@@ -19,9 +19,14 @@
  **
  ****************************************************************************/
 #include "mdtClUnitConnectionSelectionDialog.h"
+#include "mdtClConnectorKeyData.h"
+#include "mdtClUnitConnectorKeyData.h"
+#include "mdtClArticleConnectorKeyData.h"
+#include "mdtClArticleConnectionKeyData.h"
 
-mdtClUnitConnectionSelectionDialog::mdtClUnitConnectionSelectionDialog(QWidget *parent)
- : mdtSqlSelectionDialog(parent)
+mdtClUnitConnectionSelectionDialog::mdtClUnitConnectionSelectionDialog(QWidget *parent, const QLocale & locale)
+ : mdtSqlSelectionDialog(parent),
+   pvLocale(locale)
 {
   resize(700, 400);
   setWindowTitle(tr("Unit connection selection"));
@@ -55,9 +60,114 @@ bool mdtClUnitConnectionSelectionDialog::select(QSqlDatabase db, const QVariant 
   return setQuery(sql, db, allowMultiSelection);
 }
 
+mdtClUnitConnectionKeyData mdtClUnitConnectionSelectionDialog::selectedUnitConnectionKey() const
+{
+  mdtClUnitConnectionKeyData key;
+  QList<mdtClUnitConnectionKeyData> keyList;
+
+  if(result() != Accepted){
+    return key;
+  }
+  keyList = selectedUnitConnectionKeyList();
+  if(keyList.isEmpty()){
+    return key;
+  }
+  Q_ASSERT(keyList.size() == 1);
+  key = keyList.at(0);
+
+  return key;
+}
+
+QList<mdtClUnitConnectionKeyData> mdtClUnitConnectionSelectionDialog::selectedUnitConnectionKeyList() const
+{
+  QList<mdtClUnitConnectionKeyData> keyList;
+  QStringList fields;
+
+  if(result() != Accepted){
+    return keyList;
+  }
+  fields << "Id_PK" << "Unit_Id_FK" << "ACNR_Connector_Id_FK" << "ACNR_Article_Id_FK" << "Article_Id_FK" << "ArticleConnector_Id_FK" \
+         << "ConnectionType_Code_FK" << "UnitConnector_Id_FK" << "UCNR_Unit_Id_FK" << "UCNR_Connector_Id_FK" \
+         << "ArticleConnection_Id_FK" << "ACNX_ConnectionType_Code_FK";
+  auto s = selection(fields);
+  for(int row = 0; row < s.rowCount(); ++row){
+    keyList.append(buildKeyData(s, row));
+  }
+
+  return keyList;
+}
+
+bool mdtClUnitConnectionSelectionDialog::setQuery(const QString & sql, QSqlDatabase & db, bool allowMultiSelection)
+{
+  if(!mdtSqlSelectionDialog::setQuery(sql, db, allowMultiSelection)){
+    return false;
+  }
+  setMessage(tr("Select unit connection to use:"));
+  setColumnHidden("Id_PK", true);
+  setColumnHidden("Unit_Id_FK", true);
+  setColumnHidden("UnitConnector_Id_FK", true);
+  setColumnHidden("ConnectionType_Code_FK", true);
+  setColumnHidden("ArticleConnection_Id_FK", true);
+  setColumnHidden("UCNR_Unit_Id_FK", true);
+  setColumnHidden("UCNR_Connector_Id_FK", true);
+  setColumnHidden("ACNR_Connector_Id_FK", true);
+  setColumnHidden("ACNR_Article_Id_FK", true);
+  setColumnHidden("Article_Id_FK", true);
+  setColumnHidden("ArticleConnector_Id_FK", true);
+  setColumnHidden("ACNX_ConnectionType_Code_FK", true);
+  setHeaderData("UnitConnectorName", tr("Unit\nconnector"));
+  setHeaderData("UnitContactName", tr("Unit\ncontact"));
+  setHeaderData("ConnectionType", tr("Type"));
+  setHeaderData("UnitConnectionResistance", tr("R [Ohm]"));
+  setHeaderData("SchemaPage", tr("Schema\npage"));
+  setHeaderData("UnitFunction", tr("Unit\nfunction"));
+  setHeaderData("SignalName", tr("Signal\nname"));
+  setHeaderData("SwAddress", tr("SW address"));
+  addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
+  addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
+  sort();
+
+  return true;
+}
+
 QString mdtClUnitConnectionSelectionDialog::baseSqlStatement() const
 {
-  return "SELECT * FROM UnitConnection_view";
+  QString sql;
+  QString cnxTypeField;
+  QString unitFunctionField;
+  QString articleFunctionField;
+
+  // Choose some fields regarding locale
+  switch(pvLocale.language()){
+    case QLocale::French:
+      cnxTypeField = "ConnectionTypeFR";
+      unitFunctionField = "UnitFunctionFR";
+      articleFunctionField = "ArticleFunctionFR";
+      break;
+    case QLocale::German:
+      cnxTypeField = "ConnectionTypeDE";
+      unitFunctionField = "UnitFunctionDE";
+      articleFunctionField = "ArticleFunctionDE";
+      break;
+    case QLocale::Italian:
+      cnxTypeField = "ConnectionTypeIT";
+      unitFunctionField = "UnitFunctionIT";
+      articleFunctionField = "ArticleFunctionIT";
+      break;
+    default:
+      cnxTypeField = "ConnectionTypeEN";
+      unitFunctionField = "UnitFunctionEN";
+      articleFunctionField = "ArticleFunctionEN";
+  }
+  // Build SQL statement
+  sql = "SELECT Id_PK, Unit_Id_FK, UnitConnector_Id_FK, UCNR_Unit_Id_FK, UCNR_Connector_Id_FK, ConnectionType_Code_FK, ArticleConnection_Id_FK,"\
+        " ACNR_Connector_Id_FK, ArticleConnector_Id_FK, ACNR_Article_Id_FK, Article_Id_FK, ACNX_ConnectionType_Code_FK, "\
+        " UnitConnectorName, UnitContactName, " + cnxTypeField + " AS ConnectionType, UnitConnectionResistance, SchemaPage,"\
+        + unitFunctionField + " AS UnitFunction, SignalName, SwAddress,"\
+        " ArticleConnectorName, ArticleContactName, IoType, " + articleFunctionField + " AS ArticleFunction"\
+        " FROM UnitConnection_view";
+
+  return sql;
 }
 
 QString mdtClUnitConnectionSelectionDialog::linkUsageClause(mdtClUnitConnectionSelectionDialog::LinkUsage_t lu, const QVariant &unitId) const
@@ -84,4 +194,54 @@ QString mdtClUnitConnectionSelectionDialog::linkUsageClause(mdtClUnitConnectionS
   }
 
   return clause;
+}
+
+mdtClUnitConnectionKeyData mdtClUnitConnectionSelectionDialog::buildKeyData(const mdtSqlTableSelection &s, int row) const
+{
+  Q_ASSERT( (row >= 0) && (row < s.rowCount()) );
+
+  mdtClUnitConnectionKeyData key;
+  mdtClConnectorKeyData connectorFk;
+  mdtClArticleConnectorKeyData articleConnectorFk;
+  mdtClUnitConnectorKeyData unitConnectorFk;
+  mdtClArticleConnectionKeyData articleConnectionFk;
+
+  // Setup article connector FK
+  connectorFk.id = s.data(row, "ACNR_Connector_Id_FK");
+  articleConnectorFk.id = s.data(row, "ArticleConnector_Id_FK");
+  articleConnectorFk.setArticleId(s.data(row, "ACNR_Article_Id_FK"));
+  if( (!articleConnectorFk.isNull())&&(!connectorFk.isNull()) ){
+    articleConnectorFk.setConnectorFk(connectorFk);
+  }
+  // Setup unit connector FK
+  unitConnectorFk.pk.id = s.data(row, "UnitConnector_Id_FK");
+  unitConnectorFk.setUnitId(s.data(row, "UCNR_Unit_Id_FK"));
+  if(!articleConnectorFk.isNull()){
+    unitConnectorFk.setArticleConnectorFk(articleConnectorFk);
+  }else{
+    connectorFk.id = s.data(row, "UCNR_Connector_Id_FK");
+    if(!connectorFk.isNull()){
+      unitConnectorFk.setConnectorFk(connectorFk);
+    }
+  }
+  // Setup article connection FK
+  articleConnectionFk.id = s.data(row, "ArticleConnection_Id_FK");
+  articleConnectionFk.setArticleId(s.data(row, "Article_Id_FK"));
+  if(!articleConnectorFk.isNull()){
+    articleConnectionFk.setArticleConnectorFk(articleConnectorFk);
+  }
+  articleConnectionFk.setConnectionTypeCode(s.data(row, "ACNX_ConnectionType_Code_FK"));
+  // Setup unit connection key
+  key.id = s.data(row, "Id_PK");
+  key.setUnitId(s.data(row, "Unit_Id_FK"));
+  if(!unitConnectorFk.isNull()){
+    key.setUnitConnectorFk(unitConnectorFk);
+  }
+  if(articleConnectionFk.isNull()){
+    key.setConnectionTypeCode(s.data(row, "ConnectionType_Code_FK"));
+  }else{
+    key.setArticleConnectionFk(articleConnectionFk);
+  }
+
+  return key;
 }

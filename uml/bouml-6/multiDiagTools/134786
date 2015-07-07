@@ -1,6 +1,6 @@
 format 209
 "Qt4" // Qt4
-  revision 91
+  revision 92
   modified_by 2 "philippe"
   // class settings
   
@@ -5524,6 +5524,51 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    classdiagram 1470338 "QCheckBox"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1712898 "QCheckBox"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2058882 // <generalisation>
+	relation 2042754 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2058882 // <generalisation>
+	  b parent class_ref 679810 // QAbstractButton
+      end
+
+      operation 2677378 "QCheckBox"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	    defaultvalue "null"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 end

@@ -2,7 +2,7 @@ format 209
 
 classcanvas 128002 class_ref 888194 // mdtClLinkData
   classdiagramsettings member_max_width 0 end
-  xyz 8.9 322.8 2000
+  xyz 48.9 487.8 2000
 end
 classcanvas 128130 class_ref 1067266 // mdtSqlRecord
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
@@ -18,7 +18,7 @@ classcanvas 128770 class_ref 1113730 // mdtClArticleConnectionData
 end
 classcanvas 129794 class_ref 1120386 // mdtClVehicleTypeLinkData
   classdiagramsettings member_max_width 0 end
-  xyz 648.1 562 2000
+  xyz 677.1 712 2000
 end
 classcanvas 130818 class_ref 1672962 // mdtClLinkPkData
   classdiagramsettings member_max_width 0 end
@@ -26,22 +26,22 @@ classcanvas 130818 class_ref 1672962 // mdtClLinkPkData
 end
 classcanvas 130946 class_ref 1673090 // mdtClLinkKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 109 161 2000
+  xyz 90 172 2000
 end
 relationcanvas 129154 relation_ref 1391490 // <directional composition>
   decenter_begin 740
   from ref 128002 z 2007 to ref 128514
   no_role_a no_role_b
-  multiplicity_a_pos 717 248 3000 no_multiplicity_b
+  multiplicity_a_pos 744 253 3000 no_multiplicity_b
 end
 relationcanvas 129922 relation_ref 1391746 // <directional composition>
-  from ref 128002 z 2001 stereotype "<<list>>" xyz 612 600 3000 to ref 129794
-  role_a_pos 520 580 3000 no_role_b
-  multiplicity_a_pos 617 610 3000 no_multiplicity_b
+  from ref 128002 z 2001 stereotype "<<list>>" xyz 618 695 3000 to ref 129794
+  role_a_pos 549 733 3000 no_role_b
+  multiplicity_a_pos 646 763 3000 no_multiplicity_b
 end
 relationcanvas 131074 relation_ref 2015490 // <unidirectional association>
   from ref 130946 z 2001 to ref 130818
-  role_a_pos 260 144 3000 no_role_b
+  role_a_pos 255 144 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 end

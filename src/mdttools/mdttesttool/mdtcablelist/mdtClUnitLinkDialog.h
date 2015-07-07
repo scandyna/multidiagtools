@@ -300,6 +300,10 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   bool buildVehicleTypeLinkDataList();
 
+  /*! \brief Display a error
+   */
+  void displayError(const mdtError & error);
+
   Q_DISABLE_COPY(mdtClUnitLinkDialog);
 
   QSqlDatabase pvDatabase;

@@ -21,12 +21,14 @@
 #ifndef MDT_CL_UNIT_CONNECTION_SELECTION_DIALOG_H
 #define MDT_CL_UNIT_CONNECTION_SELECTION_DIALOG_H
 
+#include "mdtError.h"
 #include "mdtSqlSelectionDialog.h"
 #include "mdtClUnitConnectionKeyData.h"
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorKeyData.h"
 #include <QSqlDatabase>
 #include <QVariant>
+#include <QLocale>
 #include <QList>
 
 /*! \brief Dialog for unit connection selection (in UnitConnection_tbl)
@@ -47,7 +49,7 @@ class mdtClUnitConnectionSelectionDialog : public mdtSqlSelectionDialog
 
   /*! \brief Constructor
    */
-  mdtClUnitConnectionSelectionDialog(QWidget *parent);
+  mdtClUnitConnectionSelectionDialog(QWidget *parent, const QLocale & locale = QLocale());
 
   /*! \brief Select unit connections that are part of given unit
    */
@@ -57,7 +59,23 @@ class mdtClUnitConnectionSelectionDialog : public mdtSqlSelectionDialog
    */
   bool select(QSqlDatabase db, const QVariant & unitId, QList<mdtClUnitConnectorPkData> ucnrPkList, LinkUsage_t lu, bool allowMultiSelection);
 
+  /*! \brief Get selected unit connection key
+   *
+   * If user rejected the dialog, a null key is returned.
+   */
+  mdtClUnitConnectionKeyData selectedUnitConnectionKey() const;
+
+  /*! \brief Get a list of selected connection key
+   *
+   * If user rejected the dialog, a empty list is returned.
+   */
+  QList<mdtClUnitConnectionKeyData> selectedUnitConnectionKeyList() const;
+
  private:
+
+  /*! \brief Set SQL query and other setup
+   */
+  bool setQuery(const QString & sql, QSqlDatabase & db, bool allowMultiSelection);
 
   /*! \brief SQL base statement
    */
@@ -67,7 +85,13 @@ class mdtClUnitConnectionSelectionDialog : public mdtSqlSelectionDialog
    */
   QString linkUsageClause(LinkUsage_t lu, const QVariant & unitId) const;
 
+  /*! \brief Build unit connection key data
+   */
+  mdtClUnitConnectionKeyData buildKeyData(const mdtSqlTableSelection & s, int row) const;
+
   Q_DISABLE_COPY(mdtClUnitConnectionSelectionDialog);
+
+  QLocale pvLocale;
 };
 
 #endif // #ifndef MDT_CL_UNIT_CONNECTION_SELECTION_DIALOG_H

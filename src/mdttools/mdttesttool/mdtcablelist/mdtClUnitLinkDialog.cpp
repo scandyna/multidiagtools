@@ -601,13 +601,15 @@ void mdtClUnitLinkDialog::selectStartConnection()
     linkUsage = mdtClUnitConnectionSelectionDialog::LinkUsage_t::All;
   }
   if(!selectionDialog.select(pvDatabase, pvStartUnitId, pvStartConnectorLimitIdList, linkUsage, false)){
-    /// \todo Display a error
+    displayError(selectionDialog.lastError());
     return;
   }
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
   // Get connection data and update
+  ucnxKey = selectionDialog.selectedUnitConnectionKey();
+  /// \todo finish..
 
   
 //   mdtSqlSelectionDialog selectionDialog(this);
@@ -672,19 +674,21 @@ void mdtClUnitLinkDialog::selectEndConnection()
   mdtClUnitConnectionKeyData ucnxKey;
 
   // Setup and show dialog
-  if(cbShowOnlyUnusedStartConnections->isChecked()){
+  if(cbShowOnlyUnusedEndConnections->isChecked()){
     linkUsage = mdtClUnitConnectionSelectionDialog::LinkUsage_t::NotUsed;
   }else{
     linkUsage = mdtClUnitConnectionSelectionDialog::LinkUsage_t::All;
   }
   if(!selectionDialog.select(pvDatabase, pvEndUnitId, pvStartConnectorLimitIdList, linkUsage, false)){
-    /// \todo Display a error
+    displayError(selectionDialog.lastError());
     return;
   }
   if(selectionDialog.exec() != QDialog::Accepted){
     return;
   }
   // Get connection data and update
+  ucnxKey = selectionDialog.selectedUnitConnectionKey();
+  /// \todo finish..
 
 
 //   mdtSqlSelectionDialog selectionDialog(this);
@@ -1189,4 +1193,15 @@ bool mdtClUnitLinkDialog::buildVehicleTypeLinkDataList()
   }
 
   return true;
+}
+
+void mdtClUnitLinkDialog::displayError(const mdtError & error)
+{
+  QMessageBox msgBox(this);
+
+  msgBox.setText(error.text());
+  msgBox.setInformativeText(error.informativeText());
+  msgBox.setDetailedText(error.systemText());
+  msgBox.setIcon(error.levelIcon());
+  msgBox.exec();
 }

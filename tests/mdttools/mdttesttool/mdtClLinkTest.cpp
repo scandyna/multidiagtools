@@ -30,6 +30,8 @@
 #include "mdtClLinkTypeModel.h"
 #include "mdtClLinkDirectionData.h"
 #include "mdtClLinkDirectionModel.h"
+#include "mdtClVehicleTypeLinkKeyData.h"
+#include "mdtClVehicleTypeLinkAssignationWidgetItem.h"
 #include "mdtApplication.h"
 #include "mdtTtDatabaseSchema.h"
 #include "mdtSqlRecord.h"
@@ -426,6 +428,59 @@ void mdtClLinkTest::linkDataTest()
   QVERIFY(pk.isNull());
 }
 
+void mdtClLinkTest::vehicleTypeLinkKeyDataTest()
+{
+  mdtClVehicleTypeLinkKeyData key;
+  mdtClLinkPkData linkFk;
+
+  // Initial state
+  QVERIFY(key.isNull());
+  // Set
+  key.setVehicleTypeStartId(1);
+  QVERIFY(key.isNull());
+  key.setVehicleTypeEndId(2);
+  QVERIFY(key.isNull());
+  linkFk.connectionStartId = 3;
+  linkFk.connectionEndId = 4;
+  key.setLinkFk(linkFk);
+  QVERIFY(!key.isNull());
+  // Check
+  QCOMPARE(key.vehicleTypeStartId(), QVariant(1));
+  QCOMPARE(key.vehicleTypeEndId(), QVariant(2));
+  QCOMPARE(key.linkFk().connectionStartId, QVariant(3));
+  QCOMPARE(key.linkFk().connectionEndId, QVariant(4));
+  // Clear
+  key.clear();
+  QVERIFY(key.vehicleTypeStartId().isNull());
+  QVERIFY(key.vehicleTypeEndId().isNull());
+  QVERIFY(key.linkFk().isNull());
+  QVERIFY(key.isNull());
+}
+
+void mdtClLinkTest::vehicleTypeLinkAssignationWidgetItemTest()
+{
+  mdtSqlRecord record;
+
+  // Setup vehicle type data record
+  QVERIFY(record.addAllFields("Unit_VehicleType_view", pvDatabaseManager.database()));
+  record.setValue("VehicleType_Id_FK", 1);
+  record.setValue("Type", "Type 1");
+  record.setValue("SubType", "Sub type 1");
+  record.setValue("SeriesNumber", "Serie 1");
+  // Create item and check its initial state
+  mdtClVehicleTypeLinkAssignationWidgetItem item(nullptr, record);
+  item.show();
+  QVERIFY(!item.isChecked());
+  QVERIFY(item.keyData().isNull());
+  
+
+  /*
+   * Play
+   */
+  while(item.isVisible()){
+    QTest::qWait(500);
+  }
+}
 
 /*
  * Test database helper methods

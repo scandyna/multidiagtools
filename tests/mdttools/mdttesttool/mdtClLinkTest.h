@@ -53,6 +53,9 @@ class mdtClLinkTest : public mdtTest
 
   void linkDataTest();
 
+  void vehicleTypeLinkKeyDataTest();
+  void vehicleTypeLinkAssignationWidgetItemTest();
+
  private:
 
   // Create test database schema - Will FAIL on problem

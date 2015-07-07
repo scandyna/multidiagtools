@@ -4032,6 +4032,8 @@ bool mdtTtDatabaseSchema::createUnitConnectionView()
 
   sql = "CREATE VIEW UnitConnection_view AS\n"\
         "SELECT\n"\
+        " UCNR.Connector_Id_FK AS UCNR_Connector_Id_FK ,\n"\
+        " UCNR.Unit_Id_FK AS UCNR_Unit_Id_FK ,\n"\
         " UCNR.Name AS UnitConnectorName ,\n"\
         " UCNX.Id_PK,\n"\
         " UCNX.Unit_Id_FK ,\n"\
@@ -4051,7 +4053,12 @@ bool mdtTtDatabaseSchema::createUnitConnectionView()
         " UCNX.FunctionIT AS UnitFunctionIT,\n"\
         " UCNX.SignalName ,\n"\
         " UCNX.SwAddress ,\n"\
+        " ACNR.Connector_Id_FK AS ACNR_Connector_Id_FK ,\n"\
+        " ACNR.Article_Id_FK AS ACNR_Article_Id_FK ,\n"\
         " ACNR.Name AS ArticleConnectorName ,\n"\
+        " ACNX.ArticleConnector_Id_FK ,\n"\
+        " ACNX.Article_Id_FK ,\n"\
+        " ACNX.ConnectionType_Code_FK AS ACNX_ConnectionType_Code_FK,\n"\
         " ACNX.ArticleContactName ,\n"\
         " ACNX.IoType ,\n"\
         " ACNX.FunctionEN AS ArticleFunctionEN,\n"\
