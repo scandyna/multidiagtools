@@ -31,6 +31,7 @@
 #include "mdtClLinkDirectionData.h"
 #include "mdtClLinkDirectionModel.h"
 #include "mdtClVehicleTypeLinkKeyData.h"
+#include "mdtClVehicleTypeLinkAssignationWidget.h"
 #include "mdtClVehicleTypeLinkAssignationWidgetItem.h"
 #include "mdtApplication.h"
 #include "mdtTtDatabaseSchema.h"
@@ -460,6 +461,8 @@ void mdtClLinkTest::vehicleTypeLinkKeyDataTest()
 void mdtClLinkTest::vehicleTypeLinkAssignationWidgetItemTest()
 {
   mdtSqlRecord record;
+  mdtClLinkPkData linkFk;
+  mdtClVehicleTypeLinkKeyData vtlKey;
 
   // Setup vehicle type data record
   QVERIFY(record.addAllFields("Unit_VehicleType_view", pvDatabaseManager.database()));
@@ -467,17 +470,46 @@ void mdtClLinkTest::vehicleTypeLinkAssignationWidgetItemTest()
   record.setValue("Type", "Type 1");
   record.setValue("SubType", "Sub type 1");
   record.setValue("SeriesNumber", "Serie 1");
+  // Setup link FK
+  linkFk.connectionStartId = 3;
+  linkFk.connectionEndId = 4;
   // Create item and check its initial state
-  mdtClVehicleTypeLinkAssignationWidgetItem item(nullptr, record);
+  mdtClVehicleTypeLinkAssignationWidgetItem item(nullptr, record, linkFk);
   item.show();
   QVERIFY(!item.isChecked());
-  QVERIFY(item.keyData().isNull());
-  
+  QCOMPARE(item.keyData().vehicleTypeStartId(), QVariant(1));
+  QCOMPARE(item.keyData().vehicleTypeEndId(), QVariant(1));
+  QCOMPARE(item.keyData().linkFk().connectionStartId, QVariant(3));
+  QCOMPARE(item.keyData().linkFk().connectionEndId, QVariant(4));
+  QVERIFY(!item.keyData().isNull());
+  // Test matche checking
+  vtlKey.clear();
+  vtlKey.setVehicleTypeStartId(1);
+  vtlKey.setVehicleTypeEndId(1);
+  vtlKey.setLinkFk(linkFk);
+  item.setCheckedIfMatches(vtlKey);
+  QVERIFY(item.isChecked());
+  vtlKey.clear();
+  vtlKey.setVehicleTypeStartId(1);
+  vtlKey.setVehicleTypeEndId(2);
+  vtlKey.setLinkFk(linkFk);
+  item.setCheckedIfMatches(vtlKey);
+  QVERIFY(!item.isChecked());
+  vtlKey.clear();
+  vtlKey.setVehicleTypeStartId(1);
+  vtlKey.setVehicleTypeEndId(1);
+  vtlKey.setLinkFk(linkFk);
+  item.setCheckedIfMatches(vtlKey);
+  QVERIFY(item.isChecked());
 
   /*
    * Play
    */
-  while(item.isVisible()){
+  mdtClVehicleTypeLinkAssignationWidget vtlw(nullptr, pvDatabaseManager.database());
+  
+  vtlw.show();
+  
+  while(vtlw.isVisible()){
     QTest::qWait(500);
   }
 }

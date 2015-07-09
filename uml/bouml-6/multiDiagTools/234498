@@ -1,6 +1,6 @@
 format 209
 "mdtdatabase" // mdtdatabase
-  revision 32
+  revision 33
   modified_by 2 "philippe"
   // class settings
   
@@ -3756,6 +3756,107 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 1186946 // mdtSqlTableSelection
+      end
+    end
+  end
+
+  classview 768258 "Manager"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 1476866 "ForeignKeySetting"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1719426 "mdtSqlForeignKeySetting"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    state 276226 "mdtSqlForeignKeySettingSM"
+      stereotype "machine"
+      statediagram 1476994 "mdtSqlForeignKeySettingSM"
+	statediagramsettings show_trans_definition yes
+	 end
+	size A4
+      end
+
+      pseudostate 214146 initial 
+	transition 327170 "<transition>"
+	  on pseudostate_ref 214274 // choice
+	  external 
+	end
+      end
+
+      state 276354 "Original"
+	transition 327554 "<transition>"
+	  on state_ref 276482 // Enabled
+	    uml_trigger "enable"
+	  external 
+	end
+
+	transition 327682 "<transition>"
+	  on state_ref 276610 // Disabled
+	    uml_trigger "disable"
+	  external 
+	end
+      end
+
+      pseudostate 214274 choice 
+	transition 327298 "<transition>"
+	  on state_ref 276354 // Original
+	    uml_guard "keep === false"
+	  external 
+	end
+
+	transition 328066 "<transition>"
+	  on state_ref 276866 // Keep
+	    uml_trigger "else"
+	  external 
+	end
+      end
+
+      state 276482 "Enabled"
+	transition 327810 "<transition>"
+	  on state_ref 276610 // Disabled
+	    uml_trigger "disable"
+	  external 
+	end
+      end
+
+      state 276610 "Disabled"
+	transition 327938 "<transition>"
+	  on state_ref 276482 // Enabled
+	    uml_trigger "enable"
+	  external 
+	end
+      end
+
+      state 276866 "Keep"
       end
     end
   end

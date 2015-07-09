@@ -18,46 +18,48 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_VEHICLE_TYPE_LINK_ASSIGNATION_WIDGET_ITEM_H
-#define MDT_CL_VEHICLE_TYPE_LINK_ASSIGNATION_WIDGET_ITEM_H
+#ifndef MDT_CL_VEHICLE_TYPE_LINK_ASSIGNATION_WIDGET_H
+#define MDT_CL_VEHICLE_TYPE_LINK_ASSIGNATION_WIDGET_H
 
-#include "mdtClVehicleTypeLinkKeyData.h"
+#include "mdtError.h"
 #include "mdtClLinkKeyData.h"
-#include <QCheckBox>
-#include <QSqlRecord>
+#include <QWidget>
+#include <QSqlDatabase>
+#include <QVariant>
 
-/*! \brief Let user assign a vehicle type to a link
+class QVBoxLayout;
+
+/*! \brief Widget for vehicle type link assignation
  */
-class mdtClVehicleTypeLinkAssignationWidgetItem : public QCheckBox
+class mdtClVehicleTypeLinkAssignationWidget : public QWidget
 {
  public:
 
   /*! \brief Constructor
-   *
-   * \pre vehicleTypeData must contain fields VehicleType_Id_FK, Type, SubType and SeriesNumber
-   * \pre VehicleType_Id_FK must not be null
-   * \pre linkFk must not be null
    */
-  mdtClVehicleTypeLinkAssignationWidgetItem(QWidget *parent, const QSqlRecord & vehicleTypeData, const mdtClLinkPkData & linkFk);
+  mdtClVehicleTypeLinkAssignationWidget(QWidget *parent, QSqlDatabase db);
 
-  /*! \brief Set checked if given key matches
+  /*! \brief Set unit ID
    *
-   * Will also unchek if given key does not match
+   * Will also list all vehicle types that are assigned to given unit
    */
-  void setCheckedIfMatches(const mdtClVehicleTypeLinkKeyData & vtlKey);
+  bool setUnitId(const QVariant & unitId);
 
-  /*! \brief Get key data
+  /*! \brief Get last error
    */
-  mdtClVehicleTypeLinkKeyData keyData() const
+  mdtError lastError() const
   {
-    return pvKeyData;
+    return pvLastError;
   }
 
  private:
 
-  Q_DISABLE_COPY(mdtClVehicleTypeLinkAssignationWidgetItem);
+  Q_DISABLE_COPY(mdtClVehicleTypeLinkAssignationWidget);
 
-  mdtClVehicleTypeLinkKeyData pvKeyData;
+  QSqlDatabase pvDatabase;
+  QVBoxLayout *pvLayout;
+  mdtError pvLastError;
 };
 
-#endif // #ifndef MDT_CL_VEHICLE_TYPE_LINK_ASSIGNATION_WIDGET_ITEM_H
+#endif // #ifndef MDT_CL_VEHICLE_TYPE_LINK_ASSIGNATION_WIDGET_H
+

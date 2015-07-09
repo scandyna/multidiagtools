@@ -18,7 +18,7 @@ classcanvas 128514 class_ref 1638274 // mdtClArticleLinkData
 end
 classcanvas 128642 class_ref 1638402 // mdtClUnitLink
   classdiagramsettings member_max_width 0 end
-  xyz 39 283 2000
+  xyz 68 568 2000
 end
 classcanvas 128770 class_ref 1638530 // mdtClArticleLink
   classdiagramsettings member_max_width 0 end
@@ -30,7 +30,7 @@ classcanvas 128898 class_ref 952962 // mdtTtBase
 end
 classcanvas 129410 class_ref 1638658 // mdtClVehicleTypeLink
   classdiagramsettings member_max_width 0 end
-  xyz 425 151 2000
+  xyz 83 276 2000
 end
 classcanvas 131714 class_ref 1638786 // mdtClArticleLinkKeyData
   classdiagramsettings member_max_width 0 end
@@ -67,6 +67,11 @@ relationcanvas 132482 relation_ref 2000898 // <generalisation>
   from ref 128770 z 2001 to point 301 116
   line 132866 z 2001 to point 255 116
   line 132994 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133122 relation_ref 2049410 // <generalisation>
+  from ref 129410 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

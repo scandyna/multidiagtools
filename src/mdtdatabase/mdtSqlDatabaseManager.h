@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -71,8 +71,10 @@ class mdtSqlDatabaseManager : public QObject
   QSqlDatabase database();
 
   /*! \brief Enable/disable foreing keys constraint
+   *
+   * \deprecated See mdtSqlForeignKeySetting
    */
-  bool setForeignKeysEnabled(bool enable);
+//   bool setForeignKeysEnabled(bool enable);
 
   /*! \brief Set the parent widget for dialogs
    *

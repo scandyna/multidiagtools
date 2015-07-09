@@ -21,6 +21,7 @@
 #include "mdtTtDatabaseSchema.h"
 #include "mdtSqlDatabaseManager.h"
 #include "mdtDataTableManager.h"
+#include "mdtSqlForeignKeySetting.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlField>
@@ -107,6 +108,7 @@ bool mdtTtDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
 {
   Q_ASSERT(pvDatabaseManager->database().isOpen());
 
+  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager->database(), false);
   mdtSqlDatabaseManager sourceDbManager;
   mdtDataTableManager tableManager;
   QStringList sourceTables, destinationTables, ignoredTables;
@@ -158,7 +160,8 @@ bool mdtTtDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
   
   // Copy tables
   tableManager.enableProgressDialog(true);
-  if(!pvDatabaseManager->setForeignKeysEnabled(false)){
+  if(!fkSetting.disable()){
+//   if(!pvDatabaseManager->setForeignKeysEnabled(false)){
     pvLastError = pvDatabaseManager->lastError();
     return false;
   }
@@ -184,7 +187,8 @@ bool mdtTtDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
       return false;
     }
   }
-  if(!pvDatabaseManager->setForeignKeysEnabled(true)){
+  if(!fkSetting.enable()){
+//   if(!pvDatabaseManager->setForeignKeysEnabled(true)){
     pvLastError = pvDatabaseManager->lastError();
     return false;
   }

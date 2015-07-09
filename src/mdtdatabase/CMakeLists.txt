@@ -51,6 +51,7 @@ set (SOURCES_FILES
           mdtSqlSchemaTable.cpp
           mdtSqlFieldSelectionDialog.cpp
           mdtSqlTransaction.cpp
+          mdtSqlForeignKeySetting.cpp
     )
 
 # Qt ui files

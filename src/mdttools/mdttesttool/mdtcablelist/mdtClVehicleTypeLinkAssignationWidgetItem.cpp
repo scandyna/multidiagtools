@@ -21,7 +21,7 @@
 #include "mdtClVehicleTypeLinkAssignationWidgetItem.h"
 #include <QString>
 
-mdtClVehicleTypeLinkAssignationWidgetItem::mdtClVehicleTypeLinkAssignationWidgetItem(QWidget *parent, const QSqlRecord &vehicleTypeData)
+mdtClVehicleTypeLinkAssignationWidgetItem::mdtClVehicleTypeLinkAssignationWidgetItem(QWidget *parent, const QSqlRecord &vehicleTypeData, const mdtClLinkPkData & linkFk)
  : QCheckBox(parent)
 {
   Q_ASSERT(vehicleTypeData.contains("VehicleType_Id_FK"));
@@ -29,12 +29,18 @@ mdtClVehicleTypeLinkAssignationWidgetItem::mdtClVehicleTypeLinkAssignationWidget
   Q_ASSERT(vehicleTypeData.contains("SubType"));
   Q_ASSERT(vehicleTypeData.contains("SeriesNumber"));
   Q_ASSERT(!vehicleTypeData.value("VehicleType_Id_FK").isNull());
+  Q_ASSERT(!linkFk.isNull());
 
   QString type = vehicleTypeData.value("Type").toString().trimmed();
   QString subType = vehicleTypeData.value("SubType").toString().trimmed();
   QString serie = vehicleTypeData.value("SeriesNumber").toString().trimmed();
   QString str;
 
+  // Store keys
+  pvKeyData.setVehicleTypeStartId(vehicleTypeData.value("VehicleType_Id_FK"));
+  pvKeyData.setVehicleTypeEndId(vehicleTypeData.value("VehicleType_Id_FK"));
+  pvKeyData.setLinkFk(linkFk);
+  // Set label text
   str = type;
   if(!subType.isEmpty()){
     str += ", " + subType;
@@ -45,7 +51,12 @@ mdtClVehicleTypeLinkAssignationWidgetItem::mdtClVehicleTypeLinkAssignationWidget
   setText(str);
 }
 
-void mdtClVehicleTypeLinkAssignationWidgetItem::setLink(const mdtClLinkPkData & pk)
+void mdtClVehicleTypeLinkAssignationWidgetItem::setCheckedIfMatches(const mdtClVehicleTypeLinkKeyData &vtlKey)
 {
-
+  if( (vtlKey.vehicleTypeStartId() == pvKeyData.vehicleTypeStartId()) && (vtlKey.vehicleTypeEndId() == pvKeyData.vehicleTypeEndId()) \
+       && (vtlKey.linkFk().connectionStartId == pvKeyData.linkFk().connectionStartId) && (vtlKey.linkFk().connectionEndId == pvKeyData.linkFk().connectionEndId) ){
+    setChecked(true);
+  }else{
+    setChecked(false);
+  }
 }

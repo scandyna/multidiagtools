@@ -2,7 +2,7 @@ format 209
 
 classcanvas 128002 class_ref 888194 // mdtClLinkData
   classdiagramsettings member_max_width 0 end
-  xyz 48.9 487.8 2000
+  xyz 48.9 482.8 2000
 end
 classcanvas 128130 class_ref 1067266 // mdtSqlRecord
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
@@ -35,9 +35,9 @@ relationcanvas 129154 relation_ref 1391490 // <directional composition>
   multiplicity_a_pos 744 253 3000 no_multiplicity_b
 end
 relationcanvas 129922 relation_ref 1391746 // <directional composition>
-  from ref 128002 z 2001 stereotype "<<list>>" xyz 618 695 3000 to ref 129794
-  role_a_pos 549 733 3000 no_role_b
-  multiplicity_a_pos 646 763 3000 no_multiplicity_b
+  from ref 128002 z 2001 stereotype "<<list>>" xyz 616 691 3000 to ref 129794
+  role_a_pos 549 731 3000 no_role_b
+  multiplicity_a_pos 646 761 3000 no_multiplicity_b
 end
 relationcanvas 131074 relation_ref 2015490 // <unidirectional association>
   from ref 130946 z 2001 to ref 130818

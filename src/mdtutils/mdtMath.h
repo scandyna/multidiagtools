@@ -199,6 +199,6 @@ namespace mdt{
       return std::sqrt( sumOfSquaredDifferences<T>(c, mean) / (static_cast<T>(std::distance(std::begin(c), std::end(c)))-1.0) );
     }
 
-  };
-};
+  }
+}
 #endif  // #ifndef MDT_MATH_H

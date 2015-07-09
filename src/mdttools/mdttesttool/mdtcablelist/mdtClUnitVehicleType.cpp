@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -28,6 +28,11 @@
 
 mdtClUnitVehicleType::mdtClUnitVehicleType(QObject *parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
+{
+}
+
+mdtClUnitVehicleType::mdtClUnitVehicleType(QSqlDatabase db)
+ : mdtTtBase(nullptr, db)
 {
 }
 
@@ -184,10 +189,15 @@ bool mdtClUnitVehicleType::removeUnitVehicleAssignments(const QVariant & unitId,
 bool mdtClUnitVehicleType::removeUnitVehicleAssignments(const QVariant & unitId, const mdtSqlTableSelection & vehicleTypeIdListSelection)
 {
   QList<QVariant> idList;
-  int i;
 
   // Add entries for each vehicle type ID
   idList = vehicleTypeIdListSelection.dataList("VehicleType_Id_FK");
 
   return removeUnitVehicleAssignments(unitId, idList);
+}
+
+QList<QSqlRecord> mdtClUnitVehicleType::getVehicleTypeDataList(const QVariant & unitId, bool & ok)
+{
+  QString sql = "SELECT * FROM Unit_VehicleType_view WHERE Unit_Id_FK = " + unitId.toString();
+  return getDataList<QSqlRecord>(sql, ok);
 }

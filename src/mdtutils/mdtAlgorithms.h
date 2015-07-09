@@ -221,6 +221,6 @@ namespace mdtAlgorithms
   /*! \brief Get the string of longest line in given string
    */
   QString longestLineInString(const QString & str, const QString & sep = "\n");
-};
+}
 
 #endif  // #ifndef MDT_ALGORITHMS_H

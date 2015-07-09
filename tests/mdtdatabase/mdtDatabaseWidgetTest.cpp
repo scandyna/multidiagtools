@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtDatabaseWidgetTest.h"
 #include "mdtSqlSchemaTable.h"
+#include "mdtSqlForeignKeySetting.h"
 #include "mdtApplication.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlTableSelectionItem.h"
@@ -4316,7 +4317,9 @@ void mdtDatabaseWidgetTest::createDatabaseSchema()
   QVERIFY(pvDatabaseManager.createTable(st, mdtSqlDatabaseManager::OverwriteExisting));
 
   // Enable foreing keys support
-  QVERIFY(pvDatabaseManager.setForeignKeysEnabled(true));
+  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), true);
+  QVERIFY(fkSetting.enable());
+//   QVERIFY(pvDatabaseManager.setForeignKeysEnabled(true));
 }
 
 

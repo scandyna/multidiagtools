@@ -6,6 +6,6 @@ classcanvas 128002 class_ref 1673218 // mdtClVehicleTypeLinkKeyData
 end
 classcanvas 128130 class_ref 1120386 // mdtClVehicleTypeLinkData
   classdiagramsettings member_max_width 0 end
-  xyz 105 349 2000
+  xyz 109 457 2000
 end
 end

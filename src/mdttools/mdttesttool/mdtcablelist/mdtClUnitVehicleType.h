@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -38,6 +38,10 @@ class mdtClUnitVehicleType : public mdtTtBase
   /*! \brief Constructor
    */
   mdtClUnitVehicleType(QObject *parent, QSqlDatabase db);
+
+  /*! \brief Constructor
+   */
+  mdtClUnitVehicleType(QSqlDatabase db);
 
   /*! \brief Destructor
    */
@@ -77,6 +81,14 @@ class mdtClUnitVehicleType : public mdtTtBase
    */
   ///bool removeUnitVehicleAssignments(const QVariant & unitId, const QModelIndexList & vehicleTypeIdList);
   bool removeUnitVehicleAssignments(const QVariant & unitId, const mdtSqlTableSelection & vehicleTypeIdListSelection);
+
+  /*! \brief Get a list of vehicle type data that are assigned to given unit
+   *
+   * Will return a list of records from Unit_VehicleType_view.
+   *  If no vehicle type is assigned, or a error occured, a empty list is returned.
+   *  To differeciate both cases, use the ok parameter.
+   */
+  QList<QSqlRecord> getVehicleTypeDataList(const QVariant & unitId, bool & ok);
 
  private:
 
