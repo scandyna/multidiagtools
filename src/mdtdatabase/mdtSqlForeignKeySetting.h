@@ -32,23 +32,21 @@ class mdtSqlForeignKeySetting
 {
  public:
 
-  /*! \brief Setting state
+  /*! \brief Foreign key setting type
    */
-  enum State_t
+  enum Type_t
   {
-    Original,   /*!< Setting was never changed, or is back to original state */
-    Enabled,    /*!< Foreign key constraint setting was enabled */
-    Disabled,   /*!< Foreign key constraint setting was disabled */
-    Keep        /*!< Setting must not be reversed in destructor */
+    Permanent,  /*!< Setting is keeped when this object dies */
+    Temporary   /*!< Setting is reverted when this object dies */
   };
 
   /*! \brief Constructor
    *
    * \param db Database instance on witch to act
-   * \param keep If true, destructor will not reverse the setting
+   * \param type Type of foreign key setting
    * \pre db must be open
    */
-  mdtSqlForeignKeySetting(QSqlDatabase db, bool keep);
+  mdtSqlForeignKeySetting(QSqlDatabase db, Type_t type);
 
   /*! \brief Destructor
    *
@@ -74,6 +72,16 @@ class mdtSqlForeignKeySetting
   }
 
  private:
+
+  /*! \brief Setting state
+   */
+  enum State_t
+  {
+    Original,   /*!< Setting was never changed, or is back to original state */
+    Enabled,    /*!< Foreign key constraint setting was enabled */
+    Disabled,   /*!< Foreign key constraint setting was disabled */
+    Keep        /*!< Setting must not be reversed in destructor */
+  };
 
   /*! \brief Enable - Sqlite version
    */

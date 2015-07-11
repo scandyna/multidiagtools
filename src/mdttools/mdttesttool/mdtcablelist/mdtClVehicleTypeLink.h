@@ -27,6 +27,8 @@
 #include <QList>
 #include <QSqlRecord>
 
+class mdtSqlRecord;
+
 /*! \brief Helper class for vehicle type link manipulation
  *
  * Refers to VehicleType_Link_tbl
@@ -43,6 +45,10 @@ class mdtClVehicleTypeLink : public mdtClLink
    */
   mdtClVehicleTypeLink(QSqlDatabase db);
 
+  /*! \brief Add a vehicle type - link assignation
+   */
+  bool addVehicleTypeLink(const mdtClVehicleTypeLinkKeyData & key);
+
   /*! \brief Get vehicle type link key data list for given link PK
    *
    * \param pk PK of link for witch vehicle type link are assigned
@@ -51,6 +57,23 @@ class mdtClVehicleTypeLink : public mdtClLink
    *          Use ok parameter to diffrenciate both cases.
    */
   QList<mdtClVehicleTypeLinkKeyData> getVehicleTypeLinkKeyDataList(const mdtClLinkPkData & pk, bool & ok);
+
+  /*! \brief Get vehicle type start, end, key data list for given link PK
+   *
+   * \param pk PK of link for witch vehicle type link are assigned
+   * \return List of vehicle type start, end, key data.
+   *          A empty list is returned if no vehicle type is assigned to given link, or a error occured.
+   *          Use ok parameter to diffrenciate both cases.
+   */
+  QList<mdtClVehicleTypeStartEndKeyData> getVehicleTypeStartEndKeyDataList(const mdtClLinkPkData & pk, bool & ok);
+
+  /*! \brief Remove a vehicle type - link assignation
+   */
+  bool removeVehicleTypeLink(const mdtClVehicleTypeLinkKeyData & key);
+
+  /*! \brief Update vehicle type - link assignation
+   */
+  bool updateVehicleTypeLink(const mdtClLinkPkData & linkPk, const QList<mdtClVehicleTypeStartEndKeyData> & expectedVehicleTypeKeyList);
 
   /*! \todo Fonction pour mettre à jours l'assignation vt-link
    *
@@ -62,9 +85,17 @@ class mdtClVehicleTypeLink : public mdtClLink
 
  private:
 
+  /*! \brief Fill record with given key data
+   */
+  void fillRecord(mdtSqlRecord & record, const mdtClVehicleTypeLinkKeyData & key);
+
   /*! \brief Fill data with record from VehicleType_Link_tbl
    */
   void fillData(mdtClVehicleTypeLinkKeyData & key, const QSqlRecord & record);
+
+  /*! \brief Fill data with record from VehicleType_Link_tbl
+   */
+  void fillData(mdtClVehicleTypeStartEndKeyData & key, const QSqlRecord & record);
 
   Q_DISABLE_COPY(mdtClVehicleTypeLink);
 };

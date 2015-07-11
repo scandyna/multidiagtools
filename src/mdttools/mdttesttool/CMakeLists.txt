@@ -198,7 +198,7 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClLinkData.cpp
           mdtcablelist/mdtClVehicleTypeLinkData.cpp
           mdtcablelist/mdtClVehicleTypeLinkAssignationWidget.cpp
-          mdtcablelist/mdtClVehicleTypeLinkAssignationWidgetItem.cpp
+          mdtcablelist/mdtClVehicleTypeCheckBox.cpp
           mdtcablelist/mdtClLinkVersion.cpp
           mdtcablelist/mdtClLinkVersionModel.cpp
           mdtcablelist/mdtClLinkVersionDialog.cpp

@@ -47,7 +47,7 @@ target_link_libraries(mdtclunitconnectiontest "mdttesttool${MDTLIB_VERSION_SUFFI
 
 # * mdtClLinkTest executable *
 QT4_WRAP_CPP(MDT_LINK_TEST_MOC "mdtClLinkTest.h")
-add_executable(mdtcllinktest mdtClLinkTest.cpp mdtCableListTestScenario.cpp ${MDT_LINK_TEST_MOC})
+add_executable(mdtcllinktest mdtClLinkTest.cpp mdtCableListTestScenario.cpp mdtClVehicleTypeLinkTestData.cpp ${MDT_LINK_TEST_MOC})
 target_link_libraries(mdtcllinktest ${QT_LIBRARIES})
 target_link_libraries(mdtcllinktest "mdttest")
 target_link_libraries(mdtcllinktest "mdtutils${MDTLIB_VERSION_SUFFIX}")

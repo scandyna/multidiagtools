@@ -108,7 +108,7 @@ bool mdtTtDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
 {
   Q_ASSERT(pvDatabaseManager->database().isOpen());
 
-  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager->database(), false);
+  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager->database(), mdtSqlForeignKeySetting::Temporary);
   mdtSqlDatabaseManager sourceDbManager;
   mdtDataTableManager tableManager;
   QStringList sourceTables, destinationTables, ignoredTables;

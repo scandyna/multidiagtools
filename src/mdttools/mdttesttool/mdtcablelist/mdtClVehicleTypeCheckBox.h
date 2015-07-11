@@ -18,17 +18,16 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CL_VEHICLE_TYPE_LINK_ASSIGNATION_WIDGET_ITEM_H
-#define MDT_CL_VEHICLE_TYPE_LINK_ASSIGNATION_WIDGET_ITEM_H
+#ifndef MDT_CL_VEHICLE_TYPE_CHECK_BOX_H
+#define MDT_CL_VEHICLE_TYPE_CHECK_BOX_H
 
-#include "mdtClVehicleTypeLinkKeyData.h"
-#include "mdtClLinkKeyData.h"
 #include <QCheckBox>
 #include <QSqlRecord>
+#include <QVariant>
 
 /*! \brief Let user assign a vehicle type to a link
  */
-class mdtClVehicleTypeLinkAssignationWidgetItem : public QCheckBox
+class mdtClVehicleTypeCheckBox : public QCheckBox
 {
  public:
 
@@ -36,28 +35,21 @@ class mdtClVehicleTypeLinkAssignationWidgetItem : public QCheckBox
    *
    * \pre vehicleTypeData must contain fields VehicleType_Id_FK, Type, SubType and SeriesNumber
    * \pre VehicleType_Id_FK must not be null
-   * \pre linkFk must not be null
    */
-  mdtClVehicleTypeLinkAssignationWidgetItem(QWidget *parent, const QSqlRecord & vehicleTypeData, const mdtClLinkPkData & linkFk);
+  mdtClVehicleTypeCheckBox(QWidget *parent, const QSqlRecord & vehicleTypeData);
 
-  /*! \brief Set checked if given key matches
-   *
-   * Will also unchek if given key does not match
+  /*! \brief Get vehicle type ID
    */
-  void setCheckedIfMatches(const mdtClVehicleTypeLinkKeyData & vtlKey);
-
-  /*! \brief Get key data
-   */
-  mdtClVehicleTypeLinkKeyData keyData() const
+  QVariant vehicleTypeId() const
   {
-    return pvKeyData;
+    return pvVehicleTypeId;
   }
 
  private:
 
-  Q_DISABLE_COPY(mdtClVehicleTypeLinkAssignationWidgetItem);
+  Q_DISABLE_COPY(mdtClVehicleTypeCheckBox);
 
-  mdtClVehicleTypeLinkKeyData pvKeyData;
+  QVariant pvVehicleTypeId;
 };
 
-#endif // #ifndef MDT_CL_VEHICLE_TYPE_LINK_ASSIGNATION_WIDGET_ITEM_H
+#endif // #ifndef MDT_CL_VEHICLE_TYPE_CHECK_BOX_H

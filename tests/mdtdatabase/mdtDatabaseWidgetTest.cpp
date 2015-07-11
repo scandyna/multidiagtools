@@ -4317,7 +4317,7 @@ void mdtDatabaseWidgetTest::createDatabaseSchema()
   QVERIFY(pvDatabaseManager.createTable(st, mdtSqlDatabaseManager::OverwriteExisting));
 
   // Enable foreing keys support
-  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), true);
+  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Permanent);
   QVERIFY(fkSetting.enable());
 //   QVERIFY(pvDatabaseManager.setForeignKeysEnabled(true));
 }

@@ -1,6 +1,6 @@
 format 209
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 63
+  revision 64
   modified_by 2 "philippe"
   // class settings
   
@@ -6274,7 +6274,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
 	    classrelation_ref 2052098 // <directional composition>
-	  b parent class_ref 1706370 // mdtClVehicleTypeLinkAssignationWidgetItem
+	  b parent class_ref 1706370 // mdtClVehicleTypeCheckBox
       end
 
       operation 2670210 "mdtClVehicleTypeLinkAssignationWidget"
@@ -6339,8 +6339,40 @@ ${inlines}
 	
       end
 
+      operation 2705026 "buildVehicleTypeList"
+	private explicit_return_type "bool"
+	nparams 1
+	  param in name "unitId" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2698370 "selectVehicleTypesAssignedToLink"
+	private explicit_return_type "bool"
+	nparams 1
+	  param in name "linkPk" type class_ref 1672962 // mdtClLinkPkData
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 2698498 "clear"
-	public explicit_return_type "void"
+	private explicit_return_type "void"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -6353,26 +6385,9 @@ ${inlines}
 	
 	
       end
-
-      operation 2698370 "selectExisting"
-	private explicit_return_type "void"
-	nparams 1
-	  param in name "vtlKeyList" type class_ref 1673218 // mdtClVehicleTypeLinkKeyData
-	multiplicity "*"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
     end
 
-    class 1706370 "mdtClVehicleTypeLinkAssignationWidgetItem"
+    class 1706370 "mdtClVehicleTypeCheckBox"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -6386,16 +6401,7 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2052354 // pvKeyData (<directional composition>)
-	relation 2036226 *-->
-	  a role_name "pvKeyData" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 2052354 // pvKeyData (<directional composition>)
-	  b parent class_ref 1673218 // mdtClVehicleTypeLinkKeyData
-      end
-
-      operation 2670082 "mdtClVehicleTypeLinkAssignationWidgetItem"
+      operation 2670082 "mdtClVehicleTypeCheckBox"
 	public explicit_return_type ""
 	nparams 2
 	  param in name "parent" type class_ref 316162 // QWidget
@@ -6412,8 +6418,8 @@ ${inlines}
 	
       end
 
-      operation 2669954 "keyData"
-	public return_type class_ref 1673218 // mdtClVehicleTypeLinkKeyData
+      operation 2706178 "vehicleTypeId"
+	public return_type class_ref 161154 // QVariant
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -6435,10 +6441,66 @@ ${inlines}
 	  b parent class_ref 1712898 // QCheckBox
       end
 
-      operation 2691586 "setCheckedIfMatches"
+      attribute 1804674 "pvId"
+	private type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    classdiagram 1444098 "VehicleTypeLinkData"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1725954 "mdtClVehicleTypeStartEndKeyData"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 1804290 "pvVehicleTypeStartId"
+	private type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1804418 "pvVehicleTypeEndId"
+	private type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 2705154 "setVehicleTypeStartId"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "vtlKey" type class_ref 1673218 // mdtClVehicleTypeLinkKeyData
+	  param in name "id" type class_ref 161154 // QVariant
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -6450,11 +6512,82 @@ ${inlines}
 	
 	
       end
-    end
 
-    classdiagram 1444098 "VehicleTypeLinkData"
-      classdiagramsettings member_max_width 0 end
-      size A4
+      operation 2705282 "vehicleTypeStartId"
+	public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2705410 "setVehicleTypeEndId"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "id" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2705538 "vehicleTypeEndId"
+	public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2705666 "isNull"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2705794 "clear"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     class 1673218 "mdtClVehicleTypeLinkKeyData"
@@ -6471,20 +6604,8 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      attribute 1756290 "pvVehicleTypeStartId"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 1756418 "pvVehicleTypeEndId"
-	private type class_ref 161154 // QVariant
+      attribute 1804546 "pvVehicleTypeStartEndFk"
+	private type class_ref 1725954 // mdtClVehicleTypeStartEndKeyData
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -6565,6 +6686,37 @@ ${inlines}
 
       operation 2678018 "vehicleTypeEndId"
 	public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2706050 "setVehicleTypeStartEndFk"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "fk" type class_ref 1725954 // mdtClVehicleTypeStartEndKeyData
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2705922 "vehicleTypeStartEndFk"
+	public return_type class_ref 1725954 // mdtClVehicleTypeStartEndKeyData
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "

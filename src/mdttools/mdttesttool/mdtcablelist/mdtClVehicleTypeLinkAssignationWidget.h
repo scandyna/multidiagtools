@@ -23,11 +23,14 @@
 
 #include "mdtError.h"
 #include "mdtClLinkKeyData.h"
+#include "mdtClVehicleTypeLinkKeyData.h"
 #include <QWidget>
 #include <QSqlDatabase>
 #include <QVariant>
+#include <vector>
 
 class QVBoxLayout;
+class mdtClVehicleTypeCheckBox;
 
 /*! \brief Widget for vehicle type link assignation
  */
@@ -39,11 +42,19 @@ class mdtClVehicleTypeLinkAssignationWidget : public QWidget
    */
   mdtClVehicleTypeLinkAssignationWidget(QWidget *parent, QSqlDatabase db);
 
-  /*! \brief Set unit ID
+  /*! \brief Build assignation list
    *
-   * Will also list all vehicle types that are assigned to given unit
+   * Will build a list of each vehicle type that is assigned to given unit.
+   *  Then, each vehicle type that is assigned to given link will be selected (checked).
+   *
+   * \pre unitId must not be null
+   * \pre linkPk must not be null
    */
-  bool setUnitId(const QVariant & unitId);
+  bool buildList(const QVariant & unitId, const mdtClLinkPkData & linkPk);
+
+  /*! \brief Get list of vehicle type that are selected
+   */
+  QList<mdtClVehicleTypeStartEndKeyData> getSelectedVehicleTypeList() const;
 
   /*! \brief Get last error
    */
@@ -54,9 +65,30 @@ class mdtClVehicleTypeLinkAssignationWidget : public QWidget
 
  private:
 
+  /*! \brief Build list of all vehicle type that are assigned to given unit
+   */
+  bool buildVehicleTypeList(const QVariant & unitId);
+
+  /*! \brief Select (set checked) each vehicle type that is assigned to given link
+   */
+  bool selectVehicleTypeAssignedToLink(const mdtClLinkPkData & linkPk);
+
+  /*! \brief Add given item (to layout)
+   */
+  void addItem(mdtClVehicleTypeCheckBox *item);
+
+  /*! \brief Set each item that matches key selected (checked)
+   */
+  void setMatchingItemsSelected(const mdtClVehicleTypeStartEndKeyData & key);
+
+  /*! \brief Clear assignation list
+   */
+  void clear();
+
   Q_DISABLE_COPY(mdtClVehicleTypeLinkAssignationWidget);
 
   QSqlDatabase pvDatabase;
+  std::vector<mdtClVehicleTypeCheckBox*> pvItems;
   QVBoxLayout *pvLayout;
   mdtError pvLastError;
 };

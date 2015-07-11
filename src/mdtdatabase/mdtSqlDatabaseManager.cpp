@@ -132,7 +132,7 @@ bool mdtSqlDatabaseManager::openDatabaseSqlite(const QFileInfo & fileInfo, const
     return false;
   }
   Q_ASSERT(!pvDatabase.isOpen());
-  mdtSqlForeignKeySetting fkSetting(pvDatabase, true);
+  mdtSqlForeignKeySetting fkSetting(pvDatabase, mdtSqlForeignKeySetting::Permanent);
   // Check if file exists
   if(!fileInfo.exists()){
     pvLastError.setError(tr("File '") + fileInfo.fileName() + tr("' does not exists.") + "\n"\
@@ -373,7 +373,7 @@ bool mdtSqlDatabaseManager::createDatabaseSqlite(const QFileInfo & fileInfo, cre
   }
   */
   // Enable foreign key support
-  mdtSqlForeignKeySetting fkSetting(pvDatabase, true);
+  mdtSqlForeignKeySetting fkSetting(pvDatabase, mdtSqlForeignKeySetting::Permanent);
   if(!fkSetting.enable()){
 //   if(!setForeignKeysEnabled(true)){
     /// \todo Close here ??

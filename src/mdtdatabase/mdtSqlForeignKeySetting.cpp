@@ -24,12 +24,12 @@
 #include <QString>
 #include <QObject>
 
-mdtSqlForeignKeySetting::mdtSqlForeignKeySetting(QSqlDatabase db, bool keep)
+mdtSqlForeignKeySetting::mdtSqlForeignKeySetting(QSqlDatabase db, mdtSqlForeignKeySetting::Type_t type)
  : pvDatabase(db)
 {
   Q_ASSERT(pvDatabase.isOpen());
 
-  if(keep){
+  if(type == Permanent){
     pvState = Keep;
   }else{
     pvState = Original;

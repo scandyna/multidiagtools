@@ -1,23 +1,12 @@
 window_sizes 1280 977 312 962 924 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 852610 // mdtClLinkData
-    769 739 100 18 0 0
   classdiagram_ref 1444098 // VehicleTypeLinkData
     120 106 100 4 0 0
-  classdiagram_ref 1463810 // VehicleTypeLink
+  active  classdiagram_ref 1463810 // VehicleTypeLink
     962 924 90 18 0 0
-  classdiagram_ref 772866 // mdtClLink
-    120 106 100 4 0 0
-  classdiagram_ref 1417474 // Sandbox
-    120 106 100 4 0 0
-  classdiagram_ref 1476866 // ForeignKeySetting
-    120 106 100 4 0 0
-  active  statediagram_ref 1476994 // mdtSqlForeignKeySettingSM
-    962 924 100 4 0 0
 end
 show_stereotypes
-selected statediagram_ref 1476994 // mdtSqlForeignKeySettingSM
 open
   state_ref 276226 // mdtSqlForeignKeySettingSM
   classview_ref 755202 // ConnectorAndConnection
@@ -25,8 +14,11 @@ open
   class_ref 818690 // mdtClLink
   class_ref 1638658 // mdtClVehicleTypeLink
   operation_ref 2698498 // clear
-  operation_ref 2669954 // keyData
+  operation_ref 2706178 // vehicleTypeId
+  class_ref 1725954 // mdtClVehicleTypeStartEndKeyData
   operation_ref 2677890 // vehicleTypeStartId
+  operation_ref 2706050 // setVehicleTypeStartEndFk
+  operation_ref 2705922 // vehicleTypeStartEndFk
   class_ref 1639042 // mdtClUnitLinkKeyData
   class_ref 1679746 // mdtClLinkVersionPkData
   attribute_ref 1778050 // pvPk
@@ -35,6 +27,7 @@ open
   operation_ref 2655490 // pk
   operation_ref 2654722 // setVersionPk
   operation_ref 2654850 // setVersionPk
+  operation_ref 2656002 // clear
   operation_ref 2656386 // setModification
   operation_ref 2656258 // clear
 end

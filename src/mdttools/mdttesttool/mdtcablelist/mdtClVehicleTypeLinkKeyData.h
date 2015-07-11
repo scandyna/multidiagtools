@@ -24,17 +24,16 @@
 #include "mdtClLinkKeyData.h"
 #include <QVariant>
 
-/*! \brief Vehicle type - link key data
+/*! \brief Vehicle type start, end key data
  *
  * Refers to VehicleType_Link_tbl
  */
-struct mdtClVehicleTypeLinkKeyData
+struct mdtClVehicleTypeStartEndKeyData
 {
  private:
 
   QVariant pvVehicleTypeStartId;
   QVariant pvVehicleTypeEndId;
-  mdtClLinkPkData pvLinkFk;
 
  public:
 
@@ -66,6 +65,79 @@ struct mdtClVehicleTypeLinkKeyData
     return pvVehicleTypeEndId;
   }
 
+  /*! \brief Check if key data is null
+   *
+   * Key data is null if one vehicle ID is null
+   */
+  bool isNull() const
+  {
+    return (pvVehicleTypeStartId.isNull() || pvVehicleTypeEndId.isNull());
+  }
+
+  /*! \brief Clear key data
+   */
+  void clear()
+  {
+    pvVehicleTypeStartId.clear();
+    pvVehicleTypeEndId.clear();
+  }
+};
+
+/*! \brief Vehicle type - link key data
+ *
+ * Refers to VehicleType_Link_tbl
+ */
+struct mdtClVehicleTypeLinkKeyData
+{
+ private:
+
+  mdtClVehicleTypeStartEndKeyData pvVehicleTypeStartEndFk;
+  mdtClLinkPkData pvLinkFk;
+
+ public:
+
+  /*! \brief Set start vehicle type (VehicleTypeStart_Id_FK)
+   */
+  void setVehicleTypeStartId(const QVariant & id)
+  {
+    pvVehicleTypeStartEndFk.setVehicleTypeStartId(id);
+  }
+
+  /*! \brief Get start vehicle type (VehicleTypeStart_Id_FK)
+   */
+  QVariant vehicleTypeStartId() const
+  {
+    return pvVehicleTypeStartEndFk.vehicleTypeStartId();
+  }
+
+  /*! \brief Set end vehicle type (VehicleTypeEnd_Id_FK)
+   */
+  void setVehicleTypeEndId(const QVariant & id)
+  {
+    pvVehicleTypeStartEndFk.setVehicleTypeEndId(id);
+  }
+
+  /*! \brief Get end vehicle type (VehicleTypeEnd_Id_FK)
+   */
+  QVariant vehicleTypeEndId() const
+  {
+    return pvVehicleTypeStartEndFk.vehicleTypeEndId();
+  }
+
+  /*! \brief Set vehicle type start/end FK part
+   */
+  void setVehicleTypeStartEndFk(const mdtClVehicleTypeStartEndKeyData & fk)
+  {
+    pvVehicleTypeStartEndFk = fk;
+  }
+
+  /*! \brief Get vehicle type start/end FK part
+   */
+  mdtClVehicleTypeStartEndKeyData vehicleTypeStartEndFk() const
+  {
+    return pvVehicleTypeStartEndFk;
+  }
+
   /*! \brief Set link FK (UnitConnectionStart_Id_FK and UnitConnectionEnd_Id_FK)
    *
    * \pre fk must not be null
@@ -89,15 +161,14 @@ struct mdtClVehicleTypeLinkKeyData
    */
   bool isNull() const
   {
-    return (pvVehicleTypeStartId.isNull() || pvVehicleTypeEndId.isNull() || pvLinkFk.isNull());
+    return (pvVehicleTypeStartEndFk.isNull() || pvLinkFk.isNull());
   }
 
   /*! \brief Clear key data
    */
   void clear()
   {
-    pvVehicleTypeStartId.clear();
-    pvVehicleTypeEndId.clear();
+    pvVehicleTypeStartEndFk.clear();
     pvLinkFk.clear();
   }
 };

@@ -19,7 +19,12 @@
  **
  ****************************************************************************/
 #include "mdtClVehicleTypeLink.h"
+#include "mdtSqlRecord.h"
+#include <QSqlQuery>
+#include <QSqlError>
 #include <QString>
+
+// #include <QDebug>
 
 mdtClVehicleTypeLink::mdtClVehicleTypeLink(QObject *parent, QSqlDatabase db)
  : mdtClLink(parent, db)
@@ -29,6 +34,23 @@ mdtClVehicleTypeLink::mdtClVehicleTypeLink(QObject *parent, QSqlDatabase db)
 mdtClVehicleTypeLink::mdtClVehicleTypeLink(QSqlDatabase db)
  : mdtClLink(db)
 {
+}
+
+bool mdtClVehicleTypeLink::addVehicleTypeLink(const mdtClVehicleTypeLinkKeyData & key)
+{
+  mdtSqlRecord record;
+
+  if(!record.addAllFields("VehicleType_Link_tbl", database())){
+    pvLastError = record.lastError();
+    return false;
+  }
+  fillRecord(record, key);
+  if(!addRecord(record, "VehicleType_Link_tbl")){
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClVehicleTypeLink");
+    return false;
+  }
+
+  return true;
 }
 
 QList<mdtClVehicleTypeLinkKeyData> mdtClVehicleTypeLink::getVehicleTypeLinkKeyDataList(const mdtClLinkPkData & pk, bool & ok)
@@ -47,9 +69,71 @@ QList<mdtClVehicleTypeLinkKeyData> mdtClVehicleTypeLink::getVehicleTypeLinkKeyDa
   for(const auto & record : recordList){
     mdtClVehicleTypeLinkKeyData key;
     fillData(key, record);
+    keyList.append(key);
   }
 
   return keyList;
+}
+
+QList<mdtClVehicleTypeStartEndKeyData> mdtClVehicleTypeLink::getVehicleTypeStartEndKeyDataList(const mdtClLinkPkData &pk, bool &ok)
+{
+  QList<mdtClVehicleTypeStartEndKeyData> keyList;
+  QList<QSqlRecord> recordList;
+  QString sql;
+
+  sql = "SELECT VehicleTypeStart_Id_FK,VehicleTypeEnd_Id_FK FROM VehicleType_Link_tbl " \
+        " WHERE UnitConnectionStart_Id_FK = " + pk.connectionStartId.toString() + \
+        " AND UnitConnectionEnd_Id_FK = " + pk.connectionEndId.toString();
+  recordList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return keyList;
+  }
+  for(const auto & record : recordList){
+    mdtClVehicleTypeStartEndKeyData key;
+    fillData(key, record);
+    keyList.append(key);
+  }
+
+  return keyList;
+}
+
+bool mdtClVehicleTypeLink::removeVehicleTypeLink(const mdtClVehicleTypeLinkKeyData &key)
+{
+  QSqlQuery query(database());
+  QString sql;
+
+  sql = "DELETE FROM VehicleType_Link_tbl WHERE VehicleTypeStart_Id_FK = " + key.vehicleTypeStartId().toString() \
+      + " AND VehicleTypeEnd_Id_FK = " + key.vehicleTypeEndId().toString() \
+      + " AND UnitConnectionStart_Id_FK = " + key.linkFk().connectionStartId.toString() \
+      + " AND UnitConnectionEnd_Id_FK = " + key.linkFk().connectionEndId.toString();
+  if(!query.exec(sql)){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError(tr("Removing vehicle type - link assignation failed. SQL: ") + sql, mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClVehicleTypeLink");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtClVehicleTypeLink::updateVehicleTypeLink(const mdtClLinkPkData & linkPk, const QList<mdtClVehicleTypeStartEndKeyData> & expectedVehicleTypeKeyList)
+{
+
+}
+
+void mdtClVehicleTypeLink::fillRecord(mdtSqlRecord & record, const mdtClVehicleTypeLinkKeyData & key)
+{
+  Q_ASSERT(record.contains("VehicleTypeStart_Id_FK"));
+  Q_ASSERT(record.contains("VehicleTypeEnd_Id_FK"));
+  Q_ASSERT(record.contains("UnitConnectionStart_Id_FK"));
+  Q_ASSERT(record.contains("UnitConnectionEnd_Id_FK"));
+
+  record.setValue("VehicleTypeStart_Id_FK", key.vehicleTypeStartId());
+  record.setValue("VehicleTypeEnd_Id_FK", key.vehicleTypeEndId());
+  record.setValue("UnitConnectionStart_Id_FK", key.linkFk().connectionStartId);
+  record.setValue("UnitConnectionEnd_Id_FK", key.linkFk().connectionEndId);
 }
 
 void mdtClVehicleTypeLink::fillData(mdtClVehicleTypeLinkKeyData & key, const QSqlRecord & record)
@@ -66,4 +150,13 @@ void mdtClVehicleTypeLink::fillData(mdtClVehicleTypeLinkKeyData & key, const QSq
   linkFk.connectionStartId = record.value("UnitConnectionStart_Id_FK");
   linkFk.connectionEndId = record.value("UnitConnectionEnd_Id_FK");
   key.setLinkFk(linkFk);
+}
+
+void mdtClVehicleTypeLink::fillData(mdtClVehicleTypeStartEndKeyData & key, const QSqlRecord & record)
+{
+  Q_ASSERT(record.contains("VehicleTypeStart_Id_FK"));
+  Q_ASSERT(record.contains("VehicleTypeEnd_Id_FK"));
+
+  key.setVehicleTypeStartId(record.value("VehicleTypeStart_Id_FK"));
+  key.setVehicleTypeEndId(record.value("VehicleTypeEnd_Id_FK"));
 }
