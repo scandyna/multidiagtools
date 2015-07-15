@@ -83,6 +83,24 @@ struct mdtClVehicleTypeStartEndKeyData
   }
 };
 
+/*! \internal less than comparison functor for mdtClVehicleTypeStartEndKeyData
+ */
+struct mdtClVehicleTypeStartEndLessThan
+{
+  bool operator()(const mdtClVehicleTypeStartEndKeyData & a, const mdtClVehicleTypeStartEndKeyData & b)
+  {
+    qlonglong a1 = a.vehicleTypeStartId().toLongLong();
+    qlonglong a2 = a.vehicleTypeEndId().toLongLong();
+    qlonglong b1 = b.vehicleTypeStartId().toLongLong();
+    qlonglong b2 = b.vehicleTypeEndId().toLongLong();
+
+    if(a1 != b1){
+      return a1 < b1;
+    }
+    return a2 < b2;
+  }
+};
+
 /*! \brief Vehicle type - link key data
  *
  * Refers to VehicleType_Link_tbl

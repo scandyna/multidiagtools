@@ -40,6 +40,7 @@ class mdtClModificationModel;
 class mdtClLinkVersionModel;
 class mdtClLinkTypeModel;
 class mdtClLinkDirectionModel;
+class mdtClVehicleTypeLinkAssignationWidget;
 
 /*! \brief Dialog that let the user edit a unit link
  */
@@ -300,6 +301,11 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   bool buildVehicleTypeLinkDataList();
 
+
+  /*! \brief Update vehicle type assignations
+   */
+  void updateVehicleTypeAssignations();
+
   /*! \brief Display a error
    */
   void displayError(const mdtError & error);
@@ -325,6 +331,7 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   mdtClLinkVersionModel *pvLinkVersionModel;
   mdtClLinkTypeModel *pvLinkTypeModel;
   mdtClLinkDirectionModel *pvLinkDirectionModel;
+  mdtClVehicleTypeLinkAssignationWidget *pvVehicleTypeAssignationWidget;
 };
 
 #endif // #ifndef MDT_CL_UNIT_LINK_DIALOG_H

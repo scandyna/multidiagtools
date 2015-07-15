@@ -24,7 +24,7 @@
 #include "mdtClVehicleTypeLink.h"
 #include <QVBoxLayout>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtClVehicleTypeLinkAssignationWidget::mdtClVehicleTypeLinkAssignationWidget(QWidget *parent, QSqlDatabase db)
  : QWidget(parent),
@@ -35,20 +35,76 @@ mdtClVehicleTypeLinkAssignationWidget::mdtClVehicleTypeLinkAssignationWidget(QWi
   setLayout(pvLayout);
 }
 
-bool mdtClVehicleTypeLinkAssignationWidget::buildList(const QVariant & unitId, const mdtClLinkPkData & linkPk)
+bool mdtClVehicleTypeLinkAssignationWidget::buildVehicleTypeList(const QVariant & startUnitId, const QVariant & endUnitId)
 {
-  Q_ASSERT(!unitId.isNull());
-  Q_ASSERT(!linkPk.isNull());
+  Q_ASSERT(!startUnitId.isNull());
+  Q_ASSERT(!endUnitId.isNull());
+
+  mdtClUnitVehicleType uvt(pvDatabase);
+  QList<QSqlRecord> vehicleTypeDataList;
+  QString sql;
+  bool ok;
 
   clear();
-  if(!buildVehicleTypeList(unitId)){
+  // Get vehicle type data list
+  sql = "SELECT\n"\
+        " VTUS.Unit_Id_FK AS StartUnit_Id_FK,\n"\
+        " VTUE.Unit_Id_FK AS EndUnit_Id_FK,\n"\
+        " VTUS.VehicleType_Id_FK,\n"\
+        " VT.Type,\n"\
+        " VT.SubType,\n"\
+        " VT.SeriesNumber\n"\
+        " FROM VehicleType_Unit_tbl VTUS\n"\
+        "  JOIN VehicleType_Unit_tbl VTUE\n"\
+        "   ON VTUS.VehicleType_Id_FK = VTUE.VehicleType_Id_FK\n"\
+        "  JOIN VehicleType_tbl VT\n"\
+        "   ON VT.Id_PK = VTUS.VehicleType_Id_FK\n"\
+        " WHERE StartUnit_Id_FK = " + startUnitId.toString() + " AND EndUnit_Id_FK = " + endUnitId.toString() + \
+        " ORDER BY Type, SubType, SeriesNumber ASC";
+  vehicleTypeDataList = uvt.getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    pvLastError = uvt.lastError();
     return false;
   }
-  if(!selectVehicleTypeAssignedToLink(linkPk)){
-    return false;
+  // Build items
+  for(const auto & vehicleTypeData : vehicleTypeDataList){
+    mdtClVehicleTypeCheckBox *item = new mdtClVehicleTypeCheckBox(this, vehicleTypeData);
+    addItem(item);
   }
 
   return true;
+}
+
+bool mdtClVehicleTypeLinkAssignationWidget::selectVehicleTypeAssignedToLink(const mdtClLinkPkData & linkPk)
+{
+  Q_ASSERT(!linkPk.isNull());
+
+  mdtClVehicleTypeLink vtl(pvDatabase);
+  QList<mdtClVehicleTypeStartEndKeyData> keyDataList;
+  bool ok;
+
+  // Get vehicle types assigned to given link
+  keyDataList = vtl.getVehicleTypeStartEndKeyDataList(linkPk, ok);
+  if(!ok){
+    pvLastError = vtl.lastError();
+    return false;
+  }
+  // Update items selected state
+  for(const auto & key : keyDataList){
+    setMatchingItemsSelected(key);
+  }
+
+  return true;
+}
+
+void mdtClVehicleTypeLinkAssignationWidget::clear()
+{
+  for(auto *item : pvItems){
+    Q_ASSERT(item != nullptr);
+    pvLayout->removeWidget(item);
+    delete item;
+  }
+  pvItems.clear();
 }
 
 QList<mdtClVehicleTypeStartEndKeyData> mdtClVehicleTypeLinkAssignationWidget::getSelectedVehicleTypeList() const
@@ -68,46 +124,6 @@ QList<mdtClVehicleTypeStartEndKeyData> mdtClVehicleTypeLinkAssignationWidget::ge
   return keyList;
 }
 
-bool mdtClVehicleTypeLinkAssignationWidget::buildVehicleTypeList(const QVariant & unitId)
-{
-  mdtClUnitVehicleType uvt(pvDatabase);
-  QList<QSqlRecord> vehicleTypeDataList;
-  bool ok;
-
-  // Get vehicle type data list
-  vehicleTypeDataList = uvt.getVehicleTypeDataList(unitId, ok);
-  if(!ok){
-    pvLastError = uvt.lastError();
-    return false;
-  }
-  // Build items
-  for(const auto & vehicleTypeData : vehicleTypeDataList){
-    mdtClVehicleTypeCheckBox *item = new mdtClVehicleTypeCheckBox(this, vehicleTypeData);
-    addItem(item);
-  }
-
-  return true;
-}
-
-bool mdtClVehicleTypeLinkAssignationWidget::selectVehicleTypeAssignedToLink(const mdtClLinkPkData & linkPk)
-{
-  mdtClVehicleTypeLink vtl(pvDatabase);
-  QList<mdtClVehicleTypeStartEndKeyData> keydataList;
-  bool ok;
-
-  // Get vehicle types assigned to given link
-  keydataList = vtl.getVehicleTypeStartEndKeyDataList(linkPk, ok);
-  if(!ok){
-    pvLastError = vtl.lastError();
-    return false;
-  }
-  // Update items selected state
-  for(const auto & key : keydataList){
-    setMatchingItemsSelected(key);
-  }
-
-  return true;
-}
 
 void mdtClVehicleTypeLinkAssignationWidget::addItem(mdtClVehicleTypeCheckBox *item)
 {
@@ -126,13 +142,5 @@ void mdtClVehicleTypeLinkAssignationWidget::setMatchingItemsSelected(const mdtCl
     if( (key.vehicleTypeStartId() == id) && (key.vehicleTypeEndId() == id) ){
       item->setChecked(true);
     }
-  }
-}
-
-void mdtClVehicleTypeLinkAssignationWidget::clear()
-{
-  for(auto *item : pvItems){
-    Q_ASSERT(item != nullptr);
-    pvLayout->removeWidget(item);
   }
 }

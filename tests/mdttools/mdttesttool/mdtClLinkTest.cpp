@@ -35,6 +35,7 @@
 #include "mdtClVehicleTypeLinkAssignationWidget.h"
 #include "mdtClVehicleTypeCheckBox.h"
 #include "mdtClVehicleTypeLinkTestData.h"
+#include "mdtClLinkModificationKeyData.h"
 #include "mdtApplication.h"
 #include "mdtTtDatabaseSchema.h"
 #include "mdtSqlRecord.h"
@@ -415,6 +416,40 @@ void mdtClLinkTest::linkVersionModelTest()
 
 }
 
+void mdtClLinkTest::linkModificationDataTest()
+{
+  mdtClLinkModificationKeyData key;
+  mdtClLinkPkData linkFk;
+  mdtClLinkVersionData linkVersionData;
+  mdtClModificationPkData modificationFk;
+
+  // Initial state
+  QVERIFY(key.isNull());
+  // Setup FKs
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkVersionData.setVersion(1.2);
+  modificationFk.code = "NEW";
+  // Set
+  key.setLinkFk(linkFk);
+  QVERIFY(key.isNull());
+  key.setLinkVersionFk(linkVersionData.pk());
+  QVERIFY(key.isNull());
+  key.setModificationFk(modificationFk);
+  QVERIFY(!key.isNull());
+  QCOMPARE(key.linkFk().connectionStartId, QVariant(10));
+  QCOMPARE(key.linkFk().connectionEndId, QVariant(11));
+  linkVersionData.setPk(key.linkVersionFk());
+  QCOMPARE(linkVersionData.version(), 1.2);
+  QCOMPARE(key.modificationFk().code, QString("NEW"));
+  // Clear
+  key.clear();
+  QVERIFY(key.linkFk().isNull());
+  QVERIFY(key.linkVersionFk().isNull());
+  QVERIFY(key.modificationFk().isNull());
+  QVERIFY(key.isNull());
+}
+
 void mdtClLinkTest::linkDataTest()
 {
   mdtClLinkPkData pk;
@@ -438,7 +473,9 @@ void mdtClLinkTest::linkDataTest()
 
 void mdtClLinkTest::vehicleTypeStartEndKeyDataTest()
 {
-  mdtClVehicleTypeStartEndKeyData key;
+  mdtClVehicleTypeStartEndKeyData key, key2;
+  QList<mdtClVehicleTypeStartEndKeyData> keyList, keyList2, resultKeyList;
+  mdtClVehicleTypeStartEndLessThan lt;
 
   // Initial state
   QVERIFY(key.isNull());
@@ -455,6 +492,76 @@ void mdtClLinkTest::vehicleTypeStartEndKeyDataTest()
   QVERIFY(key.vehicleTypeStartId().isNull());
   QVERIFY(key.vehicleTypeEndId().isNull());
   QVERIFY(key.isNull());
+  /*
+   * Check mdtClVehicleTypeStartEndLessThan
+   */
+  // Direct compare check
+  key.setVehicleTypeStartId(1);
+  key.setVehicleTypeEndId(2);
+  key2.setVehicleTypeStartId(2);
+  key2.setVehicleTypeEndId(1);
+  QVERIFY(lt(key, key2));
+  QVERIFY(!lt(key2, key));
+  key.setVehicleTypeStartId(1);
+  key.setVehicleTypeEndId(2);
+  key2.setVehicleTypeStartId(1);
+  key2.setVehicleTypeEndId(2);
+  QVERIFY(!lt(key, key2));
+  QVERIFY(!lt(key2, key));
+  key.setVehicleTypeStartId(2);
+  key.setVehicleTypeEndId(1);
+  key2.setVehicleTypeStartId(1);
+  key2.setVehicleTypeEndId(2);
+  QVERIFY(!lt(key, key2));
+  QVERIFY(lt(key2, key));
+  // Build list of keys
+  keyList.clear();
+  key.setVehicleTypeStartId(2);
+  key.setVehicleTypeEndId(1);
+  keyList.append(key);
+  key.setVehicleTypeStartId(1);
+  key.setVehicleTypeEndId(2);
+  keyList.append(key);
+  key.setVehicleTypeStartId(7);
+  key.setVehicleTypeEndId(8);
+  keyList.append(key);
+  key.setVehicleTypeStartId(4);
+  key.setVehicleTypeEndId(3);
+  keyList.append(key);
+  // Sort
+  std::sort(keyList.begin(), keyList.end(), mdtClVehicleTypeStartEndLessThan());
+  // Check
+  QCOMPARE(keyList.size(), 4);
+  QCOMPARE(keyList.at(0).vehicleTypeStartId(), QVariant(1));
+  QCOMPARE(keyList.at(0).vehicleTypeEndId(), QVariant(2));
+  QCOMPARE(keyList.at(1).vehicleTypeStartId(), QVariant(2));
+  QCOMPARE(keyList.at(1).vehicleTypeEndId(), QVariant(1));
+  QCOMPARE(keyList.at(2).vehicleTypeStartId(), QVariant(4));
+  QCOMPARE(keyList.at(2).vehicleTypeEndId(), QVariant(3));
+  QCOMPARE(keyList.at(3).vehicleTypeStartId(), QVariant(7));
+  QCOMPARE(keyList.at(3).vehicleTypeEndId(), QVariant(8));
+  /*
+   * Check that applying set_difference works:
+   *  - keyList = (1,2),(2,1),(4,3),(7,8)
+   *  - keyList2 = (2,1),(7,8)
+   *  - resultKeyList = keyList \ keyList2 = (1,2),(4,3)
+   */
+  // Build keyList2
+  keyList2.clear();
+  key.setVehicleTypeStartId(2);
+  key.setVehicleTypeEndId(1);
+  keyList2.append(key);
+  key.setVehicleTypeStartId(7);
+  key.setVehicleTypeEndId(8);
+  keyList2.append(key);
+  // Apply set_difference
+  std::set_difference(keyList.constBegin(), keyList.constEnd(), keyList2.constBegin(), keyList2.constEnd(), std::inserter(resultKeyList, resultKeyList.begin()), mdtClVehicleTypeStartEndLessThan());
+  // Check
+  QCOMPARE(resultKeyList.size(), 2);
+  QCOMPARE(resultKeyList.at(0).vehicleTypeStartId(), QVariant(1));
+  QCOMPARE(resultKeyList.at(0).vehicleTypeEndId(), QVariant(2));
+  QCOMPARE(resultKeyList.at(1).vehicleTypeStartId(), QVariant(4));
+  QCOMPARE(resultKeyList.at(1).vehicleTypeEndId(), QVariant(3));
 }
 
 void mdtClLinkTest::vehicleTypeLinkKeyDataTest()
@@ -509,6 +616,7 @@ void mdtClLinkTest::vehicleTypeLinkAddGetRemoveTest()
   mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
   mdtClVehicleTypeLinkKeyData key;
   QList<mdtClVehicleTypeLinkKeyData> keyList;
+  mdtClVehicleTypeStartEndKeyData vtStartEndKey;
   QList<mdtClVehicleTypeStartEndKeyData> vtStartEndKeyList;
   mdtClLinkPkData linkFk;
   bool ok;
@@ -542,6 +650,41 @@ void mdtClLinkTest::vehicleTypeLinkAddGetRemoveTest()
   keyList = vtl.getVehicleTypeLinkKeyDataList(linkFk, ok);
   QVERIFY(ok);
   QCOMPARE(keyList.size(), 0);
+  /*
+   * Check adding and removing a list of vehicle types to a link
+   */
+  // Setup link
+  linkFk.clear();
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  // Setup vehicle types
+  vtStartEndKeyList.clear();
+  vtStartEndKey.setVehicleTypeStartId(1);
+  vtStartEndKey.setVehicleTypeEndId(2);
+  vtStartEndKeyList.append(vtStartEndKey);
+  vtStartEndKey.setVehicleTypeStartId(3);
+  vtStartEndKey.setVehicleTypeEndId(4);
+  vtStartEndKeyList.append(vtStartEndKey);
+  // Add assignations
+  QVERIFY(vtl.addVehicleTypeLinks(linkFk, vtStartEndKeyList, true));
+  // Get back and check
+  keyList = vtl.getVehicleTypeLinkKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(keyList.size(), 2);
+  QCOMPARE(keyList.at(0).vehicleTypeStartId(), QVariant(1));
+  QCOMPARE(keyList.at(0).vehicleTypeEndId(), QVariant(2));
+  QCOMPARE(keyList.at(0).linkFk().connectionStartId, QVariant(10));
+  QCOMPARE(keyList.at(0).linkFk().connectionEndId, QVariant(11));
+  QCOMPARE(keyList.at(1).vehicleTypeStartId(), QVariant(3));
+  QCOMPARE(keyList.at(1).vehicleTypeEndId(), QVariant(4));
+  QCOMPARE(keyList.at(1).linkFk().connectionStartId, QVariant(10));
+  QCOMPARE(keyList.at(1).linkFk().connectionEndId, QVariant(11));
+  // Remove assignations
+  QVERIFY(vtl.removeVehicleTypeLinks(linkFk, vtStartEndKeyList, true));
+  // Get back and check
+  keyList = vtl.getVehicleTypeLinkKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(keyList.size(), 0);
 }
 
 void mdtClLinkTest::vehicleTypeLinkUpdateTest()
@@ -564,7 +707,7 @@ void mdtClLinkTest::vehicleTypeLinkUpdateTest()
 
   /*
    * For this test, assume we have 3 links:
-   *  - UCS : 101, UCE: 101
+   *  - UCS : 101, UCE: 102
    *  - UCS : 103, UCE: 104
    *  - UCS : 105, UCE: 106
    */
@@ -581,8 +724,9 @@ void mdtClLinkTest::vehicleTypeLinkUpdateTest()
   vtKeyList.clear();
   vtKey.setVehicleTypeStartId(1);
   vtKey.setVehicleTypeEndId(1);
+  vtKeyList.append(vtKey);
   // Update
-  
+  QVERIFY(vtl.updateVehicleTypeLink(linkPk, vtKeyList, true));
   // Check
   vtlKeyList = vtl.getVehicleTypeLinkKeyDataList(linkPk, ok);
   QVERIFY(ok);
@@ -591,6 +735,69 @@ void mdtClLinkTest::vehicleTypeLinkUpdateTest()
   QCOMPARE(vtlKeyList.at(0).vehicleTypeEndId(), QVariant(1));
   QCOMPARE(vtlKeyList.at(0).linkFk().connectionStartId, QVariant(101));
   QCOMPARE(vtlKeyList.at(0).linkFk().connectionEndId, QVariant(102));
+  // Calling update with the same expected vehicle types must not change anything
+  QVERIFY(vtl.updateVehicleTypeLink(linkPk, vtKeyList, true));
+  // Check
+  vtlKeyList = vtl.getVehicleTypeLinkKeyDataList(linkPk, ok);
+  QVERIFY(ok);
+  QCOMPARE(vtlKeyList.size(), 1);
+  QCOMPARE(vtlKeyList.at(0).vehicleTypeStartId(), QVariant(1));
+  QCOMPARE(vtlKeyList.at(0).vehicleTypeEndId(), QVariant(1));
+  QCOMPARE(vtlKeyList.at(0).linkFk().connectionStartId, QVariant(101));
+  QCOMPARE(vtlKeyList.at(0).linkFk().connectionEndId, QVariant(102));
+  /*
+   * Update link UCS: 103, UCE: 104
+   *
+   * We want assign vehicle type 1 and 2 to this link
+   */
+  // Setup link PK of link to update
+  linkPk.connectionStartId = 103;
+  linkPk.connectionEndId = 104;
+  // Setup the expected assignation list
+  vtKeyList.clear();
+  vtKey.setVehicleTypeStartId(1);
+  vtKey.setVehicleTypeEndId(1);
+  vtKeyList.append(vtKey);
+  vtKey.setVehicleTypeStartId(2);
+  vtKey.setVehicleTypeEndId(2);
+  vtKeyList.append(vtKey);
+  // Update
+  QVERIFY(vtl.updateVehicleTypeLink(linkPk, vtKeyList, true));
+  // Check
+  vtlKeyList = vtl.getVehicleTypeLinkKeyDataList(linkPk, ok);
+  QVERIFY(ok);
+  QCOMPARE(vtlKeyList.size(), 2);
+  QCOMPARE(vtlKeyList.at(0).vehicleTypeStartId(), QVariant(1));
+  QCOMPARE(vtlKeyList.at(0).vehicleTypeEndId(), QVariant(1));
+  QCOMPARE(vtlKeyList.at(0).linkFk().connectionStartId, QVariant(103));
+  QCOMPARE(vtlKeyList.at(0).linkFk().connectionEndId, QVariant(104));
+  QCOMPARE(vtlKeyList.at(1).vehicleTypeStartId(), QVariant(2));
+  QCOMPARE(vtlKeyList.at(1).vehicleTypeEndId(), QVariant(2));
+  QCOMPARE(vtlKeyList.at(1).linkFk().connectionStartId, QVariant(103));
+  QCOMPARE(vtlKeyList.at(1).linkFk().connectionEndId, QVariant(104));
+  /*
+   * Remove assigned vehicle types using update function
+   */
+  vtKeyList.clear();
+  // Remove vehicle types assigned to link 101-102
+  linkPk.connectionStartId = 101;
+  linkPk.connectionEndId = 102;
+  QVERIFY(vtl.updateVehicleTypeLink(linkPk, vtKeyList, true));
+  // Check that all vehicle types assigned to link 101-102 are removed
+  vtlKeyList = vtl.getVehicleTypeLinkKeyDataList(linkPk, ok);
+  QVERIFY(ok);
+  QCOMPARE(vtlKeyList.size(), 0);
+  // Check that vehicle types assigned to link 103-104 are keeped
+  linkPk.connectionStartId = 103;
+  linkPk.connectionEndId = 104;
+  vtlKeyList = vtl.getVehicleTypeLinkKeyDataList(linkPk, ok);
+  QVERIFY(ok);
+  QCOMPARE(vtlKeyList.size(), 2);
+  // Remove vehicle types assigned to link 103-104
+  QVERIFY(vtl.updateVehicleTypeLink(linkPk, vtKeyList, true));
+  vtlKeyList = vtl.getVehicleTypeLinkKeyDataList(linkPk, ok);
+  QVERIFY(ok);
+  QCOMPARE(vtlKeyList.size(), 0);
 }
 
 void mdtClLinkTest::vehicleTypeCheckBoxTest()
@@ -643,7 +850,8 @@ void mdtClLinkTest::vehicleTypeLinkAssignationWidgetTest()
   linkPk.connectionStartId = 101;
   linkPk.connectionEndId = 102;
   
-  QVERIFY(vtlw.buildList(10, linkPk));
+  QVERIFY(vtlw.buildVehicleTypeList(10, 10));
+  QVERIFY(vtlw.selectVehicleTypeAssignedToLink(linkPk));
   vtStartEndKeyList = vtlw.getSelectedVehicleTypeList();
   QCOMPARE(vtStartEndKeyList.size(), 1);
   QCOMPARE(vtStartEndKeyList.at(0).vehicleTypeStartId(), QVariant(1));
@@ -704,6 +912,10 @@ void mdtClLinkTest::sandbox()
   }
   std::cout << std::endl;
 
+  
+  QList<mdtClVehicleTypeStartEndKeyData> E, F, G;
+  
+  std::set_difference(E.constBegin(), E.constEnd(), F.constBegin(), F.constEnd(),  std::inserter(G, G.begin()) , mdtClVehicleTypeStartEndLessThan() );
 }
 
 /*

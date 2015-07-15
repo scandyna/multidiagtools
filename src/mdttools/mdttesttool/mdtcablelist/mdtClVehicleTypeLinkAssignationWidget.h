@@ -42,15 +42,21 @@ class mdtClVehicleTypeLinkAssignationWidget : public QWidget
    */
   mdtClVehicleTypeLinkAssignationWidget(QWidget *parent, QSqlDatabase db);
 
-  /*! \brief Build assignation list
+  /*! \brief Build list of all vehicle type that are assigned to given start unit and end unit
    *
-   * Will build a list of each vehicle type that is assigned to given unit.
-   *  Then, each vehicle type that is assigned to given link will be selected (checked).
+   * \pre startUnitId and endUnitId must not be null
+   */
+  bool buildVehicleTypeList(const QVariant & startUnitId, const QVariant & endUnitId);
+
+  /*! \brief Select (set checked) each vehicle type that is assigned to given link
    *
-   * \pre unitId must not be null
    * \pre linkPk must not be null
    */
-  bool buildList(const QVariant & unitId, const mdtClLinkPkData & linkPk);
+  bool selectVehicleTypeAssignedToLink(const mdtClLinkPkData & linkPk);
+
+  /*! \brief Clear assignation list
+   */
+  void clear();
 
   /*! \brief Get list of vehicle type that are selected
    */
@@ -65,14 +71,6 @@ class mdtClVehicleTypeLinkAssignationWidget : public QWidget
 
  private:
 
-  /*! \brief Build list of all vehicle type that are assigned to given unit
-   */
-  bool buildVehicleTypeList(const QVariant & unitId);
-
-  /*! \brief Select (set checked) each vehicle type that is assigned to given link
-   */
-  bool selectVehicleTypeAssignedToLink(const mdtClLinkPkData & linkPk);
-
   /*! \brief Add given item (to layout)
    */
   void addItem(mdtClVehicleTypeCheckBox *item);
@@ -80,10 +78,6 @@ class mdtClVehicleTypeLinkAssignationWidget : public QWidget
   /*! \brief Set each item that matches key selected (checked)
    */
   void setMatchingItemsSelected(const mdtClVehicleTypeStartEndKeyData & key);
-
-  /*! \brief Clear assignation list
-   */
-  void clear();
 
   Q_DISABLE_COPY(mdtClVehicleTypeLinkAssignationWidget);
 

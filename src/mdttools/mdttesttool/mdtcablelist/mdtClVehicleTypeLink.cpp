@@ -20,11 +20,13 @@
  ****************************************************************************/
 #include "mdtClVehicleTypeLink.h"
 #include "mdtSqlRecord.h"
+#include "mdtSqlTransaction.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QString>
+#include <algorithm>
 
-// #include <QDebug>
+//#include <QDebug>
 
 mdtClVehicleTypeLink::mdtClVehicleTypeLink(QObject *parent, QSqlDatabase db)
  : mdtClLink(parent, db)
@@ -48,6 +50,34 @@ bool mdtClVehicleTypeLink::addVehicleTypeLink(const mdtClVehicleTypeLinkKeyData 
   if(!addRecord(record, "VehicleType_Link_tbl")){
     MDT_ERROR_SET_SRC(pvLastError, "mdtClVehicleTypeLink");
     return false;
+  }
+
+  return true;
+}
+
+bool mdtClVehicleTypeLink::addVehicleTypeLinks(const mdtClLinkPkData &linkPk, const QList< mdtClVehicleTypeStartEndKeyData > &vehicleTypeList, bool handleTransaction)
+{
+  mdtSqlTransaction transaction(database());
+
+  if(handleTransaction){
+    if(!transaction.begin()){
+      pvLastError = transaction.lastError();
+      return false;
+    }
+  }
+  for(const auto & vtKey : vehicleTypeList){
+    mdtClVehicleTypeLinkKeyData key;
+    key.setVehicleTypeStartEndFk(vtKey);
+    key.setLinkFk(linkPk);
+    if(!addVehicleTypeLink(key)){
+      return false;
+    }
+  }
+  if(handleTransaction){
+    if(!transaction.commit()){
+      pvLastError = transaction.lastError();
+      return false;
+    }
   }
 
   return true;
@@ -97,7 +127,7 @@ QList<mdtClVehicleTypeStartEndKeyData> mdtClVehicleTypeLink::getVehicleTypeStart
   return keyList;
 }
 
-bool mdtClVehicleTypeLink::removeVehicleTypeLink(const mdtClVehicleTypeLinkKeyData &key)
+bool mdtClVehicleTypeLink::removeVehicleTypeLink(const mdtClVehicleTypeLinkKeyData & key)
 {
   QSqlQuery query(database());
   QString sql;
@@ -118,9 +148,87 @@ bool mdtClVehicleTypeLink::removeVehicleTypeLink(const mdtClVehicleTypeLinkKeyDa
   return true;
 }
 
-bool mdtClVehicleTypeLink::updateVehicleTypeLink(const mdtClLinkPkData & linkPk, const QList<mdtClVehicleTypeStartEndKeyData> & expectedVehicleTypeKeyList)
+bool mdtClVehicleTypeLink::removeVehicleTypeLinks(const mdtClLinkPkData & linkPk, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction)
 {
+  mdtSqlTransaction transaction(database());
 
+  if(handleTransaction){
+    if(!transaction.begin()){
+      pvLastError = transaction.lastError();
+      return false;
+    }
+  }
+  for(const auto & vtKey : vehicleTypeList){
+    mdtClVehicleTypeLinkKeyData key;
+    key.setVehicleTypeStartEndFk(vtKey);
+    key.setLinkFk(linkPk);
+    if(!removeVehicleTypeLink(key)){
+      return false;
+    }
+  }
+  if(handleTransaction){
+    if(!transaction.commit()){
+      pvLastError = transaction.lastError();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtClVehicleTypeLink::updateVehicleTypeLink(const mdtClLinkPkData & linkPk, QList<mdtClVehicleTypeStartEndKeyData> expectedVehicleTypeKeyList, bool handleTransaction)
+{
+  mdtSqlTransaction transaction(database());
+  QList<mdtClVehicleTypeStartEndKeyData> existingVehicleTypeKeyList;
+  QList<mdtClVehicleTypeStartEndKeyData> toRemoveVehicleTypeKeyList;
+  QList<mdtClVehicleTypeStartEndKeyData> toAddVehicleTypeKeyList;
+  mdtClVehicleTypeStartEndLessThan lessThan;
+  bool ok;
+
+  // Get actually vehicle types assigned to given link
+  existingVehicleTypeKeyList = getVehicleTypeStartEndKeyDataList(linkPk, ok);
+  if(!ok){
+    return false;
+  }
+  // We must sort input data sets
+  std::sort(expectedVehicleTypeKeyList.begin(), expectedVehicleTypeKeyList.end(), lessThan);
+  std::sort(existingVehicleTypeKeyList.begin(), existingVehicleTypeKeyList.end(), lessThan);
+  // Determine what assignations must be removed
+  std::set_difference(existingVehicleTypeKeyList.constBegin(), existingVehicleTypeKeyList.constEnd(), \
+                      expectedVehicleTypeKeyList.constBegin(), expectedVehicleTypeKeyList.constEnd(), \
+                      std::inserter(toRemoveVehicleTypeKeyList, toRemoveVehicleTypeKeyList.begin()), lessThan );
+  // Determine what assignations must be added
+  std::set_difference(expectedVehicleTypeKeyList.constBegin(), expectedVehicleTypeKeyList.constEnd(), \
+                      existingVehicleTypeKeyList.constBegin(), existingVehicleTypeKeyList.constEnd(), \
+                      std::inserter(toAddVehicleTypeKeyList, toAddVehicleTypeKeyList.begin()), lessThan );
+  // Update in database
+  if(handleTransaction){
+    if(!transaction.begin()){
+      pvLastError = transaction.lastError();
+      return false;
+    }
+  }
+  // Remove
+  if(!toRemoveVehicleTypeKeyList.isEmpty()){
+    if(!removeVehicleTypeLinks(linkPk, toRemoveVehicleTypeKeyList, false)){
+      return false;
+    }
+  }
+  // Add
+  if(!toAddVehicleTypeKeyList.isEmpty()){
+    if(!addVehicleTypeLinks(linkPk, toAddVehicleTypeKeyList, false)){
+      return false;
+    }
+  }
+  // Commit
+  if(handleTransaction){
+    if(!transaction.commit()){
+      pvLastError = transaction.lastError();
+      return false;
+    }
+  }
+
+  return true;
 }
 
 void mdtClVehicleTypeLink::fillRecord(mdtSqlRecord & record, const mdtClVehicleTypeLinkKeyData & key)

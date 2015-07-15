@@ -2,7 +2,7 @@ format 209
 
 classcanvas 128002 class_ref 1673218 // mdtClVehicleTypeLinkKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 33.8 520.3 2000
+  xyz 34 520 2000
 end
 classcanvas 128258 class_ref 1706242 // mdtClVehicleTypeLinkAssignationWidget
   classdiagramsettings member_max_width 0 end
@@ -10,36 +10,36 @@ classcanvas 128258 class_ref 1706242 // mdtClVehicleTypeLinkAssignationWidget
 end
 classcanvas 128386 class_ref 316162 // QWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 336.6 38.1 2000
+  xyz 336.8 38.3 2000
 end
 classcanvas 128642 class_ref 1706370 // mdtClVehicleTypeCheckBox
   classdiagramsettings member_max_width 0 end
-  xyz 472.1 325.9 2000
+  xyz 472.9 325.5 2000
 end
 classcanvas 130306 class_ref 1712898 // QCheckBox
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 686.5 57.2 2000
+  xyz 686.7 57.6 2000
 end
 classcanvas 130562 class_ref 818690 // mdtClLink
   classdiagramsettings member_max_width 0 end
-  xyz 44.7 349.6 2000
+  xyz 44.1 349 2000
 end
 classcanvas 130690 class_ref 1638658 // mdtClVehicleTypeLink
   classdiagramsettings member_max_width 0 end
-  xyz 77.4 477.4 2000
+  xyz 77.8 477.8 2000
 end
 classcanvas 130946 class_ref 792194 // mdtClUnitVehicleType
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 506.7 47.2 2007
+  xyz 506.3 47.6 2007
 end
 classcanvas 131458 class_ref 1725954 // mdtClVehicleTypeStartEndKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 591.7 575.4 2000
+  xyz 591.9 575.6 2000
 end
 relationcanvas 128514 relation_ref 2035842 // <generalisation>
   geometry VHV
-  from ref 128258 z 2001 to point 305.8 117.6
-  line 129026 z 2001 to point 367.6 117.6
+  from ref 128258 z 2001 to point 305 117
+  line 129026 z 2001 to point 367 117
   line 129154 z 2001 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -73,6 +73,11 @@ relationcanvas 131202 relation_ref 2049666 // <dependency>
   from ref 128258 z 2001 to point 298 484
   line 131330 z 2001 to ref 130690
   no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131586 relation_ref 2056194 // <unidirectional association>
+  from ref 128002 z 2001 to ref 131458
+  role_a_pos 430 644 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 end

@@ -49,6 +49,16 @@ class mdtClVehicleTypeLink : public mdtClLink
    */
   bool addVehicleTypeLink(const mdtClVehicleTypeLinkKeyData & key);
 
+  /*! \brief Assign given vehicle type list to given link
+   *
+   * \param linkPk Link for witch vehicle assignations must be added
+   * \param vehicleTypeList List of vehicle types to add in assignations
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
+   */
+  bool addVehicleTypeLinks(const mdtClLinkPkData & linkPk, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
+
   /*! \brief Get vehicle type link key data list for given link PK
    *
    * \param pk PK of link for witch vehicle type link are assigned
@@ -71,9 +81,25 @@ class mdtClVehicleTypeLink : public mdtClLink
    */
   bool removeVehicleTypeLink(const mdtClVehicleTypeLinkKeyData & key);
 
-  /*! \brief Update vehicle type - link assignation
+  /*! \brief Remove given vehicle type links assigned to given link
+   *
+   * \param linkPk Link from witch vehicle assignations must be removed
+   * \param vehicleTypeList List of vehicle types to remove from linkPk
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
    */
-  bool updateVehicleTypeLink(const mdtClLinkPkData & linkPk, const QList<mdtClVehicleTypeStartEndKeyData> & expectedVehicleTypeKeyList);
+  bool removeVehicleTypeLinks(const mdtClLinkPkData & linkPk, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
+
+  /*! \brief Update vehicle type - link assignation
+   *
+   * \param linkPk Link for witch assignations must be updated
+   * \param expectedVehicleTypeKeyList List of expected vehicle types that must be assigned to link
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
+   */
+  bool updateVehicleTypeLink(const mdtClLinkPkData & linkPk, QList<mdtClVehicleTypeStartEndKeyData> expectedVehicleTypeKeyList, bool handleTransaction);
 
   /*! \todo Fonction pour mettre à jours l'assignation vt-link
    *

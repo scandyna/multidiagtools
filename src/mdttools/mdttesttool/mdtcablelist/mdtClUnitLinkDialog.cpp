@@ -28,6 +28,7 @@
 #include "mdtClLinkVersionModel.h"
 #include "mdtClLinkTypeModel.h"
 #include "mdtClLinkDirectionModel.h"
+#include "mdtClVehicleTypeLinkAssignationWidget.h"
 #include "mdtClLink.h"
 #include "mdtError.h"
 #include <QWidget>
@@ -105,6 +106,8 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
   lbEndContactName->clear();
   ///lbUnit->clear();
 
+  pvVehicleTypeAssignationWidget = new mdtClVehicleTypeLinkAssignationWidget(this, pvDatabase);
+  saVehicleType->setWidget(pvVehicleTypeAssignationWidget);
 }
 
 mdtClUnitLinkDialog::~mdtClUnitLinkDialog()
@@ -118,6 +121,9 @@ void mdtClUnitLinkDialog::setStartUnit(const QVariant &unitId)
   updateStartUnit();
   updateStartConnection();
   setStartVehicleTypes(unitId);
+  
+  qDebug() << "setStartUnit() ...";
+  updateVehicleTypeAssignations();
 }
 
 void mdtClUnitLinkDialog::setStartUnitSelectionList(const QList< QVariant >& idList)
@@ -147,6 +153,9 @@ void mdtClUnitLinkDialog::setEndUnit(const QVariant &unitId)
   updateEndUnit();
   updateEndConnection();
   setEndVehicleTypes(unitId);
+  
+  qDebug() << "setEndUnit() ...";
+  updateVehicleTypeAssignations();
 }
 
 void mdtClUnitLinkDialog::setEndUnitSelectionList(const QList< QVariant >& idList)
@@ -370,6 +379,9 @@ void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
   }
   updateStartVehicleTypes();
   updateEndVehicleTypes();
+  
+  updateVehicleTypeAssignations();
+  
   pvVehicleTypesEdited = false;
   pvUnitConnectionChanged = false;
 }
@@ -612,6 +624,8 @@ void mdtClUnitLinkDialog::selectStartConnection()
   /// \todo finish..
 
   
+  updateVehicleTypeAssignations();
+  
 //   mdtSqlSelectionDialog selectionDialog(this);
 //   mdtSqlTableSelection s;
 //   QString sql;
@@ -690,6 +704,8 @@ void mdtClUnitLinkDialog::selectEndConnection()
   ucnxKey = selectionDialog.selectedUnitConnectionKey();
   /// \todo finish..
 
+  
+  updateVehicleTypeAssignations();
 
 //   mdtSqlSelectionDialog selectionDialog(this);
 //   mdtSqlTableSelection s;
@@ -1193,6 +1209,36 @@ bool mdtClUnitLinkDialog::buildVehicleTypeLinkDataList()
   }
 
   return true;
+}
+
+
+void mdtClUnitLinkDialog::updateVehicleTypeAssignations()
+{
+  qDebug() << "updateVehicleTypeAssignations() ...";
+  // If vehicle type - link assignation is disabled, we simply do nothing
+  if(pvVehicleTypeAssignationWidget == nullptr){
+    return;
+  }
+  qDebug() << " -> start unit: " << pvStartUnitId << ", end unit: " << pvEndUnitId;
+  pvVehicleTypeAssignationWidget->clear();
+  if(pvStartUnitId.isNull() || pvEndUnitId.isNull()){
+    return;
+  }
+  if(!pvVehicleTypeAssignationWidget->buildVehicleTypeList(pvStartUnitId, pvEndUnitId)){
+    displayError(pvVehicleTypeAssignationWidget->lastError());
+    return;
+  }
+  /// \todo provisoire !!
+  mdtClLinkPkData linkPk;
+  linkPk.connectionStartId = pvLinkData.value("UnitConnectionStart_Id_FK");
+  linkPk.connectionEndId = pvLinkData.value("UnitConnectionEnd_Id_FK");
+  if(linkPk.isNull()){
+    return;
+  }
+  if(!pvVehicleTypeAssignationWidget->selectVehicleTypeAssignedToLink(linkPk)){
+    displayError(pvVehicleTypeAssignationWidget->lastError());
+    return;
+  }
 }
 
 void mdtClUnitLinkDialog::displayError(const mdtError & error)

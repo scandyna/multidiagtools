@@ -1,0 +1,37 @@
+format 209
+
+classcanvas 128002 class_ref 1732482 // mdtClLinkModificationKeyData
+  classdiagramsettings member_max_width 0 end
+  xyz 319 286 2000
+end
+classcanvas 128130 class_ref 1672962 // mdtClLinkPkData
+  classdiagramsettings member_max_width 0 end
+  xyz 424 100 2000
+end
+classcanvas 128386 class_ref 1679746 // mdtClLinkVersionPkData
+  classdiagramsettings member_max_width 0 end
+  xyz 31 329 2000
+end
+classcanvas 128642 class_ref 1693186 // mdtClModificationPkData
+  classdiagramsettings member_max_width 0 end
+  xyz 39 575 2000
+end
+relationcanvas 128258 relation_ref 2056962 // <unidirectional association>
+  decenter_begin 561
+  from ref 128002 z 2001 to ref 128130
+  role_a_pos 529 222 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 2057090 // <unidirectional association>
+  from ref 128002 z 2001 to ref 128386
+  role_a_pos 209 362 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 2057218 // <unidirectional association>
+  geometry HVr
+  from ref 128002 z 2001 to point 495 638
+  line 128898 z 2001 to ref 128642
+  role_a_pos 359 618 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end
