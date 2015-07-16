@@ -2,80 +2,59 @@ format 209
 
 classcanvas 128002 class_ref 888194 // mdtClLinkData
   classdiagramsettings member_max_width 0 end
-  xyz 4.3 235.4 2000
+  xyz 310.9 597 2000
 end
 classcanvas 130818 class_ref 1672962 // mdtClLinkPkData
   classdiagramsettings member_max_width 0 end
-  xyz 802.9 576.8 2000
+  xyz 398.5 53.4 2000
 end
 classcanvas 130946 class_ref 1673090 // mdtClLinkKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 877.3 192.7 2000
-end
-classcanvas 131202 class_ref 1725954 // mdtClVehicleTypeStartEndKeyData
-  classdiagramsettings member_max_width 0 end
-  xyz 369.2 809.8 3005
-end
-classcanvas 131330 class_ref 1673218 // mdtClVehicleTypeLinkKeyData
-  classdiagramsettings member_max_width 0 end
-  xyz 271.5 492.5 2005
+  xyz 333.2 266.1 2000
 end
 classcanvas 131970 class_ref 1653122 // mdtClLinkTypeKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 1306 273 2010
+  xyz 937.6 261.8 2010
 end
 classcanvas 132098 class_ref 1653250 // mdtClLinkDirectionKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 1058.9 541 2010
-end
-classcanvas 132226 class_ref 1679746 // mdtClLinkVersionPkData
-  classdiagramsettings member_max_width 0 end
-  xyz 819.7 860.3 2000
-end
-classcanvas 132482 class_ref 1693186 // mdtClModificationPkData
-  classdiagramsettings member_max_width 0 end
-  xyz 1058.7 832.7 2000
+  xyz 936.3 426.5 2010
 end
 classcanvas 132866 class_ref 1659778 // mdtClArticleLinkPkData
   classdiagramsettings member_max_width 0 end
-  xyz 950.1 38.1 2010
+  xyz 815.9 52.1 2010
 end
 relationcanvas 131074 relation_ref 2015490 // <unidirectional association>
-  decenter_begin 72
   from ref 130946 z 2001 to ref 130818
-  role_a_pos 910 553 3000 no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 131458 relation_ref 2056194 // <unidirectional association>
-  from ref 131330 z 3006 to ref 131202
-  role_a_pos 523 788 3000 no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 131586 relation_ref 2056322 // <unidirectional association>
-  from ref 131330 z 2006 to ref 130818
-  role_a_pos 741 609 3000 no_role_b
+  role_a_pos 504 170 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131714 relation_ref 2056450 // <unidirectional association>
+  decenter_end 481
   from ref 128002 z 2001 to ref 130946
-  role_a_pos 802 321 3000 no_role_b
+  role_a_pos 497 564 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132610 relation_ref 2056578 // <unidirectional association>
+  decenter_begin 187
   decenter_end 525
   from ref 130946 z 2011 to ref 131970
-  role_a_pos 1214 319 3000 no_role_b
+  role_a_pos 852 309 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132738 relation_ref 2056706 // <unidirectional association>
-  decenter_begin 949
+  decenter_begin 763
+  decenter_end 510
   from ref 130946 z 2011 to ref 132098
-  role_a_pos 1207 518 3000 no_role_b
+  role_a_pos 825 472 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132994 relation_ref 2056834 // <unidirectional association>
-  from ref 130946 z 2011 to ref 132866
-  role_a_pos 1056 158 3000 no_role_b
+  geometry VH
+  decenter_begin 886
+  from ref 130946 z 2011 to point 613 104
+  line 133250 z 2011 to ref 132866
+  role_a_pos 718 85 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 end

@@ -57,6 +57,10 @@ class mdtClLinkVersion : public mdtTtBase
    */
   bool setCurrentVersion(double version);
 
+  /*! \brief Set last available version as current version
+   */
+  bool setLastVersionAsCurrentVersion();
+
   /*! \brief Get current version
    *
    * \sa setCurrentVersion()

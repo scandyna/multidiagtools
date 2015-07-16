@@ -86,7 +86,6 @@ mdtClMainWindow::mdtClMainWindow()
   pvCableChecker = 0;
   pvCableCheckerWindow = 0;
 
-
   connectActions();
 }
 
@@ -100,6 +99,9 @@ void mdtClMainWindow::openDatabase()
 {
   openDatabaseSqlite();
   ///createVehicleTypeActions();
+  
+  mdtClLinkVersion lv(pvDatabaseManager->database());
+  lv.setLastVersionAsCurrentVersion();
 }
 
 void mdtClMainWindow::closeDatabase()

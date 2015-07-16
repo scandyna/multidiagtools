@@ -133,6 +133,16 @@ class mdtClUnitConnection : public mdtClArticleConnection
    */
   mdtClUnitConnectorData getUnitConnectorData(mdtClUnitConnectorPkData pk, bool includeConnectionData, bool & ok);
 
+  /*! \brief Get unit connector data for given unit connection from database
+   *
+   * \param key Unit connection PK (note: only id is used in key, other members are ignored).
+   * \param ok Is set false on error
+   * \return data for given key.
+   *       A null data is returned if given key does not exist, or a error occured.
+   *       Use ok parameter to diffrenciate both cases.
+   */
+  mdtClUnitConnectorData getUnitConnectorData(mdtClUnitConnectionKeyData key, bool & ok);
+
   /*! \brief Get unit connector data from database
    *
    * \param key Article connection, that also is presumed to be based on a article connector, on witch unit connector is based.

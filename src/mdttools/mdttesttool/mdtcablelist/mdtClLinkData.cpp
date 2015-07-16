@@ -20,6 +20,17 @@
  ****************************************************************************/
 #include "mdtClLinkData.h"
 
+void mdtClLinkData::clear()
+{
+  pvKeyData.clear();
+  identification.clear();
+  resistance.clear();
+  length.clear();
+}
+
+/*
+ * OLD stuff
+ */
 mdtClLinkData::mdtClLinkData()
  : mdtSqlRecord()
 {

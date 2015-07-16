@@ -54,6 +54,10 @@ class mdtClVehicleTypeLinkAssignationWidget : public QWidget
    */
   bool selectVehicleTypeAssignedToLink(const mdtClLinkPkData & linkPk);
 
+  /*! \brief Unselect all vehicle types
+   */
+  void unselectAllVehicleType();
+
   /*! \brief Clear assignation list
    */
   void clear();

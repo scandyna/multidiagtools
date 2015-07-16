@@ -26,7 +26,8 @@
 #include "mdtClLinkTypeData.h"
 #include "mdtClLinkDirectionData.h"
 #include "mdtClLinkVersionData.h"
-#include "mdtClModificationKeyData.h"
+#include "mdtClVehicleTypeLinkKeyData.h"
+#include "mdtClLinkModificationKeyData.h"
 #include "mdtClLinkData.h"
 #include <QDialog>
 #include <QVariant>
@@ -141,6 +142,12 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   const QList<QVariant> endVehicleTypeIdList() const;
 
+  /*! \brief Get selected vehicle type assignations
+   *
+   * \pre Only call this function if vehicle type assignation is enabled
+   */
+  QList<mdtClVehicleTypeStartEndKeyData> selectedVehicleTypeList() const;
+
   /*! \brief Display link type in combobox
    */
   void setLinkTypeCode(const QVariant & code);
@@ -177,17 +184,19 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void setLinkVersion(const mdtClLinkVersionData & v);
 
-  /*! \brief Get selected link version key data
-   */
-  mdtClLinkVersionPkData linkVersionKeyData() const;
-
   /*! \brief Set link modification
    */
   void setLinkModification(const mdtClModificationPkData & m);
 
-  /*! \brief Get selected modification key data
+  /*! \brief Set link modification
    */
-  mdtClModificationPkData linkModificationKeyData() const;
+  void setLinkModification(mdtClModification_t m);
+
+  /*! \brief Get selected link modification
+   *
+   * Will also include selected link version
+   */
+  mdtClLinkModificationKeyData linkModificationKeyData() const;
 
   /*! \brief Set link data
    */
@@ -304,7 +313,7 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
 
   /*! \brief Update vehicle type assignations
    */
-  void updateVehicleTypeAssignations();
+  void updateVehicleTypeAssignations(bool rebuildVehicleTypeList);
 
   /*! \brief Display a error
    */

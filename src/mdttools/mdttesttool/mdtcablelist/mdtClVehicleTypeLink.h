@@ -21,7 +21,7 @@
 #ifndef MDT_CL_VEHICLE_TYPE_LINK_H
 #define MDT_CL_VEHICLE_TYPE_LINK_H
 
-#include "mdtClLink.h"
+#include "mdtTtBase.h"
 #include "mdtClLinkKeyData.h"
 #include "mdtClVehicleTypeLinkKeyData.h"
 #include <QList>
@@ -33,7 +33,7 @@ class mdtSqlRecord;
  *
  * Refers to VehicleType_Link_tbl
  */
-class mdtClVehicleTypeLink : public mdtClLink
+class mdtClVehicleTypeLink : public mdtTtBase
 {
  public:
 

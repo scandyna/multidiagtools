@@ -23,8 +23,12 @@
 
 #include "mdtTtBase.h"
 #include "mdtClLinkData.h"
+#include "mdtClLinkModificationKeyData.h"
+#include "mdtClVehicleTypeLinkKeyData.h"
+
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorData.h"
+
 #include "mdtSqlTableSelection.h"
 #include <QSqlDatabase>
 #include <QList>
@@ -136,12 +140,32 @@ class mdtClLink : public mdtTtBase
    */
   bool buildVehicleTypeLinkDataList(mdtClLinkData & linkData, const QList<QVariant> & vtStartIdList, const QList<QVariant> & vtEndIdList);
 
-  /*! \brief Add a link
+  /*! \brief Add a link to database
    *
-   * Will also add required vehicle type links stored in linkData.
-   *  To generate vehicle type links, use buildVehicleTypeLinkDataList().
+   * \deprecated
    */
-  bool addLink(const mdtClLinkData & linkData, bool handleTransaction = true);
+  bool addLink(const mdtClLinkData & linkData);
+
+  /*! \brief Add a link to database
+   *
+   * \param linkData Link data to add to Link_tbl
+   * \param modification Link versionning key data (LinkModification_tbl part)
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
+   */
+  bool addLink(const mdtClLinkData & linkData, const mdtClLinkModificationKeyData & modification, bool handleTransaction);
+
+  /*! \brief Add a link and assign given vehicle types to it
+   *
+   * \param linkData Link data to add to Link_tbl
+   * \param modification Link versionning key data (LinkModification_tbl part)
+   * \param vehicleTypeList List of vehicle types to add in assignations (VehicleType_Link_tbl)
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
+   */
+  bool addLink(const mdtClLinkData & linkData, const mdtClLinkModificationKeyData & modification, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
 
   /*! \brief Add a list of links
    *
@@ -150,10 +174,23 @@ class mdtClLink : public mdtTtBase
   bool addLinks(const QList<mdtClLinkData> & linkDataList, bool handleTransaction = true);
 
   /*! \brief Check if a link exists
+   *
+   * \deprecated
    */
   bool linkExists(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, bool & ok);
 
   /*! \brief Get link data
+   *
+   * \param pk PK of link for witch to get data
+   * \return Data for requested link.
+   *          A null data object is returned if requested link does not exist, or a error occured.
+   *          Use ok parameter to diffrenciate both cases.
+   */
+  mdtClLinkData getLinkData(const mdtClLinkPkData & pk, bool & ok);
+
+  /*! \brief Get link data
+   *
+   * \deprecated
    */
   mdtClLinkData getLinkData(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, bool includeConnectionData, bool includeVehicleTypeLinkData , bool & ok);
 
@@ -170,15 +207,30 @@ class mdtClLink : public mdtTtBase
    */
   bool editLink(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, const mdtClLinkData & linkData);
 
+  /*! \brief Remove a link
+   */
+  bool removeLink(const mdtClLinkPkData & pk);
+
   /*! \brief Remove a unit link
    *
    * Will also remove all vehicle type related links
+   *
+   * \deprecated
    */
   bool removeLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, bool handleTransaction = true);
 
   /*! \brief Remove each unit link that is contained in selection
    */
   bool removeLinks(const mdtSqlTableSelection & s);
+
+  /*! \brief Add a link modification (LinkModification_tbl)
+   */
+  bool addModification(const mdtClLinkModificationKeyData & key);
+
+  /*! \brief Remove link modification (LinkModification_tbl)
+   */
+  bool removeModification(const mdtClLinkModificationKeyData & key);
+
 
   /*! \brief Get vehicle type link data for given unit ID
    */
@@ -347,6 +399,14 @@ class mdtClLink : public mdtTtBase
    * Note: will fill list in given link data
    */
   bool getVehicleTypeLinkData(mdtClLinkData & linkData, const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId);
+
+  /*! \brief Fill given record with given data
+   */
+  void fillRecord(mdtSqlRecord & record, const mdtClLinkData & data);
+
+  /*! \brief Fill given data with given record
+   */
+  void fillData(mdtClLinkData & data, const QSqlRecord & record);
 
   Q_DISABLE_COPY(mdtClLink);
 };

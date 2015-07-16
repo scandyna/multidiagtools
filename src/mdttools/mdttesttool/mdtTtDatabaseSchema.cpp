@@ -4114,6 +4114,11 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
   QString sql, selectSql;
 
   selectSql = "SELECT\n"\
+              " LV.Version,\n"\
+              " M.NameEN AS ModificationEN,\n"\
+              " M.NameFR AS ModificationFR,\n"\
+              " M.NameDE AS ModificationDE,\n"\
+              " M.NameIT AS ModificationIT,\n"\
               " LNK.Identification ,\n"\
               " LNK.LinkBeam_Id_FK ,\n"\
               " US.SchemaPosition AS StartSchemaPosition ,\n"\
@@ -4126,8 +4131,8 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
               " UCE.Name AS EndUnitConnectorName ,\n"\
               " UCNXE.UnitContactName AS EndUnitContactName ,\n"\
               " UCNXE.Resistance AS EndUnitConnectionResistance ,\n"\
-              " LNK.SinceVersion ,\n"\
-              " LNK.Modification ,\n"\
+              /** " LNK.SinceVersion ,\n"\ */
+              /** " LNK.Modification ,\n"\ */
               " LinkType_tbl.NameEN AS LinkTypeNameEN ,\n"\
               " LNK.Length ,\n"\
               " LNK.Resistance ,\n"\
@@ -4154,10 +4159,19 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
               " LNK.LinkType_Code_FK ,\n"\
               " LNK.LinkDirection_Code_FK ,\n"\
               " LNK.ArticleConnectionStart_Id_FK ,\n"\
-              " LNK.ArticleConnectionEnd_Id_FK\n";
+              " LNK.ArticleConnectionEnd_Id_FK,\n"\
+              " LM.Version_FK,\n"\
+              " LM.Modification_Code_FK\n";
   sql = "CREATE VIEW UnitLink_view AS\n";
   sql += selectSql;
   sql += "FROM Link_tbl LNK\n"\
+         " LEFT JOIN LinkModification_tbl LM\n"\
+         "  ON LM.UnitConnectionStart_Id_FK = LNK.UnitConnectionStart_Id_FK\n"\
+         "  AND LM.UnitConnectionEnd_Id_FK = LNK.UnitConnectionEnd_Id_FK\n"\
+         " LEFT JOIN LinkVersion_tbl LV\n"\
+         "  ON LV.Version_PK = LM.Version_FK\n"\
+         " LEFT JOIN Modification_tbl M\n"\
+         "  ON M.Code_PK = LM.Modification_Code_FK\n"\
          " LEFT JOIN Wire_tbl W\n"\
          "  ON W.Id_PK = LNK.Wire_Id_FK\n"\
          " JOIN UnitConnection_tbl UCNXS\n"\
@@ -4172,6 +4186,7 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
           "  ON US.Id_PK = UCNXS.Unit_Id_FK\n"\
           " JOIN Unit_tbl UE\n"\
           "  ON UE.Id_PK = UCNXE.Unit_Id_FK\n"\
+          /**
           " LEFT JOIN VehicleType_Link_tbl\n"\
           "  ON LNK.UnitConnectionStart_Id_FK = VehicleType_Link_tbl.UnitConnectionStart_Id_FK\n"\
           "  AND LNK.UnitConnectionEnd_Id_FK = VehicleType_Link_tbl.UnitConnectionEnd_Id_FK\n"\
@@ -4179,6 +4194,7 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
           "  ON VS.Id_PK = VehicleType_Link_tbl.VehicleTypeStart_Id_FK\n"\
           " LEFT JOIN VehicleType_tbl VE\n"\
           "  ON VE.Id_PK = VehicleType_Link_tbl.VehicleTypeEnd_Id_FK"\
+          */
           " JOIN LinkType_tbl\n"\
           "  ON LinkType_tbl.Code_PK = LNK.LinkType_Code_FK\n"\
           " JOIN LinkDirection_tbl\n"\

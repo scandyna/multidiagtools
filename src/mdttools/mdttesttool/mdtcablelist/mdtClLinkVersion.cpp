@@ -60,6 +60,21 @@ bool mdtClLinkVersion::setCurrentVersion(double version)
   return true;
 }
 
+bool mdtClLinkVersion::setLastVersionAsCurrentVersion()
+{
+  bool ok;
+  mdtClLinkVersionData data;
+
+  pvCurrentVersionData.clear();
+  data = getLastVersionData(ok);
+  if(!ok){
+    return false;
+  }
+  pvCurrentVersionData = data;
+
+  return true;
+}
+
 bool mdtClLinkVersion::addVersion(const mdtClLinkVersionData &data)
 {
   mdtSqlRecord record;

@@ -35,6 +35,7 @@
 #include "mdtClVehicleTypeLinkAssignationWidget.h"
 #include "mdtClVehicleTypeCheckBox.h"
 #include "mdtClVehicleTypeLinkTestData.h"
+#include "mdtClModificationKeyData.h"
 #include "mdtClLinkModificationKeyData.h"
 #include "mdtApplication.h"
 #include "mdtTtDatabaseSchema.h"
@@ -382,7 +383,23 @@ void mdtClLinkTest::linkVersionAddGetRemoveTest()
   // Check that setting a non existing version fails
   QVERIFY(!lv.setCurrentVersion(1.0));
   QVERIFY(lv.currentVersion().isNull());
-  
+  // Check setting last version as current one
+  QVERIFY(lv.setLastVersionAsCurrentVersion());
+  QVERIFY(lv.currentVersion().isNull());
+  // Add a version and check
+  data.setVersion(1.2);
+  QVERIFY(lv.addVersion(data));
+  QVERIFY(lv.setLastVersionAsCurrentVersion());
+  QCOMPARE(mdtClLinkVersion::currentVersion().version(), 1.2);
+  data.setVersion(1.1);
+  QVERIFY(lv.addVersion(data));
+  QVERIFY(lv.setLastVersionAsCurrentVersion());
+  QCOMPARE(mdtClLinkVersion::currentVersion().version(), 1.2);
+  // Remove versions
+  key.versionPk = 1200;
+  QVERIFY(lv.removeVersion(key));
+  key.versionPk = 1100;
+  QVERIFY(lv.removeVersion(key));
 }
 
 void mdtClLinkTest::linkVersionModelTest()
@@ -450,25 +467,37 @@ void mdtClLinkTest::linkModificationDataTest()
   QVERIFY(key.isNull());
 }
 
-void mdtClLinkTest::linkDataTest()
+void mdtClLinkTest::linkModificationAddGetRemoveTest()
 {
-  mdtClLinkPkData pk;
+  mdtClLink lnk(pvDatabaseManager.database());
+  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
+  mdtClLinkModificationKeyData key;
+  mdtClLinkPkData linkFk;
+  mdtClLinkVersionData version;
+  mdtClModificationPkData modificationFk;
+  bool ok;
+
+  // For this simple test, we not need to have the whole database schema, so we disable foreign keys constraints
+  QVERIFY(fkSetting.disable());
 
   /*
-   * Link PK data test
+   * Add a modification
    */
-  // Initial state
-  QVERIFY(pk.isNull());
-  // Set
-  pk.connectionStartId = 1;
-  QVERIFY(pk.isNull());
-  pk.connectionEndId = 2;
-  QVERIFY(!pk.isNull());
-  // Clear
-  pk.clear();
-  QVERIFY(pk.connectionStartId.isNull());
-  QVERIFY(pk.connectionEndId.isNull());
-  QVERIFY(pk.isNull());
+  // Setup data
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  version.setVersion(1.2);
+  modificationFk.setModification(mdtClModification_t::New);
+  key.setLinkFk(linkFk);
+  key.setLinkVersionFk(version.pk());
+  key.setModificationFk(modificationFk);
+  // Add to database
+  QVERIFY(lnk.addModification(key));
+  // Get back and check
+  
+  // Remove from database
+  QVERIFY(lnk.removeModification(key));
+
 }
 
 void mdtClLinkTest::vehicleTypeStartEndKeyDataTest()
@@ -865,6 +894,208 @@ void mdtClLinkTest::vehicleTypeLinkAssignationWidgetTest()
   while(vtlw.isVisible()){
     QTest::qWait(500);
   }
+}
+
+void mdtClLinkTest::linkDataTest()
+{
+  mdtClLinkPkData pk;
+  mdtClLinkKeyData key;
+  mdtClLinkData data;
+  mdtClArticleLinkPkData articleLinkFk;
+
+  /*
+   * Link PK data test
+   */
+  // Initial state
+  QVERIFY(pk.isNull());
+  // Set
+  pk.connectionStartId = 1;
+  QVERIFY(pk.isNull());
+  pk.connectionEndId = 2;
+  QVERIFY(!pk.isNull());
+  // Clear
+  pk.clear();
+  QVERIFY(pk.connectionStartId.isNull());
+  QVERIFY(pk.connectionEndId.isNull());
+  QVERIFY(pk.isNull());
+  /*
+   * Link key data test
+   */
+  // Initial state
+  QVERIFY(key.isNull());
+  // Setup PK and FKs
+  pk.connectionStartId = 10;
+  pk.connectionEndId = 11;
+  articleLinkFk.connectionStartId = 1;
+  articleLinkFk.connectionEndId = 2;
+  // Set
+  key.setPk(pk);
+  QVERIFY(key.isNull());
+  key.setLinkType(mdtClLinkType_t::CableLink);
+  QVERIFY(key.isNull());
+  key.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+  QVERIFY(!key.isNull());
+  key.setArticleLinkFk(articleLinkFk);
+  key.setWireId(100);
+  QVERIFY(!key.isNull());
+  QCOMPARE(key.pk().connectionStartId, QVariant(10));
+  QCOMPARE(key.pk().connectionEndId, QVariant(11));
+  QVERIFY(key.linkTypeFk().type() == mdtClLinkType_t::CableLink);
+  QVERIFY(key.linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
+  QCOMPARE(key.articleLinkFk().connectionStartId, QVariant(1));
+  QCOMPARE(key.articleLinkFk().connectionEndId, QVariant(2));
+  QCOMPARE(key.wireId(), QVariant(100));
+  // Clear
+  key.clear();
+  QVERIFY(key.pk().isNull());
+  QVERIFY(key.linkTypeFk().isNull());
+  QVERIFY(key.linkDirectionFk().isNull());
+  QVERIFY(key.articleLinkFk().isNull());
+  QVERIFY(key.wireId().isNull());
+  QVERIFY(key.isNull());
+  /*
+   * Link data test
+   */
+  // Initial state
+  QVERIFY(data.isNull());
+  // Setup PK and FKs
+  pk.connectionStartId = 12;
+  pk.connectionEndId = 13;
+  articleLinkFk.connectionStartId = 3;
+  articleLinkFk.connectionEndId = 4;
+  // Set
+  data.setPk(pk);
+  QVERIFY(data.isNull());
+  data.setLinkType(mdtClLinkType_t::Connection);
+  QVERIFY(data.isNull());
+  data.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+  QVERIFY(!data.isNull());
+  data.setArticleLinkFk(articleLinkFk);
+  data.setWireId(20);
+  data.identification = "Link 12-13";
+  data.resistance = 1.2;
+  data.length = 25.0;
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.keyData().pk().connectionStartId, QVariant(12));
+  QCOMPARE(data.keyData().pk().connectionEndId, QVariant(13));
+  QVERIFY(data.keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
+  QVERIFY(data.keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
+  QCOMPARE(data.keyData().articleLinkFk().connectionStartId, QVariant(3));
+  QCOMPARE(data.keyData().articleLinkFk().connectionEndId, QVariant(4));
+  QCOMPARE(data.keyData().wireId(), QVariant(20));
+  // Clear
+  data.clear();
+  QVERIFY(data.keyData().isNull());
+  QVERIFY(data.identification.isNull());
+  QVERIFY(data.resistance.isNull());
+  QVERIFY(data.length.isNull());
+  QVERIFY(data.isNull());
+}
+
+void mdtClLinkTest::linkAddGetRemoveTest()
+{
+  mdtClLink lnk(pvDatabaseManager.database());
+  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
+  mdtClLinkData data;
+  mdtClLinkPkData pk;
+  mdtClArticleLinkPkData articleLinkFk;
+  bool ok;
+
+  // For this simple test, we not need to have the whole database schema, so we disable foreign keys constraints
+  QVERIFY(fkSetting.disable());
+
+  /*
+   * Add a link - Not based on a article link
+   */
+  // Setup data
+  pk.connectionStartId = 10;
+  pk.connectionEndId = 11;
+  data.clear();
+  data.setPk(pk);
+  data.setLinkType(mdtClLinkType_t::InternalLink);
+  data.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+  data.setWireId(2);
+  data.identification = "Link 10-11";
+  data.resistance = 1.2;
+  data.length = 12.0;
+  // Add
+  QVERIFY(lnk.addLink(data));
+  // Get back and check
+  data = lnk.getLinkData(pk, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.pk().connectionStartId, QVariant(10));
+  QCOMPARE(data.pk().connectionEndId, QVariant(11));
+  QVERIFY(data.keyData().linkTypeFk().type() == mdtClLinkType_t::InternalLink);
+  QVERIFY(data.keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
+  QVERIFY(data.keyData().articleLinkFk().isNull());
+  QCOMPARE(data.keyData().wireId(), QVariant(2));
+  QCOMPARE(data.identification, QVariant("Link 10-11"));
+  QCOMPARE(data.resistance.value(), 1.2);
+  QCOMPARE(data.length.value(), 12.0);
+  // Remove link
+  QVERIFY(lnk.removeLink(pk));
+  data = lnk.getLinkData(pk, ok);
+  QVERIFY(ok);
+  QVERIFY(data.isNull());
+  
+}
+
+void mdtClLinkTest::linkAndVehicleTypeAddGetRemoveTest()
+{
+  mdtClLink lnk(pvDatabaseManager.database());
+  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
+  mdtClLinkData linkData;
+  mdtClLinkPkData linkPk;
+  mdtClLinkModificationKeyData linkModificationKey;
+  mdtClLinkVersionData linkVersion;
+  mdtClModificationPkData modificationKey;
+  mdtClVehicleTypeStartEndKeyData vtKey;
+  QList<mdtClVehicleTypeStartEndKeyData> vtKeyList;
+  bool ok;
+
+  // For this simple test, we not need to have the whole database schema, so we disable foreign keys constraints
+  QVERIFY(fkSetting.disable());
+
+  /*
+   * Add a link with modification and list of vehicle types to assign
+   */
+  // Setup link data
+  linkPk.connectionStartId = 15;
+  linkPk.connectionEndId = 16;
+  linkData.setPk(linkPk);
+  linkData.setLinkType(mdtClLinkType_t::CableLink);
+  linkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+  linkData.identification = "Link 15-16";
+  // Setup modification key
+  linkModificationKey.setLinkFk(linkPk);
+  linkVersion.setVersion(1.1);
+  linkModificationKey.setLinkVersionFk(linkVersion.pk());
+  modificationKey.setModification(mdtClModification_t::New);
+  linkModificationKey.setModificationFk(modificationKey);
+  // Setup vehicle type list
+  vtKey.setVehicleTypeStartId(1);
+  vtKey.setVehicleTypeEndId(2);
+  vtKeyList.append(vtKey);
+  vtKey.setVehicleTypeStartId(3);
+  vtKey.setVehicleTypeEndId(4);
+  vtKeyList.append(vtKey);
+  // Add link
+  QVERIFY(lnk.addLink(linkData, linkModificationKey, vtKeyList, true));
+  // Get link back and check
+  
+  // Get modification back and check
+  
+  // Get assigned vehicle types and check
+  
+  /*
+   * Update
+   */
+  
+  /*
+   * Remove
+   */
+  
 }
 
 

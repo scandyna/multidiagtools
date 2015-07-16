@@ -24,22 +24,115 @@
 #include "mdtSqlRecord.h"
 #include "mdtClUnitConnectionData.h"
 #include "mdtClVehicleTypeLinkData.h"
-#include <QList>
+
+#include "mdtClLinkKeyData.h"
+#include "mdtValue.h"
 #include <QVariant>
+
+#include <QList>
 #include <QSqlDatabase>
 #include <QSqlRecord>
 
 /*! \brief Data container class for link data
  *
- * Permit to exchange data with Link_tbl.
- *
- * This class was made for data edition.
- *  It is also mandatory that fields matches Link_tbl.
- *  To get data from a view, witch also can miss fields, 
- *  or have different field name, considere QSqlRecord.
+ * Refers to Link_tbl.
  */
-class mdtClLinkData : public mdtSqlRecord
+struct mdtClLinkData : public mdtSqlRecord /// \todo remove this inheritance once all is updated
 {
+ private:
+
+  mdtClLinkKeyData pvKeyData;
+
+ public:
+
+  /*! \brief Link identification (Identification)
+   */
+  QVariant identification;
+
+  /*! \brief Link resistance (Resistance)
+   */
+  mdtValueDouble resistance;
+
+  /*! \brief Link legth (Length)
+   */
+  mdtValueDouble length;
+
+  /*! \brief Set PK (UnitConnectionStart_Id_FK and UnitConnectionEnd_Id_FK)
+   */
+  void setPk(const mdtClLinkPkData & pk)
+  {
+    pvKeyData.setPk(pk);
+  }
+
+  /*! \brief Set link type (LinkType_Code_FK)
+   */
+  void setLinkType(mdtClLinkType_t t)
+  {
+    pvKeyData.setLinkType(t);
+  }
+
+  /*! \brief Set link type code (LinkType_Code_FK)
+   */
+  void setLinkTypeCode(const QVariant & c)
+  {
+    pvKeyData.setLinkTypeCode(c);
+  }
+
+  /*! \brief Set link direction (LinkDirection_Code_FK)
+   */
+  void setLinkDirection(mdtClLinkDirection_t d)
+  {
+    pvKeyData.setLinkDirection(d);
+  }
+
+  /*! \brief Set link direction code (LinkDirection_Code_FK)
+   */
+  void setLinkDirectionCode(const QVariant & c)
+  {
+    pvKeyData.setLinkDirectionCode(c);
+  }
+
+  /*! \brief Set article link FK (ArticleConnectionStart_Id_FK and ArticleConnectionEnd_Id_FK)
+   */
+  void setArticleLinkFk(const mdtClArticleLinkPkData & fk)
+  {
+    pvKeyData.setArticleLinkFk(fk);
+  }
+
+  /*! \brief Set wire ID (Wire_Id_FK)
+   */
+  void setWireId(const QVariant & id)
+  {
+    pvKeyData.setWireId(id);
+  }
+
+  /*! \brief Get key data
+   */
+  mdtClLinkKeyData keyData() const
+  {
+    return pvKeyData;
+  }
+
+  /*! \brief Get PK data
+   */
+  mdtClLinkPkData pk() const
+  {
+    return pvKeyData.pk();
+  }
+
+  /*! \brief Check if link data is null
+   *
+   * \sa mdtClLinkKeyData::isNull()
+   */
+  bool isNull() const
+  {
+    return pvKeyData.isNull();
+  }
+
+  /*! \brief Clear data
+   */
+  void clear();
+
  public:
 
   /*! \brief Construct a empty mdtClLinkData

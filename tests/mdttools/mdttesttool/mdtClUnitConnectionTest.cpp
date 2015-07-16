@@ -1089,6 +1089,13 @@ void mdtClUnitConnectionTest::unitConnectorWithConnectionsAddGetRemoveTest()
   QCOMPARE(data.connectionDataList().at(1).functionFR, QVariant("FFR2"));
   QCOMPARE(data.connectionDataList().at(1).functionDE, QVariant("FDE2"));
   QCOMPARE(data.connectionDataList().at(1).functionIT, QVariant("FIT2"));
+  // Get back connector data from unit connection B
+  unitConnectionKey = data.connectionDataList().at(1).keyData();
+  data = ucnx.getUnitConnectorData(unitConnectionKey, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.keyData().unitId(), QVariant(1000));
+  QCOMPARE(data.name, QVariant("X1"));
   /*
    * Unit connector based on a article connector
    */

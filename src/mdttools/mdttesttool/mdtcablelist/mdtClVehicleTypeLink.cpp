@@ -29,12 +29,12 @@
 //#include <QDebug>
 
 mdtClVehicleTypeLink::mdtClVehicleTypeLink(QObject *parent, QSqlDatabase db)
- : mdtClLink(parent, db)
+ : mdtTtBase(parent, db)
 {
 }
 
 mdtClVehicleTypeLink::mdtClVehicleTypeLink(QSqlDatabase db)
- : mdtClLink(db)
+ : mdtTtBase(nullptr, db)
 {
 }
 

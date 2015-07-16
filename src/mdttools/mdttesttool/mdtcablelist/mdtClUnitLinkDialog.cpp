@@ -22,6 +22,7 @@
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
 #include "mdtClUnit.h"
+#include "mdtClUnitConnection.h"
 #include "mdtClUnitConnectorData.h"
 #include "mdtClUnitConnectionSelectionDialog.h"
 #include "mdtClModificationModel.h"
@@ -116,14 +117,17 @@ mdtClUnitLinkDialog::~mdtClUnitLinkDialog()
 
 void mdtClUnitLinkDialog::setStartUnit(const QVariant &unitId)
 {
-  pvLinkData.setStartConnectionData(mdtClUnitConnectionData());
+  ///pvLinkData.setStartConnectionData(mdtClUnitConnectionData());
   pvStartUnitId = unitId;
   updateStartUnit();
+  auto pk = pvLinkData.pk();
+  pk.connectionStartId.clear();
+  pvLinkData.setPk(pk);
   updateStartConnection();
   setStartVehicleTypes(unitId);
   
   qDebug() << "setStartUnit() ...";
-  updateVehicleTypeAssignations();
+  updateVehicleTypeAssignations(true);
 }
 
 void mdtClUnitLinkDialog::setStartUnitSelectionList(const QList< QVariant >& idList)
@@ -148,14 +152,17 @@ void mdtClUnitLinkDialog::setStartConnectionLabel(const QString& labelText)
 
 void mdtClUnitLinkDialog::setEndUnit(const QVariant &unitId)
 {
-  pvLinkData.setEndConnectionData(mdtClUnitConnectionData());
+  ///pvLinkData.setEndConnectionData(mdtClUnitConnectionData());
   pvEndUnitId = unitId;
   updateEndUnit();
+  auto pk = pvLinkData.pk();
+  pk.connectionEndId.clear();
+  pvLinkData.setPk(pk);
   updateEndConnection();
   setEndVehicleTypes(unitId);
   
   qDebug() << "setEndUnit() ...";
-  updateVehicleTypeAssignations();
+  updateVehicleTypeAssignations(true);
 }
 
 void mdtClUnitLinkDialog::setEndUnitSelectionList(const QList< QVariant >& idList)
@@ -198,6 +205,7 @@ void mdtClUnitLinkDialog::clearWorkingOnVehicleTypeList()
   pvWorkingOnVehicleTypeIdList.clear();
 }
 
+/// \deprecated
 const QList<QVariant> mdtClUnitLinkDialog::startVehicleTypeIdList() const
 {
   QList<QVariant> idList;
@@ -212,6 +220,7 @@ const QList<QVariant> mdtClUnitLinkDialog::startVehicleTypeIdList() const
   return idList;
 }
 
+/// \deprecated
 const QList<QVariant> mdtClUnitLinkDialog::endVehicleTypeIdList() const
 {
   QList<QVariant> idList;
@@ -224,6 +233,13 @@ const QList<QVariant> mdtClUnitLinkDialog::endVehicleTypeIdList() const
   }
 
   return idList;
+}
+
+QList<mdtClVehicleTypeStartEndKeyData> mdtClUnitLinkDialog::selectedVehicleTypeList() const
+{
+  Q_ASSERT(pvVehicleTypeAssignationWidget != nullptr);
+
+  return pvVehicleTypeAssignationWidget->getSelectedVehicleTypeList();
 }
 
 /// \deprecated
@@ -328,11 +344,6 @@ void mdtClUnitLinkDialog::setLinkVersion(const mdtClLinkVersionData &v)
   cbLinkVersion->setCurrentIndex(row);
 }
 
-mdtClLinkVersionPkData mdtClUnitLinkDialog::linkVersionKeyData() const
-{
-  return pvLinkVersionModel->currentVersionPk(cbLinkVersion);
-}
-
 void mdtClUnitLinkDialog::setLinkModification(const mdtClModificationPkData &m)
 {
   int row;
@@ -341,49 +352,105 @@ void mdtClUnitLinkDialog::setLinkModification(const mdtClModificationPkData &m)
   cbModification->setCurrentIndex(row);
 }
 
-mdtClModificationPkData mdtClUnitLinkDialog::linkModificationKeyData() const
+void mdtClUnitLinkDialog::setLinkModification(mdtClModification_t m)
 {
-  return pvModificationModel->currentModificationPk(cbModification);
+  mdtClModificationPkData pk;
+
+  pk.setModification(m);
+  setLinkModification(pk);
+}
+
+mdtClLinkModificationKeyData mdtClUnitLinkDialog::linkModificationKeyData() const
+{
+  Q_ASSERT(!pvLinkData.pk().isNull());
+
+  mdtClLinkModificationKeyData key;
+
+  key.setLinkFk(pvLinkData.pk());
+  key.setLinkVersionFk(pvLinkVersionModel->currentVersionPk(cbLinkVersion));
+  key.setModificationFk(pvModificationModel->currentModificationPk(cbModification));
+  Q_ASSERT(!key.isNull());
+
+  return key;
 }
 
 void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
 {
-  QList<mdtClVehicleTypeLinkData> vtLinkDataList;
-  int i;
+  mdtClUnitConnection ucnx(pvDatabase);
+  mdtClUnitConnectionKeyData ucnxKey;
+  mdtClUnitConnectionData ucnxData;
+  bool ok;
 
   pvLinkData = data;
   // Update common data
-  leIdentification->setText(data.value("Identification").toString());
-  updateModificationCombobox(data.value("Modification"));
-  ///updateSinceVersionCombobox(data.value("SinceVersion"));
-  setLinkTypeCode(data.value("LinkType_Code_FK"));
-  setLinkDirectionCode(data.value("LinkDirection_Code_FK"));
-  deResistance->setValue(data.value("Resistance"));
-  deLength->setValue(data.value("Length"));
-  updateWire(data.value("Wire_Id_FK"));
-  // Update start/end units
-  pvStartUnitId = pvLinkData.startConnectionData().value("Unit_Id_FK");
+  setLinkType(data.keyData().linkTypeFk().type());
+  setLinkDirection(data.keyData().linkDirectionFk().direction());
+  deResistance->setValue(data.resistance.value());
+  deLength->setValue(data.length.value());
+  updateWire(data.keyData().wireId());
+  leIdentification->setText(data.identification.toString());
+  // Update start unit
+  ucnxKey.id = data.pk().connectionStartId;
+  ucnxData = ucnx.getUnitConnectionData(ucnxKey, ok);
+  if(ok){
+    pvStartUnitId = ucnxData.keyData().unitId();
+  }else{
+    pvStartUnitId.clear();
+  }
   updateStartUnit();
-  pvEndUnitId = pvLinkData.endConnectionData().value("Unit_Id_FK");
+  // Update end unit
+  ucnxKey.id = data.pk().connectionEndId;
+  ucnxData = ucnx.getUnitConnectionData(ucnxKey, ok);
+  if(ok){
+    pvEndUnitId = ucnxData.keyData().unitId();
+  }else{
+    pvEndUnitId.clear();
+  }
   updateEndUnit();
   // Update start/end connections
   updateStartConnection();
   updateEndConnection();
-  // Update start/end vehicle type lists
-  pvStartVehicleTypesIdList.clear();
-  pvEndVehicleTypesIdList.clear();
-  vtLinkDataList = pvLinkData.vehicleTypeLinkDataList();
-  for(i = 0; i < vtLinkDataList.size(); ++i){
-    pvStartVehicleTypesIdList.append(vtLinkDataList.at(i).vehicleTypeStartId());
-    pvEndVehicleTypesIdList.append(vtLinkDataList.at(i).vehicleTypeEndId());
-  }
-  updateStartVehicleTypes();
-  updateEndVehicleTypes();
-  
-  updateVehicleTypeAssignations();
-  
-  pvVehicleTypesEdited = false;
+  // Update vehicle type assignements
+  updateVehicleTypeAssignations(true);
+  // Unset unit connection changed flag
   pvUnitConnectionChanged = false;
+  
+//   QList<mdtClVehicleTypeLinkData> vtLinkDataList;
+//   int i;
+// 
+//   pvLinkData = data;
+//   // Update common data
+//   leIdentification->setText(data.value("Identification").toString());
+//   updateModificationCombobox(data.value("Modification"));
+//   ///updateSinceVersionCombobox(data.value("SinceVersion"));
+//   setLinkTypeCode(data.value("LinkType_Code_FK"));
+//   setLinkDirectionCode(data.value("LinkDirection_Code_FK"));
+//   deResistance->setValue(data.value("Resistance"));
+//   deLength->setValue(data.value("Length"));
+//   updateWire(data.value("Wire_Id_FK"));
+//   // Update start/end units
+//   pvStartUnitId = pvLinkData.startConnectionData().value("Unit_Id_FK");
+//   updateStartUnit();
+//   pvEndUnitId = pvLinkData.endConnectionData().value("Unit_Id_FK");
+//   updateEndUnit();
+//   // Update start/end connections
+//   updateStartConnection();
+//   updateEndConnection();
+//   // Update start/end vehicle type lists
+//   pvStartVehicleTypesIdList.clear();
+//   pvEndVehicleTypesIdList.clear();
+//   vtLinkDataList = pvLinkData.vehicleTypeLinkDataList();
+//   for(i = 0; i < vtLinkDataList.size(); ++i){
+//     pvStartVehicleTypesIdList.append(vtLinkDataList.at(i).vehicleTypeStartId());
+//     pvEndVehicleTypesIdList.append(vtLinkDataList.at(i).vehicleTypeEndId());
+//   }
+//   updateStartVehicleTypes();
+//   updateEndVehicleTypes();
+//   
+//   updateVehicleTypeAssignations();
+//   
+//   pvVehicleTypesEdited = false;
+//   pvUnitConnectionChanged = false;
 }
 
 mdtClLinkData mdtClUnitLinkDialog::linkData()
@@ -405,7 +472,7 @@ void mdtClUnitLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
     cbLinkDirection->setEnabled(false);
   }
   // Update link data
-  ///pvLinkData.setLinkType(key.type());
+  pvLinkData.setLinkType(key.type());
 }
 
 void mdtClUnitLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)
@@ -418,7 +485,7 @@ void mdtClUnitLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)
   // Update the ASCII picture
   lbLinkDirectionAsciiPicture->setText(pvLinkDirectionModel->pictureAscii(row));
   // Update link data
-  ///pvLinkData.setLinkDirection(key.direction());
+  pvLinkData.setLinkDirection(key.direction());
 }
 
 void mdtClUnitLinkDialog::selectWire()
@@ -460,7 +527,8 @@ void mdtClUnitLinkDialog::setLinkResistance(double linkLength, bool linkLengthIs
     deResistance->setValue(QVariant());
     return;
   }
-  sql = "SELECT LineicResistance FROM Wire_tbl WHERE Id_PK = " + pvLinkData.value("Wire_Id_FK").toString();
+  ///sql = "SELECT LineicResistance FROM Wire_tbl WHERE Id_PK = " + pvLinkData.value("Wire_Id_FK").toString();
+  sql = "SELECT LineicResistance FROM Wire_tbl WHERE Id_PK = " + pvLinkData.keyData().wireId().toString();
   dataList = lnk.getDataList<QVariant>(sql, ok);
   if(!ok){
     deResistance->setValue(QVariant());
@@ -621,10 +689,13 @@ void mdtClUnitLinkDialog::selectStartConnection()
   }
   // Get connection data and update
   ucnxKey = selectionDialog.selectedUnitConnectionKey();
-  /// \todo finish..
-
-  
-  updateVehicleTypeAssignations();
+  auto pk = pvLinkData.pk();
+  pk.connectionStartId = ucnxKey.id;
+  pvLinkData.setPk(pk);
+  updateStartConnection();
+  pvUnitConnectionChanged = true;
+  // Update vehicle type assignations
+  updateVehicleTypeAssignations(false);
   
 //   mdtSqlSelectionDialog selectionDialog(this);
 //   mdtSqlTableSelection s;
@@ -702,10 +773,13 @@ void mdtClUnitLinkDialog::selectEndConnection()
   }
   // Get connection data and update
   ucnxKey = selectionDialog.selectedUnitConnectionKey();
-  /// \todo finish..
-
-  
-  updateVehicleTypeAssignations();
+  auto pk = pvLinkData.pk();
+  pk.connectionEndId = ucnxKey.id;
+  pvLinkData.setPk(pk);
+  updateEndConnection();
+  pvUnitConnectionChanged = true;
+  // Update vehicle type assignations
+  updateVehicleTypeAssignations(false);
 
 //   mdtSqlSelectionDialog selectionDialog(this);
 //   mdtSqlTableSelection s;
@@ -864,27 +938,31 @@ void mdtClUnitLinkDialog::selectEndVehicleTypes()
 
 void mdtClUnitLinkDialog::accept()
 {
-  // Most of data are dynamically stored during edition, but some are to do here
-  pvLinkData.setValue("Identification", leIdentification->text());
-  pvLinkData.setValue("Modification", cbModification->currentText());
-  ///pvLinkData.setValue("SinceVersion", cbSinceVersion->currentText());
-  pvLinkData.setValue("Resistance", deResistance->value());
-  pvLinkData.setValue("Length", deLength->value());
-  /*
-   * If a unit connection was changed,
-   *  we must regenerate vehicle types
-   *  (case of a adding a link, or changing star/end connection).
-   * Else, setup data to avoid remove/add
-   * ( see mdtClLink::editLink() )
-   */
-  if(pvVehicleTypesEdited || pvUnitConnectionChanged){
-    if(!buildVehicleTypeLinkDataList()){
-      return;
-    }
-  }else{
-    pvLinkData.setHasValue("UnitConnectionStart_Id_FK", false);
-    pvLinkData.setHasValue("UnitConnectionEnd_Id_FK", false);
-  }
+  // Some data are dynamically stored during edition, but some are to handle here
+  pvLinkData.identification = leIdentification->text();
+  pvLinkData.resistance = deResistance->valueDouble();
+  pvLinkData.length = deLength->valueDouble();
+  
+//   pvLinkData.setValue("Identification", leIdentification->text());
+//   pvLinkData.setValue("Modification", cbModification->currentText());
+//   ///pvLinkData.setValue("SinceVersion", cbSinceVersion->currentText());
+//   pvLinkData.setValue("Resistance", deResistance->value());
+//   pvLinkData.setValue("Length", deLength->value());
+//   /*
+//    * If a unit connection was changed,
+//    *  we must regenerate vehicle types
+//    *  (case of a adding a link, or changing star/end connection).
+//    * Else, setup data to avoid remove/add
+//    * ( see mdtClLink::editLink() )
+//    */
+//   if(pvVehicleTypesEdited || pvUnitConnectionChanged){
+//     if(!buildVehicleTypeLinkDataList()){
+//       return;
+//     }
+//   }else{
+//     pvLinkData.setHasValue("UnitConnectionStart_Id_FK", false);
+//     pvLinkData.setHasValue("UnitConnectionEnd_Id_FK", false);
+//   }
   
   
   /// \todo checks
@@ -915,7 +993,8 @@ void mdtClUnitLinkDialog::updateWire(const QVariant& wireId)
   QSqlRecord data;
   bool ok;
 
-  pvLinkData.setValue("Wire_Id_FK", wireId);
+  ///pvLinkData.setValue("Wire_Id_FK", wireId);
+  pvLinkData.setWireId(wireId);
   if(wireId.isNull()){
     lbWireModel->clear();
     lbWireSection->clear();
@@ -1017,68 +1096,122 @@ void mdtClUnitLinkDialog::updateEndUnit()
 
 void mdtClUnitLinkDialog::updateStartConnection()
 {
-  mdtClUnit unit(0, pvDatabase);
+  mdtClUnitConnection ucnx(pvDatabase);
+  mdtClUnitConnectionKeyData connectionKey;
   mdtClUnitConnectionData connectionData;
   mdtClUnitConnectorData connectorData;
   bool ok;
 
   // Set connection name
-  if(pvLinkData.value("UnitConnectionStart_Id_FK").isNull()){
+  connectionKey.id = pvLinkData.pk().connectionStartId;
+  if(connectionKey.id.isNull()){
     lbStartContactName->setText("");
     lbStartConnectorName->setText("");
-    pvLinkData.setStartConnectionData(mdtClUnitConnectionData());
     return;
   }
-  connectionData = unit.getConnectionData(pvLinkData.value("UnitConnectionStart_Id_FK"), false, &ok);
-  if(!ok){
-    lbStartContactName->setText("<Error!>");
+  connectionData = ucnx.getUnitConnectionData(connectionKey, ok);
+  if(ok){
+    lbStartContactName->setText(connectionData.name.toString());
   }else{
-    lbStartContactName->setText(connectionData.value("UnitContactName").toString());
-    pvLinkData.setStartConnectionData(connectionData);
+    lbStartContactName->setText("<Error!>");
   }
   // Set connector name
-  if(pvLinkData.startConnectionData().value("UnitConnector_Id_FK").isNull()){
-    lbStartConnectorName->setText("");
-    return;
-  }
-  connectorData = unit.getConnectorData(pvLinkData.startConnectionData().value("UnitConnector_Id_FK"), &ok, false, false, false);
-  if(!ok){
+  connectorData = ucnx.getUnitConnectorData(connectionKey, ok);
+  if(ok){
+    lbStartConnectorName->setText(connectorData.name.toString());
+  }else{
     lbStartConnectorName->setText("<Error!>");
   }
-  lbStartConnectorName->setText(connectorData.value("Name").toString());
+
+//   mdtClUnit unit(0, pvDatabase);
+//   mdtClUnitConnectionData connectionData;
+//   mdtClUnitConnectorData connectorData;
+//   bool ok;
+
+  // Set connection name
+//   if(pvLinkData.value("UnitConnectionStart_Id_FK").isNull()){
+//     lbStartContactName->setText("");
+//     lbStartConnectorName->setText("");
+//     pvLinkData.setStartConnectionData(mdtClUnitConnectionData());
+//     return;
+//   }
+//   connectionData = unit.getConnectionData(pvLinkData.value("UnitConnectionStart_Id_FK"), false, &ok);
+//   if(!ok){
+//     lbStartContactName->setText("<Error!>");
+//   }else{
+//     lbStartContactName->setText(connectionData.value("UnitContactName").toString());
+//     pvLinkData.setStartConnectionData(connectionData);
+//   }
+  // Set connector name
+//   if(pvLinkData.startConnectionData().value("UnitConnector_Id_FK").isNull()){
+//     lbStartConnectorName->setText("");
+//     return;
+//   }
+//   connectorData = unit.getConnectorData(pvLinkData.startConnectionData().value("UnitConnector_Id_FK"), &ok, false, false, false);
+//   if(!ok){
+//     lbStartConnectorName->setText("<Error!>");
+//   }
+//   lbStartConnectorName->setText(connectorData.value("Name").toString());
 }
 
 void mdtClUnitLinkDialog::updateEndConnection()
 {
-  mdtClUnit unit(0, pvDatabase);
+  mdtClUnitConnection ucnx(pvDatabase);
+  mdtClUnitConnectionKeyData connectionKey;
   mdtClUnitConnectionData connectionData;
   mdtClUnitConnectorData connectorData;
   bool ok;
 
   // Set connection name
-  if(pvLinkData.value("UnitConnectionEnd_Id_FK").isNull()){
+  connectionKey.id = pvLinkData.pk().connectionEndId;
+  if(connectionKey.id.isNull()){
     lbEndContactName->setText("");
     lbEndConnectorName->setText("");
-    pvLinkData.setEndConnectionData(mdtClUnitConnectionData());
     return;
   }
-  connectionData = unit.getConnectionData(pvLinkData.value("UnitConnectionEnd_Id_FK"), false, &ok);
-  if(!ok){
-    lbEndContactName->setText("<Error!>");
+  connectionData = ucnx.getUnitConnectionData(connectionKey, ok);
+  if(ok){
+    lbEndContactName->setText(connectionData.name.toString());
   }else{
-    lbEndContactName->setText(connectionData.value("UnitContactName").toString());
-    pvLinkData.setEndConnectionData(connectionData);
+    lbEndContactName->setText("<Error!>");
   }
   // Set connector name
-  if(pvLinkData.endConnectionData().value("UnitConnector_Id_FK").isNull()){
-    lbEndConnectorName->setText("");
-    return;
-  }
-  connectorData = unit.getConnectorData(pvLinkData.endConnectionData().value("UnitConnector_Id_FK"), &ok, false, false, false);
-  if(!ok){
+  connectorData = ucnx.getUnitConnectorData(connectionKey, ok);
+  if(ok){
+    lbEndConnectorName->setText(connectorData.name.toString());
+  }else{
     lbEndConnectorName->setText("<Error!>");
   }
-  lbEndConnectorName->setText(connectorData.value("Name").toString());
+
+//   mdtClUnit unit(0, pvDatabase);
+//   mdtClUnitConnectionData connectionData;
+//   mdtClUnitConnectorData connectorData;
+//   bool ok;
+// 
+//   // Set connection name
+//   if(pvLinkData.value("UnitConnectionEnd_Id_FK").isNull()){
+//     lbEndContactName->setText("");
+//     lbEndConnectorName->setText("");
+//     pvLinkData.setEndConnectionData(mdtClUnitConnectionData());
+//     return;
+//   }
+//   connectionData = unit.getConnectionData(pvLinkData.value("UnitConnectionEnd_Id_FK"), false, &ok);
+//   if(!ok){
+//     lbEndContactName->setText("<Error!>");
+//   }else{
+//     lbEndContactName->setText(connectionData.value("UnitContactName").toString());
+//     pvLinkData.setEndConnectionData(connectionData);
+//   }
+//   // Set connector name
+//   if(pvLinkData.endConnectionData().value("UnitConnector_Id_FK").isNull()){
+//     lbEndConnectorName->setText("");
+//     return;
+//   }
+//   connectorData = unit.getConnectorData(pvLinkData.endConnectionData().value("UnitConnector_Id_FK"), &ok, false, false, false);
+//   if(!ok){
+//     lbEndConnectorName->setText("<Error!>");
+//   }
+//   lbEndConnectorName->setText(connectorData.value("Name").toString());
 }
 
 void mdtClUnitLinkDialog::setStartVehicleTypes(const QVariant &unitId)
@@ -1212,30 +1345,26 @@ bool mdtClUnitLinkDialog::buildVehicleTypeLinkDataList()
 }
 
 
-void mdtClUnitLinkDialog::updateVehicleTypeAssignations()
+void mdtClUnitLinkDialog::updateVehicleTypeAssignations(bool rebuildVehicleTypeList)
 {
-  qDebug() << "updateVehicleTypeAssignations() ...";
   // If vehicle type - link assignation is disabled, we simply do nothing
   if(pvVehicleTypeAssignationWidget == nullptr){
     return;
   }
-  qDebug() << " -> start unit: " << pvStartUnitId << ", end unit: " << pvEndUnitId;
-  pvVehicleTypeAssignationWidget->clear();
-  if(pvStartUnitId.isNull() || pvEndUnitId.isNull()){
+  if(rebuildVehicleTypeList){
+    pvVehicleTypeAssignationWidget->clear();
+    if(pvStartUnitId.isNull() || pvEndUnitId.isNull()){
+      return;
+    }
+    if(!pvVehicleTypeAssignationWidget->buildVehicleTypeList(pvStartUnitId, pvEndUnitId)){
+      displayError(pvVehicleTypeAssignationWidget->lastError());
+      return;
+    }
+  }
+  if(pvLinkData.pk().isNull()){
     return;
   }
-  if(!pvVehicleTypeAssignationWidget->buildVehicleTypeList(pvStartUnitId, pvEndUnitId)){
-    displayError(pvVehicleTypeAssignationWidget->lastError());
-    return;
-  }
-  /// \todo provisoire !!
-  mdtClLinkPkData linkPk;
-  linkPk.connectionStartId = pvLinkData.value("UnitConnectionStart_Id_FK");
-  linkPk.connectionEndId = pvLinkData.value("UnitConnectionEnd_Id_FK");
-  if(linkPk.isNull()){
-    return;
-  }
-  if(!pvVehicleTypeAssignationWidget->selectVehicleTypeAssignedToLink(linkPk)){
+  if(!pvVehicleTypeAssignationWidget->selectVehicleTypeAssignedToLink(pvLinkData.pk())){
     displayError(pvVehicleTypeAssignationWidget->lastError());
     return;
   }

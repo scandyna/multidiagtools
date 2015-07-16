@@ -34,12 +34,12 @@ classcanvas 130946 class_ref 792194 // mdtClUnitVehicleType
 end
 classcanvas 131458 class_ref 1725954 // mdtClVehicleTypeStartEndKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 591.9 575.6 2000
+  xyz 668.9 561.6 2000
 end
 relationcanvas 128514 relation_ref 2035842 // <generalisation>
   geometry VHV
-  from ref 128258 z 2001 to point 305 117
-  line 129026 z 2001 to point 367 117
+  from ref 128258 z 2001 to point 305 114
+  line 129026 z 2001 to point 367 114
   line 129154 z 2001 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -57,11 +57,6 @@ relationcanvas 130434 relation_ref 2042882 // <generalisation>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 130818 relation_ref 2049410 // <generalisation>
-  from ref 130690 z 2001 to ref 130562
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 relationcanvas 131074 relation_ref 2049538 // <dependency>
   from ref 128258 z 2008 to ref 130946
   no_role_a no_role_b
@@ -70,14 +65,14 @@ end
 relationcanvas 131202 relation_ref 2049666 // <dependency>
   geometry HVr
   decenter_begin 480
-  from ref 128258 z 2001 to point 298 484
+  from ref 128258 z 2001 to point 298 493
   line 131330 z 2001 to ref 130690
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131586 relation_ref 2056194 // <unidirectional association>
   from ref 128002 z 2001 to ref 131458
-  role_a_pos 430 644 3000 no_role_b
+  role_a_pos 514 638 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 end

@@ -21,6 +21,8 @@
 #include "mdtClUnitEditor.h"
 #include "mdtClUnit.h"
 #include "mdtClLink.h"
+#include "mdtClLinkVersion.h"
+#include "mdtClModificationKeyData.h"
 #include "ui_mdtClUnitEditor.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtAbstractSqlTableController.h"
@@ -893,7 +895,7 @@ void mdtClUnitEditor::viewLinkedConnections()
 
 void mdtClUnitEditor::addLink()
 {
-  mdtClUnitLinkDialog dialog(0, database());
+  mdtClUnitLinkDialog dialog(this, database());
   QVariant unitId;
   mdtClLink lnk(0, database());
 
@@ -904,11 +906,13 @@ void mdtClUnitEditor::addLink()
   }
   dialog.setWorkingOnVehicleTypeIdList(pvWorkingOnVehicleTypeIdList);
   dialog.setStartUnit(unitId);
+  dialog.setLinkVersion(mdtClLinkVersion::currentVersion());
+  dialog.setLinkModification(mdtClModification_t::New);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
   // Add link
-  if(!lnk.addLink(dialog.linkData())){
+  if(!lnk.addLink(dialog.linkData(), dialog.linkModificationKeyData(), dialog.selectedVehicleTypeList(), true)){
     pvLastError = lnk.lastError();
     displayLastError();
     return;
@@ -921,8 +925,12 @@ void mdtClUnitEditor::editLink()
 {
   mdtSqlTableWidget *linkWidget;
   mdtClUnitLinkDialog dialog(0, database());
-  QVariant unitId, startConnectionId, endConnectionId;
+  QVariant unitId; ///, startConnectionId, endConnectionId;
+  QVariant var;
+  mdtClLinkPkData pk;
   mdtClLinkData linkData;
+  mdtClLinkVersionData linkVersionData;
+  mdtClModificationPkData modificationPk;
   mdtClLink lnk(0, database());
   bool ok;
 
@@ -933,18 +941,31 @@ void mdtClUnitEditor::editLink()
   if(unitId.isNull()){
     return;
   }
-  // Get connection IDs
-  startConnectionId = linkWidget->currentData("UnitConnectionStart_Id_FK");
-  endConnectionId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
-  if(startConnectionId.isNull() || endConnectionId.isNull()){
+  // Get connection PK
+  pk.connectionStartId = linkWidget->currentData("UnitConnectionStart_Id_FK");
+  pk.connectionEndId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
+  ///startConnectionId = linkWidget->currentData("UnitConnectionStart_Id_FK");
+  ///endConnectionId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
+  ///if(startConnectionId.isNull() || endConnectionId.isNull()){
+  if(pk.isNull()){
     QMessageBox msgBox;
     msgBox.setText(tr("Please select a link."));
     msgBox.setIcon(QMessageBox::Information);
     msgBox.exec();
     return;
   }
+  // Get link version and modification
+  var = linkWidget->currentData("Version_FK");
+  if(!var.isNull()){
+    linkVersionData.setVersionPk(var);
+  }
+  var = linkWidget->currentData("Modification_Code_FK");
+  if(!var.isNull()){
+    modificationPk.code = var.toString();
+  }
   // Get current link data
-  linkData = lnk.getLinkData(startConnectionId, endConnectionId,true, true, ok);
+  ///linkData = lnk.getLinkData(startConnectionId, endConnectionId,true, true, ok);
+  linkData = lnk.getLinkData(pk, ok);
   if(!ok){
     pvLastError = lnk.lastError();
     displayLastError();
@@ -953,15 +974,21 @@ void mdtClUnitEditor::editLink()
   // Setup and show dialog
   dialog.setWorkingOnVehicleTypeIdList(pvWorkingOnVehicleTypeIdList);
   dialog.setLinkData(linkData);
+  if(!linkVersionData.isNull()){
+    dialog.setLinkVersion(linkVersionData);
+  }
+  if(!modificationPk.isNull()){
+    dialog.setLinkModification(modificationPk);
+  }
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
   // Edit link
-  if(!lnk.editLink(startConnectionId, endConnectionId, dialog.linkData())){
-    pvLastError = lnk.lastError();
-    displayLastError();
-    return;
-  }
+//   if(!lnk.editLink(startConnectionId, endConnectionId, dialog.linkData())){
+//     pvLastError = lnk.lastError();
+//     displayLastError();
+//     return;
+//   }
   // Update links view
   select("UnitLink_view");
 }

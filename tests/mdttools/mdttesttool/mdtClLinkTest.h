@@ -52,8 +52,7 @@ class mdtClLinkTest : public mdtTest
   void linkVersionModelTest();
 
   void linkModificationDataTest();
-
-  void linkDataTest();
+  void linkModificationAddGetRemoveTest();
 
   void vehicleTypeStartEndKeyDataTest();
   void vehicleTypeLinkKeyDataTest();
@@ -61,9 +60,12 @@ class mdtClLinkTest : public mdtTest
   void vehicleTypeLinkUpdateTest();
   
   void vehicleTypeCheckBoxTest();
-  
   void vehicleTypeLinkAssignationWidgetTest();
-  
+
+  void linkDataTest();
+  void linkAddGetRemoveTest();
+  void linkAndVehicleTypeAddGetRemoveTest();
+
   void sandbox();
 
  private:

@@ -274,6 +274,28 @@ mdtClUnitConnectorData mdtClUnitConnection::getUnitConnectorData(mdtClUnitConnec
   return data;
 }
 
+mdtClUnitConnectorData mdtClUnitConnection::getUnitConnectorData(mdtClUnitConnectionKeyData key, bool &ok)
+{
+  mdtClUnitConnectorData data;
+  QList<QSqlRecord> dataList;
+  QString sql;
+
+  sql = baseSqlForUnitConnector();
+  sql += " JOIN UnitConnection_tbl UCNX ON UCNX.UnitConnector_Id_FK = UCNR.Id_PK";
+  sql += " WHERE UCNX.Id_PK = " + key.id.toString();
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return data;
+  }
+  if(dataList.isEmpty()){
+    return data;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  fillData(data, dataList.at(0));
+
+  return data;
+}
+
 mdtClUnitConnectorKeyData mdtClUnitConnection::getUnitConnectorKeyData(const mdtClArticleConnectionKeyData & key, bool & ok)
 {
   mdtClUnitConnectorKeyData unitConnectorKey;

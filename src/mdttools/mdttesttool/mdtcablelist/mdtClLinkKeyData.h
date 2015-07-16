@@ -21,6 +21,9 @@
 #ifndef MDT_CL_LINK_KEY_DATA_H
 #define MDT_CL_LINK_KEY_DATA_H
 
+#include "mdtClLinkTypeData.h"
+#include "mdtClLinkDirectionData.h"
+#include "mdtClArticleLinkKeyData.h"
 #include <QVariant>
 
 /*! \brief Link primary key data
@@ -55,8 +58,125 @@ struct mdtClLinkPkData
   }
 };
 
+/*! \brief Link key data
+ *
+ * Refers to Link_tbl
+ */
 struct mdtClLinkKeyData
 {
+ private:
+
+  mdtClLinkPkData pvPk;
+  mdtClLinkTypeKeyData pvLinkTypeFk;
+  mdtClLinkDirectionKeyData pvLinkDirectionFk;
+  mdtClArticleLinkPkData pvArticleLinkFk;
+  QVariant pvWireId;
+
+ public:
+
+  /*! \brief Set PK (UnitConnectionStart_Id_FK and UnitConnectionEnd_Id_FK)
+   */
+  void setPk(const mdtClLinkPkData & pk)
+  {
+    pvPk = pk;
+  }
+
+  /*! \brief Get PK (UnitConnectionStart_Id_FK and UnitConnectionEnd_Id_FK)
+   */
+  mdtClLinkPkData pk() const
+  {
+    return pvPk;
+  }
+
+  /*! \brief Set link type (LinkType_Code_FK)
+   */
+  void setLinkType(mdtClLinkType_t t)
+  {
+    pvLinkTypeFk.setType(t);
+  }
+
+  /*! \brief Set link type code (LinkType_Code_FK)
+   */
+  void setLinkTypeCode(const QVariant & c)
+  {
+    pvLinkTypeFk.code = c;
+  }
+
+  /*! \brief Get link type FK (LinkType_Code_FK)
+   */
+  mdtClLinkTypeKeyData linkTypeFk() const
+  {
+    return pvLinkTypeFk;
+  }
+
+  /*! \brief Set link direction (LinkDirection_Code_FK)
+   */
+  void setLinkDirection(mdtClLinkDirection_t d)
+  {
+    pvLinkDirectionFk.setDirection(d);
+  }
+
+  /*! \brief Set link direction code (LinkDirection_Code_FK)
+   */
+  void setLinkDirectionCode(const QVariant & c)
+  {
+    pvLinkDirectionFk.code = c;
+  }
+
+  /*! \brief Get link direction FK (LinkDirection_Code_FK)
+   */
+  mdtClLinkDirectionKeyData linkDirectionFk() const
+  {
+    return pvLinkDirectionFk;
+  }
+
+  /*! \brief Set article link FK (ArticleConnectionStart_Id_FK and ArticleConnectionEnd_Id_FK)
+   */
+  void setArticleLinkFk(const mdtClArticleLinkPkData & fk)
+  {
+    pvArticleLinkFk = fk;
+  }
+
+  /*! \brief Get article link FK (ArticleConnectionStart_Id_FK and ArticleConnectionEnd_Id_FK)
+   */
+  mdtClArticleLinkPkData articleLinkFk() const
+  {
+    return pvArticleLinkFk;
+  }
+
+  /*! \brief Set wire ID (Wire_Id_FK)
+   */
+  void setWireId(const QVariant & id)
+  {
+    pvWireId = id;
+  }
+
+  /*! \brief Get wire ID (Wire_Id_FK)
+   */
+  QVariant wireId() const
+  {
+    return pvWireId;
+  }
+
+  /*! \brief Check if key is null
+   *
+   * Key is null if pk or linkTypeFk or linkDirectionFk is null
+   */
+  bool isNull() const
+  {
+    return (pvPk.isNull() || pvLinkTypeFk.isNull() || pvLinkDirectionFk.isNull());
+  }
+
+  /*! \brief Clear key data
+   */
+  void clear()
+  {
+    pvPk.clear();
+    pvLinkTypeFk.clear();
+    pvLinkDirectionFk.clear();
+    pvArticleLinkFk.clear();
+    pvWireId.clear();
+  }
 };
 
 #endif // #ifndef MDT_CL_LINK_KEY_DATA_H
