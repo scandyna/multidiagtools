@@ -176,6 +176,11 @@ bool mdtClVehicleTypeLink::removeVehicleTypeLinks(const mdtClLinkPkData & linkPk
   return true;
 }
 
+bool mdtClVehicleTypeLink::removeVehicleTypeLinks(const mdtClLinkPkData & linkPk)
+{
+  return removeData("VehicleType_Link_tbl", "UnitConnectionStart_Id_FK", linkPk.connectionStartId, "UnitConnectionEnd_Id_FK", linkPk.connectionEndId);
+}
+
 bool mdtClVehicleTypeLink::updateVehicleTypeLink(const mdtClLinkPkData & linkPk, QList<mdtClVehicleTypeStartEndKeyData> expectedVehicleTypeKeyList, bool handleTransaction)
 {
   mdtSqlTransaction transaction(database());

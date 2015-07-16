@@ -493,10 +493,34 @@ void mdtClLinkTest::linkModificationAddGetRemoveTest()
   key.setModificationFk(modificationFk);
   // Add to database
   QVERIFY(lnk.addModification(key));
-  // Get back and check
+  /// \todo Get back and check
   
   // Remove from database
   QVERIFY(lnk.removeModification(key));
+  /*
+   * Check removing all modifications for a link
+   */
+  // Setup data
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  version.setVersion(1.2);
+  modificationFk.setModification(mdtClModification_t::New);
+  key.setLinkFk(linkFk);
+  key.setLinkVersionFk(version.pk());
+  key.setModificationFk(modificationFk);
+  // Add to database
+  QVERIFY(lnk.addModification(key));
+  // Setup data
+  version.setVersion(1.3);
+  modificationFk.setModification(mdtClModification_t::Exists);
+  key.setLinkFk(linkFk);
+  key.setLinkVersionFk(version.pk());
+  key.setModificationFk(modificationFk);
+  // Add to database
+  QVERIFY(lnk.addModification(key));
+  // Remove
+  QVERIFY(lnk.removeModifications(linkFk));
+  /// \todo Get back and check that modifications where removed
 
 }
 
@@ -711,6 +735,31 @@ void mdtClLinkTest::vehicleTypeLinkAddGetRemoveTest()
   // Remove assignations
   QVERIFY(vtl.removeVehicleTypeLinks(linkFk, vtStartEndKeyList, true));
   // Get back and check
+  keyList = vtl.getVehicleTypeLinkKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(keyList.size(), 0);
+  /*
+   * Check removing all vehicle types assigned to a link
+   */
+  // Add a assignations
+  key.setVehicleTypeStartId(1);
+  key.setVehicleTypeEndId(2);
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  key.setLinkFk(linkFk);
+  QVERIFY(vtl.addVehicleTypeLink(key));
+  key.setVehicleTypeStartId(3);
+  key.setVehicleTypeEndId(4);
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  key.setLinkFk(linkFk);
+  QVERIFY(vtl.addVehicleTypeLink(key));
+  // Get back and check that they where added
+  keyList = vtl.getVehicleTypeLinkKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(keyList.size(), 2);
+  // Remove assignations
+  QVERIFY(vtl.removeVehicleTypeLinks(linkFk));
   keyList = vtl.getVehicleTypeLinkKeyDataList(linkFk, ok);
   QVERIFY(ok);
   QCOMPARE(keyList.size(), 0);
@@ -1034,7 +1083,7 @@ void mdtClLinkTest::linkAddGetRemoveTest()
   QCOMPARE(data.resistance.value(), 1.2);
   QCOMPARE(data.length.value(), 12.0);
   // Remove link
-  QVERIFY(lnk.removeLink(pk));
+  QVERIFY(lnk.removeLink(pk, true));
   data = lnk.getLinkData(pk, ok);
   QVERIFY(ok);
   QVERIFY(data.isNull());

@@ -312,6 +312,67 @@ mdtClLinkData mdtClLink::getLinkData(const QVariant & unitConnectionStartId, con
   return linkData;
 }
 
+bool mdtClLink::updateLink(const mdtClLinkPkData & linkPk, const mdtClLinkData & linkData,
+                           const mdtClLinkModificationKeyData & oldModification, const mdtClLinkModificationKeyData & modification,
+                           const QList< mdtClVehicleTypeStartEndKeyData > & vehicleTypeList, bool handleTransaction)
+{
+  Q_ASSERT(!linkPk.isNull());
+  Q_ASSERT(!linkData.isNull());
+
+  mdtClVehicleTypeLink vtl(database());
+  mdtSqlTransaction transaction(database());
+  bool pkChanged = false;
+
+  // Check if link PK has changed
+  if( (linkData.pk().connectionStartId != linkPk.connectionStartId) || (linkData.pk().connectionEndId != linkPk.connectionEndId) ){
+    pkChanged = true;
+  }
+  // Begin transaction
+  if(handleTransaction){
+    if(!transaction.begin()){
+      pvLastError = transaction.lastError();
+      return false;
+    }
+  }
+  // If link PK has changed, we simply remove and re-add the link
+  if(pkChanged){
+    if(!removeLink(linkPk, false)){
+      return false;
+    }
+    if(!addLink(linkData, modification, vehicleTypeList, false)){
+      return false;
+    }
+  }else{
+    // Update LinkModification_tbl part
+    if(!updateModification(oldModification, modification, false)){
+      return false;
+    }
+    // Update VehicleType_Link_tbl part
+    if(!vtl.updateVehicleTypeLink(linkPk, vehicleTypeList, false)){
+      return false;
+    }
+    // Update Link_tbl part
+    mdtSqlRecord record;
+    if(!record.addAllFields("Link_tbl", database())){
+      pvLastError = record.lastError();
+      return false;
+    }
+    fillRecord(record, linkData);
+    if(!updateRecord("Link_tbl", record, "UnitConnectionStart_Id_FK", linkPk.connectionStartId, "UnitConnectionEnd_Id_FK", linkPk.connectionEndId)){
+      return false;
+    }
+  }
+  // Commit transaction
+  if(handleTransaction){
+    if(!transaction.commit()){
+      pvLastError = transaction.lastError();
+      return false;
+    }
+  }
+
+  return true;
+}
+
 bool mdtClLink::editLink(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, const mdtClLinkData & linkData)
 {
   /*
@@ -342,9 +403,39 @@ bool mdtClLink::editLink(const QVariant & unitConnectionStartId, const QVariant 
   return true;
 }
 
-bool mdtClLink::removeLink(const mdtClLinkPkData & pk)
+bool mdtClLink::removeLink(const mdtClLinkPkData & pk, bool handleTransaction)
 {
-  return removeData("Link_tbl", "UnitConnectionStart_Id_FK", pk.connectionStartId, "UnitConnectionEnd_Id_FK", pk.connectionEndId);
+  mdtClVehicleTypeLink vtl(database());
+  mdtSqlTransaction transaction(database());
+
+  // Begin transaction
+  if(handleTransaction){
+    if(!transaction.begin()){
+      pvLastError = transaction.lastError();
+      return false;
+    }
+  }
+  // Remove VehicleType_Link_tbl part
+  if(!vtl.removeVehicleTypeLinks(pk)){
+    return false;
+  }
+  // Remove LinkModification_tbl part
+  if(!removeModifications(pk)){
+    return false;
+  }
+  // Remove Link_tbl part
+  if(!removeData("Link_tbl", "UnitConnectionStart_Id_FK", pk.connectionStartId, "UnitConnectionEnd_Id_FK", pk.connectionEndId)){
+    return false;
+  }
+  // Commit transaction
+  if(handleTransaction){
+    if(!transaction.commit()){
+      pvLastError = transaction.lastError();
+      return false;
+    }
+  }
+
+  return true;
 }
 
 
@@ -384,18 +475,23 @@ bool mdtClLink::removeLink(const QVariant & unitConnectionStartId, const QVarian
 
 bool mdtClLink::removeLinks(const mdtSqlTableSelection & s)
 {
+  mdtSqlTransaction transaction(database());
   int i;
 
-  if(!beginTransaction()){
+  if(!transaction.begin()){
+    pvLastError = transaction.lastError();
     return false;
   }
   for(i = 0; i < s.rowCount(); ++i){
-    if(!removeLink(s.data(i, "UnitConnectionStart_Id_FK"), s.data(i, "UnitConnectionEnd_Id_FK"), false)){
-      rollbackTransaction();
+    mdtClLinkPkData pk;
+    pk.connectionStartId = s.data(i, "UnitConnectionStart_Id_FK");
+    pk.connectionEndId = s.data(i, "UnitConnectionEnd_Id_FK");
+    if(!removeLink(pk, false)){
       return false;
     }
   }
-  if(!commitTransaction()){
+  if(!transaction.commit()){
+    pvLastError = transaction.lastError();
     return false;
   }
 
@@ -416,6 +512,32 @@ bool mdtClLink::addModification(const mdtClLinkModificationKeyData & key)
   record.setValue("Modification_Code_FK", key.modificationFk().code);
 
   return addRecord(record, "LinkModification_tbl");
+}
+
+bool mdtClLink::updateModification(const mdtClLinkModificationKeyData &originalModification, const mdtClLinkModificationKeyData &newModification, bool handleTransaction)
+{
+  mdtSqlTransaction transaction(database());
+
+  if(handleTransaction){
+    if(!transaction.begin()){
+      pvLastError = transaction.lastError();
+      return false;
+    }
+  }
+  if(!removeModification(originalModification)){
+    return false;
+  }
+  if(!addModification(newModification)){
+    return false;
+  }
+  if(handleTransaction){
+    if(!transaction.commit()){
+      pvLastError = transaction.lastError();
+      return false;
+    }
+  }
+
+  return true;
 }
 
 bool mdtClLink::removeModification(const mdtClLinkModificationKeyData & key)
@@ -443,6 +565,11 @@ bool mdtClLink::removeModification(const mdtClLinkModificationKeyData & key)
   }
 
   return true;
+}
+
+bool mdtClLink::removeModifications(const mdtClLinkPkData & linkPk)
+{
+  return removeData("LinkModification_tbl", "UnitConnectionStart_Id_FK", linkPk.connectionStartId, "UnitConnectionEnd_Id_FK", linkPk.connectionEndId);
 }
 
 

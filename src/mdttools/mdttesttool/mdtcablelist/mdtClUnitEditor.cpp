@@ -897,7 +897,7 @@ void mdtClUnitEditor::addLink()
 {
   mdtClUnitLinkDialog dialog(this, database());
   QVariant unitId;
-  mdtClLink lnk(0, database());
+  mdtClLink lnk(database());
 
   // Setup and show dialog
   unitId = currentUnitId();
@@ -924,14 +924,15 @@ void mdtClUnitEditor::addLink()
 void mdtClUnitEditor::editLink()
 {
   mdtSqlTableWidget *linkWidget;
-  mdtClUnitLinkDialog dialog(0, database());
-  QVariant unitId; ///, startConnectionId, endConnectionId;
+  mdtClUnitLinkDialog dialog(this, database());
+  QVariant unitId;
   QVariant var;
   mdtClLinkPkData pk;
   mdtClLinkData linkData;
   mdtClLinkVersionData linkVersionData;
   mdtClModificationPkData modificationPk;
-  mdtClLink lnk(0, database());
+  mdtClLinkModificationKeyData oldModificationKey;
+  mdtClLink lnk(database());
   bool ok;
 
   linkWidget = sqlTableWidget("UnitLink_view");
@@ -944,9 +945,6 @@ void mdtClUnitEditor::editLink()
   // Get connection PK
   pk.connectionStartId = linkWidget->currentData("UnitConnectionStart_Id_FK");
   pk.connectionEndId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
-  ///startConnectionId = linkWidget->currentData("UnitConnectionStart_Id_FK");
-  ///endConnectionId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
-  ///if(startConnectionId.isNull() || endConnectionId.isNull()){
   if(pk.isNull()){
     QMessageBox msgBox;
     msgBox.setText(tr("Please select a link."));
@@ -954,14 +952,17 @@ void mdtClUnitEditor::editLink()
     msgBox.exec();
     return;
   }
+  oldModificationKey.setLinkFk(pk);
   // Get link version and modification
   var = linkWidget->currentData("Version_FK");
   if(!var.isNull()){
     linkVersionData.setVersionPk(var);
+    oldModificationKey.setLinkVersionFk(linkVersionData.pk());
   }
   var = linkWidget->currentData("Modification_Code_FK");
   if(!var.isNull()){
     modificationPk.code = var.toString();
+    oldModificationKey.setModificationFk(modificationPk);
   }
   // Get current link data
   ///linkData = lnk.getLinkData(startConnectionId, endConnectionId,true, true, ok);
@@ -983,7 +984,12 @@ void mdtClUnitEditor::editLink()
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
-  // Edit link
+  // Update link
+  if(!lnk.updateLink(pk, dialog.linkData(), oldModificationKey, dialog.linkModificationKeyData(), dialog.selectedVehicleTypeList(), true)){
+    pvLastError = lnk.lastError();
+    displayLastError();
+    return;
+  }
 //   if(!lnk.editLink(startConnectionId, endConnectionId, dialog.linkData())){
 //     pvLastError = lnk.lastError();
 //     displayLastError();
@@ -996,11 +1002,12 @@ void mdtClUnitEditor::editLink()
 void mdtClUnitEditor::removeLinks()
 {
   mdtSqlTableWidget *widget;
-  mdtClLink lnk(0, database());
+  mdtClLink lnk(database());
   QMessageBox msgBox;
   mdtSqlTableSelection s;
   QSqlError sqlError;
   QStringList fields;
+  QString infoText;
 
   widget = sqlTableWidget("UnitLink_view");
   Q_ASSERT(widget != 0);
@@ -1012,7 +1019,9 @@ void mdtClUnitEditor::removeLinks()
   }
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove links attached to current unit."));
-  msgBox.setInformativeText(tr("Do you want to continue ?"));
+  infoText = tr("This will also remove all modification history for selected links.");
+  infoText += "\n\n" + tr("Do you want to continue ?");
+  msgBox.setInformativeText(infoText);
   msgBox.setIcon(QMessageBox::Warning);
   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
   msgBox.setDefaultButton(QMessageBox::No);

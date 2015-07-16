@@ -194,6 +194,23 @@ class mdtClLink : public mdtTtBase
    */
   mdtClLinkData getLinkData(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, bool includeConnectionData, bool includeVehicleTypeLinkData , bool & ok);
 
+  /*! \brief Update a link, its modification and its vehicle type assignations
+   *
+   * \param linkPk Link to edit
+   * \param linkData New link data
+   * \param oldModification Modification to update (LinkModification_tbl part)
+   * \param modification New modification (LinkModification_tbl part)
+   * \param vehicleTypeList List of vehicle types assignations (VehicleType_Link_tbl)
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
+   * \pre linkPk must not be null
+   * \pre linkData must not be null
+   */
+  bool updateLink(const mdtClLinkPkData & linkPk, const mdtClLinkData & linkData, 
+                  const mdtClLinkModificationKeyData & oldModification, const mdtClLinkModificationKeyData & modification,  
+                  const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
+
   /*! \brief Edit a unit link
    *
    * If linkData has following criteria:
@@ -204,12 +221,22 @@ class mdtClLink : public mdtTtBase
    * then, data are only updated in database.
    * For other cases, record will be removed then created again
    *  (this is due to complexity because of handling vehicle type links).
+   *
+   * \deprecated
    */
   bool editLink(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, const mdtClLinkData & linkData);
 
   /*! \brief Remove a link
+   *
+   * Will also remove each vehicle types assigned to given link (VehicleType_Link_tbl),
+   *  and all modification history (LinkModification_tbl).
+   *
+   * \param pk PK of link to remove
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
    */
-  bool removeLink(const mdtClLinkPkData & pk);
+  bool removeLink(const mdtClLinkPkData & pk, bool handleTransaction);
 
   /*! \brief Remove a unit link
    *
@@ -220,6 +247,8 @@ class mdtClLink : public mdtTtBase
   bool removeLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, bool handleTransaction = true);
 
   /*! \brief Remove each unit link that is contained in selection
+   *
+   * \sa removeLink()
    */
   bool removeLinks(const mdtSqlTableSelection & s);
 
@@ -227,10 +256,17 @@ class mdtClLink : public mdtTtBase
    */
   bool addModification(const mdtClLinkModificationKeyData & key);
 
+  /*! \brief Update modification
+   */
+  bool updateModification(const mdtClLinkModificationKeyData & originalModification, const mdtClLinkModificationKeyData & newModification, bool handleTransaction);
+
   /*! \brief Remove link modification (LinkModification_tbl)
    */
   bool removeModification(const mdtClLinkModificationKeyData & key);
 
+  /*! \brief Remove all modifications related to given link
+   */
+  bool removeModifications(const mdtClLinkPkData & linkPk);
 
   /*! \brief Get vehicle type link data for given unit ID
    */
