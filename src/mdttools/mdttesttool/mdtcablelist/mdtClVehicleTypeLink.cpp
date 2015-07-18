@@ -181,6 +181,34 @@ bool mdtClVehicleTypeLink::removeVehicleTypeLinks(const mdtClLinkPkData & linkPk
   return removeData("VehicleType_Link_tbl", "UnitConnectionStart_Id_FK", linkPk.connectionStartId, "UnitConnectionEnd_Id_FK", linkPk.connectionEndId);
 }
 
+bool mdtClVehicleTypeLink::removeVehicleTypeLinks(const QVariant & unitId)
+{
+  Q_ASSERT(!unitId.isNull());
+
+  QSqlQuery query(database());
+  QString sql;
+
+  sql = "DELETE FROM VehicleType_Link_tbl"\
+        " WHERE UnitConnectionStart_Id_FK IN ("\
+        "  SELECT L.UnitConnectionStart_Id_FK"\
+        "   FROM Link_tbl L JOIN UnitConnection_tbl UCNX ON UCNX.Id_PK = L.UnitConnectionStart_Id_FK"\
+        "   WHERE UCNX.Unit_Id_FK = " + unitId.toString() + ")"\
+        " AND UnitConnectionEnd_Id_FK IN ("\
+        "  SELECT L.UnitConnectionEnd_Id_FK"\
+        "   FROM Link_tbl L JOIN UnitConnection_tbl UCNX ON UCNX.Id_PK = L.UnitConnectionEnd_Id_FK"\
+        "   WHERE UCNX.Unit_Id_FK = " + unitId.toString() + ")";
+  if(!query.exec(sql)){
+    QSqlError sqlError = query.lastError();
+    pvLastError.setError(tr("Removing vehicle type - link assignation by unit failed. SQL: ") + sql, mdtError::Error);
+    pvLastError.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClVehicleTypeLink");
+    pvLastError.commit();
+    return false;
+  }
+
+  return true;
+}
+
 bool mdtClVehicleTypeLink::updateVehicleTypeLink(const mdtClLinkPkData & linkPk, QList<mdtClVehicleTypeStartEndKeyData> expectedVehicleTypeKeyList, bool handleTransaction)
 {
   mdtSqlTransaction transaction(database());

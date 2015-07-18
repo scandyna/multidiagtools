@@ -123,6 +123,7 @@ class mdtSqlForm : public QWidget
    */
   virtual void addMenus(QMenuBar *menuBar)
   {
+    Q_UNUSED(menuBar)
   }
 
   /*! \brief Set the main (or parent) table of the form

@@ -128,24 +128,6 @@ class mdtClLink : public mdtTtBase
    */
   ~mdtClLink();
 
-  /*! \brief Build vehicle type link data based on given start and end vehicle ID lists
-   *
-   * The list is built regarding distinct cases:
-   *  - If both start and end vehicle types lists contains exactly the same count of items,
-   *     each start ID is put together with each end ID , in the order of both lists.
-   *  - If one vehicle types list has only 1 item, and the other has many items,
-   *     the ID of the 1 item list is copied to the other list
-   *     (case of 1 vehicle type linked to many vehicle types) .
-   *  - All other cases are wrong.
-   */
-  bool buildVehicleTypeLinkDataList(mdtClLinkData & linkData, const QList<QVariant> & vtStartIdList, const QList<QVariant> & vtEndIdList);
-
-  /*! \brief Add a link to database
-   *
-   * \deprecated
-   */
-  bool addLink(const mdtClLinkData & linkData);
-
   /*! \brief Add a link to database
    *
    * \param linkData Link data to add to Link_tbl
@@ -167,17 +149,9 @@ class mdtClLink : public mdtTtBase
    */
   bool addLink(const mdtClLinkData & linkData, const mdtClLinkModificationKeyData & modification, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
 
-  /*! \brief Add a list of links
-   *
-   * \sa addLink().
-   */
-  bool addLinks(const QList<mdtClLinkData> & linkDataList, bool handleTransaction = true);
-
   /*! \brief Check if a link exists
-   *
-   * \deprecated
    */
-  bool linkExists(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, bool & ok);
+  bool linkExists(const mdtClLinkPkData & pk, bool & ok);
 
   /*! \brief Get link data
    *
@@ -187,12 +161,6 @@ class mdtClLink : public mdtTtBase
    *          Use ok parameter to diffrenciate both cases.
    */
   mdtClLinkData getLinkData(const mdtClLinkPkData & pk, bool & ok);
-
-  /*! \brief Get link data
-   *
-   * \deprecated
-   */
-  mdtClLinkData getLinkData(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, bool includeConnectionData, bool includeVehicleTypeLinkData , bool & ok);
 
   /*! \brief Update a link, its modification and its vehicle type assignations
    *
@@ -211,21 +179,6 @@ class mdtClLink : public mdtTtBase
                   const mdtClLinkModificationKeyData & oldModification, const mdtClLinkModificationKeyData & modification,  
                   const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
 
-  /*! \brief Edit a unit link
-   *
-   * If linkData has following criteria:
-   *  - Flag hasValue set false for UnitConnectionStart_Id_FK
-   *  - Flag hasValue set false for UnitConnectionEnd_Id_FK
-   *  - Flag vehicleTypeLinksEdited not set
-   *
-   * then, data are only updated in database.
-   * For other cases, record will be removed then created again
-   *  (this is due to complexity because of handling vehicle type links).
-   *
-   * \deprecated
-   */
-  bool editLink(const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId, const mdtClLinkData & linkData);
-
   /*! \brief Remove a link
    *
    * Will also remove each vehicle types assigned to given link (VehicleType_Link_tbl),
@@ -237,14 +190,6 @@ class mdtClLink : public mdtTtBase
    *             set this argument false.
    */
   bool removeLink(const mdtClLinkPkData & pk, bool handleTransaction);
-
-  /*! \brief Remove a unit link
-   *
-   * Will also remove all vehicle type related links
-   *
-   * \deprecated
-   */
-  bool removeLink(const QVariant &unitConnectionStartId, const QVariant &unitConnectionEndId, bool handleTransaction = true);
 
   /*! \brief Remove each unit link that is contained in selection
    *
@@ -267,18 +212,6 @@ class mdtClLink : public mdtTtBase
   /*! \brief Remove all modifications related to given link
    */
   bool removeModifications(const mdtClLinkPkData & linkPk);
-
-  /*! \brief Get vehicle type link data for given unit ID
-   */
-  QList<mdtClVehicleTypeLinkData> getVehicleTypeLinkDataByUnitId(const QVariant & unitId, bool *ok);
-
-  /*! \brief Remove vehicle type links for given unit ID
-   */
-  bool removeVehicleTypeLinkByUnitId(const QVariant & unitId, bool handleTransaction);
-
-  /*! \brief Remove vehicle type links
-   */
-  bool removeVehicleTypeLinks(const QList<mdtClVehicleTypeLinkData> & vtLinkList, bool handleTransaction);
 
   /*! \brief Get a list of connection links between A and B connections, by name
    *
@@ -411,30 +344,6 @@ class mdtClLink : public mdtTtBase
    */
   bool checkOrBuildConnectionLinkListByName(const QList<mdtClUnitConnectionData> & A, const QList<mdtClUnitConnectionData> & B, 
                                             const mdtClConnectableCriteria & criteria, QList<mdtClLinkData> *connectionLinkDataList = 0);
-
-  /*! \brief Check vehicle type start and end ID lists
-   */
-  bool checkVehicleTypeStartEndIdLists(const QList<QVariant> & vtStartIdList, const QList<QVariant> & vtEndIdList);
-
-  /*! \brief Add link to vehicle type table
-   */
-  bool addLinkToVehicleType(const mdtClVehicleTypeLinkData & data);
-
-  /*! \brief Add a list of links to vehicle type table
-   */
-  bool addLinkToVehicleTypeList(const QList<mdtClVehicleTypeLinkData> & dataList);
-
-  /*! \brief Get start and end connection data
-   *
-   * Note: will set start and end connection data in given link data
-   */
-  bool getConnectionData(mdtClLinkData & linkData, const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId);
-
-  /*! \brief Get data from vehicle type link table
-   *
-   * Note: will fill list in given link data
-   */
-  bool getVehicleTypeLinkData(mdtClLinkData & linkData, const QVariant & unitConnectionStartId, const QVariant & unitConnectionEndId);
 
   /*! \brief Fill given record with given data
    */

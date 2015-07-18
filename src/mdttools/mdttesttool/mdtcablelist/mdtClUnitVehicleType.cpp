@@ -19,7 +19,9 @@
  **
  ****************************************************************************/
 #include "mdtClUnitVehicleType.h"
-#include "mdtClLink.h"
+///#include "mdtClLink.h"
+#include "mdtClVehicleTypeLink.h"
+#include "mdtSqlTransaction.h"
 #include "mdtError.h"
 #include <QSqlQuery>
 #include <QSqlError>
@@ -128,19 +130,25 @@ bool mdtClUnitVehicleType::removeUnitVehicleAssignments(const QVariant& unitId, 
 {
   int i;
   QString sql;
-  mdtClLink lnk(0, database());
+  ///mdtClLink lnk(0, database());
+  mdtClVehicleTypeLink vtl(database());
+  mdtSqlTransaction transaction(database());
 
   if(vehicleTypeIdList.size() < 1){
     return true;
   }
-  if(!beginTransaction()){
+  if(!transaction.begin()){
+    pvLastError = transaction.lastError();
     return false;
   }
   // Remove vehicle type links
-  if(!lnk.removeVehicleTypeLinkByUnitId(unitId, false)){
-    rollbackTransaction();
+  if(!vtl.removeVehicleTypeLinks(unitId)){
     return false;
   }
+//   if(!lnk.removeVehicleTypeLinkByUnitId(unitId, false)){
+//     rollbackTransaction();
+//     return false;
+//   }
   // Generate SQL
   sql = "DELETE FROM VehicleType_Unit_tbl "\
         "WHERE Unit_Id_FK = " + unitId.toString();
@@ -156,7 +164,6 @@ bool mdtClUnitVehicleType::removeUnitVehicleAssignments(const QVariant& unitId, 
   // Submit query
   QSqlQuery query(database());
   if(!query.exec(sql)){
-    rollbackTransaction();
     QSqlError sqlError = query.lastError();
     pvLastError.setError(tr("Cannot execute query for unit <-> vehicle type assignment deletion"), mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());
@@ -164,7 +171,8 @@ bool mdtClUnitVehicleType::removeUnitVehicleAssignments(const QVariant& unitId, 
     pvLastError.commit();
     return false;
   }
-  if(!commitTransaction()){
+  if(!transaction.commit()){
+    pvLastError = transaction.lastError();
     return false;
   }
 

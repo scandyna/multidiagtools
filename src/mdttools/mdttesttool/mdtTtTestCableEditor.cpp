@@ -499,11 +499,13 @@ void mdtTtTestCableEditor::addLink()
     return;
   }
   // Add link
+  /**
   if(!lnk.addLink(dialog.linkData())){
     pvLastError = lnk.lastError();
     displayLastError();
     return;
   }
+  */
   // Update links view
   select("UnitLink_view");
 }
@@ -531,7 +533,7 @@ void mdtTtTestCableEditor::editLink()
     return;
   }
   // Get current link data
-  linkData = lnk.getLinkData(startConnectionId, endConnectionId,true, true, ok);
+  ///linkData = lnk.getLinkData(startConnectionId, endConnectionId,true, true, ok);
   if(!ok){
     pvLastError = lnk.lastError();
     displayLastError();
@@ -545,11 +547,13 @@ void mdtTtTestCableEditor::editLink()
     return;
   }
   // Edit link
+  /**
   if(!lnk.editLink(startConnectionId, endConnectionId, dialog.linkData())){
     pvLastError = lnk.lastError();
     displayLastError();
     return;
   }
+  */
   // Update links view
   select("UnitLink_view");
 }

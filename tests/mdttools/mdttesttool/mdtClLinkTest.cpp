@@ -1048,6 +1048,9 @@ void mdtClLinkTest::linkAddGetRemoveTest()
   mdtClLinkData data;
   mdtClLinkPkData pk;
   mdtClArticleLinkPkData articleLinkFk;
+  mdtClLinkVersionData linkVersionFk;
+  mdtClModificationPkData modificationFk;
+  mdtClLinkModificationKeyData linkModificationFk;
   bool ok;
 
   // For this simple test, we not need to have the whole database schema, so we disable foreign keys constraints
@@ -1056,9 +1059,16 @@ void mdtClLinkTest::linkAddGetRemoveTest()
   /*
    * Add a link - Not based on a article link
    */
-  // Setup data
+  // Setup link pk data
   pk.connectionStartId = 10;
   pk.connectionEndId = 11;
+  // Setup link modification data
+  linkVersionFk.setVersion(1.5);
+  modificationFk.setModification(mdtClModification_t::New);
+  linkModificationFk.setLinkFk(pk);
+  linkModificationFk.setLinkVersionFk(linkVersionFk.pk());
+  linkModificationFk.setModificationFk(modificationFk);
+  // Setup link data
   data.clear();
   data.setPk(pk);
   data.setLinkType(mdtClLinkType_t::InternalLink);
@@ -1068,7 +1078,7 @@ void mdtClLinkTest::linkAddGetRemoveTest()
   data.resistance = 1.2;
   data.length = 12.0;
   // Add
-  QVERIFY(lnk.addLink(data));
+  QVERIFY(lnk.addLink(data, linkModificationFk, true));
   // Get back and check
   data = lnk.getLinkData(pk, ok);
   QVERIFY(ok);

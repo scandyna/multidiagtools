@@ -26,6 +26,7 @@
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorKeyData.h"
 #include "mdtClUnitConnectorData.h"
+#include "mdtClLinkKeyData.h"
 
 /*! \brief Helper class for unit connection and unit connector manipulations
  *
@@ -45,13 +46,20 @@ class mdtClUnitConnection : public mdtClArticleConnection
 
   /*! \brief Add a unit connection to database
    *
+   * If unit connection is based on a article connection,
+   *  it will be checked if adding this unit connection
+   *  requieres to create a link (based on related article link).
+   *  In such case, only the Link_tbl part is threated here.
+   *  Use linksHaveBeenAdded() to check and getAddedLinksText()
+   *  to show the user wich links he has to update (modifications, vehicle assignations, ...)
+   *
    * \param data Unit connection data to store
    * \param handleTransaction Internally, a transaction is (explicitly) open.
    *             By calling this function with a allready open transaction,
    *             set this argument false.
-   * \return Id_PK of added unit connection, or a null key on error
+   * \return PK (Id_PK) of added unit connection, or a null PK on error
    */
-  mdtClUnitConnectionKeyData addUnitConnection(const mdtClUnitConnectionData & data, bool handleTransaction);
+  mdtClUnitConnectionPkData addUnitConnection(const mdtClUnitConnectionData & data, bool handleTransaction);
 
   /*! \brief Add a list of unit connections to database
    *
@@ -59,18 +67,26 @@ class mdtClUnitConnection : public mdtClArticleConnection
    * \param handleTransaction Internally, a transaction is (explicitly) open.
    *             By calling this function with a allready open transaction,
    *             set this argument false.
+   * \sa addUnitConnection()
    */
   bool addUnitConnectionList(const QList<mdtClUnitConnectionData> & dataList, bool handleTransaction);
 
+  /*! \brief Check if some links have been added by addUnitConnection() or addUnitConnectionList()
+   */
+  bool linksHaveBeenAdded() const;
+
+  /*! \brief Get text that contains list of links that have been added by addUnitConnection() or addUnitConnectionList()
+   */
+  QString getAddedLinksText(bool & ok);
+
   /*! \brief Get unit connection data from database
    *
-   * \param key Data that contains unit connection ID (Id_PK).
-   *     Note: only id is used, other key memebers are ignored.
+   * \param pk Data that contains unit connection ID (Id_PK).
    * \return data for given key.
    *       A null data is returned if given key does not exist, or a error occured.
    *       Use ok parameter to diffrenciate both cases.
    */
-  mdtClUnitConnectionData getUnitConnectionData(const mdtClUnitConnectionKeyData & key, bool & ok);
+  mdtClUnitConnectionData getUnitConnectionData(const mdtClUnitConnectionPkData & pk, bool & ok);
 
   /*! \brief Get unit connection data from database
    *
@@ -93,14 +109,14 @@ class mdtClUnitConnection : public mdtClArticleConnection
 
   /*! \brief Update unit connection
    *
-   * \param key Key of unit connection to edit (only id is used in key)
+   * \param pk PK of unit connection to edit
    * \param data Data to set
    */
-  bool updateUnitConnection(const mdtClUnitConnectionKeyData & key, const mdtClUnitConnectionData & data);
+  bool updateUnitConnection(const mdtClUnitConnectionPkData & pk, const mdtClUnitConnectionData & data);
 
   /*! \brief Remove a unit connection
    */
-  bool removeUnitConnection(const mdtClUnitConnectionKeyData & key);
+  bool removeUnitConnection(const mdtClUnitConnectionPkData & pk);
 
   /*! \brief Remove each unit connection that is contained in selection
    *
@@ -135,13 +151,13 @@ class mdtClUnitConnection : public mdtClArticleConnection
 
   /*! \brief Get unit connector data for given unit connection from database
    *
-   * \param key Unit connection PK (note: only id is used in key, other members are ignored).
+   * \param pk Unit connection PK.
    * \param ok Is set false on error
    * \return data for given key.
    *       A null data is returned if given key does not exist, or a error occured.
    *       Use ok parameter to diffrenciate both cases.
    */
-  mdtClUnitConnectorData getUnitConnectorData(mdtClUnitConnectionKeyData key, bool & ok);
+  mdtClUnitConnectorData getUnitConnectorData(mdtClUnitConnectionPkData pk, bool & ok);
 
   /*! \brief Get unit connector data from database
    *
@@ -231,6 +247,8 @@ class mdtClUnitConnection : public mdtClArticleConnection
   void fillData(mdtClUnitConnectorData & data, const QSqlRecord & record);
 
   Q_DISABLE_COPY(mdtClUnitConnection);
+
+  QList<mdtClLinkPkData> pvAddedLinks;
 };
 
 #endif // #ifndef MDT_CL_UNIT_CONNECTION_H

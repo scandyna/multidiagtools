@@ -26,6 +26,7 @@
 #include "mdtError.h"
 #include "mdtClArticleLinkData.h"
 #include "mdtClArticleLinkKeyData.h"
+#include "mdtClUnitConnectionKeyData.h"
 #include "mdtSqlRecord.h"
 #include <QSqlRecord>
 #include <QList>
@@ -60,6 +61,28 @@ class mdtClArticleLink : public mdtTtBase
    *       Use ok parameter to diffrenciate both cases.
    */
   mdtClArticleLinkData getLinkData(const mdtClArticleLinkPkData & key, bool & ok);
+
+  /*! \brief Get article link data from database
+   *
+   * If given unit connection is added to given unit reqeuiers that a link,
+   *  based on a article link, must be created, corresponding article link data is returned.
+   *
+   * For example, immagine we have a article that has several links defined.
+   *  While we edit a unit that is based on this article, when we add
+   *  connections based on a article connection (part of same article).
+   *  If we create 2 of such connections, and they are part of a article link,
+   *  a link must be added in Link_tbl.
+   *
+   * \param unitConnectionPk PK of unit connection
+   * \param unitId ID of concerned unit
+   * \return Article link data if adding given connection to given unit
+   *          requiers adding a link into Link_tbl, or a null data object.
+   *          If a error occurs, a null data object is also returned.
+   *          Use ok parameter to diffrenciate both cases.
+   * \pre ucnxPk must not be null.
+   * \pre unitId must not be null.
+   */
+  mdtClArticleLinkData getLinkData(const mdtClUnitConnectionPkData & ucnxPk, const QVariant & unitId, bool & ok);
 
   /*! \brief Get number of links in Link_tbl that are based on given article link
    *

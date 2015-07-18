@@ -723,18 +723,18 @@ void mdtClUnitEditor::editConnection()
   mdtSqlTableWidget *widget;
   mdtClUnitConnectionDialog dialog(this, database(), mdtClUnitConnectionDialog::Edit);
   mdtClUnitConnection ucnx(database());
-  mdtClUnitConnectionKeyData key;
+  mdtClUnitConnectionPkData pk;
   mdtClUnitConnectionData data;
   bool ok;
 
   widget = sqlTableWidget("UnitConnection_view");
   Q_ASSERT(widget != 0);
   // Get current unit connection data
-  key.id = widget->currentData("Id_PK");
-  if(key.id.isNull()){
+  pk.id = widget->currentData("Id_PK");
+  if(pk.isNull()){
     return;
   }
-  data = ucnx.getUnitConnectionData(key, ok);
+  data = ucnx.getUnitConnectionData(pk, ok);
   if(!ok){
     pvLastError = ucnx.lastError();
     displayLastError();
@@ -746,7 +746,7 @@ void mdtClUnitEditor::editConnection()
     return;
   }
   // Update in database
-  if(!ucnx.updateUnitConnection(data.keyData(), dialog.data())){
+  if(!ucnx.updateUnitConnection(data.keyData().pk, dialog.data())){
     pvLastError = ucnx.lastError();
     displayLastError();
     return;
@@ -965,7 +965,6 @@ void mdtClUnitEditor::editLink()
     oldModificationKey.setModificationFk(modificationPk);
   }
   // Get current link data
-  ///linkData = lnk.getLinkData(startConnectionId, endConnectionId,true, true, ok);
   linkData = lnk.getLinkData(pk, ok);
   if(!ok){
     pvLastError = lnk.lastError();
@@ -990,11 +989,6 @@ void mdtClUnitEditor::editLink()
     displayLastError();
     return;
   }
-//   if(!lnk.editLink(startConnectionId, endConnectionId, dialog.linkData())){
-//     pvLastError = lnk.lastError();
-//     displayLastError();
-//     return;
-//   }
   // Update links view
   select("UnitLink_view");
 }
@@ -1077,7 +1071,7 @@ void mdtClUnitEditor::connectConnectors()
   QVariant startUnitId, endUnitId;
   mdtClConnectableCriteria connectableCriteria;
   mdtClConnectableConnectorDialog connectorSelectionDialog(this, database());
-  bool ok;
+  ///bool ok;
 
   // Get current unit ID
   startUnitId = currentUnitId();

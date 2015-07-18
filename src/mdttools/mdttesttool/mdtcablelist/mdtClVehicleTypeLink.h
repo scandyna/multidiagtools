@@ -95,6 +95,10 @@ class mdtClVehicleTypeLink : public mdtTtBase
    */
   bool removeVehicleTypeLinks(const mdtClLinkPkData & linkPk);
 
+  /*! \brief Remove all vehicle types that are assigned to given unit
+   */
+  bool removeVehicleTypeLinks(const QVariant & unitId);
+
   /*! \brief Update vehicle type - link assignation
    *
    * \param linkPk Link for witch assignations must be updated

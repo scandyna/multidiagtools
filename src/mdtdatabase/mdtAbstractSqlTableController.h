@@ -1001,7 +1001,7 @@ class mdtAbstractSqlTableController : public QObject
    * Note: don't wory about child controllers or other things,
    *  they are handled in this base class.
    */
-  virtual void currentRowChangedEvent(int row) {}
+  virtual void currentRowChangedEvent(int row) { Q_UNUSED(row) }
 
   /*! \brief Insert done event
    *
@@ -1013,7 +1013,7 @@ class mdtAbstractSqlTableController : public QObject
    *
    * \param row Row (index) that was freshly insert. Note: row refers to proxyModel.
    */
-  virtual void insertDoneEvent(int row) {}
+  virtual void insertDoneEvent(int row) { Q_UNUSED(row) }
 
   /*! \brief Set current row - For internal use
    *

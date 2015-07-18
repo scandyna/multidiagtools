@@ -66,6 +66,36 @@ mdtClArticleLinkData mdtClArticleLink::getLinkData(const mdtClArticleLinkPkData 
   return data;
 }
 
+mdtClArticleLinkData mdtClArticleLink::getLinkData(const mdtClUnitConnectionPkData & ucnxPk, const QVariant & unitId, bool & ok)
+{
+  Q_ASSERT(!ucnxPk.isNull());
+  Q_ASSERT(!unitId.isNull());
+
+  mdtClArticleLinkData linkData;
+  QList<QSqlRecord> dataList;
+  QString sql;
+
+  sql = "SELECT UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, ArticleConnectionStart_Id_FK, ArticleConnectionEnd_Id_FK,";
+  sql += " LinkType_Code_FK, LinkDirection_Code_FK, Identification, Resistance";
+  sql += " FROM ArticleLink_UnitConnection_view ";
+  sql += " WHERE ( UnitConnectionStart_Id_FK = " + ucnxPk.id.toString();
+  sql += " OR UnitConnectionEnd_Id_FK = " + ucnxPk.id.toString();
+  sql += " ) AND ( StartUnit_Id_FK = " + unitId.toString();
+  sql += " AND EndUnit_Id_FK = " + unitId.toString();
+  sql += " )";
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return linkData;
+  }
+  if(dataList.isEmpty()){
+    return linkData;
+  }
+  Q_ASSERT(dataList.size() == 1);
+  fillData(linkData, dataList.at(0));
+
+  return linkData;
+}
+
 int mdtClArticleLink::relatedLinksCount(const mdtClArticleLinkPkData & key)
 {
   QString sql;
@@ -137,8 +167,8 @@ void mdtClArticleLink::fillRecord(mdtSqlRecord &record, const mdtClArticleLinkDa
   record.setValue("LinkType_Code_FK", key.linkTypeFk().code);
   record.setValue("LinkDirection_Code_FK", key.linkDirectionFk().code);
   record.setValue("Identification", data.indetification);
-  record.setValue("SinceVersion", data.sinceVersion);
-  record.setValue("Modification", data.modification);
+//   record.setValue("SinceVersion", data.sinceVersion);
+//   record.setValue("Modification", data.modification);
   record.setValue("Resistance", data.resistance);
 }
 
@@ -149,8 +179,8 @@ void mdtClArticleLink::fillData(mdtClArticleLinkData & data, const QSqlRecord & 
   Q_ASSERT(record.contains("LinkType_Code_FK"));
   Q_ASSERT(record.contains("LinkDirection_Code_FK"));
   Q_ASSERT(record.contains("Identification"));
-  Q_ASSERT(record.contains("SinceVersion"));
-  Q_ASSERT(record.contains("Modification"));
+//   Q_ASSERT(record.contains("SinceVersion"));
+//   Q_ASSERT(record.contains("Modification"));
   Q_ASSERT(record.contains("Resistance"));
 
   mdtClArticleLinkKeyData key;
@@ -162,7 +192,7 @@ void mdtClArticleLink::fillData(mdtClArticleLinkData & data, const QSqlRecord & 
   // Fill data
   data.setKeyData(key);
   data.indetification = record.value("Identification");
-  data.sinceVersion = record.value("SinceVersion");
-  data.modification = record.value("Modification");
+//   data.sinceVersion = record.value("SinceVersion");
+//   data.modification = record.value("Modification");
   data.resistance = record.value("Resistance");
 }

@@ -79,7 +79,6 @@ class mdtClUnitVehicleType : public mdtTtBase
 
   /*! \brief Remove unit <-> vehicle type assignments
    */
-  ///bool removeUnitVehicleAssignments(const QVariant & unitId, const QModelIndexList & vehicleTypeIdList);
   bool removeUnitVehicleAssignments(const QVariant & unitId, const mdtSqlTableSelection & vehicleTypeIdListSelection);
 
   /*! \brief Get a list of vehicle type data that are assigned to given unit

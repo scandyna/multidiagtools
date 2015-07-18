@@ -26,15 +26,42 @@
 #include "mdtClConnectionTypeData.h"
 #include <QVariant>
 
+/*! \brief Data container for unit connection primary key
+ *
+ * Refers to UnitConnection_tbl
+ */
+struct mdtClUnitConnectionPkData
+{
+  /*! \brief Id (Id_PK)
+   */
+  QVariant id;
+
+  /*! \brief Check if PK is null
+   *
+   * PK is null if id is null
+   */
+  bool isNull() const
+  {
+    return id.isNull();
+  }
+
+  /*! \brief Clear PK
+   */
+  void clear()
+  {
+    id.clear();
+  }
+};
+
 /*! \brief Data container for unit connection key data
  *
  * Refers to UnitConnection_tbl
  */
 struct mdtClUnitConnectionKeyData
 {
-  /*! \brief Unit connection ID (Id_PK)
+  /*! \brief Unit connection PK (Id_PK)
    */
-  QVariant id;
+  mdtClUnitConnectionPkData pk;
 
  private:
 
@@ -192,18 +219,18 @@ struct mdtClUnitConnectionKeyData
 
   /*! \brief Check if key data is null
    *
-   * Key data is null if id, unitId or connectionTypeFk is null
+   * Key data is null if pk, unitId or connectionTypeFk is null
    */
   bool isNull() const
   {
-    return (id.isNull() || pvUnitId.isNull() || pvConnectionTypeFk.isNull());
+    return (pk.isNull() || pvUnitId.isNull() || pvConnectionTypeFk.isNull());
   }
 
   /*! \brief Clear
    */
   void clear()
   {
-    id.clear();
+    pk.clear();
     pvUnitId.clear();
     pvUnitConnectorFk.clear();
     pvArticleConnectionFk.clear();

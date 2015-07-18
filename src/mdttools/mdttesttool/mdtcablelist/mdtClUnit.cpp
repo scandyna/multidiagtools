@@ -33,6 +33,11 @@ mdtClUnit::mdtClUnit(QObject *parent, QSqlDatabase db)
 {
 }
 
+mdtClUnit::mdtClUnit(QSqlDatabase db)
+ : mdtTtBase(nullptr, db)
+{
+}
+
 mdtClUnit::~mdtClUnit()
 {
 }
@@ -1110,11 +1115,13 @@ QList<mdtClLinkData> mdtClUnit::getArticleLinkListUsingConnectionId(const mdtClU
   // Build data list
   for(i = 0; i < dataList.size(); ++i){
     linkDataList.append(dataList.at(i));
+    /**
     if(!lnk.buildVehicleTypeLinkDataList(linkDataList[i], vtList, vtList)){
       *ok = false;
       pvLastError = lnk.lastError();
       return linkDataList;
     }
+    */
   }
   *ok = true;
 
@@ -1136,9 +1143,11 @@ bool mdtClUnit::addArticleBasedLinkForUnitConnection(const mdtClUnitConnectionDa
     return false;
   }
   if(linkDataList.size() > 0){
+    /**
     if(!lnk.addLinks(linkDataList, false)){
       return false;
     }
+    */
   }
 
   return true;
@@ -1160,9 +1169,11 @@ bool mdtClUnit::removeArticleBasedLinkForUnitConnection(const mdtClUnitConnectio
     return false;
   }
   for(i = 0; i < linkDataList.size(); ++i){
+    /**
     if(!lnk.removeLink(linkDataList.at(i).value("UnitConnectionStart_Id_FK"), linkDataList.at(i).value("UnitConnectionEnd_Id_FK"), false)){
       return false;
     }
+    */
   }
 
   return true;

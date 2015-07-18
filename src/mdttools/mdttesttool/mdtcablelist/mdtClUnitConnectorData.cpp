@@ -49,13 +49,13 @@ void mdtClUnitConnectorData::clear()
 void mdtClUnitConnectorData::addConnectionData(mdtClUnitConnectionData data) 
 {
   Q_ASSERT(!pvKeyData.unitId().isNull());
-  Q_ASSERT( ( (data.keyData().id.isNull()) && (!data.isPartOfUnitConnector()) ) ||
-            ( (!data.keyData().id.isNull()) && (data.keyData().unitConnectorFk().pk.id == pvKeyData.pk.id)
+  Q_ASSERT( ( (data.keyData().pk.isNull()) && (!data.isPartOfUnitConnector()) ) ||
+            ( (!data.keyData().pk.isNull()) && (data.keyData().unitConnectorFk().pk.id == pvKeyData.pk.id)
                && (data.keyData().unitConnectorFk().unitId() == pvKeyData.unitId()) ) );
 
   mdtClUnitConnectionKeyData key;
 
-  key.id = data.keyData().id;
+  key.pk = data.keyData().pk;
   key.setUnitId(pvKeyData.unitId());
   key.setUnitConnectorFk(pvKeyData);
   if(data.isBasedOnArticleConnection()){

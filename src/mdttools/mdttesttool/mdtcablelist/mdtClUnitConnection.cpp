@@ -21,6 +21,10 @@
 #include "mdtClUnitConnection.h"
 #include "mdtSqlRecord.h"
 #include "mdtSqlTransaction.h"
+#include "mdtClArticleLink.h"
+#include "mdtClArticleLinkData.h"
+#include "mdtClLink.h"
+#include "mdtClLinkData.h"
 #include <QSqlQuery>
 #include <QList>
 
@@ -36,9 +40,9 @@ mdtClUnitConnection::mdtClUnitConnection(QSqlDatabase db)
 {
 }
 
-mdtClUnitConnectionKeyData mdtClUnitConnection::addUnitConnection(const mdtClUnitConnectionData & data, bool handleTransaction)
+mdtClUnitConnectionPkData mdtClUnitConnection::addUnitConnection(const mdtClUnitConnectionData & data, bool handleTransaction)
 {
-  mdtClUnitConnectionKeyData key;
+  mdtClUnitConnectionPkData pk;
   mdtSqlRecord record;
   QSqlQuery query(database());
   mdtSqlTransaction transaction(database());
@@ -46,30 +50,33 @@ mdtClUnitConnectionKeyData mdtClUnitConnection::addUnitConnection(const mdtClUni
   // Setup record with given data
   if(!record.addAllFields("UnitConnection_tbl", database())){
     pvLastError = record.lastError();
-    return key;
+    return pk;
   }
   fillRecord(record, data);
   // Save to database
   if(handleTransaction){
     if(!transaction.begin()){
       pvLastError = transaction.lastError();
-      return key;
+      return pk;
     }
   }
   if(!addRecord(record, "UnitConnection_tbl", query)){
-    return key;
+    return pk;
   }
-  key = data.keyData();
-  key.id = query.lastInsertId();
+  pk.id = query.lastInsertId();
+  // If connection is based on a article connection, create possibly required links
+  if(data.isBasedOnArticleConnection()){
+    
+  }
   if(handleTransaction){
     if(!transaction.commit()){
       pvLastError = transaction.lastError();
-      key.clear();
-      return key;
+      pk.clear();
+      return pk;
     }
   }
 
-  return key;
+  return pk;
 }
 
 bool mdtClUnitConnection::addUnitConnectionList(const QList<mdtClUnitConnectionData> & dataList, bool handleTransaction)
@@ -97,14 +104,69 @@ bool mdtClUnitConnection::addUnitConnectionList(const QList<mdtClUnitConnectionD
   return true;
 }
 
-mdtClUnitConnectionData mdtClUnitConnection::getUnitConnectionData(const mdtClUnitConnectionKeyData & key, bool & ok)
+bool mdtClUnitConnection::linksHaveBeenAdded() const
+{
+  return !pvAddedLinks.isEmpty();
+}
+
+QString mdtClUnitConnection::getAddedLinksText(bool & ok)
+{
+  QString text;
+  mdtClLink lnk(database());
+
+  for(const auto & linkPk : pvAddedLinks){
+    // Get link data part
+    mdtClLinkData linkData = lnk.getLinkData(linkPk, ok);
+    if(!ok){
+      return text;
+    }
+    mdtClUnitConnectionPkData ucnxPk;
+    // Get start connection data part
+    ucnxPk.id = linkData.pk().connectionStartId;
+    mdtClUnitConnectionData ucnxStartData = getUnitConnectionData(ucnxPk, ok);
+    if(!ok){
+      return text;
+    }
+    // Get start connector data part
+    mdtClUnitConnectorData ucnrStartData;
+    if(ucnxStartData.isPartOfUnitConnector()){
+      ucnrStartData = getUnitConnectorData(ucnxStartData.keyData().unitConnectorFk().pk, false, ok);
+      if(!ok){
+        return text;
+      }
+    }
+    // Get end connection data part
+    ucnxPk.id = linkData.pk().connectionEndId;
+    mdtClUnitConnectionData ucnxEndData = getUnitConnectionData(ucnxPk, ok);
+    if(!ok){
+      return text;
+    }
+    // Get end connector data part
+    mdtClUnitConnectorData ucnrEndData;
+    if(ucnxEndData.isPartOfUnitConnector()){
+      ucnrEndData = getUnitConnectorData(ucnxEndData.keyData().unitConnectorFk().pk, false, ok);
+      if(!ok){
+        return text;
+      }
+    }
+    // Build line text
+    text += tr(" - ") + linkData.identification.toString() \
+          + tr(" , start (connector: ") + ucnrStartData.name.toString() + tr(" , connection: ") + ucnxStartData.name.toString() + tr(")") \
+          + tr(" , end (connector: ") + ucnrEndData.name.toString() + tr(" , connection: ") + ucnxEndData.name.toString() + tr(")") + "\n";
+
+  }
+
+  return text;
+}
+
+mdtClUnitConnectionData mdtClUnitConnection::getUnitConnectionData(const mdtClUnitConnectionPkData & pk, bool & ok)
 {
   mdtClUnitConnectionData data;
   QList<QSqlRecord> dataList;
   QString sql;
 
   sql = baseSqlForUnitConnection();
-  sql += " WHERE UCNX.Id_PK = " + key.id.toString();
+  sql += " WHERE UCNX.Id_PK = " + pk.id.toString();
   dataList = getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     return data;
@@ -160,7 +222,7 @@ QList<mdtClUnitConnectionData> mdtClUnitConnection::getUnitConnectionDataList(co
   return dataList;
 }
 
-bool mdtClUnitConnection::updateUnitConnection(const mdtClUnitConnectionKeyData & key, const mdtClUnitConnectionData & data)
+bool mdtClUnitConnection::updateUnitConnection(const mdtClUnitConnectionPkData & pk, const mdtClUnitConnectionData & data)
 {
   mdtSqlRecord record;
 
@@ -170,12 +232,12 @@ bool mdtClUnitConnection::updateUnitConnection(const mdtClUnitConnectionKeyData 
   }
   fillRecord(record, data);
 
-  return updateRecord("UnitConnection_tbl", record, "Id_PK", key.id);
+  return updateRecord("UnitConnection_tbl", record, "Id_PK", pk.id);
 }
 
-bool mdtClUnitConnection::removeUnitConnection(const mdtClUnitConnectionKeyData & key)
+bool mdtClUnitConnection::removeUnitConnection(const mdtClUnitConnectionPkData & pk)
 {
-  return removeData("UnitConnection_tbl", "Id_PK", key.id);
+  return removeData("UnitConnection_tbl", "Id_PK", pk.id);
 }
 
 bool mdtClUnitConnection::removeUnitConnections(const mdtSqlTableSelection & s)
@@ -188,9 +250,9 @@ bool mdtClUnitConnection::removeUnitConnections(const mdtSqlTableSelection & s)
     return false;
   }
   for(const auto & id : idList){
-    mdtClUnitConnectionKeyData key;
-    key.id = id;
-    if(!removeUnitConnection(key)){
+    mdtClUnitConnectionPkData pk;
+    pk.id = id;
+    if(!removeUnitConnection(pk)){
       return false;
     }
   }
@@ -226,7 +288,6 @@ mdtClUnitConnectorPkData mdtClUnitConnection::addUnitConnector(mdtClUnitConnecto
     return pk;
   }
   // Setup key to return
-  ///key = data.keyData();
   pk.id = query.lastInsertId();
   // Save connections to database
   if(data.connectionDataList().size() > 0){
@@ -274,7 +335,7 @@ mdtClUnitConnectorData mdtClUnitConnection::getUnitConnectorData(mdtClUnitConnec
   return data;
 }
 
-mdtClUnitConnectorData mdtClUnitConnection::getUnitConnectorData(mdtClUnitConnectionKeyData key, bool &ok)
+mdtClUnitConnectorData mdtClUnitConnection::getUnitConnectorData(mdtClUnitConnectionPkData pk, bool &ok)
 {
   mdtClUnitConnectorData data;
   QList<QSqlRecord> dataList;
@@ -282,7 +343,7 @@ mdtClUnitConnectorData mdtClUnitConnection::getUnitConnectorData(mdtClUnitConnec
 
   sql = baseSqlForUnitConnector();
   sql += " JOIN UnitConnection_tbl UCNX ON UCNX.UnitConnector_Id_FK = UCNR.Id_PK";
-  sql += " WHERE UCNX.Id_PK = " + key.id.toString();
+  sql += " WHERE UCNX.Id_PK = " + pk.id.toString();
   dataList = getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     return data;
@@ -428,7 +489,7 @@ void mdtClUnitConnection::fillRecord(mdtSqlRecord & record, const mdtClUnitConne
   auto key = data.keyData();
 
   record.clearValues();
-  record.setValue("Id_PK", key.id);
+  record.setValue("Id_PK", key.pk.id);
   record.setValue("Unit_Id_FK", key.unitId());
   record.setValue("UnitConnector_Id_FK", key.unitConnectorFk().pk.id);
   record.setValue("ArticleConnection_Id_FK", key.articleConnectionFk().id);
@@ -499,7 +560,7 @@ void mdtClUnitConnection::fillData(mdtClUnitConnectionData & data, const QSqlRec
   }
   articleConnectionFk.setConnectionTypeCode(record.value("ACNX_ConnectionType_Code_FK"));
   // Setup unit connection key
-  key.id = record.value("Id_PK");
+  key.pk.id = record.value("Id_PK");
   key.setUnitId(record.value("Unit_Id_FK"));
   if(!unitConnectorFk.isNull()){
     key.setUnitConnectorFk(unitConnectorFk);

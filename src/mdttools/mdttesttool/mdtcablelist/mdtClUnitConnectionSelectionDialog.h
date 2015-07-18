@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -58,6 +58,18 @@ class mdtClUnitConnectionSelectionDialog : public mdtSqlSelectionDialog
   /*! \brief Select unit connections that are part of given unit and also part of given unit connectors
    */
   bool select(QSqlDatabase db, const QVariant & unitId, QList<mdtClUnitConnectorPkData> ucnrPkList, LinkUsage_t lu, bool allowMultiSelection);
+
+  /*! \brief Get selected unit connection PK
+   *
+   * If user rejected the dialog, a null PK is returned.
+   */
+  mdtClUnitConnectionPkData selectedUnitConnectionPk() const;
+
+  /*! \brief Get a list of selected connection PK
+   *
+   * If user rejected the dialog, a empty list is returned.
+   */
+  QList<mdtClUnitConnectionPkData> selectedUnitConnectionPkList() const;
 
   /*! \brief Get selected unit connection key
    *

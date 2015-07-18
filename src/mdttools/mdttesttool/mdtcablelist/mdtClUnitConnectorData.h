@@ -119,8 +119,8 @@ struct mdtClUnitConnectorData : public mdtSqlRecord  /// \todo remove this inher
    *  to match this unit connector befor adding connection.
    *
    * \pre In this unit connector's key, unitId must be set
-   * \pre In data's key, id must be null and unitConnectorFk must not allready been set,
-   *      or id is not null and unitConnectorFk must match this connector's key
+   * \pre In data's key, pk must be null and unitConnectorFk must not allready been set,
+   *      or pk is not null and unitConnectorFk must match this connector's key
    */
   void addConnectionData(mdtClUnitConnectionData data);
 

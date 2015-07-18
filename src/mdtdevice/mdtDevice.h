@@ -284,6 +284,7 @@ class mdtDevice : public QObject
    */
   virtual void stateChangedEvent(State_t newState)
   {
+    Q_UNUSED(newState)
   }
 
   /*! \brief Called by disconnectFromDevice()

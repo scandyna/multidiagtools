@@ -651,10 +651,11 @@ QList< mdtClLinkData > mdtTtTestNode::getLinkDataListForPath(const QVariant& con
   Q_ASSERT(!connectionIdA.isNull());
   Q_ASSERT(!connectionIdB.isNull());
 
-  mdtClLink lnk(0, database());
+  mdtClLink lnk(database());
   QList<QVariant> connectionIdList;
-  QVariant startConnectionId;
-  QVariant endConnectionId;
+  ///QVariant startConnectionId;
+  ///QVariant endConnectionId;
+  mdtClLinkPkData linkPk;
   mdtClLinkData linkData;
   QList<mdtClLinkData> linkDataList;
   QList<QVariant> testNodeUnitIdList;
@@ -694,24 +695,31 @@ QList< mdtClLinkData > mdtTtTestNode::getLinkDataListForPath(const QVariant& con
    *  i.e. those added previously with addRelayToGraphPv().
    */
   for(i = 1; i < connectionIdList.size(); ++i){
-    startConnectionId = connectionIdList.at(i-1);
-    endConnectionId = connectionIdList.at(i);
-    exists = lnk.linkExists(startConnectionId, endConnectionId, ok);
+    linkPk.connectionStartId = connectionIdList.at(i-1);
+    linkPk.connectionEndId = connectionIdList.at(i);
+    exists = lnk.linkExists(linkPk, ok);
+//     startConnectionId = connectionIdList.at(i-1);
+//     endConnectionId = connectionIdList.at(i);
+//     exists = lnk.linkExists(startConnectionId, endConnectionId, ok);
     if(!ok){
       pvLastError = lnk.lastError();
       return linkDataList;
     }
     if(!exists){
-      startConnectionId = connectionIdList.at(i);
-      endConnectionId = connectionIdList.at(i-1);
-      exists = lnk.linkExists(startConnectionId, endConnectionId, ok);
+      linkPk.connectionStartId = connectionIdList.at(i);
+      linkPk.connectionEndId = connectionIdList.at(i-1);
+      exists = lnk.linkExists(linkPk, ok);
+//       startConnectionId = connectionIdList.at(i);
+//       endConnectionId = connectionIdList.at(i-1);
+//       exists = lnk.linkExists(startConnectionId, endConnectionId, ok);
       if(!ok){
         pvLastError = lnk.lastError();
         return linkDataList;
       }
     }
     if(exists){
-      linkData = lnk.getLinkData(startConnectionId, endConnectionId, true, false, ok);
+      linkData = lnk.getLinkData(linkPk, ok);
+//       linkData = lnk.getLinkData(startConnectionId, endConnectionId, true, false, ok);
       if(!ok){
         pvLastError = lnk.lastError();
         return linkDataList;

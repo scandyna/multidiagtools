@@ -43,6 +43,7 @@ class mdtClArticleLinkTest : public mdtTest
 
   void articleLinkDataTest();
   void articleLinkAddGetRemoveTest();
+  void getArticleLinkByUnitConnectionTest();
 
  private:
 

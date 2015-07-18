@@ -47,6 +47,10 @@ class mdtClUnit : public mdtTtBase
    */
   mdtClUnit(QObject *parent, QSqlDatabase db);
 
+  /*! \brief Constructor
+   */
+  mdtClUnit(QSqlDatabase db);
+
   /*! \brief Destructor
    */
   ~mdtClUnit();

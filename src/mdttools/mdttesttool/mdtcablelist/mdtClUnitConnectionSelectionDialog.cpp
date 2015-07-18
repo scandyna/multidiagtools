@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -58,6 +58,40 @@ bool mdtClUnitConnectionSelectionDialog::select(QSqlDatabase db, const QVariant 
   }
 
   return setQuery(sql, db, allowMultiSelection);
+}
+
+mdtClUnitConnectionPkData mdtClUnitConnectionSelectionDialog::selectedUnitConnectionPk() const
+{
+  mdtClUnitConnectionPkData pk;
+
+  if(result() != Accepted){
+    return pk;
+  }
+  auto s = selection("Id_PK");
+  if(s.isEmpty()){
+    return pk;
+  }
+  Q_ASSERT(s.rowCount() == 1);
+  pk.id = s.data(0, "Id_PK");
+
+  return pk;
+}
+
+QList<mdtClUnitConnectionPkData> mdtClUnitConnectionSelectionDialog::selectedUnitConnectionPkList() const
+{
+  QList<mdtClUnitConnectionPkData> pkList;
+
+  if(result() != Accepted){
+    return pkList;
+  }
+  auto s = selection("Id_PK");
+  for(int row = 0; row < s.rowCount(); ++row){
+    mdtClUnitConnectionPkData pk;
+    pk.id = s.data(row, "Id_PK");
+    pkList.append(pk);
+  }
+
+  return pkList;
 }
 
 mdtClUnitConnectionKeyData mdtClUnitConnectionSelectionDialog::selectedUnitConnectionKey() const
@@ -232,7 +266,7 @@ mdtClUnitConnectionKeyData mdtClUnitConnectionSelectionDialog::buildKeyData(cons
   }
   articleConnectionFk.setConnectionTypeCode(s.data(row, "ACNX_ConnectionType_Code_FK"));
   // Setup unit connection key
-  key.id = s.data(row, "Id_PK");
+  key.pk.id = s.data(row, "Id_PK");
   key.setUnitId(s.data(row, "Unit_Id_FK"));
   if(!unitConnectorFk.isNull()){
     key.setUnitConnectorFk(unitConnectorFk);

@@ -134,23 +134,11 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void clearWorkingOnVehicleTypeList();
 
-  /*! \brief Get selected start vehicle types
-   */
-  const QList<QVariant> startVehicleTypeIdList() const;
-
-  /*! \brief Get selected end vehicle types
-   */
-  const QList<QVariant> endVehicleTypeIdList() const;
-
   /*! \brief Get selected vehicle type assignations
    *
    * \pre Only call this function if vehicle type assignation is enabled
    */
   QList<mdtClVehicleTypeStartEndKeyData> selectedVehicleTypeList() const;
-
-  /*! \brief Display link type in combobox
-   */
-  void setLinkTypeCode(const QVariant & code);
 
   /*! \brief Set link type
    */
@@ -160,14 +148,6 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   mdtClLinkTypeKeyData linkTypeKeyData() const;
 
-  /*! \brief Get selected link type code
-   */
-  QVariant linkTypeCode() const;
-
-  /*! \brief Display link direction in combobox
-   */
-  void setLinkDirectionCode(const QVariant & code);
-
   /*! \brief Set link direction
    */
   void setLinkDirection(mdtClLinkDirection_t d);
@@ -175,10 +155,6 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   /*! \brief Get selected link direction
    */
   mdtClLinkDirectionKeyData linkDirectionKeyData() const;
-
-  /*! \brief Get selected link direction code
-   */
-  QVariant linkDirectionCode() const;
 
   /*! \brief Set link version
    */
@@ -244,27 +220,11 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void selectEndConnection();
 
-  /*! \brief Select the start vehicle types
-   */
-  void selectStartVehicleTypes();
-
-  /*! \brief Select the end vehicle types
-   */
-  void selectEndVehicleTypes();
-
   /*! \brief Do some check, store values and accept dialog if Ok
    */
   void accept();
 
  private:
-
-  /*! \brief Update modification combobox
-   */
-  void updateModificationCombobox(const QVariant &data);
-
-  /*! \brief Update since version combobox
-   */
-//   void updateSinceVersionCombobox(const QVariant &data);
 
   /*! \brief Update wire data
    */
@@ -290,27 +250,6 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void updateEndConnection();
 
-  /*! \brief Set start vehicle types
-   */
-  void setStartVehicleTypes(const QVariant &unitId);
-
-  /*! \brief Update start vehicle types
-   */
-  void updateStartVehicleTypes();
-
-  /*! \brief Set end vehicle types
-   */
-  void setEndVehicleTypes(const QVariant &unitId);
-
-  /*! \brief Update end vehicle types
-   */
-  void updateEndVehicleTypes();
-
-  /*! \brief Build vehicle type link data list
-   */
-  bool buildVehicleTypeLinkDataList();
-
-
   /*! \brief Update vehicle type assignations
    */
   void updateVehicleTypeAssignations(bool rebuildVehicleTypeList);
@@ -329,13 +268,7 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   QList<QVariant> pvEndUnitSelectionIdList;
   QList<mdtClUnitConnectorPkData> pvEndConnectorLimitIdList;    // If not empty, end connection selection will be limited to these connectors
   mdtClLinkData pvLinkData;
-  QSqlQueryModel *pvStartVehicleTypesModel;
-  QList<QVariant> pvStartVehicleTypesIdList;
-  QSqlQueryModel *pvEndVehicleTypesModel;
-  QList<QVariant> pvEndVehicleTypesIdList;
   QList<QVariant> pvWorkingOnVehicleTypeIdList;
-  bool pvVehicleTypesEdited;
-  bool pvUnitConnectionChanged;
   mdtClModificationModel *pvModificationModel;
   mdtClLinkVersionModel *pvLinkVersionModel;
   mdtClLinkTypeModel *pvLinkTypeModel;

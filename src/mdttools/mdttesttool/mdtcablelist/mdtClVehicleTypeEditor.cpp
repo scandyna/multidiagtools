@@ -91,50 +91,119 @@ void mdtClVehicleTypeEditor::editSelectedUnit()
 void mdtClVehicleTypeEditor::editLink()
 {
   mdtSqlTableWidget *linkWidget;
-  mdtClUnitLinkDialog dialog(0, database());
-  QVariant vehicleTypeId, startConnectionId, endConnectionId;
+  mdtClUnitLinkDialog dialog(this, database());
+  QVariant unitId;
+  QVariant var;
+  mdtClLinkPkData pk;
   mdtClLinkData linkData;
-  mdtClLink lnk(0, database());
+  mdtClLinkVersionData linkVersionData;
+  mdtClModificationPkData modificationPk;
+  mdtClLinkModificationKeyData oldModificationKey;
+  mdtClLink lnk(database());
   bool ok;
 
-  linkWidget = sqlTableWidget("LinkList_view");
+  linkWidget = sqlTableWidget("UnitLink_view");
   Q_ASSERT(linkWidget != 0);
-  // Get vehicle type ID
-  vehicleTypeId = currentVehicleTypeId();
-  if(vehicleTypeId.isNull()){
+  // Get unit ID
+  ///unitId = currentUnitId();
+  if(unitId.isNull()){
     return;
   }
-  // Get connection IDs
-  startConnectionId = linkWidget->currentData("UnitConnectionStart_Id_FK");
-  endConnectionId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
-  if(startConnectionId.isNull() || endConnectionId.isNull()){
+  // Get connection PK
+  pk.connectionStartId = linkWidget->currentData("UnitConnectionStart_Id_FK");
+  pk.connectionEndId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
+  if(pk.isNull()){
     QMessageBox msgBox;
     msgBox.setText(tr("Please select a link."));
     msgBox.setIcon(QMessageBox::Information);
     msgBox.exec();
     return;
   }
+  oldModificationKey.setLinkFk(pk);
+  // Get link version and modification
+  var = linkWidget->currentData("Version_FK");
+  if(!var.isNull()){
+    linkVersionData.setVersionPk(var);
+    oldModificationKey.setLinkVersionFk(linkVersionData.pk());
+  }
+  var = linkWidget->currentData("Modification_Code_FK");
+  if(!var.isNull()){
+    modificationPk.code = var.toString();
+    oldModificationKey.setModificationFk(modificationPk);
+  }
   // Get current link data
-  linkData = lnk.getLinkData(startConnectionId, endConnectionId,true, true, ok);
+  linkData = lnk.getLinkData(pk, ok);
   if(!ok){
     pvLastError = lnk.lastError();
     displayLastError();
     return;
   }
   // Setup and show dialog
-  dialog.setWorkingOnVehicleTypeId(vehicleTypeId);
+  ///dialog.setWorkingOnVehicleTypeIdList(pvWorkingOnVehicleTypeIdList);
   dialog.setLinkData(linkData);
+  if(!linkVersionData.isNull()){
+    dialog.setLinkVersion(linkVersionData);
+  }
+  if(!modificationPk.isNull()){
+    dialog.setLinkModification(modificationPk);
+  }
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
-  // Edit link
-  if(!lnk.editLink(startConnectionId, endConnectionId, dialog.linkData())){
+  // Update link
+  if(!lnk.updateLink(pk, dialog.linkData(), oldModificationKey, dialog.linkModificationKeyData(), dialog.selectedVehicleTypeList(), true)){
     pvLastError = lnk.lastError();
     displayLastError();
     return;
   }
   // Update links view
-  select("LinkList_view");
+  select("UnitLink_view");
+
+//   mdtSqlTableWidget *linkWidget;
+//   mdtClUnitLinkDialog dialog(0, database());
+//   QVariant vehicleTypeId, startConnectionId, endConnectionId;
+//   mdtClLinkData linkData;
+//   mdtClLink lnk(0, database());
+//   bool ok;
+// 
+//   linkWidget = sqlTableWidget("LinkList_view");
+//   Q_ASSERT(linkWidget != 0);
+//   // Get vehicle type ID
+//   vehicleTypeId = currentVehicleTypeId();
+//   if(vehicleTypeId.isNull()){
+//     return;
+//   }
+//   // Get connection IDs
+//   startConnectionId = linkWidget->currentData("UnitConnectionStart_Id_FK");
+//   endConnectionId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
+//   if(startConnectionId.isNull() || endConnectionId.isNull()){
+//     QMessageBox msgBox;
+//     msgBox.setText(tr("Please select a link."));
+//     msgBox.setIcon(QMessageBox::Information);
+//     msgBox.exec();
+//     return;
+//   }
+//   // Get current link data
+//   linkData = lnk.getLinkData(startConnectionId, endConnectionId,true, true, ok);
+//   if(!ok){
+//     pvLastError = lnk.lastError();
+//     displayLastError();
+//     return;
+//   }
+//   // Setup and show dialog
+//   dialog.setWorkingOnVehicleTypeId(vehicleTypeId);
+//   dialog.setLinkData(linkData);
+//   if(dialog.exec() != QDialog::Accepted){
+//     return;
+//   }
+//   // Edit link
+//   if(!lnk.editLink(startConnectionId, endConnectionId, dialog.linkData())){
+//     pvLastError = lnk.lastError();
+//     displayLastError();
+//     return;
+//   }
+//   // Update links view
+//   select("LinkList_view");
 }
 
 void mdtClVehicleTypeEditor::viewLinkPath()

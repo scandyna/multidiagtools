@@ -56,11 +56,7 @@ struct mdtClUnitConnectorPkData
  */
 struct mdtClUnitConnectorKeyData
 {
-  /*! \brief Unit connector ID (Id_PK)
-   */
-  ///QVariant id;
-
-  /*! \brief Primary key
+  /*! \brief Primary key (Id_PK)
    */
   mdtClUnitConnectorPkData pk;
 

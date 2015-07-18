@@ -135,7 +135,10 @@ QList<mdtClVehicleTypeStartEndKeyData> mdtClVehicleTypeLinkAssignationWidget::ge
 
 void mdtClVehicleTypeLinkAssignationWidget::addItem(mdtClVehicleTypeCheckBox *item)
 {
-  pvLayout->addWidget(item);
+  Q_ASSERT(pvLayout->count() > 0);  // A stretch was added in constructor
+
+  pvLayout->insertWidget(pvLayout->count()-1, item);
+//   pvLayout->addWidget(item);
   pvItems.push_back(item);
 }
 

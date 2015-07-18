@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -234,8 +234,8 @@ void mdtClLinkBeamEditor::removeEndUnits()
 
 void mdtClLinkBeamEditor::createLink()
 {
-  mdtClUnitLinkDialog dialog(0, database());
-  mdtClLink lnk(0, database());
+  mdtClUnitLinkDialog dialog(this, database());
+  mdtClLink lnk(database());
   mdtClLinkData linkData;
   QVariant linkBeamId;
   QVariant startUnitId;
@@ -285,11 +285,13 @@ void mdtClLinkBeamEditor::createLink()
   // Update link data with current beam ID and add link to DB
   linkData = dialog.linkData();
   linkData.setValue("LinkBeam_Id_FK", linkBeamId);
+  /**
   if(!lnk.addLink(linkData)){
     pvLastError = lnk.lastError();
     displayLastError();
     return;
   }
+  */
   // Update views
   select("UnitLink_view");
 }
