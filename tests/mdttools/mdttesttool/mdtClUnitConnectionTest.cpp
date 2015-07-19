@@ -971,7 +971,7 @@ void mdtClUnitConnectionTest::unitConnectorAddGetRemoveTest()
   // Check getting unit connector key from article connection key
   articleConnectionKey.clear();
   articleConnectionKey.id = 25;
-  key3 = ucnx.getUnitConnectorKeyData(articleConnectionKey, ok);
+  key3 = ucnx.getUnitConnectorKeyData(articleConnectionKey, 2000, ok);
   QVERIFY(ok);
   QVERIFY(!key3.isNull());
   QCOMPARE(key3.unitId(), QVariant(2000));

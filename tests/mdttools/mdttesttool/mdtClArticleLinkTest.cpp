@@ -209,8 +209,8 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
   QVERIFY(data.linkType() == mdtClLinkType_t::CableLink);
   QVERIFY(data.linkDirection() == mdtClLinkDirection_t::Bidirectional);
   QCOMPARE(data.indetification, QVariant("Link 21-22"));
-  QCOMPARE(data.sinceVersion, QVariant(1.0));
-  QCOMPARE(data.modification, QVariant("new"));
+  ///QCOMPARE(data.sinceVersion, QVariant(1.0));
+  ///QCOMPARE(data.modification, QVariant("new"));
   QCOMPARE(data.resistance, QVariant(0.1));
   QCOMPARE(alnk.relatedLinksCount(pk), 0);
   QVERIFY(!alnk.hasRelatedLinks(pk, ok));
@@ -233,8 +233,8 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
   QVERIFY(data.linkType() == mdtClLinkType_t::InternalLink);
   QVERIFY(data.linkDirection() == mdtClLinkDirection_t::StartToEnd);
   QCOMPARE(data.indetification, QVariant("Link 21-22 edited"));
-  QCOMPARE(data.sinceVersion, QVariant(1.1));
-  QCOMPARE(data.modification, QVariant("update"));
+  ///QCOMPARE(data.sinceVersion, QVariant(1.1));
+  ///QCOMPARE(data.modification, QVariant("update"));
   QCOMPARE(data.resistance, QVariant(0.2));
   // Remove article link
   QVERIFY(alnk.removeLink(pk));
@@ -254,6 +254,7 @@ void mdtClArticleLinkTest::getArticleLinkByUnitConnectionTest()
   mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
   mdtClArticleLinkPkData aLinkPk;
   mdtClArticleLinkData aLinkData;
+  QList<mdtClArticleLinkData> aLinkDataList;
   mdtClArticleConnectionKeyData acnxFk;
   mdtClUnitConnectionPkData ucnxPk;
   mdtClUnitConnectionKeyData ucnxKey;
@@ -323,9 +324,9 @@ void mdtClArticleLinkTest::getArticleLinkByUnitConnectionTest()
   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
   // Getting article link must return nothing
   ucnxPk.id = 100;
-  aLinkData = alnk.getLinkData(ucnxPk, 1, ok);
+  aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
   QVERIFY(ok);
-  QVERIFY(aLinkData.isNull());
+  QCOMPARE(aLinkDataList.size(), 0);
   // Add unit connection 101
   ucnxData.clear();
   ucnxKey.pk.id = 101;
@@ -335,9 +336,9 @@ void mdtClArticleLinkTest::getArticleLinkByUnitConnectionTest()
   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
   // Getting article link must return nothing
   ucnxPk.id = 101;
-  aLinkData = alnk.getLinkData(ucnxPk, 1, ok);
+  aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
   QVERIFY(ok);
-  QVERIFY(aLinkData.isNull());
+  QCOMPARE(aLinkDataList.size(), 0);
   // Add unit connection 110
   ucnxData.clear();
   acnxFk.id = 10;
@@ -350,9 +351,9 @@ void mdtClArticleLinkTest::getArticleLinkByUnitConnectionTest()
   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
   // Getting article link must return nothing
   ucnxPk.id = 110;
-  aLinkData = alnk.getLinkData(ucnxPk, 1, ok);
+  aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
   QVERIFY(ok);
-  QVERIFY(aLinkData.isNull());
+  QCOMPARE(aLinkDataList.size(), 0);
   // Add unit connection 111
   ucnxData.clear();
   acnxFk.id = 11;
@@ -365,11 +366,11 @@ void mdtClArticleLinkTest::getArticleLinkByUnitConnectionTest()
   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
   // Getting article link must return 10-11
   ucnxPk.id = 111;
-  aLinkData = alnk.getLinkData(ucnxPk, 1, ok);
+  aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
   QVERIFY(ok);
-  QVERIFY(!aLinkData.isNull());
-  QCOMPARE(aLinkData.keyData().pk.connectionStartId, QVariant(10));
-  QCOMPARE(aLinkData.keyData().pk.connectionEndId, QVariant(11));
+  QCOMPARE(aLinkDataList.size(), 1);
+  QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionStartId, QVariant(10));
+  QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionEndId, QVariant(11));
   // Add unit connection 112
   ucnxData.clear();
   acnxFk.id = 12;
@@ -382,9 +383,9 @@ void mdtClArticleLinkTest::getArticleLinkByUnitConnectionTest()
   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
   // Getting article link must return nothing
   ucnxPk.id = 114;
-  aLinkData = alnk.getLinkData(ucnxPk, 1, ok);
+  aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
   QVERIFY(ok);
-  QVERIFY(aLinkData.isNull());
+  QCOMPARE(aLinkDataList.size(), 0);
   // Add unit connection 114
   ucnxData.clear();
   acnxFk.id = 14;
@@ -407,11 +408,11 @@ void mdtClArticleLinkTest::getArticleLinkByUnitConnectionTest()
   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
   // Getting article link must return 14-15
   ucnxPk.id = 115;
-  aLinkData = alnk.getLinkData(ucnxPk, 1, ok);
+  aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
   QVERIFY(ok);
-  QVERIFY(!aLinkData.isNull());
-  QCOMPARE(aLinkData.keyData().pk.connectionStartId, QVariant(14));
-  QCOMPARE(aLinkData.keyData().pk.connectionEndId, QVariant(15));
+  QCOMPARE(aLinkDataList.size(), 1);
+  QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionStartId, QVariant(14));
+  QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionEndId, QVariant(15));
   // Add unit connection 212
   ucnxData.clear();
   acnxFk.id = 12;
@@ -424,9 +425,9 @@ void mdtClArticleLinkTest::getArticleLinkByUnitConnectionTest()
   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
   // Getting article link must return nothing
   ucnxPk.id = 212;
-  aLinkData = alnk.getLinkData(ucnxPk, 2, ok);
+  aLinkDataList = alnk.getLinkDataList(ucnxPk, 2, ok);
   QVERIFY(ok);
-  QVERIFY(aLinkData.isNull());
+  QCOMPARE(aLinkDataList.size(), 0);
   // Add unit connection 213
   ucnxData.clear();
   acnxFk.id = 13;
@@ -439,11 +440,11 @@ void mdtClArticleLinkTest::getArticleLinkByUnitConnectionTest()
   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
   // Getting article link must return 12-13
   ucnxPk.id = 213;
-  aLinkData = alnk.getLinkData(ucnxPk, 2, ok);
+  aLinkDataList = alnk.getLinkDataList(ucnxPk, 2, ok);
   QVERIFY(ok);
-  QVERIFY(!aLinkData.isNull());
-  QCOMPARE(aLinkData.keyData().pk.connectionStartId, QVariant(12));
-  QCOMPARE(aLinkData.keyData().pk.connectionEndId, QVariant(13));
+  QCOMPARE(aLinkDataList.size(), 1);
+  QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionStartId, QVariant(12));
+  QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionEndId, QVariant(13));
   // Add unit connection 216
   ucnxData.clear();
   acnxFk.id = 16;
@@ -456,9 +457,9 @@ void mdtClArticleLinkTest::getArticleLinkByUnitConnectionTest()
   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
   // Getting article link must return nothing
   ucnxPk.id = 216;
-  aLinkData = alnk.getLinkData(ucnxPk, 2, ok);
+  aLinkDataList = alnk.getLinkDataList(ucnxPk, 2, ok);
   QVERIFY(ok);
-  QVERIFY(aLinkData.isNull());
+  QCOMPARE(aLinkDataList.size(), 0);
   // Add unit connection 217
   ucnxData.clear();
   acnxFk.id = 17;
@@ -471,11 +472,11 @@ void mdtClArticleLinkTest::getArticleLinkByUnitConnectionTest()
   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
   // Getting article link must return 16-17
   ucnxPk.id = 217;
-  aLinkData = alnk.getLinkData(ucnxPk, 2, ok);
+  aLinkDataList = alnk.getLinkDataList(ucnxPk, 2, ok);
   QVERIFY(ok);
-  QVERIFY(!aLinkData.isNull());
-  QCOMPARE(aLinkData.keyData().pk.connectionStartId, QVariant(16));
-  QCOMPARE(aLinkData.keyData().pk.connectionEndId, QVariant(17));
+  QCOMPARE(aLinkDataList.size(), 1);
+  QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionStartId, QVariant(16));
+  QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionEndId, QVariant(17));
   /*
    * Remove created unit connections
    */

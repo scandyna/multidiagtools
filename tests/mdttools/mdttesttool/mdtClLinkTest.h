@@ -65,6 +65,7 @@ class mdtClLinkTest : public mdtTest
   void linkDataTest();
   void linkAddGetRemoveTest();
   void linkAndVehicleTypeAddGetRemoveTest();
+  void linkFromArticleLinkAddTest();
 
   void sandbox();
 

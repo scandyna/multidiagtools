@@ -532,6 +532,15 @@ void mdtClUnitEditor::addArticleConnectorBasedConnector()
     displayLastError();
     return;
   }
+  // If some links has been added, we tell it the user
+  if(ucnx.linksHaveBeenAdded()){
+    QMessageBox msgBox(this);
+    bool ok;
+    msgBox.setText(tr("Following links has been added:\n") + ucnx.getAddedLinksText(ok));
+    msgBox.setInformativeText(tr("Please edit them to fix vehicle type assignations and modifications."));
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.exec();
+  }
   // Update views
   select("UnitConnector_view");
   select("UnitConnection_view");
@@ -690,7 +699,7 @@ void mdtClUnitEditor::addArticleConnectionsBasedConnections()
   articleConnectionFk = selectionDialog.selectedArticleConnectionKey();
   Q_ASSERT(!articleConnectionFk.isNull());
   // Get unit connector key for given article connection
-  unitConnectorFk = ucnx.getUnitConnectorKeyData(articleConnectionFk, ok);
+  unitConnectorFk = ucnx.getUnitConnectorKeyData(articleConnectionFk, key.unitId(), ok);
   if(!ok){
     pvLastError = ucnx.lastError();
     displayLastError();
@@ -712,6 +721,14 @@ void mdtClUnitEditor::addArticleConnectionsBasedConnections()
     pvLastError = ucnx.lastError();
     displayLastError();
     return;
+  }
+  // If some links has been added, we tell it the user
+  if(ucnx.linksHaveBeenAdded()){
+    QMessageBox msgBox(this);
+    msgBox.setText(tr("Following links has been added:\n") + ucnx.getAddedLinksText(ok));
+    msgBox.setInformativeText(tr("Please edit them to fix vehicle type assignations and modifications."));
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.exec();
   }
   // Update views
   select("UnitConnection_view");

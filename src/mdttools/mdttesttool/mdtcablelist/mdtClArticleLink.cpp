@@ -21,6 +21,8 @@
 #include "mdtClArticleLink.h"
 #include "mdtSqlTransaction.h"
 
+#include <QDebug>
+
 mdtClArticleLink::mdtClArticleLink(QObject *parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
 {
@@ -66,34 +68,46 @@ mdtClArticleLinkData mdtClArticleLink::getLinkData(const mdtClArticleLinkPkData 
   return data;
 }
 
-mdtClArticleLinkData mdtClArticleLink::getLinkData(const mdtClUnitConnectionPkData & ucnxPk, const QVariant & unitId, bool & ok)
+QList<mdtClArticleLinkData> mdtClArticleLink::getLinkDataList(const mdtClUnitConnectionPkData & ucnxPk, const QVariant & unitId, bool & ok)
 {
   Q_ASSERT(!ucnxPk.isNull());
   Q_ASSERT(!unitId.isNull());
 
-  mdtClArticleLinkData linkData;
+  QList<mdtClArticleLinkData> linkDataList;
   QList<QSqlRecord> dataList;
   QString sql;
 
-  sql = "SELECT UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, ArticleConnectionStart_Id_FK, ArticleConnectionEnd_Id_FK,";
-  sql += " LinkType_Code_FK, LinkDirection_Code_FK, Identification, Resistance";
-  sql += " FROM ArticleLink_UnitConnection_view ";
-  sql += " WHERE ( UnitConnectionStart_Id_FK = " + ucnxPk.id.toString();
-  sql += " OR UnitConnectionEnd_Id_FK = " + ucnxPk.id.toString();
-  sql += " ) AND ( StartUnit_Id_FK = " + unitId.toString();
-  sql += " AND EndUnit_Id_FK = " + unitId.toString();
-  sql += " )";
+//   sql = "SELECT UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, ArticleConnectionStart_Id_FK, ArticleConnectionEnd_Id_FK,";
+//   sql += " LinkType_Code_FK, LinkDirection_Code_FK, Identification, Resistance";
+//   sql += " FROM ArticleLink_UnitConnection_view ";
+//   sql += " WHERE ( UnitConnectionStart_Id_FK = " + ucnxPk.id.toString();
+//   sql += " OR UnitConnectionEnd_Id_FK = " + ucnxPk.id.toString();
+//   sql += " ) AND ( StartUnit_Id_FK = " + unitId.toString();
+//   sql += " AND EndUnit_Id_FK = " + unitId.toString();
+//   sql += " )";
+  
+  sql = "SELECT ALNK.*\n"\
+        " FROM ArticleLink_tbl ALNK\n"\
+        " JOIN UnitConnection_tbl UCNXS\n"\
+        "  ON UCNXS.ArticleConnection_Id_FK = ALNK.ArticleConnectionStart_Id_FK\n"\
+        " JOIN UnitConnection_tbl UCNXE\n"\
+        "  ON UCNXE.ArticleConnection_Id_FK = ALNK.ArticleConnectionEnd_Id_FK\n"\
+        " WHERE ( UCNXS.Id_PK = " + ucnxPk.id.toString() + \
+        " OR UCNXE.Id_PK = " + ucnxPk.id.toString() + \
+        " ) AND ( UCNXS.Unit_Id_FK = " + unitId.toString() + \
+        " AND UCNXE.Unit_Id_FK = " + unitId.toString() + \
+        " )";
   dataList = getDataList<QSqlRecord>(sql, ok);
   if(!ok){
-    return linkData;
+    return linkDataList;
   }
-  if(dataList.isEmpty()){
-    return linkData;
+  for(const auto & record : dataList){
+    mdtClArticleLinkData data;
+    fillData(data, record);
+    linkDataList.append(data);
   }
-  Q_ASSERT(dataList.size() == 1);
-  fillData(linkData, dataList.at(0));
 
-  return linkData;
+  return linkDataList;
 }
 
 int mdtClArticleLink::relatedLinksCount(const mdtClArticleLinkPkData & key)

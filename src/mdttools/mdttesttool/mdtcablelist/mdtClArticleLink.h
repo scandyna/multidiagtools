@@ -62,9 +62,9 @@ class mdtClArticleLink : public mdtTtBase
    */
   mdtClArticleLinkData getLinkData(const mdtClArticleLinkPkData & key, bool & ok);
 
-  /*! \brief Get article link data from database
+  /*! \brief Get article link data list from database
    *
-   * If given unit connection is added to given unit reqeuiers that a link,
+   * If given unit connection is added to given unit requiers that a link,
    *  based on a article link, must be created, corresponding article link data is returned.
    *
    * For example, immagine we have a article that has several links defined.
@@ -75,14 +75,14 @@ class mdtClArticleLink : public mdtTtBase
    *
    * \param unitConnectionPk PK of unit connection
    * \param unitId ID of concerned unit
-   * \return Article link data if adding given connection to given unit
-   *          requiers adding a link into Link_tbl, or a null data object.
-   *          If a error occurs, a null data object is also returned.
+   * \return Article link data list if adding given connection to given unit
+   *          requiers adding links into Link_tbl, or a empty list.
+   *          If a error occurs, a empty list is also returned.
    *          Use ok parameter to diffrenciate both cases.
    * \pre ucnxPk must not be null.
    * \pre unitId must not be null.
    */
-  mdtClArticleLinkData getLinkData(const mdtClUnitConnectionPkData & ucnxPk, const QVariant & unitId, bool & ok);
+  QList<mdtClArticleLinkData> getLinkDataList(const mdtClUnitConnectionPkData & ucnxPk, const QVariant & unitId, bool & ok);
 
   /*! \brief Get number of links in Link_tbl that are based on given article link
    *

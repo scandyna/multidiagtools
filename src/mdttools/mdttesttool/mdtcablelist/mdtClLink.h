@@ -25,6 +25,7 @@
 #include "mdtClLinkData.h"
 #include "mdtClLinkModificationKeyData.h"
 #include "mdtClVehicleTypeLinkKeyData.h"
+#include "mdtClArticleLinkData.h"
 
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorData.h"
@@ -149,6 +150,18 @@ class mdtClLink : public mdtTtBase
    */
   bool addLink(const mdtClLinkData & linkData, const mdtClLinkModificationKeyData & modification, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
 
+  /*! \brief Add a link on base of given article link
+   *
+   * Will get start and end unit connections that are related to article link's start and end connection
+   *  for given unit.
+   *  Identification and Resistance are also copied from given article link.
+   *  Note that only the Link_tbl part is created here (vehicle types assignations and versionning is not done).
+   *
+   * \pre articleLinkData must not be null
+   * \pre unitId must not be null
+   */
+  bool addLink(const mdtClArticleLinkData & articleLinkData, const QVariant & unitId);
+
   /*! \brief Check if a link exists
    */
   bool linkExists(const mdtClLinkPkData & pk, bool & ok);
@@ -161,6 +174,10 @@ class mdtClLink : public mdtTtBase
    *          Use ok parameter to diffrenciate both cases.
    */
   mdtClLinkData getLinkData(const mdtClLinkPkData & pk, bool & ok);
+
+  /*! \brief Get link data for given article link and star unit and end unit
+   */
+  mdtClLinkData getLinkData(const mdtClArticleLinkPkData articleLinkPk, const QVariant & startUnitId, const QVariant & endUnitId, bool & ok);
 
   /*! \brief Update a link, its modification and its vehicle type assignations
    *

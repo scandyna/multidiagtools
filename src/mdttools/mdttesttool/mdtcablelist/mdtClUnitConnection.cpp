@@ -28,7 +28,7 @@
 #include <QSqlQuery>
 #include <QList>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtClUnitConnection::mdtClUnitConnection(QObject *parent, QSqlDatabase db)
  : mdtClArticleConnection(parent, db)
@@ -47,6 +47,7 @@ mdtClUnitConnectionPkData mdtClUnitConnection::addUnitConnection(const mdtClUnit
   QSqlQuery query(database());
   mdtSqlTransaction transaction(database());
 
+  pvAddedLinks.clear();
   // Setup record with given data
   if(!record.addAllFields("UnitConnection_tbl", database())){
     pvLastError = record.lastError();
@@ -66,7 +67,26 @@ mdtClUnitConnectionPkData mdtClUnitConnection::addUnitConnection(const mdtClUnit
   pk.id = query.lastInsertId();
   // If connection is based on a article connection, create possibly required links
   if(data.isBasedOnArticleConnection()){
-    
+    mdtClArticleLink alnk(database());
+    bool ok;
+    // Get possibly related article links
+    QList<mdtClArticleLinkData> aLinkDataList = alnk.getLinkDataList(pk, data.keyData().unitId(), ok);
+    if(!ok){
+      pvLastError = alnk.lastError();
+      pk.clear();
+      return pk;
+    }
+    // If article links are related, create a link on its base
+    mdtClLink lnk(database());
+    for(const auto & aLinkData : aLinkDataList){
+      if(!lnk.addLink(aLinkData, data.keyData().unitId())){
+        pvLastError = lnk.lastError();
+        pk.clear();
+        return pk;
+      }
+      AddedLink_t al{aLinkData.keyData().pk, data.keyData().unitId()};
+      pvAddedLinks.append(al);
+    }
   }
   if(handleTransaction){
     if(!transaction.commit()){
@@ -89,11 +109,14 @@ bool mdtClUnitConnection::addUnitConnectionList(const QList<mdtClUnitConnectionD
       return false;
     }
   }
+  QList<AddedLink_t> addedLinks = pvAddedLinks;
   for(const auto & data : dataList){
     if(addUnitConnection(data, false).isNull()){
       return false;
     }
+    addedLinks.append(pvAddedLinks);
   }
+  pvAddedLinks = addedLinks;
   if(handleTransaction){
     if(!transaction.commit()){
       pvLastError = transaction.lastError();
@@ -114,9 +137,9 @@ QString mdtClUnitConnection::getAddedLinksText(bool & ok)
   QString text;
   mdtClLink lnk(database());
 
-  for(const auto & linkPk : pvAddedLinks){
+  for(const auto & al : pvAddedLinks){
     // Get link data part
-    mdtClLinkData linkData = lnk.getLinkData(linkPk, ok);
+    mdtClLinkData linkData = lnk.getLinkData(al.articleLinkPk, al.unitId, al.unitId, ok);
     if(!ok){
       return text;
     }
@@ -357,7 +380,7 @@ mdtClUnitConnectorData mdtClUnitConnection::getUnitConnectorData(mdtClUnitConnec
   return data;
 }
 
-mdtClUnitConnectorKeyData mdtClUnitConnection::getUnitConnectorKeyData(const mdtClArticleConnectionKeyData & key, bool & ok)
+mdtClUnitConnectorKeyData mdtClUnitConnection::getUnitConnectorKeyData(const mdtClArticleConnectionKeyData & key, const QVariant & unitId, bool & ok)
 {
   mdtClUnitConnectorKeyData unitConnectorKey;
   mdtClUnitConnectorData data;
@@ -367,6 +390,7 @@ mdtClUnitConnectorKeyData mdtClUnitConnection::getUnitConnectorKeyData(const mdt
   sql = baseSqlForUnitConnector();
   sql += " LEFT JOIN ArticleConnection_tbl ACNX ON ACNX.ArticleConnector_Id_FK = ACNR.Id_PK\n";
   sql += " WHERE ACNX.Id_PK = " + key.id.toString();
+  sql += " AND UCNR.Unit_Id_FK = " + unitId.toString();
   dataList = getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     return unitConnectorKey;
@@ -374,6 +398,9 @@ mdtClUnitConnectorKeyData mdtClUnitConnection::getUnitConnectorKeyData(const mdt
   if(dataList.isEmpty()){
     return unitConnectorKey;
   }
+  
+  qDebug() << dataList;
+  
   Q_ASSERT(dataList.size() == 1);
   fillData(data, dataList.at(0));
   unitConnectorKey = data.keyData();

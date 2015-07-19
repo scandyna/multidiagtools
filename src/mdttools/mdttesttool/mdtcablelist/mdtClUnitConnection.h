@@ -26,7 +26,7 @@
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorKeyData.h"
 #include "mdtClUnitConnectorData.h"
-#include "mdtClLinkKeyData.h"
+#include "mdtClArticleLinkKeyData.h"
 
 /*! \brief Helper class for unit connection and unit connector manipulations
  *
@@ -163,12 +163,13 @@ class mdtClUnitConnection : public mdtClArticleConnection
    *
    * \param key Article connection, that also is presumed to be based on a article connector, on witch unit connector is based.
    *            Note: in key, only id is used, other members are ignored.
+   * \param unitId ID of unit
    * \param ok Is set false on error
    * \return data for given key.
    *       A null data is returned if given key does not return a result, or a error occured.
    *       Use ok parameter to diffrenciate both cases.
    */
-  mdtClUnitConnectorKeyData getUnitConnectorKeyData(const mdtClArticleConnectionKeyData & key, bool & ok);
+  mdtClUnitConnectorKeyData getUnitConnectorKeyData(const mdtClArticleConnectionKeyData & key, const QVariant & unitId, bool & ok);
 
   /*! \brief Update unit connector name
    *
@@ -248,7 +249,12 @@ class mdtClUnitConnection : public mdtClArticleConnection
 
   Q_DISABLE_COPY(mdtClUnitConnection);
 
-  QList<mdtClLinkPkData> pvAddedLinks;
+  struct AddedLink_t
+  {
+    mdtClArticleLinkPkData articleLinkPk;
+    QVariant unitId;
+  };
+  QList<AddedLink_t> pvAddedLinks;
 };
 
 #endif // #ifndef MDT_CL_UNIT_CONNECTION_H
