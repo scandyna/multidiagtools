@@ -28,7 +28,7 @@
 #include <QSqlError>
 #include <QSqlRecord>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtClLink::mdtClLink(QObject* parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
@@ -148,9 +148,6 @@ bool mdtClLink::addLink(const mdtClArticleLinkData & articleLinkData, const QVar
     pvLastError.commit();
     return false;
   }
-  
-  qDebug() << dataList;
-  
   Q_ASSERT(dataList.size() == 1);
   // Setup link data
   linkPk.connectionStartId = dataList.at(0).value("UnitConnectionStart_Id_FK");

@@ -524,170 +524,170 @@ void mdtCableListTest::unitConnectionUpdateTest()
   QCOMPARE(dataList.at(6).value("Resistance"), QVariant(0.0));
 }
 
-void mdtCableListTest::unitConnectionDataTest()
-{
-  mdtClUnitConnectionData connectionData;
-  mdtClArticleConnectionData articleConnectionData;
+// void mdtCableListTest::unitConnectionDataTest()
+// {
+//   mdtClUnitConnectionData connectionData;
+//   mdtClArticleConnectionData articleConnectionData;
+// 
+//   // Setup and initial flags
+//   QVERIFY(connectionData.setup(pvDatabaseManager.database(), true));
+//   QVERIFY(!connectionData.isBasedOnArticleConnection());
+// 
+//   // Set a free unit connection
+//   connectionData.setValue("Id_PK", 1);
+//   connectionData.setValue("Unit_Id_FK", 10);
+//   connectionData.setValue("UnitContactName", "Contact 1");
+//   QVERIFY(!connectionData.isBasedOnArticleConnection());
+//   QCOMPARE(connectionData.value("Id_PK"), QVariant(1));
+//   QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(10));
+//   QCOMPARE(connectionData.value("UnitContactName"), QVariant("Contact 1"));
+// 
+//   // Set a article based unit connection
+//   connectionData.setValue("Id_PK", 2);
+//   connectionData.setValue("Unit_Id_FK", 20);
+//   connectionData.setValue("ArticleConnection_Id_FK", 200);
+//   connectionData.setValue("UnitContactName", "Contact 2");
+//   QVERIFY(connectionData.isBasedOnArticleConnection());
+//   QCOMPARE(connectionData.value("Id_PK"), QVariant(2));
+//   QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(20));
+//   QCOMPARE(connectionData.value("ArticleConnection_Id_FK"), QVariant(200));
+//   QCOMPARE(connectionData.value("UnitContactName"), QVariant("Contact 2"));
+// 
+//   // Clear
+//   connectionData.clearValues();
+//   QVERIFY(!connectionData.isBasedOnArticleConnection());
+// 
+//   // Setup a artice connection data and set it to unit connection data
+//   QVERIFY(articleConnectionData.setup(pvDatabaseManager.database()));
+//   articleConnectionData.setValue("Id_PK", 100);
+//   ///articleConnectionData.setValue("ConnectionType_Code_FK", "P");
+//   connectionData.setArticleConnectionData(articleConnectionData);
+//   QVERIFY(connectionData.isBasedOnArticleConnection());
+//   QCOMPARE(connectionData.value("ArticleConnection_Id_FK"), QVariant(100));
+//   ///QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("P"));
+// }
 
-  // Setup and initial flags
-  QVERIFY(connectionData.setup(pvDatabaseManager.database(), true));
-  QVERIFY(!connectionData.isBasedOnArticleConnection());
-
-  // Set a free unit connection
-  connectionData.setValue("Id_PK", 1);
-  connectionData.setValue("Unit_Id_FK", 10);
-  connectionData.setValue("UnitContactName", "Contact 1");
-  QVERIFY(!connectionData.isBasedOnArticleConnection());
-  QCOMPARE(connectionData.value("Id_PK"), QVariant(1));
-  QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(10));
-  QCOMPARE(connectionData.value("UnitContactName"), QVariant("Contact 1"));
-
-  // Set a article based unit connection
-  connectionData.setValue("Id_PK", 2);
-  connectionData.setValue("Unit_Id_FK", 20);
-  connectionData.setValue("ArticleConnection_Id_FK", 200);
-  connectionData.setValue("UnitContactName", "Contact 2");
-  QVERIFY(connectionData.isBasedOnArticleConnection());
-  QCOMPARE(connectionData.value("Id_PK"), QVariant(2));
-  QCOMPARE(connectionData.value("Unit_Id_FK"), QVariant(20));
-  QCOMPARE(connectionData.value("ArticleConnection_Id_FK"), QVariant(200));
-  QCOMPARE(connectionData.value("UnitContactName"), QVariant("Contact 2"));
-
-  // Clear
-  connectionData.clearValues();
-  QVERIFY(!connectionData.isBasedOnArticleConnection());
-
-  // Setup a artice connection data and set it to unit connection data
-  QVERIFY(articleConnectionData.setup(pvDatabaseManager.database()));
-  articleConnectionData.setValue("Id_PK", 100);
-  ///articleConnectionData.setValue("ConnectionType_Code_FK", "P");
-  connectionData.setArticleConnectionData(articleConnectionData);
-  QVERIFY(connectionData.isBasedOnArticleConnection());
-  QCOMPARE(connectionData.value("ArticleConnection_Id_FK"), QVariant(100));
-  ///QCOMPARE(connectionData.value("ConnectionType_Code_FK"), QVariant("P"));
-}
-
-void mdtCableListTest::unitConnectorDataTest()
-{
-  mdtClUnitConnectorData data;
-  mdtClUnitConnectionData connectionData;
-  mdtClArticleConnectorData articleConnectorData;
-  mdtClArticleConnectionData articleConnectionData;
-  mdtClConnectorData connectorData;
-  bool ok;
-
-  // Setup and initial flags
-  QVERIFY(data.setup(pvDatabaseManager.database(), true, true));
-  QVERIFY(!data.isBasedOnArticleConnector());
-  QVERIFY(!data.isBasedOnConnector());
-  QCOMPARE(data.connectionDataList().size(), 0);
-
-  // Set some data and check
-  data.setValue("Id_PK", 1);
-  data.setValue("Unit_Id_FK", 10);
-  QVERIFY(!data.isBasedOnArticleConnector());
-  QVERIFY(!data.isBasedOnConnector());
-  QCOMPARE(data.value("Id_PK"), QVariant(1));
-  QCOMPARE(data.value("Unit_Id_FK"), QVariant(10));
-  QCOMPARE(data.connectionDataList().size(), 0);
-
-  // Setup connection data and add
-  QVERIFY(connectionData.setup(pvDatabaseManager.database(), true));
-  connectionData.setValue("Id_PK", 100);
-  data.addConnectionData(connectionData);
-  QCOMPARE(data.connectionDataList().size(), 1);
-  connectionData.clear();
-  QCOMPARE(connectionData.value("Id_PK"), QVariant());
-  connectionData = data.connectionData(100, &ok);
-  QVERIFY(ok);
-  QCOMPARE(connectionData.value("Id_PK"), QVariant(100));
-
-  // Clear values
-  QVERIFY(data.connectionDataList().size() > 0);
-  data.clearValues();
-  QVERIFY(!data.isBasedOnArticleConnector());
-  QVERIFY(!data.isBasedOnConnector());
-  QCOMPARE(data.connectionDataList().size(), 0);
-
-  /*
-   * Setup a connector and set it as base of unit connector
-   */
-  // Clear data
-  data.clearValues();
-  QVERIFY(!data.isBasedOnArticleConnector());
-  QVERIFY(!data.isBasedOnConnector());
-  // Setup connector
-//   QVERIFY(connectorData.setup(pvDatabaseManager.database()));
-  connectorData.setValue("Id_PK", 1000);
-  // Set connector to unit connector data
-  data.setConnectorData(connectorData);
-  QVERIFY(!data.isBasedOnArticleConnector());
-  QVERIFY(data.isBasedOnConnector());
-  connectorData.clear();
-  QCOMPARE(connectorData.value("Id_PK"), QVariant());
-  connectorData = data.connectorData();
-  QCOMPARE(connectorData.value("Id_PK"), QVariant(1000));
-
-  /*
-   * Setup a free article connector and set it as base of unit connector
-   * Check that unit connector is no longer based on connector (set previously)
-   */
-  // Setup free artice connector
-  QVERIFY(articleConnectorData.setup(pvDatabaseManager.database(), true));
-  articleConnectorData.setValue("Id_PK", 1212);
-  // Set artice connector to data
-  data.setArticleConnectorData(articleConnectorData);
-  QVERIFY(data.isBasedOnArticleConnector());
-  QVERIFY(!data.isBasedOnConnector());
-  QCOMPARE(data.value("Connector_Id_FK"), QVariant(QVariant::Int));
-  QCOMPARE(data.value("ArticleConnector_Id_FK"), QVariant(1212));
-  QCOMPARE(data.articleConnectorData().value("Id_PK"), QVariant(1212));
-
-  /*
-   * Setup a article connector based on a connector and set it as base of unit connector
-   * Check that unit connector is based on the correct artice connector, and the connector on witch artice connector is based
-   */
-  // Setup connector
-  connectorData.clearValues();
-  connectorData.setValue("Id_PK", 5656);
-  // Setup artice connector
-  articleConnectorData.clearValues();
-  articleConnectorData.setValue("Id_PK", 4444);
-  articleConnectorData.setConnectorData(connectorData);
-  // Set artice connector to data
-  data.setArticleConnectorData(articleConnectorData);
-  QVERIFY(data.isBasedOnArticleConnector());
-  QVERIFY(data.isBasedOnConnector());
-  QCOMPARE(data.value("Connector_Id_FK"), QVariant(5656));
-  QCOMPARE(data.value("ArticleConnector_Id_FK"), QVariant(4444));
-  QCOMPARE(data.articleConnectorData().value("Id_PK"), QVariant(4444));
-
-  // Clear values
-  QVERIFY(connectionData.setup(pvDatabaseManager.database(), true));
-  data.addConnectionData(connectionData);
-  QVERIFY(data.connectionDataList().size() > 0);
-  data.clearValues();
-  QVERIFY(!data.isBasedOnArticleConnector());
-  QVERIFY(!data.isBasedOnConnector());
-  QCOMPARE(data.value("Id_PK"), QVariant(QVariant::Int));
-  QCOMPARE(data.value("Unit_Id_FK"), QVariant(QVariant::Int));
-  QCOMPARE(data.value("Connector_Id_FK"), QVariant(QVariant::Int));
-  QCOMPARE(data.value("ArticleConnector_Id_FK"), QVariant(QVariant::Int));
-  QCOMPARE(data.connectionDataList().size(), 0);
-
-  // Clear
-  QVERIFY(connectionData.setup(pvDatabaseManager.database(), true));
-  data.addConnectionData(connectionData);
-  QVERIFY(data.connectionDataList().size() > 0);
-  data.clear();
-  QVERIFY(!data.isBasedOnArticleConnector());
-  QVERIFY(!data.isBasedOnConnector());
-  QCOMPARE(data.value("Id_PK"), QVariant());
-  QCOMPARE(data.value("Unit_Id_FK"), QVariant());
-  QCOMPARE(data.value("Connector_Id_FK"), QVariant());
-  QCOMPARE(data.value("ArticleConnector_Id_FK"), QVariant());
-  QCOMPARE(data.connectionDataList().size(), 0);
-}
+// void mdtCableListTest::unitConnectorDataTest()
+// {
+//   mdtClUnitConnectorData data;
+//   mdtClUnitConnectionData connectionData;
+//   mdtClArticleConnectorData articleConnectorData;
+//   mdtClArticleConnectionData articleConnectionData;
+//   mdtClConnectorData connectorData;
+//   bool ok;
+// 
+//   // Setup and initial flags
+//   QVERIFY(data.setup(pvDatabaseManager.database(), true, true));
+//   QVERIFY(!data.isBasedOnArticleConnector());
+//   QVERIFY(!data.isBasedOnConnector());
+//   QCOMPARE(data.connectionDataList().size(), 0);
+// 
+//   // Set some data and check
+//   data.setValue("Id_PK", 1);
+//   data.setValue("Unit_Id_FK", 10);
+//   QVERIFY(!data.isBasedOnArticleConnector());
+//   QVERIFY(!data.isBasedOnConnector());
+//   QCOMPARE(data.value("Id_PK"), QVariant(1));
+//   QCOMPARE(data.value("Unit_Id_FK"), QVariant(10));
+//   QCOMPARE(data.connectionDataList().size(), 0);
+// 
+//   // Setup connection data and add
+//   QVERIFY(connectionData.setup(pvDatabaseManager.database(), true));
+//   connectionData.setValue("Id_PK", 100);
+//   data.addConnectionData(connectionData);
+//   QCOMPARE(data.connectionDataList().size(), 1);
+//   connectionData.clear();
+//   QCOMPARE(connectionData.value("Id_PK"), QVariant());
+//   connectionData = data.connectionData(100, &ok);
+//   QVERIFY(ok);
+//   QCOMPARE(connectionData.value("Id_PK"), QVariant(100));
+// 
+//   // Clear values
+//   QVERIFY(data.connectionDataList().size() > 0);
+//   data.clearValues();
+//   QVERIFY(!data.isBasedOnArticleConnector());
+//   QVERIFY(!data.isBasedOnConnector());
+//   QCOMPARE(data.connectionDataList().size(), 0);
+// 
+//   /*
+//    * Setup a connector and set it as base of unit connector
+//    */
+//   // Clear data
+//   data.clearValues();
+//   QVERIFY(!data.isBasedOnArticleConnector());
+//   QVERIFY(!data.isBasedOnConnector());
+//   // Setup connector
+// //   QVERIFY(connectorData.setup(pvDatabaseManager.database()));
+//   connectorData.setValue("Id_PK", 1000);
+//   // Set connector to unit connector data
+//   data.setConnectorData(connectorData);
+//   QVERIFY(!data.isBasedOnArticleConnector());
+//   QVERIFY(data.isBasedOnConnector());
+//   connectorData.clear();
+//   QCOMPARE(connectorData.value("Id_PK"), QVariant());
+//   connectorData = data.connectorData();
+//   QCOMPARE(connectorData.value("Id_PK"), QVariant(1000));
+// 
+//   /*
+//    * Setup a free article connector and set it as base of unit connector
+//    * Check that unit connector is no longer based on connector (set previously)
+//    */
+//   // Setup free artice connector
+//   QVERIFY(articleConnectorData.setup(pvDatabaseManager.database(), true));
+//   articleConnectorData.setValue("Id_PK", 1212);
+//   // Set artice connector to data
+//   data.setArticleConnectorData(articleConnectorData);
+//   QVERIFY(data.isBasedOnArticleConnector());
+//   QVERIFY(!data.isBasedOnConnector());
+//   QCOMPARE(data.value("Connector_Id_FK"), QVariant(QVariant::Int));
+//   QCOMPARE(data.value("ArticleConnector_Id_FK"), QVariant(1212));
+//   QCOMPARE(data.articleConnectorData().value("Id_PK"), QVariant(1212));
+// 
+//   /*
+//    * Setup a article connector based on a connector and set it as base of unit connector
+//    * Check that unit connector is based on the correct artice connector, and the connector on witch artice connector is based
+//    */
+//   // Setup connector
+//   connectorData.clearValues();
+//   connectorData.setValue("Id_PK", 5656);
+//   // Setup artice connector
+//   articleConnectorData.clearValues();
+//   articleConnectorData.setValue("Id_PK", 4444);
+//   articleConnectorData.setConnectorData(connectorData);
+//   // Set artice connector to data
+//   data.setArticleConnectorData(articleConnectorData);
+//   QVERIFY(data.isBasedOnArticleConnector());
+//   QVERIFY(data.isBasedOnConnector());
+//   QCOMPARE(data.value("Connector_Id_FK"), QVariant(5656));
+//   QCOMPARE(data.value("ArticleConnector_Id_FK"), QVariant(4444));
+//   QCOMPARE(data.articleConnectorData().value("Id_PK"), QVariant(4444));
+// 
+//   // Clear values
+//   QVERIFY(connectionData.setup(pvDatabaseManager.database(), true));
+//   data.addConnectionData(connectionData);
+//   QVERIFY(data.connectionDataList().size() > 0);
+//   data.clearValues();
+//   QVERIFY(!data.isBasedOnArticleConnector());
+//   QVERIFY(!data.isBasedOnConnector());
+//   QCOMPARE(data.value("Id_PK"), QVariant(QVariant::Int));
+//   QCOMPARE(data.value("Unit_Id_FK"), QVariant(QVariant::Int));
+//   QCOMPARE(data.value("Connector_Id_FK"), QVariant(QVariant::Int));
+//   QCOMPARE(data.value("ArticleConnector_Id_FK"), QVariant(QVariant::Int));
+//   QCOMPARE(data.connectionDataList().size(), 0);
+// 
+//   // Clear
+//   QVERIFY(connectionData.setup(pvDatabaseManager.database(), true));
+//   data.addConnectionData(connectionData);
+//   QVERIFY(data.connectionDataList().size() > 0);
+//   data.clear();
+//   QVERIFY(!data.isBasedOnArticleConnector());
+//   QVERIFY(!data.isBasedOnConnector());
+//   QCOMPARE(data.value("Id_PK"), QVariant());
+//   QCOMPARE(data.value("Unit_Id_FK"), QVariant());
+//   QCOMPARE(data.value("Connector_Id_FK"), QVariant());
+//   QCOMPARE(data.value("ArticleConnector_Id_FK"), QVariant());
+//   QCOMPARE(data.connectionDataList().size(), 0);
+// }
 
 void mdtCableListTest::unitTest()
 {
@@ -761,45 +761,6 @@ void mdtCableListTest::unitConnectionTest()
   connectionData = unit.getConnectionData(10000, true, &ok);
   QVERIFY(ok);
   QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 10000"));
-}
-
-void mdtCableListTest::unitConnectorTest()
-{
-  mdtClUnit unit(0, pvDatabaseManager.database());
-  ///mdtClLink lnk(0, pvDatabaseManager.database());
-  mdtClUnitConnectorData connectorData;
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
-  bool ok;
-
-  // Create base structure
-  scenario.createTestVehicleTypes();
-  scenario.createTestArticles();
-  scenario.createTestConnectors();
-  scenario.createTestArticleConnections();
-  scenario.createTestArticleLinks();
-  scenario.createTestArticleConnectors();
-  scenario.createTestUnits();
-  scenario.createTestVehicleTypeUnitAssignations();
-  scenario.createTestUnitConnections();
-  scenario.createTestUnitConnectors();
-  /*
-   * Get unit connector ID 100000
-   */
-  connectorData = unit.getConnectorData(100000, &ok, true, false, false);
-  QVERIFY(ok);
-  QCOMPARE(connectorData.value("Id_PK"), QVariant(100000));
-  QCOMPARE(connectorData.connectionDataList().size(), 1);
-  QCOMPARE(connectorData.connectionDataList().at(0).value("Id_PK"), QVariant(10005));
-  /*
-   * Get unit connector ID 200000, witch is based on a article connector,
-   *  but request only unit connector data part.
-   */
-  connectorData = unit.getConnectorData(200000, &ok, true, false, false);
-  QVERIFY(ok);
-  QCOMPARE(connectorData.value("Id_PK"), QVariant(200000));
-  QCOMPARE(connectorData.connectionDataList().size(), 1);
-  QCOMPARE(connectorData.connectionDataList().at(0).value("Id_PK"), QVariant(20005));
-
 }
 
 void mdtCableListTest::mdtClLinkDataTest()
@@ -948,6 +909,7 @@ void mdtCableListTest::linkTest()
   linkPk.connectionEndId = 20000;
   linkData.setPk(linkPk);
   linkData.identification = "Edited link 10000-20000";
+  linkModificationFk.setLinkFk(linkPk);
   linkPk.connectionStartId = 10000;
   linkPk.connectionEndId = 10001;
   QVERIFY(lnk.updateLink(linkPk, linkData, linkModificationFk, linkModificationFk, vtList, true));
@@ -965,6 +927,10 @@ void mdtCableListTest::linkTest()
   QCOMPARE(vtList.size(), 1);
   QCOMPARE(vtList.at(0).vehicleTypeStartId(), QVariant(1));
   QCOMPARE(vtList.at(0).vehicleTypeEndId(), QVariant(1));
+  // Remove link
+  linkPk.connectionStartId = 10000;
+  linkPk.connectionEndId = 20000;
+  QVERIFY(lnk.removeLink(linkPk, true));
   /*
    * Remove unit - vehicle type assignation and check that vehicle type links are removed
    *

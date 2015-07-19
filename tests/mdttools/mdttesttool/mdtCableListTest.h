@@ -50,12 +50,10 @@ class mdtCableListTest : public mdtTest
   void articleTest();
   void unitConnectionUpdateTest();
 
-  void unitConnectionDataTest();
-  void unitConnectorDataTest();
+//   void unitConnectionDataTest();
+//   void unitConnectorDataTest();
   void unitTest();
   void unitConnectionTest();
-  void unitConnectorTest();
-  /// Créer des fonction (pas slot) qui construisent à mesure un sénario
 
   void mdtClLinkDataTest();
   void linkTest();  /// \todo Ne pas oublier: UnitLink_view et LinkList_view !

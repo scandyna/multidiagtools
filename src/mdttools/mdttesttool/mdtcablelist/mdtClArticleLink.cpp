@@ -21,7 +21,7 @@
 #include "mdtClArticleLink.h"
 #include "mdtSqlTransaction.h"
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtClArticleLink::mdtClArticleLink(QObject *parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
