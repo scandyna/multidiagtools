@@ -1357,8 +1357,7 @@ void mdtCableListTestScenario::removeTestUnitConnections()
   
   bool ok;
   QList<QSqlRecord> reclist = ucnx.getDataList<QSqlRecord>("SELECT * FROM Link_tbl", ok);
-  qDebug() << reclist;
-  
+
   // Remove created unit connections
   ucnxPk.id = 10000;
   QVERIFY(ucnx.removeUnitConnection(ucnxPk));

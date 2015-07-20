@@ -1,6 +1,6 @@
 format 209
 "mdtdatabase" // mdtdatabase
-  revision 33
+  revision 34
   modified_by 2 "philippe"
   // class settings
   
@@ -3565,21 +3565,6 @@ ${inlines}
 "
 	    classrelation_ref 904450 // pvModel (<unidirectional association>)
 	  b parent class_ref 174338 // QSqlQueryModel
-      end
-
-      operation 1344130 "setModel"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "model" type class_ref 174338 // QSqlQueryModel
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
       end
 
       operation 1344258 "setColumnHidden"

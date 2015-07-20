@@ -252,23 +252,24 @@ class mdtClLink : public mdtTtBase
    */
   QList<mdtClLinkData> getConnectionLinkListByName(const QList<mdtClUnitConnectionData> & A, const QList<mdtClUnitConnectionData> & B, const mdtClConnectableCriteria & criteria);
 
-  /*! \brief Check if unit connection S can be connected with unit connection E
+  /*! \brief Check if unit connection a can be connected with unit connection b
    *
-   * \pre Following fields must be set (not null) for S and E:
-   *    - ConnectionType_Code_FK
+   * \pre A and B muts have connection type set
    */
-  bool canConnectConnections(const mdtClUnitConnectionData & S, const mdtClUnitConnectionData & E, const mdtClConnectableCriteria & criteria);
+  bool canConnectConnections(const mdtClUnitConnectionData & a, const mdtClUnitConnectionData & b, const mdtClConnectableCriteria & criteria);
 
   /*! \brief Check if unit connection ID A can be connected with unit connection ID B
    */
+  bool canConnectConnections(const mdtClUnitConnectionPkData & pkA, const mdtClUnitConnectionPkData & pkB, const mdtClConnectableCriteria & criteria, bool & ok);
   bool canConnectConnections(const QVariant & unitConnectionIdA, const QVariant & unitConnectionIdB, const mdtClConnectableCriteria & criteria, bool & ok);
 
-  /*! \brief Check if unit connector S can be connected with unit connector E
+  /*! \brief Check if unit connector a can be connected with unit connector b
    */
-  bool canConnectConnectors(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E, const mdtClConnectableCriteria & criteria);
+  bool canConnectConnectors(const mdtClUnitConnectorData & a, const mdtClUnitConnectorData & b, const mdtClConnectableCriteria & criteria, bool & ok);
 
-  /*! \brief Check if unit connector start can be connected with unit connector end
+  /*! \brief Check if unit connector a can be connected with unit connector b
    */
+  bool canConnectConnectors(const mdtClUnitConnectorPkData & pkA, const mdtClUnitConnectorPkData & pkB, const mdtClConnectableCriteria & criteria, bool & ok);
   bool canConnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const mdtClConnectableCriteria & criteria, bool & ok);
 
   /*! \brief Get SQL statement for connectable unit connection selection

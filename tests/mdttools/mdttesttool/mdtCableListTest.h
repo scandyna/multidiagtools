@@ -55,7 +55,7 @@ class mdtCableListTest : public mdtTest
   void unitTest();
   void unitConnectionTest();
 
-  void mdtClLinkDataTest();
+//   void mdtClLinkDataTest();
   void linkTest();  /// \todo Ne pas oublier: UnitLink_view et LinkList_view !
   void linkUpdateFromArticleLinkTest();
   void linkConnectableConnectorTest();

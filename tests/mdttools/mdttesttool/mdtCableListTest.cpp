@@ -26,6 +26,7 @@
 #include "mdtTtBase.h"
 #include "mdtClArticle.h"
 #include "mdtClUnit.h"
+#include "mdtClUnitConnection.h"
 #include "mdtClConnectorData.h"
 #include "mdtClArticleConnectorData.h"
 #include "mdtClArticleConnectorData.h"
@@ -763,62 +764,62 @@ void mdtCableListTest::unitConnectionTest()
   QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 10000"));
 }
 
-void mdtCableListTest::mdtClLinkDataTest()
-{
-  mdtClLinkData linkData;
-  mdtClUnitConnectionData startConnectionData, endConnectionData;
-  mdtClVehicleTypeLinkData vtLinkData;
-
-  QVERIFY(linkData.setup(pvDatabaseManager.database()));
-  QVERIFY(startConnectionData.setup(pvDatabaseManager.database(), true));
-  QVERIFY(endConnectionData.setup(pvDatabaseManager.database(), true));
-  QVERIFY(!linkData.vehicleTypeLinksEdited());
-
-  // Setup connections data
-  startConnectionData.setValue("Id_PK", 1);
-  endConnectionData.setValue("Id_PK", 2);
-  // Setup vehicle type link data
-  vtLinkData.setVehicleTypeStartId(10);
-  vtLinkData.setVehicleTypeEndId(20);
-  // Set link data
-  linkData.setConnectionData(startConnectionData, endConnectionData);
-  linkData.setValue("Identification", "Link 12");
-  QVERIFY(!linkData.vehicleTypeLinksEdited());
-  linkData.addVehicleTypeLinkData(vtLinkData);
-  QVERIFY(linkData.vehicleTypeLinksEdited());
-  // Check
-  QCOMPARE(linkData.value("Identification"), QVariant("Link 12"));
-  QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(1));
-  QCOMPARE(linkData.startConnectionData().value("Id_PK"), QVariant(1));
-  QCOMPARE(linkData.value("UnitConnectionEnd_Id_FK"), QVariant(2));
-  QCOMPARE(linkData.endConnectionData().value("Id_PK"), QVariant(2));
-  QCOMPARE(linkData.value("ArticleConnectionStart_Id_FK"), QVariant(QVariant::Int));
-  QCOMPARE(linkData.value("ArticleConnectionStart_Id_FK"), QVariant(QVariant::Int));
-  QCOMPARE(linkData.vehicleTypeLinkDataList().size(), 1);
-  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeStartId() , QVariant(10));
-  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeEndId() , QVariant(20));
-  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionStartId() , QVariant(1));
-  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionEndId() , QVariant(2));
-  // Change start/end connection data and check
-  startConnectionData.setValue("Id_PK", 3);
-  endConnectionData.setValue("Id_PK", 4);
-  linkData.setConnectionData(startConnectionData, endConnectionData);
-  QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(3));
-  QCOMPARE(linkData.value("UnitConnectionEnd_Id_FK"), QVariant(4));
-  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionStartId() , QVariant(3));
-  QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionEndId() , QVariant(4));
-  // Clear
-  linkData.clearValues();
-  QVERIFY(!linkData.vehicleTypeLinksEdited());
-  QCOMPARE(linkData.value("Identification"), QVariant(QVariant::String));
-  QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(QVariant::Int));
-  QCOMPARE(linkData.startConnectionData().value("Id_PK"), QVariant(QVariant::Int));
-  QCOMPARE(linkData.value("UnitConnectionEnd_Id_FK"), QVariant(QVariant::Int));
-  QCOMPARE(linkData.endConnectionData().value("Id_PK"), QVariant(QVariant::Int));
-  QCOMPARE(linkData.value("ArticleConnectionStart_Id_FK"), QVariant(QVariant::Int));
-  QCOMPARE(linkData.value("ArticleConnectionStart_Id_FK"), QVariant(QVariant::Int));
-  QCOMPARE(linkData.vehicleTypeLinkDataList().size(), 0);
-}
+// void mdtCableListTest::mdtClLinkDataTest()
+// {
+//   mdtClLinkData linkData;
+//   mdtClUnitConnectionData startConnectionData, endConnectionData;
+//   mdtClVehicleTypeLinkData vtLinkData;
+// 
+//   QVERIFY(linkData.setup(pvDatabaseManager.database()));
+//   QVERIFY(startConnectionData.setup(pvDatabaseManager.database(), true));
+//   QVERIFY(endConnectionData.setup(pvDatabaseManager.database(), true));
+//   QVERIFY(!linkData.vehicleTypeLinksEdited());
+// 
+//   // Setup connections data
+//   startConnectionData.setValue("Id_PK", 1);
+//   endConnectionData.setValue("Id_PK", 2);
+//   // Setup vehicle type link data
+//   vtLinkData.setVehicleTypeStartId(10);
+//   vtLinkData.setVehicleTypeEndId(20);
+//   // Set link data
+//   linkData.setConnectionData(startConnectionData, endConnectionData);
+//   linkData.setValue("Identification", "Link 12");
+//   QVERIFY(!linkData.vehicleTypeLinksEdited());
+//   linkData.addVehicleTypeLinkData(vtLinkData);
+//   QVERIFY(linkData.vehicleTypeLinksEdited());
+//   // Check
+//   QCOMPARE(linkData.value("Identification"), QVariant("Link 12"));
+//   QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(1));
+//   QCOMPARE(linkData.startConnectionData().value("Id_PK"), QVariant(1));
+//   QCOMPARE(linkData.value("UnitConnectionEnd_Id_FK"), QVariant(2));
+//   QCOMPARE(linkData.endConnectionData().value("Id_PK"), QVariant(2));
+//   QCOMPARE(linkData.value("ArticleConnectionStart_Id_FK"), QVariant(QVariant::Int));
+//   QCOMPARE(linkData.value("ArticleConnectionStart_Id_FK"), QVariant(QVariant::Int));
+//   QCOMPARE(linkData.vehicleTypeLinkDataList().size(), 1);
+//   QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeStartId() , QVariant(10));
+//   QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).vehicleTypeEndId() , QVariant(20));
+//   QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionStartId() , QVariant(1));
+//   QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionEndId() , QVariant(2));
+//   // Change start/end connection data and check
+//   startConnectionData.setValue("Id_PK", 3);
+//   endConnectionData.setValue("Id_PK", 4);
+//   linkData.setConnectionData(startConnectionData, endConnectionData);
+//   QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(3));
+//   QCOMPARE(linkData.value("UnitConnectionEnd_Id_FK"), QVariant(4));
+//   QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionStartId() , QVariant(3));
+//   QCOMPARE(linkData.vehicleTypeLinkDataList().at(0).unitConnectionEndId() , QVariant(4));
+//   // Clear
+//   linkData.clearValues();
+//   QVERIFY(!linkData.vehicleTypeLinksEdited());
+//   QCOMPARE(linkData.value("Identification"), QVariant(QVariant::String));
+//   QCOMPARE(linkData.value("UnitConnectionStart_Id_FK"), QVariant(QVariant::Int));
+//   QCOMPARE(linkData.startConnectionData().value("Id_PK"), QVariant(QVariant::Int));
+//   QCOMPARE(linkData.value("UnitConnectionEnd_Id_FK"), QVariant(QVariant::Int));
+//   QCOMPARE(linkData.endConnectionData().value("Id_PK"), QVariant(QVariant::Int));
+//   QCOMPARE(linkData.value("ArticleConnectionStart_Id_FK"), QVariant(QVariant::Int));
+//   QCOMPARE(linkData.value("ArticleConnectionStart_Id_FK"), QVariant(QVariant::Int));
+//   QCOMPARE(linkData.vehicleTypeLinkDataList().size(), 0);
+// }
 
 void mdtCableListTest::linkTest()
 {
@@ -1354,17 +1355,28 @@ void mdtCableListTest::linkUpdateFromArticleLinkTest()
 
 void mdtCableListTest::linkConnectableConnectorTest()
 {
-  mdtClLink lnk(0, pvDatabaseManager.database());
+  mdtClLink lnk(pvDatabaseManager.database());
+  mdtClUnitConnection ucnx(pvDatabaseManager.database());
   mdtClConnectableCriteria criteria;
+  mdtClUnitConnectionKeyData ucnxKey;
   mdtClUnitConnectionData cnxA, cnxB;
+  mdtClConnectorKeyData cnrKey;
+  mdtClConnectorData cnrData;
+  ///mdtClConnectorContactKeyData contactKey;
+  mdtClConnectorContactData contactData;
+  QList<mdtClConnectorContactData> contactDataList;
+  mdtClUnitConnectorKeyData ucnrKey;
+  mdtClUnitConnectorData ucnrA, ucnrB;
+  bool ok;
+  
   mdtClConnectorData cnrS, cnrE;
   mdtClUnitConnectorData ucnrS, ucnrE;
 
   /*
    * Setup data
    */
-  QVERIFY(cnxA.setup(pvDatabaseManager.database(), false));
-  QVERIFY(cnxB.setup(pvDatabaseManager.database(), false));
+//   QVERIFY(cnxA.setup(pvDatabaseManager.database(), false));
+//   QVERIFY(cnxB.setup(pvDatabaseManager.database(), false));
 //   QVERIFY(cnrS.setup(pvDatabaseManager.database()));
 //   QVERIFY(cnrE.setup(pvDatabaseManager.database()));
   QVERIFY(ucnrS.setup(pvDatabaseManager.database(), false, false));
@@ -1380,8 +1392,10 @@ void mdtCableListTest::linkConnectableConnectorTest()
    *  B is a socket
    *  -> Must return false
    */
-  cnxA.setValue("ConnectionType_Code_FK", "S");
-  cnxB.setValue("ConnectionType_Code_FK", "S");
+  cnxA.setConnectionType(mdtClConnectionType_t::Socket);
+  cnxB.setConnectionType(mdtClConnectionType_t::Socket);
+//   cnxA.setValue("ConnectionType_Code_FK", "S");
+//   cnxB.setValue("ConnectionType_Code_FK", "S");
   QVERIFY(!lnk.canConnectConnections(cnxA, cnxB, criteria));
   /*
    * Setup connections:
@@ -1389,8 +1403,8 @@ void mdtCableListTest::linkConnectableConnectorTest()
    *  B is a pin
    *  -> Must return true
    */
-  cnxA.setValue("ConnectionType_Code_FK", "S");
-  cnxB.setValue("ConnectionType_Code_FK", "P");
+  cnxA.setConnectionType(mdtClConnectionType_t::Socket);
+  cnxB.setConnectionType(mdtClConnectionType_t::Pin);
   QVERIFY(lnk.canConnectConnections(cnxA, cnxB, criteria));
   /*
    * Setup connections:
@@ -1398,8 +1412,8 @@ void mdtCableListTest::linkConnectableConnectorTest()
    *  B is a socket
    *  -> Must return true
    */
-  cnxA.setValue("ConnectionType_Code_FK", "P");
-  cnxB.setValue("ConnectionType_Code_FK", "S");
+  cnxA.setConnectionType(mdtClConnectionType_t::Pin);
+  cnxB.setConnectionType(mdtClConnectionType_t::Socket);
   QVERIFY(lnk.canConnectConnections(cnxA, cnxB, criteria));
   /*
    * Setup connections:
@@ -1407,8 +1421,8 @@ void mdtCableListTest::linkConnectableConnectorTest()
    *  B is a terminal
    *  -> Must return true
    */
-  cnxA.setValue("ConnectionType_Code_FK", "T");
-  cnxB.setValue("ConnectionType_Code_FK", "T");
+  cnxA.setConnectionType(mdtClConnectionType_t::Terminal);
+  cnxB.setConnectionType(mdtClConnectionType_t::Terminal);
   QVERIFY(lnk.canConnectConnections(cnxA, cnxB, criteria));
   /*
    * Setup connections:
@@ -1416,8 +1430,8 @@ void mdtCableListTest::linkConnectableConnectorTest()
    *  B is a socket
    *  -> Must return false
    */
-  cnxA.setValue("ConnectionType_Code_FK", "T");
-  cnxB.setValue("ConnectionType_Code_FK", "S");
+  cnxA.setConnectionType(mdtClConnectionType_t::Terminal);
+  cnxB.setConnectionType(mdtClConnectionType_t::Socket);
   QVERIFY(!lnk.canConnectConnections(cnxA, cnxB, criteria));
   /*
    * Setup connections:
@@ -1425,8 +1439,8 @@ void mdtCableListTest::linkConnectableConnectorTest()
    *  B is a pin
    *  -> Must return false
    */
-  cnxA.setValue("ConnectionType_Code_FK", "T");
-  cnxB.setValue("ConnectionType_Code_FK", "P");
+  cnxA.setConnectionType(mdtClConnectionType_t::Terminal);
+  cnxB.setConnectionType(mdtClConnectionType_t::Pin);
   QVERIFY(!lnk.canConnectConnections(cnxA, cnxB, criteria));
   /*
    * Setup connections:
@@ -1434,8 +1448,8 @@ void mdtCableListTest::linkConnectableConnectorTest()
    *  B is a terminal
    *  -> Must return false
    */
-  cnxA.setValue("ConnectionType_Code_FK", "S");
-  cnxB.setValue("ConnectionType_Code_FK", "T");
+  cnxA.setConnectionType(mdtClConnectionType_t::Socket);
+  cnxB.setConnectionType(mdtClConnectionType_t::Terminal);
   QVERIFY(!lnk.canConnectConnections(cnxA, cnxB, criteria));
   /*
    * Setup connections:
@@ -1443,8 +1457,8 @@ void mdtCableListTest::linkConnectableConnectorTest()
    *  B is a pin
    *  -> Must return false
    */
-  cnxA.setValue("ConnectionType_Code_FK", "T");
-  cnxB.setValue("ConnectionType_Code_FK", "P");
+  cnxA.setConnectionType(mdtClConnectionType_t::Terminal);
+  cnxB.setConnectionType(mdtClConnectionType_t::Pin);
   QVERIFY(!lnk.canConnectConnections(cnxA, cnxB, criteria));
   /*
    * Setup criteria for connector checking
@@ -1453,18 +1467,19 @@ void mdtCableListTest::linkConnectableConnectorTest()
   criteria.checkContactType = true;
   criteria.checkForm = true;
   criteria.checkGenderAreOpposite = true;
+  /// \todo Once implemented, add insert checks
   criteria.checkInsert = true;
   criteria.checkInsertRotation = true;
   /*
    * Setup 2 compatible connectors:
-   *  - Start:
+   *  - A:
    *   -> Female
    *   -> Form: Round
    *   -> Insert 12-3 (fake)
    *   -> Insert rotation code: none
    *   -> 2 sockets (A, B)
    *   -> 1 terminal (GND)
-   *  - End:
+   *  - B:
    *   -> Male
    *   -> Form: Round
    *   -> Insert 12-3 (fake)
@@ -1472,52 +1487,117 @@ void mdtCableListTest::linkConnectableConnectorTest()
    *   -> 2 pins (A, B)
    *   -> 1 terminal (GND)
    */
-  // Setup start connector
-  cnrS.clearValues();
-  ucnrS.clearValues();
-  cnrS.setValue("Gender", "Female");
-  cnrS.setValue("Insert", "12-3");
-  cnrS.setValue("InsertRotation", QVariant());  // To check null with empty string values comparison
-  ucnrS.setConnectorData(cnrS);
-  // Setup start contact A
-  cnxA.clearValues();
-  cnxA.setValue("UnitContactName", "A");
-  cnxA.setValue("ConnectionType_Code_FK", "S");
-  ucnrS.addConnectionData(cnxA);
-  // Setup start contact B
-  cnxA.clearValues();
-  cnxA.setValue("UnitContactName", "B");
-  cnxA.setValue("ConnectionType_Code_FK", "S");
-  ucnrS.addConnectionData(cnxA);
-  // Setup start contact GND
-  cnxA.clearValues();
-  cnxA.setValue("UnitContactName", "GND");
-  cnxA.setValue("ConnectionType_Code_FK", "T");
-  ucnrS.addConnectionData(cnxA);
-  // Setup end connector
-  cnrE.clearValues();
-  ucnrE.clearValues();
-  cnrE.setValue("Gender", "Male");
-  cnrE.setValue("Insert", "12-3");
-  cnrE.setValue("InsertRotation", "");  // To check null with empty string values comparison
-  ucnrE.setConnectorData(cnrE);
-  // Setup end contact A
-  cnxB.clearValues();
-  cnxB.setValue("UnitContactName", "A");
-  cnxB.setValue("ConnectionType_Code_FK", "S");
-  ucnrE.addConnectionData(cnxB);
-  // Setup end contact B
-  cnxB.clearValues();
-  cnxB.setValue("UnitContactName", "B");
-  cnxB.setValue("ConnectionType_Code_FK", "S");
-  ucnrE.addConnectionData(cnxB);
-  // Setup end contact GND
-  cnxB.clearValues();
-  cnxB.setValue("UnitContactName", "GND");
-  cnxB.setValue("ConnectionType_Code_FK", "T");
-  ucnrE.addConnectionData(cnxB);
-  // Check
-  QVERIFY(lnk.canConnectConnectors(ucnrS, ucnrE, criteria));
+  // Setup base connector for A and add it to database
+  cnrKey.clear();
+  cnrKey.id = 10;
+  cnrData.clear();
+  cnrData.setKeyData(cnrKey);
+  cnrData.gender = "Female";
+  cnrData.form = "Round";
+  contactData.setConnectionType(mdtClConnectionType_t::Socket);
+  contactData.name = "A";
+  cnrData.addContactData(contactData);
+  contactData.setConnectionType(mdtClConnectionType_t::Socket);
+  contactData.name = "B";
+  cnrData.addContactData(contactData);
+  contactData.setConnectionType(mdtClConnectionType_t::Terminal);
+  contactData.name = "GND";
+  cnrData.addContactData(contactData);
+  QVERIFY(!ucnx.addConnector(cnrData, true).isNull());
+  // Setup base connector for B and add it to database
+  cnrKey.clear();
+  cnrKey.id = 11;
+  cnrData.clear();
+  cnrData.setKeyData(cnrKey);
+  cnrData.gender = "Male";
+  cnrData.form = "Round";
+  contactData.setConnectionType(mdtClConnectionType_t::Pin);
+  contactData.name = "A";
+  cnrData.addContactData(contactData);
+  contactData.setConnectionType(mdtClConnectionType_t::Pin);
+  contactData.name = "B";
+  cnrData.addContactData(contactData);
+  contactData.setConnectionType(mdtClConnectionType_t::Terminal);
+  contactData.name = "GND";
+  cnrData.addContactData(contactData);
+  QVERIFY(!ucnx.addConnector(cnrData, true).isNull());
+  // Setup unit connector A
+  ucnrKey.clear();
+  ucnrA.clear();
+  cnrKey.id = 10;
+  ucnrKey.setUnitId(1000);
+  ucnrKey.setConnectorFk(cnrKey);
+  ucnrA.setKeyData(ucnrKey);
+  contactDataList = ucnx.getContactDataList(cnrKey, ok);
+  QVERIFY(ok);
+  ucnx.addConnectionsToUnitConnector(ucnrA, contactDataList);
+  // Setup unit connector B
+  ucnrKey.clear();
+  ucnrB.clear();
+  cnrKey.id = 11;
+  ucnrKey.setUnitId(1000);
+  ucnrKey.setConnectorFk(cnrKey);
+  ucnrB.setKeyData(ucnrKey);
+  contactDataList = ucnx.getContactDataList(cnrKey, ok);
+  QVERIFY(ok);
+  ucnx.addConnectionsToUnitConnector(ucnrB, contactDataList);
+  /*
+   * Check
+   */
+  QVERIFY(lnk.canConnectConnectors(ucnrA, ucnrB, criteria, ok));
+  /*
+   * Remove created connectors
+   */
+  cnrKey.id = 10;
+  QVERIFY(ucnx.removeConnector(cnrKey, true));
+  cnrKey.id = 11;
+  QVERIFY(ucnx.removeConnector(cnrKey, true));
+
+//   cnrS.clearValues();
+//   ucnrS.clearValues();
+//   cnrS.setValue("Gender", "Female");
+//   cnrS.setValue("Insert", "12-3");
+//   cnrS.setValue("InsertRotation", QVariant());  // To check null with empty string values comparison
+//   ucnrS.setConnectorData(cnrS);
+//   // Setup start contact A
+//   cnxA.clearValues();
+//   cnxA.setValue("UnitContactName", "A");
+//   cnxA.setValue("ConnectionType_Code_FK", "S");
+//   ucnrS.addConnectionData(cnxA);
+//   // Setup start contact B
+//   cnxA.clearValues();
+//   cnxA.setValue("UnitContactName", "B");
+//   cnxA.setValue("ConnectionType_Code_FK", "S");
+//   ucnrS.addConnectionData(cnxA);
+//   // Setup start contact GND
+//   cnxA.clearValues();
+//   cnxA.setValue("UnitContactName", "GND");
+//   cnxA.setValue("ConnectionType_Code_FK", "T");
+//   ucnrS.addConnectionData(cnxA);
+//   // Setup end connector
+//   cnrE.clearValues();
+//   ucnrE.clearValues();
+//   cnrE.setValue("Gender", "Male");
+//   cnrE.setValue("Insert", "12-3");
+//   cnrE.setValue("InsertRotation", "");  // To check null with empty string values comparison
+//   ucnrE.setConnectorData(cnrE);
+//   // Setup end contact A
+//   cnxB.clearValues();
+//   cnxB.setValue("UnitContactName", "A");
+//   cnxB.setValue("ConnectionType_Code_FK", "S");
+//   ucnrE.addConnectionData(cnxB);
+//   // Setup end contact B
+//   cnxB.clearValues();
+//   cnxB.setValue("UnitContactName", "B");
+//   cnxB.setValue("ConnectionType_Code_FK", "S");
+//   ucnrE.addConnectionData(cnxB);
+//   // Setup end contact GND
+//   cnxB.clearValues();
+//   cnxB.setValue("UnitContactName", "GND");
+//   cnxB.setValue("ConnectionType_Code_FK", "T");
+//   ucnrE.addConnectionData(cnxB);
+//   // Check
+//   QVERIFY(lnk.canConnectConnectors(ucnrA, ucnrB, criteria, ok));
 }
 
 void mdtCableListTest::linkAutoConnectionTest()

@@ -22,7 +22,10 @@
 #include "mdtClVehicleTypeLink.h"
 #include "mdtClVehicleTypeLinkData.h"
 #include "mdtSqlTransaction.h"
+#include "mdtClUnitConnection.h"
+
 #include "mdtClUnit.h"
+
 #include "mdtError.h"
 #include <QSqlQuery>
 #include <QSqlError>
@@ -457,39 +460,60 @@ QList<mdtClLinkData> mdtClLink::getConnectionLinkListByName(const QList< mdtClUn
   return linkDataList;
 }
 
-bool mdtClLink::canConnectConnections(const mdtClUnitConnectionData& S, const mdtClUnitConnectionData& E, const mdtClConnectableCriteria& criteria)
+bool mdtClLink::canConnectConnections(const mdtClUnitConnectionData & a, const mdtClUnitConnectionData & b, const mdtClConnectableCriteria & criteria)
 {
-  Q_ASSERT(!S.value("ConnectionType_Code_FK").isNull());
-  Q_ASSERT(!E.value("ConnectionType_Code_FK").isNull());
+  Q_ASSERT(a.connectionType() != mdtClConnectionType_t::Undefined);
+  Q_ASSERT(b.connectionType() != mdtClConnectionType_t::Undefined);
+//   Q_ASSERT(!S.value("ConnectionType_Code_FK").isNull());
+//   Q_ASSERT(!E.value("ConnectionType_Code_FK").isNull());
 
   /*
    * Check contact name if required
    */
   if(criteria.checkContactName){
-    if(S.value("UnitContactName").toString().trimmed() != E.value("UnitContactName").toString().trimmed()){
+    if(a.name.toString().trimmed() != b.name.toString().trimmed()){
       return false;
     }
+//     if(S.value("UnitContactName").toString().trimmed() != E.value("UnitContactName").toString().trimmed()){
+//       return false;
+//     }
   }
   /*
    * Check contact type if required
    */
   if(criteria.checkContactType){
-    QString sType = S.value("ConnectionType_Code_FK").toString();
-    QString eType = E.value("ConnectionType_Code_FK").toString();
+    mdtClConnectionType_t aType = a.connectionType();
+    mdtClConnectionType_t bType = b.connectionType();
     // Check case of terminals
-    if((sType == "T")&&(eType != "T")){
+    if( (aType == mdtClConnectionType_t::Terminal) && (bType != mdtClConnectionType_t::Terminal) ){
       return false;
     }
-    if((eType == "T")&&(sType != "T")){
+    if( (bType == mdtClConnectionType_t::Terminal) && (aType != mdtClConnectionType_t::Terminal) ){
       return false;
     }
     // Here, we have Socket and Pin
-    if((sType == "P")&&(eType == "P")){
+    if( (aType == mdtClConnectionType_t::Pin) && (bType == mdtClConnectionType_t::Pin) ){
       return false;
     }
-    if((sType == "S")&&(eType == "S")){
+    if( (aType == mdtClConnectionType_t::Socket) && (bType == mdtClConnectionType_t::Socket) ){
       return false;
     }
+//     QString sType = S.value("ConnectionType_Code_FK").toString();
+//     QString eType = E.value("ConnectionType_Code_FK").toString();
+//     // Check case of terminals
+//     if((sType == "T")&&(eType != "T")){
+//       return false;
+//     }
+//     if((eType == "T")&&(sType != "T")){
+//       return false;
+//     }
+//     // Here, we have Socket and Pin
+//     if((sType == "P")&&(eType == "P")){
+//       return false;
+//     }
+//     if((sType == "S")&&(eType == "S")){
+//       return false;
+//     }
   }
   /*
    * Check if connection is part of a connector:
@@ -497,16 +521,25 @@ bool mdtClLink::canConnectConnections(const mdtClUnitConnectionData& S, const md
    *  - Both can be a connector contact, in this case, they must have the same name
    */
   // Check if connections are free (not part of a connector)
-  if((S.value("UnitConnector_Id_FK").isNull())&&(E.value("UnitConnector_Id_FK").isNull())){
+  if( (!a.isPartOfUnitConnector()) && (!b.isPartOfUnitConnector()) ){
     return true;
   }
+//   if((S.value("UnitConnector_Id_FK").isNull())&&(E.value("UnitConnector_Id_FK").isNull())){
+//     return true;
+//   }
   // If only one connection is part of a connector, they cannot be connected together
-  if((S.value("UnitConnector_Id_FK").isNull())&&(!E.value("UnitConnector_Id_FK").isNull())){
+  if( (!a.isPartOfUnitConnector()) && b.isPartOfUnitConnector() ){
     return false;
   }
-  if((!S.value("UnitConnector_Id_FK").isNull())&&(E.value("UnitConnector_Id_FK").isNull())){
+  if( (a.isPartOfUnitConnector()) && (!b.isPartOfUnitConnector()) ){
     return false;
   }
+//   if((S.value("UnitConnector_Id_FK").isNull())&&(!E.value("UnitConnector_Id_FK").isNull())){
+//     return false;
+//   }
+//   if((!S.value("UnitConnector_Id_FK").isNull())&&(E.value("UnitConnector_Id_FK").isNull())){
+//     return false;
+//   }
   
   return true;
   
@@ -522,6 +555,48 @@ bool mdtClLink::canConnectConnections(const mdtClUnitConnectionData& S, const md
   */
 }
 
+bool mdtClLink::canConnectConnections(const mdtClUnitConnectionPkData & pkA, const mdtClUnitConnectionPkData & pkB, const mdtClConnectableCriteria & criteria, bool &ok)
+{
+  mdtClUnitConnection ucnx(database());
+  mdtClUnitConnectionData a, b;
+
+  // Get A and B connections data
+  a = ucnx.getUnitConnectionData(pkA, ok);
+  if(!ok){
+    pvLastError = ucnx.lastError();
+    return false;
+  }
+  if(a.connectionType() == mdtClConnectionType_t::Undefined){
+    QString msg = tr("Connection");
+    msg += " " + a.name.toString() + " ";
+    msg += tr("has not type (Pin, Socket or Terminal");
+    pvLastError.setError(msg, mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
+    pvLastError.commit();
+    ok = false;
+    return false;
+  }
+  b = ucnx.getUnitConnectionData(pkB, ok);
+  if(!ok){
+    pvLastError = ucnx.lastError();
+    return false;
+  }
+  if(b.connectionType() == mdtClConnectionType_t::Undefined){
+    QString msg = tr("Connection");
+    msg += " " + b.name.toString() + " ";
+    msg += tr("has not type (Pin, Socket or Terminal");
+    pvLastError.setError(msg, mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
+    pvLastError.commit();
+    ok = false;
+    return false;
+  }
+  ok = true;
+
+  return canConnectConnections(a, b, criteria);
+}
+
+/// \deprecated
 bool mdtClLink::canConnectConnections(const QVariant& unitConnectionIdA, const QVariant& unitConnectionIdB, const mdtClConnectableCriteria& criteria, bool& ok)
 {
   mdtClUnit unit(0, database());
@@ -563,13 +638,49 @@ bool mdtClLink::canConnectConnections(const QVariant& unitConnectionIdA, const Q
   return canConnectConnections(A, B, criteria);
 }
 
-bool mdtClLink::canConnectConnectors(const mdtClUnitConnectorData& S, const mdtClUnitConnectorData& E, const mdtClConnectableCriteria& criteria)
+bool mdtClLink::canConnectConnectors(const mdtClUnitConnectorData & a, const mdtClUnitConnectorData & b, const mdtClConnectableCriteria & criteria, bool & ok)
 {
-  mdtClConnectorData cnrS, cnrE;
+  mdtClConnector cnr(database());
+  mdtClConnectorData cnrA, cnrB;
 
+  // Check for contact count if requested
+  if(criteria.checkContactCount){
+    if(a.connectionDataList().size() != b.connectionDataList().size()){
+      return false;
+    }
+  }
+  // If checks of base connectors are requested, a and b must be based on a base connector
+  if( (criteria.checkGenderAreOpposite) || (criteria.checkForm) || (criteria.checkInsert) || (criteria.checkInsertRotation) ){
+    if(!a.isBasedOnConnector() || !b.isBasedOnConnector()){
+      QString msg;
+      msg = tr("It was requested to check if connectors");
+      msg += " '" + a.name.toString() + "' " + tr("and") + " '" + b.name.toString() + "' ";
+      msg += tr("can be connected, with criteria that depends on connector model.\n");
+      msg += tr("At least one of the two connectors is not based on a model, so those checks could not be done.");
+      pvLastError.setError(msg, mdtError::Warning);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
+      pvLastError.commit();
+      ok = false;
+      return false;
+    }
+  }else{
+    return true;
+  }
+  Q_ASSERT(!a.keyData().connectorFk().isNull());
+  Q_ASSERT(!b.keyData().connectorFk().isNull());
   // Get connector data
-  cnrS = S.connectorData();
-  cnrE = E.connectorData();
+  cnrA = cnr.getConnectorData(a.keyData().connectorFk(), false, ok);
+  if(!ok){
+    pvLastError = cnr.lastError();
+    return false;
+  }
+  cnrB = cnr.getConnectorData(b.keyData().connectorFk(), false, ok);
+  if(!ok){
+    pvLastError = cnr.lastError();
+    return false;
+  }
+//   cnrS = S.connectorData();
+//   cnrE = E.connectorData();
   // Check for gender if requested
   /**
    * \todo Currently, gender is a simple free text.
@@ -578,38 +689,74 @@ bool mdtClLink::canConnectConnectors(const mdtClUnitConnectorData& S, const mdtC
    *   and fix this broken check !
    */
   if(criteria.checkGenderAreOpposite){
-    if(cnrS.value("Gender").toString().trimmed() == cnrE.value("Gender").toString().trimmed()){
+    if(cnrA.gender.toString().trimmed() == cnrB.gender.toString().trimmed()){
       return false;
     }
+//     if(cnrS.value("Gender").toString().trimmed() == cnrE.value("Gender").toString().trimmed()){
+//       return false;
+//     }
   }
   // Check for contact count if requested
-  if(criteria.checkContactCount){
-    if(S.connectionDataList().size() != E.connectionDataList().size()){
-      return false;
-    }
-  }
+//   if(criteria.checkContactCount){
+//     if(S.connectionDataList().size() != E.connectionDataList().size()){
+//       return false;
+//     }
+//   }
   // Check for form if requested
   if(criteria.checkForm){
-    if(cnrS.value("Form").toString().trimmed() != cnrE.value("Form").toString().trimmed()){
+    if(cnrA.form.toString().trimmed() != cnrB.form.toString().trimmed()){
       return false;
     }
+//     if(cnrS.value("Form").toString().trimmed() != cnrE.value("Form").toString().trimmed()){
+//       return false;
+//     }
   }
   // Check for insert if requested
   if(criteria.checkInsert){
-    if(cnrS.value("Insert").toString().trimmed() != cnrE.value("Insert").toString().trimmed()){
-      return false;
-    }
+    pvLastError.setError("Insert checking currently not implemented..", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
+    pvLastError.commit();
+    ok = false;
+    return false;
+//     if(cnrS.value("Insert").toString().trimmed() != cnrE.value("Insert").toString().trimmed()){
+//       return false;
+//     }
   }
   // Check for insert rotation if requested
   if(criteria.checkInsertRotation){
-    if(cnrS.value("InsertRotation").toString().trimmed() != cnrE.value("InsertRotation").toString().trimmed()){
-      return false;
-    }
+    pvLastError.setError("Insert rotation checking currently not implemented..", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
+    pvLastError.commit();
+    ok = false;
+    return false;
+//     if(cnrS.value("InsertRotation").toString().trimmed() != cnrE.value("InsertRotation").toString().trimmed()){
+//       return false;
+//     }
   }
   // Check connections
-  return checkOrBuildConnectionLinkListByName(S.connectionDataList(), E.connectionDataList(), criteria);
+  return checkOrBuildConnectionLinkListByName(a.connectionDataList(), b.connectionDataList(), criteria);
 }
 
+bool mdtClLink::canConnectConnectors(const mdtClUnitConnectorPkData & pkA, const mdtClUnitConnectorPkData & pkB, const mdtClConnectableCriteria & criteria, bool & ok)
+{
+  mdtClUnitConnection ucnx(database());
+  mdtClUnitConnectorData a, b;
+
+  a = ucnx.getUnitConnectorData(pkA, true, ok);
+  if(!ok){
+    pvLastError = ucnx.lastError();
+    return false;
+  }
+  b = ucnx.getUnitConnectorData(pkB, true, ok);
+  if(!ok){
+    pvLastError = ucnx.lastError();
+    return false;
+  }
+
+  return canConnectConnectors(a, b, criteria, ok);
+}
+
+/// \deprecated
 bool mdtClLink::canConnectConnectors(const QVariant& startUnitConnectorId, const QVariant& endUnitConnectorId, const mdtClConnectableCriteria& criteria, bool& ok)
 {
   mdtClUnit unit(0, database());
@@ -628,7 +775,7 @@ bool mdtClLink::canConnectConnectors(const QVariant& startUnitConnectorId, const
   }
   ok = true;
 
-  return canConnectConnectors(S, E, criteria);
+  return canConnectConnectors(S, E, criteria, ok);
 }
 
 QString mdtClLink::sqlForConnectableUnitConnectionsSelection(const QVariant& unitConnectionId, const QVariant& unitId, const mdtClConnectableCriteria& criteria)
