@@ -280,11 +280,13 @@ void mdtClArticleEditor::updateRelatedUnitConnections()
     return;
   }
   // Update unit connections
+  /**
   if(!art.updateUnitConnections(fields, s)){
     pvLastError = art.lastError();
     displayLastError();
     return;
   }
+  */
   msgBox.setText(tr("Unit connections update done."));
   msgBox.setInformativeText("");
   msgBox.setIcon(QMessageBox::Information);

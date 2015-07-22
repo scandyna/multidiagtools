@@ -47,32 +47,3 @@ void mdtClArticleConnectionData::clear()
   functionDE.clear();
   functionIT.clear();
 }
-
-
-/*
- * OLD
- */
-
-mdtClArticleConnectionData::mdtClArticleConnectionData()
- : mdtSqlRecord()
-{
-}
-
-mdtClArticleConnectionData::mdtClArticleConnectionData(const QSqlRecord & record)
- : mdtSqlRecord(record)
-{
-  Q_ASSERT(indexOf("Id_PK") >= 0);
-  Q_ASSERT(indexOf("Article_Id_FK") >= 0);
-  Q_ASSERT(indexOf("ArticleConnector_Id_FK") >= 0);
-  Q_ASSERT(indexOf("ArticleContactName") >= 0);
-  Q_ASSERT(indexOf("IoType") >= 0);
-  Q_ASSERT(indexOf("FunctionEN") >= 0);
-  Q_ASSERT(indexOf("FunctionFR") >= 0);
-  Q_ASSERT(indexOf("FunctionDE") >= 0);
-  Q_ASSERT(indexOf("FunctionIT") >= 0);
-}
-
-bool mdtClArticleConnectionData::setup(QSqlDatabase db) 
-{
-  return addAllFields("ArticleConnection_tbl", db);
-}

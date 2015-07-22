@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtClUnitConnectionData.h"
 
-#include <QDebug>
+//#include <QDebug>
 
 void mdtClUnitConnectionData::setKeyData(const mdtClUnitConnectionKeyData &key)
 {
@@ -53,7 +53,6 @@ void mdtClUnitConnectionData::setConnectionType(mdtClConnectionType_t t)
   pvKeyData.setConnectionType(t);
 }
 
-
 void mdtClUnitConnectionData::clear()
 {
   pvKeyData.clear();
@@ -67,62 +66,3 @@ void mdtClUnitConnectionData::clear()
   functionDE.clear();
   functionIT.clear();
 }
-
-
-/*
- * OLD stuff
- */
-mdtClUnitConnectionData::mdtClUnitConnectionData()
- : mdtSqlRecord()
-{
-}
-
-/// \todo Check that the generated flag is updated (use hasData() for check...)
-mdtClUnitConnectionData::mdtClUnitConnectionData(const QSqlRecord & record)
- : mdtSqlRecord(record)
-{
-  Q_ASSERT(indexOf("Id_PK") >= 0);
-  Q_ASSERT(indexOf("Unit_Id_FK") >= 0);
-  Q_ASSERT(indexOf("UnitConnector_Id_FK") >= 0);
-  Q_ASSERT(indexOf("ArticleConnection_Id_FK") >= 0);
-  Q_ASSERT(contains("ConnectionType_Code_FK"));
-  Q_ASSERT(indexOf("UnitContactName") >= 0);
-  Q_ASSERT(indexOf("SchemaPage") >= 0);
-  Q_ASSERT(indexOf("SwAddress") >= 0);
-  Q_ASSERT(indexOf("FunctionEN") >= 0);
-  Q_ASSERT(indexOf("FunctionFR") >= 0);
-  Q_ASSERT(indexOf("FunctionDE") >= 0);
-  Q_ASSERT(indexOf("FunctionIT") >= 0);
-}
-
-bool mdtClUnitConnectionData::setup(const QSqlDatabase & db, bool setupAcd) 
-{
-  if(!addAllFields("UnitConnection_tbl", db)){
-    return false;
-  }
-  if(setupAcd){
-    return pvArticleConnectionData.setup(db);
-  }
-  return true;
-}
-
-const mdtClArticleConnectionData & mdtClUnitConnectionData::articleConnectionData() const
-{
-  return pvArticleConnectionData;
-}
-
-mdtClArticleConnectionData& mdtClUnitConnectionData::articleConnectionData()
-{
-  return pvArticleConnectionData;
-}
-
-void mdtClUnitConnectionData::setArticleConnectionData(const mdtClArticleConnectionData & data)
-{
-  setValue("ArticleConnection_Id_FK", data.value("Id_PK"));
-  pvArticleConnectionData = data;
-}
-
-// bool mdtClUnitConnectionData::isBasedOnArticleConnection() const
-// {
-//   return !value("ArticleConnection_Id_FK").isNull();
-// }

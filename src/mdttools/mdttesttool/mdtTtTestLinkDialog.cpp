@@ -574,14 +574,14 @@ void mdtTtTestLinkDialog::displayTestCableLink()
   // Get start connectors name
   ///id = pvTestCableLinkData.value("UnitConnectionStart_Id_FK");
   id = pvTestLinkData.value("TestCableUnitConnectionStart_Id_FK");
-  var = unit.getConnectorNameOfConnectionId(id, ok);
+  ///var = unit.getConnectorNameOfConnectionId(id, ok);
   if(!ok){
     lbTestCableLinkStartConnector->setText("<Error>");
     return;
   }
   lbTestCableLinkStartConnector->setText(var.toString());
   // Get start contact name
-  var = unit.getContactName(id, ok);
+ /// var = unit.getContactName(id, ok);
   if(!ok){
     lbTestCableLinkStartContact->setText("<Error>");
     return;
@@ -590,14 +590,14 @@ void mdtTtTestLinkDialog::displayTestCableLink()
   // Get end connector name
   ///id = pvTestCableLinkData.value("UnitConnectionEnd_Id_FK");
   id = pvTestLinkData.value("TestCableUnitConnectionEnd_Id_FK");
-  var = unit.getConnectorNameOfConnectionId(id, ok);
+  ///var = unit.getConnectorNameOfConnectionId(id, ok);
   if(!ok){
      lbTestCableLinkEndConnector->setText("<Error>");
      return;
   }
   lbTestCableLinkEndConnector->setText(var.toString());
   // Get end contact name
-  var = unit.getContactName(id, ok);
+  ///var = unit.getContactName(id, ok);
   if(!ok){
     lbTestCableLinkEndContact->setText("<Error>");
     return;
@@ -657,6 +657,7 @@ void mdtTtTestLinkDialog::displayDutUnit()
   }
 }
 
+/// \todo adapt
 void mdtTtTestLinkDialog::displayTestConnection() 
 {
   mdtClUnit unit(0, pvDatabase);
@@ -668,25 +669,28 @@ void mdtTtTestLinkDialog::displayTestConnection()
     lbTestConnector->clear();
     lbTestContact->clear();
   }else{
-    connectionData = unit.getConnectionData(pvTestLinkData.value("TestConnection_Id_FK"), false, &ok);
+    ///connectionData = unit.getConnectionData(pvTestLinkData.value("TestConnection_Id_FK"), false, &ok);
     if(!ok){
       lbTestContact->setText("<Error!>");
     }else{
-      lbTestContact->setText(connectionData.value("UnitContactName").toString());
+      ///lbTestContact->setText(connectionData.value("UnitContactName").toString());
     }
     // Set connector name
+    /**
     if(connectionData.value("UnitConnector_Id_FK").isNull()){
       lbTestConnector->setText("");
       return;
     }
-    connectorData = unit.getConnectorData(connectionData.value("UnitConnector_Id_FK"), &ok, false, false, false);
+    */
+    ///connectorData = unit.getConnectorData(connectionData.value("UnitConnector_Id_FK"), &ok, false, false, false);
     if(!ok){
       lbTestConnector->setText("<Error!>");
     }
-    lbTestConnector->setText(connectorData.value("Name").toString());
+    ///lbTestConnector->setText(connectorData.value("Name").toString());
   }
 }
 
+/// \todo adapt
 void mdtTtTestLinkDialog::displayDutConnection() 
 {
   mdtClUnit unit(0, pvDatabase);
@@ -698,21 +702,23 @@ void mdtTtTestLinkDialog::displayDutConnection()
     lbDutConnector->clear();
     lbDutContact->clear();
   }else{
-    connectionData = unit.getConnectionData(pvTestLinkData.value("DutConnection_Id_FK"), false, &ok);
+    ///connectionData = unit.getConnectionData(pvTestLinkData.value("DutConnection_Id_FK"), false, &ok);
     if(!ok){
       lbDutContact->setText("<Error!>");
     }else{
-      lbDutContact->setText(connectionData.value("UnitContactName").toString());
+      ///lbDutContact->setText(connectionData.value("UnitContactName").toString());
     }
     // Set connector name
+    /**
     if(connectionData.value("UnitConnector_Id_FK").isNull()){
       lbDutConnector->setText("");
       return;
     }
-    connectorData = unit.getConnectorData(connectionData.value("UnitConnector_Id_FK"), &ok, false, false, false);
+    */
+    ///connectorData = unit.getConnectorData(connectionData.value("UnitConnector_Id_FK"), &ok, false, false, false);
     if(!ok){
       lbDutConnector->setText("<Error!>");
     }
-    lbDutConnector->setText(connectorData.value("Name").toString());
+    ///lbDutConnector->setText(connectorData.value("Name").toString());
   }
 }

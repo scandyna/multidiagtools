@@ -24,15 +24,11 @@
 #include "mdtClArticleConnectionKeyData.h"
 #include <QVariant>
 
-#include "mdtSqlRecord.h"
-#include <QList>
-#include <QSqlDatabase>
-
 /*! \brief Data container for article connection data
  *
  * Refers to ArticleConnection_tbl
  */
-struct mdtClArticleConnectionData : public mdtSqlRecord  /// \todo When all is adapted, remove this inheritance
+struct mdtClArticleConnectionData
 {
  private:
 
@@ -126,27 +122,6 @@ struct mdtClArticleConnectionData : public mdtSqlRecord  /// \todo When all is a
   /*! \brief Function italian (FunctionIT)
    */
   QVariant functionIT;
-
- public:
-
-  /*! \brief Construct a empty mdtClArticleConnectionData
-   * \deprecated
-   */
-  mdtClArticleConnectionData();
-
-  /*! \brief Contruct a mdtClArticleConnectionData from a QSqlRecord
-   *
-   * Note: if this method is used, setup is not relevant.
-   *
-   * \pre All fields from ArticleConnection_tbl must exist in record
-   * \deprecated
-   */
-  mdtClArticleConnectionData(const QSqlRecord & record);
-
-  /*! \brief Setup fields from ArticleConnection_tbl
-   * \deprecated
-   */
-  bool setup(QSqlDatabase db);
 };
 
 #endif // #ifndef MDT_CL_ARTICLE_CONNECTION_DATA_H

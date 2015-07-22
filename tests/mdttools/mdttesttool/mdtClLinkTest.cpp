@@ -1282,57 +1282,6 @@ void mdtClLinkTest::linkFromArticleLinkAddTest()
   QVERIFY(alnk.removeLink(aLinkPk));
 }
 
-
-void mdtClLinkTest::sandbox()
-{
-  ///QList<int> A, B, resultA;
-  ///QVector<int> A, B, resultA;
-//   QList<int> A {5, 2, 3, 1, 4};
-//   QList<int> B {3, -1, 1};
-//   QList<int> resultA;
-
-  QVector<int>  A {5, 2, 3, 1, 4};
-  QVector<int> B {3, -1, 1};
-  QVector<int> resultA;
-
-//   std::vector<int> A {5, 2, 3, 1, 4};
-//   std::vector<int> B {3, -1, 1};
-//   std::vector<int> resultA;
-
-  ///A << 1 << 2 << 3 << 4 << 5;
-  ///B << 3;
-  ///resultA.reserve(10);
-
-  ///std::set_difference(A.constBegin(), A.constEnd(), B.constBegin(), B.constEnd(), resultA.begin());
-  ///std::set_difference(A.cbegin(), A.cend(), B.cbegin(), B.cend(), resultA.begin());
-  
-  std::sort(A.begin(), A.end());
-  std::sort(B.begin(), B.end());
-  std::set_difference(A.constBegin(), A.constEnd(), B.constBegin(), B.constEnd(),  std::inserter(resultA, resultA.begin()) );
-//   std::set_difference(A.cbegin(), A.cend(), B.cbegin(), B.cend(),  std::inserter(resultA, resultA.begin()) );
-
-  std::cout << "A: ";
-  for(const auto & a : A){
-    std::cout << a << " ";
-  }
-  std::cout << std::endl;
-  std::cout << "B: ";
-  for(const auto & b : B){
-    std::cout << b << " ";
-  }
-  std::cout << std::endl;
-  std::cout << "A \\ B: ";
-  for(const auto & a : resultA){
-    std::cout << a << " ";
-  }
-  std::cout << std::endl;
-
-  
-  QList<mdtClVehicleTypeStartEndKeyData> E, F, G;
-  
-  std::set_difference(E.constBegin(), E.constEnd(), F.constBegin(), F.constEnd(),  std::inserter(G, G.begin()) , mdtClVehicleTypeStartEndLessThan() );
-}
-
 /*
  * Test database helper methods
  */

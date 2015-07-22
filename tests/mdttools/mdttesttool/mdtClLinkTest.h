@@ -67,8 +67,6 @@ class mdtClLinkTest : public mdtTest
   void linkAndVehicleTypeAddGetRemoveTest();
   void linkFromArticleLinkAddTest();
 
-  void sandbox();
-
  private:
 
   // Create test database schema - Will FAIL on problem

@@ -220,6 +220,7 @@ void mdtTtTestCableEditor::addConnectorBasedConnector()
     return;
   }
   // Setup unit connector data
+  /**
   if(!connectorData.setup(database(), true, false)){
     pvLastError = connectorData.lastError();
     displayLastError();
@@ -228,6 +229,7 @@ void mdtTtTestCableEditor::addConnectorBasedConnector()
   connectorData.setValue("Unit_Id_FK", unitId);
   connectorData.setValue("Connector_Id_FK", baseConnectorId);
   connectorData.setValue("Name", connectorName);
+  */
   // Add contacts to unit connector data
   /**
   if(!unit.addConnectionDataListFromConnectorContactIdList(connectorData, contactList)){
@@ -340,12 +342,14 @@ void mdtTtTestCableEditor::addConnection()
     return;
   }
   // Setup unit connection data
+  /**
   if(!data.setup(database(), true)){
     pvLastError = data.lastError();
     displayLastError();
     return;
   }
   data.setValue("Unit_Id_FK", unitId);
+  */
   // Setup and show dialog
   dialog.setData(data, currentData("Unit_tbl", "Article_Id_FK"));
   if(dialog.exec() != QDialog::Accepted){

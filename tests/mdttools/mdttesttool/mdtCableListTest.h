@@ -45,13 +45,9 @@ class mdtCableListTest : public mdtTest
 
   void applicationWidgetsTest();
 
-//   void articleConnectionDataTest();
-//   void articleConnectorDataTest();
   void articleTest();
   void unitConnectionUpdateTest();
 
-//   void unitConnectionDataTest();
-//   void unitConnectorDataTest();
   void unitTest();
 //   void unitConnectionTest();
 

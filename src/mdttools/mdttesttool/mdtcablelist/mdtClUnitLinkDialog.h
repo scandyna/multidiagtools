@@ -29,6 +29,7 @@
 #include "mdtClVehicleTypeLinkKeyData.h"
 #include "mdtClLinkModificationKeyData.h"
 #include "mdtClLinkData.h"
+#include "mdtError.h"
 #include <QDialog>
 #include <QVariant>
 #include <QSqlDatabase>

@@ -23,20 +23,14 @@
 
 #include "mdtClUnitConnectionKeyData.h"
 #include "mdtClUnitConnectorKeyData.h"
-
-#include "mdtSqlRecord.h"
-#include "mdtClArticleConnectionData.h"
-
 #include <QList>
 #include <QVariant>
-#include <QSqlDatabase>
-#include <QSqlRecord>
 
 /*! \brief Data container class for unit connection data
  *
  * Permit to echange data with UnitConnection_tbl.
  */
-struct mdtClUnitConnectionData : public mdtSqlRecord /// \todo Remove this inheritance once all is done
+struct mdtClUnitConnectionData
 {
  private:
 
@@ -152,45 +146,6 @@ struct mdtClUnitConnectionData : public mdtSqlRecord /// \todo Remove this inher
   /*! \brief Function IT (FunctionIT)
    */
   QVariant functionIT;
-
- public:
-
-  /*! \brief Construct a empty mdtClUnitConnectionData
-   */
-  mdtClUnitConnectionData();
-
-  /*! \brief Contruct a mdtClUnitConnectionData from a QSqlRecord
-   *
-   * Note: if this method is used, setup is not relevant.
-   *
-   * \pre All fields from UnitConnection_tbl must exist in record
-   */
-  mdtClUnitConnectionData(const QSqlRecord & record);
-
-  /*! \brief Setup fields from UnitConnection_tbl
-   *
-   * \param setupAcd If true, fields from article connection part are also added.
-   */
-  bool setup(const QSqlDatabase & db, bool setupAcd);
-
-  /*! \brief Set article connection data
-   *
-   * Will also update ArticleConnection_Id_FK
-   */
-  void setArticleConnectionData(const mdtClArticleConnectionData & data);
-
-  /*! \brief Access article connection data (RD)
-   */
-  const mdtClArticleConnectionData & articleConnectionData() const;
-
-  /*! \brief Access article connection data (WR)
-   */
-  mdtClArticleConnectionData & articleConnectionData();
-
-
- private:
-
-  mdtClArticleConnectionData pvArticleConnectionData;
 };
 
 #endif // #ifndef MDT_CL_UNIT_CONNECTION_DATA_H

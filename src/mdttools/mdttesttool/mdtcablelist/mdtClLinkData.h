@@ -21,23 +21,15 @@
 #ifndef MDT_CL_LINK_DATA_H
 #define MDT_CL_LINK_DATA_H
 
-#include "mdtSqlRecord.h"
-#include "mdtClUnitConnectionData.h"
-#include "mdtClVehicleTypeLinkData.h"
-
 #include "mdtClLinkKeyData.h"
 #include "mdtValue.h"
 #include <QVariant>
-
-#include <QList>
-#include <QSqlDatabase>
-#include <QSqlRecord>
 
 /*! \brief Data container class for link data
  *
  * Refers to Link_tbl.
  */
-struct mdtClLinkData // : public mdtSqlRecord /// \todo remove this inheritance once all is updated
+struct mdtClLinkData
 {
  private:
 
@@ -132,86 +124,6 @@ struct mdtClLinkData // : public mdtSqlRecord /// \todo remove this inheritance 
   /*! \brief Clear data
    */
   void clear();
-
- public:
-
-  /*! \brief Construct a empty mdtClLinkData
-   */
-//   mdtClLinkData();
-
-  /*! \brief Contruct a mdtClLinkData from a QSqlRecord
-   *
-   * Note: if this method is used, setup is not relevant.
-   *
-   * \pre All fields from Link_tbl must exist in record
-   */
-//   mdtClLinkData(const QSqlRecord & record);
-
-  /*! \brief Set start connection data
-   *
-   * Will also update following data:
-   *  - UnitConnectionStart_Id_FK
-   *  - ArticleConnectionStart_Id_FK
-   *
-   * Internal vehicle type link data list is also updated with new start unit connection IDs
-   */
-//   void setStartConnectionData(const mdtClUnitConnectionData & cnnData);
-
-  /*! \brief Set end connection data
-   *
-   * Will also update following data:
-   *  - UnitConnectionEnd_Id_FK
-   *  - ArticleConnectionEnd_Id_FK
-   *
-   * Internal vehicle type link data list is also updated with new end unit connection IDs
-   */
-//   void setEndConnectionData(const mdtClUnitConnectionData & cnnData);
-
-  /*! \brief Set start and end connection data
-   *
-   * Will also update following data:
-   *  - UnitConnectionStart_Id_FK
-   *  - UnitConnectionEnd_Id_FK
-   *  - ArticleConnectionStart_Id_FK
-   *  - ArticleConnectionEnd_Id_FK
-   *
-   * Internal vehicle type link data list is also updated with new start and end unit connection IDs
-   */
-//   void setConnectionData(const mdtClUnitConnectionData & startCnnData, const mdtClUnitConnectionData & endCnnData);
-
-  /*! \brief Get start connection data (RD)
-   */
-//   inline const mdtClUnitConnectionData & startConnectionData() const { return pvStartConnectionData; }
-
-  /*! \brief Get end connection data (RD)
-   */
-//   inline const mdtClUnitConnectionData & endConnectionData() const { return pvEndConnectionData; }
-
-  /*! \brief Check if a vehicle type link was edited
-   */
-//   inline bool vehicleTypeLinksEdited() const { return pvVehicleTypeLinksEdited; }
-
-  /*! \brief Add vehicle type link data
-   *
-   * Note: in given data, unitConnectionStartId and unitConnectionEndId are not relevant,
-   *  because they are set internally.
-   */
-//   void addVehicleTypeLinkData(const mdtClVehicleTypeLinkData & data, bool updateVehicleLinksEditedFlags = true);
-
-  /*! \brief Get list of vehicle type link data
-   */
-//   inline const QList<mdtClVehicleTypeLinkData> & vehicleTypeLinkDataList() const { return pvVehicleTypeLinkDataList; }
-
-  /*! \brief Clear only vehicle type link data list
-   */
-//   void clearVehicleTypeLinkDataList();
-
- private:
-  
-//   mdtClUnitConnectionData pvStartConnectionData;
-//   mdtClUnitConnectionData pvEndConnectionData;
-//   QList<mdtClVehicleTypeLinkData> pvVehicleTypeLinkDataList;
-//   bool pvVehicleTypeLinksEdited;
 };
 
 #endif // #ifndef MDT_CL_LINK_DATA_H

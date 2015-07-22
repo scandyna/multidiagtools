@@ -113,11 +113,11 @@ class mdtTtLogicalTestCableEditor : public mdtSqlForm
 
   /*! \brief Select start connector
    */
-  QVariant selectStartConnectorId(const QVariant & dutUnitId);
+//   QVariant selectStartConnectorId(const QVariant & dutUnitId);
 
   /*! \brief Select end connector(s) from given list
    */
-  QList<QVariant> selectEndConnectorIdList(const QList<QVariant> & unitConnectorIdList);
+//   QList<QVariant> selectEndConnectorIdList(const QList<QVariant> & unitConnectorIdList);
 
   /*! \brief Setup test cable table
    */

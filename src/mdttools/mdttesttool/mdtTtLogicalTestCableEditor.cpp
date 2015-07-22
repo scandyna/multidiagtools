@@ -378,6 +378,7 @@ void mdtTtLogicalTestCableEditor::removeLinks()
   select("TestLink_view");
 }
 
+/// \todo adapt
 void mdtTtLogicalTestCableEditor::generateLinks()
 {
   mdtTtLogicalTestCable tcc(this, database());
@@ -428,7 +429,7 @@ void mdtTtLogicalTestCableEditor::generateLinks()
   qDebug() << "BUSA cnn: " << busAtestConnectionIdList;
   qDebug() << "BUSB cnn: " << busBtestConnectionIdList;
   // Select a start connector
-  dutStartConnectorId = selectStartConnectorId(dutUnitId);
+  ///dutStartConnectorId = selectStartConnectorId(dutUnitId);
   if(dutStartConnectorId.isNull()){
     return;
   }
@@ -451,7 +452,7 @@ void mdtTtLogicalTestCableEditor::generateLinks()
     }
   }
   // Select end connector(s)
-  dutEndConnectorIdList = selectEndConnectorIdList(dutLinkedConnectorIdList);
+  ///dutEndConnectorIdList = selectEndConnectorIdList(dutLinkedConnectorIdList);
   qDebug() << "End connectors: " << dutEndConnectorIdList;
   // Get end connections that are part of selected end connectors
   dutEndConnectionIdList = tcc.getToUnitConnectionIdListLinkedUnitConnectionIdListPartOfUnitConnectorList(dutStartConnectionIdList, dutEndConnectorIdList);
@@ -691,91 +692,91 @@ QVariant mdtTtLogicalTestCableEditor::selectTestCable()
   return selectionDialog.selectionResult().at(0);
 }
 
-QVariant mdtTtLogicalTestCableEditor::selectStartConnectorId(const QVariant & dutUnitId) 
-{
-  mdtTtLogicalTestCable tcc(this, database());
-  mdtSqlSelectionDialog selectionDialog;
-  ///QSqlError sqlError;
-  ///QSqlQueryModel model;
-  QString sql;
+// QVariant mdtTtLogicalTestCableEditor::selectStartConnectorId(const QVariant & dutUnitId) 
+// {
+//   mdtTtLogicalTestCable tcc(this, database());
+//   mdtSqlSelectionDialog selectionDialog;
+//   ///QSqlError sqlError;
+//   ///QSqlQueryModel model;
+//   QString sql;
+// 
+//   // Setup model to show available connectors
+//   sql = tcc.sqlForStartConnectorSelection(dutUnitId);
+//   /**
+//   model.setQuery(sql, database());
+//   sqlError = model.lastError();
+//   if(sqlError.isValid()){
+//     pvLastError.setError(tr("Unable to get unit connector list."), mdtError::Error);
+//     pvLastError.setSystemError(sqlError.number(), sqlError.text());
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCableEditor");
+//     pvLastError.commit();
+//     ///displayLastError();
+//     return QVariant();
+//   }
+//   */
+//   // Setup and show dialog
+//   selectionDialog.setMessage("Please select a connector to test.");
+//   ///selectionDialog.setModel(&model, false);
+//   selectionDialog.setQuery(sql, database(), false);
+//   selectionDialog.setColumnHidden("Id_PK", true);
+//   selectionDialog.setColumnHidden("Unit_Id_FK", true);
+//   selectionDialog.setColumnHidden("Connector_Id_FK", true);
+//   selectionDialog.setColumnHidden("ArticleConnector_Id_FK", true);
+//   selectionDialog.addSelectionResultColumn("Id_PK");
+//   selectionDialog.resize(500, 300);
+//   if(selectionDialog.exec() != QDialog::Accepted){
+//     return QVariant();
+//   }
+//   Q_ASSERT(selectionDialog.selectionResult().size() == 1);
+// 
+//   return selectionDialog.selectionResult().at(0);
+// }
 
-  // Setup model to show available connectors
-  sql = tcc.sqlForStartConnectorSelection(dutUnitId);
-  /**
-  model.setQuery(sql, database());
-  sqlError = model.lastError();
-  if(sqlError.isValid()){
-    pvLastError.setError(tr("Unable to get unit connector list."), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCableEditor");
-    pvLastError.commit();
-    ///displayLastError();
-    return QVariant();
-  }
-  */
-  // Setup and show dialog
-  selectionDialog.setMessage("Please select a connector to test.");
-  ///selectionDialog.setModel(&model, false);
-  selectionDialog.setQuery(sql, database(), false);
-  selectionDialog.setColumnHidden("Id_PK", true);
-  selectionDialog.setColumnHidden("Unit_Id_FK", true);
-  selectionDialog.setColumnHidden("Connector_Id_FK", true);
-  selectionDialog.setColumnHidden("ArticleConnector_Id_FK", true);
-  selectionDialog.addSelectionResultColumn("Id_PK");
-  selectionDialog.resize(500, 300);
-  if(selectionDialog.exec() != QDialog::Accepted){
-    return QVariant();
-  }
-  Q_ASSERT(selectionDialog.selectionResult().size() == 1);
-
-  return selectionDialog.selectionResult().at(0);
-}
-
-QList<QVariant> mdtTtLogicalTestCableEditor::selectEndConnectorIdList(const QList<QVariant> & unitConnectorIdList) 
-{
-  mdtTtLogicalTestCable tcc(this, database());
-  mdtSqlSelectionDialog selectionDialog;
-  QModelIndexList selectedItems;
-  QList<QVariant> idList;
-  ///QSqlError sqlError;
-  ///QSqlQueryModel model;
-  QString sql;
-  int i;
-
-  // Setup model to show available connectors
-  sql = tcc.sqlForUnitConnectorSelectionFromUnitConnectorIdList(unitConnectorIdList);
-  /**
-  model.setQuery(sql, database());
-  sqlError = model.lastError();
-  if(sqlError.isValid()){
-    pvLastError.setError(tr("Unable to get unit connector list."), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCableEditor");
-    pvLastError.commit();
-    ///displayLastError();
-    return idList;
-  }
-  */
-  // Setup and show dialog
-  selectionDialog.setMessage("Please select end connector(s) to test.");
-  ///selectionDialog.setModel(&model, true);
-  selectionDialog.setQuery(sql, database(), true);
-  selectionDialog.setColumnHidden("Id_PK", true);
-  selectionDialog.setColumnHidden("Unit_Id_FK", true);
-  selectionDialog.setColumnHidden("Connector_Id_FK", true);
-  selectionDialog.setColumnHidden("ArticleConnector_Id_FK", true);
-  selectionDialog.addSelectionResultColumn("Id_PK");
-  selectionDialog.resize(500, 300);
-  if(selectionDialog.exec() != QDialog::Accepted){
-    return idList;
-  }
-  selectedItems = selectionDialog.selectionResults();
-  for(i = 0; i < selectedItems.size(); ++i){
-    idList.append(selectedItems.at(i).data());
-  }
-
-  return idList;  
-}
+// QList<QVariant> mdtTtLogicalTestCableEditor::selectEndConnectorIdList(const QList<QVariant> & unitConnectorIdList) 
+// {
+//   mdtTtLogicalTestCable tcc(this, database());
+//   mdtSqlSelectionDialog selectionDialog;
+//   QModelIndexList selectedItems;
+//   QList<QVariant> idList;
+//   ///QSqlError sqlError;
+//   ///QSqlQueryModel model;
+//   QString sql;
+//   int i;
+// 
+//   // Setup model to show available connectors
+//   sql = tcc.sqlForUnitConnectorSelectionFromUnitConnectorIdList(unitConnectorIdList);
+//   /**
+//   model.setQuery(sql, database());
+//   sqlError = model.lastError();
+//   if(sqlError.isValid()){
+//     pvLastError.setError(tr("Unable to get unit connector list."), mdtError::Error);
+//     pvLastError.setSystemError(sqlError.number(), sqlError.text());
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtTtLogicalTestCableEditor");
+//     pvLastError.commit();
+//     ///displayLastError();
+//     return idList;
+//   }
+//   */
+//   // Setup and show dialog
+//   selectionDialog.setMessage("Please select end connector(s) to test.");
+//   ///selectionDialog.setModel(&model, true);
+//   selectionDialog.setQuery(sql, database(), true);
+//   selectionDialog.setColumnHidden("Id_PK", true);
+//   selectionDialog.setColumnHidden("Unit_Id_FK", true);
+//   selectionDialog.setColumnHidden("Connector_Id_FK", true);
+//   selectionDialog.setColumnHidden("ArticleConnector_Id_FK", true);
+//   selectionDialog.addSelectionResultColumn("Id_PK");
+//   selectionDialog.resize(500, 300);
+//   if(selectionDialog.exec() != QDialog::Accepted){
+//     return idList;
+//   }
+//   selectedItems = selectionDialog.selectionResults();
+//   for(i = 0; i < selectedItems.size(); ++i){
+//     idList.append(selectedItems.at(i).data());
+//   }
+// 
+//   return idList;  
+// }
 
 bool mdtTtLogicalTestCableEditor::setupTestCableTable()
 {

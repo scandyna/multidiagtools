@@ -105,11 +105,11 @@ class mdtTtTestSystemUnitEditor : public mdtSqlForm
 
   /*! \brief Let user choose a connector from those that are related to current article
    */
-  QVariant selectArticleConnector();
+//   QVariant selectArticleConnector();
 
   /*! \brief Select article connections related to given article connector ID
    */
-  QList<QVariant> selectByArticleConnectorIdArticleConnectionIdList(const QVariant & articleConnectorId, const QVariant & unitId, bool multiSelection = true);
+//   QList<QVariant> selectByArticleConnectorIdArticleConnectionIdList(const QVariant & articleConnectorId, const QVariant & unitId, bool multiSelection = true);
 
   /*! \brief Setup Unit_tbl + TestSystemUnit_tbl part
    */

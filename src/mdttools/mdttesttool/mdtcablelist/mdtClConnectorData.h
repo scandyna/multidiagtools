@@ -21,19 +21,16 @@
 #ifndef MDT_CL_CONNECTOR_DATA_H
 #define MDT_CL_CONNECTOR_DATA_H
 
-#include "mdtSqlRecord.h"
 #include "mdtClConnectorKeyData.h"
 #include "mdtClConnectorContactData.h"
 #include <QList>
 #include <QVariant>
-#include <QSqlDatabase>
-#include <QSqlRecord>
 
 /*! \brief Data container class for connector data
  *
  * Refers to Connector_tbl
  */
-struct mdtClConnectorData : public mdtSqlRecord /// \todo When all is adapted, remove this inheritance
+struct mdtClConnectorData
 {
  private:
 
