@@ -23,7 +23,9 @@
 
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorData.h"
+
 #include "mdtClLinkData.h"
+
 #include "mdtTtBase.h"
 #include "mdtError.h"
 #include "mdtSqlRecord.h"
@@ -273,22 +275,22 @@ class mdtClUnit : public mdtTtBase
 
   /*! \brief Add unit connection
    */
-  bool addConnection(const mdtClUnitConnectionData & data, bool singleTransaction = true);
+//   bool addConnection(const mdtClUnitConnectionData & data, bool singleTransaction = true);
 
   /*! \brief Add unit connections
    */
-  bool addConnections(const QList<mdtClUnitConnectionData> & dataList, bool singleTransaction = true);
+//   bool addConnections(const QList<mdtClUnitConnectionData> & dataList, bool singleTransaction = true);
 
   /*! \brief Edit a unit connection
    *
    * \return True on success, false else.
    *          To get reason of failure, use lastError().
    */
-  bool editConnection(const QVariant & connectionId, const mdtClUnitConnectionData & data);
+//   bool editConnection(const QVariant & connectionId, const mdtClUnitConnectionData & data);
 
   /*! \brief Remove a single unit connection
    */
-  bool removeConnection(const QVariant & unitConnectionId, bool handleTransaction = true);
+//   bool removeConnection(const QVariant & unitConnectionId, bool handleTransaction = true);
 
   /*! \brief Remove each unit connection that is contained in selection
    *
@@ -297,7 +299,7 @@ class mdtClUnit : public mdtTtBase
    * \return True on success, false else.
    *          To get reason of failure, use lastError() .
    */
-  bool removeConnections(const mdtSqlTableSelection & s);
+//   bool removeConnections(const mdtSqlTableSelection & s);
 
   /*! \brief Add a unit connector
    *
@@ -308,15 +310,15 @@ class mdtClUnit : public mdtTtBase
    *  Unit_Id_FK and UnitConnector_Id_FK are not relevant,
    *  because they are token from data directly.
    */
-  bool addConnector(const mdtClUnitConnectorData & data);
+//   bool addConnector(const mdtClUnitConnectorData & data);
 
   /*! \brief Edit connector name
    */
-  bool editConnectorName(const QVariant & unitConnectorId, const QVariant & name);
+//   bool editConnectorName(const QVariant & unitConnectorId, const QVariant & name);
 
   /*! \brief Remove a unit connector and its contacts
    */
-  bool removeConnector(const QVariant & unitConnectorId);
+//   bool removeConnector(const QVariant & unitConnectorId);
 
   /*! \brief Remove each unit connector that is contained in selection
    *
@@ -326,7 +328,7 @@ class mdtClUnit : public mdtTtBase
    *          To get reason of failure, use lastError() .
    */
   ///bool removeConnectors(const QModelIndexList & indexListOfSelectedRows);
-  bool removeConnectors(const mdtSqlTableSelection & s);
+//   bool removeConnectors(const mdtSqlTableSelection & s);
 
   /*! \brief
    */
@@ -371,7 +373,7 @@ class mdtClUnit : public mdtTtBase
    *
    * Note: returned list of link data also contains vehicle type links.
    */
-  QList<mdtClLinkData> getArticleLinkListUsingConnectionId(const mdtClUnitConnectionData & unitConnectionData, bool *ok);
+//   QList<mdtClLinkData> getArticleLinkListUsingConnectionId(const mdtClUnitConnectionData & unitConnectionData, bool *ok);
 
   /*! \brief Add link that is based on a article link
    *
@@ -380,7 +382,7 @@ class mdtClUnit : public mdtTtBase
    *  are base of a article link,
    *  and add a link based on it if missing.
    */
-  bool addArticleBasedLinkForUnitConnection(const mdtClUnitConnectionData & unitConnectionData);
+//   bool addArticleBasedLinkForUnitConnection(const mdtClUnitConnectionData & unitConnectionData);
 
   /*! \brief Remove link that is based on a article link
    *
@@ -389,7 +391,7 @@ class mdtClUnit : public mdtTtBase
    *  are base of a article link,
    *  and remove link
    */
-  bool removeArticleBasedLinkForUnitConnection(const mdtClUnitConnectionData & unitConnectionData);
+//   bool removeArticleBasedLinkForUnitConnection(const mdtClUnitConnectionData & unitConnectionData);
 
   Q_DISABLE_COPY(mdtClUnit);
 };

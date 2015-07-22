@@ -37,7 +37,7 @@
  *
  * Refers to Link_tbl.
  */
-struct mdtClLinkData : public mdtSqlRecord /// \todo remove this inheritance once all is updated
+struct mdtClLinkData // : public mdtSqlRecord /// \todo remove this inheritance once all is updated
 {
  private:
 
@@ -137,7 +137,7 @@ struct mdtClLinkData : public mdtSqlRecord /// \todo remove this inheritance onc
 
   /*! \brief Construct a empty mdtClLinkData
    */
-  mdtClLinkData();
+//   mdtClLinkData();
 
   /*! \brief Contruct a mdtClLinkData from a QSqlRecord
    *
@@ -145,15 +145,7 @@ struct mdtClLinkData : public mdtSqlRecord /// \todo remove this inheritance onc
    *
    * \pre All fields from Link_tbl must exist in record
    */
-  mdtClLinkData(const QSqlRecord & record);
-
-  /*! \brief Setup fields from Link_tbl
-   */
-  bool setup(const QSqlDatabase & db);
-
-  /*! \brief Clear values
-   */
-  void clearValues();
+//   mdtClLinkData(const QSqlRecord & record);
 
   /*! \brief Set start connection data
    *
@@ -163,7 +155,7 @@ struct mdtClLinkData : public mdtSqlRecord /// \todo remove this inheritance onc
    *
    * Internal vehicle type link data list is also updated with new start unit connection IDs
    */
-  void setStartConnectionData(const mdtClUnitConnectionData & cnnData);
+//   void setStartConnectionData(const mdtClUnitConnectionData & cnnData);
 
   /*! \brief Set end connection data
    *
@@ -173,7 +165,7 @@ struct mdtClLinkData : public mdtSqlRecord /// \todo remove this inheritance onc
    *
    * Internal vehicle type link data list is also updated with new end unit connection IDs
    */
-  void setEndConnectionData(const mdtClUnitConnectionData & cnnData);
+//   void setEndConnectionData(const mdtClUnitConnectionData & cnnData);
 
   /*! \brief Set start and end connection data
    *
@@ -185,41 +177,41 @@ struct mdtClLinkData : public mdtSqlRecord /// \todo remove this inheritance onc
    *
    * Internal vehicle type link data list is also updated with new start and end unit connection IDs
    */
-  void setConnectionData(const mdtClUnitConnectionData & startCnnData, const mdtClUnitConnectionData & endCnnData);
+//   void setConnectionData(const mdtClUnitConnectionData & startCnnData, const mdtClUnitConnectionData & endCnnData);
 
   /*! \brief Get start connection data (RD)
    */
-  inline const mdtClUnitConnectionData & startConnectionData() const { return pvStartConnectionData; }
+//   inline const mdtClUnitConnectionData & startConnectionData() const { return pvStartConnectionData; }
 
   /*! \brief Get end connection data (RD)
    */
-  inline const mdtClUnitConnectionData & endConnectionData() const { return pvEndConnectionData; }
+//   inline const mdtClUnitConnectionData & endConnectionData() const { return pvEndConnectionData; }
 
   /*! \brief Check if a vehicle type link was edited
    */
-  inline bool vehicleTypeLinksEdited() const { return pvVehicleTypeLinksEdited; }
+//   inline bool vehicleTypeLinksEdited() const { return pvVehicleTypeLinksEdited; }
 
   /*! \brief Add vehicle type link data
    *
    * Note: in given data, unitConnectionStartId and unitConnectionEndId are not relevant,
    *  because they are set internally.
    */
-  void addVehicleTypeLinkData(const mdtClVehicleTypeLinkData & data, bool updateVehicleLinksEditedFlags = true);
+//   void addVehicleTypeLinkData(const mdtClVehicleTypeLinkData & data, bool updateVehicleLinksEditedFlags = true);
 
   /*! \brief Get list of vehicle type link data
    */
-  inline const QList<mdtClVehicleTypeLinkData> & vehicleTypeLinkDataList() const { return pvVehicleTypeLinkDataList; }
+//   inline const QList<mdtClVehicleTypeLinkData> & vehicleTypeLinkDataList() const { return pvVehicleTypeLinkDataList; }
 
   /*! \brief Clear only vehicle type link data list
    */
-  void clearVehicleTypeLinkDataList();
+//   void clearVehicleTypeLinkDataList();
 
  private:
   
-  mdtClUnitConnectionData pvStartConnectionData;
-  mdtClUnitConnectionData pvEndConnectionData;
-  QList<mdtClVehicleTypeLinkData> pvVehicleTypeLinkDataList;
-  bool pvVehicleTypeLinksEdited;
+//   mdtClUnitConnectionData pvStartConnectionData;
+//   mdtClUnitConnectionData pvEndConnectionData;
+//   QList<mdtClVehicleTypeLinkData> pvVehicleTypeLinkDataList;
+//   bool pvVehicleTypeLinksEdited;
 };
 
 #endif // #ifndef MDT_CL_LINK_DATA_H

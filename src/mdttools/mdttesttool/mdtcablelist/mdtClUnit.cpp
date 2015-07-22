@@ -639,239 +639,239 @@ QString mdtClUnit::toUnitRelatedLinksListStr(const QVariant &unitId, const QList
   return str;
 }
 
-bool mdtClUnit::addConnection(const mdtClUnitConnectionData & data, bool singleTransaction)
-{
-  QSqlQuery query(database());
+// bool mdtClUnit::addConnection(const mdtClUnitConnectionData & data, bool singleTransaction)
+// {
+//   QSqlQuery query(database());
+// 
+//   // We want to update many tables, so manually ask to beginn a transaction
+//   if(singleTransaction){
+//     if(!beginTransaction()){
+//       return false;
+//     }
+//   }
+//   if(!addRecord(data, "UnitConnection_tbl", query)){
+//     if(singleTransaction){
+//       rollbackTransaction();
+//     }
+//     return false;
+//   }
+//   // Add article link based links if required
+//   if(!data.value("ArticleConnection_Id_FK").isNull()){
+//     mdtClUnitConnectionData _data = data;
+//     _data.setValue("Id_PK", query.lastInsertId());
+//     if(!addArticleBasedLinkForUnitConnection(_data)){
+//       if(singleTransaction){
+//         rollbackTransaction();
+//       }
+//       return false;
+//     }
+//   }
+//   if(singleTransaction){
+//     if(!commitTransaction()){
+//       return false;
+//     }
+//   }
+// 
+//   return true;
+// }
 
-  // We want to update many tables, so manually ask to beginn a transaction
-  if(singleTransaction){
-    if(!beginTransaction()){
-      return false;
-    }
-  }
-  if(!addRecord(data, "UnitConnection_tbl", query)){
-    if(singleTransaction){
-      rollbackTransaction();
-    }
-    return false;
-  }
-  // Add article link based links if required
-  if(!data.value("ArticleConnection_Id_FK").isNull()){
-    mdtClUnitConnectionData _data = data;
-    _data.setValue("Id_PK", query.lastInsertId());
-    if(!addArticleBasedLinkForUnitConnection(_data)){
-      if(singleTransaction){
-        rollbackTransaction();
-      }
-      return false;
-    }
-  }
-  if(singleTransaction){
-    if(!commitTransaction()){
-      return false;
-    }
-  }
+// bool mdtClUnit::addConnections(const QList<mdtClUnitConnectionData> & dataList, bool singleTransaction)
+// {
+//   int i;
+// 
+//   if(singleTransaction){
+//     if(!beginTransaction()){
+//       return false;
+//     }
+//   }
+//   for(i = 0; i < dataList.size(); ++i){
+//     if(!addConnection(dataList.at(i), false)){
+//       rollbackTransaction();
+//       return false;
+//     }
+//   }
+//   if(singleTransaction){
+//     if(!commitTransaction()){
+//       return false;
+//     }
+//   }
+// 
+//   return true;
+// }
 
-  return true;
-}
+// bool mdtClUnit::editConnection(const QVariant & connectionId, const mdtClUnitConnectionData & data)
+// {
+//   Q_ASSERT(!data.value("Id_PK").isNull());
+//   ///return updateRecord("UnitConnection_tbl", data, "Id_PK", data.value("Id_PK"));
+//   return updateRecord("UnitConnection_tbl", data, "Id_PK", connectionId);
+// }
 
-bool mdtClUnit::addConnections(const QList<mdtClUnitConnectionData> & dataList, bool singleTransaction)
-{
-  int i;
+// bool mdtClUnit::removeConnection(const QVariant & unitConnectionId, bool handleTransaction)
+// {
+//   mdtClUnitConnectionData connectionData;
+//   bool ok;
+// 
+//   // We need some information about connection, because we possibly have to remove some links
+//   connectionData = getConnectionData(unitConnectionId, true, &ok);
+//   if(!ok){
+//     return false;
+//   }
+//   // We want to update many tables, so manually ask to beginn a transaction
+//   if(handleTransaction){
+//     if(!beginTransaction()){
+//       return false;
+//     }
+//   }
+//   // Remove article link based links if required
+//   if(!connectionData.value("ArticleConnection_Id_FK").isNull()){
+//     if(!removeArticleBasedLinkForUnitConnection(connectionData)){
+//       if(handleTransaction){
+//         rollbackTransaction();
+//       }
+//       return false;
+//     }
+//   }
+//   // Remove connection
+//   if(!removeData("UnitConnection_tbl", "Id_PK", unitConnectionId)){
+//     if(handleTransaction){
+//       rollbackTransaction();
+//     }
+//     return false;
+//   }
+//   // Commit
+//   if(handleTransaction){
+//     if(!commitTransaction()){
+//       return false;
+//     }
+//   }
+// 
+//   return true;
+// }
 
-  if(singleTransaction){
-    if(!beginTransaction()){
-      return false;
-    }
-  }
-  for(i = 0; i < dataList.size(); ++i){
-    if(!addConnection(dataList.at(i), false)){
-      rollbackTransaction();
-      return false;
-    }
-  }
-  if(singleTransaction){
-    if(!commitTransaction()){
-      return false;
-    }
-  }
+// bool mdtClUnit::removeConnections(const mdtSqlTableSelection & s)
+// {
+//   QList<QVariant> idList;
+//   int i;
+// 
+//   if(!beginTransaction()){
+//     return false;
+//   }
+//   idList = s.dataList("UnitConnection_Id_PK");
+//   for(i = 0; i < idList.size(); ++i){
+//     if(!removeConnection(idList.at(i), false)){
+//       rollbackTransaction();
+//       return false;
+//     }
+//   }
+//   if(!commitTransaction()){
+//     return false;
+//   }
+// 
+//   return true;
+// }
 
-  return true;
-}
+// bool mdtClUnit::addConnector(const mdtClUnitConnectorData & data)
+// {
+//   QSqlQuery query(database());
+//   mdtClUnitConnectionData connectionData;
+//   QVariant unitId;
+//   QVariant unitConnectorId;
+//   int i;
+// 
+//   // Check data coherence
+//   if(!checkConnectorData(data)){
+//     return false;
+//   }
+//   // Get unit ID
+//   unitId = data.value("Unit_Id_FK");
+//   Q_ASSERT(!unitId.isNull());
+//   // Because we add connector and get its ID for connections insertion, we use a transaction for the whole process
+//   if(!beginTransaction()){
+//     return false;
+//   }
+//   // Add unit connector
+//   if(!addRecord(data, "UnitConnector_tbl", query)){
+//     rollbackTransaction();
+//     return false;
+//   }
+//   // Get unit connector ID and update data
+//   unitConnectorId = query.lastInsertId();
+//   if(unitConnectorId.isNull()){
+//     QSqlError sqlError = query.lastError();
+//     pvLastError.setError(tr("Cannot get unit connector ID for connector insertion."), mdtError::Error);
+//     pvLastError.setSystemError(sqlError.number(), sqlError.text());
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtClUnit");
+//     pvLastError.commit();
+//     rollbackTransaction();
+//     return false;
+//   }
+//   // Update and add connection data
+//   for(i = 0; i < data.connectionDataList().size(); ++i){
+//     connectionData = data.connectionDataList().at(i);
+//     connectionData.setValue("Unit_Id_FK", unitId);
+//     connectionData.setValue("UnitConnector_Id_FK", unitConnectorId);
+//     if(!addConnection(connectionData, false)){
+//       rollbackTransaction();
+//       return false;
+//     }
+//   }
+//   // Commit
+//   if(!commitTransaction()){
+//     return false;
+//   }
+// 
+//   return true;
+// }
 
-bool mdtClUnit::editConnection(const QVariant & connectionId, const mdtClUnitConnectionData & data)
-{
-  Q_ASSERT(!data.value("Id_PK").isNull());
-  ///return updateRecord("UnitConnection_tbl", data, "Id_PK", data.value("Id_PK"));
-  return updateRecord("UnitConnection_tbl", data, "Id_PK", connectionId);
-}
+// bool mdtClUnit::editConnectorName(const QVariant & unitConnectorId, const QVariant & name)
+// {
+//   mdtClUnitConnectorData connectorData;
+//   bool ok;
+// 
+//   connectorData = getConnectorData(unitConnectorId, &ok, false, false, false);
+//   if(!ok){
+//     return false;
+//   }
+//   connectorData.setValue("Name", name);
+// 
+//   return updateRecord("UnitConnector_tbl", connectorData, "Id_PK", unitConnectorId);
+// }
 
-bool mdtClUnit::removeConnection(const QVariant & unitConnectionId, bool handleTransaction)
-{
-  mdtClUnitConnectionData connectionData;
-  bool ok;
-
-  // We need some information about connection, because we possibly have to remove some links
-  connectionData = getConnectionData(unitConnectionId, true, &ok);
-  if(!ok){
-    return false;
-  }
-  // We want to update many tables, so manually ask to beginn a transaction
-  if(handleTransaction){
-    if(!beginTransaction()){
-      return false;
-    }
-  }
-  // Remove article link based links if required
-  if(!connectionData.value("ArticleConnection_Id_FK").isNull()){
-    if(!removeArticleBasedLinkForUnitConnection(connectionData)){
-      if(handleTransaction){
-        rollbackTransaction();
-      }
-      return false;
-    }
-  }
-  // Remove connection
-  if(!removeData("UnitConnection_tbl", "Id_PK", unitConnectionId)){
-    if(handleTransaction){
-      rollbackTransaction();
-    }
-    return false;
-  }
-  // Commit
-  if(handleTransaction){
-    if(!commitTransaction()){
-      return false;
-    }
-  }
-
-  return true;
-}
-
-bool mdtClUnit::removeConnections(const mdtSqlTableSelection & s)
-{
-  QList<QVariant> idList;
-  int i;
-
-  if(!beginTransaction()){
-    return false;
-  }
-  idList = s.dataList("UnitConnection_Id_PK");
-  for(i = 0; i < idList.size(); ++i){
-    if(!removeConnection(idList.at(i), false)){
-      rollbackTransaction();
-      return false;
-    }
-  }
-  if(!commitTransaction()){
-    return false;
-  }
-
-  return true;
-}
-
-bool mdtClUnit::addConnector(const mdtClUnitConnectorData & data)
-{
-  QSqlQuery query(database());
-  mdtClUnitConnectionData connectionData;
-  QVariant unitId;
-  QVariant unitConnectorId;
-  int i;
-
-  // Check data coherence
-  if(!checkConnectorData(data)){
-    return false;
-  }
-  // Get unit ID
-  unitId = data.value("Unit_Id_FK");
-  Q_ASSERT(!unitId.isNull());
-  // Because we add connector and get its ID for connections insertion, we use a transaction for the whole process
-  if(!beginTransaction()){
-    return false;
-  }
-  // Add unit connector
-  if(!addRecord(data, "UnitConnector_tbl", query)){
-    rollbackTransaction();
-    return false;
-  }
-  // Get unit connector ID and update data
-  unitConnectorId = query.lastInsertId();
-  if(unitConnectorId.isNull()){
-    QSqlError sqlError = query.lastError();
-    pvLastError.setError(tr("Cannot get unit connector ID for connector insertion."), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnit");
-    pvLastError.commit();
-    rollbackTransaction();
-    return false;
-  }
-  // Update and add connection data
-  for(i = 0; i < data.connectionDataList().size(); ++i){
-    connectionData = data.connectionDataList().at(i);
-    connectionData.setValue("Unit_Id_FK", unitId);
-    connectionData.setValue("UnitConnector_Id_FK", unitConnectorId);
-    if(!addConnection(connectionData, false)){
-      rollbackTransaction();
-      return false;
-    }
-  }
-  // Commit
-  if(!commitTransaction()){
-    return false;
-  }
-
-  return true;
-}
-
-bool mdtClUnit::editConnectorName(const QVariant & unitConnectorId, const QVariant & name)
-{
-  mdtClUnitConnectorData connectorData;
-  bool ok;
-
-  connectorData = getConnectorData(unitConnectorId, &ok, false, false, false);
-  if(!ok){
-    return false;
-  }
-  connectorData.setValue("Name", name);
-
-  return updateRecord("UnitConnector_tbl", connectorData, "Id_PK", unitConnectorId);
-}
-
-bool mdtClUnit::removeConnector(const QVariant& unitConnectorId)
-{
-  QList<QSqlRecord> connectionIdList;
-  QString sql;
-  bool ok;
-  int i;
-
-  // Get list of unit connections to remove
-  sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE UnitConnector_Id_FK = " + unitConnectorId.toString();
-  connectionIdList = getData(sql, &ok);
-  if(!ok){
-    return false;
-  }
-  // Beginn a transaction
-  if(!beginTransaction()){
-    return false;
-  }
-  // Remove connections
-  for(i = 0; i < connectionIdList.size(); ++i){
-    if(!removeConnection(connectionIdList.at(i).value("Id_PK"), false)){
-      rollbackTransaction();
-      return false;
-    }
-  }
-  // Remove connector
-  if(!removeData("UnitConnector_tbl", "Id_PK", unitConnectorId)){
-    rollbackTransaction();
-    return false;
-  }
-  if(!commitTransaction()){
-    return false;
-  }
-
-  return true;
-}
+// bool mdtClUnit::removeConnector(const QVariant& unitConnectorId)
+// {
+//   QList<QSqlRecord> connectionIdList;
+//   QString sql;
+//   bool ok;
+//   int i;
+// 
+//   // Get list of unit connections to remove
+//   sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE UnitConnector_Id_FK = " + unitConnectorId.toString();
+//   connectionIdList = getData(sql, &ok);
+//   if(!ok){
+//     return false;
+//   }
+//   // Beginn a transaction
+//   if(!beginTransaction()){
+//     return false;
+//   }
+//   // Remove connections
+//   for(i = 0; i < connectionIdList.size(); ++i){
+//     if(!removeConnection(connectionIdList.at(i).value("Id_PK"), false)){
+//       rollbackTransaction();
+//       return false;
+//     }
+//   }
+//   // Remove connector
+//   if(!removeData("UnitConnector_tbl", "Id_PK", unitConnectorId)){
+//     rollbackTransaction();
+//     return false;
+//   }
+//   if(!commitTransaction()){
+//     return false;
+//   }
+// 
+//   return true;
+// }
 
 /**
 bool mdtClUnit::removeConnectors(const QModelIndexList & indexListOfSelectedRows)
@@ -888,18 +888,18 @@ bool mdtClUnit::removeConnectors(const QModelIndexList & indexListOfSelectedRows
 }
 */
 
-bool mdtClUnit::removeConnectors(const mdtSqlTableSelection & s)
-{
-  int i;
-
-  for(i = 0; i < s.rowCount(); ++i){
-    if(!removeConnector(s.data(i, "Id_PK"))){
-      return false;
-    }
-  }
-
-  return true;
-}
+// bool mdtClUnit::removeConnectors(const mdtSqlTableSelection & s)
+// {
+//   int i;
+// 
+//   for(i = 0; i < s.rowCount(); ++i){
+//     if(!removeConnector(s.data(i, "Id_PK"))){
+//       return false;
+//     }
+//   }
+// 
+//   return true;
+// }
 
 
 bool mdtClUnit::addRange(const QVariant & baseUnitConnectionId, const mdtClUnitConnectionData & rangeData) {
@@ -1078,103 +1078,103 @@ bool mdtClUnit::checkConnectorData(const mdtClUnitConnectorData & data)
   return true;
 }
 
-QList<mdtClLinkData> mdtClUnit::getArticleLinkListUsingConnectionId(const mdtClUnitConnectionData & unitConnectionData, bool *ok)
-{
-  Q_ASSERT(ok != 0);
-  Q_ASSERT(!unitConnectionData.value("Id_PK").isNull());
+// QList<mdtClLinkData> mdtClUnit::getArticleLinkListUsingConnectionId(const mdtClUnitConnectionData & unitConnectionData, bool *ok)
+// {
+//   Q_ASSERT(ok != 0);
+//   Q_ASSERT(!unitConnectionData.value("Id_PK").isNull());
+// 
+//   mdtClLink lnk(0, database());
+//   QList<mdtClLinkData> linkDataList;
+//   QList<QSqlRecord> dataList;
+//   QList<QVariant> vtList;
+//   QString sql;
+//   int i;
+// 
+//   // Get assigned vehicle type list
+//   sql = "SELECT VehicleType_Id_FK FROM VehicleType_Unit_tbl WHERE Unit_Id_FK = " + unitConnectionData.value("Unit_Id_FK").toString();
+//   dataList = getData(sql, ok);
+//   if(!*ok){
+//     return linkDataList;
+//   }
+//   for(i = 0; i < dataList.size(); ++i){
+//     vtList.append(dataList.at(i).value("VehicleType_Id_FK"));
+//   }
+//   // Get related article links
+//   sql = "SELECT UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, ArticleConnectionStart_Id_FK, ArticleConnectionEnd_Id_FK,";
+//   sql += " LinkType_Code_FK, LinkDirection_Code_FK, Identification, Resistance, SinceVersion, Modification ";
+//   sql += " FROM ArticleLink_UnitConnection_view ";
+//   sql += " WHERE ( UnitConnectionStart_Id_FK = " + unitConnectionData.value("Id_PK").toString();
+//   sql += " OR UnitConnectionEnd_Id_FK = " + unitConnectionData.value("Id_PK").toString();
+//   sql += " ) AND ( StartUnit_Id_FK = " + unitConnectionData.value("Unit_Id_FK").toString();
+//   sql += " AND EndUnit_Id_FK = " + unitConnectionData.value("Unit_Id_FK").toString();
+//   sql += " )";
+//   dataList = getData(sql, ok);
+//   if(!*ok){
+//     return linkDataList;
+//   }
+//   // Build data list
+//   for(i = 0; i < dataList.size(); ++i){
+//     linkDataList.append(dataList.at(i));
+//     /**
+//     if(!lnk.buildVehicleTypeLinkDataList(linkDataList[i], vtList, vtList)){
+//       *ok = false;
+//       pvLastError = lnk.lastError();
+//       return linkDataList;
+//     }
+//     */
+//   }
+//   *ok = true;
+// 
+//   return linkDataList;
+// }
 
-  mdtClLink lnk(0, database());
-  QList<mdtClLinkData> linkDataList;
-  QList<QSqlRecord> dataList;
-  QList<QVariant> vtList;
-  QString sql;
-  int i;
+// bool mdtClUnit::addArticleBasedLinkForUnitConnection(const mdtClUnitConnectionData & unitConnectionData)
+// {
+//   Q_ASSERT(!unitConnectionData.value("Id_PK").isNull());
+//   Q_ASSERT(!unitConnectionData.value("Unit_Id_FK").isNull());
+//   Q_ASSERT(!unitConnectionData.value("ArticleConnection_Id_FK").isNull());
+// 
+//   mdtClLink lnk(0, database());
+//   QList<mdtClLinkData> linkDataList;
+//   bool ok;
+// 
+//   linkDataList = getArticleLinkListUsingConnectionId(unitConnectionData, &ok);
+//   if(!ok){
+//     return false;
+//   }
+//   if(linkDataList.size() > 0){
+//     /**
+//     if(!lnk.addLinks(linkDataList, false)){
+//       return false;
+//     }
+//     */
+//   }
+// 
+//   return true;
+// }
 
-  // Get assigned vehicle type list
-  sql = "SELECT VehicleType_Id_FK FROM VehicleType_Unit_tbl WHERE Unit_Id_FK = " + unitConnectionData.value("Unit_Id_FK").toString();
-  dataList = getData(sql, ok);
-  if(!*ok){
-    return linkDataList;
-  }
-  for(i = 0; i < dataList.size(); ++i){
-    vtList.append(dataList.at(i).value("VehicleType_Id_FK"));
-  }
-  // Get related article links
-  sql = "SELECT UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, ArticleConnectionStart_Id_FK, ArticleConnectionEnd_Id_FK,";
-  sql += " LinkType_Code_FK, LinkDirection_Code_FK, Identification, Resistance, SinceVersion, Modification ";
-  sql += " FROM ArticleLink_UnitConnection_view ";
-  sql += " WHERE ( UnitConnectionStart_Id_FK = " + unitConnectionData.value("Id_PK").toString();
-  sql += " OR UnitConnectionEnd_Id_FK = " + unitConnectionData.value("Id_PK").toString();
-  sql += " ) AND ( StartUnit_Id_FK = " + unitConnectionData.value("Unit_Id_FK").toString();
-  sql += " AND EndUnit_Id_FK = " + unitConnectionData.value("Unit_Id_FK").toString();
-  sql += " )";
-  dataList = getData(sql, ok);
-  if(!*ok){
-    return linkDataList;
-  }
-  // Build data list
-  for(i = 0; i < dataList.size(); ++i){
-    linkDataList.append(dataList.at(i));
-    /**
-    if(!lnk.buildVehicleTypeLinkDataList(linkDataList[i], vtList, vtList)){
-      *ok = false;
-      pvLastError = lnk.lastError();
-      return linkDataList;
-    }
-    */
-  }
-  *ok = true;
-
-  return linkDataList;
-}
-
-bool mdtClUnit::addArticleBasedLinkForUnitConnection(const mdtClUnitConnectionData & unitConnectionData)
-{
-  Q_ASSERT(!unitConnectionData.value("Id_PK").isNull());
-  Q_ASSERT(!unitConnectionData.value("Unit_Id_FK").isNull());
-  Q_ASSERT(!unitConnectionData.value("ArticleConnection_Id_FK").isNull());
-
-  mdtClLink lnk(0, database());
-  QList<mdtClLinkData> linkDataList;
-  bool ok;
-
-  linkDataList = getArticleLinkListUsingConnectionId(unitConnectionData, &ok);
-  if(!ok){
-    return false;
-  }
-  if(linkDataList.size() > 0){
-    /**
-    if(!lnk.addLinks(linkDataList, false)){
-      return false;
-    }
-    */
-  }
-
-  return true;
-}
-
-bool mdtClUnit::removeArticleBasedLinkForUnitConnection(const mdtClUnitConnectionData & unitConnectionData)
-{
-  Q_ASSERT(!unitConnectionData.value("Id_PK").isNull());
-  Q_ASSERT(!unitConnectionData.value("Unit_Id_FK").isNull());
-  Q_ASSERT(!unitConnectionData.value("ArticleConnection_Id_FK").isNull());
-
-  mdtClLink lnk(0, database());
-  QList<mdtClLinkData> linkDataList;
-  bool ok;
-  int i;
-
-  linkDataList = getArticleLinkListUsingConnectionId(unitConnectionData, &ok);
-  if(!ok){
-    return false;
-  }
-  for(i = 0; i < linkDataList.size(); ++i){
-    /**
-    if(!lnk.removeLink(linkDataList.at(i).value("UnitConnectionStart_Id_FK"), linkDataList.at(i).value("UnitConnectionEnd_Id_FK"), false)){
-      return false;
-    }
-    */
-  }
-
-  return true;
-}
+// bool mdtClUnit::removeArticleBasedLinkForUnitConnection(const mdtClUnitConnectionData & unitConnectionData)
+// {
+//   Q_ASSERT(!unitConnectionData.value("Id_PK").isNull());
+//   Q_ASSERT(!unitConnectionData.value("Unit_Id_FK").isNull());
+//   Q_ASSERT(!unitConnectionData.value("ArticleConnection_Id_FK").isNull());
+// 
+//   mdtClLink lnk(0, database());
+//   QList<mdtClLinkData> linkDataList;
+//   bool ok;
+//   int i;
+// 
+//   linkDataList = getArticleLinkListUsingConnectionId(unitConnectionData, &ok);
+//   if(!ok){
+//     return false;
+//   }
+//   for(i = 0; i < linkDataList.size(); ++i){
+//     /**
+//     if(!lnk.removeLink(linkDataList.at(i).value("UnitConnectionStart_Id_FK"), linkDataList.at(i).value("UnitConnectionEnd_Id_FK"), false)){
+//       return false;
+//     }
+//     */
+//   }
+// 
+//   return true;
+// }

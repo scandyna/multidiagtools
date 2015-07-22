@@ -22,8 +22,11 @@
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSqlTableSelection.h"
 #include "mdtClConnectableConnectorDialog.h"
+#include "mdtClAutoConnection.h"
+
 #include "mdtClLink.h"
 #include "mdtClUnit.h"
+
 #include "mdtError.h"
 #include <QString>
 #include <QStringList>

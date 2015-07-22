@@ -284,7 +284,9 @@ void mdtClLinkBeamEditor::createLink()
   }
   // Update link data with current beam ID and add link to DB
   linkData = dialog.linkData();
-  linkData.setValue("LinkBeam_Id_FK", linkBeamId);
+  /// \todo Update once link beam data has been implemented
+  ///linkData.setValue("LinkBeam_Id_FK", linkBeamId);
+  
   /**
   if(!lnk.addLink(linkData)){
     pvLastError = lnk.lastError();

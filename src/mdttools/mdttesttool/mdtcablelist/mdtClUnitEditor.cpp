@@ -802,7 +802,10 @@ void mdtClUnitEditor::setFunctionsFromOtherConnection()
     return;
   }
   // Get current connection data
+  /**
+   * \todo Adapt
   connectionData = unit.getConnectionData(connectionId, true, &ok);
+  */
   if(!ok){
     pvLastError = unit.lastError();
     displayLastError();
@@ -814,6 +817,8 @@ void mdtClUnitEditor::setFunctionsFromOtherConnection()
     return;
   }
   // Update functions
+  /**
+   * \todo Adapt
   connectionData.setValue("FunctionEN", dialog.functionStringEN());
   connectionData.setValue("FunctionFR", dialog.functionStringFR());
   connectionData.setValue("FunctionDE", dialog.functionStringDE());
@@ -823,6 +828,7 @@ void mdtClUnitEditor::setFunctionsFromOtherConnection()
     displayLastError();
     return;
   }
+  */
   // Update connections view
   select("UnitConnection_view");
 }

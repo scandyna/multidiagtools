@@ -49,7 +49,6 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
  : QDialog(parent)
 {
   pvDatabase = db;
-  pvLinkData.setup(pvDatabase);
   setupUi(this);
   setWindowTitle(tr("Unit link edition"));
   // Setup Modification combobox

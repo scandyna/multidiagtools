@@ -183,9 +183,10 @@ void mdtTtTestCableEditor::removeTestNodeAssignation()
   select("Unit_TestNode_view");
 }
 
+/// \todo adapt
 void mdtTtTestCableEditor::addConnectorBasedConnector()
 {
-  mdtClUnit unit(this, database());
+  ///mdtClUnit unit(this, database());
   mdtClUnitConnectorData connectorData;
   QVariant unitId;
   QVariant baseConnectorId;
@@ -228,30 +229,35 @@ void mdtTtTestCableEditor::addConnectorBasedConnector()
   connectorData.setValue("Connector_Id_FK", baseConnectorId);
   connectorData.setValue("Name", connectorName);
   // Add contacts to unit connector data
+  /**
   if(!unit.addConnectionDataListFromConnectorContactIdList(connectorData, contactList)){
     pvLastError = unit.lastError();
     displayLastError();
     return;
   }
+  */
   // Add connector
+  /**
   if(!unit.addConnector(connectorData)){
     pvLastError = unit.lastError();
     displayLastError();
     return;
   }
+  */
   // Update views
   select("UnitConnector_view");
   select("UnitConnection_view");
   ///select("UnitLink_view");
 }
 
+/// \todo adapt
 void mdtTtTestCableEditor::editConnectorName()
 {
   QVariant unitConnectorId;
   QVariant connectorName;
   QString str;
   QInputDialog dialog;
-  mdtClUnit unit(this, database());
+  ///mdtClUnit unit(this, database());
 
   // Get current data
   unitConnectorId = currentData("UnitConnector_view", "Id_PK");
@@ -270,21 +276,24 @@ void mdtTtTestCableEditor::editConnectorName()
     connectorName = str;
   }
   // Edit connector name
+  /**
   if(!unit.editConnectorName(unitConnectorId, connectorName)){
     pvLastError = unit.lastError();
     displayLastError();
     return;
   }
+  */
   // Update views
   select("UnitConnector_view");
   select("UnitConnection_view");
   ///select("UnitLink_view");
 }
 
+/// \todo adapt
 void mdtTtTestCableEditor::removeConnectors()
 {
   mdtSqlTableWidget *widget;
-  mdtClUnit unit(this, database());
+  ///mdtClUnit unit(this, database());
   QMessageBox msgBox;
   mdtSqlTableSelection s;
 
@@ -305,21 +314,24 @@ void mdtTtTestCableEditor::removeConnectors()
     return;
   }
   // Remove connectors
+  /**
   if(!unit.removeConnectors(s)){
     pvLastError = unit.lastError();
     displayLastError();
     return;
   }
+  */
   // Update views
   select("UnitConnector_view");
   select("UnitConnection_view");
   ///select("UnitLink_view");
 }
 
+/// \todo adapt
 void mdtTtTestCableEditor::addConnection()
 {
   mdtClUnitConnectionDialog dialog(0, database(), mdtClUnitConnectionDialog::Add);
-  mdtClUnit unit(this, database());
+  ///mdtClUnit unit(this, database());
   mdtClUnitConnectionData data;
   QVariant unitId;
 
@@ -340,21 +352,24 @@ void mdtTtTestCableEditor::addConnection()
     return;
   }
   // Add connection
+  /**
   if(!unit.addConnection(dialog.data())){
     pvLastError = unit.lastError();
     displayLastError();
     return;
   }
+  */
   // Update connections view
   select("UnitConnection_view");
   ///select("UnitLink_view");
 }
 
+/// \todo adapt
 void mdtTtTestCableEditor::editConnection()
 {
   mdtSqlTableWidget *widget;
   mdtClUnitConnectionDialog dialog(0, database(), mdtClUnitConnectionDialog::Edit);
-  mdtClUnit unit(this, database());
+  ///mdtClUnit unit(this, database());
   QVariant connectionId;
   mdtClUnitConnectionData data;
   bool ok;
@@ -367,30 +382,35 @@ void mdtTtTestCableEditor::editConnection()
   if(connectionId.isNull()){
     return;
   }
+  /**
   data = unit.getConnectionData(connectionId, true, &ok);
   if(!ok){
     pvLastError = unit.lastError();
     displayLastError();
   }
+  */
   // Setup and show dialog
   dialog.setData(data, currentData("Unit_tbl", "Article_Id_FK"));
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
   // Edit connection
+  /**
   if(!unit.editConnection(connectionId, dialog.data())){
     pvLastError = unit.lastError();
     displayLastError();
     return;
   }
+  */
   // Update connections view
   select("UnitConnection_view");
 }
 
+/// \todo adapt
 void mdtTtTestCableEditor::removeConnections()
 {
   mdtSqlTableWidget *widget;
-  mdtClUnit unit(this, database());
+  ///mdtClUnit unit(this, database());
   QMessageBox msgBox;
   mdtSqlTableSelection s;
   QString linksMsg;
@@ -404,6 +424,7 @@ void mdtTtTestCableEditor::removeConnections()
     return;
   }
   // Check that selected connections are not related to some links
+  /**
   linksMsg = unit.toUnitRelatedLinksListStr(currentUnitId(), s.dataList("UnitConnection_Id_PK"), &ok);
   if(!ok){
     pvLastError = unit.lastError();
@@ -420,6 +441,7 @@ void mdtTtTestCableEditor::removeConnections()
     msgBox.exec();
     return;
   }
+  */
   // We ask confirmation to the user
   msgBox.setText(tr("You are about to remove connections from current unit."));
   msgBox.setInformativeText(tr("Do you want to continue ?"));
@@ -430,11 +452,13 @@ void mdtTtTestCableEditor::removeConnections()
     return;
   }
   // Delete seleced rows
+  /**
   if(!unit.removeConnections(s)){
     pvLastError = unit.lastError();
     displayLastError();
     return;
   }
+  */
   // Update connections table
   select("UnitConnection_view");
 }

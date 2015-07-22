@@ -22,6 +22,7 @@
 #define MDT_CL_CONNECTABLE_CONNECTOR_DIALOG_H
 
 #include "ui_mdtClConnectableConnectorDialog.h"
+#include "mdtClConnectableCriteria.h"
 #include <QDialog>
 #include <QVariant>
 #include <QString>

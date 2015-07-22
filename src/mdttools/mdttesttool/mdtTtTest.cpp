@@ -556,6 +556,7 @@ QList<mdtClLinkData> mdtTtTest::getLinkDataListForRoute(const QVariant& testNode
   return getLinkDataListForRoute(connectionIdA, connectionIdB, testNodeUnitSetupDataList, graph, ok);
 }
 
+/// \todo ADAPT
 double mdtTtTest::linkPathResistance(const QList< mdtClLinkData >& linkDataList) const
 {
   int i;
@@ -563,13 +564,11 @@ double mdtTtTest::linkPathResistance(const QList< mdtClLinkData >& linkDataList)
 
   for(i = 0; i < linkDataList.size(); ++i){
     mdtClLinkData linkData = linkDataList.at(i);
-    qDebug() << "Link R: " << linkData.value("Value");
-    qDebug() << "Start CNX R: " << linkData.startConnectionData().value("Resistance").toDouble();
-    qDebug() << "End CNX R: " << linkData.endConnectionData().value("Resistance").toDouble();
-    
+    /**
     r += linkData.value("Value").toDouble();
     r += linkData.startConnectionData().value("Resistance").toDouble() / 2.0;
     r += linkData.endConnectionData().value("Resistance").toDouble() / 2.0;
+    */
   }
   qDebug() << "r: " << r;
 

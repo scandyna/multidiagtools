@@ -457,72 +457,74 @@ void mdtCableListTest::articleTest()
 
 void mdtCableListTest::unitConnectionUpdateTest()
 {
-  mdtClArticle art(0, pvDatabaseManager.database());
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
-  QList<QSqlRecord> dataList;
-  bool ok;
-
-  // Create scenario
-  scenario.createTestVehicleTypes();
-  scenario.createTestArticles();
-  scenario.createTestConnectors();
-  scenario.createTestArticleConnections();
-  scenario.createTestArticleLinks();
-  scenario.createTestArticleConnectors();
-  scenario.createTestUnits();
-  scenario.createTestVehicleTypeUnitAssignations();
-  scenario.createTestUnitConnections();
+  QFAIL("Not implemented yet");
+  
+//   mdtClArticle art(0, pvDatabaseManager.database());
+//   mdtCableListTestScenario scenario(pvDatabaseManager.database());
+//   QList<QSqlRecord> dataList;
+//   bool ok;
+// 
+//   // Create scenario
+//   scenario.createTestVehicleTypes();
+//   scenario.createTestArticles();
+//   scenario.createTestConnectors();
+//   scenario.createTestArticleConnections();
+//   scenario.createTestArticleLinks();
+//   scenario.createTestArticleConnectors();
+//   scenario.createTestUnits();
+//   scenario.createTestVehicleTypeUnitAssignations();
+//   scenario.createTestUnitConnections();
 
   /*
    * We make update test on Resistance
    */
-  // Check initial Resistance of unit connections
-  dataList = art.getDataList<QSqlRecord>("SELECT * FROM UnitConnection_tbl", ok);
-  QVERIFY(ok);
-  QCOMPARE(dataList.size(), 7);
-  QCOMPARE(dataList.at(0).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(1).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(2).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(3).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(4).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(5).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(6).value("Resistance"), QVariant(0.0));
-  // Check update - Article connection ID: Null - Must update nothing
-  QVERIFY(!art.updateUnitConnections(QStringList("Resistance"), QVariant()));
-  dataList = art.getDataList<QSqlRecord>("SELECT * FROM UnitConnection_tbl", ok);
-  QVERIFY(ok);
-  QCOMPARE(dataList.size(), 7);
-  QCOMPARE(dataList.at(0).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(1).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(2).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(3).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(4).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(5).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(6).value("Resistance"), QVariant(0.0));
-  // Check update - Article connection ID: 20
-  QVERIFY(art.updateUnitConnections(QStringList("Resistance"), 20));
-  dataList = art.getDataList<QSqlRecord>("SELECT * FROM UnitConnection_tbl", ok);
-  QVERIFY(ok);
-  QCOMPARE(dataList.size(), 7);
-  QCOMPARE(dataList.at(0).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(1).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(2).value("Resistance"), QVariant(0.2));
-  QCOMPARE(dataList.at(3).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(4).value("Resistance"), QVariant(0.2));
-  QCOMPARE(dataList.at(5).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(6).value("Resistance"), QVariant(0.0));
-  // Check update - Article connection ID: 21
-  QVERIFY(art.updateUnitConnections(QStringList("Resistance"), 21));
-  dataList = art.getDataList<QSqlRecord>("SELECT * FROM UnitConnection_tbl", ok);
-  QVERIFY(ok);
-  QCOMPARE(dataList.size(), 7);
-  QCOMPARE(dataList.at(0).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(1).value("Resistance"), QVariant(0.0));
-  QCOMPARE(dataList.at(2).value("Resistance"), QVariant(0.2));
-  QCOMPARE(dataList.at(3).value("Resistance"), QVariant(0.21));
-  QCOMPARE(dataList.at(4).value("Resistance"), QVariant(0.2));
-  QCOMPARE(dataList.at(5).value("Resistance"), QVariant(0.21));
-  QCOMPARE(dataList.at(6).value("Resistance"), QVariant(0.0));
+//   // Check initial Resistance of unit connections
+//   dataList = art.getDataList<QSqlRecord>("SELECT * FROM UnitConnection_tbl", ok);
+//   QVERIFY(ok);
+//   QCOMPARE(dataList.size(), 7);
+//   QCOMPARE(dataList.at(0).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(1).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(2).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(3).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(4).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(5).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(6).value("Resistance"), QVariant(0.0));
+//   // Check update - Article connection ID: Null - Must update nothing
+//   QVERIFY(!art.updateUnitConnections(QStringList("Resistance"), QVariant()));
+//   dataList = art.getDataList<QSqlRecord>("SELECT * FROM UnitConnection_tbl", ok);
+//   QVERIFY(ok);
+//   QCOMPARE(dataList.size(), 7);
+//   QCOMPARE(dataList.at(0).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(1).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(2).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(3).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(4).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(5).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(6).value("Resistance"), QVariant(0.0));
+//   // Check update - Article connection ID: 20
+//   QVERIFY(art.updateUnitConnections(QStringList("Resistance"), 20));
+//   dataList = art.getDataList<QSqlRecord>("SELECT * FROM UnitConnection_tbl", ok);
+//   QVERIFY(ok);
+//   QCOMPARE(dataList.size(), 7);
+//   QCOMPARE(dataList.at(0).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(1).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(2).value("Resistance"), QVariant(0.2));
+//   QCOMPARE(dataList.at(3).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(4).value("Resistance"), QVariant(0.2));
+//   QCOMPARE(dataList.at(5).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(6).value("Resistance"), QVariant(0.0));
+//   // Check update - Article connection ID: 21
+//   QVERIFY(art.updateUnitConnections(QStringList("Resistance"), 21));
+//   dataList = art.getDataList<QSqlRecord>("SELECT * FROM UnitConnection_tbl", ok);
+//   QVERIFY(ok);
+//   QCOMPARE(dataList.size(), 7);
+//   QCOMPARE(dataList.at(0).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(1).value("Resistance"), QVariant(0.0));
+//   QCOMPARE(dataList.at(2).value("Resistance"), QVariant(0.2));
+//   QCOMPARE(dataList.at(3).value("Resistance"), QVariant(0.21));
+//   QCOMPARE(dataList.at(4).value("Resistance"), QVariant(0.2));
+//   QCOMPARE(dataList.at(5).value("Resistance"), QVariant(0.21));
+//   QCOMPARE(dataList.at(6).value("Resistance"), QVariant(0.0));
 }
 
 // void mdtCableListTest::unitConnectionDataTest()
@@ -724,45 +726,45 @@ void mdtCableListTest::unitTest()
 
 }
 
-void mdtCableListTest::unitConnectionTest()
-{
-  mdtClUnit unit(0, pvDatabaseManager.database());
-  mdtClLink lnk(0, pvDatabaseManager.database());
-  mdtClUnitConnectionData connectionData;
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
-  bool ok;
-
-  // Create base structure
-  scenario.createTestVehicleTypes();
-  scenario.createTestArticles();
-  scenario.createTestConnectors();
-  scenario.createTestArticleConnections();
-  scenario.createTestArticleLinks();
-  scenario.createTestArticleConnectors();
-  scenario.createTestUnits();
-  scenario.createTestVehicleTypeUnitAssignations();
-  scenario.createTestUnitConnections();
-
-  /*
-   * Check basic connection edition
-   *  - Change unit connection 10000 : set UnitContactName : Edited contact
-   */
-  connectionData = unit.getConnectionData(10000, true, &ok);
-  QVERIFY(ok);
-  connectionData.setValue("UnitContactName", "Edited contact");
-  QVERIFY(unit.editConnection(10000, connectionData));
-  connectionData.clearValues();
-  connectionData = unit.getConnectionData(10000, true, &ok);
-  QVERIFY(ok);
-  QCOMPARE(connectionData.value("UnitContactName"), QVariant("Edited contact"));
-  // Edit back to original values
-  connectionData.setValue("UnitContactName", "Unit contact 10000");
-  QVERIFY(unit.editConnection(10000, connectionData));
-  connectionData.clearValues();
-  connectionData = unit.getConnectionData(10000, true, &ok);
-  QVERIFY(ok);
-  QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 10000"));
-}
+// void mdtCableListTest::unitConnectionTest()
+// {
+//   mdtClUnit unit(0, pvDatabaseManager.database());
+//   mdtClLink lnk(0, pvDatabaseManager.database());
+//   mdtClUnitConnectionData connectionData;
+//   mdtCableListTestScenario scenario(pvDatabaseManager.database());
+//   bool ok;
+// 
+//   // Create base structure
+//   scenario.createTestVehicleTypes();
+//   scenario.createTestArticles();
+//   scenario.createTestConnectors();
+//   scenario.createTestArticleConnections();
+//   scenario.createTestArticleLinks();
+//   scenario.createTestArticleConnectors();
+//   scenario.createTestUnits();
+//   scenario.createTestVehicleTypeUnitAssignations();
+//   scenario.createTestUnitConnections();
+// 
+//   /*
+//    * Check basic connection edition
+//    *  - Change unit connection 10000 : set UnitContactName : Edited contact
+//    */
+//   connectionData = unit.getConnectionData(10000, true, &ok);
+//   QVERIFY(ok);
+//   connectionData.setValue("UnitContactName", "Edited contact");
+//   QVERIFY(unit.editConnection(10000, connectionData));
+//   connectionData.clearValues();
+//   connectionData = unit.getConnectionData(10000, true, &ok);
+//   QVERIFY(ok);
+//   QCOMPARE(connectionData.value("UnitContactName"), QVariant("Edited contact"));
+//   // Edit back to original values
+//   connectionData.setValue("UnitContactName", "Unit contact 10000");
+//   QVERIFY(unit.editConnection(10000, connectionData));
+//   connectionData.clearValues();
+//   connectionData = unit.getConnectionData(10000, true, &ok);
+//   QVERIFY(ok);
+//   QCOMPARE(connectionData.value("UnitContactName"), QVariant("Unit contact 10000"));
+// }
 
 // void mdtCableListTest::mdtClLinkDataTest()
 // {

@@ -21,8 +21,11 @@
 #include "mdtTtLogicalTestCableDialog.h"
 #include "mdtTtLogicalTestCableDutWidget.h"
 #include "mdtTtLogicalTestCableTsWidget.h"
+#include "mdtClAutoConnection.h"
+
 #include "mdtClUnit.h"
 #include "mdtClLink.h"
+
 #include "mdtTtLogicalTestCable.h"
 #include <QVBoxLayout>
 #include <QString>
