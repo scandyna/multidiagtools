@@ -1,29 +1,17 @@
 format 209
 
-classcanvas 128002 class_ref 1745666 // mdtClConnectableUnitConnectionSelectionDialog
-  classdiagramsettings member_max_width 0 end
-  xyz 12.5 413.5 2000
-end
 classcanvas 128130 class_ref 713090 // mdtSqlSelectionDialog
   classdiagramsettings hide_attributes yes hide_operations no member_max_width 0 end
-  xyz 447.5 29.7 2005
+  xyz 447.8 29.4 2005
 end
 classcanvas 128258 class_ref 1745794 // mdtClConnectableUnitConnectorSelectionDialog
   classdiagramsettings member_max_width 0 end
-  xyz 849.1 412.6 2000
-end
-relationcanvas 128386 relation_ref 2063746 // <generalisation>
-  geometry VHV
-  from ref 128002 z 2006 to point 402.8 321.1
-  line 128642 z 2006 to point 637.3 321.1
-  line 128770 z 2006 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
+  xyz 849.7 412.4 2000
 end
 relationcanvas 128514 relation_ref 2063874 // <generalisation>
   geometry VHV
-  from ref 128258 z 2006 to point 1253.5 321.7
-  line 129026 z 2006 to point 637.1 321.7
+  from ref 128258 z 2006 to point 1255.3 320.8
+  line 129026 z 2006 to point 637.1 320.8
   line 129154 z 2006 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

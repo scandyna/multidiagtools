@@ -66,7 +66,7 @@ void mdtClArticleConnectionTest::articleConnectorDataTest()
   mdtClArticleConnectorData acData;
   mdtClArticleConnectionKeyData acnxKey;
   mdtClArticleConnectionData acnxData;
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorPkData connectorFk;
 
   /*
    * Key data test
@@ -445,7 +445,7 @@ void mdtClArticleConnectionTest::articleConnectorAddGetRemoveTest()
   mdtClArticleConnectorData acData;
   mdtClArticleConnectionKeyData acnxKey;
   mdtClArticleConnectionData acnxData;
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorPkData connectorFk;
   mdtClConnectorContactKeyData ccKey;
   mdtClConnectorContactData ccData;
   QList<mdtClConnectorContactData> ccDataList;

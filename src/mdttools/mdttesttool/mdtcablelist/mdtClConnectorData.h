@@ -39,22 +39,22 @@ struct mdtClConnectorData : public mdtSqlRecord /// \todo When all is adapted, r
 
   /*! \brief Connector key data
    */
-  mdtClConnectorKeyData pvKeyData;
+  mdtClConnectorPkData pvPk;
 
  public:
 
-  /*! \brief Get key data
+  /*! \brief Get PK (Id_PK)
    */
-  inline mdtClConnectorKeyData keyData() const
+  inline mdtClConnectorPkData pk() const
   {
-    return pvKeyData;
+    return pvPk;
   }
 
-  /*! \brief Set key data
+  /*! \brief Set PK (Id_PK)
    *
-   * \pre key must not be null
+   * \pre pk must not be null
    */
-  void setKeyData(const mdtClConnectorKeyData & key);
+  void setPk(const mdtClConnectorPkData & pk);
 
   /*! \brief Connector gender
    *
@@ -106,7 +106,7 @@ struct mdtClConnectorData : public mdtSqlRecord /// \todo When all is adapted, r
    */
   inline bool isNull() const
   {
-    return pvKeyData.isNull();
+    return pvPk.isNull();
   }
 
   /*! \brief Clear data

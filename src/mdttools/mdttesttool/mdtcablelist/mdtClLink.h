@@ -30,86 +30,14 @@
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorData.h"
 
+#include "mdtClConnectableCriteria.h" /// \todo remove once ok
+
 #include "mdtSqlTableSelection.h"
 #include <QSqlDatabase>
 #include <QList>
 #include <QVariant>
 #include <QString>
 #include <QModelIndex>
-
-
-/*! \brief Criteria that defines if 2 connectors are connectable
- *
- * 
- */
-struct mdtClConnectableCriteria
-{
-  /*! \brief Contruct a default criteria struct.
-   *
-   * Will set parameters as follow:
-   *  - checkGenderAreOpposite: true
-   *  - checkContactCount: true
-   *  - checkContactType: true
-   *  - checkContactName: true
-   *  - checkForm: true
-   *  - checkInsert: true
-   *  - checkInsertRotation: true
-   */
-  mdtClConnectableCriteria()
-   : checkGenderAreOpposite(true),
-     checkContactCount(true),
-     checkContactType(true),
-     checkContactName(true),
-     checkForm(true),
-     checkInsert(true),
-     checkInsertRotation(true)
-  {
-  }
-
-  /*! \brief Gender must be opposite
-   *
-   * If true, gender of both connectors must be opposite (male and female)
-   *  Note: this concerns the connector gender, not necessarely the gender contacts.
-   *   See checkContactType for contact gender checking.
-   */
-  bool checkGenderAreOpposite;
-
-  /*! \brief Contact quantity must be the same
-   *
-   * If true, it will be checked that both connectors have the same quantity of contacts.
-   */
-  bool checkContactCount;
-
-  /*! \brief Contact gender must be compatible
-   *
-   * If true, each contact gender are checked:
-   *  - A socket (S) can be connected to a pin (P) , and reverse (P to T)
-   *  - Terminal (T) can be connected to a terminal (T)
-   */
-  bool checkContactType;
-
-  /*! \brief Contact name must match (be the same)
-   */
-  bool checkContactName;
-
-  /*! \brief Form must match for both connectors
-   *
-   * If true, it will be check that both connectors have the same form
-   */
-  bool checkForm;
-
-  /*! \brief Insert must match for both connector
-   *
-   * If true, it will be checked that both connectors have the same insert (f.ex. 24-5)
-   */
-  bool checkInsert;
-
-  /*! \brief Insert rotation code must match for both connector
-   *
-   * If true, it will be checked that both connectors have the same insert rotation code (Q, X, W, ...)
-   */
-  bool checkInsertRotation;
-};
 
 /*! \brief Helper class for link management
  */
@@ -250,27 +178,27 @@ class mdtClLink : public mdtTtBase
    *  - sqlForConnectableUnitConnectorsSelection()
    *  - connectByContactName()
    */
-  QList<mdtClLinkData> getConnectionLinkListByName(const QList<mdtClUnitConnectionData> & A, const QList<mdtClUnitConnectionData> & B, const mdtClConnectableCriteria & criteria);
+//   QList<mdtClLinkData> getConnectionLinkListByName(const QList<mdtClUnitConnectionData> & A, const QList<mdtClUnitConnectionData> & B, const mdtClConnectableCriteria & criteria);
 
   /*! \brief Check if unit connection a can be connected with unit connection b
    *
    * \pre A and B muts have connection type set
    */
-  bool canConnectConnections(const mdtClUnitConnectionData & a, const mdtClUnitConnectionData & b, const mdtClConnectableCriteria & criteria);
+//   bool canConnectConnections(const mdtClUnitConnectionData & a, const mdtClUnitConnectionData & b, const mdtClConnectableCriteria & criteria);
 
   /*! \brief Check if unit connection ID A can be connected with unit connection ID B
    */
-  bool canConnectConnections(const mdtClUnitConnectionPkData & pkA, const mdtClUnitConnectionPkData & pkB, const mdtClConnectableCriteria & criteria, bool & ok);
-  bool canConnectConnections(const QVariant & unitConnectionIdA, const QVariant & unitConnectionIdB, const mdtClConnectableCriteria & criteria, bool & ok);
+//   bool canConnectConnections(const mdtClUnitConnectionPkData & pkA, const mdtClUnitConnectionPkData & pkB, const mdtClConnectableCriteria & criteria, bool & ok);
+//   bool canConnectConnections(const QVariant & unitConnectionIdA, const QVariant & unitConnectionIdB, const mdtClConnectableCriteria & criteria, bool & ok);
 
   /*! \brief Check if unit connector a can be connected with unit connector b
    */
-  bool canConnectConnectors(const mdtClUnitConnectorData & a, const mdtClUnitConnectorData & b, const mdtClConnectableCriteria & criteria, bool & ok);
+//   bool canConnectConnectors(const mdtClUnitConnectorData & a, const mdtClUnitConnectorData & b, const mdtClConnectableCriteria & criteria, bool & ok);
 
   /*! \brief Check if unit connector a can be connected with unit connector b
    */
-  bool canConnectConnectors(const mdtClUnitConnectorPkData & pkA, const mdtClUnitConnectorPkData & pkB, const mdtClConnectableCriteria & criteria, bool & ok);
-  bool canConnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const mdtClConnectableCriteria & criteria, bool & ok);
+//   bool canConnectConnectors(const mdtClUnitConnectorPkData & pkA, const mdtClUnitConnectorPkData & pkB, const mdtClConnectableCriteria & criteria, bool & ok);
+//   bool canConnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const mdtClConnectableCriteria & criteria, bool & ok);
 
   /*! \brief Get SQL statement for connectable unit connection selection
    *
@@ -280,7 +208,7 @@ class mdtClLink : public mdtTtBase
    *
    * \return SQL statement, or empty string on error.
    */
-  QString sqlForConnectableUnitConnectionsSelection(const QVariant & unitConnectionId, const QVariant & unitId, const mdtClConnectableCriteria & criteria);
+//   QString sqlForConnectableUnitConnectionsSelection(const QVariant & unitConnectionId, const QVariant & unitId, const mdtClConnectableCriteria & criteria);
 
   /*! \brief Get SQL statement for connectable unit connector selection
    *
@@ -290,7 +218,7 @@ class mdtClLink : public mdtTtBase
    *
    * \return SQL statement, or empty string on error.
    */
-  QString sqlForConnectableUnitConnectorsSelection(const QVariant & unitConnectorId, const QVariant & unitId, const mdtClConnectableCriteria & criteria, bool & ok);
+//   QString sqlForConnectableUnitConnectorsSelection(const QVariant & unitConnectorId, const QVariant & unitId, const mdtClConnectableCriteria & criteria, bool & ok);
 
   /*! \brief Get SQL statement for connectable unit connector selection
    *
@@ -300,7 +228,7 @@ class mdtClLink : public mdtTtBase
    *
    * \return SQL statement, or empty string on error.
    */
-  QString sqlForConnectableUnitConnectorsSelection(const QVariant & unitConnectorId, const QList<QVariant> & unitIdList, const mdtClConnectableCriteria & criteria, bool & ok);
+//   QString sqlForConnectableUnitConnectorsSelection(const QVariant & unitConnectorId, const QList<QVariant> & unitIdList, const mdtClConnectableCriteria & criteria, bool & ok);
 
   /*! \brief Get SQL statement for connectable unit connector's connections selection
    *
@@ -324,9 +252,9 @@ class mdtClLink : public mdtTtBase
    *  - LinkType_Code_FK : CONNECTION
    *  - LinkDirection_Code_FK : BID
    */
-  bool connectByContactName(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E,
-                            const QVariant & startVehicleTypeId, const QVariant & endVehicleTypeId,
-                            const mdtClConnectableCriteria & criteria);
+//   bool connectByContactName(const mdtClUnitConnectorData & S, const mdtClUnitConnectorData & E,
+//                             const QVariant & startVehicleTypeId, const QVariant & endVehicleTypeId,
+//                             const mdtClConnectableCriteria & criteria);
 
   /*! \brief Connect start and end connector by contact name
    *
@@ -334,15 +262,15 @@ class mdtClLink : public mdtTtBase
    *  connection from start connector to a connection of end connector
    *  that can be connected. See getConnectionLinkListByName() for details.
    */
-  bool connectByContactName(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId,
-                            const QVariant & startVehicleTypeId, const QVariant & endVehicleTypeId,
-                            const mdtClConnectableCriteria & criteria);
+//   bool connectByContactName(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId,
+//                             const QVariant & startVehicleTypeId, const QVariant & endVehicleTypeId,
+//                             const mdtClConnectableCriteria & criteria);
 
   /*! \brief Disconnect connector S from E
    *
    * \todo In current version, vehicle type list are not token in acount. This will be the case once removeLink() is fixed.
    */
-  bool disconnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const QList<QVariant> & startVehicleTypeIdList, const QList<QVariant> & endVehicleTypeIdList);
+//   bool disconnectConnectors(const QVariant & startUnitConnectorId, const QVariant & endUnitConnectorId, const QList<QVariant> & startVehicleTypeIdList, const QList<QVariant> & endVehicleTypeIdList);
 
  private:
 
@@ -360,8 +288,8 @@ class mdtClLink : public mdtTtBase
    *  - LinkType_Code_FK : CONNECTION
    *  - LinkDirection_Code_FK : BID
    */
-  bool checkOrBuildConnectionLinkListByName(const QList<mdtClUnitConnectionData> & A, const QList<mdtClUnitConnectionData> & B, 
-                                            const mdtClConnectableCriteria & criteria, QList<mdtClLinkData> *connectionLinkDataList = 0);
+//   bool checkOrBuildConnectionLinkListByName(const QList<mdtClUnitConnectionData> & A, const QList<mdtClUnitConnectionData> & B, 
+//                                             const mdtClConnectableCriteria & criteria, QList<mdtClLinkData> *connectionLinkDataList = 0);
 
   /*! \brief Fill given record with given data
    */

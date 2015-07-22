@@ -65,6 +65,16 @@ target_link_libraries(mdtclarticlelinktest "mdtdatabase${MDTLIB_VERSION_SUFFIX}"
 #target_link_libraries(mdtclarticlelinktest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclarticlelinktest "mdttesttool${MDTLIB_VERSION_SUFFIX}")
 
+# * mdtClAutoConnectionTest executable *
+QT4_WRAP_CPP(MDT_CL_AUTO_CONNECTION_TEST_MOC "mdtClAutoConnectionTest.h")
+add_executable(mdtclautoconnectiontest mdtClAutoConnectionTest.cpp mdtCableListTestScenario.cpp ${MDT_CL_AUTO_CONNECTION_TEST_MOC})
+target_link_libraries(mdtclautoconnectiontest ${QT_LIBRARIES})
+target_link_libraries(mdtclautoconnectiontest "mdttest")
+target_link_libraries(mdtclautoconnectiontest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtclautoconnectiontest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+#target_link_libraries(mdtclautoconnectiontest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtclautoconnectiontest "mdttesttool${MDTLIB_VERSION_SUFFIX}")
+
 # * mdtTtValueLimitsTest executable *
 QT4_WRAP_CPP(MDT_VALUE_LIMITS_MOC "mdtTtValueLimitsTest.h")
 add_executable(mdttvaluelimitstest mdtTtValueLimitsTest.cpp ${MDT_VALUE_LIMITS_MOC})

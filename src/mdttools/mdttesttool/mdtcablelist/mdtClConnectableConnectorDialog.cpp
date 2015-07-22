@@ -109,7 +109,8 @@ void mdtClConnectableConnectorDialog::selectEndConnector()
   // Get connectability check criteria
   c = getConnectableCriteria();
   // Get SQL query
-  sql = lnk.sqlForConnectableUnitConnectorsSelection(pvStartUnitConnectorId, pvEndUnitIdList, c, ok);
+  /// \todo Use mdtClUnitConnectorDialog
+  ///sql = lnk.sqlForConnectableUnitConnectorsSelection(pvStartUnitConnectorId, pvEndUnitIdList, c, ok);
   if(!ok){
     displayError(lnk.lastError());
     return;

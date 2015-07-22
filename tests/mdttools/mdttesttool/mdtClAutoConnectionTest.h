@@ -18,16 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CABLE_LIST_TEST_H
-#define MDT_CABLE_LIST_TEST_H
+#ifndef MDT_CL_AUTO_CONNECTION_TEST_H
+#define MDT_CL_AUTO_CONNECTION_TEST_H
 
 #include "mdtTest.h"
-#include "mdtCableListTestScenario.h"
+#include "mdtClConnectorContactData.h"
+#include "mdtClConnectorData.h"
+#include "mdtClUnitConnectionData.h"
+#include "mdtClUnitConnectorData.h"
 #include "mdtSqlDatabaseManager.h"
 #include <QMessageBox>
 #include <QFileInfo>
+#include <QList>
+#include <QString>
+#include <QStringList>
 
-class mdtCableListTest : public mdtTest
+class mdtClAutoConnectionTest : public mdtTest
 {
  Q_OBJECT
 
@@ -40,33 +46,28 @@ class mdtCableListTest : public mdtTest
    *  and must assure that they finish with a empty schema at end.
    */
   void initTestCase();
-
   void cleanupTestCase();
 
-  void applicationWidgetsTest();
+  void canConnectConnectionsTest();
+  void checkOrBuildConnectionLinkListByNameTest();
+  void getConnectableConnectionsTest();
 
-//   void articleConnectionDataTest();
-//   void articleConnectorDataTest();
-  void articleTest();
-  void unitConnectionUpdateTest();
+  void canConnectConnectorsTest();
+  void canConnectUnitConnectorsTest();
+  void getConnectableConnectorsList();
 
-//   void unitConnectionDataTest();
-//   void unitConnectorDataTest();
-  void unitTest();
-  void unitConnectionTest();
-
-//   void mdtClLinkDataTest();
-  void linkTest();  /// \todo Ne pas oublier: UnitLink_view et LinkList_view !
-  void linkUpdateFromArticleLinkTest();
-//   void linkConnectableConnectorTest();
-//   void linkAutoConnectionTest();
-
-  void pathGraphTest();
-  void directLinkTest();
-
-  void linkBeamTest();
+  void connectByContactNameTest();
 
  private:
+
+  // Build a list of unit connections
+  QList<mdtClUnitConnectionData> buildUnitConnectionList(const QList<QVariant> & idList, const QStringList & contactNames, mdtClConnectionType_t t);
+  QList<mdtClUnitConnectionData> buildUnitConnectionList(const QVariant & unitId, const QStringList & contactNames, mdtClConnectionType_t t);
+  // Build a list on connector contacts
+  QList<mdtClConnectorContactData> buildConnectorContactList(const QStringList & contactNames, mdtClConnectionType_t t);
+  // Build unit connector
+  mdtClUnitConnectorData buildUnitConnector(const mdtClConnectorPkData & cnrPk, const QVariant & unitId);
+
 
   // Create test database schema - Will FAIL on problem
   void createDatabaseSchema();
@@ -75,4 +76,4 @@ class mdtCableListTest : public mdtTest
   QFileInfo pvDbFileInfo;
 };
 
-#endif // #ifndef MDT_CABLE_LIST_TEST_H
+#endif // #ifndef MDT_CL_AUTO_CONNECTION_TEST_H

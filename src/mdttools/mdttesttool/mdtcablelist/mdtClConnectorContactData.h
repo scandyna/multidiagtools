@@ -39,7 +39,7 @@ struct mdtClConnectorContactKeyData
 
   /*! \brief Connector ID (Connector_Id_FK)
    */
-  mdtClConnectorKeyData pvConnectorFk;
+  mdtClConnectorPkData pvConnectorFk;
 
   /*! \brief Connection type (ConnectionType_Code_FK)
    */
@@ -51,7 +51,7 @@ struct mdtClConnectorContactKeyData
    *
    * \pre fk must not be null.
    */
-  void setConnectorFk(const mdtClConnectorKeyData & fk)
+  void setConnectorFk(const mdtClConnectorPkData & fk)
   {
     Q_ASSERT(!fk.isNull());
     pvConnectorFk = fk;
@@ -59,7 +59,7 @@ struct mdtClConnectorContactKeyData
 
   /*! \brief Get connector FK (Connector_Id_FK)
    */
-  inline mdtClConnectorKeyData connectorFk() const
+  inline mdtClConnectorPkData connectorFk() const
   {
     return pvConnectorFk;
   }
@@ -134,7 +134,7 @@ struct mdtClConnectorContactData
 
   /*! \brief Set connector foreign key data
    */
-  void setConnectorFk(const mdtClConnectorKeyData & fk)
+  void setConnectorFk(const mdtClConnectorPkData & fk)
   {
     pvKeyData.setConnectorFk(fk);
   }

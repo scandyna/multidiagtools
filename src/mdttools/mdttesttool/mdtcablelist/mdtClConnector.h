@@ -94,13 +94,13 @@ class mdtClConnector : public mdtTtBase
    *        A empty list is returned if connector contains no contact, or a error occured.
    *        Use ok parameter to diffrenciate both cases.
    */
-  QList<mdtClConnectorContactData> getContactDataList(const mdtClConnectorKeyData & key, bool & ok);
+  QList<mdtClConnectorContactData> getContactDataList(const mdtClConnectorPkData & pk, bool & ok);
 
   /*! \brief Remove contact list of given connector
    *
-   * \param key Key of connector that contains contacts to remove
+   * \param pk Key of connector that contains contacts to remove
    */
-  bool removeContactList(const mdtClConnectorKeyData & key);
+  bool removeContactList(const mdtClConnectorPkData & pk);
 
   /*! \brief Add a connector to database
    *
@@ -108,28 +108,28 @@ class mdtClConnector : public mdtTtBase
    * \param handleTransaction Internally, a transaction is (explicitly) open.
    *             By calling this function with a allready open transaction,
    *             set this argument false.
-   * \return Id_PK of added connector, or a null key on error
+   * \return Id_PK of added connector, or a null pk on error
    */
-  mdtClConnectorKeyData addConnector(mdtClConnectorData data, bool handleTransaction);
+  mdtClConnectorPkData addConnector(mdtClConnectorData data, bool handleTransaction);
 
   /*! \brief Get connector data from database
    *
    * \param includeContactData If true, related contacts are also included in data
    * \param ok Is set false on error
-   * \return data for given key.
-   *       A null data is returned if given key does not exist, or a error occured.
+   * \return data for given pk.
+   *       A null data is returned if given pk does not exist, or a error occured.
    *       Use ok parameter to diffrenciate both cases.
    */
-  mdtClConnectorData getConnectorData(const mdtClConnectorKeyData & key, bool includeContactData, bool & ok);
+  mdtClConnectorData getConnectorData(const mdtClConnectorPkData & pk, bool includeContactData, bool & ok);
 
   /*! \brief Remove connector
    *
-   * \param key Key of connector to remove
+   * \param pk Key of connector to remove
    * \param handleTransaction Internally, a transaction is (explicitly) open.
    *             By calling this function with a allready open transaction,
    *             set this argument false.
    */
-  bool removeConnector(const mdtClConnectorKeyData & key, bool handleTransaction);
+  bool removeConnector(const mdtClConnectorPkData & pk, bool handleTransaction);
 
  private:
 

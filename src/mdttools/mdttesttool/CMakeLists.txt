@@ -211,6 +211,7 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClLinkedUnitConnectorInfoDialog.cpp
           mdtcablelist/mdtClLinkBeam.cpp
           mdtcablelist/mdtClLinkBeamEditor.cpp
+          mdtcablelist/mdtClAutoConnection.cpp
           mdtcablelist/mdtClConnectableConnectorDialog.cpp
     )
 

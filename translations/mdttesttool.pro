@@ -110,6 +110,7 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClLinkedUnitConnectorInfoDialog.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClLinkBeam.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClLinkBeamEditor.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClAutoConnection.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClConnectableConnectorDialog.cpp
 FORMS += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtTestSystemEditor.ui
 FORMS += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtTestSystemComponentEditor.ui

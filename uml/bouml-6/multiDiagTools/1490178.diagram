@@ -2,14 +2,10 @@ format 209
 
 classcanvas 128002 class_ref 1745538 // mdtClConnectableCriteria
   classdiagramsettings member_max_width 0 end
-  xyz 37 142 2000
+  xyz 30 193 2000
 end
-classcanvas 128130 class_ref 1745666 // mdtClConnectableUnitConnectionSelectionDialog
+classcanvas 128386 class_ref 1745922 // mdtClAutoConnection
   classdiagramsettings member_max_width 0 end
-  xyz 300 89 2000
-end
-classcanvas 128258 class_ref 1745794 // mdtClConnectableUnitConnectorSelectionDialog
-  classdiagramsettings member_max_width 0 end
-  xyz 301 274 2000
+  xyz 190 377 2000
 end
 end

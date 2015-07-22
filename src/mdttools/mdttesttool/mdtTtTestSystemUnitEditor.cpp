@@ -214,7 +214,7 @@ void mdtTtTestSystemUnitEditor::addConnectorBasedConnector()
   mdtClUnitConnectorData connectorData;
   QVariant unitId;
   ///QVariant baseConnectorId;
-  mdtClConnectorKeyData baseConnectorKey;
+  mdtClConnectorPkData baseConnectorFk;
   QVariant connectorName;
   QList<QVariant> contactList;
   QInputDialog dialog;
@@ -233,8 +233,8 @@ void mdtTtTestSystemUnitEditor::addConnectorBasedConnector()
   if(csDialog.exec() != QDialog::Accepted){
     return;
   }
-  baseConnectorKey = csDialog.selectedConnectorKey();
-  if(baseConnectorKey.isNull()){
+  baseConnectorFk = csDialog.selectedConnectorPk();
+  if(baseConnectorFk.isNull()){
     return;
   }
 //   baseConnectorId = csDialog.selectedConnectorId();
@@ -252,7 +252,7 @@ void mdtTtTestSystemUnitEditor::addConnectorBasedConnector()
     return;
   }
   // Select contacts
-  if(!ccsDialog.select(database(), baseConnectorKey, true)){
+  if(!ccsDialog.select(database(), baseConnectorFk, true)){
     pvLastError = ccsDialog.lastError();
     displayLastError();
     return;

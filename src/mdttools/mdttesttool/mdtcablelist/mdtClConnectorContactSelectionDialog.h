@@ -42,9 +42,9 @@ class mdtClConnectorContactSelectionDialog : public mdtSqlSelectionDialog
 
   /*! \brief Set SQL query and select data
    *
-   * \param connectorKey Key of connector for witch contacts must be listed
+   * \param connectorPk PK of connector for witch contacts must be listed
    */
-  bool select(QSqlDatabase db, const mdtClConnectorKeyData & connectorKey, bool allowMultiSelection);
+  bool select(QSqlDatabase db, const mdtClConnectorPkData & connectorPk, bool allowMultiSelection);
 
   /*! \brief Get selected contact data
    */

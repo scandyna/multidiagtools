@@ -23,6 +23,7 @@
 #include "mdtClUnitConnectorKeyData.h"
 #include "mdtClArticleConnectorKeyData.h"
 #include "mdtClArticleConnectionKeyData.h"
+#include "mdtClAutoConnection.h"
 
 mdtClUnitConnectionSelectionDialog::mdtClUnitConnectionSelectionDialog(QWidget *parent, const QLocale & locale)
  : mdtSqlSelectionDialog(parent),
@@ -52,10 +53,51 @@ bool mdtClUnitConnectionSelectionDialog::select(QSqlDatabase db, const QVariant 
     sql += " AND UnitConnector_Id_FK IN(";
     lastIndex = ucnrPkList.size() - 1;
     for(i = 0; i < lastIndex; ++i){
-      sql += ucnrPkList.at(i).id.toString();
+      sql += ucnrPkList.at(i).id.toString();  /// \todo OK ????
     }
     sql += ucnrPkList.at(lastIndex).id.toString() + ")";
   }
+
+  return setQuery(sql, db, allowMultiSelection);
+}
+
+bool mdtClUnitConnectionSelectionDialog::select(QSqlDatabase db, const QVariant & unitId, 
+                                                const mdtClUnitConnectionPkData & connectableToPk, const mdtClConnectableCriteria &criteria,
+                                                bool allowMultiSelection)
+{
+  mdtClAutoConnection ac(db);
+  QList<mdtClUnitConnectionPkData> pkList;
+  QString sql;
+  bool ok;
+
+  // Get connectable connections
+  pkList = ac.getConnectableConnectionPkList(connectableToPk, unitId, criteria, ok);
+  if(!ok){
+    pvLastError = ac.lastError();
+    return false;
+  }
+  if(pkList.isEmpty()){
+    pvLastError.setError(tr("Could not find any unit connection that can be connected to requested one."), mdtError::Warning);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnitConnectionSelectionDialog");
+    pvLastError.commit();
+    return false;
+  }
+  Q_ASSERT(!pkList.isEmpty());
+  // Setup SQL statement
+  sql = baseSqlStatement();
+  /** \note allready filtered above
+  if(unitId.isNull()){
+    sql += " WHERE ";
+  }else{
+    sql += " WHERE (Unit_Id_FK = " + unitId.toString() + ") AND ";
+  }
+  */
+  const int lastIndex = pkList.size() - 1;
+  sql += "Id_PK IN(";
+  for(int i = 0; i < lastIndex; ++i){
+    sql += pkList.at(i).id.toString() + ",";
+  }
+  sql += pkList.at(lastIndex).id.toString() + ")";
 
   return setQuery(sql, db, allowMultiSelection);
 }
@@ -235,7 +277,7 @@ mdtClUnitConnectionKeyData mdtClUnitConnectionSelectionDialog::buildKeyData(cons
   Q_ASSERT( (row >= 0) && (row < s.rowCount()) );
 
   mdtClUnitConnectionKeyData key;
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorPkData connectorFk;
   mdtClArticleConnectorKeyData articleConnectorFk;
   mdtClUnitConnectorKeyData unitConnectorFk;
   mdtClArticleConnectionKeyData articleConnectionFk;

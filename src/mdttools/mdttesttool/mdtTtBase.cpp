@@ -86,7 +86,7 @@ bool mdtTtBase::addRecord(const mdtSqlRecord & record, const QString & tableName
   if(!query.exec()){
     QString msg;
     QSqlError sqlError = query.lastError();
-    msg = tr("Cannot exec query for inertion in table '") + tableName + tr("'. ");
+    msg = tr("Cannot exec query for insertion in table '") + tableName + tr("'. ");
     msg += tr("Data: ") + record.dataToUpdateInfo() + tr(".");
     pvLastError.setError(msg, mdtError::Error);
     pvLastError.setSystemError(sqlError.number(), sqlError.text());

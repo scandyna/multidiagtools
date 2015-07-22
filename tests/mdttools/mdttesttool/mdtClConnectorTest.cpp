@@ -192,7 +192,7 @@ void mdtClConnectorTest::contactDataTest()
 {
   mdtClConnectorContactKeyData keyData;
   mdtClConnectorContactData data;
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorPkData connectorFk;
 
   /*
    * Key data test
@@ -239,7 +239,7 @@ void mdtClConnectorTest::contactDataTest()
 void mdtClConnectorTest::contactAddGetRemoveTest()
 {
   mdtClConnector cnr(pvDatabaseManager.database());
-  mdtClConnectorKeyData connectorKey;
+  mdtClConnectorPkData connectorKey;
   mdtClConnectorData connectorData;
   mdtClConnectorContactKeyData contactKey;
   mdtClConnectorContactData contactData;
@@ -281,7 +281,7 @@ void mdtClConnectorTest::contactAddGetRemoveTest()
 
 void mdtClConnectorTest::connectorDataTest()
 {
-  mdtClConnectorKeyData keyData;
+  mdtClConnectorPkData keyData;
   mdtClConnectorData data;
   mdtClConnectorContactData contactData;
 
@@ -309,7 +309,7 @@ void mdtClConnectorTest::connectorDataTest()
   data.gender = "Male";
   QVERIFY(data.isNull());
   keyData.id = 1;
-  data.setKeyData(keyData);
+  data.setPk(keyData);
   QVERIFY(!data.isNull());
   // Add a contact
   contactData.name = "A";
@@ -320,7 +320,7 @@ void mdtClConnectorTest::connectorDataTest()
   // Clear
   data.clear();
   QVERIFY(data.isNull());
-  QVERIFY(data.keyData().isNull());
+  QVERIFY(data.pk().isNull());
   QVERIFY(data.gender.isNull());
   QVERIFY(data.form.isNull());
   QVERIFY(data.manufacturer.isNull());
@@ -333,7 +333,7 @@ void mdtClConnectorTest::connectorAddGetRemoveTest()
 {
   mdtClConnector cnr(pvDatabaseManager.database());
   mdtClConnectorData data;
-  mdtClConnectorKeyData key;
+  mdtClConnectorPkData key;
   mdtClConnectorContactData contactData;
   mdtClConnectorContactKeyData contactKey;
   bool ok;

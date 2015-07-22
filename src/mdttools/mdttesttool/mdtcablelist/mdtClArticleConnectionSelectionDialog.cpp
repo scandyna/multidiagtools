@@ -214,7 +214,7 @@ mdtClArticleConnectionKeyData mdtClArticleConnectionSelectionDialog::buildKeyDat
 
   mdtClArticleConnectionKeyData key;
   mdtClArticleConnectorKeyData articleConnectorFk;
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorPkData connectorFk;
 
   key.id = s.data(row, "Id_PK");
   key.setArticleId(s.data(row, "Article_Id_FK"));

@@ -68,7 +68,7 @@ struct mdtClUnitConnectorKeyData
 
   /*! \brief Connector FK (Connector_Id_FK)
    */
-  mdtClConnectorKeyData pvConnectorFk;
+  mdtClConnectorPkData pvConnectorFk;
 
   /*! \brief Article connector FK (ArticleConnector_Id_FK)
    */
@@ -95,7 +95,7 @@ struct mdtClUnitConnectorKeyData
    * \pre fk must not be null
    * \pre articleConnectorFk must not allready been set
    */
-  void setConnectorFk(const mdtClConnectorKeyData & fk)
+  void setConnectorFk(const mdtClConnectorPkData & fk)
   {
     Q_ASSERT(!fk.isNull());
     /*
@@ -109,7 +109,7 @@ struct mdtClUnitConnectorKeyData
 
   /*! \brief Get connector FK (Connector_Id_FK)
    */
-  inline mdtClConnectorKeyData connectorFk() const
+  inline mdtClConnectorPkData connectorFk() const
   {
     return pvConnectorFk;
   }

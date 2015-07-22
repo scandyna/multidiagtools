@@ -103,7 +103,7 @@ mdtClConnectorContactData mdtClConnector::getContactData(const mdtClConnectorCon
   QList<QSqlRecord> dataList;
   QString sql;
   mdtClConnectorContactKeyData keyData;
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorPkData connectorFk;
 
   sql = "SELECT * FROM ConnectorContact_tbl WHERE Id_PK = " + key.id.toString();
   dataList = getDataList<QSqlRecord>(sql, ok);
@@ -162,7 +162,7 @@ bool mdtClConnector::addContactList(const QList<mdtClConnectorContactData> & dat
   return true;
 }
 
-QList<mdtClConnectorContactData> mdtClConnector::getContactDataList(const mdtClConnectorKeyData & key, bool & ok)
+QList<mdtClConnectorContactData> mdtClConnector::getContactDataList(const mdtClConnectorPkData & key, bool & ok)
 {
   QList<mdtClConnectorContactData> dataList;
   QList<QSqlRecord> recordList;
@@ -176,7 +176,7 @@ QList<mdtClConnectorContactData> mdtClConnector::getContactDataList(const mdtClC
   for(const auto & record : recordList){
     mdtClConnectorContactData data;
     mdtClConnectorContactKeyData keyData;
-    mdtClConnectorKeyData connectorFk;
+    mdtClConnectorPkData connectorFk;
     keyData.id = record.value("Id_PK");
     connectorFk.id = record.value("Connector_Id_FK");
     if(!connectorFk.isNull()){
@@ -191,14 +191,14 @@ QList<mdtClConnectorContactData> mdtClConnector::getContactDataList(const mdtClC
   return dataList;
 }
 
-bool mdtClConnector::removeContactList(const mdtClConnectorKeyData & key)
+bool mdtClConnector::removeContactList(const mdtClConnectorPkData & key)
 {
   return removeData("ConnectorContact_tbl", "Connector_Id_FK", key.id.toString());
 }
 
-mdtClConnectorKeyData mdtClConnector::addConnector(mdtClConnectorData data, bool handleTransaction)
+mdtClConnectorPkData mdtClConnector::addConnector(mdtClConnectorData data, bool handleTransaction)
 {
-  mdtClConnectorKeyData key;
+  mdtClConnectorPkData pk;
   mdtSqlRecord record;
   QSqlQuery query(database());
   mdtSqlTransaction transaction(database());
@@ -206,9 +206,9 @@ mdtClConnectorKeyData mdtClConnector::addConnector(mdtClConnectorData data, bool
   // Setup record with given data
   if(!record.addAllFields("Connector_tbl", database())){
     pvLastError = record.lastError();
-    return key;
+    return pk;
   }
-  record.setValue("Id_PK", data.keyData().id);
+  record.setValue("Id_PK", data.pk().id);
   record.setValue("Gender", data.gender);
   record.setValue("Form", data.form);
   record.setValue("Manufacturer", data.manufacturer);
@@ -218,37 +218,37 @@ mdtClConnectorKeyData mdtClConnector::addConnector(mdtClConnectorData data, bool
   if(handleTransaction){
     if(!transaction.begin()){
       pvLastError = transaction.lastError();
-      return key;
+      return pk;
     }
   }
   if(!addRecord(record, "Connector_tbl", query)){
-    return key;
+    return pk;
   }
-  key.id = query.lastInsertId();
-  data.setKeyData(key);
+  pk.id = query.lastInsertId();
+  data.setPk(pk);
   // Save contacts to database
   if(!addContactList(data.contactDataList(), false)){
-    key.clear();
-    return key;
+    pk.clear();
+    return pk;
   }
   if(handleTransaction){
     if(!transaction.commit()){
       pvLastError = transaction.lastError();
-      key.clear();
-      return key;
+      pk.clear();
+      return pk;
     }
   }
 
-  return key;
+  return pk;
 }
 
-mdtClConnectorData mdtClConnector::getConnectorData(const mdtClConnectorKeyData & key, bool includeContactData, bool & ok)
+mdtClConnectorData mdtClConnector::getConnectorData(const mdtClConnectorPkData & pk, bool includeContactData, bool & ok)
 {
   mdtClConnectorData data;
   QList<QSqlRecord> dataList;
   QString sql;
 
-  sql = "SELECT * FROM Connector_tbl WHERE Id_PK = " + key.id.toString();
+  sql = "SELECT * FROM Connector_tbl WHERE Id_PK = " + pk.id.toString();
   dataList = getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     return data;
@@ -257,14 +257,14 @@ mdtClConnectorData mdtClConnector::getConnectorData(const mdtClConnectorKeyData 
     return data;
   }
   Q_ASSERT(dataList.size() == 1);
-  data.setKeyData(key);
+  data.setPk(pk);
   data.gender = dataList.at(0).value("Gender");
   data.form = dataList.at(0).value("Form");
   data.manufacturer = dataList.at(0).value("Manufacturer");
   data.manufacturerConfigCode = dataList.at(0).value("ManufacturerConfigCode");
   data.manufacturerArticleCode = dataList.at(0).value("ManufacturerArticleCode");
   if(includeContactData){
-    data.setContactDataList(getContactDataList(data.keyData(), ok));
+    data.setContactDataList(getContactDataList(data.pk(), ok));
     if(!ok){
       data.clear();
     }
@@ -273,7 +273,7 @@ mdtClConnectorData mdtClConnector::getConnectorData(const mdtClConnectorKeyData 
   return data;
 }
 
-bool mdtClConnector::removeConnector(const mdtClConnectorKeyData & key, bool handleTransaction)
+bool mdtClConnector::removeConnector(const mdtClConnectorPkData & pk, bool handleTransaction)
 {
   mdtSqlTransaction transaction(database());
 
@@ -283,10 +283,10 @@ bool mdtClConnector::removeConnector(const mdtClConnectorKeyData & key, bool han
       return false;
     }
   }
-  if(!removeContactList(key)){
+  if(!removeContactList(pk)){
     return false;
   }
-  if(!removeData("Connector_tbl", "Id_PK", key.id.toString())){
+  if(!removeData("Connector_tbl", "Id_PK", pk.id.toString())){
     return false;
   }
   if(handleTransaction){

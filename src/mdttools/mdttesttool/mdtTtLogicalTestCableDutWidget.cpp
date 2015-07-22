@@ -221,7 +221,8 @@ void mdtTtLogicalTestCableDutWidget::selectDutConnection()
   c.checkContactType = true;
   c.checkContactName = false;
   // Get SQL query
-  sql = lnk.sqlForConnectableUnitConnectionsSelection(pvTestCableCnId, pvUnitId, c);
+  /// \todo Use mdtClUnitConnectionSelectionDislog
+  ///sql = lnk.sqlForConnectableUnitConnectionsSelection(pvTestCableCnId, pvUnitId, c);
   if(sql.isEmpty()){
     displayError(lnk.lastError());
     return;

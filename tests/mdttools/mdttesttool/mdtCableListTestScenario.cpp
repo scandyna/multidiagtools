@@ -142,43 +142,43 @@ void mdtCableListTestScenario::removeTestVehicleTypes()
 void mdtCableListTestScenario::createTestConnectors()
 {
   mdtClConnector cnr(pvDatabase);
-  mdtClConnectorKeyData connectorKey;
+  mdtClConnectorPkData connectorPk;
   mdtClConnectorData connectorData;
   mdtClConnectorContactKeyData contactKey;
   mdtClConnectorContactData contactData;
   bool ok;
 
   // Add connector 1
-  connectorKey.id = 1;
-  connectorData.setKeyData(connectorKey);
-  connectorKey = cnr.addConnector(connectorData, true);
-  QCOMPARE(connectorKey.id, QVariant(1));
+  connectorPk.id = 1;
+  connectorData.setPk(connectorPk);
+  connectorPk = cnr.addConnector(connectorData, true);
+  QCOMPARE(connectorPk.id, QVariant(1));
   // Check back
-  connectorData = cnr.getConnectorData(connectorKey, true, ok);
+  connectorData = cnr.getConnectorData(connectorPk, true, ok);
   QVERIFY(ok);
-  QCOMPARE(connectorData.keyData().id, QVariant(1));
+  QCOMPARE(connectorData.pk().id, QVariant(1));
   // Add connector 2
   connectorData.clear();
-  connectorKey.clear();
-  connectorKey.id = 2;
-  connectorData.setKeyData(connectorKey);
-  connectorKey = cnr.addConnector(connectorData, true);
-  QCOMPARE(connectorKey.id, QVariant(2));
+  connectorPk.clear();
+  connectorPk.id = 2;
+  connectorData.setPk(connectorPk);
+  connectorPk = cnr.addConnector(connectorData, true);
+  QCOMPARE(connectorPk.id, QVariant(2));
   // Check back
-  connectorData = cnr.getConnectorData(connectorKey, true, ok);
+  connectorData = cnr.getConnectorData(connectorPk, true, ok);
   QVERIFY(ok);
-  QCOMPARE(connectorData.keyData().id, QVariant(2));
+  QCOMPARE(connectorData.pk().id, QVariant(2));
   /*
    * Create connect 3
    *  - Id_PK : 3
    *   -> Contact : Id_PK : 300 (, Connector_Id_FK : 3) , ConnectionType_Code_FK : P
    *   -> Contact : Id_PK : 301 (, Connector_Id_FK : 3) , ConnectionType_Code_FK : S
    */
-  connectorKey.clear();
+  connectorPk.clear();
   connectorData.clear();
   // Setup connector data
-  connectorKey.id = 3;
-  connectorData.setKeyData(connectorKey);
+  connectorPk.id = 3;
+  connectorData.setPk(connectorPk);
   // Add contact 300
   contactData.clear();
   contactKey.clear();
@@ -192,12 +192,12 @@ void mdtCableListTestScenario::createTestConnectors()
   contactData.setKeyData(contactKey);
   connectorData.addContactData(contactData);
   // Add connector to DB
-  connectorKey = cnr.addConnector(connectorData, true);
-  QCOMPARE(connectorKey.id, QVariant(3));
+  connectorPk = cnr.addConnector(connectorData, true);
+  QCOMPARE(connectorPk.id, QVariant(3));
   // Check back
-  connectorData = cnr.getConnectorData(connectorKey, true, ok);
+  connectorData = cnr.getConnectorData(connectorPk, true, ok);
   QVERIFY(ok);
-  QCOMPARE(connectorData.keyData().id, QVariant(3));
+  QCOMPARE(connectorData.pk().id, QVariant(3));
   QCOMPARE(connectorData.contactDataList().size(), 2);
   QCOMPARE(connectorData.contactDataList().at(0).keyData().id, QVariant(300));
   QCOMPARE(connectorData.contactDataList().at(0).keyData().connectorFk().id, QVariant(3));
@@ -571,7 +571,7 @@ void mdtCableListTestScenario::createTestArticleConnectors()
   mdtClArticleConnectorData articleConnectorData;
   mdtClArticleConnectionKeyData connectionKey;
   mdtClArticleConnectionData connectionData;
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorPkData connectorFk;
   bool ok;
 
   /*
@@ -1453,7 +1453,7 @@ void mdtCableListTestScenario::createTestUnitConnectors()
   mdtClUnitConnectorPkData pk;
   mdtClUnitConnectorKeyData key;
   mdtClUnitConnectorData data;
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorPkData connectorFk;
   mdtClUnitConnectionKeyData unitConnectionKey;
   mdtClUnitConnectionData unitConnectionsData;
   mdtClArticleConnectorKeyData articleConnectorFk;

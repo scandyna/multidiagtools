@@ -240,7 +240,7 @@ mdtClArticleConnectorKeyData mdtClArticleConnection::addArticleConnector(mdtClAr
 mdtClArticleConnectorData mdtClArticleConnection::getArticleConnectorData(mdtClArticleConnectorKeyData key, bool includeConnectionData, bool &ok)
 {
   mdtClArticleConnectorData data;
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorPkData connectorFk;
   QList<QSqlRecord> dataList;
   QString sql;
 
@@ -379,7 +379,7 @@ void mdtClArticleConnection::fillData(mdtClArticleConnectionData &data, const QS
   Q_ASSERT(record.contains("Connector_Id_FK")); // From Connector_tbl
 
   mdtClArticleConnectionKeyData key;
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorPkData connectorFk;
   mdtClArticleConnectorKeyData articleConnectorFk;
 
   // Fill key

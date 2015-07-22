@@ -42,11 +42,11 @@ class mdtClConnectorSelectionDialog : public mdtSqlSelectionDialog
    */
   bool select(QSqlDatabase db);
 
-  /*! \brief Get selected connector key
+  /*! \brief Get selected connector PK
    *
-   * If user rejected the dialog, a null key is returned.
+   * If user rejected the dialog, a null PK is returned.
    */
-  mdtClConnectorKeyData selectedConnectorKey() const;
+  mdtClConnectorPkData selectedConnectorPk() const;
 
   /*! \brief Get selected connector ID
    *

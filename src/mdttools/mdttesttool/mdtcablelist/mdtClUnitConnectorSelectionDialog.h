@@ -24,6 +24,7 @@
 #include "mdtSqlSelectionDialog.h"
 #include "mdtClUnitConnectorKeyData.h"
 #include "mdtClUnitConnectorData.h"
+#include "mdtClConnectableCriteria.h"
 #include <QSqlDatabase>
 #include <QVariant>
 
@@ -45,6 +46,10 @@ class mdtClUnitConnectorSelectionDialog : public mdtSqlSelectionDialog
    */
   bool select(QSqlDatabase db, const QVariant & unitId);
 
+  /*! \brief Select unit connectors that are part of given unit list and that can be connected to given unit connector
+   */
+  bool select(QSqlDatabase db, const QList<QVariant> & unitIdList, const mdtClUnitConnectorPkData & connectableToPk, const mdtClConnectableCriteria & criteria);
+
   /*! \brief Get selected unit connector key
    *
    * If user rejected the dialog, a null key is returned.
@@ -58,6 +63,14 @@ class mdtClUnitConnectorSelectionDialog : public mdtSqlSelectionDialog
   mdtClUnitConnectorData selectedUnitConnectorData() const;
 
  private:
+
+  /*! \brief Set SQL query and other setup
+   */
+  bool setQuery(const QString & sql, QSqlDatabase & db, bool allowMultiSelection);
+
+  /*! \brief SQL base statement
+   */
+  QString baseSqlStatement() const;
 
   Q_DISABLE_COPY(mdtClUnitConnectorSelectionDialog);
 };

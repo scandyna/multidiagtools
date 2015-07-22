@@ -22,6 +22,7 @@
 #include "mdtSqlTableSelection.h"
 #include "mdtClConnectorKeyData.h"
 #include "mdtClArticleConnectorKeyData.h"
+#include "mdtClAutoConnection.h"
 #include <QStringList>
 
 mdtClUnitConnectorSelectionDialog::mdtClUnitConnectorSelectionDialog(QWidget *parent)
@@ -37,32 +38,47 @@ bool mdtClUnitConnectorSelectionDialog::select(QSqlDatabase db, const QVariant &
 
   QString sql;
 
-  sql = "SELECT UCNR.* ,"\
-        " ACNR.Article_Id_FK, ACNR.Name AS ArticleConnectorName,"\
-        " CNR.Gender, CNR.Form, CNR.Manufacturer, CNR.Series, CNR.'Insert', CNR.InsertRotation, CNR.ManufacturerConfigCode, CNR.ManufacturerArticleCode\n"\
-        "FROM UnitConnector_tbl UCNR\n"\
-        " LEFT JOIN ArticleConnector_tbl ACNR ON ACNR.Id_PK = UCNR.ArticleConnector_Id_FK\n"\
-        " LEFT JOIN Connector_tbl CNR ON CNR.Id_PK = UCNR.Connector_Id_FK\n";
+  sql = baseSqlStatement();
   sql += "WHERE UCNR.Unit_Id_FK = " + unitId.toString();
   if(!setQuery(sql, db, false)){
     return false;
   }
-  setMessage(tr("Select unit connector to use:"));
-  setColumnHidden("Id_PK", true);
-  setColumnHidden("Unit_Id_FK", true);
-  setColumnHidden("Connector_Id_FK", true);
-  setColumnHidden("ArticleConnector_Id_FK", true);
-  setColumnHidden("Article_Id_FK", true);
-  setHeaderData("Name", tr("Unit\nconnector\nname"));
-  setHeaderData("ArticleConnectorName", tr("Article\nconnector\nname"));
-//   setHeaderData("ContactQty", tr("Contact\nQty"));
-  setHeaderData("InsertRotation", tr("Insert\nRotation"));
-  setHeaderData("ManufacturerConfigCode", tr("Manufacturer\nConfiguration code"));
-  setHeaderData("ManufacturerArticleCode", tr("Manufacturer\nArticle code"));
 
-  
-  addColumnToSortOrder("Name", Qt::AscendingOrder);
-  sort();
+  return true;
+}
+
+bool mdtClUnitConnectorSelectionDialog::select(QSqlDatabase db, const QList<QVariant> & unitIdList, const mdtClUnitConnectorPkData & connectableToPk,
+                                               const mdtClConnectableCriteria & criteria)
+{
+  mdtClAutoConnection ac(db);
+  QList<mdtClUnitConnectorPkData> pkList;
+  QString sql;
+  bool ok;
+
+  // Get connectable connectors
+  pkList = ac.getConnectableConnectorPkList(connectableToPk, unitIdList, criteria, ok);
+  if(!ok){
+    pvLastError = ac.lastError();
+    return false;
+  }
+  if(pkList.isEmpty()){
+    pvLastError.setError(tr("Could not find any unit connector that can be connected to requested one."), mdtError::Warning);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnitConnectorSelectionDialog");
+    pvLastError.commit();
+    return false;
+  }
+  Q_ASSERT(!pkList.isEmpty());
+  // Setup SQL statement
+  sql = baseSqlStatement();
+  const int lastIndex = pkList.size() - 1;
+  sql += "Id_PK IN(";
+  for(int i = 0; i < lastIndex; ++i){
+    sql += pkList.at(i).id.toString() + ",";
+  }
+  sql += pkList.at(lastIndex).id.toString() + ")";
+  if(!setQuery(sql, db, false)){
+    return false;
+  }
 
   return true;
 }
@@ -70,7 +86,7 @@ bool mdtClUnitConnectorSelectionDialog::select(QSqlDatabase db, const QVariant &
 mdtClUnitConnectorKeyData mdtClUnitConnectorSelectionDialog::selectedUnitConnectorKey() const
 {
   mdtClUnitConnectorKeyData key;
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorPkData connectorFk;
   mdtClArticleConnectorKeyData articleConnectorFk;
   QStringList fields;
 
@@ -115,4 +131,43 @@ mdtClUnitConnectorData mdtClUnitConnectorSelectionDialog::selectedUnitConnectorD
   data.name = s.data(0, "Name");
 
   return data;
+}
+
+bool mdtClUnitConnectorSelectionDialog::setQuery(const QString & sql, QSqlDatabase & db, bool allowMultiSelection)
+{
+  if(!mdtSqlSelectionDialog::setQuery(sql, db, allowMultiSelection)){
+    return false;
+  }
+  setMessage(tr("Select unit connector to use:"));
+  setColumnHidden("Id_PK", true);
+  setColumnHidden("Unit_Id_FK", true);
+  setColumnHidden("Connector_Id_FK", true);
+  setColumnHidden("ArticleConnector_Id_FK", true);
+  setColumnHidden("Article_Id_FK", true);
+  setHeaderData("Name", tr("Unit\nconnector\nname"));
+  setHeaderData("ArticleConnectorName", tr("Article\nconnector\nname"));
+//   setHeaderData("ContactQty", tr("Contact\nQty"));
+  setHeaderData("InsertRotation", tr("Insert\nRotation"));
+  setHeaderData("ManufacturerConfigCode", tr("Manufacturer\nConfiguration code"));
+  setHeaderData("ManufacturerArticleCode", tr("Manufacturer\nArticle code"));
+
+  
+  addColumnToSortOrder("Name", Qt::AscendingOrder);
+  sort();
+
+  return true;
+}
+
+QString mdtClUnitConnectorSelectionDialog::baseSqlStatement() const
+{
+  QString sql;
+
+  sql = "SELECT UCNR.* ,"\
+        " ACNR.Article_Id_FK, ACNR.Name AS ArticleConnectorName,"\
+        " CNR.Gender, CNR.Form, CNR.Manufacturer, CNR.Series, CNR.'Insert', CNR.InsertRotation, CNR.ManufacturerConfigCode, CNR.ManufacturerArticleCode\n"\
+        "FROM UnitConnector_tbl UCNR\n"\
+        " LEFT JOIN ArticleConnector_tbl ACNR ON ACNR.Id_PK = UCNR.ArticleConnector_Id_FK\n"\
+        " LEFT JOIN Connector_tbl CNR ON CNR.Id_PK = UCNR.Connector_Id_FK\n";
+
+  return sql;
 }

@@ -51,18 +51,18 @@ bool mdtClConnectorSelectionDialog::select(QSqlDatabase db)
   return true;
 }
 
-mdtClConnectorKeyData mdtClConnectorSelectionDialog::selectedConnectorKey() const
+mdtClConnectorPkData mdtClConnectorSelectionDialog::selectedConnectorPk() const
 {
-  mdtClConnectorKeyData key;
+  mdtClConnectorPkData pk;
 
   if(result() != Accepted){
-    return key;
+    return pk;
   }
   auto s = selection("Id_PK");
   Q_ASSERT(s.rowCount() == 1);
-  key.id = s.data(0, "Id_PK");
+  pk.id = s.data(0, "Id_PK");
 
-  return key;
+  return pk;
 }
 
 QVariant mdtClConnectorSelectionDialog::selectedConnectorId() const

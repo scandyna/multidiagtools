@@ -28,12 +28,12 @@ mdtClConnectorContactSelectionDialog::mdtClConnectorContactSelectionDialog(QWidg
   setWindowTitle(tr("Contacts selection"));
 }
 
-bool mdtClConnectorContactSelectionDialog::select(QSqlDatabase db, const mdtClConnectorKeyData & connectorKey, bool allowMultiSelection)
+bool mdtClConnectorContactSelectionDialog::select(QSqlDatabase db, const mdtClConnectorPkData & connectorPk, bool allowMultiSelection)
 {
   QString sql;
 
   sql = "SELECT * FROM ConnectorContact_tbl ";
-  sql += " WHERE Connector_Id_FK = " + connectorKey.id.toString();
+  sql += " WHERE Connector_Id_FK = " + connectorPk.id.toString();
   setMessage("Please select contacts to use:");
   if(!setQuery(sql, db, allowMultiSelection)){
     return false;
@@ -78,7 +78,7 @@ QList<mdtClConnectorContactData> mdtClConnectorContactSelectionDialog::selectedC
   for(int row = 0; row < s.rowCount(); ++row){
     mdtClConnectorContactKeyData key;
     mdtClConnectorContactData data;
-    mdtClConnectorKeyData connectorFk;
+    mdtClConnectorPkData connectorFk;
     key.id = s.data(row, "Id_PK");
     connectorFk.id = s.data(row, "Connector_Id_FK");
     key.setConnectorFk(connectorFk);

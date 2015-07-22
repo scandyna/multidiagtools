@@ -69,7 +69,7 @@ void mdtClUnitConnectionTest::unitConnectorDataTest()
   mdtClUnitConnectorPkData pk;
   mdtClUnitConnectorKeyData key;
   mdtClUnitConnectorData data;
-  mdtClConnectorKeyData cnrKey;
+  mdtClConnectorPkData cnrKey;
   mdtClArticleConnectorKeyData acnrKey;
 
   /*
@@ -639,7 +639,7 @@ void mdtClUnitConnectionTest::unitConnectorDataFromConnectorContactsTest()
   mdtClUnitConnection ucnx(pvDatabaseManager.database());
   mdtClUnitConnectorKeyData key;
   mdtClUnitConnectorData data;
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorPkData connectorFk;
   mdtClConnectorContactKeyData contactKey;
   mdtClConnectorContactData contactData;
   QList<mdtClConnectorContactData> contactDataList;
@@ -867,7 +867,7 @@ void mdtClUnitConnectionTest::unitConnectorAddGetRemoveTest()
   mdtClUnitConnectorPkData pk1, pk2, pk3;
   mdtClUnitConnectorKeyData key1, key2, key3;
   mdtClUnitConnectorData data;
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorPkData connectorFk;
   mdtClArticleConnectorKeyData articleConnectorFk;
   mdtClArticleConnectionKeyData articleConnectionKey;
   mdtCableListTestScenario scenario(pvDatabaseManager.database());

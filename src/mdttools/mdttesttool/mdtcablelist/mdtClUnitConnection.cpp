@@ -555,7 +555,7 @@ void mdtClUnitConnection::fillData(mdtClUnitConnectionData & data, const QSqlRec
   Q_ASSERT(record.contains("ACNX_ConnectionType_Code_FK"));
   Q_ASSERT(record.contains("ACNR_Connector_Id_FK"));
 
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorPkData connectorFk;
   mdtClArticleConnectorKeyData articleConnectorFk;
   mdtClUnitConnectorKeyData unitConnectorFk;
   mdtClArticleConnectionKeyData articleConnectionFk;
@@ -643,7 +643,7 @@ void mdtClUnitConnection::fillData(mdtClUnitConnectorData &data, const QSqlRecor
   Q_ASSERT(record.contains("ACNR_Article_Id_FK"));
   Q_ASSERT(record.contains("ACNR_Connector_Id_FK"));
 
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorPkData connectorFk;
   mdtClArticleConnectorKeyData articleConnectorFk;
   mdtClUnitConnectorKeyData key;
 

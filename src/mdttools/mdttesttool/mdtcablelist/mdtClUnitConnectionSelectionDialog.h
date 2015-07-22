@@ -26,6 +26,7 @@
 #include "mdtClUnitConnectionKeyData.h"
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorKeyData.h"
+#include "mdtClConnectableCriteria.h"
 #include <QSqlDatabase>
 #include <QVariant>
 #include <QLocale>
@@ -58,6 +59,10 @@ class mdtClUnitConnectionSelectionDialog : public mdtSqlSelectionDialog
   /*! \brief Select unit connections that are part of given unit and also part of given unit connectors
    */
   bool select(QSqlDatabase db, const QVariant & unitId, QList<mdtClUnitConnectorPkData> ucnrPkList, LinkUsage_t lu, bool allowMultiSelection);
+
+  /*! \brief Select unit connections that are part of given unit and that are connectable to given connection regarding given criteria
+   */
+  bool select(QSqlDatabase db, const QVariant & unitId, const mdtClUnitConnectionPkData & connectableToPk, const mdtClConnectableCriteria & criteria, bool allowMultiSelection);
 
   /*! \brief Get selected unit connection PK
    *

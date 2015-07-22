@@ -349,7 +349,7 @@ void mdtClArticleEditor::addConnector()
   if(csDialog.exec() != QDialog::Accepted){
     return;
   }
-  articleConnectorKey.setConnectorFk( csDialog.selectedConnectorKey() );
+  articleConnectorKey.setConnectorFk( csDialog.selectedConnectorPk() );
   if(articleConnectorKey.connectorFk().isNull()){
     return;
   }

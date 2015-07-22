@@ -27,7 +27,7 @@
  *
  * Refers to Connector_tbl
  */
-struct mdtClConnectorKeyData
+struct mdtClConnectorPkData
 {
   /*! \brief Connector ID (Id_PK)
    */

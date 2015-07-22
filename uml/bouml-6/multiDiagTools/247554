@@ -1,6 +1,6 @@
 format 209
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 70
+  revision 73
   modified_by 2 "philippe"
   // class settings
   
@@ -1021,7 +1021,7 @@ ${inlines}
       end
 
       attribute 1701634 "pvKeyData"
-	private type class_ref 1639170 // mdtClConnectorKeyData
+	private type class_ref 1639170 // mdtClConnectorPkData
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1108,7 +1108,7 @@ ${inlines}
       end
 
       operation 2555138 "keyData"
-	public return_type class_ref 1639170 // mdtClConnectorKeyData
+	public return_type class_ref 1639170 // mdtClConnectorPkData
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1125,7 +1125,7 @@ ${inlines}
       operation 2555266 "setKeyData"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "key" type class_ref 1639170 // mdtClConnectorKeyData
+	  param in name "key" type class_ref 1639170 // mdtClConnectorPkData
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1139,7 +1139,7 @@ ${inlines}
       end
     end
 
-    class 1639170 "mdtClConnectorKeyData"
+    class 1639170 "mdtClConnectorPkData"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -1208,7 +1208,7 @@ ${inlines}
       end
 
       attribute 1702018 "pvConnectorFk"
-	private type class_ref 1639170 // mdtClConnectorKeyData
+	private type class_ref 1639170 // mdtClConnectorPkData
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1234,7 +1234,7 @@ ${inlines}
       operation 2624514 "setConnectorFk"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "fk" type class_ref 1639170 // mdtClConnectorKeyData
+	  param in name "fk" type class_ref 1639170 // mdtClConnectorPkData
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1310,7 +1310,7 @@ ${inlines}
       end
 
       operation 2624642 "connectorFk"
-	public return_type class_ref 1639170 // mdtClConnectorKeyData
+	public return_type class_ref 1639170 // mdtClConnectorPkData
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1412,7 +1412,7 @@ ${inlines}
       operation 2555650 "setConnectorFk"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "fk" type class_ref 1639170 // mdtClConnectorKeyData
+	  param in name "fk" type class_ref 1639170 // mdtClConnectorPkData
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1507,7 +1507,7 @@ ${inlines}
       end
 
       attribute 1703298 "pvConnectorFk"
-	private type class_ref 1639170 // mdtClConnectorKeyData
+	private type class_ref 1639170 // mdtClConnectorPkData
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1552,7 +1552,7 @@ ${inlines}
       operation 2616066 "setConnectorFk"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "fk" type class_ref 1639170 // mdtClConnectorKeyData
+	  param in name "fk" type class_ref 1639170 // mdtClConnectorPkData
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1566,7 +1566,7 @@ ${inlines}
       end
 
       operation 2616194 "connectorFk"
-	public return_type class_ref 1639170 // mdtClConnectorKeyData
+	public return_type class_ref 1639170 // mdtClConnectorPkData
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1631,7 +1631,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 2023810 // connectorFk_ (<unidirectional association>)
-	  b parent class_ref 1639170 // mdtClConnectorKeyData
+	  b parent class_ref 1639170 // mdtClConnectorPkData
       end
 
       classrelation 2024578 // articleId_ (<unidirectional association>)
@@ -2609,7 +2609,7 @@ ${inlines}
       end
 
       attribute 1746562 "pvConnectorFk"
-	private type class_ref 1639170 // mdtClConnectorKeyData
+	private type class_ref 1639170 // mdtClConnectorPkData
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -2666,7 +2666,7 @@ ${inlines}
       operation 2631426 "setConnectorFk"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "fk" type class_ref 1639170 // mdtClConnectorKeyData
+	  param in name "fk" type class_ref 1639170 // mdtClConnectorPkData
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -2680,7 +2680,7 @@ ${inlines}
       end
 
       operation 2631554 "connectorFk"
-	public return_type class_ref 1639170 // mdtClConnectorKeyData
+	public return_type class_ref 1639170 // mdtClConnectorPkData
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2791,7 +2791,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 2023554 // connectorFk_ (<unidirectional association>)
-	  b parent class_ref 1639170 // mdtClConnectorKeyData
+	  b parent class_ref 1639170 // mdtClConnectorPkData
       end
 
       classrelation 2023682 // articleConnectorFk_ (<unidirectional association>)
@@ -8966,7 +8966,7 @@ ${inlines}
     activitydiagramsettings
      end
     classdiagram 1490178 "Overview"
-      classdiagramsettings member_max_width 0 end
+      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
       size A4
     end
 
@@ -9079,311 +9079,9 @@ ${inlines}
       size A3-Landscape
     end
 
-    class 1745666 "mdtClConnectableUnitConnectionSelectionDialog"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 2079874 // <generalisation>
-	relation 2063746 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 2079874 // <generalisation>
-	  b parent class_ref 713090 // mdtSqlSelectionDialog
-      end
-
-      operation 2734594 "mdtClConnectableUnitConnectionSelectionDialog"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "parent" type class_ref 316162 // QWidget
-	    defaultvalue "nullptr"
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2735618 "select"
-	public explicit_return_type "bool"
-	nparams 4
-	  param in name "db" type class_ref 405122 // QSqlDatabase
-	  param in name "pk" type class_ref 1739010 // mdtClUnitConnectionPkData
-	  param in name "unitId" type class_ref 161154 // QVariant
-	  param in name "criteria" type class_ref 1745538 // mdtClConnectableCriteria
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, const ${t3} & ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2735746 "select"
-	public explicit_return_type "bool"
-	nparams 3
-	  param in name "db" type class_ref 405122 // QSqlDatabase
-	  param in name "pk" type class_ref 1739010 // mdtClUnitConnectionPkData
-	  param in name "criteria" type class_ref 1745538 // mdtClConnectableCriteria
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2735874 "selectedUnitConnectionPk"
-	public return_type class_ref 1739010 // mdtClUnitConnectionPkData
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2736002 "selectedUnitConnectionPkList"
-	public return_type class_ref 1739010 // mdtClUnitConnectionPkData
-	multiplicity "*"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2736130 "setQuery"
-	private explicit_return_type "bool"
-	nparams 3
-	  param in name "sql" type class_ref 161026 // QString
-	  param in name "db" type class_ref 405122 // QSqlDatabase
-	  param in name "allowMultiSelection" explicit_type "bool"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2736258 "baseSqlStatement"
-	private return_type class_ref 161026 // QString
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
-    class 1745794 "mdtClConnectableUnitConnectorSelectionDialog"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 2080002 // <generalisation>
-	relation 2063874 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 2080002 // <generalisation>
-	  b parent class_ref 713090 // mdtSqlSelectionDialog
-      end
-
-      operation 2734722 "mdtClConnectableUnitConnectorSelectionDialog"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "parent" type class_ref 316162 // QWidget
-	    defaultvalue "nullptr"
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2734850 "select"
-	public explicit_return_type "bool"
-	nparams 4
-	  param in name "db" type class_ref 405122 // QSqlDatabase
-	  param in name "pk" type class_ref 1699714 // mdtClUnitConnectorPkData
-	  param in name "unitId" type class_ref 161154 // QVariant
-	  param in name "criteria" type class_ref 1745538 // mdtClConnectableCriteria
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, const ${t3} & ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2736386 "select"
-	public explicit_return_type "bool"
-	nparams 4
-	  param in name "db" type class_ref 405122 // QSqlDatabase
-	  param in name "pk" type class_ref 1699714 // mdtClUnitConnectorPkData
-	  param in name "unitIdList" type class_ref 161154 // QVariant
-	multiplicity "*"
-	  param in name "criteria" type class_ref 1745538 // mdtClConnectableCriteria
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, const ${t3} & ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2734978 "select"
-	public explicit_return_type "bool"
-	nparams 3
-	  param in name "db" type class_ref 405122 // QSqlDatabase
-	  param in name "pk" type class_ref 1699714 // mdtClUnitConnectorPkData
-	  param in name "criteria" type class_ref 1745538 // mdtClConnectableCriteria
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2735106 "selectedUnitConnectorPk"
-	public return_type class_ref 1699714 // mdtClUnitConnectorPkData
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2735234 "selectedUnitConnectorPkList"
-	public return_type class_ref 1699714 // mdtClUnitConnectorPkData
-	multiplicity "*"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2735362 "setQuery"
-	private explicit_return_type "bool"
-	nparams 3
-	  param in name "sql" type class_ref 161026 // QString
-	  param in name "db" type class_ref 405122 // QSqlDatabase
-	  param in name "allowMultiSelection" explicit_type "bool"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2735490 "baseSqlStatement"
-	private return_type class_ref 161026 // QString
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
     classdiagram 1490434 "AutoConnection"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 1745922 "mdtClAutoConnection"
@@ -9400,6 +9098,222 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      classrelation 2086530 // <generalisation>
+	relation 2070402 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2086530 // <generalisation>
+	  b parent class_ref 952962 // mdtTtBase
+      end
+
+      operation 2742914 "mdtClAutoConnection"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2743042 "canConnectConnections"
+	public explicit_return_type "bool"
+	nparams 3
+	  param in name "a" type class_ref 1113858 // mdtClUnitConnectionData
+	  param in name "b" type class_ref 1113858 // mdtClUnitConnectionData
+	  param in name "criteria" type class_ref 1745538 // mdtClConnectableCriteria
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2743170 "canConnectConnections"
+	public explicit_return_type "bool"
+	nparams 4
+	  param in name "pkA" type class_ref 1739010 // mdtClUnitConnectionPkData
+	  param in name "pkB" type class_ref 1739010 // mdtClUnitConnectionPkData
+	  param in name "criteria" type class_ref 1745538 // mdtClConnectableCriteria
+	  param out name "ok" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, ${t3} & ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, ${t3} & ${p3}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2743298 "canConnectConnectors"
+	public explicit_return_type "bool"
+	nparams 4
+	  param in name "a" type class_ref 1107202 // mdtClUnitConnectorData
+	  param in name "b" type class_ref 1107202 // mdtClUnitConnectorData
+	  param in name "criteria" type class_ref 1745538 // mdtClConnectableCriteria
+	  param in name "ok" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, ${t3} ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, ${t3} ${p3}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2743426 "canConnectConnectors"
+	public explicit_return_type "bool"
+	nparams 4
+	  param in name "pkA" type class_ref 1699714 // mdtClUnitConnectorPkData
+	  param in name "pkB" type class_ref 1699714 // mdtClUnitConnectorPkData
+	  param in name "criteria" type class_ref 1745538 // mdtClConnectableCriteria
+	  param in name "ok" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, ${t3} ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, ${t3} ${p3}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2743554 "connectByContactName"
+	public explicit_return_type "bool"
+	nparams 4
+	  param in name "ucnrStart" type class_ref 1107202 // mdtClUnitConnectorData
+	  param in name "ucnrEnd" type class_ref 1107202 // mdtClUnitConnectorData
+	  param in name "modification" type class_ref 1732482 // mdtClLinkModificationKeyData
+	  param in name "handleTransaction" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, ${t3} ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, ${t3} ${p3}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2743810 "connectByContactName"
+	public explicit_return_type "bool"
+	nparams 4
+	  param in name "ucnrStart" type class_ref 1699714 // mdtClUnitConnectorPkData
+	  param in name "ucnrEnd" type class_ref 1699714 // mdtClUnitConnectorPkData
+	  param in name "modification" type class_ref 1732482 // mdtClLinkModificationKeyData
+	  param in name "handleTransaction" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, ${t3} ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, ${t3} ${p3}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2743682 "connectByContactName"
+	public explicit_return_type "bool"
+	nparams 5
+	  param in name "ucnrStart" type class_ref 1107202 // mdtClUnitConnectorData
+	  param in name "ucnrEnd" type class_ref 1107202 // mdtClUnitConnectorData
+	  param in name "modification" type class_ref 1732482 // mdtClLinkModificationKeyData
+	  param in name "vtList" type class_ref 1725954 // mdtClVehicleTypeStartEndKeyData
+	  param in name "handleTransaction" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, const ${t3} & ${p3}${v3}, ${t4} ${p4}${v4}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}, ${t4} ${p4}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2743938 "connectByContactName"
+	public explicit_return_type "bool"
+	nparams 5
+	  param in name "ucnrStart" type class_ref 1699714 // mdtClUnitConnectorPkData
+	  param in name "ucnrEnd" type class_ref 1699714 // mdtClUnitConnectorPkData
+	  param in name "modification" type class_ref 1732482 // mdtClLinkModificationKeyData
+	  param in name "vtList" type class_ref 1725954 // mdtClVehicleTypeStartEndKeyData
+	  param in name "handleTransaction" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, const ${t3} & ${p3}${v3}, ${t4} ${p4}${v4}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}, ${t4} ${p4}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2744066 "disconnectConnectors"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "ucnrStartPk" type class_ref 1699714 // mdtClUnitConnectorPkData
+	  param in name "ucnrEndPk" type class_ref 1699714 // mdtClUnitConnectorPkData
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2744194 "checkOrBuildConnectionLinkListByName"
+	private explicit_return_type "bool"
+	nparams 4
+	  param in name "a" type class_ref 1113858 // mdtClUnitConnectionData
+	multiplicity "*"
+	  param in name "b" type class_ref 1113858 // mdtClUnitConnectionData
+	multiplicity "*"
+	  param in name "criteria" type class_ref 1745538 // mdtClConnectableCriteria
+	  param out name "connectionLinkDataList" type class_ref 888194 // mdtClLinkData
+	multiplicity "*"
+	    defaultvalue "nullptr"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, ${t3} & ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, ${t3} & ${p3}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 end

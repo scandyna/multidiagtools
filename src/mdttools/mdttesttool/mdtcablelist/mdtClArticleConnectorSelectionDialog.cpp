@@ -73,7 +73,7 @@ bool mdtClArticleConnectorSelectionDialog::select(QSqlDatabase db, const QVarian
 mdtClArticleConnectorKeyData mdtClArticleConnectorSelectionDialog::selectedArticleConnectorKey() const
 {
   mdtClArticleConnectorKeyData key;
-  mdtClConnectorKeyData connectorFk;
+  mdtClConnectorPkData connectorFk;
   QStringList fields;
 
   if(result() != Accepted){

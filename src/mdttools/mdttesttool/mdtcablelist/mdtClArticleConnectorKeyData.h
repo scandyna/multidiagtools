@@ -44,7 +44,7 @@ struct mdtClArticleConnectorKeyData
 
   /*! \brief Connector FK (Connector_Id_FK)
    */
-  mdtClConnectorKeyData pvConnectorFk;
+  mdtClConnectorPkData pvConnectorFk;
 
  public:
 
@@ -64,14 +64,14 @@ struct mdtClArticleConnectorKeyData
 
   /*! \brief Set connector FK (Connector_Id_FK)
    */
-  void setConnectorFk(const mdtClConnectorKeyData & fk)
+  void setConnectorFk(const mdtClConnectorPkData & fk)
   {
     pvConnectorFk = fk;
   }
 
   /*! \brief Get connector FK (Connector_Id_FK)
    */
-  inline mdtClConnectorKeyData connectorFk() const
+  inline mdtClConnectorPkData connectorFk() const
   {
     return pvConnectorFk;
   }

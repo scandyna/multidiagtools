@@ -23,20 +23,20 @@
 
 //#include <QDebug>
 
-void mdtClConnectorData::setKeyData(const mdtClConnectorKeyData & key)
+void mdtClConnectorData::setPk(const mdtClConnectorPkData & pk)
 {
-  Q_ASSERT(!key.isNull());
+  Q_ASSERT(!pk.isNull());
 
   // Update contacts with new ID
   for(auto & cd : pvContactDataList){
-    cd.setConnectorFk(key);
+    cd.setConnectorFk(pk);
   }
-  pvKeyData = key;
+  pvPk = pk;
 }
 
 void mdtClConnectorData::clear()
 {
-  pvKeyData.clear();
+  pvPk.clear();
   gender.clear();
   form.clear();
   manufacturer.clear();
@@ -47,8 +47,8 @@ void mdtClConnectorData::clear()
 
 void mdtClConnectorData::addContactData(mdtClConnectorContactData data)
 {
-  if(!pvKeyData.isNull()){
-    data.setConnectorFk(pvKeyData);
+  if(!pvPk.isNull()){
+    data.setConnectorFk(pvPk);
   }
   pvContactDataList.append(data);
 }

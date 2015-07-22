@@ -156,7 +156,10 @@ QVariant mdtTtLogicalTestCableDialog::getDutConnectionId(const QVariant& testCab
         return QVariant();
       }
       // Search about DUT connection
+      /// \todo Use mdtClAutoConnection
+      /**
       for(k = 0; k < dutConnectionIdList.size(); ++k){
+        
         if(lnk.canConnectConnections(testCableConnectionId, dutConnectionIdList.at(k), c, ok)){
           return dutConnectionIdList.at(k);
         }else{
@@ -165,6 +168,7 @@ QVariant mdtTtLogicalTestCableDialog::getDutConnectionId(const QVariant& testCab
           }
         }
       }
+      */
     }else{
       if(!ok){
         return QVariant();
@@ -194,6 +198,8 @@ QVariant mdtTtLogicalTestCableDialog::getTsConnectionId(const QVariant& testCabl
         return QVariant();
       }
       // Search about DUT connection
+      /// \todo Use mdtClAutoConnection
+      /**
       for(k = 0; k < tsConnectionIdList.size(); ++k){
         if(lnk.canConnectConnections(testCableConnectionId, tsConnectionIdList.at(k), c, ok)){
           return tsConnectionIdList.at(k);
@@ -203,6 +209,7 @@ QVariant mdtTtLogicalTestCableDialog::getTsConnectionId(const QVariant& testCabl
           }
         }
       }
+      */
     }else{
       if(!ok){
         return QVariant();

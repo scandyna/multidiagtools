@@ -308,6 +308,8 @@ add_test (mdtClUnitConnectionTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdt
 add_test (mdtClLinkTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdtcllinktest)
 # mdtClArticleLinkTest
 add_test (mdtClArticleLinkTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdtclarticlelinktest)
+# mdtClAutoConnectionTest
+add_test (mdtClAutoConnectionTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdtclautoconnectiontest)
 
 # mdtCableListTest
 add_test (mdtCableListTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdtcablelisttest)

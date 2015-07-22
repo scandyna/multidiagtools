@@ -46,6 +46,7 @@
 #include "mdtClLinkedUnitConnectionInfoDialog.h"
 #include "mdtClLinkedUnitConnectorInfoDialog.h"
 #include "mdtClConnectableConnectorDialog.h"
+#include "mdtClAutoConnection.h"
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
@@ -406,7 +407,7 @@ void mdtClUnitEditor::addConnectorBasedConnector()
   mdtClUnitConnectorKeyData unitConnectorKey;
   mdtClUnitConnectorData unitConnectorData;
   mdtClConnectorSelectionDialog csDialog(this);
-  mdtClConnectorKeyData connectorKey;
+  mdtClConnectorPkData connectorKey;
   mdtClConnectorData connectorData;
   mdtClConnectorContactSelectionDialog ccsDialog(this);
 
@@ -424,7 +425,7 @@ void mdtClUnitEditor::addConnectorBasedConnector()
   if(csDialog.exec() != QDialog::Accepted){
     return;
   }
-  connectorKey = csDialog.selectedConnectorKey();
+  connectorKey = csDialog.selectedConnectorPk();
   if(connectorKey.isNull()){
     return;
   }
@@ -1081,7 +1082,7 @@ void mdtClUnitEditor::viewPath()
 /// \todo Add start and end vehicle type(s) selection to finish ...
 void mdtClUnitEditor::connectConnectors()
 {
-  mdtClLink lnk(0, database());
+  ///mdtClLink lnk(0, database());
   QString sql;
   QVariant startVehicleTypeId, endVehicleTypeId;
   QVariant startConnectorId, endConnectorId;
@@ -1140,12 +1141,19 @@ void mdtClUnitEditor::connectConnectors()
     return;
   }
   // Make connection
+  pvLastError.setError("NOT implemented yet..", mdtError::Error);
+  MDT_ERROR_SET_SRC(pvLastError, "mdtClUnitEditor");
+  pvLastError.commit();
+  displayLastError();
+  return;
+  /**
   if(!lnk.connectByContactName(startConnectorId, endConnectorId, startVehicleTypeId, endVehicleTypeId, connectableCriteria)){
     pvLastError = lnk.lastError();
     displayLastError();
     return;
   }
-  // Update viewa
+  */
+  // Update view
   select("UnitLink_view");
 }
 
