@@ -1,6 +1,6 @@
 format 209
 "Qt4" // Qt4
-  revision 93
+  revision 94
   modified_by 2 "philippe"
   // class settings
   
@@ -2977,7 +2977,7 @@ ${inlines}
     end
 
     class 719618 "QAbstractProxyModel"
-      visibility package 
+      abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
 ${inlines}
@@ -3020,6 +3020,19 @@ ${inlines}
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
   ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2750722 "data"
+	abstract cpp_virtual public return_type class_ref 161154 // QVariant
+	nparams 2
+	  param in name "index" type class_ref 147330 // QModelIndex
+	  param in name "role" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	
@@ -3406,6 +3419,34 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    classdiagram 1497090 "QIdentityProxyModel"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1752450 "QIdentityProxyModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2093058 // <generalisation>
+	relation 2076930 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2093058 // <generalisation>
+	  b parent class_ref 719618 // QAbstractProxyModel
       end
     end
   end

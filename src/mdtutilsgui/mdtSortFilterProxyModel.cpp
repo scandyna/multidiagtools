@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "mdtSortFilterProxyModel.h"
 #include "mdtAlgorithms.h"
-#include <boost/graph/graph_concepts.hpp>
 #include <QVariant>
 #include <QSqlQueryModel>
 #include <QSqlRecord>
@@ -55,15 +54,12 @@ void mdtSortFilterProxyModel::addColumnToSortOrder(int column, Qt::SortOrder ord
   pvColumnsSortOrder.prepend(QPair<int, Qt::SortOrder>(column, order));
 }
 
-void mdtSortFilterProxyModel::addColumnToSortOrder(const QString &fieldName, Qt::SortOrder order)
+void mdtSortFilterProxyModel::addColumnToSortOrder(QSqlQueryModel *m, const QString &fieldName, Qt::SortOrder order)
 {
-  QSqlQueryModel *m;
+  Q_ASSERT(m != nullptr);
+
   int column;
 
-  m = dynamic_cast<QSqlQueryModel*>(sourceModel());
-  if(m == 0){
-    return;
-  }
   column = m->record().indexOf(fieldName);
   if(column >= 0){
     addColumnToSortOrder(column, order);

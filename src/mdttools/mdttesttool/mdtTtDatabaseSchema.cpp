@@ -1709,10 +1709,35 @@ bool mdtTtDatabaseSchema::setupLinkModificationTable()
   field.setType(QVariant::Int);
   table.addField(field, true);
   // Modification_Code_FK
+  field = QSqlField();
   field.setName("Modification_Code_FK");
   field.setType(QVariant::String);
   field.setLength(10);
   table.addField(field, true);
+  // TextEN
+  field = QSqlField();
+  field.setName("TextEN");
+  field.setType(QVariant::String);
+  field.setLength(300);
+  table.addField(field, false);
+  // TextFR
+  field = QSqlField();
+  field.setName("TextFR");
+  field.setType(QVariant::String);
+  field.setLength(300);
+  table.addField(field, false);
+  // TextDE
+  field = QSqlField();
+  field.setName("TextDE");
+  field.setType(QVariant::String);
+  field.setLength(300);
+  table.addField(field, false);
+  // TextIT
+  field = QSqlField();
+  field.setName("TextIT");
+  field.setType(QVariant::String);
+  field.setLength(300);
+  table.addField(field, false);
   // Foreign keys
   table.addForeignKey("LinkModification_Link_fk", "Link_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("LinkModification_Link_fk", "UnitConnectionStart_Id_FK", "UnitConnectionStart_Id_FK")){
@@ -1816,11 +1841,13 @@ bool mdtTtDatabaseSchema::setupLinkTable()
   field.setType(QVariant::Int);
   table.addField(field, false);
   // SinceVersion
+  /// \todo Obselete
   field = QSqlField();
   field.setName("SinceVersion");
   field.setType(QVariant::Double);
   table.addField(field, false);
   // Modification
+  /// \todo Obselete
   field = QSqlField();
   field.setName("Modification");
   field.setType(QVariant::String);
@@ -4119,6 +4146,11 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
               " M.NameFR AS ModificationFR,\n"\
               " M.NameDE AS ModificationDE,\n"\
               " M.NameIT AS ModificationIT,\n"\
+              " M.SortOrder AS ModificationSortOrder,\n"\
+              " LM.TextEN AS ModificationTextEN,\n"\
+              " LM.TextFR AS ModificationTextFR,\n"\
+              " LM.TextDE AS ModificationTextDE,\n"\
+              " LM.TextIT AS ModificationTextIT,\n"\
               " LNK.Identification ,\n"\
               " LNK.LinkBeam_Id_FK ,\n"\
               " US.SchemaPosition AS StartSchemaPosition ,\n"\
@@ -5413,31 +5445,37 @@ bool mdtTtDatabaseSchema::populateModificationTable()
 
   fields << "Code_PK" << "SortOrder" << "NameEN" << "NameDE" << "NameFR" << "NameIT";
   // NEW
-  data << "NEW" << 1 << "New" << "Neu" << "Nouveau" << "Nuovo";
+  data << "NEW" << 3 << "New" << "Neu" << "Nouveau" << "Nuovo";
   if(!insertDataIntoTable("Modification_tbl", fields, data)){
     return false;
   }
   // REM
   data.clear();
-  data << "REM" << 1 << "Remove" << "Entfernen" << "Supprimer" << "Rimuovere";
+  data << "REM" << 3 << "Remove" << "Entfernen" << "Supprimer" << "Rimuovere";
+  if(!insertDataIntoTable("Modification_tbl", fields, data)){
+    return false;
+  }
+  // MOD
+  data.clear();
+  data << "MOD" << 3 << "Modifiy" << "Ändern" << "Modifier" << "Modificare";
   if(!insertDataIntoTable("Modification_tbl", fields, data)){
     return false;
   }
   // MODNEW
   data.clear();
-  data << "MODNEW" << 1 << "Modifiy (+)" << "Ändern (+)" << "Modifier (+)" << "Modificare (+)";
+  data << "MODNEW" << 2 << "Modifiy (+)" << "Ändern (+)" << "Modifier (+)" << "Modificare (+)";
   if(!insertDataIntoTable("Modification_tbl", fields, data)){
     return false;
   }
   // MODREM
   data.clear();
-  data << "MODREM" << 2 << "Modifiy (-)" << "Ändern (-)" << "Modifier (-)" << "Modificare (-)";
+  data << "MODREM" << 1 << "Modifiy (-)" << "Ändern (-)" << "Modifier (-)" << "Modificare (-)";
   if(!insertDataIntoTable("Modification_tbl", fields, data)){
     return false;
   }
   // EXISTS
   data.clear();
-  data << "EXISTS" << 1 << "Existing" << "Bestehend" << "Existant" << "Esistente";
+  data << "EXISTS" << 3 << "Existing" << "Bestehend" << "Existant" << "Esistente";
   if(!insertDataIntoTable("Modification_tbl", fields, data)){
     return false;
   }

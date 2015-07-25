@@ -1,0 +1,16 @@
+format 209
+
+classcanvas 128002 class_ref 1752450 // QIdentityProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 245 339 2000
+end
+classcanvas 128130 class_ref 719618 // QAbstractProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 156 158 2005
+end
+relationcanvas 128258 relation_ref 2076930 // <generalisation>
+  from ref 128002 z 2006 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

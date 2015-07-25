@@ -27,6 +27,7 @@
 #include "mdtSqlDataValidator.h"
 #include "mdtSqlRelationInfo.h"
 #include "mdtSortFilterProxyModel.h"
+#include "mdtFormatProxyModelSettings.h"
 #include "mdtSqlRecord.h"
 #include <QObject>
 #include <QSqlDatabase>
@@ -41,6 +42,7 @@
 class mdtState;
 class mdtAbstractSqlTableController;
 class mdtSqlRelation;
+class mdtFormatProxyModel;
 class mdtSortFilterProxyModel;
 class QSqlField;
 
@@ -405,6 +407,32 @@ class mdtAbstractSqlTableController : public QObject
    * \pre validator must be a valid pointer.
    */
   void addDataValidator(std::shared_ptr<mdtSqlDataValidator> validator, bool putAtTopPriority = false, bool setInternalMessageHandler = true);
+
+  /*! \brief Set format settings
+   */
+  void setFormatSettings(const mdtFormatProxyModelSettings & settings);
+
+  /*! \brief Add a text alignment fromat for given column
+   *
+   * Note: if given fieldName does not exist,
+   *  this function silently adds nothing.
+   */
+  void addTextAlignmentFormat(const QString & fieldName, Qt::Alignment alignment);
+
+  /*! \brief Set column that contains key data to determine backgroud fromat
+   *
+   * Note: if given fieldName does not exist,
+   *  this function silently updates nothing.
+   */
+  void setBackgroundFromatKeyDataColumn(const QString & fieldName);
+
+  /*! \brief Add a background format for given key data
+   */
+  void addBackgroundFromat(const QVariant & keyData, const QBrush & bg);
+
+  /*! \brief Clear format settings
+   */
+  void clearFormatSettings();
 
   /*! \brief Add a column to columns sort order
    *
@@ -1338,6 +1366,7 @@ class mdtAbstractSqlTableController : public QObject
   Q_DISABLE_COPY(mdtAbstractSqlTableController);
 
   std::shared_ptr<QSqlTableModel> pvModel;
+  std::shared_ptr<mdtFormatProxyModel> pvFormatProxyModel;
   std::shared_ptr<mdtSortFilterProxyModel> pvProxyModel;
   QList<std::shared_ptr<mdtSqlDataValidator> > pvDataValidators;
   std::shared_ptr<mdtUiMessageHandler> pvMessageHandler;

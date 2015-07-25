@@ -1,17 +1,16 @@
 window_sizes 1276 970 312 958 917 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 1490050 // ConnectableCriteria
-    769 739 100 4 0 0
-  classdiagram_ref 1490434 // AutoConnection
-    120 106 100 18 0 0
-  active  classdiagram_ref 1490178 // Overview
-    958 917 100 4 0 0
+  classdiagram_ref 1496962 // FormatModel
+    962 924 90 18 0 0
+  active  classdiagram_ref 739586 // CableListAllTables
+    958 917 80 16 471 218
 end
 show_stereotypes
-selected classdiagram_ref 1437442 // KeyDataOverview
+selected attribute_ref 1770498 // Modification_Code_FK
 open
-  classview_ref 755202 // ConnectorAndConnection
-  classview_ref 774786 // AutoConnection
+  attribute_ref 1770370 // Version_FK
+  attribute_ref 1050498 // LinkBeam_Id_FK
+  attribute_ref 1770242 // UnitConnectionEnd_Id_FK
 end
 end

@@ -41,6 +41,7 @@
 #include "mdtClLinkData.h"
 #include "mdtClUnitConnection.h"
 #include "mdtClUnitLinkDialog.h"
+#include "mdtClUnitLinkModificationDialog.h"
 #include "mdtClPathGraph.h"
 #include "mdtClPathGraphDialog.h"
 #include "mdtClLinkedUnitConnectionInfoDialog.h"
@@ -945,6 +946,43 @@ void mdtClUnitEditor::addLink()
   select("UnitLink_view");
 }
 
+void mdtClUnitEditor::addLinkModification()
+{
+  mdtClUnitLinkModificationDialog dialog(this, database());
+  mdtClLink lnk(database());
+  mdtSqlTableWidget *linkWidget;
+  mdtClLinkModificationKeyData modificationKey;
+  mdtClLinkPkData pk;
+
+  linkWidget = sqlTableWidget("UnitLink_view");
+  Q_ASSERT(linkWidget != nullptr);
+  // Get link PK
+  pk.connectionStartId = linkWidget->currentData("UnitConnectionStart_Id_FK");
+  pk.connectionEndId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
+  if(pk.isNull()){
+    QMessageBox msgBox;
+    msgBox.setText(tr("Please select a link."));
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.exec();
+    return;
+  }
+  // Setup and show dialog
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  /// Update modification data
+  modificationKey = dialog.linkModificationKeyData();
+  modificationKey.setLinkFk(pk);
+  // Add to database
+  if(!lnk.addModification(modificationKey)){
+    pvLastError = lnk.lastError();
+    displayLastError();
+    return;
+  }
+  // Update links view
+  select("UnitLink_view");
+}
+
 void mdtClUnitEditor::editLink()
 {
   mdtSqlTableWidget *linkWidget;
@@ -966,7 +1004,7 @@ void mdtClUnitEditor::editLink()
   if(unitId.isNull()){
     return;
   }
-  // Get connection PK
+  // Get link PK
   pk.connectionStartId = linkWidget->currentData("UnitConnectionStart_Id_FK");
   pk.connectionEndId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
   if(pk.isNull()){
@@ -1584,6 +1622,7 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   QPushButton *pbRemoveLinks;
   QPushButton *pbViewPath;
   QPushButton *pbConnectConnectors;
+  QPushButton *pb;
   mdtSqlRelationInfo relationInfo;
 
   relationInfo.setChildTableName("UnitLink_view");
@@ -1592,30 +1631,26 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   if(!addChildTable(relationInfo, tr("Links"))){
     return false;
   }
-  /**
-  if(!addChildTable("UnitLink_view", tr("Links"), database())){
-    return false;
-  }
-  if(!addRelation("Id_PK", "UnitLink_view", "StartUnit_Id_FK")){
-    return false;
-  }
-  if(!addRelation("Id_PK", "UnitLink_view", "EndUnit_Id_FK", "OR")){
-    return false;
-  }
-  */
   widget = sqlTableWidget("UnitLink_view");
   Q_ASSERT(widget != 0);
-  // Add the Add and remove buttons
+  // Add link button
   pbAddLink = new QPushButton(tr("Add link ..."));
   pbAddLink->setIcon(QIcon::fromTheme("document-new"));
   connect(pbAddLink, SIGNAL(clicked()), this, SLOT(addLink()));
   widget->addWidgetToLocalBar(pbAddLink);
+  // Add link modification button
+  pb = new QPushButton(tr("Add modification ..."));
+  connect(pb, SIGNAL(clicked()), this, SLOT(addLinkModification()));
+  widget->addWidgetToLocalBar(pb);
+  // Edit link button
   pbEditLink = new QPushButton(tr("Edit link"));
   connect(pbEditLink, SIGNAL(clicked()), this, SLOT(editLink()));
   widget->addWidgetToLocalBar(pbEditLink);
+  // Remove links button
   pbRemoveLinks = new QPushButton(tr("Remove links"));
   pbRemoveLinks->setIcon(QIcon::fromTheme("edit-delete"));
   connect(pbRemoveLinks, SIGNAL(clicked()), this, SLOT(removeLinks()));
+  // View path button
   widget->addWidgetToLocalBar(pbRemoveLinks);
   pbViewPath = new QPushButton(tr("View path"));
   connect(pbViewPath, SIGNAL(clicked()), this, SLOT(viewPath()));
@@ -1636,6 +1671,12 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   widget->setColumnHidden("LinkDirection_Code_FK", true);
   widget->setColumnHidden("ArticleConnectionStart_Id_FK", true);
   widget->setColumnHidden("ArticleConnectionEnd_Id_FK", true);
+  widget->setColumnHidden("LinkBeam_Id_FK", true);
+  widget->setColumnHidden("ModificationSortOrder", true);
+  widget->setColumnHidden("StartUnitConnector_Id_FK", true);
+  widget->setColumnHidden("EndUnitConnector_Id_FK", true);
+  widget->setColumnHidden("Version_FK", true);
+  widget->setColumnHidden("Modification_Code_FK", true);
   // Give fields a user friendly name
   widget->setHeaderData("StartSchemaPosition", tr("Start\nschema pos."));
   widget->setHeaderData("StartAlias", tr("Start\nalias"));
@@ -1661,6 +1702,8 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   widget->setHeaderData("StartSwAddress", tr("Start\nSW address"));
   widget->setHeaderData("EndSwAddress", tr("End\nSW address"));
   // Setup sorting
+  widget->addColumnToSortOrder("Identification", Qt::AscendingOrder);
+  widget->addColumnToSortOrder("ModificationSortOrder", Qt::AscendingOrder);
   widget->addColumnToSortOrder("StartSchemaPosition", Qt::AscendingOrder);
   widget->addColumnToSortOrder("StartUnitConnectorName", Qt::AscendingOrder);
   widget->addColumnToSortOrder("StartUnitContactName", Qt::AscendingOrder);
@@ -1668,10 +1711,81 @@ bool mdtClUnitEditor::setupUnitLinkTable()
   widget->addColumnToSortOrder("EndUnitConnectorName", Qt::AscendingOrder);
   widget->addColumnToSortOrder("EndUnitContactName", Qt::AscendingOrder);
   widget->sort();
+  // Setup text alignments
+  widget->addTextAlignmentFormat("Version", Qt::AlignCenter);
+  widget->addTextAlignmentFormat("StartSchemaPosition", Qt::AlignCenter);
+  widget->addTextAlignmentFormat("StartAlias", Qt::AlignCenter);
+  widget->addTextAlignmentFormat("StartUnitConnectorName", Qt::AlignCenter);
+  widget->addTextAlignmentFormat("StartUnitContactName", Qt::AlignCenter);
+  widget->addTextAlignmentFormat("StartUnitConnectionResistance", Qt::AlignCenter);
+  widget->addTextAlignmentFormat("EndSchemaPosition", Qt::AlignCenter);
+  widget->addTextAlignmentFormat("EndAlias", Qt::AlignCenter);
+  widget->addTextAlignmentFormat("EndUnitConnectorName", Qt::AlignCenter);
+  widget->addTextAlignmentFormat("EndUnitContactName", Qt::AlignCenter);
+  widget->addTextAlignmentFormat("EndUnitConnectionResistance", Qt::AlignCenter);
+
+  // Setup conditionnal baground colors
+  widget->setBackgroundFromatKeyDataColumn("Modification_Code_FK");
+  widget->addBackgroundFromat("NEW", QBrush(Qt::red));
+  widget->addBackgroundFromat("REM", QBrush(Qt::yellow));
+  widget->addBackgroundFromat("MODREM", QBrush(QColor(170, 255, 255)));
+  widget->addBackgroundFromat("MODNEW", QBrush(QColor(255, 170, 120)));
+  widget->addBackgroundFromat("MOD", QBrush(QColor(85, 170, 255)));
+  
   // Set some attributes on table view
   widget->resizeViewToContents();
+  // Update regarding locale
+  updateUnitLinkTable();
 
   return true;
+}
+
+void mdtClUnitEditor::updateUnitLinkTable(const QLocale & locale)
+{
+  auto *widget = sqlTableWidget("UnitLink_view");
+  Q_ASSERT(widget != nullptr);
+
+  switch(locale.language()){
+    case QLocale::French:
+      widget->setColumnHidden("ModificationEN", true);
+      widget->setColumnHidden("ModificationDE", true);
+      widget->setColumnHidden("ModificationIT", true);
+      widget->setHeaderData("ModificationFR", tr("Modification\ntype"));
+      widget->setColumnHidden("ModificationTextEN", true);
+      widget->setColumnHidden("ModificationTextDE", true);
+      widget->setColumnHidden("ModificationTextIT", true);
+      widget->setHeaderData("ModificationTextFR", tr("Modification\ntext"));
+      break;
+    case QLocale::German:
+      widget->setColumnHidden("ModificationEN", true);
+      widget->setColumnHidden("ModificationFR", true);
+      widget->setColumnHidden("ModificationIT", true);
+      widget->setHeaderData("ModificationDE", tr("Modification\ntype"));
+      widget->setColumnHidden("ModificationTextEN", true);
+      widget->setColumnHidden("ModificationTextFR", true);
+      widget->setColumnHidden("ModificationTextIT", true);
+      widget->setHeaderData("ModificationTextDE", tr("Modification\ntext"));
+      break;
+    case QLocale::Italian:
+      widget->setColumnHidden("ModificationEN", true);
+      widget->setColumnHidden("ModificationDE", true);
+      widget->setColumnHidden("ModificationFR", true);
+      widget->setHeaderData("ModificationIT", tr("Modification\ntype"));
+      widget->setColumnHidden("ModificationTextEN", true);
+      widget->setColumnHidden("ModificationTextDE", true);
+      widget->setColumnHidden("ModificationTextFR", true);
+      widget->setHeaderData("ModificationTextIT", tr("Modification\ntext"));
+      break;
+    default:
+      widget->setColumnHidden("ModificationFR", true);
+      widget->setColumnHidden("ModificationDE", true);
+      widget->setColumnHidden("ModificationIT", true);
+      widget->setHeaderData("ModificationEN", tr("Modification\ntype"));
+      widget->setColumnHidden("ModificationTextFR", true);
+      widget->setColumnHidden("ModificationTextDE", true);
+      widget->setColumnHidden("ModificationTextIT", true);
+      widget->setHeaderData("ModificationTextEN", tr("Modification\ntext"));
+  }
 }
 
 bool mdtClUnitEditor::setupVehicleTable()

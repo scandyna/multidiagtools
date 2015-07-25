@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -26,6 +26,8 @@
 #include <QVector>
 #include <QPair>
 #include <QString>
+
+class QSqlQueryModel;
 
 /*! \brief Provide natural sort for Qt model/view
  */
@@ -66,12 +68,8 @@ class mdtSortFilterProxyModel : public QSortFilterProxyModel
   void addColumnToSortOrder(int column, Qt::SortOrder order = Qt::AscendingOrder);
 
   /*! \brief Add a field to columns sort order
-   *
-   * Here it's possible to define a field name.
-   *  Note that this method does nothing if 
-   *  sourceModel is not based on QSqlQueryModel.
    */
-  void addColumnToSortOrder(const QString &fieldName, Qt::SortOrder order = Qt::AscendingOrder);
+  void addColumnToSortOrder(QSqlQueryModel *m, const QString &fieldName, Qt::SortOrder order = Qt::AscendingOrder);
 
   /*! \brief Disable sorting
    *

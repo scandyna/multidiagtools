@@ -21,6 +21,7 @@
 #include "mdtAbstractSqlTableController.h"
 #include "mdtState.h"
 #include "mdtSqlRelation.h"
+#include "mdtFormatProxyModel.h"
 #include <QSqlError>
 #include <QSqlRecord>
 #include <QSqlField>
@@ -35,6 +36,7 @@ using namespace std;
 
 mdtAbstractSqlTableController::mdtAbstractSqlTableController(QObject* parent)
  : QObject(parent),
+   pvFormatProxyModel(new mdtFormatProxyModel),
    pvProxyModel(new mdtSortFilterProxyModel)
 {
   buildStateMachine();
@@ -70,7 +72,7 @@ bool mdtAbstractSqlTableController::hasMessageHandler() const
 
 void mdtAbstractSqlTableController::setTableName(const QString& tableName, QSqlDatabase db, const QString& userFriendlyTableName)
 {
-  shared_ptr<QSqlTableModel> m(new QSqlTableModel(0, db));
+  shared_ptr<QSqlTableModel> m(new QSqlTableModel(nullptr, db));
   m->setTable(tableName);
   setModel(m, userFriendlyTableName);
 }
@@ -81,7 +83,9 @@ void mdtAbstractSqlTableController::setModel(shared_ptr<QSqlTableModel> m, const
 
   pvModel = m;
   pvModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
-  pvProxyModel->setSourceModel(pvModel.get());
+  pvFormatProxyModel->setSourceModel(pvModel.get());
+  pvProxyModel->setSourceModel(pvFormatProxyModel.get());
+  ///pvProxyModel->setSourceModel(pvModel.get());
   if(userFriendlyTableName.isEmpty()){
     pvUserFriendlyTableName = m->tableName();
   }else{
@@ -354,9 +358,42 @@ void mdtAbstractSqlTableController::addDataValidator(shared_ptr< mdtSqlDataValid
   }
 }
 
+void mdtAbstractSqlTableController::setFormatSettings(const mdtFormatProxyModelSettings & settings)
+{
+  pvFormatProxyModel->setSettings(settings);
+}
+
+void mdtAbstractSqlTableController::addTextAlignmentFormat(const QString & fieldName, Qt::Alignment alignment)
+{
+  auto settings = pvFormatProxyModel->settings();
+  settings.addTextAlignment(pvModel.get(), fieldName, alignment);
+  pvFormatProxyModel->setSettings(settings);
+}
+
+void mdtAbstractSqlTableController::setBackgroundFromatKeyDataColumn(const QString & fieldName)
+{
+  auto settings = pvFormatProxyModel->settings();
+  settings.setBackgroundKeyDataColumn(pvModel.get(), fieldName);
+  pvFormatProxyModel->setSettings(settings);
+}
+
+void mdtAbstractSqlTableController::addBackgroundFromat(const QVariant & keyData, const QBrush & bg)
+{
+  auto settings = pvFormatProxyModel->settings();
+  settings.addBackground(keyData, bg);
+  pvFormatProxyModel->setSettings(settings);
+}
+
+void mdtAbstractSqlTableController::clearFormatSettings()
+{
+  pvFormatProxyModel->clearSettings();
+}
+
 void mdtAbstractSqlTableController::addColumnToSortOrder(const QString& fieldName, Qt::SortOrder order)
 {
-  pvProxyModel->addColumnToSortOrder(fieldName, order);
+  Q_ASSERT(pvModel);
+
+  pvProxyModel->addColumnToSortOrder(pvModel.get(), fieldName, order);
 }
 
 void mdtAbstractSqlTableController::clearColumnsSortOrder()
@@ -368,7 +405,6 @@ void mdtAbstractSqlTableController::sort()
 {
   Q_ASSERT(pvModel);
 
-  ///qDebug() << "mdtAbstractSqlTableController::sort() - table: " << tableName() << " - called ...";
   if(!proxyModel()->hasColumnToSort()){
     return;
   }
@@ -380,7 +416,6 @@ void mdtAbstractSqlTableController::sort()
     model()->fetchMore();
   }
   // Sort
-  ///qDebug() << "mdtAbstractSqlTableController::sort() - table: " << tableName() << " - sort ...";
   pvProxyModel->sort();
 }
 
@@ -619,7 +654,7 @@ QList<QVariant> mdtAbstractSqlTableController::rowData(int row, const std::vecto
 
   for(auto & col : columns){
     Q_ASSERT(pvProxyModel->index(row, col).isValid());
-    lst.append(pvProxyModel->data(pvProxyModel->index(row, col)));
+    lst.append(pvProxyModel->data(pvProxyModel->index(row, col), role));
   }
 
   return lst;
@@ -635,7 +670,7 @@ QStringList mdtAbstractSqlTableController::rowDataStr(int row, const std::vector
 
   for(auto & col : columns){
     Q_ASSERT(pvProxyModel->index(row, col).isValid());
-    lst.append(pvProxyModel->data(pvProxyModel->index(row, col)).toString());
+    lst.append(pvProxyModel->data(pvProxyModel->index(row, col), role).toString());
   }
 
   return lst;
@@ -1483,7 +1518,6 @@ bool mdtAbstractSqlTableController::setupAndAddChildController(shared_ptr< mdtAb
   mdtAbstractSqlTableControllerContainer container;
   shared_ptr<mdtSqlRelation> relation(new mdtSqlRelation);
   mdtSqlRelationInfoItem item;
-  int i;
 
   // Setup child controller
   controller->setTableName(relationInfo.childTableName(), db, userFriendlyChildTableName);
@@ -1535,7 +1569,6 @@ void mdtAbstractSqlTableController::updateChildControllersAfterCurrentRowChanged
 
 void mdtAbstractSqlTableController::updateChildControllersAfterInsert()
 {
-  int i;
   QModelIndex proxyIndex, sourceIndex;
 
   proxyIndex = pvProxyModel->index(pvCurrentRow, 0);

@@ -304,6 +304,47 @@ class mdtSqlTableWidget :  public QWidget
    */
   void setDefaultColumnToSelect(const QString &fieldName);
 
+  /*! \brief Set format settings
+   */
+  void setFormatSettings(const mdtFormatProxyModelSettings & settings)
+  {
+    pvController->setFormatSettings(settings);
+  }
+
+  /*! \brief Add a text alignment fromat for given column
+   *
+   * Note: if given fieldName does not exist,
+   *  this function silently adds nothing.
+   */
+  void addTextAlignmentFormat(const QString & fieldName, Qt::Alignment alignment)
+  {
+    pvController->addTextAlignmentFormat(fieldName, alignment);
+  }
+
+  /*! \brief Set column that contains key data to determine backgroud fromat
+   *
+   * Note: if given fieldName does not exist,
+   *  this function silently updates nothing.
+   */
+  void setBackgroundFromatKeyDataColumn(const QString & fieldName)
+  {
+    pvController->setBackgroundFromatKeyDataColumn(fieldName);
+  }
+
+  /*! \brief Add a background format for given key data
+   */
+  void addBackgroundFromat(const QVariant & keyData, const QBrush & bg)
+  {
+    pvController->addBackgroundFromat(keyData, bg);
+  }
+
+  /*! \brief Clear format settings
+   */
+  void clearFormatSettings()
+  {
+    pvController->clearFormatSettings();
+  }
+
   /*! \brief Add a column to columns sort order
    *
    * Columns sort order is similar meaning

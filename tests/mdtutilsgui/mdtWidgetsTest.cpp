@@ -19,15 +19,21 @@
  **
  ****************************************************************************/
 #include "mdtWidgetsTest.h"
+#include "mdtWidgetsTestData.h"
 #include "mdtApplication.h"
 #include "mdtDoubleEdit.h"
 #include "mdtDoubleValidator.h"
 #include "mdtQActionEnableStateGuard.h"
+#include "mdtFormatProxyModel.h"
+#include "mdtFormatProxyModelSettings.h"
 #include <QString>
 #include <QVariant>
 #include <QValidator>
 #include <QLineEdit>
 #include <QAction>
+#include <QTableView>
+#include <QSqlTableModel>
+#include <QColor>
 
 #include <QDebug>
 
@@ -629,6 +635,156 @@ void mdtWidgetsTest::mdtQActionEnableStateGuardTest()
   QVERIFY(act1.isEnabled());
   QVERIFY(!act2.isEnabled());
   QVERIFY(act3.isEnabled());
+}
+
+void mdtWidgetsTest::formatProxyModelBackgroundTest()
+{
+  mdtFormatProxyModelBackground bg;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(bg.keyDataColumn, 0);
+  QVERIFY(bg.background("").isNull());
+  QVERIFY(bg.background(QVariant()).isNull());
+  /*
+   * Set baground key data column
+   */
+  bg.keyDataColumn = 1;
+  QCOMPARE(bg.keyDataColumn, 1);
+  /*
+   * Add a background setting:
+   *  - Key: green
+   *  - Brush: color green
+   */
+  bg.addBackground("green", QBrush(Qt::green));
+  QVERIFY(bg.background("green").value<QBrush>().color() == QColor(Qt::green));
+  QVERIFY(bg.background("A").isNull());
+  QVERIFY(bg.background(QVariant()).isNull());
+  /*
+   * Add a background setting:
+   *  - Key: red
+   *  - Brush: color red
+   */
+  bg.addBackground("red", QBrush(Qt::red));
+  QVERIFY(bg.background("red").value<QBrush>().color() == QColor(Qt::red));
+  QVERIFY(bg.background("green").value<QBrush>().color() == QColor(Qt::green));
+  QVERIFY(bg.background("A").isNull());
+  QVERIFY(bg.background(QVariant()).isNull());
+  /*
+   * Clear
+   */
+  bg.clear();
+  QCOMPARE(bg.keyDataColumn, 0);
+  QVERIFY(bg.background("green").isNull());
+  QVERIFY(bg.background("red").isNull());
+  QVERIFY(bg.background("A").isNull());
+  QVERIFY(bg.background(QVariant()).isNull());
+}
+
+void mdtWidgetsTest::formatProxyModelSettingsTest()
+{
+  mdtFormatProxyModelSettings s;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(s.textAlignment(0).isNull());
+  QCOMPARE(s.backgroundKeyDataColumn(), 0);
+  QVERIFY(s.background("green").isNull());
+  /*
+   * Set text alignment centered (horizontally and vertically) for column 1
+   */
+  s.addTextAlignment(1, Qt::AlignHCenter | Qt::AlignVCenter);
+  QVERIFY(s.textAlignment(0).isNull());
+  QVERIFY(s.textAlignment(1).toInt() == Qt::AlignCenter);
+  QVERIFY(s.textAlignment(2).isNull());
+  /*
+   * Setup baground:
+   *  - Key data column: 2
+   *  - Key green : color green
+   *  - Key red : color red
+   */
+  s.setBackgroundKeyDataColumn(2);
+  QCOMPARE(s.backgroundKeyDataColumn(), 2);
+  s.addBackground("green", QBrush(Qt::green));
+  s.addBackground("red", QBrush(Qt::red));
+  QVERIFY(s.background("red").value<QBrush>().color() == QColor(Qt::red));
+  QVERIFY(s.background("green").value<QBrush>().color() == QColor(Qt::green));
+  QVERIFY(s.background("A").isNull());
+  QVERIFY(s.background(QVariant()).isNull());
+  /*
+   * Clear
+   */
+  s.clear();
+  QVERIFY(s.textAlignment(0).isNull());
+  QVERIFY(s.textAlignment(1).isNull());
+  QVERIFY(s.textAlignment(2).isNull());
+  QCOMPARE(s.backgroundKeyDataColumn(), 0);
+  QVERIFY(s.background("green").isNull());
+  QVERIFY(s.background("red").isNull());
+  QVERIFY(s.background("A").isNull());
+}
+
+void mdtWidgetsTest::formatProxyModelSettingsBenchmark()
+{
+  mdtFormatProxyModelSettings s;
+
+  s.addTextAlignment(0, Qt::AlignCenter);
+  s.addTextAlignment(1, Qt::AlignLeft);
+  s.addTextAlignment(2, Qt::AlignRight);
+  s.setBackgroundKeyDataColumn(2);
+  s.addBackground("green", QBrush(Qt::green));
+  s.addBackground("red", QBrush(Qt::red));
+  QBENCHMARK{
+    QVERIFY(s.textAlignment(0).toInt() == Qt::AlignCenter);
+    QVERIFY(s.textAlignment(1).toInt() == Qt::AlignLeft);
+    QVERIFY(s.textAlignment(2).toInt() == Qt::AlignRight);
+    QVERIFY(s.textAlignment(3).isNull());
+    QVERIFY(s.background("red").value<QBrush>().color() == QColor(Qt::red));
+    QVERIFY(s.background("green").value<QBrush>().color() == QColor(Qt::green));
+    QVERIFY(s.background("A").isNull());
+    QVERIFY(s.background(QVariant()).isNull());
+  }
+}
+
+void mdtWidgetsTest::formatProxyModelTest()
+{
+  mdtWidgetsTestData testData;
+  QTableView tw;
+  QSqlTableModel *tm;
+  mdtFormatProxyModel *pm;
+  mdtFormatProxyModelSettings settings;
+
+  /*
+   * Create data set
+   */
+  QVERIFY(testData.createClientTable());
+  QVERIFY(testData.populateClientTable());
+  /*
+   * Setup models and view
+   */
+  tm = new QSqlTableModel(this, testData.database());
+  pm = new mdtFormatProxyModel(this);
+  pm->setSourceModel(tm);
+  tw.setModel(pm);
+  tm->setTable("Client_tbl");
+  QVERIFY(tm->select());
+  tw.show();
+  /*
+   * Set settings
+   */
+  settings.addTextAlignment(tm, "Name", Qt::AlignCenter);
+  settings.setBackgroundKeyDataColumn(tm, "Name");
+  settings.addBackground("Andy", QBrush(Qt::green));
+  pm->setSettings(settings);
+
+  /*
+   * Play
+   */
+  while(tw.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 

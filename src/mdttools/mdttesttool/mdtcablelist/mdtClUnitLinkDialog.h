@@ -259,7 +259,7 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    */
   void displayError(const mdtError & error);
 
-  Q_DISABLE_COPY(mdtClUnitLinkDialog);
+  Q_DISABLE_COPY(mdtClUnitLinkDialog)
 
   QSqlDatabase pvDatabase;
   QVariant pvStartUnitId;

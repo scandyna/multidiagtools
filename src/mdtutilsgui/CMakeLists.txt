@@ -31,6 +31,7 @@ set (HEADER_FILES
           mdtMvColumnSelectionDialog.h
           mdtMvSortingSetupDialog.h
           mdtSortFilterProxyModel.h
+          mdtFormatProxyModel.h
           # Essais
           mdtParentChildTableModel.h
           mdtParentChildTableItem.h
@@ -66,6 +67,8 @@ set (SOURCES_FILES
           mdtMvColumnSelectionDialog.cpp
           mdtMvSortingSetupDialog.cpp
           mdtSortFilterProxyModel.cpp
+          mdtFormatProxyModel.cpp
+          mdtFormatProxyModelSettings.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp

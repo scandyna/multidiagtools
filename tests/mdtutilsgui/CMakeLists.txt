@@ -37,7 +37,7 @@ target_link_libraries(mdtdatabasetestold "mdttest")
 
 # * mdtWidgetsTest executable *
 QT4_WRAP_CPP(MDT_WIDGETS_TEST_MOC "mdtWidgetsTest.h")
-add_executable(mdtwidgetstest "mdtWidgetsTest.cpp" ${MDT_WIDGETS_TEST_MOC})
+add_executable(mdtwidgetstest "mdtWidgetsTest.cpp" "mdtWidgetsTestData.cpp" ${MDT_WIDGETS_TEST_MOC})
 target_link_libraries(mdtwidgetstest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtwidgetstest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtwidgetstest "mdttest")

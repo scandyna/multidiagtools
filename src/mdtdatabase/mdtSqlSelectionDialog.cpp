@@ -139,7 +139,7 @@ void mdtSqlSelectionDialog::addColumnToSortOrder(const QString & fieldName, Qt::
 {
   Q_ASSERT(pvProxyModel != 0);
 
-  pvProxyModel->addColumnToSortOrder(fieldName, order);
+  pvProxyModel->addColumnToSortOrder(pvModel, fieldName, order);
 }
 
 void mdtSqlSelectionDialog::sort()

@@ -272,7 +272,7 @@ void mdtDatabaseTest::sortFilterProxyModelTest()
   proxy.setSourceModel(&model);
   proxy.addColumnToSortOrder(1);
   QVERIFY(proxy.hasColumnToSort());
-  proxy.addColumnToSortOrder("remarks");
+  proxy.addColumnToSortOrder(&model, "remarks");
   QVERIFY(proxy.hasColumnToSort());
   view.setModel(&proxy);
   model.select();

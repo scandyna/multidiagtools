@@ -130,6 +130,10 @@ class mdtClUnitEditor : public mdtSqlForm
    */
   void addLink();
 
+  /*! \brief Add a link modification
+   */
+  void addLinkModification();
+
   /*! \brief Edit selected link
    */
   void editLink();
@@ -199,6 +203,10 @@ class mdtClUnitEditor : public mdtSqlForm
   /*! \brief Setup unit link table
    */
   bool setupUnitLinkTable();
+
+  /*! \brief Update unit link table
+   */
+  void updateUnitLinkTable(const QLocale & locale = QLocale());
 
   /*! \brief Setup VehicleUnit table and widget
    */

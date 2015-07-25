@@ -214,9 +214,9 @@ void mdtClLinkedUnitConnectionInfoDialog::displayLinkedConnections(const QList<Q
   pvModel->setHeaderData(18, Qt::Horizontal, tr("Article\nFunction\n(German)"));
   pvModel->setHeaderData(19, Qt::Horizontal, tr("Article\nFunction\n(Italian)"));
   // Setup sorting
-  pvProxyModel->addColumnToSortOrder("SchemaPosition", Qt::AscendingOrder);
-  pvProxyModel->addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
-  pvProxyModel->addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
+  pvProxyModel->addColumnToSortOrder(pvModel, "SchemaPosition", Qt::AscendingOrder);
+  pvProxyModel->addColumnToSortOrder(pvModel, "UnitConnectorName", Qt::AscendingOrder);
+  pvProxyModel->addColumnToSortOrder(pvModel, "UnitContactName", Qt::AscendingOrder);
   // If model is empty, canFetchMore will allways return true, prevent this
   if(pvModel->rowCount() < 1){
     return;

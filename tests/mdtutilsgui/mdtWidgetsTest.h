@@ -33,6 +33,11 @@ class mdtWidgetsTest : public mdtTest
   void mdtDoubleEditTest();
 
   void mdtQActionEnableStateGuardTest();
+
+  void formatProxyModelBackgroundTest();
+  void formatProxyModelSettingsTest();
+  void formatProxyModelSettingsBenchmark();
+  void formatProxyModelTest();
 };
 
 #endif // #ifndef MDT_WIDGETS_TEST_H
