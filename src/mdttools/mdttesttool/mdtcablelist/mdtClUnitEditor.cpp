@@ -937,7 +937,7 @@ void mdtClUnitEditor::addLink()
     return;
   }
   // Add link
-  if(!lnk.addLink(dialog.linkData(), dialog.linkModificationKeyData(), dialog.selectedVehicleTypeList(), true)){
+  if(!lnk.addLink(dialog.linkData(), dialog.selectedVehicleTypeList(), true)){
     pvLastError = lnk.lastError();
     displayLastError();
     return;
@@ -948,17 +948,20 @@ void mdtClUnitEditor::addLink()
 
 void mdtClUnitEditor::addLinkModification()
 {
-  mdtClUnitLinkModificationDialog dialog(this, database());
+  mdtClUnitLinkDialog dialog(this, database());
   mdtClLink lnk(database());
   mdtSqlTableWidget *linkWidget;
-  mdtClLinkModificationKeyData modificationKey;
   mdtClLinkPkData pk;
+  mdtClLinkData linkData;
+  bool ok;
 
   linkWidget = sqlTableWidget("UnitLink_view");
   Q_ASSERT(linkWidget != nullptr);
   // Get link PK
   pk.connectionStartId = linkWidget->currentData("UnitConnectionStart_Id_FK");
   pk.connectionEndId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
+  pk.versionFk.versionPk = linkWidget->currentData("Version_FK").toInt();
+  pk.modificationFk.code = linkWidget->currentData("Modification_Code_FK").toString();
   if(pk.isNull()){
     QMessageBox msgBox;
     msgBox.setText(tr("Please select a link."));
@@ -966,15 +969,21 @@ void mdtClUnitEditor::addLinkModification()
     msgBox.exec();
     return;
   }
+  // Get current link data
+  linkData = lnk.getLinkData(pk, ok);
+  if(!ok){
+    pvLastError = lnk.lastError();
+    displayLastError();
+    return;
+  }
   // Setup and show dialog
+  dialog.setWorkingOnVehicleTypeIdList(pvWorkingOnVehicleTypeIdList);
+  dialog.setLinkData(linkData);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
-  /// Update modification data
-  modificationKey = dialog.linkModificationKeyData();
-  modificationKey.setLinkFk(pk);
-  // Add to database
-  if(!lnk.addModification(modificationKey)){
+  // Add link
+  if(!lnk.addLink(dialog.linkData(), dialog.selectedVehicleTypeList(), true)){
     pvLastError = lnk.lastError();
     displayLastError();
     return;
@@ -988,12 +997,8 @@ void mdtClUnitEditor::editLink()
   mdtSqlTableWidget *linkWidget;
   mdtClUnitLinkDialog dialog(this, database());
   QVariant unitId;
-  QVariant var;
   mdtClLinkPkData pk;
   mdtClLinkData linkData;
-  mdtClLinkVersionData linkVersionData;
-  mdtClModificationPkData modificationPk;
-  mdtClLinkModificationKeyData oldModificationKey;
   mdtClLink lnk(database());
   bool ok;
 
@@ -1007,24 +1012,14 @@ void mdtClUnitEditor::editLink()
   // Get link PK
   pk.connectionStartId = linkWidget->currentData("UnitConnectionStart_Id_FK");
   pk.connectionEndId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
+  pk.versionFk.versionPk = linkWidget->currentData("Version_FK").toInt();
+  pk.modificationFk.code = linkWidget->currentData("Modification_Code_FK").toString();
   if(pk.isNull()){
     QMessageBox msgBox;
     msgBox.setText(tr("Please select a link."));
     msgBox.setIcon(QMessageBox::Information);
     msgBox.exec();
     return;
-  }
-  oldModificationKey.setLinkFk(pk);
-  // Get link version and modification
-  var = linkWidget->currentData("Version_FK");
-  if(!var.isNull()){
-    linkVersionData.setVersionPk(var);
-    oldModificationKey.setLinkVersionFk(linkVersionData.pk());
-  }
-  var = linkWidget->currentData("Modification_Code_FK");
-  if(!var.isNull()){
-    modificationPk.code = var.toString();
-    oldModificationKey.setModificationFk(modificationPk);
   }
   // Get current link data
   linkData = lnk.getLinkData(pk, ok);
@@ -1036,17 +1031,11 @@ void mdtClUnitEditor::editLink()
   // Setup and show dialog
   dialog.setWorkingOnVehicleTypeIdList(pvWorkingOnVehicleTypeIdList);
   dialog.setLinkData(linkData);
-  if(!linkVersionData.isNull()){
-    dialog.setLinkVersion(linkVersionData);
-  }
-  if(!modificationPk.isNull()){
-    dialog.setLinkModification(modificationPk);
-  }
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
   // Update link
-  if(!lnk.updateLink(pk, dialog.linkData(), oldModificationKey, dialog.linkModificationKeyData(), dialog.selectedVehicleTypeList(), true)){
+  if(!lnk.updateLink(pk, dialog.linkData(), dialog.selectedVehicleTypeList(), true)){
     pvLastError = lnk.lastError();
     displayLastError();
     return;
@@ -1751,6 +1740,7 @@ void mdtClUnitEditor::updateUnitLinkTable(const QLocale & locale)
       widget->setColumnHidden("ModificationDE", true);
       widget->setColumnHidden("ModificationIT", true);
       widget->setHeaderData("ModificationFR", tr("Modification\ntype"));
+      /// \todo Modification text removed..
       widget->setColumnHidden("ModificationTextEN", true);
       widget->setColumnHidden("ModificationTextDE", true);
       widget->setColumnHidden("ModificationTextIT", true);
@@ -1761,6 +1751,7 @@ void mdtClUnitEditor::updateUnitLinkTable(const QLocale & locale)
       widget->setColumnHidden("ModificationFR", true);
       widget->setColumnHidden("ModificationIT", true);
       widget->setHeaderData("ModificationDE", tr("Modification\ntype"));
+      /// \todo Modification text removed..
       widget->setColumnHidden("ModificationTextEN", true);
       widget->setColumnHidden("ModificationTextFR", true);
       widget->setColumnHidden("ModificationTextIT", true);
@@ -1771,6 +1762,7 @@ void mdtClUnitEditor::updateUnitLinkTable(const QLocale & locale)
       widget->setColumnHidden("ModificationDE", true);
       widget->setColumnHidden("ModificationFR", true);
       widget->setHeaderData("ModificationIT", tr("Modification\ntype"));
+      /// \todo Modification text removed..
       widget->setColumnHidden("ModificationTextEN", true);
       widget->setColumnHidden("ModificationTextDE", true);
       widget->setColumnHidden("ModificationTextFR", true);
@@ -1781,6 +1773,7 @@ void mdtClUnitEditor::updateUnitLinkTable(const QLocale & locale)
       widget->setColumnHidden("ModificationDE", true);
       widget->setColumnHidden("ModificationIT", true);
       widget->setHeaderData("ModificationEN", tr("Modification\ntype"));
+      /// \todo Modification text removed..
       widget->setColumnHidden("ModificationTextFR", true);
       widget->setColumnHidden("ModificationTextDE", true);
       widget->setColumnHidden("ModificationTextIT", true);

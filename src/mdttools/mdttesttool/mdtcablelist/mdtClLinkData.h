@@ -49,6 +49,10 @@ struct mdtClLinkData
    */
   mdtValueDouble length;
 
+  /*! \brief Remarks of link (Remarks)
+   */
+  QVariant remarks;
+
   /*! \brief Set PK (UnitConnectionStart_Id_FK and UnitConnectionEnd_Id_FK)
    */
   void setPk(const mdtClLinkPkData & pk)

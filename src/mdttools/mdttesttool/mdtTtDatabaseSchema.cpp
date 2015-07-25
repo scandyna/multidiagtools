@@ -157,6 +157,7 @@ bool mdtTtDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
   /// \todo Provisoire !!
   ///sourceTables.removeAll("TestNodeUnitConnection_tbl");
   ///sourceTables.removeAll("TestNodeUnitSetup_tbl");
+  sourceTables.removeAll("LinkModification_tbl");
   
   // Copy tables
   tableManager.enableProgressDialog(true);
@@ -288,9 +289,9 @@ bool mdtTtDatabaseSchema::setupTables()
   if(!setupWireTable()){
     return false;
   }
-  if(!setupLinkModificationTable()){
-    return false;
-  }
+//   if(!setupLinkModificationTable()){
+//     return false;
+//   }
   if(!setupLinkVersionTable()){
     return false;
   }
@@ -665,28 +666,45 @@ bool mdtTtDatabaseSchema::setupVehicleTypeLinkTable()
   field.setName("UnitConnectionEnd_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, true);
-  // Indexes
-  table.addIndex("UnitConnectionIndex", false);
-  if(!table.addFieldToIndex("UnitConnectionIndex", "UnitConnectionStart_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  if(!table.addFieldToIndex("UnitConnectionIndex", "UnitConnectionEnd_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addIndex("VehicleTypeEnd_Id_FK_idx", false);
-  if(!table.addFieldToIndex("VehicleTypeEnd_Id_FK_idx", "VehicleTypeEnd_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
+  // Link_Version_FK (refers to Link_tbl)
+  field.setName("Link_Version_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // Link_Modification_Code_FK (refers to Link_tbl)
+  field.setName("Link_Modification_Code_FK");
+  field.setType(QVariant::String);
+  field.setLength(10);
+  table.addField(field, true);
+//   // Indexes
+//   table.addIndex("UnitConnectionIndex", false);
+//   if(!table.addFieldToIndex("UnitConnectionIndex", "UnitConnectionStart_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   if(!table.addFieldToIndex("UnitConnectionIndex", "UnitConnectionEnd_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addIndex("VehicleTypeEnd_Id_FK_idx", false);
+//   if(!table.addFieldToIndex("VehicleTypeEnd_Id_FK_idx", "VehicleTypeEnd_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
   // Foreign keys
-  table.addForeignKey("UnitConnection_fk", "Link_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("UnitConnection_fk", "UnitConnectionStart_Id_FK", "UnitConnectionStart_Id_FK")){
+  table.addForeignKey("Link_fk", "Link_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Link_fk", "UnitConnectionStart_Id_FK", "UnitConnectionStart_Id_FK")){
     pvLastError = table.lastError();
     return false;
   }
-  if(!table.addFieldToForeignKey("UnitConnection_fk", "UnitConnectionEnd_Id_FK", "UnitConnectionEnd_Id_FK")){
+  if(!table.addFieldToForeignKey("Link_fk", "UnitConnectionEnd_Id_FK", "UnitConnectionEnd_Id_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  if(!table.addFieldToForeignKey("Link_fk", "Link_Version_FK", "Version_FK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  if(!table.addFieldToForeignKey("Link_fk", "Link_Modification_Code_FK", "Modification_Code_FK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -1688,81 +1706,81 @@ bool mdtTtDatabaseSchema::setupModificationTable()
   return true;
 }
 
-bool mdtTtDatabaseSchema::setupLinkModificationTable()
-{
-  mdtSqlSchemaTable table;
-  QSqlField field;
-
-  table.setTableName("LinkModification_tbl", "UTF8");
-  // UnitConnectionStart_Id_FK
-  field.setName("UnitConnectionStart_Id_FK");
-  field.setType(QVariant::Int);
-  table.addField(field, true);
-  // UnitConnectionEnd_Id_FK
-  field = QSqlField();
-  field.setName("UnitConnectionEnd_Id_FK");
-  field.setType(QVariant::Int);
-  table.addField(field, true);
-  // Version_FK
-  field = QSqlField();
-  field.setName("Version_FK");
-  field.setType(QVariant::Int);
-  table.addField(field, true);
-  // Modification_Code_FK
-  field = QSqlField();
-  field.setName("Modification_Code_FK");
-  field.setType(QVariant::String);
-  field.setLength(10);
-  table.addField(field, true);
-  // TextEN
-  field = QSqlField();
-  field.setName("TextEN");
-  field.setType(QVariant::String);
-  field.setLength(300);
-  table.addField(field, false);
-  // TextFR
-  field = QSqlField();
-  field.setName("TextFR");
-  field.setType(QVariant::String);
-  field.setLength(300);
-  table.addField(field, false);
-  // TextDE
-  field = QSqlField();
-  field.setName("TextDE");
-  field.setType(QVariant::String);
-  field.setLength(300);
-  table.addField(field, false);
-  // TextIT
-  field = QSqlField();
-  field.setName("TextIT");
-  field.setType(QVariant::String);
-  field.setLength(300);
-  table.addField(field, false);
-  // Foreign keys
-  table.addForeignKey("LinkModification_Link_fk", "Link_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("LinkModification_Link_fk", "UnitConnectionStart_Id_FK", "UnitConnectionStart_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  if(!table.addFieldToForeignKey("LinkModification_Link_fk", "UnitConnectionEnd_Id_FK", "UnitConnectionEnd_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("LinkModification_LinkVersion_fk", "LinkVersion_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("LinkModification_LinkVersion_fk", "Version_FK", "Version_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("LinkModification_Modification_fk", "Modification_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("LinkModification_Modification_fk", "Modification_Code_FK", "Code_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-
-  pvTables.append(table);
-
-  return true;
-}
+// bool mdtTtDatabaseSchema::setupLinkModificationTable()
+// {
+//   mdtSqlSchemaTable table;
+//   QSqlField field;
+// 
+//   table.setTableName("LinkModification_tbl", "UTF8");
+//   // UnitConnectionStart_Id_FK
+//   field.setName("UnitConnectionStart_Id_FK");
+//   field.setType(QVariant::Int);
+//   table.addField(field, true);
+//   // UnitConnectionEnd_Id_FK
+//   field = QSqlField();
+//   field.setName("UnitConnectionEnd_Id_FK");
+//   field.setType(QVariant::Int);
+//   table.addField(field, true);
+//   // Version_FK
+//   field = QSqlField();
+//   field.setName("Version_FK");
+//   field.setType(QVariant::Int);
+//   table.addField(field, true);
+//   // Modification_Code_FK
+//   field = QSqlField();
+//   field.setName("Modification_Code_FK");
+//   field.setType(QVariant::String);
+//   field.setLength(10);
+//   table.addField(field, true);
+//   // TextEN
+//   field = QSqlField();
+//   field.setName("TextEN");
+//   field.setType(QVariant::String);
+//   field.setLength(300);
+//   table.addField(field, false);
+//   // TextFR
+//   field = QSqlField();
+//   field.setName("TextFR");
+//   field.setType(QVariant::String);
+//   field.setLength(300);
+//   table.addField(field, false);
+//   // TextDE
+//   field = QSqlField();
+//   field.setName("TextDE");
+//   field.setType(QVariant::String);
+//   field.setLength(300);
+//   table.addField(field, false);
+//   // TextIT
+//   field = QSqlField();
+//   field.setName("TextIT");
+//   field.setType(QVariant::String);
+//   field.setLength(300);
+//   table.addField(field, false);
+//   // Foreign keys
+//   table.addForeignKey("LinkModification_Link_fk", "Link_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("LinkModification_Link_fk", "UnitConnectionStart_Id_FK", "UnitConnectionStart_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   if(!table.addFieldToForeignKey("LinkModification_Link_fk", "UnitConnectionEnd_Id_FK", "UnitConnectionEnd_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("LinkModification_LinkVersion_fk", "LinkVersion_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("LinkModification_LinkVersion_fk", "Version_FK", "Version_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("LinkModification_Modification_fk", "Modification_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("LinkModification_Modification_fk", "Modification_Code_FK", "Code_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+// 
+//   pvTables.append(table);
+// 
+//   return true;
+// }
 
 bool mdtTtDatabaseSchema::setupLinkVersionTable()
 {
@@ -1785,6 +1803,31 @@ bool mdtTtDatabaseSchema::setupLinkVersionTable()
   return true;
 }
 
+// bool mdtTtDatabaseSchema::createOnLinkVersionAfterInsertTrigger()
+// {
+//   QString sql;
+// 
+//   /*
+//    * When creating a new link version in LinkVersion_tbl
+//    * we must add a entry in LinkModification_tbl for each link
+//    * that is allready versionned
+//    */
+//   sql = "CREATE TRIGGER onLinkVersionAfterInsert AFTER INSERT ON LinkVersion_tbl\n"\
+//         "FOR EACH ROW\n"\
+//         "BEGIN\n"\
+//         " INSERT INTO LinkModification_tbl (UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, Version_FK, Modification_Code_FK)\n"\
+//         "  SELECT DISTINCT L.UnitConnectionStart_Id_FK, L.UnitConnectionEnd_Id_FK, NEW.Version_PK, 'EXISTS'\n"\
+//         "   FROM Link_tbl L\n"\
+//         "   LEFT JOIN LinkModification_tbl LM\n"\
+//         "    ON LM.UnitConnectionStart_Id_FK = L.UnitConnectionStart_Id_FK\n"\
+//         "    AND LM.UnitConnectionEnd_Id_FK = L.UnitConnectionEnd_Id_FK\n"\
+//         "  WHERE LM.Version_FK = (SELECT max(Version_FK) FROM LinkModification_tbl)\n"\
+//         "  AND (LM.Modification_Code_FK NOT IN ('REM') OR Modification_Code_FK IS NULL);\n"\
+//         "END";
+// 
+//   return createTrigger("onLinkVersionAfterInsert", sql);
+// }
+
 bool mdtTtDatabaseSchema::createOnLinkVersionAfterInsertTrigger()
 {
   QString sql;
@@ -1797,14 +1840,15 @@ bool mdtTtDatabaseSchema::createOnLinkVersionAfterInsertTrigger()
   sql = "CREATE TRIGGER onLinkVersionAfterInsert AFTER INSERT ON LinkVersion_tbl\n"\
         "FOR EACH ROW\n"\
         "BEGIN\n"\
-        " INSERT INTO LinkModification_tbl (UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, Version_FK, Modification_Code_FK)\n"\
-        "  SELECT DISTINCT L.UnitConnectionStart_Id_FK, L.UnitConnectionEnd_Id_FK, NEW.Version_PK, 'EXISTS'\n"\
+        " INSERT INTO Link_tbl (UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, Version_FK, Modification_Code_FK, "\
+                               "LinkType_Code_FK, LinkDirection_Code_FK, ArticleConnectionStart_Id_FK, ArticleConnectionEnd_Id_FK, "\
+                               "Wire_Id_FK, LinkBeam_Id_FK, Identification, Resistance, Length, Remarks)\n"\
+        "  SELECT DISTINCT L.UnitConnectionStart_Id_FK, L.UnitConnectionEnd_Id_FK, NEW.Version_PK, 'EXISTS', "\
+                               "L.LinkType_Code_FK, L.LinkDirection_Code_FK, L.ArticleConnectionStart_Id_FK, L.ArticleConnectionEnd_Id_FK, "\
+                               "L.Wire_Id_FK, L.LinkBeam_Id_FK, L.Identification, L.Resistance, L.Length, L.Remarks\n"\
         "   FROM Link_tbl L\n"\
-        "   LEFT JOIN LinkModification_tbl LM\n"\
-        "    ON LM.UnitConnectionStart_Id_FK = L.UnitConnectionStart_Id_FK\n"\
-        "    AND LM.UnitConnectionEnd_Id_FK = L.UnitConnectionEnd_Id_FK\n"\
-        "  WHERE LM.Version_FK = (SELECT max(Version_FK) FROM LinkModification_tbl)\n"\
-        "  AND (LM.Modification_Code_FK NOT IN ('REM') OR Modification_Code_FK IS NULL);\n"\
+        "  WHERE L.Version_FK = (SELECT max(Version_FK) FROM Link_tbl)\n"\
+        "  AND (L.Modification_Code_FK NOT IN ('REM') OR L.Modification_Code_FK IS NULL);\n"\
         "END";
 
   return createTrigger("onLinkVersionAfterInsert", sql);
@@ -1825,6 +1869,17 @@ bool mdtTtDatabaseSchema::setupLinkTable()
   field.setName("UnitConnectionEnd_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, true);
+  // Version_FK
+  field = QSqlField();
+  field.setName("Version_FK");
+  field.setType(QVariant::Int);
+  table.addField(field, true);
+  // Modification_Code_FK
+  field = QSqlField();
+  field.setName("Modification_Code_FK");
+  field.setType(QVariant::String);
+  field.setLength(10);
+  table.addField(field, true);
   // ArticleConnectionStart_Id_FK
   field = QSqlField();
   field.setName("ArticleConnectionStart_Id_FK");
@@ -1840,18 +1895,10 @@ bool mdtTtDatabaseSchema::setupLinkTable()
   field.setName("Wire_Id_FK");
   field.setType(QVariant::Int);
   table.addField(field, false);
-  // SinceVersion
-  /// \todo Obselete
+  // LinkBeam_Id_FK
   field = QSqlField();
-  field.setName("SinceVersion");
-  field.setType(QVariant::Double);
-  table.addField(field, false);
-  // Modification
-  /// \todo Obselete
-  field = QSqlField();
-  field.setName("Modification");
-  field.setType(QVariant::String);
-  field.setLength(20);
+  field.setName("LinkBeam_Id_FK");
+  field.setType(QVariant::Int);
   table.addField(field, false);
   // Identification
   field = QSqlField();
@@ -1883,12 +1930,18 @@ bool mdtTtDatabaseSchema::setupLinkTable()
   field.setName("Length");
   field.setType(QVariant::Double);
   table.addField(field, false);
-  // LinkBeam_Id_FK
+  // Remarks
   field = QSqlField();
-  field.setName("LinkBeam_Id_FK");
-  field.setType(QVariant::Int);
+  field.setName("Remarks");
+  field.setType(QVariant::String);
+  field.setLength(200);
   table.addField(field, false);
   // Indexes
+//   table.addIndex("Modification_Code_FK_idx", false);
+//   if(!table.addFieldToIndex("Modification_Code_FK_idx", "Modification_Code_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
   table.addIndex("Direction_Id_FK_idx", false);
   if(!table.addFieldToIndex("Direction_Id_FK_idx", "LinkDirection_Code_FK")){
     pvLastError = table.lastError();
@@ -1926,6 +1979,16 @@ bool mdtTtDatabaseSchema::setupLinkTable()
   }
   table.addForeignKey("UnitConnectionEnd_Id_FK_fk", "UnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("UnitConnectionEnd_Id_FK_fk", "UnitConnectionEnd_Id_FK", "Id_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("Version_FK_fk", "LinkVersion_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Version_FK_fk", "Version_FK", "Version_PK")){
+    pvLastError = table.lastError();
+    return false;
+  }
+  table.addForeignKey("Modification_Code_FK_fk", "Modification_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  if(!table.addFieldToForeignKey("Modification_Code_FK_fk", "Modification_Code_FK", "Code_PK")){
     pvLastError = table.lastError();
     return false;
   }
@@ -3141,6 +3204,8 @@ bool mdtTtDatabaseSchema::setupTestLinkTable()
     return false;
   }
   // Foreign keys
+  /**
+   * \todo Update once all is defined !!
   table.addForeignKey("Link_Id_FK_fk", "Link_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("Link_Id_FK_fk", "TestCableUnitConnectionStart_Id_FK", "UnitConnectionStart_Id_FK")){
     pvLastError = table.lastError();
@@ -3150,6 +3215,7 @@ bool mdtTtDatabaseSchema::setupTestLinkTable()
     pvLastError = table.lastError();
     return false;
   }
+  */
   table.addForeignKey("TestConnection_Id_FK_fk2", "TestNodeUnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   if(!table.addFieldToForeignKey("TestConnection_Id_FK_fk2", "TestConnection_Id_FK", "UnitConnection_Id_FK_PK")){
     pvLastError = table.lastError();
@@ -4147,10 +4213,6 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
               " M.NameDE AS ModificationDE,\n"\
               " M.NameIT AS ModificationIT,\n"\
               " M.SortOrder AS ModificationSortOrder,\n"\
-              " LM.TextEN AS ModificationTextEN,\n"\
-              " LM.TextFR AS ModificationTextFR,\n"\
-              " LM.TextDE AS ModificationTextDE,\n"\
-              " LM.TextIT AS ModificationTextIT,\n"\
               " LNK.Identification ,\n"\
               " LNK.LinkBeam_Id_FK ,\n"\
               " US.SchemaPosition AS StartSchemaPosition ,\n"\
@@ -4163,8 +4225,6 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
               " UCE.Name AS EndUnitConnectorName ,\n"\
               " UCNXE.UnitContactName AS EndUnitContactName ,\n"\
               " UCNXE.Resistance AS EndUnitConnectionResistance ,\n"\
-              /** " LNK.SinceVersion ,\n"\ */
-              /** " LNK.Modification ,\n"\ */
               " LinkType_tbl.NameEN AS LinkTypeNameEN ,\n"\
               " LNK.Length ,\n"\
               " LNK.Resistance ,\n"\
@@ -4192,18 +4252,15 @@ bool mdtTtDatabaseSchema::createUnitLinkView()
               " LNK.LinkDirection_Code_FK ,\n"\
               " LNK.ArticleConnectionStart_Id_FK ,\n"\
               " LNK.ArticleConnectionEnd_Id_FK,\n"\
-              " LM.Version_FK,\n"\
-              " LM.Modification_Code_FK\n";
+              " LNK.Version_FK,\n"\
+              " LNK.Modification_Code_FK\n";
   sql = "CREATE VIEW UnitLink_view AS\n";
   sql += selectSql;
   sql += "FROM Link_tbl LNK\n"\
-         " LEFT JOIN LinkModification_tbl LM\n"\
-         "  ON LM.UnitConnectionStart_Id_FK = LNK.UnitConnectionStart_Id_FK\n"\
-         "  AND LM.UnitConnectionEnd_Id_FK = LNK.UnitConnectionEnd_Id_FK\n"\
          " LEFT JOIN LinkVersion_tbl LV\n"\
-         "  ON LV.Version_PK = LM.Version_FK\n"\
+         "  ON LV.Version_PK = LNK.Version_FK\n"\
          " LEFT JOIN Modification_tbl M\n"\
-         "  ON M.Code_PK = LM.Modification_Code_FK\n"\
+         "  ON M.Code_PK = LNK.Modification_Code_FK\n"\
          " LEFT JOIN Wire_tbl W\n"\
          "  ON W.Id_PK = LNK.Wire_Id_FK\n"\
          " JOIN UnitConnection_tbl UCNXS\n"\
@@ -4265,8 +4322,6 @@ bool mdtTtDatabaseSchema::createLinkListView()
               " VS.Type AS StartVehicleType ,\n"\
               " VS.SubType AS StartVehicleSubType ,\n"\
               " VS.SeriesNumber AS StartVehicleSerie,\n"\
-              " LNK.SinceVersion ,\n"\
-              " LNK.Modification ,\n"\
               " LNK.Identification ,\n"\
               " LNK.LinkDirection_Code_FK ,\n"\
               " LNK.LinkType_Code_FK ,\n"\

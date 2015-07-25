@@ -57,7 +57,7 @@ class mdtClVehicleTypeLinkTestData
   // Remove created VTU
   void removeCreatedVehicleTypeUnitAssignations();
   // Add vehicle type - link assignation
-  bool addVehicleTypeLinkAssignation(int vtId, int ucsId, int uceId);
+  bool addVehicleTypeLinkAssignation(int vtId, int ucsId, int uceId, int versionPk, const QString & modificationCode);
   // Remove created vehicle type - link assignations
   void removeCreatedVehicleTypeLinkAssignations();
 

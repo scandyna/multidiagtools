@@ -54,10 +54,27 @@ class mdtClLink : public mdtTtBase
   /*! \brief Add a link to database
    *
    * \param linkData Link data to add to Link_tbl
+   */
+  bool addLink(const mdtClLinkData & linkData);
+
+  /*! \brief Add a link and assign given vehicle types to it
+   *
+   * \param linkData Link data to add to Link_tbl
+   * \param vehicleTypeList List of vehicle types to add in assignations (VehicleType_Link_tbl)
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
+   */
+  bool addLink(const mdtClLinkData & linkData, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
+
+  /*! \brief Add a link to database
+   *
+   * \param linkData Link data to add to Link_tbl
    * \param modification Link versionning key data (LinkModification_tbl part)
    * \param handleTransaction Internally, a transaction is (explicitly) open.
    *             By calling this function with a allready open transaction,
    *             set this argument false.
+   * \deprecated
    */
   bool addLink(const mdtClLinkData & linkData, const mdtClLinkModificationKeyData & modification, bool handleTransaction);
 
@@ -69,6 +86,7 @@ class mdtClLink : public mdtTtBase
    * \param handleTransaction Internally, a transaction is (explicitly) open.
    *             By calling this function with a allready open transaction,
    *             set this argument false.
+   * \deprecated
    */
   bool addLink(const mdtClLinkData & linkData, const mdtClLinkModificationKeyData & modification, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
 
@@ -97,9 +115,33 @@ class mdtClLink : public mdtTtBase
    */
   mdtClLinkData getLinkData(const mdtClLinkPkData & pk, bool & ok);
 
-  /*! \brief Get link data for given article link and star unit and end unit
+  /*! \brief Get link data for given article link and start unit and end unit
+   * \todo + version + modification ...
    */
   mdtClLinkData getLinkData(const mdtClArticleLinkPkData articleLinkPk, const QVariant & startUnitId, const QVariant & endUnitId, bool & ok);
+
+  /*! \brief Update a link
+   *
+   * \param linkPk Link to update
+   * \param linkData New link data
+   * \pre linkPk must not be null
+   * \pre linkData must not be null
+   */
+  bool updateLink(const mdtClLinkPkData & linkPk, const mdtClLinkData & linkData);
+
+  /*! \brief Update a link and its vehicle type assignations
+   *
+   * \param linkPk Link to update
+   * \param linkData New link data
+   * \param vehicleTypeList List of vehicle types assignations (VehicleType_Link_tbl)
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
+   * \pre linkPk must not be null
+   * \pre linkData must not be null
+   */
+  bool updateLink(const mdtClLinkPkData & linkPk, const mdtClLinkData & linkData,
+                  const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
 
   /*! \brief Update a link, its modification and its vehicle type assignations
    *
@@ -113,6 +155,8 @@ class mdtClLink : public mdtTtBase
    *             set this argument false.
    * \pre linkPk must not be null
    * \pre linkData must not be null
+   * 
+   * \deprecated
    */
   bool updateLink(const mdtClLinkPkData & linkPk, const mdtClLinkData & linkData, 
                   const mdtClLinkModificationKeyData & oldModification, const mdtClLinkModificationKeyData & modification,  
@@ -120,8 +164,7 @@ class mdtClLink : public mdtTtBase
 
   /*! \brief Remove a link
    *
-   * Will also remove each vehicle types assigned to given link (VehicleType_Link_tbl),
-   *  and all modification history (LinkModification_tbl).
+   * Will also remove each vehicle types assigned to given link (VehicleType_Link_tbl)
    *
    * \param pk PK of link to remove
    * \param handleTransaction Internally, a transaction is (explicitly) open.

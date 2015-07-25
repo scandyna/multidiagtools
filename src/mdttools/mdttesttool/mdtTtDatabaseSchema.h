@@ -185,7 +185,7 @@ class mdtTtDatabaseSchema
 
   /*! \brief Setup LinkModification_tbl
    */
-  bool setupLinkModificationTable();
+//   bool setupLinkModificationTable();
 
   /*! \brief Setup LinkVersion_tbl
    */

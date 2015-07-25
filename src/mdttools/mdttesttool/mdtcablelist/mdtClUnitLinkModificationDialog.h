@@ -35,6 +35,8 @@ class mdtClModificationModel;
 class mdtClLinkVersionModel;
 
 /*! \brief Link modification edition dialog
+ *
+ * \deprecated
  */
 class mdtClUnitLinkModificationDialog : public QDialog, Ui::mdtClUnitLinkModificationDialog
 {

@@ -1,6 +1,6 @@
 format 209
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 73
+  revision 74
   modified_by 2 "philippe"
   // class settings
   
@@ -5878,6 +5878,30 @@ ${inlines}
 	
 	
       end
+
+      attribute 1853698 "versionFk"
+	public type class_ref 1679746 // mdtClLinkVersionPkData
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1853826 "modificationFk"
+	public type class_ref 1693186 // mdtClModificationPkData
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
     end
 
     class 1673090 "mdtClLinkKeyData"
@@ -5943,6 +5967,18 @@ ${inlines}
       end
 
       attribute 1756162 "pvWireId"
+	private type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1853954 "pvLinkBeamId"
 	private type class_ref 161154 // QVariant
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -6113,6 +6149,68 @@ ${inlines}
 "
 	    classrelation_ref 2072962 // _articleLinkFk (<unidirectional association>)
 	  b parent class_ref 1659778 // mdtClArticleLinkPkData
+      end
+
+      operation 2766722 "setWireId"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "id" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2766850 "wireId"
+	public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2766978 "setLinkBeamId"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "id" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2767106 "linkBeamId"
+	public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -6304,6 +6402,18 @@ ${inlines}
 
       attribute 1818370 "length"
 	public explicit_type "mdtValueDouble"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1854082 "remarks"
+	public type class_ref 161154 // QVariant
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -8408,15 +8518,6 @@ ${inlines}
 	MysqlColumn
       end
 
-      classrelation 2073090 // _linkFk (<unidirectional association>)
-	relation 2056962 --->
-	  a role_name "_linkFk" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 2073090 // _linkFk (<unidirectional association>)
-	  b parent class_ref 1672962 // mdtClLinkPkData
-      end
-
       classrelation 2073218 // _linkVersionFk (<unidirectional association>)
 	relation 2057090 --->
 	  a role_name "_linkVersionFk" private
@@ -8436,15 +8537,6 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
-      end
-
-      classrelation 2073346 // _modificationFk (<unidirectional association>)
-	relation 2057218 --->
-	  a role_name "_modificationFk" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 2073346 // _modificationFk (<unidirectional association>)
-	  b parent class_ref 1693186 // mdtClModificationPkData
       end
 
       attribute 1811458 "pvModificationFk"

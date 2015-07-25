@@ -28,6 +28,9 @@
 /*! \brief Link modification key data
  *
  * Refers to LinkModification_tbl
+ *
+ * \deprecated
+ * \todo Remove once versionning is fixed
  */
 struct mdtClLinkModificationKeyData
 {

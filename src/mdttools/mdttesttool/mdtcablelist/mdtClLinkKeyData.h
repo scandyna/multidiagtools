@@ -24,6 +24,8 @@
 #include "mdtClLinkTypeData.h"
 #include "mdtClLinkDirectionData.h"
 #include "mdtClArticleLinkKeyData.h"
+#include "mdtClLinkVersionKeyData.h"
+#include "mdtClModificationKeyData.h"
 #include <QVariant>
 
 /*! \brief Link primary key data
@@ -40,13 +42,21 @@ struct mdtClLinkPkData
    */
   QVariant connectionEndId;
 
+  /*! \brief Link version FK (Version_FK)
+   */
+  mdtClLinkVersionPkData versionFk;
+
+  /*! \brief Link modification FK (Modification_Code_FK)
+   */
+  mdtClModificationPkData modificationFk;
+
   /*! \brief Check if primary key is null
    *
-   * Primary key is null if one of the connection ID is null
+   * Primary key is null if one of the connection ID or versionFk or modificationFk is null
    */
   bool isNull() const
   {
-    return (connectionStartId.isNull() || connectionEndId.isNull());
+    return (connectionStartId.isNull() || connectionEndId.isNull() || versionFk.isNull() || modificationFk.isNull());
   }
 
   /*! \brief Clear primary key
@@ -55,6 +65,8 @@ struct mdtClLinkPkData
   {
     connectionStartId.clear();
     connectionEndId.clear();
+    versionFk.clear();
+    modificationFk.clear();
   }
 };
 
@@ -71,6 +83,7 @@ struct mdtClLinkKeyData
   mdtClLinkDirectionKeyData pvLinkDirectionFk;
   mdtClArticleLinkPkData pvArticleLinkFk;
   QVariant pvWireId;
+  QVariant pvLinkBeamId;
 
  public:
 
@@ -158,6 +171,20 @@ struct mdtClLinkKeyData
     return pvWireId;
   }
 
+  /*! \brief Set link beam ID (LinkBeam_Id_FK)
+   */
+  void setLinkBeamId(const QVariant & id)
+  {
+    pvLinkBeamId = id;
+  }
+
+  /*! \brief Get link beam ID (LinkBeam_Id_FK)
+   */
+  QVariant linkBeamId() const
+  {
+    return pvLinkBeamId;
+  }
+
   /*! \brief Check if key is null
    *
    * Key is null if pk or linkTypeFk or linkDirectionFk is null
@@ -176,6 +203,7 @@ struct mdtClLinkKeyData
     pvLinkDirectionFk.clear();
     pvArticleLinkFk.clear();
     pvWireId.clear();
+    pvLinkBeamId.clear();
   }
 };
 

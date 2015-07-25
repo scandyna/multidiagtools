@@ -27,7 +27,7 @@
 #include "mdtClLinkDirectionData.h"
 #include "mdtClLinkVersionData.h"
 #include "mdtClVehicleTypeLinkKeyData.h"
-#include "mdtClLinkModificationKeyData.h"
+///#include "mdtClLinkModificationKeyData.h"
 #include "mdtClLinkData.h"
 #include "mdtError.h"
 #include <QDialog>
@@ -173,7 +173,7 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
    *
    * Will also include selected link version
    */
-  mdtClLinkModificationKeyData linkModificationKeyData() const;
+//   mdtClLinkModificationKeyData linkModificationKeyData() const;
 
   /*! \brief Set link data
    */

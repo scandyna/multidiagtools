@@ -402,6 +402,11 @@ void mdtClLinkTest::linkVersionAddGetRemoveTest()
   QVERIFY(lv.removeVersion(key));
   key.versionPk = 1100;
   QVERIFY(lv.removeVersion(key));
+  
+  /**
+   * \todo Check version adding better when links allready exists !!
+   */
+  QFAIL("Not completely implemented yet");
 }
 
 void mdtClLinkTest::linkVersionModelTest()
@@ -435,96 +440,96 @@ void mdtClLinkTest::linkVersionModelTest()
 
 }
 
-void mdtClLinkTest::linkModificationDataTest()
-{
-  mdtClLinkModificationKeyData key;
-  mdtClLinkPkData linkFk;
-  mdtClLinkVersionData linkVersionData;
-  mdtClModificationPkData modificationFk;
+// void mdtClLinkTest::linkModificationDataTest()
+// {
+//   mdtClLinkModificationKeyData key;
+//   mdtClLinkPkData linkFk;
+//   mdtClLinkVersionData linkVersionData;
+//   mdtClModificationPkData modificationFk;
+// 
+//   // Initial state
+//   QVERIFY(key.isNull());
+//   // Setup FKs
+//   linkFk.connectionStartId = 10;
+//   linkFk.connectionEndId = 11;
+//   linkVersionData.setVersion(1.2);
+//   modificationFk.code = "NEW";
+//   // Set
+//   key.setLinkFk(linkFk);
+//   QVERIFY(key.isNull());
+//   key.setLinkVersionFk(linkVersionData.pk());
+//   QVERIFY(key.isNull());
+//   key.setModificationFk(modificationFk);
+//   QVERIFY(!key.isNull());
+//   QCOMPARE(key.linkFk().connectionStartId, QVariant(10));
+//   QCOMPARE(key.linkFk().connectionEndId, QVariant(11));
+//   linkVersionData.setPk(key.linkVersionFk());
+//   QCOMPARE(linkVersionData.version(), 1.2);
+//   QCOMPARE(key.modificationFk().code, QString("NEW"));
+//   // Clear
+//   key.clear();
+//   QVERIFY(key.linkFk().isNull());
+//   QVERIFY(key.linkVersionFk().isNull());
+//   QVERIFY(key.modificationFk().isNull());
+//   QVERIFY(key.isNull());
+// }
 
-  // Initial state
-  QVERIFY(key.isNull());
-  // Setup FKs
-  linkFk.connectionStartId = 10;
-  linkFk.connectionEndId = 11;
-  linkVersionData.setVersion(1.2);
-  modificationFk.code = "NEW";
-  // Set
-  key.setLinkFk(linkFk);
-  QVERIFY(key.isNull());
-  key.setLinkVersionFk(linkVersionData.pk());
-  QVERIFY(key.isNull());
-  key.setModificationFk(modificationFk);
-  QVERIFY(!key.isNull());
-  QCOMPARE(key.linkFk().connectionStartId, QVariant(10));
-  QCOMPARE(key.linkFk().connectionEndId, QVariant(11));
-  linkVersionData.setPk(key.linkVersionFk());
-  QCOMPARE(linkVersionData.version(), 1.2);
-  QCOMPARE(key.modificationFk().code, QString("NEW"));
-  // Clear
-  key.clear();
-  QVERIFY(key.linkFk().isNull());
-  QVERIFY(key.linkVersionFk().isNull());
-  QVERIFY(key.modificationFk().isNull());
-  QVERIFY(key.isNull());
-}
-
-void mdtClLinkTest::linkModificationAddGetRemoveTest()
-{
-  mdtClLink lnk(pvDatabaseManager.database());
-  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
-  mdtClLinkModificationKeyData key;
-  mdtClLinkPkData linkFk;
-  mdtClLinkVersionData version;
-  mdtClModificationPkData modificationFk;
-  bool ok;
-
-  // For this simple test, we not need to have the whole database schema, so we disable foreign keys constraints
-  QVERIFY(fkSetting.disable());
-
-  /*
-   * Add a modification
-   */
-  // Setup data
-  linkFk.connectionStartId = 10;
-  linkFk.connectionEndId = 11;
-  version.setVersion(1.2);
-  modificationFk.setModification(mdtClModification_t::New);
-  key.setLinkFk(linkFk);
-  key.setLinkVersionFk(version.pk());
-  key.setModificationFk(modificationFk);
-  // Add to database
-  QVERIFY(lnk.addModification(key));
-  /// \todo Get back and check
-  
-  // Remove from database
-  QVERIFY(lnk.removeModification(key));
-  /*
-   * Check removing all modifications for a link
-   */
-  // Setup data
-  linkFk.connectionStartId = 10;
-  linkFk.connectionEndId = 11;
-  version.setVersion(1.2);
-  modificationFk.setModification(mdtClModification_t::New);
-  key.setLinkFk(linkFk);
-  key.setLinkVersionFk(version.pk());
-  key.setModificationFk(modificationFk);
-  // Add to database
-  QVERIFY(lnk.addModification(key));
-  // Setup data
-  version.setVersion(1.3);
-  modificationFk.setModification(mdtClModification_t::Exists);
-  key.setLinkFk(linkFk);
-  key.setLinkVersionFk(version.pk());
-  key.setModificationFk(modificationFk);
-  // Add to database
-  QVERIFY(lnk.addModification(key));
-  // Remove
-  QVERIFY(lnk.removeModifications(linkFk));
-  /// \todo Get back and check that modifications where removed
-
-}
+// void mdtClLinkTest::linkModificationAddGetRemoveTest()
+// {
+//   mdtClLink lnk(pvDatabaseManager.database());
+//   mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
+//   mdtClLinkModificationKeyData key;
+//   mdtClLinkPkData linkFk;
+//   mdtClLinkVersionData version;
+//   mdtClModificationPkData modificationFk;
+//   bool ok;
+// 
+//   // For this simple test, we not need to have the whole database schema, so we disable foreign keys constraints
+//   QVERIFY(fkSetting.disable());
+// 
+//   /*
+//    * Add a modification
+//    */
+//   // Setup data
+//   linkFk.connectionStartId = 10;
+//   linkFk.connectionEndId = 11;
+//   version.setVersion(1.2);
+//   modificationFk.setModification(mdtClModification_t::New);
+//   key.setLinkFk(linkFk);
+//   key.setLinkVersionFk(version.pk());
+//   key.setModificationFk(modificationFk);
+//   // Add to database
+//   QVERIFY(lnk.addModification(key));
+//   /// \todo Get back and check
+//   
+//   // Remove from database
+//   QVERIFY(lnk.removeModification(key));
+//   /*
+//    * Check removing all modifications for a link
+//    */
+//   // Setup data
+//   linkFk.connectionStartId = 10;
+//   linkFk.connectionEndId = 11;
+//   version.setVersion(1.2);
+//   modificationFk.setModification(mdtClModification_t::New);
+//   key.setLinkFk(linkFk);
+//   key.setLinkVersionFk(version.pk());
+//   key.setModificationFk(modificationFk);
+//   // Add to database
+//   QVERIFY(lnk.addModification(key));
+//   // Setup data
+//   version.setVersion(1.3);
+//   modificationFk.setModification(mdtClModification_t::Exists);
+//   key.setLinkFk(linkFk);
+//   key.setLinkVersionFk(version.pk());
+//   key.setModificationFk(modificationFk);
+//   // Add to database
+//   QVERIFY(lnk.addModification(key));
+//   // Remove
+//   QVERIFY(lnk.removeModifications(linkFk));
+//   /// \todo Get back and check that modifications where removed
+// 
+// }
 
 void mdtClLinkTest::vehicleTypeStartEndKeyDataTest()
 {
@@ -634,6 +639,8 @@ void mdtClLinkTest::vehicleTypeLinkKeyDataTest()
   QVERIFY(key.isNull());
   linkFk.connectionStartId = 3;
   linkFk.connectionEndId = 4;
+  linkFk.versionFk.versionPk = 100;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
   key.setLinkFk(linkFk);
   QVERIFY(!key.isNull());
   // Check
@@ -684,6 +691,8 @@ void mdtClLinkTest::vehicleTypeLinkAddGetRemoveTest()
   key.setVehicleTypeEndId(2);
   linkFk.connectionStartId = 10;
   linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 100;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
   key.setLinkFk(linkFk);
   QVERIFY(vtl.addVehicleTypeLink(key));
   // Get back and check
@@ -692,6 +701,8 @@ void mdtClLinkTest::vehicleTypeLinkAddGetRemoveTest()
   QCOMPARE(keyList.size(), 1);
   QCOMPARE(keyList.at(0).vehicleTypeStartId(), QVariant(1));
   QCOMPARE(keyList.at(0).vehicleTypeEndId(), QVariant(2));
+  QCOMPARE(keyList.at(0).linkFk().versionFk.versionPk.value(), 100);
+  QVERIFY(keyList.at(0).linkFk().modificationFk.modification() == mdtClModification_t::New);
   QCOMPARE(keyList.at(0).linkFk().connectionStartId, QVariant(10));
   QCOMPARE(keyList.at(0).linkFk().connectionEndId, QVariant(11));
   // Check getting vehicle type start, end key data
@@ -712,6 +723,8 @@ void mdtClLinkTest::vehicleTypeLinkAddGetRemoveTest()
   linkFk.clear();
   linkFk.connectionStartId = 10;
   linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 100;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
   // Setup vehicle types
   vtStartEndKeyList.clear();
   vtStartEndKey.setVehicleTypeStartId(1);
@@ -730,6 +743,8 @@ void mdtClLinkTest::vehicleTypeLinkAddGetRemoveTest()
   QCOMPARE(keyList.at(0).vehicleTypeEndId(), QVariant(2));
   QCOMPARE(keyList.at(0).linkFk().connectionStartId, QVariant(10));
   QCOMPARE(keyList.at(0).linkFk().connectionEndId, QVariant(11));
+  QCOMPARE(keyList.at(0).linkFk().versionFk.versionPk.value(), 100);
+  QVERIFY(keyList.at(0).linkFk().modificationFk.modification() == mdtClModification_t::New);
   QCOMPARE(keyList.at(1).vehicleTypeStartId(), QVariant(3));
   QCOMPARE(keyList.at(1).vehicleTypeEndId(), QVariant(4));
   QCOMPARE(keyList.at(1).linkFk().connectionStartId, QVariant(10));
@@ -748,12 +763,16 @@ void mdtClLinkTest::vehicleTypeLinkAddGetRemoveTest()
   key.setVehicleTypeEndId(2);
   linkFk.connectionStartId = 10;
   linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 100;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
   key.setLinkFk(linkFk);
   QVERIFY(vtl.addVehicleTypeLink(key));
   key.setVehicleTypeStartId(3);
   key.setVehicleTypeEndId(4);
   linkFk.connectionStartId = 10;
   linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 100;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
   key.setLinkFk(linkFk);
   QVERIFY(vtl.addVehicleTypeLink(key));
   // Get back and check that they where added
@@ -765,6 +784,174 @@ void mdtClLinkTest::vehicleTypeLinkAddGetRemoveTest()
   keyList = vtl.getVehicleTypeLinkKeyDataList(linkFk, ok);
   QVERIFY(ok);
   QCOMPARE(keyList.size(), 0);
+  /*
+   * Check getting and removing vehicle types assigned to a link only for a version
+   */
+  // Add a assignation for version 0.1
+  key.setVehicleTypeStartId(1);
+  key.setVehicleTypeEndId(2);
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 100;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  key.setLinkFk(linkFk);
+  QVERIFY(vtl.addVehicleTypeLink(key));
+  // Add a assignation for version 0.2
+  key.setVehicleTypeStartId(1);
+  key.setVehicleTypeEndId(2);
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 200;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  key.setLinkFk(linkFk);
+  QVERIFY(vtl.addVehicleTypeLink(key));
+  // Get assignations for version 0.1
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 100;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  keyList = vtl.getVehicleTypeLinkKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(keyList.size(), 1);
+  // Get assignations for version 0.2
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 200;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  keyList = vtl.getVehicleTypeLinkKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(keyList.size(), 1);
+  // Remove assignations for version 0.1
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 100;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  QVERIFY(vtl.removeVehicleTypeLinks(linkFk));
+  // Get assignations for version 0.1 - Must return nothing
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 100;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  keyList = vtl.getVehicleTypeLinkKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(keyList.size(), 0);
+  // Get assignations for version 0.2 - Must return 1 item
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 200;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  keyList = vtl.getVehicleTypeLinkKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(keyList.size(), 1);
+  // Remove assignations for version 0.2
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 200;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  QVERIFY(vtl.removeVehicleTypeLinks(linkFk));
+  // Get assignations for version 0.1 - Must return nothing
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 100;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  keyList = vtl.getVehicleTypeLinkKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(keyList.size(), 0);
+  // Get assignations for version 0.2 - Must return nothing
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 200;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  keyList = vtl.getVehicleTypeLinkKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(keyList.size(), 0);
+  /*
+   * Get/remove vehicle types start/end for a version
+   */
+  // Add a assignation for version 0.1
+  key.setVehicleTypeStartId(1);
+  key.setVehicleTypeEndId(2);
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 100;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  key.setLinkFk(linkFk);
+  QVERIFY(vtl.addVehicleTypeLink(key));
+  // Add a assignation for version 0.2
+  key.setVehicleTypeStartId(1);
+  key.setVehicleTypeEndId(2);
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 200;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  key.setLinkFk(linkFk);
+  QVERIFY(vtl.addVehicleTypeLink(key));
+  // Get vehicle types start/end for version 0.1
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 100;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  vtStartEndKeyList = vtl.getVehicleTypeStartEndKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(vtStartEndKeyList.size(), 1);
+  // Get vehicle types start/end for version 0.2
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 200;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  vtStartEndKeyList = vtl.getVehicleTypeStartEndKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(vtStartEndKeyList.size(), 1);
+  // Remove vehicle types start/end for version 0.1
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 100;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  vtStartEndKeyList = vtl.getVehicleTypeStartEndKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(vtStartEndKeyList.size(), 1);
+  QVERIFY(vtl.removeVehicleTypeLinks(linkFk, vtStartEndKeyList, true));
+  // Get vehicle types start/end for version 0.1 - Must return nothing
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 100;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  vtStartEndKeyList = vtl.getVehicleTypeStartEndKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(vtStartEndKeyList.size(), 0);
+  // Get vehicle types start/end for version 0.2 - Must return 1 item
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 200;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  vtStartEndKeyList = vtl.getVehicleTypeStartEndKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(vtStartEndKeyList.size(), 1);
+  // Remove vehicle types start/end for version 0.2
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 200;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  vtStartEndKeyList = vtl.getVehicleTypeStartEndKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(vtStartEndKeyList.size(), 1);
+  QVERIFY(vtl.removeVehicleTypeLinks(linkFk, vtStartEndKeyList, true));
+  // Get vehicle types start/end for version 0.1 - Must return nothing
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 100;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  vtStartEndKeyList = vtl.getVehicleTypeStartEndKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(vtStartEndKeyList.size(), 0);
+  // Get vehicle types start/end for version 0.2 - Must return nothing
+  linkFk.connectionStartId = 10;
+  linkFk.connectionEndId = 11;
+  linkFk.versionFk.versionPk = 200;
+  linkFk.modificationFk.setModification(mdtClModification_t::New);
+  vtStartEndKeyList = vtl.getVehicleTypeStartEndKeyDataList(linkFk, ok);
+  QVERIFY(ok);
+  QCOMPARE(vtStartEndKeyList.size(), 0);
 }
 
 void mdtClLinkTest::vehicleTypeLinkUpdateTest()
@@ -800,6 +987,8 @@ void mdtClLinkTest::vehicleTypeLinkUpdateTest()
   // Setup link PK of link to update
   linkPk.connectionStartId = 101;
   linkPk.connectionEndId = 102;
+  linkPk.versionFk.versionPk = 100;
+  linkPk.modificationFk.setModification(mdtClModification_t::New);
   // Setup the expected assignation list
   vtKeyList.clear();
   vtKey.setVehicleTypeStartId(1);
@@ -833,6 +1022,8 @@ void mdtClLinkTest::vehicleTypeLinkUpdateTest()
   // Setup link PK of link to update
   linkPk.connectionStartId = 103;
   linkPk.connectionEndId = 104;
+  linkPk.versionFk.versionPk = 100;
+  linkPk.modificationFk.setModification(mdtClModification_t::New);
   // Setup the expected assignation list
   vtKeyList.clear();
   vtKey.setVehicleTypeStartId(1);
@@ -862,6 +1053,8 @@ void mdtClLinkTest::vehicleTypeLinkUpdateTest()
   // Remove vehicle types assigned to link 101-102
   linkPk.connectionStartId = 101;
   linkPk.connectionEndId = 102;
+  linkPk.versionFk.versionPk = 100;
+  linkPk.modificationFk.setModification(mdtClModification_t::New);
   QVERIFY(vtl.updateVehicleTypeLink(linkPk, vtKeyList, true));
   // Check that all vehicle types assigned to link 101-102 are removed
   vtlKeyList = vtl.getVehicleTypeLinkKeyDataList(linkPk, ok);
@@ -870,6 +1063,8 @@ void mdtClLinkTest::vehicleTypeLinkUpdateTest()
   // Check that vehicle types assigned to link 103-104 are keeped
   linkPk.connectionStartId = 103;
   linkPk.connectionEndId = 104;
+  linkPk.versionFk.versionPk = 100;
+  linkPk.modificationFk.setModification(mdtClModification_t::New);
   vtlKeyList = vtl.getVehicleTypeLinkKeyDataList(linkPk, ok);
   QVERIFY(ok);
   QCOMPARE(vtlKeyList.size(), 2);
@@ -924,12 +1119,14 @@ void mdtClLinkTest::vehicleTypeLinkAssignationWidgetTest()
   QVERIFY(testData.addVehicleTypeUnitAssignation(1, 10));
   QVERIFY(testData.addVehicleTypeUnitAssignation(2, 10));
   // Create vehicle type - link assignations
-  QVERIFY(testData.addVehicleTypeLinkAssignation(1, 101, 102));
+  QVERIFY(testData.addVehicleTypeLinkAssignation(1, 101, 102, 100, "NEW"));
   
   
   linkPk.connectionStartId = 101;
   linkPk.connectionEndId = 102;
-  
+  linkPk.versionFk.versionPk = 100;
+  linkPk.modificationFk.setModification(mdtClModification_t::New);
+
   QVERIFY(vtlw.buildVehicleTypeList(10, 10));
   QVERIFY(vtlw.selectVehicleTypeAssignedToLink(linkPk));
   vtStartEndKeyList = vtlw.getSelectedVehicleTypeList();
@@ -941,10 +1138,11 @@ void mdtClLinkTest::vehicleTypeLinkAssignationWidgetTest()
    * Play
    */
   vtlw.show();
-  
+  /*
   while(vtlw.isVisible()){
     QTest::qWait(500);
   }
+  */
 }
 
 void mdtClLinkTest::linkDataTest()
@@ -963,11 +1161,17 @@ void mdtClLinkTest::linkDataTest()
   pk.connectionStartId = 1;
   QVERIFY(pk.isNull());
   pk.connectionEndId = 2;
+  QVERIFY(pk.isNull());
+  pk.versionFk.versionPk = 100;
+  QVERIFY(pk.isNull());
+  pk.modificationFk.setModification(mdtClModification_t::New);
   QVERIFY(!pk.isNull());
   // Clear
   pk.clear();
   QVERIFY(pk.connectionStartId.isNull());
   QVERIFY(pk.connectionEndId.isNull());
+  QVERIFY(pk.versionFk.isNull());
+  QVERIFY(pk.modificationFk.isNull());
   QVERIFY(pk.isNull());
   /*
    * Link key data test
@@ -977,6 +1181,8 @@ void mdtClLinkTest::linkDataTest()
   // Setup PK and FKs
   pk.connectionStartId = 10;
   pk.connectionEndId = 11;
+  pk.versionFk.versionPk = 100;
+  pk.modificationFk.setModification(mdtClModification_t::New);
   articleLinkFk.connectionStartId = 1;
   articleLinkFk.connectionEndId = 2;
   // Set
@@ -988,6 +1194,7 @@ void mdtClLinkTest::linkDataTest()
   QVERIFY(!key.isNull());
   key.setArticleLinkFk(articleLinkFk);
   key.setWireId(100);
+  key.setLinkBeamId(105);
   QVERIFY(!key.isNull());
   QCOMPARE(key.pk().connectionStartId, QVariant(10));
   QCOMPARE(key.pk().connectionEndId, QVariant(11));
@@ -996,6 +1203,7 @@ void mdtClLinkTest::linkDataTest()
   QCOMPARE(key.articleLinkFk().connectionStartId, QVariant(1));
   QCOMPARE(key.articleLinkFk().connectionEndId, QVariant(2));
   QCOMPARE(key.wireId(), QVariant(100));
+  QCOMPARE(key.linkBeamId(), QVariant(105));
   // Clear
   key.clear();
   QVERIFY(key.pk().isNull());
@@ -1003,6 +1211,7 @@ void mdtClLinkTest::linkDataTest()
   QVERIFY(key.linkDirectionFk().isNull());
   QVERIFY(key.articleLinkFk().isNull());
   QVERIFY(key.wireId().isNull());
+  QVERIFY(key.linkBeamId().isNull());
   QVERIFY(key.isNull());
   /*
    * Link data test
@@ -1026,6 +1235,7 @@ void mdtClLinkTest::linkDataTest()
   data.identification = "Link 12-13";
   data.resistance = 1.2;
   data.length = 25.0;
+  data.remarks = "Remark 1";
   QVERIFY(!data.isNull());
   QCOMPARE(data.keyData().pk().connectionStartId, QVariant(12));
   QCOMPARE(data.keyData().pk().connectionEndId, QVariant(13));
@@ -1040,6 +1250,7 @@ void mdtClLinkTest::linkDataTest()
   QVERIFY(data.identification.isNull());
   QVERIFY(data.resistance.isNull());
   QVERIFY(data.length.isNull());
+  QVERIFY(data.remarks.isNull());
   QVERIFY(data.isNull());
 }
 
@@ -1050,9 +1261,6 @@ void mdtClLinkTest::linkAddGetRemoveTest()
   mdtClLinkData data;
   mdtClLinkPkData pk;
   mdtClArticleLinkPkData articleLinkFk;
-  mdtClLinkVersionData linkVersionFk;
-  mdtClModificationPkData modificationFk;
-  mdtClLinkModificationKeyData linkModificationFk;
   bool ok;
 
   // For this simple test, we not need to have the whole database schema, so we disable foreign keys constraints
@@ -1060,16 +1268,13 @@ void mdtClLinkTest::linkAddGetRemoveTest()
 
   /*
    * Add a link - Not based on a article link
+   *  - Versionning: v1.5, New
    */
   // Setup link pk data
   pk.connectionStartId = 10;
   pk.connectionEndId = 11;
-  // Setup link modification data
-  linkVersionFk.setVersion(1.5);
-  modificationFk.setModification(mdtClModification_t::New);
-  linkModificationFk.setLinkFk(pk);
-  linkModificationFk.setLinkVersionFk(linkVersionFk.pk());
-  linkModificationFk.setModificationFk(modificationFk);
+  pk.versionFk.versionPk = 1500;
+  pk.modificationFk.setModification(mdtClModification_t::New);
   // Setup link data
   data.clear();
   data.setPk(pk);
@@ -1079,14 +1284,41 @@ void mdtClLinkTest::linkAddGetRemoveTest()
   data.identification = "Link 10-11";
   data.resistance = 1.2;
   data.length = 12.0;
+  data.remarks = "Remark 10-11";
   // Add
-  QVERIFY(lnk.addLink(data, linkModificationFk, true));
-  // Get back and check
+  QVERIFY(lnk.addLink(data));
+  /*
+   * Add the same link
+   *  - Versionning: v1.6, Existing
+   */
+  // Setup link pk data
+  pk.versionFk.versionPk = 1600;
+  pk.modificationFk.setModification(mdtClModification_t::Exists);
+  // Setup link data
+  data.clear();
+  data.setPk(pk);
+  data.setLinkType(mdtClLinkType_t::InternalLink);
+  data.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+  data.setWireId(2);
+  data.identification = "Link 10-11";
+  data.resistance = 1.2;
+  data.length = 12.0;
+  data.remarks = "Remark 10-11";
+  // Add
+  QVERIFY(lnk.addLink(data));
+  /*
+   * Get data
+   */
+  // Get back and check version 1.5
+  pk.versionFk.versionPk = 1500;
+  pk.modificationFk.setModification(mdtClModification_t::New);
   data = lnk.getLinkData(pk, ok);
   QVERIFY(ok);
   QVERIFY(!data.isNull());
   QCOMPARE(data.pk().connectionStartId, QVariant(10));
   QCOMPARE(data.pk().connectionEndId, QVariant(11));
+  QCOMPARE(data.pk().versionFk.versionPk.value(), 1500);
+  QVERIFY(data.pk().modificationFk.modification() == mdtClModification_t::New);
   QVERIFY(data.keyData().linkTypeFk().type() == mdtClLinkType_t::InternalLink);
   QVERIFY(data.keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   QVERIFY(data.keyData().articleLinkFk().isNull());
@@ -1094,12 +1326,123 @@ void mdtClLinkTest::linkAddGetRemoveTest()
   QCOMPARE(data.identification, QVariant("Link 10-11"));
   QCOMPARE(data.resistance.value(), 1.2);
   QCOMPARE(data.length.value(), 12.0);
-  // Remove link
+  QCOMPARE(data.remarks, QVariant("Remark 10-11"));
+  // Get back and check version 1.6
+  pk.versionFk.versionPk = 1600;
+  pk.modificationFk.setModification(mdtClModification_t::Exists);
+  data = lnk.getLinkData(pk, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.pk().connectionStartId, QVariant(10));
+  QCOMPARE(data.pk().connectionEndId, QVariant(11));
+  QCOMPARE(data.pk().versionFk.versionPk.value(), 1600);
+  QVERIFY(data.pk().modificationFk.modification() == mdtClModification_t::Exists);
+  QVERIFY(data.keyData().linkTypeFk().type() == mdtClLinkType_t::InternalLink);
+  QVERIFY(data.keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
+  QVERIFY(data.keyData().articleLinkFk().isNull());
+  QCOMPARE(data.keyData().wireId(), QVariant(2));
+  QCOMPARE(data.identification, QVariant("Link 10-11"));
+  QCOMPARE(data.resistance.value(), 1.2);
+  QCOMPARE(data.length.value(), 12.0);
+  QCOMPARE(data.remarks, QVariant("Remark 10-11"));
+  /*
+   * Update version 1.5:
+   *  - Change only identification and remarks (No change on PK)
+   */
+  // Get link
+  pk.connectionStartId = 10;
+  pk.connectionEndId = 11;
+  pk.versionFk.versionPk = 1500;
+  pk.modificationFk.setModification(mdtClModification_t::New);
+  data = lnk.getLinkData(pk, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  // Update
+  data.setPk(pk);
+  data.identification = "Link 10-11 edited";
+  data.remarks = "Remark 10-11 edited";
+  QVERIFY(lnk.updateLink(pk, data));
+  // Get data back and check
+  data = lnk.getLinkData(pk, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.identification, QVariant("Link 10-11 edited"));
+  QCOMPARE(data.remarks, QVariant("Remark 10-11 edited"));
+  /*
+   * Update version 1.6:
+   *  - Change connections start/end, version and modification (PK change)
+   */
+  // Get link
+  pk.connectionStartId = 10;
+  pk.connectionEndId = 11;
+  pk.versionFk.versionPk = 1600;
+  pk.modificationFk.setModification(mdtClModification_t::Exists);
+  data = lnk.getLinkData(pk, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  // Update
+  pk.connectionStartId = 15;
+  pk.connectionEndId = 16;
+  pk.versionFk.versionPk = 1700;
+  pk.modificationFk.setModification(mdtClModification_t::ModRem);
+  data.setPk(pk);
+  data.identification = "Link 15-16";
+  data.remarks = "Remark 15-16 REM";
+  pk.connectionStartId = 10;
+  pk.connectionEndId = 11;
+  pk.versionFk.versionPk = 1600;
+  pk.modificationFk.setModification(mdtClModification_t::Exists);
+  QVERIFY(lnk.updateLink(pk, data));
+  // Get data back and check
+  pk.connectionStartId = 15;
+  pk.connectionEndId = 16;
+  pk.versionFk.versionPk = 1700;
+  pk.modificationFk.setModification(mdtClModification_t::ModRem);
+  data = lnk.getLinkData(pk, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.identification, QVariant("Link 15-16"));
+  QCOMPARE(data.remarks, QVariant("Remark 15-16 REM"));
+  // Add a new modification for this link
+  pk.modificationFk.setModification(mdtClModification_t::ModNew);
+  data.setPk(pk);
+  data.remarks = "Remark 15-16 NEW";
+  QVERIFY(lnk.addLink(data));
+  data = lnk.getLinkData(pk, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  QCOMPARE(data.identification, QVariant("Link 15-16"));
+  QCOMPARE(data.remarks, QVariant("Remark 15-16 NEW"));
+  /*
+   * Remove test
+   */
+  // Remove link 10-11 version 1.5
+  pk.connectionStartId = 10;
+  pk.connectionEndId = 11;
+  pk.versionFk.versionPk = 1500;
+  pk.modificationFk.setModification(mdtClModification_t::New);
   QVERIFY(lnk.removeLink(pk, true));
   data = lnk.getLinkData(pk, ok);
   QVERIFY(ok);
   QVERIFY(data.isNull());
-  
+  // Remove link 15-16 version 1.7 ModRem
+  pk.connectionStartId = 15;
+  pk.connectionEndId = 16;
+  pk.versionFk.versionPk = 1700;
+  pk.modificationFk.setModification(mdtClModification_t::ModRem);
+  QVERIFY(lnk.removeLink(pk, true));
+  data = lnk.getLinkData(pk, ok);
+  QVERIFY(ok);
+  QVERIFY(data.isNull());
+  // Remove link 15-16 version 1.7 ModNew
+  pk.connectionStartId = 15;
+  pk.connectionEndId = 16;
+  pk.versionFk.versionPk = 1700;
+  pk.modificationFk.setModification(mdtClModification_t::ModNew);
+  QVERIFY(lnk.removeLink(pk, true));
+  data = lnk.getLinkData(pk, ok);
+  QVERIFY(ok);
+  QVERIFY(data.isNull());
 }
 
 void mdtClLinkTest::linkAndVehicleTypeAddGetRemoveTest()
@@ -1108,9 +1451,9 @@ void mdtClLinkTest::linkAndVehicleTypeAddGetRemoveTest()
   mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
   mdtClLinkData linkData;
   mdtClLinkPkData linkPk;
-  mdtClLinkModificationKeyData linkModificationKey;
+  ///mdtClLinkModificationKeyData linkModificationKey;
   mdtClLinkVersionData linkVersion;
-  mdtClModificationPkData modificationKey;
+  ///mdtClModificationPkData modificationKey;
   mdtClVehicleTypeStartEndKeyData vtKey;
   QList<mdtClVehicleTypeStartEndKeyData> vtKeyList;
   bool ok;
@@ -1124,16 +1467,19 @@ void mdtClLinkTest::linkAndVehicleTypeAddGetRemoveTest()
   // Setup link data
   linkPk.connectionStartId = 15;
   linkPk.connectionEndId = 16;
+  linkVersion.setVersion(1.1);
+  linkPk.versionFk = linkVersion.pk();
+  linkPk.modificationFk.setModification(mdtClModification_t::New);
   linkData.setPk(linkPk);
   linkData.setLinkType(mdtClLinkType_t::CableLink);
   linkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
   linkData.identification = "Link 15-16";
   // Setup modification key
-  linkModificationKey.setLinkFk(linkPk);
-  linkVersion.setVersion(1.1);
-  linkModificationKey.setLinkVersionFk(linkVersion.pk());
-  modificationKey.setModification(mdtClModification_t::New);
-  linkModificationKey.setModificationFk(modificationKey);
+//   linkModificationKey.setLinkFk(linkPk);
+//   linkVersion.setVersion(1.1);
+//   linkModificationKey.setLinkVersionFk(linkVersion.pk());
+//   modificationKey.setModification(mdtClModification_t::New);
+//   linkModificationKey.setModificationFk(modificationKey);
   // Setup vehicle type list
   vtKey.setVehicleTypeStartId(1);
   vtKey.setVehicleTypeEndId(2);
@@ -1142,7 +1488,7 @@ void mdtClLinkTest::linkAndVehicleTypeAddGetRemoveTest()
   vtKey.setVehicleTypeEndId(4);
   vtKeyList.append(vtKey);
   // Add link
-  QVERIFY(lnk.addLink(linkData, linkModificationKey, vtKeyList, true));
+  QVERIFY(lnk.addLink(linkData, vtKeyList, true));
   // Get link back and check
   
   // Get modification back and check
@@ -1157,6 +1503,7 @@ void mdtClLinkTest::linkAndVehicleTypeAddGetRemoveTest()
    * Remove
    */
   
+  QFAIL("Not completly implemented");
 }
 
 void mdtClLinkTest::linkFromArticleLinkAddTest()
@@ -1177,7 +1524,7 @@ void mdtClLinkTest::linkFromArticleLinkAddTest()
   bool ok;
 
   /*
-   * For this test we work directly ArticleLink_tbl and UnitConnection_tbl.
+   * For this test we work directly on ArticleLink_tbl and UnitConnection_tbl.
    * We not need the complete schema, so we disable foreign key check
    */
   QVERIFY(fkSetting.disable());

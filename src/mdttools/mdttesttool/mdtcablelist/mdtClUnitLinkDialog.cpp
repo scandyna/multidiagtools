@@ -244,25 +244,26 @@ void mdtClUnitLinkDialog::setLinkModification(mdtClModification_t m)
   setLinkModification(pk);
 }
 
-mdtClLinkModificationKeyData mdtClUnitLinkDialog::linkModificationKeyData() const
-{
-  Q_ASSERT(!pvLinkData.pk().isNull());
-
-  mdtClLinkModificationKeyData key;
-
-  key.setLinkFk(pvLinkData.pk());
-  key.setLinkVersionFk(pvLinkVersionModel->currentVersionPk(cbLinkVersion));
-  key.setModificationFk(pvModificationModel->currentModificationPk(cbModification));
-  Q_ASSERT(!key.isNull());
-
-  return key;
-}
+// mdtClLinkModificationKeyData mdtClUnitLinkDialog::linkModificationKeyData() const
+// {
+//   Q_ASSERT(!pvLinkData.pk().isNull());
+// 
+//   mdtClLinkModificationKeyData key;
+// 
+//   key.setLinkFk(pvLinkData.pk());
+//   key.setLinkVersionFk(pvLinkVersionModel->currentVersionPk(cbLinkVersion));
+//   key.setModificationFk(pvModificationModel->currentModificationPk(cbModification));
+//   Q_ASSERT(!key.isNull());
+// 
+//   return key;
+// }
 
 void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
 {
   mdtClUnitConnection ucnx(pvDatabase);
   mdtClUnitConnectionPkData ucnxPk;
   mdtClUnitConnectionData ucnxData;
+  mdtClLinkVersionData linkVersionData;
   bool ok;
 
   pvLinkData = data;
@@ -296,7 +297,10 @@ void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
   updateEndConnection();
   // Update vehicle type assignements
   updateVehicleTypeAssignations(true);
-  // Unset unit connection changed flag
+  // Update versionning
+  linkVersionData.setPk(pvLinkData.pk().versionFk);
+  setLinkVersion(linkVersionData);
+  setLinkModification(pvLinkData.pk().modificationFk);
 }
 
 mdtClLinkData mdtClUnitLinkDialog::linkData()
@@ -574,6 +578,10 @@ void mdtClUnitLinkDialog::selectEndConnection()
 void mdtClUnitLinkDialog::accept()
 {
   // Some data are dynamically stored during edition, but some are to handle here
+  mdtClLinkPkData pk = pvLinkData.pk();
+  pk.versionFk = pvLinkVersionModel->currentVersionPk(cbLinkVersion);
+  pk.modificationFk = pvModificationModel->currentModificationPk(cbModification);
+  pvLinkData.setPk(pk);
   pvLinkData.identification = leIdentification->text();
   pvLinkData.resistance = deResistance->valueDouble();
   pvLinkData.length = deLength->valueDouble();

@@ -1,6 +1,6 @@
 format 209
 "DatabaseLogical" // mdttools::mdttesttool::DatabaseLogical
-  revision 87
+  revision 88
   modified_by 2 "philippe"
   // class settings
   
@@ -929,7 +929,7 @@ ${inlines}
 
       attribute 1770498 "Modification_Code_FK"
 	private explicit_type "string"
-	stereotype "FK"
+	stereotype "PK, FK"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1062,6 +1062,18 @@ ${inlines}
 
       attribute 1590402 "Length"
 	private explicit_type "double"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1853314 "Remarks"
+	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1596,6 +1608,32 @@ ${inlines}
 "
 	    classrelation_ref 1181186 // <unidirectional association>
 	  b parent class_ref 944770 // VehicleType_tbl
+      end
+
+      attribute 1853442 "Link_Version_FK"
+	private explicit_type "int"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1853570 "Link_Modification_Code_FK"
+	private explicit_type "string"
+	stereotype "PK, FK"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 
@@ -2400,104 +2438,6 @@ ${inlines}
 
       attribute 1769986 "Version"
 	private explicit_type "double"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-
-    class 1686530 "LinkModification_tbl"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 1770114 "UnitConnectionStart_Id_FK"
-	private explicit_type "int"
-	stereotype "PK, FK"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 1770242 "UnitConnectionEnd_Id_FK"
-	private explicit_type "int"
-	stereotype "PK, FK"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      classrelation 2038530 // <unidirectional association>
-	relation 2022402 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 2038530 // <unidirectional association>
-	  b parent class_ref 1686530 // LinkModification_tbl
-      end
-
-      attribute 1846402 "TextEN"
-	private explicit_type "string"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 1846530 "TextFR"
-	private explicit_type "string"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 1846658 "TextDE"
-	private explicit_type "string"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 1846786 "TextIT"
-	private explicit_type "string"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""

@@ -98,7 +98,7 @@ void mdtClVehicleTypeEditor::editLink()
   mdtClLinkData linkData;
   mdtClLinkVersionData linkVersionData;
   mdtClModificationPkData modificationPk;
-  mdtClLinkModificationKeyData oldModificationKey;
+  ///mdtClLinkModificationKeyData oldModificationKey;
   mdtClLink lnk(database());
   bool ok;
 
@@ -119,17 +119,17 @@ void mdtClVehicleTypeEditor::editLink()
     msgBox.exec();
     return;
   }
-  oldModificationKey.setLinkFk(pk);
+  ///oldModificationKey.setLinkFk(pk);
   // Get link version and modification
   var = linkWidget->currentData("Version_FK");
   if(!var.isNull()){
     linkVersionData.setVersionPk(var);
-    oldModificationKey.setLinkVersionFk(linkVersionData.pk());
+    ///oldModificationKey.setLinkVersionFk(linkVersionData.pk());
   }
   var = linkWidget->currentData("Modification_Code_FK");
   if(!var.isNull()){
     modificationPk.code = var.toString();
-    oldModificationKey.setModificationFk(modificationPk);
+    ///oldModificationKey.setModificationFk(modificationPk);
   }
   // Get current link data
   linkData = lnk.getLinkData(pk, ok);
@@ -151,7 +151,7 @@ void mdtClVehicleTypeEditor::editLink()
     return;
   }
   // Update link
-  if(!lnk.updateLink(pk, dialog.linkData(), oldModificationKey, dialog.linkModificationKeyData(), dialog.selectedVehicleTypeList(), true)){
+  if(!lnk.updateLink(pk, dialog.linkData(), dialog.selectedVehicleTypeList(), true)){
     pvLastError = lnk.lastError();
     displayLastError();
     return;

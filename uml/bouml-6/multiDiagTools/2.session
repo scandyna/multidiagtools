@@ -1,16 +1,20 @@
-window_sizes 1276 970 312 958 917 0
+window_sizes 1280 977 312 962 924 0
 cleanlooks_style
 diagrams
   classdiagram_ref 1496962 // FormatModel
     962 924 90 18 0 0
-  active  classdiagram_ref 739586 // CableListAllTables
-    958 917 80 16 471 218
+  classdiagram_ref 852610 // mdtClLinkData
+    120 106 90 17 0 240
+  classdiagram_ref 1483522 // LinkModification
+    120 106 100 4 0 0
+  active  classdiagram_ref 1463810 // VehicleTypeLink
+    962 924 100 18 0 0
 end
 show_stereotypes
-selected attribute_ref 1770498 // Modification_Code_FK
+selected classdiagram_ref 1463810 // VehicleTypeLink
 open
-  attribute_ref 1770370 // Version_FK
-  attribute_ref 1050498 // LinkBeam_Id_FK
-  attribute_ref 1770242 // UnitConnectionEnd_Id_FK
+  class_ref 1672962 // mdtClLinkPkData
+  attribute_ref 1853954 // pvLinkBeamId
+  attribute_ref 1854082 // remarks
 end
 end

@@ -26,4 +26,5 @@ void mdtClLinkData::clear()
   identification.clear();
   resistance.clear();
   length.clear();
+  remarks.clear();
 }

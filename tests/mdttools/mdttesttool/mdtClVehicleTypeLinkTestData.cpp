@@ -97,7 +97,7 @@ void mdtClVehicleTypeLinkTestData::removeCreatedVehicleTypeUnitAssignations()
   QVERIFY(transaction.commit());
 }
 
-bool mdtClVehicleTypeLinkTestData::addVehicleTypeLinkAssignation(int vtId, int ucsId, int uceId)
+bool mdtClVehicleTypeLinkTestData::addVehicleTypeLinkAssignation(int vtId, int ucsId, int uceId, int versionPk, const QString & modificationCode)
 {
   mdtClVehicleTypeLink vtl(pvDatabase);
   ///mdtTtBase tb(nullptr, pvDatabase);
@@ -107,6 +107,8 @@ bool mdtClVehicleTypeLinkTestData::addVehicleTypeLinkAssignation(int vtId, int u
 
   linkFk.connectionStartId = ucsId;
   linkFk.connectionEndId = uceId;
+  linkFk.versionFk.versionPk = versionPk;
+  linkFk.modificationFk.code = modificationCode;
   vtlKey.setVehicleTypeStartId(vtId);
   vtlKey.setVehicleTypeEndId(vtId);
   vtlKey.setLinkFk(linkFk);
