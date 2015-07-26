@@ -23,9 +23,7 @@
 
 #include "mdtTtBase.h"
 #include "mdtClLinkData.h"
-#include "mdtClLinkModificationKeyData.h"
 #include "mdtClVehicleTypeLinkKeyData.h"
-///#include "mdtClArticleLinkData.h"
 #include "mdtClArticleLinkUnitConnectionKeyData.h"
 #include "mdtSqlTableSelection.h"
 #include <QSqlDatabase>
@@ -95,42 +93,6 @@ class mdtClLink : public mdtTtBase
                    const mdtClLinkVersionPkData & versionPk, const mdtClModificationPkData & modificationPk,
                    const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList,  bool handleTransaction);
 
-  /*! \brief Add a link to database
-   *
-   * \param linkData Link data to add to Link_tbl
-   * \param modification Link versionning key data (LinkModification_tbl part)
-   * \param handleTransaction Internally, a transaction is (explicitly) open.
-   *             By calling this function with a allready open transaction,
-   *             set this argument false.
-   * \deprecated
-   */
-  bool addLink(const mdtClLinkData & linkData, const mdtClLinkModificationKeyData & modification, bool handleTransaction);
-
-  /*! \brief Add a link and assign given vehicle types to it
-   *
-   * \param linkData Link data to add to Link_tbl
-   * \param modification Link versionning key data (LinkModification_tbl part)
-   * \param vehicleTypeList List of vehicle types to add in assignations (VehicleType_Link_tbl)
-   * \param handleTransaction Internally, a transaction is (explicitly) open.
-   *             By calling this function with a allready open transaction,
-   *             set this argument false.
-   * \deprecated
-   */
-  bool addLink(const mdtClLinkData & linkData, const mdtClLinkModificationKeyData & modification, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
-
-  /*! \brief Add a link on base of given article link
-   *
-   * Will get start and end unit connections that are related to article link's start and end connection
-   *  for given unit.
-   *  Identification and Resistance are also copied from given article link.
-   *  Note that only the Link_tbl part is created here (vehicle types assignations and versionning is not done).
-   *
-   * \pre articleLinkData must not be null
-   * \pre unitId must not be null
-   * \deprecated
-   */
-//   bool addLink(const mdtClArticleLinkData & articleLinkData, const QVariant & unitId);
-
   /*! \brief Check if a link exists
    */
   bool linkExists(const mdtClLinkPkData & pk, bool & ok);
@@ -143,24 +105,6 @@ class mdtClLink : public mdtTtBase
    *          Use ok parameter to diffrenciate both cases.
    */
   mdtClLinkData getLinkData(const mdtClLinkPkData & pk, bool & ok);
-
-  /*! \brief Get link data for given article link and start unit and end unit
-   * \todo + version + modification ...
-   * \deprecated
-   */
-//   mdtClLinkData getLinkData(const mdtClArticleLinkPkData & articleLinkPk, const QVariant & startUnitId, const QVariant & endUnitId, bool & ok);
-
-  /*! \brief Build link data based on given article link data
-   *
-   * Will get start and end unit connections that are related to article link's start and end connection for given unit.
-   *  Identification and Resistance are also copied from given article link.
-   *  Note that only the Link_tbl part is created here (vehicle types assignations and versionning is not done).
-   *
-   * \pre articleLinkData must not be null
-   * \pre unitId must not be null
-   * \deprecated
-   */
-  
 
   /*! \brief Update a link
    *
@@ -185,25 +129,6 @@ class mdtClLink : public mdtTtBase
   bool updateLink(const mdtClLinkPkData & linkPk, const mdtClLinkData & linkData,
                   const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
 
-  /*! \brief Update a link, its modification and its vehicle type assignations
-   *
-   * \param linkPk Link to edit
-   * \param linkData New link data
-   * \param oldModification Modification to update (LinkModification_tbl part)
-   * \param modification New modification (LinkModification_tbl part)
-   * \param vehicleTypeList List of vehicle types assignations (VehicleType_Link_tbl)
-   * \param handleTransaction Internally, a transaction is (explicitly) open.
-   *             By calling this function with a allready open transaction,
-   *             set this argument false.
-   * \pre linkPk must not be null
-   * \pre linkData must not be null
-   * 
-   * \deprecated
-   */
-  bool updateLink(const mdtClLinkPkData & linkPk, const mdtClLinkData & linkData, 
-                  const mdtClLinkModificationKeyData & oldModification, const mdtClLinkModificationKeyData & modification,  
-                  const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
-
   /*! \brief Remove a link
    *
    * Will also remove each vehicle types assigned to given link (VehicleType_Link_tbl)
@@ -220,22 +145,6 @@ class mdtClLink : public mdtTtBase
    * \sa removeLink()
    */
   bool removeLinks(const mdtSqlTableSelection & s);
-
-  /*! \brief Add a link modification (LinkModification_tbl)
-   */
-  bool addModification(const mdtClLinkModificationKeyData & key);
-
-  /*! \brief Update modification
-   */
-  bool updateModification(const mdtClLinkModificationKeyData & originalModification, const mdtClLinkModificationKeyData & newModification, bool handleTransaction);
-
-  /*! \brief Remove link modification (LinkModification_tbl)
-   */
-  bool removeModification(const mdtClLinkModificationKeyData & key);
-
-  /*! \brief Remove all modifications related to given link
-   */
-  bool removeModifications(const mdtClLinkPkData & linkPk);
 
  private:
 

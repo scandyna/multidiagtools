@@ -331,7 +331,8 @@ QList<mdtClUnitConnectorPkData> mdtClAutoConnection::getConnectableConnectorPkLi
 }
 
 bool mdtClAutoConnection::connectByContactName(const mdtClUnitConnectorData & a, const mdtClUnitConnectorData & b,
-                                               const mdtClLinkModificationKeyData & modification, const QList<mdtClVehicleTypeStartEndKeyData> & vtList,
+                                               const mdtClLinkVersionPkData & versionPk, const mdtClModificationPkData & modificationPk,
+                                               const QList<mdtClVehicleTypeStartEndKeyData> & vtList,
                                                const mdtClConnectableCriteria & criteria, bool handleTransaction)
 {
   mdtClLink lnk(database());
@@ -339,7 +340,7 @@ bool mdtClAutoConnection::connectByContactName(const mdtClUnitConnectorData & a,
   QList<mdtClLinkData> linkDataList;
 
   // Build list of links
-  if(!checkOrBuildConnectionLinkListByName(a.connectionDataList(), b.connectionDataList(), criteria, &linkDataList)){
+  if(!checkOrBuildConnectionLinkListByName(a.connectionDataList(), b.connectionDataList(), criteria, & linkDataList, &versionPk, &modificationPk)){
     QString msg;
     msg = tr("Could not find connections that can be connected from connector:");
     msg += " '" + a.name.toString() + "' ";
@@ -359,7 +360,7 @@ bool mdtClAutoConnection::connectByContactName(const mdtClUnitConnectorData & a,
   }
   // Add each link
   for(const auto & linkData : linkDataList){
-    if(!lnk.addLink(linkData, modification, vtList, false)){
+    if(!lnk.addLink(linkData, vtList, false)){
       pvLastError = lnk.lastError();
       return false;
     }
@@ -420,7 +421,8 @@ bool mdtClAutoConnection::disconnectConnectors(const mdtClUnitConnectorPkData & 
 }
 
 bool mdtClAutoConnection::checkOrBuildConnectionLinkListByName(const QList<mdtClUnitConnectionData> & A, const QList<mdtClUnitConnectionData> & B,
-                                                               const mdtClConnectableCriteria & criteria, QList<mdtClLinkData> *connectionLinkDataList)
+                                                               const mdtClConnectableCriteria & criteria, QList<mdtClLinkData> *connectionLinkDataList,
+                                                               const mdtClLinkVersionPkData *versionPk, const mdtClModificationPkData *modificationPk)
 {
   mdtClUnitConnectionData c;
   const QList<mdtClUnitConnectionData> *C = nullptr;
@@ -442,6 +444,8 @@ bool mdtClAutoConnection::checkOrBuildConnectionLinkListByName(const QList<mdtCl
 
   if(connectionLinkDataList != nullptr){
     connectionLinkDataList->clear();
+    Q_ASSERT(versionPk != nullptr);
+    Q_ASSERT(modificationPk != nullptr);
   }
   // Search in C
   for(const auto & c : *C){
@@ -455,6 +459,8 @@ bool mdtClAutoConnection::checkOrBuildConnectionLinkListByName(const QList<mdtCl
           mdtClLinkPkData pk;
           pk.connectionStartId = c.keyData().pk.id;
           pk.connectionEndId = d.keyData().pk.id;
+          pk.versionFk = *versionPk;
+          pk.modificationFk = *modificationPk;
           mdtClLinkData data;
           data.setPk(pk);
           data.setLinkType(mdtClLinkType_t::Connection);

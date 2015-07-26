@@ -114,7 +114,7 @@ class mdtClArticleLink : public mdtTtBase
    */
   void fillData(mdtClArticleLinkData & data, const QSqlRecord & record);
 
-  Q_DISABLE_COPY(mdtClArticleLink);
+  Q_DISABLE_COPY(mdtClArticleLink)
 };
 
 #endif // #ifndef MDT_CL_ARTICLE_LINK_H

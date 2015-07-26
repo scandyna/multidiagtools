@@ -592,7 +592,7 @@ void mdtCableListTest::linkTest()
   QList<mdtClVehicleTypeStartEndKeyData> vtList;
   mdtClLinkVersionPkData linkVersionFk;
   mdtClModificationPkData modificationFk;
-  mdtClLinkModificationKeyData linkModificationFk;
+  ///mdtClLinkModificationKeyData linkModificationFk;
   bool ok;
 
   // Create base structure
@@ -600,6 +600,8 @@ void mdtCableListTest::linkTest()
   // Get link data for a non existing link
   linkPk.connectionStartId = 135;
   linkPk.connectionEndId = 45678;
+  linkPk.versionFk.versionPk = 500;
+  linkPk.modificationFk.setModification(mdtClModification_t::New);
   linkData = lnk.getLinkData(linkPk, ok);
   QVERIFY(ok);
   QVERIFY(linkData.isNull());
@@ -612,15 +614,15 @@ void mdtCableListTest::linkTest()
   // Get link data
   linkPk.connectionStartId = 10000;
   linkPk.connectionEndId = 10001;
+  linkPk.versionFk.versionPk = 500;
+  linkPk.modificationFk.setModification(mdtClModification_t::New);
   linkData = lnk.getLinkData(linkPk, ok);
   QVERIFY(ok);
   QVERIFY(!linkData.isNull());
   // Setup modification key (we keep it as in scenario)
-  linkModificationFk.setLinkFk(linkPk);
-  linkVersionFk.versionPk = 500;
-  linkModificationFk.setLinkVersionFk(linkVersionFk);
-  modificationFk.setModification(mdtClModification_t::New);
-  linkModificationFk.setModificationFk(modificationFk);
+  ///linkModificationFk.setLinkFk(linkPk);
+  ///linkModificationFk.setLinkVersionFk(linkVersionFk);
+  ///linkModificationFk.setModificationFk(modificationFk);
   // Setup expected vehicle types (we keep them as in scenario)
   vtList.clear();
   vt.setVehicleTypeStartId(1);
@@ -628,13 +630,12 @@ void mdtCableListTest::linkTest()
   vtList << vt;
   // Update link
   linkData.identification = "Edited link";
-  QVERIFY(lnk.updateLink(linkPk, linkData, linkModificationFk, linkModificationFk, vtList, true));
+  QVERIFY(lnk.updateLink(linkPk, linkData, vtList, true));
   // Get back and check - Link_tbl part
   linkData = lnk.getLinkData(linkPk, ok);
   QVERIFY(ok);
   QVERIFY(!linkData.isNull());
   QCOMPARE(linkData.identification, QVariant("Edited link"));
-  /// \todo Check linkModification_tbl part
   // Check VehicleType_Link_tbl part
   vtList = vtl.getVehicleTypeStartEndKeyDataList(linkPk, ok);
   QVERIFY(ok);
@@ -650,15 +651,17 @@ void mdtCableListTest::linkTest()
   // Get link data
   linkPk.connectionStartId = 10000;
   linkPk.connectionEndId = 10001;
+  linkPk.versionFk.versionPk = 500;
+  linkPk.modificationFk.setModification(mdtClModification_t::New);
   linkData = lnk.getLinkData(linkPk, ok);
   QVERIFY(ok);
   QVERIFY(!linkData.isNull());
   // Setup modification key (we keep it as in scenario)
-  linkModificationFk.setLinkFk(linkPk);
-  linkVersionFk.versionPk = 500;
-  linkModificationFk.setLinkVersionFk(linkVersionFk);
-  modificationFk.setModification(mdtClModification_t::New);
-  linkModificationFk.setModificationFk(modificationFk);
+//   linkModificationFk.setLinkFk(linkPk);
+//   linkVersionFk.versionPk = 500;
+//   linkModificationFk.setLinkVersionFk(linkVersionFk);
+//   modificationFk.setModification(mdtClModification_t::New);
+//   linkModificationFk.setModificationFk(modificationFk);
   // Setup expected vehicle types (we keep them as in scenario)
   vtList.clear();
   vt.setVehicleTypeStartId(1);
@@ -667,20 +670,23 @@ void mdtCableListTest::linkTest()
   // Update link
   linkPk.connectionStartId = 10000;
   linkPk.connectionEndId = 20000;
+  linkPk.versionFk.versionPk = 500;
+  linkPk.modificationFk.setModification(mdtClModification_t::New);
   linkData.setPk(linkPk);
   linkData.identification = "Edited link 10000-20000";
-  linkModificationFk.setLinkFk(linkPk);
+  ///linkModificationFk.setLinkFk(linkPk);
   linkPk.connectionStartId = 10000;
   linkPk.connectionEndId = 10001;
-  QVERIFY(lnk.updateLink(linkPk, linkData, linkModificationFk, linkModificationFk, vtList, true));
+  QVERIFY(lnk.updateLink(linkPk, linkData, vtList, true));
   // Get back and check - Link_tbl part
   linkPk.connectionStartId = 10000;
   linkPk.connectionEndId = 20000;
+  linkPk.versionFk.versionPk = 500;
+  linkPk.modificationFk.setModification(mdtClModification_t::New);
   linkData = lnk.getLinkData(linkPk, ok);
   QVERIFY(ok);
   QVERIFY(!linkData.isNull());
   QCOMPARE(linkData.identification, QVariant("Edited link 10000-20000"));
-  /// \todo Check linkModification_tbl part
   // Check VehicleType_Link_tbl part
   vtList = vtl.getVehicleTypeStartEndKeyDataList(linkPk, ok);
   QVERIFY(ok);
@@ -711,6 +717,8 @@ void mdtCableListTest::linkTest()
   // Check that we have expected assignations
   linkPk.connectionStartId = 10000;
   linkPk.connectionEndId = 10001;
+  linkPk.versionFk.versionPk = 500;
+  linkPk.modificationFk.setModification(mdtClModification_t::New);
   vtList = vtl.getVehicleTypeStartEndKeyDataList(linkPk, ok);
   QVERIFY(ok);
   QCOMPARE(vtList.size(), 1);

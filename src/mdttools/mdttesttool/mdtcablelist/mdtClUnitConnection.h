@@ -28,8 +28,6 @@
 #include "mdtClUnitConnectorData.h"
 #include "mdtClArticleLinkUnitConnectionKeyData.h"
 
-#include "mdtClArticleLinkKeyData.h"
-
 /*! \brief Helper class for unit connection and unit connector manipulations
  *
  * Acts mainly on UnitConnection_tbl and UnitConnector_tbl
@@ -80,18 +78,6 @@ class mdtClUnitConnection : public mdtClArticleConnection
   {
     return pvLinksToCreate;
   }
-
-  /*! \brief Check if some links have been added by addUnitConnection() or addUnitConnectionList()
-   *
-   * \deprecated
-   */
-//   bool linksHaveBeenAdded() const;
-
-  /*! \brief Get text that contains list of links that have been added by addUnitConnection() or addUnitConnectionList()
-   *
-   * \deprecated
-   */
-//   QString getAddedLinksText(bool & ok);
 
   /*! \brief Get unit connection data from database
    *
@@ -274,17 +260,9 @@ class mdtClUnitConnection : public mdtClArticleConnection
    */
   void fillData(mdtClUnitConnectorData & data, const QSqlRecord & record);
 
-  Q_DISABLE_COPY(mdtClUnitConnection);
+  Q_DISABLE_COPY(mdtClUnitConnection)
 
   QList<mdtClArticleLinkUnitConnectionKeyData> pvLinksToCreate;
-
-  /// \deprecated
-//   struct AddedLink_t
-//   {
-//     mdtClArticleLinkPkData articleLinkPk;
-//     QVariant unitId;
-//   };
-//   QList<AddedLink_t> pvAddedLinks;
 };
 
 #endif // #ifndef MDT_CL_UNIT_CONNECTION_H

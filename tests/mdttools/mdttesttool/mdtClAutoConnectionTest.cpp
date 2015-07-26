@@ -25,6 +25,8 @@
 #include "mdtClUnitConnectionKeyData.h"
 #include "mdtClUnitConnectorKeyData.h"
 #include "mdtClUnitConnection.h"
+#include "mdtClLinkVersionKeyData.h"
+#include "mdtClModificationKeyData.h"
 #include "mdtApplication.h"
 #include "mdtTtDatabaseSchema.h"
 #include "mdtSqlRecord.h"
@@ -147,6 +149,8 @@ void mdtClAutoConnectionTest::checkOrBuildConnectionLinkListByNameTest()
   QStringList cnxNames;
   QList<QVariant> idList;
   QList<mdtClUnitConnectionData> ucnxAlist, ucnxBlist;
+  mdtClLinkVersionPkData versionPk;
+  mdtClModificationPkData modificationPk;
   QList<mdtClLinkData> linkDataList;
 
   /*
@@ -171,7 +175,9 @@ void mdtClAutoConnectionTest::checkOrBuildConnectionLinkListByNameTest()
   // Check - no link list to build
   QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria));
   // Check - Buil link list
-  QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria, &linkDataList));
+  versionPk.versionPk = 500;
+  modificationPk.setModification(mdtClModification_t::New);
+  QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria, &linkDataList, &versionPk, &modificationPk));
   QCOMPARE(linkDataList.size(), 5);
   QVERIFY(!linkDataList.at(0).pk().isNull());
   QVERIFY(linkDataList.at(0).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
@@ -209,7 +215,7 @@ void mdtClAutoConnectionTest::checkOrBuildConnectionLinkListByNameTest()
   // Check - no link list to build
   QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria));
   // Check - Buil link list
-  QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria, &linkDataList));
+  QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria, &linkDataList, &versionPk, &modificationPk));
   QCOMPARE(linkDataList.size(), 3);
   QVERIFY(!linkDataList.at(0).pk().isNull());
   QVERIFY(linkDataList.at(0).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
@@ -241,7 +247,7 @@ void mdtClAutoConnectionTest::checkOrBuildConnectionLinkListByNameTest()
   // Check - no link list to build
   QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria));
   // Check - Buil link list
-  QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria, &linkDataList));
+  QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria, &linkDataList, &versionPk, &modificationPk));
   QCOMPARE(linkDataList.size(), 3);
   QVERIFY(!linkDataList.at(0).pk().isNull());
   QVERIFY(linkDataList.at(0).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
@@ -273,7 +279,7 @@ void mdtClAutoConnectionTest::checkOrBuildConnectionLinkListByNameTest()
   // Check - no link list to build
   QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria));
   // Check - Buil link list
-  QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria, &linkDataList));
+  QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria, &linkDataList, &versionPk, &modificationPk));
   QCOMPARE(linkDataList.size(), 3);
   QVERIFY(!linkDataList.at(0).pk().isNull());
   QVERIFY(linkDataList.at(0).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
@@ -305,7 +311,7 @@ void mdtClAutoConnectionTest::checkOrBuildConnectionLinkListByNameTest()
   // Check - no link list to build
   QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria));
   // Check - Buil link list
-  QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria, &linkDataList));
+  QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria, &linkDataList, &versionPk, &modificationPk));
   QCOMPARE(linkDataList.size(), 1);
   QVERIFY(!linkDataList.at(0).pk().isNull());
   QVERIFY(linkDataList.at(0).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);

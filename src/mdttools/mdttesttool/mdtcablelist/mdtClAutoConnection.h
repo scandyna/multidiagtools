@@ -23,7 +23,8 @@
 
 #include "mdtTtBase.h"
 #include "mdtClLinkData.h"
-#include "mdtClLinkModificationKeyData.h"
+#include "mdtClLinkVersionKeyData.h"
+#include "mdtClModificationKeyData.h"
 #include "mdtClVehicleTypeLinkKeyData.h"
 #include "mdtClConnectorData.h"
 #include "mdtClUnitConnectionData.h"
@@ -109,7 +110,8 @@ class mdtClAutoConnection : public mdtTtBase
    *  - linkDirection : will be set to Bidirectionnal
    */
   bool connectByContactName(const mdtClUnitConnectorData & a, const mdtClUnitConnectorData & b,
-                            const mdtClLinkModificationKeyData & modification, const QList<mdtClVehicleTypeStartEndKeyData> & vtList,
+                            const mdtClLinkVersionPkData & versionPk, const mdtClModificationPkData & modificationPk,
+                            const QList<mdtClVehicleTypeStartEndKeyData> & vtList,
                             const mdtClConnectableCriteria & criteria, bool handleTransaction);
 
   /*! \brief Disconnect connector a from b
@@ -134,7 +136,8 @@ class mdtClAutoConnection : public mdtTtBase
    *  - linkDirection : will be set to Bidirectionnal
    */
   bool checkOrBuildConnectionLinkListByName(const QList<mdtClUnitConnectionData> & a, const QList<mdtClUnitConnectionData> & b, 
-                                            const mdtClConnectableCriteria & criteria, QList<mdtClLinkData> *connectionLinkDataList = nullptr);
+                                            const mdtClConnectableCriteria & criteria, QList<mdtClLinkData> *connectionLinkDataList = nullptr,
+                                            const mdtClLinkVersionPkData *versionPk = nullptr, const mdtClModificationPkData *modificationPk = nullptr);
 
   Q_DISABLE_COPY(mdtClAutoConnection)
 };
