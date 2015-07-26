@@ -27,6 +27,8 @@
 #include "mdtClArticleLinkData.h"
 #include "mdtClArticleLinkKeyData.h"
 #include "mdtClUnitConnectionKeyData.h"
+#include "mdtClLinkVersionKeyData.h"
+#include "mdtClModificationKeyData.h"
 #include "mdtSqlRecord.h"
 #include <QSqlRecord>
 #include <QList>
@@ -81,8 +83,19 @@ class mdtClArticleLink : public mdtTtBase
    *          Use ok parameter to diffrenciate both cases.
    * \pre ucnxPk must not be null.
    * \pre unitId must not be null.
+   * \deprecated
    */
-  QList<mdtClArticleLinkData> getLinkDataList(const mdtClUnitConnectionPkData & ucnxPk, const QVariant & unitId, bool & ok);
+//   QList<mdtClArticleLinkData> getLinkDataList(const mdtClUnitConnectionPkData & ucnxPk, const QVariant & unitId, bool & ok);
+
+  /*! \brief Check how many links should be added to Link_tbl to reflect ArticleLink_tbl
+   *
+   * \return Number of links to add to Link_tbl, or a value < 0 on error.
+   */
+//   int relatedLinksToCreateCount(const mdtClUnitConnectionPkData & ucnxPk, const QVariant & unitId);
+
+  /*! \brief Check if links should be added to Link_tbl to reflect ArticleLink_tbl
+   */
+//   bool hasRelatedLinksToCreate(const mdtClUnitConnectionPkData & ucnxPk, const QVariant & unitId, bool & ok);
 
   /*! \brief Get number of links in Link_tbl that are based on given article link
    *

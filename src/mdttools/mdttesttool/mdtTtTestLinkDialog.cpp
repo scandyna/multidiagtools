@@ -642,7 +642,7 @@ void mdtTtTestLinkDialog::displayDutUnit()
   }else{
     // Get unit data
     sql = "SELECT SchemaPosition, Alias, Cabinet FROM Unit_tbl WHERE Id_PK = " + pvDutUnitId.toString();
-    dataList = unit.getData(sql, &ok);
+    dataList = unit.getDataList<QSqlRecord>(sql, ok);
     if(!ok){
       lbDutSchemaPosition->setText("<Error!>");
       lbDutAlias->setText("<Error!>");

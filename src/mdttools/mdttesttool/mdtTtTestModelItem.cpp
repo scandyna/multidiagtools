@@ -324,7 +324,7 @@ bool mdtTtTestModelItem::testNodeUnitSetupExists(const QVariant & testModelItemI
   sql = "SELECT 1 FROM TestNodeUnitSetup_tbl ";
   sql += " WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
   sql += " AND TestNodeUnit_Id_FK = " + testNodeUnitId.toString();
-  dataList = getData(sql, ok);
+  dataList = getDataList<QSqlRecord>(sql, *ok);
   if(!*ok){
     return false;
   }
@@ -343,7 +343,7 @@ mdtTtTestNodeUnitSetupData mdtTtTestModelItem::getTestNodeUnitSetupData(const QV
   sql = "SELECT * FROM TestNodeUnitSetup_tbl ";
   sql += " WHERE TestModelItem_Id_FK = " + testModelItemId.toString();
   sql += " AND TestNodeUnit_Id_FK = " + testNodeUnitId.toString();
-  dataList = getData(sql, ok);
+  dataList = getDataList<QSqlRecord>(sql, *ok);
   if(!*ok){
     return data;
   }

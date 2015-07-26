@@ -26,6 +26,8 @@
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorKeyData.h"
 #include "mdtClUnitConnectorData.h"
+#include "mdtClArticleLinkUnitConnectionKeyData.h"
+
 #include "mdtClArticleLinkKeyData.h"
 
 /*! \brief Helper class for unit connection and unit connector manipulations
@@ -49,17 +51,18 @@ class mdtClUnitConnection : public mdtClArticleConnection
    * If unit connection is based on a article connection,
    *  it will be checked if adding this unit connection
    *  requieres to create a link (based on related article link).
-   *  In such case, only the Link_tbl part is threated here.
-   *  Use linksHaveBeenAdded() to check and getAddedLinksText()
-   *  to show the user wich links he has to update (modifications, vehicle assignations, ...)
+   *  To check this, use linkToCreateKeyList() after connection was added.
    *
    * \param data Unit connection data to store
    * \param handleTransaction Internally, a transaction is (explicitly) open.
    *             By calling this function with a allready open transaction,
    *             set this argument false.
+   * \param clearLinksToCreate If true, linkToCreateKeyList will be cleared before adding link.
+   *             This parameter is used by addUnitConnectionList() and addUnitConnector().
+   *             Most of time, default value is ok.
    * \return PK (Id_PK) of added unit connection, or a null PK on error
    */
-  mdtClUnitConnectionPkData addUnitConnection(const mdtClUnitConnectionData & data, bool handleTransaction);
+  mdtClUnitConnectionPkData addUnitConnection(const mdtClUnitConnectionData & data, bool handleTransaction, bool clearLinksToCreate = true);
 
   /*! \brief Add a list of unit connections to database
    *
@@ -71,13 +74,24 @@ class mdtClUnitConnection : public mdtClArticleConnection
    */
   bool addUnitConnectionList(const QList<mdtClUnitConnectionData> & dataList, bool handleTransaction);
 
-  /*! \brief Check if some links have been added by addUnitConnection() or addUnitConnectionList()
+  /*! \brief Get list of link keys for links that should be created after adding unit links
    */
-  bool linksHaveBeenAdded() const;
+  QList<mdtClArticleLinkUnitConnectionKeyData> linkToCreateKeyList() const
+  {
+    return pvLinksToCreate;
+  }
+
+  /*! \brief Check if some links have been added by addUnitConnection() or addUnitConnectionList()
+   *
+   * \deprecated
+   */
+//   bool linksHaveBeenAdded() const;
 
   /*! \brief Get text that contains list of links that have been added by addUnitConnection() or addUnitConnectionList()
+   *
+   * \deprecated
    */
-  QString getAddedLinksText(bool & ok);
+//   QString getAddedLinksText(bool & ok);
 
   /*! \brief Get unit connection data from database
    *
@@ -213,6 +227,19 @@ class mdtClUnitConnection : public mdtClArticleConnection
 
  private:
 
+  /*! \brief Add links to create to pvLinksToAdd
+   *
+   * This function is used by addUnitConnection() when adding a unit connection that is based on a article connection.
+   *  A article, that is the holder of a base article connection, can contain several links.
+   *  Depending on unit connection was added, it can requier that several links has to be added to Link_tbl
+   *  to reflect article's links.
+   *
+   * \param ucnxPk PK of unit connection that was freshly added
+   * \param unitId ID of unit to witch unit connection was added
+   * \return true of no error occured (if no key was added, this is not a error), false else
+   */
+  bool addLinkToCreateKeys(const mdtClUnitConnectionPkData & ucnxPk, const QVariant & unitId);
+
   /*! \brief Get base SQL statement to get unit connections
    */
   QString baseSqlForUnitConnection() const;
@@ -249,12 +276,15 @@ class mdtClUnitConnection : public mdtClArticleConnection
 
   Q_DISABLE_COPY(mdtClUnitConnection);
 
-  struct AddedLink_t
-  {
-    mdtClArticleLinkPkData articleLinkPk;
-    QVariant unitId;
-  };
-  QList<AddedLink_t> pvAddedLinks;
+  QList<mdtClArticleLinkUnitConnectionKeyData> pvLinksToCreate;
+
+  /// \deprecated
+//   struct AddedLink_t
+//   {
+//     mdtClArticleLinkPkData articleLinkPk;
+//     QVariant unitId;
+//   };
+//   QList<AddedLink_t> pvAddedLinks;
 };
 
 #endif // #ifndef MDT_CL_UNIT_CONNECTION_H

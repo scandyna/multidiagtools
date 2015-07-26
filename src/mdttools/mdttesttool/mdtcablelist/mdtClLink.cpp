@@ -161,67 +161,68 @@ bool mdtClLink::addLink(const mdtClLinkData & linkData, const mdtClLinkModificat
   return true;
 }
 
-bool mdtClLink::addLink(const mdtClArticleLinkData & articleLinkData, const QVariant & unitId)
-{
-  Q_ASSERT(!articleLinkData.isNull());
-  Q_ASSERT(!unitId.isNull());
-
-  QList<QSqlRecord> dataList;
-  QString sql;
-  mdtClArticleLinkPkData articleLinkPk = articleLinkData.keyData().pk;
-  mdtClLinkPkData linkPk;
-  mdtClLinkData linkData;
-  mdtSqlRecord record;
-  bool ok;
-
-  // Get unit connection start and end
-  sql = "SELECT UCNXS.Id_PK AS UnitConnectionStart_Id_FK, UCNXE.Id_PK AS UnitConnectionEnd_Id_FK\n"\
-        " FROM ArticleLink_tbl ALNK\n"\
-        " JOIN UnitConnection_tbl UCNXS\n"\
-        "  ON UCNXS.ArticleConnection_Id_FK = ALNK.ArticleConnectionStart_Id_FK\n"\
-        " JOIN UnitConnection_tbl UCNXE\n"\
-        "  ON UCNXE.ArticleConnection_Id_FK = ALNK.ArticleConnectionEnd_Id_FK\n"\
-        " WHERE ALNK.ArticleConnectionStart_Id_FK = " + articleLinkPk.connectionStartId.toString() + \
-        " AND ALNK.ArticleConnectionEnd_Id_FK = " + articleLinkPk.connectionEndId.toString() + \
-        " AND UCNXS.Unit_Id_FK = " + unitId.toString() + \
-        " AND UCNXE.Unit_Id_FK = " + unitId.toString();
-  dataList = getDataList<QSqlRecord>(sql, ok);
-  if(!ok){
-    return false;
-  }
-  if(dataList.isEmpty()){
-    QString msg = tr("No link can be created on base of given article link in given unit because at least on unit connection is missing.\n");
-    msg += tr("Article link: ") + articleLinkData.indetification.toString() + tr(", unit ID: ") + unitId.toString();
-    pvLastError.setError(msg, mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
-    pvLastError.commit();
-    return false;
-  }
-  Q_ASSERT(dataList.size() == 1);
-  // Setup link data
-  linkPk.connectionStartId = dataList.at(0).value("UnitConnectionStart_Id_FK");
-  linkPk.connectionEndId = dataList.at(0).value("UnitConnectionEnd_Id_FK");
-  linkData.setPk(linkPk);
-  linkData.setArticleLinkFk(articleLinkData.keyData().pk);
-  linkData.setLinkType(articleLinkData.linkType());
-  linkData.setLinkDirection(articleLinkData.linkDirection());
-  linkData.identification = articleLinkData.indetification;
-  if(!articleLinkData.resistance.isNull()){
-    linkData.resistance = articleLinkData.resistance.toDouble();
-  }
-  // Setup record
-  if(!record.addAllFields("Link_tbl", database())){
-    pvLastError = record.lastError();
-    return false;
-  }
-  fillRecord(record, linkData);
-  // Add to database
-  if(!addRecord(record, "Link_tbl")){
-    return false;
-  }
-
-  return true;
-}
+/// \deprecated
+// bool mdtClLink::addLink(const mdtClArticleLinkData & articleLinkData, const QVariant & unitId)
+// {
+//   Q_ASSERT(!articleLinkData.isNull());
+//   Q_ASSERT(!unitId.isNull());
+// 
+//   QList<QSqlRecord> dataList;
+//   QString sql;
+//   mdtClArticleLinkPkData articleLinkPk = articleLinkData.keyData().pk;
+//   mdtClLinkPkData linkPk;
+//   mdtClLinkData linkData;
+//   mdtSqlRecord record;
+//   bool ok;
+// 
+//   // Get unit connection start and end
+//   sql = "SELECT UCNXS.Id_PK AS UnitConnectionStart_Id_FK, UCNXE.Id_PK AS UnitConnectionEnd_Id_FK\n"\
+//         " FROM ArticleLink_tbl ALNK\n"\
+//         " JOIN UnitConnection_tbl UCNXS\n"\
+//         "  ON UCNXS.ArticleConnection_Id_FK = ALNK.ArticleConnectionStart_Id_FK\n"\
+//         " JOIN UnitConnection_tbl UCNXE\n"\
+//         "  ON UCNXE.ArticleConnection_Id_FK = ALNK.ArticleConnectionEnd_Id_FK\n"\
+//         " WHERE ALNK.ArticleConnectionStart_Id_FK = " + articleLinkPk.connectionStartId.toString() + \
+//         " AND ALNK.ArticleConnectionEnd_Id_FK = " + articleLinkPk.connectionEndId.toString() + \
+//         " AND UCNXS.Unit_Id_FK = " + unitId.toString() + \
+//         " AND UCNXE.Unit_Id_FK = " + unitId.toString();
+//   dataList = getDataList<QSqlRecord>(sql, ok);
+//   if(!ok){
+//     return false;
+//   }
+//   if(dataList.isEmpty()){
+//     QString msg = tr("No link can be created on base of given article link in given unit because at least on unit connection is missing.\n");
+//     msg += tr("Article link: ") + articleLinkData.indetification.toString() + tr(", unit ID: ") + unitId.toString();
+//     pvLastError.setError(msg, mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
+//     pvLastError.commit();
+//     return false;
+//   }
+//   Q_ASSERT(dataList.size() == 1);
+//   // Setup link data
+//   linkPk.connectionStartId = dataList.at(0).value("UnitConnectionStart_Id_FK");
+//   linkPk.connectionEndId = dataList.at(0).value("UnitConnectionEnd_Id_FK");
+//   linkData.setPk(linkPk);
+//   linkData.setArticleLinkFk(articleLinkData.keyData().pk);
+//   linkData.setLinkType(articleLinkData.linkType());
+//   linkData.setLinkDirection(articleLinkData.linkDirection());
+//   linkData.identification = articleLinkData.indetification;
+//   if(!articleLinkData.resistance.isNull()){
+//     linkData.resistance = articleLinkData.resistance.toDouble();
+//   }
+//   // Setup record
+//   if(!record.addAllFields("Link_tbl", database())){
+//     pvLastError = record.lastError();
+//     return false;
+//   }
+//   fillRecord(record, linkData);
+//   // Add to database
+//   if(!addRecord(record, "Link_tbl")){
+//     return false;
+//   }
+// 
+//   return true;
+// }
 
 bool mdtClLink::linkExists(const mdtClLinkPkData & pk, bool & ok)
 {
@@ -269,39 +270,40 @@ mdtClLinkData mdtClLink::getLinkData(const mdtClLinkPkData & pk, bool & ok)
   return linkData;
 }
 
-mdtClLinkData mdtClLink::getLinkData(const mdtClArticleLinkPkData articleLinkPk, const QVariant &startUnitId, const QVariant &endUnitId, bool & ok)
-{
-  mdtClLinkData data;
-  mdtClLinkPkData pk;
-  QList<QSqlRecord> dataList;
-  QString sql;
-
-  // Get unit connection start and end
-  sql = "SELECT UCNXS.Id_PK AS UnitConnectionStart_Id_FK, UCNXE.Id_PK AS UnitConnectionEnd_Id_FK\n"\
-        " FROM ArticleLink_tbl ALNK\n"\
-        " JOIN UnitConnection_tbl UCNXS\n"\
-        "  ON UCNXS.ArticleConnection_Id_FK = ALNK.ArticleConnectionStart_Id_FK\n"\
-        " JOIN UnitConnection_tbl UCNXE\n"\
-        "  ON UCNXE.ArticleConnection_Id_FK = ALNK.ArticleConnectionEnd_Id_FK\n"\
-        " WHERE ALNK.ArticleConnectionStart_Id_FK = " + articleLinkPk.connectionStartId.toString() + \
-        " AND ALNK.ArticleConnectionEnd_Id_FK = " + articleLinkPk.connectionEndId.toString() + \
-        " AND UCNXS.Unit_Id_FK = " + startUnitId.toString() + \
-        " AND UCNXE.Unit_Id_FK = " + endUnitId.toString();
-  dataList = getDataList<QSqlRecord>(sql, ok);
-  if(!ok){
-    return data;
-  }
-  if(dataList.isEmpty()){
-    return data;
-  }
-  Q_ASSERT(dataList.size() == 1);
-  // Get link data
-  pk.connectionStartId = dataList.at(0).value("UnitConnectionStart_Id_FK");
-  pk.connectionEndId = dataList.at(0).value("UnitConnectionEnd_Id_FK");
-  data = getLinkData(pk, ok);
-
-  return data;
-}
+/// \deprecated
+// mdtClLinkData mdtClLink::getLinkData(const mdtClArticleLinkPkData & articleLinkPk, const QVariant & startUnitId, const QVariant & endUnitId, bool & ok)
+// {
+//   mdtClLinkData data;
+//   mdtClLinkPkData pk;
+//   QList<QSqlRecord> dataList;
+//   QString sql;
+// 
+//   // Get unit connection start and end
+//   sql = "SELECT UCNXS.Id_PK AS UnitConnectionStart_Id_FK, UCNXE.Id_PK AS UnitConnectionEnd_Id_FK\n"\
+//         " FROM ArticleLink_tbl ALNK\n"\
+//         " JOIN UnitConnection_tbl UCNXS\n"\
+//         "  ON UCNXS.ArticleConnection_Id_FK = ALNK.ArticleConnectionStart_Id_FK\n"\
+//         " JOIN UnitConnection_tbl UCNXE\n"\
+//         "  ON UCNXE.ArticleConnection_Id_FK = ALNK.ArticleConnectionEnd_Id_FK\n"\
+//         " WHERE ALNK.ArticleConnectionStart_Id_FK = " + articleLinkPk.connectionStartId.toString() + \
+//         " AND ALNK.ArticleConnectionEnd_Id_FK = " + articleLinkPk.connectionEndId.toString() + \
+//         " AND UCNXS.Unit_Id_FK = " + startUnitId.toString() + \
+//         " AND UCNXE.Unit_Id_FK = " + endUnitId.toString();
+//   dataList = getDataList<QSqlRecord>(sql, ok);
+//   if(!ok){
+//     return data;
+//   }
+//   if(dataList.isEmpty()){
+//     return data;
+//   }
+//   Q_ASSERT(dataList.size() == 1);
+//   // Get link data
+//   pk.connectionStartId = dataList.at(0).value("UnitConnectionStart_Id_FK");
+//   pk.connectionEndId = dataList.at(0).value("UnitConnectionEnd_Id_FK");
+//   data = getLinkData(pk, ok);
+// 
+//   return data;
+// }
 
 bool mdtClLink::updateLink(const mdtClLinkPkData & linkPk, const mdtClLinkData & linkData)
 {

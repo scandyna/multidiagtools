@@ -99,8 +99,9 @@ class mdtClLink : public mdtTtBase
    *
    * \pre articleLinkData must not be null
    * \pre unitId must not be null
+   * \deprecated
    */
-  bool addLink(const mdtClArticleLinkData & articleLinkData, const QVariant & unitId);
+//   bool addLink(const mdtClArticleLinkData & articleLinkData, const QVariant & unitId);
 
   /*! \brief Check if a link exists
    */
@@ -117,8 +118,21 @@ class mdtClLink : public mdtTtBase
 
   /*! \brief Get link data for given article link and start unit and end unit
    * \todo + version + modification ...
+   * \deprecated
    */
-  mdtClLinkData getLinkData(const mdtClArticleLinkPkData articleLinkPk, const QVariant & startUnitId, const QVariant & endUnitId, bool & ok);
+//   mdtClLinkData getLinkData(const mdtClArticleLinkPkData & articleLinkPk, const QVariant & startUnitId, const QVariant & endUnitId, bool & ok);
+
+  /*! \brief Build link data based on given article link data
+   *
+   * Will get start and end unit connections that are related to article link's start and end connection for given unit.
+   *  Identification and Resistance are also copied from given article link.
+   *  Note that only the Link_tbl part is created here (vehicle types assignations and versionning is not done).
+   *
+   * \pre articleLinkData must not be null
+   * \pre unitId must not be null
+   * \deprecated
+   */
+  
 
   /*! \brief Update a link
    *

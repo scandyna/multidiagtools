@@ -109,7 +109,7 @@ QSqlRecord mdtTtTestNode::getTestNodeData(const QVariant & testNodeId, bool & ok
         " JOIN VehicleType_tbl VT\n"\
         "  ON VT.Id_PK = TN.VehicleType_Id_FK_PK\n";
   sql += " WHERE TN.VehicleType_Id_FK_PK = " + testNodeId.toString();
-  dataList = getData(sql, &ok);
+  dataList = getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     return QSqlRecord();
   }
@@ -353,7 +353,7 @@ bool mdtTtTestNode::addMissingConnections(const QVariant & testNodeId)
 
   // Get ID list of node units
   sql = "SELECT Unit_Id_FK_PK FROM TestNodeUnit_tbl WHERE TestNode_Id_FK = " + testNodeId.toString();
-  dataList = getData(sql, &ok);
+  dataList = getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     return false;
   }

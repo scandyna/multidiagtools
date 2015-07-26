@@ -157,7 +157,7 @@ mdtSqlRecord mdtTtTestNodeUnit::getUnitData(const QVariant & unitId, bool *ok)
     return data;
   }
   sql = "SELECT * FROM Unit_tbl WHERE Id_PK = " + unitId.toString();
-  dataList = mdtTtBase::getData(sql, ok);
+  dataList = mdtTtBase::getDataList<QSqlRecord>(sql, *ok);
   if(!*ok){
     return data;
   }
@@ -190,7 +190,7 @@ mdtTtTestNodeUnitData mdtTtTestNodeUnit::getData(const QVariant & nodeUnitId, bo
   }
   // Get TestNodeUnit_tbl part
   sql = "SELECT * FROM TestNodeUnit_tbl WHERE Unit_Id_FK_PK = " + nodeUnitId.toString();
-  dataList = mdtTtBase::getData(sql, ok);
+  dataList = mdtTtBase::getDataList<QSqlRecord>(sql, *ok);
   if(!*ok){
     return data;
   }
@@ -435,7 +435,7 @@ bool mdtTtTestNodeUnit::setBusIdToConnection(const QVariant & unitConnectionId, 
 
   // Get record of given unit connection ID
   sql = "SELECT * FROM TestNodeUnitConnection_tbl WHERE UnitConnection_Id_FK_PK = " + unitConnectionId.toString();
-  dataList = mdtTtBase::getData(sql, &ok);
+  dataList = mdtTtBase::getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     return false;
   }

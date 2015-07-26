@@ -70,7 +70,7 @@ void mdtClLinkedUnitConnectorInfoDialog::displayConnector(const QVariant& connec
   }
   // Get unit connector data
   sql = "SELECT Unit_Id_FK, Name FROM UnitConnector_tbl WHERE Id_PK = " + connectorId.toString();
-  dataList = unit.getData(sql, &ok);
+  dataList = unit.getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     lbUnitConnectorName->setText("<Error!>");
     return;
@@ -98,7 +98,7 @@ void mdtClLinkedUnitConnectorInfoDialog::displayUnit(const QVariant& unitId)
   }
   // Get unit data
   sql = "SELECT SchemaPosition, Alias, Cabinet, Coordinate FROM Unit_tbl WHERE Id_PK = " + unitId.toString();
-  dataList = unit.getData(sql, &ok);
+  dataList = unit.getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     lbSchemaPosition->setText("<Error!>");
     lbAlias->setText("<Error!>");

@@ -248,278 +248,278 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
 
 }
 
-void mdtClArticleLinkTest::getArticleLinkByUnitConnectionTest()
-{
-  mdtClArticleLink alnk(pvDatabaseManager.database());
-  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
-  mdtClArticleLinkPkData aLinkPk;
-  mdtClArticleLinkData aLinkData;
-  QList<mdtClArticleLinkData> aLinkDataList;
-  mdtClArticleConnectionKeyData acnxFk;
-  mdtClUnitConnectionPkData ucnxPk;
-  mdtClUnitConnectionKeyData ucnxKey;
-  mdtClUnitConnectionData ucnxData;
-  mdtClUnitConnection ucnx(pvDatabaseManager.database());
-  bool ok;
-
-  /*
-   * For this test we work directly ArticleLink_tbl and UnitConnection_tbl.
-   * We not need the complete schema, so we disable foreign key check
-   */
-  QVERIFY(fkSetting.disable());
-  /*
-   * Create article links:
-   *  - 10-11 , CableLink, Bidirectional
-   *  - 12-13 , CableLink, Bidirectional
-   *  - 14-15 , InternalLink, Bidirectional
-   *  - 16-17 , InternalLink, Bidirectional
-   */
-  aLinkData.clear();
-  aLinkPk.connectionStartId = 10;
-  aLinkPk.connectionEndId = 11;
-  aLinkData.setPkData(aLinkPk);
-  aLinkData.setLinkType(mdtClLinkType_t::CableLink);
-  aLinkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
-  QVERIFY(alnk.addLink(aLinkData));
-  aLinkData.clear();
-  aLinkPk.connectionStartId = 12;
-  aLinkPk.connectionEndId = 13;
-  aLinkData.setPkData(aLinkPk);
-  aLinkData.setLinkType(mdtClLinkType_t::CableLink);
-  aLinkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
-  QVERIFY(alnk.addLink(aLinkData));
-  aLinkData.clear();
-  aLinkPk.connectionStartId = 14;
-  aLinkPk.connectionEndId = 15;
-  aLinkData.setPkData(aLinkPk);
-  aLinkData.setLinkType(mdtClLinkType_t::InternalLink);
-  aLinkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
-  QVERIFY(alnk.addLink(aLinkData));
-  aLinkData.clear();
-  aLinkPk.connectionStartId = 16;
-  aLinkPk.connectionEndId = 17;
-  aLinkData.setPkData(aLinkPk);
-  aLinkData.setLinkType(mdtClLinkType_t::InternalLink);
-  aLinkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
-  QVERIFY(alnk.addLink(aLinkData));
-  /*
-   * Create unit connections:
-   *  - 100 , part of unit 1 , NOT based on a article connection
-   *  - 101 , part of unit 1 , NOT based on a article connection
-   *  - 110 , part of unit 1 , based on article connection 10
-   *  - 111 , part of unit 1 , based on article connection 11
-   *  - 114 , part of unit 1 , based on article connection 14
-   *  - 115 , part of unit 1 , based on article connection 15
-   *  - 212 , part of unit 2 , based on article connection 12
-   *  - 213 , part of unit 2 , based on article connection 13
-   *  - 216 , part of unit 2 , based on article connection 16
-   *  - 217 , part of unit 2 , based on article connection 17
-   */
-  // Add unit connection 100
-  ucnxData.clear();
-  ucnxKey.pk.id = 100;
-  ucnxKey.setUnitId(1);
-  ucnxData.setKeyData(ucnxKey);
-  ucnxData.setConnectionType(mdtClConnectionType_t::Pin);
-  QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
-  // Getting article link must return nothing
-  ucnxPk.id = 100;
-  aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
-  QVERIFY(ok);
-  QCOMPARE(aLinkDataList.size(), 0);
-  // Add unit connection 101
-  ucnxData.clear();
-  ucnxKey.pk.id = 101;
-  ucnxKey.setUnitId(1);
-  ucnxData.setKeyData(ucnxKey);
-  ucnxData.setConnectionType(mdtClConnectionType_t::Pin);
-  QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
-  // Getting article link must return nothing
-  ucnxPk.id = 101;
-  aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
-  QVERIFY(ok);
-  QCOMPARE(aLinkDataList.size(), 0);
-  // Add unit connection 110
-  ucnxData.clear();
-  acnxFk.id = 10;
-  acnxFk.setArticleId(1);
-  acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
-  ucnxKey.pk.id = 110;
-  ucnxKey.setUnitId(1);
-  ucnxKey.setArticleConnectionFk(acnxFk);
-  ucnxData.setKeyData(ucnxKey);
-  QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
-  // Getting article link must return nothing
-  ucnxPk.id = 110;
-  aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
-  QVERIFY(ok);
-  QCOMPARE(aLinkDataList.size(), 0);
-  // Add unit connection 111
-  ucnxData.clear();
-  acnxFk.id = 11;
-  acnxFk.setArticleId(1);
-  acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
-  ucnxKey.pk.id = 111;
-  ucnxKey.setUnitId(1);
-  ucnxKey.setArticleConnectionFk(acnxFk);
-  ucnxData.setKeyData(ucnxKey);
-  QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
-  // Getting article link must return 10-11
-  ucnxPk.id = 111;
-  aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
-  QVERIFY(ok);
-  QCOMPARE(aLinkDataList.size(), 1);
-  QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionStartId, QVariant(10));
-  QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionEndId, QVariant(11));
-  // Add unit connection 112
-  ucnxData.clear();
-  acnxFk.id = 12;
-  acnxFk.setArticleId(1);
-  acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
-  ucnxKey.pk.id = 112;
-  ucnxKey.setUnitId(1);
-  ucnxKey.setArticleConnectionFk(acnxFk);
-  ucnxData.setKeyData(ucnxKey);
-  QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
-  // Getting article link must return nothing
-  ucnxPk.id = 114;
-  aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
-  QVERIFY(ok);
-  QCOMPARE(aLinkDataList.size(), 0);
-  // Add unit connection 114
-  ucnxData.clear();
-  acnxFk.id = 14;
-  acnxFk.setArticleId(1);
-  acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
-  ucnxKey.pk.id = 114;
-  ucnxKey.setUnitId(1);
-  ucnxKey.setArticleConnectionFk(acnxFk);
-  ucnxData.setKeyData(ucnxKey);
-  QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
-  // Add unit connection 115
-  ucnxData.clear();
-  acnxFk.id = 15;
-  acnxFk.setArticleId(1);
-  acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
-  ucnxKey.pk.id = 115;
-  ucnxKey.setUnitId(1);
-  ucnxKey.setArticleConnectionFk(acnxFk);
-  ucnxData.setKeyData(ucnxKey);
-  QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
-  // Getting article link must return 14-15
-  ucnxPk.id = 115;
-  aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
-  QVERIFY(ok);
-  QCOMPARE(aLinkDataList.size(), 1);
-  QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionStartId, QVariant(14));
-  QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionEndId, QVariant(15));
-  // Add unit connection 212
-  ucnxData.clear();
-  acnxFk.id = 12;
-  acnxFk.setArticleId(1);
-  acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
-  ucnxKey.pk.id = 212;
-  ucnxKey.setUnitId(2);
-  ucnxKey.setArticleConnectionFk(acnxFk);
-  ucnxData.setKeyData(ucnxKey);
-  QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
-  // Getting article link must return nothing
-  ucnxPk.id = 212;
-  aLinkDataList = alnk.getLinkDataList(ucnxPk, 2, ok);
-  QVERIFY(ok);
-  QCOMPARE(aLinkDataList.size(), 0);
-  // Add unit connection 213
-  ucnxData.clear();
-  acnxFk.id = 13;
-  acnxFk.setArticleId(1);
-  acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
-  ucnxKey.pk.id = 213;
-  ucnxKey.setUnitId(2);
-  ucnxKey.setArticleConnectionFk(acnxFk);
-  ucnxData.setKeyData(ucnxKey);
-  QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
-  // Getting article link must return 12-13
-  ucnxPk.id = 213;
-  aLinkDataList = alnk.getLinkDataList(ucnxPk, 2, ok);
-  QVERIFY(ok);
-  QCOMPARE(aLinkDataList.size(), 1);
-  QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionStartId, QVariant(12));
-  QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionEndId, QVariant(13));
-  // Add unit connection 216
-  ucnxData.clear();
-  acnxFk.id = 16;
-  acnxFk.setArticleId(1);
-  acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
-  ucnxKey.pk.id = 216;
-  ucnxKey.setUnitId(2);
-  ucnxKey.setArticleConnectionFk(acnxFk);
-  ucnxData.setKeyData(ucnxKey);
-  QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
-  // Getting article link must return nothing
-  ucnxPk.id = 216;
-  aLinkDataList = alnk.getLinkDataList(ucnxPk, 2, ok);
-  QVERIFY(ok);
-  QCOMPARE(aLinkDataList.size(), 0);
-  // Add unit connection 217
-  ucnxData.clear();
-  acnxFk.id = 17;
-  acnxFk.setArticleId(1);
-  acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
-  ucnxKey.pk.id = 217;
-  ucnxKey.setUnitId(2);
-  ucnxKey.setArticleConnectionFk(acnxFk);
-  ucnxData.setKeyData(ucnxKey);
-  QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
-  // Getting article link must return 16-17
-  ucnxPk.id = 217;
-  aLinkDataList = alnk.getLinkDataList(ucnxPk, 2, ok);
-  QVERIFY(ok);
-  QCOMPARE(aLinkDataList.size(), 1);
-  QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionStartId, QVariant(16));
-  QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionEndId, QVariant(17));
-  /*
-   * Remove created unit connections
-   */
-  ucnxPk.id = 100;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 101;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 110;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 111;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 112;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 113;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 114;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 115;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 212;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 213;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 216;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 217;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  /*
-   * Remove created article links
-   */
-  aLinkPk.connectionStartId = 10;
-  aLinkPk.connectionEndId = 11;
-  QVERIFY(alnk.removeLink(aLinkPk));
-  aLinkPk.connectionStartId = 12;
-  aLinkPk.connectionEndId = 13;
-  QVERIFY(alnk.removeLink(aLinkPk));
-  aLinkPk.connectionStartId = 14;
-  aLinkPk.connectionEndId = 15;
-  QVERIFY(alnk.removeLink(aLinkPk));
-  aLinkPk.connectionStartId = 16;
-  aLinkPk.connectionEndId = 17;
-  QVERIFY(alnk.removeLink(aLinkPk));
-}
+// void mdtClArticleLinkTest::getArticleLinkByUnitConnectionTest()
+// {
+//   mdtClArticleLink alnk(pvDatabaseManager.database());
+//   mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
+//   mdtClArticleLinkPkData aLinkPk;
+//   mdtClArticleLinkData aLinkData;
+//   QList<mdtClArticleLinkData> aLinkDataList;
+//   mdtClArticleConnectionKeyData acnxFk;
+//   mdtClUnitConnectionPkData ucnxPk;
+//   mdtClUnitConnectionKeyData ucnxKey;
+//   mdtClUnitConnectionData ucnxData;
+//   mdtClUnitConnection ucnx(pvDatabaseManager.database());
+//   bool ok;
+// 
+//   /*
+//    * For this test we work directly ArticleLink_tbl and UnitConnection_tbl.
+//    * We not need the complete schema, so we disable foreign key check
+//    */
+//   QVERIFY(fkSetting.disable());
+//   /*
+//    * Create article links:
+//    *  - 10-11 , CableLink, Bidirectional
+//    *  - 12-13 , CableLink, Bidirectional
+//    *  - 14-15 , InternalLink, Bidirectional
+//    *  - 16-17 , InternalLink, Bidirectional
+//    */
+//   aLinkData.clear();
+//   aLinkPk.connectionStartId = 10;
+//   aLinkPk.connectionEndId = 11;
+//   aLinkData.setPkData(aLinkPk);
+//   aLinkData.setLinkType(mdtClLinkType_t::CableLink);
+//   aLinkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+//   QVERIFY(alnk.addLink(aLinkData));
+//   aLinkData.clear();
+//   aLinkPk.connectionStartId = 12;
+//   aLinkPk.connectionEndId = 13;
+//   aLinkData.setPkData(aLinkPk);
+//   aLinkData.setLinkType(mdtClLinkType_t::CableLink);
+//   aLinkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+//   QVERIFY(alnk.addLink(aLinkData));
+//   aLinkData.clear();
+//   aLinkPk.connectionStartId = 14;
+//   aLinkPk.connectionEndId = 15;
+//   aLinkData.setPkData(aLinkPk);
+//   aLinkData.setLinkType(mdtClLinkType_t::InternalLink);
+//   aLinkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+//   QVERIFY(alnk.addLink(aLinkData));
+//   aLinkData.clear();
+//   aLinkPk.connectionStartId = 16;
+//   aLinkPk.connectionEndId = 17;
+//   aLinkData.setPkData(aLinkPk);
+//   aLinkData.setLinkType(mdtClLinkType_t::InternalLink);
+//   aLinkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+//   QVERIFY(alnk.addLink(aLinkData));
+//   /*
+//    * Create unit connections:
+//    *  - 100 , part of unit 1 , NOT based on a article connection
+//    *  - 101 , part of unit 1 , NOT based on a article connection
+//    *  - 110 , part of unit 1 , based on article connection 10
+//    *  - 111 , part of unit 1 , based on article connection 11
+//    *  - 114 , part of unit 1 , based on article connection 14
+//    *  - 115 , part of unit 1 , based on article connection 15
+//    *  - 212 , part of unit 2 , based on article connection 12
+//    *  - 213 , part of unit 2 , based on article connection 13
+//    *  - 216 , part of unit 2 , based on article connection 16
+//    *  - 217 , part of unit 2 , based on article connection 17
+//    */
+//   // Add unit connection 100
+//   ucnxData.clear();
+//   ucnxKey.pk.id = 100;
+//   ucnxKey.setUnitId(1);
+//   ucnxData.setKeyData(ucnxKey);
+//   ucnxData.setConnectionType(mdtClConnectionType_t::Pin);
+//   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
+//   // Getting article link must return nothing
+//   ucnxPk.id = 100;
+//   aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
+//   QVERIFY(ok);
+//   QCOMPARE(aLinkDataList.size(), 0);
+//   // Add unit connection 101
+//   ucnxData.clear();
+//   ucnxKey.pk.id = 101;
+//   ucnxKey.setUnitId(1);
+//   ucnxData.setKeyData(ucnxKey);
+//   ucnxData.setConnectionType(mdtClConnectionType_t::Pin);
+//   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
+//   // Getting article link must return nothing
+//   ucnxPk.id = 101;
+//   aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
+//   QVERIFY(ok);
+//   QCOMPARE(aLinkDataList.size(), 0);
+//   // Add unit connection 110
+//   ucnxData.clear();
+//   acnxFk.id = 10;
+//   acnxFk.setArticleId(1);
+//   acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
+//   ucnxKey.pk.id = 110;
+//   ucnxKey.setUnitId(1);
+//   ucnxKey.setArticleConnectionFk(acnxFk);
+//   ucnxData.setKeyData(ucnxKey);
+//   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
+//   // Getting article link must return nothing
+//   ucnxPk.id = 110;
+//   aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
+//   QVERIFY(ok);
+//   QCOMPARE(aLinkDataList.size(), 0);
+//   // Add unit connection 111
+//   ucnxData.clear();
+//   acnxFk.id = 11;
+//   acnxFk.setArticleId(1);
+//   acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
+//   ucnxKey.pk.id = 111;
+//   ucnxKey.setUnitId(1);
+//   ucnxKey.setArticleConnectionFk(acnxFk);
+//   ucnxData.setKeyData(ucnxKey);
+//   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
+//   // Getting article link must return 10-11
+//   ucnxPk.id = 111;
+//   aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
+//   QVERIFY(ok);
+//   QCOMPARE(aLinkDataList.size(), 1);
+//   QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionStartId, QVariant(10));
+//   QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionEndId, QVariant(11));
+//   // Add unit connection 112
+//   ucnxData.clear();
+//   acnxFk.id = 12;
+//   acnxFk.setArticleId(1);
+//   acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
+//   ucnxKey.pk.id = 112;
+//   ucnxKey.setUnitId(1);
+//   ucnxKey.setArticleConnectionFk(acnxFk);
+//   ucnxData.setKeyData(ucnxKey);
+//   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
+//   // Getting article link must return nothing
+//   ucnxPk.id = 114;
+//   aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
+//   QVERIFY(ok);
+//   QCOMPARE(aLinkDataList.size(), 0);
+//   // Add unit connection 114
+//   ucnxData.clear();
+//   acnxFk.id = 14;
+//   acnxFk.setArticleId(1);
+//   acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
+//   ucnxKey.pk.id = 114;
+//   ucnxKey.setUnitId(1);
+//   ucnxKey.setArticleConnectionFk(acnxFk);
+//   ucnxData.setKeyData(ucnxKey);
+//   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
+//   // Add unit connection 115
+//   ucnxData.clear();
+//   acnxFk.id = 15;
+//   acnxFk.setArticleId(1);
+//   acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
+//   ucnxKey.pk.id = 115;
+//   ucnxKey.setUnitId(1);
+//   ucnxKey.setArticleConnectionFk(acnxFk);
+//   ucnxData.setKeyData(ucnxKey);
+//   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
+//   // Getting article link must return 14-15
+//   ucnxPk.id = 115;
+//   aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
+//   QVERIFY(ok);
+//   QCOMPARE(aLinkDataList.size(), 1);
+//   QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionStartId, QVariant(14));
+//   QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionEndId, QVariant(15));
+//   // Add unit connection 212
+//   ucnxData.clear();
+//   acnxFk.id = 12;
+//   acnxFk.setArticleId(1);
+//   acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
+//   ucnxKey.pk.id = 212;
+//   ucnxKey.setUnitId(2);
+//   ucnxKey.setArticleConnectionFk(acnxFk);
+//   ucnxData.setKeyData(ucnxKey);
+//   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
+//   // Getting article link must return nothing
+//   ucnxPk.id = 212;
+//   aLinkDataList = alnk.getLinkDataList(ucnxPk, 2, ok);
+//   QVERIFY(ok);
+//   QCOMPARE(aLinkDataList.size(), 0);
+//   // Add unit connection 213
+//   ucnxData.clear();
+//   acnxFk.id = 13;
+//   acnxFk.setArticleId(1);
+//   acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
+//   ucnxKey.pk.id = 213;
+//   ucnxKey.setUnitId(2);
+//   ucnxKey.setArticleConnectionFk(acnxFk);
+//   ucnxData.setKeyData(ucnxKey);
+//   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
+//   // Getting article link must return 12-13
+//   ucnxPk.id = 213;
+//   aLinkDataList = alnk.getLinkDataList(ucnxPk, 2, ok);
+//   QVERIFY(ok);
+//   QCOMPARE(aLinkDataList.size(), 1);
+//   QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionStartId, QVariant(12));
+//   QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionEndId, QVariant(13));
+//   // Add unit connection 216
+//   ucnxData.clear();
+//   acnxFk.id = 16;
+//   acnxFk.setArticleId(1);
+//   acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
+//   ucnxKey.pk.id = 216;
+//   ucnxKey.setUnitId(2);
+//   ucnxKey.setArticleConnectionFk(acnxFk);
+//   ucnxData.setKeyData(ucnxKey);
+//   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
+//   // Getting article link must return nothing
+//   ucnxPk.id = 216;
+//   aLinkDataList = alnk.getLinkDataList(ucnxPk, 2, ok);
+//   QVERIFY(ok);
+//   QCOMPARE(aLinkDataList.size(), 0);
+//   // Add unit connection 217
+//   ucnxData.clear();
+//   acnxFk.id = 17;
+//   acnxFk.setArticleId(1);
+//   acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
+//   ucnxKey.pk.id = 217;
+//   ucnxKey.setUnitId(2);
+//   ucnxKey.setArticleConnectionFk(acnxFk);
+//   ucnxData.setKeyData(ucnxKey);
+//   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
+//   // Getting article link must return 16-17
+//   ucnxPk.id = 217;
+//   aLinkDataList = alnk.getLinkDataList(ucnxPk, 2, ok);
+//   QVERIFY(ok);
+//   QCOMPARE(aLinkDataList.size(), 1);
+//   QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionStartId, QVariant(16));
+//   QCOMPARE(aLinkDataList.at(0).keyData().pk.connectionEndId, QVariant(17));
+//   /*
+//    * Remove created unit connections
+//    */
+//   ucnxPk.id = 100;
+//   QVERIFY(ucnx.removeUnitConnection(ucnxPk));
+//   ucnxPk.id = 101;
+//   QVERIFY(ucnx.removeUnitConnection(ucnxPk));
+//   ucnxPk.id = 110;
+//   QVERIFY(ucnx.removeUnitConnection(ucnxPk));
+//   ucnxPk.id = 111;
+//   QVERIFY(ucnx.removeUnitConnection(ucnxPk));
+//   ucnxPk.id = 112;
+//   QVERIFY(ucnx.removeUnitConnection(ucnxPk));
+//   ucnxPk.id = 113;
+//   QVERIFY(ucnx.removeUnitConnection(ucnxPk));
+//   ucnxPk.id = 114;
+//   QVERIFY(ucnx.removeUnitConnection(ucnxPk));
+//   ucnxPk.id = 115;
+//   QVERIFY(ucnx.removeUnitConnection(ucnxPk));
+//   ucnxPk.id = 212;
+//   QVERIFY(ucnx.removeUnitConnection(ucnxPk));
+//   ucnxPk.id = 213;
+//   QVERIFY(ucnx.removeUnitConnection(ucnxPk));
+//   ucnxPk.id = 216;
+//   QVERIFY(ucnx.removeUnitConnection(ucnxPk));
+//   ucnxPk.id = 217;
+//   QVERIFY(ucnx.removeUnitConnection(ucnxPk));
+//   /*
+//    * Remove created article links
+//    */
+//   aLinkPk.connectionStartId = 10;
+//   aLinkPk.connectionEndId = 11;
+//   QVERIFY(alnk.removeLink(aLinkPk));
+//   aLinkPk.connectionStartId = 12;
+//   aLinkPk.connectionEndId = 13;
+//   QVERIFY(alnk.removeLink(aLinkPk));
+//   aLinkPk.connectionStartId = 14;
+//   aLinkPk.connectionEndId = 15;
+//   QVERIFY(alnk.removeLink(aLinkPk));
+//   aLinkPk.connectionStartId = 16;
+//   aLinkPk.connectionEndId = 17;
+//   QVERIFY(alnk.removeLink(aLinkPk));
+// }
 
 /*
  * Test database helper methods

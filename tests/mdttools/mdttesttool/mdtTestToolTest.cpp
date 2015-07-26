@@ -105,6 +105,8 @@ void mdtTestToolTest::mdtTtBaseTest()
   QSqlRecord data;
   QList<QSqlRecord> dataList;
   QList<QVariant> variantList;
+  QVariant variant;
+  int intData;
   QList<int> intList;
   QList<qlonglong> longLongList;
   bool ok;
@@ -125,10 +127,19 @@ void mdtTestToolTest::mdtTtBaseTest()
   sql = "SELECT * FROM VehicleType_tbl";
   fields.clear();
   fields << "Id_PK" << "Type" << "SubType" << "SeriesNumber";
-  dataList = b.getData(sql, &ok, fields);
+  dataList = b.getDataList<QSqlRecord>(sql, ok, fields);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   data = dataList.at(0);
+  QCOMPARE(data.value("Id_PK"), QVariant(1));
+  QCOMPARE(data.value("Type"), QVariant("Vehicle type 1"));
+  QCOMPARE(data.value("SubType"), QVariant(QVariant::String));
+  QVERIFY(data.value("SubType").isNull());
+  QCOMPARE(data.value("SeriesNumber"), QVariant(QVariant::String));
+  QVERIFY(data.value("SeriesNumber").isNull());
+  // Check again with getData() - Type: QSqlRecord
+  data = b.getData<QSqlRecord>(sql, ok, fields);
+  QVERIFY(ok);
   QCOMPARE(data.value("Id_PK"), QVariant(1));
   QCOMPARE(data.value("Type"), QVariant("Vehicle type 1"));
   QCOMPARE(data.value("SubType"), QVariant(QVariant::String));
@@ -162,32 +173,37 @@ void mdtTestToolTest::mdtTtBaseTest()
   QVERIFY(ok);
   QCOMPARE(longLongList.size(), 1);
   QCOMPARE(longLongList.at(0), static_cast<qlonglong>(1));
+  // Check again with getData() - Type: QVariant
+  variant = b.getData<QVariant>(sql, ok);
+  QVERIFY(ok);
+  QCOMPARE(variant, QVariant(1));
+  // Check again with getData() - Type: int
+  intData = b.getData<int>(sql, ok);
+  QVERIFY(ok);
+  QCOMPARE(intData, 1);
   // Get data from a non existing table - must fail
   sql = "SELECT * FROM jkhswjqkhkjqhwdjwhqkhj";
-  dataList = b.getData(sql, &ok, fields);
+  dataList = b.getDataList<QSqlRecord>(sql, ok, fields);
   QVERIFY(!ok);
   QCOMPARE(dataList.size(), 0);
   // Get data from a existing table, but expect a field that not exists - must fail
   sql = "SELECT * FROM VehicleType_tbl";
   fields.clear();
   fields << "Id_PK" << "Type" << "HuhUHHUIJhkhjKHjhkjh" << "SeriesNumber";
-  dataList = b.getData(sql, &ok, fields);
+  dataList = b.getDataList<QSqlRecord>(sql, ok, fields);
   QVERIFY(!ok);
   QCOMPARE(dataList.size(), 0);
   // Get data from a existing table, specifing only some expect fields - Must work
   sql = "SELECT * FROM VehicleType_tbl";
   fields.clear();
   fields << "Id_PK" << "SeriesNumber";
-  dataList = b.getData(sql, &ok, fields);
+  dataList = b.getDataList<QSqlRecord>(sql, ok, fields);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   // Get data from a existing table without specifing expected fields - Must work
   sql = "SELECT * FROM VehicleType_tbl";
-  dataList = b.getData(sql, &ok);
+  dataList = b.getDataList<QSqlRecord>(sql, ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 1);
-  // Get data without ok pointer, must not crash
-  dataList = b.getData(sql);
   QCOMPARE(dataList.size(), 1);
   // Add data
   QVERIFY(record.addAllFields("VehicleType_tbl", b.database()));
@@ -196,17 +212,28 @@ void mdtTestToolTest::mdtTtBaseTest()
   QVERIFY(b.addRecord(record, "VehicleType_tbl"));
   // Get data and check
   sql = "SELECT * FROM VehicleType_tbl";
-  dataList = b.getData(sql, &ok);
+  dataList = b.getDataList<QSqlRecord>(sql, ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 2);
   data = dataList.at(1);
   QCOMPARE(data.value("Id_PK"), QVariant(2));
   QCOMPARE(data.value("Type"), QVariant("Vehicle type 2"));
+  // Check again with getData() - Type: QSqlRecord - Must fail because SQL statement will return more than 1 record
+  data = b.getData<QSqlRecord>(sql, ok);
+  QVERIFY(!ok);
+  // Check again with getData() - Type: QVariant, int - Must fail because SQL statement will return more than 1 record
+  sql = "SELECT Id_PK FROM VehicleType_tbl";
+  variant = b.getData<QVariant>(sql, ok);
+  QVERIFY(!ok);
+  QVERIFY(variant.isNull());
+  intData = b.getData<int>(sql, ok);
+  QVERIFY(!ok);
+  QCOMPARE(intData, 0);
   // Remove first row
   QVERIFY(b.removeData("VehicleType_tbl", "Id_PK", 1));
   // Check that only first row was removed
   sql = "SELECT * FROM VehicleType_tbl";
-  dataList = b.getData(sql, &ok);
+  dataList = b.getDataList<QSqlRecord>(sql, ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   data = dataList.at(0);
@@ -220,7 +247,7 @@ void mdtTestToolTest::mdtTtBaseTest()
   QVERIFY(b.updateRecord("VehicleType_tbl", record, "Id_PK", 2));
   // Get data and check
   sql = "SELECT * FROM VehicleType_tbl";
-  dataList = b.getData(sql, &ok);
+  dataList = b.getDataList<QSqlRecord>(sql, ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   data = dataList.at(0);
@@ -232,7 +259,7 @@ void mdtTestToolTest::mdtTtBaseTest()
   QVERIFY(b.updateRecord("VehicleType_tbl", record, "Id_PK", 2));
   // Get data and check
   sql = "SELECT * FROM VehicleType_tbl";
-  dataList = b.getData(sql, &ok);
+  dataList = b.getDataList<QSqlRecord>(sql, ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   data = dataList.at(0);

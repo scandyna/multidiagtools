@@ -2,11 +2,11 @@ format 209
 
 classcanvas 128002 class_ref 1732482 // mdtClLinkModificationKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 319 286 2000
+  xyz 434 578 2000
 end
 classcanvas 128130 class_ref 1672962 // mdtClLinkPkData
   classdiagramsettings member_max_width 0 end
-  xyz 424 100 2000
+  xyz 48 52 2000
 end
 classcanvas 128386 class_ref 1679746 // mdtClLinkVersionPkData
   classdiagramsettings member_max_width 0 end
@@ -16,9 +16,8 @@ classcanvas 128642 class_ref 1693186 // mdtClModificationPkData
   classdiagramsettings member_max_width 0 end
   xyz 39 575 2000
 end
-relationcanvas 128514 relation_ref 2057090 // <unidirectional association>
-  from ref 128002 z 2001 to ref 128386
-  role_a_pos 209 362 3000 no_role_b
-  no_multiplicity_a no_multiplicity_b
+classcanvas 128770 class_ref 1766146 // mdtClArticleLinkUnitConnectionPkData
+  classdiagramsettings member_max_width 0 end
+  xyz 370 53 2000
 end
 end

@@ -654,7 +654,7 @@ void mdtClUnitLinkDialog::updateStartUnit()
   }
   // Get unit data
   sql = "SELECT SchemaPosition, Alias, Cabinet FROM Unit_tbl WHERE Id_PK = " + pvStartUnitId.toString();
-  dataList = unit.getData(sql, &ok);
+  dataList = unit.getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     lbStartSchemaPosition->setText("<Error!>");
     lbStartAlias->setText("<Error!>");
@@ -684,7 +684,7 @@ void mdtClUnitLinkDialog::updateEndUnit()
   }
   // Get unit data
   sql = "SELECT SchemaPosition, Alias, Cabinet FROM Unit_tbl WHERE Id_PK = " + pvEndUnitId.toString();
-  dataList = unit.getData(sql, &ok);
+  dataList = unit.getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     lbEndSchemaPosition->setText("<Error!>");
     lbEndAlias->setText("<Error!>");

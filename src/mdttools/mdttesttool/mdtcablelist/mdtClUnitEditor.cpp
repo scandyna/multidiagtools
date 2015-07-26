@@ -535,6 +535,7 @@ void mdtClUnitEditor::addArticleConnectorBasedConnector()
     return;
   }
   // If some links has been added, we tell it the user
+  /** \todo FIX !
   if(ucnx.linksHaveBeenAdded()){
     QMessageBox msgBox(this);
     bool ok;
@@ -543,6 +544,7 @@ void mdtClUnitEditor::addArticleConnectorBasedConnector()
     msgBox.setIcon(QMessageBox::Information);
     msgBox.exec();
   }
+  */
   // Update views
   select("UnitConnector_view");
   select("UnitConnection_view");
@@ -725,6 +727,7 @@ void mdtClUnitEditor::addArticleConnectionsBasedConnections()
     return;
   }
   // If some links has been added, we tell it the user
+  /** \todo FIX !
   if(ucnx.linksHaveBeenAdded()){
     QMessageBox msgBox(this);
     msgBox.setText(tr("Following links has been added:\n") + ucnx.getAddedLinksText(ok));
@@ -732,6 +735,7 @@ void mdtClUnitEditor::addArticleConnectionsBasedConnections()
     msgBox.setIcon(QMessageBox::Information);
     msgBox.exec();
   }
+  */
   // Update views
   select("UnitConnection_view");
   select("UnitLink_view");

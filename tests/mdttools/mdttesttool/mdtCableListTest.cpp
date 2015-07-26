@@ -113,7 +113,7 @@ void mdtCableListTest::articleTest()
   record.setValue("DesignationEN", "Article 1234");
   QVERIFY(art.addRecord(record, "Article_tbl"));
   // Check added article
-  dataList = art.getData("SELECT * FROM Article_tbl", &ok);
+  dataList = art.getDataList<QSqlRecord>("SELECT * FROM Article_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   data = dataList.at(0);
@@ -127,7 +127,7 @@ void mdtCableListTest::articleTest()
   record.setValue("DesignationEN", "Article ABC");
   QVERIFY(art.addRecord(record, "Article_tbl"));
   // Check existing articles
-  dataList = art.getData("SELECT * FROM Article_tbl", &ok);
+  dataList = art.getDataList<QSqlRecord>("SELECT * FROM Article_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 2);
   data = dataList.at(0);
@@ -144,13 +144,13 @@ void mdtCableListTest::articleTest()
    */
 
   // Initially we have not assigned any component
-  dataList = art.getData("SELECT * FROM ArticleComponent_view", &ok);
+  dataList = art.getDataList<QSqlRecord>("SELECT * FROM ArticleComponent_view", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
   // Assign article ID 2 as component of article ID 1
   QVERIFY(art.addComponent(1, 2, 5, "pce"));
   // Check back
-  dataList = art.getData("SELECT * FROM ArticleComponent_view", &ok);
+  dataList = art.getDataList<QSqlRecord>("SELECT * FROM ArticleComponent_view", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   data = dataList.at(0);
@@ -160,12 +160,12 @@ void mdtCableListTest::articleTest()
   QCOMPARE(data.value("ComponentQtyUnit"), QVariant("pce"));
   // Try to remove wrong component assignation - Note: possibly ok that no error is returned
   art.removeComponent(5, 3);
-  dataList = art.getData("SELECT * FROM ArticleComponent_view", &ok);
+  dataList = art.getDataList<QSqlRecord>("SELECT * FROM ArticleComponent_view", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   // Remove component assignation
   QVERIFY(art.removeComponent(1, 2));
-  dataList = art.getData("SELECT * FROM ArticleComponent_view", &ok);
+  dataList = art.getDataList<QSqlRecord>("SELECT * FROM ArticleComponent_view", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
 
@@ -360,11 +360,11 @@ void mdtCableListTest::articleTest()
 //   QCOMPARE(dataList.size(), 0);
   // Remove article
   QVERIFY(art.removeData("Article_tbl", "Id_PK", 1));
-  dataList = art.getData("SELECT * FROM Article_tbl", &ok);
+  dataList = art.getDataList<QSqlRecord>("SELECT * FROM Article_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   QVERIFY(art.removeData("Article_tbl", "Id_PK", 2));
-  dataList = art.getData("SELECT * FROM Article_tbl", &ok);
+  dataList = art.getDataList<QSqlRecord>("SELECT * FROM Article_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
   // Remove base connector
@@ -372,7 +372,7 @@ void mdtCableListTest::articleTest()
   QVERIFY(art.removeData("ConnectorContact_tbl", "Id_PK", 2));
   QVERIFY(art.removeData("ConnectorContact_tbl", "Id_PK", 3));
   QVERIFY(art.removeData("Connector_tbl", "Id_PK", 1));
-  dataList = art.getData("SELECT * FROM Connector_tbl", &ok);
+  dataList = art.getDataList<QSqlRecord>("SELECT * FROM Connector_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
 }
@@ -1845,7 +1845,7 @@ void mdtCableListTest::directLinkTest()
   QVERIFY(record.contains("UnitConnectionStart_Id_FK"));
   QVERIFY(record.contains("UnitConnectionEnd_Id_FK"));
   // Get unit connections for next tests
-  dataList = dlnk->getData("SELECT Id_PK FROM UnitConnection_tbl", &ok);
+  dataList = dlnk->getDataList<QSqlRecord>("SELECT Id_PK FROM UnitConnection_tbl", ok);
   QVERIFY(ok);
   for(i = 0; i < dataList.size(); ++i){
     allConnectionsIdList.append(dataList.at(i).value(0));
@@ -1866,18 +1866,18 @@ void mdtCableListTest::directLinkTest()
   QVERIFY(!dlnk->addLink(10000, QVariant()));
   QVERIFY(!dlnk->addLink(QVariant(), 20000));
   QVERIFY(dlnk->addLink(10000, 20000));
-  dataList = dlnk->getData("SELECT * FROM DirectLink_tbl", &ok);
+  dataList = dlnk->getDataList<QSqlRecord>("SELECT * FROM DirectLink_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   QCOMPARE(dataList.at(0).value("UnitConnectionStart_Id_FK"), QVariant(10000));
   QCOMPARE(dataList.at(0).value("UnitConnectionEnd_Id_FK"), QVariant(20000));
   QVERIFY(dlnk->removeData("DirectLink_tbl", "UnitConnectionStart_Id_FK", 10000, "UnitConnectionEnd_Id_FK", 20000));
-  dataList = dlnk->getData("SELECT * FROM DirectLink_tbl", &ok);
+  dataList = dlnk->getDataList<QSqlRecord>("SELECT * FROM DirectLink_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
   // Check link adding between 2 connectors
   QVERIFY(dlnk->addLinksByUnitConnector(300000, 500000, &graph));
-  dataList = dlnk->getData("SELECT * FROM DirectLink_tbl", &ok);
+  dataList = dlnk->getDataList<QSqlRecord>("SELECT * FROM DirectLink_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   QCOMPARE(dataList.at(0).value("UnitConnectionStart_Id_FK"), QVariant(30005));
@@ -1907,7 +1907,7 @@ void mdtCableListTest::linkBeamTest()
   record.setValue("Id_PK", 1);
   record.setValue("Identification", "Link beam 1");
   QVERIFY(lb.addRecord(record, "LinkBeam_tbl"));
-  dataList = lb.getData("SELECT * FROM LinkBeam_tbl", &ok);
+  dataList = lb.getDataList<QSqlRecord>("SELECT * FROM LinkBeam_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   QCOMPARE(dataList.at(0).value("Id_PK"), QVariant(1));
@@ -1916,7 +1916,7 @@ void mdtCableListTest::linkBeamTest()
    * Add a start unit
    */
   QVERIFY(lb.addStartUnit(1000, 1));
-  dataList = lb.getData("SELECT * FROM LinkBeam_UnitStart_view", &ok);
+  dataList = lb.getDataList<QSqlRecord>("SELECT * FROM LinkBeam_UnitStart_view", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   QCOMPARE(dataList.at(0).value("Unit_Id_FK"), QVariant(1000));
@@ -1925,7 +1925,7 @@ void mdtCableListTest::linkBeamTest()
    * Add a end unit
    */
   QVERIFY(lb.addEndUnit(2000, 1));
-  dataList = lb.getData("SELECT * FROM LinkBeam_UnitEnd_view", &ok);
+  dataList = lb.getDataList<QSqlRecord>("SELECT * FROM LinkBeam_UnitEnd_view", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   QCOMPARE(dataList.at(0).value("Unit_Id_FK"), QVariant(2000));
@@ -1934,7 +1934,7 @@ void mdtCableListTest::linkBeamTest()
    * Add (existing) link from unit connection ID 10000 -> 10001 to link beam 1
    */
   QVERIFY(lb.addLink(10000, 10001, 1));
-  dataList = lb.getData("SELECT * FROM UnitLink_view WHERE LinkBeam_Id_FK = 1", &ok);
+  dataList = lb.getDataList<QSqlRecord>("SELECT * FROM UnitLink_view WHERE LinkBeam_Id_FK = 1", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   QCOMPARE(dataList.at(0).value("UnitConnectionStart_Id_FK"), QVariant(10000));
@@ -1945,7 +1945,7 @@ void mdtCableListTest::linkBeamTest()
    * Remove (existing) link from unit connection ID 10000 -> 10001 from link beam 1
    */
   QVERIFY(lb.removeLink(10000, 10001));
-  dataList = lb.getData("SELECT * FROM UnitLink_view WHERE UnitConnectionStart_Id_FK = 10000 AND UnitConnectionEnd_Id_FK = 10001", &ok);
+  dataList = lb.getDataList<QSqlRecord>("SELECT * FROM UnitLink_view WHERE UnitConnectionStart_Id_FK = 10000 AND UnitConnectionEnd_Id_FK = 10001", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   QVERIFY(dataList.at(0).value("LinkBeam_Id_FK").isNull());
@@ -1954,14 +1954,14 @@ void mdtCableListTest::linkBeamTest()
    * Remove start unit
    */
   QVERIFY(lb.removeStartUnit(1000, 1));
-  dataList = lb.getData("SELECT * FROM LinkBeam_UnitStart_view", &ok);
+  dataList = lb.getDataList<QSqlRecord>("SELECT * FROM LinkBeam_UnitStart_view", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
   /*
    * Remove end unit
    */
   QVERIFY(lb.removeEndUnit(2000, 1));
-  dataList = lb.getData("SELECT * FROM LinkBeam_UnitEnd_view", &ok);
+  dataList = lb.getDataList<QSqlRecord>("SELECT * FROM LinkBeam_UnitEnd_view", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
 }

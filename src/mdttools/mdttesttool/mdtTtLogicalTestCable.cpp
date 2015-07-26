@@ -454,7 +454,7 @@ mdtTtTestLinkData mdtTtLogicalTestCable::getLinkData(const QVariant & testConnec
   sql = "SELECT * FROM TestLink_tbl";
   sql += " WHERE TestConnection_Id_FK = " + testConnectionId.toString();
   sql += " AND DutConnection_Id_FK = " + dutConnectionId.toString();
-  dataList = getData(sql, ok);
+  dataList = getDataList<QSqlRecord>(sql, *ok);
   if(!*ok){
     return linkData;
   }

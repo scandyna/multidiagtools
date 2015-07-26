@@ -35,6 +35,7 @@
 #include "mdtClVehicleTypeLinkAssignationWidget.h"
 #include "mdtClVehicleTypeCheckBox.h"
 #include "mdtClArticleLink.h"
+#include "mdtClArticleLinkUnitConnectionKeyData.h"
 #include "mdtClUnitConnection.h"
 #include "mdtClVehicleTypeLinkTestData.h"
 #include "mdtClModificationKeyData.h"
@@ -1522,12 +1523,32 @@ void mdtClLinkTest::linkFromArticleLinkAddTest()
   mdtClUnitConnectionData ucnxData;
   mdtClUnitConnection ucnx(pvDatabaseManager.database());
   bool ok;
+  mdtClArticleLinkUnitConnectionKeyData alucnxKey;
 
   /*
    * For this test we work directly on ArticleLink_tbl and UnitConnection_tbl.
    * We not need the complete schema, so we disable foreign key check
    */
   QVERIFY(fkSetting.disable());
+  /*
+   * Article link - unit connection PK data test
+   */
+  // Initial state
+  QVERIFY(alucnxKey.isNull());
+  // Set
+  alucnxKey.articleLinkPk.connectionStartId = 1;
+  alucnxKey.articleLinkPk.connectionEndId = 2;
+  QVERIFY(alucnxKey.isNull());
+  alucnxKey.unitConnectionStartPk.id = 3;
+  QVERIFY(alucnxKey.isNull());
+  alucnxKey.unitConnectionEndPk.id = 4;
+  QVERIFY(!alucnxKey.isNull());
+  // Clear
+  alucnxKey.clear();
+  QVERIFY(alucnxKey.articleLinkPk.isNull());
+  QVERIFY(alucnxKey.unitConnectionStartPk.isNull());
+  QVERIFY(alucnxKey.unitConnectionEndPk.isNull());
+  QVERIFY(alucnxKey.isNull());
   /*
    * Create article links:
    *  - 10-11 , CableLink, Bidirectional
@@ -1546,7 +1567,7 @@ void mdtClLinkTest::linkFromArticleLinkAddTest()
    *  - 110 , part of unit 1 , based on article connection 10
    *  - 111 , part of unit 1 , based on article connection 11
    */
-  // Add unit connection 110
+  // Setup data for unit connection 110
   ucnxData.clear();
   acnxFk.id = 10;
   acnxFk.setArticleId(1);
@@ -1555,14 +1576,18 @@ void mdtClLinkTest::linkFromArticleLinkAddTest()
   ucnxKey.setUnitId(1);
   ucnxKey.setArticleConnectionFk(acnxFk);
   ucnxData.setKeyData(ucnxKey);
+  // Add unit connection
   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
-  QVERIFY(!ucnx.linksHaveBeenAdded());
-  // Getting article link must return nothing
-  ucnxPk.id = 110;
-  aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
-  QVERIFY(ok);
-  QCOMPARE(aLinkDataList.size(), 0);
-  // Add unit connection 111
+  ///QVERIFY(!ucnx.linksHaveBeenAdded());
+  // At this state, no links has to be created
+  QCOMPARE(ucnx.linkToCreateKeyList().size(), 0);
+//   ucnxPk.id = 110;
+//   QVERIFY(!alnk.hasRelatedLinksToCreate(ucnxPk, 1, ok));
+//   QVERIFY(ok);
+//   aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
+//   QVERIFY(ok);
+//   QCOMPARE(aLinkDataList.size(), 0);
+  // Setup data for unit connection 111
   ucnxData.clear();
   acnxFk.id = 11;
   acnxFk.setArticleId(1);
@@ -1571,43 +1596,59 @@ void mdtClLinkTest::linkFromArticleLinkAddTest()
   ucnxKey.setUnitId(1);
   ucnxKey.setArticleConnectionFk(acnxFk);
   ucnxData.setKeyData(ucnxKey);
+  // Add unit connection
   QVERIFY(!ucnx.addUnitConnection(ucnxData, true).isNull());
-  QVERIFY(ucnx.linksHaveBeenAdded());
-  // Getting article link must return 10-11
-  ucnxPk.id = 111;
-  aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
-  QVERIFY(ok);
-  QCOMPARE(aLinkDataList.size(), 1);
-  // Link was allready created when connection was added. Remove it, so we can check..
-  linkPk.connectionStartId = 110;
-  linkPk.connectionEndId = 111;
-  QVERIFY(lnk.removeLink(linkPk, true));
-  // Create link on base of this article link
-  QVERIFY(lnk.addLink(aLinkData, 1));
-  // Get link back and check
-  linkPk.connectionStartId = 110;
-  linkPk.connectionEndId = 111;
-  linkData = lnk.getLinkData(linkPk, ok);
-  QVERIFY(ok);
-  QVERIFY(!linkData.isNull());
-  QCOMPARE(linkData.keyData().articleLinkFk().connectionStartId, QVariant(10));
-  QCOMPARE(linkData.keyData().articleLinkFk().connectionEndId, QVariant(11));
-  QVERIFY(linkData.keyData().linkTypeFk().type() == mdtClLinkType_t::CableLink);
-  QVERIFY(linkData.keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
-  QCOMPARE(linkData.identification, QVariant("Link 10-11"));
-  QCOMPARE(linkData.resistance.value(), 1.3);
-  // Check getting link data by article link PK
-  aLinkPk.connectionStartId = 10;
-  aLinkPk.connectionEndId = 11;
-  linkData = lnk.getLinkData(aLinkPk, 1, 1, ok);
-  QVERIFY(ok);
-  QVERIFY(!linkData.isNull());
-  QCOMPARE(linkData.keyData().articleLinkFk().connectionStartId, QVariant(10));
-  QCOMPARE(linkData.keyData().articleLinkFk().connectionEndId, QVariant(11));
-  QVERIFY(linkData.keyData().linkTypeFk().type() == mdtClLinkType_t::CableLink);
-  QVERIFY(linkData.keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
-  QCOMPARE(linkData.identification, QVariant("Link 10-11"));
-  QCOMPARE(linkData.resistance.value(), 1.3);
+  ///QVERIFY(ucnx.linksHaveBeenAdded());
+  // At this state, 1 link has to be created
+  QCOMPARE(ucnx.linkToCreateKeyList().size(), 1);
+  QCOMPARE(ucnx.linkToCreateKeyList().at(0).articleLinkPk.connectionStartId, QVariant(10));
+  QCOMPARE(ucnx.linkToCreateKeyList().at(0).articleLinkPk.connectionEndId, QVariant(11));
+  QCOMPARE(ucnx.linkToCreateKeyList().at(0).unitConnectionStartPk.id, QVariant(110));
+  QCOMPARE(ucnx.linkToCreateKeyList().at(0).unitConnectionEndPk.id, QVariant(111));
+//   ucnxPk.id = 111;
+//   QVERIFY(alnk.hasRelatedLinksToCreate(ucnxPk, 1, ok));
+//   QVERIFY(ok);
+//   QCOMPARE(alnk.relatedLinksToCreateCount(ucnxPk, 1), 1);
+//   aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
+//   QVERIFY(ok);
+//   QCOMPARE(aLinkDataList.size(), 1);
+//   // Getting article link must return 10-11
+//   ucnxPk.id = 111;
+//   aLinkDataList = alnk.getLinkDataList(ucnxPk, 1, ok);
+//   QVERIFY(ok);
+//   QCOMPARE(aLinkDataList.size(), 1);
+//   // Link was allready created when connection was added. Remove it, so we can check..
+//   linkPk.connectionStartId = 110;
+//   linkPk.connectionEndId = 111;
+//   QVERIFY(lnk.removeLink(linkPk, true));
+//   // Create link on base of this article link
+//   QVERIFY(lnk.addLink(aLinkData, 1));
+//   // Get link back and check
+  // Link was allready created when connection was added. Check it
+//   linkPk.connectionStartId = 110;
+//   linkPk.connectionEndId = 111;
+//   qDebug() << "About to check link...";
+//   linkData = lnk.getLinkData(linkPk, ok);
+//   QVERIFY(ok);
+//   QVERIFY(!linkData.isNull());
+//   QCOMPARE(linkData.keyData().articleLinkFk().connectionStartId, QVariant(10));
+//   QCOMPARE(linkData.keyData().articleLinkFk().connectionEndId, QVariant(11));
+//   QVERIFY(linkData.keyData().linkTypeFk().type() == mdtClLinkType_t::CableLink);
+//   QVERIFY(linkData.keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
+//   QCOMPARE(linkData.identification, QVariant("Link 10-11"));
+//   QCOMPARE(linkData.resistance.value(), 1.3);
+//   // Check getting link data by article link PK
+//   aLinkPk.connectionStartId = 10;
+//   aLinkPk.connectionEndId = 11;
+//   linkData = lnk.getLinkData(aLinkPk, 1, 1, ok);
+//   QVERIFY(ok);
+//   QVERIFY(!linkData.isNull());
+//   QCOMPARE(linkData.keyData().articleLinkFk().connectionStartId, QVariant(10));
+//   QCOMPARE(linkData.keyData().articleLinkFk().connectionEndId, QVariant(11));
+//   QVERIFY(linkData.keyData().linkTypeFk().type() == mdtClLinkType_t::CableLink);
+//   QVERIFY(linkData.keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
+//   QCOMPARE(linkData.identification, QVariant("Link 10-11"));
+//   QCOMPARE(linkData.resistance.value(), 1.3);
   /*
    * Remove created links
    */

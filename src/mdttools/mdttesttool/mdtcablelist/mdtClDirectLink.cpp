@@ -59,7 +59,7 @@ QList<QVariant> mdtClDirectLink::getUnitConnectionIdListPartOfUnit(const QList<Q
     sql += " OR Id_PK = " + unitConnectionIdList.at(i).toString();
   }
   sql += ")";
-  dataList = getData(sql, ok);
+  dataList = getDataList<QSqlRecord>(sql, *ok);
   if(!*ok){
     return idList;
   }
@@ -90,7 +90,7 @@ QList<QVariant> mdtClDirectLink::getUnitConnectionIdListPartOfUnitConnector(cons
     sql += " OR Id_PK = " + unitConnectionIdList.at(i).toString();
   }
   sql += ")";
-  dataList = getData(sql, ok);
+  dataList = getDataList<QSqlRecord>(sql, *ok);
   if(!*ok){
     return idList;
   }
@@ -239,7 +239,7 @@ QList<QSqlRecord> mdtClDirectLink::getStartData(const QVariant & unitConnectionI
         " FROM LinkList_view ";
   sql += " WHERE UnitConnectionStart_Id_FK = " + unitConnectionId.toString();
 
-  return getData(sql, ok);
+  return getDataList<QSqlRecord>(sql, *ok);
 }
 
 QList<QSqlRecord> mdtClDirectLink::getEndData(const QVariant & unitConnectionId, bool *ok)
@@ -255,7 +255,7 @@ QList<QSqlRecord> mdtClDirectLink::getEndData(const QVariant & unitConnectionId,
         " FROM LinkList_view ";
   sql += " WHERE UnitConnectionEnd_Id_FK = " + unitConnectionId.toString();
 
-  return getData(sql, ok);
+  return getDataList<QSqlRecord>(sql, *ok);
 }
 
 void mdtClDirectLink::addDataList(const QList<QSqlRecord> & src, QList<QSqlRecord> & dest)

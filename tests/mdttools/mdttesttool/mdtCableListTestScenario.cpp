@@ -106,7 +106,7 @@ void mdtCableListTestScenario::createTestVehicleTypes()
   record.setValue("Type", "Vehicle type 1");
   QVERIFY(tb.addRecord(record, "VehicleType_tbl"));
   // Check back
-  dataList = tb.getData("SELECT * FROM VehicleType_tbl", &ok);
+  dataList = tb.getDataList<QSqlRecord>("SELECT * FROM VehicleType_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   QCOMPARE(dataList.at(0).value("Id_PK"), QVariant(1));
@@ -118,7 +118,7 @@ void mdtCableListTestScenario::createTestVehicleTypes()
   record.setValue("Type", "Vehicle type 2");
   QVERIFY(tb.addRecord(record, "VehicleType_tbl"));
   // Check back
-  dataList = tb.getData("SELECT * FROM VehicleType_tbl", &ok);
+  dataList = tb.getDataList<QSqlRecord>("SELECT * FROM VehicleType_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 2);
   QCOMPARE(dataList.at(1).value("Id_PK"), QVariant(2));
@@ -134,7 +134,7 @@ void mdtCableListTestScenario::removeTestVehicleTypes()
 
   QVERIFY(tb.removeData("VehicleType_tbl", "Id_PK", 1));
   QVERIFY(tb.removeData("VehicleType_tbl", "Id_PK", 2));
-  dataList = tb.getData("SELECT * FROM VehicleType_tbl", &ok);
+  dataList = tb.getDataList<QSqlRecord>("SELECT * FROM VehicleType_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
 }
@@ -221,7 +221,7 @@ void mdtCableListTestScenario::removeTestConnectors()
   QVERIFY(art.removeData("ConnectorContact_tbl", "Id_PK", 301));
   QVERIFY(art.removeData("Connector_tbl", "Id_PK", 3));
   // Check back
-  dataList = art.getData("SELECT * FROM Connector_tbl", &ok);
+  dataList = art.getDataList<QSqlRecord>("SELECT * FROM Connector_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
 }
@@ -241,7 +241,7 @@ void mdtCableListTestScenario::createTestArticles()
   record.setValue("DesignationEN", "Article 1");
   QVERIFY(art.addRecord(record, "Article_tbl"));
   // Check added article
-  dataList = art.getData("SELECT * FROM Article_tbl", &ok);
+  dataList = art.getDataList<QSqlRecord>("SELECT * FROM Article_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   data = dataList.at(0);
@@ -255,7 +255,7 @@ void mdtCableListTestScenario::createTestArticles()
   record.setValue("DesignationEN", "Article 2");
   QVERIFY(art.addRecord(record, "Article_tbl"));
   // Check added article
-  dataList = art.getData("SELECT * FROM Article_tbl", &ok);
+  dataList = art.getDataList<QSqlRecord>("SELECT * FROM Article_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 2);
   data = dataList.at(1);
@@ -272,11 +272,11 @@ void mdtCableListTestScenario::removeTestArticles()
   bool ok;
 
   QVERIFY(art.removeData("Article_tbl", "Id_PK", 1));
-  dataList = art.getData("SELECT * FROM Article_tbl", &ok);
+  dataList = art.getDataList<QSqlRecord>("SELECT * FROM Article_tbl", ok);
   QVERIFY(ok);
   ///QCOMPARE(dataList.size(), 1);  // Fails if articles where never created
   QVERIFY(art.removeData("Article_tbl", "Id_PK", 2));
-  dataList = art.getData("SELECT * FROM Article_tbl", &ok);
+  dataList = art.getDataList<QSqlRecord>("SELECT * FROM Article_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
 }
@@ -529,7 +529,7 @@ void mdtCableListTestScenario::createTestArticleLinks()
 //   QVERIFY(art.addCableLink(10, 20, "", 0.0));  
 //   QVERIFY(art.addCableLink(21, 20, "", 0.0));
 //   QVERIFY(art.addInternalLink(21, 22, "", 0.0));
-  dataList = art.getData("SELECT * FROM ArticleLink_view", &ok);
+  dataList = art.getDataList<QSqlRecord>("SELECT * FROM ArticleLink_view", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 3);
   QCOMPARE(dataList.at(0).value("ArticleConnectionStart_Id_FK"), QVariant(10));
@@ -568,7 +568,7 @@ void mdtCableListTestScenario::createTestUnits()
   data.setValue("Id_PK", 1000);
   data.setValue("SchemaPosition", "Position 1000");
   QVERIFY(unit.addRecord(data, "Unit_tbl"));
-  dataList = unit.getData("SELECT * FROM Unit_tbl", &ok);
+  dataList = unit.getDataList<QSqlRecord>("SELECT * FROM Unit_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   QCOMPARE(dataList.at(0).value("Id_PK"), QVariant(1000));
@@ -578,7 +578,7 @@ void mdtCableListTestScenario::createTestUnits()
   data.setValue("Article_Id_FK", 2);
   data.setValue("SchemaPosition", "Position 2000");
   QVERIFY(unit.addRecord(data, "Unit_tbl"));
-  dataList = unit.getData("SELECT * FROM Unit_tbl", &ok);
+  dataList = unit.getDataList<QSqlRecord>("SELECT * FROM Unit_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 2);
   QCOMPARE(dataList.at(1).value("Id_PK"), QVariant(2000));
@@ -589,7 +589,7 @@ void mdtCableListTestScenario::createTestUnits()
   data.setValue("Article_Id_FK", 2);
   data.setValue("SchemaPosition", "Position 2001");
   QVERIFY(unit.addRecord(data, "Unit_tbl"));
-  dataList = unit.getData("SELECT * FROM Unit_tbl", &ok);
+  dataList = unit.getDataList<QSqlRecord>("SELECT * FROM Unit_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 3);
   QCOMPARE(dataList.at(2).value("Id_PK"), QVariant(2001));
@@ -623,7 +623,7 @@ void mdtCableListTestScenario::removeTestUnits()
   QVERIFY(unit.removeData("Unit_tbl", "Id_PK", 1000));
   QVERIFY(unit.removeData("Unit_tbl", "Id_PK", 2000));
   QVERIFY(unit.removeData("Unit_tbl", "Id_PK", 2001));
-  dataList = unit.getData("SELECT * FROM Unit_tbl", &ok);
+  dataList = unit.getDataList<QSqlRecord>("SELECT * FROM Unit_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
 }
@@ -636,21 +636,21 @@ void mdtCableListTestScenario::createTestVehicleTypeUnitAssignations()
 
   // Unit 1000 <-> VehicleType 1
   QVERIFY(uvt.addUnitVehicleTypeAssignment(1000, 1));
-  dataList = uvt.getData("SELECT * FROM VehicleType_Unit_tbl", &ok);
+  dataList = uvt.getDataList<QSqlRecord>("SELECT * FROM VehicleType_Unit_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 1);
   QCOMPARE(dataList.at(0).value("Unit_Id_FK"), QVariant(1000));
   QCOMPARE(dataList.at(0).value("VehicleType_Id_FK"), QVariant(1));
   // Unit 2000 <-> VehicleType 2
   QVERIFY(uvt.addUnitVehicleTypeAssignment(2000, 2));
-  dataList = uvt.getData("SELECT * FROM VehicleType_Unit_tbl", &ok);
+  dataList = uvt.getDataList<QSqlRecord>("SELECT * FROM VehicleType_Unit_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 2);
   QCOMPARE(dataList.at(1).value("Unit_Id_FK"), QVariant(2000));
   QCOMPARE(dataList.at(1).value("VehicleType_Id_FK"), QVariant(2));
   // Unit 2001 <-> VehicleType 2
   QVERIFY(uvt.addUnitVehicleTypeAssignment(2001, 2));
-  dataList = uvt.getData("SELECT * FROM VehicleType_Unit_tbl", &ok);
+  dataList = uvt.getDataList<QSqlRecord>("SELECT * FROM VehicleType_Unit_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 3);
   QCOMPARE(dataList.at(2).value("Unit_Id_FK"), QVariant(2001));
@@ -668,7 +668,7 @@ void mdtCableListTestScenario::removeTestVehicleTypeUnitAssignations()
   QVERIFY(uvt.removeUnitVehicleAssignment(1000, 1));
   QVERIFY(uvt.removeUnitVehicleAssignment(2000, 2));
   QVERIFY(uvt.removeUnitVehicleAssignment(2001, 2));
-  dataList = uvt.getData("SELECT * FROM VehicleType_Unit_tbl", &ok);
+  dataList = uvt.getDataList<QSqlRecord>("SELECT * FROM VehicleType_Unit_tbl", ok);
   QVERIFY(ok);
   QCOMPARE(dataList.size(), 0);
   

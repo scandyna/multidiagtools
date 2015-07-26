@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -40,10 +40,6 @@
  *  dedicated classes helps for interaction with database .
  *
  * This class is a base that regroups common methods .
- *
- * \todo Should inherit QObject, because:
- *   - Use of tr()
- *   - Use QObject::destroyed() signal (see mdtTtTest for a typical usecase)
  */
 class mdtTtBase : public QObject
 {
@@ -59,7 +55,10 @@ class mdtTtBase : public QObject
 
   /*! \brief Get database instance
    */
-  QSqlDatabase database();
+  QSqlDatabase database()
+  {
+    return pvDatabase;
+  }
 
   /*! \brief Get last error
    */
@@ -115,20 +114,6 @@ class mdtTtBase : public QObject
     return true;  
   }
 
-  /*! \brief Get data for given sql statement
-   *
-   * Note that this method will not check if given SQL statement
-   *  makes a SELECT, INSERT, etc..
-   *  It is simply executed.
-   *
-   * \param sql SQL statement
-   * \param ok If not null, this pointer will contain true on success,
-   *            false else (in that case, lastError() will contain error ).
-   * \param expectedFields If not empty, it will be checked that query result
-   *                        contains all listed fields, and fail if some fields are missing.
-   */
-  QList<QSqlRecord> getData(const QString & sql, bool *ok = 0, const QStringList & expectedFields = QStringList());
-
   /*! \brief Get data of type T for given sql statement
    *
    * Note that this method will not check if given SQL statement
@@ -144,9 +129,52 @@ class mdtTtBase : public QObject
    * \pre If T is another type than QSqlRecord, sql must select exactly on field.
    */
   template <typename T>
-  QList<T> getDataList(const QString & sql, bool & ok, const QStringList & expectedFields = QStringList()){
-    QSqlQuery query(database());
+  T getData(const QString & sql, bool & ok, const QStringList & expectedFields = QStringList())
+  {
+    T data{};
+    QSqlQuery query(pvDatabase);
+
+    if(!processGetData(sql, query, expectedFields)){
+      ok = false;
+      return data;
+    }
+    if(query.next()){
+      QSqlRecord record = query.record();
+      // If query has more items, this is a error (by calling this function we expect max 1 record)
+      if(query.next()){
+        pvLastError.setError(tr("Given query returned more than 1 record. SQL: '") + sql + tr("'"), mdtError::Error);
+        MDT_ERROR_SET_SRC(pvLastError, "mdtTtBase");
+        pvLastError.commit();
+        ok = false;
+        return data;
+      }
+      // Fill data
+      convertRecord(data, record);
+    }
+    ok = true;
+
+    return data;
+  }
+
+  /*! \brief Get a list of data of type T for given sql statement
+   *
+   * Note that this method will not check if given SQL statement
+   *  makes a SELECT, INSERT, etc..
+   *  It is simply executed.
+   *
+   * T can be QSqlRecord, QVariant or a type that QVariant can handle.
+   *
+   * \param sql SQL statement
+   * \param ok Will contain true on success, false else (in that case, lastError() will contain error ).
+   * \param expectedFields If not empty, it will be checked that query result
+   *                        contains all listed fields, and fail if some fields are missing.
+   * \pre If T is another type than QSqlRecord, sql must select exactly on field.
+   */
+  template <typename T>
+  QList<T> getDataList(const QString & sql, bool & ok, const QStringList & expectedFields = QStringList())
+  {
     QList<T> dataList;
+    QSqlQuery query(pvDatabase);
     T data;
 
     if(!processGetData(sql, query, expectedFields)){
@@ -315,7 +343,7 @@ class mdtTtBase : public QObject
     out = record.value(0).value<T>();
   }
 
-  Q_DISABLE_COPY(mdtTtBase);
+  Q_DISABLE_COPY(mdtTtBase)
 
   QSqlDatabase pvDatabase;
 };

@@ -586,7 +586,7 @@ QVariant mdtTtTestModelItemEditor::getTestLinkIdForTestConnectionId(const QVaria
   sql = "SELECT Id_PK FROM TestLink_tbl TL JOIN TestModelItem_TestLink_tbl TMITL ON TMITL.TestLink_Id_FK = TL.Id_PK";
   sql += " WHERE TMITL.TestModelItem_Id_FK = " + testModelItemId.toString();
   sql += " AND TL.TestConnection_Id_FK = " + testConnectionId.toString();
-  dataList = tmi.getData(sql, &ok);
+  dataList = tmi.getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     pvLastError = tmi.lastError();
     displayLastError();

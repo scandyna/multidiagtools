@@ -397,7 +397,7 @@ bool mdtTtTestNodeRouteDialog::populateTestNodeUnitATypeCombobox()
   bool ok;
 
   cbUnitAType->clear();
-  dataList = tn.getData(sqlForUnitTypeData(), &ok);
+  dataList = tn.getDataList<QSqlRecord>(sqlForUnitTypeData(), ok);
   if(!ok){
     displayError(tn.lastError());
     return false;
@@ -417,7 +417,7 @@ bool mdtTtTestNodeRouteDialog::populateTestNodeUnitACombobox(const QString & uni
   int i;
 
   cbUnitA->clear();
-  dataList = tn.getData(sqlForUnitData(unitType), &ok);
+  dataList = tn.getDataList<QSqlRecord>(sqlForUnitData(unitType), ok);
   if(!ok){
     displayError(tn.lastError());
     return false;
@@ -437,7 +437,7 @@ bool mdtTtTestNodeRouteDialog::populateConnectionACombobox(const QVariant & test
   QString function;
   bool ok;
 
-  dataList = tn.getData(sqlForConnectionData(testNodeUnitId), &ok);
+  dataList = tn.getDataList<QSqlRecord>(sqlForConnectionData(testNodeUnitId), ok);
   if(!ok){
     displayError(tn.lastError());
     return false;
@@ -461,7 +461,7 @@ bool mdtTtTestNodeRouteDialog::populateTestNodeUnitBTypeCombobox()
   bool ok;
 
   cbUnitBType->clear();
-  dataList = tn.getData(sqlForUnitTypeData(), &ok);
+  dataList = tn.getDataList<QSqlRecord>(sqlForUnitTypeData(), ok);
   if(!ok){
     displayError(tn.lastError());
     return false;
@@ -481,7 +481,7 @@ bool mdtTtTestNodeRouteDialog::populateTestNodeUnitBCombobox(const QString & uni
   int i;
 
   cbUnitB->clear();
-  dataList = tn.getData(sqlForUnitData(unitType), &ok);
+  dataList = tn.getDataList<QSqlRecord>(sqlForUnitData(unitType), ok);
   if(!ok){
     displayError(tn.lastError());
     return false;
@@ -501,7 +501,7 @@ bool mdtTtTestNodeRouteDialog::populateConnectionBCombobox(const QVariant& testN
   QString function;
   bool ok;
 
-  dataList = tn.getData(sqlForConnectionData(testNodeUnitId), &ok);
+  dataList = tn.getDataList<QSqlRecord>(sqlForConnectionData(testNodeUnitId), ok);
   if(!ok){
     displayError(tn.lastError());
     return false;

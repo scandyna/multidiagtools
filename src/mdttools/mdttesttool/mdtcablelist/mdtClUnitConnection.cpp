@@ -40,14 +40,17 @@ mdtClUnitConnection::mdtClUnitConnection(QSqlDatabase db)
 {
 }
 
-mdtClUnitConnectionPkData mdtClUnitConnection::addUnitConnection(const mdtClUnitConnectionData & data, bool handleTransaction)
+mdtClUnitConnectionPkData mdtClUnitConnection::addUnitConnection(const mdtClUnitConnectionData & data, bool handleTransaction, bool clearLinksToCreate)
 {
   mdtClUnitConnectionPkData pk;
   mdtSqlRecord record;
   QSqlQuery query(database());
   mdtSqlTransaction transaction(database());
 
-  pvAddedLinks.clear();
+  ///pvAddedLinks.clear();
+  if(clearLinksToCreate){
+    pvLinksToCreate.clear();
+  }
   // Setup record with given data
   if(!record.addAllFields("UnitConnection_tbl", database())){
     pvLastError = record.lastError();
@@ -65,8 +68,13 @@ mdtClUnitConnectionPkData mdtClUnitConnection::addUnitConnection(const mdtClUnit
     return pk;
   }
   pk.id = query.lastInsertId();
-  // If connection is based on a article connection, create possibly required links
+  // If connection is based on a article connection, store keys for links that are possibly to create
   if(data.isBasedOnArticleConnection()){
+    if(!addLinkToCreateKeys(pk, data.keyData().unitId())){
+      pk.clear();
+      return pk;
+    }
+    /**
     mdtClArticleLink alnk(database());
     bool ok;
     // Get possibly related article links
@@ -87,6 +95,7 @@ mdtClUnitConnectionPkData mdtClUnitConnection::addUnitConnection(const mdtClUnit
       AddedLink_t al{aLinkData.keyData().pk, data.keyData().unitId()};
       pvAddedLinks.append(al);
     }
+    */
   }
   if(handleTransaction){
     if(!transaction.commit()){
@@ -109,14 +118,14 @@ bool mdtClUnitConnection::addUnitConnectionList(const QList<mdtClUnitConnectionD
       return false;
     }
   }
-  QList<AddedLink_t> addedLinks = pvAddedLinks;
+  ///QList<AddedLink_t> addedLinks = pvAddedLinks;
   for(const auto & data : dataList){
-    if(addUnitConnection(data, false).isNull()){
+    if(addUnitConnection(data, false, false).isNull()){
       return false;
     }
-    addedLinks.append(pvAddedLinks);
+    ///addedLinks.append(pvAddedLinks);
   }
-  pvAddedLinks = addedLinks;
+  ///pvAddedLinks = addedLinks;
   if(handleTransaction){
     if(!transaction.commit()){
       pvLastError = transaction.lastError();
@@ -127,60 +136,62 @@ bool mdtClUnitConnection::addUnitConnectionList(const QList<mdtClUnitConnectionD
   return true;
 }
 
-bool mdtClUnitConnection::linksHaveBeenAdded() const
-{
-  return !pvAddedLinks.isEmpty();
-}
+/// \deprecated
+// bool mdtClUnitConnection::linksHaveBeenAdded() const
+// {
+//   return !pvAddedLinks.isEmpty();
+// }
 
-QString mdtClUnitConnection::getAddedLinksText(bool & ok)
-{
-  QString text;
-  mdtClLink lnk(database());
-
-  for(const auto & al : pvAddedLinks){
-    // Get link data part
-    mdtClLinkData linkData = lnk.getLinkData(al.articleLinkPk, al.unitId, al.unitId, ok);
-    if(!ok){
-      return text;
-    }
-    mdtClUnitConnectionPkData ucnxPk;
-    // Get start connection data part
-    ucnxPk.id = linkData.pk().connectionStartId;
-    mdtClUnitConnectionData ucnxStartData = getUnitConnectionData(ucnxPk, ok);
-    if(!ok){
-      return text;
-    }
-    // Get start connector data part
-    mdtClUnitConnectorData ucnrStartData;
-    if(ucnxStartData.isPartOfUnitConnector()){
-      ucnrStartData = getUnitConnectorData(ucnxStartData.keyData().unitConnectorFk().pk, false, ok);
-      if(!ok){
-        return text;
-      }
-    }
-    // Get end connection data part
-    ucnxPk.id = linkData.pk().connectionEndId;
-    mdtClUnitConnectionData ucnxEndData = getUnitConnectionData(ucnxPk, ok);
-    if(!ok){
-      return text;
-    }
-    // Get end connector data part
-    mdtClUnitConnectorData ucnrEndData;
-    if(ucnxEndData.isPartOfUnitConnector()){
-      ucnrEndData = getUnitConnectorData(ucnxEndData.keyData().unitConnectorFk().pk, false, ok);
-      if(!ok){
-        return text;
-      }
-    }
-    // Build line text
-    text += tr(" - ") + linkData.identification.toString() \
-          + tr(" , start (connector: ") + ucnrStartData.name.toString() + tr(" , connection: ") + ucnxStartData.name.toString() + tr(")") \
-          + tr(" , end (connector: ") + ucnrEndData.name.toString() + tr(" , connection: ") + ucnxEndData.name.toString() + tr(")") + "\n";
-
-  }
-
-  return text;
-}
+/// \deprecated
+// QString mdtClUnitConnection::getAddedLinksText(bool & ok)
+// {
+//   QString text;
+//   mdtClLink lnk(database());
+// 
+//   for(const auto & al : pvAddedLinks){
+//     // Get link data part
+//     mdtClLinkData linkData = lnk.getLinkData(al.articleLinkPk, al.unitId, al.unitId, ok);
+//     if(!ok){
+//       return text;
+//     }
+//     mdtClUnitConnectionPkData ucnxPk;
+//     // Get start connection data part
+//     ucnxPk.id = linkData.pk().connectionStartId;
+//     mdtClUnitConnectionData ucnxStartData = getUnitConnectionData(ucnxPk, ok);
+//     if(!ok){
+//       return text;
+//     }
+//     // Get start connector data part
+//     mdtClUnitConnectorData ucnrStartData;
+//     if(ucnxStartData.isPartOfUnitConnector()){
+//       ucnrStartData = getUnitConnectorData(ucnxStartData.keyData().unitConnectorFk().pk, false, ok);
+//       if(!ok){
+//         return text;
+//       }
+//     }
+//     // Get end connection data part
+//     ucnxPk.id = linkData.pk().connectionEndId;
+//     mdtClUnitConnectionData ucnxEndData = getUnitConnectionData(ucnxPk, ok);
+//     if(!ok){
+//       return text;
+//     }
+//     // Get end connector data part
+//     mdtClUnitConnectorData ucnrEndData;
+//     if(ucnxEndData.isPartOfUnitConnector()){
+//       ucnrEndData = getUnitConnectorData(ucnxEndData.keyData().unitConnectorFk().pk, false, ok);
+//       if(!ok){
+//         return text;
+//       }
+//     }
+//     // Build line text
+//     text += tr(" - ") + linkData.identification.toString() \
+//           + tr(" , start (connector: ") + ucnrStartData.name.toString() + tr(" , connection: ") + ucnxStartData.name.toString() + tr(")") \
+//           + tr(" , end (connector: ") + ucnrEndData.name.toString() + tr(" , connection: ") + ucnxEndData.name.toString() + tr(")") + "\n";
+// 
+//   }
+// 
+//   return text;
+// }
 
 mdtClUnitConnectionData mdtClUnitConnection::getUnitConnectionData(const mdtClUnitConnectionPkData & pk, bool & ok)
 {
@@ -492,6 +503,46 @@ void mdtClUnitConnection::addConnectionsToUnitConnector(mdtClUnitConnectorData &
     ucData.name = acnxData.name;
     ucnrData.addConnectionData(ucData);
   }
+}
+
+bool mdtClUnitConnection::addLinkToCreateKeys(const mdtClUnitConnectionPkData & ucnxPk, const QVariant & unitId)
+{
+  Q_ASSERT(!ucnxPk.isNull());
+  Q_ASSERT(!unitId.isNull());
+
+  QList<mdtClArticleLinkData> linkDataList;
+  QList<QSqlRecord> dataList;
+  QString sql;
+  bool ok;
+
+  sql = "SELECT"\
+        " ALNK.ArticleConnectionStart_Id_FK, ALNK.ArticleConnectionEnd_Id_FK,"\
+        " UCNXS.Id_PK AS UnitConnectionStart_Id, UCNXE.Id_PK AS UnitConnectionEnd_Id\n"\
+        " FROM ArticleLink_tbl ALNK\n"\
+        " JOIN UnitConnection_tbl UCNXS\n"\
+        "  ON UCNXS.ArticleConnection_Id_FK = ALNK.ArticleConnectionStart_Id_FK\n"\
+        " JOIN UnitConnection_tbl UCNXE\n"\
+        "  ON UCNXE.ArticleConnection_Id_FK = ALNK.ArticleConnectionEnd_Id_FK\n"\
+        " WHERE ( UCNXS.Id_PK = " + ucnxPk.id.toString() + \
+        " OR UCNXE.Id_PK = " + ucnxPk.id.toString() + \
+        " ) AND ( UCNXS.Unit_Id_FK = " + unitId.toString() + \
+        " AND UCNXE.Unit_Id_FK = " + unitId.toString() + \
+        " )";
+  dataList = getDataList<QSqlRecord>(sql, ok);
+  if(!ok){
+    return false;
+  }
+  for(const auto & record : dataList){
+    mdtClArticleLinkUnitConnectionKeyData key;
+    key.articleLinkPk.connectionStartId = record.value("ArticleConnectionStart_Id_FK");
+    key.articleLinkPk.connectionEndId = record.value("ArticleConnectionEnd_Id_FK");
+    key.unitConnectionStartPk.id = record.value("UnitConnectionStart_Id");
+    key.unitConnectionEndPk.id = record.value("UnitConnectionEnd_Id");
+    Q_ASSERT(!key.isNull());
+    pvLinksToCreate.append(key);
+  }
+
+  return true;
 }
 
 QString mdtClUnitConnection::baseSqlForUnitConnection() const

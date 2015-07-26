@@ -64,7 +64,7 @@ QList<QVariant> mdtClUnit::getConnectionIdListPartOfConnectorId(const QVariant &
   int i;
 
   sql = "SELECT Id_PK FROM UnitConnection_tbl WHERE UnitConnector_Id_FK = " + unitConnectorId.toString();
-  dataList = getData(sql, ok);
+  dataList = getDataList<QSqlRecord>(sql, *ok);
   if(!*ok){
     return idList;
   }
@@ -83,7 +83,7 @@ QVariant mdtClUnit::getConnectorIdOfConnectionId(const QVariant & unitConnection
   QList<QSqlRecord> dataList;
 
   sql = "SELECT UnitConnector_Id_FK FROM UnitConnection_tbl WHERE Id_PK = " + unitConnectionId.toString();
-  dataList = getData(sql, ok);
+  dataList = getDataList<QSqlRecord>(sql, *ok);
   if(!*ok){
     return QVariant();
   }
@@ -239,7 +239,7 @@ QStringList mdtClUnit::toUnitRelatedLinksList(const QVariant &unitId, const QLis
     sql += " ) ";
   }
   // Get link data
-  dataList = getData(sql, ok);
+  dataList = getDataList<QSqlRecord>(sql, *ok);
   if(!*ok){
     return linksList;
   }

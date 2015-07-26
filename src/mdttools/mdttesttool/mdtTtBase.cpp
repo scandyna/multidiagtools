@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,8 +25,6 @@
 
 //#include <QDebug>
 
-/// \todo Add tr() in errors
-
 mdtTtBase::mdtTtBase(QObject *parent, QSqlDatabase db)
  : QObject(parent)
 {
@@ -35,11 +33,6 @@ mdtTtBase::mdtTtBase(QObject *parent, QSqlDatabase db)
 
 mdtTtBase::~mdtTtBase() 
 {
-}
-
-QSqlDatabase mdtTtBase::database() 
-{
-  return pvDatabase;
 }
 
 mdtError mdtTtBase::lastError() 
@@ -96,56 +89,6 @@ bool mdtTtBase::addRecord(const mdtSqlRecord & record, const QString & tableName
   }
 
   return true;
-}
-
-/**
-bool mdtTtBase::addRecordList(const QList<mdtSqlRecord> & recordList, const QString & tableName, bool singleTransaction )
-{
-  int i;
-
-  if(singleTransaction){
-    if(!beginTransaction()){
-      return false;
-    }
-  }
-  for(i = 0; i < recordList.size(); ++i){
-    if(!addRecord(recordList.at(i), tableName)){
-      if(singleTransaction){
-        rollbackTransaction();
-      }
-      return false;
-    }
-  }
-  if(singleTransaction){
-    if(!commitTransaction()){
-      return false;
-    }
-  }
-
-  return true;  
-}
-*/
-
-QList<QSqlRecord> mdtTtBase::getData(const QString & sql, bool *ok, const QStringList & expectedFields)
-{
-  QSqlQuery query(database());
-  QList<QSqlRecord> dataList;
-
-  if(!processGetData(sql, query, expectedFields)){
-    if(ok != 0){
-      *ok = false;
-      return dataList;
-    }
-  }
-  // Get data
-  while(query.next()){
-    dataList.append(query.record());
-  }
-  if(ok != 0){
-    *ok = true;
-  }
-
-  return dataList;
 }
 
 bool mdtTtBase::updateRecord(const QString & tableName, const mdtSqlRecord & record, const QSqlRecord & matchData)
