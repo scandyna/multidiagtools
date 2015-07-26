@@ -21,10 +21,11 @@
 #ifndef MDT_CL_UNIT_LINK_MODIFICATION_DIALOG_H
 #define MDT_CL_UNIT_LINK_MODIFICATION_DIALOG_H
 
-#include "ui_mdtClUnitLinkModificationDialog.h"
+#include "ui_mdtClLinkAttributeDialog.h"
 #include "mdtClLinkVersionData.h"
+#include "mdtClModificationKeyData.h"
 #include "mdtClVehicleTypeLinkKeyData.h"
-#include "mdtClLinkModificationKeyData.h"
+#include "mdtError.h"
 #include <QDialog>
 #include <QVariant>
 #include <QSqlDatabase>
@@ -33,12 +34,11 @@
 class QWidget;
 class mdtClModificationModel;
 class mdtClLinkVersionModel;
+class mdtClVehicleTypeLinkAssignationWidget;
 
-/*! \brief Link modification edition dialog
- *
- * \deprecated
+/*! \brief Let user select versionning and vehicle assignations
  */
-class mdtClUnitLinkModificationDialog : public QDialog, Ui::mdtClUnitLinkModificationDialog
+class mdtClLinkAttributeDialog : public QDialog, Ui::mdtClLinkAttributeDialog
 {
  Q_OBJECT
 
@@ -46,35 +46,60 @@ class mdtClUnitLinkModificationDialog : public QDialog, Ui::mdtClUnitLinkModific
 
   /*! \brief Constructor
    */
-  mdtClUnitLinkModificationDialog(QWidget *parent, QSqlDatabase db);
+  mdtClLinkAttributeDialog(QWidget *parent, QSqlDatabase db, bool enableVehicleTypeAssignations);
+
+  /*! \brief Set message of dialog
+   */
+  void setMessage(const QString & msg);
+
+  /*! \brief Build list of vehicle types related to given unit ID
+   *
+   * \pre Use this function only if vehicle type assignatins was enabled
+   */
+  bool buildVehicleTypeList(const QVariant & unitId);
+
+  /*! \brief Get list of selected vehicle types
+   *
+   * \pre Use this function only if vehicle type assignatins was enabled
+   */
+  QList<mdtClVehicleTypeStartEndKeyData> selectedVehicleTypeList() const;
 
   /*! \brief Set link version
    */
   void setLinkVersion(const mdtClLinkVersionData & v);
 
-  /*! \brief Set link modification
+  /*! \brief Get selected link version
    */
-  void setLinkModification(const mdtClModificationPkData & m);
+  mdtClLinkVersionPkData linkVersionPkData() const;
 
   /*! \brief Set link modification
    */
-  void setLinkModification(mdtClModification_t m);
+  void setModification(const mdtClModificationPkData & m);
+
+  /*! \brief Set link modification
+   */
+  void setModification(mdtClModification_t m);
 
   /*! \brief Get selected link modification
-   *
-   * Will also include selected link version
-   *
-   * \todo link PK not included !
    */
-  mdtClLinkModificationKeyData linkModificationKeyData() const;
+  mdtClModificationPkData modificationKeyData() const;
+
+  /*! \brief Get last error
+   */
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
 
  private:
 
-  Q_DISABLE_COPY(mdtClUnitLinkModificationDialog)
+  Q_DISABLE_COPY(mdtClLinkAttributeDialog)
 
   QSqlDatabase pvDatabase;
-  mdtClModificationModel *pvLinkModificationModel;
+  mdtClModificationModel *pvModificationModel;
   mdtClLinkVersionModel *pvLinkVersionModel;
+  mdtClVehicleTypeLinkAssignationWidget *pvVehicleTypeAssignationWidget;
+  mdtError pvLastError;
 };
 
 #endif // #ifndef MDT_CL_UNIT_LINK_MODIFICATION_DIALOG_H

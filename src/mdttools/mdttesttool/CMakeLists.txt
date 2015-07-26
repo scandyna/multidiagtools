@@ -148,7 +148,7 @@ set (CL_HEADER_FILES
           mdtcablelist/mdtClWireEditor.h
           mdtcablelist/mdtClLinkVersion.h
           mdtcablelist/mdtClUnitLinkDialog.h
-          mdtcablelist/mdtClUnitLinkModificationDialog.h
+          mdtcablelist/mdtClLinkAttributeDialog.h
           mdtcablelist/mdtClLinkedUnitConnectionInfoDialog.h
           mdtcablelist/mdtClLinkedUnitConnectorInfoDialog.h
           mdtcablelist/mdtClLinkBeamEditor.h
@@ -207,7 +207,7 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClVehicleTypeLink.cpp
           mdtcablelist/mdtClDirectLink.cpp
           mdtcablelist/mdtClUnitLinkDialog.cpp
-          mdtcablelist/mdtClUnitLinkModificationDialog.cpp
+          mdtcablelist/mdtClLinkAttributeDialog.cpp
           mdtcablelist/mdtClUnitVehicleType.cpp
           mdtcablelist/mdtClLinkedUnitConnectionInfoDialog.cpp
           mdtcablelist/mdtClLinkedUnitConnectorInfoDialog.cpp
@@ -231,7 +231,7 @@ set (CL_FORM_FILES
           mdtcablelist/mdtClWireEditor.ui
           mdtcablelist/mdtClLinkVersionDialog.ui
           mdtcablelist/mdtClUnitLinkDialog.ui
-          mdtcablelist/mdtClUnitLinkModificationDialog.ui
+          mdtcablelist/mdtClLinkAttributeDialog.ui
           mdtcablelist/mdtClLinkedUnitConnectionInfoDialog.ui
           mdtcablelist/mdtClLinkedUnitConnectorInfoDialog.ui
           mdtcablelist/mdtClLinkBeamEditor.ui

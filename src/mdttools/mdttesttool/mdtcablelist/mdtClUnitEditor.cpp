@@ -41,7 +41,7 @@
 #include "mdtClLinkData.h"
 #include "mdtClUnitConnection.h"
 #include "mdtClUnitLinkDialog.h"
-#include "mdtClUnitLinkModificationDialog.h"
+#include "mdtClLinkAttributeDialog.h"
 #include "mdtClPathGraph.h"
 #include "mdtClPathGraphDialog.h"
 #include "mdtClLinkedUnitConnectionInfoDialog.h"
@@ -472,6 +472,7 @@ void mdtClUnitEditor::addArticleConnectorBasedConnector()
   mdtClArticleConnectorSelectionDialog acnrsDialog(this);
   mdtClArticleConnectorKeyData articleConnectorFk;
   mdtClArticleConnectionSelectionDialog acnxsDialog(this);
+  QList<mdtClArticleLinkUnitConnectionKeyData> linksToCreateKeys;
 
   // Check that vehicle type assignation was made
   if(rowCount("Unit_VehicleType_view", false) < 1){
@@ -534,17 +535,34 @@ void mdtClUnitEditor::addArticleConnectorBasedConnector()
     displayLastError();
     return;
   }
-  // If some links has been added, we tell it the user
-  /** \todo FIX !
-  if(ucnx.linksHaveBeenAdded()){
-    QMessageBox msgBox(this);
-    bool ok;
-    msgBox.setText(tr("Following links has been added:\n") + ucnx.getAddedLinksText(ok));
-    msgBox.setInformativeText(tr("Please edit them to fix vehicle type assignations and modifications."));
-    msgBox.setIcon(QMessageBox::Information);
-    msgBox.exec();
+  // Create article related links if required
+  linksToCreateKeys = ucnx.linkToCreateKeyList();
+  if(!linksToCreateKeys.isEmpty()){
+    mdtClLink lnk(database());
+    // Setup and show dialog for versionning and vehicle type assignations
+    mdtClLinkAttributeDialog laDialog(this, database(), true);
+    if(!laDialog.buildVehicleTypeList(unitConnectorKey.unitId())){
+      pvLastError = laDialog.lastError();
+      displayLastError();
+      return;
+    }
+    laDialog.setLinkVersion(mdtClLinkVersion::currentVersion());
+    laDialog.setMessage(tr("Several links (based on links defined in article) have to be created.\nSet options to apply to all of them."));
+    if(laDialog.exec() != QDialog::Accepted){
+      QMessageBox msgBox(this);
+      msgBox.setText(tr("No article based link was created, witch is not coherent."));
+      msgBox.setInformativeText(tr("Try to remove, then add connector again."));
+      msgBox.setIcon(QMessageBox::Warning);
+      msgBox.exec();
+      return;
+    }
+    // Create the links
+    if(!lnk.addLinkList(linksToCreateKeys, laDialog.linkVersionPkData(), laDialog.modificationKeyData(), laDialog.selectedVehicleTypeList(), true)){
+      pvLastError = lnk.lastError();
+      displayLastError();
+      return;
+    }
   }
-  */
   // Update views
   select("UnitConnector_view");
   select("UnitConnection_view");
@@ -680,6 +698,7 @@ void mdtClUnitEditor::addArticleConnectionsBasedConnections()
   mdtClUnitConnectionKeyData key;
   mdtClUnitConnectorKeyData unitConnectorFk;
   mdtClUnitConnectionData data;
+  QList<mdtClArticleLinkUnitConnectionKeyData> linksToCreateKeys;
   bool ok;
 
   articleId = currentData("Unit_tbl", "Article_Id_FK");
@@ -726,16 +745,34 @@ void mdtClUnitEditor::addArticleConnectionsBasedConnections()
     displayLastError();
     return;
   }
-  // If some links has been added, we tell it the user
-  /** \todo FIX !
-  if(ucnx.linksHaveBeenAdded()){
-    QMessageBox msgBox(this);
-    msgBox.setText(tr("Following links has been added:\n") + ucnx.getAddedLinksText(ok));
-    msgBox.setInformativeText(tr("Please edit them to fix vehicle type assignations and modifications."));
-    msgBox.setIcon(QMessageBox::Information);
-    msgBox.exec();
+  // Create article related links if required
+  linksToCreateKeys = ucnx.linkToCreateKeyList();
+  if(!linksToCreateKeys.isEmpty()){
+    mdtClLink lnk(database());
+    // Setup and show dialog for versionning and vehicle type assignations
+    mdtClLinkAttributeDialog laDialog(this, database(), true);
+    if(!laDialog.buildVehicleTypeList(key.unitId())){
+      pvLastError = laDialog.lastError();
+      displayLastError();
+      return;
+    }
+    laDialog.setLinkVersion(mdtClLinkVersion::currentVersion());
+    laDialog.setMessage(tr("Several links (based on links defined in article) have to be created.\nSet options to apply to all of them."));
+    if(laDialog.exec() != QDialog::Accepted){
+      QMessageBox msgBox(this);
+      msgBox.setText(tr("No article based link was created, witch is not coherent."));
+      msgBox.setInformativeText(tr("Try to remove, then add connection again."));
+      msgBox.setIcon(QMessageBox::Warning);
+      msgBox.exec();
+      return;
+    }
+    // Create the links
+    if(!lnk.addLinkList(linksToCreateKeys, laDialog.linkVersionPkData(), laDialog.modificationKeyData(), laDialog.selectedVehicleTypeList(), true)){
+      pvLastError = lnk.lastError();
+      displayLastError();
+      return;
+    }
   }
-  */
   // Update views
   select("UnitConnection_view");
   select("UnitLink_view");
@@ -1061,7 +1098,7 @@ void mdtClUnitEditor::removeLinks()
   widget = sqlTableWidget("UnitLink_view");
   Q_ASSERT(widget != 0);
   // Get selected rows
-  fields << "UnitConnectionStart_Id_FK" << "UnitConnectionEnd_Id_FK";
+  fields << "UnitConnectionStart_Id_FK" << "UnitConnectionEnd_Id_FK" << "Version_FK" << "Modification_Code_FK";
   s = widget->currentSelection(fields);
   if(s.isEmpty()){
     return;

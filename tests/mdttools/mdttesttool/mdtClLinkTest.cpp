@@ -1524,6 +1524,8 @@ void mdtClLinkTest::linkFromArticleLinkAddTest()
   mdtClUnitConnection ucnx(pvDatabaseManager.database());
   bool ok;
   mdtClArticleLinkUnitConnectionKeyData alucnxKey;
+  mdtClLinkVersionPkData versionPk;
+  mdtClModificationPkData modificationPk;
 
   /*
    * For this test we work directly on ArticleLink_tbl and UnitConnection_tbl.
@@ -1605,6 +1607,21 @@ void mdtClLinkTest::linkFromArticleLinkAddTest()
   QCOMPARE(ucnx.linkToCreateKeyList().at(0).articleLinkPk.connectionEndId, QVariant(11));
   QCOMPARE(ucnx.linkToCreateKeyList().at(0).unitConnectionStartPk.id, QVariant(110));
   QCOMPARE(ucnx.linkToCreateKeyList().at(0).unitConnectionEndPk.id, QVariant(111));
+  // Create the link
+  versionPk.versionPk = 100;
+  modificationPk.setModification(mdtClModification_t::Exists);
+  QVERIFY(lnk.addLinkList(ucnx.linkToCreateKeyList(), versionPk, modificationPk, true));
+  // Get link back and check
+  linkPk.connectionStartId = 110;
+  linkPk.connectionEndId = 111;
+  linkPk.versionFk = versionPk;
+  linkPk.modificationFk = modificationPk;
+  linkData = lnk.getLinkData(linkPk, ok);
+  QVERIFY(ok);
+  QVERIFY(!linkData.isNull());
+  QCOMPARE(linkData.keyData().articleLinkFk().connectionStartId, QVariant(10));
+  QCOMPARE(linkData.keyData().articleLinkFk().connectionEndId, QVariant(11));
+  
 //   ucnxPk.id = 111;
 //   QVERIFY(alnk.hasRelatedLinksToCreate(ucnxPk, 1, ok));
 //   QVERIFY(ok);

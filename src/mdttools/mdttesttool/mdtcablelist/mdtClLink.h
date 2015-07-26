@@ -25,7 +25,8 @@
 #include "mdtClLinkData.h"
 #include "mdtClLinkModificationKeyData.h"
 #include "mdtClVehicleTypeLinkKeyData.h"
-#include "mdtClArticleLinkData.h"
+///#include "mdtClArticleLinkData.h"
+#include "mdtClArticleLinkUnitConnectionKeyData.h"
 #include "mdtSqlTableSelection.h"
 #include <QSqlDatabase>
 #include <QList>
@@ -66,6 +67,33 @@ class mdtClLink : public mdtTtBase
    *             set this argument false.
    */
   bool addLink(const mdtClLinkData & linkData, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
+
+  /*! \brief Add list of links based on given article links
+   *
+   * \param keyList A link will be added in Link_tbl based on article link for each key.
+   * \param versionPk Created links will be created for given version
+   * \param modificationPk Created links will be created for given modification
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
+   */
+  bool addLinkList(const QList<mdtClArticleLinkUnitConnectionKeyData> & keyList,
+                   const mdtClLinkVersionPkData & versionPk, const mdtClModificationPkData & modificationPk,
+                   bool handleTransaction);
+
+  /*! \brief Add list of links based on given article links
+   *
+   * \param keyList A link will be added in Link_tbl based on article link for each key.
+   * \param versionPk Created links will be created for given version
+   * \param modificationPk Created links will be created for given modification
+   * \param vehicleTypeList List of vehicle types to add in assignations (VehicleType_Link_tbl) for each created link
+   * \param handleTransaction Internally, a transaction is (explicitly) open.
+   *             By calling this function with a allready open transaction,
+   *             set this argument false.
+   */
+  bool addLinkList(const QList<mdtClArticleLinkUnitConnectionKeyData> & keyList,
+                   const mdtClLinkVersionPkData & versionPk, const mdtClModificationPkData & modificationPk,
+                   const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList,  bool handleTransaction);
 
   /*! \brief Add a link to database
    *

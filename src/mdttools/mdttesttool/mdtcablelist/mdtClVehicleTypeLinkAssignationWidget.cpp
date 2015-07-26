@@ -97,6 +97,14 @@ bool mdtClVehicleTypeLinkAssignationWidget::selectVehicleTypeAssignedToLink(cons
   return true;
 }
 
+void mdtClVehicleTypeLinkAssignationWidget::selectAllVehicleType()
+{
+  for(auto *item : pvItems){
+    Q_ASSERT(item != nullptr);
+    item->setChecked(true);
+  }
+}
+
 void mdtClVehicleTypeLinkAssignationWidget::unselectAllVehicleType()
 {
   for(auto *item : pvItems){

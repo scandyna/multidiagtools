@@ -21,6 +21,7 @@
 #include "mdtClLink.h"
 #include "mdtClVehicleTypeLink.h"
 #include "mdtClVehicleTypeLinkData.h"
+#include "mdtClArticleLink.h"
 #include "mdtSqlTransaction.h"
 #include "mdtClUnitConnection.h"
 #include "mdtError.h"
@@ -93,6 +94,71 @@ bool mdtClLink::addLink(const mdtClLinkData & linkData, const QList<mdtClVehicle
   return true;
 }
 
+bool mdtClLink::addLinkList(const QList<mdtClArticleLinkUnitConnectionKeyData> & keyList,
+                            const mdtClLinkVersionPkData & versionPk, const mdtClModificationPkData & modificationPk, bool handleTransaction)
+{
+  return addLinkList(keyList, versionPk, modificationPk, QList<mdtClVehicleTypeStartEndKeyData>(), handleTransaction);
+}
+
+bool mdtClLink::addLinkList(const QList<mdtClArticleLinkUnitConnectionKeyData> & keyList,
+                            const mdtClLinkVersionPkData & versionPk, const mdtClModificationPkData & modificationPk,
+                            const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction)
+{
+  mdtSqlTransaction transaction(database());
+  mdtClArticleLink alnk(database());
+  bool ok;
+
+  // Init transaction
+  if(handleTransaction){
+    if(!transaction.begin()){
+      pvLastError = transaction.lastError();
+      return false;
+    }
+  }
+  for(const auto & key : keyList){
+    // Get article link data
+    mdtClArticleLinkData articleLinkData = alnk.getLinkData(key.articleLinkPk, ok);
+    if(!ok){
+      return false;
+    }
+    // Build link PK
+    mdtClLinkPkData pk;
+    pk.connectionStartId = key.unitConnectionStartPk.id;
+    pk.connectionEndId = key.unitConnectionEndPk.id;
+    pk.versionFk = versionPk;
+    pk.modificationFk = modificationPk;
+    // Build link data
+    mdtClLinkData linkData;
+    linkData.setPk(pk);
+    linkData.setLinkType(articleLinkData.linkType());
+    linkData.setLinkDirection(articleLinkData.linkDirection());
+    linkData.setArticleLinkFk(articleLinkData.keyData().pk);
+    linkData.identification = articleLinkData.indetification;
+    if(!articleLinkData.resistance.isNull()){
+      linkData.resistance = articleLinkData.resistance.toDouble();
+    }
+    // Add link ro database
+    if(vehicleTypeList.isEmpty()){
+      ok = addLink(linkData);
+    }else{
+      ok = addLink(linkData, vehicleTypeList, false);
+    }
+    if(!ok){
+      return false;
+    }
+  }
+  // Commit transaction
+  if(handleTransaction){
+    if(!transaction.commit()){
+      pvLastError = transaction.lastError();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/// \deprecated
 bool mdtClLink::addLink(const mdtClLinkData & linkData, const mdtClLinkModificationKeyData & modification, bool handleTransaction)
 {
   mdtSqlTransaction transaction(database());
@@ -130,6 +196,7 @@ bool mdtClLink::addLink(const mdtClLinkData & linkData, const mdtClLinkModificat
   return true;
 }
 
+/// \deprecated
 bool mdtClLink::addLink(const mdtClLinkData & linkData, const mdtClLinkModificationKeyData & modification, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction)
 {
   mdtClVehicleTypeLink vtl(database());
@@ -538,6 +605,8 @@ bool mdtClLink::removeLinks(const mdtSqlTableSelection & s)
     mdtClLinkPkData pk;
     pk.connectionStartId = s.data(i, "UnitConnectionStart_Id_FK");
     pk.connectionEndId = s.data(i, "UnitConnectionEnd_Id_FK");
+    pk.versionFk.versionPk = s.data(i, "Version_FK").toInt();
+    pk.modificationFk.code = s.data(i, "Modification_Code_FK").toString();
     if(!removeLink(pk, false)){
       return false;
     }
