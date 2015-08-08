@@ -1559,6 +1559,13 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   widget->setColumnHidden("Unit_Id_FK", true);
   widget->setColumnHidden("ArticleConnection_Id_FK", true);
   widget->setColumnHidden("ConnectionType_Code_FK", true);
+  widget->setColumnHidden("UCNR_Connector_Id_FK", true);
+  widget->setColumnHidden("UCNR_Unit_Id_FK", true);
+  widget->setColumnHidden("ACNR_Connector_Id_FK", true);
+  widget->setColumnHidden("ACNR_Article_Id_FK", true);
+  widget->setColumnHidden("ArticleConnector_Id_FK", true);
+  widget->setColumnHidden("Article_Id_FK", true);
+  widget->setColumnHidden("ACNX_ConnectionType_Code_FK", true);
   // Give fields a user friendly name
   widget->setHeaderData("SchemaPage", tr("Vehicle\nSchema\npage"));
   widget->setHeaderData("SignalName", tr("Signal name"));
@@ -1570,12 +1577,19 @@ bool mdtClUnitEditor::setupUnitConnectionTable()
   widget->setHeaderData("ArticleContactName", tr("Article\ncontact"));
   widget->setHeaderData("IoType", tr("I/O type"));
   updateUnitConnectionTable();
+  // Setup formats
+  widget->addTextAlignmentFormat("UnitConnectorName", Qt::AlignCenter);
+  widget->addTextAlignmentFormat("UnitContactName", Qt::AlignCenter);
+  widget->addTextAlignmentFormat("UnitConnectionResistance", Qt::AlignCenter);
+  widget->addTextAlignmentFormat("ArticleConnectorName", Qt::AlignCenter);
+  widget->addTextAlignmentFormat("ArticleContactName", Qt::AlignCenter);
+  widget->addTextAlignmentFormat("IoType", Qt::AlignCenter);
   // Enable sorting
   widget->addColumnToSortOrder("UnitConnectorName", Qt::AscendingOrder);
   widget->addColumnToSortOrder("UnitContactName", Qt::AscendingOrder);
   widget->sort();
   // Set some attributes on table view
-  widget->tableView()->resizeColumnsToContents();
+  widget->resizeViewToContents();
 
   return true;
 }

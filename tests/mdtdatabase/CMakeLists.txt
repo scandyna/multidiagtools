@@ -29,3 +29,11 @@ target_link_libraries(mdtdatatabletest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatatabletest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatatabletest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatatabletest "mdttest")
+
+# * mdtSqlCopierTest executable *
+QT4_WRAP_CPP(MDT_SQL_COPIER_TEST_MOC "mdtSqlCopierTest.h")
+add_executable(mdtsqlcopiertest "mdtSqlCopierTest.cpp" ${MDT_SQL_COPIER_TEST_MOC})
+target_link_libraries(mdtsqlcopiertest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtsqlcopiertest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtsqlcopiertest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtsqlcopiertest "mdttest")

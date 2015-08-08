@@ -1,0 +1,63 @@
+format 209
+
+classcanvas 128130 class_ref 404738 // QSqlField
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 610 82 2000
+end
+classcanvas 128258 class_ref 910466 // QSqlIndex
+  classdiagramsettings member_max_width 0 end
+  xyzwh 423 416 2000 117 129
+end
+classcanvas 128386 class_ref 404994 // QSqlRecord
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 440 153 2006
+end
+classcanvas 129410 class_ref 910210 // mdtSqlSchemaTable
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 32 190 2006
+end
+relationcanvas 128514 relation_ref 490882 // <directional composition>
+  from ref 128386 z 2007 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 579 182 3000 no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 1118850 // <generalisation>
+  decenter_begin 487
+  from ref 128258 z 2007 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 1118722 // <directional composition>
+  decenter_end 951
+  from ref 129410 z 2007 stereotype "<<list>>" xyz 418 257 2007 to ref 128130
+  role_a_pos 550 235 3000 no_role_b
+  multiplicity_a_pos 594 265 3000 no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 1118978 // <directional composition>
+  geometry VH
+  decenter_begin 608
+  decenter_end 565
+  from ref 129410 z 2007 to point 178 486
+  line 130306 z 2007 stereotype "<<hash>>" xyz 263 466 2007 to ref 128258
+  role_a_pos 352 466 3000 no_role_b
+  multiplicity_a_pos 407 496 3000 no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 1119106 // <directional composition>
+  geometry VH
+  decenter_begin 963
+  decenter_end 155
+  from ref 129410 z 2007 to point 265 433
+  line 130562 z 2007 to ref 128258
+  role_a_pos 330 413 3000 no_role_b
+  multiplicity_a_pos 405 443 3000 no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 1119490 // <directional composition>
+  geometry VH
+  decenter_begin 408
+  decenter_end 930
+  from ref 129410 z 2007 to point 129 533
+  line 130434 z 2007 stereotype "<<hash>>" xyz 176.5 514.5 2007 to ref 128258
+  role_a_pos 325 513 3000 no_role_b
+  multiplicity_a_pos 407 543 3000 no_multiplicity_b
+end
+end

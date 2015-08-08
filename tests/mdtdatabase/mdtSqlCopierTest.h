@@ -18,15 +18,16 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DATABASE_TEST_H
-#define MDT_DATABASE_TEST_H
+#ifndef MDT_SQL_COPIER_TEST_H
+#define MDT_SQL_COPIER_TEST_H
 
 #include "mdtTest.h"
+#include "mdtSqlDatabaseManager.h"
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QSqlDatabase>
 
-class mdtDatabaseTest : public mdtTest
+class mdtSqlCopierTest : public mdtTest
 {
  Q_OBJECT
 
@@ -35,24 +36,9 @@ class mdtDatabaseTest : public mdtTest
   void initTestCase();
   void cleanupTestCase();
 
-  void sqlDriverTypeTest();
-
-  void sqlSchemaTableTest();
-  void sqlSchemaTableSqliteTest();
-
-  void databaseManagerTest();
-
-  void sqlTransactionTest();
-
-  /// \todo Add mdtSqlForm test
-  /// \todo Add mdtSqlWindow test
-
-  void sqlRecordTest();
-
-  void sqlRelationInfoTest();
-  void sqlRelationTest();
-
-  void doubleValueTest();
+  void sqlFieldTableModelTest();
+  void sqlFieldSetupDataTest();
+  void sqlFieldSetupWidgetTest();
 
  private:
 
@@ -65,8 +51,8 @@ class mdtDatabaseTest : public mdtTest
   // Clear test database data
   void clearTestDatabaseData();
 
-  QFileInfo pvDatabaseFileInfo;
-  QSqlDatabase pvDatabase;
+  mdtSqlDatabaseManager pvDatabaseManager;
+  QFileInfo pvDbFileInfo;
 };
 
-#endif // #ifndef MDT_DATABASE_TEST_H
+#endif // #ifndef MDT_SQL_COPIER_TEST_H

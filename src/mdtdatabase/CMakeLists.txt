@@ -23,6 +23,8 @@ set (HEADER_FILES
           mdtSqlDatabaseManager.h
           mdtSqlFieldSelectionDialog.h
           mdtSqlRelation.h
+          mdtSqlFieldSetupWidget.h
+          mdtSqlFieldSetupTableModel.h
 
     )
 
@@ -52,6 +54,8 @@ set (SOURCES_FILES
           mdtSqlFieldSelectionDialog.cpp
           mdtSqlTransaction.cpp
           mdtSqlForeignKeySetting.cpp
+          mdtSqlFieldSetupWidget.cpp
+          mdtSqlFieldSetupTableModel.cpp
     )
 
 # Qt ui files
@@ -59,6 +63,7 @@ set (FORM_FILES
           mdtSqlWindow.ui
           mdtSqlSelectionDialog.ui
           mdtSqlFieldSelectionDialog.ui
+          mdtSqlFieldSetupWidget.ui
     )
 
 # Liste des fichiers rcc (ressources)

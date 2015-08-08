@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #define MDT_SQL_SCHEMA_TABLE_H
 
 #include "mdtError.h"
+#include "mdtSqlDriverType.h"
 #include <QString>
 #include <QSqlDatabase>
 #include <QSqlField>
@@ -73,7 +74,7 @@ class mdtSqlSchemaTable
    *
    * Driver name must be given in format returned by QSqlDatabase::driverName() .
    */
-  void setDriverName(const QString & name);
+  bool setDriverName(const QString & name);
 
   /*! \brief Set database name
    */
@@ -105,6 +106,13 @@ class mdtSqlSchemaTable
   /*! \brief Get number of fields
    */
   int fieldCount() const;
+
+  /*! \brief Access fields list
+   */
+  const QList<QSqlField> & fieldList() const
+  {
+    return pvFields;
+  }
 
   /*! \brief Get field for given field name
    */
@@ -252,7 +260,8 @@ class mdtSqlSchemaTable
    */
   bool setupForeignKeysFromDatabaseSqlite(const QSqlDatabase & db);
 
-  QString pvDriverName;
+  ///QString pvDriverName;
+  mdtSqlDriverType pvDriverType;
   QString pvDatabaseName;
   QString pvTemporaryTableKw;
   QString pvTableName;

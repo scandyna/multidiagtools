@@ -1,35 +1,35 @@
-format 76
+format 209
 
 classcanvas 128002 class_ref 910210 // mdtSqlSchemaTable
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 18.8 394.2 2000
+  classdiagramsettings member_max_width 0 end
+  xyz 220.6 52.4 2000
 end
 classcanvas 128258 class_ref 404738 // QSqlField
-  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 513.4 25 2000
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 51 175 2000
 end
 classcanvas 128642 class_ref 404994 // QSqlRecord
-  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 695.4 65 2006
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 44 255 2006
 end
 classcanvas 128898 class_ref 910466 // QSqlIndex
-  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyzwh 700.8 141.6 2012 93 113
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyzwh 42 336 2012 93 113
 end
 classcanvas 129666 class_ref 910594 // QSqlQuery
-  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 45.2 33.4 2000
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 1185.2 234.8 2000
 end
 relationcanvas 128386 relation_ref 1118722 // <directional composition>
-  decenter_begin 416
-  from ref 128002 z 2001 stereotype "<<list>>" xyz 463.5 229 3000 to ref 128258
-  role_a_pos 554 72 3000 no_role_b
-  multiplicity_a_pos 526 72 3000 no_multiplicity_b
+  decenter_begin 391
+  from ref 128002 z 2001 stereotype "<<list>>" xyz 85 388 3000 to ref 128258
+  role_a_pos 139 178 3000 no_role_b
+  multiplicity_a_pos 138 212 3000 no_multiplicity_b
 end
-relationcanvas 128770 relation_ref 490882 // <unidirectional association>
+relationcanvas 128770 relation_ref 490882 // <directional composition>
   from ref 128642 z 2007 to ref 128258
   no_role_a no_role_b
-  multiplicity_a_pos 603 62 3000 no_multiplicity_b
+  multiplicity_a_pos 58 225 3000 no_multiplicity_b
 end
 relationcanvas 129026 relation_ref 1118850 // <generalisation>
   from ref 128898 z 2013 to ref 128642
@@ -37,29 +37,30 @@ relationcanvas 129026 relation_ref 1118850 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129154 relation_ref 1118978 // <directional composition>
-  decenter_begin 521
-  decenter_end 221
-  from ref 128002 z 2013 stereotype "<<hash>>" xyz 491 323 3000 to ref 128898
-  role_a_pos 707 173 3000 no_role_b
-  multiplicity_a_pos 677 173 3000 no_multiplicity_b
+  decenter_begin 762
+  decenter_end 141
+  from ref 128002 z 2013 stereotype "<<hash>>" xyz 70 401 3000 to ref 128898
+  role_a_pos 146 328 3000 no_role_b
+  multiplicity_a_pos 146 362 3000 no_multiplicity_b
 end
 relationcanvas 129282 relation_ref 1119106 // <directional composition>
-  decenter_begin 592
-  decenter_end 96
+  decenter_begin 958
+  decenter_end 849
   from ref 128002 z 2013 to ref 128898
-  role_a_pos 715 260 3000 no_role_b
-  multiplicity_a_pos 685 260 3000 no_multiplicity_b
+  role_a_pos 148 408 3000 no_role_b
+  multiplicity_a_pos 146 442 3000 no_multiplicity_b
 end
 relationcanvas 129794 relation_ref 1119362 // <dependency>
+  decenter_begin 508
+  decenter_end 581
   from ref 128002 z 2001 to ref 129666
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129922 relation_ref 1119490 // <directional composition>
-  decenter_begin 838
-  decenter_end 902
-  from ref 128002 z 2013 stereotype "<<hash>>" xyz 812.5 348.5 3000 to ref 128898
-  role_a_pos 800 260 3000 no_role_b
-  multiplicity_a_pos 770 260 3000 no_multiplicity_b
+  decenter_begin 860
+  from ref 128002 z 2013 stereotype "<<hash>>" xyz 202 425 3000 to ref 128898
+  role_a_pos 147 368 3000 no_role_b
+  multiplicity_a_pos 146 402 3000 no_multiplicity_b
 end
 end

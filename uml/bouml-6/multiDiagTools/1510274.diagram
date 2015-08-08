@@ -1,0 +1,47 @@
+format 209
+
+classcanvas 128002 class_ref 1794434 // CsvImportOptionDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 43 82 2000
+end
+classcanvas 128130 class_ref 1794562 // mdtSqlCopierDataPreviewModel
+  classdiagramsettings member_max_width 0 end
+  xyz 196 155 2000
+end
+classcanvas 128258 class_ref 1794690 // CsvImportOption
+  classdiagramsettings member_max_width 0 end
+  xyz 254 65 2000
+end
+classcanvas 128386 class_ref 1801346 // mdtSqlFieldSetupWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 122 378 2000
+end
+classcanvas 128514 class_ref 316162 // QWidget
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 246 290 2005
+end
+classcanvas 128770 class_ref 404738 // QSqlField
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 566 537 2000
+end
+classcanvas 129922 class_ref 1801602 // mdtSqlFieldSetupData
+  classdiagramsettings member_max_width 0 end
+  xyz 180 588 2000
+end
+relationcanvas 128642 relation_ref 2118914 // <generalisation>
+  decenter_begin 526
+  from ref 128386 z 2006 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 2119682 // <directional composition>
+  from ref 129922 z 2001 to ref 128770
+  role_a_pos 527 606 3000 no_role_b
+  multiplicity_a_pos 548 636 3000 no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 2119810 // <unidirectional association>
+  from ref 128386 z 2001 to ref 129922
+  role_a_pos 279 565 3000 no_role_b
+  multiplicity_a_pos 252 565 3000 no_multiplicity_b
+end
+end

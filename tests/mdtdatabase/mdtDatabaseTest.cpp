@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -26,6 +26,7 @@
 #include "mdtSqlRelation.h"
 #include "mdtSqlRelationInfo.h"
 #include "mdtSqlTransaction.h"
+#include "mdtSqlDriverType.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -63,6 +64,57 @@ void mdtDatabaseTest::initTestCase()
 {
   createTestDatabase();
   clearTestDatabaseData();
+}
+
+void mdtDatabaseTest::sqlDriverTypeTest()
+{
+  mdtSqlDriverType dt;
+
+  // Static functions
+  QCOMPARE(mdtSqlDriverType::nameFromType(mdtSqlDriverType::Unknown), QString(""));
+  QCOMPARE(mdtSqlDriverType::nameFromType(mdtSqlDriverType::SQLite), QString("QSQLITE"));
+  QCOMPARE(mdtSqlDriverType::nameFromType(mdtSqlDriverType::MariaDB), QString("QMYSQL"));
+  QCOMPARE(mdtSqlDriverType::nameFromType(mdtSqlDriverType::MySQL), QString("QMYSQL"));
+  QVERIFY(mdtSqlDriverType::typeFromName("QSQLITE") == mdtSqlDriverType::SQLite);
+  QVERIFY(mdtSqlDriverType::typeFromName("QMYSQL") == mdtSqlDriverType::MySQL);
+  QVERIFY(mdtSqlDriverType::typeFromName("") == mdtSqlDriverType::Unknown);
+  QVERIFY(mdtSqlDriverType::typeFromName("FAKENAME") == mdtSqlDriverType::Unknown);
+  // Initial state
+  QVERIFY(dt.type() == mdtSqlDriverType::Unknown);
+  QVERIFY(dt.isNull());
+  // Set from type
+  dt.setType(mdtSqlDriverType::SQLite);
+  QVERIFY(!dt.isNull());
+  QVERIFY(dt.type() == mdtSqlDriverType::SQLite);
+  QCOMPARE(dt.name(), QString("QSQLITE"));
+  dt.setType(mdtSqlDriverType::Unknown);
+  QVERIFY(dt.isNull());
+  // Set from name
+  QVERIFY(dt.setType("QSQLITE"));
+  QVERIFY(!dt.isNull());
+  QVERIFY(dt.type() == mdtSqlDriverType::SQLite);
+  QCOMPARE(dt.name(), QString("QSQLITE"));
+  QVERIFY(dt.setType("QMYSQL"));
+  QVERIFY(!dt.isNull());
+  QVERIFY(dt.type() == mdtSqlDriverType::MySQL);
+  QCOMPARE(dt.name(), QString("QMYSQL"));
+  QVERIFY(!dt.setType(""));
+  QVERIFY(dt.isNull());
+  QVERIFY(dt.type() == mdtSqlDriverType::Unknown);
+  QCOMPARE(dt.name(), QString(""));
+  QVERIFY(!dt.setType("FAKENAME"));
+  QVERIFY(dt.isNull());
+  QVERIFY(dt.type() == mdtSqlDriverType::Unknown);
+  QCOMPARE(dt.name(), QString(""));
+  // Set a valid type before clear test
+  dt.setType(mdtSqlDriverType::MariaDB);
+  QVERIFY(!dt.isNull());
+  QVERIFY(dt.type() == mdtSqlDriverType::MariaDB);
+  // Clear
+  dt.clear();
+  QVERIFY(dt.isNull());
+  QVERIFY(dt.type() == mdtSqlDriverType::Unknown);
+  QCOMPARE(dt.name(), QString(""));
 }
 
 void mdtDatabaseTest::sqlSchemaTableTest()

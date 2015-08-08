@@ -1,0 +1,15 @@
+format 209
+
+classcanvas 128002 class_ref 1794306 // mdtSqlCopierDatabaseTable
+  classdiagramsettings member_max_width 0 end
+  xyz 21 104 2000
+end
+classcanvas 128130 class_ref 910210 // mdtSqlSchemaTable
+  classdiagramsettings member_max_width 0 end
+  xyz 14 355 2005
+end
+classcanvas 128258 class_ref 1794178 // mdtSqlCopierCsvFileTable
+  classdiagramsettings member_max_width 0 end
+  xyz 554 278 2000
+end
+end

@@ -831,6 +831,7 @@ bool mdtClArticleEditor::setupArticleConnectionTable()
   widget->setColumnHidden("Article_Id_FK", true);
   widget->setColumnHidden("Connector_Id_FK", true);
   widget->setColumnHidden("ArticleConnector_Id_FK", true);
+  widget->setColumnHidden("ConnectionType_Code_FK", true);
   // Set fields a user friendly name
   widget->setHeaderData("ArticleConnectorName", tr("Connector"));
   widget->setHeaderData("ArticleContactName", tr("Contact"));

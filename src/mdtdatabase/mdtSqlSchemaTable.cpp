@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -35,7 +35,8 @@ mdtSqlSchemaTable::~mdtSqlSchemaTable()
 
 void mdtSqlSchemaTable::clear()
 {
-  pvDriverName.clear();
+  ///pvDriverName.clear();
+  pvDriverType.clear();
   pvDatabaseName.clear();
   pvTemporaryTableKw.clear();
   pvTableName.clear();
@@ -49,9 +50,16 @@ void mdtSqlSchemaTable::clear()
   pvForeignKeys.clear();
 }
 
-void mdtSqlSchemaTable::setDriverName(const QString & name) 
+bool mdtSqlSchemaTable::setDriverName(const QString & name) 
 {
-  pvDriverName = name;
+  ///pvDriverName = name;
+  if(!pvDriverType.setType(name)){
+    pvLastError.setError("Driver name '" + name + "' is not supported.", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
+    pvLastError.commit();
+    return false;
+  }
+  return true;
 }
 
 void mdtSqlSchemaTable::setDatabaseName(const QString & name) 
@@ -235,7 +243,10 @@ bool mdtSqlSchemaTable::setupFromTable(const QString & name, QSqlDatabase db)
   */
   // Set table and driver names
   pvTableName = name;
-  pvDriverName = db.driverName();
+  ///pvDriverName = db.driverName();
+  if(!setDriverName(db.driverName())){
+    return false;
+  }
   // Add fields
   if(!setupFieldsFromDatabase(db)){
     return false;
@@ -271,6 +282,21 @@ QString mdtSqlSchemaTable::sqlForCreateTable()
     return sql;
   }
   // Add the create table statement regarding driver
+  switch(pvDriverType.type()){
+    case mdtSqlDriverType::MariaDB:
+    case mdtSqlDriverType::MySQL:
+      sql += sqlForCreateTableMySql();
+      break;
+    case mdtSqlDriverType::SQLite:
+      sql += sqlForCreateTableSqlite();
+      break;
+    case mdtSqlDriverType::Unknown:
+      pvLastError.setError("Unknown driver name '" + pvDriverType.name() + "'", mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
+      pvLastError.commit();
+      break;
+  }
+  /**
   if(pvDriverName == "QMYSQL"){
     sql += sqlForCreateTableMySql();
   }else if(pvDriverName == "QSQLITE"){
@@ -281,6 +307,7 @@ QString mdtSqlSchemaTable::sqlForCreateTable()
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
     pvLastError.commit();
   }
+  */
 
   return sql;
 }
@@ -293,11 +320,24 @@ QString mdtSqlSchemaTable::sqlForDropTable() const
   if(pvTableName.isEmpty()){
     return "";
   }
+  switch(pvDriverType.type()){
+    case mdtSqlDriverType::MariaDB:
+    case mdtSqlDriverType::MySQL:
+      delimiter = "`";
+      break;
+    case mdtSqlDriverType::SQLite:
+      delimiter = "'";
+      break;
+    case mdtSqlDriverType::Unknown:
+      break;
+  }
+  /**
   if(pvDriverName == "QMYSQL"){
     delimiter = "`";
   }else{
     delimiter = "'";
   }
+  */
   if(pvDatabaseName.trimmed().isEmpty()){
     sql = "DROP TABLE IF EXISTS " + delimiter + pvTableName + delimiter + ";\n";
   }else{
@@ -340,9 +380,14 @@ QString mdtSqlSchemaTable::sqlForCreateTableMySql() const
   if(!pvCharset.trimmed().isEmpty()){
     sql += " DEFAULT CHARSET=" + pvCharset;
   }
+  if(pvDriverType.type() == mdtSqlDriverType::MySQL){
+    sql += sqlForCollateMySql();
+  }
+  /**
   if(pvDriverName.trimmed() == "QMYSQL"){
     sql += sqlForCollateMySql();
   }
+  */
   sql += ";\n";
 
   return sql;
@@ -542,6 +587,8 @@ QString mdtSqlSchemaTable::sqlForIndexesSqlite() const
 
 QString mdtSqlSchemaTable::sqlForForeignKeys(const QString &delimiter) const
 {
+  Q_ASSERT(!pvDriverType.isNull());
+
   QString sql;
   QSqlField field;
   QSqlRecord fields;
@@ -556,11 +603,25 @@ QString mdtSqlSchemaTable::sqlForForeignKeys(const QString &delimiter) const
   while(itf.hasNext()){
     itf.next();
     fkInfo = itf.value();
+    switch(pvDriverType.type()){
+      case mdtSqlDriverType::MariaDB:
+      case mdtSqlDriverType::MySQL:
+        sql += "  FOREIGN KEY " + delimiter + itf.key() + delimiter + " (";
+        break;
+      case mdtSqlDriverType::SQLite:
+        sql += "  FOREIGN KEY (";
+        break;
+      case mdtSqlDriverType::Unknown:
+        // Should never happen (we put it just to avoid compiler warnings, and we don't want a default in switch)
+        break;
+    }
+    /**
     if(pvDriverName.trimmed() == "QSQLITE"){
       sql += "  FOREIGN KEY (";
     }else{
       sql += "  FOREIGN KEY " + delimiter + itf.key() + delimiter + " (";
     }
+    */
     fields = fkInfo.fields;
     for(i = 0; i < fields.count(); ++i){
       sql += delimiter + fields.field(i).name() + delimiter;
@@ -773,9 +834,20 @@ mdtSqlSchemaTable::foreignKeyAction_t mdtSqlSchemaTable::foreignKeyActionFromNam
 
 bool mdtSqlSchemaTable::setupFieldsFromDatabase(const QSqlDatabase & db)
 {
+  switch(pvDriverType.type()){
+    case mdtSqlDriverType::Unknown:
+      return false;
+    case mdtSqlDriverType::SQLite:
+      return setupFieldsFromDatabaseSqlite(db);
+    case mdtSqlDriverType::MariaDB:
+    case mdtSqlDriverType::MySQL:
+      break;
+  }
+  /**
   if(pvDriverName == "QSQLITE"){
     return setupFieldsFromDatabaseSqlite(db);
   }
+  */
   QSqlRecord record = db.record(pvTableName);
   int i;
   Q_ASSERT(!record.isEmpty());
@@ -829,10 +901,20 @@ bool mdtSqlSchemaTable::setupFieldsFromDatabaseSqlite(const QSqlDatabase & db)
 
 bool mdtSqlSchemaTable::setupIndexesFromDatabase(const QSqlDatabase & db)
 {
+  switch(pvDriverType.type()){
+    case mdtSqlDriverType::SQLite:
+      return setupIndexesFromDatabaseSqlite(db);
+    case mdtSqlDriverType::MariaDB:
+    case mdtSqlDriverType::MySQL:
+    case mdtSqlDriverType::Unknown:
+      break;
+  }
+  /**
   if(pvDriverName == "QSQLITE"){
     return setupIndexesFromDatabaseSqlite(db);
   }
-  pvLastError.setError("Unknown driver name '" + pvDriverName + "'", mdtError::Error);
+  */
+  pvLastError.setError("Unknown driver name '" + pvDriverType.name() + "'", mdtError::Error);
   MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
   pvLastError.commit();
   return false;
@@ -889,10 +971,20 @@ bool mdtSqlSchemaTable::setupIndexesFromDatabaseSqlite(const QSqlDatabase & db)
 
 bool mdtSqlSchemaTable::setupForeignKeysFromDatabase(const QSqlDatabase & db)
 {
+  switch(pvDriverType.type()){
+    case mdtSqlDriverType::SQLite:
+      return setupForeignKeysFromDatabaseSqlite(db);
+    case mdtSqlDriverType::MariaDB:
+    case mdtSqlDriverType::MySQL:
+    case mdtSqlDriverType::Unknown:
+      break;
+  }
+  /**
   if(pvDriverName == "QSQLITE"){
     return setupForeignKeysFromDatabaseSqlite(db);
   }
-  pvLastError.setError("Unknown driver name '" + pvDriverName + "'", mdtError::Error);
+  */
+  pvLastError.setError("Unknown driver name '" + pvDriverType.name() + "'", mdtError::Error);
   MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
   pvLastError.commit();
   return false;
