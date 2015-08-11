@@ -3,21 +3,18 @@ cleanlooks_style
 diagrams
   classdiagram_ref 1503618 // sandbox
     742 739 100 4 288 0
-  classdiagram_ref 874370 // SchemaTable
-    120 106 100 21 0 0
-  classdiagram_ref 1517186 // FieldSetup
-    928 924 100 4 192 0
-  active  classdiagram_ref 1510402 // SchemaTableModel
-    928 924 100 4 0 0
+  active  classdiagram_ref 1530370 // FieldMapping
+    928 924 100 4 60 0
 end
 show_stereotypes
-selected attribute_ref 920578 // DriverType
+selected class_ref 1787266 // mdtFieldMappingSplitParameters
 open
   classview_ref 286978 // mdtDatabase
-  class_ref 1772930 // mdtFieldMapping
-  class_ref 1773186 // mdtFieldMappingField
+  classdiagram_ref 1530370 // FieldMapping
   operation_ref 2798594 // sourceFieldNameList
   operation_ref 2781826 // clear
+  class_ref 1772930 // mdtFieldMapping
+  class_ref 1773186 // mdtFieldMappingField
   class_ref 1794562 // mdtSqlCopierDataPreviewModel
   classview_ref 602498 // Data
   attribute_ref 1890946 // Charset

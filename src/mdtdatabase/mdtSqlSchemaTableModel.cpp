@@ -35,28 +35,12 @@ void mdtSqlSchemaTableModel::setTableSchema(const mdtSqlSchemaTable &st)
   endResetModel();
 }
 
-// void mdtSqlSchemaTableModel::setFieldList(const QList<QSqlField> & fields)
-// {
-//   beginResetModel();
-//   pvFields = fields;
-//   endResetModel();
-// }
-
-// void mdtSqlSchemaTableModel::setPrimaryKey(const QSqlIndex & pk)
-// {
-//   pvPrimaryKey = pk;
-// }
-
 QSqlField mdtSqlSchemaTableModel::field(int row) const
 {
   if( (row < 0) || (row >= pvSchema.fieldCount()) ){
     return QSqlField();
   }
   return pvSchema.fieldList().at(row);
-//   if( (row < 0) || (row >= pvFields.size()) ){
-//     return QSqlField();
-//   }
-//   return pvFields.at(row);
 }
 
 QSqlField mdtSqlSchemaTableModel::currentField(QComboBox *cb) const
@@ -69,7 +53,6 @@ QSqlField mdtSqlSchemaTableModel::currentField(QComboBox *cb) const
 bool mdtSqlSchemaTableModel::isPartOfPrimaryKey(int row) const
 {
   return pvSchema.primaryKey().contains(field(row).name());
-//   return pvPrimaryKey.contains(field(row).name());
 }
 
 int mdtSqlSchemaTableModel::rowCount(const QModelIndex & parent) const
@@ -79,7 +62,6 @@ int mdtSqlSchemaTableModel::rowCount(const QModelIndex & parent) const
     return 0;
   }
   return pvSchema.fieldCount();
-//   return pvFields.size();
 }
 
 int mdtSqlSchemaTableModel::columnCount(const QModelIndex & /*parent */) const
@@ -119,17 +101,13 @@ QVariant mdtSqlSchemaTableModel::data(const QModelIndex & index, int role) const
   }
   int row = index.row();
   Q_ASSERT( (row >= 0) && (row < pvSchema.fieldCount()) );
-//   Q_ASSERT( (row >= 0) && (row < pvFields.size()) );
   switch(index.column()){
     case NameIndex:
       return pvSchema.fieldList().at(row).name();
-//       return pvFields.at(row).name();
     case TypeIndex:
       return pvSchema.fieldList().at(row).type();
-//       return pvFields.at(row).type();
     case LengthIndex:
       return pvSchema.fieldList().at(row).length();
-//       return pvFields.at(row).length();
     case IsPkIndex:
       return isPartOfPrimaryKey(row);
   }

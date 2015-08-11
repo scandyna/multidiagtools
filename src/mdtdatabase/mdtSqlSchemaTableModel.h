@@ -25,8 +25,6 @@
 #include <QAbstractTableModel>
 #include <QModelIndex>
 #include <QSqlField>
-#include <QSqlIndex>
-#include <QList>
 #include <QVariant>
 
 class QComboBox;
@@ -68,14 +66,6 @@ class mdtSqlSchemaTableModel : public QAbstractTableModel
   /*! \brief Set table schema
    */
   void setTableSchema(const mdtSqlSchemaTable & st);
-
-  /*! \brief Set field list
-   */
-//   void setFieldList(const QList<QSqlField> & fields);
-
-  /*! \brief Set primary key
-   */
-//   void setPrimaryKey(const QSqlIndex & pk);
 
   /*! \brief Get field at given row
    *
@@ -128,8 +118,6 @@ class mdtSqlSchemaTableModel : public QAbstractTableModel
   Q_DISABLE_COPY(mdtSqlSchemaTableModel)
 
   mdtSqlSchemaTable pvSchema;
-//   QList<QSqlField> pvFields;
-//   QSqlIndex pvPrimaryKey;
 };
 
 #endif // #ifndef MDT_SQL_SCHEMA_TABLE_MODEL_H

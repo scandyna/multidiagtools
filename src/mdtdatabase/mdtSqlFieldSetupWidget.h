@@ -42,6 +42,10 @@ class mdtSqlFieldSetupWidget : public QWidget, Ui::mdtSqlFieldSetupWidget
    */
   mdtSqlFieldSetupWidget(QWidget *parent);
 
+  /*! \brief Set edition mode
+   */
+  void setEditionMode(mdtSqlFieldSetupEditionMode_t mode);
+
   /*! \brief Set setup data
    */
   bool setData(const mdtSqlFieldSetupData & data, QSqlDatabase db);
@@ -68,10 +72,6 @@ class mdtSqlFieldSetupWidget : public QWidget, Ui::mdtSqlFieldSetupWidget
   /*! \brief Set field type
    */
   void setFieldType(QVariant::Type type);
-
-  /*! \brief Set edition mode
-   */
-  void setEditionMode(mdtSqlFieldSetupEditionMode_t mode);
 
   /*! \brief Set creation edition mode
    */

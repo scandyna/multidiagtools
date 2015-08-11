@@ -37,6 +37,21 @@ mdtSqlFieldSetupWidget::mdtSqlFieldSetupWidget(QWidget *parent)
   connect(cbField, SIGNAL(currentIndexChanged(int)), this, SLOT(updateFieldParameters(int)));
 }
 
+void mdtSqlFieldSetupWidget::setEditionMode(mdtSqlFieldSetupEditionMode_t mode)
+{
+  switch(mode){
+    case mdtSqlFieldSetupEditionMode_t::Creation:
+      setEditionModeCreation();
+      break;
+    case mdtSqlFieldSetupEditionMode_t::Selection:
+      setEditionModeSelection();
+      break;
+    case mdtSqlFieldSetupEditionMode_t::Edition:
+      setEditionModeEdition();
+      break;
+  }
+}
+
 bool mdtSqlFieldSetupWidget::setData(const mdtSqlFieldSetupData & data, QSqlDatabase db)
 {
   mdtSqlSchemaTable st;
@@ -55,10 +70,6 @@ bool mdtSqlFieldSetupWidget::setData(const mdtSqlFieldSetupData & data, QSqlData
   setEditionMode(data.editionMode);
   lbTableName->setText(data.tableName);
   pvSchemaTabledModel->setTableSchema(st);
-  /**
-  pvSchemaTabledModel->setFieldList(st.fieldList());
-  pvSchemaTabledModel->setPrimaryKey(st.primaryKey());
-  */
   cbField->setCurrentIndex(0);
 
   return true;
@@ -100,21 +111,6 @@ void mdtSqlFieldSetupWidget::setFieldType(QVariant::Type type)
 {
   int index = cbType->findData(type);
   cbType->setCurrentIndex(index);
-}
-
-void mdtSqlFieldSetupWidget::setEditionMode(mdtSqlFieldSetupEditionMode_t mode)
-{
-  switch(mode){
-    case mdtSqlFieldSetupEditionMode_t::Creation:
-      setEditionModeCreation();
-      break;
-    case mdtSqlFieldSetupEditionMode_t::Selection:
-      setEditionModeSelection();
-      break;
-    case mdtSqlFieldSetupEditionMode_t::Edition:
-      setEditionModeEdition();
-      break;
-  }
 }
 
 void mdtSqlFieldSetupWidget::setEditionModeCreation()

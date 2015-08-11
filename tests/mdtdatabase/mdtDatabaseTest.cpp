@@ -781,9 +781,7 @@ void mdtDatabaseTest::sqlSchemaTableModelTest()
   QTableView tableView;
   QTreeView treeView;
   QComboBox cb;
-///  QList<QSqlField> fields;
   QSqlField field;
-///  QSqlIndex pk;
 
   /*
    * Setup fields
@@ -794,21 +792,16 @@ void mdtDatabaseTest::sqlSchemaTableModelTest()
   field.setType(QVariant::Int);
   field.setAutoValue(true);
   st.addField(field, true);
-//   fields.append(field);
-//   pk.append(field);
   // Name
   field = QSqlField();
   field.setName("Name");
   field.setType(QVariant::String);
   field.setLength(100);
   st.addField(field, false);
-//   fields.append(field);
   /*
    * Setup model and views
    */
   model.setTableSchema(st);
-//   model.setFieldList(fields);
-//   model.setPrimaryKey(pk);
   tableView.setModel(&model);
   tableView.resize(400, 200);
   tableView.show();
