@@ -20,8 +20,6 @@
  ****************************************************************************/
 #include "mdtSqlCopierTest.h"
 #include "mdtSqlFieldSetupData.h"
-#include "mdtSqlFieldSetupTableModel.h"
-#include "mdtSqlFieldSetupWidget.h"
 #include "mdtApplication.h"
 #include "mdtSqlDatabaseManager.h"
 #include "mdtSqlSchemaTable.h"
@@ -56,71 +54,77 @@ void mdtSqlCopierTest::cleanupTestCase()
  * Tests implemtations
  */
 
-void mdtSqlCopierTest::sqlFieldTableModelTest()
-{
-  mdtSqlFieldSetupTableModel model;
-  QTableView tableView;
-  QTreeView treeView;
-  QComboBox cb;
-  QList<QSqlField> fields;
-  QSqlField field;
-
-  /*
-   * Setup fields
-   */
-  // Id_PK
-  field = QSqlField();
-  field.setName("Id_PK");
-  field.setType(QVariant::Int);
-  field.setAutoValue(true);
-  fields.append(field);
-  // Name
-  field = QSqlField();
-  field.setName("Name");
-  field.setType(QVariant::String);
-  field.setLength(100);
-  fields.append(field);
-  /*
-   * Setup model and views
-   */
-  model.setFieldList(fields);
-  tableView.setModel(&model);
-  tableView.show();
-  treeView.setModel(&model);
-  treeView.show();
-  cb.setModel(&model);
-  cb.setModelColumn(0);
-  cb.setInsertPolicy(QComboBox::InsertAtCurrent);
-  cb.setEditable(true);
-  cb.show();
-  /*
-   * Check getting field
-   */
-  QVERIFY(!model.field(-1).isValid());
-  QVERIFY(model.field(0).isValid());
-  QCOMPARE(model.field(0).name(), QString("Id_PK"));
-  QVERIFY(model.field(1).isValid());
-  QCOMPARE(model.field(1).name(), QString("Name"));
-  QVERIFY(!model.field(20).isValid());
-  // Check with combo box
-  cb.setCurrentIndex(0);
-  QVERIFY(model.currentField(&cb).isValid());
-  QCOMPARE(model.currentField(&cb).name(), QString("Id_PK"));
-  cb.setCurrentIndex(1);
-  QVERIFY(model.currentField(&cb).isValid());
-  QCOMPARE(model.currentField(&cb).name(), QString("Name"));
-  cb.setCurrentIndex(-1);
-  QVERIFY(!model.currentField(&cb).isValid());
-
-  /*
-   * Play
-   */
-  
-  while(tableView.isVisible()){
-    QTest::qWait(500);
-  }
-  
-}
+// void mdtSqlCopierTest::sqlFieldTableModelTest()
+// {
+//   mdtSqlFieldSetupTableModel model;
+//   QTableView tableView;
+//   QTreeView treeView;
+//   QComboBox cb;
+//   QList<QSqlField> fields;
+//   QSqlField field;
+//   QSqlIndex pk;
+// 
+//   /*
+//    * Setup fields
+//    */
+//   // Id_PK
+//   field = QSqlField();
+//   field.setName("Id_PK");
+//   field.setType(QVariant::Int);
+//   field.setAutoValue(true);
+//   fields.append(field);
+//   pk.append(field);
+//   // Name
+//   field = QSqlField();
+//   field.setName("Name");
+//   field.setType(QVariant::String);
+//   field.setLength(100);
+//   fields.append(field);
+//   /*
+//    * Setup model and views
+//    */
+//   model.setFieldList(fields);
+//   model.setPrimaryKey(pk);
+//   tableView.setModel(&model);
+//   tableView.resize(400, 200);
+//   tableView.show();
+//   treeView.setModel(&model);
+//   treeView.show();
+//   cb.setModel(&model);
+//   cb.setModelColumn(0);
+//   cb.setInsertPolicy(QComboBox::InsertAtCurrent);
+//   cb.setEditable(true);
+//   cb.show();
+//   /*
+//    * Check getting field
+//    */
+//   QVERIFY(!model.field(-1).isValid());
+//   QVERIFY(model.field(0).isValid());
+//   QCOMPARE(model.field(0).name(), QString("Id_PK"));
+//   QVERIFY(model.isPartOfPrimaryKey(0));
+//   QVERIFY(model.field(1).isValid());
+//   QCOMPARE(model.field(1).name(), QString("Name"));
+//   QVERIFY(!model.isPartOfPrimaryKey(1));
+//   QVERIFY(!model.field(20).isValid());
+//   QVERIFY(!model.isPartOfPrimaryKey(20));
+//   // Check with combo box
+//   cb.setCurrentIndex(0);
+//   QVERIFY(model.currentField(&cb).isValid());
+//   QCOMPARE(model.currentField(&cb).name(), QString("Id_PK"));
+//   cb.setCurrentIndex(1);
+//   QVERIFY(model.currentField(&cb).isValid());
+//   QCOMPARE(model.currentField(&cb).name(), QString("Name"));
+//   cb.setCurrentIndex(-1);
+//   QVERIFY(!model.currentField(&cb).isValid());
+// 
+//   /*
+//    * Play
+//    */
+//   
+//   while(tableView.isVisible()){
+//     QTest::qWait(500);
+//   }
+// }
 
 void mdtSqlCopierTest::sqlFieldSetupDataTest()
 {
@@ -148,23 +152,23 @@ void mdtSqlCopierTest::sqlFieldSetupDataTest()
   QVERIFY(data.isNull());
 }
 
-void mdtSqlCopierTest::sqlFieldSetupWidgetTest()
-{
-  mdtSqlFieldSetupWidget w(nullptr);
-  mdtSqlFieldSetupData data;
-
-  data.tableName = "Client_tbl";
-  ///data.editionMode = mdtSqlFieldSetupEditionMode_t::Edition;
-  QVERIFY(w.setData(data, pvDatabaseManager.database()));
-  w.show();
-
-  /*
-   * Play
-   */
-  while(w.isVisible()){
-    QTest::qWait(500);
-  }
-}
+// void mdtSqlCopierTest::sqlFieldSetupWidgetTest()
+// {
+//   mdtSqlFieldSetupWidget w(nullptr);
+//   mdtSqlFieldSetupData data;
+// 
+//   data.tableName = "Client_tbl";
+//   data.editionMode = mdtSqlFieldSetupEditionMode_t::Edition;
+//   QVERIFY(w.setData(data, pvDatabaseManager.database()));
+//   w.show();
+// 
+//   /*
+//    * Play
+//    */
+//   while(w.isVisible()){
+//     QTest::qWait(500);
+//   }
+// }
 
 
 /*

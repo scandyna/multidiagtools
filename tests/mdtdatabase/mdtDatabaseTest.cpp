@@ -22,16 +22,24 @@
 #include "mdtApplication.h"
 #include "mdtSqlDatabaseManager.h"
 #include "mdtSqlSchemaTable.h"
+
+#include "mdtSqlSchemaTableModel.h"
+
+#include "mdtSqlFieldSetupWidget.h"
+
 #include "mdtSqlRecord.h"
 #include "mdtSqlRelation.h"
 #include "mdtSqlRelationInfo.h"
 #include "mdtSqlTransaction.h"
 #include "mdtSqlDriverType.h"
+#include "mdtSqlFieldType.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlField>
 #include <QSqlError>
+#include <QTableView>
+#include <QTreeView>
 #include <QWidget>
 #include <QDialog>
 #include <QLineEdit>
@@ -115,6 +123,55 @@ void mdtDatabaseTest::sqlDriverTypeTest()
   QVERIFY(dt.isNull());
   QVERIFY(dt.type() == mdtSqlDriverType::Unknown);
   QCOMPARE(dt.name(), QString(""));
+}
+
+void mdtDatabaseTest::sqlFieldTypeTest()
+{
+  mdtSqlFieldType ft;
+  QList<mdtSqlFieldType> fieldTypeList;
+
+  // Static functions - SQLite
+  /// \todo To be done
+  // Available field type list - SQLite
+  fieldTypeList = mdtSqlFieldType::availableFieldTypeList(mdtSqlDriverType::SQLite);
+  QCOMPARE(fieldTypeList.size(), 6);
+  QVERIFY(fieldTypeList.at(0).type() == QVariant::Int);
+  QCOMPARE(fieldTypeList.at(0).name(), QString("INTEGER"));
+  QVERIFY(fieldTypeList.at(1).type() == QVariant::String);
+  QCOMPARE(fieldTypeList.at(1).name(), QString("VARCHAR"));
+  QVERIFY(fieldTypeList.at(2).type() == QVariant::Double);
+  QCOMPARE(fieldTypeList.at(2).name(), QString("DOUBLE"));
+  QVERIFY(fieldTypeList.at(3).type() == QVariant::Bool);
+  QCOMPARE(fieldTypeList.at(3).name(), QString("BOOLEAN"));
+  QVERIFY(fieldTypeList.at(4).type() == QVariant::Date);
+  QCOMPARE(fieldTypeList.at(4).name(), QString("DATE"));
+  QVERIFY(fieldTypeList.at(5).type() == QVariant::DateTime);
+  QCOMPARE(fieldTypeList.at(5).name(), QString("DATETIME"));
+  // Static functions - MySQL
+  /// \todo To be done
+  // Available field type list - MariaDB/MySQL
+  /// \todo To be done
+  // Initial state
+  QVERIFY(ft.type() == QVariant::Invalid);
+  QVERIFY(ft.isNull());
+  // Set from type
+  QVERIFY(ft.setType(QVariant::Int, mdtSqlDriverType::SQLite));
+  QVERIFY(!ft.isNull());
+  QVERIFY(ft.type() == QVariant::Int);
+  QCOMPARE(ft.name(), QString("INTEGER"));
+  QVERIFY(!ft.setType(QVariant::Color, mdtSqlDriverType::SQLite));
+  QVERIFY(ft.type() == QVariant::Invalid);
+  QVERIFY(ft.isNull());
+  // Set a valid type before clear test
+  QVERIFY(ft.setType(QVariant::String, mdtSqlDriverType::SQLite));
+  QVERIFY(!ft.isNull());
+  QVERIFY(ft.type() == QVariant::String);
+  QCOMPARE(ft.name(), QString("VARCHAR"));
+  // Clear
+  ft.clear();
+  QVERIFY(ft.type() == QVariant::Invalid);
+  QVERIFY(ft.name().isEmpty());
+  QVERIFY(ft.isNull());
 }
 
 void mdtDatabaseTest::sqlSchemaTableTest()
@@ -353,7 +410,7 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   expectedSql  = "CREATE TABLE 'sandbox'.'Address_tbl' (\n";
   expectedSql += "  'Id_PK' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
   expectedSql += "  'Street' VARCHAR(50) DEFAULT NULL COLLATE NOCASE,\n";
-  expectedSql += "  'Client_Id_FK' INT NOT NULL DEFAULT NULL,\n";
+  expectedSql += "  'Client_Id_FK' INTEGER NOT NULL DEFAULT NULL,\n";
   expectedSql += "  FOREIGN KEY ('Client_Id_FK')\n";
   expectedSql += "   REFERENCES 'Client_tbl' ('Id_PK')\n";
   expectedSql += "   ON DELETE RESTRICT\n";
@@ -715,6 +772,100 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   QVERIFY(q.exec(sql));
   QVERIFY(!db.tables().contains("DataTypeTest_tbl"));
 
+}
+
+void mdtDatabaseTest::sqlSchemaTableModelTest()
+{
+  mdtSqlSchemaTableModel model;
+  mdtSqlSchemaTable st;
+  QTableView tableView;
+  QTreeView treeView;
+  QComboBox cb;
+///  QList<QSqlField> fields;
+  QSqlField field;
+///  QSqlIndex pk;
+
+  /*
+   * Setup fields
+   */
+  // Id_PK
+  field = QSqlField();
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  st.addField(field, true);
+//   fields.append(field);
+//   pk.append(field);
+  // Name
+  field = QSqlField();
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(100);
+  st.addField(field, false);
+//   fields.append(field);
+  /*
+   * Setup model and views
+   */
+  model.setTableSchema(st);
+//   model.setFieldList(fields);
+//   model.setPrimaryKey(pk);
+  tableView.setModel(&model);
+  tableView.resize(400, 200);
+  tableView.show();
+  treeView.setModel(&model);
+  treeView.show();
+  cb.setModel(&model);
+  cb.setModelColumn(0);
+  cb.setInsertPolicy(QComboBox::InsertAtCurrent);
+  cb.setEditable(true);
+  cb.show();
+  /*
+   * Check getting field
+   */
+  QVERIFY(!model.field(-1).isValid());
+  QVERIFY(model.field(0).isValid());
+  QCOMPARE(model.field(0).name(), QString("Id_PK"));
+  QVERIFY(model.isPartOfPrimaryKey(0));
+  QVERIFY(model.field(1).isValid());
+  QCOMPARE(model.field(1).name(), QString("Name"));
+  QVERIFY(!model.isPartOfPrimaryKey(1));
+  QVERIFY(!model.field(20).isValid());
+  QVERIFY(!model.isPartOfPrimaryKey(20));
+  // Check with combo box
+  cb.setCurrentIndex(0);
+  QVERIFY(model.currentField(&cb).isValid());
+  QCOMPARE(model.currentField(&cb).name(), QString("Id_PK"));
+  cb.setCurrentIndex(1);
+  QVERIFY(model.currentField(&cb).isValid());
+  QCOMPARE(model.currentField(&cb).name(), QString("Name"));
+  cb.setCurrentIndex(-1);
+  QVERIFY(!model.currentField(&cb).isValid());
+
+  /*
+   * Play
+   */
+  
+  while(tableView.isVisible()){
+    QTest::qWait(500);
+  }
+}
+
+void mdtDatabaseTest::sqlFieldSetupWidgetTest()
+{
+  mdtSqlFieldSetupWidget w(nullptr);
+  mdtSqlFieldSetupData data;
+
+  data.tableName = "Client_tbl";
+  data.editionMode = mdtSqlFieldSetupEditionMode_t::Edition;
+  QVERIFY(w.setData(data, pvDatabase));
+  w.show();
+
+  /*
+   * Play
+   */
+  while(w.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 void mdtDatabaseTest::databaseManagerTest()

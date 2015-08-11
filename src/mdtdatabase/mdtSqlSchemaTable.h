@@ -118,6 +118,13 @@ class mdtSqlSchemaTable
    */
   QSqlField field(const QString & fieldName) const;
 
+  /*! \brief Access primary key
+   */
+  const QSqlIndex & primaryKey() const
+  {
+    return pvPrimaryKey;
+  }
+
   /*! \brief Add a index
    *
    * If name allready exists, it will not be appended
@@ -260,7 +267,6 @@ class mdtSqlSchemaTable
    */
   bool setupForeignKeysFromDatabaseSqlite(const QSqlDatabase & db);
 
-  ///QString pvDriverName;
   mdtSqlDriverType pvDriverType;
   QString pvDatabaseName;
   QString pvTemporaryTableKw;
@@ -273,7 +279,7 @@ class mdtSqlSchemaTable
   QHash<QString, QSqlIndex> pvIndexes;
   QHash<QString, bool> pvIndexeAtIsUnique;
   QHash<QString, mdtSqlSchemaTableForeignKeyInfo> pvForeignKeys;
-  mdtError pvLastError;
+  mutable mdtError pvLastError;
 };
 
 #endif // #ifndef MDT_SQL_SCHEMA_TABLE_H

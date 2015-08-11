@@ -19,17 +19,22 @@
  **
  ****************************************************************************/
 #include "mdtSqlFieldSetupWidget.h"
-#include "mdtSqlFieldSetupTableModel.h"
+#include "mdtSqlSchemaTableModel.h"
 #include "mdtSqlSchemaTable.h"
+#include "mdtSqlDriverType.h"
+#include "mdtSqlFieldType.h"
+
+#include <QDebug>
 
 mdtSqlFieldSetupWidget::mdtSqlFieldSetupWidget(QWidget *parent)
  : QWidget(parent)
 {
   setupUi(this);
   // Setup field selection combobox
-  pvFieldModel = new mdtSqlFieldSetupTableModel(this);
-  cbField->setModel(pvFieldModel);
-  cbField->setModelColumn(mdtSqlFieldSetupTableModel::NameIndex);
+  pvSchemaTabledModel = new mdtSqlSchemaTableModel(this);
+  cbField->setModel(pvSchemaTabledModel);
+  cbField->setModelColumn(mdtSqlSchemaTableModel::NameIndex);
+  connect(cbField, SIGNAL(currentIndexChanged(int)), this, SLOT(updateFieldParameters(int)));
 }
 
 bool mdtSqlFieldSetupWidget::setData(const mdtSqlFieldSetupData & data, QSqlDatabase db)
@@ -42,12 +47,59 @@ bool mdtSqlFieldSetupWidget::setData(const mdtSqlFieldSetupData & data, QSqlData
     pvLastError = st.lastError();
     return false;
   }
+  // Fill available field types
+  if(!populateFieldTypeCombobox(db.driverName())){
+    return false;
+  }
   // Update
   setEditionMode(data.editionMode);
   lbTableName->setText(data.tableName);
-  pvFieldModel->setFieldList(st.fieldList());
+  pvSchemaTabledModel->setTableSchema(st);
+  /**
+  pvSchemaTabledModel->setFieldList(st.fieldList());
+  pvSchemaTabledModel->setPrimaryKey(st.primaryKey());
+  */
+  cbField->setCurrentIndex(0);
 
   return true;
+}
+
+void mdtSqlFieldSetupWidget::updateFieldParameters(int cbFieldIndex)
+{
+  QSqlField field = pvSchemaTabledModel->field(cbFieldIndex);
+
+  leName->setText(field.name());
+  setFieldType(field.type());
+  sbLength->setValue(field.length());
+  leDefaultValue->setText(field.defaultValue().toString());
+  cbAutoIncrement->setChecked(field.isAutoValue());
+  cbPartOfPk->setChecked(pvSchemaTabledModel->isPartOfPrimaryKey(cbFieldIndex));
+  cbRequired->setChecked(field.requiredStatus() == QSqlField::QSqlField::Required);
+}
+
+bool mdtSqlFieldSetupWidget::populateFieldTypeCombobox(const QString & driverName)
+{
+  auto driverType = mdtSqlDriverType::typeFromName(driverName);
+
+  cbType->clear();
+  if(driverType == mdtSqlDriverType::Unknown){
+    pvLastError.setError(tr("Unsupported driver '") + driverName + tr("'"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlFieldSetupWidget");
+    pvLastError.commit();
+    return false;
+  }
+  auto availableFieldTypeList = mdtSqlFieldType::availableFieldTypeList(driverType);
+  for(const auto & fieldType : availableFieldTypeList){
+    cbType->addItem(fieldType.name(), fieldType.type());
+  }
+
+  return true;
+}
+
+void mdtSqlFieldSetupWidget::setFieldType(QVariant::Type type)
+{
+  int index = cbType->findData(type);
+  cbType->setCurrentIndex(index);
 }
 
 void mdtSqlFieldSetupWidget::setEditionMode(mdtSqlFieldSetupEditionMode_t mode)

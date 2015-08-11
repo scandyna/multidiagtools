@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtSqlSchemaTable.h"
+#include "mdtSqlFieldType.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QStringList>
@@ -35,7 +36,6 @@ mdtSqlSchemaTable::~mdtSqlSchemaTable()
 
 void mdtSqlSchemaTable::clear()
 {
-  ///pvDriverName.clear();
   pvDriverType.clear();
   pvDatabaseName.clear();
   pvTemporaryTableKw.clear();
@@ -52,7 +52,6 @@ void mdtSqlSchemaTable::clear()
 
 bool mdtSqlSchemaTable::setDriverName(const QString & name) 
 {
-  ///pvDriverName = name;
   if(!pvDriverType.setType(name)){
     pvLastError.setError("Driver name '" + name + "' is not supported.", mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
@@ -243,7 +242,6 @@ bool mdtSqlSchemaTable::setupFromTable(const QString & name, QSqlDatabase db)
   */
   // Set table and driver names
   pvTableName = name;
-  ///pvDriverName = db.driverName();
   if(!setDriverName(db.driverName())){
     return false;
   }
@@ -296,18 +294,6 @@ QString mdtSqlSchemaTable::sqlForCreateTable()
       pvLastError.commit();
       break;
   }
-  /**
-  if(pvDriverName == "QMYSQL"){
-    sql += sqlForCreateTableMySql();
-  }else if(pvDriverName == "QSQLITE"){
-    sql += sqlForCreateTableSqlite();
-  }else{
-    sql = "";
-    pvLastError.setError("Unknown driver name '" + pvDriverName + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
-    pvLastError.commit();
-  }
-  */
 
   return sql;
 }
@@ -331,13 +317,6 @@ QString mdtSqlSchemaTable::sqlForDropTable() const
     case mdtSqlDriverType::Unknown:
       break;
   }
-  /**
-  if(pvDriverName == "QMYSQL"){
-    delimiter = "`";
-  }else{
-    delimiter = "'";
-  }
-  */
   if(pvDatabaseName.trimmed().isEmpty()){
     sql = "DROP TABLE IF EXISTS " + delimiter + pvTableName + delimiter + ";\n";
   }else{
@@ -383,11 +362,6 @@ QString mdtSqlSchemaTable::sqlForCreateTableMySql() const
   if(pvDriverType.type() == mdtSqlDriverType::MySQL){
     sql += sqlForCollateMySql();
   }
-  /**
-  if(pvDriverName.trimmed() == "QMYSQL"){
-    sql += sqlForCollateMySql();
-  }
-  */
   sql += ";\n";
 
   return sql;
@@ -615,13 +589,6 @@ QString mdtSqlSchemaTable::sqlForForeignKeys(const QString &delimiter) const
         // Should never happen (we put it just to avoid compiler warnings, and we don't want a default in switch)
         break;
     }
-    /**
-    if(pvDriverName.trimmed() == "QSQLITE"){
-      sql += "  FOREIGN KEY (";
-    }else{
-      sql += "  FOREIGN KEY " + delimiter + itf.key() + delimiter + " (";
-    }
-    */
     fields = fkInfo.fields;
     for(i = 0; i < fields.count(); ++i){
       sql += delimiter + fields.field(i).name() + delimiter;
@@ -711,47 +678,54 @@ QString mdtSqlSchemaTable::fieldTypeNameSqlite(QVariant::Type type, int length) 
 {
   QString strType;
 
-  switch(type){
-    case QVariant::Int:
-      strType = "INT";
-      break;
-    case QVariant::UInt:
-      strType = "INT";
-      break;
-    case QVariant::LongLong:
-      strType = "BIGINT";
-      break;
-    case QVariant::ULongLong:
-      strType = "BIGINT";
-      break;
-    case QVariant::Double:
-      strType = "DOUBLE";
-      break;
-    case QVariant::Bool:
-      strType = "BOOLEAN";
-      break;
-    case QVariant::Date:
-      strType = "DATE";
-      break;
-    case QVariant::Time:
-      strType = "DATETIME";
-      break;
-    case QVariant::DateTime:
-      strType = "DATETIME";
-      break;
-    case QVariant::String:
-      strType = "VARCHAR";
-      break;
-    case QVariant::Bitmap:
-      strType = "BLOB";
-      break;
-    case QVariant::Image:
-      strType = "BLOB";
-      break;
-    default:
-      mdtError e(MDT_DATABASE_ERROR, "Unknown mapping for type " + QString::number(type) + " (QVariant::Type)", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtSqlSchemaTable");
-      e.commit();
+//   switch(type){
+//     case QVariant::Int:
+//       strType = "INT";
+//       break;
+//     case QVariant::UInt:
+//       strType = "INT";
+//       break;
+//     case QVariant::LongLong:
+//       strType = "BIGINT";
+//       break;
+//     case QVariant::ULongLong:
+//       strType = "BIGINT";
+//       break;
+//     case QVariant::Double:
+//       strType = "DOUBLE";
+//       break;
+//     case QVariant::Bool:
+//       strType = "BOOLEAN";
+//       break;
+//     case QVariant::Date:
+//       strType = "DATE";
+//       break;
+//     case QVariant::Time:
+//       strType = "DATETIME";
+//       break;
+//     case QVariant::DateTime:
+//       strType = "DATETIME";
+//       break;
+//     case QVariant::String:
+//       strType = "VARCHAR";
+//       break;
+//     case QVariant::Bitmap:
+//       strType = "BLOB";
+//       break;
+//     case QVariant::Image:
+//       strType = "BLOB";
+//       break;
+//     default:
+//       mdtError e(MDT_DATABASE_ERROR, "Unknown mapping for type " + QString::number(type) + " (QVariant::Type)", mdtError::Error);
+//       MDT_ERROR_SET_SRC(e, "mdtSqlSchemaTable");
+//       e.commit();
+//   }
+  strType = mdtSqlFieldType::nameFromType(type, mdtSqlDriverType::SQLite);
+  if(strType.isEmpty()){
+    pvLastError.setError("Unknown mapping for type " + QString::number(type) + " (QVariant::Type)", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
+    pvLastError.commit();
+    return strType;
   }
   // Add length if defined (We not check if length is supported for given type)
   if(length > 0){
@@ -843,11 +817,6 @@ bool mdtSqlSchemaTable::setupFieldsFromDatabase(const QSqlDatabase & db)
     case mdtSqlDriverType::MySQL:
       break;
   }
-  /**
-  if(pvDriverName == "QSQLITE"){
-    return setupFieldsFromDatabaseSqlite(db);
-  }
-  */
   QSqlRecord record = db.record(pvTableName);
   int i;
   Q_ASSERT(!record.isEmpty());
@@ -909,11 +878,6 @@ bool mdtSqlSchemaTable::setupIndexesFromDatabase(const QSqlDatabase & db)
     case mdtSqlDriverType::Unknown:
       break;
   }
-  /**
-  if(pvDriverName == "QSQLITE"){
-    return setupIndexesFromDatabaseSqlite(db);
-  }
-  */
   pvLastError.setError("Unknown driver name '" + pvDriverType.name() + "'", mdtError::Error);
   MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
   pvLastError.commit();
@@ -979,11 +943,6 @@ bool mdtSqlSchemaTable::setupForeignKeysFromDatabase(const QSqlDatabase & db)
     case mdtSqlDriverType::Unknown:
       break;
   }
-  /**
-  if(pvDriverName == "QSQLITE"){
-    return setupForeignKeysFromDatabaseSqlite(db);
-  }
-  */
   pvLastError.setError("Unknown driver name '" + pvDriverType.name() + "'", mdtError::Error);
   MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
   pvLastError.commit();

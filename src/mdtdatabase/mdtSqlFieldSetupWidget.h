@@ -26,13 +26,16 @@
 #include "mdtError.h"
 #include <QWidget>
 #include <QSqlDatabase>
+#include <QVariant>
 
-class mdtSqlFieldSetupTableModel;
+class mdtSqlSchemaTableModel;
 
 /*! \brief Field setup widget
  */
 class mdtSqlFieldSetupWidget : public QWidget, Ui::mdtSqlFieldSetupWidget
 {
+ Q_OBJECT
+
  public:
 
   /*! \brief Constructor
@@ -50,7 +53,21 @@ class mdtSqlFieldSetupWidget : public QWidget, Ui::mdtSqlFieldSetupWidget
     return pvLastError;
   }
 
+ private slots:
+
+  /*! \brief Update field parameters
+   */
+  void updateFieldParameters(int cbFieldIndex);
+
  private:
+
+  /*! \brief Populate field type combobox
+   */
+  bool populateFieldTypeCombobox(const QString & driverName);
+
+  /*! \brief Set field type
+   */
+  void setFieldType(QVariant::Type type);
 
   /*! \brief Set edition mode
    */
@@ -70,7 +87,7 @@ class mdtSqlFieldSetupWidget : public QWidget, Ui::mdtSqlFieldSetupWidget
 
   Q_DISABLE_COPY(mdtSqlFieldSetupWidget)
 
-  mdtSqlFieldSetupTableModel *pvFieldModel;
+  mdtSqlSchemaTableModel *pvSchemaTabledModel;
   mdtSqlFieldSetupData pvSetupData;
   mdtError pvLastError;
 };

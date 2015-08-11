@@ -36,9 +36,9 @@ class mdtSqlCopierTest : public mdtTest
   void initTestCase();
   void cleanupTestCase();
 
-  void sqlFieldTableModelTest();
+//   void sqlFieldTableModelTest();
   void sqlFieldSetupDataTest();
-  void sqlFieldSetupWidgetTest();
+//   void sqlFieldSetupWidgetTest();
 
  private:
 

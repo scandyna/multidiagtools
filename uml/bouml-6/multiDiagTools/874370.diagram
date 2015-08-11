@@ -23,8 +23,8 @@ end
 relationcanvas 128386 relation_ref 1118722 // <directional composition>
   decenter_begin 391
   from ref 128002 z 2001 stereotype "<<list>>" xyz 85 388 3000 to ref 128258
-  role_a_pos 139 178 3000 no_role_b
-  multiplicity_a_pos 138 212 3000 no_multiplicity_b
+  role_a_pos 135 185 3000 no_role_b
+  multiplicity_a_pos 135 215 3000 no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 490882 // <directional composition>
   from ref 128642 z 2007 to ref 128258
@@ -40,15 +40,15 @@ relationcanvas 129154 relation_ref 1118978 // <directional composition>
   decenter_begin 762
   decenter_end 141
   from ref 128002 z 2013 stereotype "<<hash>>" xyz 70 401 3000 to ref 128898
-  role_a_pos 146 328 3000 no_role_b
-  multiplicity_a_pos 146 362 3000 no_multiplicity_b
+  role_a_pos 144 334 3000 no_role_b
+  multiplicity_a_pos 144 364 3000 no_multiplicity_b
 end
 relationcanvas 129282 relation_ref 1119106 // <directional composition>
   decenter_begin 958
   decenter_end 849
   from ref 128002 z 2013 to ref 128898
-  role_a_pos 148 408 3000 no_role_b
-  multiplicity_a_pos 146 442 3000 no_multiplicity_b
+  role_a_pos 144 415 3000 no_role_b
+  multiplicity_a_pos 144 445 3000 no_multiplicity_b
 end
 relationcanvas 129794 relation_ref 1119362 // <dependency>
   decenter_begin 508
@@ -60,7 +60,7 @@ end
 relationcanvas 129922 relation_ref 1119490 // <directional composition>
   decenter_begin 860
   from ref 128002 z 2013 stereotype "<<hash>>" xyz 202 425 3000 to ref 128898
-  role_a_pos 147 368 3000 no_role_b
-  multiplicity_a_pos 146 402 3000 no_multiplicity_b
+  role_a_pos 144 389 3000 no_role_b
+  multiplicity_a_pos 144 419 3000 no_multiplicity_b
 end
 end

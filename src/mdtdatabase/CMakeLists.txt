@@ -24,7 +24,7 @@ set (HEADER_FILES
           mdtSqlFieldSelectionDialog.h
           mdtSqlRelation.h
           mdtSqlFieldSetupWidget.h
-          mdtSqlFieldSetupTableModel.h
+          mdtSqlSchemaTableModel.h
 
     )
 
@@ -51,11 +51,11 @@ set (SOURCES_FILES
           mdtDataTableManager.cpp
           mdtSqlDatabaseManager.cpp
           mdtSqlSchemaTable.cpp
+          mdtSqlSchemaTableModel.cpp
           mdtSqlFieldSelectionDialog.cpp
           mdtSqlTransaction.cpp
           mdtSqlForeignKeySetting.cpp
           mdtSqlFieldSetupWidget.cpp
-          mdtSqlFieldSetupTableModel.cpp
     )
 
 # Qt ui files

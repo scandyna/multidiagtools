@@ -37,8 +37,13 @@ class mdtDatabaseTest : public mdtTest
 
   void sqlDriverTypeTest();
 
+  void sqlFieldTypeTest();
+
   void sqlSchemaTableTest();
   void sqlSchemaTableSqliteTest();
+  void sqlSchemaTableModelTest();
+
+  void sqlFieldSetupWidgetTest();
 
   void databaseManagerTest();
 

@@ -24,7 +24,7 @@ classcanvas 129410 class_ref 316162 // QWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 230 56 3018
 end
-classcanvas 129666 class_ref 1808130 // mdtSqlFieldSetupTableModel
+classcanvas 129666 class_ref 1808130 // mdtSqlSchemaTableModel
   classdiagramsettings member_max_width 0 end
   xyz 55 723 2000
 end
@@ -32,6 +32,8 @@ classcanvas 129794 class_ref 147202 // QAbstractTableModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 243 639 3016
 end
+note 130306 "Should be renamed mdtSqlSchemaTableModel ??"
+  xyzwh 17 608 2000 217 61
 relationcanvas 128258 relation_ref 2119810 // <unidirectional association>
   from ref 128002 z 3006 to ref 128130
   role_a_pos 490 234 3000 no_role_b
@@ -78,4 +80,11 @@ relationcanvas 130050 relation_ref 2126722 // <directional composition>
   role_a_pos 670 662 3000 no_role_b
   multiplicity_a_pos 645 662 3000 no_multiplicity_b
 end
+relationcanvas 130562 relation_ref 2133250 // <unidirectional association>
+  from ref 129666 z 3018 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 130434 -_-_ decenter_end 216
+  from ref 130306 z 2001 to ref 129666
 end

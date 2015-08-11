@@ -18,34 +18,34 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_FIELD_TABLE_MODEL_H
-#define MDT_SQL_FIELD_TABLE_MODEL_H
+#ifndef MDT_SQL_SCHEMA_TABLE_MODEL_H
+#define MDT_SQL_SCHEMA_TABLE_MODEL_H
 
+#include "mdtSqlSchemaTable.h"
 #include <QAbstractTableModel>
 #include <QModelIndex>
 #include <QSqlField>
+#include <QSqlIndex>
 #include <QList>
 #include <QVariant>
 
 class QComboBox;
 
-/*! \brief Model to access attributes of a list of QSqlFields
- *
- * \todo Should be renamed to mdtSqlFieldSetupTableModel
+/*! \brief Model to access attributes of a SQL table schema
  *
  * Each row represents a field and each column the attribute of the field.
  *
  * Typical usage with a QComboBox:
  * \code
  *   QComboBox *cb = new QComboBox;
- *   cb->setModel(new mdtSqlFieldSetupTableModel(this));
- *   cb->setModelColumn(mdtSqlFieldSetupTableModel::NameIndex);  // Will display field name
+ *   cb->setModel(new mdtSqlSchemaTableModel(this));
+ *   cb->setModelColumn(mdtSqlSchemaTableModel::NameIndex);  // Will display field name
  *   // Recommended way to enable field name edition
  *   cb->setInsertPolicy(QComboBox::InsertAtCurrent);
  *   cb->setEditable(true);
  * \endcode
  */
-class mdtSqlFieldSetupTableModel : public QAbstractTableModel
+class mdtSqlSchemaTableModel : public QAbstractTableModel
 {
  Q_OBJECT
 
@@ -58,15 +58,24 @@ class mdtSqlFieldSetupTableModel : public QAbstractTableModel
     NameIndex = 0,    /*!< Column index of field name */
     TypeIndex = 1,    /*!< Column index of field type */
     LengthIndex = 2,  /*!< Column index of field length */
+    IsPkIndex = 3     /*!< Column index that tells if field is part of primary key */
   };
 
   /*! \brief Constructor
    */
-  mdtSqlFieldSetupTableModel(QObject *parent = 0);
+  mdtSqlSchemaTableModel(QObject *parent = 0);
+
+  /*! \brief Set table schema
+   */
+  void setTableSchema(const mdtSqlSchemaTable & st);
 
   /*! \brief Set field list
    */
-  void setFieldList(const QList<QSqlField> & fields);
+//   void setFieldList(const QList<QSqlField> & fields);
+
+  /*! \brief Set primary key
+   */
+//   void setPrimaryKey(const QSqlIndex & pk);
 
   /*! \brief Get field at given row
    *
@@ -79,6 +88,10 @@ class mdtSqlFieldSetupTableModel : public QAbstractTableModel
    * \sa field()
    */
   QSqlField currentField(QComboBox *cb) const;
+
+  /*! \brief Check if field at given row is part of primary key
+   */
+  bool isPartOfPrimaryKey(int row) const;
 
   /*! \brief Get row count
    *
@@ -99,18 +112,24 @@ class mdtSqlFieldSetupTableModel : public QAbstractTableModel
   QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
 
   /*! \brief Get item flags
+   *
+   * \todo Currently, edition is not supported
    */
-  Qt::ItemFlags flags(const QModelIndex & index) const;
+//   Qt::ItemFlags flags(const QModelIndex & index) const;
 
   /*! \brief Set data
+   *
+   * \todo Currently, edition is not supported
    */
-  bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
+//   bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
 
  private:
 
-  Q_DISABLE_COPY(mdtSqlFieldSetupTableModel)
+  Q_DISABLE_COPY(mdtSqlSchemaTableModel)
 
-  QList<QSqlField> pvFields;
+  mdtSqlSchemaTable pvSchema;
+//   QList<QSqlField> pvFields;
+//   QSqlIndex pvPrimaryKey;
 };
 
-#endif // #ifndef MDT_SQL_FIELD_TABLE_MODEL_H
+#endif // #ifndef MDT_SQL_SCHEMA_TABLE_MODEL_H
