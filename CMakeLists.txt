@@ -13,7 +13,7 @@
 # * root project file *
 
 # CMake minimal requiered version
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.11)
 
 # Project
 project(multidiagtools)
@@ -34,7 +34,7 @@ endif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
 # Project version
 set(MDTLIB_VERSION_MAJOR 0)
 set(MDTLIB_VERSION_MINOR 3)
-set(MDTLIB_VERSION_MICRO 1)
+set(MDTLIB_VERSION_MICRO 2)
 
 # Library version suffix:
 #  Since version 0.2.8, naming convension has changed.
@@ -86,14 +86,31 @@ endif(WIN32)
 # Additionnal Cmake modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
-# Enable Qt4 support
-set(QT_USE_QTTEST TRUE)
-set(QT_USE_QTSQL TRUE)
-set(QT_USE_QTNETWORK TRUE)
-find_package(Qt4 REQUIRED)
-#find_package(Qt REQUIRED)
-include(${QT_USE_FILE})
-add_definitions(${QT_DEFINITIONS})
+# # Enable Qt4 support
+# set(QT_USE_QTTEST TRUE)
+# set(QT_USE_QTSQL TRUE)
+# set(QT_USE_QTNETWORK TRUE)
+# find_package(Qt4 REQUIRED)
+# #find_package(Qt REQUIRED)
+# include(${QT_USE_FILE})
+# add_definitions(${QT_DEFINITIONS})
+
+# As moc files are generated in the binary dir, tell CMake to always look for includes there
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+# Enable Qt5 support
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+# find_package(Qt5Core REQUIRED)
+find_package(Qt5Widgets REQUIRED) # Widgets finds its own dependencies (QtGui and QtCore).
+find_package(Qt5Network REQUIRED)
+find_package(Qt5Sql REQUIRED)
+find_package(Qt5Test REQUIRED)
+
+# include_directories(${Qt5Widgets_INCLUDES})
+# message("Qt5Widgets_INCLUDES INC: ${Qt5Network_INCLUDES}")
+# include_directories(${Qt5Network_INCLUDES})
+# message("Network INC: ${Qt5Network_INCLUDES}")
 
 # Get Qwt
 find_package(Qwt REQUIRED)

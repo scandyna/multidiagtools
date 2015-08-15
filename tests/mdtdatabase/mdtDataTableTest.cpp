@@ -1765,7 +1765,7 @@ void mdtDataTableTest::csvImportTest()
   v.setEditTriggers(QAbstractItemView::NoEditTriggers);
   v.resize(600, 600);
   v.setSortingEnabled(true);
-  v.horizontalHeader()->setMovable(true);
+  v.horizontalHeader()->setSectionsMovable(true);
   v.show();
 
   

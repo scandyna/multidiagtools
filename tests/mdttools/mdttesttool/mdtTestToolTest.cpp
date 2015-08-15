@@ -73,6 +73,10 @@
 #include <QFileInfo>
 #include <QPointF>
 #include <QVector>
+
+/*! \todo Remove when bug is fixed in Ubuntu 15.04
+ */
+#define QT_STATIC_CONST static const
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
 

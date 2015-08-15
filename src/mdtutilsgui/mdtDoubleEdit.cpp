@@ -154,7 +154,8 @@ void mdtDoubleEdit::setRange(double min, double max)
 
 int mdtDoubleEdit::p10exponent(const QChar & c)
 {
-  switch(c.toAscii()){
+//   switch(c.toAscii()){
+  switch(c.toLatin1()){
     case 'a':
       return -18;
     case 'f':

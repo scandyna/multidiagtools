@@ -148,7 +148,8 @@ mdtDeviceAddressList mdtModbusTcpPortManager::scan(const QNetworkInterface & ifa
     bCast = entry.broadcast().toIPv4Address();
     subNet = bCast & entry.netmask().toIPv4Address();
     // We need min. place for 2 machines in subnet
-    if((bCast-subNet-4) < 0){
+//     if((bCast-subNet-4) < 0){
+    if(static_cast<int>((bCast-subNet-4)) < 0){
       pvLastError.setError(tr("Interface '") + iface.name() + tr("' has a subnet for less than 2 machines"), mdtError::Warning);
       MDT_ERROR_SET_SRC(pvLastError, "mdtModbusTcpPortManager");
       pvLastError.commit();
@@ -334,7 +335,8 @@ bool mdtModbusTcpPortManager::saveScanResult(const QList<mdtPortInfo*> scanResul
   // Save items
   for(i=0; i<scanResult.size(); i++){
     Q_ASSERT(scanResult.at(i) != 0);
-    line = scanResult.at(i)->portName().toAscii();
+//     line = scanResult.at(i)->portName().toAscii();
+    line = scanResult.at(i)->portName().toLocal8Bit();
     line += "\n";
     if(file.write(line) < 0){
       mdtError e(MDT_FILE_IO_ERROR, "Write error occured during write to " + file.fileName(), mdtError::Error);

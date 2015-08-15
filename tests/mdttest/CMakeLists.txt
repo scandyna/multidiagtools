@@ -20,25 +20,31 @@ set (SOURCES_FILES
 # * mdtutils *
 
 # Fichiers à traiter par le compilateur moc
-QT4_WRAP_CPP (MOC_HEADERS ${HEADER_FILES})
+# QT4_WRAP_CPP (MOC_HEADERS ${HEADER_FILES})
 
 # Fichiers à traiter par le compilateur uic
-QT4_WRAP_UI (UIC_HEADERS ${FORM_FILES})
+# QT4_WRAP_UI (UIC_HEADERS ${FORM_FILES})
 
 # Fichiers à traiter par le compilateur rcc
-QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
+# QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 
 # Binary lib
-add_library (mdttest ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
+add_library (mdttest ${SOURCES_FILES})
+target_link_libraries(mdttest Qt5::Widgets Qt5::Test)
+# add_library (mdttest ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 # Libryries to link
 #target_link_libraries(mdttest ${QT_LIBRARIES})
 
 # Minimal application
 add_executable(minimalapp "minimalApp.cpp")
-target_link_libraries(minimalapp ${QT_LIBRARIES})
+# target_link_libraries(minimalapp ${QT_LIBRARIES})
+target_link_libraries(minimalapp Qt5::Widgets)
 
 # Virtual method bench
-QT4_WRAP_CPP(MOC_MDT_VIRTUAL_METHOD_BENCH "mdtVirtualMethodBench.h")
-add_executable(mdtvirtualmethodbench "mdtVirtualMethodBench.cpp" ${MOC_MDT_VIRTUAL_METHOD_BENCH})
+add_executable(mdtvirtualmethodbench "mdtVirtualMethodBench.cpp")
 target_link_libraries(mdtvirtualmethodbench "mdttest")
-target_link_libraries(mdtvirtualmethodbench ${QT_LIBRARIES})
+# QT4_WRAP_CPP(MOC_MDT_VIRTUAL_METHOD_BENCH "mdtVirtualMethodBench.h")
+# add_executable(mdtvirtualmethodbench "mdtVirtualMethodBench.cpp" ${MOC_MDT_VIRTUAL_METHOD_BENCH})
+# target_link_libraries(mdtvirtualmethodbench "mdttest")
+# target_link_libraries(mdtvirtualmethodbench ${QT_LIBRARIES})
+target_link_libraries(mdtvirtualmethodbench Qt5::Widgets)

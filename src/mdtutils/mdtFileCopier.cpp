@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -204,7 +204,8 @@ bool mdtFileCopier::startCopy()
     item->setSrcDirectoryPath(pvSrcFileInfo.canonicalPath());
     item->setDestDirectoryPath(pvDestFileInfo.canonicalPath());
     // Here we are shure that user wants to write destination , try it now
-    destTestFile = fopen(item->destFilePath().toAscii().data(), "wb");
+//     destTestFile = fopen(item->destFilePath().toAscii().data(), "wb");
+    destTestFile = fopen(item->destFilePath().toLocal8Bit().data(), "wb");
     if(destTestFile == 0){
       switch(errno){
         case EACCES:
@@ -475,7 +476,8 @@ void mdtFileCopier::run()
     Q_ASSERT(item != 0);
     // Text to display in progress dialog
     emit(newProgressLabelText(item->copyText()));
-    srcFile = fopen(item->srcFilePath().toAscii().data(), "rb");
+//     srcFile = fopen(item->srcFilePath().toAscii().data(), "rb");
+    srcFile = fopen(item->srcFilePath().toLocal8Bit().data(), "rb");
     if(srcFile == 0){
       mdtError e(MDT_FILE_IO_ERROR, "Cannot open file: " + item->srcFilePath(), mdtError::Error);
       e.setSystemError(errno, strerror(errno));
@@ -484,7 +486,8 @@ void mdtFileCopier::run()
       failedCopies += item->srcFileName() + " -> " + item->destFilePath() + "\n\n";
       continue;
     }
-    destFile = fopen(item->destFilePath().toAscii().data(), "wb");
+//     destFile = fopen(item->destFilePath().toAscii().data(), "wb");
+    destFile = fopen(item->destFilePath().toLocal8Bit().data(), "wb");
     if(destFile == 0){
       mdtError e(MDT_FILE_IO_ERROR, "Cannot open file: " + item->destFilePath(), mdtError::Error);
       e.setSystemError(errno, strerror(errno));
@@ -505,7 +508,8 @@ void mdtFileCopier::run()
         fclose(srcFile);
         fclose(destFile);
         // Remove current destination file (avoid currupted files..)
-        if(remove(item->destFilePath().toAscii().data()) < 0){
+//         if(remove(item->destFilePath().toAscii().data()) < 0){
+        if(remove(item->destFilePath().toLocal8Bit().data()) < 0){
           mdtError e(MDT_FILE_IO_ERROR, "Cannot remove file: " + item->destFilePath(), mdtError::Error);
           e.setSystemError(errno, strerror(errno));
           MDT_ERROR_SET_SRC(e, "mdtFileCopier");
@@ -615,7 +619,8 @@ void mdtFileCopier::run()
     // Check destination (with hash) if needed
     if(item->checkAfterCopy()){
       // Open destination read only
-      destFile = fopen(item->destFilePath().toAscii().data(), "r");
+//       destFile = fopen(item->destFilePath().toAscii().data(), "r");
+      destFile = fopen(item->destFilePath().toLocal8Bit().data(), "r");
       if(destFile == 0){
         mdtError e(MDT_FILE_IO_ERROR, "Cannot open file: " + item->destFilePath(), mdtError::Error);
         e.setSystemError(errno, strerror(errno));

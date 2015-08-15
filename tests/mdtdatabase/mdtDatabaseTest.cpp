@@ -848,9 +848,12 @@ void mdtDatabaseTest::sqlFieldSetupWidgetTest()
   mdtSqlFieldSetupWidget w(nullptr);
   mdtSqlFieldSetupData data;
 
-  data.tableName = "Client_tbl";
-  data.editionMode = mdtSqlFieldSetupEditionMode_t::Edition;
-  QVERIFY(w.setData(data, pvDatabase));
+//   data.tableName = "Client_tbl";
+//   data.editionMode = mdtSqlFieldSetupEditionMode_t::Edition;
+//   QVERIFY(w.setData(data, pvDatabase));
+  w.setEditionMode(mdtSqlFieldSetupEditionMode_t::Edition);
+  QVERIFY(w.setTable("Client_tbl", pvDatabase));
+  w.setField(1);
   w.show();
 
   /*

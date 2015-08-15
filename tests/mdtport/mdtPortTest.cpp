@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -548,7 +548,7 @@ void mdtPortTest::readRawTest()
   qDebug() << "TEST: thd started";
 
   // Write data to file and verify that data was written
-  QVERIFY(file.write(data.toAscii()) == data.size());
+  QVERIFY(file.write(data.toLocal8Bit()) == data.size());
   QVERIFY(file.flush());
   file.close();
   file.open();
@@ -644,7 +644,7 @@ void mdtPortTest::readAsciiTest()
   QVERIFY(rdThd.isRunning());
 
   // Write data to file and verify that data was written
-  QVERIFY(file.write(data.toAscii()) == data.size());
+  QVERIFY(file.write(data.toLocal8Bit()) == data.size());
   QVERIFY(file.flush());
   file.close();
   file.open();

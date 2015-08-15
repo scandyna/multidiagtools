@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -55,7 +55,8 @@ bool mdtApplication::init(bool allowMultipleInstances, int dialogErrorLevelsMask
   }
 
 #ifdef Q_OS_UNIX
-  QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+//   QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+  QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 #endif
 
   // System data directory path

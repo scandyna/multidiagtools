@@ -62,23 +62,23 @@ void mdtSqlCopierTest::sqlFieldSetupDataTest()
 
   // Initial state
   QVERIFY(data.isNull());
-  QVERIFY(data.editionMode == mdtSqlFieldSetupEditionMode_t::Selection);
+//   QVERIFY(data.editionMode == mdtSqlFieldSetupEditionMode_t::Selection);
   // Set
-  data.tableName = "Clien_tbl";
-  QVERIFY(data.isNull());
+//   data.tableName = "Client_tbl";
+//   QVERIFY(data.isNull());
   data.field.setName("Id_PK");
   QVERIFY(data.isNull());
   data.field.setType(QVariant::Int);
   QVERIFY(!data.isNull());
   data.isPartOfPrimaryKey = true;
-  data.editionMode = mdtSqlFieldSetupEditionMode_t::Creation;
+//   data.editionMode = mdtSqlFieldSetupEditionMode_t::Creation;
   // Clear
   data.clear();
-  QVERIFY(data.tableName.isEmpty());
+//   QVERIFY(data.tableName.isEmpty());
   QVERIFY(data.isPartOfPrimaryKey == false);
   QVERIFY(data.field.name().isEmpty());
   QVERIFY(data.field.type() == QVariant::Invalid);
-  QVERIFY(data.editionMode == mdtSqlFieldSetupEditionMode_t::Selection);
+//   QVERIFY(data.editionMode == mdtSqlFieldSetupEditionMode_t::Selection);
   QVERIFY(data.isNull());
 }
 

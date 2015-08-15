@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -165,7 +165,7 @@ void mdtTcpSocketTest::writeReadTest()
     QVERIFY(frame != 0);
     // Add some data to frame and commit
     frame->clear();
-    frame->append(queries.at(i).toAscii());
+    frame->append(queries.at(i).toLocal8Bit());
     s.addFrameToWrite(frame);
     s.unlockMutex();
   }
@@ -203,7 +203,7 @@ void mdtTcpSocketTest::writeReadTest()
     QVERIFY(frame != 0);
     // Add some data to frame and commit
     frame->clear();
-    frame->append(queries.at(i).toAscii());
+    frame->append(queries.at(i).toLocal8Bit());
     s.addFrameToWrite(frame);
     s.unlockMutex();
   }

@@ -1,6 +1,6 @@
 format 209
 "Ideas" // mdtdatabase::Ideas
-  revision 11
+  revision 12
   modified_by 2 "philippe"
   // class settings
   
@@ -83,11 +83,6 @@ format 209
     activitydiagramsettings
      end
     classdiagram 1503618 "sandbox"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    classdiagram 1530370 "FieldMapping"
       classdiagramsettings member_max_width 0 end
       size A4
     end
@@ -241,6 +236,11 @@ ${inlines}
 	    classrelation_ref 2128514 // <directional composition>
 	  b parent class_ref 910210 // mdtSqlSchemaTable
       end
+    end
+
+    classdiagram 1530370 "FieldMapping"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
 
     class 1772930 "mdtFieldMapping"
@@ -1243,6 +1243,96 @@ ${inlines}
 "
 	    classrelation_ref 2156162 // <unidirectional association>
 	  b parent class_ref 1801346 // mdtSqlFieldSetupWidget
+      end
+
+      classrelation 2162818 // <dependency>
+	relation 2146690 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2162818 // <dependency>
+	  b parent class_ref 910210 // mdtSqlSchemaTable
+      end
+
+      operation 2849282 "setSourceEditionMode"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "mode" explicit_type "mdtSqlFieldSetupEditionMode_t"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2849410 "setSourceTable"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "tableSchema" type class_ref 910210 // mdtSqlSchemaTable
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2849538 "setDestinationEditionMode"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "mode" explicit_type "mdtSqlFieldSetupEditionMode_t"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2849666 "setDestinationTable"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "tableSchema" type class_ref 910210 // mdtSqlSchemaTable
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2849794 "setMapping"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "mapping" type class_ref 1772930 // mdtFieldMapping
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end

@@ -1,6 +1,6 @@
 format 209
 "mdtdatabase" // mdtdatabase
-  revision 44
+  revision 45
   modified_by 2 "philippe"
   // class settings
   
@@ -4276,19 +4276,26 @@ ${inlines}
 	
       end
 
-      classrelation 2135938 // SetupData (<unidirectional association>)
-	relation 2119810 --->
-	  a role_name "SetupData" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+      operation 2848642 "setEditionMode"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "mode" explicit_type "mdtSqlFieldSetupEditionMode_t"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
-	    classrelation_ref 2135938 // SetupData (<unidirectional association>)
-	  b parent class_ref 1801602 // mdtSqlFieldSetupData
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
-      operation 2805890 "setData"
+      operation 2848770 "setTable"
 	public explicit_return_type "bool"
 	nparams 2
-	  param in name "data" type class_ref 1801602 // mdtSqlFieldSetupData
+	  param in name "tableName" type class_ref 161026 // QString
 	  param in name "db" type class_ref 405122 // QSqlDatabase
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
@@ -4302,7 +4309,40 @@ ${inlines}
 	
       end
 
-      operation 2806018 "data"
+      operation 2848898 "setTable"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "tableSchema" type class_ref 910210 // mdtSqlSchemaTable
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2849026 "setField"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "fieldIndex" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2849154 "fieldSetup"
 	public return_type class_ref 1801602 // mdtSqlFieldSetupData
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -4364,41 +4404,29 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2135810 // field (<directional composition>)
+      classrelation 2135810 // <directional composition>
 	relation 2119682 *-->
-	  a role_name "field" multiplicity "1" public
+	  a role_name "" multiplicity "1" public
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
-	    classrelation_ref 2135810 // field (<directional composition>)
+	    classrelation_ref 2135810 // <directional composition>
 	  b parent class_ref 404738 // QSqlField
-      end
-
-      attribute 1891714 "editionMode"
-	public explicit_type "EditionMode_t"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 1891458 "tableName"
-	public type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
       end
 
       attribute 1891586 "isPartOfPrimaryKey"
 	public explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1905282 "field"
+	public type class_ref 404738 // QSqlField
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""

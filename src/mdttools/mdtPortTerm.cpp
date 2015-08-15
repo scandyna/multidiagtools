@@ -111,7 +111,8 @@ void mdtPortTerm::sendCommandToSerialPort()
     leCmd->clear();
     return;
   }
-  if(pvSerialPortManager->sendData(cmd.toAscii() + pvCmdTermSequence) < 0){
+//   if(pvSerialPortManager->sendData(cmd.toAscii() + pvCmdTermSequence) < 0){
+  if(pvSerialPortManager->sendData(cmd.toLocal8Bit() + pvCmdTermSequence) < 0){
     showStatusMessage(tr("Error occured during write process"), 1000);
   }
 }
@@ -133,14 +134,16 @@ void mdtPortTerm::sendCommandToUsbtmcPort()
     return;
   }
   if(cmd.right(1) == "?"){
-    QByteArray data = pvUsbtmcPort->sendQuery(cmd.toAscii() + pvCmdTermSequence);
+//     QByteArray data = pvUsbtmcPort->sendQuery(cmd.toAscii() + pvCmdTermSequence);
+    QByteArray data = pvUsbtmcPort->sendQuery(cmd.toLocal8Bit() + pvCmdTermSequence);
     if(data.isEmpty()){
       pvStatusWidget->setPermanentText(pvUsbtmcPort->lastError().text());
       return;
     }
     teTerm->append(data);
   }else{
-    if(!pvUsbtmcPort->sendCommand(cmd.toAscii() + pvCmdTermSequence)){
+//     if(!pvUsbtmcPort->sendCommand(cmd.toAscii() + pvCmdTermSequence)){
+    if(!pvUsbtmcPort->sendCommand(cmd.toLocal8Bit() + pvCmdTermSequence)){
       pvStatusWidget->setPermanentText(pvUsbtmcPort->lastError().text());
       return;
     }

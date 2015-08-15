@@ -52,28 +52,60 @@ void mdtSqlFieldSetupWidget::setEditionMode(mdtSqlFieldSetupEditionMode_t mode)
   }
 }
 
-bool mdtSqlFieldSetupWidget::setData(const mdtSqlFieldSetupData & data, QSqlDatabase db)
+bool mdtSqlFieldSetupWidget::setTable(const QString & tableName, QSqlDatabase db)
 {
   mdtSqlSchemaTable st;
 
-  pvSetupData = data;
   // Reverse table
-  if(!st.setupFromTable(data.tableName, db)){
+  if(!st.setupFromTable(tableName, db)){
     pvLastError = st.lastError();
     return false;
   }
+
+  return setTable(st, db);
+}
+
+bool mdtSqlFieldSetupWidget::setTable(const mdtSqlSchemaTable & tableSchema, QSqlDatabase db)
+{
   // Fill available field types
   if(!populateFieldTypeCombobox(db.driverName())){
     return false;
   }
   // Update
-  setEditionMode(data.editionMode);
-  lbTableName->setText(data.tableName);
-  pvSchemaTabledModel->setTableSchema(st);
+  lbTableName->setText(tableSchema.tableName());
+  pvSchemaTabledModel->setTableSchema(tableSchema);
   cbField->setCurrentIndex(0);
 
   return true;
 }
+
+void mdtSqlFieldSetupWidget::setField(int fieldIndex)
+{
+  cbField->setCurrentIndex(fieldIndex);
+}
+
+// bool mdtSqlFieldSetupWidget::setData(const mdtSqlFieldSetupData & data, QSqlDatabase db)
+// {
+//   mdtSqlSchemaTable st;
+// 
+//   pvSetupData = data;
+//   // Reverse table
+//   if(!st.setupFromTable(data.tableName, db)){
+//     pvLastError = st.lastError();
+//     return false;
+//   }
+//   // Fill available field types
+//   if(!populateFieldTypeCombobox(db.driverName())){
+//     return false;
+//   }
+//   // Update
+//   setEditionMode(data.editionMode);
+//   lbTableName->setText(data.tableName);
+//   pvSchemaTabledModel->setTableSchema(st);
+//   cbField->setCurrentIndex(0);
+// 
+//   return true;
+// }
 
 void mdtSqlFieldSetupWidget::updateFieldParameters(int cbFieldIndex)
 {

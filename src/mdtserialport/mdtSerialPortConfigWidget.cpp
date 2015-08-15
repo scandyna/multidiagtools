@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -154,12 +154,14 @@ void mdtSerialPortConfigWidget::updateConfig(mdtSerialPortConfig &config)
     // Get Xon char
     index = cbXonChar->currentIndex();
     if(index >= 0){
-      xon = cbXonChar->itemData(index).toChar().toAscii();
+//       xon = cbXonChar->itemData(index).toChar().toAscii();
+      xon = cbXonChar->itemData(index).toChar().toLatin1();
     }
     // Get Xoff char
     index = cbXoffChar->currentIndex();
     if(index >= 0){
-      xoff = cbXoffChar->itemData(index).toChar().toAscii();
+//       xoff = cbXoffChar->itemData(index).toChar().toAscii();
+      xoff = cbXoffChar->itemData(index).toChar().toLatin1();
     }
     config.enableFlowCtlXonXoff(xon, xoff);
   }else{

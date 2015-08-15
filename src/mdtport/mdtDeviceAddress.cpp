@@ -276,7 +276,8 @@ bool mdtDeviceAddressList::saveToFile(const QString & filePath)
   }
   // Save items
   for(const auto & da : pvDeviceAddresses){
-    line = da.addressString().toAscii();
+//     line = da.addressString().toAscii();
+    line = da.addressString().toLocal8Bit();
     line += "\t" + da.alias();
     line += "\n";
     if(file.write(line) < 0){

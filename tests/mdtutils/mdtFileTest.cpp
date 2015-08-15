@@ -957,7 +957,7 @@ void mdtFileTest::csvFileReadTest()
   // Write data
   for(int i=0; i<data.size(); i++){
     for(int j=0; j<data.at(i).size(); j++){
-      QVERIFY(tmp.write(data.at(i).at(j).toAscii()) == (qint64)data.at(i).at(j).toAscii().size());
+      QVERIFY(tmp.write(data.at(i).at(j).toLocal8Bit()) == (qint64)data.at(i).at(j).toLocal8Bit().size());
     }
   }
   // Close tmp file
@@ -968,7 +968,7 @@ void mdtFileTest::csvFileReadTest()
   QVERIFY(csv.open(QIODevice::ReadWrite | QIODevice::Text));
 
   // Read file and verify data
-  QVERIFY(csv.readLines(separator.toAscii(), dataProtection.toAscii()));
+  QVERIFY(csv.readLines(separator.toLocal8Bit(), dataProtection.toLocal8Bit()));
   for(int i=0; i<refData.size(); i++){
     for(int j=0; j<refData.at(i).size(); j++){
       QCOMPARE(csv.valueAt(i, j), refData.at(i).at(j));

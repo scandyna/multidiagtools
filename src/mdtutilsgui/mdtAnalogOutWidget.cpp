@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -35,7 +35,9 @@ mdtAnalogOutWidget::mdtAnalogOutWidget(QWidget *parent)
 
   // Setup GUI
   l->addWidget(lbLabel, 0, 0);
-  slValue = new QwtSlider(this, Qt::Vertical, QwtSlider::LeftScale);
+  ///slValue = new QwtSlider(this, Qt::Vertical, QwtSlider::LeftScale);
+  slValue = new QwtSlider(Qt::Vertical, this);
+  // slValue->setScalePosition(QwtSlider::LeadingScale);
   l->addWidget(slValue, 1, 0);
   sbValue = new QDoubleSpinBox;
   l->addWidget(sbValue, 2, 0);
@@ -76,7 +78,8 @@ void mdtAnalogOutWidget::setUnit(const QString &unit)
 
 void mdtAnalogOutWidget::setRange(double min, double max)
 {
-  slValue->setRange(min, max);
+//   slValue->setRange(min, max);
+  slValue->setScale(min, max);
   sbValue->setRange(min, max);
 }
 

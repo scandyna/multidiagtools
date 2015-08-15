@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -68,6 +68,6 @@ void mdtTest::compare(double x, double y, int n, double min, double max, const c
     msg += "  Expected: " + QString::number(y) + " (min: " + QString::number(y-lsb-DBL_EPSILON) + " , max: " + QString::number(y+lsb+DBL_EPSILON) + ")\n";
     msg += "  LSB:      " + QString::number(lsb) + " (" + QString::number(n) + " bit resolution) \n";
     msg += "  SRC: " + QString(file) + "(" + QString::number(line) + ")";
-    QFAIL(msg.toAscii());
+    QFAIL(msg.toLatin1());
   }
 }

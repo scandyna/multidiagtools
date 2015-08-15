@@ -27,8 +27,29 @@
 #include <QWidget>
 #include <QSqlDatabase>
 #include <QVariant>
+#include <QString>
 
+class mdtSqlSchemaTable;
 class mdtSqlSchemaTableModel;
+
+/*! \brief Field setup edition mode
+ *
+ * This enum is used by mdtSqlFieldSetupData and mdtSqlFieldSetupWidget
+ */
+enum class mdtSqlFieldSetupEditionMode_t
+{
+  Creation,     /*!< For creation of a new field.
+                     Will not list available fields, but let the user enter a field name.
+                     All field attributes are editable. */
+  Selection,    /*!< For selection of a existing field.
+                     Will list available fields. Only field selection is possible, no attribute is editable. */
+  Edition,      /*!< For selection and edition of a existing field.
+                     Will list available fields. Its possible to edit selected field's attributes. */
+  
+  /// \todo View only mode ? (no selection, no edition)
+};
+
+/// \todo Show/hide database specific attributes ?
 
 /*! \brief Field setup widget
  */
@@ -46,9 +67,25 @@ class mdtSqlFieldSetupWidget : public QWidget, Ui::mdtSqlFieldSetupWidget
    */
   void setEditionMode(mdtSqlFieldSetupEditionMode_t mode);
 
+  /*! \brief Set table
+   *
+   * Will also reverse table to list all aviable fields
+   */
+  bool setTable(const QString & tableName, QSqlDatabase db);
+
+  /*! \brief Set table
+   *
+   * Will also list all aviable fields
+   */
+  bool setTable(const mdtSqlSchemaTable & tableSchema, QSqlDatabase db);
+
+  /*! \brief Set given field index as selected one
+   */
+  void setField(int fieldIndex);
+
   /*! \brief Set setup data
    */
-  bool setData(const mdtSqlFieldSetupData & data, QSqlDatabase db);
+//   bool setData(const mdtSqlFieldSetupData & data, QSqlDatabase db);
 
   /*! \brief Get last error
    */
@@ -88,7 +125,7 @@ class mdtSqlFieldSetupWidget : public QWidget, Ui::mdtSqlFieldSetupWidget
   Q_DISABLE_COPY(mdtSqlFieldSetupWidget)
 
   mdtSqlSchemaTableModel *pvSchemaTabledModel;
-  mdtSqlFieldSetupData pvSetupData;
+//   mdtSqlFieldSetupData pvSetupData;
   mdtError pvLastError;
 };
 

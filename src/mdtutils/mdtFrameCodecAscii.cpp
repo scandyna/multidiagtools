@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -43,7 +43,8 @@ void mdtFrameCodecAscii::setEofSeq(QByteArray &eofSeq)
   str.remove('\v');
   str.remove('\f');
 
-  pvEofSeq = str.toAscii();
+//   pvEofSeq = str.toAscii();
+  pvEofSeq = str.toLocal8Bit();
 }
 
 void mdtFrameCodecAscii::trim()

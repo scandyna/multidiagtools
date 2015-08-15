@@ -270,7 +270,8 @@ bool mdtCsvFile::readLines(const QString &separator, const QString &dataProtecti
   // Read file and parse each line
   while(hasMoreLines()){
     lineBa.clear();
-    if(readLine(lineBa, dataProtection, comment, escapeChar, eol.toAscii())){
+//     if(readLine(lineBa, dataProtection, comment, escapeChar, eol.toAscii())){
+    if(readLine(lineBa, dataProtection, comment, escapeChar, eol.toLocal8Bit())){
       line = pvCodec->toUnicode(lineBa);
       if(line.size() > 0){
         // Parse the line
@@ -326,10 +327,13 @@ bool mdtCsvFile::dataProtectionSectionBegins(const QByteArray &line, const QStri
     return false;
   }
   // Build the escaped data protection version
-  escapedDataProtection.append(escapeChar.toAscii());
-  escapedDataProtection += dataProtection.toAscii();
+//   escapedDataProtection.append(escapeChar.toAscii());
+//   escapedDataProtection += dataProtection.toAscii();
+  escapedDataProtection.append(escapeChar.unicode());
+  escapedDataProtection += dataProtection.toLocal8Bit();
   // Count data protection occurences
-  dpCount = line.count(dataProtection.toAscii());
+//   dpCount = line.count(dataProtection.toAscii());
+  dpCount = line.count(dataProtection.toLocal8Bit());
   // Count escaped data protection occurences
   if(escapeEqualProtection){
     esDpCount = 0;
@@ -344,7 +348,8 @@ void mdtCsvFile::readUntilDataProtection(QByteArray &buffer, int &dpIndex, const
 {
   bool dpFound = false;
   bool escapeEqualProtection = QString(escapeChar) == dataProtection;
-  char es = escapeChar.toAscii();
+//   char es = escapeChar.toAscii();
+  char es = escapeChar.toLatin1();
   int start = 0;
 
   while((!dpFound)/*&&(!atEnd())*/){

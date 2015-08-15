@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -40,7 +40,7 @@ void mdtTcpServerThread::run()
 
   // Send the data
   for(i=0; i<pvResponses.size(); i++){
-    socket.write(pvResponses.at(i).toAscii());
+    socket.write(pvResponses.at(i).toLocal8Bit());
     if(!socket.waitForBytesWritten()){
       qDebug() << "*SRV mdtTcpServerThread::run(): system returned: " << socket.errorString();
       break;

@@ -33,8 +33,17 @@
 #include <QHBoxLayout>
 #include <QVector>
 #include <QPointF>
+
+/*! \todo Remove when fixed
+ * Bug in Ubuntu 15.04 :
+ *  - Qt 5.4 has removed QT_STATIC_CONST from qblobal.h
+ *  - Qwt fixed this in version 6.1.2
+ *  - Ubuntu ships Qt 5.4 and Qwt 6.1.1
+ */
+#define QT_STATIC_CONST static const
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
+
 #include <random>
 
 #include <QDebug>

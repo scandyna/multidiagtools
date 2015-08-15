@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -76,7 +76,7 @@ void mdtAnalogInWidget::setUnit(const QString &unit)
 
 void mdtAnalogInWidget::setRange(double min, double max)
 {
-  thValue->setRange(min, max);
+  thValue->setScale(min, max);
 }
 
 void mdtAnalogInWidget::setValue(const mdtValue &value)
@@ -95,7 +95,7 @@ void mdtAnalogInWidget::setValue(const mdtValue &value)
       lbValue->setText(sValue);
     }
   }else{
-    thValue->setValue(thValue->minValue());
+    thValue->setValue(thValue->lowerBound());
     lbValue->setText("??");
   }
 }

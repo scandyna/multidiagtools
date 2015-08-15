@@ -291,7 +291,7 @@ class mdtUsbTransferPool
   {
     Q_ASSERT(n <= pvMaxTransfers);
 
-    int i;
+    unsigned int i;
     T *transfer;
 
     clear();

@@ -199,7 +199,7 @@ void mdtIoWidgetTest::analogOutWidgetRecursifTest()
   ao.setRange(0.0, 10.0, 12);
   plcAo.setLabelShort("PLC");
   plcAo.setRange(0.0, 10.0, 12);
-  sl.setRange(0.0, 10.0);
+  sl.setScale(0.0, 10.0);
   QObject::connect(&sl, SIGNAL(valueChanged(double)), &ao, SLOT(setValueFromUi(double)));
   QObject::connect(&ao, SIGNAL(valueChangedForUi(const mdtValue&)), &sl, SLOT(setValue(const mdtValue&)));
   QObject::connect(&ao, SIGNAL(valueChanged(const mdtValue&)), &plcAo, SLOT(setValue(const mdtValue&)));

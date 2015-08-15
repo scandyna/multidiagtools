@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -137,7 +137,7 @@ void mdtSerialPortManagerTest::transferTest()
 
   // Send data
   ///QVERIFY(m.writeData(data.toAscii()) >= 0);
-  QVERIFY(m.sendData(data.toAscii()) >= 0);
+  QVERIFY(m.sendData(data.toLocal8Bit()) >= 0);
 
   // Get incomming data
   while(receivedData.size() < data.size()){
