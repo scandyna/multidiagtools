@@ -4,5 +4,3 @@ TRANSLATIONS = /home/philippe/programmation/multiDiagTools/src/mdttools/../../tr
 TRANSLATIONS += /home/philippe/programmation/multiDiagTools/src/mdttools/../../translations/mdttools_de.ts
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdtPortTerm.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdtModbusIoTool.cpp
-FORMS += /home/philippe/programmation/multiDiagTools/src/mdttools/mdtPortTerm.ui
-FORMS += /home/philippe/programmation/multiDiagTools/src/mdttools/mdtModbusIoTool.ui

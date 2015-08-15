@@ -34,4 +34,3 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtState.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtStateMachine.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtApplication.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/linux/mdtPartitionAttributesPosix.cpp
-FORMS += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtUicNumberWidget.ui

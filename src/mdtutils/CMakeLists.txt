@@ -5,25 +5,6 @@
 # Project
 project (multidiagtools)
 
-# List of Qt headers (headers that contains Q_OBJECT macro)
-set (HEADER_FILES 
-          # mdtError
-          mdtErrorOut.h
-          # UIC Number
-          mdtUicNumberWidget.h
-          # mdtFileSystem
-          mdtFileCopier.h
-          # I/O
-          mdtAbstractIo.h
-          mdtAnalogIo.h
-          mdtDigitalIo.h
-          # State machine
-          mdtState.h
-          mdtStateMachine.h
-          # Main application
-          mdtApplication.h
-    )
-
 # List of source files
 set (SOURCES_FILES 
           mdtAlgorithms.cpp
@@ -70,24 +51,12 @@ set (SOURCES_FILES
           mdtApplication.cpp
     )
 
-# List of .ui files
-set (FORM_FILES
-          mdtUicNumberWidget.ui
-    )
-
-# List of rcc files (Qt ressources)
-set (RESOURCE_FILES
-
-    )
-
 # Platform specific files
 
 # Unix (Posix) specific files
 if(UNIX)
   set (SOURCES_FILES ${SOURCES_FILES}
           linux/mdtPartitionAttributesPosix.cpp
-  )
-  set (HEADER_FILES ${HEADER_FILES} 
   )
 endif(UNIX)
 
@@ -96,18 +65,8 @@ if(WIN32)
   set (SOURCES_FILES ${SOURCES_FILES}
           windows/mdtPartitionAttributesWindows.cpp
   )
-  set (HEADER_FILES ${HEADER_FILES} 
-  )
 endif(WIN32)
 
-# Files on witch moc compiler must work
-# QT4_WRAP_CPP (MOC_HEADERS ${HEADER_FILES})
-
-# Files on witch uic compiler must work
-# QT4_WRAP_UI (UIC_HEADERS ${FORM_FILES})
-
-# Files on witch rcc compiler must work
-# QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 
 # Some specific build options
 
@@ -129,9 +88,6 @@ endif(WIN32)
 add_library (mdtutils${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
 target_link_libraries(mdtutils${MDTLIB_VERSION_SUFFIX} Qt5::Core)
 target_link_libraries(mdtutils${MDTLIB_VERSION_SUFFIX} "qtsingleapplication${MDTLIB_VERSION_SUFFIX}")
-# add_library (mdtutils${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
-# target_link_libraries(mdtutils${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
-# target_link_libraries(mdtutils${MDTLIB_VERSION_SUFFIX} "qtsingleapplication${MDTLIB_VERSION_SUFFIX}")
 
 # Translations - We generate a .pro file, that simplify the usage of lupdate
 file(WRITE "${PROJECT_SOURCE_DIR}/../../translations/mdtutils.pro" "# Translations project file for lupdate/lrelease\n")
