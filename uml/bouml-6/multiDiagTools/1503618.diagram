@@ -4,7 +4,7 @@ classcanvas 128514 class_ref 910210 // mdtSqlSchemaTable
   classdiagramsettings hide_operations yes member_max_width 0 end
   xyz 405.3 757.8 3011
 end
-classcanvas 129666 class_ref 1772930 // mdtFieldMapping
+classcanvas 129666 class_ref 1772930 // mdtSqlFieldMappingData
   classdiagramsettings hide_attributes no hide_operations no member_max_width 0 end
   xyz 4.4 811.1 2000
 end
@@ -44,11 +44,11 @@ classcanvas 132226 class_ref 1787138 // mdtSqlCopierWidget
 end
 classcanvas 132354 class_ref 1787266 // mdtFieldMappingSplitParameters
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 553 1044 2005
+  xyz 556 1069 2005
 end
 classcanvas 132482 class_ref 1787394 // mdtFieldMappingCatParameters
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 552 948 2000
+  xyz 556 979 2000
 end
 classcanvas 132994 class_ref 1787522 // mdtSqlCopierTable
   classdiagramsettings member_max_width 0 end
@@ -85,18 +85,18 @@ end
 relationcanvas 132610 relation_ref 2104578 // <unidirectional association>
   geometry VH
   decenter_begin 485
-  from ref 129666 z 2006 to point 184 1080
+  from ref 129666 z 2006 to point 188 1105
   line 133250 z 2006 to ref 132354
   no_role_a no_role_b
-  multiplicity_a_pos 535 1090 3000 no_multiplicity_b
+  multiplicity_a_pos 538 1115 3000 no_multiplicity_b
 end
 relationcanvas 132866 relation_ref 2104706 // <unidirectional association>
   geometry VH
   decenter_begin 793
-  from ref 129666 z 2001 to point 300 984
+  from ref 129666 z 2001 to point 307 1015
   line 133378 z 2001 to ref 132482
   no_role_a no_role_b
-  multiplicity_a_pos 530 994 3000 no_multiplicity_b
+  multiplicity_a_pos 538 1025 3000 no_multiplicity_b
 end
 relationcanvas 134274 relation_ref 2111618 // <unidirectional association>
   from ref 131458 z 2001 to ref 130690

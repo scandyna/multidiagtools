@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>mdtFieldMappingDialog</class>
- <widget class="QDialog" name="mdtFieldMappingDialog">
+ <class>mdtSqlFieldMappingDialog</class>
+ <widget class="QDialog" name="mdtSqlFieldMappingDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -53,7 +53,7 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QRadioButton" name="rbNoSourceSplit">
+         <widget class="QRadioButton" name="rbNoSourceSplitting">
           <property name="text">
            <string>No splitting</string>
           </property>
@@ -65,7 +65,7 @@
         <item>
          <widget class="QRadioButton" name="rbUseSourceSplitting">
           <property name="text">
-           <string>Split</string>
+           <string>&amp;Split</string>
           </property>
          </widget>
         </item>
@@ -125,7 +125,7 @@
         <item>
          <widget class="QRadioButton" name="rbUseDestinationCat">
           <property name="text">
-           <string>Cat</string>
+           <string>Ca&amp;t</string>
           </property>
          </widget>
         </item>
@@ -173,7 +173,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>mdtFieldMappingDialog</receiver>
+   <receiver>mdtSqlFieldMappingDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -189,7 +189,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>mdtFieldMappingDialog</receiver>
+   <receiver>mdtSqlFieldMappingDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

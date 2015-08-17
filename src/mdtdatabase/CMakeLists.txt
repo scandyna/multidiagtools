@@ -33,7 +33,9 @@ set (SOURCES_FILES
           mdtSqlTransaction.cpp
           mdtSqlForeignKeySetting.cpp
           mdtSqlFieldSetupWidget.cpp
-          mdtFieldMappingDialog.cpp
+          mdtSqlFieldMappingDialog.cpp
+          mdtSqlTableMappingModel.cpp
+          mdtSqlTableMappingWidget.cpp
     )
 
 # Platform specific files

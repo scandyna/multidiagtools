@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>272</width>
-    <height>217</height>
+    <width>305</width>
+    <height>256</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -110,6 +110,9 @@
      </property>
      <item row="0" column="0">
       <widget class="QCheckBox" name="cbPartOfPk">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="text">
         <string>Part of primary key</string>
        </property>

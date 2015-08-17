@@ -66,6 +66,7 @@ int mdtSqlSchemaTableModel::rowCount(const QModelIndex & parent) const
 
 int mdtSqlSchemaTableModel::columnCount(const QModelIndex & /*parent */) const
 {
+  /// \todo Return 0 on case of valid parent ??
   return 4;
 }
 

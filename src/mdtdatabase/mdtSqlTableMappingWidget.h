@@ -18,12 +18,29 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtFieldMappingDialog.h"
-#include "mdtSqlFieldSetupWidget.h"
+#ifndef MDT_SQL_TABLE_MAPPING_WIDGET_H
+#define MDT_SQL_TABLE_MAPPING_WIDGET_H
 
-mdtFieldMappingDialog::mdtFieldMappingDialog(QWidget *parent)
- : QDialog(parent)
+#include "ui_mdtSqlTableMappingWidget.h"
+#include <QWidget>
+
+/*! \brief Widget that provides edition of mapping between source and destination tables
+ */
+class mdtSqlTableMappingWidget : public QWidget, Ui::mdtSqlTableMappingWidget
 {
-  setupUi(this);
-  fsSourceSetupWidget->setEditionMode(mdtSqlFieldSetupEditionMode_t::Selection);
-}
+ Q_OBJECT
+
+ public:
+
+  /*! \brief Constructor
+   */
+  mdtSqlTableMappingWidget(QWidget *parent = nullptr);
+
+ private:
+
+  Q_DISABLE_COPY(mdtSqlTableMappingWidget)
+
+  
+};
+
+#endif // #ifndef MDT_SQL_TABLE_MAPPING_WIDGET_H

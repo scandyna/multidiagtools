@@ -18,45 +18,10 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_COPIER_TEST_H
-#define MDT_SQL_COPIER_TEST_H
+#include "mdtSqlTableMappingWidget.h"
 
-#include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QFileInfo>
-#include <QMessageBox>
-#include <QSqlDatabase>
-
-class mdtSqlCopierTest : public mdtTest
+mdtSqlTableMappingWidget::mdtSqlTableMappingWidget(QWidget* parent)
+ : QWidget(parent)
 {
- Q_OBJECT
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void sqlFieldSetupDataTest();
-
-  void fieldMappingDataTest();
-  void fieldMappingDialogTest();
-
-//   void tableMappingModelTest();
-  void tableMappingWidgetTest();
-
- private:
-
-  /*
-   * Create the test database
-   */
-  void createTestDatabase();
-  // Populate database with some common data
-  void populateTestDatabase();
-  // Clear test database data
-  void clearTestDatabaseData();
-
-  mdtSqlDatabaseManager pvDatabaseManager;
-  QFileInfo pvDbFileInfo;
-};
-
-#endif // #ifndef MDT_SQL_COPIER_TEST_H
+  setupUi(this);
+}

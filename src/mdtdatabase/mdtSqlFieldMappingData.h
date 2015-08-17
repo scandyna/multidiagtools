@@ -18,23 +18,47 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_FIELD_MAPPING_DIALOG_H
-#define MDT_FIELD_MAPPING_DIALOG_H
+#ifndef MDT_SQL_FIELD_MAPPING_DATA_H
+#define MDT_SQL_FIELD_MAPPING_DATA_H
 
-#include "ui_mdtFieldMappingDialog.h"
-#include <QDialog>
-
-/*! \brief Field mapping dialog
+/*! \brief Field mapping data
+ *
+ * \sa mdtSqlFieldMappingDialog
  */
-class mdtFieldMappingDialog : public QDialog, Ui::mdtFieldMappingDialog
+struct mdtSqlFieldMappingData
 {
- Q_OBJECT
-
- public:
-
-  /*! \brief Constructor
+  /*! \brief Source field index
    */
-  mdtFieldMappingDialog(QWidget *parent = nullptr);
+  int sourceFieldIndex;
+
+  /*! \brief Destination field index
+   */
+  int destinationFieldIndex;
+
+  /*! \brief Default constructor
+   */
+  mdtSqlFieldMappingData()
+   : sourceFieldIndex(-1),
+     destinationFieldIndex(-1)
+  {
+  }
+
+  /*! \brief Check if mapping data is null
+   *
+   * Mapping data is null if source or destination field index is < 0
+   */
+  bool isNull() const
+  {
+    return ( (sourceFieldIndex < 0) || (destinationFieldIndex < 0) );
+  }
+
+  /*! \brief Clear
+   */
+  void clear()
+  {
+    sourceFieldIndex = -1;
+    destinationFieldIndex = -1;
+  }
 };
 
-#endif // #ifndef MDT_FIELD_MAPPING_DIALOG_H
+#endif // MDT_SQL_FIELD_MAPPING_DATA_H

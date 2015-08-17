@@ -25,7 +25,9 @@
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlRecord.h"
 #include "mdtSqlTransaction.h"
-#include "mdtFieldMappingDialog.h"
+#include "mdtSqlFieldMappingDialog.h"
+// #include "mdtSqlTableMappingModel.h"
+#include "mdtSqlTableMappingWidget.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -82,11 +84,74 @@ void mdtSqlCopierTest::sqlFieldSetupDataTest()
   QVERIFY(data.isNull());
 }
 
+void mdtSqlCopierTest::fieldMappingDataTest()
+{
+  mdtSqlFieldMappingData data;
+
+  // Initial state
+  QCOMPARE(data.sourceFieldIndex, -1);
+  QCOMPARE(data.destinationFieldIndex, -1);
+  QVERIFY(data.isNull());
+  // Set
+  data.sourceFieldIndex = 0;
+  QVERIFY(data.isNull());
+  data.destinationFieldIndex = 0;
+  QVERIFY(!data.isNull());
+  // Clear
+  data.clear();
+  QCOMPARE(data.sourceFieldIndex, -1);
+  QCOMPARE(data.destinationFieldIndex, -1);
+  QVERIFY(data.isNull());
+}
+
 void mdtSqlCopierTest::fieldMappingDialogTest()
 {
-  mdtFieldMappingDialog dialog;
+  mdtSqlFieldMappingDialog dialog;
+  mdtSqlFieldMappingData mapping;
 
+  QVERIFY(dialog.setSourceTable("Client_tbl", pvDatabaseManager.database()));
+  QVERIFY(dialog.setDestinationTable("Client2_tbl", pvDatabaseManager.database()));
+  mapping.sourceFieldIndex = 1;
+  mapping.destinationFieldIndex = 1;
+  dialog.setMapping(mapping);
   dialog.exec();
+  QCOMPARE(dialog.mapping().sourceFieldIndex, 1);
+  QCOMPARE(dialog.mapping().destinationFieldIndex, 1);
+}
+
+// void mdtSqlCopierTest::tableMappingModelTest()
+// {
+//   mdtSqlTableMappingModel tmm;
+//   QTableView tableView;
+//   QTreeView treeView;
+// 
+//   tableView.setModel(&tmm);
+//   treeView.setModel(&tmm);
+//   
+//   tableView.resize(300, 200);
+//   tableView.show();
+//   treeView.show();
+// 
+//   /*
+//    * Play
+//    */
+//   while(tableView.isVisible()){
+//     QTest::qWait(500);
+//   }
+// }
+
+void mdtSqlCopierTest::tableMappingWidgetTest()
+{
+  mdtSqlTableMappingWidget tmw;
+
+  tmw.show();
+
+  /*
+   * Play
+   */
+  while(tmw.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 
@@ -114,6 +179,22 @@ void mdtSqlCopierTest::createTestDatabase()
   // Create Client_tbl
   table.clear();
   table.setTableName("Client_tbl", "UTF8");
+  // Id_PK
+  field = QSqlField();
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // Name
+  field = QSqlField();
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(100);
+  table.addField(field, false);
+  QVERIFY(pvDatabaseManager.createTable(table, mdtSqlDatabaseManager::OverwriteExisting));
+  // Create Client2_tbl
+  table.clear();
+  table.setTableName("Client2_tbl", "UTF8");
   // Id_PK
   field = QSqlField();
   field.setName("Id_PK");

@@ -84,29 +84,6 @@ void mdtSqlFieldSetupWidget::setField(int fieldIndex)
   cbField->setCurrentIndex(fieldIndex);
 }
 
-// bool mdtSqlFieldSetupWidget::setData(const mdtSqlFieldSetupData & data, QSqlDatabase db)
-// {
-//   mdtSqlSchemaTable st;
-// 
-//   pvSetupData = data;
-//   // Reverse table
-//   if(!st.setupFromTable(data.tableName, db)){
-//     pvLastError = st.lastError();
-//     return false;
-//   }
-//   // Fill available field types
-//   if(!populateFieldTypeCombobox(db.driverName())){
-//     return false;
-//   }
-//   // Update
-//   setEditionMode(data.editionMode);
-//   lbTableName->setText(data.tableName);
-//   pvSchemaTabledModel->setTableSchema(st);
-//   cbField->setCurrentIndex(0);
-// 
-//   return true;
-// }
-
 void mdtSqlFieldSetupWidget::updateFieldParameters(int cbFieldIndex)
 {
   QSqlField field = pvSchemaTabledModel->field(cbFieldIndex);
@@ -158,11 +135,17 @@ void mdtSqlFieldSetupWidget::setEditionModeCreation()
   leDefaultValue->setVisible(true);
   leDefaultValue->setEnabled(true);
   cbPartOfPk->setVisible(true);
-  cbPartOfPk->setCheckable(true);
+  cbPartOfPk->setEnabled(true);
   cbRequired->setVisible(true);
-  cbRequired->setCheckable(true);
+  cbRequired->setEnabled(true);
   cbAutoIncrement->setVisible(true);
-  cbAutoIncrement->setCheckable(true);
+  cbAutoIncrement->setEnabled(true);
+//   cbPartOfPk->setVisible(true);
+//   cbPartOfPk->setCheckable(true);
+//   cbRequired->setVisible(true);
+//   cbRequired->setCheckable(true);
+//   cbAutoIncrement->setVisible(true);
+//   cbAutoIncrement->setCheckable(true);
 }
 
 void mdtSqlFieldSetupWidget::setEditionModeSelection()
@@ -174,9 +157,12 @@ void mdtSqlFieldSetupWidget::setEditionModeSelection()
   cbType->setEnabled(false);
   sbLength->setEnabled(false);
   leDefaultValue->setEnabled(false);
-  cbPartOfPk->setCheckable(false);
-  cbRequired->setCheckable(false);
-  cbAutoIncrement->setCheckable(false);
+  cbPartOfPk->setEnabled(false);
+  cbRequired->setEnabled(false);
+  cbAutoIncrement->setEnabled(false);
+//   cbPartOfPk->setCheckable(false);
+//   cbRequired->setCheckable(false);
+//   cbAutoIncrement->setCheckable(false);
 }
 
 void mdtSqlFieldSetupWidget::setEditionModeEdition()
@@ -192,9 +178,15 @@ void mdtSqlFieldSetupWidget::setEditionModeEdition()
   leDefaultValue->setVisible(true);
   leDefaultValue->setEnabled(true);
   cbPartOfPk->setVisible(true);
-  cbPartOfPk->setCheckable(true);
+  cbPartOfPk->setEnabled(true);
   cbRequired->setVisible(true);
-  cbRequired->setCheckable(true);
+  cbRequired->setEnabled(true);
   cbAutoIncrement->setVisible(true);
-  cbAutoIncrement->setCheckable(true);
+  cbAutoIncrement->setEnabled(true);
+//   cbPartOfPk->setVisible(true);
+//   cbPartOfPk->setCheckable(true);
+//   cbRequired->setVisible(true);
+//   cbRequired->setCheckable(true);
+//   cbAutoIncrement->setVisible(true);
+//   cbAutoIncrement->setCheckable(true);
 }

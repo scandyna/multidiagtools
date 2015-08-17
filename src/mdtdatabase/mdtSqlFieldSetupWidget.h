@@ -57,6 +57,8 @@ class mdtSqlFieldSetupWidget : public QWidget, Ui::mdtSqlFieldSetupWidget
 {
  Q_OBJECT
 
+ friend class mdtDatabaseTest;
+
  public:
 
   /*! \brief Constructor

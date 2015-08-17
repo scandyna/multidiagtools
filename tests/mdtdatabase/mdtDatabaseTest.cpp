@@ -848,13 +848,59 @@ void mdtDatabaseTest::sqlFieldSetupWidgetTest()
   mdtSqlFieldSetupWidget w(nullptr);
   mdtSqlFieldSetupData data;
 
-//   data.tableName = "Client_tbl";
-//   data.editionMode = mdtSqlFieldSetupEditionMode_t::Edition;
-//   QVERIFY(w.setData(data, pvDatabase));
-  w.setEditionMode(mdtSqlFieldSetupEditionMode_t::Edition);
+  /*
+   * Reverse Client_tbl
+   */
   QVERIFY(w.setTable("Client_tbl", pvDatabase));
-  w.setField(1);
   w.show();
+  /*
+   * Check displaying attributes in edition mode
+   */
+  w.setEditionMode(mdtSqlFieldSetupEditionMode_t::Edition);
+  // Select Id_PK and check
+  w.setField(0);
+  QCOMPARE(w.cbField->currentText(), QString("Id_PK"));
+  QVERIFY(w.cbType->currentData() == QVariant::Int);
+  QVERIFY(w.cbPartOfPk->isChecked());
+  QVERIFY(w.cbAutoIncrement->isChecked());
+  // Select FirstName and check
+  w.setField(1);
+  QCOMPARE(w.cbField->currentText(), QString("FirstName"));
+  QVERIFY(w.cbType->currentData() == QVariant::String);
+  QVERIFY(!w.cbPartOfPk->isChecked());
+  QVERIFY(!w.cbAutoIncrement->isChecked());
+  QVERIFY(w.cbRequired->isChecked());
+  // Select Remarks and check
+  w.setField(2);
+  QCOMPARE(w.cbField->currentText(), QString("Remarks"));
+  QVERIFY(w.cbType->currentData() == QVariant::String);
+  QVERIFY(!w.cbPartOfPk->isChecked());
+  QVERIFY(!w.cbAutoIncrement->isChecked());
+  QVERIFY(!w.cbRequired->isChecked());
+  /*
+   * Check displaying attributes in selection mode
+   */
+  w.setEditionMode(mdtSqlFieldSetupEditionMode_t::Selection);
+  // Select Id_PK and check
+  w.setField(0);
+  QCOMPARE(w.cbField->currentText(), QString("Id_PK"));
+  QVERIFY(w.cbType->currentData() == QVariant::Int);
+  QVERIFY(w.cbPartOfPk->isChecked());
+  QVERIFY(w.cbAutoIncrement->isChecked());
+  // Select FirstName and check
+  w.setField(1);
+  QCOMPARE(w.cbField->currentText(), QString("FirstName"));
+  QVERIFY(w.cbType->currentData() == QVariant::String);
+  QVERIFY(!w.cbPartOfPk->isChecked());
+  QVERIFY(!w.cbAutoIncrement->isChecked());
+  QVERIFY(w.cbRequired->isChecked());
+  // Select Remarks and check
+  w.setField(2);
+  QCOMPARE(w.cbField->currentText(), QString("Remarks"));
+  QVERIFY(w.cbType->currentData() == QVariant::String);
+  QVERIFY(!w.cbPartOfPk->isChecked());
+  QVERIFY(!w.cbAutoIncrement->isChecked());
+  QVERIFY(!w.cbRequired->isChecked());
 
   /*
    * Play
