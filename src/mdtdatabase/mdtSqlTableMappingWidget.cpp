@@ -19,9 +19,47 @@
  **
  ****************************************************************************/
 #include "mdtSqlTableMappingWidget.h"
+#include "mdtSqlTableMappingWidgetItem.h"
+#include "mdtSqlFieldMappingData.h"
+#include "mdtSqlFieldMappingDialog.h"
+#include <QToolButton>
+#include <QVBoxLayout>
+
+#include <QDebug>
 
 mdtSqlTableMappingWidget::mdtSqlTableMappingWidget(QWidget* parent)
- : QWidget(parent)
+ : QWidget(parent),
+   pvItemsContainerWidget(new QWidget),
+   pvItemsContainerLayout(new QVBoxLayout)
 {
   setupUi(this);
+  pvItemsContainerLayout->addStretch(1);
+  pvItemsContainerWidget->setLayout(pvItemsContainerLayout);
+  saItems->setWidget(pvItemsContainerWidget);
+  connect(tbRemoveFieldMapping, &QToolButton::clicked, this, &mdtSqlTableMappingWidget::addFieldMapping);
+}
+
+void mdtSqlTableMappingWidget::addFieldMapping()
+{
+  Q_ASSERT(pvItemsContainerLayout->count() > 0);  // A stretch was added in constructor
+
+  auto *item = new mdtSqlTableMappingWidgetItem(this, this);
+  pvItemsContainerLayout->insertWidget(pvItemsContainerLayout->count() - 1, item);
+}
+
+void mdtSqlTableMappingWidget::editFieldMapping(mdtSqlTableMappingWidgetItem* item)
+{
+  Q_ASSERT(item != nullptr);
+
+  mdtSqlFieldMappingDialog dialog(this);
+
+  dialog.exec();
+}
+
+void mdtSqlTableMappingWidget::removeFieldMapping(mdtSqlTableMappingWidgetItem* item)
+{
+  Q_ASSERT(item != nullptr);
+
+  pvItemsContainerLayout->removeWidget(item);
+  delete item;
 }

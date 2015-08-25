@@ -18,47 +18,48 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_TABLE_MAPPING_MODEL_H
-#define MDT_SQL_TABLE_MAPPING_MODEL_H
+#ifndef MDT_SQL_TABLE_MAPPING_WIDGET_ITEM_H
+#define MDT_SQL_TABLE_MAPPING_WIDGET_ITEM_H
 
-#include <QAbstractTableModel>
-#include <QString>
-#include <QVariant>
-#include <QModelIndex>
+#include "ui_mdtSqlTableMappingWidgetItem.h"
+#include <QWidget>
 
-/*! \brief Table model used by mdtSqlTableMappingWidget
+class mdtSqlTableMappingWidget;
+
+/*! \brief Item of mdtSqlTableMappingWidget
  */
-class mdtSqlTableMappingModel : public QAbstractTableModel
+class mdtSqlTableMappingWidgetItem : public QWidget, Ui::mdtSqlTableMappingWidgetItem
 {
  public:
 
   /*! \brief Constructor
+   *
+   * \param parent Parent widget
+   * \param owner The container that creates this item
+   * \pre owner must be a valid pointer
    */
-  mdtSqlTableMappingModel(QObject *parent = nullptr);
+  mdtSqlTableMappingWidgetItem(QWidget *parent, mdtSqlTableMappingWidget *owner);
 
-  /*! \brief Get header data (for the view)
+  /*! \brief Set separation line visible
    */
-  QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+  void setSeparationLineVisible(bool visible);
 
-  /*! \brief Get columns count (for the view)
+ private slots:
+
+  /*! \brief Edit field mapping
    */
-  int columnCount(const QModelIndex & parent = QModelIndex()) const;
+  void editFieldMapping();
 
-  /*! \brief Get rows count (for the view)
+  /*! \brief Remove field mapping
    */
-  int rowCount(const QModelIndex & parent = QModelIndex()) const;
-
-  /*! \brief Get data (for the view)
-   */
-  QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
-
-  
+  void removeFieldMapping();
 
  private:
 
-  Q_DISABLE_COPY(mdtSqlTableMappingModel)
+  Q_DISABLE_COPY(mdtSqlTableMappingWidgetItem)
 
-  
+  mdtSqlTableMappingWidget *pvOwner;
 };
 
-#endif // #ifndef MDT_SQL_TABLE_MAPPING_MODEL_H
+#endif // #ifndef MDT_SQL_TABLE_MAPPING_WIDGET_ITEM_H
+

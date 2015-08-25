@@ -26,7 +26,7 @@
 #include "mdtSqlRecord.h"
 #include "mdtSqlTransaction.h"
 #include "mdtSqlFieldMappingDialog.h"
-// #include "mdtSqlTableMappingModel.h"
+#include "mdtSqlTableMappingWidgetItem.h"
 #include "mdtSqlTableMappingWidget.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
@@ -139,6 +139,21 @@ void mdtSqlCopierTest::fieldMappingDialogTest()
 //     QTest::qWait(500);
 //   }
 // }
+
+void mdtSqlCopierTest::tableMappingWidgetItemTest()
+{
+  mdtSqlTableMappingWidget tmw;
+  mdtSqlTableMappingWidgetItem item(nullptr, &tmw);
+
+  item.show();
+
+  /*
+   * Play
+   */
+  while(item.isVisible()){
+    QTest::qWait(500);
+  }
+}
 
 void mdtSqlCopierTest::tableMappingWidgetTest()
 {

@@ -18,45 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_COPIER_TEST_H
-#define MDT_SQL_COPIER_TEST_H
+#ifndef MDT_SQL_DATABASE_SQLITE_H
+#define MDT_SQL_DATABASE_SQLITE_H
 
-#include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QFileInfo>
-#include <QMessageBox>
 #include <QSqlDatabase>
 
-class mdtSqlCopierTest : public mdtTest
+/*! \brief Helper class for SQLite database connection and creation
+ *
+ * To handle database connections, QSqlDatabase provides all the needed stuff.
+ *  mdtSqlDatabaseSqlite is a helper class the adds some logic to deal with common cases
+ *  when creating or opening a SQLite database (behaviour whenn opening a non existing file
+ *  or creating a existing file, etc...)
+ *
+ * \sa mdtSqlDatabaseDialogSqlite
+ */
+class mdtSqlDatabaseSqlite
 {
- Q_OBJECT
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void sqlFieldSetupDataTest();
-
-  void fieldMappingDataTest();
-  void fieldMappingDialogTest();
-
-  void tableMappingWidgetItemTest();
-  void tableMappingWidgetTest();
-
- private:
-
-  /*
-   * Create the test database
-   */
-  void createTestDatabase();
-  // Populate database with some common data
-  void populateTestDatabase();
-  // Clear test database data
-  void clearTestDatabaseData();
-
-  mdtSqlDatabaseManager pvDatabaseManager;
-  QFileInfo pvDbFileInfo;
 };
 
-#endif // #ifndef MDT_SQL_COPIER_TEST_H
+#endif // #ifndef MDT_SQL_DATABASE_SQLITE_H

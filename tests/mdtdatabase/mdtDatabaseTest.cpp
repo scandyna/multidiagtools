@@ -20,7 +20,12 @@
  ****************************************************************************/
 #include "mdtDatabaseTest.h"
 #include "mdtApplication.h"
+
 #include "mdtSqlDatabaseManager.h"
+
+#include "mdtSqlDatabaseSqlite.h"
+#include "mdtSqlDatabaseDialogSqlite.h"
+
 #include "mdtSqlSchemaTable.h"
 
 #include "mdtSqlSchemaTableModel.h"
@@ -908,6 +913,17 @@ void mdtDatabaseTest::sqlFieldSetupWidgetTest()
   while(w.isVisible()){
     QTest::qWait(500);
   }
+}
+
+void mdtDatabaseTest::databaseSqliteTest()
+{
+}
+
+void mdtDatabaseTest::databaseDialogSqliteTest()
+{
+  mdtSqlDatabaseDialogSqlite dialog;
+
+  dialog.exec();
 }
 
 void mdtDatabaseTest::databaseManagerTest()

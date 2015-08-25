@@ -38,7 +38,7 @@ class QWidget;
  *  deal with common problems. For example, with Sqlite, checking if a file exists,
  *  what to do if it exists and we are creating a new database, ...
  */
-class mdtSqlDatabaseManager : public QObject
+class /* [[deprecated("Use mdtSqliteDatabase for SQLite")]] Does MOC support this keyword? */ mdtSqlDatabaseManager : public QObject
 {
  Q_OBJECT
 

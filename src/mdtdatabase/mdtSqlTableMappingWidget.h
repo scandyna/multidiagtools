@@ -24,10 +24,15 @@
 #include "ui_mdtSqlTableMappingWidget.h"
 #include <QWidget>
 
+class mdtSqlTableMappingWidgetItem;
+class QVBoxLayout;
+
 /*! \brief Widget that provides edition of mapping between source and destination tables
  */
 class mdtSqlTableMappingWidget : public QWidget, Ui::mdtSqlTableMappingWidget
 {
+ friend class mdtSqlTableMappingWidgetItem;
+
  Q_OBJECT
 
  public:
@@ -36,11 +41,26 @@ class mdtSqlTableMappingWidget : public QWidget, Ui::mdtSqlTableMappingWidget
    */
   mdtSqlTableMappingWidget(QWidget *parent = nullptr);
 
+ private slots:
+
+  /*! \brief Edit a field mapping item
+   */
+  void addFieldMapping();
+
  private:
+
+  /*! \brief Edit a field mapping
+   */
+  void editFieldMapping(mdtSqlTableMappingWidgetItem *item);
+
+  /*! \brief Edit a field mapping item
+   */
+  void removeFieldMapping(mdtSqlTableMappingWidgetItem *item);
 
   Q_DISABLE_COPY(mdtSqlTableMappingWidget)
 
-  
+  QWidget *pvItemsContainerWidget;
+  QVBoxLayout *pvItemsContainerLayout;
 };
 
 #endif // #ifndef MDT_SQL_TABLE_MAPPING_WIDGET_H

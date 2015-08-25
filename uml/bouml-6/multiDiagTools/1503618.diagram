@@ -12,9 +12,9 @@ classcanvas 129922 class_ref 1773186 // mdtFieldMappingField
   classdiagramsettings hide_attributes no hide_operations no member_max_width 0 end
   xyz 659.2 805.2 2000
 end
-classcanvas 130690 class_ref 1773570 // mdtSqlCopierTableMapping
+classcanvas 130690 class_ref 1773570 // mdtSqlTableMapping
   classdiagramsettings hide_attributes no hide_operations no member_max_width 0 end
-  xyz 92.7 500.9 2000
+  xyz 72.7 504.9 2000
 end
 note 131202 "QVector: Copy On Write, permet de passer des copies du mapper"
   xyzwh 4 372 2000 189 83
@@ -116,7 +116,7 @@ end
 relationcanvas 134658 relation_ref 2112386 // <directional composition>
   from ref 130690 z 3012 to ref 128514
   no_role_a no_role_b
-  multiplicity_a_pos 437 734 3000 no_multiplicity_b
+  multiplicity_a_pos 431 734 3000 no_multiplicity_b
 end
 line 131330 -_-_ decenter_begin 275 decenter_end 159
   from ref 131202 z 2001 to ref 130690

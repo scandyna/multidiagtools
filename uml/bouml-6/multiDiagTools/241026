@@ -1,6 +1,6 @@
 format 209
 "Ideas" // mdtdatabase::Ideas
-  revision 14
+  revision 19
   modified_by 2 "philippe"
   // class settings
   
@@ -92,7 +92,7 @@ format 209
       size A4
     end
 
-    class 1773570 "mdtSqlCopierTableMapping"
+    class 1773570 "mdtSqlTableMapping"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -588,7 +588,7 @@ ${inlines}
       operation 2797186 "setMapping"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "mapping" type class_ref 1773570 // mdtSqlCopierTableMapping
+	  param in name "mapping" type class_ref 1773570 // mdtSqlTableMapping
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -645,7 +645,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 2127746 // <unidirectional association>
-	  b parent class_ref 1773570 // mdtSqlCopierTableMapping
+	  b parent class_ref 1773570 // mdtSqlTableMapping
       end
     end
 
@@ -777,7 +777,7 @@ ${inlines}
 	nparams 3
 	  param in name "sourceRecord" type class_ref 404994 // QSqlRecord
 	  param out name "destinationRecord" type class_ref 1067266 // mdtSqlRecord
-	  param in name "fieldMapping" type class_ref 1773570 // mdtSqlCopierTableMapping
+	  param in name "fieldMapping" type class_ref 1773570 // mdtSqlTableMapping
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
@@ -796,7 +796,7 @@ ${inlines}
 	  param in name "sourceRowData" type class_ref 161154 // QVariant
 	multiplicity "*"
 	  param out name "destinationRecord" type class_ref 1067266 // mdtSqlRecord
-	  param in name "fieldMapping" type class_ref 1773570 // mdtSqlCopierTableMapping
+	  param in name "fieldMapping" type class_ref 1773570 // mdtSqlTableMapping
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
@@ -815,7 +815,7 @@ ${inlines}
 	  param in name "sourceRecord" type class_ref 404994 // QSqlRecord
 	  param out name "destinationRowData" type class_ref 161154 // QVariant
 	multiplicity "*"
-	  param in name "fieldMapping" type class_ref 1773570 // mdtSqlCopierTableMapping
+	  param in name "fieldMapping" type class_ref 1773570 // mdtSqlTableMapping
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
@@ -835,7 +835,7 @@ ${inlines}
 	multiplicity "*"
 	  param out name "destinationRowData" type class_ref 161154 // QVariant
 	multiplicity "*"
-	  param in name "fieldMapping" type class_ref 1773570 // mdtSqlCopierTableMapping
+	  param in name "fieldMapping" type class_ref 1773570 // mdtSqlTableMapping
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
@@ -1431,13 +1431,111 @@ ${inlines}
 	  b parent class_ref 1827970 // Ui::mdtSqlTableMappingWidget
       end
 
-      classrelation 2176258 // <directional composition>
-	relation 2160130 *-->
+      classrelation 2176258 // <composition>
+	relation 2160130 *---
 	  a role_name "" multiplicity "*" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
-	    classrelation_ref 2176258 // <directional composition>
-	  b parent class_ref 1834626 // mdtSqlTableMappingWidgetItem
+	    classrelation_ref 2176258 // <composition>
+	  b role_name "" multiplicity "1" private
+	    classrelation_ref 2183042 // <composition>
+      end
+
+      classrelation 2183170 // <unidirectional association>
+	relation 2166914 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2183170 // <unidirectional association>
+	  b parent class_ref 1773570 // mdtSqlTableMapping
+      end
+
+      operation 2863362 "mdtSqlTableMappingWidget"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	    defaultvalue "nullptr"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2870274 "~mdtSqlTableMappingWidget"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2863490 "addFieldMapping"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2863618 "editFieldMapping"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "item" type class_ref 1834626 // mdtSqlTableMappingWidgetItem
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2863746 "removeFieldMapping"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "item" type class_ref 1834626 // mdtSqlTableMappingWidgetItem
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 2183298 // <dependency>
+	relation 2167042 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2183298 // <dependency>
+	  b parent class_ref 1821314 // mdtSqlFieldMappingDialog
       end
     end
 
@@ -1478,6 +1576,111 @@ ${inlines}
 	    classrelation_ref 2176386 // <generalisation>
 	  b parent class_ref 316162 // QWidget
       end
+
+      classrelation 2182914 // <generalisation>
+	relation 2166786 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2182914 // <generalisation>
+	  b parent class_ref 1841154 // Ui::mdtSqlTableMappingWidgetItem
+      end
+
+      operation 2863234 "mdtSqlTableMappingWidgetItem"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "parent" type class_ref 316162 // QWidget
+	  param in name "tmw" type class_ref 1827842 // mdtSqlTableMappingWidget
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 1911810 "Mapping"
+	private type class_ref 1772930 // mdtSqlFieldMappingData
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 2183042 // <composition>
+	relation_ref 2160130 // <composition>
+      end
+
+      operation 2870402 "editFieldMapping"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2876930 "removeFieldMapping"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 1841154 "Ui::mdtSqlTableMappingWidgetItem"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 1847682 "mdtSqlCopierPath"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 end

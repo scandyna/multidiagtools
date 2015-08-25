@@ -27,6 +27,9 @@ set (SOURCES_FILES
           mdtSqlTableSelection.cpp
           mdtDataTableManager.cpp
           mdtSqlDatabaseManager.cpp
+          
+          mdtSqlDatabaseSqlite.cpp
+          mdtSqlDatabaseDialogSqlite.cpp
           mdtSqlSchemaTable.cpp
           mdtSqlSchemaTableModel.cpp
           mdtSqlFieldSelectionDialog.cpp
@@ -34,8 +37,8 @@ set (SOURCES_FILES
           mdtSqlForeignKeySetting.cpp
           mdtSqlFieldSetupWidget.cpp
           mdtSqlFieldMappingDialog.cpp
-          mdtSqlTableMappingModel.cpp
           mdtSqlTableMappingWidget.cpp
+          mdtSqlTableMappingWidgetItem.cpp
     )
 
 # Platform specific files
