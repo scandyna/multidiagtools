@@ -109,6 +109,8 @@ void mdtSqlConnectionNameWidget::removeSelectedConnection()
 {
   QString connectionName = cbConnectionNames->currentText();
   Q_ASSERT(!QSqlDatabase::database(connectionName, false).isOpen());
+
+  emit aboutToRemoveDatabaseConnection(connectionName);
   QSqlDatabase::removeDatabase(connectionName);
   updateConnectionsList();
 }

@@ -76,6 +76,10 @@ class mdtSqlConnectionNameWidget : public QWidget, Ui::mdtSqlConnectionNameWidge
    */
   void currentDatabaseChanged(const QSqlDatabase & db);
 
+  /*! \brief Emitted just before current database connection is removed
+   */
+  void aboutToRemoveDatabaseConnection(const QString & connectionName);
+
  private slots:
 
   /*! \brief Add a database connection

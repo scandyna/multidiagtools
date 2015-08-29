@@ -70,19 +70,19 @@ class mdtSqlDatabaseDialogSqlite : public QDialog, Ui::mdtSqlDatabaseDialogSqlit
    */
   void updateDatabase(const QSqlDatabase & db);
 
-  /*! \brief Add a connection
+  /*! \brief Check if internal database must be cleared before connection is removed
    */
-//   void addConnection();
-
-  /*! \brief Remove selected connection
-   */
-//   void removeSelectedConnection();
-
-  /*! \brief Update dialog with currently selected connection
-   */
-//   void onCbConnectionNamesIndexChanged(int index);
+  void maybeClearDatabase(const QString & connectionName);
 
  private:
+
+  /*! \brief Update database informations
+   */
+  void updateDatabaseInformations();
+
+  /*! \brief Update buttons state
+   */
+  void updateButtonsState();
 
   Q_DISABLE_COPY(mdtSqlDatabaseDialogSqlite)
 
