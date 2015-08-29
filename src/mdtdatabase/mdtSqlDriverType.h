@@ -45,7 +45,8 @@ class mdtSqlDriverType
   {
     Unknown,  /*!< Database engine is not defined, or not supported by multiDiagTools library */
     SQLite,   /*!< SQLite database engine */
-    MariaDB,  /*!< MariaDB database engine */
+    MariaDB,  /*!< MariaDB database engine 
+                   \todo should be removed, because MySQL driver is used for MariaDB */
     MySQL     /*!< MySQL database engine */
   };
 

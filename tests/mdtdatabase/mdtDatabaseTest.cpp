@@ -23,6 +23,7 @@
 
 #include "mdtSqlDatabaseManager.h"
 
+#include "mdtSqlConnectionNameWidget.h"
 #include "mdtSqlDatabaseSqlite.h"
 #include "mdtSqlDatabaseDialogSqlite.h"
 
@@ -56,6 +57,7 @@
 #include <QString>
 #include <QStringList>
 #include <QSqlDatabase>
+#include <QSqlDriver>
 #include <QSqlQueryModel>
 #include <QSqlTableModel>
 #include <QFile>
@@ -915,15 +917,131 @@ void mdtDatabaseTest::sqlFieldSetupWidgetTest()
   }
 }
 
+void mdtDatabaseTest::connectionNameWidgetTest()
+{
+  mdtSqlConnectionNameWidget widget;
+  QStringList connectionNames;
+
+  /*
+   * Check getConnectionNames() function
+   */
+  // Initially, we have only the default connection, witch uses the SQLite driver
+  QCOMPARE(QSqlDatabase::connectionNames().size(), 1);
+  // Create some connections
+  QSqlDatabase::addDatabase("QSQLITE", "cnn1");
+  QSqlDatabase::addDatabase("QMYSQL", "cnn2");
+  QSqlDatabase::addDatabase("QPSQL", "cnn3");
+  QSqlDatabase::addDatabase("QSQLITE", "cnn4");
+  // Get connection names and check
+  connectionNames = mdtSqlConnectionNameWidget::getConnectionNames(mdtSqlDriverType::SQLite, true);
+  QCOMPARE(connectionNames.size(), 3);
+  QVERIFY(connectionNames.contains("cnn1"));
+  QVERIFY(!connectionNames.contains("cnn2"));
+  QVERIFY(!connectionNames.contains("cnn3"));
+  QVERIFY(connectionNames.contains("cnn4"));
+  /*
+   * Check widget
+   */
+  // Initial state
+  QVERIFY(widget.pvDriverType == mdtSqlDriverType::Unknown);
+  QCOMPARE(widget.cbConnectionNames->count(), 0);
+  // Set SQLite driver type
+  widget.setDriverType(mdtSqlDriverType::SQLite);
+  QCOMPARE(widget.cbConnectionNames->count(), 3);
+
+  /*
+   * Play
+   */
+  widget.show();
+  while(widget.isVisible()){
+    QTest::qWait(500);
+  }
+
+  // Remove added connections
+  QSqlDatabase::removeDatabase("cnn1");
+  QSqlDatabase::removeDatabase("cnn2");
+  QSqlDatabase::removeDatabase("cnn3");
+  QSqlDatabase::removeDatabase("cnn4");
+}
+
 void mdtDatabaseTest::databaseSqliteTest()
 {
+  QStringList connectionNames;
+
+  /*
+   * Check getConnectionNames() function
+   */
+  // Initially, we have only the default connection, witch uses the SQLite driver
+  QCOMPARE(QSqlDatabase::connectionNames().size(), 1);
+  // Create some connections
+  QSqlDatabase::addDatabase("QSQLITE", "cnn1");
+  QSqlDatabase::addDatabase("QMYSQL", "cnn2");
+  QSqlDatabase::addDatabase("QPSQL", "cnn3");
+  QSqlDatabase::addDatabase("QSQLITE", "cnn4");
+  // Get connection names and check
+  connectionNames = mdtSqlDatabaseSqlite::getConnectionNames();
+  QCOMPARE(connectionNames.size(), 3);
+  QVERIFY(connectionNames.contains("cnn1"));
+  QVERIFY(!connectionNames.contains("cnn2"));
+  QVERIFY(!connectionNames.contains("cnn3"));
+  QVERIFY(connectionNames.contains("cnn4"));
+  /*
+   * Check object construction
+   */
+  // Default constructed
+  mdtSqlDatabaseSqlite db1;
+  QVERIFY(!db1.isValid());
+  QVERIFY(db1.database().connectionName().isEmpty());
+  QVERIFY(!db1.database().isOpen());
+  // Constructed on base of a valid QSqlDatabase object
+  mdtSqlDatabaseSqlite db2(QSqlDatabase::database("cnn1", false));
+  QVERIFY(db2.isValid());
+  QCOMPARE(db2.database().connectionName(), QString("cnn1"));
+  QVERIFY(!db2.database().isOpen());
+  // Clear
+  db2.clear();
+  QVERIFY(!db2.isValid());
+  QVERIFY(!db2.database().isOpen());
+
+  // Remove added connections
+  QSqlDatabase::removeDatabase("cnn1");
+  QSqlDatabase::removeDatabase("cnn2");
+  QSqlDatabase::removeDatabase("cnn3");
+  QSqlDatabase::removeDatabase("cnn4");
 }
 
 void mdtDatabaseTest::databaseDialogSqliteTest()
 {
-  mdtSqlDatabaseDialogSqlite dialog;
+  mdtSqlDatabaseDialogSqlite *dialog = new mdtSqlDatabaseDialogSqlite;
 
-  dialog.exec();
+  /*
+   * Check set/get database
+   */
+  // Initially, we have only the default connection, witch uses the SQLite driver
+  QVERIFY(dialog->database().database().isValid());
+  // Add some connections
+  QSqlDatabase::addDatabase("QSQLITE", "cnn1");
+  QSqlDatabase::addDatabase("QSQLITE", "cnn2");
+  QSqlDatabase::addDatabase("QSQLITE", "cnn3");
+  dialog->updateConnectionsList();
+  // Set connections and check
+  dialog->setDatabase(QSqlDatabase::database("cnn2", false));
+  QCOMPARE(dialog->database().database().connectionName(), QString("cnn2"));
+  QVERIFY(!dialog->database().database().isOpen());
+  
+  
+
+  
+  dialog->exec();
+  /*
+   * Delete dialog here, so that contained database object is destructed,
+   *  else, Qt will warn that we are removing a connection that is currently used.
+   */
+  delete dialog;
+  // Remove added connections
+  QSqlDatabase::removeDatabase("cnn1");
+  QSqlDatabase::removeDatabase("cnn2");
+  QSqlDatabase::removeDatabase("cnn3");
 }
 
 void mdtDatabaseTest::databaseManagerTest()
@@ -972,7 +1090,7 @@ void mdtDatabaseTest::databaseManagerTest()
   field.setType(QVariant::String);
   field.setLength(50);
   st.addField(field, false);
-  // Fisrt creation
+  // First creation
   QVERIFY(m.createTable(st, mdtSqlDatabaseManager::FailIfExists));
   QVERIFY(m.database().tables().contains("Client_tbl"));
   // Check overwite

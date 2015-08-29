@@ -19,3 +19,41 @@
  **
  ****************************************************************************/
 #include "mdtSqlDatabaseSqlite.h"
+#include "mdtSqlDriverType.h"
+#include <QString>
+
+mdtSqlDatabaseSqlite::mdtSqlDatabaseSqlite()
+{
+}
+
+mdtSqlDatabaseSqlite::mdtSqlDatabaseSqlite(const QSqlDatabase & db)
+ : pvDatabase(db)
+{
+  Q_ASSERT(mdtSqlDriverType::typeFromName(db.driverName()) == mdtSqlDriverType::SQLite);
+}
+
+void mdtSqlDatabaseSqlite::clear()
+{
+  /// \todo close
+  pvDatabase = QSqlDatabase();
+}
+
+void mdtSqlDatabaseSqlite::setDatabase(const QSqlDatabase & db)
+{
+  Q_ASSERT(mdtSqlDriverType::typeFromName(db.driverName()) == mdtSqlDriverType::SQLite);
+  pvDatabase = db;
+}
+
+QStringList mdtSqlDatabaseSqlite::getConnectionNames()
+{
+  QStringList connectionNames;
+
+  for(const auto & cnnName : QSqlDatabase::connectionNames()){
+    QSqlDatabase db = QSqlDatabase::database(cnnName, false);
+    if(mdtSqlDriverType::typeFromName(db.driverName()) == mdtSqlDriverType::SQLite){
+      connectionNames.append(cnnName);
+    }
+  }
+
+  return connectionNames;
+}

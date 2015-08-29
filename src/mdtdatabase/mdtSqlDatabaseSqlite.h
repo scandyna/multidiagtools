@@ -22,6 +22,7 @@
 #define MDT_SQL_DATABASE_SQLITE_H
 
 #include <QSqlDatabase>
+#include <QStringList>
 
 /*! \brief Helper class for SQLite database connection and creation
  *
@@ -34,6 +35,64 @@
  */
 class mdtSqlDatabaseSqlite
 {
+ public:
+
+  /*! \brief Default constructor
+   *
+   * Contruct a invalid database object
+   */
+  mdtSqlDatabaseSqlite();
+
+  /*! \brief Constructor
+   *
+   * Construct a database object based on db.
+   *
+   * \pre db must use the SQLite driver (see Qt's QSqlDatabase documentation about driver for details)
+   */
+  mdtSqlDatabaseSqlite(const QSqlDatabase & db);
+
+  /*! \brief Check validity
+   *
+   * Returns true if database has a valid driver (exactly like QSqlDatabase::isValid()).
+   */
+  bool isValid() const
+  {
+    return pvDatabase.isValid();
+  }
+
+  /*! \brief Clear
+   *
+   * If database is open, it will first close it before clear.
+   *  After clear, database object becomes invalid.
+   */
+  void clear();
+
+  /*! \brief Set database
+   *
+   * \pre db must use the SQLite driver (see Qt's QSqlDatabase documentation about driver for details)
+   */
+  void setDatabase(const QSqlDatabase & db);
+
+  /*! \brief Get database
+   */
+  QSqlDatabase database() const
+  {
+    return pvDatabase;
+  }
+
+  /*! \brief Get a list containing the name of all SQLite connections
+   *
+   * This is the same as QSqlDatabase::connectionNames() ,
+   *  but only contains connections that uses the SQLite driver.
+   *
+   * Note: each call of this function will build the list, also fetching some information, wich is not fast.
+   */
+  [[deprecated]]
+  static QStringList getConnectionNames();
+
+ private:
+
+  QSqlDatabase pvDatabase;
 };
 
 #endif // #ifndef MDT_SQL_DATABASE_SQLITE_H

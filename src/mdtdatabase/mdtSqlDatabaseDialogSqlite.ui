@@ -6,108 +6,132 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>447</width>
-    <height>175</height>
+    <width>391</width>
+    <height>209</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>SQLite database</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <layout class="QFormLayout" name="formLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Open connections:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QComboBox" name="comboBox"/>
-       </item>
-       <item>
-        <widget class="QToolButton" name="toolButton">
-         <property name="toolTip">
-          <string>Close selected connection</string>
-         </property>
-         <property name="text">
-          <string>Close</string>
-         </property>
-         <property name="icon">
-          <iconset theme="document-close"/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="toolButton_3">
-         <property name="toolTip">
-          <string>Open database file</string>
-         </property>
-         <property name="text">
-          <string>Open</string>
-         </property>
-         <property name="icon">
-          <iconset theme="document-open"/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="toolButton_2">
-         <property name="toolTip">
-          <string>Create new database</string>
-         </property>
-         <property name="text">
-          <string>Create</string>
-         </property>
-         <property name="icon">
-          <iconset theme="document-new"/>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Connection name:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>File:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>file</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Directory:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>directory</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="mdtSqlConnectionNameWidget" name="wConnectionName" native="true"/>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="gbDatabase">
+     <property name="title">
+      <string>Database</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QToolButton" name="tbOpenDatabase">
+          <property name="toolTip">
+           <string>Open database file</string>
+          </property>
+          <property name="text">
+           <string>Open</string>
+          </property>
+          <property name="icon">
+           <iconset theme="document-open">
+            <normaloff/>
+           </iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="tbCloseDatabase">
+          <property name="toolTip">
+           <string>Close database</string>
+          </property>
+          <property name="text">
+           <string>Close</string>
+          </property>
+          <property name="icon">
+           <iconset theme="document-close">
+            <normaloff/>
+           </iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="tbCreateDatabase">
+          <property name="toolTip">
+           <string>Create new database</string>
+          </property>
+          <property name="text">
+           <string>Create</string>
+          </property>
+          <property name="icon">
+           <iconset theme="document-new">
+            <normaloff/>
+           </iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="tbDeleteDatabase">
+          <property name="toolTip">
+           <string>Delete database</string>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset theme="edit-delete"/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="lbFileNameLabel">
+          <property name="text">
+           <string>File:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="lbFileName">
+          <property name="text">
+           <string>file</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lbDirectoryLabel">
+          <property name="text">
+           <string>Directory:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="lbDirectory">
+          <property name="text">
+           <string>directory</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
@@ -121,6 +145,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>mdtSqlConnectionNameWidget</class>
+   <extends>QWidget</extends>
+   <header>mdtSqlConnectionNameWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

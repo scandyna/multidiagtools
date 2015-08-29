@@ -45,6 +45,7 @@ class mdtDatabaseTest : public mdtTest
 
   void sqlFieldSetupWidgetTest();
 
+  void connectionNameWidgetTest();
   void databaseSqliteTest();
   void databaseDialogSqliteTest();
 

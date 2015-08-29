@@ -36,13 +36,57 @@ class mdtSqlDatabaseDialogSqlite : public QDialog, Ui::mdtSqlDatabaseDialogSqlit
  public:
 
   /*! \brief Constructor
+   *
+   * Will also list currently available database connections.
+   *  Note: if a connection is created with QSqlDatabase::addDatabase()
+   *        after creation of this dialog, it will not be listed.
+   *        Use updateConnectionsList() in this case.
    */
   mdtSqlDatabaseDialogSqlite(QWidget *parent = nullptr);
 
+  /*! \brief Update connections list
+   *
+   * Update the connections combo box with currently available
+   *  connections that uses the SQLite driver.
+   */
+  void updateConnectionsList();
+
+  /*! \brief Set database
+   *
+   * Will also set db's connection as selected connection
+   */
+  void setDatabase(const mdtSqlDatabaseSqlite & db);
+
+  /*! \brief Get selected database
+   */
+  mdtSqlDatabaseSqlite database() const
+  {
+    return pvDatabase;
+  }
+
+ private slots:
+
+  /*! \brief Update regarding given database
+   */
+  void updateDatabase(const QSqlDatabase & db);
+
+  /*! \brief Add a connection
+   */
+//   void addConnection();
+
+  /*! \brief Remove selected connection
+   */
+//   void removeSelectedConnection();
+
+  /*! \brief Update dialog with currently selected connection
+   */
+//   void onCbConnectionNamesIndexChanged(int index);
+
  private:
 
- Q_DISABLE_COPY(mdtSqlDatabaseDialogSqlite)
+  Q_DISABLE_COPY(mdtSqlDatabaseDialogSqlite)
 
+  mdtSqlDatabaseSqlite pvDatabase;
 };
 
 #endif // #ifndef MDT_SQL_DATABASE_DIALOG_SQLITE_H

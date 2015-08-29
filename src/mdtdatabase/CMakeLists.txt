@@ -28,6 +28,7 @@ set (SOURCES_FILES
           mdtDataTableManager.cpp
           mdtSqlDatabaseManager.cpp
           
+          mdtSqlConnectionNameWidget.cpp
           mdtSqlDatabaseSqlite.cpp
           mdtSqlDatabaseDialogSqlite.cpp
           mdtSqlSchemaTable.cpp
