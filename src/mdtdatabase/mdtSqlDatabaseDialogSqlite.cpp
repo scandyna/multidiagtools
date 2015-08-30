@@ -26,8 +26,10 @@
 #include <QStringList>
 #include <QFileInfo>
 #include <QDir>
+#include <QSqlError>
+#include <QFileDialog>
+#include <QMessageBox>
 // #include <QInputDialog>
-// #include <QMessageBox>
 
 #include <QDebug>
 
@@ -38,6 +40,11 @@ mdtSqlDatabaseDialogSqlite::mdtSqlDatabaseDialogSqlite(QWidget* parent)
   connect(wConnectionName, &mdtSqlConnectionNameWidget::currentDatabaseChanged, this, &mdtSqlDatabaseDialogSqlite::updateDatabase);
   connect(wConnectionName, &mdtSqlConnectionNameWidget::aboutToRemoveDatabaseConnection, this, &mdtSqlDatabaseDialogSqlite::maybeClearDatabase);
   wConnectionName->setDriverType(mdtSqlDriverType::SQLite); // Will also update connections names
+  connect(tbOpenDatabase, &QToolButton::clicked, this, &mdtSqlDatabaseDialogSqlite::openDatabase);
+  connect(tbClearDatabaseName, &QToolButton::clicked, this, &mdtSqlDatabaseDialogSqlite::clearDatabaseName);
+  connect(tbCreateDatabase, &QToolButton::clicked, this, &mdtSqlDatabaseDialogSqlite::createDatabase);
+  connect(tbCloseDatabase, &QToolButton::clicked, this, &mdtSqlDatabaseDialogSqlite::closeDatabase);
+  connect(tbDeleteDatabase, &QToolButton::clicked, this, &mdtSqlDatabaseDialogSqlite::deleteDatabase);
 }
 
 void mdtSqlDatabaseDialogSqlite::updateConnectionsList()
@@ -64,9 +71,111 @@ void mdtSqlDatabaseDialogSqlite::updateDatabase(const QSqlDatabase & db)
 void mdtSqlDatabaseDialogSqlite::maybeClearDatabase(const QString & connectionName)
 {
   if(pvDatabase.database().connectionName() == connectionName){
-    Q_ASSERT(!pvDatabase.database().isOpen());
     pvDatabase.clear();
   }
+}
+
+void mdtSqlDatabaseDialogSqlite::openDatabase()
+{
+  Q_ASSERT(!pvDatabase.isOpen());
+
+  if(pvDatabase.database().databaseName().isEmpty()){
+    QFileInfo fileInfo;
+    QFileDialog dialog(this);
+    // Let the user choose a database file
+    dialog.setAcceptMode(QFileDialog::AcceptOpen);
+    ///dialog.setDirectory(startDirectory);
+    dialog.setNameFilter(tr("(Sqlite) Database file (*.sqlite *.db)"));
+    dialog.setFileMode(QFileDialog::ExistingFile);
+    if(dialog.exec() != QDialog::Accepted){
+      return;
+    }
+    Q_ASSERT(dialog.selectedFiles().size() == 1);
+    fileInfo.setFile(dialog.selectedFiles().at(0));
+    // Open database
+    if(!pvDatabase.openDatabase(fileInfo)){
+      displayError(pvDatabase.lastError());
+      return;
+    }
+  }else{
+    // Re-open allready set database
+    if(!pvDatabase.openDatabase()){
+      displayError(pvDatabase.lastError());
+      return;
+    }
+  }
+  // Setup and show dialog
+  updateDatabaseInformations();
+  updateButtonsState();
+}
+
+void mdtSqlDatabaseDialogSqlite::clearDatabaseName()
+{
+  Q_ASSERT(!pvDatabase.isOpen());
+
+  pvDatabase.clearDatabaseName();
+  updateDatabaseInformations();
+  updateButtonsState();
+}
+
+void mdtSqlDatabaseDialogSqlite::createDatabase()
+{
+  Q_ASSERT(!pvDatabase.isOpen());
+
+  QFileDialog dialog(this);
+  QFileInfo fileInfo;
+
+  // Setup and show dialog
+  dialog.setAcceptMode(QFileDialog::AcceptSave);
+  ///dialog.setDirectory(startDirectory);
+  dialog.setNameFilter(tr("(Sqlite) Database file (*.sqlite *.db)"));
+  dialog.setFileMode(QFileDialog::AnyFile);
+  dialog.setOption(QFileDialog::DontConfirmOverwrite, false);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  Q_ASSERT(dialog.selectedFiles().size() == 1);
+  fileInfo.setFile(dialog.selectedFiles().at(0));
+  // Create database
+  if(!pvDatabase.createDatabase(fileInfo, mdtSqlDatabaseSqlite::OverwriteExisting)){
+    displayError(pvDatabase.lastError());
+    return;
+  }
+  updateDatabaseInformations();
+  updateButtonsState();
+}
+
+void mdtSqlDatabaseDialogSqlite::closeDatabase()
+{
+  pvDatabase.close();
+  updateDatabaseInformations();
+  updateButtonsState();
+}
+
+void mdtSqlDatabaseDialogSqlite::deleteDatabase()
+{
+  Q_ASSERT(!pvDatabase.isOpen());
+
+  QString msg;
+
+  // Ask confirmation
+  QMessageBox msgBox(this);
+  msgBox.setText(tr("Delete database file."));
+  msg = tr("File") + " '" + pvDatabase.database().databaseName() + "' " + tr("will be deleted.") + "\n";
+  msg += tr("Do you want to continue ?");
+  msgBox.setInformativeText(msg);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+  msgBox.setIcon(QMessageBox::Warning);
+  if(msgBox.exec() != QMessageBox::Yes){
+    return;
+  }
+  // Delete database
+  if(!pvDatabase.deleteDatabase(pvDatabase.database().databaseName())){
+    displayError(pvDatabase.lastError());
+    return;
+  }
+  updateDatabaseInformations();
+  updateButtonsState();
 }
 
 void mdtSqlDatabaseDialogSqlite::updateDatabaseInformations()
@@ -87,16 +196,34 @@ void mdtSqlDatabaseDialogSqlite::updateDatabaseInformations()
 
 void mdtSqlDatabaseDialogSqlite::updateButtonsState()
 {
-  if(pvDatabase.database().isOpen()){
+  if(pvDatabase.isOpen()){
     tbOpenDatabase->setEnabled(false);
+    tbClearDatabaseName->setEnabled(false);
     tbCloseDatabase->setEnabled(true);
     tbCreateDatabase->setEnabled(false);
     tbDeleteDatabase->setEnabled(false);
   }else{
-    //
     tbOpenDatabase->setEnabled(true);
+    if(pvDatabase.database().databaseName().isEmpty()){
+      tbClearDatabaseName->setEnabled(false);
+      tbDeleteDatabase->setEnabled(false);
+    }else{
+      tbClearDatabaseName->setEnabled(true);
+      tbDeleteDatabase->setEnabled(true);
+    }
     tbCloseDatabase->setEnabled(false);
     tbCreateDatabase->setEnabled(true);
-    tbDeleteDatabase->setEnabled(true);
   }
+  wConnectionName->updateState(pvDatabase.database());
+}
+
+void mdtSqlDatabaseDialogSqlite::displayError(const mdtError & error)
+{
+  QMessageBox msgBox(this);
+
+  msgBox.setText(error.text());
+  msgBox.setInformativeText(error.informativeText());
+  msgBox.setDetailedText(error.systemText());
+  msgBox.setIcon(error.levelIcon());
+  msgBox.exec();
 }

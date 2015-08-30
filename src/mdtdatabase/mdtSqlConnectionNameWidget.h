@@ -61,6 +61,14 @@ class mdtSqlConnectionNameWidget : public QWidget, Ui::mdtSqlConnectionNameWidge
    */
   void setCurrentConnection(const QString & name);
 
+  /*! \brief Update state
+   *
+   * When database refering to current connection is open
+   *  or closed, this function should be called to update
+   *  this widget to a coherent state.
+   */
+  void updateState(const QSqlDatabase & db);
+
   /*! \brief Get a list containing the name of existing connections
    *
    * This is the same as QSqlDatabase::connectionNames() ,

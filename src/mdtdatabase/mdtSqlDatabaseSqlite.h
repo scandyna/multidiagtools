@@ -21,8 +21,11 @@
 #ifndef MDT_SQL_DATABASE_SQLITE_H
 #define MDT_SQL_DATABASE_SQLITE_H
 
+#include "mdtError.h"
 #include <QSqlDatabase>
+#include <QString>
 #include <QStringList>
+#include <QFileInfo>
 
 /*! \brief Helper class for SQLite database connection and creation
  *
@@ -36,6 +39,14 @@
 class mdtSqlDatabaseSqlite
 {
  public:
+
+  /*! \brief Creation mode
+   */
+  enum CreateMode{
+    OverwriteExisting,  /*!< If file/database/table allready exists, it will be overwritten */
+    KeepExisting,       /*!< If file/database/table allready exists, it will simply be open */
+    FailIfExists,       /*!< If file/database/table allready exists, create function will fail */
+  };
 
   /*! \brief Default constructor
    *
@@ -53,17 +64,16 @@ class mdtSqlDatabaseSqlite
 
   /*! \brief Check validity
    *
-   * Returns true if database has a valid driver (exactly like QSqlDatabase::isValid()).
+   * Returns true if database has a valid SQLite driver.
    */
-  bool isValid() const
-  {
-    return pvDatabase.isValid();
-  }
+  bool isValid() const;
 
   /*! \brief Clear
    *
-   * If database is open, it will first close it before clear.
-   *  After clear, database object becomes invalid.
+   * After clear, this instance does not refer to a databse connection
+   *  anymore and becomes invalid.
+   *
+   * \note It is not checked if database is open or not before clear.
    */
   void clear();
 
@@ -80,6 +90,86 @@ class mdtSqlDatabaseSqlite
     return pvDatabase;
   }
 
+  /*! \brief Open a database
+   *
+   * Will check if given file exists, set it as database name
+   *  and open it.
+   *
+   * \pre Database must be valid (\sa isValid() )
+   * \pre Database must not allready be open (\sa isOpen() )
+   * \pre fileInfo must contain a non empty path (existence of file is checked, and is not a precondition)
+   * \sa lastError()
+   *
+   * \todo Create options (like FK support, sync mode, ...)
+   */
+  bool openDatabase(const QFileInfo & fileInfo);
+
+  /*! \brief Open allready set database
+   *
+   * \pre Database must be valid (\sa isValid() )
+   * \pre Database must not allready be open (\sa isOpen() )
+   * \pre Database name must allready been set (f.ex. was previously open with openDatabase(const QFileInfo &) )
+   * \sa lastError()
+   *
+   * \todo Create options (like FK support, sync mode, ...)
+   */
+  bool openDatabase();
+
+  /*! \brief Create a database and open it
+   *
+   * \pre Database must be valid (\sa isValid() )
+   * \pre Database must not allready be open (\sa isOpen() )
+   * \pre fileInfo must contain a non empty path (existence of file is checked, and is not a precondition)
+   * \sa lastError()
+   *
+   * \todo Create options (like FK support, sync mode, ...)
+   */
+  bool createDatabase(const QFileInfo & fileInfo, CreateMode createMode);
+
+  /*! \brief Check if database is open
+   */
+  bool isOpen() const
+  {
+    return pvDatabase.isOpen();
+  }
+
+  /*! \brief Close database
+   *
+   * Closes the database connection, freeing any resources acquired, and invalidating any existing QSqlQuery objects that are used with the database.
+   *
+   * This will also affect copies of this QSqlDatabase object.
+   *
+   * \sa clearDatabaseName()
+   */
+  void close()
+  {
+    pvDatabase.close();
+  }
+
+  /*! \brief Clear database name
+   *
+   * \pre Database mut not be open (\sa isOpen() )
+   */
+  void clearDatabaseName()
+  {
+    Q_ASSERT(!isOpen());
+    pvDatabase.setDatabaseName("");
+  }
+
+  /*! \brief Delete database
+   *
+   * \warning Will delete given file path without confirmation.
+   * \pre Database mut not be open (\sa isOpen() )
+   */
+  bool deleteDatabase(const QString & filePath);
+
+  /*! \brief Get last error
+   */
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
+
   /*! \brief Get a list containing the name of all SQLite connections
    *
    * This is the same as QSqlDatabase::connectionNames() ,
@@ -92,7 +182,16 @@ class mdtSqlDatabaseSqlite
 
  private:
 
+  /*! \brief Open database (common stuff)
+   */
+  bool openDatabasePv();
+
+  /*! \brief Call QObject::tr()
+   */
+  static QString tr(const char *sourceText, const char *disambiguation = nullptr, int n = -1);
+
   QSqlDatabase pvDatabase;
+  mdtError pvLastError;
 };
 
 #endif // #ifndef MDT_SQL_DATABASE_SQLITE_H

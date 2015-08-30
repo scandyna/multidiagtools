@@ -28,7 +28,7 @@
         <item>
          <widget class="QToolButton" name="tbOpenDatabase">
           <property name="toolTip">
-           <string>Open database file</string>
+           <string>Open database</string>
           </property>
           <property name="text">
            <string>Open</string>
@@ -37,6 +37,19 @@
            <iconset theme="document-open">
             <normaloff/>
            </iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="tbClearDatabaseName">
+          <property name="toolTip">
+           <string>Clear database file name</string>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset theme="edit-clear"/>
           </property>
          </widget>
         </item>
@@ -79,7 +92,9 @@
            <string>...</string>
           </property>
           <property name="icon">
-           <iconset theme="edit-delete"/>
+           <iconset theme="edit-delete">
+            <normaloff/>
+           </iconset>
           </property>
          </widget>
         </item>

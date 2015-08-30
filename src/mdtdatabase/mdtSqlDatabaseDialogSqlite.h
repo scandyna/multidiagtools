@@ -23,6 +23,7 @@
 
 #include "mdtSqlDatabaseSqlite.h"
 #include "ui_mdtSqlDatabaseDialogSqlite.h"
+#include "mdtError.h"
 #include <QDialog>
 
 /*! \brief Dialog for SQLite connection
@@ -74,6 +75,26 @@ class mdtSqlDatabaseDialogSqlite : public QDialog, Ui::mdtSqlDatabaseDialogSqlit
    */
   void maybeClearDatabase(const QString & connectionName);
 
+  /*! \brief Let user choose a databse file and open it
+   */
+  void openDatabase();
+
+  /*! \brief Clear database name
+   */
+  void clearDatabaseName();
+
+  /*! \brief Create a database
+   */
+  void createDatabase();
+
+  /*! \brief Close database
+   */
+  void closeDatabase();
+
+  /*! \brief Delete database
+   */
+  void deleteDatabase();
+
  private:
 
   /*! \brief Update database informations
@@ -83,6 +104,10 @@ class mdtSqlDatabaseDialogSqlite : public QDialog, Ui::mdtSqlDatabaseDialogSqlit
   /*! \brief Update buttons state
    */
   void updateButtonsState();
+
+  /*! \brief Display error
+   */
+  void displayError(const mdtError & error);
 
   Q_DISABLE_COPY(mdtSqlDatabaseDialogSqlite)
 

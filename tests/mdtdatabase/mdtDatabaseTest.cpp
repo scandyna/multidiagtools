@@ -992,16 +992,59 @@ void mdtDatabaseTest::databaseSqliteTest()
   mdtSqlDatabaseSqlite db1;
   QVERIFY(!db1.isValid());
   QVERIFY(db1.database().connectionName().isEmpty());
-  QVERIFY(!db1.database().isOpen());
+  QVERIFY(!db1.isOpen());
   // Constructed on base of a valid QSqlDatabase object
   mdtSqlDatabaseSqlite db2(QSqlDatabase::database("cnn1", false));
   QVERIFY(db2.isValid());
   QCOMPARE(db2.database().connectionName(), QString("cnn1"));
-  QVERIFY(!db2.database().isOpen());
+  QVERIFY(!db2.isOpen());
   // Clear
   db2.clear();
   QVERIFY(!db2.isValid());
-  QVERIFY(!db2.database().isOpen());
+  QVERIFY(!db2.isOpen());
+  /*
+   * Check database (file) creation
+   */
+  QTemporaryFile dbFile;
+  QFileInfo dbFileInfo;
+  // Setup file info
+  QVERIFY(dbFile.open());
+  dbFileInfo.setFile(dbFile);
+  dbFile.close();
+  // Prepare db1 to a known state
+  db1.close();
+  db1.setDatabase(QSqlDatabase::database());
+  db1.close();
+  db1.clearDatabaseName();
+  QVERIFY(db1.isValid());
+  QVERIFY(!db1.isOpen());
+  QVERIFY(db1.database().databaseName().isEmpty());
+  // Check creation with ovewriting existing file
+  QVERIFY(db1.createDatabase(dbFileInfo, mdtSqlDatabaseSqlite::OverwriteExisting));
+  QVERIFY(db1.isOpen());
+  QCOMPARE(db1.database().databaseName(), dbFileInfo.absoluteFilePath());
+  // Close - must keep database name
+  db1.close();
+  QCOMPARE(db1.database().databaseName(), dbFileInfo.absoluteFilePath());
+  // Check creation with failing on existing database file
+  QVERIFY(!db1.createDatabase(dbFileInfo, mdtSqlDatabaseSqlite::FailIfExists));
+  QVERIFY(!db1.isOpen());
+  QCOMPARE(db1.database().databaseName(), dbFileInfo.absoluteFilePath());
+  // Check creation with keep existing database file
+  QVERIFY(db1.createDatabase(dbFileInfo, mdtSqlDatabaseSqlite::KeepExisting));
+  QVERIFY(db1.isOpen());
+  QCOMPARE(db1.database().databaseName(), dbFileInfo.absoluteFilePath());
+  db1.close();
+  // Check opening given file
+  QVERIFY(db1.openDatabase(dbFileInfo));
+  QVERIFY(db1.isOpen());
+  QCOMPARE(db1.database().databaseName(), dbFileInfo.absoluteFilePath());
+  db1.close();
+  // Check opening allready set database
+  QVERIFY(db1.openDatabase());
+  QVERIFY(db1.isOpen());
+  QCOMPARE(db1.database().databaseName(), dbFileInfo.absoluteFilePath());
+  db1.close();
 
   // Remove added connections
   QSqlDatabase::removeDatabase("cnn1");

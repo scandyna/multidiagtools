@@ -22,7 +22,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSqlConnectionNameWidget::mdtSqlConnectionNameWidget(QWidget* parent)
  : QWidget(parent),
@@ -51,6 +51,15 @@ void mdtSqlConnectionNameWidget::updateConnectionsList()
 {
   cbConnectionNames->clear();
   cbConnectionNames->addItems(getConnectionNames(pvDriverType, true));
+}
+
+void mdtSqlConnectionNameWidget::updateState(const QSqlDatabase & db)
+{
+  if(db.isOpen()){
+    tbRemoveConnection->setEnabled(false);
+  }else{
+    tbRemoveConnection->setEnabled(true);
+  }
 }
 
 QStringList mdtSqlConnectionNameWidget::getConnectionNames(mdtSqlDriverType::Type type, bool sort)
@@ -117,14 +126,8 @@ void mdtSqlConnectionNameWidget::removeSelectedConnection()
 
 void mdtSqlConnectionNameWidget::onCbConnectionNamesIndexChanged(int index)
 {
-  qDebug() << "onCbConnectionNamesIndexChanged(" << index << ")";
   QSqlDatabase db = QSqlDatabase::database(cbConnectionNames->currentText(), false);
 
-  if(db.isOpen()){
-    tbRemoveConnection->setEnabled(false);
-  }else{
-    tbRemoveConnection->setEnabled(true);
-  }
+  updateState(db);
   emit currentDatabaseChanged(db);
-  qDebug() << "currentDatabaseChanged() emited";
 }
