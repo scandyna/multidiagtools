@@ -25,8 +25,8 @@ mdtSqlFieldMappingDialog::mdtSqlFieldMappingDialog(QWidget *parent)
  : QDialog(parent)
 {
   setupUi(this);
-  fsSourceSetupWidget->setEditionMode(mdtSqlFieldSetupEditionMode_t::Selection);
-  fsDestinationSetupWidget->setEditionMode(mdtSqlFieldSetupEditionMode_t::Selection);
+  fsSourceSetupWidget->setEditionMode(mdtSqlFieldSetupEditionMode::Selection);
+  fsDestinationSetupWidget->setEditionMode(mdtSqlFieldSetupEditionMode::Selection);
   rbUseSourceSplitting->setChecked(true);
   connect(rbNoSourceSplitting, &QRadioButton::toggled, this, &mdtSqlFieldMappingDialog::setSourceSplittingEditionEnabled);
   rbNoSourceSplitting->setChecked(true);
@@ -35,7 +35,7 @@ mdtSqlFieldMappingDialog::mdtSqlFieldMappingDialog(QWidget *parent)
   rbNoDestinationCat->setChecked(true);
 }
 
-void mdtSqlFieldMappingDialog::setSourceEditionMode(mdtSqlFieldSetupEditionMode_t mode)
+void mdtSqlFieldMappingDialog::setSourceEditionMode(mdtSqlFieldSetupEditionMode mode)
 {
   fsSourceSetupWidget->setEditionMode(mode);
 }
@@ -58,7 +58,7 @@ bool mdtSqlFieldMappingDialog::setSourceTable(const mdtSqlSchemaTable & tableSch
   return true;
 }
 
-void mdtSqlFieldMappingDialog::setDestinationEditionMode(mdtSqlFieldSetupEditionMode_t mode)
+void mdtSqlFieldMappingDialog::setDestinationEditionMode(mdtSqlFieldSetupEditionMode mode)
 {
   fsDestinationSetupWidget->setEditionMode(mode);
 }

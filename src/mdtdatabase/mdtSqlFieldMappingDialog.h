@@ -40,7 +40,7 @@ class mdtSqlFieldMappingDialog : public QDialog, Ui::mdtSqlFieldMappingDialog
 
   /*! \brief Set source edition mode
    */
-  void setSourceEditionMode(mdtSqlFieldSetupEditionMode_t mode);
+  void setSourceEditionMode(mdtSqlFieldSetupEditionMode mode);
 
   /*! \brief Set source table
    *
@@ -56,7 +56,7 @@ class mdtSqlFieldMappingDialog : public QDialog, Ui::mdtSqlFieldMappingDialog
 
   /*! \brief Set destination edition mode
    */
-  void setDestinationEditionMode(mdtSqlFieldSetupEditionMode_t mode);
+  void setDestinationEditionMode(mdtSqlFieldSetupEditionMode mode);
 
   /*! \brief Set destination table
    *

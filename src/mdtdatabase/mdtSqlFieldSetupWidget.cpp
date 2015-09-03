@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtSqlFieldSetupWidget.h"
-#include "mdtSqlSchemaTableModel.h"
+#include "mdtSqlTableSchemaModel.h"
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlDriverType.h"
 #include "mdtSqlFieldType.h"
@@ -31,22 +31,22 @@ mdtSqlFieldSetupWidget::mdtSqlFieldSetupWidget(QWidget *parent)
 {
   setupUi(this);
   // Setup field selection combobox
-  pvSchemaTabledModel = new mdtSqlSchemaTableModel(this);
-  cbField->setModel(pvSchemaTabledModel);
-  cbField->setModelColumn(mdtSqlSchemaTableModel::NameIndex);
+  pvTabledSchemaModel = new mdtSqlTableSchemaModel(this);
+  cbField->setModel(pvTabledSchemaModel);
+  cbField->setModelColumn(mdtSqlTableSchemaModel::NameIndex);
   connect(cbField, SIGNAL(currentIndexChanged(int)), this, SLOT(updateFieldParameters(int)));
 }
 
-void mdtSqlFieldSetupWidget::setEditionMode(mdtSqlFieldSetupEditionMode_t mode)
+void mdtSqlFieldSetupWidget::setEditionMode(mdtSqlFieldSetupEditionMode mode)
 {
   switch(mode){
-    case mdtSqlFieldSetupEditionMode_t::Creation:
+    case mdtSqlFieldSetupEditionMode::Creation:
       setEditionModeCreation();
       break;
-    case mdtSqlFieldSetupEditionMode_t::Selection:
+    case mdtSqlFieldSetupEditionMode::Selection:
       setEditionModeSelection();
       break;
-    case mdtSqlFieldSetupEditionMode_t::Edition:
+    case mdtSqlFieldSetupEditionMode::Edition:
       setEditionModeEdition();
       break;
   }
@@ -73,7 +73,7 @@ bool mdtSqlFieldSetupWidget::setTable(const mdtSqlSchemaTable & tableSchema, QSq
   }
   // Update
   lbTableName->setText(tableSchema.tableName());
-  pvSchemaTabledModel->setTableSchema(tableSchema);
+  pvTabledSchemaModel->setTableSchema(tableSchema);
   cbField->setCurrentIndex(0);
 
   return true;
@@ -86,14 +86,14 @@ void mdtSqlFieldSetupWidget::setField(int fieldIndex)
 
 void mdtSqlFieldSetupWidget::updateFieldParameters(int cbFieldIndex)
 {
-  QSqlField field = pvSchemaTabledModel->field(cbFieldIndex);
+  QSqlField field = pvTabledSchemaModel->field(cbFieldIndex);
 
   leName->setText(field.name());
   setFieldType(field.type());
   sbLength->setValue(field.length());
   leDefaultValue->setText(field.defaultValue().toString());
   cbAutoIncrement->setChecked(field.isAutoValue());
-  cbPartOfPk->setChecked(pvSchemaTabledModel->isPartOfPrimaryKey(cbFieldIndex));
+  cbPartOfPk->setChecked(pvTabledSchemaModel->isPartOfPrimaryKey(cbFieldIndex));
   cbRequired->setChecked(field.requiredStatus() == QSqlField::QSqlField::Required);
 }
 

@@ -2,7 +2,7 @@ format 209
 
 classcanvas 128002 class_ref 1772930 // mdtSqlFieldMappingData
   classdiagramsettings member_max_width 0 end
-  xyz 419 287 2000
+  xyz 419 314 2000
 end
 classcanvas 128258 class_ref 910210 // mdtSqlSchemaTable
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
@@ -26,7 +26,7 @@ classcanvas 129666 class_ref 1787394 // mdtFieldMappingCatParameters
 end
 classcanvas 129922 class_ref 1787266 // mdtFieldMappingSplitParameters
   classdiagramsettings member_max_width 0 end
-  xyz 345 501 3010
+  xyz 338 510 3010
 end
 classcanvas 130178 class_ref 1801602 // mdtSqlFieldSetupData
   classdiagramsettings member_max_width 0 end
@@ -34,14 +34,6 @@ classcanvas 130178 class_ref 1801602 // mdtSqlFieldSetupData
 end
 note 131970 "Add commitChanges function ??"
   xyzwh 84 560 2000 145 81
-relationcanvas 128514 relation_ref 2120066 // <dependency>
-  geometry HVH unfixed
-  from ref 128386 z 2007 to point 822 791
-  line 131330 z 2007 to point 822 128
-  line 131458 z 2007 to ref 128258
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 relationcanvas 128898 relation_ref 2139778 // <generalisation>
   from ref 128642 z 2006 to ref 128770
   no_role_a no_role_b
@@ -51,10 +43,10 @@ relationcanvas 129026 relation_ref 2139906 // <unidirectional association>
   geometry HV
   decenter_begin 790
   decenter_end 450
-  from ref 128642 z 2001 to point 590 222
+  from ref 128642 z 2001 to point 590 273
   line 129282 z 2001 to ref 128002
   no_role_a no_role_b
-  multiplicity_a_pos 575 264 3000 no_multiplicity_b
+  multiplicity_a_pos 575 291 3000 no_multiplicity_b
 end
 relationcanvas 129410 relation_ref 2140034 // <unidirectional association>
   geometry VH
@@ -69,13 +61,13 @@ relationcanvas 129794 relation_ref 2104706 // <unidirectional association>
   decenter_begin 753
   from ref 128002 z 3006 to ref 129666
   no_role_a no_role_b
-  multiplicity_a_pos 688 502 3000 no_multiplicity_b
+  multiplicity_a_pos 689 502 3000 no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 2104578 // <unidirectional association>
   decenter_begin 92
   from ref 128002 z 3011 to ref 129922
   no_role_a no_role_b
-  multiplicity_a_pos 437 478 3000 no_multiplicity_b
+  multiplicity_a_pos 437 487 3000 no_multiplicity_b
 end
 relationcanvas 131586 relation_ref 2146690 // <dependency>
   decenter_begin 209

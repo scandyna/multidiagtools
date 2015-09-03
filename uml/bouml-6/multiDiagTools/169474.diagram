@@ -1,17 +1,31 @@
-format 76
+format 209
 
 classcanvas 128002 class_ref 182402 // mdtError
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 19 72 2000
+  classdiagramsettings member_max_width 0 end
+  xyz 46 9 2000
 end
 classcanvas 128642 class_ref 209538 // mdtErrorOut
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  classdiagramsettings member_max_width 0 end
   xyz 457 520 2000
 end
 classcanvas 128898 class_ref 138626 // QObject
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 603 363 2000
+  classdiagramsettings member_max_width 0 end
+  xyz 617 360 2000
 end
+note 129154 "Note: use a thread pool for logging to file ?
+Or, see some asnyc, or future ???"
+  xyzwh 44 467 2000 385 85
+note 129282 "Set source: add a facility function for QObject ?
+Or, general easy solutiuion ? (Reflection ??)"
+  xyzwh 43 562 2000 381 65
+note 129410 "Call stack ??"
+  xyzwh 43 637 2000 257 35
+note 129538 "Error dialog"
+  xyzwh 45 680 2000 245 35
+note 129666 "Error items ? (each item has a type, like descriptive or informative test, source, etc...)"
+  xyzwh 44 722 2000 363 59
+note 129794 "Error code, or type, or number = template with default type to void ? WW compatibility problems ?"
+  xyzwh 46 792 2000 383 55
 relationcanvas 128770 relation_ref 210306 // <dependency>
   from ref 128002 z 2001 to ref 128642
   no_role_a no_role_b

@@ -18,24 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtSqlSchemaTableModel.h"
+#include "mdtSqlTableSchemaModel.h"
 #include <QComboBox>
 
 //#include <QDebug>
 
-mdtSqlSchemaTableModel::mdtSqlSchemaTableModel(QObject *parent)
+mdtSqlTableSchemaModel::mdtSqlTableSchemaModel(QObject *parent)
  : QAbstractTableModel(parent)
 {
 }
 
-void mdtSqlSchemaTableModel::setTableSchema(const mdtSqlSchemaTable &st)
+void mdtSqlTableSchemaModel::setTableSchema(const mdtSqlSchemaTable &st)
 {
   beginResetModel();
   pvSchema = st;
   endResetModel();
 }
 
-QSqlField mdtSqlSchemaTableModel::field(int row) const
+QSqlField mdtSqlTableSchemaModel::field(int row) const
 {
   if( (row < 0) || (row >= pvSchema.fieldCount()) ){
     return QSqlField();
@@ -43,19 +43,19 @@ QSqlField mdtSqlSchemaTableModel::field(int row) const
   return pvSchema.fieldList().at(row);
 }
 
-QSqlField mdtSqlSchemaTableModel::currentField(QComboBox *cb) const
+QSqlField mdtSqlTableSchemaModel::currentField(QComboBox *cb) const
 {
   Q_ASSERT(cb != nullptr);
 
   return field(cb->currentIndex());
 }
 
-bool mdtSqlSchemaTableModel::isPartOfPrimaryKey(int row) const
+bool mdtSqlTableSchemaModel::isPartOfPrimaryKey(int row) const
 {
   return pvSchema.primaryKey().contains(field(row).name());
 }
 
-int mdtSqlSchemaTableModel::rowCount(const QModelIndex & parent) const
+int mdtSqlTableSchemaModel::rowCount(const QModelIndex & parent) const
 {
   // Check parent validity (case of use with a tree view)
   if(parent.isValid()){
@@ -64,13 +64,13 @@ int mdtSqlSchemaTableModel::rowCount(const QModelIndex & parent) const
   return pvSchema.fieldCount();
 }
 
-int mdtSqlSchemaTableModel::columnCount(const QModelIndex & /*parent */) const
+int mdtSqlTableSchemaModel::columnCount(const QModelIndex & /*parent */) const
 {
   /// \todo Return 0 on case of valid parent ??
   return 4;
 }
 
-QVariant mdtSqlSchemaTableModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant mdtSqlTableSchemaModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
   if(orientation != Qt::Horizontal){
     return QAbstractTableModel::headerData(section, orientation, role);
@@ -92,7 +92,7 @@ QVariant mdtSqlSchemaTableModel::headerData(int section, Qt::Orientation orienta
   return section;
 }
 
-QVariant mdtSqlSchemaTableModel::data(const QModelIndex & index, int role) const
+QVariant mdtSqlTableSchemaModel::data(const QModelIndex & index, int role) const
 {
   if(!index.isValid()){
     return QVariant();
@@ -117,7 +117,7 @@ QVariant mdtSqlSchemaTableModel::data(const QModelIndex & index, int role) const
 }
 
 /// Currently, edition is not supported
-// Qt::ItemFlags mdtSqlSchemaTableModel::flags(const QModelIndex & index) const
+// Qt::ItemFlags mdtSqlTableSchemaModel::flags(const QModelIndex & index) const
 // {
 //   if(index.column() == NameIndex){
 //     return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
@@ -126,7 +126,7 @@ QVariant mdtSqlSchemaTableModel::data(const QModelIndex & index, int role) const
 // }
 
 /// Currently, edition is not supported
-// bool mdtSqlSchemaTableModel::setData(const QModelIndex & index, const QVariant & value, int role)
+// bool mdtSqlTableSchemaModel::setData(const QModelIndex & index, const QVariant & value, int role)
 // {
 //   if(!index.isValid()){
 //     return false;

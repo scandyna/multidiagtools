@@ -30,13 +30,13 @@
 #include <QString>
 
 class mdtSqlSchemaTable;
-class mdtSqlSchemaTableModel;
+class mdtSqlTableSchemaModel;
 
 /*! \brief Field setup edition mode
  *
  * This enum is used by mdtSqlFieldSetupData and mdtSqlFieldSetupWidget
  */
-enum class mdtSqlFieldSetupEditionMode_t
+enum class mdtSqlFieldSetupEditionMode
 {
   Creation,     /*!< For creation of a new field.
                      Will not list available fields, but let the user enter a field name.
@@ -67,7 +67,7 @@ class mdtSqlFieldSetupWidget : public QWidget, Ui::mdtSqlFieldSetupWidget
 
   /*! \brief Set edition mode
    */
-  void setEditionMode(mdtSqlFieldSetupEditionMode_t mode);
+  void setEditionMode(mdtSqlFieldSetupEditionMode mode);
 
   /*! \brief Set table
    *
@@ -126,7 +126,7 @@ class mdtSqlFieldSetupWidget : public QWidget, Ui::mdtSqlFieldSetupWidget
 
   Q_DISABLE_COPY(mdtSqlFieldSetupWidget)
 
-  mdtSqlSchemaTableModel *pvSchemaTabledModel;
+  mdtSqlTableSchemaModel *pvTabledSchemaModel;
 //   mdtSqlFieldSetupData pvSetupData;
   mdtError pvLastError;
 };

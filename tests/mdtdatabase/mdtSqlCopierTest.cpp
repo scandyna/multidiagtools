@@ -28,6 +28,9 @@
 #include "mdtSqlFieldMappingDialog.h"
 #include "mdtSqlTableMappingWidgetItem.h"
 #include "mdtSqlTableMappingWidget.h"
+#include "mdtSqlCopierCodecSettings.h"
+#include "mdtSqlCopierSqliteDatabaseTableCodecSettings.h"
+#include "mdtSqlCopierCodecSettingsWidget.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -40,6 +43,7 @@
 #include <QTableView>
 #include <QComboBox>
 #include <QTreeView>
+#include <memory>
 
 #include <QDebug>
 
@@ -56,6 +60,40 @@ void mdtSqlCopierTest::cleanupTestCase()
 /*
  * Tests implemtations
  */
+
+void mdtSqlCopierTest::codecSettingsTest()
+{
+  std::unique_ptr<mdtSqlCopierCodecSettings> cs;
+  QVERIFY(!cs);
+
+  /*
+   * Base codec
+   */
+  mdtSqlCopierCodecSettings baseCs;
+  QVERIFY(baseCs.type() == mdtSqlCopierCodecSettings::UnknownCodec);
+  baseCs.setConnectionName("FakeCn");
+  QVERIFY(baseCs.connectionName().isEmpty());
+  /*
+   * SQLite database table codec settings
+   */
+  cs.reset(new mdtSqlCopierSqliteDatabaseTableCodecSettings);
+  QVERIFY(cs->type() == mdtSqlCopierCodecSettings::SqliteCodec);
+  cs->setConnectionName("cnn1");
+  QCOMPARE(cs->connectionName(), QString("cnn1"));
+}
+
+void mdtSqlCopierTest::codecSettingsWidgetTest()
+{
+  mdtSqlCopierCodecSettingsWidget w;
+
+  /*
+   * Play
+   */
+  w.show();
+  while(w.isVisible()){
+    QTest::qWait(500);
+  }
+}
 
 
 void mdtSqlCopierTest::sqlFieldSetupDataTest()

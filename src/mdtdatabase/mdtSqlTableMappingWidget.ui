@@ -6,42 +6,38 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>508</width>
-    <height>250</height>
+    <width>695</width>
+    <height>458</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Table mapping</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QFormLayout" name="formLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="lbSourceLabel">
-       <property name="text">
-        <string>Source:</string>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QGroupBox" name="gbSource">
+       <property name="title">
+        <string>Source</string>
        </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="mdtSqlCopierCodecSettingsWidget" name="wSourceCodecSettings" native="true"/>
+        </item>
+       </layout>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="lbSource">
-       <property name="text">
-        <string/>
+     <item>
+      <widget class="QGroupBox" name="gbDestination">
+       <property name="title">
+        <string>Destination</string>
        </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="lbDestinationLabel">
-       <property name="text">
-        <string>Destination:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLabel" name="lbDestination">
-       <property name="text">
-        <string/>
-       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="mdtSqlCopierCodecSettingsWidget" name="wDestinationCodecSettings_2" native="true"/>
+        </item>
+       </layout>
       </widget>
      </item>
     </layout>
@@ -56,8 +52,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>488</width>
-        <height>142</height>
+        <width>675</width>
+        <height>344</height>
        </rect>
       </property>
      </widget>
@@ -94,6 +90,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>mdtSqlCopierCodecSettingsWidget</class>
+   <extends>QWidget</extends>
+   <header>mdtSqlCopierCodecSettingsWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

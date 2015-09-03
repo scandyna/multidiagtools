@@ -8,7 +8,7 @@ classcanvas 128386 class_ref 910210 // mdtSqlSchemaTable
   classdiagramsettings member_max_width 0 end
   xyz 6 421 2000
 end
-classcanvas 128642 class_ref 1808130 // mdtSqlSchemaTableModel
+classcanvas 128642 class_ref 1808130 // mdtSqlTableSchemaModel
   classdiagramsettings member_max_width 0 end
   xyz 102 138 2006
 end

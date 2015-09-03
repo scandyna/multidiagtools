@@ -27,11 +27,13 @@
 #include "mdtSqlDatabaseSqlite.h"
 #include "mdtSqlDatabaseDialogSqlite.h"
 
-#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSetupWidget.h"
 
-#include "mdtSqlSchemaTableModel.h"
+#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSchemaModel.h"
 
 #include "mdtSqlFieldSetupWidget.h"
+#include "mdtSqlFieldSetupDialog.h"
 
 #include "mdtSqlRecord.h"
 #include "mdtSqlRelation.h"
@@ -779,11 +781,14 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   QVERIFY(q.exec(sql));
   QVERIFY(!db.tables().contains("DataTypeTest_tbl"));
 
+  // Free resources
+  db.close();
+  QSqlDatabase::removeDatabase(db.connectionName());
 }
 
 void mdtDatabaseTest::sqlSchemaTableModelTest()
 {
-  mdtSqlSchemaTableModel model;
+  mdtSqlTableSchemaModel model;
   mdtSqlSchemaTable st;
   QTableView tableView;
   QTreeView treeView;
@@ -863,7 +868,7 @@ void mdtDatabaseTest::sqlFieldSetupWidgetTest()
   /*
    * Check displaying attributes in edition mode
    */
-  w.setEditionMode(mdtSqlFieldSetupEditionMode_t::Edition);
+  w.setEditionMode(mdtSqlFieldSetupEditionMode::Edition);
   // Select Id_PK and check
   w.setField(0);
   QCOMPARE(w.cbField->currentText(), QString("Id_PK"));
@@ -887,7 +892,7 @@ void mdtDatabaseTest::sqlFieldSetupWidgetTest()
   /*
    * Check displaying attributes in selection mode
    */
-  w.setEditionMode(mdtSqlFieldSetupEditionMode_t::Selection);
+  w.setEditionMode(mdtSqlFieldSetupEditionMode::Selection);
   // Select Id_PK and check
   w.setField(0);
   QCOMPARE(w.cbField->currentText(), QString("Id_PK"));
@@ -915,6 +920,39 @@ void mdtDatabaseTest::sqlFieldSetupWidgetTest()
   while(w.isVisible()){
     QTest::qWait(500);
   }
+
+  // Check that we didn't close the default database
+  QVERIFY(pvDatabase.isOpen());
+}
+
+void mdtDatabaseTest::sqlFieldSetupDialogTest()
+{
+  mdtSqlFieldSetupDialog dialog;
+
+  
+  QVERIFY(dialog.setTable("Client_tbl", pvDatabase));
+  dialog.setEditionMode(mdtSqlFieldSetupEditionMode::Edition);
+  
+  /*
+   * Play
+   */
+  dialog.exec();
+}
+
+void mdtDatabaseTest::sqlTableSetupWidgetTest()
+{
+  mdtSqlTableSetupWidget tsw;
+
+  tsw.show();
+
+  /*
+   * Play
+   */
+  
+  while(tsw.isVisible()){
+    QTest::qWait(500);
+  }
+
 }
 
 void mdtDatabaseTest::connectionNameWidgetTest()
@@ -922,6 +960,7 @@ void mdtDatabaseTest::connectionNameWidgetTest()
   mdtSqlConnectionNameWidget widget;
   QStringList connectionNames;
 
+  qDebug() << QSqlDatabase::connectionNames();
   /*
    * Check getConnectionNames() function
    */
@@ -957,6 +996,8 @@ void mdtDatabaseTest::connectionNameWidgetTest()
     QTest::qWait(500);
   }
 
+  // Check that we didn't close the default database
+  QVERIFY(pvDatabase.isOpen());
   // Remove added connections
   QSqlDatabase::removeDatabase("cnn1");
   QSqlDatabase::removeDatabase("cnn2");
@@ -993,6 +1034,10 @@ void mdtDatabaseTest::databaseSqliteTest()
   QVERIFY(!db1.isValid());
   QVERIFY(db1.database().connectionName().isEmpty());
   QVERIFY(!db1.isOpen());
+  QVERIFY(pvDatabase.isOpen());
+  
+  // We peeked up the default connection, so we must re-open the database
+  ///QVERIFY(pvDatabase.open());
   // Constructed on base of a valid QSqlDatabase object
   mdtSqlDatabaseSqlite db2(QSqlDatabase::database("cnn1", false));
   QVERIFY(db2.isValid());
@@ -1011,41 +1056,43 @@ void mdtDatabaseTest::databaseSqliteTest()
   QVERIFY(dbFile.open());
   dbFileInfo.setFile(dbFile);
   dbFile.close();
-  // Prepare db1 to a known state
-  db1.close();
-  db1.setDatabase(QSqlDatabase::database());
-  db1.close();
-  db1.clearDatabaseName();
-  QVERIFY(db1.isValid());
-  QVERIFY(!db1.isOpen());
-  QVERIFY(db1.database().databaseName().isEmpty());
+  // Prepare db2 to a known state
+  db2.close();
+  db2.setDatabase(QSqlDatabase::database("cnn1", false));
+  db2.clearDatabaseName();
+  QVERIFY(db2.isValid());
+  QVERIFY(!db2.isOpen());
+  QVERIFY(db2.database().databaseName().isEmpty());
   // Check creation with ovewriting existing file
-  QVERIFY(db1.createDatabase(dbFileInfo, mdtSqlDatabaseSqlite::OverwriteExisting));
-  QVERIFY(db1.isOpen());
-  QCOMPARE(db1.database().databaseName(), dbFileInfo.absoluteFilePath());
+  QVERIFY(db2.createDatabase(dbFileInfo, mdtSqlDatabaseSqlite::OverwriteExisting));
+  QVERIFY(db2.isOpen());
+  QCOMPARE(db2.database().databaseName(), dbFileInfo.absoluteFilePath());
   // Close - must keep database name
-  db1.close();
-  QCOMPARE(db1.database().databaseName(), dbFileInfo.absoluteFilePath());
+  db2.close();
+  QCOMPARE(db2.database().databaseName(), dbFileInfo.absoluteFilePath());
   // Check creation with failing on existing database file
-  QVERIFY(!db1.createDatabase(dbFileInfo, mdtSqlDatabaseSqlite::FailIfExists));
-  QVERIFY(!db1.isOpen());
-  QCOMPARE(db1.database().databaseName(), dbFileInfo.absoluteFilePath());
+  QVERIFY(!db2.createDatabase(dbFileInfo, mdtSqlDatabaseSqlite::FailIfExists));
+  QVERIFY(!db2.isOpen());
+  QCOMPARE(db2.database().databaseName(), dbFileInfo.absoluteFilePath());
   // Check creation with keep existing database file
-  QVERIFY(db1.createDatabase(dbFileInfo, mdtSqlDatabaseSqlite::KeepExisting));
-  QVERIFY(db1.isOpen());
-  QCOMPARE(db1.database().databaseName(), dbFileInfo.absoluteFilePath());
-  db1.close();
+  QVERIFY(db2.createDatabase(dbFileInfo, mdtSqlDatabaseSqlite::KeepExisting));
+  QVERIFY(db2.isOpen());
+  QCOMPARE(db2.database().databaseName(), dbFileInfo.absoluteFilePath());
+  db2.close();
   // Check opening given file
-  QVERIFY(db1.openDatabase(dbFileInfo));
-  QVERIFY(db1.isOpen());
-  QCOMPARE(db1.database().databaseName(), dbFileInfo.absoluteFilePath());
-  db1.close();
+  QVERIFY(db2.openDatabase(dbFileInfo));
+  QVERIFY(db2.isOpen());
+  QCOMPARE(db2.database().databaseName(), dbFileInfo.absoluteFilePath());
+  db2.close();
   // Check opening allready set database
-  QVERIFY(db1.openDatabase());
-  QVERIFY(db1.isOpen());
-  QCOMPARE(db1.database().databaseName(), dbFileInfo.absoluteFilePath());
-  db1.close();
+  QVERIFY(db2.openDatabase());
+  QVERIFY(db2.isOpen());
+  QCOMPARE(db2.database().databaseName(), dbFileInfo.absoluteFilePath());
+  db2.close();
+  db2.clear();
 
+  // Check that we didn't close the default database
+  QVERIFY(pvDatabase.isOpen());
   // Remove added connections
   QSqlDatabase::removeDatabase("cnn1");
   QSqlDatabase::removeDatabase("cnn2");
@@ -1062,6 +1109,7 @@ void mdtDatabaseTest::databaseDialogSqliteTest()
    */
   // Initially, we have only the default connection, witch uses the SQLite driver
   QVERIFY(dialog->database().database().isValid());
+  QVERIFY(QSqlDatabase::database().isOpen());
   // Add some connections
   QSqlDatabase::addDatabase("QSQLITE", "cnn1");
   QSqlDatabase::addDatabase("QSQLITE", "cnn2");
@@ -1081,6 +1129,8 @@ void mdtDatabaseTest::databaseDialogSqliteTest()
    *  else, Qt will warn that we are removing a connection that is currently used.
    */
   delete dialog;
+  // Check that we didn't close the default database
+  QVERIFY(pvDatabase.isOpen());
   // Remove added connections
   QSqlDatabase::removeDatabase("cnn1");
   QSqlDatabase::removeDatabase("cnn2");
@@ -1090,7 +1140,6 @@ void mdtDatabaseTest::databaseDialogSqliteTest()
 void mdtDatabaseTest::databaseManagerTest()
 {
   mdtSqlDatabaseManager m;
-  QSqlDatabase db;
   mdtSqlSchemaTable st;
   QSqlField field;
 
@@ -1143,6 +1192,8 @@ void mdtDatabaseTest::databaseManagerTest()
   // Cleanup
   m.database().close();
   QFile::remove(dbFileInfo.filePath());
+  // Check that we didn't close the default database
+  QVERIFY(pvDatabase.isOpen());
 }
 
 void mdtDatabaseTest::sqlRecordTest()
@@ -1380,6 +1431,8 @@ void mdtDatabaseTest::sqlRecordTest()
   matchData.setValue("Remarks", "Remark 8");
   QCOMPARE(record.sqlForUpdate("Client_tbl", matchData), QString("UPDATE Client_tbl SET FirstName=? WHERE Id_PK=8 AND FirstName='Name 8' AND Remarks='Remark 8'"));
 
+  // Check that we didn't close the default database
+  QVERIFY(pvDatabase.isOpen());
   // Cleanup
   clearTestDatabaseData();
 }
@@ -1404,6 +1457,9 @@ void mdtDatabaseTest::sqlTransactionTest()
   // Commit
   QVERIFY(t.commit());
   QVERIFY(!t.isStarted());
+
+  // Check that we didn't close the default database
+  QVERIFY(pvDatabase.isOpen());
 }
 
 void mdtDatabaseTest::sqlRelationInfoTest()

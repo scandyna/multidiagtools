@@ -18,48 +18,33 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_COPIER_TEST_H
-#define MDT_SQL_COPIER_TEST_H
+#ifndef MDT_SQL_TABLE_SETUP_WIDGET_H
+#define MDT_SQL_TABLE_SETUP_WIDGET_H
 
-#include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QFileInfo>
-#include <QMessageBox>
-#include <QSqlDatabase>
+#include "ui_mdtSqlTableSetupWidget.h"
+#include <QWidget>
 
-class mdtSqlCopierTest : public mdtTest
+class mdtSqlTableSchemaModel;
+
+/*! \brief SQL table schema edition
+ *
+ * Display SQL table schema in a table view and let user add, remove and edit fields
+ */
+class mdtSqlTableSetupWidget : public QWidget, Ui::mdtSqlTableSetupWidget
 {
  Q_OBJECT
 
- private slots:
+ public:
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void codecSettingsTest();
-  void codecSettingsWidgetTest();
-
-  void sqlFieldSetupDataTest();
-
-  void fieldMappingDataTest();
-  void fieldMappingDialogTest();
-
-  void tableMappingWidgetItemTest();
-  void tableMappingWidgetTest();
+  /*! \brief Constructor
+   */
+  mdtSqlTableSetupWidget(QWidget *parent = nullptr);
 
  private:
 
-  /*
-   * Create the test database
-   */
-  void createTestDatabase();
-  // Populate database with some common data
-  void populateTestDatabase();
-  // Clear test database data
-  void clearTestDatabaseData();
+  Q_DISABLE_COPY(mdtSqlTableSetupWidget)
 
-  mdtSqlDatabaseManager pvDatabaseManager;
-  QFileInfo pvDbFileInfo;
+  mdtSqlTableSchemaModel *pvSchemaTabledModel;
 };
 
-#endif // #ifndef MDT_SQL_COPIER_TEST_H
+#endif // #ifndef MDT_SQL_TABLE_SETUP_WIDGET_H

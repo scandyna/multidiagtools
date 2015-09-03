@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_TABLE_MODEL_H
-#define MDT_SQL_SCHEMA_TABLE_MODEL_H
+#ifndef MDT_SQL_TABLE_SCHEMA_MODEL_H
+#define MDT_SQL_TABLE_SCHEMA_MODEL_H
 
 #include "mdtSqlSchemaTable.h"
 #include <QAbstractTableModel>
@@ -36,14 +36,14 @@ class QComboBox;
  * Typical usage with a QComboBox:
  * \code
  *   QComboBox *cb = new QComboBox;
- *   cb->setModel(new mdtSqlSchemaTableModel(this));
- *   cb->setModelColumn(mdtSqlSchemaTableModel::NameIndex);  // Will display field name
+ *   cb->setModel(new mdtSqlTableSchemaModel(this));
+ *   cb->setModelColumn(mdtSqlTableSchemaModel::NameIndex);  // Will display field name
  *   // Recommended way to enable field name edition
  *   cb->setInsertPolicy(QComboBox::InsertAtCurrent);
  *   cb->setEditable(true);
  * \endcode
  */
-class mdtSqlSchemaTableModel : public QAbstractTableModel
+class mdtSqlTableSchemaModel : public QAbstractTableModel
 {
  Q_OBJECT
 
@@ -61,7 +61,7 @@ class mdtSqlSchemaTableModel : public QAbstractTableModel
 
   /*! \brief Constructor
    */
-  mdtSqlSchemaTableModel(QObject *parent = 0);
+  mdtSqlTableSchemaModel(QObject *parent = 0);
 
   /*! \brief Set table schema
    */
@@ -115,9 +115,9 @@ class mdtSqlSchemaTableModel : public QAbstractTableModel
 
  private:
 
-  Q_DISABLE_COPY(mdtSqlSchemaTableModel)
+  Q_DISABLE_COPY(mdtSqlTableSchemaModel)
 
   mdtSqlSchemaTable pvSchema;
 };
 
-#endif // #ifndef MDT_SQL_SCHEMA_TABLE_MODEL_H
+#endif // #ifndef MDT_SQL_TABLE_SCHEMA_MODEL_H

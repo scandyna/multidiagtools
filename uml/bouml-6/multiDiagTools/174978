@@ -1,6 +1,6 @@
 format 209
 "mdtutilsgui" // mdtutilsgui
-  revision 82
+  revision 83
   modified_by 2 "philippe"
   // class settings
   
@@ -2790,6 +2790,126 @@ ${inlines}
     end
   end
 
+  deploymentview 285058 "mdtIoWidgets"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 275842 "mdtAbstractIoWidget"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 518658 // mdtAbstractIoWidget
+      end
+    end
+
+    artifact 275970 "mdtDigitalInWidget"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 518786 // mdtDigitalInWidget
+      end
+    end
+
+    artifact 276098 "mdtDigitalOutWidget"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 518914 // mdtDigitalOutWidget
+      end
+    end
+
+    artifact 276226 "mdtAnalogInWidget"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 519042 // mdtAnalogInWidget
+      end
+    end
+
+    artifact 276354 "mdtAnalogOutWidget"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 519170 // mdtAnalogOutWidget
+      end
+    end
+  end
+
   classview 346370 "mdtIoWidgets"
     
     classdiagramsettings member_max_width 0 end
@@ -3338,126 +3458,6 @@ ${inlines}
 	    cpp default "#include dans les sources"
 	    classrelation_ref 635650 // <dependency>
 	  b parent class_ref 539010 // mdtAnalogIo
-      end
-    end
-  end
-
-  deploymentview 285058 "mdtIoWidgets"
-    //deployment diagram settings
-    deploymentdiagramsettings
-     end
-    artifact 275842 "mdtAbstractIoWidget"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 518658 // mdtAbstractIoWidget
-      end
-    end
-
-    artifact 275970 "mdtDigitalInWidget"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 518786 // mdtDigitalInWidget
-      end
-    end
-
-    artifact 276098 "mdtDigitalOutWidget"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 518914 // mdtDigitalOutWidget
-      end
-    end
-
-    artifact 276226 "mdtAnalogInWidget"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 519042 // mdtAnalogInWidget
-      end
-    end
-
-    artifact 276354 "mdtAnalogOutWidget"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 519170 // mdtAnalogOutWidget
       end
     end
   end

@@ -31,12 +31,17 @@ set (SOURCES_FILES
           mdtSqlConnectionNameWidget.cpp
           mdtSqlDatabaseSqlite.cpp
           mdtSqlDatabaseDialogSqlite.cpp
-          mdtSqlSchemaTable.cpp
-          mdtSqlSchemaTableModel.cpp
           mdtSqlFieldSelectionDialog.cpp
           mdtSqlTransaction.cpp
           mdtSqlForeignKeySetting.cpp
+          
+          mdtSqlCopierCodecSettingsWidget.cpp
+          
+          mdtSqlSchemaTable.cpp
+          mdtSqlTableSchemaModel.cpp
+          mdtSqlTableSetupWidget.cpp
           mdtSqlFieldSetupWidget.cpp
+          mdtSqlFieldSetupDialog.cpp
           mdtSqlFieldMappingDialog.cpp
           mdtSqlTableMappingWidget.cpp
           mdtSqlTableMappingWidgetItem.cpp

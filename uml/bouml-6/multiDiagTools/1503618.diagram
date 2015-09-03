@@ -20,7 +20,7 @@ note 131202 "QVector: Copy On Write, permet de passer des copies du mapper"
   xyzwh 4 372 2000 189 83
 classcanvas 131458 class_ref 1780226 // mdtSqlCopierItem
   classdiagramsettings hide_attributes no hide_operations no member_max_width 0 end
-  xyz 204.9 343 2000
+  xyz 205.9 361 2000
 end
 classcanvas 131586 class_ref 1780354 // CopyItemWidget
   classdiagramsettings hide_attributes no hide_operations no member_max_width 0 end
@@ -68,7 +68,7 @@ classcanvas 133762 class_ref 1794178 // mdtSqlCopierCsvFileTable
 end
 classcanvas 133890 class_ref 1794306 // mdtSqlCopierDatabaseTable
   classdiagramsettings member_max_width 0 end
-  xyz 616.9 539 2000
+  xyz 396.9 561 2000
 end
 relationcanvas 130818 relation_ref 2097794 // <directional composition>
   decenter_begin 282
