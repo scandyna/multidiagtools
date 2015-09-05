@@ -12,7 +12,7 @@ classcanvas 129922 class_ref 1773186 // mdtFieldMappingField
   classdiagramsettings hide_attributes no hide_operations no member_max_width 0 end
   xyz 659.2 805.2 2000
 end
-classcanvas 130690 class_ref 1773570 // mdtSqlTableMapping
+classcanvas 130690 class_ref 1773570 // mdtSqlCopierTableMapping
   classdiagramsettings hide_attributes no hide_operations no member_max_width 0 end
   xyz 72.7 504.9 2000
 end
@@ -68,7 +68,7 @@ classcanvas 133762 class_ref 1794178 // mdtSqlCopierCsvFileTable
 end
 classcanvas 133890 class_ref 1794306 // mdtSqlCopierDatabaseTable
   classdiagramsettings member_max_width 0 end
-  xyz 396.9 561 2000
+  xyz 403.9 554 2000
 end
 relationcanvas 130818 relation_ref 2097794 // <directional composition>
   decenter_begin 282

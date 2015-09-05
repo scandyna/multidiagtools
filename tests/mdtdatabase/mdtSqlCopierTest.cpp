@@ -29,7 +29,7 @@
 #include "mdtSqlTableMappingWidgetItem.h"
 #include "mdtSqlTableMappingWidget.h"
 #include "mdtSqlCopierCodecSettings.h"
-#include "mdtSqlCopierSqliteDatabaseTableCodecSettings.h"
+///#include "mdtSqlCopierSqliteDatabaseTableCodecSettings.h"
 #include "mdtSqlCopierCodecSettingsWidget.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
@@ -63,29 +63,43 @@ void mdtSqlCopierTest::cleanupTestCase()
 
 void mdtSqlCopierTest::codecSettingsTest()
 {
-  std::unique_ptr<mdtSqlCopierCodecSettings> cs;
-  QVERIFY(!cs);
+  mdtSqlCopierCodecSettings cs;
 
-  /*
-   * Base codec
-   */
-  mdtSqlCopierCodecSettings baseCs;
-  QVERIFY(baseCs.type() == mdtSqlCopierCodecSettings::UnknownCodec);
-  baseCs.setConnectionName("FakeCn");
-  QVERIFY(baseCs.connectionName().isEmpty());
-  /*
-   * SQLite database table codec settings
-   */
-  cs.reset(new mdtSqlCopierSqliteDatabaseTableCodecSettings);
-  QVERIFY(cs->type() == mdtSqlCopierCodecSettings::SqliteCodec);
-  cs->setConnectionName("cnn1");
-  QCOMPARE(cs->connectionName(), QString("cnn1"));
+  // Initial state
+  QVERIFY(cs.isNull());
+  QVERIFY(cs.type() == mdtSqlCopierCodecSettings::UnknownCodec);
+  // SQLite database table codec settings
+  cs.setCodecType(mdtSqlCopierCodecSettings::SqliteCodec);
+  QVERIFY(cs.type() == mdtSqlCopierCodecSettings::SqliteCodec);
+  QVERIFY(!cs.isNull());
+  cs.setConnectionName("cnn1");
+  QCOMPARE(cs.connectionName(), QString("cnn1"));
+
+//   /*
+//    * Base codec
+//    */
+//   mdtSqlCopierCodecSettings baseCs;
+//   QVERIFY(baseCs.type() == mdtSqlCopierCodecSettings::UnknownCodec);
+//   QVERIFY(baseCs.isNull());
+//   baseCs.setConnectionName("FakeCn");
+//   QVERIFY(baseCs.connectionName().isEmpty());
+//   QVERIFY(baseCs.isNull());
+//   /*
+//    * SQLite database table codec settings
+//    */
+//   cs.reset(new mdtSqlCopierSqliteDatabaseTableCodecSettings);
+//   QVERIFY(cs->type() == mdtSqlCopierCodecSettings::SqliteCodec);
+//   QVERIFY(cs->isNull());
+//   cs->setConnectionName("cnn1");
+//   QCOMPARE(cs->connectionName(), QString("cnn1"));
 }
 
 void mdtSqlCopierTest::codecSettingsWidgetTest()
 {
   mdtSqlCopierCodecSettingsWidget w;
 
+  w.setCodecType(mdtSqlCopierCodecSettings::SqliteCodec);
+  QVERIFY(w.codecSettings().type() == mdtSqlCopierCodecSettings::SqliteCodec);
   /*
    * Play
    */

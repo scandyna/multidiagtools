@@ -1,6 +1,6 @@
 format 209
 "Ideas" // mdtdatabase::Ideas
-  revision 25
+  revision 27
   modified_by 2 "philippe"
   // class settings
   
@@ -118,8 +118,101 @@ ${inlines}
 	MysqlColumn
       end
 
+      attribute 1944834 "ConnectionName"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1944962 "FilePath"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 1945090 "TableName"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 2946050 "mdtSqlCopierCodecSettings"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2925314 "mdtSqlCopierCodecSettings"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "type" explicit_type "CodecType"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 2925442 "type"
 	cpp_virtual public explicit_return_type "CodecType"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2939266 "isNull"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2946178 "clear"
+	public explicit_return_type "void"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -201,22 +294,6 @@ ${inlines}
 	
 	
       end
-
-      operation 2925314 "mdtSqlCopierCodecSettings"
-	protected explicit_return_type ""
-	nparams 1
-	  param in name "type" explicit_type "CodecType"
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
     end
 
     class 1874050 "mdtSqlCopierSqliteDatabaseTableCodecSettings"
@@ -245,8 +322,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1931522 "Table"
-	private type class_ref 910210 // mdtSqlSchemaTable
+      attribute 1944706 "DatabaseName"
+	private type class_ref 161026 // QString
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -257,12 +334,16 @@ ${inlines}
 	MysqlColumn
       end
 
-      classrelation 2216962 // <generalisation>
-	relation 2200706 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 2216962 // <generalisation>
-	  b parent class_ref 1874434 // mdtSqlCopierCodecSettings
+      attribute 1931522 "TableName"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
 
       operation 2925570 "setConnectionName"
@@ -326,6 +407,37 @@ ${inlines}
 	
 	
       end
+
+      operation 2945794 "setTableName"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "name" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2945922 "tableName"
+	cpp_virtual public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     class 1874178 "mdtSqlCopierCsvFileCodecSettings"
@@ -354,13 +466,6 @@ ${inlines}
 	MysqlColumn
       end
 
-      classrelation 2217090 // <generalisation>
-	relation 2200834 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 2217090 // <generalisation>
-	  b parent class_ref 1874434 // mdtSqlCopierCodecSettings
-      end
     end
 
     class 1874306 "mdtSqlCopierClipboardCodecSettings"
@@ -377,13 +482,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2217218 // <generalisation>
-	relation 2200962 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 2217218 // <generalisation>
-	  b parent class_ref 1874434 // mdtSqlCopierCodecSettings
-      end
     end
 
     classdiagram 1563010 "TableMapping"

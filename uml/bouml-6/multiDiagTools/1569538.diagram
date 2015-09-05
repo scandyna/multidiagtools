@@ -2,56 +2,27 @@ format 209
 
 classcanvas 128002 class_ref 1874050 // mdtSqlCopierSqliteDatabaseTableCodecSettings
   classdiagramsettings member_max_width 0 end
-  xyz 23 336.4 2000
+  xyz 32 417.4 2000
 end
 classcanvas 128130 class_ref 1874178 // mdtSqlCopierCsvFileCodecSettings
   classdiagramsettings member_max_width 0 end
-  xyz 361.6 336.6 2005
+  xyz 367.6 453.6 2005
 end
 classcanvas 128258 class_ref 1874306 // mdtSqlCopierClipboardCodecSettings
   classdiagramsettings member_max_width 0 end
-  xyz 633.2 339.4 2010
+  xyz 643.2 447.4 2010
 end
 classcanvas 128386 class_ref 1874434 // mdtSqlCopierCodecSettings
   classdiagramsettings member_max_width 0 end
-  xyz 386 53.2 2016
+  xyz 387 29.2 2016
 end
 classcanvas 129922 class_ref 1880962 // mdtSqlCopierCodecSettingsWidget
   classdiagramsettings member_max_width 0 end
-  xyz 27 122 2000
-end
-note 130178 "Should store table name"
-  xyzwh 66 520 2000 235 37
-relationcanvas 128514 relation_ref 2200706 // <generalisation>
-  geometry VHV unfixed
-  decenter_end 414
-  from ref 128002 z 2017 to point 182 303
-  line 129666 z 2017 to point 517 303
-  line 129794 z 2017 to ref 128386
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 128642 relation_ref 2200962 // <generalisation>
-  geometry VHV unfixed
-  decenter_end 408
-  from ref 128258 z 2017 to point 757 303
-  line 128898 z 2017 to point 515 303
-  line 129026 z 2017 to ref 128386
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 128770 relation_ref 2200834 // <generalisation>
-  decenter_begin 655
-  decenter_end 414
-  from ref 128130 z 2017 to ref 128386
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
+  xyz 28 166 2000
 end
 relationcanvas 130050 relation_ref 2207618 // <unidirectional association>
   from ref 129922 z 2017 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-line 130306 -_-_
-  from ref 130178 z 2001 to ref 128002
 end

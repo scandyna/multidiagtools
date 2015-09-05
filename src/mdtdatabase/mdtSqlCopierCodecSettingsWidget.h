@@ -23,9 +23,9 @@
 
 #include "ui_mdtSqlCopierCodecSettingsWidget.h"
 #include "mdtSqlCopierCodecSettings.h"
-#include "mdtSqlCopierSqliteDatabaseTableCodecSettings.h"
+///#include "mdtSqlCopierSqliteDatabaseTableCodecSettings.h"
 #include <QWidget>
-#include <memory>
+/// #include <memory>
 
 /*! \brief Settings widget for SQL copier codec
  */
@@ -39,6 +39,17 @@ class mdtSqlCopierCodecSettingsWidget : public QWidget, Ui::mdtSqlCopierCodecSet
    */
   mdtSqlCopierCodecSettingsWidget(QWidget *parent = nullptr);
 
+  /*! \brief Set codec type
+   */
+  void setCodecType(mdtSqlCopierCodecSettings::CodecType type);
+
+  /*! \brief Get codec settings
+   */
+  mdtSqlCopierCodecSettings codecSettings() const
+  {
+    return pvSettings;
+  }
+
  private slots:
 
   /*! \brief Update widget after type was selected
@@ -48,6 +59,10 @@ class mdtSqlCopierCodecSettingsWidget : public QWidget, Ui::mdtSqlCopierCodecSet
   /*! \brief Let user select database or file or whatever (depending on pvSettings codec type)
    */
   void selectTarget();
+
+  /*! \brief Update table name when it was selected
+   */
+  void updateTableName(const QString & name);
 
  private:
 
@@ -69,7 +84,8 @@ class mdtSqlCopierCodecSettingsWidget : public QWidget, Ui::mdtSqlCopierCodecSet
 
   Q_DISABLE_COPY(mdtSqlCopierCodecSettingsWidget)
 
-  std::unique_ptr<mdtSqlCopierCodecSettings> pvSettings;
+//   std::unique_ptr<mdtSqlCopierCodecSettings> pvSettings;
+  mdtSqlCopierCodecSettings pvSettings;
 };
 
 #endif // #ifndef MDT_SQL_COPIER_CODEC_SETTINGS_WIDGET_H

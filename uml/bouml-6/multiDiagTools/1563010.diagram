@@ -6,42 +6,42 @@ classcanvas 128386 class_ref 1773570 // mdtSqlCopierTableMapping
 end
 classcanvas 128898 class_ref 1874050 // mdtSqlCopierSqliteDatabaseTableCodecSettings
   classdiagramsettings member_max_width 0 end
-  xyz 10 482 2000
+  xyz 6 646 2000
 end
 classcanvas 129026 class_ref 1874178 // mdtSqlCopierCsvFileCodecSettings
   classdiagramsettings member_max_width 0 end
-  xyz 318 488 2000
+  xyz 356 630 2000
 end
 classcanvas 129154 class_ref 1874306 // mdtSqlCopierClipboardCodecSettings
   classdiagramsettings member_max_width 0 end
-  xyz 596 483 2000
+  xyz 567 705 2000
 end
 classcanvas 129282 class_ref 1874434 // mdtSqlCopierCodecSettings
   classdiagramsettings member_max_width 0 end
-  xyz 319 292 2005
+  xyz 251 282 2005
 end
 classcanvas 129410 class_ref 1854338 // mdtSqlDatabaseDialogSqlite
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 63 627 2000
+  xyz 609 403 2000
 end
 relationcanvas 129794 relation_ref 2200706 // <generalisation>
-  geometry VHV
-  from ref 128898 z 2006 to point 7 495
-  line 130946 z 2006 to point 316 495
+  geometry VHV unfixed
+  from ref 128898 z 2006 to point 165 542
+  line 130946 z 2006 to point 410 542
   line 131074 z 2006 to ref 129282
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129922 relation_ref 2200834 // <generalisation>
-  decenter_begin 402
+  decenter_begin 207
   from ref 129026 z 2006 to ref 129282
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 2200962 // <generalisation>
   geometry VHV
-  from ref 129154 z 2006 to point 593 495
-  line 130434 z 2006 to point 316 495
+  from ref 129154 z 2006 to point 692 611
+  line 130434 z 2006 to point 407 611
   line 130562 z 2006 to ref 129282
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -49,6 +49,6 @@ end
 relationcanvas 131202 relation_ref 2201090 // <unidirectional association>
   from ref 128386 z 2006 to ref 129282
   no_role_a no_role_b
-  multiplicity_a_pos 434 269 3000 no_multiplicity_b
+  multiplicity_a_pos 396 259 3000 no_multiplicity_b
 end
 end

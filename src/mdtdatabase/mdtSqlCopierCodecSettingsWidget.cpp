@@ -39,11 +39,19 @@ mdtSqlCopierCodecSettingsWidget::mdtSqlCopierCodecSettingsWidget(QWidget* parent
   cbType->setCurrentIndex(0);
   // Setup tbSelect
   connect(tbSelect, &QToolButton::clicked, this, &mdtSqlCopierCodecSettingsWidget::selectTarget);
+  // Setup cbTable
+  connect(cbTable, &QComboBox::currentTextChanged, this, &mdtSqlCopierCodecSettingsWidget::updateTableName);
+}
+
+void mdtSqlCopierCodecSettingsWidget::setCodecType(mdtSqlCopierCodecSettings::CodecType type)
+{
+  int index = cbType->findData(type);
+  cbType->setCurrentIndex(index);
 }
 
 void mdtSqlCopierCodecSettingsWidget::updateCodecType(int cbTypeIndex)
 {
-  int codecType = static_cast<mdtSqlCopierCodecSettings::CodecType>(cbType->itemData(cbTypeIndex).toInt());
+  auto codecType = static_cast<mdtSqlCopierCodecSettings::CodecType>(cbType->itemData(cbTypeIndex).toInt());
 
   switch(codecType){
     case mdtSqlCopierCodecSettings::SqliteCodec:
@@ -59,9 +67,7 @@ void mdtSqlCopierCodecSettingsWidget::updateCodecType(int cbTypeIndex)
 
 void mdtSqlCopierCodecSettingsWidget::selectTarget()
 {
-  Q_ASSERT(pvSettings);
-
-  switch(pvSettings->type()){
+  switch(pvSettings.type()){
     case mdtSqlCopierCodecSettings::SqliteCodec:
       selectSqliteDatabase();
       break;
@@ -72,10 +78,15 @@ void mdtSqlCopierCodecSettingsWidget::selectTarget()
   }
 }
 
+void mdtSqlCopierCodecSettingsWidget::updateTableName(const QString & name)
+{
+  pvSettings.setTableName(name);
+}
+
 void mdtSqlCopierCodecSettingsWidget::setCodecTypeUnknown()
 {
   // Update widgets data
-  pvSettings.reset();
+  pvSettings.clear();
   updateWidgetsData();
   // Update widgets visibility/enable state
   tbSelect->setEnabled(false);
@@ -92,7 +103,7 @@ void mdtSqlCopierCodecSettingsWidget::setCodecTypeUnknown()
 void mdtSqlCopierCodecSettingsWidget::setCodecTypeSqlite()
 {
   // Update widgets data
-  pvSettings.reset(new mdtSqlCopierSqliteDatabaseTableCodecSettings);
+  pvSettings.setCodecType(mdtSqlCopierCodecSettings::SqliteCodec);
   updateWidgetsData();
   // Update widgets visibility
   tbSelect->setEnabled(true);
@@ -108,6 +119,23 @@ void mdtSqlCopierCodecSettingsWidget::setCodecTypeSqlite()
 
 void mdtSqlCopierCodecSettingsWidget::updateWidgetsData()
 {
+  if(pvSettings.isNull()){
+    lbConnection->clear();
+    lbFile->clear();
+    lbDirectory->clear();
+    cbTable->clear();
+  }else{
+    lbConnection->setText(pvSettings.connectionName());
+    QFileInfo fileInfo(pvSettings.filePath());
+    if(fileInfo.fileName().isEmpty()){
+      lbFile->clear();
+      lbDirectory->clear();
+    }else{
+      lbFile->setText(fileInfo.fileName());
+      lbDirectory->setText(fileInfo.absoluteDir().path());
+    }
+  }
+/*
   if(pvSettings){
     lbConnection->setText(pvSettings->connectionName());
     QFileInfo fileInfo(pvSettings->filePath());
@@ -123,21 +151,19 @@ void mdtSqlCopierCodecSettingsWidget::updateWidgetsData()
     lbFile->clear();
     lbDirectory->clear();
     cbTable->clear();
-  }
+  }*/
 }
 
 void mdtSqlCopierCodecSettingsWidget::selectSqliteDatabase()
 {
-  Q_ASSERT(pvSettings);
-
   mdtSqlDatabaseDialogSqlite dialog(this);
 
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
   QSqlDatabase db = dialog.database().database();
-  pvSettings->setConnectionName(db.connectionName());
-  pvSettings->setFilePath(db.databaseName());
+  pvSettings.setConnectionName(db.connectionName());
+  pvSettings.setFilePath(db.databaseName());
   cbTable->clear();
   cbTable->addItems(db.tables(QSql::Tables));
   updateWidgetsData();

@@ -68,10 +68,25 @@ class mdtSqlCopierSqliteDatabaseTableCodecSettings : public mdtSqlCopierCodecSet
     return pvDatabaseName;
   }
 
+  /*! \brief Set table name
+   */
+  void setTableName(const QString & name)
+  {
+    pvTableName = name;
+  }
+
+  /*! \brief Get table name
+   */
+  QString tableName() const
+  {
+    return pvTableName;
+  }
+
  private:
 
   QString pvConnectionName;
   QString pvDatabaseName;
+  QString pvTableName;
 };
 
 #endif // #ifndef MDT_SQL_COPIER_SQLITE_DATABASE_TABLE_CODEC_SETTINGS_H

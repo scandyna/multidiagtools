@@ -2,7 +2,7 @@ format 209
 
 classcanvas 128002 class_ref 1773570 // mdtSqlCopierTableMapping
   classdiagramsettings member_max_width 0 end
-  xyz 8 656 2000
+  xyz 5 678 2000
 end
 classcanvas 128130 class_ref 1827842 // mdtSqlTableMappingWidget
   classdiagramsettings member_max_width 0 end
@@ -18,7 +18,7 @@ classcanvas 128514 class_ref 1827970 // Ui::mdtSqlTableMappingWidget
 end
 classcanvas 129282 class_ref 1834626 // mdtSqlTableMappingWidgetItem
   classdiagramsettings member_max_width 0 end
-  xyz 230 331 2000
+  xyz 229 306 2000
 end
 classcanvas 129538 class_ref 316162 // QWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
@@ -30,7 +30,7 @@ classcanvas 129794 class_ref 1841154 // Ui::mdtSqlTableMappingWidgetItem
 end
 classcanvas 130434 class_ref 1821314 // mdtSqlFieldMappingDialog
   classdiagramsettings hide_attributes yes hide_operations no member_max_width 0 end
-  xyz 145 460 3005
+  xyz 149 424 3005
 end
 relationcanvas 128386 relation_ref 2153218 // <generalisation>
   decenter_begin 267
@@ -47,10 +47,10 @@ end
 relationcanvas 129410 relation_ref 2160130 // <composition>
   geometry HV
   decenter_end 609
-  from ref 128130 z 2001 to point 574 197
+  from ref 128130 z 2001 to point 573 197
   line 130178 z 2001 to ref 129282
   no_role_a no_role_b
-  multiplicity_a_pos 561 308 3000 multiplicity_b_pos 470 207 3000
+  multiplicity_a_pos 560 283 3000 multiplicity_b_pos 470 207 3000
 end
 relationcanvas 129666 relation_ref 2160258 // <generalisation>
   decenter_begin 692
@@ -74,7 +74,7 @@ end
 relationcanvas 130562 relation_ref 2167042 // <dependency>
   geometry VH
   decenter_begin 189
-  from ref 128130 z 3006 to point 102 540
+  from ref 128130 z 3006 to point 102 535
   line 131074 z 3006 to ref 130434
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

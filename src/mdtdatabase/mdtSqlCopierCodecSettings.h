@@ -39,17 +39,31 @@ class mdtSqlCopierCodecSettings
     ClipboardCodec  /*!< Clipboard codec */
   };
 
-  /*! \brief Default constructor
+  /*! \brief Construct a null codec settings
    */
-  mdtSqlCopierCodecSettings()
-   : pvType(UnknownCodec)
+//   mdtSqlCopierCodecSettings()
+//    : pvType(UnknownCodec)
+//   {
+//   }
+
+  /*! \brief Construct a codec settings of given type
+   */
+  mdtSqlCopierCodecSettings(CodecType type = UnknownCodec)
+   : pvType(type)
   {
   }
 
   /*! \brief Destructor
    */
-  virtual ~mdtSqlCopierCodecSettings()
+//   virtual ~mdtSqlCopierCodecSettings()
+//   {
+//   }
+
+  /*! \brief Set codec type
+   */
+  void setCodecType(CodecType type)
   {
+    pvType = type;
   }
 
   /*! \brief Get codec type
@@ -59,56 +73,97 @@ class mdtSqlCopierCodecSettings
     return pvType;
   }
 
+  /*! \brief Check if codec settings is null
+   *
+   * Codec settings is null if type is UnknownCodec
+   */
+  bool isNull() const
+  {
+    return (pvType == UnknownCodec);
+  }
+
+  /*! \brief Clear
+   *
+   * Clear all properties and set codec type to UnknownCodec
+   */
+  void clear()
+  {
+    pvType = UnknownCodec;
+    pvConnectionName.clear();
+    pvFilePath.clear();
+    pvTableName.clear();
+  }
+
   /*! \brief Set database connection name
    *
    * Connection name refers to QSqlDatabase connection name.
    *  This property has only sense for codecs that act on a database.
-   *  Default implementation does nothing.
    */
-  virtual void setConnectionName(const QString &)
+  void setConnectionName(const QString & cn)
   {
+    pvConnectionName = cn;
   }
 
   /*! \brief Get database connection name
    *
-   * Default implementation returns allways a empty string.
    * \sa setConnectionName()
    */
-  virtual QString connectionName() const
+  QString connectionName() const
   {
-    return QString();
+    return pvConnectionName;
   }
 
   /*! \brief Set file path
    *
-   *  Default implementation does nothing.
+   *  Note: for SqliteCodec, this is the same as QSqlDatabase's databaseName.
    */
-  virtual void setFilePath(const QString &)
+  void setFilePath(const QString & path)
   {
+    pvFilePath = path;
   }
 
   /*! \brief Get file path
    *
-   * Default implementation returns allways a empty string.
    * \sa setFilePath()
    */
-  virtual QString filePath() const
+  QString filePath() const
   {
-    return QString();
+    return pvFilePath;
+  }
+
+  /*! \brief Set table name
+   *
+   * This property has only sense for codecs that act on a database.
+   */
+  void setTableName(const QString & name)
+  {
+    pvTableName = name;
+  }
+
+  /*! \brief Get table name
+   *
+   * \sa setTableName()
+   */
+  QString tableName() const
+  {
+    return pvTableName;
   }
 
  protected:
 
   /*! \brief Constructor
    */
-  mdtSqlCopierCodecSettings(CodecType type)
-   : pvType(type)
-  {
-  }
+//   mdtSqlCopierCodecSettings(CodecType type)
+//    : pvType(type)
+//   {
+//   }
 
  private:
 
   CodecType pvType;
+  QString pvConnectionName;
+  QString pvFilePath;
+  QString pvTableName;
 };
 
 #endif // #ifndef MDT_SQL_COPIER_CODEC_SETTINGS_H
