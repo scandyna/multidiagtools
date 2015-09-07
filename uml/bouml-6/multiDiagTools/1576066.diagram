@@ -1,0 +1,25 @@
+format 209
+
+classcanvas 128002 class_ref 1772930 // mdtSqlCopierFieldMapping
+  classdiagramsettings member_max_width 0 end
+  xyz 182 203 2000
+end
+classcanvas 128130 class_ref 1787266 // mdtFieldMappingSplitParameters
+  classdiagramsettings member_max_width 0 end
+  xyz 64 474 3005
+end
+classcanvas 128386 class_ref 1787394 // mdtFieldMappingCatParameters
+  classdiagramsettings member_max_width 0 end
+  xyz 434 474 2006
+end
+relationcanvas 128258 relation_ref 2104578 // <unidirectional association>
+  from ref 128002 z 3006 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 238 451 3000 no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 2104706 // <unidirectional association>
+  from ref 128002 z 2007 to ref 128386
+  no_role_a no_role_b
+  multiplicity_a_pos 488 451 3000 no_multiplicity_b
+end
+end

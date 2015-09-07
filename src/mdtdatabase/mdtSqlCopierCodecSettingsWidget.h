@@ -23,9 +23,7 @@
 
 #include "ui_mdtSqlCopierCodecSettingsWidget.h"
 #include "mdtSqlCopierCodecSettings.h"
-///#include "mdtSqlCopierSqliteDatabaseTableCodecSettings.h"
 #include <QWidget>
-/// #include <memory>
 
 /*! \brief Settings widget for SQL copier codec
  */
@@ -49,6 +47,16 @@ class mdtSqlCopierCodecSettingsWidget : public QWidget, Ui::mdtSqlCopierCodecSet
   {
     return pvSettings;
   }
+
+  /*! \brief Set enabled
+   */
+  void setEnabled(bool enable);
+
+ signals:
+
+  /*! \brief Emited when codec settings changed
+   */
+  void settingsChanged(const mdtSqlCopierCodecSettings & cs);
 
  private slots:
 
@@ -84,7 +92,6 @@ class mdtSqlCopierCodecSettingsWidget : public QWidget, Ui::mdtSqlCopierCodecSet
 
   Q_DISABLE_COPY(mdtSqlCopierCodecSettingsWidget)
 
-//   std::unique_ptr<mdtSqlCopierCodecSettings> pvSettings;
   mdtSqlCopierCodecSettings pvSettings;
 };
 

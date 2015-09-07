@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>mdtSqlFieldMappingDialog</class>
- <widget class="QDialog" name="mdtSqlFieldMappingDialog">
+ <class>mdtSqlCopierFieldMappingDialog</class>
+ <widget class="QDialog" name="mdtSqlCopierFieldMappingDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -21,11 +21,7 @@
        <property name="title">
         <string>Source field</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <widget class="mdtSqlFieldSetupWidget" name="fsSourceSetupWidget" native="true"/>
-        </item>
-       </layout>
+       <layout class="QVBoxLayout" name="verticalLayout_3"/>
       </widget>
      </item>
      <item row="0" column="1">
@@ -33,11 +29,7 @@
        <property name="title">
         <string>Destination field</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <item>
-         <widget class="mdtSqlFieldSetupWidget" name="fsDestinationSetupWidget" native="true"/>
-        </item>
-       </layout>
+       <layout class="QVBoxLayout" name="verticalLayout_4"/>
       </widget>
      </item>
      <item row="1" column="0">
@@ -55,7 +47,7 @@
         <item>
          <widget class="QRadioButton" name="rbNoSourceSplitting">
           <property name="text">
-           <string>No splitting</string>
+           <string>No s&amp;plitting</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -160,20 +152,12 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>mdtSqlFieldSetupWidget</class>
-   <extends>QWidget</extends>
-   <header>mdtSqlFieldSetupWidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>mdtSqlFieldMappingDialog</receiver>
+   <receiver>mdtSqlCopierFieldMappingDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -189,7 +173,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>mdtSqlFieldMappingDialog</receiver>
+   <receiver>mdtSqlCopierFieldMappingDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

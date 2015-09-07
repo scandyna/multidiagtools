@@ -65,6 +65,13 @@ void mdtSqlCopierCodecSettingsWidget::updateCodecType(int cbTypeIndex)
   }
 }
 
+void mdtSqlCopierCodecSettingsWidget::setEnabled(bool enable)
+{
+  cbType->setEnabled(enable);
+  tbSelect->setEnabled(enable);
+  cbTable->setEnabled(enable);
+}
+
 void mdtSqlCopierCodecSettingsWidget::selectTarget()
 {
   switch(pvSettings.type()){
@@ -81,6 +88,7 @@ void mdtSqlCopierCodecSettingsWidget::selectTarget()
 void mdtSqlCopierCodecSettingsWidget::updateTableName(const QString & name)
 {
   pvSettings.setTableName(name);
+  emit settingsChanged(pvSettings);
 }
 
 void mdtSqlCopierCodecSettingsWidget::setCodecTypeUnknown()
@@ -135,23 +143,6 @@ void mdtSqlCopierCodecSettingsWidget::updateWidgetsData()
       lbDirectory->setText(fileInfo.absoluteDir().path());
     }
   }
-/*
-  if(pvSettings){
-    lbConnection->setText(pvSettings->connectionName());
-    QFileInfo fileInfo(pvSettings->filePath());
-    if(fileInfo.fileName().isEmpty()){
-      lbFile->clear();
-      lbDirectory->clear();
-    }else{
-      lbFile->setText(fileInfo.fileName());
-      lbDirectory->setText(fileInfo.absoluteDir().path());
-    }
-  }else{
-    lbConnection->clear();
-    lbFile->clear();
-    lbDirectory->clear();
-    cbTable->clear();
-  }*/
 }
 
 void mdtSqlCopierCodecSettingsWidget::selectSqliteDatabase()

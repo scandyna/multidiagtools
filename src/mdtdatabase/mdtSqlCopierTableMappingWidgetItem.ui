@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>mdtSqlTableMappingWidgetItem</class>
- <widget class="QWidget" name="mdtSqlTableMappingWidgetItem">
+ <class>mdtSqlCopierTableMappingWidgetItem</class>
+ <widget class="QWidget" name="mdtSqlCopierTableMappingWidgetItem">
   <property name="geometry">
    <rect>
     <x>0</x>

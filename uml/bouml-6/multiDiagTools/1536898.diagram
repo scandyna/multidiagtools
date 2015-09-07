@@ -2,11 +2,11 @@ format 209
 
 classcanvas 128002 class_ref 1773570 // mdtSqlCopierTableMapping
   classdiagramsettings member_max_width 0 end
-  xyz 5 678 2000
+  xyz 8 595 2000
 end
-classcanvas 128130 class_ref 1827842 // mdtSqlTableMappingWidget
+classcanvas 128130 class_ref 1827842 // mdtSqlCopierTableMappingWidget
   classdiagramsettings member_max_width 0 end
-  xyz 22 131 2000
+  xyz 10 97 2000
 end
 classcanvas 128258 class_ref 316162 // QWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
@@ -16,21 +16,25 @@ classcanvas 128514 class_ref 1827970 // Ui::mdtSqlTableMappingWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 230 15 2000
 end
-classcanvas 129282 class_ref 1834626 // mdtSqlTableMappingWidgetItem
+classcanvas 129282 class_ref 1834626 // mdtSqlCopierTableMappingWidgetItem
   classdiagramsettings member_max_width 0 end
-  xyz 229 306 2000
+  xyz 446 307 2000
 end
 classcanvas 129538 class_ref 316162 // QWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 591 80 2000
+  xyz 828 41 2000
 end
 classcanvas 129794 class_ref 1841154 // Ui::mdtSqlTableMappingWidgetItem
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 596 27 2000
+  xyz 914 42 2000
 end
-classcanvas 130434 class_ref 1821314 // mdtSqlFieldMappingDialog
-  classdiagramsettings hide_attributes yes hide_operations no member_max_width 0 end
-  xyz 149 424 3005
+classcanvas 130434 class_ref 1821314 // mdtSqlCopierFieldMappingDialog
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 617 117 3005
+end
+classcanvas 131458 class_ref 1880962 // mdtSqlCopierCodecSettingsWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 297 435 2006
 end
 relationcanvas 128386 relation_ref 2153218 // <generalisation>
   decenter_begin 267
@@ -46,11 +50,11 @@ relationcanvas 128642 relation_ref 2153346 // <generalisation>
 end
 relationcanvas 129410 relation_ref 2160130 // <composition>
   geometry HV
-  decenter_end 609
-  from ref 128130 z 2001 to point 573 197
+  decenter_end 341
+  from ref 128130 z 2001 to point 664 187
   line 130178 z 2001 to ref 129282
   no_role_a no_role_b
-  multiplicity_a_pos 560 283 3000 multiplicity_b_pos 470 207 3000
+  multiplicity_a_pos 651 284 3000 multiplicity_b_pos 550 197 3000
 end
 relationcanvas 129666 relation_ref 2160258 // <generalisation>
   decenter_begin 692
@@ -72,11 +76,17 @@ relationcanvas 130306 relation_ref 2166914 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130562 relation_ref 2167042 // <dependency>
-  geometry VH
-  decenter_begin 189
-  from ref 128130 z 3006 to point 102 535
-  line 131074 z 3006 to ref 130434
+  decenter_begin 227
+  from ref 128130 z 3006 to ref 130434
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131714 relation_ref 2214786 // <directional composition>
+  geometry VH
+  decenter_begin 450
+  from ref 128130 z 2007 to point 246 504
+  line 131842 z 2007 to ref 131458
+  no_role_a no_role_b
+  multiplicity_a_pos 279 514 3000 no_multiplicity_b
 end
 end

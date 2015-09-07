@@ -18,49 +18,47 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_TABLE_MAPPING_WIDGET_H
-#define MDT_SQL_TABLE_MAPPING_WIDGET_H
+#ifndef MDT_SQL_COPIER_FIELD_MAPPING_H
+#define MDT_SQL_COPIER_FIELD_MAPPING_H
 
-#include "ui_mdtSqlTableMappingWidget.h"
-#include <QWidget>
-
-class mdtSqlTableMappingWidgetItem;
-class QVBoxLayout;
-
-/*! \brief Widget that provides edition of mapping between source and destination tables
+/*! \brief Field mapping data
+ *
+ * \sa mdtSqlFieldMappingDialog
  */
-class mdtSqlTableMappingWidget : public QWidget, Ui::mdtSqlTableMappingWidget
+struct mdtSqlCopierFieldMapping
 {
- friend class mdtSqlTableMappingWidgetItem;
-
- Q_OBJECT
-
- public:
-
-  /*! \brief Constructor
+  /*! \brief Source field index
    */
-  mdtSqlTableMappingWidget(QWidget *parent = nullptr);
+  int sourceFieldIndex;
 
- private slots:
-
-  /*! \brief Edit a field mapping item
+  /*! \brief Destination field index
    */
-  void addFieldMapping();
+  int destinationFieldIndex;
 
- private:
-
-  /*! \brief Edit a field mapping
+  /*! \brief Default constructor
    */
-  void editFieldMapping(mdtSqlTableMappingWidgetItem *item);
+  mdtSqlCopierFieldMapping()
+   : sourceFieldIndex(-1),
+     destinationFieldIndex(-1)
+  {
+  }
 
-  /*! \brief Edit a field mapping item
+  /*! \brief Check if mapping data is null
+   *
+   * Mapping data is null if source or destination field index is < 0
    */
-  void removeFieldMapping(mdtSqlTableMappingWidgetItem *item);
+  bool isNull() const
+  {
+    return ( (sourceFieldIndex < 0) || (destinationFieldIndex < 0) );
+  }
 
-  Q_DISABLE_COPY(mdtSqlTableMappingWidget)
-
-  QWidget *pvItemsContainerWidget;
-  QVBoxLayout *pvItemsContainerLayout;
+  /*! \brief Clear
+   */
+  void clear()
+  {
+    sourceFieldIndex = -1;
+    destinationFieldIndex = -1;
+  }
 };
 
-#endif // #ifndef MDT_SQL_TABLE_MAPPING_WIDGET_H
+#endif // MDT_SQL_COPIER_FIELD_MAPPING_H

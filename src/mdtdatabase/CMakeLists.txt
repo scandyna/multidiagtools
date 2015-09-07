@@ -35,6 +35,10 @@ set (SOURCES_FILES
           mdtSqlTransaction.cpp
           mdtSqlForeignKeySetting.cpp
           
+          mdtAbstractSqlCopierCodec.cpp
+          mdtSqlCopierCodecSqlite.cpp
+          mdtSqlCopierCodec.cpp
+          
           mdtSqlCopierCodecSettingsWidget.cpp
           
           mdtSqlSchemaTable.cpp
@@ -42,9 +46,11 @@ set (SOURCES_FILES
           mdtSqlTableSetupWidget.cpp
           mdtSqlFieldSetupWidget.cpp
           mdtSqlFieldSetupDialog.cpp
-          mdtSqlFieldMappingDialog.cpp
-          mdtSqlTableMappingWidget.cpp
-          mdtSqlTableMappingWidgetItem.cpp
+          
+          mdtSqlCopierFieldMappingDialog.cpp
+          
+          mdtSqlCopierTableMappingWidget.cpp
+          mdtSqlCopierTableMappingWidgetItem.cpp
     )
 
 # Platform specific files

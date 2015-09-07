@@ -18,32 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtSqlTableMappingWidgetItem.h"
-#include "mdtSqlTableMappingWidget.h"
-#include <QToolButton>
+#include "mdtAbstractSqlCopierCodec.h"
+#include <QObject>
 
-mdtSqlTableMappingWidgetItem::mdtSqlTableMappingWidgetItem(QWidget* parent, mdtSqlTableMappingWidget *owner)
- : QWidget(parent),
-   pvOwner(owner)
+mdtAbstractSqlCopierCodec::mdtAbstractSqlCopierCodec()
 {
-  Q_ASSERT(pvOwner != nullptr);
-
-  setupUi(this);
-  connect(tbEditFieldMapping, &QToolButton::clicked, this, &mdtSqlTableMappingWidgetItem::editFieldMapping);
-  connect(tbRemoveFieldMapping, &QToolButton::clicked, this, &mdtSqlTableMappingWidgetItem::removeFieldMapping);
 }
 
-void mdtSqlTableMappingWidgetItem::setSeparationLineVisible(bool visible)
+mdtAbstractSqlCopierCodec::~mdtAbstractSqlCopierCodec()
 {
-  pvSeparationLine->setVisible(visible);
 }
 
-void mdtSqlTableMappingWidgetItem::editFieldMapping()
+QString mdtAbstractSqlCopierCodec::tr(const char* sourceText, const char* disambiguation, int n)
 {
-  pvOwner->editFieldMapping(this);
-}
-
-void mdtSqlTableMappingWidgetItem::removeFieldMapping()
-{
-  pvOwner->removeFieldMapping(this);
+  return QObject::tr(sourceText, disambiguation, n);
 }

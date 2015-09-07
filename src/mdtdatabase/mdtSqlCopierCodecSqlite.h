@@ -18,48 +18,35 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_TABLE_MAPPING_WIDGET_ITEM_H
-#define MDT_SQL_TABLE_MAPPING_WIDGET_ITEM_H
+#ifndef MDT_SQL_COPIER_CODEC_SQLITE_H
+#define MDT_SQL_COPIER_CODEC_SQLITE_H
 
-#include "ui_mdtSqlTableMappingWidgetItem.h"
-#include <QWidget>
+#include "mdtAbstractSqlCopierCodec.h"
+#include <QSqlDatabase>
 
-class mdtSqlTableMappingWidget;
-
-/*! \brief Item of mdtSqlTableMappingWidget
+/*! \brief SQL copier codec SQLite implementation
  */
-class mdtSqlTableMappingWidgetItem : public QWidget, Ui::mdtSqlTableMappingWidgetItem
+class mdtSqlCopierCodecSqlite : public mdtAbstractSqlCopierCodec
 {
  public:
 
-  /*! \brief Constructor
+  /*! \brief Set codec settings
    *
-   * \param parent Parent widget
-   * \param owner The container that creates this item
-   * \pre owner must be a valid pointer
+   * \pre cs type must be mdtSqlCopierCodecSettings::SqliteCodec
    */
-  mdtSqlTableMappingWidgetItem(QWidget *parent, mdtSqlTableMappingWidget *owner);
+  void setSettings(const mdtSqlCopierCodecSettings & cs)
+  {
+    Q_ASSERT(cs.type() == mdtSqlCopierCodecSettings::SqliteCodec);
+    pvSettings = cs;
+  }
 
-  /*! \brief Set separation line visible
+  /*! \brief Open target
    */
-  void setSeparationLineVisible(bool visible);
-
- private slots:
-
-  /*! \brief Edit field mapping
-   */
-  void editFieldMapping();
-
-  /*! \brief Remove field mapping
-   */
-  void removeFieldMapping();
+  bool openTarget();
 
  private:
 
-  Q_DISABLE_COPY(mdtSqlTableMappingWidgetItem)
-
-  mdtSqlTableMappingWidget *pvOwner;
+  QSqlDatabase pvDatabase;
 };
 
-#endif // #ifndef MDT_SQL_TABLE_MAPPING_WIDGET_ITEM_H
-
+#endif // #ifndef MDT_SQL_COPIER_CODEC_SQLITE_H

@@ -63,7 +63,7 @@ class mdtSqlFieldSetupWidget : public QWidget, Ui::mdtSqlFieldSetupWidget
 
   /*! \brief Constructor
    */
-  mdtSqlFieldSetupWidget(QWidget *parent);
+  mdtSqlFieldSetupWidget(QWidget *parent = nullptr);
 
   /*! \brief Set edition mode
    */
@@ -84,6 +84,14 @@ class mdtSqlFieldSetupWidget : public QWidget, Ui::mdtSqlFieldSetupWidget
   /*! \brief Set given field index as selected one
    */
   void setField(int fieldIndex);
+
+  /*! \brief Get currently selected field name
+   */
+  QString fieldName() const;
+
+  /*! \brief Get currently selected field index
+   */
+  int fieldIndex() const;
 
   /*! \brief Set setup data
    */

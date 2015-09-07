@@ -39,25 +39,12 @@ class mdtSqlCopierCodecSettings
     ClipboardCodec  /*!< Clipboard codec */
   };
 
-  /*! \brief Construct a null codec settings
-   */
-//   mdtSqlCopierCodecSettings()
-//    : pvType(UnknownCodec)
-//   {
-//   }
-
   /*! \brief Construct a codec settings of given type
    */
   mdtSqlCopierCodecSettings(CodecType type = UnknownCodec)
    : pvType(type)
   {
   }
-
-  /*! \brief Destructor
-   */
-//   virtual ~mdtSqlCopierCodecSettings()
-//   {
-//   }
 
   /*! \brief Set codec type
    */
@@ -148,15 +135,6 @@ class mdtSqlCopierCodecSettings
   {
     return pvTableName;
   }
-
- protected:
-
-  /*! \brief Constructor
-   */
-//   mdtSqlCopierCodecSettings(CodecType type)
-//    : pvType(type)
-//   {
-//   }
 
  private:
 

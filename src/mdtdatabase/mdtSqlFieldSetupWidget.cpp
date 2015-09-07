@@ -84,6 +84,16 @@ void mdtSqlFieldSetupWidget::setField(int fieldIndex)
   cbField->setCurrentIndex(fieldIndex);
 }
 
+QString mdtSqlFieldSetupWidget::fieldName() const
+{
+  return cbField->currentText();
+}
+
+int mdtSqlFieldSetupWidget::fieldIndex() const
+{
+  return cbField->currentIndex();
+}
+
 void mdtSqlFieldSetupWidget::updateFieldParameters(int cbFieldIndex)
 {
   QSqlField field = pvTabledSchemaModel->field(cbFieldIndex);

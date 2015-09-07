@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>mdtSqlTableMappingWidget</class>
- <widget class="QWidget" name="mdtSqlTableMappingWidget">
+ <class>mdtSqlCopierTableMappingWidget</class>
+ <widget class="QWidget" name="mdtSqlCopierTableMappingWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -35,7 +35,7 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="mdtSqlCopierCodecSettingsWidget" name="wDestinationCodecSettings_2" native="true"/>
+         <widget class="mdtSqlCopierCodecSettingsWidget" name="wDestinationCodecSettings" native="true"/>
         </item>
        </layout>
       </widget>

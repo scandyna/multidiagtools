@@ -39,6 +39,8 @@ class mdtSqlCopierTest : public mdtTest
   void codecSettingsTest();
   void codecSettingsWidgetTest();
 
+  void codecTest();
+
   void sqlFieldSetupDataTest();
 
   void fieldMappingDataTest();

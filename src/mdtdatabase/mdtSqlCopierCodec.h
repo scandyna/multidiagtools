@@ -18,47 +18,56 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_FIELD_MAPPING_DATA_H
-#define MDT_SQL_FIELD_MAPPING_DATA_H
+#ifndef MDT_SQL_COPIER_CODEC_H
+#define MDT_SQL_COPIER_CODEC_H
 
-/*! \brief Field mapping data
- *
- * \sa mdtSqlFieldMappingDialog
+#include "mdtSqlCopierCodecSettings.h"
+#include "mdtError.h"
+#include <QString>
+#include <QStringList>
+#include <memory>
+
+class mdtAbstractSqlCopierCodec;
+
+/*! \brief SQL copier codec
  */
-struct mdtSqlFieldMappingData
+class mdtSqlCopierCodec
 {
-  /*! \brief Source field index
-   */
-  int sourceFieldIndex;
+ public:
 
-  /*! \brief Destination field index
+  /*! \brief Constructor
    */
-  int destinationFieldIndex;
+  mdtSqlCopierCodec();
 
-  /*! \brief Default constructor
+  /*! \internal Disable copy
    */
-  mdtSqlFieldMappingData()
-   : sourceFieldIndex(-1),
-     destinationFieldIndex(-1)
-  {
-  }
+  mdtSqlCopierCodec(const mdtSqlCopierCodec &) = delete;
 
-  /*! \brief Check if mapping data is null
+  /*! \brief Set codec settings
    *
-   * Mapping data is null if source or destination field index is < 0
+   * Internally, a instance of the concrete class, regarding cs type, is created if needed.
    */
-  bool isNull() const
-  {
-    return ( (sourceFieldIndex < 0) || (destinationFieldIndex < 0) );
-  }
+  void setSettings(const mdtSqlCopierCodecSettings & cs);
 
-  /*! \brief Clear
+  /*! \brief Get settings
    */
-  void clear()
-  {
-    sourceFieldIndex = -1;
-    destinationFieldIndex = -1;
-  }
+  mdtSqlCopierCodecSettings settings() const;
+
+  /*! \brief Open target regarding settings
+   */
+  bool openTarget();
+
+  /*! \brief Get field names list
+   */
+  QStringList fieldNameList() const;
+
+  /*! \brief Get last error
+   */
+  mdtError lastError() const;
+
+ private:
+
+  std::unique_ptr<mdtAbstractSqlCopierCodec> pvImpl;
 };
 
-#endif // MDT_SQL_FIELD_MAPPING_DATA_H
+#endif // #ifndef MDT_SQL_COPIER_CODEC_H

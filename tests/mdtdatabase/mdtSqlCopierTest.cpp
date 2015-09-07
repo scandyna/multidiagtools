@@ -25,11 +25,12 @@
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlRecord.h"
 #include "mdtSqlTransaction.h"
-#include "mdtSqlFieldMappingDialog.h"
-#include "mdtSqlTableMappingWidgetItem.h"
-#include "mdtSqlTableMappingWidget.h"
+#include "mdtSqlCopierFieldMappingDialog.h"
+#include "mdtSqlCopierTableMappingWidgetItem.h"
+#include "mdtSqlCopierTableMappingWidget.h"
+#include "mdtAbstractSqlCopierCodec.h"
+#include "mdtSqlCopierCodec.h"
 #include "mdtSqlCopierCodecSettings.h"
-///#include "mdtSqlCopierSqliteDatabaseTableCodecSettings.h"
 #include "mdtSqlCopierCodecSettingsWidget.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
@@ -109,6 +110,52 @@ void mdtSqlCopierTest::codecSettingsWidgetTest()
   }
 }
 
+void mdtSqlCopierTest::codecTest()
+{
+  mdtSqlCopierCodec codec;
+  mdtSqlCopierCodecSettings cs;
+
+  // Initial state
+  QVERIFY(codec.settings().type() == mdtSqlCopierCodecSettings::UnknownCodec);
+  
+  /*
+   * Check changing settings
+   */
+  // Unknown codec
+  cs.clear();
+  cs.setCodecType(mdtSqlCopierCodecSettings::UnknownCodec);
+  codec.setSettings(cs);
+  QVERIFY(codec.settings().type() == mdtSqlCopierCodecSettings::UnknownCodec);
+  QVERIFY(!codec.openTarget());
+  // Set SQLite codec
+  cs.clear();
+  cs.setCodecType(mdtSqlCopierCodecSettings::SqliteCodec);
+  codec.setSettings(cs);
+  QVERIFY(codec.settings().type() == mdtSqlCopierCodecSettings::SqliteCodec);
+  // Change settings but keep SQLite codec
+  cs.setConnectionName("cnn1");
+  codec.setSettings(cs);
+  QVERIFY(codec.settings().type() == mdtSqlCopierCodecSettings::SqliteCodec);
+  QCOMPARE(codec.settings().connectionName(), QString("cnn1"));
+  /*
+   * Check opening a SQLite table
+   */
+  QVERIFY(pvDatabaseManager.database().isOpen());
+  // Setup
+  cs.clear();
+  cs.setCodecType(mdtSqlCopierCodecSettings::SqliteCodec);
+  cs.setConnectionName(pvDatabaseManager.database().connectionName());
+  cs.setFilePath(pvDatabaseManager.database().databaseName());
+  cs.setTableName("Client_tbl");
+  codec.setSettings(cs);
+  // Open target
+  QVERIFY(codec.openTarget());
+  // Check found attributes
+  QCOMPARE(codec.fieldNameList().size(), 2);
+  QCOMPARE(codec.fieldNameList().at(0), QString("Id_PK"));
+  QCOMPARE(codec.fieldNameList().at(1), QString("Name"));
+}
+
 
 void mdtSqlCopierTest::sqlFieldSetupDataTest()
 {
@@ -138,7 +185,7 @@ void mdtSqlCopierTest::sqlFieldSetupDataTest()
 
 void mdtSqlCopierTest::fieldMappingDataTest()
 {
-  mdtSqlFieldMappingData data;
+  mdtSqlCopierFieldMapping data;
 
   // Initial state
   QCOMPARE(data.sourceFieldIndex, -1);
@@ -158,11 +205,18 @@ void mdtSqlCopierTest::fieldMappingDataTest()
 
 void mdtSqlCopierTest::fieldMappingDialogTest()
 {
-  mdtSqlFieldMappingDialog dialog;
-  mdtSqlFieldMappingData mapping;
+  mdtSqlCopierFieldMappingDialog dialog;
+  mdtSqlCopierFieldMapping mapping;
+  mdtSqlCopierCodecSettings cs;
 
-  QVERIFY(dialog.setSourceTable("Client_tbl", pvDatabaseManager.database()));
-  QVERIFY(dialog.setDestinationTable("Client2_tbl", pvDatabaseManager.database()));
+  cs.setCodecType(mdtSqlCopierCodecSettings::SqliteCodec);
+  cs.setConnectionName(pvDatabaseManager.database().connectionName());
+  cs.setTableName("Client_tbl");
+  QVERIFY(dialog.setSource(cs));
+//   QVERIFY(dialog.setSourceTable("Client_tbl", pvDatabaseManager.database()));
+//   QVERIFY(dialog.setDestinationTable("Client2_tbl", pvDatabaseManager.database()));
+  cs.setTableName("Client2_tbl");
+  QVERIFY(dialog.setDestination(cs));
   mapping.sourceFieldIndex = 1;
   mapping.destinationFieldIndex = 1;
   dialog.setMapping(mapping);
@@ -194,8 +248,8 @@ void mdtSqlCopierTest::fieldMappingDialogTest()
 
 void mdtSqlCopierTest::tableMappingWidgetItemTest()
 {
-  mdtSqlTableMappingWidget tmw;
-  mdtSqlTableMappingWidgetItem item(nullptr, &tmw);
+  mdtSqlCopierTableMappingWidget tmw;
+  mdtSqlCopierTableMappingWidgetItem item(nullptr, &tmw);
 
   item.show();
 
@@ -209,7 +263,7 @@ void mdtSqlCopierTest::tableMappingWidgetItemTest()
 
 void mdtSqlCopierTest::tableMappingWidgetTest()
 {
-  mdtSqlTableMappingWidget tmw;
+  mdtSqlCopierTableMappingWidget tmw;
 
   tmw.show();
 
