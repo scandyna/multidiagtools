@@ -58,6 +58,50 @@ class mdtSqlCopierTableMapping
     return pvDestination;
   }
 
+  /*! \brief Add a field mapping
+   */
+  void addFieldMapping(const mdtSqlCopierFieldMapping & fm)
+  {
+    pvFieldMappingList.append(fm);
+  }
+
+  /*! \brief Get count of field mapping
+   */
+  int fieldMappingCount() const
+  {
+    return pvFieldMappingList.size();
+  }
+
+  /*! \brief Set field mapping of given index
+   *
+   * \pre index must be >= 0 and < fieldMappingCount()
+   */
+  void setFieldMapping(int index, const mdtSqlCopierFieldMapping & fm)
+  {
+    Q_ASSERT( (index >= 0) && (index < pvFieldMappingList.size()) );
+    pvFieldMappingList[index] = fm;
+  }
+
+  /*! \brief Get field mapping of given index
+   *
+   * \pre index must be >= 0 and < fieldMappingCount()
+   */
+  mdtSqlCopierFieldMapping fieldMappingAt(int index) const
+  {
+    Q_ASSERT( (index >= 0) && (index < pvFieldMappingList.size()) );
+    return pvFieldMappingList.at(index);
+  }
+
+  /*! \brief Remove field mapping at given index
+   *
+   * \pre index must be >= 0 and < fieldMappingCount()
+   */
+  void removeFieldMappingAt(int index)
+  {
+    Q_ASSERT( (index >= 0) && (index < pvFieldMappingList.size()) );
+    pvFieldMappingList.removeAt(index);
+  }
+
   /*! \brief Set field mapping list
    */
   void setFieldMappingList(const QVector<mdtSqlCopierFieldMapping> & fmList)

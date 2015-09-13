@@ -28,6 +28,10 @@ classcanvas 129922 class_ref 1894402 // mdtSqlCopierCodec
   classdiagramsettings member_max_width 0 end
   xyz 17 165 2000
 end
+note 130178 "Should remember if database was allready open,
+and keep it open.
+If not, it should also close it in destructor."
+  xyzwh 100 622 2000 397 91
 relationcanvas 128770 relation_ref 2214146 // <generalisation>
   geometry VHV unfixed
   from ref 128386 z 2001 to point 269 408
@@ -61,4 +65,6 @@ relationcanvas 130050 relation_ref 2221442 // <directional composition>
   no_role_a no_role_b
   multiplicity_a_pos 418 231 3000 no_multiplicity_b
 end
+line 130306 -_-_
+  from ref 130178 z 2001 to ref 128386
 end

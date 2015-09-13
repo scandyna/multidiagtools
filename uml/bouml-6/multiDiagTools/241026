@@ -1,6 +1,6 @@
 format 209
 "Ideas" // mdtdatabase::Ideas
-  revision 31
+  revision 33
   modified_by 2 "philippe"
   // class settings
   
@@ -444,7 +444,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     class 1887874 "mdtSqlCopierCodecClipboard"
@@ -833,6 +832,68 @@ ${inlines}
 	MysqlColumn
       end
 
+      operation 2975106 "setSource"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "cs" type class_ref 1874434 // mdtSqlCopierCodecSettings
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2975234 "source"
+	public return_type class_ref 1874434 // mdtSqlCopierCodecSettings
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2975362 "setDestination"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "cs" type class_ref 1874434 // mdtSqlCopierCodecSettings
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2975490 "destination"
+	public return_type class_ref 1874434 // mdtSqlCopierCodecSettings
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 2788482 "fieldMappingList"
 	stereotype "QVector"
 	public return_type class_ref 1772930 // mdtSqlCopierFieldMapping
@@ -865,10 +926,75 @@ ${inlines}
 	
       end
 
-      operation 2806274 "addMapping"
-	public explicit_return_type "bool"
+      operation 2806274 "addFieldMapping"
+	public explicit_return_type "void"
 	nparams 1
-	  param in name "mapping" type class_ref 1772930 // mdtSqlCopierFieldMapping
+	  param in name "fm" type class_ref 1772930 // mdtSqlCopierFieldMapping
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2975618 "fieldMappingCount"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2975746 "setFieldMapping"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "index" explicit_type "int"
+	  param in name "fm" type class_ref 1772930 // mdtSqlCopierFieldMapping
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2975874 "fieldMappingAt"
+	public return_type class_ref 1772930 // mdtSqlCopierFieldMapping
+	nparams 1
+	  param in name "index" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2976002 "setFieldMappingList"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "fmList" type class_ref 1772930 // mdtSqlCopierFieldMapping
+	multiplicity "*"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -954,11 +1080,27 @@ ${inlines}
 	    classrelation_ref 2217346 // <unidirectional association>
 	  b parent class_ref 1874434 // mdtSqlCopierCodecSettings
       end
+
+      operation 2976386 "removeFieldMappingAt"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "index" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 1536898 "TableMappingWidget"
       classdiagramsettings draw_all_relations no member_max_width 0 end
-      size A4-Landscape
+      size A3
     end
 
     class 1827842 "mdtSqlCopierTableMappingWidget"
@@ -1003,7 +1145,7 @@ ${inlines}
 
       classrelation 2183170 // <unidirectional association>
 	relation 2166914 --->
-	  a role_name "" private
+	  a role_name "" multiplicity "1" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 2183170 // <unidirectional association>
@@ -1139,6 +1281,37 @@ ${inlines}
 "
 	    classrelation_ref 2231042 // <directional composition>
 	  b parent class_ref 1880962 // mdtSqlCopierCodecSettingsWidget
+      end
+
+      operation 2976130 "addFieldMappingPv"
+	private explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2976258 "removeFieldMappingPv"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "widgetItem" type class_ref 1834626 // mdtSqlCopierTableMappingWidgetItem
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 

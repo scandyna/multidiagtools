@@ -19,11 +19,11 @@ end
 relationcanvas 131202 relation_ref 2201090 // <unidirectional association>
   from ref 128386 z 2006 to ref 129282
   no_role_a no_role_b
-  multiplicity_a_pos 304 275 3000 no_multiplicity_b
+  multiplicity_a_pos 260 434 3000 no_multiplicity_b
 end
 relationcanvas 131458 relation_ref 2097794 // <directional composition>
   from ref 128386 z 2007 to ref 131330
   no_role_a no_role_b
-  multiplicity_a_pos 517 282 3000 no_multiplicity_b
+  multiplicity_a_pos 589 401 3000 no_multiplicity_b
 end
 end

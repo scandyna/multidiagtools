@@ -26,6 +26,8 @@
 #include "mdtSqlCopierFieldMapping.h"
 #include "mdtError.h"
 #include <QWidget>
+#include <QVector>
+
 #include <vector>
 
 class mdtSqlCopierTableMappingWidgetItem;
@@ -63,7 +65,7 @@ class mdtSqlCopierTableMappingWidget : public QWidget, Ui::mdtSqlCopierTableMapp
 
   /*! \brief Edit a field mapping
    */
-  void editFieldMapping(mdtSqlCopierTableMappingWidgetItem *item);
+  void editFieldMapping(mdtSqlCopierTableMappingWidgetItem *widgetItem);
 
   /*! \brief Edit a field mapping item
    */
@@ -106,8 +108,21 @@ class mdtSqlCopierTableMappingWidget : public QWidget, Ui::mdtSqlCopierTableMapp
   
   
   /*! \brief Add field mapping
+   *
+   * - Create a new (empty) mdtSqlCopierFieldMapping and add it to pvTableMapping
+   * - Create a new mdtSqlCopierTableMappingWidgetItem and add it to pvFieldMappingWidgetItems
+   * \return Index of freshly added field mapping
+   * \post Index is valid
    */
-  void addFieldMapping(const mdtSqlCopierFieldMapping & fm, mdtSqlCopierTableMappingWidgetItem *widgetItem);
+  int addFieldMappingPv();
+
+  /*! \brief Remove field mapping refered by given widget item
+   *
+   * - Remove widgetItem from pvFieldMappingWidgetItems (and from layout)
+   * - Remove related field mapping from pvTableMapping
+   * \pre widgetItem must be valid and exist in pvFieldMappingWidgetItems
+   */
+  void removeFieldMappingPv(mdtSqlCopierTableMappingWidgetItem *widgetItem);
 
   /*! \brief Get field mapping of given index
    */
@@ -118,10 +133,15 @@ class mdtSqlCopierTableMappingWidget : public QWidget, Ui::mdtSqlCopierTableMapp
   void setFieldMappingAt(int index, const mdtSqlCopierFieldMapping & fm);
 
   /*! \brief Get mapping index of given widget item
+   *
+   * \pre item must be valid
+   * \post returned index is valid
    */
-  int fieldMappingIndex(mdtSqlCopierTableMappingWidgetItem *item);
+  int fieldMappingIndex(mdtSqlCopierTableMappingWidgetItem *widgetItem);
 
   /*! \brief Add n field mapping widget items
+   *
+   * Creates n new mdtSqlCopierTableMappingWidgetItem and add them to pvFieldMappingWidgetItems (and layout)
    */
   void addFieldMappingWidgetItems(int n);
 
@@ -132,6 +152,8 @@ class mdtSqlCopierTableMappingWidget : public QWidget, Ui::mdtSqlCopierTableMapp
   /*! \brief Update all field mapping widget items
    */
   void updateFieldMappingWidgetItems();
+
+  QVector<mdtSqlCopierTableMappingWidgetItem*> pvFieldMappingWidgetItems;
 };
 
 #endif // #ifndef MDT_SQL_COPIER_TABLE_MAPPING_WIDGET_H

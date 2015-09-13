@@ -40,7 +40,7 @@ mdtSqlCopierTableMappingWidget::mdtSqlCopierTableMappingWidget(QWidget* parent)
   pvItemsContainerLayout->addStretch(1);
   pvItemsContainerWidget->setLayout(pvItemsContainerLayout);
   saItems->setWidget(pvItemsContainerWidget);
-  connect(tbRemoveFieldMapping, &QToolButton::clicked, this, &mdtSqlCopierTableMappingWidget::addFieldMapping);
+  connect(tbAddFieldMapping, &QToolButton::clicked, this, &mdtSqlCopierTableMappingWidget::addFieldMapping);
   connect(wSourceCodecSettings, &mdtSqlCopierCodecSettingsWidget::settingsChanged, this, &mdtSqlCopierTableMappingWidget::updateSourceCodecSettings);
   connect(wDestinationCodecSettings, &mdtSqlCopierCodecSettingsWidget::settingsChanged, this, &mdtSqlCopierTableMappingWidget::updateDestinationCodecSettings);
 }
@@ -61,34 +61,36 @@ void mdtSqlCopierTableMappingWidget::updateDestinationCodecSettings(const mdtSql
 
 void mdtSqlCopierTableMappingWidget::addFieldMapping()
 {
-  Q_ASSERT(pvItemsContainerLayout->count() > 0);  // A stretch was added in constructor
+//   Q_ASSERT(pvItemsContainerLayout->count() > 0);  // A stretch was added in constructor
 
   // Disable source and destination codec settings
   wSourceCodecSettings->setEnabled(false);
   wDestinationCodecSettings->setEnabled(false);
   // Add new item
-  auto *item = new mdtSqlCopierTableMappingWidgetItem(this, this);
-  pvItemsContainerLayout->insertWidget(pvItemsContainerLayout->count() - 1, item);
-  pvFieldMappingItems.emplace_back(mdtSqlCopierFieldMapping(), item);
-  editFieldMapping(item);
+  addFieldMappingPv();
+//   auto *item = new mdtSqlCopierTableMappingWidgetItem(this, this);
+//   pvItemsContainerLayout->insertWidget(pvItemsContainerLayout->count() - 1, item);
+//   pvFieldMappingItems.emplace_back(mdtSqlCopierFieldMapping(), item);
+//   editFieldMapping(item);
 }
 
-void mdtSqlCopierTableMappingWidget::editFieldMapping(mdtSqlCopierTableMappingWidgetItem* item)
+void mdtSqlCopierTableMappingWidget::editFieldMapping(mdtSqlCopierTableMappingWidgetItem* widgetItem)
 {
-  Q_ASSERT(item != nullptr);
+  Q_ASSERT(widgetItem != nullptr);
 
   mdtSqlCopierFieldMappingDialog dialog(this);
-  std::vector<FieldMappingItem>::size_type fmItemIndex;
-  FieldMappingItem fmItem;
+  int index = fieldMappingIndex(widgetItem);
+//   std::vector<FieldMappingItem>::size_type fmItemIndex;
+//   FieldMappingItem fmItem;
 
   // Find field map item to update (and its index in vector)
-  for(fmItemIndex = 0; fmItemIndex < pvFieldMappingItems.size(); ++fmItemIndex){
-    if(pvFieldMappingItems[fmItemIndex].widget == item){
-      fmItem = pvFieldMappingItems[fmItemIndex];
-      break;
-    }
-  }
-  Q_ASSERT(fmItem.widget != nullptr);
+//   for(fmItemIndex = 0; fmItemIndex < pvFieldMappingItems.size(); ++fmItemIndex){
+//     if(pvFieldMappingItems[fmItemIndex].widget == item){
+//       fmItem = pvFieldMappingItems[fmItemIndex];
+//       break;
+//     }
+//   }
+//   Q_ASSERT(fmItem.widget != nullptr);
 
   // Setup dialog's source part
   if(!dialog.setSource(pvTableMapping.source())){
@@ -105,17 +107,18 @@ void mdtSqlCopierTableMappingWidget::editFieldMapping(mdtSqlCopierTableMappingWi
   /// \todo Find first field index that was not allready mapped
   ///dialog.setDestinationField(0);
   
-  dialog.setMapping(fmItem.mapping);
+//   dialog.setMapping(fmItem.mapping);
+  dialog.setMapping(pvTableMapping.fieldMappingAt(index));
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
   // Update
-  item->setSourceFieldName(dialog.sourceFieldName());
-  item->setDestinationFieldName(dialog.destinationFieldName());
-  fmItem.mapping = dialog.mapping();
-  pvFieldMappingItems[fmItemIndex] = fmItem;
-  // Rebuild table mapping
-  rebuildFieldMappingList();
+//   item->setSourceFieldName(dialog.sourceFieldName());
+//   item->setDestinationFieldName(dialog.destinationFieldName());
+//   fmItem.mapping = dialog.mapping();
+//   pvFieldMappingItems[fmItemIndex] = fmItem;
+//   // Rebuild table mapping
+//   rebuildFieldMappingList();
 }
 
 void mdtSqlCopierTableMappingWidget::removeFieldMapping(mdtSqlCopierTableMappingWidgetItem* item)
@@ -123,19 +126,24 @@ void mdtSqlCopierTableMappingWidget::removeFieldMapping(mdtSqlCopierTableMapping
   Q_ASSERT(item != nullptr);
 
   // Remove item
-  pvItemsContainerLayout->removeWidget(item);
-  for(auto it = pvFieldMappingItems.begin(); it != pvFieldMappingItems.end(); ++it){
-    if(it->widget == item){
-      pvFieldMappingItems.erase(it);
-      break;
-    }
-  }
-  delete item;
+  removeFieldMappingPv(item);
+//   pvItemsContainerLayout->removeWidget(item);
+//   for(auto it = pvFieldMappingItems.begin(); it != pvFieldMappingItems.end(); ++it){
+//     if(it->widget == item){
+//       pvFieldMappingItems.erase(it);
+//       break;
+//     }
+//   }
+//   delete item;
   // Re-enable source and destination codec settings widgets if no field mapping exists anymore
-  if(pvFieldMappingItems.empty()){
+  if(pvFieldMappingWidgetItems.isEmpty()){
     wSourceCodecSettings->setEnabled(true);
     wDestinationCodecSettings->setEnabled(true);
   }
+//   if(pvFieldMappingItems.empty()){
+//     wSourceCodecSettings->setEnabled(true);
+//     wDestinationCodecSettings->setEnabled(true);
+//   }
 }
 
 void mdtSqlCopierTableMappingWidget::rebuildFieldMappingList()
@@ -157,4 +165,63 @@ void mdtSqlCopierTableMappingWidget::displayError(const mdtError & error)
   msgBox.setDetailedText(error.systemText());
   msgBox.setIcon(error.levelIcon());
   msgBox.exec();
+}
+
+int mdtSqlCopierTableMappingWidget::addFieldMappingPv()
+{
+  Q_ASSERT(pvFieldMappingWidgetItems.size() == pvTableMapping.fieldMappingCount());
+
+  int index = pvFieldMappingWidgetItems.size();
+
+  addFieldMappingWidgetItems(1);
+  pvTableMapping.addFieldMapping(mdtSqlCopierFieldMapping());
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < pvTableMapping.fieldMappingCount());
+  Q_ASSERT(pvFieldMappingWidgetItems.size() == pvTableMapping.fieldMappingCount());
+
+  return index;
+}
+
+void mdtSqlCopierTableMappingWidget::removeFieldMappingPv(mdtSqlCopierTableMappingWidgetItem* widgetItem)
+{
+  Q_ASSERT(widgetItem != nullptr);
+
+  int index = fieldMappingIndex(widgetItem);
+
+  pvItemsContainerLayout->removeWidget(widgetItem);
+  pvTableMapping.removeFieldMappingAt(index);
+  pvFieldMappingWidgetItems.removeAt(index);
+  delete widgetItem;
+  Q_ASSERT(pvFieldMappingWidgetItems.size() == pvTableMapping.fieldMappingCount());
+}
+
+int mdtSqlCopierTableMappingWidget::fieldMappingIndex(mdtSqlCopierTableMappingWidgetItem* widgetItem)
+{
+  Q_ASSERT(widgetItem != nullptr);
+
+  int index = 0;
+
+  for(const auto *item : pvFieldMappingWidgetItems){
+    Q_ASSERT(item != nullptr);
+    if(item == widgetItem){
+      break;
+    }
+    ++index;
+  }
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < pvFieldMappingWidgetItems.size());
+  Q_ASSERT(index < pvTableMapping.fieldMappingCount());
+
+  return index;
+}
+
+void mdtSqlCopierTableMappingWidget::addFieldMappingWidgetItems(int n)
+{
+  Q_ASSERT(pvItemsContainerLayout->count() > 0);  // A stretch was added in constructor
+
+  for(int i = 0; i < n; ++i){
+    auto *item = new mdtSqlCopierTableMappingWidgetItem(this, this);
+    pvItemsContainerLayout->insertWidget(pvItemsContainerLayout->count() - 1, item);
+    pvFieldMappingWidgetItems.append(item);
+  }
 }

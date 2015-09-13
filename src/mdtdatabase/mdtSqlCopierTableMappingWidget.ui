@@ -62,7 +62,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QToolButton" name="tbRemoveFieldMapping">
+      <widget class="QToolButton" name="tbAddFieldMapping">
        <property name="text">
         <string>...</string>
        </property>
