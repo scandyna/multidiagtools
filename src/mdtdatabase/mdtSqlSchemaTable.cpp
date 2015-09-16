@@ -118,6 +118,20 @@ QSqlField mdtSqlSchemaTable::field(const QString & fieldName) const
   return QSqlField();
 }
 
+/*! \todo
+ *  see fieldTypeNameMySql() and fieldTypeNameSqlite() and define all properly.
+ */
+QString mdtSqlSchemaTable::fieldTypeName(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < pvFields.size());
+
+  if(pvDriverType.type() == mdtSqlDriverType::Unknown){
+    return QString();
+  }
+  return mdtSqlFieldType::nameFromType(pvFields.at(index).type(), pvDriverType.type());
+}
+
 void mdtSqlSchemaTable::addIndex(const QString & name, bool unique) 
 {
   if(pvIndexes.contains(name)){

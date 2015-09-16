@@ -71,42 +71,16 @@ class mdtSqlCopierTableMappingWidget : public QWidget, Ui::mdtSqlCopierTableMapp
    */
   void removeFieldMapping(mdtSqlCopierTableMappingWidgetItem *item);
 
-  /*! \brief Rebuild the field mapping list
-   */
-  void rebuildFieldMappingList();
-
   /*! \brief Display error
    */
   void displayError(const mdtError & error);
 
   Q_DISABLE_COPY(mdtSqlCopierTableMappingWidget)
 
-  QWidget *pvItemsContainerWidget;
-  QVBoxLayout *pvItemsContainerLayout;
-  /*
-   * To keep field mapping items and widget items coherent,
-   * we need a vector to store both.
-   * When a item is added or removed,
-   * we also rebuild pvTableMapping's vector
-   */
-  struct FieldMappingItem
-  {
-    FieldMappingItem(mdtSqlCopierFieldMapping m, mdtSqlCopierTableMappingWidgetItem *w)
-     : mapping(m), widget(w)
-    {
-      Q_ASSERT(widget != nullptr);
-    }
-    FieldMappingItem()
-     : widget(nullptr)
-    {
-    }
-    mdtSqlCopierFieldMapping mapping;
-    mdtSqlCopierTableMappingWidgetItem *widget;
-  };
-  std::vector<FieldMappingItem> pvFieldMappingItems;
   mdtSqlCopierTableMapping pvTableMapping;
-  
-  
+  QVector<mdtSqlCopierTableMappingWidgetItem*> pvFieldMappingWidgetItems;
+  QVBoxLayout *pvItemsContainerLayout;
+
   /*! \brief Add field mapping
    *
    * - Create a new (empty) mdtSqlCopierFieldMapping and add it to pvTableMapping
@@ -129,6 +103,8 @@ class mdtSqlCopierTableMappingWidget : public QWidget, Ui::mdtSqlCopierTableMapp
   mdtSqlCopierFieldMapping fieldMappingAt(int index) const;
 
   /*! \brief Update field mapping of given index
+   *
+   * Will also update related widget item
    */
   void setFieldMappingAt(int index, const mdtSqlCopierFieldMapping & fm);
 
@@ -153,7 +129,7 @@ class mdtSqlCopierTableMappingWidget : public QWidget, Ui::mdtSqlCopierTableMapp
    */
   void updateFieldMappingWidgetItems();
 
-  QVector<mdtSqlCopierTableMappingWidgetItem*> pvFieldMappingWidgetItems;
+  
 };
 
 #endif // #ifndef MDT_SQL_COPIER_TABLE_MAPPING_WIDGET_H

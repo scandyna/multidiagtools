@@ -37,6 +37,7 @@ set (SOURCES_FILES
           mdtSortFilterProxyModel.cpp
           mdtFormatProxyModel.cpp
           mdtFormatProxyModelSettings.cpp
+          mdtComboBoxItemDelegate.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp

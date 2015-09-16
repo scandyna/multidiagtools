@@ -2,6 +2,14 @@ format 209
 
 classcanvas 128002 class_ref 1814658 // mdtSqlFieldType
   classdiagramsettings member_max_width 0 end
-  xyz 134 169 2000
+  xyz 152 87 2000
+end
+classcanvas 128130 class_ref 1914370 // mdtSqlFieldTypeSelectionDelegate
+  classdiagramsettings member_max_width 0 end
+  xyz 303 690 2000
+end
+classcanvas 128258 class_ref 605570 // QStyledItemDelegate
+  classdiagramsettings member_max_width 0 end
+  xyz 107 408 2005
 end
 end

@@ -221,6 +221,25 @@ namespace mdtAlgorithms
   /*! \brief Get the string of longest line in given string
    */
   QString longestLineInString(const QString & str, const QString & sep = "\n");
+
+  /*! \brief Generate a random string
+   *
+   * \param length Length of the string to generate
+   * \note Internally qrand() is used, so this function is thread safe.
+   *       qsrand() should be called once before calling this function.
+   */
+  QString generateString(int length);
+
+  /*! \brief Generate a random string
+   *
+   * \param length Length of the string to generate
+   * \param excludeList List of strings that must be excluded.
+   *                    As long as the generated string matches one of these strings,
+   *                    a new one is generated.
+   * \note Internally qrand() is used, so this function is thread safe.
+   *       qsrand() should be called once before calling this function.
+   */
+  QString generateString(int length, const QStringList excludeList);
 }
 
 #endif  // #ifndef MDT_ALGORITHMS_H

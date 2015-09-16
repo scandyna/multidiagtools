@@ -41,12 +41,12 @@ class mdtDatabaseTest : public mdtTest
 
   void sqlSchemaTableTest();
   void sqlSchemaTableSqliteTest();
-  void sqlSchemaTableModelTest();
+  void sqlTableSchemaModelTest();
+
+  void sqlTableSetupWidgetTest();
 
   void sqlFieldSetupWidgetTest();
   void sqlFieldSetupDialogTest();
-
-  void sqlTableSetupWidgetTest();
 
   void connectionNameWidgetTest();
   void databaseSqliteTest();

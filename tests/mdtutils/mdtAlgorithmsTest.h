@@ -50,6 +50,10 @@ class mdtAlgorithmsTest : public mdtTest
   void splitStringTest();
 
   void longestLineInStringTest();
+
+  // String generation test
+  void generateStringTest();
+  void generateStringBenchmark();
 };
 
 #endif  // #ifndef MDT_ALGORITHMS_TEST_H

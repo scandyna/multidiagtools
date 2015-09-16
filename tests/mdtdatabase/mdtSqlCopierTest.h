@@ -40,6 +40,7 @@ class mdtSqlCopierTest : public mdtTest
   void codecSettingsWidgetTest();
 
   void codecTest();
+  void codecSqliteBenchmark();
 
   void sqlFieldSetupDataTest();
 

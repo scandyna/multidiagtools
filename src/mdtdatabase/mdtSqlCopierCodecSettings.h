@@ -86,6 +86,7 @@ class mdtSqlCopierCodecSettings
    * Connection name refers to QSqlDatabase connection name.
    *  This property has only sense for codecs that act on a database.
    */
+  [[deprecated]]
   void setConnectionName(const QString & cn)
   {
     pvConnectionName = cn;
@@ -95,6 +96,7 @@ class mdtSqlCopierCodecSettings
    *
    * \sa setConnectionName()
    */
+  [[deprecated]]
   QString connectionName() const
   {
     return pvConnectionName;

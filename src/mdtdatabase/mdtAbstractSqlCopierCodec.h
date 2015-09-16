@@ -36,7 +36,7 @@ class mdtAbstractSqlCopierCodec
    */
   mdtAbstractSqlCopierCodec();
 
-  /*! \internal Diable copy
+  /*! \internal Disable copy
    */
   mdtAbstractSqlCopierCodec(const mdtAbstractSqlCopierCodec &) = delete;
 
@@ -46,7 +46,8 @@ class mdtAbstractSqlCopierCodec
 
   /*! \brief Set codec settings
    *
-   * \pre cs type must match the concrete class type
+   * \pre cs type must match the concrete class type.
+   *      Some concrete subclass can requier other preconditions.
    */
   virtual void setSettings(const mdtSqlCopierCodecSettings & cs)
   {
@@ -64,10 +65,21 @@ class mdtAbstractSqlCopierCodec
   /*! \brief Open target regarding settings
    *
    * Default implementation does nothing and allways returns false.
+   *
+   * \note Subclass implementation must take care that this function can be called from another thread than main thread.
+   *       After target was open, field name list should be set using setFieldNameList().
    */
   virtual bool openTarget()
   {
     return false;
+  }
+
+  /*! \brief Close target and clear cached data
+   *
+   * Default implementation does nothing
+   */
+  virtual void close()
+  {
   }
 
   /*! \brief Get field names list
@@ -91,6 +103,13 @@ class mdtAbstractSqlCopierCodec
   void setFieldNameList(const QStringList & names)
   {
     pvFieldNameList = names;
+  }
+
+  /*! \brief Clear field name list
+   */
+  void clearFieldNameList()
+  {
+    pvFieldNameList.clear();
   }
 
   /*! \brief Codec settings

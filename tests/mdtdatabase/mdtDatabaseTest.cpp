@@ -470,6 +470,30 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   expectedSql = "DROP TABLE IF EXISTS 'sandbox'.'Client_tbl';\n";
   QCOMPARE(st.sqlForDropTable(), expectedSql);
 
+  /*
+   * Simple set/get tests (used by mdtSqlTableSchemaModel)
+   */
+  // Clear
+  st.clear();
+  QCOMPARE(st.fieldCount(), 0);
+  // Add a field
+  field = QSqlField();
+  field.setName("Id_PK");
+  field.setAutoValue(true);
+  st.addField(field, true);
+  // Get field attributes
+  QCOMPARE(st.fieldCount(), 1);
+  QCOMPARE(st.fieldName(0), QString("Id_PK"));
+  // Add a field
+  field = QSqlField();
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  st.addField(field, false);
+  // Get field attributes
+  QCOMPARE(st.fieldCount(), 2);
+  QCOMPARE(st.fieldName(1), QString("Name"));
+
 }
 
 void mdtDatabaseTest::sqlSchemaTableSqliteTest()
@@ -786,7 +810,7 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   QSqlDatabase::removeDatabase(db.connectionName());
 }
 
-void mdtDatabaseTest::sqlSchemaTableModelTest()
+void mdtDatabaseTest::sqlTableSchemaModelTest()
 {
   mdtSqlTableSchemaModel model;
   mdtSqlSchemaTable st;
@@ -795,6 +819,7 @@ void mdtDatabaseTest::sqlSchemaTableModelTest()
   QComboBox cb;
   QSqlField field;
 
+  st.setDriverName("QSQLITE");
   /*
    * Setup fields
    */
@@ -853,6 +878,22 @@ void mdtDatabaseTest::sqlSchemaTableModelTest()
   while(tableView.isVisible()){
     QTest::qWait(500);
   }
+}
+
+void mdtDatabaseTest::sqlTableSetupWidgetTest()
+{
+  mdtSqlTableSetupWidget tsw;
+
+  tsw.show();
+
+  /*
+   * Play
+   */
+  
+  while(tsw.isVisible()){
+    QTest::qWait(500);
+  }
+
 }
 
 void mdtDatabaseTest::sqlFieldSetupWidgetTest()
@@ -937,22 +978,6 @@ void mdtDatabaseTest::sqlFieldSetupDialogTest()
    * Play
    */
   dialog.exec();
-}
-
-void mdtDatabaseTest::sqlTableSetupWidgetTest()
-{
-  mdtSqlTableSetupWidget tsw;
-
-  tsw.show();
-
-  /*
-   * Play
-   */
-  
-  while(tsw.isVisible()){
-    QTest::qWait(500);
-  }
-
 }
 
 void mdtDatabaseTest::connectionNameWidgetTest()
@@ -1063,13 +1088,19 @@ void mdtDatabaseTest::databaseSqliteTest()
   QVERIFY(db2.isValid());
   QVERIFY(!db2.isOpen());
   QVERIFY(db2.database().databaseName().isEmpty());
+  // Currently, no connection refers to database that we want to create
+  QVERIFY(db2.getConnectionNameUsingDatabase(dbFileInfo).isEmpty());
   // Check creation with ovewriting existing file
   QVERIFY(db2.createDatabase(dbFileInfo, mdtSqlDatabaseSqlite::OverwriteExisting));
   QVERIFY(db2.isOpen());
   QCOMPARE(db2.database().databaseName(), dbFileInfo.absoluteFilePath());
+  // Now, cnn1 refers to freshly created database - Check with open database object
+  QCOMPARE(db2.getConnectionNameUsingDatabase(dbFileInfo), QString("cnn1"));
   // Close - must keep database name
   db2.close();
   QCOMPARE(db2.database().databaseName(), dbFileInfo.absoluteFilePath());
+  // As before, cnn1 refers to freshly created database - Check with closed database object
+  QCOMPARE(db2.getConnectionNameUsingDatabase(dbFileInfo), QString("cnn1"));
   // Check creation with failing on existing database file
   QVERIFY(!db2.createDatabase(dbFileInfo, mdtSqlDatabaseSqlite::FailIfExists));
   QVERIFY(!db2.isOpen());
@@ -1115,6 +1146,7 @@ void mdtDatabaseTest::databaseDialogSqliteTest()
   QSqlDatabase::addDatabase("QSQLITE", "cnn2");
   QSqlDatabase::addDatabase("QSQLITE", "cnn3");
   dialog->updateConnectionsList();
+  dialog->addNonEditableConnectionName(pvDatabase.connectionName());
   // Set connections and check
   dialog->setDatabase(QSqlDatabase::database("cnn2", false));
   QCOMPARE(dialog->database().database().connectionName(), QString("cnn2"));

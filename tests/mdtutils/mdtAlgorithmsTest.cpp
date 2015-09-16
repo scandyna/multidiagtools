@@ -596,6 +596,55 @@ void mdtAlgorithmsTest::splitStringTest()
   ///qDebug() << items;
 }
 
+void mdtAlgorithmsTest::longestLineInStringTest()
+{
+  QCOMPARE(longestLineInString(""), QString(""));
+  QCOMPARE(longestLineInString("A"), QString("A"));
+  QCOMPARE(longestLineInString("A\n"), QString("A"));
+  QCOMPARE(longestLineInString("A\nBC"), QString("BC"));
+  QCOMPARE(longestLineInString("AB\nC"), QString("AB"));
+  QCOMPARE(longestLineInString("AB\nC\nDEF"), QString("DEF"));
+}
+
+void mdtAlgorithmsTest::generateStringTest()
+{
+  QStringList excludeList;
+  QString str;
+
+  // Init
+  excludeList << "ABCD" << "1234" << "efgh";
+  qsrand(time(NULL));
+  // Generate and check
+  str = generateString(4, excludeList);
+  QCOMPARE(str.size(), 4);
+  QVERIFY(!excludeList.contains(str));
+  str = generateString(5, excludeList);
+  QCOMPARE(str.size(), 5);
+  QVERIFY(!excludeList.contains(str));
+  str = generateString(3, excludeList);
+  QCOMPARE(str.size(), 3);
+  QVERIFY(!excludeList.contains(str));
+  str = generateString(4, excludeList);
+  QCOMPARE(str.size(), 4);
+  QVERIFY(!excludeList.contains(str));
+}
+
+void mdtAlgorithmsTest::generateStringBenchmark()
+{
+  QStringList excludeList;
+  QString str;
+
+  // Init
+  excludeList << "ABCD" << "1234" << "efgh";
+  qsrand(time(NULL));
+
+  QBENCHMARK{
+    str = generateString(4, excludeList);
+  }
+  QCOMPARE(str.size(), 4);
+  QVERIFY(!excludeList.contains(str));
+}
+
 
 int main(int argc, char **argv)
 {
@@ -609,12 +658,3 @@ int main(int argc, char **argv)
   return QTest::qExec(&test, argc, argv);
 }
 
-void mdtAlgorithmsTest::longestLineInStringTest()
-{
-  QCOMPARE(longestLineInString(""), QString(""));
-  QCOMPARE(longestLineInString("A"), QString("A"));
-  QCOMPARE(longestLineInString("A\n"), QString("A"));
-  QCOMPARE(longestLineInString("A\nBC"), QString("BC"));
-  QCOMPARE(longestLineInString("AB\nC"), QString("AB"));
-  QCOMPARE(longestLineInString("AB\nC\nDEF"), QString("DEF"));
-}

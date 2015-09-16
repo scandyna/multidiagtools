@@ -29,6 +29,10 @@ mdtSqlCopierCodec::mdtSqlCopierCodec()
 {
 }
 
+mdtSqlCopierCodec::~mdtSqlCopierCodec()
+{
+}
+
 void mdtSqlCopierCodec::setSettings(const mdtSqlCopierCodecSettings & cs)
 {
   Q_ASSERT(pvImpl);
@@ -61,6 +65,12 @@ bool mdtSqlCopierCodec::openTarget()
 {
   Q_ASSERT(pvImpl);
   return pvImpl->openTarget();
+}
+
+void mdtSqlCopierCodec::close()
+{
+  Q_ASSERT(pvImpl);
+  pvImpl->close();
 }
 
 QStringList mdtSqlCopierCodec::fieldNameList() const

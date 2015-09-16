@@ -39,6 +39,10 @@ class mdtSqlCopierCodec
    */
   mdtSqlCopierCodec();
 
+  /*! \brief Destructor
+   */
+  ~mdtSqlCopierCodec();
+
   /*! \internal Disable copy
    */
   mdtSqlCopierCodec(const mdtSqlCopierCodec &) = delete;
@@ -56,6 +60,12 @@ class mdtSqlCopierCodec
   /*! \brief Open target regarding settings
    */
   bool openTarget();
+
+  /*! \brief Close target and clear cached data
+   *
+   * After call of this function, fieldNameList() will return a empty result.
+   */
+  void close();
 
   /*! \brief Get field names list
    */

@@ -104,11 +104,11 @@ QVariant mdtSqlTableSchemaModel::data(const QModelIndex & index, int role) const
   Q_ASSERT( (row >= 0) && (row < pvSchema.fieldCount()) );
   switch(index.column()){
     case NameIndex:
-      return pvSchema.fieldList().at(row).name();
+      return pvSchema.fieldName(row);
     case TypeIndex:
-      return pvSchema.fieldList().at(row).type();
+      return pvSchema.fieldTypeName(row);
     case LengthIndex:
-      return pvSchema.fieldList().at(row).length();
+      return pvSchema.fieldLength(row);
     case IsPkIndex:
       return isPartOfPrimaryKey(row);
   }

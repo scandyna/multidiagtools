@@ -1,43 +1,41 @@
-window_sizes 1280 952 330 944 899 0
+window_sizes 1280 957 395 879 904 0
 cleanlooks_style
 diagrams
   classdiagram_ref 1563010 // TableMapping
     944 899 100 4 0 0
-  active  classdiagram_ref 1536898 // TableMappingWidget
-    944 899 100 3 120 0
-  classdiagram_ref 1530370 // FieldMappingDialog
-    120 106 100 4 0 0
-  classdiagram_ref 1576066 // FieldMapping
-    120 106 100 4 0 0
   classdiagram_ref 1582594 // CopierCodec
     944 899 100 18 0 0
   classdiagram_ref 1569538 // CopierCodecSettings
-    120 106 100 18 0 192
+    120 106 100 18 0 125
+  classdiagram_ref 1595778 // SettingsOverview
+    120 106 90 18 0 0
+  usecasediagram_ref 1596034 // ImportCsvFile
+    120 106 100 4 0 0
+  usecasediagram_ref 1596290 // MigrateDbSchema
+    120 106 100 4 0 0
+  classdiagram_ref 1596162 // CopyDbTableOverview
+    120 106 100 4 0 0
+  classdiagram_ref 874370 // TableSchema
+    120 106 100 21 0 0
+  classdiagram_ref 1510402 // TableSchemaModel
+    120 106 100 4 132 0
+  classdiagram_ref 1523714 // SqlFieldType
+    120 106 100 4 0 0
+  classdiagram_ref 1059586 // mdtItemsSelectorDialog
+    120 106 100 4 0 0
+  classdiagram_ref 1602818 // mdtComboBoxItemDelegate
+    120 106 100 4 0 0
+  active  classdiagram_ref 1556482 // TableSetupWidget
+    879 904 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 2976386 // removeFieldMappingAt
+selected classdiagram_ref 1556482 // TableSetupWidget
 open
-  operation_ref 2967426 // setSettings
-  operation_ref 2968066 // settings
-  operation_ref 2967554 // settings
-  operation_ref 2967810 // close
-  attribute_ref 1951618 // Settings
-  class_ref 1887618 // mdtSqlCopierCodecSqlite
-  class_ref 1887746 // mdtSqlCopierCodecCsvFile
-  operation_ref 2975106 // setSource
-  operation_ref 2975362 // setDestination
-  operation_ref 2975490 // destination
-  operation_ref 2975618 // fieldMappingCount
-  operation_ref 2975746 // setFieldMapping
-  operation_ref 2975874 // fieldMappingAt
-  operation_ref 2976002 // setFieldMappingList
-  classrelation_ref 2217346 // <unidirectional association>
-  class_ref 1827842 // mdtSqlCopierTableMappingWidget
-  class_ref 1827970 // Ui::mdtSqlTableMappingWidget
-  class_ref 1841154 // Ui::mdtSqlTableMappingWidgetItem
-  class_ref 1787138 // mdtSqlCopierWidget
-  classdiagram_ref 1517058 // TableSandbox
+  classview_ref 781314 // FormatModel
+  classview_ref 813954 // ModelView
+  classview_ref 787842 // ImportExportCopy
   classview_ref 794370 // SqlSchema
-  classview_ref 800898 // sqlDatabase
+  attribute_ref 1965826 // SourceDatabase
+  attribute_ref 1965954 // DestinationDatabase
 end
 end

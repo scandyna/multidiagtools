@@ -38,6 +38,8 @@ class mdtWidgetsTest : public mdtTest
   void formatProxyModelSettingsTest();
   void formatProxyModelSettingsBenchmark();
   void formatProxyModelTest();
+
+  void comboBoxItemDelegateTest();
 };
 
 #endif // #ifndef MDT_WIDGETS_TEST_H

@@ -1,0 +1,36 @@
+format 209
+
+classcanvas 128002 class_ref 1907458 // user
+  simpleclassdiagramsettings end
+  xyz 13 323 2000
+end
+note 128386 "1. User selects source and destination database
+2. System lists available tables in source database and destination database
+3. User selects source and destinations tables
+4. User setups field mapping between source and destination tables:
+ - Manually
+ - Automatically by field names
+5. System does checks...
+6. User confirms
+7. System proceeds to copy.."
+  xyzwh 390 122 2000 427 231
+usecasecanvas 128514 usecase_ref 128130 // Copy DB table to a existing DB table
+  xyzwh 64 44 3005 343 81 label_xy 138 71
+end
+usecasecanvas 128898 usecase_ref 128258 // Copy DB table to a new DB table
+  xyzwh 103 404 3005 239 67 label_xy 128 426
+end
+note 129154 "1. User selects source and destination database
+2. System lists available tables in source database
+3. User selects source table
+4. fdfdgdfgfdg"
+  xyzwh 376 447 2000 429 253
+line 128642 ----
+  from ref 128002 z 3006 to ref 128514
+line 129026 ----
+  from ref 128002 z 3006 to ref 128898
+line 128770 -_-_
+  from ref 128386 z 3006 to ref 128514
+line 129282 -_-_
+  from ref 128898 z 3006 to ref 129154
+end

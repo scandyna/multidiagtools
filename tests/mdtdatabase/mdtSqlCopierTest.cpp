@@ -115,6 +115,31 @@ void mdtSqlCopierTest::codecTest()
   mdtSqlCopierCodec codec;
   mdtSqlCopierCodecSettings cs;
 
+  
+  // Sandbox
+//   QString filePath = pvDatabaseManager.database().databaseName();
+//   QSqlDatabase db1 = QSqlDatabase::addDatabase("QSQLITE", "cnn1");
+//   db1.setDatabaseName(filePath);
+//   db1.open();
+//   qDebug() << "db1 (" << db1.connectionName() << ", " << db1.databaseName() << ") is open: " << db1.isOpen();
+//   
+//   QSqlDatabase db2 = QSqlDatabase::addDatabase("QSQLITE", "cnn2");
+//   ///QSqlDatabase db2 = QSqlDatabase::database("cnn1", false);
+//   db2.setDatabaseName(filePath);
+//   db2.open();
+//   qDebug() << "db2 (" << db2.connectionName() << ", " << db2.databaseName() << ") is open: " << db2.isOpen();
+//   
+//   qDebug() << "Closing db1 ...";
+//   db1.close();
+//   qDebug() << "db1 (" << db1.connectionName() << ", " << db1.databaseName() << ") is open: " << db1.isOpen();
+//   qDebug() << "db2 (" << db2.connectionName() << ", " << db2.databaseName() << ") is open: " << db2.isOpen();
+//   
+//   qDebug() << "THD ID: " << QThread::currentThreadId();
+//   
+//   /// \todo provisoire !!
+//   return;
+  
+  
   // Initial state
   QVERIFY(codec.settings().type() == mdtSqlCopierCodecSettings::UnknownCodec);
   
@@ -140,11 +165,11 @@ void mdtSqlCopierTest::codecTest()
   /*
    * Check opening a SQLite table
    */
-  QVERIFY(pvDatabaseManager.database().isOpen());
+ /// QVERIFY(pvDatabaseManager.database().isOpen());
   // Setup
   cs.clear();
   cs.setCodecType(mdtSqlCopierCodecSettings::SqliteCodec);
-  cs.setConnectionName(pvDatabaseManager.database().connectionName());
+ /// cs.setConnectionName(pvDatabaseManager.database().connectionName());
   cs.setFilePath(pvDatabaseManager.database().databaseName());
   cs.setTableName("Client_tbl");
   codec.setSettings(cs);
@@ -154,6 +179,27 @@ void mdtSqlCopierTest::codecTest()
   QCOMPARE(codec.fieldNameList().size(), 2);
   QCOMPARE(codec.fieldNameList().at(0), QString("Id_PK"));
   QCOMPARE(codec.fieldNameList().at(1), QString("Name"));
+  
+  // Close
+  codec.close();
+  QCOMPARE(codec.fieldNameList().size(), 0);
+}
+
+void mdtSqlCopierTest::codecSqliteBenchmark()
+{
+  mdtSqlCopierCodec codec;
+  mdtSqlCopierCodecSettings cs;
+
+  cs.setCodecType(mdtSqlCopierCodecSettings::SqliteCodec);
+  cs.setFilePath(pvDatabaseManager.database().databaseName());
+  cs.setTableName("Client_tbl");
+  codec.setSettings(cs);
+  QBENCHMARK{
+    QVERIFY(codec.openTarget());
+    QCOMPARE(codec.fieldNameList().size(), 2);
+    codec.close();
+    QCOMPARE(codec.fieldNameList().size(), 0);
+  }
 }
 
 

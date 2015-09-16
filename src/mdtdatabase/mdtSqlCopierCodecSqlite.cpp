@@ -20,37 +20,35 @@
  ****************************************************************************/
 #include "mdtSqlCopierCodecSqlite.h"
 #include "mdtSqlSchemaTable.h"
+#include "mdtAlgorithms.h"
 #include <QSqlError>
 
 #include <QDebug>
 
+mdtSqlCopierCodecSqlite::~mdtSqlCopierCodecSqlite()
+{
+  close();
+}
+
 bool mdtSqlCopierCodecSqlite::openTarget()
 {
   auto cs = pvSettings;
+  QString connectionName;
 
-  qDebug() << "CNN: " << cs.connectionName() << " , db: " << cs.filePath();
-
-  // Get a database regarding connection name
-  if(pvDatabase.connectionName() != cs.connectionName()){
-    pvDatabase = QSqlDatabase::database(cs.connectionName(), false);
-  }
+  // Create a new connection
+  connectionName = mdtAlgorithms::generateString(5, QSqlDatabase::connectionNames());
+  Q_ASSERT(!QSqlDatabase::connectionNames().contains(connectionName));
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE", connectionName);
   // Set database name (file path)
-  if(pvDatabase.databaseName() != cs.filePath()){
-    if(pvDatabase.isOpen()){
-      pvDatabase.close();
-    }
-    pvDatabase.setDatabaseName(cs.filePath());
-  }
+  pvDatabase.setDatabaseName(cs.filePath());
   // Open database
-  if(!pvDatabase.isOpen()){
-    if(!pvDatabase.open()){
-      QSqlError error = pvDatabase.lastError();
-      pvLastError.setError(tr("Unable to open database") + " '" + cs.filePath() + "'", mdtError::Error);
-      pvLastError.setSystemError(error.number(), error.text());
-      MDT_ERROR_SET_SRC(pvLastError, "mdtSqlCopierCodecSqlite");
-      pvLastError.commit();
-      return false;
-    }
+  if(!pvDatabase.open()){
+    QSqlError error = pvDatabase.lastError();
+    pvLastError.setError(tr("Unable to open database") + " '" + cs.filePath() + "'", mdtError::Error);
+    pvLastError.setSystemError(error.number(), error.text());
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlCopierCodecSqlite");
+    pvLastError.commit();
+    return false;
   }
   // Check that requested table exists
   if(!pvDatabase.tables().contains(cs.tableName())){
@@ -72,4 +70,18 @@ bool mdtSqlCopierCodecSqlite::openTarget()
   setFieldNameList(fieldNames);
 
   return true;
+}
+
+void mdtSqlCopierCodecSqlite::close()
+{
+  QString connectionName = pvDatabase.connectionName();
+
+  if(pvDatabase.isOpen()){
+    pvDatabase.close();
+  }
+  pvDatabase = QSqlDatabase();
+  if(!connectionName.isEmpty()){
+    QSqlDatabase::removeDatabase(connectionName);
+  }
+  clearFieldNameList();
 }

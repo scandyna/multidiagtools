@@ -448,3 +448,26 @@ QString mdtAlgorithms::longestLineInString(const QString & str, const QString & 
 
   return strList.at(maxLenIndex);
 }
+
+QString mdtAlgorithms::generateString(int length)
+{
+  QString str(length, QChar());
+  static const char table[] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+  for(int i = 0; i < length; ++i){
+    str[i] = table[qrand() % (sizeof(table)-1)];
+  }
+
+  return str;
+}
+
+QString mdtAlgorithms::generateString(int length, const QStringList excludeList)
+{
+  QString str;
+
+  do{
+    str = generateString(length);
+  }while(excludeList.contains(str));
+
+  return str;
+}

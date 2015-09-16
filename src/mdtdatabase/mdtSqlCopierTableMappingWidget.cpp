@@ -23,6 +23,7 @@
 #include "mdtSqlCopierFieldMapping.h"
 #include "mdtSqlCopierFieldMappingDialog.h"
 ///#include "mdtSqlCopierCodecSettings.h"
+#include "mdtSqlCopierCodec.h"
 #include <QToolButton>
 #include <QVBoxLayout>
 #include <QMessageBox>
@@ -33,13 +34,13 @@
 
 mdtSqlCopierTableMappingWidget::mdtSqlCopierTableMappingWidget(QWidget* parent)
  : QWidget(parent),
-   pvItemsContainerWidget(new QWidget),
    pvItemsContainerLayout(new QVBoxLayout)
 {
   setupUi(this);
   pvItemsContainerLayout->addStretch(1);
-  pvItemsContainerWidget->setLayout(pvItemsContainerLayout);
-  saItems->setWidget(pvItemsContainerWidget);
+  QWidget *itemsContainerWidget = new QWidget;
+  itemsContainerWidget->setLayout(pvItemsContainerLayout);
+  saItems->setWidget(itemsContainerWidget);
   connect(tbAddFieldMapping, &QToolButton::clicked, this, &mdtSqlCopierTableMappingWidget::addFieldMapping);
   connect(wSourceCodecSettings, &mdtSqlCopierCodecSettingsWidget::settingsChanged, this, &mdtSqlCopierTableMappingWidget::updateSourceCodecSettings);
   connect(wDestinationCodecSettings, &mdtSqlCopierCodecSettingsWidget::settingsChanged, this, &mdtSqlCopierTableMappingWidget::updateDestinationCodecSettings);
@@ -47,31 +48,26 @@ mdtSqlCopierTableMappingWidget::mdtSqlCopierTableMappingWidget(QWidget* parent)
 
 void mdtSqlCopierTableMappingWidget::updateSourceCodecSettings(const mdtSqlCopierCodecSettings & cs)
 {
-  Q_ASSERT(pvFieldMappingItems.empty());
+  Q_ASSERT(pvTableMapping.fieldMappingCount() == 0);
 
   pvTableMapping.setSource(cs);
 }
 
 void mdtSqlCopierTableMappingWidget::updateDestinationCodecSettings(const mdtSqlCopierCodecSettings & cs)
 {
-  Q_ASSERT(pvFieldMappingItems.empty());
+  Q_ASSERT(pvTableMapping.fieldMappingCount() == 0);
 
   pvTableMapping.setDestination(cs);
 }
 
 void mdtSqlCopierTableMappingWidget::addFieldMapping()
 {
-//   Q_ASSERT(pvItemsContainerLayout->count() > 0);  // A stretch was added in constructor
-
   // Disable source and destination codec settings
   wSourceCodecSettings->setEnabled(false);
   wDestinationCodecSettings->setEnabled(false);
   // Add new item
   addFieldMappingPv();
-//   auto *item = new mdtSqlCopierTableMappingWidgetItem(this, this);
-//   pvItemsContainerLayout->insertWidget(pvItemsContainerLayout->count() - 1, item);
-//   pvFieldMappingItems.emplace_back(mdtSqlCopierFieldMapping(), item);
-//   editFieldMapping(item);
+  editFieldMapping(pvFieldMappingWidgetItems.at(pvFieldMappingWidgetItems.size()-1));
 }
 
 void mdtSqlCopierTableMappingWidget::editFieldMapping(mdtSqlCopierTableMappingWidgetItem* widgetItem)
@@ -80,17 +76,6 @@ void mdtSqlCopierTableMappingWidget::editFieldMapping(mdtSqlCopierTableMappingWi
 
   mdtSqlCopierFieldMappingDialog dialog(this);
   int index = fieldMappingIndex(widgetItem);
-//   std::vector<FieldMappingItem>::size_type fmItemIndex;
-//   FieldMappingItem fmItem;
-
-  // Find field map item to update (and its index in vector)
-//   for(fmItemIndex = 0; fmItemIndex < pvFieldMappingItems.size(); ++fmItemIndex){
-//     if(pvFieldMappingItems[fmItemIndex].widget == item){
-//       fmItem = pvFieldMappingItems[fmItemIndex];
-//       break;
-//     }
-//   }
-//   Q_ASSERT(fmItem.widget != nullptr);
 
   // Setup dialog's source part
   if(!dialog.setSource(pvTableMapping.source())){
@@ -106,19 +91,13 @@ void mdtSqlCopierTableMappingWidget::editFieldMapping(mdtSqlCopierTableMappingWi
   }
   /// \todo Find first field index that was not allready mapped
   ///dialog.setDestinationField(0);
-  
-//   dialog.setMapping(fmItem.mapping);
+
   dialog.setMapping(pvTableMapping.fieldMappingAt(index));
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
   // Update
-//   item->setSourceFieldName(dialog.sourceFieldName());
-//   item->setDestinationFieldName(dialog.destinationFieldName());
-//   fmItem.mapping = dialog.mapping();
-//   pvFieldMappingItems[fmItemIndex] = fmItem;
-//   // Rebuild table mapping
-//   rebuildFieldMappingList();
+  setFieldMappingAt(index, dialog.mapping());
 }
 
 void mdtSqlCopierTableMappingWidget::removeFieldMapping(mdtSqlCopierTableMappingWidgetItem* item)
@@ -127,33 +106,11 @@ void mdtSqlCopierTableMappingWidget::removeFieldMapping(mdtSqlCopierTableMapping
 
   // Remove item
   removeFieldMappingPv(item);
-//   pvItemsContainerLayout->removeWidget(item);
-//   for(auto it = pvFieldMappingItems.begin(); it != pvFieldMappingItems.end(); ++it){
-//     if(it->widget == item){
-//       pvFieldMappingItems.erase(it);
-//       break;
-//     }
-//   }
-//   delete item;
   // Re-enable source and destination codec settings widgets if no field mapping exists anymore
   if(pvFieldMappingWidgetItems.isEmpty()){
     wSourceCodecSettings->setEnabled(true);
     wDestinationCodecSettings->setEnabled(true);
   }
-//   if(pvFieldMappingItems.empty()){
-//     wSourceCodecSettings->setEnabled(true);
-//     wDestinationCodecSettings->setEnabled(true);
-//   }
-}
-
-void mdtSqlCopierTableMappingWidget::rebuildFieldMappingList()
-{
-  QVector<mdtSqlCopierFieldMapping> fmList;
-
-  for(const auto & fmItem : pvFieldMappingItems){
-    fmList.append(fmItem.mapping);
-  }
-  pvTableMapping.setFieldMappingList(fmList);
 }
 
 void mdtSqlCopierTableMappingWidget::displayError(const mdtError & error)
@@ -193,6 +150,29 @@ void mdtSqlCopierTableMappingWidget::removeFieldMappingPv(mdtSqlCopierTableMappi
   pvFieldMappingWidgetItems.removeAt(index);
   delete widgetItem;
   Q_ASSERT(pvFieldMappingWidgetItems.size() == pvTableMapping.fieldMappingCount());
+}
+
+void mdtSqlCopierTableMappingWidget::setFieldMappingAt(int index, const mdtSqlCopierFieldMapping & fm)
+{
+  mdtSqlCopierCodec sourceCodec, destinationCodec;
+
+  // Store field mapping
+  pvTableMapping.setFieldMapping(index, fm);
+  // Update related widget
+  auto *widgetItem = pvFieldMappingWidgetItems.at(index);
+  Q_ASSERT(widgetItem != nullptr);
+  sourceCodec.setSettings(pvTableMapping.source());
+  if(!sourceCodec.openTarget()){
+    displayError(sourceCodec.lastError());
+    return;
+  }
+  destinationCodec.setSettings(pvTableMapping.destination());
+  if(!destinationCodec.openTarget()){
+    displayError(destinationCodec.lastError());
+    return;
+  }
+  widgetItem->setSourceFieldName(sourceCodec.fieldNameList().at(fm.sourceFieldIndex));
+  widgetItem->setDestinationFieldName(destinationCodec.fieldNameList().at(fm.destinationFieldIndex));
 }
 
 int mdtSqlCopierTableMappingWidget::fieldMappingIndex(mdtSqlCopierTableMappingWidgetItem* widgetItem)

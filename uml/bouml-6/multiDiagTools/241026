@@ -1,6 +1,6 @@
 format 209
 "Ideas" // mdtdatabase::Ideas
-  revision 33
+  revision 36
   modified_by 2 "philippe"
   // class settings
   
@@ -175,6 +175,21 @@ ${inlines}
 	
 	
       end
+
+      operation 2990594 "close"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     class 1887490 "mdtAbstractSqlCopierCodec"
@@ -314,6 +329,21 @@ ${inlines}
 	
 	
       end
+
+      operation 2990850 "clearFieldNameList"
+	cpp_virtual protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     class 1887618 "mdtSqlCopierCodecSqlite"
@@ -390,6 +420,21 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      operation 2990722 "close"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -787,6 +832,14 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 2244226 // <dependency>
+	relation 2227970 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2244226 // <dependency>
+	  b parent class_ref 1854338 // mdtSqlDatabaseDialogSqlite
       end
     end
 
@@ -2603,6 +2656,11 @@ ${inlines}
     classdiagram 1517058 "TableSandbox"
       classdiagramsettings member_max_width 0 end
       size A4
+    end
+
+    classdiagram 1595778 "SettingsOverview"
+      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+      size A4-Landscape
     end
   end
 end

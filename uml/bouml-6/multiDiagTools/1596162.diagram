@@ -1,0 +1,19 @@
+format 209
+
+classcanvas 128130 class_ref 1913986 // mdtSqlTableCopier
+  classdiagramsettings member_max_width 0 end
+  xyz 42 83 2000
+end
+classcanvas 128258 class_ref 1914114 // mdtSqlTableCopierMapping
+  classdiagramsettings member_max_width 0 end
+  xyz 238 84 2000
+end
+classcanvas 128386 class_ref 1914242 // mdtSqlTableCopierFieldMapping
+  classdiagramsettings member_max_width 0 end
+  xyz 550 86 2000
+end
+classcanvas 128514 class_ref 910210 // mdtSqlSchemaTable
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 684 474 2000
+end
+end

@@ -23,8 +23,6 @@
 #include "mdtSqlConnectionNameWidget.h"
 #include <QComboBox>
 #include <QToolButton>
-#include <QStringList>
-#include <QFileInfo>
 #include <QDir>
 #include <QSqlError>
 #include <QFileDialog>
@@ -45,6 +43,16 @@ mdtSqlDatabaseDialogSqlite::mdtSqlDatabaseDialogSqlite(QWidget* parent)
   connect(tbCreateDatabase, &QToolButton::clicked, this, &mdtSqlDatabaseDialogSqlite::createDatabase);
   connect(tbCloseDatabase, &QToolButton::clicked, this, &mdtSqlDatabaseDialogSqlite::closeDatabase);
   connect(tbDeleteDatabase, &QToolButton::clicked, this, &mdtSqlDatabaseDialogSqlite::deleteDatabase);
+}
+
+void mdtSqlDatabaseDialogSqlite::setNonEditableConnectionNames(const QStringList & names)
+{
+  pvNonEditableConnectionNames = names;
+}
+
+void mdtSqlDatabaseDialogSqlite::addNonEditableConnectionName(const QString & name)
+{
+  pvNonEditableConnectionNames.append(name);
 }
 
 void mdtSqlDatabaseDialogSqlite::updateConnectionsList()
@@ -92,6 +100,12 @@ void mdtSqlDatabaseDialogSqlite::openDatabase()
     }
     Q_ASSERT(dialog.selectedFiles().size() == 1);
     fileInfo.setFile(dialog.selectedFiles().at(0));
+    // Check that selected database is not allready referenced by a connection
+    QString cnn = pvDatabase.getConnectionNameUsingDatabase(fileInfo);
+    if(!cnn.isEmpty()){
+      warnAboutDatabaseReferencedByConnection(fileInfo, cnn);
+      return;
+    }
     // Open database
     if(!pvDatabase.openDatabase(fileInfo)){
       displayError(pvDatabase.lastError());
@@ -136,6 +150,12 @@ void mdtSqlDatabaseDialogSqlite::createDatabase()
   }
   Q_ASSERT(dialog.selectedFiles().size() == 1);
   fileInfo.setFile(dialog.selectedFiles().at(0));
+  // Check that selected database is not allready referenced by a connection
+  QString cnn = pvDatabase.getConnectionNameUsingDatabase(fileInfo);
+  if(!cnn.isEmpty()){
+    warnAboutDatabaseReferencedByConnection(fileInfo, cnn);
+    return;
+  }
   // Create database
   if(!pvDatabase.createDatabase(fileInfo, mdtSqlDatabaseSqlite::OverwriteExisting)){
     displayError(pvDatabase.lastError());
@@ -196,7 +216,13 @@ void mdtSqlDatabaseDialogSqlite::updateDatabaseInformations()
 
 void mdtSqlDatabaseDialogSqlite::updateButtonsState()
 {
-  if(pvDatabase.isOpen()){
+  if(pvNonEditableConnectionNames.contains(pvDatabase.database().connectionName())){
+    tbOpenDatabase->setEnabled(false);
+    tbClearDatabaseName->setEnabled(false);
+    tbCloseDatabase->setEnabled(false);
+    tbCreateDatabase->setEnabled(false);
+    tbDeleteDatabase->setEnabled(false);
+  }else if(pvDatabase.isOpen()){
     tbOpenDatabase->setEnabled(false);
     tbClearDatabaseName->setEnabled(false);
     tbCloseDatabase->setEnabled(true);
@@ -225,5 +251,20 @@ void mdtSqlDatabaseDialogSqlite::displayError(const mdtError & error)
   msgBox.setInformativeText(error.informativeText());
   msgBox.setDetailedText(error.systemText());
   msgBox.setIcon(error.levelIcon());
+  msgBox.exec();
+}
+
+void mdtSqlDatabaseDialogSqlite::warnAboutDatabaseReferencedByConnection(const QFileInfo & fileInfo, const QString& connectionName)
+{
+  QMessageBox msgBox(this);
+  QString msg;
+
+  msg = tr("Selected database is allready referenced by a connection.\n");
+  msg += tr("File: ") + fileInfo.fileName() + tr("\n");
+  msg += tr("Directory: ") + fileInfo.absoluteDir().path() + tr("\n");
+  msg += tr("Referenced by: ") + connectionName;
+  msgBox.setText(msg);
+  msgBox.setInformativeText(tr("Use connection that refers to this database, or chose a other database."));
+  msgBox.setIcon(QMessageBox::Warning);
   msgBox.exec();
 }

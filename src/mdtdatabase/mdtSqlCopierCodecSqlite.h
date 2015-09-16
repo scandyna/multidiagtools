@@ -30,6 +30,10 @@ class mdtSqlCopierCodecSqlite : public mdtAbstractSqlCopierCodec
 {
  public:
 
+  /*! \brief Destructor - Will also call close()
+   */
+  ~mdtSqlCopierCodecSqlite();
+
   /*! \brief Set codec settings
    *
    * \pre cs type must be mdtSqlCopierCodecSettings::SqliteCodec
@@ -41,8 +45,14 @@ class mdtSqlCopierCodecSqlite : public mdtAbstractSqlCopierCodec
   }
 
   /*! \brief Open target
+   *
+   * Will also open a new connection to database passed in setSettings().
    */
   bool openTarget();
+
+  /*! \brief Close target database and remove added connection
+   */
+  void close();
 
  private:
 

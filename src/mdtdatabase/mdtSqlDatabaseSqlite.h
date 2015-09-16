@@ -90,6 +90,10 @@ class mdtSqlDatabaseSqlite
     return pvDatabase;
   }
 
+  /*! \brief Find the first connection name that refers to given file
+   */
+  QString getConnectionNameUsingDatabase(const QFileInfo & fileInfo) const;
+
   /*! \brief Open a database
    *
    * Will check if given file exists, set it as database name

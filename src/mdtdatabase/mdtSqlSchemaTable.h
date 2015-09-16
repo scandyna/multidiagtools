@@ -118,6 +118,39 @@ class mdtSqlSchemaTable
    */
   QSqlField field(const QString & fieldName) const;
 
+  /*! \brief Get field name for given field index
+   *
+   * \pre index must be valid
+   */
+  QString fieldName(int index) const
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < pvFields.size());
+    return pvFields.at(index).name();
+  }
+
+  /*! \brief Get field type name for given field index
+   *
+   * \pre index must be valid
+   */
+  QString fieldTypeName(int index) const;
+
+  /*! \brief Get field length for given index
+   *
+   * \pre index must be valid
+   */
+  QVariant fieldLength(int index) const
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < pvFields.size());
+
+    int length = pvFields.at(index).length();
+    if(length < 0){
+      return QVariant();
+    }
+    return length;
+  }
+
   /*! \brief Access primary key
    */
   const QSqlIndex & primaryKey() const

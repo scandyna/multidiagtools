@@ -55,6 +55,26 @@ void mdtSqlDatabaseSqlite::setDatabase(const QSqlDatabase & db)
   pvDatabase = db;
 }
 
+QString mdtSqlDatabaseSqlite::getConnectionNameUsingDatabase(const QFileInfo & fileInfo) const
+{
+  QString resultCnn;
+  QStringList cnnNames = QSqlDatabase::connectionNames();
+  QString dbName = fileInfo.filePath();
+
+  if(dbName.isEmpty()){
+    return resultCnn;
+  }
+  for(const auto & cnn : cnnNames){
+    auto db = QSqlDatabase::database(cnn, false);
+    if(db.databaseName() == dbName){
+      resultCnn = cnn;
+      break;
+    }
+  }
+
+  return resultCnn;
+}
+
 bool mdtSqlDatabaseSqlite::openDatabase(const QFileInfo & fileInfo)
 {
   Q_ASSERT(isValid());

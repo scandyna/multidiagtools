@@ -26,13 +26,20 @@
 #include "mdtQActionEnableStateGuard.h"
 #include "mdtFormatProxyModel.h"
 #include "mdtFormatProxyModelSettings.h"
+#include "mdtComboBoxItemDelegate.h"
 #include <QString>
 #include <QVariant>
 #include <QValidator>
 #include <QLineEdit>
 #include <QAction>
+#include <QListView>
 #include <QTableView>
+#include <QTreeView>
+#include <QComboBox>
 #include <QSqlTableModel>
+#include <QStringListModel>
+#include <QStandardItemModel>
+#include <QStandardItem>
 #include <QColor>
 
 #include <QDebug>
@@ -783,6 +790,55 @@ void mdtWidgetsTest::formatProxyModelTest()
    * Play
    */
   while(tw.isVisible()){
+    QTest::qWait(500);
+  }
+}
+
+void mdtWidgetsTest::comboBoxItemDelegateTest()
+{
+  QStandardItemModel model(4, 5);
+  mdtComboBoxItemDelegate *delegate;
+  QListView listView;
+  QTableView tableView;
+  QTreeView treeVidew;
+
+  // Populate model with data
+  for (int row = 0; row < model.rowCount(); ++row) {
+    for (int column = 0; column < model.columnCount(); ++column) {
+        QStandardItem *item = new QStandardItem(QString("row %0, column %1").arg(row).arg(column));
+        model.setItem(row, column, item);
+    }
+  }
+  // Setup list view
+  listView.setModel(&model);
+  delegate = new mdtComboBoxItemDelegate(&listView);
+  delegate->addItem("A");
+  delegate->addItem("B");
+  delegate->addItem("C");
+  listView.setItemDelegate(delegate);
+  // Setup table view
+  tableView.setModel(&model);
+  delegate = new mdtComboBoxItemDelegate(&tableView);
+  delegate->addItem("E");
+  delegate->addItem("F");
+  delegate->addItem("G");
+  tableView.setItemDelegateForColumn(1, delegate);
+  // Setup tree view
+  treeVidew.setModel(&model);
+  delegate = new mdtComboBoxItemDelegate(&treeVidew);
+  delegate->addItem("1");
+  delegate->addItem("2");
+  delegate->addItem("3");
+  treeVidew.setItemDelegateForColumn(1, delegate);
+
+  listView.show();
+  tableView.show();
+  treeVidew.show();
+  
+  /*
+   * Play
+   */
+  while(listView.isVisible()){
     QTest::qWait(500);
   }
 }

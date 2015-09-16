@@ -25,6 +25,8 @@
 #include "ui_mdtSqlDatabaseDialogSqlite.h"
 #include "mdtError.h"
 #include <QDialog>
+#include <QFileInfo>
+#include <QStringList>
 
 /*! \brief Dialog for SQLite connection
  *
@@ -44,6 +46,14 @@ class mdtSqlDatabaseDialogSqlite : public QDialog, Ui::mdtSqlDatabaseDialogSqlit
    *        Use updateConnectionsList() in this case.
    */
   mdtSqlDatabaseDialogSqlite(QWidget *parent = nullptr);
+
+  /*! \brief Set list of connections that user is not allowed to edit
+   */
+  void setNonEditableConnectionNames(const QStringList & names);
+
+  /*! \brief Add a connection that user is not allowed to edit
+   */
+  void addNonEditableConnectionName(const QString & name);
 
   /*! \brief Update connections list
    *
@@ -109,9 +119,14 @@ class mdtSqlDatabaseDialogSqlite : public QDialog, Ui::mdtSqlDatabaseDialogSqlit
    */
   void displayError(const mdtError & error);
 
+  /*! \brief Warn about a database (file) that is allready referenced by a connection
+   */
+  void warnAboutDatabaseReferencedByConnection(const QFileInfo & fileInfo, const QString & connectionName);
+
   Q_DISABLE_COPY(mdtSqlDatabaseDialogSqlite)
 
   mdtSqlDatabaseSqlite pvDatabase;
+  QStringList pvNonEditableConnectionNames; // List of connections that user is not allowed to edit
 };
 
 #endif // #ifndef MDT_SQL_DATABASE_DIALOG_SQLITE_H
