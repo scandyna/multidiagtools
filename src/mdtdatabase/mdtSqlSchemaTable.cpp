@@ -100,9 +100,15 @@ void mdtSqlSchemaTable::addField(const QSqlField & field, bool isPartOfPrimaryKe
   }
 }
 
-int mdtSqlSchemaTable::fieldCount() const
+QStringList mdtSqlSchemaTable::getFieldNameList() const
 {
-  return pvFields.size();
+  QStringList names;
+
+  for(const auto & field : pvFields){
+    names.append(field.name());
+  }
+
+  return names;
 }
 
 QSqlField mdtSqlSchemaTable::field(const QString & fieldName) const

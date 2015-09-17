@@ -31,7 +31,7 @@ class mdtAbstractSqlCopierCodec;
 
 /*! \brief SQL copier codec
  */
-class mdtSqlCopierCodec
+class [[deprecated]] mdtSqlCopierCodec
 {
  public:
 

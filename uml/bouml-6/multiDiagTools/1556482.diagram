@@ -27,7 +27,15 @@ end
 note 130562 "Should be renamed mdtSqlTableSchema"
   xyzwh 462 494 2000 279 53
 note 130818 "Should be renamed mdtSqlTableSchemaWidget ??"
-  xyzwh 41 491 2000 359 57
+  xyzwh 41 385 2000 359 57
+note 131074 "!!! NOTE on table copy !!!
+
+Because reversing a schema is not reliable (loss of imformations), we should be able to hrecreate a schema (for example by a existing SQL script or some definition of a SQL schema), then map tables and fields, then import data to this new schema !!
+
+If a widget proposes to create a table based on sa source table, the user must be warned that this functionnality is not propoerly supported (field tapes, no FK support, no index supposrt, etc...) !!!
+
+For database schema, set a flag (a hint) for tables that are populated by creation tim, and that sould not be touched after.."
+  xyzwh 30 564 2000 697 211
 relationcanvas 128386 relation_ref 2133250 // <unidirectional association>
   from ref 128258 z 2007 to ref 128130
   no_role_a no_role_b

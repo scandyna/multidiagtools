@@ -51,6 +51,9 @@ set (SOURCES_FILES
           
           mdtSqlCopierTableMappingWidget.cpp
           mdtSqlCopierTableMappingWidgetItem.cpp
+          
+          mdtSqlTableCopierMapping.cpp
+          mdtSqlTableCopierMappingModel.cpp
     )
 
 # Platform specific files

@@ -119,6 +119,9 @@ QVariant mdtSqlTableSchemaModel::data(const QModelIndex & index, int role) const
 /// Currently, edition is not supported
 // Qt::ItemFlags mdtSqlTableSchemaModel::flags(const QModelIndex & index) const
 // {
+//   if(!index.isValid()){
+//     return QAbstractTableModel::flags(index);
+//   }
 //   if(index.column() == NameIndex){
 //     return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
 //   }

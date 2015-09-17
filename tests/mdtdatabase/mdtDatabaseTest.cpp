@@ -476,6 +476,8 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   // Clear
   st.clear();
   QCOMPARE(st.fieldCount(), 0);
+  QCOMPARE(st.getFieldNameList().size(), 0);
+  QCOMPARE(st.fieldIndex("Id_PK"), -1);
   // Add a field
   field = QSqlField();
   field.setName("Id_PK");
@@ -484,6 +486,9 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   // Get field attributes
   QCOMPARE(st.fieldCount(), 1);
   QCOMPARE(st.fieldName(0), QString("Id_PK"));
+  QCOMPARE(st.getFieldNameList().size(), 1);
+  QCOMPARE(st.getFieldNameList().at(0), QString("Id_PK"));
+  QCOMPARE(st.fieldIndex("Id_PK"), 0);
   // Add a field
   field = QSqlField();
   field.setName("Name");
@@ -493,7 +498,10 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   // Get field attributes
   QCOMPARE(st.fieldCount(), 2);
   QCOMPARE(st.fieldName(1), QString("Name"));
-
+  QCOMPARE(st.getFieldNameList().size(), 2);
+  QCOMPARE(st.getFieldNameList().at(1), QString("Name"));
+  QCOMPARE(st.fieldIndex("Id_PK"), 0);
+  QCOMPARE(st.fieldIndex("Name"), 1);
 }
 
 void mdtDatabaseTest::sqlSchemaTableSqliteTest()

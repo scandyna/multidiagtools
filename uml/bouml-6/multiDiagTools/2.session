@@ -1,4 +1,4 @@
-window_sizes 1280 957 395 879 904 0
+window_sizes 1280 952 395 879 899 0
 cleanlooks_style
 diagrams
   classdiagram_ref 1563010 // TableMapping
@@ -13,8 +13,8 @@ diagrams
     120 106 100 4 0 0
   usecasediagram_ref 1596290 // MigrateDbSchema
     120 106 100 4 0 0
-  classdiagram_ref 1596162 // CopyDbTableOverview
-    120 106 100 4 0 0
+  active  classdiagram_ref 1596162 // CopyDbTableOverview
+    879 899 100 4 0 0
   classdiagram_ref 874370 // TableSchema
     120 106 100 21 0 0
   classdiagram_ref 1510402 // TableSchemaModel
@@ -25,11 +25,11 @@ diagrams
     120 106 100 4 0 0
   classdiagram_ref 1602818 // mdtComboBoxItemDelegate
     120 106 100 4 0 0
-  active  classdiagram_ref 1556482 // TableSetupWidget
-    879 904 100 4 0 0
+  classdiagram_ref 1556482 // TableSetupWidget
+    867 893 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1556482 // TableSetupWidget
+selected operation_ref 3007234 // addFieldMapping
 open
   classview_ref 781314 // FormatModel
   classview_ref 813954 // ModelView
@@ -37,5 +37,11 @@ open
   classview_ref 794370 // SqlSchema
   attribute_ref 1965826 // SourceDatabase
   attribute_ref 1965954 // DestinationDatabase
+  operation_ref 3008002 // setSourceDatabase
+  operation_ref 3008130 // setDestinationDatabase
+  operation_ref 3008258 // setSourceTable
+  operation_ref 3008386 // setDestinationTable
+  operation_ref 3007618 // sourceFieldCount
+  class_ref 1921282 // mdtSqlTableCopierMappingModel
 end
 end

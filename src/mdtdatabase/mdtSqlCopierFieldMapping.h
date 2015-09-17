@@ -36,6 +36,8 @@ struct mdtSqlCopierFieldMapping
   int destinationFieldIndex;
 
   /*! \brief Default constructor
+   *
+   * Will set source and destination field indexes to -1
    */
   mdtSqlCopierFieldMapping()
    : sourceFieldIndex(-1),
@@ -53,6 +55,8 @@ struct mdtSqlCopierFieldMapping
   }
 
   /*! \brief Clear
+   *
+   * Will set source and destination field indexes to -1
    */
   void clear()
   {

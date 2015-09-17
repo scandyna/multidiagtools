@@ -35,6 +35,9 @@ class QAbstractItemModel;
  * \code
  *   QTableView *tableView = new QTableView;
  *   mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(tableView); // Give a parent to handle deletion of delegate
+ *   // Populate the delegate with items that its internal combobox must display
+ *   delegate->addItem("A");
+ *   delegate->addItem("B");
  *   tableView->setModel(someUsefullModel);
  *   tableView->setItemDelegateForColumn(1, delegate); // Will use the combobox delegate only for column 1
  * \endcode

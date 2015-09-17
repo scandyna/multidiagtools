@@ -32,6 +32,11 @@
 #include "mdtSqlCopierCodec.h"
 #include "mdtSqlCopierCodecSettings.h"
 #include "mdtSqlCopierCodecSettingsWidget.h"
+
+#include "mdtSqlTableCopierMapping.h"
+#include "mdtSqlTableCopierMappingModel.h"
+#include "mdtComboBoxItemDelegate.h"
+
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -317,6 +322,106 @@ void mdtSqlCopierTest::tableMappingWidgetTest()
    * Play
    */
   while(tmw.isVisible()){
+    QTest::qWait(500);
+  }
+}
+
+void mdtSqlCopierTest::sqlTableCopierMappingTest()
+{
+  mdtSqlTableCopierMapping mapping;
+  mdtSqlCopierFieldMapping fm;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(mapping.fieldCount(), 0);
+
+  /*
+   * Setup databases and tables
+   */
+  QVERIFY(mapping.setSourceDatabase(pvDatabaseManager.database()));
+  QVERIFY(mapping.setDestinationDatabase(pvDatabaseManager.database()));
+  QVERIFY(mapping.setSourceTable("Client_tbl"));
+  QVERIFY(mapping.setDestinationTable("Client2_tbl"));
+  // Check attributes without any mapping set
+  QCOMPARE(mapping.fieldCount(), 2);
+  QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
+  QVERIFY(mapping.destinationFieldName(0).isNull());
+  QVERIFY(mapping.destinationFieldName(1).isNull());
+  /*
+   * Set a field mapping:
+   *  - Client_tbl.Id_PK -> Client2_tbl.Name
+   */
+  mapping.setDestinationField(0, "Name");
+  // Check attributes
+  QCOMPARE(mapping.fieldCount(), 2);
+  QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
+  QCOMPARE(mapping.destinationFieldName(0), QString("Name"));
+  QVERIFY(mapping.destinationFieldName(1).isNull());
+  /*
+   * Add a field mapping:
+   *  - Client_tbl.Name -> Client2_tbl.Id_PK
+   */
+  mapping.setDestinationField(1, "Id_PK");
+  // Check attributes
+  QCOMPARE(mapping.fieldCount(), 2);
+  QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
+  QCOMPARE(mapping.destinationFieldName(0), QString("Name"));
+  QCOMPARE(mapping.destinationFieldName(1), QString("Id_PK"));
+  /*
+   * Check field mapping generation by field name
+   */
+  mapping.generateFieldMappingByName();
+  QCOMPARE(mapping.fieldCount(), 2);
+  QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
+  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+
+
+
+  
+}
+
+void mdtSqlCopierTest::sqlTableCopierMappingModelTest()
+{
+  QTableView tableView;
+  QTreeView treeView;
+  mdtSqlTableCopierMappingModel model;
+  mdtSqlTableCopierMapping mapping;
+  mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
+
+  /*
+   * Setup views
+   */
+  // Setup table view
+  tableView.setModel(&model);
+  tableView.setItemDelegateForColumn(2, delegate);
+  tableView.resize(600, 150);
+  tableView.show();
+  // Setup tree view
+  treeView.setModel(&model);
+  treeView.show();
+
+  /*
+   * Setup model
+   */
+  QVERIFY(model.setSourceDatabase(pvDatabaseManager.database()));
+  QVERIFY(model.setDestinationDatabase(pvDatabaseManager.database()));
+  QVERIFY(model.setSourceTable("Client_tbl"));
+  QVERIFY(model.setDestinationTable("Client2_tbl", delegate));
+  ///model.setMapping(mapping);
+  model.generateFieldMappingByName();
+  tableView.resizeColumnsToContents();
+  
+
+  /*
+   * Play
+   */
+  while(tableView.isVisible()){
     QTest::qWait(500);
   }
 }

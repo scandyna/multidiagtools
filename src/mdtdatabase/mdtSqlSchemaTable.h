@@ -24,6 +24,7 @@
 #include "mdtError.h"
 #include "mdtSqlDriverType.h"
 #include <QString>
+#include <QStringList>
 #include <QSqlDatabase>
 #include <QSqlField>
 #include <QSqlRecord>
@@ -105,7 +106,10 @@ class mdtSqlSchemaTable
 
   /*! \brief Get number of fields
    */
-  int fieldCount() const;
+  int fieldCount() const
+  {
+    return pvFields.size();
+  }
 
   /*! \brief Access fields list
    */
@@ -114,9 +118,40 @@ class mdtSqlSchemaTable
     return pvFields;
   }
 
+  /*! \brief Get list of field names
+   *
+   * Note: the list is built at every call of this function.
+   */
+  QStringList getFieldNameList() const;
+
   /*! \brief Get field for given field name
    */
   QSqlField field(const QString & fieldName) const;
+
+  /*! \brief Get field for given field index
+   *
+   * \pre index must be in valid range
+   */
+  QSqlField field(int index) const
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < pvFields.size());
+    return pvFields.at(index);
+  }
+
+  /*! \brief Get index of field name
+   *
+   * If field name does not exist, -1 is returned.
+   */
+  int fieldIndex(const QString & name)
+  {
+    for(int i = 0; i < pvFields.size(); ++i){
+      if(pvFields.at(i).name() == name){
+        return i;
+      }
+    }
+    return -1;
+  }
 
   /*! \brief Get field name for given field index
    *
