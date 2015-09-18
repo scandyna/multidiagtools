@@ -13,8 +13,6 @@ diagrams
     120 106 100 4 0 0
   usecasediagram_ref 1596290 // MigrateDbSchema
     120 106 100 4 0 0
-  active  classdiagram_ref 1596162 // CopyDbTableOverview
-    879 899 100 4 0 0
   classdiagram_ref 874370 // TableSchema
     120 106 100 21 0 0
   classdiagram_ref 1510402 // TableSchemaModel
@@ -27,21 +25,31 @@ diagrams
     120 106 100 4 0 0
   classdiagram_ref 1556482 // TableSetupWidget
     867 893 100 4 0 0
+  classdiagram_ref 1609346 // DatabaseCopierMapping
+    879 899 100 4 0 0
+  active  classdiagram_ref 1616002 // SqlDatabaseCopierDialog
+    879 899 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 3007234 // addFieldMapping
+selected classdiagram_ref 1616002 // SqlDatabaseCopierDialog
 open
   classview_ref 781314 // FormatModel
   classview_ref 813954 // ModelView
-  classview_ref 787842 // ImportExportCopy
+  
+  package_ref 241026 // Ideas
   classview_ref 794370 // SqlSchema
-  attribute_ref 1965826 // SourceDatabase
-  attribute_ref 1965954 // DestinationDatabase
+  class_ref 1934466 // mdtSqlDatabaseBasicInfoWidget
+  operation_ref 3015042 // resetFieldMapping
+  operation_ref 3015170 // clearFieldMapping
+  operation_ref 3015298 // generateFieldMappingByName
+  operation_ref 3015426 // setDestinationField
+  operation_ref 3015554 // getSourceFieldNameList
+  operation_ref 3015682 // sourceFieldTypeName
+  operation_ref 3015810 // getDestinationFieldNameList
+  operation_ref 3016194 // destinationFieldTypeName
+  class_ref 1921282 // mdtSqlDatabaseCopierTableMappingModel
+  classrelation_ref 2264578 // <directional composition>
   operation_ref 3008002 // setSourceDatabase
   operation_ref 3008130 // setDestinationDatabase
-  operation_ref 3008258 // setSourceTable
-  operation_ref 3008386 // setDestinationTable
-  operation_ref 3007618 // sourceFieldCount
-  class_ref 1921282 // mdtSqlTableCopierMappingModel
 end
 end

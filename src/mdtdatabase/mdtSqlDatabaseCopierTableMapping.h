@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_TABLE_COPIER_MAPPING_H
-#define MDT_SQL_TABLE_COPIER_MAPPING_H
+#ifndef MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_H
+#define MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_H
 
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlCopierFieldMapping.h"
@@ -31,9 +31,29 @@
 
 /*! \brief Mapping used to copy 2 SQL tables
  */
-class mdtSqlTableCopierMapping
+class mdtSqlDatabaseCopierTableMapping
 {
  public:
+
+  /*! \brief Mapping state
+   */
+  enum MappingState
+  {
+    MappingNotSet,      /*!< Source or destination table was not set,
+                             or field mapping was not set. */
+    MappingComplete,    /*!< Source and destination table have been successfully set.
+                             Field mapping was done automatically without any mismatch,
+                             or confirmed by the user as complete. */
+    MappingPartial,     /*!< Source and destination table have been successfully set.
+                             Field mapping was done automatically, but some mismatch
+                             was detected, and a action is required from the user to fix it */
+    MappingError        /*!< A error was detected during source or detination table set,
+                             or during field mapping. Get more information with lastError() . */
+  };
+
+  /*! \brief Constructor
+   */
+  mdtSqlDatabaseCopierTableMapping();
 
   /*! \brief Set source database
    *
@@ -41,7 +61,7 @@ class mdtSqlTableCopierMapping
    *
    * \sa clearFieldMapping()
    */
-  bool setSourceDatabase(const QSqlDatabase & db);
+//   bool setSourceDatabase(const QSqlDatabase & db);
 
   /*! \brief Set destination database
    *
@@ -49,7 +69,7 @@ class mdtSqlTableCopierMapping
    *
    * \sa clearFieldMapping()
    */
-  bool setDestinationDatabase(const QSqlDatabase & db);
+//   bool setDestinationDatabase(const QSqlDatabase & db);
 
   /*! \brief Set source table
    *
@@ -57,7 +77,7 @@ class mdtSqlTableCopierMapping
    *
    * \sa resetFieldMapping()
    */
-  bool setSourceTable(const QString & tableName);
+  bool setSourceTable(const QString & tableName, const QSqlDatabase & db);
 
   /*! \brief Set destination table
    *
@@ -65,19 +85,21 @@ class mdtSqlTableCopierMapping
    *
    * \sa resetFieldMapping()
    */
-  bool setDestinationTable(const QString & tableName);
+  bool setDestinationTable(const QString & tableName, const QSqlDatabase & db);
 
-  /*! \brief Add a field mapping
-   *
-   * \pre fm's source and destination field indexes must be in valid range
+  /*! \brief Get source table name
    */
-//   void addFieldMapping(const mdtSqlCopierFieldMapping & fm);
+  QString sourceTableName() const
+  {
+    return pvSourceTable.tableName();
+  }
 
-  /*! \brief Add a field mapping
-   *
-   * \pre sourceFieldIndex must be in a valid range and destination field name must exist in destination table.
+  /*! \brief Get destination table name
    */
-//   void addFieldMapping(int sourceFieldIndex, const QString & destinationFieldName);
+  QString destinationTableName() const
+  {
+    return pvDestinationTable.tableName();
+  }
 
   /*! \brief Reset field mapping
    *
@@ -109,6 +131,13 @@ class mdtSqlTableCopierMapping
    * \pre index must be in a valid range
    */
   void setDestinationField(int index, const QString & fieldName);
+
+  /*! \brief Get mapping state
+   */
+  MappingState mappingState() const
+  {
+    return pvMappingState;
+  }
 
   /*! \brief Get field count
    *
@@ -210,27 +239,17 @@ class mdtSqlTableCopierMapping
 
  private:
 
-  /*! \brief Get field mapping of given source field index
-   *
-   * If no mapping was defined with given source field index,
-   *  a null field mapping is returned.
+  /*! \brief Check if mapping is complete
    */
-//   mdtSqlCopierFieldMapping fieldMapping(int sourceFieldIndex) const
-//   {
-//     for(const auto & fm : pvFieldMappingList){
-//       if(fm.sourceFieldIndex == sourceFieldIndex){
-//         return fm;
-//       }
-//     }
-//     return mdtSqlCopierFieldMapping();
-//   }
+  bool mappingIsCompete();
 
-  QSqlDatabase pvSourceDatabase;
+  MappingState pvMappingState;
+//   QSqlDatabase pvSourceDatabase;  /// \todo Check if database instance must be stored or not
   mdtSqlSchemaTable pvSourceTable;
-  QSqlDatabase pvDestinationDatabase;
+//   QSqlDatabase pvDestinationDatabase; /// \todo Check if database instance must be stored or not
   mdtSqlSchemaTable pvDestinationTable;
   QVector<mdtSqlCopierFieldMapping> pvFieldMappingList;
   mdtError pvLastError;
 };
 
-#endif // #ifndef MDT_SQL_TABLE_COPIER_MAPPING_H
+#endif // #ifndef MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_H

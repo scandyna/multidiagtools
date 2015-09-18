@@ -18,39 +18,44 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtSqlTableCopierMapping.h"
+#include "mdtSqlDatabaseCopierTableMapping.h"
 #include <QSqlField>
 
-bool mdtSqlTableCopierMapping::setSourceDatabase(const QSqlDatabase & db)
+mdtSqlDatabaseCopierTableMapping::mdtSqlDatabaseCopierTableMapping()
+ : pvMappingState(MappingNotSet)
 {
-  clearFieldMapping();
-  pvSourceTable.clear();
-  if(!pvSourceTable.setDriverName(db.driverName())){
-    pvLastError = pvSourceTable.lastError();
-    return false;
-  }
-  pvSourceDatabase = db;
-
-  return true;
 }
 
-bool mdtSqlTableCopierMapping::setDestinationDatabase(const QSqlDatabase & db)
+// bool mdtSqlDatabaseCopierTableMapping::setSourceDatabase(const QSqlDatabase & db)
+// {
+//   clearFieldMapping();
+//   pvSourceTable.clear();
+//   if(!pvSourceTable.setDriverName(db.driverName())){
+//     pvLastError = pvSourceTable.lastError();
+//     return false;
+//   }
+//   pvSourceDatabase = db;
+// 
+//   return true;
+// }
+
+// bool mdtSqlDatabaseCopierTableMapping::setDestinationDatabase(const QSqlDatabase & db)
+// {
+//   clearFieldMapping();
+//   pvDestinationTable.clear();
+//   if(!pvDestinationTable.setDriverName(db.driverName())){
+//     pvLastError = pvDestinationTable.lastError();
+//     return false;
+//   }
+//   pvDestinationDatabase = db;
+// 
+//   return true;
+// }
+
+bool mdtSqlDatabaseCopierTableMapping::setSourceTable(const QString & tableName, const QSqlDatabase & db)
 {
   clearFieldMapping();
-  pvDestinationTable.clear();
-  if(!pvDestinationTable.setDriverName(db.driverName())){
-    pvLastError = pvDestinationTable.lastError();
-    return false;
-  }
-  pvDestinationDatabase = db;
-
-  return true;
-}
-
-bool mdtSqlTableCopierMapping::setSourceTable(const QString & tableName)
-{
-  clearFieldMapping();
-  if(!pvSourceTable.setupFromTable(tableName, pvSourceDatabase)){
+  if(!pvSourceTable.setupFromTable(tableName, db)){
     pvLastError = pvSourceTable.lastError();
     return false;
   }
@@ -59,10 +64,10 @@ bool mdtSqlTableCopierMapping::setSourceTable(const QString & tableName)
   return true;
 }
 
-bool mdtSqlTableCopierMapping::setDestinationTable(const QString & tableName)
+bool mdtSqlDatabaseCopierTableMapping::setDestinationTable(const QString & tableName, const QSqlDatabase & db)
 {
   clearFieldMapping();
-  if(!pvDestinationTable.setupFromTable(tableName, pvDestinationDatabase)){
+  if(!pvDestinationTable.setupFromTable(tableName, db)){
     pvLastError = pvDestinationTable.lastError();
     return false;
   }
@@ -71,35 +76,11 @@ bool mdtSqlTableCopierMapping::setDestinationTable(const QString & tableName)
   return true;
 }
 
-// void mdtSqlTableCopierMapping::addFieldMapping(const mdtSqlCopierFieldMapping& fm)
-// {
-//   Q_ASSERT(fm.sourceFieldIndex >= 0);
-//   Q_ASSERT(fm.sourceFieldIndex < pvSourceTable.fieldCount());
-//   Q_ASSERT(fm.destinationFieldIndex >= 0);
-//   Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
-// 
-//   pvFieldMappingList.append(fm);
-// }
-
-// void mdtSqlTableCopierMapping::addFieldMapping(int sourceFieldIndex, const QString & destinationFieldName)
-// {
-//   Q_ASSERT(sourceFieldIndex >= 0);
-//   Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
-// 
-//   int destinationFieldIndex = pvDestinationTable.fieldIndex(destinationFieldName);
-//   Q_ASSERT(destinationFieldIndex >= 0);
-//   Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
-//   mdtSqlCopierFieldMapping fm;
-//   fm.sourceFieldIndex = sourceFieldIndex;
-//   fm.destinationFieldIndex = destinationFieldIndex;
-//   pvFieldMappingList.append(fm);
-// }
-
-void mdtSqlTableCopierMapping::resetFieldMapping()
+void mdtSqlDatabaseCopierTableMapping::resetFieldMapping()
 {
   int n = pvSourceTable.fieldCount();
 
-  pvFieldMappingList.clear();
+  clearFieldMapping();
   for(int i = 0; i < n; ++i){
     mdtSqlCopierFieldMapping fm;
     fm.sourceFieldIndex = i;
@@ -107,13 +88,16 @@ void mdtSqlTableCopierMapping::resetFieldMapping()
   }
 }
 
-void mdtSqlTableCopierMapping::clearFieldMapping()
+void mdtSqlDatabaseCopierTableMapping::clearFieldMapping()
 {
   pvFieldMappingList.clear();
+  pvMappingState = MappingNotSet;
 }
 
-void mdtSqlTableCopierMapping::generateFieldMappingByName()
+void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
 {
+  bool mismatchDetected = false;
+
   resetFieldMapping();
   for(auto & fm : pvFieldMappingList){
     // Get source field
@@ -127,9 +111,14 @@ void mdtSqlTableCopierMapping::generateFieldMappingByName()
     // Update field mapping
     fm.destinationFieldIndex = destinationFieldIndex;
   }
+  if(mismatchDetected){
+    pvMappingState = MappingPartial;
+  }else{
+    pvMappingState = MappingComplete;
+  }
 }
 
-void mdtSqlTableCopierMapping::setDestinationField(int index, const QString & fieldName)
+void mdtSqlDatabaseCopierTableMapping::setDestinationField(int index, const QString & fieldName)
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < pvFieldMappingList.size());
@@ -142,4 +131,28 @@ void mdtSqlTableCopierMapping::setDestinationField(int index, const QString & fi
     fm.destinationFieldIndex = pvDestinationTable.fieldIndex(fieldName);
   }
   pvFieldMappingList[index] = fm;
+  // Check if mapping is now complete and update state
+  if(mappingIsCompete()){
+    pvMappingState = MappingComplete;
+  }else{
+    pvMappingState = MappingPartial;
+  }
+}
+
+bool mdtSqlDatabaseCopierTableMapping::mappingIsCompete()
+{
+  // Check if both tables are set
+  if( pvSourceTable.tableName().isEmpty() || pvDestinationTable.tableName().isEmpty() ){
+    return false;
+  }
+  // Check field mapping
+  for(const auto & fm : pvFieldMappingList){
+    // Check if source and destination is mapped
+    if(fm.isNull()){
+      return false;
+    }
+    /// \todo Type and other checks
+  }
+
+  return true;
 }

@@ -50,8 +50,12 @@ class mdtSqlCopierTest : public mdtTest
   void tableMappingWidgetItemTest();
   void tableMappingWidgetTest();
 
-  void sqlTableCopierMappingTest();
-  void sqlTableCopierMappingModelTest();
+  void sqlDatabaseCopierTableMappingTest();
+  void sqlDatabaseCopierTableMappingModelTest();
+
+  void sqlDatabaseCopierMappingTest();
+  void sqlDatabaseCopierMappingModelTest();
+  void sqlDatabaseCopierDialogTest();
 
  private:
 

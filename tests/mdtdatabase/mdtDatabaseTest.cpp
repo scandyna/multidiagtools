@@ -24,6 +24,7 @@
 #include "mdtSqlDatabaseManager.h"
 
 #include "mdtSqlConnectionNameWidget.h"
+#include "mdtSqlDatabaseBasicInfoWidget.h"
 #include "mdtSqlDatabaseSqlite.h"
 #include "mdtSqlDatabaseDialogSqlite.h"
 
@@ -1036,6 +1037,23 @@ void mdtDatabaseTest::connectionNameWidgetTest()
   QSqlDatabase::removeDatabase("cnn2");
   QSqlDatabase::removeDatabase("cnn3");
   QSqlDatabase::removeDatabase("cnn4");
+}
+
+void mdtDatabaseTest::basicInfoWidgetTest()
+{
+  mdtSqlDatabaseBasicInfoWidget w;
+
+  w.show();
+  w.displayInfo(QSqlDatabase());
+  QTest::qWait(2000);
+  w.displayInfo(pvDatabase);
+
+  /*
+   * Play
+   */
+  while(w.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 void mdtDatabaseTest::databaseSqliteTest()

@@ -18,10 +18,10 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_TABLE_COPIER_MAPPING_MODEL_H
-#define MDT_SQL_TABLE_COPIER_MAPPING_MODEL_H
+#ifndef MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_MODEL_H
+#define MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_MODEL_H
 
-#include "mdtSqlTableCopierMapping.h"
+#include "mdtSqlDatabaseCopierTableMapping.h"
 #include "mdtError.h"
 #include <QAbstractTableModel>
 #include <QModelIndex>
@@ -32,62 +32,62 @@ class mdtComboBoxItemDelegate;
 
 /*! \brief Table model to access SQL table copier mapping
  *
- * \sa mdtSqlTableCopierMapping
+ * \sa mdtSqlDatabaseCopierTableMapping
  */
-class mdtSqlTableCopierMappingModel : public QAbstractTableModel
+class mdtSqlDatabaseCopierTableMappingModel : public QAbstractTableModel
 {
-  Q_OBJECT
+ Q_OBJECT
 
  public:
 
   /*! \brief Constructor
    */
-  mdtSqlTableCopierMappingModel(QObject *parent = nullptr);
+  mdtSqlDatabaseCopierTableMappingModel(QObject *parent = nullptr);
 
   /*! \internal Copy disabled
    */
-  mdtSqlTableCopierMappingModel(const mdtSqlTableCopierMappingModel & other) = delete;
+  mdtSqlDatabaseCopierTableMappingModel(const mdtSqlDatabaseCopierTableMappingModel & other) = delete;
 
   /*! \brief Set source database
    *
    * Will also clear field mapping and source table.
    */
-  bool setSourceDatabase(const QSqlDatabase & db);
+//   bool setSourceDatabase(const QSqlDatabase & db);
 
   /*! \brief Set destination database
    *
    * Will also clear field mapping and destination table.
    */
-  bool setDestinationDatabase(const QSqlDatabase & db);
+//   bool setDestinationDatabase(const QSqlDatabase & db);
 
   /*! \brief Set source table
    *
-   * Will also clear field mapping.
+   * Will also reset field mapping.
    */
-  bool setSourceTable(const QString & tableName);
+  bool setSourceTable(const QString & tableName, const QSqlDatabase & db);
 
   /*! \brief Set destination table
    *
-   * Will also clear field mapping.
+   * Will also reset field mapping.
    *
    * If delegate is not null,
    *  its combobox will be populated with available fields.
    */
-  bool setDestinationTable(const QString & tableName, mdtComboBoxItemDelegate *delegate = nullptr);
+  bool setDestinationTable(const QString & tableName, const QSqlDatabase & db, mdtComboBoxItemDelegate *delegate = nullptr);
 
   /*! \brief Generate field mapping by name
    *
-   * \sa mdtSqlTableCopierMapping::generateFieldMappingByName()
+   * \sa mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
    */
   void generateFieldMappingByName();
 
   /*! \brief Set mapping
    */
-//   void setMapping(const mdtSqlTableCopierMapping & m);
+//   void setMapping(const mdtSqlDatabaseCopierTableMapping & m);
 
   /*! \brief Get mapping
    */
-  mdtSqlTableCopierMapping mapping() const
+  mdtSqlDatabaseCopierTableMapping mapping() const
   {
     return pvMapping;
   }
@@ -137,8 +137,8 @@ class mdtSqlTableCopierMappingModel : public QAbstractTableModel
     DestinationTypeIndex = 3  /*!< Column index of destination field type */
   };
 
-  mdtSqlTableCopierMapping pvMapping;
+  mdtSqlDatabaseCopierTableMapping pvMapping;
   mdtError pvLastError;
 };
 
-#endif // #ifndef MDT_SQL_TABLE_COPIER_MAPPING_MODEL_H
+#endif // #ifndef MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_MODEL_H

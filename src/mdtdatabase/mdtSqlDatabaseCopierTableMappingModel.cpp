@@ -18,84 +18,90 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtSqlTableCopierMappingModel.h"
+#include "mdtSqlDatabaseCopierTableMappingModel.h"
 #include "mdtComboBoxItemDelegate.h"
 
 #include <QDebug>
 
-mdtSqlTableCopierMappingModel::mdtSqlTableCopierMappingModel(QObject* parent)
+mdtSqlDatabaseCopierTableMappingModel::mdtSqlDatabaseCopierTableMappingModel(QObject* parent)
  : QAbstractTableModel(parent)
 {
 }
 
-bool mdtSqlTableCopierMappingModel::setSourceDatabase(const QSqlDatabase& db)
+// bool mdtSqlDatabaseCopierTableMappingModel::setSourceDatabase(const QSqlDatabase& db)
+// {
+//   beginResetModel();
+//   if(!pvMapping.setSourceDatabase(db)){
+//     pvLastError = pvMapping.lastError();
+//     return false;
+//   }
+//   endResetModel();
+// 
+//   return true;
+// }
+
+// bool mdtSqlDatabaseCopierTableMappingModel::setDestinationDatabase(const QSqlDatabase& db)
+// {
+//   beginResetModel();
+//   if(!pvMapping.setDestinationDatabase(db)){
+//     pvLastError = pvMapping.lastError();
+//     return false;
+//   }
+//   endResetModel();
+// 
+//   return true;
+// }
+
+bool mdtSqlDatabaseCopierTableMappingModel::setSourceTable(const QString & tableName, const QSqlDatabase & db)
 {
+  bool ok;
+
   beginResetModel();
-  if(!pvMapping.setSourceDatabase(db)){
+  ok = pvMapping.setSourceTable(tableName, db);
+  endResetModel();
+  if(!ok){
     pvLastError = pvMapping.lastError();
     return false;
   }
-  endResetModel();
 
   return true;
 }
 
-bool mdtSqlTableCopierMappingModel::setDestinationDatabase(const QSqlDatabase& db)
+bool mdtSqlDatabaseCopierTableMappingModel::setDestinationTable(const QString & tableName, const QSqlDatabase & db, mdtComboBoxItemDelegate* delegate)
 {
+  bool ok;
+
   beginResetModel();
-  if(!pvMapping.setDestinationDatabase(db)){
-    pvLastError = pvMapping.lastError();
-    return false;
-  }
-  endResetModel();
-
-  return true;
-}
-
-bool mdtSqlTableCopierMappingModel::setSourceTable(const QString& tableName)
-{
-  beginResetModel();
-  if(!pvMapping.setSourceTable(tableName)){
-    pvLastError = pvMapping.lastError();
-    return false;
-  }
-  endResetModel();
-
-  return true;
-}
-
-bool mdtSqlTableCopierMappingModel::setDestinationTable(const QString & tableName, mdtComboBoxItemDelegate *delegate)
-{
-  beginResetModel();
-  if(!pvMapping.setDestinationTable(tableName)){
-    pvLastError = pvMapping.lastError();
-    return false;
-  }
-  if(delegate != nullptr){
+  ok = pvMapping.setDestinationTable(tableName, db);
+  if( (ok) && (delegate != nullptr) ){
     delegate->clear();
     delegate->addItem("");
     delegate->addItems(pvMapping.getDestinationFieldNameList());
   }
   endResetModel();
+  if(!ok){
+    pvLastError = pvMapping.lastError();
+    return false;
+  }
 
   return true;
 }
 
-void mdtSqlTableCopierMappingModel::generateFieldMappingByName()
+void mdtSqlDatabaseCopierTableMappingModel::generateFieldMappingByName()
 {
   beginResetModel();
   pvMapping.generateFieldMappingByName();
   endResetModel();
 }
 
-// void mdtSqlTableCopierMappingModel::setMapping(const mdtSqlTableCopierMapping& m)
+// void mdtSqlDatabaseCopierTableMappingModel::setMapping(const mdtSqlTableCopierMapping& m)
 // {
 //   beginResetModel();
 //   pvMapping = m;
 //   endResetModel();
 // }
 
-int mdtSqlTableCopierMappingModel::rowCount(const QModelIndex& parent) const
+int mdtSqlDatabaseCopierTableMappingModel::rowCount(const QModelIndex& parent) const
 {
   // Check parent validity (case of use with a tree view)
   if(parent.isValid()){
@@ -104,12 +110,12 @@ int mdtSqlTableCopierMappingModel::rowCount(const QModelIndex& parent) const
   return pvMapping.fieldCount();
 }
 
-int mdtSqlTableCopierMappingModel::columnCount(const QModelIndex & /*parent*/) const
+int mdtSqlDatabaseCopierTableMappingModel::columnCount(const QModelIndex & /*parent*/) const
 {
   return 4;
 }
 
-QVariant mdtSqlTableCopierMappingModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant mdtSqlDatabaseCopierTableMappingModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
   if(orientation != Qt::Horizontal){
     return QAbstractTableModel::headerData(section, orientation, role);
@@ -131,7 +137,7 @@ QVariant mdtSqlTableCopierMappingModel::headerData(int section, Qt::Orientation 
   return section;
 }
 
-QVariant mdtSqlTableCopierMappingModel::data(const QModelIndex& index, int role) const
+QVariant mdtSqlDatabaseCopierTableMappingModel::data(const QModelIndex& index, int role) const
 {
   if(!index.isValid()){
     return QVariant();
@@ -155,7 +161,7 @@ QVariant mdtSqlTableCopierMappingModel::data(const QModelIndex& index, int role)
   return QVariant();
 }
 
-Qt::ItemFlags mdtSqlTableCopierMappingModel::flags(const QModelIndex& index) const
+Qt::ItemFlags mdtSqlDatabaseCopierTableMappingModel::flags(const QModelIndex& index) const
 {
   if(!index.isValid()){
     return QAbstractTableModel::flags(index);
@@ -166,7 +172,7 @@ Qt::ItemFlags mdtSqlTableCopierMappingModel::flags(const QModelIndex& index) con
   return QAbstractTableModel::flags(index);
 }
 
-bool mdtSqlTableCopierMappingModel::setData(const QModelIndex & index, const QVariant & value, int role)
+bool mdtSqlDatabaseCopierTableMappingModel::setData(const QModelIndex & index, const QVariant & value, int role)
 {
   if(!index.isValid()){
     return false;

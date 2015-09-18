@@ -53,7 +53,7 @@ mdtCsvFile::mdtCsvFile(QObject *parent, const QByteArray &fileEncoding)
  : QFile(parent)
 {
   pvCodec = QTextCodec::codecForName(fileEncoding);
-  Q_ASSERT(pvCodec != 0);
+  Q_ASSERT(pvCodec != 0);  /// \todo Should generate a error, or fallback to something
   pvReadLineBufferSize = 8192;
 }
 

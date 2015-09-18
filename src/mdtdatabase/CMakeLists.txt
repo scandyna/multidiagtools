@@ -29,6 +29,7 @@ set (SOURCES_FILES
           mdtSqlDatabaseManager.cpp
           
           mdtSqlConnectionNameWidget.cpp
+          mdtSqlDatabaseBasicInfoWidget.cpp
           mdtSqlDatabaseSqlite.cpp
           mdtSqlDatabaseDialogSqlite.cpp
           mdtSqlFieldSelectionDialog.cpp
@@ -52,8 +53,11 @@ set (SOURCES_FILES
           mdtSqlCopierTableMappingWidget.cpp
           mdtSqlCopierTableMappingWidgetItem.cpp
           
-          mdtSqlTableCopierMapping.cpp
-          mdtSqlTableCopierMappingModel.cpp
+          mdtSqlDatabaseCopierTableMapping.cpp
+          mdtSqlDatabaseCopierTableMappingModel.cpp
+          mdtSqlDatabaseCopierMapping.cpp
+          mdtSqlDatabaseCopierMappingModel.cpp
+          mdtSqlDatabaseCopierDialog.cpp
     )
 
 # Platform specific files

@@ -33,9 +33,12 @@
 #include "mdtSqlCopierCodecSettings.h"
 #include "mdtSqlCopierCodecSettingsWidget.h"
 
-#include "mdtSqlTableCopierMapping.h"
-#include "mdtSqlTableCopierMappingModel.h"
 #include "mdtComboBoxItemDelegate.h"
+#include "mdtSqlDatabaseCopierTableMapping.h"
+#include "mdtSqlDatabaseCopierTableMappingModel.h"
+#include "mdtSqlDatabaseCopierMapping.h"
+#include "mdtSqlDatabaseCopierMappingModel.h"
+#include "mdtSqlDatabaseCopierDialog.h"
 
 #include <QTemporaryFile>
 #include <QSqlQuery>
@@ -326,23 +329,25 @@ void mdtSqlCopierTest::tableMappingWidgetTest()
   }
 }
 
-void mdtSqlCopierTest::sqlTableCopierMappingTest()
+void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
 {
-  mdtSqlTableCopierMapping mapping;
+  mdtSqlDatabaseCopierTableMapping mapping;
   mdtSqlCopierFieldMapping fm;
 
   /*
    * Initial state
    */
   QCOMPARE(mapping.fieldCount(), 0);
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
 
   /*
    * Setup databases and tables
    */
-  QVERIFY(mapping.setSourceDatabase(pvDatabaseManager.database()));
-  QVERIFY(mapping.setDestinationDatabase(pvDatabaseManager.database()));
-  QVERIFY(mapping.setSourceTable("Client_tbl"));
-  QVERIFY(mapping.setDestinationTable("Client2_tbl"));
+//   QVERIFY(mapping.setSourceDatabase(pvDatabaseManager.database()));
+//   QVERIFY(mapping.setDestinationDatabase(pvDatabaseManager.database()));
+  QVERIFY(mapping.setSourceTable("Client_tbl", pvDatabaseManager.database()));
+  QVERIFY(mapping.setDestinationTable("Client2_tbl", pvDatabaseManager.database()));
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
   // Check attributes without any mapping set
   QCOMPARE(mapping.fieldCount(), 2);
   QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
@@ -355,6 +360,7 @@ void mdtSqlCopierTest::sqlTableCopierMappingTest()
    */
   mapping.setDestinationField(0, "Name");
   // Check attributes
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
   QCOMPARE(mapping.fieldCount(), 2);
   QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
   QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
@@ -366,6 +372,7 @@ void mdtSqlCopierTest::sqlTableCopierMappingTest()
    */
   mapping.setDestinationField(1, "Id_PK");
   // Check attributes
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
   QCOMPARE(mapping.fieldCount(), 2);
   QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
   QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
@@ -375,23 +382,85 @@ void mdtSqlCopierTest::sqlTableCopierMappingTest()
    * Check field mapping generation by field name
    */
   mapping.generateFieldMappingByName();
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
   QCOMPARE(mapping.fieldCount(), 2);
   QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
   QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
   QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
   QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+  /*
+   * Clear
+   */
+  mapping.clearFieldMapping();
+  QCOMPARE(mapping.fieldCount(), 0);
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
 
-
-
-  
 }
 
-void mdtSqlCopierTest::sqlTableCopierMappingModelTest()
+void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
 {
   QTableView tableView;
   QTreeView treeView;
-  mdtSqlTableCopierMappingModel model;
-  mdtSqlTableCopierMapping mapping;
+  mdtSqlDatabaseCopierTableMappingModel model;
+  mdtSqlDatabaseCopierTableMapping mapping;
+  mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
+
+  /*
+   * Setup views
+   */
+  // Setup table view
+  tableView.setModel(&model);
+  tableView.setItemDelegateForColumn(2, delegate);
+  tableView.resize(600, 150);
+  tableView.show();
+  // Setup tree view
+  treeView.setModel(&model);
+  treeView.show();
+
+  /*
+   * Setup model
+   */
+//   QVERIFY(model.setSourceDatabase(pvDatabaseManager.database()));
+//   QVERIFY(model.setDestinationDatabase(pvDatabaseManager.database()));
+  QVERIFY(model.setSourceTable("Client_tbl", pvDatabaseManager.database()));
+  QVERIFY(model.setDestinationTable("Client2_tbl", pvDatabaseManager.database(), delegate));
+  model.generateFieldMappingByName();
+  tableView.resizeColumnsToContents();
+  
+
+  /*
+   * Play
+   */
+  while(tableView.isVisible()){
+    QTest::qWait(500);
+  }
+}
+
+void mdtSqlCopierTest::sqlDatabaseCopierMappingTest()
+{
+  mdtSqlDatabaseCopierMapping mapping;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(mapping.tableMappingCount(), 0);
+  /*
+   * Set source database
+   */
+  QVERIFY(mapping.setSourceDatabase(pvDatabaseManager.database()));
+  // Check attributes without any mapping set
+  QCOMPARE(mapping.tableMappingCount(), 2);
+  QCOMPARE(mapping.sourceTableName(0), QString("Client_tbl"));
+  QCOMPARE(mapping.sourceTableName(1), QString("Client2_tbl"));
+  
+}
+
+void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
+{
+  QTableView tableView;
+  QTreeView treeView;
+  mdtSqlDatabaseCopierMappingModel model;
+  mdtSqlDatabaseCopierMapping mapping;
   mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
 
   /*
@@ -411,10 +480,7 @@ void mdtSqlCopierTest::sqlTableCopierMappingModelTest()
    */
   QVERIFY(model.setSourceDatabase(pvDatabaseManager.database()));
   QVERIFY(model.setDestinationDatabase(pvDatabaseManager.database()));
-  QVERIFY(model.setSourceTable("Client_tbl"));
-  QVERIFY(model.setDestinationTable("Client2_tbl", delegate));
-  ///model.setMapping(mapping);
-  model.generateFieldMappingByName();
+  QVERIFY(model.generateTableMappingByName());
   tableView.resizeColumnsToContents();
   
 
@@ -424,6 +490,13 @@ void mdtSqlCopierTest::sqlTableCopierMappingModelTest()
   while(tableView.isVisible()){
     QTest::qWait(500);
   }
+}
+
+void mdtSqlCopierTest::sqlDatabaseCopierDialogTest()
+{
+  mdtSqlDatabaseCopierDialog dialog;
+
+  dialog.exec();
 }
 
 
