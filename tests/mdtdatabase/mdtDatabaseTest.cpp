@@ -32,6 +32,7 @@
 
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlTableSchemaModel.h"
+#include "mdtSqlViewSchema.h"
 
 #include "mdtSqlFieldSetupWidget.h"
 #include "mdtSqlFieldSetupDialog.h"
@@ -1037,6 +1038,113 @@ void mdtDatabaseTest::connectionNameWidgetTest()
   QSqlDatabase::removeDatabase("cnn2");
   QSqlDatabase::removeDatabase("cnn3");
   QSqlDatabase::removeDatabase("cnn4");
+}
+
+void mdtDatabaseTest::sqlViewSchemaTest()
+{
+  mdtSqlViewSchema vs;
+  QString expectedSql;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(vs.getSqlForCreate("'", "'").isEmpty());
+  QVERIFY(vs.getSqlForDrop("'").isEmpty());
+  /*
+   * Setup a simple view
+   */
+  vs.setName("Simple_view");
+  vs.addSelectItem("Id_PK");
+  vs.addSelectItem("Name");
+  vs.setAfterSelectStatement("FROM Simple_tbl");
+  // Check DROP statement
+  expectedSql = "DROP VIEW IF EXISTS `Simple_view`";
+  QCOMPARE(vs.getSqlForDrop("`"), expectedSql);
+  // Check CREATE statement
+  expectedSql =  "CREATE VIEW `Simple_view` AS\n";
+  expectedSql += "SELECT\n";
+  expectedSql += " 'Id_PK',\n";
+  expectedSql += " 'Name'\n";
+  expectedSql += "FROM Simple_tbl\n";
+  QCOMPARE(vs.getSqlForCreate("`", "'"), expectedSql);
+  /*
+   * Check that choosing no end of line works
+   */
+  // Clear
+  vs.clear();
+  QVERIFY(vs.getSqlForCreate("'", "'").isEmpty());
+  QVERIFY(vs.getSqlForDrop("'").isEmpty());
+  // Setup
+  vs.setName("Simple_view");
+  vs.addSelectItem("Id_PK");
+  vs.addSelectItem("Name");
+  vs.setAfterSelectStatement("FROM Simple_tbl");
+  // Check CREATE statement
+  expectedSql =  "CREATE VIEW `Simple_view` AS SELECT 'Id_PK', 'Name' FROM Simple_tbl";
+  QCOMPARE(vs.getSqlForCreate("`", "'", ""), expectedSql);
+  /*
+   * Check with 1 field (with defaul end of line)
+   */
+  // Clear
+  vs.clear();
+  QVERIFY(vs.getSqlForCreate("'", "'").isEmpty());
+  // Setup
+  vs.setName("Simple_view");
+  vs.addSelectItem("Id_PK");
+  vs.setAfterSelectStatement("FROM Simple_tbl");
+  // Check CREATE statement
+  expectedSql =  "CREATE VIEW `Simple_view` AS\n";
+  expectedSql += "SELECT\n";
+  expectedSql += " 'Id_PK'\n";
+  expectedSql += "FROM Simple_tbl\n";
+  QCOMPARE(vs.getSqlForCreate("`", "'"), expectedSql);
+  /*
+   * Check with empty parts
+   */
+  vs.clear();
+  QVERIFY(vs.getSqlForCreate("'", "'").isEmpty());
+  QVERIFY(vs.getSqlForDrop("'").isEmpty());
+  // Set only name
+  vs.setName("Brocken_view");
+  QVERIFY(vs.getSqlForCreate("'", "'").isEmpty());
+  // Check DROP statement (witch works if view name is set)
+  expectedSql = "DROP VIEW IF EXISTS `Brocken_view`";
+  QCOMPARE(vs.getSqlForDrop("`"), expectedSql);
+  // Set after SELECT statement
+  vs.setAfterSelectStatement("FROM BRK_tbl");
+  QVERIFY(vs.getSqlForCreate("'", "'").isEmpty());
+  // Set only Name and a field
+  vs.clear();
+  vs.setName("Brocken_view");
+  vs.addSelectItem("Id_PK");
+  QVERIFY(vs.getSqlForCreate("'", "'").isEmpty());
+  /*
+   * Clear
+   */
+  vs.clear();
+  QVERIFY(vs.getSqlForCreate("'", "'").isEmpty());
+}
+
+void mdtDatabaseTest::sqlViewSchemaBenchmark()
+{
+  mdtSqlViewSchema vs;
+  QString expectedSql;
+  QString sqlD, sqlC;
+
+  vs.setName("Simple_view");
+  vs.addSelectItem("Id_PK");
+  vs.addSelectItem("Name");
+  vs.setAfterSelectStatement("FROM Simple_tbl");
+  QBENCHMARK{
+    sqlD = vs.getSqlForDrop("'");
+    sqlC = vs.getSqlForCreate("`", "'");
+  }
+  expectedSql =  "CREATE VIEW `Simple_view` AS\n";
+  expectedSql += "SELECT\n";
+  expectedSql += " 'Id_PK',\n";
+  expectedSql += " 'Name'\n";
+  expectedSql += "FROM Simple_tbl\n";
+  QCOMPARE(sqlC, expectedSql);
 }
 
 void mdtDatabaseTest::basicInfoWidgetTest()

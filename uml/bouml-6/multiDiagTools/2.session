@@ -6,7 +6,7 @@ diagrams
   classdiagram_ref 874370 // TableSchema
     120 106 100 21 0 0
   classdiagram_ref 1510402 // TableSchemaModel
-    120 106 100 4 132 0
+    120 106 100 4 96 0
   classdiagram_ref 1523714 // SqlFieldType
     120 106 100 4 0 0
   classdiagram_ref 1059586 // mdtItemsSelectorDialog
@@ -21,13 +21,24 @@ diagrams
     879 904 100 4 0 0
   classdiagram_ref 1629058 // sqlDatabaseCopierTableMappingDialog
     120 106 100 4 0 0
-  active  classdiagram_ref 1622530 // SqlDatabaseCopierThread
+  classdiagram_ref 1622530 // SqlDatabaseCopierThread
+    879 899 100 4 0 0
+  classdiagram_ref 1517186 // FieldSetup
+    120 106 100 4 0 0
+  active  classdiagram_ref 1635586 // DatabaseSchema
     879 899 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1622530 // SqlDatabaseCopierThread
+selected attribute_ref 1986306 // SelectList
 open
   classview_ref 787842 // ImportExportCopy
+  operation_ref 3045890 // setupViews
+  operation_ref 3046018 // populateTables
+  class_ref 1954306 // mdtSqlDatabaseSchemaDialog
+  attribute_ref 1986434 // Name
+  attribute_ref 1986306 // SelectList
+  class_ref 1954690 // mdtSqlTriggerSchema
+  class_ref 1954818 // mdtSqlTablePopulationSchema
   classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
   class_ref 1947650 // mdtSqlDatabaseCopierTableMappingDialog
 end

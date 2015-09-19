@@ -1,0 +1,61 @@
+format 209
+
+classcanvas 128002 class_ref 1954178 // mdtAbstractSqlDatabaseSchema
+  classdiagramsettings member_max_width 0 end
+  xyz 45 439 2000
+end
+classcanvas 128130 class_ref 910210 // mdtSqlSchemaTable
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 523 460 2000
+end
+classcanvas 128386 class_ref 1954306 // mdtSqlDatabaseSchemaDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 62 90 2000
+end
+classcanvas 128514 class_ref 1954434 // mdtSqlDatabaseSchema
+  classdiagramsettings member_max_width 0 end
+  xyz 90 325 2000
+end
+classcanvas 128770 class_ref 1954562 // mdtSqlViewSchema
+  classdiagramsettings member_max_width 0 end
+  xyz 389 135 2000
+end
+classcanvas 128898 class_ref 1954690 // mdtSqlTriggerSchema
+  classdiagramsettings member_max_width 0 end
+  xyz 534 333 2000
+end
+classcanvas 129282 class_ref 1954818 // mdtSqlTablePopulationSchema
+  classdiagramsettings member_max_width 0 end
+  xyz 526 540 2000
+end
+classcanvas 129538 class_ref 1954946 // mdtSqlDatabaseSchemaModel
+  classdiagramsettings member_max_width 0 end
+  xyz 122 194 2000
+end
+relationcanvas 128258 relation_ref 2274562 // <directional composition>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 507 503 3000 no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 2274690 // <directional composition>
+  from ref 128514 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 2274818 // <directional composition>
+  decenter_begin 87
+  from ref 128002 z 2001 to ref 128770
+  no_role_a no_role_b
+  multiplicity_a_pos 556 272 3000 no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 2274946 // <directional composition>
+  from ref 128002 z 2001 to ref 128898
+  no_role_a no_role_b
+  multiplicity_a_pos 518 411 3000 no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 2275074 // <directional composition>
+  from ref 128002 z 2001 to ref 129282
+  no_role_a no_role_b
+  multiplicity_a_pos 510 605 3000 no_multiplicity_b
+end
+end

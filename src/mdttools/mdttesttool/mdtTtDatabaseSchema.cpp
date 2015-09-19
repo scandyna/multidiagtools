@@ -217,6 +217,7 @@ bool mdtTtDatabaseSchema::checkSchema()
       return false;
     }
   }
+  /// \todo Sould'nt we clear tables ??
 
   return true;
 }

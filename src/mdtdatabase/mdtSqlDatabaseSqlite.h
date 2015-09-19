@@ -35,6 +35,10 @@
  *  or creating a existing file, etc...)
  *
  * \sa mdtSqlDatabaseDialogSqlite
+ *
+ * \todo Add option that permit to create automatically an new connection,
+ *        and that removes it in destructor.
+ *        This becomes usefull for copy, witch requieres normally a second connection.
  */
 class mdtSqlDatabaseSqlite
 {
