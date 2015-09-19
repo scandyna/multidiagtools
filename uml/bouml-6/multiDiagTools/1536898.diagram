@@ -1,92 +1,19 @@
 format 209
 
-classcanvas 128002 class_ref 1773570 // mdtSqlCopierTableMapping
-  classdiagramsettings member_max_width 0 end
-  xyz 3.8 618.1 2000
-end
-classcanvas 128130 class_ref 1827842 // mdtSqlCopierTableMappingWidget
-  classdiagramsettings member_max_width 0 end
-  xyz 10.5 97.9 2000
-end
 classcanvas 128258 class_ref 316162 // QWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 104.7 13.4 2000
 end
-classcanvas 128514 class_ref 1827970 // Ui::mdtSqlTableMappingWidget
-  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 230.6 15.6 2000
-end
-classcanvas 129282 class_ref 1834626 // mdtSqlCopierTableMappingWidgetItem
-  classdiagramsettings member_max_width 0 end
-  xyz 446.9 307.4 2000
-end
 classcanvas 129538 class_ref 316162 // QWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 828.1 41.2 2000
+  xyz 546.1 57.2 2000
 end
 classcanvas 129794 class_ref 1841154 // Ui::mdtSqlTableMappingWidgetItem
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 914.4 42.3 2000
 end
-classcanvas 130434 class_ref 1821314 // mdtSqlCopierFieldMappingDialog
-  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 617 117.8 3005
-end
 classcanvas 131458 class_ref 1880962 // mdtSqlCopierCodecSettingsWidget
   classdiagramsettings member_max_width 0 end
-  xyz 297.2 435.6 2006
-end
-relationcanvas 128386 relation_ref 2153218 // <generalisation>
-  decenter_begin 267
-  from ref 128130 z 2001 to ref 128258
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 128642 relation_ref 2153346 // <generalisation>
-  decenter_begin 625
-  from ref 128130 z 2001 to ref 128514
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 129410 relation_ref 2160130 // <composition>
-  geometry HV
-  decenter_end 341
-  from ref 128130 z 2001 to point 664 205
-  line 130178 z 2001 to ref 129282
-  no_role_a no_role_b
-  multiplicity_a_pos 651 284 3000 multiplicity_b_pos 552 215 3000
-end
-relationcanvas 129666 relation_ref 2160258 // <generalisation>
-  decenter_begin 692
-  from ref 129282 z 2001 to ref 129538
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 129922 relation_ref 2166786 // <generalisation>
-  decenter_begin 855
-  from ref 129282 z 2001 to ref 129794
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 130306 relation_ref 2166914 // <unidirectional association>
-  decenter_begin 94
-  decenter_end 110
-  from ref 128130 z 2001 to ref 128002
-  no_role_a no_role_b
-  multiplicity_a_pos 43 595 3000 no_multiplicity_b
-end
-relationcanvas 130562 relation_ref 2167042 // <dependency>
-  decenter_begin 227
-  from ref 128130 z 3006 to ref 130434
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 131714 relation_ref 2214786 // <directional composition>
-  geometry VH
-  decenter_begin 450
-  from ref 128130 z 2007 to point 247 504
-  line 131842 z 2007 to ref 131458
-  no_role_a no_role_b
-  multiplicity_a_pos 279 514 3000 no_multiplicity_b
+  xyz 360.2 299.6 2006
 end
 end

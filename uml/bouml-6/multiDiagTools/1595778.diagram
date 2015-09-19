@@ -1,32 +1,8 @@
 format 209
 
-classcanvas 128002 class_ref 1894402 // mdtSqlCopierCodec
-  classdiagramsettings member_max_width 0 end
-  xyz 983.7 525.7 2000
-end
-classcanvas 128130 class_ref 1880962 // mdtSqlCopierCodecSettingsWidget
-  classdiagramsettings member_max_width 0 end
-  xyz 785.3 199 2000
-end
-classcanvas 128258 class_ref 1874434 // mdtSqlCopierCodecSettings
-  classdiagramsettings member_max_width 0 end
-  xyz 808.2 119 2006
-end
-classcanvas 128514 class_ref 1773570 // mdtSqlCopierTableMapping
-  classdiagramsettings member_max_width 0 end
-  xyz 538.6 119 2012
-end
-classcanvas 128770 class_ref 1827842 // mdtSqlCopierTableMappingWidget
-  classdiagramsettings member_max_width 0 end
-  xyz 512.4 199 2018
-end
 classcanvas 129154 class_ref 1772930 // mdtSqlCopierFieldMapping
   classdiagramsettings member_max_width 0 end
-  xyz 976.4 279 3005
-end
-classcanvas 129410 class_ref 1821314 // mdtSqlCopierFieldMappingDialog
-  classdiagramsettings member_max_width 0 end
-  xyz 247 199 3011
+  xyz 976.8 279 3005
 end
 classcanvas 129794 class_ref 910210 // mdtSqlSchemaTable
   classdiagramsettings member_max_width 0 end
@@ -34,87 +10,27 @@ classcanvas 129794 class_ref 910210 // mdtSqlSchemaTable
 end
 classcanvas 130178 class_ref 1808130 // mdtSqlTableSchemaModel
   classdiagramsettings member_max_width 0 end
-  xyz 37.4 119 3023
+  xyz 37.6 119 3023
 end
 classcanvas 130434 class_ref 1867394 // mdtSqlTableSetupWidget
   classdiagramsettings member_max_width 0 end
-  xyz 42.4 39 3029
+  xyz 42.6 39 3029
 end
 classcanvas 130690 class_ref 1801346 // mdtSqlFieldSetupWidget
   classdiagramsettings member_max_width 0 end
-  xyz 43.4 199 3029
+  xyz 43.6 199 3029
 end
 classcanvas 131458 class_ref 1854338 // mdtSqlDatabaseDialogSqlite
   classdiagramsettings member_max_width 0 end
-  xyz 744.8 388 2000
+  xyz 744.8 388.6 2000
 end
 classcanvas 131586 class_ref 1854210 // mdtSqlDatabaseSqlite
   classdiagramsettings member_max_width 0 end
-  xyz 765.3 526 2006
+  xyz 765.7 526.8 2006
 end
 classcanvas 131970 class_ref 1801346 // mdtSqlFieldSetupWidget
   classdiagramsettings member_max_width 0 end
-  xyz 156.9 278.1 3029
-end
-relationcanvas 128386 relation_ref 2207618 // <unidirectional association>
-  from ref 128130 z 2007 to ref 128258
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 128642 relation_ref 2201090 // <unidirectional association>
-  decenter_begin 581
-  decenter_end 581
-  from ref 128514 z 2013 to ref 128258
-  no_role_a no_role_b
-  multiplicity_a_pos 790 151 3000 no_multiplicity_b
-end
-relationcanvas 128898 relation_ref 2166914 // <unidirectional association>
-  decenter_begin 515
-  from ref 128770 z 2019 to ref 128514
-  no_role_a no_role_b
-  multiplicity_a_pos 614 169 3000 no_multiplicity_b
-end
-relationcanvas 129026 relation_ref 2214786 // <directional composition>
-  decenter_begin 395
-  decenter_end 395
-  from ref 128770 z 2019 to ref 128130
-  no_role_a no_role_b
-  multiplicity_a_pos 766 224 3000 no_multiplicity_b
-end
-relationcanvas 129282 relation_ref 2097794 // <directional composition>
-  decenter_end 475
-  from ref 128514 z 3006 to point 632.2 80.6
-  line 131074 z 3006 to point 1064.8 80.6
-  line 131202 z 3006 to ref 129154
-  no_role_a no_role_b
-  multiplicity_a_pos 1048 256 3000 no_multiplicity_b
-end
-relationcanvas 129538 relation_ref 2139906 // <unidirectional association>
-  geometry VH unfixed
-  decenter_end 395
-  from ref 129410 z 3012 to point 357 293
-  line 131330 z 3012 to ref 129154
-  no_role_a no_role_b
-  multiplicity_a_pos 958 303 3000 no_multiplicity_b
-end
-relationcanvas 129666 relation_ref 2167042 // <dependency>
-  decenter_begin 395
-  decenter_end 395
-  from ref 128770 z 3012 to ref 129410
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 129922 relation_ref 2112386 // <directional composition>
-  decenter_begin 581
-  decenter_end 581
-  from ref 128514 z 3018 to ref 129794
-  no_role_a no_role_b
-  multiplicity_a_pos 441 151 3000 no_multiplicity_b
-end
-relationcanvas 130050 relation_ref 2146690 // <dependency>
-  from ref 129410 z 3018 to ref 129794
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
+  xyz 156.3 278.7 3029
 end
 relationcanvas 130306 relation_ref 2133250 // <unidirectional association>
   decenter_begin 581
@@ -133,19 +49,8 @@ relationcanvas 130818 relation_ref 2194178 // <unidirectional association>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 130946 relation_ref 2140034 // <unidirectional association>
-  decenter_begin 395
-  from ref 129410 z 3030 to ref 130690
-  no_role_a no_role_b
-  multiplicity_a_pos 223 224 3000 no_multiplicity_b
-end
 relationcanvas 131714 relation_ref 2173826 // <unidirectional association>
   from ref 131458 z 2007 to ref 131586
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 131842 relation_ref 2227970 // <dependency>
-  from ref 128130 z 2001 to ref 131458
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

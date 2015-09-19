@@ -1,18 +1,8 @@
 window_sizes 1280 952 395 879 899 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 1563010 // TableMapping
-    944 899 100 4 0 0
-  classdiagram_ref 1582594 // CopierCodec
-    944 899 100 18 0 0
-  classdiagram_ref 1569538 // CopierCodecSettings
-    120 106 100 18 0 125
   classdiagram_ref 1595778 // SettingsOverview
     120 106 90 18 0 0
-  usecasediagram_ref 1596034 // ImportCsvFile
-    120 106 100 4 0 0
-  usecasediagram_ref 1596290 // MigrateDbSchema
-    120 106 100 4 0 0
   classdiagram_ref 874370 // TableSchema
     120 106 100 21 0 0
   classdiagram_ref 1510402 // TableSchemaModel
@@ -27,18 +17,18 @@ diagrams
     867 893 100 4 0 0
   classdiagram_ref 1609346 // DatabaseCopierMapping
     879 899 100 4 0 0
-  active  classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
-    879 899 100 4 0 0
+  classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
+    879 904 100 4 0 0
   classdiagram_ref 1629058 // sqlDatabaseCopierTableMappingDialog
     120 106 100 4 0 0
+  active  classdiagram_ref 1622530 // SqlDatabaseCopierThread
+    879 899 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
+selected classdiagram_ref 1622530 // SqlDatabaseCopierThread
 open
-  
-  package_ref 241026 // Ideas
-  classview_ref 794370 // SqlSchema
-  class_ref 1934466 // mdtSqlDatabaseBasicInfoWidget
+  classview_ref 787842 // ImportExportCopy
+  classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
   class_ref 1947650 // mdtSqlDatabaseCopierTableMappingDialog
 end
 end

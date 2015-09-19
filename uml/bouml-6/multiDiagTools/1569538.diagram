@@ -1,37 +1,9 @@
 format 209
 
-classcanvas 128386 class_ref 1874434 // mdtSqlCopierCodecSettings
-  classdiagramsettings member_max_width 0 end
-  xyz 743 28.2 2016
-end
-classcanvas 129922 class_ref 1880962 // mdtSqlCopierCodecSettingsWidget
-  classdiagramsettings member_max_width 0 end
-  xyz 221 138 2000
-end
 classcanvas 130178 class_ref 316162 // QWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 414 52 2022
 end
 note 130434 "Possibilité de récupérer liste des champs ?"
   xyzwh 154 455 2000 279 51
-classcanvas 130690 class_ref 1894402 // mdtSqlCopierCodec
-  classdiagramsettings member_max_width 0 end
-  xyz 458 434 2000
-end
-classcanvas 130818 class_ref 1821314 // mdtSqlCopierFieldMappingDialog
-  classdiagramsettings member_max_width 0 end
-  xyz 234 577 2000
-end
-relationcanvas 130050 relation_ref 2207618 // <unidirectional association>
-  from ref 129922 z 2017 to ref 128386
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 130306 relation_ref 2214658 // <generalisation>
-  from ref 129922 z 2023 to ref 130178
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-line 130562 -_-_
-  from ref 130434 z 2001 to ref 129922
 end

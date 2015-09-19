@@ -32,27 +32,17 @@ set (SOURCES_FILES
           mdtSqlDatabaseBasicInfoWidget.cpp
           mdtSqlDatabaseSqlite.cpp
           mdtSqlDatabaseDialogSqlite.cpp
+          
           mdtSqlFieldSelectionDialog.cpp
           mdtSqlTransaction.cpp
           mdtSqlForeignKeySetting.cpp
-          
-          mdtAbstractSqlCopierCodec.cpp
-          mdtSqlCopierCodecSqlite.cpp
-          mdtSqlCopierCodec.cpp
-          
-          mdtSqlCopierCodecSettingsWidget.cpp
           
           mdtSqlSchemaTable.cpp
           mdtSqlTableSchemaModel.cpp
           mdtSqlTableSetupWidget.cpp
           mdtSqlFieldSetupWidget.cpp
           mdtSqlFieldSetupDialog.cpp
-          
-          mdtSqlCopierFieldMappingDialog.cpp
-          
-          mdtSqlCopierTableMappingWidget.cpp
-          mdtSqlCopierTableMappingWidgetItem.cpp
-          
+          # Database copier classes
           mdtSqlDatabaseCopierTableMapping.cpp
           mdtSqlDatabaseCopierTableMappingModel.cpp
           mdtSqlDatabaseCopierTableMappingDialog.cpp

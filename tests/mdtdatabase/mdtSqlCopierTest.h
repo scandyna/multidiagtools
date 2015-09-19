@@ -36,19 +36,9 @@ class mdtSqlCopierTest : public mdtTest
   void initTestCase();
   void cleanupTestCase();
 
-  void codecSettingsTest();
-  void codecSettingsWidgetTest();
-
-  void codecTest();
-  void codecSqliteBenchmark();
-
   void sqlFieldSetupDataTest();
 
   void fieldMappingDataTest();
-  void fieldMappingDialogTest();
-
-  void tableMappingWidgetItemTest();
-  void tableMappingWidgetTest();
 
   void sqlDatabaseCopierTableMappingTest();
   void sqlDatabaseCopierTableMappingModelTest();

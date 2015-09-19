@@ -28,7 +28,7 @@ end
 relationcanvas 129154 relation_ref 2241410 // <directional composition>
   from ref 128258 z 2006 to ref 128642
   no_role_a no_role_b
-  multiplicity_a_pos 576 519 3000 no_multiplicity_b
+  multiplicity_a_pos 576 528 3000 no_multiplicity_b
 end
 relationcanvas 129282 relation_ref 2241538 // <directional composition>
   from ref 128770 z 2001 to ref 128258
