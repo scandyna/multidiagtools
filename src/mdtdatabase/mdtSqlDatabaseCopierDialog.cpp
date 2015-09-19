@@ -21,8 +21,10 @@
 #include "mdtSqlDatabaseCopierDialog.h"
 #include "mdtSqlDatabaseDialogSqlite.h"
 #include "mdtSqlDatabaseCopierMappingModel.h"
+#include "mdtSqlDatabaseCopierTableMappingDialog.h"
 #include <QToolButton>
 #include <QMessageBox>
+#include <QTableView>
 
 mdtSqlDatabaseCopierDialog::mdtSqlDatabaseCopierDialog(QWidget* parent)
  : QDialog(parent),
@@ -31,7 +33,7 @@ mdtSqlDatabaseCopierDialog::mdtSqlDatabaseCopierDialog(QWidget* parent)
   setupUi(this);
   
   tvMapping->setModel(pvMappingModel);
-  
+  connect(tvMapping, &QTableView::doubleClicked, this, &mdtSqlDatabaseCopierDialog::editTableMapping);
   connect(tbSelectSourceDatabase, &QToolButton::clicked, this, &mdtSqlDatabaseCopierDialog::selectSourceDatabase);
   connect(tbSelectDestinationDatabase, &QToolButton::clicked, this, &mdtSqlDatabaseCopierDialog::selectDestinationDatabase);
   connect(tbMapByName, &QToolButton::clicked, this, &mdtSqlDatabaseCopierDialog::mapByName);
@@ -48,7 +50,9 @@ void mdtSqlDatabaseCopierDialog::selectSourceDatabase()
   wSourceDatabaseInfo->displayInfo(db);
   if(!pvMappingModel->setSourceDatabase(db)){
     displayError(pvMappingModel->lastError());
+    return;
   }
+  resizeTableViewToContents();
 }
 
 void mdtSqlDatabaseCopierDialog::selectDestinationDatabase()
@@ -62,7 +66,9 @@ void mdtSqlDatabaseCopierDialog::selectDestinationDatabase()
   wDestinationDatabaseInfo->displayInfo(db);
   if(!pvMappingModel->setDestinationDatabase(db)){
     displayError(pvMappingModel->lastError());
+    return;
   }
+  resizeTableViewToContents();
 }
 
 void mdtSqlDatabaseCopierDialog::resetMapping()
@@ -74,7 +80,30 @@ void mdtSqlDatabaseCopierDialog::mapByName()
 {
   if(!pvMappingModel->generateTableMappingByName()){
     displayError(pvMappingModel->lastError());
+    return;
   }
+  resizeTableViewToContents();
+}
+
+void mdtSqlDatabaseCopierDialog::editTableMapping(const QModelIndex& index)
+{
+  if(!index.isValid()){
+    return;
+  }
+  int row = index.row();
+  auto tm = pvMappingModel->tableMapping(row);
+  mdtSqlDatabaseCopierTableMappingDialog dialog(this);
+  dialog.setMapping(tm);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  pvMappingModel->setTableMapping(row, dialog.mapping());
+}
+
+void mdtSqlDatabaseCopierDialog::resizeTableViewToContents()
+{
+  tvMapping->resizeColumnsToContents();
+  tvMapping->resizeRowsToContents();
 }
 
 void mdtSqlDatabaseCopierDialog::displayError(const mdtError& error)

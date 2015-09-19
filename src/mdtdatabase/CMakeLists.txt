@@ -55,6 +55,7 @@ set (SOURCES_FILES
           
           mdtSqlDatabaseCopierTableMapping.cpp
           mdtSqlDatabaseCopierTableMappingModel.cpp
+          mdtSqlDatabaseCopierTableMappingDialog.cpp
           mdtSqlDatabaseCopierMapping.cpp
           mdtSqlDatabaseCopierMappingModel.cpp
           mdtSqlDatabaseCopierDialog.cpp

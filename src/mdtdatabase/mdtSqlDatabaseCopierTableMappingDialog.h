@@ -18,19 +18,19 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_DATABASE_COPIER_DIALOG_H
-#define MDT_SQL_DATABASE_COPIER_DIALOG_H
+#ifndef MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_DIALOG_H
+#define MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_DIALOG_H
 
-#include "ui_mdtSqlDatabaseCopierDialog.h"
-#include "mdtError.h"
+#include "ui_mdtSqlDatabaseCopierTableMappingDialog.h"
+#include "mdtSqlDatabaseCopierTableMapping.h"
 #include <QDialog>
-#include <QModelIndex>
 
-class mdtSqlDatabaseCopierMappingModel;
+class mdtSqlDatabaseCopierTableMappingModel;
+class mdtComboBoxItemDelegate;
 
-/*! \brief Dialog that provides database copier tool
+/*! \brief SQL database copier table mapping dialog
  */
-class mdtSqlDatabaseCopierDialog : public QDialog, Ui::mdtSqlDatabaseCopierDialog
+class mdtSqlDatabaseCopierTableMappingDialog : public QDialog, Ui::mdtSqlDatabaseCopierTableMappingDialog
 {
  Q_OBJECT
 
@@ -38,33 +38,29 @@ class mdtSqlDatabaseCopierDialog : public QDialog, Ui::mdtSqlDatabaseCopierDialo
 
   /*! \brief Constructor
    */
-  mdtSqlDatabaseCopierDialog(QWidget *parent = nullptr);
+  mdtSqlDatabaseCopierTableMappingDialog(QWidget *parent = nullptr);
 
-  /*! \internal Copy diabled
+  /*! \internal Copy disabled
    */
-  mdtSqlDatabaseCopierDialog(const mdtSqlDatabaseCopierDialog & other) = delete;
+  mdtSqlDatabaseCopierTableMappingDialog(const mdtSqlDatabaseCopierTableMappingDialog & other) = delete;
+
+  /*! \brief Set table mapping
+   */
+  void setMapping(const mdtSqlDatabaseCopierTableMapping & m);
+
+  /*! \brief Get table mapping
+   */
+  mdtSqlDatabaseCopierTableMapping mapping() const;
 
  private slots:
 
-  /*! \brief Select source database
+  /*! \brief Reset field mapping
    */
-  void selectSourceDatabase();
+  void resetFieldMapping();
 
-  /*! \brief Select destination database
+  /*! \brief Map by field names
    */
-  void selectDestinationDatabase();
-
-  /*! \brief Reset mapping
-   */
-  void resetMapping();
-
-  /*! \brief Map by name
-   */
-  void mapByName();
-
-  /*! \brief Edit a table mapping
-   */
-  void editTableMapping(const QModelIndex & index);
+  void mapByFieldName();
 
   /*! \brief Resize table view
    */
@@ -72,11 +68,8 @@ class mdtSqlDatabaseCopierDialog : public QDialog, Ui::mdtSqlDatabaseCopierDialo
 
  private:
 
-  /*! \brief Display error
-   */
-  void displayError(const mdtError & error);
-
-  mdtSqlDatabaseCopierMappingModel *pvMappingModel;
+  mdtSqlDatabaseCopierTableMappingModel *pvMappingModel;
+  mdtComboBoxItemDelegate *pvDestinationFieldSelectionDelegate;
 };
 
-#endif // #ifndef MDT_SQL_DATABASE_COPIER_DIALOG_H
+#endif // #ifndef MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_DIALOG_H

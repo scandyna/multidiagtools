@@ -1,70 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>mdtSqlDatabaseCopierDialog</class>
- <widget class="QDialog" name="mdtSqlDatabaseCopierDialog">
+ <class>mdtSqlDatabaseCopierTableMappingDialog</class>
+ <widget class="QDialog" name="mdtSqlDatabaseCopierTableMappingDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>728</width>
-    <height>451</height>
+    <width>876</width>
+    <height>499</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Database copy</string>
+   <string>Dialog</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QGroupBox" name="gbSourceDatabase">
+      <widget class="QGroupBox" name="gbSourceTable">
        <property name="title">
-        <string>Source database</string>
+        <string>Source table</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QToolButton" name="tbSelectSourceDatabase">
-          <property name="statusTip">
-           <string>Select database</string>
-          </property>
+         <widget class="QLabel" name="lbSourceTable">
           <property name="text">
-           <string>...</string>
-          </property>
-          <property name="icon">
-           <iconset theme="document-open">
-            <normaloff/>
-           </iconset>
+           <string>source table</string>
           </property>
          </widget>
-        </item>
-        <item>
-         <widget class="mdtSqlDatabaseBasicInfoWidget" name="wSourceDatabaseInfo" native="true"/>
         </item>
        </layout>
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="gbDestinationDatabase">
+      <widget class="QGroupBox" name="gbDestinationTable">
        <property name="title">
-        <string>Destination database</string>
+        <string>Destination table</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QToolButton" name="tbSelectDestinationDatabase">
-          <property name="statusTip">
-           <string>Select database</string>
-          </property>
+         <widget class="QLabel" name="lbDestinationTable">
           <property name="text">
-           <string>...</string>
-          </property>
-          <property name="icon">
-           <iconset theme="document-open">
-            <normaloff>../../../../</normaloff>../../../../</iconset>
+           <string>destination table</string>
           </property>
          </widget>
-        </item>
-        <item>
-         <widget class="mdtSqlDatabaseBasicInfoWidget" name="wDestinationDatabaseInfo" native="true"/>
         </item>
        </layout>
       </widget>
@@ -74,30 +53,28 @@
    <item>
     <widget class="QGroupBox" name="gbMapping">
      <property name="title">
-      <string>Mapping</string>
+      <string>Field mapping</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QToolButton" name="tbResetMapping">
           <property name="toolTip">
-           <string>Reset mapping</string>
+           <string>Reset field mapping</string>
           </property>
           <property name="text">
            <string>...</string>
           </property>
           <property name="icon">
-           <iconset theme="edit-clear">
-            <normaloff/>
-           </iconset>
+           <iconset theme="edit-clear"/>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QToolButton" name="tbMapByName">
           <property name="text">
-           <string>map by name</string>
+           <string>Map by name</string>
           </property>
          </widget>
         </item>
@@ -128,26 +105,18 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Close</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>mdtSqlDatabaseBasicInfoWidget</class>
-   <extends>QWidget</extends>
-   <header>mdtSqlDatabaseBasicInfoWidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>mdtSqlDatabaseCopierDialog</receiver>
+   <receiver>mdtSqlDatabaseCopierTableMappingDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -163,7 +132,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>mdtSqlDatabaseCopierDialog</receiver>
+   <receiver>mdtSqlDatabaseCopierTableMappingDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

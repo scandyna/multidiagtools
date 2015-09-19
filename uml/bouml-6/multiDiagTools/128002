@@ -1,6 +1,6 @@
 format 209
 "mdtutils" // mdtutils
-  revision 143
+  revision 144
   modified_by 2 "philippe"
   // class settings
   
@@ -3607,20 +3607,19 @@ ${inlines}
     end
   end
 
-  usecaseview 128002 "mdt::optional"
-    
-    usecasediagramsettings end
-    
-    sequencediagramsettings end
-    
-    collaborationdiagramsettings end
+  classview 820482 "mdt::optional"
     
     classdiagramsettings member_max_width 0 end
     
+    collaborationdiagramsettings end
+    
     objectdiagramsettings end
+    
+    sequencediagramsettings end
     
     statediagramsettings
      end
+    
     
     activitydiagramsettings
      end

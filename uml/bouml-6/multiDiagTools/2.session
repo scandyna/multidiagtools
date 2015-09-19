@@ -27,29 +27,18 @@ diagrams
     867 893 100 4 0 0
   classdiagram_ref 1609346 // DatabaseCopierMapping
     879 899 100 4 0 0
-  active  classdiagram_ref 1616002 // SqlDatabaseCopierDialog
+  active  classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
     879 899 100 4 0 0
+  classdiagram_ref 1629058 // sqlDatabaseCopierTableMappingDialog
+    120 106 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1616002 // SqlDatabaseCopierDialog
+selected classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
 open
-  classview_ref 781314 // FormatModel
-  classview_ref 813954 // ModelView
   
   package_ref 241026 // Ideas
   classview_ref 794370 // SqlSchema
   class_ref 1934466 // mdtSqlDatabaseBasicInfoWidget
-  operation_ref 3015042 // resetFieldMapping
-  operation_ref 3015170 // clearFieldMapping
-  operation_ref 3015298 // generateFieldMappingByName
-  operation_ref 3015426 // setDestinationField
-  operation_ref 3015554 // getSourceFieldNameList
-  operation_ref 3015682 // sourceFieldTypeName
-  operation_ref 3015810 // getDestinationFieldNameList
-  operation_ref 3016194 // destinationFieldTypeName
-  class_ref 1921282 // mdtSqlDatabaseCopierTableMappingModel
-  classrelation_ref 2264578 // <directional composition>
-  operation_ref 3008002 // setSourceDatabase
-  operation_ref 3008130 // setDestinationDatabase
+  class_ref 1947650 // mdtSqlDatabaseCopierTableMappingDialog
 end
 end

@@ -36,6 +36,7 @@
 #include "mdtComboBoxItemDelegate.h"
 #include "mdtSqlDatabaseCopierTableMapping.h"
 #include "mdtSqlDatabaseCopierTableMappingModel.h"
+#include "mdtSqlDatabaseCopierTableMappingDialog.h"
 #include "mdtSqlDatabaseCopierMapping.h"
 #include "mdtSqlDatabaseCopierMappingModel.h"
 #include "mdtSqlDatabaseCopierDialog.h"
@@ -434,6 +435,19 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   while(tableView.isVisible()){
     QTest::qWait(500);
   }
+}
+
+void mdtSqlCopierTest::sqlDatabaseCopierTableMappingDialogTest()
+{
+  mdtSqlDatabaseCopierTableMappingDialog dialog;
+  mdtSqlDatabaseCopierTableMapping mapping;
+
+  QVERIFY(mapping.setSourceTable("Client_tbl", pvDatabaseManager.database()));
+  QVERIFY(mapping.setDestinationTable("Client2_tbl", pvDatabaseManager.database()));
+  mapping.generateFieldMappingByName();
+
+  dialog.setMapping(mapping);
+  dialog.exec();
 }
 
 void mdtSqlCopierTest::sqlDatabaseCopierMappingTest()

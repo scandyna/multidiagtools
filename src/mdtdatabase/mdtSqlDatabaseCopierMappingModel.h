@@ -22,6 +22,7 @@
 #define MDT_SQL_DATABASE_COPIER_MAPPING_MODEL_H
 
 #include "mdtSqlDatabaseCopierMapping.h"
+#include "mdtSqlDatabaseCopierTableMapping.h"
 #include "mdtError.h"
 #include <QAbstractTableModel>
 #include <QModelIndex>
@@ -65,6 +66,18 @@ class mdtSqlDatabaseCopierMappingModel : public QAbstractTableModel
    * \sa mdtSqlDatabaseCopierMapping::generateTableMappingByName()
    */
   bool generateTableMappingByName();
+
+  /*! \brief Get table mapping at given row
+   *
+   * \pre row must be in a valid range
+   */
+  mdtSqlDatabaseCopierTableMapping tableMapping(int row) const;
+
+  /*! \brief Set table mapping for given row
+   *
+   * \pre row must be in a valid range
+   */
+  void setTableMapping(int row, const mdtSqlDatabaseCopierTableMapping & tm);
 
   /*! \brief Get row count
    *

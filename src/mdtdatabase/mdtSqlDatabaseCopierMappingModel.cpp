@@ -73,6 +73,22 @@ bool mdtSqlDatabaseCopierMappingModel::generateTableMappingByName()
   return true;
 }
 
+mdtSqlDatabaseCopierTableMapping mdtSqlDatabaseCopierMappingModel::tableMapping(int row) const
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < pvMapping.tableMappingCount());
+
+  return pvMapping.tableMapping(row);
+}
+
+void mdtSqlDatabaseCopierMappingModel::setTableMapping(int row, const mdtSqlDatabaseCopierTableMapping& tm)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < pvMapping.tableMappingCount());
+
+  pvMapping.setTableMapping(row, tm);
+}
+
 int mdtSqlDatabaseCopierMappingModel::rowCount(const QModelIndex & parent) const
 {
   // Check parent validity (case of use with a tree view)

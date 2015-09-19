@@ -110,6 +110,28 @@ class mdtSqlDatabaseCopierMapping
     return pvTableMappingList.at(index).mappingState();
   }
 
+  /*! \brief Get table mapping at given index
+   *
+   * \pre index must be in a valid range
+   */
+  mdtSqlDatabaseCopierTableMapping tableMapping(int index) const
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < pvTableMappingList.size());
+    return pvTableMappingList.at(index);
+  }
+
+  /*! \brief Set table mapping for given index
+   *
+   * \pre index must be in a valid range
+   */
+  void setTableMapping(int index, const mdtSqlDatabaseCopierTableMapping & tm)
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < pvTableMappingList.size());
+    pvTableMappingList[index] = tm;
+  }
+
   /*! \brief Get last error
    */
   mdtError lastError() const

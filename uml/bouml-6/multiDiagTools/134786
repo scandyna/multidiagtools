@@ -1,6 +1,6 @@
 format 209
 "Qt4" // Qt4
-  revision 99
+  revision 100
   modified_by 2 "philippe"
   // class settings
   
@@ -318,15 +318,14 @@ ${inlines}
 	
       end
 
-      operation 308482 "start"
-	stereotype "slot"
+      operation 3037442 "started"
+	stereotype "signal"
 	public explicit_return_type "void"
-	nparams 1
-	  param in name "priority" explicit_type "Priority"
-	    defaultvalue "InheritPriority"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
   ${body}}
 "
 	

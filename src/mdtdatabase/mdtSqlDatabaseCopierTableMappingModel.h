@@ -75,6 +75,12 @@ class mdtSqlDatabaseCopierTableMappingModel : public QAbstractTableModel
    */
   bool setDestinationTable(const QString & tableName, const QSqlDatabase & db, mdtComboBoxItemDelegate *delegate = nullptr);
 
+  /*! \brief Reset field mapping
+   *
+   * \sa mdtSqlDatabaseCopierTableMapping::resetFieldMapping()
+   */
+  void resetFieldMapping();
+
   /*! \brief Generate field mapping by name
    *
    * \sa mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
@@ -83,7 +89,7 @@ class mdtSqlDatabaseCopierTableMappingModel : public QAbstractTableModel
 
   /*! \brief Set mapping
    */
-//   void setMapping(const mdtSqlDatabaseCopierTableMapping & m);
+  void setMapping(const mdtSqlDatabaseCopierTableMapping & m);
 
   /*! \brief Get mapping
    */

@@ -29,6 +29,8 @@ class mdtErrorTest : public mdtTest
 
  private slots:
 
+  void sandbox();
+
   void simpleTest();
 
   void errorOutInitTest();

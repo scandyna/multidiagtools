@@ -24,7 +24,61 @@
 #include "mdtApplication.h"
 #include <QTest>
 #include <QFile>
+#include <vector>
+#include <type_traits>
 
+#include <QDebug>
+
+/// \todo Basic error struct ?????
+
+template <typename T = int8_t>
+struct OtherErrorType
+{
+  T pvE;
+};
+/// typedef BasicOtherErrorType<int8_t> OtherErrorType;
+
+
+void mdtErrorTest::sandbox()
+{
+  qDebug() << "Sizeof int: " << sizeof(int);
+  qDebug() << "Sizeof QString: " << sizeof(QString);
+  qDebug() << "Sizeof mdtError: " << sizeof(mdtError);
+  qDebug() << "Sizeof std::vector<QString>: " << sizeof(std::vector<QString>);
+  std::vector<QString> msg(0);
+  qDebug() << "Sizeof std::vector<QString> msg variable: " << sizeof(msg);
+  
+  struct errorType1
+  {
+    QString a;
+    QString b;
+    QString c;
+    QString d;
+    QString e;
+    int f;
+    int g;
+    int h;
+    int i;
+  };
+  qDebug() << "Sizeof errorType1: " << sizeof(errorType1);
+  struct errorType2
+  {
+    std::vector<QString> pvMsg;
+    int f;
+    int g;
+    int h;
+    int i;
+  };
+  qDebug() << "Sizeof errorType2: " << sizeof(errorType2);
+  
+//   qDebug() << "Sizeof OtherErrorType: " << sizeof(OtherErrorType);
+//   qDebug() << "Sizeof BasicOtherErrorType<long int>: " << sizeof(BasicOtherErrorType<long int>);
+  qDebug() << "Sizeof OtherErrorType<>: " << sizeof(OtherErrorType<>);
+  qDebug() << "Sizeof OtherErrorType<int>: " << sizeof(OtherErrorType<int>);
+  
+  
+  /// \todo Benchmarks for copying varous version of ErrorStructs
+}
 /// \todo Check if number is usable anymore, and update test if needed.
 void mdtErrorTest::simpleTest()
 {

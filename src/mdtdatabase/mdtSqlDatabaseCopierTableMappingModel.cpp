@@ -87,6 +87,13 @@ bool mdtSqlDatabaseCopierTableMappingModel::setDestinationTable(const QString & 
   return true;
 }
 
+void mdtSqlDatabaseCopierTableMappingModel::resetFieldMapping()
+{
+  beginResetModel();
+  pvMapping.resetFieldMapping();
+  endResetModel();
+}
+
 void mdtSqlDatabaseCopierTableMappingModel::generateFieldMappingByName()
 {
   beginResetModel();
@@ -94,12 +101,12 @@ void mdtSqlDatabaseCopierTableMappingModel::generateFieldMappingByName()
   endResetModel();
 }
 
-// void mdtSqlDatabaseCopierTableMappingModel::setMapping(const mdtSqlTableCopierMapping& m)
-// {
-//   beginResetModel();
-//   pvMapping = m;
-//   endResetModel();
-// }
+void mdtSqlDatabaseCopierTableMappingModel::setMapping(const mdtSqlDatabaseCopierTableMapping & m)
+{
+  beginResetModel();
+  pvMapping = m;
+  endResetModel();
+}
 
 int mdtSqlDatabaseCopierTableMappingModel::rowCount(const QModelIndex& parent) const
 {
