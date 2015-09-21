@@ -51,6 +51,11 @@ class mdtDatabaseTest : public mdtTest
   void sqlViewSchemaTest();
   void sqlViewSchemaBenchmark();
 
+  void sqlTablePopulationSchemaTest();
+
+  void sqlDatabaseSchemaTest();
+  void sqlDatabaseSchemaModelTest();
+
   void connectionNameWidgetTest();
   void basicInfoWidgetTest();
   void databaseSqliteTest();

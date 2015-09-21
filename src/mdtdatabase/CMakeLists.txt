@@ -37,6 +37,9 @@ set (SOURCES_FILES
           mdtSqlTransaction.cpp
           mdtSqlForeignKeySetting.cpp
           
+          # Database schema
+          mdtSqlDatabaseSchema.cpp
+          mdtSqlDatabaseSchemaModel.cpp
           mdtSqlSchemaTable.cpp
           mdtSqlTableSchemaModel.cpp
           mdtSqlTableSetupWidget.cpp

@@ -25,20 +25,26 @@ diagrams
     879 899 100 4 0 0
   classdiagram_ref 1517186 // FieldSetup
     120 106 100 4 0 0
-  active  classdiagram_ref 1635586 // DatabaseSchema
+  classdiagram_ref 1635586 // DatabaseSchema
+    879 904 100 4 36 0
+  active  classdiagram_ref 1642114 // DatabaseSchemaModel
     879 899 100 4 0 0
 end
 show_stereotypes
-selected attribute_ref 1986306 // SelectList
+selected operation_ref 3053442 // parent
 open
   classview_ref 787842 // ImportExportCopy
-  operation_ref 3045890 // setupViews
-  operation_ref 3046018 // populateTables
+  operation_ref 3044994 // addTable
+  operation_ref 3053058 // table
+  operation_ref 3053186 // setTable
+  operation_ref 3052930 // viewCount
   class_ref 1954306 // mdtSqlDatabaseSchemaDialog
   attribute_ref 1986434 // Name
   attribute_ref 1986306 // SelectList
   class_ref 1954690 // mdtSqlTriggerSchema
   class_ref 1954818 // mdtSqlTablePopulationSchema
+  class_ref 1954946 // mdtSqlDatabaseSchemaModel
+  classview_ref 800898 // sqlDatabase
   classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
   class_ref 1947650 // mdtSqlDatabaseCopierTableMappingDialog
 end

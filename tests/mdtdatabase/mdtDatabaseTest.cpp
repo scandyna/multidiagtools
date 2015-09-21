@@ -33,6 +33,9 @@
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlTableSchemaModel.h"
 #include "mdtSqlViewSchema.h"
+#include "mdtSqlTablePopulationSchema.h"
+#include "mdtSqlDatabaseSchema.h"
+#include "mdtSqlDatabaseSchemaModel.h"
 
 #include "mdtSqlFieldSetupWidget.h"
 #include "mdtSqlFieldSetupDialog.h"
@@ -1145,6 +1148,134 @@ void mdtDatabaseTest::sqlViewSchemaBenchmark()
   expectedSql += " 'Name'\n";
   expectedSql += "FROM Simple_tbl\n";
   QCOMPARE(sqlC, expectedSql);
+}
+
+void mdtDatabaseTest::sqlTablePopulationSchemaTest()
+{
+  mdtSqlTablePopulationSchema tps;
+
+  /*
+   * Initial state
+   */
+  
+  /*
+   * Set data starting from a empty object
+   */
+  // Set
+  tps.setName("Type_tbl data");
+  tps.setTableName("Type_tbl");
+  tps.addFieldName("Id_PK");
+  tps.addFieldName("Name");
+  
+  // Check
+  QCOMPARE(tps.name(), QString("Type_tbl data"));
+  QCOMPARE(tps.tableName(), QString("Type_tbl"));
+  QCOMPARE(tps.fieldNameList().size(), 2);
+  QCOMPARE(tps.fieldNameList().at(0), QString("Id_PK"));
+  QCOMPARE(tps.fieldNameList().at(1), QString("Name"));
+  /*
+   * Populate with data
+   */
+  QCOMPARE(tps.rowDataCount(), 0);
+  // Add a row of data
+  tps.currentRowData() << 1 << "Name 1";
+  tps.commitCurrentRowData();
+  QCOMPARE(tps.rowDataCount(), 1);
+  QCOMPARE(tps.rowData(0).size(), 2);
+  QCOMPARE(tps.rowData(0).at(0), QVariant(1));
+  QCOMPARE(tps.rowData(0).at(1), QVariant("Name 1"));
+  // Add a row of data
+  tps.currentRowData() << 2 << "Name 2";
+  tps.commitCurrentRowData();
+  QCOMPARE(tps.rowDataCount(), 2);
+  QCOMPARE(tps.rowData(1).size(), 2);
+  QCOMPARE(tps.rowData(1).at(0), QVariant(2));
+  QCOMPARE(tps.rowData(1).at(1), QVariant("Name 2"));
+  /*
+   * Clear
+   */
+  tps.clear();
+  QVERIFY(tps.name().isEmpty());
+  QVERIFY(tps.tableName().isEmpty());
+  QVERIFY(tps.fieldNameList().isEmpty());
+  QCOMPARE(tps.rowDataCount(), 0);
+}
+
+void mdtDatabaseTest::sqlDatabaseSchemaTest()
+{
+  mdtSqlDatabaseSchema s;
+  /*
+   * Initial state
+   */
+}
+
+void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
+{
+  mdtSqlDatabaseSchema s;
+  mdtSqlDatabaseSchemaModel model;
+  mdtSqlSchemaTable ts;
+  mdtSqlViewSchema vs;
+  mdtSqlTablePopulationSchema tps;
+  QSqlField field;
+  QTreeView treeView;
+
+  /*
+   * Build a database schema
+   */
+  // Build Client_tbl
+  ts.clear();
+  ts.setTableName("Client_tbl", "UTF8");
+  // Id_PK
+  field = QSqlField();
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  ts.addField(field, true);
+  // Name
+  field = QSqlField();
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  ts.addField(field, false);
+  s.addTable(ts);
+  // Build Address_tbl
+  ts.clear();
+  ts.setTableName("Address_tbl", "UTF8");
+  // Id_PK
+  field = QSqlField();
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  ts.addField(field, true);
+  s.addTable(ts);
+  // Build Client_view
+  vs.clear();
+  vs.setName("Client_view");
+  s.addView(vs);
+  // Build table population schema for Client_tbl
+  tps.clear();
+  tps.setName("Client_tbl base data");
+  s.addTablePopulation(tps);
+
+
+  /// \todo Should check model by calling its function as we weher a tree view.
+  
+  /// \todo See also http://code.qt.io/cgit/qt/qt.git/tree/tests/auto/modeltest
+  
+  treeView.setModel(&model);
+  treeView.show();
+
+  /*
+   * Update model
+   */
+  model.setSchema(s);
+
+  /*
+   * Play
+   */
+  while(treeView.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 void mdtDatabaseTest::basicInfoWidgetTest()

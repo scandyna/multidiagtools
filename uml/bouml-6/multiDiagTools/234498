@@ -1,6 +1,6 @@
 format 209
 "mdtdatabase" // mdtdatabase
-  revision 62
+  revision 63
   modified_by 2 "philippe"
   // class settings
   
@@ -5094,8 +5094,8 @@ ${inlines}
       size A4
     end
 
-    class 1954178 "mdtAbstractSqlDatabaseSchema"
-      abstract visibility package 
+    class 1954178 "mdtSqlDatabaseSchema"
+      visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -5115,17 +5115,6 @@ ${inlines}
 "
 	    classrelation_ref 2290818 // <directional composition>
 	  b parent class_ref 910210 // mdtSqlSchemaTable
-      end
-
-      operation 3046146 "~mdtAbstractSqlDatabaseSchema"
-	abstract cpp_virtual public explicit_return_type ""
-	nparams 0
-	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
-"
-	
-	
-	
-	
       end
 
       operation 3044738 "clear"
@@ -5174,6 +5163,54 @@ ${inlines}
 	
       end
 
+      operation 3053058 "table"
+	public return_type class_ref 910210 // mdtSqlSchemaTable
+	nparams 1
+	  param in name "index" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3053186 "setTable"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "index" explicit_type "int"
+	  param in name "ts" type class_ref 910210 // mdtSqlSchemaTable
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3052930 "viewCount"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 3045122 "addView"
 	public explicit_return_type ""
 	nparams 0
@@ -5204,21 +5241,6 @@ ${inlines}
 	
       end
 
-      operation 3045378 "checkSchema"
-	public explicit_return_type "bool"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 3045506 "lastError"
 	public return_type class_ref 182402 // mdtError
 	nparams 0
@@ -5234,41 +5256,8 @@ ${inlines}
 	
       end
 
-      operation 3045634 "setupTables"
-	abstract cpp_virtual public explicit_return_type ""
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 3045890 "setupViews"
-	abstract cpp_virtual public explicit_return_type "bool"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 3046018 "populateTables"
-	abstract cpp_virtual public explicit_return_type "bool"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
       operation 3045762 "pvLastError"
-	protected return_type class_ref 182402 // mdtError
+	private return_type class_ref 182402 // mdtError
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -5350,30 +5339,6 @@ ${inlines}
 	
 	
 	
-      end
-    end
-
-    class 1954434 "mdtSqlDatabaseSchema"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 2290946 // <directional composition>
-	relation 2274690 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 2290946 // <directional composition>
-	  b parent class_ref 1954178 // mdtAbstractSqlDatabaseSchema
       end
     end
 
@@ -5514,7 +5479,7 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      attribute 1986818 "TableName"
+      attribute 1994114 "Name"
 	private type class_ref 161026 // QString
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -5526,7 +5491,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1986946 "Sql"
+      attribute 1986818 "TableName"
 	private type class_ref 161026 // QString
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -5550,7 +5515,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1987586 "DataRows"
+      attribute 1987586 "RowDataList"
 	private explicit_type "QVariantList"
 	multiplicity "*"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
@@ -5562,6 +5527,27 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
+    end
+
+    class 1961474 "mdtSqlDatabaseSchemaThread"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 1642114 "DatabaseSchemaModel"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
 
     class 1954946 "mdtSqlDatabaseSchemaModel"
@@ -5578,6 +5564,46 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      classrelation 2297858 // <generalisation>
+	relation 2281602 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2297858 // <generalisation>
+	  b parent class_ref 146946 // QAbstractItemModel
+      end
+
+      operation 3053314 "index"
+	public return_type class_ref 147330 // QModelIndex
+	nparams 3
+	  param in name "row" explicit_type "int"
+	  param in name "column" explicit_type "int"
+	  param in name "parent" type class_ref 147330 // QModelIndex
+	    defaultvalue "QModelIndex()"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3053442 "parent"
+	public return_type class_ref 147330 // QModelIndex
+	nparams 1
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 
