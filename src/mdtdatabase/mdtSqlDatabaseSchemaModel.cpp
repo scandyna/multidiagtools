@@ -29,9 +29,9 @@
 
 /*! \internal Data structure to hold position in the tree
  *
- * Note: this class only contains
+ * Note: this class mostly only contains
  *  informations about the tree structure,
- *  no data is stored here.
+ *  no data related to database schema is stored here.
  */
 class mdtSqlDatabaseSchemaModelItem
 {
@@ -41,19 +41,17 @@ class mdtSqlDatabaseSchemaModelItem
    */
   enum Type{
     Root,
-    TablesCategory,
-    TableData,
-    ViewsCategory,
-    ViewData,
-    TablePopulationsCategory,
-    TablePopulationData
+    ObjectCategory,
+    ObjectName
   };
 
   /*! \brief Internal Constructor
    */
-  mdtSqlDatabaseSchemaModelItem(Type t, mdtSqlDatabaseSchemaModelItem *parent)
+  mdtSqlDatabaseSchemaModelItem(Type t, mdtSqlDatabaseSchemaModel::ObjectCategory c, mdtSqlDatabaseSchemaModelItem *parent)
    : pvType(t),
-     pvParentItem(parent)
+     pvCategory(c),
+     pvParentItem(parent),
+     pvProgress(0)
   {
     Q_ASSERT( ((t == Root) && (parent == nullptr)) || ((t != Root) && (parent != nullptr)) );
   }
@@ -72,21 +70,28 @@ class mdtSqlDatabaseSchemaModelItem
     return pvType;
   }
 
-  /*! \internal Add a child of type t
+  /*! \internal Get item category
    */
-  mdtSqlDatabaseSchemaModelItem *addChild(Type t)
+  mdtSqlDatabaseSchemaModel::ObjectCategory category() const
   {
-    mdtSqlDatabaseSchemaModelItem *item = new mdtSqlDatabaseSchemaModelItem(t, this);
+    return pvCategory;
+  }
+
+  /*! \internal Add a child of type t and category c
+   */
+  mdtSqlDatabaseSchemaModelItem *addChild(Type t, mdtSqlDatabaseSchemaModel::ObjectCategory c)
+  {
+    mdtSqlDatabaseSchemaModelItem *item = new mdtSqlDatabaseSchemaModelItem(t, c, this);
     pvChildItems.append(item);
     return item;
   }
 
-  /*! \internal Add n children of type t
+  /*! \internal Add n children of type t and category c
    */
-  void addChildren(int n, Type t)
+  void addChildren(int n, Type t, mdtSqlDatabaseSchemaModel::ObjectCategory c)
   {
     for(int i = 0; i < n; ++i){
-      pvChildItems.append(new mdtSqlDatabaseSchemaModelItem(t, this));
+      pvChildItems.append(new mdtSqlDatabaseSchemaModelItem(t, c, this));
     }
   }
 
@@ -102,12 +107,6 @@ class mdtSqlDatabaseSchemaModelItem
   mdtSqlDatabaseSchemaModelItem *childItem(int row)
   {
     return pvChildItems.value(row, nullptr);
-  }
-
-  /// \todo define if needed, and update columnCount() in model
-  int columnCount() const
-  {
-    return 1;
   }
 
   /*! \internal Get the row position of this item in its parent
@@ -135,11 +134,27 @@ class mdtSqlDatabaseSchemaModelItem
     pvChildItems.clear();
   }
 
+  /*! \brief Set progress
+   */
+  void setProgress(int x)
+  {
+    pvProgress = x;
+  }
+
+  /*! \brief Get progress
+   */
+  int progress() const
+  {
+    return pvProgress;
+  }
+
  private:
 
   Type pvType;
-  QVector<mdtSqlDatabaseSchemaModelItem*> pvChildItems;
+  mdtSqlDatabaseSchemaModel::ObjectCategory pvCategory;
   mdtSqlDatabaseSchemaModelItem *pvParentItem;
+  int pvProgress;
+  QVector<mdtSqlDatabaseSchemaModelItem*> pvChildItems;
 };
 
 /*
@@ -149,22 +164,7 @@ class mdtSqlDatabaseSchemaModelItem
 mdtSqlDatabaseSchemaModel::mdtSqlDatabaseSchemaModel(QObject* parent)
  : QAbstractItemModel(parent)
 {
-  /*
-   * Build some tree:
-   * root
-   *  |- Tables
-   *  |    |- 0
-   *  |    |- 1
-   *  |- Views
-   *       |- 0
-   */
-  pvRootItem = new mdtSqlDatabaseSchemaModelItem(mdtSqlDatabaseSchemaModelItem::Root, nullptr);
-  
-//   mdtSqlDatabaseSchemaModelItem *tables = pvRootItem->addChild(mdtSqlDatabaseSchemaModelItem::TablesCategory);
-//   tables->addChild(mdtSqlDatabaseSchemaModelItem::TableData);
-//   tables->addChild(mdtSqlDatabaseSchemaModelItem::TableData);
-//   mdtSqlDatabaseSchemaModelItem *views = pvRootItem->addChild(mdtSqlDatabaseSchemaModelItem::ViewsCategory);
-//   views->addChild(mdtSqlDatabaseSchemaModelItem::ViewData);
+  pvRootItem = new mdtSqlDatabaseSchemaModelItem(mdtSqlDatabaseSchemaModelItem::Root, Invalid, nullptr);
 }
 
 mdtSqlDatabaseSchemaModel::~mdtSqlDatabaseSchemaModel()
@@ -177,19 +177,17 @@ void mdtSqlDatabaseSchemaModel::setSchema(const mdtSqlDatabaseSchema & s)
   beginResetModel();
   pvSchema = s;
   pvRootItem->clear();
-  auto *tables = pvRootItem->addChild(mdtSqlDatabaseSchemaModelItem::TablesCategory);
-  tables->addChildren(s.tableCount(), mdtSqlDatabaseSchemaModelItem::TableData);
-  auto *views = pvRootItem->addChild(mdtSqlDatabaseSchemaModelItem::ViewsCategory);
-  views->addChildren(s.viewCount(), mdtSqlDatabaseSchemaModelItem::ViewData);
-  auto *tps = pvRootItem->addChild(mdtSqlDatabaseSchemaModelItem::TablePopulationsCategory);
-  tps->addChildren(s.tablePopulationCount(), mdtSqlDatabaseSchemaModelItem::TablePopulationData);
+  auto *tables = pvRootItem->addChild(mdtSqlDatabaseSchemaModelItem::ObjectCategory, Table);
+  tables->addChildren(s.tableCount(), mdtSqlDatabaseSchemaModelItem::ObjectName, Table);
+  auto *views = pvRootItem->addChild(mdtSqlDatabaseSchemaModelItem::ObjectCategory, View);
+  views->addChildren(s.viewCount(), mdtSqlDatabaseSchemaModelItem::ObjectName, View);
+  auto *tps = pvRootItem->addChild(mdtSqlDatabaseSchemaModelItem::ObjectCategory, TablePopulation);
+  tps->addChildren(s.tablePopulationCount(), mdtSqlDatabaseSchemaModelItem::ObjectName, TablePopulation);
   endResetModel();
 }
 
 QModelIndex mdtSqlDatabaseSchemaModel::index(int row, int column, const QModelIndex & parent) const
 {
-  qDebug() << "REQ index for row " << row << " col " << column << " parent " << parent;
-
   // Get parent item
   mdtSqlDatabaseSchemaModelItem *parentItem;
   if(!parent.isValid()){
@@ -204,14 +202,12 @@ QModelIndex mdtSqlDatabaseSchemaModel::index(int row, int column, const QModelIn
   if(item != nullptr){
     return createIndex(row, column, item);
   }
-  qDebug() << " -> No item found";
+
   return QModelIndex();
 }
 
 QModelIndex mdtSqlDatabaseSchemaModel::parent(const QModelIndex & index) const
 {
-  qDebug() << "REQ parent for index " << index;
-
   if(!index.isValid()){
     return QModelIndex();
   }
@@ -219,7 +215,6 @@ QModelIndex mdtSqlDatabaseSchemaModel::parent(const QModelIndex & index) const
   auto *item = reinterpret_cast<mdtSqlDatabaseSchemaModelItem*>(index.internalPointer());
   Q_ASSERT(item != nullptr);
   auto parentItem = item->parentItem();
-  ///Q_ASSERT(parentItem != nullptr);
   // We not let root item accessible from view
   if(item == pvRootItem){
     return QModelIndex();
@@ -230,8 +225,6 @@ QModelIndex mdtSqlDatabaseSchemaModel::parent(const QModelIndex & index) const
 
 int mdtSqlDatabaseSchemaModel::rowCount(const QModelIndex & parent) const
 {
-  qDebug() << "REQ rowCount for parent " << parent;
-
   /// \todo Check what to do with parent's column
   if(parent.column() > 0){
     return 0;
@@ -267,29 +260,52 @@ QVariant mdtSqlDatabaseSchemaModel::data(const QModelIndex & index, int role) co
   if(!index.isValid()){
     return QVariant();
   }
-  if(index.column() != ObjectColumnIndex){
-    return QVariant();
-  }
   // Get item referenced by index
   auto *item = reinterpret_cast<mdtSqlDatabaseSchemaModelItem*>(index.internalPointer());
   Q_ASSERT(item != nullptr);
-  // Return data regarding item's type
-  switch(item->type()){
-    case mdtSqlDatabaseSchemaModelItem::Root:
+  // Return data regarding column
+  if(index.column() == ProgressColumnIndex){
+    if(role != Qt::DisplayRole){
       return QVariant();
-    case mdtSqlDatabaseSchemaModelItem::TablesCategory:
-    case mdtSqlDatabaseSchemaModelItem::ViewsCategory:
-    case mdtSqlDatabaseSchemaModelItem::TablePopulationsCategory:
-      return categoryData(item, role);
-    case mdtSqlDatabaseSchemaModelItem::TableData:
-      return tableSchemaData(index, role);
-    case mdtSqlDatabaseSchemaModelItem::ViewData:
-      return viewSchemaData(index, role);
-    case mdtSqlDatabaseSchemaModelItem::TablePopulationData:
-      return tablePopulationSchemaData(index, role);
+    }
+    return item->progress();
+  }else if(index.column() == ObjectColumnIndex){
+    // Return data regarding item's type
+    switch(item->type()){
+      case mdtSqlDatabaseSchemaModelItem::Root:
+        return QVariant();
+      case mdtSqlDatabaseSchemaModelItem::ObjectCategory:
+        return categoryData(item, role);
+      case mdtSqlDatabaseSchemaModelItem::ObjectName:
+        return nameData(index, item->category(), role);
+    }
   }
 
   return QVariant();
+}
+
+void mdtSqlDatabaseSchemaModel::setProgress(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, int value)
+{
+  QModelIndex index = indexOf(objectCategory);
+
+  if(!index.isValid()){
+    return;
+  }
+  auto *item = reinterpret_cast<mdtSqlDatabaseSchemaModelItem*>(index.internalPointer());
+  Q_ASSERT(item != nullptr);
+  item->setProgress(value);
+}
+
+void mdtSqlDatabaseSchemaModel::setProgress(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, const QString& objectName, int value)
+{
+  QModelIndex index = indexOf(objectCategory, objectName);
+
+  if(!index.isValid()){
+    return;
+  }
+  auto *item = reinterpret_cast<mdtSqlDatabaseSchemaModelItem*>(index.internalPointer());
+  Q_ASSERT(item != nullptr);
+  item->setProgress(value);
 }
 
 QVariant mdtSqlDatabaseSchemaModel::categoryData(mdtSqlDatabaseSchemaModelItem* item, int role) const
@@ -310,15 +326,33 @@ QVariant mdtSqlDatabaseSchemaModel::categoryDisplayRoleData(mdtSqlDatabaseSchema
 {
   Q_ASSERT(item != nullptr);
 
-  switch(item->type()){
-    case mdtSqlDatabaseSchemaModelItem::TablesCategory:
+  switch(item->category()){
+    case Table:
       return tr("Tables");
-    case mdtSqlDatabaseSchemaModelItem::ViewsCategory:
+    case View:
       return tr("Views");
-    case mdtSqlDatabaseSchemaModelItem::TablePopulationsCategory:
+    case TablePopulation:
       return tr("Table population");
     default:
       return QVariant();
+  }
+
+  return QVariant();
+}
+
+QVariant mdtSqlDatabaseSchemaModel::nameData(const QModelIndex & index, ObjectCategory oc, int role) const
+{
+  Q_ASSERT(index.isValid());
+
+  switch(oc){
+    case Invalid:
+      return QVariant();
+    case Table:
+      return tableSchemaData(index, role);
+    case View:
+      return viewSchemaData(index, role);
+    case TablePopulation:
+      return tablePopulationSchemaData(index, role);
   }
 
   return QVariant();
@@ -356,4 +390,41 @@ QVariant mdtSqlDatabaseSchemaModel::tablePopulationSchemaData(const QModelIndex&
     return pvSchema.tablePopulationName(index.row());
   }
   return QVariant();
+}
+
+QModelIndex mdtSqlDatabaseSchemaModel::indexOf(mdtSqlDatabaseSchemaModel::ObjectCategory oc) const
+{
+  /*
+   * The root item's children are category items.
+   */
+  for(int row = 0; row < pvRootItem->childCount(); ++row){
+    auto *item = pvRootItem->childItem(row);
+    Q_ASSERT(item != nullptr);
+    if(item->category() == oc){
+      return createIndex(row, 0, item);
+    }
+  }
+
+  return QModelIndex();
+}
+
+QModelIndex mdtSqlDatabaseSchemaModel::indexOf(mdtSqlDatabaseSchemaModel::ObjectCategory oc, const QString & objectName) const
+{
+  // Get index of requested object category
+  QModelIndex categoryIndex = indexOf(oc);
+  if(!categoryIndex.isValid()){
+    return QModelIndex();
+  }
+  // Search in each child
+  int n = rowCount(categoryIndex);
+  for(int row = 0; row < n; ++row){
+    QModelIndex idx = index(row, 0, categoryIndex);
+    if(idx.isValid()){
+      if(data(idx, Qt::DisplayRole).toString() == objectName){
+        return idx;
+      }
+    }
+  }
+
+  return QModelIndex();
 }

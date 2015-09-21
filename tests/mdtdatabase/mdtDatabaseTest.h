@@ -55,6 +55,7 @@ class mdtDatabaseTest : public mdtTest
 
   void sqlDatabaseSchemaTest();
   void sqlDatabaseSchemaModelTest();
+  void sqlDatabaseSchemaDialogTest();
 
   void connectionNameWidgetTest();
   void basicInfoWidgetTest();

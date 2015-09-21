@@ -1,6 +1,6 @@
 format 209
 "mdtdatabase" // mdtdatabase
-  revision 63
+  revision 64
   modified_by 2 "philippe"
   // class settings
   
@@ -5311,37 +5311,6 @@ ${inlines}
       end
     end
 
-    class 1954306 "mdtSqlDatabaseSchemaDialog"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      operation 3044610 "createSchema"
-	stereotype "slot"
-	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
     class 1954562 "mdtSqlViewSchema"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -5529,22 +5498,6 @@ ${inlines}
       end
     end
 
-    class 1961474 "mdtSqlDatabaseSchemaThread"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
     classdiagram 1642114 "DatabaseSchemaModel"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -5604,7 +5557,249 @@ ${inlines}
 	
 	
       end
+
+      operation 3060610 "setProgress"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "objectCategory" explicit_type "ObjectCategory"
+	  param in name "progress" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3060738 "setProgress"
+	public explicit_return_type "void"
+	nparams 3
+	  param in name "objectCategory" explicit_type "ObjectCategory"
+	  param in name "objectName" type class_ref 161026 // QString
+	  param in name "progress" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3060866 "indexOf"
+	private return_type class_ref 147330 // QModelIndex
+	nparams 1
+	  param in name "objectCategory" explicit_type "ObjectCategory"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3060994 "indexOf"
+	private return_type class_ref 147330 // QModelIndex
+	nparams 2
+	  param in name "objectCategory" explicit_type "ObjectCategory"
+	  param in name "objectName" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
+
+    classdiagram 1648642 "DatabaseSchemaDialog"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1954306 "mdtSqlDatabaseSchemaDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 3044610 "createSchema"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 2304386 // <generalisation>
+	relation 2288130 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2304386 // <generalisation>
+	  b parent class_ref 370434 // QDialog
+      end
+
+      classrelation 2304514 // <directional composition>
+	relation 2288258 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2304514 // <directional composition>
+	  b parent class_ref 1954946 // mdtSqlDatabaseSchemaModel
+      end
+    end
+
+    classdiagram 1648770 "DatabaseSchemaThread"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1961474 "mdtSqlDatabaseSchemaThread"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2304642 // <generalisation>
+	relation 2288386 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2304642 // <generalisation>
+	  b parent class_ref 222722 // QThread
+      end
+
+      operation 3060098 "createSchema"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "s" type class_ref 1954178 // mdtSqlDatabaseSchema
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3060226 "abort"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3060482 "objectProgressChanged"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 3
+	  param in name "objectCategory" explicit_type "oc"
+	  param in name "objectName" type class_ref 161026 // QString
+	  param in name "progress" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3060354 "errorOccured"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "error" type class_ref 182402 // mdtError
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3059970 "run"
+	cpp_virtual private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 2304770 // <unidirectional association>
+	relation 2288514 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2304770 // <unidirectional association>
+	  b parent class_ref 1954178 // mdtSqlDatabaseSchema
+      end
+    end
+
   end
 
   classview 800898 "sqlDatabase"

@@ -36,6 +36,7 @@
 #include "mdtSqlTablePopulationSchema.h"
 #include "mdtSqlDatabaseSchema.h"
 #include "mdtSqlDatabaseSchemaModel.h"
+#include "mdtSqlDatabaseSchemaDialog.h"
 
 #include "mdtSqlFieldSetupWidget.h"
 #include "mdtSqlFieldSetupDialog.h"
@@ -1269,6 +1270,10 @@ void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
    * Update model
    */
   model.setSchema(s);
+  
+  model.setProgress(mdtSqlDatabaseSchemaModel::Table, "Client_tbl", 4);
+  model.setProgress(mdtSqlDatabaseSchemaModel::Table, "Address_tbl", 6);
+  model.setProgress(mdtSqlDatabaseSchemaModel::Table, 10);
 
   /*
    * Play
@@ -1276,6 +1281,57 @@ void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
   while(treeView.isVisible()){
     QTest::qWait(500);
   }
+}
+
+void mdtDatabaseTest::sqlDatabaseSchemaDialogTest()
+{
+  mdtSqlDatabaseSchemaDialog dialog;
+  mdtSqlDatabaseSchema s;
+  mdtSqlSchemaTable ts;
+  mdtSqlViewSchema vs;
+  mdtSqlTablePopulationSchema tps;
+  QSqlField field;
+
+  /*
+   * Build a database schema
+   */
+  // Build Client_tbl
+  ts.clear();
+  ts.setTableName("Client_tbl", "UTF8");
+  // Id_PK
+  field = QSqlField();
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  ts.addField(field, true);
+  // Name
+  field = QSqlField();
+  field.setName("Name");
+  field.setType(QVariant::String);
+  field.setLength(50);
+  ts.addField(field, false);
+  s.addTable(ts);
+  // Build Address_tbl
+  ts.clear();
+  ts.setTableName("Address_tbl", "UTF8");
+  // Id_PK
+  field = QSqlField();
+  field.setName("Id_PK");
+  field.setType(QVariant::Int);
+  field.setAutoValue(true);
+  ts.addField(field, true);
+  s.addTable(ts);
+  // Build Client_view
+  vs.clear();
+  vs.setName("Client_view");
+  s.addView(vs);
+  // Build table population schema for Client_tbl
+  tps.clear();
+  tps.setName("Client_tbl base data");
+  s.addTablePopulation(tps);
+
+  dialog.setSchema(s);
+  dialog.exec();
 }
 
 void mdtDatabaseTest::basicInfoWidgetTest()

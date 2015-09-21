@@ -27,13 +27,23 @@
 
 class mdtSqlDatabaseSchemaModelItem;
 
-/*! \brief Tree model to display database some schema informations
+/*! \brief Tree model to display some database schema informations
  */
 class mdtSqlDatabaseSchemaModel : public QAbstractItemModel
 {
-  Q_OBJECT
+ Q_OBJECT
 
  public:
+
+  /*! \brief Object category
+   */
+  enum ObjectCategory
+  {
+    Invalid,          /*!< Not a valid object */
+    Table,            /*!< Object refers to a table schema */
+    View,             /*!< Object refers to a view schema */
+    TablePopulation   /*!< Object refers to a table population schema */
+  };
 
   /*! \brief Constructor
    */
@@ -71,22 +81,45 @@ class mdtSqlDatabaseSchemaModel : public QAbstractItemModel
    */
   QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
 
+  /*! \brief Set progress value
+   *
+   * \param objectCategory Category of target object
+   * \param value Progress (0 <= value <= 100)
+   */
+  void setProgress(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, int value);
+
+  /*! \brief Set progress value
+   *
+   * \param objectCategory Category of target object
+   * \param objectName Name of target object
+   * \param value Progress (0 <= value <= 100)
+   *
+   * For example, if we would set progress for a table named Clien_tbl,
+   *  we also call setProgress(mdtSqlDatabaseSchemaModel::Table, "Clien_tbl")
+   */
+  void setProgress(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, const QString & objectName, int value);
+
  private:
 
   /*! \brief Column index
    */
   enum ColumnIndex
   {
-    ObjectColumnIndex = 0   /*!< Column that display categories (Tables, Views, ..) and object names */
+    ObjectColumnIndex = 0,    /*!< Column that display categories (Tables, Views, ..) and object names */
+    ProgressColumnIndex = 1   /*!< Column that display progress */
   };
 
-  /*! \brief Get category data
+  /*! \brief Get object category data
    */
   QVariant categoryData(mdtSqlDatabaseSchemaModelItem *item, int role) const;
 
   /*! \brief Get category data for display role
    */
   QVariant categoryDisplayRoleData(mdtSqlDatabaseSchemaModelItem *item) const;
+
+  /*! \brief Get object name data
+   */
+  QVariant nameData(const QModelIndex & index, ObjectCategory oc, int role) const;
 
   /*! \brief Get table schema data
    */
@@ -99,6 +132,14 @@ class mdtSqlDatabaseSchemaModel : public QAbstractItemModel
   /*! \brief Get table population schema data
    */
   QVariant tablePopulationSchemaData(const QModelIndex & index, int role) const;
+
+  /*! \brief Get the index of given object category
+   */
+  QModelIndex indexOf(ObjectCategory oc) const;
+
+  /*! \brief Get the index of given object category and name
+   */
+  QModelIndex indexOf(ObjectCategory oc, const QString & objectName) const;
 
   mdtSqlDatabaseSchemaModelItem *pvRootItem;
   mdtSqlDatabaseSchema pvSchema;
