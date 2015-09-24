@@ -25,23 +25,23 @@ diagrams
     879 899 100 4 0 0
   classdiagram_ref 1517186 // FieldSetup
     120 106 100 4 0 0
-  classdiagram_ref 1635586 // DatabaseSchema
-    879 904 100 4 0 0
-  classdiagram_ref 1642114 // DatabaseSchemaModel
-    879 899 100 4 60 0
+  active  classdiagram_ref 1642114 // DatabaseSchemaModel
+    879 899 100 4 12 0
   classdiagram_ref 1648642 // DatabaseSchemaDialog
-    120 106 100 4 0 0
-  active  classdiagram_ref 1648770 // DatabaseSchemaThread
+    879 899 100 4 0 0
+  classdiagram_ref 1648770 // DatabaseSchemaThread
     879 899 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 3060482 // objectProgressChanged
+selected classdiagram_ref 1642114 // DatabaseSchemaModel
 open
   classview_ref 787842 // ImportExportCopy
+  class_ref 1954178 // mdtSqlDatabaseSchema
   class_ref 1954946 // mdtSqlDatabaseSchemaModel
+  class_ref 1954306 // mdtSqlDatabaseSchemaDialog
   operation_ref 3060098 // createSchema
   operation_ref 3060226 // abort
-  operation_ref 3060354 // errorOccured
+  operation_ref 3067522 // errorOccured
   classview_ref 800898 // sqlDatabase
   classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
   class_ref 1947650 // mdtSqlDatabaseCopierTableMappingDialog

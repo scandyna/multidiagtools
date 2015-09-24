@@ -27,6 +27,7 @@
 #include "mdtSqlDatabaseBasicInfoWidget.h"
 #include "mdtSqlDatabaseSqlite.h"
 #include "mdtSqlDatabaseDialogSqlite.h"
+#include "mdtSqlDatabaseSchemaThread.h"
 
 #include "mdtSqlTableSetupWidget.h"
 
@@ -994,56 +995,6 @@ void mdtDatabaseTest::sqlFieldSetupDialogTest()
   dialog.exec();
 }
 
-void mdtDatabaseTest::connectionNameWidgetTest()
-{
-  mdtSqlConnectionNameWidget widget;
-  QStringList connectionNames;
-
-  qDebug() << QSqlDatabase::connectionNames();
-  /*
-   * Check getConnectionNames() function
-   */
-  // Initially, we have only the default connection, witch uses the SQLite driver
-  QCOMPARE(QSqlDatabase::connectionNames().size(), 1);
-  // Create some connections
-  QSqlDatabase::addDatabase("QSQLITE", "cnn1");
-  QSqlDatabase::addDatabase("QMYSQL", "cnn2");
-  QSqlDatabase::addDatabase("QPSQL", "cnn3");
-  QSqlDatabase::addDatabase("QSQLITE", "cnn4");
-  // Get connection names and check
-  connectionNames = mdtSqlConnectionNameWidget::getConnectionNames(mdtSqlDriverType::SQLite, true);
-  QCOMPARE(connectionNames.size(), 3);
-  QVERIFY(connectionNames.contains("cnn1"));
-  QVERIFY(!connectionNames.contains("cnn2"));
-  QVERIFY(!connectionNames.contains("cnn3"));
-  QVERIFY(connectionNames.contains("cnn4"));
-  /*
-   * Check widget
-   */
-  // Initial state
-  QVERIFY(widget.pvDriverType == mdtSqlDriverType::Unknown);
-  QCOMPARE(widget.cbConnectionNames->count(), 0);
-  // Set SQLite driver type
-  widget.setDriverType(mdtSqlDriverType::SQLite);
-  QCOMPARE(widget.cbConnectionNames->count(), 3);
-
-  /*
-   * Play
-   */
-  widget.show();
-  while(widget.isVisible()){
-    QTest::qWait(500);
-  }
-
-  // Check that we didn't close the default database
-  QVERIFY(pvDatabase.isOpen());
-  // Remove added connections
-  QSqlDatabase::removeDatabase("cnn1");
-  QSqlDatabase::removeDatabase("cnn2");
-  QSqlDatabase::removeDatabase("cnn3");
-  QSqlDatabase::removeDatabase("cnn4");
-}
-
 void mdtDatabaseTest::sqlViewSchemaTest()
 {
   mdtSqlViewSchema vs;
@@ -1212,6 +1163,9 @@ void mdtDatabaseTest::sqlDatabaseSchemaTest()
 
 void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
 {
+  const int objectColumn = 0;
+  const int progressColumn = 1;
+  const int statusColumn = 2;
   mdtSqlDatabaseSchema s;
   mdtSqlDatabaseSchemaModel model;
   mdtSqlSchemaTable ts;
@@ -1219,6 +1173,7 @@ void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
   mdtSqlTablePopulationSchema tps;
   QSqlField field;
   QTreeView treeView;
+  QModelIndex index, parentIndex;
 
   /*
    * Build a database schema
@@ -1257,11 +1212,72 @@ void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
   tps.clear();
   tps.setName("Client_tbl base data");
   s.addTablePopulation(tps);
+  // Set schema to model
+  model.setSchema(s);
+  /*
+   * Currently, we have this tree:
+   *
+   * Tables
+   *   |--Client_tbl
+   *   |--Address_tbl
+   * Views
+   *   |--Client_view
+   * Table population
+   *   |--Client_tbl base data
+   *
+   * Check getting objects
+   */
+  // Check tables
+  index = model.index(0, objectColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Tables"));
+  parentIndex = index;
+  index = model.index(0, 0, parentIndex);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Client_tbl"));
+  index = model.index(1, 0, parentIndex);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Address_tbl"));
+  // Check views
+  index = model.index(1, objectColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Views"));
+  parentIndex = index;
+  index = model.index(0, 0, parentIndex);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Client_view"));
+  // Check table pupolations
+  index = model.index(2, objectColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Table population"));
+  parentIndex = index;
+  index = model.index(0, 0, parentIndex);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Client_tbl base data"));
+  /*
+   * Check set/get progress
+   */
+  // Tables category
+  model.setProgress(mdtSqlDatabaseSchemaModel::Table, 15);
+  index = model.index(0, progressColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant(15));
+  // Client_tbl
+  parentIndex = index;
+  model.setProgress(mdtSqlDatabaseSchemaModel::Table, "Client_tbl", 7);
+  index = model.index(0, progressColumn, parentIndex);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant(7));
+
+
+
 
 
   /// \todo Should check model by calling its function as we weher a tree view.
   
   /// \todo See also http://code.qt.io/cgit/qt/qt.git/tree/tests/auto/modeltest
+  
+  
   
   treeView.setModel(&model);
   treeView.show();
@@ -1334,6 +1350,63 @@ void mdtDatabaseTest::sqlDatabaseSchemaDialogTest()
   dialog.exec();
 }
 
+void mdtDatabaseTest::sqlDatabaseSchemaThreadTest()
+{
+  mdtSqlDatabaseSchemaThread thread;
+
+  
+}
+
+void mdtDatabaseTest::connectionNameWidgetTest()
+{
+  mdtSqlConnectionNameWidget widget;
+  QStringList connectionNames;
+
+  qDebug() << QSqlDatabase::connectionNames();
+  /*
+   * Check getConnectionNames() function
+   */
+  // Initially, we have only the default connection, witch uses the SQLite driver
+  QCOMPARE(QSqlDatabase::connectionNames().size(), 1);
+  // Create some connections
+  QSqlDatabase::addDatabase("QSQLITE", "cnn1");
+  QSqlDatabase::addDatabase("QMYSQL", "cnn2");
+  QSqlDatabase::addDatabase("QPSQL", "cnn3");
+  QSqlDatabase::addDatabase("QSQLITE", "cnn4");
+  // Get connection names and check
+  connectionNames = mdtSqlConnectionNameWidget::getConnectionNames(mdtSqlDriverType::SQLite, true);
+  QCOMPARE(connectionNames.size(), 3);
+  QVERIFY(connectionNames.contains("cnn1"));
+  QVERIFY(!connectionNames.contains("cnn2"));
+  QVERIFY(!connectionNames.contains("cnn3"));
+  QVERIFY(connectionNames.contains("cnn4"));
+  /*
+   * Check widget
+   */
+  // Initial state
+  QVERIFY(widget.pvDriverType == mdtSqlDriverType::Unknown);
+  QCOMPARE(widget.cbConnectionNames->count(), 0);
+  // Set SQLite driver type
+  widget.setDriverType(mdtSqlDriverType::SQLite);
+  QCOMPARE(widget.cbConnectionNames->count(), 3);
+
+  /*
+   * Play
+   */
+  widget.show();
+  while(widget.isVisible()){
+    QTest::qWait(500);
+  }
+
+  // Check that we didn't close the default database
+  QVERIFY(pvDatabase.isOpen());
+  // Remove added connections
+  QSqlDatabase::removeDatabase("cnn1");
+  QSqlDatabase::removeDatabase("cnn2");
+  QSqlDatabase::removeDatabase("cnn3");
+  QSqlDatabase::removeDatabase("cnn4");
+}
+
 void mdtDatabaseTest::basicInfoWidgetTest()
 {
   mdtSqlDatabaseBasicInfoWidget w;
@@ -1353,25 +1426,18 @@ void mdtDatabaseTest::basicInfoWidgetTest()
 
 void mdtDatabaseTest::databaseSqliteTest()
 {
-  QStringList connectionNames;
-
   /*
-   * Check getConnectionNames() function
+   * Check getOpenConnectionReferingDatabaseCount() function
    */
   // Initially, we have only the default connection, witch uses the SQLite driver
   QCOMPARE(QSqlDatabase::connectionNames().size(), 1);
+  QCOMPARE(mdtSqlDatabaseSqlite::getOpenConnectionReferingDatabaseCount(pvDatabase), 1);
   // Create some connections
   QSqlDatabase::addDatabase("QSQLITE", "cnn1");
   QSqlDatabase::addDatabase("QMYSQL", "cnn2");
   QSqlDatabase::addDatabase("QPSQL", "cnn3");
   QSqlDatabase::addDatabase("QSQLITE", "cnn4");
-  // Get connection names and check
-  connectionNames = mdtSqlDatabaseSqlite::getConnectionNames();
-  QCOMPARE(connectionNames.size(), 3);
-  QVERIFY(connectionNames.contains("cnn1"));
-  QVERIFY(!connectionNames.contains("cnn2"));
-  QVERIFY(!connectionNames.contains("cnn3"));
-  QVERIFY(connectionNames.contains("cnn4"));
+  QCOMPARE(mdtSqlDatabaseSqlite::getOpenConnectionReferingDatabaseCount(pvDatabase), 1);
   /*
    * Check object construction
    */
@@ -1417,11 +1483,17 @@ void mdtDatabaseTest::databaseSqliteTest()
   QCOMPARE(db2.database().databaseName(), dbFileInfo.absoluteFilePath());
   // Now, cnn1 refers to freshly created database - Check with open database object
   QCOMPARE(db2.getConnectionNameUsingDatabase(dbFileInfo), QString("cnn1"));
+  // Now we have 2 open connections that refers to 2 different databases
+  QCOMPARE(mdtSqlDatabaseSqlite::getOpenConnectionReferingDatabaseCount(pvDatabase), 1);
+  QCOMPARE(mdtSqlDatabaseSqlite::getOpenConnectionReferingDatabaseCount(db2.database()), 1);
   // Close - must keep database name
   db2.close();
   QCOMPARE(db2.database().databaseName(), dbFileInfo.absoluteFilePath());
   // As before, cnn1 refers to freshly created database - Check with closed database object
   QCOMPARE(db2.getConnectionNameUsingDatabase(dbFileInfo), QString("cnn1"));
+  // Now we have 2 connections that refers to 2 different databases, but only the one refered by pvDatabase is open
+  QCOMPARE(mdtSqlDatabaseSqlite::getOpenConnectionReferingDatabaseCount(pvDatabase), 1);
+  QCOMPARE(mdtSqlDatabaseSqlite::getOpenConnectionReferingDatabaseCount(db2.database()), 0);
   // Check creation with failing on existing database file
   QVERIFY(!db2.createDatabase(dbFileInfo, mdtSqlDatabaseSqlite::FailIfExists));
   QVERIFY(!db2.isOpen());

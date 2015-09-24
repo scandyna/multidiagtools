@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtSqlDatabaseSchemaModel.h"
 #include <QVector>
+#include <QColor>
 
 #include <QDebug>
 
@@ -45,13 +46,14 @@ class mdtSqlDatabaseSchemaModelItem
     ObjectName
   };
 
-  /*! \brief Internal Constructor
+  /*! \internal Constructor
    */
   mdtSqlDatabaseSchemaModelItem(Type t, mdtSqlDatabaseSchemaModel::ObjectCategory c, mdtSqlDatabaseSchemaModelItem *parent)
    : pvType(t),
      pvCategory(c),
      pvParentItem(parent),
-     pvProgress(0)
+     pvProgress(0),
+     pvStatus(mdtSqlDatabaseSchemaModel::mdtSqlDatabaseSchemaModel::StatusUnknown)
   {
     Q_ASSERT( ((t == Root) && (parent == nullptr)) || ((t != Root) && (parent != nullptr)) );
   }
@@ -75,6 +77,33 @@ class mdtSqlDatabaseSchemaModelItem
   mdtSqlDatabaseSchemaModel::ObjectCategory category() const
   {
     return pvCategory;
+  }
+
+  /*! \brief Set status
+   */
+  void setStatus(mdtSqlDatabaseSchemaModel::Status s){
+    pvStatus = s;
+  }
+
+  /*! \brief Get status
+   */
+  mdtSqlDatabaseSchemaModel::Status status() const
+  {
+    return pvStatus;
+  }
+
+  /*! \brief Set status text
+   */
+  void setStatusText(const QString & text)
+  {
+    pvStatusText = text;
+  }
+
+  /*! \brief Get status text
+   */
+  QString statusText() const
+  {
+    return pvStatusText;
   }
 
   /*! \internal Add a child of type t and category c
@@ -154,6 +183,8 @@ class mdtSqlDatabaseSchemaModelItem
   mdtSqlDatabaseSchemaModel::ObjectCategory pvCategory;
   mdtSqlDatabaseSchemaModelItem *pvParentItem;
   int pvProgress;
+  mdtSqlDatabaseSchemaModel::Status pvStatus;
+  QString pvStatusText;
   QVector<mdtSqlDatabaseSchemaModelItem*> pvChildItems;
 };
 
@@ -250,7 +281,7 @@ int mdtSqlDatabaseSchemaModel::columnCount(const QModelIndex & parent) const
    *  - parent index is valid, we declare 1 column
    */
   if(!parent.isValid()){
-    return 2;
+    return 3;
   }
   return 1;
 }
@@ -264,12 +295,8 @@ QVariant mdtSqlDatabaseSchemaModel::data(const QModelIndex & index, int role) co
   auto *item = reinterpret_cast<mdtSqlDatabaseSchemaModelItem*>(index.internalPointer());
   Q_ASSERT(item != nullptr);
   // Return data regarding column
-  if(index.column() == ProgressColumnIndex){
-    if(role != Qt::DisplayRole){
-      return QVariant();
-    }
-    return item->progress();
-  }else if(index.column() == ObjectColumnIndex){
+  int col = index.column();
+  if(col == ObjectColumnIndex){
     // Return data regarding item's type
     switch(item->type()){
       case mdtSqlDatabaseSchemaModelItem::Root:
@@ -279,6 +306,13 @@ QVariant mdtSqlDatabaseSchemaModel::data(const QModelIndex & index, int role) co
       case mdtSqlDatabaseSchemaModelItem::ObjectName:
         return nameData(index, item->category(), role);
     }
+  }else if(col == ProgressColumnIndex){
+    if(role != Qt::DisplayRole){
+      return QVariant();
+    }
+    return item->progress();
+  }else if(col == StatusColunIndex){
+    return statusData(item, role);
   }
 
   return QVariant();
@@ -286,26 +320,72 @@ QVariant mdtSqlDatabaseSchemaModel::data(const QModelIndex & index, int role) co
 
 void mdtSqlDatabaseSchemaModel::setProgress(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, int value)
 {
-  QModelIndex index = indexOf(objectCategory);
+//   QModelIndex index = indexOf(objectCategory, ProgressColumnIndex);
+// 
+//   if(!index.isValid()){
+//     return;
+//   }
+//   auto *item = reinterpret_cast<mdtSqlDatabaseSchemaModelItem*>(index.internalPointer());
+//   Q_ASSERT(item != nullptr);
+//   item->setProgress(value);
+//   emit dataChanged(index, index);
 
-  if(!index.isValid()){
-    return;
+  auto *item = getItem(objectCategory);
+
+  if(item != nullptr){
+    item->setProgress(value);
+    auto index = createIndex(item->row(), ProgressColumnIndex, item);
+    emit dataChanged(index, index);
   }
-  auto *item = reinterpret_cast<mdtSqlDatabaseSchemaModelItem*>(index.internalPointer());
-  Q_ASSERT(item != nullptr);
-  item->setProgress(value);
 }
 
 void mdtSqlDatabaseSchemaModel::setProgress(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, const QString& objectName, int value)
 {
-  QModelIndex index = indexOf(objectCategory, objectName);
+//   QModelIndex index = indexOf(objectCategory, ProgressColumnIndex, objectName);
+// 
+//   if(!index.isValid()){
+//     return;
+//   }
+//   auto *item = reinterpret_cast<mdtSqlDatabaseSchemaModelItem*>(index.internalPointer());
+//   Q_ASSERT(item != nullptr);
+//   item->setProgress(value);
+//   emit dataChanged(index, index);
+// 
+  auto *item = getItem(objectCategory, objectName);
 
-  if(!index.isValid()){
-    return;
+  if(item != nullptr){
+    item->setProgress(value);
+    auto index = createIndex(item->row(), ProgressColumnIndex, item);
+    emit dataChanged(index, index);
   }
-  auto *item = reinterpret_cast<mdtSqlDatabaseSchemaModelItem*>(index.internalPointer());
-  Q_ASSERT(item != nullptr);
-  item->setProgress(value);
+}
+
+void mdtSqlDatabaseSchemaModel::setStatus(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, const QString& objectName,
+                                          mdtSqlDatabaseSchemaModel::Status status, const QString & statusText)
+{
+//   QModelIndex index = indexOf(objectCategory, StatusColunIndex, objectName);
+// 
+//   qDebug() << "Model, setStatus() - OBJ: " << objectName << ", text: " << statusText;
+//   
+//   if(!index.isValid()){
+//     return;
+//   }
+//   auto *item = reinterpret_cast<mdtSqlDatabaseSchemaModelItem*>(index.internalPointer());
+//   Q_ASSERT(item != nullptr);
+//   item->setStatus(status);
+//   item->setStatusText(statusText);
+//   emit dataChanged(index, index);
+//   
+//   qDebug() << " -> Model, setStatus() done";
+  auto *item = getItem(objectCategory, objectName);
+
+  if(item != nullptr){
+    item->setStatus(status);
+    item->setStatusText(statusText);
+    auto index = createIndex(item->row(), StatusColunIndex, item);
+    emit dataChanged(index, index);
+  }
+
 }
 
 QVariant mdtSqlDatabaseSchemaModel::categoryData(mdtSqlDatabaseSchemaModelItem* item, int role) const
@@ -392,7 +472,41 @@ QVariant mdtSqlDatabaseSchemaModel::tablePopulationSchemaData(const QModelIndex&
   return QVariant();
 }
 
-QModelIndex mdtSqlDatabaseSchemaModel::indexOf(mdtSqlDatabaseSchemaModel::ObjectCategory oc) const
+QVariant mdtSqlDatabaseSchemaModel::statusData(mdtSqlDatabaseSchemaModelItem* item, int role) const
+{
+  ///qDebug() << "Status data - item text: " << item->statusText() << " - role: " << role;
+  switch(item->status()){
+    case mdtSqlDatabaseSchemaModel::StatusUnknown:
+///      qDebug() << " - StatusUnknown";
+      return QVariant();
+    case mdtSqlDatabaseSchemaModel::StatusOk:
+      qDebug() << " - StatusOk";
+      switch(role){
+        case Qt::DisplayRole:
+          return tr("Ok");
+        case Qt::DecorationRole:
+          return QColor(Qt::green);
+        default:
+          return QVariant();
+      }
+    case mdtSqlDatabaseSchemaModel::StatusError:
+      qDebug() << " - StatusError";
+      switch(role){
+        case Qt::DisplayRole:
+          return tr("Error");
+        case Qt::DecorationRole:
+          return QColor(Qt::red);
+        case Qt::ToolTipRole:
+          return item->statusText();
+        default:
+          return QVariant();
+      }
+  }
+
+  return QVariant();
+}
+
+mdtSqlDatabaseSchemaModelItem* mdtSqlDatabaseSchemaModel::getItem(mdtSqlDatabaseSchemaModel::ObjectCategory oc) const
 {
   /*
    * The root item's children are category items.
@@ -401,30 +515,81 @@ QModelIndex mdtSqlDatabaseSchemaModel::indexOf(mdtSqlDatabaseSchemaModel::Object
     auto *item = pvRootItem->childItem(row);
     Q_ASSERT(item != nullptr);
     if(item->category() == oc){
-      return createIndex(row, 0, item);
+      return item;
     }
   }
 
-  return QModelIndex();
+  return nullptr;
 }
 
-QModelIndex mdtSqlDatabaseSchemaModel::indexOf(mdtSqlDatabaseSchemaModel::ObjectCategory oc, const QString & objectName) const
+mdtSqlDatabaseSchemaModelItem* mdtSqlDatabaseSchemaModel::getItem(mdtSqlDatabaseSchemaModel::ObjectCategory oc, const QString & objectName) const
 {
-  // Get index of requested object category
-  QModelIndex categoryIndex = indexOf(oc);
-  if(!categoryIndex.isValid()){
-    return QModelIndex();
+  auto *categoryItem = getItem(oc);
+  if(categoryItem == nullptr){
+    return nullptr;
   }
-  // Search in each child
-  int n = rowCount(categoryIndex);
-  for(int row = 0; row < n; ++row){
-    QModelIndex idx = index(row, 0, categoryIndex);
-    if(idx.isValid()){
-      if(data(idx, Qt::DisplayRole).toString() == objectName){
-        return idx;
-      }
+  for(int row = 0; row < categoryItem->childCount(); ++row){
+    auto *item = categoryItem->childItem(row);
+    Q_ASSERT(item != nullptr);
+    auto index = createIndex(item->row(), 0, item);
+    if(data(index).toString() == objectName){
+      return item;
     }
   }
 
-  return QModelIndex();
+  return nullptr;
 }
+
+// QModelIndex mdtSqlDatabaseSchemaModel::createIndexForItem(mdtSqlDatabaseSchemaModelItem* item, int column) const
+// {
+//   Q_ASSERT(item != nullptr);
+// 
+//   // We never return a index to root item
+//   if(item == pvRootItem){
+//     return QModelIndex();
+//   }
+//   // We must create a parent index
+//   QModelIndex parentIndex;
+//   auto *parentItem = item->parentItem();
+//   Q_ASSERT(parentItem != nullptr);
+//   parentIndex = createIndex(parentItem->row(), 0, parentItem);
+// 
+//   return createIndex(item->row(), column, parentIndex);
+// }
+
+// QModelIndex mdtSqlDatabaseSchemaModel::indexOf(mdtSqlDatabaseSchemaModel::ObjectCategory oc, int column) const
+// {
+//   /*
+//    * The root item's children are category items.
+//    */
+//   for(int row = 0; row < pvRootItem->childCount(); ++row){
+//     auto *item = pvRootItem->childItem(row);
+//     Q_ASSERT(item != nullptr);
+//     if(item->category() == oc){
+//       return createIndex(row, column, item);
+//     }
+//   }
+// 
+//   return QModelIndex();
+// }
+
+// QModelIndex mdtSqlDatabaseSchemaModel::indexOf(mdtSqlDatabaseSchemaModel::ObjectCategory oc, int column, const QString & objectName) const
+// {
+//   // Get index of requested object category
+//   QModelIndex categoryIndex = indexOf(oc, column);
+//   if(!categoryIndex.isValid()){
+//     return QModelIndex();
+//   }
+//   // Search in each child
+//   int n = rowCount(categoryIndex);
+//   for(int row = 0; row < n; ++row){
+//     QModelIndex idx = index(row, column, categoryIndex);
+//     if(idx.isValid()){
+//       if(data(idx, Qt::DisplayRole).toString() == objectName){
+//         return idx;
+//       }
+//     }
+//   }
+// 
+//   return QModelIndex();
+// }

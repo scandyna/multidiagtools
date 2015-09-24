@@ -45,6 +45,14 @@ class mdtSqlDatabaseSchemaModel : public QAbstractItemModel
     TablePopulation   /*!< Object refers to a table population schema */
   };
 
+  /*! \brief Status
+   */
+  enum Status{
+    StatusUnknown,  /*!< Status unknown  */
+    StatusOk,       /*!< Status OK */
+    StatusError     /*!< Status error */
+  };
+
   /*! \brief Constructor
    */
   mdtSqlDatabaseSchemaModel(QObject *parent = nullptr);
@@ -60,6 +68,13 @@ class mdtSqlDatabaseSchemaModel : public QAbstractItemModel
   /*! \brief Set database schema
    */
   void setSchema(const mdtSqlDatabaseSchema & s);
+
+  /*! \brief Get database schema
+   */
+  mdtSqlDatabaseSchema schema() const
+  {
+    return pvSchema;
+  }
 
   /*! \brief Get index
    */
@@ -95,9 +110,22 @@ class mdtSqlDatabaseSchemaModel : public QAbstractItemModel
    * \param value Progress (0 <= value <= 100)
    *
    * For example, if we would set progress for a table named Clien_tbl,
-   *  we also call setProgress(mdtSqlDatabaseSchemaModel::Table, "Clien_tbl")
+   *  we also call setProgress(mdtSqlDatabaseSchemaModel::Table, "Clien_tbl", 25)
    */
   void setProgress(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, const QString & objectName, int value);
+
+  /*! \brief Set staus
+   *
+   * \param objectCategory Category of target object
+   * \param objectName Name of target object
+   * \param status Status to set
+   * \param text Status text to set
+   *
+   * For example, if we would set status for a table named Clien_tbl,
+   *  we also call setStatus(mdtSqlDatabaseSchemaModel::Table, "Clien_tbl", mdtSqlDatabaseSchemaModel::StatusOk)
+   */
+  void setStatus(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, const QString & objectName,
+                 mdtSqlDatabaseSchemaModel::Status status, const QString & statusText = QString());
 
  private:
 
@@ -106,7 +134,8 @@ class mdtSqlDatabaseSchemaModel : public QAbstractItemModel
   enum ColumnIndex
   {
     ObjectColumnIndex = 0,    /*!< Column that display categories (Tables, Views, ..) and object names */
-    ProgressColumnIndex = 1   /*!< Column that display progress */
+    ProgressColumnIndex = 1,  /*!< Column that display progress */
+    StatusColunIndex = 2      /*!< Column that display status */
   };
 
   /*! \brief Get object category data
@@ -133,13 +162,29 @@ class mdtSqlDatabaseSchemaModel : public QAbstractItemModel
    */
   QVariant tablePopulationSchemaData(const QModelIndex & index, int role) const;
 
-  /*! \brief Get the index of given object category
+  /*! \brief Get status data
    */
-  QModelIndex indexOf(ObjectCategory oc) const;
+  QVariant statusData(mdtSqlDatabaseSchemaModelItem *item, int role) const;
 
-  /*! \brief Get the index of given object category and name
+  /*! \brief Get item of given object category
    */
-  QModelIndex indexOf(ObjectCategory oc, const QString & objectName) const;
+  mdtSqlDatabaseSchemaModelItem *getItem(ObjectCategory oc) const;
+
+  /*! \brief Get item of given object category and name
+   */
+  mdtSqlDatabaseSchemaModelItem *getItem(ObjectCategory oc, const QString & objectName) const;
+
+  /*! \brief Create a index for given item and column
+   */
+//   QModelIndex createIndexForItem(mdtSqlDatabaseSchemaModelItem *item, int column) const;
+  
+  /*! \brief Get the index of given object category and column
+   */
+//   QModelIndex indexOf(ObjectCategory oc, int column) const;
+
+  /*! \brief Get the index of given object category, column and name
+   */
+//   QModelIndex indexOf(ObjectCategory oc, int column, const QString & objectName) const;
 
   mdtSqlDatabaseSchemaModelItem *pvRootItem;
   mdtSqlDatabaseSchema pvSchema;

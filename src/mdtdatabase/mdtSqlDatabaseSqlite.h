@@ -94,10 +94,6 @@ class mdtSqlDatabaseSqlite
     return pvDatabase;
   }
 
-  /*! \brief Find the first connection name that refers to given file
-   */
-  QString getConnectionNameUsingDatabase(const QFileInfo & fileInfo) const;
-
   /*! \brief Open a database
    *
    * Will check if given file exists, set it as database name
@@ -178,15 +174,17 @@ class mdtSqlDatabaseSqlite
     return pvLastError;
   }
 
-  /*! \brief Get a list containing the name of all SQLite connections
-   *
-   * This is the same as QSqlDatabase::connectionNames() ,
-   *  but only contains connections that uses the SQLite driver.
-   *
-   * Note: each call of this function will build the list, also fetching some information, wich is not fast.
+  /*! \brief Find the first connection name that refers to given file
    */
-  [[deprecated]]
-  static QStringList getConnectionNames();
+  static QString getConnectionNameUsingDatabase(const QFileInfo & fileInfo);
+
+  /*! \brief Get the number of open connections that refers to given database
+   *
+   * Will search in all available connections that uses the QSQLITE driver
+   *  and that have the same database name as db.
+   *  All connections that matches are counted if they are open.
+   */
+  static int getOpenConnectionReferingDatabaseCount(const QSqlDatabase & db);
 
  private:
 

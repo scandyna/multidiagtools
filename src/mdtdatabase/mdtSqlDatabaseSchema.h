@@ -49,6 +49,13 @@ class mdtSqlDatabaseSchema
     return pvTableList.size();
   }
 
+  /*! \brief Get table list
+   */
+  QList<mdtSqlSchemaTable> tableList() const
+  {
+    return pvTableList;
+  }
+
   /*! \brief Get table name for given index
    *
    * \pre index must be in a valid range

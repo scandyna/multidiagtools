@@ -55,26 +55,6 @@ void mdtSqlDatabaseSqlite::setDatabase(const QSqlDatabase & db)
   pvDatabase = db;
 }
 
-QString mdtSqlDatabaseSqlite::getConnectionNameUsingDatabase(const QFileInfo & fileInfo) const
-{
-  QString resultCnn;
-  QStringList cnnNames = QSqlDatabase::connectionNames();
-  QString dbName = fileInfo.filePath();
-
-  if(dbName.isEmpty()){
-    return resultCnn;
-  }
-  for(const auto & cnn : cnnNames){
-    auto db = QSqlDatabase::database(cnn, false);
-    if(db.databaseName() == dbName){
-      resultCnn = cnn;
-      break;
-    }
-  }
-
-  return resultCnn;
-}
-
 bool mdtSqlDatabaseSqlite::openDatabase(const QFileInfo & fileInfo)
 {
   Q_ASSERT(isValid());
@@ -165,18 +145,40 @@ bool mdtSqlDatabaseSqlite::deleteDatabase(const QString & filePath)
   return true;
 }
 
-QStringList mdtSqlDatabaseSqlite::getConnectionNames()
+QString mdtSqlDatabaseSqlite::getConnectionNameUsingDatabase(const QFileInfo & fileInfo)
 {
-  QStringList connectionNames;
+  QString resultCnn;
+  QStringList cnnNames = QSqlDatabase::connectionNames();
+  QString dbName = fileInfo.filePath();
 
-  for(const auto & cnnName : QSqlDatabase::connectionNames()){
-    QSqlDatabase db = QSqlDatabase::database(cnnName, false);
-    if(mdtSqlDriverType::typeFromName(db.driverName()) == mdtSqlDriverType::SQLite){
-      connectionNames.append(cnnName);
+  if(dbName.isEmpty()){
+    return resultCnn;
+  }
+  for(const auto & cnn : cnnNames){
+    auto db = QSqlDatabase::database(cnn, false);
+    if(db.databaseName() == dbName){
+      resultCnn = cnn;
+      break;
     }
   }
 
-  return connectionNames;
+  return resultCnn;
+}
+
+int mdtSqlDatabaseSqlite::getOpenConnectionReferingDatabaseCount(const QSqlDatabase & db)
+{
+  int i = 0;
+  QStringList cnnNames = QSqlDatabase::connectionNames();
+  QString dbName = db.databaseName();
+
+  for(const auto & cnn : cnnNames){
+    auto db2 = QSqlDatabase::database(cnn, false);
+    if( (db2.isOpen()) && (db2.databaseName() == dbName) && (mdtSqlDriverType::typeFromName(db2.driverName()) == mdtSqlDriverType::SQLite) ){
+      ++i;
+    }
+  }
+
+  return i;
 }
 
 bool mdtSqlDatabaseSqlite::openDatabasePv()
