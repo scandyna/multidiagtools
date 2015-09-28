@@ -78,6 +78,13 @@ class mdtSqlDatabaseSchema
     return pvViewList.size();
   }
 
+  /*! \brief Get view schema list
+   */
+  QList<mdtSqlViewSchema> viewList() const
+  {
+    return pvViewList;
+  }
+
   /*! \brief Get view name for given index
    *
    * \pre index must be in a valid range
@@ -98,6 +105,13 @@ class mdtSqlDatabaseSchema
   int tablePopulationCount() const
   {
     return pvTablePopulationSchemaList.size();
+  }
+
+  /*! \brief Get table population schema list
+   */
+  QList<mdtSqlTablePopulationSchema> tablePopulationSchemaList() const
+  {
+    return pvTablePopulationSchemaList;
   }
 
   /*! \brief Get table population schema name

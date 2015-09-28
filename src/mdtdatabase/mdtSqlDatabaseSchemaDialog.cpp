@@ -40,9 +40,12 @@ mdtSqlDatabaseSchemaDialog::mdtSqlDatabaseSchemaDialog(QWidget* parent)
   connect(tbSelectDatabase, &QToolButton::clicked, this, &mdtSqlDatabaseSchemaDialog::selectDatabase);
   connect(pbCreateSchema, &QPushButton::clicked, this, &mdtSqlDatabaseSchemaDialog::createSchema);
   connect(pvThread, &mdtSqlDatabaseSchemaThread::objectProgressChanged, this, &mdtSqlDatabaseSchemaDialog::updateObjectProgress);
+  connect(pvThread, &mdtSqlDatabaseSchemaThread::objectStatusChanged, this, &mdtSqlDatabaseSchemaDialog::setObjectStatus);
   connect(pvThread, &QThread::finished, this, &mdtSqlDatabaseSchemaDialog::onThreadFinished);
+  connect(pvThread, &mdtSqlDatabaseSchemaThread::globalProgressChanged, this, &mdtSqlDatabaseSchemaDialog::updateGlobalProgress);
   connect(pvThread, &mdtSqlDatabaseSchemaThread::globalErrorOccured, this, &mdtSqlDatabaseSchemaDialog::onThreadGlobalErrorOccured);
-  connect(pvThread, &mdtSqlDatabaseSchemaThread::errorOccured, this, &mdtSqlDatabaseSchemaDialog::setObjectError);
+  connect(pvThread, &mdtSqlDatabaseSchemaThread::objectErrorOccured, this, &mdtSqlDatabaseSchemaDialog::setObjectError);
+  connect(pbAbort, &QPushButton::clicked, pvThread, &mdtSqlDatabaseSchemaThread::abort);
 }
 
 void mdtSqlDatabaseSchemaDialog::setSchema(const mdtSqlDatabaseSchema & s)
@@ -67,8 +70,7 @@ void mdtSqlDatabaseSchemaDialog::createSchema()
   if(!assureNoOpenConnectionToDatabase()){
     return;
   }
-  pbGlobalProgress->setRange(0, 0); /// \todo just playing
-  
+  pvModel->clearStatusAndProgress();
   pvThread->createSchema(pvModel->schema(), pvDatabase);
 }
 
@@ -76,34 +78,37 @@ void mdtSqlDatabaseSchemaDialog::updateObjectProgress(int objectCategory, QStrin
 {
   auto oc = static_cast<mdtSqlDatabaseSchemaModel::ObjectCategory>(objectCategory);
 
-  if(objectName.isEmpty()){
-    pvModel->setProgress(oc, progress);
-  }else{
-    pvModel->setProgress(oc, objectName, progress);
-  }
+  pvModel->setProgress(oc, objectName, progress);
 }
 
-void mdtSqlDatabaseSchemaDialog::setObjectFinished(int objectCategory, QString objectName)
+void mdtSqlDatabaseSchemaDialog::setObjectStatus(int objectCategory, QString objectName, int status)
 {
   auto oc = static_cast<mdtSqlDatabaseSchemaModel::ObjectCategory>(objectCategory);
+  auto s = static_cast<mdtSqlDatabaseSchemaModel::Status>(status);
 
-  pvModel->setStatus(oc, objectName, mdtSqlDatabaseSchemaModel::StatusOk);
+  pvModel->setStatus(oc, objectName, s);
 }
 
 void mdtSqlDatabaseSchemaDialog::setObjectError(int objectCategory, QString objectName, mdtError error)
 {
   auto oc = static_cast<mdtSqlDatabaseSchemaModel::ObjectCategory>(objectCategory);
+  QString errorText;
 
-  qDebug() << "Dialog, RX error: " << error.text();
-  pvModel->setStatus(oc, objectName, mdtSqlDatabaseSchemaModel::StatusError, error.text());
+  errorText = error.text();
+  if(!error.systemText().isEmpty()){
+    errorText += "\n" + error.systemText();
+  }
+  pvModel->setStatus(oc, objectName, mdtSqlDatabaseSchemaModel::StatusError, errorText);
+}
+
+void mdtSqlDatabaseSchemaDialog::updateGlobalProgress(int progress)
+{
+  pbGlobalProgress->setValue(progress);
 }
 
 void mdtSqlDatabaseSchemaDialog::onThreadFinished()
 {
-  /// \todo just playing
-  pbGlobalProgress->setRange(0, 100);
-  pbGlobalProgress->setValue(100);
-  
+
 }
 
 void mdtSqlDatabaseSchemaDialog::onThreadGlobalErrorOccured(mdtError error)

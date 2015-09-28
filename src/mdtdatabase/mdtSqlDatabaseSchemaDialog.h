@@ -64,14 +64,18 @@ class mdtSqlDatabaseSchemaDialog : public QDialog, Ui::mdtSqlDatabaseSchemaDialo
    */
   void updateObjectProgress(int objectCategory, QString objectName, int progress);
 
-  /*! \brief Will update status to OK for given object
+  /*! \brief Will update status for given object
    */
-  void setObjectFinished(int objectCategory, QString objectName);
+  void setObjectStatus(int objectCategory, QString objectName, int status);
 
   /*! \brief Will update status to Error and set error text as tooltip
    */
   void setObjectError(int objectCategory, QString objectName, mdtError error);
 
+  /*! \brief Update global progress
+   */
+  void updateGlobalProgress(int progress);
+  
   void onThreadFinished();
 
   /*! \brief Reciver for a global error generated from worker thread

@@ -22,12 +22,15 @@
 #define MDT_SQL_DATABASE_SCHEMA_THREAD_H
 
 #include "mdtSqlDatabaseSchema.h"
+#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTablePopulationSchema.h"
+#include "mdtSqlViewSchema.h"
 #include "mdtError.h"
 #include <QThread>
 #include <QString>
 #include <QSqlDatabase>
-
-class mdtSqlSchemaTable;
+#include <QList>
+#include <atomic>
 
 /*! \brief Worker thread for SQL database schema creation
  */
@@ -64,19 +67,33 @@ class mdtSqlDatabaseSchemaThread : public QThread
    */
   void createSchema(const mdtSqlDatabaseSchema & s, const QSqlDatabase & db);
 
+ public slots:
+
+  /*! \brief Abort database schema creation
+   */
+  void abort();
+
  signals:
 
   /*! \brief Emitted when a object progress was updated
    */
   void objectProgressChanged(int objectCategory, QString objectName, int progress);
 
-  /*! \brief Emitted when a error occured
+  /*! \brief Emitted when a object was successfully created
    */
-  void globalErrorOccured(mdtError error);
+  void objectStatusChanged(int objectCategory, QString objectName, int status);
 
   /*! \brief Emitted when a error occured for a specific object
    */
-  void errorOccured(int objectCategory, QString objectName, mdtError error);
+  void objectErrorOccured(int objectCategory, QString objectName, mdtError error);
+
+  /*! \brief Emittes when global progress changed
+   */
+  void globalProgressChanged(int progress);
+
+  /*! \brief Emitted when a error occured
+   */
+  void globalErrorOccured(mdtError error);
 
  private:
 
@@ -86,10 +103,34 @@ class mdtSqlDatabaseSchemaThread : public QThread
    */
   QSqlDatabase createConnection();
 
+  /*! \brief Create tables
+   */
+  void createTables(QList<mdtSqlSchemaTable> & tables, const QSqlDatabase & db,
+                    double & globalProgress, double globalProgressStep);
+
   /*! \brief Create a table
    */
-  void createTable(mdtSqlSchemaTable & ts, const QSqlDatabase & db);
+  bool createTable(mdtSqlSchemaTable & ts, const QSqlDatabase & db);
 
+  /*! \brief Populate tables
+   */
+  void populateTables(const QList<mdtSqlTablePopulationSchema> & tablePopulations, const QSqlDatabase & db,
+                      double & globalProgress, double globalProgressStep);
+
+  /*! \brief Populate a table
+   */
+  bool populateTable(const mdtSqlTablePopulationSchema & tps, const QSqlDatabase & db);
+
+  /*! \brief Create views
+   */
+  void createViews(const QList<mdtSqlViewSchema> & views, const QSqlDatabase & db,
+                   double & globalProgress, double globalProgressStep);
+
+  /*! \brief Create a view
+   */
+  bool createView(const mdtSqlViewSchema & vs, const QSqlDatabase & db);
+
+  std::atomic<bool> pvAbort;
   mdtSqlDatabaseSchema pvSchema;
   QSqlDatabase pvDatabaseInfo;    // Only to store database informations, never use it in thraed (other than GUI).
 };

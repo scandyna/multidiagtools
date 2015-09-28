@@ -318,74 +318,56 @@ QVariant mdtSqlDatabaseSchemaModel::data(const QModelIndex & index, int role) co
   return QVariant();
 }
 
-void mdtSqlDatabaseSchemaModel::setProgress(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, int value)
-{
-//   QModelIndex index = indexOf(objectCategory, ProgressColumnIndex);
+// void mdtSqlDatabaseSchemaModel::setProgress(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, int value)
+// {
+//   auto *item = getItem(objectCategory);
 // 
-//   if(!index.isValid()){
-//     return;
+//   if(item != nullptr){
+//     item->setProgress(value);
+//     auto index = createIndex(item->row(), ProgressColumnIndex, item);
+//     emit dataChanged(index, index);
 //   }
-//   auto *item = reinterpret_cast<mdtSqlDatabaseSchemaModelItem*>(index.internalPointer());
-//   Q_ASSERT(item != nullptr);
-//   item->setProgress(value);
-//   emit dataChanged(index, index);
-
-  auto *item = getItem(objectCategory);
-
-  if(item != nullptr){
-    item->setProgress(value);
-    auto index = createIndex(item->row(), ProgressColumnIndex, item);
-    emit dataChanged(index, index);
-  }
-}
+// }
 
 void mdtSqlDatabaseSchemaModel::setProgress(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, const QString& objectName, int value)
 {
-//   QModelIndex index = indexOf(objectCategory, ProgressColumnIndex, objectName);
-// 
-//   if(!index.isValid()){
-//     return;
-//   }
-//   auto *item = reinterpret_cast<mdtSqlDatabaseSchemaModelItem*>(index.internalPointer());
-//   Q_ASSERT(item != nullptr);
-//   item->setProgress(value);
-//   emit dataChanged(index, index);
-// 
-  auto *item = getItem(objectCategory, objectName);
+  mdtSqlDatabaseSchemaModelItem *item;
 
-  if(item != nullptr){
-    item->setProgress(value);
-    auto index = createIndex(item->row(), ProgressColumnIndex, item);
-    emit dataChanged(index, index);
+  if(objectName.isEmpty()){
+    item = getItem(objectCategory);
+  }else{
+    item = getItem(objectCategory, objectName);
   }
+  if(item == nullptr){
+    return;
+  }
+  item->setProgress(value);
+  auto index = createIndex(item->row(), ProgressColumnIndex, item);
+  emit dataChanged(index, index);
 }
 
 void mdtSqlDatabaseSchemaModel::setStatus(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, const QString& objectName,
                                           mdtSqlDatabaseSchemaModel::Status status, const QString & statusText)
 {
-//   QModelIndex index = indexOf(objectCategory, StatusColunIndex, objectName);
-// 
-//   qDebug() << "Model, setStatus() - OBJ: " << objectName << ", text: " << statusText;
-//   
-//   if(!index.isValid()){
-//     return;
-//   }
-//   auto *item = reinterpret_cast<mdtSqlDatabaseSchemaModelItem*>(index.internalPointer());
-//   Q_ASSERT(item != nullptr);
-//   item->setStatus(status);
-//   item->setStatusText(statusText);
-//   emit dataChanged(index, index);
-//   
-//   qDebug() << " -> Model, setStatus() done";
-  auto *item = getItem(objectCategory, objectName);
+  mdtSqlDatabaseSchemaModelItem *item;
 
-  if(item != nullptr){
-    item->setStatus(status);
-    item->setStatusText(statusText);
-    auto index = createIndex(item->row(), StatusColunIndex, item);
-    emit dataChanged(index, index);
+  if(objectName.isEmpty()){
+    item = getItem(objectCategory);
+  }else{
+    item = getItem(objectCategory, objectName);
   }
+  if(item == nullptr){
+    return;
+  }
+  item->setStatus(status);
+  item->setStatusText(statusText);
+  auto index = createIndex(item->row(), StatusColunIndex, item);
+  emit dataChanged(index, index);
+}
 
+void mdtSqlDatabaseSchemaModel::clearStatusAndProgress()
+{
+  setStatusAndProgressRecursiv(pvRootItem, mdtSqlDatabaseSchemaModel::StatusUnknown, 0);
 }
 
 QVariant mdtSqlDatabaseSchemaModel::categoryData(mdtSqlDatabaseSchemaModelItem* item, int role) const
@@ -474,13 +456,10 @@ QVariant mdtSqlDatabaseSchemaModel::tablePopulationSchemaData(const QModelIndex&
 
 QVariant mdtSqlDatabaseSchemaModel::statusData(mdtSqlDatabaseSchemaModelItem* item, int role) const
 {
-  ///qDebug() << "Status data - item text: " << item->statusText() << " - role: " << role;
   switch(item->status()){
     case mdtSqlDatabaseSchemaModel::StatusUnknown:
-///      qDebug() << " - StatusUnknown";
       return QVariant();
     case mdtSqlDatabaseSchemaModel::StatusOk:
-      qDebug() << " - StatusOk";
       switch(role){
         case Qt::DisplayRole:
           return tr("Ok");
@@ -490,7 +469,6 @@ QVariant mdtSqlDatabaseSchemaModel::statusData(mdtSqlDatabaseSchemaModelItem* it
           return QVariant();
       }
     case mdtSqlDatabaseSchemaModel::StatusError:
-      qDebug() << " - StatusError";
       switch(role){
         case Qt::DisplayRole:
           return tr("Error");
@@ -540,56 +518,23 @@ mdtSqlDatabaseSchemaModelItem* mdtSqlDatabaseSchemaModel::getItem(mdtSqlDatabase
   return nullptr;
 }
 
-// QModelIndex mdtSqlDatabaseSchemaModel::createIndexForItem(mdtSqlDatabaseSchemaModelItem* item, int column) const
-// {
-//   Q_ASSERT(item != nullptr);
-// 
-//   // We never return a index to root item
-//   if(item == pvRootItem){
-//     return QModelIndex();
-//   }
-//   // We must create a parent index
-//   QModelIndex parentIndex;
-//   auto *parentItem = item->parentItem();
-//   Q_ASSERT(parentItem != nullptr);
-//   parentIndex = createIndex(parentItem->row(), 0, parentItem);
-// 
-//   return createIndex(item->row(), column, parentIndex);
-// }
+void mdtSqlDatabaseSchemaModel::setStatusAndProgressRecursiv(mdtSqlDatabaseSchemaModelItem* rootItem, mdtSqlDatabaseSchemaModel::Status status, int progress)
+{
+  Q_ASSERT(rootItem != nullptr);
 
-// QModelIndex mdtSqlDatabaseSchemaModel::indexOf(mdtSqlDatabaseSchemaModel::ObjectCategory oc, int column) const
-// {
-//   /*
-//    * The root item's children are category items.
-//    */
-//   for(int row = 0; row < pvRootItem->childCount(); ++row){
-//     auto *item = pvRootItem->childItem(row);
-//     Q_ASSERT(item != nullptr);
-//     if(item->category() == oc){
-//       return createIndex(row, column, item);
-//     }
-//   }
-// 
-//   return QModelIndex();
-// }
-
-// QModelIndex mdtSqlDatabaseSchemaModel::indexOf(mdtSqlDatabaseSchemaModel::ObjectCategory oc, int column, const QString & objectName) const
-// {
-//   // Get index of requested object category
-//   QModelIndex categoryIndex = indexOf(oc, column);
-//   if(!categoryIndex.isValid()){
-//     return QModelIndex();
-//   }
-//   // Search in each child
-//   int n = rowCount(categoryIndex);
-//   for(int row = 0; row < n; ++row){
-//     QModelIndex idx = index(row, column, categoryIndex);
-//     if(idx.isValid()){
-//       if(data(idx, Qt::DisplayRole).toString() == objectName){
-//         return idx;
-//       }
-//     }
-//   }
-// 
-//   return QModelIndex();
-// }
+  for(int row = 0; row < rootItem->childCount(); ++row){
+    auto *item = rootItem->childItem(row);
+    Q_ASSERT(item != nullptr);
+    item->setStatus(status);
+    item->setProgress(progress);
+    /*
+     * We signal the change for each conecrend index.
+     * It could be faster to make 1 beginResetModel() then 1 endResetModel(),
+     * but this resets also the view, and the user has to resize alls stuff -> bad.
+     */
+    auto index1 = createIndex(item->row(), StatusColunIndex, item);
+    auto index2 = createIndex(item->row(), ProgressColumnIndex, item);
+    emit dataChanged(index1, index2);
+    setStatusAndProgressRecursiv(item, status, progress);
+  }
+}

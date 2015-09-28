@@ -101,7 +101,10 @@ class mdtSqlDatabaseSchemaModel : public QAbstractItemModel
    * \param objectCategory Category of target object
    * \param value Progress (0 <= value <= 100)
    */
-  void setProgress(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, int value);
+  void setProgress(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, int value)
+  {
+    setProgress(objectCategory, QString(), value);
+  }
 
   /*! \brief Set progress value
    *
@@ -114,7 +117,22 @@ class mdtSqlDatabaseSchemaModel : public QAbstractItemModel
    */
   void setProgress(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, const QString & objectName, int value);
 
-  /*! \brief Set staus
+  /*! \brief Set status
+   *
+   * \param objectCategory Category of target object
+   * \param status Status to set
+   * \param text Status text to set
+   *
+   * For example, if we would set status for tables category
+   *  we also call setStatus(mdtSqlDatabaseSchemaModel::Table, mdtSqlDatabaseSchemaModel::StatusOk)
+   */
+  void setStatus(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory,
+                 mdtSqlDatabaseSchemaModel::Status status, const QString & statusText = QString())
+  {
+    setStatus(objectCategory, QString(), status, statusText);
+  }
+
+  /*! \brief Set status
    *
    * \param objectCategory Category of target object
    * \param objectName Name of target object
@@ -126,6 +144,10 @@ class mdtSqlDatabaseSchemaModel : public QAbstractItemModel
    */
   void setStatus(mdtSqlDatabaseSchemaModel::ObjectCategory objectCategory, const QString & objectName,
                  mdtSqlDatabaseSchemaModel::Status status, const QString & statusText = QString());
+
+  /*! \brief Clear status and progress for all objects
+   */
+  void clearStatusAndProgress();
 
  private:
 
@@ -174,17 +196,9 @@ class mdtSqlDatabaseSchemaModel : public QAbstractItemModel
    */
   mdtSqlDatabaseSchemaModelItem *getItem(ObjectCategory oc, const QString & objectName) const;
 
-  /*! \brief Create a index for given item and column
+  /*! \brief Set status and progress values for item and all its childs
    */
-//   QModelIndex createIndexForItem(mdtSqlDatabaseSchemaModelItem *item, int column) const;
-  
-  /*! \brief Get the index of given object category and column
-   */
-//   QModelIndex indexOf(ObjectCategory oc, int column) const;
-
-  /*! \brief Get the index of given object category, column and name
-   */
-//   QModelIndex indexOf(ObjectCategory oc, int column, const QString & objectName) const;
+  void setStatusAndProgressRecursiv(mdtSqlDatabaseSchemaModelItem *rootItem, mdtSqlDatabaseSchemaModel::Status status, int progress);
 
   mdtSqlDatabaseSchemaModelItem *pvRootItem;
   mdtSqlDatabaseSchema pvSchema;

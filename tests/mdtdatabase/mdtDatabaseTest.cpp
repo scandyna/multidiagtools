@@ -34,6 +34,7 @@
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlTableSchemaModel.h"
 #include "mdtSqlViewSchema.h"
+#include "mdtSqlViewSchemaJoinClause.h"
 #include "mdtSqlTablePopulationSchema.h"
 #include "mdtSqlDatabaseSchema.h"
 #include "mdtSqlDatabaseSchemaModel.h"
@@ -995,89 +996,176 @@ void mdtDatabaseTest::sqlFieldSetupDialogTest()
   dialog.exec();
 }
 
-void mdtDatabaseTest::sqlViewSchemaTest()
+void mdtDatabaseTest::sqlViewSchemaJoinClauseTest()
 {
-  mdtSqlViewSchema vs;
+  mdtSqlViewSchemaJoinClause vsjc;
   QString expectedSql;
 
   /*
    * Initial state
    */
-  QVERIFY(vs.getSqlForCreate("'", "'").isEmpty());
-  QVERIFY(vs.getSqlForDrop("'").isEmpty());
+  QVERIFY(vsjc.getSql(pvDatabase.driver()).isEmpty());
+  /*
+   * Set JOIN clause - NOT using aliases
+   */
+  vsjc.setTables("Client_tbl", "Address_tbl");
+  QVERIFY(vsjc.getSql(pvDatabase.driver()).isEmpty());
+  vsjc.setConstraintOn("Id_PK", "Client_Id_FK");
+  expectedSql = " JOIN \"Address_tbl\"\n  ON \"Address_tbl\".\"Client_Id_FK\" = \"Client_tbl\".\"Id_PK\"\n";
+  QCOMPARE(vsjc.getSql(pvDatabase.driver()), expectedSql);
+  /*
+   * Clear
+   */
+  vsjc.clear();
+  QVERIFY(vsjc.getSql(pvDatabase.driver()).isEmpty());
+  /*
+   * Set JOIN clause - Using aliases
+   */
+  vsjc.setTables("CLI", "Address_tbl", "ADR");
+  QVERIFY(vsjc.getSql(pvDatabase.driver()).isEmpty());
+  vsjc.setConstraintOn("Id_PK", "Client_Id_FK");
+  expectedSql = " JOIN \"Address_tbl\" \"ADR\"\n  ON \"ADR\".\"Client_Id_FK\" = \"CLI\".\"Id_PK\"\n";
+  QCOMPARE(vsjc.getSql(pvDatabase.driver()), expectedSql);
+}
+
+void mdtDatabaseTest::sqlViewSchemaTest()
+{
+  mdtSqlViewSchema vs;
+  mdtSqlViewSchemaJoinClause vsjc;
+  QString expectedSql;
+  const QSqlDriver *driver = pvDatabase.driver();
+
+  /*
+   * Initial state
+   */
+  QVERIFY(vs.getSqlForCreate(driver).isEmpty());
+  QVERIFY(vs.getSqlForDrop(driver).isEmpty());
   /*
    * Setup a simple view
    */
   vs.setName("Simple_view");
+  vs.setTableName("Simple_tbl");
   vs.addSelectItem("Id_PK");
   vs.addSelectItem("Name");
-  vs.setAfterSelectStatement("FROM Simple_tbl");
   // Check DROP statement
-  expectedSql = "DROP VIEW IF EXISTS `Simple_view`";
-  QCOMPARE(vs.getSqlForDrop("`"), expectedSql);
+  expectedSql = "DROP VIEW IF EXISTS \"Simple_view\"";
+  QCOMPARE(vs.getSqlForDrop(driver), expectedSql);
   // Check CREATE statement
-  expectedSql =  "CREATE VIEW `Simple_view` AS\n";
+  expectedSql =  "CREATE VIEW \"Simple_view\" AS\n";
   expectedSql += "SELECT\n";
-  expectedSql += " 'Id_PK',\n";
-  expectedSql += " 'Name'\n";
-  expectedSql += "FROM Simple_tbl\n";
-  QCOMPARE(vs.getSqlForCreate("`", "'"), expectedSql);
+  expectedSql += " \"Id_PK\",\n";
+  expectedSql += " \"Name\"\n";
+  expectedSql += "FROM \"Simple_tbl\"\n";
+  QCOMPARE(vs.getSqlForCreate(driver), expectedSql);
   /*
    * Check that choosing no end of line works
    */
   // Clear
-  vs.clear();
-  QVERIFY(vs.getSqlForCreate("'", "'").isEmpty());
-  QVERIFY(vs.getSqlForDrop("'").isEmpty());
-  // Setup
-  vs.setName("Simple_view");
-  vs.addSelectItem("Id_PK");
-  vs.addSelectItem("Name");
-  vs.setAfterSelectStatement("FROM Simple_tbl");
-  // Check CREATE statement
-  expectedSql =  "CREATE VIEW `Simple_view` AS SELECT 'Id_PK', 'Name' FROM Simple_tbl";
-  QCOMPARE(vs.getSqlForCreate("`", "'", ""), expectedSql);
+//   vs.clear();
+//   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
+//   QVERIFY(vs.getSqlForDrop(driver).isEmpty());
+//   // Setup
+//   vs.setName("Simple_view");
+//   vs.setTableName("Simple_tbl");
+//   vs.setSelectSuffix(mdtSqlViewSchema::SelectSuffixDistinct);
+//   vs.addSelectItem("Id_PK");
+//   vs.addSelectItem("Name");
+//   ///vs.setAfterSelectStatement("FROM Simple_tbl");
+//   // Check CREATE statement
+//   expectedSql =  "CREATE VIEW \"Simple_view\" AS SELECT DISTINCT \"Id_PK\", \"Name\" FROM \"Simple_tbl\"";
+//   QCOMPARE(vs.getSqlForCreate(driver, ""), expectedSql);
   /*
-   * Check with 1 field (with defaul end of line)
+   * Check with 1 field
    */
   // Clear
   vs.clear();
-  QVERIFY(vs.getSqlForCreate("'", "'").isEmpty());
+  QVERIFY(vs.getSqlForCreate(driver).isEmpty());
   // Setup
   vs.setName("Simple_view");
+  vs.setTableName("Simple_tbl");
   vs.addSelectItem("Id_PK");
-  vs.setAfterSelectStatement("FROM Simple_tbl");
   // Check CREATE statement
-  expectedSql =  "CREATE VIEW `Simple_view` AS\n";
+  expectedSql =  "CREATE VIEW \"Simple_view\" AS\n";
   expectedSql += "SELECT\n";
-  expectedSql += " 'Id_PK'\n";
-  expectedSql += "FROM Simple_tbl\n";
-  QCOMPARE(vs.getSqlForCreate("`", "'"), expectedSql);
+  expectedSql += " \"Id_PK\"\n";
+  expectedSql += "FROM \"Simple_tbl\"\n";
+  QCOMPARE(vs.getSqlForCreate(driver), expectedSql);
   /*
    * Check with empty parts
    */
   vs.clear();
-  QVERIFY(vs.getSqlForCreate("'", "'").isEmpty());
-  QVERIFY(vs.getSqlForDrop("'").isEmpty());
+  QVERIFY(vs.getSqlForCreate(driver).isEmpty());
+  QVERIFY(vs.getSqlForDrop(driver).isEmpty());
   // Set only name
   vs.setName("Brocken_view");
-  QVERIFY(vs.getSqlForCreate("'", "'").isEmpty());
+  QVERIFY(vs.getSqlForCreate(driver).isEmpty());
   // Check DROP statement (witch works if view name is set)
-  expectedSql = "DROP VIEW IF EXISTS `Brocken_view`";
-  QCOMPARE(vs.getSqlForDrop("`"), expectedSql);
+  expectedSql = "DROP VIEW IF EXISTS \"Brocken_view\"";
+  QCOMPARE(vs.getSqlForDrop(driver), expectedSql);
   // Set after SELECT statement
-  vs.setAfterSelectStatement("FROM BRK_tbl");
-  QVERIFY(vs.getSqlForCreate("'", "'").isEmpty());
+  QVERIFY(vs.getSqlForCreate(driver).isEmpty());
   // Set only Name and a field
   vs.clear();
   vs.setName("Brocken_view");
   vs.addSelectItem("Id_PK");
-  QVERIFY(vs.getSqlForCreate("'", "'").isEmpty());
+  QVERIFY(vs.getSqlForCreate(driver).isEmpty());
   /*
    * Clear
    */
   vs.clear();
-  QVERIFY(vs.getSqlForCreate("'", "'").isEmpty());
+  QVERIFY(vs.getSqlForCreate(driver).isEmpty());
+  /*
+   * Check a view with table name alias and a join
+   */
+  // Setup view
+  vs.setName("Client_view");
+  vs.setTableName("Client_tbl", "CLI");
+  vs.addSelectItem("CLI.Id_PK");
+  // Setup join
+  vsjc.clear();
+  vsjc.setTables("CLI", "Address_tbl", "ADR");
+  vsjc.setConstraintOn("Id_PK", "Client_Id_FK");
+  vs.addJoinClause(vsjc);
+  // Check CREATE statement
+  expectedSql =  "CREATE VIEW \"Client_view\" AS\n";
+  expectedSql += "SELECT\n";
+  expectedSql += " \"CLI\".\"Id_PK\"\n";
+  expectedSql += "FROM \"Client_tbl\" \"CLI\"\n";
+  expectedSql += " JOIN \"Address_tbl\" \"ADR\"\n";
+  expectedSql += "  ON \"ADR\".\"Client_Id_FK\" = \"CLI\".\"Id_PK\"\n";
+  QCOMPARE(vs.getSqlForCreate(driver), expectedSql);
+  /*
+   * Clear
+   */
+  vs.clear();
+  QVERIFY(vs.getSqlForCreate(driver).isEmpty());
+  /*
+   * Check a view with table name alias and 2 joins
+   */
+  // Setup view
+  vs.setName("Client_view");
+  vs.setTableName("Client_tbl", "CLI");
+  vs.addSelectItem("CLI.Id_PK");
+  // Setup join
+  vsjc.clear();
+  vsjc.setTables("CLI", "Address_tbl", "ADR");
+  vsjc.setConstraintOn("Id_PK", "Client_Id_FK");
+  vs.addJoinClause(vsjc);
+  vsjc.clear();
+  vsjc.setTables("ADR", "AddressDetail_tbl", "ADD");
+  vsjc.setConstraintOn("Id_PK", "Address_Id_FK");
+  vs.addJoinClause(vsjc);
+  // Check CREATE statement
+  expectedSql =  "CREATE VIEW \"Client_view\" AS\n";
+  expectedSql += "SELECT\n";
+  expectedSql += " \"CLI\".\"Id_PK\"\n";
+  expectedSql += "FROM \"Client_tbl\" \"CLI\"\n";
+  expectedSql += " JOIN \"Address_tbl\" \"ADR\"\n";
+  expectedSql += "  ON \"ADR\".\"Client_Id_FK\" = \"CLI\".\"Id_PK\"\n";
+  expectedSql += " JOIN \"AddressDetail_tbl\" \"ADD\"\n";
+  expectedSql += "  ON \"ADD\".\"Address_Id_FK\" = \"ADR\".\"Id_PK\"\n";
+  QCOMPARE(vs.getSqlForCreate(driver), expectedSql);
+
 }
 
 void mdtDatabaseTest::sqlViewSchemaBenchmark()
@@ -1087,24 +1175,26 @@ void mdtDatabaseTest::sqlViewSchemaBenchmark()
   QString sqlD, sqlC;
 
   vs.setName("Simple_view");
+  vs.setTableName("Simple_tbl");
   vs.addSelectItem("Id_PK");
   vs.addSelectItem("Name");
-  vs.setAfterSelectStatement("FROM Simple_tbl");
+  ///vs.setAfterSelectStatement("FROM Simple_tbl");
   QBENCHMARK{
-    sqlD = vs.getSqlForDrop("'");
-    sqlC = vs.getSqlForCreate("`", "'");
+    sqlD = vs.getSqlForDrop(pvDatabase.driver());
+    sqlC = vs.getSqlForCreate(pvDatabase.driver());
   }
-  expectedSql =  "CREATE VIEW `Simple_view` AS\n";
+  expectedSql =  "CREATE VIEW \"Simple_view\" AS\n";
   expectedSql += "SELECT\n";
-  expectedSql += " 'Id_PK',\n";
-  expectedSql += " 'Name'\n";
-  expectedSql += "FROM Simple_tbl\n";
+  expectedSql += " \"Id_PK\",\n";
+  expectedSql += " \"Name\"\n";
+  expectedSql += "FROM \"Simple_tbl\"\n";
   QCOMPARE(sqlC, expectedSql);
 }
 
 void mdtDatabaseTest::sqlTablePopulationSchemaTest()
 {
   mdtSqlTablePopulationSchema tps;
+  QString expectedSql;
 
   /*
    * Initial state
@@ -1118,13 +1208,15 @@ void mdtDatabaseTest::sqlTablePopulationSchemaTest()
   tps.setTableName("Type_tbl");
   tps.addFieldName("Id_PK");
   tps.addFieldName("Name");
-  
-  // Check
+  // Check data
   QCOMPARE(tps.name(), QString("Type_tbl data"));
   QCOMPARE(tps.tableName(), QString("Type_tbl"));
   QCOMPARE(tps.fieldNameList().size(), 2);
   QCOMPARE(tps.fieldNameList().at(0), QString("Id_PK"));
   QCOMPARE(tps.fieldNameList().at(1), QString("Name"));
+  // Check SQL for insertion
+  expectedSql = "INSERT INTO \"Type_tbl\" (\"Id_PK\",\"Name\") VALUES (?,?)";
+  QCOMPARE(tps.sqlForInsert(pvDatabase.driver()), expectedSql);
   /*
    * Populate with data
    */
@@ -1268,11 +1360,41 @@ void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
   index = model.index(0, progressColumn, parentIndex);
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index), QVariant(7));
-
-
-
-
-
+  /*
+   * Check set/get status
+   */
+  // Tables category
+  model.setStatus(mdtSqlDatabaseSchemaModel::Table, mdtSqlDatabaseSchemaModel::StatusOk);
+  index = model.index(0, statusColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Ok"));
+  // Client_tbl
+  parentIndex = index;
+  model.setStatus(mdtSqlDatabaseSchemaModel::Table, "Client_tbl", mdtSqlDatabaseSchemaModel::StatusError);
+  index = model.index(0, statusColumn, parentIndex);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Error"));
+  /*
+   * Clear status and progress
+   */
+  model.clearStatusAndProgress();
+  // Check Table category status
+  index = model.index(0, statusColumn);
+  QVERIFY(index.isValid());
+  QVERIFY(model.data(index).isNull());
+  // Check Table category progress
+  index = model.index(0, progressColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant(0));
+  // Check Client_tbl status
+  parentIndex = index;
+  index = model.index(0, statusColumn, parentIndex);
+  QVERIFY(index.isValid());
+  QVERIFY(model.data(index).isNull());
+  // Check Client_tbl progress
+  index = model.index(0, progressColumn, parentIndex);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant(0));
   /// \todo Should check model by calling its function as we weher a tree view.
   
   /// \todo See also http://code.qt.io/cgit/qt/qt.git/tree/tests/auto/modeltest
@@ -1344,6 +1466,15 @@ void mdtDatabaseTest::sqlDatabaseSchemaDialogTest()
   // Build table population schema for Client_tbl
   tps.clear();
   tps.setName("Client_tbl base data");
+  tps.setTableName("Client_tbl");
+  tps.addFieldName("Id_PK");
+  tps.addFieldName("Name");
+  tps.currentRowData() << QVariant() << "A name 1";
+  tps.commitCurrentRowData();
+  tps.currentRowData() << QVariant() << "A name 2";
+  tps.commitCurrentRowData();
+  tps.currentRowData() << QVariant() << "A name 3";
+  tps.commitCurrentRowData();
   s.addTablePopulation(tps);
 
   dialog.setSchema(s);

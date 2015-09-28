@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "mdtSqlDatabaseSchemaThread.h"
 #include "mdtSqlDatabaseSchemaModel.h"
-#include "mdtSqlSchemaTable.h"
 #include "mdtAlgorithms.h"
 #include <QSqlError>
 #include <QSqlQuery>
@@ -28,7 +27,8 @@
 #include <QDebug>
 
 mdtSqlDatabaseSchemaThread::mdtSqlDatabaseSchemaThread(QObject* parent)
- : QThread(parent)
+ : QThread(parent),
+   pvAbort(false)
 {
 }
 
@@ -42,6 +42,11 @@ void mdtSqlDatabaseSchemaThread::createSchema(const mdtSqlDatabaseSchema & s, co
   start();
 }
 
+void mdtSqlDatabaseSchemaThread::abort()
+{
+  pvAbort = true;
+}
+
 void mdtSqlDatabaseSchemaThread::run()
 {
   QString connectionName;
@@ -49,26 +54,36 @@ void mdtSqlDatabaseSchemaThread::run()
     auto db = createConnection();
     connectionName = db.connectionName();
     auto tables = pvSchema.tableList();
+    auto tablePopulations = pvSchema.tablePopulationSchemaList();
+    auto views = pvSchema.viewList();
+    double globalProgess = 0.0;
+    double globalProgessStep = 0.0;
+    double elemetsCount;
 
+    /*
+     * Init
+     */
+    pvAbort = false;
+    // Global progress
+    elemetsCount = tables.size() + tablePopulations.size() + views.size();
+    if(elemetsCount > 0.0){
+      globalProgessStep = 100.0 / elemetsCount;
+    }
+    emit globalProgressChanged(0);
     qDebug() << "THD started...";
 
     // Check that we are successfully connected to database
     if(!db.isOpen()){
       return;
     }
-    // Create tables
-    for(auto & ts : tables){
-      createTable(ts, db);
-    }
-    
-    for(int i = 0; i <= 100; ++i){
-      emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, "", i);
-      msleep(100);
-    }
-    for(int i = 0; i <= 100; ++i){
-      emit objectProgressChanged(mdtSqlDatabaseSchemaModel::View, "", i);
-      msleep(10);
-    }
+    /*
+     * Create tables
+     */
+    createTables(tables, db, globalProgess, globalProgessStep);
+    // Populate tables
+    populateTables(tablePopulations, db, globalProgess, globalProgessStep);
+    // Create views
+    createViews(views, db, globalProgess, globalProgessStep);
 
     qDebug() << "THD END";
     
@@ -104,20 +119,220 @@ QSqlDatabase mdtSqlDatabaseSchemaThread::createConnection()
   return db;
 }
 
-void mdtSqlDatabaseSchemaThread::createTable(mdtSqlSchemaTable & ts, const QSqlDatabase & db)
+void mdtSqlDatabaseSchemaThread::createTables(QList<mdtSqlSchemaTable> & tables, const QSqlDatabase & db,
+                                              double & globalProgress, double globalProgressStep)
 {
-  QSqlQuery query(db);
+  bool errorOccured = false;
+  double progress = 0.0;
+  double progressStep;
 
-  if(!ts.setDriverName(db.driverName())){
-    emit errorOccured(mdtSqlDatabaseSchemaModel::Table, ts.tableName(), ts.lastError());
+  if(tables.isEmpty()){
     return;
   }
+  progressStep = 100.0 / static_cast<double>(tables.size());
+  for(auto & ts : tables){
+    if(pvAbort){
+      return;
+    }
+    
+    msleep(1000);
+    
+    // Create table
+    if(!createTable(ts, db)){
+      errorOccured = true;
+    }
+    // Update progresses
+    if(!errorOccured){
+      progress += progressStep;
+      emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, "", progress);
+      globalProgress += globalProgressStep;
+      emit globalProgressChanged(globalProgress);
+    }
+  }
+  // Update tables creation status
+  if(errorOccured){
+    emit objectStatusChanged(mdtSqlDatabaseSchemaModel::Table, "", mdtSqlDatabaseSchemaModel::StatusError);
+  }else{
+    emit objectStatusChanged(mdtSqlDatabaseSchemaModel::Table, "", mdtSqlDatabaseSchemaModel::StatusOk);
+  }
+}
+
+bool mdtSqlDatabaseSchemaThread::createTable(mdtSqlSchemaTable & ts, const QSqlDatabase & db)
+{
+  QSqlQuery query(db);
+  QString tableName = ts.tableName();
+
+  if(!ts.setDriverName(db.driverName())){
+    emit objectErrorOccured(mdtSqlDatabaseSchemaModel::Table, tableName, ts.lastError());
+    return false;
+  }
+  emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, tableName, -1);
   if(!query.exec(ts.sqlForCreateTable())){
     QSqlError sqlError = query.lastError();
-    mdtError error(tr("Cannot create table '") + ts.tableName() + tr("'"), mdtError::Error);
+    mdtError error(tr("Cannot create table '") + tableName + tr("'"), mdtError::Error);
     error.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseSchemaThread");
     error.commit();
-    emit errorOccured(mdtSqlDatabaseSchemaModel::Table, ts.tableName(), error);
+    emit objectErrorOccured(mdtSqlDatabaseSchemaModel::Table, tableName, error);
+    emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, tableName, 0);
+    return false;
   }
+  emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, tableName, 100);
+  emit objectStatusChanged(mdtSqlDatabaseSchemaModel::Table, tableName, mdtSqlDatabaseSchemaModel::StatusOk);
+
+  return true;
+}
+
+void mdtSqlDatabaseSchemaThread::populateTables(const QList<mdtSqlTablePopulationSchema> & tablePopulations, const QSqlDatabase & db,
+                                                double & globalProgress, double globalProgressStep)
+{
+  bool errorOccured = false;
+  double progress = 0.0;
+  double progressStep;
+
+  if(tablePopulations.isEmpty()){
+    return;
+  }
+  progressStep = 100.0 / static_cast<double>(tablePopulations.size());
+  for(const auto & tps : tablePopulations){
+    if(pvAbort){
+      return;
+    }
+    
+    msleep(1000);
+    
+    if(!populateTable(tps, db)){
+      errorOccured = true;
+    }
+    // Update progresses
+    if(!errorOccured){
+      progress += progressStep;
+      emit objectProgressChanged(mdtSqlDatabaseSchemaModel::TablePopulation, "", progress);
+      globalProgress += globalProgressStep;
+      emit globalProgressChanged(globalProgress);
+    }
+  }
+  // Update tables population status
+  if(errorOccured){
+    emit objectStatusChanged(mdtSqlDatabaseSchemaModel::TablePopulation, "", mdtSqlDatabaseSchemaModel::StatusError);
+  }else{
+    emit objectStatusChanged(mdtSqlDatabaseSchemaModel::TablePopulation, "", mdtSqlDatabaseSchemaModel::StatusOk);
+  }
+}
+
+bool mdtSqlDatabaseSchemaThread::populateTable(const mdtSqlTablePopulationSchema & tps, const QSqlDatabase & db)
+{
+  Q_ASSERT(db.driver() != nullptr);
+
+  QSqlQuery query(db);
+  QString name = tps.name();
+  QString sql = tps.sqlForInsert(db.driver());
+
+  for(int row = 0; row < tps.rowDataCount(); ++row){
+    // Build prepare statement
+    if(!query.prepare(sql)){
+      QSqlError sqlError = query.lastError();
+      mdtError error(tr("Cannot populate table '") + tps.tableName() + tr("'"), mdtError::Error);
+      error.setSystemError(sqlError.number(), sqlError.text());
+      MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseSchemaThread");
+      error.commit();
+      emit objectErrorOccured(mdtSqlDatabaseSchemaModel::TablePopulation, name, error);
+      emit objectProgressChanged(mdtSqlDatabaseSchemaModel::TablePopulation, name, 0);
+      return false;
+    }
+    // Bind row data values
+    for(const auto data : tps.rowData(row)){
+      query.addBindValue(data);
+    }
+    // Exec query
+    if(!query.exec()){
+      QSqlError sqlError = query.lastError();
+      mdtError error(tr("Cannot populate table '") + tps.tableName() + tr("'"), mdtError::Error);
+      error.setSystemError(sqlError.number(), sqlError.text());
+      MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseSchemaThread");
+      error.commit();
+      emit objectErrorOccured(mdtSqlDatabaseSchemaModel::TablePopulation, name, error);
+      emit objectProgressChanged(mdtSqlDatabaseSchemaModel::TablePopulation, name, 0);
+      return false;
+    }
+  }
+  emit objectProgressChanged(mdtSqlDatabaseSchemaModel::TablePopulation, name, 100);
+  emit objectStatusChanged(mdtSqlDatabaseSchemaModel::TablePopulation, name, mdtSqlDatabaseSchemaModel::StatusOk);
+
+  return true;
+}
+
+void mdtSqlDatabaseSchemaThread::createViews(const QList<mdtSqlViewSchema> & views, const QSqlDatabase & db,
+                                             double& globalProgress, double globalProgressStep)
+{
+  bool errorOccured = false;
+  double progress = 0.0;
+  double progressStep;
+
+  if(views.isEmpty()){
+    return;
+  }
+  progressStep = 100.0 / static_cast<double>(views.size());
+  for(const auto & vs : views){
+    if(pvAbort){
+      return;
+    }
+    
+    msleep(1000);
+    
+    if(!createView(vs, db)){
+      errorOccured = true;
+    }
+    // Update progresses
+    if(!errorOccured){
+      progress += progressStep;
+      emit objectProgressChanged(mdtSqlDatabaseSchemaModel::View, "", progress);
+      globalProgress += globalProgressStep;
+      emit globalProgressChanged(globalProgress);
+    }
+  }
+  // Update views creation status
+  if(errorOccured){
+    emit objectStatusChanged(mdtSqlDatabaseSchemaModel::View, "", mdtSqlDatabaseSchemaModel::StatusError);
+  }else{
+    emit objectStatusChanged(mdtSqlDatabaseSchemaModel::View, "", mdtSqlDatabaseSchemaModel::StatusOk);
+  }
+}
+
+bool mdtSqlDatabaseSchemaThread::createView(const mdtSqlViewSchema& vs, const QSqlDatabase& db)
+{
+  Q_ASSERT(db.driver() != nullptr);
+
+  QSqlQuery query(db);
+  QString name = vs.name();
+  QString sql;
+
+  // Drop view
+  sql = vs.getSqlForDrop(db.driver());
+  if(!query.exec(sql)){
+    QSqlError sqlError = query.lastError();
+    mdtError error(tr("Cannot drop view '") + name + tr("'"), mdtError::Error);
+    error.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseSchemaThread");
+    error.commit();
+    emit objectErrorOccured(mdtSqlDatabaseSchemaModel::View, name, error);
+    emit objectProgressChanged(mdtSqlDatabaseSchemaModel::View, name, 0);
+    return false;
+  }
+  // Create view
+  sql = vs.getSqlForCreate(db.driver());
+  if(!query.exec(sql)){
+    QSqlError sqlError = query.lastError();
+    mdtError error(tr("Cannot create view '") + name + tr("'"), mdtError::Error);
+    error.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseSchemaThread");
+    error.commit();
+    emit objectErrorOccured(mdtSqlDatabaseSchemaModel::View, name, error);
+    emit objectProgressChanged(mdtSqlDatabaseSchemaModel::View, name, 0);
+    return false;
+  }
+  emit objectProgressChanged(mdtSqlDatabaseSchemaModel::View, name, 100);
+  emit objectStatusChanged(mdtSqlDatabaseSchemaModel::View, name, mdtSqlDatabaseSchemaModel::StatusOk);
+
+  return true;
 }

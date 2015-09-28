@@ -21,8 +21,11 @@
 #ifndef MDT_SQL_VIEW_SCHEMA_H
 #define MDT_SQL_VIEW_SCHEMA_H
 
+#include "mdtSqlViewSchemaJoinClause.h"
 #include <QString>
 #include <QStringList>
+#include <QSqlDriver>
+#include <QList>
 
 /*! \brief Helper class for SQL database schema creation
  *
@@ -33,19 +36,26 @@ class mdtSqlViewSchema
 {
  public:
 
+  /*! \brief SELECT suffix
+   */
+  enum SelectSuffix
+  {
+    SelectSuffixNone,     /*!< Select statement is simply SELECT */
+    SelectSuffixAll,      /*!< Select statmenet becomes SELECT ALL */
+    SelectSuffixDistinct  /*!< Select statmenet becomes SELECT DISTINCT */
+  };
+
   /*! \brief Constructor
    */
   mdtSqlViewSchema(const QString & name = QString())
-   : pvName(name)
+   : pvName(name),
+     pvSelectSuffix(SelectSuffixNone)
   {
   }
 
   /*! \brief Set the name of the view
    */
-  void setName(const QString & name)
-  {
-    pvName = name;
-  }
+  void setName(const QString & name);
 
   /*! \brief Get the name of the view
    */
@@ -53,6 +63,14 @@ class mdtSqlViewSchema
   {
     return pvName;
   }
+
+  /*! \brief Set table name
+   */
+  void setTableName(const QString & name, const QString & alias = QString());
+
+  /*! \brief Set select suffix
+   */
+  void setSelectSuffix(SelectSuffix s);
 
   /*! \brief Add a SELECT item
    *
@@ -66,77 +84,56 @@ class mdtSqlViewSchema
    *  the generated part of the SELECT statement will be:
    *  SELECT Id_PK, Name AS AliasedName, CLI.PhoneNumber
    */
-  void addSelectItem(const QString & item)
-  {
-    pvSelectList.append(item);
-  }
+  void addSelectItem(const QString & item);
 
-  /*! \brief Set the SQL statement that must be appended to SELECT statement
+  /*! \brief Add a join clause
    */
-  void setAfterSelectStatement(const QString & sql)
-  {
-    pvAfterSelectStatement = sql;
-  }
+  void addJoinClause(const mdtSqlViewSchemaJoinClause & jc);
 
   /*! \brief Clear
    */
-  void clear()
-  {
-    pvName.clear();
-    pvSelectList.clear();
-    pvAfterSelectStatement.clear();
-  }
+  void clear();
 
   /*! \brief Get the SQL statement to drop the view
    *
    * Note that each call of this function will rebuild the SQL statement.
+   *
+   * \pre driver must not be a null pointer
    */
-  QString getSqlForDrop(const QString & tableNameDelimiter) const
-  {
-    if(pvName.isEmpty()){
-      return "";
-    }
-    return "DROP VIEW IF EXISTS " + tableNameDelimiter + pvName + tableNameDelimiter;
-  }
+  QString getSqlForDrop(const QSqlDriver *driver) const;
 
   /*! \brief Get the SQL statement to create the view
    *
    * Note that each call of this function will rebuild the SQL statement.
+   *
+   * \pre driver must not be a null pointer
    */
-  QString getSqlForCreate(const QString tableNameDelimiter, const QString fieldNameDelimiter, const QString endOfLine = "\n") const
-  {
-    QString sql;
-    QString space;
-
-    // Check if we need space
-    if(endOfLine.isEmpty()){
-      space = " ";
-    }
-    // Check if all is complete
-    if( (pvName.isEmpty()) || (pvSelectList.isEmpty()) || (pvAfterSelectStatement.isEmpty()) ){
-      return sql;
-    }
-    // Build header
-    sql = "CREATE VIEW " + tableNameDelimiter + pvName + tableNameDelimiter + " AS" + space + endOfLine;
-    // Build SELECT statement
-    sql += "SELECT" + endOfLine;
-    int lastIndex = pvSelectList.size() - 1;
-    Q_ASSERT(lastIndex >= 0);
-    for(int i = 0; i < lastIndex; ++i){
-      sql += " " + fieldNameDelimiter + pvSelectList.at(i) + fieldNameDelimiter + "," + endOfLine;
-    }
-    sql += " " + fieldNameDelimiter + pvSelectList.at(lastIndex) + fieldNameDelimiter + endOfLine;
-    // Add the rest of SQL
-    sql += space + pvAfterSelectStatement + endOfLine;
-
-    return sql;
-  }
+  QString getSqlForCreate(const QSqlDriver *driver) const;
 
  private:
 
+  /*! \brief Get select key word regarding select suffix
+   */
+  QString selectKeyWord() const
+  {
+    switch(pvSelectSuffix){
+      case SelectSuffixNone:
+        return "SELECT";
+      case SelectSuffixAll:
+        return "SELECT ALL";
+      case SelectSuffixDistinct:
+        return "SELECT DISTINCT";
+    }
+    return QString();
+  }
+
   QString pvName;
+  QString pvTableName;
+  QString pvTableAlias;
+  SelectSuffix pvSelectSuffix;
   QStringList pvSelectList;
-  QString pvAfterSelectStatement;
+  QList<mdtSqlViewSchemaJoinClause> pvJoinClauseList;
+//   QString pvAfterSelectStatement;
 };
 
 #endif // #ifndef MDT_SQL_VIEW_SCHEMA_H

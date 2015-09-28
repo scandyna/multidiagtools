@@ -25,6 +25,7 @@
 #include <QStringList>
 #include <QVariant>
 #include <QList>
+#include <QSqlDriver>
 
 /*! \brief Simple container that holds data to populate on a specific table
  */
@@ -83,6 +84,13 @@ class mdtSqlTablePopulationSchema
     pvFieldNameList.append(name);
   }
 
+  /*! \brief Get field names count
+   */
+  int fieldcount() const
+  {
+    return pvFieldNameList.size();
+  }
+
   /*! \brief Get list of field names
    */
   QStringList fieldNameList() const
@@ -139,6 +147,40 @@ class mdtSqlTablePopulationSchema
     Q_ASSERT(row >= 0);
     Q_ASSERT(row < pvRowDataList.size());
     return pvRowDataList.at(row);
+  }
+
+  /*! \brief Get SQL for insertion
+   *
+   * Return SQL statement that can be used with QSqlQuery bind values.
+   *  For example, if tableName is Client_tbl and we have fields Id_PK and Name,
+   *  the SQL statement will be: \" INSERT INTO Client_tbl (Id_PK, Name) VALUES (?, ?) \"
+   *
+   * Note: each call of this function will rebuild the SQL statement
+   *
+   * \pre driver must be non null pointer
+   */
+  QString sqlForInsert(const QSqlDriver *driver) const
+  {
+    Q_ASSERT( driver != nullptr);
+
+    QString sql;
+    int lastIndex = pvFieldNameList.size() - 1;
+
+    if(lastIndex < 0){
+      return sql;
+    }
+    sql = "INSERT INTO " + driver->escapeIdentifier(pvTableName, QSqlDriver::TableName) + " (";
+    for(int i = 0; i < lastIndex; ++i){
+      sql += driver->escapeIdentifier(pvFieldNameList.at(i), QSqlDriver::FieldName) + ",";
+    }
+    sql += driver->escapeIdentifier(pvFieldNameList.at(lastIndex), QSqlDriver::FieldName);
+    sql += ") VALUES (";
+    for(int i = 0; i < lastIndex; ++i){
+      sql += "?,";
+    }
+    sql += "?)";
+
+    return sql;
   }
 
   /*! \brief Clear
