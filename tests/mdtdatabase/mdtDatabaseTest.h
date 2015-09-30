@@ -39,6 +39,8 @@ class mdtDatabaseTest : public mdtTest
 
   void sqlFieldTypeTest();
 
+  void sqlFieldTest();
+
   void sqlSchemaTableTest();
   void sqlSchemaTableSqliteTest();
   void sqlTableSchemaModelTest();

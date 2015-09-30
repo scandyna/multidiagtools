@@ -1,6 +1,6 @@
 format 209
 "mdtdatabase" // mdtdatabase
-  revision 67
+  revision 69
   modified_by 2 "philippe"
   // class settings
   
@@ -4702,6 +4702,11 @@ ${inlines}
       end
     end
 
+    classdiagram 1661826 "SqlField"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
     classdiagram 1523714 "SqlFieldType"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -5397,6 +5402,180 @@ ${inlines}
       end
     end
 
+    class 1968002 "mdtSqlViewSchemaJoinClause"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 2000642 "TableName1"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2000770 "TableAlias1"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2000898 "TableName2"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2001026 "TableAlias2"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2001154 "JoinOperator"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2001282 "JoinConstraint"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3074818 "setJoinOperator"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "op" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3074306 "setTable1"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "name" type class_ref 161026 // QString
+	  param in name "alias" type class_ref 161026 // QString
+	    defaultvalue "QString()"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3074434 "setTable2"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "name" type class_ref 161026 // QString
+	  param in name "alias" type class_ref 161026 // QString
+	    defaultvalue "QString()"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3074562 "setContraintOn"
+	public explicit_return_type "void"
+	nparams 3
+	  param in name "table1Field" type class_ref 161026 // QString
+	  param in name "table2Field" type class_ref 161026 // QString
+	  param in name "op" type class_ref 161026 // QString
+	    defaultvalue "\"=\""
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3074690 "setConstraint"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "sql" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
     class 1954690 "mdtSqlTriggerSchema"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -5865,7 +6044,7 @@ ${inlines}
       end
     end
 
-    class 1968002 "mdtSqlViewSchemaJoinClause"
+    class 1974530 "mdtSqlField"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -5879,7 +6058,19 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      attribute 2000642 "TableName1"
+      attribute 2007810 "Type"
+	private explicit_type "Type"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2007938 "Name"
 	private type class_ref 161026 // QString
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -5891,8 +6082,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 2000770 "TableAlias1"
-	private type class_ref 161026 // QString
+      attribute 2008194 "IsAutoValue"
+	private explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -5903,8 +6094,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 2000898 "TableName2"
-	private type class_ref 161026 // QString
+      attribute 2008578 "IsRequired"
+	private explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -5915,8 +6106,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 2001026 "TableAlias2"
-	private type class_ref 161026 // QString
+      attribute 2008066 "DefaultValue"
+	private type class_ref 161154 // QVariant
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -5927,8 +6118,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 2001154 "JoinOperator"
-	private type class_ref 161026 // QString
+      attribute 2008450 "Length"
+	private explicit_type "int"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -5939,22 +6130,73 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 2001282 "JoinConstraint"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+      operation 3081730 "mdtSqlField"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
 "
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
-      operation 3074818 "setJoinOperator"
-	public explicit_return_type "void"
+      operation 3081858 "mdtSqlField"
+	public explicit_return_type ""
 	nparams 1
-	  param in name "op" type class_ref 161026 // QString
+	  param in name "fld" type class_ref 404738 // QSqlField
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3081346 "getSql"
+	public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "driver" explicit_type "QSqlDriver"
+	  param in name "isPartOfPk" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3081474 "isTringType"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3081602 "isStringType"
+	class_operation public explicit_return_type "bool"
+	nparams 1
+	  param in name "type" explicit_type "Type"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -5967,49 +6209,12 @@ ${inlines}
 	
       end
 
-      operation 3074306 "setTable1"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "name" type class_ref 161026 // QString
-	  param in name "alias" type class_ref 161026 // QString
-	    defaultvalue "QString()"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3074434 "setTable2"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "name" type class_ref 161026 // QString
-	  param in name "alias" type class_ref 161026 // QString
-	    defaultvalue "QString()"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3074562 "setContraintOn"
-	public explicit_return_type "void"
+      operation 3081986 "setupFromDatabase"
+	public explicit_return_type "bool"
 	nparams 3
-	  param in name "table1Field" type class_ref 161026 // QString
-	  param in name "table2Field" type class_ref 161026 // QString
-	  param in name "op" type class_ref 161026 // QString
-	    defaultvalue "\"=\""
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	  param in name "tableName" type class_ref 161026 // QString
+	  param in name "fieldName" type class_ref 161026 // QString
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
@@ -6022,13 +6227,15 @@ ${inlines}
 	
       end
 
-      operation 3074690 "setConstraint"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "sql" type class_ref 161026 // QString
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+      operation 3082114 "setupFromDatabaseSqlite"
+	private explicit_return_type "bool"
+	nparams 3
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	  param in name "tableName" type class_ref 161026 // QString
+	  param in name "fieldName" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "

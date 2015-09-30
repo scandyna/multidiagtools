@@ -31,6 +31,7 @@
 
 #include "mdtSqlTableSetupWidget.h"
 
+#include "mdtSqlField.h"
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlTableSchemaModel.h"
 #include "mdtSqlViewSchema.h"
@@ -189,6 +190,68 @@ void mdtDatabaseTest::sqlFieldTypeTest()
   QVERIFY(ft.type() == QVariant::Invalid);
   QVERIFY(ft.name().isEmpty());
   QVERIFY(ft.isNull());
+}
+
+void mdtDatabaseTest::sqlFieldTest()
+{
+  mdtSqlField field;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(field.type() == mdtSqlField::UnknownType);
+  QVERIFY(!field.isAutoValue());
+  QVERIFY(!field.isRequired());
+  QCOMPARE(field.length(), -1);
+  /*
+   * Simple set/get check
+   */
+  // Setup a auto increment PK
+  field.setType(mdtSqlField::Integer);
+  field.setName("Id_PK");
+  field.setAutoValue(true);
+  field.setRequired(true);
+  // Check
+  QVERIFY(field.type() == mdtSqlField::Integer);
+  QCOMPARE(field.name(), QString("Id_PK"));
+  QVERIFY(field.isAutoValue());
+  QVERIFY(field.isRequired());
+  /*
+   * Clear
+   */
+  field.clear();
+  QVERIFY(field.type() == mdtSqlField::UnknownType);
+  QVERIFY(field.name().isEmpty());
+  QVERIFY(!field.isAutoValue());
+  QVERIFY(!field.isRequired());
+  QVERIFY(field.defaultValue().isNull());
+  QCOMPARE(field.length(), -1);
+  /*
+   * Simple set/get check
+   */
+  // Setup a text field
+  field.setType(mdtSqlField::Varchar);
+  field.setName("Name");
+  field.setLength(50);
+  field.setDefaultValue("Empty");
+  // Check
+  QVERIFY(field.type() == mdtSqlField::Varchar);
+  QCOMPARE(field.name(), QString("Name"));
+  QVERIFY(!field.isAutoValue());
+  QVERIFY(!field.isRequired());
+  QCOMPARE(field.length(), 50);
+  QCOMPARE(field.defaultValue(), QVariant("Empty"));
+  /*
+   * Clear
+   */
+  field.clear();
+  QVERIFY(field.type() == mdtSqlField::UnknownType);
+  QVERIFY(field.name().isEmpty());
+  QVERIFY(!field.isAutoValue());
+  QVERIFY(!field.isRequired());
+  QVERIFY(field.defaultValue().isNull());
+  QCOMPARE(field.length(), -1);
+
 }
 
 void mdtDatabaseTest::sqlSchemaTableTest()
