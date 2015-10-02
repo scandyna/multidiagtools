@@ -171,19 +171,21 @@ void mdtDatabaseTest::sqlFieldTypeTest()
   /// \todo To be done
   // Available field type list - SQLite
   fieldTypeList = mdtSqlFieldType::availableFieldTypeList(mdtSqlDriverType::SQLite);
-  QCOMPARE(fieldTypeList.size(), 6);
-  QVERIFY(fieldTypeList.at(0).type() == mdtSqlFieldType::Integer);
-  QCOMPARE(fieldTypeList.at(0).name(), QString("INTEGER"));
-  QVERIFY(fieldTypeList.at(1).type() == mdtSqlFieldType::Varchar);
-  QCOMPARE(fieldTypeList.at(1).name(), QString("VARCHAR"));
-  QVERIFY(fieldTypeList.at(2).type() == mdtSqlFieldType::Double);
-  QCOMPARE(fieldTypeList.at(2).name(), QString("DOUBLE"));
-  QVERIFY(fieldTypeList.at(3).type() == mdtSqlFieldType::Boolean);
-  QCOMPARE(fieldTypeList.at(3).name(), QString("BOOLEAN"));
-  QVERIFY(fieldTypeList.at(4).type() == mdtSqlFieldType::Date);
-  QCOMPARE(fieldTypeList.at(4).name(), QString("DATE"));
-  QVERIFY(fieldTypeList.at(5).type() == mdtSqlFieldType::Time);
-  QCOMPARE(fieldTypeList.at(5).name(), QString("DATETIME"));
+  QCOMPARE(fieldTypeList.size(), 7);
+  QVERIFY(fieldTypeList.at(0).type() == mdtSqlFieldType::Boolean);
+  QCOMPARE(fieldTypeList.at(0).name(), QString("BOOLEAN"));
+  QVERIFY(fieldTypeList.at(1).type() == mdtSqlFieldType::Integer);
+  QCOMPARE(fieldTypeList.at(1).name(), QString("INTEGER"));
+  QVERIFY(fieldTypeList.at(2).type() == mdtSqlFieldType::Float);
+  QCOMPARE(fieldTypeList.at(2).name(), QString("FLOAT"));
+  QVERIFY(fieldTypeList.at(3).type() == mdtSqlFieldType::Double);
+  QCOMPARE(fieldTypeList.at(3).name(), QString("DOUBLE"));
+  QVERIFY(fieldTypeList.at(4).type() == mdtSqlFieldType::Varchar);
+  QCOMPARE(fieldTypeList.at(4).name(), QString("VARCHAR"));
+  QVERIFY(fieldTypeList.at(5).type() == mdtSqlFieldType::Date);
+  QCOMPARE(fieldTypeList.at(5).name(), QString("DATE"));
+  QVERIFY(fieldTypeList.at(6).type() == mdtSqlFieldType::Time);
+  QCOMPARE(fieldTypeList.at(6).name(), QString("TIME"));
   // Static functions - MySQL
   /// \todo To be done
   // Available field type list - MariaDB/MySQL
@@ -200,9 +202,6 @@ void mdtDatabaseTest::sqlFieldTypeTest()
   QVERIFY(!ft.isNull());
   QVERIFY(ft.type() == mdtSqlFieldType::Integer);
   QCOMPARE(ft.name(), QString("INTEGER"));
-//   QVERIFY(!ft.setType(QVariant::Color, mdtSqlDriverType::SQLite));
-//   QVERIFY(ft.type() == QVariant::Invalid);
-//   QVERIFY(ft.isNull());
   // Set a valid type before clear test
   ft.setType(mdtSqlFieldType::Varchar, mdtSqlDriverType::SQLite);
   QVERIFY(!ft.isNull());
@@ -215,14 +214,65 @@ void mdtDatabaseTest::sqlFieldTypeTest()
   QVERIFY(ft.isNull());
 }
 
+void mdtDatabaseTest::sqlCollationTest()
+{
+  mdtSqlCollation collation;
+  QString expectedSql;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(collation.isCaseSensitive());
+  QVERIFY(collation.country() == QLocale::AnyCountry);
+  QVERIFY(collation.language() == QLocale::AnyLanguage);
+  QVERIFY(collation.isNull());
+  /*
+   * Simple set/get
+   */
+  collation.setCaseSensitive(false);
+  collation.setCountry(QLocale::Switzerland);
+  collation.setLanguage(QLocale::French);
+  collation.setCharset("utf8");
+  QVERIFY(!collation.isCaseSensitive());
+  QVERIFY(collation.country() == QLocale::Switzerland);
+  QVERIFY(collation.language() == QLocale::French);
+  QCOMPARE(collation.charset(), QString("utf8"));
+  QVERIFY(!collation.isNull());
+  /*
+   * Clear
+   */
+  collation.clear();
+  QVERIFY(collation.isCaseSensitive());
+  QVERIFY(collation.country() == QLocale::AnyCountry);
+  QVERIFY(collation.language() == QLocale::AnyLanguage);
+  QVERIFY(collation.charset().isEmpty());
+  QVERIFY(collation.isNull());
+  /*
+   * SQL for SQLite
+   */
+  // Null collation
+  collation.clear();
+  expectedSql = "";
+  QCOMPARE(collation.getSql(mdtSqlDriverType::SQLite), expectedSql);
+  // Setup collation
+  collation.setCaseSensitive(false);
+  collation.setCountry(QLocale::Switzerland); // Must simply be ignored
+  collation.setLanguage(QLocale::French);     // Must simply be ignored
+  collation.setCharset("utf8");               // Must simply be ignored
+  // Check
+  expectedSql = "NOCASE";
+  QCOMPARE(collation.getSql(mdtSqlDriverType::SQLite), expectedSql);
+  // Set a case sensitive collation
+  collation.clear();
+  collation.setCaseSensitive(true);
+  expectedSql = "BINARY";
+  QCOMPARE(collation.getSql(mdtSqlDriverType::SQLite), expectedSql);
+}
+
 void mdtDatabaseTest::sqlFieldTest()
 {
   mdtSqlField field;
 
-  qDebug() << "sizeof field: " << sizeof(field);
-  qDebug() << "sizeof Type: " << sizeof(mdtSqlFieldType::Type);
-  qDebug() << "sizeof bool: " << sizeof(bool);
-  
   /*
    * Initial state
    */
@@ -253,6 +303,7 @@ void mdtDatabaseTest::sqlFieldTest()
   QVERIFY(!field.isRequired());
   QVERIFY(field.defaultValue().isNull());
   QCOMPARE(field.length(), -1);
+  QVERIFY(field.collation().isNull());
   /*
    * Simple set/get check
    */
@@ -261,6 +312,7 @@ void mdtDatabaseTest::sqlFieldTest()
   field.setName("Name");
   field.setLength(50);
   field.setDefaultValue("Empty");
+  field.setCaseSensitive(false);
   // Check
   QVERIFY(field.type() == mdtSqlFieldType::Varchar);
   QCOMPARE(field.name(), QString("Name"));
@@ -268,6 +320,7 @@ void mdtDatabaseTest::sqlFieldTest()
   QVERIFY(!field.isRequired());
   QCOMPARE(field.length(), 50);
   QCOMPARE(field.defaultValue(), QVariant("Empty"));
+  QVERIFY(!field.collation().isCaseSensitive());
   /*
    * Clear
    */
@@ -278,7 +331,125 @@ void mdtDatabaseTest::sqlFieldTest()
   QVERIFY(!field.isRequired());
   QVERIFY(field.defaultValue().isNull());
   QCOMPARE(field.length(), -1);
+  QVERIFY(field.collation().isNull());
+  /*
+   * Check setting up from a QSqlField
+   */
+  // Setup QSqlField
+  QSqlField qtField;
+  qtField.setType(QVariant::Int);
+  qtField.setName("Id_PK");
+  qtField.setAutoValue(true);
+  qtField.setRequired(true);
+  qtField.setDefaultValue(2);
+  qtField.setLength(5);
+  // Setup field and check
+  field.setupFromQSqlField(qtField, mdtSqlDriverType::SQLite);
+  QVERIFY(field.type() == mdtSqlFieldType::Integer);
+  QCOMPARE(field.name(), QString("Id_PK"));
+  QVERIFY(field.isAutoValue());
+  QVERIFY(field.isRequired());
+  QCOMPARE(field.length(), 5);
+  QCOMPARE(field.defaultValue(), QVariant(2));
+  // Clear
+  field.clear();
 }
+
+void mdtDatabaseTest::sqlFieldSQLiteTest()
+{
+  mdtSqlField field;
+  QSqlDatabase db = pvDatabase;
+  QString expectedSql;
+
+  QCOMPARE(db.driverName(), QString("QSQLITE"));
+  /*
+   * Auto increment PK
+   */
+  // Setup field
+  field.clear();
+  field.setName("Id_PK");
+  field.setType(mdtSqlFieldType::Integer);
+  field.setAutoValue(true);
+  field.setRequired(true);
+  // Check
+  expectedSql = "\"Id_PK\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT";
+  QCOMPARE(field.getSql(db, true), expectedSql);
+  /*
+   * Simple INTEGER field
+   */
+  field.clear();
+  field.setName("Number");
+  field.setType(mdtSqlFieldType::Integer);
+  // Check
+  expectedSql = "\"Number\" INTEGER DEFAULT NULL";
+  QCOMPARE(field.getSql(db, false), expectedSql);
+  /*
+   * INTEGER field with NOT NULL constraint
+   */
+  field.clear();
+  field.setName("Number");
+  field.setType(mdtSqlFieldType::Integer);
+  field.setRequired(true);
+  // Check
+  expectedSql = "\"Number\" INTEGER NOT NULL DEFAULT NULL";
+  QCOMPARE(field.getSql(db, false), expectedSql);
+  /*
+   * INTEGER field with a default value
+   */
+  field.clear();
+  field.setName("Number");
+  field.setType(mdtSqlFieldType::Integer);
+  field.setDefaultValue(5);
+  // Check
+  expectedSql = "\"Number\" INTEGER DEFAULT 5";
+  QCOMPARE(field.getSql(db, false), expectedSql);
+  /*
+   * Simple VARCHAR field
+   */
+  field.clear();
+  field.setName("Name");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(50);
+  // Check
+  expectedSql = "\"Name\" VARCHAR(50) DEFAULT NULL";
+  QCOMPARE(field.getSql(db, false), expectedSql);
+  /*
+   * VARCHAR field with collation set
+   */
+  field.clear();
+  field.setName("Name");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(100);
+  field.setCaseSensitive(false);
+  // Check
+  expectedSql = "\"Name\" VARCHAR(100) DEFAULT NULL COLLATE NOCASE";
+  QCOMPARE(field.getSql(db, false), expectedSql);
+  /*
+   * VARCHAR field with NOT NULL constraint
+   */
+  field.clear();
+  field.setName("Name");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(25);
+  field.setRequired(true);
+  // Check
+  expectedSql = "\"Name\" VARCHAR(25) NOT NULL DEFAULT NULL";
+  QCOMPARE(field.getSql(db, false), expectedSql);
+  /*
+   * VARCHAR field with NOT NULL constraint and a collation set
+   */
+  field.clear();
+  field.setName("Name");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(50);
+  field.setRequired(true);
+  field.setCaseSensitive(false);
+  // Check
+  expectedSql = "\"Name\" VARCHAR(50) NOT NULL DEFAULT NULL COLLATE NOCASE";
+  QCOMPARE(field.getSql(db, false), expectedSql);
+
+}
+
 
 void mdtDatabaseTest::sqlSchemaTableTest()
 {

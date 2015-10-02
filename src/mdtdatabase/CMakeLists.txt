@@ -46,6 +46,7 @@ set (SOURCES_FILES
           mdtSqlViewSchema.cpp
           mdtSqlTableSchemaModel.cpp
           mdtSqlTableSetupWidget.cpp
+          mdtSqlField.cpp
           mdtSqlFieldSetupWidget.cpp
           mdtSqlFieldSetupDialog.cpp
           # Database copier classes

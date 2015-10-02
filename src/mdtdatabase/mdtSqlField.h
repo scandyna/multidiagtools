@@ -21,9 +21,14 @@
 #ifndef MDT_SQL_FIELD_H
 #define MDT_SQL_FIELD_H
 
+#include "mdtError.h"
 #include "mdtSqlFieldType.h"
+#include "mdtSqlCollation.h"
 #include <QString>
 #include <QVariant>
+#include <QSqlField>
+
+class QSqlDatabase;
 
 /*! \brief Represents a field in a SQL database table
  *
@@ -47,15 +52,7 @@ class mdtSqlField final
 
   /*! \brief Clear
    */
-  void clear()
-  {
-    pvType = mdtSqlFieldType::UnknownType;
-    pvName.clear();
-    pvIsAutoValue = false;
-    pvIsRequired = false;
-    pvDefaultValue.clear();
-    pvLength = -1;
-  }
+  void clear();
 
   /*! \brief Set field type
    */
@@ -115,7 +112,7 @@ class mdtSqlField final
 
   /*! \brief Set default value
    */
-  void setDefaultValue(const QString & v)
+  void setDefaultValue(const QVariant & v)
   {
     pvDefaultValue = v;
   }
@@ -145,15 +142,47 @@ class mdtSqlField final
     return pvLength;
   }
 
-//   static QMap<QVariant::Type, mdtSqlField::Type> essai()
-//   {
-//     return {
-//       std::pair<QVariant::Type, mdtSqlField::Type>{QVariant::Int, mdtSqlField::Integer},
-//       std::pair<QVariant::Type, mdtSqlField::Type>{QVariant::Bool, mdtSqlField::Boolean}
-//     };
-//   }
-  
+  /*! \brief Set collation
+   */
+  void setCollation(const mdtSqlCollation & collation)
+  {
+    pvCollation = collation;
+  }
+
+  /*! \brief Set case sensitivity
+   *
+   * Case sensitivity will update collation
+   */
+  void setCaseSensitive(bool cs)
+  {
+    pvCollation.setCaseSensitive(cs);
+  }
+
+  /*! \brief Get collation
+   */
+  mdtSqlCollation collation() const
+  {
+    return pvCollation;
+  }
+
+  /*! \brief Setup from QSqlField
+   */
+  void setupFromQSqlField(const QSqlField & qtField, mdtSqlDriverType::Type driverType);
+
+  /*! \brief Get SQL for field definition
+   *
+   * \param db Will be used to fetch driver type, and to escape field name
+   * \param pk If true, PRIMARY KEY will be included in definition.
+   *            This has only sense if this field is the only one in the primary key of the table.
+   * \pre db's driver must be loaded
+   */
+  QString getSql(const QSqlDatabase & db, bool pk) const;
+
  private:
+
+  /*! \brief Complete definition - SQLite implementation
+   */
+  QString getSqliteDefinition(bool pk) const;
 
   mdtSqlFieldType::Type pvType;
   uint pvIsAutoValue : 1;
@@ -161,6 +190,8 @@ class mdtSqlField final
   int pvLength;
   QString pvName;
   QVariant pvDefaultValue;
+  mdtSqlCollation pvCollation;
+  mdtError pvLastError;
 };
 
 #endif // #ifndef MDT_SQL_FIELD_H
