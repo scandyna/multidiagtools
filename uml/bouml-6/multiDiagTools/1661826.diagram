@@ -2,7 +2,7 @@ format 209
 
 classcanvas 128002 class_ref 1974530 // mdtSqlField
   classdiagramsettings member_max_width 0 end
-  xyz 83 69 2000
+  xyz 60 37 2000
 end
 note 128130 "Find solution to map QVariant::Type to mdtSqlField:.Type
 Should be based on a dynamic table (so user could choose some mappins (f.ex. String to TEXT, or String to VARCHAR, etc...)"

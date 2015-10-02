@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_FIELD_H
 #define MDT_SQL_FIELD_H
 
+#include "mdtSqlFieldType.h"
 #include <QString>
 #include <QVariant>
 
@@ -30,28 +31,14 @@
  *  Because of multiple possible usage,
  *  no coherence check is made.
  */
-class mdtSqlField
+class mdtSqlField final
 {
  public:
-
-  /*! \brief Field type
-   */
-  enum Type
-  {
-    UnknownType,  /*!< Unknown type (or no type) */
-    Boolean,      /*!< Boolean type */
-    Integer,      /*!< Integer type */
-    Float,        /*!< Float type */
-    Double,       /*!< Double type */
-    Varchar,      /*!< Variable length string */
-    Date,         /*!< Date type */
-    Time          /*!< Time type */
-  };
 
   /*! \brief Default constructor
    */
   mdtSqlField()
-   : pvType(UnknownType),
+   : pvType(mdtSqlFieldType::UnknownType),
      pvIsAutoValue(false),
      pvIsRequired(false),
      pvLength(-1)
@@ -62,7 +49,7 @@ class mdtSqlField
    */
   void clear()
   {
-    pvType = UnknownType;
+    pvType = mdtSqlFieldType::UnknownType;
     pvName.clear();
     pvIsAutoValue = false;
     pvIsRequired = false;
@@ -72,14 +59,14 @@ class mdtSqlField
 
   /*! \brief Set field type
    */
-  void setType(Type t)
+  void setType(mdtSqlFieldType::Type t)
   {
     pvType = t;
   }
 
   /*! \brief Get field type
    */
-  Type type() const
+  mdtSqlFieldType::Type type() const
   {
     return pvType;
   }
@@ -158,14 +145,22 @@ class mdtSqlField
     return pvLength;
   }
 
+//   static QMap<QVariant::Type, mdtSqlField::Type> essai()
+//   {
+//     return {
+//       std::pair<QVariant::Type, mdtSqlField::Type>{QVariant::Int, mdtSqlField::Integer},
+//       std::pair<QVariant::Type, mdtSqlField::Type>{QVariant::Bool, mdtSqlField::Boolean}
+//     };
+//   }
+  
  private:
 
-  Type pvType;
-  QString pvName;
-  bool pvIsAutoValue;
-  bool pvIsRequired;
-  QVariant pvDefaultValue;
+  mdtSqlFieldType::Type pvType;
+  uint pvIsAutoValue : 1;
+  uint pvIsRequired : 1;
   int pvLength;
+  QString pvName;
+  QVariant pvDefaultValue;
 };
 
 #endif // #ifndef MDT_SQL_FIELD_H

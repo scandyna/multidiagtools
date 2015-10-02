@@ -135,7 +135,7 @@ QString mdtSqlSchemaTable::fieldTypeName(int index) const
   if(pvDriverType.type() == mdtSqlDriverType::Unknown){
     return QString();
   }
-  return mdtSqlFieldType::nameFromType(pvFields.at(index).type(), pvDriverType.type());
+  ///return mdtSqlFieldType::nameFromType(pvFields.at(index).type(), pvDriverType.type());
 }
 
 void mdtSqlSchemaTable::addIndex(const QString & name, bool unique) 
@@ -740,7 +740,7 @@ QString mdtSqlSchemaTable::fieldTypeNameSqlite(QVariant::Type type, int length) 
 //       MDT_ERROR_SET_SRC(e, "mdtSqlSchemaTable");
 //       e.commit();
 //   }
-  strType = mdtSqlFieldType::nameFromType(type, mdtSqlDriverType::SQLite);
+  ///strType = mdtSqlFieldType::nameFromType(type, mdtSqlDriverType::SQLite);
   if(strType.isEmpty()){
     pvLastError.setError("Unknown mapping for type " + QString::number(type) + " (QVariant::Type)", mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");

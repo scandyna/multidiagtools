@@ -148,46 +148,69 @@ void mdtDatabaseTest::sqlFieldTypeTest()
   mdtSqlFieldType ft;
   QList<mdtSqlFieldType> fieldTypeList;
 
+  /*
+   * Check field type mapping - SQLite
+   */
+  QVERIFY(mdtSqlFieldType::fromQVariantType(QVariant::Invalid, mdtSqlDriverType::SQLite) == mdtSqlFieldType::UnknownType);
+  QVERIFY(mdtSqlFieldType::fromQVariantType(QVariant::Int, mdtSqlDriverType::SQLite) == mdtSqlFieldType::Integer);
+  QVERIFY(mdtSqlFieldType::fromQVariantType(QVariant::Bool, mdtSqlDriverType::SQLite) == mdtSqlFieldType::Boolean);
+  QVERIFY(mdtSqlFieldType::fromQVariantType(QVariant::Polygon, mdtSqlDriverType::SQLite) == mdtSqlFieldType::UnknownType);
+  /*
+   * Check getting field type name - SQLite
+   */
+  QCOMPARE(mdtSqlFieldType::nameFromType(mdtSqlFieldType::Boolean, mdtSqlDriverType::SQLite) , QString("BOOLEAN"));
+  QCOMPARE(mdtSqlFieldType::nameFromType(mdtSqlFieldType::Integer, mdtSqlDriverType::SQLite) , QString("INTEGER"));
+  QCOMPARE(mdtSqlFieldType::nameFromType(mdtSqlFieldType::Float, mdtSqlDriverType::SQLite) , QString("FLOAT"));
+  QCOMPARE(mdtSqlFieldType::nameFromType(mdtSqlFieldType::Double, mdtSqlDriverType::SQLite) , QString("DOUBLE"));
+  QCOMPARE(mdtSqlFieldType::nameFromType(mdtSqlFieldType::Varchar, mdtSqlDriverType::SQLite) , QString("VARCHAR"));
+  QCOMPARE(mdtSqlFieldType::nameFromType(mdtSqlFieldType::Date, mdtSqlDriverType::SQLite) , QString("DATE"));
+  ///QCOMPARE(mdtSqlFieldType::nameFromType(mdtSqlFieldType::Time, mdtSqlDriverType::SQLite) , QString("??"));
+  
+  
   // Static functions - SQLite
   /// \todo To be done
   // Available field type list - SQLite
   fieldTypeList = mdtSqlFieldType::availableFieldTypeList(mdtSqlDriverType::SQLite);
   QCOMPARE(fieldTypeList.size(), 6);
-  QVERIFY(fieldTypeList.at(0).type() == QVariant::Int);
+  QVERIFY(fieldTypeList.at(0).type() == mdtSqlFieldType::Integer);
   QCOMPARE(fieldTypeList.at(0).name(), QString("INTEGER"));
-  QVERIFY(fieldTypeList.at(1).type() == QVariant::String);
+  QVERIFY(fieldTypeList.at(1).type() == mdtSqlFieldType::Varchar);
   QCOMPARE(fieldTypeList.at(1).name(), QString("VARCHAR"));
-  QVERIFY(fieldTypeList.at(2).type() == QVariant::Double);
+  QVERIFY(fieldTypeList.at(2).type() == mdtSqlFieldType::Double);
   QCOMPARE(fieldTypeList.at(2).name(), QString("DOUBLE"));
-  QVERIFY(fieldTypeList.at(3).type() == QVariant::Bool);
+  QVERIFY(fieldTypeList.at(3).type() == mdtSqlFieldType::Boolean);
   QCOMPARE(fieldTypeList.at(3).name(), QString("BOOLEAN"));
-  QVERIFY(fieldTypeList.at(4).type() == QVariant::Date);
+  QVERIFY(fieldTypeList.at(4).type() == mdtSqlFieldType::Date);
   QCOMPARE(fieldTypeList.at(4).name(), QString("DATE"));
-  QVERIFY(fieldTypeList.at(5).type() == QVariant::DateTime);
+  QVERIFY(fieldTypeList.at(5).type() == mdtSqlFieldType::Time);
   QCOMPARE(fieldTypeList.at(5).name(), QString("DATETIME"));
   // Static functions - MySQL
   /// \todo To be done
   // Available field type list - MariaDB/MySQL
   /// \todo To be done
   // Initial state
-  QVERIFY(ft.type() == QVariant::Invalid);
+  /*
+   * Object checks
+   */
+  // Initial state
+  QVERIFY(ft.type() == mdtSqlFieldType::UnknownType);
   QVERIFY(ft.isNull());
   // Set from type
-  QVERIFY(ft.setType(QVariant::Int, mdtSqlDriverType::SQLite));
+  ft.setType(mdtSqlFieldType::Integer, mdtSqlDriverType::SQLite);
   QVERIFY(!ft.isNull());
-  QVERIFY(ft.type() == QVariant::Int);
+  QVERIFY(ft.type() == mdtSqlFieldType::Integer);
   QCOMPARE(ft.name(), QString("INTEGER"));
-  QVERIFY(!ft.setType(QVariant::Color, mdtSqlDriverType::SQLite));
-  QVERIFY(ft.type() == QVariant::Invalid);
-  QVERIFY(ft.isNull());
+//   QVERIFY(!ft.setType(QVariant::Color, mdtSqlDriverType::SQLite));
+//   QVERIFY(ft.type() == QVariant::Invalid);
+//   QVERIFY(ft.isNull());
   // Set a valid type before clear test
-  QVERIFY(ft.setType(QVariant::String, mdtSqlDriverType::SQLite));
+  ft.setType(mdtSqlFieldType::Varchar, mdtSqlDriverType::SQLite);
   QVERIFY(!ft.isNull());
-  QVERIFY(ft.type() == QVariant::String);
+  QVERIFY(ft.type() == mdtSqlFieldType::Varchar);
   QCOMPARE(ft.name(), QString("VARCHAR"));
   // Clear
   ft.clear();
-  QVERIFY(ft.type() == QVariant::Invalid);
+  QVERIFY(ft.type() == mdtSqlFieldType::UnknownType);
   QVERIFY(ft.name().isEmpty());
   QVERIFY(ft.isNull());
 }
@@ -196,10 +219,14 @@ void mdtDatabaseTest::sqlFieldTest()
 {
   mdtSqlField field;
 
+  qDebug() << "sizeof field: " << sizeof(field);
+  qDebug() << "sizeof Type: " << sizeof(mdtSqlFieldType::Type);
+  qDebug() << "sizeof bool: " << sizeof(bool);
+  
   /*
    * Initial state
    */
-  QVERIFY(field.type() == mdtSqlField::UnknownType);
+  QVERIFY(field.type() == mdtSqlFieldType::UnknownType);
   QVERIFY(!field.isAutoValue());
   QVERIFY(!field.isRequired());
   QCOMPARE(field.length(), -1);
@@ -207,12 +234,12 @@ void mdtDatabaseTest::sqlFieldTest()
    * Simple set/get check
    */
   // Setup a auto increment PK
-  field.setType(mdtSqlField::Integer);
+  field.setType(mdtSqlFieldType::Integer);
   field.setName("Id_PK");
   field.setAutoValue(true);
   field.setRequired(true);
   // Check
-  QVERIFY(field.type() == mdtSqlField::Integer);
+  QVERIFY(field.type() == mdtSqlFieldType::Integer);
   QCOMPARE(field.name(), QString("Id_PK"));
   QVERIFY(field.isAutoValue());
   QVERIFY(field.isRequired());
@@ -220,7 +247,7 @@ void mdtDatabaseTest::sqlFieldTest()
    * Clear
    */
   field.clear();
-  QVERIFY(field.type() == mdtSqlField::UnknownType);
+  QVERIFY(field.type() == mdtSqlFieldType::UnknownType);
   QVERIFY(field.name().isEmpty());
   QVERIFY(!field.isAutoValue());
   QVERIFY(!field.isRequired());
@@ -230,12 +257,12 @@ void mdtDatabaseTest::sqlFieldTest()
    * Simple set/get check
    */
   // Setup a text field
-  field.setType(mdtSqlField::Varchar);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setName("Name");
   field.setLength(50);
   field.setDefaultValue("Empty");
   // Check
-  QVERIFY(field.type() == mdtSqlField::Varchar);
+  QVERIFY(field.type() == mdtSqlFieldType::Varchar);
   QCOMPARE(field.name(), QString("Name"));
   QVERIFY(!field.isAutoValue());
   QVERIFY(!field.isRequired());
@@ -245,13 +272,12 @@ void mdtDatabaseTest::sqlFieldTest()
    * Clear
    */
   field.clear();
-  QVERIFY(field.type() == mdtSqlField::UnknownType);
+  QVERIFY(field.type() == mdtSqlFieldType::UnknownType);
   QVERIFY(field.name().isEmpty());
   QVERIFY(!field.isAutoValue());
   QVERIFY(!field.isRequired());
   QVERIFY(field.defaultValue().isNull());
   QCOMPARE(field.length(), -1);
-
 }
 
 void mdtDatabaseTest::sqlSchemaTableTest()

@@ -27,6 +27,8 @@
 #include <QStringList>
 #include <QLatin1String>
 #include <QList>
+#include <QMap>
+#include <utility>
 
 /*! \brief SQL field type
  *
@@ -36,52 +38,76 @@
  *  for schema generation and edition.
  *  This part is currently very limited (partial support of Sqlite and MySql/MariaDB).
  *
- * mdtSqlFieldType provides a mapping between QVariant::Type and datbase engine's type name.
+ * mdtSqlFieldType provides a mapping between QVariant::Type and datbase engine's type and its name.
  */
 class mdtSqlFieldType
 {
  public:
 
+  /*! \brief Field type
+   */
+  enum Type : uint8_t
+  {
+    UnknownType,  /*!< Unknown type (or no type) */
+    Boolean,      /*!< Boolean type */
+    Integer,      /*!< Integer type */
+    Float,        /*!< Float type */
+    Double,       /*!< Double type */
+    Varchar,      /*!< Variable length string */
+    Date,         /*!< Date type */
+    Time          /*!< Time type */
+  };
+
   /*! \brief Default constructor
    */
   mdtSqlFieldType()
-   : pvType(QVariant::Invalid)
+   : pvType(UnknownType)
    {
    }
 
-  /*! \brief Check if field tpe is null
+  /*! \brief Check if field type is null
    */
   bool isNull() const
   {
-    return (pvType == QVariant::Invalid);
+    return (pvType == UnknownType);
   }
 
   /*! \brief Set type
    */
-  bool setType(QVariant::Type type, mdtSqlDriverType::Type driverType)
+  void setType(Type type, mdtSqlDriverType::Type driverType)
   {
     Q_ASSERT(driverType != mdtSqlDriverType::Unknown);
 
     pvName = nameFromType(type, driverType);
-    if(pvName.isEmpty()){
-      pvType = QVariant::Invalid;
-      return false;
-    }
     pvType = type;
-    return true;
   }
+
+  /*! \brief Set type
+   */
+//   bool setType(QVariant::Type type, mdtSqlDriverType::Type driverType)
+//   {
+//     Q_ASSERT(driverType != mdtSqlDriverType::Unknown);
+// 
+//     pvName = nameFromType(type, driverType);
+//     if(pvName.isEmpty()){
+//       pvType = QVariant::Invalid;
+//       return false;
+//     }
+//     pvType = type;
+//     return true;
+//   }
 
   /*! \brief Clear
    */
   void clear()
   {
-    pvType = QVariant::Invalid;
+    pvType = UnknownType;
     pvName.clear();
   }
 
   /*! \brief Get field type
    */
-  QVariant::Type type() const
+  Type type() const
   {
     return pvType;
   }
@@ -100,23 +126,24 @@ class mdtSqlFieldType
    * \return Name of the field type, or a empty string if no mapping could be defined.
    * \pre driverType must be defined (not Unknown)
    */
-  static QString nameFromType(QVariant::Type type, mdtSqlDriverType::Type driverType)
-  {
-    Q_ASSERT(driverType != mdtSqlDriverType::Unknown);
-
-    switch(driverType){
-      case mdtSqlDriverType::SQLite:
-        return nameFromTypeSqlite(type);
-      case mdtSqlDriverType::MariaDB:
-      case mdtSqlDriverType::MySQL:
-        return nameFromTypeMysql(type);
-      case mdtSqlDriverType::Unknown:
-        // Should never happen.
-        break;
-    }
-
-    return QString();
-  }
+//   [[deprecated]]
+//   static QString nameFromType(QVariant::Type type, mdtSqlDriverType::Type driverType)
+//   {
+//     Q_ASSERT(driverType != mdtSqlDriverType::Unknown);
+// 
+//     switch(driverType){
+//       case mdtSqlDriverType::SQLite:
+//         return nameFromTypeSqlite(type);
+//       case mdtSqlDriverType::MariaDB:
+//       case mdtSqlDriverType::MySQL:
+//         return nameFromTypeMysql(type);
+//       case mdtSqlDriverType::Unknown:
+//         // Should never happen.
+//         break;
+//     }
+// 
+//     return QString();
+//   }
 
 //   /*! \brief Get field type from given field type name and driver
 //    *
@@ -143,91 +170,207 @@ class mdtSqlFieldType
 //     return QVariant::Invalid;
 //   }
 
+  /*! \brief Get field type name for given type and driver
+   *
+   * \param type Field type
+   * \param driverType Driver type (If unknown, a common name is returned)
+   * \return Name of the field type, or a empty string if no mapping could be defined.
+   */
+  static QString nameFromType(Type type, mdtSqlDriverType::Type driverType)
+  {
+    switch(driverType){
+      case mdtSqlDriverType::SQLite:
+      case mdtSqlDriverType::MariaDB:
+      case mdtSqlDriverType::MySQL:
+      case mdtSqlDriverType::Unknown:
+        return nameFromTypeCommon(type);
+    }
+    return QString();
+  }
+
   /*! \brief Get a list of available field type
    */
   static QList<mdtSqlFieldType> availableFieldTypeList(mdtSqlDriverType::Type driverType)
   {
     switch(driverType){
       case mdtSqlDriverType::SQLite:
-        return availableFieldTypeListSqlite();
       case mdtSqlDriverType::MariaDB:
       case mdtSqlDriverType::MySQL:
-        return availableFieldTypeListMysql();
       case mdtSqlDriverType::Unknown:
-        break;
+        return availableFieldTypeListCommon(driverType);
     }
     return QList<mdtSqlFieldType>();
   }
 
+  /*! \brief Get field type from QVariant::Type and driver type
+   */
+  static Type fromQVariantType(QVariant::Type qvt, mdtSqlDriverType::Type driverType)
+  {
+    switch(driverType){
+      case mdtSqlDriverType::SQLite:
+        return fromQVariantType(qvt, mappingTableSqlite());
+      case mdtSqlDriverType::MariaDB:
+      case mdtSqlDriverType::MySQL:
+      case mdtSqlDriverType::Unknown:
+        break;
+    }
+    return UnknownType;
+  }
+
+  /*! \brief Get field type from QVariant::Type and mapping table
+   */
+  static Type fromQVariantType(QVariant::Type qvt, const QMap<QVariant::Type, mdtSqlFieldType::Type> & mt)
+  {
+    return mt.value(qvt, UnknownType);
+  }
+
+  /*! \brief Get field type mapping table for given driver type
+   */
+  static QMap<QVariant::Type, mdtSqlFieldType::Type> mappingTable(mdtSqlDriverType::Type driverType)
+  {
+    switch(driverType){
+      case mdtSqlDriverType::SQLite:
+        return mappingTableSqlite();
+      case mdtSqlDriverType::MariaDB:
+      case mdtSqlDriverType::MySQL:
+      case mdtSqlDriverType::Unknown:
+        break;
+    }
+    return QMap<QVariant::Type, mdtSqlFieldType::Type>();
+  }
+
  private:
+
+  /*! \brief Get field type mapping table for SQLite
+   */
+  static QMap<QVariant::Type, mdtSqlFieldType::Type> mappingTableSqlite()
+  {
+    return {
+      std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Invalid, mdtSqlFieldType::UnknownType},
+      std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Bool, mdtSqlFieldType::Boolean},
+      std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Date, mdtSqlFieldType::Date},
+      std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Double, mdtSqlFieldType::Double},
+      std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Int, mdtSqlFieldType::Integer},
+      std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::String, mdtSqlFieldType::Varchar},
+      std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Time, mdtSqlFieldType::Time}
+    };
+  }
+
+  /*! \brief Get field type name for given type (Common implementation)
+   */
+  static QString nameFromTypeCommon(Type type)
+  {
+    switch(type){
+      case UnknownType:
+        return QLatin1String("");
+      case Boolean:
+        return QLatin1String("BOOLEAN");
+      case Integer:
+        return QLatin1String("INTEGER");
+      case Float:
+        return QLatin1String("FLOAT");
+      case Double:
+        return QLatin1String("DOUBLE");
+      case Varchar:
+        return QLatin1String("VARCHAR");
+      case Date:
+        return QLatin1String("DATE");
+    }
+    return QLatin1String("");
+  }
+
+  /*! \brief Get a list of available field type (common implementation)
+   */
+  static QList<mdtSqlFieldType> availableFieldTypeListCommon(mdtSqlDriverType::Type driverType)
+  {
+    QList<mdtSqlFieldType> fieldTypeList;
+    mdtSqlFieldType fieldType;
+
+    fieldType.setType(Boolean, driverType);
+    fieldTypeList.append(fieldType);
+    fieldType.setType(Integer, driverType);
+    fieldTypeList.append(fieldType);
+    fieldType.setType(Float, driverType);
+    fieldTypeList.append(fieldType);
+    fieldType.setType(Double, driverType);
+    fieldTypeList.append(fieldType);
+    fieldType.setType(Varchar, driverType);
+    fieldTypeList.append(fieldType);
+    fieldType.setType(Date, driverType);
+    fieldTypeList.append(fieldType);
+
+    return fieldTypeList;
+  }
 
   /*! \brief Get field type name for given type (Sqlite implementation)
    */
-  static QString nameFromTypeSqlite(QVariant::Type type)
-  {
-    switch(type){
-      case QVariant::Int:
-        return QLatin1String("INTEGER");
-      case QVariant::UInt:
-        return QLatin1String("INTEGER");
-      case QVariant::LongLong:
-        return QLatin1String("BIGINT");
-      case QVariant::ULongLong:
-        return QLatin1String("BIGINT");
-      case QVariant::Double:
-        return QLatin1String("DOUBLE");
-      case QVariant::Bool:
-        return QLatin1String("BOOLEAN");
-      case QVariant::Date:
-        return QLatin1String("DATE");
-      case QVariant::Time:
-        return QLatin1String("DATETIME");
-      case QVariant::DateTime:
-        return QLatin1String("DATETIME");
-      case QVariant::String:
-        return QLatin1String("VARCHAR");
-      case QVariant::Bitmap:
-        return QLatin1String("BLOB");
-      case QVariant::Image:
-        return QLatin1String("BLOB");
-      default:
-        return QLatin1String("");
-    }
-  }
+//   [[deprecated]]
+//   static QString nameFromTypeSqlite(QVariant::Type type)
+//   {
+//     switch(type){
+//       case QVariant::Int:
+//         return QLatin1String("INTEGER");
+//       case QVariant::UInt:
+//         return QLatin1String("INTEGER");
+//       case QVariant::LongLong:
+//         return QLatin1String("BIGINT");
+//       case QVariant::ULongLong:
+//         return QLatin1String("BIGINT");
+//       case QVariant::Double:
+//         return QLatin1String("DOUBLE");
+//       case QVariant::Bool:
+//         return QLatin1String("BOOLEAN");
+//       case QVariant::Date:
+//         return QLatin1String("DATE");
+//       case QVariant::Time:
+//         return QLatin1String("DATETIME");
+//       case QVariant::DateTime:
+//         return QLatin1String("DATETIME");
+//       case QVariant::String:
+//         return QLatin1String("VARCHAR");
+//       case QVariant::Bitmap:
+//         return QLatin1String("BLOB");
+//       case QVariant::Image:
+//         return QLatin1String("BLOB");
+//       default:
+//         return QLatin1String("");
+//     }
+//   }
 
   /*! \brief Get field type name for given type (MariaDB/MySQL implementation)
    */
-  static QString nameFromTypeMysql(QVariant::Type type)
-  {
-    switch(type){
-      case QVariant::Int:
-        return QLatin1String("INT");
-      case QVariant::UInt:
-        return QLatin1String("UNSIGNED INT");
-      case QVariant::LongLong:
-        return QLatin1String("BIGINT");
-      case QVariant::ULongLong:
-        return QLatin1String("UNSIGNED BIGINT");
-      case QVariant::Double:
-        return QLatin1String("DOUBLE");
-      case QVariant::Bool:
-        return QLatin1String("BOOLEAN");
-      case QVariant::Date:
-        return QLatin1String("DATE");
-      case QVariant::Time:
-        return QLatin1String("TIME");
-      case QVariant::DateTime:
-        return QLatin1String("DATETIME");
-      case QVariant::String:
-        return QLatin1String("VARCHAR");
-      case QVariant::Bitmap:
-        return QLatin1String("BLOB");
-      case QVariant::Image:
-        return QLatin1String("BLOB");
-      default:
-        return QLatin1String("");
-    }
-  }
+//   [[deprecated]]
+//   static QString nameFromTypeMysql(QVariant::Type type)
+//   {
+//     switch(type){
+//       case QVariant::Int:
+//         return QLatin1String("INT");
+//       case QVariant::UInt:
+//         return QLatin1String("UNSIGNED INT");
+//       case QVariant::LongLong:
+//         return QLatin1String("BIGINT");
+//       case QVariant::ULongLong:
+//         return QLatin1String("UNSIGNED BIGINT");
+//       case QVariant::Double:
+//         return QLatin1String("DOUBLE");
+//       case QVariant::Bool:
+//         return QLatin1String("BOOLEAN");
+//       case QVariant::Date:
+//         return QLatin1String("DATE");
+//       case QVariant::Time:
+//         return QLatin1String("TIME");
+//       case QVariant::DateTime:
+//         return QLatin1String("DATETIME");
+//       case QVariant::String:
+//         return QLatin1String("VARCHAR");
+//       case QVariant::Bitmap:
+//         return QLatin1String("BLOB");
+//       case QVariant::Image:
+//         return QLatin1String("BLOB");
+//       default:
+//         return QLatin1String("");
+//     }
+//   }
 
 //   /*! \brief Get field type from name (QSQlite implementation)
 //    */
@@ -345,41 +488,41 @@ class mdtSqlFieldType
 //     return QVariant::String;
 //   }
 
-  /*! \brief Get a list of available field type (SQLite implementation)
-   */
-  static QList<mdtSqlFieldType> availableFieldTypeListSqlite()
-  {
-    QList<mdtSqlFieldType> fieldTypeList;
-    mdtSqlFieldType fieldType;
-
-    fieldType.setType(QVariant::Int, mdtSqlDriverType::SQLite);
-    fieldTypeList.append(fieldType);
-    fieldType.setType(QVariant::String, mdtSqlDriverType::SQLite);
-    fieldTypeList.append(fieldType);
-    fieldType.setType(QVariant::Double, mdtSqlDriverType::SQLite);
-    fieldTypeList.append(fieldType);
-    fieldType.setType(QVariant::Bool, mdtSqlDriverType::SQLite);
-    fieldTypeList.append(fieldType);
-    fieldType.setType(QVariant::Date, mdtSqlDriverType::SQLite);
-    fieldTypeList.append(fieldType);
-    fieldType.setType(QVariant::DateTime, mdtSqlDriverType::SQLite);
-    fieldTypeList.append(fieldType);
-
-    return fieldTypeList;
-  }
+//   /*! \brief Get a list of available field type (SQLite implementation)
+//    */
+//   static QList<mdtSqlFieldType> availableFieldTypeListSqlite()
+//   {
+//     QList<mdtSqlFieldType> fieldTypeList;
+//     mdtSqlFieldType fieldType;
+// 
+//     fieldType.setType(QVariant::Int, mdtSqlDriverType::SQLite);
+//     fieldTypeList.append(fieldType);
+//     fieldType.setType(QVariant::String, mdtSqlDriverType::SQLite);
+//     fieldTypeList.append(fieldType);
+//     fieldType.setType(QVariant::Double, mdtSqlDriverType::SQLite);
+//     fieldTypeList.append(fieldType);
+//     fieldType.setType(QVariant::Bool, mdtSqlDriverType::SQLite);
+//     fieldTypeList.append(fieldType);
+//     fieldType.setType(QVariant::Date, mdtSqlDriverType::SQLite);
+//     fieldTypeList.append(fieldType);
+//     fieldType.setType(QVariant::DateTime, mdtSqlDriverType::SQLite);
+//     fieldTypeList.append(fieldType);
+// 
+//     return fieldTypeList;
+//   }
 
   /*! \brief Get a list of available field type (MariaDB/MySQL implementation)
    */
-  static QList<mdtSqlFieldType> availableFieldTypeListMysql()
-  {
-    QList<mdtSqlFieldType> fieldTypeList;
+//   static QList<mdtSqlFieldType> availableFieldTypeListMysql()
+//   {
+//     QList<mdtSqlFieldType> fieldTypeList;
+// 
+//     
+// 
+//     return fieldTypeList;
+//   }
 
-    
-
-    return fieldTypeList;
-  }
-
-  QVariant::Type pvType;
+  Type pvType;
   QString pvName;
 };
 
