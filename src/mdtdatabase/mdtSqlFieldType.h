@@ -55,7 +55,8 @@ class mdtSqlFieldType
     Double,       /*!< Double type */
     Varchar,      /*!< Variable length string */
     Date,         /*!< Date type */
-    Time          /*!< Time type */
+    Time,         /*!< Time type */
+    DateTime      /*!< DateTime type */
   };
 
   /*! \brief Default constructor

@@ -32,6 +32,9 @@
 #include "mdtSqlTableSetupWidget.h"
 
 #include "mdtSqlField.h"
+#include "mdtSqlIndexBase.h"
+#include "mdtSqlIndex.h"
+#include "mdtSqlPrimaryKey.h"
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlTableSchemaModel.h"
 #include "mdtSqlViewSchema.h"
@@ -280,12 +283,15 @@ void mdtDatabaseTest::sqlFieldTest()
   QVERIFY(!field.isAutoValue());
   QVERIFY(!field.isRequired());
   QCOMPARE(field.length(), -1);
+  QVERIFY(field.isNull());
   /*
    * Simple set/get check
    */
   // Setup a auto increment PK
   field.setType(mdtSqlFieldType::Integer);
+  QVERIFY(field.isNull());
   field.setName("Id_PK");
+  QVERIFY(!field.isNull());
   field.setAutoValue(true);
   field.setRequired(true);
   // Check
@@ -304,12 +310,15 @@ void mdtDatabaseTest::sqlFieldTest()
   QVERIFY(field.defaultValue().isNull());
   QCOMPARE(field.length(), -1);
   QVERIFY(field.collation().isNull());
+  QVERIFY(field.isNull());
   /*
    * Simple set/get check
    */
   // Setup a text field
-  field.setType(mdtSqlFieldType::Varchar);
   field.setName("Name");
+  QVERIFY(field.isNull());
+  field.setType(mdtSqlFieldType::Varchar);
+  QVERIFY(!field.isNull());
   field.setLength(50);
   field.setDefaultValue("Empty");
   field.setCaseSensitive(false);
@@ -332,6 +341,7 @@ void mdtDatabaseTest::sqlFieldTest()
   QVERIFY(field.defaultValue().isNull());
   QCOMPARE(field.length(), -1);
   QVERIFY(field.collation().isNull());
+  QVERIFY(field.isNull());
   /*
    * Check setting up from a QSqlField
    */
@@ -450,13 +460,192 @@ void mdtDatabaseTest::sqlFieldSQLiteTest()
 
 }
 
+void mdtDatabaseTest::sqlIndexBaseTest()
+{
+  mdtSqlIndexBase index;
+  mdtSqlField field;
+  QSqlField qtField;
+  QSqlIndex qtIndex;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(index.isNull());
+  /*
+   * Simple set/get
+   */
+  index.setName("IDX");
+  QVERIFY(index.isNull());
+  field.clear();
+  field.setName("Id_PK");
+  field.setType(mdtSqlFieldType::Integer);
+  index.addField(field);
+  QVERIFY(!index.isNull());
+  QCOMPARE(index.fieldCount(), 1);
+  QCOMPARE(index.field(0).name(), QString("Id_PK"));
+  QCOMPARE(index.field("Id_PK").name(), QString("Id_PK"));
+  /*
+   * Clear
+   */
+  index.clear();
+  QVERIFY(index.name().isEmpty());
+  QCOMPARE(index.fieldCount(), 0);
+  QVERIFY(index.isNull());
+  /*
+   * Setup from QSqlIndex
+   */
+  qtIndex.clear();
+  qtIndex.setName("index_1");
+  // Setup Id_A_PK
+  qtField = QSqlField();
+  qtField.setName("Id_A_PK");
+  qtField.setType(QVariant::Int);
+  qtField.setRequired(true);
+  qtIndex.append(qtField);
+  // Setup Id_B_PK
+  qtField = QSqlField();
+  qtField.setName("Id_B_PK");
+  qtField.setType(QVariant::Int);
+  qtField.setRequired(true);
+  qtIndex.append(qtField);
+  // Setup index
+  index.setupFromQSqlIndex(qtIndex, mdtSqlDriverType::SQLite);
+  // Check
+  QVERIFY(!index.isNull());
+  QCOMPARE(index.name(), qtIndex.name());
+  QCOMPARE(index.fieldCount(), qtIndex.count());
+  QCOMPARE(index.field(0).name(), qtIndex.field(0).name());
+  QCOMPARE(index.field(1).name(), qtIndex.field(1).name());
+}
+
+void mdtDatabaseTest::sqlIndexTest()
+{
+  mdtSqlIndex index;
+  mdtSqlField field;
+  QSqlDatabase db = pvDatabase;
+  QString expectedSql;
+
+  QCOMPARE(db.driverName(), QString("QSQLITE"));
+  /*
+   * Initial state
+   */
+  QVERIFY(!index.isUnique());
+  QVERIFY(index.isNull());
+  /*
+   * Simple set/get
+   */
+  index.clear();
+  index.setTableName("Client_tbl");
+  index.setUnique(true);
+  // Add a field
+  field.clear();
+  field.setName("Id_A");
+  field.setType(mdtSqlFieldType::Integer);
+  index.addField(field);
+  // Generate name
+  index.generateName();
+  // Check
+  QVERIFY(!index.isNull());
+  QCOMPARE(index.name(), QString("Client_tbl_Id_A_index"));
+  QCOMPARE(index.tableName(), QString("Client_tbl"));
+  /*
+   * Clear
+   */
+  index.clear();
+  QVERIFY(index.name().isEmpty());
+  QVERIFY(index.tableName().isEmpty());
+  QVERIFY(!index.isUnique());
+  QCOMPARE(index.fieldCount(), 0);
+  QVERIFY(index.isNull());
+  /*
+   * SQL generation: non unique with 1 field
+   */
+  // Setup index
+  index.clear();
+  field.clear();
+  field.setName("Id_A");
+  field.setType(mdtSqlFieldType::Integer);
+  index.addField(field);
+  index.setTableName("Client_tbl");
+  index.generateName();
+  // Generate SQL and check
+  expectedSql = "DROP INDEX \"Client_tbl_Id_A_index\"";
+  QCOMPARE(index.getSqlForDrop(db), expectedSql);
+  expectedSql = "CREATE INDEX \"Client_tbl_Id_A_index\" ON \"Client_tbl\" (\"Id_A\")";
+  QCOMPARE(index.getSqlForCreate(db), expectedSql);
+  /*
+   * SQL generation: unique with 2 fields
+   */
+  // Setup index
+  index.clear();
+  field.clear();
+  field.setName("Id_A");
+  field.setType(mdtSqlFieldType::Integer);
+  index.addField(field);
+  field.clear();
+  field.setName("Id_B");
+  field.setType(mdtSqlFieldType::Integer);
+  index.addField(field);
+  index.setTableName("Client_tbl");
+  index.setUnique(true);
+  index.generateName();
+  // Generate SQL and check
+  expectedSql = "DROP INDEX \"Client_tbl_Id_A_Id_B_index\"";
+  QCOMPARE(index.getSqlForDrop(db), expectedSql);
+  expectedSql = "CREATE UNIQUE INDEX \"Client_tbl_Id_A_Id_B_index\" ON \"Client_tbl\" (\"Id_A\",\"Id_B\")";
+  QCOMPARE(index.getSqlForCreate(db), expectedSql);
+}
+
+void mdtDatabaseTest::sqlPrimaryKeySqliteTest()
+{
+  mdtSqlPrimaryKey pk;
+  mdtSqlField field;
+  QString expectedSql;
+  QSqlDatabase db = pvDatabase;
+
+  QCOMPARE(db.driverName(), QString("QSQLITE"));
+  /*
+   * Simple 1 field PK
+   */
+  // Setup field
+  field.clear();
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setName("Code_PK");
+  field.setLength(20);
+  // Setup PK
+  pk.clear();
+  pk.setName("PK_1");   // Must be ignored
+  pk.addField(field);
+  // Check
+  expectedSql = "PRIMARY KEY (\"Code_PK\")";
+  QCOMPARE(pk.getSql(db), expectedSql);
+  /*
+   * Simple 2 fields PK
+   */
+  pk.clear();
+  pk.setName("PK_2");   // Must be ignored
+  // Add field A
+  field.clear();
+  field.setType(mdtSqlFieldType::Integer);
+  field.setName("Id_A_PK");
+  pk.addField(field);
+  // Add field B
+  field.clear();
+  field.setType(mdtSqlFieldType::Integer);
+  field.setName("Id_B_PK");
+  pk.addField(field);
+  // Check
+  expectedSql = "PRIMARY KEY (\"Id_A_PK\",\"Id_B_PK\")";
+  QCOMPARE(pk.getSql(db), expectedSql);
+}
+
 
 void mdtDatabaseTest::sqlSchemaTableTest()
 {
   mdtSqlSchemaTable st;
   QString expectedSql;
   QString expectedSql2; // For copy test, at end
-  QSqlField field;
+  mdtSqlField field;
 
   // Initial
   QVERIFY(st.sqlForCreateTable().isEmpty());
@@ -466,17 +655,17 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   st.setDriverName("QMYSQL");
   st.setTableName("Client_tbl");
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   st.addField(field, true);
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setLength(0);
   field.setName("Name");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   st.addField(field, false);
   QCOMPARE(st.field("Id_PK").name(), QString("Id_PK"));
-  QCOMPARE(st.field("Id_PK").type(), QVariant::Int);
+  QVERIFY(st.field("Id_PK").type() == mdtSqlFieldType::Integer);
   expectedSql =  "CREATE TABLE `Client_tbl` (\n";
   expectedSql += "  `Id_PK` INT NOT NULL AUTO_INCREMENT,\n";
   expectedSql += "  `Name` VARCHAR(50) DEFAULT NULL,\n";
@@ -495,14 +684,14 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   st.setDriverName("QMYSQL");
   st.setDatabaseName("sandbox");
   st.setTableName("Client_tbl");
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   st.addField(field, true);
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Name");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   st.addField(field, false);
   expectedSql =  "CREATE TABLE `sandbox`.`Client_tbl` (\n";
@@ -524,14 +713,14 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   st.setDatabaseName("sandbox");
   st.setStorageEngineName("InnoDB");
   st.setTableName("Client_tbl", "UTF8");
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   st.addField(field, true);
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Name");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   st.addField(field, false);
   expectedSql  = "CREATE TABLE `sandbox`.`Client_tbl` (\n";
@@ -551,20 +740,20 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   st.setDatabaseName("sandbox");
   st.setStorageEngineName("InnoDB");
   st.setTableName("Address_tbl", "UTF8");
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   st.addField(field, true);
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Street");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   st.addField(field, false);
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Client_Id_FK");
-  field.setType(QVariant::Int);
-  field.setRequiredStatus(QSqlField::Required);
+  field.setType(mdtSqlFieldType::Integer);
+  field.setRequired(true);
   st.addField(field, false);
   st.addIndex("Client_Id_FK_IDX", false);
   QVERIFY(st.addFieldToIndex("Client_Id_FK_IDX", "Client_Id_FK"));
@@ -595,14 +784,14 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   st.setDatabaseName("sandbox");
   st.setStorageEngineName("InnoDB");
   st.setTableName("Client_tbl", "UTF8");
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   st.addField(field, true);
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Name");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   st.addField(field, false);
   expectedSql  = "CREATE TABLE 'sandbox'.'Client_tbl' (\n";
@@ -625,19 +814,19 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   st.setDatabaseName("sandbox");
   st.setStorageEngineName("InnoDB");
   st.setTableName("Client_tbl", "UTF8");
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   st.addField(field, true);
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Name");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   st.addField(field, false);
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("NameU");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   st.addField(field, false);
   st.addIndex("Index", false);
@@ -663,20 +852,20 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   st.setDatabaseName("sandbox");
   st.setStorageEngineName("InnoDB");
   st.setTableName("Address_tbl", "UTF8");
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   st.addField(field, true);
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Street");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   st.addField(field, false);
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Client_Id_FK");
-  field.setType(QVariant::Int);
-  field.setRequiredStatus(QSqlField::Required);
+  field.setType(mdtSqlFieldType::Integer);
+  field.setRequired(true);
   st.addField(field, false);
   st.addIndex("Client_Id_FK_IDX", false);
   QVERIFY(st.addFieldToIndex("Client_Id_FK_IDX", "Client_Id_FK"));
@@ -720,14 +909,14 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   st.setStorageEngineName("InnoDB");
   st.setTableName("Client_tbl", "UTF8");
   st.setTableTemporary(true);
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   st.addField(field, true);
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Name");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   st.addField(field, false);
   expectedSql  = "CREATE TEMPORARY TABLE 'sandbox'.'Client_tbl' (\n";
@@ -747,7 +936,7 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   QCOMPARE(st.getFieldNameList().size(), 0);
   QCOMPARE(st.fieldIndex("Id_PK"), -1);
   // Add a field
-  field = QSqlField();
+  field.clear();
   field.setName("Id_PK");
   field.setAutoValue(true);
   st.addField(field, true);
@@ -758,9 +947,9 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   QCOMPARE(st.getFieldNameList().at(0), QString("Id_PK"));
   QCOMPARE(st.fieldIndex("Id_PK"), 0);
   // Add a field
-  field = QSqlField();
+  field.clear();
   field.setName("Name");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   st.addField(field, false);
   // Get field attributes
@@ -781,7 +970,7 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   QString sql;
   mdtSqlSchemaTable st;
   QSqlRecord record;
-  QSqlField field;
+  mdtSqlField field;
 
   // Create a temp file that will be used for database
   QVERIFY(tempFile.open());
@@ -810,14 +999,14 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   ///st.setDatabaseName(db.databaseName());
   st.setStorageEngineName("InnoDB");  // Must be ignored
   st.setTableName("Client_tbl", "UTF8");
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   st.addField(field, true);
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Name");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   st.addField(field, false);
   st.addIndex("Name_idx", true);
@@ -830,13 +1019,13 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   QVERIFY(db.tables().contains("Client_tbl"));
   record = db.record("Client_tbl");
   QCOMPARE(record.count(), 2);
-  field = record.field(0);
+  field.setupFromQSqlField(record.field(0), mdtSqlDriverType::SQLite);
   QCOMPARE(field.name(), QString("Id_PK"));
-  QCOMPARE(field.type(), QVariant::Int);
+  QVERIFY(field.type() == mdtSqlFieldType::Integer);
   QVERIFY(field.isAutoValue());
-  field = record.field(1);
+  field.setupFromQSqlField(record.field(1), mdtSqlDriverType::SQLite);
   QCOMPARE(field.name(), QString("Name"));
-  QCOMPARE(field.type(), QVariant::String);
+  QVERIFY(field.type() == mdtSqlFieldType::Varchar);
 
   /*
    * Create second table that is child of Client_tbl
@@ -846,20 +1035,20 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   ///st.setDatabaseName("sandbox");
   st.setStorageEngineName("InnoDB");
   st.setTableName("Address_tbl", "UTF8");
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   st.addField(field, true);
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Street");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   st.addField(field, false);
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Client_Id_FK");
-  field.setType(QVariant::Int);
-  field.setRequiredStatus(QSqlField::Required);
+  field.setType(mdtSqlFieldType::Integer);
+  field.setRequired(true);
   st.addField(field, false);
   st.addIndex("Client_Id_FK_IDX", false);
   QVERIFY(st.addFieldToIndex("Client_Id_FK_IDX", "Client_Id_FK"));
@@ -873,16 +1062,16 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   QVERIFY(db.tables().contains("Address_tbl"));
   record = db.record("Address_tbl");
   QCOMPARE(record.count(), 3);
-  field = record.field(0);
+  field.setupFromQSqlField(record.field(0), mdtSqlDriverType::SQLite);
   QCOMPARE(field.name(), QString("Id_PK"));
-  QCOMPARE(field.type(), QVariant::Int);
+  QVERIFY(field.type() == mdtSqlFieldType::Integer);
   QVERIFY(field.isAutoValue());
-  field = record.field(1);
+  field.setupFromQSqlField(record.field(1), mdtSqlDriverType::SQLite);
   QCOMPARE(field.name(), QString("Street"));
-  QCOMPARE(field.type(), QVariant::String);
-  field = record.field(2);
+  QVERIFY(field.type() == mdtSqlFieldType::Varchar);
+  field.setupFromQSqlField(record.field(2), mdtSqlDriverType::SQLite);
   QCOMPARE(field.name(), QString("Client_Id_FK"));
-  QCOMPARE(field.type(), QVariant::Int);
+  QVERIFY(field.type() == mdtSqlFieldType::Integer);
 
   // Try to insert some data
   sql = "INSERT INTO Client_tbl (Name) VALUES ('Name 1')";
@@ -903,9 +1092,9 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   st.setTableName("Client2_tbl");
   st.setTableTemporary(true);
   QCOMPARE(st.field("Id_PK").name(), QString("Id_PK"));
-  QCOMPARE(st.field("Id_PK").type(), QVariant::Int);
+  QVERIFY(field.type() == mdtSqlFieldType::Integer);
   QCOMPARE(st.field("Name").name(), QString("Name"));
-  QCOMPARE(st.field("Name").type(), QVariant::String);
+  QVERIFY(field.type() == mdtSqlFieldType::Varchar);
   sql = st.sqlForDropTable();
   QVERIFY(q.exec(sql));
   sql = st.sqlForCreateTable();
@@ -914,13 +1103,13 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   QVERIFY(db.tables().contains("Client2_tbl"));
   record = db.record("Client2_tbl");
   QCOMPARE(record.count(), 2);
-  field = record.field(0);
+  field.setupFromQSqlField(record.field(0), mdtSqlDriverType::SQLite);
   QCOMPARE(field.name(), QString("Id_PK"));
-  QCOMPARE(field.type(), QVariant::Int);
+  QVERIFY(field.type() == mdtSqlFieldType::Integer);
   QVERIFY(field.isAutoValue());
-  field = record.field(1);
+  field.setupFromQSqlField(record.field(1), mdtSqlDriverType::SQLite);
   QCOMPARE(field.name(), QString("Name"));
-  QCOMPARE(field.type(), QVariant::String);
+  QVERIFY(field.type() == mdtSqlFieldType::Varchar);
 
   /*
    * Create Address2_tbl witch has the same structure than Address_tbl
@@ -930,11 +1119,11 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   st.setTableTemporary(true);
   st.updateForeignKeyReferingTable("Client_Id_FK_fk", "Client2_tbl");
   QCOMPARE(st.field("Id_PK").name(), QString("Id_PK"));
-  QCOMPARE(st.field("Id_PK").type(), QVariant::Int);
+  QVERIFY(st.field("Id_PK").type() == mdtSqlFieldType::Integer);
   QCOMPARE(st.field("Street").name(), QString("Street"));
-  QCOMPARE(st.field("Street").type(), QVariant::String);
+  QVERIFY(st.field("Street").type() == mdtSqlFieldType::Varchar);
   QCOMPARE(st.field("Client_Id_FK").name(), QString("Client_Id_FK"));
-  QCOMPARE(st.field("Client_Id_FK").type(), QVariant::Int);
+  QVERIFY(st.field("Client_Id_FK").type() == mdtSqlFieldType::Integer);
   sql = st.sqlForDropTable();
   QVERIFY(q.exec(sql));
   sql = st.sqlForCreateTable();
@@ -943,16 +1132,16 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   QVERIFY(db.tables().contains("Address2_tbl"));
   record = db.record("Address2_tbl");
   QCOMPARE(record.count(), 3);
-  field = record.field(0);
+  field.setupFromQSqlField(record.field(0), mdtSqlDriverType::SQLite);
   QCOMPARE(field.name(), QString("Id_PK"));
-  QCOMPARE(field.type(), QVariant::Int);
+  QVERIFY(field.type() == mdtSqlFieldType::Integer);
   QVERIFY(field.isAutoValue());
-  field = record.field(1);
+  field.setupFromQSqlField(record.field(1), mdtSqlDriverType::SQLite);
   QCOMPARE(field.name(), QString("Street"));
-  QCOMPARE(field.type(), QVariant::String);
-  field = record.field(2);
+  QVERIFY(field.type() == mdtSqlFieldType::Varchar);
+  field.setupFromQSqlField(record.field(2), mdtSqlDriverType::SQLite);
   QCOMPARE(field.name(), QString("Client_Id_FK"));
-  QCOMPARE(field.type(), QVariant::Int);
+  QVERIFY(field.type() == mdtSqlFieldType::Integer);
 
   // Try to insert some data
   sql = "INSERT INTO Client2_tbl (Name) VALUES ('Name 1')";
@@ -970,47 +1159,49 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   st.clear();
   st.setDriverName(db.driverName());
   st.setTableName("DataTypeTest_tbl", "UTF8");
-  field = QSqlField();
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   st.addField(field, true);
   // String type
-  field = QSqlField();
+  field.clear();
   field.setName("StringType");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   st.addField(field, false);
   // Int type
-  field = QSqlField();
+  field.clear();
   field.setName("IntType");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   st.addField(field, false);
   // Double type
-  field = QSqlField();
+  field.clear();
   field.setName("DoubleType");
-  field.setType(QVariant::Double);
+  field.setType(mdtSqlFieldType::Double);
   st.addField(field, false);
   // Date type
-  field = QSqlField();
+  field.clear();
   field.setName("DateType");
-  field.setType(QVariant::Date);
+  field.setType(mdtSqlFieldType::Date);
   st.addField(field, false);
   // Time type
-  field = QSqlField();
+  field.clear();
   field.setName("TimeType");
-  field.setType(QVariant::Time);
+  field.setType(mdtSqlFieldType::Time);
   st.addField(field, false);
   // DateTime type
-  field = QSqlField();
+  field.clear();
   field.setName("DateTimeType");
-  field.setType(QVariant::DateTime);
+  field.setType(mdtSqlFieldType::DateTime);
   st.addField(field, false);
   // Create table
   sql = st.sqlForCreateTable();
   QVERIFY(q.exec(sql));
   // Clear mdtSqlSchemaTable for next step
   st.clear();
+  /**
+   * \todo Re-enable once it was defined if on how valid should be defined in mdtSqlField
   field = st.field("Id_PK");
   QVERIFY(!field.isValid());
   field = st.field("StringType");
@@ -1021,61 +1212,62 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   QVERIFY(!field.isValid());
   field = st.field("DateType");
   QVERIFY(!field.isValid());
+  */
   // Check that table was correctly created
   QVERIFY(db.tables().contains("DataTypeTest_tbl"));
   record = db.record("DataTypeTest_tbl");
   QCOMPARE(record.count(), 7);
-  field = record.field(0);
+  field.setupFromQSqlField(record.field(0), mdtSqlDriverType::SQLite);
   QCOMPARE(field.name(), QString("Id_PK"));
-  QCOMPARE(field.type(), QVariant::Int);
+  QVERIFY(field.type() == mdtSqlFieldType::Integer);
   QVERIFY(field.isAutoValue());
-  field = record.field(1);
+  field.setupFromQSqlField(record.field(1), mdtSqlDriverType::SQLite);
   QCOMPARE(field.name(), QString("StringType"));
-  QCOMPARE(field.type(), QVariant::String);
-  field = record.field(2);
+  QVERIFY(field.type() == mdtSqlFieldType::Varchar);
+  field.setupFromQSqlField(record.field(2), mdtSqlDriverType::SQLite);
   QCOMPARE(field.name(), QString("IntType"));
-  QCOMPARE(field.type(), QVariant::Int);
-  field = record.field(3);
+  QVERIFY(field.type() == mdtSqlFieldType::Integer);
+  field.setupFromQSqlField(record.field(3), mdtSqlDriverType::SQLite);
   QCOMPARE(field.name(), QString("DoubleType"));
-  QCOMPARE(field.type(), QVariant::Double);
-  field = record.field(4);
+  QVERIFY(field.type() == mdtSqlFieldType::Double);
+  field.setupFromQSqlField(record.field(4), mdtSqlDriverType::SQLite);
   // Now check that mdtSqlSchemaTable fetches existing table correctly
   QVERIFY(st.setupFromTable("DataTypeTest_tbl", db));
   field = st.field("Id_PK");
   QCOMPARE(field.name(), QString("Id_PK"));
-  QCOMPARE(field.type(), QVariant::Int);
+  QVERIFY(field.type() == mdtSqlFieldType::Integer);
   QVERIFY(field.isAutoValue());
-  QVERIFY(field.requiredStatus() == QSqlField::Required);
+  QVERIFY(field.isRequired());
   field = st.field("StringType");
   QCOMPARE(field.name(), QString("StringType"));
-  QCOMPARE(field.type(), QVariant::String);
+  QVERIFY(field.type() == mdtSqlFieldType::Varchar);
   QVERIFY(!field.isAutoValue());
-  QVERIFY(field.requiredStatus() == QSqlField::Optional);
+  QVERIFY(!field.isRequired());
   field = st.field("IntType");
   QCOMPARE(field.name(), QString("IntType"));
-  QCOMPARE(field.type(), QVariant::Int);
+  QVERIFY(field.type() == mdtSqlFieldType::Integer);
   QVERIFY(!field.isAutoValue());
-  QVERIFY(field.requiredStatus() == QSqlField::Optional);
+  QVERIFY(!field.isRequired());
   field = st.field("DoubleType");
   QCOMPARE(field.name(), QString("DoubleType"));
-  QCOMPARE(field.type(), QVariant::Double);
+  QVERIFY(field.type() == mdtSqlFieldType::Double);
   QVERIFY(!field.isAutoValue());
-  QVERIFY(field.requiredStatus() == QSqlField::Optional);
+  QVERIFY(!field.isRequired());
   field = st.field("DateType");
   QCOMPARE(field.name(), QString("DateType"));
-  QCOMPARE(field.type(), QVariant::Date);
+  QVERIFY(field.type() == mdtSqlFieldType::Date);
   QVERIFY(!field.isAutoValue());
-  QVERIFY(field.requiredStatus() == QSqlField::Optional);
+  QVERIFY(!field.isRequired());
   field = st.field("TimeType");
   QCOMPARE(field.name(), QString("TimeType"));
-  QCOMPARE(field.type(), QVariant::DateTime);
+  QVERIFY(field.type() == mdtSqlFieldType::DateTime);
   QVERIFY(!field.isAutoValue());
-  QVERIFY(field.requiredStatus() == QSqlField::Optional);
+  QVERIFY(!field.isRequired());
   field = st.field("DateTimeType");
   QCOMPARE(field.name(), QString("DateTimeType"));
-  QCOMPARE(field.type(), QVariant::DateTime);
+  QVERIFY(field.type() == mdtSqlFieldType::DateTime);
   QVERIFY(!field.isAutoValue());
-  QVERIFY(field.requiredStatus() == QSqlField::Optional);
+  QVERIFY(!field.isRequired());
   // Drop table
   sql = st.sqlForDropTable();
   QVERIFY(q.exec(sql));
@@ -1093,22 +1285,22 @@ void mdtDatabaseTest::sqlTableSchemaModelTest()
   QTableView tableView;
   QTreeView treeView;
   QComboBox cb;
-  QSqlField field;
+  mdtSqlField field;
 
   st.setDriverName("QSQLITE");
   /*
    * Setup fields
    */
   // Id_PK
-  field = QSqlField();
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   st.addField(field, true);
   // Name
-  field = QSqlField();
+  field.clear();
   field.setName("Name");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(100);
   st.addField(field, false);
   /*
@@ -1128,6 +1320,9 @@ void mdtDatabaseTest::sqlTableSchemaModelTest()
   /*
    * Check getting field
    */
+  /**
+   * \todo re-enable and update once migrated to mdtSqlField
+   * 
   QVERIFY(!model.field(-1).isValid());
   QVERIFY(model.field(0).isValid());
   QCOMPARE(model.field(0).name(), QString("Id_PK"));
@@ -1146,6 +1341,7 @@ void mdtDatabaseTest::sqlTableSchemaModelTest()
   QCOMPARE(model.currentField(&cb).name(), QString("Name"));
   cb.setCurrentIndex(-1);
   QVERIFY(!model.currentField(&cb).isValid());
+  */
 
   /*
    * Play
@@ -1523,7 +1719,7 @@ void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
   mdtSqlSchemaTable ts;
   mdtSqlViewSchema vs;
   mdtSqlTablePopulationSchema tps;
-  QSqlField field;
+  mdtSqlField field;
   QTreeView treeView;
   QModelIndex index, parentIndex;
 
@@ -1534,15 +1730,15 @@ void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
   ts.clear();
   ts.setTableName("Client_tbl", "UTF8");
   // Id_PK
-  field = QSqlField();
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   ts.addField(field, true);
   // Name
-  field = QSqlField();
+  field.clear();
   field.setName("Name");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   ts.addField(field, false);
   s.addTable(ts);
@@ -1550,9 +1746,9 @@ void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
   ts.clear();
   ts.setTableName("Address_tbl", "UTF8");
   // Id_PK
-  field = QSqlField();
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   ts.addField(field, true);
   s.addTable(ts);
@@ -1688,7 +1884,7 @@ void mdtDatabaseTest::sqlDatabaseSchemaDialogTest()
   mdtSqlSchemaTable ts;
   mdtSqlViewSchema vs;
   mdtSqlTablePopulationSchema tps;
-  QSqlField field;
+  mdtSqlField field;
 
   /*
    * Build a database schema
@@ -1697,15 +1893,15 @@ void mdtDatabaseTest::sqlDatabaseSchemaDialogTest()
   ts.clear();
   ts.setTableName("Client_tbl", "UTF8");
   // Id_PK
-  field = QSqlField();
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   ts.addField(field, true);
   // Name
-  field = QSqlField();
+  field.clear();
   field.setName("Name");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   ts.addField(field, false);
   s.addTable(ts);
@@ -1713,9 +1909,9 @@ void mdtDatabaseTest::sqlDatabaseSchemaDialogTest()
   ts.clear();
   ts.setTableName("Address_tbl", "UTF8");
   // Id_PK
-  field = QSqlField();
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   ts.addField(field, true);
   s.addTable(ts);
@@ -1957,7 +2153,7 @@ void mdtDatabaseTest::databaseManagerTest()
 {
   mdtSqlDatabaseManager m;
   mdtSqlSchemaTable st;
-  QSqlField field;
+  mdtSqlField field;
 
   QTemporaryFile dbFile;
   QFileInfo dbFileInfo;
@@ -1988,14 +2184,14 @@ void mdtDatabaseTest::databaseManagerTest()
   QVERIFY(m.database().isOpen());
   // Check table creation
   st.setTableName("Client_tbl", "UTF8");
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   st.addField(field, true);
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Name");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   st.addField(field, false);
   // First creation

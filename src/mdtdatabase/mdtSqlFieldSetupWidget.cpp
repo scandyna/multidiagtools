@@ -96,7 +96,7 @@ int mdtSqlFieldSetupWidget::fieldIndex() const
 
 void mdtSqlFieldSetupWidget::updateFieldParameters(int cbFieldIndex)
 {
-  QSqlField field = pvTabledSchemaModel->field(cbFieldIndex);
+  mdtSqlField field;/// = pvTabledSchemaModel->field(cbFieldIndex);
 
   leName->setText(field.name());
   setFieldType(field.type());
@@ -104,7 +104,8 @@ void mdtSqlFieldSetupWidget::updateFieldParameters(int cbFieldIndex)
   leDefaultValue->setText(field.defaultValue().toString());
   cbAutoIncrement->setChecked(field.isAutoValue());
   cbPartOfPk->setChecked(pvTabledSchemaModel->isPartOfPrimaryKey(cbFieldIndex));
-  cbRequired->setChecked(field.requiredStatus() == QSqlField::QSqlField::Required);
+  ///cbRequired->setChecked(field.requiredStatus() == QSqlField::QSqlField::Required);
+  cbRequired->setChecked(field.isRequired());
 }
 
 bool mdtSqlFieldSetupWidget::populateFieldTypeCombobox(const QString & driverName)
@@ -126,7 +127,7 @@ bool mdtSqlFieldSetupWidget::populateFieldTypeCombobox(const QString & driverNam
   return true;
 }
 
-void mdtSqlFieldSetupWidget::setFieldType(QVariant::Type type)
+void mdtSqlFieldSetupWidget::setFieldType(mdtSqlFieldType::Type type)
 {
   int index = cbType->findData(type);
   cbType->setCurrentIndex(index);

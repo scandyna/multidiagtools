@@ -23,6 +23,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QStringList>
+#include <QSqlField>
 
 //#include <QDebug>
 
@@ -92,12 +93,21 @@ void mdtSqlSchemaTable::setStorageEngineName(const QString & name)
   pvStorageEngineName = name;
 }
 
+// void mdtSqlSchemaTable::addField(const mdtSqlField & field, bool isPartOfPrimaryKey)
+// {
+//   if(isPartOfPrimaryKey){
+//     pvPrimaryKey.addField(field);
+//   }else{
+//     pvFields.append(field);
+//   }
+// }
+
 void mdtSqlSchemaTable::addField(const QSqlField & field, bool isPartOfPrimaryKey) 
 {
-  pvFields.append(field);
-  if(isPartOfPrimaryKey){
-    pvPrimaryKey.append(field);
-  }
+//   pvFields.append(field);
+//   if(isPartOfPrimaryKey){
+//     pvPrimaryKey.append(field);
+//   }
 }
 
 QStringList mdtSqlSchemaTable::getFieldNameList() const
@@ -111,18 +121,18 @@ QStringList mdtSqlSchemaTable::getFieldNameList() const
   return names;
 }
 
-QSqlField mdtSqlSchemaTable::field(const QString & fieldName) const
-{
-  int i;
-
-  for(i = 0; i < pvFields.size(); ++i){
-    if(pvFields.at(i).name() == fieldName){
-      return pvFields.at(i);
-    }
-  }
-
-  return QSqlField();
-}
+// QSqlField mdtSqlSchemaTable::field(const QString & fieldName) const
+// {
+//   int i;
+// 
+//   for(i = 0; i < pvFields.size(); ++i){
+//     if(pvFields.at(i).name() == fieldName){
+//       return pvFields.at(i);
+//     }
+//   }
+// 
+//   return QSqlField();
+// }
 
 /*! \todo
  *  see fieldTypeNameMySql() and fieldTypeNameSqlite() and define all properly.

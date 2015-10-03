@@ -35,24 +35,24 @@ void mdtSqlTableSchemaModel::setTableSchema(const mdtSqlSchemaTable &st)
   endResetModel();
 }
 
-QSqlField mdtSqlTableSchemaModel::field(int row) const
-{
-  if( (row < 0) || (row >= pvSchema.fieldCount()) ){
-    return QSqlField();
-  }
-  return pvSchema.fieldList().at(row);
-}
+// QSqlField mdtSqlTableSchemaModel::field(int row) const
+// {
+//   if( (row < 0) || (row >= pvSchema.fieldCount()) ){
+//     return QSqlField();
+//   }
+//   return pvSchema.fieldList().at(row);
+// }
 
-QSqlField mdtSqlTableSchemaModel::currentField(QComboBox *cb) const
-{
-  Q_ASSERT(cb != nullptr);
-
-  return field(cb->currentIndex());
-}
+// QSqlField mdtSqlTableSchemaModel::currentField(QComboBox *cb) const
+// {
+//   Q_ASSERT(cb != nullptr);
+// 
+//   return field(cb->currentIndex());
+// }
 
 bool mdtSqlTableSchemaModel::isPartOfPrimaryKey(int row) const
 {
-  return pvSchema.primaryKey().contains(field(row).name());
+  ///return pvSchema.primaryKey().contains(field(row).name());
 }
 
 int mdtSqlTableSchemaModel::rowCount(const QModelIndex & parent) const

@@ -1,43 +1,13 @@
 window_sizes 1280 952 395 879 899 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 1595778 // SettingsOverview
-    120 106 90 18 0 0
-  classdiagram_ref 874370 // TableSchema
-    120 106 100 21 0 0
-  classdiagram_ref 1510402 // TableSchemaModel
-    120 106 100 4 96 0
-  classdiagram_ref 1059586 // mdtItemsSelectorDialog
-    120 106 100 4 0 0
-  classdiagram_ref 1602818 // mdtComboBoxItemDelegate
-    120 106 100 4 0 0
-  classdiagram_ref 1556482 // TableSetupWidget
-    867 893 100 4 0 0
-  classdiagram_ref 1609346 // DatabaseCopierMapping
-    879 899 100 4 0 0
-  classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
-    879 904 100 4 0 0
-  classdiagram_ref 1629058 // sqlDatabaseCopierTableMappingDialog
-    120 106 100 4 0 0
-  classdiagram_ref 1622530 // SqlDatabaseCopierThread
-    879 899 100 4 0 0
-  classdiagram_ref 1517186 // FieldSetup
-    120 106 100 4 0 0
-  classdiagram_ref 1648642 // DatabaseSchemaDialog
-    879 899 100 4 0 0
-  classdiagram_ref 1648770 // DatabaseSchemaThread
-    879 899 100 4 0 0
-  classdiagram_ref 1635586 // DatabaseSchema
-    120 106 100 4 0 0
-  active  classdiagram_ref 1661826 // SqlField
-    879 899 100 4 12 0
+  active  classdiagram_ref 1668354 // sqlIndex
+    879 899 90 18 0 0
 end
 show_stereotypes
-selected attribute_ref 2015362 // IsCaseSensitive
 open
   classview_ref 787842 // ImportExportCopy
-  operation_ref 3081602 // isStringType
-  operation_ref 3088898 // mappingTable
+  class_ref 910210 // mdtSqlSchemaTable
   attribute_ref 2008194 // IsAutoValue
   attribute_ref 2008578 // IsRequired
   attribute_ref 2008450 // Length
@@ -45,8 +15,10 @@ open
   operation_ref 3081858 // mdtSqlField
   operation_ref 3081474 // isStringType
   operation_ref 3082114 // setupFromDatabaseSqlite
-  attribute_ref 2015490 // Country
-  attribute_ref 2015106 // Charset
+  class_ref 1987714 // mdtSqlIndexBase
+  class_ref 1987842 // mdtSqlPrimaryKey
+  class_ref 1987970 // mdtSqlIndex
+  class_ref 1988098 // mdtSqlForeignKey
   classview_ref 800898 // sqlDatabase
   classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
   class_ref 1947650 // mdtSqlDatabaseCopierTableMappingDialog

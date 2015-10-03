@@ -21,7 +21,7 @@
 #ifndef MDT_SQL_FIELD_HANDLER_H
 #define MDT_SQL_FIELD_HANDLER_H
 
-#include <QSqlField>
+#include "mdtSqlField.h"
 #include <QDateTime>
 #include <QPalette>
 #include <QVariant>
@@ -87,7 +87,6 @@ class mdtSqlFieldHandlerPlainTextEdit : public QObject, public mdtSqlFieldHandle
   bool pvSetDataFromDb;
 };
 
-
 /*! \brief Handle events between a SQL field and a edition widget
  *
  * When writing a GUI for a SQL database, Qt offers several classes.
@@ -124,7 +123,7 @@ class mdtSqlFieldHandler : public QWidget
    * Store the sql field.
    *  Some field's attributes will be used to handle edit/view widget.
    */
-  void setField(const QSqlField &field);
+  void setField(const mdtSqlField & field);
 
   /*! \brief Set the readOnly flag
    *
@@ -315,10 +314,11 @@ class mdtSqlFieldHandler : public QWidget
   QSpinBox *pvSpinBox;
   QComboBox *pvComboBox;
   */
-  QSqlField pvSqlField;
+  ///QSqlField pvSqlField;
   // Flags
   bool pvIsReadOnly;
   bool pvDataEdited;
+  mdtSqlField pvSqlField;
   QPalette pvDataWidgetOriginalPalette;
 
   Q_DISABLE_COPY(mdtSqlFieldHandler);

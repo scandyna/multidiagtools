@@ -71,13 +71,13 @@ class mdtSqlTableSchemaModel : public QAbstractTableModel
    *
    * If given row does not exist, a invalid QSqlField is returned
    */
-  QSqlField field(int row) const;
+//   QSqlField field(int row) const;
 
   /*! \brief Get field for given combo box current index
    *
    * \sa field()
    */
-  QSqlField currentField(QComboBox *cb) const;
+//   QSqlField currentField(QComboBox *cb) const;
 
   /*! \brief Check if field at given row is part of primary key
    */

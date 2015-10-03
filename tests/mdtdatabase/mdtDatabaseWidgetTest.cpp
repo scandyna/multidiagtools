@@ -560,7 +560,7 @@ void mdtDatabaseWidgetTest::sqlRelationTest()
 void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
 {
   mdtSqlFieldHandler fh;
-  QSqlField field;
+  mdtSqlField field;
 
   // Check inital flags
   QVERIFY(fh.isNull());
@@ -570,8 +570,8 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   // Setup field
   field.setAutoValue(false);
   field.setLength(10);
-  field.setRequiredStatus(QSqlField::Required);
-  field.setReadOnly(false);
+  field.setRequired(true);
+  ///field.setReadOnly(false);
   fh.setField(field);
 
   /*
@@ -669,8 +669,8 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   // Setup field as read only
   field.setAutoValue(false);
   field.setLength(10);
-  field.setRequiredStatus(QSqlField::Required);
-  field.setReadOnly(true);
+  field.setRequired(true);
+  ///field.setReadOnly(true);
   fh.setField(field);
   // Check field handler flags
   ///QVERIFY(fh.isReadOnly());
@@ -681,8 +681,8 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   // Setup field
   field.setAutoValue(false);
   field.setLength(10);
-  field.setRequiredStatus(QSqlField::Required);
-  field.setReadOnly(false);
+  field.setRequired(true);
+  ///field.setReadOnly(false);
   fh.setField(field);
 
   /*
@@ -733,8 +733,8 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   // Setup field
   field.setAutoValue(false);
   field.setLength(10);
-  field.setRequiredStatus(QSqlField::Required);
-  field.setReadOnly(false);
+  field.setRequired(true);
+  ///field.setReadOnly(false);
   fh.setField(field);
 
   /*
@@ -827,8 +827,8 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   // Setup field as read only
   field.setAutoValue(false);
   field.setLength(10);
-  field.setRequiredStatus(QSqlField::Required);
-  field.setReadOnly(true);
+  field.setRequired(true);
+  ///field.setReadOnly(true);
   fh.setField(field);
   // Check widget flags
   QVERIFY(pte.isEnabled());
@@ -839,10 +839,10 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
    */
   mdtDoubleEdit de;
   // Setup field
-  field = QSqlField();
-  field.setType(QVariant::Double);
+  field.clear();
+  field.setType(mdtSqlFieldType::Double);
   field.setRequired(true);
-  field.setReadOnly(false);
+  ///field.setReadOnly(false);
   // Setup double edit
   de.setEditionMode(mdtDoubleEdit::DefaultEditionMode);
   de.setMinimumToMinusInfinity();
@@ -4225,7 +4225,7 @@ void mdtDatabaseWidgetTest::createDatabaseSchema()
   QTemporaryFile dbFile;
   QFileInfo dbFileInfo;
   mdtSqlSchemaTable st;
-  QSqlField field;
+  mdtSqlField field;
 
   /*
    * Check Sqlite database creation
@@ -4241,29 +4241,29 @@ void mdtDatabaseWidgetTest::createDatabaseSchema()
   st.clear();
   st.setTableName("Client_tbl", "UTF8");
   // Id_PK
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   st.addField(field, true);
   // FirstName
-  field = QSqlField();
+  field.clear();
   field.setName("FirstName");
   field.setRequired(true);
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   st.addField(field, false);
   // Remarks
-  field = QSqlField();
+  field.clear();
   field.setName("Remarks");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(100);
   st.addField(field, false);
   QVERIFY(pvDatabaseManager.createTable(st, mdtSqlDatabaseManager::OverwriteExisting));
   // SomeValueDouble
-  field = QSqlField();
+  field.clear();
   field.setName("SomeValueDouble");
-  field.setType(QVariant::Double);
+  field.setType(mdtSqlFieldType::Double);
   st.addField(field, false);
   QVERIFY(pvDatabaseManager.createTable(st, mdtSqlDatabaseManager::OverwriteExisting));
   /*
@@ -4272,18 +4272,18 @@ void mdtDatabaseWidgetTest::createDatabaseSchema()
   st.clear();
   st.setTableName("ClientDetail_tbl", "UTF8");
   // Client_Id_FK_PK
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Client_Id_FK_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(false);
   st.addField(field, true);
   st.addForeignKey("Client_Id_FK_PK_fk", "Client_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   QVERIFY(st.addFieldToForeignKey("Client_Id_FK_PK_fk", "Client_Id_FK_PK", "Id_PK"));
   // Detail
-  field = QSqlField();
+  field.clear();
   field.setName("Detail");
   field.setRequired(true);
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(100);
   st.addField(field, false);
   QVERIFY(pvDatabaseManager.createTable(st, mdtSqlDatabaseManager::OverwriteExisting));
@@ -4291,26 +4291,26 @@ void mdtDatabaseWidgetTest::createDatabaseSchema()
   st.clear();
   st.setTableName("Address_tbl", "UTF8");
   // Id_PK
-  field = QSqlField();  // To clear field attributes (QSqlField::clear() only clear values)
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   st.addField(field, true);
   // StreetName
-  field = QSqlField();
+  field.clear();
   field.setName("StreetName");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   st.addField(field, false);
   // StreetNumber
-  field = QSqlField();
+  field.clear();
   field.setName("StreetNumber");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   st.addField(field, false);
   // Client_Id_FK
-  field = QSqlField();
+  field.clear();
   field.setName("Client_Id_FK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   st.addField(field, false);
   st.addForeignKey("Client_Id_FK_fk", "Client_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
   QVERIFY(st.addFieldToForeignKey("Client_Id_FK_fk", "Client_Id_FK", "Id_PK"));

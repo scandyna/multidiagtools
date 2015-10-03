@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtSqlDatabaseCopierTableMapping.h"
-#include <QSqlField>
+#include "mdtSqlField.h"
 
 mdtSqlDatabaseCopierTableMapping::mdtSqlDatabaseCopierTableMapping()
  : pvMappingState(MappingNotSet)
@@ -103,7 +103,7 @@ void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
     // Get source field
     Q_ASSERT(fm.sourceFieldIndex >= 0);
     Q_ASSERT(fm.sourceFieldIndex < pvSourceTable.fieldCount());
-    QSqlField sourceField = pvSourceTable.field(fm.sourceFieldIndex);
+    mdtSqlField sourceField = pvSourceTable.field(fm.sourceFieldIndex);
     // Get destination field index that matches source field name
     int destinationFieldIndex = pvDestinationTable.fieldIndex(sourceField.name());
     /// \todo If destination field exists, do some check here

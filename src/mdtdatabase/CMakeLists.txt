@@ -46,6 +46,9 @@ set (SOURCES_FILES
           mdtSqlViewSchema.cpp
           mdtSqlTableSchemaModel.cpp
           mdtSqlTableSetupWidget.cpp
+          mdtSqlIndex.cpp
+          mdtSqlPrimaryKey.cpp
+          mdtSqlForeignKey.cpp
           mdtSqlField.cpp
           mdtSqlFieldSetupWidget.cpp
           mdtSqlFieldSetupDialog.cpp

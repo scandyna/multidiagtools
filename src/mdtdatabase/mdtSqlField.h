@@ -50,6 +50,18 @@ class mdtSqlField final
   {
   }
 
+  /*! \brief Check if field is null
+   *
+   * Field is null at least if one of the mandatory attribute is not set.
+   *  Mandatory attributes are:
+   *  - type \sa setType() , type()
+   *  - name \sa setName() , name()
+   */
+  bool isNull() const
+  {
+    return ( (pvType == mdtSqlFieldType::UnknownType) || pvName.isEmpty());
+  }
+
   /*! \brief Clear
    */
   void clear();

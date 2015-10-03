@@ -23,6 +23,7 @@
 
 #include "ui_mdtSqlFieldSetupWidget.h"
 #include "mdtSqlFieldSetupData.h"
+#include "mdtSqlFieldType.h"
 #include "mdtError.h"
 #include <QWidget>
 #include <QSqlDatabase>
@@ -118,7 +119,7 @@ class mdtSqlFieldSetupWidget : public QWidget, Ui::mdtSqlFieldSetupWidget
 
   /*! \brief Set field type
    */
-  void setFieldType(QVariant::Type type);
+  void setFieldType(mdtSqlFieldType::Type type);
 
   /*! \brief Set creation edition mode
    */

@@ -23,14 +23,17 @@
 
 #include "mdtError.h"
 #include "mdtSqlDriverType.h"
+#include "mdtSqlField.h"
+///#include "mdtSqlIndex.h"
 #include <QString>
 #include <QStringList>
 #include <QSqlDatabase>
-#include <QSqlField>
 #include <QSqlRecord>
 #include <QSqlIndex>
 #include <QList>
 #include <QHash>
+
+#include <QSqlField>  /// \todo remove once done
 
 /*
  * Container for foreign keys informations
@@ -101,6 +104,15 @@ class mdtSqlSchemaTable
   void setStorageEngineName(const QString & name);
 
   /*! \brief Add a field
+   * \todo IMPLEMENT !
+   */
+  void addField(const mdtSqlField & field, bool isPartOfPrimaryKey)
+  {
+  }
+
+  /*! \brief Add a field
+   *
+   * \deprecated
    */
   void addField(const QSqlField & field, bool isPartOfPrimaryKey);
 
@@ -113,10 +125,10 @@ class mdtSqlSchemaTable
 
   /*! \brief Access fields list
    */
-  const QList<QSqlField> & fieldList() const
-  {
-    return pvFields;
-  }
+//   const QList<QSqlField> & fieldList() const
+//   {
+//     return pvFields;
+//   }
 
   /*! \brief Get list of field names
    *
@@ -126,17 +138,23 @@ class mdtSqlSchemaTable
 
   /*! \brief Get field for given field name
    */
-  QSqlField field(const QString & fieldName) const;
+  mdtSqlField field(const QString & fieldName) const
+  {
+    /// \todo Adjust !!!
+    return mdtSqlField();
+  }
+//   QSqlField field(const QString & fieldName) const;
 
   /*! \brief Get field for given field index
    *
    * \pre index must be in valid range
    */
-  QSqlField field(int index) const
+  mdtSqlField field(int index) const
+//   QSqlField field(int index) const
   {
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < pvFields.size());
-    return pvFields.at(index);
+    ///return pvFields.at(index);
   }
 
   /*! \brief Get index of field name
