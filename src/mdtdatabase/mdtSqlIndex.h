@@ -80,8 +80,8 @@ class mdtSqlIndex : public mdtSqlIndexBase
     Q_ASSERT(!pvFields.isEmpty());
 
     QString name = pvTableName + "_";
-    for(const auto & field : pvFields){
-      name += field.name() + "_";
+    for(const auto & fieldName : pvFields){
+      name += fieldName + "_";
     }
     name += "index";
     setName(name);

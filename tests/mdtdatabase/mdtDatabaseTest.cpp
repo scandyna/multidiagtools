@@ -463,7 +463,7 @@ void mdtDatabaseTest::sqlFieldSQLiteTest()
 void mdtDatabaseTest::sqlIndexBaseTest()
 {
   mdtSqlIndexBase index;
-  mdtSqlField field;
+//   mdtSqlField field;
   QSqlField qtField;
   QSqlIndex qtIndex;
 
@@ -476,14 +476,14 @@ void mdtDatabaseTest::sqlIndexBaseTest()
    */
   index.setName("IDX");
   QVERIFY(index.isNull());
-  field.clear();
-  field.setName("Id_PK");
-  field.setType(mdtSqlFieldType::Integer);
-  index.addField(field);
+//   field.clear();
+//   field.setName("Id_PK");
+//   field.setType(mdtSqlFieldType::Integer);
+  index.addField("Id_PK");
   QVERIFY(!index.isNull());
   QCOMPARE(index.fieldCount(), 1);
-  QCOMPARE(index.field(0).name(), QString("Id_PK"));
-  QCOMPARE(index.field("Id_PK").name(), QString("Id_PK"));
+  QCOMPARE(index.fieldName(0), QString("Id_PK"));
+//   QCOMPARE(index.field("Id_PK").name(), QString("Id_PK"));
   /*
    * Clear
    */
@@ -509,19 +509,19 @@ void mdtDatabaseTest::sqlIndexBaseTest()
   qtField.setRequired(true);
   qtIndex.append(qtField);
   // Setup index
-  index.setupFromQSqlIndex(qtIndex, mdtSqlDriverType::SQLite);
+  index.setupFromQSqlIndex(qtIndex);
   // Check
   QVERIFY(!index.isNull());
   QCOMPARE(index.name(), qtIndex.name());
   QCOMPARE(index.fieldCount(), qtIndex.count());
-  QCOMPARE(index.field(0).name(), qtIndex.field(0).name());
-  QCOMPARE(index.field(1).name(), qtIndex.field(1).name());
+  QCOMPARE(index.fieldName(0), qtIndex.field(0).name());
+  QCOMPARE(index.fieldName(1), qtIndex.field(1).name());
 }
 
 void mdtDatabaseTest::sqlIndexTest()
 {
   mdtSqlIndex index;
-  mdtSqlField field;
+//   mdtSqlField field;
   QSqlDatabase db = pvDatabase;
   QString expectedSql;
 
@@ -538,10 +538,10 @@ void mdtDatabaseTest::sqlIndexTest()
   index.setTableName("Client_tbl");
   index.setUnique(true);
   // Add a field
-  field.clear();
-  field.setName("Id_A");
-  field.setType(mdtSqlFieldType::Integer);
-  index.addField(field);
+//   field.clear();
+//   field.setName("Id_A");
+//   field.setType(mdtSqlFieldType::Integer);
+  index.addField("Id_A");
   // Generate name
   index.generateName();
   // Check
@@ -562,10 +562,10 @@ void mdtDatabaseTest::sqlIndexTest()
    */
   // Setup index
   index.clear();
-  field.clear();
-  field.setName("Id_A");
-  field.setType(mdtSqlFieldType::Integer);
-  index.addField(field);
+//   field.clear();
+//   field.setName("Id_A");
+//   field.setType(mdtSqlFieldType::Integer);
+  index.addField("Id_A");
   index.setTableName("Client_tbl");
   index.generateName();
   // Generate SQL and check
@@ -578,14 +578,14 @@ void mdtDatabaseTest::sqlIndexTest()
    */
   // Setup index
   index.clear();
-  field.clear();
-  field.setName("Id_A");
-  field.setType(mdtSqlFieldType::Integer);
-  index.addField(field);
-  field.clear();
-  field.setName("Id_B");
-  field.setType(mdtSqlFieldType::Integer);
-  index.addField(field);
+//   field.clear();
+//   field.setName("Id_A");
+//   field.setType(mdtSqlFieldType::Integer);
+  index.addField("Id_A");
+//   field.clear();
+//   field.setName("Id_B");
+//   field.setType(mdtSqlFieldType::Integer);
+  index.addField("Id_B");
   index.setTableName("Client_tbl");
   index.setUnique(true);
   index.generateName();
@@ -599,7 +599,7 @@ void mdtDatabaseTest::sqlIndexTest()
 void mdtDatabaseTest::sqlPrimaryKeySqliteTest()
 {
   mdtSqlPrimaryKey pk;
-  mdtSqlField field;
+//   mdtSqlField field;
   QString expectedSql;
   QSqlDatabase db = pvDatabase;
 
@@ -608,14 +608,14 @@ void mdtDatabaseTest::sqlPrimaryKeySqliteTest()
    * Simple 1 field PK
    */
   // Setup field
-  field.clear();
-  field.setType(mdtSqlFieldType::Varchar);
-  field.setName("Code_PK");
-  field.setLength(20);
+//   field.clear();
+//   field.setType(mdtSqlFieldType::Varchar);
+//   field.setName("Code_PK");
+//   field.setLength(20);
   // Setup PK
   pk.clear();
   pk.setName("PK_1");   // Must be ignored
-  pk.addField(field);
+  pk.addField("Code_PK");
   // Check
   expectedSql = "PRIMARY KEY (\"Code_PK\")";
   QCOMPARE(pk.getSql(db), expectedSql);
@@ -625,15 +625,15 @@ void mdtDatabaseTest::sqlPrimaryKeySqliteTest()
   pk.clear();
   pk.setName("PK_2");   // Must be ignored
   // Add field A
-  field.clear();
-  field.setType(mdtSqlFieldType::Integer);
-  field.setName("Id_A_PK");
-  pk.addField(field);
+//   field.clear();
+//   field.setType(mdtSqlFieldType::Integer);
+//   field.setName("Id_A_PK");
+  pk.addField("Id_A_PK");
   // Add field B
-  field.clear();
-  field.setType(mdtSqlFieldType::Integer);
-  field.setName("Id_B_PK");
-  pk.addField(field);
+//   field.clear();
+//   field.setType(mdtSqlFieldType::Integer);
+//   field.setName("Id_B_PK");
+  pk.addField("Id_B_PK");
   // Check
   expectedSql = "PRIMARY KEY (\"Id_A_PK\",\"Id_B_PK\")";
   QCOMPARE(pk.getSql(db), expectedSql);

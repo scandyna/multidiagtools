@@ -21,11 +21,12 @@
 #ifndef MDT_SQL_INDEX_BASE_H
 #define MDT_SQL_INDEX_BASE_H
 
-#include "mdtSqlField.h"
-#include "mdtSqlDriverType.h"
+///#include "mdtSqlField.h"
+///#include "mdtSqlDriverType.h"
 #include <QString>
+#include <QStringList>
 #include <QSqlIndex>
-#include <QList>
+///#include <QList>
 
 /*! \brief Common stuff for SQL schema indexes
  */
@@ -49,9 +50,9 @@ class mdtSqlIndexBase
 
   /*! \brief Add a field to index
    */
-  void addField(const mdtSqlField & field)
+  void addField(const QString & fieldName)
   {
-    pvFields.append(field);
+    pvFields.append(fieldName);
   }
 
   /*! \brief Get field count
@@ -61,11 +62,11 @@ class mdtSqlIndexBase
     return pvFields.size();
   }
 
-  /*! \brief Get field at given index
+  /*! \brief Get field name at given index
    *
    * \pre index must be in valid range
    */
-  mdtSqlField field(int index) const
+  QString fieldName(int index) const
   {
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < pvFields.size());
@@ -74,26 +75,24 @@ class mdtSqlIndexBase
 
   /*! \brief Get field for given field name
    */
-  mdtSqlField field(const QString & name) const
-  {
-    for(const auto & field : pvFields){
-      if(field.name() == name){
-        return field;
-      }
-    }
-    return mdtSqlField();
-  }
+//   mdtSqlField field(const QString & name) const
+//   {
+//     for(const auto & field : pvFields){
+//       if(field.name() == name){
+//         return field;
+//       }
+//     }
+//     return mdtSqlField();
+//   }
 
   /*! \brief Setup index from QSqlIndex
    */
-  void setupFromQSqlIndex(const QSqlIndex & index, mdtSqlDriverType::Type driverType)
+  void setupFromQSqlIndex(const QSqlIndex & index)
   {
     clear();
     pvName = index.name();
     for(int i = 0; i < index.count(); ++i){
-      mdtSqlField field;
-      field.setupFromQSqlField(index.field(i), driverType);
-      pvFields.append(field);
+      pvFields.append(index.fieldName(i));
     }
   }
 
@@ -121,7 +120,8 @@ class mdtSqlIndexBase
 
  protected:
 
-  QList<mdtSqlField> pvFields;
+  ///QList<mdtSqlField> pvFields;
+  QStringList pvFields;
 };
 
 #endif // #ifndef MDT_SQL_INDEX_BASE_H

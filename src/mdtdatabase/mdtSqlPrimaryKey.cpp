@@ -52,9 +52,9 @@ QString mdtSqlPrimaryKey::getSqlSqlite(const QSqlDriver*const driver) const
   }
   sql = "PRIMARY KEY (";
   for(int i = 0; i < lastFieldIndex; ++i){
-    sql += driver->escapeIdentifier(pvFields.at(i).name(), QSqlDriver::FieldName) + ",";
+    sql += driver->escapeIdentifier(pvFields.at(i), QSqlDriver::FieldName) + ",";
   }
-  sql += driver->escapeIdentifier(pvFields.at(lastFieldIndex).name(), QSqlDriver::FieldName) + ")";
+  sql += driver->escapeIdentifier(pvFields.at(lastFieldIndex), QSqlDriver::FieldName) + ")";
 
   return sql;
 }

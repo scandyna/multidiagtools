@@ -1,11 +1,14 @@
-window_sizes 1280 952 395 879 899 0
+window_sizes 1280 952 381 893 899 0
 cleanlooks_style
 diagrams
   active  classdiagram_ref 1668354 // sqlIndex
-    879 899 90 18 0 0
+    893 899 90 18 0 0
 end
 show_stereotypes
+selected classdiagram_ref 1589250 // mdt::optional
 open
+  classview_ref 161666 // mdtError
+  classview_ref 820482 // mdt::optional
   classview_ref 787842 // ImportExportCopy
   class_ref 910210 // mdtSqlSchemaTable
   attribute_ref 2008194 // IsAutoValue

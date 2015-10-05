@@ -1,6 +1,6 @@
 format 209
 "mdtdatabase" // mdtdatabase
-  revision 72
+  revision 74
   modified_by 2 "philippe"
   // class settings
   
@@ -4208,6 +4208,15 @@ ${inlines}
 	    classrelation_ref 1130882 // pvForeignKeys (<directional composition>)
 	  b parent class_ref 910466 // QSqlIndex
       end
+
+      classrelation 2331522 // <directional composition>
+	relation 2315266 *-->
+	  a role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2331522 // <directional composition>
+	  b parent class_ref 1987842 // mdtSqlPrimaryKey
+      end
     end
 
     classdiagram 1510402 "TableSchemaModel"
@@ -5308,15 +5317,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2324354 // <directional composition>
-	relation 2308098 *-->
-	  a role_name "" multiplicity "*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 2324354 // <directional composition>
-	  b parent class_ref 1974530 // mdtSqlField
-      end
-
       attribute 2022018 "Name"
 	private type class_ref 161026 // QString
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -5808,6 +5808,15 @@ ${inlines}
 "
 	    classrelation_ref 2291330 // <directional composition>
 	  b parent class_ref 1954818 // mdtSqlTablePopulationSchema
+      end
+
+      classrelation 2331394 // <directional composition>
+	relation 2315138 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2331394 // <directional composition>
+	  b parent class_ref 1987970 // mdtSqlIndex
       end
     end
 

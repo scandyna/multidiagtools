@@ -58,9 +58,9 @@ QString mdtSqlIndex::getSqlForCreate(const QSqlDatabase & db) const
   sql += driver->escapeIdentifier(name(), QSqlDriver::TableName);
   sql += " ON " + driver->escapeIdentifier(pvTableName, QSqlDriver::TableName) + " (";
   for(int i = 0; i < lastFieldIndex; ++i){
-    sql += driver->escapeIdentifier(pvFields.at(i).name(), QSqlDriver::FieldName) + ",";
+    sql += driver->escapeIdentifier(pvFields.at(i), QSqlDriver::FieldName) + ",";
   }
-  sql += driver->escapeIdentifier(pvFields.at(lastFieldIndex).name(), QSqlDriver::FieldName) + ")";
+  sql += driver->escapeIdentifier(pvFields.at(lastFieldIndex), QSqlDriver::FieldName) + ")";
 
   return sql;
 }

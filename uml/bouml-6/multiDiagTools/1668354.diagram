@@ -2,45 +2,32 @@ format 209
 
 classcanvas 128002 class_ref 1987714 // mdtSqlIndexBase
   classdiagramsettings member_max_width 0 end
-  xyz 302.6 31.6 2000
-end
-classcanvas 128130 class_ref 1974530 // mdtSqlField
-  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 703 59.9 2000
+  xyz 302.6 32.4 2000
 end
 classcanvas 128386 class_ref 1987842 // mdtSqlPrimaryKey
   classdiagramsettings member_max_width 0 end
-  xyz 696 208.7 2000
+  xyz 696.8 208.6 2000
 end
 classcanvas 128642 class_ref 1987970 // mdtSqlIndex
   classdiagramsettings member_max_width 0 end
-  xyz 300.9 210.7 2000
+  xyz 300.5 210.6 2000
 end
 classcanvas 128898 class_ref 1988098 // mdtSqlForeignKey
   classdiagramsettings member_max_width 0 end
-  xyz 31.6 219.7 2000
+  xyz 31.2 219 2000
 end
 classcanvas 129794 class_ref 910210 // mdtSqlSchemaTable
   classdiagramsettings member_max_width 0 end
-  xyz 9.3 621.3 2000
+  xyz 10 622 2000
 end
 classcanvas 129922 class_ref 1954178 // mdtSqlDatabaseSchema
   classdiagramsettings member_max_width 0 end
-  xyz 186.8 363.8 2006
-end
-note 130178 "Check if mdtSqlField is really needed. If not, replace list by a simple QStringList of field names"
-  xyzwh 10 127.8 2000 341 90
-relationcanvas 128258 relation_ref 2308098 // <directional composition>
-  decenter_begin 547
-  decenter_end 581
-  from ref 128002 z 2001 to ref 128130
-  no_role_a no_role_b
-  multiplicity_a_pos 687 92 3000 no_multiplicity_b
+  xyz 188.7 365.7 2006
 end
 relationcanvas 128514 relation_ref 2308226 // <generalisation>
   geometry VHV unfixed
-  from ref 128386 z 2001 to point 822 151.5
-  line 129410 z 2001 to point 457 151.5
+  from ref 128386 z 2001 to point 821.7 150.5
+  line 129410 z 2001 to point 457.1 150.5
   line 129538 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -58,8 +45,17 @@ end
 relationcanvas 130050 relation_ref 2274562 // <directional composition>
   from ref 129922 z 2007 to ref 129794
   no_role_a no_role_b
-  multiplicity_a_pos 394 618 3000 no_multiplicity_b
+  multiplicity_a_pos 396 619 3000 no_multiplicity_b
 end
-line 130306 -_-_
-  from ref 130178 z 2001 to ref 128002
+relationcanvas 130434 relation_ref 2315138 // <directional composition>
+  from ref 129922 z 2007 to ref 128642
+  no_role_a no_role_b
+  multiplicity_a_pos 416 328 3000 no_multiplicity_b
+end
+relationcanvas 130562 relation_ref 2315266 // <directional composition>
+  decenter_begin 868
+  from ref 129794 z 2001 to ref 128386
+  no_role_a no_role_b
+  multiplicity_a_pos 804 272 3000 no_multiplicity_b
+end
 end
