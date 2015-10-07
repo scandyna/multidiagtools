@@ -29,18 +29,22 @@ void mdtSqlIndex::clear()
   pvTableName.clear();
 }
 
-QString mdtSqlIndex::getSqlForDrop(const QSqlDatabase& db) const
+QString mdtSqlIndex::getSqlForDrop(const QSqlDatabase& db, const QString & databaseName) const
 {
   QString sql;
   QSqlDriver *driver = db.driver();
   Q_ASSERT(driver != nullptr);
 
-  sql = "DROP INDEX " + driver->escapeIdentifier(name(), QSqlDriver::TableName);
+  sql = "DROP INDEX IF EXISTS ";
+  if(!databaseName.isEmpty()){
+    sql += driver->escapeIdentifier(databaseName, QSqlDriver::TableName) + ".";
+  }
+  sql += driver->escapeIdentifier(name(), QSqlDriver::TableName);
 
   return sql;
 }
 
-QString mdtSqlIndex::getSqlForCreate(const QSqlDatabase & db) const
+QString mdtSqlIndex::getSqlForCreate(const QSqlDatabase & db, const QString & databaseName) const
 {
   QString sql;
   QSqlDriver *driver = db.driver();
@@ -54,6 +58,9 @@ QString mdtSqlIndex::getSqlForCreate(const QSqlDatabase & db) const
     sql = "CREATE UNIQUE INDEX ";
   }else{
     sql = "CREATE INDEX ";
+  }
+  if(!databaseName.isEmpty()){
+    sql += driver->escapeIdentifier(databaseName, QSqlDriver::TableName) + ".";
   }
   sql += driver->escapeIdentifier(name(), QSqlDriver::TableName);
   sql += " ON " + driver->escapeIdentifier(pvTableName, QSqlDriver::TableName) + " (";

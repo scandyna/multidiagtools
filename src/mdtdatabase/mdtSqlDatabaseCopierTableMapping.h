@@ -186,7 +186,8 @@ class mdtSqlDatabaseCopierTableMapping
     if(sourceFieldIndex < 0){
       return QString();
     }
-    return pvSourceTable.fieldTypeName(sourceFieldIndex);
+    ///return pvSourceTable.fieldTypeName(sourceFieldIndex);
+    return "To be implemented !!";
   }
 
   /*! \brief Get list of field names of destination table
@@ -227,7 +228,8 @@ class mdtSqlDatabaseCopierTableMapping
     if(destinationFieldIndex < 0){
       return QString();
     }
-    return pvDestinationTable.fieldTypeName(destinationFieldIndex);
+    ///return pvDestinationTable.fieldTypeName(destinationFieldIndex);
+    return "To be implemented !!";
   }
 
   /*! \brief Get last error

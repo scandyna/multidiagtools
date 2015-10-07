@@ -23,8 +23,11 @@
 
 #include "mdtError.h"
 #include "mdtSqlDriverType.h"
+#include "mdtSqlCollation.h"
 #include "mdtSqlField.h"
-///#include "mdtSqlIndex.h"
+#include "mdtSqlIndex.h"
+#include "mdtSqlPrimaryKey.h"
+#include "mdtSqlForeignKey.h"
 #include <QString>
 #include <QStringList>
 #include <QSqlDatabase>
@@ -78,6 +81,7 @@ class mdtSqlSchemaTable
    *
    * Driver name must be given in format returned by QSqlDatabase::driverName() .
    */
+  [[deprecated]]
   bool setDriverName(const QString & name);
 
   /*! \brief Set database name
@@ -85,6 +89,9 @@ class mdtSqlSchemaTable
   void setDatabaseName(const QString & name);
 
   /*! \brief Set table name
+   *
+   * \todo Currently, charset and cs parameters are ignored (see mdtSqlField to define column specific collations)
+   *       It must be defined if they must be used as table wide default collation (regarding standard SQL and target DBMS)
    */
   void setTableName(const QString & name, const QString &charset = QString(), Qt::CaseSensitivity cs = Qt::CaseInsensitive);
 
@@ -97,7 +104,14 @@ class mdtSqlSchemaTable
    * If temporary is true, the table will be created
    *  as temporary table (CREATE TEMPORARY TABLE ... in Sqlite and MySql).
    */
-  void setTableTemporary(bool temporary);
+  void setTemporary(bool temporary);
+
+  /*! \brief Check temporary table flag
+   */
+  bool isTemporary() const
+  {
+    return pvIsTemporary;
+  }
 
   /*! \brief Set the Maria DB/MySQL storage engine (XtraDB, Inno DB, ...)
    */
@@ -106,9 +120,7 @@ class mdtSqlSchemaTable
   /*! \brief Add a field
    * \todo IMPLEMENT !
    */
-  void addField(const mdtSqlField & field, bool isPartOfPrimaryKey)
-  {
-  }
+  void addField(const mdtSqlField & field, bool isPartOfPrimaryKey);
 
   /*! \brief Add a field
    *
@@ -186,7 +198,7 @@ class mdtSqlSchemaTable
    *
    * \pre index must be valid
    */
-  QString fieldTypeName(int index) const;
+  QString fieldTypeName(int index, mdtSqlDriverType::Type driverType) const;
 
   /*! \brief Get field length for given index
    *
@@ -206,14 +218,22 @@ class mdtSqlSchemaTable
 
   /*! \brief Access primary key
    */
-  const QSqlIndex & primaryKey() const
+  const mdtSqlPrimaryKey & primaryKey() const
   {
     return pvPrimaryKey;
   }
 
   /*! \brief Add a index
    *
+   * \note The table name of given index is ignored.
+   */
+  void addIndex(const mdtSqlIndex & index);
+
+  /*! \brief Add a index
+   *
    * If name allready exists, it will not be appended
+   *
+   * \deprecated
    */
   void addIndex(const QString & name, bool unique);
 
@@ -222,10 +242,14 @@ class mdtSqlSchemaTable
    * Field must allready be created with addField() and index also with addIndex() .
    *  If index with name indexName does not exists, or field with fieldName not exists,
    *  this method returns false.
+   *
+   * \deprecated
    */
   bool addFieldToIndex(const QString & indexName, const QString & fieldName);
 
   /*! \brief Add a foreign key contraint
+   *
+   * \deprecated
    */
   void addForeignKey(const QString & name, const QString & referingTableName, const foreignKeyAction_t & actionOnDelete, const foreignKeyAction_t & actionOnUpdate);
 
@@ -234,10 +258,13 @@ class mdtSqlSchemaTable
    * Field must allready be created with addField() and foreign key also with addForeignKey() .
    *  If foreign key with name foreignKeyName does not exists, or field with fieldName not exists,
    *  this method returns false.
+   *
+   * \deprecated
    */
   bool addFieldToForeignKey(const QString & foreignKeyName, const QString & fieldName, const QString & referingFieldName);
 
   /*! \brief Update a foreign key refering table name
+   * \deprecated
    */
   bool updateForeignKeyReferingTable(const QString & name, const QString & referingTableName);
 
@@ -252,11 +279,25 @@ class mdtSqlSchemaTable
   bool setupFromTable(const QString & name, QSqlDatabase db);
 
   /*! \brief Get SQL statement for table creation
+   *
+   * \pre db's driver must be loaded
    */
+  QString getSqlForCreateTable(const QSqlDatabase & db) const;
+
+  /*! \brief Get SQL statement for table deletion
+   *
+   * \pre db's driver must be loaded
+   */
+  QString getSqlForDropTable(const QSqlDatabase & db) const;
+
+  /*! \brief Get SQL statement for table creation
+   */
+  [[deprecated]]
   QString sqlForCreateTable();
 
   /*! \brief Get SQL statement for table deleteion
    */
+  [[deprecated]]
   QString sqlForDropTable() const;
 
   /*! \brief Get last error
@@ -353,18 +394,29 @@ class mdtSqlSchemaTable
    */
   bool setupForeignKeysFromDatabaseSqlite(const QSqlDatabase & db);
 
-  mdtSqlDriverType pvDriverType;
+  uint pvIsTemporary : 1;
   QString pvDatabaseName;
-  QString pvTemporaryTableKw;
   QString pvTableName;
-  QString pvCharset;
-  Qt::CaseSensitivity pvCaseSensitivity;
+  mdtSqlCollation pvCollation;
   QString pvStorageEngineName;
-  QList<QSqlField> pvFields;
-  QSqlIndex pvPrimaryKey;
-  QHash<QString, QSqlIndex> pvIndexes;
-  QHash<QString, bool> pvIndexeAtIsUnique;
-  QHash<QString, mdtSqlSchemaTableForeignKeyInfo> pvForeignKeys;
+  mdtSqlPrimaryKey pvPrimaryKey;
+  QList<mdtSqlField> pvFields;
+  QList<mdtSqlIndex> pvIndexes;
+  QList<mdtSqlForeignKey> pvForeignKeys;
+  
+  mdtSqlDriverType pvDriverType;  /// \todo Obselete
+  
+  ///QString pvTemporaryTableKw;
+  
+  ///QString pvCharset;
+  ///Qt::CaseSensitivity pvCaseSensitivity;
+  
+  
+  ///QList<QSqlField> pvFields;
+  ///QSqlIndex pvPrimaryKey;
+  ///QHash<QString, QSqlIndex> pvIndexes;
+  ///QHash<QString, bool> pvIndexeAtIsUnique;
+  ///QHash<QString, mdtSqlSchemaTableForeignKeyInfo> pvForeignKeys;
   mutable mdtError pvLastError;
 };
 

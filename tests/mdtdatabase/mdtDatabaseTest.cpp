@@ -35,6 +35,7 @@
 #include "mdtSqlIndexBase.h"
 #include "mdtSqlIndex.h"
 #include "mdtSqlPrimaryKey.h"
+#include "mdtSqlForeignKey.h"
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlTableSchemaModel.h"
 #include "mdtSqlViewSchema.h"
@@ -521,7 +522,6 @@ void mdtDatabaseTest::sqlIndexBaseTest()
 void mdtDatabaseTest::sqlIndexTest()
 {
   mdtSqlIndex index;
-//   mdtSqlField field;
   QSqlDatabase db = pvDatabase;
   QString expectedSql;
 
@@ -537,10 +537,6 @@ void mdtDatabaseTest::sqlIndexTest()
   index.clear();
   index.setTableName("Client_tbl");
   index.setUnique(true);
-  // Add a field
-//   field.clear();
-//   field.setName("Id_A");
-//   field.setType(mdtSqlFieldType::Integer);
   index.addField("Id_A");
   // Generate name
   index.generateName();
@@ -562,44 +558,47 @@ void mdtDatabaseTest::sqlIndexTest()
    */
   // Setup index
   index.clear();
-//   field.clear();
-//   field.setName("Id_A");
-//   field.setType(mdtSqlFieldType::Integer);
   index.addField("Id_A");
   index.setTableName("Client_tbl");
   index.generateName();
   // Generate SQL and check
-  expectedSql = "DROP INDEX \"Client_tbl_Id_A_index\"";
-  QCOMPARE(index.getSqlForDrop(db), expectedSql);
+  expectedSql = "DROP INDEX IF EXISTS \"Client_tbl_Id_A_index\"";
+  QCOMPARE(index.getSqlForDrop(db, ""), expectedSql);
   expectedSql = "CREATE INDEX \"Client_tbl_Id_A_index\" ON \"Client_tbl\" (\"Id_A\")";
-  QCOMPARE(index.getSqlForCreate(db), expectedSql);
+  QCOMPARE(index.getSqlForCreate(db, ""), expectedSql);
+  /*
+   * SQL generation: non unique with 1 field - database name specified
+   */
+  // Setup index
+  index.clear();
+  index.addField("Id_A");
+  index.setTableName("Client_tbl");
+  index.generateName();
+  // Generate SQL and check
+  expectedSql = "DROP INDEX IF EXISTS \"sandbox\".\"Client_tbl_Id_A_index\"";
+  QCOMPARE(index.getSqlForDrop(db, "sandbox"), expectedSql);
+  expectedSql = "CREATE INDEX \"sandbox\".\"Client_tbl_Id_A_index\" ON \"Client_tbl\" (\"Id_A\")";
+  QCOMPARE(index.getSqlForCreate(db, "sandbox"), expectedSql);
   /*
    * SQL generation: unique with 2 fields
    */
   // Setup index
   index.clear();
-//   field.clear();
-//   field.setName("Id_A");
-//   field.setType(mdtSqlFieldType::Integer);
   index.addField("Id_A");
-//   field.clear();
-//   field.setName("Id_B");
-//   field.setType(mdtSqlFieldType::Integer);
   index.addField("Id_B");
   index.setTableName("Client_tbl");
   index.setUnique(true);
   index.generateName();
   // Generate SQL and check
-  expectedSql = "DROP INDEX \"Client_tbl_Id_A_Id_B_index\"";
-  QCOMPARE(index.getSqlForDrop(db), expectedSql);
+  expectedSql = "DROP INDEX IF EXISTS \"Client_tbl_Id_A_Id_B_index\"";
+  QCOMPARE(index.getSqlForDrop(db, ""), expectedSql);
   expectedSql = "CREATE UNIQUE INDEX \"Client_tbl_Id_A_Id_B_index\" ON \"Client_tbl\" (\"Id_A\",\"Id_B\")";
-  QCOMPARE(index.getSqlForCreate(db), expectedSql);
+  QCOMPARE(index.getSqlForCreate(db, ""), expectedSql);
 }
 
 void mdtDatabaseTest::sqlPrimaryKeySqliteTest()
 {
   mdtSqlPrimaryKey pk;
-//   mdtSqlField field;
   QString expectedSql;
   QSqlDatabase db = pvDatabase;
 
@@ -607,11 +606,6 @@ void mdtDatabaseTest::sqlPrimaryKeySqliteTest()
   /*
    * Simple 1 field PK
    */
-  // Setup field
-//   field.clear();
-//   field.setType(mdtSqlFieldType::Varchar);
-//   field.setName("Code_PK");
-//   field.setLength(20);
   // Setup PK
   pk.clear();
   pk.setName("PK_1");   // Must be ignored
@@ -624,19 +618,245 @@ void mdtDatabaseTest::sqlPrimaryKeySqliteTest()
    */
   pk.clear();
   pk.setName("PK_2");   // Must be ignored
-  // Add field A
-//   field.clear();
-//   field.setType(mdtSqlFieldType::Integer);
-//   field.setName("Id_A_PK");
   pk.addField("Id_A_PK");
-  // Add field B
-//   field.clear();
-//   field.setType(mdtSqlFieldType::Integer);
-//   field.setName("Id_B_PK");
   pk.addField("Id_B_PK");
   // Check
   expectedSql = "PRIMARY KEY (\"Id_A_PK\",\"Id_B_PK\")";
   QCOMPARE(pk.getSql(db), expectedSql);
+}
+
+void mdtDatabaseTest::sqlForeignKeyTest()
+{
+  mdtSqlForeignKey fk;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(!fk.createParentIndex());
+  QVERIFY(!fk.createChildIndex());
+  QVERIFY(fk.onDeleteAction() == mdtSqlForeignKey::NoAction);
+  QVERIFY(fk.onUpdateAction() == mdtSqlForeignKey::NoAction);
+  /*
+   * Simple set/get
+   */
+  // Set
+  fk.setParentTableName("Client_tbl");
+  fk.setChildTableName("Address_tbl");
+  fk.addKeyFields("Id_PK", "Client_Id_FK");
+  fk.setCreateChildIndex(true);
+  fk.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  // Check
+  QVERIFY(!fk.createParentIndex());
+  QVERIFY(fk.createChildIndex());
+  QVERIFY(fk.onDeleteAction() == mdtSqlForeignKey::Restrict);
+  QVERIFY(fk.onUpdateAction() == mdtSqlForeignKey::Cascade);
+  QCOMPARE(fk.parentTableName(), QString("Client_tbl"));
+  QCOMPARE(fk.childTableName(), QString("Address_tbl"));
+  /*
+   * Clear
+   */
+  fk.clear();
+  QVERIFY(!fk.createParentIndex());
+  QVERIFY(!fk.createChildIndex());
+  QVERIFY(fk.onDeleteAction() == mdtSqlForeignKey::NoAction);
+  QVERIFY(fk.onUpdateAction() == mdtSqlForeignKey::NoAction);
+  QVERIFY(fk.parentTableName().isEmpty());
+  QVERIFY(fk.childTableName().isEmpty());
+
+}
+
+void mdtDatabaseTest::sqlForeignKeySqliteTest()
+{
+  mdtSqlForeignKey fk;
+  QString expectedSql;
+  QSqlDatabase db = pvDatabase;
+
+  QCOMPARE(db.driverName(), QString("QSQLITE"));
+  /*
+   * Simple 1 field FK
+   */
+  fk.clear();
+  fk.setParentTableName("Client_tbl");
+  fk.setChildTableName("Address_tbl");
+  fk.addKeyFields("Id_PK", "Client_Id_FK");
+  fk.setCreateParentIndex(true);
+  fk.setCreateChildIndex(true);
+  fk.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  // Check SQL for FK
+  expectedSql  = "  FOREIGN KEY (\"Client_Id_FK\")\n";
+  expectedSql += "   REFERENCES \"Client_tbl\" (\"Id_PK\")\n";
+  expectedSql += "   ON DELETE RESTRICT\n";
+  expectedSql += "   ON UPDATE CASCADE\n";
+  QCOMPARE(fk.getSqlForForeignKey(db), expectedSql);
+  // Check SQL to drop parent table index
+  expectedSql = "DROP INDEX IF EXISTS \"Client_tbl_Id_PK_index\"";
+  QCOMPARE(fk.getSqlForDropParentTableIndex(db, ""), expectedSql);
+  // Check SQL to create parent table index
+  expectedSql = "CREATE INDEX \"Client_tbl_Id_PK_index\" ON \"Client_tbl\" (\"Id_PK\")";
+  QCOMPARE(fk.getSqlForCreateParentTableIndex(db, ""), expectedSql);
+  // Check SQL to drop child table index
+  expectedSql = "DROP INDEX IF EXISTS \"Address_tbl_Client_Id_FK_index\"";
+  QCOMPARE(fk.getSqlForDropChildTableIndex(db, ""), expectedSql);
+  // Check SQL to create child table index
+  expectedSql = "CREATE INDEX \"Address_tbl_Client_Id_FK_index\" ON \"Address_tbl\" (\"Client_Id_FK\")";
+  QCOMPARE(fk.getSqlForCreateChildTableIndex(db, ""), expectedSql);
+}
+
+void mdtDatabaseTest::sqlTableSchemaTest()
+{
+  mdtSqlSchemaTable ts;
+  mdtSqlField field;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(!ts.isTemporary());
+  
+  /*
+   * Simple set/get
+   */
+  // Set
+  ts.setTemporary(true);
+  
+  // Check
+  QVERIFY(ts.isTemporary());
+  /*
+   * Clear
+   */
+  ts.clear();
+  QVERIFY(!ts.isTemporary());
+}
+
+void mdtDatabaseTest::sqlTableSchemaGetSqlMySqlTest()
+{
+
+}
+
+void mdtDatabaseTest::sqlTableSchemaGetSqlSqliteTest()
+{
+  mdtSqlSchemaTable ts;
+  mdtSqlField field;
+  mdtSqlIndex index;
+  QString expectedSql;
+  QSqlDatabase db = pvDatabase;
+
+  QCOMPARE(db.driverName(), QString("QSQLITE"));
+  /*
+   * Empty table schema
+   */
+  QVERIFY(ts.getSqlForCreateTable(db).isEmpty());
+  QVERIFY(ts.getSqlForDropTable(db).isEmpty());
+  
+  /// \todo Table COLLATE is missing now
+  
+  /*
+   * Simple Sqlite Table:
+   *  - Database name is specified
+   *  - Storage engine is specified (must be ignored)
+   *  - Collation: nothing is specified
+   */
+  ts.clear();
+  ts.setDatabaseName("sandbox");
+  ts.setStorageEngineName("InnoDB");
+  ts.setTableName("Client_tbl", "UTF8");
+  field.clear();
+  field.setName("Id_PK");
+  field.setType(mdtSqlFieldType::Integer);
+  field.setAutoValue(true);
+  ts.addField(field, true);
+  field.clear();
+  field.setName("Name");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(50);
+  ts.addField(field, false);
+  expectedSql  = "CREATE TABLE \"sandbox\".\"Client_tbl\" (\n";
+  expectedSql += "  \"Id_PK\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
+  expectedSql += "  \"Name\" VARCHAR(50) DEFAULT NULL\n";
+  expectedSql += ");\n";
+  QCOMPARE(ts.getSqlForCreateTable(db), expectedSql);
+  expectedSql = "DROP TABLE IF EXISTS \"sandbox\".\"Client_tbl\";\n";
+  QCOMPARE(ts.getSqlForDropTable(db), expectedSql);
+  /*
+   * Simple Sqlite Table:
+   *  - Storage engine is specified (must be ignored)
+   *  - Collation: field Name , not case sensitive
+   */
+  ts.clear();
+  ts.setStorageEngineName("InnoDB");
+  ts.setTableName("Client_tbl", "UTF8");
+  field.clear();
+  field.setName("Id_PK");
+  field.setType(mdtSqlFieldType::Integer);
+  field.setAutoValue(true);
+  ts.addField(field, true);
+  field.clear();
+  field.setName("Name");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(50);
+  field.setCaseSensitive(false);
+  ts.addField(field, false);
+  expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
+  expectedSql += "  \"Id_PK\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
+  expectedSql += "  \"Name\" VARCHAR(50) DEFAULT NULL COLLATE NOCASE\n";
+  expectedSql += ");\n";
+  QCOMPARE(ts.getSqlForCreateTable(db), expectedSql);
+  expectedSql = "DROP TABLE IF EXISTS \"Client_tbl\";\n";
+  QCOMPARE(ts.getSqlForDropTable(db), expectedSql);
+  /*
+   * Simple Sqlite Table:
+   *  - Storage engine is specified (must be ignored)
+   *  - Collation: nothing is specified
+   *  - A NON UNIQUE index is added
+   *  - A UNIQUE index is added
+   */
+  ts.clear();
+  ts.setTableName("Client_tbl", "UTF8");
+  field.clear();
+  field.setName("Id_PK");
+  field.setType(mdtSqlFieldType::Integer);
+  field.setAutoValue(true);
+  ts.addField(field, true);
+  field.clear();
+  field.setName("Name");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(50);
+  ts.addField(field, false);
+  field.clear();
+  field.setName("NameU");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(50);
+  ts.addField(field, false);
+  index.clear();
+  index.addField("Name");
+  ts.addIndex(index);
+  index.clear();
+  index.setUnique(true);
+  index.addField("NameU");
+  ts.addIndex(index);
+  expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
+  expectedSql += "  \"Id_PK\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
+  expectedSql += "  \"Name\" VARCHAR(50) DEFAULT NULL,\n";
+  expectedSql += "  \"NameU\" VARCHAR(50) DEFAULT NULL\n";
+  expectedSql += ");\n";
+  expectedSql += "CREATE INDEX \"Client_tbl_Name_index\" ON \"Client_tbl\" (\"Name\")";
+  expectedSql += "CREATE UNIQUE INDEX \"Client_tbl_NameU_index\" ON \"Client_tbl\" (\"NameU\")";
+  QCOMPARE(ts.getSqlForCreateTable(db), expectedSql);
+  expectedSql  = "DROP TABLE IF EXISTS \"Client_tbl\";\n";
+  expectedSql += "DROP INDEX IF EXISTS \"Client_tbl_Name_index\"";
+  expectedSql += "DROP INDEX IF EXISTS \"Client_tbl_NameU_index\"";
+  QCOMPARE(ts.getSqlForDropTable(db), expectedSql);
+
+  
+  /// \todo Version with 2 fields in PK
+  
+  /// \todo Version without database name set
+}
+
+void mdtDatabaseTest::sqlTableSchemaCreateSqliteTest()
+{
+
 }
 
 
@@ -774,74 +994,74 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   expectedSql = "DROP TABLE IF EXISTS `sandbox`.`Address_tbl`;\n";
   QCOMPARE(st.sqlForDropTable(), expectedSql);
 
-  /*
-   * Simple Sqlite Table:
-   *  - Storage engine is specified (must be ignored)
-   *  - Charset is specified
-   */
-  st.clear();
-  st.setDriverName("QSQLITE");
-  st.setDatabaseName("sandbox");
-  st.setStorageEngineName("InnoDB");
-  st.setTableName("Client_tbl", "UTF8");
-  field.clear();
-  field.setName("Id_PK");
-  field.setType(mdtSqlFieldType::Integer);
-  field.setAutoValue(true);
-  st.addField(field, true);
-  field.clear();
-  field.setName("Name");
-  field.setType(mdtSqlFieldType::Varchar);
-  field.setLength(50);
-  st.addField(field, false);
-  expectedSql  = "CREATE TABLE 'sandbox'.'Client_tbl' (\n";
-  expectedSql += "  'Id_PK' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
-  expectedSql += "  'Name' VARCHAR(50) DEFAULT NULL COLLATE NOCASE\n";
-  expectedSql += ");\n";
-  QCOMPARE(st.sqlForCreateTable(), expectedSql);
-  expectedSql = "DROP TABLE IF EXISTS 'sandbox'.'Client_tbl';\n";
-  QCOMPARE(st.sqlForDropTable(), expectedSql);
+//   /*
+//    * Simple Sqlite Table:
+//    *  - Storage engine is specified (must be ignored)
+//    *  - Charset is specified
+//    */
+//   st.clear();
+//   st.setDriverName("QSQLITE");
+//   st.setDatabaseName("sandbox");
+//   st.setStorageEngineName("InnoDB");
+//   st.setTableName("Client_tbl", "UTF8");
+//   field.clear();
+//   field.setName("Id_PK");
+//   field.setType(mdtSqlFieldType::Integer);
+//   field.setAutoValue(true);
+//   st.addField(field, true);
+//   field.clear();
+//   field.setName("Name");
+//   field.setType(mdtSqlFieldType::Varchar);
+//   field.setLength(50);
+//   st.addField(field, false);
+//   expectedSql  = "CREATE TABLE 'sandbox'.'Client_tbl' (\n";
+//   expectedSql += "  'Id_PK' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
+//   expectedSql += "  'Name' VARCHAR(50) DEFAULT NULL COLLATE NOCASE\n";
+//   expectedSql += ");\n";
+//   QCOMPARE(st.sqlForCreateTable(), expectedSql);
+//   expectedSql = "DROP TABLE IF EXISTS 'sandbox'.'Client_tbl';\n";
+//   QCOMPARE(st.sqlForDropTable(), expectedSql);
 
-  /*
-   * Simple Sqlite Table:
-   *  - Storage engine is specified (must be ignored)
-   *  - Charset is specified
-   *  - A NON UNIQUE index is added (must be ignored)
-   *  - A UNIQUE index is added
-   */
-  st.clear();
-  st.setDriverName("QSQLITE");
-  st.setDatabaseName("sandbox");
-  st.setStorageEngineName("InnoDB");
-  st.setTableName("Client_tbl", "UTF8");
-  field.clear();
-  field.setName("Id_PK");
-  field.setType(mdtSqlFieldType::Integer);
-  field.setAutoValue(true);
-  st.addField(field, true);
-  field.clear();
-  field.setName("Name");
-  field.setType(mdtSqlFieldType::Varchar);
-  field.setLength(50);
-  st.addField(field, false);
-  field.clear();
-  field.setName("NameU");
-  field.setType(mdtSqlFieldType::Varchar);
-  field.setLength(50);
-  st.addField(field, false);
-  st.addIndex("Index", false);
-  QVERIFY(st.addFieldToIndex("Index", "Name"));
-  st.addIndex("IndexU", true);
-  QVERIFY(st.addFieldToIndex("IndexU", "NameU"));
-  expectedSql  = "CREATE TABLE 'sandbox'.'Client_tbl' (\n";
-  expectedSql += "  'Id_PK' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
-  expectedSql += "  'Name' VARCHAR(50) DEFAULT NULL COLLATE NOCASE,\n";
-  expectedSql += "  'NameU' VARCHAR(50) DEFAULT NULL COLLATE NOCASE,\n";
-  expectedSql += "  UNIQUE ('NameU')\n";
-  expectedSql += ");\n";
-  QCOMPARE(st.sqlForCreateTable(), expectedSql);
-  expectedSql = "DROP TABLE IF EXISTS 'sandbox'.'Client_tbl';\n";
-  QCOMPARE(st.sqlForDropTable(), expectedSql);
+//   /*
+//    * Simple Sqlite Table:
+//    *  - Storage engine is specified (must be ignored)
+//    *  - Charset is specified
+//    *  - A NON UNIQUE index is added (must be ignored)
+//    *  - A UNIQUE index is added
+//    */
+//   st.clear();
+//   st.setDriverName("QSQLITE");
+//   st.setDatabaseName("sandbox");
+//   st.setStorageEngineName("InnoDB");
+//   st.setTableName("Client_tbl", "UTF8");
+//   field.clear();
+//   field.setName("Id_PK");
+//   field.setType(mdtSqlFieldType::Integer);
+//   field.setAutoValue(true);
+//   st.addField(field, true);
+//   field.clear();
+//   field.setName("Name");
+//   field.setType(mdtSqlFieldType::Varchar);
+//   field.setLength(50);
+//   st.addField(field, false);
+//   field.clear();
+//   field.setName("NameU");
+//   field.setType(mdtSqlFieldType::Varchar);
+//   field.setLength(50);
+//   st.addField(field, false);
+//   st.addIndex("Index", false);
+//   QVERIFY(st.addFieldToIndex("Index", "Name"));
+//   st.addIndex("IndexU", true);
+//   QVERIFY(st.addFieldToIndex("IndexU", "NameU"));
+//   expectedSql  = "CREATE TABLE 'sandbox'.'Client_tbl' (\n";
+//   expectedSql += "  'Id_PK' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
+//   expectedSql += "  'Name' VARCHAR(50) DEFAULT NULL COLLATE NOCASE,\n";
+//   expectedSql += "  'NameU' VARCHAR(50) DEFAULT NULL COLLATE NOCASE,\n";
+//   expectedSql += "  UNIQUE ('NameU')\n";
+//   expectedSql += ");\n";
+//   QCOMPARE(st.sqlForCreateTable(), expectedSql);
+//   expectedSql = "DROP TABLE IF EXISTS 'sandbox'.'Client_tbl';\n";
+//   QCOMPARE(st.sqlForDropTable(), expectedSql);
 
   /*
    * Second table for Sqlite that is child of Client_tbl
@@ -908,7 +1128,7 @@ void mdtDatabaseTest::sqlSchemaTableTest()
   st.setDatabaseName("sandbox");
   st.setStorageEngineName("InnoDB");
   st.setTableName("Client_tbl", "UTF8");
-  st.setTableTemporary(true);
+  st.setTemporary(true);
   field.clear();
   field.setName("Id_PK");
   field.setType(mdtSqlFieldType::Integer);
@@ -1090,7 +1310,7 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
   QCOMPARE(st.fieldCount(), 0);
   QVERIFY(st.setupFromTable("Client_tbl", db));
   st.setTableName("Client2_tbl");
-  st.setTableTemporary(true);
+  st.setTemporary(true);
   QCOMPARE(st.field("Id_PK").name(), QString("Id_PK"));
   QVERIFY(field.type() == mdtSqlFieldType::Integer);
   QCOMPARE(st.field("Name").name(), QString("Name"));
@@ -1116,7 +1336,7 @@ void mdtDatabaseTest::sqlSchemaTableSqliteTest()
    */
   QVERIFY(st.setupFromTable("Address_tbl", db));
   st.setTableName("Address2_tbl");
-  st.setTableTemporary(true);
+  st.setTemporary(true);
   st.updateForeignKeyReferingTable("Client_Id_FK_fk", "Client2_tbl");
   QCOMPARE(st.field("Id_PK").name(), QString("Id_PK"));
   QVERIFY(st.field("Id_PK").type() == mdtSqlFieldType::Integer);

@@ -47,10 +47,18 @@ class mdtDatabaseTest : public mdtTest
   void sqlIndexBaseTest();
   void sqlIndexTest();
   void sqlPrimaryKeySqliteTest();
+  void sqlForeignKeyTest();
+  void sqlForeignKeySqliteTest();
 
+  void sqlTableSchemaTest();
+  void sqlTableSchemaGetSqlMySqlTest();
+  void sqlTableSchemaGetSqlSqliteTest();
+  void sqlTableSchemaCreateSqliteTest();
+  void sqlTableSchemaModelTest();
+  
   void sqlSchemaTableTest();
   void sqlSchemaTableSqliteTest();
-  void sqlTableSchemaModelTest();
+  
 
   void sqlTableSetupWidgetTest();
 

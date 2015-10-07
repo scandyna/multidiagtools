@@ -1,6 +1,6 @@
 format 209
 "mdtdatabase" // mdtdatabase
-  revision 74
+  revision 77
   modified_by 2 "philippe"
   // class settings
   
@@ -3881,31 +3881,7 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      attribute 920578 "DriverType"
-	private type class_ref 1814786 // mdtSqlDriverType
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
       attribute 921090 "DatabaseName"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 1891074 "TemporaryTableKw"
 	private type class_ref 161026 // QString
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -3929,8 +3905,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1890946 "Charset"
-	private type class_ref 161026 // QString
+      attribute 1891074 "IsTemporarty"
+	private explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -3941,8 +3917,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 1891202 "CaseSensitivity"
-	private explicit_type "Qt::CaseSensitivity"
+      attribute 1890946 "Collation"
+	private type class_ref 1981186 // mdtSqlCollation
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -3965,57 +3941,12 @@ ${inlines}
 	MysqlColumn
       end
 
-      classrelation 1130114 // pvFields (<directional composition>)
-	relation 1118722 *-->
-	  stereotype "list"
-	  a role_name "pvFields" multiplicity "*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 1130114 // pvFields (<directional composition>)
-	  b parent class_ref 404738 // QSqlField
-      end
-
-      classrelation 1130370 // pvIndexes (<directional composition>)
-	relation 1118978 *-->
-	  stereotype "hash"
-	  a role_name "pvIndexes" multiplicity "*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 1130370 // pvIndexes (<directional composition>)
-	  b parent class_ref 910466 // QSqlIndex
-      end
-
-      classrelation 1130498 // pvPrimaryKey (<directional composition>)
-	relation 1119106 *-->
-	  a role_name "pvPrimaryKey" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 1130498 // pvPrimaryKey (<directional composition>)
-	  b parent class_ref 910466 // QSqlIndex
-      end
-
       classrelation 1130754 // <dependency>
 	relation 1119362 -_->
 	  a default
 	    cpp default "#include in source"
 	    classrelation_ref 1130754 // <dependency>
 	  b parent class_ref 910594 // QSqlQuery
-      end
-
-      operation 1660034 "setDriverName"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "name" type class_ref 161026 // QString
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
       end
 
       operation 1661058 "setDatabaseName"
@@ -4199,16 +4130,6 @@ ${inlines}
 	
       end
 
-      classrelation 1130882 // pvForeignKeys (<directional composition>)
-	relation 1119490 *-->
-	  stereotype "hash"
-	  a role_name "pvForeignKeys" multiplicity "*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 1130882 // pvForeignKeys (<directional composition>)
-	  b parent class_ref 910466 // QSqlIndex
-      end
-
       classrelation 2331522 // <directional composition>
 	relation 2315266 *-->
 	  a role_name "" multiplicity "1" private
@@ -4216,6 +4137,42 @@ ${inlines}
 "
 	    classrelation_ref 2331522 // <directional composition>
 	  b parent class_ref 1987842 // mdtSqlPrimaryKey
+      end
+
+      classrelation 2338050 // <directional composition>
+	relation 2321794 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2338050 // <directional composition>
+	  b parent class_ref 1974530 // mdtSqlField
+      end
+
+      classrelation 2338178 // <directional composition>
+	relation 2321922 *-->
+	  a role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2338178 // <directional composition>
+	  b parent class_ref 1981186 // mdtSqlCollation
+      end
+
+      classrelation 2338306 // <directional composition>
+	relation 2322050 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2338306 // <directional composition>
+	  b parent class_ref 1988098 // mdtSqlForeignKey
+      end
+
+      classrelation 2338434 // <directional composition>
+	relation 2322178 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2338434 // <directional composition>
+	  b parent class_ref 1987970 // mdtSqlIndex
       end
     end
 
@@ -6653,15 +6610,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2324866 // <directional composition>
-	relation 2308610 *-->
-	  a role_name "" multiplicity "2" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${multiplicity}${value};
-"
-	    classrelation_ref 2324866 // <directional composition>
-	  b parent class_ref 1987970 // mdtSqlIndex
-      end
-
       attribute 2022658 "CreateParentIndex"
 	private explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -6686,8 +6634,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 2022914 "ParentKey"
-	private type class_ref 1987970 // mdtSqlIndex
+      attribute 2022914 "ParentTableName"
+	private type class_ref 161026 // QString
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -6698,8 +6646,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 2023042 "ChildKey"
-	private type class_ref 1987970 // mdtSqlIndex
+      attribute 2023042 "ChildTableName"
+	private type class_ref 161026 // QString
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -6708,6 +6656,133 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      attribute 2036226 "ParentTableFields"
+	private type class_ref 160770 // QStringList
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2036354 "ChildTableFields"
+	private type class_ref 160770 // QStringList
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2029570 "OnDeleteAction"
+	private explicit_type "Action"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2029698 "OnUpdateAction"
+	private explicit_type "Action"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3109634 "setParentTableName"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "name" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3109762 "setChildTableName"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "name" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3109890 "addKeyFields"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "parentFieldName" type class_ref 161026 // QString
+	  param in name "childFieldName" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3110018 "isNull"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3110146 "clear"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end

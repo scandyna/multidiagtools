@@ -212,6 +212,8 @@ class mdtSqlFieldType
         return QLatin1String("DATE");
       case Time:
         return QLatin1String("TIME");
+      case DateTime:
+        return QLatin1String("DATETIME");
     }
     return QLatin1String("");
   }

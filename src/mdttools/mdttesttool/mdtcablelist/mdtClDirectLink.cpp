@@ -414,7 +414,7 @@ bool mdtClDirectLink::createDirectLinkTable()
     return false;
   }
   st.setTableName("DirectLink_tbl", "UTF-8");
-  st.setTableTemporary(true);
+  st.setTemporary(true);
   if(!query.exec(st.sqlForCreateTable())){
     QSqlError sqlError = query.lastError();
     pvLastError.setError(tr("Cannot create table 'DirectLink_tbl'"), mdtError::Error);

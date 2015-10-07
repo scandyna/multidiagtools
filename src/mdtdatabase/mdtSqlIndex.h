@@ -95,13 +95,13 @@ class mdtSqlIndex : public mdtSqlIndexBase
    *
    * \pre db's driver must be loaded
    */
-  QString getSqlForDrop(const QSqlDatabase & db) const;
+  QString getSqlForDrop(const QSqlDatabase & db, const QString & databaseName) const;
 
   /*! \brief Get SQL statement to create the index
    *
    * \pre db's driver must be loaded
    */
-  QString getSqlForCreate(const QSqlDatabase & db) const;
+  QString getSqlForCreate(const QSqlDatabase & db, const QString & databaseName) const;
 
  private:
 

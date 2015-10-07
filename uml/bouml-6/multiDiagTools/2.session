@@ -1,27 +1,17 @@
 window_sizes 1280 952 381 893 899 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1668354 // sqlIndex
-    893 899 90 18 0 0
+  classdiagram_ref 874370 // TableSchema
+    714 719 90 21 0 15
+  active  classdiagram_ref 1510402 // TableSchemaModel
+    893 899 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1589250 // mdt::optional
+selected classdiagram_ref 1510402 // TableSchemaModel
 open
-  classview_ref 161666 // mdtError
-  classview_ref 820482 // mdt::optional
   classview_ref 787842 // ImportExportCopy
-  class_ref 910210 // mdtSqlSchemaTable
-  attribute_ref 2008194 // IsAutoValue
-  attribute_ref 2008578 // IsRequired
-  attribute_ref 2008450 // Length
-  operation_ref 3081730 // mdtSqlField
-  operation_ref 3081858 // mdtSqlField
-  operation_ref 3081474 // isStringType
-  operation_ref 3082114 // setupFromDatabaseSqlite
-  class_ref 1987714 // mdtSqlIndexBase
-  class_ref 1987842 // mdtSqlPrimaryKey
-  class_ref 1987970 // mdtSqlIndex
-  class_ref 1988098 // mdtSqlForeignKey
+  attribute_ref 920706 // TableName
+  attribute_ref 1891074 // IsTemporarty
   classview_ref 800898 // sqlDatabase
   classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
   class_ref 1947650 // mdtSqlDatabaseCopierTableMappingDialog

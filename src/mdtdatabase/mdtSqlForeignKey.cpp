@@ -19,3 +19,129 @@
  **
  ****************************************************************************/
 #include "mdtSqlForeignKey.h"
+#include "mdtSqlIndex.h"
+#include <QSqlDatabase>
+#include <QSqlDriver>
+
+void mdtSqlForeignKey::clear()
+{
+  pvCreateParentIndex = false;
+  pvCreateChildIndex = false;
+  pvOnDeleteAction = NoAction;
+  pvOnUpdateAction = NoAction;
+  pvParentTableName.clear();
+  pvChildTableName.clear();
+  pvParentTableFields.clear();
+  pvChildTableFields.clear();
+}
+
+QString mdtSqlForeignKey::getSqlForForeignKey(const QSqlDatabase & db)
+{
+  QString sql;
+  int lastFieldIndex;
+  QSqlDriver *driver = db.driver();
+  Q_ASSERT(driver != nullptr);
+  Q_ASSERT(pvParentTableFields.size() == pvChildTableFields.size());
+
+  if(pvParentTableFields.isEmpty() || pvChildTableFields.isEmpty()){
+    return sql;
+  }
+  sql = "  FOREIGN KEY (";
+  // Add fields from table
+  lastFieldIndex = pvChildTableFields.size() - 1;
+  Q_ASSERT(lastFieldIndex >= 0);
+  for(int i = 0; i < lastFieldIndex; ++i){
+    sql += driver->escapeIdentifier(pvChildTableFields.at(i), QSqlDriver::FieldName) + ",";
+  }
+  sql += driver->escapeIdentifier(pvChildTableFields.at(lastFieldIndex), QSqlDriver::FieldName) + ")\n";
+  sql += "   REFERENCES " + driver->escapeIdentifier(pvParentTableName, QSqlDriver::TableName) + " (";
+  // Add fields from parent (referenced) table
+  lastFieldIndex = pvParentTableFields.size() - 1;
+  Q_ASSERT(lastFieldIndex >= 0);
+  for(int i = 0; i < lastFieldIndex; ++i){
+    sql += driver->escapeIdentifier(pvParentTableFields.at(i), QSqlDriver::FieldName) + ",";
+  }
+  sql += driver->escapeIdentifier(pvParentTableFields.at(lastFieldIndex), QSqlDriver::FieldName) + ")\n";
+  // Add actions
+  sql += "   ON DELETE " + actionStr(pvOnDeleteAction) + "\n";
+  sql += "   ON UPDATE " + actionStr(pvOnUpdateAction) + "\n";
+
+  return sql;
+}
+
+QString mdtSqlForeignKey::getSqlForDropParentTableIndex(const QSqlDatabase & db, const QString & databaseName)
+{
+  Q_ASSERT(db.isValid());
+
+  mdtSqlIndex index;
+
+  index.setTableName(pvParentTableName);
+  for(const auto & fn : pvParentTableFields){
+    index.addField(fn);
+  }
+  index.generateName();
+
+  return index.getSqlForDrop(db, databaseName);
+}
+
+QString mdtSqlForeignKey::getSqlForCreateParentTableIndex(const QSqlDatabase & db, const QString & databaseName)
+{
+  Q_ASSERT(db.isValid());
+
+  mdtSqlIndex index;
+
+  index.setTableName(pvParentTableName);
+  for(const auto & fn : pvParentTableFields){
+    index.addField(fn);
+  }
+  index.generateName();
+
+  return index.getSqlForCreate(db, databaseName);
+}
+
+QString mdtSqlForeignKey::getSqlForDropChildTableIndex(const QSqlDatabase & db, const QString & databaseName)
+{
+  Q_ASSERT(db.isValid());
+
+  mdtSqlIndex index;
+
+  index.setTableName(pvChildTableName);
+  for(const auto & fn : pvChildTableFields){
+    index.addField(fn);
+  }
+  index.generateName();
+
+  return index.getSqlForDrop(db, databaseName);
+}
+
+QString mdtSqlForeignKey::getSqlForCreateChildTableIndex(const QSqlDatabase & db, const QString & databaseName)
+{
+  Q_ASSERT(db.isValid());
+
+  mdtSqlIndex index;
+
+  index.setTableName(pvChildTableName);
+  for(const auto & fn : pvChildTableFields){
+    index.addField(fn);
+  }
+  index.generateName();
+
+  return index.getSqlForCreate(db, databaseName);
+}
+
+QString mdtSqlForeignKey::actionStr(mdtSqlForeignKey::Action action)
+{
+  switch(action){
+    case NoAction:
+      return "NO ACTION";
+    case Restrict:
+      return "RESTRICT";
+    case SetNull:
+      return "SET NULL";
+    case SetDefault:
+      return "SET DEFAULT";
+    case Cascade:
+      return "CASCADE";
+  }
+  return QString();
+}

@@ -106,7 +106,8 @@ QVariant mdtSqlTableSchemaModel::data(const QModelIndex & index, int role) const
     case NameIndex:
       return pvSchema.fieldName(row);
     case TypeIndex:
-      return pvSchema.fieldTypeName(row);
+      ///return pvSchema.fieldTypeName(row);
+      return "To be implemented !";
     case LengthIndex:
       return pvSchema.fieldLength(row);
     case IsPkIndex:

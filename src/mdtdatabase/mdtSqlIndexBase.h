@@ -21,12 +21,9 @@
 #ifndef MDT_SQL_INDEX_BASE_H
 #define MDT_SQL_INDEX_BASE_H
 
-///#include "mdtSqlField.h"
-///#include "mdtSqlDriverType.h"
 #include <QString>
 #include <QStringList>
 #include <QSqlIndex>
-///#include <QList>
 
 /*! \brief Common stuff for SQL schema indexes
  */
@@ -73,18 +70,6 @@ class mdtSqlIndexBase
     return pvFields.at(index);
   }
 
-  /*! \brief Get field for given field name
-   */
-//   mdtSqlField field(const QString & name) const
-//   {
-//     for(const auto & field : pvFields){
-//       if(field.name() == name){
-//         return field;
-//       }
-//     }
-//     return mdtSqlField();
-//   }
-
   /*! \brief Setup index from QSqlIndex
    */
   void setupFromQSqlIndex(const QSqlIndex & index)
@@ -120,7 +105,6 @@ class mdtSqlIndexBase
 
  protected:
 
-  ///QList<mdtSqlField> pvFields;
   QStringList pvFields;
 };
 
