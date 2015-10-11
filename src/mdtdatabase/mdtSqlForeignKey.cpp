@@ -152,3 +152,25 @@ QString mdtSqlForeignKey::actionStr(mdtSqlForeignKey::Action action) const
   }
   return QString();
 }
+
+mdtSqlForeignKey::Action mdtSqlForeignKey::actionFromStr(const QString & actionName) const
+{
+  Action action;
+  const QString str = actionName.trimmed().toUpper();
+
+  if(str == QLatin1String("NO ACTION")){
+    action = NoAction;
+  }else if(str == QLatin1String("RESTRICT")){
+    action = Restrict;
+  }else if(str == QLatin1String("SET NULL")){
+    action = SetNull;
+  }else if(str == QLatin1String("SET DEFAULT")){
+    action = SetDefault;
+  }else if(str == QLatin1String("CASCADE")){
+    action = Cascade;
+  }else{
+    action = NoAction;
+  }
+
+  return action;
+}

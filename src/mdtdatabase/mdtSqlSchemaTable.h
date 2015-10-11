@@ -150,23 +150,17 @@ class mdtSqlSchemaTable
 
   /*! \brief Get field for given field name
    */
-  mdtSqlField field(const QString & fieldName) const
-  {
-    /// \todo Adjust !!!
-    return mdtSqlField();
-  }
-//   QSqlField field(const QString & fieldName) const;
+  mdtSqlField field(const QString & fieldName) const;
 
   /*! \brief Get field for given field index
    *
    * \pre index must be in valid range
    */
   mdtSqlField field(int index) const
-//   QSqlField field(int index) const
   {
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < pvFields.size());
-    ///return pvFields.at(index);
+    return pvFields.at(index);
   }
 
   /*! \brief Get index of field name
@@ -229,6 +223,13 @@ class mdtSqlSchemaTable
    */
   void addIndex(const mdtSqlIndex & index);
 
+  /*! \brief Get list of indexes
+   */
+  QList<mdtSqlIndex> indexList() const
+  {
+    return pvIndexes;
+  }
+
   /*! \brief Add a foreign key
    *
    * \note fk's child table name is ignored.
@@ -236,6 +237,22 @@ class mdtSqlSchemaTable
    * \pre For each key field contained in FK, child table's field must exist in current table
    */
   void addForeignKey(const mdtSqlForeignKey & fk);
+
+  /*! \brief Set foreign key at given index
+   *
+   * \note fk's child table name is ignored.
+   * \pre fk's parent table name must be set
+   * \pre For each key field contained in FK, child table's field must exist in current table
+   * \pre index must be valid
+   */
+  void setForeignKeyAt(int index, const mdtSqlForeignKey & fk);
+
+  /*! \brief Get list of foreign keys
+   */
+  QList<mdtSqlForeignKey> foreignKeyList() const
+  {
+    return pvForeignKeys;
+  }
 
   /*! \brief Add a index
    *
@@ -310,65 +327,20 @@ class mdtSqlSchemaTable
 
   /*! \brief Get last error
    */
-  mdtError lastError() const;
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
 
  private:
+
+  /*! \brief Check if primary key definition must be added in field definition or not
+   */
+  bool includePrimaryKeyDefinitionInField(const QString & fieldName) const;
 
   /*! \brief For each key fields in fk, check if child table's field exists in current table
    */
   bool childFieldsExistsInTable(const mdtSqlForeignKey & fk);
-
-  /*! \brief Build create table statement for Maria DB/MySQL
-   */
-  QString sqlForCreateTableMySql() const;
-
-  /*! \brief Build create table statement for Sqlite
-   */
-  QString sqlForCreateTableSqlite() const;
-
-  /*! \brief Get SQL statement for the fields part for Maria DB/MySQL
-   */
-  QString sqlForFieldsMySql() const;
-
-  /*! \brief Get SQL statement for the fields part for Sqlite
-   */
-  QString sqlForFieldsSqlite() const;
-
-  /*! \brief Get SQL statement for the primary key
-   */
-  QString sqlForPrimaryKey(const QString &delimiter) const;
-
-  /*! \brief Get SQL statement for the indexes for Maria DB/MySQL
-   */
-  QString sqlForIndexesMySql() const;
-
-  /*! \brief Get SQL statement for the indexes for Sqlite
-   */
-  QString sqlForIndexesSqlite() const;
-
-  /*! \brief Get SQL statement for the foreign keys
-   */
-  QString sqlForForeignKeys(const QString &delimiter) const;
-
-  /*! \brief Get field type name for Maria DB/MySQL
-   */
-  QString fieldTypeNameMySql(QVariant::Type type, int length) const;
-
-  /*! \brief Get field type name for Maria Sqlite
-   */
-  QString fieldTypeNameSqlite(QVariant::Type type, int length) const;
-
-  /*! \brief Get the COLLATE string for Maria DB/MySQL
-   */
-  QString sqlForCollateMySql() const;
-
-  /*! \brief Get the COLLATE string for Sqlite
-   */
-  QString sqlForCollateSqlite() const;
-
-  /*! \brief Get the string version of foreignKeyAction_t
-   */
-  QString foreignKeyActionName(foreignKeyAction_t action) const;
 
   /*! \brief Get foreignKeyAction_t type from name
    *
@@ -417,18 +389,6 @@ class mdtSqlSchemaTable
   QList<mdtSqlForeignKey> pvForeignKeys;
   
   mdtSqlDriverType pvDriverType;  /// \todo Obselete
-  
-  ///QString pvTemporaryTableKw;
-  
-  ///QString pvCharset;
-  ///Qt::CaseSensitivity pvCaseSensitivity;
-  
-  
-  ///QList<QSqlField> pvFields;
-  ///QSqlIndex pvPrimaryKey;
-  ///QHash<QString, QSqlIndex> pvIndexes;
-  ///QHash<QString, bool> pvIndexeAtIsUnique;
-  ///QHash<QString, mdtSqlSchemaTableForeignKeyInfo> pvForeignKeys;
   mutable mdtError pvLastError;
 };
 

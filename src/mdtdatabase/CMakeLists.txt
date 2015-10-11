@@ -50,6 +50,7 @@ set (SOURCES_FILES
           mdtSqlPrimaryKey.cpp
           mdtSqlForeignKey.cpp
           mdtSqlField.cpp
+          mdtSqlFieldType.cpp
           mdtSqlFieldSetupWidget.cpp
           mdtSqlFieldSetupDialog.cpp
           # Database copier classes

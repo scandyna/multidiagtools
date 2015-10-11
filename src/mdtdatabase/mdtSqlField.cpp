@@ -62,8 +62,11 @@ QString mdtSqlField::getSql(const QSqlDatabase & db, bool pk) const
   switch(driverType){
     case mdtSqlDriverType::SQLite:
       sql += getSqliteDefinition(pk);
+      break;
     case mdtSqlDriverType::MariaDB:
     case mdtSqlDriverType::MySQL:
+      sql += getMysqlDefinition(pk);
+      break;
     case mdtSqlDriverType::Unknown:
       break;
   }
@@ -83,19 +86,58 @@ QString mdtSqlField::getSqliteDefinition(bool pk) const
     return sql;
   }
   // Null constraint
-  if(pvIsRequired){
+  if(pvIsRequired || pk){
     sql += " NOT NULL";
   }
   // Default value
-  if(pvDefaultValue.isNull()){
-    sql += " DEFAULT NULL";
-  }else{
-    sql += " DEFAULT " + pvDefaultValue.toString();
+  if(!pk){
+    if(pvDefaultValue.isNull()){
+      sql += " DEFAULT NULL";
+    }else{
+      sql += " DEFAULT " + pvDefaultValue.toString();
+    }
+  }
+  // Primary key
+  if(pk){
+    sql += " PRIMARY KEY";
   }
   // Collation
   if(!pvCollation.isNull()){
     sql += " COLLATE " + pvCollation.getSql(mdtSqlDriverType::SQLite);
   }
+
+  return sql;
+}
+
+QString mdtSqlField::getMysqlDefinition(bool pk) const
+{
+  QString sql;
+
+  // Null constraint
+  if(pvIsRequired || pk){
+    sql += " NOT NULL";
+  }
+  // Default value
+  if(!pk){
+    if(pvDefaultValue.isNull()){
+      sql += " DEFAULT NULL";
+    }else{
+      sql += " DEFAULT " + pvDefaultValue.toString();
+    }
+  }
+  // Auto increment
+  if(pvIsAutoValue){
+    sql += " AUTO_INCREMENT";
+  }
+  // Primary key
+  if(pk){
+    sql += " PRIMARY KEY";
+  }
+  // Collation
+  if(!pvCollation.isNull()){
+    sql += " COLLATE " + pvCollation.getSql(mdtSqlDriverType::SQLite);
+  }
+
 
   return sql;
 }

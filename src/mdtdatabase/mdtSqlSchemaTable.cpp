@@ -26,7 +26,7 @@
 #include <QSqlField>
 #include <QSqlDriver>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtSqlSchemaTable::mdtSqlSchemaTable()
  : pvIsTemporary(false)
@@ -139,6 +139,16 @@ QStringList mdtSqlSchemaTable::getFieldNameList() const
   return names;
 }
 
+mdtSqlField mdtSqlSchemaTable::field(const QString& fieldName) const
+{
+  for(const auto & field : pvFields){
+    if(field.name() == fieldName){
+      return field;
+    }
+  }
+  return mdtSqlField();
+}
+
 // QSqlField mdtSqlSchemaTable::field(const QString & fieldName) const
 // {
 //   int i;
@@ -183,6 +193,14 @@ void mdtSqlSchemaTable::addForeignKey(const mdtSqlForeignKey & fk)
   pvForeignKeys.append(fk);
 }
 
+void mdtSqlSchemaTable::setForeignKeyAt(int index, const mdtSqlForeignKey& fk)
+{
+  Q_ASSERT(!fk.parentTableName().isEmpty());
+  Q_ASSERT(childFieldsExistsInTable(fk));
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < pvFields.size());
+  pvForeignKeys[index] = fk;
+}
 
 void mdtSqlSchemaTable::addIndex(const QString & name, bool unique) 
 {
@@ -315,14 +333,8 @@ bool mdtSqlSchemaTable::setupFromTable(const QString & name, QSqlDatabase db)
   if(!setupFieldsFromDatabase(db)){
     return false;
   }
-  /**
-  for(i = 0; i < record.count(); ++i){
-    pvFields.append(record.field(i));
-  }
-  */
   // Set primary key
   pvPrimaryKey.setupFromQSqlIndex(db.primaryIndex(name));
-  ///pvPrimaryKey = db.primaryIndex(name);
   // Add other indexes
   if(!setupIndexesFromDatabase(db)){
     return false;
@@ -365,14 +377,11 @@ QStringList mdtSqlSchemaTable::getSqlForCreateTable(const QSqlDatabase & db) con
   sql += driver->escapeIdentifier(pvTableName, QSqlDriver::TableName) + " (\n";
   // Add fields
   Q_ASSERT(lastFieldIndex >= 0);
-  pkInFieldDefinition = false;
   for(int i = 0; i < lastFieldIndex; ++i){
-    // If we have exactly 1 field in PK, inclue PK definition in field part
-    if( (pvPrimaryKey.fieldCount() == 1) && (pvPrimaryKey.fieldName(0) == pvFields.at(i).name()) ){
-      pkInFieldDefinition = true;
-    }
+    pkInFieldDefinition = includePrimaryKeyDefinitionInField(pvFields.at(i).name());
     sql += "  " + pvFields.at(i).getSql(db, pkInFieldDefinition) + ",\n";
   }
+  pkInFieldDefinition = includePrimaryKeyDefinitionInField(pvFields.at(lastFieldIndex).name());
   sql += "  " + pvFields.at(lastFieldIndex).getSql(db, pkInFieldDefinition);
   // Add primary key constraint if needed
   if( (!pkInFieldDefinition) && (pvPrimaryKey.fieldCount() > 1) ){
@@ -382,7 +391,21 @@ QStringList mdtSqlSchemaTable::getSqlForCreateTable(const QSqlDatabase & db) con
   for(const auto & fk : pvForeignKeys){
     sql += ",\n" + fk.getSqlForForeignKey(db);
   }
-  sql += "\n);\n";
+  // Add engine
+  if(pvStorageEngineName.isEmpty()){
+    sql += "\n);\n";
+  }else{
+    switch(mdtSqlDriverType::typeFromName(db.driverName())){
+      case mdtSqlDriverType::Unknown:
+      case mdtSqlDriverType::SQLite:
+        sql += "\n);\n";
+        break;
+      case mdtSqlDriverType::MySQL:
+      case mdtSqlDriverType::MariaDB:
+        sql += "\n) ENGINE=" + pvStorageEngineName + ";\n";
+        break;
+    }
+  }
   sqlList.append(sql);
   // Add indexes
   for(auto index : pvIndexes){
@@ -508,9 +531,11 @@ QString mdtSqlSchemaTable::sqlForDropTable() const
   return sql;
 }
 
-mdtError mdtSqlSchemaTable::lastError() const
+bool mdtSqlSchemaTable::includePrimaryKeyDefinitionInField(const QString & fieldName) const
 {
-  return pvLastError;
+  auto pk = pvPrimaryKey;
+
+  return ( (pk.fieldCount() == 1) && (pk.fieldName(0) == fieldName) );
 }
 
 bool mdtSqlSchemaTable::childFieldsExistsInTable(const mdtSqlForeignKey & fk)
@@ -521,473 +546,6 @@ bool mdtSqlSchemaTable::childFieldsExistsInTable(const mdtSqlForeignKey & fk)
     }
   }
   return false;
-}
-
-QString mdtSqlSchemaTable::sqlForCreateTableMySql() const
-{
-  QString sql;
-
-//   if(pvDatabaseName.trimmed().isEmpty()){
-//     ///sql = "CREATE " + pvTemporaryTableKw + "TABLE `" + pvTableName + "` (\n";
-//   }else{
-//     ///sql = "CREATE " + pvTemporaryTableKw + "TABLE `" + pvDatabaseName + "`.`" + pvTableName + "` (\n";
-//   }
-//   // Add fields
-//   sql += sqlForFieldsMySql();
-//   if((pvPrimaryKey.isEmpty())&&(pvIndexes.isEmpty())&&(pvForeignKeys.isEmpty())){
-//     sql += "\n";
-//   }
-//   // Add primary key
-//   sql += sqlForPrimaryKey("`");
-//   // Add indexes
-//   sql += sqlForIndexesMySql();
-//   // Add foreign keys
-//   sql += sqlForForeignKeys("`");
-//   // Add end + table attributes
-//   sql += "\n)";
-//   if(!pvStorageEngineName.trimmed().isEmpty()){
-//     sql += " ENGINE=" + pvStorageEngineName;
-//   }
-//   /**
-//   if(!pvCharset.trimmed().isEmpty()){
-//     sql += " DEFAULT CHARSET=" + pvCharset;
-//   }
-//   */
-//   if(pvDriverType.type() == mdtSqlDriverType::MySQL){
-//     sql += sqlForCollateMySql();
-//   }
-//   sql += ";\n";
-
-  return sql;
-}
-
-QString mdtSqlSchemaTable::sqlForCreateTableSqlite() const
-{
-  QString sql;
-//   QSqlField field;
-// 
-//   if(pvDatabaseName.trimmed().isEmpty()){
-//     ///sql = "CREATE " + pvTemporaryTableKw + "TABLE '" + pvTableName + "' (\n";
-//   }else{
-//     ///sql = "CREATE " + pvTemporaryTableKw + "TABLE '" + pvDatabaseName + "'.'" + pvTableName + "' (\n";
-//   }
-//   // Add fields
-//   sql += sqlForFieldsSqlite();
-//   if((pvPrimaryKey.isEmpty())&&(pvIndexes.isEmpty())&&(pvForeignKeys.isEmpty())){
-//     sql += "\n";
-//   }
-//   // Add primary key
-//   if(!((pvPrimaryKey.count() == 1)&&(pvPrimaryKey.field(0).type() == QVariant::Int)&&(pvPrimaryKey.field(0).isAutoValue()))){
-//     sql += sqlForPrimaryKey("'");
-//   }
-//   // Add indexes
-//   sql += sqlForIndexesSqlite();
-//   // Add foreign keys
-//   sql += sqlForForeignKeys("'");
-//   // Add end + table attributes
-//   sql += "\n);\n";
-
-  return sql;
-}
-
-QString mdtSqlSchemaTable::sqlForFieldsMySql() const
-{
-  QString sql;
-//   QSqlField field;
-//   int i;
-// 
-//   for(i = 0; i < pvFields.size(); ++i){
-//     field = pvFields.at(i);
-//     sql += "  `" + field.name() + "` ";
-//     sql += fieldTypeNameMySql(field.type(), field.length());
-//     if((field.requiredStatus() == QSqlField::Required)||(pvPrimaryKey.contains(field.name()))){
-//       sql += " NOT NULL";
-//     }
-//     if((pvPrimaryKey.contains(field.name()))&&(field.isAutoValue())){
-//       sql += " AUTO_INCREMENT";
-//     }else{
-//       if(field.defaultValue().isNull()){
-//         sql += " DEFAULT NULL";
-//       }else{
-//         sql += " DEFAULT " + field.defaultValue().toString();
-//       }
-//     }
-//     if(i < (pvFields.size() - 1)){
-//       sql += ",\n";
-//     }
-//   }
-
-  return sql;
-}
-
-QString mdtSqlSchemaTable::sqlForFieldsSqlite() const
-{
-  QString sql;
-//   QSqlField field;
-//   int i;
-// 
-//   for(i = 0; i < pvFields.size(); ++i){
-//     field = pvFields.at(i);
-//     sql += "  '" + field.name() + "' ";
-//     // Auto increment is only accepted for one case and needs a special syntax in Sqlite
-//     if((pvPrimaryKey.count() == 1)&&(field.type() == QVariant::Int)&&(field.isAutoValue())&&(pvPrimaryKey.contains(field.name()))){
-//       sql += "INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT";
-//     }else{
-//       sql += fieldTypeNameSqlite(field.type(), field.length());
-//       if((field.requiredStatus() == QSqlField::Required)||(pvPrimaryKey.contains(field.name()))){
-//         sql += " NOT NULL";
-//       }
-//       if(field.defaultValue().isNull()){
-//         sql += " DEFAULT NULL";
-//       }else{
-//         sql += " DEFAULT " + field.defaultValue().toString();
-//       }
-//     }
-//     if(field.type() == QVariant::String){
-//       sql += sqlForCollateSqlite();
-//     }
-//     if(i < (pvFields.size() - 1)){
-//       sql += ",\n";
-//     }
-//   }
-
-  return sql;
-}
-
-QString mdtSqlSchemaTable::sqlForPrimaryKey(const QString &delimiter) const
-{
-  QString sql;
-  int i;
-
-//   if(pvPrimaryKey.count() > 0){
-//     sql += ",\n";
-//     sql += "  PRIMARY KEY (";
-//     for(i = 0; i < pvPrimaryKey.count(); ++i){
-//       sql += delimiter + pvPrimaryKey.field(i).name() + delimiter;
-//       if(i < (pvPrimaryKey.count() - 1)){
-//         sql += ",";
-//       }
-//     }
-//     sql += ")";
-//   }
-
-  return sql;
-}
-
-QString mdtSqlSchemaTable::sqlForIndexesMySql() const
-{
-  QString sql;
-//   QSqlIndex index;
-//   int i;
-// 
-//   if(pvIndexes.isEmpty()){
-//     return "";
-//   }
-//   sql = ",\n";
-//   QHashIterator<QString, QSqlIndex> it(pvIndexes);
-//   while(it.hasNext()){
-//     it.next();
-//     index = it.value();
-//     if(pvIndexeAtIsUnique.value(index.name())){
-//       sql += "  UNIQUE INDEX `" + index.name() + "` (";
-//     }else{
-//       sql += "  INDEX `" + index.name() + "` (";
-//     }
-//     for(i = 0; i < index.count(); ++i){
-//       sql += "`" + index.field(i).name() + "`";
-//       if(i < (index.count() - 1)){
-//         sql += ",";
-//       }
-//     }
-//     if(it.hasNext()){
-//       sql += "),\n";
-//     }else{
-//       sql += ")";
-//     }
-//   }
-
-  return sql;
-}
-
-QString mdtSqlSchemaTable::sqlForIndexesSqlite() const
-{
-  QString sql, indexSql;
-//   QSqlIndex index;
-//   QHash<QString, QSqlIndex> uniqueIndexes;
-//   int i;
-// 
-//   // With Sqlite, only unique indexes must be taken into account
-//   QHashIterator<QString, QSqlIndex> it(pvIndexes);
-//   while(it.hasNext()){
-//     it.next();
-//     if(pvIndexeAtIsUnique.value(it.value().name())){
-//       uniqueIndexes.insert(it.key(), it.value());
-//     }
-//   }
-//   if(uniqueIndexes.isEmpty()){
-//     return "";
-//   }
-//   QHashIterator<QString, QSqlIndex> it2(uniqueIndexes);
-//   while(it2.hasNext()){
-//     it2.next();
-//     index = it2.value();
-//     ///if(pvIndexeAtIsUnique.value(index.name())){
-//     indexSql += "  UNIQUE (";
-//     for(i = 0; i < index.count(); ++i){
-//       indexSql += "'" + index.field(i).name() + "'";
-//       if(i < (index.count() - 1)){
-//         indexSql += ",";
-//       }
-//     }
-//     if(it2.hasNext()){
-//       indexSql += "),\n";
-//     }else{
-//       indexSql += ")";
-//     }
-//     ///}
-//   }
-//   if(!indexSql.trimmed().isEmpty()){
-//     sql = ",\n" + indexSql;
-//   }
-
-  return sql;
-}
-
-QString mdtSqlSchemaTable::sqlForForeignKeys(const QString &delimiter) const
-{
-//   Q_ASSERT(!pvDriverType.isNull());
-// 
-//   QString sql;
-//   QSqlField field;
-//   QSqlRecord fields;
-//   mdtSqlSchemaTableForeignKeyInfo fkInfo;
-//   int i;
-// 
-//   if(pvForeignKeys.isEmpty()){
-//     return "";
-//   }
-//   sql = ",\n";
-//   QHashIterator<QString, mdtSqlSchemaTableForeignKeyInfo> itf(pvForeignKeys);
-//   while(itf.hasNext()){
-//     itf.next();
-//     fkInfo = itf.value();
-//     switch(pvDriverType.type()){
-//       case mdtSqlDriverType::MariaDB:
-//       case mdtSqlDriverType::MySQL:
-//         sql += "  FOREIGN KEY " + delimiter + itf.key() + delimiter + " (";
-//         break;
-//       case mdtSqlDriverType::SQLite:
-//         sql += "  FOREIGN KEY (";
-//         break;
-//       case mdtSqlDriverType::Unknown:
-//         // Should never happen (we put it just to avoid compiler warnings, and we don't want a default in switch)
-//         break;
-//     }
-//     fields = fkInfo.fields;
-//     for(i = 0; i < fields.count(); ++i){
-//       sql += delimiter + fields.field(i).name() + delimiter;
-//       if(i < (fields.count() - 1)){
-//         sql += ",";
-//       }
-//     }
-//     sql += ")\n";
-//     sql += "   REFERENCES " + delimiter + fkInfo.referingTableName + delimiter + " (";
-//     fields = fkInfo.referingFields;
-//     for(i = 0; i < fields.count(); ++i){
-//       sql += delimiter + fields.field(i).name() + delimiter;
-//       if(i < (fields.count() - 1)){
-//         sql += ",";
-//       }
-//     }
-//     sql += ")\n";
-//     sql += "   ON DELETE " + foreignKeyActionName((foreignKeyAction_t)fkInfo.actionOnDelete) + "\n";
-//     sql += "   ON UPDATE " + foreignKeyActionName((foreignKeyAction_t)fkInfo.actionOnUpdate);
-//     if(itf.hasNext()){
-//       sql += ",\n";
-//     }
-//   }
-// 
-//   return sql;
-}
-
-QString mdtSqlSchemaTable::fieldTypeNameMySql(QVariant::Type type, int length) const
-{
-  QString strType;
-
-//   switch(type){
-//     case QVariant::Int:
-//       strType = "INT";
-//       break;
-//     case QVariant::UInt:
-//       strType = "INT";
-//       break;
-//     case QVariant::LongLong:
-//       strType = "BIGINT";
-//       break;
-//     case QVariant::ULongLong:
-//       strType = "BIGINT";
-//       break;
-//     case QVariant::Double:
-//       strType = "DOUBLE PRECISION";
-//       break;
-//     case QVariant::Bool:
-//       strType = "BOOL";
-//       break;
-//     case QVariant::Date:
-//       strType = "DATE";
-//       break;
-//     case QVariant::Time:
-//       strType = "TIME";
-//       break;
-//     case QVariant::DateTime:
-//       strType = "DATETIME";
-//       break;
-//     case QVariant::String:
-//       strType = "VARCHAR";
-//       break;
-//     case QVariant::Bitmap:
-//       strType = "BLOB";
-//       break;
-//     case QVariant::Image:
-//       strType = "BLOB";
-//       break;
-//     default:
-//       mdtError e(MDT_DATABASE_ERROR, "Unknown mapping for type " + QString::number(type) + " (QVariant::Type)", mdtError::Error);
-//       MDT_ERROR_SET_SRC(e, "mdtSqlSchemaTable");
-//       e.commit();
-//   }
-//   // Add length if defined (We not check if length is supported for given type)
-//   if(length > 0){
-//     strType += "(" + QString::number(length) + ")";
-//   }
-//   // Add the UNSIGNED suffix if type is unsigned
-//   if((type == QVariant::UInt)||(type == QVariant::ULongLong)){
-//     strType += " UNSIGNED";
-//   }
-
-  return strType;
-}
-
-QString mdtSqlSchemaTable::fieldTypeNameSqlite(QVariant::Type type, int length) const
-{
-  QString strType;
-
-//   switch(type){
-//     case QVariant::Int:
-//       strType = "INT";
-//       break;
-//     case QVariant::UInt:
-//       strType = "INT";
-//       break;
-//     case QVariant::LongLong:
-//       strType = "BIGINT";
-//       break;
-//     case QVariant::ULongLong:
-//       strType = "BIGINT";
-//       break;
-//     case QVariant::Double:
-//       strType = "DOUBLE";
-//       break;
-//     case QVariant::Bool:
-//       strType = "BOOLEAN";
-//       break;
-//     case QVariant::Date:
-//       strType = "DATE";
-//       break;
-//     case QVariant::Time:
-//       strType = "DATETIME";
-//       break;
-//     case QVariant::DateTime:
-//       strType = "DATETIME";
-//       break;
-//     case QVariant::String:
-//       strType = "VARCHAR";
-//       break;
-//     case QVariant::Bitmap:
-//       strType = "BLOB";
-//       break;
-//     case QVariant::Image:
-//       strType = "BLOB";
-//       break;
-//     default:
-//       mdtError e(MDT_DATABASE_ERROR, "Unknown mapping for type " + QString::number(type) + " (QVariant::Type)", mdtError::Error);
-//       MDT_ERROR_SET_SRC(e, "mdtSqlSchemaTable");
-//       e.commit();
-//   }
-  ///strType = mdtSqlFieldType::nameFromType(type, mdtSqlDriverType::SQLite);
-//   if(strType.isEmpty()){
-//     pvLastError.setError("Unknown mapping for type " + QString::number(type) + " (QVariant::Type)", mdtError::Error);
-//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
-//     pvLastError.commit();
-//     return strType;
-//   }
-//   // Add length if defined (We not check if length is supported for given type)
-//   if(length > 0){
-//     strType += "(" + QString::number(length) + ")";
-//   }
-//   // Add the UNSIGNED suffix if type is unsigned
-//   if((type == QVariant::UInt)||(type == QVariant::ULongLong)){
-//     strType += " UNSIGNED";
-//   }
-
-  return strType;
-}
-
-QString mdtSqlSchemaTable::sqlForCollateMySql() const
-{
-  QString sql;
-
-  /**
-  if(pvCharset.trimmed().isEmpty()){
-    return sql;
-  }
-  sql = " COLLATE=";
-  // Set first part regarding charset
-  if(pvCharset.toLower() == "utf8"){
-    sql += "utf8_unicode";
-  }
-  // Set case sensitivity
-  switch(pvCaseSensitivity){
-    case Qt::CaseInsensitive:
-      sql += "_ci";
-      break;
-    case Qt::CaseSensitive:
-      sql += "_cs";
-      break;
-  }
-  */
-
-  return sql;
-}
-
-QString mdtSqlSchemaTable::sqlForCollateSqlite() const
-{
-  /**
-  switch(pvCaseSensitivity){
-    case Qt::CaseInsensitive:
-      return " COLLATE NOCASE";
-    case Qt::CaseSensitive:
-      return " COLLATE BINARY";
-      break;
-  }
-  */
-
-  return "";
-}
-
-QString mdtSqlSchemaTable::foreignKeyActionName(foreignKeyAction_t action) const
-{
-//   switch(action){
-//     case Cascade:
-//       return "CASCADE";
-//     case SetNull:
-//       return "SET NULL";
-//     case NoAction:
-//       return "NO ACTION";
-//     case Restrict:
-//       return "RESTRICT";
-//   }
-  return "";
 }
 
 mdtSqlSchemaTable::foreignKeyAction_t mdtSqlSchemaTable::foreignKeyActionFromName(const QString & name) const
@@ -1006,7 +564,9 @@ mdtSqlSchemaTable::foreignKeyAction_t mdtSqlSchemaTable::foreignKeyActionFromNam
 
 bool mdtSqlSchemaTable::setupFieldsFromDatabase(const QSqlDatabase & db)
 {
-  switch(pvDriverType.type()){
+  mdtSqlDriverType::Type driverType = mdtSqlDriverType::typeFromName(db.driverName());
+
+  switch(driverType){
     case mdtSqlDriverType::Unknown:
       return false;
     case mdtSqlDriverType::SQLite:
@@ -1019,7 +579,9 @@ bool mdtSqlSchemaTable::setupFieldsFromDatabase(const QSqlDatabase & db)
   int i;
   Q_ASSERT(!record.isEmpty());
   for(i = 0; i < record.count(); ++i){
-    ///pvFields.append(record.field(i));
+    mdtSqlField field;
+    field.setupFromQSqlField(record.field(i), driverType);
+    pvFields.append(field);
   }
   return true;
 }
@@ -1027,10 +589,10 @@ bool mdtSqlSchemaTable::setupFieldsFromDatabase(const QSqlDatabase & db)
 bool mdtSqlSchemaTable::setupFieldsFromDatabaseSqlite(const QSqlDatabase & db)
 {
   QSqlRecord dbRecord = db.record(pvTableName);
-  QSqlRecord record;
+  ///QSqlRecord record;
   QSqlQuery query(db);
   QString sql;
-  QSqlField field;
+  ///QSqlField field;
   QString fieldTypeName;
 
   Q_ASSERT(!dbRecord.isEmpty());
@@ -1047,20 +609,28 @@ bool mdtSqlSchemaTable::setupFieldsFromDatabaseSqlite(const QSqlDatabase & db)
   }
   // Add fields
   while(query.next()){
-    record = query.record();
+    mdtSqlField field;
+    mdtSqlFieldType ft;
+    auto tableInfoRecord = query.record();
     // Most of setup can be done via Qt's driver
-    field = dbRecord.field(record.value("name").toString());
-    // If field type is one that we want to handle, set it
-    fieldTypeName = record.value("type").toString().toUpper();
-    if(fieldTypeName == "DATE"){
-      field.setType(QVariant::Date);
-    }else if(fieldTypeName == "TIME"){
-      field.setType(QVariant::Time);
-    }else if(fieldTypeName == "DATETIME"){
-      field.setType(QVariant::DateTime);
+    field.setupFromQSqlField(dbRecord.field(tableInfoRecord.value("name").toString()), mdtSqlDriverType::SQLite);
+    // Try to map field type from name
+    fieldTypeName = tableInfoRecord.value("type").toString().toUpper();
+    ft = mdtSqlFieldType::typeFromName(fieldTypeName, mdtSqlDriverType::SQLite);
+    if(!ft.isNull()){
+      field.setType(ft.type());
+      field.setLength(ft.length());
     }
+    // If field type is one that we want to handle, set it
+//     if(fieldTypeName == "DATE"){
+//       field.setType(mdtSqlFieldType::Date);
+//     }else if(fieldTypeName == "TIME"){
+//       field.setType(mdtSqlFieldType::Time);
+//     }else if(fieldTypeName == "DATETIME"){
+//       field.setType(mdtSqlFieldType::DateTime);
+//     }
     // Add field
-    ///pvFields.append(field);
+    pvFields.append(field);
   }
 
   return true;
@@ -1068,7 +638,7 @@ bool mdtSqlSchemaTable::setupFieldsFromDatabaseSqlite(const QSqlDatabase & db)
 
 bool mdtSqlSchemaTable::setupIndexesFromDatabase(const QSqlDatabase & db)
 {
-  switch(pvDriverType.type()){
+  switch(mdtSqlDriverType::typeFromName(db.driverName())){
     case mdtSqlDriverType::SQLite:
       return setupIndexesFromDatabaseSqlite(db);
     case mdtSqlDriverType::MariaDB:
@@ -1087,9 +657,9 @@ bool mdtSqlSchemaTable::setupIndexesFromDatabaseSqlite(const QSqlDatabase & db)
   QSqlQuery query(db);
   QString sql;
   QSqlRecord record;
-  QString indexName;
-  QStringList indexList;
-  int i;
+//   QString indexName;
+//   QStringList indexList;
+  
 
   // Get index list
   sql = "PRAGMA index_list(" + pvTableName + ")";
@@ -1103,18 +673,22 @@ bool mdtSqlSchemaTable::setupIndexesFromDatabaseSqlite(const QSqlDatabase & db)
   }
   // Add indexes
   while(query.next()){
+    mdtSqlIndex index;
     record = query.record();
-    indexName = record.value("name").toString();
-    addIndex(indexName, record.value("unique").toBool());
-    indexList.append(indexName);
+    index.setName(record.value("name").toString());
+    index.setUnique(record.value("unique").toInt() == 1);
+    index.setTableName(pvTableName);
+    pvIndexes.append(index);
+//     indexName = record.value("name").toString();
+//     addIndex(indexName, record.value("unique").toBool());
+//     indexList.append(indexName);
   }
   // Add fields for each indexes
-  for(i = 0; i < indexList.size(); ++i){
-    indexName = indexList.at(i);
-    sql = "PRAGMA index_info(" + indexName + ")";
+  for(auto & index : pvIndexes){
+    sql = "PRAGMA index_info(" + index.name() + ")";
     if(!query.exec(sql)){
       QSqlError sqlError = query.lastError();
-      pvLastError.setError("Cannot get index info for index '" + indexName + "' in table '" + pvTableName + "'", mdtError::Error);
+      pvLastError.setError("Cannot get index info for index '" + index.name() + "' in table '" + pvTableName + "'", mdtError::Error);
       pvLastError.setSystemError(sqlError.number(), sqlError.text());
       MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
       pvLastError.commit();
@@ -1122,18 +696,34 @@ bool mdtSqlSchemaTable::setupIndexesFromDatabaseSqlite(const QSqlDatabase & db)
     }
     while(query.next()){
       record = query.record();
-      if(!addFieldToIndex(indexName, record.value("name").toString())){
-        return false;
-      }
+      index.addField(record.value("name").toString());
     }
   }
+//   for(int i = 0; i < indexList.size(); ++i){
+//     indexName = indexList.at(i);
+//     sql = "PRAGMA index_info(" + indexName + ")";
+//     if(!query.exec(sql)){
+//       QSqlError sqlError = query.lastError();
+//       pvLastError.setError("Cannot get index info for index '" + indexName + "' in table '" + pvTableName + "'", mdtError::Error);
+//       pvLastError.setSystemError(sqlError.number(), sqlError.text());
+//       MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSchemaTable");
+//       pvLastError.commit();
+//       return false;
+//     }
+//     while(query.next()){
+//       record = query.record();
+//       if(!addFieldToIndex(indexName, record.value("name").toString())){
+//         return false;
+//       }
+//     }
+//   }
 
   return true;
 }
 
 bool mdtSqlSchemaTable::setupForeignKeysFromDatabase(const QSqlDatabase & db)
 {
-  switch(pvDriverType.type()){
+  switch(mdtSqlDriverType::typeFromName(db.driverName())){
     case mdtSqlDriverType::SQLite:
       return setupForeignKeysFromDatabaseSqlite(db);
     case mdtSqlDriverType::MariaDB:
@@ -1152,7 +742,10 @@ bool mdtSqlSchemaTable::setupForeignKeysFromDatabaseSqlite(const QSqlDatabase & 
   QSqlQuery query(db);
   QString sql;
   QSqlRecord record;
-  QString fkName;
+  mdtSqlForeignKey fk;
+  QMap<int, mdtSqlForeignKey> fkMap;
+//   int lastFkId;
+  ///QString fkName;
 
   // Get foreign key list
   sql = "PRAGMA foreign_key_list(" + pvTableName + ")";
@@ -1164,15 +757,72 @@ bool mdtSqlSchemaTable::setupForeignKeysFromDatabaseSqlite(const QSqlDatabase & 
     pvLastError.commit();
     return false;
   }
-  // Add foreign keys
+  // Build foreign keys
   while(query.next()){
     record = query.record();
-    fkName = record.value("from").toString() + "_fk";
-    addForeignKey(fkName, record.value("table").toString(), foreignKeyActionFromName(record.value("on_delete").toString()), foreignKeyActionFromName(record.value("on_update").toString()) );
-    if(!addFieldToForeignKey(fkName, record.value("from").toString(), record.value("to").toString())){
-      return false;
+    int fkId = record.value("id").toInt();
+    // Check if a FK must be created or just updated
+    if(fkMap.contains(fkId)){
+      fkMap[fkId].addKeyFields(record.value("to").toString(), record.value("from").toString());
+    }else{
+      fk.clear();
+      fk.setParentTableName(record.value("table").toString());
+      fk.setChildTableName(pvTableName);
+      fk.setOnDeleteAction(record.value("on_delete").toString());
+      fk.setOnUpdateAction(record.value("on_update").toString());
+      fk.addKeyFields(record.value("to").toString(), record.value("from").toString());
+      fkMap.insert(fkId, fk);
     }
   }
+  // Add foreign keys
+  pvForeignKeys = fkMap.values();
+  
+//   // Add foreign keys
+//   lastFkId = -1;
+//   while(query.next()){
+//     record = query.record();
+//     
+//     qDebug() << record;
+//     
+//     int fkId = record.value("id").toInt();
+//     
+//     qDebug() << "Id: " << fkId << ", last ID: " << lastFkId;
+//     
+//     // Setup FK common
+//     if(fkId != lastFkId){
+//       
+//       qDebug() << " - base setup ...";
+//       ///pvForeignKeys.append(fk);
+//       
+//       fk.clear();
+//       fk.setParentTableName(record.value("table").toString());
+//       fk.setChildTableName(pvTableName);
+//       fk.setOnDeleteAction(record.value("on_delete").toString());
+//       fk.setOnUpdateAction(record.value("on_update").toString());
+//     }
+//     // Add field
+//     
+//     qDebug() << " - add field ...";
+//     
+//     fk.addKeyFields(record.value("to").toString(), record.value("from").toString());
+//     
+// //     lastFkId = fkId;
+//     // Add FK to list
+//     if(fkId != lastFkId){
+//       
+//       qDebug() << " - add FK to list";
+//       
+//       pvForeignKeys.append(fk);
+//       lastFkId = fkId;
+//     }
+//     
+//     fkName = record.value("from").toString() + "_fk";
+//     addForeignKey(fkName, record.value("table").toString(), foreignKeyActionFromName(record.value("on_delete").toString()), foreignKeyActionFromName(record.value("on_update").toString()) );
+//     if(!addFieldToForeignKey(fkName, record.value("from").toString(), record.value("to").toString())){
+//       return false;
+//     }
+//   }
+  ///pvForeignKeys.append(fk);
 
   return true;
 }

@@ -24,11 +24,8 @@
 #include "mdtSqlDriverType.h"
 #include <QVariant>
 #include <QString>
-#include <QStringList>
-#include <QLatin1String>
 #include <QList>
 #include <QMap>
-#include <utility>
 
 /*! \brief SQL field type
  *
@@ -62,7 +59,8 @@ class mdtSqlFieldType
   /*! \brief Default constructor
    */
   mdtSqlFieldType()
-   : pvType(UnknownType)
+   : pvType(UnknownType),
+     pvLength(-1)
    {
    }
 
@@ -83,11 +81,19 @@ class mdtSqlFieldType
     pvType = type;
   }
 
+  /*! \brief Set length
+   */
+  void setLength(int length)
+  {
+    pvLength = length;
+  }
+
   /*! \brief Clear
    */
   void clear()
   {
     pvType = UnknownType;
+    pvLength = -1;
     pvName.clear();
   }
 
@@ -103,6 +109,15 @@ class mdtSqlFieldType
   QString name() const
   {
     return pvName;
+  }
+
+  /*! \brief Get field type length
+   *
+   * If length was not defined, this function returns -1
+   */
+  int length() const
+  {
+    return pvLength;
   }
 
   /*! \brief Get field type name for given type and driver
@@ -121,6 +136,20 @@ class mdtSqlFieldType
         return nameFromTypeCommon(type);
     }
     return QString();
+  }
+
+  /*! \brief Get field type from type name
+   */
+  static mdtSqlFieldType typeFromName(const QString & typeName, mdtSqlDriverType::Type driverType)
+  {
+    switch(driverType){
+      case mdtSqlDriverType::SQLite:
+      case mdtSqlDriverType::MariaDB:
+      case mdtSqlDriverType::MySQL:
+      case mdtSqlDriverType::Unknown:
+        return typeFromNameCommon(typeName);
+    }
+    return mdtSqlFieldType();
   }
 
   /*! \brief Get a list of available field type
@@ -178,72 +207,22 @@ class mdtSqlFieldType
 
   /*! \brief Get field type mapping table for SQLite
    */
-  static QMap<QVariant::Type, mdtSqlFieldType::Type> mappingTableSqlite()
-  {
-    return {
-      std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Invalid, mdtSqlFieldType::UnknownType},
-      std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Bool, mdtSqlFieldType::Boolean},
-      std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Date, mdtSqlFieldType::Date},
-      std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Double, mdtSqlFieldType::Double},
-      std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Int, mdtSqlFieldType::Integer},
-      std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::String, mdtSqlFieldType::Varchar},
-      std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Time, mdtSqlFieldType::Time}
-    };
-  }
+  static QMap<QVariant::Type, mdtSqlFieldType::Type> mappingTableSqlite();
 
   /*! \brief Get field type name for given type (Common implementation)
    */
-  static QString nameFromTypeCommon(Type type)
-  {
-    switch(type){
-      case UnknownType:
-        return QLatin1String("");
-      case Boolean:
-        return QLatin1String("BOOLEAN");
-      case Integer:
-        return QLatin1String("INTEGER");
-      case Float:
-        return QLatin1String("FLOAT");
-      case Double:
-        return QLatin1String("DOUBLE");
-      case Varchar:
-        return QLatin1String("VARCHAR");
-      case Date:
-        return QLatin1String("DATE");
-      case Time:
-        return QLatin1String("TIME");
-      case DateTime:
-        return QLatin1String("DATETIME");
-    }
-    return QLatin1String("");
-  }
+  static QString nameFromTypeCommon(Type type);
+
+  /*! \brief Get field type from type name (Common implementation)
+   */
+  static mdtSqlFieldType typeFromNameCommon(const QString & typeName);
 
   /*! \brief Get a list of available field type (common implementation)
    */
-  static QList<mdtSqlFieldType> availableFieldTypeListCommon(mdtSqlDriverType::Type driverType)
-  {
-    QList<mdtSqlFieldType> fieldTypeList;
-    mdtSqlFieldType fieldType;
-
-    fieldType.setType(Boolean, driverType);
-    fieldTypeList.append(fieldType);
-    fieldType.setType(Integer, driverType);
-    fieldTypeList.append(fieldType);
-    fieldType.setType(Float, driverType);
-    fieldTypeList.append(fieldType);
-    fieldType.setType(Double, driverType);
-    fieldTypeList.append(fieldType);
-    fieldType.setType(Varchar, driverType);
-    fieldTypeList.append(fieldType);
-    fieldType.setType(Date, driverType);
-    fieldTypeList.append(fieldType);
-    fieldType.setType(Time, driverType);
-    fieldTypeList.append(fieldType);
-
-    return fieldTypeList;
-  }
+  static QList<mdtSqlFieldType> availableFieldTypeListCommon(mdtSqlDriverType::Type driverType);
 
   Type pvType;
+  int pvLength;
   QString pvName;
 };
 

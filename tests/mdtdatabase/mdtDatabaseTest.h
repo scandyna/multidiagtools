@@ -23,7 +23,7 @@
 
 #include "mdtTest.h"
 #include <QFileInfo>
-#include <QMessageBox>
+///#include <QMessageBox>
 #include <QSqlDatabase>
 
 class mdtDatabaseTest : public mdtTest
@@ -43,6 +43,7 @@ class mdtDatabaseTest : public mdtTest
 
   void sqlFieldTest();
   void sqlFieldSQLiteTest();
+  void sqlFieldMySQLTest();
 
   void sqlIndexBaseTest();
   void sqlIndexTest();
@@ -55,10 +56,6 @@ class mdtDatabaseTest : public mdtTest
   void sqlTableSchemaGetSqlSqliteTest();
   void sqlTableSchemaCreateSqliteTest();
   void sqlTableSchemaModelTest();
-  
-  void sqlSchemaTableTest();
-  void sqlSchemaTableSqliteTest();
-  
 
   void sqlTableSetupWidgetTest();
 

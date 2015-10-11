@@ -168,6 +168,13 @@ class mdtSqlForeignKey
     pvOnDeleteAction = action;
   }
 
+  /*! \brief Set on delete action
+   */
+  void setOnDeleteAction(const QString & actionName)
+  {
+    pvOnDeleteAction = actionFromStr(actionName);
+  }
+
   /*! \brief Get on delete action
    */
   Action onDeleteAction() const
@@ -180,6 +187,13 @@ class mdtSqlForeignKey
   void setOnUpdateAction(Action action)
   {
     pvOnUpdateAction = action;
+  }
+
+  /*! \brief Set on update action
+   */
+  void setOnUpdateAction(const QString & actionName)
+  {
+    pvOnUpdateAction = actionFromStr(actionName);
   }
 
   /*! \brief Get on update action
@@ -228,6 +242,10 @@ class mdtSqlForeignKey
   /*! \brief Get string version of given action
    */
   QString actionStr(Action action) const;
+
+  /*! \brief Get action from action name
+   */
+  Action actionFromStr(const QString & actionName) const;
 
   uint pvCreateParentIndex : 1;
   uint pvCreateChildIndex : 1;

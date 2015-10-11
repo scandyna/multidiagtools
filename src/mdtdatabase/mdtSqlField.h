@@ -196,6 +196,10 @@ class mdtSqlField final
    */
   QString getSqliteDefinition(bool pk) const;
 
+  /*! \brief Complete definition - MySQL implementation
+   */
+  QString getMysqlDefinition(bool pk) const;
+
   mdtSqlFieldType::Type pvType;
   uint pvIsAutoValue : 1;
   uint pvIsRequired : 1;

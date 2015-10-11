@@ -30,9 +30,9 @@ QString mdtSqlPrimaryKey::getSql(const QSqlDatabase & db) const
 
   switch(mdtSqlDriverType::typeFromName(db.driverName())){
     case mdtSqlDriverType::SQLite:
-      return getSqlSqlite(driver);
     case mdtSqlDriverType::MariaDB:
     case mdtSqlDriverType::MySQL:
+      return getSqlSqlite(driver);  /// \todo Fix once really adapted for other DBMS than SQLite
     case mdtSqlDriverType::Unknown:
       break;
   }
