@@ -20,8 +20,15 @@
  ****************************************************************************/
 #include "mdtSqlForeignKey.h"
 #include "mdtSqlIndex.h"
+#include "mdtSqlField.h"
 #include <QSqlDatabase>
 #include <QSqlDriver>
+
+void mdtSqlForeignKey::addKeyFields(const QString & parentTableFieldName, const mdtSqlField & childTableField)
+{
+  Q_ASSERT(!childTableField.name().isEmpty());
+  addKeyFields(parentTableFieldName, childTableField.name());
+}
 
 void mdtSqlForeignKey::clear()
 {
@@ -35,7 +42,7 @@ void mdtSqlForeignKey::clear()
   pvChildTableFields.clear();
 }
 
-QString mdtSqlForeignKey::getSqlForForeignKey(const QSqlDatabase & db)
+QString mdtSqlForeignKey::getSqlForForeignKey(const QSqlDatabase & db) const
 {
   QString sql;
   int lastFieldIndex;
@@ -64,12 +71,12 @@ QString mdtSqlForeignKey::getSqlForForeignKey(const QSqlDatabase & db)
   sql += driver->escapeIdentifier(pvParentTableFields.at(lastFieldIndex), QSqlDriver::FieldName) + ")\n";
   // Add actions
   sql += "   ON DELETE " + actionStr(pvOnDeleteAction) + "\n";
-  sql += "   ON UPDATE " + actionStr(pvOnUpdateAction) + "\n";
+  sql += "   ON UPDATE " + actionStr(pvOnUpdateAction);
 
   return sql;
 }
 
-QString mdtSqlForeignKey::getSqlForDropParentTableIndex(const QSqlDatabase & db, const QString & databaseName)
+QString mdtSqlForeignKey::getSqlForDropParentTableIndex(const QSqlDatabase & db, const QString & databaseName) const
 {
   Q_ASSERT(db.isValid());
 
@@ -84,7 +91,7 @@ QString mdtSqlForeignKey::getSqlForDropParentTableIndex(const QSqlDatabase & db,
   return index.getSqlForDrop(db, databaseName);
 }
 
-QString mdtSqlForeignKey::getSqlForCreateParentTableIndex(const QSqlDatabase & db, const QString & databaseName)
+QString mdtSqlForeignKey::getSqlForCreateParentTableIndex(const QSqlDatabase & db, const QString & databaseName) const
 {
   Q_ASSERT(db.isValid());
 
@@ -99,7 +106,7 @@ QString mdtSqlForeignKey::getSqlForCreateParentTableIndex(const QSqlDatabase & d
   return index.getSqlForCreate(db, databaseName);
 }
 
-QString mdtSqlForeignKey::getSqlForDropChildTableIndex(const QSqlDatabase & db, const QString & databaseName)
+QString mdtSqlForeignKey::getSqlForDropChildTableIndex(const QSqlDatabase & db, const QString & databaseName) const
 {
   Q_ASSERT(db.isValid());
 
@@ -114,7 +121,7 @@ QString mdtSqlForeignKey::getSqlForDropChildTableIndex(const QSqlDatabase & db, 
   return index.getSqlForDrop(db, databaseName);
 }
 
-QString mdtSqlForeignKey::getSqlForCreateChildTableIndex(const QSqlDatabase & db, const QString & databaseName)
+QString mdtSqlForeignKey::getSqlForCreateChildTableIndex(const QSqlDatabase & db, const QString & databaseName) const
 {
   Q_ASSERT(db.isValid());
 
@@ -129,7 +136,7 @@ QString mdtSqlForeignKey::getSqlForCreateChildTableIndex(const QSqlDatabase & db
   return index.getSqlForCreate(db, databaseName);
 }
 
-QString mdtSqlForeignKey::actionStr(mdtSqlForeignKey::Action action)
+QString mdtSqlForeignKey::actionStr(mdtSqlForeignKey::Action action) const
 {
   switch(action){
     case NoAction:

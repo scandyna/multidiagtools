@@ -176,6 +176,13 @@ void mdtSqlSchemaTable::addIndex(const mdtSqlIndex & index)
   pvIndexes.append(index);
 }
 
+void mdtSqlSchemaTable::addForeignKey(const mdtSqlForeignKey & fk)
+{
+  Q_ASSERT(!fk.parentTableName().isEmpty());
+  Q_ASSERT(childFieldsExistsInTable(fk));
+  pvForeignKeys.append(fk);
+}
+
 
 void mdtSqlSchemaTable::addIndex(const QString & name, bool unique) 
 {
@@ -299,11 +306,11 @@ bool mdtSqlSchemaTable::setupFromTable(const QString & name, QSqlDatabase db)
     return false;
   }
   */
-  // Set table and driver names
+  // Set table name
   pvTableName = name;
-  if(!setDriverName(db.driverName())){
-    return false;
-  }
+//   if(!setDriverName(db.driverName())){
+//     return false;
+//   }
   // Add fields
   if(!setupFieldsFromDatabase(db)){
     return false;
@@ -328,10 +335,11 @@ bool mdtSqlSchemaTable::setupFromTable(const QString & name, QSqlDatabase db)
   return true;
 }
 
-QString mdtSqlSchemaTable::getSqlForCreateTable(const QSqlDatabase & db) const
+QStringList mdtSqlSchemaTable::getSqlForCreateTable(const QSqlDatabase & db) const
 {
   Q_ASSERT(db.isValid());
 
+  QStringList sqlList;
   QString sql;
   QSqlDriver *driver = db.driver();
   Q_ASSERT(driver != nullptr);
@@ -340,10 +348,10 @@ QString mdtSqlSchemaTable::getSqlForCreateTable(const QSqlDatabase & db) const
 
   // Check if we have requiered info
   if(pvTableName.isEmpty()){
-    return sql;
+    return sqlList;
   }
   if(pvFields.isEmpty()){
-    return sql;
+    return sqlList;
   }
   // Create table beginning part
   if(isTemporary()){
@@ -365,31 +373,52 @@ QString mdtSqlSchemaTable::getSqlForCreateTable(const QSqlDatabase & db) const
     }
     sql += "  " + pvFields.at(i).getSql(db, pkInFieldDefinition) + ",\n";
   }
-  sql += "  " + pvFields.at(lastFieldIndex).getSql(db, pkInFieldDefinition) + "\n";
-  /// ......
-  
-  sql += ");\n";
+  sql += "  " + pvFields.at(lastFieldIndex).getSql(db, pkInFieldDefinition);
+  // Add primary key constraint if needed
+  if( (!pkInFieldDefinition) && (pvPrimaryKey.fieldCount() > 1) ){
+    sql += ",\n  " + pvPrimaryKey.getSql(db);
+  }
+  // Add foreign key constraints
+  for(const auto & fk : pvForeignKeys){
+    sql += ",\n" + fk.getSqlForForeignKey(db);
+  }
+  sql += "\n);\n";
+  sqlList.append(sql);
   // Add indexes
   for(auto index : pvIndexes){
     index.setTableName(pvTableName);
     index.generateName();
-    sql += index.getSqlForCreate(db, pvDatabaseName);
+    sql = index.getSqlForCreate(db, pvDatabaseName) + ";\n";
+    sqlList.append(sql);
+  }
+  // Add indexes for foreign keys that request to create indexes
+  for(auto fk : pvForeignKeys){
+    if(fk.createParentIndex()){
+      sql = fk.getSqlForCreateParentTableIndex(db, pvDatabaseName) + ";\n";
+      sqlList.append(sql);
+    }
+    if(fk.createChildIndex()){
+      fk.setChildTableName(pvTableName);
+      sql = fk.getSqlForCreateChildTableIndex(db, pvDatabaseName) + ";\n";
+      sqlList.append(sql);
+    }
   }
 
-  return sql;
+  return sqlList;
 }
 
-QString mdtSqlSchemaTable::getSqlForDropTable(const QSqlDatabase & db) const
+QStringList mdtSqlSchemaTable::getSqlForDropTable(const QSqlDatabase & db) const
 {
   Q_ASSERT(db.isValid());
 
+  QStringList sqlList;
   QString sql;
   QSqlDriver *driver = db.driver();
   Q_ASSERT(driver != nullptr);
 
   // Check if we have requiered info
   if(pvTableName.isEmpty()){
-    return sql;
+    return sqlList;
   }
   // Build SQL
   sql = "DROP TABLE IF EXISTS ";
@@ -397,14 +426,28 @@ QString mdtSqlSchemaTable::getSqlForDropTable(const QSqlDatabase & db) const
     sql += driver->escapeIdentifier(pvDatabaseName, QSqlDriver::TableName) + ".";
   }
   sql += driver->escapeIdentifier(pvTableName, QSqlDriver::TableName) + ";\n";
+  sqlList.append(sql);
   // Add indexes
   for(auto index : pvIndexes){
     index.setTableName(pvTableName);
     index.generateName();
-    sql += index.getSqlForDrop(db, pvDatabaseName);
+    sql = index.getSqlForDrop(db, pvDatabaseName) +  + ";\n";
+    sqlList.append(sql);
+  }
+  // Add indexes for foreign keys that request to create indexes
+  for(auto fk : pvForeignKeys){
+    if(fk.createParentIndex()){
+      sql = fk.getSqlForDropParentTableIndex(db, pvDatabaseName) + ";\n";
+      sqlList.append(sql);
+    }
+    if(fk.createChildIndex()){
+      fk.setChildTableName(pvTableName);
+      sql = fk.getSqlForDropChildTableIndex(db, pvDatabaseName) + ";\n";
+      sqlList.append(sql);
+    }
   }
 
-  return sql;
+  return sqlList;
 }
 
 QString mdtSqlSchemaTable::sqlForCreateTable()
@@ -468,6 +511,16 @@ QString mdtSqlSchemaTable::sqlForDropTable() const
 mdtError mdtSqlSchemaTable::lastError() const
 {
   return pvLastError;
+}
+
+bool mdtSqlSchemaTable::childFieldsExistsInTable(const mdtSqlForeignKey & fk)
+{
+  for(const auto & childTableFieldName : fk.childTableFields()){
+    if(fieldIndex(childTableFieldName) >= 0){
+      return true;
+    }
+  }
+  return false;
 }
 
 QString mdtSqlSchemaTable::sqlForCreateTableMySql() const

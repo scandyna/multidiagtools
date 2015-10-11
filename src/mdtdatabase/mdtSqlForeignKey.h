@@ -25,6 +25,7 @@
 #include <QStringList>
 
 class QSqlDatabase;
+class mdtSqlField;
 
 /*! \brief Foreign key information for SQL database schema creation
  */
@@ -87,6 +88,49 @@ class mdtSqlForeignKey
   {
     pvParentTableFields.append(parentTableFieldName);
     pvChildTableFields.append(childTableFieldName);
+  }
+
+  /*! \brief Add a couple of fields
+   *
+   * This version can help when defining table schema like this:
+   * \code
+   *  mdtSqlTableSchema ts;
+   *  mdtSqlField field;
+   *  mdtSqlForeignKey fk;
+   *
+   *  // other stuff ...
+   *
+   *  // Common definition of foreign key constraint
+   *  fk.clear();
+   *  fk.setParentTableName("Client_tbl");
+   *  fk.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+   *  fk.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+   *  // Definition of Client_Id_FK field
+   *  field.clear();
+   *  field.setName("Client_Id_FK");
+   *  field.setType(mdtSqlFieldType::Integer);
+   *  field.setRequired(true);
+   *  ts.addField(field, false);
+   *  // Add field to foriegn key
+   *  fk.addKeyFields("Id_PK", field);
+   *  // Add forign key to table schema
+   *  ts.addForeignKey(fk);
+   * \endcode
+   * This way of defining foreign key can prevent some mismatch
+   *  of parent table field name and child table field name.
+   *
+   * \note For this function, only field's name is used.
+   * \pre field's name must not be empty.
+   */
+  void addKeyFields(const QString & parentTableFieldName, const mdtSqlField & childTableField);
+
+  /*! \brief Access child table fields
+   *
+   * \note Used by mdtSqlTableSchema for checking
+   */
+  const QStringList & childTableFields() const
+  {
+    return pvChildTableFields;
   }
 
   /*! \brief Set if a index must be created for parent table
@@ -153,37 +197,37 @@ class mdtSqlForeignKey
    *
    * \pre db's driver must be loaded
    */
-  QString getSqlForForeignKey(const QSqlDatabase & db);
+  QString getSqlForForeignKey(const QSqlDatabase & db) const;
 
   /*! \brief Get SQL statement to drop parent table index
    *
    * \pre db's driver must be loaded
    */
-  QString getSqlForDropParentTableIndex(const QSqlDatabase & db, const QString & databaseName);
+  QString getSqlForDropParentTableIndex(const QSqlDatabase & db, const QString & databaseName) const;
 
   /*! \brief Get SQL statement to create parent table index
    *
    * \pre db's driver must be loaded
    */
-  QString getSqlForCreateParentTableIndex(const QSqlDatabase & db, const QString & databaseName);
+  QString getSqlForCreateParentTableIndex(const QSqlDatabase & db, const QString & databaseName) const;
 
   /*! \brief Get SQL statement to drop child table index
    *
    * \pre db's driver must be loaded
    */
-  QString getSqlForDropChildTableIndex(const QSqlDatabase & db, const QString & databaseName);
+  QString getSqlForDropChildTableIndex(const QSqlDatabase & db, const QString & databaseName) const;
 
   /*! \brief Get SQL statement to create child table index
    *
    * \pre db's driver must be loaded
    */
-  QString getSqlForCreateChildTableIndex(const QSqlDatabase & db, const QString & databaseName);
+  QString getSqlForCreateChildTableIndex(const QSqlDatabase & db, const QString & databaseName) const;
 
  private:
 
   /*! \brief Get string version of given action
    */
-  QString actionStr(Action action);
+  QString actionStr(Action action) const;
 
   uint pvCreateParentIndex : 1;
   uint pvCreateChildIndex : 1;

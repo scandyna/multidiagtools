@@ -229,6 +229,14 @@ class mdtSqlSchemaTable
    */
   void addIndex(const mdtSqlIndex & index);
 
+  /*! \brief Add a foreign key
+   *
+   * \note fk's child table name is ignored.
+   * \pre fk's parent table name must be set
+   * \pre For each key field contained in FK, child table's field must exist in current table
+   */
+  void addForeignKey(const mdtSqlForeignKey & fk);
+
   /*! \brief Add a index
    *
    * If name allready exists, it will not be appended
@@ -278,17 +286,17 @@ class mdtSqlSchemaTable
    */
   bool setupFromTable(const QString & name, QSqlDatabase db);
 
-  /*! \brief Get SQL statement for table creation
+  /*! \brief Get SQL statements for table creation
    *
    * \pre db's driver must be loaded
    */
-  QString getSqlForCreateTable(const QSqlDatabase & db) const;
+  QStringList getSqlForCreateTable(const QSqlDatabase & db) const;
 
-  /*! \brief Get SQL statement for table deletion
+  /*! \brief Get SQL statements for table deletion
    *
    * \pre db's driver must be loaded
    */
-  QString getSqlForDropTable(const QSqlDatabase & db) const;
+  QStringList getSqlForDropTable(const QSqlDatabase & db) const;
 
   /*! \brief Get SQL statement for table creation
    */
@@ -305,6 +313,10 @@ class mdtSqlSchemaTable
   mdtError lastError() const;
 
  private:
+
+  /*! \brief For each key fields in fk, check if child table's field exists in current table
+   */
+  bool childFieldsExistsInTable(const mdtSqlForeignKey & fk);
 
   /*! \brief Build create table statement for Maria DB/MySQL
    */
