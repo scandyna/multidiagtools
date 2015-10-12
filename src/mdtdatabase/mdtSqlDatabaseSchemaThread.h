@@ -33,6 +33,9 @@
 #include <atomic>
 
 /*! \brief Worker thread for SQL database schema creation
+ *
+ * This class is used by mdtSqlDatabaseSchemaDialog, wich should be used
+ *  by applications.
  */
 class mdtSqlDatabaseSchemaThread : public QThread
 {
@@ -66,6 +69,20 @@ class mdtSqlDatabaseSchemaThread : public QThread
    * \pre Thread must be stopped before calling this function
    */
   void createSchema(const mdtSqlDatabaseSchema & s, const QSqlDatabase & db);
+
+  /*! \brief Create given database schema
+   *
+   * This version will not run a separate thread
+   *  and should not be used in GUI applications.
+   *  Internally, this function is mainly used in
+   *  unit tests.
+   *
+   * Given database object is directly used for database creation.
+   *  It will be open by this function if it is not allready.
+   *
+   * \pre db must be valid (its driver must be loaded) and open
+   */
+  bool createSchemaBlocking(const mdtSqlDatabaseSchema & s, const QSqlDatabase & db);
 
  public slots:
 
@@ -110,7 +127,7 @@ class mdtSqlDatabaseSchemaThread : public QThread
 
   /*! \brief Create a table
    */
-  bool createTable(mdtSqlSchemaTable & ts, const QSqlDatabase & db);
+  bool createTable(const mdtSqlSchemaTable & ts, const QSqlDatabase & db);
 
   /*! \brief Populate tables
    */

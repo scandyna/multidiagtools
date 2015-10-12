@@ -22,9 +22,11 @@
 #define MDT_SQL_TABLE_SCHEMA_MODEL_H
 
 #include "mdtSqlSchemaTable.h"
+#include "mdtSqlField.h"
+#include "mdtSqlDriverType.h"
 #include <QAbstractTableModel>
 #include <QModelIndex>
-#include <QSqlField>
+///#include <QSqlField>
 #include <QVariant>
 
 class QComboBox;
@@ -65,19 +67,19 @@ class mdtSqlTableSchemaModel : public QAbstractTableModel
 
   /*! \brief Set table schema
    */
-  void setTableSchema(const mdtSqlSchemaTable & st);
+  void setTableSchema(const mdtSqlSchemaTable & st, mdtSqlDriverType::Type driverType);
 
   /*! \brief Get field at given row
    *
    * If given row does not exist, a invalid QSqlField is returned
    */
-//   QSqlField field(int row) const;
+  mdtSqlField field(int row) const;
 
   /*! \brief Get field for given combo box current index
    *
    * \sa field()
    */
-//   QSqlField currentField(QComboBox *cb) const;
+  mdtSqlField currentField(QComboBox *cb) const;
 
   /*! \brief Check if field at given row is part of primary key
    */
@@ -118,6 +120,7 @@ class mdtSqlTableSchemaModel : public QAbstractTableModel
   Q_DISABLE_COPY(mdtSqlTableSchemaModel)
 
   mdtSqlSchemaTable pvSchema;
+  mdtSqlDriverType::Type pvDriverType;
 };
 
 #endif // #ifndef MDT_SQL_TABLE_SCHEMA_MODEL_H

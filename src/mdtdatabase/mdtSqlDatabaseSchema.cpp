@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtSqlDatabaseSchema.h"
+#include "mdtSqlDatabaseSchemaThread.h"
 
 void mdtSqlDatabaseSchema::addTable(const mdtSqlSchemaTable & st)
 {
@@ -33,4 +34,11 @@ void mdtSqlDatabaseSchema::addView(const mdtSqlViewSchema& vs)
 void mdtSqlDatabaseSchema::addTablePopulation(const mdtSqlTablePopulationSchema& tps)
 {
   pvTablePopulationSchemaList.append(tps);
+}
+
+bool mdtSqlDatabaseSchema::createSchema(const QSqlDatabase& db)
+{
+  mdtSqlDatabaseSchemaThread thread;
+
+  return thread.createSchemaBlocking(*this, db);
 }

@@ -525,7 +525,7 @@ mdtSqlFieldHandler::~mdtSqlFieldHandler()
   delete pvDataWidget;
 }
 
-void mdtSqlFieldHandler::setField(const mdtSqlField & field)
+void mdtSqlFieldHandler::setField(const QSqlField & field)
 {
   pvSqlField = field;
   setDataWidgetAttributes();
@@ -736,8 +736,8 @@ bool mdtSqlFieldHandler::checkBeforeSubmit()
     clearDataWidget();
   }
   // Check the requiered state
-  if( (pvSqlField.isRequired()) && (isNull()) ){
-  ///if((pvSqlField.requiredStatus() == QSqlField::Required)&&(isNull())){
+  ///if( (pvSqlField.isRequired()) && (isNull()) ){
+  if((pvSqlField.requiredStatus() == QSqlField::Required)&&(isNull())){
     setDataWidgetNotOk(tr("This field is requiered"));
     return false;
   }
@@ -751,32 +751,32 @@ void mdtSqlFieldHandler::setData(const QVariant & data)
 
   // Try to handle some date/time format
   if(data.type() == QVariant::String){
-    switch(pvSqlField.type()){
-      case mdtSqlFieldType::DateTime:
-        pvDataWidget->setData(QDateTime::fromString(data.toString(), Qt::ISODate));
-        break;
-      case mdtSqlFieldType::Date:
-        pvDataWidget->setData(QDate::fromString(data.toString(), Qt::ISODate));
-        break;
-      case mdtSqlFieldType::Time:
-        pvDataWidget->setData(QTime::fromString(data.toString(), Qt::ISODate));
-        break;
-      default:
-        pvDataWidget->setData(data);
-    }
 //     switch(pvSqlField.type()){
-//       case QVariant::DateTime:
+//       case mdtSqlFieldType::DateTime:
 //         pvDataWidget->setData(QDateTime::fromString(data.toString(), Qt::ISODate));
 //         break;
-//       case QVariant::Date:
+//       case mdtSqlFieldType::Date:
 //         pvDataWidget->setData(QDate::fromString(data.toString(), Qt::ISODate));
 //         break;
-//       case QVariant::Time:
+//       case mdtSqlFieldType::Time:
 //         pvDataWidget->setData(QTime::fromString(data.toString(), Qt::ISODate));
 //         break;
 //       default:
 //         pvDataWidget->setData(data);
 //     }
+    switch(pvSqlField.type()){
+      case QVariant::DateTime:
+        pvDataWidget->setData(QDateTime::fromString(data.toString(), Qt::ISODate));
+        break;
+      case QVariant::Date:
+        pvDataWidget->setData(QDate::fromString(data.toString(), Qt::ISODate));
+        break;
+      case QVariant::Time:
+        pvDataWidget->setData(QTime::fromString(data.toString(), Qt::ISODate));
+        break;
+      default:
+        pvDataWidget->setData(data);
+    }
   }else{
     pvDataWidget->setData(data);
   }
@@ -852,9 +852,9 @@ void mdtSqlFieldHandler::setDataWidgetAttributes()
   // Read only
   if(pvIsReadOnly){
     pvDataWidget->setReadOnly(true);
-  }/**else{
+  }else{
     pvDataWidget->setReadOnly(pvSqlField.isReadOnly());
-  }*/
+  }
   // Original palette
   pvDataWidgetOriginalPalette = pvDataWidget->widget()->palette();
 }

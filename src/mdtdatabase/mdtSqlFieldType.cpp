@@ -25,6 +25,32 @@
 
 //#include <QDebug>
 
+QVariant::Type mdtSqlFieldType::toQVariantType(mdtSqlFieldType::Type type)
+{
+  switch(type){
+    case mdtSqlFieldType::UnknownType:
+      return QVariant::Invalid;
+    case mdtSqlFieldType::Boolean:
+      return QVariant::Bool;
+    case mdtSqlFieldType::Integer:
+      return QVariant::Int;
+    case mdtSqlFieldType::Float:
+      return QVariant::Double;
+    case mdtSqlFieldType::Double:
+      return QVariant::Double;
+    case mdtSqlFieldType::Varchar:
+      return QVariant::String;
+    case mdtSqlFieldType::Date:
+      return QVariant::Date;
+    case mdtSqlFieldType::Time:
+      return QVariant::Time;
+    case mdtSqlFieldType::DateTime:
+      return QVariant::DateTime;
+  }
+  return QVariant::Invalid;
+}
+
+
 QMap< QVariant::Type, mdtSqlFieldType::Type > mdtSqlFieldType::mappingTableSqlite()
 {
   return {

@@ -42,16 +42,12 @@ void mdtSqlSchemaTable::clear()
   pvIsTemporary = false;
   pvDriverType.clear();
   pvDatabaseName.clear();
-///  pvTemporaryTableKw.clear();
   pvTableName.clear();
   pvCollation.clear();
-  ///pvCharset.clear();
-  ///pvCaseSensitivity = Qt::CaseInsensitive;
   pvStorageEngineName.clear();
   pvFields.clear();
   pvPrimaryKey.clear();
   pvIndexes.clear();
- /// pvIndexeAtIsUnique.clear();
   pvForeignKeys.clear();
 }
 
@@ -77,8 +73,6 @@ void mdtSqlSchemaTable::setTableName(const QString & name, const QString &charse
   pvCollation.clear();
   pvCollation.setCharset(charset);
   pvCollation.setCaseSensitive(cs == Qt::CaseSensitive);
-//   pvCharset = charset.toLower();
-//   pvCaseSensitivity = cs;
 }
 
 QString mdtSqlSchemaTable::tableName() const
@@ -89,28 +83,12 @@ QString mdtSqlSchemaTable::tableName() const
 void mdtSqlSchemaTable::setTemporary(bool temporary)
 {
   pvIsTemporary = temporary;
-  /**
-  if(temporary){
-    pvTemporaryTableKw = "TEMPORARY ";
-  }else{
-    pvTemporaryTableKw.clear();
-  }
-  */
 }
 
 void mdtSqlSchemaTable::setStorageEngineName(const QString & name) 
 {
   pvStorageEngineName = name;
 }
-
-// void mdtSqlSchemaTable::addField(const mdtSqlField & field, bool isPartOfPrimaryKey)
-// {
-//   if(isPartOfPrimaryKey){
-//     pvPrimaryKey.addField(field);
-//   }else{
-//     pvFields.append(field);
-//   }
-// }
 
 void mdtSqlSchemaTable::addField(const mdtSqlField & field, bool isPartOfPrimaryKey)
 {

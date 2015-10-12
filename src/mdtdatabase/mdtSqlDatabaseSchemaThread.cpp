@@ -42,6 +42,37 @@ void mdtSqlDatabaseSchemaThread::createSchema(const mdtSqlDatabaseSchema & s, co
   start();
 }
 
+bool mdtSqlDatabaseSchemaThread::createSchemaBlocking(const mdtSqlDatabaseSchema & s, const QSqlDatabase & db)
+{
+  Q_ASSERT(db.isValid());
+  Q_ASSERT(db.isOpen());
+
+  auto tables = s.tableList();
+  auto tablePopulations = s.tablePopulationSchemaList();
+  auto views = s.viewList();
+
+  // Create table
+  for(const auto & ts : tables){
+    if(!createTable(ts, db)){
+      return false;
+    }
+  }
+  // Populate tables
+  for(const auto & tps : tablePopulations){
+    if(!populateTable(tps, db)){
+      return false;
+    }
+  }
+  // Create views
+  for(const auto & vs : views){
+    if(!createView(vs, db)){
+      return false;
+    }
+  }
+
+  return true;
+}
+
 void mdtSqlDatabaseSchemaThread::abort()
 {
   pvAbort = true;
@@ -157,25 +188,23 @@ void mdtSqlDatabaseSchemaThread::createTables(QList<mdtSqlSchemaTable> & tables,
   }
 }
 
-bool mdtSqlDatabaseSchemaThread::createTable(mdtSqlSchemaTable & ts, const QSqlDatabase & db)
+bool mdtSqlDatabaseSchemaThread::createTable(const mdtSqlSchemaTable & ts, const QSqlDatabase & db)
 {
   QSqlQuery query(db);
   QString tableName = ts.tableName();
 
-  if(!ts.setDriverName(db.driverName())){
-    emit objectErrorOccured(mdtSqlDatabaseSchemaModel::Table, tableName, ts.lastError());
-    return false;
-  }
   emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, tableName, -1);
-  if(!query.exec(ts.sqlForCreateTable())){
-    QSqlError sqlError = query.lastError();
-    mdtError error(tr("Cannot create table '") + tableName + tr("'"), mdtError::Error);
-    error.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseSchemaThread");
-    error.commit();
-    emit objectErrorOccured(mdtSqlDatabaseSchemaModel::Table, tableName, error);
-    emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, tableName, 0);
-    return false;
+  for(const auto & sql : ts.getSqlForCreateTable(db)){
+    if(!query.exec(sql)){
+      QSqlError sqlError = query.lastError();
+      mdtError error(tr("Cannot create table '") + tableName + tr("'"), mdtError::Error);
+      error.setSystemError(sqlError.number(), sqlError.text());
+      MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseSchemaThread");
+      error.commit();
+      emit objectErrorOccured(mdtSqlDatabaseSchemaModel::Table, tableName, error);
+      emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, tableName, 0);
+      return false;
+    }
   }
   emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, tableName, 100);
   emit objectStatusChanged(mdtSqlDatabaseSchemaModel::Table, tableName, mdtSqlDatabaseSchemaModel::StatusOk);

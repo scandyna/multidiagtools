@@ -19,7 +19,10 @@
  **
  ****************************************************************************/
 #include "mdtDatabaseWidgetTest.h"
+#include "mdtSqlDatabaseSqlite.h"
+#include "mdtSqlForeignKey.h"
 #include "mdtSqlSchemaTable.h"
+#include "mdtSqlDatabaseSchema.h"
 #include "mdtSqlForeignKeySetting.h"
 #include "mdtApplication.h"
 #include "mdtSqlTableWidget.h"
@@ -37,7 +40,6 @@
 #include "mdtSqlFieldSelectionDialog.h"
 #include "mdtDoubleEdit.h"
 #include "mdtSqlDialog.h"
-#include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlField>
@@ -318,17 +320,17 @@ void mdtDatabaseWidgetTestScenario1Data::debugSqlError(const QSqlError& error)
 void mdtDatabaseWidgetTest::initTestCase()
 {
   createDatabaseSchema();
-  QVERIFY(pvDatabaseManager.database().isOpen());
+  QVERIFY(pvDatabase.isOpen());
 }
 
 void mdtDatabaseWidgetTest::cleanupTestCase()
 {
-  QFile::remove(pvDatabaseManager.database().databaseName());
+  QFile::remove(pvDatabase.databaseName());
 }
 
 void mdtDatabaseWidgetTest::sqlRelationTest()
 {
-  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabase);
   QSqlTableModel clientModel;
   QSqlTableModel detailModel;
   QSqlTableModel addressModel;
@@ -560,7 +562,7 @@ void mdtDatabaseWidgetTest::sqlRelationTest()
 void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
 {
   mdtSqlFieldHandler fh;
-  mdtSqlField field;
+  QSqlField field;
 
   // Check inital flags
   QVERIFY(fh.isNull());
@@ -571,7 +573,7 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   field.setAutoValue(false);
   field.setLength(10);
   field.setRequired(true);
-  ///field.setReadOnly(false);
+  field.setReadOnly(false);
   fh.setField(field);
 
   /*
@@ -670,7 +672,7 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   field.setAutoValue(false);
   field.setLength(10);
   field.setRequired(true);
-  ///field.setReadOnly(true);
+  field.setReadOnly(true);
   fh.setField(field);
   // Check field handler flags
   ///QVERIFY(fh.isReadOnly());
@@ -682,7 +684,7 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   field.setAutoValue(false);
   field.setLength(10);
   field.setRequired(true);
-  ///field.setReadOnly(false);
+  field.setReadOnly(false);
   fh.setField(field);
 
   /*
@@ -734,7 +736,7 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   field.setAutoValue(false);
   field.setLength(10);
   field.setRequired(true);
-  ///field.setReadOnly(false);
+  field.setReadOnly(false);
   fh.setField(field);
 
   /*
@@ -828,7 +830,7 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   field.setAutoValue(false);
   field.setLength(10);
   field.setRequired(true);
-  ///field.setReadOnly(true);
+  field.setReadOnly(true);
   fh.setField(field);
   // Check widget flags
   QVERIFY(pte.isEnabled());
@@ -840,9 +842,9 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
   mdtDoubleEdit de;
   // Setup field
   field.clear();
-  field.setType(mdtSqlFieldType::Double);
+  field.setType(QVariant::Double);
   field.setRequired(true);
-  ///field.setReadOnly(false);
+  field.setReadOnly(false);
   // Setup double edit
   de.setEditionMode(mdtDoubleEdit::DefaultEditionMode);
   de.setMinimumToMinusInfinity();
@@ -930,13 +932,13 @@ void mdtDatabaseWidgetTest::sqlFieldHandlerTest()
 
 void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
 {
-  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
-  QSqlQuery q(pvDatabaseManager.database());
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabase);
+  QSqlQuery q(pvDatabase);
   sqlDataWidgetControllerTestWidget w;
   ///std::shared_ptr<mdtUiMessageHandler> messageHandler(new mdtUiMessageHandler(&w));
   mdtSqlDataWidgetController wc;
-  std::shared_ptr<QSqlTableModel> m1(new QSqlTableModel(0, pvDatabaseManager.database()));
-  std::shared_ptr<QSqlTableModel> m2(new QSqlTableModel(0, pvDatabaseManager.database()));
+  std::shared_ptr<QSqlTableModel> m1(new QSqlTableModel(0, pvDatabase));
+  std::shared_ptr<QSqlTableModel> m2(new QSqlTableModel(0, pvDatabase));
   std::shared_ptr<QSqlTableModel> model;
   QVariant data;
   QStringList fields;
@@ -1001,7 +1003,7 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
   /*
    * Set table name, and check that m2 is intact
    */
-  wc.setTableName("Client_tbl", pvDatabaseManager.database(), "Clients");
+  wc.setTableName("Client_tbl", pvDatabase, "Clients");
   QCOMPARE(wc.model()->tableName(), QString("Client_tbl"));
   QCOMPARE(wc.userFriendlyTableName(), QString("Clients"));
   QCOMPARE(m2->tableName(), QString("Address_tbl"));
@@ -2019,8 +2021,8 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerTest()
 
 void mdtDatabaseWidgetTest::sqlDataWidgetControllerRoTest()
 {
-  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
-  QSqlQuery q(pvDatabaseManager.database());
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabase);
+  QSqlQuery q(pvDatabase);
   sqlDataWidgetControllerTestWidget w;
   mdtSqlDataWidgetController wc;
   QVariant data;
@@ -2053,7 +2055,7 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerRoTest()
    * Set table name (and tell controller that we cannot write to it)
    */
   wc.setCanWriteToDatabase(false);
-  wc.setTableName("Client_tbl", pvDatabaseManager.database(), "Clients");
+  wc.setTableName("Client_tbl", pvDatabase, "Clients");
   QCOMPARE(wc.userFriendlyTableName(), QString("Clients"));
   QCOMPARE(wc.rowCount(), 0);
   QVERIFY(wc.currentRow() < 0);
@@ -2232,8 +2234,8 @@ void mdtDatabaseWidgetTest::sqlDataWidgetControllerRoTest()
 
 void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
 {
-  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
-  QSqlQuery q(pvDatabaseManager.database());
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabase);
+  QSqlQuery q(pvDatabase);
   sqlDataWidgetControllerTestWidget w;
   mdtSqlDataWidgetController clientController;
   std::shared_ptr<mdtSqlDataWidgetController> detailController;
@@ -2258,7 +2260,7 @@ void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
   connect(&clientController, SIGNAL(removeEnabledStateChanged(bool)), &w, SLOT(setRemoveEnableState(bool)));
   connect(&clientController, SIGNAL(submitEnabledStateChanged(bool)), &w, SLOT(setSubmitEnableState(bool)));
   connect(&clientController, SIGNAL(revertEnabledStateChanged(bool)), &w, SLOT(setRevertEnableState(bool)));
-  clientController.setTableName("Client_tbl", pvDatabaseManager.database(), "Client");
+  clientController.setTableName("Client_tbl", pvDatabase, "Client");
   relationInfo.setChildTableName("ClientDetail_tbl");
   relationInfo.setRelationType(mdtSqlRelationInfo::OneToOne);
   relationInfo.addRelation("Id_PK", "Client_Id_FK_PK", true);
@@ -2581,11 +2583,11 @@ void mdtDatabaseWidgetTest::sqlDataWidgetController2tableTest()
 
 void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
 {
-  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabase);
   mdtTableViewControllerTestObject testObject;
   mdtSqlTableViewController tvc;
   QTableView tv;
-  QSqlQuery q(pvDatabaseManager.database());
+  QSqlQuery q(pvDatabase);
   QModelIndex index;
   QLineEdit *lineEdit;
   mdtSqlTableSelection s;
@@ -2601,7 +2603,7 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
    * Setup
    */
   tvc.setTableView(&tv);
-  tvc.setTableName("Client_tbl", pvDatabaseManager.database(), "Clients");
+  tvc.setTableName("Client_tbl", pvDatabase, "Clients");
   QCOMPARE(tvc.tableName(), QString("Client_tbl"));
   connect(&tvc, SIGNAL(doubleClicked(const QSqlRecord&)), &testObject, SLOT(doubleClickedReceiver(const QSqlRecord&)));
   tv.setEditTriggers(QAbstractItemView::EditKeyPressed);
@@ -3160,7 +3162,7 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
 // {
 //   mdtSqlTableViewController tvc;
 //   QTableView tv;
-//   QSqlQuery q(pvDatabaseManager.database());
+//   QSqlQuery q(pvDatabase);
 //   ///QModelIndex index;
 //   ///QLineEdit *lineEdit;
 //   ///mdtSqlTableSelection s;
@@ -3173,7 +3175,7 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
 //    * Setup
 //    */
 //   tvc.setTableView(&tv);
-//   tvc.setTableName("Client_tbl", pvDatabaseManager.database(), "Clients");
+//   tvc.setTableName("Client_tbl", pvDatabase, "Clients");
 //   QCOMPARE(tvc.tableName(), QString("Client_tbl"));
 //   tv.setEditTriggers(QAbstractItemView::EditKeyPressed);
 //   tv.resize(400, 300);
@@ -3203,7 +3205,7 @@ void mdtDatabaseWidgetTest::sqlTableViewControllerTest()
 
 void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
 {
-  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabase);
   sqlDataWidgetControllerTestWidget clientWidget;
   mdtSqlDataWidgetController clientController;
   QTableView addressView;
@@ -3219,7 +3221,7 @@ void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
    * Setup
    */
   // Setup client widget and controller
-  clientController.setTableName("Client_tbl", pvDatabaseManager.database(), "Clients");
+  clientController.setTableName("Client_tbl", pvDatabase, "Clients");
   clientController.addColumnToSortOrder("FirstName", Qt::AscendingOrder);
   QVERIFY(clientController.mapFormWidgets(&clientWidget));
   connect(&clientController, SIGNAL(toFirstEnabledStateChanged(bool)), &clientWidget, SLOT(setToFirstEnableState(bool)));
@@ -3394,7 +3396,7 @@ void mdtDatabaseWidgetTest::sqlControllerParentChildTest()
 
 void mdtDatabaseWidgetTest::sqlTableSelectionItemTest()
 {
-  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabase);
   QSqlTableModel model;
   QModelIndex index;
 
@@ -3414,7 +3416,7 @@ void mdtDatabaseWidgetTest::sqlTableSelectionItemTest()
 
 void mdtDatabaseWidgetTest::sqlTableSelectionRowTest()
 {
-  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabase);
   QSqlTableModel model;
   QModelIndex index;
   mdtSqlTableSelectionRow row;
@@ -3458,7 +3460,7 @@ void mdtDatabaseWidgetTest::sqlTableSelectionRowTest()
 
 void mdtDatabaseWidgetTest::sqlTableSelectionTest()
 {
-  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabase);
   QSqlTableModel model;
   QTableView view;
   QItemSelectionModel *selectionModel;
@@ -3624,7 +3626,7 @@ void mdtDatabaseWidgetTest::sqlTableSelectionTest()
 
 void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
 {
-  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabase);
   mdtSqlSelectionDialog *dialog;
   QSqlQuery q;
   QString sql;
@@ -3638,7 +3640,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
    */
   sql = "SELECT * FROM Client_tbl";
   dialog = new mdtSqlSelectionDialog;
-  QVERIFY(dialog->setQuery(sql, pvDatabaseManager.database()));
+  QVERIFY(dialog->setQuery(sql, pvDatabase));
   dialog->selectRow(0);
   QTimer::singleShot(50, dialog, SLOT(accept()));
   QVERIFY(dialog->exec() == QDialog::Accepted);
@@ -3651,7 +3653,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
    */
   sql = "SELECT * FROM Client_tbl";
   dialog = new mdtSqlSelectionDialog;
-  QVERIFY(dialog->setQuery(sql, pvDatabaseManager.database()));
+  QVERIFY(dialog->setQuery(sql, pvDatabase));
   dialog->addColumnToSortOrder("FirstName", Qt::AscendingOrder);
   dialog->sort();
   dialog->selectRow(0);
@@ -3666,7 +3668,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
    */
   sql = "SELECT * FROM Client_tbl";
   dialog = new mdtSqlSelectionDialog;
-  QVERIFY(dialog->setQuery(sql, pvDatabaseManager.database()));
+  QVERIFY(dialog->setQuery(sql, pvDatabase));
   dialog->addColumnToSortOrder("FirstName", Qt::DescendingOrder);
   dialog->sort();
   dialog->selectRow(0);
@@ -3681,7 +3683,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
    */
   sql = "SELECT * FROM Client_tbl";
   dialog = new mdtSqlSelectionDialog;
-  QVERIFY(dialog->setQuery(sql, pvDatabaseManager.database()));
+  QVERIFY(dialog->setQuery(sql, pvDatabase));
   dialog->selectRow(0);
   QTimer::singleShot(50, dialog, SLOT(accept()));
   QVERIFY(dialog->exec() == QDialog::Accepted);
@@ -3694,7 +3696,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
    */
   sql = "SELECT * FROM Client_tbl";
   dialog = new mdtSqlSelectionDialog;
-  QVERIFY(dialog->setQuery(sql, pvDatabaseManager.database()));
+  QVERIFY(dialog->setQuery(sql, pvDatabase));
   dialog->selectRow(0);
   QTimer::singleShot(50, dialog, SLOT(accept()));
   QVERIFY(dialog->exec() == QDialog::Accepted);
@@ -3710,7 +3712,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
    */
   sql = "SELECT * FROM Client_tbl";
   dialog = new mdtSqlSelectionDialog;
-  QVERIFY(dialog->setQuery(sql, pvDatabaseManager.database(), true));
+  QVERIFY(dialog->setQuery(sql, pvDatabase, true));
   dialog->selectRow(0);
   dialog->selectRow(1);
   QTimer::singleShot(50, dialog, SLOT(accept()));
@@ -3725,7 +3727,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
    */
   sql = "SELECT * FROM Client_tbl";
   dialog = new mdtSqlSelectionDialog;
-  QVERIFY(dialog->setQuery(sql, pvDatabaseManager.database(), true));
+  QVERIFY(dialog->setQuery(sql, pvDatabase, true));
   dialog->addColumnToSortOrder("FirstName", Qt::DescendingOrder);
   dialog->sort();
   dialog->selectRow(0);
@@ -3745,7 +3747,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
    */
   sql = "SELECT * FROM Client_tbl";
   dialog = new mdtSqlSelectionDialog;
-  QVERIFY(dialog->setQuery(sql, pvDatabaseManager.database(), true));
+  QVERIFY(dialog->setQuery(sql, pvDatabase, true));
   dialog->addColumnToSortOrder("FirstName", Qt::DescendingOrder);
   dialog->selectRow(0);
   dialog->selectRow(1);
@@ -3764,7 +3766,7 @@ void mdtDatabaseWidgetTest::sqlSelectionDialogTest()
 
 void mdtDatabaseWidgetTest::sqlTableWidgetTest()
 {
-  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabase);
   mdtSqlTableWidget *sqlTableWidget;
   std::shared_ptr<mdtSqlTableViewController> addressController;
   mdtSqlTableWidget *addressWidget;
@@ -3778,7 +3780,7 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
   QVERIFY(scenario1.populate());
   // Setup client widget
   sqlTableWidget = new mdtSqlTableWidget;
-  sqlTableWidget->setTableName("Client_tbl", pvDatabaseManager.database());
+  sqlTableWidget->setTableName("Client_tbl", pvDatabase);
   sqlTableWidget->resize(500, 300);
   sqlTableWidget->show();
   view = sqlTableWidget->tableView();
@@ -3964,7 +3966,7 @@ void mdtDatabaseWidgetTest::sqlTableWidgetTest()
 
 void mdtDatabaseWidgetTest::sqlTableWidgetCsvExportTest()
 {
-  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabase);
   mdtSqlTableWidget *sqlTableWidget;
   std::shared_ptr<mdtSqlTableViewController> addressController;
   ///mdtSqlTableWidget *addressWidget;
@@ -3984,7 +3986,7 @@ void mdtDatabaseWidgetTest::sqlTableWidgetCsvExportTest()
   QVERIFY(scenario1.populate());
   // Setup client widget
   sqlTableWidget = new mdtSqlTableWidget;
-  sqlTableWidget->setTableName("Client_tbl", pvDatabaseManager.database());
+  sqlTableWidget->setTableName("Client_tbl", pvDatabase);
   sqlTableWidget->resize(500, 300);
   sqlTableWidget->show();
   view = sqlTableWidget->tableView();
@@ -4038,8 +4040,8 @@ void mdtDatabaseWidgetTest::sqlTableWidgetCsvExportTest()
 
 void mdtDatabaseWidgetTest::sqlFormTest()
 {
-  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
-  mdtSqlForm form(0, pvDatabaseManager.database());
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabase);
+  mdtSqlForm form(0, pvDatabase);
   sqlDataWidgetControllerTestWidget clientWidget;
   mdtSqlRelationInfo relationInfo;
 
@@ -4111,7 +4113,7 @@ void mdtDatabaseWidgetTest::sqlFormTest()
 
 void mdtDatabaseWidgetTest::mdtSqlDialogTest()
 {
-  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabaseManager.database());
+  mdtDatabaseWidgetTestScenario1Data scenario1(pvDatabase);
   mdtSqlDialog sqlDialog;
   mdtSqlForm *form;
   QWidget *formWidget;
@@ -4123,7 +4125,7 @@ void mdtDatabaseWidgetTest::mdtSqlDialogTest()
   /*
    * Setup - We simly create a fake main widget for form
    */
-  form = new mdtSqlForm(0, pvDatabaseManager.database());
+  form = new mdtSqlForm(0, pvDatabase);
   formWidget = new QWidget;
   formWidget->setLayout(new QVBoxLayout);
   form->setMainTableWidget(formWidget);
@@ -4206,8 +4208,8 @@ void mdtDatabaseWidgetTest::sqlApplicationWidgetsTest()
   // Following line must not compile
   //mdtSqlApplicationWidgetsTest wt;
 
-  mdtSqlApplicationWidgetsTest::setDatabase(pvDatabaseManager.database());
-  QVERIFY(mdtSqlApplicationWidgetsTest::database().tables() == pvDatabaseManager.database().tables());
+  mdtSqlApplicationWidgetsTest::setDatabase(pvDatabase);
+  QVERIFY(mdtSqlApplicationWidgetsTest::database().tables() == pvDatabase.tables());
   
   mdtError e("Test", mdtError::Warning);
   mdtSqlApplicationWidgetsTest::doSomeThing();
@@ -4222,102 +4224,137 @@ void mdtDatabaseWidgetTest::sqlApplicationWidgetsTest()
 
 void mdtDatabaseWidgetTest::createDatabaseSchema()
 {
-  QTemporaryFile dbFile;
-  QFileInfo dbFileInfo;
-  mdtSqlSchemaTable st;
+  ///QTemporaryFile dbFile;
+  ///QFileInfo dbFileInfo;
+  mdtSqlDatabaseSchema s;
+  mdtSqlSchemaTable ts;
+  mdtSqlForeignKey fk;
   mdtSqlField field;
+  mdtSqlDatabaseSqlite db;
 
+  /*
+   * Init and open database
+   */
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  db.setDatabase(pvDatabase);
+  QVERIFY(db.isValid());
+  QVERIFY(pvTempFile.open());
+  QVERIFY(db.openDatabase(pvTempFile));
+  QVERIFY(pvDatabase.isOpen());
+  
+  qDebug() << "DB: " << pvDatabase.databaseName();
+  
   /*
    * Check Sqlite database creation
    */
-  QVERIFY(dbFile.open());
-  dbFile.close();
-  dbFileInfo.setFile(dbFile.fileName() + ".db");
-  QVERIFY(pvDatabaseManager.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::OverwriteExisting));
+//   QVERIFY(dbFile.open());
+//   dbFile.close();
+//   dbFileInfo.setFile(dbFile.fileName() + ".db");
+//   QVERIFY(pvDatabaseManager.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::OverwriteExisting));
   /*
    * Create schema
    */
   // Client_tbl
-  st.clear();
-  st.setTableName("Client_tbl", "UTF8");
+  ts.clear();
+  ts.setTableName("Client_tbl", "UTF8");
   // Id_PK
   field.clear();
   field.setName("Id_PK");
   field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
-  st.addField(field, true);
+  ts.addField(field, true);
   // FirstName
   field.clear();
   field.setName("FirstName");
   field.setRequired(true);
   field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
-  st.addField(field, false);
+  ts.addField(field, false);
   // Remarks
   field.clear();
   field.setName("Remarks");
   field.setType(mdtSqlFieldType::Varchar);
   field.setLength(100);
-  st.addField(field, false);
-  QVERIFY(pvDatabaseManager.createTable(st, mdtSqlDatabaseManager::OverwriteExisting));
+  ts.addField(field, false);
+  ///QVERIFY(pvDatabaseManager.createTable(ts, mdtSqlDatabaseManager::OverwriteExisting));
   // SomeValueDouble
   field.clear();
   field.setName("SomeValueDouble");
   field.setType(mdtSqlFieldType::Double);
-  st.addField(field, false);
-  QVERIFY(pvDatabaseManager.createTable(st, mdtSqlDatabaseManager::OverwriteExisting));
+  ts.addField(field, false);
+  s.addTable(ts);
+  ///QVERIFY(pvDatabaseManager.createTable(ts, mdtSqlDatabaseManager::OverwriteExisting));
   /*
    * ClientDetail_tbl - Linked 1-1 to Client_tbl (Real cases would be SomeTable_tbl based on Client_tbl)
    */
-  st.clear();
-  st.setTableName("ClientDetail_tbl", "UTF8");
+  ts.clear();
+  ts.setTableName("ClientDetail_tbl", "UTF8");
   // Client_Id_FK_PK
   field.clear();
   field.setName("Client_Id_FK_PK");
   field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(false);
-  st.addField(field, true);
-  st.addForeignKey("Client_Id_FK_PK_fk", "Client_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  QVERIFY(st.addFieldToForeignKey("Client_Id_FK_PK_fk", "Client_Id_FK_PK", "Id_PK"));
+  ts.addField(field, true);
+  fk.clear();
+  fk.setParentTableName("Client_tbl");
+  fk.setCreateChildIndex(true);
+  fk.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk.addKeyFields("Id_PK", field);
+  ts.addForeignKey(fk);
+//   ts.addForeignKey("Client_Id_FK_PK_fk", "Client_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   QVERIFY(ts.addFieldToForeignKey("Client_Id_FK_PK_fk", "Client_Id_FK_PK", "Id_PK"));
   // Detail
   field.clear();
   field.setName("Detail");
   field.setRequired(true);
   field.setType(mdtSqlFieldType::Varchar);
   field.setLength(100);
-  st.addField(field, false);
-  QVERIFY(pvDatabaseManager.createTable(st, mdtSqlDatabaseManager::OverwriteExisting));
+  ts.addField(field, false);
+  s.addTable(ts);
+  ///QVERIFY(pvDatabaseManager.createTable(ts, mdtSqlDatabaseManager::OverwriteExisting));
   // Address_tbl
-  st.clear();
-  st.setTableName("Address_tbl", "UTF8");
+  ts.clear();
+  ts.setTableName("Address_tbl", "UTF8");
   // Id_PK
   field.clear();
   field.setName("Id_PK");
   field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
-  st.addField(field, true);
+  ts.addField(field, true);
   // StreetName
   field.clear();
   field.setName("StreetName");
   field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
-  st.addField(field, false);
+  ts.addField(field, false);
   // StreetNumber
   field.clear();
   field.setName("StreetNumber");
   field.setType(mdtSqlFieldType::Integer);
-  st.addField(field, false);
+  ts.addField(field, false);
   // Client_Id_FK
   field.clear();
   field.setName("Client_Id_FK");
   field.setType(mdtSqlFieldType::Integer);
-  st.addField(field, false);
-  st.addForeignKey("Client_Id_FK_fk", "Client_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  QVERIFY(st.addFieldToForeignKey("Client_Id_FK_fk", "Client_Id_FK", "Id_PK"));
-  QVERIFY(pvDatabaseManager.createTable(st, mdtSqlDatabaseManager::OverwriteExisting));
+  ts.addField(field, false);
+  fk.clear();
+  fk.setParentTableName("Client_tbl");
+  fk.setCreateChildIndex(true);
+  fk.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk.addKeyFields("Id_PK", field);
+  ts.addForeignKey(fk);
+  s.addTable(ts);
+//   ts.addForeignKey("Client_Id_FK_fk", "Client_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   QVERIFY(ts.addFieldToForeignKey("Client_Id_FK_fk", "Client_Id_FK", "Id_PK"));
+  ///QVERIFY(pvDatabaseManager.createTable(ts, mdtSqlDatabaseManager::OverwriteExisting));
+  // Create schema
+  QVERIFY(s.createSchema(pvDatabase));
 
   // Enable foreing keys support
-  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Permanent);
+  ///mdtSqlForeignKeySetting fkSetting(pvDatabase, mdtSqlForeignKeySetting::Permanent);
+  mdtSqlForeignKeySetting fkSetting(pvDatabase, mdtSqlForeignKeySetting::Permanent);
   QVERIFY(fkSetting.enable());
 //   QVERIFY(pvDatabaseManager.setForeignKeysEnabled(true));
 }

@@ -52,6 +52,14 @@ class mdtSqlDatabaseSqlite
     FailIfExists,       /*!< If file/database/table allready exists, create function will fail */
   };
 
+//   enum ConnectionOwnership
+//   {
+//     Owning,     /*!< The connection is owned by this object.
+//                      Whenn this object is destroyed, the connection is removed with QSqlDatabase::removeDatabase() */
+//     Shared      /*!< The connection is shared.
+//                      When this object is destroyed, the connection is not touched (not closed and not removed) */
+//   };
+
   /*! \brief Default constructor
    *
    * Contruct a invalid database object
@@ -129,6 +137,17 @@ class mdtSqlDatabaseSqlite
    * \todo Create options (like FK support, sync mode, ...)
    */
   bool createDatabase(const QFileInfo & fileInfo, CreateMode createMode);
+
+  /*! \brief Create a temporary database
+   *
+   * Will create a database based on a temporary file.
+   *  This can be usefull for unit testing.
+   *
+   * \pre Database must be valid (\sa isValid() )
+   * \pre Database must not allready be open (\sa isOpen() )
+   * \sa lastError()
+   */
+//   bool createTemporaryDatabase();
 
   /*! \brief Check if database is open
    */

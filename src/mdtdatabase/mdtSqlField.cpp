@@ -43,6 +43,20 @@ void mdtSqlField::setupFromQSqlField(const QSqlField & qtField, mdtSqlDriverType
   pvLength = qtField.length();
 }
 
+QSqlField mdtSqlField::toQSqlField() const
+{
+  QSqlField qtField;
+
+  qtField.setType(mdtSqlFieldType::toQVariantType(pvType));
+  qtField.setName(pvName);
+  qtField.setAutoValue(pvIsAutoValue);
+  qtField.setRequired(pvIsRequired);
+  qtField.setDefaultValue(pvDefaultValue);
+  qtField.setLength(pvLength);
+
+  return qtField;
+}
+
 QString mdtSqlField::getSql(const QSqlDatabase & db, bool pk) const
 {
   Q_ASSERT(db.driver() != nullptr);

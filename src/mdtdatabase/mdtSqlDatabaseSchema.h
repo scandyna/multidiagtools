@@ -26,6 +26,8 @@
 #include "mdtSqlViewSchema.h"
 #include <QList>
 
+class QSqlDatabase;
+
 /*! \brief Container for a database schema
  *
  * This class is mostly a container for database schema information objects,
@@ -124,6 +126,18 @@ class mdtSqlDatabaseSchema
     Q_ASSERT(index < pvTablePopulationSchemaList.size());
     return pvTablePopulationSchemaList.at(index).name();
   }
+
+  /*! \brief Create given database schema
+   *
+   * Given database object is directly used for database creation.
+   *  It will be open by this function if it is not allready.
+   *
+   * \note When creating GUI applications, consider using
+   *        mdtSqlDatabaseSchemaDialog.
+   * \pre db must be valid (its driver must be loaded) and open
+   * \sa mdtSqlDatabaseSchemaDialog , mdtSqlDatabaseSchemaThread , mdtSqlDatabaseSchemaModel .
+   */
+  bool createSchema(const QSqlDatabase & db);
 
  private:
 

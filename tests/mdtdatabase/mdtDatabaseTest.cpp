@@ -181,10 +181,19 @@ void mdtDatabaseTest::sqlFieldTypeTest()
   /*
    * Check field type mapping - SQLite
    */
+  // QVariant -> mdtSqlFieldType
   QVERIFY(mdtSqlFieldType::fromQVariantType(QVariant::Invalid, mdtSqlDriverType::SQLite) == mdtSqlFieldType::UnknownType);
   QVERIFY(mdtSqlFieldType::fromQVariantType(QVariant::Int, mdtSqlDriverType::SQLite) == mdtSqlFieldType::Integer);
   QVERIFY(mdtSqlFieldType::fromQVariantType(QVariant::Bool, mdtSqlDriverType::SQLite) == mdtSqlFieldType::Boolean);
   QVERIFY(mdtSqlFieldType::fromQVariantType(QVariant::Polygon, mdtSqlDriverType::SQLite) == mdtSqlFieldType::UnknownType);
+  // mdtSqlFieldType -> QVariant
+  QVERIFY(mdtSqlFieldType::toQVariantType(mdtSqlFieldType::UnknownType) == QVariant::Invalid);
+  QVERIFY(mdtSqlFieldType::toQVariantType(mdtSqlFieldType::Boolean) == QVariant::Bool);
+  QVERIFY(mdtSqlFieldType::toQVariantType(mdtSqlFieldType::Integer) == QVariant::Int);
+  QVERIFY(mdtSqlFieldType::toQVariantType(mdtSqlFieldType::Varchar) == QVariant::String);
+  QVERIFY(mdtSqlFieldType::toQVariantType(mdtSqlFieldType::Date) == QVariant::Date);
+  QVERIFY(mdtSqlFieldType::toQVariantType(mdtSqlFieldType::Time) == QVariant::Time);
+  QVERIFY(mdtSqlFieldType::toQVariantType(mdtSqlFieldType::DateTime) == QVariant::DateTime);
   /*
    * Check getting field type name - SQLite
    */
@@ -417,8 +426,20 @@ void mdtDatabaseTest::sqlFieldTest()
   QVERIFY(field.isRequired());
   QCOMPARE(field.length(), 5);
   QCOMPARE(field.defaultValue(), QVariant(2));
-  // Clear
+  /*
+   * Check converting to QSqlField
+   */
   field.clear();
+  field.setName("Name");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(50);
+  field.setDefaultValue("Empty");
+  field.setCaseSensitive(false);
+  qtField = field.toQSqlField();
+  QCOMPARE(qtField.name(), QString("Name"));
+  QVERIFY(qtField.type() == QVariant::String);
+  QCOMPARE(qtField.length(), 50);
+  QCOMPARE(qtField.defaultValue(), QVariant("Empty"));
 }
 
 void mdtDatabaseTest::sqlFieldSQLiteTest()
@@ -639,19 +660,17 @@ void mdtDatabaseTest::sqlIndexBaseTest()
    * Initial state
    */
   QVERIFY(index.isNull());
+  QVERIFY(!index.contains("Id_PK"));
   /*
    * Simple set/get
    */
   index.setName("IDX");
   QVERIFY(index.isNull());
-//   field.clear();
-//   field.setName("Id_PK");
-//   field.setType(mdtSqlFieldType::Integer);
   index.addField("Id_PK");
   QVERIFY(!index.isNull());
   QCOMPARE(index.fieldCount(), 1);
   QCOMPARE(index.fieldName(0), QString("Id_PK"));
-//   QCOMPARE(index.field("Id_PK").name(), QString("Id_PK"));
+  QVERIFY(index.contains("Id_PK"));
   /*
    * Clear
    */
@@ -659,6 +678,7 @@ void mdtDatabaseTest::sqlIndexBaseTest()
   QVERIFY(index.name().isEmpty());
   QCOMPARE(index.fieldCount(), 0);
   QVERIFY(index.isNull());
+  QVERIFY(!index.contains("Id_PK"));
   /*
    * Setup from QSqlIndex
    */
@@ -2148,7 +2168,6 @@ void mdtDatabaseTest::sqlTableSchemaModelTest()
   QComboBox cb;
   mdtSqlField field;
 
-  st.setDriverName("QSQLITE");
   /*
    * Setup fields
    */
@@ -2167,7 +2186,7 @@ void mdtDatabaseTest::sqlTableSchemaModelTest()
   /*
    * Setup model and views
    */
-  model.setTableSchema(st);
+  model.setTableSchema(st, mdtSqlDriverType::SQLite);
   tableView.setModel(&model);
   tableView.resize(400, 200);
   tableView.show();
@@ -2181,28 +2200,24 @@ void mdtDatabaseTest::sqlTableSchemaModelTest()
   /*
    * Check getting field
    */
-  /**
-   * \todo re-enable and update once migrated to mdtSqlField
-   * 
-  QVERIFY(!model.field(-1).isValid());
-  QVERIFY(model.field(0).isValid());
+  QVERIFY(model.field(-1).isNull());
+  QVERIFY(!model.field(0).isNull());
   QCOMPARE(model.field(0).name(), QString("Id_PK"));
   QVERIFY(model.isPartOfPrimaryKey(0));
-  QVERIFY(model.field(1).isValid());
+  QVERIFY(!model.field(1).isNull());
   QCOMPARE(model.field(1).name(), QString("Name"));
   QVERIFY(!model.isPartOfPrimaryKey(1));
-  QVERIFY(!model.field(20).isValid());
+  QVERIFY(model.field(20).isNull());
   QVERIFY(!model.isPartOfPrimaryKey(20));
   // Check with combo box
   cb.setCurrentIndex(0);
-  QVERIFY(model.currentField(&cb).isValid());
+  QVERIFY(!model.currentField(&cb).isNull());
   QCOMPARE(model.currentField(&cb).name(), QString("Id_PK"));
   cb.setCurrentIndex(1);
-  QVERIFY(model.currentField(&cb).isValid());
+  QVERIFY(!model.currentField(&cb).isNull());
   QCOMPARE(model.currentField(&cb).name(), QString("Name"));
   cb.setCurrentIndex(-1);
-  QVERIFY(!model.currentField(&cb).isValid());
-  */
+  QVERIFY(model.currentField(&cb).isNull());
 
   /*
    * Play
@@ -2246,20 +2261,20 @@ void mdtDatabaseTest::sqlFieldSetupWidgetTest()
   // Select Id_PK and check
   w.setField(0);
   QCOMPARE(w.cbField->currentText(), QString("Id_PK"));
-  QVERIFY(w.cbType->currentData() == QVariant::Int);
+  QVERIFY(w.cbType->currentData() == mdtSqlFieldType::Integer);
   QVERIFY(w.cbPartOfPk->isChecked());
   QVERIFY(w.cbAutoIncrement->isChecked());
   // Select FirstName and check
   w.setField(1);
   QCOMPARE(w.cbField->currentText(), QString("FirstName"));
-  QVERIFY(w.cbType->currentData() == QVariant::String);
+  QVERIFY(w.cbType->currentData() == mdtSqlFieldType::Varchar);
   QVERIFY(!w.cbPartOfPk->isChecked());
   QVERIFY(!w.cbAutoIncrement->isChecked());
   QVERIFY(w.cbRequired->isChecked());
   // Select Remarks and check
   w.setField(2);
   QCOMPARE(w.cbField->currentText(), QString("Remarks"));
-  QVERIFY(w.cbType->currentData() == QVariant::String);
+  QVERIFY(w.cbType->currentData() == mdtSqlFieldType::Varchar);
   QVERIFY(!w.cbPartOfPk->isChecked());
   QVERIFY(!w.cbAutoIncrement->isChecked());
   QVERIFY(!w.cbRequired->isChecked());
@@ -2270,20 +2285,20 @@ void mdtDatabaseTest::sqlFieldSetupWidgetTest()
   // Select Id_PK and check
   w.setField(0);
   QCOMPARE(w.cbField->currentText(), QString("Id_PK"));
-  QVERIFY(w.cbType->currentData() == QVariant::Int);
+  QVERIFY(w.cbType->currentData() == mdtSqlFieldType::Integer);
   QVERIFY(w.cbPartOfPk->isChecked());
   QVERIFY(w.cbAutoIncrement->isChecked());
   // Select FirstName and check
   w.setField(1);
   QCOMPARE(w.cbField->currentText(), QString("FirstName"));
-  QVERIFY(w.cbType->currentData() == QVariant::String);
+  QVERIFY(w.cbType->currentData() == mdtSqlFieldType::Varchar);
   QVERIFY(!w.cbPartOfPk->isChecked());
   QVERIFY(!w.cbAutoIncrement->isChecked());
   QVERIFY(w.cbRequired->isChecked());
   // Select Remarks and check
   w.setField(2);
   QCOMPARE(w.cbField->currentText(), QString("Remarks"));
-  QVERIFY(w.cbType->currentData() == QVariant::String);
+  QVERIFY(w.cbType->currentData() == mdtSqlFieldType::Varchar);
   QVERIFY(!w.cbPartOfPk->isChecked());
   QVERIFY(!w.cbAutoIncrement->isChecked());
   QVERIFY(!w.cbRequired->isChecked());
@@ -2801,8 +2816,118 @@ void mdtDatabaseTest::sqlDatabaseSchemaDialogTest()
 void mdtDatabaseTest::sqlDatabaseSchemaThreadTest()
 {
   mdtSqlDatabaseSchemaThread thread;
+  QTemporaryFile tempFile;
+  QFileInfo dbFileInfo;
+  QSqlDatabase db;
+  QString sql;
+  mdtSqlDatabaseSchema s;
+  mdtSqlSchemaTable ts;
+  mdtSqlViewSchema vs;
+  mdtSqlTablePopulationSchema tps;
+  ///QSqlRecord record;
+  mdtSqlField field;
+  mdtSqlIndex index;
+  mdtSqlForeignKey fk;
+  ///mdtSqlPrimaryKey pk;
 
-  
+  /*
+   * Create a temporary database
+   */
+  QVERIFY(tempFile.open());
+  tempFile.close();
+  dbFileInfo.setFile(tempFile.fileName() + ".db");
+  // Create connection to database
+  db = QSqlDatabase::addDatabase("QSQLITE", "sqlDatabaseSchemaThreadTest");
+  db.setDatabaseName(dbFileInfo.filePath());
+  QVERIFY(db.open());
+  // QSqlQuery must be created after db.open() was called.
+  QSqlQuery q(db);
+  /*
+   * Enable foreing keys support
+   */
+  sql = "PRAGMA foreign_keys = ON";
+  QVERIFY(q.exec(sql));
+  /*
+   * Build a database schema
+   */
+  // Build Client_tbl
+  ts.clear();
+  ts.setTableName("Client_tbl", "UTF8");
+  // Id_PK
+  field.clear();
+  field.setName("Id_PK");
+  field.setType(mdtSqlFieldType::Integer);
+  field.setAutoValue(true);
+  ts.addField(field, true);
+  // Name
+  field.clear();
+  field.setName("Name");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(50);
+  ts.addField(field, false);
+  s.addTable(ts);
+  // Build Client_view
+  vs.clear();
+  vs.setName("Client_view");
+  vs.setTableName("Client_tbl");
+  vs.addSelectItem("*");
+  s.addView(vs);
+  // Build table population schema for Client_tbl
+  tps.clear();
+  tps.setName("Client_tbl base data");
+  tps.setTableName("Client_tbl");
+  tps.addFieldName("Id_PK");
+  tps.addFieldName("Name");
+  tps.currentRowData() << QVariant() << "A name 1";
+  tps.commitCurrentRowData();
+  tps.currentRowData() << QVariant() << "A name 2";
+  tps.commitCurrentRowData();
+  tps.currentRowData() << QVariant() << "A name 3";
+  tps.commitCurrentRowData();
+  s.addTablePopulation(tps);
+  /*
+   * Create schema in blocking way
+   */
+  QVERIFY(thread.createSchemaBlocking(s, db));
+  // Check that objects where created
+  QVERIFY(db.tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(db.tables(QSql::AllTables).contains("Client_view"));
+  // Check that Client_tbl was populated
+  QVERIFY(q.exec("SELECT * FROM Client_tbl"));
+  QVERIFY(q.next());
+  QCOMPARE(q.record().value("Name"), QVariant("A name 1"));
+  QVERIFY(q.next());
+  QCOMPARE(q.record().value("Name"), QVariant("A name 2"));
+  QVERIFY(q.next());
+  QCOMPARE(q.record().value("Name"), QVariant("A name 3"));
+  /*
+   * Drop schema
+   */
+  QVERIFY(q.exec("DROP TABLE Client_tbl"));
+  QVERIFY(q.exec("DROP VIEW Client_view"));
+  QVERIFY(!db.tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(!db.tables(QSql::AllTables).contains("Client_view"));
+  /*
+   * Create schema in asnyc way (and wait thread end)
+   */
+  thread.createSchema(s, db);
+  thread.wait();
+  // Check that objects where created
+  QVERIFY(db.tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(db.tables(QSql::AllTables).contains("Client_view"));
+  // Check that Client_tbl was populated
+  QVERIFY(q.exec("SELECT * FROM Client_tbl"));
+  QVERIFY(q.next());
+  QCOMPARE(q.record().value("Name"), QVariant("A name 1"));
+  QVERIFY(q.next());
+  QCOMPARE(q.record().value("Name"), QVariant("A name 2"));
+  QVERIFY(q.next());
+  QCOMPARE(q.record().value("Name"), QVariant("A name 3"));
+
+  // Free resources
+  db.close();
+  db = QSqlDatabase();
+  QSqlDatabase::removeDatabase(db.connectionName());
 }
 
 void mdtDatabaseTest::connectionNameWidgetTest()

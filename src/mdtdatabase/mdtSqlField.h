@@ -181,6 +181,10 @@ class mdtSqlField final
    */
   void setupFromQSqlField(const QSqlField & qtField, mdtSqlDriverType::Type driverType);
 
+  /*! \brief Convert to QSqlField
+   */
+  QSqlField toQSqlField() const;
+
   /*! \brief Get SQL for field definition
    *
    * \param db Will be used to fetch driver type, and to escape field name

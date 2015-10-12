@@ -21,7 +21,7 @@
 #ifndef MDT_SQL_FIELD_HANDLER_H
 #define MDT_SQL_FIELD_HANDLER_H
 
-#include "mdtSqlField.h"
+#include <QSqlField>
 #include <QDateTime>
 #include <QPalette>
 #include <QVariant>
@@ -123,7 +123,7 @@ class mdtSqlFieldHandler : public QWidget
    * Store the sql field.
    *  Some field's attributes will be used to handle edit/view widget.
    */
-  void setField(const mdtSqlField & field);
+  void setField(const QSqlField & field);
 
   /*! \brief Set the readOnly flag
    *
@@ -318,7 +318,7 @@ class mdtSqlFieldHandler : public QWidget
   // Flags
   bool pvIsReadOnly;
   bool pvDataEdited;
-  mdtSqlField pvSqlField;
+  QSqlField pvSqlField;
   QPalette pvDataWidgetOriginalPalette;
 
   Q_DISABLE_COPY(mdtSqlFieldHandler);

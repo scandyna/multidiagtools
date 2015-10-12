@@ -70,6 +70,13 @@ class mdtSqlIndexBase
     return pvFields.at(index);
   }
 
+  /*! \brief Check if given field name exists in index
+   */
+  bool contains(const QString & fieldName) const
+  {
+    return pvFields.contains(fieldName);
+  }
+
   /*! \brief Setup index from QSqlIndex
    */
   void setupFromQSqlIndex(const QSqlIndex & index)

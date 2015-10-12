@@ -24,35 +24,37 @@
 //#include <QDebug>
 
 mdtSqlTableSchemaModel::mdtSqlTableSchemaModel(QObject *parent)
- : QAbstractTableModel(parent)
+ : QAbstractTableModel(parent),
+   pvDriverType(mdtSqlDriverType::Unknown)
 {
 }
 
-void mdtSqlTableSchemaModel::setTableSchema(const mdtSqlSchemaTable &st)
+void mdtSqlTableSchemaModel::setTableSchema(const mdtSqlSchemaTable & st, mdtSqlDriverType::Type driverType)
 {
   beginResetModel();
   pvSchema = st;
+  pvDriverType = driverType;
   endResetModel();
 }
 
-// QSqlField mdtSqlTableSchemaModel::field(int row) const
-// {
-//   if( (row < 0) || (row >= pvSchema.fieldCount()) ){
-//     return QSqlField();
-//   }
-//   return pvSchema.fieldList().at(row);
-// }
+mdtSqlField mdtSqlTableSchemaModel::field(int row) const
+{
+  if( (row < 0) || (row >= pvSchema.fieldCount()) ){
+    return mdtSqlField();
+  }
+  return pvSchema.field(row);
+}
 
-// QSqlField mdtSqlTableSchemaModel::currentField(QComboBox *cb) const
-// {
-//   Q_ASSERT(cb != nullptr);
-// 
-//   return field(cb->currentIndex());
-// }
+mdtSqlField mdtSqlTableSchemaModel::currentField(QComboBox *cb) const
+{
+  Q_ASSERT(cb != nullptr);
+
+  return field(cb->currentIndex());
+}
 
 bool mdtSqlTableSchemaModel::isPartOfPrimaryKey(int row) const
 {
-  ///return pvSchema.primaryKey().contains(field(row).name());
+  return pvSchema.primaryKey().contains(field(row).name());
 }
 
 int mdtSqlTableSchemaModel::rowCount(const QModelIndex & parent) const
@@ -106,8 +108,7 @@ QVariant mdtSqlTableSchemaModel::data(const QModelIndex & index, int role) const
     case NameIndex:
       return pvSchema.fieldName(row);
     case TypeIndex:
-      ///return pvSchema.fieldTypeName(row);
-      return "To be implemented !";
+      return mdtSqlFieldType::nameFromType(pvSchema.field(row).type(), pvDriverType);
     case LengthIndex:
       return pvSchema.fieldLength(row);
     case IsPkIndex:

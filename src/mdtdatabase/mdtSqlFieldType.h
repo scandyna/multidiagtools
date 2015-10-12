@@ -203,6 +203,10 @@ class mdtSqlFieldType
     return QMap<QVariant::Type, mdtSqlFieldType::Type>();
   }
 
+  /*! \brief Get QVariant::Type from type
+   */
+  static QVariant::Type toQVariantType(Type type);
+
  private:
 
   /*! \brief Get field type mapping table for SQLite

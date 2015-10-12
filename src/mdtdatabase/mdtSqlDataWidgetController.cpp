@@ -125,7 +125,7 @@ bool mdtSqlDataWidgetController::addMapping(QWidget* widget, const QString& fiel
   // If field was found, map it
   if(fieldIndex >= 0){
     fieldHandler = new mdtSqlFieldHandler;
-    fieldHandler->setField(st.field(fieldName));
+    fieldHandler->setField(st.field(fieldName).toQSqlField());
     fieldHandler->setDataWidget(widget);
     connect(fieldHandler, SIGNAL(dataEdited()), this, SIGNAL(dataEdited()));
     pvFieldHandlers.append(fieldHandler);

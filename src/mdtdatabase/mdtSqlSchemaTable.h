@@ -126,6 +126,7 @@ class mdtSqlSchemaTable
    *
    * \deprecated
    */
+  [[deprecated]]
   void addField(const QSqlField & field, bool isPartOfPrimaryKey);
 
   /*! \brief Get number of fields

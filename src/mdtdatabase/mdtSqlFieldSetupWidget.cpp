@@ -73,7 +73,7 @@ bool mdtSqlFieldSetupWidget::setTable(const mdtSqlSchemaTable & tableSchema, QSq
   }
   // Update
   lbTableName->setText(tableSchema.tableName());
-  pvTabledSchemaModel->setTableSchema(tableSchema);
+  pvTabledSchemaModel->setTableSchema(tableSchema, mdtSqlDriverType::typeFromName(db.driverName()));
   cbField->setCurrentIndex(0);
 
   return true;
@@ -96,7 +96,7 @@ int mdtSqlFieldSetupWidget::fieldIndex() const
 
 void mdtSqlFieldSetupWidget::updateFieldParameters(int cbFieldIndex)
 {
-  mdtSqlField field;/// = pvTabledSchemaModel->field(cbFieldIndex);
+  mdtSqlField field = pvTabledSchemaModel->field(cbFieldIndex);
 
   leName->setText(field.name());
   setFieldType(field.type());
@@ -104,7 +104,7 @@ void mdtSqlFieldSetupWidget::updateFieldParameters(int cbFieldIndex)
   leDefaultValue->setText(field.defaultValue().toString());
   cbAutoIncrement->setChecked(field.isAutoValue());
   cbPartOfPk->setChecked(pvTabledSchemaModel->isPartOfPrimaryKey(cbFieldIndex));
-  ///cbRequired->setChecked(field.requiredStatus() == QSqlField::QSqlField::Required);
+  cbRequired->setChecked(field.isRequired());
   cbRequired->setChecked(field.isRequired());
 }
 

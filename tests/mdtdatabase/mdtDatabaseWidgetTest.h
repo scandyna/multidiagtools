@@ -22,12 +22,15 @@
 #define MDT_DATABASE_WIDGET_TEST_H
 
 #include "mdtTest.h"
+
 #include "mdtSqlDatabaseManager.h"
+
 #include "mdtSqlApplicationWidgets.h"
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QSqlDatabase>
 #include <QSqlRecord>
+#include <QTemporaryFile>
 
 class QLineEdit;
 class mdtDoubleEdit;
@@ -168,6 +171,9 @@ class mdtDatabaseWidgetTest : public mdtTest
 
 //   void populate1000Names();
 
+  QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
+  QSqlDatabase pvDatabase;
+  
   mdtSqlDatabaseManager pvDatabaseManager;
 };
 
