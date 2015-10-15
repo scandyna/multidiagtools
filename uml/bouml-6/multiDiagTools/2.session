@@ -3,17 +3,23 @@ cleanlooks_style
 diagrams
   classdiagram_ref 874370 // TableSchema
     714 719 90 21 0 15
-  active  classdiagram_ref 1510402 // TableSchemaModel
+  classdiagram_ref 1510402 // TableSchemaModel
+    893 899 100 4 0 0
+  classdiagram_ref 1655298 // SqlViewSchema
+    120 106 100 4 0 0
+  active  classdiagram_ref 1674882 // Schema
     893 899 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1510402 // TableSchemaModel
+selected class_ref 1988098 // mdtSqlForeignKey
 open
   classview_ref 787842 // ImportExportCopy
-  attribute_ref 920706 // TableName
-  attribute_ref 1891074 // IsTemporarty
+  classview_ref 794370 // SqlSchema
+  class_ref 1994626 // Table
+  class_ref 1994754 // Schema
+  class_ref 1994882 // SelectField
+  class_ref 1995138 // JoinClause
+  class_ref 1995266 // JoinKey
   classview_ref 800898 // sqlDatabase
-  classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
-  class_ref 1947650 // mdtSqlDatabaseCopierTableMappingDialog
 end
 end

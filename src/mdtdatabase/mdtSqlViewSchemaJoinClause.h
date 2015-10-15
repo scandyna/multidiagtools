@@ -24,6 +24,48 @@
 #include <QString>
 #include <QSqlDriver>
 
+#include <vector>
+
+namespace mdtSqlViewSchemaJCXXXXXyyy
+{
+
+//   struct SelectStatement
+//   {
+//     void addField(const Table & table, const Field & field){}
+//   };
+//   
+//   struct TableToJoin
+//   {
+//     QString name;
+//     QString alias;
+//   };
+//   
+//   struct TableField
+//   {
+//     QString name;
+//   };
+//   
+//   struct TableToJoinField
+//   {
+//     QString name;
+//   };
+//   
+//   struct JoinConstraint
+//   {
+//     QString joinOp;
+//     TableField tableField;
+//     TableToJoinField tableToJoinField;
+//     QString fieldOp;
+//   };
+//   
+//   struct JoinClause
+//   {
+//     Table table;
+//     TableToJoin tableToJoin;
+//     std::vector<JoinConstraint> constraints;
+//   };
+};
+
 /*! \brief Helper class for mdtSqlViewSchema to handle JOIN clause
  */
 class mdtSqlViewSchemaJoinClause
@@ -44,6 +86,25 @@ class mdtSqlViewSchemaJoinClause
   void setJoinOperator(const QString & op)
   {
     pvJoinOperator = op;
+  }
+
+  /*! \brief Set table
+   *
+   * Specify the table just after JOIN
+   *
+   * \param tableName Table name
+   * \param tableAlias Table alias
+   */
+  void setTable(const QString & tableName, const QString & tableAlias = QString())
+  {
+  }
+
+  /*! \brief Set table to join
+   */
+  void setTableToJoin(const QString & tableName, const QString & tableAlias = QString())
+  {
+    pvTableToJoinName = tableName;
+    pvTableToJoinAlias = tableAlias;
   }
 
   /*! \brief Set tables

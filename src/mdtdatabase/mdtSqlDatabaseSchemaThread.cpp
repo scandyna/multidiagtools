@@ -291,7 +291,7 @@ bool mdtSqlDatabaseSchemaThread::populateTable(const mdtSqlTablePopulationSchema
   return true;
 }
 
-void mdtSqlDatabaseSchemaThread::createViews(const QList<mdtSqlViewSchema> & views, const QSqlDatabase & db,
+void mdtSqlDatabaseSchemaThread::createViews(const QList<mdtSqlViewSchema::Schema> & views, const QSqlDatabase & db,
                                              double& globalProgress, double globalProgressStep)
 {
   bool errorOccured = false;
@@ -328,7 +328,7 @@ void mdtSqlDatabaseSchemaThread::createViews(const QList<mdtSqlViewSchema> & vie
   }
 }
 
-bool mdtSqlDatabaseSchemaThread::createView(const mdtSqlViewSchema& vs, const QSqlDatabase& db)
+bool mdtSqlDatabaseSchemaThread::createView(const mdtSqlViewSchema::Schema & vs, const QSqlDatabase& db)
 {
   Q_ASSERT(db.driver() != nullptr);
 

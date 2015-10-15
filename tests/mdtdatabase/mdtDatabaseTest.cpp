@@ -2328,50 +2328,240 @@ void mdtDatabaseTest::sqlFieldSetupDialogTest()
   dialog.exec();
 }
 
-void mdtDatabaseTest::sqlViewSchemaJoinClauseTest()
+void mdtDatabaseTest::sqlViewSchemaFieldTest()
 {
-  mdtSqlViewSchemaJoinClause vsjc;
-  QString expectedSql;
+  using namespace mdtSqlViewSchema;
+  SelectField field1;
+
+  QCOMPARE(pvDatabase.driverName(), QString("QSQLITE"));
+  /*
+   * Construction + set/get
+   */
+  SelectField field2("Id_PK");
+  QCOMPARE(field2.fieldName(), QString("Id_PK"));
+  SelectField field3("Id_PK", "Client ID");
+  QCOMPARE(field3.fieldName(), QString("Id_PK"));
+  QCOMPARE(field3.alias(), QString("Client ID"));
+  field3.setFieldName("Id_A");
+  field3.setAlias("A");
+  QCOMPARE(field3.fieldName(), QString("Id_A"));
+  QCOMPARE(field3.alias(), QString("A"));
+  /*
+   * Set/get
+   */
+  field1.setFieldName("Id_PK");
+  field1.setAlias("Id");
+  field1.setTable("TBL");
+  QCOMPARE(field1.fieldName(), QString("Id_PK"));
+  QCOMPARE(field1.alias(), QString("Id"));
+  QCOMPARE(field1.table(), QString("TBL"));
+  /*
+   * Clear
+   */
+  field1.clear();
+  QVERIFY(field1.fieldName().isEmpty());
+  QVERIFY(field1.alias().isEmpty());
+  QVERIFY(field1.table().isEmpty());
+  /*
+   * SQL
+   */
+  // Empty field
+  QVERIFY(field1.getSql(pvDatabase.driver()).isEmpty());
+  // Field with only field name
+  field1.setFieldName("Id_PK");
+  QCOMPARE(field1.getSql(pvDatabase.driver()), QString("\"Id_PK\""));
+  // Field with field name and table name/alias
+  field1.setTable("CLI");
+  QCOMPARE(field1.getSql(pvDatabase.driver()), QString("\"CLI\".\"Id_PK\""));
+  // Field with field name and alias
+  field1.clear();
+  field1.setFieldName("Id_PK");
+  field1.setAlias("Client ID");
+  QCOMPARE(field1.getSql(pvDatabase.driver()), QString("\"Id_PK\" AS \"Client ID\""));
+  // Field with field name and alias + table name/alias
+  field1.setTable("CLI");
+  QCOMPARE(field1.getSql(pvDatabase.driver()), QString("\"CLI\".\"Id_PK\" AS \"Client ID\""));
+  // Check with table name/alias + * as field name
+  field1.clear();
+  field1.setTable("CLI");
+  field1.setFieldName("*");
+  QCOMPARE(field1.getSql(pvDatabase.driver()), QString("\"CLI\".*"));
+}
+
+void mdtDatabaseTest::sqlViewSchemaTableTest()
+{
+  using namespace mdtSqlViewSchema;
+  Table client1;
+
+  QCOMPARE(pvDatabase.driverName(), QString("QSQLITE"));
+  /*
+   * Construction
+   */
+  Table client2("Client_tbl");
+  QCOMPARE(client2.tableName(), QString("Client_tbl"));
+  Table client3("Client_tbl", "CLI");
+  QCOMPARE(client3.tableName(), QString("Client_tbl"));
+  QCOMPARE(client3.alias(), QString("CLI"));
+  /*
+   * Set/get
+   */
+  client1.setTableName("TBL");
+  QCOMPARE(client1.tableName(), QString("TBL"));
+  QCOMPARE(client1.aliasOrTableName(), QString("TBL"));
+  client1.setAlias("Table");
+  QCOMPARE(client1.aliasOrTableName(), QString("Table"));
+  QCOMPARE(client1.alias(), QString("Table"));
+  /*
+   * Clear
+   */
+  client1.clear();
+  QVERIFY(client1.tableName().isEmpty());
+  QVERIFY(client1.alias().isEmpty());
+}
+
+void mdtDatabaseTest::sqlViewSchemaJoinKeyTest()
+{
+  using namespace mdtSqlViewSchema;
+  JoinKey key;
 
   /*
    * Initial state
    */
-  QVERIFY(vsjc.getSql(pvDatabase.driver()).isEmpty());
+  QVERIFY(key.constraintOperator() == JoinKey::On);
+  QVERIFY(key.fieldOperator() == JoinKey::Equal);
   /*
-   * Set JOIN clause - NOT using aliases
+   * Set/get
    */
-  vsjc.setTables("Client_tbl", "Address_tbl");
-  QVERIFY(vsjc.getSql(pvDatabase.driver()).isEmpty());
-  vsjc.setConstraintOn("Id_PK", "Client_Id_FK");
-  expectedSql = " JOIN \"Address_tbl\"\n  ON \"Address_tbl\".\"Client_Id_FK\" = \"Client_tbl\".\"Id_PK\"\n";
-  QCOMPARE(vsjc.getSql(pvDatabase.driver()), expectedSql);
+  key.setMainTableField("Id_PK");
+  key.setTableToJoinField("Client_Id_FK");
+  key.setConstraintOperator(JoinKey::And);
+  key.setFieldOperator(JoinKey::MtfLessThanTdjf);
+  QCOMPARE(key.mainTableField(), QString("Id_PK"));
+  QCOMPARE(key.tableToJoinField(), QString("Client_Id_FK"));
+  QVERIFY(key.constraintOperator() == JoinKey::And);
+  QCOMPARE(key.constraintOperatorStr(), QString("AND"));
+  QVERIFY(key.fieldOperator() == JoinKey::MtfLessThanTdjf);
+  QCOMPARE(key.fieldOperatorStr(), QString("<"));
+  key.setConstraintOperator(JoinKey::And);
   /*
    * Clear
    */
-  vsjc.clear();
-  QVERIFY(vsjc.getSql(pvDatabase.driver()).isEmpty());
+  key.clear();
+  QVERIFY(key.mainTableField().isEmpty());
+  QVERIFY(key.tableToJoinField().isEmpty());
+  QVERIFY(key.constraintOperator() == JoinKey::On);
+  QCOMPARE(key.constraintOperatorStr(), QString("ON"));
+  QVERIFY(key.fieldOperator() == JoinKey::Equal);
+  QCOMPARE(key.fieldOperatorStr(), QString("="));
+}
+
+void mdtDatabaseTest::sqlViewSchemaJoinClauseTest()
+{
+  using namespace mdtSqlViewSchema;
+  QString expectedSql;
+  Table client;
+  Table address;
+  JoinKey key;
+  JoinClause join;
+
+  QCOMPARE(pvDatabase.driverName(), QString("QSQLITE"));
+  // Empty join clause
   /*
-   * Set JOIN clause - Using aliases
+   * Initial state
    */
-  vsjc.setTables("CLI", "Address_tbl", "ADR");
-  QVERIFY(vsjc.getSql(pvDatabase.driver()).isEmpty());
-  vsjc.setConstraintOn("Id_PK", "Client_Id_FK");
-  expectedSql = " JOIN \"Address_tbl\" \"ADR\"\n  ON \"ADR\".\"Client_Id_FK\" = \"CLI\".\"Id_PK\"\n";
-  QCOMPARE(vsjc.getSql(pvDatabase.driver()), expectedSql);
+  QVERIFY(join.isNull());
+  QCOMPARE(join.getSql(pvDatabase.driver()), QString());
+  /*
+   * Simple JOIN
+   */
+  // Setup join clause
+  client.setTableName("Client_tbl");
+  client.setAlias("CLI");
+  address.setTableName("Address_tbl");
+  address.setAlias("ADR");
+  join.setMainTable(client);
+  join.setTableToJoin(address);
+  QVERIFY(!join.isNull());
+  key.setMainTableField("Id_PK");
+  key.setTableToJoinField("Client_Id_FK");
+  join.addKey(key);
+  // Check SQL
+  expectedSql  = " JOIN \"Address_tbl\" \"ADR\"\n";
+  expectedSql += "  ON \"CLI\".\"Id_PK\" = \"ADR\".\"Client_Id_FK\"";
+  QCOMPARE(join.getSql(pvDatabase.driver()), expectedSql);
+  /*
+   * Clear
+   */
+  join.clear();
+  QVERIFY(join.isNull());
+  QCOMPARE(join.getSql(pvDatabase.driver()), QString());
+//   mdtSqlViewSchemaJoinClause vsjc;
+//   QString expectedSql;
+// 
+//   /*
+//    * Initial state
+//    */
+//   QVERIFY(vsjc.getSql(pvDatabase.driver()).isEmpty());
+//   /*
+//    * Set JOIN clause - NOT using aliases
+//    */
+//   vsjc.setTables("Client_tbl", "Address_tbl");
+//   QVERIFY(vsjc.getSql(pvDatabase.driver()).isEmpty());
+//   vsjc.setConstraintOn("Id_PK", "Client_Id_FK");
+//   expectedSql = " JOIN \"Address_tbl\"\n  ON \"Address_tbl\".\"Client_Id_FK\" = \"Client_tbl\".\"Id_PK\"\n";
+//   QCOMPARE(vsjc.getSql(pvDatabase.driver()), expectedSql);
+//   /*
+//    * Clear
+//    */
+//   vsjc.clear();
+//   QVERIFY(vsjc.getSql(pvDatabase.driver()).isEmpty());
+//   /*
+//    * Set JOIN clause - Using aliases
+//    */
+//   vsjc.setTables("CLI", "Address_tbl", "ADR");
+//   QVERIFY(vsjc.getSql(pvDatabase.driver()).isEmpty());
+//   vsjc.setConstraintOn("Id_PK", "Client_Id_FK");
+//   expectedSql = " JOIN \"Address_tbl\" \"ADR\"\n  ON \"ADR\".\"Client_Id_FK\" = \"CLI\".\"Id_PK\"\n";
+//   QCOMPARE(vsjc.getSql(pvDatabase.driver()), expectedSql);
 }
 
 void mdtDatabaseTest::sqlViewSchemaTest()
 {
-  mdtSqlViewSchema vs;
+  using namespace mdtSqlViewSchema;
   mdtSqlViewSchemaJoinClause vsjc;
   QString expectedSql;
   const QSqlDriver *driver = pvDatabase.driver();
+  Schema vs;
+  Table client("Client_tbl", "CLI");
+  Table address("Address_tbl", "ADR");
 
+  QCOMPARE(pvDatabase.driverName(), QString("QSQLITE"));
   /*
    * Initial state
    */
   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
   QVERIFY(vs.getSqlForDrop(driver).isEmpty());
+  /*
+   * Basic view
+   */
+  // Setup
+  vs.setName("Client_address_view");
+  vs.setTable(client);
+  vs.addSelectField(client, SelectField("Id_PK", "Client_Id"));
+  vs.addSelectField(client, SelectField("Name"));
+  vs.addSelectField(address, SelectField("Id_PK", "Address_Id"));
+  vs.addSelectField(address, SelectField("Street"));
+  // Check SQL to DROP view
+  
+  // Check SQL to CREATE view
+  
+  // Clear and check empty SQL
+  
+  /*
+   * View with a JOIN
+   */
+  
+  
   /*
    * Setup a simple view
    */
@@ -2502,7 +2692,8 @@ void mdtDatabaseTest::sqlViewSchemaTest()
 
 void mdtDatabaseTest::sqlViewSchemaBenchmark()
 {
-  mdtSqlViewSchema vs;
+  using namespace mdtSqlViewSchema;
+  Schema vs;
   QString expectedSql;
   QString sqlD, sqlC;
 
@@ -2587,13 +2778,14 @@ void mdtDatabaseTest::sqlDatabaseSchemaTest()
 
 void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
 {
+  ///using namespace mdtSqlViewSchema;
   const int objectColumn = 0;
   const int progressColumn = 1;
   const int statusColumn = 2;
   mdtSqlDatabaseSchema s;
   mdtSqlDatabaseSchemaModel model;
   mdtSqlSchemaTable ts;
-  mdtSqlViewSchema vs;
+  mdtSqlViewSchema::Schema vs;
   mdtSqlTablePopulationSchema tps;
   mdtSqlField field;
   QTreeView treeView;
@@ -2758,7 +2950,7 @@ void mdtDatabaseTest::sqlDatabaseSchemaDialogTest()
   mdtSqlDatabaseSchemaDialog dialog;
   mdtSqlDatabaseSchema s;
   mdtSqlSchemaTable ts;
-  mdtSqlViewSchema vs;
+  mdtSqlViewSchema::Schema vs;
   mdtSqlTablePopulationSchema tps;
   mdtSqlField field;
 
@@ -2822,7 +3014,7 @@ void mdtDatabaseTest::sqlDatabaseSchemaThreadTest()
   QString sql;
   mdtSqlDatabaseSchema s;
   mdtSqlSchemaTable ts;
-  mdtSqlViewSchema vs;
+  mdtSqlViewSchema::Schema vs;
   mdtSqlTablePopulationSchema tps;
   ///QSqlRecord record;
   mdtSqlField field;

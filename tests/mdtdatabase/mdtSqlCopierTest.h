@@ -22,10 +22,9 @@
 #define MDT_SQL_COPIER_TEST_H
 
 #include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QFileInfo>
 #include <QMessageBox>
 #include <QSqlDatabase>
+#include <QTemporaryFile>
 
 class mdtSqlCopierTest : public mdtTest
 {
@@ -59,8 +58,8 @@ class mdtSqlCopierTest : public mdtTest
   // Clear test database data
   void clearTestDatabaseData();
 
-  mdtSqlDatabaseManager pvDatabaseManager;
-  QFileInfo pvDbFileInfo;
+  QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
+  QSqlDatabase pvDatabase;
 };
 
 #endif // #ifndef MDT_SQL_COPIER_TEST_H

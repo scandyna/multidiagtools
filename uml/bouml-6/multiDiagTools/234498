@@ -1,6 +1,6 @@
 format 209
 "mdtdatabase" // mdtdatabase
-  revision 77
+  revision 78
   modified_by 2 "philippe"
   // class settings
   
@@ -6786,6 +6786,8 @@ ${inlines}
       end
     end
   end
+
+  package_ref 267522 // mdtSqlViewSchema
 
   classview 800898 "sqlDatabase"
     

@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtDatabaseWidgetTest.h"
-#include "mdtSqlDatabaseSqlite.h"
+///#include "mdtSqlDatabaseSqlite.h"
 #include "mdtSqlForeignKey.h"
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlDatabaseSchema.h"
@@ -4230,20 +4230,22 @@ void mdtDatabaseWidgetTest::createDatabaseSchema()
   mdtSqlSchemaTable ts;
   mdtSqlForeignKey fk;
   mdtSqlField field;
-  mdtSqlDatabaseSqlite db;
+  ///mdtSqlDatabaseSqlite db;
 
   /*
    * Init and open database
    */
-  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
-  db.setDatabase(pvDatabase);
-  QVERIFY(db.isValid());
   QVERIFY(pvTempFile.open());
-  QVERIFY(db.openDatabase(pvTempFile));
-  QVERIFY(pvDatabase.isOpen());
-  
-  qDebug() << "DB: " << pvDatabase.databaseName();
-  
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  pvDatabase.setDatabaseName(pvTempFile.fileName());
+  QVERIFY(pvDatabase.open());
+
+//   pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
+//   db.setDatabase(pvDatabase);
+//   QVERIFY(db.isValid());
+//   QVERIFY(pvTempFile.open());
+//   QVERIFY(db.openDatabase(pvTempFile));
+//   QVERIFY(pvDatabase.isOpen());
   /*
    * Check Sqlite database creation
    */

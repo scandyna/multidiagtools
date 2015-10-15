@@ -26,7 +26,7 @@ void mdtSqlDatabaseSchema::addTable(const mdtSqlSchemaTable & st)
   pvTableList.append(st);
 }
 
-void mdtSqlDatabaseSchema::addView(const mdtSqlViewSchema& vs)
+void mdtSqlDatabaseSchema::addView(const mdtSqlViewSchema::Schema & vs)
 {
   pvViewList.append(vs);
 }

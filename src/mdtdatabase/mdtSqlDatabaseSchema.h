@@ -71,7 +71,7 @@ class mdtSqlDatabaseSchema
 
   /*! \brief Add a view schema
    */
-  void addView(const mdtSqlViewSchema & vs);
+  void addView(const mdtSqlViewSchema::Schema & vs);
 
   /*! \brief Get view schema count
    */
@@ -82,7 +82,7 @@ class mdtSqlDatabaseSchema
 
   /*! \brief Get view schema list
    */
-  QList<mdtSqlViewSchema> viewList() const
+  QList<mdtSqlViewSchema::Schema> viewList() const
   {
     return pvViewList;
   }
@@ -142,7 +142,7 @@ class mdtSqlDatabaseSchema
  private:
 
   QList<mdtSqlSchemaTable> pvTableList;
-  QList<mdtSqlViewSchema> pvViewList;
+  QList<mdtSqlViewSchema::Schema> pvViewList;
   QList<mdtSqlTablePopulationSchema> pvTablePopulationSchemaList;
 };
 

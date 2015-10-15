@@ -23,9 +23,10 @@
 
 #include "mdtTest.h"
 #include "mdtCableListTestScenario.h"
-#include "mdtSqlDatabaseManager.h"
+///#include "mdtSqlDatabaseManager.h"
 #include <QMessageBox>
-#include <QFileInfo>
+/// #include <QFileInfo>
+#include <QTemporaryFile>
 
 class mdtCableListTest : public mdtTest
 {
@@ -67,8 +68,11 @@ class mdtCableListTest : public mdtTest
   // Create test database schema - Will FAIL on problem
   void createDatabaseSchema();
 
-  mdtSqlDatabaseManager pvDatabaseManager;
-  QFileInfo pvDbFileInfo;
+  QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
+  QSqlDatabase pvDatabase;
+
+//   mdtSqlDatabaseManager pvDatabaseManager;
+//   QFileInfo pvDbFileInfo;
 };
 
 #endif // #ifndef MDT_CABLE_LIST_TEST_H

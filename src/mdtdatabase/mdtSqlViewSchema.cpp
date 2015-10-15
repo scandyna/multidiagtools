@@ -19,34 +19,182 @@
  **
  ****************************************************************************/
 #include "mdtSqlViewSchema.h"
+#include <QSqlDriver>
+#include <QLatin1String>
 
-void mdtSqlViewSchema::setName(const QString & name)
+//#include <QDebug>
+
+using namespace mdtSqlViewSchema;
+
+void SelectField::clear()
+{
+  pvName.clear();
+  pvAlias.clear();
+  pvTable.clear();
+}
+
+QString SelectField::getSql(const QSqlDriver * const driver) const
+{
+  Q_ASSERT(driver != nullptr);
+
+  QString sql;
+
+  if(pvName.isEmpty()){
+    return sql;
+  }
+  if(!pvTable.isEmpty()){
+    sql = driver->escapeIdentifier(pvTable, QSqlDriver::TableName) + ".";
+  }
+  if(pvName == "*"){
+    sql += "*";
+  }else{
+    sql += driver->escapeIdentifier(pvName, QSqlDriver::FieldName);
+  }
+  if(!pvAlias.isEmpty()){
+    sql += " AS " + driver->escapeIdentifier(pvAlias, QSqlDriver::FieldName);
+  }
+
+  return sql;
+}
+
+
+void Table::clear()
+{
+  pvTableName.clear();
+  pvAlias.clear();
+}
+
+// QString Table::getSql(const QSqlDriver * const driver) const
+// {
+//   Q_ASSERT(driver != nullptr);
+// 
+//   
+// }
+
+
+void JoinKey::clear()
+{
+  pvMainTableField.clear();
+  pvConstraintOperator = On;
+  pvTableToJoinField.clear();
+  pvFieldOperator = Equal;
+}
+
+QString JoinKey::constraintOperatorStr() const
+{
+  switch(pvConstraintOperator){
+    case On:
+      return "ON";
+    case And:
+      return "AND";
+    case Or:
+      return "OR";
+  }
+  return QString();
+}
+
+QString JoinKey::fieldOperatorStr() const
+{
+  switch(pvFieldOperator){
+    case Equal:
+      return "=";
+    case MtfLessThanTdjf:
+      return "<";
+    case MtfGreaterThanTdjf:
+      return ">";
+  }
+  return QString();
+}
+
+void JoinClause::clear()
+{
+  pvOperator = Join;
+  pvMainTable.clear();
+  pvTableToJoin.clear();
+  pvKeyList.clear();
+}
+
+QString JoinClause::getSql(const QSqlDriver * const driver) const
+{
+  Q_ASSERT(driver != nullptr);
+
+  QString sql;
+
+  if(isNull()){
+    return sql;
+  }
+  sql = " " + operatorStr() + " " + driver->escapeIdentifier(pvTableToJoin.tableName(), QSqlDriver::TableName);
+  if(!pvTableToJoin.alias().isEmpty()){
+    sql += " " + driver->escapeIdentifier(pvTableToJoin.alias(), QSqlDriver::TableName);
+  }
+  for(const auto & key : pvKeyList){
+    sql += QLatin1String("\n  ") + key.constraintOperatorStr()
+         + QLatin1String(" ") + driver->escapeIdentifier(pvMainTable.aliasOrTableName(), QSqlDriver::TableName)
+         + QLatin1String(".") + driver->escapeIdentifier(key.mainTableField(), QSqlDriver::FieldName)
+         + QLatin1String(" ") + key.fieldOperatorStr()
+         + QLatin1String(" ") + driver->escapeIdentifier(pvTableToJoin.aliasOrTableName(), QSqlDriver::TableName)
+         + QLatin1String(".") + driver->escapeIdentifier(key.tableToJoinField(), QSqlDriver::FieldName);
+  }
+
+  return sql;
+}
+
+QString JoinClause::operatorStr() const
+{
+  switch(pvOperator){
+    case Join:
+      return "JOIN";
+    case LeftJoin:
+      return "LEFT JOIN";
+  }
+  return QString();
+}
+
+
+void Schema::setName(const QString & name)
 {
   pvName = name;
 }
 
-void mdtSqlViewSchema::setTableName(const QString & name, const QString & alias)
+void Schema::setTable(const Table & table)
+{
+  pvTable = table;
+}
+
+void Schema::addSelectField(const Table & table, SelectField field)
+{
+  if(table.alias().isEmpty()){
+    field.setTable(table.tableName());
+  }else{
+    field.setTable(table.alias());
+  }
+  pvSelectFieldList.append(field);
+}
+
+
+
+void Schema::setTableName(const QString & name, const QString & alias)
 {
   pvTableName = name;
   pvTableAlias = alias;
 }
 
-void mdtSqlViewSchema::setSelectSuffix(mdtSqlViewSchema::SelectSuffix s)
+void Schema::setSelectSuffix(Schema::SelectSuffix s)
 {
   pvSelectSuffix = s;
 }
 
-void mdtSqlViewSchema::addSelectItem(const QString& item)
+void Schema::addSelectItem(const QString& item)
 {
   pvSelectList.append(item);
 }
 
-void mdtSqlViewSchema::addJoinClause(const mdtSqlViewSchemaJoinClause& jc)
+void Schema::addJoinClause(const mdtSqlViewSchemaJoinClause& jc)
 {
   pvJoinClauseList.append(jc);
 }
 
-void mdtSqlViewSchema::clear()
+void Schema::clear()
 {
   pvName.clear();
   pvTableName.clear();
@@ -56,7 +204,7 @@ void mdtSqlViewSchema::clear()
   pvJoinClauseList.clear();
 }
 
-QString mdtSqlViewSchema::getSqlForDrop(const QSqlDriver* driver) const
+QString Schema::getSqlForDrop(const QSqlDriver* driver) const
 {
   Q_ASSERT(driver != nullptr);
 
@@ -66,7 +214,7 @@ QString mdtSqlViewSchema::getSqlForDrop(const QSqlDriver* driver) const
   return "DROP VIEW IF EXISTS " + driver->escapeIdentifier(pvName, QSqlDriver::TableName);
 }
 
-QString mdtSqlViewSchema::getSqlForCreate(const QSqlDriver* driver) const
+QString Schema::getSqlForCreate(const QSqlDriver* driver) const
 {
   Q_ASSERT(driver != nullptr);
 

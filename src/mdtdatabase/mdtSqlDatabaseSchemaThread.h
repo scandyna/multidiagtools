@@ -140,12 +140,12 @@ class mdtSqlDatabaseSchemaThread : public QThread
 
   /*! \brief Create views
    */
-  void createViews(const QList<mdtSqlViewSchema> & views, const QSqlDatabase & db,
+  void createViews(const QList<mdtSqlViewSchema::Schema> & views, const QSqlDatabase & db,
                    double & globalProgress, double globalProgressStep);
 
   /*! \brief Create a view
    */
-  bool createView(const mdtSqlViewSchema & vs, const QSqlDatabase & db);
+  bool createView(const mdtSqlViewSchema::Schema & vs, const QSqlDatabase & db);
 
   std::atomic<bool> pvAbort;
   mdtSqlDatabaseSchema pvSchema;

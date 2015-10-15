@@ -41,7 +41,6 @@
 #include "mdtClDirectLink.h"
 #include "mdtClLinkBeam.h"
 #include "mdtClPathGraph.h"
-#include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlField>
@@ -74,25 +73,26 @@
 void mdtCableListTest::initTestCase()
 {
   createDatabaseSchema();
-  QVERIFY(pvDatabaseManager.database().isOpen());
+  QVERIFY(pvDatabase.isOpen());
+  ///QVERIFY(pvDatabase.isOpen());
 }
 
 void mdtCableListTest::cleanupTestCase()
 {
-  QFile::remove(pvDbFileInfo.absoluteFilePath());
+  ///QFile::remove(pvDbFileInfo.absoluteFilePath());
 }
 
 void mdtCableListTest::applicationWidgetsTest()
 {
-  mdtClApplicationWidgets::setDatabase(pvDatabaseManager.database());
-  QCOMPARE(mdtClApplicationWidgets::database().connectionName(), pvDatabaseManager.database().connectionName());
-  QCOMPARE(mdtClApplicationWidgets::database().connectionName(), pvDatabaseManager.database().connectionName());
+  mdtClApplicationWidgets::setDatabase(pvDatabase);
+  QCOMPARE(mdtClApplicationWidgets::database().connectionName(), pvDatabase.connectionName());
+  QCOMPARE(mdtClApplicationWidgets::database().connectionName(), pvDatabase.connectionName());
   qDebug() << "Cnn: " << mdtClApplicationWidgets::database().connectionName();
 }
 
 void mdtCableListTest::articleTest()
 {
-  mdtClArticle art(0, pvDatabaseManager.database());
+  mdtClArticle art(0, pvDatabase);
   mdtSqlRecord record;
   QSqlRecord data;
   QList<QSqlRecord> dataList;
@@ -107,7 +107,7 @@ void mdtCableListTest::articleTest()
    */
 
   // Add a article
-  QVERIFY(record.addAllFields("Article_tbl", pvDatabaseManager.database()));
+  QVERIFY(record.addAllFields("Article_tbl", pvDatabase));
   record.setValue("Id_PK", 1);
   record.setValue("ArticleCode", "1234");
   record.setValue("DesignationEN", "Article 1234");
@@ -173,8 +173,8 @@ void mdtCableListTest::articleTest()
    * Article connection
    */
 
-//   QVERIFY(connectionData.setup(pvDatabaseManager.database()));
-//   ///QVERIFY(record.addAllFields("ArticleConnection_tbl", pvDatabaseManager.database()));
+//   QVERIFY(connectionData.setup(pvDatabase));
+//   ///QVERIFY(record.addAllFields("ArticleConnection_tbl", pvDatabase));
 //   // Initially we have no connections
 //   dataList = art.getData("SELECT * FROM ArticleConnection_view", &ok);
 //   QVERIFY(ok);
@@ -213,13 +213,13 @@ void mdtCableListTest::articleTest()
 
   // Setup connector data for article ID 1
 //   connectorData.clear();
-//   QVERIFY(connectorData.setup(pvDatabaseManager.database(), false));
+//   QVERIFY(connectorData.setup(pvDatabase, false));
 //   connectorData.setValue("Id_PK", 1);
 //   connectorData.setValue("Article_Id_FK", 1);
 //   connectorData.setValue("Name", "X1");
 //   // Setup connection data
 //   ///connectionData.clear();
-//   ///QVERIFY(connectionData.setup(pvDatabaseManager.database()));
+//   ///QVERIFY(connectionData.setup(pvDatabase));
 //   connectionData.clearValues();
 //   for(int i = 0; i < 11; ++i){
 //     connectionData.clearValues();
@@ -250,12 +250,12 @@ void mdtCableListTest::articleTest()
 
 //   // Setup a Connector
 //   baseConnectorData.clear();
-//   QVERIFY(baseConnectorData.setup(pvDatabaseManager.database()));
+//   QVERIFY(baseConnectorData.setup(pvDatabase));
 //   baseConnectorData.setValue("Id_PK", 1);
 //   QVERIFY(art.addRecord(baseConnectorData, "Connector_tbl"));
 //   // Add contacts to this connector
 //   record.clear();
-//   QVERIFY(record.addAllFields("ConnectorContact_tbl", pvDatabaseManager.database()));
+//   QVERIFY(record.addAllFields("ConnectorContact_tbl", pvDatabase));
 //   record.setValue("Id_PK", 1);
 //   record.setValue("Connector_Id_FK", 1);
 //   record.setValue("ConnectionType_Code_FK", "P");
@@ -273,7 +273,7 @@ void mdtCableListTest::articleTest()
 //   QVERIFY(art.addRecord(record, "ConnectorContact_tbl"));
 //   // Setup article connector data for article ID 1
 //   connectorData.clear();
-//   QVERIFY(connectorData.setup(pvDatabaseManager.database(), false));
+//   QVERIFY(connectorData.setup(pvDatabase, false));
 //   connectorData.setValue("Id_PK", 2);
 //   connectorData.setValue("Article_Id_FK", 1);
 //   connectorData.setValue("Connector_Id_FK", 1);
@@ -381,8 +381,8 @@ void mdtCableListTest::unitConnectionUpdateTest()
 {
   QFAIL("Not implemented yet");
   
-//   mdtClArticle art(0, pvDatabaseManager.database());
-//   mdtCableListTestScenario scenario(pvDatabaseManager.database());
+//   mdtClArticle art(0, pvDatabase);
+//   mdtCableListTestScenario scenario(pvDatabase);
 //   QList<QSqlRecord> dataList;
 //   bool ok;
 // 
@@ -451,11 +451,11 @@ void mdtCableListTest::unitConnectionUpdateTest()
 
 void mdtCableListTest::unitTest()
 {
-  mdtClUnit unit(0, pvDatabaseManager.database());
+  mdtClUnit unit(0, pvDatabase);
   mdtClUnitConnectorData connectorData;
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  mdtCableListTestScenario scenario(pvDatabase);
 
-  ///QVERIFY(connectorData.setup(pvDatabaseManager.database(), true, true));
+  ///QVERIFY(connectorData.setup(pvDatabase, true, true));
   // Create base structure
   scenario.createTestVehicleTypes();
   scenario.createTestArticles();
@@ -485,10 +485,10 @@ void mdtCableListTest::unitTest()
 
 // void mdtCableListTest::unitConnectionTest()
 // {
-//   mdtClUnit unit(0, pvDatabaseManager.database());
-//   mdtClLink lnk(0, pvDatabaseManager.database());
+//   mdtClUnit unit(0, pvDatabase);
+//   mdtClLink lnk(0, pvDatabase);
 //   mdtClUnitConnectionData connectionData;
-//   mdtCableListTestScenario scenario(pvDatabaseManager.database());
+//   mdtCableListTestScenario scenario(pvDatabase);
 //   bool ok;
 // 
 //   // Create base structure
@@ -529,9 +529,9 @@ void mdtCableListTest::unitTest()
 //   mdtClUnitConnectionData startConnectionData, endConnectionData;
 //   mdtClVehicleTypeLinkData vtLinkData;
 // 
-//   QVERIFY(linkData.setup(pvDatabaseManager.database()));
-//   QVERIFY(startConnectionData.setup(pvDatabaseManager.database(), true));
-//   QVERIFY(endConnectionData.setup(pvDatabaseManager.database(), true));
+//   QVERIFY(linkData.setup(pvDatabase));
+//   QVERIFY(startConnectionData.setup(pvDatabase, true));
+//   QVERIFY(endConnectionData.setup(pvDatabase, true));
 //   QVERIFY(!linkData.vehicleTypeLinksEdited());
 // 
 //   // Setup connections data
@@ -582,10 +582,10 @@ void mdtCableListTest::unitTest()
 
 void mdtCableListTest::linkTest()
 {
-  mdtClLink lnk(pvDatabaseManager.database());
-  mdtClUnitVehicleType uvt(pvDatabaseManager.database());
-  mdtClVehicleTypeLink vtl(pvDatabaseManager.database());
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  mdtClLink lnk(pvDatabase);
+  mdtClUnitVehicleType uvt(pvDatabase);
+  mdtClVehicleTypeLink vtl(pvDatabase);
+  mdtCableListTestScenario scenario(pvDatabase);
   mdtClLinkData linkData;
   mdtClLinkPkData linkPk;
   mdtClVehicleTypeStartEndKeyData vt;
@@ -762,13 +762,13 @@ void mdtCableListTest::linkTest()
   QCOMPARE(vtList.size(), 0);
 
 
-//   mdtClUnit unit(pvDatabaseManager.database());
+//   mdtClUnit unit(pvDatabase);
 //   QList<QVariant> vtStartIdList, vtEndIdList;
 //   mdtClUnitConnectionData connectionData;
 //   QList<mdtClVehicleTypeLinkData> vtLinkDataList;
 //   QString sql;
 
-//   QVERIFY(linkData.setup(pvDatabaseManager.database()));
+//   QVERIFY(linkData.setup(pvDatabase));
 
   /*
    * Check vehicle type link data list
@@ -976,17 +976,17 @@ void mdtCableListTest::linkTest()
 
 void mdtCableListTest::linkUpdateFromArticleLinkTest()
 {
-  mdtClLink lnk(pvDatabaseManager.database());
+  mdtClLink lnk(pvDatabase);
   mdtClLinkPkData linkPk;
-  mdtClArticleLink alnk(pvDatabaseManager.database());
+  mdtClArticleLink alnk(pvDatabase);
   mdtClArticleLinkPkData aLnkPk;
   
-  mdtClArticle art(0, pvDatabaseManager.database());
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  mdtClArticle art(0, pvDatabase);
+  mdtCableListTestScenario scenario(pvDatabase);
   QList<QSqlRecord> dataList;
   QSqlRecord data;
-  ///mdtClUnit unit(0, pvDatabaseManager.database());
-  ///mdtClUnitVehicleType uvt(0, pvDatabaseManager.database());
+  ///mdtClUnit unit(0, pvDatabase);
+  ///mdtClUnitVehicleType uvt(0, pvDatabase);
   ///QList<QVariant> vtStartIdList, vtEndIdList;
   mdtClLinkData linkData;
   ///mdtClUnitConnectionData connectionData;
@@ -994,7 +994,7 @@ void mdtCableListTest::linkUpdateFromArticleLinkTest()
   QString sql;
   bool ok;
 
-//   QVERIFY(linkData.setup(pvDatabaseManager.database()));
+//   QVERIFY(linkData.setup(pvDatabase));
 
   // Create base structure
   scenario.createSenario();
@@ -1122,8 +1122,8 @@ void mdtCableListTest::linkUpdateFromArticleLinkTest()
 
 // void mdtCableListTest::linkConnectableConnectorTest()
 // {
-//   mdtClLink lnk(pvDatabaseManager.database());
-//   mdtClUnitConnection ucnx(pvDatabaseManager.database());
+//   mdtClLink lnk(pvDatabase);
+//   mdtClUnitConnection ucnx(pvDatabase);
 //   mdtClConnectableCriteria criteria;
 //   mdtClUnitConnectionKeyData ucnxKey;
 //   mdtClUnitConnectionData cnxA, cnxB;
@@ -1142,12 +1142,12 @@ void mdtCableListTest::linkUpdateFromArticleLinkTest()
 //   /*
 //    * Setup data
 //    */
-// //   QVERIFY(cnxA.setup(pvDatabaseManager.database(), false));
-// //   QVERIFY(cnxB.setup(pvDatabaseManager.database(), false));
-// //   QVERIFY(cnrS.setup(pvDatabaseManager.database()));
-// //   QVERIFY(cnrE.setup(pvDatabaseManager.database()));
-//   QVERIFY(ucnrS.setup(pvDatabaseManager.database(), false, false));
-//   QVERIFY(ucnrE.setup(pvDatabaseManager.database(), false, false));
+// //   QVERIFY(cnxA.setup(pvDatabase, false));
+// //   QVERIFY(cnxB.setup(pvDatabase, false));
+// //   QVERIFY(cnrS.setup(pvDatabase));
+// //   QVERIFY(cnrE.setup(pvDatabase));
+//   QVERIFY(ucnrS.setup(pvDatabase, false, false));
+//   QVERIFY(ucnrE.setup(pvDatabase, false, false));
 //   /*
 //    * Check contact checking method.
 //    * In current version, only checkContactType has sense here
@@ -1369,8 +1369,8 @@ void mdtCableListTest::linkUpdateFromArticleLinkTest()
 
 // void mdtCableListTest::linkAutoConnectionTest()
 // {
-//   mdtClLink lnk(pvDatabaseManager.database());
-//   mdtCableListTestScenario scenario(pvDatabaseManager.database());
+//   mdtClLink lnk(pvDatabase);
+//   mdtCableListTestScenario scenario(pvDatabase);
 //   mdtClLinkPkData linkPk;
 //   QList<mdtClLinkData> cnnLinkDataList;
 //   mdtClLinkData cnnLinkData;
@@ -1381,8 +1381,8 @@ void mdtCableListTest::linkUpdateFromArticleLinkTest()
 //   bool ok;
 // 
 //   // Setup connection data
-//   QVERIFY(a.setup(pvDatabaseManager.database(), false));
-//   QVERIFY(b.setup(pvDatabaseManager.database(), false));
+//   QVERIFY(a.setup(pvDatabase, false));
+//   QVERIFY(b.setup(pvDatabase, false));
 // 
 //   /*
 //    * Case 1 :
@@ -1613,8 +1613,8 @@ void mdtCableListTest::linkUpdateFromArticleLinkTest()
 
 void mdtCableListTest::pathGraphTest()
 {
-  mdtClPathGraph graph(pvDatabaseManager.database());
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  mdtClPathGraph graph(pvDatabase);
+  mdtCableListTestScenario scenario(pvDatabase);
   QList<QVariant> idList;
   bool ok;
 
@@ -1832,8 +1832,8 @@ void mdtCableListTest::pathGraphTest()
 void mdtCableListTest::directLinkTest()
 {
   mdtClDirectLink *dlnk;
-  mdtClPathGraph graph(pvDatabaseManager.database());
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  mdtClPathGraph graph(pvDatabase);
+  mdtCableListTestScenario scenario(pvDatabase);
   QSqlRecord record;
   QList<QSqlRecord> dataList;
   QList<QVariant> idList;
@@ -1847,9 +1847,9 @@ void mdtCableListTest::directLinkTest()
   // Load link list
   QVERIFY(graph.loadLinkList());
   // Initial
-  dlnk = new mdtClDirectLink(0, pvDatabaseManager.database());
-  QVERIFY(pvDatabaseManager.database().tables().contains("DirectLink_tbl"));
-  record = pvDatabaseManager.database().record("DirectLink_tbl");
+  dlnk = new mdtClDirectLink(0, pvDatabase);
+  QVERIFY(pvDatabase.tables().contains("DirectLink_tbl"));
+  record = pvDatabase.record("DirectLink_tbl");
   QVERIFY(record.contains("UnitConnectionStart_Id_FK"));
   QVERIFY(record.contains("UnitConnectionEnd_Id_FK"));
   // Get unit connections for next tests
@@ -1895,13 +1895,13 @@ void mdtCableListTest::directLinkTest()
 
 
   delete dlnk;
-  QVERIFY(!pvDatabaseManager.database().tables().contains("DirectLink_tbl"));
+  QVERIFY(!pvDatabase.tables().contains("DirectLink_tbl"));
 }
 
 void mdtCableListTest::linkBeamTest()
 {
-  mdtClLinkBeam lb(0, pvDatabaseManager.database());
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  mdtClLinkBeam lb(0, pvDatabase);
+  mdtCableListTestScenario scenario(pvDatabase);
   mdtSqlRecord record;
   QList<QSqlRecord> dataList;
   bool ok;
@@ -1911,7 +1911,7 @@ void mdtCableListTest::linkBeamTest()
   /*
    * Create a LinkBeam
    */
-  QVERIFY(record.addAllFields("LinkBeam_tbl", pvDatabaseManager.database()));
+  QVERIFY(record.addAllFields("LinkBeam_tbl", pvDatabase));
   record.setValue("Id_PK", 1);
   record.setValue("Identification", "Link beam 1");
   QVERIFY(lb.addRecord(record, "LinkBeam_tbl"));
@@ -1980,18 +1980,39 @@ void mdtCableListTest::linkBeamTest()
 
 void mdtCableListTest::createDatabaseSchema()
 {
-  QTemporaryFile dbFile;
+//   QTemporaryFile dbFile;
 
+  /*
+   * Init and open database
+   */
+  QVERIFY(pvTempFile.open());
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  pvDatabase.setDatabaseName(pvTempFile.fileName());
+  QVERIFY(pvDatabase.open());
   /*
    * Check Sqlite database creation
    */
-  QVERIFY(dbFile.open());
-  dbFile.close();
-  pvDbFileInfo.setFile(dbFile.fileName() + ".db");
-  mdtTtDatabaseSchema schema(&pvDatabaseManager);
-  QVERIFY(schema.createSchemaSqlite(pvDbFileInfo));
-  QVERIFY(pvDatabaseManager.database().isOpen());
-  QVERIFY(schema.checkSchema());
+  mdtTtDatabaseSchema schema;
+  QVERIFY(schema.buildSchema());
+  QVERIFY(schema.databaseSchema().createSchema(pvDatabase));
+  QVERIFY(schema.checkSchema(pvDatabase));
+  
+  qDebug() << "Tables: " << pvDatabase.tables();
+  QSqlQuery q(pvDatabase);
+  ///QVERIFY(q.exec("PRAGMA index_list(ConnectorContact_tbl)"));
+  ///QVERIFY(q.exec("PRAGMA index_list(*)"));
+  QVERIFY(q.exec("SELECT * FROM sqlite_master WHERE type = 'index'"));
+  while(q.next()){
+    qDebug() << "TBL: " << q.value("tbl_name").toString() << " , IDX: " << q.record().value("name").toString();
+  }
+
+//   QVERIFY(dbFile.open());
+//   dbFile.close();
+//   pvDbFileInfo.setFile(dbFile.fileName() + ".db");
+//   mdtTtDatabaseSchema schema(&pvDatabaseManager);
+//   QVERIFY(schema.createSchemaSqlite(pvDbFileInfo));
+//   QVERIFY(pvDatabase.isOpen());
+//   QVERIFY(schema.checkSchema());
 }
 
 /*

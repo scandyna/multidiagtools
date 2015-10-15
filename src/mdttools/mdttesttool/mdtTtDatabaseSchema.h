@@ -22,6 +22,8 @@
 #define MDT_TT_DATABASE_SCHEMA_H
 
 #include "mdtSqlSchemaTable.h"
+
+#include "mdtSqlDatabaseSchema.h"
 #include "mdtError.h"
 #include <QList>
 #include <QString>
@@ -41,11 +43,43 @@ class mdtTtDatabaseSchema
 
   /*! \brief Constructor
    */
+  mdtTtDatabaseSchema();
+
+  /*! \brief Constructor
+   */
+  [[deprecated]]
   mdtTtDatabaseSchema(mdtSqlDatabaseManager *dbManager);
 
   /*! \brief Destructor
    */
   ~mdtTtDatabaseSchema();
+
+  /*! \brief Build schema
+   */
+  bool buildSchema();
+
+  /*! \brief Get schema
+   */
+  mdtSqlDatabaseSchema databaseSchema() const
+  {
+    return pvSchema;
+  }
+
+  /*! \brief Check validity of a schema
+   *
+   * \todo Current version only checks that all expected tables exists .
+   *
+   * \pre db must allready be open .
+   */
+  bool checkSchema(const QSqlDatabase & db);
+
+  /*! \brief Check validity of a schema
+   *
+   * \todo Current version only checks that all expected tables exists .
+   *
+   * \pre A database must allready be open .
+   */
+  bool checkSchema();
 
   /*! \brief Create schema using Sqlite
    *
@@ -83,14 +117,6 @@ class mdtTtDatabaseSchema
    */
   bool importDatabase(const QFileInfo sourceDbFileInfo);
 
-  /*! \brief Check validity of a schema
-   *
-   * \todo Current version only checks that all expected tables exists .
-   *
-   * \pre A database must allready be open .
-   */
-  bool checkSchema();
-
   /*! \brief Get last error
    */
   mdtError lastError() const;
@@ -117,9 +143,9 @@ class mdtTtDatabaseSchema
    */
   bool populateTables();
 
-  /*! \brief
+  /*! \brief Setup VehicleType_tbl
    */
-  bool setupVehicleTypeTable();
+  void setupVehicleTypeTable();
 
   /*! \brief
    */
@@ -131,27 +157,27 @@ class mdtTtDatabaseSchema
 
   /*! \brief Setup connection type table
    */
-  bool setupConnectionTypeTable();
+  void setupConnectionTypeTable();
 
   /*! \brief Setup connector table
    */
-  bool setupConnectorTable();
+  void setupConnectorTable();
 
   /*! \brief Setup Connector contact table
    */
-  bool setupConnectorContactTable();
+  void setupConnectorContactTable();
 
-  /*! \brief
+  /*! \brief Article_tbl
    */
-  bool setupArticleTable();
+  void setupArticleTable();
 
-  /*! \brief
+  /*! \brief ArticleComponent_tbl
    */
-  bool setupArticleComponentTable();
+  void setupArticleComponentTable();
 
-  /*! \brief Setup article connector table
+  /*! \brief ArticleConnector_tbl
    */
-  bool setupArticleConnectorTable();
+  void setupArticleConnectorTable();
 
   /*! \brief
    */
@@ -181,7 +207,7 @@ class mdtTtDatabaseSchema
 
   /*! \brief Setup Modification_tbl
    */
-  bool setupModificationTable();
+  void setupModificationTable();
 
   /*! \brief Setup LinkModification_tbl
    */
@@ -354,6 +380,11 @@ class mdtTtDatabaseSchema
    */
   bool createVehicleTypeUnitView();
 
+  /*! \brief VehicleType_Unit_view
+   */
+  void setupVehicleTypeUnitView();
+  
+  
   /*! \brief
    */
   bool createArticleComponentUsageView();
@@ -592,6 +623,8 @@ class mdtTtDatabaseSchema
 
   Q_DISABLE_COPY(mdtTtDatabaseSchema);
 
+  mdtSqlDatabaseSchema pvSchema;
+  
   mdtSqlDatabaseManager *pvDatabaseManager;
   QList<mdtSqlSchemaTable> pvTables;
   mdtError pvLastError;

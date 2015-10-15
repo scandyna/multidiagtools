@@ -21,7 +21,8 @@
 #include "mdtSqlCopierTest.h"
 #include "mdtSqlFieldSetupData.h"
 #include "mdtApplication.h"
-#include "mdtSqlDatabaseManager.h"
+///#include "mdtSqlDatabaseManager.h"
+#include "mdtSqlDatabaseSchema.h"
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlRecord.h"
 #include "mdtSqlTransaction.h"
@@ -58,7 +59,7 @@ void mdtSqlCopierTest::initTestCase()
 
 void mdtSqlCopierTest::cleanupTestCase()
 {
-  QFile::remove(pvDbFileInfo.filePath());
+  ///QFile::remove(pvDbFileInfo.filePath());
 }
 
 /*
@@ -126,10 +127,10 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   /*
    * Setup databases and tables
    */
-//   QVERIFY(mapping.setSourceDatabase(pvDatabaseManager.database()));
-//   QVERIFY(mapping.setDestinationDatabase(pvDatabaseManager.database()));
-  QVERIFY(mapping.setSourceTable("Client_tbl", pvDatabaseManager.database()));
-  QVERIFY(mapping.setDestinationTable("Client2_tbl", pvDatabaseManager.database()));
+//   QVERIFY(mapping.setSourceDatabase(pvDatabase));
+//   QVERIFY(mapping.setDestinationDatabase(pvDatabase));
+  QVERIFY(mapping.setSourceTable("Client_tbl", pvDatabase));
+  QVERIFY(mapping.setDestinationTable("Client2_tbl", pvDatabase));
   QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
   // Check attributes without any mapping set
   QCOMPARE(mapping.fieldCount(), 2);
@@ -203,10 +204,10 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   /*
    * Setup model
    */
-//   QVERIFY(model.setSourceDatabase(pvDatabaseManager.database()));
-//   QVERIFY(model.setDestinationDatabase(pvDatabaseManager.database()));
-  QVERIFY(model.setSourceTable("Client_tbl", pvDatabaseManager.database()));
-  QVERIFY(model.setDestinationTable("Client2_tbl", pvDatabaseManager.database(), delegate));
+//   QVERIFY(model.setSourceDatabase(pvDatabase));
+//   QVERIFY(model.setDestinationDatabase(pvDatabase));
+  QVERIFY(model.setSourceTable("Client_tbl", pvDatabase));
+  QVERIFY(model.setDestinationTable("Client2_tbl", pvDatabase, delegate));
   model.generateFieldMappingByName();
   tableView.resizeColumnsToContents();
   
@@ -224,8 +225,8 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingDialogTest()
   mdtSqlDatabaseCopierTableMappingDialog dialog;
   mdtSqlDatabaseCopierTableMapping mapping;
 
-  QVERIFY(mapping.setSourceTable("Client_tbl", pvDatabaseManager.database()));
-  QVERIFY(mapping.setDestinationTable("Client2_tbl", pvDatabaseManager.database()));
+  QVERIFY(mapping.setSourceTable("Client_tbl", pvDatabase));
+  QVERIFY(mapping.setDestinationTable("Client2_tbl", pvDatabase));
   mapping.generateFieldMappingByName();
 
   dialog.setMapping(mapping);
@@ -243,7 +244,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingTest()
   /*
    * Set source database
    */
-  QVERIFY(mapping.setSourceDatabase(pvDatabaseManager.database()));
+  QVERIFY(mapping.setSourceDatabase(pvDatabase));
   // Check attributes without any mapping set
   QCOMPARE(mapping.tableMappingCount(), 2);
   QCOMPARE(mapping.sourceTableName(0), QString("Client_tbl"));
@@ -274,8 +275,8 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
   /*
    * Setup model
    */
-  QVERIFY(model.setSourceDatabase(pvDatabaseManager.database()));
-  QVERIFY(model.setDestinationDatabase(pvDatabaseManager.database()));
+  QVERIFY(model.setSourceDatabase(pvDatabase));
+  QVERIFY(model.setDestinationDatabase(pvDatabase));
   QVERIFY(model.generateTableMappingByName());
   tableView.resizeColumnsToContents();
   
@@ -302,18 +303,19 @@ void mdtSqlCopierTest::sqlDatabaseCopierDialogTest()
 
 void mdtSqlCopierTest::createTestDatabase()
 {
-  QTemporaryFile dbFile;
   mdtSqlSchemaTable table;
-  QSqlField field;
+  mdtSqlDatabaseSchema s;
+  ///mdtSqlForeignKey fk;
+  mdtSqlField field;
 
   /*
-   * Create and open database
+   * Init and open database
    */
-  QVERIFY(dbFile.open());
-  dbFile.close();
-  pvDbFileInfo.setFile(dbFile.fileName() + ".db");
-  QVERIFY(pvDatabaseManager.createDatabaseSqlite(pvDbFileInfo, mdtSqlDatabaseManager::OverwriteExisting));
-  QVERIFY(pvDatabaseManager.database().isOpen());
+  QVERIFY(pvTempFile.open());
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  pvDatabase.setDatabaseName(pvTempFile.fileName());
+  QVERIFY(pvDatabase.open());
+
   /*
    * Create tables
    */
@@ -321,35 +323,36 @@ void mdtSqlCopierTest::createTestDatabase()
   table.clear();
   table.setTableName("Client_tbl", "UTF8");
   // Id_PK
-  field = QSqlField();
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   table.addField(field, true);
   // Name
-  field = QSqlField();
+  field.clear();
   field.setName("Name");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(100);
   table.addField(field, false);
-  QVERIFY(pvDatabaseManager.createTable(table, mdtSqlDatabaseManager::OverwriteExisting));
+  s.addTable(table);
   // Create Client2_tbl
   table.clear();
   table.setTableName("Client2_tbl", "UTF8");
   // Id_PK
-  field = QSqlField();
+  field.clear();
   field.setName("Id_PK");
-  field.setType(QVariant::Int);
+  field.setType(mdtSqlFieldType::Integer);
   field.setAutoValue(true);
   table.addField(field, true);
   // Name
-  field = QSqlField();
+  field.clear();
   field.setName("Name");
-  field.setType(QVariant::String);
+  field.setType(mdtSqlFieldType::Varchar);
   field.setLength(100);
   table.addField(field, false);
-  QVERIFY(pvDatabaseManager.createTable(table, mdtSqlDatabaseManager::OverwriteExisting));
-
+  s.addTable(table);
+  // Create schema
+  QVERIFY(s.createSchema(pvDatabase));
 }
 
 void mdtSqlCopierTest::populateTestDatabase()

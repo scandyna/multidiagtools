@@ -23,7 +23,7 @@
 
 #include "mdtTest.h"
 
-#include "mdtSqlDatabaseManager.h"
+///#include "mdtSqlDatabaseManager.h"
 
 #include "mdtSqlApplicationWidgets.h"
 #include <QFileInfo>
@@ -173,8 +173,6 @@ class mdtDatabaseWidgetTest : public mdtTest
 
   QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
   QSqlDatabase pvDatabase;
-  
-  mdtSqlDatabaseManager pvDatabaseManager;
 };
 
 #endif // #ifndef MDT_DATABASE_WIDGET_TEST_H

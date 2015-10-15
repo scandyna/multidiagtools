@@ -62,6 +62,9 @@ class mdtDatabaseTest : public mdtTest
   void sqlFieldSetupWidgetTest();
   void sqlFieldSetupDialogTest();
 
+  void sqlViewSchemaFieldTest();
+  void sqlViewSchemaTableTest();
+  void sqlViewSchemaJoinKeyTest();
   void sqlViewSchemaJoinClauseTest();
   void sqlViewSchemaTest();
   void sqlViewSchemaBenchmark();
