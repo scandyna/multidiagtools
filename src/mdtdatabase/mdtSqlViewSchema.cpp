@@ -114,6 +114,12 @@ void JoinClause::clear()
   pvKeyList.clear();
 }
 
+/// Try QT_USE_FAST_OPERATOR_PLUS
+
+/// See also QLatin1Char
+
+/// Or, fall back to +=
+
 QString JoinClause::getSql(const QSqlDriver * const driver) const
 {
   Q_ASSERT(driver != nullptr);
@@ -141,7 +147,7 @@ QString JoinClause::getSql(const QSqlDriver * const driver) const
 
 QString JoinClause::operatorStr() const
 {
-  switch(pvOperator){
+  switch(pvOperator){ /// Try QStringLiteral
     case Join:
       return "JOIN";
     case LeftJoin:
@@ -171,12 +177,10 @@ void Schema::addSelectField(const Table & table, SelectField field)
   pvSelectFieldList.append(field);
 }
 
-
-
 void Schema::setTableName(const QString & name, const QString & alias)
 {
-  pvTableName = name;
-  pvTableAlias = alias;
+  pvTable.setTableName(name);
+  pvTable.setAlias(alias);
 }
 
 void Schema::setSelectSuffix(Schema::SelectSuffix s)
@@ -184,24 +188,27 @@ void Schema::setSelectSuffix(Schema::SelectSuffix s)
   pvSelectSuffix = s;
 }
 
-void Schema::addSelectItem(const QString& item)
+void Schema::addJoinClause(const JoinClause& join)
 {
-  pvSelectList.append(item);
+  pvJoinClauseList.append(join);
 }
 
-void Schema::addJoinClause(const mdtSqlViewSchemaJoinClause& jc)
-{
-  pvJoinClauseList.append(jc);
-}
+// void Schema::addSelectItem(const QString& item)
+// {
+//   pvSelectList.append(item);
+// }
+
+// void Schema::addJoinClause(const mdtSqlViewSchemaJoinClause& jc)
+// {
+//   pvJoinClauseList.append(jc);
+// }
 
 void Schema::clear()
 {
-  pvName.clear();
-  pvTableName.clear();
-  pvTableAlias.clear();
   pvSelectSuffix = SelectSuffixNone;
-  pvSelectList.clear();
-  pvJoinClauseList.clear();
+  pvName.clear();
+  pvTable.clear();
+  pvSelectFieldList.clear();
 }
 
 QString Schema::getSqlForDrop(const QSqlDriver* driver) const
@@ -221,28 +228,27 @@ QString Schema::getSqlForCreate(const QSqlDriver* driver) const
   QString sql;
 
   // Check if all is complete
-  if( (pvName.isEmpty()) || (pvSelectList.isEmpty()) || (pvTableName.isEmpty()) ){
+  if( (pvName.isEmpty()) || (pvSelectFieldList.isEmpty()) || (pvTable.tableName().isEmpty()) ){
     return sql;
   }
   // Build header
   sql = "CREATE VIEW " + driver->escapeIdentifier(pvName, QSqlDriver::TableName) + " AS\n";
   // Build SELECT statement
   sql += selectKeyWord() + "\n";
-  int lastIndex = pvSelectList.size() - 1;
+  int lastIndex = pvSelectFieldList.size() - 1;
   Q_ASSERT(lastIndex >= 0);
   for(int i = 0; i < lastIndex; ++i){
-    sql += " " + driver->escapeIdentifier(pvSelectList.at(i), QSqlDriver::FieldName) + ",\n";
+    sql += " " + driver->escapeIdentifier(pvSelectFieldList.at(i).getSql(driver), QSqlDriver::FieldName) + ",\n";
   }
-  sql += " " + driver->escapeIdentifier(pvSelectList.at(lastIndex), QSqlDriver::FieldName) + "\n";
+  sql += " " + driver->escapeIdentifier(pvSelectFieldList.at(lastIndex).getSql(driver), QSqlDriver::FieldName) + "\n";
   // Add FROM statement (without anay join)
-  sql += "FROM " + driver->escapeIdentifier(pvTableName, QSqlDriver::TableName);
-  if(!pvTableAlias.isEmpty()){
-    sql += " " + driver->escapeIdentifier(pvTableAlias, QSqlDriver::TableName);
+  sql += "FROM " + driver->escapeIdentifier(pvTable.tableName(), QSqlDriver::TableName);
+  if(!pvTable.alias().isEmpty()){
+    sql += " " + driver->escapeIdentifier(pvTable.alias(), QSqlDriver::TableName);
   }
-  sql += "\n";
   // Add JOIN clauses
-  for(const auto & jc : pvJoinClauseList){
-    sql += jc.getSql(driver);
+  for(const auto & join : pvJoinClauseList){
+    sql += "\n" + join.getSql(driver);
   }
 
   return sql;

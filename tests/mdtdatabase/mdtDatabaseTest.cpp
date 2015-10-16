@@ -2531,54 +2531,129 @@ void mdtDatabaseTest::sqlViewSchemaTest()
   mdtSqlViewSchemaJoinClause vsjc;
   QString expectedSql;
   const QSqlDriver *driver = pvDatabase.driver();
-  Schema vs;
-  Table client("Client_tbl", "CLI");
-  Table address("Address_tbl", "ADR");
+  Schema view;
+  Table client;
+  Table address;
+  JoinClause join;
+  JoinKey key;
 
   QCOMPARE(pvDatabase.driverName(), QString("QSQLITE"));
   /*
    * Initial state
    */
-  QVERIFY(vs.getSqlForCreate(driver).isEmpty());
-  QVERIFY(vs.getSqlForDrop(driver).isEmpty());
+  QVERIFY(view.getSqlForCreate(driver).isEmpty());
+  QVERIFY(view.getSqlForDrop(driver).isEmpty());
   /*
-   * Basic view
+   * Simple 1 table view - No aliases
    */
   // Setup
-  vs.setName("Client_address_view");
-  vs.setTable(client);
-  vs.addSelectField(client, SelectField("Id_PK", "Client_Id"));
-  vs.addSelectField(client, SelectField("Name"));
-  vs.addSelectField(address, SelectField("Id_PK", "Address_Id"));
-  vs.addSelectField(address, SelectField("Street"));
+  client.clear();
+  client.setTableName("Client_tbl");
+  view.setName("Client_view");
+  view.setTable(client);
+  view.addSelectField(client, SelectField("Id_PK"));
+  view.addSelectField(client, SelectField("Name"));
   // Check SQL to DROP view
-  
+  expectedSql = "DROP VIEW IF EXISTS \"Client_view\"";
+  QCOMPARE(view.getSqlForDrop(driver), expectedSql);
   // Check SQL to CREATE view
-  
+  expectedSql  = "CREATE VIEW \"Client_view\" AS\n";
+  expectedSql += "SELECT\n";
+  expectedSql += " \"Client_tbl\".\"Id_PK\",\n";
+  expectedSql += " \"Client_tbl\".\"Name\"\n";
+  expectedSql += "FROM \"Client_tbl\"";
+  QCOMPARE(view.getSqlForCreate(driver), expectedSql);
   // Clear and check empty SQL
-  
+  view.clear();
+  QVERIFY(view.getSqlForCreate(driver).isEmpty());
+  QVERIFY(view.getSqlForDrop(driver).isEmpty());
+  /*
+   * Simple 1 table view - With table and field aliases
+   */
+  // Setup
+  client.clear();
+  client.setTableName("Client_tbl");
+  client.setAlias("CLI");
+  view.setName("Client_view");
+  view.setTable(client);
+  view.addSelectField(client, SelectField("Id_PK", "Client ID"));
+  view.addSelectField(client, SelectField("Name"));
+  // Check SQL to DROP view
+  expectedSql = "DROP VIEW IF EXISTS \"Client_view\"";
+  QCOMPARE(view.getSqlForDrop(driver), expectedSql);
+  // Check SQL to CREATE view
+  expectedSql  = "CREATE VIEW \"Client_view\" AS\n";
+  expectedSql += "SELECT\n";
+  expectedSql += " \"CLI\".\"Id_PK\" AS \"Client ID\",\n";
+  expectedSql += " \"CLI\".\"Name\"\n";
+  expectedSql += "FROM \"Client_tbl\" \"CLI\"";
+  QCOMPARE(view.getSqlForCreate(driver), expectedSql);
+  // Clear and check empty SQL
+  view.clear();
+  QVERIFY(view.getSqlForCreate(driver).isEmpty());
+  QVERIFY(view.getSqlForDrop(driver).isEmpty());
   /*
    * View with a JOIN
    */
+  // Setup
+  client.clear();
+  client.setTableName("Client_tbl");
+  client.setAlias("CLI");
+  address.clear();
+  address.setTableName("Address_tbl");
+  address.setAlias("ADR");
+  view.setName("Client_address_view");
+  view.setTable(client);
+  view.addSelectField(client, SelectField("Id_PK", "Client_Id"));
+  view.addSelectField(client, SelectField("Name"));
+  view.addSelectField(address, SelectField("Id_PK", "Address_Id"));
+  view.addSelectField(address, SelectField("Street"));
+  join.clear();
+  join.setMainTable(client);
+  join.setTableToJoin(address);
+  key.clear();
+  key.setMainTableField("Id_PK");
+  key.setTableToJoinField("Client_Id_FK");
+  join.addKey(key);
+  view.addJoinClause(join);
+  // Check SQL to DROP view
+  expectedSql = "DROP VIEW IF EXISTS \"Client_address_view\"";
+  QCOMPARE(view.getSqlForDrop(driver), expectedSql);
+  // Check SQL to CREATE view
+  expectedSql  = "CREATE VIEW \"Client_address_view\" AS\n";
+  expectedSql += "SELECT\n";
+  expectedSql += " \"CLI\".\"Id_PK\" AS \"Client_Id\",\n";
+  expectedSql += " \"CLI\".\"Name\",\n";
+  expectedSql += " \"ADR\".\"Id_PK\" AS \"Address_Id\",\n";
+  expectedSql += " \"ADR\".\"Street\"\n";
+  expectedSql += "FROM \"Client_tbl\" \"CLI\"\n";
+  expectedSql += " JOIN \"Address_tbl\" \"ADR\"\n";
+  expectedSql += "  ON \"CLI\".\"Id_PK\" = \"ADR\".\"Client_Id_FK\"";
   
+  qDebug() << "\n" << view.getSqlForCreate(driver);
   
+  QCOMPARE(view.getSqlForCreate(driver), expectedSql);
+  // Clear and check empty SQL
+  view.clear();
+  QVERIFY(view.getSqlForCreate(driver).isEmpty());
+  QVERIFY(view.getSqlForDrop(driver).isEmpty());
   /*
    * Setup a simple view
    */
-  vs.setName("Simple_view");
-  vs.setTableName("Simple_tbl");
-  vs.addSelectItem("Id_PK");
-  vs.addSelectItem("Name");
-  // Check DROP statement
-  expectedSql = "DROP VIEW IF EXISTS \"Simple_view\"";
-  QCOMPARE(vs.getSqlForDrop(driver), expectedSql);
-  // Check CREATE statement
-  expectedSql =  "CREATE VIEW \"Simple_view\" AS\n";
-  expectedSql += "SELECT\n";
-  expectedSql += " \"Id_PK\",\n";
-  expectedSql += " \"Name\"\n";
-  expectedSql += "FROM \"Simple_tbl\"\n";
-  QCOMPARE(vs.getSqlForCreate(driver), expectedSql);
+//   vs.setName("Simple_view");
+//   vs.setTableName("Simple_tbl");
+//   vs.addSelectItem("Id_PK");
+//   vs.addSelectItem("Name");
+//   // Check DROP statement
+//   expectedSql = "DROP VIEW IF EXISTS \"Simple_view\"";
+//   QCOMPARE(vs.getSqlForDrop(driver), expectedSql);
+//   // Check CREATE statement
+//   expectedSql =  "CREATE VIEW \"Simple_view\" AS\n";
+//   expectedSql += "SELECT\n";
+//   expectedSql += " \"Id_PK\",\n";
+//   expectedSql += " \"Name\"\n";
+//   expectedSql += "FROM \"Simple_tbl\"\n";
+//   QCOMPARE(vs.getSqlForCreate(driver), expectedSql);
   /*
    * Check that choosing no end of line works
    */
@@ -2600,118 +2675,118 @@ void mdtDatabaseTest::sqlViewSchemaTest()
    * Check with 1 field
    */
   // Clear
-  vs.clear();
-  QVERIFY(vs.getSqlForCreate(driver).isEmpty());
-  // Setup
-  vs.setName("Simple_view");
-  vs.setTableName("Simple_tbl");
-  vs.addSelectItem("Id_PK");
-  // Check CREATE statement
-  expectedSql =  "CREATE VIEW \"Simple_view\" AS\n";
-  expectedSql += "SELECT\n";
-  expectedSql += " \"Id_PK\"\n";
-  expectedSql += "FROM \"Simple_tbl\"\n";
-  QCOMPARE(vs.getSqlForCreate(driver), expectedSql);
-  /*
-   * Check with empty parts
-   */
-  vs.clear();
-  QVERIFY(vs.getSqlForCreate(driver).isEmpty());
-  QVERIFY(vs.getSqlForDrop(driver).isEmpty());
-  // Set only name
-  vs.setName("Brocken_view");
-  QVERIFY(vs.getSqlForCreate(driver).isEmpty());
-  // Check DROP statement (witch works if view name is set)
-  expectedSql = "DROP VIEW IF EXISTS \"Brocken_view\"";
-  QCOMPARE(vs.getSqlForDrop(driver), expectedSql);
-  // Set after SELECT statement
-  QVERIFY(vs.getSqlForCreate(driver).isEmpty());
-  // Set only Name and a field
-  vs.clear();
-  vs.setName("Brocken_view");
-  vs.addSelectItem("Id_PK");
-  QVERIFY(vs.getSqlForCreate(driver).isEmpty());
-  /*
-   * Clear
-   */
-  vs.clear();
-  QVERIFY(vs.getSqlForCreate(driver).isEmpty());
-  /*
-   * Check a view with table name alias and a join
-   */
-  // Setup view
-  vs.setName("Client_view");
-  vs.setTableName("Client_tbl", "CLI");
-  vs.addSelectItem("CLI.Id_PK");
-  // Setup join
-  vsjc.clear();
-  vsjc.setTables("CLI", "Address_tbl", "ADR");
-  vsjc.setConstraintOn("Id_PK", "Client_Id_FK");
-  vs.addJoinClause(vsjc);
-  // Check CREATE statement
-  expectedSql =  "CREATE VIEW \"Client_view\" AS\n";
-  expectedSql += "SELECT\n";
-  expectedSql += " \"CLI\".\"Id_PK\"\n";
-  expectedSql += "FROM \"Client_tbl\" \"CLI\"\n";
-  expectedSql += " JOIN \"Address_tbl\" \"ADR\"\n";
-  expectedSql += "  ON \"ADR\".\"Client_Id_FK\" = \"CLI\".\"Id_PK\"\n";
-  QCOMPARE(vs.getSqlForCreate(driver), expectedSql);
-  /*
-   * Clear
-   */
-  vs.clear();
-  QVERIFY(vs.getSqlForCreate(driver).isEmpty());
-  /*
-   * Check a view with table name alias and 2 joins
-   */
-  // Setup view
-  vs.setName("Client_view");
-  vs.setTableName("Client_tbl", "CLI");
-  vs.addSelectItem("CLI.Id_PK");
-  // Setup join
-  vsjc.clear();
-  vsjc.setTables("CLI", "Address_tbl", "ADR");
-  vsjc.setConstraintOn("Id_PK", "Client_Id_FK");
-  vs.addJoinClause(vsjc);
-  vsjc.clear();
-  vsjc.setTables("ADR", "AddressDetail_tbl", "ADD");
-  vsjc.setConstraintOn("Id_PK", "Address_Id_FK");
-  vs.addJoinClause(vsjc);
-  // Check CREATE statement
-  expectedSql =  "CREATE VIEW \"Client_view\" AS\n";
-  expectedSql += "SELECT\n";
-  expectedSql += " \"CLI\".\"Id_PK\"\n";
-  expectedSql += "FROM \"Client_tbl\" \"CLI\"\n";
-  expectedSql += " JOIN \"Address_tbl\" \"ADR\"\n";
-  expectedSql += "  ON \"ADR\".\"Client_Id_FK\" = \"CLI\".\"Id_PK\"\n";
-  expectedSql += " JOIN \"AddressDetail_tbl\" \"ADD\"\n";
-  expectedSql += "  ON \"ADD\".\"Address_Id_FK\" = \"ADR\".\"Id_PK\"\n";
-  QCOMPARE(vs.getSqlForCreate(driver), expectedSql);
+//   vs.clear();
+//   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
+//   // Setup
+//   vs.setName("Simple_view");
+//   vs.setTableName("Simple_tbl");
+//   vs.addSelectItem("Id_PK");
+//   // Check CREATE statement
+//   expectedSql =  "CREATE VIEW \"Simple_view\" AS\n";
+//   expectedSql += "SELECT\n";
+//   expectedSql += " \"Id_PK\"\n";
+//   expectedSql += "FROM \"Simple_tbl\"\n";
+//   QCOMPARE(vs.getSqlForCreate(driver), expectedSql);
+//   /*
+//    * Check with empty parts
+//    */
+//   vs.clear();
+//   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
+//   QVERIFY(vs.getSqlForDrop(driver).isEmpty());
+//   // Set only name
+//   vs.setName("Brocken_view");
+//   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
+//   // Check DROP statement (witch works if view name is set)
+//   expectedSql = "DROP VIEW IF EXISTS \"Brocken_view\"";
+//   QCOMPARE(vs.getSqlForDrop(driver), expectedSql);
+//   // Set after SELECT statement
+//   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
+//   // Set only Name and a field
+//   vs.clear();
+//   vs.setName("Brocken_view");
+//   vs.addSelectItem("Id_PK");
+//   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
+//   /*
+//    * Clear
+//    */
+//   vs.clear();
+//   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
+//   /*
+//    * Check a view with table name alias and a join
+//    */
+//   // Setup view
+//   vs.setName("Client_view");
+//   vs.setTableName("Client_tbl", "CLI");
+//   vs.addSelectItem("CLI.Id_PK");
+//   // Setup join
+//   vsjc.clear();
+//   vsjc.setTables("CLI", "Address_tbl", "ADR");
+//   vsjc.setConstraintOn("Id_PK", "Client_Id_FK");
+//   vs.addJoinClause(vsjc);
+//   // Check CREATE statement
+//   expectedSql =  "CREATE VIEW \"Client_view\" AS\n";
+//   expectedSql += "SELECT\n";
+//   expectedSql += " \"CLI\".\"Id_PK\"\n";
+//   expectedSql += "FROM \"Client_tbl\" \"CLI\"\n";
+//   expectedSql += " JOIN \"Address_tbl\" \"ADR\"\n";
+//   expectedSql += "  ON \"ADR\".\"Client_Id_FK\" = \"CLI\".\"Id_PK\"\n";
+//   QCOMPARE(vs.getSqlForCreate(driver), expectedSql);
+//   /*
+//    * Clear
+//    */
+//   vs.clear();
+//   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
+//   /*
+//    * Check a view with table name alias and 2 joins
+//    */
+//   // Setup view
+//   vs.setName("Client_view");
+//   vs.setTableName("Client_tbl", "CLI");
+//   vs.addSelectItem("CLI.Id_PK");
+//   // Setup join
+//   vsjc.clear();
+//   vsjc.setTables("CLI", "Address_tbl", "ADR");
+//   vsjc.setConstraintOn("Id_PK", "Client_Id_FK");
+//   vs.addJoinClause(vsjc);
+//   vsjc.clear();
+//   vsjc.setTables("ADR", "AddressDetail_tbl", "ADD");
+//   vsjc.setConstraintOn("Id_PK", "Address_Id_FK");
+//   vs.addJoinClause(vsjc);
+//   // Check CREATE statement
+//   expectedSql =  "CREATE VIEW \"Client_view\" AS\n";
+//   expectedSql += "SELECT\n";
+//   expectedSql += " \"CLI\".\"Id_PK\"\n";
+//   expectedSql += "FROM \"Client_tbl\" \"CLI\"\n";
+//   expectedSql += " JOIN \"Address_tbl\" \"ADR\"\n";
+//   expectedSql += "  ON \"ADR\".\"Client_Id_FK\" = \"CLI\".\"Id_PK\"\n";
+//   expectedSql += " JOIN \"AddressDetail_tbl\" \"ADD\"\n";
+//   expectedSql += "  ON \"ADD\".\"Address_Id_FK\" = \"ADR\".\"Id_PK\"\n";
+//   QCOMPARE(vs.getSqlForCreate(driver), expectedSql);
 
 }
 
 void mdtDatabaseTest::sqlViewSchemaBenchmark()
 {
   using namespace mdtSqlViewSchema;
-  Schema vs;
-  QString expectedSql;
-  QString sqlD, sqlC;
-
-  vs.setName("Simple_view");
-  vs.setTableName("Simple_tbl");
-  vs.addSelectItem("Id_PK");
-  vs.addSelectItem("Name");
-  ///vs.setAfterSelectStatement("FROM Simple_tbl");
-  QBENCHMARK{
-    sqlD = vs.getSqlForDrop(pvDatabase.driver());
-    sqlC = vs.getSqlForCreate(pvDatabase.driver());
-  }
-  expectedSql =  "CREATE VIEW \"Simple_view\" AS\n";
-  expectedSql += "SELECT\n";
-  expectedSql += " \"Id_PK\",\n";
-  expectedSql += " \"Name\"\n";
-  expectedSql += "FROM \"Simple_tbl\"\n";
-  QCOMPARE(sqlC, expectedSql);
+//   Schema vs;
+//   QString expectedSql;
+//   QString sqlD, sqlC;
+// 
+//   vs.setName("Simple_view");
+//   vs.setTableName("Simple_tbl");
+//   vs.addSelectItem("Id_PK");
+//   vs.addSelectItem("Name");
+//   ///vs.setAfterSelectStatement("FROM Simple_tbl");
+//   QBENCHMARK{
+//     sqlD = vs.getSqlForDrop(pvDatabase.driver());
+//     sqlC = vs.getSqlForCreate(pvDatabase.driver());
+//   }
+//   expectedSql =  "CREATE VIEW \"Simple_view\" AS\n";
+//   expectedSql += "SELECT\n";
+//   expectedSql += " \"Id_PK\",\n";
+//   expectedSql += " \"Name\"\n";
+//   expectedSql += "FROM \"Simple_tbl\"\n";
+//   QCOMPARE(sqlC, expectedSql);
 }
 
 void mdtDatabaseTest::sqlTablePopulationSchemaTest()
@@ -3059,11 +3134,15 @@ void mdtDatabaseTest::sqlDatabaseSchemaThreadTest()
   ts.addField(field, false);
   s.addTable(ts);
   // Build Client_view
+  /**
+   * \todo re-enable once View Schema is done
+   *
   vs.clear();
   vs.setName("Client_view");
   vs.setTableName("Client_tbl");
   vs.addSelectItem("*");
   s.addView(vs);
+  */
   // Build table population schema for Client_tbl
   tps.clear();
   tps.setName("Client_tbl base data");

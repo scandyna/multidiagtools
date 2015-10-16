@@ -401,6 +401,7 @@ namespace mdtSqlViewSchema
   *  key.setMainTableField("Id_PK");
   *  key.setTableToJoinField("Client_Id_FK");
   *  join.addKey(key);
+  *  view.addJoinClause(join);
   * 
   * \endcode
   */
@@ -420,8 +421,8 @@ namespace mdtSqlViewSchema
     /*! \brief Constructor
     */
     Schema(const QString & name = QString())
-    : pvName(name),
-      pvSelectSuffix(SelectSuffixNone)
+    : pvSelectSuffix(SelectSuffixNone),
+      pvName(name)
     {
     }
 
@@ -456,6 +457,10 @@ namespace mdtSqlViewSchema
      */
     void addSelectField(const Table & table, SelectField field);
 
+    /*! \brief Add a JOIN clause
+     */
+    void addJoinClause(const JoinClause & join);
+
     /*! \brief Add a SELECT item
     *
     * Given item will be added as is to the list of fields
@@ -468,11 +473,11 @@ namespace mdtSqlViewSchema
     *  the generated part of the SELECT statement will be:
     *  SELECT Id_PK, Name AS AliasedName, CLI.PhoneNumber
     */
-    void addSelectItem(const QString & item);
+//     void addSelectItem(const QString & item);
 
     /*! \brief Add a join clause
     */
-    void addJoinClause(const mdtSqlViewSchemaJoinClause & jc);
+//     void addJoinClause(const mdtSqlViewSchemaJoinClause & jc);
 
     /*! \brief Clear
     */
@@ -511,15 +516,16 @@ namespace mdtSqlViewSchema
       return QString();
     }
 
+    SelectSuffix pvSelectSuffix;
     QString pvName;
     Table pvTable;
     QVector<SelectField> pvSelectFieldList;
+    QVector<JoinClause> pvJoinClauseList;
     
-    QString pvTableName;
-    QString pvTableAlias;
-    SelectSuffix pvSelectSuffix;
-    QStringList pvSelectList;
-    QList<mdtSqlViewSchemaJoinClause> pvJoinClauseList;
+//     QString pvTableName;
+//     QString pvTableAlias;
+//     QStringList pvSelectList;
+//     QList<mdtSqlViewSchemaJoinClause> pvJoinClauseList;
   //   QString pvAfterSelectStatement;
   };
 
