@@ -180,6 +180,21 @@ void mdtSqlSchemaTable::setForeignKeyAt(int index, const mdtSqlForeignKey& fk)
   pvForeignKeys[index] = fk;
 }
 
+mdtSqlForeignKey mdtSqlSchemaTable::foreignKeyReferencing(const QString & parentTableName) const
+{
+  mdtSqlForeignKey fk;
+
+  for(const auto & _fk : pvForeignKeys){
+    if(_fk.parentTableName() == parentTableName){
+      fk = _fk;
+      fk.setChildTableName(pvTableName);
+      return fk;
+    }
+  }
+
+  return fk;
+}
+
 void mdtSqlSchemaTable::addIndex(const QString & name, bool unique) 
 {
 //   if(pvIndexes.contains(name)){

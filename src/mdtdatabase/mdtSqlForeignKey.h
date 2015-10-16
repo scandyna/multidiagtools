@@ -124,9 +124,19 @@ class mdtSqlForeignKey
    */
   void addKeyFields(const QString & parentTableFieldName, const mdtSqlField & childTableField);
 
+  /*! \brief Access parent table fields
+   *
+   * \note Used by mdtSqlDatabaseSchema to build SQL JOIN clause
+   */
+  const QStringList & parentTableFields() const
+  {
+    return pvParentTableFields;
+  }
+
   /*! \brief Access child table fields
    *
-   * \note Used by mdtSqlTableSchema for checking
+   * \note Used by mdtSqlTableSchema for checking,
+   *        and by mdtSqlDatabaseSchema to build SQL JOIN clause
    */
   const QStringList & childTableFields() const
   {

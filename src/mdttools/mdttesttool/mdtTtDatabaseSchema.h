@@ -147,13 +147,13 @@ class mdtTtDatabaseSchema
    */
   void setupVehicleTypeTable();
 
-  /*! \brief
+  /*! \brief VehicleType_Unit_tbl
    */
-  bool setupVehicleTypeUnitTable();
+  void setupVehicleTypeUnitTable();
 
-  /*! \brief
+  /*! \brief VehicleType_Link_tbl
    */
-  bool setupVehicleTypeLinkTable();
+  void setupVehicleTypeLinkTable();
 
   /*! \brief Setup connection type table
    */
@@ -179,21 +179,21 @@ class mdtTtDatabaseSchema
    */
   void setupArticleConnectorTable();
 
-  /*! \brief
+  /*! \brief ArticleConnection_tbl
    */
-  bool setupArticleConnectionTable();
+  void setupArticleConnectionTable();
+
+  /*! \brief ArticleLink_tbl
+   */
+  void setupArticleLinkTable();
 
   /*! \brief
    */
-  bool setupArticleLinkTable();
+  void setupUnitTable();
 
-  /*! \brief
+  /*! \brief UnitConnector_tbl
    */
-  bool setupUnitTable();
-
-  /*! \brief Setup unit connector table
-   */
-  bool setupUnitConnectorTable();
+  void setupUnitConnectorTable();
 
   /*! \brief
    */
@@ -237,9 +237,13 @@ class mdtTtDatabaseSchema
    */
   bool setupLinkBeamUnitEndTable();
 
-  /*! \brief
+  /*! \brief LinkDirection_tbl
    */
-  bool setupLinkDirectionTable();
+  void setupLinkDirectionTable();
+
+  /*! \brief LinkType_tbl
+   */
+  void setupLinkTypeTable();
 
   /*! \brief Setup TestSystem_tbl
    */
@@ -355,14 +359,8 @@ class mdtTtDatabaseSchema
   bool setupTestTable();
 
   /*! \brief Setup test result item table
-   *
-   * \todo Move to test tool when created
    */
   bool setupTestItemTable();
-
-  /*! \brief
-   */
-  bool setupLinkTypeTable();
 
   /*! \brief Create a trigger
    *
@@ -378,20 +376,26 @@ class mdtTtDatabaseSchema
 
   /*! \brief
    */
-  bool createVehicleTypeUnitView();
+//   bool createVehicleTypeUnitView();
 
   /*! \brief VehicleType_Unit_view
    */
   void setupVehicleTypeUnitView();
-  
-  
+
   /*! \brief
    */
   bool createArticleComponentUsageView();
 
   /*! \brief
    */
-  bool createArticleComponentView();
+
+  /*! \brief
+   */
+//   bool createArticleComponentView();
+
+  /*! \brief ArticleComponent_view
+   */
+  void setupArticleComponentView();
 
   /*! \brief Create article connection view
    */
@@ -403,7 +407,11 @@ class mdtTtDatabaseSchema
 
   /*! \brief
    */
-  bool createArticleLinkView();
+//   bool createArticleLinkView();
+
+  /*! \brief ArticleLink_view
+   */
+  void setupArticleLinkView();
 
   /*! \brief
    */

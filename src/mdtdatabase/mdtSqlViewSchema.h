@@ -21,7 +21,6 @@
 #ifndef MDT_SQL_VIEW_SCHEMA_H
 #define MDT_SQL_VIEW_SCHEMA_H
 
-#include "mdtSqlViewSchemaJoinClause.h"
 #include <QString>
 #include <QStringList>
 #include <QList>
@@ -461,24 +460,6 @@ namespace mdtSqlViewSchema
      */
     void addJoinClause(const JoinClause & join);
 
-    /*! \brief Add a SELECT item
-    *
-    * Given item will be added as is to the list of fields
-    *  that must appear in the select statement.
-    *
-    * For example, if we call
-    *  addSelectItem("Id_PK"), 
-    *  addSelectItem("Name AS AliasedName"),
-    *  addSelectItem("CLI.PhoneNumber"),
-    *  the generated part of the SELECT statement will be:
-    *  SELECT Id_PK, Name AS AliasedName, CLI.PhoneNumber
-    */
-//     void addSelectItem(const QString & item);
-
-    /*! \brief Add a join clause
-    */
-//     void addJoinClause(const mdtSqlViewSchemaJoinClause & jc);
-
     /*! \brief Clear
     */
     void clear();
@@ -503,30 +484,13 @@ namespace mdtSqlViewSchema
 
     /*! \brief Get select key word regarding select suffix
     */
-    QString selectKeyWord() const
-    {
-      switch(pvSelectSuffix){
-        case SelectSuffixNone:
-          return "SELECT";
-        case SelectSuffixAll:
-          return "SELECT ALL";
-        case SelectSuffixDistinct:
-          return "SELECT DISTINCT";
-      }
-      return QString();
-    }
+    QString selectKeyWord() const;
 
     SelectSuffix pvSelectSuffix;
     QString pvName;
     Table pvTable;
     QVector<SelectField> pvSelectFieldList;
     QVector<JoinClause> pvJoinClauseList;
-    
-//     QString pvTableName;
-//     QString pvTableAlias;
-//     QStringList pvSelectList;
-//     QList<mdtSqlViewSchemaJoinClause> pvJoinClauseList;
-  //   QString pvAfterSelectStatement;
   };
 
 };  // namespace mdtSqlViewSchema

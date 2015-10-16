@@ -39,7 +39,6 @@
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlTableSchemaModel.h"
 #include "mdtSqlViewSchema.h"
-#include "mdtSqlViewSchemaJoinClause.h"
 #include "mdtSqlTablePopulationSchema.h"
 #include "mdtSqlDatabaseSchema.h"
 #include "mdtSqlDatabaseSchemaModel.h"
@@ -932,6 +931,7 @@ void mdtDatabaseTest::sqlTableSchemaTest()
 {
   mdtSqlSchemaTable ts;
   mdtSqlField field;
+  mdtSqlForeignKey fk;
 
   /*
    * Initial state
@@ -973,6 +973,47 @@ void mdtDatabaseTest::sqlTableSchemaTest()
   QCOMPARE(ts.fieldIndex("Name"), 1);
   QCOMPARE(ts.field(1).name(), QString("Name"));
   QCOMPARE(ts.field("Name").name(), QString("Name"));
+  /*
+   * Setup Address_tbl
+   */
+  ts.clear();
+  ts.setTableName("Address_tbl");
+  // Add Id_PK field
+  field.clear();
+  field.setName("Id_PK");
+  field.setAutoValue(true);
+  ts.addField(field, true);
+  // Add Street field
+  field.clear();
+  field.setName("Street");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(50);
+  ts.addField(field, false);
+  // Add Client_Id_FK field
+  field.clear();
+  field.setName("Client_Id_FK");
+  field.setType(mdtSqlFieldType::Integer);
+  field.setRequired(true);
+  ts.addField(field, false);
+  fk.clear();
+  fk.setParentTableName("Client_tbl");
+  fk.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk.setCreateChildIndex(true);
+  fk.addKeyFields("Id_PK", field);
+  ts.addForeignKey(fk);
+  // Check getting foreign key
+  fk.clear();
+  fk = ts.foreignKeyReferencing("Client_tbl");
+  QCOMPARE(fk.parentTableName(), QString("Client_tbl"));
+  QCOMPARE(fk.parentTableFields().size(), 1);
+  QCOMPARE(fk.parentTableFields().at(0), QString("Id_PK"));
+  QCOMPARE(fk.childTableName(), QString("Address_tbl"));
+  QCOMPARE(fk.childTableFields().size(), 1);
+  QCOMPARE(fk.childTableFields().at(0), QString("Client_Id_FK"));
+  QVERIFY(fk.onDeleteAction() == mdtSqlForeignKey::Restrict);
+  QVERIFY(fk.onUpdateAction() == mdtSqlForeignKey::Cascade);
+  
 
   /*
    * Clear
@@ -2528,7 +2569,6 @@ void mdtDatabaseTest::sqlViewSchemaJoinClauseTest()
 void mdtDatabaseTest::sqlViewSchemaTest()
 {
   using namespace mdtSqlViewSchema;
-  mdtSqlViewSchemaJoinClause vsjc;
   QString expectedSql;
   const QSqlDriver *driver = pvDatabase.driver();
   Schema view;
@@ -2629,140 +2669,11 @@ void mdtDatabaseTest::sqlViewSchemaTest()
   expectedSql += "FROM \"Client_tbl\" \"CLI\"\n";
   expectedSql += " JOIN \"Address_tbl\" \"ADR\"\n";
   expectedSql += "  ON \"CLI\".\"Id_PK\" = \"ADR\".\"Client_Id_FK\"";
-  
-  qDebug() << "\n" << view.getSqlForCreate(driver);
-  
   QCOMPARE(view.getSqlForCreate(driver), expectedSql);
   // Clear and check empty SQL
   view.clear();
   QVERIFY(view.getSqlForCreate(driver).isEmpty());
   QVERIFY(view.getSqlForDrop(driver).isEmpty());
-  /*
-   * Setup a simple view
-   */
-//   vs.setName("Simple_view");
-//   vs.setTableName("Simple_tbl");
-//   vs.addSelectItem("Id_PK");
-//   vs.addSelectItem("Name");
-//   // Check DROP statement
-//   expectedSql = "DROP VIEW IF EXISTS \"Simple_view\"";
-//   QCOMPARE(vs.getSqlForDrop(driver), expectedSql);
-//   // Check CREATE statement
-//   expectedSql =  "CREATE VIEW \"Simple_view\" AS\n";
-//   expectedSql += "SELECT\n";
-//   expectedSql += " \"Id_PK\",\n";
-//   expectedSql += " \"Name\"\n";
-//   expectedSql += "FROM \"Simple_tbl\"\n";
-//   QCOMPARE(vs.getSqlForCreate(driver), expectedSql);
-  /*
-   * Check that choosing no end of line works
-   */
-  // Clear
-//   vs.clear();
-//   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
-//   QVERIFY(vs.getSqlForDrop(driver).isEmpty());
-//   // Setup
-//   vs.setName("Simple_view");
-//   vs.setTableName("Simple_tbl");
-//   vs.setSelectSuffix(mdtSqlViewSchema::SelectSuffixDistinct);
-//   vs.addSelectItem("Id_PK");
-//   vs.addSelectItem("Name");
-//   ///vs.setAfterSelectStatement("FROM Simple_tbl");
-//   // Check CREATE statement
-//   expectedSql =  "CREATE VIEW \"Simple_view\" AS SELECT DISTINCT \"Id_PK\", \"Name\" FROM \"Simple_tbl\"";
-//   QCOMPARE(vs.getSqlForCreate(driver, ""), expectedSql);
-  /*
-   * Check with 1 field
-   */
-  // Clear
-//   vs.clear();
-//   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
-//   // Setup
-//   vs.setName("Simple_view");
-//   vs.setTableName("Simple_tbl");
-//   vs.addSelectItem("Id_PK");
-//   // Check CREATE statement
-//   expectedSql =  "CREATE VIEW \"Simple_view\" AS\n";
-//   expectedSql += "SELECT\n";
-//   expectedSql += " \"Id_PK\"\n";
-//   expectedSql += "FROM \"Simple_tbl\"\n";
-//   QCOMPARE(vs.getSqlForCreate(driver), expectedSql);
-//   /*
-//    * Check with empty parts
-//    */
-//   vs.clear();
-//   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
-//   QVERIFY(vs.getSqlForDrop(driver).isEmpty());
-//   // Set only name
-//   vs.setName("Brocken_view");
-//   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
-//   // Check DROP statement (witch works if view name is set)
-//   expectedSql = "DROP VIEW IF EXISTS \"Brocken_view\"";
-//   QCOMPARE(vs.getSqlForDrop(driver), expectedSql);
-//   // Set after SELECT statement
-//   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
-//   // Set only Name and a field
-//   vs.clear();
-//   vs.setName("Brocken_view");
-//   vs.addSelectItem("Id_PK");
-//   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
-//   /*
-//    * Clear
-//    */
-//   vs.clear();
-//   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
-//   /*
-//    * Check a view with table name alias and a join
-//    */
-//   // Setup view
-//   vs.setName("Client_view");
-//   vs.setTableName("Client_tbl", "CLI");
-//   vs.addSelectItem("CLI.Id_PK");
-//   // Setup join
-//   vsjc.clear();
-//   vsjc.setTables("CLI", "Address_tbl", "ADR");
-//   vsjc.setConstraintOn("Id_PK", "Client_Id_FK");
-//   vs.addJoinClause(vsjc);
-//   // Check CREATE statement
-//   expectedSql =  "CREATE VIEW \"Client_view\" AS\n";
-//   expectedSql += "SELECT\n";
-//   expectedSql += " \"CLI\".\"Id_PK\"\n";
-//   expectedSql += "FROM \"Client_tbl\" \"CLI\"\n";
-//   expectedSql += " JOIN \"Address_tbl\" \"ADR\"\n";
-//   expectedSql += "  ON \"ADR\".\"Client_Id_FK\" = \"CLI\".\"Id_PK\"\n";
-//   QCOMPARE(vs.getSqlForCreate(driver), expectedSql);
-//   /*
-//    * Clear
-//    */
-//   vs.clear();
-//   QVERIFY(vs.getSqlForCreate(driver).isEmpty());
-//   /*
-//    * Check a view with table name alias and 2 joins
-//    */
-//   // Setup view
-//   vs.setName("Client_view");
-//   vs.setTableName("Client_tbl", "CLI");
-//   vs.addSelectItem("CLI.Id_PK");
-//   // Setup join
-//   vsjc.clear();
-//   vsjc.setTables("CLI", "Address_tbl", "ADR");
-//   vsjc.setConstraintOn("Id_PK", "Client_Id_FK");
-//   vs.addJoinClause(vsjc);
-//   vsjc.clear();
-//   vsjc.setTables("ADR", "AddressDetail_tbl", "ADD");
-//   vsjc.setConstraintOn("Id_PK", "Address_Id_FK");
-//   vs.addJoinClause(vsjc);
-//   // Check CREATE statement
-//   expectedSql =  "CREATE VIEW \"Client_view\" AS\n";
-//   expectedSql += "SELECT\n";
-//   expectedSql += " \"CLI\".\"Id_PK\"\n";
-//   expectedSql += "FROM \"Client_tbl\" \"CLI\"\n";
-//   expectedSql += " JOIN \"Address_tbl\" \"ADR\"\n";
-//   expectedSql += "  ON \"ADR\".\"Client_Id_FK\" = \"CLI\".\"Id_PK\"\n";
-//   expectedSql += " JOIN \"AddressDetail_tbl\" \"ADD\"\n";
-//   expectedSql += "  ON \"ADD\".\"Address_Id_FK\" = \"ADR\".\"Id_PK\"\n";
-//   QCOMPARE(vs.getSqlForCreate(driver), expectedSql);
-
 }
 
 void mdtDatabaseTest::sqlViewSchemaBenchmark()
@@ -2845,10 +2756,90 @@ void mdtDatabaseTest::sqlTablePopulationSchemaTest()
 
 void mdtDatabaseTest::sqlDatabaseSchemaTest()
 {
+  using namespace mdtSqlViewSchema;
+  QString expectedSql;
   mdtSqlDatabaseSchema s;
+  mdtSqlSchemaTable table;
+  mdtSqlField field;
+  mdtSqlForeignKey fk;
+  JoinClause join;
+
+  QCOMPARE(pvDatabase.driverName(), QString("QSQLITE"));
   /*
    * Initial state
    */
+  QCOMPARE(s.tableCount(), 0);
+  /*
+   * Create Client_tbl
+   */
+  table.clear();
+  table.setTableName("Client_tbl");
+  // Id_PK
+  field.clear();
+  field.setAutoValue(true);
+  field.setName("Id_PK");
+  field.setType(mdtSqlFieldType::Integer);
+  table.addField(field, true);
+  // Name
+  field.clear();
+  field.setName("Name");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(50);
+  table.addField(field, false);
+  // Add table to database schema and check
+  s.addTable(table);
+  QCOMPARE(s.tableCount(), 1);
+  /*
+   * Address_tbl
+   */
+  table.clear();
+  table.setTableName("Address_tbl");
+  // Id_PK
+  field.clear();
+  field.setAutoValue(true);
+  field.setName("Id_PK");
+  field.setType(mdtSqlFieldType::Integer);
+  table.addField(field, true);
+  // Street
+  field.clear();
+  field.setName("Street");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(50);
+  table.addField(field, false);
+  // Client_Id_FK
+  field.clear();
+  field.setName("Client_Id_FK");
+  field.setType(mdtSqlFieldType::Integer);
+  field.setRequired(true);
+  table.addField(field, false);
+  fk.clear();
+  fk.setParentTableName("Client_tbl");
+  fk.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk.setCreateChildIndex(true);
+  fk.addKeyFields("Id_PK", field);
+  table.addForeignKey(fk);
+  // Add table to database schema and check
+  s.addTable(table);
+  QCOMPARE(s.tableCount(), 2);
+  /*
+   * Get clause to JOIN Address_tbl to Client_tbl
+   */
+  join = s.joinClause(Table("Client_tbl"), Table("Address_tbl"));
+  QVERIFY(!join.isNull());
+  // Check SQL clause
+  expectedSql  = " JOIN \"Address_tbl\"\n";
+  expectedSql += "  ON \"Client_tbl\".\"Id_PK\" = \"Address_tbl\".\"Client_Id_FK\"";
+  QCOMPARE(join.getSql(pvDatabase.driver()), expectedSql);
+  /*
+   * Get clause to JOIN Client_tbl to Address_tbl
+   * Note: this is a very common use case
+   */
+  join = s.joinClause(Table("Address_tbl"), Table("Client_tbl"));
+  QVERIFY(!join.isNull());
+  expectedSql  = " JOIN \"Client_tbl\"\n";
+  expectedSql += "  ON \"Address_tbl\".\"Client_Id_FK\" = \"Client_tbl\".\"Id_PK\"";
+  QCOMPARE(join.getSql(pvDatabase.driver()), expectedSql);
 }
 
 void mdtDatabaseTest::sqlDatabaseSchemaModelTest()

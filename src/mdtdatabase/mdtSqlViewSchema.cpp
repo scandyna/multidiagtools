@@ -64,14 +64,6 @@ void Table::clear()
   pvAlias.clear();
 }
 
-// QString Table::getSql(const QSqlDriver * const driver) const
-// {
-//   Q_ASSERT(driver != nullptr);
-// 
-//   
-// }
-
-
 void JoinKey::clear()
 {
   pvMainTableField.clear();
@@ -193,16 +185,6 @@ void Schema::addJoinClause(const JoinClause& join)
   pvJoinClauseList.append(join);
 }
 
-// void Schema::addSelectItem(const QString& item)
-// {
-//   pvSelectList.append(item);
-// }
-
-// void Schema::addJoinClause(const mdtSqlViewSchemaJoinClause& jc)
-// {
-//   pvJoinClauseList.append(jc);
-// }
-
 void Schema::clear()
 {
   pvSelectSuffix = SelectSuffixNone;
@@ -252,4 +234,17 @@ QString Schema::getSqlForCreate(const QSqlDriver* driver) const
   }
 
   return sql;
+}
+
+QString Schema::selectKeyWord() const
+{
+  switch(pvSelectSuffix){
+    case SelectSuffixNone:
+      return "SELECT";
+    case SelectSuffixAll:
+      return "SELECT ALL";
+    case SelectSuffixDistinct:
+      return "SELECT DISTINCT";
+  }
+  return QString();
 }

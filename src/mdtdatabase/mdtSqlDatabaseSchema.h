@@ -51,6 +51,10 @@ class mdtSqlDatabaseSchema
     return pvTableList.size();
   }
 
+  /*! \brief Get table schema for requested table name
+   */
+  mdtSqlSchemaTable table(const QString & tableName) const;
+
   /*! \brief Get table list
    */
   QList<mdtSqlSchemaTable> tableList() const
@@ -68,6 +72,22 @@ class mdtSqlDatabaseSchema
     Q_ASSERT(index < pvTableList.size());
     return pvTableList.at(index).tableName();
   }
+
+  /*! \brief Get clause to join 2 tables
+   *
+   * This function works if both specified tables
+   *  are defined in database schema and related.
+   *  The table to join must contain a foreign key
+   *  that refers to main table.
+   *
+   * \param mainTable Main table of the join clause.
+   * \param tableToJoin Table to join. Must contain a foreign key to main table.
+   * \return If all requirements are met, a join clause with tables and keys set.
+   *         Else, a Null clause is returned.
+   * \pre Main table and table to join must exist in database schema.
+   * \pre Table to join must have a foreign key refrencing main table.
+   */
+  mdtSqlViewSchema::JoinClause joinClause(const mdtSqlViewSchema::Table & mainTable, const mdtSqlViewSchema::Table & tableToJoin) const;
 
   /*! \brief Add a view schema
    */

@@ -51,6 +51,39 @@ struct mdtSqlSchemaTableForeignKeyInfo
 };
 
 /*! \brief Helper class that generate SQL table creation string
+ *
+ * Typical usage:
+ * \code
+ * mdtSqlTableSchema table;
+ * mdtSqlField Id_PK;
+ * mdtSqlField Street;
+ * mdtSqlField Client_Id_FK;
+ * mdtSqlForeignKey fk_Client_Id_FK;
+ *
+ * // Setup table basics
+ * table.setTableName("Address_tbl");
+ * // Id_PK
+ * Id_PK.setName("Id_PK");
+ * Id_PK.setType(mdtSqlFieldType::Integer);
+ * Id_PK.setAutoValue(true);
+ * table.addField(Id_PK, true);
+ * // Name
+ * Street.setName("Name");
+ * Street.setType(mdtSqlFieldType::Varchar);
+ * Street.setLength(50);
+ * table.addField(Street, false);
+ * // Client_Id_FK
+ * Client_Id_FK.setName("Client_Id_FK");
+ * Client_Id_FK.setType(mdtSqlFieldType::Integer);
+ * Client_Id_FK.setRequired(true);
+ * table.addField(Client_Id_FK, false);
+ * fk_Client_Id_FK.setParentTableName("Client_tbl");
+ * fk_Client_Id_FK.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+ * fk_Client_Id_FK.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+ * fk_Client_Id_FK.setCreateChildIndex(true);
+ * fk_Client_Id_FK.addKeyFields("Id_PK", Client_Id_FK);
+ * table.addForeignKey(fk_Client_Id_FK);
+ * \endcode
  */
 class mdtSqlSchemaTable
 {
@@ -247,6 +280,10 @@ class mdtSqlSchemaTable
    * \pre index must be valid
    */
   void setForeignKeyAt(int index, const mdtSqlForeignKey & fk);
+
+  /*! \brief Get foreign key referencing given table
+   */
+  mdtSqlForeignKey foreignKeyReferencing(const QString & parentTableName) const;
 
   /*! \brief Get list of foreign keys
    */
