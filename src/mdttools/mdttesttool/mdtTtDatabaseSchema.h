@@ -391,27 +391,13 @@ class mdtTtDatabaseSchema
    */
   void setupUnitView();
 
-  /*! \brief
-   */
-//   bool createUnitComponentView();
-
   /*! \brief UnitComponent_view
    */
   void setupUnitComponentView();
 
-  /*! \brief Create UnitConnector_view
-   */
-//   bool createUnitConnectorView();
-
   /*! \brief UnitConnector_view
    */
   void setupUnitConnectorView();
-
-  /*! \brief Create UnitConnectorUsage_view
-   *
-   * Display wich units uses a given connector
-   */
-//   bool createUnitConnectorUsageView();
 
   /*! \brief UnitConnectorUsage_view
    *
@@ -419,9 +405,10 @@ class mdtTtDatabaseSchema
    */
   void setupUnitConnectorUsageView();
 
-  /*! \brief
+  /*! \brief UnitConnection_view
    */
-  bool createUnitConnectionView();
+//   bool createUnitConnectionView();
+  void setupUnitConnectionView();
 
   /*! \brief Create a view that joins article link table with unit connections
    *
@@ -436,27 +423,33 @@ class mdtTtDatabaseSchema
    *
    * This view will give article links that are used by a unit connection .
    */
-  bool createArticleLinkUnitConnectionView();
+//   bool createArticleLinkUnitConnectionView();
+  void setupArticleLinkUnitConnectionView();
 
-  /*! \brief
+  /*! \brief UnitLink_view
    */
-  bool createUnitLinkView();
+//   bool createUnitLinkView();
+  void setupUnitLinkView();
 
-  /*! \brief
+  /*! \brief Unit_VehicleType_view
    */
   bool createUnitVehicleTypeView();
+  void setupUnitVehicleTypeView();
 
-  /*! \brief
+  /*! \brief LinkList_view
    */
   bool createLinkListView();
+  void setupLinkListView();
 
-  /*! \brief Create LinkBeam_UnitStart_view
+  /*! \brief LinkBeam_UnitStart_view
    */
   bool createLinkBeamUnitStartView();
+  void setupLinkBeamUnitStartView();
 
   /*! \brief Create LinkBeam_UnitEnd_view
    */
   bool createLinkBeamUnitEndView();
+  void setupLinkBeamUnitEndView();
 
   
   /*! \brief Create TestSystemComponent_view
