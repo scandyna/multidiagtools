@@ -367,10 +367,6 @@ class mdtTtDatabaseSchema
    */
   void setupVehicleTypeUnitView();
 
-  /*! \brief
-   */
-//   bool createArticleComponentUsageView();
-
   /*! \brief ArticleComponentUsage_view
    */
   void setupArticleComponentUsageView();
@@ -379,17 +375,9 @@ class mdtTtDatabaseSchema
    */
   void setupArticleComponentView();
 
-  /*! \brief Create article connection view
-   */
-//   bool createArticleConnectorView();
-
   /*! \brief ArticleConnector_view
    */
   void setupArticleConnectorView();
-
-  /*! \brief Create article connection view
-   */
-//   bool createArticleConnectionView();
 
   /*! \brief ArticleConnection_view
    */
@@ -399,21 +387,25 @@ class mdtTtDatabaseSchema
    */
   void setupArticleLinkView();
 
-  /*! \brief
-   */
-//   bool createUnitView();
-
   /*! \brief Unit_view
    */
   void setupUnitView();
 
   /*! \brief
    */
-  bool createUnitComponentView();
+//   bool createUnitComponentView();
+
+  /*! \brief UnitComponent_view
+   */
+  void setupUnitComponentView();
 
   /*! \brief Create UnitConnector_view
    */
   bool createUnitConnectorView();
+
+  /*! \brief UnitConnector_view
+   */
+  void setupUnitConnectorView();
 
   /*! \brief Create UnitConnectorUsage_view
    *
