@@ -2,7 +2,7 @@ Multidiagtools
 ==============
 
 Multidiagtools is a library that should help (in some future) interacting with some common instruments.
-But, today it's just a set of C++ classes, and nothing is complete. Multidiagtool is based on Qt4, but some part of code is platform dependent.
+But, today it's just a set of C++ classes, and nothing is complete. Multidiagtool is based on Qt5, but some part of code is platform dependent.
 
 Current state
 =============
@@ -36,11 +36,13 @@ sudo apt-get install cmake make g++ libqt4-dev libqt4-network libqt4-sql libqt4-
 cd to the source tree, and run:
 
 ```bash
-./configure.sh && make clean && make
+mkdir build && cd build && cmake .. && make
 ```
 To run the unit test suite, you can use make test. All tests are available in tests sub-directory.
 
 Windows
+
+Note: this section is not up to date.
 
 The library was tested on Windows XP and Wine. I use MinGW, so I will explain how to install and build all with it. The needed programs are:
 
@@ -66,6 +68,8 @@ Note: on some version of MinGW, make alias is not made. In this case, the comman
 
 Install
 =======
+
+Note: this section is not up to date.
 
 The best way to install is to generate packages, and install it. To create theses packages, run:
 
