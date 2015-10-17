@@ -369,7 +369,11 @@ class mdtTtDatabaseSchema
 
   /*! \brief
    */
-  bool createArticleComponentUsageView();
+//   bool createArticleComponentUsageView();
+
+  /*! \brief ArticleComponentUsage_view
+   */
+  void setupArticleComponentUsageView();
 
   /*! \brief ArticleComponent_view
    */
@@ -377,11 +381,19 @@ class mdtTtDatabaseSchema
 
   /*! \brief Create article connection view
    */
-  bool createArticleConnectorView();
+//   bool createArticleConnectorView();
+
+  /*! \brief ArticleConnector_view
+   */
+  void setupArticleConnectorView();
 
   /*! \brief Create article connection view
    */
-  bool createArticleConnectionView();
+//   bool createArticleConnectionView();
+
+  /*! \brief ArticleConnection_view
+   */
+  void setupArticleConnectionView();
 
   /*! \brief ArticleLink_view
    */
@@ -389,7 +401,11 @@ class mdtTtDatabaseSchema
 
   /*! \brief
    */
-  bool createUnitView();
+//   bool createUnitView();
+
+  /*! \brief Unit_view
+   */
+  void setupUnitView();
 
   /*! \brief
    */

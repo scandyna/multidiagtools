@@ -85,6 +85,10 @@ bool mdtTtDatabaseSchema::buildSchema()
   setupVehicleTypeUnitView();
   setupArticleComponentView();
   setupArticleLinkView();
+  setupArticleComponentUsageView();
+  setupArticleConnectorView();
+  setupArticleConnectionView();
+  setupUnitView();
 
   return true;
 }
@@ -371,103 +375,103 @@ bool mdtTtDatabaseSchema::createTriggers()
 
 bool mdtTtDatabaseSchema::createViews() 
 {
-  if(!createArticleComponentUsageView()){
-    return false;
-  }
-  if(!createArticleConnectorView()){
-    return false;
-  }
-  if(!createArticleConnectionView()){
-    return false;
-  }
-  if(!createArticleLinkUnitConnectionView()){
-    return false;
-  }
-  if(!createUnitLinkView()){
-    return false;
-  }
-  if(!createUnitVehicleTypeView()){
-    return false;
-  }
-  if(!createUnitView()){
-    return false;
-  }
-  if(!createUnitComponentView()){
-    return false;
-  }
-  if(!createUnitConnectorView()){
-    return false;
-  }
-  if(!createUnitConnectorUsageView()){
-    return false;
-  }
-  if(!createUnitConnectionView()){
-    return false;
-  }
-  if(!createLinkListView()){
-    return false;
-  }
-  if(!createLinkBeamUnitStartView()){
-    return false;
-  }
-  if(!createTestNodeView()){
-    return false;
-  }
-  if(!createLinkBeamUnitEndView()){
-    return false;
-  }
-  if(!createTestSystemComponentView()){
-    return false;
-  }
-  if(!createTestSytemOfComponentView()){
-    return false;
-  }
-  if(!createTestSystemUnitView()){
-    return false;
-  }
-
-  if(!createTestNodeUnitView()){
-    return false;
-  }
-  if(!createUnitTestNodeView()){
-    return false;
-  }
-  if(!createTestNodeUnitConnectionView()){
-    return false;
-  }
-  if(!createTestLinkView()){
-    return false;
-  }
-  if(!createTestCableTestNodeUnitView()){
-    return false;
-  }
-  if(!createTestCableDutUnitView()){
-    return false;
-  }
-  if(!createTestNodeTestCableView()){
-    return false;
-  }
-  if(!createTestModelTestNodeView()){
-    return false;
-  }
-  if(!createTestModelItemTestLinkView()){
-    return false;
-  }
-  if(!createTestNodeUnitSetupView()){
-    return false;
-  }
-  if(!createTestView()){
-    return false;
-  }
-  if(!createTestItemView()){
-    return false;
-  }
-  if(!createTestItemNodeUnitSetupView()){
-    return false;
-  }
-  if(!createTestNodeRouteView()){
-    return false;
-  }
+//   if(!createArticleComponentUsageView()){
+//     return false;
+//   }
+//   if(!createArticleConnectorView()){
+//     return false;
+//   }
+//   if(!createArticleConnectionView()){
+//     return false;
+//   }
+//   if(!createArticleLinkUnitConnectionView()){
+//     return false;
+//   }
+//   if(!createUnitLinkView()){
+//     return false;
+//   }
+//   if(!createUnitVehicleTypeView()){
+//     return false;
+//   }
+//   if(!createUnitView()){
+//     return false;
+//   }
+//   if(!createUnitComponentView()){
+//     return false;
+//   }
+//   if(!createUnitConnectorView()){
+//     return false;
+//   }
+//   if(!createUnitConnectorUsageView()){
+//     return false;
+//   }
+//   if(!createUnitConnectionView()){
+//     return false;
+//   }
+//   if(!createLinkListView()){
+//     return false;
+//   }
+//   if(!createLinkBeamUnitStartView()){
+//     return false;
+//   }
+//   if(!createTestNodeView()){
+//     return false;
+//   }
+//   if(!createLinkBeamUnitEndView()){
+//     return false;
+//   }
+//   if(!createTestSystemComponentView()){
+//     return false;
+//   }
+//   if(!createTestSytemOfComponentView()){
+//     return false;
+//   }
+//   if(!createTestSystemUnitView()){
+//     return false;
+//   }
+// 
+//   if(!createTestNodeUnitView()){
+//     return false;
+//   }
+//   if(!createUnitTestNodeView()){
+//     return false;
+//   }
+//   if(!createTestNodeUnitConnectionView()){
+//     return false;
+//   }
+//   if(!createTestLinkView()){
+//     return false;
+//   }
+//   if(!createTestCableTestNodeUnitView()){
+//     return false;
+//   }
+//   if(!createTestCableDutUnitView()){
+//     return false;
+//   }
+//   if(!createTestNodeTestCableView()){
+//     return false;
+//   }
+//   if(!createTestModelTestNodeView()){
+//     return false;
+//   }
+//   if(!createTestModelItemTestLinkView()){
+//     return false;
+//   }
+//   if(!createTestNodeUnitSetupView()){
+//     return false;
+//   }
+//   if(!createTestView()){
+//     return false;
+//   }
+//   if(!createTestItemView()){
+//     return false;
+//   }
+//   if(!createTestItemNodeUnitSetupView()){
+//     return false;
+//   }
+//   if(!createTestNodeRouteView()){
+//     return false;
+//   }
 //   if(!createTestModelItemRouteView()){
 //     return false;
 //   }
@@ -3517,26 +3521,53 @@ void mdtTtDatabaseSchema::setupVehicleTypeUnitView()
   pvSchema.addView(view);
 }
 
+// bool mdtTtDatabaseSchema::createArticleComponentUsageView() 
+// {
+//   QString sql;
+// 
+//   sql = "CREATE VIEW ArticleComponentUsage_view AS\n"\
+//         "SELECT\n"\
+//         " ArticleComponent_tbl.Component_Id_FK AS Component_Id_PK ,\n"\
+//         " ArticleComponent_tbl.Composite_Id_FK AS Article_Id_PK ,\n"\
+//         " Article_tbl.ArticleCode ,\n"\
+//         " Article_tbl.DesignationEN,\n"\
+//         " Article_tbl.DesignationFR,\n"\
+//         " Article_tbl.DesignationDE,\n"\
+//         " Article_tbl.DesignationIT\n"\
+//         "FROM ArticleComponent_tbl\n"\
+//         " JOIN Article_tbl\n"\
+//         "  ON Article_tbl.Id_PK = ArticleComponent_tbl.Composite_Id_FK";
+// 
+//   return createView("ArticleComponentUsage_view", sql);
+// }
 
-
-bool mdtTtDatabaseSchema::createArticleComponentUsageView() 
+void mdtTtDatabaseSchema::setupArticleComponentUsageView()
 {
-  QString sql;
+  using namespace mdtSqlViewSchema;
 
-  sql = "CREATE VIEW ArticleComponentUsage_view AS\n"\
-        "SELECT\n"\
-        " ArticleComponent_tbl.Component_Id_FK AS Component_Id_PK ,\n"\
-        " ArticleComponent_tbl.Composite_Id_FK AS Article_Id_PK ,\n"\
-        " Article_tbl.ArticleCode ,\n"\
-        " Article_tbl.DesignationEN,\n"\
-        " Article_tbl.DesignationFR,\n"\
-        " Article_tbl.DesignationDE,\n"\
-        " Article_tbl.DesignationIT\n"\
-        "FROM ArticleComponent_tbl\n"\
-        " JOIN Article_tbl\n"\
-        "  ON Article_tbl.Id_PK = ArticleComponent_tbl.Composite_Id_FK";
+  Schema view;
+  Table AC("ArticleComponent_tbl", "AC");
+  Table A("Article_tbl", "A");
+  JoinClause join;
+  JoinKey key;
 
-  return createView("ArticleComponentUsage_view", sql);
+  view.setName("ArticleComponentUsage_view");
+  view.setTable(AC);
+  view.addSelectField(AC, SelectField("Component_Id_FK", "Component_Id_PK"));
+  view.addSelectField(AC, SelectField("Composite_Id_FK", "Article_Id_PK"));
+  view.addSelectField(A, SelectField("ArticleCode"));
+  view.addSelectField(A, SelectField("DesignationEN"));
+  view.addSelectField(A, SelectField("DesignationFR"));
+  view.addSelectField(A, SelectField("DesignationDE"));
+  view.addSelectField(A, SelectField("DesignationIT"));
+  join.setMainTable(AC);
+  join.setTableToJoin(A);
+  key.setMainTableField("Composite_Id_FK");
+  key.setTableToJoinField("Id_PK");
+  join.addKey(key);
+  view.addJoinClause(join);
+
+  pvSchema.addView(view);
 }
 
 void mdtTtDatabaseSchema::setupArticleComponentView()
@@ -3571,58 +3602,123 @@ void mdtTtDatabaseSchema::setupArticleComponentView()
   pvSchema.addView(view);
 }
 
-bool mdtTtDatabaseSchema::createArticleConnectorView()
+// bool mdtTtDatabaseSchema::createArticleConnectorView()
+// {
+//   QString sql;
+// 
+//   sql = "CREATE VIEW ArticleConnector_view AS\n"\
+//         "SELECT\n"\
+//         " ArticleConnector_tbl.Id_PK,\n"\
+//         " ArticleConnector_tbl.Article_Id_FK,\n"\
+//         " ArticleConnector_tbl.Connector_Id_FK,\n"\
+//         " ArticleConnector_tbl.Name AS ArticleConnectorName,\n"\
+//         " Connector_tbl.Gender,\n"\
+//         " Connector_tbl.Form,\n"\
+//         " Connector_tbl.Manufacturer,\n"\
+//         " Connector_tbl.ManufacturerConfigCode,\n"\
+//         " Connector_tbl.ManufacturerArticleCode\n"\
+//         "FROM ArticleConnector_tbl\n"\
+//         " LEFT JOIN Connector_tbl\n"\
+//         "  ON Connector_tbl.Id_PK = ArticleConnector_tbl.Connector_Id_FK";
+// 
+//   return createView("ArticleConnector_view", sql);
+// }
+
+void mdtTtDatabaseSchema::setupArticleConnectorView()
 {
-  QString sql;
+  using namespace mdtSqlViewSchema;
 
-  sql = "CREATE VIEW ArticleConnector_view AS\n"\
-        "SELECT\n"\
-        " ArticleConnector_tbl.Id_PK,\n"\
-        " ArticleConnector_tbl.Article_Id_FK,\n"\
-        " ArticleConnector_tbl.Connector_Id_FK,\n"\
-        " ArticleConnector_tbl.Name AS ArticleConnectorName,\n"\
-        " Connector_tbl.Gender,\n"\
-        " Connector_tbl.Form,\n"\
-        " Connector_tbl.Manufacturer,\n"\
-        " Connector_tbl.ManufacturerConfigCode,\n"\
-        " Connector_tbl.ManufacturerArticleCode\n"\
-        "FROM ArticleConnector_tbl\n"\
-        " LEFT JOIN Connector_tbl\n"\
-        "  ON Connector_tbl.Id_PK = ArticleConnector_tbl.Connector_Id_FK";
+  Schema view;
+  Table ACNR("ArticleConnector_tbl", "ACNR");
+  Table CNR("Connector_tbl", "CNR");
+  JoinClause join;
 
-  return createView("ArticleConnector_view", sql);
+  view.setName("ArticleConnector_view");
+  view.setTable(ACNR);
+  view.addSelectField(ACNR, SelectField("Id_PK"));
+  view.addSelectField(ACNR, SelectField("Article_Id_FK"));
+  view.addSelectField(ACNR, SelectField("Connector_Id_FK"));
+  view.addSelectField(ACNR, SelectField("Name", "ArticleConnectorName"));
+  view.addSelectField(CNR, SelectField("Gender"));
+  view.addSelectField(CNR, SelectField("Form"));
+  view.addSelectField(CNR, SelectField("Manufacturer"));
+  view.addSelectField(CNR, SelectField("ManufacturerConfigCode"));
+  view.addSelectField(CNR, SelectField("ManufacturerArticleCode"));
+  join = pvSchema.joinClause(ACNR, CNR);
+  join.setOperator(JoinClause::LeftJoin);
+  view.addJoinClause(join);
+
+  pvSchema.addView(view);
 }
 
-bool mdtTtDatabaseSchema::createArticleConnectionView()
+// bool mdtTtDatabaseSchema::createArticleConnectionView()
+// {
+//   QString sql;
+// 
+//   sql = "CREATE VIEW ArticleConnection_view AS\n"\
+//         "SELECT\n"\
+//         " ACNR.Connector_Id_FK,\n"\
+//         " ACNR.Name AS ArticleConnectorName,\n"\
+//         " ACNX.Id_PK,\n"\
+//         " ACNX.Article_Id_FK,\n"\
+//         " ACNX.ArticleConnector_Id_FK,\n"\
+//         " ACNX.ConnectionType_Code_FK,\n"\
+//         " ACNX.ArticleContactName,\n"\
+//         " CT.NameEN AS ConnectionTypeEN,\n"\
+//         " CT.NameFR AS ConnectionTypeFR,\n"\
+//         " CT.NameDE AS ConnectionTypeDE,\n"\
+//         " CT.NameIT AS ConnectionTypeIT,\n"\
+//         " ACNX.Resistance,\n"\
+//         " ACNX.IoType,\n"\
+//         " ACNX.FunctionEN,\n"\
+//         " ACNX.FunctionFR,\n"\
+//         " ACNX.FunctionDE,\n"\
+//         " ACNX.FunctionIT\n"\
+//         "FROM ArticleConnection_tbl ACNX\n"\
+//         " LEFT JOIN ArticleConnector_tbl ACNR\n"\
+//         "  ON ACNX.ArticleConnector_Id_FK = ACNR.Id_PK\n"\
+//         " JOIN ConnectionType_tbl CT\n"\
+//         "  ON CT.Code_PK = ACNX.ConnectionType_Code_FK";
+// 
+//   return createView("ArticleConnection_view", sql);
+// }
+
+void mdtTtDatabaseSchema::setupArticleConnectionView()
 {
-  QString sql;
+  using namespace mdtSqlViewSchema;
 
-  sql = "CREATE VIEW ArticleConnection_view AS\n"\
-        "SELECT\n"\
-        " ACNR.Connector_Id_FK,\n"\
-        " ACNR.Name AS ArticleConnectorName,\n"\
-        " ACNX.Id_PK,\n"\
-        " ACNX.Article_Id_FK,\n"\
-        " ACNX.ArticleConnector_Id_FK,\n"\
-        " ACNX.ConnectionType_Code_FK,\n"\
-        " ACNX.ArticleContactName,\n"\
-        " CT.NameEN AS ConnectionTypeEN,\n"\
-        " CT.NameFR AS ConnectionTypeFR,\n"\
-        " CT.NameDE AS ConnectionTypeDE,\n"\
-        " CT.NameIT AS ConnectionTypeIT,\n"\
-        " ACNX.Resistance,\n"\
-        " ACNX.IoType,\n"\
-        " ACNX.FunctionEN,\n"\
-        " ACNX.FunctionFR,\n"\
-        " ACNX.FunctionDE,\n"\
-        " ACNX.FunctionIT\n"\
-        "FROM ArticleConnection_tbl ACNX\n"\
-        " LEFT JOIN ArticleConnector_tbl ACNR\n"\
-        "  ON ACNX.ArticleConnector_Id_FK = ACNR.Id_PK\n"\
-        " JOIN ConnectionType_tbl CT\n"\
-        "  ON CT.Code_PK = ACNX.ConnectionType_Code_FK";
+  Schema view;
+  Table ACNX("ArticleConnection_tbl", "ACNX");
+  Table ACNR("ArticleConnector_tbl", "ACNR");
+  Table CT("ConnectionType_tbl", "CT");
+  JoinClause join;
 
-  return createView("ArticleConnection_view", sql);
+  view.setName("ArticleConnection_view");
+  view.setTable(ACNX);
+  view.addSelectField(ACNR, SelectField("Connector_Id_FK"));
+  view.addSelectField(ACNR, SelectField("Name", "ArticleConnectorName"));
+  view.addSelectField(ACNX, SelectField("Id_PK"));
+  view.addSelectField(ACNX, SelectField("Article_Id_FK"));
+  view.addSelectField(ACNX, SelectField("ArticleConnector_Id_FK"));
+  view.addSelectField(ACNX, SelectField("ConnectionType_Code_FK"));
+  view.addSelectField(ACNX, SelectField("ArticleContactName"));
+  view.addSelectField(CT, SelectField("NameEN", "ConnectionTypeEN"));
+  view.addSelectField(CT, SelectField("NameFR", "ConnectionTypeFR"));
+  view.addSelectField(CT, SelectField("NameDE", "ConnectionTypeDE"));
+  view.addSelectField(CT, SelectField("NameIT", "ConnectionTypeIT"));
+  view.addSelectField(ACNX, SelectField("Resistance"));
+  view.addSelectField(ACNX, SelectField("IoType"));
+  view.addSelectField(ACNX, SelectField("FunctionEN"));
+  view.addSelectField(ACNX, SelectField("FunctionFR"));
+  view.addSelectField(ACNX, SelectField("FunctionDE"));
+  view.addSelectField(ACNX, SelectField("FunctionIT"));
+  join = pvSchema.joinClause(ACNX, ACNR);
+  join.setOperator(JoinClause::LeftJoin);
+  view.addJoinClause(join);
+  join = pvSchema.joinClause(ACNX, CT);
+  view.addJoinClause(join);
+
+  pvSchema.addView(view);
 }
 
 void mdtTtDatabaseSchema::setupArticleLinkView()
@@ -3700,37 +3796,75 @@ void mdtTtDatabaseSchema::setupArticleLinkView()
   pvSchema.addView(view);
 }
 
+// bool mdtTtDatabaseSchema::createUnitView() 
+// {
+//   QString sql;
+// 
+//   sql = "CREATE VIEW Unit_view AS\n"\
+//         "SELECT\n"\
+//         " Unit_tbl.Id_PK AS Unit_Id_PK ,\n"\
+//         " Unit_tbl.SchemaPosition,\n"\
+//         " Unit_tbl.Alias ,\n"\
+//         " Unit_tbl.Coordinate ,\n"\
+//         " Unit_tbl.Cabinet ,\n"\
+//         " VehicleType_tbl.Id_PK AS VehicleType_Id_PK,\n"\
+//         " VehicleType_tbl.Type,\n"\
+//         " VehicleType_tbl.SubType,\n"\
+//         " VehicleType_tbl.SeriesNumber,\n"\
+//         " Article_tbl.Id_PK AS Article_Id_PK ,\n"\
+//         " Article_tbl.ArticleCode ,\n"\
+//         " Article_tbl.DesignationEN,\n"\
+//         " Article_tbl.DesignationFR,\n"\
+//         " Article_tbl.DesignationDE,\n"\
+//         " Article_tbl.DesignationIT\n"\
+//         "FROM Unit_tbl\n"\
+//         " LEFT JOIN Article_tbl\n"\
+//         "  ON Unit_tbl.Article_Id_FK = Article_tbl.Id_PK\n"\
+//         " JOIN VehicleType_Unit_tbl\n"\
+//         "  ON VehicleType_Unit_tbl.Unit_Id_FK = Unit_tbl.Id_PK\n"\
+//         " JOIN VehicleType_tbl\n"\
+//         "  ON VehicleType_tbl.Id_PK = VehicleType_Unit_tbl.VehicleType_Id_FK";
+// 
+//   return createView("Unit_view", sql);
+// }
 
-bool mdtTtDatabaseSchema::createUnitView() 
+void mdtTtDatabaseSchema::setupUnitView()
 {
-  QString sql;
+  using namespace mdtSqlViewSchema;
 
-  sql = "CREATE VIEW Unit_view AS\n"\
-        "SELECT\n"\
-        " Unit_tbl.Id_PK AS Unit_Id_PK ,\n"\
-        " Unit_tbl.SchemaPosition,\n"\
-        " Unit_tbl.Alias ,\n"\
-        " Unit_tbl.Coordinate ,\n"\
-        " Unit_tbl.Cabinet ,\n"\
-        " VehicleType_tbl.Id_PK AS VehicleType_Id_PK,\n"\
-        " VehicleType_tbl.Type,\n"\
-        " VehicleType_tbl.SubType,\n"\
-        " VehicleType_tbl.SeriesNumber,\n"\
-        " Article_tbl.Id_PK AS Article_Id_PK ,\n"\
-        " Article_tbl.ArticleCode ,\n"\
-        " Article_tbl.DesignationEN,\n"\
-        " Article_tbl.DesignationFR,\n"\
-        " Article_tbl.DesignationDE,\n"\
-        " Article_tbl.DesignationIT\n"\
-        "FROM Unit_tbl\n"\
-        " LEFT JOIN Article_tbl\n"\
-        "  ON Unit_tbl.Article_Id_FK = Article_tbl.Id_PK\n"\
-        " JOIN VehicleType_Unit_tbl\n"\
-        "  ON VehicleType_Unit_tbl.Unit_Id_FK = Unit_tbl.Id_PK\n"\
-        " JOIN VehicleType_tbl\n"\
-        "  ON VehicleType_tbl.Id_PK = VehicleType_Unit_tbl.VehicleType_Id_FK";
+  Schema view;
+  Table U("Unit_tbl", "U");
+  Table A("Article_tbl", "A");
+  Table VTU("VehicleType_Unit_tbl", "VTU");
+  Table VT("VehicleType_tbl", "VT");
+  JoinClause join;
 
-  return createView("Unit_view", sql);
+  view.setName("Unit_view");
+  view.setTable(U);
+  view.addSelectField(U, SelectField("Id_PK", "Unit_Id_PK"));
+  view.addSelectField(U, SelectField("SchemaPosition"));
+  view.addSelectField(U, SelectField("Alias"));
+  view.addSelectField(U, SelectField("Coordinate"));
+  view.addSelectField(U, SelectField("Cabinet"));
+  view.addSelectField(VT, SelectField("Id_PK", "VehicleType_Id_PK"));
+  view.addSelectField(VT, SelectField("Type"));
+  view.addSelectField(VT, SelectField("SubType"));
+  view.addSelectField(VT, SelectField("SeriesNumber"));
+  view.addSelectField(A, SelectField("Id_PK", "Article_Id_PK"));
+  view.addSelectField(A, SelectField("ArticleCode"));
+  view.addSelectField(A, SelectField("DesignationEN"));
+  view.addSelectField(A, SelectField("DesignationFR"));
+  view.addSelectField(A, SelectField("DesignationDE"));
+  view.addSelectField(A, SelectField("DesignationIT"));
+  join = pvSchema.joinClause(U, A);
+  join.setOperator(JoinClause::LeftJoin);
+  view.addJoinClause(join);
+  join = pvSchema.joinClause(U, VTU);
+  view.addJoinClause(join);
+  join = pvSchema.joinClause(VTU ,VT);
+  view.addJoinClause(join);
+
+  pvSchema.addView(view);
 }
 
 bool mdtTtDatabaseSchema::createUnitComponentView() 

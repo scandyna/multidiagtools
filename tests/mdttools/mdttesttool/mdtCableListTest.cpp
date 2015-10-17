@@ -1997,12 +1997,10 @@ void mdtCableListTest::createDatabaseSchema()
   
   qDebug() << "Tables: " << pvDatabase.tables();
   QSqlQuery q(pvDatabase);
-  ///QVERIFY(q.exec("PRAGMA index_list(ConnectorContact_tbl)"));
-  ///QVERIFY(q.exec("PRAGMA index_list(*)"));
-  QVERIFY(q.exec("SELECT * FROM sqlite_master WHERE type = 'index'"));
-  while(q.next()){
-    qDebug() << "TBL: " << q.value("tbl_name").toString() << " , IDX: " << q.record().value("name").toString();
-  }
+//   QVERIFY(q.exec("SELECT * FROM sqlite_master WHERE type = 'index'"));
+//   while(q.next()){
+//     qDebug() << "TBL: " << q.value("tbl_name").toString() << " , IDX: " << q.record().value("name").toString();
+//   }
 
 //   QVERIFY(dbFile.open());
 //   dbFile.close();
