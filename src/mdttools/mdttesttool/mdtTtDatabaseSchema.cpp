@@ -91,6 +91,7 @@ bool mdtTtDatabaseSchema::buildSchema()
   setupUnitView();
   setupUnitComponentView();
   setupUnitConnectorView();
+  setupUnitConnectorUsageView();
 
   return true;
 }
@@ -3832,65 +3833,128 @@ void mdtTtDatabaseSchema::setupUnitComponentView()
   pvSchema.addView(view);
 }
 
-bool mdtTtDatabaseSchema::createUnitConnectorView()
-{
-  QString sql;
-
-  sql = "CREATE VIEW UnitConnector_view AS\n"\
-        "SELECT\n"\
-        " UnitConnector_tbl.Id_PK,\n"\
-        " UnitConnector_tbl.Unit_Id_FK,\n"\
-        " UnitConnector_tbl.Connector_Id_FK,\n"\
-        " UnitConnector_tbl.ArticleConnector_Id_FK,\n"\
-        " UnitConnector_tbl.Name AS UnitConnectorName,\n"\
-        " ArticleConnector_tbl.Name AS ArticleConnectorName,\n"\
-        " Connector_tbl.Gender,\n"\
-        " Connector_tbl.Form,\n"\
-        " Connector_tbl.Manufacturer,\n"\
-        " Connector_tbl.Housing,\n"\
-        " Connector_tbl.`Insert`,\n"\
-        " Connector_tbl.InsertRotation,\n"\
-        " Connector_tbl.ManufacturerConfigCode,\n"\
-        " Connector_tbl.ManufacturerArticleCode\n"\
-        "FROM UnitConnector_tbl\n"\
-        " LEFT JOIN Connector_tbl\n"\
-        "  ON Connector_tbl.Id_PK = UnitConnector_tbl.Connector_Id_FK\n"\
-        " LEFT JOIN ArticleConnector_tbl\n"\
-        "  ON ArticleConnector_tbl.Id_PK = UnitConnector_tbl.ArticleConnector_Id_FK";
-
-  return createView("UnitConnector_view", sql);
-}
+// bool mdtTtDatabaseSchema::createUnitConnectorView()
+// {
+//   QString sql;
+// 
+//   sql = "CREATE VIEW UnitConnector_view AS\n"\
+//         "SELECT\n"\
+//         " UnitConnector_tbl.Id_PK,\n"\
+//         " UnitConnector_tbl.Unit_Id_FK,\n"\
+//         " UnitConnector_tbl.Connector_Id_FK,\n"\
+//         " UnitConnector_tbl.ArticleConnector_Id_FK,\n"\
+//         " UnitConnector_tbl.Name AS UnitConnectorName,\n"\
+//         " ArticleConnector_tbl.Name AS ArticleConnectorName,\n"\
+//         " Connector_tbl.Gender,\n"\
+//         " Connector_tbl.Form,\n"\
+//         " Connector_tbl.Manufacturer,\n"\
+//         " Connector_tbl.Housing,\n"\
+//         " Connector_tbl.`Insert`,\n"\
+//         " Connector_tbl.InsertRotation,\n"\
+//         " Connector_tbl.ManufacturerConfigCode,\n"\
+//         " Connector_tbl.ManufacturerArticleCode\n"\
+//         "FROM UnitConnector_tbl\n"\
+//         " LEFT JOIN Connector_tbl\n"\
+//         "  ON Connector_tbl.Id_PK = UnitConnector_tbl.Connector_Id_FK\n"\
+//         " LEFT JOIN ArticleConnector_tbl\n"\
+//         "  ON ArticleConnector_tbl.Id_PK = UnitConnector_tbl.ArticleConnector_Id_FK";
+// 
+//   return createView("UnitConnector_view", sql);
+// }
 
 void mdtTtDatabaseSchema::setupUnitConnectorView()
 {
+  using namespace mdtSqlViewSchema;
 
+  Schema view;
+  Table UCNR("UnitConnector_tbl", "UCNR");
+  Table CNR("Connector_tbl", "CNR");
+  Table ACNR("ArticleConnector_tbl", "ACNR");
+  JoinClause join;
+
+  view.setName("UnitConnector_view");
+  view.setTable(UCNR);
+  view.addSelectField(UCNR, SelectField("Id_PK"));
+  view.addSelectField(UCNR, SelectField("Unit_Id_FK"));
+  view.addSelectField(UCNR, SelectField("Connector_Id_FK"));
+  view.addSelectField(UCNR, SelectField("ArticleConnector_Id_FK"));
+  view.addSelectField(UCNR, SelectField("Name", "ArticleConnectorName"));
+  view.addSelectField(CNR, SelectField("Gender"));
+  view.addSelectField(CNR, SelectField("Form"));
+  view.addSelectField(CNR, SelectField("Manufacturer"));
+  view.addSelectField(CNR, SelectField("Housing"));
+  view.addSelectField(CNR, SelectField("Insert"));
+  view.addSelectField(CNR, SelectField("InsertRotation"));
+  view.addSelectField(CNR, SelectField("ManufacturerConfigCode"));
+  view.addSelectField(CNR, SelectField("ManufacturerArticleCode"));
+  join = pvSchema.joinClause(UCNR, CNR);
+  join.setOperator(JoinClause::LeftJoin);
+  view.addJoinClause(join);
+  join = pvSchema.joinClause(UCNR, ACNR);
+  join.setOperator(JoinClause::LeftJoin);
+  view.addJoinClause(join);
+
+  pvSchema.addView(view);
 }
 
-bool mdtTtDatabaseSchema::createUnitConnectorUsageView()
+// bool mdtTtDatabaseSchema::createUnitConnectorUsageView()
+// {
+//   QString sql;
+// 
+//   sql = "CREATE VIEW UnitConnectorUsage_view AS\n"\
+//         "SELECT\n"\
+//         " UC.Id_PK,\n"\
+//         " UC.Unit_Id_FK,\n"\
+//         " UC.Connector_Id_FK,\n"\
+//         " UC.ArticleConnector_Id_FK,\n"\
+//         " UC.Name AS UnitConnectorName,\n"\
+//         " U.SchemaPosition,\n"\
+//         " U.Alias,\n"\
+//         " VT.Type,\n"\
+//         " VT.SubType,\n"\
+//         " VT.SeriesNumber\n"\
+//         "FROM UnitConnector_tbl UC\n"\
+//         " JOIN Unit_tbl U\n"\
+//         "  ON U.Id_PK = UC.Unit_Id_FK\n"\
+//         " JOIN VehicleType_Unit_tbl VTU\n"\
+//         "  ON VTU.Unit_Id_FK = U.Id_PK\n"\
+//         " JOIN VehicleType_tbl VT\n"\
+//         "  ON VT.Id_PK = VTU.VehicleType_Id_FK";
+// 
+//   return createView("UnitConnectorUsage_view", sql);
+// }
+
+void mdtTtDatabaseSchema::setupUnitConnectorUsageView()
 {
-  QString sql;
+  using namespace mdtSqlViewSchema;
 
-  sql = "CREATE VIEW UnitConnectorUsage_view AS\n"\
-        "SELECT\n"\
-        " UC.Id_PK,\n"\
-        " UC.Unit_Id_FK,\n"\
-        " UC.Connector_Id_FK,\n"\
-        " UC.ArticleConnector_Id_FK,\n"\
-        " UC.Name AS UnitConnectorName,\n"\
-        " U.SchemaPosition,\n"\
-        " U.Alias,\n"\
-        " VT.Type,\n"\
-        " VT.SubType,\n"\
-        " VT.SeriesNumber\n"\
-        "FROM UnitConnector_tbl UC\n"\
-        " JOIN Unit_tbl U\n"\
-        "  ON U.Id_PK = UC.Unit_Id_FK\n"\
-        " JOIN VehicleType_Unit_tbl VTU\n"\
-        "  ON VTU.Unit_Id_FK = U.Id_PK\n"\
-        " JOIN VehicleType_tbl VT\n"\
-        "  ON VT.Id_PK = VTU.VehicleType_Id_FK";
+  Schema view;
+  Table UCNR("UnitConnector_tbl", "UCNR");
+  Table U("Unit_tbl", "U");
+  Table VTU("VehicleType_Unit_tbl", "VTU");
+  Table VT("VehicleType_tbl", "VT");
+  JoinClause join;
 
-  return createView("UnitConnectorUsage_view", sql);
+  view.setName("UnitConnectorUsage_view");
+  view.setTable(UCNR);
+  view.addSelectField(UCNR, SelectField("Id_PK"));
+  view.addSelectField(UCNR, SelectField("Unit_Id_FK"));
+  view.addSelectField(UCNR, SelectField("Connector_Id_FK"));
+  view.addSelectField(UCNR, SelectField("ArticleConnector_Id_FK"));
+  view.addSelectField(UCNR, SelectField("Name", "UnitConnectorName"));
+  view.addSelectField(U, SelectField("SchemaPosition"));
+  view.addSelectField(U, SelectField("Alias"));
+  view.addSelectField(VT, SelectField("Type"));
+  view.addSelectField(VT, SelectField("SubType"));
+  view.addSelectField(VT, SelectField("SeriesNumber"));
+  join = pvSchema.joinClause(UCNR, U);
+  view.addJoinClause(join);
+  join = pvSchema.joinClause(U, VTU);
+  view.addJoinClause(join);
+  join = pvSchema.joinClause(VTU, VT);
+  view.addJoinClause(join);
+
+  pvSchema.addView(view);
 }
 
 

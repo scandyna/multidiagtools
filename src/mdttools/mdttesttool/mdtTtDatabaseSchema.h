@@ -401,7 +401,7 @@ class mdtTtDatabaseSchema
 
   /*! \brief Create UnitConnector_view
    */
-  bool createUnitConnectorView();
+//   bool createUnitConnectorView();
 
   /*! \brief UnitConnector_view
    */
@@ -411,7 +411,13 @@ class mdtTtDatabaseSchema
    *
    * Display wich units uses a given connector
    */
-  bool createUnitConnectorUsageView();
+//   bool createUnitConnectorUsageView();
+
+  /*! \brief UnitConnectorUsage_view
+   *
+   * Display wich units uses a given connector
+   */
+  void setupUnitConnectorUsageView();
 
   /*! \brief
    */
