@@ -1,25 +1,12 @@
-window_sizes 1280 952 381 893 899 0
+window_sizes 1280 952 246 1028 899 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 874370 // TableSchema
-    714 719 90 21 0 15
-  classdiagram_ref 1510402 // TableSchemaModel
-    893 899 100 4 0 0
-  classdiagram_ref 1655298 // SqlViewSchema
-    120 106 100 4 0 0
-  active  classdiagram_ref 1674882 // Schema
-    893 899 100 4 0 0
+  active  classdiagram_ref 941058 // Test
+    1028 899 90 3 0 0
 end
 show_stereotypes
-selected class_ref 1988098 // mdtSqlForeignKey
+selected classdiagram_ref 941058 // Test
 open
-  classview_ref 787842 // ImportExportCopy
-  classview_ref 794370 // SqlSchema
-  class_ref 1994626 // Table
-  class_ref 1994754 // Schema
-  class_ref 1994882 // SelectField
-  class_ref 1995138 // JoinClause
-  class_ref 1995266 // JoinKey
-  classview_ref 800898 // sqlDatabase
+  classview_ref 569730 // TestTool
 end
 end

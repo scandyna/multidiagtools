@@ -456,6 +456,11 @@ namespace mdtSqlViewSchema
      */
     void addSelectField(const Table & table, SelectField field);
 
+    /**
+     * \todo Add something like addSelectExpression(const QString & expression)
+     * Problem: preserving order with pvSelectFieldList ?
+     */
+
     /*! \brief Add a JOIN clause
      */
     void addJoinClause(const JoinClause & join);

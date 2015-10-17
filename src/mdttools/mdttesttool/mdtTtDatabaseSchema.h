@@ -195,15 +195,15 @@ class mdtTtDatabaseSchema
    */
   void setupUnitConnectorTable();
 
-  /*! \brief
+  /*! \brief UnitConnection_tbl
    */
-  bool setupUnitConnectionTable();
+  void setupUnitConnectionTable();
 
-  /*! \brief Create Wire_tbl
+  /*! \brief Wire_tbl
    *
    * Wire_tbl is a sort of wires databse
    */
-  bool setupWireTable();
+  void setupWireTable();
 
   /*! \brief Setup Modification_tbl
    */
@@ -215,7 +215,7 @@ class mdtTtDatabaseSchema
 
   /*! \brief Setup LinkVersion_tbl
    */
-  bool setupLinkVersionTable();
+  void setupLinkVersionTable();
 
   /*! \brief Create onLinkVersionAfterInsert trigger
    */
@@ -223,19 +223,19 @@ class mdtTtDatabaseSchema
 
   /*! \brief Create Link_tbl
    */
-  bool setupLinkTable();
+  void setupLinkTable();
 
   /*! \brief Setup LinkBeam_tbl
    */
-  bool setupLinkBeamTable();
+  void setupLinkBeamTable();
 
   /*! \brief Setup LinkBeam_Unit_tbl
    */
-  bool setupLinkBeamUnitStartTable();
+  void setupLinkBeamUnitStartTable();
 
   /*! \brief Setup LinkBeam_Unit_tbl
    */
-  bool setupLinkBeamUnitEndTable();
+  void setupLinkBeamUnitEndTable();
 
   /*! \brief LinkDirection_tbl
    */
@@ -247,27 +247,27 @@ class mdtTtDatabaseSchema
 
   /*! \brief Setup TestSystem_tbl
    */
-  bool setupTestSystemTable();
+  void setupTestSystemTable();
 
   /*! \brief Setup TestSystemComponentType_tbl
    */
-  bool setupTestSystemComponentTypeTable();
+  void setupTestSystemComponentTypeTable();
 
   /*! \brief Setup TestSystemComponent_tbl
    */
-  bool setupTestSystemComponentTable();
+  void setupTestSystemComponentTable();
 
   /*! \brief Setup TestSystem_TestSystemComponent_tbl
    */
-  bool setupTestSystem_TestSystemComponentTable();
+  void setupTestSystem_TestSystemComponentTable();
 
   /*! \brief Setup TestSystemUnit_tbl
    */
-  bool setupTestSystemUnitTable();
+  void setupTestSystemUnitTable();
 
   /*! \brief Setup TestSystemUnitType_tbl
    */
-  bool setupTestSystemUnitTypeTable();
+  void setupTestSystemUnitTypeTable();
 
 
 

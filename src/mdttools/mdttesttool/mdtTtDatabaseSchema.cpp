@@ -66,11 +66,21 @@ bool mdtTtDatabaseSchema::buildSchema()
   setupArticleLinkTable();
   setupUnitTable();
   setupUnitConnectorTable();
-  
+  setupUnitConnectionTable();
   setupLinkDirectionTable();
   setupLinkTypeTable();
-  
-  
+  setupLinkVersionTable();
+  setupWireTable();
+  setupLinkBeamTable();
+  setupLinkBeamUnitStartTable();
+  setupLinkBeamUnitEndTable();
+  setupLinkTable();
+  setupTestSystemTable();
+  setupTestSystemComponentTypeTable();
+  setupTestSystemComponentTable();
+  setupTestSystem_TestSystemComponentTable();
+  setupTestSystemUnitTable();
+  setupTestSystemUnitTypeTable();
   // Setup views
   setupVehicleTypeUnitView();
   setupArticleComponentView();
@@ -307,9 +317,9 @@ bool mdtTtDatabaseSchema::setupTables()
 //   if(!setupUnitConnectorTable()){
 //     return false;
 //   }
-  if(!setupUnitConnectionTable()){
-    return false;
-  }
+//   if(!setupUnitConnectionTable()){
+//     return false;
+//   }
 //   if(!setupVehicleTypeUnitTable()){
 //     return false;
 //   }
@@ -322,50 +332,50 @@ bool mdtTtDatabaseSchema::setupTables()
 //   if(!setupArticleLinkTable()){
 //     return false;
 //   }
-  if(!setupLinkBeamTable()){
-    return false;
-  }
-  if(!setupLinkBeamUnitStartTable()){
-    return false;
-  }
-  if(!setupLinkBeamUnitEndTable()){
-    return false;
-  }
-  if(!setupWireTable()){
-    return false;
-  }
+//   if(!setupLinkBeamTable()){
+//     return false;
+//   }
+//   if(!setupLinkBeamUnitStartTable()){
+//     return false;
+//   }
+//   if(!setupLinkBeamUnitEndTable()){
+//     return false;
+//   }
+//   if(!setupWireTable()){
+//     return false;
+//   }
 //   if(!setupLinkModificationTable()){
 //     return false;
 //   }
-  if(!setupLinkVersionTable()){
-    return false;
-  }
-  if(!setupLinkTable()){
-    return false;
-  }
+//   if(!setupLinkVersionTable()){
+//     return false;
+//   }
+//   if(!setupLinkTable()){
+//     return false;
+//   }
 //   if(!setupVehicleTypeLinkTable()){
 //     return false;
 //   }
   // Test tool part
   
-  if(!setupTestSystemTable()){
-    return false;
-  }
-  if(!setupTestSystemComponentTypeTable()){
-    return false;
-  }
-  if(!setupTestSystemComponentTable()){
-    return false;
-  }
-  if(!setupTestSystem_TestSystemComponentTable()){
-    return false;
-  }
-  if(!setupTestSystemUnitTypeTable()){
-    return false;
-  }
-  if(!setupTestSystemUnitTable()){
-    return false;
-  }
+//   if(!setupTestSystemTable()){
+//     return false;
+//   }
+//   if(!setupTestSystemComponentTypeTable()){
+//     return false;
+//   }
+//   if(!setupTestSystemComponentTable()){
+//     return false;
+//   }
+//   if(!setupTestSystem_TestSystemComponentTable()){
+//     return false;
+//   }
+//   if(!setupTestSystemUnitTypeTable()){
+//     return false;
+//   }
+//   if(!setupTestSystemUnitTable()){
+//     return false;
+//   }
   
   if(!setupTestNodeTable()){
     return false;
@@ -1649,230 +1659,256 @@ void mdtTtDatabaseSchema::setupUnitConnectorTable()
   return true;*/
 }
 
-bool mdtTtDatabaseSchema::setupUnitConnectionTable() 
+void mdtTtDatabaseSchema::setupUnitConnectionTable() 
 {
   mdtSqlSchemaTable table;
-  QSqlField field;
+  mdtSqlField Id_PK;
+  mdtSqlField Unit_Id_FK;
+  mdtSqlForeignKey fk_Unit;
+  mdtSqlField UnitConnector_Id_FK;
+  mdtSqlForeignKey fk_UnitConnector;
+  mdtSqlField ArticleConnection_Id_FK;
+  mdtSqlForeignKey fk_ArticleConnection;
+  mdtSqlField ConnectionType_Code_FK;
+  mdtSqlForeignKey fk_ConnectionType;
+  mdtSqlField UnitContactName;
+  mdtSqlField Resistance;
+  mdtSqlField IsATestPoint;
+  mdtSqlField SchemaPage;
+  mdtSqlField FunctionEN;
+  mdtSqlField FunctionFR;
+  mdtSqlField FunctionDE;
+  mdtSqlField FunctionIT;
+  mdtSqlField SignalName;
+  mdtSqlField SwAddress;
 
   table.setTableName("UnitConnection_tbl", "UTF8");
   // Id_PK
-  field.setName("Id_PK");
-  field.setType(QVariant::Int);
-  field.setAutoValue(true);
-  table.addField(field, true);
+  Id_PK.setName("Id_PK");
+  Id_PK.setType(mdtSqlFieldType::Integer);
+  Id_PK.setAutoValue(true);
+  table.addField(Id_PK, true);
   // Unit_Id_FK
-  field = QSqlField();
-  field.setName("Unit_Id_FK");
-  field.setType(QVariant::Int);
-  field.setRequiredStatus(QSqlField::Required);
-  table.addField(field, false);
+  Unit_Id_FK.setName("Unit_Id_FK");
+  Unit_Id_FK.setType(mdtSqlFieldType::Integer);
+  Unit_Id_FK.setRequired(true);
+  table.addField(Unit_Id_FK, false);
+  fk_Unit.setParentTableName("Unit_tbl");
+  fk_Unit.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_Unit.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_Unit.setCreateChildIndex(true);
+  fk_Unit.addKeyFields("Id_PK", Unit_Id_FK);
+  table.addForeignKey(fk_Unit);
   // UnitConnector_Id_FK
-  field = QSqlField();
-  field.setName("UnitConnector_Id_FK");
-  field.setType(QVariant::Int);
-  ///field.setRequiredStatus(QSqlField::Required);
-  table.addField(field, false);
+  UnitConnector_Id_FK.setName("UnitConnector_Id_FK");
+  UnitConnector_Id_FK.setType(mdtSqlFieldType::Integer);
+  table.addField(UnitConnector_Id_FK, false);
+  fk_UnitConnector.setParentTableName("UnitConnector_tbl");
+  fk_UnitConnector.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_UnitConnector.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_UnitConnector.setCreateChildIndex(true);
+  fk_UnitConnector.addKeyFields("Id_PK", UnitConnector_Id_FK);
+  table.addForeignKey(fk_UnitConnector);
   // ArticleConnection_Id_FK
-  field = QSqlField();
-  field.setName("ArticleConnection_Id_FK");
-  field.setType(QVariant::Int);
-  table.addField(field, false);
+  ArticleConnection_Id_FK.setName("ArticleConnection_Id_FK");
+  ArticleConnection_Id_FK.setType(mdtSqlFieldType::Integer);
+  table.addField(ArticleConnection_Id_FK, false);
+  fk_ArticleConnection.setParentTableName("ArticleConnection_tbl");
+  fk_ArticleConnection.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_ArticleConnection.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_ArticleConnection.setCreateChildIndex(true);
+  fk_ArticleConnection.addKeyFields("Id_PK", ArticleConnection_Id_FK);
+  table.addForeignKey(fk_ArticleConnection);
   // ConnectionType_Code_FK [P/S/T] (Pin/Socket/Terminal)
-  field = QSqlField();
-  field.setName("ConnectionType_Code_FK");
-  field.setType(QVariant::String);
-  field.setLength(1);
-  ///field.setDefaultValue("T");
-  field.setRequired(true);
-  table.addField(field, false);
+  ConnectionType_Code_FK.setName("ConnectionType_Code_FK");
+  ConnectionType_Code_FK.setType(mdtSqlFieldType::Varchar);
+  ConnectionType_Code_FK.setLength(1);
+  ConnectionType_Code_FK.setRequired(true);
+  table.addField(ConnectionType_Code_FK, false);
+  fk_ConnectionType.setParentTableName("ConnectionType_tbl");
+  fk_ConnectionType.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_ConnectionType.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_ConnectionType.setCreateChildIndex(true);
+  fk_ConnectionType.addKeyFields("Id_PK", ConnectionType_Code_FK);
+  table.addForeignKey(fk_ConnectionType);
   // UnitContactName
-  field = QSqlField();
-  field.setName("UnitContactName");
-  field.setType(QVariant::String);
-  field.setLength(30);
-  table.addField(field, false);
+  UnitContactName.setName("UnitContactName");
+  UnitContactName.setType(mdtSqlFieldType::Varchar);
+  UnitContactName.setLength(30);
+  table.addField(UnitContactName, false);
   // Resistance
-  field = QSqlField();
-  field.setName("Resistance");
-  field.setType(QVariant::Double);
-  field.setDefaultValue(0.0);
-  table.addField(field, false);
+  Resistance.setName("Resistance");
+  Resistance.setType(mdtSqlFieldType::Double);
+  Resistance.setDefaultValue(0.0);
+  table.addField(Resistance, false);
   // IsATestPoint
-  field = QSqlField();
-  field.setName("IsATestPoint");
-  field.setType(QVariant::Bool);
-  table.addField(field, false);
+  IsATestPoint.setName("IsATestPoint");
+  IsATestPoint.setType(mdtSqlFieldType::Boolean);
+  table.addField(IsATestPoint, false);
   // SchemaPage
-  field = QSqlField();
-  field.setName("SchemaPage");
-  field.setType(QVariant::String);
-  field.setLength(20);
-  table.addField(field, false);
+  SchemaPage.setName("SchemaPage");
+  SchemaPage.setType(mdtSqlFieldType::Varchar);
+  SchemaPage.setLength(20);
+  table.addField(SchemaPage, false);
   // FunctionEN
-  field = QSqlField();
-  field.setName("FunctionEN");
-  field.setType(QVariant::String);
-  field.setLength(100);
-  table.addField(field, false);
+  FunctionEN.setName("FunctionEN");
+  FunctionEN.setType(mdtSqlFieldType::Varchar);
+  FunctionEN.setLength(100);
+  table.addField(FunctionEN, false);
   // FunctionFR
-  field = QSqlField();
-  field.setName("FunctionFR");
-  field.setType(QVariant::String);
-  field.setLength(100);
-  table.addField(field, false);
+  FunctionFR.setName("FunctionFR");
+  FunctionFR.setType(mdtSqlFieldType::Varchar);
+  FunctionFR.setLength(100);
+  table.addField(FunctionFR, false);
   // FunctionDE
-  field = QSqlField();
-  field.setName("FunctionDE");
-  field.setType(QVariant::String);
-  field.setLength(100);
-  table.addField(field, false);
+  FunctionDE.setName("FunctionDE");
+  FunctionDE.setType(mdtSqlFieldType::Varchar);
+  FunctionDE.setLength(100);
+  table.addField(FunctionDE, false);
   // FunctionIT
-  field = QSqlField();
-  field.setName("FunctionIT");
-  field.setType(QVariant::String);
-  field.setLength(100);
-  table.addField(field, false);
+  FunctionIT.setName("FunctionIT");
+  FunctionIT.setType(mdtSqlFieldType::Varchar);
+  FunctionIT.setLength(100);
+  table.addField(FunctionIT, false);
   // SignalName
-  field = QSqlField();
-  field.setName("SignalName");
-  field.setType(QVariant::String);
-  field.setLength(50);
-  table.addField(field, false);
+  SignalName.setName("SignalName");
+  SignalName.setType(mdtSqlFieldType::Varchar);
+  SignalName.setLength(50);
+  table.addField(SignalName, false);
   // SwAddress
-  field = QSqlField();
-  field.setName("SwAddress");
-  field.setType(QVariant::Int);
-  table.addField(field, false);
+  SwAddress.setName("SwAddress");
+  SwAddress.setType(mdtSqlFieldType::Integer);
+  table.addField(SwAddress, false);
+
+  pvSchema.addTable(table);
   // Indexes
-  table.addIndex("Unit_Id_FK_ArticleConnection_Id_FK_idx", true);
-  if(!table.addFieldToIndex("Unit_Id_FK_ArticleConnection_Id_FK_idx", "Unit_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  if(!table.addFieldToIndex("Unit_Id_FK_ArticleConnection_Id_FK_idx", "ArticleConnection_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addIndex("ArticleConnection_Id_FK_idx", false);
-  if(!table.addFieldToIndex("ArticleConnection_Id_FK_idx", "ArticleConnection_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addIndex("UnitConnector_Id_FK_idx", false);
-  if(!table.addFieldToIndex("UnitConnector_Id_FK_idx", "UnitConnector_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addIndex("ConnectionType_Code_FK_idx3", false);
-  if(!table.addFieldToIndex("ConnectionType_Code_FK_idx3", "ConnectionType_Code_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  // Foreign keys
-  table.addForeignKey("Unit_Id_FK_fk", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("Unit_Id_FK_fk", "Unit_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("ArticleConnection_Id_FK_idx2", "ArticleConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("ArticleConnection_Id_FK_idx2", "ArticleConnection_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("UnitConnector_Id_FK_fk", "UnitConnector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("UnitConnector_Id_FK_fk", "UnitConnector_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("ConnectionType_Code_FK_fk3", "ConnectionType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("ConnectionType_Code_FK_fk3", "ConnectionType_Code_FK", "Code_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-
-  pvTables.append(table);
-
-  return true;
+//   table.addIndex("Unit_Id_FK_ArticleConnection_Id_FK_idx", true);
+//   if(!table.addFieldToIndex("Unit_Id_FK_ArticleConnection_Id_FK_idx", "Unit_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   if(!table.addFieldToIndex("Unit_Id_FK_ArticleConnection_Id_FK_idx", "ArticleConnection_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addIndex("ArticleConnection_Id_FK_idx", false);
+//   if(!table.addFieldToIndex("ArticleConnection_Id_FK_idx", "ArticleConnection_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addIndex("UnitConnector_Id_FK_idx", false);
+//   if(!table.addFieldToIndex("UnitConnector_Id_FK_idx", "UnitConnector_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addIndex("ConnectionType_Code_FK_idx3", false);
+//   if(!table.addFieldToIndex("ConnectionType_Code_FK_idx3", "ConnectionType_Code_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   // Foreign keys
+//   table.addForeignKey("Unit_Id_FK_fk", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("Unit_Id_FK_fk", "Unit_Id_FK", "Id_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("ArticleConnection_Id_FK_idx2", "ArticleConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("ArticleConnection_Id_FK_idx2", "ArticleConnection_Id_FK", "Id_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("UnitConnector_Id_FK_fk", "UnitConnector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("UnitConnector_Id_FK_fk", "UnitConnector_Id_FK", "Id_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("ConnectionType_Code_FK_fk3", "ConnectionType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("ConnectionType_Code_FK_fk3", "ConnectionType_Code_FK", "Code_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+// 
+//   pvTables.append(table);
+// 
+//   return true;
 }
 
-bool mdtTtDatabaseSchema::setupWireTable()
+void mdtTtDatabaseSchema::setupWireTable()
 {
   mdtSqlSchemaTable table;
-  QSqlField field;
+  mdtSqlField Id_PK;
+  mdtSqlField ArticleCode;
+  mdtSqlField Model;
+  mdtSqlField Manufacturer;
+  mdtSqlField ManufacturerArticleCode;
+  mdtSqlField Section;
+  mdtSqlField ExternalDiameter;
+  mdtSqlField LineicResistance;
+  mdtSqlField ColorEN;
+  mdtSqlField ColorFR;
+  mdtSqlField ColorDE;
+  mdtSqlField ColorIT;
 
   table.setTableName("Wire_tbl", "UTF8");
   // Id_PK
-  field.setName("Id_PK");
-  field.setType(QVariant::Int);
-  field.setAutoValue(true);
-  table.addField(field, true);
+  Id_PK.setName("Id_PK");
+  Id_PK.setType(mdtSqlFieldType::Integer);
+  Id_PK.setAutoValue(true);
+  table.addField(Id_PK, true);
   // ArticleCode
-  field = QSqlField();
-  field.setName("ArticleCode");
-  field.setType(QVariant::String);
-  field.setLength(50);
-  table.addField(field, false);
+  ArticleCode.setName("ArticleCode");
+  ArticleCode.setType(mdtSqlFieldType::Varchar);
+  ArticleCode.setLength(50);
+  table.addField(ArticleCode, false);
   // Manufacturer
-  field = QSqlField();
-  field.setName("Manufacturer");
-  field.setType(QVariant::String);
-  field.setLength(100);
-  table.addField(field, false);
+  Manufacturer.setName("Manufacturer");
+  Manufacturer.setType(mdtSqlFieldType::Varchar);
+  Manufacturer.setLength(100);
+  table.addField(Manufacturer, false);
   // Model
-  field = QSqlField();
-  field.setName("Model");
-  field.setType(QVariant::String);
-  field.setLength(100);
-  table.addField(field, false);
+  Model.setName("Model");
+  Model.setType(mdtSqlFieldType::Varchar);
+  Model.setLength(100);
+  table.addField(Model, false);
   // ManufacturerArticleCode
-  field = QSqlField();
-  field.setName("ManufacturerArticleCode");
-  field.setType(QVariant::String);
-  field.setLength(50);
-  table.addField(field, false);
+  ManufacturerArticleCode.setName("ManufacturerArticleCode");
+  ManufacturerArticleCode.setType(mdtSqlFieldType::Varchar);
+  ManufacturerArticleCode.setLength(50);
+  table.addField(ManufacturerArticleCode, false);
   // Section
-  field = QSqlField();
-  field.setName("Section");
-  field.setType(QVariant::Double);
-  table.addField(field, false);
+  Section.setName("Section");
+  Section.setType(mdtSqlFieldType::Double);
+  table.addField(Section, false);
   // ExternalDiameter
-  field = QSqlField();
-  field.setName("ExternalDiameter");
-  field.setType(QVariant::Double);
-  table.addField(field, false);
+  ExternalDiameter.setName("ExternalDiameter");
+  ExternalDiameter.setType(mdtSqlFieldType::Double);
+  table.addField(ExternalDiameter, false);
   // LineicResistance
-  field = QSqlField();
-  field.setName("LineicResistance");
-  field.setType(QVariant::Double);
-  table.addField(field, false);
+  LineicResistance.setName("LineicResistance");
+  LineicResistance.setType(mdtSqlFieldType::Double);
+  table.addField(LineicResistance, false);
   // ColorEN
-  field = QSqlField();
-  field.setName("ColorEN");
-  field.setType(QVariant::String);
-  field.setLength(50);
-  table.addField(field, false);
+  ColorEN.setName("ColorEN");
+  ColorEN.setType(mdtSqlFieldType::Varchar);
+  ColorEN.setLength(50);
+  table.addField(ColorEN, false);
   // ColorFR
-  field = QSqlField();
-  field.setName("ColorFR");
-  field.setType(QVariant::String);
-  field.setLength(50);
-  table.addField(field, false);
+  ColorFR.setName("ColorFR");
+  ColorFR.setType(mdtSqlFieldType::Varchar);
+  ColorFR.setLength(50);
+  table.addField(ColorFR, false);
   // ColorDE
-  field = QSqlField();
-  field.setName("ColorDE");
-  field.setType(QVariant::String);
-  field.setLength(50);
-  table.addField(field, false);
+  ColorDE.setName("ColorDE");
+  ColorDE.setType(mdtSqlFieldType::Varchar);
+  ColorDE.setLength(50);
+  table.addField(ColorDE, false);
   // ColorIT
-  field = QSqlField();
-  field.setName("ColorIT");
-  field.setType(QVariant::String);
-  field.setLength(50);
-  table.addField(field, false);
+  ColorIT.setName("ColorIT");
+  ColorIT.setType(mdtSqlFieldType::Varchar);
+  ColorIT.setLength(50);
+  table.addField(ColorIT, false);
 
-  pvTables.append(table);
-
-  return true;
+  pvSchema.addTable(table);
 }
 
 void mdtTtDatabaseSchema::setupModificationTable()
@@ -1995,25 +2031,23 @@ void mdtTtDatabaseSchema::setupModificationTable()
 //   return true;
 // }
 
-bool mdtTtDatabaseSchema::setupLinkVersionTable()
+void mdtTtDatabaseSchema::setupLinkVersionTable()
 {
   mdtSqlSchemaTable table;
-  QSqlField field;
+  mdtSqlField Version_PK;
+  mdtSqlField Version;
 
   table.setTableName("LinkVersion_tbl", "UTF8");
   // Version_PK
-  field.setName("Version_PK");
-  field.setType(QVariant::Int);
-  table.addField(field, true);
+  Version_PK.setName("Version_PK");
+  Version_PK.setType(mdtSqlFieldType::Integer);
+  table.addField(Version_PK, true);
   // Version
-  field = QSqlField();
-  field.setName("Version");
-  field.setType(QVariant::Double);
-  table.addField(field, false);
+  Version.setName("Version");
+  Version.setType(mdtSqlFieldType::Double);
+  table.addField(Version, false);
 
-  pvTables.append(table);
-
-  return true;
+  pvSchema.addTable(table);
 }
 
 // bool mdtTtDatabaseSchema::createOnLinkVersionAfterInsertTrigger()
@@ -2067,293 +2101,400 @@ bool mdtTtDatabaseSchema::createOnLinkVersionAfterInsertTrigger()
   return createTrigger("onLinkVersionAfterInsert", sql);
 }
 
-bool mdtTtDatabaseSchema::setupLinkTable() 
+void mdtTtDatabaseSchema::setupLinkTable() 
 {
   mdtSqlSchemaTable table;
-  QSqlField field;
+  mdtSqlField UnitConnectionStart_Id_FK;
+  mdtSqlForeignKey fk_UnitConnectionStart;
+  mdtSqlField UnitConnectionEnd_Id_FK;
+  mdtSqlForeignKey fk_UnitConnectionEnd;
+  mdtSqlField Version_FK;
+  mdtSqlForeignKey fk_Version;
+  mdtSqlField Modification_Code_FK;
+  mdtSqlForeignKey fk_Modification;
+  mdtSqlField ArticleConnectionStart_Id_FK;
+  mdtSqlField ArticleConnectionEnd_Id_FK;
+  mdtSqlForeignKey fk_ArticleLink;
+  mdtSqlField Wire_Id_FK;
+  mdtSqlForeignKey fk_Wire;
+  mdtSqlField LinkBeam_Id_FK;
+  mdtSqlForeignKey fk_LinkBeam;
+  mdtSqlField Identification;
+  mdtSqlField LinkDirection_Code_FK;
+  mdtSqlForeignKey fk_LinkDirection;
+  mdtSqlField LinkType_Code_FK;
+  mdtSqlForeignKey fk_LinkType;
+  mdtSqlField Resistance;
+  mdtSqlField Length;
+  mdtSqlField Remarks;
 
   table.setTableName("Link_tbl", "UTF8");
   // UnitConnectionStart_Id_FK
-  field.setName("UnitConnectionStart_Id_FK");
-  field.setType(QVariant::Int);
-  table.addField(field, true);
+  UnitConnectionStart_Id_FK.setName("UnitConnectionStart_Id_FK");
+  UnitConnectionStart_Id_FK.setType(mdtSqlFieldType::Integer);
+  table.addField(UnitConnectionStart_Id_FK, true);
+  fk_UnitConnectionStart.setParentTableName("UnitConnection_tbl");
+  fk_UnitConnectionStart.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_UnitConnectionStart.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_UnitConnectionStart.setCreateChildIndex(true);
+  fk_UnitConnectionStart.addKeyFields("Id_PK", UnitConnectionStart_Id_FK);
+  table.addForeignKey(fk_UnitConnectionStart);
   // UnitConnectionEnd_Id_FK
-  field = QSqlField();
-  field.setName("UnitConnectionEnd_Id_FK");
-  field.setType(QVariant::Int);
-  table.addField(field, true);
+  UnitConnectionEnd_Id_FK.setName("UnitConnectionEnd_Id_FK");
+  UnitConnectionEnd_Id_FK.setType(mdtSqlFieldType::Integer);
+  table.addField(UnitConnectionEnd_Id_FK, true);
+  fk_UnitConnectionEnd.setParentTableName("UnitConnection_tbl");
+  fk_UnitConnectionEnd.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_UnitConnectionEnd.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_UnitConnectionEnd.setCreateChildIndex(true);
+  fk_UnitConnectionEnd.addKeyFields("Id_PK", UnitConnectionEnd_Id_FK);
+  table.addForeignKey(fk_UnitConnectionEnd);
   // Version_FK
-  field = QSqlField();
-  field.setName("Version_FK");
-  field.setType(QVariant::Int);
-  table.addField(field, true);
+  Version_FK.setName("Version_FK");
+  Version_FK.setType(mdtSqlFieldType::Integer);
+  table.addField(Version_FK, true);
+  fk_Version.setParentTableName("LinkVersion_tbl");
+  fk_Version.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_Version.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_Version.setCreateChildIndex(true);
+  fk_Version.addKeyFields("Version_PK", Version_FK);
+  table.addForeignKey(fk_Version);
   // Modification_Code_FK
-  field = QSqlField();
-  field.setName("Modification_Code_FK");
-  field.setType(QVariant::String);
-  field.setLength(10);
-  table.addField(field, true);
+  Modification_Code_FK.setName("Modification_Code_FK");
+  Modification_Code_FK.setType(mdtSqlFieldType::Varchar);
+  Modification_Code_FK.setLength(10);
+  table.addField(Modification_Code_FK, true);
+  fk_Modification.setParentTableName("Modification_tbl");
+  fk_Modification.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_Modification.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_Modification.setCreateChildIndex(true);
+  fk_Modification.addKeyFields("Code_PK", Modification_Code_FK);
+  table.addForeignKey(fk_Modification);
   // ArticleConnectionStart_Id_FK
-  field = QSqlField();
-  field.setName("ArticleConnectionStart_Id_FK");
-  field.setType(QVariant::Int);
-  table.addField(field, false);
+  ArticleConnectionStart_Id_FK.setName("ArticleConnectionStart_Id_FK");
+  ArticleConnectionStart_Id_FK.setType(mdtSqlFieldType::Integer);
+  table.addField(ArticleConnectionStart_Id_FK, false);
   // ArticleConnectionEnd_Id_FK
-  field = QSqlField();
-  field.setName("ArticleConnectionEnd_Id_FK");
-  field.setType(QVariant::Int);
-  table.addField(field, false);
+  ArticleConnectionEnd_Id_FK.setName("ArticleConnectionEnd_Id_FK");
+  ArticleConnectionEnd_Id_FK.setType(mdtSqlFieldType::Integer);
+  table.addField(ArticleConnectionEnd_Id_FK, false);
+  fk_ArticleLink.setParentTableName("ArticleLink_tbl");
+  fk_ArticleLink.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_ArticleLink.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_ArticleLink.setCreateChildIndex(true);
+  fk_ArticleLink.addKeyFields("ArticleConnectionStart_Id_FK", ArticleConnectionStart_Id_FK);
+  fk_ArticleLink.addKeyFields("ArticleConnectionEnd_Id_FK", ArticleConnectionEnd_Id_FK);
+  table.addForeignKey(fk_ArticleLink);
   // Wire_Id_FK
-  field = QSqlField();
-  field.setName("Wire_Id_FK");
-  field.setType(QVariant::Int);
-  table.addField(field, false);
+  Wire_Id_FK.setName("Wire_Id_FK");
+  Wire_Id_FK.setType(mdtSqlFieldType::Integer);
+  table.addField(Wire_Id_FK, false);
+  fk_Wire.setParentTableName("Wire_tbl");
+  fk_Wire.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_Wire.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_Wire.setCreateChildIndex(true);
+  fk_Wire.addKeyFields("Id_PK", Wire_Id_FK);
+  table.addForeignKey(fk_Wire);
   // LinkBeam_Id_FK
-  field = QSqlField();
-  field.setName("LinkBeam_Id_FK");
-  field.setType(QVariant::Int);
-  table.addField(field, false);
+  LinkBeam_Id_FK.setName("LinkBeam_Id_FK");
+  LinkBeam_Id_FK.setType(mdtSqlFieldType::Integer);
+  table.addField(LinkBeam_Id_FK, false);
+  fk_LinkBeam.setParentTableName("LinkBeam_tbl");
+  fk_LinkBeam.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_LinkBeam.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_LinkBeam.setCreateChildIndex(true);
+  fk_LinkBeam.addKeyFields("Id_PK", LinkBeam_Id_FK);
+  table.addForeignKey(fk_LinkBeam);
   // Identification
-  field = QSqlField();
-  field.setName("Identification");
-  field.setType(QVariant::String);
-  field.setLength(50);
-  table.addField(field, false);
+  Identification.setName("Identification");
+  Identification.setType(mdtSqlFieldType::Varchar);
+  Identification.setLength(50);
+  table.addField(Identification, false);
   // LinkDirection_Code_FK
-  field = QSqlField();
-  field.setName("LinkDirection_Code_FK");
-  field.setType(QVariant::String);
-  field.setLength(10);
-  field.setRequiredStatus(QSqlField::Required);
-  table.addField(field, false);
+  LinkDirection_Code_FK.setName("LinkDirection_Code_FK");
+  LinkDirection_Code_FK.setType(mdtSqlFieldType::Varchar);
+  LinkDirection_Code_FK.setLength(10);
+  LinkDirection_Code_FK.setRequired(true);
+  table.addField(LinkDirection_Code_FK, false);
+  fk_LinkDirection.setParentTableName("LinkDirection_tbl");
+  fk_LinkDirection.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_LinkDirection.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_LinkDirection.setCreateChildIndex(true);
+  fk_LinkDirection.addKeyFields("Code_PK", LinkDirection_Code_FK);
+  table.addForeignKey(fk_LinkDirection);
   // LinkType_Code_FK
-  field = QSqlField();
-  field.setName("LinkType_Code_FK");
-  field.setType(QVariant::String);
-  field.setLength(10);
-  field.setRequiredStatus(QSqlField::Required);
-  table.addField(field, false);
+  LinkType_Code_FK.setName("LinkType_Code_FK");
+  LinkType_Code_FK.setType(mdtSqlFieldType::Varchar);
+  LinkType_Code_FK.setLength(10);
+  LinkType_Code_FK.setRequired(true);
+  table.addField(LinkType_Code_FK, false);
+  fk_LinkType.setParentTableName("LinkType_tbl");
+  fk_LinkType.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_LinkType.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_LinkType.setCreateChildIndex(true);
+  fk_LinkType.addKeyFields("Id_PK", LinkType_Code_FK);
+  table.addForeignKey(fk_LinkType);
   // Resistance
-  field = QSqlField();
-  field.setName("Resistance");
-  field.setType(QVariant::Double);
-  table.addField(field, false);
+  Resistance.setName("Resistance");
+  Resistance.setType(mdtSqlFieldType::Double);
+  table.addField(Resistance, false);
   // Length
-  field = QSqlField();
-  field.setName("Length");
-  field.setType(QVariant::Double);
-  table.addField(field, false);
+  Length.setName("Length");
+  Length.setType(mdtSqlFieldType::Double);
+  table.addField(Length, false);
   // Remarks
-  field = QSqlField();
-  field.setName("Remarks");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  Remarks.setName("Remarks");
+  Remarks.setType(mdtSqlFieldType::Varchar);
+  Remarks.setLength(200);
+  table.addField(Remarks, false);
+
+  pvSchema.addTable(table);
   // Indexes
 //   table.addIndex("Modification_Code_FK_idx", false);
 //   if(!table.addFieldToIndex("Modification_Code_FK_idx", "Modification_Code_FK")){
 //     pvLastError = table.lastError();
 //     return false;
 //   }
-  table.addIndex("Direction_Id_FK_idx", false);
-  if(!table.addFieldToIndex("Direction_Id_FK_idx", "LinkDirection_Code_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addIndex("Type_Id_FK_idx", false);
-  if(!table.addFieldToIndex("Type_Id_FK_idx", "LinkType_Code_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addIndex("Link_ArticleLink_idx", false);
-  if(!table.addFieldToIndex("Link_ArticleLink_idx", "ArticleConnectionStart_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  if(!table.addFieldToIndex("Link_ArticleLink_idx", "ArticleConnectionEnd_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addIndex("LinkBeam_Id_FK_idx", false);
-  if(!table.addFieldToIndex("LinkBeam_Id_FK_idx", "LinkBeam_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addIndex("Wire_Id_FK_idx1", false);
-  if(!table.addFieldToIndex("Wire_Id_FK_idx1", "Wire_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  // Foreign keys
-  table.addForeignKey("UnitConnectionStart_Id_FK_fk", "UnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("UnitConnectionStart_Id_FK_fk", "UnitConnectionStart_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("UnitConnectionEnd_Id_FK_fk", "UnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("UnitConnectionEnd_Id_FK_fk", "UnitConnectionEnd_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("Version_FK_fk", "LinkVersion_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("Version_FK_fk", "Version_FK", "Version_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("Modification_Code_FK_fk", "Modification_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("Modification_Code_FK_fk", "Modification_Code_FK", "Code_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("Link_ArticleLink_fk", "ArticleLink_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("Link_ArticleLink_fk", "ArticleConnectionStart_Id_FK", "ArticleConnectionStart_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  if(!table.addFieldToForeignKey("Link_ArticleLink_fk", "ArticleConnectionEnd_Id_FK", "ArticleConnectionEnd_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("LinkDirection_Code_FK_fk2", "LinkDirection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("LinkDirection_Code_FK_fk2", "LinkDirection_Code_FK", "Code_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("LinkType_Code_FK_fk2", "LinkType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("LinkType_Code_FK_fk2", "LinkType_Code_FK", "Code_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("LinkBeam_Id_FK_fk", "LinkBeam_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("LinkBeam_Id_FK_fk", "LinkBeam_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("Wire_Id_FK_fk1", "Wire_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("Wire_Id_FK_fk1", "Wire_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-
-  pvTables.append(table);
-
-  return true;
+//   table.addIndex("Direction_Id_FK_idx", false);
+//   if(!table.addFieldToIndex("Direction_Id_FK_idx", "LinkDirection_Code_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addIndex("Type_Id_FK_idx", false);
+//   if(!table.addFieldToIndex("Type_Id_FK_idx", "LinkType_Code_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addIndex("Link_ArticleLink_idx", false);
+//   if(!table.addFieldToIndex("Link_ArticleLink_idx", "ArticleConnectionStart_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   if(!table.addFieldToIndex("Link_ArticleLink_idx", "ArticleConnectionEnd_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addIndex("LinkBeam_Id_FK_idx", false);
+//   if(!table.addFieldToIndex("LinkBeam_Id_FK_idx", "LinkBeam_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addIndex("Wire_Id_FK_idx1", false);
+//   if(!table.addFieldToIndex("Wire_Id_FK_idx1", "Wire_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   // Foreign keys
+//   table.addForeignKey("UnitConnectionStart_Id_FK_fk", "UnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("UnitConnectionStart_Id_FK_fk", "UnitConnectionStart_Id_FK", "Id_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("UnitConnectionEnd_Id_FK_fk", "UnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("UnitConnectionEnd_Id_FK_fk", "UnitConnectionEnd_Id_FK", "Id_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("Version_FK_fk", "LinkVersion_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("Version_FK_fk", "Version_FK", "Version_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("Modification_Code_FK_fk", "Modification_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("Modification_Code_FK_fk", "Modification_Code_FK", "Code_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("Link_ArticleLink_fk", "ArticleLink_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("Link_ArticleLink_fk", "ArticleConnectionStart_Id_FK", "ArticleConnectionStart_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   if(!table.addFieldToForeignKey("Link_ArticleLink_fk", "ArticleConnectionEnd_Id_FK", "ArticleConnectionEnd_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("LinkDirection_Code_FK_fk2", "LinkDirection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("LinkDirection_Code_FK_fk2", "LinkDirection_Code_FK", "Code_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("LinkType_Code_FK_fk2", "LinkType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("LinkType_Code_FK_fk2", "LinkType_Code_FK", "Code_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("LinkBeam_Id_FK_fk", "LinkBeam_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("LinkBeam_Id_FK_fk", "LinkBeam_Id_FK", "Id_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("Wire_Id_FK_fk1", "Wire_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("Wire_Id_FK_fk1", "Wire_Id_FK", "Id_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+// 
+//   pvTables.append(table);
+// 
+//   return true;
 }
 
-bool mdtTtDatabaseSchema::setupLinkBeamTable()
+void mdtTtDatabaseSchema::setupLinkBeamTable()
 {
   mdtSqlSchemaTable table;
-  QSqlField field;
+  mdtSqlField Id_PK;
+  mdtSqlField Identification;
 
   table.setTableName("LinkBeam_tbl", "UTF8");
-
   // Id_PK
-  field.setName("Id_PK");
-  field.setType(QVariant::Int);
-  field.setAutoValue(true);
-  table.addField(field, true);
+  Id_PK.setName("Id_PK");
+  Id_PK.setType(mdtSqlFieldType::Integer);
+  Id_PK.setAutoValue(true);
+  table.addField(Id_PK, true);
   // Identification
-  field = QSqlField();
-  field.setName("Identification");
-  field.setType(QVariant::String);
-  field.setLength(50);
-  table.addField(field, false);
+  Identification.setName("Identification");
+  Identification.setType(mdtSqlFieldType::Varchar);
+  Identification.setLength(50);
+  table.addField(Identification, false);
 
-  pvTables.append(table);
-
-  return true;
+  pvSchema.addTable(table);
 }
 
-bool mdtTtDatabaseSchema::setupLinkBeamUnitStartTable()
+void mdtTtDatabaseSchema::setupLinkBeamUnitStartTable()
 {
   mdtSqlSchemaTable table;
-  QSqlField field;
+  mdtSqlField Unit_Id_FK;
+  mdtSqlForeignKey fk_Unit;
+  mdtSqlField LinkBeam_Id_FK;
+  mdtSqlForeignKey fk_LinkBeam;
 
   table.setTableName("LinkBeam_UnitStart_tbl", "UTF8");
 
-  // UnitStart_Id_FK
-  field.setName("Unit_Id_FK");
-  field.setType(QVariant::Int);
-  field.setAutoValue(true);
-  table.addField(field, true);
+  // Unit_Id_FK
+  Unit_Id_FK.setName("Unit_Id_FK");
+  Unit_Id_FK.setType(mdtSqlFieldType::Integer);
+  Unit_Id_FK.setAutoValue(true);
+  table.addField(Unit_Id_FK, true);
+  fk_Unit.setParentTableName("Unit_tbl");
+  fk_Unit.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_Unit.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_Unit.setCreateChildIndex(true);
+  fk_Unit.addKeyFields("Id_PK", Unit_Id_FK);
+  table.addForeignKey(fk_Unit);
   // LinkBeam_Id_FK
-  field = QSqlField();
-  field.setName("LinkBeam_Id_FK");
-  field.setType(QVariant::Int);
-  field.setAutoValue(true);
-  table.addField(field, true);
+  LinkBeam_Id_FK.setName("LinkBeam_Id_FK");
+  LinkBeam_Id_FK.setType(mdtSqlFieldType::Integer);
+  LinkBeam_Id_FK.setAutoValue(true);
+  table.addField(LinkBeam_Id_FK, true);
+  fk_LinkBeam.setParentTableName("LinkBeam_tbl");
+  fk_LinkBeam.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_LinkBeam.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_LinkBeam.setCreateChildIndex(true);
+  fk_LinkBeam.addKeyFields("Id_PK", LinkBeam_Id_FK);
+  table.addForeignKey(fk_LinkBeam);
+
+  pvSchema.addTable(table);
   // Indexes
-  table.addIndex("Unit_Id_FK_idx4", false);
-  if(!table.addFieldToIndex("Unit_Id_FK_idx4", "Unit_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addIndex("LinkBeam_Id_FK_idx2", false);
-  if(!table.addFieldToIndex("LinkBeam_Id_FK_idx2", "LinkBeam_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  // Foreign keys
-  table.addForeignKey("Unit_Id_FK_fk4", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("Unit_Id_FK_fk4", "Unit_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("LinkBeam_Id_FK_fk2", "LinkBeam_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("LinkBeam_Id_FK_fk2", "LinkBeam_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-
-  pvTables.append(table);
-
-  return true;
+//   table.addIndex("Unit_Id_FK_idx4", false);
+//   if(!table.addFieldToIndex("Unit_Id_FK_idx4", "Unit_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addIndex("LinkBeam_Id_FK_idx2", false);
+//   if(!table.addFieldToIndex("LinkBeam_Id_FK_idx2", "LinkBeam_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   // Foreign keys
+//   table.addForeignKey("Unit_Id_FK_fk4", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("Unit_Id_FK_fk4", "Unit_Id_FK", "Id_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("LinkBeam_Id_FK_fk2", "LinkBeam_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("LinkBeam_Id_FK_fk2", "LinkBeam_Id_FK", "Id_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+// 
+//   pvTables.append(table);
+// 
+//   return true;
 }
 
-bool mdtTtDatabaseSchema::setupLinkBeamUnitEndTable()
+void mdtTtDatabaseSchema::setupLinkBeamUnitEndTable()
 {
   mdtSqlSchemaTable table;
-  QSqlField field;
+  mdtSqlField Unit_Id_FK;
+  mdtSqlForeignKey fk_Unit;
+  mdtSqlField LinkBeam_Id_FK;
+  mdtSqlForeignKey fk_LinkBeam;
 
   table.setTableName("LinkBeam_UnitEnd_tbl", "UTF8");
 
-  // UnitStart_Id_FK
-  field.setName("Unit_Id_FK");
-  field.setType(QVariant::Int);
-  field.setAutoValue(true);
-  table.addField(field, true);
+  // Unit_Id_FK
+  Unit_Id_FK.setName("Unit_Id_FK");
+  Unit_Id_FK.setType(mdtSqlFieldType::Integer);
+  Unit_Id_FK.setAutoValue(true);
+  table.addField(Unit_Id_FK, true);
+  fk_Unit.setParentTableName("Unit_tbl");
+  fk_Unit.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_Unit.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_Unit.setCreateChildIndex(true);
+  fk_Unit.addKeyFields("Id_PK", Unit_Id_FK);
+  table.addForeignKey(fk_Unit);
   // LinkBeam_Id_FK
-  field = QSqlField();
-  field.setName("LinkBeam_Id_FK");
-  field.setType(QVariant::Int);
-  field.setAutoValue(true);
-  table.addField(field, true);
-  // Indexes
-  table.addIndex("Unit_Id_FK_idx5", false);
-  if(!table.addFieldToIndex("Unit_Id_FK_idx5", "Unit_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addIndex("LinkBeam_Id_FK_idx3", false);
-  if(!table.addFieldToIndex("LinkBeam_Id_FK_idx3", "LinkBeam_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  // Foreign keys
-  table.addForeignKey("Unit_Id_FK_fk5", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("Unit_Id_FK_fk5", "Unit_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("LinkBeam_Id_FK_fk3", "LinkBeam_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("LinkBeam_Id_FK_fk3", "LinkBeam_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
+  LinkBeam_Id_FK.setName("LinkBeam_Id_FK");
+  LinkBeam_Id_FK.setType(mdtSqlFieldType::Integer);
+  LinkBeam_Id_FK.setAutoValue(true);
+  table.addField(LinkBeam_Id_FK, true);
+  fk_LinkBeam.setParentTableName("LinkBeam_tbl");
+  fk_LinkBeam.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_LinkBeam.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_LinkBeam.setCreateChildIndex(true);
+  fk_LinkBeam.addKeyFields("Id_PK", LinkBeam_Id_FK);
+  table.addForeignKey(fk_LinkBeam);
 
-  pvTables.append(table);
+  pvSchema.addTable(table);
 
-  return true;
+//   // UnitStart_Id_FK
+//   field.setName("Unit_Id_FK");
+//   field.setType(QVariant::Int);
+//   field.setAutoValue(true);
+//   table.addField(field, true);
+//   // LinkBeam_Id_FK
+//   field = QSqlField();
+//   field.setName("LinkBeam_Id_FK");
+//   field.setType(QVariant::Int);
+//   field.setAutoValue(true);
+//   table.addField(field, true);
+//   // Indexes
+//   table.addIndex("Unit_Id_FK_idx5", false);
+//   if(!table.addFieldToIndex("Unit_Id_FK_idx5", "Unit_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addIndex("LinkBeam_Id_FK_idx3", false);
+//   if(!table.addFieldToIndex("LinkBeam_Id_FK_idx3", "LinkBeam_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   // Foreign keys
+//   table.addForeignKey("Unit_Id_FK_fk5", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("Unit_Id_FK_fk5", "Unit_Id_FK", "Id_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("LinkBeam_Id_FK_fk3", "LinkBeam_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("LinkBeam_Id_FK_fk3", "LinkBeam_Id_FK", "Id_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+// 
+//   pvTables.append(table);
+// 
+//   return true;
 }
 
 void mdtTtDatabaseSchema::setupLinkDirectionTable() 
@@ -2446,324 +2587,370 @@ void mdtTtDatabaseSchema::setupLinkTypeTable()
   pvSchema.addTable(table);
 }
 
-bool mdtTtDatabaseSchema::setupTestSystemTable()
+void mdtTtDatabaseSchema::setupTestSystemTable()
 {
   mdtSqlSchemaTable table;
-  QSqlField field;
+  mdtSqlField Id_PK;
+  mdtSqlField NameEN;
+  mdtSqlField NameFR;
+  mdtSqlField NameDE;
+  mdtSqlField NameIT;
 
   table.setTableName("TestSystem_tbl", "UTF8");
   // Id_PK
-  field.setName("Id_PK");
-  field.setType(QVariant::Int);
-  field.setAutoValue(true);
-  table.addField(field, true);
+  Id_PK.setName("Id_PK");
+  Id_PK.setType(mdtSqlFieldType::Integer);
+  Id_PK.setAutoValue(true);
+  table.addField(Id_PK, true);
   // NameEN
-  field = QSqlField();
-  field.setName("NameEN");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  NameEN.setName("NameEN");
+  NameEN.setType(mdtSqlFieldType::Varchar);
+  NameEN.setLength(200);
+  table.addField(NameEN, false);
   // NameFR
-  field = QSqlField();
-  field.setName("NameFR");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  NameFR.setName("NameFR");
+  NameFR.setType(mdtSqlFieldType::Varchar);
+  NameFR.setLength(200);
+  table.addField(NameFR, false);
   // NameDE
-  field = QSqlField();
-  field.setName("NameDE");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  NameDE.setName("NameDE");
+  NameDE.setType(mdtSqlFieldType::Varchar);
+  NameDE.setLength(200);
+  table.addField(NameDE, false);
   // NameIT
-  field = QSqlField();
-  field.setName("NameIT");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  NameIT.setName("NameIT");
+  NameIT.setType(mdtSqlFieldType::Varchar);
+  NameIT.setLength(200);
+  table.addField(NameIT, false);
 
-  pvTables.append(table);
-
-  return true;
+  pvSchema.addTable(table);
 }
 
-bool mdtTtDatabaseSchema::setupTestSystemComponentTypeTable()
+void mdtTtDatabaseSchema::setupTestSystemComponentTypeTable()
 {
   mdtSqlSchemaTable table;
-  QSqlField field;
+  mdtSqlField Code_PK;
+  mdtSqlField NameEN;
+  mdtSqlField NameFR;
+  mdtSqlField NameDE;
+  mdtSqlField NameIT;
 
   table.setTableName("TestSystemComponentType_tbl", "UTF8");
   // Code_PK
-  field.setName("Code_PK");
-  field.setType(QVariant::String);
-  field.setLength(20);
-  table.addField(field, true);
+  Code_PK.setName("Code_PK");
+  Code_PK.setType(mdtSqlFieldType::Varchar);
+  Code_PK.setLength(20);
+  table.addField(Code_PK, true);
   // NameEN
-  field = QSqlField();
-  field.setName("NameEN");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  NameEN.setName("NameEN");
+  NameEN.setType(mdtSqlFieldType::Varchar);
+  NameEN.setLength(200);
+  table.addField(NameEN, false);
   // NameFR
-  field = QSqlField();
-  field.setName("NameFR");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  NameFR.setName("NameFR");
+  NameFR.setType(mdtSqlFieldType::Varchar);
+  NameFR.setLength(200);
+  table.addField(NameFR, false);
   // NameDE
-  field = QSqlField();
-  field.setName("NameDE");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  NameDE.setName("NameDE");
+  NameDE.setType(mdtSqlFieldType::Varchar);
+  NameDE.setLength(200);
+  table.addField(NameDE, false);
   // NameIT
-  field = QSqlField();
-  field.setName("NameIT");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  NameIT.setName("NameIT");
+  NameIT.setType(mdtSqlFieldType::Varchar);
+  NameIT.setLength(200);
+  table.addField(NameIT, false);
 
-  pvTables.append(table);
-
-  return true;
+  pvSchema.addTable(table);
 }
 
-bool mdtTtDatabaseSchema::setupTestSystemComponentTable()
+void mdtTtDatabaseSchema::setupTestSystemComponentTable()
 {
   mdtSqlSchemaTable table;
-  QSqlField field;
+  mdtSqlField Id_PK;
+  mdtSqlField Type_Code_FK;
+  mdtSqlForeignKey fk_Type;
+  mdtSqlField Alias;
+  mdtSqlField NameEN;
+  mdtSqlField NameFR;
+  mdtSqlField NameDE;
+  mdtSqlField NameIT;
+  mdtSqlField DescriptionEN;
+  mdtSqlField DescriptionFR;
+  mdtSqlField DescriptionDE;
+  mdtSqlField DescriptionIT;
 
   table.setTableName("TestSystemComponent_tbl", "UTF8");
   // Id_PK
-  field.setName("Id_PK");
-  field.setType(QVariant::Int);
-  field.setAutoValue(true);
-  table.addField(field, true);
+  Id_PK.setName("Id_PK");
+  Id_PK.setType(mdtSqlFieldType::Integer);
+  Id_PK.setAutoValue(true);
+  table.addField(Id_PK, true);
   // Type_Code_FK
-  field.setName("Type_Code_FK");
-  field.setType(QVariant::String);
-  field.setLength(20);
-  field.setRequired(true);
-  table.addField(field, false);
+  Type_Code_FK.setName("Type_Code_FK");
+  Type_Code_FK.setType(mdtSqlFieldType::Varchar);
+  Type_Code_FK.setLength(20);
+  Type_Code_FK.setRequired(true);
+  table.addField(Type_Code_FK, false);
+  fk_Type.setParentTableName("TestSystemComponentType_tbl");
+  fk_Type.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_Type.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_Type.setCreateChildIndex(true);
+  fk_Type.addKeyFields("Code_PK", Type_Code_FK);
+  table.addForeignKey(fk_Type);
   // Alias
-  field = QSqlField();
-  field.setName("Alias");
-  field.setRequired(true);
-  field.setType(QVariant::String);
-  field.setLength(50);
-  table.addField(field, false);
+  Alias.setName("Alias");
+  Alias.setRequired(true);
+  Alias.setType(mdtSqlFieldType::Varchar);
+  Alias.setLength(50);
+  table.addField(Alias, false);
   // NameEN
-  field = QSqlField();
-  field.setName("NameEN");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  NameEN.setName("NameEN");
+  NameEN.setType(mdtSqlFieldType::Varchar);
+  NameEN.setLength(200);
+  table.addField(NameEN, false);
   // NameFR
-  field = QSqlField();
-  field.setName("NameFR");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  NameFR.setName("NameFR");
+  NameFR.setType(mdtSqlFieldType::Varchar);
+  NameFR.setLength(200);
+  table.addField(NameFR, false);
   // NameDE
-  field = QSqlField();
-  field.setName("NameDE");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  NameDE.setName("NameDE");
+  NameDE.setType(mdtSqlFieldType::Varchar);
+  NameDE.setLength(200);
+  table.addField(NameDE, false);
   // NameIT
-  field = QSqlField();
-  field.setName("NameIT");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  NameIT.setName("NameIT");
+  NameIT.setType(mdtSqlFieldType::Varchar);
+  NameIT.setLength(200);
+  table.addField(NameIT, false);
   // DescriptionEN
-  field = QSqlField();
-  field.setName("DescriptionEN");
-  field.setType(QVariant::String);
-  field.setLength(500);
-  table.addField(field, false);
+  DescriptionEN.setName("DescriptionEN");
+  DescriptionEN.setType(mdtSqlFieldType::Varchar);
+  DescriptionEN.setLength(500);
+  table.addField(DescriptionEN, false);
   // DescriptionFR
-  field = QSqlField();
-  field.setName("DescriptionFR");
-  field.setType(QVariant::String);
-  field.setLength(500);
-  table.addField(field, false);
+  DescriptionFR.setName("DescriptionFR");
+  DescriptionFR.setType(mdtSqlFieldType::Varchar);
+  DescriptionFR.setLength(500);
+  table.addField(DescriptionFR, false);
   // DescriptionDE
-  field = QSqlField();
-  field.setName("DescriptionDE");
-  field.setType(QVariant::String);
-  field.setLength(500);
-  table.addField(field, false);
+  DescriptionDE.setName("DescriptionDE");
+  DescriptionDE.setType(mdtSqlFieldType::Varchar);
+  DescriptionDE.setLength(500);
+  table.addField(DescriptionDE, false);
   // DescriptionIT
-  field = QSqlField();
-  field.setName("DescriptionIT");
-  field.setType(QVariant::String);
-  field.setLength(500);
-  table.addField(field, false);
+  DescriptionIT.setName("DescriptionIT");
+  DescriptionIT.setType(mdtSqlFieldType::Varchar);
+  DescriptionIT.setLength(500);
+  table.addField(DescriptionIT, false);
+
+  pvSchema.addTable(table);
   // Indexes
-  table.addIndex("Type_Code_FK_idx2", false);
-  if(!table.addFieldToIndex("Type_Code_FK_idx2", "Type_Code_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addIndex("Alias_idx2", true);
-  if(!table.addFieldToIndex("Alias_idx2", "Alias")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  // Foreign keys
-  table.addForeignKey("Type_Code_FK_fk2", "TestSystemComponentType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("Type_Code_FK_fk2", "Type_Code_FK", "Code_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-
-  pvTables.append(table);
-
-  return true;
+//   table.addIndex("Type_Code_FK_idx2", false);
+//   if(!table.addFieldToIndex("Type_Code_FK_idx2", "Type_Code_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addIndex("Alias_idx2", true);
+//   if(!table.addFieldToIndex("Alias_idx2", "Alias")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   // Foreign keys
+//   table.addForeignKey("Type_Code_FK_fk2", "TestSystemComponentType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("Type_Code_FK_fk2", "Type_Code_FK", "Code_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+// 
+//   pvTables.append(table);
+// 
+//   return true;
 }
 
-bool mdtTtDatabaseSchema::setupTestSystem_TestSystemComponentTable()
+void mdtTtDatabaseSchema::setupTestSystem_TestSystemComponentTable()
 {
   mdtSqlSchemaTable table;
-  QSqlField field;
+  mdtSqlField TestSystem_Id_FK;
+  mdtSqlForeignKey fk_TestSystem;
+  mdtSqlField TestSystemComponent_Id_FK;
+  mdtSqlForeignKey fk_TestSystemComponent;
 
   table.setTableName("TestSystem_TestSystemComponent_tbl", "UTF8");
   // TestSystem_Id_FK
-  field.setName("TestSystem_Id_FK");
-  field.setType(QVariant::Int);
-  table.addField(field, true);
+  TestSystem_Id_FK.setName("TestSystem_Id_FK");
+  TestSystem_Id_FK.setType(mdtSqlFieldType::Integer);
+  table.addField(TestSystem_Id_FK, true);
+  fk_TestSystem.setParentTableName("TestSystem_tbl");
+  fk_TestSystem.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_TestSystem.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_TestSystem.setCreateChildIndex(true);
+  fk_TestSystem.addKeyFields("Id_PK", TestSystem_Id_FK);
+  table.addForeignKey(fk_TestSystem);
   // TestSystemComponent_Id_FK
-  field.setName("TestSystemComponent_Id_FK");
-  field.setType(QVariant::Int);
-  table.addField(field, true);
+  TestSystemComponent_Id_FK.setName("TestSystemComponent_Id_FK");
+  TestSystemComponent_Id_FK.setType(mdtSqlFieldType::Integer);
+  table.addField(TestSystemComponent_Id_FK, true);
+  fk_TestSystemComponent.setParentTableName("TestSystemComponent_tbl");
+  fk_TestSystemComponent.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_TestSystemComponent.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_TestSystemComponent.setCreateChildIndex(true);
+  fk_TestSystemComponent.addKeyFields("Id_PK", TestSystemComponent_Id_FK);
+  table.addForeignKey(fk_TestSystemComponent);
+
+  pvSchema.addTable(table);
   // Foreign keys
-  table.addForeignKey("TestSystem_Id_FK_fk", "TestSystem_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("TestSystem_Id_FK_fk", "TestSystem_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("TestSystemComponent_Id_FK_fk", "TestSystemComponent_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("TestSystemComponent_Id_FK_fk", "TestSystemComponent_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-
-  pvTables.append(table);
-
-  return true;
+//   table.addForeignKey("TestSystem_Id_FK_fk", "TestSystem_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("TestSystem_Id_FK_fk", "TestSystem_Id_FK", "Id_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("TestSystemComponent_Id_FK_fk", "TestSystemComponent_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("TestSystemComponent_Id_FK_fk", "TestSystemComponent_Id_FK", "Id_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+// 
+//   pvTables.append(table);
+// 
+//   return true;
 }
 
-bool mdtTtDatabaseSchema::setupTestSystemUnitTable()
+void mdtTtDatabaseSchema::setupTestSystemUnitTable()
 {
   mdtSqlSchemaTable table;
-  QSqlField field;
+  mdtSqlField Code_PK;
+  mdtSqlField NameEN;
+  mdtSqlField NameFR;
+  mdtSqlField NameDE;
+  mdtSqlField NameIT;
+
 
   table.setTableName("TestSystemUnitType_tbl", "UTF8");
   // Code_PK
-  field.setName("Code_PK");
-  field.setType(QVariant::String);
-  field.setLength(20);
-  table.addField(field, true);
+  Code_PK.setName("Code_PK");
+  Code_PK.setType(mdtSqlFieldType::Varchar);
+  Code_PK.setLength(20);
+  table.addField(Code_PK, true);
   // NameEN
-  field = QSqlField();
-  field.setName("NameEN");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  NameEN.setName("NameEN");
+  NameEN.setType(mdtSqlFieldType::Varchar);
+  NameEN.setLength(200);
+  table.addField(NameEN, false);
   // NameFR
-  field = QSqlField();
-  field.setName("NameFR");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  NameFR.setName("NameFR");
+  NameFR.setType(mdtSqlFieldType::Varchar);
+  NameFR.setLength(200);
+  table.addField(NameFR, false);
   // NameDE
-  field = QSqlField();
-  field.setName("NameDE");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  NameDE.setName("NameDE");
+  NameDE.setType(mdtSqlFieldType::Varchar);
+  NameDE.setLength(200);
+  table.addField(NameDE, false);
   // NameIT
-  field = QSqlField();
-  field.setName("NameIT");
-  field.setType(QVariant::String);
-  field.setLength(200);
-  table.addField(field, false);
+  NameIT.setName("NameIT");
+  NameIT.setType(mdtSqlFieldType::Varchar);
+  NameIT.setLength(200);
+  table.addField(NameIT, false);
 
-  pvTables.append(table);
-
-  return true;
+  pvSchema.addTable(table);
 }
 
-bool mdtTtDatabaseSchema::setupTestSystemUnitTypeTable()
+void mdtTtDatabaseSchema::setupTestSystemUnitTypeTable()
 {
   mdtSqlSchemaTable table;
-  QSqlField field;
+  mdtSqlField Unit_Id_FK_PK;
+  mdtSqlForeignKey fk_Unit;
+  mdtSqlField TestSystemComponent_Id_FK;
+  mdtSqlForeignKey fk_TestSystemComponent;
+  mdtSqlField Type_Code_FK;
+  mdtSqlForeignKey fk_Type;
+  mdtSqlField IoPosition;
+  mdtSqlField CalibrationDate;
+  
 
   table.setTableName("TestSystemUnit_tbl", "UTF8");
   // Unit_Id_FK_PK
-  field.setName("Unit_Id_FK_PK");
-  field.setType(QVariant::Int);
-  table.addField(field, true);
+  Unit_Id_FK_PK.setName("Unit_Id_FK_PK");
+  Unit_Id_FK_PK.setType(mdtSqlFieldType::Integer);
+  table.addField(Unit_Id_FK_PK, true);
+  fk_Unit.setParentTableName("Unit_tbl");
+  fk_Unit.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_Unit.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_Unit.setCreateChildIndex(true);
+  fk_Unit.addKeyFields("Id_PK", Unit_Id_FK_PK);
+  table.addForeignKey(fk_Unit);
   // TestSystemComponent_Id_FK
-  field = QSqlField();
-  field.setName("TestSystemComponent_Id_FK");
-  field.setType(QVariant::Int);
-  field.setRequired(true);
-  table.addField(field, false);
+  TestSystemComponent_Id_FK.setName("TestSystemComponent_Id_FK");
+  TestSystemComponent_Id_FK.setType(mdtSqlFieldType::Integer);
+  TestSystemComponent_Id_FK.setRequired(true);
+  table.addField(TestSystemComponent_Id_FK, false);
+  fk_TestSystemComponent.setParentTableName("TestSystemComponent_tbl");
+  fk_TestSystemComponent.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_TestSystemComponent.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_TestSystemComponent.setCreateChildIndex(true);
+  fk_TestSystemComponent.addKeyFields("Id_PK", TestSystemComponent_Id_FK);
+  table.addForeignKey(fk_TestSystemComponent);
   // Type_Code_FK
-  field = QSqlField();
-  field.setName("Type_Code_FK");
-  field.setType(QVariant::String);
-  field.setLength(10);
-  field.setRequired(true);
-  table.addField(field, false);
+  Type_Code_FK.setName("Type_Code_FK");
+  Type_Code_FK.setType(mdtSqlFieldType::Varchar);
+  Type_Code_FK.setLength(10);
+  Type_Code_FK.setRequired(true);
+  table.addField(Type_Code_FK, false);
+  fk_Type.setParentTableName("TestSystemUnitType_tbl");
+  fk_Type.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk_Type.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk_Type.setCreateChildIndex(true);
+  fk_Type.addKeyFields("Code_PK", Type_Code_FK);
+  table.addForeignKey(fk_Type);
   // IoPosition
-  field = QSqlField();
-  field.setName("IoPosition");
-  field.setType(QVariant::Int);
-  table.addField(field, false);
+  IoPosition.setName("IoPosition");
+  IoPosition.setType(mdtSqlFieldType::Integer);
+  table.addField(IoPosition, false);
   // CalibrationDate
-  field = QSqlField();
-  field.setName("CalibrationDate");
-  field.setType(QVariant::DateTime);
-  table.addField(field, false);
-  // Indexes
-  table.addIndex("Unit_Id_FK_PK_idx", false);
-  if(!table.addFieldToIndex("Unit_Id_FK_PK_idx", "Unit_Id_FK_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addIndex("TestSystemComponent_Id_FK_idx", false);
-  if(!table.addFieldToIndex("TestSystemComponent_Id_FK_idx", "TestSystemComponent_Id_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addIndex("Type_Code_FK_idx4", false);
-  if(!table.addFieldToIndex("Type_Code_FK_idx4", "Type_Code_FK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  // Foreign keys
-  table.addForeignKey("Unit_Id_FK_PK_fk", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("Unit_Id_FK_PK_fk", "Unit_Id_FK_PK", "Id_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("TestSystemComponent_Id_FK_fk4", "TestSystemComponent_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("TestSystemComponent_Id_FK_fk4", "TestSystemComponent_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
-  table.addForeignKey("Type_Code_FK_fk4", "TestSystemUnitType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("Type_Code_FK_fk4", "Type_Code_FK", "Code_PK")){
-    pvLastError = table.lastError();
-    return false;
-  }
+  CalibrationDate.setName("CalibrationDate");
+  CalibrationDate.setType(mdtSqlFieldType::DateTime);
+  table.addField(CalibrationDate, false);
 
-  pvTables.append(table);
-
-  return true;
+  pvSchema.addTable(table);
+//   // Indexes
+//   table.addIndex("Unit_Id_FK_PK_idx", false);
+//   if(!table.addFieldToIndex("Unit_Id_FK_PK_idx", "Unit_Id_FK_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addIndex("TestSystemComponent_Id_FK_idx", false);
+//   if(!table.addFieldToIndex("TestSystemComponent_Id_FK_idx", "TestSystemComponent_Id_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addIndex("Type_Code_FK_idx4", false);
+//   if(!table.addFieldToIndex("Type_Code_FK_idx4", "Type_Code_FK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   // Foreign keys
+//   table.addForeignKey("Unit_Id_FK_PK_fk", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("Unit_Id_FK_PK_fk", "Unit_Id_FK_PK", "Id_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("TestSystemComponent_Id_FK_fk4", "TestSystemComponent_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("TestSystemComponent_Id_FK_fk4", "TestSystemComponent_Id_FK", "Id_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+//   table.addForeignKey("Type_Code_FK_fk4", "TestSystemUnitType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+//   if(!table.addFieldToForeignKey("Type_Code_FK_fk4", "Type_Code_FK", "Code_PK")){
+//     pvLastError = table.lastError();
+//     return false;
+//   }
+// 
+//   pvTables.append(table);
+// 
+//   return true;
 }
 
 

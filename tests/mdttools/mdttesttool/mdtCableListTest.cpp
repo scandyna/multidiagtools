@@ -1980,8 +1980,6 @@ void mdtCableListTest::linkBeamTest()
 
 void mdtCableListTest::createDatabaseSchema()
 {
-//   QTemporaryFile dbFile;
-
   /*
    * Init and open database
    */
