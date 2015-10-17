@@ -297,10 +297,6 @@ class mdtTtDatabaseSchema
    */
   bool setupTestNodeUnitTypeTable();
 
-  /*! \brief Setup TestNodeBus_tbl
-   */
-//   bool setupTestNodeBusTable();
-
   /*! \brief Setup TestCable_TestNodeUnit_tbl
    */
   bool setupTestCableTestNodeUnitTable();
@@ -345,13 +341,6 @@ class mdtTtDatabaseSchema
    */
   bool setupTestNodeUnitSetupTable();
 
-  /*! \brief Setup TestModelItemRoute_tbl
-   *
-   * This table will contain routes (paths)
-   *  from a test link to node units.
-   */
-//   bool setupTestModelItemRouteTable();
-
   /*! \brief Setup test result table
    *
    * \todo Move to test tool when created
@@ -374,10 +363,6 @@ class mdtTtDatabaseSchema
    */
   bool createView(const QString & viewName, const QString & sql);
 
-  /*! \brief
-   */
-//   bool createVehicleTypeUnitView();
-
   /*! \brief VehicleType_Unit_view
    */
   void setupVehicleTypeUnitView();
@@ -385,13 +370,6 @@ class mdtTtDatabaseSchema
   /*! \brief
    */
   bool createArticleComponentUsageView();
-
-  /*! \brief
-   */
-
-  /*! \brief
-   */
-//   bool createArticleComponentView();
 
   /*! \brief ArticleComponent_view
    */
@@ -404,10 +382,6 @@ class mdtTtDatabaseSchema
   /*! \brief Create article connection view
    */
   bool createArticleConnectionView();
-
-  /*! \brief
-   */
-//   bool createArticleLinkView();
 
   /*! \brief ArticleLink_view
    */

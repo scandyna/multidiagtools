@@ -283,100 +283,6 @@ mdtError mdtTtDatabaseSchema::lastError() const
 
 bool mdtTtDatabaseSchema::setupTables() 
 {
-  // We must build tables list in correct order, regarding dependencies
-//   if(!setupModificationTable()){
-//     return false;
-//   }
-//   if(!setupVehicleTypeTable()){
-//     return false;
-//   }
-//   if(!setupConnectionTypeTable()){
-//     return false;
-//   }
-//   if(!setupConnectorTable()){
-//     return false;
-//   }
-//   if(!setupConnectorContactTable()){
-//     return false;
-//   }
-//   if(!setupArticleTable()){
-//     return false;
-//   }
-//   if(!setupArticleComponentTable()){
-//     return false;
-//   }
-//   if(!setupArticleConnectorTable()){
-//     return false;
-//   }
-//   if(!setupArticleConnectionTable()){
-//     return false;
-//   }
-//   if(!setupUnitTable()){
-//     return false;
-//   }
-//   if(!setupUnitConnectorTable()){
-//     return false;
-//   }
-//   if(!setupUnitConnectionTable()){
-//     return false;
-//   }
-//   if(!setupVehicleTypeUnitTable()){
-//     return false;
-//   }
-//   if(!setupLinkDirectionTable()){
-//     return false;
-//   }
-//   if(!setupLinkTypeTable()){
-//     return false;
-//   }
-//   if(!setupArticleLinkTable()){
-//     return false;
-//   }
-//   if(!setupLinkBeamTable()){
-//     return false;
-//   }
-//   if(!setupLinkBeamUnitStartTable()){
-//     return false;
-//   }
-//   if(!setupLinkBeamUnitEndTable()){
-//     return false;
-//   }
-//   if(!setupWireTable()){
-//     return false;
-//   }
-//   if(!setupLinkModificationTable()){
-//     return false;
-//   }
-//   if(!setupLinkVersionTable()){
-//     return false;
-//   }
-//   if(!setupLinkTable()){
-//     return false;
-//   }
-//   if(!setupVehicleTypeLinkTable()){
-//     return false;
-//   }
-  // Test tool part
-  
-//   if(!setupTestSystemTable()){
-//     return false;
-//   }
-//   if(!setupTestSystemComponentTypeTable()){
-//     return false;
-//   }
-//   if(!setupTestSystemComponentTable()){
-//     return false;
-//   }
-//   if(!setupTestSystem_TestSystemComponentTable()){
-//     return false;
-//   }
-//   if(!setupTestSystemUnitTypeTable()){
-//     return false;
-//   }
-//   if(!setupTestSystemUnitTable()){
-//     return false;
-//   }
-  
   if(!setupTestNodeTable()){
     return false;
   }
@@ -465,9 +371,6 @@ bool mdtTtDatabaseSchema::createTriggers()
 
 bool mdtTtDatabaseSchema::createViews() 
 {
-//   if(!createArticleComponentView()){
-//     return false;
-//   }
   if(!createArticleComponentUsageView()){
     return false;
   }
@@ -477,9 +380,6 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createArticleConnectionView()){
     return false;
   }
-//   if(!createArticleLinkView()){
-//     return false;
-//   }
   if(!createArticleLinkUnitConnectionView()){
     return false;
   }
@@ -516,10 +416,6 @@ bool mdtTtDatabaseSchema::createViews()
   if(!createLinkBeamUnitEndView()){
     return false;
   }
-//   if(!createVehicleTypeUnitView()){
-//     return false;
-//   }
-  
   if(!createTestSystemComponentView()){
     return false;
   }
@@ -694,21 +590,6 @@ void mdtTtDatabaseSchema::setupVehicleTypeUnitTable()
   table.addForeignKey(fk_Unit_Id_FK);
 
   pvSchema.addTable(table);
-  // Foreign keys
-//   table.addForeignKey("VehicleType_Id_FK_fk", "VehicleType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("VehicleType_Id_FK_fk", "VehicleType_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//    /// return false;
-//   }
-//   table.addForeignKey("Unit_Id_FK_fk2", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Unit_Id_FK_fk2", "Unit_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-// 
-//   pvTables.append(table);
-
-  ///return true;
 }
 
 void mdtTtDatabaseSchema::setupVehicleTypeLinkTable() 
@@ -774,54 +655,6 @@ void mdtTtDatabaseSchema::setupVehicleTypeLinkTable()
   table.addForeignKey(fk_Link_tbl);
 
   pvSchema.addTable(table);
-
-//   // Indexes
-//   table.addIndex("UnitConnectionIndex", false);
-//   if(!table.addFieldToIndex("UnitConnectionIndex", "UnitConnectionStart_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   if(!table.addFieldToIndex("UnitConnectionIndex", "UnitConnectionEnd_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("VehicleTypeEnd_Id_FK_idx", false);
-//   if(!table.addFieldToIndex("VehicleTypeEnd_Id_FK_idx", "VehicleTypeEnd_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   // Foreign keys
-//   table.addForeignKey("Link_fk", "Link_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Link_fk", "UnitConnectionStart_Id_FK", "UnitConnectionStart_Id_FK")){
-//     pvLastError = table.lastError();
-//     //////return false;
-//   }
-//   if(!table.addFieldToForeignKey("Link_fk", "UnitConnectionEnd_Id_FK", "UnitConnectionEnd_Id_FK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-//   if(!table.addFieldToForeignKey("Link_fk", "Link_Version_FK", "Version_FK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-//   if(!table.addFieldToForeignKey("Link_fk", "Link_Modification_Code_FK", "Modification_Code_FK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-//   table.addForeignKey("VehicleTypeStart_Id_FK_fk", "VehicleType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("VehicleTypeStart_Id_FK_fk", "VehicleTypeStart_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-//   table.addForeignKey("VehicleTypeEnd_Id_FK_fk", "VehicleType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("VehicleTypeEnd_Id_FK_fk", "VehicleTypeEnd_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-// 
-//   pvTables.append(table);
-
-  ///return true;
 }
 
 void mdtTtDatabaseSchema::setupConnectionTypeTable()
@@ -982,29 +815,6 @@ void mdtTtDatabaseSchema::setupConnectorContactTable()
   fk_ConnectionType_Code_FK.addKeyFields("Code_PK", ConnectionType_Code_FK);
   table.addForeignKey(fk_ConnectionType_Code_FK);
 
-  // Indexes
-//   table.addIndex("Connector_Id_FK_idx", false);
-//   if(!table.addFieldToIndex("Connector_Id_FK_idx", "Connector_Id_FK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-//   table.addIndex("ConnectionType_Code_FK_idx", false);
-//   if(!table.addFieldToIndex("ConnectionType_Code_FK_idx", "ConnectionType_Code_FK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-  // Foreign keys
-//   table.addForeignKey("Connector_Id_FK_fk", "Connector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Connector_Id_FK_fk", "Connector_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-//   table.addForeignKey("ConnectionType_Code_FK_fk", "ConnectionType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("ConnectionType_Code_FK_fk", "ConnectionType_Code_FK", "Code_PK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-
   pvSchema.addTable(table);
 }
 
@@ -1133,17 +943,6 @@ void mdtTtDatabaseSchema::setupArticleComponentTable()
   ComponentQtyUnit.setLength(10);
   ComponentQtyUnit.setRequired(true);
   table.addField(ComponentQtyUnit, false);
-  // Foreign keys
-//   table.addForeignKey("Composite_Id_FK_fk2", "Article_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Composite_Id_FK_fk2", "Composite_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-//   table.addForeignKey("Component_Id_FK_fk", "Article_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Component_Id_FK_fk", "Component_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
 
   pvSchema.addTable(table);
 }
@@ -1190,28 +989,6 @@ void mdtTtDatabaseSchema::setupArticleConnectorTable()
   Name.setType(mdtSqlFieldType::Varchar);
   Name.setLength(30);
   table.addField(Name, false);
-//   // Indexes
-//   table.addIndex("Article_Id_FK_idx3", false);
-//   if(!table.addFieldToIndex("Article_Id_FK_idx3", "Article_Id_FK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-//   table.addIndex("Connector_Id_FK_idx2", false);
-//   if(!table.addFieldToIndex("Connector_Id_FK_idx2", "Connector_Id_FK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-//   // Foreign keys
-//   table.addForeignKey("Article_Id_FK_fk3", "Article_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Article_Id_FK_fk3", "Article_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-//   table.addForeignKey("Connector_Id_FK_fk2", "Connector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Connector_Id_FK_fk2", "Connector_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
 
   pvSchema.addTable(table);
 }
@@ -1311,43 +1088,6 @@ void mdtTtDatabaseSchema::setupArticleConnectionTable()
   table.addField(FunctionIT, false);
 
   pvSchema.addTable(table);
-/*  
-  // Indexes
-  table.addIndex("Article_Id_FK_idx2", false);
-  if(!table.addFieldToIndex("Article_Id_FK_idx2", "Article_Id_FK")){
-    pvLastError = table.lastError();
-    ///return false;
-  }
-  table.addIndex("ArticleConnector_Id_FK_idx", false);
-  if(!table.addFieldToIndex("ArticleConnector_Id_FK_idx", "ArticleConnector_Id_FK")){
-    pvLastError = table.lastError();
-    ///return false;
-  }
-  table.addIndex("ConnectionType_Code_FK_idx2", false);
-  if(!table.addFieldToIndex("ConnectionType_Code_FK_idx2", "ConnectionType_Code_FK")){
-    pvLastError = table.lastError();
-    ///return false;
-  }
-  // Foreign keys
-  table.addForeignKey("Article_Id_FK_fk2", "Article_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("Article_Id_FK_fk2", "Article_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    ///return false;
-  }
-  table.addForeignKey("ArticleConnector_Id_FK_fk", "ArticleConnector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("ArticleConnector_Id_FK_fk", "ArticleConnector_Id_FK", "Id_PK")){
-    pvLastError = table.lastError();
-    ///return false;
-  }
-  table.addForeignKey("ConnectionType_Code_FK_fk2", "ConnectionType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-  if(!table.addFieldToForeignKey("ConnectionType_Code_FK_fk2", "ConnectionType_Code_FK", "Code_PK")){
-    pvLastError = table.lastError();
-    ///return false;
-  }
-
-  ///pvTables.append(table);
-
-  ///return true;*/
 }
 
 void mdtTtDatabaseSchema::setupArticleLinkTable() 
@@ -1433,42 +1173,6 @@ void mdtTtDatabaseSchema::setupArticleLinkTable()
   table.addField(Resistance, false);
 
   pvSchema.addTable(table);
-  // Indexes
-//   table.addIndex("LinkType_Code_FK_idx", false);
-//   if(!table.addFieldToIndex("LinkType_Code_FK_idx", "LinkType_Code_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("LinkDirection_Code_FK_idx", false);
-//   if(!table.addFieldToIndex("LinkDirection_Code_FK_idx", "LinkDirection_Code_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   // Foreign keys
-//   table.addForeignKey("ArticleConnectionStart_Id_FK_fk", "ArticleConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("ArticleConnectionStart_Id_FK_fk", "ArticleConnectionStart_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("ArticleConnectionEnd_Id_FK_fk", "ArticleConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("ArticleConnectionEnd_Id_FK_fk", "ArticleConnectionEnd_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("LinkDirection_Code_FK_fk", "LinkDirection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("LinkDirection_Code_FK_fk", "LinkDirection_Code_FK", "Code_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("LinkType_Code_FK_fk", "LinkType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("LinkType_Code_FK_fk", "LinkType_Code_FK", "Code_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-/*
-  pvTables.append(table);
-
-  return true;*/
 }
 
 void mdtTtDatabaseSchema::setupUnitTable() 
@@ -1532,33 +1236,6 @@ void mdtTtDatabaseSchema::setupUnitTable()
   table.addField(Alias, false);
 
   pvSchema.addTable(table);
-
-  // Indexes
-//   table.addIndex("Article_Id_FK_idx", false);
-//   if(!table.addFieldToIndex("Article_Id_FK_idx", "Article_Id_FK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-//   table.addIndex("Composite_Id_FK_idx", false);
-//   if(!table.addFieldToIndex("Composite_Id_FK_idx", "Composite_Id_FK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-//   // Foreign keys
-//   table.addForeignKey("Composite_Id_FK_fk", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Composite_Id_FK_fk", "Composite_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-//   table.addForeignKey("Article_Id_FK_fk", "Article_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Article_Id_FK_fk", "Article_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     ///return false;
-//   }
-
-//   pvTables.append(table);
-// 
-//   return true;
 }
 
 void mdtTtDatabaseSchema::setupUnitConnectorTable()
@@ -1617,46 +1294,6 @@ void mdtTtDatabaseSchema::setupUnitConnectorTable()
   table.addField(Name, false);
 
   pvSchema.addTable(table);
-  // Indexes
-//   table.addIndex("Unit_Id_FK_idx3", false);
-//   if(!table.addFieldToIndex("Unit_Id_FK_idx3", "Unit_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("Connector_Id_FK_idx3", false);
-//   if(!table.addFieldToIndex("Connector_Id_FK_idx3", "Connector_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("ArticleConnector_Unit_idx", true);
-//   if(!table.addFieldToIndex("ArticleConnector_Unit_idx", "ArticleConnector_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   if(!table.addFieldToIndex("ArticleConnector_Unit_idx", "Unit_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   // Foreign keys
-//   table.addForeignKey("Unit_Id_FK_fk3", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Unit_Id_FK_fk3", "Unit_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("Connector_Id_FK_fk3", "Connector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Connector_Id_FK_fk3", "Connector_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("ArticleConnector_Id_FK_fk2", "ArticleConnector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("ArticleConnector_Id_FK_fk2", "ArticleConnector_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-/*
-  pvTables.append(table);
-
-  return true;*/
 }
 
 void mdtTtDatabaseSchema::setupUnitConnectionTable() 
@@ -1781,56 +1418,6 @@ void mdtTtDatabaseSchema::setupUnitConnectionTable()
   table.addField(SwAddress, false);
 
   pvSchema.addTable(table);
-  // Indexes
-//   table.addIndex("Unit_Id_FK_ArticleConnection_Id_FK_idx", true);
-//   if(!table.addFieldToIndex("Unit_Id_FK_ArticleConnection_Id_FK_idx", "Unit_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   if(!table.addFieldToIndex("Unit_Id_FK_ArticleConnection_Id_FK_idx", "ArticleConnection_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("ArticleConnection_Id_FK_idx", false);
-//   if(!table.addFieldToIndex("ArticleConnection_Id_FK_idx", "ArticleConnection_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("UnitConnector_Id_FK_idx", false);
-//   if(!table.addFieldToIndex("UnitConnector_Id_FK_idx", "UnitConnector_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("ConnectionType_Code_FK_idx3", false);
-//   if(!table.addFieldToIndex("ConnectionType_Code_FK_idx3", "ConnectionType_Code_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   // Foreign keys
-//   table.addForeignKey("Unit_Id_FK_fk", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Unit_Id_FK_fk", "Unit_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("ArticleConnection_Id_FK_idx2", "ArticleConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("ArticleConnection_Id_FK_idx2", "ArticleConnection_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("UnitConnector_Id_FK_fk", "UnitConnector_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("UnitConnector_Id_FK_fk", "UnitConnector_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("ConnectionType_Code_FK_fk3", "ConnectionType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("ConnectionType_Code_FK_fk3", "ConnectionType_Code_FK", "Code_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-// 
-//   pvTables.append(table);
-// 
-//   return true;
 }
 
 void mdtTtDatabaseSchema::setupWireTable()
@@ -2249,95 +1836,6 @@ void mdtTtDatabaseSchema::setupLinkTable()
   table.addField(Remarks, false);
 
   pvSchema.addTable(table);
-  // Indexes
-//   table.addIndex("Modification_Code_FK_idx", false);
-//   if(!table.addFieldToIndex("Modification_Code_FK_idx", "Modification_Code_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("Direction_Id_FK_idx", false);
-//   if(!table.addFieldToIndex("Direction_Id_FK_idx", "LinkDirection_Code_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("Type_Id_FK_idx", false);
-//   if(!table.addFieldToIndex("Type_Id_FK_idx", "LinkType_Code_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("Link_ArticleLink_idx", false);
-//   if(!table.addFieldToIndex("Link_ArticleLink_idx", "ArticleConnectionStart_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   if(!table.addFieldToIndex("Link_ArticleLink_idx", "ArticleConnectionEnd_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("LinkBeam_Id_FK_idx", false);
-//   if(!table.addFieldToIndex("LinkBeam_Id_FK_idx", "LinkBeam_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("Wire_Id_FK_idx1", false);
-//   if(!table.addFieldToIndex("Wire_Id_FK_idx1", "Wire_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   // Foreign keys
-//   table.addForeignKey("UnitConnectionStart_Id_FK_fk", "UnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("UnitConnectionStart_Id_FK_fk", "UnitConnectionStart_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("UnitConnectionEnd_Id_FK_fk", "UnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("UnitConnectionEnd_Id_FK_fk", "UnitConnectionEnd_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("Version_FK_fk", "LinkVersion_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Version_FK_fk", "Version_FK", "Version_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("Modification_Code_FK_fk", "Modification_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Modification_Code_FK_fk", "Modification_Code_FK", "Code_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("Link_ArticleLink_fk", "ArticleLink_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Link_ArticleLink_fk", "ArticleConnectionStart_Id_FK", "ArticleConnectionStart_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   if(!table.addFieldToForeignKey("Link_ArticleLink_fk", "ArticleConnectionEnd_Id_FK", "ArticleConnectionEnd_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("LinkDirection_Code_FK_fk2", "LinkDirection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("LinkDirection_Code_FK_fk2", "LinkDirection_Code_FK", "Code_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("LinkType_Code_FK_fk2", "LinkType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("LinkType_Code_FK_fk2", "LinkType_Code_FK", "Code_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("LinkBeam_Id_FK_fk", "LinkBeam_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("LinkBeam_Id_FK_fk", "LinkBeam_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("Wire_Id_FK_fk1", "Wire_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Wire_Id_FK_fk1", "Wire_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-// 
-//   pvTables.append(table);
-// 
-//   return true;
 }
 
 void mdtTtDatabaseSchema::setupLinkBeamTable()
@@ -2395,32 +1893,6 @@ void mdtTtDatabaseSchema::setupLinkBeamUnitStartTable()
   table.addForeignKey(fk_LinkBeam);
 
   pvSchema.addTable(table);
-  // Indexes
-//   table.addIndex("Unit_Id_FK_idx4", false);
-//   if(!table.addFieldToIndex("Unit_Id_FK_idx4", "Unit_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("LinkBeam_Id_FK_idx2", false);
-//   if(!table.addFieldToIndex("LinkBeam_Id_FK_idx2", "LinkBeam_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   // Foreign keys
-//   table.addForeignKey("Unit_Id_FK_fk4", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Unit_Id_FK_fk4", "Unit_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("LinkBeam_Id_FK_fk2", "LinkBeam_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("LinkBeam_Id_FK_fk2", "LinkBeam_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-// 
-//   pvTables.append(table);
-// 
-//   return true;
 }
 
 void mdtTtDatabaseSchema::setupLinkBeamUnitEndTable()
@@ -2457,44 +1929,6 @@ void mdtTtDatabaseSchema::setupLinkBeamUnitEndTable()
   table.addForeignKey(fk_LinkBeam);
 
   pvSchema.addTable(table);
-
-//   // UnitStart_Id_FK
-//   field.setName("Unit_Id_FK");
-//   field.setType(QVariant::Int);
-//   field.setAutoValue(true);
-//   table.addField(field, true);
-//   // LinkBeam_Id_FK
-//   field = QSqlField();
-//   field.setName("LinkBeam_Id_FK");
-//   field.setType(QVariant::Int);
-//   field.setAutoValue(true);
-//   table.addField(field, true);
-//   // Indexes
-//   table.addIndex("Unit_Id_FK_idx5", false);
-//   if(!table.addFieldToIndex("Unit_Id_FK_idx5", "Unit_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("LinkBeam_Id_FK_idx3", false);
-//   if(!table.addFieldToIndex("LinkBeam_Id_FK_idx3", "LinkBeam_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   // Foreign keys
-//   table.addForeignKey("Unit_Id_FK_fk5", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Unit_Id_FK_fk5", "Unit_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("LinkBeam_Id_FK_fk3", "LinkBeam_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("LinkBeam_Id_FK_fk3", "LinkBeam_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-// 
-//   pvTables.append(table);
-// 
-//   return true;
 }
 
 void mdtTtDatabaseSchema::setupLinkDirectionTable() 
@@ -2747,27 +2181,6 @@ void mdtTtDatabaseSchema::setupTestSystemComponentTable()
   table.addField(DescriptionIT, false);
 
   pvSchema.addTable(table);
-  // Indexes
-//   table.addIndex("Type_Code_FK_idx2", false);
-//   if(!table.addFieldToIndex("Type_Code_FK_idx2", "Type_Code_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("Alias_idx2", true);
-//   if(!table.addFieldToIndex("Alias_idx2", "Alias")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   // Foreign keys
-//   table.addForeignKey("Type_Code_FK_fk2", "TestSystemComponentType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Type_Code_FK_fk2", "Type_Code_FK", "Code_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-// 
-//   pvTables.append(table);
-// 
-//   return true;
 }
 
 void mdtTtDatabaseSchema::setupTestSystem_TestSystemComponentTable()
@@ -2801,21 +2214,6 @@ void mdtTtDatabaseSchema::setupTestSystem_TestSystemComponentTable()
   table.addForeignKey(fk_TestSystemComponent);
 
   pvSchema.addTable(table);
-  // Foreign keys
-//   table.addForeignKey("TestSystem_Id_FK_fk", "TestSystem_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("TestSystem_Id_FK_fk", "TestSystem_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("TestSystemComponent_Id_FK_fk", "TestSystemComponent_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("TestSystemComponent_Id_FK_fk", "TestSystemComponent_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-// 
-//   pvTables.append(table);
-// 
-//   return true;
 }
 
 void mdtTtDatabaseSchema::setupTestSystemUnitTable()
@@ -2915,42 +2313,6 @@ void mdtTtDatabaseSchema::setupTestSystemUnitTypeTable()
   table.addField(CalibrationDate, false);
 
   pvSchema.addTable(table);
-//   // Indexes
-//   table.addIndex("Unit_Id_FK_PK_idx", false);
-//   if(!table.addFieldToIndex("Unit_Id_FK_PK_idx", "Unit_Id_FK_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("TestSystemComponent_Id_FK_idx", false);
-//   if(!table.addFieldToIndex("TestSystemComponent_Id_FK_idx", "TestSystemComponent_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("Type_Code_FK_idx4", false);
-//   if(!table.addFieldToIndex("Type_Code_FK_idx4", "Type_Code_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   // Foreign keys
-//   table.addForeignKey("Unit_Id_FK_PK_fk", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Unit_Id_FK_PK_fk", "Unit_Id_FK_PK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("TestSystemComponent_Id_FK_fk4", "TestSystemComponent_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("TestSystemComponent_Id_FK_fk4", "TestSystemComponent_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("Type_Code_FK_fk4", "TestSystemUnitType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("Type_Code_FK_fk4", "Type_Code_FK", "Code_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-// 
-//   pvTables.append(table);
-// 
-//   return true;
 }
 
 
@@ -3325,46 +2687,6 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitTypeTable()
 
   return true;
 }
-
-// bool mdtTtDatabaseSchema::setupTestNodeBusTable()
-// {
-//   mdtSqlSchemaTable table;
-//   QSqlField field;
-// 
-//   table.setTableName("TestNodeBus_tbl", "UTF8");
-//   // Id_PK
-//   field.setName("Id_PK");
-//   field.setType(QVariant::Int);
-//   field.setAutoValue(true);
-//   table.addField(field, true);
-//   // TestNode_Id_FK
-//   field = QSqlField();
-//   field.setName("TestNode_Id_FK");
-//   field.setType(QVariant::Int);
-//   table.addField(field, false);
-//   // NameEN
-//   field = QSqlField();
-//   field.setName("NameEN");
-//   field.setType(QVariant::String);
-//   field.setLength(50);
-//   table.addField(field, false);
-//   // Indexes
-//   table.addIndex("TestNode_Id_FK_idx2", false);
-//   if(!table.addFieldToIndex("TestNode_Id_FK_idx2", "TestNode_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   // Foreign keys
-//   table.addForeignKey("TestNode_Id_FK_fk2", "TestNode_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("TestNode_Id_FK_fk2", "TestNode_Id_FK", "VehicleType_Id_FK_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-// 
-//   pvTables.append(table);
-// 
-//   return true;
-// }
 
 bool mdtTtDatabaseSchema::setupTestCableTestNodeUnitTable()
 {
@@ -3958,73 +3280,6 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitSetupTable()
   return true;
 }
 
-// bool mdtTtDatabaseSchema::setupTestModelItemRouteTable()
-// {
-//   mdtSqlSchemaTable table;
-//   QSqlField field;
-// 
-//   table.setTableName("TestModelItemRoute_tbl", "UTF8");
-//   // Id_PK
-//   field.setName("Id_PK");
-//   field.setType(QVariant::Int);
-//   field.setAutoValue(true);
-//   table.addField(field, true);
-//   // TestModelItem_Id_FK
-//   field = QSqlField();
-//   field.setName("TestModelItem_Id_FK");
-//   field.setType(QVariant::Int);
-//   field.setRequired(true);
-//   table.addField(field, false);
-//   // TestLink_Id_FK
-//   field = QSqlField();
-//   field.setName("TestLink_Id_FK");
-//   field.setType(QVariant::Int);
-//   field.setRequired(true);
-//   table.addField(field, false);
-//   // MeasureTestNodeUnitConnection_Id_FK
-//   field = QSqlField();
-//   field.setName("MeasureTestNodeUnitConnection_Id_FK");
-//   field.setType(QVariant::Int);
-//   field.setRequired(true);
-//   table.addField(field, false);
-//   // Indexes
-//   table.addIndex("TestModelItem_Id_FK_idx3", false);
-//   if(!table.addFieldToIndex("TestModelItem_Id_FK_idx3", "TestModelItem_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("TestLink_Id_FK_idx", false);
-//   if(!table.addFieldToIndex("TestLink_Id_FK_idx", "TestLink_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addIndex("MeasureTestNodeUnitConnection_Id_FK_idx", false);
-//   if(!table.addFieldToIndex("MeasureTestNodeUnitConnection_Id_FK_idx", "MeasureTestNodeUnitConnection_Id_FK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   // Foreign keys
-//   table.addForeignKey("TestModelItem_Id_FK_fk4", "TestModelItem_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("TestModelItem_Id_FK_fk4", "TestModelItem_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("TestLink_Id_FK_fk2", "TestLink_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("TestLink_Id_FK_fk2", "TestLink_Id_FK", "Id_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-//   table.addForeignKey("MeasureTestNodeUnitConnection_Id_FK_fk", "TestNodeUnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   if(!table.addFieldToForeignKey("MeasureTestNodeUnitConnection_Id_FK_fk", "MeasureTestNodeUnitConnection_Id_FK", "UnitConnection_Id_FK_PK")){
-//     pvLastError = table.lastError();
-//     return false;
-//   }
-// 
-//   pvTables.append(table);
-// 
-//   return true;
-// }
-
 bool mdtTtDatabaseSchema::setupTestTable()
 {
   mdtSqlSchemaTable table;
@@ -4222,39 +3477,6 @@ bool mdtTtDatabaseSchema::createView(const QString & viewName, const QString & s
   return true;
 }
 
-// bool mdtTtDatabaseSchema::createVehicleTypeUnitView() 
-// {
-//   QString sql;
-// 
-//   sql = "CREATE VIEW VehicleType_Unit_view AS\n"\
-//         "SELECT\n"\
-//         " VT.Type ,\n"\
-//         " VT.SubType ,\n"\
-//         " VT.SeriesNumber ,\n"\
-//         " U.Coordinate ,\n"\
-//         " U.Cabinet ,\n"\
-//         " U.SchemaPosition ,\n"\
-//         " U.Alias ,\n"\
-//         " A.ArticleCode ,\n"\
-//         " A.Manufacturer,\n"\
-//         " A.ManufacturerCode,\n"\
-//         " A.DesignationEN,\n"\
-//         " A.DesignationFR,\n"\
-//         " A.DesignationDE,\n"\
-//         " A.DesignationIT,\n"\
-//         " VTU.VehicleType_Id_FK ,\n"\
-//         " VTU.Unit_Id_FK\n"\
-//         "FROM VehicleType_Unit_tbl VTU\n"\
-//         " JOIN VehicleType_tbl VT\n"\
-//         "  ON VT.Id_PK = VTU.VehicleType_Id_FK\n"\
-//         " JOIN Unit_tbl U\n"\
-//         "  ON U.Id_PK = VTU.Unit_Id_FK\n"\
-//         " LEFT JOIN Article_tbl A\n"\
-//         "  ON A.Id_PK = U.Article_Id_FK";
-// 
-//   return createView("VehicleType_Unit_view", sql);
-// }
-
 void mdtTtDatabaseSchema::setupVehicleTypeUnitView()
 {
   using namespace mdtSqlViewSchema;
@@ -4291,49 +3513,8 @@ void mdtTtDatabaseSchema::setupVehicleTypeUnitView()
   join = pvSchema.joinClause(U, A);
   join.setOperator(JoinClause::LeftJoin);
   view.addJoinClause(join);
+
   pvSchema.addView(view);
-  
-//   mdtSqlViewSchema view;
-//   mdtSqlViewSchemaJoinClause join_VehicleType_tbl;
-//   mdtSqlViewSchemaJoinClause join_Unit_tbl;
-//   mdtSqlViewSchemaJoinClause join_Article_tbl;
-// 
-//   view.setName("VehicleType_Unit_view");
-//   view.setTableName("VehicleType_Unit_tbl", "VTU");
-//   
-//   
-//   join_VehicleType_tbl.setTables("VTU", "VehicleType_tbl", "VT");
-//   join_VehicleType_tbl.setConstraintOn("VT.Id_PK", "VTU.VehicleType_Id_FK");
-//   
-//   using namespace mdtSqlViewSchemaJCXXXXXyyy;
-//   
-//   Table table;
-//   TableToJoin tableToJoin;
-//   JoinConstraint joinConstraint;
-//   
-//   JoinConstraint join;
-//   
-//   JoinClause joinClause;
-//   
-//   table.name = "VehicleType_Unit_tbl";
-//   table.alias = "VTU";
-//   tableToJoin.name = "VehicleType_tbl";
-//   tableToJoin.alias = "VT";
-//   joinConstraint.joinOp = "ON";
-//   joinConstraint.tableField.name = "VehicleType_Id_FK";
-//   joinConstraint.tableToJoinField.name = "Id_PK";
-//   joinConstraint.fieldOp = "=";
-//   joinClause.table = table;
-//   joinClause.tableToJoin = tableToJoin;
-//   joinClause.constraints.push_back(joinConstraint);
-//   
-//   
-//   table.name = "Unit_tbl";
-//   table.alias = "U";
-//   tableToJoin.name = "UnitConnector_tbl";
-//   tableToJoin.alias = "UCNR";
-//   join.tableField = "Id_PK";
-//   join.tableToJoinField = "Unit_Id_FK";
 }
 
 
@@ -4357,28 +3538,6 @@ bool mdtTtDatabaseSchema::createArticleComponentUsageView()
 
   return createView("ArticleComponentUsage_view", sql);
 }
-
-// bool mdtTtDatabaseSchema::createArticleComponentView() 
-// {
-//   QString sql;
-// 
-//   sql = "CREATE VIEW ArticleComponent_view AS\n"\
-//         "SELECT\n"\
-//         " ArticleComponent_tbl.Composite_Id_FK AS Article_Id_PK ,\n"\
-//         " ArticleComponent_tbl.Component_Id_FK AS Component_Id_PK ,\n"\
-//         " ArticleComponent_tbl.ComponentQty ,\n"\
-//         " ArticleComponent_tbl.ComponentQtyUnit ,\n"\
-//         " Article_tbl.ArticleCode ,\n"\
-//         " Article_tbl.DesignationEN,\n"\
-//         " Article_tbl.DesignationFR,\n"\
-//         " Article_tbl.DesignationDE,\n"\
-//         " Article_tbl.DesignationIT\n"\
-//         "FROM ArticleComponent_tbl\n"\
-//         " JOIN Article_tbl\n"\
-//         "  ON Article_tbl.Id_PK = ArticleComponent_tbl.Component_Id_FK";
-// 
-//   return createView("ArticleComponent_view", sql);
-// }
 
 void mdtTtDatabaseSchema::setupArticleComponentView()
 {
@@ -4408,6 +3567,7 @@ void mdtTtDatabaseSchema::setupArticleComponentView()
   key.setTableToJoinField("Id_PK");
   join.addKey(key);
   view.addJoinClause(join);
+
   pvSchema.addView(view);
 }
 
@@ -4464,57 +3624,6 @@ bool mdtTtDatabaseSchema::createArticleConnectionView()
 
   return createView("ArticleConnection_view", sql);
 }
-
-// bool mdtTtDatabaseSchema::createArticleLinkView() 
-// {
-//   QString sql;
-// 
-//   sql = "CREATE VIEW ArticleLink_view AS\n"\
-//         "SELECT\n"\
-//         " ArticleLink_tbl.LinkType_Code_FK ,\n"\
-//         " ArticleLink_tbl.LinkDirection_Code_FK ,\n"\
-//         " ArticleLink_tbl.ArticleConnectionStart_Id_FK ,\n"\
-//         " ArticleLink_tbl.ArticleConnectionEnd_Id_FK ,\n"\
-//         " ArticleLink_tbl.Identification ,\n"\
-//         " LinkType_tbl.NameEN AS LinkTypeNameEN ,\n"\
-//         " LinkType_tbl.NameFR AS LinkTypeNameFR ,\n"\
-//         " LinkType_tbl.NameDE AS LinkTypeNameDE ,\n"\
-//         " LinkType_tbl.NameIT AS LinkTypeNameIT ,\n"\
-//         " ArticleLink_tbl.Resistance ,\n"\
-//         " LinkType_tbl.ValueUnit ,\n"\
-//         " ACNXS.Article_Id_FK AS StartArticle_Id_FK ,\n"\
-//         " ACS.Name AS StartArticleConnectorName ,\n"\
-//         " ACNXS.ArticleContactName AS StartArticleContactName ,\n"\
-//         " ACNXS.IoType AS StartIoType ,\n"\
-//         " ACNXS.FunctionEN AS StartFunctionEN ,\n"\
-//         " ACNXS.FunctionFR AS StartFunctionFR ,\n"\
-//         " ACNXS.FunctionDE AS StartFunctionDE ,\n"\
-//         " ACNXS.FunctionIT AS StartFunctionIT ,\n"\
-//         " LinkDirection_tbl.PictureAscii AS LinkDirectionPictureAscii ,\n"\
-//         " ACNXE.Article_Id_FK AS EndArticle_Id_FK ,\n"\
-//         " ACE.Name AS EndArticleConnectorName ,\n"\
-//         " ACNXE.ArticleContactName AS EndArticleContactName ,\n"\
-//         " ACNXE.IoType AS EndIoType ,\n"\
-//         " ACNXE.FunctionEN AS EndFunctionEN,\n"\
-//         " ACNXE.FunctionFR AS EndFunctionFR,\n"\
-//         " ACNXE.FunctionDE AS EndFunctionDE,\n"\
-//         " ACNXE.FunctionIT AS EndFunctionIT\n"\
-//         "FROM ArticleLink_tbl\n"\
-//         " JOIN ArticleConnection_tbl ACNXS\n"\
-//         "  ON ArticleLink_tbl.ArticleConnectionStart_Id_FK = ACNXS.Id_PK\n"\
-//         " JOIN ArticleConnection_tbl ACNXE\n"\
-//         "  ON ArticleLink_tbl.ArticleConnectionEnd_Id_FK = ACNXE.Id_PK\n"\
-//         " LEFT JOIN ArticleConnector_tbl ACS\n"\
-//         "  ON ACNXS.ArticleConnector_Id_FK = ACS.Id_PK\n"\
-//         " LEFT JOIN ArticleConnector_tbl ACE\n"\
-//         "  ON ACNXE.ArticleConnector_Id_FK = ACE.Id_PK\n"\
-//         " JOIN LinkType_tbl\n"\
-//         "  ON LinkType_tbl.Code_PK = ArticleLink_tbl.LinkType_Code_FK\n"\
-//         " JOIN LinkDirection_tbl\n"\
-//         "  ON LinkDirection_tbl.Code_PK = ArticleLink_tbl.LinkDirection_Code_FK";
-// 
-//   return createView("ArticleLink_view", sql);
-// }
 
 void mdtTtDatabaseSchema::setupArticleLinkView()
 {
