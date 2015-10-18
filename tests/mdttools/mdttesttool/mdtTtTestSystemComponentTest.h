@@ -22,10 +22,10 @@
 #define MDT_TT_TEST_SYSTEM_COMPONENT_TEST_H
 
 #include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
+#include <QTemporaryFile>
+#include <QSqlDatabase>
 #include <QString>
 #include <QVariant>
-#include <QSqlDatabase>
 
 /*
  * Create some basic datasets for tests
@@ -102,8 +102,8 @@ class mdtTtTestSystemComponentTest : public mdtTest
   /// \todo Candidates for a common base class
   void createDatabaseSchema();
 
-  mdtSqlDatabaseManager pvDatabaseManager;
-  QFileInfo pvDbFileInfo;
+  QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
+  QSqlDatabase pvDatabase;
 };
 
 #endif // #ifndef MDT_TT_TEST_SYSTEM_COMPONENT_TEST_H

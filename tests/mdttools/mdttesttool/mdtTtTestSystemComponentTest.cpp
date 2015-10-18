@@ -159,18 +159,17 @@ void mdtTtTestSystemComponentTestData::debugSqlError(const QSqlQuery & query)
 void mdtTtTestSystemComponentTest::initTestCase()
 {
   createDatabaseSchema();
-  QVERIFY(pvDatabaseManager.database().isOpen());
+  QVERIFY(pvDatabase.isOpen());
 }
 
 void mdtTtTestSystemComponentTest::cleanupTestCase()
 {
-  QFile::remove(pvDbFileInfo.absoluteFilePath());
 }
 
 void mdtTtTestSystemComponentTest::testSystemAssignationTest()
 {
-  mdtTtTestSystemComponent tsc(pvDatabaseManager.database());
-  mdtTtTestSystemComponentTestData testData(pvDatabaseManager.database());
+  mdtTtTestSystemComponent tsc(pvDatabase);
+  mdtTtTestSystemComponentTestData testData(pvDatabase);
   QList<QSqlRecord> dataList;
   mdtTtTestSystemAssignationData data;
   bool ok;
@@ -214,8 +213,8 @@ void mdtTtTestSystemComponentTest::testSystemAssignationTest()
 
 void mdtTtTestSystemComponentTest::createUnitTest()
 {
-  mdtTtTestSystemComponent tsc(pvDatabaseManager.database());
-  mdtTtTestSystemComponentTestData testData(pvDatabaseManager.database());
+  mdtTtTestSystemComponent tsc(pvDatabase);
+  mdtTtTestSystemComponentTestData testData(pvDatabase);
   QList<QSqlRecord> dataList;
   QVariant unitId;
   bool ok;
@@ -250,19 +249,20 @@ void mdtTtTestSystemComponentTest::createUnitTest()
 
 void mdtTtTestSystemComponentTest::createDatabaseSchema()
 {
-  QTemporaryFile dbFile;
-  ///QFileInfo dbFileInfo;
-
+  /*
+   * Init and open database
+   */
+  QVERIFY(pvTempFile.open());
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  pvDatabase.setDatabaseName(pvTempFile.fileName());
+  QVERIFY(pvDatabase.open());
   /*
    * Check Sqlite database creation
    */
-  QVERIFY(dbFile.open());
-  dbFile.close();
-  pvDbFileInfo.setFile(dbFile.fileName() + ".db");
-  mdtTtDatabaseSchema schema(&pvDatabaseManager);
-  QVERIFY(schema.createSchemaSqlite(pvDbFileInfo));
-  QVERIFY(pvDatabaseManager.database().isOpen());
-  QVERIFY(schema.checkSchema());
+  mdtTtDatabaseSchema schema;
+  QVERIFY(schema.buildSchema());
+  QVERIFY(schema.databaseSchema().createSchema(pvDatabase));
+  QVERIFY(schema.checkSchema(pvDatabase));
 }
 
 /*

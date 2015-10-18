@@ -56,12 +56,11 @@
 void mdtClUnitConnectionTest::initTestCase()
 {
   createDatabaseSchema();
-  QVERIFY(pvDatabaseManager.database().isOpen());
+  QVERIFY(pvDatabase.isOpen());
 }
 
 void mdtClUnitConnectionTest::cleanupTestCase()
 {
-  QFile::remove(pvDbFileInfo.absoluteFilePath());
 }
 
 void mdtClUnitConnectionTest::unitConnectorDataTest()
@@ -636,7 +635,7 @@ void mdtClUnitConnectionTest::unitConnectorWithConnectionsDataTest()
 
 void mdtClUnitConnectionTest::unitConnectorDataFromConnectorContactsTest()
 {
-  mdtClUnitConnection ucnx(pvDatabaseManager.database());
+  mdtClUnitConnection ucnx(pvDatabase);
   mdtClUnitConnectorKeyData key;
   mdtClUnitConnectorData data;
   mdtClConnectorPkData connectorFk;
@@ -675,7 +674,7 @@ void mdtClUnitConnectionTest::unitConnectorDataFromConnectorContactsTest()
 
 void mdtClUnitConnectionTest::unitConnectorDataFromArticleConnectionListTest()
 {
-  mdtClUnitConnection ucnx(pvDatabaseManager.database());
+  mdtClUnitConnection ucnx(pvDatabase);
   mdtClUnitConnectorKeyData key;
   mdtClUnitConnectorData data;
   mdtClArticleConnectorKeyData articleConnectorFk;
@@ -722,8 +721,8 @@ void mdtClUnitConnectionTest::unitConnectorDataFromArticleConnectionListTest()
 
 void mdtClUnitConnectionTest::unitConnectionAddGetRemoveTest()
 {
-  mdtClUnitConnection ucnx(pvDatabaseManager.database());
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  mdtClUnitConnection ucnx(pvDatabase);
+  mdtCableListTestScenario scenario(pvDatabase);
   mdtClUnitConnectionPkData pk1, pk2;
   mdtClUnitConnectionKeyData key1, key2;
   mdtClUnitConnectionData data;
@@ -863,14 +862,14 @@ void mdtClUnitConnectionTest::unitConnectionWithArticleLinkAddGetRemoveTest()
 
 void mdtClUnitConnectionTest::unitConnectorAddGetRemoveTest()
 {
-  mdtClUnitConnection ucnx(pvDatabaseManager.database());
+  mdtClUnitConnection ucnx(pvDatabase);
   mdtClUnitConnectorPkData pk1, pk2, pk3;
   mdtClUnitConnectorKeyData key1, key2, key3;
   mdtClUnitConnectorData data;
   mdtClConnectorPkData connectorFk;
   mdtClArticleConnectorKeyData articleConnectorFk;
   mdtClArticleConnectionKeyData articleConnectionKey;
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  mdtCableListTestScenario scenario(pvDatabase);
   bool ok;
 
   /*
@@ -1003,7 +1002,7 @@ void mdtClUnitConnectionTest::unitConnectorAddGetRemoveTest()
 
 void mdtClUnitConnectionTest::unitConnectorWithConnectionsAddGetRemoveTest()
 {
-  mdtClUnitConnection ucnx(pvDatabaseManager.database());
+  mdtClUnitConnection ucnx(pvDatabase);
   mdtClUnitConnectorPkData pk1, pk2;
   mdtClUnitConnectorKeyData key1, key2;
   mdtClUnitConnectorData data;
@@ -1011,7 +1010,7 @@ void mdtClUnitConnectionTest::unitConnectorWithConnectionsAddGetRemoveTest()
   mdtClUnitConnectionData unitConnectionsData;
   mdtClArticleConnectorKeyData articleConnectorFk;
   mdtClArticleConnectionKeyData articleConnectionFk;
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  mdtCableListTestScenario scenario(pvDatabase);
   bool ok;
 
   /*
@@ -1199,7 +1198,7 @@ void mdtClUnitConnectionTest::unitConnectionSelectionDialogTest()
   QFAIL("Not implemented yet");
   
   mdtClUnitConnectionSelectionDialog dialog(nullptr);
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  mdtCableListTestScenario scenario(pvDatabase);
 
   // Populate with test data
   scenario.createTestVehicleTypes();
@@ -1223,18 +1222,20 @@ void mdtClUnitConnectionTest::unitConnectionSelectionDialogTest()
 
 void mdtClUnitConnectionTest::createDatabaseSchema()
 {
-  QTemporaryFile dbFile;
-
+  /*
+   * Init and open database
+   */
+  QVERIFY(pvTempFile.open());
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  pvDatabase.setDatabaseName(pvTempFile.fileName());
+  QVERIFY(pvDatabase.open());
   /*
    * Check Sqlite database creation
    */
-  QVERIFY(dbFile.open());
-  dbFile.close();
-  pvDbFileInfo.setFile(dbFile.fileName() + ".db");
-  mdtTtDatabaseSchema schema(&pvDatabaseManager);
-  QVERIFY(schema.createSchemaSqlite(pvDbFileInfo));
-  QVERIFY(pvDatabaseManager.database().isOpen());
-  QVERIFY(schema.checkSchema());
+  mdtTtDatabaseSchema schema;
+  QVERIFY(schema.buildSchema());
+  QVERIFY(schema.databaseSchema().createSchema(pvDatabase));
+  QVERIFY(schema.checkSchema(pvDatabase));
 }
 
 

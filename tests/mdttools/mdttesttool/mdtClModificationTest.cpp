@@ -43,12 +43,11 @@
 void mdtClModificationTest::initTestCase()
 {
   createDatabaseSchema();
-  QVERIFY(pvDatabaseManager.database().isOpen());
+  QVERIFY(pvDatabase.isOpen());
 }
 
 void mdtClModificationTest::cleanupTestCase()
 {
-  QFile::remove(pvDbFileInfo.absoluteFilePath());
 }
 
 void mdtClModificationTest::modificationDataTest()
@@ -103,7 +102,7 @@ void mdtClModificationTest::modificationDataTest()
 void mdtClModificationTest::modificationModelTest()
 {
   QLocale locale(QLocale::English);
-  mdtClModificationModel m(pvDatabaseManager.database(), locale);
+  mdtClModificationModel m(pvDatabase, locale);
 
   // Initial state
   QCOMPARE(m.rowCount(), 5);
@@ -130,18 +129,20 @@ void mdtClModificationTest::modificationModelTest()
 
 void mdtClModificationTest::createDatabaseSchema()
 {
-  QTemporaryFile dbFile;
-
+  /*
+   * Init and open database
+   */
+  QVERIFY(pvTempFile.open());
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  pvDatabase.setDatabaseName(pvTempFile.fileName());
+  QVERIFY(pvDatabase.open());
   /*
    * Check Sqlite database creation
    */
-  QVERIFY(dbFile.open());
-  dbFile.close();
-  pvDbFileInfo.setFile(dbFile.fileName() + ".db");
-  mdtTtDatabaseSchema schema(&pvDatabaseManager);
-  QVERIFY(schema.createSchemaSqlite(pvDbFileInfo));
-  QVERIFY(pvDatabaseManager.database().isOpen());
-  QVERIFY(schema.checkSchema());
+  mdtTtDatabaseSchema schema;
+  QVERIFY(schema.buildSchema());
+  QVERIFY(schema.databaseSchema().createSchema(pvDatabase));
+  QVERIFY(schema.checkSchema(pvDatabase));
 }
 
 /*

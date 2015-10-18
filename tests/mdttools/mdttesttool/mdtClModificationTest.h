@@ -22,9 +22,8 @@
 #define MDT_CL_MODIFICATION_TEST_H
 
 #include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QMessageBox>
-#include <QFileInfo>
+#include <QTemporaryFile>
+#include <QSqlDatabase>
 
 class mdtClModificationTest : public mdtTest
 {
@@ -49,8 +48,8 @@ class mdtClModificationTest : public mdtTest
   // Create test database schema - Will FAIL on problem
   void createDatabaseSchema();
 
-  mdtSqlDatabaseManager pvDatabaseManager;
-  QFileInfo pvDbFileInfo;
+  QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
+  QSqlDatabase pvDatabase;
 };
 
 #endif // #ifndef MDT_CL_MODIFICATION_TEST_H
