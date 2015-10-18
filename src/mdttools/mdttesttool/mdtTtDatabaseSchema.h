@@ -407,7 +407,6 @@ class mdtTtDatabaseSchema
 
   /*! \brief UnitConnection_view
    */
-//   bool createUnitConnectionView();
   void setupUnitConnectionView();
 
   /*! \brief Create a view that joins article link table with unit connections
@@ -423,32 +422,26 @@ class mdtTtDatabaseSchema
    *
    * This view will give article links that are used by a unit connection .
    */
-//   bool createArticleLinkUnitConnectionView();
   void setupArticleLinkUnitConnectionView();
 
   /*! \brief UnitLink_view
    */
-//   bool createUnitLinkView();
   void setupUnitLinkView();
 
   /*! \brief Unit_VehicleType_view
    */
-//   bool createUnitVehicleTypeView();
   void setupUnitVehicleTypeView();
 
   /*! \brief LinkList_view
    */
-//   bool createLinkListView();
   void setupLinkListView();
 
   /*! \brief LinkBeam_UnitStart_view
    */
-//   bool createLinkBeamUnitStartView();
   void setupLinkBeamUnitStartView();
 
   /*! \brief Create LinkBeam_UnitEnd_view
    */
-//   bool createLinkBeamUnitEndView();
   void setupLinkBeamUnitEndView();
 
   
