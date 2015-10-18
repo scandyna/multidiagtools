@@ -2756,6 +2756,74 @@ void mdtDatabaseTest::sqlTablePopulationSchemaTest()
 
 void mdtDatabaseTest::sqlDatabaseSchemaTest()
 {
+  QString expectedSql;
+  mdtSqlDatabaseSchema s;
+  mdtSqlSchemaTable table;
+  mdtSqlField field;
+  mdtSqlForeignKey fk;
+
+  QCOMPARE(pvDatabase.driverName(), QString("QSQLITE"));
+  /*
+   * Initial state
+   */
+  QCOMPARE(s.tableCount(), 0);
+  /*
+   * Create Client_tbl
+   */
+  table.clear();
+  table.setTableName("Client_tbl");
+  // Id_PK
+  field.clear();
+  field.setAutoValue(true);
+  field.setName("Id_PK");
+  field.setType(mdtSqlFieldType::Integer);
+  table.addField(field, true);
+  // Name
+  field.clear();
+  field.setName("Name");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(50);
+  table.addField(field, false);
+  // Add table to database schema and check
+  s.addTable(table);
+  QCOMPARE(s.tableCount(), 1);
+  /*
+   * Address_tbl
+   */
+  table.clear();
+  table.setTableName("Address_tbl");
+  // Id_PK
+  field.clear();
+  field.setAutoValue(true);
+  field.setName("Id_PK");
+  field.setType(mdtSqlFieldType::Integer);
+  table.addField(field, true);
+  // Street
+  field.clear();
+  field.setName("Street");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(50);
+  table.addField(field, false);
+  // Client_Id_FK
+  field.clear();
+  field.setName("Client_Id_FK");
+  field.setType(mdtSqlFieldType::Integer);
+  field.setRequired(true);
+  table.addField(field, false);
+  fk.clear();
+  fk.setParentTableName("Client_tbl");
+  fk.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk.setCreateChildIndex(true);
+  fk.addKeyFields("Id_PK", field);
+  table.addForeignKey(fk);
+  // Add table to database schema and check
+  s.addTable(table);
+  QCOMPARE(s.tableCount(), 2);
+}
+
+void mdtDatabaseTest::sqlDatabaseSchemaGetJoinClauseTest()
+{
   using namespace mdtSqlViewSchema;
   QString expectedSql;
   mdtSqlDatabaseSchema s;
@@ -2766,9 +2834,9 @@ void mdtDatabaseTest::sqlDatabaseSchemaTest()
 
   QCOMPARE(pvDatabase.driverName(), QString("QSQLITE"));
   /*
-   * Initial state
+   * Setup Client_tbl and Address_tbl
+   *  witch are related by a single filed FK
    */
-  QCOMPARE(s.tableCount(), 0);
   /*
    * Create Client_tbl
    */
@@ -2839,6 +2907,72 @@ void mdtDatabaseTest::sqlDatabaseSchemaTest()
   QVERIFY(!join.isNull());
   expectedSql  = " JOIN \"Client_tbl\"\n";
   expectedSql += "  ON \"Address_tbl\".\"Client_Id_FK\" = \"Client_tbl\".\"Id_PK\"";
+  QCOMPARE(join.getSql(pvDatabase.driver()), expectedSql);
+  /*
+   * Setup ArticleLink_tbl and Link_tbl
+   *  witch are related by a multiple fields FK
+   */
+  /*
+   * ArticleLink_tbl
+   */
+  table.clear();
+  table.setTableName("ArticleLink_tbl");
+  // Id_S_PK
+  field.clear();
+  field.setName("Id_S_PK");
+  field.setType(mdtSqlFieldType::Integer);
+  table.addField(field, true);
+  // Id_E_PK
+  field.clear();
+  field.setName("Id_E_PK");
+  field.setType(mdtSqlFieldType::Integer);
+  table.addField(field, true);
+  s.addTable(table);
+  /*
+   * Link_tbl
+   */
+  table.clear();
+  table.setTableName("Link_tbl");
+  // Setup FK's common
+  fk.clear();
+  fk.setParentTableName("ArticleLink_tbl");
+  fk.setOnDeleteAction(mdtSqlForeignKey::Restrict);
+  fk.setOnUpdateAction(mdtSqlForeignKey::Cascade);
+  fk.setCreateChildIndex(true);
+  // Id_S_PK_FK
+  field.clear();
+  field.setName("Id_S_PK_FK");
+  field.setType(mdtSqlFieldType::Integer);
+  table.addField(field, true);
+  fk.addKeyFields("Id_S_PK", field);
+  // Id_E_PK_FK
+  field.clear();
+  field.setName("Id_E_PK_FK");
+  field.setType(mdtSqlFieldType::Integer);
+  table.addField(field, true);
+  fk.addKeyFields("Id_E_PK", field);
+  table.addForeignKey(fk);
+  // Add table to database schema and check
+  s.addTable(table);
+  /*
+   * Get clause to JOIN ArticleLink_tbl to Link_tbl
+   */
+  join = s.joinClause(Table("Link_tbl"), Table("ArticleLink_tbl"));
+  QVERIFY(!join.isNull());
+  // Check SQL clause
+  expectedSql  = " JOIN \"ArticleLink_tbl\"\n";
+  expectedSql += "  ON \"Link_tbl\".\"Id_S_PK_FK\" = \"ArticleLink_tbl\".\"Id_S_PK\"\n";
+  expectedSql += "  AND \"Link_tbl\".\"Id_E_PK_FK\" = \"ArticleLink_tbl\".\"Id_E_PK\"";
+  QCOMPARE(join.getSql(pvDatabase.driver()), expectedSql);
+  /*
+   * Get clause to JOIN Link_tbl to ArticleLink_tbl
+   */
+  join = s.joinClause(Table("ArticleLink_tbl"), Table("Link_tbl"));
+  QVERIFY(!join.isNull());
+  // Check SQL clause
+  expectedSql  = " JOIN \"Link_tbl\"\n";
+  expectedSql += "  ON \"ArticleLink_tbl\".\"Id_S_PK\" = \"Link_tbl\".\"Id_S_PK_FK\"\n";
+  expectedSql += "  AND \"ArticleLink_tbl\".\"Id_E_PK\" = \"Link_tbl\".\"Id_E_PK_FK\"";
   QCOMPARE(join.getSql(pvDatabase.driver()), expectedSql);
 }
 

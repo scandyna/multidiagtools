@@ -4273,157 +4273,352 @@ void mdtTtDatabaseSchema::setupUnitLinkView()
   pvSchema.addView(view);
 }
 
-bool mdtTtDatabaseSchema::createUnitVehicleTypeView() 
-{
-  QString sql;
-
-  sql = "CREATE VIEW Unit_VehicleType_view AS\n"\
-        "SELECT\n"\
-        " VehicleType_tbl.Type ,\n"\
-        " VehicleType_tbl.SubType ,\n"\
-        " VehicleType_tbl.SeriesNumber ,\n"\
-        " VehicleType_Unit_tbl.VehicleType_Id_FK ,\n"\
-        " VehicleType_Unit_tbl.Unit_Id_FK\n"\
-        "FROM VehicleType_tbl\n"\
-        " JOIN VehicleType_Unit_tbl\n"\
-        "  ON VehicleType_tbl.Id_PK = VehicleType_Unit_tbl.VehicleType_Id_FK";
-
-  return createView("Unit_VehicleType_view", sql);
-}
+// bool mdtTtDatabaseSchema::createUnitVehicleTypeView() 
+// {
+//   QString sql;
+// 
+//   sql = "CREATE VIEW Unit_VehicleType_view AS\n"\
+//         "SELECT\n"\
+//         " VehicleType_tbl.Type ,\n"\
+//         " VehicleType_tbl.SubType ,\n"\
+//         " VehicleType_tbl.SeriesNumber ,\n"\
+//         " VehicleType_Unit_tbl.VehicleType_Id_FK ,\n"\
+//         " VehicleType_Unit_tbl.Unit_Id_FK\n"\
+//         "FROM VehicleType_tbl\n"\
+//         " JOIN VehicleType_Unit_tbl\n"\
+//         "  ON VehicleType_tbl.Id_PK = VehicleType_Unit_tbl.VehicleType_Id_FK";
+// 
+//   return createView("Unit_VehicleType_view", sql);
+// }
 
 void mdtTtDatabaseSchema::setupUnitVehicleTypeView()
 {
+  using namespace mdtSqlViewSchema;
 
+  Schema view;
+  Table VT("VehicleType_tbl", "VT");
+  Table VTU("VehicleType_Unit_tbl", "VTU");
+  JoinClause join;
+
+  view.setName("Unit_VehicleType_view");
+  view.setTable(VT);
+  view.addSelectField(VT, SelectField("Type"));
+  view.addSelectField(VT, SelectField("SubType"));
+  view.addSelectField(VT, SelectField("SeriesNumber"));
+  view.addSelectField(VTU, SelectField("VehicleType_Id_FK"));
+  view.addSelectField(VTU, SelectField("Unit_Id_FK"));
+  join = pvSchema.joinClause(VT, VTU);
+  view.addJoinClause(join);
+
+  pvSchema.addView(view);
 }
 
-bool mdtTtDatabaseSchema::createLinkListView()
-{
-  QString sql, selectSql;
-
-  selectSql = "SELECT\n"\
-              " LNK.UnitConnectionStart_Id_FK ,\n"\
-              " LNK.UnitConnectionEnd_Id_FK ,\n"\
-              " LNK.LinkBeam_Id_FK ,\n"\
-              " VS.Id_PK AS StartVehicleType_Id_PK,\n"\
-              " VS.Type AS StartVehicleType ,\n"\
-              " VS.SubType AS StartVehicleSubType ,\n"\
-              " VS.SeriesNumber AS StartVehicleSerie,\n"\
-              " LNK.Identification ,\n"\
-              " LNK.LinkDirection_Code_FK ,\n"\
-              " LNK.LinkType_Code_FK ,\n"\
-              " US.Id_PK AS StartUnit_Id_PK ,\n"\
-              " US.SchemaPosition AS StartSchemaPosition,\n"\
-              " US.Alias AS StartAlias,\n"\
-              " US.Cabinet AS StartCabinet,\n"\
-              " US.Coordinate AS StartCoordinate ,\n"\
-              " UCS.Id_PK AS UnitConnectorStart_Id_FK,\n"\
-              " UCS.Name AS StartUnitConnectorName ,\n"\
-              " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
-              " UCNXS.ConnectionType_Code_FK AS StartConnectionType_Code_FK,\n"\
-              " UCNXS.FunctionEN AS StartFunctionEN,\n"\
-              " UCNXS.FunctionFR AS StartFunctionFR,\n"\
-              " UCNXS.FunctionDE AS StartFunctionDE,\n"\
-              " UCNXS.FunctionIT AS StartFunctionIT,\n"\
-              " VE.Id_PK AS EndVehicleType_Id_PK,\n"\
-              " VE.Type AS EndVehicleType ,\n"\
-              " VE.SubType AS EndVehicleSubType ,\n"\
-              " VE.SeriesNumber AS EndVehicleSerie,\n"\
-              " UE.Id_PK AS EndUnit_Id_PK ,\n"\
-              " UE.SchemaPosition AS EndSchemaPosition,\n"\
-              " UE.Alias AS EndAlias,\n"\
-              " UE.Cabinet AS EndCabinet,\n"\
-              " UE.Coordinate AS EndCoordinate ,\n"\
-              " UCE.Id_PK AS UnitConnectorEnd_Id_FK,\n"\
-              " UCE.Name AS EndUnitConnectorName ,\n"\
-              " UCNXE.UnitContactName AS EndUnitContactName,\n"\
-              " UCNXE.ConnectionType_Code_FK AS EndConnectionType_Code_FK,\n"\
-              " W.Model AS WireModel,\n"\
-              " LNK.Length,\n"\
-              " W.Section,\n"\
-              " LNK.Resistance,\n"\
-              " W.ColorEN AS WireColorEN,\n"\
-              " UCNXE.FunctionEN AS EndFunctionEN,\n"\
-              " UCNXE.FunctionFR AS EndFunctionFR,\n"\
-              " UCNXE.FunctionDE AS EndFunctionDE,\n"\
-              " UCNXE.FunctionIT AS EndFunctionIT\n";
-  sql = "CREATE VIEW LinkList_view AS\n";
-  sql += selectSql;
-  sql += "FROM Link_tbl LNK\n"\
-         " JOIN UnitConnection_tbl UCNXS\n"\
-         "  ON UCNXS.Id_PK = LNK.UnitConnectionStart_Id_FK\n"\
-         " JOIN UnitConnection_tbl UCNXE\n"\
-         "  ON UCNXE.Id_PK = LNK.UnitConnectionEnd_Id_FK\n"\
-          " LEFT JOIN UnitConnector_tbl UCS\n"\
-          "  ON UCNXS.UnitConnector_Id_FK = UCS.Id_PK\n"\
-          " LEFT JOIN UnitConnector_tbl UCE\n"\
-          "  ON UCNXE.UnitConnector_Id_FK = UCE.Id_PK\n"\
-          " JOIN Unit_tbl US\n"\
-          "  ON US.Id_PK = UCNXS.Unit_Id_FK\n"\
-          " JOIN Unit_tbl UE\n"\
-          "  ON UE.Id_PK = UCNXE.Unit_Id_FK\n"\
-          " LEFT JOIN VehicleType_Link_tbl\n"\
-          "  ON LNK.UnitConnectionStart_Id_FK = VehicleType_Link_tbl.UnitConnectionStart_Id_FK\n"\
-          "  AND LNK.UnitConnectionEnd_Id_FK = VehicleType_Link_tbl.UnitConnectionEnd_Id_FK\n"\
-          " LEFT JOIN VehicleType_tbl VS\n"\
-          "  ON VS.Id_PK = VehicleType_Link_tbl.VehicleTypeStart_Id_FK\n"\
-          " LEFT JOIN VehicleType_tbl VE\n"\
-          "  ON VE.Id_PK = VehicleType_Link_tbl.VehicleTypeEnd_Id_FK"\
-          " JOIN LinkType_tbl\n"\
-          "  ON LinkType_tbl.Code_PK = LNK.LinkType_Code_FK\n"\
-          " JOIN LinkDirection_tbl\n"\
-          "  ON LinkDirection_tbl.Code_PK = LNK.LinkDirection_Code_FK\n"\
-          " LEFT JOIN Wire_tbl W\n"\
-          "  ON W.Id_PK = LNK.Wire_Id_FK";
-
-  return createView("LinkList_view", sql);
-}
+// bool mdtTtDatabaseSchema::createLinkListView()
+// {
+//   QString sql, selectSql;
+// 
+//   selectSql = "SELECT\n"\
+//               " LNK.UnitConnectionStart_Id_FK ,\n"\
+//               " LNK.UnitConnectionEnd_Id_FK ,\n"\
+//               " LNK.LinkBeam_Id_FK ,\n"\
+//               " VS.Id_PK AS StartVehicleType_Id_PK,\n"\
+//               " VS.Type AS StartVehicleType ,\n"\
+//               " VS.SubType AS StartVehicleSubType ,\n"\
+//               " VS.SeriesNumber AS StartVehicleSerie,\n"\
+//               " LNK.Identification ,\n"\
+//               " LNK.LinkDirection_Code_FK ,\n"\
+//               " LNK.LinkType_Code_FK ,\n"\
+//               " US.Id_PK AS StartUnit_Id_PK ,\n"\
+//               " US.SchemaPosition AS StartSchemaPosition,\n"\
+//               " US.Alias AS StartAlias,\n"\
+//               " US.Cabinet AS StartCabinet,\n"\
+//               " US.Coordinate AS StartCoordinate ,\n"\
+//               " UCS.Id_PK AS UnitConnectorStart_Id_FK,\n"\
+//               " UCS.Name AS StartUnitConnectorName ,\n"\
+//               " UCNXS.UnitContactName AS StartUnitContactName ,\n"\
+//               " UCNXS.ConnectionType_Code_FK AS StartConnectionType_Code_FK,\n"\
+//               " UCNXS.FunctionEN AS StartFunctionEN,\n"\
+//               " UCNXS.FunctionFR AS StartFunctionFR,\n"\
+//               " UCNXS.FunctionDE AS StartFunctionDE,\n"\
+//               " UCNXS.FunctionIT AS StartFunctionIT,\n"\
+//               " VE.Id_PK AS EndVehicleType_Id_PK,\n"\
+//               " VE.Type AS EndVehicleType ,\n"\
+//               " VE.SubType AS EndVehicleSubType ,\n"\
+//               " VE.SeriesNumber AS EndVehicleSerie,\n"\
+//               " UE.Id_PK AS EndUnit_Id_PK ,\n"\
+//               " UE.SchemaPosition AS EndSchemaPosition,\n"\
+//               " UE.Alias AS EndAlias,\n"\
+//               " UE.Cabinet AS EndCabinet,\n"\
+//               " UE.Coordinate AS EndCoordinate ,\n"\
+//               " UCE.Id_PK AS UnitConnectorEnd_Id_FK,\n"\
+//               " UCE.Name AS EndUnitConnectorName ,\n"\
+//               " UCNXE.UnitContactName AS EndUnitContactName,\n"\
+//               " UCNXE.ConnectionType_Code_FK AS EndConnectionType_Code_FK,\n"\
+//               " W.Model AS WireModel,\n"\
+//               " LNK.Length,\n"\
+//               " W.Section,\n"\
+//               " LNK.Resistance,\n"\
+//               " W.ColorEN AS WireColorEN,\n"\
+//               " UCNXE.FunctionEN AS EndFunctionEN,\n"\
+//               " UCNXE.FunctionFR AS EndFunctionFR,\n"\
+//               " UCNXE.FunctionDE AS EndFunctionDE,\n"\
+//               " UCNXE.FunctionIT AS EndFunctionIT\n";
+//   sql = "CREATE VIEW LinkList_view AS\n";
+//   sql += selectSql;
+//   sql += "FROM Link_tbl LNK\n"\
+//          " JOIN UnitConnection_tbl UCNXS\n"\
+//          "  ON UCNXS.Id_PK = LNK.UnitConnectionStart_Id_FK\n"\
+//          " JOIN UnitConnection_tbl UCNXE\n"\
+//          "  ON UCNXE.Id_PK = LNK.UnitConnectionEnd_Id_FK\n"\
+//           " LEFT JOIN UnitConnector_tbl UCS\n"\
+//           "  ON UCNXS.UnitConnector_Id_FK = UCS.Id_PK\n"\
+//           " LEFT JOIN UnitConnector_tbl UCE\n"\
+//           "  ON UCNXE.UnitConnector_Id_FK = UCE.Id_PK\n"\
+//           " JOIN Unit_tbl US\n"\
+//           "  ON US.Id_PK = UCNXS.Unit_Id_FK\n"\
+//           " JOIN Unit_tbl UE\n"\
+//           "  ON UE.Id_PK = UCNXE.Unit_Id_FK\n"\
+//           " LEFT JOIN VehicleType_Link_tbl\n"\
+//           "  ON LNK.UnitConnectionStart_Id_FK = VehicleType_Link_tbl.UnitConnectionStart_Id_FK\n"\
+//           "  AND LNK.UnitConnectionEnd_Id_FK = VehicleType_Link_tbl.UnitConnectionEnd_Id_FK\n"\
+//           " LEFT JOIN VehicleType_tbl VS\n"\
+//           "  ON VS.Id_PK = VehicleType_Link_tbl.VehicleTypeStart_Id_FK\n"\
+//           " LEFT JOIN VehicleType_tbl VE\n"\
+//           "  ON VE.Id_PK = VehicleType_Link_tbl.VehicleTypeEnd_Id_FK"\
+//           " JOIN LinkType_tbl\n"\
+//           "  ON LinkType_tbl.Code_PK = LNK.LinkType_Code_FK\n"\
+//           " JOIN LinkDirection_tbl\n"\
+//           "  ON LinkDirection_tbl.Code_PK = LNK.LinkDirection_Code_FK\n"\
+//           " LEFT JOIN Wire_tbl W\n"\
+//           "  ON W.Id_PK = LNK.Wire_Id_FK";
+// 
+//   return createView("LinkList_view", sql);
+// }
 
 void mdtTtDatabaseSchema::setupLinkListView()
 {
+  using namespace mdtSqlViewSchema;
 
+  Schema view;
+  Table LNK("Link_tbl", "LNK");
+  ///Table LV("LinkVersion_tbl", "LV");
+  ///Table M("Modification_tbl", "M");
+  Table W("Wire_tbl", "W");
+  Table UCNXS("UnitConnection_tbl", "UCNXS");
+  Table UCNXE("UnitConnection_tbl", "UCNXE");
+  Table UCS("UnitConnector_tbl", "UCS");
+  Table UCE("UnitConnector_tbl", "UCE");
+  Table US("Unit_tbl", "US");
+  Table UE("Unit_tbl", "UE");
+  Table VTL("VehicleType_Link_tbl", "VTL");
+  Table VTS("VehicleType_tbl", "VTS");
+  Table VTE("VehicleType_tbl", "VTE");
+  Table LT("LinkType_tbl", "LT");
+  Table LD("LinkDirection_tbl", "LD");
+  JoinClause join;
+  JoinKey key;
+
+  view.setName("LinkList_view");
+  view.setTable(LNK);
+  view.addSelectField(VTS, SelectField("Id_PK", "StartVehicleType_Id_PK"));
+  view.addSelectField(VTS, SelectField("Type", "StartVehicleType"));
+  view.addSelectField(VTS, SelectField("SubType", "StartVehicleSubType"));
+  view.addSelectField(VTS, SelectField("SeriesNumber", "StartVehicleSerie"));
+  view.addSelectField(VTE, SelectField("Id_PK", "EndVehicleType_Id_PK"));
+  view.addSelectField(VTE, SelectField("Type", "EndVehicleType"));
+  view.addSelectField(VTE, SelectField("SubType", "EndVehicleSubType"));
+  view.addSelectField(VTE, SelectField("SeriesNumber", "EndVehicleSerie"));
+  ///view.addSelectField(LV, SelectField("Version"));
+  ///view.addSelectField(M, SelectField("NameEN", "ModificationEN"));
+  ///view.addSelectField(M, SelectField("NameFR", "ModificationFR"));
+  ///view.addSelectField(M, SelectField("NameDE", "ModificationDE"));
+  ///view.addSelectField(M, SelectField("NameIT", "ModificationIT"));
+  ///view.addSelectField(M, SelectField("SortOrder", "ModificationSortOrder"));
+  view.addSelectField(LNK, SelectField("Identification"));
+  view.addSelectField(LNK, SelectField("LinkBeam_Id_FK"));
+  view.addSelectField(US, SelectField("SchemaPosition", "StartSchemaPosition"));
+  view.addSelectField(US, SelectField("Alias", "StartAlias"));
+  view.addSelectField(UCS, SelectField("Name", "StartUnitConnectorName"));
+  view.addSelectField(UCNXS, SelectField("UnitContactName", "StartUnitContactName"));
+  view.addSelectField(UCNXS, SelectField("Resistance", "StartUnitConnectionResistance"));
+  view.addSelectField(UE, SelectField("SchemaPosition", "EndSchemaPosition"));
+  view.addSelectField(UE, SelectField("Alias", "EndAlias"));
+  view.addSelectField(UCE, SelectField("Name", "EndUnitConnectorName"));
+  view.addSelectField(UCNXE, SelectField("UnitContactName", "EndUnitContactName"));
+  view.addSelectField(UCNXE, SelectField("Resistance", "EndUnitConnectionResistance"));
+  view.addSelectField(LT, SelectField("NameEN", "LinkTypeNameEN"));
+  view.addSelectField(LNK, SelectField("Length"));
+  view.addSelectField(LNK, SelectField("Resistance"));
+  view.addSelectField(W, SelectField("Model", "WireModel"));
+  view.addSelectField(W, SelectField("Section"));
+  view.addSelectField(W, SelectField("ColorEN"));
+  view.addSelectField(W, SelectField("ArticleCode", "WireArticleCode"));
+  view.addSelectField(LT, SelectField("ValueUnit"));
+  view.addSelectField(LD, SelectField("PictureAscii", "LinkDirectionPictureAscii"));
+  view.addSelectField(UCNXS, SelectField("SchemaPage", "StartSchemaPage"));
+  view.addSelectField(UCNXS, SelectField("FunctionEN", "StartFunctionEN"));
+  view.addSelectField(UCNXS, SelectField("SignalName", "StartSignalName"));
+  view.addSelectField(UCNXS, SelectField("SwAddress", "StartSwAddress"));
+  view.addSelectField(UCNXE, SelectField("SchemaPage", "EndSchemaPage"));
+  view.addSelectField(UCNXE, SelectField("FunctionEN", "EndFunctionEN"));
+  view.addSelectField(UCNXE, SelectField("SignalName", "EndSignalName"));
+  view.addSelectField(UCNXE, SelectField("SwAddress", "EndSwAddress"));
+  view.addSelectField(LNK, SelectField("UnitConnectionStart_Id_FK"));
+  view.addSelectField(LNK, SelectField("UnitConnectionEnd_Id_FK"));
+  view.addSelectField(UCNXS, SelectField("UnitConnector_Id_FK", "StartUnitConnector_Id_FK"));
+  view.addSelectField(UCNXS, SelectField("Unit_Id_FK", "StartUnit_Id_FK"));
+  view.addSelectField(UCNXE, SelectField("UnitConnector_Id_FK", "EndUnitConnector_Id_FK"));
+  view.addSelectField(UCNXE, SelectField("Unit_Id_FK", "EndUnit_Id_FK"));
+  view.addSelectField(LNK, SelectField("LinkType_Code_FK"));
+  view.addSelectField(LNK, SelectField("LinkDirection_Code_FK"));
+  view.addSelectField(LNK, SelectField("ArticleConnectionStart_Id_FK"));
+  view.addSelectField(LNK, SelectField("ArticleConnectionEnd_Id_FK"));
+  view.addSelectField(LNK, SelectField("Version_FK"));
+  view.addSelectField(LNK, SelectField("Modification_Code_FK"));
+  /** \todo Add versionning
+  join = pvSchema.joinClause(LNK, LV);
+  join.setOperator(JoinClause::LeftJoin);
+  view.addJoinClause(join);
+  join = pvSchema.joinClause(LNK, M);
+  join.setOperator(JoinClause::LeftJoin);
+  view.addJoinClause(join);
+  */
+  // LNK - UCNXS JOIN
+  join.clear();
+  join.setMainTable(LNK);
+  join.setTableToJoin(UCNXS);
+  key.clear();
+  key.setMainTableField("UnitConnectionStart_Id_FK");
+  key.setTableToJoinField("Id_PK");
+  join.addKey(key);
+  view.addJoinClause(join);
+  // LNK - UCNXE JOIN
+  join.clear();
+  join.setMainTable(LNK);
+  join.setTableToJoin(UCNXE);
+  key.clear();
+  key.setMainTableField("UnitConnectionEnd_Id_FK");
+  key.setTableToJoinField("Id_PK");
+  join.addKey(key);
+  view.addJoinClause(join);
+  // Other JOINs
+  join = pvSchema.joinClause(UCNXS, UCS);
+  join.setOperator(JoinClause::LeftJoin);
+  view.addJoinClause(join);
+  join = pvSchema.joinClause(UCNXE, UCE);
+  join.setOperator(JoinClause::LeftJoin);
+  view.addJoinClause(join);
+  join = pvSchema.joinClause(UCNXS, US);
+  view.addJoinClause(join);
+  join = pvSchema.joinClause(UCNXE, UE);
+  view.addJoinClause(join);
+  join = pvSchema.joinClause(LNK, VTL);
+  join.setOperator(JoinClause::LeftJoin);
+  view.addJoinClause(join);
+  // VTL - VTS JOIN
+  join.clear();
+  join.setOperator(JoinClause::LeftJoin);
+  join.setMainTable(VTL);
+  join.setTableToJoin(VTS);
+  key.clear();
+  key.setMainTableField("VehicleTypeStart_Id_FK");
+  key.setTableToJoinField("Id_PK");
+  join.addKey(key);
+  view.addJoinClause(join);
+  // VTL - VTE JOIN
+  join.clear();
+  join.setOperator(JoinClause::LeftJoin);
+  join.setMainTable(VTL);
+  join.setTableToJoin(VTE);
+  key.clear();
+  key.setMainTableField("VehicleTypeEnd_Id_FK");
+  key.setTableToJoinField("Id_PK");
+  join.addKey(key);
+  view.addJoinClause(join);
+  // Other JOINs
+  join = pvSchema.joinClause(LNK, LT);
+  view.addJoinClause(join);
+  join = pvSchema.joinClause(LNK, LD);
+  view.addJoinClause(join);
+  join = pvSchema.joinClause(LNK, W);
+  join.setOperator(JoinClause::LeftJoin);
+  view.addJoinClause(join);
+
+  pvSchema.addView(view);
 }
 
-bool mdtTtDatabaseSchema::createLinkBeamUnitStartView()
-{
-  QString sql, selectSql;
-
-  selectSql = "SELECT\n"\
-              " LB.Unit_Id_FK,\n"\
-              " LB.LinkBeam_Id_FK,\n"\
-              " U.*";
-  sql = "CREATE VIEW LinkBeam_UnitStart_view AS\n";
-  sql += selectSql;
-  sql += "FROM LinkBeam_UnitStart_tbl LB\n"\
-         " JOIN Unit_tbl U\n"\
-         "  ON U.Id_PK = LB.Unit_Id_FK";
-
-  return createView("LinkBeam_UnitStart_view", sql);
-}
+// bool mdtTtDatabaseSchema::createLinkBeamUnitStartView()
+// {
+//   QString sql, selectSql;
+// 
+//   selectSql = "SELECT\n"\
+//               " LB.Unit_Id_FK,\n"\
+//               " LB.LinkBeam_Id_FK,\n"\
+//               " U.*";
+//   sql = "CREATE VIEW LinkBeam_UnitStart_view AS\n";
+//   sql += selectSql;
+//   sql += "FROM LinkBeam_UnitStart_tbl LB\n"\
+//          " JOIN Unit_tbl U\n"\
+//          "  ON U.Id_PK = LB.Unit_Id_FK";
+// 
+//   return createView("LinkBeam_UnitStart_view", sql);
+// }
 
 void mdtTtDatabaseSchema::setupLinkBeamUnitStartView()
 {
+  using namespace mdtSqlViewSchema;
 
+  Schema view;
+  Table LBUS("LinkBeam_UnitStart_tbl", "LBUS");
+  Table U("Unit_tbl", "U");
+  JoinClause join;
+
+  view.setName("LinkBeam_UnitStart_view");
+  view.setTable(LBUS);
+  view.addSelectField(LBUS, SelectField("Unit_Id_FK"));
+  view.addSelectField(LBUS, SelectField("LinkBeam_Id_FK"));
+  view.addSelectField(U, SelectField("*"));
+  join = pvSchema.joinClause(LBUS, U);
+  view.addJoinClause(join);
+
+  pvSchema.addView(view);
 }
 
-bool mdtTtDatabaseSchema::createLinkBeamUnitEndView()
-{
-  QString sql, selectSql;
-
-  selectSql = "SELECT\n"\
-              " LB.Unit_Id_FK,\n"\
-              " LB.LinkBeam_Id_FK,\n"\
-              " U.*";
-  sql = "CREATE VIEW LinkBeam_UnitEnd_view AS\n";
-  sql += selectSql;
-  sql += "FROM LinkBeam_UnitEnd_tbl LB\n"\
-         " JOIN Unit_tbl U\n"\
-         "  ON U.Id_PK = LB.Unit_Id_FK";
-
-  return createView("LinkBeam_UnitEnd_view", sql);
-}
+// bool mdtTtDatabaseSchema::createLinkBeamUnitEndView()
+// {
+//   QString sql, selectSql;
+// 
+//   selectSql = "SELECT\n"\
+//               " LB.Unit_Id_FK,\n"\
+//               " LB.LinkBeam_Id_FK,\n"\
+//               " U.*";
+//   sql = "CREATE VIEW LinkBeam_UnitEnd_view AS\n";
+//   sql += selectSql;
+//   sql += "FROM LinkBeam_UnitEnd_tbl LB\n"\
+//          " JOIN Unit_tbl U\n"\
+//          "  ON U.Id_PK = LB.Unit_Id_FK";
+// 
+//   return createView("LinkBeam_UnitEnd_view", sql);
+// }
 
 void mdtTtDatabaseSchema::setupLinkBeamUnitEndView()
 {
+  using namespace mdtSqlViewSchema;
+
+  Schema view;
+  Table LBUE("LinkBeam_UnitEnd_tbl", "LBUE");
+  Table U("Unit_tbl", "U");
+  JoinClause join;
+
+  view.setName("LinkBeam_UnitEnd_view");
+  view.setTable(LBUE);
+  view.addSelectField(LBUE, SelectField("Unit_Id_FK"));
+  view.addSelectField(LBUE, SelectField("LinkBeam_Id_FK"));
+  view.addSelectField(U, SelectField("*"));
+  join = pvSchema.joinClause(LBUE, U);
+  view.addJoinClause(join);
+
+  pvSchema.addView(view);
 
 }
 

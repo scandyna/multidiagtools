@@ -85,19 +85,30 @@ mdtSqlViewSchema::JoinClause mdtSqlDatabaseSchema::joinClause(const mdtSqlViewSc
 #endif // #ifndef QT_NO_DEBUG
   // Get table to join's FK
   Q_ASSERT(fk.parentTableFields().size() == fk.childTableFields().size());
+  Q_ASSERT(fk.parentTableFields().size() > 0);
   // Setup join clause
   join.setMainTable(mainTable);
   join.setTableToJoin(tableToJoin);
   if(revserse){
-    for(int i = 0; i < fk.parentTableFields().size(); ++i){
+    JoinKey key;
+    key.setMainTableField(fk.childTableFields().at(0));
+    key.setTableToJoinField(fk.parentTableFields().at(0));
+    join.addKey(key);
+    for(int i = 1; i < fk.parentTableFields().size(); ++i){
       JoinKey key;
+      key.setConstraintOperator(JoinKey::And);
       key.setMainTableField(fk.childTableFields().at(i));
       key.setTableToJoinField(fk.parentTableFields().at(i));
       join.addKey(key);
     }
   }else{
-    for(int i = 0; i < fk.parentTableFields().size(); ++i){
+    JoinKey key;
+    key.setMainTableField(fk.parentTableFields().at(0));
+    key.setTableToJoinField(fk.childTableFields().at(0));
+    join.addKey(key);
+    for(int i = 1; i < fk.parentTableFields().size(); ++i){
       JoinKey key;
+      key.setConstraintOperator(JoinKey::And);
       key.setMainTableField(fk.parentTableFields().at(i));
       key.setTableToJoinField(fk.childTableFields().at(i));
       join.addKey(key);

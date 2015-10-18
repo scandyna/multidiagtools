@@ -72,6 +72,7 @@ class mdtDatabaseTest : public mdtTest
   void sqlTablePopulationSchemaTest();
 
   void sqlDatabaseSchemaTest();
+  void sqlDatabaseSchemaGetJoinClauseTest();
   void sqlDatabaseSchemaModelTest();
   void sqlDatabaseSchemaDialogTest();
   void sqlDatabaseSchemaThreadTest();

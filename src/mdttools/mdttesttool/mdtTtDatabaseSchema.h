@@ -433,22 +433,22 @@ class mdtTtDatabaseSchema
 
   /*! \brief Unit_VehicleType_view
    */
-  bool createUnitVehicleTypeView();
+//   bool createUnitVehicleTypeView();
   void setupUnitVehicleTypeView();
 
   /*! \brief LinkList_view
    */
-  bool createLinkListView();
+//   bool createLinkListView();
   void setupLinkListView();
 
   /*! \brief LinkBeam_UnitStart_view
    */
-  bool createLinkBeamUnitStartView();
+//   bool createLinkBeamUnitStartView();
   void setupLinkBeamUnitStartView();
 
   /*! \brief Create LinkBeam_UnitEnd_view
    */
-  bool createLinkBeamUnitEndView();
+//   bool createLinkBeamUnitEndView();
   void setupLinkBeamUnitEndView();
 
   
