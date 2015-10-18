@@ -22,9 +22,11 @@
 #define MDT_CL_ARTICLE_LINK_TEST_H
 
 #include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QMessageBox>
-#include <QFileInfo>
+#include <QTemporaryFile>
+#include <QSqlDatabase>
+///#include "mdtSqlDatabaseManager.h"
+///#include <QMessageBox>
+///#include <QFileInfo>
 
 class mdtClArticleLinkTest : public mdtTest
 {
@@ -50,8 +52,11 @@ class mdtClArticleLinkTest : public mdtTest
   // Create test database schema - Will FAIL on problem
   void createDatabaseSchema();
 
-  mdtSqlDatabaseManager pvDatabaseManager;
-  QFileInfo pvDbFileInfo;
+  QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
+  QSqlDatabase pvDatabase;
+
+//   mdtSqlDatabaseManager pvDatabaseManager;
+//   QFileInfo pvDbFileInfo;
 };
 
 #endif // #ifndef MDT_CL_ARTICLE_LINK_TEST_H

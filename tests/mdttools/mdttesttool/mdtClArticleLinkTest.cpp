@@ -48,12 +48,12 @@
 void mdtClArticleLinkTest::initTestCase()
 {
   createDatabaseSchema();
-  QVERIFY(pvDatabaseManager.database().isOpen());
+  QVERIFY(pvDatabase.isOpen());
 }
 
 void mdtClArticleLinkTest::cleanupTestCase()
 {
-  QFile::remove(pvDbFileInfo.absoluteFilePath());
+//   QFile::remove(pvDbFileInfo.absoluteFilePath());
 }
 
 void mdtClArticleLinkTest::articleLinkDataTest()
@@ -176,10 +176,10 @@ void mdtClArticleLinkTest::articleLinkDataTest()
 
 void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
 {
-  mdtClArticleLink alnk(pvDatabaseManager.database());
+  mdtClArticleLink alnk(pvDatabase);
   mdtClArticleLinkPkData pk;
   mdtClArticleLinkData data;
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  mdtCableListTestScenario scenario(pvDatabase);
   bool ok;
 
   // Populate db with base data
@@ -250,8 +250,8 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
 
 // void mdtClArticleLinkTest::getArticleLinkByUnitConnectionTest()
 // {
-//   mdtClArticleLink alnk(pvDatabaseManager.database());
-//   mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
+//   mdtClArticleLink alnk(pvDatabase);
+//   mdtSqlForeignKeySetting fkSetting(pvDatabase, mdtSqlForeignKeySetting::Temporary);
 //   mdtClArticleLinkPkData aLinkPk;
 //   mdtClArticleLinkData aLinkData;
 //   QList<mdtClArticleLinkData> aLinkDataList;
@@ -259,7 +259,7 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
 //   mdtClUnitConnectionPkData ucnxPk;
 //   mdtClUnitConnectionKeyData ucnxKey;
 //   mdtClUnitConnectionData ucnxData;
-//   mdtClUnitConnection ucnx(pvDatabaseManager.database());
+//   mdtClUnitConnection ucnx(pvDatabase);
 //   bool ok;
 // 
 //   /*
@@ -527,18 +527,33 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
 
 void mdtClArticleLinkTest::createDatabaseSchema()
 {
-  QTemporaryFile dbFile;
-
+  /*
+   * Init and open database
+   */
+  QVERIFY(pvTempFile.open());
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  pvDatabase.setDatabaseName(pvTempFile.fileName());
+  QVERIFY(pvDatabase.open());
   /*
    * Check Sqlite database creation
    */
-  QVERIFY(dbFile.open());
-  dbFile.close();
-  pvDbFileInfo.setFile(dbFile.fileName() + ".db");
-  mdtTtDatabaseSchema schema(&pvDatabaseManager);
-  QVERIFY(schema.createSchemaSqlite(pvDbFileInfo));
-  QVERIFY(pvDatabaseManager.database().isOpen());
-  QVERIFY(schema.checkSchema());
+  mdtTtDatabaseSchema schema;
+  QVERIFY(schema.buildSchema());
+  QVERIFY(schema.databaseSchema().createSchema(pvDatabase));
+  QVERIFY(schema.checkSchema(pvDatabase));
+
+//   QTemporaryFile dbFile;
+//
+//   /*
+//    * Check Sqlite database creation
+//    */
+//   QVERIFY(dbFile.open());
+//   dbFile.close();
+//   pvDbFileInfo.setFile(dbFile.fileName() + ".db");
+//   mdtTtDatabaseSchema schema(&pvDatabaseManager);
+//   QVERIFY(schema.createSchemaSqlite(pvDbFileInfo));
+//   QVERIFY(pvDatabase.isOpen());
+//   QVERIFY(schema.checkSchema());
 }
 
 /*
