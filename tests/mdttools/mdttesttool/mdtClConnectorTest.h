@@ -22,9 +22,8 @@
 #define MDT_CL_CONNECTOR_TEST_H
 
 #include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QMessageBox>
-#include <QFileInfo>
+#include <QTemporaryFile>
+#include <QSqlDatabase>
 
 class mdtClConnectorTest : public mdtTest
 {
@@ -57,8 +56,8 @@ class mdtClConnectorTest : public mdtTest
   // Create test database schema - Will FAIL on problem
   void createDatabaseSchema();
 
-  mdtSqlDatabaseManager pvDatabaseManager;
-  QFileInfo pvDbFileInfo;
+  QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
+  QSqlDatabase pvDatabase;
 };
 
 #endif // #ifndef MDT_CL_CONNECTOR_TEST_H

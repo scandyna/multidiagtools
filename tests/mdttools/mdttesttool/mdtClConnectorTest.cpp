@@ -46,12 +46,11 @@
 void mdtClConnectorTest::initTestCase()
 {
   createDatabaseSchema();
-  QVERIFY(pvDatabaseManager.database().isOpen());
+  QVERIFY(pvDatabase.isOpen());
 }
 
 void mdtClConnectorTest::cleanupTestCase()
 {
-  QFile::remove(pvDbFileInfo.absoluteFilePath());
 }
 
 void mdtClConnectorTest::connectionTypeDataTest()
@@ -137,7 +136,7 @@ void mdtClConnectorTest::connectionTypeDataTest()
 
 void mdtClConnectorTest::connectionTypeGetTest()
 {
-  mdtClConnector cnr(pvDatabaseManager.database());
+  mdtClConnector cnr(pvDatabase);
   mdtClConnectionTypeData data;
   bool ok;
 
@@ -170,7 +169,7 @@ void mdtClConnectorTest::connectionTypeGetTest()
 void mdtClConnectorTest::connectionTypeModelTest()
 {
   QLocale locale(QLocale::English);
-  mdtClConnectionTypeModel m(pvDatabaseManager.database(), locale);
+  mdtClConnectionTypeModel m(pvDatabase, locale);
   mdtClConnectionTypeKeyData key;
 
   // Initial state
@@ -238,7 +237,7 @@ void mdtClConnectorTest::contactDataTest()
 
 void mdtClConnectorTest::contactAddGetRemoveTest()
 {
-  mdtClConnector cnr(pvDatabaseManager.database());
+  mdtClConnector cnr(pvDatabase);
   mdtClConnectorPkData connectorKey;
   mdtClConnectorData connectorData;
   mdtClConnectorContactKeyData contactKey;
@@ -331,7 +330,7 @@ void mdtClConnectorTest::connectorDataTest()
 
 void mdtClConnectorTest::connectorAddGetRemoveTest()
 {
-  mdtClConnector cnr(pvDatabaseManager.database());
+  mdtClConnector cnr(pvDatabase);
   mdtClConnectorData data;
   mdtClConnectorPkData key;
   mdtClConnectorContactData contactData;
@@ -419,18 +418,20 @@ void mdtClConnectorTest::connectorAddGetRemoveTest()
 
 void mdtClConnectorTest::createDatabaseSchema()
 {
-  QTemporaryFile dbFile;
-
+  /*
+   * Init and open database
+   */
+  QVERIFY(pvTempFile.open());
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  pvDatabase.setDatabaseName(pvTempFile.fileName());
+  QVERIFY(pvDatabase.open());
   /*
    * Check Sqlite database creation
    */
-  QVERIFY(dbFile.open());
-  dbFile.close();
-  pvDbFileInfo.setFile(dbFile.fileName() + ".db");
-  mdtTtDatabaseSchema schema(&pvDatabaseManager);
-  QVERIFY(schema.createSchemaSqlite(pvDbFileInfo));
-  QVERIFY(pvDatabaseManager.database().isOpen());
-  QVERIFY(schema.checkSchema());
+  mdtTtDatabaseSchema schema;
+  QVERIFY(schema.buildSchema());
+  QVERIFY(schema.databaseSchema().createSchema(pvDatabase));
+  QVERIFY(schema.checkSchema(pvDatabase));
 }
 
 /*
