@@ -23,9 +23,6 @@
 
 #include "mdtTest.h"
 #include "mdtCableListTestScenario.h"
-///#include "mdtSqlDatabaseManager.h"
-#include <QMessageBox>
-/// #include <QFileInfo>
 #include <QTemporaryFile>
 
 class mdtCableListTest : public mdtTest
@@ -70,9 +67,6 @@ class mdtCableListTest : public mdtTest
 
   QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
   QSqlDatabase pvDatabase;
-
-//   mdtSqlDatabaseManager pvDatabaseManager;
-//   QFileInfo pvDbFileInfo;
 };
 
 #endif // #ifndef MDT_CABLE_LIST_TEST_H

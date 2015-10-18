@@ -103,6 +103,7 @@ class mdtClLink : public mdtTtBase
    * \return Data for requested link.
    *          A null data object is returned if requested link does not exist, or a error occured.
    *          Use ok parameter to diffrenciate both cases.
+   * \pre pk must not be null.
    */
   mdtClLinkData getLinkData(const mdtClLinkPkData & pk, bool & ok);
 

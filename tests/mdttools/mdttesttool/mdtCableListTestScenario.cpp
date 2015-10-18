@@ -491,6 +491,7 @@ void mdtCableListTestScenario::createTestArticleLinks()
   mdtClArticleLink alnk(pvDatabase);
   mdtClArticleLinkPkData pk;
   mdtClArticleLinkData data;
+  bool ok;
 //   mdtClArticleConnectionKeyData acnnKey;
 
   // Add cable link 10 <--> 20
@@ -520,24 +521,27 @@ void mdtCableListTestScenario::createTestArticleLinks()
   data.setLinkType(mdtClLinkType_t::InternalLink);
   data.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
   QVERIFY(alnk.addLink(data));
-  
-  
-  mdtClArticle art(0, pvDatabase);
-  QList<QSqlRecord> dataList;
-  bool ok;
-
-//   QVERIFY(art.addCableLink(10, 20, "", 0.0));  
-//   QVERIFY(art.addCableLink(21, 20, "", 0.0));
-//   QVERIFY(art.addInternalLink(21, 22, "", 0.0));
-  dataList = art.getDataList<QSqlRecord>("SELECT * FROM ArticleLink_view", ok);
+  /*
+   * Check
+   */
+  // Cable link 10 <--> 20
+  pk.connectionStartId = 10;
+  pk.connectionEndId = 20;
+  data = alnk.getLinkData(pk, ok);
   QVERIFY(ok);
-  QCOMPARE(dataList.size(), 3);
-  QCOMPARE(dataList.at(0).value("ArticleConnectionStart_Id_FK"), QVariant(10));
-  QCOMPARE(dataList.at(0).value("ArticleConnectionEnd_Id_FK"), QVariant(20));
-  QCOMPARE(dataList.at(1).value("ArticleConnectionStart_Id_FK"), QVariant(21));
-  QCOMPARE(dataList.at(1).value("ArticleConnectionEnd_Id_FK"), QVariant(20));
-  QCOMPARE(dataList.at(2).value("ArticleConnectionStart_Id_FK"), QVariant(21));
-  QCOMPARE(dataList.at(2).value("ArticleConnectionEnd_Id_FK"), QVariant(22));
+  QVERIFY(!data.isNull());
+  // Cable link 21 <--> 20
+  pk.connectionStartId = 21;
+  pk.connectionEndId = 20;
+  data = alnk.getLinkData(pk, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
+  // Internal link 21 <--> 22
+  pk.connectionStartId = 21;
+  pk.connectionEndId = 22;
+  data = alnk.getLinkData(pk, ok);
+  QVERIFY(ok);
+  QVERIFY(!data.isNull());
 }
 
 void mdtCableListTestScenario::removeTestArticleLinks()
