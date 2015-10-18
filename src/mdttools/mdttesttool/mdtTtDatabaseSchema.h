@@ -554,60 +554,29 @@ class mdtTtDatabaseSchema
    */
   ///bool createTestModelItemNodeUnitView();
 
-  /*! \brief Check if given PK data exists in given table name
-   */
-//   bool pkExistsInTable(const QString & tableName, const QString & pkField, const QVariant & pkData);
-
-  /*! \brief Insert data into a table
-   *
-   * Note: first field must be primary key
-   */
-//   bool insertDataIntoTable(const QString & tableName, const QStringList & fields, const QList<QVariant> & data);
-
-  /*! \brief Get SQL statement for data insertion
-   */
-//   QString sqlForDataInsertion(const QString & tableName, const QStringList & fields, const QList<QVariant> & data);
-
-  /*! \brief Get SQL statement for data edition
-   */
-//   QString sqlForDataEdition(const QString & tableName, const QStringList & fields, const QList<QVariant> & data);
-
   /*! \brief Populate Modification_tbl
    */
   void setupModificationTablePopulation();
-//   bool populateModificationTable();
 
   /*! \brief Populate Connection type table
    */
   void setupConnectionTypeTablePopulation();
-//   bool populateConnectionTypeTable();
 
   /*! \brief Populate LinkType table
    */
   void setupLinkTypeTablePopulation();
-//   bool populateLinkTypeTable();
 
   /*! \brief Populate LinkType table
    */
   void setupLinkDirectionTablePopulation();
-//   bool populateLinkDirectionTable();
 
   /*! \brief Populate TestSystemComponentType_tbl
    */
   void setupTestSystemComponentTypeTablePopulation();
-//   bool populateTestSystemComponentTypeTable();
 
   /*! \brief Populate TestSystemUnitType_tbl
    */
   void setupTestSystemUnitTypeTablePopulation();
-//   bool populateTestSystemUnitTypeTable();
-
-
-  /*! \brief Populate TestNodeUnitType table
-   *
-   * \todo Move to test tool when created
-   */
-//   bool populateTestNodeUnitTypeTable();
 
   Q_DISABLE_COPY(mdtTtDatabaseSchema);
 

@@ -5267,178 +5267,6 @@ bool mdtTtDatabaseSchema::createTestItemNodeUnitSetupView()
   return createView("TestItemNodeUnitSetup_view", sql);
 }
 
-// bool mdtTtDatabaseSchema::pkExistsInTable(const QString & tableName, const QString & pkField, const QVariant & pkData)
-// {
-//   QSqlQuery query(pvDatabaseManager->database());
-//   QSqlError sqlError;
-//   QString sql;
-//   QString dp;
-// 
-//   if(pkData.type() == QVariant::String){
-//     dp = "'";
-//   }
-//   sql = "SELECT " + pkField + " FROM '" + tableName + "' WHERE " + pkField + " = " + dp + pkData.toString() + dp;
-//   if(!query.exec(sql)){
-//     sqlError = query.lastError();
-//     pvLastError.setError("Cannot execute query to check if data exists in table '" + tableName + "'", mdtError::Error);
-//     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-//     MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
-//     pvLastError.commit();
-//     return false;
-//   }
-//   if(query.next()){
-//     return true;
-//   }
-// 
-//   return false;
-// }
-
-// bool mdtTtDatabaseSchema::insertDataIntoTable(const QString & tableName, const QStringList & fields, const QList<QVariant> & data)
-// {
-//   Q_ASSERT(fields.size() > 0);
-//   Q_ASSERT(data.size() == fields.size());
-// 
-//   QSqlQuery query(pvDatabaseManager->database());
-//   QSqlError sqlError;
-//   QString sql;
-//   int i;
-//   bool pkExists;
-// 
-//   pkExists = pkExistsInTable(tableName, fields.at(0), data.at(0));
-//   if(pkExists){
-//     sql = sqlForDataEdition(tableName, fields, data);
-//   }else{
-//     sql = sqlForDataInsertion(tableName, fields, data);
-//   }
-//   // Prepare query for insertion
-//   if(!query.prepare(sql)){
-//     sqlError = query.lastError();
-//     pvLastError.setError("Cannot prepare query for insertion into table '" + tableName + "'", mdtError::Error);
-//     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-//     MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
-//     pvLastError.commit();
-//     return false;
-//   }
-//   // Bind values
-//   if(pkExists){
-//     i = 1;
-//   }else{
-//     i = 0;
-//   }
-//   for(i = i; i < data.size(); ++i){
-//     query.bindValue(i, data.at(i));
-//   }
-//   // Exec query
-//   if(!query.exec()){
-//     sqlError = query.lastError();
-//     pvLastError.setError("Cannot execute query for insertion into table '" + tableName + "'", mdtError::Error);
-//     pvLastError.setSystemError(sqlError.number(), sqlError.text());
-//     MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
-//     pvLastError.commit();
-//     return false;
-//   }
-// 
-//   return true;
-// }
-
-// QString mdtTtDatabaseSchema::sqlForDataInsertion(const QString & tableName, const QStringList & fields, const QList<QVariant> & data)
-// {
-//   QString sql;
-//   int i;
-// 
-//   // Generate SQL statement
-//   sql = "INSERT INTO '" + tableName + "' (";
-//   for(i = 0; i < fields.size(); ++i){
-//     sql += fields.at(i);
-//     if(i < (fields.size() - 1)){
-//       sql += ",";
-//     }
-//   }
-//   sql += ") VALUES(";
-//   for(i = 0; i < fields.size(); ++i){
-//     sql += "?";
-//     if(i < (fields.size() - 1)){
-//       sql += ",";
-//     }
-//   }
-//   sql += ")";
-// 
-//   return sql;
-// }
-
-// QString mdtTtDatabaseSchema::sqlForDataEdition(const QString & tableName, const QStringList & fields, const QList<QVariant> & data)
-// {
-//   Q_ASSERT(fields.size() > 0);
-//   Q_ASSERT(data.size() == fields.size());
-// 
-//   QString sql;
-//   QVariant pkData;
-//   QString dp;
-//   int i;
-// 
-//   pkData = data.at(0);
-//   if(pkData.type() == QVariant::String){
-//     dp = "'";
-//   }
-//   // Generate SQL statement
-//   sql = "UPDATE '" + tableName + "' SET\n";
-//   for(i = 1; i < fields.size(); ++i){
-//     sql += fields.at(i) + " = :" + fields.at(i);
-//     if(i < (fields.size() - 1)){
-//       sql += ",";
-//     }
-//     sql += "\n";
-//   }
-//   sql += " WHERE " + fields.at(0) + " = " + dp + pkData.toString() + dp;
-// 
-//   return sql;
-// }
-
-// bool mdtTtDatabaseSchema::populateModificationTable()
-// {
-//   QStringList fields;
-//   QList<QVariant> data;
-// 
-//   fields << "Code_PK" << "SortOrder" << "NameEN" << "NameDE" << "NameFR" << "NameIT";
-//   // NEW
-//   data << "NEW" << 3 << "New" << "Neu" << "Nouveau" << "Nuovo";
-//   if(!insertDataIntoTable("Modification_tbl", fields, data)){
-//     return false;
-//   }
-//   // REM
-//   data.clear();
-//   data << "REM" << 3 << "Remove" << "Entfernen" << "Supprimer" << "Rimuovere";
-//   if(!insertDataIntoTable("Modification_tbl", fields, data)){
-//     return false;
-//   }
-//   // MOD
-//   data.clear();
-//   data << "MOD" << 3 << "Modifiy" << "Ändern" << "Modifier" << "Modificare";
-//   if(!insertDataIntoTable("Modification_tbl", fields, data)){
-//     return false;
-//   }
-//   // MODNEW
-//   data.clear();
-//   data << "MODNEW" << 2 << "Modifiy (+)" << "Ändern (+)" << "Modifier (+)" << "Modificare (+)";
-//   if(!insertDataIntoTable("Modification_tbl", fields, data)){
-//     return false;
-//   }
-//   // MODREM
-//   data.clear();
-//   data << "MODREM" << 1 << "Modifiy (-)" << "Ändern (-)" << "Modifier (-)" << "Modificare (-)";
-//   if(!insertDataIntoTable("Modification_tbl", fields, data)){
-//     return false;
-//   }
-//   // EXISTS
-//   data.clear();
-//   data << "EXISTS" << 3 << "Existing" << "Bestehend" << "Existant" << "Esistente";
-//   if(!insertDataIntoTable("Modification_tbl", fields, data)){
-//     return false;
-//   }
-// 
-//   return true;
-// }
-
 void mdtTtDatabaseSchema::setupModificationTablePopulation()
 {
   mdtSqlTablePopulationSchema tp;
@@ -5473,34 +5301,6 @@ void mdtTtDatabaseSchema::setupModificationTablePopulation()
   pvSchema.addTablePopulation(tp);
 }
 
-// bool mdtTtDatabaseSchema::populateConnectionTypeTable()
-// {
-//   QStringList fields;
-//   QList<QVariant> data;
-// 
-//   fields << "Code_PK" << "NameEN" << "NameDE" << "NameFR" << "NameIT";
-// 
-//   // Terminal type
-//   data << "T" << "Terminal" << "Klemme" << "Borne" << "Terminale";
-//   if(!insertDataIntoTable("ConnectionType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Pin type
-//   data.clear();
-//   data << "P" << "Pin (male)" << "Stift (männlich)" << "Contact (mâle)" << "perno (maschio)";
-//   if(!insertDataIntoTable("ConnectionType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Socket type
-//   data.clear();
-//   data << "S" << "Socket (female)" << "Buchse (weiblich)" << "Douille (femelle)" << "presa (femminile)";
-//   if(!insertDataIntoTable("ConnectionType_tbl", fields, data)){
-//     return false;
-//   }
-// 
-//   return true;
-// }
-
 void mdtTtDatabaseSchema::setupConnectionTypeTablePopulation()
 {
   mdtSqlTablePopulationSchema tp;
@@ -5524,40 +5324,6 @@ void mdtTtDatabaseSchema::setupConnectionTypeTablePopulation()
 
   pvSchema.addTablePopulation(tp);
 }
-
-// bool mdtTtDatabaseSchema::populateLinkTypeTable()
-// {
-//   QStringList fields;
-//   QList<QVariant> data;
-// 
-//   fields << "Code_PK" << "NameEN" << "NameDE" << "NameFR" << "NameIT" << "ValueUnit";
-// 
-//   // Cable link type
-//   data << "CABLELINK" << "Cable link" << "Kabel Verbindung" << "Liaison cablée" << "Collegamento via cavo" << "Ohm";
-//   if(!insertDataIntoTable("LinkType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Internal link
-//   data.clear();
-//   data << "INTERNLINK" << "Internal link" << "Interne Verbindung" << "Liaison interne" << "Collegamento interno" << "Ohm";
-//   if(!insertDataIntoTable("LinkType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Connection type
-//   data.clear();
-//   data << "CONNECTION" << "Connection" << "Anschluss" << "Raccordement" << "Collegamento" << "Ohm";
-//   if(!insertDataIntoTable("LinkType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Test link type
-//   data.clear();
-//   data << "TESTLINK" << "Test link" << "Test Verbindung" << "Liaison de test" << "Collegamento test" << "Ohm";
-//   if(!insertDataIntoTable("LinkType_tbl", fields, data)){
-//     return false;
-//   }
-// 
-//   return true;
-// }
 
 void mdtTtDatabaseSchema::setupLinkTypeTablePopulation()
 {
@@ -5587,34 +5353,6 @@ void mdtTtDatabaseSchema::setupLinkTypeTablePopulation()
   pvSchema.addTablePopulation(tp);
 }
 
-// bool mdtTtDatabaseSchema::populateLinkDirectionTable()
-// {
-//   QStringList fields;
-//   QList<QVariant> data;
-// 
-//   fields << "Code_PK" << "PictureAscii" << "NameEN" << "NameDE" << "NameFR" << "NameIT";
-// 
-//   // Bidirectional
-//   data << "BID" << "<-->" << "Bidirectional" << "Bidirektional" << "Bidirectionnel" << "Bidirezionale";
-//   if(!insertDataIntoTable("LinkDirection_tbl", fields, data)){
-//     return false;
-//   }
-//   // Start to end
-//   data.clear();
-//   data << "STE" << "-->" << "Start to end" << "Start zum Ende" << "Départ vers arrivée" << "Dall'inizio alla fine";
-//   if(!insertDataIntoTable("LinkDirection_tbl", fields, data)){
-//     return false;
-//   }
-//   // End to start
-//   data.clear();
-//   data << "ETS" << "<--" << "End to Start" << "Ende zum Start" << "Arrivée vers départ" << "Dall'fine alla inizio";
-//   if(!insertDataIntoTable("LinkDirection_tbl", fields, data)){
-//     return false;
-//   }
-// 
-//   return true;
-// }
-
 void mdtTtDatabaseSchema::setupLinkDirectionTablePopulation()
 {
   mdtSqlTablePopulationSchema tp;
@@ -5640,34 +5378,6 @@ void mdtTtDatabaseSchema::setupLinkDirectionTablePopulation()
   pvSchema.addTablePopulation(tp);
 }
 
-// bool mdtTtDatabaseSchema::populateTestSystemComponentTypeTable()
-// {
-//   QStringList fields;
-//   QList<QVariant> data;
-// 
-//   fields << "Code_PK" << "NameEN" << "NameFR" << "NameDE" << "NameIT";
-// 
-//   // Test node
-//   data << "TESTNODE" << "Test node" << "Noeud de test" << "Testknoten" << "Nodo di prova";
-//   if(!insertDataIntoTable("TestSystemComponentType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Test cable
-//   data.clear();
-//   data << "TESTCABLE" << "Test cable" << "Câble de test" << "Test Kabel" << "Cavo di prova";
-//   if(!insertDataIntoTable("TestSystemComponentType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Test plug
-//   data.clear();
-//   data << "TESTPLUG" << "Test plug" << "Fiche de test" << "Test Stecker" << "Spina di prova";
-//   if(!insertDataIntoTable("TestSystemComponentType_tbl", fields, data)){
-//     return false;
-//   }
-// 
-//   return true;
-// }
-
 void mdtTtDatabaseSchema::setupTestSystemComponentTypeTablePopulation()
 {
   mdtSqlTablePopulationSchema tp;
@@ -5691,58 +5401,6 @@ void mdtTtDatabaseSchema::setupTestSystemComponentTypeTablePopulation()
 
   pvSchema.addTablePopulation(tp);
 }
-
-// bool mdtTtDatabaseSchema::populateTestSystemUnitTypeTable()
-// {
-//   QStringList fields;
-//   QList<QVariant> data;
-// 
-//   fields << "Code_PK" << "NameEN" << "NameFR" << "NameDE" << "NameIT";
-// 
-//   // Bus coupling relay
-//   data << "BUSCPLREL" << "Bus coupling relay" << "Relai de couplage de bus" << "Bus Koppelrelais" << "Relè di accoppiamento bus";
-//   if(!insertDataIntoTable("TestSystemUnitType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Channel relay
-//   data.clear();
-//   data << "CHANELREL" << "Channel relay" << "Relai de canal" << "Kanal-Relais" << "Relè della Manica";
-//   if(!insertDataIntoTable("TestSystemUnitType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Test connector
-//   data.clear();
-//   data << "TESTCONNECTOR" << "Test connector" << "Connecteur de test" << "Test Stecker" << "Connettore di test";
-//   if(!insertDataIntoTable("TestSystemUnitType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Measure connector
-//   data.clear();
-//   data << "MEASCONNECTOR" << "Measure connector" << "Connecteur de mesure" << "Mess Stecker" << "Connettore di misura";
-//   if(!insertDataIntoTable("TestSystemUnitType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Power supply
-//   data.clear();
-//   data << "PWR" << "Power supply" << "Alimentation" << "Speisung" << "Alimentazione";
-//   if(!insertDataIntoTable("TestSystemUnitType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Analog output
-//   data.clear();
-//   data << "AO" << "Analog output" << "Sortie analogique" << "Analog Ausgabe" << "Uscita analogica";
-//   if(!insertDataIntoTable("TestSystemUnitType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Analog input
-//   data.clear();
-//   data << "AI" << "Analog input" << "Entrée analogique" << "Analog Eingabe" << "Ingresso analogica";
-//   if(!insertDataIntoTable("TestSystemUnitType_tbl", fields, data)){
-//     return false;
-//   }
-// 
-//   return true;
-// }
 
 void mdtTtDatabaseSchema::setupTestSystemUnitTypeTablePopulation()
 {
@@ -5780,56 +5438,3 @@ void mdtTtDatabaseSchema::setupTestSystemUnitTypeTablePopulation()
 
   pvSchema.addTablePopulation(tp);
 }
-
-
-// bool mdtTtDatabaseSchema::populateTestNodeUnitTypeTable()
-// {
-//   QStringList fields;
-//   QList<QVariant> data;
-// 
-//   fields << "Code_PK" << "NameEN" << "NameFR" << "NameDE" << "NameIT";
-// 
-//   // Bus coupling relay
-//   data << "BUSCPLREL" << "Bus coupling relay" << "Relai de couplage de bus" << "Bus Koppelrelais" << "Relè di accoppiamento bus";
-//   if(!insertDataIntoTable("TestNodeUnitType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Channel relay
-//   data.clear();
-//   data << "CHANELREL" << "Channel relay" << "Relai de canal" << "Kanal-Relais" << "Relè della Manica";
-//   if(!insertDataIntoTable("TestNodeUnitType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Test connector
-//   data.clear();
-//   data << "TESTCONNECTOR" << "Test connector" << "Connecteur de test" << "Test Stecker" << "Connettore di test";
-//   if(!insertDataIntoTable("TestNodeUnitType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Measure connector
-//   data.clear();
-//   data << "MEASCONNECTOR" << "Measure connector" << "Connecteur de mesure" << "Mess Stecker" << "Connettore di misura";
-//   if(!insertDataIntoTable("TestNodeUnitType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Power supply
-//   data.clear();
-//   data << "PWR" << "Power supply" << "Alimentation" << "Speisung" << "Alimentazione";
-//   if(!insertDataIntoTable("TestNodeUnitType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Analog output
-//   data.clear();
-//   data << "AO" << "Analog output" << "Sortie analogique" << "Analog Ausgabe" << "Uscita analogica";
-//   if(!insertDataIntoTable("TestNodeUnitType_tbl", fields, data)){
-//     return false;
-//   }
-//   // Analog input
-//   data.clear();
-//   data << "AI" << "Analog input" << "Entrée analogique" << "Analog Eingabe" << "Ingresso analogica";
-//   if(!insertDataIntoTable("TestNodeUnitType_tbl", fields, data)){
-//     return false;
-//   }
-// 
-//   return true;
-// }
