@@ -28,6 +28,23 @@
 #include <QSqlDriver>
 
 /*! \brief Simple container that holds data to populate on a specific table
+ *
+ * Typical usage:
+ * \code
+ * mdtSqlTablePopulationSchema tp;
+ *
+ * // Name and table name
+ * tp.setName("Client_tbl data");
+ * tp.setTableName("Client_tbl");
+ * // Add fields
+ * tp.addFieldName("Id_PK");
+ * tp.addFieldName("Name");
+ * // Add data
+ * tp.currentRowData() << 1 << "Name 1";
+ * tp.commitCurrentRowData();
+ * tp.currentRowData() << 2 << "Name 2";
+ * tp.commitCurrentRowData();
+ * \endcode
  */
 class mdtSqlTablePopulationSchema
 {

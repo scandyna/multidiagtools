@@ -66,12 +66,11 @@
 void mdtClLinkTest::initTestCase()
 {
   createDatabaseSchema();
-  QVERIFY(pvDatabaseManager.database().isOpen());
+  QVERIFY(pvDatabase.isOpen());
 }
 
 void mdtClLinkTest::cleanupTestCase()
 {
-  QFile::remove(pvDbFileInfo.absoluteFilePath());
 }
 
 void mdtClLinkTest::linkTypeDataTest()
@@ -137,7 +136,7 @@ void mdtClLinkTest::linkTypeDataTest()
 void mdtClLinkTest::linkTypeModelTest()
 {
   QLocale locale(QLocale::English);
-  mdtClLinkTypeModel m(pvDatabaseManager.database(), locale);
+  mdtClLinkTypeModel m(pvDatabase, locale);
   mdtClLinkTypeKeyData key;
 
   // Initial state
@@ -234,7 +233,7 @@ void mdtClLinkTest::linkDirectionDataTest()
 void mdtClLinkTest::linkDirectionModelTest()
 {
   QLocale locale(QLocale::English);
-  mdtClLinkDirectionModel m(pvDatabaseManager.database(), locale);
+  mdtClLinkDirectionModel m(pvDatabase, locale);
   mdtClLinkDirectionKeyData key;
   mdtClLinkTypeKeyData typeKey;
 
@@ -342,7 +341,7 @@ void mdtClLinkTest::linkVersionDataTest()
 
 void mdtClLinkTest::linkVersionAddGetRemoveTest()
 {
-  mdtClLinkVersion lv(pvDatabaseManager.database());
+  mdtClLinkVersion lv(pvDatabase);
   mdtClLinkVersionData data;
   mdtClLinkVersionPkData key;
   bool ok;
@@ -411,13 +410,13 @@ void mdtClLinkTest::linkVersionAddGetRemoveTest()
 
 void mdtClLinkTest::linkVersionModelTest()
 {
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  mdtCableListTestScenario scenario(pvDatabase);
   mdtClLinkVersionPkData pk;
 
   // Populate versions
   scenario.createTestLinkVersions();
 
-  mdtClLinkVersionModel m(pvDatabaseManager.database());
+  mdtClLinkVersionModel m(pvDatabase);
   // Initial state
   QCOMPARE(m.rowCount(), 4);
   // Check row of version
@@ -476,8 +475,8 @@ void mdtClLinkTest::linkVersionModelTest()
 
 // void mdtClLinkTest::linkModificationAddGetRemoveTest()
 // {
-//   mdtClLink lnk(pvDatabaseManager.database());
-//   mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
+//   mdtClLink lnk(pvDatabase);
+//   mdtSqlForeignKeySetting fkSetting(pvDatabase, mdtSqlForeignKeySetting::Temporary);
 //   mdtClLinkModificationKeyData key;
 //   mdtClLinkPkData linkFk;
 //   mdtClLinkVersionData version;
@@ -674,8 +673,8 @@ void mdtClLinkTest::vehicleTypeLinkKeyDataTest()
 
 void mdtClLinkTest::vehicleTypeLinkAddGetRemoveTest()
 {
-  mdtClVehicleTypeLink vtl(pvDatabaseManager.database());
-  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
+  mdtClVehicleTypeLink vtl(pvDatabase);
+  mdtSqlForeignKeySetting fkSetting(pvDatabase, mdtSqlForeignKeySetting::Temporary);
   mdtClVehicleTypeLinkKeyData key;
   QList<mdtClVehicleTypeLinkKeyData> keyList;
   mdtClVehicleTypeStartEndKeyData vtStartEndKey;
@@ -956,9 +955,9 @@ void mdtClLinkTest::vehicleTypeLinkAddGetRemoveTest()
 
 void mdtClLinkTest::vehicleTypeLinkUpdateTest()
 {
-  mdtClVehicleTypeLink vtl(pvDatabaseManager.database());
-  mdtClVehicleTypeLinkTestData testData(pvDatabaseManager.database());
-  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
+  mdtClVehicleTypeLink vtl(pvDatabase);
+  mdtClVehicleTypeLinkTestData testData(pvDatabase);
+  mdtSqlForeignKeySetting fkSetting(pvDatabase, mdtSqlForeignKeySetting::Temporary);
   mdtClVehicleTypeStartEndKeyData vtKey;
   QList<mdtClVehicleTypeStartEndKeyData> vtKeyList;
   QList<mdtClVehicleTypeLinkKeyData> vtlKeyList;
@@ -1080,7 +1079,7 @@ void mdtClLinkTest::vehicleTypeCheckBoxTest()
   mdtSqlRecord record;
 
   // Setup vehicle type data record
-  QVERIFY(record.addAllFields("Unit_VehicleType_view", pvDatabaseManager.database()));
+  QVERIFY(record.addAllFields("Unit_VehicleType_view", pvDatabase));
   record.setValue("VehicleType_Id_FK", 1);
   record.setValue("Type", "Type 1");
   record.setValue("SubType", "Sub type 1");
@@ -1103,9 +1102,9 @@ void mdtClLinkTest::vehicleTypeCheckBoxTest()
 
 void mdtClLinkTest::vehicleTypeLinkAssignationWidgetTest()
 {
-  mdtClVehicleTypeLinkAssignationWidget vtlw(nullptr, pvDatabaseManager.database());
-  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
-  mdtClVehicleTypeLinkTestData testData(pvDatabaseManager.database());
+  mdtClVehicleTypeLinkAssignationWidget vtlw(nullptr, pvDatabase);
+  mdtSqlForeignKeySetting fkSetting(pvDatabase, mdtSqlForeignKeySetting::Temporary);
+  mdtClVehicleTypeLinkTestData testData(pvDatabase);
   mdtClLinkPkData linkPk;
   QList<mdtClVehicleTypeStartEndKeyData> vtStartEndKeyList;
 
@@ -1256,8 +1255,8 @@ void mdtClLinkTest::linkDataTest()
 
 void mdtClLinkTest::linkAddGetRemoveTest()
 {
-  mdtClLink lnk(pvDatabaseManager.database());
-  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
+  mdtClLink lnk(pvDatabase);
+  mdtSqlForeignKeySetting fkSetting(pvDatabase, mdtSqlForeignKeySetting::Temporary);
   mdtClLinkData data;
   mdtClLinkPkData pk;
   mdtClArticleLinkPkData articleLinkFk;
@@ -1447,8 +1446,8 @@ void mdtClLinkTest::linkAddGetRemoveTest()
 
 void mdtClLinkTest::linkAndVehicleTypeAddGetRemoveTest()
 {
-  mdtClLink lnk(pvDatabaseManager.database());
-  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
+  mdtClLink lnk(pvDatabase);
+  mdtSqlForeignKeySetting fkSetting(pvDatabase, mdtSqlForeignKeySetting::Temporary);
   mdtClLinkData linkData;
   mdtClLinkPkData linkPk;
   ///mdtClLinkModificationKeyData linkModificationKey;
@@ -1508,11 +1507,11 @@ void mdtClLinkTest::linkAndVehicleTypeAddGetRemoveTest()
 
 void mdtClLinkTest::linkFromArticleLinkAddTest()
 {
-  mdtClLink lnk(pvDatabaseManager.database());
+  mdtClLink lnk(pvDatabase);
   mdtClLinkPkData linkPk;
   mdtClLinkData linkData;
-  mdtClArticleLink alnk(pvDatabaseManager.database());
-  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager.database(), mdtSqlForeignKeySetting::Temporary);
+  mdtClArticleLink alnk(pvDatabase);
+  mdtSqlForeignKeySetting fkSetting(pvDatabase, mdtSqlForeignKeySetting::Temporary);
   mdtClArticleLinkPkData aLinkPk;
   mdtClArticleLinkData aLinkData;
   QList<mdtClArticleLinkData> aLinkDataList;
@@ -1520,7 +1519,7 @@ void mdtClLinkTest::linkFromArticleLinkAddTest()
   mdtClUnitConnectionPkData ucnxPk;
   mdtClUnitConnectionKeyData ucnxKey;
   mdtClUnitConnectionData ucnxData;
-  mdtClUnitConnection ucnx(pvDatabaseManager.database());
+  mdtClUnitConnection ucnx(pvDatabase);
   bool ok;
   mdtClArticleLinkUnitConnectionKeyData alucnxKey;
   mdtClLinkVersionPkData versionPk;
@@ -1692,18 +1691,20 @@ void mdtClLinkTest::linkFromArticleLinkAddTest()
 
 void mdtClLinkTest::createDatabaseSchema()
 {
-  QTemporaryFile dbFile;
-
+  /*
+   * Init and open database
+   */
+  QVERIFY(pvTempFile.open());
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  pvDatabase.setDatabaseName(pvTempFile.fileName());
+  QVERIFY(pvDatabase.open());
   /*
    * Check Sqlite database creation
    */
-  QVERIFY(dbFile.open());
-  dbFile.close();
-  pvDbFileInfo.setFile(dbFile.fileName() + ".db");
-  mdtTtDatabaseSchema schema(&pvDatabaseManager);
-  QVERIFY(schema.createSchemaSqlite(pvDbFileInfo));
-  QVERIFY(pvDatabaseManager.database().isOpen());
-  QVERIFY(schema.checkSchema());
+  mdtTtDatabaseSchema schema;
+  QVERIFY(schema.buildSchema());
+  QVERIFY(schema.databaseSchema().createSchema(pvDatabase));
+  QVERIFY(schema.checkSchema(pvDatabase));
 }
 
 /*
