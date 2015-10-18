@@ -26,9 +26,8 @@
 #include "mdtClConnectorData.h"
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorData.h"
-#include "mdtSqlDatabaseManager.h"
-#include <QMessageBox>
-#include <QFileInfo>
+#include <QTemporaryFile>
+#include <QSqlDatabase>
 #include <QList>
 #include <QString>
 #include <QStringList>
@@ -72,8 +71,8 @@ class mdtClAutoConnectionTest : public mdtTest
   // Create test database schema - Will FAIL on problem
   void createDatabaseSchema();
 
-  mdtSqlDatabaseManager pvDatabaseManager;
-  QFileInfo pvDbFileInfo;
+  QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
+  QSqlDatabase pvDatabase;
 };
 
 #endif // #ifndef MDT_CL_AUTO_CONNECTION_TEST_H

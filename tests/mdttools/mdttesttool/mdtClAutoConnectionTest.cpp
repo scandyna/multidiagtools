@@ -50,17 +50,16 @@
 void mdtClAutoConnectionTest::initTestCase()
 {
   createDatabaseSchema();
-  QVERIFY(pvDatabaseManager.database().isOpen());
+  QVERIFY(pvDatabase.isOpen());
 }
 
 void mdtClAutoConnectionTest::cleanupTestCase()
 {
-  QFile::remove(pvDbFileInfo.absoluteFilePath());
 }
 
 void mdtClAutoConnectionTest::canConnectConnectionsTest()
 {
-  mdtClAutoConnection ac(pvDatabaseManager.database());
+  mdtClAutoConnection ac(pvDatabase);
   mdtClConnectableCriteria criteria;
   mdtClUnitConnectionData cnxA, cnxB;
 
@@ -144,7 +143,7 @@ void mdtClAutoConnectionTest::canConnectConnectionsTest()
 
 void mdtClAutoConnectionTest::checkOrBuildConnectionLinkListByNameTest()
 {
-  mdtClAutoConnection ac(pvDatabaseManager.database());
+  mdtClAutoConnection ac(pvDatabase);
   mdtClConnectableCriteria criteria;
   QStringList cnxNames;
   QList<QVariant> idList;
@@ -320,9 +319,9 @@ void mdtClAutoConnectionTest::checkOrBuildConnectionLinkListByNameTest()
 
 void mdtClAutoConnectionTest::getConnectableConnectionsTest()
 {
-  mdtClAutoConnection ac(pvDatabaseManager.database());
-  mdtClUnitConnection ucnx(pvDatabaseManager.database());
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  mdtClAutoConnection ac(pvDatabase);
+  mdtClUnitConnection ucnx(pvDatabase);
+  mdtCableListTestScenario scenario(pvDatabase);
   mdtClConnectableCriteria criteria;
   QStringList cnxNames;
   QList<mdtClUnitConnectionData> ucnxList;
@@ -450,7 +449,7 @@ void mdtClAutoConnectionTest::getConnectableConnectionsTest()
 
 void mdtClAutoConnectionTest::canConnectConnectorsTest()
 {
-  mdtClAutoConnection ac(pvDatabaseManager.database());
+  mdtClAutoConnection ac(pvDatabase);
   mdtClConnectableCriteria criteria;
   mdtClConnectorData a, b;
 
@@ -480,9 +479,9 @@ void mdtClAutoConnectionTest::canConnectConnectorsTest()
 
 void mdtClAutoConnectionTest::canConnectUnitConnectorsTest()
 {
-  mdtClAutoConnection ac(pvDatabaseManager.database());
-  mdtClUnitConnection ucnx(pvDatabaseManager.database());
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  mdtClAutoConnection ac(pvDatabase);
+  mdtClUnitConnection ucnx(pvDatabase);
+  mdtCableListTestScenario scenario(pvDatabase);
   mdtClConnectorData cnrData;
   QList<mdtClConnectorContactData> contactList;
   mdtClConnectorPkData cnrPkA, cnrPkB;
@@ -621,7 +620,7 @@ mdtClUnitConnectorData mdtClAutoConnectionTest::buildUnitConnector(const mdtClCo
 {
   mdtClUnitConnectorData data;
   mdtClUnitConnectorKeyData key;
-  mdtClUnitConnection ucnx(pvDatabaseManager.database());
+  mdtClUnitConnection ucnx(pvDatabase);
   mdtClConnectorData cnrData;
   bool ok;
 
@@ -642,18 +641,20 @@ mdtClUnitConnectorData mdtClAutoConnectionTest::buildUnitConnector(const mdtClCo
 
 void mdtClAutoConnectionTest::createDatabaseSchema()
 {
-  QTemporaryFile dbFile;
-
+  /*
+   * Init and open database
+   */
+  QVERIFY(pvTempFile.open());
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  pvDatabase.setDatabaseName(pvTempFile.fileName());
+  QVERIFY(pvDatabase.open());
   /*
    * Check Sqlite database creation
    */
-  QVERIFY(dbFile.open());
-  dbFile.close();
-  pvDbFileInfo.setFile(dbFile.fileName() + ".db");
-  mdtTtDatabaseSchema schema(&pvDatabaseManager);
-  QVERIFY(schema.createSchemaSqlite(pvDbFileInfo));
-  QVERIFY(pvDatabaseManager.database().isOpen());
-  QVERIFY(schema.checkSchema());
+  mdtTtDatabaseSchema schema;
+  QVERIFY(schema.buildSchema());
+  QVERIFY(schema.databaseSchema().createSchema(pvDatabase));
+  QVERIFY(schema.checkSchema(pvDatabase));
 }
 
 /*

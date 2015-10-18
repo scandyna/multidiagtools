@@ -53,7 +53,6 @@ void mdtClArticleLinkTest::initTestCase()
 
 void mdtClArticleLinkTest::cleanupTestCase()
 {
-//   QFile::remove(pvDbFileInfo.absoluteFilePath());
 }
 
 void mdtClArticleLinkTest::articleLinkDataTest()
@@ -541,19 +540,6 @@ void mdtClArticleLinkTest::createDatabaseSchema()
   QVERIFY(schema.buildSchema());
   QVERIFY(schema.databaseSchema().createSchema(pvDatabase));
   QVERIFY(schema.checkSchema(pvDatabase));
-
-//   QTemporaryFile dbFile;
-//
-//   /*
-//    * Check Sqlite database creation
-//    */
-//   QVERIFY(dbFile.open());
-//   dbFile.close();
-//   pvDbFileInfo.setFile(dbFile.fileName() + ".db");
-//   mdtTtDatabaseSchema schema(&pvDatabaseManager);
-//   QVERIFY(schema.createSchemaSqlite(pvDbFileInfo));
-//   QVERIFY(pvDatabase.isOpen());
-//   QVERIFY(schema.checkSchema());
 }
 
 /*

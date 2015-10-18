@@ -24,9 +24,6 @@
 #include "mdtTest.h"
 #include <QTemporaryFile>
 #include <QSqlDatabase>
-///#include "mdtSqlDatabaseManager.h"
-///#include <QMessageBox>
-///#include <QFileInfo>
 
 class mdtClArticleLinkTest : public mdtTest
 {
@@ -54,9 +51,6 @@ class mdtClArticleLinkTest : public mdtTest
 
   QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
   QSqlDatabase pvDatabase;
-
-//   mdtSqlDatabaseManager pvDatabaseManager;
-//   QFileInfo pvDbFileInfo;
 };
 
 #endif // #ifndef MDT_CL_ARTICLE_LINK_TEST_H
