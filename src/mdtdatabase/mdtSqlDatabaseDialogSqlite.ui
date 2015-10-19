@@ -26,17 +26,12 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QToolButton" name="tbOpenDatabase">
+         <widget class="QToolButton" name="tbChooseDatabaseFile">
           <property name="toolTip">
-           <string>Open database</string>
+           <string>Choose database file</string>
           </property>
           <property name="text">
-           <string>Open</string>
-          </property>
-          <property name="icon">
-           <iconset theme="document-open">
-            <normaloff/>
-           </iconset>
+           <string>...</string>
           </property>
          </widget>
         </item>
@@ -49,7 +44,24 @@
            <string>...</string>
           </property>
           <property name="icon">
-           <iconset theme="edit-clear"/>
+           <iconset theme="edit-clear">
+            <normaloff/>
+           </iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="tbOpenDatabase">
+          <property name="toolTip">
+           <string>Open database</string>
+          </property>
+          <property name="text">
+           <string>Open</string>
+          </property>
+          <property name="icon">
+           <iconset theme="document-open">
+            <normaloff/>
+           </iconset>
           </property>
          </widget>
         </item>

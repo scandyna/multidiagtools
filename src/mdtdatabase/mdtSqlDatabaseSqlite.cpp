@@ -92,7 +92,7 @@ bool mdtSqlDatabaseSqlite::createDatabase(const QFileInfo & fileInfo, mdtSqlData
 
   // Check if directory exists
   if(!fileInfo.absoluteDir().exists()){
-    pvLastError = mdtError(tr("Directory '") + fileInfo.absoluteDir().path() + tr("' does not exists.") , mdtError::Error);
+    pvLastError.setError(tr("Directory '") + fileInfo.absoluteDir().path() + tr("' does not exists.") , mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseSqlite");
     pvLastError.commit();
     return false;
@@ -103,7 +103,7 @@ bool mdtSqlDatabaseSqlite::createDatabase(const QFileInfo & fileInfo, mdtSqlData
       case KeepExisting:
         break;
       case FailIfExists:
-        pvLastError = mdtError(tr("Database '") + fileInfo.fileName() + tr("' allready exists") , mdtError::Error);
+        pvLastError.setError(tr("Database '") + fileInfo.fileName() + tr("' allready exists") , mdtError::Error);
         MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseSqlite");
         pvLastError.commit();
         return false;
@@ -111,7 +111,7 @@ bool mdtSqlDatabaseSqlite::createDatabase(const QFileInfo & fileInfo, mdtSqlData
         {
           QFile file(fileInfo.absoluteFilePath());
           if(!file.resize(0)){
-            pvLastError = mdtError(tr("File truncate failed for file '") + fileInfo.absoluteFilePath() + "'", mdtError::Error);
+            pvLastError.setError(tr("File truncate failed for file '") + fileInfo.absoluteFilePath() + "'", mdtError::Error);
             MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseSqlite");
             pvLastError.setSystemError(file.error(), file.errorString());
             pvLastError.commit();
@@ -127,6 +127,24 @@ bool mdtSqlDatabaseSqlite::createDatabase(const QFileInfo & fileInfo, mdtSqlData
   return openDatabasePv();
 }
 
+bool mdtSqlDatabaseSqlite::setDatabaseFile(const QFileInfo & fileInfo)
+{
+  Q_ASSERT(!isOpen());
+  Q_ASSERT(!fileInfo.filePath().isEmpty());
+
+  if(!fileInfo.exists()){
+    QString msg = tr("File '") + fileInfo.fileName() + tr("' does not exist.");
+    msg += "\n" + tr("Directory: '") + fileInfo.absoluteDir().path() + tr("'");
+    pvLastError.setError(msg, mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseSqlite");
+    pvLastError.commit();
+    return false;
+  }
+  pvDatabase.setDatabaseName(fileInfo.absoluteFilePath());
+
+  return true;
+}
+
 bool mdtSqlDatabaseSqlite::deleteDatabase(const QString & filePath)
 {
   Q_ASSERT(!isOpen());
@@ -134,7 +152,7 @@ bool mdtSqlDatabaseSqlite::deleteDatabase(const QString & filePath)
   QFile file(filePath);
 
   if(!file.remove()){
-    pvLastError = mdtError(tr("Cannot remove file '") + filePath + "'", mdtError::Error);
+    pvLastError.setError(tr("Cannot remove file '") + filePath + "'", mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseSqlite");
     pvLastError.setSystemError(file.error(), file.errorString());
     pvLastError.commit();

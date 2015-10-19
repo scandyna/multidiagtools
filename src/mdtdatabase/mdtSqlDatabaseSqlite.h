@@ -169,6 +169,13 @@ class mdtSqlDatabaseSqlite
     pvDatabase.close();
   }
 
+  /*! \brief Set database file
+   *
+   * \pre Database mut not be open (\sa isOpen() )
+   * \pre fileInfo must contain a non empty path (existence of file is checked, and is not a precondition)
+   */
+  bool setDatabaseFile(const QFileInfo & fileInfo);
+
   /*! \brief Clear database name
    *
    * \pre Database mut not be open (\sa isOpen() )

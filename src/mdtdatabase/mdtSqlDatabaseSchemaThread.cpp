@@ -350,9 +350,6 @@ bool mdtSqlDatabaseSchemaThread::createView(const mdtSqlViewSchema::Schema & vs,
   }
   // Create view
   sql = vs.getSqlForCreate(db.driver());
-  
-  qDebug() << "\n" << sql;
-  
   if(!query.exec(sql)){
     QSqlError sqlError = query.lastError();
     mdtError error(tr("Cannot create view '") + name + tr("'"), mdtError::Error);

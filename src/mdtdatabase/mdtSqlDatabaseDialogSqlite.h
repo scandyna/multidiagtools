@@ -75,6 +75,10 @@ class mdtSqlDatabaseDialogSqlite : public QDialog, Ui::mdtSqlDatabaseDialogSqlit
     return pvDatabase;
   }
 
+  /*! \brief Set directory to start from in file selection dialog
+   */
+  void setDefaultDirectory(const QString & directory);
+
  private slots:
 
   /*! \brief Update regarding given database
@@ -85,7 +89,13 @@ class mdtSqlDatabaseDialogSqlite : public QDialog, Ui::mdtSqlDatabaseDialogSqlit
    */
   void maybeClearDatabase(const QString & connectionName);
 
-  /*! \brief Let user choose a databse file and open it
+  /*! \brief Let user choose a database file
+   *
+   * Will update pvDatabase with choosen file.
+   */
+  void chooseDatabaseFile();
+
+  /*! \brief Let user choose a databse file and open it WRONG
    */
   void openDatabase();
 
@@ -127,6 +137,7 @@ class mdtSqlDatabaseDialogSqlite : public QDialog, Ui::mdtSqlDatabaseDialogSqlit
 
   mdtSqlDatabaseSqlite pvDatabase;
   QStringList pvNonEditableConnectionNames; // List of connections that user is not allowed to edit
+  QString pvDefaultDirectory;
 };
 
 #endif // #ifndef MDT_SQL_DATABASE_DIALOG_SQLITE_H

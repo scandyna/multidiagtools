@@ -28,6 +28,7 @@
 #include <QString>
 #include <QList>
 #include <QMap>
+#include <QSqlDatabase>
 
 class mdtSqlForm;
 class mdtSqlTableWidget;
@@ -394,15 +395,19 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   bool initWorkDirectory();
 
+  /*! \brief Init database connection
+   */
+  bool initDatabase();
+
   /*! \brief Open a Sqlite database
    *
    * \todo Manage default/previous opened DB, let user choose, etc...
    */
-  bool openDatabaseSqlite();
+//   bool openDatabaseSqlite();
 
   /*! \brief Create a new Sqlite database
    */
-  bool createDatabaseSqlite();
+//   bool createDatabaseSqlite();
 
   /*! \brief Import a Sqlite database into currently open database
    */
@@ -416,6 +421,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void displayError(const mdtError & error);
 
+  // Database members
+  QSqlDatabase pvDatabase;
+  mdtSqlDatabaseManager *pvDatabaseManager; /// \deprecated
+  QDir pvWorkDirectory;
   // View and editor container
   QList<mdtSqlTableWidget*> pvOpenViews;
   QList<mdtSqlWindow*> pvOpenEditors;
@@ -428,9 +437,6 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   QList<QVariant> pvWorkingOnVehicleTypeList;
   // Central widget
   QTabWidget *pvTabWidget;
-  // Database members
-  mdtSqlDatabaseManager *pvDatabaseManager;
-  QDir pvWorkDirectory;
 
   // Test item editor
   ///mdtTtTestModelItemEditor *pvTestItemEditor;

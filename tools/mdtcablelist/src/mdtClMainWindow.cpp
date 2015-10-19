@@ -21,7 +21,11 @@
 #include "mdtClMainWindow.h"
 #include "mdtSqlWindow.h"
 #include "mdtSqlForm.h"
+
 #include "mdtSqlDatabaseManager.h"
+
+#include "mdtSqlDatabaseDialogSqlite.h"
+#include "mdtSqlDatabaseSchemaDialog.h"
 #include "mdtClLinkVersion.h"
 #include "mdtTtDatabaseSchema.h"
 #include "mdtClVehicleTypeEditor.h"
@@ -97,25 +101,75 @@ mdtClMainWindow::~mdtClMainWindow()
 
 void mdtClMainWindow::openDatabase()
 {
-  openDatabaseSqlite();
-  ///createVehicleTypeActions();
-  
-  mdtClLinkVersion lv(pvDatabaseManager->database());
+  mdtSqlDatabaseDialogSqlite dialog(this);
+
+  // Check that no database is allready open
+  if(pvDatabase.isOpen()){
+    displayWarning(tr("A database is allready open."), tr("Close current database and try again."));
+    return;
+  }
+  // Init database
+  if(!initDatabase()){
+    return;
+  }
+  // Setup and show dialog
+  dialog.updateConnectionsList();
+  dialog.setDatabase(pvDatabase);
+  dialog.setDefaultDirectory(pvWorkDirectory.absolutePath());
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  Q_ASSERT(pvDatabase.isOpen());
+  // Check that we have open a cable list schema
+  mdtTtDatabaseSchema dbSchema;
+  if(!dbSchema.checkSchema(pvDatabase)){
+    displayWarning(tr("Choosen file does not contain a valid cable list database."));
+    closeDatabase();
+    return;
+  }
+  // Set also open database to Widgets containers
+  mdtClApplicationWidgets::setDatabase(pvDatabase);
+  mdtTtApplicationWidgets::setDatabase(pvDatabase);
+  // Set last available link version to current one
+  mdtClLinkVersion lv(pvDatabase);
   lv.setLastVersionAsCurrentVersion();
 }
 
 void mdtClMainWindow::closeDatabase()
 {
-  if(!deleteEditors()){
-    return;
+  if(pvDatabase.isOpen()){
+    if(!deleteEditors()){
+      return;
+    }
+    deleteTableviews();
+    pvDatabase.close();
   }
-  deleteTableviews();
-  pvDatabaseManager->database().close();
+  if(pvDatabase.isValid()){
+    QSqlDatabase::removeDatabase(pvDatabase.connectionName());
+  }
+  ///pvDatabaseManager->database().close();
 }
 
 void mdtClMainWindow::createNewDatabase()
 {
-  createDatabaseSqlite();
+  mdtSqlDatabaseSchemaDialog dialog(this);
+  mdtTtDatabaseSchema dbSchema;
+
+  // Check that no database is allready open
+  if(pvDatabase.isOpen()){
+    displayWarning(tr("A database is allready open."), tr("Close current database and try again."));
+    return;
+  }
+  // Init database
+  if(!initDatabase()){
+    return;
+  }
+  // Setup and show dialog
+  dbSchema.buildSchema();
+  dialog.setSchema(dbSchema.databaseSchema());
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
 }
 
 void mdtClMainWindow::importDatabase()
@@ -1430,75 +1484,88 @@ bool mdtClMainWindow::initWorkDirectory()
   return true;
 }
 
-bool mdtClMainWindow::openDatabaseSqlite()
+bool mdtClMainWindow::initDatabase()
 {
-  QFileInfo fileInfo;
-
-  // Check that no database is allready open
-  if(pvDatabaseManager->database().isOpen()){
-    displayWarning(tr("A database is allready open."), tr("Close current database and try again."));
+  if(pvDatabase.isValid()){
+    return true;
+  }
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE", "cablelist");
+  if(!pvDatabase.isValid()){
+    displayWarning(tr("Could not create database connection."), tr("Check that qt driver for SQLite is available."));
     return false;
   }
-  // Let the user choose a file
-  fileInfo = pvDatabaseManager->chooseDatabaseSqlite(pvWorkDirectory);
-  if(fileInfo.fileName().isEmpty()){
-    return false;
-  }
-  /// \todo Mange, let user choose, etc...
-  ///QFileInfo fileInfo(pvWorkDirectory, "test01.sqlite");
-  // Open database
-  if(!pvDatabaseManager->openDatabaseSqlite(fileInfo)){
-    displayWarning(pvDatabaseManager->lastError().text());
-    /// \todo Dangerous !!
-    /**
-    mdtTtDatabaseSchema dbSchema(pvDatabaseManager);
-    if(!dbSchema.createSchemaSqlite(fileInfo)){
-      QMessageBox msgBox(this);
-      mdtError e(tr("Cannot create database schema."), mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtClMainWindow");
-      e.commit();
-      msgBox.setText(e.text());
-      msgBox.setIcon(QMessageBox::Critical);
-      msgBox.exec();
-      return false;
-    }
-    */
-    return false;
-  }
-  // Check that we have open a cable list schema
-  mdtTtDatabaseSchema dbSchema(pvDatabaseManager);
-  if(!dbSchema.checkSchema()){
-    displayWarning(tr("Choosen file does not contain a valid cable list database."));
-    closeDatabase();
-    return false;
-  }
-  // Set also open database to Widgets containers
-  mdtClApplicationWidgets::setDatabase(pvDatabaseManager->database());
-  mdtTtApplicationWidgets::setDatabase(pvDatabaseManager->database());
-
   return true;
 }
 
-bool mdtClMainWindow::createDatabaseSqlite()
-{
-  // Check that no database is allready open
-  if(pvDatabaseManager->database().isOpen()){
-    displayWarning(tr("A database is allready open."), tr("Close current database and try again."));
-    return false;
-  }
-  // Create database
-  mdtTtDatabaseSchema dbSchema(pvDatabaseManager);
-  if(!dbSchema.createSchemaSqlite(pvWorkDirectory)){
-    QMessageBox msgBox(this);
-    msgBox.setText(tr("Database creation failed.") + "                ");
-    msgBox.setDetailedText(dbSchema.lastError().text());
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.exec();
-    return false;
-  }
+// bool mdtClMainWindow::openDatabaseSqlite()
+// {
+//   QFileInfo fileInfo;
+// 
+//   // Check that no database is allready open
+//   if(pvDatabaseManager->database().isOpen()){
+//     displayWarning(tr("A database is allready open."), tr("Close current database and try again."));
+//     return false;
+//   }
+//   // Let the user choose a file
+//   fileInfo = pvDatabaseManager->chooseDatabaseSqlite(pvWorkDirectory);
+//   if(fileInfo.fileName().isEmpty()){
+//     return false;
+//   }
+//   /// \todo Mange, let user choose, etc...
+//   ///QFileInfo fileInfo(pvWorkDirectory, "test01.sqlite");
+//   // Open database
+//   if(!pvDatabaseManager->openDatabaseSqlite(fileInfo)){
+//     displayWarning(pvDatabaseManager->lastError().text());
+//     /// \todo Dangerous !!
+//     /**
+//     mdtTtDatabaseSchema dbSchema(pvDatabaseManager);
+//     if(!dbSchema.createSchemaSqlite(fileInfo)){
+//       QMessageBox msgBox(this);
+//       mdtError e(tr("Cannot create database schema."), mdtError::Error);
+//       MDT_ERROR_SET_SRC(e, "mdtClMainWindow");
+//       e.commit();
+//       msgBox.setText(e.text());
+//       msgBox.setIcon(QMessageBox::Critical);
+//       msgBox.exec();
+//       return false;
+//     }
+//     */
+//     return false;
+//   }
+//   // Check that we have open a cable list schema
+//   mdtTtDatabaseSchema dbSchema(pvDatabaseManager);
+//   if(!dbSchema.checkSchema()){
+//     displayWarning(tr("Choosen file does not contain a valid cable list database."));
+//     closeDatabase();
+//     return false;
+//   }
+//   // Set also open database to Widgets containers
+//   mdtClApplicationWidgets::setDatabase(pvDatabaseManager->database());
+//   mdtTtApplicationWidgets::setDatabase(pvDatabaseManager->database());
+// 
+//   return true;
+// }
 
-  return true;
-}
+// bool mdtClMainWindow::createDatabaseSqlite()
+// {
+//   // Check that no database is allready open
+//   if(pvDatabaseManager->database().isOpen()){
+//     displayWarning(tr("A database is allready open."), tr("Close current database and try again."));
+//     return false;
+//   }
+//   // Create database
+//   mdtTtDatabaseSchema dbSchema(pvDatabaseManager);
+//   if(!dbSchema.createSchemaSqlite(pvWorkDirectory)){
+//     QMessageBox msgBox(this);
+//     msgBox.setText(tr("Database creation failed.") + "                ");
+//     msgBox.setDetailedText(dbSchema.lastError().text());
+//     msgBox.setIcon(QMessageBox::Critical);
+//     msgBox.exec();
+//     return false;
+//   }
+// 
+//   return true;
+// }
 
 bool mdtClMainWindow::importDatabaseSqlite()
 {
