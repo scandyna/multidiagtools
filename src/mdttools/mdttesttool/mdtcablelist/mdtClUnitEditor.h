@@ -46,7 +46,7 @@ class mdtClUnitEditor : public mdtSqlForm
 
   /*! \brief Destructor
    */
-  ///~mdtClUnitEditor();
+  ~mdtClUnitEditor();
 
   /*! \brief Setup tables
    */

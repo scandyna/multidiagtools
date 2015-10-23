@@ -250,6 +250,7 @@ add_test (mdtClConnectorTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtcl
 add_test (mdtDatabaseTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtdatabasetest)
 add_test (mdtDatabaseWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtdatabasewidgettest)
 add_test (mdtSqlCopierTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtsqlcopiertest)
+add_test (mdtSqlApplicationWidgetsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtsqlapplicationwidgetstest)
 
 # mdtIoWidgetTest
 add_test (mdtIoWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtiowidgettest)

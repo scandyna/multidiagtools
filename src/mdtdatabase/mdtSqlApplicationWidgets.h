@@ -40,6 +40,8 @@
  * Using this class helps to create editors and views.
  *  Most of time, only one instance of each editore or view is needed,
  *  but must be accessible from multiple places in application.
+ *
+ * \sa mdtSqlApplicationWidgetsGuard
  */
 template <typename T>
 class mdtSqlApplicationWidgets : public QObject
@@ -50,14 +52,14 @@ class mdtSqlApplicationWidgets : public QObject
    */
   static void setDatabase(QSqlDatabase db)
   {
-    instance().pvDatabase = db;
+    instance()->pvDatabase = db;
   }
 
   /*! \brief Get used database
    */
   static QSqlDatabase database()
   {
-    return instance().pvDatabase;
+    return instance()->pvDatabase;
   }
 
   /*! \brief Close all open widgets
@@ -73,24 +75,39 @@ class mdtSqlApplicationWidgets : public QObject
    */
   static void clear();
 
-  /*! \brief Get pointer to instance
+  /*! \brief Get the (unique) instance of (concrete) application widgets
    *
-   * Useful for signal/slot connections
+   * Memory allocation is done automatically if needed,
+   *  so it is allways valid.
+   *
+   * Once destrcut() was called, this function will also
+   *  return a pointer to a new object.
+   *  Take care when storing returned pointer and calling destrcut().
+   *  Note also the lifetime of created mdtSqlApplicationWidgetsGuard object,
+   *  witch will call destrcut() when it is deleted.
+   *
+   * \sa mdtSqlApplicationWidgetsGuard
    */
-  static T *instancePtr()
+  static T *instance()
   {
-    return & instance();
+    if(pvInstance == nullptr){
+      pvInstance = new T;
+    }
+    return pvInstance;
+  }
+
+  /*! \brief Free resource
+   *
+   * Will delete the instance of application widgets.
+   *
+   * \sa mdtSqlApplicationWidgetsGuard
+   */
+  static void destruct()
+  {
+    delete pvInstance;
   }
 
  protected:
-
-  /*! \brief Get the (unique) instance
-   */
-  static T & instance()
-  {
-    static T aw;
-    return aw;
-  }
 
   /*! \brief Setup given editor in mdtSqlWindow
    *
@@ -100,15 +117,15 @@ class mdtSqlApplicationWidgets : public QObject
    *
    * \pre editor must be a valid pointer.
    */
-  std::shared_ptr<mdtSqlWindow> setupEditorInSqlWindow(const std::shared_ptr<mdtSqlForm> & editor);
+  std::shared_ptr<mdtSqlWindow> setupEditorInSqlWindow(mdtSqlForm * const editor);
 
   /*! \brief Show open window that contains given sql form
    */
-  void showSqlWindow(const std::shared_ptr<mdtSqlForm> & form, bool enableNavigation, bool enableEdition);
+  void showSqlWindow(const mdtSqlForm * const form, bool enableNavigation, bool enableEdition);
 
   /*! \brief Get open window for given sql form
    */
-  std::shared_ptr<mdtSqlWindow> getOpenSqlWindow(const std::shared_ptr<mdtSqlForm> & form);
+  std::shared_ptr<mdtSqlWindow> getOpenSqlWindow(const mdtSqlForm * const form);
 
   /*! \brief Close all open SQL windows
    *
@@ -149,46 +166,54 @@ class mdtSqlApplicationWidgets : public QObject
    */
   void displayError(const mdtError & error);
 
-  /*! \brief Prevent multiple object instances
-   */
+  // Prevent multiple object instances
   mdtSqlApplicationWidgets() {}
+
+  // Destructor
+  ~mdtSqlApplicationWidgets()
+  {
+    pvInstance = nullptr;
+  }
+
+  // Disable also move and copy
+  mdtSqlApplicationWidgets(const mdtSqlApplicationWidgets &&) = delete;
+  mdtSqlApplicationWidgets(mdtSqlApplicationWidgets &) = delete;
+  mdtSqlApplicationWidgets & operator=(const mdtSqlApplicationWidgets &) = delete;
 
   QSqlDatabase pvDatabase;
 
  private:
 
-  // We define no destructer, it will never be called
-
-  Q_DISABLE_COPY(mdtSqlApplicationWidgets);
-
+  static T *pvInstance;
   QList<std::shared_ptr<mdtSqlWindow> > pvOpenEditorWidows;
 };
+template<typename T> T *mdtSqlApplicationWidgets<T>::pvInstance = nullptr;
 
 
 template <typename T>
 bool mdtSqlApplicationWidgets<T>::closeOpenWidgets()
 {
-  if(!instance().closeOpenSqlWindows()){
+  if(!instance()->closeOpenSqlWindows()){
     return false;
   }
-  return instance().closeCustomWidgets();
+  return instance()->closeCustomWidgets();
 }
 
 template <typename T>
 void mdtSqlApplicationWidgets<T>::clear()
 {
-  instance().clearAllWidgets();
-  instance().pvOpenEditorWidows.clear();
+  instance()->clearAllWidgets();
+  instance()->pvOpenEditorWidows.clear();
 }
 
 template <typename T>
-std::shared_ptr<mdtSqlWindow> mdtSqlApplicationWidgets<T>::setupEditorInSqlWindow(const std::shared_ptr<mdtSqlForm> & editor)
+std::shared_ptr<mdtSqlWindow> mdtSqlApplicationWidgets<T>::setupEditorInSqlWindow(mdtSqlForm * const editor)
 {
-  Q_ASSERT(editor);
+  Q_ASSERT(editor != nullptr);
 
   std::shared_ptr<mdtSqlWindow> window(new mdtSqlWindow);
 
-  window->setSqlForm(editor.get());
+  window->setSqlForm(editor);
   window->enableInsertion();
   window->enableDeletion();
   window->enableEdition();
@@ -198,9 +223,9 @@ std::shared_ptr<mdtSqlWindow> mdtSqlApplicationWidgets<T>::setupEditorInSqlWindo
 }
 
 template <typename T>
-void mdtSqlApplicationWidgets<T>::showSqlWindow(const std::shared_ptr<mdtSqlForm> & form, bool enableNavigation, bool enableEdition)
+void mdtSqlApplicationWidgets<T>::showSqlWindow(const mdtSqlForm * const form, bool enableNavigation, bool enableEdition)
 {
-  Q_ASSERT(form);
+  Q_ASSERT(form != nullptr);
 
   auto window = getOpenSqlWindow(form);
   Q_ASSERT(window);
@@ -211,13 +236,13 @@ void mdtSqlApplicationWidgets<T>::showSqlWindow(const std::shared_ptr<mdtSqlForm
 }
 
 template <typename T>
-std::shared_ptr<mdtSqlWindow> mdtSqlApplicationWidgets<T>::getOpenSqlWindow(const std::shared_ptr<mdtSqlForm> & form)
+std::shared_ptr<mdtSqlWindow> mdtSqlApplicationWidgets<T>::getOpenSqlWindow(const mdtSqlForm * const form)
 {
-  Q_ASSERT(form);
+  Q_ASSERT(form != nullptr);
 
   for(auto & window : pvOpenEditorWidows){
     Q_ASSERT(window);
-    if(window->sqlForm() == form.get()){
+    if(window->sqlForm() == form){
       return window;
     }
   }
@@ -255,5 +280,59 @@ void mdtSqlApplicationWidgets<T>::displayError(const mdtError & error)
   msgBox.setIcon(error.levelIcon());
   msgBox.exec();
 }
+
+/*! \brief Guard for mdtSqlApplicationWidgets
+ *
+ * mdtSqlApplicationWidgets is based on a singleton pattern.
+ *  A problem is that mdtSqlApplicationWidgets::destruct() must
+ *  be called explicitly to free resource.
+ *
+ * To avoid handling this free explicitly,
+ *  create one instance of mdtSqlApplicationWidgetsGuard
+ *  in the scope of the lifetime of mdtSqlApplicationWidgets (f.ex. in main() ).
+ *
+ * \note One option was tested with mdtSqlApplicationWidgets::instance() returning a shared pointer,
+ *        which also avoid creating this guard class.
+ *        The problem with this approach is that calling a function witch calls
+ *        mdtSqlApplicationWidgets::instance() creates a shared pointer,
+ *        witch is also destructed when the function returns.
+ *        The result was allways creating and deleting the application widgets singleton
+ *        (witch is not only a performance issue, but a danger if instance pointer is reused somewhere).
+ *
+ * \code
+ * int main(void)
+ * {
+ *  // myApplicationWidgets is a specialization of mdtSqlApplicationWidgets
+ *  mdtSqlApplicationWidgetsGuard<myApplicationWidgets> myAppGuard;
+ *
+ *  // Classic init stuff (f.ex. QApplication, ...)
+ *
+ *  // Application code ...
+ *  myApplicationWidgets::showSomeWidget();
+ *
+ *  // When returning from main, myApplicationWidgets::destrcut() is called
+ * }
+ * \endcode
+ */
+template <typename T>
+class mdtSqlApplicationWidgetsGuard
+{
+ public:
+
+  mdtSqlApplicationWidgetsGuard() {}
+  // Move and copy is not allowed
+  mdtSqlApplicationWidgetsGuard(mdtSqlApplicationWidgetsGuard &&) = delete;
+  mdtSqlApplicationWidgetsGuard(const mdtSqlApplicationWidgetsGuard &) = delete;
+  mdtSqlApplicationWidgetsGuard operator=(const mdtSqlApplicationWidgetsGuard &) = delete;
+
+  /*! \brief Destructor
+   *
+   * Will call destruct() on specified mdtSqlApplicationWidgets type
+   */
+  ~mdtSqlApplicationWidgetsGuard()
+  {
+    mdtSqlApplicationWidgets<T>::destruct();
+  }
+};
 
 #endif // #ifndef MDT_SQL_APPLICATION_WIDGETS_H

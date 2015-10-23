@@ -47,9 +47,6 @@
 #include "mdtTtBasicTesterWindow.h"
 #include "mdtTtBasicTestNodeCalibrationWindow.h"
 
-#include "mdtClApplicationWidgets.h"
-#include "mdtTtApplicationWidgets.h"
-
 #include <QAction>
 #include <QMessageBox>
 #include <QApplication>
@@ -141,6 +138,8 @@ void mdtClMainWindow::closeDatabase()
     if(!deleteEditors()){
       return;
     }
+    mdtClApplicationWidgets::clear();
+    mdtTtApplicationWidgets::clear();
     deleteTableviews();
     pvDatabase.close();
   }
@@ -427,7 +426,7 @@ void mdtClMainWindow::editSelectedUnit()
 
    // Get unit view
    view = getTableView("Unit_view");
-   if(view == 0){
+   if(view == nullptr){
      return;
    }
   // Get ID of selected unit
@@ -571,7 +570,7 @@ void mdtClMainWindow::editSelectedTestConnectionCable()
 //     return;
 //   }
   Q_ASSERT(s.rowCount() == 1);
-  mdtTtApplicationWidgets::editTestCable(s.data(0, "Unit_Id_FK_PK"));
+//   mdtTtApplicationWidgets::editTestCable(s.data(0, "Unit_Id_FK_PK"));
   /// \todo Corriger !! + filtre ??
 //   if(!editor->setCurrentRow("Id_PK", s.data(0, "Unit_Id_FK_PK"))){
 //     displayError(editor->lastError());
@@ -709,6 +708,8 @@ void mdtClMainWindow::disconnectTestCable()
 
 void mdtClMainWindow::closeTableView(int index)
 {
+  Q_ASSERT(pvTabWidget != nullptr);
+
   QWidget *widget;
   int i;
 
@@ -924,6 +925,7 @@ bool mdtClMainWindow::createArticleTableView()
 
 void mdtClMainWindow::deleteTableviews()
 {
+  Q_ASSERT(pvTabWidget != nullptr);
   pvTabWidget->clear();
   qDeleteAll(pvOpenViews);
   pvOpenViews.clear();
@@ -1210,13 +1212,13 @@ mdtSqlTableWidget *mdtClMainWindow::createTableView(const QString & tableName, c
   mdtSqlTableWidget *tableWidget;
 
   // Check that we have currently a database open
-  if(!pvDatabaseManager->database().isOpen()){
+  if(!pvDatabase.isOpen()){
     displayWarning(tr("No database is open."), tr("Please open a database and try again."));
     return 0;
   }
   // Setup widget
   tableWidget = new mdtSqlTableWidget;
-  tableWidget->setTableName(tableName, pvDatabaseManager->database(), userFriendlyTableName);
+  tableWidget->setTableName(tableName, pvDatabase, userFriendlyTableName);
   // Setup tab widget (if needed)
   if(pvTabWidget == 0){
     pvTabWidget = new QTabWidget;
@@ -1405,10 +1407,9 @@ void mdtClMainWindow::connectActions()
   ///connect(pbEditArticle, SIGNAL(clicked()), this, SLOT(editArticle()));
 
   // Unit edition
-  connect(actViewUnit, SIGNAL(triggered()), this, SLOT(viewUnit()));
-  ///connect(actEditUnit, SIGNAL(triggered()), this, SLOT(editUnit()));
-  connect(actEditUnit, SIGNAL(triggered()), mdtClApplicationWidgets::instancePtr(), SLOT(slotEditUnits()));
-  ///connect(actEditSelectedUnit, SIGNAL(triggered()), this, SLOT(editSelectedUnit()));
+  connect(actViewUnit, &QAction::triggered, this, &mdtClMainWindow::viewUnit);
+  connect(actEditUnit, &QAction::triggered, mdtClApplicationWidgets::instance(), &mdtClApplicationWidgets::slotEditUnits);
+  connect(actEditSelectedUnit, &QAction::triggered, this, &mdtClMainWindow::editSelectedUnit);
 
   // Link list
   connect(actViewLinkList, SIGNAL(triggered()), this, SLOT(viewLinkList()));
@@ -1419,11 +1420,11 @@ void mdtClMainWindow::connectActions()
   connect(actViewLinkBeam, SIGNAL(triggered()), this, SLOT(viewLinkBeam()));
   connect(actEditLinkBeam, SIGNAL(triggered()), this, SLOT(editLinkBeam()));
   // Link version
-  connect(actCreateLinkVersion, SIGNAL(triggered()), mdtClApplicationWidgets::instancePtr(), SLOT(createLinkVersion()));
+  connect(actCreateLinkVersion, &QAction::triggered, mdtClApplicationWidgets::instance(), &mdtClApplicationWidgets::createLinkVersion);
 
   // Test connection cable
   connect(actViewTestConnectionCable, SIGNAL(triggered()), this, SLOT(viewTestConnectionCable()));
-  connect(actEditTestConnectionCable, SIGNAL(triggered()), mdtTtApplicationWidgets::instancePtr(), SLOT(slotEditTestCables()));
+//   connect(actEditTestConnectionCable, &QAction::triggered, mdtTtApplicationWidgets::instance(), &mdtTtApplicationWidgets::slotEditTestCables);
   ///connect(actEditTestConnectionCable, SIGNAL(triggered()), this, SLOT(editTestConnectionCable()));
   /**
   connect(actCreateTestConnectionCable, SIGNAL(triggered()), this, SLOT(createTestConnectionCable()));
@@ -1432,13 +1433,13 @@ void mdtClMainWindow::connectActions()
   */
   
   // Test system edition
-  connect(actEditTestSystem, SIGNAL(triggered()), mdtTtApplicationWidgets::instancePtr(), SLOT(slotEditTestSystems()));
-  connect(actEditTestSystemComponent, SIGNAL(triggered()), mdtTtApplicationWidgets::instancePtr(), SLOT(slotEditTestSystemComponents()));
-  connect(actEditTestSystemUnit, SIGNAL(triggered()), mdtTtApplicationWidgets::instancePtr(), SLOT(slotEditTestSystemUnits()));
-  
+  connect(actEditTestSystem, &QAction::triggered, mdtTtApplicationWidgets::instance(), &mdtTtApplicationWidgets::slotEditTestSystems);
+  connect(actEditTestSystemComponent, &QAction::triggered, mdtTtApplicationWidgets::instance(), &mdtTtApplicationWidgets::slotEditTestSystemComponents);
+  connect(actEditTestSystemUnit, &QAction::triggered, mdtTtApplicationWidgets::instance(), &mdtTtApplicationWidgets::slotEditTestSystemUnits);
+
   // Test node edition
   ///connect(actEditTestNode, SIGNAL(triggered()), this, SLOT(editTestNode()));
-  connect(actEditTestNode, SIGNAL(triggered()), mdtTtApplicationWidgets::instancePtr(), SLOT(slotEditTestNodes()));
+  ///connect(actEditTestNode, SIGNAL(triggered()), mdtTtApplicationWidgets::instancePtr(), SLOT(slotEditTestNodes()));
   connect(actCalibrateW750_2BusNode, SIGNAL(triggered()), this, SLOT(calibrateW750TestNode()));
   // Test edition
   connect(actEditTest, SIGNAL(triggered()), this, SLOT(editTest()));
@@ -1496,76 +1497,6 @@ bool mdtClMainWindow::initDatabase()
   }
   return true;
 }
-
-// bool mdtClMainWindow::openDatabaseSqlite()
-// {
-//   QFileInfo fileInfo;
-// 
-//   // Check that no database is allready open
-//   if(pvDatabaseManager->database().isOpen()){
-//     displayWarning(tr("A database is allready open."), tr("Close current database and try again."));
-//     return false;
-//   }
-//   // Let the user choose a file
-//   fileInfo = pvDatabaseManager->chooseDatabaseSqlite(pvWorkDirectory);
-//   if(fileInfo.fileName().isEmpty()){
-//     return false;
-//   }
-//   /// \todo Mange, let user choose, etc...
-//   ///QFileInfo fileInfo(pvWorkDirectory, "test01.sqlite");
-//   // Open database
-//   if(!pvDatabaseManager->openDatabaseSqlite(fileInfo)){
-//     displayWarning(pvDatabaseManager->lastError().text());
-//     /// \todo Dangerous !!
-//     /**
-//     mdtTtDatabaseSchema dbSchema(pvDatabaseManager);
-//     if(!dbSchema.createSchemaSqlite(fileInfo)){
-//       QMessageBox msgBox(this);
-//       mdtError e(tr("Cannot create database schema."), mdtError::Error);
-//       MDT_ERROR_SET_SRC(e, "mdtClMainWindow");
-//       e.commit();
-//       msgBox.setText(e.text());
-//       msgBox.setIcon(QMessageBox::Critical);
-//       msgBox.exec();
-//       return false;
-//     }
-//     */
-//     return false;
-//   }
-//   // Check that we have open a cable list schema
-//   mdtTtDatabaseSchema dbSchema(pvDatabaseManager);
-//   if(!dbSchema.checkSchema()){
-//     displayWarning(tr("Choosen file does not contain a valid cable list database."));
-//     closeDatabase();
-//     return false;
-//   }
-//   // Set also open database to Widgets containers
-//   mdtClApplicationWidgets::setDatabase(pvDatabaseManager->database());
-//   mdtTtApplicationWidgets::setDatabase(pvDatabaseManager->database());
-// 
-//   return true;
-// }
-
-// bool mdtClMainWindow::createDatabaseSqlite()
-// {
-//   // Check that no database is allready open
-//   if(pvDatabaseManager->database().isOpen()){
-//     displayWarning(tr("A database is allready open."), tr("Close current database and try again."));
-//     return false;
-//   }
-//   // Create database
-//   mdtTtDatabaseSchema dbSchema(pvDatabaseManager);
-//   if(!dbSchema.createSchemaSqlite(pvWorkDirectory)){
-//     QMessageBox msgBox(this);
-//     msgBox.setText(tr("Database creation failed.") + "                ");
-//     msgBox.setDetailedText(dbSchema.lastError().text());
-//     msgBox.setIcon(QMessageBox::Critical);
-//     msgBox.exec();
-//     return false;
-//   }
-// 
-//   return true;
-// }
 
 bool mdtClMainWindow::importDatabaseSqlite()
 {

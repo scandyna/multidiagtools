@@ -1,12 +1,23 @@
-window_sizes 1280 952 246 1028 899 0
+window_sizes 1280 964 323 951 911 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 941058 // Test
-    1028 899 90 3 0 0
+  classdiagram_ref 753154 // mdtClUnitVehicle
+    760 728 100 4 0 0
+  classdiagram_ref 759682 // mdtClUnit
+    760 728 100 3 48 0
+  classdiagram_ref 1086466 // mdtClLinkedUnitConnectionInfoDialog
+    120 106 100 4 0 0
+  classdiagram_ref 1092994 // mdtClLinkedUnitConnectorInfoDialog
+    120 106 100 18 0 0
+  classdiagram_ref 1026690 // CableList
+    120 106 100 4 0 0
+  active  classdiagram_ref 1430914 // UnitConnectorAndConnection
+    951 911 100 3 0 0
 end
 show_stereotypes
-selected classdiagram_ref 941058 // Test
+selected classdiagram_ref 1430914 // UnitConnectorAndConnection
 open
-  classview_ref 569730 // TestTool
+  classview_ref 609154 // GlobalView
+  classview_ref 755202 // ConnectorAndConnection
 end
 end

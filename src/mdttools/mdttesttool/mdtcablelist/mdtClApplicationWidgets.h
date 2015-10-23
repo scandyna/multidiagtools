@@ -22,6 +22,7 @@
 #define MDT_CL_APPLICATION_WIDGETS_H
 
 #include "mdtSqlApplicationWidgets.h"
+#include <QPointer>
 
 // Editors
 class mdtClUnitEditor;
@@ -36,7 +37,7 @@ class mdtClApplicationWidgets : public mdtSqlApplicationWidgets<mdtClApplication
 {
  Q_OBJECT
 
- // Needed because mdtSqlApplicationWidgets must access some private function from mdtTtApplicationWidgets
+ // Needed because mdtSqlApplicationWidgets must access some private function from mdtClApplicationWidgets
  friend class mdtSqlApplicationWidgets<mdtClApplicationWidgets>;
 
  public:
@@ -55,15 +56,23 @@ class mdtClApplicationWidgets : public mdtSqlApplicationWidgets<mdtClApplication
    */
   void slotEditUnits();
 
-  /*! \brief Create a new link version
-   */
-  void createLinkVersion(QWidget *parentWidget = nullptr);
-
  private:
+
+  /*! \brief Setup and show unit editor
+   */
+  void setupAndShowUnitEditor(const QVariant & unitId = QVariant());
 
   /*! \brief Create Unit editor
    */
   bool createUnitEditor();
+
+ public:
+
+  /*! \brief Create a new link version
+   */
+  void createLinkVersion();
+
+ private:
 
   /*! \brief Clear all widgets
    */
@@ -71,16 +80,14 @@ class mdtClApplicationWidgets : public mdtSqlApplicationWidgets<mdtClApplication
 
   /*! \brief Prevent multiple object instances
    */
-  mdtClApplicationWidgets() {}
+  mdtClApplicationWidgets();
 
   // We define no destructer, it will never be called
 
   Q_DISABLE_COPY(mdtClApplicationWidgets);
 
-//   QSqlDatabase pvDatabase;
-//   QList<std::shared_ptr<mdtSqlWindow> > pvOpenEditorWidows;
   // Editors
-  std::shared_ptr<mdtClUnitEditor> pvUnitEditor;
+  QPointer<mdtClUnitEditor> pvUnitEditor;
 };
 
 #endif // #ifndef MDT_CL_APPLICATION_WIDGETS_H

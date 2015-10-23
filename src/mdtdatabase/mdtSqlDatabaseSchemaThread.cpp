@@ -165,9 +165,6 @@ void mdtSqlDatabaseSchemaThread::createTables(QList<mdtSqlSchemaTable> & tables,
     if(pvAbort){
       return;
     }
-    
-    msleep(1000);
-    
     // Create table
     if(!createTable(ts, db)){
       errorOccured = true;
@@ -227,9 +224,6 @@ void mdtSqlDatabaseSchemaThread::populateTables(const QList<mdtSqlTablePopulatio
     if(pvAbort){
       return;
     }
-    
-    msleep(1000);
-    
     if(!populateTable(tps, db)){
       errorOccured = true;
     }
@@ -306,9 +300,6 @@ void mdtSqlDatabaseSchemaThread::createViews(const QList<mdtSqlViewSchema::Schem
     if(pvAbort){
       return;
     }
-    
-    msleep(1000);
-    
     if(!createView(vs, db)){
       errorOccured = true;
     }

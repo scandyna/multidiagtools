@@ -4203,34 +4203,16 @@ void mdtDatabaseWidgetTest::sqlFieldSelectionDialogTest()
 
 }
 
-void mdtDatabaseWidgetTest::sqlApplicationWidgetsTest()
-{
-  // Following line must not compile
-  //mdtSqlApplicationWidgetsTest wt;
-
-  mdtSqlApplicationWidgetsTest::setDatabase(pvDatabase);
-  QVERIFY(mdtSqlApplicationWidgetsTest::database().tables() == pvDatabase.tables());
-  
-  mdtError e("Test", mdtError::Warning);
-  mdtSqlApplicationWidgetsTest::doSomeThing();
-  
-  // Cleanup
-  mdtSqlApplicationWidgetsTest::clear();
-}
-
 /*
  * Helper methods
  */
 
 void mdtDatabaseWidgetTest::createDatabaseSchema()
 {
-  ///QTemporaryFile dbFile;
-  ///QFileInfo dbFileInfo;
   mdtSqlDatabaseSchema s;
   mdtSqlSchemaTable ts;
   mdtSqlForeignKey fk;
   mdtSqlField field;
-  ///mdtSqlDatabaseSqlite db;
 
   /*
    * Init and open database
@@ -4239,20 +4221,6 @@ void mdtDatabaseWidgetTest::createDatabaseSchema()
   pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
   pvDatabase.setDatabaseName(pvTempFile.fileName());
   QVERIFY(pvDatabase.open());
-
-//   pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
-//   db.setDatabase(pvDatabase);
-//   QVERIFY(db.isValid());
-//   QVERIFY(pvTempFile.open());
-//   QVERIFY(db.openDatabase(pvTempFile));
-//   QVERIFY(pvDatabase.isOpen());
-  /*
-   * Check Sqlite database creation
-   */
-//   QVERIFY(dbFile.open());
-//   dbFile.close();
-//   dbFileInfo.setFile(dbFile.fileName() + ".db");
-//   QVERIFY(pvDatabaseManager.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::OverwriteExisting));
   /*
    * Create schema
    */
@@ -4278,14 +4246,12 @@ void mdtDatabaseWidgetTest::createDatabaseSchema()
   field.setType(mdtSqlFieldType::Varchar);
   field.setLength(100);
   ts.addField(field, false);
-  ///QVERIFY(pvDatabaseManager.createTable(ts, mdtSqlDatabaseManager::OverwriteExisting));
   // SomeValueDouble
   field.clear();
   field.setName("SomeValueDouble");
   field.setType(mdtSqlFieldType::Double);
   ts.addField(field, false);
   s.addTable(ts);
-  ///QVERIFY(pvDatabaseManager.createTable(ts, mdtSqlDatabaseManager::OverwriteExisting));
   /*
    * ClientDetail_tbl - Linked 1-1 to Client_tbl (Real cases would be SomeTable_tbl based on Client_tbl)
    */
@@ -4304,8 +4270,6 @@ void mdtDatabaseWidgetTest::createDatabaseSchema()
   fk.setOnUpdateAction(mdtSqlForeignKey::Cascade);
   fk.addKeyFields("Id_PK", field);
   ts.addForeignKey(fk);
-//   ts.addForeignKey("Client_Id_FK_PK_fk", "Client_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   QVERIFY(ts.addFieldToForeignKey("Client_Id_FK_PK_fk", "Client_Id_FK_PK", "Id_PK"));
   // Detail
   field.clear();
   field.setName("Detail");
@@ -4314,7 +4278,6 @@ void mdtDatabaseWidgetTest::createDatabaseSchema()
   field.setLength(100);
   ts.addField(field, false);
   s.addTable(ts);
-  ///QVERIFY(pvDatabaseManager.createTable(ts, mdtSqlDatabaseManager::OverwriteExisting));
   // Address_tbl
   ts.clear();
   ts.setTableName("Address_tbl", "UTF8");
@@ -4348,17 +4311,12 @@ void mdtDatabaseWidgetTest::createDatabaseSchema()
   fk.addKeyFields("Id_PK", field);
   ts.addForeignKey(fk);
   s.addTable(ts);
-//   ts.addForeignKey("Client_Id_FK_fk", "Client_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
-//   QVERIFY(ts.addFieldToForeignKey("Client_Id_FK_fk", "Client_Id_FK", "Id_PK"));
-  ///QVERIFY(pvDatabaseManager.createTable(ts, mdtSqlDatabaseManager::OverwriteExisting));
   // Create schema
   QVERIFY(s.createSchema(pvDatabase));
 
   // Enable foreing keys support
-  ///mdtSqlForeignKeySetting fkSetting(pvDatabase, mdtSqlForeignKeySetting::Permanent);
   mdtSqlForeignKeySetting fkSetting(pvDatabase, mdtSqlForeignKeySetting::Permanent);
   QVERIFY(fkSetting.enable());
-//   QVERIFY(pvDatabaseManager.setForeignKeysEnabled(true));
 }
 
 

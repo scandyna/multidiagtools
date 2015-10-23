@@ -38,116 +38,22 @@
 
 void mdtTtApplicationWidgets::editTestSystems()
 {
-  auto & aw = instance();
-
-  if(!aw.pvTestSystemEditor){
-    if(!aw.createTestSystemEditor()){
-      return;
-    }
-  }
-  Q_ASSERT(aw.pvTestSystemEditor);
-  if(!aw.pvTestSystemEditor->select()){
-    aw.displayError(aw.pvTestSystemEditor->lastError());
-    return;
-  }
-  aw.showSqlWindow(aw.pvTestSystemEditor, false, true);
+  instance()->setupAndShowTestSystemEditor();
 }
-
-void mdtTtApplicationWidgets::editTestSystemComponents()
-{
-  auto & aw = instance();
-
-  if(!aw.pvTestSystemComponentEditor){
-    if(!aw.createTestSystemComponentEditor()){
-      return;
-    }
-  }
-  Q_ASSERT(aw.pvTestSystemComponentEditor);
-  if(!aw.pvTestSystemComponentEditor->select()){
-    aw.displayError(aw.pvTestSystemComponentEditor->lastError());
-    return;
-  }
-  aw.showSqlWindow(aw.pvTestSystemComponentEditor, false, true);
-}
-
-void mdtTtApplicationWidgets::editTestSystemUnit(const QVariant& unitId)
-{
-  auto & aw = instance();
-
-  if(!aw.pvTestSystemUnitEditor){
-    if(!aw.createTestSystemUnitEditor()){
-      return;
-    }
-  }
-  Q_ASSERT(aw.pvTestSystemUnitEditor);
-  if(!aw.pvTestSystemUnitEditor->select()){
-    aw.displayError(aw.pvTestSystemUnitEditor->lastError());
-    return;
-  }
-  if(!aw.pvTestSystemUnitEditor->setCurrentRow("Unit_Id_FK_PK", unitId)){
-    aw.displayError(aw.pvTestSystemUnitEditor->lastError());
-    return;
-  }
-  aw.showSqlWindow(aw.pvTestSystemUnitEditor, false, true);
-}
-
-
-
-void mdtTtApplicationWidgets::editTestCable(const QVariant & testCableId)
-{
-  auto & aw = instance();
-
-  if(!aw.pvTestCableEditor){
-    if(!aw.createTestCableEditor()){
-      return;
-    }
-  }
-  Q_ASSERT(aw.pvTestCableEditor);
-  if(!aw.pvTestCableEditor->select()){
-    aw.displayError(aw.pvTestCableEditor->lastError());
-    return;
-  }
-  if(!aw.pvTestCableEditor->setCurrentRow("Id_PK", testCableId)){
-    aw.displayError(aw.pvTestCableEditor->lastError());
-    return;
-  }
-  aw.showSqlWindow(aw.pvTestCableEditor, false, true);
-}
-
-void mdtTtApplicationWidgets::editTestCables()
-{
-  instance().slotEditTestCables();
-}
-
-void mdtTtApplicationWidgets::showTestNodeModbusIoTool(const QString& deviceAlias)
-{
-  auto & aw = instance();
-
-  // Create tool if needed
-  if(!aw.pvTestNodeModbusIoTool){
-    if(!aw.createTestNodeModbusIoTool()){
-      return;
-    }
-  }
-  Q_ASSERT(aw.pvTestNodeModbusIoTool);
-  // .....
-  if(!aw.pvTestNodeModbusIoTool->setModbusDevice(deviceAlias)){
-    aw.displayError(aw.pvTestNodeModbusIoTool->lastError());
-    return;
-  }
-  aw.pvTestNodeModbusIoTool->raise();
-  aw.pvTestNodeModbusIoTool->show();
-}
-
 
 void mdtTtApplicationWidgets::slotEditTestSystems()
 {
-  if(!pvTestSystemEditor){
+  setupAndShowTestSystemEditor();
+}
+
+void mdtTtApplicationWidgets::setupAndShowTestSystemEditor()
+{
+  if(pvTestSystemEditor == nullptr){
     if(!createTestSystemEditor()){
       return;
     }
   }
-  Q_ASSERT(pvTestSystemEditor);
+  Q_ASSERT(pvTestSystemEditor != nullptr);
   if(!pvTestSystemEditor->select()){
     displayError(pvTestSystemEditor->lastError());
     return;
@@ -155,78 +61,15 @@ void mdtTtApplicationWidgets::slotEditTestSystems()
   showSqlWindow(pvTestSystemEditor, true, true);
 }
 
-void mdtTtApplicationWidgets::slotEditTestSystemComponents()
-{
-  if(!pvTestSystemComponentEditor){
-    if(!createTestSystemComponentEditor()){
-      return;
-    }
-  }
-  Q_ASSERT(pvTestSystemComponentEditor);
-  if(!pvTestSystemComponentEditor->select()){
-    displayError(pvTestSystemComponentEditor->lastError());
-    return;
-  }
-  showSqlWindow(pvTestSystemComponentEditor, true, true);
-}
-
-void mdtTtApplicationWidgets::slotEditTestSystemUnits()
-{
-  if(!pvTestSystemUnitEditor){
-    if(!createTestSystemUnitEditor()){
-      return;
-    }
-  }
-  Q_ASSERT(pvTestSystemUnitEditor);
-  if(!pvTestSystemUnitEditor->select()){
-    displayError(pvTestSystemUnitEditor->lastError());
-    return;
-  }
-  showSqlWindow(pvTestSystemUnitEditor, true, true);
-}
-
-
-
-void mdtTtApplicationWidgets::slotEditTestCables()
-{
-  if(!pvTestCableEditor){
-    if(!createTestCableEditor()){
-      return;
-    }
-  }
-  Q_ASSERT(pvTestCableEditor);
-  if(!pvTestCableEditor->select()){
-    displayError(pvTestCableEditor->lastError());
-    return;
-  }
-  showSqlWindow(pvTestCableEditor, true, true);
-}
-
-void mdtTtApplicationWidgets::slotEditTestNodes()
-{
-  if(!pvTestNodeEditor){
-    if(!createTestNodeEditor()){
-      return;
-    }
-  }
-  Q_ASSERT(pvTestNodeEditor);
-  if(!pvTestNodeEditor->select()){
-    displayError(pvTestNodeEditor->lastError());
-    return;
-  }
-  showSqlWindow(pvTestNodeEditor, true, true);
-}
-
-
 bool mdtTtApplicationWidgets::createTestSystemEditor()
 {
-  Q_ASSERT(!pvTestSystemEditor);
+  Q_ASSERT(pvTestSystemEditor == nullptr);
 
   // Setup editor
-  pvTestSystemEditor.reset(new mdtTtTestSystemEditor(0, pvDatabase) );
+  pvTestSystemEditor = new mdtTtTestSystemEditor(nullptr, pvDatabase);
   if(!pvTestSystemEditor->setupTables()){
     displayError(pvTestSystemEditor->lastError());
-    pvTestSystemEditor.reset();
+    delete pvTestSystemEditor;
     return false;
   }
   // Setup in a generic SQL window
@@ -238,15 +81,40 @@ bool mdtTtApplicationWidgets::createTestSystemEditor()
   return true;
 }
 
+void mdtTtApplicationWidgets::editTestSystemComponents()
+{
+  instance()->setupAndShowTestSystemComponentEditor();
+}
+
+void mdtTtApplicationWidgets::slotEditTestSystemComponents()
+{
+  setupAndShowTestSystemComponentEditor();
+}
+
+void mdtTtApplicationWidgets::setupAndShowTestSystemComponentEditor()
+{
+  if(pvTestSystemComponentEditor.isNull()){
+    if(!createTestSystemComponentEditor()){
+      return;
+    }
+  }
+  Q_ASSERT(!pvTestSystemComponentEditor.isNull());
+  if(!pvTestSystemComponentEditor->select()){
+    displayError(pvTestSystemComponentEditor->lastError());
+    return;
+  }
+  showSqlWindow(pvTestSystemComponentEditor, true, true);
+}
+
 bool mdtTtApplicationWidgets::createTestSystemComponentEditor()
 {
-  Q_ASSERT(!pvTestSystemComponentEditor);
+  Q_ASSERT(pvTestSystemComponentEditor.isNull());
 
   // Setup editor
-  pvTestSystemComponentEditor.reset(new mdtTtTestSystemComponentEditor(0, pvDatabase) );
+  pvTestSystemComponentEditor = new mdtTtTestSystemComponentEditor(nullptr, pvDatabase);
   if(!pvTestSystemComponentEditor->setupTables()){
     displayError(pvTestSystemComponentEditor->lastError());
-    pvTestSystemComponentEditor.reset();
+    delete pvTestSystemComponentEditor;
     return false;
   }
   // Setup in a generic SQL window
@@ -258,15 +126,46 @@ bool mdtTtApplicationWidgets::createTestSystemComponentEditor()
   return true;
 }
 
+void mdtTtApplicationWidgets::editTestSystemUnit(const QVariant& unitId)
+{
+  instance()->setupAndShowTestSystemUnitEditor(unitId);
+}
+
+void mdtTtApplicationWidgets::slotEditTestSystemUnits()
+{
+  setupAndShowTestSystemUnitEditor();
+}
+
+void mdtTtApplicationWidgets::setupAndShowTestSystemUnitEditor(const QVariant & unitId)
+{
+  if(pvTestSystemUnitEditor.isNull()){
+    if(!createTestSystemUnitEditor()){
+      return;
+    }
+  }
+  Q_ASSERT(!pvTestSystemUnitEditor.isNull());
+  if(!pvTestSystemUnitEditor->select()){
+    displayError(pvTestSystemUnitEditor->lastError());
+    return;
+  }
+  if(!unitId.isNull()){
+    if(!pvTestSystemUnitEditor->setCurrentRow("Unit_Id_FK_PK", unitId)){
+      displayError(pvTestSystemUnitEditor->lastError());
+      return;
+    }
+  }
+  showSqlWindow(pvTestSystemUnitEditor, true, true);
+}
+
 bool mdtTtApplicationWidgets::createTestSystemUnitEditor()
 {
-  Q_ASSERT(!pvTestSystemUnitEditor);
+  Q_ASSERT(pvTestSystemUnitEditor.isNull());
 
   // Setup editor
-  pvTestSystemUnitEditor.reset(new mdtTtTestSystemUnitEditor(0, pvDatabase) );
+  pvTestSystemUnitEditor = new mdtTtTestSystemUnitEditor(nullptr, pvDatabase);
   if(!pvTestSystemUnitEditor->setupTables()){
     displayError(pvTestSystemUnitEditor->lastError());
-    pvTestSystemUnitEditor.reset();
+    delete pvTestSystemUnitEditor;
     return false;
   }
   // Setup in a generic SQL window
@@ -280,62 +179,142 @@ bool mdtTtApplicationWidgets::createTestSystemUnitEditor()
   return true;
 }
 
-
-
-bool mdtTtApplicationWidgets::createTestCableEditor()
+void mdtTtApplicationWidgets::showTestNodeModbusIoTool(const QString& deviceAlias)
 {
-  Q_ASSERT(!pvTestCableEditor);
-
-  // Setup editor
-  pvTestCableEditor.reset(new mdtTtTestCableEditor(0, pvDatabase) );
-  if(!pvTestCableEditor->setupTables()){
-    displayError(pvTestCableEditor->lastError());
-    pvTestCableEditor.reset();
-    return false;
-  }
-  // Setup in a generic SQL window
-  auto window = setupEditorInSqlWindow(pvTestCableEditor);
-  Q_ASSERT(window);
-  window->setWindowTitle(tr("Physical test cable edition"));
-  window->resize(800, 600);
-
-  return true;
+  instance()->setupAndShowTestNodeModbusIoTool(deviceAlias);
 }
 
-bool mdtTtApplicationWidgets::createTestNodeEditor()
+void mdtTtApplicationWidgets::setupAndShowTestNodeModbusIoTool(const QString& deviceAlias)
 {
-  Q_ASSERT(!pvTestNodeEditor);
-
-  // Setup editor
-  pvTestNodeEditor.reset(new mdtTtTestNodeEditor(0, pvDatabase));
-  if(!pvTestNodeEditor->setupTables()){
-    displayError(pvTestNodeEditor->lastError());
-    pvTestNodeEditor.reset();
-    return false;
+  // Create tool if needed
+  if(pvTestNodeModbusIoTool.isNull()){
+    if(!createTestNodeModbusIoTool()){
+      return;
+    }
   }
-  // Setup in a generic SQL window
-  auto window = setupEditorInSqlWindow(pvTestNodeEditor);
-  Q_ASSERT(window);
-  // Add modbus I/O tool action
-  Q_ASSERT(window->menuBar() != nullptr);
-  QMenu *toolsMenu = window->menuBar()->addMenu(tr("&Tools"));
-  QAction *actShowTestNodeModbusIoTool = toolsMenu->addAction(tr("&MODBUS I/O tool"));
-  connect(actShowTestNodeModbusIoTool, SIGNAL(triggered()), pvTestNodeEditor.get(), SLOT(showTestNodeModbusIoTool()));
-  // Some other setup
-  window->setWindowTitle(tr("Test node edition"));
-  window->resize(800, 600);
-
-  return true;
+  Q_ASSERT(!pvTestNodeModbusIoTool.isNull());
+  // .....
+  if(!pvTestNodeModbusIoTool->setModbusDevice(deviceAlias)){
+    displayError(pvTestNodeModbusIoTool->lastError());
+    return;
+  }
+  pvTestNodeModbusIoTool->raise();
+  pvTestNodeModbusIoTool->show();
 }
 
 bool mdtTtApplicationWidgets::createTestNodeModbusIoTool()
 {
-  Q_ASSERT(!pvTestNodeModbusIoTool);
+  Q_ASSERT(pvTestNodeModbusIoTool.isNull());
 
-  pvTestNodeModbusIoTool.reset(new mdtTtTestNodeModbusIoTool(0, pvDatabase));
+  pvTestNodeModbusIoTool = new mdtTtTestNodeModbusIoTool(nullptr, pvDatabase);
 
   return true;
 }
+
+// void mdtTtApplicationWidgets::editTestCable(const QVariant & testCableId)
+// {
+//   auto *aw = instance();
+//
+//   if(!aw->pvTestCableEditor){
+//     if(!aw->createTestCableEditor()){
+//       return;
+//     }
+//   }
+//   Q_ASSERT(aw->pvTestCableEditor);
+//   if(!aw->pvTestCableEditor->select()){
+//     aw->displayError(aw->pvTestCableEditor->lastError());
+//     return;
+//   }
+//   if(!aw->pvTestCableEditor->setCurrentRow("Id_PK", testCableId)){
+//     aw->displayError(aw->pvTestCableEditor->lastError());
+//     return;
+//   }
+//   aw->showSqlWindow(aw->pvTestCableEditor, false, true);
+// }
+
+// void mdtTtApplicationWidgets::editTestCables()
+// {
+//   instance()->slotEditTestCables();
+// }
+
+// void mdtTtApplicationWidgets::slotEditTestCables()
+// {
+//   if(!pvTestCableEditor){
+//     if(!createTestCableEditor()){
+//       return;
+//     }
+//   }
+//   Q_ASSERT(pvTestCableEditor);
+//   if(!pvTestCableEditor->select()){
+//     displayError(pvTestCableEditor->lastError());
+//     return;
+//   }
+//   showSqlWindow(pvTestCableEditor, true, true);
+// }
+
+// void mdtTtApplicationWidgets::slotEditTestNodes()
+// {
+//   if(!pvTestNodeEditor){
+//     if(!createTestNodeEditor()){
+//       return;
+//     }
+//   }
+//   Q_ASSERT(pvTestNodeEditor);
+//   if(!pvTestNodeEditor->select()){
+//     displayError(pvTestNodeEditor->lastError());
+//     return;
+//   }
+//   showSqlWindow(pvTestNodeEditor, true, true);
+// }
+
+
+
+
+// bool mdtTtApplicationWidgets::createTestCableEditor()
+// {
+//   Q_ASSERT(!pvTestCableEditor);
+//
+//   // Setup editor
+//   pvTestCableEditor.reset(new mdtTtTestCableEditor(0, pvDatabase) );
+//   if(!pvTestCableEditor->setupTables()){
+//     displayError(pvTestCableEditor->lastError());
+//     pvTestCableEditor.reset();
+//     return false;
+//   }
+//   // Setup in a generic SQL window
+//   auto window = setupEditorInSqlWindow(pvTestCableEditor);
+//   Q_ASSERT(window);
+//   window->setWindowTitle(tr("Physical test cable edition"));
+//   window->resize(800, 600);
+//
+//   return true;
+// }
+
+// bool mdtTtApplicationWidgets::createTestNodeEditor()
+// {
+//   Q_ASSERT(!pvTestNodeEditor);
+// 
+//   // Setup editor
+//   pvTestNodeEditor.reset(new mdtTtTestNodeEditor(0, pvDatabase));
+//   if(!pvTestNodeEditor->setupTables()){
+//     displayError(pvTestNodeEditor->lastError());
+//     pvTestNodeEditor.reset();
+//     return false;
+//   }
+//   // Setup in a generic SQL window
+//   auto window = setupEditorInSqlWindow(pvTestNodeEditor);
+//   Q_ASSERT(window);
+//   // Add modbus I/O tool action
+//   Q_ASSERT(window->menuBar() != nullptr);
+//   QMenu *toolsMenu = window->menuBar()->addMenu(tr("&Tools"));
+//   QAction *actShowTestNodeModbusIoTool = toolsMenu->addAction(tr("&MODBUS I/O tool"));
+//   connect(actShowTestNodeModbusIoTool, SIGNAL(triggered()), pvTestNodeEditor.get(), SLOT(showTestNodeModbusIoTool()));
+//   // Some other setup
+//   window->setWindowTitle(tr("Test node edition"));
+//   window->resize(800, 600);
+//
+//   return true;
+// }
 
 bool mdtTtApplicationWidgets::closeCustomWidgets()
 {
@@ -350,13 +329,23 @@ bool mdtTtApplicationWidgets::closeCustomWidgets()
 
 void mdtTtApplicationWidgets::clearAllWidgets()
 {
-  // Delete all editors
-  pvTestSystemEditor.reset();
-  pvTestSystemComponentEditor.reset();
-  pvTestSystemUnitEditor.reset();
-  
-  pvTestCableEditor.reset();
-  pvTestNodeEditor.reset();
+  /*
+   * Delete all editors.
+   * Note:
+   *  thanks to QPointer, we can simply delete all
+   *  without taking care if they are allready destroyed
+   *  (typically by a parent).
+   *  QPointer also becomes a nullptr automatically.
+   */
+  delete pvTestSystemEditor;
+  delete pvTestSystemComponentEditor;
+  delete pvTestSystemUnitEditor;
+//   pvTestCableEditor.reset();
+//   pvTestNodeEditor.reset();
   // Delete all tools
-  pvTestNodeModbusIoTool.reset();
+  delete pvTestNodeModbusIoTool;
+}
+
+mdtTtApplicationWidgets::mdtTtApplicationWidgets()
+{
 }

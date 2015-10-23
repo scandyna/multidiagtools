@@ -43,6 +43,7 @@ mdtSqlWindow::mdtSqlWindow(QWidget *parent, Qt::WindowFlags flags)
 
 mdtSqlWindow::~mdtSqlWindow()
 {
+  qDebug() << "mdtSqlWindow::~mdtSqlWindow() - form: " << pvForm->objectName();
 }
 
 void mdtSqlWindow::setSqlForm(mdtSqlForm *form)

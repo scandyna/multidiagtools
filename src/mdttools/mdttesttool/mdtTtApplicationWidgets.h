@@ -22,6 +22,7 @@
 #define MDT_TT_APPLICATION_WIDGETS_H
 
 #include "mdtSqlApplicationWidgets.h"
+#include <QPointer>
 
 // Editors
 class mdtTtTestSystemEditor;
@@ -52,76 +53,106 @@ class mdtTtApplicationWidgets : public mdtSqlApplicationWidgets<mdtTtApplication
    */
   static void editTestSystems();
 
-  /*! \brief Edit test system components
-   */
-  static void editTestSystemComponents();
-
-  /*! \brief Edit specified test system unit
-   */
-  static void editTestSystemUnit(const QVariant & unitId);
-
-
-  /*! \brief Edit a specific test cable
-   */
-  static void editTestCable(const QVariant & testCableId);
-
-  /*! \brief Edit test cables
-   */
-  static void editTestCables();
-
-  /*! \brief Show test node MODBUS I/O tool
-   */
-  static void showTestNodeModbusIoTool(const QString & deviceAlias);
-
- public slots:
-
   /*! \brief Edit test systems
    */
   void slotEditTestSystems();
 
-  /*! \brief Edit test system components
-   */
-  void slotEditTestSystemComponents();
-
-  /*! \brief Edit test system units
-   */
-  void slotEditTestSystemUnits();
-
-
-  /*! \brief Edit test cables
-   */
-  void slotEditTestCables();
-
-  /*! \brief Edit test nodes
-   */
-  void slotEditTestNodes();
-
  private:
+
+  /*! \brief Setup and show test system editor
+   */
+  void setupAndShowTestSystemEditor();
 
   /*! \brief Create test system editor
    */
   bool createTestSystemEditor();
 
+ public:
+
+  /*! \brief Edit test system components
+   */
+  static void editTestSystemComponents();
+
+  /*! \brief Edit test system components
+   */
+  void slotEditTestSystemComponents();
+
+ private:
+
+  /*! \brief Setup and show test system component editor
+   */
+  void setupAndShowTestSystemComponentEditor();
+
   /*! \brief Create test system component editor
    */
   bool createTestSystemComponentEditor();
+
+ public:
+
+  /*! \brief Edit specified test system unit
+   */
+  static void editTestSystemUnit(const QVariant & unitId);
+
+  /*! \brief Edit test system units
+   */
+  void slotEditTestSystemUnits();
+
+ private:
+
+  /*! \brief Setup and show test system unit editor
+   */
+  void setupAndShowTestSystemUnitEditor(const QVariant & unitId = QVariant());
 
   /*! \brief Create test system unit editor
    */
   bool createTestSystemUnitEditor();
 
+ public:
 
-  /*! \brief Create test cable editor
+  /*! \brief Edit a specific test cable
    */
-  bool createTestCableEditor();
+//   static void editTestCable(const QVariant & testCableId);
 
-  /*! \brief Create test node editor
+  /*! \brief Edit test cables
    */
-  bool createTestNodeEditor();
+//   static void editTestCables();
+
+ private:
+
+ public:
+
+  /*! \brief Show test node MODBUS I/O tool
+   */
+  static void showTestNodeModbusIoTool(const QString & deviceAlias);
+
+ private:
+
+  /*! \brief Setup and show test node MODBUS I/O tool
+   */
+  void setupAndShowTestNodeModbusIoTool(const QString & deviceAlias);
 
   /*! \brief Create test node MODBUS I/O tool
    */
   bool createTestNodeModbusIoTool();
+
+  /*! \brief Edit test cables
+   */
+//   void slotEditTestCables();
+
+  /*! \brief Edit test nodes
+   */
+//   void slotEditTestNodes();
+
+ private:
+
+  /*! \brief Create test cable editor
+   */
+//   bool createTestCableEditor();
+
+  /*! \brief Create test node editor
+   */
+//   bool createTestNodeEditor();
+
 
   /*! \brief Close custom widgets
    */
@@ -133,21 +164,21 @@ class mdtTtApplicationWidgets : public mdtSqlApplicationWidgets<mdtTtApplication
 
   /*! \brief Prevent multiple object instances
    */
-  mdtTtApplicationWidgets() {}
+  mdtTtApplicationWidgets();
 
   // We define no destructer, it will never be called
 
   Q_DISABLE_COPY(mdtTtApplicationWidgets);
 
   // Editors
-  std::shared_ptr<mdtTtTestSystemEditor> pvTestSystemEditor;
-  std::shared_ptr<mdtTtTestSystemComponentEditor> pvTestSystemComponentEditor;
-  std::shared_ptr<mdtTtTestSystemUnitEditor> pvTestSystemUnitEditor;
-  
-  std::shared_ptr<mdtTtTestCableEditor> pvTestCableEditor;
-  std::shared_ptr<mdtTtTestNodeEditor> pvTestNodeEditor;
+  QPointer<mdtTtTestSystemEditor> pvTestSystemEditor;
+  QPointer<mdtTtTestSystemComponentEditor> pvTestSystemComponentEditor;
+  QPointer<mdtTtTestSystemUnitEditor> pvTestSystemUnitEditor;
+//   std::shared_ptr<mdtTtTestCableEditor> pvTestCableEditor;
+//   std::shared_ptr<mdtTtTestNodeEditor> pvTestNodeEditor;
   // Tools
-  std::shared_ptr<mdtTtTestNodeModbusIoTool> pvTestNodeModbusIoTool;
+  QPointer<mdtTtTestNodeModbusIoTool> pvTestNodeModbusIoTool;
+  ///std::shared_ptr<mdtTtTestNodeModbusIoTool> pvTestNodeModbusIoTool;
 };
 
 #endif // #ifndef MDT_TT_APPLICATION_WIDGETS_H

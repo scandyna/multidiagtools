@@ -23,7 +23,6 @@
 
 #include "mdtTest.h"
 #include <QFileInfo>
-///#include <QMessageBox>
 #include <QSqlDatabase>
 
 class mdtDatabaseTest : public mdtTest

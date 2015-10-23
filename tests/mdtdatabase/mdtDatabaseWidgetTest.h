@@ -22,9 +22,6 @@
 #define MDT_DATABASE_WIDGET_TEST_H
 
 #include "mdtTest.h"
-
-///#include "mdtSqlDatabaseManager.h"
-
 #include "mdtSqlApplicationWidgets.h"
 #include <QFileInfo>
 #include <QMessageBox>
@@ -97,31 +94,6 @@ class mdtTableViewControllerTestObject : public QObject
   void doubleClickedReceiver(const QSqlRecord & record);
 };
 
-/*
- * Concrete application widgets test class
- */
-class mdtSqlApplicationWidgetsTest : public mdtSqlApplicationWidgets<mdtSqlApplicationWidgetsTest>
-{
- Q_OBJECT
-
-  friend class mdtSqlApplicationWidgets<mdtSqlApplicationWidgetsTest>;
-
- public:
-
-  void clearAllWidgets()
-  {
-    qDebug() << "Clear all widgets ...";
-  }
-  static void doSomeThing(){
-    //instance().displayError(mdtError("Test", mdtError::Warning));
-  }
-
- private:
-
-  mdtSqlApplicationWidgetsTest(){}
-  Q_DISABLE_COPY(mdtSqlApplicationWidgetsTest);
-};
-
 
 /*
  * Test itself
@@ -159,7 +131,7 @@ class mdtDatabaseWidgetTest : public mdtTest
 
   void sqlFieldSelectionDialogTest();
 
-  void sqlApplicationWidgetsTest();
+//   void sqlApplicationWidgetsTest();
 
  private:
 

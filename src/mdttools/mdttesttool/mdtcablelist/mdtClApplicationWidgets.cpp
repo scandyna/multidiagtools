@@ -31,49 +31,65 @@
 
 void mdtClApplicationWidgets::editUnit(const QVariant & unitId)
 {
-  auto & aw = instance();
-
-  if(!aw.pvUnitEditor){
-    if(!aw.createUnitEditor()){
-      return;
-    }
-  }
-  Q_ASSERT(aw.pvUnitEditor);
-  if(!aw.pvUnitEditor->select()){
-    aw.displayError(aw.pvUnitEditor->lastError());
-    return;
-  }
-  if(!aw.pvUnitEditor->setCurrentRow("Id_PK", unitId)){
-    aw.displayError(aw.pvUnitEditor->lastError());
-    return;
-  }
-  aw.showSqlWindow(aw.pvUnitEditor, false, true);
+  instance()->setupAndShowUnitEditor(unitId);
 }
 
 void mdtClApplicationWidgets::editUnits()
 {
-  instance().slotEditUnits();
+  instance()->setupAndShowUnitEditor();
 }
 
 void mdtClApplicationWidgets::slotEditUnits()
 {
-  if(!pvUnitEditor){
+  instance()->setupAndShowUnitEditor();
+}
+
+void mdtClApplicationWidgets::setupAndShowUnitEditor(const QVariant & unitId)
+{
+  if(pvUnitEditor == nullptr){
     if(!createUnitEditor()){
       return;
     }
   }
-  Q_ASSERT(pvUnitEditor);
+  Q_ASSERT(pvUnitEditor != nullptr);
   if(!pvUnitEditor->select()){
     displayError(pvUnitEditor->lastError());
     return;
   }
+  if(!unitId.isNull()){
+    if(!pvUnitEditor->setCurrentRow("Id_PK", unitId)){
+      displayError(pvUnitEditor->lastError());
+      return;
+    }
+  }
   showSqlWindow(pvUnitEditor, true, true);
 }
 
-void mdtClApplicationWidgets::createLinkVersion(QWidget *parentWidget)
+bool mdtClApplicationWidgets::createUnitEditor()
+{
+  Q_ASSERT(pvUnitEditor == nullptr);
+
+  // Setup editor
+  pvUnitEditor = new mdtClUnitEditor(nullptr, pvDatabase);
+  if(!pvUnitEditor->setupTables()){
+    displayError(pvUnitEditor->lastError());
+    delete pvUnitEditor;
+    ///pvUnitEditor = nullptr;
+    return false;
+  }
+  // Setup in a generic SQL window
+  auto window = setupEditorInSqlWindow(pvUnitEditor);
+  Q_ASSERT(window);
+  window->setWindowTitle(tr("Unit edition"));
+  window->resize(800, 600);
+
+  return true;
+}
+
+void mdtClApplicationWidgets::createLinkVersion()
 {
   mdtClLinkVersion lv(pvDatabase);
-  mdtClLinkVersionDialog dialog(parentWidget);
+  mdtClLinkVersionDialog dialog;
   mdtClLinkVersionData data;
   bool ok;
 
@@ -101,28 +117,19 @@ void mdtClApplicationWidgets::createLinkVersion(QWidget *parentWidget)
   msgBox.exec();
 }
 
-bool mdtClApplicationWidgets::createUnitEditor()
-{
-  Q_ASSERT(!pvUnitEditor);
-
-  // Setup editor
-  pvUnitEditor.reset(new mdtClUnitEditor(0, pvDatabase) );
-  if(!pvUnitEditor->setupTables()){
-    displayError(pvUnitEditor->lastError());
-    pvUnitEditor.reset();
-    return false;
-  }
-  // Setup in a generic SQL window
-  auto window = setupEditorInSqlWindow(pvUnitEditor);
-  Q_ASSERT(window);
-  window->setWindowTitle(tr("Unit edition"));
-  window->resize(800, 600);
-
-  return true;
-}
-
 void mdtClApplicationWidgets::clearAllWidgets()
 {
-  // Delete all editors
-  pvUnitEditor.reset();
+  /*
+   * Delete all editors.
+   * Note:
+   *  thanks to QPointer, we can simply delete all
+   *  without taking care if they are allready destroyed
+   *  (typically by a parent).
+   *  QPointer also becomes a nullptr automatically.
+   */
+  delete pvUnitEditor;
+}
+
+mdtClApplicationWidgets::mdtClApplicationWidgets()
+{
 }

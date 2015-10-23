@@ -71,11 +71,10 @@ mdtClUnitEditor::mdtClUnitEditor(QWidget *parent, QSqlDatabase db)
 {
 }
 
-/**
 mdtClUnitEditor::~mdtClUnitEditor()
 {
+  qDebug() << "mdtClUnitEditor::~mdtClUnitEditor() ...";
 }
-*/
 
 bool mdtClUnitEditor::setupTables()
 {

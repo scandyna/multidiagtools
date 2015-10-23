@@ -32,3 +32,10 @@ target_link_libraries(mdtsqlcopiertest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtsqlcopiertest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtsqlcopiertest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtsqlcopiertest "mdttest")
+
+# * mdtSqlApplicationWidgetsTest executable *
+add_executable(mdtsqlapplicationwidgetstest "mdtSqlApplicationWidgetsTest.cpp")
+target_link_libraries(mdtsqlapplicationwidgetstest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtsqlapplicationwidgetstest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtsqlapplicationwidgetstest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtsqlapplicationwidgetstest "mdttest")

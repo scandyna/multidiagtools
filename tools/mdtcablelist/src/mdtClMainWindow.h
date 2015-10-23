@@ -23,6 +23,8 @@
 
 #include "ui_mdtClMainWindow.h"
 #include "mdtError.h"
+#include "mdtClApplicationWidgets.h"
+#include "mdtTtApplicationWidgets.h"
 #include <QMainWindow>
 #include <QDir>
 #include <QString>
@@ -399,16 +401,6 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   bool initDatabase();
 
-  /*! \brief Open a Sqlite database
-   *
-   * \todo Manage default/previous opened DB, let user choose, etc...
-   */
-//   bool openDatabaseSqlite();
-
-  /*! \brief Create a new Sqlite database
-   */
-//   bool createDatabaseSqlite();
-
   /*! \brief Import a Sqlite database into currently open database
    */
   bool importDatabaseSqlite();
@@ -447,6 +439,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   
   // Calibration tool
   mdtTtBasicTestNodeCalibrationWindow *pvW750CalibrationWindow;
+
+  // Applications widgets guards
+  mdtSqlApplicationWidgetsGuard<mdtClApplicationWidgets> pvClAppWidgetsGuard;
+  mdtSqlApplicationWidgetsGuard<mdtTtApplicationWidgets> pvTtAppWidgetsGuard;
 };
 
 #endif // #ifndef MDT_CL_MAIN_WINDOW_H
