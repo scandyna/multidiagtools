@@ -72,10 +72,6 @@ class mdtSqlApplicationWidgetsTest : public mdtTest
   void initTestCase();
   void cleanupTestCase();
 
-  void sandbox();
-  
-  void ptrSandbox();
-
   void simpleTest();
 
  private:

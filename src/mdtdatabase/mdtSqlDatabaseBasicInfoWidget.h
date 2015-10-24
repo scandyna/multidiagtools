@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_DATABASE_BASIC_INFO_WIDGET_H
 #define MDT_SQL_DATABASE_BASIC_INFO_WIDGET_H
 
+#include "mdtSqlDriverType.h"
 #include <QWidget>
 #include <QSqlDatabase>
 #include <QString>
@@ -43,6 +44,14 @@ class mdtSqlDatabaseBasicInfoWidget : public QWidget
   /*! \internal Copy disabled
    */
   mdtSqlDatabaseBasicInfoWidget(const mdtSqlDatabaseBasicInfoWidget & other) = delete;
+
+  /*! \brief Set driver type
+   *
+   * Display labels regarding driver type and clear informations.
+   *
+   * \note This function is automatically called by displayInfo()
+   */
+  void setDriverType(mdtSqlDriverType::Type driverType);
 
   /*! \brief Display basic information of given database
    */

@@ -74,7 +74,6 @@ bool mdtClApplicationWidgets::createUnitEditor()
   if(!pvUnitEditor->setupTables()){
     displayError(pvUnitEditor->lastError());
     delete pvUnitEditor;
-    ///pvUnitEditor = nullptr;
     return false;
   }
   // Setup in a generic SQL window

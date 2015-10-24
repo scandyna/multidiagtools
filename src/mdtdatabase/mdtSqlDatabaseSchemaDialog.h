@@ -29,6 +29,7 @@
 
 class mdtSqlDatabaseSchemaModel;
 class mdtSqlDatabaseSchemaThread;
+class QCloseEvent;
 
 /*! \brief Permit to create SQL database schema
  */
@@ -46,7 +47,15 @@ class mdtSqlDatabaseSchemaDialog : public QDialog, Ui::mdtSqlDatabaseSchemaDialo
    */
   mdtSqlDatabaseSchemaDialog(const mdtSqlDatabaseSchemaDialog & other) = delete;
 
+  /*! \brief Set database
+   *
+   * \pre Process of creating or dropping schema must not run when calling this function.
+   */
+  void setDatabase(const QSqlDatabase & db);
+
   /*! \brief Set the database schema
+   *
+   * \pre Process of creating or dropping schema must not run when calling this function.
    */
   void setSchema(const mdtSqlDatabaseSchema & s);
 
@@ -84,6 +93,50 @@ class mdtSqlDatabaseSchemaDialog : public QDialog, Ui::mdtSqlDatabaseSchemaDialo
 
  private:
 
+  /*! \brief State
+   */
+  enum State
+  {
+    DatabaseNotSet, /*!< pvDatabase contains not the needed informations to create the schema.
+                         It's also not possible to process. */
+    DatabaseSet,    /*!< pvDatabase has needed informations and it's possible to process.  */
+    CreatingSchema  /*!< The only possible action is abort. */
+  };
+
+  /*! \brief Set database state set or not set
+   *
+   * Will check if pvDatabase contains needed informations
+   *  and set state to DatabaseSet if ok,
+   *  DatabaseNotSet if not.
+   */
+  void setStateDatabaseSetOrNotSet();
+
+  /*! \brief Set database not set state
+   */
+  void setStateDatabaseNotSet();
+
+  /*! \brief Set database set state
+   */
+  void setStateDatabaseSet();
+
+  /*! \brief Set creating schema state
+   */
+  void setStateCreatingSchema();
+
+  /*! \brief Set closable
+   *
+   * If closable is false, user cannot close this dialog.
+   */
+  void setClosable(bool closable);
+
+  /*! \brief Close event
+   */
+  void closeEvent(QCloseEvent *event);
+
+  /*! \brief Reject (event)
+   */
+  void reject();
+
   /*! \brief Check if selected database is open
    *
    * If selected database is open, or a connection
@@ -95,6 +148,8 @@ class mdtSqlDatabaseSchemaDialog : public QDialog, Ui::mdtSqlDatabaseSchemaDialo
    */
   bool assureNoOpenConnectionToDatabase();
 
+  bool pvClosable;
+  State pvState;
   mdtSqlDatabaseSchemaModel *pvModel;
   mdtSqlDatabaseSchemaThread *pvThread;
   QSqlDatabase pvDatabase;

@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "mdtSqlDatabaseBasicInfoWidget.h"
-#include "mdtSqlDriverType.h"
 #include <QFormLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -43,6 +42,27 @@ mdtSqlDatabaseBasicInfoWidget::mdtSqlDatabaseBasicInfoWidget(QWidget* parent)
   setLayout(pvLayout);
 }
 
+void mdtSqlDatabaseBasicInfoWidget::setDriverType(mdtSqlDriverType::Type driverType)
+{
+  switch(driverType){
+    case mdtSqlDriverType::Unknown:
+    case mdtSqlDriverType::MariaDB:
+    case mdtSqlDriverType::MySQL:
+      updateDatabaseNameWidgets(true);
+      updateDirectoryWidgets(false);
+      updateHostAndPortWidgets(true);
+      updateUserWidgets(true);
+      break;
+    case mdtSqlDriverType::SQLite:
+      updateDatabaseNameWidgets(true);
+      updateDirectoryWidgets(true);
+      updateHostAndPortWidgets(false);
+      updateUserWidgets(false);
+      break;
+  }
+  clearDatabaseInfo();
+}
+
 void mdtSqlDatabaseBasicInfoWidget::displayInfo(const QSqlDatabase & db)
 {
   updateWidgets(db);
@@ -52,21 +72,14 @@ void mdtSqlDatabaseBasicInfoWidget::updateWidgets(const QSqlDatabase & db)
 {
   mdtSqlDriverType::Type driverType = mdtSqlDriverType::typeFromName(db.driverName());
 
+  setDriverType(driverType);
   switch(driverType){
     case mdtSqlDriverType::Unknown:
     case mdtSqlDriverType::MariaDB:
     case mdtSqlDriverType::MySQL:
-      updateDatabaseNameWidgets(true);
-      updateDirectoryWidgets(false);
-      updateHostAndPortWidgets(true);
-      updateUserWidgets(true);
       clearDatabaseInfo();
       break;
     case mdtSqlDriverType::SQLite:
-      updateDatabaseNameWidgets(true);
-      updateDirectoryWidgets(true);
-      updateHostAndPortWidgets(false);
-      updateUserWidgets(false);
       displayInfoSqlite(db);
       break;
   }

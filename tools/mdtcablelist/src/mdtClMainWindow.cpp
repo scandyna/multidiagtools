@@ -166,6 +166,7 @@ void mdtClMainWindow::createNewDatabase()
   // Setup and show dialog
   dbSchema.buildSchema();
   dialog.setSchema(dbSchema.databaseSchema());
+  dialog.setDatabase(pvDatabase);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }

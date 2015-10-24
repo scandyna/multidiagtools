@@ -178,7 +178,6 @@ class mdtTtApplicationWidgets : public mdtSqlApplicationWidgets<mdtTtApplication
 //   std::shared_ptr<mdtTtTestNodeEditor> pvTestNodeEditor;
   // Tools
   QPointer<mdtTtTestNodeModbusIoTool> pvTestNodeModbusIoTool;
-  ///std::shared_ptr<mdtTtTestNodeModbusIoTool> pvTestNodeModbusIoTool;
 };
 
 #endif // #ifndef MDT_TT_APPLICATION_WIDGETS_H

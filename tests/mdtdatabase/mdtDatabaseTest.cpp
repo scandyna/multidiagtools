@@ -3201,6 +3201,7 @@ void mdtDatabaseTest::sqlDatabaseSchemaDialogTest()
   tps.commitCurrentRowData();
   s.addTablePopulation(tps);
 
+  dialog.setDatabase(pvDatabase);
   dialog.setSchema(s);
   dialog.exec();
 }

@@ -25,7 +25,7 @@
 #include "mdtSqlDatabaseSqlite.h"
 #include <QPushButton>
 #include <QMessageBox>
-
+#include <QCloseEvent>
 #include <QSqlDatabase>
 
 #include <QDebug>
@@ -46,11 +46,25 @@ mdtSqlDatabaseSchemaDialog::mdtSqlDatabaseSchemaDialog(QWidget* parent)
   connect(pvThread, &mdtSqlDatabaseSchemaThread::globalErrorOccured, this, &mdtSqlDatabaseSchemaDialog::onThreadGlobalErrorOccured);
   connect(pvThread, &mdtSqlDatabaseSchemaThread::objectErrorOccured, this, &mdtSqlDatabaseSchemaDialog::setObjectError);
   connect(pbAbort, &QPushButton::clicked, pvThread, &mdtSqlDatabaseSchemaThread::abort);
+  setStateDatabaseNotSet();
+}
+
+void mdtSqlDatabaseSchemaDialog::setDatabase(const QSqlDatabase & db)
+{
+  Q_ASSERT(pvState != CreatingSchema);
+
+  pvDatabase = db;
+  wDatabaseInfo->displayInfo(db);
+  // Update state
+  setStateDatabaseSetOrNotSet();
 }
 
 void mdtSqlDatabaseSchemaDialog::setSchema(const mdtSqlDatabaseSchema & s)
 {
+  Q_ASSERT(pvState != CreatingSchema);
+
   pvModel->setSchema(s);
+  tvObjects->resizeColumnToContents(0);
 }
 
 void mdtSqlDatabaseSchemaDialog::selectDatabase()
@@ -60,16 +74,18 @@ void mdtSqlDatabaseSchemaDialog::selectDatabase()
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
-  pvDatabase = dialog.database().database();
-  wDatabaseInfo->displayInfo(pvDatabase);
+  setDatabase(dialog.database().database());
 }
 
 void mdtSqlDatabaseSchemaDialog::createSchema()
 {
+  Q_ASSERT(pvState != CreatingSchema);
+
   // Check about open connections
   if(!assureNoOpenConnectionToDatabase()){
     return;
   }
+  setStateCreatingSchema();
   pvModel->clearStatusAndProgress();
   pvThread->createSchema(pvModel->schema(), pvDatabase);
 }
@@ -108,7 +124,7 @@ void mdtSqlDatabaseSchemaDialog::updateGlobalProgress(int progress)
 
 void mdtSqlDatabaseSchemaDialog::onThreadFinished()
 {
-
+  setStateDatabaseSetOrNotSet();
 }
 
 void mdtSqlDatabaseSchemaDialog::onThreadGlobalErrorOccured(mdtError error)
@@ -120,6 +136,66 @@ void mdtSqlDatabaseSchemaDialog::onThreadGlobalErrorOccured(mdtError error)
   msgBox.setDetailedText(error.systemText());
   msgBox.setIcon(error.levelIcon());
   msgBox.exec();
+}
+
+void mdtSqlDatabaseSchemaDialog::setStateDatabaseSetOrNotSet()
+{
+  if(pvDatabase.databaseName().isEmpty()){
+    setStateDatabaseNotSet();
+  }else{
+    setStateDatabaseSet();
+  }
+}
+
+void mdtSqlDatabaseSchemaDialog::setStateDatabaseNotSet()
+{
+  pvState = DatabaseNotSet;
+  tbSelectDatabase->setEnabled(true);
+  pbCreateSchema->setEnabled(false);
+  pbAbort->setEnabled(false);
+  setClosable(true);
+}
+
+void mdtSqlDatabaseSchemaDialog::setStateDatabaseSet()
+{
+  pvState = DatabaseSet;
+  tbSelectDatabase->setEnabled(true);
+  pbCreateSchema->setEnabled(true);
+  pbAbort->setEnabled(false);
+  setClosable(true);
+}
+
+void mdtSqlDatabaseSchemaDialog::setStateCreatingSchema()
+{
+  pvState = CreatingSchema;
+  tbSelectDatabase->setEnabled(false);
+  pbCreateSchema->setEnabled(false);
+  pbAbort->setEnabled(true);
+  setClosable(false);
+}
+
+void mdtSqlDatabaseSchemaDialog::setClosable(bool closable)
+{
+  buttonBox->setEnabled(closable);
+  pvClosable = closable;
+}
+
+void mdtSqlDatabaseSchemaDialog::closeEvent(QCloseEvent* event)
+{
+  Q_ASSERT(event != nullptr);
+
+  if(pvClosable){
+    event->accept();
+  }else{
+    event->ignore();
+  }
+}
+
+void mdtSqlDatabaseSchemaDialog::reject()
+{
+  if(pvClosable){
+    QDialog::reject();
+  }
 }
 
 bool mdtSqlDatabaseSchemaDialog::assureNoOpenConnectionToDatabase()
