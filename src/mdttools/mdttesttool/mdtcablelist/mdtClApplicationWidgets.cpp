@@ -21,6 +21,7 @@
 #include "mdtClApplicationWidgets.h"
 // Editor classes
 #include "mdtClUnitEditor.h"
+#include "mdtClVehicleTypeEditor.h"
 // Other data edition classes
 #include "mdtClLinkVersion.h"
 #include "mdtClLinkVersionDialog.h"
@@ -28,6 +29,51 @@
 #include <QMessageBox>
 
 #include <QDebug>
+
+void mdtClApplicationWidgets::editVehicleTypes()
+{
+  instance()->setupAndShowVehicleTypeEditor();
+}
+
+// void mdtClApplicationWidgets::slotEditVehicleTypes()
+// {
+// 
+// }
+
+void mdtClApplicationWidgets::setupAndShowVehicleTypeEditor()
+{
+  if(pvVehicleTypeEditor == nullptr){
+    if(!createVehicleTypeEditor()){
+      return;
+    }
+  }
+  Q_ASSERT(pvVehicleTypeEditor != nullptr);
+  if(!pvVehicleTypeEditor->select()){
+    displayError(pvVehicleTypeEditor->lastError());
+    return;
+  }
+  showSqlWindow(pvVehicleTypeEditor, true, true);
+}
+
+bool mdtClApplicationWidgets::createVehicleTypeEditor()
+{
+  Q_ASSERT(pvVehicleTypeEditor == nullptr);
+
+  // Setup editor
+  pvVehicleTypeEditor = new mdtClVehicleTypeEditor(nullptr, pvDatabase);
+  if(!pvVehicleTypeEditor->setupTables()){
+    displayError(pvVehicleTypeEditor->lastError());
+    delete pvVehicleTypeEditor;
+    return false;
+  }
+  // Setup in a generic SQL window
+  auto window = setupEditorInSqlWindow(pvVehicleTypeEditor);
+  Q_ASSERT(window);
+  window->setWindowTitle(tr("Vehicle type edition"));
+  window->resize(800, 600);
+
+  return true;
+}
 
 void mdtClApplicationWidgets::editUnit(const QVariant & unitId)
 {
@@ -127,6 +173,7 @@ void mdtClApplicationWidgets::clearAllWidgets()
    *  QPointer also becomes a nullptr automatically.
    */
   delete pvUnitEditor;
+  delete pvVehicleTypeEditor;
 }
 
 mdtClApplicationWidgets::mdtClApplicationWidgets()

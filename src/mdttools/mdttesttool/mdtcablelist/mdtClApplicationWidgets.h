@@ -26,6 +26,7 @@
 
 // Editors
 class mdtClUnitEditor;
+class mdtClVehicleTypeEditor;
 
 /*! \brief Container for cable list editors and views
  *
@@ -39,6 +40,26 @@ class mdtClApplicationWidgets : public mdtSqlApplicationWidgets<mdtClApplication
 
  // Needed because mdtSqlApplicationWidgets must access some private function from mdtClApplicationWidgets
  friend class mdtSqlApplicationWidgets<mdtClApplicationWidgets>;
+
+ public:
+
+  /*! \brief Edit vehicle types
+   */
+  static void editVehicleTypes();
+
+  /*! \brief Edit vehicle types
+   */
+//   static void slotEditVehicleTypes();
+
+ private:
+
+  /*! \brief Setup and show vehicle type editor
+   */
+  void setupAndShowVehicleTypeEditor();
+
+  /*! \brief Create vehicle type editor
+   */
+  bool createVehicleTypeEditor();
 
  public:
 
@@ -87,6 +108,7 @@ class mdtClApplicationWidgets : public mdtSqlApplicationWidgets<mdtClApplication
   Q_DISABLE_COPY(mdtClApplicationWidgets);
 
   // Editors
+  QPointer<mdtClVehicleTypeEditor> pvVehicleTypeEditor;
   QPointer<mdtClUnitEditor> pvUnitEditor;
 };
 

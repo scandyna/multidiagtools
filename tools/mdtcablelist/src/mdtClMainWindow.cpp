@@ -28,9 +28,13 @@
 #include "mdtSqlDatabaseSchemaDialog.h"
 #include "mdtClLinkVersion.h"
 #include "mdtTtDatabaseSchema.h"
-#include "mdtClVehicleTypeEditor.h"
+
+// #include "mdtClVehicleTypeEditor.h"
+
 #include "mdtClConnectorEditor.h"
-#include "mdtClUnitEditor.h"
+
+// #include "mdtClUnitEditor.h"
+
 #include "mdtClWireEditor.h"
 #include "mdtClLinkBeamEditor.h"
 #include "mdtClArticleEditor.h"
@@ -220,29 +224,29 @@ void mdtClMainWindow::updateVehicleTypeMenu()
   createVehicleTypeActions();
 }
 
-void mdtClMainWindow::editVehicleType()
-{
-  mdtClVehicleTypeEditor *editor;
-  mdtSqlWindow *window;
-
-  // Get or create editor
-  editor = getVehicleTypeEditor();
-  if(editor == 0){
-    return;
-  }
-  // Get window
-  window = getEditorWindow(editor);
-  Q_ASSERT(window != 0);
-  // Select and show
-  Q_ASSERT(editor != 0);
-  if(!editor->select()){
-    displayError(editor->lastError());
-    return;
-  }
-  window->enableNavigation();
-  window->raise();
-  window->show();
-}
+// void mdtClMainWindow::editVehicleType()
+// {
+//   mdtClVehicleTypeEditor *editor;
+//   mdtSqlWindow *window;
+// 
+//   // Get or create editor
+//   editor = getVehicleTypeEditor();
+//   if(editor == 0){
+//     return;
+//   }
+//   // Get window
+//   window = getEditorWindow(editor);
+//   Q_ASSERT(window != 0);
+//   // Select and show
+//   Q_ASSERT(editor != 0);
+//   if(!editor->select()){
+//     displayError(editor->lastError());
+//     return;
+//   }
+//   window->enableNavigation();
+//   window->raise();
+//   window->show();
+// }
 
 void mdtClMainWindow::viewConnector()
 {
@@ -811,37 +815,37 @@ void mdtClMainWindow::removeVehicleTypeActions()
   }
 }
 
-mdtClVehicleTypeEditor* mdtClMainWindow::getVehicleTypeEditor()
-{
-  mdtClVehicleTypeEditor *editor;
+// mdtClVehicleTypeEditor* mdtClMainWindow::getVehicleTypeEditor()
+// {
+//   mdtClVehicleTypeEditor *editor;
+// 
+//   editor = getEditor<mdtClVehicleTypeEditor>();
+//   if(editor != 0){
+//     return editor;
+//   }else{
+//     return createVehicleTypeEditor();
+//   }
+// }
 
-  editor = getEditor<mdtClVehicleTypeEditor>();
-  if(editor != 0){
-    return editor;
-  }else{
-    return createVehicleTypeEditor();
-  }
-}
-
-mdtClVehicleTypeEditor *mdtClMainWindow::createVehicleTypeEditor()
-{
-  mdtClVehicleTypeEditor *editor;
-  mdtSqlWindow *window;
-
-  editor = new mdtClVehicleTypeEditor(0, pvDatabaseManager->database());
-  /**
-  Q_ASSERT(editor->mainSqlWidget() != 0);
-  connect(editor->mainSqlWidget(), SIGNAL(stateVisualizingEntered()), this, SLOT(updateVehicleTypeMenu()));
-  */
-  window = setupEditor(editor);
-  if(window == 0){
-    return 0;
-  }
-  window->setWindowTitle(tr("Vehicle type edition"));
-  window->resize(800, 600);
-
-  return editor;
-}
+// mdtClVehicleTypeEditor *mdtClMainWindow::createVehicleTypeEditor()
+// {
+//   mdtClVehicleTypeEditor *editor;
+//   mdtSqlWindow *window;
+// 
+//   editor = new mdtClVehicleTypeEditor(0, pvDatabaseManager->database());
+//   /**
+//   Q_ASSERT(editor->mainSqlWidget() != 0);
+//   connect(editor->mainSqlWidget(), SIGNAL(stateVisualizingEntered()), this, SLOT(updateVehicleTypeMenu()));
+//   */
+//   window = setupEditor(editor);
+//   if(window == 0){
+//     return 0;
+//   }
+//   window->setWindowTitle(tr("Vehicle type edition"));
+//   window->resize(800, 600);
+// 
+//   return editor;
+// }
 
 bool mdtClMainWindow::createConnectorTableView()
 {
@@ -1394,7 +1398,8 @@ void mdtClMainWindow::connectActions()
 
   // Vehicle type edition
   connect(actViewVehicleType, SIGNAL(triggered()), this, SLOT(viewVehicleType()));
-  connect(actEditVehicleType, SIGNAL(triggered()), this, SLOT(editVehicleType()));
+  connect(actEditVehicleType, &QAction::triggered, mdtClApplicationWidgets::instance(), &mdtClApplicationWidgets::editVehicleTypes);
+  ///connect(actEditVehicleType, SIGNAL(triggered()), this, SLOT(editVehicleType()));
   ///connect(pbEditVehicleType, SIGNAL(clicked()), this, SLOT(editVehicleType()));
   // Connector
   connect(actViewConnector, SIGNAL(triggered()), this, SLOT(viewConnector()));

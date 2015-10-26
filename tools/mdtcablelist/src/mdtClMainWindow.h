@@ -35,8 +35,8 @@
 class mdtSqlForm;
 class mdtSqlTableWidget;
 class mdtSqlDatabaseManager;
-class mdtClVehicleTypeEditor;
-class mdtClUnitEditor;
+// class mdtClVehicleTypeEditor;
+// class mdtClUnitEditor;
 class mdtClWireEditor;
 class mdtClConnectorEditor;
 class mdtClArticleEditor;
@@ -104,7 +104,7 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
 
   /*! \brief Edit vehicle types
    */
-  void editVehicleType();
+//   void editVehicleType();
 
   /*! \brief View connectors
    */
@@ -230,11 +230,11 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
 
   /*! \brief Get vehicle type editor
    */
-  mdtClVehicleTypeEditor *getVehicleTypeEditor();
+//   mdtClVehicleTypeEditor *getVehicleTypeEditor();
 
   /*! \brief Create vehicle type editor
    */
-  mdtClVehicleTypeEditor *createVehicleTypeEditor();
+//   mdtClVehicleTypeEditor *createVehicleTypeEditor();
 
   /*! \brief Create connector table view
    */
