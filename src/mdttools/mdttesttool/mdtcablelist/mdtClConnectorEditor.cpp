@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "mdtClConnectorEditor.h"
 #include "ui_mdtClConnectorEditor.h"
-///#include "mdtSqlFormWidget.h"
 #include "mdtSqlTableWidget.h"
 
 mdtClConnectorEditor::mdtClConnectorEditor(QWidget *parent, QSqlDatabase db)
@@ -45,6 +44,11 @@ bool mdtClConnectorEditor::setupTables()
   }
 
   return true;
+}
+
+bool mdtClConnectorEditor::setCurrentConnector(const mdtClConnectorPkData & pk)
+{
+  return setCurrentRow("Id_PK", pk.id);
 }
 
 bool mdtClConnectorEditor::setupConnectorTable()

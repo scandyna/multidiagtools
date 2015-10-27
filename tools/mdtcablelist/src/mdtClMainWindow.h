@@ -35,8 +35,6 @@
 class mdtSqlForm;
 class mdtSqlTableWidget;
 class mdtSqlDatabaseManager;
-// class mdtClVehicleTypeEditor;
-// class mdtClUnitEditor;
 class mdtClWireEditor;
 class mdtClConnectorEditor;
 class mdtClArticleEditor;
@@ -102,17 +100,9 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void updateWorkingOnVehicleTypes();
 
-  /*! \brief Edit vehicle types
-   */
-//   void editVehicleType();
-
   /*! \brief View connectors
    */
   void viewConnector();
-
-  /*! \brief Edit connectors
-   */
-  void editConnector();
 
   /*! \brief Edit connectors
    */
@@ -122,10 +112,6 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void viewArticle();
 
-  /*! \brief Edit articles
-   */
-  void editArticle();
-
   /*! \brief Edit selected article
    */
   void editSelectedArticle();
@@ -133,10 +119,6 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   /*! \brief View units
    */
   void viewUnit();
-
-  /*! \brief Edit units
-   */
-  ///void editUnit();
 
   /*! \brief Edit selected unit
    */
@@ -228,37 +210,13 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
    */
   void removeVehicleTypeActions();
 
-  /*! \brief Get vehicle type editor
-   */
-//   mdtClVehicleTypeEditor *getVehicleTypeEditor();
-
-  /*! \brief Create vehicle type editor
-   */
-//   mdtClVehicleTypeEditor *createVehicleTypeEditor();
-
   /*! \brief Create connector table view
    */
   bool createConnectorTableView();
 
-  /*! \brief Get connector editor
-   */
-  mdtClConnectorEditor *getConnectorEditor();
-
-  /*! \brief Create connector editor
-   */
-  mdtClConnectorEditor *createConnectorEditor();
-
   /*! \brief Create article table view
    */
   bool createArticleTableView();
-
-  /*! \brief Get article editor
-   */
-  mdtClArticleEditor *getArticleEditor();
-
-  /*! \brief Create article editor
-   */
-  mdtClArticleEditor *createArticleEditor();
 
   /*! \brief Create unit table view
    */

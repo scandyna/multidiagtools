@@ -22,11 +22,14 @@
 #define MDT_CL_APPLICATION_WIDGETS_H
 
 #include "mdtSqlApplicationWidgets.h"
+#include "mdtClConnectorKeyData.h"
 #include <QPointer>
 
 // Editors
-class mdtClUnitEditor;
 class mdtClVehicleTypeEditor;
+class mdtClConnectorEditor;
+class mdtClArticleEditor;
+class mdtClUnitEditor;
 
 /*! \brief Container for cable list editors and views
  *
@@ -47,10 +50,6 @@ class mdtClApplicationWidgets : public mdtSqlApplicationWidgets<mdtClApplication
    */
   static void editVehicleTypes();
 
-  /*! \brief Edit vehicle types
-   */
-//   static void slotEditVehicleTypes();
-
  private:
 
   /*! \brief Setup and show vehicle type editor
@@ -63,6 +62,46 @@ class mdtClApplicationWidgets : public mdtSqlApplicationWidgets<mdtClApplication
 
  public:
 
+  /*! \brief Edit connectors
+   */
+  static void editConnectors();
+
+  /*! \brief Edit specified connector
+   */
+  static void editConnector(const mdtClConnectorPkData & pk);
+
+ private:
+
+  /*! \brief Setup and show connector editor
+   */
+  void setupAndShowConnectorEditor(const mdtClConnectorPkData & pk = mdtClConnectorPkData());
+
+  /*! \brief Create connector editor
+   */
+  bool createConnectorEditor();
+
+ public:
+
+  /*! \brief Edit articles
+   */
+  static void editArticles();
+
+  /*! \brief Edit specified article
+   */
+  static void editArticle(const QVariant & articleId);
+
+ private:
+
+  /*! \brief Setup and show article editor
+   */
+  void setupAndShowArticleEditor(const QVariant & articleId = QVariant());
+
+  /*! \brief Create article editor
+   */
+  bool createArticleEditor();
+
+ public:
+
   /*! \brief Edit a specific unit
    */
   static void editUnit(const QVariant & unitId);
@@ -70,12 +109,6 @@ class mdtClApplicationWidgets : public mdtSqlApplicationWidgets<mdtClApplication
   /*! \brief Edit units
    */
   static void editUnits();
-
- public slots:
-
-  /*! \brief Edit units
-   */
-  void slotEditUnits();
 
  private:
 
@@ -109,6 +142,8 @@ class mdtClApplicationWidgets : public mdtSqlApplicationWidgets<mdtClApplication
 
   // Editors
   QPointer<mdtClVehicleTypeEditor> pvVehicleTypeEditor;
+  QPointer<mdtClConnectorEditor> pvConnectorEditor;
+  QPointer<mdtClArticleEditor> pvArticleEditor;
   QPointer<mdtClUnitEditor> pvUnitEditor;
 };
 

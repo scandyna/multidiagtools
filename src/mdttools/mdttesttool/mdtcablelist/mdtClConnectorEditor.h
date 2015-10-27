@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2014 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #define MDT_CL_CONNECTOR_EDITOR_H
 
 #include "mdtSqlForm.h"
+#include "mdtClConnectorKeyData.h"
 
 class QWidget;
 
@@ -44,6 +45,10 @@ class mdtClConnectorEditor : public mdtSqlForm
   /*! \brief Setup tables
    */
   bool setupTables();
+
+  /*! \brief Set connector of given PK as current one
+   */
+  bool setCurrentConnector(const mdtClConnectorPkData & pk);
 
  private:
 

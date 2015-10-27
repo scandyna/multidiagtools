@@ -20,8 +20,10 @@
  ****************************************************************************/
 #include "mdtClApplicationWidgets.h"
 // Editor classes
-#include "mdtClUnitEditor.h"
 #include "mdtClVehicleTypeEditor.h"
+#include "mdtClConnectorEditor.h"
+#include "mdtClArticleEditor.h"
+#include "mdtClUnitEditor.h"
 // Other data edition classes
 #include "mdtClLinkVersion.h"
 #include "mdtClLinkVersionDialog.h"
@@ -34,11 +36,6 @@ void mdtClApplicationWidgets::editVehicleTypes()
 {
   instance()->setupAndShowVehicleTypeEditor();
 }
-
-// void mdtClApplicationWidgets::slotEditVehicleTypes()
-// {
-// 
-// }
 
 void mdtClApplicationWidgets::setupAndShowVehicleTypeEditor()
 {
@@ -75,17 +72,116 @@ bool mdtClApplicationWidgets::createVehicleTypeEditor()
   return true;
 }
 
+void mdtClApplicationWidgets::editConnectors()
+{
+  instance()->setupAndShowConnectorEditor();
+}
+
+void mdtClApplicationWidgets::editConnector(const mdtClConnectorPkData & pk)
+{
+  instance()->setupAndShowConnectorEditor(pk);
+}
+
+void mdtClApplicationWidgets::setupAndShowConnectorEditor(const mdtClConnectorPkData & pk)
+{
+  if(pvConnectorEditor == nullptr){
+    if(!createConnectorEditor()){
+      return;
+    }
+  }
+  Q_ASSERT(pvConnectorEditor != nullptr);
+  if(!pvConnectorEditor->select()){
+    displayError(pvConnectorEditor->lastError());
+    return;
+  }
+  if(!pk.isNull()){
+    if(!pvConnectorEditor->setCurrentConnector(pk)){
+      displayError(pvConnectorEditor->lastError());
+      return;
+    }
+  }
+  showSqlWindow(pvConnectorEditor, true, true);
+}
+
+bool mdtClApplicationWidgets::createConnectorEditor()
+{
+  Q_ASSERT(pvConnectorEditor == nullptr);
+
+  // Setup editor
+  pvConnectorEditor = new mdtClConnectorEditor(nullptr, pvDatabase);
+  if(!pvConnectorEditor->setupTables()){
+    displayError(pvConnectorEditor->lastError());
+    delete pvConnectorEditor;
+    return false;
+  }
+  // Setup in a generic SQL window
+  // Setup in a generic SQL window
+  auto window = setupEditorInSqlWindow(pvConnectorEditor);
+  Q_ASSERT(window);
+  window->setWindowTitle(tr("Connector edition"));
+  window->resize(800, 600);
+
+  return true;
+}
+
+void mdtClApplicationWidgets::editArticles()
+{
+  instance()->setupAndShowArticleEditor();
+}
+
+void mdtClApplicationWidgets::editArticle(const QVariant& articleId)
+{
+  instance()->setupAndShowArticleEditor(articleId);
+}
+
+void mdtClApplicationWidgets::setupAndShowArticleEditor(const QVariant & articleId)
+{
+  if(pvArticleEditor == nullptr){
+    if(!createArticleEditor()){
+      return;
+    }
+  }
+  Q_ASSERT(pvArticleEditor != nullptr);
+  if(!pvArticleEditor->select()){
+    displayError(pvArticleEditor->lastError());
+    return;
+  }
+  if(!articleId.isNull()){
+    if(!pvArticleEditor->setCurrentRow("Id_PK", articleId)){
+      displayError(pvArticleEditor->lastError());
+      return;
+    }
+  }
+  showSqlWindow(pvArticleEditor, true, true);
+}
+
+bool mdtClApplicationWidgets::createArticleEditor()
+{
+  Q_ASSERT(pvArticleEditor == nullptr);
+
+  // Setup editor
+  pvArticleEditor = new mdtClArticleEditor(nullptr, pvDatabase);
+  if(!pvArticleEditor->setupTables()){
+    displayError(pvArticleEditor->lastError());
+    delete pvArticleEditor;
+    return false;
+  }
+  // Setup in a generic SQL window
+  // Setup in a generic SQL window
+  auto window = setupEditorInSqlWindow(pvArticleEditor);
+  Q_ASSERT(window);
+  window->setWindowTitle(tr("Article edition"));
+  window->resize(800, 600);
+
+  return true;
+}
+
 void mdtClApplicationWidgets::editUnit(const QVariant & unitId)
 {
   instance()->setupAndShowUnitEditor(unitId);
 }
 
 void mdtClApplicationWidgets::editUnits()
-{
-  instance()->setupAndShowUnitEditor();
-}
-
-void mdtClApplicationWidgets::slotEditUnits()
 {
   instance()->setupAndShowUnitEditor();
 }

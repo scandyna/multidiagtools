@@ -28,13 +28,7 @@
 #include "mdtSqlDatabaseSchemaDialog.h"
 #include "mdtClLinkVersion.h"
 #include "mdtTtDatabaseSchema.h"
-
-// #include "mdtClVehicleTypeEditor.h"
-
 #include "mdtClConnectorEditor.h"
-
-// #include "mdtClUnitEditor.h"
-
 #include "mdtClWireEditor.h"
 #include "mdtClLinkBeamEditor.h"
 #include "mdtClArticleEditor.h"
@@ -224,30 +218,6 @@ void mdtClMainWindow::updateVehicleTypeMenu()
   createVehicleTypeActions();
 }
 
-// void mdtClMainWindow::editVehicleType()
-// {
-//   mdtClVehicleTypeEditor *editor;
-//   mdtSqlWindow *window;
-// 
-//   // Get or create editor
-//   editor = getVehicleTypeEditor();
-//   if(editor == 0){
-//     return;
-//   }
-//   // Get window
-//   window = getEditorWindow(editor);
-//   Q_ASSERT(window != 0);
-//   // Select and show
-//   Q_ASSERT(editor != 0);
-//   if(!editor->select()){
-//     displayError(editor->lastError());
-//     return;
-//   }
-//   window->enableNavigation();
-//   window->raise();
-//   window->show();
-// }
-
 void mdtClMainWindow::viewConnector()
 {
   if(!displayTableView("Connector_tbl")){
@@ -255,38 +225,13 @@ void mdtClMainWindow::viewConnector()
   }
 }
 
-void mdtClMainWindow::editConnector()
-{
-  mdtClConnectorEditor *editor;
-  mdtSqlWindow *window;
-
-  // Get or create editor
-  editor = getConnectorEditor();
-  if(editor == 0){
-    return;
-  }
-  // Get window
-  window = getEditorWindow(editor);
-  Q_ASSERT(window != 0);
-  // Select and show
-  Q_ASSERT(editor != 0);
-  if(!editor->select()){
-    displayError(editor->lastError());
-    return;
-  }
-  window->enableNavigation();
-  window->raise();
-  window->show();
-}
-
 void mdtClMainWindow::editSelectedConnector()
 {
   mdtSqlTableSelection s;
-  mdtClConnectorEditor *editor;
-  mdtSqlWindow *window;
+  mdtClConnectorPkData pk;
   mdtSqlTableWidget *view;
 
-  // Get article view
+  // Get connector view
   view = getTableView("Connector_tbl");
   if(view == 0){
     return;
@@ -296,28 +241,9 @@ void mdtClMainWindow::editSelectedConnector()
   if(s.isEmpty()){
     return;
   }
-  // Get or create editor
-  editor = getConnectorEditor();
-  if(editor == 0){
-    return;
-  }
-  // Get window
-  window = getEditorWindow(editor);
-  Q_ASSERT(window != 0);
-  // Select and show
-  Q_ASSERT(editor != 0);
-  if(!editor->select()){
-    displayError(editor->lastError());
-    return;
-  }
-  Q_ASSERT(s.rowCount() > 0);
-  if(!editor->setCurrentRow("Id_PK", s.data(0, "Id_PK"))){
-    displayError(editor->lastError());
-    return;
-  }
-  window->enableNavigation();
-  window->raise();
-  window->show();
+  // Setup PK and call editor
+  pk.id = s.data(0, "Id_PK");
+  mdtClApplicationWidgets::editConnector(pk);
 }
 
 void mdtClMainWindow::viewArticle()
@@ -327,35 +253,9 @@ void mdtClMainWindow::viewArticle()
   }
 }
 
-void mdtClMainWindow::editArticle()
-{
-  mdtClArticleEditor *editor;
-  mdtSqlWindow *window;
-
-  // Get or create editor
-  editor = getArticleEditor();
-  if(editor == 0){
-    return;
-  }
-  // Get window
-  window = getEditorWindow(editor);
-  Q_ASSERT(window != 0);
-  // Select and show
-  Q_ASSERT(editor != 0);
-  if(!editor->select()){
-    displayError(editor->lastError());
-    return;
-  }
-  window->enableNavigation();
-  window->raise();
-  window->show();
-}
-
 void mdtClMainWindow::editSelectedArticle()
 {
   mdtSqlTableSelection s;
-  mdtClArticleEditor *editor;
-  mdtSqlWindow *window;
   mdtSqlTableWidget *view;
 
   // Get article view
@@ -368,27 +268,8 @@ void mdtClMainWindow::editSelectedArticle()
   if(s.isEmpty()){
     return;
   }
-  // Get or create editor
-  editor = getArticleEditor();
-  if(editor == 0){
-    return;
-  }
-  // Get window
-  window = getEditorWindow(editor);
-  Q_ASSERT(window != 0);
-  // Select and show
-  Q_ASSERT(editor != 0);
-  if(!editor->select()){
-    displayError(editor->lastError());
-    return;
-  }
-  Q_ASSERT(s.rowCount() == 1);
-  if(!editor->setCurrentRow("Id_PK", s.data(0, "Id_PK"))){
-    displayError(editor->lastError());
-  }
-  window->enableNavigation();
-  window->raise();
-  window->show();
+  // Edit article
+  mdtClApplicationWidgets::editArticle(s.data(0, "Id_PK"));
 }
 
 void mdtClMainWindow::viewUnit()
@@ -397,32 +278,6 @@ void mdtClMainWindow::viewUnit()
     createUnitTableView();
   }
 }
-
-/**
-void mdtClMainWindow::editUnit()
-{
-  mdtClUnitEditor *editor;
-  mdtSqlWindow *window;
-
-  // Get or create editor
-  editor = getUnitEditor();
-  if(editor == 0){
-    return;
-  }
-  // Get window
-  window = getEditorWindow(editor);
-  Q_ASSERT(window != 0);
-  // Select and show
-  Q_ASSERT(editor != 0);
-  if(!editor->select()){
-    displayError(editor->lastError());
-    return;
-  }
-  window->enableNavigation();
-  window->raise();
-  window->show();
-}
-*/
 
 void mdtClMainWindow::editSelectedUnit()
 {
@@ -815,38 +670,6 @@ void mdtClMainWindow::removeVehicleTypeActions()
   }
 }
 
-// mdtClVehicleTypeEditor* mdtClMainWindow::getVehicleTypeEditor()
-// {
-//   mdtClVehicleTypeEditor *editor;
-// 
-//   editor = getEditor<mdtClVehicleTypeEditor>();
-//   if(editor != 0){
-//     return editor;
-//   }else{
-//     return createVehicleTypeEditor();
-//   }
-// }
-
-// mdtClVehicleTypeEditor *mdtClMainWindow::createVehicleTypeEditor()
-// {
-//   mdtClVehicleTypeEditor *editor;
-//   mdtSqlWindow *window;
-// 
-//   editor = new mdtClVehicleTypeEditor(0, pvDatabaseManager->database());
-//   /**
-//   Q_ASSERT(editor->mainSqlWidget() != 0);
-//   connect(editor->mainSqlWidget(), SIGNAL(stateVisualizingEntered()), this, SLOT(updateVehicleTypeMenu()));
-//   */
-//   window = setupEditor(editor);
-//   if(window == 0){
-//     return 0;
-//   }
-//   window->setWindowTitle(tr("Vehicle type edition"));
-//   window->resize(800, 600);
-// 
-//   return editor;
-// }
-
 bool mdtClMainWindow::createConnectorTableView()
 {
   mdtSqlTableWidget *tableWidget;
@@ -872,34 +695,6 @@ bool mdtClMainWindow::createConnectorTableView()
   tableWidget->tableView()->resizeRowsToContents();
 
   return true;
-}
-
-mdtClConnectorEditor *mdtClMainWindow::getConnectorEditor()
-{
-  mdtClConnectorEditor *editor;
-
-  editor = getEditor<mdtClConnectorEditor>();
-  if(editor != 0){
-    return editor;
-  }else{
-    return createConnectorEditor();
-  }
-}
-
-mdtClConnectorEditor *mdtClMainWindow::createConnectorEditor()
-{
-  mdtClConnectorEditor *editor;
-  mdtSqlWindow *window;
-
-  editor = new mdtClConnectorEditor(0, pvDatabaseManager->database());
-  window = setupEditor(editor);
-  if(window == 0){
-    return 0;
-  }
-  window->setWindowTitle(tr("Connector edition"));
-  window->resize(800, 600);
-
-  return editor;
 }
 
 bool mdtClMainWindow::createArticleTableView()
@@ -934,34 +729,6 @@ void mdtClMainWindow::deleteTableviews()
   pvTabWidget->clear();
   qDeleteAll(pvOpenViews);
   pvOpenViews.clear();
-}
-
-mdtClArticleEditor *mdtClMainWindow::getArticleEditor()
-{
-  mdtClArticleEditor *editor;
-
-  editor = getEditor<mdtClArticleEditor>();
-  if(editor != 0){
-    return editor;
-  }else{
-    return createArticleEditor();
-  }
-}
-
-mdtClArticleEditor *mdtClMainWindow::createArticleEditor()
-{
-  mdtClArticleEditor *editor;
-  mdtSqlWindow *window;
-
-  editor = new mdtClArticleEditor(0, pvDatabaseManager->database());
-  window = setupEditor(editor);
-  if(window == 0){
-    return 0;
-  }
-  window->setWindowTitle(tr("Article edition"));
-  window->resize(800, 600);
-
-  return editor;
 }
 
 bool mdtClMainWindow::createUnitTableView()
@@ -1399,22 +1166,17 @@ void mdtClMainWindow::connectActions()
   // Vehicle type edition
   connect(actViewVehicleType, SIGNAL(triggered()), this, SLOT(viewVehicleType()));
   connect(actEditVehicleType, &QAction::triggered, mdtClApplicationWidgets::instance(), &mdtClApplicationWidgets::editVehicleTypes);
-  ///connect(actEditVehicleType, SIGNAL(triggered()), this, SLOT(editVehicleType()));
-  ///connect(pbEditVehicleType, SIGNAL(clicked()), this, SLOT(editVehicleType()));
   // Connector
   connect(actViewConnector, SIGNAL(triggered()), this, SLOT(viewConnector()));
-  connect(actEditConnector, SIGNAL(triggered()), this, SLOT(editConnector()));
-  connect(actEditSelectedConnector, SIGNAL(triggered()), this, SLOT(editSelectedConnector()));
-  
+  connect(actEditConnector, &QAction::triggered, mdtClApplicationWidgets::instance(), &mdtClApplicationWidgets::editConnectors);
+  connect(actEditSelectedConnector, &QAction::triggered, this, &mdtClMainWindow::editSelectedConnector);
   // Article edition
   connect(actViewArticle, SIGNAL(triggered()), this, SLOT(viewArticle()));
-  connect(actEditArticle, SIGNAL(triggered()), this, SLOT(editArticle()));
-  connect(actEditSelectedArticle, SIGNAL(triggered()), this, SLOT(editSelectedArticle()));
-  ///connect(pbEditArticle, SIGNAL(clicked()), this, SLOT(editArticle()));
-
+  connect(actEditArticle, &QAction::triggered, mdtClApplicationWidgets::instance(), &mdtClApplicationWidgets::editArticles);
+  connect(actEditSelectedArticle, &QAction::triggered, this, &mdtClMainWindow::editSelectedArticle);
   // Unit edition
   connect(actViewUnit, &QAction::triggered, this, &mdtClMainWindow::viewUnit);
-  connect(actEditUnit, &QAction::triggered, mdtClApplicationWidgets::instance(), &mdtClApplicationWidgets::slotEditUnits);
+  connect(actEditUnit, &QAction::triggered, mdtClApplicationWidgets::instance(), &mdtClApplicationWidgets::editUnits);
   connect(actEditSelectedUnit, &QAction::triggered, this, &mdtClMainWindow::editSelectedUnit);
 
   // Link list
