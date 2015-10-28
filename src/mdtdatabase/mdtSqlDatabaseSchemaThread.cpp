@@ -87,6 +87,7 @@ void mdtSqlDatabaseSchemaThread::run()
     auto tables = pvSchema.tableList();
     auto tablePopulations = pvSchema.tablePopulationSchemaList();
     auto views = pvSchema.viewList();
+    auto triggers = pvSchema.triggerList();
     double globalProgess = 0.0;
     double globalProgessStep = 0.0;
     double elemetsCount;
@@ -96,7 +97,7 @@ void mdtSqlDatabaseSchemaThread::run()
      */
     pvAbort = false;
     // Global progress
-    elemetsCount = tables.size() + tablePopulations.size() + views.size();
+    elemetsCount = tables.size() + tablePopulations.size() + views.size() + triggers.size();
     if(elemetsCount > 0.0){
       globalProgessStep = 100.0 / elemetsCount;
     }
@@ -115,6 +116,8 @@ void mdtSqlDatabaseSchemaThread::run()
     populateTables(tablePopulations, db, globalProgess, globalProgessStep);
     // Create views
     createViews(views, db, globalProgess, globalProgessStep);
+    // Create triggers
+    createTriggers(triggers, db, globalProgess, globalProgessStep);
 
     qDebug() << "THD END";
     
@@ -353,6 +356,78 @@ bool mdtSqlDatabaseSchemaThread::createView(const mdtSqlViewSchema::Schema & vs,
   }
   emit objectProgressChanged(mdtSqlDatabaseSchemaModel::View, name, 100);
   emit objectStatusChanged(mdtSqlDatabaseSchemaModel::View, name, mdtSqlDatabaseSchemaModel::StatusOk);
+
+  return true;
+}
+
+void mdtSqlDatabaseSchemaThread::createTriggers(const QList<mdtSqlTriggerSchema> & triggers, const QSqlDatabase & db,
+                                                double & globalProgress, double globalProgressStep)
+{
+  bool errorOccured = false;
+  double progress = 0.0;
+  double progressStep;
+
+  if(triggers.isEmpty()){
+    return;
+  }
+  progressStep = 100.0 / static_cast<double>(triggers.size());
+  for(const auto & trigger : triggers){
+    if(pvAbort){
+      return;
+    }
+    if(!createTrigger(trigger, db)){
+      errorOccured = true;
+    }
+    // Update progresses
+    if(!errorOccured){
+      progress += progressStep;
+      emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Trigger, "", progress);
+      globalProgress += globalProgressStep;
+      emit globalProgressChanged(globalProgress);
+    }
+  }
+  // Update views creation status
+  if(errorOccured){
+    emit objectStatusChanged(mdtSqlDatabaseSchemaModel::Trigger, "", mdtSqlDatabaseSchemaModel::StatusError);
+  }else{
+    emit objectStatusChanged(mdtSqlDatabaseSchemaModel::Trigger, "", mdtSqlDatabaseSchemaModel::StatusOk);
+  }
+}
+
+bool mdtSqlDatabaseSchemaThread::createTrigger(const mdtSqlTriggerSchema& trigger, const QSqlDatabase& db)
+{
+  Q_ASSERT(db.isValid());
+
+  QSqlQuery query(db);
+  QString name = trigger.name();
+  QString sql;
+
+  // Drop trigger
+  sql = trigger.getSqlForDropTrigger(db);
+  if(!query.exec(sql)){
+    QSqlError sqlError = query.lastError();
+    mdtError error(tr("Cannot drop trigger '") + name + tr("'"), mdtError::Error);
+    error.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseSchemaThread");
+    error.commit();
+    emit objectErrorOccured(mdtSqlDatabaseSchemaModel::Trigger, name, error);
+    emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Trigger, name, 0);
+    return false;
+  }
+  // Create trigger
+  sql = trigger.getSqlForCreateTrigger(db);
+  if(!query.exec(sql)){
+    QSqlError sqlError = query.lastError();
+    mdtError error(tr("Cannot create trigger '") + name + tr("'"), mdtError::Error);
+    error.setSystemError(sqlError.number(), sqlError.text());
+    MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseSchemaThread");
+    error.commit();
+    emit objectErrorOccured(mdtSqlDatabaseSchemaModel::Trigger, name, error);
+    emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Trigger, name, 0);
+    return false;
+  }
+  emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Trigger, name, 100);
+  emit objectStatusChanged(mdtSqlDatabaseSchemaModel::Trigger, name, mdtSqlDatabaseSchemaModel::StatusOk);
 
   return true;
 }

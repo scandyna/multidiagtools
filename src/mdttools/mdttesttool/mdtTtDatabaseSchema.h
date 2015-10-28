@@ -221,6 +221,10 @@ class mdtTtDatabaseSchema
    */
   bool createOnLinkVersionAfterInsertTrigger();
 
+  /*! \brief Setup onLinkVersionAfterInsert trigger
+   */
+  void setupOnLinkVersionAfterInsertTrigger();
+
   /*! \brief Create Link_tbl
    */
   void setupLinkTable();

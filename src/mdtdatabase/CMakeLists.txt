@@ -44,6 +44,7 @@ set (SOURCES_FILES
           mdtSqlDatabaseSchemaThread.cpp
           mdtSqlSchemaTable.cpp
           mdtSqlViewSchema.cpp
+          mdtSqlTriggerSchema.cpp
           mdtSqlTableSchemaModel.cpp
           mdtSqlTableSetupWidget.cpp
           mdtSqlIndex.cpp

@@ -25,6 +25,7 @@
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlTablePopulationSchema.h"
 #include "mdtSqlViewSchema.h"
+#include "mdtSqlTriggerSchema.h"
 #include "mdtError.h"
 #include <QThread>
 #include <QString>
@@ -146,6 +147,15 @@ class mdtSqlDatabaseSchemaThread : public QThread
   /*! \brief Create a view
    */
   bool createView(const mdtSqlViewSchema::Schema & vs, const QSqlDatabase & db);
+
+  /*! \brief Create triggers
+   */
+  void createTriggers(const QList<mdtSqlTriggerSchema> & triggers, const QSqlDatabase & db,
+                      double & globalProgress, double globalProgressStep);
+
+  /*! \brief Create a trigger
+   */
+  bool createTrigger(const mdtSqlTriggerSchema & trigger, const QSqlDatabase & db);
 
   std::atomic<bool> pvAbort;
   mdtSqlDatabaseSchema pvSchema;

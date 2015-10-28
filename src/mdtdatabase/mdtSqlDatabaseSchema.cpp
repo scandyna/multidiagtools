@@ -128,6 +128,11 @@ void mdtSqlDatabaseSchema::addTablePopulation(const mdtSqlTablePopulationSchema&
   pvTablePopulationSchemaList.append(tps);
 }
 
+void mdtSqlDatabaseSchema::addTrigger(const mdtSqlTriggerSchema & trigger)
+{
+  pvTriggerList.append(trigger);
+}
+
 bool mdtSqlDatabaseSchema::createSchema(const QSqlDatabase& db)
 {
   mdtSqlDatabaseSchemaThread thread;

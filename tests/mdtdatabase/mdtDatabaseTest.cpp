@@ -39,6 +39,7 @@
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlTableSchemaModel.h"
 #include "mdtSqlViewSchema.h"
+#include "mdtSqlTriggerSchema.h"
 #include "mdtSqlTablePopulationSchema.h"
 #include "mdtSqlDatabaseSchema.h"
 #include "mdtSqlDatabaseSchemaModel.h"
@@ -2700,6 +2701,67 @@ void mdtDatabaseTest::sqlViewSchemaBenchmark()
 //   QCOMPARE(sqlC, expectedSql);
 }
 
+void mdtDatabaseTest::sqlTriggerSchemaTest()
+{
+  mdtSqlTriggerSchema trigger;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(!trigger.isTemporary());
+  QVERIFY(trigger.event() == mdtSqlTriggerSchema::Unknown);
+  /*
+   * Set/get
+   */
+  trigger.setTemporary(true);
+  QVERIFY(trigger.isTemporary());
+  trigger.setName("TestTrigger");
+  QCOMPARE(trigger.name(), QString("TestTrigger"));
+  trigger.setEvent(mdtSqlTriggerSchema::AfterInsert);
+  QVERIFY(trigger.event() == mdtSqlTriggerSchema::AfterInsert);
+  trigger.setTableName("Client_tbl");
+  QCOMPARE(trigger.tableName(), QString("Client_tbl"));
+  trigger.setScript("UPDATE Client_tbl SET Name = 'Some name';");
+  QCOMPARE(trigger.script(), QString("UPDATE Client_tbl SET Name = 'Some name';"));
+  /*
+   * Clear
+   */
+  trigger.clear();
+  QVERIFY(!trigger.isTemporary());
+  QVERIFY(trigger.name().isEmpty());
+  QVERIFY(trigger.event() == mdtSqlTriggerSchema::Unknown);
+  QVERIFY(trigger.tableName().isEmpty());
+  QVERIFY(trigger.script().isEmpty());
+}
+
+void mdtDatabaseTest::sqlTriggerSchemaGetSqlSqliteTest()
+{
+  mdtSqlTriggerSchema trigger;
+  QString expectedSql;
+
+  QCOMPARE(pvDatabase.driverName(), QString("QSQLITE"));
+
+  /*
+   * Simple trigger
+   */
+  // Setup trigger
+  trigger.setTemporary(true);
+  trigger.setName("TestTrigger");
+  trigger.setEvent(mdtSqlTriggerSchema::AfterInsert);
+  trigger.setTableName("Client_tbl");
+  trigger.setScript(" UPDATE Client_tbl SET Name = 'Some name';");
+  // Check SQL for DROP
+  expectedSql = "DROP TRIGGER IF EXISTS \"TestTrigger\"";
+  QCOMPARE(trigger.getSqlForDropTrigger(pvDatabase), expectedSql);
+  // Check SQL for CREATE
+  expectedSql = "CREATE TEMPORARY TRIGGER \"TestTrigger\" AFTER INSERT ON \"Client_tbl\"\n" \
+                "FOR EACH ROW\n" \
+                "BEGIN\n" \
+                " UPDATE Client_tbl SET Name = 'Some name';\n" \
+                "END";
+  QCOMPARE(trigger.getSqlForCreateTrigger(pvDatabase), expectedSql);
+}
+
 void mdtDatabaseTest::sqlTablePopulationSchemaTest()
 {
   mdtSqlTablePopulationSchema tps;
@@ -2761,6 +2823,7 @@ void mdtDatabaseTest::sqlDatabaseSchemaTest()
   mdtSqlSchemaTable table;
   mdtSqlField field;
   mdtSqlForeignKey fk;
+  mdtSqlTriggerSchema trigger;
 
   QCOMPARE(pvDatabase.driverName(), QString("QSQLITE"));
   /*
@@ -2820,6 +2883,20 @@ void mdtDatabaseTest::sqlDatabaseSchemaTest()
   // Add table to database schema and check
   s.addTable(table);
   QCOMPARE(s.tableCount(), 2);
+  /*
+   * Trigger
+   */
+  // Setup trigger
+  trigger.clear();
+  trigger.setName("TestTrigger");
+  trigger.setEvent(mdtSqlTriggerSchema::AfterInsert);
+  trigger.setTableName("Client_tbl");
+  trigger.setScript(" UPDATE Client_tbl SET Name = 'Some name';");
+  // Add trigger to database schema
+  s.addTrigger(trigger);
+  QCOMPARE(s.triggerCount(), 1);
+  QCOMPARE(s.triggerName(0), QString("TestTrigger"));
+
 }
 
 void mdtDatabaseTest::sqlDatabaseSchemaGetJoinClauseTest()
@@ -2978,7 +3055,6 @@ void mdtDatabaseTest::sqlDatabaseSchemaGetJoinClauseTest()
 
 void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
 {
-  ///using namespace mdtSqlViewSchema;
   const int objectColumn = 0;
   const int progressColumn = 1;
   const int statusColumn = 2;
@@ -2987,6 +3063,7 @@ void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
   mdtSqlSchemaTable ts;
   mdtSqlViewSchema::Schema vs;
   mdtSqlTablePopulationSchema tps;
+  mdtSqlTriggerSchema trigger;
   mdtSqlField field;
   QTreeView treeView;
   QModelIndex index, parentIndex;
@@ -3028,6 +3105,10 @@ void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
   tps.clear();
   tps.setName("Client_tbl base data");
   s.addTablePopulation(tps);
+  // Build trigger schema
+  trigger.clear();
+  trigger.setName("Client_tbl trigger");
+  s.addTrigger(trigger);
   // Set schema to model
   model.setSchema(s);
   /*
@@ -3040,6 +3121,8 @@ void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
    *   |--Client_view
    * Table population
    *   |--Client_tbl base data
+   * Triggers
+   *   |--Client_tbl trigger
    *
    * Check getting objects
    */
@@ -3070,6 +3153,14 @@ void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
   index = model.index(0, 0, parentIndex);
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index), QVariant("Client_tbl base data"));
+  // Check triggers
+  index = model.index(3, objectColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Triggers"));
+  parentIndex = index;
+  index = model.index(0, 0, parentIndex);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Client_tbl trigger"));
   /*
    * Check set/get progress
    */
@@ -3152,6 +3243,7 @@ void mdtDatabaseTest::sqlDatabaseSchemaDialogTest()
   mdtSqlSchemaTable ts;
   mdtSqlViewSchema::Schema vs;
   mdtSqlTablePopulationSchema tps;
+  mdtSqlTriggerSchema trigger;
   mdtSqlField field;
 
   /*
@@ -3200,6 +3292,12 @@ void mdtDatabaseTest::sqlDatabaseSchemaDialogTest()
   tps.currentRowData() << QVariant() << "A name 3";
   tps.commitCurrentRowData();
   s.addTablePopulation(tps);
+  // Build trigger for Client_tbl
+  trigger.clear();
+  trigger.setName("on_Client_tbl_AfterInsert");
+  trigger.setTableName("Client_tbl");
+  trigger.setScript(" UPDATE Client_tbl SET Remarks = 'Some remark';");
+  s.addTrigger(trigger);
 
   dialog.setDatabase(pvDatabase);
   dialog.setSchema(s);
@@ -3215,8 +3313,8 @@ void mdtDatabaseTest::sqlDatabaseSchemaThreadTest()
   QString sql;
   mdtSqlDatabaseSchema s;
   mdtSqlSchemaTable ts;
-  mdtSqlViewSchema::Schema vs;
   mdtSqlTablePopulationSchema tps;
+  mdtSqlTriggerSchema trigger;
   ///QSqlRecord record;
   mdtSqlField field;
   mdtSqlIndex index;
@@ -3258,17 +3356,20 @@ void mdtDatabaseTest::sqlDatabaseSchemaThreadTest()
   field.setType(mdtSqlFieldType::Varchar);
   field.setLength(50);
   ts.addField(field, false);
+  // Remarks (populated by trigger)
+  field.clear();
+  field.setName("Remarks");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(100);
+  ts.addField(field, false);
   s.addTable(ts);
   // Build Client_view
-  /**
-   * \todo re-enable once View Schema is done
-   *
-  vs.clear();
-  vs.setName("Client_view");
-  vs.setTableName("Client_tbl");
-  vs.addSelectItem("*");
-  s.addView(vs);
-  */
+  mdtSqlViewSchema::Schema view;
+  mdtSqlViewSchema::Table client("Client_tbl", "CLI");
+  view.setName("Client_view");
+  view.setTable(client);
+  view.addSelectField(client, mdtSqlViewSchema::SelectField("*"));
+  s.addView(view);
   // Build table population schema for Client_tbl
   tps.clear();
   tps.setName("Client_tbl base data");
@@ -3282,6 +3383,12 @@ void mdtDatabaseTest::sqlDatabaseSchemaThreadTest()
   tps.currentRowData() << QVariant() << "A name 3";
   tps.commitCurrentRowData();
   s.addTablePopulation(tps);
+  // Build trigger for Client_tbl
+  trigger.clear();
+  trigger.setName("on_Client_tbl_AfterInsert");
+  trigger.setTableName("Client_tbl");
+  trigger.setScript(" UPDATE Client_tbl SET Remarks = 'Some remark';");
+  s.addTrigger(trigger);
   /*
    * Create schema in blocking way
    */
@@ -3293,6 +3400,7 @@ void mdtDatabaseTest::sqlDatabaseSchemaThreadTest()
   QVERIFY(q.exec("SELECT * FROM Client_tbl"));
   QVERIFY(q.next());
   QCOMPARE(q.record().value("Name"), QVariant("A name 1"));
+  QCOMPARE(q.record().value("Remarks"), QVariant("Some remark"));
   QVERIFY(q.next());
   QCOMPARE(q.record().value("Name"), QVariant("A name 2"));
   QVERIFY(q.next());
@@ -3316,6 +3424,7 @@ void mdtDatabaseTest::sqlDatabaseSchemaThreadTest()
   QVERIFY(q.exec("SELECT * FROM Client_tbl"));
   QVERIFY(q.next());
   QCOMPARE(q.record().value("Name"), QVariant("A name 1"));
+  QCOMPARE(q.record().value("Remarks"), QVariant("Some remark"));
   QVERIFY(q.next());
   QCOMPARE(q.record().value("Name"), QVariant("A name 2"));
   QVERIFY(q.next());

@@ -42,7 +42,8 @@ class mdtSqlDatabaseSchemaModel : public QAbstractItemModel
     Invalid,          /*!< Not a valid object */
     Table,            /*!< Object refers to a table schema */
     View,             /*!< Object refers to a view schema */
-    TablePopulation   /*!< Object refers to a table population schema */
+    TablePopulation,  /*!< Object refers to a table population schema */
+    Trigger           /*!< Object refers to a trigger schema */
   };
 
   /*! \brief Status
@@ -183,6 +184,10 @@ class mdtSqlDatabaseSchemaModel : public QAbstractItemModel
   /*! \brief Get table population schema data
    */
   QVariant tablePopulationSchemaData(const QModelIndex & index, int role) const;
+
+  /*! \brief Get trigger schema data
+   */
+  QVariant triggerSchemaData(const QModelIndex & index, int role) const;
 
   /*! \brief Get status data
    */

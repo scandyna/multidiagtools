@@ -24,6 +24,7 @@
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlTablePopulationSchema.h"
 #include "mdtSqlViewSchema.h"
+#include "mdtSqlTriggerSchema.h"
 #include <QList>
 
 class QSqlDatabase;
@@ -147,6 +148,35 @@ class mdtSqlDatabaseSchema
     return pvTablePopulationSchemaList.at(index).name();
   }
 
+  /*! \brief Add a trigger schema
+   */
+  void addTrigger(const mdtSqlTriggerSchema & trigger);
+
+  /*! \brief Get trigger schema count
+   */
+  int triggerCount() const
+  {
+    return pvTriggerList.size();
+  }
+
+  /*! \brief Get trigger schema list
+   */
+  QList<mdtSqlTriggerSchema> triggerList() const
+  {
+    return pvTriggerList;
+  }
+
+  /*! \brief Get trigger schema name
+   *
+   * \pre index must be in a valid range
+   */
+  QString triggerName(int index) const
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < pvTriggerList.size());
+    return pvTriggerList.at(index).name();
+  }
+
   /*! \brief Create given database schema
    *
    * Given database object is directly used for database creation.
@@ -164,6 +194,7 @@ class mdtSqlDatabaseSchema
   QList<mdtSqlSchemaTable> pvTableList;
   QList<mdtSqlViewSchema::Schema> pvViewList;
   QList<mdtSqlTablePopulationSchema> pvTablePopulationSchemaList;
+  QList<mdtSqlTriggerSchema> pvTriggerList;
 };
 
 #endif // #ifndef MDT_SQL_DATABASE_SCHEMA_H

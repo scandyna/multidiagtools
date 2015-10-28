@@ -26,6 +26,7 @@
 #include "mdtSqlIndex.h"
 #include "mdtSqlForeignKey.h"
 #include "mdtSqlViewSchema.h"
+#include "mdtSqlTriggerSchema.h"
 #include "mdtSqlTablePopulationSchema.h"
 #include <QSqlQuery>
 #include <QSqlError>
@@ -108,6 +109,8 @@ bool mdtTtDatabaseSchema::buildSchema()
   setupLinkDirectionTablePopulation();
   setupTestSystemComponentTypeTablePopulation();
   setupTestSystemUnitTypeTablePopulation();
+  // Setup triggers
+  setupOnLinkVersionAfterInsertTrigger();
 
   return true;
 }
@@ -1711,6 +1714,29 @@ bool mdtTtDatabaseSchema::createOnLinkVersionAfterInsertTrigger()
 
   return createTrigger("onLinkVersionAfterInsert", sql);
 }
+
+void mdtTtDatabaseSchema::setupOnLinkVersionAfterInsertTrigger()
+{
+  mdtSqlTriggerSchema trigger;
+  QString script;
+
+  trigger.setName("onLinkVersionAfterInsert");
+  trigger.setEvent(mdtSqlTriggerSchema::AfterInsert);
+  trigger.setTableName("LinkVersion_tbl");
+  script = " INSERT INTO Link_tbl (UnitConnectionStart_Id_FK, UnitConnectionEnd_Id_FK, Version_FK, Modification_Code_FK, "\
+                                  "LinkType_Code_FK, LinkDirection_Code_FK, ArticleConnectionStart_Id_FK, ArticleConnectionEnd_Id_FK, "\
+                                  "Wire_Id_FK, LinkBeam_Id_FK, Identification, Resistance, Length, Remarks)\n"\
+           "  SELECT DISTINCT L.UnitConnectionStart_Id_FK, L.UnitConnectionEnd_Id_FK, NEW.Version_PK, 'EXISTS', "\
+                                  "L.LinkType_Code_FK, L.LinkDirection_Code_FK, L.ArticleConnectionStart_Id_FK, L.ArticleConnectionEnd_Id_FK, "\
+                                  "L.Wire_Id_FK, L.LinkBeam_Id_FK, L.Identification, L.Resistance, L.Length, L.Remarks\n"\
+           "   FROM Link_tbl L\n"\
+           "  WHERE L.Version_FK = (SELECT max(Version_FK) FROM Link_tbl)\n"\
+           "  AND (L.Modification_Code_FK NOT IN ('REM') OR L.Modification_Code_FK IS NULL);\n";
+  trigger.setScript(script);
+
+  pvSchema.addTrigger(trigger);
+}
+
 
 void mdtTtDatabaseSchema::setupLinkTable() 
 {

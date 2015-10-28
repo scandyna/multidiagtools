@@ -214,6 +214,8 @@ void mdtSqlDatabaseSchemaModel::setSchema(const mdtSqlDatabaseSchema & s)
   views->addChildren(s.viewCount(), mdtSqlDatabaseSchemaModelItem::ObjectName, View);
   auto *tps = pvRootItem->addChild(mdtSqlDatabaseSchemaModelItem::ObjectCategory, TablePopulation);
   tps->addChildren(s.tablePopulationCount(), mdtSqlDatabaseSchemaModelItem::ObjectName, TablePopulation);
+  auto *triggers = pvRootItem->addChild(mdtSqlDatabaseSchemaModelItem::ObjectCategory, Trigger);
+  triggers->addChildren(s.triggerCount(), mdtSqlDatabaseSchemaModelItem::ObjectName, Trigger);
   endResetModel();
 }
 
@@ -395,6 +397,8 @@ QVariant mdtSqlDatabaseSchemaModel::categoryDisplayRoleData(mdtSqlDatabaseSchema
       return tr("Views");
     case TablePopulation:
       return tr("Table population");
+    case Trigger:
+      return tr("Triggers");
     default:
       return QVariant();
   }
@@ -415,6 +419,8 @@ QVariant mdtSqlDatabaseSchemaModel::nameData(const QModelIndex & index, ObjectCa
       return viewSchemaData(index, role);
     case TablePopulation:
       return tablePopulationSchemaData(index, role);
+    case Trigger:
+      return triggerSchemaData(index, role);
   }
 
   return QVariant();
@@ -450,6 +456,17 @@ QVariant mdtSqlDatabaseSchemaModel::tablePopulationSchemaData(const QModelIndex&
 
   if(role == Qt::DisplayRole){
     return pvSchema.tablePopulationName(index.row());
+  }
+  return QVariant();
+}
+
+QVariant mdtSqlDatabaseSchemaModel::triggerSchemaData(const QModelIndex& index, int role) const
+{
+  Q_ASSERT(index.isValid());
+  Q_ASSERT(index.row() < pvSchema.triggerCount());
+
+  if(role == Qt::DisplayRole){
+    return pvSchema.triggerName(index.row());
   }
   return QVariant();
 }
