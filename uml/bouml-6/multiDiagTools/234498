@@ -1,6 +1,6 @@
 format 210
 "mdtdatabase" // mdtdatabase
-  revision 79
+  revision 80
   modified_by 2 "philippe"
   // class settings
   
@@ -8391,13 +8391,13 @@ ${inlines}
 	
       end
 
-      classrelation 2277762 // <unidirectional association>
-	relation 2261506 --->
+      classrelation 2365570 // <unidirectional association>
+	relation 2349314 --->
 	  a role_name "" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	    classrelation_ref 2277762 // <unidirectional association>
-	  b parent class_ref 1914114 // mdtSqlDatabaseCopierTableMapping
+	    classrelation_ref 2365570 // <unidirectional association>
+	  b parent class_ref 1927810 // mdtSqlDatabaseCopierMapping
       end
     end
   end

@@ -361,6 +361,7 @@ void mdtDatabaseTest::sqlFieldTest()
   field.setRequired(true);
   // Check
   QVERIFY(field.type() == mdtSqlFieldType::Integer);
+  QCOMPARE(field.typeName(mdtSqlDriverType::Unknown), QString("INTEGER"));
   QCOMPARE(field.name(), QString("Id_PK"));
   QVERIFY(field.isAutoValue());
   QVERIFY(field.isRequired());

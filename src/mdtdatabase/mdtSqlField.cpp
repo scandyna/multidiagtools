@@ -33,6 +33,17 @@ void mdtSqlField::clear()
   pvCollation.clear();
 }
 
+QString mdtSqlField::typeName(mdtSqlDriverType::Type driverType) const
+{
+  QString name = mdtSqlFieldType::nameFromType(pvType, driverType);
+
+  if(pvLength > 0){
+    name += "(" + QString::number(pvLength) + ")";
+  }
+
+  return name;
+}
+
 void mdtSqlField::setupFromQSqlField(const QSqlField & qtField, mdtSqlDriverType::Type driverType)
 {
   pvType = mdtSqlFieldType::fromQVariantType(qtField.type(), driverType);
@@ -68,10 +79,7 @@ QString mdtSqlField::getSql(const QSqlDatabase & db, bool pk) const
   // Field name
   sql = driver->escapeIdentifier(pvName, QSqlDriver::FieldName);
   // Field type
-  sql += " " + mdtSqlFieldType::nameFromType(pvType, driverType);
-  if(pvLength > 0){
-    sql += "(" + QString::number(pvLength) + ")";
-  }
+  sql += " " + typeName(driverType);
   // Other definitions witch are databse specific
   switch(driverType){
     case mdtSqlDriverType::SQLite:

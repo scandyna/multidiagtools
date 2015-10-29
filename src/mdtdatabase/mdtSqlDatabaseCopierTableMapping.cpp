@@ -20,6 +20,10 @@
  ****************************************************************************/
 #include "mdtSqlDatabaseCopierTableMapping.h"
 #include "mdtSqlField.h"
+#include "mdtSqlDriverType.h"
+#include <QSqlDriver>
+
+//#include <QDebug>
 
 mdtSqlDatabaseCopierTableMapping::mdtSqlDatabaseCopierTableMapping()
  : pvMappingState(MappingNotSet)
@@ -59,6 +63,7 @@ bool mdtSqlDatabaseCopierTableMapping::setSourceTable(const QString & tableName,
     pvLastError = pvSourceTable.lastError();
     return false;
   }
+  pvSourceDatabase = db;
   resetFieldMapping();
 
   return true;
@@ -71,6 +76,7 @@ bool mdtSqlDatabaseCopierTableMapping::setDestinationTable(const QString & table
     pvLastError = pvDestinationTable.lastError();
     return false;
   }
+  pvDestinationDatabase = db;
   resetFieldMapping();
 
   return true;
@@ -139,6 +145,58 @@ void mdtSqlDatabaseCopierTableMapping::setDestinationField(int index, const QStr
   }
 }
 
+QString mdtSqlDatabaseCopierTableMapping::sourceFieldName(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < pvFieldMappingList.size());
+
+  int sourceFieldIndex = pvFieldMappingList.at(index).sourceFieldIndex;
+  Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
+  if(sourceFieldIndex < 0){
+    return QString();
+  }
+  return pvSourceTable.fieldName(sourceFieldIndex);
+}
+
+QString mdtSqlDatabaseCopierTableMapping::sourceFieldTypeName(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < pvFieldMappingList.size());
+
+  int sourceFieldIndex = pvFieldMappingList.at(index).sourceFieldIndex;
+  Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
+  if(sourceFieldIndex < 0){
+    return QString();
+  }
+  return pvSourceTable.fieldTypeName(sourceFieldIndex, mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName()));
+}
+
+QString mdtSqlDatabaseCopierTableMapping::destinationFieldName(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < pvFieldMappingList.size());
+
+  int destinationFieldIndex = pvFieldMappingList.at(index).destinationFieldIndex;
+  Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
+  if(destinationFieldIndex < 0){
+    return QString();
+  }
+  return pvDestinationTable.fieldName(destinationFieldIndex);
+}
+
+QString mdtSqlDatabaseCopierTableMapping::destinationFieldTypeName(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < pvFieldMappingList.size());
+
+  int destinationFieldIndex = pvFieldMappingList.at(index).destinationFieldIndex;
+  Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
+  if(destinationFieldIndex < 0){
+    return QString();
+  }
+  return pvDestinationTable.fieldTypeName(destinationFieldIndex, mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName()));
+}
+
 bool mdtSqlDatabaseCopierTableMapping::mappingIsCompete()
 {
   // Check if both tables are set
@@ -155,4 +213,71 @@ bool mdtSqlDatabaseCopierTableMapping::mappingIsCompete()
   }
 
   return true;
+}
+
+QString mdtSqlDatabaseCopierTableMapping::getSqlForSourceTableSelect(const QSqlDatabase & db) const
+{
+  QString sql;
+  QStringList fields;
+  QSqlDriver *driver = db.driver();
+  Q_ASSERT(driver != nullptr);
+  int lastIndex;
+
+  // Build list of mapped fields
+  for(const auto & fm : pvFieldMappingList){
+    if(fm.destinationFieldIndex >= 0){
+      Q_ASSERT(fm.sourceFieldIndex >= 0);
+      Q_ASSERT(fm.sourceFieldIndex < pvSourceTable.fieldCount());
+      fields.append(pvSourceTable.fieldName(fm.sourceFieldIndex));
+    }
+  }
+  lastIndex = fields.size() - 1;
+  // If no mapping was set, simply return a empty statement
+  if(lastIndex < 0){
+    return sql;
+  }
+  // Build statement
+  sql = "SELECT ";
+  for(int i = 0; i < lastIndex; ++i){
+    sql += driver->escapeIdentifier(fields.at(i), QSqlDriver::FieldName) + ",";
+  }
+  sql += driver->escapeIdentifier(fields.at(lastIndex), QSqlDriver::FieldName);
+  sql += " FROM " + driver->escapeIdentifier(pvSourceTable.tableName(), QSqlDriver::TableName);
+
+  return sql;
+}
+
+QString mdtSqlDatabaseCopierTableMapping::getSqlForDestinationTableInsert(const QSqlDatabase & db) const
+{
+  QString sql;
+  QStringList fields;
+  QSqlDriver *driver = db.driver();
+  Q_ASSERT(driver != nullptr);
+  int lastIndex;
+
+  // Build list of mapped fields
+  for(const auto & fm : pvFieldMappingList){
+    if(fm.destinationFieldIndex >= 0){
+      Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
+      fields.append(pvDestinationTable.fieldName(fm.destinationFieldIndex));
+    }
+  }
+  lastIndex = fields.size() - 1;
+  // If no mapping was set, simply return a empty statement
+  if(lastIndex < 0){
+    return sql;
+  }
+  // Build statement
+  sql = "INSERT INTO " + driver->escapeIdentifier(pvDestinationTable.tableName(), QSqlDriver::TableName) + " (";
+  for(int i = 0; i < lastIndex; ++i){
+    sql += driver->escapeIdentifier(fields.at(i), QSqlDriver::FieldName) + ",";
+  }
+  sql += driver->escapeIdentifier(fields.at(lastIndex), QSqlDriver::FieldName);
+  sql += ") VALUES (";
+  for(int i = 0; i < lastIndex; ++i){
+    sql += "?,";
+  }
+  sql += "?)";
+
+  return sql;
 }

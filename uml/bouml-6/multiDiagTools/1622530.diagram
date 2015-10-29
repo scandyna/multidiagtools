@@ -1,4 +1,4 @@
-format 209
+format 210
 
 classcanvas 128002 class_ref 1941122 // mdtSqlDatabaseCopierThread
   classdiagramsettings member_max_width 0 end
@@ -13,15 +13,24 @@ note 128386 "Thread should be started (f.ex. when copy dialog was oen), so it is
   xyzwh 95 540 2000 483 109
 classcanvas 128514 class_ref 1914114 // mdtSqlDatabaseCopierTableMapping
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 579 392 2000
+  xyz 589 549 2000
+end
+classcanvas 128770 class_ref 1927810 // mdtSqlDatabaseCopierMapping
+  classdiagramsettings member_max_width 0 end
+  xyz 538 244 2006
 end
 relationcanvas 128258 relation_ref 2261378 // <generalisation>
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 128642 relation_ref 2261506 // <unidirectional association>
-  from ref 128002 z 2001 to ref 128514
+relationcanvas 128898 relation_ref 2248322 // <directional composition>
+  from ref 128770 z 2007 to ref 128514
+  no_role_a no_role_b
+  multiplicity_a_pos 696 522 3000 no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 2349314 // <unidirectional association>
+  from ref 128002 z 2007 to ref 128770
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

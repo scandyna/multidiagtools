@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtSqlDatabaseCopierMapping.h"
-#include <QStringList>
+#include <QLatin1String>
 
 bool mdtSqlDatabaseCopierMapping::setSourceDatabase(const QSqlDatabase & db)
 {
@@ -39,7 +39,7 @@ bool mdtSqlDatabaseCopierMapping::setDestinationDatabase(const QSqlDatabase & db
 
 bool mdtSqlDatabaseCopierMapping::resetTableMapping()
 {
-  QStringList sourceTableNameList = pvSourceDatabase.tables(QSql::Tables);
+  QStringList sourceTableNameList = getTables(pvSourceDatabase);
 
   pvTableMappingList.clear();
   sourceTableNameList.sort();
@@ -66,7 +66,7 @@ bool mdtSqlDatabaseCopierMapping::generateTableMappingByName()
   if(!resetTableMapping()){
     return false;
   }
-  QStringList destinationTableNameList = pvDestinationDatabase.tables(QSql::Tables);
+  QStringList destinationTableNameList = getTables(pvDestinationDatabase);
   for(auto & tm : pvTableMappingList){
     QString sourceTableName = tm.sourceTableName();
     if(destinationTableNameList.contains(sourceTableName)){
@@ -77,4 +77,46 @@ bool mdtSqlDatabaseCopierMapping::generateTableMappingByName()
   }
 
   return true;
+}
+
+QVector<mdtSqlDatabaseCopierTableMapping> mdtSqlDatabaseCopierMapping::getCompletedTableMappingList() const
+{
+  QVector<mdtSqlDatabaseCopierTableMapping> tmList;
+
+  for(const auto & tm : pvTableMappingList){
+    if(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete){
+      tmList.append(tm);
+    }
+  }
+
+  return tmList;
+}
+
+QStringList mdtSqlDatabaseCopierMapping::getTables(const QSqlDatabase & db)
+{
+  auto driverType = mdtSqlDriverType::typeFromName(db.driverName());
+
+  switch(driverType){
+    case mdtSqlDriverType::SQLite:
+      return getTablesSqlite(db);
+    case mdtSqlDriverType::MariaDB:
+    case mdtSqlDriverType::MySQL:
+    case mdtSqlDriverType::Unknown:
+      return db.tables(QSql::Tables);
+  }
+
+  return QStringList();
+}
+
+QStringList mdtSqlDatabaseCopierMapping::getTablesSqlite(const QSqlDatabase & db)
+{
+  QStringList tables;
+
+  for(const auto & tableName : db.tables(QSql::Tables)){
+    if(!tableName.startsWith(QLatin1String("sqlite_"))){
+      tables.append(tableName);
+    }
+  }
+
+  return tables;
 }

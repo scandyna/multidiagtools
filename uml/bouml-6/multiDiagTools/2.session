@@ -1,18 +1,16 @@
 window_sizes 1280 964 323 951 911 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 1635586 // DatabaseSchema
-    760 728 100 4 0 0
-  active  classdiagram_ref 1687938 // SqlTrigger
+  active  classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
     951 911 100 4 0 0
+  classdiagram_ref 1629058 // sqlDatabaseCopierTableMappingDialog
+    120 106 100 4 0 0
+  classdiagram_ref 1622530 // SqlDatabaseCopierThread
+    120 106 100 4 0 0
 end
 show_stereotypes
-selected attribute_ref 2070658 // WhenClause
+selected classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
 open
-  attribute_ref 2070274 // IsTemporary
-  attribute_ref 1986690 // Name
-  attribute_ref 2070402 // Event
-  attribute_ref 2070530 // TableName
-  attribute_ref 2070658 // WhenClause
+  classview_ref 807426 // ImportExportCopy
 end
 end

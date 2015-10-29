@@ -80,6 +80,12 @@ class mdtSqlField final
     return pvType;
   }
 
+  /*! \brief Get field type name
+   *
+   * If length is > 0 , it will be included in name
+   */
+  QString typeName(mdtSqlDriverType::Type driverType) const;
+
   /*! \brief Set field name
    */
   void setName(const QString & name)

@@ -159,36 +159,13 @@ class mdtSqlDatabaseCopierTableMapping
    *
    * \pre index must be in valid range.
    */
-  QString sourceFieldName(int index) const
-  {
-    Q_ASSERT(index >= 0);
-    Q_ASSERT(index < pvFieldMappingList.size());
-
-    int sourceFieldIndex = pvFieldMappingList.at(index).sourceFieldIndex;
-    Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
-    if(sourceFieldIndex < 0){
-      return QString();
-    }
-    return pvSourceTable.fieldName(sourceFieldIndex);
-  }
+  QString sourceFieldName(int index) const;
 
   /*! \brief Get source field type name for given field mapping index
    *
    * \pre index must be in valid range.
    */
-  QString sourceFieldTypeName(int index) const
-  {
-    Q_ASSERT(index >= 0);
-    Q_ASSERT(index < pvFieldMappingList.size());
-
-    int sourceFieldIndex = pvFieldMappingList.at(index).sourceFieldIndex;
-    Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
-    if(sourceFieldIndex < 0){
-      return QString();
-    }
-    ///return pvSourceTable.fieldTypeName(sourceFieldIndex);
-    return "To be implemented !!";
-  }
+  QString sourceFieldTypeName(int index) const;
 
   /*! \brief Get list of field names of destination table
    */
@@ -201,36 +178,13 @@ class mdtSqlDatabaseCopierTableMapping
    *
    * \pre index must be in valid range.
    */
-  QString destinationFieldName(int index) const
-  {
-    Q_ASSERT(index >= 0);
-    Q_ASSERT(index < pvFieldMappingList.size());
-
-    int destinationFieldIndex = pvFieldMappingList.at(index).destinationFieldIndex;
-    Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
-    if(destinationFieldIndex < 0){
-      return QString();
-    }
-    return pvDestinationTable.fieldName(destinationFieldIndex);
-  }
+  QString destinationFieldName(int index) const;
 
   /*! \brief Get destination field type name for given field mapping index
    *
    * \pre index must be in valid range.
    */
-  QString destinationFieldTypeName(int index) const
-  {
-    Q_ASSERT(index >= 0);
-    Q_ASSERT(index < pvFieldMappingList.size());
-
-    int destinationFieldIndex = pvFieldMappingList.at(index).destinationFieldIndex;
-    Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
-    if(destinationFieldIndex < 0){
-      return QString();
-    }
-    ///return pvDestinationTable.fieldTypeName(destinationFieldIndex);
-    return "To be implemented !!";
-  }
+  QString destinationFieldTypeName(int index) const;
 
   /*! \brief Get last error
    */
@@ -239,6 +193,28 @@ class mdtSqlDatabaseCopierTableMapping
     return pvLastError;
   }
 
+  /*! \brief Get SQL statement to select source table data
+   *
+   * Will build a SQL SELECT statement that contains
+   *  fields regarding mapping.
+   *
+   * \note We cannot use internal databases, because this function is called by mdtSqlDatabaseCopierThread
+   */
+  QString getSqlForSourceTableSelect(const QSqlDatabase & db) const;
+
+  /*! \brief Get SQL statement to insert data into destination table
+   *
+   * Will build a INSERT INTO statement that contains
+   *  fields regarding mapping.
+   *  This stamenet can be used with QSqlQuery's bind vaue with positional placeholder.
+   *
+   * Format is:
+   *  INSERT INTO SourceTable (field0, field1, ..., fieldN) VALUES(?, ?, ..., ?)
+   *
+   * \note We cannot use internal databases, because this function is called by mdtSqlDatabaseCopierThread
+   */
+  QString getSqlForDestinationTableInsert(const QSqlDatabase & db) const;
+
  private:
 
   /*! \brief Check if mapping is complete
@@ -246,9 +222,9 @@ class mdtSqlDatabaseCopierTableMapping
   bool mappingIsCompete();
 
   MappingState pvMappingState;
-//   QSqlDatabase pvSourceDatabase;  /// \todo Check if database instance must be stored or not
+  QSqlDatabase pvSourceDatabase;
   mdtSqlSchemaTable pvSourceTable;
-//   QSqlDatabase pvDestinationDatabase; /// \todo Check if database instance must be stored or not
+  QSqlDatabase pvDestinationDatabase;
   mdtSqlSchemaTable pvDestinationTable;
   QVector<mdtSqlCopierFieldMapping> pvFieldMappingList;
   mdtError pvLastError;

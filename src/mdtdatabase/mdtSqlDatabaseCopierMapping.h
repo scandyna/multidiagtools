@@ -24,6 +24,7 @@
 #include "mdtSqlDatabaseCopierTableMapping.h"
 #include <QSqlDatabase>
 #include <QVector>
+#include <QStringList>
 
 /*! \brief Store SQL database copy mapping
  */
@@ -39,6 +40,13 @@ class mdtSqlDatabaseCopierMapping
    */
   bool setSourceDatabase(const QSqlDatabase & db);
 
+  /*! \brief Get source database
+   */
+  QSqlDatabase sourceDatabase() const
+  {
+    return pvSourceDatabase;
+  }
+
   /*! \brief Set destination database
    *
    * Will also reset table mapping.
@@ -46,6 +54,13 @@ class mdtSqlDatabaseCopierMapping
    * \sa resetTableMapping()
    */
   bool setDestinationDatabase(const QSqlDatabase & db);
+
+  /*! \brief Get destination database
+   */
+  QSqlDatabase destinationDatabase() const
+  {
+    return pvDestinationDatabase;
+  }
 
   /*! \brief Reset table mapping
    *
@@ -132,6 +147,13 @@ class mdtSqlDatabaseCopierMapping
     pvTableMappingList[index] = tm;
   }
 
+  /*! \brief Get the list of table mapping
+   *
+   * Returned list will only contain table mapping
+   *  witch has the MappingComplete state.
+   */
+  QVector<mdtSqlDatabaseCopierTableMapping> getCompletedTableMappingList() const;
+
   /*! \brief Get last error
    */
   mdtError lastError() const
@@ -140,6 +162,22 @@ class mdtSqlDatabaseCopierMapping
   }
 
  private:
+
+  /*! \brief Get a list of tables for given database
+   *
+   * Will also remove some system tables from the list.
+   *
+   * Note: QSqlDatabase::tables(QSql::Tables) returns
+   *       no system tables, but, with QSQLite,
+   *       tables like sqlite_sequence are returned.
+   *       This function will remove them for SQLite database.
+   *
+   */
+  QStringList getTables(const QSqlDatabase & db);
+
+  /*! \brief Get list of table (SQLite implementation)
+   */
+  QStringList getTablesSqlite(const QSqlDatabase & db);
 
   QSqlDatabase pvSourceDatabase;
   QSqlDatabase pvDestinationDatabase;

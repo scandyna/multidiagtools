@@ -140,24 +140,24 @@ mdtSqlField mdtSqlSchemaTable::field(const QString& fieldName) const
 //   return QSqlField();
 // }
 
-/*! \todo
- *  see fieldTypeNameMySql() and fieldTypeNameSqlite() and define all properly.
- */
-QString mdtSqlSchemaTable::fieldTypeName(int index, mdtSqlDriverType::Type driverType) const
-{
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < pvFields.size());
-
-//   if(pvDriverType.type() == mdtSqlDriverType::Unknown){
+// /*! \todo
+//  *  see fieldTypeNameMySql() and fieldTypeNameSqlite() and define all properly.
+//  */
+// QString mdtSqlSchemaTable::fieldTypeName(int index, mdtSqlDriverType::Type driverType) const
+// {
+//   Q_ASSERT(index >= 0);
+//   Q_ASSERT(index < pvFields.size());
+// 
+// //   if(pvDriverType.type() == mdtSqlDriverType::Unknown){
+// //     return QString();
+// //   }
+//   ///return mdtSqlFieldType::nameFromType(pvFields.at(index).type(), pvDriverType.type());
+//   
+//   if(driverType == mdtSqlDriverType::Unknown){
 //     return QString();
 //   }
-  ///return mdtSqlFieldType::nameFromType(pvFields.at(index).type(), pvDriverType.type());
-  
-  if(driverType == mdtSqlDriverType::Unknown){
-    return QString();
-  }
-  return mdtSqlFieldType::nameFromType(pvFields.at(index).type(), driverType);
-}
+//   return mdtSqlFieldType::nameFromType(pvFields.at(index).type(), driverType);
+// }
 
 void mdtSqlSchemaTable::addIndex(const mdtSqlIndex & index)
 {
@@ -609,10 +609,12 @@ bool mdtSqlSchemaTable::setupFieldsFromDatabaseSqlite(const QSqlDatabase & db)
     field.setupFromQSqlField(dbRecord.field(tableInfoRecord.value("name").toString()), mdtSqlDriverType::SQLite);
     // Try to map field type from name
     fieldTypeName = tableInfoRecord.value("type").toString().toUpper();
-    ft = mdtSqlFieldType::typeFromName(fieldTypeName, mdtSqlDriverType::SQLite);
-    if(!ft.isNull()){
-      field.setType(ft.type());
-      field.setLength(ft.length());
+    if(!fieldTypeName.isEmpty()){
+      ft = mdtSqlFieldType::typeFromName(fieldTypeName, mdtSqlDriverType::SQLite);
+      if(!ft.isNull()){
+        field.setType(ft.type());
+        field.setLength(ft.length());
+      }
     }
     // If field type is one that we want to handle, set it
 //     if(fieldTypeName == "DATE"){

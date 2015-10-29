@@ -226,7 +226,12 @@ class mdtSqlSchemaTable
    *
    * \pre index must be valid
    */
-  QString fieldTypeName(int index, mdtSqlDriverType::Type driverType) const;
+  QString fieldTypeName(int index, mdtSqlDriverType::Type driverType) const
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < pvFields.size());
+    return pvFields.at(index).typeName(driverType);
+  }
 
   /*! \brief Get field length for given index
    *

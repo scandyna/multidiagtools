@@ -61,6 +61,7 @@ set (SOURCES_FILES
           mdtSqlDatabaseCopierMapping.cpp
           mdtSqlDatabaseCopierMappingModel.cpp
           mdtSqlDatabaseCopierDialog.cpp
+          mdtSqlDatabaseCopierThread.cpp
     )
 
 # Platform specific files

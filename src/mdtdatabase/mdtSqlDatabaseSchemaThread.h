@@ -79,7 +79,6 @@ class mdtSqlDatabaseSchemaThread : public QThread
    *  unit tests.
    *
    * Given database object is directly used for database creation.
-   *  It will be open by this function if it is not allready.
    *
    * \pre db must be valid (its driver must be loaded) and open
    */
