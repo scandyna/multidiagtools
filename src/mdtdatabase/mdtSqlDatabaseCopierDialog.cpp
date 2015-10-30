@@ -22,21 +22,30 @@
 #include "mdtSqlDatabaseDialogSqlite.h"
 #include "mdtSqlDatabaseCopierMappingModel.h"
 #include "mdtSqlDatabaseCopierTableMappingDialog.h"
+#include "mdtSqlDatabaseCopierThread.h"
 #include <QToolButton>
+#include <QPushButton>
 #include <QMessageBox>
 #include <QTableView>
 
 mdtSqlDatabaseCopierDialog::mdtSqlDatabaseCopierDialog(QWidget* parent)
  : QDialog(parent),
-   pvMappingModel(new mdtSqlDatabaseCopierMappingModel(this))
+   pvMappingModel(new mdtSqlDatabaseCopierMappingModel(this)),
+   pvThread(new mdtSqlDatabaseCopierThread(this))
 {
   setupUi(this);
-  
+
   tvMapping->setModel(pvMappingModel);
   connect(tvMapping, &QTableView::doubleClicked, this, &mdtSqlDatabaseCopierDialog::editTableMapping);
   connect(tbSelectSourceDatabase, &QToolButton::clicked, this, &mdtSqlDatabaseCopierDialog::selectSourceDatabase);
   connect(tbSelectDestinationDatabase, &QToolButton::clicked, this, &mdtSqlDatabaseCopierDialog::selectDestinationDatabase);
+  connect(tbResetMapping, &QToolButton::clicked, this, &mdtSqlDatabaseCopierDialog::resetMapping);
   connect(tbMapByName, &QToolButton::clicked, this, &mdtSqlDatabaseCopierDialog::mapByName);
+  connect(pbCopy, &QPushButton::clicked, this, &mdtSqlDatabaseCopierDialog::copyData);
+  connect(pbAbort, &QPushButton::clicked, this, &mdtSqlDatabaseCopierDialog::abortCopy);
+  connect(pvThread, &mdtSqlDatabaseCopierThread::tableCopyProgressChanged, pvMappingModel, &mdtSqlDatabaseCopierMappingModel::setTableCopyProgress);
+  connect(pvThread, &mdtSqlDatabaseCopierThread::tableCopyStatusChanged, pvMappingModel, &mdtSqlDatabaseCopierMappingModel::setTableCopyStatus);
+  connect(pvThread, &mdtSqlDatabaseCopierThread::tableCopyErrorOccured, pvMappingModel, &mdtSqlDatabaseCopierMappingModel::setTableCopyError);
 }
 
 void mdtSqlDatabaseCopierDialog::selectSourceDatabase()
@@ -73,7 +82,11 @@ void mdtSqlDatabaseCopierDialog::selectDestinationDatabase()
 
 void mdtSqlDatabaseCopierDialog::resetMapping()
 {
-
+  if(!pvMappingModel->resetTableMapping()){
+    displayError(pvMappingModel->lastError());
+    return;
+  }
+  resizeTableViewToContents();
 }
 
 void mdtSqlDatabaseCopierDialog::mapByName()
@@ -104,6 +117,16 @@ void mdtSqlDatabaseCopierDialog::resizeTableViewToContents()
 {
   tvMapping->resizeColumnsToContents();
   tvMapping->resizeRowsToContents();
+}
+
+void mdtSqlDatabaseCopierDialog::copyData()
+{
+  pvThread->copyData(pvMappingModel->mapping());
+}
+
+void mdtSqlDatabaseCopierDialog::abortCopy()
+{
+
 }
 
 void mdtSqlDatabaseCopierDialog::displayError(const mdtError& error)

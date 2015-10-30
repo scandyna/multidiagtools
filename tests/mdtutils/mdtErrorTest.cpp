@@ -31,7 +31,7 @@
 
 /// \todo Basic error struct ?????
 
-template <typename T = int8_t>
+template <typename T = /**typename*/ int8_t>
 struct OtherErrorType
 {
   T pvE;

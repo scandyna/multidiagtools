@@ -28,6 +28,8 @@
 #include <QModelIndex>
 #include <QSqlField>
 #include <QVariant>
+#include <QString>
+#include <vector>
 
 class mdtComboBoxItemDelegate;
 
@@ -40,6 +42,15 @@ class mdtSqlDatabaseCopierMappingModel : public QAbstractTableModel
  Q_OBJECT
 
  public:
+
+  /*! \brief Copy status
+   */
+  enum CopyStatus
+  {
+    CopyStatusUnknown,  /*!< Copy status unknown */
+    CopyStatusOk,       /*!< Copy Ok */
+    CopyStatusError     /*!< Error occured */
+  };
 
   /*! \brief Constructor
    */
@@ -67,6 +78,12 @@ class mdtSqlDatabaseCopierMappingModel : public QAbstractTableModel
    */
   bool generateTableMappingByName();
 
+  /*! \brief Reset table mapping
+   *
+   * \sa mdtSqlDatabaseCopierMapping::resetTableMapping()
+   */
+  bool resetTableMapping();
+
   /*! \brief Get table mapping at given row
    *
    * \pre row must be in a valid range
@@ -78,6 +95,31 @@ class mdtSqlDatabaseCopierMappingModel : public QAbstractTableModel
    * \pre row must be in a valid range
    */
   void setTableMapping(int row, const mdtSqlDatabaseCopierTableMapping & tm);
+
+  /*! \brief Get database mapping
+   */
+  mdtSqlDatabaseCopierMapping mapping() const
+  {
+    return pvMapping;
+  }
+
+  /*! \brief Set table copy progress for given row
+   *
+   * \pre row must be in a valid range
+   */
+  void setTableCopyProgress(int row, int progress);
+
+  /*! \brief Set table copy status
+   *
+   * \pre row must be in a valid range
+   */
+  void setTableCopyStatus(int row, int status);
+
+  /*! \brief Set table copy error
+   *
+   * \pre row must be in a valid range
+   */
+  void setTableCopyError(int row, mdtError error);
 
   /*! \brief Get row count
    *
@@ -117,6 +159,22 @@ class mdtSqlDatabaseCopierMappingModel : public QAbstractTableModel
    */
   QVariant tableMappingStateDecoration(mdtSqlDatabaseCopierTableMapping::MappingState state) const;
 
+  /*! \brief Get table copy progress
+   */
+  QVariant tableCopyProgress(int row, int role) const;
+
+  /*! \brief Get table copy status data
+   */
+  QVariant tableCopyStatusData(int row, int role) const;
+
+  /*! \brief Get table copy status text
+   */
+  QString tableCopyStatusText(CopyStatus status) const;
+
+  /*! \brief Get table copy status decoration
+   */
+  QVariant tableCopyStatusDecoration(CopyStatus status) const;
+
   /*! \brief Get last error
    */
   mdtError lastError() const
@@ -128,14 +186,19 @@ class mdtSqlDatabaseCopierMappingModel : public QAbstractTableModel
 
   /*! \brief Column index
    */
-  enum ColumnIndex_t
+  enum ColumnIndex
   {
     SourceTableNameIndex = 0,       /*!< Column index of source table name */
     DestinationTableNameIndex = 1,  /*!< Column index of destination table name */
-    TableMappingStateIndex = 2      /*!< Column index of table mapping state */
+    TableMappingStateIndex = 2,     /*!< Column index of table mapping state */
+    TableCopyProgressIndex = 3,     /*!< Column index of table copy progress */
+    TableCopyStatusIndex = 4        /*!< Column index of table copy status */
   };
 
   mdtSqlDatabaseCopierMapping pvMapping;
+  std::vector<int> pvRowCopyProgress;
+  std::vector<CopyStatus> pvRowCopyStatus;
+  std::vector<QString> pvRowCopyStatusText;
   mdtError pvLastError;
 };
 

@@ -79,18 +79,18 @@ bool mdtSqlDatabaseCopierMapping::generateTableMappingByName()
   return true;
 }
 
-QVector<mdtSqlDatabaseCopierTableMapping> mdtSqlDatabaseCopierMapping::getCompletedTableMappingList() const
-{
-  QVector<mdtSqlDatabaseCopierTableMapping> tmList;
-
-  for(const auto & tm : pvTableMappingList){
-    if(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete){
-      tmList.append(tm);
-    }
-  }
-
-  return tmList;
-}
+// QVector<mdtSqlDatabaseCopierTableMapping> mdtSqlDatabaseCopierMapping::getCompletedTableMappingList() const
+// {
+//   QVector<mdtSqlDatabaseCopierTableMapping> tmList;
+// 
+//   for(const auto & tm : pvTableMappingList){
+//     if(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete){
+//       tmList.append(tm);
+//     }
+//   }
+// 
+//   return tmList;
+// }
 
 QStringList mdtSqlDatabaseCopierMapping::getTables(const QSqlDatabase & db)
 {

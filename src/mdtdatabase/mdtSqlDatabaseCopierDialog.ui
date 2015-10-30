@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>728</width>
-    <height>451</height>
+    <height>593</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -121,6 +121,39 @@
       </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QPushButton" name="pbCopy">
+       <property name="text">
+        <string>Copy</string>
+       </property>
+       <property name="icon">
+        <iconset theme="system-run"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbAbort">
+       <property name="text">
+        <string>Abort</string>
+       </property>
+       <property name="icon">
+        <iconset theme="process-stop">
+         <normaloff/>
+        </iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QProgressBar" name="pbGlobalProgress">
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

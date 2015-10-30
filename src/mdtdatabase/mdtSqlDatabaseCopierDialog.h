@@ -27,6 +27,7 @@
 #include <QModelIndex>
 
 class mdtSqlDatabaseCopierMappingModel;
+class mdtSqlDatabaseCopierThread;
 
 /*! \brief Dialog that provides database copier tool
  */
@@ -70,6 +71,14 @@ class mdtSqlDatabaseCopierDialog : public QDialog, Ui::mdtSqlDatabaseCopierDialo
    */
   void resizeTableViewToContents();
 
+  /*! \brief Copy data
+   */
+  void copyData();
+
+  /*! \brief Abort copy
+   */
+  void abortCopy();
+
  private:
 
   /*! \brief Display error
@@ -77,6 +86,7 @@ class mdtSqlDatabaseCopierDialog : public QDialog, Ui::mdtSqlDatabaseCopierDialo
   void displayError(const mdtError & error);
 
   mdtSqlDatabaseCopierMappingModel *pvMappingModel;
+  mdtSqlDatabaseCopierThread *pvThread;
 };
 
 #endif // #ifndef MDT_SQL_DATABASE_COPIER_DIALOG_H

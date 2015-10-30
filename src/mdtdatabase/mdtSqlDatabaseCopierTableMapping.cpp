@@ -215,6 +215,17 @@ bool mdtSqlDatabaseCopierTableMapping::mappingIsCompete()
   return true;
 }
 
+QString mdtSqlDatabaseCopierTableMapping::getSqlForSourceTableCount(const QSqlDatabase& db) const
+{
+  QString sql;
+  QSqlDriver *driver = db.driver();
+  Q_ASSERT(driver != nullptr);
+
+  sql = "SELECT COUNT(*) FROM " + driver->escapeIdentifier(pvSourceTable.tableName(), QSqlDriver::TableName);
+
+  return sql;
+}
+
 QString mdtSqlDatabaseCopierTableMapping::getSqlForSourceTableSelect(const QSqlDatabase & db) const
 {
   QString sql;

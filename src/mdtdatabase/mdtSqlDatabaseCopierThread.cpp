@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtSqlDatabaseCopierThread.h"
+#include "mdtSqlDatabaseCopierMappingModel.h"
 #include "mdtAlgorithms.h"
 #include "mdtError.h"
 #include <QSqlError>
@@ -67,11 +68,16 @@ void mdtSqlDatabaseCopierThread::run()
     qDebug() << "THD started ...";
 
     // Get table mapping list
-    auto tableMappingList = pvMapping.getCompletedTableMappingList();
-    // Copy data of each table
-    for(const auto & tm : tableMappingList){
-      /// \todo return value
-      copyTable(tm, sourceDatabase, destinationDatabase);
+    auto tableMappingList = pvMapping.tableMappingList();
+    /*
+     * Copy each table that has a valid mapping
+     */
+    for(int i = 0; i < tableMappingList.size(); ++i){
+      auto tm = tableMappingList.at(i);
+      if(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete){
+        /// \todo return value
+        copyTable(tm, i, sourceDatabase, destinationDatabase);
+      }
     }
 
     qDebug() << "THD end";
@@ -113,16 +119,30 @@ bool mdtSqlDatabaseCopierThread::isSameDatabase(const QSqlDatabase& dbA, const Q
   return (dbA.databaseName() == dbB.databaseName());
 }
 
-bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMapping & tm,
+bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMapping & tm, int dbMappingModelRow,
                                            const QSqlDatabase & sourceDatabase, const QSqlDatabase& destinationDatabase)
 {
   QSqlQuery sourceQuery(sourceDatabase);
   QSqlQuery destinationQuery(destinationDatabase);
   QString sql;
+  double progressStep = -1.0;
 
   sourceQuery.setForwardOnly(true);
   destinationQuery.setForwardOnly(true);
 
+  qDebug() << "Copy table " << tm.sourceTableName() << " -> " << tm.destinationTableName() << " ...";
+  
+  // Get count of rows in source table
+  sql = tm.getSqlForSourceTableCount(sourceDatabase);
+  if( (sourceQuery.exec(sql)) && (sourceQuery.next()) ){
+    double count = sourceQuery.value(0).toDouble();
+    if(count > 0.0){
+      progressStep = 100.0 / count;
+    }
+  }
+  
+  qDebug() << "progress step: " << progressStep;
+  
   // Get source table data
   sql = tm.getSqlForSourceTableSelect(sourceDatabase);
   if(!sourceQuery.exec(sql)){
@@ -131,7 +151,7 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
     error.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseCopierThread");
     error.commit();
-    ///emit objectErrorOccured(mdtSqlDatabaseSchemaModel::Table, tableName, error);
+    emit tableCopyErrorOccured(dbMappingModelRow, error);
     ///emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, tableName, 0);
     return false;
   }
@@ -145,7 +165,7 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
       error.setSystemError(sqlError.number(), sqlError.text());
       MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseCopierThread");
       error.commit();
-      ///emit objectErrorOccured(mdtSqlDatabaseSchemaModel::Table, tableName, error);
+      emit tableCopyErrorOccured(dbMappingModelRow, error);
       ///emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, tableName, 0);
       return false;
     }
@@ -161,11 +181,15 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
       error.setSystemError(sqlError.number(), sqlError.text());
       MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseCopierThread");
       error.commit();
-      ///emit objectErrorOccured(mdtSqlDatabaseSchemaModel::Table, tableName, error);
+      emit tableCopyErrorOccured(dbMappingModelRow, error);
       ///emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, tableName, 0);
       return false;
     }
+    // Update progress
+    /// \todo Check that delta is about 1% , else we will spam the GUI (an maybe produce a stack overflow)
+    /// \note: build a struct with functions ?
   }
+  emit tableCopyStatusChanged(dbMappingModelRow, mdtSqlDatabaseCopierMappingModel::CopyStatusOk);
 
   return true;
 }

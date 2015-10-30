@@ -23,6 +23,7 @@
 
 #include "mdtSqlDatabaseCopierMapping.h"
 #include "mdtSqlDatabaseCopierTableMapping.h"
+#include "mdtError.h"
 #include <QThread>
 #include <QString>
 #include <QSqlDatabase>
@@ -71,6 +72,20 @@ class mdtSqlDatabaseCopierThread : public QThread
    */
   void copyData(const mdtSqlDatabaseCopierMapping & mapping);
 
+ signals:
+
+  /*! \brief Emitted when table copy progress was updated
+   */
+  void tableCopyProgressChanged(int dbMappingModelRow, int progress);
+
+  /*! \brief Emitted when table copy status was updated
+   */
+  void tableCopyStatusChanged(int dbMappingModelRow, int status);
+
+  /*! \brief Emitted when a error occured during a table copy
+   */
+  void tableCopyErrorOccured(int dbMappingModelRow, mdtError error);
+
  private:
 
   /*! \brief Thread function implementation
@@ -91,7 +106,7 @@ class mdtSqlDatabaseCopierThread : public QThread
 
   /*! \brief Copy source table to destination table regarding table mapping
    */
-  bool copyTable(const mdtSqlDatabaseCopierTableMapping & tm,
+  bool copyTable(const mdtSqlDatabaseCopierTableMapping & tm, int dbMappingModelRow,
                  const QSqlDatabase & sourceDatabase, const QSqlDatabase & destinationDatabase);
 
   mdtSqlDatabaseCopierMapping pvMapping;

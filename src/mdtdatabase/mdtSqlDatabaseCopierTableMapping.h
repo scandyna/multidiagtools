@@ -193,6 +193,12 @@ class mdtSqlDatabaseCopierTableMapping
     return pvLastError;
   }
 
+  /*! \brief Get SQL statement to count rows in source table
+   *
+   * \note We cannot use internal databases, because this function is called by mdtSqlDatabaseCopierThread
+   */
+  QString getSqlForSourceTableCount(const QSqlDatabase & db) const;
+
   /*! \brief Get SQL statement to select source table data
    *
    * Will build a SQL SELECT statement that contains

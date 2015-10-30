@@ -147,12 +147,12 @@ class mdtSqlDatabaseCopierMapping
     pvTableMappingList[index] = tm;
   }
 
-  /*! \brief Get the list of table mapping
-   *
-   * Returned list will only contain table mapping
-   *  witch has the MappingComplete state.
+  /*! \brief Get table mapping list
    */
-  QVector<mdtSqlDatabaseCopierTableMapping> getCompletedTableMappingList() const;
+  QVector<mdtSqlDatabaseCopierTableMapping> tableMappingList() const
+  {
+    return pvTableMappingList;
+  }
 
   /*! \brief Get last error
    */

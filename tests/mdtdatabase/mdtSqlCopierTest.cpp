@@ -343,6 +343,9 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
    * - Client_tbl.Id_PK -> Client2_tbl.Id_PK
    */
   mapping.setDestinationField(0, "Id_PK");
+  // Check SQL for count in source table
+  expectedSql = "SELECT COUNT(*) FROM \"Client_tbl\"";
+  QCOMPARE(mapping.getSqlForSourceTableCount(db), expectedSql);
   // Check SQL select data in source table
   expectedSql = "SELECT \"Id_PK\" FROM \"Client_tbl\"";
   QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
@@ -354,6 +357,9 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
    * - Client_tbl.Name -> Client2_tbl.Name
    */
   mapping.setDestinationField(1, "Name");
+  // Check SQL for count in source table
+  expectedSql = "SELECT COUNT(*) FROM \"Client_tbl\"";
+  QCOMPARE(mapping.getSqlForSourceTableCount(db), expectedSql);
   // Check SQL select data in source table
   expectedSql = "SELECT \"Id_PK\",\"Name\" FROM \"Client_tbl\"";
   QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
@@ -445,14 +451,14 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingTest()
    * Initial state
    */
   QCOMPARE(mapping.tableMappingCount(), 0);
-  QCOMPARE(mapping.getCompletedTableMappingList().size(), 0);
+  QCOMPARE(mapping.tableMappingList().size(), 0);
   /*
    * Set source database
    */
   QVERIFY(mapping.setSourceDatabase(pvDatabase));
   // Check attributes without any mapping set
   QCOMPARE(mapping.tableMappingCount(), 2);
-  QCOMPARE(mapping.getCompletedTableMappingList().size(), 0);
+  QCOMPARE(mapping.tableMappingList().size(), 2);
   // Note: tables are sorted, and '_' is after '2' in ascii
   QCOMPARE(mapping.sourceTableName(0), QString("Client2_tbl"));
   QCOMPARE(mapping.sourceTableName(1), QString("Client_tbl"));
@@ -474,7 +480,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingTest()
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
   mapping.setTableMapping(1, tm);
   QCOMPARE(mapping.tableMappingCount(), 2);
-  QCOMPARE(mapping.getCompletedTableMappingList().size(), 1);
+  QCOMPARE(mapping.tableMappingList().size(), 2);
 
 }
 
@@ -483,6 +489,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
   QTableView tableView;
   QTreeView treeView;
   mdtSqlDatabaseCopierMappingModel model;
+  QModelIndex index;
   mdtSqlDatabaseCopierMapping mapping;
   mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
 
@@ -506,6 +513,15 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
   QVERIFY(model.generateTableMappingByName());
   tableView.resizeColumnsToContents();
   
+  /*
+   * Check updating table copy progress and status
+   */
+  QCOMPARE(model.rowCount(), 2);
+  // Progress of row 0
+  model.setTableCopyProgress(0, 15);
+  index = model.index(0, 3);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant(15));
 
   /*
    * Play
@@ -565,7 +581,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierThreadTest()
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
   mapping.setTableMapping(1, tm);
   QCOMPARE(mapping.tableMappingCount(), 2);
-  QCOMPARE(mapping.getCompletedTableMappingList().size(), 1);
+  QCOMPARE(mapping.tableMappingList().size(), 2);
   /*
    * Run copy
    */
