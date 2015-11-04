@@ -36,6 +36,8 @@
 #include "mdtSqlDatabaseCopierMapping.h"
 #include "mdtSqlDatabaseCopierMappingModel.h"
 #include "mdtSqlDatabaseCopierDialog.h"
+#include "mdtProgressBarItemDelegate.h"
+#include "mdtProgressValue.h"
 
 #include <QTemporaryFile>
 #include <QSqlQuery>
@@ -492,6 +494,8 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
   QModelIndex index;
   mdtSqlDatabaseCopierMapping mapping;
   mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
+  mdtProgressBarItemDelegate *progressDelegate = new mdtProgressBarItemDelegate(&tableView);
+  mdtProgressValue<int> progress;
 
   /*
    * Setup views
@@ -499,6 +503,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
   // Setup table view
   tableView.setModel(&model);
   tableView.setItemDelegateForColumn(2, delegate);
+  tableView.setItemDelegateForColumn(3, progressDelegate);
   tableView.resize(600, 150);
   tableView.show();
   // Setup tree view
@@ -518,10 +523,19 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
    */
   QCOMPARE(model.rowCount(), 2);
   // Progress of row 0
-  model.setTableCopyProgress(0, 15);
+  progress.setRange(0, 10);
+  progress.setValue(2);
+  model.setTableCopyProgress(0, progress.scaledValue());
   index = model.index(0, 3);
   QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant(15));
+  QCOMPARE(model.data(index), QVariant(20));
+  // Progress of row 1
+  progress.setRange(0, 1000);
+  progress.setValue(500);
+  model.setTableCopyProgress(1, progress.scaledValue());
+  index = model.index(1, 3);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant(50));
 
   /*
    * Play

@@ -1,16 +1,23 @@
 window_sizes 1280 964 323 951 911 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
+  classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
     951 911 100 4 0 0
   classdiagram_ref 1629058 // sqlDatabaseCopierTableMappingDialog
     120 106 100 4 0 0
   classdiagram_ref 1622530 // SqlDatabaseCopierThread
     120 106 100 4 0 0
+  active  classdiagram_ref 1694466 // Progress
+    951 911 100 4 0 0
+  classdiagram_ref 1694594 // ProgressBarItemDelegate
+    951 911 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
+selected attribute_ref 2077186 // Value
 open
+  attribute_ref 2084354 // Minimum
+  operation_ref 3150722 // isTimeToNotify
+  class_ref 2021762 // mdtProgressBarItemDelegate
   classview_ref 807426 // ImportExportCopy
 end
 end

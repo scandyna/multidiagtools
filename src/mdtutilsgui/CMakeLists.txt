@@ -38,6 +38,7 @@ set (SOURCES_FILES
           mdtFormatProxyModel.cpp
           mdtFormatProxyModelSettings.cpp
           mdtComboBoxItemDelegate.cpp
+          mdtProgressBarItemDelegate.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp

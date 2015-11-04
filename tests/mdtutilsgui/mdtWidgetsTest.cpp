@@ -27,6 +27,7 @@
 #include "mdtFormatProxyModel.h"
 #include "mdtFormatProxyModelSettings.h"
 #include "mdtComboBoxItemDelegate.h"
+#include "mdtProgressValue.h"
 #include <QString>
 #include <QVariant>
 #include <QValidator>
@@ -792,6 +793,53 @@ void mdtWidgetsTest::formatProxyModelTest()
   while(tw.isVisible()){
     QTest::qWait(500);
   }
+}
+
+void mdtWidgetsTest::progressValueTest()
+{
+  mdtProgressValue<qint64> progress;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(progress.value(), 0);
+  QCOMPARE((double)progress.scaledValue(), 0.0);
+  /*
+   * Check with standard percent scale
+   *  - Value range: 0 to 1000
+   *  - Progress bar range: 0 to 100
+   */
+  progress.setRange(0, 1000);
+  progress.setValue(0);
+  QCOMPARE(progress.value(), 0);
+  QCOMPARE((double)progress.scaledValue(), 0.0);
+  progress.setValue(1000);
+  QCOMPARE(progress.value(), 1000);
+  QCOMPARE((double)progress.scaledValue(), 100.0);
+  progress.setValue(500);
+  QCOMPARE((double)progress.scaledValue(), 50.0);
+  /*
+   * Check with large values
+   *  - Value range: 0 to 100'000'000'000
+   *  - Progress bar range: 0 to 10'000
+   */
+  progress.setScaleFactor(0, 100000000000, 0, 10000);
+  progress.setValue(0);
+  QCOMPARE((double)progress.scaledValue(), 0.0);
+  progress.setValue(100000000000);
+  QCOMPARE((double)progress.scaledValue(), 10000.0);
+  progress.setValue(50000000000);
+  QCOMPARE((double)progress.scaledValue(), 5000.0);
+  /*
+   * Check notify interval
+   *
+   * - Initialy, interval is 50ms
+   */
+  QVERIFY(!progress.isTimeToNotify());
+  QTest::qWait(60);
+  QVERIFY(progress.isTimeToNotify());
+  QCOMPARE((double)progress.scaledValue(), 5000.0);
+  QVERIFY(!progress.isTimeToNotify());
 }
 
 void mdtWidgetsTest::comboBoxItemDelegateTest()
