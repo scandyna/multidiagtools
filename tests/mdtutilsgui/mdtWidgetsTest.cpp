@@ -818,6 +818,14 @@ void mdtWidgetsTest::progressValueTest()
   QCOMPARE((double)progress.scaledValue(), 100.0);
   progress.setValue(500);
   QCOMPARE((double)progress.scaledValue(), 50.0);
+  // Check operators
+  progress += 100;
+  QCOMPARE(progress.value(), 600);
+  QCOMPARE((double)progress.scaledValue(), 60.0);
+  ++progress;
+  QCOMPARE(progress.value(), 601);
+  ++progress;
+  QCOMPARE(progress.value(), 602);
   /*
    * Check with large values
    *  - Value range: 0 to 100'000'000'000

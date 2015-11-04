@@ -44,6 +44,12 @@ class mdtSqlDatabaseCopierTableMappingDialog : public QDialog, Ui::mdtSqlDatabas
    */
   mdtSqlDatabaseCopierTableMappingDialog(const mdtSqlDatabaseCopierTableMappingDialog & other) = delete;
 
+  /*! \brief Set destination database and list of destination tables to display
+   *
+   * \note db will be reused to fetch selected destination table informations.
+   */
+  void setDestinationTables(const QSqlDatabase & db, const QStringList & tables);
+
   /*! \brief Set table mapping
    */
   void setMapping(const mdtSqlDatabaseCopierTableMapping & m);
@@ -70,6 +76,7 @@ class mdtSqlDatabaseCopierTableMappingDialog : public QDialog, Ui::mdtSqlDatabas
 
   mdtSqlDatabaseCopierTableMappingModel *pvMappingModel;
   mdtComboBoxItemDelegate *pvDestinationFieldSelectionDelegate;
+  QSqlDatabase pvDestinationDatabase;
 };
 
 #endif // #ifndef MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_DIALOG_H

@@ -35,6 +35,13 @@ mdtSqlDatabaseCopierTableMappingDialog::mdtSqlDatabaseCopierTableMappingDialog(Q
   connect(tbMapByName, &QToolButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::mapByFieldName);
 }
 
+void mdtSqlDatabaseCopierTableMappingDialog::setDestinationTables(const QSqlDatabase& db, const QStringList& tables)
+{
+  pvDestinationDatabase = db;
+  cbDestinationTable->clear();
+  cbDestinationTable->addItems(tables);
+}
+
 void mdtSqlDatabaseCopierTableMappingDialog::setMapping(const mdtSqlDatabaseCopierTableMapping& m)
 {
   // Setup destination field selection delegate
@@ -45,7 +52,7 @@ void mdtSqlDatabaseCopierTableMappingDialog::setMapping(const mdtSqlDatabaseCopi
   pvMappingModel->setMapping(m);
   // Update source and destination table names
   lbSourceTable->setText(m.sourceTableName());
-  lbDestinationTable->setText(m.destinationTableName());
+  cbDestinationTable->setCurrentText(m.destinationTableName());
 
   resizeTableViewToContents();
 }

@@ -436,11 +436,14 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingDialogTest()
 {
   mdtSqlDatabaseCopierTableMappingDialog dialog;
   mdtSqlDatabaseCopierTableMapping mapping;
+  QStringList destinationTables;
 
   QVERIFY(mapping.setSourceTable("Client_tbl", pvDatabase));
   QVERIFY(mapping.setDestinationTable("Client2_tbl", pvDatabase));
   mapping.generateFieldMappingByName();
 
+  destinationTables << "Client_tbl" << "Client2_tbl";
+  dialog.setDestinationTables(pvDatabase, destinationTables);
   dialog.setMapping(mapping);
   dialog.exec();
 }
@@ -617,6 +620,10 @@ void mdtSqlCopierTest::sqlDatabaseCopierThreadTest()
   QCOMPARE(query.value(1), QVariant("Name 2"));
   QCOMPARE(query.value(2), QVariant("FieldB 2"));
   QCOMPARE(query.value(3), QVariant("FieldA 2"));
+  /*
+   * Cleanup
+   */
+  QVERIFY(query.exec("DELETE FROM Client2_tbl"));
 }
 
 

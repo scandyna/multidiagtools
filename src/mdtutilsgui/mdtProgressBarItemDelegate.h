@@ -64,19 +64,6 @@ class mdtProgressBarItemDelegate : public QStyledItemDelegate
   /*! \brief Paint reimplementation
    */
   void paint(QPainter *painter, const QStyleOptionViewItem & option, const QModelIndex & index) const;
-
-  /*! \brief Set range
-   *
-   * Because the range is global for all rows in model,
-   *  some scaling must be done somewhere else.
-   *  To help of this scaling, see mdtProgressValue class.
-   */
-//   void setRange(int minimum, int maximum);
-
- private:
-
-//   int pvMinimum;
-//   int pvMaximum;
 };
 
 #endif // #ifndef MDT_PROGRESS_BAR_ITEM_DELEGATE_H

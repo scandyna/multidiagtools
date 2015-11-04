@@ -28,8 +28,6 @@
 
 mdtProgressBarItemDelegate::mdtProgressBarItemDelegate(QObject* parent)
  : QStyledItemDelegate(parent)
-//    pvMinimum(0),
-//    pvMaximum(0)
 {
 }
 
@@ -40,8 +38,6 @@ mdtProgressBarItemDelegate::~mdtProgressBarItemDelegate()
 void mdtProgressBarItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem & option, const QModelIndex & index) const
 {
   int progress = index.data().toInt();
-//   int min = pvMinimum;
-//   int max = pvMaximum;
 
   QStyleOptionProgressBar progressBarOption;
   progressBarOption.rect = option.rect;
@@ -50,21 +46,6 @@ void mdtProgressBarItemDelegate::paint(QPainter* painter, const QStyleOptionView
   progressBarOption.progress = progress;
   progressBarOption.text = QString::number(progress) + "%";
   progressBarOption.textVisible = true;
-//   if( (min == 0) && (max == 0) ){
-//     /// \todo The progress should be animated. This not works currently because we not repaint.
-//     progressBarOption.progress = 0;
-//     progressBarOption.textVisible = false;
-//   }else{
-//     progressBarOption.progress = progress;
-//     progressBarOption.text = QString::number(progress) + "%";
-//     progressBarOption.textVisible = true;
-//   }
 
   QApplication::style()->drawControl(QStyle::QStyle::CE_ProgressBar, &progressBarOption, painter);
 }
-
-// void mdtProgressBarItemDelegate::setRange(int minimum, int maximum)
-// {
-//   pvMinimum = minimum;
-//   pvMaximum = maximum;
-// }

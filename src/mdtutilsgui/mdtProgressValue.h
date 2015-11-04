@@ -99,6 +99,22 @@ class mdtProgressValue
     pvValue = value;
   }
 
+  /*! \brief Add steps to value
+   */
+  mdtProgressValue<T> & operator+=(T steps)
+  {
+    pvValue += steps;
+    return *this;
+  }
+
+  /*! \brief Add 1 step to value
+   */
+  mdtProgressValue<T> & operator++()
+  {
+    ++pvValue;
+    return *this;
+  }
+
   /*! \brief Get value
    */
   T value() const

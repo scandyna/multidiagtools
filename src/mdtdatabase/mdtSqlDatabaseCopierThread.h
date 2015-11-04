@@ -28,6 +28,8 @@
 #include <QString>
 #include <QSqlDatabase>
 #include <atomic>
+#include <vector>
+#include <cstdint>
 
 /*! \brief Worker thread for SQL database copy
  *
@@ -100,9 +102,13 @@ class mdtSqlDatabaseCopierThread : public QThread
    */
   bool isSameDatabase(const QSqlDatabase & dbA, const QSqlDatabase & dbB) const;
 
-  /*! \brief Copy tables regarding mapping
+  /*! \brief Calculate size of each table in source database
    */
-//   void copyTables();
+  void calculateTableSizes(const QSqlDatabase & sourceDatabase);
+
+  /*! \brief Get size (row count) of source table for given row
+   */
+  int64_t tableSize(int dbMappingModelRow) const;
 
   /*! \brief Copy source table to destination table regarding table mapping
    */
@@ -110,6 +116,7 @@ class mdtSqlDatabaseCopierThread : public QThread
                  const QSqlDatabase & sourceDatabase, const QSqlDatabase & destinationDatabase);
 
   mdtSqlDatabaseCopierMapping pvMapping;
+  std::vector<int64_t> pvTableSizeList;   // Contains items (or row) count for each table in source database
 };
 
 #endif // #ifndef MDT_SQL_DATABASE_COPIER_THREAD_H
