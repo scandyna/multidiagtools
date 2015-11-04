@@ -37,6 +37,11 @@ bool mdtSqlDatabaseCopierMapping::setDestinationDatabase(const QSqlDatabase & db
   return resetTableMapping();
 }
 
+QStringList mdtSqlDatabaseCopierMapping::getAvailableDestinationTableNameList() const
+{
+  return getTables(pvDestinationDatabase);
+}
+
 bool mdtSqlDatabaseCopierMapping::resetTableMapping()
 {
   QStringList sourceTableNameList = getTables(pvSourceDatabase);
@@ -92,7 +97,7 @@ bool mdtSqlDatabaseCopierMapping::generateTableMappingByName()
 //   return tmList;
 // }
 
-QStringList mdtSqlDatabaseCopierMapping::getTables(const QSqlDatabase & db)
+QStringList mdtSqlDatabaseCopierMapping::getTables(const QSqlDatabase & db) const
 {
   auto driverType = mdtSqlDriverType::typeFromName(db.driverName());
 
@@ -108,7 +113,7 @@ QStringList mdtSqlDatabaseCopierMapping::getTables(const QSqlDatabase & db)
   return QStringList();
 }
 
-QStringList mdtSqlDatabaseCopierMapping::getTablesSqlite(const QSqlDatabase & db)
+QStringList mdtSqlDatabaseCopierMapping::getTablesSqlite(const QSqlDatabase & db) const
 {
   QStringList tables;
 

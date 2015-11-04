@@ -60,6 +60,12 @@ class mdtSqlDatabaseCopierTableMappingDialog : public QDialog, Ui::mdtSqlDatabas
 
  private slots:
 
+  /*! \brief Set destination table
+   *
+   * Called when cbDestinationTable's index changed.
+   */
+  void setDestinationTable(int cbIndex);
+
   /*! \brief Reset field mapping
    */
   void resetFieldMapping();

@@ -62,6 +62,12 @@ class mdtSqlDatabaseCopierMapping
     return pvDestinationDatabase;
   }
 
+  /*! \brief Get a list of available destination table names
+   *
+   * \note: returns list of available table names for destination database
+   */
+  QStringList getAvailableDestinationTableNameList() const;
+
   /*! \brief Reset table mapping
    *
    * Will clear table mapping,
@@ -173,11 +179,11 @@ class mdtSqlDatabaseCopierMapping
    *       This function will remove them for SQLite database.
    *
    */
-  QStringList getTables(const QSqlDatabase & db);
+  QStringList getTables(const QSqlDatabase & db) const;
 
   /*! \brief Get list of table (SQLite implementation)
    */
-  QStringList getTablesSqlite(const QSqlDatabase & db);
+  QStringList getTablesSqlite(const QSqlDatabase & db) const;
 
   QSqlDatabase pvSourceDatabase;
   QSqlDatabase pvDestinationDatabase;

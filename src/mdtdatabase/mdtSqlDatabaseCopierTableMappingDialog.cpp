@@ -33,6 +33,8 @@ mdtSqlDatabaseCopierTableMappingDialog::mdtSqlDatabaseCopierTableMappingDialog(Q
   tvMapping->setItemDelegateForColumn(2, pvDestinationFieldSelectionDelegate);
   connect(tbResetMapping, &QToolButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::resetFieldMapping);
   connect(tbMapByName, &QToolButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::mapByFieldName);
+  connect(cbDestinationTable, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+          this, &mdtSqlDatabaseCopierTableMappingDialog::setDestinationTable);
 }
 
 void mdtSqlDatabaseCopierTableMappingDialog::setDestinationTables(const QSqlDatabase& db, const QStringList& tables)
@@ -60,6 +62,12 @@ void mdtSqlDatabaseCopierTableMappingDialog::setMapping(const mdtSqlDatabaseCopi
 mdtSqlDatabaseCopierTableMapping mdtSqlDatabaseCopierTableMappingDialog::mapping() const
 {
   return pvMappingModel->mapping();
+}
+
+void mdtSqlDatabaseCopierTableMappingDialog::setDestinationTable(int cbIndex)
+{
+  QString tableName = cbDestinationTable->itemText(cbIndex);
+  pvMappingModel->setDestinationTable(tableName, pvDestinationDatabase, pvDestinationFieldSelectionDelegate);
 }
 
 void mdtSqlDatabaseCopierTableMappingDialog::resetFieldMapping()

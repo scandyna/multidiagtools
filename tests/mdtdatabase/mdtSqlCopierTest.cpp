@@ -551,7 +551,17 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
 void mdtSqlCopierTest::sqlDatabaseCopierDialogTest()
 {
   mdtSqlDatabaseCopierDialog dialog;
+  QSqlDatabase db = pvDatabase;
+  clientTableTestDataSet dataset(db);
 
+  QVERIFY(db.isValid());
+  /*
+   * Insert some test data into Client_tbl
+   */
+  QVERIFY(dataset.populate());
+  /*
+   * Setup and show dialog
+   */
   dialog.exec();
 }
 

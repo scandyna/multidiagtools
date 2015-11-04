@@ -106,6 +106,7 @@ void mdtSqlDatabaseCopierDialog::editTableMapping(const QModelIndex& index)
   int row = index.row();
   auto tm = pvMappingModel->tableMapping(row);
   mdtSqlDatabaseCopierTableMappingDialog dialog(this);
+  dialog.setDestinationTables(pvMappingModel->destinationDatabase(), pvMappingModel->getAvailableDestinationTableNameList());
   dialog.setMapping(tm);
   if(dialog.exec() != QDialog::Accepted){
     return;

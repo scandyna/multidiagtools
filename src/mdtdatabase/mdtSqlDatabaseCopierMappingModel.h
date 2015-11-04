@@ -72,6 +72,22 @@ class mdtSqlDatabaseCopierMappingModel : public QAbstractTableModel
    */
   bool setDestinationDatabase(const QSqlDatabase & db);
 
+  /*! \brief Get destination database
+   */
+  QSqlDatabase destinationDatabase() const
+  {
+    return pvMapping.destinationDatabase();
+  }
+
+  /*! \brief Get a list of available destination table names
+   *
+   * \sa mdtSqlDatabaseCopierMapping::getAvailableDestinationTableNameList()
+   */
+  QStringList getAvailableDestinationTableNameList() const
+  {
+    return pvMapping.getAvailableDestinationTableNameList();
+  }
+
   /*! \brief Generate table mapping by name
    *
    * \sa mdtSqlDatabaseCopierMapping::generateTableMappingByName()
