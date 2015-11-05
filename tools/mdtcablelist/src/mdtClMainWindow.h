@@ -361,7 +361,7 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
 
   /*! \brief Import a Sqlite database into currently open database
    */
-  bool importDatabaseSqlite();
+//   bool importDatabaseSqlite();
 
   /*! \brief Display a warning to the user
    */

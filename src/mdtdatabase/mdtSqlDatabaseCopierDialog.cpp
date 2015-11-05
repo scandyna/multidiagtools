@@ -23,6 +23,7 @@
 #include "mdtSqlDatabaseCopierMappingModel.h"
 #include "mdtSqlDatabaseCopierTableMappingDialog.h"
 #include "mdtSqlDatabaseCopierThread.h"
+#include "mdtProgressBarItemDelegate.h"
 #include <QToolButton>
 #include <QPushButton>
 #include <QMessageBox>
@@ -36,16 +37,41 @@ mdtSqlDatabaseCopierDialog::mdtSqlDatabaseCopierDialog(QWidget* parent)
   setupUi(this);
 
   tvMapping->setModel(pvMappingModel);
+  auto *progressBarDelegate = new mdtProgressBarItemDelegate(tvMapping);
+  tvMapping->setItemDelegateForColumn(3, progressBarDelegate);
   connect(tvMapping, &QTableView::doubleClicked, this, &mdtSqlDatabaseCopierDialog::editTableMapping);
   connect(tbSelectSourceDatabase, &QToolButton::clicked, this, &mdtSqlDatabaseCopierDialog::selectSourceDatabase);
   connect(tbSelectDestinationDatabase, &QToolButton::clicked, this, &mdtSqlDatabaseCopierDialog::selectDestinationDatabase);
   connect(tbResetMapping, &QToolButton::clicked, this, &mdtSqlDatabaseCopierDialog::resetMapping);
   connect(tbMapByName, &QToolButton::clicked, this, &mdtSqlDatabaseCopierDialog::mapByName);
   connect(pbCopy, &QPushButton::clicked, this, &mdtSqlDatabaseCopierDialog::copyData);
-  connect(pbAbort, &QPushButton::clicked, this, &mdtSqlDatabaseCopierDialog::abortCopy);
+  connect(pbAbort, &QPushButton::clicked, pvThread, &mdtSqlDatabaseCopierThread::abort);
   connect(pvThread, &mdtSqlDatabaseCopierThread::tableCopyProgressChanged, pvMappingModel, &mdtSqlDatabaseCopierMappingModel::setTableCopyProgress);
   connect(pvThread, &mdtSqlDatabaseCopierThread::tableCopyStatusChanged, pvMappingModel, &mdtSqlDatabaseCopierMappingModel::setTableCopyStatus);
   connect(pvThread, &mdtSqlDatabaseCopierThread::tableCopyErrorOccured, pvMappingModel, &mdtSqlDatabaseCopierMappingModel::setTableCopyError);
+  connect(pvThread, &mdtSqlDatabaseCopierThread::globalProgressRangeChanged, pbGlobalProgress, &QProgressBar::setRange );
+  connect(pvThread, &mdtSqlDatabaseCopierThread::globalProgressValueChanged, pbGlobalProgress, &QProgressBar::setValue);
+  connect(pvThread, &mdtSqlDatabaseCopierThread::globalErrorOccured, this, &mdtSqlDatabaseCopierDialog::onThreadGlobalErrorOccured);
+}
+
+void mdtSqlDatabaseCopierDialog::setSourceDatabase(const QSqlDatabase & db)
+{
+  wSourceDatabaseInfo->displayInfo(db);
+  if(!pvMappingModel->setSourceDatabase(db)){
+    displayError(pvMappingModel->lastError());
+    return;
+  }
+  resizeTableViewToContents();
+}
+
+void mdtSqlDatabaseCopierDialog::setDestinationDatabase(const QSqlDatabase & db)
+{
+  wDestinationDatabaseInfo->displayInfo(db);
+  if(!pvMappingModel->setDestinationDatabase(db)){
+    displayError(pvMappingModel->lastError());
+    return;
+  }
+  resizeTableViewToContents();
 }
 
 void mdtSqlDatabaseCopierDialog::selectSourceDatabase()
@@ -55,13 +81,7 @@ void mdtSqlDatabaseCopierDialog::selectSourceDatabase()
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
-  QSqlDatabase db = dialog.database().database();
-  wSourceDatabaseInfo->displayInfo(db);
-  if(!pvMappingModel->setSourceDatabase(db)){
-    displayError(pvMappingModel->lastError());
-    return;
-  }
-  resizeTableViewToContents();
+  setSourceDatabase(dialog.database().database());
 }
 
 void mdtSqlDatabaseCopierDialog::selectDestinationDatabase()
@@ -71,13 +91,7 @@ void mdtSqlDatabaseCopierDialog::selectDestinationDatabase()
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
-  QSqlDatabase db = dialog.database().database();
-  wDestinationDatabaseInfo->displayInfo(db);
-  if(!pvMappingModel->setDestinationDatabase(db)){
-    displayError(pvMappingModel->lastError());
-    return;
-  }
-  resizeTableViewToContents();
+  setDestinationDatabase(dialog.database().database());
 }
 
 void mdtSqlDatabaseCopierDialog::resetMapping()
@@ -125,7 +139,22 @@ void mdtSqlDatabaseCopierDialog::copyData()
   pvThread->copyData(pvMappingModel->mapping());
 }
 
-void mdtSqlDatabaseCopierDialog::abortCopy()
+// void mdtSqlDatabaseCopierDialog::abortCopy()
+// {
+// 
+// }
+
+// void mdtSqlDatabaseCopierDialog::updateGlobalProgress(int progress)
+// {
+//   pbGlobalProgress->setValue(progress);
+// }
+
+void mdtSqlDatabaseCopierDialog::onThreadGlobalErrorOccured(mdtError error)
+{
+
+}
+
+void mdtSqlDatabaseCopierDialog::onThreadFinished()
 {
 
 }

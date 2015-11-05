@@ -26,6 +26,7 @@
 
 #include "mdtSqlDatabaseDialogSqlite.h"
 #include "mdtSqlDatabaseSchemaDialog.h"
+#include "mdtSqlDatabaseCopierDialog.h"
 #include "mdtClLinkVersion.h"
 #include "mdtTtDatabaseSchema.h"
 #include "mdtClConnectorEditor.h"
@@ -170,9 +171,41 @@ void mdtClMainWindow::createNewDatabase()
   }
 }
 
+// bool mdtClMainWindow::importDatabaseSqlite()
+// {
+//   // Check that we have currently a database open
+//   if(!pvDatabaseManager->database().isOpen()){
+//     displayWarning(tr("Cannot import a database."), tr("Please open a database and try again."));
+//     return false;
+//   }
+//   /// \todo Save current edition !
+//   /// \todo Create a backup from current database !
+//   // Let the user a chance to cancel import
+//   QMessageBox msgBox(this);
+//   msgBox.setText(tr("You are about to import a database into current database."));
+//   msgBox.setInformativeText(tr("Do you want to continue ?"));
+//   msgBox.setIcon(QMessageBox::Warning);
+//   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+//   if(msgBox.exec() != QMessageBox::Yes){
+//     return false;
+//   }
+//   // Import ...
+//   mdtTtDatabaseSchema dbSchema(pvDatabaseManager);
+// 
+//   return dbSchema.importDatabase(pvWorkDirectory);
+// }
+
 void mdtClMainWindow::importDatabase()
 {
-  importDatabaseSqlite();
+  mdtSqlDatabaseCopierDialog dialog(this);
+
+  // Init database
+  if(!initDatabase()){
+    return;
+  }
+  // Setup and show copy dialog
+  dialog.setDestinationDatabase(pvDatabase);
+  dialog.exec();
 }
 
 void mdtClMainWindow::viewVehicleType()
@@ -1266,29 +1299,29 @@ bool mdtClMainWindow::initDatabase()
   return true;
 }
 
-bool mdtClMainWindow::importDatabaseSqlite()
-{
-  // Check that we have currently a database open
-  if(!pvDatabaseManager->database().isOpen()){
-    displayWarning(tr("Cannot import a database."), tr("Please open a database and try again."));
-    return false;
-  }
-  /// \todo Save current edition !
-  /// \todo Create a backup from current database !
-  // Let the user a chance to cancel import
-  QMessageBox msgBox(this);
-  msgBox.setText(tr("You are about to import a database into current database."));
-  msgBox.setInformativeText(tr("Do you want to continue ?"));
-  msgBox.setIcon(QMessageBox::Warning);
-  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-  if(msgBox.exec() != QMessageBox::Yes){
-    return false;
-  }
-  // Import ...
-  mdtTtDatabaseSchema dbSchema(pvDatabaseManager);
-
-  return dbSchema.importDatabase(pvWorkDirectory);
-}
+// bool mdtClMainWindow::importDatabaseSqlite()
+// {
+//   // Check that we have currently a database open
+//   if(!pvDatabaseManager->database().isOpen()){
+//     displayWarning(tr("Cannot import a database."), tr("Please open a database and try again."));
+//     return false;
+//   }
+//   /// \todo Save current edition !
+//   /// \todo Create a backup from current database !
+//   // Let the user a chance to cancel import
+//   QMessageBox msgBox(this);
+//   msgBox.setText(tr("You are about to import a database into current database."));
+//   msgBox.setInformativeText(tr("Do you want to continue ?"));
+//   msgBox.setIcon(QMessageBox::Warning);
+//   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+//   if(msgBox.exec() != QMessageBox::Yes){
+//     return false;
+//   }
+//   // Import ...
+//   mdtTtDatabaseSchema dbSchema(pvDatabaseManager);
+// 
+//   return dbSchema.importDatabase(pvWorkDirectory);
+// }
 
 void mdtClMainWindow::displayWarning(const QString & text , const QString & informativeText)
 {

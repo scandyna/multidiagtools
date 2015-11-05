@@ -45,6 +45,14 @@ class mdtSqlDatabaseCopierDialog : public QDialog, Ui::mdtSqlDatabaseCopierDialo
    */
   mdtSqlDatabaseCopierDialog(const mdtSqlDatabaseCopierDialog & other) = delete;
 
+  /*! \brief Set source database
+   */
+  void setSourceDatabase(const QSqlDatabase & db);
+
+  /*! \brief Set destination database
+   */
+  void setDestinationDatabase(const QSqlDatabase & db);
+
  private slots:
 
   /*! \brief Select source database
@@ -77,7 +85,19 @@ class mdtSqlDatabaseCopierDialog : public QDialog, Ui::mdtSqlDatabaseCopierDialo
 
   /*! \brief Abort copy
    */
-  void abortCopy();
+//   void abortCopy();
+
+  /*! \brief Update global progress
+   */
+//   void updateGlobalProgress(int progress);
+
+  /*! \brief Reciver for a global error generated from worker thread
+   */
+  void onThreadGlobalErrorOccured(mdtError error);
+
+  /*! \brief
+   */
+  void onThreadFinished();
 
  private:
 

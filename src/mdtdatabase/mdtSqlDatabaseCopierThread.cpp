@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "mdtSqlDatabaseCopierThread.h"
 #include "mdtSqlDatabaseCopierMappingModel.h"
-#include "mdtProgressValue.h"
 #include "mdtAlgorithms.h"
 #include "mdtError.h"
 #include <QSqlError>
@@ -30,7 +29,8 @@
 #include <QDebug>
 
 mdtSqlDatabaseCopierThread::mdtSqlDatabaseCopierThread(QObject* parent)
- : QThread(parent)
+ : QThread(parent),
+   pvAbort(false)
 {
 }
 
@@ -43,11 +43,18 @@ void mdtSqlDatabaseCopierThread::copyData(const mdtSqlDatabaseCopierMapping & ma
   start();
 }
 
+void mdtSqlDatabaseCopierThread::abort()
+{
+  pvAbort = true;
+}
+
 void mdtSqlDatabaseCopierThread::run()
 {
   QString sourceConnectionName;
   QString destinationConnectionName;
   {
+    mdtProgressValue<int64_t> globalProgress;
+    int64_t totalSize;
     auto sourceDatabase = createConnection(pvMapping.sourceDatabase());
     sourceConnectionName = sourceDatabase.connectionName();
     QSqlDatabase destinationDatabase;
@@ -68,8 +75,21 @@ void mdtSqlDatabaseCopierThread::run()
 
     qDebug() << "THD started ...";
 
+    /*
+     * Init
+     */
+    pvAbort = false;
     // Calculate row count of each table that has a valid mapping
+    emit globalProgressRangeChanged(0, 0);
     calculateTableSizes(sourceDatabase);
+    totalSize = getTotalCopySize();
+    if(totalSize > 0){
+      globalProgress.setRange(0, totalSize);
+    }
+    emit globalProgressRangeChanged(0, 100);
+
+    qDebug() << "Copy size: " << totalSize;
+
     // Get table mapping list
     auto tableMappingList = pvMapping.tableMappingList();
     /*
@@ -79,7 +99,7 @@ void mdtSqlDatabaseCopierThread::run()
       auto tm = tableMappingList.at(i);
       if(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete){
         /// \todo return value
-        copyTable(tm, i, sourceDatabase, destinationDatabase);
+        copyTable(tm, i, sourceDatabase, destinationDatabase, globalProgress);
       }
     }
 
@@ -110,7 +130,7 @@ QSqlDatabase mdtSqlDatabaseCopierThread::createConnection(const QSqlDatabase & d
     error.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseCopierThread");
     error.commit();
-    ///emit globalErrorOccured(error);
+    emit globalErrorOccured(error);
   }
 
   return db;
@@ -152,8 +172,22 @@ int64_t mdtSqlDatabaseCopierThread::tableSize(int dbMappingModelRow) const
   return pvTableSizeList[dbMappingModelRow];
 }
 
+int64_t mdtSqlDatabaseCopierThread::getTotalCopySize() const
+{
+  int64_t totalSize = 0;
+
+  for(const auto size : pvTableSizeList){
+    if(size > 0){
+      totalSize += size;
+    }
+  }
+
+  return totalSize;
+}
+
 bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMapping & tm, int dbMappingModelRow,
-                                           const QSqlDatabase & sourceDatabase, const QSqlDatabase& destinationDatabase)
+                                           const QSqlDatabase & sourceDatabase, const QSqlDatabase& destinationDatabase,
+                                           mdtProgressValue<int64_t> & globalProgress)
 {
   QSqlQuery sourceQuery(sourceDatabase);
   QSqlQuery destinationQuery(destinationDatabase);
@@ -163,6 +197,9 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
 
   qDebug() << "Copy table " << tm.sourceTableName() << " -> " << tm.destinationTableName() << " ...";
 
+  if(pvAbort){
+    return true;
+  }
   // Setup queries
   sourceQuery.setForwardOnly(true);
   destinationQuery.setForwardOnly(true);
@@ -170,9 +207,6 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
   if(totalRows > 0){
     progress.setRange(0, totalRows);
   }
-
-  qDebug() << "Table progress: " << progress.scaledValue();
-  
   // Get source table data
   sql = tm.getSqlForSourceTableSelect(sourceDatabase);
   if(!sourceQuery.exec(sql)){
@@ -187,6 +221,9 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
   }
   // Copy each row
   while(sourceQuery.next()){
+    if(pvAbort){
+      return true;
+    }
     // Prepare destination query for insertion
     sql = tm.getSqlForDestinationTableInsert(destinationDatabase);
     if(!destinationQuery.prepare(sql)){
@@ -216,19 +253,16 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
       return false;
     }
     // Update progress
+    ++globalProgress;
     ++progress;
     if(progress.isTimeToNotify()){
       emit tableCopyProgressChanged(dbMappingModelRow, progress.scaledValue());
-      qDebug() << "Table progress: " << progress.scaledValue();
+      emit globalProgressValueChanged(globalProgress.scaledValue());
     }
-    
-    /// \todo Check that delta is about 1% , else we will spam the GUI (an maybe produce a stack overflow)
-    /// \note: build a struct with functions ?
   }
   emit tableCopyStatusChanged(dbMappingModelRow, mdtSqlDatabaseCopierMappingModel::CopyStatusOk);
-  
-  qDebug() << "End - table progress: " << progress.scaledValue();
   emit tableCopyProgressChanged(dbMappingModelRow, progress.scaledValue());
+  emit globalProgressValueChanged(globalProgress.scaledValue());
 
   return true;
 }

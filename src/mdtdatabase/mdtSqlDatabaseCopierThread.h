@@ -23,6 +23,7 @@
 
 #include "mdtSqlDatabaseCopierMapping.h"
 #include "mdtSqlDatabaseCopierTableMapping.h"
+#include "mdtProgressValue.h"
 #include "mdtError.h"
 #include <QThread>
 #include <QString>
@@ -74,6 +75,12 @@ class mdtSqlDatabaseCopierThread : public QThread
    */
   void copyData(const mdtSqlDatabaseCopierMapping & mapping);
 
+ public slots:
+
+  /*! \brief Abort database copy
+   */
+  void abort();
+
  signals:
 
   /*! \brief Emitted when table copy progress was updated
@@ -87,6 +94,18 @@ class mdtSqlDatabaseCopierThread : public QThread
   /*! \brief Emitted when a error occured during a table copy
    */
   void tableCopyErrorOccured(int dbMappingModelRow, mdtError error);
+
+  /*! \brief Emitted when global copy progress range changed
+   */
+  void globalProgressRangeChanged(int min, int max);
+
+  /*! \brief Emitted when global copy progress value changed
+   */
+  void globalProgressValueChanged(int progress);
+
+  /*! \brief Emitted when a global error occured
+   */
+  void globalErrorOccured(mdtError error);
 
  private:
 
@@ -110,11 +129,17 @@ class mdtSqlDatabaseCopierThread : public QThread
    */
   int64_t tableSize(int dbMappingModelRow) const;
 
+  /*! \brief Get total copy size
+   */
+  int64_t getTotalCopySize() const;
+
   /*! \brief Copy source table to destination table regarding table mapping
    */
   bool copyTable(const mdtSqlDatabaseCopierTableMapping & tm, int dbMappingModelRow,
-                 const QSqlDatabase & sourceDatabase, const QSqlDatabase & destinationDatabase);
+                 const QSqlDatabase & sourceDatabase, const QSqlDatabase & destinationDatabase,
+                 mdtProgressValue<int64_t> & globalProgress);
 
+  std::atomic<bool> pvAbort;
   mdtSqlDatabaseCopierMapping pvMapping;
   std::vector<int64_t> pvTableSizeList;   // Contains items (or row) count for each table in source database
 };
