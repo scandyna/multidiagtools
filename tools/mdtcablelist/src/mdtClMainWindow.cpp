@@ -204,6 +204,7 @@ void mdtClMainWindow::importDatabase()
     return;
   }
   // Setup and show copy dialog
+  dialog.initSourceDatabase(mdtSqlDriverType::SQLite);
   dialog.setDestinationDatabase(pvDatabase);
   dialog.exec();
 }

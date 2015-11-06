@@ -147,6 +147,15 @@ void mdtSqlDatabaseCopierMappingModel::setTableCopyError(int row, mdtError error
   emit dataChanged(idx, idx);
 }
 
+void mdtSqlDatabaseCopierMappingModel::clearCopyStatusAndProgress()
+{
+  beginResetModel();
+  pvRowCopyProgress.assign(pvMapping.tableMappingCount(), 0);
+  pvRowCopyStatus.assign(pvMapping.tableMappingCount(), CopyStatusUnknown);
+  pvRowCopyStatusText.assign(pvMapping.tableMappingCount(), QString());
+  endResetModel();
+}
+
 int mdtSqlDatabaseCopierMappingModel::rowCount(const QModelIndex & parent) const
 {
   // Check parent validity (case of use with a tree view)

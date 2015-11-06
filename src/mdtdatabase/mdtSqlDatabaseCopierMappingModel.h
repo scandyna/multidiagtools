@@ -66,6 +66,13 @@ class mdtSqlDatabaseCopierMappingModel : public QAbstractTableModel
    */
   bool setSourceDatabase(const QSqlDatabase & db);
 
+  /*! \brief Get source database
+   */
+  QSqlDatabase sourceDatabase() const
+  {
+    return pvMapping.sourceDatabase();
+  }
+
   /*! \brief Set destination database
    *
    * Will also reset table mapping.
@@ -136,6 +143,10 @@ class mdtSqlDatabaseCopierMappingModel : public QAbstractTableModel
    * \pre row must be in a valid range
    */
   void setTableCopyError(int row, mdtError error);
+
+  /*! \brief Clear copy status and progress for all rows
+   */
+  void clearCopyStatusAndProgress();
 
   /*! \brief Get row count
    *

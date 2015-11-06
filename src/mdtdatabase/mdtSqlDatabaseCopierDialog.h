@@ -22,6 +22,7 @@
 #define MDT_SQL_DATABASE_COPIER_DIALOG_H
 
 #include "ui_mdtSqlDatabaseCopierDialog.h"
+#include "mdtSqlDriverType.h"
 #include "mdtError.h"
 #include <QDialog>
 #include <QModelIndex>
@@ -45,7 +46,20 @@ class mdtSqlDatabaseCopierDialog : public QDialog, Ui::mdtSqlDatabaseCopierDialo
    */
   mdtSqlDatabaseCopierDialog(const mdtSqlDatabaseCopierDialog & other) = delete;
 
+  /*! \brief Destructor
+   */
+  ~mdtSqlDatabaseCopierDialog();
+
+  /*! \brief Init a database for source
+   *
+   * \note: currently, only SQLite is supported.
+   * \pre This function can be called only once
+   */
+  void initSourceDatabase(mdtSqlDriverType::Type driverType);
+
   /*! \brief Set source database
+   *
+   * \pre This function must not be called if initSourceDatabase() has been caled before
    */
   void setSourceDatabase(const QSqlDatabase & db);
 
@@ -101,12 +115,68 @@ class mdtSqlDatabaseCopierDialog : public QDialog, Ui::mdtSqlDatabaseCopierDialo
 
  private:
 
+  /*! \brief Set source database implementation
+   */
+  void setSourceDatabasePv(const QSqlDatabase & db);
+
+  /*! \brief State
+   */
+  enum State
+  {
+    DatabasesNotSet,  /*!< Source and/or destination databases contains not the needed informations for the copy.
+                           It's also not possible to process. */
+    DatabasesSet,     /*!< Source and destination databases have needed informations and it's possible to process.  */
+    ProcessingCopy    /*!< The only possible action is abort. */
+  };
+
+  /*! \brief Set database state set or not set
+   *
+   * Will check if if source and destination databases contains needed informations
+   *  and set state to DatabasesSet if ok,
+   *  DatabasesNotSet if not.
+   */
+  void setStateDatabasesSetOrNotSet();
+
+  /*! \brief Set database not set state
+   */
+  void setStateDatabasesNotSet();
+
+  /*! \brief Set database set state
+   */
+  void setStateDatabasesSet();
+
+  /*! \brief Check if db contains all needed informations
+   */
+  bool hasDatabaseNeededInformations(const QSqlDatabase & db) const;
+
+  /*! \brief Set ProcessingCopy state
+   */
+  void setStateProcessingCopy();
+
+  /*! \brief Set closable
+   *
+   * If closable is false, user cannot close this dialog.
+   */
+  void setClosable(bool closable);
+
+  /*! \brief Close event
+   */
+  void closeEvent(QCloseEvent *event);
+
+  /*! \brief Reject (event)
+   */
+  void reject();
+
   /*! \brief Display error
    */
   void displayError(const mdtError & error);
 
+  bool pvClosable;
+  State pvState;
   mdtSqlDatabaseCopierMappingModel *pvMappingModel;
   mdtSqlDatabaseCopierThread *pvThread;
+  QString pvOwningSourceConnectionName;
+  QString pvOwningDestinationConnectionName;
 };
 
 #endif // #ifndef MDT_SQL_DATABASE_COPIER_DIALOG_H

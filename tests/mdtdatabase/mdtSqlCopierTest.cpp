@@ -539,6 +539,14 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
   index = model.index(1, 3);
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index), QVariant(50));
+  // Clear
+  model.clearCopyStatusAndProgress();
+  index = model.index(0, 3);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant(0));
+  index = model.index(1, 3);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant(0));
 
   /*
    * Play
