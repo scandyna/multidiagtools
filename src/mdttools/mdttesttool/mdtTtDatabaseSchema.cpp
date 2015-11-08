@@ -636,6 +636,7 @@ void mdtTtDatabaseSchema::setupVehicleTypeLinkTable()
   // VehicleTypeStart_Id_FK
   VehicleTypeStart_Id_FK.setName("VehicleTypeStart_Id_FK");
   VehicleTypeStart_Id_FK.setType(mdtSqlFieldType::Integer);
+  VehicleTypeStart_Id_FK.setRequired(true);
   table.addField(VehicleTypeStart_Id_FK, true);
   fk_VehicleTypeStart_Id_FK.setParentTableName("VehicleType_tbl");
   fk_VehicleTypeStart_Id_FK.setOnDeleteAction(mdtSqlForeignKey::Restrict);
@@ -646,6 +647,7 @@ void mdtTtDatabaseSchema::setupVehicleTypeLinkTable()
   // VehicleTypeEnd_Id_FK
   VehicleTypeEnd_Id_FK.setName("VehicleTypeEnd_Id_FK");
   VehicleTypeEnd_Id_FK.setType(mdtSqlFieldType::Integer);
+  VehicleTypeEnd_Id_FK.setRequired(true);
   table.addField(VehicleTypeEnd_Id_FK, true);
   fk_VehicleTypeEnd_Id_FK.setParentTableName("VehicleType_tbl");
   fk_VehicleTypeEnd_Id_FK.setOnDeleteAction(mdtSqlForeignKey::Restrict);
@@ -656,19 +658,23 @@ void mdtTtDatabaseSchema::setupVehicleTypeLinkTable()
   // UnitConnectionStart_Id_FK
   UnitConnectionStart_Id_FK.setName("UnitConnectionStart_Id_FK");
   UnitConnectionStart_Id_FK.setType(mdtSqlFieldType::Integer);
+  UnitConnectionStart_Id_FK.setRequired(true);
   table.addField(UnitConnectionStart_Id_FK, true);
   // UnitConnectionEnd_Id_FK
   UnitConnectionEnd_Id_FK.setName("UnitConnectionEnd_Id_FK");
   UnitConnectionEnd_Id_FK.setType(mdtSqlFieldType::Integer);
+  UnitConnectionEnd_Id_FK.setRequired(true);
   table.addField(UnitConnectionEnd_Id_FK, true);
   // Link_Version_FK (refers to Link_tbl)
   Link_Version_FK.setName("Link_Version_FK");
   Link_Version_FK.setType(mdtSqlFieldType::Integer);
+  Link_Version_FK.setRequired(true);
   table.addField(Link_Version_FK, true);
   // Link_Modification_Code_FK (refers to Link_tbl)
   Link_Modification_Code_FK.setName("Link_Modification_Code_FK");
   Link_Modification_Code_FK.setType(mdtSqlFieldType::Varchar);
   Link_Modification_Code_FK.setLength(10);
+  Link_Modification_Code_FK.setRequired(true);
   table.addField(Link_Modification_Code_FK, true);
   // Foreign key to Link_tbl
   fk_Link_tbl.setParentTableName("Link_tbl");
@@ -1769,6 +1775,7 @@ void mdtTtDatabaseSchema::setupLinkTable()
   // UnitConnectionStart_Id_FK
   UnitConnectionStart_Id_FK.setName("UnitConnectionStart_Id_FK");
   UnitConnectionStart_Id_FK.setType(mdtSqlFieldType::Integer);
+  UnitConnectionStart_Id_FK.setRequired(true);
   table.addField(UnitConnectionStart_Id_FK, true);
   fk_UnitConnectionStart.setParentTableName("UnitConnection_tbl");
   fk_UnitConnectionStart.setOnDeleteAction(mdtSqlForeignKey::Restrict);
@@ -1779,6 +1786,7 @@ void mdtTtDatabaseSchema::setupLinkTable()
   // UnitConnectionEnd_Id_FK
   UnitConnectionEnd_Id_FK.setName("UnitConnectionEnd_Id_FK");
   UnitConnectionEnd_Id_FK.setType(mdtSqlFieldType::Integer);
+  UnitConnectionEnd_Id_FK.setRequired(true);
   table.addField(UnitConnectionEnd_Id_FK, true);
   fk_UnitConnectionEnd.setParentTableName("UnitConnection_tbl");
   fk_UnitConnectionEnd.setOnDeleteAction(mdtSqlForeignKey::Restrict);
@@ -1789,6 +1797,7 @@ void mdtTtDatabaseSchema::setupLinkTable()
   // Version_FK
   Version_FK.setName("Version_FK");
   Version_FK.setType(mdtSqlFieldType::Integer);
+  Version_FK.setRequired(true);
   table.addField(Version_FK, true);
   fk_Version.setParentTableName("LinkVersion_tbl");
   fk_Version.setOnDeleteAction(mdtSqlForeignKey::Restrict);
@@ -1800,6 +1809,7 @@ void mdtTtDatabaseSchema::setupLinkTable()
   Modification_Code_FK.setName("Modification_Code_FK");
   Modification_Code_FK.setType(mdtSqlFieldType::Varchar);
   Modification_Code_FK.setLength(10);
+  Modification_Code_FK.setRequired(true);
   table.addField(Modification_Code_FK, true);
   fk_Modification.setParentTableName("Modification_tbl");
   fk_Modification.setOnDeleteAction(mdtSqlForeignKey::Restrict);

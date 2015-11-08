@@ -67,7 +67,13 @@ mdtSqlDatabaseCopierTableMapping mdtSqlDatabaseCopierTableMappingDialog::mapping
 void mdtSqlDatabaseCopierTableMappingDialog::setDestinationTable(int cbIndex)
 {
   QString tableName = cbDestinationTable->itemText(cbIndex);
-  pvMappingModel->setDestinationTable(tableName, pvDestinationDatabase, pvDestinationFieldSelectionDelegate);
+  /*
+   * Setting a new destination table will reset field mapping,
+   * so, we only do this if destination table changed.
+   */
+  if(tableName != pvMappingModel->destinationTableName()){
+    pvMappingModel->setDestinationTable(tableName, pvDestinationDatabase, pvDestinationFieldSelectionDelegate);
+  }
 }
 
 void mdtSqlDatabaseCopierTableMappingDialog::resetFieldMapping()

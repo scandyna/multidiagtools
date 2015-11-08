@@ -63,9 +63,17 @@ class mdtSqlDatabaseCopierDialog : public QDialog, Ui::mdtSqlDatabaseCopierDialo
    */
   void setSourceDatabase(const QSqlDatabase & db);
 
+  /*! \brief Set source database selectable or not by the user
+   */
+  void setSourceDatabaseSelectable(bool selectable);
+
   /*! \brief Set destination database
    */
   void setDestinationDatabase(const QSqlDatabase & db);
+
+  /*! \brief Set destination database selectable or not by the user
+   */
+  void setDestinationDatabaseSelectable(bool selectable);
 
  private slots:
 
@@ -176,7 +184,9 @@ class mdtSqlDatabaseCopierDialog : public QDialog, Ui::mdtSqlDatabaseCopierDialo
   mdtSqlDatabaseCopierMappingModel *pvMappingModel;
   mdtSqlDatabaseCopierThread *pvThread;
   QString pvOwningSourceConnectionName;
-  QString pvOwningDestinationConnectionName;
+//   QString pvOwningDestinationConnectionName;
+  bool pvSourceDatabaseSelectable;
+  bool pvDestinationDatabaseSelectable;
 };
 
 #endif // #ifndef MDT_SQL_DATABASE_COPIER_DIALOG_H

@@ -398,7 +398,10 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   QTableView tableView;
   QTreeView treeView;
   mdtSqlDatabaseCopierTableMappingModel model;
-  mdtSqlDatabaseCopierTableMapping mapping;
+  const int sourceFieldNameColumn = 0;
+  const int destinationFieldNameColumn = 2;
+  QModelIndex index;
+  mdtSqlDatabaseCopierTableMapping tm;
   mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
 
   /*
@@ -407,26 +410,77 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   // Setup table view
   tableView.setModel(&model);
   tableView.setItemDelegateForColumn(2, delegate);
-  tableView.resize(600, 150);
+  tableView.resize(600, 200);
   tableView.show();
   // Setup tree view
   treeView.setModel(&model);
   treeView.show();
 
   /*
-   * Setup model
+   * Check by generating by name
    */
-//   QVERIFY(model.setSourceDatabase(pvDatabase));
-//   QVERIFY(model.setDestinationDatabase(pvDatabase));
+  // Set tables and generate field mapping
   QVERIFY(model.setSourceTable("Client_tbl", pvDatabase));
   QVERIFY(model.setDestinationTable("Client2_tbl", pvDatabase, delegate));
   model.generateFieldMappingByName();
-  tableView.resizeColumnsToContents();
-  
+  // Check row 0
+  index = model.index(0, sourceFieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Id_PK"));
+  index = model.index(0, destinationFieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Id_PK"));
+  // Check row 1
+  index = model.index(1, sourceFieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Name"));
+  index = model.index(1, destinationFieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Name"));
+  // Check row 2
+  index = model.index(2, sourceFieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("FieldA"));
+  index = model.index(2, destinationFieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("FieldA"));
+  // Check row 3
+  index = model.index(3, sourceFieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("FieldB"));
+  index = model.index(3, destinationFieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("FieldB"));
+  /*
+   * Check updating mapping
+   */
+  tm = model.mapping();
+  QCOMPARE(tm.fieldCount(), 4);
+  // Update: source FieldA -> destination FieldB
+  tm.setDestinationField(2, "FieldB");
+  // Update: source FieldB -> destination FieldA
+  tm.setDestinationField(3, "FieldA");
+  // Update model
+  model.setMapping(tm);
+  // Check row 2
+  index = model.index(2, sourceFieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("FieldA"));
+  index = model.index(2, destinationFieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("FieldB"));
+  // Check row 3
+  index = model.index(3, sourceFieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("FieldB"));
+  index = model.index(3, destinationFieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("FieldA"));
 
   /*
    * Play
    */
+  tableView.resizeColumnsToContents();
   while(tableView.isVisible()){
     QTest::qWait(500);
   }
@@ -494,8 +548,11 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
   QTableView tableView;
   QTreeView treeView;
   mdtSqlDatabaseCopierMappingModel model;
+  const int sourceTableNameColumn = 0;
+  const int destinationTableNameColumn = 1;
   QModelIndex index;
-  mdtSqlDatabaseCopierMapping mapping;
+  ///mdtSqlDatabaseCopierMapping dbm;
+  mdtSqlDatabaseCopierTableMapping tm;
   mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
   mdtProgressBarItemDelegate *progressDelegate = new mdtProgressBarItemDelegate(&tableView);
   mdtProgressValue<int> progress;
@@ -514,12 +571,48 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
   treeView.show();
 
   /*
-   * Setup model
+   * Check generating mapping by name
    */
+  // Set databases and generate by name
   QVERIFY(model.setSourceDatabase(pvDatabase));
   QVERIFY(model.setDestinationDatabase(pvDatabase));
   QVERIFY(model.generateTableMappingByName());
-  tableView.resizeColumnsToContents();
+  // Check row 0
+  index = model.index(0, sourceTableNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Client2_tbl"));
+  index = model.index(0, destinationTableNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Client2_tbl"));
+  // Check row 1
+  index = model.index(1, sourceTableNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Client_tbl"));
+  index = model.index(1, destinationTableNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Client_tbl"));
+  /*
+   * Check that table mapping where generated for both database mappings
+   */
+  // Check row 0
+  tm = model.tableMapping(0);
+  QCOMPARE(tm.sourceTableName(), QString("Client2_tbl"));
+  QCOMPARE(tm.destinationTableName(), QString("Client2_tbl"));
+  QCOMPARE(tm.fieldCount(), 4);
+  QCOMPARE(tm.destinationFieldName(0), QString("Id_PK"));
+  // Check row 1
+  tm = model.tableMapping(1);
+  QCOMPARE(tm.sourceTableName(), QString("Client_tbl"));
+  QCOMPARE(tm.destinationTableName(), QString("Client_tbl"));
+  QCOMPARE(tm.fieldCount(), 4);
+  QCOMPARE(tm.destinationFieldName(0), QString("Id_PK"));
+
+  /** \todo
+   * Check updating model
+   */
+  tm = model.tableMapping(0);
+  
+
   
   /*
    * Check updating table copy progress and status
@@ -551,6 +644,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
   /*
    * Play
    */
+  tableView.resizeColumnsToContents();
   while(tableView.isVisible()){
     QTest::qWait(500);
   }

@@ -34,7 +34,9 @@
 mdtSqlDatabaseCopierDialog::mdtSqlDatabaseCopierDialog(QWidget* parent)
  : QDialog(parent),
    pvMappingModel(new mdtSqlDatabaseCopierMappingModel),
-   pvThread(new mdtSqlDatabaseCopierThread)
+   pvThread(new mdtSqlDatabaseCopierThread),
+   pvSourceDatabaseSelectable(true),
+   pvDestinationDatabaseSelectable(true)
 {
   setupUi(this);
 
@@ -65,9 +67,9 @@ mdtSqlDatabaseCopierDialog::~mdtSqlDatabaseCopierDialog()
   if(!pvOwningSourceConnectionName.isEmpty()){
     QSqlDatabase::removeDatabase(pvOwningSourceConnectionName);
   }
-  if(!pvOwningDestinationConnectionName.isEmpty()){
-    QSqlDatabase::removeDatabase(pvOwningDestinationConnectionName);
-  }
+//   if(!pvOwningDestinationConnectionName.isEmpty()){
+//     QSqlDatabase::removeDatabase(pvOwningDestinationConnectionName);
+//   }
 }
 
 void mdtSqlDatabaseCopierDialog::initSourceDatabase(mdtSqlDriverType::Type driverType)
@@ -90,6 +92,14 @@ void mdtSqlDatabaseCopierDialog::setSourceDatabase(const QSqlDatabase & db)
   setSourceDatabasePv(db);
 }
 
+void mdtSqlDatabaseCopierDialog::setSourceDatabaseSelectable(bool selectable)
+{
+  Q_ASSERT(pvState != ProcessingCopy);
+
+  pvSourceDatabaseSelectable = selectable;
+  tbSelectSourceDatabase->setEnabled(selectable);
+}
+
 void mdtSqlDatabaseCopierDialog::setDestinationDatabase(const QSqlDatabase & db)
 {
   Q_ASSERT(pvState != ProcessingCopy);
@@ -101,6 +111,14 @@ void mdtSqlDatabaseCopierDialog::setDestinationDatabase(const QSqlDatabase & db)
   }
   resizeTableViewToContents();
   setStateDatabasesSetOrNotSet();
+}
+
+void mdtSqlDatabaseCopierDialog::setDestinationDatabaseSelectable(bool selectable)
+{
+  Q_ASSERT(pvState != ProcessingCopy);
+
+  pvDestinationDatabaseSelectable = selectable;
+  tbSelectDestinationDatabase->setEnabled(selectable);
 }
 
 void mdtSqlDatabaseCopierDialog::selectSourceDatabase()
@@ -242,8 +260,12 @@ void mdtSqlDatabaseCopierDialog::setStateDatabasesSetOrNotSet()
 void mdtSqlDatabaseCopierDialog::setStateDatabasesNotSet()
 {
   pvState = DatabasesNotSet;
-  tbSelectSourceDatabase->setEnabled(true);
-  tbSelectDestinationDatabase->setEnabled(true);
+  if(pvSourceDatabaseSelectable){
+    tbSelectSourceDatabase->setEnabled(true);
+  }
+  if(pvDestinationDatabaseSelectable){
+    tbSelectDestinationDatabase->setEnabled(true);
+  }
   tbResetMapping->setEnabled(false);
   tbMapByName->setEnabled(false);
   tvMapping->setEnabled(false);
@@ -255,8 +277,12 @@ void mdtSqlDatabaseCopierDialog::setStateDatabasesNotSet()
 void mdtSqlDatabaseCopierDialog::setStateDatabasesSet()
 {
   pvState = DatabasesSet;
-  tbSelectSourceDatabase->setEnabled(true);
-  tbSelectDestinationDatabase->setEnabled(true);
+  if(pvSourceDatabaseSelectable){
+    tbSelectSourceDatabase->setEnabled(true);
+  }
+  if(pvDestinationDatabaseSelectable){
+    tbSelectDestinationDatabase->setEnabled(true);
+  }
   tbResetMapping->setEnabled(true);
   tbMapByName->setEnabled(true);
   tvMapping->setEnabled(true);

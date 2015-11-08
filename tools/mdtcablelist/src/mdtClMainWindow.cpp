@@ -199,13 +199,19 @@ void mdtClMainWindow::importDatabase()
 {
   mdtSqlDatabaseCopierDialog dialog(this);
 
-  // Init database
-  if(!initDatabase()){
+  // Check that we have currently a database open
+  if(!pvDatabase.isOpen()){
+    displayWarning(tr("Cannot import a database."), tr("Please open a database and try again."));
     return;
   }
+//   // Init database
+//   if(!initDatabase()){
+//     return;
+//   }
   // Setup and show copy dialog
   dialog.initSourceDatabase(mdtSqlDriverType::SQLite);
   dialog.setDestinationDatabase(pvDatabase);
+  dialog.setDestinationDatabaseSelectable(false);
   dialog.exec();
 }
 

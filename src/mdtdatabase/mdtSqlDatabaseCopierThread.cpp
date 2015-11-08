@@ -21,6 +21,7 @@
 #include "mdtSqlDatabaseCopierThread.h"
 #include "mdtSqlDatabaseCopierMappingModel.h"
 #include "mdtAlgorithms.h"
+#include "mdtSqlTransaction.h"
 #include "mdtError.h"
 #include <QSqlError>
 #include <QSqlQuery>
@@ -191,6 +192,7 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
 {
   QSqlQuery sourceQuery(sourceDatabase);
   QSqlQuery destinationQuery(destinationDatabase);
+  mdtSqlTransaction transaction(destinationDatabase);
   QString sql;
   mdtProgressValue<int64_t> progress;
   auto totalRows = tableSize(dbMappingModelRow);
@@ -217,6 +219,14 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
     error.commit();
     emit tableCopyErrorOccured(dbMappingModelRow, error);
     ///emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, tableName, 0);
+    return false;
+  }
+  // Beginn transaction
+  if(!transaction.begin()){
+    mdtError error = transaction.lastError();
+    MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseCopierThread");
+    error.commit();
+    emit tableCopyErrorOccured(dbMappingModelRow, error);
     return false;
   }
   // Copy each row
@@ -260,6 +270,15 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
       emit globalProgressValueChanged(globalProgress.scaledValue());
     }
   }
+  // Commit transaction
+  if(!transaction.commit()){
+    mdtError error = transaction.lastError();
+    MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseCopierThread");
+    error.commit();
+    emit tableCopyErrorOccured(dbMappingModelRow, error);
+    return false;
+  }
+  // Notify end
   emit tableCopyStatusChanged(dbMappingModelRow, mdtSqlDatabaseCopierMappingModel::CopyStatusOk);
   emit tableCopyProgressChanged(dbMappingModelRow, progress.scaledValue());
   emit globalProgressValueChanged(globalProgress.scaledValue());

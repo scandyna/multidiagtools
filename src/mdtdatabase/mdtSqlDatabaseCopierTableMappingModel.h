@@ -66,6 +66,13 @@ class mdtSqlDatabaseCopierTableMappingModel : public QAbstractTableModel
    */
   bool setSourceTable(const QString & tableName, const QSqlDatabase & db);
 
+  /*! \brief Get source table name
+   */
+  QString sourceTableName() const
+  {
+    return pvMapping.sourceTableName();
+  }
+
   /*! \brief Set destination table
    *
    * Will also reset field mapping.
@@ -74,6 +81,13 @@ class mdtSqlDatabaseCopierTableMappingModel : public QAbstractTableModel
    *  its combobox will be populated with available fields.
    */
   bool setDestinationTable(const QString & tableName, const QSqlDatabase & db, mdtComboBoxItemDelegate *delegate = nullptr);
+
+  /*! \brief Get destination table name
+   */
+  QString destinationTableName() const
+  {
+    return pvMapping.destinationTableName();
+  }
 
   /*! \brief Reset field mapping
    *
