@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtSqlDatabaseCopierTableMapping.h"
 #include "mdtSqlField.h"
-#include "mdtSqlDriverType.h"
+#include "mdtSqlFieldType.h"
 #include <QSqlDriver>
 
 //#include <QDebug>
@@ -102,9 +102,17 @@ void mdtSqlDatabaseCopierTableMapping::clearFieldMapping()
 
 void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
 {
-  bool mismatchDetected = false;
+//   bool mismatchDetected = false;
+  auto sourceDriverType = mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName());
+  auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
 
   resetFieldMapping();
+  if(sourceDriverType == mdtSqlDriverType::Unknown){
+    return;
+  }
+  if(destinationDriverType == mdtSqlDriverType::Unknown){
+    return;
+  }
   for(auto & fm : pvFieldMappingList){
     // Get source field
     Q_ASSERT(fm.sourceFieldIndex >= 0);
@@ -112,16 +120,17 @@ void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
     mdtSqlField sourceField = pvSourceTable.field(fm.sourceFieldIndex);
     // Get destination field index that matches source field name
     int destinationFieldIndex = pvDestinationTable.fieldIndex(sourceField.name());
-    /// \todo If destination field exists, do some check here
-    
     // Update field mapping
     fm.destinationFieldIndex = destinationFieldIndex;
+    updateFieldMappingState(fm, sourceDriverType, destinationDriverType);
   }
-  if(mismatchDetected){
-    pvMappingState = MappingPartial;
-  }else{
-    pvMappingState = MappingComplete;
-  }
+  // Update table mapping state
+  updateTableMappingState();
+//   if(mismatchDetected){
+//     pvMappingState = MappingPartial;
+//   }else{
+//     pvMappingState = MappingComplete;
+//   }
 }
 
 void mdtSqlDatabaseCopierTableMapping::setDestinationField(int index, const QString & fieldName)
@@ -130,19 +139,29 @@ void mdtSqlDatabaseCopierTableMapping::setDestinationField(int index, const QStr
   Q_ASSERT(index < pvFieldMappingList.size());
 
   auto fm = pvFieldMappingList.at(index);
+  auto sourceDriverType = mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName());
+  auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
 
+  if(sourceDriverType == mdtSqlDriverType::Unknown){
+    return;
+  }
+  if(destinationDriverType == mdtSqlDriverType::Unknown){
+    return;
+  }
   if(fieldName.isEmpty()){
     fm.destinationFieldIndex = -1;
   }else{
     fm.destinationFieldIndex = pvDestinationTable.fieldIndex(fieldName);
   }
+  updateFieldMappingState(fm, sourceDriverType, destinationDriverType);
   pvFieldMappingList[index] = fm;
-  // Check if mapping is now complete and update state
-  if(mappingIsCompete()){
-    pvMappingState = MappingComplete;
-  }else{
-    pvMappingState = MappingPartial;
-  }
+  // Update table mapping state
+  updateTableMappingState();
+//   if(mappingIsCompete()){
+//     pvMappingState = MappingComplete;
+//   }else{
+//     pvMappingState = MappingPartial;
+//   }
 }
 
 QString mdtSqlDatabaseCopierTableMapping::sourceFieldName(int index) const
@@ -195,24 +214,6 @@ QString mdtSqlDatabaseCopierTableMapping::destinationFieldTypeName(int index) co
     return QString();
   }
   return pvDestinationTable.fieldTypeName(destinationFieldIndex, mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName()));
-}
-
-bool mdtSqlDatabaseCopierTableMapping::mappingIsCompete()
-{
-  // Check if both tables are set
-  if( pvSourceTable.tableName().isEmpty() || pvDestinationTable.tableName().isEmpty() ){
-    return false;
-  }
-  // Check field mapping
-  for(const auto & fm : pvFieldMappingList){
-    // Check if source and destination is mapped
-    if(fm.isNull()){
-      return false;
-    }
-    /// \todo Type and other checks
-  }
-
-  return true;
 }
 
 QString mdtSqlDatabaseCopierTableMapping::getSqlForSourceTableCount(const QSqlDatabase& db) const
@@ -292,3 +293,69 @@ QString mdtSqlDatabaseCopierTableMapping::getSqlForDestinationTableInsert(const 
 
   return sql;
 }
+
+void mdtSqlDatabaseCopierTableMapping::updateFieldMappingState(mdtSqlCopierFieldMapping & fm, mdtSqlDriverType::Type sourceDriverType, mdtSqlDriverType::Type destinationDriverType)
+{
+  Q_ASSERT(sourceDriverType != mdtSqlDriverType::Unknown);
+  Q_ASSERT(destinationDriverType != mdtSqlDriverType::Unknown);
+
+  if(fm.isNull()){
+    fm.mappingState = mdtSqlCopierFieldMapping::MappingNotSet;
+    return;
+  }
+  Q_ASSERT(fm.sourceFieldIndex >= 0);
+  Q_ASSERT(fm.sourceFieldIndex < pvSourceTable.fieldCount());
+  Q_ASSERT(fm.destinationFieldIndex >= 0);
+  Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
+  // Do checks regarding field types
+  auto sourceFieldType = pvSourceTable.field(fm.sourceFieldIndex).getFieldType(sourceDriverType);
+  auto destinationFieldType = pvDestinationTable.field(fm.destinationFieldIndex).getFieldType(destinationDriverType);
+  if(sourceFieldType == destinationFieldType){
+    fm.mappingState = mdtSqlCopierFieldMapping::MappingComplete;
+  }else{
+    fm.mappingState = mdtSqlCopierFieldMapping::MappingError;
+  }
+}
+
+void mdtSqlDatabaseCopierTableMapping::updateTableMappingState()
+{
+  // Check if both tables are set
+  if( pvSourceTable.tableName().isEmpty() || pvDestinationTable.tableName().isEmpty() ){
+    pvMappingState = MappingNotSet;
+    return;
+  }
+  // Check state of each field mapping and deduce table mapping state
+  for(const auto & fm : pvFieldMappingList){
+    switch(fm.mappingState){
+      case mdtSqlCopierFieldMapping::MappingError:
+        pvMappingState = MappingError;
+        return;
+      case mdtSqlCopierFieldMapping::MappingNotSet:
+      case mdtSqlCopierFieldMapping::MappingPartial:
+        pvMappingState = MappingPartial;
+        return;
+      case mdtSqlCopierFieldMapping::MappingComplete:
+        break;
+    }
+  }
+  // All checks successfully passed
+  pvMappingState = MappingComplete;
+}
+
+// bool mdtSqlDatabaseCopierTableMapping::mappingIsCompete()
+// {
+//   // Check if both tables are set
+//   if( pvSourceTable.tableName().isEmpty() || pvDestinationTable.tableName().isEmpty() ){
+//     return false;
+//   }
+//   // Check field mapping
+//   for(const auto & fm : pvFieldMappingList){
+//     // Check if source and destination is mapped
+//     if(fm.isNull()){
+//       return false;
+//     }
+//     /// \todo Type and other checks
+//   }
+// 
+//   return true;
+// }

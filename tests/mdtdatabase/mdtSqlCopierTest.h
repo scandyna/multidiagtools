@@ -40,6 +40,7 @@ class mdtSqlCopierTest : public mdtTest
   void fieldMappingDataTest();
 
   void sqlDatabaseCopierTableMappingTest();
+  void sqlDatabaseCopierTableMappingStateTest();
   void sqlDatabaseCopierTableMappingSqliteTest();
   void sqlDatabaseCopierTableMappingModelTest();
   void sqlDatabaseCopierTableMappingDialogTest();

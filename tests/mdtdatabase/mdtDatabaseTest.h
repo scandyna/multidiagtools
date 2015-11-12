@@ -37,6 +37,7 @@ class mdtDatabaseTest : public mdtTest
   void sqlDriverTypeTest();
 
   void sqlFieldTypeTest();
+  void sqlFieldTypeCompareTest();
 
   void sqlCollationTest();
 

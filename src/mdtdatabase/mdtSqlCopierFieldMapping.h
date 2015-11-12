@@ -23,10 +23,25 @@
 
 /*! \brief Field mapping data
  *
- * \sa mdtSqlFieldMappingDialog
+ * Contains only data for field mapping.
+ *  The functionnal part is implemented
+ *  in specific copier.
  */
 struct mdtSqlCopierFieldMapping
 {
+  /*! \brief Field mapping state
+   */
+  enum MappingState
+  {
+    MappingNotSet,      /*!< Source or destination field index was not set.
+                             This is the default. */
+    MappingComplete,    /*!< Field mapping was done automatically without any mismatch,
+                             or confirmed by the user as complete. */
+    MappingPartial,     /*!< Field mapping was done automatically, but some mismatch
+                             was detected, and a action is required from the user to fix it */
+    MappingError        /*!< A error was detected in field mapping. */
+  };
+
   /*! \brief Source field index
    */
   int sourceFieldIndex;
@@ -35,13 +50,16 @@ struct mdtSqlCopierFieldMapping
    */
   int destinationFieldIndex;
 
+  MappingState mappingState;
+
   /*! \brief Default constructor
    *
    * Will set source and destination field indexes to -1
    */
   mdtSqlCopierFieldMapping()
    : sourceFieldIndex(-1),
-     destinationFieldIndex(-1)
+     destinationFieldIndex(-1),
+     mappingState(mdtSqlCopierFieldMapping::MappingNotSet)
   {
   }
 
@@ -62,6 +80,7 @@ struct mdtSqlCopierFieldMapping
   {
     sourceFieldIndex = -1;
     destinationFieldIndex = -1;
+    mappingState = MappingNotSet;
   }
 };
 

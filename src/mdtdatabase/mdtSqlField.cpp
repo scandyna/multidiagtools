@@ -33,6 +33,26 @@ void mdtSqlField::clear()
   pvCollation.clear();
 }
 
+mdtSqlFieldType mdtSqlField::getFieldType() const
+{
+  mdtSqlFieldType ft;
+
+  ft.setType(pvType);
+  ft.setLength(pvLength);
+
+  return ft;
+}
+
+mdtSqlFieldType mdtSqlField::getFieldType(mdtSqlDriverType::Type driverType) const
+{
+  mdtSqlFieldType ft;
+
+  ft.setType(pvType, driverType);
+  ft.setLength(pvLength);
+
+  return ft;
+}
+
 QString mdtSqlField::typeName(mdtSqlDriverType::Type driverType) const
 {
   QString name = mdtSqlFieldType::nameFromType(pvType, driverType);

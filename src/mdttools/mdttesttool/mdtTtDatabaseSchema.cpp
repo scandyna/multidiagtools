@@ -702,7 +702,7 @@ void mdtTtDatabaseSchema::setupConnectionTypeTable()
   table.setTableName("ConnectionType_tbl", "UTF8");
   // Code_PK
   Code_PK.setName("Code_PK");
-  Code_PK.setType(mdtSqlFieldType::Integer);
+  Code_PK.setType(mdtSqlFieldType::Varchar);
   Code_PK.setLength(1);
   table.addField(Code_PK, true);
   // NameEN

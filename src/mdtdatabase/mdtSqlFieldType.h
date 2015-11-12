@@ -72,6 +72,8 @@ class mdtSqlFieldType
   }
 
   /*! \brief Set type
+   *
+   * This version will set name
    */
   void setType(Type type, mdtSqlDriverType::Type driverType)
   {
@@ -79,6 +81,16 @@ class mdtSqlFieldType
 
     pvName = nameFromType(type, driverType);
     pvType = type;
+  }
+
+  /*! \brief Set type
+   *
+   * This version will not set name
+   */
+  void setType(Type type)
+  {
+    pvType = type;
+    pvName.clear();
   }
 
   /*! \brief Set length
@@ -105,6 +117,8 @@ class mdtSqlFieldType
   }
 
   /*! \brief Get field type name
+   *
+   * \note returns only the name of field type, length is not included
    */
   QString name() const
   {
@@ -229,5 +243,23 @@ class mdtSqlFieldType
   int pvLength;
   QString pvName;
 };
+
+/*! \brief Check if field type a and b are equal
+  *
+  * Checking equality for field types requiers some rules
+  *  for cases of unset type or length:
+  *  - type is unknown for a or for b -> a != b
+  *  - one of the field types has a length set, but the other is set -> a != b
+  */
+bool operator==(const mdtSqlFieldType & a, const mdtSqlFieldType & b);
+
+/*! \brief Check if field type a and b are different
+ *
+ * \sa operator==()
+ */
+inline bool operator!=(const mdtSqlFieldType & a, const mdtSqlFieldType & b)
+{
+  return !(a == b);
+}
 
 #endif // #ifndef MDT_SQL_FIELD_TYPE_H

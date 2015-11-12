@@ -186,16 +186,19 @@ void mdtSqlCopierTest::fieldMappingDataTest()
   // Initial state
   QCOMPARE(data.sourceFieldIndex, -1);
   QCOMPARE(data.destinationFieldIndex, -1);
+  QVERIFY(data.mappingState == mdtSqlCopierFieldMapping::MappingNotSet);
   QVERIFY(data.isNull());
   // Set
   data.sourceFieldIndex = 0;
   QVERIFY(data.isNull());
   data.destinationFieldIndex = 0;
   QVERIFY(!data.isNull());
+  data.mappingState = mdtSqlCopierFieldMapping::MappingComplete;
   // Clear
   data.clear();
   QCOMPARE(data.sourceFieldIndex, -1);
   QCOMPARE(data.destinationFieldIndex, -1);
+  QVERIFY(data.mappingState == mdtSqlCopierFieldMapping::MappingNotSet);
   QVERIFY(data.isNull());
 }
 
@@ -325,6 +328,53 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   mapping.clearFieldMapping();
   QCOMPARE(mapping.fieldCount(), 0);
   QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
+
+}
+
+void mdtSqlCopierTest::sqlDatabaseCopierTableMappingStateTest()
+{
+  mdtSqlDatabaseCopierTableMapping tm;
+  ///mdtSqlCopierFieldMapping fm;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(tm.fieldCount(), 0);
+  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
+  /*
+   * Set source and destination tables
+   * and set mapping by name.
+   */
+  QVERIFY(tm.setSourceTable("Client_tbl", pvDatabase));
+  QVERIFY(tm.setDestinationTable("Client2_tbl", pvDatabase));
+  QCOMPARE(tm.fieldCount(), 4);
+  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
+  /*
+   * Map by name and check: we know that Client_tbl and Client2_tbl have exactly the same schema
+   */
+  tm.generateFieldMappingByName();
+  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
+  /*
+   * Setup a valid mapping "by hand" and check state
+   */
+  // Clear previous mapping
+  tm.resetFieldMapping();
+  QCOMPARE(tm.fieldCount(), 4);
+  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
+  tm.setDestinationField(0, "Id_PK");
+  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  tm.setDestinationField(1, "Name");
+  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  tm.setDestinationField(2, "FieldA");
+  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  tm.setDestinationField(3, "FieldB");
+  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
+  /*
+   * Map incompatible field types
+   */
+  tm.setDestinationField(1, "Id_PK");
+  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingError);
+
 
 }
 

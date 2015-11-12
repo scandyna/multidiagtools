@@ -153,3 +153,40 @@ QList< mdtSqlFieldType > mdtSqlFieldType::availableFieldTypeListCommon(mdtSqlDri
 
   return fieldTypeList;
 }
+
+bool operator==(const mdtSqlFieldType & a, const mdtSqlFieldType & b)
+{
+  /*
+   * If type is unknown for a or for b, a != b
+   */
+  if( (a.type() == mdtSqlFieldType::UnknownType) || (b.type() == mdtSqlFieldType::UnknownType) ){
+    return false;
+  }
+  // Trivial type check
+  if(a.type() != b.type()){
+    return false;
+  }
+  /*
+   * If one field type has its length set, but not the other, a != b
+   */
+  if( (a.length() < 0) && (b.length() >= 0) ){
+    return false;
+  }
+  if( (b.length() < 0) && (a.length() >= 0) ){
+    return false;
+  }
+  /*
+   * If both a and b has not thier length set, a == b
+   */
+  if( (a.length() < 0) && (b.length() < 0) ){
+    return true;
+  }
+  // Trivial length check
+  Q_ASSERT(a.length() > 0);
+  Q_ASSERT(b.length() > 0);
+  if(a.length() != b.length()){
+    return false;
+  }
+
+  return true;
+}

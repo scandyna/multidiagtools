@@ -23,6 +23,7 @@
 
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlCopierFieldMapping.h"
+#include "mdtSqlDriverType.h"
 #include "mdtError.h"
 #include <QString>
 #include <QStringList>
@@ -35,7 +36,7 @@ class mdtSqlDatabaseCopierTableMapping
 {
  public:
 
-  /*! \brief Mapping state
+  /*! \brief Table mapping state
    */
   enum MappingState
   {
@@ -106,6 +107,8 @@ class mdtSqlDatabaseCopierTableMapping
    * Will clear field mapping,
    *  then, generate it for each available field in source table.
    *  After this, no valid field mapping is set to destination table.
+   *
+   * \todo We should list all available fields in destination table
    */
   void resetFieldMapping();
 
@@ -223,9 +226,17 @@ class mdtSqlDatabaseCopierTableMapping
 
  private:
 
+  /*! \brief Update given field maping state
+   */
+  void updateFieldMappingState(mdtSqlCopierFieldMapping & fm, mdtSqlDriverType::Type sourceDriverType, mdtSqlDriverType::Type destinationDriverType);
+
+  /*! \brief Update table mapping state
+   */
+  void updateTableMappingState();
+
   /*! \brief Check if mapping is complete
    */
-  bool mappingIsCompete();
+//   bool mappingIsCompete();
 
   MappingState pvMappingState;
   QSqlDatabase pvSourceDatabase;

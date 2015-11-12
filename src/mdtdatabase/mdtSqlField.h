@@ -80,6 +80,18 @@ class mdtSqlField final
     return pvType;
   }
 
+  /*! \brief Get field type object
+   *
+   * This version will not set field type name
+   */
+  mdtSqlFieldType getFieldType() const;
+
+  /*! \brief Get field type object
+   *
+   * This version will set field type name
+   */
+  mdtSqlFieldType getFieldType(mdtSqlDriverType::Type driverType) const;
+
   /*! \brief Get field type name
    *
    * If length is > 0 , it will be included in name

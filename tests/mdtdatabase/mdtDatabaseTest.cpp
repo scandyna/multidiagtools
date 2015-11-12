@@ -160,11 +160,16 @@ void mdtDatabaseTest::sqlFieldTypeTest()
   QVERIFY(ft.type() == mdtSqlFieldType::UnknownType);
   QCOMPARE(ft.length(), -1);
   QVERIFY(ft.isNull());
-  // Set from type
+  // Set type including type name
   ft.setType(mdtSqlFieldType::Integer, mdtSqlDriverType::SQLite);
   QVERIFY(!ft.isNull());
   QVERIFY(ft.type() == mdtSqlFieldType::Integer);
   QCOMPARE(ft.name(), QString("INTEGER"));
+  // Set type without type name
+  ft.setType(mdtSqlFieldType::Integer);
+  QVERIFY(!ft.isNull());
+  QVERIFY(ft.type() == mdtSqlFieldType::Integer);
+  QVERIFY(ft.name().isEmpty());
   // Set a valid type before clear test
   ft.setType(mdtSqlFieldType::Varchar, mdtSqlDriverType::SQLite);
   ft.setLength(50);
@@ -282,6 +287,46 @@ void mdtDatabaseTest::sqlFieldTypeTest()
   // Initial state
 }
 
+void mdtDatabaseTest::sqlFieldTypeCompareTest()
+{
+  mdtSqlFieldType ftA, ftB;
+  mdtSqlDriverType::Type driverType = mdtSqlDriverType::SQLite;
+
+  /*
+   * Initially, ftA and ftB are UnknownType,
+   * so they are not equal.
+   */
+  QVERIFY(ftA != ftB);
+  /*
+   * Check by setting only type
+   */
+  ftA.setType(mdtSqlFieldType::Integer, driverType);
+  ftB.setType(mdtSqlFieldType::Integer, driverType);
+  QVERIFY(ftA == ftB);
+  ftA.setType(mdtSqlFieldType::Integer, driverType);
+  ftB.setType(mdtSqlFieldType::Boolean, driverType);
+  QVERIFY(ftA != ftB);
+  /*
+   * Set same type, but vary length
+   */
+  ftA.setType(mdtSqlFieldType::Integer, driverType);
+  ftB.setType(mdtSqlFieldType::Integer, driverType);
+  QVERIFY(ftA == ftB);
+  ftA.setLength(-1);
+  ftB.setLength(-1);
+  QVERIFY(ftA == ftB);
+  ftA.setLength(50);
+  ftB.setLength(-1);
+  QVERIFY(ftA != ftB);
+  ftA.setLength(50);
+  ftB.setLength(50);
+  QVERIFY(ftA == ftB);
+  ftA.setLength(-1);
+  ftB.setLength(50);
+  QVERIFY(ftA != ftB);
+
+}
+
 void mdtDatabaseTest::sqlCollationTest()
 {
   mdtSqlCollation collation;
@@ -340,6 +385,7 @@ void mdtDatabaseTest::sqlCollationTest()
 void mdtDatabaseTest::sqlFieldTest()
 {
   mdtSqlField field;
+  mdtSqlFieldType ft;
 
   /*
    * Initial state
@@ -396,6 +442,16 @@ void mdtDatabaseTest::sqlFieldTest()
   QCOMPARE(field.length(), 50);
   QCOMPARE(field.defaultValue(), QVariant("Empty"));
   QVERIFY(!field.collation().isCaseSensitive());
+  // Check getting field type object with its type name
+  ft = field.getFieldType();
+  QVERIFY(ft.type() == mdtSqlFieldType::Varchar);
+  QCOMPARE(ft.length(), 50);
+  QVERIFY(ft.name().isEmpty());
+  // Check getting field type object with its type name
+  ft = field.getFieldType(mdtSqlDriverType::SQLite);
+  QVERIFY(ft.type() == mdtSqlFieldType::Varchar);
+  QCOMPARE(ft.length(), 50);
+  QCOMPARE(ft.name(), QString("VARCHAR"));
   /*
    * Clear
    */
