@@ -205,7 +205,6 @@ void mdtSqlCopierTest::fieldMappingDataTest()
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
 {
   mdtSqlDatabaseCopierTableMapping mapping;
-  ///mdtSqlCopierFieldMapping fm;
 
   /*
    * Initial state
@@ -216,98 +215,96 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   /*
    * Setup databases and tables
    */
-//   QVERIFY(mapping.setSourceDatabase(pvDatabase));
-//   QVERIFY(mapping.setDestinationDatabase(pvDatabase));
   QVERIFY(mapping.setSourceTable("Client_tbl", pvDatabase));
   QVERIFY(mapping.setDestinationTable("Client2_tbl", pvDatabase));
   QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
   // Check attributes without any mapping set
   QCOMPARE(mapping.fieldCount(), 4);
-  QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
-  QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
-  QCOMPARE(mapping.sourceFieldName(2), QString("FieldA"));
-  QCOMPARE(mapping.sourceFieldName(3), QString("FieldB"));
-  QVERIFY(mapping.destinationFieldName(0).isNull());
-  QVERIFY(mapping.destinationFieldName(1).isNull());
-  QVERIFY(mapping.destinationFieldName(2).isNull());
-  QVERIFY(mapping.destinationFieldName(3).isNull());
+  QVERIFY(mapping.sourceFieldName(0).isNull());
+  QVERIFY(mapping.sourceFieldName(1).isNull());
+  QVERIFY(mapping.sourceFieldName(2).isNull());
+  QVERIFY(mapping.sourceFieldName(3).isNull());
+  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
   /*
    * Set a field mapping:
    *  - Client_tbl.Id_PK -> Client2_tbl.Id_PK
    */
-  mapping.setDestinationField(0, "Id_PK");
+  mapping.setSourceField(0, "Id_PK");
   // Check attributes
   QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
   QCOMPARE(mapping.fieldCount(), 4);
   QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
-  QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
-  QCOMPARE(mapping.sourceFieldName(2), QString("FieldA"));
-  QCOMPARE(mapping.sourceFieldName(3), QString("FieldB"));
+  QVERIFY(mapping.sourceFieldName(1).isNull());
+  QVERIFY(mapping.sourceFieldName(2).isNull());
+  QVERIFY(mapping.sourceFieldName(3).isNull());
   QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
-  QVERIFY(mapping.destinationFieldName(1).isNull());
-  QVERIFY(mapping.destinationFieldName(2).isNull());
-  QVERIFY(mapping.destinationFieldName(3).isNull());
+  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
   /*
    * Set a field mapping:
    *  - Client_tbl.Name -> Client2_tbl.Name
    */
-  mapping.setDestinationField(1, "Name");
+  mapping.setSourceField(1, "Name");
   // Check attributes
   QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
   QCOMPARE(mapping.fieldCount(), 4);
   QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
   QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
-  QCOMPARE(mapping.sourceFieldName(2), QString("FieldA"));
-  QCOMPARE(mapping.sourceFieldName(3), QString("FieldB"));
+  QVERIFY(mapping.sourceFieldName(2).isNull());
+  QVERIFY(mapping.sourceFieldName(3).isNull());
   QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
   QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
-  QVERIFY(mapping.destinationFieldName(2).isNull());
-  QVERIFY(mapping.destinationFieldName(3).isNull());
-  /*
-   * Set a field mapping:
-   *  - Client_tbl.FieldA -> Client2_tbl.FieldB
-   */
-  mapping.setDestinationField(2, "FieldB");
-  // Check attributes
-  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
-  QCOMPARE(mapping.fieldCount(), 4);
-  QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
-  QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
-  QCOMPARE(mapping.sourceFieldName(2), QString("FieldA"));
-  QCOMPARE(mapping.sourceFieldName(3), QString("FieldB"));
-  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
-  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
-  QCOMPARE(mapping.destinationFieldName(2), QString("FieldB"));
-  QVERIFY(mapping.destinationFieldName(3).isNull());
+  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
   /*
    * Set a field mapping:
    *  - Client_tbl.FieldB -> Client2_tbl.FieldA
    */
-  mapping.setDestinationField(3, "FieldA");
+  mapping.setSourceField(2, "FieldB");
+  // Check attributes
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QCOMPARE(mapping.fieldCount(), 4);
+  QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
+  QCOMPARE(mapping.sourceFieldName(2), QString("FieldB"));
+  QVERIFY(mapping.sourceFieldName(3).isNull());
+  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
+  /*
+   * Set a field mapping:
+   *  - Client_tbl.FieldA -> Client2_tbl.FieldB
+   */
+  mapping.setSourceField(3, "FieldA");
   // Check attributes
   QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
   QCOMPARE(mapping.fieldCount(), 4);
   QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
   QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
-  QCOMPARE(mapping.sourceFieldName(2), QString("FieldA"));
-  QCOMPARE(mapping.sourceFieldName(3), QString("FieldB"));
+  QCOMPARE(mapping.sourceFieldName(2), QString("FieldB"));
+  QCOMPARE(mapping.sourceFieldName(3), QString("FieldA"));
   QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
   QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
-  QCOMPARE(mapping.destinationFieldName(2), QString("FieldB"));
-  QCOMPARE(mapping.destinationFieldName(3), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
   /*
    * Reset
    */
   mapping.resetFieldMapping();
   QCOMPARE(mapping.fieldCount(), 4);
-  QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
-  QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
-  QCOMPARE(mapping.sourceFieldName(2), QString("FieldA"));
-  QCOMPARE(mapping.sourceFieldName(3), QString("FieldB"));
-  QVERIFY(mapping.destinationFieldName(0).isNull());
-  QVERIFY(mapping.destinationFieldName(1).isNull());
-  QVERIFY(mapping.destinationFieldName(2).isNull());
-  QVERIFY(mapping.destinationFieldName(3).isNull());
+  QVERIFY(mapping.sourceFieldName(0).isNull());
+  QVERIFY(mapping.sourceFieldName(1).isNull());
+  QVERIFY(mapping.sourceFieldName(2).isNull());
+  QVERIFY(mapping.sourceFieldName(3).isNull());
+  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
   /*
    * Check field mapping generation by field name
    */
@@ -334,7 +331,6 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingStateTest()
 {
   mdtSqlDatabaseCopierTableMapping tm;
-  ///mdtSqlCopierFieldMapping fm;
 
   /*
    * Initial state
@@ -361,18 +357,18 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingStateTest()
   tm.resetFieldMapping();
   QCOMPARE(tm.fieldCount(), 4);
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
-  tm.setDestinationField(0, "Id_PK");
+  tm.setSourceField(0, "Id_PK");
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
-  tm.setDestinationField(1, "Name");
+  tm.setSourceField(1, "Name");
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
-  tm.setDestinationField(2, "FieldA");
+  tm.setSourceField(2, "FieldA");
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
-  tm.setDestinationField(3, "FieldB");
+  tm.setSourceField(3, "FieldB");
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
   /*
    * Map incompatible field types
    */
-  tm.setDestinationField(1, "Id_PK");
+  tm.setSourceField(0, "Name");
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingError);
 
 
@@ -394,7 +390,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
    * Add field mapping:
    * - Client_tbl.Id_PK -> Client2_tbl.Id_PK
    */
-  mapping.setDestinationField(0, "Id_PK");
+  mapping.setSourceField(0, "Id_PK");
   // Check SQL for count in source table
   expectedSql = "SELECT COUNT(*) FROM \"Client_tbl\"";
   QCOMPARE(mapping.getSqlForSourceTableCount(db), expectedSql);
@@ -408,7 +404,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
    * Add field mapping:
    * - Client_tbl.Name -> Client2_tbl.Name
    */
-  mapping.setDestinationField(1, "Name");
+  mapping.setSourceField(1, "Name");
   // Check SQL for count in source table
   expectedSql = "SELECT COUNT(*) FROM \"Client_tbl\"";
   QCOMPARE(mapping.getSqlForSourceTableCount(db), expectedSql);
@@ -420,25 +416,25 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
   QCOMPARE(mapping.getSqlForDestinationTableInsert(db), expectedSql);
   /*
    * Add field mapping:
-   * - Client_tbl.FieldA -> Client2_tbl.FieldB
+   * - Client_tbl.FieldB -> Client2_tbl.FieldA
    */
-  mapping.setDestinationField(2, "FieldB");
+  mapping.setSourceField(2, "FieldB");
   // Check SQL select data in source table
-  expectedSql = "SELECT \"Id_PK\",\"Name\",\"FieldA\" FROM \"Client_tbl\"";
+  expectedSql = "SELECT \"Id_PK\",\"Name\",\"FieldB\" FROM \"Client_tbl\"";
   QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
   // Check SQL to insert into destination table
-  expectedSql = "INSERT INTO \"Client2_tbl\" (\"Id_PK\",\"Name\",\"FieldB\") VALUES (?,?,?)";
+  expectedSql = "INSERT INTO \"Client2_tbl\" (\"Id_PK\",\"Name\",\"FieldA\") VALUES (?,?,?)";
   QCOMPARE(mapping.getSqlForDestinationTableInsert(db), expectedSql);
   /*
    * Add field mapping:
-   * - Client_tbl.FieldB -> Client2_tbl.FieldA
+   * - Client_tbl.FieldA -> Client2_tbl.FieldB
    */
-  mapping.setDestinationField(3, "FieldA");
+  mapping.setSourceField(3, "FieldA");
   // Check SQL select data in source table
-  expectedSql = "SELECT \"Id_PK\",\"Name\",\"FieldA\",\"FieldB\" FROM \"Client_tbl\"";
+  expectedSql = "SELECT \"Id_PK\",\"Name\",\"FieldB\",\"FieldA\" FROM \"Client_tbl\"";
   QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
   // Check SQL to insert into destination table
-  expectedSql = "INSERT INTO \"Client2_tbl\" (\"Id_PK\",\"Name\",\"FieldB\",\"FieldA\") VALUES (?,?,?,?)";
+  expectedSql = "INSERT INTO \"Client2_tbl\" (\"Id_PK\",\"Name\",\"FieldA\",\"FieldB\") VALUES (?,?,?,?)";
   QCOMPARE(mapping.getSqlForDestinationTableInsert(db), expectedSql);
 
 }
@@ -459,7 +455,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
    */
   // Setup table view
   tableView.setModel(&model);
-  tableView.setItemDelegateForColumn(2, delegate);
+  tableView.setItemDelegateForColumn(sourceFieldNameColumn, delegate);
   tableView.resize(600, 200);
   tableView.show();
   // Setup tree view
@@ -470,8 +466,8 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
    * Check by generating by name
    */
   // Set tables and generate field mapping
-  QVERIFY(model.setSourceTable("Client_tbl", pvDatabase));
-  QVERIFY(model.setDestinationTable("Client2_tbl", pvDatabase, delegate));
+  QVERIFY(model.setSourceTable("Client_tbl", pvDatabase, delegate));
+  QVERIFY(model.setDestinationTable("Client2_tbl", pvDatabase));
   model.generateFieldMappingByName();
   // Check row 0
   index = model.index(0, sourceFieldNameColumn);
@@ -506,26 +502,26 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
    */
   tm = model.mapping();
   QCOMPARE(tm.fieldCount(), 4);
-  // Update: source FieldA -> destination FieldB
-  tm.setDestinationField(2, "FieldB");
   // Update: source FieldB -> destination FieldA
-  tm.setDestinationField(3, "FieldA");
+  tm.setSourceField(2, "FieldB");
+  // Update: source FieldA -> destination FieldB
+  tm.setSourceField(3, "FieldA");
   // Update model
   model.setMapping(tm);
   // Check row 2
   index = model.index(2, sourceFieldNameColumn);
   QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("FieldA"));
+  QCOMPARE(model.data(index), QVariant("FieldB"));
   index = model.index(2, destinationFieldNameColumn);
   QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("FieldB"));
+  QCOMPARE(model.data(index), QVariant("FieldA"));
   // Check row 3
   index = model.index(3, sourceFieldNameColumn);
   QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("FieldB"));
+  QCOMPARE(model.data(index), QVariant("FieldA"));
   index = model.index(3, destinationFieldNameColumn);
   QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("FieldA"));
+  QCOMPARE(model.data(index), QVariant("FieldB"));
 
   /*
    * Play
@@ -540,14 +536,14 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingDialogTest()
 {
   mdtSqlDatabaseCopierTableMappingDialog dialog;
   mdtSqlDatabaseCopierTableMapping mapping;
-  QStringList destinationTables;
+  QStringList sourceTables;
 
   QVERIFY(mapping.setSourceTable("Client_tbl", pvDatabase));
   QVERIFY(mapping.setDestinationTable("Client2_tbl", pvDatabase));
   mapping.generateFieldMappingByName();
 
-  destinationTables << "Client_tbl" << "Client2_tbl";
-  dialog.setDestinationTables(pvDatabase, destinationTables);
+  sourceTables << "Client_tbl" << "Client2_tbl";
+  dialog.setSourceTables(pvDatabase, sourceTables);
   dialog.setMapping(mapping);
   dialog.exec();
 }
@@ -562,6 +558,18 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingTest()
   QCOMPARE(mapping.tableMappingCount(), 0);
   QCOMPARE(mapping.tableMappingList().size(), 0);
   /*
+   * Set destination database
+   */
+  QVERIFY(mapping.setDestinationDatabase(pvDatabase));
+  // Check attributes without any mapping set
+  QCOMPARE(mapping.tableMappingCount(), 2);
+  QCOMPARE(mapping.tableMappingList().size(), 2);
+  // Note: tables are sorted, and '_' is after '2' in ascii
+  QCOMPARE(mapping.destinationTableName(0), QString("Client2_tbl"));
+  QCOMPARE(mapping.destinationTableName(1), QString("Client_tbl"));
+  QVERIFY(mapping.sourceTableName(0).isEmpty());
+  QVERIFY(mapping.sourceTableName(1).isEmpty());
+  /*
    * Set source database
    */
   QVERIFY(mapping.setSourceDatabase(pvDatabase));
@@ -569,28 +577,48 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingTest()
   QCOMPARE(mapping.tableMappingCount(), 2);
   QCOMPARE(mapping.tableMappingList().size(), 2);
   // Note: tables are sorted, and '_' is after '2' in ascii
-  QCOMPARE(mapping.sourceTableName(0), QString("Client2_tbl"));
-  QCOMPARE(mapping.sourceTableName(1), QString("Client_tbl"));
+  QCOMPARE(mapping.destinationTableName(0), QString("Client2_tbl"));
+  QCOMPARE(mapping.destinationTableName(1), QString("Client_tbl"));
+  QVERIFY(mapping.sourceTableName(0).isEmpty());
+  QVERIFY(mapping.sourceTableName(1).isEmpty());
   /*
    * Edit table mapping:
    *  Table Client_tbl -> Client2_tbl
    *  Fields:
    *   Client_tbl.Id_PK -> Client2_tbl.Id_PK
    *   Client_tbl.Name -> Client2_tbl.Name
-   *   Client_tbl.FieldA -> Client2_tbl.FieldB
    *   Client_tbl.FieldB -> Client2_tbl.FieldA
+   *   Client_tbl.FieldA -> Client2_tbl.FieldB
    */
-  auto tm = mapping.tableMapping(1);
-  QVERIFY(tm.setDestinationTable("Client2_tbl", pvDatabase));
-  tm.setDestinationField(0, "Id_PK");
-  tm.setDestinationField(1, "Name");
-  tm.setDestinationField(2, "FieldB");
-  tm.setDestinationField(3, "FieldA");
+  auto tm = mapping.tableMapping(0);
+  QVERIFY(tm.setSourceTable("Client_tbl", pvDatabase));
+  tm.setSourceField(0, "Id_PK");
+  tm.setSourceField(1, "Name");
+  tm.setSourceField(2, "FieldB");
+  tm.setSourceField(3, "FieldA");
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
-  mapping.setTableMapping(1, tm);
+  mapping.setTableMapping(0, tm);
   QCOMPARE(mapping.tableMappingCount(), 2);
   QCOMPARE(mapping.tableMappingList().size(), 2);
-
+  QCOMPARE(mapping.sourceTableName(0), QString("Client_tbl"));
+  QCOMPARE(mapping.destinationTableName(0), QString("Client2_tbl"));
+  /*
+   * Reset mapping
+   */
+  QVERIFY(mapping.resetTableMapping());
+  // Note: tables are sorted, and '_' is after '2' in ascii
+  QCOMPARE(mapping.destinationTableName(0), QString("Client2_tbl"));
+  QCOMPARE(mapping.destinationTableName(1), QString("Client_tbl"));
+  QVERIFY(mapping.sourceTableName(0).isEmpty());
+  QVERIFY(mapping.sourceTableName(1).isEmpty());
+  /*
+   * Generate mapping by names
+   */
+  QVERIFY(mapping.generateTableMappingByName());
+  QCOMPARE(mapping.destinationTableName(0), QString("Client2_tbl"));
+  QCOMPARE(mapping.destinationTableName(1), QString("Client_tbl"));
+  QCOMPARE(mapping.sourceTableName(0), QString("Client2_tbl"));
+  QCOMPARE(mapping.sourceTableName(1), QString("Client_tbl"));
 }
 
 void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
@@ -603,7 +631,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
   QModelIndex index;
   ///mdtSqlDatabaseCopierMapping dbm;
   mdtSqlDatabaseCopierTableMapping tm;
-  mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
+  ///mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
   mdtProgressBarItemDelegate *progressDelegate = new mdtProgressBarItemDelegate(&tableView);
   mdtProgressValue<int> progress;
 
@@ -612,7 +640,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
    */
   // Setup table view
   tableView.setModel(&model);
-  tableView.setItemDelegateForColumn(2, delegate);
+  ///tableView.setItemDelegateForColumn(2, delegate);
   tableView.setItemDelegateForColumn(3, progressDelegate);
   tableView.resize(600, 150);
   tableView.show();
@@ -748,17 +776,17 @@ void mdtSqlCopierTest::sqlDatabaseCopierThreadTest()
    *  Fields:
    *   Client_tbl.Id_PK -> Client2_tbl.Id_PK
    *   Client_tbl.Name -> Client2_tbl.Name
-   *   Client_tbl.FieldA -> Client2_tbl.FieldB
    *   Client_tbl.FieldB -> Client2_tbl.FieldA
+   *   Client_tbl.FieldA -> Client2_tbl.FieldB
    */
-  auto tm = mapping.tableMapping(1);
-  QVERIFY(tm.setDestinationTable("Client2_tbl", pvDatabase));
-  tm.setDestinationField(0, "Id_PK");
-  tm.setDestinationField(1, "Name");
-  tm.setDestinationField(2, "FieldB");
-  tm.setDestinationField(3, "FieldA");
+  auto tm = mapping.tableMapping(0);
+  QVERIFY(tm.setSourceTable("Client_tbl", pvDatabase));
+  tm.setSourceField(0, "Id_PK");
+  tm.setSourceField(1, "Name");
+  tm.setSourceField(2, "FieldB");
+  tm.setSourceField(3, "FieldA");
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
-  mapping.setTableMapping(1, tm);
+  mapping.setTableMapping(0, tm);
   QCOMPARE(mapping.tableMappingCount(), 2);
   QCOMPARE(mapping.tableMappingList().size(), 2);
   /*

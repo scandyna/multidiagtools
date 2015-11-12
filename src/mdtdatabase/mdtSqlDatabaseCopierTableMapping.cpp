@@ -30,32 +30,6 @@ mdtSqlDatabaseCopierTableMapping::mdtSqlDatabaseCopierTableMapping()
 {
 }
 
-// bool mdtSqlDatabaseCopierTableMapping::setSourceDatabase(const QSqlDatabase & db)
-// {
-//   clearFieldMapping();
-//   pvSourceTable.clear();
-//   if(!pvSourceTable.setDriverName(db.driverName())){
-//     pvLastError = pvSourceTable.lastError();
-//     return false;
-//   }
-//   pvSourceDatabase = db;
-// 
-//   return true;
-// }
-
-// bool mdtSqlDatabaseCopierTableMapping::setDestinationDatabase(const QSqlDatabase & db)
-// {
-//   clearFieldMapping();
-//   pvDestinationTable.clear();
-//   if(!pvDestinationTable.setDriverName(db.driverName())){
-//     pvLastError = pvDestinationTable.lastError();
-//     return false;
-//   }
-//   pvDestinationDatabase = db;
-// 
-//   return true;
-// }
-
 bool mdtSqlDatabaseCopierTableMapping::setSourceTable(const QString & tableName, const QSqlDatabase & db)
 {
   clearFieldMapping();
@@ -84,12 +58,12 @@ bool mdtSqlDatabaseCopierTableMapping::setDestinationTable(const QString & table
 
 void mdtSqlDatabaseCopierTableMapping::resetFieldMapping()
 {
-  int n = pvSourceTable.fieldCount();
+  int n = pvDestinationTable.fieldCount();
 
   clearFieldMapping();
   for(int i = 0; i < n; ++i){
     mdtSqlCopierFieldMapping fm;
-    fm.sourceFieldIndex = i;
+    fm.destinationFieldIndex = i;
     pvFieldMappingList.append(fm);
   }
 }
@@ -102,7 +76,6 @@ void mdtSqlDatabaseCopierTableMapping::clearFieldMapping()
 
 void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
 {
-//   bool mismatchDetected = false;
   auto sourceDriverType = mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName());
   auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
 
@@ -115,25 +88,18 @@ void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
   }
   for(auto & fm : pvFieldMappingList){
     // Get source field
-    Q_ASSERT(fm.sourceFieldIndex >= 0);
-    Q_ASSERT(fm.sourceFieldIndex < pvSourceTable.fieldCount());
-    mdtSqlField sourceField = pvSourceTable.field(fm.sourceFieldIndex);
-    // Get destination field index that matches source field name
-    int destinationFieldIndex = pvDestinationTable.fieldIndex(sourceField.name());
-    // Update field mapping
-    fm.destinationFieldIndex = destinationFieldIndex;
+    Q_ASSERT(fm.destinationFieldIndex >= 0);
+    Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
+    mdtSqlField destinationField = pvDestinationTable.field(fm.destinationFieldIndex);
+    // Get source field index that matches destination field name
+    fm.sourceFieldIndex = pvSourceTable.fieldIndex(destinationField.name());
     updateFieldMappingState(fm, sourceDriverType, destinationDriverType);
   }
   // Update table mapping state
   updateTableMappingState();
-//   if(mismatchDetected){
-//     pvMappingState = MappingPartial;
-//   }else{
-//     pvMappingState = MappingComplete;
-//   }
 }
 
-void mdtSqlDatabaseCopierTableMapping::setDestinationField(int index, const QString & fieldName)
+void mdtSqlDatabaseCopierTableMapping::setSourceField(int index, const QString & fieldName)
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < pvFieldMappingList.size());
@@ -149,19 +115,14 @@ void mdtSqlDatabaseCopierTableMapping::setDestinationField(int index, const QStr
     return;
   }
   if(fieldName.isEmpty()){
-    fm.destinationFieldIndex = -1;
+    fm.sourceFieldIndex = -1;
   }else{
-    fm.destinationFieldIndex = pvDestinationTable.fieldIndex(fieldName);
+    fm.sourceFieldIndex = pvSourceTable.fieldIndex(fieldName);
   }
   updateFieldMappingState(fm, sourceDriverType, destinationDriverType);
   pvFieldMappingList[index] = fm;
   // Update table mapping state
   updateTableMappingState();
-//   if(mappingIsCompete()){
-//     pvMappingState = MappingComplete;
-//   }else{
-//     pvMappingState = MappingPartial;
-//   }
 }
 
 QString mdtSqlDatabaseCopierTableMapping::sourceFieldName(int index) const
@@ -237,8 +198,7 @@ QString mdtSqlDatabaseCopierTableMapping::getSqlForSourceTableSelect(const QSqlD
 
   // Build list of mapped fields
   for(const auto & fm : pvFieldMappingList){
-    if(fm.destinationFieldIndex >= 0){
-      Q_ASSERT(fm.sourceFieldIndex >= 0);
+    if(fm.sourceFieldIndex >= 0){
       Q_ASSERT(fm.sourceFieldIndex < pvSourceTable.fieldCount());
       fields.append(pvSourceTable.fieldName(fm.sourceFieldIndex));
     }
@@ -269,7 +229,8 @@ QString mdtSqlDatabaseCopierTableMapping::getSqlForDestinationTableInsert(const 
 
   // Build list of mapped fields
   for(const auto & fm : pvFieldMappingList){
-    if(fm.destinationFieldIndex >= 0){
+    if(fm.sourceFieldIndex >= 0){
+      Q_ASSERT(fm.destinationFieldIndex >= 0);
       Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
       fields.append(pvDestinationTable.fieldName(fm.destinationFieldIndex));
     }
@@ -341,21 +302,3 @@ void mdtSqlDatabaseCopierTableMapping::updateTableMappingState()
   // All checks successfully passed
   pvMappingState = MappingComplete;
 }
-
-// bool mdtSqlDatabaseCopierTableMapping::mappingIsCompete()
-// {
-//   // Check if both tables are set
-//   if( pvSourceTable.tableName().isEmpty() || pvDestinationTable.tableName().isEmpty() ){
-//     return false;
-//   }
-//   // Check field mapping
-//   for(const auto & fm : pvFieldMappingList){
-//     // Check if source and destination is mapped
-//     if(fm.isNull()){
-//       return false;
-//     }
-//     /// \todo Type and other checks
-//   }
-// 
-//   return true;
-// }

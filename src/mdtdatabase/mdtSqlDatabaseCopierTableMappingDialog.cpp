@@ -23,38 +23,48 @@
 #include "mdtComboBoxItemDelegate.h"
 #include <QToolButton>
 
+//#include <QDebug>
+
 mdtSqlDatabaseCopierTableMappingDialog::mdtSqlDatabaseCopierTableMappingDialog(QWidget* parent)
  : QDialog(parent),
    pvMappingModel(new mdtSqlDatabaseCopierTableMappingModel(this)),
-   pvDestinationFieldSelectionDelegate(new mdtComboBoxItemDelegate(this))
+   pvSourceFieldSelectionDelegate(new mdtComboBoxItemDelegate(this))
 {
   setupUi(this);
   tvMapping->setModel(pvMappingModel);
-  tvMapping->setItemDelegateForColumn(2, pvDestinationFieldSelectionDelegate);
+  tvMapping->setItemDelegateForColumn(0, pvSourceFieldSelectionDelegate);
   connect(tbResetMapping, &QToolButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::resetFieldMapping);
   connect(tbMapByName, &QToolButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::mapByFieldName);
-  connect(cbDestinationTable, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-          this, &mdtSqlDatabaseCopierTableMappingDialog::setDestinationTable);
+  connect(cbSourceTable, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+          this, &mdtSqlDatabaseCopierTableMappingDialog::setSourceTable);
 }
 
-void mdtSqlDatabaseCopierTableMappingDialog::setDestinationTables(const QSqlDatabase& db, const QStringList& tables)
+void mdtSqlDatabaseCopierTableMappingDialog::setSourceTables(const QSqlDatabase & db, const QStringList & tables)
 {
-  pvDestinationDatabase = db;
-  cbDestinationTable->clear();
-  cbDestinationTable->addItems(tables);
+  pvSourceDatabase = db;
+  cbSourceTable->clear();
+  cbSourceTable->addItems(tables);
 }
 
-void mdtSqlDatabaseCopierTableMappingDialog::setMapping(const mdtSqlDatabaseCopierTableMapping& m)
+void mdtSqlDatabaseCopierTableMappingDialog::setMapping(const mdtSqlDatabaseCopierTableMapping & m)
 {
-  // Setup destination field selection delegate
-  pvDestinationFieldSelectionDelegate->clear();
-  pvDestinationFieldSelectionDelegate->addItem("");
-  pvDestinationFieldSelectionDelegate->addItems(m.getDestinationFieldNameList());
+  int previousCbIndex;
+  int newCbIndex;
+
+  // Setup source field selection delegate
+  pvSourceFieldSelectionDelegate->clear();
+  pvSourceFieldSelectionDelegate->addItem("");
+  pvSourceFieldSelectionDelegate->addItems(m.getSourceFieldNameList());
+  // Update source and destination table names
+  previousCbIndex = cbSourceTable->currentIndex();
+  newCbIndex = cbSourceTable->findText(m.sourceTableName());
+  cbSourceTable->setCurrentIndex(newCbIndex);
+  if(newCbIndex == previousCbIndex){
+    setSourceTable(newCbIndex);
+  }
+  lbDestinationTable->setText(m.destinationTableName());
   // Update mapping model
   pvMappingModel->setMapping(m);
-  // Update source and destination table names
-  lbSourceTable->setText(m.sourceTableName());
-  cbDestinationTable->setCurrentText(m.destinationTableName());
 
   resizeTableViewToContents();
 }
@@ -64,16 +74,14 @@ mdtSqlDatabaseCopierTableMapping mdtSqlDatabaseCopierTableMappingDialog::mapping
   return pvMappingModel->mapping();
 }
 
-void mdtSqlDatabaseCopierTableMappingDialog::setDestinationTable(int cbIndex)
+void mdtSqlDatabaseCopierTableMappingDialog::setSourceTable(int cbIndex)
 {
-  QString tableName = cbDestinationTable->itemText(cbIndex);
-  /*
-   * Setting a new destination table will reset field mapping,
-   * so, we only do this if destination table changed.
-   */
-  if(tableName != pvMappingModel->destinationTableName()){
-    pvMappingModel->setDestinationTable(tableName, pvDestinationDatabase, pvDestinationFieldSelectionDelegate);
+  QString tableName = cbSourceTable->itemText(cbIndex);
+
+  if(cbIndex < 0){
+    return;
   }
+  pvMappingModel->setSourceTable(tableName, pvSourceDatabase, pvSourceFieldSelectionDelegate);
 }
 
 void mdtSqlDatabaseCopierTableMappingDialog::resetFieldMapping()

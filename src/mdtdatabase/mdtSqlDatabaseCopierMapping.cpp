@@ -37,6 +37,11 @@ bool mdtSqlDatabaseCopierMapping::setDestinationDatabase(const QSqlDatabase & db
   return resetTableMapping();
 }
 
+QStringList mdtSqlDatabaseCopierMapping::getAvailableSourceTableNameList() const
+{
+  return getTables(pvSourceDatabase);
+}
+
 QStringList mdtSqlDatabaseCopierMapping::getAvailableDestinationTableNameList() const
 {
   return getTables(pvDestinationDatabase);
@@ -44,22 +49,46 @@ QStringList mdtSqlDatabaseCopierMapping::getAvailableDestinationTableNameList() 
 
 bool mdtSqlDatabaseCopierMapping::resetTableMapping()
 {
-  QStringList sourceTableNameList = getTables(pvSourceDatabase);
+  QStringList destinationTableNameList = getTables(pvDestinationDatabase);
 
   pvTableMappingList.clear();
-  sourceTableNameList.sort();
-  for(const auto & sourceTableName : sourceTableNameList){
+  destinationTableNameList.sort();
+  for(const auto & destinationTableName : destinationTableNameList){
     mdtSqlDatabaseCopierTableMapping tm;
-    if(!tm.setSourceTable(sourceTableName, pvSourceDatabase)){
+    if(!tm.setDestinationTable(destinationTableName, pvDestinationDatabase)){
       clearTableMapping();
       pvLastError = tm.lastError();
       return false;
     }
+//     if(!tm.setSourceTable(sourceTableName, pvSourceDatabase)){
+//       clearTableMapping();
+//       pvLastError = tm.lastError();
+//       return false;
+//     }
     pvTableMappingList.append(tm);
   }
 
   return true;
 }
+
+// bool mdtSqlDatabaseCopierMapping::resetTableMapping()
+// {
+//   QStringList sourceTableNameList = getTables(pvSourceDatabase);
+// 
+//   pvTableMappingList.clear();
+//   sourceTableNameList.sort();
+//   for(const auto & sourceTableName : sourceTableNameList){
+//     mdtSqlDatabaseCopierTableMapping tm;
+//     if(!tm.setSourceTable(sourceTableName, pvSourceDatabase)){
+//       clearTableMapping();
+//       pvLastError = tm.lastError();
+//       return false;
+//     }
+//     pvTableMappingList.append(tm);
+//   }
+// 
+//   return true;
+// }
 
 void mdtSqlDatabaseCopierMapping::clearTableMapping()
 {
@@ -71,18 +100,36 @@ bool mdtSqlDatabaseCopierMapping::generateTableMappingByName()
   if(!resetTableMapping()){
     return false;
   }
-  QStringList destinationTableNameList = getTables(pvDestinationDatabase);
+  QStringList sourceTableNameList = getTables(pvSourceDatabase);
   for(auto & tm : pvTableMappingList){
-    QString sourceTableName = tm.sourceTableName();
-    if(destinationTableNameList.contains(sourceTableName)){
+    QString destinationTableName = tm.destinationTableName();
+    if(sourceTableNameList.contains(destinationTableName)){
       /// \todo We ignore errors, the mapping state will indicate failures
-      tm.setDestinationTable(sourceTableName, pvDestinationDatabase);
+      tm.setSourceTable(destinationTableName, pvSourceDatabase);
       tm.generateFieldMappingByName();
     }
   }
 
   return true;
 }
+
+// bool mdtSqlDatabaseCopierMapping::generateTableMappingByName()
+// {
+//   if(!resetTableMapping()){
+//     return false;
+//   }
+//   QStringList destinationTableNameList = getTables(pvDestinationDatabase);
+//   for(auto & tm : pvTableMappingList){
+//     QString sourceTableName = tm.sourceTableName();
+//     if(destinationTableNameList.contains(sourceTableName)){
+//       /// \todo We ignore errors, the mapping state will indicate failures
+//       tm.setDestinationTable(sourceTableName, pvDestinationDatabase);
+//       tm.generateFieldMappingByName();
+//     }
+//   }
+// 
+//   return true;
+// }
 
 // QVector<mdtSqlDatabaseCopierTableMapping> mdtSqlDatabaseCopierMapping::getCompletedTableMappingList() const
 // {

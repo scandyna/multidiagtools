@@ -86,6 +86,15 @@ class mdtSqlDatabaseCopierMappingModel : public QAbstractTableModel
     return pvMapping.destinationDatabase();
   }
 
+  /*! \brief Get a list of available source table names
+   *
+   * \sa mdtSqlDatabaseCopierMapping::getAvailableSourceTableNameList()
+   */
+  QStringList getAvailableSourceTableNameList() const
+  {
+    return pvMapping.getAvailableSourceTableNameList();
+  }
+
   /*! \brief Get a list of available destination table names
    *
    * \sa mdtSqlDatabaseCopierMapping::getAvailableDestinationTableNameList()

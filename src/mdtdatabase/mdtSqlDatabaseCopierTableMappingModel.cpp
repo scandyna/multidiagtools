@@ -28,36 +28,17 @@ mdtSqlDatabaseCopierTableMappingModel::mdtSqlDatabaseCopierTableMappingModel(QOb
 {
 }
 
-// bool mdtSqlDatabaseCopierTableMappingModel::setSourceDatabase(const QSqlDatabase& db)
-// {
-//   beginResetModel();
-//   if(!pvMapping.setSourceDatabase(db)){
-//     pvLastError = pvMapping.lastError();
-//     return false;
-//   }
-//   endResetModel();
-// 
-//   return true;
-// }
-
-// bool mdtSqlDatabaseCopierTableMappingModel::setDestinationDatabase(const QSqlDatabase& db)
-// {
-//   beginResetModel();
-//   if(!pvMapping.setDestinationDatabase(db)){
-//     pvLastError = pvMapping.lastError();
-//     return false;
-//   }
-//   endResetModel();
-// 
-//   return true;
-// }
-
-bool mdtSqlDatabaseCopierTableMappingModel::setSourceTable(const QString & tableName, const QSqlDatabase & db)
+bool mdtSqlDatabaseCopierTableMappingModel::setSourceTable(const QString & tableName, const QSqlDatabase & db, mdtComboBoxItemDelegate* delegate)
 {
   bool ok;
 
   beginResetModel();
   ok = pvMapping.setSourceTable(tableName, db);
+  if( (ok) && (delegate != nullptr) ){
+    delegate->clear();
+    delegate->addItem("");
+    delegate->addItems(pvMapping.getSourceFieldNameList());
+  }
   endResetModel();
   if(!ok){
     pvLastError = pvMapping.lastError();
@@ -67,17 +48,12 @@ bool mdtSqlDatabaseCopierTableMappingModel::setSourceTable(const QString & table
   return true;
 }
 
-bool mdtSqlDatabaseCopierTableMappingModel::setDestinationTable(const QString & tableName, const QSqlDatabase & db, mdtComboBoxItemDelegate* delegate)
+bool mdtSqlDatabaseCopierTableMappingModel::setDestinationTable(const QString & tableName, const QSqlDatabase & db)
 {
   bool ok;
 
   beginResetModel();
   ok = pvMapping.setDestinationTable(tableName, db);
-  if( (ok) && (delegate != nullptr) ){
-    delegate->clear();
-    delegate->addItem("");
-    delegate->addItems(pvMapping.getDestinationFieldNameList());
-  }
   endResetModel();
   if(!ok){
     pvLastError = pvMapping.lastError();
@@ -173,7 +149,7 @@ Qt::ItemFlags mdtSqlDatabaseCopierTableMappingModel::flags(const QModelIndex& in
   if(!index.isValid()){
     return QAbstractTableModel::flags(index);
   }
-  if(index.column() == DestinationNameIndex){
+  if(index.column() == SourceNameIndex){
     return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
   }
   return QAbstractTableModel::flags(index);
@@ -187,10 +163,10 @@ bool mdtSqlDatabaseCopierTableMappingModel::setData(const QModelIndex & index, c
   if(role != Qt::EditRole){
     return false;
   }
-  Q_ASSERT(index.column() == DestinationNameIndex); /// Currently, we only support selecting destination field name
+  Q_ASSERT(index.column() == SourceNameIndex); /// Currently, we only support selecting source field name
   int row = index.row();
   Q_ASSERT( (row >= 0) && (row < pvMapping.fieldCount()) );
-  pvMapping.setDestinationField(row, value.toString());
+  pvMapping.setSourceField(row, value.toString());
   // Signal that we updated data
   emit dataChanged(index, index);
 

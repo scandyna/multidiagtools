@@ -56,22 +56,6 @@ class mdtSqlDatabaseCopierTableMapping
    */
   mdtSqlDatabaseCopierTableMapping();
 
-  /*! \brief Set source database
-   *
-   * Will also clear field mapping and source table.
-   *
-   * \sa clearFieldMapping()
-   */
-//   bool setSourceDatabase(const QSqlDatabase & db);
-
-  /*! \brief Set destination database
-   *
-   * Will also clear field mapping and destination table.
-   *
-   * \sa clearFieldMapping()
-   */
-//   bool setDestinationDatabase(const QSqlDatabase & db);
-
   /*! \brief Set source table
    *
    * Will also reset field mapping.
@@ -105,10 +89,8 @@ class mdtSqlDatabaseCopierTableMapping
   /*! \brief Reset field mapping
    *
    * Will clear field mapping,
-   *  then, generate it for each available field in source table.
-   *  After this, no valid field mapping is set to destination table.
-   *
-   * \todo We should list all available fields in destination table
+   *  then, generate it for each available field in destination table.
+   *  After this, no field from source table is assigned to destination table.
    */
   void resetFieldMapping();
 
@@ -119,21 +101,19 @@ class mdtSqlDatabaseCopierTableMapping
   /*! \brief Generate field mapping by name
    *
    * Will first reset field mapping.
-   *  Then, for each field in source table,
-   *  destination field is defined by source field name.
-   *
-   * \todo Type compatiblity checking is to add..
+   *  Then, for each field in destination table,
+   *  source field is defined by destination field name.
    */
   void generateFieldMappingByName();
 
-  /*! \brief Set destination field for given field mapping index
+  /*! \brief Set source field for given field mapping index
    *
-   * If destination field name is empty,
-   *  the destination field will be removed for given index.
+   * If source field name is empty,
+   *  the source field will be removed for given index.
    *
    * \pre index must be in a valid range
    */
-  void setDestinationField(int index, const QString & fieldName);
+  void setSourceField(int index, const QString & fieldName);
 
   /*! \brief Get mapping state
    */
@@ -233,10 +213,6 @@ class mdtSqlDatabaseCopierTableMapping
   /*! \brief Update table mapping state
    */
   void updateTableMappingState();
-
-  /*! \brief Check if mapping is complete
-   */
-//   bool mappingIsCompete();
 
   MappingState pvMappingState;
   QSqlDatabase pvSourceDatabase;
