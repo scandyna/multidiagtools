@@ -60,35 +60,11 @@ bool mdtSqlDatabaseCopierMapping::resetTableMapping()
       pvLastError = tm.lastError();
       return false;
     }
-//     if(!tm.setSourceTable(sourceTableName, pvSourceDatabase)){
-//       clearTableMapping();
-//       pvLastError = tm.lastError();
-//       return false;
-//     }
     pvTableMappingList.append(tm);
   }
 
   return true;
 }
-
-// bool mdtSqlDatabaseCopierMapping::resetTableMapping()
-// {
-//   QStringList sourceTableNameList = getTables(pvSourceDatabase);
-// 
-//   pvTableMappingList.clear();
-//   sourceTableNameList.sort();
-//   for(const auto & sourceTableName : sourceTableNameList){
-//     mdtSqlDatabaseCopierTableMapping tm;
-//     if(!tm.setSourceTable(sourceTableName, pvSourceDatabase)){
-//       clearTableMapping();
-//       pvLastError = tm.lastError();
-//       return false;
-//     }
-//     pvTableMappingList.append(tm);
-//   }
-// 
-//   return true;
-// }
 
 void mdtSqlDatabaseCopierMapping::clearTableMapping()
 {
@@ -112,37 +88,6 @@ bool mdtSqlDatabaseCopierMapping::generateTableMappingByName()
 
   return true;
 }
-
-// bool mdtSqlDatabaseCopierMapping::generateTableMappingByName()
-// {
-//   if(!resetTableMapping()){
-//     return false;
-//   }
-//   QStringList destinationTableNameList = getTables(pvDestinationDatabase);
-//   for(auto & tm : pvTableMappingList){
-//     QString sourceTableName = tm.sourceTableName();
-//     if(destinationTableNameList.contains(sourceTableName)){
-//       /// \todo We ignore errors, the mapping state will indicate failures
-//       tm.setDestinationTable(sourceTableName, pvDestinationDatabase);
-//       tm.generateFieldMappingByName();
-//     }
-//   }
-// 
-//   return true;
-// }
-
-// QVector<mdtSqlDatabaseCopierTableMapping> mdtSqlDatabaseCopierMapping::getCompletedTableMappingList() const
-// {
-//   QVector<mdtSqlDatabaseCopierTableMapping> tmList;
-// 
-//   for(const auto & tm : pvTableMappingList){
-//     if(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete){
-//       tmList.append(tm);
-//     }
-//   }
-// 
-//   return tmList;
-// }
 
 QStringList mdtSqlDatabaseCopierMapping::getTables(const QSqlDatabase & db) const
 {

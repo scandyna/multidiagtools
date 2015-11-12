@@ -27,7 +27,7 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSqlDatabaseCopierThread::mdtSqlDatabaseCopierThread(QObject* parent)
  : QThread(parent),
@@ -73,9 +73,6 @@ void mdtSqlDatabaseCopierThread::run()
     if(!destinationDatabase.isOpen()){
       return;
     }
-
-    qDebug() << "THD started ...";
-
     /*
      * Init
      */
@@ -88,9 +85,6 @@ void mdtSqlDatabaseCopierThread::run()
       globalProgress.setRange(0, totalSize);
     }
     emit globalProgressRangeChanged(0, 100);
-
-    qDebug() << "Copy size: " << totalSize;
-
     // Get table mapping list
     auto tableMappingList = pvMapping.tableMappingList();
     /*
@@ -103,8 +97,6 @@ void mdtSqlDatabaseCopierThread::run()
         copyTable(tm, i, sourceDatabase, destinationDatabase, globalProgress);
       }
     }
-
-    qDebug() << "THD end";
   }
   QSqlDatabase::removeDatabase(sourceConnectionName);
   QSqlDatabase::removeDatabase(destinationConnectionName);
@@ -115,9 +107,6 @@ QSqlDatabase mdtSqlDatabaseCopierThread::createConnection(const QSqlDatabase & d
   QSqlDatabase db;
   QString cnn = mdtAlgorithms::generateString(6, QSqlDatabase::connectionNames());
   db = QSqlDatabase::addDatabase(dbInfo.driverName(), cnn);
-
-  qDebug() << "Driver: " << db.driverName();
-  qDebug() << "DB: " << dbInfo.databaseName();
   
   db.setDatabaseName(dbInfo.databaseName());
   db.setHostName(dbInfo.hostName());
@@ -196,8 +185,6 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
   QString sql;
   mdtProgressValue<int64_t> progress;
   auto totalRows = tableSize(dbMappingModelRow);
-
-  qDebug() << "Copy table " << tm.sourceTableName() << " -> " << tm.destinationTableName() << " ...";
 
   if(pvAbort){
     return true;

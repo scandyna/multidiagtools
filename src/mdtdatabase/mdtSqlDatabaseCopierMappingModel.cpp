@@ -21,7 +21,7 @@
 #include "mdtSqlDatabaseCopierMappingModel.h"
 #include <QColor>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSqlDatabaseCopierMappingModel::mdtSqlDatabaseCopierMappingModel(QObject* parent)
  : QAbstractTableModel(parent)

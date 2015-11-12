@@ -526,10 +526,12 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   /*
    * Play
    */
+  /*
   tableView.resizeColumnsToContents();
   while(tableView.isVisible()){
     QTest::qWait(500);
   }
+  */
 }
 
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingDialogTest()
@@ -545,7 +547,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingDialogTest()
   sourceTables << "Client_tbl" << "Client2_tbl";
   dialog.setSourceTables(pvDatabase, sourceTables);
   dialog.setMapping(mapping);
-  dialog.exec();
+  //dialog.exec();
 }
 
 void mdtSqlCopierTest::sqlDatabaseCopierMappingTest()
@@ -722,10 +724,12 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
   /*
    * Play
    */
+  /*
   tableView.resizeColumnsToContents();
   while(tableView.isVisible()){
     QTest::qWait(500);
   }
+  */
 }
 
 void mdtSqlCopierTest::sqlDatabaseCopierDialogTest()
@@ -742,7 +746,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierDialogTest()
   /*
    * Setup and show dialog
    */
-  dialog.exec();
+  //dialog.exec();
 }
 
 
