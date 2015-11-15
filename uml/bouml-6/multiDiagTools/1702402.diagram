@@ -1,0 +1,47 @@
+format 210
+
+classcanvas 128002 class_ref 2036226 // io_base
+  classdiagramsettings member_max_width 0 end
+  xyz 324 38 2000
+end
+classcanvas 128130 class_ref 2036354 // basic_ios
+  classdiagramsettings member_max_width 0 end
+  xyz 322 153 2000
+end
+classcanvas 128386 class_ref 2036482 // basic_istream
+  classdiagramsettings member_max_width 0 end
+  xyz 307 294 2000
+end
+classcanvas 128642 class_ref 2036610 // basic_ifstream
+  classdiagramsettings member_max_width 0 end
+  xyz 302 423 2000
+end
+classcanvas 128898 class_ref 2036738 // ifstream
+  classdiagramsettings member_max_width 0 end
+  xyz 589 422 2000
+end
+classcanvas 129154 class_ref 2036866 // istreambuf_iterator
+  classdiagramsettings member_max_width 0 end
+  xyz 32 539 2000
+end
+relationcanvas 128258 relation_ref 2362882 // <generalisation>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 2363010 // <generalisation>
+  from ref 128386 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 2363138 // <generalisation>
+  from ref 128642 z 2001 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 2363266 // <dependency>
+  from ref 128898 z 2001 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

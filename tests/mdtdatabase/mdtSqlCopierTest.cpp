@@ -26,9 +26,6 @@
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlRecord.h"
 #include "mdtSqlTransaction.h"
-
-#include "mdtComboBoxItemDelegate.h"
-
 #include "mdtSqlDatabaseCopierTableMapping.h"
 #include "mdtSqlDatabaseCopierTableMappingModel.h"
 #include "mdtSqlDatabaseCopierTableMappingDialog.h"
@@ -36,9 +33,9 @@
 #include "mdtSqlDatabaseCopierMapping.h"
 #include "mdtSqlDatabaseCopierMappingModel.h"
 #include "mdtSqlDatabaseCopierDialog.h"
+#include "mdtComboBoxItemDelegate.h"
 #include "mdtProgressBarItemDelegate.h"
 #include "mdtProgressValue.h"
-
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -53,7 +50,71 @@
 #include <QTreeView>
 #include <memory>
 
+#include <QClipboard>
+#include <QMimeData>
+#include <QTextEdit>
+#include <QTextDocument>
+#include <QTextFrame>
+#include <QTextTable>
+#include <QTextTableCell>
+#include <QTextBlock>
+#include <QTextFragment>
+
 #include <QDebug>
+
+void mdtSqlCopierTest::sandbox()
+{
+  auto *clipboard = QApplication::clipboard();
+  QVERIFY(clipboard != nullptr);
+  auto *mimeData = clipboard->mimeData();
+  QVERIFY(mimeData != nullptr);
+  QTextEdit textEdit;
+  QTextDocument doc;
+
+  
+
+  qDebug() << "Clipboard formats:";
+  for(const auto & format : mimeData->formats()){
+    qDebug() << format;
+  }
+  /**
+  qDebug() << "data:";
+  doc.setHtml(mimeData->data("text/html"));
+  QTextFrame *root = doc.rootFrame();
+  
+  for(auto it = root->begin(); !it.atEnd(); ++it){
+    QTextFrame *frame = it.currentFrame();
+    if(frame != nullptr){
+      auto *table = qobject_cast<QTextTable*>(frame);
+      if(table != nullptr){
+        for(int row = 0; row < table->rows(); ++row){
+          for(int col = 0; col < table->columns(); ++col){
+            QTextTableCell cell = table->cellAt(row, col);
+            for(auto tableIt = cell.begin(); !tableIt.atEnd(); ++tableIt){
+              QTextBlock textBlock = tableIt.currentBlock();
+              for(auto blockIt = textBlock.begin(); !blockIt.atEnd(); ++blockIt){
+                QTextFragment fragment = blockIt.fragment();
+                qDebug() << fragment.text();
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  */
+  
+  ///textEdit.setText(mimeData->data("text/richtext"));
+  ///textEdit.setHtml(mimeData->data("text/html"));
+  textEdit.setPlainText(mimeData->data("text/plain"));
+  
+  textEdit.show();
+  while(textEdit.isVisible()){
+    QTest::qWait(500);
+  }
+}
+
+
 
 /*
  * Populate Client_tbl with test data

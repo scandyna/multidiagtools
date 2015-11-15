@@ -18,34 +18,36 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_FILE_TEST_H
-#define MDT_FILE_TEST_H
+#include "mdtCsvTest.h"
+#include "mdtCsvParser.h"
+#include "mdtApplication.h"
+#include <QTemporaryFile>
+#include <QFile>
+#include <string>
 
-#include "mdtTest.h"
+#include <QDebug>
 
-class mdtFileTest : public mdtTest
+void mdtCsvTest::sandbox()
 {
- Q_OBJECT
+  ///std::string str("A,B,C,D\n");
+  std::string str("ABC\r\n");
+  mdtCsvStringParser csv;
 
- private slots:
+  csv.setSource(str);
+  QVERIFY(csv.readLine());
+}
 
-  void sandbox();
+/*
+ * Main
+ */
+int main(int argc, char **argv)
+{
+  mdtApplication app(argc, argv);
+  mdtCsvTest csvTest;
 
-  void csvFileSettingsTest();
-  // CSV file read/write tests
-  void csvFileWriteTest();
-  void csvFileReadLineTest();
-  void csvFileReadLineTest_data();
-  void csvFileReadTest();
-  void csvFileReadTest_data();
-  // CSV file: check cross-platform read
-  void csvFileReadEolTest();
+  if(!app.init()){
+    return 1;
+  }
 
-  // Partition attributes tests
-  void mdtPartitionAttributesTest();
-
-  // File copier
-  void mdtFileCopierTest();
-};
-
-#endif  // #ifndef MDT_FILE_TEST_H
+  return QTest::qExec(&csvTest, argc, argv);
+}

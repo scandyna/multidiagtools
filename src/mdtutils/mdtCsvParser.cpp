@@ -18,34 +18,28 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_FILE_TEST_H
-#define MDT_FILE_TEST_H
+#include "mdtCsvParser.h"
+#include "mdtCsvParserTemplate.h"
 
-#include "mdtTest.h"
+/*
+ * mdtCsvStringParser implementation
+ */
 
-class mdtFileTest : public mdtTest
+mdtCsvStringParser::mdtCsvStringParser()
+ : pvImpl(new mdtCsvParserTemplate<std::string::const_iterator>)
 {
- Q_OBJECT
+}
 
- private slots:
+mdtCsvStringParser::~mdtCsvStringParser()
+{
+}
 
-  void sandbox();
+void mdtCsvStringParser::setSource(const std::string & source)
+{
+  pvImpl->setSource(source.cbegin(), source.cend());
+}
 
-  void csvFileSettingsTest();
-  // CSV file read/write tests
-  void csvFileWriteTest();
-  void csvFileReadLineTest();
-  void csvFileReadLineTest_data();
-  void csvFileReadTest();
-  void csvFileReadTest_data();
-  // CSV file: check cross-platform read
-  void csvFileReadEolTest();
-
-  // Partition attributes tests
-  void mdtPartitionAttributesTest();
-
-  // File copier
-  void mdtFileCopierTest();
-};
-
-#endif  // #ifndef MDT_FILE_TEST_H
+bool mdtCsvStringParser::readLine()
+{
+  return pvImpl->readLine();
+}

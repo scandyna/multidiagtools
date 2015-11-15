@@ -1,0 +1,7 @@
+format 210
+
+classcanvas 128002 class_ref 2035586 // stream_parser
+  classdiagramsettings member_max_width 0 end
+  xyz 237 298 2000
+end
+end

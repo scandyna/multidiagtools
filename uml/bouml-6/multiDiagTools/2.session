@@ -1,14 +1,25 @@
 window_sizes 1280 964 323 951 911 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
+  classdiagram_ref 394882 // mdtCsvFileOld
+    760 732 100 4 0 0
+  active  classdiagram_ref 1701506 // mdtCsvParser
     951 911 100 4 0 0
-  classdiagram_ref 1629058 // sqlDatabaseCopierTableMappingDialog
-    120 106 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
+selected operation_ref 3173122 // setSource
 open
-  classview_ref 807426 // ImportExportCopy
+  class_ref 2035202 // mdtCsvParserLineGrammar
+  operation_ref 3172482 // mdtCsvParserTemplate
+  operation_ref 3172866 // mdtCsvParserTemplate
+  operation_ref 3165314 // currentRowData
+  operation_ref 3165954 // readAll
+  class_ref 2037122 // mdtCsvFileInput
+  class_ref 2043778 // mdtCsvStringParser
+  class_ref 2036098 // multi_pass
+  
+  package_ref 274178 // qi
+  operation_ref 3165826 // is_open
+  class_ref 2036866 // istreambuf_iterator
 end
 end

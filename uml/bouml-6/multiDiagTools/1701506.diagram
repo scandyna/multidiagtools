@@ -1,0 +1,108 @@
+format 210
+
+classcanvas 128002 class_ref 2035202 // mdtCsvParserLineGrammar
+  classdiagramsettings member_max_width 0 end
+  xyz 155 152 2000
+end
+classcanvas 128130 class_ref 2034818 // grammar
+  classdiagramsettings member_max_width 0 end
+  xyz 221 35 2005
+end
+classcanvas 128386 class_ref 2034946 // rule
+  classdiagramsettings member_max_width 0 end
+  xyz 491 181 2005
+end
+classcanvas 128642 class_ref 2035330 // mdtCsvParserTemplate
+  classdiagramsettings member_max_width 0 end
+  xyz 291 260 2000
+end
+classcanvas 128770 class_ref 2035458 // QTextCodec
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 694 441 2000
+end
+classcanvas 128898 class_ref 390530 // QFile
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 768 850 2000
+end
+classcanvas 129026 class_ref 161026 // QString
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 693 497 2000
+end
+classcanvas 129154 class_ref 236162 // QByteArray
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 692 368 2005
+end
+classcanvas 129666 class_ref 2036098 // multi_pass
+  classdiagramsettings member_max_width 0 end
+  xyz 233 759 2005
+end
+classcanvas 129794 class_ref 2036866 // istreambuf_iterator
+  classdiagramsettings member_max_width 0 end
+  xyz 469 757 2005
+end
+classcanvas 129922 class_ref 2036738 // ifstream
+  classdiagramsettings member_max_width 0 end
+  xyz 447 638 2010
+end
+classcanvas 130050 class_ref 2036994 // mdtCsvRowData
+  classdiagramsettings member_max_width 0 end
+  xyz 52 691 2000
+end
+classcanvas 130178 class_ref 161154 // QVariant
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 281 692 2000
+end
+classcanvas 130562 class_ref 2037122 // mdtCsvFileInput
+  classdiagramsettings member_max_width 0 end
+  xyz 36 558 2000
+end
+classcanvas 130690 class_ref 2036610 // basic_ifstream
+  classdiagramsettings member_max_width 0 end
+  xyz 574 584 2016
+end
+classcanvas 130946 class_ref 2037250 // mdtCsvStringInput
+  classdiagramsettings member_max_width 0 end
+  xyz 343 583 2000
+end
+note 131074 "When simply define parser on astream, it could be possible to \"stream in\" std::string, ?
+Better: think only about iterators ! Then, typedef for QString, QBytearray, std::string, fstream iterators, etc..."
+  xyzwh 434 20 2005 345 137
+classcanvas 131330 class_ref 2043778 // mdtCsvStringParser
+  classdiagramsettings member_max_width 0 end
+  xyz 10 299 2000
+end
+classcanvas 131458 class_ref 2043906 // mdtCsvFileParser
+  classdiagramsettings member_max_width 0 end
+  xyz 44 440 2000
+end
+relationcanvas 128258 relation_ref 2362370 // <generalisation>
+  from ref 128002 z 2006 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 2362498 // <composition>
+  from ref 128002 z 2006 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130306 relation_ref 2363394 // <directional composition>
+  from ref 130050 z 2001 stereotype "<<QVector>>" xyz 186 713 3000 to ref 130178
+  role_a_pos 217 687 3000 no_role_b
+  multiplicity_a_pos 265 723 3000 no_multiplicity_b
+end
+relationcanvas 130818 relation_ref 2363266 // <dependency>
+  from ref 129922 z 2017 to ref 130690
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131586 relation_ref 2369922 // <directional composition>
+  from ref 131330 z 2001 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131714 relation_ref 2370050 // <directional composition>
+  from ref 131458 z 2001 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

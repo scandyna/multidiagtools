@@ -1,6 +1,6 @@
 format 210
-"Boost" // Boost
-  revision 2
+"eol" // Boost::spirit::qi::eol
+  revision 1
   modified_by 2 "philippe"
   // class settings
   
@@ -26,9 +26,4 @@ format 210
   activitydiagramsettings
    end
   
-  package_ref 260994 // statechart
-
-  package_ref 274050 // spirit
-
-  package_ref 274946 // phoenix
 end

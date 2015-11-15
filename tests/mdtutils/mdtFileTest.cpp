@@ -35,6 +35,115 @@
 
 #include <QDebug>
 
+#include <QVector>
+#include <QVariant>
+#include <boost/spirit/include/qi.hpp>
+#include <boost/spirit/include/phoenix_core.hpp>
+#include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/spirit/include/phoenix_stl.hpp>
+#include <boost/spirit/include/support_multi_pass.hpp>
+#include <boost/bind.hpp>
+#include <string>
+#include <vector>
+#include <fstream>
+#include <iterator>
+///#include <functional>
+
+
+void printDouble(double x)
+{
+  qDebug() << x;
+}
+
+struct doubleAction
+{
+  void operator()(double x, boost::spirit::qi::unused_type, boost::spirit::qi::unused_type) const
+  {
+    qDebug() << "da: " << this << " , x: " << x;
+  }
+};
+
+template<typename Iterator>
+struct doubleGrammar : boost::spirit::qi::grammar<Iterator, std::vector<double>(), boost::spirit::ascii::space_type>
+{
+  doubleGrammar()
+   : doubleGrammar::base_type(start)
+  {
+    using boost::spirit::qi::double_;
+    using boost::spirit::qi::char_;
+    using boost::spirit::qi::lit;
+
+    ///start = double_ % char_(',');
+    ///start = double_ >> *(lit(',') >> double_);
+    start = double_ | (lit(',') >> double_);
+  }
+
+  boost::spirit::qi::rule<Iterator, std::vector<double>(), boost::spirit::ascii::space_type> start;
+};
+
+void mdtFileTest::sandbox()
+{
+  using namespace boost::spirit;
+  namespace phoenix = boost::phoenix;
+  using boost::spirit::qi::double_;
+  using boost::spirit::qi::_1;
+  ///using boost::phoenix::ref;
+  using boost::phoenix::push_back;
+  using boost::spirit::ascii::space;
+  
+  std::string str("1,2 ,3, 5e3 \n,4.067");
+
+  auto first = str.begin();
+  auto last = str.end();
+  /**
+  doubleAction da;
+  bool ok = qi::phrase_parse(first, last, double_[da] >> *(qi::char_(',') >> double_[da]) , ascii::space);
+  */
+  ///std::vector<double> v;
+  QVector<QVariant> v;
+  ///bool ok = qi::phrase_parse(first, last, double_[push_back(phoenix::ref(v), _1)] >> *(qi::char_(',') >> double_[push_back(phoenix::ref(v), _1)]) , ascii::space);
+  ///bool ok = qi::phrase_parse(first, last, double_[push_back(phoenix::ref(v), _1)] % qi::char_(',') , ascii::space);
+  ///bool ok = qi::phrase_parse(first, last, double_ % qi::char_(',') , ascii::space, v);
+  doubleGrammar<std::string::iterator> dg;
+  ///bool ok = qi::parse(first, last, dg, v);
+  bool ok = qi::phrase_parse(first, last, dg, space, v);
+  if(first != last){
+    qDebug() << "did not get full match";
+  }
+  if(!ok){
+    qDebug() << "failed";
+  }
+  qDebug() << "ok";
+  for(const auto & x : v){
+    qDebug() << x;
+  }
+  
+  
+  QTemporaryFile tmpFile;
+  QVERIFY(tmpFile.open());
+  QVERIFY(tmpFile.write(str.c_str()) > 0);
+  
+  std::ifstream dataFile(tmpFile.fileName().toLocal8Bit().toStdString());
+  tmpFile.close();
+  QVERIFY(dataFile.is_open());
+  
+  typedef std::istreambuf_iterator<char> base_iterator_type;
+  multi_pass<base_iterator_type> fFirst = make_default_multi_pass(base_iterator_type(dataFile));
+  const multi_pass<base_iterator_type> fLast = make_default_multi_pass(base_iterator_type());
+
+  doubleGrammar<multi_pass<base_iterator_type>> fdg;
+  v.clear();
+  while(fFirst != fLast){
+    ok = qi::phrase_parse(fFirst, fLast, fdg, space, v);
+    QVERIFY(ok);
+  }
+  qDebug() << "ok";
+  for(const auto & x : v){
+    qDebug() << x;
+  }
+}
+
+
 // We need a list of byte array for readLine data results
 typedef QList<QByteArray> byteArrayList;
 Q_DECLARE_METATYPE(byteArrayList);

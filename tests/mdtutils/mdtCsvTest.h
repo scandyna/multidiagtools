@@ -18,34 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_FILE_TEST_H
-#define MDT_FILE_TEST_H
+#ifndef MDT_CSV_TEST_H
+#define MDT_CSV_TEST_H
 
 #include "mdtTest.h"
 
-class mdtFileTest : public mdtTest
+class mdtCsvTest : public mdtTest
 {
  Q_OBJECT
 
  private slots:
 
   void sandbox();
-
-  void csvFileSettingsTest();
-  // CSV file read/write tests
-  void csvFileWriteTest();
-  void csvFileReadLineTest();
-  void csvFileReadLineTest_data();
-  void csvFileReadTest();
-  void csvFileReadTest_data();
-  // CSV file: check cross-platform read
-  void csvFileReadEolTest();
-
-  // Partition attributes tests
-  void mdtPartitionAttributesTest();
-
-  // File copier
-  void mdtFileCopierTest();
 };
 
-#endif  // #ifndef MDT_FILE_TEST_H
+#endif // #ifndef MDT_CSV_TEST_H

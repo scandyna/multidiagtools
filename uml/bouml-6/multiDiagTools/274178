@@ -1,6 +1,6 @@
 format 210
-"Boost" // Boost
-  revision 2
+"qi" // Boost::spirit::qi
+  revision 1
   modified_by 2 "philippe"
   // class settings
   
@@ -26,9 +26,17 @@ format 210
   activitydiagramsettings
    end
   
-  package_ref 260994 // statechart
+  package_ref 274306 // grammar
 
-  package_ref 274050 // spirit
+  package_ref 274434 // rule
 
-  package_ref 274946 // phoenix
+  package_ref 274562 // lit
+
+  package_ref 274690 // double_
+
+  package_ref 274818 // eol
+
+  package_ref 275074 // stream
+
+  package_ref 275202 // wstream
 end

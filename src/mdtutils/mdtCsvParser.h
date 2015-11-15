@@ -18,34 +18,44 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_FILE_TEST_H
-#define MDT_FILE_TEST_H
+#ifndef MDT_CSV_PARSER_H
+#define MDT_CSV_PARSER_H
 
-#include "mdtTest.h"
+#include <string>
+#include <memory>
 
-class mdtFileTest : public mdtTest
+template <typename InputIterator>
+class mdtCsvParserTemplate;
+
+/*! \brief CSV parser that acts on a std::string as input
+ */
+class mdtCsvStringParser
 {
- Q_OBJECT
+ public:
 
- private slots:
+  /*! \brief Default constructor
+   */
+  mdtCsvStringParser();
 
-  void sandbox();
+  /*! \brief Destructor
+   */
+  ~mdtCsvStringParser();
 
-  void csvFileSettingsTest();
-  // CSV file read/write tests
-  void csvFileWriteTest();
-  void csvFileReadLineTest();
-  void csvFileReadLineTest_data();
-  void csvFileReadTest();
-  void csvFileReadTest_data();
-  // CSV file: check cross-platform read
-  void csvFileReadEolTest();
+  /*! \internal Copy disabled
+   */
+  mdtCsvStringParser(const mdtCsvStringParser &) = delete;
 
-  // Partition attributes tests
-  void mdtPartitionAttributesTest();
+  /*! \brief Set CSV source string
+   */
+  void setSource(const std::string & source);
 
-  // File copier
-  void mdtFileCopierTest();
+  /*! \brief Read one line
+   */
+  bool readLine();
+
+ private:
+
+  std::unique_ptr<mdtCsvParserTemplate<std::string::const_iterator> > pvImpl;
 };
 
-#endif  // #ifndef MDT_FILE_TEST_H
+#endif // #ifndef MDT_CSV_PARSER_H

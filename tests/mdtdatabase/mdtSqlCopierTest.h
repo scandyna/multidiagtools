@@ -32,6 +32,8 @@ class mdtSqlCopierTest : public mdtTest
 
  private slots:
 
+  void sandbox();
+
   void initTestCase();
   void cleanupTestCase();
 

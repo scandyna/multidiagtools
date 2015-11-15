@@ -1,6 +1,6 @@
-format 206
+format 210
 "multiDiagTools"
-  revision 21
+  revision 22
   modified_by 2 "philippe"
   cpp_root_dir "cpp_gen/"
 
@@ -13,9 +13,9 @@ format 206
   
   usecasediagramsettings package_name_in_tab no show_context_mode no auto_label_position yes draw_all_relations yes class_drawing_mode actor shadow yes gradient none show_stereotype_properties no end
   
-  sequencediagramsettings show_full_operations_definition no write_horizontally yes instances_drawing_mode natural drawing_language uml draw_all_relations yes shadow yes gradient none show_stereotype_properties no show_class_context_mode no show_msg_context_mode no end
+  sequencediagramsettings show_full_operations_definition no show_class_of_operation no write_horizontally yes instances_drawing_mode natural drawing_language uml draw_all_relations yes shadow yes gradient none show_stereotype_properties no show_class_context_mode no show_msg_context_mode no end
   
-  collaborationdiagramsettings show_full_operations_definition no show_hierarchical_rank no write_horizontally yes instances_drawing_mode natural drawing_language uml package_name_in_tab no show_class_pack_context_mode no show_msg_context_mode no draw_all_relations yes shadow yes gradient none show_stereotype_properties no end
+  collaborationdiagramsettings show_full_operations_definition no show_class_of_operation no show_hierarchical_rank no write_horizontally yes instances_drawing_mode natural drawing_language uml package_name_in_tab no show_class_pack_context_mode no show_msg_context_mode no draw_all_relations yes shadow yes gradient none show_stereotype_properties no end
   
   objectdiagramsettings write_horizontally yes package_name_in_tab no show_class_pack_context_mode no auto_label_position yes draw_all_relations yes shadow yes gradient none show_stereotype_properties no end
   
@@ -31,7 +31,7 @@ format 206
   activitydiagramsettings package_name_in_tab no show_context_mode no show_opaque_action_definition no auto_label_position yes write_label_horizontally no draw_all_relations yes shadow yes gradient none
    show_infonote yes drawing_language uml show_stereotype_properties no end
   
-  class_color lightmediumblue duration_color transparent continuation_color gray note_color blue fragment_color transparent subject_color transparent usecase_color yellow package_color transparent component_color green artifact_color green deploymentnode_color gray state_color yellow stateaction_color transparent activity_color transparent activityregion_color transparent activitypartition_color transparent activityaction_color transparent parameterpin_color white 
+  class_color lightmediumblue duration_color transparent continuation_color gray note_color blue fragment_color transparent subject_color transparent usecase_color yellow package_color transparent component_color green artifact_color green deploymentnode_color gray state_color yellow stateaction_color transparent activity_color transparent activityregion_color transparent activitypartition_color transparent activityaction_color transparent parameterpin_color white generalization_color black 
   dpi 0
   font_size 10
   diagram_format A4
@@ -58,11 +58,13 @@ format 206
 
   package_ref 134530 // mdtTest
 
-  package_ref 134786 // Qt4
+  package_ref 134786 // Qt
 
   package_ref 134658 // ImportZms
 
   package_ref 221058 // sandbox
 
   package_ref 260866 // Boost
+
+  package_ref 275458 // std
 end

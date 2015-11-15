@@ -222,6 +222,8 @@ add_test (mdtCodecTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtcodectest)
 add_test (mdtUicNumberTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtuicnumbertest)
 # mdtFileTest
 add_test (mdtFileTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtfiletest)
+# mdtCsvTest
+add_test (mdtCsvTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtcsvtest)
 # mdtValueTest
 add_test (mdtValueTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtvaluetest)
 # mdtIoTest
