@@ -1,21 +1,23 @@
-window_sizes 1280 969 323 951 916 0
+window_sizes 1280 964 323 951 911 0
 cleanlooks_style
 diagrams
   classdiagram_ref 394882 // mdtCsvFileOld
     760 732 100 4 0 0
   active  classdiagram_ref 1701506 // mdtCsvParser
-    951 916 100 4 0 0
+    951 911 100 4 60 0
 end
 show_stereotypes
-selected attribute_ref 2098434 // End
+selected attribute_ref 2111618 // rawColumnDataList
 open
-  operation_ref 3172482 // mdtCsvParserTemplate
   operation_ref 3172866 // mdtCsvParserTemplate
   operation_ref 3165314 // currentRowData
   operation_ref 3165954 // readAll
-  class_ref 2037122 // mdtCsvFileInput
+  class_ref 2036994 // mdtCsvRecord
   class_ref 2043778 // mdtCsvStringParser
-  class_ref 2043906 // mdtCsvFileParser
+  attribute_ref 2097794 // Stream
+  attribute_ref 2097922 // CurrentPosition
+  attribute_ref 2098050 // End
+  class_ref 2050434 // mdtCsvParserSettings
   class_ref 2036098 // multi_pass
   
   package_ref 274178 // qi

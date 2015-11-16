@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtCsvTest.h"
 #include "mdtCsvParser.h"
+#include "mdtCsvSettings.h"
 #include "mdtApplication.h"
 #include <QTemporaryFile>
 #include <QFile>
@@ -30,12 +31,44 @@
 void mdtCsvTest::sandbox()
 {
   ///std::string str("A,B,C,D\n");
-  std::string str("ABC\r\n");
+  std::string str("ABC\r\nZ,UV\rDE,F\n456\r\nTEF");
+  ///std::string str("ABC");
   mdtCsvStringParser csv;
 
   csv.setSource(str);
   QVERIFY(csv.readLine());
+  QVERIFY(csv.readLine());
+  QVERIFY(csv.readLine());
+  QVERIFY(csv.readLine());
+  QVERIFY(csv.readLine());
+  
+  QVERIFY(csv.readLine());
 }
+
+void mdtCsvTest::settingsTest()
+{
+  using std::string;
+
+  mdtCsvParserSettings s;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(s.fieldSeparator, string(","));
+  QCOMPARE(s.fieldProtection, string("\""));
+  /*
+   * Some setup
+   */
+  s.fieldSeparator = ";";
+  s.fieldProtection = "'";
+  /*
+   * Clear
+   */
+  s.clear();
+  QCOMPARE(s.fieldSeparator, string(","));
+  QCOMPARE(s.fieldProtection, string("\""));
+}
+
 
 /*
  * Main

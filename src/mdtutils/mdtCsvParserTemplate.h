@@ -21,50 +21,24 @@
 #ifndef MDT_CSV_PARSER_TEMPLATE_H
 #define MDT_CSV_PARSER_TEMPLATE_H
 
+#include "mdtCsvSettings.h"
+#include "mdtCsvData.h"
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
-#include <boost/spirit/include/support_multi_pass.hpp>
+///#include <boost/spirit/include/support_multi_pass.hpp>
 #include <boost/bind.hpp>
 #include <string>
 #include <vector>
 
+#include <QVector>
+
 #include <iostream>
 #include <QDebug>
 
-using boost::phoenix::push_back;
-using boost::spirit::ascii::space;
-
-/*! \brief CSV parser grammar to read a line
- */
-// template<typename Iterator>
-// class mdtCsvParserLineGrammar : boost::spirit::qi::grammar<Iterator, std::string(), boost::spirit::ascii::space_type>
-// {
-//  public:
-// 
-//   /*! \brief Constructor
-//    */
-//   mdtCsvParserLineGrammar()
-//    : mdtCsvParserLineGrammar::base_type(start)
-//   {
-//     using boost::spirit::qi::double_;
-//     using boost::spirit::qi::char_;
-//     using boost::spirit::qi::eol;
-//     using boost::spirit::qi::lit;
-// 
-//     start = *char_;
-//     ///start = *(char_) >> eol;
-//     ///start = double_ % char_(',');
-//     ///start = double_ >> *(lit(',') >> double_);
-//     ///start = double_ | (lit(',') >> double_);
-//   }
-// 
-//  ///private:
-// 
-//   boost::spirit::qi::rule<Iterator, std::string(), boost::spirit::ascii::space_type> start;
-// };
-
+///using boost::phoenix::push_back;
+///using boost::spirit::ascii::space;
 
 /*! \brief CSV parser template
  *
@@ -75,6 +49,9 @@ using boost::spirit::ascii::space;
  * \tparam SourceIterator Type of iterator that will act on the source.
  * \note Including directly this header in a project can slow down compilation time
  * \sa mdtCsvStringParser
+ * \note Some part of this API documentation
+ *       refers to CSV-1203 standard.
+ *       CSV-1203 is a open standard available here: http://mastpoint.com/csv-1203
  */
 template <typename SourceIterator>
 class mdtCsvParserTemplate
@@ -86,10 +63,16 @@ class mdtCsvParserTemplate
   mdtCsvParserTemplate()
   {
     using boost::spirit::qi::char_;
+    using boost::spirit::qi::lit;
     using boost::spirit::qi::eol;
     ///using boost::spirit::qi::eof;
     
-    pvRule = *char_ >> -eol;
+    auto fieldSep = pvSettings.fieldSeparator;
+    
+    pvRecordRule = pvRecordPayload >> -eol;
+    pvRecordPayload %= pvFieldPayload % lit(fieldSep);
+    
+    pvFieldPayload = *(char_ - eol - lit(fieldSep));
   }
 
   /*! \brief Destructor
@@ -106,55 +89,52 @@ class mdtCsvParserTemplate
    */
   void setSource(SourceIterator begin, SourceIterator end)
   {
-    std::cout << "(1) Start: " << *begin << " , size: " << std::distance(begin, end) << std::endl;
-    
-    ///pvCurrentSourcePosition = boost::spirit::make_default_multi_pass(begin);
-    ///pvSourceEnd = boost::spirit::make_default_multi_pass(end);
     pvCurrentSourcePosition = begin;
     pvSourceEnd = end;
-    
-    std::cout << "(2) Start: " << *pvCurrentSourcePosition << " , size: " << std::distance(pvCurrentSourcePosition, pvSourceEnd) << std::endl;
   }
 
   /*! \brief Read one line
    */
   bool readLine()
   {
-    ///return boost::spirit::qi::phrase_parse(pvCurrentSourcePosition, pvSourceEnd, pvLineGrammar, space, pvLine);
-    
     using boost::spirit::qi::char_;
     using boost::phoenix::ref;
-    using boost::spirit::ascii::space;
-    
-    std::cout << "(3) Start: " << *pvCurrentSourcePosition << " , size: " << std::distance(pvCurrentSourcePosition, pvSourceEnd) << std::endl;
-    
-    ///std::string str("1234");
-    
-    ///bool ok = boost::spirit::qi::phrase_parse(pvCurrentSourcePosition, pvSourceEnd, *char_[boost::phoenix::push_back(boost::phoenix::ref(pvLine), _1)], space/**, pvLine*/);
-    ///bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, *char_, pvLine);
-    bool ok = boost::spirit::qi::phrase_parse(pvCurrentSourcePosition, pvSourceEnd, pvRule, space, pvLine);
+    ///using boost::spirit::ascii::space;
 
-    ///bool ok = boost::spirit::qi::parse(str.cbegin(), str.cend(), *char_, pvLine);
-    ///bool ok = boost::spirit::qi::parse(str.cbegin(), str.cend(), pvLineGrammar, pvLine);
+    ///bool ok = boost::spirit::qi::phrase_parse(pvCurrentSourcePosition, pvSourceEnd, pvLineRule, space, pvLine);
+//     bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, pvRecordRule, pvLine);
+//     if(ok){
+//       std::cout << "elm: " << pvLine.size() << " , : " << pvLine << std::endl;
+//     }
+    pvRecord.clear();
+    bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, pvRecordRule, pvRecord.rawColumnDataList);
     if(ok){
-      std::cout << "elm: " << pvLine.size() << " , : " << pvLine << std::endl;
+      ///std::cout << "elm: " << pvRowData.size() << std::endl;
+      for(const auto & str : pvRecord.rawColumnDataList){
+        std::cout << str << "|";
+      }
+      std::cout << std::endl;
     }
-    
+
     return ok;
   }
 
  private:
 
-  ///boost::spirit::multi_pass<SourceIterator> pvCurrentSourcePosition;
-  ///boost::spirit::multi_pass<SourceIterator> pvSourceEnd;
   SourceIterator pvCurrentSourcePosition;
   SourceIterator pvSourceEnd;
-//   mdtCsvParserLineGrammar<boost::spirit::multi_pass<SourceIterator> > pvLineGrammar;
   
-  ///std::vector<std::string> pvRowData;
-  std::string pvLine;
+  ///QVector<std::string> pvRowData;
+  mdtCsvRecord pvRecord;
+  ///std::string pvLine;
   
-  boost::spirit::qi::rule<SourceIterator, std::string(), boost::spirit::ascii::space_type> pvRule;
+  ///boost::spirit::qi::rule<SourceIterator, std::string(), boost::spirit::ascii::space_type> pvLineRule;
+  boost::spirit::qi::rule<SourceIterator, QVector<std::string>()> pvRecordRule;
+  boost::spirit::qi::rule<SourceIterator, QVector<std::string>()> pvRecordPayload;
+  
+  boost::spirit::qi::rule<SourceIterator, std::string()> pvFieldPayload;
+  
+  mdtCsvParserSettings pvSettings;
 };
 
 #endif // #ifndef MDT_CSV_PARSER_TEMPLATE_H

@@ -1,6 +1,6 @@
 format 210
 "mdtutils" // mdtutils
-  revision 150
+  revision 151
   modified_by 2 "philippe"
   // class settings
   
@@ -4222,7 +4222,7 @@ ${inlines}
       end
 
       operation 3165314 "currentRowData"
-	cpp_inline public return_type class_ref 2036994 // mdtCsvRowData
+	cpp_inline public return_type class_ref 2036994 // mdtCsvRecord
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -4327,9 +4327,21 @@ ${inlines}
 	
 	
       end
+
+      attribute 2111874 "Settings"
+	private type class_ref 2050434 // mdtCsvParserSettings
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
     end
 
-    class 2036994 "mdtCsvRowData"
+    class 2036994 "mdtCsvRecord"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -4343,34 +4355,11 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2379778 // Columns (<directional composition>)
-	relation 2363394 *-->
-	  stereotype "QVector"
-	  a role_name "Columns" multiplicity "*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 2379778 // Columns (<directional composition>)
-	  b parent class_ref 161154 // QVariant
-      end
-    end
-
-    class 2037122 "mdtCsvFileInput"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 2097794 "Stream"
-	private type class_ref 2036738 // ifstream
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+      attribute 2111618 "rawColumnDataList"
+	public explicit_type "string"
+	multiplicity "*"
+	stereotype "vector"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
 	java_decl ""
 	php_decl ""
@@ -4379,46 +4368,6 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
-
-      attribute 2097922 "CurrentPosition"
-	private type class_ref 2036098 // multi_pass
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2098050 "End"
-	private type class_ref 2036098 // multi_pass
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-
-    class 2037250 "mdtCsvStringInput"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
     end
 
     class 2043778 "mdtCsvStringParser"
@@ -4515,6 +4464,30 @@ ${inlines}
 	  b parent class_ref 2035330 // mdtCsvParserTemplate
       end
 
+      attribute 2097794 "Stream"
+	private type class_ref 2036738 // ifstream
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2097922 "CurrentPosition"
+	private type class_ref 2036098 // multi_pass
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       operation 3179650 "open"
 	public explicit_return_type "bool"
 	nparams 1
@@ -4530,6 +4503,97 @@ ${inlines}
 	
 	
       end
+
+      attribute 2098050 "End"
+	private type class_ref 2036098 // multi_pass
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 2050434 "mdtCsvParserSettings"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 2111490 "fieldSeparator"
+	public explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2111746 "fieldProtection"
+	public explicit_type "string"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 2050562 "mdtCsvData"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2392962 // <directional composition>
+	relation 2376578 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2392962 // <directional composition>
+	  b parent class_ref 2036994 // mdtCsvRecord
+      end
+    end
+
+    class 2050690 "std::string"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 

@@ -18,20 +18,30 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CSV_TEST_H
-#define MDT_CSV_TEST_H
+#ifndef MDT_CSV_DATA_H
+#define MDT_CSV_DATA_H
 
-#include "mdtTest.h"
+#include <QVector>
+#include <string>
 
-class mdtCsvTest : public mdtTest
+/*! \brief CSV record of data
+ *
+ * Container for a CSV record (i.e. a row, or a line of data)
+ */
+struct mdtCsvRecord
 {
- Q_OBJECT
+  /*! \brief Raw record data container
+   *
+   * \note It was choosen to use a QVector because it offers copy on write
+   */
+  QVector<std::string> rawColumnDataList;
 
- private slots:
-
-  void sandbox();
-
-  void settingsTest();
+  /*! \brief Clear
+   */
+  void clear()
+  {
+    rawColumnDataList.clear();
+  }
 };
 
-#endif // #ifndef MDT_CSV_TEST_H
+#endif // #ifndef MDT_CSV_DATA_H

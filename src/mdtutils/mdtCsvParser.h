@@ -21,6 +21,7 @@
 #ifndef MDT_CSV_PARSER_H
 #define MDT_CSV_PARSER_H
 
+#include "mdtCsvSettings.h"
 #include <string>
 #include <memory>
 
