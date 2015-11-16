@@ -1,20 +1,12 @@
 format 210
 
-classcanvas 128002 class_ref 2035202 // mdtCsvParserLineGrammar
-  classdiagramsettings member_max_width 0 end
-  xyz 155 152 2000
-end
-classcanvas 128130 class_ref 2034818 // grammar
-  classdiagramsettings member_max_width 0 end
-  xyz 221 35 2005
-end
 classcanvas 128386 class_ref 2034946 // rule
   classdiagramsettings member_max_width 0 end
-  xyz 491 181 2005
+  xyz 58 27 2005
 end
 classcanvas 128642 class_ref 2035330 // mdtCsvParserTemplate
   classdiagramsettings member_max_width 0 end
-  xyz 291 260 2000
+  xyz 322 153 2000
 end
 classcanvas 128770 class_ref 2035458 // QTextCodec
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
@@ -64,27 +56,16 @@ classcanvas 130946 class_ref 2037250 // mdtCsvStringInput
   classdiagramsettings member_max_width 0 end
   xyz 343 583 2000
 end
-note 131074 "When simply define parser on astream, it could be possible to \"stream in\" std::string, ?
-Better: think only about iterators ! Then, typedef for QString, QBytearray, std::string, fstream iterators, etc..."
-  xyzwh 434 20 2005 345 137
 classcanvas 131330 class_ref 2043778 // mdtCsvStringParser
   classdiagramsettings member_max_width 0 end
-  xyz 10 299 2000
+  xyz 6 191 2000
 end
 classcanvas 131458 class_ref 2043906 // mdtCsvFileParser
   classdiagramsettings member_max_width 0 end
-  xyz 44 440 2000
+  xyz 16 376 2000
 end
-relationcanvas 128258 relation_ref 2362370 // <generalisation>
-  from ref 128002 z 2006 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 128514 relation_ref 2362498 // <composition>
-  from ref 128002 z 2006 to ref 128386
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
+note 131842 "getting current row: format, including column formats and text codec ?"
+  xyzwh 288 58 2000 253 71
 relationcanvas 130306 relation_ref 2363394 // <directional composition>
   from ref 130050 z 2001 stereotype "<<QVector>>" xyz 186 713 3000 to ref 130178
   role_a_pos 217 687 3000 no_role_b
@@ -96,11 +77,14 @@ relationcanvas 130818 relation_ref 2363266 // <dependency>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131586 relation_ref 2369922 // <directional composition>
+  decenter_end 274
   from ref 131330 z 2001 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131714 relation_ref 2370050 // <directional composition>
+  decenter_begin 442
+  decenter_end 816
   from ref 131458 z 2001 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

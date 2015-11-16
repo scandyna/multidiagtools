@@ -1,6 +1,6 @@
 format 210
 "mdtutils" // mdtutils
-  revision 148
+  revision 150
   modified_by 2 "philippe"
   // class settings
   
@@ -4157,78 +4157,6 @@ ${inlines}
       size A4
     end
 
-    class 2035202 "mdtCsvParserLineGrammar"
-      visibility package 
-      nformals 1
-      formal name "Iterator" type "class" explicit_default_value ""
-        explicit_extends ""
-      nactuals 4
-      actual class class_ref 2034818 // grammar
-        rank 0 explicit_value ""
-      actual class class_ref 2034818 // grammar
-        rank 1 explicit_value ""
-      actual class class_ref 2034818 // grammar
-        rank 2 explicit_value ""
-      actual class class_ref 2034818 // grammar
-        rank 3 explicit_value ""
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 2378626 // <generalisation>
-	relation 2362370 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 2378626 // <generalisation>
-	  b parent class_ref 2034818 // grammar
-      end
-
-      classrelation 2378754 // <composition>
-	relation 2362498 *---
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 2378754 // <composition>
-	  b role_name "" package
-	    classrelation_ref 2378882 // <composition>
-      end
-
-      operation 3164162 "mdtCsvParserLineGrammar"
-	cpp_inline public explicit_return_type ""
-	nparams 0
-	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      attribute 2097538 "delim"
-	private type class_ref 2034946 // rule
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-
     class 2035330 "mdtCsvParserTemplate"
       visibility package 
       nformals 1
@@ -4335,8 +4263,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 2098178 "LineGrammar"
-	private explicit_type "mdtCsvLineGrammar<InputIterator>"
+      attribute 2098178 "LineRule"
+	private type class_ref 2034946 // rule
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -4348,7 +4276,7 @@ ${inlines}
       end
 
       attribute 2098306 "CurrentPosition"
-	private explicit_type "multi_pass<SourceIterator>"
+	private explicit_type "SourceIterator"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -4360,7 +4288,7 @@ ${inlines}
       end
 
       attribute 2098434 "End"
-	private explicit_type "multi_pass<SourceIterator>"
+	private explicit_type "SourceIterator"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -4585,6 +4513,22 @@ ${inlines}
 "
 	    classrelation_ref 2386434 // <directional composition>
 	  b parent class_ref 2035330 // mdtCsvParserTemplate
+      end
+
+      operation 3179650 "open"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "path" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end

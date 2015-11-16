@@ -1,6 +1,6 @@
 format 210
 "rule" // Boost::spirit::qi::rule
-  revision 1
+  revision 2
   modified_by 2 "philippe"
   // class settings
   
@@ -70,9 +70,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2378882 // <composition>
-	relation_ref 2362498 // <composition>
-      end
     end
   end
 end

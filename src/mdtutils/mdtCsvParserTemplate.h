@@ -87,6 +87,7 @@ class mdtCsvParserTemplate
   {
     using boost::spirit::qi::char_;
     using boost::spirit::qi::eol;
+    ///using boost::spirit::qi::eof;
     
     pvRule = *char_ >> -eol;
   }
