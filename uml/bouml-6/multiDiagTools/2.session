@@ -7,7 +7,7 @@ diagrams
     951 911 100 4 60 0
 end
 show_stereotypes
-selected attribute_ref 2111618 // rawColumnDataList
+selected operation_ref 3164674 // readLine
 open
   operation_ref 3172866 // mdtCsvParserTemplate
   operation_ref 3165314 // currentRowData

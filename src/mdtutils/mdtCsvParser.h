@@ -22,6 +22,7 @@
 #define MDT_CSV_PARSER_H
 
 #include "mdtCsvSettings.h"
+#include "mdtCsvData.h"
 #include <string>
 #include <memory>
 
@@ -50,9 +51,13 @@ class mdtCsvStringParser
    */
   void setSource(const std::string & source);
 
+  /*! \brief Check if parser is at end of the source
+   */
+  bool atEnd() const;
+
   /*! \brief Read one line
    */
-  bool readLine();
+  mdtCsvRecord readLine();
 
  private:
 

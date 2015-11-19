@@ -1,6 +1,6 @@
 format 210
 "mdtutils" // mdtutils
-  revision 151
+  revision 152
   modified_by 2 "philippe"
   // class settings
   
@@ -4207,7 +4207,7 @@ ${inlines}
       end
 
       operation 3164674 "readLine"
-	cpp_inline public explicit_return_type "bool"
+	cpp_inline public return_type class_ref 2036994 // mdtCsvRecord
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -4360,6 +4360,18 @@ ${inlines}
 	multiplicity "*"
 	stereotype "vector"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2118402 "ErrorOccured"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
 	php_decl ""

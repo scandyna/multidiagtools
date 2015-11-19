@@ -21,24 +21,23 @@
 #ifndef MDT_CSV_PARSER_TEMPLATE_H
 #define MDT_CSV_PARSER_TEMPLATE_H
 
+#define BOOST_SPIRIT_DEBUG
+#define BOOST_SPIRIT_DEBUG_TRACENODE
+//#define BOOST_SPIRIT_DEBUG_PRINT_SOME 80
+
+
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
-///#include <boost/spirit/include/support_multi_pass.hpp>
 #include <boost/bind.hpp>
 #include <string>
-#include <vector>
-
-#include <QVector>
+///#include <vector>
 
 #include <iostream>
 #include <QDebug>
-
-///using boost::phoenix::push_back;
-///using boost::spirit::ascii::space;
 
 /*! \brief CSV parser template
  *
@@ -65,14 +64,53 @@ class mdtCsvParserTemplate
     using boost::spirit::qi::char_;
     using boost::spirit::qi::lit;
     using boost::spirit::qi::eol;
-    ///using boost::spirit::qi::eof;
+    using boost::spirit::ascii::space;
     
-    auto fieldSep = pvSettings.fieldSeparator;
+//     auto fieldSep = pvSettings.fieldSeparator;
+//     auto fieldQuote = pvSettings.fieldProtection;
+    /// \todo adapter settings si ok
+    char fieldSep = ',';
+    char fieldQuote = '\"';
     
-    pvRecordRule = pvRecordPayload >> -eol;
-    pvRecordPayload %= pvFieldPayload % lit(fieldSep);
+//     char CR = 0x0D;
+//     char LF = 0x0A;
+//     char TAB = 0x09;
+    /*
+     * Build the grammar
+     * Sources:
+     *  - CSV-1203
+     *  - http://stackoverflow.com/questions/7436481/how-to-make-my-split-work-only-on-one-real-line-and-be-capable-to-skip-quoted-pa/7462539#7462539
+     */
+    pvRecordRule = pvRecordPayload >> eol;
+    pvRecordPayload %= pvFieldColumn % char_(fieldSep);
+    pvFieldColumn =  pvUnprotectedField | pvProtectedField;
+    ///pvProtectedField = char_(fieldQuote) >> pvFieldPayload >> char_(fieldQuote);
+    pvProtectedField = lit(fieldQuote) >> pvFieldPayload >> lit(fieldQuote);
+    pvFieldPayload = +pvAnychar;
+    pvUnprotectedField %= pvRawFieldPayload;
+    pvRawFieldPayload = pvSafechar | (pvSafechar >> *char_ >> pvSafechar);
+    pvAnychar = pvChar | char_(fieldSep) | (char_(fieldQuote) >> char_(fieldQuote)) | space; // space matches space, CR, LF and other See std::isspace()
+    pvChar = pvSafechar | char_(0x20);  // 0x20 == SPACE char
+    //pvSafechar = char_(0x21, 0xFF) - lit(fieldSep) - lit(fieldQuote); 
+    ///pvSafechar %= char_(0x21, 0xFF);
+    pvSafechar = char_(0x21, 0x7F) - char_(fieldSep) - char_(fieldQuote);
+    ///pvSafechar = char_("0-9a-zA-Z");
     
-    pvFieldPayload = *(char_ - eol - lit(fieldSep));
+    ///pvRecordPayload %= pvFieldPayload % lit(fieldSep);
+    ///pvUnprotectedField %= pvFieldPayload - eol - lit(fieldSep);
+    ///pvFieldPayload = *(char_ - eol - lit(fieldSep) - lit(fieldQuote));
+    
+    
+//     BOOST_SPIRIT_DEBUG_NODE(pvRecordRule);
+//     BOOST_SPIRIT_DEBUG_NODE(pvRecordPayload);
+    BOOST_SPIRIT_DEBUG_NODE(pvFieldColumn);
+//     BOOST_SPIRIT_DEBUG_NODE(pvProtectedField);
+//     BOOST_SPIRIT_DEBUG_NODE(pvUnprotectedField);
+//     BOOST_SPIRIT_DEBUG_NODE(pvFieldPayload);
+//     BOOST_SPIRIT_DEBUG_NODE(pvRawFieldPayload);
+//     BOOST_SPIRIT_DEBUG_NODE(pvAnychar);
+//     BOOST_SPIRIT_DEBUG_NODE(pvChar);
+//     BOOST_SPIRIT_DEBUG_NODE(pvSafechar);
   }
 
   /*! \brief Destructor
@@ -93,47 +131,62 @@ class mdtCsvParserTemplate
     pvSourceEnd = end;
   }
 
+  /*! \brief Check if parser is at end of the source
+   */
+  bool atEnd() const
+  {
+    if(pvCurrentSourcePosition == pvSourceEnd){
+      return true;
+    }
+    /// \todo Check about EOF
+    
+    return false;
+  }
+
   /*! \brief Read one line
    */
-  bool readLine()
+  mdtCsvRecord readLine()
   {
+    mdtCsvRecord record;
     using boost::spirit::qi::char_;
     using boost::phoenix::ref;
     ///using boost::spirit::ascii::space;
 
-    ///bool ok = boost::spirit::qi::phrase_parse(pvCurrentSourcePosition, pvSourceEnd, pvLineRule, space, pvLine);
-//     bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, pvRecordRule, pvLine);
-//     if(ok){
-//       std::cout << "elm: " << pvLine.size() << " , : " << pvLine << std::endl;
-//     }
-    pvRecord.clear();
-    bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, pvRecordRule, pvRecord.rawColumnDataList);
-    if(ok){
-      ///std::cout << "elm: " << pvRowData.size() << std::endl;
-      for(const auto & str : pvRecord.rawColumnDataList){
-        std::cout << str << "|";
-      }
-      std::cout << std::endl;
+    // Special if we reached the end of source, or source is empty
+    /// \todo Check if this should be a error or not
+    if(pvCurrentSourcePosition == pvSourceEnd){
+      return record;
+    }
+    // Parse a line
+    bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, pvRecordRule, record.rawColumnDataList);
+    if(!ok){
+      record.setErrorOccured();
+      /// \todo Store error
     }
 
-    return ok;
+    qDebug() << "record: ";
+    for(int col = 0; col < record.count(); ++col){
+      qDebug() << QString::fromStdString(record.rawColumnDataList.at(col));
+    }
+
+    return record;
   }
 
  private:
 
   SourceIterator pvCurrentSourcePosition;
   SourceIterator pvSourceEnd;
-  
-  ///QVector<std::string> pvRowData;
-  mdtCsvRecord pvRecord;
-  ///std::string pvLine;
-  
-  ///boost::spirit::qi::rule<SourceIterator, std::string(), boost::spirit::ascii::space_type> pvLineRule;
   boost::spirit::qi::rule<SourceIterator, QVector<std::string>()> pvRecordRule;
   boost::spirit::qi::rule<SourceIterator, QVector<std::string>()> pvRecordPayload;
-  
+  boost::spirit::qi::rule<SourceIterator, std::string()> pvFieldColumn;
+  boost::spirit::qi::rule<SourceIterator, std::string()> pvProtectedField;
+  boost::spirit::qi::rule<SourceIterator, std::string()> pvUnprotectedField;
   boost::spirit::qi::rule<SourceIterator, std::string()> pvFieldPayload;
-  
+  boost::spirit::qi::rule<SourceIterator, std::string()> pvRawFieldPayload;
+  boost::spirit::qi::rule<SourceIterator, char()> pvAnychar;
+  boost::spirit::qi::rule<SourceIterator, char()> pvChar;
+  ///boost::spirit::qi::rule<SourceIterator, std::string()> pvSafechar;
+  boost::spirit::qi::rule<SourceIterator, char()> pvSafechar;
   mdtCsvParserSettings pvSettings;
 };
 

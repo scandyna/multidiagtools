@@ -32,6 +32,10 @@ class mdtCsvTest : public mdtTest
   void sandbox();
 
   void settingsTest();
+  void recordTest();
+
+  void stringParserReadLineTest();
+  void stringParserReadLineTest_data();
 };
 
 #endif // #ifndef MDT_CSV_TEST_H

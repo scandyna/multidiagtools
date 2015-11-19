@@ -39,7 +39,12 @@ void mdtCsvStringParser::setSource(const std::string & source)
   pvImpl->setSource(source.cbegin(), source.cend());
 }
 
-bool mdtCsvStringParser::readLine()
+bool mdtCsvStringParser::atEnd() const
+{
+  return pvImpl->atEnd();
+}
+
+mdtCsvRecord mdtCsvStringParser::readLine()
 {
   return pvImpl->readLine();
 }
