@@ -34,6 +34,11 @@ mdtCsvStringParser::~mdtCsvStringParser()
 {
 }
 
+void mdtCsvStringParser::setSettings(const mdtCsvParserSettings& s)
+{
+  pvImpl->setSettings(s);
+}
+
 void mdtCsvStringParser::setSource(const std::string & source)
 {
   pvImpl->setSource(source.cbegin(), source.cend());

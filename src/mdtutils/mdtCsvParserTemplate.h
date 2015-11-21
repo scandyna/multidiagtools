@@ -21,20 +21,22 @@
 #ifndef MDT_CSV_PARSER_TEMPLATE_H
 #define MDT_CSV_PARSER_TEMPLATE_H
 
+// Uncomment those lines to enable parser debuging
 #define BOOST_SPIRIT_DEBUG
 #define BOOST_SPIRIT_DEBUG_TRACENODE
-//#define BOOST_SPIRIT_DEBUG_PRINT_SOME 80
 
-
+#include "mdtError.h"
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
+#include <QChar>
+#include <QString>
+#include <QObject>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/bind.hpp>
 #include <string>
-///#include <vector>
 
 #include <iostream>
 #include <QDebug>
@@ -65,16 +67,9 @@ class mdtCsvParserTemplate
     using boost::spirit::qi::lit;
     using boost::spirit::qi::eol;
     using boost::spirit::ascii::space;
-    
-//     auto fieldSep = pvSettings.fieldSeparator;
-//     auto fieldQuote = pvSettings.fieldProtection;
-    /// \todo adapter settings si ok
-    char fieldSep = ',';
-    char fieldQuote = '\"';
-    
-//     char CR = 0x0D;
-//     char LF = 0x0A;
-//     char TAB = 0x09;
+
+    char fieldSep = pvSettings.fieldSeparator;
+    char fieldQuote = pvSettings.fieldProtection;
     /*
      * Build the grammar
      * Sources:
@@ -84,23 +79,14 @@ class mdtCsvParserTemplate
     pvRecordRule = pvRecordPayload >> eol;
     pvRecordPayload %= pvFieldColumn % char_(fieldSep);
     pvFieldColumn =  pvUnprotectedField | pvProtectedField;
-    ///pvProtectedField = char_(fieldQuote) >> pvFieldPayload >> char_(fieldQuote);
     pvProtectedField = lit(fieldQuote) >> pvFieldPayload >> lit(fieldQuote);
     pvFieldPayload = +pvAnychar;
     pvUnprotectedField %= pvRawFieldPayload;
     pvRawFieldPayload = pvSafechar | (pvSafechar >> *char_ >> pvSafechar);
     pvAnychar = pvChar | char_(fieldSep) | (char_(fieldQuote) >> char_(fieldQuote)) | space; // space matches space, CR, LF and other See std::isspace()
     pvChar = pvSafechar | char_(0x20);  // 0x20 == SPACE char
-    //pvSafechar = char_(0x21, 0xFF) - lit(fieldSep) - lit(fieldQuote); 
-    ///pvSafechar %= char_(0x21, 0xFF);
-    pvSafechar = char_(0x21, 0x7F) - char_(fieldSep) - char_(fieldQuote);
-    ///pvSafechar = char_("0-9a-zA-Z");
-    
-    ///pvRecordPayload %= pvFieldPayload % lit(fieldSep);
-    ///pvUnprotectedField %= pvFieldPayload - eol - lit(fieldSep);
-    ///pvFieldPayload = *(char_ - eol - lit(fieldSep) - lit(fieldQuote));
-    
-    
+    pvSafechar = char_(0x21, 0x7F) - char_(fieldSep) - char_(fieldQuote); /// \todo Should allow all except sep, quote and EOF
+
 //     BOOST_SPIRIT_DEBUG_NODE(pvRecordRule);
 //     BOOST_SPIRIT_DEBUG_NODE(pvRecordPayload);
     BOOST_SPIRIT_DEBUG_NODE(pvFieldColumn);
@@ -122,6 +108,13 @@ class mdtCsvParserTemplate
   /*! \internal Copy disabled
    */
   mdtCsvParserTemplate(const mdtCsvParserTemplate &) = delete;
+
+  /*! \brief Set settings
+   */
+  void setSettings(const mdtCsvParserSettings & s)
+  {
+    pvSettings = s;
+  }
 
   /*! \brief Set source
    */
@@ -161,7 +154,13 @@ class mdtCsvParserTemplate
     bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, pvRecordRule, record.rawColumnDataList);
     if(!ok){
       record.setErrorOccured();
-      /// \todo Store error
+      pvCurrentSourcePosition = pvSourceEnd;
+      /// Store error \todo Better message needed..
+      QString msg = tr("Parsing error occured.");
+      pvLastError.setError(msg, mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtCsvParserTemplate");
+      pvLastError.commit();
+      /// \todo Witch place should the error message be genarated ? F.ex. File parser should output file name..
     }
 
     qDebug() << "record: ";
@@ -174,6 +173,22 @@ class mdtCsvParserTemplate
 
  private:
 
+  /*! \brief Translate (calls QObject::tr() )
+   */
+  QString tr(const char *sourceText)
+  {
+    return QObject::tr(sourceText);
+  }
+  
+  /*! \brief Idées pour unicode:
+   *  - std::vector de QChar ? (voir ce qu'il faut faire pour que QChar fonctionne..
+   *   -> NOTE: QChar: 16 bit avec "tag" de version unicode (unicode actuel, dont UTF-8, peut être > 16bit)
+   *  - Bricoler un genrre de stream QString -> std::string "à la demande"..
+   *  - NOTE: revoir "compatibilité" UTF-8 pour les caractères ASCII (-> ' , ", \n, etc...)
+   *   -> Cela voudrait dire: pvSafechar devrait tout accepter sauf sep et quote (et EOF)
+   *   -> Il faudrait aussi s'assurer que la source soit UTF-8 (et pas UTF-16, UTF-32, ...)
+   */
+
   SourceIterator pvCurrentSourcePosition;
   SourceIterator pvSourceEnd;
   boost::spirit::qi::rule<SourceIterator, QVector<std::string>()> pvRecordRule;
@@ -185,9 +200,9 @@ class mdtCsvParserTemplate
   boost::spirit::qi::rule<SourceIterator, std::string()> pvRawFieldPayload;
   boost::spirit::qi::rule<SourceIterator, char()> pvAnychar;
   boost::spirit::qi::rule<SourceIterator, char()> pvChar;
-  ///boost::spirit::qi::rule<SourceIterator, std::string()> pvSafechar;
   boost::spirit::qi::rule<SourceIterator, char()> pvSafechar;
   mdtCsvParserSettings pvSettings;
+  mdtError pvLastError;
 };
 
 #endif // #ifndef MDT_CSV_PARSER_TEMPLATE_H

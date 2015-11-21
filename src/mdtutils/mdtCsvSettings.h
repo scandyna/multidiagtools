@@ -36,7 +36,7 @@ struct mdtCsvParserSettings
    * As suggested by CSV-1203 standard, rule 4.3,
    *  the default field separator is comma ","
    */
-  std::string fieldSeparator;
+  char fieldSeparator;
 
   /*! \brief Field payload protection
    *
@@ -48,13 +48,13 @@ struct mdtCsvParserSettings
    *  The ability to choose another protection
    *  is a non standard extention.
    */
-  std::string fieldProtection;
+  char fieldProtection;
 
   /*! \brief Constructor
    */
   mdtCsvParserSettings()
-   : fieldSeparator(","),
-     fieldProtection("\"")
+   : fieldSeparator(','),
+     fieldProtection('\"')
   {
   }
 
@@ -64,8 +64,8 @@ struct mdtCsvParserSettings
    */
   void clear()
   {
-    fieldSeparator = ",";
-    fieldProtection = "\"";
+    fieldSeparator = ',';
+    fieldProtection = '\"';
   }
 };
 

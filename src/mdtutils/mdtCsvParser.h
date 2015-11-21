@@ -47,6 +47,10 @@ class mdtCsvStringParser
    */
   mdtCsvStringParser(const mdtCsvStringParser &) = delete;
 
+  /*! \brief Set settings
+   */
+  void setSettings(const mdtCsvParserSettings & s);
+
   /*! \brief Set CSV source string
    */
   void setSource(const std::string & source);

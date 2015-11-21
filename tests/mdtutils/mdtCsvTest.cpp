@@ -75,19 +75,19 @@ void mdtCsvTest::settingsTest()
   /*
    * Initial state
    */
-  QCOMPARE(s.fieldSeparator, string(","));
-  QCOMPARE(s.fieldProtection, string("\""));
+  QCOMPARE(s.fieldSeparator, ',');
+  QCOMPARE(s.fieldProtection, '\"');
   /*
    * Some setup
    */
-  s.fieldSeparator = ";";
-  s.fieldProtection = "'";
+  s.fieldSeparator = ';';
+  s.fieldProtection = '\'';
   /*
    * Clear
    */
   s.clear();
-  QCOMPARE(s.fieldSeparator, string(","));
-  QCOMPARE(s.fieldProtection, string("\""));
+  QCOMPARE(s.fieldSeparator, ',');
+  QCOMPARE(s.fieldProtection, '\"');
 }
 
 void mdtCsvTest::recordTest()
@@ -121,6 +121,7 @@ void mdtCsvTest::stringParserReadLineTest()
   mdtCsvData data;
   QFETCH(QByteArray, sourceData);
   QFETCH(mdtCsvData, expectedData);
+  QFETCH(bool, expectedOk);
 
   // Setup CSV source string and parser
   std::string str = sourceData.toStdString();
@@ -128,7 +129,7 @@ void mdtCsvTest::stringParserReadLineTest()
   // Parse line by line
   while(!parser.atEnd()){
     record = parser.readLine();
-    QVERIFY(!record.errorOccured());
+    QVERIFY(record.errorOccured() == !expectedOk);
     data.addRecord(record);
   }
   // Check
@@ -149,10 +150,13 @@ void mdtCsvTest::stringParserReadLineTest_data()
 {
   QTest::addColumn<QByteArray>("sourceData");
   QTest::addColumn<mdtCsvData>("expectedData");
+  QTest::addColumn<bool>("expectedOk");
 
   QByteArray sourceData;
   mdtCsvRecord expectedRecord;
   mdtCsvData expectedData;
+  const bool Ok = true;
+  const bool Nok = false;
 
   /*
    * Simple CSV tests:
@@ -161,51 +165,52 @@ void mdtCsvTest::stringParserReadLineTest_data()
    *  - EOL: \n and \r\n
    */
   // Empty CSV
+  /// \todo Define if it should be Nok
   sourceData = "";
   expectedData.clear();
-  QTest::newRow("Empty(,|FP:None|EOL:None") << sourceData << expectedData;
+  QTest::newRow("Empty(,|FP:None|EOL:None") << sourceData << expectedData << Ok;
   // Single char CSV - No EOL
   sourceData = "A";
   expectedData.clear();
   expectedRecord.clear();
   expectedRecord.rawColumnDataList << "A";
   expectedData.addRecord(expectedRecord);
-  QTest::newRow("1 char(,|FP:None|EOL:None") << sourceData << expectedData;
+  QTest::newRow("1 char(,|FP:None|EOL:None") << sourceData << expectedData << Nok;
   // Single char CSV - \n EOL
   sourceData = "A\n";
   expectedData.clear();
   expectedRecord.clear();
   expectedRecord.rawColumnDataList << "A";
   expectedData.addRecord(expectedRecord);
-  QTest::newRow("1 char(,|FP:None|EOL:\\n") << sourceData << expectedData;
+  QTest::newRow("1 char(,|FP:None|EOL:\\n") << sourceData << expectedData << Ok;
   // Single char CSV - \n EOL
   sourceData = "A\r\n";
   expectedData.clear();
   expectedRecord.clear();
   expectedRecord.rawColumnDataList << "A";
   expectedData.addRecord(expectedRecord);
-  QTest::newRow("1 char(,|FP:None|EOL:\\r\\n") << sourceData << expectedData;
+  QTest::newRow("1 char(,|FP:None|EOL:\\r\\n") << sourceData << expectedData << Ok;
   // Single line CSV - No EOL
   sourceData = "A,B,C,D";
   expectedData.clear();
   expectedRecord.clear();
   expectedRecord.rawColumnDataList << "A" << "B" << "C" << "D";
   expectedData.addRecord(expectedRecord);
-  QTest::newRow("A,B,C,D") << sourceData << expectedData;
+  QTest::newRow("A,B,C,D") << sourceData << expectedData << Nok;
   // Single line CSV - \n EOL
   sourceData = "A,B,C,D\n";
   expectedData.clear();
   expectedRecord.clear();
   expectedRecord.rawColumnDataList << "A" << "B" << "C" << "D";
   expectedData.addRecord(expectedRecord);
-  QTest::newRow("A,B,C,D\\n") << sourceData << expectedData;
+  QTest::newRow("A,B,C,D\\n") << sourceData << expectedData << Ok;
   // Single line CSV - \r\n EOL
   sourceData = "A,B,C,D\r\n";
   expectedData.clear();
   expectedRecord.clear();
   expectedRecord.rawColumnDataList << "A" << "B" << "C" << "D";
   expectedData.addRecord(expectedRecord);
-  QTest::newRow("A,B,C,D\\r\\n") << sourceData << expectedData;
+  QTest::newRow("A,B,C,D\\r\\n") << sourceData << expectedData << Ok;
   // 2 line CSV - \n EOL
   sourceData = "A,B,C,D\n1,2,3,4\n";
   expectedData.clear();
@@ -215,7 +220,7 @@ void mdtCsvTest::stringParserReadLineTest_data()
   expectedRecord.clear();
   expectedRecord.rawColumnDataList << "1" << "2" << "3" << "4";
   expectedData.addRecord(expectedRecord);
-  QTest::newRow("A,B,C,D\\n1,2,3,4\\n") << sourceData << expectedData;
+  QTest::newRow("A,B,C,D\\n1,2,3,4\\n") << sourceData << expectedData << Ok;
   // 2 line CSV - \r\n EOL
   sourceData = "A,B,C,D\r\n1,2,3,4\r\n";
   expectedData.clear();
@@ -225,7 +230,7 @@ void mdtCsvTest::stringParserReadLineTest_data()
   expectedRecord.clear();
   expectedRecord.rawColumnDataList << "1" << "2" << "3" << "4";
   expectedData.addRecord(expectedRecord);
-  QTest::newRow("A,B,C,D\\r\\n1,2,3,4\\r\\n") << sourceData << expectedData;
+  QTest::newRow("A,B,C,D\\r\\n1,2,3,4\\r\\n") << sourceData << expectedData << Ok;
   /*
    * Quoted CSV tests:
    *  - Field separator: ,
@@ -238,42 +243,57 @@ void mdtCsvTest::stringParserReadLineTest_data()
   expectedRecord.clear();
   expectedRecord.rawColumnDataList << "A";
   expectedData.addRecord(expectedRecord);
-  QTest::newRow("\"A\"\\n") << sourceData << expectedData;
+  QTest::newRow("\"A\"\\n") << sourceData << expectedData << Ok;
   // Single line CSV
   sourceData = "\"A\",\"B\"\n";
   expectedData.clear();
   expectedRecord.clear();
   expectedRecord.rawColumnDataList << "A" << "B";
   expectedData.addRecord(expectedRecord);
-  QTest::newRow("\"A\",\"B\"\\n") << sourceData << expectedData;
+  QTest::newRow("\"A\",\"B\"\\n") << sourceData << expectedData << Ok;
   // Single line CSV with EOL in quoted field
   sourceData = "\"A\nB\",\"C\"\n";
   expectedData.clear();
   expectedRecord.clear();
   expectedRecord.rawColumnDataList << "A\nB" << "C";
   expectedData.addRecord(expectedRecord);
-  QTest::newRow("\"A\\nB\",\"C\"\\n") << sourceData << expectedData;
+  QTest::newRow("\"A\\nB\",\"C\"\\n") << sourceData << expectedData << Ok;
   // Single line CSV with EOL in quoted field
   sourceData = "\"A\r\nB\",\"C\"\n";
   expectedData.clear();
   expectedRecord.clear();
   expectedRecord.rawColumnDataList << "A\r\nB" << "C";
   expectedData.addRecord(expectedRecord);
-  QTest::newRow("\"A\\r\\nB\",\"C\"\\n") << sourceData << expectedData;
+  QTest::newRow("\"A\\r\\nB\",\"C\"\\n") << sourceData << expectedData << Ok;
   // Single line CSV with , in quoted field
   sourceData = "\"A,B\",\"C\"\n";
   expectedData.clear();
   expectedRecord.clear();
   expectedRecord.rawColumnDataList << "A,B" << "C";
   expectedData.addRecord(expectedRecord);
-  QTest::newRow("\"A,B\",\"C\"\\n") << sourceData << expectedData;
+  QTest::newRow("\"A,B\",\"C\"\\n") << sourceData << expectedData << Ok;
   // Single line CSV with double quoted string in quoted field
   sourceData = "\"A\"\"B\"\"\",\"C\"\n";
   expectedData.clear();
   expectedRecord.clear();
   expectedRecord.rawColumnDataList << "A\"B\"" << "C";
   expectedData.addRecord(expectedRecord);
-  QTest::newRow("\"A\"\"B\"\"\",\"C\"\\n") << sourceData << expectedData;
+  QTest::newRow("\"A\"\"B\"\"\",\"C\"\\n") << sourceData << expectedData << Ok;
+  /*
+   * Some tests witch non ASCII strings:
+   *  - Field separator: ,
+   *  - Field protection: "
+   *  - EOL: \n
+   * Note: only edit this part with a UTF-8 editor !
+   */
+  // Non quoted
+  sourceData = "A,é,à,B,è,ü,ö,ä";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.rawColumnDataList << "A" << "é" << "à" << "B" << "è" << "ü" << "ö" << "ä";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow("A,é,à,B,è,ü,ö,ä") << sourceData << expectedData << Ok;
+  /// \todo Add quoted
 
   /// \todo Non ASCII strings
   
