@@ -21,8 +21,6 @@
 #ifndef MDT_CSV_SETTINGS_H
 #define MDT_CSV_SETTINGS_H
 
-#include <string>
-
 /*! \brief CSV parser settings
  *
  * \note Some part of this API documentation

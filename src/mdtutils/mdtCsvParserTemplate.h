@@ -22,24 +22,177 @@
 #define MDT_CSV_PARSER_TEMPLATE_H
 
 // Uncomment those lines to enable parser debuging
-#define BOOST_SPIRIT_DEBUG
+// #define BOOST_SPIRIT_DEBUG
 #define BOOST_SPIRIT_DEBUG_TRACENODE
 
 #include "mdtError.h"
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
-#include <QChar>
-#include <QString>
-#include <QObject>
+
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
+#include <boost/spirit/include/phoenix_fusion.hpp>
+#include <boost/spirit/include/phoenix_bind.hpp>
+///#include <boost/phoenix/bind/bind_member_function.hpp>
 #include <boost/bind.hpp>
+#include <QChar>
+#include <QString>
+#include <QObject>
+
 #include <string>
 
 #include <iostream>
 #include <QDebug>
+
+#include <boost/spirit/include/phoenix_object.hpp>
+#include <boost/fusion/include/adapt_struct.hpp>
+#include <boost/variant/recursive_variant.hpp>
+#include <boost/foreach.hpp>
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+// namespace boost { namespace spirit { namespace traits
+// {
+//   template <>
+//   struct transform_attribute<QChar, char16_t, boost::spirit::qi::domain>
+//   {
+//     static char16_t pre(QChar & c)
+//     {
+//       return 0;
+//     }
+// 
+//     static void post(char16_t & c, const QChar & qc)
+//     {
+//       c = 0;
+//     }
+// 
+//     static void fail(char16_t &)
+//     {
+//     }
+//   };
+// 
+//   template <>
+//   struct transform_attribute<char16_t, QChar, boost::spirit::qi::domain>
+//   {
+//     static QChar pre(char16_t & c)
+//     {
+//       return QChar();
+//     }
+// 
+//     static void post(QChar & qc, const char16_t & c)
+//     {
+//       qc = QChar();
+//     }
+// 
+//     static void fail(QChar &)
+//     {
+//     }
+//   };
+// 
+// }}} // namespace boost { namespace spirit { namespace traits
+
+
+// namespace boost { namespace spirit { namespace traits
+// {
+//   bool operator&&(bool b, const QChar & c)
+//   {
+//     return ( b && (!c.isNull()) );
+//   }
+// 
+// }}} // namespace boost { namespace spirit { namespace traits
+
+// /*! \internal Tell Qi that QChar is a char type
+//  */
+// namespace boost { namespace spirit { namespace traits
+// {
+//   /*! \internal Make Qi recognize QChar as a char
+//    */
+//   template <>
+//   struct is_char<QChar> : mpl::true_
+//   {
+//   };
+// }}} // namespace boost { namespace spirit { namespace traits
+
+// /*! \internal Tell Qi how to use QString as a string type
+//  */
+// namespace boost { namespace spirit { namespace traits
+// {
+//   /*! \internal Make Qi recognize QString as a string
+//    */
+//   template <>
+//   struct is_string<QString> : mpl::true_
+//   {
+//   };
+// 
+//   /*! \internal Tell Qi what type of char it contains
+//    */
+//   template <>
+//   struct char_type_of<QString> : mpl::identity<QChar>
+//   {
+//   };
+// 
+//   /*! \internal ??
+//    */
+// //   template
+// //   struct ischar<QChar, CharEncoding, true>
+// //   {
+// //     static bool call(const QChar &)
+// //     {
+// //       return true;
+// //     }
+// //   };
+// 
+// }}} // namespace boost { namespace spirit { namespace traits
+
+// /*! \internal Tell Qi how to use QString as a container
+//  */
+// namespace boost { namespace spirit { namespace traits
+// {
+//   /*! \internal Make Qi recognize QString as a container
+//    */
+//   template <>
+//   struct is_container<QString> : mpl::true_
+//   {
+//   };
+// 
+//   /*! \internal Expose QString's value_type
+//    */
+//   template <>
+//   struct container_value<QString> : mpl::identity<QChar>
+//   {
+//   };
+// 
+//   /*! \internal Define how to insert a new element at the end of the QString container
+//    *
+//    * \todo Consider UTF-8 !!
+//    */
+//   template <>
+//   struct push_back_container<QString, QChar>
+//   {
+//     /*! \internal call function
+//      */
+//     static bool call(QString & str, const QChar & c)
+//     {
+//       str.append(c);
+//       return true;
+//     }
+//   };
+// }}} // namespace boost { namespace spirit { namespace traits
+
+
+template <typename Iterator>
+struct error_handler
+{
+  void operator()(Iterator first, Iterator last, Iterator err_pos, const boost::spirit::info & what) const
+  {
+  }
+};
+
 
 /*! \brief CSV parser template
  *
@@ -63,20 +216,36 @@ class mdtCsvParserTemplate
    */
   mdtCsvParserTemplate()
   {
-    using boost::spirit::qi::char_;
-    using boost::spirit::qi::lit;
-    using boost::spirit::qi::eol;
+    namespace qi = boost::spirit::qi;
+    namespace phoenix = boost::phoenix;
+    // Parsers
+    using qi::char_;
+    using qi::lit;
+    using qi::eol;
     using boost::spirit::ascii::space;
+    // Error handling
+//     using boost::spirit::qi::on_error;
+//     using boost::spirit::qi::fail;
+//     ///using boost::phoenix::val;
+//     using boost::phoenix::bind;
+//     
+//     using namespace boost::spirit::qi::labels;
+//     using boost::phoenix::construct;
+//     using boost::phoenix::val;
 
     char fieldSep = pvSettings.fieldSeparator;
     char fieldQuote = pvSettings.fieldProtection;
     /*
+     * Give our rules a name (used for error)
+     */
+    pvRecordRule.name("pvRecordRule");
+    /*
      * Build the grammar
      * Sources:
      *  - CSV-1203
-     *  - http://stackoverflow.com/questions/7436481/how-to-make-my-split-work-only-on-one-real-line-and-be-capable-to-skip-quoted-pa/7462539#7462539
      */
-    pvRecordRule = pvRecordPayload >> eol;
+    ///pvRecordRule = pvRecordPayload >> eol;
+    pvRecordRule = pvRecordPayload > eol;
     pvRecordPayload %= pvFieldColumn % char_(fieldSep);
     pvFieldColumn =  pvUnprotectedField | pvProtectedField;
     pvProtectedField = lit(fieldQuote) >> pvFieldPayload >> lit(fieldQuote);
@@ -85,10 +254,26 @@ class mdtCsvParserTemplate
     pvRawFieldPayload = pvSafechar | (pvSafechar >> *char_ >> pvSafechar);
     pvAnychar = pvChar | char_(fieldSep) | (char_(fieldQuote) >> char_(fieldQuote)) | space; // space matches space, CR, LF and other See std::isspace()
     pvChar = pvSafechar | char_(0x20);  // 0x20 == SPACE char
-    pvSafechar = char_(0x21, 0x7F) - char_(fieldSep) - char_(fieldQuote); /// \todo Should allow all except sep, quote and EOF
+//     ///pvSafechar = char_(0x21, 0x7F) - char_(fieldSep) - char_(fieldQuote); /// \todo Should allow all except sep, quote and EOF
+    std::string exclude = std::string(" ") + fieldSep + fieldQuote;
+    pvSafechar = ~char_(exclude);
 
-//     BOOST_SPIRIT_DEBUG_NODE(pvRecordRule);
-//     BOOST_SPIRIT_DEBUG_NODE(pvRecordPayload);
+    ///error_handler<SourceIterator> handler;
+    ///on_error<fail>(pvRecordRule, handler(boost::spirit::qi::_1, boost::spirit::qi::_2, boost::spirit::qi::_3, boost::spirit::_4));
+    ///myErrorHandler<SourceIterator> eh;
+    ///on_error<fail>(pvRecordRule, bind(&myErrorHandler<SourceIterator>::printError, &eh, boost::spirit::qi::_3));
+    ///on_error<fail>(pvRecordRule, bind(&mdtCsvParserTemplate::errorHandler, this, boost::spirit::qi::_3));
+    ///on_error<fail>(pvRecordRule, boost::phoenix::ref(std::cout) << "fail: ");
+    ///qi::on_error<qi::fail>(pvRecordRule, phoenix::bind(&mdtCsvParserTemplate::myErrorHandler, this, qi::_2, qi::_3, qi::_4));
+    qi::on_error<qi::fail>(pvRecordRule, phoenix::bind(&mdtCsvParserTemplate::myErrorHandler, this, qi::_1, qi::_2, qi::_3));
+
+    /*! \todo For exclude, see:
+     *  std::string exclude = std::string(" ,!u..") + '\0';
+     *  pvSafechar = *(~char_(exclude));
+     */
+
+    BOOST_SPIRIT_DEBUG_NODE(pvRecordRule);
+    BOOST_SPIRIT_DEBUG_NODE(pvRecordPayload);
     BOOST_SPIRIT_DEBUG_NODE(pvFieldColumn);
 //     BOOST_SPIRIT_DEBUG_NODE(pvProtectedField);
 //     BOOST_SPIRIT_DEBUG_NODE(pvUnprotectedField);
@@ -103,6 +288,15 @@ class mdtCsvParserTemplate
    */
   ~mdtCsvParserTemplate()
   {
+  }
+
+//   template <typename Context>
+//   static void myErrorHandler(boost::fusion::vector<SourceIterator & , const SourceIterator &, const SourceIterator &> args, Context & context)
+  ///void errorHandler(auto args)
+  ///static void myErrorHandler(boost::fusion::vector<SourceIterator & , const SourceIterator &, const SourceIterator &> args)
+  void myErrorHandler(SourceIterator & first, const SourceIterator & last, const SourceIterator & it)
+  {
+    std::cout << "error, first: " << *first << " , last: " << *last << " , it: " << *it << std::endl;
   }
 
   /*! \internal Copy disabled
@@ -138,9 +332,9 @@ class mdtCsvParserTemplate
 
   /*! \brief Read one line
    */
-  mdtCsvRecord readLine()
+  mdtCsvRawRecord readLine()
   {
-    mdtCsvRecord record;
+    mdtCsvRawRecord record;
     using boost::spirit::qi::char_;
     using boost::phoenix::ref;
     ///using boost::spirit::ascii::space;
@@ -151,7 +345,8 @@ class mdtCsvParserTemplate
       return record;
     }
     // Parse a line
-    bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, pvRecordRule, record.rawColumnDataList);
+    bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, pvRecordRule, record.columnDataList);
+    ///bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, char_);
     if(!ok){
       record.setErrorOccured();
       pvCurrentSourcePosition = pvSourceEnd;
@@ -161,11 +356,6 @@ class mdtCsvParserTemplate
       MDT_ERROR_SET_SRC(pvLastError, "mdtCsvParserTemplate");
       pvLastError.commit();
       /// \todo Witch place should the error message be genarated ? F.ex. File parser should output file name..
-    }
-
-    qDebug() << "record: ";
-    for(int col = 0; col < record.count(); ++col){
-      qDebug() << QString::fromStdString(record.rawColumnDataList.at(col));
     }
 
     return record;
@@ -179,7 +369,7 @@ class mdtCsvParserTemplate
   {
     return QObject::tr(sourceText);
   }
-  
+
   /*! \brief Idées pour unicode:
    *  - std::vector de QChar ? (voir ce qu'il faut faire pour que QChar fonctionne..
    *   -> NOTE: QChar: 16 bit avec "tag" de version unicode (unicode actuel, dont UTF-8, peut être > 16bit)
@@ -191,16 +381,16 @@ class mdtCsvParserTemplate
 
   SourceIterator pvCurrentSourcePosition;
   SourceIterator pvSourceEnd;
-  boost::spirit::qi::rule<SourceIterator, QVector<std::string>()> pvRecordRule;
-  boost::spirit::qi::rule<SourceIterator, QVector<std::string>()> pvRecordPayload;
-  boost::spirit::qi::rule<SourceIterator, std::string()> pvFieldColumn;
-  boost::spirit::qi::rule<SourceIterator, std::string()> pvProtectedField;
-  boost::spirit::qi::rule<SourceIterator, std::string()> pvUnprotectedField;
-  boost::spirit::qi::rule<SourceIterator, std::string()> pvFieldPayload;
-  boost::spirit::qi::rule<SourceIterator, std::string()> pvRawFieldPayload;
-  boost::spirit::qi::rule<SourceIterator, char()> pvAnychar;
-  boost::spirit::qi::rule<SourceIterator, char()> pvChar;
-  boost::spirit::qi::rule<SourceIterator, char()> pvSafechar;
+  boost::spirit::qi::rule<SourceIterator, QVector<std::wstring>()> pvRecordRule;
+  boost::spirit::qi::rule<SourceIterator, QVector<std::wstring>()> pvRecordPayload;
+  boost::spirit::qi::rule<SourceIterator, std::wstring()> pvFieldColumn;
+  boost::spirit::qi::rule<SourceIterator, std::wstring()> pvProtectedField;
+  boost::spirit::qi::rule<SourceIterator, std::wstring()> pvUnprotectedField;
+  boost::spirit::qi::rule<SourceIterator, std::wstring()> pvFieldPayload;
+  boost::spirit::qi::rule<SourceIterator, std::wstring()> pvRawFieldPayload;
+  boost::spirit::qi::rule<SourceIterator, wchar_t()> pvAnychar;
+  boost::spirit::qi::rule<SourceIterator, wchar_t()> pvChar;
+  boost::spirit::qi::rule<SourceIterator, wchar_t()> pvSafechar;
   mdtCsvParserSettings pvSettings;
   mdtError pvLastError;
 };

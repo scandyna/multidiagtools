@@ -23,21 +23,24 @@
 
 #include <QMetaType>
 #include <QVector>
+#include <QString>
 #include <string>
 
-/*! \brief CSV record of data
+/*! \brief CSV record of data template
  *
  * Container for a CSV record (i.e. a row, or a line of data)
  *
+ * \tparam StringType String type for column data
  * \note Some part of this API documentation
  *       refers to CSV-1203 standard.
  *       CSV-1203 is a open standard available here: http://mastpoint.com/csv-1203
  */
-struct mdtCsvRecord
+template <typename StringType>
+struct mdtCsvRecordTemplate
 {
   /*! \brief Constructor
    */
-  mdtCsvRecord()
+  mdtCsvRecordTemplate()
    : pvErrorOccured(false)
   {
   }
@@ -61,17 +64,17 @@ struct mdtCsvRecord
     pvErrorOccured = true;
   }
 
-  /*! \brief Raw record data container
+  /*! \brief Record data container
    *
    * \note It was choosen to use a QVector because it offers copy on write
    */
-  QVector<std::string> rawColumnDataList;
+  QVector<StringType> columnDataList;
 
   /*! \brief Get count of columns in the record
    */
   int count() const
   {
-    return rawColumnDataList.size();
+    return columnDataList.size();
   }
 
   /*! \brief Clear
@@ -80,7 +83,7 @@ struct mdtCsvRecord
    */
   void clear()
   {
-    rawColumnDataList.clear();
+    columnDataList.clear();
     pvErrorOccured = false;
   }
 
@@ -88,7 +91,18 @@ struct mdtCsvRecord
 
   bool pvErrorOccured;
 };
-Q_DECLARE_METATYPE(mdtCsvRecord)
+
+/*! \brief Raw CSV record of data
+ *
+ * Container for a raw CSV record (i.e. a row, or a line of data)
+ */
+typedef mdtCsvRecordTemplate<std::wstring> mdtCsvRawRecord;
+
+/*! \brief CSV record of data
+ *
+ * Container for a CSV record (i.e. a row, or a line of data)
+ */
+typedef mdtCsvRecordTemplate<QString> mdtCsvRecord;
 
 /*! \brief CSV data
  *
@@ -100,31 +114,31 @@ Q_DECLARE_METATYPE(mdtCsvRecord)
  */
 struct mdtCsvData
 {
-  /*! \brief Raw record list
+  /*! \brief Record list
    *
    * \note It was choosen to use a QVector because it offers copy on write
    */
-  QVector<mdtCsvRecord> rawRecordList;
+  QVector<mdtCsvRecord> recordList;
 
   /*! \brief Add a record
    */
   void addRecord(const mdtCsvRecord & record)
   {
-    rawRecordList.append(record);
+    recordList.append(record);
   }
 
   /*! \brief Get records count
    */
   int recordCount() const
   {
-    return rawRecordList.size();
+    return recordList.size();
   }
 
   /*! \brief Clear
    */
   void clear()
   {
-    rawRecordList.clear();
+    recordList.clear();
   }
 };
 Q_DECLARE_METATYPE(mdtCsvData)

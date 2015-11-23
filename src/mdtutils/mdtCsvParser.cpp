@@ -26,7 +26,7 @@
  */
 
 mdtCsvStringParser::mdtCsvStringParser()
- : pvImpl(new mdtCsvParserTemplate<std::string::const_iterator>)
+ : pvImpl(new mdtCsvParserTemplate<std::wstring::const_iterator>)
 {
 }
 
@@ -34,14 +34,21 @@ mdtCsvStringParser::~mdtCsvStringParser()
 {
 }
 
-void mdtCsvStringParser::setSettings(const mdtCsvParserSettings& s)
+void mdtCsvStringParser::setSettings(const mdtCsvParserSettings & s)
 {
   pvImpl->setSettings(s);
 }
 
-void mdtCsvStringParser::setSource(const std::string & source)
+void mdtCsvStringParser::setSource(const QString & source)
 {
-  pvImpl->setSource(source.cbegin(), source.cend());
+  /*
+   * We have to convert source to std::wstring type,
+   * witch is supported by boost::spirit.
+   * A try was made to include QString support in spirit,
+   * but this never worked.
+   */
+  pvSource = source.toStdWString();
+  pvImpl->setSource(pvSource.cbegin(), pvSource.cend());
 }
 
 bool mdtCsvStringParser::atEnd() const
@@ -51,5 +58,14 @@ bool mdtCsvStringParser::atEnd() const
 
 mdtCsvRecord mdtCsvStringParser::readLine()
 {
-  return pvImpl->readLine();
+  mdtCsvRecord record;
+  mdtCsvRawRecord rawRecord;
+
+  rawRecord = pvImpl->readLine();
+  record.columnDataList.reserve(rawRecord.count());
+  for(const auto & data : rawRecord.columnDataList){
+    record.columnDataList.append(QString::fromStdWString(data));
+  }
+
+  return record;
 }
