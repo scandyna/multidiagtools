@@ -22,7 +22,7 @@ classcanvas 128898 class_ref 2036738 // ifstream
 end
 classcanvas 129154 class_ref 2036866 // istreambuf_iterator
   classdiagramsettings member_max_width 0 end
-  xyz 32 539 2000
+  xyz 29 622 2000
 end
 relationcanvas 128258 relation_ref 2362882 // <generalisation>
   from ref 128130 z 2001 to ref 128002

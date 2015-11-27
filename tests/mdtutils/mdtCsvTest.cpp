@@ -117,6 +117,11 @@ void mdtCsvTest::sandbox()
 
 }
 
+void mdtCsvTest::sandbox2()
+{
+  mdtReadIteratorTestFunction();
+}
+
 
 void mdtCsvTest::settingsTest()
 {

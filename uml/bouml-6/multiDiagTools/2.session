@@ -3,11 +3,13 @@ cleanlooks_style
 diagrams
   classdiagram_ref 394882 // mdtCsvFileOld
     760 732 100 4 0 0
-  active  classdiagram_ref 1701506 // mdtCsvParser
+  classdiagram_ref 1701506 // mdtCsvParser
     951 911 100 4 60 0
+  active  classdiagram_ref 1702402 // ifstream
+    951 911 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 3164674 // readLine
+selected classdiagram_ref 1702402 // ifstream
 open
   operation_ref 3172866 // mdtCsvParserTemplate
   operation_ref 3165314 // currentRowData

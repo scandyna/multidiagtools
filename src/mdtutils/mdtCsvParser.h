@@ -70,4 +70,7 @@ class mdtCsvStringParser
   std::wstring pvSource;
 };
 
+/// \todo Sandbox
+void mdtReadIteratorTestFunction();
+
 #endif // #ifndef MDT_CSV_PARSER_H

@@ -22,7 +22,7 @@
 #define MDT_CSV_PARSER_TEMPLATE_H
 
 // Uncomment those lines to enable parser debuging
-// #define BOOST_SPIRIT_DEBUG
+#define BOOST_SPIRIT_DEBUG
 #define BOOST_SPIRIT_DEBUG_TRACENODE
 
 #include "mdtError.h"
@@ -35,7 +35,6 @@
 #include <boost/spirit/include/phoenix_stl.hpp>
 #include <boost/spirit/include/phoenix_fusion.hpp>
 #include <boost/spirit/include/phoenix_bind.hpp>
-///#include <boost/phoenix/bind/bind_member_function.hpp>
 #include <boost/bind.hpp>
 #include <QChar>
 #include <QString>
@@ -55,144 +54,6 @@
 #include <fstream>
 #include <string>
 #include <vector>
-
-// namespace boost { namespace spirit { namespace traits
-// {
-//   template <>
-//   struct transform_attribute<QChar, char16_t, boost::spirit::qi::domain>
-//   {
-//     static char16_t pre(QChar & c)
-//     {
-//       return 0;
-//     }
-// 
-//     static void post(char16_t & c, const QChar & qc)
-//     {
-//       c = 0;
-//     }
-// 
-//     static void fail(char16_t &)
-//     {
-//     }
-//   };
-// 
-//   template <>
-//   struct transform_attribute<char16_t, QChar, boost::spirit::qi::domain>
-//   {
-//     static QChar pre(char16_t & c)
-//     {
-//       return QChar();
-//     }
-// 
-//     static void post(QChar & qc, const char16_t & c)
-//     {
-//       qc = QChar();
-//     }
-// 
-//     static void fail(QChar &)
-//     {
-//     }
-//   };
-// 
-// }}} // namespace boost { namespace spirit { namespace traits
-
-
-// namespace boost { namespace spirit { namespace traits
-// {
-//   bool operator&&(bool b, const QChar & c)
-//   {
-//     return ( b && (!c.isNull()) );
-//   }
-// 
-// }}} // namespace boost { namespace spirit { namespace traits
-
-// /*! \internal Tell Qi that QChar is a char type
-//  */
-// namespace boost { namespace spirit { namespace traits
-// {
-//   /*! \internal Make Qi recognize QChar as a char
-//    */
-//   template <>
-//   struct is_char<QChar> : mpl::true_
-//   {
-//   };
-// }}} // namespace boost { namespace spirit { namespace traits
-
-// /*! \internal Tell Qi how to use QString as a string type
-//  */
-// namespace boost { namespace spirit { namespace traits
-// {
-//   /*! \internal Make Qi recognize QString as a string
-//    */
-//   template <>
-//   struct is_string<QString> : mpl::true_
-//   {
-//   };
-// 
-//   /*! \internal Tell Qi what type of char it contains
-//    */
-//   template <>
-//   struct char_type_of<QString> : mpl::identity<QChar>
-//   {
-//   };
-// 
-//   /*! \internal ??
-//    */
-// //   template
-// //   struct ischar<QChar, CharEncoding, true>
-// //   {
-// //     static bool call(const QChar &)
-// //     {
-// //       return true;
-// //     }
-// //   };
-// 
-// }}} // namespace boost { namespace spirit { namespace traits
-
-// /*! \internal Tell Qi how to use QString as a container
-//  */
-// namespace boost { namespace spirit { namespace traits
-// {
-//   /*! \internal Make Qi recognize QString as a container
-//    */
-//   template <>
-//   struct is_container<QString> : mpl::true_
-//   {
-//   };
-// 
-//   /*! \internal Expose QString's value_type
-//    */
-//   template <>
-//   struct container_value<QString> : mpl::identity<QChar>
-//   {
-//   };
-// 
-//   /*! \internal Define how to insert a new element at the end of the QString container
-//    *
-//    * \todo Consider UTF-8 !!
-//    */
-//   template <>
-//   struct push_back_container<QString, QChar>
-//   {
-//     /*! \internal call function
-//      */
-//     static bool call(QString & str, const QChar & c)
-//     {
-//       str.append(c);
-//       return true;
-//     }
-//   };
-// }}} // namespace boost { namespace spirit { namespace traits
-
-
-template <typename Iterator>
-struct error_handler
-{
-  void operator()(Iterator first, Iterator last, Iterator err_pos, const boost::spirit::info & what) const
-  {
-  }
-};
-
 
 /*! \brief CSV parser template
  *
@@ -254,27 +115,20 @@ class mdtCsvParserTemplate
     pvRawFieldPayload = pvSafechar | (pvSafechar >> *char_ >> pvSafechar);
     pvAnychar = pvChar | char_(fieldSep) | (char_(fieldQuote) >> char_(fieldQuote)) | space; // space matches space, CR, LF and other See std::isspace()
     pvChar = pvSafechar | char_(0x20);  // 0x20 == SPACE char
-//     ///pvSafechar = char_(0x21, 0x7F) - char_(fieldSep) - char_(fieldQuote); /// \todo Should allow all except sep, quote and EOF
+//     pvSafechar = char_(0x21, 0x7F) - char_(fieldSep) - char_(fieldQuote); /// \todo Should allow all except sep, quote and EOF
     std::string exclude = std::string(" ") + fieldSep + fieldQuote;
     pvSafechar = ~char_(exclude);
 
-    ///error_handler<SourceIterator> handler;
-    ///on_error<fail>(pvRecordRule, handler(boost::spirit::qi::_1, boost::spirit::qi::_2, boost::spirit::qi::_3, boost::spirit::_4));
-    ///myErrorHandler<SourceIterator> eh;
-    ///on_error<fail>(pvRecordRule, bind(&myErrorHandler<SourceIterator>::printError, &eh, boost::spirit::qi::_3));
-    ///on_error<fail>(pvRecordRule, bind(&mdtCsvParserTemplate::errorHandler, this, boost::spirit::qi::_3));
-    ///on_error<fail>(pvRecordRule, boost::phoenix::ref(std::cout) << "fail: ");
-    ///qi::on_error<qi::fail>(pvRecordRule, phoenix::bind(&mdtCsvParserTemplate::myErrorHandler, this, qi::_2, qi::_3, qi::_4));
-    qi::on_error<qi::fail>(pvRecordRule, phoenix::bind(&mdtCsvParserTemplate::myErrorHandler, this, qi::_1, qi::_2, qi::_3));
+//     qi::on_success(pvRecordRule, phoenix::bind(&mdtCsvParserTemplate::displaySuccess, this, qi::_1, qi::_2, qi::_3));
+//     qi::on_error<qi::fail>(pvRecordRule, phoenix::bind(&mdtCsvParserTemplate::myErrorHandler, this, qi::_1, qi::_2, qi::_3, qi::_4));
+//     
+//     qi::on_error<qi::fail>(pvRecordPayload, phoenix::bind(&mdtCsvParserTemplate::onRecordPayloadError, this, qi::_1, qi::_2, qi::_3, qi::_4));
+//     qi::on_error<qi::fail>(pvFieldColumn, phoenix::bind(&mdtCsvParserTemplate::onRecordPayloadError, this, qi::_1, qi::_2, qi::_3, qi::_4));
 
-    /*! \todo For exclude, see:
-     *  std::string exclude = std::string(" ,!u..") + '\0';
-     *  pvSafechar = *(~char_(exclude));
-     */
 
-    BOOST_SPIRIT_DEBUG_NODE(pvRecordRule);
-    BOOST_SPIRIT_DEBUG_NODE(pvRecordPayload);
-    BOOST_SPIRIT_DEBUG_NODE(pvFieldColumn);
+//     BOOST_SPIRIT_DEBUG_NODE(pvRecordRule);
+//     BOOST_SPIRIT_DEBUG_NODE(pvRecordPayload);
+//     BOOST_SPIRIT_DEBUG_NODE(pvFieldColumn);
 //     BOOST_SPIRIT_DEBUG_NODE(pvProtectedField);
 //     BOOST_SPIRIT_DEBUG_NODE(pvUnprotectedField);
 //     BOOST_SPIRIT_DEBUG_NODE(pvFieldPayload);
@@ -290,13 +144,40 @@ class mdtCsvParserTemplate
   {
   }
 
-//   template <typename Context>
-//   static void myErrorHandler(boost::fusion::vector<SourceIterator & , const SourceIterator &, const SourceIterator &> args, Context & context)
-  ///void errorHandler(auto args)
-  ///static void myErrorHandler(boost::fusion::vector<SourceIterator & , const SourceIterator &, const SourceIterator &> args)
-  void myErrorHandler(SourceIterator & first, const SourceIterator & last, const SourceIterator & it)
+  void displaySuccess(SourceIterator & first, const SourceIterator & last, const SourceIterator & errorPos)
   {
-    std::cout << "error, first: " << *first << " , last: " << *last << " , it: " << *it << std::endl;
+    std::cout << "OK, first: " << *first << " , last: " << *last << " , errorPos: " << *errorPos << std::endl;
+    std::cout << " -> Complete: " << std::string(first, last) << std::endl;
+    std::cout << " -> Partial: " << std::string(first, errorPos) << std::endl;
+  }
+
+  void myErrorHandler(SourceIterator & first, const SourceIterator & last, const SourceIterator & errorPos, const boost::spirit::info & what)
+  {
+    /**
+     * NOTE: we must differenciate the case of EOL not found in string and other error
+     * NOTE: obove is wrong: this error function is ONLY called if a expectation point fails (not on other failure)
+     */
+    std::cout << "Error REC RULE: " << what << std::endl;
+    std::cout << " -> At: first: " << *first << " , last: " << *last << " , errorPos: " << *errorPos << std::endl;
+    std::cout << " -> " << std::string(first, last) << std::endl;
+  }
+
+  void onRecordPayloadError(SourceIterator & first, const SourceIterator & last, const SourceIterator & errorPos, const boost::spirit::info & what)
+  {
+    using boost::phoenix::construct;
+
+    std::cout << "Error REC payload: " << what << std::endl;
+    std::cout << " -> At: first: " << *first << " , last: " << *last << " , errorPos: " << *errorPos << std::endl;
+    std::cout << " -> : " << construct<std::string>(first, last) << std::endl;
+  }
+
+  void onFieldColumnError(SourceIterator & first, const SourceIterator & last, const SourceIterator & errorPos, const boost::spirit::info & what)
+  {
+    using boost::phoenix::construct;
+
+    std::cout << "Error FIELD column: " << what << std::endl;
+    std::cout << " -> At: first: " << *first << " , last: " << *last << " , errorPos: " << *errorPos << std::endl;
+    std::cout << " -> : " << construct<std::string>(first, last) << std::endl;
   }
 
   /*! \internal Copy disabled
@@ -346,6 +227,35 @@ class mdtCsvParserTemplate
     }
     // Parse a line
     bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, pvRecordRule, record.columnDataList);
+    ///bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, char_);
+    if(!ok){
+      record.setErrorOccured();
+      pvCurrentSourcePosition = pvSourceEnd;
+      /// Store error \todo Better message needed..
+      QString msg = tr("Parsing error occured.");
+      pvLastError.setError(msg, mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtCsvParserTemplate");
+      pvLastError.commit();
+      /// \todo Witch place should the error message be genarated ? F.ex. File parser should output file name..
+    }
+
+    return record;
+  }
+
+  mdtCsvRawRecord readLine(SourceIterator & first, const SourceIterator & last)
+  {
+    mdtCsvRawRecord record;
+    using boost::spirit::qi::char_;
+    using boost::phoenix::ref;
+    ///using boost::spirit::ascii::space;
+
+    // Special if we reached the end of source, or source is empty
+    /// \todo Check if this should be a error or not
+//     if(pvCurrentSourcePosition == pvSourceEnd){
+//       return record;
+//     }
+    // Parse a line
+    bool ok = boost::spirit::qi::parse(first, last, pvRecordRule, record.columnDataList);
     ///bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, char_);
     if(!ok){
       record.setErrorOccured();

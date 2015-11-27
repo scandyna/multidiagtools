@@ -30,6 +30,7 @@ class mdtCsvTest : public mdtTest
  private slots:
 
   void sandbox();
+  void sandbox2();
 
   void settingsTest();
   void recordTest();

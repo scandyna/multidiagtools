@@ -26,22 +26,56 @@
 #include <QFile>
 #include <vector>
 #include <type_traits>
+#include <memory>
+#include <limits>
 
 #include <QDebug>
 
 /// \todo Basic error struct ?????
 
+struct OtherErrorTypePrivate
+{
+  QString msg;
+};
+
+struct mdtEmptyError
+{
+};
+
 template <typename T = /**typename*/ int8_t>
 struct OtherErrorType
 {
   T pvE;
-};
-/// typedef BasicOtherErrorType<int8_t> OtherErrorType;
+  std::unique_ptr<OtherErrorTypePrivate> pv;
+  ///std::shared_ptr<OtherErrorTypePrivate> pv;
+  
+  void setMsg(const QString & msg)
+  {
+    if(!pv){
+      pv = std::unique_ptr<OtherErrorTypePrivate>(new OtherErrorTypePrivate);
+    }
+    pv->msg = msg;
+  }
 
+  QString msg() const
+  {
+    QString s;
+    if(pv){
+      s = pv->msg;
+    }
+    return s;
+  }
+};
+
+typedef OtherErrorType<mdtEmptyError> myErrorType;
 
 void mdtErrorTest::sandbox()
 {
+  myErrorType et;
+
+  qDebug() << "Sizeof et: " << sizeof(et);
   qDebug() << "Sizeof int: " << sizeof(int);
+  qDebug() << "Sizeof std::unique_ptr<int>: " << sizeof(std::unique_ptr<int>);
   qDebug() << "Sizeof QString: " << sizeof(QString);
   qDebug() << "Sizeof mdtError: " << sizeof(mdtError);
   qDebug() << "Sizeof std::vector<QString>: " << sizeof(std::vector<QString>);
@@ -75,7 +109,16 @@ void mdtErrorTest::sandbox()
 //   qDebug() << "Sizeof BasicOtherErrorType<long int>: " << sizeof(BasicOtherErrorType<long int>);
   qDebug() << "Sizeof OtherErrorType<>: " << sizeof(OtherErrorType<>);
   qDebug() << "Sizeof OtherErrorType<int>: " << sizeof(OtherErrorType<int>);
-  
+  OtherErrorType<int> oe;
+  qDebug() << "Sizeof oe: " << sizeof(oe);
+  qDebug() << "Set oe ...";
+  oe.pvE = std::numeric_limits<int>::max();
+  oe.setMsg("Test error msg");
+  qDebug() << "Sizeof oe: " << sizeof(oe);
+  qDebug() << "msg: " << oe.msg();
+  qDebug() << "num: " << oe.pvE;
+  /// \todo think about copy: shared pointer ? Qt's implicit share method ? + also thread safety !!
+  ///auto oe2 = oe;
   
   /// \todo Benchmarks for copying varous version of ErrorStructs
 }
