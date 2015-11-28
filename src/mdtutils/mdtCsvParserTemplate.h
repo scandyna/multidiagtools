@@ -105,8 +105,8 @@ class mdtCsvParserTemplate
      * Sources:
      *  - CSV-1203
      */
-    ///pvRecordRule = pvRecordPayload >> eol;
-    pvRecordRule = pvRecordPayload > eol;
+    pvRecordRule = pvRecordPayload >> eol;
+    ///pvRecordRule = pvRecordPayload > eol;
     pvRecordPayload %= pvFieldColumn % char_(fieldSep);
     pvFieldColumn =  pvUnprotectedField | pvProtectedField;
     pvProtectedField = lit(fieldQuote) >> pvFieldPayload >> lit(fieldQuote);
@@ -126,10 +126,10 @@ class mdtCsvParserTemplate
 //     qi::on_error<qi::fail>(pvFieldColumn, phoenix::bind(&mdtCsvParserTemplate::onRecordPayloadError, this, qi::_1, qi::_2, qi::_3, qi::_4));
 
 
-//     BOOST_SPIRIT_DEBUG_NODE(pvRecordRule);
-//     BOOST_SPIRIT_DEBUG_NODE(pvRecordPayload);
-//     BOOST_SPIRIT_DEBUG_NODE(pvFieldColumn);
-//     BOOST_SPIRIT_DEBUG_NODE(pvProtectedField);
+     BOOST_SPIRIT_DEBUG_NODE(pvRecordRule);
+     BOOST_SPIRIT_DEBUG_NODE(pvRecordPayload);
+     BOOST_SPIRIT_DEBUG_NODE(pvFieldColumn);
+     BOOST_SPIRIT_DEBUG_NODE(pvProtectedField);
 //     BOOST_SPIRIT_DEBUG_NODE(pvUnprotectedField);
 //     BOOST_SPIRIT_DEBUG_NODE(pvFieldPayload);
 //     BOOST_SPIRIT_DEBUG_NODE(pvRawFieldPayload);
@@ -242,34 +242,34 @@ class mdtCsvParserTemplate
     return record;
   }
 
-  mdtCsvRawRecord readLine(SourceIterator & first, const SourceIterator & last)
-  {
-    mdtCsvRawRecord record;
-    using boost::spirit::qi::char_;
-    using boost::phoenix::ref;
-    ///using boost::spirit::ascii::space;
-
-    // Special if we reached the end of source, or source is empty
-    /// \todo Check if this should be a error or not
-//     if(pvCurrentSourcePosition == pvSourceEnd){
-//       return record;
+//   mdtCsvRawRecord readLine(SourceIterator & first, const SourceIterator & last)
+//   {
+//     mdtCsvRawRecord record;
+//     using boost::spirit::qi::char_;
+//     using boost::phoenix::ref;
+//     ///using boost::spirit::ascii::space;
+// 
+//     // Special if we reached the end of source, or source is empty
+//     /// \todo Check if this should be a error or not
+// //     if(pvCurrentSourcePosition == pvSourceEnd){
+// //       return record;
+// //     }
+//     // Parse a line
+//     bool ok = boost::spirit::qi::parse(first, last, pvRecordRule, record.columnDataList);
+//     ///bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, char_);
+//     if(!ok){
+//       record.setErrorOccured();
+//       pvCurrentSourcePosition = pvSourceEnd;
+//       /// Store error \todo Better message needed..
+//       QString msg = tr("Parsing error occured.");
+//       pvLastError.setError(msg, mdtError::Error);
+//       MDT_ERROR_SET_SRC(pvLastError, "mdtCsvParserTemplate");
+//       pvLastError.commit();
+//       /// \todo Witch place should the error message be genarated ? F.ex. File parser should output file name..
 //     }
-    // Parse a line
-    bool ok = boost::spirit::qi::parse(first, last, pvRecordRule, record.columnDataList);
-    ///bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, char_);
-    if(!ok){
-      record.setErrorOccured();
-      pvCurrentSourcePosition = pvSourceEnd;
-      /// Store error \todo Better message needed..
-      QString msg = tr("Parsing error occured.");
-      pvLastError.setError(msg, mdtError::Error);
-      MDT_ERROR_SET_SRC(pvLastError, "mdtCsvParserTemplate");
-      pvLastError.commit();
-      /// \todo Witch place should the error message be genarated ? F.ex. File parser should output file name..
-    }
-
-    return record;
-  }
+// 
+//     return record;
+//   }
 
  private:
 

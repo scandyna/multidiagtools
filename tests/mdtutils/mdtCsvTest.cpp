@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtCsvTest.h"
 #include "mdtCsvParser.h"
+#include "mdtCsvParserIterator.h"
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
 #include "mdtApplication.h"
@@ -31,6 +32,9 @@
 
 #include <iostream>
 #include <QDebug>
+
+/// Sandbox
+#include <mdtCsvParserTemplate.h>
 
 // void mdtCsvTest::sandbox()
 // {
@@ -63,63 +67,143 @@
 // 
 // }
 
-#include <boost/phoenix/core.hpp>
-#include <boost/phoenix/function.hpp>
-#include <vector>
-#include <algorithm>
+// #include <boost/phoenix/core.hpp>
+// #include <boost/phoenix/function.hpp>
+// #include <vector>
+// #include <algorithm>
+// 
+// template <typename F>
+// void print(F f)
+// {
+//   std::cout << f() << std::endl;
+// }
+// 
+// struct isOddImpl
+// {
+//   typedef bool result_type;
+// 
+//   template <typename Arg>
+//   bool operator()(Arg arg1) const
+//   {
+//     return arg1 % 2 == 1;
+//   }
+// };
+// boost::phoenix::function<isOddImpl> isOdd;
 
-template <typename F>
-void print(F f)
-{
-  std::cout << f() << std::endl;
-}
-
-struct isOddImpl
-{
-  typedef bool result_type;
-
-  template <typename Arg>
-  bool operator()(Arg arg1) const
-  {
-    return arg1 % 2 == 1;
-  }
-};
-boost::phoenix::function<isOddImpl> isOdd;
+// void mdtCsvTest::sandbox()
+// {
+//   using boost::phoenix::val;
+//   using boost::phoenix::ref;
+//   using boost::phoenix::arg_names::arg1;
+//   using boost::phoenix::arg_names::arg2;
+// 
+//   print(val(3));
+//   print(val("Hello !"));
+// 
+//   int i = 4;
+//   print(ref(i));
+//   std::string str = "Hello v2";
+// 
+//   i = 5;
+//   std::cout << arg1(i) << std::endl;
+//   i = 6;
+//   std::cout << arg1(i, str) << std::endl;
+//   i = 7;
+//   std::cout << arg2(i, str) << std::endl;
+// 
+//   std::vector<int> v{1,2,2,2,3,4,5,6,7,8,9};
+//   auto it = v.cbegin();
+//   it = std::find_if(it, v.cend(), isOdd(arg1));
+//   std::cout << "it: " << *it << std::endl;
+//   ++it;
+//   it = std::find_if(it, v.cend(), isOdd(arg1));
+//   std::cout << "it: " << *it << std::endl;
+// 
+// }
 
 void mdtCsvTest::sandbox()
 {
-  using boost::phoenix::val;
-  using boost::phoenix::ref;
-  using boost::phoenix::arg_names::arg1;
-  using boost::phoenix::arg_names::arg2;
+  QString str = "A,B,C,D,E,é,ö,à,ä,è,ü\n";
+  ///QString str = "A,B,C,D,E\n";
+  std::wstring wstr = L"A,B,C,D,E,é,ö,à,ä,è,ü\n";
 
-  print(val(3));
-  print(val("Hello !"));
+  mdtCsvParserQStringIterator first(str.begin());
+  mdtCsvParserQStringIterator last(str.end());
 
-  int i = 4;
-  print(ref(i));
-  std::string str = "Hello v2";
+  qDebug() << "sizeof(ushort): " << sizeof(ushort);
+  qDebug() << "sizeof(wchar_t): " << sizeof(wchar_t);
+  qDebug() << "sizeof(std::ptrdiff_t): " << sizeof(std::ptrdiff_t);
+  qDebug() << "sizeof(QChar): " << sizeof(QChar);
+  qDebug() << "sizeof(QChar*): " << sizeof(QChar*);
+  
+  std::wcout << wstr << std::endl;
+  
+  std::wcout << *first << std::endl;
+  std::wcout << "Get it that is first advanced by 2" << std::endl;
+  auto it = first + 2;
+  std::wcout << "it: " << *it << " , first: " << *first << std::endl;
+  std::wcout << "Get it that is first rewind by 2" << std::endl;
+  it = it - 2;
+  std::wcout << "it: " << *it << " , first: " << *first << std::endl;
+  std::wcout << "Advance first by 2" << std::endl;
+  first += 2;
+  std::wcout << "first: " << *first << std::endl;
+  std::wcout << "Rewind first by 2" << std::endl;
+  first -= 2;
+  std::wcout << "first: " << *first << std::endl;
+  std::wcout << "first[3]: " << first[3] << std::endl;
 
-  i = 5;
-  std::cout << arg1(i) << std::endl;
-  i = 6;
-  std::cout << arg1(i, str) << std::endl;
-  i = 7;
-  std::cout << arg2(i, str) << std::endl;
+  while(first != last)
+  {
+    ///qDebug() << first->unicode();
+    ///qDebug() << *first;
+    std::cout << "first < last ?: " << (first < last) << std::endl;
+    std::cout << "first <= last ?: " << (first <= last) << std::endl;
+    std::cout << "first > last ?: " << (first > last) << std::endl;
+    std::cout << "first >= last ?: " << (first >= last) << std::endl;
+    std::wcout << *first << std::endl;
+    ++first;
+  }
+  std::cout << "first < last ?: " << (first < last) << std::endl;
+  std::cout << "first <= last ?: " << (first <= last) << std::endl;
+  std::cout << "first > last ?: " << (first > last) << std::endl;
+  std::cout << "first >= last ?: " << (first >= last) << std::endl;
 
-  std::vector<int> v{1,2,2,2,3,4,5,6,7,8,9};
-  auto it = v.cbegin();
-  it = std::find_if(it, v.cend(), isOdd(arg1));
-  std::cout << "it: " << *it << std::endl;
-  ++it;
-  it = std::find_if(it, v.cend(), isOdd(arg1));
-  std::cout << "it: " << *it << std::endl;
+  
+  --first;
+  std::wcout << *first << std::endl;
+  --first;
+  std::wcout << *first << std::endl;
+  --first;
+  std::wcout << *first << std::endl;
+  --first;
+  std::wcout << *first << std::endl;
+  --first;
+  std::wcout << *first << std::endl;
+  --first;
+  std::wcout << *first << std::endl;
+  --first;
+  std::wcout << *first << std::endl;
+  --first;
+  std::wcout << *first << std::endl;
+  --first;
+  std::wcout << *first << std::endl;
+  --first;
+  std::wcout << *first << std::endl;
+  --first;
+  std::wcout << *first << std::endl;
 
-}
-
-void mdtCsvTest::sandbox2()
-{
-  mdtReadIteratorTestFunction();
+  mdtCsvParserTemplate<mdtCsvParserQStringIterator> parser;
+  parser.setSource(str.cbegin(), str.cend());
+//   mdtCsvParserTemplate<std::wstring::const_iterator> parser;
+//   parser.setSource(wstr.cbegin(), wstr.cend());
+  
+  
+  mdtCsvRawRecord rec = parser.readLine();
+  qDebug() << "Error: " << rec.errorOccured();
+  for(const auto & data : rec.columnDataList){
+    std::wcout << data << std::endl;
+  }
 }
 
 

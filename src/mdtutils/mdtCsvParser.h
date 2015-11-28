@@ -71,6 +71,6 @@ class mdtCsvStringParser
 };
 
 /// \todo Sandbox
-void mdtReadIteratorTestFunction();
+// void mdtReadIteratorTestFunction();
 
 #endif // #ifndef MDT_CSV_PARSER_H
