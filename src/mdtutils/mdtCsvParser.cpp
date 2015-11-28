@@ -287,14 +287,15 @@ bool mdtCsvStringParser::atEnd() const
 
 mdtCsvRecord mdtCsvStringParser::readLine()
 {
-  mdtCsvRecord record;
-  mdtCsvRawRecord rawRecord;
-
-  rawRecord = pvImpl->readLine();
-  record.columnDataList.reserve(rawRecord.count());
-  for(const auto & data : rawRecord.columnDataList){
-    record.columnDataList.append(QString::fromStdWString(data));
-  }
-
-  return record;
+  return pvImpl->readLine();
+//   mdtCsvRecord record;
+//   mdtCsvRawRecord rawRecord;
+// 
+//   rawRecord = pvImpl->readLine();
+//   record.columnDataList.reserve(rawRecord.count());
+//   for(const auto & data : rawRecord.columnDataList){
+//     record.columnDataList.append(QString::fromStdWString(data));
+//   }
+// 
+//   return record;
 }

@@ -536,12 +536,27 @@ void mdtCsvTest::stringParserReadLineTest_data()
    * Note: only edit this part with a UTF-8 editor !
    */
   // Non quoted
-  sourceData = "A,é,à,B,è,ü,ö,ä";
+  sourceData = u8"A,é,à,B,è,ü,ö,ä,\u03B1\n";
   expectedData.clear();
   expectedRecord.clear();
-  expectedRecord.columnDataList << "A" << "é" << "à" << "B" << "è" << "ü" << "ö" << "ä";
+  expectedRecord.columnDataList << "A" << "é" << "à" << "B" << "è" << "ü" << "ö" << "ä" << u8"\u03B1";
   expectedData.addRecord(expectedRecord);
-  QTest::newRow("A,é,à,B,è,ü,ö,ä") << sourceData << expectedData << Ok;
+  QTest::newRow(u8"A,é,à,B,è,ü,ö,ä,\u03B1\\n") << sourceData << expectedData << Ok;
+  // Quoted
+  sourceData = u8"\"A\",\"é\",\"à\",\"B\",\"è\",\"ü\",\"ö\",\"ä\",\"\u03B1\"\n";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "A" << "é" << "à" << "B" << "è" << "ü" << "ö" << "ä" << u8"\u03B1";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow(u8"\"A\",\"é\",\"à\",\"B\",\"è\",\"ü\",\"ö\",\"ä\",\"\u03B1\"\\n") << sourceData << expectedData << Ok;
+  // Quoted
+  sourceData = u8"\"A,é\",\"à,B\",\"è,ü\",\"ö,ä,\u03B1\"\n";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.columnDataList << u8"A,é" << u8"à,B" << u8"è,ü" << u8"ö,ä,\u03B1";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow(u8"\"A,é\",\"à,B\",\"è,ü\",\"ö,ä,\u03B1\"\\n") << sourceData << expectedData << Ok;
+
   /// \todo Add quoted
 
   /// \todo Non ASCII strings

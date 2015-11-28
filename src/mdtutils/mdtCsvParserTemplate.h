@@ -22,8 +22,8 @@
 #define MDT_CSV_PARSER_TEMPLATE_H
 
 // Uncomment those lines to enable parser debuging
-#define BOOST_SPIRIT_DEBUG
-#define BOOST_SPIRIT_DEBUG_TRACENODE
+// #define BOOST_SPIRIT_DEBUG
+// #define BOOST_SPIRIT_DEBUG_TRACENODE
 
 #include "mdtError.h"
 #include "mdtCsvSettings.h"
@@ -36,8 +36,15 @@
 #include <boost/spirit/include/phoenix_fusion.hpp>
 #include <boost/spirit/include/phoenix_bind.hpp>
 #include <boost/bind.hpp>
+
+#include <boost/spirit/include/phoenix_object.hpp>
+#include <boost/fusion/include/adapt_struct.hpp>
+#include <boost/variant/recursive_variant.hpp>
+#include <boost/foreach.hpp>
+
 #include <QChar>
 #include <QString>
+
 #include <QObject>
 
 #include <string>
@@ -45,15 +52,66 @@
 #include <iostream>
 #include <QDebug>
 
-#include <boost/spirit/include/phoenix_object.hpp>
-#include <boost/fusion/include/adapt_struct.hpp>
-#include <boost/variant/recursive_variant.hpp>
-#include <boost/foreach.hpp>
 
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
+
+namespace boost { namespace spirit { namespace traits
+{
+  /*! \internal Make Qi recognize QString as a container
+   */
+  template <>
+  struct is_container<QString> : mpl::true_
+  {
+  };
+
+  /*! \internal Expose QString's value_type
+   */
+  template <>
+  struct container_value<QString> : mpl::identity<QChar>
+  {
+  };
+
+  /*! \internal Define how to insert a new element at the end of the QString container
+   */
+  template <typename T>
+  struct push_back_container<QString, T>
+  {
+    /*! \internal call function
+     */
+    static bool call(QString & str, const QChar & c)
+    {
+      str.append(c);
+      return true;
+    }
+  };
+
+  /*! \internal Test if a QString is empty (required for debug)
+  */
+  template <>
+  struct is_empty_container<QString>
+  {
+    static bool call(const QString & c)
+    {
+      return c.isEmpty();
+    }
+  };
+
+  /*! \internal Define how to stream a QString (required for debug)
+   */
+  template <typename Out, typename Enable>
+  struct print_attribute_debug<Out, QString, Enable>
+  {
+    static void call(Out & out, const QString & val)
+    {
+      out << val.toStdString();
+    }
+  };
+
+}}} // namespace boost { namespace spirit { namespace traits
+
 
 /*! \brief CSV parser template
  *
@@ -84,22 +142,13 @@ class mdtCsvParserTemplate
     using qi::lit;
     using qi::eol;
     using boost::spirit::ascii::space;
-    // Error handling
-//     using boost::spirit::qi::on_error;
-//     using boost::spirit::qi::fail;
-//     ///using boost::phoenix::val;
-//     using boost::phoenix::bind;
-//     
-//     using namespace boost::spirit::qi::labels;
-//     using boost::phoenix::construct;
-//     using boost::phoenix::val;
 
     char fieldSep = pvSettings.fieldSeparator;
     char fieldQuote = pvSettings.fieldProtection;
     /*
      * Give our rules a name (used for error)
      */
-    pvRecordRule.name("pvRecordRule");
+//     pvRecordRule.name("pvRecordRule");
     /*
      * Build the grammar
      * Sources:
@@ -121,21 +170,18 @@ class mdtCsvParserTemplate
 
 //     qi::on_success(pvRecordRule, phoenix::bind(&mdtCsvParserTemplate::displaySuccess, this, qi::_1, qi::_2, qi::_3));
 //     qi::on_error<qi::fail>(pvRecordRule, phoenix::bind(&mdtCsvParserTemplate::myErrorHandler, this, qi::_1, qi::_2, qi::_3, qi::_4));
-//     
-//     qi::on_error<qi::fail>(pvRecordPayload, phoenix::bind(&mdtCsvParserTemplate::onRecordPayloadError, this, qi::_1, qi::_2, qi::_3, qi::_4));
-//     qi::on_error<qi::fail>(pvFieldColumn, phoenix::bind(&mdtCsvParserTemplate::onRecordPayloadError, this, qi::_1, qi::_2, qi::_3, qi::_4));
 
 
-     BOOST_SPIRIT_DEBUG_NODE(pvRecordRule);
-//      BOOST_SPIRIT_DEBUG_NODE(pvRecordPayload);
-//      BOOST_SPIRIT_DEBUG_NODE(pvFieldColumn);
-//      BOOST_SPIRIT_DEBUG_NODE(pvProtectedField);
-//     BOOST_SPIRIT_DEBUG_NODE(pvUnprotectedField);
-//     BOOST_SPIRIT_DEBUG_NODE(pvFieldPayload);
-//     BOOST_SPIRIT_DEBUG_NODE(pvRawFieldPayload);
-//     BOOST_SPIRIT_DEBUG_NODE(pvAnychar);
-//     BOOST_SPIRIT_DEBUG_NODE(pvChar);
-//     BOOST_SPIRIT_DEBUG_NODE(pvSafechar);
+    BOOST_SPIRIT_DEBUG_NODE(pvRecordRule);
+    BOOST_SPIRIT_DEBUG_NODE(pvRecordPayload);
+    BOOST_SPIRIT_DEBUG_NODE(pvFieldColumn);
+    BOOST_SPIRIT_DEBUG_NODE(pvProtectedField);
+    BOOST_SPIRIT_DEBUG_NODE(pvUnprotectedField);
+    BOOST_SPIRIT_DEBUG_NODE(pvFieldPayload);
+    BOOST_SPIRIT_DEBUG_NODE(pvRawFieldPayload);
+    BOOST_SPIRIT_DEBUG_NODE(pvAnychar);
+    BOOST_SPIRIT_DEBUG_NODE(pvChar);
+    BOOST_SPIRIT_DEBUG_NODE(pvSafechar);
   }
 
   /*! \brief Destructor
@@ -160,24 +206,6 @@ class mdtCsvParserTemplate
     std::cout << "Error REC RULE: " << what << std::endl;
     std::cout << " -> At: first: " << *first << " , last: " << *last << " , errorPos: " << *errorPos << std::endl;
     std::cout << " -> " << std::string(first, last) << std::endl;
-  }
-
-  void onRecordPayloadError(SourceIterator & first, const SourceIterator & last, const SourceIterator & errorPos, const boost::spirit::info & what)
-  {
-    using boost::phoenix::construct;
-
-    std::cout << "Error REC payload: " << what << std::endl;
-    std::cout << " -> At: first: " << *first << " , last: " << *last << " , errorPos: " << *errorPos << std::endl;
-    std::cout << " -> : " << construct<std::string>(first, last) << std::endl;
-  }
-
-  void onFieldColumnError(SourceIterator & first, const SourceIterator & last, const SourceIterator & errorPos, const boost::spirit::info & what)
-  {
-    using boost::phoenix::construct;
-
-    std::cout << "Error FIELD column: " << what << std::endl;
-    std::cout << " -> At: first: " << *first << " , last: " << *last << " , errorPos: " << *errorPos << std::endl;
-    std::cout << " -> : " << construct<std::string>(first, last) << std::endl;
   }
 
   /*! \internal Copy disabled
@@ -213,12 +241,11 @@ class mdtCsvParserTemplate
 
   /*! \brief Read one line
    */
-  mdtCsvRawRecord readLine()
+  mdtCsvRecord readLine()
   {
-    mdtCsvRawRecord record;
+    mdtCsvRecord record;
     using boost::spirit::qi::char_;
     using boost::phoenix::ref;
-    ///using boost::spirit::ascii::space;
 
     // Special if we reached the end of source, or source is empty
     /// \todo Check if this should be a error or not
@@ -227,7 +254,6 @@ class mdtCsvParserTemplate
     }
     // Parse a line
     bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, pvRecordRule, record.columnDataList);
-    ///bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, char_);
     if(!ok){
       record.setErrorOccured();
       pvCurrentSourcePosition = pvSourceEnd;
@@ -241,35 +267,6 @@ class mdtCsvParserTemplate
 
     return record;
   }
-
-//   mdtCsvRawRecord readLine(SourceIterator & first, const SourceIterator & last)
-//   {
-//     mdtCsvRawRecord record;
-//     using boost::spirit::qi::char_;
-//     using boost::phoenix::ref;
-//     ///using boost::spirit::ascii::space;
-// 
-//     // Special if we reached the end of source, or source is empty
-//     /// \todo Check if this should be a error or not
-// //     if(pvCurrentSourcePosition == pvSourceEnd){
-// //       return record;
-// //     }
-//     // Parse a line
-//     bool ok = boost::spirit::qi::parse(first, last, pvRecordRule, record.columnDataList);
-//     ///bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, char_);
-//     if(!ok){
-//       record.setErrorOccured();
-//       pvCurrentSourcePosition = pvSourceEnd;
-//       /// Store error \todo Better message needed..
-//       QString msg = tr("Parsing error occured.");
-//       pvLastError.setError(msg, mdtError::Error);
-//       MDT_ERROR_SET_SRC(pvLastError, "mdtCsvParserTemplate");
-//       pvLastError.commit();
-//       /// \todo Witch place should the error message be genarated ? F.ex. File parser should output file name..
-//     }
-// 
-//     return record;
-//   }
 
  private:
 
@@ -291,13 +288,20 @@ class mdtCsvParserTemplate
 
   SourceIterator pvCurrentSourcePosition;
   SourceIterator pvSourceEnd;
-  boost::spirit::qi::rule<SourceIterator, QVector<std::wstring>()> pvRecordRule;
-  boost::spirit::qi::rule<SourceIterator, QVector<std::wstring>()> pvRecordPayload;
-  boost::spirit::qi::rule<SourceIterator, std::wstring()> pvFieldColumn;
-  boost::spirit::qi::rule<SourceIterator, std::wstring()> pvProtectedField;
-  boost::spirit::qi::rule<SourceIterator, std::wstring()> pvUnprotectedField;
-  boost::spirit::qi::rule<SourceIterator, std::wstring()> pvFieldPayload;
-  boost::spirit::qi::rule<SourceIterator, std::wstring()> pvRawFieldPayload;
+//   boost::spirit::qi::rule<SourceIterator, QVector<std::wstring>()> pvRecordRule;
+//   boost::spirit::qi::rule<SourceIterator, QVector<std::wstring>()> pvRecordPayload;
+//   boost::spirit::qi::rule<SourceIterator, std::wstring()> pvFieldColumn;
+//   boost::spirit::qi::rule<SourceIterator, std::wstring()> pvProtectedField;
+//   boost::spirit::qi::rule<SourceIterator, std::wstring()> pvUnprotectedField;
+//   boost::spirit::qi::rule<SourceIterator, std::wstring()> pvFieldPayload;
+//   boost::spirit::qi::rule<SourceIterator, std::wstring()> pvRawFieldPayload;
+  boost::spirit::qi::rule<SourceIterator, QVector<QString>()> pvRecordRule;
+  boost::spirit::qi::rule<SourceIterator, QVector<QString>()> pvRecordPayload;
+  boost::spirit::qi::rule<SourceIterator, QString()> pvFieldColumn;
+  boost::spirit::qi::rule<SourceIterator, QString()> pvProtectedField;
+  boost::spirit::qi::rule<SourceIterator, QString()> pvUnprotectedField;
+  boost::spirit::qi::rule<SourceIterator, QString()> pvFieldPayload;
+  boost::spirit::qi::rule<SourceIterator, QString()> pvRawFieldPayload;
   boost::spirit::qi::rule<SourceIterator, wchar_t()> pvAnychar;
   boost::spirit::qi::rule<SourceIterator, wchar_t()> pvChar;
   boost::spirit::qi::rule<SourceIterator, wchar_t()> pvSafechar;

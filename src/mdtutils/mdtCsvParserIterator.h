@@ -45,7 +45,6 @@ struct mdtCsvParserQStringIterator
   static_assert(sizeof(wchar_t) >= 2, "wchar_t is < 16 bit");
 
   typedef wchar_t value_type;
-  ///typedef QString::iterator difference_type;  // aka QChar*
   typedef std::ptrdiff_t difference_type;
   typedef const value_type & reference;
   typedef const value_type* pointer;
@@ -158,13 +157,9 @@ struct mdtCsvParserQStringIterator
 
   /*! \brief Get pointed value
    */
-  ///reference operator*() const
   value_type operator*() const
   {
     Q_ASSERT(index != nullptr);
-    ///return *index;
-//     value = index->unicode();
-//     return value;
     return index->unicode();
   }
 
@@ -173,13 +168,11 @@ struct mdtCsvParserQStringIterator
   value_type operator[](difference_type i) const
   {
     Q_ASSERT(index != nullptr);
-//     value = index[i].unicode();
-//     return value;
     return index[i].unicode();
   }
 
-  /*! \brief Get a pointer to value
-   */
+//   /*! \brief Get a pointer to value
+//    */
 //   pointer operator->() const
 //   {
 //     Q_ASSERT(index != nullptr);
