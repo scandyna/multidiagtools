@@ -127,9 +127,9 @@ class mdtCsvParserTemplate
 
 
      BOOST_SPIRIT_DEBUG_NODE(pvRecordRule);
-     BOOST_SPIRIT_DEBUG_NODE(pvRecordPayload);
-     BOOST_SPIRIT_DEBUG_NODE(pvFieldColumn);
-     BOOST_SPIRIT_DEBUG_NODE(pvProtectedField);
+//      BOOST_SPIRIT_DEBUG_NODE(pvRecordPayload);
+//      BOOST_SPIRIT_DEBUG_NODE(pvFieldColumn);
+//      BOOST_SPIRIT_DEBUG_NODE(pvProtectedField);
 //     BOOST_SPIRIT_DEBUG_NODE(pvUnprotectedField);
 //     BOOST_SPIRIT_DEBUG_NODE(pvFieldPayload);
 //     BOOST_SPIRIT_DEBUG_NODE(pvRawFieldPayload);

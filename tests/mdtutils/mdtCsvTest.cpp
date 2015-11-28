@@ -193,17 +193,17 @@ void mdtCsvTest::sandbox()
   --first;
   std::wcout << *first << std::endl;
 
-  mdtCsvParserTemplate<mdtCsvParserQStringIterator> parser;
-  parser.setSource(str.cbegin(), str.cend());
-//   mdtCsvParserTemplate<std::wstring::const_iterator> parser;
-//   parser.setSource(wstr.cbegin(), wstr.cend());
-  
-  
-  mdtCsvRawRecord rec = parser.readLine();
-  qDebug() << "Error: " << rec.errorOccured();
-  for(const auto & data : rec.columnDataList){
-    std::wcout << data << std::endl;
-  }
+//   mdtCsvParserTemplate<mdtCsvParserQStringIterator> parser;
+//   parser.setSource(str.cbegin(), str.cend());
+// //   mdtCsvParserTemplate<std::wstring::const_iterator> parser;
+// //   parser.setSource(wstr.cbegin(), wstr.cend());
+//   
+//   
+//   mdtCsvRawRecord rec = parser.readLine();
+//   qDebug() << "Error: " << rec.errorOccured();
+//   for(const auto & data : rec.columnDataList){
+//     std::wcout << data << std::endl;
+//   }
 }
 
 
@@ -251,6 +251,104 @@ void mdtCsvTest::recordTest()
   record.clear();
   QVERIFY(!record.errorOccured());
   QCOMPARE(record.count(), 0);
+}
+
+void mdtCsvTest::dataTest()
+{
+  QFAIL("Not implemented yet");
+}
+
+void mdtCsvTest::csvParserQStringIteratorTest()
+{
+  QString str;
+  ///wchar_t c;
+
+  /*
+   * Constructs and assignements
+   */
+  str = "ABCDEF";
+  // Direct assignement
+  mdtCsvParserQStringIterator it(str.cbegin());
+  QCOMPARE(*it, wchar_t('A'));
+  // Default constructed
+  mdtCsvParserQStringIterator first, last;
+  // Assignement
+  first = str.cbegin();
+  QCOMPARE(*first, wchar_t('A'));
+  last = first;
+  QCOMPARE(*last, wchar_t('A'));
+  /*
+   * Increment
+   */
+  it = str.cbegin();
+  QCOMPARE(*it, wchar_t('A'));
+  // Pre-increment
+  ++it;
+  QCOMPARE(*it, wchar_t('B'));
+  // Post-increment
+  QCOMPARE(*it++, wchar_t('B'));
+  QCOMPARE(*it, wchar_t('C'));
+  /*
+   * Decrement
+   */
+  it = str.cbegin();
+  QCOMPARE(*it, wchar_t('A'));
+  ++it;
+  ++it;
+  QCOMPARE(*it, wchar_t('C'));
+  // Pre-decrement
+  --it;
+  QCOMPARE(*it, wchar_t('B'));
+  // Post-decrement
+  QCOMPARE(*it--, wchar_t('B'));
+  QCOMPARE(*it, wchar_t('A'));
+  /*
+   * Increment and decrement by n
+   */
+  it = str.cbegin();
+  QCOMPARE(*it, wchar_t('A'));
+  it += 2;
+  QCOMPARE(*it, wchar_t('C'));
+  it -= 2;
+  QCOMPARE(*it, wchar_t('A'));
+  first = it;
+  it = first + 2;
+  QCOMPARE(*it, wchar_t('C'));
+  first = it - 1;
+  QCOMPARE(*first, wchar_t('B'));
+  /*
+   * Index based access
+   */
+  it = str.cbegin();
+  QCOMPARE(it[0], wchar_t('A'));
+  QCOMPARE(it[1], wchar_t('B'));
+  QCOMPARE(it[2], wchar_t('C'));
+  /*
+   * Comparisons
+   */
+  first = str.cbegin();
+  it = first;
+  QVERIFY(it == first);
+  QVERIFY(!(it != first));
+  QVERIFY(!(it < first));
+  QVERIFY(it <= first);
+  QVERIFY(!(it > first));
+  QVERIFY(it >= first);
+  // Increment it and check
+  ++it;
+  QVERIFY(!(it == first));
+  QVERIFY(it != first);
+  QVERIFY(!(it < first));
+  QVERIFY(!(it <= first));
+  QVERIFY(it > first);
+  QVERIFY(it >= first);
+  
+
+}
+
+void mdtCsvTest::csvParserQStringIteratorBenchmark()
+{
+
 }
 
 void mdtCsvTest::stringParserReadLineTest()

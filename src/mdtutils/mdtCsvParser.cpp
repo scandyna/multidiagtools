@@ -251,7 +251,8 @@
  */
 
 mdtCsvStringParser::mdtCsvStringParser()
- : pvImpl(new mdtCsvParserTemplate<std::wstring::const_iterator>)
+/// : pvImpl(new mdtCsvParserTemplate<std::wstring::const_iterator>)
+ : pvImpl(new mdtCsvParserTemplate<mdtCsvParserQStringIterator>)
 {
 }
 
@@ -272,8 +273,11 @@ void mdtCsvStringParser::setSource(const QString & source)
    * A try was made to include QString support in spirit,
    * but this disi not work.
    */
+  /**
   pvSource = source.toStdWString();
   pvImpl->setSource(pvSource.cbegin(), pvSource.cend());
+  */
+  pvImpl->setSource(source.cbegin(), source.cend());
 }
 
 bool mdtCsvStringParser::atEnd() const

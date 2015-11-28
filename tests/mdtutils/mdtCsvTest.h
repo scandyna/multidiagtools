@@ -33,6 +33,10 @@ class mdtCsvTest : public mdtTest
 
   void settingsTest();
   void recordTest();
+  void dataTest();
+
+  void csvParserQStringIteratorTest();
+  void csvParserQStringIteratorBenchmark();
 
   void stringParserReadLineTest();
   void stringParserReadLineTest_data();

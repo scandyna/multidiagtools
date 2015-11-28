@@ -23,14 +23,16 @@
 
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
+#include "mdtCsvParserIterator.h"
 #include <QString>
 #include <memory>
+
 #include <string>
 
 template <typename InputIterator>
 class mdtCsvParserTemplate;
 
-/*! \brief CSV parser that acts on a std::string as input
+/*! \brief CSV parser that acts on a QString as input
  */
 class mdtCsvStringParser
 {
@@ -53,6 +55,9 @@ class mdtCsvStringParser
   void setSettings(const mdtCsvParserSettings & s);
 
   /*! \brief Set CSV source string
+   *
+   * \note Parsing will be done directly on source
+   *       Make shure that it is not detached during parsing process
    */
   void setSource(const QString & source);
 
@@ -66,8 +71,9 @@ class mdtCsvStringParser
 
  private:
 
-  std::unique_ptr<mdtCsvParserTemplate<std::wstring::const_iterator> > pvImpl;
-  std::wstring pvSource;
+  ///std::unique_ptr<mdtCsvParserTemplate<std::wstring::const_iterator> > pvImpl;
+  std::unique_ptr<mdtCsvParserTemplate<mdtCsvParserQStringIterator> > pvImpl;
+  ///std::wstring pvSource;
 };
 
 /// \todo Sandbox

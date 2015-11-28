@@ -26,10 +26,24 @@
 #include <iterator>
 #include <cstddef>
 
-/*! \brief
+/*! \brief Iterator that acts on QString
+ *
+ * This iterator was made for mdtCsvStringParser
+ *  to be able to parse QString directly.
+ *
+ * Parsing is done by using Boost.Spirit,
+ *  witch handles wchar_t and std::wstring,
+ *  but not QString.
+ *  The trick here is when accessing
+ *  the item of the iterator,
+ *  QChar::unicode() is invoked.
+ *  This way, Spirit sees wchar_t
+ *  and can do needed comparisons.
  */
 struct mdtCsvParserQStringIterator
 {
+  static_assert(sizeof(wchar_t) >= 2, "wchar_t is < 16 bit");
+
   typedef wchar_t value_type;
   ///typedef QString::iterator difference_type;  // aka QChar*
   typedef std::ptrdiff_t difference_type;
