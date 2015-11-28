@@ -29,6 +29,7 @@
 #include <QString>
 #include <QByteArray>
 #include <string>
+#include <vector>
 
 #include <iostream>
 #include <QDebug>
@@ -342,13 +343,25 @@ void mdtCsvTest::csvParserQStringIteratorTest()
   QVERIFY(!(it <= first));
   QVERIFY(it > first);
   QVERIFY(it >= first);
-  
-
 }
 
 void mdtCsvTest::csvParserQStringIteratorBenchmark()
 {
+  QString source = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+  std::vector<wchar_t> destination;
 
+  destination.reserve(source.size());
+  QBENCHMARK
+  {
+    destination.clear();
+    mdtCsvParserQStringIterator first(source.cbegin());
+    mdtCsvParserQStringIterator last(source.cend());
+    while(first != last){
+      destination.push_back(*first);
+      ++first;
+    }
+  }
+  QCOMPARE((int)destination.size(), source.size());
 }
 
 void mdtCsvTest::stringParserReadLineTest()

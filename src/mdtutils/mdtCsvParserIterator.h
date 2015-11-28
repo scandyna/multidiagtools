@@ -156,32 +156,35 @@ struct mdtCsvParserQStringIterator
     return *this;
   }
 
-  /*! \brief Access pointed value
+  /*! \brief Get pointed value
    */
-  reference operator*() const
+  ///reference operator*() const
+  value_type operator*() const
   {
     Q_ASSERT(index != nullptr);
     ///return *index;
-    value = index->unicode();
-    return value;
+//     value = index->unicode();
+//     return value;
+    return index->unicode();
   }
 
-  /*! \brief Access value by index
+  /*! \brief Get value by index
    */
-  reference operator[](difference_type i) const
+  value_type operator[](difference_type i) const
   {
     Q_ASSERT(index != nullptr);
-    value = index[i].unicode();
-    return value;
+//     value = index[i].unicode();
+//     return value;
+    return index[i].unicode();
   }
 
   /*! \brief Get a pointer to value
    */
-  pointer operator->() const
-  {
-    Q_ASSERT(index != nullptr);
-    return &**this;
-  }
+//   pointer operator->() const
+//   {
+//     Q_ASSERT(index != nullptr);
+//     return &**this;
+//   }
 
   /*! \brief Returns true if iterator a refers to same item than iterator b
    */
