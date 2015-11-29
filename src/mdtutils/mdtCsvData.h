@@ -92,12 +92,6 @@ struct mdtCsvRecordTemplate
   bool pvErrorOccured;
 };
 
-/*! \brief Raw CSV record of data
- *
- * Container for a raw CSV record (i.e. a row, or a line of data)
- */
-typedef mdtCsvRecordTemplate<std::wstring> mdtCsvRawRecord;
-
 /*! \brief CSV record of data
  *
  * Container for a CSV record (i.e. a row, or a line of data)

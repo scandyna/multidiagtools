@@ -21,6 +21,8 @@
 #include "mdtCsvTest.h"
 #include "mdtCsvParser.h"
 #include "mdtCsvParserIterator.h"
+#include "mdtCsvFileParserIterator.h"
+#include "mdtCsvFileParserIteratorSharedData.h"
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
 #include "mdtApplication.h"
@@ -124,87 +126,7 @@
 
 void mdtCsvTest::sandbox()
 {
-  QString str = "A,B,C,D,E,é,ö,à,ä,è,ü\n";
-  ///QString str = "A,B,C,D,E\n";
-  std::wstring wstr = L"A,B,C,D,E,é,ö,à,ä,è,ü\n";
-
-  mdtCsvParserQStringIterator first(str.begin());
-  mdtCsvParserQStringIterator last(str.end());
-
-  qDebug() << "sizeof(ushort): " << sizeof(ushort);
-  qDebug() << "sizeof(wchar_t): " << sizeof(wchar_t);
-  qDebug() << "sizeof(std::ptrdiff_t): " << sizeof(std::ptrdiff_t);
-  qDebug() << "sizeof(QChar): " << sizeof(QChar);
-  qDebug() << "sizeof(QChar*): " << sizeof(QChar*);
-  
-  std::wcout << wstr << std::endl;
-  
-  std::wcout << *first << std::endl;
-  std::wcout << "Get it that is first advanced by 2" << std::endl;
-  auto it = first + 2;
-  std::wcout << "it: " << *it << " , first: " << *first << std::endl;
-  std::wcout << "Get it that is first rewind by 2" << std::endl;
-  it = it - 2;
-  std::wcout << "it: " << *it << " , first: " << *first << std::endl;
-  std::wcout << "Advance first by 2" << std::endl;
-  first += 2;
-  std::wcout << "first: " << *first << std::endl;
-  std::wcout << "Rewind first by 2" << std::endl;
-  first -= 2;
-  std::wcout << "first: " << *first << std::endl;
-  std::wcout << "first[3]: " << first[3] << std::endl;
-
-  while(first != last)
-  {
-    ///qDebug() << first->unicode();
-    ///qDebug() << *first;
-    std::cout << "first < last ?: " << (first < last) << std::endl;
-    std::cout << "first <= last ?: " << (first <= last) << std::endl;
-    std::cout << "first > last ?: " << (first > last) << std::endl;
-    std::cout << "first >= last ?: " << (first >= last) << std::endl;
-    std::wcout << *first << std::endl;
-    ++first;
-  }
-  std::cout << "first < last ?: " << (first < last) << std::endl;
-  std::cout << "first <= last ?: " << (first <= last) << std::endl;
-  std::cout << "first > last ?: " << (first > last) << std::endl;
-  std::cout << "first >= last ?: " << (first >= last) << std::endl;
-
-  
-  --first;
-  std::wcout << *first << std::endl;
-  --first;
-  std::wcout << *first << std::endl;
-  --first;
-  std::wcout << *first << std::endl;
-  --first;
-  std::wcout << *first << std::endl;
-  --first;
-  std::wcout << *first << std::endl;
-  --first;
-  std::wcout << *first << std::endl;
-  --first;
-  std::wcout << *first << std::endl;
-  --first;
-  std::wcout << *first << std::endl;
-  --first;
-  std::wcout << *first << std::endl;
-  --first;
-  std::wcout << *first << std::endl;
-  --first;
-  std::wcout << *first << std::endl;
-
-//   mdtCsvParserTemplate<mdtCsvParserQStringIterator> parser;
-//   parser.setSource(str.cbegin(), str.cend());
-// //   mdtCsvParserTemplate<std::wstring::const_iterator> parser;
-// //   parser.setSource(wstr.cbegin(), wstr.cend());
-//   
-//   
-//   mdtCsvRawRecord rec = parser.readLine();
-//   qDebug() << "Error: " << rec.errorOccured();
-//   for(const auto & data : rec.columnDataList){
-//     std::wcout << data << std::endl;
-//   }
+  mdtReadIteratorTestFunction();
 }
 
 
@@ -262,7 +184,6 @@ void mdtCsvTest::dataTest()
 void mdtCsvTest::csvParserQStringIteratorTest()
 {
   QString str;
-  ///wchar_t c;
 
   /*
    * Constructs and assignements
@@ -557,12 +478,130 @@ void mdtCsvTest::stringParserReadLineTest_data()
   expectedData.addRecord(expectedRecord);
   QTest::newRow(u8"\"A,é\",\"à,B\",\"è,ü\",\"ö,ä,\u03B1\"\\n") << sourceData << expectedData << Ok;
 
-  /// \todo Add quoted
-
-  /// \todo Non ASCII strings
-  
   /// \todo add casese from: http://stackoverflow.com/questions/7436481/how-to-make-my-split-work-only-on-one-real-line-and-be-capable-to-skip-quoted-pa/7462539#7462539
 
+}
+
+void mdtCsvTest::csvFileParserIteratorSharedDataTest()
+{
+  mdtCsvFileParserIteratorSharedData sd;
+  QTemporaryFile file;
+
+  QVERIFY(QTextCodec::codecForName("UTF-8") != nullptr);
+  /*
+   * Initial state
+   */
+  
+  /*
+   * set source
+   */
+  // Pass file that is no allready open + existing encoding
+  QVERIFY(!file.isOpen());
+  QVERIFY(sd.setSource(&file, "UTF-8"));
+  QVERIFY(file.isOpen());
+  // Pass file that is allready open + existing encoding
+  QVERIFY(sd.setSource(&file, "UTF-8"));
+  QVERIFY(file.isOpen());
+  // Pass a file that is allready open + NON existing encoding
+  QVERIFY(!sd.setSource(&file, "SomeUnknownEncoding"));
+  QVERIFY(file.isOpen()); // file must be keeped untouched
+}
+
+void mdtCsvTest::csvFileParserIteratorSharedDataReadTest()
+{
+  mdtCsvFileParserIteratorSharedData sd;
+  QTemporaryFile file;
+  QFETCH(QString, fileData);
+  QFETCH(QString, fileEncoding);
+  QFETCH(int, rawDataBufferSize);
+  QString unicodeBuffer;
+  QByteArray fileRawData;
+  QTextCodec *codec;
+
+  QVERIFY(QTextCodec::codecForName(fileEncoding.toLatin1()) != nullptr);
+  /*
+   * Write our test data
+   */
+  // Encode test data
+  codec = QTextCodec::codecForName(fileEncoding.toLatin1());
+  QVERIFY(codec != nullptr);
+  fileRawData = codec->fromUnicode(fileData);
+  // Write test data
+  QVERIFY(file.open());
+  QVERIFY(file.write(fileRawData) == fileRawData.size());
+  // Close file (to flush data) and re-open it
+  file.close();
+  QVERIFY(file.open());
+  /*
+   * Check
+   */
+  QVERIFY(unicodeBuffer.isEmpty());
+  // Read data
+  QVERIFY(sd.setSource(&file, fileEncoding.toLatin1()));
+  sd.setInternalRawDataBufferSize(rawDataBufferSize);
+  while(!sd.atEnd()){
+    auto cp = sd.takeOne();
+    QVERIFY(cp.second == true);
+    unicodeBuffer.append(cp.first);
+  }
+  // Check
+  qDebug() << "file data: " << fileData;
+  qDebug() << "unicodeBuffer: " << unicodeBuffer;
+  QCOMPARE(unicodeBuffer, fileData);
+}
+
+void mdtCsvTest::csvFileParserIteratorSharedDataReadTest_data()
+{
+  QTest::addColumn<QString>("fileData");
+  QTest::addColumn<QString>("fileEncoding");
+  QTest::addColumn<int>("rawDataBufferSize");
+
+  // Note: only edit this part with a UTF-8 editor
+  QTest::newRow("Empty file,UTF-8,1") << "" << "UTF-8" << 1;
+  QTest::newRow("Empty file,UTF-8,2") << "" << "UTF-8" << 2;
+  QTest::newRow("Empty file,UTF-8,3") << "" << "UTF-8" << 3;
+  QTest::newRow("Empty file,UTF-8,1024") << "" << "UTF-8" << 1024;
+  QTest::newRow("A,UTF-8,1") << "A" << "UTF-8" << 1;
+  QTest::newRow("A,UTF-8,2") << "A" << "UTF-8" << 2;
+  QTest::newRow("A,UTF-8,3") << "A" << "UTF-8" << 3;
+  QTest::newRow("A,UTF-8,4") << "A" << "UTF-8" << 4;
+  QTest::newRow("A,UTF-8,1024") << "A" << "UTF-8" << 1024;
+  QTest::newRow("ö,UTF-8,1") << "ö" << "UTF-8" << 1;
+  QTest::newRow("ö,UTF-8,2") << "ö" << "UTF-8" << 2;
+  QTest::newRow("ö,UTF-8,3") << "ö" << "UTF-8" << 3;
+  QTest::newRow("ö,UTF-8,4") << "ö" << "UTF-8" << 4;
+  QTest::newRow("ö,UTF-8,1024") << "ö" << "UTF-8" << 1024;
+  QTest::newRow("AB,UTF-8,1") << "AB" << "UTF-8" << 1;
+  QTest::newRow("AB,UTF-8,2") << "AB" << "UTF-8" << 2;
+  QTest::newRow("AB,UTF-8,3") << "AB" << "UTF-8" << 3;
+  QTest::newRow("AB,UTF-8,4") << "AB" << "UTF-8" << 4;
+  QTest::newRow("AB,UTF-8,1024") << "AB" << "UTF-8" << 1024;
+  QTest::newRow("Aö,UTF-8,1") << "Aö" << "UTF-8" << 1;
+  QTest::newRow("Aö,UTF-8,2") << "Aö" << "UTF-8" << 2;
+  QTest::newRow("Aö,UTF-8,3") << "Aö" << "UTF-8" << 3;
+  QTest::newRow("Aö,UTF-8,4") << "Aö" << "UTF-8" << 4;
+  QTest::newRow("Aö,UTF-8,1024") << "Aö" << "UTF-8" << 1024;
+  QTest::newRow("AöB,UTF-8,1") << "AöB" << "UTF-8" << 1;
+  QTest::newRow("AöB,UTF-8,2") << "AöB" << "UTF-8" << 2;
+  QTest::newRow("AöB,UTF-8,3") << "AöB" << "UTF-8" << 3;
+  QTest::newRow("AöB,UTF-8,4") << "AöB" << "UTF-8" << 4;
+  QTest::newRow("AöB,UTF-8,5") << "AöB" << "UTF-8" << 5;
+  QTest::newRow("AöB,UTF-8,6") << "AöB" << "UTF-8" << 6;
+  QTest::newRow("AöB,UTF-8,1024") << "AöB" << "UTF-8" << 1024;
+  QTest::newRow("Medium ASCII string,UTF-8,3") << "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n0123456789\nabcdefghijklmnopqrstuvwxyz" << "UTF-8" << 3;
+  QTest::newRow("Medium ASCII string,UTF-8,1024") << "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n0123456789\nabcdefghijklmnopqrstuvwxyz" << "UTF-8" << 1024;
+  QTest::newRow("Medium string,UTF-8,3") << "ABCDEFGHIJKLMNOPQRSTUVWXYZ@01€23456789aäbcdeéfghijklmnoöpqrstuvwxyz" << "UTF-8" << 3;
+  QTest::newRow("Medium string,UTF-8,1024") << "ABCDEFGHIJKLMNOPQRSTUVWXYZ@01€23456789aäbcdeéfghijklmnoöpqrstuvwxyz" << "UTF-8" << 1024;
+  QTest::newRow("Medium string,UTF-16,3") << "ABCDEFGHIJKLMNOPQRSTUVWXYZ@01€23456789aäbcdeéfghijklmnoöpqrstuvwxyz" << "UTF-16" << 3;
+  QTest::newRow("Medium string,UTF-16,1024") << "ABCDEFGHIJKLMNOPQRSTUVWXYZ@01€23456789aäbcdeéfghijklmnoöpqrstuvwxyz" << "UTF-16" << 1024;
+  QTest::newRow("Medium string,UTF-32,3") << "ABCDEFGHIJKLMNOPQRSTUVWXYZ@01€23456789aäbcdeéfghijklmnoöpqrstuvwxyz" << "UTF-32" << 3;
+  QTest::newRow("Medium string,UTF-32,1024") << "ABCDEFGHIJKLMNOPQRSTUVWXYZ@01€23456789aäbcdeéfghijklmnoöpqrstuvwxyz" << "UTF-32" << 1024;
+
+}
+
+void mdtCsvTest::csvFileParserIteratorTest()
+{
+  mdtCsvFileParserIterator it;
 }
 
 

@@ -54,7 +54,7 @@ classcanvas 131330 class_ref 2043778 // mdtCsvStringParser
 end
 classcanvas 131458 class_ref 2043906 // mdtCsvFileParser
   classdiagramsettings member_max_width 0 end
-  xyz 20 352 2000
+  xyz 17 383 2000
 end
 note 131842 "getting current row: format, including column formats and text codec ?"
   xyzwh 445 26 2000 253 71

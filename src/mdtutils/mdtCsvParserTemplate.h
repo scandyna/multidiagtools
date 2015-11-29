@@ -127,6 +127,7 @@ namespace boost { namespace spirit { namespace traits
  *       CSV-1203 is a open standard available here: http://mastpoint.com/csv-1203
  */
 template <typename SourceIterator>
+ // requirse RandomAccessIterator<SourceIterator>
 class mdtCsvParserTemplate
 {
  public:
@@ -161,7 +162,8 @@ class mdtCsvParserTemplate
     pvProtectedField = lit(fieldQuote) >> pvFieldPayload >> lit(fieldQuote);
     pvFieldPayload = +pvAnychar;
     pvUnprotectedField %= pvRawFieldPayload;
-    pvRawFieldPayload = pvSafechar | (pvSafechar >> *char_ >> pvSafechar);
+    /// \todo Try *pvSafechar | ......
+    pvRawFieldPayload /**%*/= pvSafechar | (pvSafechar >> *char_ >> pvSafechar); /// \note It semms that actual grammar is a tuple. If both are the same, a vector will be used
     pvAnychar = pvChar | char_(fieldSep) | (char_(fieldQuote) >> char_(fieldQuote)) | space; // space matches space, CR, LF and other See std::isspace()
     pvChar = pvSafechar | char_(0x20);  // 0x20 == SPACE char
 //     pvSafechar = char_(0x21, 0x7F) - char_(fieldSep) - char_(fieldQuote); /// \todo Should allow all except sep, quote and EOF

@@ -71,12 +71,10 @@ class mdtCsvStringParser
 
  private:
 
-  ///std::unique_ptr<mdtCsvParserTemplate<std::wstring::const_iterator> > pvImpl;
   std::unique_ptr<mdtCsvParserTemplate<mdtCsvParserQStringIterator> > pvImpl;
-  ///std::wstring pvSource;
 };
 
 /// \todo Sandbox
-// void mdtReadIteratorTestFunction();
+void mdtReadIteratorTestFunction();
 
 #endif // #ifndef MDT_CSV_PARSER_H

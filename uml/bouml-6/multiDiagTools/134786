@@ -1,6 +1,6 @@
 format 210
 "Qt" // Qt
-  revision 104
+  revision 105
   modified_by 2 "philippe"
   // class settings
   
@@ -5984,6 +5984,70 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      operation 3186306 "makeDecoder"
+	public return_type class_ref 2057474 // QTextDecoder
+	nparams 1
+	  param in name "flags" explicit_type "ConversionFlags"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 2057474 "QTextDecoder"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 3186178 "toUnicode"
+	public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "ba" type class_ref 236162 // QByteArray
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3186434 "toUnicode"
+	public explicit_return_type "void"
+	nparams 3
+	  param out name "target" type class_ref 161026 // QString
+	  param in name "chars" explicit_type "char"
+	  param in name "len" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 end

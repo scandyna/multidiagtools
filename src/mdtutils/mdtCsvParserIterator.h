@@ -39,6 +39,8 @@
  *  QChar::unicode() is invoked.
  *  This way, Spirit sees wchar_t
  *  and can do needed comparisons.
+ *
+ * \todo Should be renamed mdtCsvStringParserIterator (also rename the header and #ifndef)
  */
 struct mdtCsvParserQStringIterator
 {

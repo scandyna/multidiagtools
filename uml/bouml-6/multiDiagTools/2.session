@@ -4,22 +4,24 @@ diagrams
   classdiagram_ref 394882 // mdtCsvFileOld
     760 732 100 4 0 0
   classdiagram_ref 1701506 // mdtCsvParser
-    951 911 100 4 60 0
-  active  classdiagram_ref 1702402 // ifstream
+    951 911 100 4 0 0
+  active  classdiagram_ref 1708930 // mdtCsvFileParser
     951 911 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1702402 // ifstream
+selected operation_ref 3186562 // setSource
 open
   operation_ref 3172866 // mdtCsvParserTemplate
   operation_ref 3165314 // currentRowData
   operation_ref 3165954 // readAll
   class_ref 2036994 // mdtCsvRecord
   class_ref 2043778 // mdtCsvStringParser
-  attribute_ref 2097794 // Stream
-  attribute_ref 2097922 // CurrentPosition
-  attribute_ref 2098050 // End
   class_ref 2050434 // mdtCsvParserSettings
+  class_ref 2043906 // mdtCsvFileParser
+  class_ref 2057218 // mdtCsvFileParserIterator
+  class_ref 2057346 // mdtCsvFileParserIteratorSharedData
+  class_ref 2035458 // QTextCodec
+  class_ref 2057474 // QTextDecoder
   class_ref 2036098 // multi_pass
   
   package_ref 274178 // qi

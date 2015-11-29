@@ -18,34 +18,17 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CSV_TEST_H
-#define MDT_CSV_TEST_H
+#ifndef MDT_CSV_FILE_PARSER_ITERATOR_H
+#define MDT_CSV_FILE_PARSER_ITERATOR_H
 
-#include "mdtTest.h"
+#include "mdtCsvFileParserIteratorSharedData.h"
 
-class mdtCsvTest : public mdtTest
+/*! \brief Iterator that acts on a I/O device
+ *
+ * This iterator is used by mdtCsvFileParser.
+ */
+struct mdtCsvFileParserIterator
 {
- Q_OBJECT
-
- private slots:
-
-  void sandbox();
-
-  void settingsTest();
-  void recordTest();
-  void dataTest();
-
-  void csvParserQStringIteratorTest();
-  void csvParserQStringIteratorBenchmark();
-
-  void stringParserReadLineTest();
-  void stringParserReadLineTest_data();
-
-  void csvFileParserIteratorSharedDataTest();
-  void csvFileParserIteratorSharedDataReadTest();
-  void csvFileParserIteratorSharedDataReadTest_data();
-  void csvFileParserIteratorTest();
-
 };
 
-#endif // #ifndef MDT_CSV_TEST_H
+#endif // #ifndef MDT_CSV_FILE_PARSER_ITERATOR_H
