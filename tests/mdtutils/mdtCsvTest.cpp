@@ -738,10 +738,8 @@ void mdtCsvTest::csvFileParserIteratorTest()
   mdtCsvFileParserIterator last;
   str.clear();
   while(first != last){
-    qDebug() << "current: " << *first;
     str.append(static_cast<ushort>(*first));
     ++first;
-    qDebug() << " -> ++ , eof: " << first.isEof();
   }
   QCOMPARE(str, QString("ABCDE"));
 }

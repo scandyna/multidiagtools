@@ -196,7 +196,6 @@ class mdtCsvFileParserIteratorSharedData
     Q_ASSERT(pvDevice->isReadable());
     Q_ASSERT(pvDecoder);
 
-    qDebug() << "advance() ...";
     // Check if we have to read more data
     while(pvCurrentPos == pvEnd){
       if(!readMore()){
@@ -206,7 +205,6 @@ class mdtCsvFileParserIteratorSharedData
     // Update result and current position
     Q_ASSERT(pvCurrentPos != pvEnd);
     ++pvCurrentPos;
-    qDebug() << " -> Ok, current: " << *pvCurrentPos;
 
     return true;
   }
