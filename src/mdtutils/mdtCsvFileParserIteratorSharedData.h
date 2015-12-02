@@ -30,10 +30,9 @@
 #include <QObject>
 #include <QPointer>
 #include <utility>
-
 #include <vector>
 
-#include <QDebug>
+//#include <QDebug>
 
 /*! \brief Contains shared part of mdtCsvFileParserIterator
  */
@@ -55,9 +54,17 @@ class mdtCsvFileParserIteratorSharedData
    */
   mdtCsvFileParserIteratorSharedData(const mdtCsvFileParserIteratorSharedData &) = delete;
 
+  /*! \brief Assignement is disabled
+   */
+  mdtCsvFileParserIteratorSharedData & operator=(const mdtCsvFileParserIteratorSharedData &) = delete;
+
   /*! \brief Move is disabled
    */
   mdtCsvFileParserIteratorSharedData(const mdtCsvFileParserIteratorSharedData &&) = delete;
+
+  /*! \brief Assignement is disabled
+   */
+  mdtCsvFileParserIteratorSharedData & operator=(mdtCsvFileParserIteratorSharedData &&) = delete;
 
   /*! \brief Destructor
    */
@@ -67,6 +74,11 @@ class mdtCsvFileParserIteratorSharedData
   }
 
   /*! \brief Set source
+   *
+   * First, device will be open (if not allready open).
+   *  Then, a text decoder is created, based on given encoding.
+   *  If above operations succeeds, and device is not at end, a first chunk of data
+   *  is read and decoded into unicode buffer.
    *
    * \param device I/O device on witch data will be read.
    *               If device is not allready open,
@@ -123,6 +135,22 @@ class mdtCsvFileParserIteratorSharedData
       }
     }
     pvDevice = device;
+    /*
+     * If device is allready at end, its not a error,
+     * but we do not try to read from it.
+     */
+    if(device->atEnd()){
+      return true;
+    }
+    /*
+     * Try to read and decode the first chunck of data from device
+     */
+    while(pvCurrentPos == pvEnd){
+      if(!readMore()){
+        return false;
+      }
+    }
+    Q_ASSERT(pvCurrentPos != pvEnd);
 
     return true;
   }
@@ -132,14 +160,73 @@ class mdtCsvFileParserIteratorSharedData
    * Returns true when I/O device
    *  is at end, and no more data is available
    *  in internal unicode buffer.
+   *
+   * If no device was set or was closed,
+   *  this function also returns true.
    */
   bool atEnd() const
   {
-    Q_ASSERT(pvDevice);
+    if(!pvDevice){
+      return true;
+    }
+    if(!pvDevice->isOpen()){
+      return true;
+    }
     return ( (pvCurrentPos == pvEnd) && (pvDevice->atEnd()) );
   }
 
-  /*! \brief Take a char from unicode buffer
+  /*! \brief Advance by one unicode char in buffer
+   *
+   * If internal unicode buffer has data available,
+   *  current position is simply incremented by 1.
+   *  If no more data is available any more,
+   *  a chunk is readen frome device,
+   *  decoded into unicode buffer and current position
+   *  set to its beginning.
+   *
+   * Retuns false if a error occured.
+   *
+   * \pre This function can only be called once setSource() successfully returned.
+   * \sa lastError()
+   * \sa get()
+   */
+  bool advance()
+  {
+    Q_ASSERT(pvDevice);
+    Q_ASSERT(pvDevice->isReadable());
+    Q_ASSERT(pvDecoder);
+
+    qDebug() << "advance() ...";
+    // Check if we have to read more data
+    while(pvCurrentPos == pvEnd){
+      if(!readMore()){
+        return false;
+      }
+    }
+    // Update result and current position
+    Q_ASSERT(pvCurrentPos != pvEnd);
+    ++pvCurrentPos;
+    qDebug() << " -> Ok, current: " << *pvCurrentPos;
+
+    return true;
+  }
+
+  /*! \brief Get current char in unicode buffer
+   *
+   * Does nothing else than return the char
+   *  referenced by current position.
+   *  Calling this function multiple
+   *  times also returns allways the same char.
+   *
+   * \pre This function must not be called after atEnd() returns true.
+   */
+  QChar get() const
+  {
+    Q_ASSERT(pvCurrentPos != pvEnd);
+    return *pvCurrentPos;
+  }
+
+  /*! \brief Get a char from unicode buffer
    *
    * If internal unicode buffer has data available,
    *  one char is simply returned.
@@ -152,18 +239,21 @@ class mdtCsvFileParserIteratorSharedData
    *  from device, caller must check that second of retruned pair
    *  is true (false means a failure).
    *
+   * Note that this function will not advance
+   *  in the stream. In other words, calling it multiple time
+   *  will allways return the same char.
+   *
    * \pre This function can only be called once setSource() successfully returned.
+   * \sa takeOne()
    */
-  std::pair<QChar, bool> takeOne()
+  std::pair<QChar, bool> getOne()
   {
     Q_ASSERT(pvDevice);
     Q_ASSERT(pvDevice->isReadable());
-    ///Q_ASSERT(!pvDevice->atEnd());
     Q_ASSERT(pvDecoder);
 
     std::pair<QChar, bool> result;
 
-    qDebug() << "takeOne() , device at end: " << pvDevice->atEnd() << " , pvCurrentPos == pvEnd: " << (pvCurrentPos == pvEnd);
     // Check if we have to read more data
     while(pvCurrentPos == pvEnd){
       result.second = readMore();
@@ -175,8 +265,28 @@ class mdtCsvFileParserIteratorSharedData
     Q_ASSERT(pvCurrentPos != pvEnd);
     result.first = *pvCurrentPos;
     result.second = true;
-    ++pvCurrentPos;
 
+    return result;
+  }
+
+  /*! \brief Take a char from unicode buffer
+   *
+   * Does the same operation than getOne() ,
+   *  but also advances in stream.
+   *
+   * \pre This function can only be called once setSource() successfully returned.
+   * \sa getOne()
+   */
+  std::pair<QChar, bool> takeOne()
+  {
+    Q_ASSERT(pvDevice);
+    Q_ASSERT(pvDevice->isReadable());
+    Q_ASSERT(pvDecoder);
+
+    std::pair<QChar, bool> result = getOne();
+    if(result.second){
+      ++pvCurrentPos;
+    }
     return result;
   }
 
@@ -189,6 +299,13 @@ class mdtCsvFileParserIteratorSharedData
     Q_ASSERT(size > 0);
     pvRawDataBuffer.resize(size);
     pvRawDataBuffer.shrink_to_fit();
+  }
+
+  /*! \brief Get last error
+   */
+  mdtError lastError() const
+  {
+    return pvLastError;
   }
 
  private:
@@ -218,7 +335,6 @@ class mdtCsvFileParserIteratorSharedData
     pvDecoder->toUnicode(&pvUnicodeBuffer, pvRawDataBuffer.data(), n);
     pvCurrentPos = pvUnicodeBuffer.cbegin();
     pvEnd = pvUnicodeBuffer.cend();
-    qDebug() << "Readen " << n << " bytes, unicode buffer: " << pvUnicodeBuffer;
 
     return true;
   }

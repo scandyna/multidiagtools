@@ -22,13 +22,221 @@
 #define MDT_CSV_FILE_PARSER_ITERATOR_H
 
 #include "mdtCsvFileParserIteratorSharedData.h"
+#include "mdtError.h"
+#include <QIODevice>
+#include <QByteArray>
+#include <memory>
 
 /*! \brief Iterator that acts on a I/O device
  *
  * This iterator is used by mdtCsvFileParser.
+ *
+ * mdtCsvFileParserIterator is a single-pass input iterator
+ *  that reads data from a QIODevice.
+ *  When the iterator is incremented, it will take
+ *  a char from its internal buffer, witch is handled
+ *  by mdtCsvFileParserIteratorSharedData.
+ *  When no data is available anymore in the buffer,
+ *  a chunck of data is read from QIODevice and encoded
+ *  to unicode.
+ *
  */
 struct mdtCsvFileParserIterator
 {
+  static_assert(sizeof(wchar_t) >= 2, "wchar_t is < 16 bit");
+
+  typedef wchar_t value_type;
+  typedef std::ptrdiff_t difference_type;
+  typedef const value_type & reference;
+  typedef const value_type* pointer;
+  typedef std::input_iterator_tag iterator_category;
+
+  /*! \brief Constructs a end-of-stream iterator.
+   */
+  mdtCsvFileParserIterator()
+   : pvCurrentValue(0),
+     pvErrorOccured(false)
+  {
+  }
+
+  /*! \brief Construct a iterator that acts on device
+   *
+   * Will use mdtCsvFileParserIteratorSharedData::setSource().
+   *  On success, a first char is read from device, decoded, then stored.
+   *  On failure, this iterator falls back to a end-of-stream iterator,
+   *  and error flag is set.
+   *  On success, it can also happen that the device is allready
+   *  at end. In this case, this iterator also falls back
+   *  to a end-of-stream iterator.
+   *
+   * \sa mdtCsvFileParserIteratorSharedData::setSource()
+   * \sa errorOccured()
+   */
+  mdtCsvFileParserIterator(QIODevice *device, const QByteArray & encoding)
+   : pvCurrentValue(0),
+     pvErrorOccured(false),
+     pvShared(new mdtCsvFileParserIteratorSharedData)
+  {
+    pvErrorOccured = !pvShared->setSource(device, encoding);
+    if(pvErrorOccured){
+      pvShared.reset();
+      return;
+    }
+    // Check if device is allready at end
+    if(pvShared->atEnd()){
+      pvShared.reset();
+      return;
+    }
+    // Here device is open and not at end, lets cache a char
+    pvCurrentValue = pvShared->get().unicode();
+//     auto r = pvShared->getOne();
+//     ///auto r = pvShared->takeOne();
+//     if(r.second){
+//       pvCurrentValue = r.first.unicode();
+//     }else{
+//       pvErrorOccured = true;
+//       pvCurrentValue = 0x2BD1;
+//     }
+  }
+
+  /*! \brief Copy on base of other iterator
+   */
+  // Thanks to std::shared_ptr we can let do the compiler
+  mdtCsvFileParserIterator(const mdtCsvFileParserIterator & other) = default;
+
+  /*! \brief Move constructor
+   */
+  // Thanks to std::shared_ptr we can let do the compiler
+  mdtCsvFileParserIterator(mdtCsvFileParserIterator && other) = default;
+
+  /*! \brief Assign other iterator
+   */
+  // Thanks to std::shared_ptr we can let do the compiler
+  mdtCsvFileParserIterator & operator=(const mdtCsvFileParserIterator & other) = default;
+
+  /*! \brief Increment iterator (pre-increment)
+   *
+   * Will take a unicode char in internal buffer
+   *  and store it. If buffer is empty,
+   *  a chunck of data is also read from device
+   *  and decoded to unicode.
+   *
+   * If a error occures (typically while reading from device),
+   *  the error flag is set, and the unicode uncertainty sign
+   *  (0x2BD1) is stored.
+   *
+   * \pre This iterator must not be a end-of-stream iterator
+   * \sa errorOccured()
+   */
+  mdtCsvFileParserIterator & operator++()
+  {
+    Q_ASSERT(!isEof());
+    Q_ASSERT(pvShared);
+
+    qDebug() << "operator++() ...";
+    pvErrorOccured = !pvShared->advance();
+//     if(pvErrorOccured){
+//       pvCurrentValue = 0x2BD1;
+//     }else{
+//       pvCurrentValue = pvShared->get().unicode();
+//     }
+//     qDebug() << " -> error: " << pvErrorOccured << " , value: " << pvCurrentValue;
+//     auto r = pvShared->takeOne();
+//     if(r.second){
+//       pvCurrentValue = r.first.unicode();
+//     }else{
+//       pvErrorOccured = true;
+//       pvCurrentValue = 0x2BD1;
+//     }
+
+    return *this;
+  }
+
+  /*! \brief Increment iterator (post-increment)
+   *
+   * \pre This iterator must not be a end-of-stream iterator
+   * \sa operator++()
+   */
+  mdtCsvFileParserIterator operator++(int)
+  {
+    Q_ASSERT(!isEof());
+
+    mdtCsvFileParserIterator tmp(*this);
+    ++*this;
+
+    return tmp;
+  }
+
+  /*! \brief Get last read value
+   *
+   * \pre This iterator must not be a end-of-stream iterator
+   * \sa operator++()
+   */
+  value_type operator*() const
+  {
+    Q_ASSERT(!isEof());
+    if(pvErrorOccured){
+      return 0x2BD1;
+    }
+    return pvShared->get().unicode();
+    ///return pvCurrentValue;
+  }
+
+  /*! \brief Returns true if a and b are EOF iterators, or a and b are valid iterators
+   */
+  friend
+  bool operator==(const mdtCsvFileParserIterator & a, const mdtCsvFileParserIterator & b)
+  {
+    return (a.isEof() == b.isEof());
+  }
+
+  /*! \brief See operator==()
+   */
+  friend
+  bool operator!=(const mdtCsvFileParserIterator & a, const mdtCsvFileParserIterator & b)
+  {
+    return !(a == b);
+  }
+
+  /*! \brief Check if this iterator is a end-of-stream iterator
+   *
+   * Returns true if this is a default constructed
+   *  iterator (no device was set),
+   *  or device and iternal buffer are both at end.
+   */
+  bool isEof() const
+  {
+    if(!pvShared){
+      return true;
+    }
+    return pvShared->atEnd();
+  }
+
+  /*! \brief Check if a error occured
+   *
+   * \sa lastError()
+   */
+  bool errorOccured() const
+  {
+    return pvErrorOccured;
+  }
+
+  /*! \brief Get last error
+   *
+   * \pre this must be a iterator attached to a device
+   * \sa errorOccured()
+   */
+  mdtError lastError() const
+  {
+    Q_ASSERT(pvShared);
+    return pvShared->lastError();
+  }
+
+ private:
+
+  value_type pvCurrentValue;
+  bool pvErrorOccured;
+  std::shared_ptr<mdtCsvFileParserIteratorSharedData> pvShared;
 };
 
 #endif // #ifndef MDT_CSV_FILE_PARSER_ITERATOR_H

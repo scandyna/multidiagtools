@@ -505,6 +505,66 @@ void mdtCsvTest::csvFileParserIteratorSharedDataTest()
   // Pass a file that is allready open + NON existing encoding
   QVERIFY(!sd.setSource(&file, "SomeUnknownEncoding"));
   QVERIFY(file.isOpen()); // file must be keeped untouched
+  /*
+   * Prepare file with some data
+   */
+  file.close();
+  QVERIFY(file.open());
+  QVERIFY(file.write("ABCDE") > 0);
+  file.close();
+  /*
+   * Some flags checks
+   */
+  QVERIFY(file.open());
+  QVERIFY(sd.setSource(&file, "UTF-8"));
+  QVERIFY(!sd.atEnd());
+  QVERIFY(sd.getOne().second);
+  QVERIFY(!sd.atEnd());
+  // Close file and check that sd is at end
+  file.close();
+  QVERIFY(sd.atEnd());
+  /*
+   * Check getting data
+   */
+  QVERIFY(file.open());
+  QVERIFY(sd.setSource(&file, "UTF-8"));
+  QVERIFY(file.isOpen());
+  // Get first char
+  QVERIFY(!sd.atEnd());
+  QCOMPARE(sd.get(), QChar('A'));
+  QCOMPARE(sd.get(), QChar('A'));
+  // Step and get
+  QVERIFY(!sd.atEnd());
+  QVERIFY(sd.advance());
+  QCOMPARE(sd.get(), QChar('B'));
+  // Step and get
+  QVERIFY(!sd.atEnd());
+  QVERIFY(sd.advance());
+  QCOMPARE(sd.get(), QChar('C'));
+  // Step and get
+  QVERIFY(!sd.atEnd());
+  QVERIFY(sd.advance());
+  QCOMPARE(sd.get(), QChar('D'));
+  // Step and get
+  QVERIFY(!sd.atEnd());
+  QVERIFY(sd.advance());
+  QCOMPARE(sd.get(), QChar('E'));
+  // Step again - Now we reached EOF
+  QVERIFY(sd.advance());
+  QVERIFY(sd.atEnd());
+
+//   QVERIFY(!sd.atEnd());
+//   QCOMPARE(sd.getOne().first, QChar('A'));
+//   QCOMPARE(sd.takeOne().first, QChar('A'));
+//   QVERIFY(!sd.atEnd());
+//   QCOMPARE(sd.takeOne().first, QChar('B'));
+//   QVERIFY(!sd.atEnd());
+//   QCOMPARE(sd.takeOne().first, QChar('C'));
+//   QVERIFY(!sd.atEnd());
+//   QCOMPARE(sd.takeOne().first, QChar('D'));
+//   QVERIFY(!sd.atEnd());
+//   QCOMPARE(sd.takeOne().first, QChar('E'));
+//   QVERIFY(sd.atEnd());
 }
 
 void mdtCsvTest::csvFileParserIteratorSharedDataReadTest()
@@ -540,13 +600,13 @@ void mdtCsvTest::csvFileParserIteratorSharedDataReadTest()
   QVERIFY(sd.setSource(&file, fileEncoding.toLatin1()));
   sd.setInternalRawDataBufferSize(rawDataBufferSize);
   while(!sd.atEnd()){
-    auto cp = sd.takeOne();
-    QVERIFY(cp.second == true);
-    unicodeBuffer.append(cp.first);
+    unicodeBuffer.append(sd.get());
+    QVERIFY(sd.advance());
+//     auto cp = sd.takeOne();
+//     QVERIFY(cp.second == true);
+//     unicodeBuffer.append(cp.first);
   }
   // Check
-  qDebug() << "file data: " << fileData;
-  qDebug() << "unicodeBuffer: " << unicodeBuffer;
   QCOMPARE(unicodeBuffer, fileData);
 }
 
@@ -601,7 +661,89 @@ void mdtCsvTest::csvFileParserIteratorSharedDataReadTest_data()
 
 void mdtCsvTest::csvFileParserIteratorTest()
 {
+  QTemporaryFile file;
+  QString str;
+
+  QVERIFY(QTextCodec::codecForName("UTF-8") != nullptr);
+  /*
+   * Prepare file
+   */
+  QVERIFY(file.open());
+  QVERIFY(file.write("ABCDE") > 0);
+  file.close();
+  /*
+   * Constructs
+   */
+  // Default (end-of-stream iterator)
   mdtCsvFileParserIterator it;
+  QVERIFY(!it.errorOccured());
+  QVERIFY(it.isEof());
+  // Copy
+  mdtCsvFileParserIterator it2(it);
+  QVERIFY(!it2.errorOccured());
+  QVERIFY(it2.isEof());
+  QVERIFY(it == it2);
+  QVERIFY(!(it != it2));
+  // Construct it3 that acts on file
+  QVERIFY(file.open());
+  mdtCsvFileParserIterator it3(&file, "UTF-8");
+  QVERIFY(!it3.errorOccured());
+  QVERIFY(!it3.isEof());
+  QVERIFY(*it3 == 'A');
+  // Construct it4 that is a copy of it3
+  mdtCsvFileParserIterator it4(it3);
+  QVERIFY(!it4.errorOccured());
+  QVERIFY(!it4.isEof());
+  QVERIFY(*it4 == 'A');
+  QVERIFY(it4 == it3);
+  // Assign it4 to it
+  it = it4;
+  QVERIFY(!it.errorOccured());
+  QVERIFY(!it.isEof());
+  QVERIFY(*it == 'A');
+  QVERIFY(it == it4);
+  // Step it and check
+  QVERIFY(!it.isEof());
+  ++it;
+  QVERIFY(*it == 'B');
+  // Step it and check
+  QVERIFY(!it.isEof());
+  ++it;
+  QVERIFY(*it == 'C');
+  // Step it and check
+  QVERIFY(!it.isEof());
+  ++it;
+  QVERIFY(*it == 'D');
+  // Step it and check
+  QVERIFY(!it.isEof());
+  ++it;
+  QVERIFY(*it == 'E');
+  // Step - Now we reached EOF
+  ++it;
+  QVERIFY(it.isEof());
+  /*
+   * Some error handling
+   */
+  // Close the file and check that we end up with end-of-stream iterators
+  file.close();
+  QVERIFY(it.isEof());
+  QVERIFY(it3.isEof());
+  QVERIFY(it4.isEof());
+  /*
+   * Check reading the whole file
+   */
+  file.close();
+  QVERIFY(file.open());
+  mdtCsvFileParserIterator first(&file, "UTF-8");
+  mdtCsvFileParserIterator last;
+  str.clear();
+  while(first != last){
+    qDebug() << "current: " << *first;
+    str.append(static_cast<ushort>(*first));
+    ++first;
+    qDebug() << " -> ++ , eof: " << first.isEof();
+  }
+  QCOMPARE(str, QString("ABCDE"));
 }
 
 
