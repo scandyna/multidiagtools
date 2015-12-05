@@ -40,7 +40,7 @@ class mdtCsvStringParser
 
   /*! \brief Default constructor
    */
-  mdtCsvStringParser();
+  mdtCsvStringParser(const mdtCsvParserSettings & csvSettings = mdtCsvParserSettings());
 
   /*! \brief Destructor
    */
@@ -52,7 +52,7 @@ class mdtCsvStringParser
 
   /*! \brief Set settings
    */
-  void setSettings(const mdtCsvParserSettings & s);
+//   void setSettings(const mdtCsvParserSettings & s);
 
   /*! \brief Set CSV source string
    *

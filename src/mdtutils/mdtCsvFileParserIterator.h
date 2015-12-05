@@ -25,7 +25,10 @@
 #include "mdtError.h"
 #include <QIODevice>
 #include <QByteArray>
+#include <boost/spirit/include/support_multi_pass.hpp>
 #include <memory>
+
+#include <QDebug>
 
 /*! \brief Iterator that acts on a I/O device
  *
@@ -48,6 +51,7 @@ struct mdtCsvFileParserIterator
   typedef wchar_t value_type;
   typedef std::ptrdiff_t difference_type;
   typedef const value_type & reference;
+  ///typedef const value_type reference;
   typedef const value_type* pointer;
   typedef std::input_iterator_tag iterator_category;
 
@@ -120,6 +124,7 @@ struct mdtCsvFileParserIterator
     Q_ASSERT(pvShared);
 
     pvErrorOccured = !pvShared->advance();
+    qDebug() << "++ , error: " << pvErrorOccured;
 
     return *this;
   }
@@ -147,13 +152,19 @@ struct mdtCsvFileParserIterator
    * \pre This iterator must not be a end-of-stream iterator
    * \sa operator++()
    */
-  value_type operator*() const
+  ///value_type operator*() const
+  reference operator*()
   {
     Q_ASSERT(!isEof());
     if(pvErrorOccured){
-      return 0x2BD1;
+      pvCurrentChar = 0x2BD1;
+      ///return 0x2BD1;
+    }else{
+      pvCurrentChar = pvShared->get().unicode();
     }
-    return pvShared->get().unicode();
+    qDebug() << "* : " << pvShared->get() << " (" << pvShared->get().unicode() << ")";
+    return pvCurrentChar;
+    ///return pvShared->get().unicode();
   }
 
   /*! \brief Returns true if a and b are EOF iterators, or a and b are valid iterators
@@ -209,13 +220,34 @@ struct mdtCsvFileParserIterator
  private:
 
   bool pvErrorOccured;
+  value_type pvCurrentChar;
   std::shared_ptr<mdtCsvFileParserIteratorSharedData> pvShared;
 };
 
-/*! \brief \todo Multipass iterator
- *
- * Name: mdtCsvFileParserMultiPassIterator ?
- */
+// Namespace to define mdtCsvFileParserMultiPassIterator without exposing boost::spirit
+namespace mdtCsvFileParserMultiPassIteratorPrivate
+{
+  using namespace boost::spirit;
+  using namespace boost::spirit::iterator_policies;
 
+  ///typedef default_policy<first_owner, no_check, buffering_input_iterator, split_std_deque> csvPolicy;
+  ///typedef default_policy<first_owner, buf_id_check, input_iterator, split_std_deque> csvPolicy;
+  typedef default_policy<first_owner, no_check, input_iterator, split_std_deque> csvPolicy;
+  typedef multi_pass<mdtCsvFileParserIterator, csvPolicy> mdtCsvFileParserMultiPassIterator;
+}
+
+/*! \brief CSV file parser multi pass policies
+ *
+ * \sa mdtCsvFileParserMultiPassIterator
+ */
+typedef mdtCsvFileParserMultiPassIteratorPrivate::csvPolicy mdtCsvFileParserMultiPassPolicy;
+
+/*! \brief CSV file parser multi pass iterator
+ *
+ * This iterator uses Boost.Spirt's multi pass API
+ *  to map mdtCsvFileParserIterator (witch is a single pass input iterator)
+ *  to a multi pass iterator, that is required by Spirit parsers.
+ */
+typedef mdtCsvFileParserMultiPassIteratorPrivate::mdtCsvFileParserMultiPassIterator mdtCsvFileParserMultiPassIterator;
 
 #endif // #ifndef MDT_CSV_FILE_PARSER_ITERATOR_H

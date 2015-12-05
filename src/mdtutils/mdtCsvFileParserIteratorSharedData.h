@@ -32,7 +32,7 @@
 #include <utility>
 #include <vector>
 
-//#include <QDebug>
+#include <QDebug>
 
 /*! \brief Contains shared part of mdtCsvFileParserIterator
  */
@@ -48,6 +48,7 @@ class mdtCsvFileParserIteratorSharedData
     pvCurrentPos = pvUnicodeBuffer.cbegin();
     pvEnd = pvUnicodeBuffer.cend();
     pvRawDataBuffer.reserve(1024);
+    qDebug() << "mdtCsvFileParserIteratorSharedData::mdtCsvFileParserIteratorSharedData() ...";
   }
 
   /*! \brief Copy is disabled
@@ -71,6 +72,7 @@ class mdtCsvFileParserIteratorSharedData
   ~mdtCsvFileParserIteratorSharedData()
   {
     delete pvDecoder;
+    qDebug() << "mdtCsvFileParserIteratorSharedData::~mdtCsvFileParserIteratorSharedData() ...";
   }
 
   /*! \brief Set source

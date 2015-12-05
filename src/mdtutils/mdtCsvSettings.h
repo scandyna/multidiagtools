@@ -21,6 +21,8 @@
 #ifndef MDT_CSV_SETTINGS_H
 #define MDT_CSV_SETTINGS_H
 
+#include <QMetaType>
+
 /*! \brief CSV parser settings
  *
  * \note Some part of this API documentation
@@ -43,16 +45,31 @@ struct mdtCsvParserSettings
    *
    * The default is the double quote '"' .
    *
-   *  The ability to choose another protection
+   * The ability to choose another protection
    *  is a non standard extention.
    */
   char fieldProtection;
+
+  /*! \brief Parse Excel protection marker
+   *
+   * The Excel protection marker (EXP) is explained
+   *  in CSV-1203 standard, §10.
+   *
+   * When parseExp is true,
+   *  when a field begins with a ~ (=EXP),
+   *  it will not be stored in resulting data.
+   *
+   * The ability to not parse EXP
+   *  is a non standard extention.
+   */
+  bool parseExp;
 
   /*! \brief Constructor
    */
   mdtCsvParserSettings()
    : fieldSeparator(','),
-     fieldProtection('\"')
+     fieldProtection('\"'),
+     parseExp(true)
   {
   }
 
@@ -64,7 +81,9 @@ struct mdtCsvParserSettings
   {
     fieldSeparator = ',';
     fieldProtection = '\"';
+    parseExp = true;
   }
 };
+Q_DECLARE_METATYPE(mdtCsvParserSettings)
 
 #endif // #ifndef MDT_CSV_SETTINGS_H

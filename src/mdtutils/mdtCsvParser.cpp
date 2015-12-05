@@ -252,8 +252,8 @@ void mdtReadIteratorTestFunction()
  * mdtCsvStringParser implementation
  */
 
-mdtCsvStringParser::mdtCsvStringParser()
- : pvImpl(new mdtCsvParserTemplate<mdtCsvParserQStringIterator>)
+mdtCsvStringParser::mdtCsvStringParser(const mdtCsvParserSettings & csvSettings)
+ : pvImpl(new mdtCsvParserTemplate<mdtCsvParserQStringIterator>(csvSettings))
 {
 }
 
@@ -261,10 +261,10 @@ mdtCsvStringParser::~mdtCsvStringParser()
 {
 }
 
-void mdtCsvStringParser::setSettings(const mdtCsvParserSettings & s)
-{
-  pvImpl->setSettings(s);
-}
+// void mdtCsvStringParser::setSettings(const mdtCsvParserSettings & s)
+// {
+//   pvImpl->setSettings(s);
+// }
 
 void mdtCsvStringParser::setSource(const QString & source)
 {
