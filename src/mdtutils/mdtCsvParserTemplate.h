@@ -85,7 +85,6 @@ namespace boost { namespace spirit { namespace traits
      */
     static bool call(QString & str, const QChar & c)
     {
-      qDebug() << "call , append " << c;
       str.append(c);
       return true;
     }
@@ -115,50 +114,6 @@ namespace boost { namespace spirit { namespace traits
 
 }}} // namespace boost { namespace spirit { namespace traits
 
-// namespace boost { namespace spirit { namespace traits
-// {
-//   /*! \internal Make Qi recognize QVector as a container
-//    */
-//   template <>
-//   struct is_container<QVector<QString>> : mpl::true_
-//   {
-//   };
-// 
-// //   /*! \internal Expose QVector's value_type
-// //    */
-// //   template <>
-// //   struct container_value<QVector<QString>> : mpl::identity<T>
-// //   {
-// //   };
-// 
-//   /*! \internal Define how to insert a new element at the end of the QVector container
-//    */
-//   template <>
-//   struct push_back_container<QVector<QString>, std::wstring>
-//   {
-//     /*! \internal call function
-//      */
-//     static bool call(QVector<QString> & v, const std::wstring & str)
-//     {
-//       qDebug() << "call , append " << QString::fromStdWString(str);
-//       v.append(QString::fromStdWString(str));
-//       return true;
-//     }
-//   };
-// 
-//   /*! \internal Test if a QVector is empty (required for debug)
-//   */
-//   template <>
-//   struct is_empty_container<QVector<QString>>
-//   {
-//     static bool call(const QVector<QString> & v)
-//     {
-//       return v.isEmpty();
-//     }
-//   };
-// 
-// }}} // namespace boost { namespace spirit { namespace traits
-
 /*! \brief CSV parser template
  *
  * This class implements the parser logic,
@@ -168,9 +123,9 @@ namespace boost { namespace spirit { namespace traits
  * \tparam SourceIterator Type of iterator that will act on the source.
  * \note Including directly this header in a project can slow down compilation time
  * \sa mdtCsvStringParser
- * \note Some part of this API documentation
- *       refers to CSV-1203 standard.
- *       CSV-1203 is a open standard available here: http://mastpoint.com/csv-1203
+ * \note Some part of this API documentation following statnards:
+ *       \li CSV-1203 available here: http://mastpoint.com/csv-1203
+ *       \li RFC 4180 available here: https://tools.ietf.org/html/rfc4180
  */
 template <typename SourceIterator>
  // requirse RandomAccessIterator<SourceIterator>
@@ -211,27 +166,10 @@ class mdtCsvParserTemplate
 //     pvSafechar.name("pvSafechar");
     /*
      * Build the grammar
-     * Sources:
-     *  - CSV-1203
+     * This grammar is based on CSV-1203.
+     * Some rules are also altered, to try to match RFC 4180 and unicode
      */
-//     ///pvRecordRule = pvRecordPayload >> eol;
-//     pvRecordRule = pvRecordPayload > eol;
-//     pvRecordPayload %= pvFieldColumn % char_(fieldSep);
-//     pvFieldColumn =  pvUnprotectedField | pvProtectedField;
-//     pvProtectedField = lit(fieldQuote) >> pvFieldPayload >> lit(fieldQuote);
-//     pvFieldPayload = +pvAnychar;
-//     pvUnprotectedField /**%*/= pvRawFieldPayload;
-    /// \todo Try *pvSafechar | ......
-//     pvRawFieldPayload = *pvSafechar | (pvSafechar >> *char_ >> pvSafechar);
-    ///pvRawFieldPayload /**%*/= pvSafechar | (pvSafechar >> *char_ >> pvSafechar); /// \note It semms that actual grammar is a tuple. If both are the same, a vector will be used
-//     pvAnychar = pvChar | char_(fieldSep) | (char_(fieldQuote) >> char_(fieldQuote)) | space; // space matches space, CR, LF and other See std::isspace()
-//     pvChar = pvSafechar | char_(0x20);  // 0x20 == SPACE char
-//     pvSafechar = char_(0x21, 0x7F) - char_(fieldSep) - char_(fieldQuote); /// \todo Should allow all except sep, quote and EOF
-//     std::string exclude = std::string(" ") + fieldSep + fieldQuote;
-//     pvSafechar = ~char_(exclude);
-
-    ///pvRecordRule = pvRecordPayload > eol;
-    pvRecordRule = pvRecordPayload >> eol;
+    pvRecordRule = pvRecordPayload >> -eol; // RFC 4180 do not need a end of line in last line
     pvRecordPayload = pvFieldColumn % char_(fieldSep);
     pvFieldColumn = pvProtectedField | pvUnprotectedField;
     if(parseExp){
@@ -244,7 +182,6 @@ class mdtCsvParserTemplate
     pvFieldPayload = +pvAnychar;
     pvRawFieldPayload = *pvSafechar | (pvSafechar >> *char_ >> pvSafechar);
     // Character collections
-    ///pvAnychar = pvChar | char_(fieldSep) | (char_(fieldQuote) >> char_(fieldQuote)) | space; // space matches space, CR, LF and other See std::isspace()
     pvAnychar = pvChar | char_(fieldSep) | (char_(fieldQuote) >> lit(fieldQuote)) | space; // space matches space, CR, LF and other See std::isspace()
     pvChar = pvSafechar | char_(0x20);  // 0x20 == SPACE char
     std::string exclude = std::string(" \n\t\r") + fieldSep + fieldQuote;
@@ -294,62 +231,55 @@ class mdtCsvParserTemplate
    */
   mdtCsvParserTemplate(const mdtCsvParserTemplate &) = delete;
 
-  /*! \brief Set settings
-   */
-//   void setSettings(const mdtCsvParserSettings & s)
-//   {
-//     pvSettings = s;
-//   }
-
   /*! \brief Set source
    */
-  void setSource(SourceIterator begin, SourceIterator end)
-  {
-    pvCurrentSourcePosition = begin;
-    pvSourceEnd = end;
-  }
+//   void setSource(SourceIterator begin, SourceIterator end)
+//   {
+//     pvCurrentSourcePosition = begin;
+//     pvSourceEnd = end;
+//   }
 
   /*! \brief Check if parser is at end of the source
    */
-  bool atEnd() const
-  {
-    if(pvCurrentSourcePosition == pvSourceEnd){
-      return true;
-    }
-    /// \todo Check about EOF
-    
-    return false;
-  }
+//   bool atEnd() const
+//   {
+//     if(pvCurrentSourcePosition == pvSourceEnd){
+//       return true;
+//     }
+//     /// \todo Check about EOF
+//     
+//     return false;
+//   }
 
   /*! \brief Read one line
    */
-  mdtCsvRecord readLine()
-  {
-    mdtCsvRecord record;
-    using boost::spirit::qi::char_;
-    using boost::phoenix::ref;
-
-    // Special if we reached the end of source, or source is empty
-    /// \todo Check if this should be a error or not
-    if(pvCurrentSourcePosition == pvSourceEnd){
-      return record;
-    }
-    // Parse a line
-    ///bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, pvRecordPayload);
-    bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, pvRecordRule, record.columnDataList);
-    if(!ok){
-      record.setErrorOccured();
-      pvCurrentSourcePosition = pvSourceEnd;
-      /// Store error \todo Better message needed..
-      QString msg = tr("Parsing error occured.");
-      pvLastError.setError(msg, mdtError::Error);
-      MDT_ERROR_SET_SRC(pvLastError, "mdtCsvParserTemplate");
-      pvLastError.commit();
-      /// \todo Witch place should the error message be genarated ? F.ex. File parser should output file name..
-    }
-
-    return record;
-  }
+//   mdtCsvRecord readLine()
+//   {
+//     mdtCsvRecord record;
+//     using boost::spirit::qi::char_;
+//     using boost::phoenix::ref;
+// 
+//     // Special if we reached the end of source, or source is empty
+//     /// \todo Check if this should be a error or not
+//     if(pvCurrentSourcePosition == pvSourceEnd){
+//       return record;
+//     }
+//     // Parse a line
+//     ///bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, pvRecordPayload);
+//     bool ok = boost::spirit::qi::parse(pvCurrentSourcePosition, pvSourceEnd, pvRecordRule, record.columnDataList);
+//     if(!ok){
+//       record.setErrorOccured();
+//       pvCurrentSourcePosition = pvSourceEnd;
+//       /// Store error \todo Better message needed..
+//       QString msg = tr("Parsing error occured.");
+//       pvLastError.setError(msg, mdtError::Error);
+//       MDT_ERROR_SET_SRC(pvLastError, "mdtCsvParserTemplate");
+//       pvLastError.commit();
+//       /// \todo Witch place should the error message be genarated ? F.ex. File parser should output file name..
+//     }
+// 
+//     return record;
+//   }
 
   mdtCsvRecord readLine(SourceIterator & first, const SourceIterator & last)
   {
@@ -359,21 +289,21 @@ class mdtCsvParserTemplate
 
     // Special if we reached the end of source, or source is empty
     /// \todo Check if this should be a error or not
-//     if(pvCurrentSourcePosition == pvSourceEnd){
-//       return record;
-//     }
+    if(first == last){
+      return record;
+    }
     // Parse a line
-//     bool ok = boost::spirit::qi::parse(first, last, pvRecordRule, record.columnDataList);
-//     if(!ok){
-//       record.setErrorOccured();
-// //       pvCurrentSourcePosition = pvSourceEnd;
-//       /// Store error \todo Better message needed..
-//       QString msg = tr("Parsing error occured.");
-//       pvLastError.setError(msg, mdtError::Error);
-//       MDT_ERROR_SET_SRC(pvLastError, "mdtCsvParserTemplate");
-//       pvLastError.commit();
-//       /// \todo Witch place should the error message be genarated ? F.ex. File parser should output file name..
-//     }
+    bool ok = boost::spirit::qi::parse(first, last, pvRecordRule, record.columnDataList);
+    if(!ok){
+      record.setErrorOccured();
+      first = last;
+      /// Store error \todo Better message needed..
+      QString msg = tr("Parsing error occured.");
+      pvLastError.setError(msg, mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtCsvParserTemplate");
+      pvLastError.commit();
+      /// \todo Witch place should the error message be genarated ? F.ex. File parser should output file name..
+    }
 
     return record;
   }
@@ -396,16 +326,8 @@ class mdtCsvParserTemplate
    *   -> Il faudrait aussi s'assurer que la source soit UTF-8 (et pas UTF-16, UTF-32, ...)
    */
 
-  SourceIterator pvCurrentSourcePosition;
-  SourceIterator pvSourceEnd;
-//   boost::spirit::qi::rule<SourceIterator, QVector<std::wstring>()> pvRecordRule;
-//   boost::spirit::qi::rule<SourceIterator, QVector<std::wstring>()> pvRecordPayload;
-//   boost::spirit::qi::rule<SourceIterator, std::wstring()> pvFieldColumn;
-//   boost::spirit::qi::rule<SourceIterator, std::wstring()> pvProtectedField;
-//   boost::spirit::qi::rule<SourceIterator, std::wstring()> pvUnprotectedField;
-//   boost::spirit::qi::rule<SourceIterator, std::wstring()> pvFieldPayload;
-//   boost::spirit::qi::rule<SourceIterator, std::wstring()> pvRawFieldPayload;
-
+//   SourceIterator pvCurrentSourcePosition;
+//   SourceIterator pvSourceEnd;
   boost::spirit::qi::rule<SourceIterator, QVector<QString>()> pvRecordRule;
   boost::spirit::qi::rule<SourceIterator, QVector<QString>()> pvRecordPayload;
   boost::spirit::qi::rule<SourceIterator, QString()> pvFieldColumn;
@@ -416,7 +338,6 @@ class mdtCsvParserTemplate
   boost::spirit::qi::rule<SourceIterator, wchar_t()> pvAnychar;
   boost::spirit::qi::rule<SourceIterator, wchar_t()> pvChar;
   boost::spirit::qi::rule<SourceIterator, wchar_t()> pvSafechar;
-///   mdtCsvParserSettings pvSettings;
   mdtError pvLastError;
 };
 

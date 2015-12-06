@@ -47,6 +47,9 @@ class mdtCsvTest : public mdtTest
   void csvFileParserIteratorTest();
   void csvFileParserMultiPassIteratorTest();
 
+ private:
+
+  void buildCsvTestData();
 };
 
 #endif // #ifndef MDT_CSV_TEST_H

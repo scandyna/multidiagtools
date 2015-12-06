@@ -261,22 +261,18 @@ mdtCsvStringParser::~mdtCsvStringParser()
 {
 }
 
-// void mdtCsvStringParser::setSettings(const mdtCsvParserSettings & s)
-// {
-//   pvImpl->setSettings(s);
-// }
-
 void mdtCsvStringParser::setSource(const QString & source)
 {
-  pvImpl->setSource(source.cbegin(), source.cend());
+  pvCurrentPosition = source.cbegin();
+  pvEnd = source.cend();
 }
 
 bool mdtCsvStringParser::atEnd() const
 {
-  return pvImpl->atEnd();
+  return (pvCurrentPosition == pvEnd);
 }
 
 mdtCsvRecord mdtCsvStringParser::readLine()
 {
-  return pvImpl->readLine();
+  return pvImpl->readLine(pvCurrentPosition, pvEnd);
 }

@@ -27,8 +27,6 @@
 #include <QString>
 #include <memory>
 
-#include <string>
-
 template <typename InputIterator>
 class mdtCsvParserTemplate;
 
@@ -50,10 +48,6 @@ class mdtCsvStringParser
    */
   mdtCsvStringParser(const mdtCsvStringParser &) = delete;
 
-  /*! \brief Set settings
-   */
-//   void setSettings(const mdtCsvParserSettings & s);
-
   /*! \brief Set CSV source string
    *
    * \note Parsing will be done directly on source
@@ -71,6 +65,8 @@ class mdtCsvStringParser
 
  private:
 
+  mdtCsvParserQStringIterator pvCurrentPosition;
+  mdtCsvParserQStringIterator pvEnd;
   std::unique_ptr<mdtCsvParserTemplate<mdtCsvParserQStringIterator> > pvImpl;
 };
 
