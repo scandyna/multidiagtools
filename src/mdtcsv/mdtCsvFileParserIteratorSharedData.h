@@ -42,13 +42,13 @@ class mdtCsvFileParserIteratorSharedData
 
   /*! \brief Default constructor
    */
-  mdtCsvFileParserIteratorSharedData()
+  mdtCsvFileParserIteratorSharedData(int rawDataBufferCapacity = 1024)
    : pvDecoder(nullptr)
   {
+    Q_ASSERT(rawDataBufferCapacity > 0);
     pvCurrentPos = pvUnicodeBuffer.cbegin();
     pvEnd = pvUnicodeBuffer.cend();
-    pvRawDataBuffer.reserve(1024);
-    qDebug() << "mdtCsvFileParserIteratorSharedData::mdtCsvFileParserIteratorSharedData() ...";
+    pvRawDataBuffer.reserve(rawDataBufferCapacity);
   }
 
   /*! \brief Copy is disabled
@@ -72,40 +72,35 @@ class mdtCsvFileParserIteratorSharedData
   ~mdtCsvFileParserIteratorSharedData()
   {
     delete pvDecoder;
-    qDebug() << "mdtCsvFileParserIteratorSharedData::~mdtCsvFileParserIteratorSharedData() ...";
   }
 
   /*! \brief Set source
    *
-   * First, device will be open (if not allready open).
+   * First, it is checked that device is open.
    *  Then, a text decoder is created, based on given encoding.
    *  If above operations succeeds, and device is not at end, a first chunk of data
    *  is read and decoded into unicode buffer.
    *
    * \param device I/O device on witch data will be read.
-   *               If device is not allready open,
-   *                it will be open with QIODevice::ReadOnly.
-   *               If device is allready open, it will be kept as is.
    *               Note: device is not owned here (will not be deleted)
    * \param encoding Encoding name of the data that device will read.
    *               Will use QTextCodec::codecForName() to get apropriate codec.
-   * \return false if device could not be open, or no codec could be found for given encoding,
+   * \return false if device is not open, or no codec could be found for given encoding,
    *         true if all goes well.
    *
    * \pre device must be a valid pointer
-   * \pre device must not be open with QIODevice::WriteOnly (QIODevice::isReadable() must return true)
+   * \pre device must readable (QIODevice::isReadable() must return true)
    */
   bool setSource(QIODevice *device, const QByteArray & encoding)
   {
     Q_ASSERT(device != nullptr);
-    Q_ASSERT((!device->isOpen()) || (device->isReadable()));
 
     // Delete possibly allocated decoder (it is a nullptr or a valid pointer)
     delete pvDecoder;
     pvDecoder = nullptr;
     // Set possibly referenced divice to nullptr
     pvDevice = nullptr;
-    // Clear buffer(s??)
+    // Clear buffer
     clearUnicodeBuffer();
     /*
      * Find a codec for requested encodeing
@@ -124,18 +119,23 @@ class mdtCsvFileParserIteratorSharedData
     Q_ASSERT(codec != nullptr);
     pvDecoder = codec->makeDecoder();
     /*
-     * Open device if it is not allready open
+     * Check that device is open
+     * We must do it at runtime,
+     * because it can be closed at any time
+     * (f.ex. a file on a removable device)
      */
     if(!device->isOpen()){
-      if(!device->open(QIODevice::ReadOnly)){
-        QString msg = tr("Could not open device:\n") \
-                    + device->errorString();
-        pvLastError.setError(msg, mdtError::Error);
-        MDT_ERROR_SET_SRC(pvLastError, "mdtCsvFileParserIteratorSharedData");
-        pvLastError.commit();
-        return false;
+      QString msg = tr("Device is not open.");
+      pvLastError.setError(msg, mdtError::Error);
+      msg = device->errorString();
+      if(!msg.isEmpty()){
+        pvLastError.setSystemError(0, msg);
       }
+      MDT_ERROR_SET_SRC(pvLastError, "mdtCsvFileParserIteratorSharedData");
+      pvLastError.commit();
+      return false;
     }
+    Q_ASSERT(device->isReadable());
     pvDevice = device;
     /*
      * If device is allready at end, its not a error,
@@ -168,12 +168,18 @@ class mdtCsvFileParserIteratorSharedData
    */
   bool atEnd() const
   {
+    return (pvCurrentPos == pvEnd);
+    
     if(!pvDevice){
+      qDebug() << "atEnd(): pvDevice is null";
       return true;
     }
     if(!pvDevice->isOpen()){
+      qDebug() << "atEnd(): pvDevice is closed";
       return true;
     }
+    qDebug() << "atEnd(): (pvCurrentPos == pvEnd): " << (pvCurrentPos == pvEnd);
+    qDebug() << "atEnd(): device at end: " << pvDevice->atEnd();
     return ( (pvCurrentPos == pvEnd) && (pvDevice->atEnd()) );
   }
 
@@ -195,18 +201,22 @@ class mdtCsvFileParserIteratorSharedData
   bool advance()
   {
     Q_ASSERT(pvDevice);
-    Q_ASSERT(pvDevice->isReadable());
     Q_ASSERT(pvDecoder);
 
+    // Check if we have cached data
+    if(pvCurrentPos != pvEnd){
+      ++pvCurrentPos;
+    }
     // Check if we have to read more data
     while(pvCurrentPos == pvEnd){
       if(!readMore()){
+        Q_ASSERT(pvCurrentPos == pvEnd);
         return false;
       }
+      if(pvDevice->atEnd()){
+        return true;
+      }
     }
-    // Update result and current position
-    Q_ASSERT(pvCurrentPos != pvEnd);
-    ++pvCurrentPos;
 
     return true;
   }
@@ -226,80 +236,16 @@ class mdtCsvFileParserIteratorSharedData
     return *pvCurrentPos;
   }
 
-  /*! \brief Get a char from unicode buffer
-   *
-   * If internal unicode buffer has data available,
-   *  one char is simply returned.
-   *  If no more data is available any more,
-   *  a chunk is readen frome device,
-   *  decoded into unicode buffer
-   *  and one element is returned.
-   *
-   * Because data can possibly been readen
-   *  from device, caller must check that second of retruned pair
-   *  is true (false means a failure).
-   *
-   * Note that this function will not advance
-   *  in the stream. In other words, calling it multiple time
-   *  will allways return the same char.
-   *
-   * \pre This function can only be called once setSource() successfully returned.
-   * \sa takeOne()
-   */
-  std::pair<QChar, bool> getOne()
-  {
-    Q_ASSERT(pvDevice);
-    Q_ASSERT(pvDevice->isReadable());
-    Q_ASSERT(pvDecoder);
-
-    std::pair<QChar, bool> result;
-
-    // Check if we have to read more data
-    while(pvCurrentPos == pvEnd){
-      result.second = readMore();
-      if(!result.second){
-        return result;
-      }
-    }
-    // Update result and current position
-    Q_ASSERT(pvCurrentPos != pvEnd);
-    result.first = *pvCurrentPos;
-    result.second = true;
-
-    return result;
-  }
-
-  /*! \brief Take a char from unicode buffer
-   *
-   * Does the same operation than getOne() ,
-   *  but also advances in stream.
-   *
-   * \pre This function can only be called once setSource() successfully returned.
-   * \sa getOne()
-   */
-  std::pair<QChar, bool> takeOne()
-  {
-    Q_ASSERT(pvDevice);
-    Q_ASSERT(pvDevice->isReadable());
-    Q_ASSERT(pvDecoder);
-
-    std::pair<QChar, bool> result = getOne();
-    if(result.second){
-      ++pvCurrentPos;
-    }
-    return result;
-  }
-
   /*! \brief Set internal raw data buffer size
    *
    * This function is mainly used for unit testing.
    */
-  void setInternalRawDataBufferSize(int size)
-  {
-    Q_ASSERT(size > 0);
-    pvRawDataBuffer.resize(size);
-    pvRawDataBuffer.shrink_to_fit();
-  }
+//   void setInternalRawDataBufferSize(int size)
+//   {
+//     Q_ASSERT(size > 0);
+//     pvRawDataBuffer.resize(size);
+//     pvRawDataBuffer.shrink_to_fit();
+//   }
 
   /*! \brief Get last error
    */
@@ -315,12 +261,30 @@ class mdtCsvFileParserIteratorSharedData
   bool readMore()
   {
     Q_ASSERT(pvDevice);
-    Q_ASSERT(pvDevice->isReadable());
     Q_ASSERT(pvDecoder);
     Q_ASSERT(pvRawDataBuffer.capacity() > 0);
 
+    qDebug() << "Read more , raw cap: " << pvRawDataBuffer.capacity();
     // Clear unicode buffer (also enshure that iterators are valid)
     clearUnicodeBuffer();
+    /*
+     * Check that device is open
+     * We must do it at runtime,
+     * because it can be closed at any time
+     * (f.ex. a file on a removable device)
+     */
+    if(!pvDevice->isOpen()){
+      QString msg = tr("Device was closed.");
+      pvLastError.setError(msg, mdtError::Error);
+      msg = pvDevice->errorString();
+      if(!msg.isEmpty()){
+        pvLastError.setSystemError(0, msg);
+      }
+      MDT_ERROR_SET_SRC(pvLastError, "mdtCsvFileParserIteratorSharedData");
+      pvLastError.commit();
+      return false;
+    }
+    Q_ASSERT(pvDevice->isReadable());
     // Read a chunk of data from device
     auto n = pvDevice->read(pvRawDataBuffer.data(), pvRawDataBuffer.capacity());
     if(n < 0){

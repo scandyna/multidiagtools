@@ -46,6 +46,9 @@ class mdtCsvTest : public mdtTest
   void csvFileParserIteratorSharedDataReadTest_data();
   void csvFileParserIteratorTest();
   void csvFileParserMultiPassIteratorTest();
+  void csvFileParserTest();
+  void csvFileParserReadAllTest();
+  void csvFileParserReadAllTest_data();
 
  private:
 

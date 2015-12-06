@@ -23,6 +23,7 @@
 #include "mdtCsvStringParserIterator.h"
 #include "mdtCsvFileParserIterator.h"
 #include "mdtCsvFileParserIteratorSharedData.h"
+#include "mdtCsvFileParser.h"
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
 #include "mdtApplication.h"
@@ -30,6 +31,8 @@
 #include <QFile>
 #include <QString>
 #include <QByteArray>
+#include <QVector>
+#include <QtTest>
 #include <string>
 #include <vector>
 
@@ -338,19 +341,23 @@ void mdtCsvTest::csvFileParserIteratorSharedDataTest()
   /*
    * Initial state
    */
-  
+  QVERIFY(sd.atEnd());
   /*
-   * set source
+   * set source to a empty file
    */
   // Pass file that is no allready open + existing encoding
   QVERIFY(!file.isOpen());
-  QVERIFY(sd.setSource(&file, "UTF-8"));
-  QVERIFY(file.isOpen());
+  QVERIFY(!sd.setSource(&file, "UTF-8"));
+  QVERIFY(!file.isOpen());
+  QVERIFY(sd.atEnd());
   // Pass file that is allready open + existing encoding
+  QVERIFY(file.open());
   QVERIFY(sd.setSource(&file, "UTF-8"));
   QVERIFY(file.isOpen());
+  QVERIFY(sd.atEnd());
   // Pass a file that is allready open + NON existing encoding
   QVERIFY(!sd.setSource(&file, "SomeUnknownEncoding"));
+  QVERIFY(sd.atEnd());
   QVERIFY(file.isOpen()); // file must be keeped untouched
   /*
    * Prepare file with some data
@@ -365,11 +372,10 @@ void mdtCsvTest::csvFileParserIteratorSharedDataTest()
   QVERIFY(file.open());
   QVERIFY(sd.setSource(&file, "UTF-8"));
   QVERIFY(!sd.atEnd());
-  QVERIFY(sd.getOne().second);
   QVERIFY(!sd.atEnd());
   // Close file and check that sd is at end
   file.close();
-  QVERIFY(sd.atEnd());
+  ///QVERIFY(sd.atEnd());
   /*
    * Check getting data
    */
@@ -399,11 +405,29 @@ void mdtCsvTest::csvFileParserIteratorSharedDataTest()
   // Step again - Now we reached EOF
   QVERIFY(sd.advance());
   QVERIFY(sd.atEnd());
+  /*
+   * Check error handling
+   */
+  // Re-open file
+  file.close();
+  QVERIFY(file.open());
+  mdtCsvFileParserIteratorSharedData sd2(1);
+  QVERIFY(sd2.setSource(&file, "UTF-8"));
+  // Get first char
+  QVERIFY(!sd2.atEnd());
+  QCOMPARE(sd2.get(), QChar('A'));
+  // Step and get
+  QVERIFY(sd2.advance());
+  QVERIFY(!sd2.atEnd());
+  QCOMPARE(sd2.get(), QChar('B'));
+  // Close file
+  file.close();
+  QVERIFY(!sd2.advance());
+  QVERIFY(sd2.atEnd());
 }
 
 void mdtCsvTest::csvFileParserIteratorSharedDataReadTest()
 {
-  mdtCsvFileParserIteratorSharedData sd;
   QTemporaryFile file;
   QFETCH(QString, fileData);
   QFETCH(QString, fileEncoding);
@@ -411,6 +435,7 @@ void mdtCsvTest::csvFileParserIteratorSharedDataReadTest()
   QString unicodeBuffer;
   QByteArray fileRawData;
   QTextCodec *codec;
+  mdtCsvFileParserIteratorSharedData sd(rawDataBufferSize);
 
   QVERIFY(QTextCodec::codecForName(fileEncoding.toLatin1()) != nullptr);
   /*
@@ -432,7 +457,7 @@ void mdtCsvTest::csvFileParserIteratorSharedDataReadTest()
   QVERIFY(unicodeBuffer.isEmpty());
   // Read data
   QVERIFY(sd.setSource(&file, fileEncoding.toLatin1()));
-  sd.setInternalRawDataBufferSize(rawDataBufferSize);
+//   sd.setInternalRawDataBufferSize(rawDataBufferSize);
   while(!sd.atEnd()){
     unicodeBuffer.append(sd.get());
     QVERIFY(sd.advance());
@@ -619,6 +644,53 @@ void mdtCsvTest::csvFileParserMultiPassIteratorTest()
   ///auto rec = parser.readLine(first, make_multi_pass<mdtCsvFileParserMultiPassPolicy, mdtCsvFileParserIterator>(mdtCsvFileParserIterator()));
   ///qDebug() << rec.columnDataList;
 
+}
+
+void mdtCsvTest::csvFileParserTest()
+{
+  mdtCsvFileParser parser;
+  QTemporaryFile file;
+  QString str;
+
+  QVERIFY(QTextCodec::codecForName("UTF-8") != nullptr);
+  /*
+   * Prepare file
+   */
+  QVERIFY(file.open());
+  QVERIFY(file.write(u8"ABCDE\n1234\n") > 0);
+  file.close();
+  /*
+   * Initial state
+   */
+  
+  /*
+   * Open/close test
+   */
+  qDebug() << "TEST , open ...";
+  QVERIFY(parser.openFile(file.fileName(), "UTF-8"));
+  
+  auto rec = parser.readLine();
+  qDebug() << rec.columnDataList;
+  rec = parser.readLine();
+  qDebug() << rec.columnDataList;
+
+  
+  qDebug() << "TEST , close ...";
+  parser.closeFile();
+//   qDebug() << "TEST , open ...";
+//   QVERIFY(parser.openFile(file.fileName(), "UTF-8"));
+  
+  qDebug() << "TEST , END";
+}
+
+void mdtCsvTest::csvFileParserReadAllTest()
+{
+
+}
+
+void mdtCsvTest::csvFileParserReadAllTest_data()
+{
+  buildCsvTestData();
 }
 
 void mdtCsvTest::buildCsvTestData()

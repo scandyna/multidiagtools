@@ -52,11 +52,6 @@ add_executable(mdtfiletest "mdtFileTest.cpp")
 target_link_libraries(mdtfiletest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtfiletest "mdttest")
 
-# * mdtCsvTest executable *
-add_executable(mdtcsvtest "mdtCsvTest.cpp")
-target_link_libraries(mdtcsvtest "mdtutils${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtcsvtest "mdttest")
-
 # * mdtValueTest executable *
 add_executable(mdtvaluetest "mdtValueTest.cpp")
 target_link_libraries(mdtvaluetest "mdtutils${MDTLIB_VERSION_SUFFIX}")

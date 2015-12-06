@@ -19,7 +19,6 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtCodecScpi
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtError.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtErrorOut.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtCsvFile.cpp
-SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtCsvStringParser.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtUicNumber.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtUicNumberItem.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtUicNumberWidget.cpp

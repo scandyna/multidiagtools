@@ -29,7 +29,6 @@ set (SOURCES_FILES
           mdtErrorOut.cpp
           # File
           mdtCsvFile.cpp
-          mdtCsvStringParser.cpp
           # UIC number
           mdtUicNumber.cpp
           mdtUicNumberItem.cpp

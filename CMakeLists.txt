@@ -34,7 +34,7 @@ endif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
 # Project version
 set(MDTLIB_VERSION_MAJOR 0)
 set(MDTLIB_VERSION_MINOR 3)
-set(MDTLIB_VERSION_MICRO 2)
+set(MDTLIB_VERSION_MICRO 3)
 
 # Library version suffix:
 #  Since version 0.2.8, naming convension has changed.
@@ -114,6 +114,7 @@ endif(Boost_FOUND)
 # Headers directories
 #include_directories("${CMAKE_CURRENT_BINARY_DIR}/src")
 include_directories("${PROJECT_SOURCE_DIR}/src")
+include_directories("${PROJECT_SOURCE_DIR}/src/mdtcsv")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtdatabase")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtdevice")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtport")
@@ -126,6 +127,7 @@ include_directories("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")
 include_directories("${PROJECT_SOURCE_DIR}/src/qt-solutions/qtsingleapplication")
 # Because some headers are generated during building (config.h, Qt's UIC), we also add path to those
 include_directories("${CMAKE_BINARY_DIR}/src")
+include_directories("${CMAKE_BINARY_DIR}/src/mdtcsv")
 include_directories("${CMAKE_BINARY_DIR}/src/mdtdatabase")
 include_directories("${CMAKE_BINARY_DIR}/src/mdtdevice")
 include_directories("${CMAKE_BINARY_DIR}/src/mdtport")
@@ -164,6 +166,9 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/qt-solutions")
 
 # * mdtutils *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutils")
+
+# * mdtcsv *
+add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtcsv")
 
 # * mdtutilsgui *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")
@@ -222,8 +227,6 @@ add_test (mdtCodecTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtcodectest)
 add_test (mdtUicNumberTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtuicnumbertest)
 # mdtFileTest
 add_test (mdtFileTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtfiletest)
-# mdtCsvTest
-add_test (mdtCsvTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtcsvtest)
 # mdtValueTest
 add_test (mdtValueTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtvaluetest)
 # mdtIoTest
@@ -232,6 +235,11 @@ add_test (mdtIoTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtiotest)
 add_test (mdtGraphTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtgraphtest)
 # mdtStateMachineTest
 add_test (mdtStateMachineTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtstatemachinetest)
+
+# * mdtcsv *
+
+# mdtCsvTest
+add_test (mdtCsvTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtcsv/mdtcsvtest)
 
 # * mdtutilsgui *
 
