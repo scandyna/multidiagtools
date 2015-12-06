@@ -47,8 +47,7 @@ bool mdtCsvFileParser::openFile(const QFileInfo & fileInfo, const QByteArray & e
     return false;
   }
   // Assign file iterator
-  pvFileIterator = mdtCsvFileParserIterator(&pvFile, encoding);
-  if(pvFileIterator.errorOccured()){
+  if(!pvFileIterator.setSource(&pvFile, encoding)){
     pvLastError = pvFileIterator.lastError();
     return false;
   }
@@ -61,19 +60,34 @@ bool mdtCsvFileParser::openFile(const QFileInfo & fileInfo, const QByteArray & e
 
 void mdtCsvFileParser::closeFile()
 {
-  // Iterators ...
-  
-  // Close file
+  pvFileIterator.clear();
   pvFile.close();
+}
+
+bool mdtCsvFileParser::atEnd() const
+{
+  return pvFileIterator.isEof();
 }
 
 mdtCsvRecord mdtCsvFileParser::readLine()
 {
+  mdtCsvRecord record;
 
+  // Create multi pass iterators
   auto first = boost::spirit::make_multi_pass<mdtCsvFileParserMultiPassPolicy, mdtCsvFileParserIterator>(mdtCsvFileParserIterator(pvFileIterator));
   auto last = boost::spirit::make_multi_pass<mdtCsvFileParserMultiPassPolicy, mdtCsvFileParserIterator>(mdtCsvFileParserIterator());
+  // Parse a line
+  record = pvParser->readLine(first, last);
+  if(record.errorOccured()){
+    // Maybe a error on file
+    if(pvFileIterator.errorOccured()){
+      pvLastError = pvFileIterator.lastError();
+    }else{
+      pvLastError = pvParser->lastError();
+    }
+  }
 
-  return pvParser->readLine(first, last);
+  return record;
 }
 
 QString mdtCsvFileParser::tr(const char* sourceText)

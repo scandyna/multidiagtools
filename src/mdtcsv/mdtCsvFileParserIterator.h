@@ -84,15 +84,17 @@ struct mdtCsvFileParserIterator
    : pvErrorOccured(false),
      pvShared(new mdtCsvFileParserIteratorSharedData)
   {
-    pvErrorOccured = !pvShared->setSource(device, encoding);
-    if(pvErrorOccured){
-      pvShared.reset();
-      return;
-    }
-    // Check if device is allready at end
-    if(pvShared->atEnd()){
-      pvShared.reset();
-    }
+    init(device, encoding);
+//     pvErrorOccured = !pvShared->setSource(device, encoding);
+//     if(pvErrorOccured){
+//       pvLastError = pvShared->lastError();
+//       pvShared.reset();
+//       return;
+//     }
+//     // Check if device is allready at end
+//     if(pvShared->atEnd()){
+//       pvShared.reset();
+//     }
   }
 
   /*! \brief Copy on base of other iterator
@@ -109,6 +111,42 @@ struct mdtCsvFileParserIterator
    */
   // Thanks to std::shared_ptr we can let do the compiler
   mdtCsvFileParserIterator & operator=(const mdtCsvFileParserIterator & other) = default;
+
+  /*! \brief Set source
+   *
+   * Will use mdtCsvFileParserIteratorSharedData::setSource().
+   *  On success, a first char is read from device, decoded, then stored.
+   *  On failure, this iterator falls back to a end-of-stream iterator,
+   *  and error flag is set.
+   *  On success, it can also happen that the device is allready
+   *  at end. In this case, this iterator also falls back
+   *  to a end-of-stream iterator.
+   *
+   * \sa mdtCsvFileParserIteratorSharedData::setSource()
+   * \sa errorOccured()
+   */
+  bool setSource(QIODevice *device, const QByteArray & encoding)
+  {
+    Q_ASSERT(device != nullptr);
+
+    pvErrorOccured = false;
+    if(!pvShared){
+      pvShared.reset(new mdtCsvFileParserIteratorSharedData);
+    }
+
+    return init(device, encoding);
+  }
+
+  /*! \brief Clear
+   *
+   * After calling this function,
+   *  this iterator becomes a end-of-stream iterator
+   */
+  void clear()
+  {
+    pvErrorOccured = false;
+    pvShared.reset();
+  }
 
   /*! \brief Increment iterator (pre-increment)
    *
@@ -218,15 +256,38 @@ struct mdtCsvFileParserIterator
    */
   mdtError lastError() const
   {
-    Q_ASSERT(pvShared);
-    return pvShared->lastError();
+    return pvLastError;
   }
 
  private:
 
+  /*! \brief Init
+   *
+   * \sa setSource()
+   */
+  bool init(QIODevice *device, const QByteArray & encoding)
+  {
+    Q_ASSERT(device != nullptr);
+    Q_ASSERT(pvShared);
+
+    pvErrorOccured = !pvShared->setSource(device, encoding);
+    if(pvErrorOccured){
+      pvLastError = pvShared->lastError();
+      pvShared.reset();
+      return false;
+    }
+    // Check if device is allready at end
+    if(pvShared->atEnd()){
+      pvShared.reset();
+    }
+
+    return true;
+  }
+
   bool pvErrorOccured;
   value_type pvCurrentChar;
   std::shared_ptr<mdtCsvFileParserIteratorSharedData> pvShared;
+  mdtError pvLastError;
 };
 
 // Namespace to define mdtCsvFileParserMultiPassIterator without exposing boost::spirit

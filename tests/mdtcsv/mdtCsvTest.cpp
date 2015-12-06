@@ -539,6 +539,27 @@ void mdtCsvTest::csvFileParserIteratorTest()
   QVERIFY(it2.isEof());
   QVERIFY(it == it2);
   QVERIFY(!(it != it2));
+  // Assign file to it
+  QVERIFY(file.open());
+  QVERIFY(it.setSource(&file, "UTF-8"));
+  QVERIFY(!it.errorOccured());
+  QVERIFY(!it.isEof());
+  file.close();
+  // Assign again
+  QVERIFY(file.open());
+  QVERIFY(it.setSource(&file, "UTF-8"));
+  QVERIFY(!it.errorOccured());
+  QVERIFY(!it.isEof());
+  // Clear
+  it.clear();
+  QVERIFY(it.isEof());
+  file.close();
+  // Assign again
+  QVERIFY(file.open());
+  QVERIFY(it.setSource(&file, "UTF-8"));
+  QVERIFY(!it.errorOccured());
+  QVERIFY(!it.isEof());
+  file.close();
   // Construct it3 that acts on file
   QVERIFY(file.open());
   mdtCsvFileParserIterator it3(&file, "UTF-8");
@@ -651,6 +672,7 @@ void mdtCsvTest::csvFileParserTest()
   mdtCsvFileParser parser;
   QTemporaryFile file;
   QString str;
+  mdtCsvRecord record;
 
   QVERIFY(QTextCodec::codecForName("UTF-8") != nullptr);
   /*
@@ -662,25 +684,32 @@ void mdtCsvTest::csvFileParserTest()
   /*
    * Initial state
    */
-  
+  QVERIFY(parser.atEnd());
   /*
    * Open/close test
    */
-  qDebug() << "TEST , open ...";
   QVERIFY(parser.openFile(file.fileName(), "UTF-8"));
-  
-  auto rec = parser.readLine();
-  qDebug() << rec.columnDataList;
-  rec = parser.readLine();
-  qDebug() << rec.columnDataList;
-
-  
-  qDebug() << "TEST , close ...";
+  QVERIFY(!parser.atEnd());
   parser.closeFile();
-//   qDebug() << "TEST , open ...";
-//   QVERIFY(parser.openFile(file.fileName(), "UTF-8"));
-  
-  qDebug() << "TEST , END";
+  QVERIFY(parser.atEnd());
+  QVERIFY(parser.openFile(file.fileName(), "UTF-8"));
+  QVERIFY(!parser.atEnd());
+  /*
+   * Read line by line
+   */
+  // Read first line
+  QVERIFY(!parser.atEnd());
+  record = parser.readLine();
+  QVERIFY(!record.errorOccured());
+  QCOMPARE(record.count(), 1);
+  QCOMPARE(record.columnDataList.at(0), QString("ABCDE"));
+  // Read second line
+  QVERIFY(!parser.atEnd());
+  record = parser.readLine();
+  QVERIFY(!record.errorOccured());
+  QCOMPARE(record.count(), 1);
+  QCOMPARE(record.columnDataList.at(0), QString("1234"));
+  QVERIFY(parser.atEnd());
 }
 
 void mdtCsvTest::csvFileParserReadAllTest()

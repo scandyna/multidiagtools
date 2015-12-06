@@ -66,6 +66,10 @@ class mdtCsvFileParser
    */
   void closeFile();
 
+  /*! \brief Check about end of file
+   */
+  bool atEnd() const;
+
   /*! \brief Read one line in CSV file
    */
   mdtCsvRecord readLine();

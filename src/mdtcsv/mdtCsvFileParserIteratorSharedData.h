@@ -32,7 +32,7 @@
 #include <utility>
 #include <vector>
 
-#include <QDebug>
+//#include <QDebug>
 
 /*! \brief Contains shared part of mdtCsvFileParserIterator
  */
@@ -169,18 +169,6 @@ class mdtCsvFileParserIteratorSharedData
   bool atEnd() const
   {
     return (pvCurrentPos == pvEnd);
-    
-    if(!pvDevice){
-      qDebug() << "atEnd(): pvDevice is null";
-      return true;
-    }
-    if(!pvDevice->isOpen()){
-      qDebug() << "atEnd(): pvDevice is closed";
-      return true;
-    }
-    qDebug() << "atEnd(): (pvCurrentPos == pvEnd): " << (pvCurrentPos == pvEnd);
-    qDebug() << "atEnd(): device at end: " << pvDevice->atEnd();
-    return ( (pvCurrentPos == pvEnd) && (pvDevice->atEnd()) );
   }
 
   /*! \brief Advance by one unicode char in buffer
@@ -236,17 +224,6 @@ class mdtCsvFileParserIteratorSharedData
     return *pvCurrentPos;
   }
 
-  /*! \brief Set internal raw data buffer size
-   *
-   * This function is mainly used for unit testing.
-   */
-//   void setInternalRawDataBufferSize(int size)
-//   {
-//     Q_ASSERT(size > 0);
-//     pvRawDataBuffer.resize(size);
-//     pvRawDataBuffer.shrink_to_fit();
-//   }
-
   /*! \brief Get last error
    */
   mdtError lastError() const
@@ -264,7 +241,6 @@ class mdtCsvFileParserIteratorSharedData
     Q_ASSERT(pvDecoder);
     Q_ASSERT(pvRawDataBuffer.capacity() > 0);
 
-    qDebug() << "Read more , raw cap: " << pvRawDataBuffer.capacity();
     // Clear unicode buffer (also enshure that iterators are valid)
     clearUnicodeBuffer();
     /*
