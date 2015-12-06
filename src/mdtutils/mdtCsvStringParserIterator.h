@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CSV_PARSER_ITERATOR_H
-#define MDT_CSV_PARSER_ITERATOR_H
+#ifndef MDT_CSV_STRING_PARSER_ITERATOR_H
+#define MDT_CSV_STRING_PARSER_ITERATOR_H
 
 #include <QChar>
 #include <QString>
@@ -42,7 +42,7 @@
  *
  * \todo Should be renamed mdtCsvStringParserIterator (also rename the header and #ifndef)
  */
-struct mdtCsvParserQStringIterator
+struct mdtCsvStringParserIterator
 {
   static_assert(sizeof(wchar_t) >= 2, "wchar_t is < 16 bit");
 
@@ -56,14 +56,14 @@ struct mdtCsvParserQStringIterator
    *
    * Construct a invalid iterator
    */
-  mdtCsvParserQStringIterator()
+  mdtCsvStringParserIterator()
    : index(nullptr)
   {
   }
 
   /*! \brief Constructor
    */
-  mdtCsvParserQStringIterator(QString::const_iterator it)
+  mdtCsvStringParserIterator(QString::const_iterator it)
    : index(it)
   {
     Q_ASSERT(index != nullptr);
@@ -71,7 +71,7 @@ struct mdtCsvParserQStringIterator
 
   /*! \brief Assignement
    */
-  mdtCsvParserQStringIterator & operator=(const mdtCsvParserQStringIterator & other)
+  mdtCsvStringParserIterator & operator=(const mdtCsvStringParserIterator & other)
   {
     index = other.index;
     return *this;
@@ -79,7 +79,7 @@ struct mdtCsvParserQStringIterator
 
   /*! \brief Assignement
    */
-  mdtCsvParserQStringIterator & operator=(QString::const_iterator & it)
+  mdtCsvStringParserIterator & operator=(QString::const_iterator & it)
   {
     index = it;
     return *this;
@@ -87,7 +87,7 @@ struct mdtCsvParserQStringIterator
 
   /*! \brief Increment iterator (pre-increment)
    */
-  mdtCsvParserQStringIterator & operator++()
+  mdtCsvStringParserIterator & operator++()
   {
     Q_ASSERT(index != nullptr);
     ++index;
@@ -96,17 +96,17 @@ struct mdtCsvParserQStringIterator
 
   /*! \brief Increment iterator (post-increment)
    */
-  mdtCsvParserQStringIterator operator++(int)
+  mdtCsvStringParserIterator operator++(int)
   {
     Q_ASSERT(index != nullptr);
-    mdtCsvParserQStringIterator tmp(*this);
+    mdtCsvStringParserIterator tmp(*this);
     ++*this;
     return tmp;
   }
 
   /*! \brief Decrement iterator (pre-decrement)
    */
-  mdtCsvParserQStringIterator & operator--()
+  mdtCsvStringParserIterator & operator--()
   {
     Q_ASSERT(index != nullptr);
     --index;
@@ -115,33 +115,33 @@ struct mdtCsvParserQStringIterator
 
   /*! \brief Decrement iterator (post-decrement)
    */
-  mdtCsvParserQStringIterator operator--(int)
+  mdtCsvStringParserIterator operator--(int)
   {
     Q_ASSERT(index != nullptr);
-    mdtCsvParserQStringIterator tmp(*this);
+    mdtCsvStringParserIterator tmp(*this);
     --*this;
     return tmp;
   }
 
   /*! \brief Returns a iterator that is advanced by n positions
    */
-  mdtCsvParserQStringIterator operator+(difference_type n) const
+  mdtCsvStringParserIterator operator+(difference_type n) const
   {
     Q_ASSERT(index != nullptr);
-    return mdtCsvParserQStringIterator(index + n);
+    return mdtCsvStringParserIterator(index + n);
   }
 
   /*! \brief Returns a iterator that is rewind by n positions
    */
-  mdtCsvParserQStringIterator operator-(difference_type n) const
+  mdtCsvStringParserIterator operator-(difference_type n) const
   {
     Q_ASSERT(index != nullptr);
-    return mdtCsvParserQStringIterator(index - n);
+    return mdtCsvStringParserIterator(index - n);
   }
 
   /*! \brief Advance iterator by n positions
    */
-  mdtCsvParserQStringIterator & operator+=(difference_type n)
+  mdtCsvStringParserIterator & operator+=(difference_type n)
   {
     Q_ASSERT(index != nullptr);
     index += n;
@@ -150,7 +150,7 @@ struct mdtCsvParserQStringIterator
 
   /*! \brief Rewind iterator by n positions
    */
-  mdtCsvParserQStringIterator & operator-=(difference_type n)
+  mdtCsvStringParserIterator & operator-=(difference_type n)
   {
     Q_ASSERT(index != nullptr);
     index -= n;
@@ -184,7 +184,7 @@ struct mdtCsvParserQStringIterator
   /*! \brief Returns true if iterator a refers to same item than iterator b
    */
   friend
-  bool operator==(const mdtCsvParserQStringIterator & a, const mdtCsvParserQStringIterator & b)
+  bool operator==(const mdtCsvStringParserIterator & a, const mdtCsvStringParserIterator & b)
   {
     return (a.index == b.index);
   }
@@ -192,7 +192,7 @@ struct mdtCsvParserQStringIterator
   /*! \brief Returns true if iterator a refers not to same item than iterator b
    */
   friend
-  bool operator!=(const mdtCsvParserQStringIterator & a, const mdtCsvParserQStringIterator & b)
+  bool operator!=(const mdtCsvStringParserIterator & a, const mdtCsvStringParserIterator & b)
   {
     return !(a == b);
   }
@@ -200,7 +200,7 @@ struct mdtCsvParserQStringIterator
   /*! \brief Returns true if iterator a refers to a element prior to item referenced by iterator b
    */
   friend
-  bool operator<(const mdtCsvParserQStringIterator & a, const mdtCsvParserQStringIterator & b)
+  bool operator<(const mdtCsvStringParserIterator & a, const mdtCsvStringParserIterator & b)
   {
     return (a.index < b.index);
   }
@@ -208,7 +208,7 @@ struct mdtCsvParserQStringIterator
   /*! \brief Returns true if iterator a <= iterator b
    */
   friend
-  bool operator<=(const mdtCsvParserQStringIterator & a, const mdtCsvParserQStringIterator & b)
+  bool operator<=(const mdtCsvStringParserIterator & a, const mdtCsvStringParserIterator & b)
   {
     return (a.index <= b.index);
   }
@@ -216,7 +216,7 @@ struct mdtCsvParserQStringIterator
   /*! \brief Returns true if iterator a > iterator b
    */
   friend
-  bool operator>(const mdtCsvParserQStringIterator & a, const mdtCsvParserQStringIterator & b)
+  bool operator>(const mdtCsvStringParserIterator & a, const mdtCsvStringParserIterator & b)
   {
     return (a.index > b.index);
   }
@@ -224,7 +224,7 @@ struct mdtCsvParserQStringIterator
   /*! \brief Returns true if iterator a >= iterator b
    */
   friend
-  bool operator>=(const mdtCsvParserQStringIterator & a, const mdtCsvParserQStringIterator & b)
+  bool operator>=(const mdtCsvStringParserIterator & a, const mdtCsvStringParserIterator & b)
   {
     return (a.index >= b.index);
   }
@@ -235,4 +235,4 @@ struct mdtCsvParserQStringIterator
   mutable value_type value;
 };
 
-#endif // #ifndef MDT_CSV_PARSER_ITERATOR_H
+#endif // #ifndef MDT_CSV_STRING_PARSER_ITERATOR_H

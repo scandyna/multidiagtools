@@ -19,8 +19,8 @@
  **
  ****************************************************************************/
 #include "mdtCsvTest.h"
-#include "mdtCsvParser.h"
-#include "mdtCsvParserIterator.h"
+#include "mdtCsvStringParser.h"
+#include "mdtCsvStringParserIterator.h"
 #include "mdtCsvFileParserIterator.h"
 #include "mdtCsvFileParserIteratorSharedData.h"
 #include "mdtCsvSettings.h"
@@ -193,10 +193,10 @@ void mdtCsvTest::csvParserQStringIteratorTest()
    */
   str = "ABCDEF";
   // Direct assignement
-  mdtCsvParserQStringIterator it(str.cbegin());
+  mdtCsvStringParserIterator it(str.cbegin());
   QCOMPARE(*it, wchar_t('A'));
   // Default constructed
-  mdtCsvParserQStringIterator first, last;
+  mdtCsvStringParserIterator first, last;
   // Assignement
   first = str.cbegin();
   QCOMPARE(*first, wchar_t('A'));
@@ -278,8 +278,8 @@ void mdtCsvTest::csvParserQStringIteratorBenchmark()
   QBENCHMARK
   {
     destination.clear();
-    mdtCsvParserQStringIterator first(source.cbegin());
-    mdtCsvParserQStringIterator last(source.cend());
+    mdtCsvStringParserIterator first(source.cbegin());
+    mdtCsvStringParserIterator last(source.cend());
     while(first != last){
       destination.push_back(*first);
       ++first;
@@ -587,24 +587,14 @@ void mdtCsvTest::csvFileParserMultiPassIteratorTest()
   QVERIFY(file.open());
   QVERIFY(file.write(u8"ABCDE\n1234\n") > 0);
   file.close();
-
-  // Create our iterators
+  /*
+   * Create our iterators
+   */
   QVERIFY(file.open());
   mdtCsvFileParserIterator it(&file, "UTF-8");
   auto first = make_multi_pass<mdtCsvFileParserMultiPassPolicy, mdtCsvFileParserIterator>(mdtCsvFileParserIterator(it));
   auto last = make_multi_pass<mdtCsvFileParserMultiPassPolicy, mdtCsvFileParserIterator>(mdtCsvFileParserIterator());
   QVERIFY(!it.errorOccured());
-  
-  mdtCsvParserSettings csvSettings;
-  mdtCsvParserTemplate<mdtCsvFileParserMultiPassIterator> parser(csvSettings);
-  
-  ///parser.setSource(first, last);
-  ///auto rec = parser.readLine();
-  auto rec = parser.readLine(first, last);
-  ///auto rec = parser.readLine(first, make_multi_pass<mdtCsvFileParserMultiPassPolicy, mdtCsvFileParserIterator>(mdtCsvFileParserIterator()));
-  
-  qDebug() << rec.columnDataList;
-  
   /*
    * Check iterating
    */
@@ -613,6 +603,21 @@ void mdtCsvTest::csvFileParserMultiPassIteratorTest()
 //   QVERIFY(*first == 'B');
 //   --first;
 //   QVERIFY(*first == 'A');
+  // Check iterating the whole file
+  QVERIFY(*first == 'A');
+  while(first != last){
+    str.append(static_cast<ushort>(*first));
+    ++first;
+  }
+  QCOMPARE(str, QString(u8"ABCDE\n1234\n"));
+
+  ///mdtCsvParserSettings csvSettings;
+  ///mdtCsvParserTemplate<mdtCsvFileParserMultiPassIterator> parser(csvSettings);
+  ///parser.setSource(first, last);
+  ///auto rec = parser.readLine();
+  ///auto rec = parser.readLine(first, last);
+  ///auto rec = parser.readLine(first, make_multi_pass<mdtCsvFileParserMultiPassPolicy, mdtCsvFileParserIterator>(mdtCsvFileParserIterator()));
+  ///qDebug() << rec.columnDataList;
 
 }
 

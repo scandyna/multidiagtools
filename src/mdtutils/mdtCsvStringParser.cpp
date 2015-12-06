@@ -18,7 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtCsvParser.h"
+#include "mdtCsvStringParser.h"
 #include "mdtCsvParserTemplate.h"
 /**
  * For Sandbox
@@ -206,7 +206,7 @@ typedef iterator_policies::default_policy<iterator_policies::first_owner,
                    mdtCsvInputPolicy,
                    iterator_policies::split_std_deque> somePolicy;
 
-typedef multi_pass<mdtCsvParserQStringIterator, somePolicy> mdt_input_iterator;
+typedef multi_pass<mdtCsvStringParserIterator, somePolicy> mdt_input_iterator;
 
 void mdtReadIteratorTestFunction()
 {
@@ -222,8 +222,8 @@ void mdtReadIteratorTestFunction()
 //   mdt_input_iterator first(str.begin());
 //   mdt_input_iterator last(str.end());
 
-  mdt_input_iterator first = make_multi_pass<somePolicy, mdtCsvParserQStringIterator>(mdtCsvParserQStringIterator(str.begin()));
-  mdt_input_iterator last = make_multi_pass<somePolicy, mdtCsvParserQStringIterator>(mdtCsvParserQStringIterator());
+  mdt_input_iterator first = make_multi_pass<somePolicy, mdtCsvStringParserIterator>(mdtCsvStringParserIterator(str.begin()));
+  mdt_input_iterator last = make_multi_pass<somePolicy, mdtCsvStringParserIterator>(mdtCsvStringParserIterator());
 
   while(first != last){
     std::wcout << "Val: " << *first << std::endl;
@@ -253,7 +253,7 @@ void mdtReadIteratorTestFunction()
  */
 
 mdtCsvStringParser::mdtCsvStringParser(const mdtCsvParserSettings & csvSettings)
- : pvImpl(new mdtCsvParserTemplate<mdtCsvParserQStringIterator>(csvSettings))
+ : pvImpl(new mdtCsvParserTemplate<mdtCsvStringParserIterator>(csvSettings))
 {
 }
 

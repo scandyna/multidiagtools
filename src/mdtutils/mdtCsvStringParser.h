@@ -18,12 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CSV_PARSER_H
-#define MDT_CSV_PARSER_H
+#ifndef MDT_CSV_STRING_PARSER_H
+#define MDT_CSV_STRING_PARSER_H
 
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
-#include "mdtCsvParserIterator.h"
+#include "mdtCsvStringParserIterator.h"
 #include <QString>
 #include <memory>
 
@@ -65,12 +65,12 @@ class mdtCsvStringParser
 
  private:
 
-  mdtCsvParserQStringIterator pvCurrentPosition;
-  mdtCsvParserQStringIterator pvEnd;
-  std::unique_ptr<mdtCsvParserTemplate<mdtCsvParserQStringIterator> > pvImpl;
+  mdtCsvStringParserIterator pvCurrentPosition;
+  mdtCsvStringParserIterator pvEnd;
+  std::unique_ptr<mdtCsvParserTemplate<mdtCsvStringParserIterator> > pvImpl;
 };
 
 /// \todo Sandbox
 void mdtReadIteratorTestFunction();
 
-#endif // #ifndef MDT_CSV_PARSER_H
+#endif // #ifndef MDT_CSV_STRING_PARSER_H
