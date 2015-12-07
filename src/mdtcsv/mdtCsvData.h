@@ -31,9 +31,9 @@
  * Container for a CSV record (i.e. a row, or a line of data)
  *
  * \tparam StringType String type for column data
- * \note Some part of this API documentation
- *       refers to CSV-1203 standard.
- *       CSV-1203 is a open standard available here: http://mastpoint.com/csv-1203
+ * \note Some part of this API documentation refers to following standards:
+ *       \li CSV-1203 available here: http://mastpoint.com/csv-1203
+ *       \li RFC 4180 available here: https://tools.ietf.org/html/rfc4180
  */
 template <typename StringType>
 struct mdtCsvRecordTemplate
@@ -102,9 +102,9 @@ typedef mdtCsvRecordTemplate<QString> mdtCsvRecord;
  *
  * CSV data is a list of mdtCsvRecord
  *
- * \note Some part of this API documentation
- *       refers to CSV-1203 standard.
- *       CSV-1203 is a open standard available here: http://mastpoint.com/csv-1203
+ * \note Some part of this API documentation refers to following standards:
+ *       \li CSV-1203 available here: http://mastpoint.com/csv-1203
+ *       \li RFC 4180 available here: https://tools.ietf.org/html/rfc4180
  */
 struct mdtCsvData
 {

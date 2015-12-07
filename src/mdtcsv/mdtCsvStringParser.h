@@ -21,6 +21,7 @@
 #ifndef MDT_CSV_STRING_PARSER_H
 #define MDT_CSV_STRING_PARSER_H
 
+#include "mdtError.h"
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
 #include "mdtCsvStringParserIterator.h"
@@ -31,6 +32,13 @@ template <typename InputIterator>
 class mdtCsvParserTemplate;
 
 /*! \brief CSV parser that acts on a QString as input
+ *
+ * mdtCsvStringParser parses a CSV string.
+ *  The CSV string can contain quoted section.
+ *
+ * \note Some part of this API documentation refers to following standards:
+ *       \li CSV-1203 available here: http://mastpoint.com/csv-1203
+ *       \li RFC 4180 available here: https://tools.ietf.org/html/rfc4180
  */
 class mdtCsvStringParser
 {
@@ -60,17 +68,32 @@ class mdtCsvStringParser
   bool atEnd() const;
 
   /*! \brief Read one line
+   *
+   * If a end of line is in a quoted section,
+   *  it will not be threated as end of line.
+   *
+   * This function can be used, f.ex.,
+   *  to store a long string to some other
+   *  storage device, without having to
+   *  copy the entiere source before.
+   *  Reading line by line can also
+   *  save some memory.
    */
   mdtCsvRecord readLine();
+
+  /*! \brief Get last error
+   */
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
 
  private:
 
   mdtCsvStringParserIterator pvCurrentPosition;
   mdtCsvStringParserIterator pvEnd;
   std::unique_ptr<mdtCsvParserTemplate<mdtCsvStringParserIterator> > pvImpl;
+  mdtError pvLastError;
 };
-
-/// \todo Sandbox
-// void mdtReadIteratorTestFunction();
 
 #endif // #ifndef MDT_CSV_STRING_PARSER_H

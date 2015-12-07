@@ -61,10 +61,6 @@ struct mdtCsvFileParserIterator
   {
   }
 
-  ~mdtCsvFileParserIterator()
-  {
-  }
-
   /*! \brief Construct a iterator that acts on device
    *
    * Will use mdtCsvFileParserIteratorSharedData::setSource().

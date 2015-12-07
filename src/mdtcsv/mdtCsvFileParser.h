@@ -35,6 +35,10 @@ template <typename InputIterator>
 class mdtCsvParserTemplate;
 
 /*! \brief CSV parser that acts on a file as input
+ *
+ * \note Some part of this API documentation refers to following standards:
+ *       \li CSV-1203 available here: http://mastpoint.com/csv-1203
+ *       \li RFC 4180 available here: https://tools.ietf.org/html/rfc4180
  */
 class mdtCsvFileParser
 {
