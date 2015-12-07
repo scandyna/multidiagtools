@@ -127,10 +127,10 @@
 // 
 // }
 
-void mdtCsvTest::sandbox()
-{
-  mdtReadIteratorTestFunction();
-}
+// void mdtCsvTest::sandbox()
+// {
+//   mdtReadIteratorTestFunction();
+// }
 
 
 void mdtCsvTest::settingsTest()
@@ -710,6 +710,60 @@ void mdtCsvTest::csvFileParserTest()
   QCOMPARE(record.count(), 1);
   QCOMPARE(record.columnDataList.at(0), QString("1234"));
   QVERIFY(parser.atEnd());
+}
+
+void mdtCsvTest::csvFileParserReadLineTest()
+{
+  QFETCH(QString, sourceData);
+  QFETCH(mdtCsvData, expectedData);
+  QFETCH(bool, expectedOk);
+  QFETCH(mdtCsvParserSettings, csvSettings);
+  mdtCsvFileParser parser(csvSettings);
+  mdtCsvRecord record;
+  mdtCsvData data;
+  QTemporaryFile file;
+  QTextCodec *codec;
+  QByteArray rawFileData;
+
+  /*
+   * Prepare file
+   */
+  codec = QTextCodec::codecForName("UTF-8");
+  QVERIFY(codec != nullptr);
+  rawFileData = codec->fromUnicode(sourceData);
+  QVERIFY(file.open());
+  QVERIFY(file.write(rawFileData) >= rawFileData.size());
+  file.close();
+  /*
+   * Initial state
+   */
+  QVERIFY(parser.atEnd());
+  // Setup CSV parser
+  QVERIFY(parser.openFile(file.fileName(), "UTF-8"));
+  // Parse line by line
+  while(!parser.atEnd()){
+    record = parser.readLine();
+    QVERIFY(record.errorOccured() == !expectedOk);
+    data.addRecord(record);
+  }
+  // Check
+  QCOMPARE(data.recordCount(), expectedData.recordCount());
+  for(int row = 0; row < data.recordCount(); ++row){
+    record = data.recordList.at(row);
+    auto expectedRecord = expectedData.recordList.at(row);
+    QCOMPARE(record.count(), expectedRecord.count());
+    for(int col = 0; col < record.count(); ++col){
+      auto colData = record.columnDataList.at(col);
+      auto expectedColData = expectedRecord.columnDataList.at(col);
+      QCOMPARE(colData, expectedColData);
+    }
+  }
+  parser.closeFile();
+}
+
+void mdtCsvTest::csvFileParserReadLineTest_data()
+{
+  buildCsvTestData();
 }
 
 void mdtCsvTest::csvFileParserReadAllTest()

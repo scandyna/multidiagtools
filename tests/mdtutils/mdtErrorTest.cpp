@@ -68,6 +68,8 @@ struct OtherErrorType
 };
 
 typedef OtherErrorType<mdtEmptyError> myErrorType;
+// #define myErrorType OtherErrorType<mdtEmptyError>
+// #define myErrorType<T> OtherErrorType<T>
 
 void mdtErrorTest::sandbox()
 {

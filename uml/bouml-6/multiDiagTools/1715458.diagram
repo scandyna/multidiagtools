@@ -1,0 +1,10 @@
+format 210
+
+classcanvas 128002 class_ref 209538 // mdtErrorOut
+  classdiagramsettings member_max_width 0 end
+  xyz 108 81 2000
+end
+note 128130 "Note: use a thread pool for logging to file ?
+Or, see some asnyc, or future ???"
+  xyzwh 460.5 81.5 2000 385 85
+end

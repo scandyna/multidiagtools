@@ -29,7 +29,7 @@ class mdtCsvTest : public mdtTest
 
  private slots:
 
-  void sandbox();
+//   void sandbox();
 
   void settingsTest();
   void recordTest();
@@ -47,6 +47,8 @@ class mdtCsvTest : public mdtTest
   void csvFileParserIteratorTest();
   void csvFileParserMultiPassIteratorTest();
   void csvFileParserTest();
+  void csvFileParserReadLineTest();
+  void csvFileParserReadLineTest_data();
   void csvFileParserReadAllTest();
   void csvFileParserReadAllTest_data();
 

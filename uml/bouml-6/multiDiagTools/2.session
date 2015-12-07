@@ -1,31 +1,27 @@
 window_sizes 1280 964 323 951 911 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 394882 // mdtCsvFileOld
-    760 732 100 4 0 0
-  classdiagram_ref 1701506 // mdtCsvParser
+  classdiagram_ref 1589250 // mdt::optional
+    760 728 100 4 0 0
+  active  classdiagram_ref 169474 // mdtError
     951 911 100 4 0 0
-  active  classdiagram_ref 1708930 // mdtCsvFileParser
-    951 911 100 4 0 0
+  classdiagram_ref 1715458 // mdtErrorOut
+    120 106 100 4 0 0
+  classdiagram_ref 1715714 // sandbox
+    120 106 90 18 0 20
+  classdiagram_ref 1715842 // mdtErrorStack
+    120 106 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 3186562 // setSource
+selected classdiagram_ref 169474 // mdtError
 open
-  operation_ref 3172866 // mdtCsvParserTemplate
-  operation_ref 3165314 // currentRowData
-  operation_ref 3165954 // readAll
-  class_ref 2036994 // mdtCsvRecord
-  class_ref 2043778 // mdtCsvStringParser
-  class_ref 2050434 // mdtCsvParserSettings
-  class_ref 2043906 // mdtCsvFileParser
-  class_ref 2057218 // mdtCsvFileParserIterator
-  class_ref 2057346 // mdtCsvFileParserIteratorSharedData
-  class_ref 2035458 // QTextCodec
-  class_ref 2057474 // QTextDecoder
-  class_ref 2036098 // multi_pass
-  
-  package_ref 274178 // qi
-  operation_ref 3165826 // is_open
-  class_ref 2036866 // istreambuf_iterator
+  class_ref 2064386 // C
+  class_ref 2064130 // mdtErrorData
+  class_ref 2065026 // mdtErrorStack
+  classdiagram_ref 1715458 // mdtErrorOut
+  class_ref 2064770 // CAnyProperty
+  class_ref 2064898 // CAnyHandlerBase
+  classview_ref 854018 // mdtErrorDialog
+  classview_ref 820482 // mdt::optional
 end
 end

@@ -79,115 +79,115 @@
 // mdtReadIterator::result_type mdtReadIterator::eof = mdtReadIterator::result_type(4);
 
 
-struct mdtCsvInputPolicy
-{
-  // Input is the same type as the first template parameter while instanciating the multi_pass
-  template <typename Input>
-  struct unique
-  {
-    typedef std::wstring::iterator::value_type value_type;
-    typedef std::wstring::iterator::difference_type difference_type;
-    typedef std::wstring::iterator::difference_type distance_type;
-    typedef std::wstring::iterator::pointer pointer;
-    typedef std::wstring::iterator::reference reference;
+// struct mdtCsvInputPolicy
+// {
+//   // Input is the same type as the first template parameter while instanciating the multi_pass
+//   template <typename Input>
+//   struct unique
+//   {
+//     typedef std::wstring::iterator::value_type value_type;
+//     typedef std::wstring::iterator::difference_type difference_type;
+//     typedef std::wstring::iterator::difference_type distance_type;
+//     typedef std::wstring::iterator::pointer pointer;
+//     typedef std::wstring::iterator::reference reference;
+// 
+//     unique()
+//     {
+//       std::cout << "mdtCsvInputPolicy::unique::unique()" << std::endl;
+//     }
+// 
+//     explicit unique(Input)
+//     {
+//       std::cout << "mdtCsvInputPolicy::unique::unique(Input)" << std::endl;
+//     }
+// 
+//     template <typename MultiPass>
+//     static void destroy(MultiPass &)
+//     {
+//       std::cout << "mdtCsvInputPolicy::unique::destroy()" << std::endl;
+//     }
+// 
+//     void swap(unique &)
+//     {
+//       std::cout << "mdtCsvInputPolicy::unique::swap()" << std::endl;
+//     }
+// 
+//     template <typename MultiPass>
+//     static typename MultiPass::reference get_input(MultiPass & mp)
+//     {
+//       std::cout << "mdtCsvInputPolicy::unique::get_input()" << std::endl;
+//       return mp.shared()->get_input();
+//     }
+// 
+//     template <typename MultiPass>
+//     static void advance_input(MultiPass & mp)
+//     {
+//       std::cout << "mdtCsvInputPolicy::unique::advance_input()" << std::endl;
+//       mp.shared()->advance_input();
+//     }
+// 
+//     template <typename MultiPass>
+//     static bool input_at_eof(const MultiPass & mp)
+//     {
+//       std::cout << "mdtCsvInputPolicy::unique::input_at_eof()" << std::endl;
+// 
+//       /*
+//        * See: http://sourceforge.net/p/spirit/mailman/spirit-general/thread/3C1A726A.9090003@caldera.com/
+//        *
+//        * Returning true, false, or whatever simply don't work (?!?)
+//        */
+//       static Input const end_iter;
+//       return mp.shared()->input_ == end_iter;
+//     }
+// 
+//     template <typename MultiPass>
+//     static bool input_is_valid(const MultiPass & mp, const value_type & t)
+//     {
+//       std::cout << "mdtCsvInputPolicy::unique::input_is_valid()" << std::endl;
+//       return mp.shared()->input_is_valid_;
+//     }
+//   };
+// 
+//   template <typename Input>
+//   struct shared
+//   {
+//     explicit shared(const Input & input)
+//      : input_(input),
+//        curtok_(0),
+//        input_is_valid_(false),
+//        count(0)
+//     {
+//       std::cout << "mdtCsvInputPolicy::shared::shared()" << std::endl;
+//     }
+// 
+//     void advance_input()
+//     {
+//       input_is_valid_ = false;
+//       if(count >= 0){
+//         input_ = Input();
+//         return;
+//       }
+//       ++input_;
+//       ++count;
+//     }
+// 
+//     wchar_t & get_input()
+//     {
+//       if(!input_is_valid_){
+//         curtok_ = *input_;
+//         input_is_valid_ = true;
+//       }
+//       return curtok_;
+//     }
+// 
+//     Input input_;
+//     wchar_t curtok_;
+//     bool input_is_valid_;
+//     int count;
+//   };
+// };
 
-    unique()
-    {
-      std::cout << "mdtCsvInputPolicy::unique::unique()" << std::endl;
-    }
-
-    explicit unique(Input)
-    {
-      std::cout << "mdtCsvInputPolicy::unique::unique(Input)" << std::endl;
-    }
-
-    template <typename MultiPass>
-    static void destroy(MultiPass &)
-    {
-      std::cout << "mdtCsvInputPolicy::unique::destroy()" << std::endl;
-    }
-
-    void swap(unique &)
-    {
-      std::cout << "mdtCsvInputPolicy::unique::swap()" << std::endl;
-    }
-
-    template <typename MultiPass>
-    static typename MultiPass::reference get_input(MultiPass & mp)
-    {
-      std::cout << "mdtCsvInputPolicy::unique::get_input()" << std::endl;
-      return mp.shared()->get_input();
-    }
-
-    template <typename MultiPass>
-    static void advance_input(MultiPass & mp)
-    {
-      std::cout << "mdtCsvInputPolicy::unique::advance_input()" << std::endl;
-      mp.shared()->advance_input();
-    }
-
-    template <typename MultiPass>
-    static bool input_at_eof(const MultiPass & mp)
-    {
-      std::cout << "mdtCsvInputPolicy::unique::input_at_eof()" << std::endl;
-
-      /*
-       * See: http://sourceforge.net/p/spirit/mailman/spirit-general/thread/3C1A726A.9090003@caldera.com/
-       *
-       * Returning true, false, or whatever simply don't work (?!?)
-       */
-      static Input const end_iter;
-      return mp.shared()->input_ == end_iter;
-    }
-
-    template <typename MultiPass>
-    static bool input_is_valid(const MultiPass & mp, const value_type & t)
-    {
-      std::cout << "mdtCsvInputPolicy::unique::input_is_valid()" << std::endl;
-      return mp.shared()->input_is_valid_;
-    }
-  };
-
-  template <typename Input>
-  struct shared
-  {
-    explicit shared(const Input & input)
-     : input_(input),
-       curtok_(0),
-       input_is_valid_(false),
-       count(0)
-    {
-      std::cout << "mdtCsvInputPolicy::shared::shared()" << std::endl;
-    }
-
-    void advance_input()
-    {
-      input_is_valid_ = false;
-      if(count >= 0){
-        input_ = Input();
-        return;
-      }
-      ++input_;
-      ++count;
-    }
-
-    wchar_t & get_input()
-    {
-      if(!input_is_valid_){
-        curtok_ = *input_;
-        input_is_valid_ = true;
-      }
-      return curtok_;
-    }
-
-    Input input_;
-    wchar_t curtok_;
-    bool input_is_valid_;
-    int count;
-  };
-};
-
-using namespace boost::spirit;
+// using namespace boost::spirit;
 
 // typedef multi_pass<std::wstring::iterator, iterator_policies::default_policy<
 //                   iterator_policies::first_owner,
@@ -201,52 +201,52 @@ using namespace boost::spirit;
 //                    iterator_policies::input_iterator,
 //                    iterator_policies::split_std_deque> > mdt_input_iterator;
 
-typedef iterator_policies::default_policy<iterator_policies::first_owner,
-                   iterator_policies::no_check,
-                   mdtCsvInputPolicy,
-                   iterator_policies::split_std_deque> somePolicy;
-
-typedef multi_pass<mdtCsvStringParserIterator, somePolicy> mdt_input_iterator;
-
-void mdtReadIteratorTestFunction()
-{
-  std::cout << "mdtReadIteratorTestFunction() ..." << std::endl;
-//   std::wstring str;
-//   str.push_back('A');
-//   str.push_back('B');
-//   str.push_back('\n');
-  QString str = "ABCDEF";
-  
-//   mdt_reader_multi_pass_type first(str.begin());// = mdt_reader_multi_pass_type(str.begin());
-//   mdt_reader_multi_pass_type last(str.end());// = mdt_reader_multi_pass_type(str.end());
-//   mdt_input_iterator first(str.begin());
-//   mdt_input_iterator last(str.end());
-
-  mdt_input_iterator first = make_multi_pass<somePolicy, mdtCsvStringParserIterator>(mdtCsvStringParserIterator(str.begin()));
-  mdt_input_iterator last = make_multi_pass<somePolicy, mdtCsvStringParserIterator>(mdtCsvStringParserIterator());
-
-  while(first != last){
-    std::wcout << "Val: " << *first << std::endl;
-    ++first;
-  }
-  ///mdtCsvParserTemplate<mdt_input_iterator> parser;
-//   
-//   mdt_reader_multi_pass_type first = mdt_reader_multi_pass_type(mdtReadIterator());
-//   mdt_reader_multi_pass_type last;
+// typedef iterator_policies::default_policy<iterator_policies::first_owner,
+//                    iterator_policies::no_check,
+//                    mdtCsvInputPolicy,
+//                    iterator_policies::split_std_deque> somePolicy;
 // 
-//   parser.setSource(first, last);
+// typedef multi_pass<mdtCsvStringParserIterator, somePolicy> mdt_input_iterator;
+
+// void mdtReadIteratorTestFunction()
+// {
+//   std::cout << "mdtReadIteratorTestFunction() ..." << std::endl;
+// //   std::wstring str;
+// //   str.push_back('A');
+// //   str.push_back('B');
+// //   str.push_back('\n');
+//   QString str = "ABCDEF";
 //   
-  /**
-  mdtCsvRawRecord rec = parser.readLine(first, last);
-  if(rec.errorOccured()){
-    return;
-  }
-  for(const auto & data : rec.columnDataList){
-    std::wcout << data << std::endl;
-  }
-  */
-  
-}
+// //   mdt_reader_multi_pass_type first(str.begin());// = mdt_reader_multi_pass_type(str.begin());
+// //   mdt_reader_multi_pass_type last(str.end());// = mdt_reader_multi_pass_type(str.end());
+// //   mdt_input_iterator first(str.begin());
+// //   mdt_input_iterator last(str.end());
+// 
+//   mdt_input_iterator first = make_multi_pass<somePolicy, mdtCsvStringParserIterator>(mdtCsvStringParserIterator(str.begin()));
+//   mdt_input_iterator last = make_multi_pass<somePolicy, mdtCsvStringParserIterator>(mdtCsvStringParserIterator());
+// 
+//   while(first != last){
+//     std::wcout << "Val: " << *first << std::endl;
+//     ++first;
+//   }
+//   ///mdtCsvParserTemplate<mdt_input_iterator> parser;
+// //   
+// //   mdt_reader_multi_pass_type first = mdt_reader_multi_pass_type(mdtReadIterator());
+// //   mdt_reader_multi_pass_type last;
+// // 
+// //   parser.setSource(first, last);
+// //   
+//   /**
+//   mdtCsvRawRecord rec = parser.readLine(first, last);
+//   if(rec.errorOccured()){
+//     return;
+//   }
+//   for(const auto & data : rec.columnDataList){
+//     std::wcout << data << std::endl;
+//   }
+//   */
+//   
+// }
 
 /*
  * mdtCsvStringParser implementation
