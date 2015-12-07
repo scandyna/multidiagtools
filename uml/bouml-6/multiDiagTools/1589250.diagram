@@ -4,4 +4,7 @@ classcanvas 128002 class_ref 1900930 // optional
   classdiagramsettings member_max_width 0 end
   xyz 112 158 2000
 end
+note 128130 "operateur bool (p.ex.!), surtout pour les type bool.
+Permet: if(!openFile()){ heu..}"
+  xyzwh 393 277 2000 325 105
 end

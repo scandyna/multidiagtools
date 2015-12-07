@@ -123,6 +123,7 @@ namespace boost { namespace spirit { namespace traits
  * \tparam SourceIterator Type of iterator that will act on the source.
  * \note Including directly this header in a project can slow down compilation time
  * \sa mdtCsvStringParser
+ * \sa mdtCsvFileParser
  * \note Some part of this API documentation refers to following standards:
  *       \li CSV-1203 available here: http://mastpoint.com/csv-1203
  *       \li RFC 4180 available here: https://tools.ietf.org/html/rfc4180

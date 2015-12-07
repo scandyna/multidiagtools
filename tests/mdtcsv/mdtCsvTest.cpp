@@ -36,102 +36,7 @@
 #include <string>
 #include <vector>
 
-#include <iostream>
 #include <QDebug>
-
-/// Sandbox
-#include <mdtCsvParserTemplate.h>
-
-// void mdtCsvTest::sandbox()
-// {
-//   QString str("ABC\r\nZ,UV\rDE,F\n456\r\nTEF");
-//   mdtCsvStringParser csv;
-//   mdtCsvRecord record;
-// 
-//   csv.setSource(str);
-//   record = csv.readLine();
-//   QVERIFY(!record.errorOccured());
-//   QCOMPARE(record.count(), 1);
-//   QCOMPARE(record.columnDataList.at(0), QString("ABC"));
-// 
-//   for(const auto & str : record.columnDataList){
-//     std::cout << str.toStdString() << "|";
-//   }
-//   std::cout << std::endl;
-//   
-//   record = csv.readLine();
-//   for(const auto & str : record.columnDataList){
-//     std::cout << str.toStdString() << "|";
-//   }
-//   std::cout << std::endl;
-// 
-//   record = csv.readLine();
-//   for(const auto & str : record.columnDataList){
-//     std::cout << str.toStdString() << "|";
-//   }
-//   std::cout << std::endl;
-// 
-// }
-
-// #include <boost/phoenix/core.hpp>
-// #include <boost/phoenix/function.hpp>
-// #include <vector>
-// #include <algorithm>
-// 
-// template <typename F>
-// void print(F f)
-// {
-//   std::cout << f() << std::endl;
-// }
-// 
-// struct isOddImpl
-// {
-//   typedef bool result_type;
-// 
-//   template <typename Arg>
-//   bool operator()(Arg arg1) const
-//   {
-//     return arg1 % 2 == 1;
-//   }
-// };
-// boost::phoenix::function<isOddImpl> isOdd;
-
-// void mdtCsvTest::sandbox()
-// {
-//   using boost::phoenix::val;
-//   using boost::phoenix::ref;
-//   using boost::phoenix::arg_names::arg1;
-//   using boost::phoenix::arg_names::arg2;
-// 
-//   print(val(3));
-//   print(val("Hello !"));
-// 
-//   int i = 4;
-//   print(ref(i));
-//   std::string str = "Hello v2";
-// 
-//   i = 5;
-//   std::cout << arg1(i) << std::endl;
-//   i = 6;
-//   std::cout << arg1(i, str) << std::endl;
-//   i = 7;
-//   std::cout << arg2(i, str) << std::endl;
-// 
-//   std::vector<int> v{1,2,2,2,3,4,5,6,7,8,9};
-//   auto it = v.cbegin();
-//   it = std::find_if(it, v.cend(), isOdd(arg1));
-//   std::cout << "it: " << *it << std::endl;
-//   ++it;
-//   it = std::find_if(it, v.cend(), isOdd(arg1));
-//   std::cout << "it: " << *it << std::endl;
-// 
-// }
-
-// void mdtCsvTest::sandbox()
-// {
-//   mdtReadIteratorTestFunction();
-// }
-
 
 void mdtCsvTest::settingsTest()
 {
@@ -184,10 +89,30 @@ void mdtCsvTest::recordTest()
 
 void mdtCsvTest::dataTest()
 {
-  QSKIP("Not implemented yet");
+  mdtCsvData data;
+  mdtCsvRecord record;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(data.recordCount(), 0);
+  QVERIFY(!data.errorOccured());
+  /*
+   * Set
+   */
+  data.addRecord(record);
+  QCOMPARE(data.recordCount(), 1);
+  data.setErrorOccured();
+  QVERIFY(data.errorOccured());
+  /*
+   * Clear
+   */
+  data.clear();
+  QCOMPARE(data.recordCount(), 0);
+  QVERIFY(!data.errorOccured());
 }
 
-void mdtCsvTest::csvParserQStringIteratorTest()
+void mdtCsvTest::csvStringParserIteratorTest()
 {
   QString str;
 
@@ -272,7 +197,7 @@ void mdtCsvTest::csvParserQStringIteratorTest()
   QVERIFY(it >= first);
 }
 
-void mdtCsvTest::csvParserQStringIteratorBenchmark()
+void mdtCsvTest::csvStringParserIteratorBenchmark()
 {
   QString source = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
   std::vector<wchar_t> destination;
@@ -328,6 +253,44 @@ void mdtCsvTest::stringParserReadLineTest()
 }
 
 void mdtCsvTest::stringParserReadLineTest_data()
+{
+  buildCsvTestData();
+}
+
+void mdtCsvTest::stringParserReadAllTest()
+{
+  QFETCH(QString, sourceData);
+  QFETCH(mdtCsvData, expectedData);
+  QFETCH(bool, expectedOk);
+  QFETCH(mdtCsvParserSettings, csvSettings);
+  mdtCsvStringParser parser(csvSettings);
+  mdtCsvRecord record;
+  mdtCsvData data;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(parser.atEnd());
+  // Setup CSV source string and parser
+  parser.setSource(sourceData);
+  // Parse the entires string
+  data = parser.readAll();
+  QVERIFY(data.errorOccured() == !expectedOk);
+  // Check
+  QCOMPARE(data.recordCount(), expectedData.recordCount());
+  for(int row = 0; row < data.recordCount(); ++row){
+    record = data.recordList.at(row);
+    auto expectedRecord = expectedData.recordList.at(row);
+    QCOMPARE(record.count(), expectedRecord.count());
+    for(int col = 0; col < record.count(); ++col){
+      auto colData = record.columnDataList.at(col);
+      auto expectedColData = expectedRecord.columnDataList.at(col);
+      QCOMPARE(colData, expectedColData);
+    }
+  }
+}
+
+void mdtCsvTest::stringParserReadAllTest_data()
 {
   buildCsvTestData();
 }
@@ -644,11 +607,6 @@ void mdtCsvTest::csvFileParserMultiPassIteratorTest()
   /*
    * Check iterating
    */
-//   QVERIFY(*first == 'A');
-//   ++first;
-//   QVERIFY(*first == 'B');
-//   --first;
-//   QVERIFY(*first == 'A');
   // Check iterating the whole file
   QVERIFY(*first == 'A');
   while(first != last){
@@ -656,15 +614,6 @@ void mdtCsvTest::csvFileParserMultiPassIteratorTest()
     ++first;
   }
   QCOMPARE(str, QString(u8"ABCDE\n1234\n"));
-
-  ///mdtCsvParserSettings csvSettings;
-  ///mdtCsvParserTemplate<mdtCsvFileParserMultiPassIterator> parser(csvSettings);
-  ///parser.setSource(first, last);
-  ///auto rec = parser.readLine();
-  ///auto rec = parser.readLine(first, last);
-  ///auto rec = parser.readLine(first, make_multi_pass<mdtCsvFileParserMultiPassPolicy, mdtCsvFileParserIterator>(mdtCsvFileParserIterator()));
-  ///qDebug() << rec.columnDataList;
-
 }
 
 void mdtCsvTest::csvFileParserTest()
@@ -768,7 +717,48 @@ void mdtCsvTest::csvFileParserReadLineTest_data()
 
 void mdtCsvTest::csvFileParserReadAllTest()
 {
+  QFETCH(QString, sourceData);
+  QFETCH(mdtCsvData, expectedData);
+  QFETCH(bool, expectedOk);
+  QFETCH(mdtCsvParserSettings, csvSettings);
+  mdtCsvFileParser parser(csvSettings);
+  mdtCsvRecord record;
+  mdtCsvData data;
+  QTemporaryFile file;
+  QTextCodec *codec;
+  QByteArray rawFileData;
 
+  /*
+   * Prepare file
+   */
+  codec = QTextCodec::codecForName("UTF-8");
+  QVERIFY(codec != nullptr);
+  rawFileData = codec->fromUnicode(sourceData);
+  QVERIFY(file.open());
+  QVERIFY(file.write(rawFileData) >= rawFileData.size());
+  file.close();
+  /*
+   * Initial state
+   */
+  QVERIFY(parser.atEnd());
+  // Setup CSV parser
+  QVERIFY(parser.openFile(file.fileName(), "UTF-8"));
+  // Parse file
+  data = parser.readAll();
+  QVERIFY(data.errorOccured() == !expectedOk);
+  // Check
+  QCOMPARE(data.recordCount(), expectedData.recordCount());
+  for(int row = 0; row < data.recordCount(); ++row){
+    record = data.recordList.at(row);
+    auto expectedRecord = expectedData.recordList.at(row);
+    QCOMPARE(record.count(), expectedRecord.count());
+    for(int col = 0; col < record.count(); ++col){
+      auto colData = record.columnDataList.at(col);
+      auto expectedColData = expectedRecord.columnDataList.at(col);
+      QCOMPARE(colData, expectedColData);
+    }
+  }
+  parser.closeFile();
 }
 
 void mdtCsvTest::csvFileParserReadAllTest_data()

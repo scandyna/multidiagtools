@@ -108,6 +108,32 @@ typedef mdtCsvRecordTemplate<QString> mdtCsvRecord;
  */
 struct mdtCsvData
 {
+  /*! \brief Constructor
+   */
+  mdtCsvData()
+   : pvErrorOccured(false)
+  {
+  }
+
+  /*! \brief Get error flag
+   *
+   * This flag is set by worker objects,
+   *  such as CSV parser, when a error occured.
+   *  The error is not stored in the record,
+   *  but must be retrieved from worker.
+   */
+  bool errorOccured() const
+  {
+    return pvErrorOccured;
+  }
+
+  /*! \brief Set error flag
+   */
+  void setErrorOccured()
+  {
+    pvErrorOccured = true;
+  }
+
   /*! \brief Record list
    *
    * \note It was choosen to use a QVector because it offers copy on write
@@ -133,7 +159,12 @@ struct mdtCsvData
   void clear()
   {
     recordList.clear();
+    pvErrorOccured = false;
   }
+
+ private:
+
+  bool pvErrorOccured;
 };
 Q_DECLARE_METATYPE(mdtCsvData)
 

@@ -56,3 +56,19 @@ mdtCsvRecord mdtCsvStringParser::readLine()
 
   return record;
 }
+
+mdtCsvData mdtCsvStringParser::readAll()
+{
+  mdtCsvData data;
+
+  while(!atEnd()){
+    auto record = readLine();
+    if(record.errorOccured()){
+      data.setErrorOccured();
+      return data;
+    }
+    data.addRecord(record);
+  }
+
+  return data;
+}

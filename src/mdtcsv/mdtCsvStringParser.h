@@ -48,8 +48,7 @@ class mdtCsvStringParser
    */
   mdtCsvStringParser(const mdtCsvParserSettings & csvSettings = mdtCsvParserSettings());
 
-  /*! \brief Destructor
-   */
+  // Destructor: required so that pvParser pointer has the definition for its destructor
   ~mdtCsvStringParser();
 
   /*! \internal Copy disabled
@@ -80,6 +79,10 @@ class mdtCsvStringParser
    *  save some memory.
    */
   mdtCsvRecord readLine();
+
+  /*! \brief Read the entire CSV file
+   */
+  mdtCsvData readAll();
 
   /*! \brief Get last error
    */

@@ -270,20 +270,20 @@ struct mdtCsvFileParserIterator
 };
 
 // Namespace to define mdtCsvFileParserMultiPassIterator without exposing boost::spirit
-namespace mdtCsvFileParserMultiPassIteratorPrivate
+namespace mdtCsvPrivate
 {
   using namespace boost::spirit;
   using namespace boost::spirit::iterator_policies;
 
   typedef default_policy<first_owner, no_check, input_iterator, split_std_deque> csvPolicy;
-  typedef multi_pass<mdtCsvFileParserIterator, csvPolicy> mdtCsvFileParserMultiPassIterator;
+  typedef multi_pass<mdtCsvFileParserIterator, csvPolicy> MultiPassIterator;
 }
 
 /*! \brief CSV file parser multi pass policies
  *
  * \sa mdtCsvFileParserMultiPassIterator
  */
-typedef mdtCsvFileParserMultiPassIteratorPrivate::csvPolicy mdtCsvFileParserMultiPassPolicy;
+typedef mdtCsvPrivate::csvPolicy mdtCsvFileParserMultiPassPolicy;
 
 /*! \brief CSV file parser multi pass iterator
  *
@@ -291,6 +291,6 @@ typedef mdtCsvFileParserMultiPassIteratorPrivate::csvPolicy mdtCsvFileParserMult
  *  to map mdtCsvFileParserIterator (witch is a single pass input iterator)
  *  to a multi pass iterator, that is required by Spirit parsers.
  */
-typedef mdtCsvFileParserMultiPassIteratorPrivate::mdtCsvFileParserMultiPassIterator mdtCsvFileParserMultiPassIterator;
+typedef mdtCsvPrivate::MultiPassIterator mdtCsvFileParserMultiPassIterator;
 
 #endif // #ifndef MDT_CSV_FILE_PARSER_ITERATOR_H

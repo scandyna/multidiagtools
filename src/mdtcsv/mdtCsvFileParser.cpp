@@ -29,6 +29,10 @@ mdtCsvFileParser::mdtCsvFileParser(const mdtCsvParserSettings & csvSettings)
 {
 }
 
+mdtCsvFileParser::~mdtCsvFileParser()
+{
+}
+
 bool mdtCsvFileParser::openFile(const QFileInfo & fileInfo, const QByteArray & encoding)
 {
   // Close possibly previously open file
@@ -51,9 +55,6 @@ bool mdtCsvFileParser::openFile(const QFileInfo & fileInfo, const QByteArray & e
     pvLastError = pvFileIterator.lastError();
     return false;
   }
-  // Assign multi pass iterators
-//   pvCurrentPosition = boost::spirit::make_multi_pass<mdtCsvFileParserMultiPassPolicy, mdtCsvFileParserIterator>(mdtCsvFileParserIterator(pvFileIterator));
-//   pvEnd = boost::spirit::make_multi_pass<mdtCsvFileParserMultiPassPolicy, mdtCsvFileParserIterator>(mdtCsvFileParserIterator());
 
   return true;
 }
@@ -88,6 +89,22 @@ mdtCsvRecord mdtCsvFileParser::readLine()
   }
 
   return record;
+}
+
+mdtCsvData mdtCsvFileParser::readAll()
+{
+  mdtCsvData data;
+
+  while(!atEnd()){
+    auto record = readLine();
+    if(record.errorOccured()){
+      data.setErrorOccured();
+      return data;
+    }
+    data.addRecord(record);
+  }
+
+  return data;
 }
 
 QString mdtCsvFileParser::tr(const char* sourceText)
