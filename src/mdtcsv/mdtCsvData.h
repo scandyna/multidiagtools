@@ -24,18 +24,21 @@
 #include <QMetaType>
 #include <QVector>
 #include <QString>
+
+#include <QVariant>
+
 #include <string>
 
 /*! \brief CSV record of data template
  *
  * Container for a CSV record (i.e. a row, or a line of data)
  *
- * \tparam StringType String type for column data
+ * \tparam T Type for column data
  * \note Some part of this API documentation refers to following standards:
  *       \li CSV-1203 available here: http://mastpoint.com/csv-1203
  *       \li RFC 4180 available here: https://tools.ietf.org/html/rfc4180
  */
-template <typename StringType>
+template <typename T>
 struct mdtCsvRecordTemplate
 {
   /*! \brief Constructor
@@ -68,7 +71,7 @@ struct mdtCsvRecordTemplate
    *
    * \note It was choosen to use a QVector because it offers copy on write
    */
-  QVector<StringType> columnDataList;
+  QVector<T> columnDataList;
 
   /*! \brief Get count of columns in the record
    */
@@ -96,7 +99,7 @@ struct mdtCsvRecordTemplate
  *
  * Container for a CSV record (i.e. a row, or a line of data)
  */
-typedef mdtCsvRecordTemplate<QString> mdtCsvRecord;
+typedef mdtCsvRecordTemplate<QVariant> mdtCsvRecord;
 
 /*! \brief CSV data
  *

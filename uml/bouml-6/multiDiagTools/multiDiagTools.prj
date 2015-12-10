@@ -1,6 +1,6 @@
 format 210
 "multiDiagTools"
-  revision 23
+  revision 24
   modified_by 2 "philippe"
   cpp_root_dir "cpp_gen/"
 
@@ -54,7 +54,9 @@ format 210
 
   package_ref 168322 // mdtport
 
-  package_ref 148226 // mdtserialport
+  package_ref 288642 // mdtserialport
+
+  package_ref 148226 // mdtserialportLEGACY
 
   package_ref 161538 // mdtdevice
 

@@ -45,6 +45,8 @@
 #include <QChar>
 #include <QString>
 
+#include <QVariant>
+
 #include <QObject>
 
 #include <QVector>
@@ -277,19 +279,8 @@ class mdtCsvParserTemplate
     return QObject::tr(sourceText);
   }
 
-  /*! \brief Idées pour unicode:
-   *  - std::vector de QChar ? (voir ce qu'il faut faire pour que QChar fonctionne..
-   *   -> NOTE: QChar: 16 bit avec "tag" de version unicode (unicode actuel, dont UTF-8, peut être > 16bit)
-   *  - Bricoler un genrre de stream QString -> std::string "à la demande"..
-   *  - NOTE: revoir "compatibilité" UTF-8 pour les caractères ASCII (-> ' , ", \n, etc...)
-   *   -> Cela voudrait dire: pvSafechar devrait tout accepter sauf sep et quote (et EOF)
-   *   -> Il faudrait aussi s'assurer que la source soit UTF-8 (et pas UTF-16, UTF-32, ...)
-   */
-
-//   SourceIterator pvCurrentSourcePosition;
-//   SourceIterator pvSourceEnd;
-  boost::spirit::qi::rule<SourceIterator, QVector<QString>()> pvRecordRule;
-  boost::spirit::qi::rule<SourceIterator, QVector<QString>()> pvRecordPayload;
+  boost::spirit::qi::rule<SourceIterator, QVector<QVariant>()> pvRecordRule;
+  boost::spirit::qi::rule<SourceIterator, QVector<QVariant>()> pvRecordPayload;
   boost::spirit::qi::rule<SourceIterator, QString()> pvFieldColumn;
   boost::spirit::qi::rule<SourceIterator, std::wstring()> pvProtectedField;
   boost::spirit::qi::rule<SourceIterator, std::wstring()> pvUnprotectedField;

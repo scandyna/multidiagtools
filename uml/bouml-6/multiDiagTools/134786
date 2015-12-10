@@ -1,6 +1,6 @@
 format 210
 "Qt" // Qt
-  revision 105
+  revision 106
   modified_by 2 "philippe"
   // class settings
   
@@ -6048,6 +6048,52 @@ ${inlines}
 	
 	
       end
+    end
+  end
+
+  classview 860802 "QSerialPort"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 1742850 "QSerialPort"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2092162 "QSerialPort"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2427010 // <generalisation>
+	relation 2410626 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2427010 // <generalisation>
+	  b parent class_ref 322818 // QIODevice
+      end
+
     end
   end
 end

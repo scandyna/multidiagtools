@@ -22,15 +22,31 @@
 #define MDT_CSV_SETTINGS_H
 
 #include <QMetaType>
+#include <string>
 
-/*! \brief CSV parser settings
+// Set OS native End Of Line sequence
+#ifdef Q_OS_WIN
+ #define MDT_CSV_NATIVE_EOL "\r\n"
+#else
+ #define MDT_CSV_NATIVE_EOL "\n"
+#endif
+
+/*! \brief Common CSV settings
  *
  * \note Some part of this API documentation
  *       refers to CSV-1203 standard.
  *       CSV-1203 is a open standard available here: http://mastpoint.com/csv-1203
  */
-struct mdtCsvParserSettings
+struct mdtCsvCommonSettings
 {
+  /*! \brief Constructor
+   */
+  mdtCsvCommonSettings()
+   : fieldSeparator(','),
+     fieldProtection('\"')
+  {
+  }
+
   /*! \brief Field (or column) separator
    *
    * As suggested by CSV-1203 standard, rule 4.3,
@@ -50,6 +66,22 @@ struct mdtCsvParserSettings
    */
   char fieldProtection;
 
+  /*! \brief Clear
+   *
+   * Will reset to default settings.
+   */
+  void clear()
+  {
+    fieldSeparator = ',';
+    fieldProtection = '\"';
+  }
+};
+
+/*! \brief CSV parser settings
+ */
+struct mdtCsvParserSettings : public mdtCsvCommonSettings
+{
+
   /*! \brief Parse Excel protection marker
    *
    * The Excel protection marker (EXP) is explained
@@ -67,8 +99,7 @@ struct mdtCsvParserSettings
   /*! \brief Constructor
    */
   mdtCsvParserSettings()
-   : fieldSeparator(','),
-     fieldProtection('\"'),
+   : mdtCsvCommonSettings(),
      parseExp(true)
   {
   }
@@ -79,11 +110,52 @@ struct mdtCsvParserSettings
    */
   void clear()
   {
-    fieldSeparator = ',';
-    fieldProtection = '\"';
+    mdtCsvCommonSettings::clear();
     parseExp = true;
   }
 };
 Q_DECLARE_METATYPE(mdtCsvParserSettings)
+
+/*! \brief CSV generator settings
+ */
+struct mdtCsvGeneratorSettings : public mdtCsvCommonSettings
+{
+  /*! \brief End of line
+   *
+   * The default is native end of line
+   *  (\\n on unix, \\r\\n on Windows)
+   */
+  std::string eol;
+
+  /*! \brief Allways quote text fields
+   *
+   * Normal way to generate CSV from a text field
+   *  is to protect it when needed.
+   *  If this flag is set, text fields will always be protected,
+   *  witch can produce overhead in generated file/string.
+   */
+  bool allwaysProtectTextFields;
+
+  /*! \brief Constructor
+   */
+  mdtCsvGeneratorSettings()
+   : mdtCsvCommonSettings(),
+     eol(MDT_CSV_NATIVE_EOL),
+     allwaysProtectTextFields(false)
+  {
+  }
+
+  /*! \brief Clear
+   *
+   * Will reset to default settings.
+   */
+  void clear()
+  {
+    mdtCsvCommonSettings::clear();
+    eol = MDT_CSV_NATIVE_EOL;
+    allwaysProtectTextFields = false;
+  }
+};
+Q_DECLARE_METATYPE(mdtCsvGeneratorSettings)
 
 #endif // #ifndef MDT_CSV_SETTINGS_H

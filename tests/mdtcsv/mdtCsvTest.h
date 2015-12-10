@@ -29,9 +29,11 @@ class mdtCsvTest : public mdtTest
 
  private slots:
 
-  void settingsTest();
+  void parserSettingsTest();
+  void generatorSettingsTest();
   void recordTest();
   void dataTest();
+  void recordFormatTest();
 
   void csvStringParserIteratorTest();
   void csvStringParserIteratorBenchmark();
@@ -52,9 +54,13 @@ class mdtCsvTest : public mdtTest
   void csvFileParserReadAllTest();
   void csvFileParserReadAllTest_data();
 
+  void csvStringGeneratorWriteLineTest();
+  void csvStringGeneratorWriteLineTest_data();
+
  private:
 
-  void buildCsvTestData();
+  void buildCsvParserTestData();
+  void buildCsvGeneratorTestData();
 };
 
 #endif // #ifndef MDT_CSV_TEST_H

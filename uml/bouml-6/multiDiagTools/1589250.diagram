@@ -6,5 +6,26 @@ classcanvas 128002 class_ref 1900930 // optional
 end
 note 128130 "operateur bool (p.ex.!), surtout pour les type bool.
 Permet: if(!openFile()){ heu..}"
-  xyzwh 393 277 2000 325 105
+  xyzwh 393 377 2000 323 75
+note 128258 "Maybe reanme: mdtValue ?
+ - Value
+ - Null
+ - Error"
+  xyzwh 392 54 2000 281 129
+note 128386 "Case of Null, how to map objects that has concept of Null values, like QVariant ?
+Maybe, separate class for type that not handles Null concepts ?"
+  xyzwh 396 187 2000 325 111
+note 128514 "Document case of error well: precondition: if hasError, not try to get value (maybe, isNull could be allowed?)"
+  xyzwh 392 466 2000 365 91
+note 128642 "Pour mdtValueDouble: mdtValue<mdtDouble> xy"
+  xyzwh 391 305 2000 391 59
+note 128770 "mdtExcpected<T, Error>
+mdtValue -> mdtExpected avec concept Null"
+  xyzwh 155 22 2000 231 87
+note 128898 "Expression: auto r = read(..);
+if(r.hasError()){
+  propagate(r.error());
+}
+Do other stuff.."
+  xyzwh 146 598 2000 461 133
 end

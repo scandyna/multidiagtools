@@ -4,3 +4,5 @@ TRANSLATIONS = /home/philippe/programmation/multiDiagTools/src/mdtcsv/../../tran
 TRANSLATIONS += /home/philippe/programmation/multiDiagTools/src/mdtcsv/../../translations/mdtutils_de.ts
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvStringParser.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvFileParser.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvStringGenerator.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvRecordFormat.cpp

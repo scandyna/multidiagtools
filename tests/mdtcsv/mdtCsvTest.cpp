@@ -24,8 +24,10 @@
 #include "mdtCsvFileParserIterator.h"
 #include "mdtCsvFileParserIteratorSharedData.h"
 #include "mdtCsvFileParser.h"
+#include "mdtCsvStringGenerator.h"
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
+#include "mdtCsvRecordFormat.h"
 #include "mdtApplication.h"
 #include <QTemporaryFile>
 #include <QFile>
@@ -38,7 +40,13 @@
 
 #include <QDebug>
 
-void mdtCsvTest::settingsTest()
+/** \todo  CSV "generator" (xy string out, CsvFileSave, see QFileSave).
+ *         When a separator or eol is in string,
+ *         do automatic data protection. Also double quote, etc...
+ */
+
+
+void mdtCsvTest::parserSettingsTest()
 {
   mdtCsvParserSettings s;
 
@@ -61,6 +69,35 @@ void mdtCsvTest::settingsTest()
   QCOMPARE(s.fieldSeparator, ',');
   QCOMPARE(s.fieldProtection, '\"');
   QCOMPARE(s.parseExp, true);
+}
+
+void mdtCsvTest::generatorSettingsTest()
+{
+  mdtCsvGeneratorSettings s;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(s.fieldSeparator, ',');
+  QCOMPARE(s.fieldProtection, '\"');
+  QCOMPARE(s.eol.c_str(), MDT_CSV_NATIVE_EOL);
+  QVERIFY(!s.allwaysProtectTextFields);
+  /*
+   * Some setup
+   */
+  s.fieldSeparator = ';';
+  s.fieldProtection = '\'';
+  s.eol = "\t";
+  s.allwaysProtectTextFields = true;
+  QVERIFY(s.allwaysProtectTextFields);
+  /*
+   * Clear
+   */
+  s.clear();
+  QCOMPARE(s.fieldSeparator, ',');
+  QCOMPARE(s.fieldProtection, '\"');
+  QCOMPARE(s.eol.c_str(), MDT_CSV_NATIVE_EOL);
+  QVERIFY(!s.allwaysProtectTextFields);
 }
 
 void mdtCsvTest::recordTest()
@@ -110,6 +147,76 @@ void mdtCsvTest::dataTest()
   data.clear();
   QCOMPARE(data.recordCount(), 0);
   QVERIFY(!data.errorOccured());
+}
+
+void mdtCsvTest::recordFormatTest()
+{
+  mdtCsvRecordFormat fmt(5);
+  mdtCsvRecord record;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(fmt.fieldCount(), 5);
+  QVERIFY(fmt.fieldType(0) == QMetaType::UnknownType);
+  QVERIFY(fmt.fieldType(1) == QMetaType::UnknownType);
+  QVERIFY(fmt.fieldType(2) == QMetaType::UnknownType);
+  QVERIFY(fmt.fieldType(3) == QMetaType::UnknownType);
+  QVERIFY(fmt.fieldType(4) == QMetaType::UnknownType);
+  QVERIFY(!fmt.hasType(0));
+  QVERIFY(!fmt.hasType(1));
+  QVERIFY(!fmt.hasType(2));
+  QVERIFY(!fmt.hasType(3));
+  QVERIFY(!fmt.hasType(4));
+  /*
+   * Set
+   */
+  fmt.setFieldType(0, QMetaType::QString);
+  QVERIFY(fmt.fieldType(0) == QMetaType::QString);
+  QVERIFY(fmt.hasType(0));
+  fmt.setFieldType(1, QMetaType::Double);
+  QVERIFY(fmt.fieldType(1) == QMetaType::Double);
+  QVERIFY(fmt.hasType(1));
+  fmt.setFieldType(2, QMetaType::QDateTime);
+  QVERIFY(fmt.fieldType(2) == QMetaType::QDateTime);
+  QVERIFY(fmt.hasType(2));
+  fmt.setFieldType(3, QMetaType::Int);
+  QVERIFY(fmt.fieldType(3) == QMetaType::Int);
+  QVERIFY(fmt.hasType(3));
+  fmt.setFieldType(4, QMetaType::QString);
+  QVERIFY(fmt.fieldType(4) == QMetaType::QString);
+  QVERIFY(fmt.hasType(4));
+  /*
+   * Clear
+   */
+  fmt.clearFormats();
+  QCOMPARE(fmt.fieldCount(), 5);
+  QVERIFY(fmt.fieldType(0) == QMetaType::UnknownType);
+  QVERIFY(fmt.fieldType(1) == QMetaType::UnknownType);
+  QVERIFY(fmt.fieldType(2) == QMetaType::UnknownType);
+  QVERIFY(fmt.fieldType(3) == QMetaType::UnknownType);
+  QVERIFY(fmt.fieldType(4) == QMetaType::UnknownType);
+  QVERIFY(!fmt.hasType(0));
+  QVERIFY(!fmt.hasType(1));
+  QVERIFY(!fmt.hasType(2));
+  QVERIFY(!fmt.hasType(3));
+  QVERIFY(!fmt.hasType(4));
+  /*
+   * Check formatting record
+   */
+  // Setup format
+  fmt.clearFormats();
+  fmt.setFieldType(2, QMetaType::Int);
+  // Setup record
+  record.clear();
+  record.columnDataList << "A" << "B" << "1" << "2" << "3";
+  // Format and check
+  QVERIFY(fmt.formatRecord(record));
+  QVERIFY(record.columnDataList.at(0).type() == QVariant::String);
+  QVERIFY(record.columnDataList.at(1).type() == QVariant::String);
+  QVERIFY(record.columnDataList.at(2).type() == QVariant::Int);
+  QVERIFY(record.columnDataList.at(3).type() == QVariant::String);
+  QVERIFY(record.columnDataList.at(4).type() == QVariant::String);
 }
 
 void mdtCsvTest::csvStringParserIteratorTest()
@@ -254,7 +361,7 @@ void mdtCsvTest::stringParserReadLineTest()
 
 void mdtCsvTest::stringParserReadLineTest_data()
 {
-  buildCsvTestData();
+  buildCsvParserTestData();
 }
 
 void mdtCsvTest::stringParserReadAllTest()
@@ -292,7 +399,7 @@ void mdtCsvTest::stringParserReadAllTest()
 
 void mdtCsvTest::stringParserReadAllTest_data()
 {
-  buildCsvTestData();
+  buildCsvParserTestData();
 }
 
 void mdtCsvTest::csvFileParserIteratorSharedDataTest()
@@ -651,13 +758,13 @@ void mdtCsvTest::csvFileParserTest()
   record = parser.readLine();
   QVERIFY(!record.errorOccured());
   QCOMPARE(record.count(), 1);
-  QCOMPARE(record.columnDataList.at(0), QString("ABCDE"));
+  QCOMPARE(record.columnDataList.at(0), QVariant("ABCDE"));
   // Read second line
   QVERIFY(!parser.atEnd());
   record = parser.readLine();
   QVERIFY(!record.errorOccured());
   QCOMPARE(record.count(), 1);
-  QCOMPARE(record.columnDataList.at(0), QString("1234"));
+  QCOMPARE(record.columnDataList.at(0), QVariant("1234"));
   QVERIFY(parser.atEnd());
 }
 
@@ -712,7 +819,7 @@ void mdtCsvTest::csvFileParserReadLineTest()
 
 void mdtCsvTest::csvFileParserReadLineTest_data()
 {
-  buildCsvTestData();
+  buildCsvParserTestData();
 }
 
 void mdtCsvTest::csvFileParserReadAllTest()
@@ -763,10 +870,39 @@ void mdtCsvTest::csvFileParserReadAllTest()
 
 void mdtCsvTest::csvFileParserReadAllTest_data()
 {
-  buildCsvTestData();
+  buildCsvParserTestData();
 }
 
-void mdtCsvTest::buildCsvTestData()
+void mdtCsvTest::csvStringGeneratorWriteLineTest()
+{
+  QFETCH(mdtCsvData, sourceData);
+  QFETCH(QString, expectedCsvString);
+  QFETCH(mdtCsvGeneratorSettings, csvSettings);
+  QString csvString;
+  mdtCsvStringGenerator generator(csvSettings);
+
+  /*
+   * Initial state
+   */
+  
+  /*
+   * Write each line
+   */
+  for(const auto & record : sourceData.recordList){
+    csvString += generator.writeLine(record);
+  }
+  /*
+   * Check
+   */
+  QCOMPARE(csvString, expectedCsvString);
+}
+
+void mdtCsvTest::csvStringGeneratorWriteLineTest_data()
+{
+  buildCsvGeneratorTestData();
+}
+
+void mdtCsvTest::buildCsvParserTestData()
 {
   QTest::addColumn<QString>("sourceData");
   QTest::addColumn<mdtCsvData>("expectedData");
@@ -781,7 +917,7 @@ void mdtCsvTest::buildCsvTestData()
   const bool Nok = false;
 
   /*
-   * Testst are generally based on CSV-1203 standard.
+   * Tests are generally based on CSV-1203 standard.
    * Some exceptions also comes from RFC 4180
    */
 
@@ -1041,6 +1177,89 @@ void mdtCsvTest::buildCsvTestData()
   /// \todo add casese from: http://stackoverflow.com/questions/7436481/how-to-make-my-split-work-only-on-one-real-line-and-be-capable-to-skip-quoted-pa/7462539#7462539
 
   /// \todo Add some from /home/philippe/programmation/c_cpp/libreoffiche/git/core/sc/qa/unit/data/contentCSV/
+}
+
+void mdtCsvTest::buildCsvGeneratorTestData()
+{
+  QTest::addColumn<mdtCsvData>("sourceData");
+  QTest::addColumn<QString>("expectedCsvString");
+  QTest::addColumn<mdtCsvGeneratorSettings>("csvSettings");
+
+  mdtCsvRecord record;
+  mdtCsvData sourceData;
+  QString expectedCsvString;
+  mdtCsvGeneratorSettings csvSettings;
+
+  /*
+   * Tests are based on CSV-1203 standard.
+   */
+  csvSettings.eol = '\n';
+  csvSettings.fieldSeparator = ',';
+  csvSettings.fieldProtection = '"';
+  csvSettings.allwaysProtectTextFields = false;
+  // Empty data
+  record.clear();
+  sourceData.clear();
+  expectedCsvString = "";
+  QTest::newRow("") << sourceData << expectedCsvString << csvSettings;
+  // Auto quoted 1 field short data
+  sourceData.clear();
+  record.clear();
+  record.columnDataList << "A";
+  sourceData.addRecord(record);
+  expectedCsvString = "A\n";
+  QTest::newRow("[A]") << sourceData << expectedCsvString << csvSettings;
+  // Auto quoted 1 field short data
+  sourceData.clear();
+  record.clear();
+  record.columnDataList << "AB";
+  sourceData.addRecord(record);
+  expectedCsvString = "AB\n";
+  QTest::newRow("[AB]") << sourceData << expectedCsvString << csvSettings;
+  // Auto quoted 1 field short data
+  sourceData.clear();
+  record.clear();
+  record.columnDataList << 1;
+  sourceData.addRecord(record);
+  expectedCsvString = "1\n";
+  QTest::newRow("[1]") << sourceData << expectedCsvString << csvSettings;
+  // Auto quoted 1 field short data
+  sourceData.clear();
+  record.clear();
+  record.columnDataList << "A,B";
+  sourceData.addRecord(record);
+  expectedCsvString = "\"A,B\"\n";
+  QTest::newRow("[A,B]") << sourceData << expectedCsvString << csvSettings;
+  // Auto quoted 1 field short data
+  sourceData.clear();
+  record.clear();
+  record.columnDataList << "A\"B\"C";
+  sourceData.addRecord(record);
+  expectedCsvString = "\"A\"\"B\"\"C\"\n";
+  QTest::newRow("[A\"B\"C]") << sourceData << expectedCsvString << csvSettings;
+  // Auto quoted 1 line short data
+  sourceData.clear();
+  record.clear();
+  record.columnDataList << "A" << "B";
+  sourceData.addRecord(record);
+  expectedCsvString = "A,B\n";
+  QTest::newRow("[A|B]") << sourceData << expectedCsvString << csvSettings;
+  // Auto quoted 1 line short data
+  sourceData.clear();
+  record.clear();
+  record.columnDataList << "AB" << "C";
+  sourceData.addRecord(record);
+  expectedCsvString = "AB,C\n";
+  QTest::newRow("[AB|C]") << sourceData << expectedCsvString << csvSettings;
+  // Auto quoted 1 line short data
+  sourceData.clear();
+  record.clear();
+  record.columnDataList << "A" << 1;
+  sourceData.addRecord(record);
+  expectedCsvString = "A,1\n";
+  QTest::newRow("[A|1]") << sourceData << expectedCsvString << csvSettings;
+
+
 }
 
 

@@ -31,6 +31,23 @@
 
 #include <QDebug>
 
+/**
+ * \todo Try:
+ * 
+ * #define mdtError(e) mdtError e(__FILE__, __LINE__, className, __FUNCTION__);
+ *  -> For the problem of className, see qDebug MACRO, or else. <- Sad, but.. :=(
+ *  See also for: #define mdtError(e) mdtErrorBase<int8_t> e(__FILE__, __LINE__, className, __FUNCTION__);
+ *   and #define mdtError<T>(e) mdtErrorBase<T> e(__FILE__, __LINE__, className, __FUNCTION__);
+ *
+ * #define mdtError(e, className) mdtError e(__FILE__, __LINE__, className, __FUNCTION__);
+ * #define mdtError(e, obj) mdtError e(__FILE__, __LINE__, obj.className(), __FUNCTION__);
+ * 
+ * #define MDT_ERROR_SET_SRC(e, className) e.setSource(__FILE__, __LINE__, className, __FUNCTION__);
+ *
+ * 
+ */
+
+
 /// \todo Basic error struct ?????
 
 struct OtherErrorTypePrivate

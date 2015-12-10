@@ -1,0 +1,32 @@
+format 210
+
+classcanvas 128002 class_ref 2078978 // mdtCsvCommonSettings
+  classdiagramsettings member_max_width 0 end
+  xyz 231 39 2000
+end
+classcanvas 128130 class_ref 2050434 // mdtCsvParserSettings
+  classdiagramsettings member_max_width 0 end
+  xyz 52 220 2000
+end
+classcanvas 128258 class_ref 2078850 // mdtCsvGeneratorSettings
+  classdiagramsettings member_max_width 0 end
+  xyz 419 210 2000
+end
+relationcanvas 128386 relation_ref 2403970 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 501
+  from ref 128130 z 2001 to point 126 152
+  line 128642 z 2001 to point 314 152
+  line 128770 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 2404098 // <generalisation>
+  geometry VHV
+  from ref 128258 z 2001 to point 505 163
+  line 129282 z 2001 to point 314 163
+  line 129410 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

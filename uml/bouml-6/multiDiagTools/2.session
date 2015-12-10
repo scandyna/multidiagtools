@@ -1,27 +1,31 @@
 window_sizes 1280 964 323 951 911 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1589250 // mdt::optional
-    951 911 100 4 0 0
-  classdiagram_ref 169474 // mdtError
-    951 911 100 4 0 0
-  classdiagram_ref 1715458 // mdtErrorOut
+  classdiagram_ref 1701506 // mdtCsvParser
+    754 722 100 4 0 0
+  classdiagram_ref 1708930 // mdtCsvFileParser
     120 106 100 4 0 0
-  classdiagram_ref 1715714 // sandbox
-    120 106 90 18 0 20
-  classdiagram_ref 1715842 // mdtErrorStack
+  classdiagram_ref 1722498 // csvStringParser
     120 106 100 4 0 0
+  classdiagram_ref 1722626 // csvParserModel
+    943 903 100 18 0 0
+  classdiagram_ref 1729154 // csvStringGenerator
+    951 911 100 4 0 0
+  classdiagram_ref 1729282 // csvFileGenerator
+    120 106 100 4 0 0
+  classdiagram_ref 1736066 // csvData
+    951 911 100 4 0 0
+  classdiagram_ref 1365122 // Wait
+    120 106 100 4 0 0
+  active  classdiagram_ref 1742722 // sandbox
+    951 911 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1589250 // mdt::optional
+selected 
+  package_ref 168322 // mdtport
 open
-  class_ref 2064386 // C
-  class_ref 2064130 // mdtErrorData
-  class_ref 2065026 // mdtErrorStack
-  classdiagram_ref 1715458 // mdtErrorOut
-  class_ref 2064770 // CAnyProperty
-  class_ref 2064898 // CAnyHandlerBase
-  classview_ref 854018 // mdtErrorDialog
-  classview_ref 820482 // mdt::optional
+  
+  package_ref 281986 // mdtcsv
+  classview_ref 860674 // sandbox
 end
 end

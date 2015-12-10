@@ -8,6 +8,8 @@ project (multidiagtools)
 set (SOURCES_FILES 
           mdtCsvStringParser.cpp
           mdtCsvFileParser.cpp
+          mdtCsvStringGenerator.cpp
+          mdtCsvRecordFormat.cpp
     )
 
 # Output library

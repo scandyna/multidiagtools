@@ -1,6 +1,6 @@
-format 204
-"mdtserialport" // mdtserialport
-  revision 49
+format 210
+"mdtserialportLEGACY" // mdtserialportLEGACY
+  revision 50
   modified_by 2 "philippe"
   // class settings
   
@@ -26,6 +26,28 @@ format 204
   activitydiagramsettings
    end
   
+  classview 860546 "sandbox"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 1742594 "sandbox"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+  end
+
   classview 128002 "mdtSerialPort"
     
     classdiagramsettings member_max_width 0 end
