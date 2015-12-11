@@ -989,6 +989,27 @@ void mdtCsvTest::buildCsvParserTestData()
   expectedRecord.columnDataList << "A" << "B" << "C" << "D";
   expectedData.addRecord(expectedRecord);
   QTest::newRow("A,B,C,D\\r\\n") << sourceData << expectedData << Ok << csvSettings;
+  // Single line with empty parts
+  sourceData = "A,,B,C\r\n";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "A" << "" << "B" << "C";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow("A,,B,C\\r\\n") << sourceData << expectedData << Ok << csvSettings;
+  // Single line with empty parts (at end)
+  sourceData = "A,,B,\r\n";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "A" << "" << "B" << "";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow("A,,B,\\r\\n") << sourceData << expectedData << Ok << csvSettings;
+  // Single line with more than 1 char per field and empty parts
+  sourceData = "AB,,C,D\r\n";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "AB" << "" << "C" << "D";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow("AB,,C,D\\r\\n") << sourceData << expectedData << Ok << csvSettings;
   // 2 line CSV - \n EOL
   sourceData = "A,B,C,D\n1,2,3,4\n";
   expectedData.clear();
@@ -1044,6 +1065,20 @@ void mdtCsvTest::buildCsvParserTestData()
   expectedRecord.columnDataList << "A" << "B";
   expectedData.addRecord(expectedRecord);
   QTest::newRow("\"A\",\"B\"\\n") << sourceData << expectedData << Ok << csvSettings;
+  // Single line with empty parts
+  sourceData = "\"A\",\"\",\"B\",\"C\"\n";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "A" << "" << "B" << "C";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow("\"A\",\"\",\"B\",\"C\"\\n") << sourceData << expectedData << Ok << csvSettings;
+  // Single line with empty parts (at end)
+  sourceData = "\"A\",\"\",\"B\",\"\"\n";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "A" << "" << "B" << "";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow("\"A\",\"\",\"B\",\"\"\\n") << sourceData << expectedData << Ok << csvSettings;
   // Single line CSV (with many charachter strings)
   sourceData = "\"ABCD\",\"EFGH\"\n";
   expectedData.clear();
@@ -1079,6 +1114,13 @@ void mdtCsvTest::buildCsvParserTestData()
   expectedRecord.columnDataList << "A\"B\"" << "C";
   expectedData.addRecord(expectedRecord);
   QTest::newRow("\"A\"\"B\"\"\",\"C\"\\n") << sourceData << expectedData << Ok << csvSettings;
+  // Single line with more than 1 char per field and empty parts
+  sourceData = "\"AB\",\"\",\"C\",\"D\"\n";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "AB" << "" << "C" << "D";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow("\"AB\",\"\",\"C\",\"D\"\\n") << sourceData << expectedData << Ok << csvSettings;
   // RFC 4180 escape quote. We are not conform, but check that this does not crasch
   /// \todo Determine if this should generate a error or not
   sourceData = "\"A\"\"B\"\n";
@@ -1258,6 +1300,14 @@ void mdtCsvTest::buildCsvGeneratorTestData()
   sourceData.addRecord(record);
   expectedCsvString = "A,1\n";
   QTest::newRow("[A|1]") << sourceData << expectedCsvString << csvSettings;
+  // Auto quoted line with null data
+  sourceData.clear();
+  record.clear();
+  record.columnDataList << "" << 1 << QVariant();
+  sourceData.addRecord(record);
+  expectedCsvString = ",1,\n";
+  QTest::newRow("[|1|null]") << sourceData << expectedCsvString << csvSettings;
+
 
 
 }

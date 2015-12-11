@@ -114,6 +114,17 @@ namespace boost { namespace spirit { namespace traits
     }
   };
 
+  /*! \internal Define how to stream a QVariant (required for debug)
+   */
+  template <typename Out, typename Enable>
+  struct print_attribute_debug<Out, QVariant, Enable>
+  {
+    static void call(Out & out, const QVariant & val)
+    {
+      out << val.toString().toStdString();
+    }
+  };
+
 }}} // namespace boost { namespace spirit { namespace traits
 
 /*! \brief CSV parser template
@@ -173,6 +184,7 @@ class mdtCsvParserTemplate
      * Some rules are also altered, to try to match RFC 4180 and unicode
      */
     pvRecordRule = pvRecordPayload >> -eol; // RFC 4180 do not need a end of line in last line
+    ///pvRecordRule = pvRecordPayload >> eol;
     pvRecordPayload = pvFieldColumn % char_(fieldSep);
     pvFieldColumn = pvProtectedField | pvUnprotectedField;
     if(parseExp){
@@ -180,9 +192,10 @@ class mdtCsvParserTemplate
       pvUnprotectedField = -lit('~') >> pvRawFieldPayload;
     }else{
       pvProtectedField = lit(fieldQuote) >> pvFieldPayload >> lit(fieldQuote);
-      pvUnprotectedField = -char_ >> pvRawFieldPayload; // pvUnprotectedField = pvRawFieldPayload causes runtime exception
+      pvUnprotectedField = -char_('~') >> pvRawFieldPayload; // pvUnprotectedField = pvRawFieldPayload causes runtime exception
     }
-    pvFieldPayload = +pvAnychar;
+    pvFieldPayload = *pvAnychar;
+    ///pvRawFieldPayload = *pvSafechar | (pvSafechar >> *char_ >> pvSafechar);
     pvRawFieldPayload = *pvSafechar | (pvSafechar >> *char_ >> pvSafechar);
     // Character collections
     pvAnychar = pvChar | char_(fieldSep) | (char_(fieldQuote) >> lit(fieldQuote)) | space; // space matches space, CR, LF and other See std::isspace()
