@@ -21,46 +21,24 @@
 #ifndef MDT_CSV_PARSER_TEMPLATE_H
 #define MDT_CSV_PARSER_TEMPLATE_H
 
-// Uncomment those lines to enable parser debuging
+// Uncomment this line to enable parser debuging
 // #define BOOST_SPIRIT_DEBUG
-// #define BOOST_SPIRIT_DEBUG_TRACENODE
+
+#include <QDebug>
+#include <iostream>
 
 #include "mdtError.h"
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
-
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_stl.hpp>
-#include <boost/spirit/include/phoenix_fusion.hpp>
-#include <boost/spirit/include/phoenix_bind.hpp>
-#include <boost/bind.hpp>
-
-#include <boost/spirit/include/phoenix_object.hpp>
-#include <boost/fusion/include/adapt_struct.hpp>
-#include <boost/variant/recursive_variant.hpp>
-#include <boost/foreach.hpp>
-
 #include <QChar>
 #include <QString>
-
 #include <QVariant>
-
-#include <QObject>
-
 #include <QVector>
-
-#include <string>
-
-#include <iostream>
-#include <QDebug>
-
-
-#include <iostream>
-#include <fstream>
 #include <string>
 #include <vector>
+
+#include <QObject>
 
 namespace boost { namespace spirit { namespace traits
 {
@@ -92,6 +70,20 @@ namespace boost { namespace spirit { namespace traits
     }
   };
 
+  /*! \internal Test if a QVariant is empty (required for debug)
+  */
+  template <>
+  struct is_empty_container<QVariant>
+  {
+    static bool call(const QVariant & v)
+    {
+      if(v.type() == QVariant::String){
+        return v.toString().isEmpty();
+      }
+      return v.isNull();
+    }
+  };
+
   /*! \internal Test if a QString is empty (required for debug)
   */
   template <>
@@ -110,7 +102,7 @@ namespace boost { namespace spirit { namespace traits
   {
     static void call(Out & out, const QString & val)
     {
-      out << val.toStdString();
+      out << "QString(" << val.toStdString() << ")";
     }
   };
 
@@ -121,7 +113,7 @@ namespace boost { namespace spirit { namespace traits
   {
     static void call(Out & out, const QVariant & val)
     {
-      out << val.toString().toStdString();
+      out << "QVariant(" << val.toString().toStdString() << ")";
     }
   };
 
@@ -154,16 +146,14 @@ class mdtCsvParserTemplate
     namespace qi = boost::spirit::qi;
     namespace phoenix = boost::phoenix;
     // Parsers
-    ///using qi::char_;
     using qi::lit;
     using qi::eol;
-    ///using boost::spirit::ascii::space;
     using boost::spirit::standard_wide::char_;
     using boost::spirit::standard_wide::space;
 
-    char fieldSep = csvSettings.fieldSeparator;
-    char fieldQuote = csvSettings.fieldProtection;
-    bool parseExp = csvSettings.parseExp;
+    const char fieldSep = csvSettings.fieldSeparator;
+    const char fieldQuote = csvSettings.fieldProtection;
+    const bool parseExp = csvSettings.parseExp;
 
     /*
      * Give our rules a name (used for error)
@@ -184,7 +174,6 @@ class mdtCsvParserTemplate
      * Some rules are also altered, to try to match RFC 4180 and unicode
      */
     pvRecordRule = pvRecordPayload >> -eol; // RFC 4180 do not need a end of line in last line
-    ///pvRecordRule = pvRecordPayload >> eol;
     pvRecordPayload = pvFieldColumn % char_(fieldSep);
     pvFieldColumn = pvProtectedField | pvUnprotectedField;
     if(parseExp){
@@ -195,7 +184,6 @@ class mdtCsvParserTemplate
       pvUnprotectedField = -char_('~') >> pvRawFieldPayload; // pvUnprotectedField = pvRawFieldPayload causes runtime exception
     }
     pvFieldPayload = *pvAnychar;
-    ///pvRawFieldPayload = *pvSafechar | (pvSafechar >> *char_ >> pvSafechar);
     pvRawFieldPayload = *pvSafechar | (pvSafechar >> *char_ >> pvSafechar);
     // Character collections
     pvAnychar = pvChar | char_(fieldSep) | (char_(fieldQuote) >> lit(fieldQuote)) | space; // space matches space, CR, LF and other See std::isspace()
@@ -207,16 +195,24 @@ class mdtCsvParserTemplate
 //     qi::on_error<qi::fail>(pvRecordRule, phoenix::bind(&mdtCsvParserTemplate::myErrorHandler, this, qi::_1, qi::_2, qi::_3, qi::_4));
 
 
-    BOOST_SPIRIT_DEBUG_NODE(pvRecordRule);
-    BOOST_SPIRIT_DEBUG_NODE(pvRecordPayload);
-    BOOST_SPIRIT_DEBUG_NODE(pvFieldColumn);
-    BOOST_SPIRIT_DEBUG_NODE(pvProtectedField);
-    BOOST_SPIRIT_DEBUG_NODE(pvUnprotectedField);
-    BOOST_SPIRIT_DEBUG_NODE(pvFieldPayload);
-    BOOST_SPIRIT_DEBUG_NODE(pvRawFieldPayload);
-    BOOST_SPIRIT_DEBUG_NODE(pvAnychar);
-    BOOST_SPIRIT_DEBUG_NODE(pvChar);
-    BOOST_SPIRIT_DEBUG_NODE(pvSafechar);
+    /*
+     * Parser nodes debug.
+     * Don't forget to also uncomment #define BOOST_SPIRIT_DEBUG
+     * Note: to display what id parsed,
+     *       a certain amount of data is read from source.
+     *       With mdtCsvFileParser, this causes
+     *       it to be at eof after the first call of readLine().
+     */
+    //BOOST_SPIRIT_DEBUG_NODE(pvRecordRule);
+    //BOOST_SPIRIT_DEBUG_NODE(pvRecordPayload);
+    //BOOST_SPIRIT_DEBUG_NODE(pvFieldColumn);
+    //BOOST_SPIRIT_DEBUG_NODE(pvProtectedField);
+    //BOOST_SPIRIT_DEBUG_NODE(pvUnprotectedField);
+    //BOOST_SPIRIT_DEBUG_NODE(pvFieldPayload);
+    //BOOST_SPIRIT_DEBUG_NODE(pvRawFieldPayload);
+    //BOOST_SPIRIT_DEBUG_NODE(pvAnychar);
+    //BOOST_SPIRIT_DEBUG_NODE(pvChar);
+    //BOOST_SPIRIT_DEBUG_NODE(pvSafechar);
   }
 
   /*! \brief Destructor
@@ -247,19 +243,20 @@ class mdtCsvParserTemplate
    */
   mdtCsvParserTemplate(const mdtCsvParserTemplate &) = delete;
 
+  /*! \internal Assignment disabled
+   */
+  mdtCsvParserTemplate & operator=(const mdtCsvParserTemplate &) = delete;
+
   /*! \brief Read one line of CSV data
    */
   mdtCsvRecord readLine(SourceIterator & first, const SourceIterator & last)
   {
+    Q_ASSERT(first != last);
+
     mdtCsvRecord record;
     using boost::spirit::qi::char_;
     using boost::phoenix::ref;
 
-    // Special if we reached the end of source, or source is empty
-    /// \todo Check if this should be a error or not
-    if(first == last){
-      return record;
-    }
     // Parse a line
     bool ok = boost::spirit::qi::parse(first, last, pvRecordRule, record.columnDataList);
     if(!ok){

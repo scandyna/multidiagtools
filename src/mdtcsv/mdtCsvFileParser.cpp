@@ -75,8 +75,8 @@ mdtCsvRecord mdtCsvFileParser::readLine()
   mdtCsvRecord record;
 
   // Create multi pass iterators
-  auto first = boost::spirit::make_multi_pass<mdtCsvFileParserMultiPassPolicy, mdtCsvFileParserIterator>(mdtCsvFileParserIterator(pvFileIterator));
-  auto last = boost::spirit::make_multi_pass<mdtCsvFileParserMultiPassPolicy, mdtCsvFileParserIterator>(mdtCsvFileParserIterator());
+  auto first = mdtCsvFileParserMultiPassIterator(pvFileIterator);
+  auto last = mdtCsvFileParserMultiPassIterator(mdtCsvFileParserIterator());
   // Parse a line
   record = pvParser->readLine(first, last);
   if(record.errorOccured()){

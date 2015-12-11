@@ -26,6 +26,8 @@
 #include <iterator>
 #include <cstddef>
 
+//#include <QDebug>
+
 /*! \brief Iterator that acts on QString
  *
  * This iterator was made for mdtCsvStringParser

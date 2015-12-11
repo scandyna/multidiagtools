@@ -694,7 +694,7 @@ void mdtCsvTest::csvFileParserMultiPassIteratorTest()
 {
   using namespace boost::spirit;
   QTemporaryFile file;
-  QString str;
+  ///QString str;
 
   QVERIFY(QTextCodec::codecForName("UTF-8") != nullptr);
   /*
@@ -714,13 +714,60 @@ void mdtCsvTest::csvFileParserMultiPassIteratorTest()
   /*
    * Check iterating
    */
-  // Check iterating the whole file
   QVERIFY(*first == 'A');
-  while(first != last){
-    str.append(static_cast<ushort>(*first));
-    ++first;
-  }
-  QCOMPARE(str, QString(u8"ABCDE\n1234\n"));
+  // Step and check
+  QVERIFY(first != last);
+  ++first;
+  QVERIFY(*first == 'B');
+  // Step and check
+  QVERIFY(first != last);
+  ++first;
+  QVERIFY(*first == 'C');
+  // Step and check
+  QVERIFY(first != last);
+  ++first;
+  QVERIFY(*first == 'D');
+  // Step and check
+  QVERIFY(first != last);
+  ++first;
+  QVERIFY(*first == 'E');
+  // Step and check
+  QVERIFY(first != last);
+  ++first;
+  QVERIFY(*first == '\n');
+  // Step and check
+  QVERIFY(first != last);
+  ++first;
+  QVERIFY(*first == '1');
+  // Step and check
+  QVERIFY(first != last);
+  ++first;
+  QVERIFY(*first == '2');
+  // Step and check
+  QVERIFY(first != last);
+  ++first;
+  QVERIFY(*first == '3');
+  // Step and check
+  QVERIFY(first != last);
+  ++first;
+  QVERIFY(*first == '4');
+  QVERIFY(*first == '4');
+  // Step and check
+  QVERIFY(first != last);
+  ++first;
+  QVERIFY(*first == '\n');
+  // Now we reach eof
+  QVERIFY(first != last);
+  ++first;
+  QVERIFY(first == last);
+
+  // Check iterating the whole file
+///  QVERIFY(*first == 'A');
+//   while(first != last){
+//     str.append(static_cast<ushort>(*first));
+//     ++first;
+//   }
+//   QCOMPARE(str, QString(u8"ABCDE\n1234\n"));
 }
 
 void mdtCsvTest::csvFileParserTest()
