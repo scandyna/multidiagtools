@@ -143,6 +143,8 @@ class mdtCsvParserTemplate
    */
   mdtCsvParserTemplate(const mdtCsvParserSettings & csvSettings)
   {
+    Q_ASSERT(csvSettings.isValid());
+
     namespace qi = boost::spirit::qi;
     namespace phoenix = boost::phoenix;
     // Parsers

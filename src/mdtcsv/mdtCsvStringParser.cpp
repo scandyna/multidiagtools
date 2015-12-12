@@ -28,6 +28,7 @@
 mdtCsvStringParser::mdtCsvStringParser(const mdtCsvParserSettings & csvSettings)
  : pvImpl(new mdtCsvParserTemplate<mdtCsvStringParserIterator>(csvSettings))
 {
+  Q_ASSERT(csvSettings.isValid());
 }
 
 mdtCsvStringParser::~mdtCsvStringParser()

@@ -45,6 +45,8 @@ class mdtCsvFileParser
  public:
 
   /*! \brief Default constructor
+   *
+   * \pre csvSettings must be valid
    */
   mdtCsvFileParser(const mdtCsvParserSettings & csvSettings = mdtCsvParserSettings());
 

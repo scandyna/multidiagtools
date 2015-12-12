@@ -37,10 +37,13 @@ class mdtCsvStringGenerator
  public:
 
   /*! \brief Constructor
+   *
+   * \pre csvSettings must be valid
    */
   mdtCsvStringGenerator(const mdtCsvGeneratorSettings & csvSettings)
    : pvCsvSettings(csvSettings)
   {
+    Q_ASSERT(csvSettings.isValid());
   }
 
   /*! \brief Copy disabled

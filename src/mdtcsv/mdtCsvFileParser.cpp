@@ -27,6 +27,7 @@
 mdtCsvFileParser::mdtCsvFileParser(const mdtCsvParserSettings & csvSettings)
  : pvParser(new mdtCsvParserTemplate<mdtCsvFileParserMultiPassIterator>(csvSettings))
 {
+  Q_ASSERT(csvSettings.isValid());
 }
 
 mdtCsvFileParser::~mdtCsvFileParser()

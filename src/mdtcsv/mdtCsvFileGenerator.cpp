@@ -28,6 +28,7 @@
 mdtCsvFileGenerator::mdtCsvFileGenerator(const mdtCsvGeneratorSettings & csvSettings)
  : pvCsvSettings(csvSettings)
 {
+  Q_ASSERT(csvSettings.isValid());
 }
 
 mdtCsvFileGenerator::~mdtCsvFileGenerator()
@@ -97,6 +98,8 @@ bool mdtCsvFileGenerator::closeFile()
 bool mdtCsvFileGenerator::writeLine(const mdtCsvRecord & record)
 {
   Q_ASSERT(pvEncoder);
+  Q_ASSERT(pvFile.isWritable());
+  Q_ASSERT(pvFile.isOpen());
 
   mdtCsvStringGenerator generator(pvCsvSettings);
   const QString csv = generator.getCsvString(record);
@@ -110,6 +113,22 @@ bool mdtCsvFileGenerator::writeLine(const mdtCsvRecord & record)
     MDT_ERROR_SET_SRC(pvLastError, "mdtCsvFileGenerator");
     pvLastError.commit();
     return false;
+  }
+
+  return true;
+}
+
+bool mdtCsvFileGenerator::writeAll(const mdtCsvData& data)
+{
+  Q_ASSERT(pvEncoder);
+  Q_ASSERT(pvFile.isWritable());
+  Q_ASSERT(pvFile.isOpen());
+
+  for(const auto & record : data.recordList){
+    if(!writeLine(record)){
+      MDT_ERROR_SET_SRC(pvLastError, "mdtCsvFileGenerator");
+      return false;
+    }
   }
 
   return true;

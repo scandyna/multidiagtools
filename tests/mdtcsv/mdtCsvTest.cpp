@@ -57,12 +57,25 @@ void mdtCsvTest::parserSettingsTest()
   QCOMPARE(s.fieldSeparator, ',');
   QCOMPARE(s.fieldProtection, '\"');
   QCOMPARE(s.parseExp, true);
+  QVERIFY(s.isValid());
   /*
    * Some setup
    */
+  // Wrong setup
+  s.fieldSeparator = ',';
+  s.fieldProtection = ',';
+  s.parseExp = false;
+  QVERIFY(!s.isValid());
+  // Wrong setup
+  s.fieldSeparator = ',';
+  s.fieldProtection = '~';
+  s.parseExp = true;
+  QVERIFY(!s.isValid());
+  // Good setup
   s.fieldSeparator = ';';
   s.fieldProtection = '\'';
   s.parseExp = false;
+  QVERIFY(s.isValid());
   /*
    * Clear
    */
@@ -70,6 +83,7 @@ void mdtCsvTest::parserSettingsTest()
   QCOMPARE(s.fieldSeparator, ',');
   QCOMPARE(s.fieldProtection, '\"');
   QCOMPARE(s.parseExp, true);
+  QVERIFY(s.isValid());
 }
 
 void mdtCsvTest::generatorSettingsTest()
@@ -83,14 +97,27 @@ void mdtCsvTest::generatorSettingsTest()
   QCOMPARE(s.fieldProtection, '\"');
   QCOMPARE(s.eol.c_str(), MDT_CSV_NATIVE_EOL);
   QVERIFY(!s.allwaysProtectTextFields);
+  QVERIFY(s.isValid());
   /*
    * Some setup
    */
-  s.fieldSeparator = ';';
-  s.fieldProtection = '\'';
-  s.eol = "\t";
+  // Good setup
+  s.fieldSeparator = ',';
+  s.fieldProtection = '\"';
+  s.eol = "\n";
   s.allwaysProtectTextFields = true;
   QVERIFY(s.allwaysProtectTextFields);
+  QVERIFY(s.isValid());
+  // Wrong setup
+  s.fieldSeparator = ',';
+  s.fieldProtection = ',';
+  s.eol = '\n';
+  QVERIFY(!s.isValid());
+  // Wrong setup
+  s.fieldSeparator = ',';
+  s.fieldProtection = '\"';
+  s.eol = 'a';
+  QVERIFY(!s.isValid());
   /*
    * Clear
    */
@@ -99,6 +126,7 @@ void mdtCsvTest::generatorSettingsTest()
   QCOMPARE(s.fieldProtection, '\"');
   QCOMPARE(s.eol.c_str(), MDT_CSV_NATIVE_EOL);
   QVERIFY(!s.allwaysProtectTextFields);
+  QVERIFY(s.isValid());
 }
 
 void mdtCsvTest::recordTest()
@@ -1017,7 +1045,7 @@ void mdtCsvTest::csvFileGeneratorWriteLineTest()
   /*
    * Initial state
    */
-  
+
   /*
    * Create test file
    */
@@ -1052,12 +1080,33 @@ void mdtCsvTest::csvFileGeneratorWriteAllTest()
   QFETCH(mdtCsvGeneratorSettings, csvSettings);
   QString csvString;
   mdtCsvFileGenerator generator(csvSettings);
+  QTemporaryFile file;
+  QTextCodec *codec;
 
+  codec = QTextCodec::codecForName("UTF-8");
+  QVERIFY(codec != nullptr);
   /*
    * Initial state
    */
-  
 
+  /*
+   * Create test file
+   */
+  QVERIFY(file.open());
+  file.close();
+  /*
+   * Write CSV file
+   */
+  QVERIFY(generator.openFile(file.fileName(), "UTF-8"));
+  QVERIFY(generator.writeAll(sourceData));
+  QVERIFY(generator.closeFile());
+  /*
+   * Check
+   */
+  QVERIFY(codec != nullptr);
+  QVERIFY(file.open());
+  csvString = codec->toUnicode(file.readAll());
+  QCOMPARE(csvString, expectedCsvString);
 }
 
 void mdtCsvTest::csvFileGeneratorWriteAllTest_data()

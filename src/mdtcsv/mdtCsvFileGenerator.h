@@ -42,6 +42,8 @@ class mdtCsvFileGenerator
  public:
 
   /*! \brief Constructor
+   *
+   * \pre csvSettings must be valid
    */
   mdtCsvFileGenerator(const mdtCsvGeneratorSettings & csvSettings);
 
@@ -76,6 +78,12 @@ class mdtCsvFileGenerator
    * \pre This function can only be called once openFile() successfully returned.
    */
   bool writeLine(const mdtCsvRecord & record);
+
+  /*! \brief Write all CSV data to file
+   *
+   * \pre This function can only be called once openFile() successfully returned.
+   */
+  bool writeAll(const mdtCsvData & data);
 
   /*! \brief Get last error
    */

@@ -66,6 +66,20 @@ struct mdtCsvCommonSettings
    */
   char fieldProtection;
 
+  /*! \brief Check if settings are valid
+   *
+   * \todo Add error messages (once mdtError is updated and mdtOptional/mdtExpected is implemented..)
+   */
+  bool isValid() const
+  {
+    // Check that field separator and protection are not the same char
+    if(fieldSeparator == fieldProtection){
+      return false;
+    }
+    // Seems OK
+    return true;
+  }
+
   /*! \brief Clear
    *
    * Will reset to default settings.
@@ -102,6 +116,24 @@ struct mdtCsvParserSettings : public mdtCsvCommonSettings
    : mdtCsvCommonSettings(),
      parseExp(true)
   {
+  }
+
+  /*! \brief Check if settings are valid
+   *
+   * \todo Add error messages (once mdtError is updated and mdtOptional/mdtExpected is implemented..)
+   */
+  bool isValid() const
+  {
+    // Check basis
+    if(!mdtCsvCommonSettings::isValid()){
+      return false;
+    }
+    // Check that EXP is not used as a field separator or protection
+    if( (fieldSeparator == '~') || (fieldProtection == '~') ){
+      return false;
+    }
+    // Seems OK
+    return true;
   }
 
   /*! \brief Clear
@@ -143,6 +175,24 @@ struct mdtCsvGeneratorSettings : public mdtCsvCommonSettings
      eol(MDT_CSV_NATIVE_EOL),
      allwaysProtectTextFields(false)
   {
+  }
+
+  /*! \brief Check if settings are valid
+   *
+   * \todo Add error messages (once mdtError is updated and mdtOptional/mdtExpected is implemented..)
+   */
+  bool isValid() const
+  {
+    // Check basis
+    if(!mdtCsvCommonSettings::isValid()){
+      return false;
+    }
+    // Check that EOL is valid
+    if( (eol != "\n") && (eol != "\r") && (eol != "\r\n") ){
+      return false;
+    }
+    // Seems OK
+    return true;
   }
 
   /*! \brief Clear
