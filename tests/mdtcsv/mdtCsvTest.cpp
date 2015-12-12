@@ -29,6 +29,8 @@
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
 #include "mdtCsvRecordFormat.h"
+#include "mdtCsvGeneratorSettingsWidget.h"
+#include "mdtCsvFileGeneratorSettingsDialog.h"
 #include "mdtApplication.h"
 #include <QTemporaryFile>
 #include <QFile>
@@ -127,6 +129,82 @@ void mdtCsvTest::generatorSettingsTest()
   QCOMPARE(s.eol.c_str(), MDT_CSV_NATIVE_EOL);
   QVERIFY(!s.allwaysProtectTextFields);
   QVERIFY(s.isValid());
+}
+
+void mdtCsvTest::generatorSettingsWidgetTest()
+{
+  mdtCsvGeneratorSettingsWidget widget;
+  mdtCsvGeneratorSettings settings;
+
+  /*
+   * Set/get
+   */
+  // Set some known settings
+  settings.fieldSeparator = ':';
+  settings.fieldProtection = '\'';
+  settings.eol = "\r";
+  settings.allwaysProtectTextFields = true;
+  widget.setSettings(settings);
+  // Get settings back and check
+  settings = widget.getSettings();
+  QCOMPARE(settings.fieldSeparator, ':');
+  QCOMPARE(settings.fieldProtection, '\'');
+  QCOMPARE(settings.eol.c_str(), "\r");
+  QVERIFY(settings.allwaysProtectTextFields);
+  // Set some known settings (TAB)
+  settings.fieldSeparator = '\t';
+  widget.setSettings(settings);
+  // Get settings back and check
+  settings = widget.getSettings();
+  QCOMPARE(settings.fieldSeparator, '\t');
+  // Set some unknown settings
+  settings.fieldSeparator = 'a';
+  settings.fieldProtection = 'b';
+  widget.setSettings(settings);
+  // Get settings back and check
+  settings = widget.getSettings();
+  QCOMPARE(settings.fieldSeparator, 'a');
+  QCOMPARE(settings.fieldProtection, 'b');
+
+  /*
+   * Play
+   */
+//   widget.show();
+//   while(widget.isVisible()){
+//     QTest::qWait(500);
+//   }
+}
+
+void mdtCsvTest::fileGeneratorSettingsDialogTest()
+{
+  mdtCsvFileGeneratorSettingsDialog dialog;
+  mdtCsvGeneratorSettings settings;
+
+  /*
+   * Set/get
+   */
+  // Set file settings
+  dialog.setFileSettings("/path/to/csvfile.csv", "UTF-16");
+  // Set CSV settings
+  settings.fieldSeparator = ':';
+  settings.fieldProtection = '\'';
+  settings.eol = "\r";
+  settings.allwaysProtectTextFields = true;
+  dialog.setCsvSettings(settings);
+  // Check file settings
+  QCOMPARE(dialog.filePath(), QString("/path/to/csvfile.csv"));
+  QCOMPARE(dialog.fileEncoding(), QByteArray("UTF-16"));
+  // Check CSV setting
+  settings = dialog.getCsvSettings();
+  QCOMPARE(settings.fieldSeparator, ':');
+  QCOMPARE(settings.fieldProtection, '\'');
+  QCOMPARE(settings.eol.c_str(), "\r");
+  QVERIFY(settings.allwaysProtectTextFields);
+
+  /*
+   * Play
+   */
+  dialog.exec();
 }
 
 void mdtCsvTest::recordTest()

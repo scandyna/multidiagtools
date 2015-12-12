@@ -11,6 +11,8 @@ set (SOURCES_FILES
           mdtCsvStringGenerator.cpp
           mdtCsvFileGenerator.cpp
           mdtCsvRecordFormat.cpp
+          mdtCsvGeneratorSettingsWidget.cpp
+          mdtCsvFileGeneratorSettingsDialog.cpp
     )
 
 # Output library

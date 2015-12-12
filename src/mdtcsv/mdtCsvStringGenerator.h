@@ -21,7 +21,6 @@
 #ifndef MDT_CSV_STRING_GENERATOR_H
 #define MDT_CSV_STRING_GENERATOR_H
 
-///#include "mdtError.h"
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
 #include <QString>
