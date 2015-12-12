@@ -1,6 +1,6 @@
 format 210
 "mdtutils" // mdtutils
-  revision 156
+  revision 157
   modified_by 2 "philippe"
   // class settings
   
@@ -7837,8 +7837,8 @@ ${inlines}
       size A4
     end
 
-    class 1545218 "mdtWait"
-      visibility package 
+    class 1545218 "mdtAbstractWait"
+      abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -7851,6 +7851,16 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      operation 3222914 "~mdtAbstractWait"
+	abstract cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
     end
 
     class 1545346 "mdtWaitQtEventLoop"
@@ -7867,6 +7877,13 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      classrelation 2434306 // <generalisation>
+	relation 2417922 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2434306 // <generalisation>
+	  b parent class_ref 1545218 // mdtAbstractWait
+      end
     end
   end
 end

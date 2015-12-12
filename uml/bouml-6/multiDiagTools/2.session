@@ -15,17 +15,20 @@ diagrams
     120 106 100 4 0 0
   classdiagram_ref 1736066 // csvData
     951 911 100 4 0 0
-  classdiagram_ref 1365122 // Wait
+  classdiagram_ref 1715714 // sandbox
+    120 106 100 18 0 0
+  classdiagram_ref 169474 // mdtError
     120 106 100 4 0 0
   active  classdiagram_ref 1742722 // sandbox
     951 911 100 4 0 0
 end
 show_stereotypes
-selected 
-  package_ref 168322 // mdtport
+selected operation_ref 3222914 // ~mdtAbstractWait
 open
+  classview_ref 161666 // mdtError
   
   package_ref 281986 // mdtcsv
+  class_ref 1545218 // mdtAbstractWait
   classview_ref 860674 // sandbox
 end
 end

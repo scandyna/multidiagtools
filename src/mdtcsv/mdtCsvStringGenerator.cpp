@@ -19,10 +19,9 @@
  **
  ****************************************************************************/
 #include "mdtCsvStringGenerator.h"
-///#include <QLatin1String>
 #include <QChar>
 
-QString mdtCsvStringGenerator::writeLine(const mdtCsvRecord & record) const
+QString mdtCsvStringGenerator::getCsvString(const mdtCsvRecord & record) const
 {
   QString csv;
   const int lastIndex = record.columnDataList.size() - 1;
@@ -38,6 +37,17 @@ QString mdtCsvStringGenerator::writeLine(const mdtCsvRecord & record) const
   }
   csv.append(formatFieldData(record.columnDataList.at(lastIndex)));
   csv.append(eol);
+
+  return csv;
+}
+
+QString mdtCsvStringGenerator::getCsvString(const mdtCsvData & data) const
+{
+  QString csv;
+
+  for(const auto & record : data.recordList){
+    csv.append(getCsvString(record));
+  }
 
   return csv;
 }

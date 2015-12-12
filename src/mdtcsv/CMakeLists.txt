@@ -9,6 +9,7 @@ set (SOURCES_FILES
           mdtCsvStringParser.cpp
           mdtCsvFileParser.cpp
           mdtCsvStringGenerator.cpp
+          mdtCsvFileGenerator.cpp
           mdtCsvRecordFormat.cpp
     )
 

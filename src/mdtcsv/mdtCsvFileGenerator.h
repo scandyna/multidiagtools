@@ -18,48 +18,46 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CSV_FILE_PARSER_H
-#define MDT_CSV_FILE_PARSER_H
+#ifndef MDT_CSV_FILE_GENERATOR_H
+#define MDT_CSV_FILE_GENERATOR_H
 
+#include "mdtError.h"
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
-#include "mdtCsvFileParserIterator.h"
-#include "mdtError.h"
 #include <QString>
-#include <QByteArray>
-#include <QFile>
 #include <QFileInfo>
+#include <QFile>
 #include <memory>
 
-template <typename InputIterator>
-class mdtCsvParserTemplate;
+class QTextEncoder;
 
-/*! \brief CSV parser that acts on a file as input
+/*! \brief CSV file generator
  *
  * \note Some part of this API documentation refers to following standards:
  *       \li CSV-1203 available here: http://mastpoint.com/csv-1203
  *       \li RFC 4180 available here: https://tools.ietf.org/html/rfc4180
  */
-class mdtCsvFileParser
+class mdtCsvFileGenerator
 {
  public:
 
-  /*! \brief Default constructor
+  /*! \brief Constructor
    */
-  mdtCsvFileParser(const mdtCsvParserSettings & csvSettings = mdtCsvParserSettings());
+  mdtCsvFileGenerator(const mdtCsvGeneratorSettings & csvSettings);
+
+  /*! \brief Destructor
+   */
+  ~mdtCsvFileGenerator();
 
   /*! \brief Copy disabled
    */
-  mdtCsvFileParser(const mdtCsvFileParser &) = delete;
+  mdtCsvFileGenerator(const mdtCsvFileGenerator &) = delete;
 
   /*! \brief Assignment disabled
    */
-  mdtCsvFileParser & operator=(const mdtCsvFileParser &) = delete;
+  mdtCsvFileGenerator & operator=(const mdtCsvFileGenerator &) = delete;
 
-  // Destructor: required so that pvParser pointer has the definition for its destructor
-  ~mdtCsvFileParser();
-
-  /*! \brief Open CSV file
+  /*! \brief Open target CSV file
    *
    * \param fileInfo Path to CSV file that must be open
    * \param encoding Encoding name of the CSV file format.
@@ -71,19 +69,13 @@ class mdtCsvFileParser
 
   /*! \brief Close CSV file
    */
-  void closeFile();
+  bool closeFile();
 
-  /*! \brief Check about end of file
+  /*! \brief Write a CSV line
+   *
+   * \pre This function can only be called once openFile() successfully returned.
    */
-  bool atEnd() const;
-
-  /*! \brief Read one line in CSV file
-   */
-  mdtCsvRecord readLine();
-
-  /*! \brief Read the entire CSV file
-   */
-  mdtCsvData readAll();
+  bool writeLine(const mdtCsvRecord & record);
 
   /*! \brief Get last error
    */
@@ -98,10 +90,10 @@ class mdtCsvFileParser
    */
   QString tr(const char *sourceText);
 
+  mdtCsvGeneratorSettings pvCsvSettings;
   QFile pvFile;
-  mdtCsvFileParserIterator pvFileIterator;
-  std::unique_ptr<mdtCsvParserTemplate<mdtCsvFileParserMultiPassIterator> > pvParser;
+  std::unique_ptr<QTextEncoder> pvEncoder;
   mdtError pvLastError;
 };
 
-#endif // #ifndef MDT_CSV_FILE_PARSER_H
+#endif // #ifndef MDT_CSV_FILE_GENERATOR_H

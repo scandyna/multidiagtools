@@ -54,8 +54,14 @@ class mdtCsvTest : public mdtTest
   void csvFileParserReadAllTest();
   void csvFileParserReadAllTest_data();
 
-  void csvStringGeneratorWriteLineTest();
-  void csvStringGeneratorWriteLineTest_data();
+  void csvStringGeneratorFromRecordTest();
+  void csvStringGeneratorFromRecordTest_data();
+  void csvStringGeneratorFromDataTest();
+  void csvStringGeneratorFromDataTest_data();
+  void csvFileGeneratorWriteLineTest();
+  void csvFileGeneratorWriteLineTest_data();
+  void csvFileGeneratorWriteAllTest();
+  void csvFileGeneratorWriteAllTest_data();
 
  private:
 

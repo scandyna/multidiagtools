@@ -25,6 +25,7 @@
 #include "mdtCsvFileParserIteratorSharedData.h"
 #include "mdtCsvFileParser.h"
 #include "mdtCsvStringGenerator.h"
+#include "mdtCsvFileGenerator.h"
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
 #include "mdtCsvRecordFormat.h"
@@ -210,13 +211,38 @@ void mdtCsvTest::recordFormatTest()
   // Setup record
   record.clear();
   record.columnDataList << "A" << "B" << "1" << "2" << "3";
-  // Format and check
+  // Format
   QVERIFY(fmt.formatRecord(record));
+  // Check formats
   QVERIFY(record.columnDataList.at(0).type() == QVariant::String);
   QVERIFY(record.columnDataList.at(1).type() == QVariant::String);
   QVERIFY(record.columnDataList.at(2).type() == QVariant::Int);
   QVERIFY(record.columnDataList.at(3).type() == QVariant::String);
   QVERIFY(record.columnDataList.at(4).type() == QVariant::String);
+  // Check values
+  QCOMPARE(record.columnDataList.at(0), QVariant("A"));
+  QCOMPARE(record.columnDataList.at(1), QVariant("B"));
+  QCOMPARE(record.columnDataList.at(2), QVariant(1));
+  QCOMPARE(record.columnDataList.at(3), QVariant("2"));
+  QCOMPARE(record.columnDataList.at(4), QVariant("3"));
+  // Setup record - At index 2, type is int, must be null
+  record.clear();
+  record.columnDataList << "A" << "" << "" << "2" << "3";
+  // Format
+  QVERIFY(fmt.formatRecord(record));
+  // Check formats
+  QVERIFY(record.columnDataList.at(0).type() == QVariant::String);
+  QVERIFY(record.columnDataList.at(1).type() == QVariant::String);
+  QVERIFY(record.columnDataList.at(2).type() == QVariant::Int);
+  QVERIFY(record.columnDataList.at(3).type() == QVariant::String);
+  QVERIFY(record.columnDataList.at(4).type() == QVariant::String);
+  // Check values
+  QCOMPARE(record.columnDataList.at(0), QVariant("A"));
+  QCOMPARE(record.columnDataList.at(1), QVariant(""));
+  QVERIFY(record.columnDataList.at(2).isNull());
+  QCOMPARE(record.columnDataList.at(3), QVariant("2"));
+  QCOMPARE(record.columnDataList.at(4), QVariant("3"));
+
 }
 
 void mdtCsvTest::csvStringParserIteratorTest()
@@ -920,7 +946,7 @@ void mdtCsvTest::csvFileParserReadAllTest_data()
   buildCsvParserTestData();
 }
 
-void mdtCsvTest::csvStringGeneratorWriteLineTest()
+void mdtCsvTest::csvStringGeneratorFromRecordTest()
 {
   QFETCH(mdtCsvData, sourceData);
   QFETCH(QString, expectedCsvString);
@@ -936,7 +962,7 @@ void mdtCsvTest::csvStringGeneratorWriteLineTest()
    * Write each line
    */
   for(const auto & record : sourceData.recordList){
-    csvString += generator.writeLine(record);
+    csvString += generator.getCsvString(record);
   }
   /*
    * Check
@@ -944,7 +970,97 @@ void mdtCsvTest::csvStringGeneratorWriteLineTest()
   QCOMPARE(csvString, expectedCsvString);
 }
 
-void mdtCsvTest::csvStringGeneratorWriteLineTest_data()
+void mdtCsvTest::csvStringGeneratorFromRecordTest_data()
+{
+  buildCsvGeneratorTestData();
+}
+
+void mdtCsvTest::csvStringGeneratorFromDataTest()
+{
+  QFETCH(mdtCsvData, sourceData);
+  QFETCH(QString, expectedCsvString);
+  QFETCH(mdtCsvGeneratorSettings, csvSettings);
+  QString csvString;
+  mdtCsvStringGenerator generator(csvSettings);
+
+  /*
+   * Initial state
+   */
+  
+  /*
+   * Convert
+   */
+  csvString = generator.getCsvString(sourceData);
+  /*
+   * Check
+   */
+  QCOMPARE(csvString, expectedCsvString);
+}
+
+void mdtCsvTest::csvStringGeneratorFromDataTest_data()
+{
+  buildCsvGeneratorTestData();
+}
+
+void mdtCsvTest::csvFileGeneratorWriteLineTest()
+{
+  QFETCH(mdtCsvData, sourceData);
+  QFETCH(QString, expectedCsvString);
+  QFETCH(mdtCsvGeneratorSettings, csvSettings);
+  QString csvString;
+  mdtCsvFileGenerator generator(csvSettings);
+  QTemporaryFile file;
+  QTextCodec *codec;
+
+  codec = QTextCodec::codecForName("UTF-8");
+  QVERIFY(codec != nullptr);
+  /*
+   * Initial state
+   */
+  
+  /*
+   * Create test file
+   */
+  QVERIFY(file.open());
+  file.close();
+  /*
+   * Write CSV file
+   */
+  QVERIFY(generator.openFile(file.fileName(), "UTF-8"));
+  for(const auto & record : sourceData.recordList){
+    QVERIFY(generator.writeLine(record));
+  }
+  QVERIFY(generator.closeFile());
+  /*
+   * Check
+   */
+  QVERIFY(codec != nullptr);
+  QVERIFY(file.open());
+  csvString = codec->toUnicode(file.readAll());
+  QCOMPARE(csvString, expectedCsvString);
+}
+
+void mdtCsvTest::csvFileGeneratorWriteLineTest_data()
+{
+  buildCsvGeneratorTestData();
+}
+
+void mdtCsvTest::csvFileGeneratorWriteAllTest()
+{
+  QFETCH(mdtCsvData, sourceData);
+  QFETCH(QString, expectedCsvString);
+  QFETCH(mdtCsvGeneratorSettings, csvSettings);
+  QString csvString;
+  mdtCsvFileGenerator generator(csvSettings);
+
+  /*
+   * Initial state
+   */
+  
+
+}
+
+void mdtCsvTest::csvFileGeneratorWriteAllTest_data()
 {
   buildCsvGeneratorTestData();
 }
@@ -1354,9 +1470,16 @@ void mdtCsvTest::buildCsvGeneratorTestData()
   sourceData.addRecord(record);
   expectedCsvString = ",1,\n";
   QTest::newRow("[|1|null]") << sourceData << expectedCsvString << csvSettings;
-
-
-
+  // Auto quoted simple 2 Lines
+  sourceData.clear();
+  record.clear();
+  record.columnDataList << "A" << "B" << "C";
+  sourceData.addRecord(record);
+  record.clear();
+  record.columnDataList << "1" << "2" << "3";
+  sourceData.addRecord(record);
+  expectedCsvString = "A,B,C\n1,2,3\n";
+  QTest::newRow("[A|B|C][1|2|3]") << sourceData << expectedCsvString << csvSettings;
 }
 
 

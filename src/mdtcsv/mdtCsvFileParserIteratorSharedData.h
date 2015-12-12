@@ -109,7 +109,7 @@ class mdtCsvFileParserIteratorSharedData
      */
     auto *codec = QTextCodec::codecForName(encoding);
     if(codec == nullptr){
-      QString msg = tr("Could not find a codec for requested encodeing '") + encoding + tr("'");
+      QString msg = tr("Could not find a codec for requested encoding '") + encoding + tr("'");
       pvLastError.setError(msg, mdtError::Error);
       MDT_ERROR_SET_SRC(pvLastError, "mdtCsvFileParserIteratorSharedData");
       pvLastError.commit();

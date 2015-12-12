@@ -1,6 +1,6 @@
 format 210
 "mdtserialport" // mdtserialport
-  revision 1
+  revision 2
   modified_by 2 "philippe"
   // class settings
   
@@ -49,6 +49,9 @@ format 210
 
     class 2092034 "mdtSerialPortThread"
       visibility package 
+      nformals 1
+      formal name "T" type "class" explicit_default_value ""
+        explicit_extends ""
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -61,21 +64,12 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2427138 // <generalisation>
-	relation 2410754 ---|>
+      classrelation 2434178 // <generalisation>
+	relation 2417794 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 2427138 // <generalisation>
-	  b parent class_ref 222722 // QThread
-      end
-
-      classrelation 2427394 // <unidirectional association>
-	relation 2411010 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 2427394 // <unidirectional association>
-	  b parent class_ref 2092418 // mdtFrameQueue???
+	    classrelation_ref 2434178 // <generalisation>
+	  b parent class_ref 2098946 // mdtSerialPortPrivate
       end
     end
 
@@ -112,6 +106,29 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    class 2098946 "mdtSerialPortPrivate"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2434050 // <generalisation>
+	relation 2417666 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2434050 // <generalisation>
+	  b parent class_ref 222722 // QThread
+      end
     end
   end
 end

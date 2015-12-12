@@ -1,6 +1,6 @@
 format 210
 "Qt" // Qt
-  revision 106
+  revision 107
   modified_by 2 "philippe"
   // class settings
   
@@ -6093,7 +6093,6 @@ ${inlines}
 	    classrelation_ref 2427010 // <generalisation>
 	  b parent class_ref 322818 // QIODevice
       end
-
     end
   end
 end

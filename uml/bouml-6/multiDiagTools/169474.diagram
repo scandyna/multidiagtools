@@ -32,6 +32,9 @@ classcanvas 130946 class_ref 2065282 // mdtEmptyError
   classdiagramsettings member_max_width 0 end
   xyz 239 27 2005
 end
+note 131074 "mdtError , mdtWarning, etc... ?
+Think: mdtOptional: how to differientiate hasError() if it is just a warning ? "
+  xyzwh 634 511 2005 203 185
 relationcanvas 130178 relation_ref 2389890 // <directional composition>
   from ref 128002 z 2001 to ref 129922
   role_a_pos 499 489 3000 no_role_b

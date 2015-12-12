@@ -46,10 +46,20 @@ void mdtCsvRecordFormat::clearFormats()
 
 bool mdtCsvRecordFormat::convert(QVariant & data, QMetaType::Type type)
 {
-  const QString msgData = data.toString().left(50); // When QVariant::convert() fails, data are lost
+  const QString str = data.toString();
 
+  /*
+   * If data is empty, we want to convert to a null QVariant of requested type.
+   * The best way to do this is using QVariant::convert() and ignore return value.
+   * See Qt's QVariant documentation about this.
+   */
+  if(str.isEmpty()){
+    data.convert(type);
+    return true;
+  }
+  // Convert
   if(!data.convert(type)){
-    QString msg = tr("Convertion of data '") + msgData \
+    QString msg = tr("Convertion of data '") + str.left(50) \
                   + tr("' to type '") + QMetaType::typeName(type) \
                   + tr("' failed.");
     pvLastError.setError(msg, mdtError::Error);

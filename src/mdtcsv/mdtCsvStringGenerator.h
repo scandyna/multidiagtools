@@ -21,7 +21,7 @@
 #ifndef MDT_CSV_STRING_GENERATOR_H
 #define MDT_CSV_STRING_GENERATOR_H
 
-#include "mdtError.h"
+///#include "mdtError.h"
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
 #include <QString>
@@ -32,7 +32,6 @@
  *       \li CSV-1203 available here: http://mastpoint.com/csv-1203
  *       \li RFC 4180 available here: https://tools.ietf.org/html/rfc4180
  */
-
 class mdtCsvStringGenerator
 {
  public:
@@ -54,7 +53,11 @@ class mdtCsvStringGenerator
 
   /*! \brief Write a CSV line
    */
-  QString writeLine(const mdtCsvRecord & record) const;
+  QString getCsvString(const mdtCsvRecord & record) const;
+
+  /*! \brief Write all CSV data
+   */
+  QString getCsvString(const mdtCsvData & data) const;
 
  private:
 

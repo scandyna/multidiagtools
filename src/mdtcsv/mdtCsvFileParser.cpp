@@ -43,7 +43,7 @@ bool mdtCsvFileParser::openFile(const QFileInfo & fileInfo, const QByteArray & e
   pvFile.setFileName(fileInfo.absoluteFilePath());
   if(!pvFile.open(QIODevice::ReadOnly)){
     QString msg = tr("Could not open file '") + fileInfo.fileName() + tr("'\n") \
-                  + tr("Director: '") + fileInfo.dir().absolutePath() + tr("'");
+                  + tr("Directory: '") + fileInfo.dir().absolutePath() + tr("'");
     pvLastError.setError(msg, mdtError::Error);
     pvLastError.setSystemError(0, pvFile.errorString());
     MDT_ERROR_SET_SRC(pvLastError, "mdtCsvFileParserIteratorSharedData");
