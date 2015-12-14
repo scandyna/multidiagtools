@@ -2,7 +2,7 @@ format 210
 
 classcanvas 128002 class_ref 182402 // mdtError
   classdiagramsettings member_max_width 0 end
-  xyz 73 95 2000
+  xyz 49 117 2000
 end
 note 129282 "Set source: add a facility function for QObject ?
 Or, general easy solutiuion ? (Reflection ??)"
@@ -13,31 +13,52 @@ note 129666 "Error items ? (each item has a type, like descriptive or informativ
   xyzwh 44 632 2000 367 77
 note 129794 "Error code, or type, or number = template with default type to void ? WW compatibility problems ?"
   xyzwh 450 756 2000 389 65
-classcanvas 129922 class_ref 2064130 // mdtErrorData
+classcanvas 129922 class_ref 2064130 // mdtErrorPrivate
   classdiagramsettings member_max_width 0 end
-  xyz 462 516 2000
+  xyz 415 325 2000
 end
 note 130434 "SystemError: should by a mdtError of type of system error ?
 WW: how to mix in a container ?"
   xyzwh 55 538 2000 349 81
-classcanvas 130562 class_ref 2064258 // mdtAbstractError
-  classdiagramsettings member_max_width 0 end
-  xyz 454 28 2005
-end
 classcanvas 130690 class_ref 2035458 // QTextCodec
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 697 405 2010
 end
-classcanvas 130946 class_ref 2065282 // mdtEmptyError
-  classdiagramsettings member_max_width 0 end
-  xyz 239 27 2005
-end
 note 131074 "mdtError , mdtWarning, etc... ?
-Think: mdtOptional: how to differientiate hasError() if it is just a warning ? "
-  xyzwh 634 511 2005 203 185
-relationcanvas 130178 relation_ref 2389890 // <directional composition>
-  from ref 128002 z 2001 to ref 129922
-  role_a_pos 499 489 3000 no_role_b
-  multiplicity_a_pos 457 489 3000 no_multiplicity_b
+Think: mdtOptional: how to differientiate hasError() if it is just a warning ? 
+"
+  xyzwh 461 474 2005 203 185
+classcanvas 131330 class_ref 2112002 // mdtErrorPrivateBase
+  classdiagramsettings member_max_width 0 end
+  xyz 356 97 2000
+end
+note 131970 "Static functions:
+ - fromQsqlError
+ - rom QxyFileWeror ?
+ - ...
+
+OR: set eror from above types (in a separated file, dependency problemm)
+
+OR: #ifdef, simplement.. Mais, requier #include <xy> avant..."
+  xyzwh 63 291 2000 323 167
+classcanvas 132098 class_ref 2125186 // QSharedData
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 453 12 3005
+end
+relationcanvas 131458 relation_ref 2424578 // <generalisation>
+  from ref 129922 z 2001 to ref 131330
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131586 relation_ref 2424706 // <directional composition>
+  decenter_begin 200
+  from ref 128002 z 2001 stereotype "<<*>>" xyz 286 149 3000 to ref 131330
+  role_a_pos 338 128 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132226 relation_ref 2437762 // <generalisation>
+  from ref 131330 z 3006 to ref 132098
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end

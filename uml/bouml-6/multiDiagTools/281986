@@ -1,6 +1,6 @@
 format 210
 "mdtcsv" // mdtcsv
-  revision 4
+  revision 5
   modified_by 2 "philippe"
   // class settings
   
@@ -380,6 +380,37 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
+
+      operation 3229570 "mdtCsvRecord"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "record" type class_ref 2105474 // mdtDataRecord
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3229698 "toDataRecord"
+	public return_type class_ref 2105474 // mdtDataRecord
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     class 2050562 "mdtCsvData"
@@ -529,7 +560,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     classdiagram 1701506 "mdtCsvParser"
@@ -1243,6 +1273,5 @@ ${inlines}
       mysql_decl ""
       
     end
-
   end
 end

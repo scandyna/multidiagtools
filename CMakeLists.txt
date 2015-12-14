@@ -117,6 +117,8 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtcsv")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtdatabase")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtdevice")
+include_directories("${PROJECT_SOURCE_DIR}/src/mdterror")
+include_directories("${PROJECT_SOURCE_DIR}/src/mdterrorgui")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtport")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdttools")
@@ -130,6 +132,8 @@ include_directories("${CMAKE_BINARY_DIR}/src")
 include_directories("${CMAKE_BINARY_DIR}/src/mdtcsv")
 include_directories("${CMAKE_BINARY_DIR}/src/mdtdatabase")
 include_directories("${CMAKE_BINARY_DIR}/src/mdtdevice")
+include_directories("${CMAKE_BINARY_DIR}/src/mdterror")
+include_directories("${CMAKE_BINARY_DIR}/src/mdterrorgui")
 include_directories("${CMAKE_BINARY_DIR}/src/mdtport")
 include_directories("${CMAKE_BINARY_DIR}/src/mdtserialport")
 include_directories("${CMAKE_BINARY_DIR}/src/mdttools")
@@ -169,6 +173,10 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutils")
 
 # * mdtcsv *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtcsv")
+
+# * mdterror and mdterrorgui *
+add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdterror")
+add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdterrorgui")
 
 # * mdtutilsgui *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")

@@ -1,6 +1,6 @@
 format 210
 "mdtutils" // mdtutils
-  revision 157
+  revision 158
   modified_by 2 "philippe"
   // class settings
   
@@ -7883,6 +7883,57 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 2434306 // <generalisation>
 	  b parent class_ref 1545218 // mdtAbstractWait
+      end
+    end
+  end
+
+  classview 867330 "data"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 1749378 "record"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2105474 "mdtDataRecord"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 2151554 "columnDataList"
+	public type class_ref 161154 // QVariant
+	multiplicity "*"
+	stereotype "vector"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
   end

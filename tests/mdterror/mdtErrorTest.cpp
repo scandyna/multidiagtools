@@ -1,0 +1,191 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
+#include "mdtErrorTest.h"
+#include "mdtApplication.h"
+#include "mdtErrorV2.h"
+
+// #include <cstdint>
+// #include <vector>
+// #include <string>
+// #include <memory>
+// #include <typeinfo>     // typeid
+// #include <type_traits>  // std::is_same
+// 
+// #include <QVariant>
+
+#include <QDebug>
+
+void mdtErrorTest::sandbox()
+{
+  mdtErrorV2 err1;
+
+  err1.setError<int>(1, "1", mdtErrorV2::Error);
+  qDebug() << "err1: " << err1.error<int>();
+  
+  qDebug() << "sizeof(mdtErrorV2): " << sizeof(mdtErrorV2);
+}
+
+void mdtErrorTest::constructAndCopyTest()
+{
+  /*
+   * Default constructed
+   */
+  mdtErrorV2 error1;
+  QVERIFY(error1.isNull());
+  QVERIFY(error1.level() == mdtErrorV2::NoError);
+  QVERIFY(error1.text().isEmpty());
+  // Calling error() is allowed on null mdtError
+  QCOMPARE(error1.error<int>(), 0);
+  
+  /*
+   * Copy construct
+   */
+  // Set some attributes to error1
+  error1.setError<int>(1, "error1", mdtErrorV2::Error);
+  QVERIFY(!error1.isNull());
+  QCOMPARE(error1.error<int>(), 1);
+  QCOMPARE(error1.text(), QString("error1"));
+  QVERIFY(error1.level() == mdtErrorV2::Error);
+  // Construct error2 on base of error1
+  mdtErrorV2 error2(error1);
+  QVERIFY(!error2.isNull());
+  QCOMPARE(error2.error<int>(), 1);
+  QCOMPARE(error2.text(), QString("error1"));
+  QVERIFY(error2.level() == mdtErrorV2::Error);
+  /*
+   * COW test
+   */
+  // Set error2
+  error2.setError<int>(2, "error2", mdtErrorV2::Info);
+  // Check error2
+  QVERIFY(!error2.isNull());
+  QCOMPARE(error2.error<int>(), 2);
+  QCOMPARE(error2.text(), QString("error2"));
+  QVERIFY(error2.level() == mdtErrorV2::Info);
+  // Check that error1 was not modified
+  QVERIFY(!error1.isNull());
+  QCOMPARE(error1.error<int>(), 1);
+  QCOMPARE(error1.text(), QString("error1"));
+  QVERIFY(error1.level() == mdtErrorV2::Error);
+  // Set error2 to a other error type
+  error2.setError<double>(2.1, "error2.1", mdtErrorV2::Warning);
+  // Check error2
+  QVERIFY(!error2.isNull());
+  QCOMPARE(error2.error<double>(), 2.1);
+  QCOMPARE(error2.text(), QString("error2.1"));
+  QVERIFY(error2.level() == mdtErrorV2::Warning);
+  // Check that error1 was not modified
+  QVERIFY(!error1.isNull());
+  QCOMPARE(error1.error<int>(), 1);
+  QCOMPARE(error1.text(), QString("error1"));
+  QVERIFY(error1.level() == mdtErrorV2::Error);
+  /*
+   * Check many copies of error
+   */
+  // Set error1
+  error1.setError<int>(5, "shared error 5", mdtErrorV2::Info);
+  // Copy construct 2 errors
+  mdtErrorV2 error3(error1);
+  mdtErrorV2 error4(error1);
+  // Check error3
+  QVERIFY(!error3.isNull());
+  QCOMPARE(error3.error<int>(), 5);
+  QCOMPARE(error3.text(), QString("shared error 5"));
+  QVERIFY(error3.level() == mdtErrorV2::Info);
+  // Check error4
+  QVERIFY(!error4.isNull());
+  QCOMPARE(error4.error<int>(), 5);
+  QCOMPARE(error4.text(), QString("shared error 5"));
+  QVERIFY(error4.level() == mdtErrorV2::Info);
+  // Set error3
+  error3.setError<double>(3.0, "error3", mdtErrorV2::Warning);
+  // Check error3
+  QVERIFY(!error3.isNull());
+  QCOMPARE(error3.error<double>(), 3.0);
+  QCOMPARE(error3.text(), QString("error3"));
+  QVERIFY(error3.level() == mdtErrorV2::Warning);
+  // Check that error1 is untouched
+  QVERIFY(!error1.isNull());
+  QCOMPARE(error1.error<int>(), 5);
+  QCOMPARE(error1.text(), QString("shared error 5"));
+  QVERIFY(error1.level() == mdtErrorV2::Info);
+  // Check that error4 is untouched
+  QVERIFY(!error4.isNull());
+  QCOMPARE(error4.error<int>(), 5);
+  QCOMPARE(error4.text(), QString("shared error 5"));
+  QVERIFY(error4.level() == mdtErrorV2::Info);
+  // Clear error1
+  error1.clear();
+  // Check error1
+  QVERIFY(error1.isNull());
+  // Check that error3 is untouched
+  QVERIFY(!error3.isNull());
+  QCOMPARE(error3.error<double>(), 3.0);
+  QCOMPARE(error3.text(), QString("error3"));
+  QVERIFY(error3.level() == mdtErrorV2::Warning);
+  // Check that error4 is untouched
+  QVERIFY(!error4.isNull());
+  QCOMPARE(error4.error<int>(), 5);
+  QCOMPARE(error4.text(), QString("shared error 5"));
+  QVERIFY(error4.level() == mdtErrorV2::Info);
+
+  /// \todo Also check with different error types
+  /*
+   * Copy assignment
+   */
+  // Set error1
+  qDebug() << "Setting error1 ...";
+  error1.setError<int>(1, "error1", mdtErrorV2::Error);
+  // Assign error1 to error2
+  qDebug() << "error2 = error1";
+  error2 = error1;
+  // Check error3
+  qDebug() << "Checking error2 ...";
+  QVERIFY(!error2.isNull());
+  QCOMPARE(error2.error<int>(), 1);
+  QCOMPARE(error2.text(), QString("error1"));
+  QVERIFY(error2.level() == mdtErrorV2::Error);
+
+
+  
+  
+  qDebug() << "END";
+}
+
+void mdtErrorTest::simpleTest()
+{
+
+}
+
+/*
+ * Main
+ */
+int main(int argc, char **argv)
+{
+  mdtApplication app(argc, argv);
+  mdtErrorTest errorTest;
+
+  if(!app.init()){
+    return 1;
+  }
+
+  return QTest::qExec(&errorTest, argc, argv);
+}

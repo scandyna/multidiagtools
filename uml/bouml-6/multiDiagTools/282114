@@ -1,6 +1,6 @@
 format 210
 "mdterror" // mdterror
-  revision 2
+  revision 5
   modified_by 2 "philippe"
   // class settings
   
@@ -92,7 +92,7 @@ ${inlines}
 	
       end
 
-      class 2064514 "~CInternalBase"
+      class 2064514 "CInternalBase"
 	abstract visibility private 
 	cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -136,7 +136,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 2406402 // m_internalBasePtr (<directional composition>)
-	  b parent class_ref 2064514 // ~CInternalBase
+	  b parent class_ref 2064514 // CInternalBase
       end
 
       class 2064642 "Cinjected"
@@ -161,7 +161,7 @@ ${inlines}
 	    a public
 	      cpp default "${type}"
 	      classrelation_ref 2406530 // <generalisation>
-	    b parent class_ref 2064514 // ~CInternalBase
+	    b parent class_ref 2064514 // CInternalBase
 	end
 
 	attribute 2131714 "m_injected"
@@ -216,9 +216,6 @@ ${inlines}
 
     class 182402 "mdtError"
       visibility package 
-      nformals 1
-      formal name "T" type "class" explicit_default_value "int8_t"
-        explicit_extends ""
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
 ${inlines}
@@ -238,18 +235,6 @@ ${inlines}
 	  b parent class_ref 209538 // mdtErrorOut
       end
 
-      attribute 230274 "Error"
-	private explicit_type "T"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
       operation 3193090 "mdtError"
 	cpp_inline public explicit_return_type ""
 	nparams 0
@@ -265,15 +250,15 @@ ${inlines}
 	
       end
 
-      operation 278658 "mdtError"
-	cpp_inline public explicit_return_type ""
-	nparams 3
-	  param in name "number" explicit_type "int"
-	  param in name "text" type class_ref 161026 // QString
-	  param in name "level" explicit_type "level_t"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+      operation 3236738 "setError"
+	stereotype "T"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "T" explicit_type "e"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
   ${body}}
 "
 	
@@ -282,60 +267,14 @@ ${inlines}
 	
       end
 
-      operation 278786 "setSystemError"
-	cpp_inline public explicit_return_type "void"
-	nparams 2
-	  param in name "number" explicit_type "int"
-	  param in name "text" type class_ref 161026 // QString
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 278914 "setSource"
-	cpp_inline public explicit_return_type "void"
-	nparams 4
-	  param in name "fileName" type class_ref 161026 // QString
-	  param in name "fileLine" explicit_type "int"
-	  param in name "className" type class_ref 161026 // QString
-	  param in name "function" type class_ref 161026 // QString
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, const ${t2} & ${p2}${v2}, const ${t3} & ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 279042 "commit"
-	cpp_inline public explicit_return_type "void"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 279170 "error"
+      operation 3236482 "error"
+	stereotype "T"
 	cpp_inline public explicit_return_type "T"
 	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
   ${body}}
 "
 	
@@ -372,8 +311,267 @@ ${inlines}
 	
       end
 
-      operation 279554 "systemNumber"
-	cpp_inline public explicit_return_type "int"
+      classrelation 2441090 // p (<directional composition>)
+	relation 2424706 *-->
+	  stereotype "*"
+	  a role_name "p" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2441090 // p (<directional composition>)
+	  b parent class_ref 2112002 // mdtErrorPrivateBase
+      end
+    end
+
+    class 2112002 "mdtErrorPrivateBase"
+      visibility protected 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 3236866 "mdtErrorPrivateBase"
+	cpp_virtual public explicit_return_type ""
+	nparams 1
+	  param in name "tid" explicit_type "std::type_index"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
+
+      operation 3236610 "~mdtErrorPrivateBase"
+	cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
+
+      attribute 2158082 "userErrorType"
+	public explicit_type "std::type_index"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 236930 "level"
+	public explicit_type "Level"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 230402 "text"
+	public type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 2454146 // <generalisation>
+	relation 2437762 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2454146 // <generalisation>
+	  b parent class_ref 2125186 // QSharedData
+      end
+    end
+
+    class 2064130 "mdtErrorPrivate"
+      visibility protected 
+      nformals 1
+      formal name "T" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 230274 "error"
+	public explicit_type "T"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 2440962 // <generalisation>
+	relation 2424578 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2440962 // <generalisation>
+	  b parent class_ref 2112002 // mdtErrorPrivateBase
+      end
+
+      operation 3243394 "mdtErrorPrivate"
+	cpp_inline public explicit_return_type ""
+	nparams 1
+	  param in name "e" explicit_type "T"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 1755906 "mdtErrorOLD"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2112130 "mdtErrorOld"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 278658 "mdtError"
+	cpp_inline public explicit_return_type ""
+	nparams 3
+	  param in name "number" explicit_type "int"
+	  param in name "text" type class_ref 161026 // QString
+	  param in name "level" explicit_type "level_t"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 237186 "systemText"
+	public type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 251906 "fileLine"
+	public explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 251778 "fileName"
+	public type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 251650 "functionName"
+	public type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 237058 "systemNumber"
+	public explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 278786 "setSystemError"
+	cpp_inline public explicit_return_type "void"
+	nparams 2
+	  param in name "number" explicit_type "int"
+	  param in name "text" type class_ref 161026 // QString
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 279170 "error"
+	cpp_inline public explicit_return_type "T"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -388,6 +586,20 @@ ${inlines}
 
       operation 279682 "systemText"
 	cpp_inline public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 279042 "commit"
+	cpp_inline public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -428,7 +640,7 @@ ${inlines}
 	
       end
 
-      operation 280066 "fileLine"
+      operation 279554 "systemNumber"
 	cpp_inline public explicit_return_type "int"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -442,13 +654,18 @@ ${inlines}
 	
       end
 
-      classrelation 2406274 // pvData (<directional composition>)
-	relation 2389890 *-->
-	  a role_name "pvData" multiplicity "0..1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+      operation 280066 "fileLine"
+	cpp_inline public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	    classrelation_ref 2406274 // pvData (<directional composition>)
-	  b parent class_ref 2064130 // mdtErrorData
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
       operation 3193218 "logText"
@@ -465,104 +682,23 @@ ${inlines}
 	
 	
       end
-    end
 
-    class 2064130 "mdtErrorData"
-      visibility protected 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
+      operation 278914 "setSource"
+	cpp_inline public explicit_return_type "void"
+	nparams 4
+	  param in name "fileName" type class_ref 161026 // QString
+	  param in name "fileLine" explicit_type "int"
+	  param in name "className" type class_ref 161026 // QString
+	  param in name "function" type class_ref 161026 // QString
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, const ${t2} & ${p2}${v2}, const ${t3} & ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
 "
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 236930 "level"
-	public explicit_type "Level"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
 "
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 230402 "text"
-	public type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 237058 "systemNumber"
-	public explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 237186 "systemText"
-	public type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 251650 "functionName"
-	public type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 251778 "fileName"
-	public type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 251906 "fileLine"
-	public explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
+	
+	
+	
+	
       end
     end
 
@@ -863,22 +999,6 @@ ${inlines}
       end
     end
 
-    class 2064258 "mdtAbstractError"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
     class 2064770 "CAnyProperty"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -1077,21 +1197,6 @@ ${members}};
       end
     end
 
-    class 2065282 "mdtEmptyError"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
   end
 
   classview 854018 "mdtErrorDialog"

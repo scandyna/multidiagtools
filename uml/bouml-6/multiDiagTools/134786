@@ -1,6 +1,6 @@
 format 210
 "Qt" // Qt
-  revision 107
+  revision 108
   modified_by 2 "philippe"
   // class settings
   
@@ -6048,6 +6048,78 @@ ${inlines}
 	
 	
       end
+    end
+
+    classdiagram 1762434 "QSharedData"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2125186 "QSharedData"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 3249922 "QSharedData"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3250050 "QSharedData"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "other" explicit_type "QSharedData"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 1762562 "QExplicitlySharedDataPointer"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2125314 "QExplicitlySharedDataPointer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 

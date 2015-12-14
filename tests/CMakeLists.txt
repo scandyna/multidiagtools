@@ -19,6 +19,9 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/mdtutils")
 # * mdtcsv *
 add_subdirectory("${PROJECT_SOURCE_DIR}/mdtcsv")
 
+# * mdterror *
+add_subdirectory("${PROJECT_SOURCE_DIR}/mdterror")
+
 # * mdtutilsgui *
 add_subdirectory("${PROJECT_SOURCE_DIR}/mdtutilsgui")
 

@@ -204,7 +204,7 @@ void mdtCsvTest::fileGeneratorSettingsDialogTest()
   /*
    * Play
    */
-  dialog.exec();
+//   dialog.exec();
 }
 
 void mdtCsvTest::recordTest()

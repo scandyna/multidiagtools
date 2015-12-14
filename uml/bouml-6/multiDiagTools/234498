@@ -1,6 +1,6 @@
 format 210
 "mdtdatabase" // mdtdatabase
-  revision 82
+  revision 83
   modified_by 2 "philippe"
   // class settings
   
@@ -3034,6 +3034,22 @@ ${inlines}
 	
       end
 
+      operation 3229442 "mdtSqlRecord"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "record" type class_ref 2105474 // mdtDataRecord
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 1844482 "~mdtSqlRecord"
 	public explicit_return_type ""
 	nparams 0
@@ -3074,6 +3090,21 @@ ${inlines}
 "
 	    classrelation_ref 1329794 // pvLastError (<directional composition>)
 	  b parent class_ref 182402 // mdtError
+      end
+
+      operation 3229826 "toDataRecord"
+	public return_type class_ref 2105474 // mdtDataRecord
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
       operation 1845122 "lastError"

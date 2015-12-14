@@ -2,35 +2,35 @@ format 210
 
 classcanvas 128002 class_ref 2064386 // C
   classdiagramsettings member_max_width 0 end
-  xyz 75.8 50.6 2000
+  xyz 76.3 50.2 2000
 end
-classcanvas 128130 class_ref 2064514 // ~CInternalBase
+classcanvas 128130 class_ref 2064514 // CInternalBase
   classdiagramsettings member_max_width 0 end
-  xyz 573.2 59 2000
+  xyz 573.7 59 2000
 end
 classcanvas 128514 class_ref 2064642 // Cinjected
   classdiagramsettings member_max_width 0 end
-  xyz 546.8 253.2 2006
+  xyz 546.2 253.8 2006
 end
 classcanvas 129026 class_ref 2064770 // CAnyProperty
   classdiagramsettings member_max_width 0 end
-  xyz 29 454.2 2000
+  xyz 29 454.8 2000
 end
 classcanvas 129154 class_ref 2064898 // CAnyHandlerBase
   classdiagramsettings member_max_width 0 end
-  xyz 734 506.2 2000
+  xyz 734 506 2000
 end
 relationcanvas 128258 relation_ref 2390018 // <directional composition>
   decenter_begin 361
   decenter_end 200
-  from ref 128002 z 2001 stereotype "<<shared_ptr>>" xyz 379.5 77 3000 to ref 128130
-  role_a_pos 452 49 3000 no_role_b
+  from ref 128002 z 2001 stereotype "<<shared_ptr>>" xyz 379 77 3000 to ref 128130
+  role_a_pos 451 50 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 line 128386 ---+ decenter_begin 800 decenter_end 891
   from ref 128130 z 2001 to ref 128002
 line 128642 ---+ geometry VHr decenter_begin 800 decenter_end 352
-  from ref 128514 z 2007 to point 145 346
+  from ref 128514 z 2007 to point 146 346
   line 128770 z 2007 to ref 128002
 relationcanvas 128898 relation_ref 2390146 // <generalisation>
   from ref 128514 z 2007 to ref 128130
@@ -40,7 +40,7 @@ end
 relationcanvas 129282 relation_ref 2390274 // <directional composition>
   decenter_begin 889
   decenter_end 330
-  from ref 129026 z 2001 stereotype "<<map<TypeInfo, shared_ptr>>>" xyz 504.5 563.5 3000 to ref 129154
+  from ref 129026 z 2001 stereotype "<<map<TypeInfo, shared_ptr>>>" xyz 504 563 3000 to ref 129154
   role_a_pos 611 537 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
