@@ -19,3 +19,38 @@
  **
  ****************************************************************************/
 #include "mdtErrorDialog.h"
+
+mdtErrorDialog::mdtErrorDialog(QWidget* parent)
+ : QMessageBox(parent)
+{
+}
+
+mdtErrorDialog::mdtErrorDialog(const mdtErrorV2 & error, QWidget* parent)
+ : QMessageBox(parent)
+{
+  setError(error);
+}
+
+void mdtErrorDialog::setError(const mdtErrorV2 & error)
+{
+  setIconFromLevel(error.level());
+  setText(error.text());
+}
+
+void mdtErrorDialog::setIconFromLevel(mdtErrorV2::Level level)
+{
+  switch(level){
+    case mdtErrorV2::Error:
+      setIcon(QMessageBox::Critical);
+      break;
+    case mdtErrorV2::Warning:
+      setIcon(QMessageBox::Warning);
+      break;
+    case mdtErrorV2::Info:
+      setIcon(QMessageBox::Information);
+      break;
+    case mdtErrorV2::NoError:
+      setIcon(QMessageBox::NoIcon);
+      break;
+  }
+}

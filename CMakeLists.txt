@@ -223,6 +223,8 @@ add_test (mdtAlgorithmsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtalgori
 add_test (mdtMathTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtmathtest)
 # mdtErrorTest
 add_test (mdtErrorTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdterrortest)
+# mdtErrorGuiTest
+add_test (mdtErrorGuiTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdterrorguitest)
 # mdtBufferTest
 add_test (mdtBufferTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtbuffertest)
 # mdtFrameTest

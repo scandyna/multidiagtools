@@ -27,10 +27,11 @@
 #include <type_traits>  // std::is_same
 #include <typeindex>
 #include <typeinfo>
+#include <vector>
 
 #include <QDebug>
 
-/// \todo voir https://github.com/cheinan/any_config
+class mdtErrorV2;
 
 /*! \internal Generic error
  */
@@ -47,36 +48,24 @@ struct mdtErrorPrivateBase : public QSharedData
   mdtErrorPrivateBase(const std::type_info & ti)
    : userErrorType(ti)
    {
-     qDebug() << "mdtErrorPrivateBase() , ref: " << ref;
+     qDebug() << "mdtErrorPrivateBase()";
    }
-   
-   mdtErrorPrivateBase(const mdtErrorPrivateBase & other) = delete;
-//     : QSharedData(other),
-//       level(other.level),
-//       userErrorType(other.userErrorType),
-//       text(other.text)
-//    {
-//      qDebug() << "mdtErrorPrivateBase(other), ref: " << ref;
-//    }
 
+   mdtErrorPrivateBase(const mdtErrorPrivateBase & other) = delete;
    mdtErrorPrivateBase() = delete;
-   
    mdtErrorPrivateBase & operator=(const mdtErrorPrivateBase &) = delete;
    mdtErrorPrivateBase(mdtErrorPrivateBase &&) = delete;
 
    // Destructor must be virtual (else mdtErrorPrivate::~mdtErrorPrivate() is never called)
    virtual ~mdtErrorPrivateBase()
    {
-     qDebug() << "~mdtErrorPrivateBase() , ref: " << ref << " , text: " << text;
+     qDebug() << "~mdtErrorPrivateBase()";
    }
-
-  /*! \brief Destructor
-   */
-  ///virtual ~mdtErrorPrivateBase() {}
 
   short level;
   std::type_index userErrorType;
   QString text;
+  std::vector<mdtErrorV2> pvErrorStack;
 };
 
 /*! \internal User defined error
@@ -90,18 +79,17 @@ struct mdtErrorPrivate : public mdtErrorPrivateBase
   {
     qDebug() << "mdtErrorPrivate()";
   }
-  
+
   ~mdtErrorPrivate()
   {
     qDebug() << "~mdtErrorPrivate()";
   }
-  
+
   mdtErrorPrivate() = delete;
   mdtErrorPrivate(const mdtErrorPrivate &) = delete;
   mdtErrorPrivate & operator=(const mdtErrorPrivate &) = delete;
   mdtErrorPrivate(mdtErrorPrivate &&) = delete;
-  
-  
+
   T error;
 };
 
@@ -111,6 +99,8 @@ struct mdtErrorPrivate : public mdtErrorPrivateBase
  * mdtError contains only a pointer to (implicitly) shared data.
  *  As long as no error was set, no more memory is allocated.
  *  This allows to store a mdtError object with a few overhead.
+ *
+ * 
  */
 class mdtErrorV2
 {
@@ -134,6 +124,8 @@ class mdtErrorV2
    */
   // Copy construct is handled by QExplicitlySharedDataPointer
   mdtErrorV2(const mdtErrorV2 &) = default;
+  
+  ///mdtErrorV2(mdtErrorV2 &&) = default;
 
   /*! \brief Check if error is null
    *
@@ -211,6 +203,18 @@ class mdtErrorV2
    */
   QString text() const;
 
+  /*! \brief Stack given error
+   *
+   * \pre this error and given error must not be null
+   */
+  void stackError(const mdtErrorV2 & error);
+
+  /*! \brief Get error stack
+   *
+   * \note The returned stack is rebuilt at each call.
+   */
+  std::vector<mdtErrorV2> getErrorStack() const;
+
  private:
 
   /*! \brief Init shared part
@@ -221,21 +225,10 @@ class mdtErrorV2
     static_assert(std::is_default_constructible<T>::value, "T must be default constructible");
     static_assert(std::is_copy_constructible<T>::value, "T must be copy constructible");
 
-//     if(pvShared){
-//       qDebug() << "initShared() , ref: " << pvShared->ref << " , detach";
-//       pvShared.detach();
-//     }else{
-//       qDebug() << "initShared() , new";
-//       pvShared = new mdtErrorPrivate<T>(userDefinedError);
-//     }
-
     if(pvShared){
-      qDebug() << "initShared() , ref: " << pvShared->ref << " , reset";
       pvShared.reset();
     }
-    qDebug() << "initShared() , new";
     pvShared = new mdtErrorPrivate<T>(userDefinedError);
-
   }
 
   QExplicitlySharedDataPointer<mdtErrorPrivateBase> pvShared;

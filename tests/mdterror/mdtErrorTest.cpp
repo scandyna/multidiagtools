@@ -22,26 +22,7 @@
 #include "mdtApplication.h"
 #include "mdtErrorV2.h"
 
-// #include <cstdint>
-// #include <vector>
-// #include <string>
-// #include <memory>
-// #include <typeinfo>     // typeid
-// #include <type_traits>  // std::is_same
-// 
-// #include <QVariant>
-
 #include <QDebug>
-
-void mdtErrorTest::sandbox()
-{
-  mdtErrorV2 err1;
-
-  err1.setError<int>(1, "1", mdtErrorV2::Error);
-  qDebug() << "err1: " << err1.error<int>();
-  
-  qDebug() << "sizeof(mdtErrorV2): " << sizeof(mdtErrorV2);
-}
 
 void mdtErrorTest::constructAndCopyTest()
 {
@@ -54,7 +35,6 @@ void mdtErrorTest::constructAndCopyTest()
   QVERIFY(error1.text().isEmpty());
   // Calling error() is allowed on null mdtError
   QCOMPARE(error1.error<int>(), 0);
-  
   /*
    * Copy construct
    */
@@ -146,34 +126,133 @@ void mdtErrorTest::constructAndCopyTest()
   QCOMPARE(error4.error<int>(), 5);
   QCOMPARE(error4.text(), QString("shared error 5"));
   QVERIFY(error4.level() == mdtErrorV2::Info);
-
-  /// \todo Also check with different error types
   /*
    * Copy assignment
    */
   // Set error1
-  qDebug() << "Setting error1 ...";
   error1.setError<int>(1, "error1", mdtErrorV2::Error);
   // Assign error1 to error2
-  qDebug() << "error2 = error1";
   error2 = error1;
-  // Check error3
-  qDebug() << "Checking error2 ...";
+  // Check error2
   QVERIFY(!error2.isNull());
   QCOMPARE(error2.error<int>(), 1);
   QCOMPARE(error2.text(), QString("error1"));
   QVERIFY(error2.level() == mdtErrorV2::Error);
-
-
-  
-  
-  qDebug() << "END";
+  // Set error1
+  error1.setError<double>(1.1, "error1.1", mdtErrorV2::Warning);
+  // Check error1
+  QVERIFY(!error1.isNull());
+  QCOMPARE(error1.error<double>(), 1.1);
+  QCOMPARE(error1.text(), QString("error1.1"));
+  QVERIFY(error1.level() == mdtErrorV2::Warning);
+  // Check that error2 is untouched
+  QVERIFY(!error2.isNull());
+  QCOMPARE(error2.error<int>(), 1);
+  QCOMPARE(error2.text(), QString("error1"));
+  QVERIFY(error2.level() == mdtErrorV2::Error);
+  /*
+   * Move
+   */
+  /// \todo Implement once understanding move..
+  qDebug() << "Move ...";
+  error2 = std::move(error1);
+  qDebug() << "Done";
+  qDebug() << "swap ...";
+  std::swap(error1, error2);
+  qDebug() << "Done";
 }
 
-void mdtErrorTest::simpleTest()
+void mdtErrorTest::errorStackTest()
 {
+  std::vector<mdtErrorV2> errorStack;
+  /*
+   * Some check errors with empty stack, etc...
+   */
+  mdtErrorV2 error1;
+  mdtErrorV2 error2;
+  // Try to get stack from null error
+  QVERIFY(error1.isNull());
+  QVERIFY(error2.isNull());
+  errorStack = error1.getErrorStack();
+  QVERIFY(errorStack.empty());
+  errorStack = error2.getErrorStack();
+  QVERIFY(errorStack.empty());
+  // Setup errors
+  error1.setError("Error 1", mdtErrorV2::Error);
+  error2.setError("Error 2", mdtErrorV2::Info);
+  // Try to get error stack from error that does not have stack
+  errorStack = error1.getErrorStack();
+  QVERIFY(errorStack.empty());
+  errorStack = error2.getErrorStack();
+  QVERIFY(errorStack.empty());
+  /*
+   * Stack error1 -> error2 :
+   * error2
+   *   |-[error1]
+   */
+  error2.stackError(error1);
+  errorStack = error2.getErrorStack();
+  QCOMPARE(errorStack.size(), (size_t)1);
+  /*
+   * Immagine som senario:
+   * User wants to open a file, using a software with some GUI.
+   * The software calls some helper function,
+   * witch also call a system function.
+   * The system function fails (because of missing write acces, f.ex.)
+   * and also returns a error with a system specific (and technical) text.
+   * Then, the software helper function automatically fails,
+   * and simply gets error returned by the system function.
+   * Finally, the software generates a error with a more user friendly message,
+   * but also some back trace of what technically failed
+   */
+  mdtErrorV2 systemFunctionError;
+  mdtErrorV2 systemFunctionApiError;
+  mdtErrorV2 helperFunctionError;
+  mdtErrorV2 guiError;
 
+  // First, system API function fails
+  systemFunctionApiError.setError<int>(-1, "write access error", mdtErrorV2::Error);
+  // Then, system function generates a error with some details and stacks API error
+  systemFunctionError.setError<int>(-1, "Could not open file 'fake.txt'", mdtErrorV2::Error);
+  systemFunctionError.stackError(systemFunctionApiError);
+  errorStack = systemFunctionError.getErrorStack();
+  QCOMPARE(errorStack.size(), (size_t)1);
+  QCOMPARE(errorStack.at(0).error<int>(), -1);
+  QCOMPARE(errorStack.at(0).text(), QString("write access error"));
+  // Helper function also fails, but does not provide more informations
+  helperFunctionError = systemFunctionError;
+  errorStack = helperFunctionError.getErrorStack();
+  QCOMPARE(errorStack.size(), (size_t)1);
+  QCOMPARE(errorStack.at(0).error<int>(), -1);
+  QCOMPARE(errorStack.at(0).text(), QString("write access error"));
+  // Finally, the GUI function makes some checks, and generates a error with user friendly message
+  auto errorCode = helperFunctionError.error<int>();
+  switch(errorCode){
+    case -1:
+      guiError.setError("Could not open document 'fake.txt' because of missing write access", mdtErrorV2::Error);
+      break;
+    case -2:
+      guiError.setError("Could not open document 'fake.txt' because it allready exists", mdtErrorV2::Error);
+      break;
+  }
+  guiError.stackError(helperFunctionError);
+  // The guiError is also displayed (f.ex. with a mdtErrorDialog)
+  QCOMPARE(guiError.text(), QString("Could not open document 'fake.txt' because of missing write access"));
+  errorStack = guiError.getErrorStack();
+  QCOMPARE(errorStack.size(), (size_t)2);
+  QCOMPARE(errorStack.at(0).error<int>(), -1);
+  QCOMPARE(errorStack.at(0).text(), QString("Could not open file 'fake.txt'"));
+  QCOMPARE(errorStack.at(1).error<int>(), -1);
+  QCOMPARE(errorStack.at(1).text(), QString("write access error"));
+
+
+  
+  auto v = guiError.getErrorStack();
+  for(const auto & e : v){
+    qDebug() << e.text();
+  }
 }
+
 
 /*
  * Main

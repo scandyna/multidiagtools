@@ -29,6 +29,7 @@ class mdtErrorGuiTest : public mdtTest
 
  private slots:
 
+  void errorDialogTest();
 };
 
 #endif // #ifndef MDT_ERROR_GUI_TEST_H

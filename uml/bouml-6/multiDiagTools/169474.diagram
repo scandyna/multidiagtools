@@ -45,6 +45,11 @@ classcanvas 132098 class_ref 2125186 // QSharedData
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 453 12 3005
 end
+note 132354 "macro mdtErrorNew 
+#define mdtErrorNew(..)  mdtError(__LINE__, __FILE_, ...)
+Call: auto error = mdtErrorNew
+Note: name: mdtErrorCreate(..)"
+  xyzwh -1 9 2000 451 97
 relationcanvas 131458 relation_ref 2424578 // <generalisation>
   from ref 129922 z 2001 to ref 131330
   no_role_a no_role_b

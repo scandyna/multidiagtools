@@ -19,19 +19,10 @@
  **
  ****************************************************************************/
 #include "mdtErrorV2.h"
+#include <algorithm>
+#include <iterator>
 
-
-
-/*! \internal mdtError private data
- */
-// struct mdtErrorPrivateData
-// {
-//   QString text;
-// };
-
-/*
- * mdtError implementation
- */
+#include <QDebug>
 
 mdtErrorV2::mdtErrorV2()
 {
@@ -58,3 +49,41 @@ QString mdtErrorV2::text() const
   return pvShared->text;
 }
 
+void mdtErrorV2::stackError(const mdtErrorV2 & error)
+{
+  Q_ASSERT(!isNull());
+  Q_ASSERT(!error.isNull());
+//   if(!pvShared){
+//     initShared<mdtGenericError>(mdtGenericError());
+//   }
+  /*
+   * We push errors back (as if it was a queue),
+   * Then, when getting them back, we do is reverse order
+   */
+  Q_ASSERT(pvShared);
+  // Copy given error's stack if available
+  if(error.pvShared){
+    auto first = error.pvShared->pvErrorStack.cbegin();
+    auto last = error.pvShared->pvErrorStack.cend();
+    std::copy(first, last, std::back_inserter(pvShared->pvErrorStack));
+  }
+  // Push error itself at end
+  pvShared->pvErrorStack.push_back(error);
+}
+
+std::vector<mdtErrorV2> mdtErrorV2::getErrorStack() const
+{
+  std::vector<mdtErrorV2> stack;
+
+  if(!pvShared){
+    return stack;
+  }
+  if(pvShared->pvErrorStack.empty()){
+    return stack;
+  }
+  auto first = pvShared->pvErrorStack.cbegin();
+  auto last = pvShared->pvErrorStack.cend();
+  std::reverse_copy(first, last, std::back_inserter(stack));
+
+  return stack;
+}

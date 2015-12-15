@@ -20,6 +20,21 @@
  ****************************************************************************/
 #include "mdtErrorGuiTest.h"
 #include "mdtApplication.h"
+#include "mdtErrorDialog.h"
+
+void mdtErrorGuiTest::errorDialogTest()
+{
+  mdtErrorDialog dialog;
+  mdtErrorV2 error;
+
+  error.setError<int>(1, "Some error", mdtErrorV2::Error);
+  dialog.setError(error);
+
+  /*
+   * Play
+   */
+  dialog.exec();
+}
 
 
 /*

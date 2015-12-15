@@ -7,4 +7,9 @@ end
 note 128130 "Note: use a thread pool for logging to file ?
 Or, see some asnyc, or future ???"
   xyzwh 460.5 81.5 2000 385 85
+note 128258 "See for a formatter.."
+  xyzwh 472 228 2000 217 49
+note 128386 "Create a central errorOut witch is thread safem, and then dispatches to others (std out, file) regarding flags.
+Note: also queue every thing and delay it ? (file and std err/out) ??"
+  xyzwh 485 299 2000 335 141
 end

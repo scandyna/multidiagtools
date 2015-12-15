@@ -21,8 +21,32 @@
 #ifndef MDT_ERROR_DIALOG_H
 #define MDT_ERROR_DIALOG_H
 
-class mdtErrorDialog
+#include "mdtErrorV2.h"
+#include <QMessageBox>
+
+/*! \brief Dialog that displays mdtError
+ */
+class mdtErrorDialog : public QMessageBox
 {
+ public:
+
+  /*! \brief Construct a dialog without error
+   */
+  mdtErrorDialog(QWidget* parent = nullptr);
+
+  /*! \brief Construct a dialog with error
+   */
+  mdtErrorDialog(const mdtErrorV2 & error, QWidget *parent = nullptr);
+
+  /*! \brief Set error
+   */
+  void setError(const mdtErrorV2 & error);
+
+ private:
+
+  /*! \brief Set icon regarding error level
+   */
+  void setIconFromLevel(mdtErrorV2::Level level);
 };
 
 #endif // #ifndef MDT_ERROR_DIALOG_H
