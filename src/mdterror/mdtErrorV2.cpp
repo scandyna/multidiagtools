@@ -19,10 +19,13 @@
  **
  ****************************************************************************/
 #include "mdtErrorV2.h"
+#include <QLatin1String>
+#include <QObject>
+#include <QMetaObject>
 #include <algorithm>
 #include <iterator>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtErrorV2::mdtErrorV2()
 {
@@ -67,18 +70,14 @@ QString mdtErrorV2::text() const
 
 void mdtErrorV2::stackError(const mdtErrorV2 & error)
 {
-  Q_ASSERT(!isNull());
-  Q_ASSERT(!error.isNull());
-//   if(!pvShared){
-//     initShared<mdtGenericError>(mdtGenericError());
-//   }
+  Q_ASSERT(pvShared);
+  Q_ASSERT(error.pvShared);
+
+  pvShared.detach();
   /*
    * We push errors back (as if it was a queue),
    * Then, when getting them back, we do is reverse order
    */
-  Q_ASSERT(pvShared);
-  Q_ASSERT(error.pvShared);
-  pvShared.detach();
   // Copy given error's stack if available
   auto first = error.pvShared->pvErrorStack.cbegin();
   auto last = error.pvShared->pvErrorStack.cend();
@@ -102,4 +101,46 @@ std::vector<mdtErrorV2> mdtErrorV2::getErrorStack() const
   std::reverse_copy(first, last, std::back_inserter(stack));
 
   return stack;
+}
+
+void mdtErrorV2::setSource(const QString & fileName, int fileLine, const QString & className, const QString & functionName)
+{
+  Q_ASSERT(pvShared);
+
+  pvShared.detach();
+  pvShared->fileName = fileName;
+  pvShared->lineNumber = fileLine;
+  pvShared->functionName =  className + QLatin1String("::") + functionName + QLatin1String("()");
+}
+
+void mdtErrorV2::setSource(const QString& fileName, int fileLine, const QObject*const obj, const QString& functionName)
+{
+  Q_ASSERT(obj != nullptr);
+  Q_ASSERT(obj->metaObject() != nullptr);
+
+  setSource(fileName, fileLine, obj->metaObject()->className(), functionName);
+}
+
+QString mdtErrorV2::fileName() const
+{
+  if(!pvShared){
+    return QString();
+  }
+  return pvShared->fileName;
+}
+
+int mdtErrorV2::fileLine() const
+{
+  if(!pvShared){
+    return 0;
+  }
+  return pvShared->lineNumber;
+}
+
+QString mdtErrorV2::functionName() const
+{
+  if(!pvShared){
+    return QString();
+  }
+  return pvShared->functionName;
 }

@@ -21,8 +21,17 @@
 #include "mdtErrorTest.h"
 #include "mdtApplication.h"
 #include "mdtErrorV2.h"
+#include <QObject>
+#include <QMetaObject>
+#include <QLatin1String>
+#include <QString>
 
 #include <QDebug>
+
+void mdtErrorTest::sandbox()
+{
+}
+
 
 void mdtErrorTest::constructAndCopyTest()
 {
@@ -181,7 +190,6 @@ void mdtErrorTest::constructAndCopyTest()
   // Set error1
   error1.setError<int>(1, "error1", mdtErrorV2::Error);
   // Assign error1 to error2
-  qDebug() << "TEST: error2 = error1";
   error2 = error1;
   // Check that types are preserved
   QCOMPARE(error1.error<int>(), 1);
@@ -190,7 +198,6 @@ void mdtErrorTest::constructAndCopyTest()
   QVERIFY(error1.informativeText().isEmpty());
   QVERIFY(error2.informativeText().isEmpty());
   // Set informative text to error1
-  qDebug() << "TEST: error1.setInformativeText()";
   error1.setInformativeText("error1 info");
   // Check that types are preserved
   QCOMPARE(error1.error<int>(), 1);
@@ -200,7 +207,6 @@ void mdtErrorTest::constructAndCopyTest()
   // Check that error2 is untouched
   QVERIFY(error2.informativeText().isEmpty());
   // Set informative text to error2
-  qDebug() << "TEST: error2.setInformativeText()";
   error2.setInformativeText("error2 info");
   // Check that types are preserved
   QCOMPARE(error1.error<int>(), 1);
@@ -318,7 +324,6 @@ void mdtErrorTest::errorStackTest()
   QVERIFY(error1.getErrorStack().empty());
   QVERIFY(error2.getErrorStack().empty());
   // Stack to error1
-  qDebug() << "TEST: stack to error1";
   error1.stackError(error3);
   // Check error1 stack
   errorStack = error1.getErrorStack();
@@ -328,7 +333,6 @@ void mdtErrorTest::errorStackTest()
   // Check that error2 is untouched
   QVERIFY(error2.getErrorStack().empty());
   // Stack to error2
-  qDebug() << "TEST: stack to error2";
   error2.stackError(error4);
   // Check error2
   errorStack = error2.getErrorStack();
@@ -341,6 +345,86 @@ void mdtErrorTest::errorStackTest()
   QCOMPARE(errorStack.at(0).error<long int>(), (long int)30);
   QCOMPARE(errorStack.at(0).text(), QString("error3"));
 
+}
+
+void mdtErrorTest::setSourceTest()
+{
+  // Constants for check
+  const QString fileName = __FILE__;
+  const QString functionName = metaObject()->className() + QLatin1String("::") + QLatin1String(__FUNCTION__) + QLatin1String("()");
+  /*
+   * Check creating error with helper macros
+   */
+  const int firstLine = __LINE__;
+  mdtErrorV2 error1 = mdtErrorNew("error1", mdtErrorV2::Error, "mdtErrorTest");
+  mdtErrorV2 error2 = mdtErrorNewT(int, 2, "error2", mdtErrorV2::Error, "mdtErrorTest");
+  mdtErrorV2 error3 = mdtErrorNewQ("error3", mdtErrorV2::Info, this);
+  mdtErrorV2 error4 = mdtErrorNewTQ(float, 4.0, "error4", mdtErrorV2::Info, this);
+  // Check error1
+  QCOMPARE(error1.text(), QString("error1"));
+  QVERIFY(error1.level() == mdtErrorV2::Error);
+  QCOMPARE(error1.fileName(), fileName);
+  QCOMPARE(error1.fileLine(), firstLine + 1);
+  QCOMPARE(error1.functionName(), functionName);
+  // Check error2
+  QCOMPARE(error2.error<int>(), 2);
+  QCOMPARE(error2.text(), QString("error2"));
+  QVERIFY(error2.level() == mdtErrorV2::Error);
+  QCOMPARE(error2.fileName(), fileName);
+  QCOMPARE(error2.fileLine(), firstLine + 2);
+  QCOMPARE(error2.functionName(), functionName);
+  // Check error3
+  QCOMPARE(error3.text(), QString("error3"));
+  QVERIFY(error3.level() == mdtErrorV2::Info);
+  QCOMPARE(error3.fileName(), fileName);
+  QCOMPARE(error3.fileLine(), firstLine + 3);
+  QCOMPARE(error3.functionName(), functionName);
+  // Check error4
+  QCOMPARE(error4.error<float>(), 4.0);
+  QCOMPARE(error4.text(), QString("error4"));
+  QVERIFY(error4.level() == mdtErrorV2::Info);
+  QCOMPARE(error4.fileName(), fileName);
+  QCOMPARE(error4.fileLine(), firstLine + 4);
+  QCOMPARE(error4.functionName(), functionName);
+  /*
+   * COW check
+   */
+  // Assign error2 = error1
+  error2 = error1;
+  // Check error2
+  QCOMPARE(error2.text(), QString("error1"));
+  QVERIFY(error2.level() == mdtErrorV2::Error);
+  QCOMPARE(error2.fileName(), fileName);
+  QCOMPARE(error2.fileLine(), firstLine + 1);
+  QCOMPARE(error2.functionName(), functionName);
+  // Update error2
+  error2.setSource("file.cpp", 36, "C", "F");
+  // Check error2
+  QCOMPARE(error2.text(), QString("error1"));
+  QVERIFY(error2.level() == mdtErrorV2::Error);
+  QCOMPARE(error2.fileName(), QString("file.cpp"));
+  QCOMPARE(error2.fileLine(), 36);
+  QCOMPARE(error2.functionName(), QString("C::F()"));
+  // Check that error1 is untouched
+  QCOMPARE(error1.text(), QString("error1"));
+  QVERIFY(error1.level() == mdtErrorV2::Error);
+  QCOMPARE(error1.fileName(), fileName);
+  QCOMPARE(error1.fileLine(), firstLine + 1);
+  QCOMPARE(error1.functionName(), functionName);
+  // Update source of error1
+  error1.setSource("file1.cpp", 35, "C1", "F1");
+  // Check error1
+  QCOMPARE(error1.text(), QString("error1"));
+  QVERIFY(error1.level() == mdtErrorV2::Error);
+  QCOMPARE(error1.fileName(), QString("file1.cpp"));
+  QCOMPARE(error1.fileLine(), 35);
+  QCOMPARE(error1.functionName(), QString("C1::F1()"));
+  // Check that error2 is untouched
+  QCOMPARE(error2.text(), QString("error1"));
+  QVERIFY(error2.level() == mdtErrorV2::Error);
+  QCOMPARE(error2.fileName(), QString("file.cpp"));
+  QCOMPARE(error2.fileLine(), 36);
+  QCOMPARE(error2.functionName(), QString("C::F()"));
 }
 
 

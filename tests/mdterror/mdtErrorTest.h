@@ -29,8 +29,11 @@ class mdtErrorTest : public mdtTest
 
  private slots:
 
+  void sandbox();
+
   void constructAndCopyTest();
   void errorStackTest();
+  void setSourceTest();
 
 };
 

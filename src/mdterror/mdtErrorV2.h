@@ -29,7 +29,7 @@
 #include <typeinfo>
 #include <vector>
 
-#include <QDebug>
+//#include <QDebug>
 
 class mdtErrorV2;
 
@@ -48,28 +48,29 @@ struct mdtErrorPrivateBase : public QSharedData
   mdtErrorPrivateBase(const std::type_info & ti)
    : userErrorType(ti)
    {
-     qDebug() << "mdtErrorPrivateBase()";
    }
 
-   ///mdtErrorPrivateBase(const mdtErrorPrivateBase & other) = delete;
-   mdtErrorPrivateBase(const mdtErrorPrivateBase & other) = default;
-   mdtErrorPrivateBase() = delete;
-   mdtErrorPrivateBase & operator=(const mdtErrorPrivateBase &) = delete;
-   mdtErrorPrivateBase(mdtErrorPrivateBase &&) = delete;
+  mdtErrorPrivateBase(const mdtErrorPrivateBase & other) = default;
+  mdtErrorPrivateBase() = delete;
+  mdtErrorPrivateBase & operator=(const mdtErrorPrivateBase &) = delete;
+  mdtErrorPrivateBase(mdtErrorPrivateBase &&) = delete;
 
+  // Needed for QExplicitlySharedDataPointer::clone()
   virtual mdtErrorPrivateBase *clone() const = 0;
-   
-   // Destructor must be virtual (else mdtErrorPrivate::~mdtErrorPrivate() is never called)
-   virtual ~mdtErrorPrivateBase()
-   {
-     qDebug() << "~mdtErrorPrivateBase()";
-   }
+
+  // Destructor must be virtual (else mdtErrorPrivate::~mdtErrorPrivate() is never called)
+  virtual ~mdtErrorPrivateBase()
+  {
+  }
 
   short level;
   std::type_index userErrorType;
   QString text;
   QString informativeText;
   std::vector<mdtErrorV2> pvErrorStack;
+  QString fileName;
+  int lineNumber;
+  QString functionName;
 };
 
 /*! \internal User defined error
@@ -81,43 +82,112 @@ struct mdtErrorPrivate : public mdtErrorPrivateBase
   : mdtErrorPrivateBase(typeid(T)),
     error(e)
   {
-    qDebug() << "mdtErrorPrivate()";
   }
 
   ~mdtErrorPrivate()
   {
-    qDebug() << "~mdtErrorPrivate()";
   }
 
   mdtErrorPrivate() = delete;
-  ///mdtErrorPrivate(const mdtErrorPrivate &) = delete;
 
-  mdtErrorPrivate(const mdtErrorPrivate & other)
-   : mdtErrorPrivateBase(other),
-     error(other.error)
-  {
-    qDebug() << "--*--*-> mdtErrorPrivate(copy)";
-  }
 
   mdtErrorPrivate & operator=(const mdtErrorPrivate &) = delete;
   mdtErrorPrivate(mdtErrorPrivate &&) = delete;
 
+  // Because of template, copy constructor must be explicit ( used by clone() )
+  mdtErrorPrivate(const mdtErrorPrivate & other)
+   : mdtErrorPrivateBase(other),
+     error(other.error)
+  {
+  }
+
+  // Needed for QExplicitlySharedDataPointer::clone()
   mdtErrorPrivate *clone() const
   {
     return new mdtErrorPrivate(*this);
   }
-  
+
   T error;
 };
 
+class QObject;
+
+/*! \brief Helper macro to build a mdtError with source file informations
+ *
+ * Typical usage:
+ * \code
+ * auto error = mdtErrorNew("Some error occured", mdtError::Error, "MyClass");
+ * \endcode
+ *
+ * \note If you create a error for a QObject subclass, you should use mdtErrorNewQ()
+ */
+#define mdtErrorNew(text, level, className) mdtErrorV2(static_cast<mdtGenericError>(mdtGenericError()), text, level, __FILE__, __LINE__, className, __FUNCTION__)
+
+/*! \brief Helper macro to build a user defined mdtError with source file informations
+ *
+ * Typical usage:
+ * \code
+ * auto error = mdtErrorNewT(int, -1, "Some error occured", mdtError::Error, "MyClass");
+ * \endcode
+ *
+ * \note If you create a error for a QObject subclass, you should use mdtErrorNewTQ()
+ */
+#define mdtErrorNewT(T, error, text, level, className) mdtErrorV2(static_cast<T>(error), text, level, __FILE__, __LINE__, className, __FUNCTION__)
+
+/*! \brief Helper macro to build a mdtError with source file informations
+ *
+ * This version accepts a QObject instance, witch avoids typing class name explicitly.
+ *  If you create a error for a object that is not a subclass of QObject,
+ *  use mdtErrorNew()
+ *
+ * Typical usage:
+ * \code
+ * auto error = mdtErrorNewQ("Some error occured", mdtError::Error, this);
+ * \endcode
+ */
+#define mdtErrorNewQ(text, level, obj) mdtErrorV2(static_cast<mdtGenericError>(mdtGenericError()), text, level, __FILE__, __LINE__, obj, __FUNCTION__)
+
+/*! \brief Helper macro to build a user defined mdtError with source file informations
+ *
+ * This version accepts a QObject instance, witch avoids typing class name explicitly.
+ *  If you create a error for a object that is not a subclass of QObject,
+ *  use mdtErrorNewT()
+ *
+ * Typical usage:
+ * \code
+ * auto error = mdtErrorNewTQ(int, -1, "Some error occured", mdtError::Error, this);
+ * \endcode
+ */
+#define mdtErrorNewTQ(T, error, text, level, obj) mdtErrorV2(static_cast<T>(error), text, level, __FILE__, __LINE__, obj, __FUNCTION__)
 
 /*! \brief Value class that contain a error
  *
- * mdtError contains only a pointer to (implicitly) shared data.
+ * mdtError contains only a pointer to (implicitly) shared data (also known as copy-on-write).
  *  As long as no error was set, no more memory is allocated.
  *  This allows to store a mdtError object with a few overhead.
  *
- * 
+ * Concept of error stack
+ *
+ *  Imagine a case of a application that provides document editing functionnality,
+ *  and the user wants to save a document.
+ *  The application will probably call a helper function from its own library,
+ *  witch also calls a other system function from a onther part of the library,
+ *  witch finally calls a (maybe system dependant) low level function.
+ *  The low level function fails (for some reason).
+ *  How could the application provide the most usefull error message to the user ?
+ *  Lets illustrate a possible call stack:
+ *  <table border="1" cellpadding="5">
+ *   <tr><th>Function</th><th>Error</th><th>Error message</th></tr>
+ *   <tr><td>write()</td><td>EDQUOT (int)</td><td>Disk quota exhausted</td></tr>
+ *   <tr><td>writeToFile()</td><td>DiskQuotaExhausted (enum)</td><td>Could not write to file 'document.txt' because disk quota exhausted</td></tr>
+ *   <tr><td>saveDocument()</td><td></td><td>Could not save your work to 'document.txt'. This is because you reached the disk quota. Please try to save the document to a other place and contact your administrator to solve the problem.</td></tr>
+ *  </table>
+ * In above scenario, the application can build appropriate message because it knows what DiskQuotaExhausted means.
+ * For some other errors (that the application currently not handles), it could also simply display the error returned from saveDocument().
+ * To implement such error stack, simply, at each level, stack a error that a function returns to current error.
+ * For example, in writeToFile(), if write() fails, we create a new mdtError, and return it.
+ * Then, saveDocument() will fail, create its own mdtError object, and stack the one returned by writeToFile().
+ * To stack a error, use stackError() , and use getErrorStack() to get stacked errors back.
  */
 class mdtErrorV2
 {
@@ -137,12 +207,45 @@ class mdtErrorV2
    */
   mdtErrorV2();
 
+  /*! \brief Construct a error with error and source set
+   *
+   * Calling this constructor directly is a bit long.
+   *  Consider using mdtErrorNew() or mdtErrorNewT() macro.
+   */
+  template <typename T>
+  mdtErrorV2(const T & error, const QString & text, Level level,
+             const QString & fileName, int fileLine, const QString & className, const QString & functionName)
+  {
+    static_assert(std::is_default_constructible<T>::value, "T must be default constructible");
+    static_assert(std::is_copy_constructible<T>::value, "T must be copy constructible");
+
+    setError<T>(error, text, level);
+    setSource(fileName, fileLine, className, functionName);
+  }
+
+  /*! \brief Construct a error with error and source set
+   *
+   * Calling this constructor directly is a bit long.
+   *  Consider using mdtErrorNewQ() or mdtErrorNewTQ() macro.
+   */
+  template <typename T>
+  mdtErrorV2(const T & error, const QString & text, Level level,
+             const QString & fileName, int fileLine, const QObject * const obj, const QString & functionName)
+  {
+    static_assert(std::is_default_constructible<T>::value, "T must be default constructible");
+    static_assert(std::is_copy_constructible<T>::value, "T must be copy constructible");
+    Q_ASSERT(obj != nullptr);
+
+    setError<T>(error, text, level);
+    setSource(fileName, fileLine, obj, functionName);
+  }
+
   /*! \brief Construct a copy of other error
    */
   // Copy construct is handled by QExplicitlySharedDataPointer
   mdtErrorV2(const mdtErrorV2 &) = default;
 
-  ///mdtErrorV2(mdtErrorV2 &&) = default;
+  //mdtErrorV2(mdtErrorV2 &&) = default;
 
   /*! \brief Check if error is null
    *
@@ -205,8 +308,28 @@ class mdtErrorV2
     if(!pvShared){
       return T();
     }
-    Q_ASSERT_X(std::type_index(typeid(T)) == pvShared->userErrorType, "T mdtError::error() const", "Requested type T is not the same as stored error type");
+#ifndef QT_NO_DEBUG
+    /*
+     * Requested type coherence check:
+     * If we can, we provide caller information.
+     * This seems somwhat ugly, but provides helpfull informations
+     * (and is only compiled in debug)
+     * Note: we use Q_ASSERT_X() because qFatal() requires to include QDebug,
+     *       witch we really not want here.
+     */
+    QString msg;
+    if(std::type_index(typeid(T)) != pvShared->userErrorType){
+      // If we have caller informations, put it into failure message
+      const QString functionName = pvShared->functionName;
+      QString caller;
+      if(!functionName.isEmpty()){
+        caller = " mdtError object source: " + functionName + " in file " + pvShared->fileName + ", line " + QString::number(pvShared->lineNumber);
+      }
+      msg = "Requested type T is not the same as stored error type." + caller;
+    }
+    Q_ASSERT_X(std::type_index(typeid(T)) == pvShared->userErrorType, "T mdtError::error() const", msg.toStdString().c_str());
     Q_ASSERT(dynamic_cast<const mdtErrorPrivate<T>*>(pvShared.constData()) != nullptr);
+#endif // #ifndef QT_NO_DEBUG
 
     return static_cast<const mdtErrorPrivate<T>*>(pvShared.constData())->error;
   }
@@ -218,7 +341,7 @@ class mdtErrorV2
    *  and is used the same way in mdtErrorDialog.
    *
    * \pre this error must not be null when calling this function
-   * \sa setInformativeText()
+   * \sa informativeText()
    */
   void setInformativeText(const QString & text);
 
@@ -242,14 +365,38 @@ class mdtErrorV2
   /*! \brief Stack given error
    *
    * \pre this error and given error must not be null
+   * \sa getErrorStack()
    */
   void stackError(const mdtErrorV2 & error);
 
   /*! \brief Get error stack
    *
    * \note The returned stack is rebuilt at each call.
+   * \sa stackError()
    */
   std::vector<mdtErrorV2> getErrorStack() const;
+
+  /*! \brief Add the source of error
+   *
+   *  It's possible to use the helper macro MDT_ERROR_SET_SRC()
+   *
+   * \pre this error must not be null when calling this function
+   */
+  void setSource(const QString & fileName, int fileLine, const QString & className, const QString & functionName);
+  
+  void setSource(const QString & fileName, int fileLine, const QObject * const obj, const QString & functionName);
+
+  /*! \brief Error source function
+   */
+  QString functionName() const;
+
+  /*! \brief Error source file (name only)
+   */
+  QString fileName() const;
+
+  /*! \brief Error source line
+   */
+  int fileLine() const;
 
  private:
 
@@ -270,17 +417,17 @@ class mdtErrorV2
   QExplicitlySharedDataPointer<mdtErrorPrivateBase> pvShared;
 };
 
+/*
+ * Clone template specialization:
+ * We have a QExplicitlySharedDataPointer<mdtErrorPrivateBase>,
+ * but we must return a new mdtErrorPrivate object.
+ * This is the reason of this specialization,
+ * and also clone() function in mdtErrorPrivateBase and mdtErrorPrivate.
+ */
 template <>
 mdtErrorPrivateBase *QExplicitlySharedDataPointer<mdtErrorPrivateBase>::clone()
 {
-  qDebug() << "--------- Clone from " << d->text << ", type: " << d->userErrorType.hash_code();
-  ///auto *ptr = new mdtErrorPrivate<d->userErrorType>(d->userErrorType());
-  ///auto *ptr = new mdtErrorPrivateBase(*d);
-  auto *ptr = d->clone();
-  qDebug() << "----------> clone is " << ptr->text << ", type: " << ptr->userErrorType.hash_code();
-  
-  return ptr;
-  ///return new mdtErrorPrivate<mdtGenericError>(mdtGenericError());
+  return d->clone();
 }
 
 #endif // #ifndef MDT_ERROR_V2_H
