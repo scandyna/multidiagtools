@@ -51,11 +51,14 @@ struct mdtErrorPrivateBase : public QSharedData
      qDebug() << "mdtErrorPrivateBase()";
    }
 
-   mdtErrorPrivateBase(const mdtErrorPrivateBase & other) = delete;
+   ///mdtErrorPrivateBase(const mdtErrorPrivateBase & other) = delete;
+   mdtErrorPrivateBase(const mdtErrorPrivateBase & other) = default;
    mdtErrorPrivateBase() = delete;
    mdtErrorPrivateBase & operator=(const mdtErrorPrivateBase &) = delete;
    mdtErrorPrivateBase(mdtErrorPrivateBase &&) = delete;
 
+  virtual mdtErrorPrivateBase *clone() const = 0;
+   
    // Destructor must be virtual (else mdtErrorPrivate::~mdtErrorPrivate() is never called)
    virtual ~mdtErrorPrivateBase()
    {
@@ -65,6 +68,7 @@ struct mdtErrorPrivateBase : public QSharedData
   short level;
   std::type_index userErrorType;
   QString text;
+  QString informativeText;
   std::vector<mdtErrorV2> pvErrorStack;
 };
 
@@ -86,10 +90,23 @@ struct mdtErrorPrivate : public mdtErrorPrivateBase
   }
 
   mdtErrorPrivate() = delete;
-  mdtErrorPrivate(const mdtErrorPrivate &) = delete;
+  ///mdtErrorPrivate(const mdtErrorPrivate &) = delete;
+
+  mdtErrorPrivate(const mdtErrorPrivate & other)
+   : mdtErrorPrivateBase(other),
+     error(other.error)
+  {
+    qDebug() << "--*--*-> mdtErrorPrivate(copy)";
+  }
+
   mdtErrorPrivate & operator=(const mdtErrorPrivate &) = delete;
   mdtErrorPrivate(mdtErrorPrivate &&) = delete;
 
+  mdtErrorPrivate *clone() const
+  {
+    return new mdtErrorPrivate(*this);
+  }
+  
   T error;
 };
 
@@ -124,7 +141,7 @@ class mdtErrorV2
    */
   // Copy construct is handled by QExplicitlySharedDataPointer
   mdtErrorV2(const mdtErrorV2 &) = default;
-  
+
   ///mdtErrorV2(mdtErrorV2 &&) = default;
 
   /*! \brief Check if error is null
@@ -155,6 +172,8 @@ class mdtErrorV2
   }
 
   /*! \brief Set user defined error
+   *
+   * Setting error will clear it first.
    *
    * \tparam T Type of user defined error.
    * \param error Error of type T that will be stored.
@@ -191,6 +210,23 @@ class mdtErrorV2
 
     return static_cast<const mdtErrorPrivate<T>*>(pvShared.constData())->error;
   }
+
+  /*! \brief Set informative text
+   *
+   * Can be set to give the user a fuller description of the error.
+   *  This is the same meaning than QMessageBox,
+   *  and is used the same way in mdtErrorDialog.
+   *
+   * \pre this error must not be null when calling this function
+   * \sa setInformativeText()
+   */
+  void setInformativeText(const QString & text);
+
+  /*! \brief Get informative text
+   *
+   * \sa setInformativeText()
+   */
+  QString informativeText() const;
 
   /*! \brief Get error level
    *
@@ -233,5 +269,18 @@ class mdtErrorV2
 
   QExplicitlySharedDataPointer<mdtErrorPrivateBase> pvShared;
 };
+
+template <>
+mdtErrorPrivateBase *QExplicitlySharedDataPointer<mdtErrorPrivateBase>::clone()
+{
+  qDebug() << "--------- Clone from " << d->text << ", type: " << d->userErrorType.hash_code();
+  ///auto *ptr = new mdtErrorPrivate<d->userErrorType>(d->userErrorType());
+  ///auto *ptr = new mdtErrorPrivateBase(*d);
+  auto *ptr = d->clone();
+  qDebug() << "----------> clone is " << ptr->text << ", type: " << ptr->userErrorType.hash_code();
+  
+  return ptr;
+  ///return new mdtErrorPrivate<mdtGenericError>(mdtGenericError());
+}
 
 #endif // #ifndef MDT_ERROR_V2_H

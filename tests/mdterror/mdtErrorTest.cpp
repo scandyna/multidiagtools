@@ -33,6 +33,7 @@ void mdtErrorTest::constructAndCopyTest()
   QVERIFY(error1.isNull());
   QVERIFY(error1.level() == mdtErrorV2::NoError);
   QVERIFY(error1.text().isEmpty());
+  QVERIFY(error1.informativeText().isEmpty());
   // Calling error() is allowed on null mdtError
   QCOMPARE(error1.error<int>(), 0);
   /*
@@ -40,15 +41,18 @@ void mdtErrorTest::constructAndCopyTest()
    */
   // Set some attributes to error1
   error1.setError<int>(1, "error1", mdtErrorV2::Error);
+  error1.setInformativeText("error1 info");
   QVERIFY(!error1.isNull());
   QCOMPARE(error1.error<int>(), 1);
   QCOMPARE(error1.text(), QString("error1"));
+  QCOMPARE(error1.informativeText(), QString("error1 info"));
   QVERIFY(error1.level() == mdtErrorV2::Error);
   // Construct error2 on base of error1
   mdtErrorV2 error2(error1);
   QVERIFY(!error2.isNull());
   QCOMPARE(error2.error<int>(), 1);
   QCOMPARE(error2.text(), QString("error1"));
+  QCOMPARE(error2.informativeText(), QString("error1 info"));
   QVERIFY(error2.level() == mdtErrorV2::Error);
   /*
    * COW test
@@ -59,11 +63,27 @@ void mdtErrorTest::constructAndCopyTest()
   QVERIFY(!error2.isNull());
   QCOMPARE(error2.error<int>(), 2);
   QCOMPARE(error2.text(), QString("error2"));
+  QVERIFY(error2.informativeText().isEmpty());
   QVERIFY(error2.level() == mdtErrorV2::Info);
   // Check that error1 was not modified
   QVERIFY(!error1.isNull());
   QCOMPARE(error1.error<int>(), 1);
   QCOMPARE(error1.text(), QString("error1"));
+  QCOMPARE(error1.informativeText(), QString("error1 info"));
+  QVERIFY(error1.level() == mdtErrorV2::Error);
+  // Update error2 informative text
+  error2.setInformativeText("error2 info");
+  // Check error2
+  QVERIFY(!error2.isNull());
+  QCOMPARE(error2.error<int>(), 2);
+  QCOMPARE(error2.text(), QString("error2"));
+  QCOMPARE(error2.informativeText(), QString("error2 info"));
+  QVERIFY(error2.level() == mdtErrorV2::Info);
+  // Check that error1 was not modified
+  QVERIFY(!error1.isNull());
+  QCOMPARE(error1.error<int>(), 1);
+  QCOMPARE(error1.text(), QString("error1"));
+  QCOMPARE(error1.informativeText(), QString("error1 info"));
   QVERIFY(error1.level() == mdtErrorV2::Error);
   // Set error2 to a other error type
   error2.setError<double>(2.1, "error2.1", mdtErrorV2::Warning);
@@ -71,11 +91,13 @@ void mdtErrorTest::constructAndCopyTest()
   QVERIFY(!error2.isNull());
   QCOMPARE(error2.error<double>(), 2.1);
   QCOMPARE(error2.text(), QString("error2.1"));
+  QVERIFY(error2.informativeText().isEmpty());
   QVERIFY(error2.level() == mdtErrorV2::Warning);
   // Check that error1 was not modified
   QVERIFY(!error1.isNull());
   QCOMPARE(error1.error<int>(), 1);
   QCOMPARE(error1.text(), QString("error1"));
+  QCOMPARE(error1.informativeText(), QString("error1 info"));
   QVERIFY(error1.level() == mdtErrorV2::Error);
   /*
    * Check many copies of error
@@ -151,6 +173,43 @@ void mdtErrorTest::constructAndCopyTest()
   QCOMPARE(error2.text(), QString("error1"));
   QVERIFY(error2.level() == mdtErrorV2::Error);
   /*
+   * Update tests
+   * (setError() allways resets, check other setters)
+   */
+  // To check that COW works, we set error2 to other type than error1
+  error2.setError<double>(2.5, "error2.5", mdtErrorV2::Warning);
+  // Set error1
+  error1.setError<int>(1, "error1", mdtErrorV2::Error);
+  // Assign error1 to error2
+  qDebug() << "TEST: error2 = error1";
+  error2 = error1;
+  // Check that types are preserved
+  QCOMPARE(error1.error<int>(), 1);
+  QCOMPARE(error2.error<int>(), 1);
+  // Check informative text
+  QVERIFY(error1.informativeText().isEmpty());
+  QVERIFY(error2.informativeText().isEmpty());
+  // Set informative text to error1
+  qDebug() << "TEST: error1.setInformativeText()";
+  error1.setInformativeText("error1 info");
+  // Check that types are preserved
+  QCOMPARE(error1.error<int>(), 1);
+  QCOMPARE(error2.error<int>(), 1);
+  // Check error1
+  QCOMPARE(error1.informativeText(), QString("error1 info"));
+  // Check that error2 is untouched
+  QVERIFY(error2.informativeText().isEmpty());
+  // Set informative text to error2
+  qDebug() << "TEST: error2.setInformativeText()";
+  error2.setInformativeText("error2 info");
+  // Check that types are preserved
+  QCOMPARE(error1.error<int>(), 1);
+  QCOMPARE(error2.error<int>(), 1);
+  // Check error2
+  QCOMPARE(error2.informativeText(), QString("error2 info"));
+  // Check that error1 is untouched
+  QCOMPARE(error1.informativeText(), QString("error1 info"));
+  /*
    * Move
    */
   /// \todo Implement once understanding move..
@@ -170,6 +229,8 @@ void mdtErrorTest::errorStackTest()
    */
   mdtErrorV2 error1;
   mdtErrorV2 error2;
+  mdtErrorV2 error3;
+  mdtErrorV2 error4;
   // Try to get stack from null error
   QVERIFY(error1.isNull());
   QVERIFY(error2.isNull());
@@ -244,13 +305,42 @@ void mdtErrorTest::errorStackTest()
   QCOMPARE(errorStack.at(0).text(), QString("Could not open file 'fake.txt'"));
   QCOMPARE(errorStack.at(1).error<int>(), -1);
   QCOMPARE(errorStack.at(1).text(), QString("write access error"));
+  /*
+   * Check Copy-On-Write
+   */
+  // error3 and error4 will be stacked to error1 and error2, set them up
+  error3.setError<long int>(30, "error3", mdtErrorV2::Warning);
+  error4.setError<float>(4.0, "error4", mdtErrorV2::Info);
+  // Set error1 and error2 to some error
+  error1.setError<int>(1, "error1", mdtErrorV2::Error);
+  // Assign error1 -> error1
+  error2 = error1;
+  QVERIFY(error1.getErrorStack().empty());
+  QVERIFY(error2.getErrorStack().empty());
+  // Stack to error1
+  qDebug() << "TEST: stack to error1";
+  error1.stackError(error3);
+  // Check error1 stack
+  errorStack = error1.getErrorStack();
+  QCOMPARE(errorStack.size(), (size_t)1);
+  QCOMPARE(errorStack.at(0).error<long int>(), (long int)30);
+  QCOMPARE(errorStack.at(0).text(), QString("error3"));
+  // Check that error2 is untouched
+  QVERIFY(error2.getErrorStack().empty());
+  // Stack to error2
+  qDebug() << "TEST: stack to error2";
+  error2.stackError(error4);
+  // Check error2
+  errorStack = error2.getErrorStack();
+  QCOMPARE(errorStack.size(), (size_t)1);
+  QCOMPARE(errorStack.at(0).error<float>(), 4.0);
+  QCOMPARE(errorStack.at(0).text(), QString("error4"));
+  // Check that error1 is untouched
+  errorStack = error1.getErrorStack();
+  QCOMPARE(errorStack.size(), (size_t)1);
+  QCOMPARE(errorStack.at(0).error<long int>(), (long int)30);
+  QCOMPARE(errorStack.at(0).text(), QString("error3"));
 
-
-  
-  auto v = guiError.getErrorStack();
-  for(const auto & e : v){
-    qDebug() << e.text();
-  }
 }
 
 

@@ -33,6 +33,22 @@ void mdtErrorV2::clear()
   pvShared.reset();
 }
 
+void mdtErrorV2::setInformativeText(const QString& text)
+{
+  Q_ASSERT(!isNull());
+
+  pvShared.detach();
+  pvShared->informativeText = text;
+}
+
+QString mdtErrorV2::informativeText() const
+{
+  if(!pvShared){
+    return QString();
+  }
+  return pvShared->informativeText;
+}
+
 mdtErrorV2::Level mdtErrorV2::level() const
 {
   if(!pvShared){
@@ -61,12 +77,12 @@ void mdtErrorV2::stackError(const mdtErrorV2 & error)
    * Then, when getting them back, we do is reverse order
    */
   Q_ASSERT(pvShared);
+  Q_ASSERT(error.pvShared);
+  pvShared.detach();
   // Copy given error's stack if available
-  if(error.pvShared){
-    auto first = error.pvShared->pvErrorStack.cbegin();
-    auto last = error.pvShared->pvErrorStack.cend();
-    std::copy(first, last, std::back_inserter(pvShared->pvErrorStack));
-  }
+  auto first = error.pvShared->pvErrorStack.cbegin();
+  auto last = error.pvShared->pvErrorStack.cend();
+  std::copy(first, last, std::back_inserter(pvShared->pvErrorStack));
   // Push error itself at end
   pvShared->pvErrorStack.push_back(error);
 }
