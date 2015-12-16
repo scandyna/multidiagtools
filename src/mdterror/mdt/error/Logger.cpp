@@ -18,27 +18,38 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ERROR_TEST_H
-#define MDT_ERROR_TEST_H
+#include "Logger.h"
+#include <QDebug>
 
-#include "mdtTest.h"
+namespace mdt{ namespace error {
 
-class mdtErrorTest : public mdtTest
+void Logger::cleanup()
 {
- Q_OBJECT
+}
 
- private slots:
 
-  void sandbox();
 
-  void constructAndCopyTest();
-  void errorStackTest();
-  void setSourceTest();
+Logger::Logger()
+{
+}
 
-  void errorLoggerConsoleBackendTest();
-  void errorLoggerFileBackendTest();
-  void errorLoggerTest();
-  void errorLoggerConcurrentAccessTest();
-};
+Logger& Logger::instance()
+{
+  static Logger logger;
+  return logger;
+}
 
-#endif // #ifndef MDT_ERROR_TEST_H
+/*
+ * mdtErrorLoggerGuard implementation
+ */
+
+LoggerGuard::LoggerGuard()
+{
+}
+
+LoggerGuard::~LoggerGuard()
+{
+  Logger::cleanup();
+}
+
+}}  // namespace mdt{ namespace error {

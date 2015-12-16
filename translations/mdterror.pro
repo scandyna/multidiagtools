@@ -3,3 +3,7 @@
 TRANSLATIONS = /home/philippe/programmation/multiDiagTools/src/mdterror/../../translations/mdtutils_fr.ts
 TRANSLATIONS += /home/philippe/programmation/multiDiagTools/src/mdterror/../../translations/mdtutils_de.ts
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdterror/mdtErrorV2.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdterror/mdt/error/Logger.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdterror/mdt/error/LoggerBackend.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdterror/mdt/error/LoggerConsoleBackend.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdterror/mdt/error/LoggerFileBackend.cpp

@@ -21,10 +21,17 @@
 #include "mdtErrorTest.h"
 #include "mdtApplication.h"
 #include "mdtErrorV2.h"
+#include "mdt/error/Logger.h"
+#include "mdt/error/LoggerConsoleBackend.h"
+#include "mdt/error/LoggerFileBackend.h"
 #include <QObject>
 #include <QMetaObject>
+#include <QByteArray>
 #include <QLatin1String>
 #include <QString>
+#include <QTemporaryFile>
+#include <QFile>
+#include <memory>
 
 #include <QDebug>
 
@@ -43,6 +50,7 @@ void mdtErrorTest::constructAndCopyTest()
   QVERIFY(error1.level() == mdtErrorV2::NoError);
   QVERIFY(error1.text().isEmpty());
   QVERIFY(error1.informativeText().isEmpty());
+  QCOMPARE(error1.fileLine(), 0);
   // Calling error() is allowed on null mdtError
   QCOMPARE(error1.error<int>(), 0);
   /*
@@ -56,6 +64,7 @@ void mdtErrorTest::constructAndCopyTest()
   QCOMPARE(error1.text(), QString("error1"));
   QCOMPARE(error1.informativeText(), QString("error1 info"));
   QVERIFY(error1.level() == mdtErrorV2::Error);
+  QCOMPARE(error1.fileLine(), 0);
   // Construct error2 on base of error1
   mdtErrorV2 error2(error1);
   QVERIFY(!error2.isNull());
@@ -425,6 +434,104 @@ void mdtErrorTest::setSourceTest()
   QCOMPARE(error2.fileName(), QString("file.cpp"));
   QCOMPARE(error2.fileLine(), 36);
   QCOMPARE(error2.functionName(), QString("C::F()"));
+}
+
+void mdtErrorTest::errorLoggerConsoleBackendTest()
+{
+  mdt::error::LoggerConsoleBackend backend;
+
+  mdtErrorV2 error = mdtErrorNewTQ(int, 25, "error", mdtErrorV2::Error, this);
+
+  error.setInformativeText("Some more info");
+  backend.logError(error);
+}
+
+void mdtErrorTest::errorLoggerFileBackendTest()
+{
+  mdt::error::LoggerFileBackend backend;
+  mdtErrorV2 error; // = mdtErrorNewTQ(int, 25, "error", mdtErrorV2::Error, this);
+  QTemporaryFile tmpFile;
+  QFile logFile;
+  QByteArray logFileData;
+
+  // Prepare log file for tests
+  QVERIFY(tmpFile.open());
+  tmpFile.close();
+  logFile.setFileName(tmpFile.fileName());
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(backend.maxFileSize(), 1024);
+  /*
+   * Setup logger backend
+   */
+  // Setup
+  QVERIFY(backend.setLogFilePath(logFile.fileName(), 10));
+  // Check
+  QCOMPARE(backend.logFilePath(), logFile.fileName());
+  QCOMPARE(backend.maxFileSize(), 10);
+  QVERIFY(!backend.backupLogFilePath().isEmpty());
+  QVERIFY(backend.backupLogFilePath() != backend.logFilePath());
+  /*
+   * Check log file backup
+   * Note: we do not use QTemporaryFile for check, but another QFile object.
+   *       Not doing so gave strange problem (on Linux, at least):
+   *       - In test, close log file
+   *       - Log a new error (backend also does backup (rename)
+   *       - In test, open log file
+   *       - Now, its the backup file that is read !
+   */
+  // Check first
+  QVERIFY(QFile::exists(backend.logFilePath()));
+  QVERIFY(!QFile::exists(backend.backupLogFilePath()));
+  // Log error
+  error.setError("1234567890", mdtErrorV2::Error);
+  backend.logError(error);
+  // Check
+  QVERIFY(!QFile::exists(backend.backupLogFilePath()));
+  QVERIFY(logFile.open(QIODevice::ReadOnly | QIODevice::Text));
+  logFileData = logFile.readAll();
+  logFile.close();
+  QVERIFY(!logFileData.isEmpty());
+  QVERIFY(logFileData.contains("1234567890"));
+  // Log error
+  error.setError("ABCDEFGH", mdtErrorV2::Error);
+  backend.logError(error);
+  // Check - We know that we reached maximum log file size after previous log
+  QVERIFY(QFile::exists(backend.backupLogFilePath()));
+  QVERIFY(logFile.open(QIODevice::ReadOnly | QIODevice::Text));
+  logFileData = logFile.readAll();
+  logFile.close();
+  QVERIFY(!logFileData.isEmpty());
+  QVERIFY(!logFileData.contains("1234567890"));
+  QVERIFY(logFileData.contains("ABCDEFGH"));
+  // Check backed up log file
+  QFile backupFile(backend.backupLogFilePath());
+  QVERIFY(backupFile.open(QIODevice::ReadOnly | QIODevice::Text));
+  logFileData = backupFile.readAll();
+  QVERIFY(!logFileData.isEmpty());
+  QVERIFY(logFileData.contains("1234567890"));
+
+  // Remove created backup file
+  QFile::remove(backend.backupLogFilePath());
+}
+
+void mdtErrorTest::errorLoggerTest()
+{
+  using namespace mdt::error;
+
+  LoggerGuard loggerGard;
+
+
+
+}
+
+void mdtErrorTest::errorLoggerConcurrentAccessTest()
+{
+  
+
+  
 }
 
 

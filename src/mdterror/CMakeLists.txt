@@ -7,6 +7,10 @@ project (multidiagtools)
 # List of source files
 set (SOURCES_FILES 
       mdtErrorV2.cpp
+      mdt/error/Logger.cpp
+      mdt/error/LoggerBackend.cpp
+      mdt/error/LoggerConsoleBackend.cpp
+      mdt/error/LoggerFileBackend.cpp
     )
 
 # Output library

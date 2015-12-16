@@ -144,3 +144,16 @@ QString mdtErrorV2::functionName() const
   }
   return pvShared->functionName;
 }
+
+/*
+ * Clone template specialization:
+ * We have a QExplicitlySharedDataPointer<mdtErrorPrivateBase>,
+ * but we must return a new mdtErrorPrivate object.
+ * This is the reason of this specialization,
+ * and also clone() function in mdtErrorPrivateBase and mdtErrorPrivate.
+ */
+template <>
+mdtErrorPrivateBase *QExplicitlySharedDataPointer<mdtErrorPrivateBase>::clone()
+{
+  return d->clone();
+}

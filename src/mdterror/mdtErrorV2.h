@@ -21,9 +21,9 @@
 #ifndef MDT_ERROR_V2_H
 #define MDT_ERROR_V2_H
 
+#include <QExplicitlySharedDataPointer>
 #include <QString>
 #include <QSharedData>
-#include <QExplicitlySharedDataPointer>
 #include <type_traits>  // std::is_same
 #include <typeindex>
 #include <typeinfo>
@@ -46,7 +46,9 @@ struct mdtErrorPrivateBase : public QSharedData
   /*! \brief Constructor
    */
   mdtErrorPrivateBase(const std::type_info & ti)
-   : userErrorType(ti)
+   : level(0),
+     userErrorType(ti),
+     lineNumber(0)
    {
    }
 
@@ -416,18 +418,5 @@ class mdtErrorV2
 
   QExplicitlySharedDataPointer<mdtErrorPrivateBase> pvShared;
 };
-
-/*
- * Clone template specialization:
- * We have a QExplicitlySharedDataPointer<mdtErrorPrivateBase>,
- * but we must return a new mdtErrorPrivate object.
- * This is the reason of this specialization,
- * and also clone() function in mdtErrorPrivateBase and mdtErrorPrivate.
- */
-template <>
-mdtErrorPrivateBase *QExplicitlySharedDataPointer<mdtErrorPrivateBase>::clone()
-{
-  return d->clone();
-}
 
 #endif // #ifndef MDT_ERROR_V2_H

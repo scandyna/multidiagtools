@@ -18,27 +18,10 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ERROR_TEST_H
-#define MDT_ERROR_TEST_H
+#include "LoggerBackend.h"
+#include <QObject>
 
-#include "mdtTest.h"
-
-class mdtErrorTest : public mdtTest
+QString mdt::error::LoggerBackend::tr(const char* text)
 {
- Q_OBJECT
-
- private slots:
-
-  void sandbox();
-
-  void constructAndCopyTest();
-  void errorStackTest();
-  void setSourceTest();
-
-  void errorLoggerConsoleBackendTest();
-  void errorLoggerFileBackendTest();
-  void errorLoggerTest();
-  void errorLoggerConcurrentAccessTest();
-};
-
-#endif // #ifndef MDT_ERROR_TEST_H
+  return QObject::tr(text);
+}

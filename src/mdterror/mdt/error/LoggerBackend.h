@@ -18,27 +18,45 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ERROR_TEST_H
-#define MDT_ERROR_TEST_H
+#ifndef MDT_ERROR_LOGGER_BACKEND_H
+#define MDT_ERROR_LOGGER_BACKEND_H
 
-#include "mdtTest.h"
+#include <QString>
 
-class mdtErrorTest : public mdtTest
-{
- Q_OBJECT
+class mdtErrorV2;
 
- private slots:
+namespace mdt{ namespace error {
 
-  void sandbox();
+  /*! \brief Error Logger backend
+   *
+   * This class is a interface to create a error logger backend
+   *  that will be used by error Logger to output errors.
+   *
+   * Notice that Logger executes from a non main thread,
+   *  also take care that some functons must at least be reentrant.
+   */
+  class LoggerBackend
+  {
+   public:
 
-  void constructAndCopyTest();
-  void errorStackTest();
-  void setSourceTest();
+    /*! \brief Destructor
+     */
+    virtual ~LoggerBackend(){}
 
-  void errorLoggerConsoleBackendTest();
-  void errorLoggerFileBackendTest();
-  void errorLoggerTest();
-  void errorLoggerConcurrentAccessTest();
-};
+    /*! \brief Log given error
+     *
+     * This function must be reentrant, because its called from Logger thread
+     *  (witch is not the main thread).
+     */
+    virtual void logError(const mdtErrorV2 & error) = 0;
 
-#endif // #ifndef MDT_ERROR_TEST_H
+   protected:
+
+    /*! \brief Calls QObject::tr()
+     */
+    static QString tr(const char *text);
+  };
+
+}}  // namespace mdt{ namespace error {
+
+#endif // #ifndef MDT_ERROR_LOGGER_BACKEND_H

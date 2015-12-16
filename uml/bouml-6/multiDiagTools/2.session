@@ -1,13 +1,11 @@
 window_sizes 1280 964 372 902 911 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 1715458 // mdtErrorOut
-    951 911 100 4 0 0
-  active  classdiagram_ref 1769090 // errorLogger
+  active  classdiagram_ref 1769090 // Logger
     902 911 100 4 0 0
 end
 show_stereotypes
-selected attribute_ref 2164610 // Mutex
+selected operation_ref 3265154 // logError
 open
   class_ref 2064514 // CInternalBase
   operation_ref 3193090 // mdtError
@@ -30,7 +28,10 @@ open
   operation_ref 280066 // fileLine
   operation_ref 3193218 // logText
   operation_ref 278914 // setSource
-  class_ref 2131842 // mdtErrorLogger
+  class_ref 2139522 // mdtErrorLoggerGuard
+  class_ref 2131842 // Logger
+  class_ref 2139650 // LoggerBackend
+  class_ref 2139778 // LoggerFileBackend
   class_ref 2105474 // mdtDataRecord
   operation_ref 3229442 // mdtSqlRecord
   operation_ref 3229826 // toDataRecord

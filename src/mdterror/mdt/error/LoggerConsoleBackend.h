@@ -18,27 +18,35 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ERROR_TEST_H
-#define MDT_ERROR_TEST_H
+#ifndef MDT_ERROR_LOGGER_CONSOLE_BACKEND_H
+#define MDT_ERROR_LOGGER_CONSOLE_BACKEND_H
 
-#include "mdtTest.h"
+#include "LoggerBackend.h"
+#include <QString>
 
-class mdtErrorTest : public mdtTest
-{
- Q_OBJECT
+namespace mdt{ namespace error {
 
- private slots:
+  /*! \brief Console backend for error Logger
+   */
+  class LoggerConsoleBackend : public LoggerBackend
+  {
+   public:
 
-  void sandbox();
+    /*! \brief Destructor
+     */
+    ~LoggerConsoleBackend();
 
-  void constructAndCopyTest();
-  void errorStackTest();
-  void setSourceTest();
+    /*! \brief Log given error
+     */
+    void logError(const mdtErrorV2 & error);
 
-  void errorLoggerConsoleBackendTest();
-  void errorLoggerFileBackendTest();
-  void errorLoggerTest();
-  void errorLoggerConcurrentAccessTest();
-};
+   private:
 
-#endif // #ifndef MDT_ERROR_TEST_H
+    /*! \brief Get error informations
+     */
+    QString getErrorString(const mdtErrorV2 & error) const;
+  };
+
+}}  // namespace mdt{ namespace error {
+
+#endif // #ifndef MDT_ERROR_LOGGER_CONSOLE_BACKEND_H
