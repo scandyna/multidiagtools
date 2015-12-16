@@ -1,6 +1,6 @@
 format 210
 "error" // mdterror::mdt::error
-  revision 1
+  revision 2
   modified_by 2 "philippe"
   // class settings
   
@@ -297,5 +297,4 @@ ${inlines}
       end
     end
   end
-
 end

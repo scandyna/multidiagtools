@@ -23,6 +23,8 @@
 
 #include <QString>
 
+#include <QDebug>
+
 class mdtErrorV2;
 
 namespace mdt{ namespace error {
@@ -39,9 +41,16 @@ namespace mdt{ namespace error {
   {
    public:
 
+    /*! \brief Constructor
+     */
+    LoggerBackend(){}
+
     /*! \brief Destructor
      */
-    virtual ~LoggerBackend(){}
+    virtual ~LoggerBackend()
+    {
+      qDebug() << "~LoggerBackend()";
+    }
 
     /*! \brief Log given error
      *
@@ -49,6 +58,12 @@ namespace mdt{ namespace error {
      *  (witch is not the main thread).
      */
     virtual void logError(const mdtErrorV2 & error) = 0;
+
+    // Disable copy and move
+    LoggerBackend(const LoggerBackend &) = delete;
+    LoggerBackend(LoggerBackend &&) = delete;
+    LoggerBackend & operator=(const LoggerBackend &) = delete;
+    LoggerBackend & operator=(LoggerBackend &&) = delete;
 
    protected:
 

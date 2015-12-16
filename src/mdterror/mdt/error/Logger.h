@@ -21,21 +21,40 @@
 #ifndef MDT_ERROR_LOGGER_H
 #define MDT_ERROR_LOGGER_H
 
+#include "mdtErrorV2.h"
+#include <thread>
 #include <mutex>
+#include <condition_variable>
+#include <atomic>
+#include <vector>
+#include <memory>
 
 namespace mdt{ namespace error {
+
+  class LoggerBackend;
 
   /*! \brief Helper class to log mdtError objects
   */
   class Logger
   {
-  public:
+   public:
 
     // Disable copy and move
     Logger(const Logger &) = delete;
     Logger(Logger &&) = delete;
     Logger & operator=(const Logger &) = delete;
     Logger & operator=(Logger &&) = delete;
+
+    /*! \brief Add a logger backend
+     */
+    static void addBackend(const std::shared_ptr<LoggerBackend> & backend);
+
+    /*! \brief Log given error
+     *
+     * This function is thread safe
+     * \pre error must not be null
+     */
+    static void logError(const mdtErrorV2 & error);
 
     /*! \brief Cleanup
     *
@@ -48,7 +67,6 @@ namespace mdt{ namespace error {
 
   private:
 
-
     // mdtErrorLogger is a singleton
     Logger();
 
@@ -56,7 +74,35 @@ namespace mdt{ namespace error {
     */
     static Logger & instance();
 
+    /*! \brief Enqueue error and start thread if needed
+     */
+    void logErrorImpl(const mdtErrorV2 & error);
+
+    /*! \brief Start worker thread
+     */
+    void start();
+
+    /*! \brief Stop worker thread
+     */
+    void stop();
+
+    /*! \brief Take a error from queue
+     *
+     * Returns a null error if queue was empty
+     */
+    mdtErrorV2 takeError();
+
+    /*! \brief Worker thread function
+     */
+    void run();
+
     std::mutex pvMutex;
+    std::condition_variable pvNewWork;
+    std::condition_variable pvWorkDone;
+    std::atomic<bool> pvRunning;
+    std::vector<mdtErrorV2> pvErrorQueue;
+    std::vector<std::shared_ptr<LoggerBackend>> pvBackends;
+    std::thread pvThread;
   };
 
   /*! \brief Scope guard for error Logger

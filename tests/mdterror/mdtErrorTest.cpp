@@ -22,6 +22,7 @@
 #include "mdtApplication.h"
 #include "mdtErrorV2.h"
 #include "mdt/error/Logger.h"
+#include "mdt/error/LoggerBackend.h"
 #include "mdt/error/LoggerConsoleBackend.h"
 #include "mdt/error/LoggerFileBackend.h"
 #include <QObject>
@@ -32,8 +33,28 @@
 #include <QTemporaryFile>
 #include <QFile>
 #include <memory>
+#include <vector>
 
 #include <QDebug>
+
+/*
+ * Logger backend for tests
+ */
+class mdtErrorLoggerTestBackend : public mdt::error::LoggerBackend
+{
+ public:
+  mdtErrorLoggerTestBackend(){}
+  ~mdtErrorLoggerTestBackend(){}
+  void logError(const mdtErrorV2 & error)
+  {
+    errorList.push_back(error);
+  }
+  std::vector<mdtErrorV2> errorList;
+};
+
+/*
+ * mdtErrorTest implementation
+ */
 
 void mdtErrorTest::sandbox()
 {
@@ -522,9 +543,30 @@ void mdtErrorTest::errorLoggerTest()
   using namespace mdt::error;
 
   LoggerGuard loggerGard;
+  auto fileBackend = std::make_shared<LoggerFileBackend>();
+  std::shared_ptr<mdtErrorLoggerTestBackend> backend(new mdtErrorLoggerTestBackend);
+  
+  QTemporaryFile tmpFile;
+  QVERIFY(tmpFile.open());
+  tmpFile.close();
 
+  fileBackend->setLogFilePath(tmpFile.fileName());
+  
+  Logger::addBackend(std::make_shared<LoggerConsoleBackend>());
+  Logger::addBackend(fileBackend);
+  // Use our sentinel backend
+  ///Logger::addBackend(std::make_shared<mdtErrorLoggerTestBackend>());
+  Logger::addBackend(backend);
 
+  auto error1 = mdtErrorNewTQ(int, 1, "error1", mdtErrorV2::Error, this);
+  Logger::logError(error1);
 
+  Logger::cleanup();
+  
+  QVERIFY(tmpFile.open());
+  qDebug() << "Logfile: " << tmpFile.readAll();
+  
+  
 }
 
 void mdtErrorTest::errorLoggerConcurrentAccessTest()
