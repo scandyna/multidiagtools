@@ -1,15 +1,13 @@
-window_sizes 1280 964 323 951 911 0
+window_sizes 1280 964 372 902 911 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 169474 // mdtError
+  classdiagram_ref 1715458 // mdtErrorOut
     951 911 100 4 0 0
-  classdiagram_ref 1715842 // mdtErrorStack
-    120 106 100 4 0 0
-  active  classdiagram_ref 1715458 // mdtErrorOut
-    951 911 100 4 0 0
+  active  classdiagram_ref 1769090 // errorLogger
+    902 911 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1715458 // mdtErrorOut
+selected attribute_ref 2164610 // Mutex
 open
   class_ref 2064514 // CInternalBase
   operation_ref 3193090 // mdtError
@@ -32,9 +30,14 @@ open
   operation_ref 280066 // fileLine
   operation_ref 3193218 // logText
   operation_ref 278914 // setSource
+  class_ref 2131842 // mdtErrorLogger
   class_ref 2105474 // mdtDataRecord
   operation_ref 3229442 // mdtSqlRecord
   operation_ref 3229826 // toDataRecord
   class_ref 2125186 // QSharedData
+  class_ref 2132098 // QDebugStateSaver
+  class_ref 2132226 // QDebug
+  class_ref 2132482 // QMessageLogger
+  class_ref 2132866 // lock
 end
 end
