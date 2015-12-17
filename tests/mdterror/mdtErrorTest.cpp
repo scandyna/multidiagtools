@@ -64,72 +64,6 @@ Q_DECLARE_METATYPE(ErrorVectorType);
  * mdtErrorTest implementation
  */
 
-#include <thread>
-#include <mutex>
-#include <condition_variable>
-
-std::mutex mutex25;
-std::condition_variable cv;
-QString data;
-bool ready = false;
-bool proceed = false;
-
-void workerThreadFunction()
-{
-  // Wait until main sends data
-  std::unique_lock<std::mutex> lock(mutex25);
-  cv.wait(lock, []{return ready;});
-
-  // Woke up, take the lock
-  qDebug() << "Worker, processing...";
-  data += " after process";
-
-  // Notify processed
-  proceed = true;
-  qDebug() << "Worker, processing done";
-
-  // Unlock and notify
-  lock.unlock();
-  cv.notify_one();
-}
-
-void mdtErrorTest::sandbox()
-{
-  std::thread worker(workerThreadFunction);
-
-  data = "Example data";
-  // Send data to wroker
-  {
-    std::lock_guard<std::mutex> lock(mutex25);
-    ready = true;
-    qDebug() << "main: data ready";
-  }
-  cv.notify_one();
-
-  // Wait for the worker
-  {
-    std::unique_lock<std::mutex> lock(mutex25);
-    cv.wait(lock, []{return proceed;});
-  }
-  qDebug() << "Main: data: " << data;
-
-  worker.join();
-}
-
-void workerThread2()
-{
-  qDebug() << "Worker thread 2";
-}
-
-void mdtErrorTest::sandbox2()
-{
-  for(int i = 0; i < 10; ++i){
-    std::thread thd(workerThread2);
-    thd.join();
-  }
-}
-
-
 void mdtErrorTest::constructAndCopyTest()
 {
   /*
@@ -552,7 +486,7 @@ void mdtErrorTest::errorLoggerFileBackendTest()
   /*
    * Initial state
    */
-  QCOMPARE(backend.maxFileSize(), 1024);
+  QCOMPARE(backend.maxFileSize(), 1024*1024);
   /*
    * Setup logger backend
    */
@@ -613,7 +547,6 @@ void mdtErrorTest::errorLoggerTest()
 
   LoggerGuard loggerGard;
   auto testBackend = std::make_shared<mdtErrorLoggerTestBackend>();
-//   QVector<mdtErrorV2> errorList;
   QFETCH(ErrorVectorType, errorList); // ErrorVectorType == QVector<mdtError>
   QFETCH(int, interLogWaitTime);
   QFETCH(int, endWaitTime);
@@ -623,7 +556,6 @@ void mdtErrorTest::errorLoggerTest()
   // Log errors
   for(const auto & error : errorList){
     QVERIFY(!error.isNull());
-    qDebug() << "Calling for log error " << error.text();
     Logger::logError(error);
     if(interLogWaitTime > 0){
       QTest::qWait(interLogWaitTime);
@@ -639,8 +571,6 @@ void mdtErrorTest::errorLoggerTest()
   for(int i = 0; i < errorList.size(); ++i){
     auto error = testBackend->errorList.at(i);
     auto expectedError = errorList.at(i);
-    qDebug() << "error: " << error.text() << " , expected error: " << expectedError.text();
-    
     QVERIFY(error.level() == expectedError.level());
     QCOMPARE(error.text(), expectedError.text());
     QCOMPARE(error.informativeText(), expectedError.informativeText());
@@ -669,15 +599,57 @@ void mdtErrorTest::errorLoggerTest_data()
   QTest::newRow("2,0,0") << errorList << 0 << 0;
   QTest::newRow("2,1,0") << errorList << 1 << 0;
   QTest::newRow("2,0,1") << errorList << 0 << 1;
+  // 3 errors
+  error.setError("error3", mdtErrorV2::Warning);
+  errorList.append(error);
+  QTest::newRow("3,0,0") << errorList << 0 << 0;
+  QTest::newRow("3,1,0") << errorList << 1 << 0;
+  QTest::newRow("3,0,1") << errorList << 0 << 1;
+  QTest::newRow("3,0,1") << errorList << 1 << 1;
+}
 
-  
+void errorLoggerConcurrentAccessTestWorker(const mdtErrorV2 & error)
+{
+  mdt::error::Logger::logError(error);
 }
 
 void mdtErrorTest::errorLoggerConcurrentAccessTest()
 {
-  
+  using namespace mdt::error;
 
-  
+  LoggerGuard loggerGard;
+  auto testBackend = std::make_shared<mdtErrorLoggerTestBackend>();
+  std::vector<std::thread> threadList;
+  QFETCH(ErrorVectorType, errorList); // ErrorVectorType == QVector<mdtError>
+
+  // Setup logger
+  Logger::addBackend(testBackend);
+  // Create threads
+  for(int i = 0; i < errorList.size(); ++i){
+    threadList.emplace_back(std::thread(errorLoggerConcurrentAccessTestWorker, errorList.at(i)));
+  }
+  // Join our threads
+  for(auto & thd : threadList){
+    thd.join();
+  }
+  // Explicitly cleanup here (to join logger thread)
+  Logger::cleanup();
+  // Check that all errors where logged
+  QCOMPARE((int)testBackend->errorList.size(), errorList.size());
+}
+
+void mdtErrorTest::errorLoggerConcurrentAccessTest_data()
+{
+  QTest::addColumn<ErrorVectorType>("errorList");
+
+  ErrorVectorType errorList;
+  const int maxThreads = 20;
+
+  for(int i = 0; i <= maxThreads; ++i){
+    mdtErrorV2 error = mdtErrorNewQ("error" + QString::number(i), mdtErrorV2::Error, this);
+    errorList.append(error);
+    QTest::newRow(QString::number(i).toStdString().c_str()) << errorList;
+  }
 }
 
 

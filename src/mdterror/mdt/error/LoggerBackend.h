@@ -23,8 +23,6 @@
 
 #include <QString>
 
-#include <QDebug>
-
 class mdtErrorV2;
 
 namespace mdt{ namespace error {
@@ -49,7 +47,6 @@ namespace mdt{ namespace error {
      */
     virtual ~LoggerBackend()
     {
-      qDebug() << "~LoggerBackend()";
     }
 
     /*! \brief Log given error

@@ -29,9 +29,6 @@ class mdtErrorTest : public mdtTest
 
  private slots:
 
-  void sandbox();
-  void sandbox2();
-
   void constructAndCopyTest();
   void errorStackTest();
   void setSourceTest();
@@ -41,6 +38,7 @@ class mdtErrorTest : public mdtTest
   void errorLoggerTest();
   void errorLoggerTest_data();
   void errorLoggerConcurrentAccessTest();
+  void errorLoggerConcurrentAccessTest_data();
 };
 
 #endif // #ifndef MDT_ERROR_TEST_H

@@ -46,11 +46,7 @@ void Logger::cleanup()
 }
 
 Logger::Logger()
-//  : pvEventForThread(NoEvent),
-//    pvAllErrorsLogged(false),
-//    pvThread(&Logger::run, std::ref(*this))
 {
-  qDebug() << "Logger::Logger()";
 }
 
 Logger& Logger::instance()
@@ -63,13 +59,13 @@ void Logger::logErrorImpl(const mdtErrorV2 & error)
 {
   Q_ASSERT(!error.isNull());
 
-  // Start thread if needed
-  if(!pvThread.joinable()){
-    start();
-  }
   // Queue error and wake up thread
   {
     std::unique_lock<std::mutex> lock(pvMutex);
+    // Start thread if needed
+    if(!pvThread.joinable()){
+      start();
+    }
     pvErrorQueue.push(error);
     pvEventForThread = ErrorsToLog;
     pvAllErrorsLogged = false;
@@ -93,7 +89,6 @@ void Logger::stop()
     return;
   }
   // Wait until all errors are logged
-  qDebug() << "Stop, wait all errors logged";
   {
     std::unique_lock<std::mutex> lock(pvMutex);
     if(!pvAllErrorsLogged){
@@ -103,14 +98,6 @@ void Logger::stop()
     pvEventForThread = End;
     pvCv.notify_one();
   }
-//   qDebug() << "Stop, wake up thread..";
-//   // Tell thread that it must finish
-//   {
-//     std::unique_lock<std::mutex> lock(pvMutex);
-//     pvEventForThread = End;
-//     pvCv.notify_one();
-//   }
-  qDebug() << "Stop, join...";
   // Join thread
   if(pvThread.joinable()){
     pvThread.join();
@@ -143,16 +130,13 @@ void Logger::outputErrorToBackends(const mdtErrorV2 & error)
 
 void Logger::run()
 {
-  qDebug() << "THD: starting...";
   mdtErrorV2 error;
   bool running = true;
 
-  qDebug() << "THD: started...";
   // Work..
   while(running){
-    // Wait for new job or end
-    qDebug() << "THD: Going to wait ...";
     /*
+     * Wait for new job or end:
      * We must lock the mutex before wait.
      * wait will then relese it.
      * Once wait returns, the mutex is locked again.
@@ -163,12 +147,10 @@ void Logger::run()
       std::unique_lock<std::mutex> lock(pvMutex);
       pvCv.wait(lock, [=]{return pvEventForThread != NoEvent;});
     }
-    qDebug() << "THD: woke up , pvEventForThread: " << pvEventForThread;
     // Log all available errors
     do{
       error = takeError();
       if(!error.isNull()){
-        qDebug() << "THD: logging error " << error.text();
         outputErrorToBackends(error);
       }
     }while(!error.isNull());
@@ -185,7 +167,6 @@ void Logger::run()
     }
     pvCv.notify_one();
   }
-  qDebug() << "THD: END";
 }
 
 /*
