@@ -145,9 +145,9 @@ bool mdtCsvFile::writeLine(const QStringList & line, const mdtCsvFileSettings & 
   }
   str += eol;
   if(write(pvCodec->fromUnicode(str)) < 0){
-    mdtError e(MDT_FILE_IO_ERROR, "Write error occured on file " + fileName(), mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtCsvFile");
-    e.commit();
+//     mdtError e(MDT_FILE_IO_ERROR, "Write error occured on file " + fileName(), mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtCsvFile");
+//     e.commit();
     return false;
   }
 
@@ -212,9 +212,9 @@ bool mdtCsvFile::readLine(QByteArray &line, const QString &dataProtection, const
         // Search until we find a closing data protrection to confirm that we found a opening one
         readUntilDataProtection(buffer, dpCursor, dataProtection, escapeChar);
         if(dpCursor < 0){
-          mdtError e(MDT_FILE_IO_ERROR, "In file " + fileName() + " : format error (missing a closing " + dataProtection + ")", mdtError::Error);
-          MDT_ERROR_SET_SRC(e, "mdtCsvFile");
-          e.commit();
+//           mdtError e(MDT_FILE_IO_ERROR, "In file " + fileName() + " : format error (missing a closing " + dataProtection + ")", mdtError::Error);
+//           MDT_ERROR_SET_SRC(e, "mdtCsvFile");
+//           e.commit();
           return false;
         }else{
           line.append(buffer.left(dpCursor+dataProtection.size()));
@@ -256,9 +256,9 @@ bool mdtCsvFile::readLines(const QString &separator, const QString &dataProtecti
 
   // Check if file was open
   if(!isOpen()){
-    mdtError e(MDT_FILE_IO_ERROR, "File " + fileName() + " is not open", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtCsvFile");
-    e.commit();
+//     mdtError e(MDT_FILE_IO_ERROR, "File " + fileName() + " is not open", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtCsvFile");
+//     e.commit();
     return false;
   }
   // Clear previous results

@@ -42,8 +42,7 @@ bool mdtFrameCodecK8055::decode(QByteArray &data)
   pvValues.clear();
   // Check data
   if(data.size() != 8){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Wrong size, expected: 8", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecK8055");
+    auto e = mdtErrorNew("Wrong size, expected: 8", mdtError::Error, "mdtFrameCodecK8055");
     e.commit();
     return false;
   }

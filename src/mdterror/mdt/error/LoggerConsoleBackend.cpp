@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "LoggerConsoleBackend.h"
-#include "mdtErrorV2.h"
+#include "mdtError.h"
 #include <QDebug>
 #include <QDebugStateSaver>
 #include <QLatin1String>
@@ -30,7 +30,7 @@ LoggerConsoleBackend::~LoggerConsoleBackend()
 {
 }
 
-void LoggerConsoleBackend::logError(const mdtErrorV2& error)
+void LoggerConsoleBackend::logError(const mdtError& error)
 {
   QDebug dbg(QtDebugMsg);
   QDebugStateSaver stateSaver(dbg);
@@ -50,7 +50,7 @@ void LoggerConsoleBackend::logError(const mdtErrorV2& error)
   dbg << msg;
 }
 
-QString LoggerConsoleBackend::getErrorString(const mdtErrorV2 & error) const
+QString LoggerConsoleBackend::getErrorString(const mdtError & error) const
 {
   QString str;
   QString informativeText;

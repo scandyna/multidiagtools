@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtUsbtmcPortSetupDialog.h"
 #include "mdtCodecScpi.h"
+#include "mdtErrorDialog.h"
 #include <QWidget>
 #include <QAbstractButton>
 #include <QDialogButtonBox>
@@ -221,10 +222,6 @@ QString mdtUsbtmcPortSetupDialog::interfaceDisplayText(const mdtUsbInterfaceDesc
 
 void mdtUsbtmcPortSetupDialog::displayLastError()
 {
-  QMessageBox msgBox(this);
-
-  msgBox.setText(pvLastError.text());
-  msgBox.setDetailedText(pvLastError.systemText());
-  ///msgBox.setIcon(pvLastError.levelIcon());
-  msgBox.exec();
+  mdtErrorDialog dialog(this);
+  dialog.exec();
 }

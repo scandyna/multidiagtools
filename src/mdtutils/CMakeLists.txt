@@ -6,7 +6,8 @@
 project (multidiagtools)
 
 # List of source files
-set (SOURCES_FILES 
+set (SOURCES_FILES
+          mdtFileError.cpp
           mdtAlgorithms.cpp
           mdtMath.cpp
           mdtBuffer.cpp
@@ -24,9 +25,6 @@ set (SOURCES_FILES
           mdtFrameCodecK8055.cpp
           # Codec
           mdtCodecScpi.cpp
-          # mdtError
-          mdtError.cpp
-          mdtErrorOut.cpp
           # File
           mdtCsvFile.cpp
           # UIC number
@@ -88,6 +86,7 @@ endif(WIN32)
 add_library (mdtutils${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
 target_link_libraries(mdtutils${MDTLIB_VERSION_SUFFIX} Qt5::Core)
 target_link_libraries(mdtutils${MDTLIB_VERSION_SUFFIX} "qtsingleapplication${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtutils${MDTLIB_VERSION_SUFFIX} "mdterror${MDTLIB_VERSION_SUFFIX}")
 
 # Translations - We generate a .pro file, that simplify the usage of lupdate
 file(WRITE "${PROJECT_SOURCE_DIR}/../../translations/mdtutils.pro" "# Translations project file for lupdate/lrelease\n")

@@ -157,25 +157,25 @@ bool mdtSqlDatabaseManager::openDatabaseSqlite(const QFileInfo & fileInfo, const
     }
   }
   if(!pvDatabase.isValid()){
-    pvLastError = mdtError(tr("Cannot create database connection (probably plugin/driver problem)"), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
-    pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
-    pvLastError.commit();
+//     pvLastError = mdtError(tr("Cannot create database connection (probably plugin/driver problem)"), mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+//     pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
+//     pvLastError.commit();
     return false;
   }
   if(pvDatabase.driverName() != "QSQLITE"){
-    pvLastError = mdtError(tr("Requested connection allready exists but is not for Sqlite."), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
-    pvLastError.commit();
+//     pvLastError = mdtError(tr("Requested connection allready exists but is not for Sqlite."), mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+//     pvLastError.commit();
     return false;
   }
   pvDatabase.setDatabaseName(pvDatabaseName);
   if(!pvDatabase.open()){
-    pvLastError = mdtError(tr("Cannot open database '") + pvDatabaseName + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
-    pvLastError.setInformativeText(tr("Check that you have write access to directory '") + fileInfo.absoluteDir().path() + tr("'."));
-    pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
-    pvLastError.commit();
+//     pvLastError = mdtError(tr("Cannot open database '") + pvDatabaseName + "'", mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+//     pvLastError.setInformativeText(tr("Check that you have write access to directory '") + fileInfo.absoluteDir().path() + tr("'."));
+//     pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
+//     pvLastError.commit();
     return false;
   }
   Q_ASSERT(pvDatabase.isValid());
@@ -190,10 +190,10 @@ bool mdtSqlDatabaseManager::openDatabaseSqlite(const QFileInfo & fileInfo, const
   QSqlQuery query(pvDatabase);
   // At default, synchronous write is set to FULL. This is safe, but really slow..
   if(!query.exec("PRAGMA synchronous = NORMAL")){
-    pvLastError.setError(tr("Cannot set PRAGMA synchronous to NORMAL (its probably set to FULL now). Database: '") + pvDatabaseName + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
-    pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
-    pvLastError.commit();
+//     pvLastError.setError(tr("Cannot set PRAGMA synchronous to NORMAL (its probably set to FULL now). Database: '") + pvDatabaseName + "'", mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+//     pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
+//     pvLastError.commit();
     /// \todo Error ? Close here ?
     return false;
   }
@@ -243,7 +243,7 @@ bool mdtSqlDatabaseManager::createDatabaseSqlite(const QDir & startDirectory, co
     QMessageBox msgBox(pvForDialogParentWidget);
     msgBox.setText(pvLastError.text());
     msgBox.setInformativeText(pvLastError.informativeText());
-    msgBox.setDetailedText(pvLastError.systemErrorString(&msgBox));
+//     msgBox.setDetailedText(pvLastError.systemErrorString(&msgBox));
     ///msgBox.setIcon(pvLastError.levelIcon());
     msgBox.setWindowTitle(tr("Error during database creation."));
     msgBox.exec();
@@ -259,9 +259,9 @@ bool mdtSqlDatabaseManager::createDatabaseSqlite(const QFileInfo & fileInfo, cre
 
   // Check if directory exists
   if(!fileInfo.absoluteDir().exists()){
-    pvLastError = mdtError(tr("Directory '") + fileInfo.absoluteDir().path() + tr("' does not exists.") , mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
-    pvLastError.commit();
+//     pvLastError = mdtError(tr("Directory '") + fileInfo.absoluteDir().path() + tr("' does not exists.") , mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+//     pvLastError.commit();
     return false;
   }
   // Store the database name
@@ -295,17 +295,17 @@ bool mdtSqlDatabaseManager::createDatabaseSqlite(const QFileInfo & fileInfo, cre
       case KeepExisting:
         break;
       case FailIfExists:
-        pvLastError = mdtError(tr("Database '") + fileInfo.fileName() + tr("' allready exists") , mdtError::Error);
-        MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
-        pvLastError.commit();
+//         pvLastError = mdtError(tr("Database '") + fileInfo.fileName() + tr("' allready exists") , mdtError::Error);
+//         MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+//         pvLastError.commit();
         return false;
       case OverwriteExisting:
         file.setFileName(fileInfo.absoluteFilePath());
         if(!file.resize(0)){
-          pvLastError = mdtError(tr("File truncate failed for file '") + fileInfo.absoluteFilePath() + "'", mdtError::Error);
-          MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
-          pvLastError.setSystemError(file.error(), file.errorString());
-          pvLastError.commit();
+//           pvLastError = mdtError(tr("File truncate failed for file '") + fileInfo.absoluteFilePath() + "'", mdtError::Error);
+//           MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+//           pvLastError.setSystemError(file.error(), file.errorString());
+//           pvLastError.commit();
           return false;
         }
         break;
@@ -313,10 +313,10 @@ bool mdtSqlDatabaseManager::createDatabaseSqlite(const QFileInfo & fileInfo, cre
         if(userChooseToOverwriteFile(fileInfo)){
           file.setFileName(fileInfo.absoluteFilePath());
           if(!file.resize(0)){
-            pvLastError = mdtError(tr("File truncate failed for file '") + fileInfo.absoluteFilePath() + "'", mdtError::Error);
-            MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
-            pvLastError.setSystemError(file.error(), file.errorString());
-            pvLastError.commit();
+//             pvLastError = mdtError(tr("File truncate failed for file '") + fileInfo.absoluteFilePath() + "'", mdtError::Error);
+//             MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+//             pvLastError.setSystemError(file.error(), file.errorString());
+//             pvLastError.commit();
             return false;
           }
         }
@@ -338,25 +338,25 @@ bool mdtSqlDatabaseManager::createDatabaseSqlite(const QFileInfo & fileInfo, cre
     }
   }
   if(!pvDatabase.isValid()){
-    pvLastError = mdtError(tr("Cannot create database connection (probably plugin/driver problem)"), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
-    pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
-    pvLastError.commit();
+//     pvLastError = mdtError(tr("Cannot create database connection (probably plugin/driver problem)"), mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+//     pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
+//     pvLastError.commit();
     return false;
   }
   if(pvDatabase.driverName() != "QSQLITE"){
-    pvLastError = mdtError(tr("Requested connection allready exists but is not for Sqlite."), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
-    pvLastError.commit();
+//     pvLastError = mdtError(tr("Requested connection allready exists but is not for Sqlite."), mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+//     pvLastError.commit();
     return false;
   }
   pvDatabase.setDatabaseName(pvDatabaseName);
   if(!pvDatabase.open()){
-    pvLastError = mdtError(tr("Cannot open database '") + pvDatabaseName + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
-    pvLastError.setInformativeText(tr("Check that you have write access to directory '") + fileInfo.absoluteDir().path() + tr("'."));
-    pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
-    pvLastError.commit();
+//     pvLastError = mdtError(tr("Cannot open database '") + pvDatabaseName + "'", mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+//     pvLastError.setInformativeText(tr("Check that you have write access to directory '") + fileInfo.absoluteDir().path() + tr("'."));
+//     pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
+//     pvLastError.commit();
     return false;
   }
   Q_ASSERT(pvDatabase.isValid());
@@ -382,10 +382,10 @@ bool mdtSqlDatabaseManager::createDatabaseSqlite(const QFileInfo & fileInfo, cre
   QSqlQuery query(pvDatabase);
   // At defoult, synchronous write is set to FULL. This is safe, but really slow..
   if(!query.exec("PRAGMA synchronous = NORMAL")){
-    pvLastError.setError(tr("Cannot set PRAGMA synchronous to NORMAL (its probably set to FULL now). Database: '") + pvDatabaseName + "'", mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
-    pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
-    pvLastError.commit();
+//     pvLastError.setError(tr("Cannot set PRAGMA synchronous to NORMAL (its probably set to FULL now). Database: '") + pvDatabaseName + "'", mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+//     pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
+//     pvLastError.commit();
     /// \todo Error ? Close here ?
     return false;
   }
@@ -399,9 +399,9 @@ bool mdtSqlDatabaseManager::createTable(mdtSqlSchemaTable & table, createMode_t 
   QSqlError sqlError;
 
   if(!pvDatabase.isOpen()){
-    pvLastError.setError(tr("Cannot create table because database is closed."), mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
-    pvLastError.commit();
+//     pvLastError.setError(tr("Cannot create table because database is closed."), mdtError::Error);
+//     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseManager");
+//     pvLastError.commit();
     return false;
   }
   QSqlQuery query(pvDatabase);

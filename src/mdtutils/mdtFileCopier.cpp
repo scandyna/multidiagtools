@@ -218,10 +218,9 @@ bool mdtFileCopier::startCopy()
           msgDetails += tr("Cannot copy file '") + pvSrcFileInfo.fileName() + tr("' to '") + pvDestFileInfo.absolutePath() + tr("' : filesystem is read only\n\n");
           break;
         default:
-          mdtError e(MDT_FILE_IO_ERROR, "fopen() failed for " + item->destFilePath(), mdtError::Error);
-          e.setSystemError(errno, strerror(errno));
-          MDT_ERROR_SET_SRC(e, "mdtFileCopier");
-          e.commit();
+          auto error = mdtErrorNewQ("fopen() failed for " + item->destFilePath(), mdtError::Error, this);
+          auto sysError = mdtErrorNewTQ(int, errno, strerror(errno), mdtError::Error, this); error.stackError(sysError);
+          error.commit();
           msgDetails += tr("Cannot copy file '") + pvSrcFileInfo.fileName() + tr("' to '") + pvDestFileInfo.absolutePath() + " : " + QString(strerror(errno)) + "\n";
           break;
       }
@@ -389,25 +388,22 @@ bool mdtFileCopier::sync(FILE *f)
 #ifdef Q_OS_WIN
   HANDLE h = (HANDLE)_get_osfhandle(fileno(f));
   if(h == INVALID_HANDLE_VALUE){
-    mdtError e(MDT_FILE_IO_ERROR, "Getting file handle failed", mdtError::Error);
+    auto error = mdtErrorNewQ("Getting file handle failed", mdtError::Error, this);
     e.setSystemErrorWinApi();
-    MDT_ERROR_SET_SRC(e, "mdtFileCopier");
-    e.commit();
+    error.commit();
     return false;
   }
   if(FlushFileBuffers(h) == 0){
-    mdtError e(MDT_FILE_IO_ERROR, "FlushFileBuffers call failed", mdtError::Error);
+    auto error = mdtErrorNewQ("FlushFileBuffers call failed", mdtError::Error, this);
     e.setSystemErrorWinApi();
-    MDT_ERROR_SET_SRC(e, "mdtFileCopier");
-    e.commit();
+    error.commit();
     return false;
   }
 #else
   if(fsync(fileno(f)) < 0){
-    mdtError e(MDT_FILE_IO_ERROR, "Sync call failed", mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtFileCopier");
-    e.commit();
+    auto error = mdtErrorNewQ("Sync call failed", mdtError::Error, this);
+    auto sysError = mdtErrorNewTQ(int, errno, strerror(errno), mdtError::Error, this); error.stackError(sysError);
+    error.commit();
     return false;
   }
 #endif
@@ -479,20 +475,20 @@ void mdtFileCopier::run()
 //     srcFile = fopen(item->srcFilePath().toAscii().data(), "rb");
     srcFile = fopen(item->srcFilePath().toLocal8Bit().data(), "rb");
     if(srcFile == 0){
-      mdtError e(MDT_FILE_IO_ERROR, "Cannot open file: " + item->srcFilePath(), mdtError::Error);
-      e.setSystemError(errno, strerror(errno));
-      MDT_ERROR_SET_SRC(e, "mdtFileCopier");
-      e.commit();
+      auto error = mdtErrorNewQ("Cannot open file: " + item->srcFilePath(), mdtError::Error, this);
+      auto sysError = mdtErrorNewTQ(int, errno, strerror(errno), mdtError::Error, this); error.stackError(sysError);
+      
+      error.commit();
       failedCopies += item->srcFileName() + " -> " + item->destFilePath() + "\n\n";
       continue;
     }
 //     destFile = fopen(item->destFilePath().toAscii().data(), "wb");
     destFile = fopen(item->destFilePath().toLocal8Bit().data(), "wb");
     if(destFile == 0){
-      mdtError e(MDT_FILE_IO_ERROR, "Cannot open file: " + item->destFilePath(), mdtError::Error);
-      e.setSystemError(errno, strerror(errno));
-      MDT_ERROR_SET_SRC(e, "mdtFileCopier");
-      e.commit();
+      auto error = mdtErrorNewQ("Cannot open file: " + item->destFilePath(), mdtError::Error, this);
+      auto sysError = mdtErrorNewTQ(int, errno, strerror(errno), mdtError::Error, this); error.stackError(sysError);
+      
+      error.commit();
       fclose(srcFile);
       failedCopies += item->srcFileName() + " -> " + item->destFilePath() + "\n\n";
       continue;
@@ -510,10 +506,10 @@ void mdtFileCopier::run()
         // Remove current destination file (avoid currupted files..)
 //         if(remove(item->destFilePath().toAscii().data()) < 0){
         if(remove(item->destFilePath().toLocal8Bit().data()) < 0){
-          mdtError e(MDT_FILE_IO_ERROR, "Cannot remove file: " + item->destFilePath(), mdtError::Error);
-          e.setSystemError(errno, strerror(errno));
-          MDT_ERROR_SET_SRC(e, "mdtFileCopier");
-          e.commit();
+          auto error = mdtErrorNewQ("Cannot remove file: " + item->destFilePath(), mdtError::Error, this);
+          auto sysError = mdtErrorNewTQ(int, errno, strerror(errno), mdtError::Error, this); error.stackError(sysError);
+          
+          error.commit();
         }
         qDeleteAll(pvCopiesInProcess);
         pvCopiesInProcess.clear();
@@ -545,10 +541,10 @@ void mdtFileCopier::run()
             delete item;
             return;
           default:
-            mdtError e(MDT_FILE_IO_ERROR, "Write call failed on file: " + item->destFilePath(), mdtError::Error);
-            e.setSystemError(errno, strerror(errno));
-            MDT_ERROR_SET_SRC(e, "mdtFileCopier");
-            e.commit();
+            auto error = mdtErrorNewQ("Write call failed on file: " + item->destFilePath(), mdtError::Error, this);
+            auto sysError = mdtErrorNewTQ(int, errno, strerror(errno), mdtError::Error, this); error.stackError(sysError);
+            
+            error.commit();
             emit(copyEnded(failedCopies));
             pvMutex.lock();
             qDeleteAll(pvCopiesInProcess);
@@ -570,10 +566,10 @@ void mdtFileCopier::run()
     }
     // Flush
     if(fflush(destFile) != 0){
-      mdtError e(MDT_FILE_IO_ERROR, "Cannot flush file: " + item->destFilePath(), mdtError::Error);
-      e.setSystemError(errno, strerror(errno));
-      MDT_ERROR_SET_SRC(e, "mdtFileCopier");
-      e.commit();
+      auto error = mdtErrorNewQ("Cannot flush file: " + item->destFilePath(), mdtError::Error, this);
+      auto sysError = mdtErrorNewTQ(int, errno, strerror(errno), mdtError::Error, this); error.stackError(sysError);
+      
+      error.commit();
       failedCopies += item->srcFileName() + " -> " + item->destFilePath() + "\n\n";
     }
     // Sync, if needed
@@ -594,18 +590,18 @@ void mdtFileCopier::run()
     }
     // Close opened files
     if(fclose(srcFile) != 0){
-      mdtError e(MDT_FILE_IO_ERROR, "Cannot close file: " + item->srcFilePath(), mdtError::Error);
-      e.setSystemError(errno, strerror(errno));
-      MDT_ERROR_SET_SRC(e, "mdtFileCopier");
-      e.commit();
+      auto error = mdtErrorNewQ("Cannot close file: " + item->srcFilePath(), mdtError::Error, this);
+      auto sysError = mdtErrorNewTQ(int, errno, strerror(errno), mdtError::Error, this); error.stackError(sysError);
+      
+      error.commit();
     }
     srcFile = 0;
     if(fclose(destFile) != 0){
       // If fclose fails on destination, it can be a fatal error (device full, HW error, ...) - We cancel the copy
-      mdtError e(MDT_FILE_IO_ERROR, "Cannot close file: " + item->destFilePath(), mdtError::Error);
-      e.setSystemError(errno, strerror(errno));
-      MDT_ERROR_SET_SRC(e, "mdtFileCopier");
-      e.commit();
+      auto error = mdtErrorNewQ("Cannot close file: " + item->destFilePath(), mdtError::Error, this);
+      auto sysError = mdtErrorNewTQ(int, errno, strerror(errno), mdtError::Error, this); error.stackError(sysError);
+      
+      error.commit();
       failedCopies += item->srcFileName() + " -> " + item->destFilePath() + "\n\n";
       emit(copyEnded(failedCopies));
       pvMutex.lock();
@@ -622,10 +618,10 @@ void mdtFileCopier::run()
 //       destFile = fopen(item->destFilePath().toAscii().data(), "r");
       destFile = fopen(item->destFilePath().toLocal8Bit().data(), "r");
       if(destFile == 0){
-        mdtError e(MDT_FILE_IO_ERROR, "Cannot open file: " + item->destFilePath(), mdtError::Error);
-        e.setSystemError(errno, strerror(errno));
-        MDT_ERROR_SET_SRC(e, "mdtFileCopier");
-        e.commit();
+        auto error = mdtErrorNewQ("Cannot open file: " + item->destFilePath(), mdtError::Error, this);
+        auto sysError = mdtErrorNewTQ(int, errno, strerror(errno), mdtError::Error, this); error.stackError(sysError);
+        
+        error.commit();
         failedCopies += item->srcFileName() + " -> " + item->destFilePath() + tr("\n Open for verification failed\n\n");
         continue;
       }

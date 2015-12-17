@@ -30,7 +30,7 @@ void Logger::addBackend(const std::shared_ptr<LoggerBackend> & backend)
   instance().pvBackends.push_back(backend);
 }
 
-void Logger::logError(const mdtErrorV2 & error)
+void Logger::logError(const mdtError & error)
 {
   Q_ASSERT(!error.isNull());
   instance().logErrorImpl(error);
@@ -55,7 +55,7 @@ Logger& Logger::instance()
   return logger;
 }
 
-void Logger::logErrorImpl(const mdtErrorV2 & error)
+void Logger::logErrorImpl(const mdtError & error)
 {
   Q_ASSERT(!error.isNull());
 
@@ -104,9 +104,9 @@ void Logger::stop()
   }
 }
 
-mdtErrorV2 Logger::takeError()
+mdtError Logger::takeError()
 {
-  mdtErrorV2 error;
+  mdtError error;
   std::unique_lock<std::mutex> lock(pvMutex);
 
   if(pvErrorQueue.empty()){
@@ -118,7 +118,7 @@ mdtErrorV2 Logger::takeError()
   return error;
 }
 
-void Logger::outputErrorToBackends(const mdtErrorV2 & error)
+void Logger::outputErrorToBackends(const mdtError & error)
 {
   Q_ASSERT(!error.isNull());
 
@@ -130,7 +130,7 @@ void Logger::outputErrorToBackends(const mdtErrorV2 & error)
 
 void Logger::run()
 {
-  mdtErrorV2 error;
+  mdtError error;
   bool running = true;
 
   // Work..

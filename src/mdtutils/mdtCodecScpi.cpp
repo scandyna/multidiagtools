@@ -229,7 +229,8 @@ mdtError mdtCodecScpi::decodeDeviceError(const QByteArray& data, const QString &
     return mdtError();
   }
   // Fill error
-  error.setSystemError(code, fields.at(1).trimmed());
+  auto sysError = mdtErrorNewT(int, code, fields.at(1).trimmed(), mdtError::Error, "mdtCodecScpi");
+  error.stackError(sysError);
 
   return error;
 }

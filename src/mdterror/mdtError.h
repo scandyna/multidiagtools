@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ERROR_V2_H
-#define MDT_ERROR_V2_H
+#ifndef MDT_ERROR_H
+#define MDT_ERROR_H
 
 #include <QExplicitlySharedDataPointer>
 #include <QString>
@@ -31,7 +31,7 @@
 
 //#include <QDebug>
 
-class mdtErrorV2;
+class mdtError;
 
 /*! \internal Generic error
  */
@@ -69,7 +69,7 @@ struct mdtErrorPrivateBase : public QSharedData
   std::type_index userErrorType;
   QString text;
   QString informativeText;
-  std::vector<mdtErrorV2> pvErrorStack;
+  std::vector<mdtError> pvErrorStack;
   QString fileName;
   int lineNumber;
   QString functionName;
@@ -123,7 +123,7 @@ class QObject;
  *
  * \note If you create a error for a QObject subclass, you should use mdtErrorNewQ()
  */
-#define mdtErrorNew(text, level, className) mdtErrorV2(static_cast<mdtGenericError>(mdtGenericError()), text, level, __FILE__, __LINE__, className, __FUNCTION__)
+#define mdtErrorNew(text, level, className) mdtError(static_cast<mdtGenericError>(mdtGenericError()), text, level, __FILE__, __LINE__, className, __FUNCTION__)
 
 /*! \brief Helper macro to build a user defined mdtError with source file informations
  *
@@ -134,7 +134,7 @@ class QObject;
  *
  * \note If you create a error for a QObject subclass, you should use mdtErrorNewTQ()
  */
-#define mdtErrorNewT(T, error, text, level, className) mdtErrorV2(static_cast<T>(error), text, level, __FILE__, __LINE__, className, __FUNCTION__)
+#define mdtErrorNewT(T, error, text, level, className) mdtError(static_cast<T>(error), text, level, __FILE__, __LINE__, className, __FUNCTION__)
 
 /*! \brief Helper macro to build a mdtError with source file informations
  *
@@ -147,7 +147,7 @@ class QObject;
  * auto error = mdtErrorNewQ("Some error occured", mdtError::Error, this);
  * \endcode
  */
-#define mdtErrorNewQ(text, level, obj) mdtErrorV2(static_cast<mdtGenericError>(mdtGenericError()), text, level, __FILE__, __LINE__, obj, __FUNCTION__)
+#define mdtErrorNewQ(text, level, obj) mdtError(static_cast<mdtGenericError>(mdtGenericError()), text, level, __FILE__, __LINE__, obj, __FUNCTION__)
 
 /*! \brief Helper macro to build a user defined mdtError with source file informations
  *
@@ -160,13 +160,13 @@ class QObject;
  * auto error = mdtErrorNewTQ(int, -1, "Some error occured", mdtError::Error, this);
  * \endcode
  */
-#define mdtErrorNewTQ(T, error, text, level, obj) mdtErrorV2(static_cast<T>(error), text, level, __FILE__, __LINE__, obj, __FUNCTION__)
+#define mdtErrorNewTQ(T, error, text, level, obj) mdtError(static_cast<T>(error), text, level, __FILE__, __LINE__, obj, __FUNCTION__)
 
 /*! \brief Helper macro to set source file informations to a existing error
  *
  * \note If you create a error for a QObject subclass, you should use MDT_ERROR_SET_SRC_Q()
  */
-///#define MDT_ERROR_SET_SRC(e, className) e.setSource(__FILE__, __LINE__, className, __FUNCTION__)
+#define MDT_ERROR_SET_SRC(e, className) e.setSource(__FILE__, __LINE__, className, __FUNCTION__)
 
 /*! \brief Helper macro to set source file informations to a existing error
  *
@@ -204,7 +204,7 @@ class QObject;
  * Then, saveDocument() will fail, create its own mdtError object, and stack the one returned by writeToFile().
  * To stack a error, use stackError() , and use getErrorStack() to get stacked errors back.
  */
-class mdtErrorV2
+class mdtError
 {
  public:
 
@@ -220,7 +220,7 @@ class mdtErrorV2
 
   /*! \brief Construct a null error
    */
-  mdtErrorV2();
+  mdtError();
 
   /*! \brief Construct a error with error and source set
    *
@@ -228,7 +228,7 @@ class mdtErrorV2
    *  Consider using mdtErrorNew() or mdtErrorNewT() macro.
    */
   template <typename T>
-  mdtErrorV2(const T & error, const QString & text, Level level,
+  mdtError(const T & error, const QString & text, Level level,
              const QString & fileName, int fileLine, const QString & className, const QString & functionName)
   {
     static_assert(std::is_default_constructible<T>::value, "T must be default constructible");
@@ -244,7 +244,7 @@ class mdtErrorV2
    *  Consider using mdtErrorNewQ() or mdtErrorNewTQ() macro.
    */
   template <typename T>
-  mdtErrorV2(const T & error, const QString & text, Level level,
+  mdtError(const T & error, const QString & text, Level level,
              const QString & fileName, int fileLine, const QObject * const obj, const QString & functionName)
   {
     static_assert(std::is_default_constructible<T>::value, "T must be default constructible");
@@ -258,7 +258,7 @@ class mdtErrorV2
   /*! \brief Construct a copy of other error
    */
   // Copy construct is handled by QExplicitlySharedDataPointer
-  mdtErrorV2(const mdtErrorV2 &) = default;
+  mdtError(const mdtError &) = default;
 
   //mdtErrorV2(mdtErrorV2 &&) = default;
 
@@ -388,14 +388,14 @@ class mdtErrorV2
    * \pre this error and given error must not be null
    * \sa getErrorStack()
    */
-  void stackError(const mdtErrorV2 & error);
+  void stackError(const mdtError & error);
 
   /*! \brief Get error stack
    *
    * \note The returned stack is rebuilt at each call.
    * \sa stackError()
    */
-  std::vector<mdtErrorV2> getErrorStack() const;
+  std::vector<mdtError> getErrorStack() const;
 
   /*! \brief Add the source of error
    *
@@ -473,4 +473,6 @@ class mdtErrorV2
   QExplicitlySharedDataPointer<mdtErrorPrivateBase> pvShared;
 };
 
-#endif // #ifndef MDT_ERROR_V2_H
+///Q_DECLARE_METATYPE(mdtError)
+
+#endif // #ifndef MDT_ERROR_H

@@ -115,17 +115,17 @@ void mdtPortThread::stop()
   if(QThread::isRunning()){
     Q_ASSERT(pvNativePthreadObject != 0);
     err = pthread_kill(pvNativePthreadObject, SIGALRM);
-    if(err != 0){
-      mdtError e(MDT_PORT_IO_ERROR, "pthread_kill() failed", mdtError::Error);
-      switch(err){
-        case EINVAL:
-          e.setSystemError(err, "Invalid signal was specified (EINVAL)");
-        case ESRCH:
-          e.setSystemError(err, "Specified thread ID not found (ESRCH)");
-      }
-      MDT_ERROR_SET_SRC(e, "mdtPortThread");
-      e.commit();
-    }
+//     if(err != 0){
+// //       mdtError e(MDT_PORT_IO_ERROR, "pthread_kill() failed", mdtError::Error);
+//       switch(err){
+//         case EINVAL:
+// //           e.setSystemError(err, "Invalid signal was specified (EINVAL)");
+//         case ESRCH:
+// //           e.setSystemError(err, "Specified thread ID not found (ESRCH)");
+//       }
+// //       MDT_ERROR_SET_SRC(e, "mdtPortThread");
+// //       e.commit();
+//     }
   }
 #endif
   pvPort->unlockMutex();
@@ -236,9 +236,9 @@ mdtAbstractPort::error_t mdtPortThread::reconnect(bool notify)
 
   // Check about buggy caller
   if(!pvRunning){
-    mdtError e(MDT_PORT_IO_ERROR, "Thread called reconnect() during a stop process, aborting", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtPortThread");
-    e.commit();
+//     mdtError e(MDT_PORT_IO_ERROR, "Thread called reconnect() during a stop process, aborting", mdtError::Warning);
+//     MDT_ERROR_SET_SRC(e, "mdtPortThread");
+//     e.commit();
     return mdtAbstractPort::UnhandledError;
   }
   if(notify){
@@ -267,9 +267,9 @@ mdtAbstractPort::error_t mdtPortThread::reconnect(bool notify)
   }
   // Max try reached
   if(notify){
-    mdtError e(MDT_PORT_IO_ERROR, "Connection failed after max try", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtPortThread");
-    e.commit();
+//     mdtError e(MDT_PORT_IO_ERROR, "Connection failed after max try", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtPortThread");
+//     e.commit();
     ///notifyError(mdtAbstractPort::Disconnected); /// \todo notify ConnectionFailed
     notifyError(mdtAbstractPort::ConnectionFailed);
   }

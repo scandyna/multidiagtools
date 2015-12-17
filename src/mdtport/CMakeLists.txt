@@ -43,6 +43,7 @@ set (SOURCES_FILES
           mdtModbusTcpPortSetupDialog.cpp
           
           # New USB API
+          mdtUsbError.cpp
           mdtUsbDeviceList.cpp
           mdtUsbTransfer.cpp
           mdtUsbControlTransfer.cpp
@@ -76,6 +77,7 @@ add_library (mdtport${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
 target_link_libraries(mdtport${MDTLIB_VERSION_SUFFIX} Qt5::Core)
 target_link_libraries(mdtport${MDTLIB_VERSION_SUFFIX} "usb-1.0")
 target_link_libraries(mdtport${MDTLIB_VERSION_SUFFIX} "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+#target_link_libraries(mdtport${MDTLIB_VERSION_SUFFIX} "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
 
 # Translations - We generate a .pro file, that simplify the usage of lupdate
 file(WRITE "${PROJECT_SOURCE_DIR}/../../translations/mdtport.pro" "# Translations project file for lupdate/lrelease\n")

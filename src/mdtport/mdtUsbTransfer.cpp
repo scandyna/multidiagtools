@@ -19,7 +19,9 @@
  **
  ****************************************************************************/
 #include "mdtUsbTransfer.h"
+#include "mdtUsbError.h"
 #include <QtGlobal>
+#include <QObject>
 
 mdtUsbTransfer::mdtUsbTransfer ( libusb_device_handle* dev_handle, int isoPacketsCount )
  : pvTransfer(0),
@@ -53,8 +55,8 @@ bool mdtUsbTransfer::submit(bool sync)
   err = libusb_submit_transfer(pvTransfer);
   if(err != 0){
     pvLastError.setError(QObject::tr("Failed to submit transfer"), mdtError::Error);
-    pvLastError.setSystemError(err, libusb_strerror((libusb_error)err));
     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbTransfer");
+    pvLastError.stackError(mdtUsbError::fromLibusbError(err));
     pvLastError.commit();
     return false;
   }
@@ -73,8 +75,8 @@ bool mdtUsbTransfer::cancel(bool sync)
   err = libusb_cancel_transfer(pvTransfer);
   if((err != 0) && (err != LIBUSB_ERROR_NOT_FOUND)){
     pvLastError.setError(QObject::tr("Failed to submit transfer canecl request"), mdtError::Error);
-    pvLastError.setSystemError(err, libusb_strerror((libusb_error)err));
     MDT_ERROR_SET_SRC(pvLastError, "mdtUsbTransfer");
+    pvLastError.stackError(mdtUsbError::fromLibusbError(err));
     pvLastError.commit();
     return false;
   }

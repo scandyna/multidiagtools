@@ -21,6 +21,7 @@
 #include "mdtSqlDatabaseDialogSqlite.h"
 #include "mdtSqlDatabaseSqlite.h"
 #include "mdtSqlConnectionNameWidget.h"
+#include "mdtErrorDialog.h"
 #include <QComboBox>
 #include <QToolButton>
 #include <QDir>
@@ -293,13 +294,8 @@ void mdtSqlDatabaseDialogSqlite::updateButtonsState()
 
 void mdtSqlDatabaseDialogSqlite::displayError(const mdtError & error)
 {
-  QMessageBox msgBox(this);
-
-  msgBox.setText(error.text());
-  msgBox.setInformativeText(error.informativeText());
-  msgBox.setDetailedText(error.systemText());
-  ///msgBox.setIcon(error.levelIcon());
-  msgBox.exec();
+  mdtErrorDialog dialog(error, this);
+  dialog.exec();
 }
 
 void mdtSqlDatabaseDialogSqlite::warnAboutDatabaseReferencedByConnection(const QFileInfo & fileInfo, const QString& connectionName)

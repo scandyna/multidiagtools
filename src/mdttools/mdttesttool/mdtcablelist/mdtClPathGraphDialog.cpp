@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtClPathGraphDialog.h"
 #include "mdtClPathGraph.h"
+#include "mdtErrorDialog.h"
 #include <QMessageBox>
 
 mdtClPathGraphDialog::mdtClPathGraphDialog(QWidget *parent, QSqlDatabase db)
@@ -58,12 +59,8 @@ bool mdtClPathGraphDialog::drawPath(const QVariant & fromConnectionId)
   return true;
 }
 
-void mdtClPathGraphDialog::displayError(const mdtError& error)
+void mdtClPathGraphDialog::displayError(const mdtError & error)
 {
-  QMessageBox msgBox(this);
-  msgBox.setText(error.text());
-  msgBox.setInformativeText(error.informativeText());
-  msgBox.setDetailedText(error.systemErrorString());
-  msgBox.setIcon(QMessageBox::Critical);
-  msgBox.exec();
+  mdtErrorDialog dialog(error, this);
+  dialog.exec();
 }

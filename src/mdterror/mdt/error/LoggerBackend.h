@@ -23,7 +23,7 @@
 
 #include <QString>
 
-class mdtErrorV2;
+class mdtError;
 
 namespace mdt{ namespace error {
 
@@ -54,7 +54,7 @@ namespace mdt{ namespace error {
      * This function must be reentrant, because its called from Logger thread
      *  (witch is not the main thread).
      */
-    virtual void logError(const mdtErrorV2 & error) = 0;
+    virtual void logError(const mdtError & error) = 0;
 
     // Disable copy and move
     LoggerBackend(const LoggerBackend &) = delete;

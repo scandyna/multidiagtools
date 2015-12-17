@@ -79,8 +79,7 @@ bool mdtDeviceModbusWago::isWago750()
 {
   // If device is not from Wago, server can return a error (Something like: invalid address range)
   // We put a information into the log, so that we know that we are scanning.
-  mdtError e1(MDT_DEVICE_ERROR, deviceIdString() + ": checking if device is from Wago ...", mdtError::Info);
-  MDT_ERROR_SET_SRC(e1, "mdtDeviceModbusWago");
+  auto e1 = mdtErrorNewQ(deviceIdString() + ": checking if device is from Wago ...", mdtError::Info, this);
   e1.commit();
 
   if(!getRegisterValues(0x2011, 1)){
@@ -89,8 +88,7 @@ bool mdtDeviceModbusWago::isWago750()
   if(registerValues().size() != 1){
     return false;
   }
-  mdtError e2(MDT_DEVICE_ERROR, deviceIdString() + ": device is from Wago", mdtError::Info);
-  MDT_ERROR_SET_SRC(e2, "mdtDeviceModbusWago");
+  auto e2 = mdtErrorNewQ(deviceIdString() + ": device is from Wago", mdtError::Info, this);
   e2.commit();
 
   return (registerValues().at(0) == 750);

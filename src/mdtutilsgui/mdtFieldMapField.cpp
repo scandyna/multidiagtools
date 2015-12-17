@@ -126,9 +126,9 @@ QString mdtFieldMapField::getFieldName(const QString &name, const QString &repla
 
   if(strContainsIllegalString(replaceBy)){
     replace = "_";
-    mdtError e("Replacement string '" + replaceBy + "' contains illegal string. Using '_' instead.", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFieldMapField");
-    e.commit();
+//     mdtError e("Replacement string '" + replaceBy + "' contains illegal string. Using '_' instead.", mdtError::Warning);
+//     MDT_ERROR_SET_SRC(e, "mdtFieldMapField");
+//     e.commit();
   }
   newName = name;
   for(i = 0; i < spvIllegalStrings.size(); ++i){

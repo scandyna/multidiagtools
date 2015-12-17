@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,28 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ERROR_TEST_H
-#define MDT_ERROR_TEST_H
+#ifndef MDT_USB_ERROR_H
+#define MDT_USB_ERROR_H
 
-#include "mdtTest.h"
+#include "mdtError.h"
+#include <libusb-1.0/libusb.h>
 
-class mdtErrorTest : public mdtTest
+namespace mdtUsbError
 {
- Q_OBJECT
+  /*! \brief Get a mdtError from given libusb error
+   */
+  mdtError fromLibusbError(int usbError);
 
- private slots:
+  /*! \brief Get a mdtError from a libusb_transfer_status
+   */
+  mdtError fromLibusbTransferStatus(libusb_transfer_status status);
 
-  void sandbox();
+} // namespace mdtUsbError
 
-  void simpleTest();
-
-  void errorOutInitTest();
-
-  void errorOutAddTest();
-
-  void errorOutBackupTest();
-
-  void copyTest();
-};
-
-#endif // #ifndef MDT_ERROR_TEST_H
+#endif // #ifndef MDT_USB_ERROR_H

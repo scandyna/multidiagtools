@@ -17,11 +17,6 @@ target_link_libraries(mdtmathtest "mdttest")
 # NOTE: only for sandbox
 target_link_libraries(mdtmathtest "${QWT_LIBRARIES}")
 
-# * mdtErrorTest executable *
-add_executable(mdterrortestOld "mdtErrorTest.cpp")
-target_link_libraries(mdterrortestOld "mdtutils${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdterrortestOld "mdttest")
-
 # * mdtBufferTest executable *
 add_executable(mdtbuffertest "mdtBufferTest.cpp")
 target_link_libraries(mdtbuffertest "mdtutils${MDTLIB_VERSION_SUFFIX}")

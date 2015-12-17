@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,6 +21,7 @@
 #ifndef MDT_PARTITION_ATTRIBUTES_H
 #define MDT_PARTITION_ATTRIBUTES_H
 
+#include "mdtError.h"
 #include <QString>
 #include <QStringList>
 
@@ -83,12 +84,20 @@ class mdtPartitionAttributes
    */
   static QStringList availablePartitions(const QStringList &ignoreList = QStringList());
 
+  /*! \brief Get last error
+   */
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
+
  private:
 
   QString pvRootPath;
   QString pvName;
   bool pvIsReadOnly;
   QString pvFileSystem;
+  mdtError pvLastError;
 };
 
 #endif  // #ifndef MDT_PARTITION_ATTRIBUTES_H

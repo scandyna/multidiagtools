@@ -21,6 +21,8 @@
 #include "mdtSqlDatabaseSqlite.h"
 #include "mdtSqlDriverType.h"
 #include "mdtSqlForeignKeySetting.h"
+#include "mdtSqlError.h"
+#include "mdtFileError.h"
 #include <QString>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -113,7 +115,7 @@ bool mdtSqlDatabaseSqlite::createDatabase(const QFileInfo & fileInfo, mdtSqlData
           if(!file.resize(0)){
             pvLastError.setError(tr("File truncate failed for file '") + fileInfo.absoluteFilePath() + "'", mdtError::Error);
             MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseSqlite");
-            pvLastError.setSystemError(file.error(), file.errorString());
+            pvLastError.stackError(mdtFileError::fromQFileDeviceError(file));
             pvLastError.commit();
             return false;
           }
@@ -154,7 +156,7 @@ bool mdtSqlDatabaseSqlite::deleteDatabase(const QString & filePath)
   if(!file.remove()){
     pvLastError.setError(tr("Cannot remove file '") + filePath + "'", mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseSqlite");
-    pvLastError.setSystemError(file.error(), file.errorString());
+    pvLastError.stackError(mdtFileError::fromQFileDeviceError(file));
     pvLastError.commit();
     return false;
   }
@@ -203,10 +205,10 @@ bool mdtSqlDatabaseSqlite::openDatabasePv()
 {
   if(!pvDatabase.open()){
     QFileInfo fileInfo(pvDatabase.databaseName());
-    pvLastError = mdtError(tr("Cannot open database '") + fileInfo.fileName() + "'", mdtError::Error);
+    pvLastError.setError(tr("Cannot open database '") + fileInfo.fileName() + "'", mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseSqlite");
     pvLastError.setInformativeText(tr("Check that you have write access to directory '") + fileInfo.absoluteDir().path() + tr("'."));
-    pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
+    pvLastError.stackError(mdtSqlError::fromQSqlError(pvDatabase.lastError()));
     pvLastError.commit();
     return false;
   }
@@ -224,7 +226,7 @@ bool mdtSqlDatabaseSqlite::openDatabasePv()
   if(!query.exec("PRAGMA synchronous = NORMAL")){
     pvLastError.setError(tr("Cannot set PRAGMA synchronous to NORMAL (its probably set to FULL now). Database: '") + pvDatabase.databaseName() + "'", mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseSqlite");
-    pvLastError.setSystemError(pvDatabase.lastError().number(), pvDatabase.lastError().text());
+    pvLastError.stackError(mdtSqlError::fromQSqlError(pvDatabase.lastError()));
     pvLastError.commit();
     close();
     return false;

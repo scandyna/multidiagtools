@@ -83,9 +83,9 @@ QList<mdtPortInfo*> mdtSerialPortManager::scan()
   // Common device directory
   dir.setPath("/dev");
   if(!dir.exists()){
-    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "directory '" + dir.dirName() + "' not exists", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSerialPortManagerPosix");
-    e.commit();
+//     mdtError e(MDT_SERIAL_PORT_IO_ERROR, "directory '" + dir.dirName() + "' not exists", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtSerialPortManagerPosix");
+//     e.commit();
     return availablePorts;
   }
   dir.setNameFilters(extList);

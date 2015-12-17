@@ -19,9 +19,12 @@
  **
  ****************************************************************************/
 #include "mdtApplication.h"
-#include "mdtErrorOut.h"
+#include "mdt/error/Logger.h"
+#include "mdt/error/LoggerConsoleBackend.h"
+#include "mdt/error/LoggerFileBackend.h"
 #include <QFileInfo>
 #include <QTextCodec>
+#include <memory>
 #include <iostream>
 
 #include <QDebug>
@@ -37,11 +40,11 @@ mdtApplication::mdtApplication(int &argc, char **argv, bool GUIenabled)
 mdtApplication::~mdtApplication()
 {
   // Free the error system
-  mdtErrorOut::destroy();
+  mdt::error::Logger::cleanup();
   qDeleteAll(pvTranslators);
 }
 
-bool mdtApplication::init(bool allowMultipleInstances, int dialogErrorLevelsMask)
+bool mdtApplication::init(bool allowMultipleInstances/*, int dialogErrorLevelsMask*/)
 {
   QFileInfo fi;
   QString logFileName;
@@ -92,14 +95,15 @@ bool mdtApplication::init(bool allowMultipleInstances, int dialogErrorLevelsMask
   logFileName += ".log";
   qDebug() << "mdtApplication::init(): log file: " << logFileName;
   // Init error system
-  ///if(!mdtErrorOut::init(pvLogDirPath + "/" + logFileName)){
-  if(!mdtErrorOut::init(pvLogDir.absolutePath() + "/" + logFileName)){
-    std::cerr << "mdtApplication::init(): unable to init the error system" << std::endl;
-    return false;
+  auto consoleOut = std::make_shared<mdt::error::LoggerConsoleBackend>();
+  mdt::error::Logger::addBackend(consoleOut);
+  auto fileOut = std::make_shared<mdt::error::LoggerFileBackend>();
+  if(fileOut->setLogFilePath(pvLogDir.absolutePath() + "/" + logFileName)){
+    mdt::error::Logger::addBackend(fileOut);
+  }else{
+    qWarning() << "mdtApplication::init(): log file '" << logFileName << "' could not be open, no log will come to it";
   }
-  mdtErrorOut::setDialogLevelsMask(dialogErrorLevelsMask);
   // Load translations and set the default language
-  ///addTranslationsDirectory(pvSystemDataDirPath + "/i18n");
   addTranslationsDirectory(pvSystemDataDir.absolutePath() + "/i18n");
 #ifdef Q_OS_UNIX
   addTranslationsDirectory("/usr/share/qt4/translations");
@@ -154,9 +158,8 @@ void mdtApplication::addTranslationsDirectory(const QString &directory)
   if(dir.cd(directory)){
     pvTranslationsDirectories << directory;
   }else{
-    mdtError e(MDT_QM_FILE_LOAD_ERROR, "Cannot access directory '" + directory +"'", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtApplication");
-    e.commit();
+    auto error = mdtErrorNewQ("Cannot access directory '" + directory + "'", mdtError::Warning, this);
+    error.commit();
   }
 }
 
@@ -199,9 +202,8 @@ void mdtApplication::changeLanguage(const QLocale &locale)
   pvCurrentTranslationKey = "en";
   if(languageSuffix != "en"){
     if(!loadTranslationFiles(languageSuffix)){
-      mdtError e(MDT_QM_FILE_LOAD_ERROR, "Loading a translation file failed for " + languageSuffix, mdtError::Warning);
-      MDT_ERROR_SET_SRC(e, "mdtApplication");
-      e.commit();
+      auto error = mdtErrorNewQ("Loading a translation file failed for " + languageSuffix, mdtError::Warning, this);
+      error.commit();
     }
   }
 

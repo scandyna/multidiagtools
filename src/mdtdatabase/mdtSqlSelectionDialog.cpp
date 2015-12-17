@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSortFilterProxyModel.h"
+#include "mdtSqlError.h"
 #include <QSqlQueryModel>
 #include <QSqlField>
 #include <QDialogButtonBox>
@@ -69,14 +70,10 @@ bool mdtSqlSelectionDialog::setQuery(const QString& sql, QSqlDatabase db, bool a
   sqlError = pvModel->lastError();
   if(sqlError.isValid()){
     pvLastError.setError(tr("Unable to get data for given SQL query") + ": '" + sql + "'", mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSelectionDialog");
+    pvLastError.stackError(mdtSqlError::fromQSqlError(sqlError));
     pvLastError.commit();
     return false;
-/*
-    
-    displaySqlError(sqlError);
-    return;*/
   }
   pvTableView->resizeColumnsToContents();
   pvTableView->resizeRowsToContents();
@@ -202,9 +199,9 @@ void mdtSqlSelectionDialog::addSelectionResultColumn(const QString &field)
 
   column = pvModel->record().indexOf(field);
   if(column < 0){
-    mdtError e(tr("Field") + " '" + field + "' " + tr("not found"), mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSqlSelectionDialog");
-    e.commit();
+    pvLastError.setError(tr("Field") + " '" + field + "' " + tr("not found"), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSelectionDialog");
+    pvLastError.commit();
     return;
   }
   pvSelectionResultColumns.append(column);

@@ -24,6 +24,7 @@
 #include "mdtClArticleConnectorSelectionDialog.h"
 #include "mdtClConnectionTypeData.h"
 #include "mdtClConnectionTypeModel.h"
+#include "mdtErrorDialog.h"
 #include <QWidget>
 #include <QSqlQueryModel>
 #include <QList>
@@ -193,11 +194,6 @@ bool mdtClArticleConnectionDialog::checkData()
 
 void mdtClArticleConnectionDialog::displayError(const mdtError & error)
 {
-  QMessageBox msgBox(this);
-
-  msgBox.setText(error.text());
-  msgBox.setInformativeText(error.informativeText());
-  msgBox.setDetailedText(error.systemText());
-  ///msgBox.setIcon(error.levelIcon());
-  msgBox.exec();
+  mdtErrorDialog dialog(error, this);
+  dialog.exec();
 }

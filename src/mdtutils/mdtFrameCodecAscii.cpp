@@ -100,8 +100,7 @@ bool mdtFrameCodecAscii::clean()
   }
   // Check that data are available
   if(pvAsciiData.size() < 1){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame contains no data (after clean)", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecAscii");
+    mdtError e = mdtErrorNew("Frame contains no data (after clean)", mdtError::Error, "mdtFrameCodecAscii");
     e.commit();
     return false;
   }
@@ -117,8 +116,7 @@ bool mdtFrameCodecAscii::removeEofSeq()
   }
   // Check data length
   if(pvAsciiData.size() <= pvEofSeq.size()){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame is smaller than End Of Frame Sequence" , mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
+    mdtError e = mdtErrorNew("Frame is smaller than End Of Frame Sequence" , mdtError::Error, "mdtFrameCodecAscii");
     e.commit();
     return false;
   }

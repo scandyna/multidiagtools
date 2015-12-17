@@ -21,7 +21,7 @@
 #ifndef MDT_ERROR_LOGGER_H
 #define MDT_ERROR_LOGGER_H
 
-#include "mdtErrorV2.h"
+#include "mdtError.h"
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -56,7 +56,7 @@ namespace mdt{ namespace error {
      * This function is thread safe
      * \pre error must not be null
      */
-    static void logError(const mdtErrorV2 & error);
+    static void logError(const mdtError & error);
 
     /*! \brief Cleanup
     *
@@ -78,7 +78,7 @@ namespace mdt{ namespace error {
 
     /*! \brief Enqueue error and start thread if needed
      */
-    void logErrorImpl(const mdtErrorV2 & error);
+    void logErrorImpl(const mdtError & error);
 
     /*! \brief Start worker thread
      */
@@ -92,11 +92,11 @@ namespace mdt{ namespace error {
      *
      * Returns a null error if queue was empty
      */
-    mdtErrorV2 takeError();
+    mdtError takeError();
 
     /*! \brief Output error to each backend
      */
-    void outputErrorToBackends(const mdtErrorV2 & error);
+    void outputErrorToBackends(const mdtError & error);
 
     /*! \brief Worker thread function
      */
@@ -113,7 +113,7 @@ namespace mdt{ namespace error {
     std::condition_variable pvCv;
     Event pvEventForThread;
     bool pvAllErrorsLogged;
-    std::queue<mdtErrorV2> pvErrorQueue;
+    std::queue<mdtError> pvErrorQueue;
     std::vector<std::shared_ptr<LoggerBackend>> pvBackends;
     std::thread pvThread;
   };

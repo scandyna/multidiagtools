@@ -56,8 +56,8 @@ class mdtSqlFieldHandlerAbstractDataWidget
   virtual void clear() = 0;
   virtual QWidget *widget() = 0;
   virtual void setReadOnly(bool readOnly) = 0;
-  virtual void setMaxLength(int maxLength) {};
-  virtual void setRange(qreal min, qreal max) {};
+  virtual void setMaxLength(int /*maxLength*/) {};
+  virtual void setRange(qreal /*min*/, qreal /*max*/) {};
   virtual bool validate() { return true; }
 };
 

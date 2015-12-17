@@ -136,9 +136,9 @@ void mdtPortThreadHelperSocket::onSocketDisconnected()
   pvPort->lockMutex();
   notifyError(mdtAbstractPort::Disconnected);
   if(pvConnectMaxTry < 1){
-    mdtError e(MDT_TCP_IO_ERROR, "Connection failed after max try", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-    e.commit();
+//     mdtError e(MDT_TCP_IO_ERROR, "Connection failed after max try", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//     e.commit();
     pvSocket->close();
     pvPort->unlockMutex();
     notifyError(mdtAbstractPort::ConnectionFailed);
@@ -180,10 +180,10 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         QString message = "Cannot connect to ";
         message += pvHost + " , port: ";
         message += QString::number(pvPortNumber);
-        mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Warning);
-        e.setSystemError(socketError, pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-        e.commit();
+//         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Warning);
+//         e.setSystemError(socketError, pvSocket->errorString());
+//         MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//         e.commit();
       }
       // Reconnect
       ///onSocketDisconnected();
@@ -198,10 +198,10 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
         QString message = "Cannot connect to ";
         message += pvHost + " , port: ";
         message += QString::number(pvPortNumber);
-        mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Warning);
-        e.setSystemError(socketError, pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-        e.commit();
+//         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Warning);
+//         e.setSystemError(socketError, pvSocket->errorString());
+//         MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//         e.commit();
       }
       // Reconnect
       onSocketDisconnected();
@@ -209,10 +209,10 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
     case QAbstractSocket::SocketAccessError:
       {
         QString message = "Socket access error";
-        mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
-        e.setSystemError(socketError, pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-        e.commit();
+//         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
+//         e.setSystemError(socketError, pvSocket->errorString());
+//         MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//         e.commit();
       }
       // Notify
       notifyError(mdtAbstractPort::PortAccess);
@@ -220,10 +220,10 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
     case QAbstractSocket::SocketResourceError:
       {
         QString message = "Socket resource error";
-        mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
-        e.setSystemError(socketError, pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-        e.commit();
+//         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
+//         e.setSystemError(socketError, pvSocket->errorString());
+//         MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//         e.commit();
       }
       // Notify and stop
       notifyError(mdtAbstractPort::UnhandledError);
@@ -232,10 +232,10 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
     case QAbstractSocket::SocketTimeoutError:
       {
         QString message = "Timeout reported by QTcpSocket";
-        mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Warning);
-        e.setSystemError(socketError, pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-        e.commit();
+//         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Warning);
+//         e.setSystemError(socketError, pvSocket->errorString());
+//         MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//         e.commit();
       }
       // This should only occur if long timeouts are set in port config.
       // We cannot know what sort of timeout we have.
@@ -245,10 +245,10 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
     case QAbstractSocket::DatagramTooLargeError:
       {
         QString message = "Socket datagram too large";
-        mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
-        e.setSystemError(socketError, pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-        e.commit();
+//         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
+//         e.setSystemError(socketError, pvSocket->errorString());
+//         MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//         e.commit();
       }
       // Notify and stop
       notifyError(mdtAbstractPort::UnhandledError);
@@ -257,10 +257,10 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
     case QAbstractSocket::NetworkError:
       {
         QString message = "Network error";
-        mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Warning);
-        e.setSystemError(socketError, pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-        e.commit();
+//         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Warning);
+//         e.setSystemError(socketError, pvSocket->errorString());
+//         MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//         e.commit();
       }
       // We abort the socket, witch will call the disconnect/reconnect process.
       pvSocket->abort();
@@ -268,10 +268,10 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
     case QAbstractSocket::UnsupportedSocketOperationError:
       {
         QString message = "Socket unsupported operation error";
-        mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
-        e.setSystemError(socketError, pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-        e.commit();
+//         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
+//         e.setSystemError(socketError, pvSocket->errorString());
+//         MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//         e.commit();
       }
       // Notify and stop
       notifyError(mdtAbstractPort::UnhandledError);
@@ -280,10 +280,10 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
     case QAbstractSocket::ProxyAuthenticationRequiredError:
       {
         QString message = "Socket proxy authentification error";
-        mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
-        e.setSystemError(socketError, pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-        e.commit();
+//         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
+//         e.setSystemError(socketError, pvSocket->errorString());
+//         MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//         e.commit();
       }
       // Notify and stop
       notifyError(mdtAbstractPort::UnhandledError);
@@ -295,10 +295,10 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
     case QAbstractSocket::ProxyConnectionRefusedError:
       {
         QString message = "Socket proxy denied error";
-        mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
-        e.setSystemError(socketError, pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-        e.commit();
+//         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
+//         e.setSystemError(socketError, pvSocket->errorString());
+//         MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//         e.commit();
       }
       // Notify and stop
       notifyError(mdtAbstractPort::UnhandledError);
@@ -307,10 +307,10 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
     case QAbstractSocket::ProxyConnectionClosedError:
       {
         QString message = "Socket proxy connection closed error";
-        mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
-        e.setSystemError(socketError, pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-        e.commit();
+//         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
+//         e.setSystemError(socketError, pvSocket->errorString());
+//         MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//         e.commit();
       }
       // Notify and stop
       notifyError(mdtAbstractPort::UnhandledError);
@@ -319,10 +319,10 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
     case QAbstractSocket::ProxyConnectionTimeoutError:
       {
         QString message = "Socket proxy connection timeout error";
-        mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
-        e.setSystemError(socketError, pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-        e.commit();
+//         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
+//         e.setSystemError(socketError, pvSocket->errorString());
+//         MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//         e.commit();
       }
       // Notify and stop
       notifyError(mdtAbstractPort::UnhandledError);
@@ -331,10 +331,10 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
     case QAbstractSocket::ProxyNotFoundError:
       {
         QString message = "Socket proxy not found";
-        mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
-        e.setSystemError(socketError, pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-        e.commit();
+//         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
+//         e.setSystemError(socketError, pvSocket->errorString());
+//         MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//         e.commit();
       }
       // Notify and stop
       notifyError(mdtAbstractPort::UnhandledError);
@@ -343,10 +343,10 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
     case QAbstractSocket::ProxyProtocolError:
       {
         QString message = "Socket proxy protocol error";
-        mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
-        e.setSystemError(socketError, pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-        e.commit();
+//         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
+//         e.setSystemError(socketError, pvSocket->errorString());
+//         MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//         e.commit();
       }
       // Notify and stop
       notifyError(mdtAbstractPort::UnhandledError);
@@ -355,10 +355,10 @@ void mdtPortThreadHelperSocket::onSocketError(QAbstractSocket::SocketError socke
     default:
       {
         QString message = "Socket unknown error";
-        mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
-        e.setSystemError(socketError, pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-        e.commit();
+//         mdtError e(MDT_TCP_IO_ERROR, message, mdtError::Error);
+//         e.setSystemError(socketError, pvSocket->errorString());
+//         MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//         e.commit();
       }
       // Notify and stop
       notifyError(mdtAbstractPort::UnhandledError);
@@ -492,9 +492,9 @@ mdtAbstractPort::error_t mdtPortThreadHelperSocket::readFromSocket()
     pvReadBuffer = new char[pvReadBufferSize];
     if(pvReadBuffer == 0){
       pvReadBufferSize = 0;
-      mdtError e(MDT_MEMORY_ALLOC_ERROR, "Cannot allocate memory for local buffer", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-      e.commit();
+//       mdtError e(MDT_MEMORY_ALLOC_ERROR, "Cannot allocate memory for local buffer", mdtError::Error);
+//       MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//       e.commit();
       return mdtAbstractPort::UnhandledError;
     }
   }
@@ -591,10 +591,10 @@ mdtAbstractPort::error_t mdtPortThreadHelperSocket::mapSocketError(QAbstractSock
     case QAbstractSocket::NetworkError:
       return mdtAbstractPort::Disconnected;
     default:
-      mdtError e(MDT_TCP_IO_ERROR, "Unhandled socket error occured.", mdtError::Error);
-      e.setSystemError(error, pvSocket->errorString());
-      MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
-      e.commit();
+//       mdtError e(MDT_TCP_IO_ERROR, "Unhandled socket error occured.", mdtError::Error);
+//       e.setSystemError(error, pvSocket->errorString());
+//       MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperSocket");
+//       e.commit();
       return mdtAbstractPort::UnhandledError;
   }
 }

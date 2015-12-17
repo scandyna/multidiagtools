@@ -22,7 +22,7 @@
 #define MDT_ERROR_LOGGER_FILE_BACKEND_H
 
 #include "LoggerBackend.h"
-#include "mdtErrorV2.h"
+#include "mdtError.h"
 #include <QString>
 
 class QFile;
@@ -72,7 +72,7 @@ namespace mdt{ namespace error {
 
     /*! \brief Log given error
      */
-    void logError(const mdtErrorV2 & error);
+    void logError(const mdtError & error);
 
    private:
 
@@ -82,11 +82,11 @@ namespace mdt{ namespace error {
 
     /*! \brief Get error informations
      */
-    QString getErrorString(const mdtErrorV2 & error) const;
+    QString getErrorString(const mdtError & error) const;
 
     /*! \brief Get error level text
      */
-    QString errorLevelText(mdtErrorV2::Level level) const;
+    QString errorLevelText(mdtError::Level level) const;
 
     /*! \brief Backup log file
      */

@@ -94,10 +94,10 @@ mdtAbstractPort::error_t mdtPort::waitForReadyRead()
           return ReadCanceled;
         default:
           // Unhandled error
-          mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
-          e.setSystemError(errno, strerror(errno));
-          MDT_ERROR_SET_SRC(e, "mdtPort");
-          e.commit();
+//           mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
+//           e.setSystemError(errno, strerror(errno));
+//           MDT_ERROR_SET_SRC(e, "mdtPort");
+//           e.commit();
           return UnhandledError;
       }
     }
@@ -121,10 +121,10 @@ qint64 mdtPort::read(char *data, qint64 maxSize)
       case ETIMEDOUT:   // Read timeout (happens with USBTMC)
         return ReadTimeout;
       default:
-        mdtError e(MDT_UNDEFINED_ERROR, "read() call failed", mdtError::Error);
-        e.setSystemError(err, strerror(err));
-        MDT_ERROR_SET_SRC(e, "mdtPort");
-        e.commit();
+//         mdtError e(MDT_UNDEFINED_ERROR, "read() call failed", mdtError::Error);
+//         e.setSystemError(err, strerror(err));
+//         MDT_ERROR_SET_SRC(e, "mdtPort");
+//         e.commit();
         return n;
     }
   }
@@ -159,10 +159,10 @@ mdtAbstractPort::error_t mdtPort::waitEventWriteReady()
           return WriteCanceled;
         default:
           // Unhandled error
-          mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
-          e.setSystemError(errno, strerror(errno));
-          MDT_ERROR_SET_SRC(e, "mdtPort");
-          e.commit();
+//           mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
+//           e.setSystemError(errno, strerror(errno));
+//           MDT_ERROR_SET_SRC(e, "mdtPort");
+//           e.commit();
           return UnhandledError;
       }
     }
@@ -184,10 +184,10 @@ qint64 mdtPort::write(const char *data, qint64 maxSize)
       case EAGAIN:    // Can't write now
         return 0;
       default:
-        mdtError e(MDT_UNDEFINED_ERROR, "write() call failed", mdtError::Error);
-        e.setSystemError(err, strerror(err));
-        MDT_ERROR_SET_SRC(e, "mdtPort");
-        e.commit();
+//         mdtError e(MDT_UNDEFINED_ERROR, "write() call failed", mdtError::Error);
+//         e.setSystemError(err, strerror(err));
+//         MDT_ERROR_SET_SRC(e, "mdtPort");
+//         e.commit();
         return n;
     }
   }
@@ -207,15 +207,15 @@ mdtAbstractPort::error_t mdtPort::pvOpen()
     err = errno;
     // Check if port was locked by another
     if(pvPortLock->isLockedByAnother()){
-      mdtError e(MDT_SERIAL_PORT_IO_ERROR, "Port " + pvPortName + " allready locked, cannot open it", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtPort");
-      e.commit();
+//       mdtError e(MDT_SERIAL_PORT_IO_ERROR, "Port " + pvPortName + " allready locked, cannot open it", mdtError::Error);
+//       MDT_ERROR_SET_SRC(e, "mdtPort");
+//       e.commit();
       return PortLocked;
     }
-    mdtError e(MDT_PORT_IO_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
-    e.setSystemError(err, strerror(err));
-    MDT_ERROR_SET_SRC(e, "mdtPort");
-    e.commit();
+//     mdtError e(MDT_PORT_IO_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
+//     e.setSystemError(err, strerror(err));
+//     MDT_ERROR_SET_SRC(e, "mdtPort");
+//     e.commit();
     pvPortLock->unlock();
     // Check error and return a possibly correct code
     switch(err){

@@ -1,11 +1,6 @@
 window_sizes 1280 964 372 902 911 0
 cleanlooks_style
-diagrams
-  active  classdiagram_ref 1769090 // Logger
-    902 911 100 4 0 0
-end
 show_stereotypes
-selected operation_ref 3265154 // logError
 open
   class_ref 2064514 // CInternalBase
   operation_ref 3193090 // mdtError
@@ -14,25 +9,7 @@ open
   attribute_ref 236930 // level
   attribute_ref 230402 // text
   classrelation_ref 2440962 // <generalisation>
-  classdiagram_ref 1755906 // mdtErrorOLD
-  operation_ref 278658 // mdtError
-  attribute_ref 237186 // systemText
-  attribute_ref 251906 // fileLine
-  attribute_ref 251778 // fileName
-  attribute_ref 237058 // systemNumber
-  operation_ref 279170 // error
-  operation_ref 279682 // systemText
-  operation_ref 279042 // commit
-  operation_ref 279810 // functionName
-  operation_ref 279554 // systemNumber
-  operation_ref 280066 // fileLine
-  operation_ref 3193218 // logText
-  operation_ref 278914 // setSource
   class_ref 2139522 // mdtErrorLoggerGuard
-  class_ref 2131842 // Logger
-  class_ref 2139650 // LoggerBackend
-  class_ref 2139778 // LoggerFileBackend
-  class_ref 2105474 // mdtDataRecord
   operation_ref 3229442 // mdtSqlRecord
   operation_ref 3229826 // toDataRecord
   class_ref 2125186 // QSharedData

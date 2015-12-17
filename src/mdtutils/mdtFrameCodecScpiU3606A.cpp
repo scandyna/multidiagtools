@@ -49,9 +49,8 @@ bool mdtFrameCodecScpiU3606A::decodeConfigure(const QByteArray &data)
   // Decode <function>
   pvNodes = pvValues.at(0).toString().split(':', QString::SkipEmptyParts);
   if(pvNodes.size() < 1){
-    mdtError e("Function part contains no data", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpiU3606A");
-    e.commit();
+    auto error = mdtErrorNew("Function part contains no data", mdtError::Error, "mdtFrameCodecScpiU3606A");
+    error.commit();
     return false;
   }
   // Get "first level" type (voltage, current, resistance, ...) and set default sub type (DC, AC, ...)

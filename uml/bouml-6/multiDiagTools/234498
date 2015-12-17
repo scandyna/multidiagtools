@@ -1,6 +1,6 @@
 format 210
 "mdtdatabase" // mdtdatabase
-  revision 83
+  revision 84
   modified_by 2 "philippe"
   // class settings
   
@@ -2999,7 +2999,6 @@ ${inlines}
     
     activitydiagramsettings
      end
-    associated_deployment_view deploymentview_ref 474498 // Data
     classdiagram 1000578 "mdtSqlData"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -3129,35 +3128,6 @@ ${inlines}
 "
 	    classrelation_ref 1397890 // pvRecord (<directional composition>)
 	  b parent class_ref 404994 // QSqlRecord
-      end
-    end
-  end
-
-  deploymentview 474498 "Data"
-    //deployment diagram settings
-    deploymentdiagramsettings
-     end
-    artifact 677122 "mdtSqlRecord"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-
-#endif // #ifndef ${NAME}_H
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 1067266 // mdtSqlRecord
       end
     end
   end

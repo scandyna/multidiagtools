@@ -18,35 +18,17 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ERROR_LOGGER_CONSOLE_BACKEND_H
-#define MDT_ERROR_LOGGER_CONSOLE_BACKEND_H
+#include "mdtSqlError.h"
 
-#include "LoggerBackend.h"
-#include <QString>
-
-namespace mdt{ namespace error {
-
-  /*! \brief Console backend for error Logger
+namespace mdtSqlError
+{
+  /*! \brief Get a mdtError from given QSqlError
    */
-  class LoggerConsoleBackend : public LoggerBackend
+  mdtError fromQSqlError(const QSqlError & sqlError)
   {
-   public:
+    mdtError error;
+    error.setError<QSqlError::ErrorType>(sqlError.type(), sqlError.text(), mdtError::Error);
+    return error;
+  }
 
-    /*! \brief Destructor
-     */
-    ~LoggerConsoleBackend();
-
-    /*! \brief Log given error
-     */
-    void logError(const mdtError & error);
-
-   private:
-
-    /*! \brief Get error informations
-     */
-    QString getErrorString(const mdtError & error) const;
-  };
-
-}}  // namespace mdt{ namespace error {
-
-#endif // #ifndef MDT_ERROR_LOGGER_CONSOLE_BACKEND_H
+} // namespace mdtError

@@ -366,8 +366,7 @@ void mdtModbusTcpPortSetupDialog::getDeviceInformations()
    */
   // We will try to get values from some registers. This will add errors to log (Something like: invalid address range)
   // We put a information into the log, so that we know that we are fetching device informations.
-  mdtError e1(MDT_NO_ERROR, "Checking about device manufacturer, can produce some errors ...", mdtError::Info);
-  MDT_ERROR_SET_SRC(e1, "mdtDeviceModbusWago");
+  auto e1 = mdtErrorNewQ("Checking about device manufacturer, can produce some errors ...", mdtError::Info, this);
   e1.commit();
   // Try Wago informations
   if(getWago750Informations()){

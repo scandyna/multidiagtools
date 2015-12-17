@@ -25,9 +25,9 @@
 void mdtErrorGuiTest::errorDialogTest()
 {
   mdtErrorDialog dialog;
-  mdtErrorV2 error;
+  mdtError error;
 
-  error.setError<int>(1, "Some error", mdtErrorV2::Error);
+  error.setError<int>(1, "Some error", mdtError::Error);
   dialog.setError(error);
 
   /*

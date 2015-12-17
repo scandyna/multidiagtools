@@ -22,6 +22,7 @@
 #define MDT_SQL_APPLICATION_WIDGETS_H
 
 #include "mdtError.h"
+#include "mdtErrorDialog.h"
 #include "mdtSqlWindow.h"
 #include "mdtSqlForm.h"
 #include <QObject>
@@ -273,12 +274,8 @@ bool mdtSqlApplicationWidgets<T>::closeOpenSqlWindows()
 template <typename T>
 void mdtSqlApplicationWidgets<T>::displayError(const mdtError & error)
 {
-  QMessageBox msgBox;
-
-  msgBox.setText(error.text());
-  msgBox.setDetailedText(error.systemText());
-  ///msgBox.setIcon(error.levelIcon());
-  msgBox.exec();
+  mdtErrorDialog dialog(error);
+  dialog.exec();
 }
 
 /*! \brief Guard for mdtSqlApplicationWidgets

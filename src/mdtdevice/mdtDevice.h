@@ -307,7 +307,7 @@ class mdtDevice : public QObject
    * This default implementation does nothing,
    *  it's also not necessery to call this base function from subclass.
    */
-  virtual void deviceAddressChangedEvent(const mdtDeviceAddress & address)
+  virtual void deviceAddressChangedEvent(const mdtDeviceAddress & /*address*/)
   {
   }
 

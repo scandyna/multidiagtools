@@ -25,6 +25,7 @@
 #include "mdtClConnectorContactSelectionDialog.h"
 #include "mdtClUnitConnection.h"
 #include "mdtClConnectionTypeModel.h"
+#include "mdtErrorDialog.h"
 #include <QMessageBox>
 #include <QList>
 #include <QStringList>
@@ -574,13 +575,8 @@ void mdtClUnitConnectionDialog::showArticleConnectionWidgets()
 
 void mdtClUnitConnectionDialog::displayError(const mdtError &error)
 {
-  QMessageBox msgBox(this);
-
-  msgBox.setText(error.text());
-  msgBox.setInformativeText(error.informativeText());
-  msgBox.setDetailedText(error.systemText());
-  ///msgBox.setIcon(error.levelIcon());
-  msgBox.exec();
+  mdtErrorDialog dialog(error, this);
+  dialog.exec();
 }
 
 bool mdtClUnitConnectionDialog::canSelectConnection() const

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2013 Philippe Steinmann.
+ ** Copyright (C) 2011-2015 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,7 +22,7 @@
 #include "mdtError.h"
 #include <QString>
 
-///#include <QDebug>
+//#include <QDebug>
 
 mdtFrameCodecModbus::mdtFrameCodecModbus()
 {
@@ -39,7 +39,7 @@ QByteArray mdtFrameCodecModbus::encodeReadCoils(quint16 startAddress, quint16 n)
 
   // Check n (1 to 2000)
   if((n < 1)||(n > 2000)){
-    mdtError e(MDT_FRAME_ENCODE_ERROR, "Request coils count out of allowed range", mdtError::Error);
+    auto e = mdtErrorNew("Request coils count out of allowed range", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return pvPdu;
@@ -63,7 +63,7 @@ QByteArray mdtFrameCodecModbus::encodeReadDiscreteInputs(quint16 startAddress, q
 
   // Check n (1 to 2000)
   if((n < 1)||(n > 2000)){
-    mdtError e(MDT_FRAME_ENCODE_ERROR, "Request inputs count out of allowed range", mdtError::Error);
+    auto e = mdtErrorNew("Request inputs count out of allowed range", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return pvPdu;
@@ -87,7 +87,7 @@ QByteArray mdtFrameCodecModbus::encodeReadHoldingRegisters(quint16 startAddress,
 
   // Check n (1 to 125)
   if((n < 1)||(n > 125)){
-    mdtError e(MDT_FRAME_ENCODE_ERROR, "Request registers count out of allowed range", mdtError::Error);
+    auto e = mdtErrorNew("Request registers count out of allowed range", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return pvPdu;
@@ -111,7 +111,7 @@ QByteArray mdtFrameCodecModbus::encodeReadInputRegisters(quint16 startAddress, q
 
   // Check n (1 to 125)
   if((n < 1)||(n > 125)){
-    mdtError e(MDT_FRAME_ENCODE_ERROR, "Request registers count out of allowed range", mdtError::Error);
+    auto e = mdtErrorNew("Request registers count out of allowed range", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return pvPdu;
@@ -176,7 +176,7 @@ QByteArray mdtFrameCodecModbus::encodeWriteMultipleCoils(quint16 startAddress, c
 
   // Check qty (1 to 1968)
   if((n < 1)||(n > 1968)){
-    mdtError e(MDT_FRAME_ENCODE_ERROR, "Request registers count out of allowed range", mdtError::Error);
+    auto e = mdtErrorNew("Request registers count out of allowed range", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return pvPdu;
@@ -228,7 +228,7 @@ QByteArray mdtFrameCodecModbus::encodeWriteMultipleRegisters(quint16 startAddres
 
   // Check qty (1 to 123)
   if((n < 1)||(n > 123)){
-    mdtError e(MDT_FRAME_ENCODE_ERROR, "Request registers count out of allowed range", mdtError::Error);
+    auto e = mdtErrorNew("Request registers count out of allowed range", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return pvPdu;
@@ -289,7 +289,7 @@ int mdtFrameCodecModbus::decode(const QByteArray &pdu)
 
   // Case of empty PDU
   if(pvPdu.size() < 2){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Request a decode of a empty PDU (size < 2 Bytes)", mdtError::Error);
+    auto e = mdtErrorNew("Request a decode of a empty PDU (size < 2 Bytes)", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return -1;
@@ -369,7 +369,7 @@ int mdtFrameCodecModbus::decode(const QByteArray &pdu)
     default:
       QByteArray num;
       num.setNum(functionCode, 16);
-      mdtError e(MDT_FRAME_DECODE_ERROR, "Unknow function code: 0x" + num, mdtError::Error);
+      auto e = mdtErrorNew("Unknow function code: 0x" + num, mdtError::Error, "mdtFrameCodecModbus");
       MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
       e.commit();
       return -1;
@@ -390,7 +390,7 @@ bool mdtFrameCodecModbus::decodeReadCoils()
 
   // Case of not enougth data
   if(pvPdu.size() < 3){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains no data (size < 3 Bytes)", mdtError::Error);
+    auto e = mdtErrorNew("PDU contains no data (size < 3 Bytes)", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
@@ -398,7 +398,7 @@ bool mdtFrameCodecModbus::decodeReadCoils()
   // Get bytes count and check it's validity
   bytesCount = pvPdu.at(1);
   if(bytesCount != (pvPdu.size() -2)){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains a invalid bytes count", mdtError::Error);
+    auto e = mdtErrorNew("PDU contains a invalid bytes count", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
@@ -421,7 +421,7 @@ bool mdtFrameCodecModbus::decodeReadDiscreteInputs()
 
   // Case of not enougth data
   if(pvPdu.size() < 3){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains no data (size < 3 Bytes)", mdtError::Error);
+    auto e = mdtErrorNew("PDU contains no data (size < 3 Bytes)", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
@@ -429,7 +429,7 @@ bool mdtFrameCodecModbus::decodeReadDiscreteInputs()
   // Get bytes count and check it's validity
   bytesCount = pvPdu.at(1);
   if(bytesCount != (pvPdu.size()-2)){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains a invalid bytes count", mdtError::Error);
+    auto e = mdtErrorNew("PDU contains a invalid bytes count", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
@@ -452,7 +452,7 @@ bool mdtFrameCodecModbus::decodeReadHoldingRegisters()
 
   // Case of not enougth data
   if(pvPdu.size() < 3){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains no data (size < 3 Bytes)", mdtError::Error);
+    auto e = mdtErrorNew("PDU contains no data (size < 3 Bytes)", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
@@ -461,14 +461,14 @@ bool mdtFrameCodecModbus::decodeReadHoldingRegisters()
   bytesCount = pvPdu.at(1);
   // Check that bytesCount is mod 2
   if((bytesCount%2) != 0){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains a invalid bytes count (not MOD 2)", mdtError::Error);
+    auto e = mdtErrorNew("PDU contains a invalid bytes count (not MOD 2)", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
   }
   // Check that PDU contains right amount of data
   if(bytesCount != (pvPdu.size() -2)){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains a invalid bytes count", mdtError::Error);
+    auto e = mdtErrorNew("PDU contains a invalid bytes count", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
@@ -492,7 +492,7 @@ bool mdtFrameCodecModbus::decodeReadInputRegisters()
 
   // Case of not enougth data
   if(pvPdu.size() < 3){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains no data (size < 3 Bytes)", mdtError::Error);
+    auto e = mdtErrorNew("PDU contains no data (size < 3 Bytes)", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
@@ -501,14 +501,14 @@ bool mdtFrameCodecModbus::decodeReadInputRegisters()
   bytesCount = pvPdu.at(1);
   // Check that bytesCount is mod 2
   if((bytesCount%2) != 0){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains a invalid bytes count (not MOD 2)", mdtError::Error);
+    auto e = mdtErrorNew("PDU contains a invalid bytes count (not MOD 2)", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
   }
   // Check that PDU contains right amount of data
   if(bytesCount != (pvPdu.size() -2)){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains a invalid bytes count", mdtError::Error);
+    auto e = mdtErrorNew("PDU contains a invalid bytes count", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
@@ -530,7 +530,7 @@ bool mdtFrameCodecModbus::decodeWriteSingleCoil()
 
   // Case of invalid bytes count
   if(pvPdu.size() != 5){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid (size <> 5 Bytes)", mdtError::Error);
+    auto e = mdtErrorNew("PDU size not valid (size <> 5 Bytes)", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
@@ -555,7 +555,7 @@ bool mdtFrameCodecModbus::decodeWriteSingleRegister()
 
   // Case of invalid bytes count
   if(pvPdu.size() != 5){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid (size <> 5 Bytes)", mdtError::Error);
+    auto e = mdtErrorNew("PDU size not valid (size <> 5 Bytes)", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
@@ -578,7 +578,7 @@ bool mdtFrameCodecModbus::decodeWriteMultipleCoils()
 
   // Case of invalid bytes count
   if(pvPdu.size() != 5){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid (size <> 5 Bytes)", mdtError::Error);
+    auto e = mdtErrorNew("PDU size not valid (size <> 5 Bytes)", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
@@ -601,7 +601,7 @@ bool mdtFrameCodecModbus::decodeWriteMultipleRegisters()
 
   // Case of invalid bytes count
   if(pvPdu.size() != 5){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid (size <> 5 Bytes)", mdtError::Error);
+    auto e = mdtErrorNew("PDU size not valid (size <> 5 Bytes)", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
@@ -626,7 +626,7 @@ bool mdtFrameCodecModbus::decodeReadDeviceIdentification()
 
   // We need min. 8 bytes
   if(pvPdu.size() < 8){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid (size < 8 Bytes)", mdtError::Error);
+    auto e = mdtErrorNew("PDU size not valid (size < 8 Bytes)", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
@@ -635,7 +635,7 @@ bool mdtFrameCodecModbus::decodeReadDeviceIdentification()
   Q_ASSERT((int)pvPdu.at(0) == 0x2B);
   // Check MEI Type
   if((int)pvPdu.at(1) != 0x0E){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "MEI Type not valid", mdtError::Error);
+    auto e = mdtErrorNew("MEI Type not valid", mdtError::Error, "mdtFrameCodecModbus");
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
     e.commit();
     return false;
@@ -652,7 +652,7 @@ bool mdtFrameCodecModbus::decodeReadDeviceIdentification()
   while(cursor < pvPdu.size()){
     // Check that PDU contains enougth data to get object length
     if(pvPdu.size() < (cursor+1)){
-      mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid in Objects part", mdtError::Error);
+      auto e = mdtErrorNew("PDU size not valid in Objects part", mdtError::Error, "mdtFrameCodecModbus");
       MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
       e.commit();
       pvValues.clear();
@@ -662,7 +662,7 @@ bool mdtFrameCodecModbus::decodeReadDeviceIdentification()
     objectLength = (quint8)pvPdu.at(cursor+1);
     // Check that PDU contains enougth data to get object
     if(pvPdu.size() < (cursor+1+objectLength)){
-      mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid in Objects part", mdtError::Error);
+      auto e = mdtErrorNew("PDU size not valid in Objects part", mdtError::Error, "mdtFrameCodecModbus");
       MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
       e.commit();
       pvValues.clear();
@@ -736,9 +736,9 @@ int mdtFrameCodecModbus::decodeModbusError(quint8 error)
       pvLastModbusError = UNKNOW_ERROR;
   }
   // Append error
-  mdtError e(MDT_FRAME_DECODE_ERROR, "PDU returned from server contains a exception code", mdtError::Error);
-  e.setSystemError(pvLastModbusError, errorText);
-  MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+  auto e = mdtErrorNew("PDU returned from server contains a exception code", mdtError::Error, "mdtFrameCodecModbus");
+  auto sysError = mdtErrorNewT(modbus_error_code_t, pvLastModbusError, errorText, mdtError::Error, "mdtFrameCodecModbus");
+  e.stackError(sysError);
   e.commit();
 
   return pvLastModbusError;

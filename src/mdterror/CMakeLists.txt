@@ -6,7 +6,7 @@ project (multidiagtools)
 
 # List of source files
 set (SOURCES_FILES 
-      mdtErrorV2.cpp
+      mdtError.cpp
       mdt/error/Logger.cpp
       mdt/error/LoggerBackend.cpp
       mdt/error/LoggerConsoleBackend.cpp

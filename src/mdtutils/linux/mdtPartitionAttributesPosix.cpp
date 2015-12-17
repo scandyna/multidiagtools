@@ -45,10 +45,12 @@ bool mdtPartitionAttributes::setPath(const QString &path)
   // Open mtab FIXME: probably not POSIX, but only Linux ?
   fd = setmntent("/etc/mtab", "r");
   if(fd == 0){
-    mdtError e(MDT_FILE_IO_ERROR, "Unable to open /mnt/mtab", mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtPartitionAttributes");
-    e.commit();
+    pvLastError.setError("Unable to open /mnt/mtab", mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtPartitionAttributes");
+    auto sysError = mdtErrorNewT(int, errno, strerror(errno), mdtError::Error, "mdtPartitionAttributes");
+    sysError.commit();
+    pvLastError.stackError(sysError);
+    pvLastError.commit();
     return false;
   }
   // Travel mounted partitions and get attributes
@@ -62,10 +64,12 @@ bool mdtPartitionAttributes::setPath(const QString &path)
         pvFileSystem = fs->mnt_type;
         // Get flags
         if(statvfs(fs->mnt_dir, &vfs) != 0){
-          mdtError e(MDT_FILE_IO_ERROR, "statvfs() failed on " + pvRootPath, mdtError::Error);
-          e.setSystemError(errno, strerror(errno));
-          MDT_ERROR_SET_SRC(e, "mdtPartitionAttributes");
-          e.commit();
+          pvLastError.setError("statvfs() failed on " + pvRootPath, mdtError::Error);
+          MDT_ERROR_SET_SRC(pvLastError, "mdtPartitionAttributes");
+          auto sysError = mdtErrorNewT(int, errno, strerror(errno), mdtError::Error, "mdtPartitionAttributes");
+          sysError.commit();
+          pvLastError.stackError(sysError);
+          pvLastError.commit();
           endmntent(fd);
           return false;
         }
@@ -83,7 +87,7 @@ bool mdtPartitionAttributes::setPath(const QString &path)
 
   // Close mtab
   endmntent(fd);
-  
+
   return false;
 }
 
@@ -96,10 +100,11 @@ QStringList mdtPartitionAttributes::availablePartitions(const QStringList &ignor
   // Open mtab FIXME: probably not POSIX, but only Linux ?
   fd = setmntent("/etc/mtab", "r");
   if(fd == 0){
-    mdtError e(MDT_FILE_IO_ERROR, "Unable to open /mnt/mtab", mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtPartitionAttributes");
-    e.commit();
+    auto error = mdtErrorNew("Unable to open /mnt/mtab", mdtError::Error, "mdtPartitionAttributes");
+    auto sysError = mdtErrorNewT(int, errno, strerror(errno), mdtError::Error, "mdtPartitionAttributes");
+    sysError.commit();
+    error.stackError(sysError);
+    error.commit();
     return partitionsList;
   }
   // Travel mounted partitions

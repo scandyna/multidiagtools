@@ -27,6 +27,8 @@
 #include "mdtClLink.h"
 
 #include "mdtTtLogicalTestCable.h"
+#include "mdtError.h"
+#include "mdtErrorDialog.h"
 #include <QVBoxLayout>
 #include <QString>
 #include <QSqlRecord>
@@ -248,8 +250,8 @@ void mdtTtLogicalTestCableDialog::accept()
 
   // Check that user enterred a Key
   if(leLogicalCableKey->text().trimmed().isEmpty()){
-    mdtError e(tr("Please enter a Key"), mdtError::Warning);
-    displayError(e);
+    auto error = mdtErrorNewQ(tr("Please enter a Key"), mdtError::Warning, this);
+    displayError(error);
     return;
   }
   // Check that key does not allready exist
@@ -259,16 +261,16 @@ void mdtTtLogicalTestCableDialog::accept()
     return;
   }
   if(exists){
-    mdtError e(tr("A logical test cable with this key allready exists."), mdtError::Warning);
-    displayError(e);
+    auto error = mdtErrorNewQ(tr("A logical test cable with this key allready exists."), mdtError::Warning, this);
+    displayError(error);
     return;
   }
   // Check that user selected a connector or connection for each DUT affectation widget at DUT side
   for(i = 0; i < pvDutSideAffectationWidgets.size(); ++i){
     Q_ASSERT(pvDutSideAffectationWidgets.at(i) != 0);
     if(pvDutSideAffectationWidgets.at(i)->cnId().isNull()){
-      mdtError e(tr("Please affect something to ") + pvDutSideAffectationWidgets.at(i)->testCableCnName(), mdtError::Warning);
-      displayError(e);
+      auto error = mdtErrorNewQ(tr("Please affect something to ") + pvDutSideAffectationWidgets.at(i)->testCableCnName(), mdtError::Warning, this);
+      displayError(error);
       return;
     }
   }
@@ -276,8 +278,8 @@ void mdtTtLogicalTestCableDialog::accept()
   for(i = 0; i < pvTsSideAffectationWidgets.size(); ++i){
     Q_ASSERT(pvTsSideAffectationWidgets.at(i) != 0);
     if(pvTsSideAffectationWidgets.at(i)->cnId().isNull()){
-      mdtError e(tr("Please affect something to ") + pvTsSideAffectationWidgets.at(i)->testCableCnName(), mdtError::Warning);
-      displayError(e);
+      auto error = mdtErrorNewQ(tr("Please affect something to ") + pvTsSideAffectationWidgets.at(i)->testCableCnName(), mdtError::Warning, this);
+      displayError(error);
       return;
     }
   }
@@ -287,11 +289,6 @@ void mdtTtLogicalTestCableDialog::accept()
 
 void mdtTtLogicalTestCableDialog::displayError(const mdtError& error)
 {
-  QMessageBox msgBox(this);
-
-  msgBox.setText(error.text());
-  msgBox.setInformativeText(error.informativeText());
-  msgBox.setDetailedText(error.systemText());
-  ///msgBox.setIcon(error.levelIcon());
-  msgBox.exec();
+  mdtErrorDialog dialog(this);
+  dialog.exec();
 }

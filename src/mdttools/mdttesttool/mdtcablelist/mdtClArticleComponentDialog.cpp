@@ -22,6 +22,7 @@
 #include "mdtSqlSelectionDialog.h"
 #include "mdtClArticle.h"
 #include "mdtError.h"
+#include "mdtSqlError.h"
 #include <QWidget>
 #include <QSqlQueryModel>
 #include <QModelIndex>
@@ -47,10 +48,9 @@ mdtClArticleComponentDialog::mdtClArticleComponentDialog(QWidget *parent, QSqlDa
                                     " FROM ArticleComponent_view", pvDatabase);
   sqlError = pvArticleComponentModel->lastError();
   if(sqlError.isValid()){
-    mdtError e(MDT_DATABASE_ERROR, "Unable to get data from ArticleComponent_view", mdtError::Error);
-    e.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClArticleComponentDialog");
-    e.commit();
+    auto error = mdtErrorNewQ("Unable to get data from ArticleComponent_view", mdtError::Error, this);
+    error.stackError(mdtSqlError::fromQSqlError(sqlError));
+    error.commit();
   }
   // Set initial data
   displayCurrentComponent();

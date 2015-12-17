@@ -89,17 +89,17 @@ mdtAbstractPort::error_t mdtTcpSocket::pvOpen()
   // Extract host name and port number from port name
   items = pvPortName.split(":");
   if(items.size() != 2){
-    mdtError e(MDT_TCP_IO_ERROR, "Cannot extract host name and port name in (format must be hostname:port) " + pvPortName, mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
-    e.commit();
+//     mdtError e(MDT_TCP_IO_ERROR, "Cannot extract host name and port name in (format must be hostname:port) " + pvPortName, mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
+//     e.commit();
     return SetupError;
   }
   pvPeerName = items.at(0);
   pvPeerPort = items.at(1).toUShort(&ok);
   if(!ok){
-    mdtError e(MDT_TCP_IO_ERROR, "Cannot extract port in (format must be hostname:port) " + pvPortName, mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
-    e.commit();
+//     mdtError e(MDT_TCP_IO_ERROR, "Cannot extract port in (format must be hostname:port) " + pvPortName, mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
+//     e.commit();
     return SetupError;
   }
 

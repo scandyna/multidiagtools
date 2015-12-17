@@ -25,6 +25,7 @@
 #include "mdtSqlDatabaseCopierThread.h"
 #include "mdtProgressBarItemDelegate.h"
 #include "mdtAlgorithms.h"
+#include "mdtErrorDialog.h"
 #include <QToolButton>
 #include <QPushButton>
 #include <QMessageBox>
@@ -339,11 +340,6 @@ void mdtSqlDatabaseCopierDialog::reject()
 
 void mdtSqlDatabaseCopierDialog::displayError(const mdtError& error)
 {
-  QMessageBox msgBox(this);
-
-  msgBox.setText(error.text());
-  msgBox.setInformativeText(error.informativeText());
-  msgBox.setDetailedText(error.systemText());
-  ///msgBox.setIcon(error.levelIcon());
-  msgBox.exec();
+  mdtErrorDialog dialog(this);
+  dialog.exec();
 }

@@ -8,6 +8,7 @@ project (multidiagtools)
 # * mdtDatabaseTest executable *
 add_executable(mdtdatabasetest "mdtDatabaseTest.cpp")
 target_link_libraries(mdtdatabasetest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtdatabasetest "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatabasetest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 #target_link_libraries(mdtdatabasetest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatabasetest "mdttest")
@@ -24,6 +25,7 @@ add_executable(mdtdatatabletest "mdtDataTableTest.cpp")
 target_link_libraries(mdtdatatabletest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatatabletest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatatabletest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+#target_link_libraries(mdtdatabasetest "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatatabletest "mdttest")
 
 # * mdtSqlCopierTest executable *

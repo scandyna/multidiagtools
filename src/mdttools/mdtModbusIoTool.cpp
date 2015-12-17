@@ -29,7 +29,6 @@
 #include "mdtModbusTcpPortSetupDialog.h"
 #include "mdtModbusHwNodeId.h"
 #include "mdtPortInfo.h"
-#include "mdtErrorOut.h"
 #include <QList>
 #include <QMessageBox>
 

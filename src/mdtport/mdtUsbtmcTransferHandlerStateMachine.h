@@ -447,7 +447,7 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       /*! \brief AbortingBulkOut entry/
        */
       template<typename EventType, typename FSM>
-      void on_entry(EventType const &, FSM & fsm)
+      void on_entry(EventType const &, FSM &)
       {
         qDebug() << "Entering AbortingBulkOut ...";
       }
@@ -467,7 +467,7 @@ namespace mdtUsbtmcTransferHandlerStateMachine
       /*! \brief AbortingBulkIn entry/
        */
       template<typename EventType, typename FSM>
-      void on_entry(EventType const &, FSM & fsm)
+      void on_entry(EventType const &, FSM &)
       {
         qDebug() << "Entering AbortingBulkIn ...";
       }
@@ -871,8 +871,7 @@ namespace mdtUsbtmcTransferHandlerStateMachine
     template <class FSM,class Event>
     void no_transition(Event const & e, FSM &, int state)
     {
-      mdtError error("No transition from state id " + QString::number(state) + " on event '" + typeid(e).name() + "'", mdtError::Warning);
-      MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandlerStateMachine::StateMachine_");
+      auto error = mdtErrorNew("No transition from state id " + QString::number(state) + " on event '" + typeid(e).name() + "'", mdtError::Warning, "mdtUsbtmcTransferHandlerStateMachine::StateMachine_");
       error.commit();
     }
 

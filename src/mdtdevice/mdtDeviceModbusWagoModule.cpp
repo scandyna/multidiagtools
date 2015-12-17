@@ -931,64 +931,62 @@ mdtAnalogIo *mdtDeviceModbusWagoModule::getNewAnalogInput(int partNumber, int ch
   // Get I/O module's parameters
   value = analogInputValueMin(partNumber, channel);
   if(value.isNull()){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog input range minimum value (unknown part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+    auto error = mdtErrorNew("Cannot get analog input range minimum value (unknown part number: " + partNumberText() + ")", mdtError::Error, "mdtDeviceModbusWagoModule");
+    error.commit();
     return 0;
   }
   min = value.toDouble();
   value = analogInputValueMax(partNumber, channel);
   if(!value.isValid()){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog input range maximum value (unknown part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+//     auto error = mdtErrorNewQ("Cannot get analog input range maximum value (unknown part number: " + partNumberText() + ")", mdtError::Error, this);
+//     error.commit();
     return 0;
   }
   max = value.toDouble();
   intValueBitsCount = analogInputValueBitsCount(partNumber, channel);
   if(intValueBitsCount < 0){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog input value bits count (unknown part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+//     mdtError e(MDT_DEVICE_ERROR, "Cannot get analog input value bits count (unknown part number: " + partNumberText() + ")", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+//     e.commit();
     return 0;
   }
   intValueLsbIndex = analogInputValueLsbIndex(partNumber, channel);
   if(intValueLsbIndex < 0){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog input value LSB index (unknown part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+//     mdtError e(MDT_DEVICE_ERROR, "Cannot get analog input value LSB index (unknown part number: " + partNumberText() + ")", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+//     e.commit();
     return 0;
   }
   value = analogInputValueSigned(partNumber, channel);
   if(!value.isValid()){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot check if analog input value is signed (unknown part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+//     mdtError e(MDT_DEVICE_ERROR, "Cannot check if analog input value is signed (unknown part number: " + partNumberText() + ")", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+//     e.commit();
     return 0;
   }
   intValueSigned = value.toBool();
   value = analogInputValueScaledFromMinToMax(partNumber, channel);
   if(!value.isValid()){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot check if analog input value is scaled from minimum to maximum (unknown part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+//     mdtError e(MDT_DEVICE_ERROR, "Cannot check if analog input value is scaled from minimum to maximum (unknown part number: " + partNumberText() + ")", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+//     e.commit();
     return 0;
   }
   scaleFromMinToMax = value.toBool();
   value = analogInputValueConversionFactor(partNumber, channel);
   if(!value.isValid()){
-    mdtError e(MDT_DEVICE_ERROR, "Cannot get analog input conversion factor (unknown part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+//     mdtError e(MDT_DEVICE_ERROR, "Cannot get analog input conversion factor (unknown part number: " + partNumberText() + ")", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+//     e.commit();
     return 0;
   }
   conversionFactor = value.toDouble();
   // Have all needed parameters, build I/O
   aio = new mdtAnalogIo;
   if(aio == 0){
-    mdtError e(MDT_DEVICE_ERROR, "Memory allocation failed during analog input creation (unknown part number: " + partNumberText() + ")", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
-    e.commit();
+//     mdtError e(MDT_DEVICE_ERROR, "Memory allocation failed during analog input creation (unknown part number: " + partNumberText() + ")", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWagoModule");
+//     e.commit();
     return 0;
   }
   aio->setRange(min, max, intValueBitsCount, intValueLsbIndex, intValueSigned, scaleFromMinToMax, conversionFactor);

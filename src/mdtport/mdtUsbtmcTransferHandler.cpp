@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtUsbtmcTransferHandler.h"
 #include "mdtUsbtmcPort.h"
+#include "mdtUsbError.h"
 #include <thread>         // std::this_thread::sleep_for
 #include <chrono>         // std::chrono
 #include "mdtUsbtmcTransferHandlerStateMachine.h"
@@ -475,8 +476,7 @@ void mdtUsbtmcTransferHandler::handleControlTransferComplete(mdtUsbtmcControlTra
       {
         QString msg = deviceIdString() + QObject::tr("control query with bRequest '") + QString::number(transfer->bRequest()) + "' ";
         msg += QObject::tr("is not supported by device.");
-        mdtError error(msg, mdtError::Error);
-        MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
+        auto error = mdtErrorNew(msg, mdtError::Error, "mdtUsbtmcTransferHandler");
         ErrorOccuredEvent errorEvent(error);
         pvStateMachine->process_event(errorEvent);
       }
@@ -489,9 +489,11 @@ void mdtUsbtmcTransferHandler::handleControlTransferComplete(mdtUsbtmcControlTra
     case LIBUSB_TRANSFER_ERROR:
     {
       QString msg = deviceIdString() + QObject::tr("Control transfer completed with a unhandled status.");
-      mdtError error(msg, mdtError::Error);
-      error.setSystemError(transfer->status(), libusbTransferStatusText(transfer->status()));
-      MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
+      auto error = mdtErrorNew(msg, mdtError::Error, "mdtUsbtmcTransferHandler");
+      error.stackError(mdtUsbError::fromLibusbTransferStatus(transfer->status()));
+//       mdtError error(msg, mdtError::Error);
+//       error.setSystemError(transfer->status(), libusbTransferStatusText(transfer->status()));
+//       MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
       ErrorOccuredEvent errorEvent(error);
       pvStateMachine->process_event(errorEvent);
       return;
@@ -523,8 +525,7 @@ void mdtUsbtmcTransferHandler::handleControlTransferComplete(mdtUsbtmcControlTra
         QString msg = deviceIdString() + QObject::tr("received a unhandled control response:");
         msg += " " + transfer->usbtmcRequestText() + " . ";
         msg += QObject::tr("Will be ignored.");
-        mdtError error(msg, mdtError::Error);
-        MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
+        auto error = mdtErrorNew(msg, mdtError::Error, "mdtUsbtmcTransferHandler");
         ErrorOccuredEvent errorEvent(error);
         pvStateMachine->process_event(errorEvent);
         return;
@@ -573,9 +574,9 @@ void mdtUsbtmcTransferHandler::handleBulkOutTransferComplete(mdtUsbtmcBulkTransf
     case LIBUSB_TRANSFER_ERROR:
     {
       QString msg = deviceIdString() + QObject::tr("Bulk-OUT transfer completed with a unhandled status.");
-      mdtError error(msg, mdtError::Error);
-      error.setSystemError(transfer->status(), libusbTransferStatusText(transfer->status()));
+      auto error = mdtErrorNew(msg, mdtError::Error, "mdtUsbtmcTransferHandler");
       MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
+      error.stackError(mdtUsbError::fromLibusbTransferStatus(transfer->status()));
       ErrorOccuredEvent errorEvent(error);
       pvStateMachine->process_event(errorEvent);
       return;
@@ -632,9 +633,8 @@ void mdtUsbtmcTransferHandler::restoreBulkOutTransferSA(mdtUsbtmcBulkTransfer* t
     case LIBUSB_TRANSFER_ERROR:
     {
       QString msg = deviceIdString() + QObject::tr("Bulk-OUT transfer completed with a unhandled status.");
-      mdtError error(msg, mdtError::Error);
-      error.setSystemError(transfer->status(), libusbTransferStatusText(transfer->status()));
-      MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
+      auto error = mdtErrorNew(msg, mdtError::Error, "mdtUsbtmcTransferHandler");
+      error.stackError(mdtUsbError::fromLibusbTransferStatus(transfer->status()));
       ErrorOccuredEvent errorEvent(error);
       pvStateMachine->process_event(errorEvent);
       return;
@@ -719,9 +719,8 @@ void mdtUsbtmcTransferHandler::handleBulkInTransferComplete(mdtUsbtmcBulkTransfe
     case LIBUSB_TRANSFER_OVERFLOW:
     {
       QString msg = deviceIdString() + QObject::tr("Bulk-IN transfer completed with a unhandled status.");
-      mdtError error(msg, mdtError::Error);
-      error.setSystemError(transfer->status(), libusbTransferStatusText(transfer->status()));
-      MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
+      auto error = mdtErrorNew(msg, mdtError::Error, "mdtUsbtmcTransferHandler");
+      error.stackError(mdtUsbError::fromLibusbTransferStatus(transfer->status()));
       ErrorOccuredEvent errorEvent(error);
       pvStateMachine->process_event(errorEvent);
       return;
@@ -805,9 +804,8 @@ void mdtUsbtmcTransferHandler::restoreBulkInTransferSA(mdtUsbtmcBulkTransfer* tr
     case LIBUSB_TRANSFER_ERROR:
     {
       QString msg = deviceIdString() + QObject::tr("Bulk-IN transfer completed with a unhandled status.");
-      mdtError error(msg, mdtError::Error);
-      error.setSystemError(transfer->status(), libusbTransferStatusText(transfer->status()));
-      MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
+      auto error = mdtErrorNew(msg, mdtError::Error, "mdtUsbtmcTransferHandler");
+      error.stackError(mdtUsbError::fromLibusbTransferStatus(transfer->status()));
       ErrorOccuredEvent errorEvent(error);
       pvStateMachine->process_event(errorEvent);
       return;
@@ -909,9 +907,8 @@ void mdtUsbtmcTransferHandler::handleInterruptInTransferComplete(mdtUsbtmcInterr
     case LIBUSB_TRANSFER_ERROR:     /// \todo handle !
     {
       QString msg = deviceIdString() + QObject::tr("Interrupt-IN transfer completed with a unhandled status.");
-      mdtError error(msg, mdtError::Error);
-      error.setSystemError(transfer->status(), libusbTransferStatusText(transfer->status()));
-      MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
+      auto error = mdtErrorNew(msg, mdtError::Error, "mdtUsbtmcTransferHandler");
+      error.stackError(mdtUsbError::fromLibusbTransferStatus(transfer->status()));
       ErrorOccuredEvent errorEvent(error);
       pvStateMachine->process_event(errorEvent);
       return;
@@ -992,8 +989,7 @@ void mdtUsbtmcTransferHandler::handleInitiateAbortBulkOutResponse(mdtUsbtmcContr
   qDebug() << "actual len: " << transfer->actualLength() << " - wLength: " << transfer->wLength();
   if(transfer->wLength() != 2){
     QString msg = deviceIdString() + QObject::tr("INITIATE_ABORT_BULK_OUT request returned unexpected amount of data (expected: 2)");
-    mdtError error(msg, mdtError::Error);
-    MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
+    auto error = mdtErrorNew(msg, mdtError::Error, "mdtUsbtmcTransferHandler");
     ErrorOccuredEvent errorEvent(error);
     pvStateMachine->process_event(errorEvent);
     return;
@@ -1038,8 +1034,7 @@ void mdtUsbtmcTransferHandler::handleCheckAbortBulkOutStatusResponse(mdtUsbtmcCo
   // Check wLength
   if(transfer->wLength() != 4){
     QString msg = deviceIdString() + QObject::tr("CHECK_ABORT_BULK_OUT_STATUS request returned unexpected amount of data (expected: 4)");
-    mdtError error(msg, mdtError::Error);
-    MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
+    auto error = mdtErrorNew(msg, mdtError::Error, "mdtUsbtmcTransferHandler");
     ErrorOccuredEvent errorEvent(error);
     pvStateMachine->process_event(errorEvent);
     return;
@@ -1141,8 +1136,7 @@ void mdtUsbtmcTransferHandler::handleInitiateAbortBulkInResponse(mdtUsbtmcContro
   qDebug() << "actual len: " << transfer->actualLength() << " - wLength: " << transfer->wLength();
   if(transfer->wLength() != 2){
     QString msg = deviceIdString() + QObject::tr("INITIATE_ABORT_BULK_IN request returned unexpected amount of data (expected: 2)");
-    mdtError error(msg, mdtError::Error);
-    MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
+    auto error = mdtErrorNew(msg, mdtError::Error, "mdtUsbtmcTransferHandler");
     ErrorOccuredEvent errorEvent(error);
     pvStateMachine->process_event(errorEvent);
     return;
@@ -1225,8 +1219,7 @@ void mdtUsbtmcTransferHandler::handleCheckAbortBulkInStatusResponse(mdtUsbtmcCon
   qDebug() << "actual len: " << transfer->actualLength() << " - wLength: " << transfer->wLength();
   if(transfer->wLength() != 8){
     QString msg = deviceIdString() + QObject::tr("CHECK_ABORT_BULK_IN_STATUS request returned unexpected amount of data (expected: 8)");
-    mdtError error(msg, mdtError::Error);
-    MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
+    auto error = mdtErrorNew(msg, mdtError::Error, "mdtUsbtmcTransferHandler");
     ErrorOccuredEvent errorEvent(error);
     pvStateMachine->process_event(errorEvent);
     return;
@@ -1285,8 +1278,7 @@ void mdtUsbtmcTransferHandler::handleInitiateClearResponse(mdtUsbtmcControlTrans
   qDebug() << "actual len: " << transfer->actualLength() << " - wLength: " << transfer->wLength();
   if(transfer->wLength() != 1){
     QString msg = deviceIdString() + QObject::tr("INITIATE_CLEAR request returned unexpected amount of data (expected: 1)");
-    mdtError error(msg, mdtError::Error);
-    MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
+    auto error = mdtErrorNew(msg, mdtError::Error, "mdtUsbtmcTransferHandler");
     ErrorOccuredEvent errorEvent(error);
     pvStateMachine->process_event(errorEvent);
     return;
@@ -1333,8 +1325,7 @@ void mdtUsbtmcTransferHandler::handleCheckClearStatusResponse(mdtUsbtmcControlTr
   qDebug() << "actual len: " << transfer->actualLength() << " - wLength: " << transfer->wLength();
   if(transfer->wLength() != 2){
     QString msg = deviceIdString() + QObject::tr("CHECK_CLEAR_STATUS request returned unexpected amount of data (expected: 2)");
-    mdtError error(msg, mdtError::Error);
-    MDT_ERROR_SET_SRC(error, "mdtUsbtmcTransferHandler");
+    auto error = mdtErrorNew(msg, mdtError::Error, "mdtUsbtmcTransferHandler");
     ErrorOccuredEvent errorEvent(error);
     pvStateMachine->process_event(errorEvent);
     return;
@@ -1448,8 +1439,8 @@ bool mdtUsbtmcTransferHandler::processSyncControlTransfer(mdtUsbtmcControlTransf
       // Unhandled error, cancel transfer
       pvLastErrorMutex.lock();
       pvLastError.setError(QObject::tr("USB event handling failed (libusb_handle_events())"), mdtError::Error);
-      pvLastError.setSystemError(err, libusb_strerror((libusb_error)err));
       MDT_ERROR_SET_SRC(pvLastError, "mdtUsbtmcTransferHandler");
+      pvLastError.stackError(mdtUsbError::fromLibusbError(err));
       pvLastError.commit();
       pvLastErrorMutex.unlock();
       // Submit cancel request
@@ -1479,34 +1470,34 @@ QString mdtUsbtmcTransferHandler::deviceIdString() const
   return QObject::tr("Device") + " '" + pvDeviceName + "' : ";
 }
 
-QString mdtUsbtmcTransferHandler::libusbTransferStatusText(libusb_transfer_status status) const
-{
-  QString msg;
-
-  // Build system error text
-  switch(status){
-    case LIBUSB_TRANSFER_COMPLETED:
-      msg = "LIBUSB_TRANSFER_COMPLETED (" + QObject::tr("Transfer completed without error.") + ")";
-      break;
-    case LIBUSB_TRANSFER_ERROR:
-      msg = "LIBUSB_TRANSFER_ERROR (" + QObject::tr("Transfer failed.") + ")";
-      break;
-    case LIBUSB_TRANSFER_TIMED_OUT:
-      msg = "LIBUSB_TRANSFER_TIMED_OUT (" + QObject::tr("Transfer timed out.") + ")";
-      break;
-    case LIBUSB_TRANSFER_CANCELLED:
-      msg = "LIBUSB_TRANSFER_CANCELLED (" + QObject::tr("Transfer was cancelled.") + ")";
-      break;
-    case LIBUSB_TRANSFER_STALL:
-      msg = "LIBUSB_TRANSFER_STALL (" + QObject::tr("Halt condition or control request not supported.") + ")";
-      break;
-    case LIBUSB_TRANSFER_NO_DEVICE:
-      msg = "LIBUSB_TRANSFER_NO_DEVICE (" + QObject::tr("Device was disconnected.") + ")";
-      break;
-    case LIBUSB_TRANSFER_OVERFLOW:
-      msg = "LIBUSB_TRANSFER_OVERFLOW (" + QObject::tr("Device sent more data than requested (in USB layer)") + ")";
-      break;
-  }
-
-  return msg;
-}
+// QString mdtUsbtmcTransferHandler::libusbTransferStatusText(libusb_transfer_status status) const
+// {
+//   QString msg;
+// 
+//   // Build system error text
+//   switch(status){
+//     case LIBUSB_TRANSFER_COMPLETED:
+//       msg = "LIBUSB_TRANSFER_COMPLETED (" + QObject::tr("Transfer completed without error.") + ")";
+//       break;
+//     case LIBUSB_TRANSFER_ERROR:
+//       msg = "LIBUSB_TRANSFER_ERROR (" + QObject::tr("Transfer failed.") + ")";
+//       break;
+//     case LIBUSB_TRANSFER_TIMED_OUT:
+//       msg = "LIBUSB_TRANSFER_TIMED_OUT (" + QObject::tr("Transfer timed out.") + ")";
+//       break;
+//     case LIBUSB_TRANSFER_CANCELLED:
+//       msg = "LIBUSB_TRANSFER_CANCELLED (" + QObject::tr("Transfer was cancelled.") + ")";
+//       break;
+//     case LIBUSB_TRANSFER_STALL:
+//       msg = "LIBUSB_TRANSFER_STALL (" + QObject::tr("Halt condition or control request not supported.") + ")";
+//       break;
+//     case LIBUSB_TRANSFER_NO_DEVICE:
+//       msg = "LIBUSB_TRANSFER_NO_DEVICE (" + QObject::tr("Device was disconnected.") + ")";
+//       break;
+//     case LIBUSB_TRANSFER_OVERFLOW:
+//       msg = "LIBUSB_TRANSFER_OVERFLOW (" + QObject::tr("Device sent more data than requested (in USB layer)") + ")";
+//       break;
+//   }
+// 
+//   return msg;
+// }

@@ -26,6 +26,7 @@
 #include "mdtClPathGraph.h"
 #include "mdtClDirectLink.h"
 #include "mdtClUnit.h"
+#include "mdtErrorDialog.h"
 #include <QSqlTableModel>
 #include <QSqlRecord>
 #include <QVBoxLayout>
@@ -370,11 +371,6 @@ void mdtClLinkedUnitConnectorInfoDialog::populateDirectLinkTable(const QVariant 
 
 void mdtClLinkedUnitConnectorInfoDialog::displayError(const mdtError & error) 
 {
-  /// \todo Used mdtErrorDialog
-  QMessageBox msgBox;
-
-  msgBox.setText(error.text());
-  msgBox.setDetailedText(error.systemText());
-  ///msgBox.setIcon(error.levelIcon());
-  msgBox.exec();
+  mdtErrorDialog dialog(error, this);
+  dialog.exec();
 }

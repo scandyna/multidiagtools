@@ -525,7 +525,7 @@ class mdtUsbtmcTransferHandler
 
   /*! \brief Get libubs_transfer_status text
    */
-  QString libusbTransferStatusText(libusb_transfer_status status) const;
+//   QString libusbTransferStatusText(libusb_transfer_status status) const;
 
   Q_DISABLE_COPY(mdtUsbtmcTransferHandler);
 

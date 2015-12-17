@@ -129,7 +129,8 @@ class mdtCsvFileParserIteratorSharedData
       pvLastError.setError(msg, mdtError::Error);
       msg = device->errorString();
       if(!msg.isEmpty()){
-        pvLastError.setSystemError(0, msg);
+        auto error = mdtErrorNewQ(msg, mdtError::Error, "mdtCsvFileParserIteratorSharedData");
+        pvLastError.stackError(error);
       }
       MDT_ERROR_SET_SRC(pvLastError, "mdtCsvFileParserIteratorSharedData");
       pvLastError.commit();
@@ -254,7 +255,8 @@ class mdtCsvFileParserIteratorSharedData
       pvLastError.setError(msg, mdtError::Error);
       msg = pvDevice->errorString();
       if(!msg.isEmpty()){
-        pvLastError.setSystemError(0, msg);
+        auto error = mdtErrorNewQ(msg, mdtError::Error, "mdtCsvFileParserIteratorSharedData");
+        pvLastError.stackError(error);
       }
       MDT_ERROR_SET_SRC(pvLastError, "mdtCsvFileParserIteratorSharedData");
       pvLastError.commit();

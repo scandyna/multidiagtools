@@ -77,9 +77,9 @@ int mdtPortThreadHelperPort::readFromPort(bool emitNewFrameReaden)
     pvReadBuffer = new char[pvReadBufferSize];
     if(pvReadBuffer == 0){
       pvReadBufferSize = 0;
-      mdtError e(MDT_MEMORY_ALLOC_ERROR, "Cannot allocate memory for local buffer", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperPort");
-      e.commit();
+//       mdtError e(MDT_MEMORY_ALLOC_ERROR, "Cannot allocate memory for local buffer", mdtError::Error);
+//       MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperPort");
+//       e.commit();
       return 0;
     }
   }
@@ -162,9 +162,9 @@ mdtAbstractPort::error_t mdtPortThreadHelperPort::writeToPort(bool bytePerByteWr
     if((written == 0)&&(!frame->isEmpty())){
       if(maxWriteTry <= 0){
         // Notify error and restore frame into write pool
-        mdtError e(MDT_PORT_IO_ERROR, "Max write try reached after write busy", mdtError::Error);
-        MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperPort");
-        e.commit();
+//         mdtError e(MDT_PORT_IO_ERROR, "Max write try reached after write busy", mdtError::Error);
+//         MDT_ERROR_SET_SRC(e, "mdtPortThreadHelperPort");
+//         e.commit();
         if(pvThread->runningFlagSet()){
           notifyError(mdtAbstractPort::WriteTimeout);
         }

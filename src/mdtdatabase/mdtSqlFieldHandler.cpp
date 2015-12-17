@@ -120,7 +120,7 @@ QWidget* mdtSqlFieldHandlerLabel::widget()
   return pvLabel;
 }
 
-void mdtSqlFieldHandlerLabel::setReadOnly(bool readOnly)
+void mdtSqlFieldHandlerLabel::setReadOnly(bool /*readOnly*/)
 {
   Q_ASSERT(pvLabel != 0);
 }
@@ -431,7 +431,7 @@ void mdtSqlFieldHandlerMdtDoubleEdit::setReadOnly(bool readOnly)
   pvDoubleEdit->setReadOnly(readOnly);
 }
 
-void mdtSqlFieldHandlerMdtDoubleEdit::setMaxLength(int maxLength)
+void mdtSqlFieldHandlerMdtDoubleEdit::setMaxLength(int /*maxLength*/)
 {
 }
 
@@ -585,9 +585,8 @@ void mdtSqlFieldHandler::setDataWidget(QWidget *widget)
     return;
   }
   // Not supported widget type
-  mdtError e("Cannot find type of widget, object name: " + widget->objectName(), mdtError::Warning);
-  MDT_ERROR_SET_SRC(e, "mdtSqlFieldHandler");
-  e.commit();
+  auto error = mdtErrorNewQ("Cannot find type of widget, object name: " + widget->objectName(), mdtError::Warning, this);
+  error.commit();
 }
 
 void mdtSqlFieldHandler::setDataWidget(QLabel* widget)

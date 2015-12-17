@@ -40,6 +40,7 @@
 #include <QMenu>
 #include <QAction>
 #include <QIcon>
+#include <QMessageBox>
 #include <memory>
 
 #include <QDebug>

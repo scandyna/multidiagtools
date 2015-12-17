@@ -29,6 +29,7 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortConfig
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtAbstractPortSetupDialog.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbtmcPortSetupDialog.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtModbusTcpPortSetupDialog.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbError.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbDeviceList.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbTransfer.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbControlTransfer.cpp

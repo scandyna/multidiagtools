@@ -73,14 +73,14 @@ mdtAbstractPort::error_t mdtPortThreadHelper::handleCommonReadErrors(mdtAbstract
   Q_ASSERT(pvThread != 0);
 
   if(!pvThread->runningFlagSet()){
-    mdtError e(MDT_PORT_IO_ERROR, "Non running thread wants to check about errors", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtPortThread");
-    e.commit();
+//     mdtError e(MDT_PORT_IO_ERROR, "Non running thread wants to check about errors", mdtError::Warning);
+//     MDT_ERROR_SET_SRC(e, "mdtPortThread");
+//     e.commit();
   }
   if(pvCurrentReadFrame == 0){
-    mdtError e(MDT_PORT_IO_ERROR, "Try to handle a read error, but currently no read frame is set", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtPortThreadHelper");
-    e.commit();
+//     mdtError e(MDT_PORT_IO_ERROR, "Try to handle a read error, but currently no read frame is set", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtPortThreadHelper");
+//     e.commit();
     return mdtAbstractPort::UnhandledError;
   }
   pvCurrentReadFrame->clear();
@@ -123,14 +123,14 @@ mdtAbstractPort::error_t mdtPortThreadHelper::handleCommonWriteErrors(mdtAbstrac
   Q_ASSERT(pvThread != 0);
 
   if(!pvThread->runningFlagSet()){
-    mdtError e(MDT_PORT_IO_ERROR, "Non running thread wants to check about errors", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtPortThread");
-    e.commit();
+//     mdtError e(MDT_PORT_IO_ERROR, "Non running thread wants to check about errors", mdtError::Warning);
+//     MDT_ERROR_SET_SRC(e, "mdtPortThread");
+//     e.commit();
   }
   if(pvCurrentWriteFrame == 0){
-    mdtError e(MDT_PORT_IO_ERROR, "Try to handle a write error, but currently no write frame is set", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtPortThreadHelper");
-    e.commit();
+//     mdtError e(MDT_PORT_IO_ERROR, "Try to handle a write error, but currently no write frame is set", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtPortThreadHelper");
+//     e.commit();
     return mdtAbstractPort::UnhandledError;
   }
   restoreCurrentWriteFrameToPool();
@@ -183,9 +183,9 @@ bool mdtPortThreadHelper::getNewFrameRead()
   Q_ASSERT(pvThread != 0);
 
   if(pvPort->readFramesPool().size() < 1){
-    mdtError e(MDT_PORT_QUEUE_EMPTY_ERROR, "Read frames pool is empty", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtPortThreadHelper");
-    e.commit();
+//     mdtError e(MDT_PORT_QUEUE_EMPTY_ERROR, "Read frames pool is empty", mdtError::Warning);
+//     MDT_ERROR_SET_SRC(e, "mdtPortThreadHelper");
+//     e.commit();
     notifyError(mdtAbstractPort::ReadPoolEmpty);
     // Wait until a frame is available again, or end of thread.
     while(pvPort->readFramesPool().size() < 1){
@@ -198,9 +198,9 @@ bool mdtPortThreadHelper::getNewFrameRead()
       }
     }
     // Put info into log that a frame is available again
-    mdtError e2(MDT_NO_ERROR, "Read frames pool has now frames again (no longer empty)", mdtError::Info);
-    MDT_ERROR_SET_SRC(e2, "mdtPortThreadHelper");
-    e2.commit();
+//     mdtError e2(MDT_NO_ERROR, "Read frames pool has now frames again (no longer empty)", mdtError::Info);
+//     MDT_ERROR_SET_SRC(e2, "mdtPortThreadHelper");
+//     e2.commit();
     notifyError(mdtAbstractPort::NoError);
   }
   Q_ASSERT(!pvPort->readFramesPool().isEmpty());
@@ -347,7 +347,7 @@ void mdtPortThreadHelper::notifyError(mdtAbstractPort::error_t error, bool renot
   pvThread->notifyError(error, renotifySameError);
 }
 
-mdtAbstractPort::error_t mdtPortThreadHelper::reconnect(bool notify)
+mdtAbstractPort::error_t mdtPortThreadHelper::reconnect(bool)
 {
   return mdtAbstractPort::UnhandledError;
 }

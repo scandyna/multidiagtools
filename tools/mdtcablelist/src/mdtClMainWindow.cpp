@@ -45,7 +45,8 @@
 #include "mdtTtBasicTester.h"
 #include "mdtTtBasicTesterWindow.h"
 #include "mdtTtBasicTestNodeCalibrationWindow.h"
-
+#include "mdtSqlError.h"
+#include "mdtErrorDialog.h"
 #include <QAction>
 #include <QMessageBox>
 #include <QApplication>
@@ -662,12 +663,10 @@ bool mdtClMainWindow::createVehicleTypeActions()
   // Get vehicle types from DB
   sql = "SELECT Id_PK, Type, SubType, SeriesNumber FROM VehicleType_tbl";
   if(!query.exec(sql)){
-    QSqlError sqlError = query.lastError();
-    mdtError e(tr("Unable to get vehicle type list."), mdtError::Error);
-    e.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(e, "mdtClMainWindow");
-    e.commit();
-    displayError(e);
+    auto error = mdtErrorNewQ(tr("Unable to get vehicle type list."), mdtError::Error, this);
+    error.stackError(mdtSqlError::fromQSqlError(query.lastError()));
+    error.commit();
+    displayError(error);
     return false;
   }
   // Create actions
@@ -1265,22 +1264,17 @@ bool mdtClMainWindow::initWorkDirectory()
   pvWorkDirectory = QDir::home();
   if(!pvWorkDirectory.cd("mdtcablelist")){
     if(!pvWorkDirectory.mkdir("mdtcablelist")){
-      QMessageBox msgBox(this);
-      mdtError e(tr("Cannot create 'mdtcablelist' directory."), mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtClMainWindow");
-      e.commit();
-      msgBox.setText(e.text());
+      auto error = mdtErrorNewQ(tr("Cannot create 'mdtcablelist' directory."), mdtError::Error, this);
+      error.commit();
+      displayError(error);
       /// \todo Let the user a chance to choose another place to create this directory !
-      msgBox.setIcon(QMessageBox::Critical);
-      msgBox.exec();
       return false;
     }
     if(!pvWorkDirectory.cd("mdtcablelist")){
       ///QMessageBox msgBox(this);
-      mdtError e(tr("Cannot create 'mdtcablelist' directory."), mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtClMainWindow");
-      e.commit();
-      displayWarning(e.text());
+      auto error = mdtErrorNewQ(tr("Cannot create 'mdtcablelist' directory."), mdtError::Error, this);
+      error.commit();
+      displayError(error);
       /**
       msgBox.setText(e.text());
       msgBox.setIcon(QMessageBox::Critical);
@@ -1341,10 +1335,6 @@ void mdtClMainWindow::displayWarning(const QString & text , const QString & info
 
 void mdtClMainWindow::displayError(const mdtError & error)
 {
-  QMessageBox msgBox;
-
-  msgBox.setText(error.text());
-  msgBox.setDetailedText(error.systemText());
-  msgBox.setIcon(error.levelIcon());
-  msgBox.exec();
+  mdtErrorDialog dialog(error, this);
+  dialog.exec();
 }

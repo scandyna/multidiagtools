@@ -18,7 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtErrorV2.h"
+#include "mdtError.h"
 #include "mdt/error/Logger.h"
 #include <QLatin1String>
 #include <QObject>
@@ -28,16 +28,16 @@
 
 //#include <QDebug>
 
-mdtErrorV2::mdtErrorV2()
+mdtError::mdtError()
 {
 }
 
-void mdtErrorV2::clear()
+void mdtError::clear()
 {
   pvShared.reset();
 }
 
-void mdtErrorV2::updateText(const QString & text)
+void mdtError::updateText(const QString & text)
 {
   Q_ASSERT(!isNull());
 
@@ -45,7 +45,7 @@ void mdtErrorV2::updateText(const QString & text)
   pvShared->text = text;
 }
 
-void mdtErrorV2::setInformativeText(const QString& text)
+void mdtError::setInformativeText(const QString& text)
 {
   Q_ASSERT(!isNull());
 
@@ -53,7 +53,7 @@ void mdtErrorV2::setInformativeText(const QString& text)
   pvShared->informativeText = text;
 }
 
-QString mdtErrorV2::informativeText() const
+QString mdtError::informativeText() const
 {
   if(!pvShared){
     return QString();
@@ -61,7 +61,7 @@ QString mdtErrorV2::informativeText() const
   return pvShared->informativeText;
 }
 
-mdtErrorV2::Level mdtErrorV2::level() const
+mdtError::Level mdtError::level() const
 {
   if(!pvShared){
     return NoError;
@@ -69,7 +69,7 @@ mdtErrorV2::Level mdtErrorV2::level() const
   return static_cast<Level>(pvShared->level);
 }
 
-QString mdtErrorV2::text() const
+QString mdtError::text() const
 {
   if(!pvShared){
     return QString();
@@ -77,7 +77,7 @@ QString mdtErrorV2::text() const
   return pvShared->text;
 }
 
-void mdtErrorV2::stackError(const mdtErrorV2 & error)
+void mdtError::stackError(const mdtError & error)
 {
   Q_ASSERT(pvShared);
   Q_ASSERT(error.pvShared);
@@ -95,9 +95,9 @@ void mdtErrorV2::stackError(const mdtErrorV2 & error)
   pvShared->pvErrorStack.push_back(error);
 }
 
-std::vector<mdtErrorV2> mdtErrorV2::getErrorStack() const
+std::vector<mdtError> mdtError::getErrorStack() const
 {
-  std::vector<mdtErrorV2> stack;
+  std::vector<mdtError> stack;
 
   if(!pvShared){
     return stack;
@@ -112,7 +112,7 @@ std::vector<mdtErrorV2> mdtErrorV2::getErrorStack() const
   return stack;
 }
 
-void mdtErrorV2::setSource(const QString & fileName, int fileLine, const QString & className, const QString & functionName)
+void mdtError::setSource(const QString & fileName, int fileLine, const QString & className, const QString & functionName)
 {
   Q_ASSERT(pvShared);
 
@@ -122,7 +122,7 @@ void mdtErrorV2::setSource(const QString & fileName, int fileLine, const QString
   pvShared->functionName =  className + QLatin1String("::") + functionName + QLatin1String("()");
 }
 
-void mdtErrorV2::setSource(const QString& fileName, int fileLine, const QObject*const obj, const QString& functionName)
+void mdtError::setSource(const QString& fileName, int fileLine, const QObject*const obj, const QString& functionName)
 {
   Q_ASSERT(obj != nullptr);
   Q_ASSERT(obj->metaObject() != nullptr);
@@ -130,12 +130,13 @@ void mdtErrorV2::setSource(const QString& fileName, int fileLine, const QObject*
   setSource(fileName, fileLine, obj->metaObject()->className(), functionName);
 }
 
-void mdtErrorV2::commit()
+void mdtError::commit()
 {
+  /// \todo Add a flag to know if allready logged. Logger must also support logging stack.
   mdt::error::Logger::logError(*this);
 }
 
-QString mdtErrorV2::fileName() const
+QString mdtError::fileName() const
 {
   if(!pvShared){
     return QString();
@@ -143,7 +144,7 @@ QString mdtErrorV2::fileName() const
   return pvShared->fileName;
 }
 
-int mdtErrorV2::fileLine() const
+int mdtError::fileLine() const
 {
   if(!pvShared){
     return 0;
@@ -151,7 +152,7 @@ int mdtErrorV2::fileLine() const
   return pvShared->lineNumber;
 }
 
-QString mdtErrorV2::functionName() const
+QString mdtError::functionName() const
 {
   if(!pvShared){
     return QString();
@@ -159,7 +160,7 @@ QString mdtErrorV2::functionName() const
   return pvShared->functionName;
 }
 
-void mdtErrorV2::setSystemError(int, const QString&)
+void mdtError::setSystemError(int, const QString&)
 {
 }
 

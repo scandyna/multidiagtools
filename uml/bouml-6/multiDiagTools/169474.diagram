@@ -4,30 +4,14 @@ classcanvas 128002 class_ref 182402 // mdtError
   classdiagramsettings member_max_width 0 end
   xyz 49 117 2000
 end
-note 129282 "Set source: add a facility function for QObject ?
-Or, general easy solutiuion ? (Reflection ??)"
-  xyzwh 41 758 2000 381 65
-note 129410 "Call stack ??"
-  xyzwh 104 484 2000 273 39
-note 129666 "Error items ? (each item has a type, like descriptive or informative test, source, etc...)"
-  xyzwh 44 632 2000 367 77
-note 129794 "Error code, or type, or number = template with default type to void ? WW compatibility problems ?"
-  xyzwh 450 756 2000 389 65
 classcanvas 129922 class_ref 2064130 // mdtErrorPrivate
   classdiagramsettings member_max_width 0 end
   xyz 415 325 2000
 end
-note 130434 "SystemError: should by a mdtError of type of system error ?
-WW: how to mix in a container ?"
-  xyzwh 55 538 2000 349 81
-classcanvas 130690 class_ref 2035458 // QTextCodec
-  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 697 405 2010
-end
 note 131074 "mdtError , mdtWarning, etc... ?
 Think: mdtOptional: how to differientiate hasError() if it is just a warning ? 
 "
-  xyzwh 461 474 2005 203 185
+  xyzwh 400 437 2005 203 185
 classcanvas 131330 class_ref 2112002 // mdtErrorPrivateBase
   classdiagramsettings member_max_width 0 end
   xyz 356 97 2000
@@ -45,11 +29,6 @@ classcanvas 132098 class_ref 2125186 // QSharedData
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 453 12 3005
 end
-note 132354 "macro mdtErrorNew 
-#define mdtErrorNew(..)  mdtError(__LINE__, __FILE_, ...)
-Call: auto error = mdtErrorNew
-Note: name: mdtErrorCreate(..)"
-  xyzwh -1 9 2000 451 97
 relationcanvas 131458 relation_ref 2424578 // <generalisation>
   from ref 129922 z 2001 to ref 131330
   no_role_a no_role_b

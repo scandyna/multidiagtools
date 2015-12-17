@@ -137,9 +137,8 @@ bool mdtSqlDataWidgetController::addMapping(QWidget* widget, const QString& fiel
     pvWidgetMapper.addMapping(fieldHandler, fieldIndex, "data");
   }else{
     widget->setEnabled(false);
-    mdtError e(tr("For table '") + tableName() + tr("': cannot find field for widget '") + widget->objectName() + tr("'"), mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtSqlDataWidgetController");
-    e.commit();
+    auto error = mdtErrorNewQ(tr("For table '") + tableName() + tr("': cannot find field for widget '") + widget->objectName() + tr("'"), mdtError::Warning, this);
+    error.commit();
   }
 
   return true;

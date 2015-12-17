@@ -48,9 +48,9 @@ int mdtPortLock::openLocked(const QString &portName, int flags)
 
   // If this method is called second time without unlocking port before, it's a error
   if(pvIsLocked){
-    mdtError e(MDT_PORT_IO_ERROR , "Port " + portName + " is allready locked by this instance, please unlock it first", mdtError::Info);
-    MDT_ERROR_SET_SRC(e, "mdtPortLock");
-    e.commit();
+//     mdtError e(MDT_PORT_IO_ERROR , "Port " + portName + " is allready locked by this instance, please unlock it first", mdtError::Info);
+//     MDT_ERROR_SET_SRC(e, "mdtPortLock");
+//     e.commit();
     return -1;
   }
 
@@ -61,9 +61,9 @@ int mdtPortLock::openLocked(const QString &portName, int flags)
   buildLockFilesList();
   for(i=0; i<pvLockfiles.size(); i++){
     if(pvLockfiles.at(i).exists()){
-      mdtError e(MDT_PORT_IO_ERROR , "Port " + pvPort.absoluteFilePath() + " is allready locked (Lockfile" + pvLockfiles.at(i).filePath() + " exists)", mdtError::Info);
-      MDT_ERROR_SET_SRC(e, "mdtPortLock");
-      e.commit();
+//       mdtError e(MDT_PORT_IO_ERROR , "Port " + pvPort.absoluteFilePath() + " is allready locked (Lockfile" + pvLockfiles.at(i).filePath() + " exists)", mdtError::Info);
+//       MDT_ERROR_SET_SRC(e, "mdtPortLock");
+//       e.commit();
       pvIsLockedByAnother = true;
       return -1;
     }
@@ -78,10 +78,10 @@ int mdtPortLock::openLocked(const QString &portName, int flags)
   pvFd = ::open(pvPort.absoluteFilePath().toStdString().c_str(), flags);
   if(pvFd < 0){
     err = errno;
-    mdtError e(MDT_PORT_IO_ERROR, "Unable to open " + pvPort.absoluteFilePath(), mdtError::Error);
-    e.setSystemError(err, strerror(err));
-    MDT_ERROR_SET_SRC(e, "mdtPortLock");
-    e.commit();
+//     mdtError e(MDT_PORT_IO_ERROR, "Unable to open " + pvPort.absoluteFilePath(), mdtError::Error);
+//     e.setSystemError(err, strerror(err));
+//     MDT_ERROR_SET_SRC(e, "mdtPortLock");
+//     e.commit();
     removeLockFiles();
     errno = err;
     return -1;
@@ -93,10 +93,10 @@ int mdtPortLock::openLocked(const QString &portName, int flags)
   pvLock.l_len = 0;
   if(fcntl(pvFd, F_SETLK, &pvLock) < 0){
     err =errno;
-    mdtError e(MDT_PORT_IO_ERROR, "Unable to lock " + pvPort.absoluteFilePath(), mdtError::Error);
-    e.setSystemError(err, strerror(err));
-    MDT_ERROR_SET_SRC(e, "mdtPortLock");
-    e.commit();
+//     mdtError e(MDT_PORT_IO_ERROR, "Unable to lock " + pvPort.absoluteFilePath(), mdtError::Error);
+//     e.setSystemError(err, strerror(err));
+//     MDT_ERROR_SET_SRC(e, "mdtPortLock");
+//     e.commit();
     removeLockFiles();
     ::close(pvFd);
     pvFd = -1;
@@ -157,9 +157,9 @@ void mdtPortLock::scanForLockDirectories()
   }
   // Warn if no directory was found
   if(pvWritableLockDirectories.size() < 1){
-    mdtError e(MDT_PORT_IO_ERROR, "No lock directory found", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtPortLock");
-    e.commit();
+//     mdtError e(MDT_PORT_IO_ERROR, "No lock directory found", mdtError::Warning);
+//     MDT_ERROR_SET_SRC(e, "mdtPortLock");
+//     e.commit();
   }
 }
 
@@ -181,17 +181,17 @@ bool mdtPortLock::createLockFile(const QFileInfo &file)
 
   // Check if file exists
   if(f.exists()){
-    mdtError e(MDT_PORT_IO_ERROR, "File " + f.fileName() + " exists", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtPortLock");
-    e.commit();
+//     mdtError e(MDT_PORT_IO_ERROR, "File " + f.fileName() + " exists", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtPortLock");
+//     e.commit();
     pvIsLocked = true;
     return false;
   }
   // Try to create
   if(!f.open(QIODevice::ReadWrite)){
-    mdtError e(MDT_PORT_IO_ERROR, "File " + f.fileName() + " cannot be created", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtPortLock");
-    e.commit();
+//     mdtError e(MDT_PORT_IO_ERROR, "File " + f.fileName() + " cannot be created", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtPortLock");
+//     e.commit();
     return false;
   }
   pvCreatedLockFiles << file;
@@ -207,9 +207,9 @@ void mdtPortLock::removeLockFiles()
   for(int i=0; i<pvCreatedLockFiles.size(); i++){
     f.setFileName(pvCreatedLockFiles.at(i).absoluteFilePath());
     if(!f.remove()){
-      mdtError e(MDT_PORT_IO_ERROR, "Cannot remove lock file " + pvCreatedLockFiles.at(i).absoluteFilePath(), mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtPortLock");
-      e.commit();
+//       mdtError e(MDT_PORT_IO_ERROR, "Cannot remove lock file " + pvCreatedLockFiles.at(i).absoluteFilePath(), mdtError::Error);
+//       MDT_ERROR_SET_SRC(e, "mdtPortLock");
+//       e.commit();
     }
   }
   pvCreatedLockFiles.clear();

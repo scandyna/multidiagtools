@@ -84,9 +84,8 @@ void mdtPortManager::lockPortMutex()
   Q_ASSERT(pvPort != 0);
 
   if(pvPortMutexLocked){
-    mdtError e(MDT_PORT_IO_ERROR, "Trying to lock port mutex from main thread while it is allready locked (from main thread)", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtPortManager");
-    e.commit();
+    auto error = mdtErrorNewQ("Trying to lock port mutex from main thread while it is allready locked (from main thread)", mdtError::Warning, this);
+    error.commit();
     return;
   }
   pvPortMutexLocked = true;
@@ -296,9 +295,8 @@ mdtPortTransaction *mdtPortManager::getNewTransaction()
     pvTransactionsAllocatedCount++;
     // Check about memory leaks
     if((pvTransactionsAllocatedCount - pvTransactionsPool.size() - pvTransactionsPending.size() - pvTransactionsDone.size()) > 10){
-      mdtError e(MDT_PORT_IO_ERROR, "Transactions management produces memory leakage", mdtError::Warning);
-      MDT_ERROR_SET_SRC(e, "mdtPortManager");
-      e.commit();
+      auto error = mdtErrorNewQ("Transactions management produces memory leakage", mdtError::Warning, this);
+      error.commit();
     }
   }else{
     transaction = pvTransactionsPool.dequeue();
@@ -390,9 +388,8 @@ bool mdtPortManager::waitTransactionDone(int id)
   }
   // Check if transaction exists in pending queue
   if(!pvTransactionsPending.contains(id)){
-    mdtError e(MDT_PORT_IO_ERROR, "Wait on a frame that was never added to pending queue, id: " + QString::number(id), mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtPortManager");
-    e.commit();
+    auto error = mdtErrorNewQ("Wait on a frame that was never added to pending queue, id: " + QString::number(id), mdtError::Warning, this);
+    error.commit();
     emit pmUnhandledErrorEvent();
     return false;
   }
@@ -683,16 +680,14 @@ void mdtPortManager::addTransactionPending(mdtPortTransaction *transaction)
   pvTransactionsPending.insert(transaction->id(), transaction);
   // If we have more transactions pending than write queue size, we wait here
   if(pvTransactionsPending.size() > pvMaxTransactionsPending){
-    mdtError e(MDT_PORT_IO_ERROR, "Pending transactions queue has reached maximum authorized of " + QString::number(pvMaxTransactionsPending) +  " (this is a bug)", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtPortManager");
-    e.commit();
+    auto error = mdtErrorNewQ("Pending transactions queue has reached maximum authorized of " + QString::number(pvMaxTransactionsPending) +  " (this is a bug)", mdtError::Error, this);
+    error.commit();
     emit pmUnhandledErrorEvent();
   }
   // Watch transactions size
   if(pvTransactionsPending.size() > (pvMaxTransactionsPending +20)){
-    mdtError e(MDT_PORT_IO_ERROR, "Pending transactions queue has more than 20 items over maximum authorized, will clear it (this is a bug)", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtPortManager");
-    e.commit();
+    auto error = mdtErrorNewQ("Pending transactions queue has more than 20 items over maximum authorized, will clear it (this is a bug)", mdtError::Error, this);
+    error.commit();
     qDeleteAll(pvTransactionsPending);
     pvTransactionsPending.clear();
     emit pmUnhandledErrorEvent();
@@ -846,9 +841,8 @@ void mdtPortManager::fromThreadNewFrameReaden()
       addTransactionDone(transaction);
       ++framesCount;
     }else{
-      mdtError e(MDT_PORT_IO_ERROR, "Received a uncomplete frame, will discard it", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtPortManager");
-      e.commit();
+      auto error = mdtErrorNewQ("Received a uncomplete frame, will discard it", mdtError::Error, this);
+      error.commit();
     }
     // Restore frame back into pool
     pvPort->readFramesPool().enqueue(frame);

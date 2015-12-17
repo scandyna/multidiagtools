@@ -127,9 +127,9 @@ QVariant mdtFrameCodecScpi::decodeSingleValueDouble(const QByteArray &data)
   }
   // Case of no data
   if(pvAsciiData.size() < 1){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame contains no data" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("Frame contains no data" , mdtError::Warning);
+
+    error.commit();
     return value;
   }
   // Convert and check
@@ -160,9 +160,8 @@ mdtValue mdtFrameCodecScpi::decodeSingleValueDouble(const QByteArray &data)
   }
   // Case of no data
   if(pvAsciiData.size() < 1){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame contains no data" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("Frame contains no data" , mdtError::Warning, "mdtFrameCodecScpi");
+    error.commit();
     return mdtValue();
   }
   // Convert and check
@@ -233,33 +232,33 @@ bool mdtFrameCodecScpi::decodeFunctionParameters(const QByteArray &data)
   }
   // Case of no data
   if(pvAsciiData.size() < 1){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame contains no data" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("Frame contains no data" , mdtError::Warning, "mdtFrameCodecScpi");
+
+    error.commit();
     return false;
   }
   // Separate <function> <parameters>
   pvNodes = pvAsciiData.split(' ', QString::SkipEmptyParts);
   if(pvNodes.size() < 1){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Unexpected amount of space separated elements (expected min. 1)" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("Unexpected amount of space separated elements (expected min. 1)" , mdtError::Warning, "mdtFrameCodecScpi");
+
+    error.commit();
     return false;
   }
   // Ad function to result
   pvValues.append(pvNodes.at(0));
   if(pvValues.at(0).type() != QVariant::String){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Function is not a string" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("Function is not a string" , mdtError::Warning, "mdtFrameCodecScpi");
+
+    error.commit();
     return false;
   }
   // Separate parameters
   if(pvNodes.size() > 1){
     if(pvNodes.size() != 2){
-      mdtError e(MDT_FRAME_DECODE_ERROR, "Unexpected amount of space separated elements (expected 2)" , mdtError::Warning);
-      MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-      e.commit();
+      auto error = mdtErrorNew("Unexpected amount of space separated elements (expected 2)" , mdtError::Warning, "mdtFrameCodecScpi");
+  
+      error.commit();
       return false;
     }
     pvNodes = pvNodes.at(1).split(',', QString::SkipEmptyParts);
@@ -319,25 +318,25 @@ bool mdtFrameCodecScpi::decodeScpiVersion(const QByteArray &data)
   // Separate YYYY and V
   pvNodes = pvAsciiData.split('.', QString::SkipEmptyParts);
   if(pvNodes.size() != 2){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Unexpected amount of space separated elements (expected 2)" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("Unexpected amount of space separated elements (expected 2)" , mdtError::Warning, "mdtFrameCodecScpi");
+
+    error.commit();
     return false;
   }
   // Convert and store version
   value = pvNodes.at(0);
   if(!value.convert(QVariant::Int)){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Version has wrong format (expected YYYY.V)" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("Version has wrong format (expected YYYY.V)" , mdtError::Warning, "mdtFrameCodecScpi");
+
+    error.commit();
     return false;
   }
   pvValues.append(value);
   value = pvNodes.at(1);
   if(!value.convert(QVariant::Int)){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Version has wrong format (expected YYYY.V)" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("Version has wrong format (expected YYYY.V)" , mdtError::Warning, "mdtFrameCodecScpi");
+
+    error.commit();
     return false;
   }
   pvValues.append(value);
@@ -367,9 +366,9 @@ bool mdtFrameCodecScpi::decodeError(const QByteArray &data)
   pvNodes = mdtAlgorithms::splitString(pvAsciiData, ",", "\"");
   // Store result in data list
   if(pvNodes.size() != 2){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "data contains not an error" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("data contains not an error" , mdtError::Warning, "mdtFrameCodecScpi");
+
+    error.commit();
     return false;
   }
   // Error code
@@ -398,45 +397,45 @@ bool mdtFrameCodecScpi::decodeIEEEblock(const QByteArray &data, mdtFrameCodecScp
   pvValues.clear();
   // If string length is < 3: shure: not an IEEE block
   if(data.size() < 3){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame is not a IEEE block (length < 2)" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("Frame is not a IEEE block (length < 2)" , mdtError::Warning, "mdtFrameCodecScpi");
+
+    error.commit();
     return false;
   }
   // If first char is not a #, we have not a IEEE block
   if(data.at(0) != '#'){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame is not a IEEE block (beginns not with #)" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("Frame is not a IEEE block (beginns not with #)" , mdtError::Warning, "mdtFrameCodecScpi");
+
+    error.commit();
     return false;
   }
   // Get the header length
   headerSize = data.mid(1, 1).toInt(&ok);
   if(!ok){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Cannot get header length in IEEE block" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("Cannot get header length in IEEE block" , mdtError::Warning, "mdtFrameCodecScpi");
+
+    error.commit();
     return false;
   }
   // Check that enough bytes are available
   if(data.size() < (headerSize+2)){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "IEEE block contains no data" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("IEEE block contains no data" , mdtError::Warning, "mdtFrameCodecScpi");
+
+    error.commit();
     return false;
   }
   // Get data length
   dataSize = data.mid(2, headerSize).toInt(&ok);
   if(!ok){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Cannot get data length in IEEE block" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("Cannot get data length in IEEE block" , mdtError::Warning, "mdtFrameCodecScpi");
+
+    error.commit();
     return false;
   }
   if(dataSize < 1){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "IEEE block contains no data (info from header)" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("IEEE block contains no data (info from header)" , mdtError::Warning, "mdtFrameCodecScpi");
+
+    error.commit();
     return false;
   }
   // Calculate real received data size
@@ -446,9 +445,9 @@ bool mdtFrameCodecScpi::decodeIEEEblock(const QByteArray &data, mdtFrameCodecScp
     dataSize = data.size()-headerSize-2;
   }
   if(dataSize < 1){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "IEEE block contains no data (info from header)" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("IEEE block contains no data (info from header)" , mdtError::Warning, "mdtFrameCodecScpi");
+
+    error.commit();
     return false;
   }
   // Decode data part
@@ -458,9 +457,8 @@ bool mdtFrameCodecScpi::decodeIEEEblock(const QByteArray &data, mdtFrameCodecScp
   if(format == ASCII){
     return decodeIEEEdataAscii(data.mid(headerSize+2, dataSize));
   }
-  mdtError e(MDT_FRAME_DECODE_ERROR, "Data format not implemented yet, sorry" , mdtError::Warning);
-  MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-  e.commit();
+  auto error = mdtErrorNew("Data format not implemented yet, sorry" , mdtError::Warning, "mdtFrameCodecScpi");
+  error.commit();
   return false;
 }
 
@@ -494,9 +492,9 @@ bool mdtFrameCodecScpi::decodeIEEEdataByte(const QByteArray &data)
   // Check data length
   /*
   if(len < 1){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "IEEE block contains no data" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+    auto error = mdtErrorNew("IEEE block contains no data" , mdtError::Warning);
+
+    error.commit();
     return false;
   }
   */

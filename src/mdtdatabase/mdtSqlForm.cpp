@@ -21,6 +21,7 @@
 #include "mdtSqlForm.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtUiMessageHandler.h"
+#include "mdtErrorDialog.h"
 #include <QSqlTableModel>
 #include <QSqlField>
 #include <QSqlError>
@@ -208,16 +209,11 @@ mdtError mdtSqlForm::lastError() const
 
 void mdtSqlForm::displayLastError(const QString & windowTitle)
 {
-  QMessageBox msgBox(this);
-
-  msgBox.setText(pvLastError.text());
-  msgBox.setInformativeText(pvLastError.informativeText());
-  msgBox.setDetailedText(pvLastError.systemText());
-  ///msgBox.setIcon(pvLastError.levelIcon());
+  mdtErrorDialog dialog(pvLastError, this);
   if(!windowTitle.isEmpty()){
-    msgBox.setWindowTitle(windowTitle);
+    dialog.setWindowTitle(windowTitle);
   }
-  msgBox.exec();
+  dialog.exec();
 }
 
 int mdtSqlForm::rowCount(const QString& tableName, bool fetchAll)

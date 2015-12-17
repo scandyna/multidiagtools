@@ -23,6 +23,7 @@
 #include "mdtSqlDatabaseSchemaThread.h"
 #include "mdtSqlDatabaseDialogSqlite.h"
 #include "mdtSqlDatabaseSqlite.h"
+#include "mdtErrorDialog.h"
 #include <QPushButton>
 #include <QMessageBox>
 #include <QCloseEvent>
@@ -129,13 +130,8 @@ void mdtSqlDatabaseSchemaDialog::onThreadFinished()
 
 void mdtSqlDatabaseSchemaDialog::onThreadGlobalErrorOccured(mdtError error)
 {
-  QMessageBox msgBox(this);
-
-  msgBox.setText(error.text());
-  msgBox.setInformativeText(error.informativeText());
-  msgBox.setDetailedText(error.systemText());
-  ///msgBox.setIcon(error.levelIcon());
-  msgBox.exec();
+  mdtErrorDialog dialog(error, this);
+  dialog.exec();
 }
 
 void mdtSqlDatabaseSchemaDialog::setStateDatabaseSetOrNotSet()

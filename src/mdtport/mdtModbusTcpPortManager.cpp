@@ -327,9 +327,9 @@ bool mdtModbusTcpPortManager::saveScanResult(const QList<mdtPortInfo*> scanResul
   // Try to open file
   file.setFileName(mdtApplication::cacheDir().absolutePath() + "/" + pvKnownHostsFileName);
   if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)){
-    mdtError e(MDT_FILE_IO_ERROR, "Cannot write to " + file.fileName(), mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
-    e.commit();
+    pvLastError.setError("Cannot write to " + file.fileName(), mdtError::Error);
+    MDT_ERROR_SET_SRC(pvLastError, "mdtModbusTcpPortManager");
+    pvLastError.commit();
     return false;
   }
   // Save items
@@ -339,9 +339,9 @@ bool mdtModbusTcpPortManager::saveScanResult(const QList<mdtPortInfo*> scanResul
     line = scanResult.at(i)->portName().toLocal8Bit();
     line += "\n";
     if(file.write(line) < 0){
-      mdtError e(MDT_FILE_IO_ERROR, "Write error occured during write to " + file.fileName(), mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
-      e.commit();
+      pvLastError.setError("Write error occured during write to " + file.fileName(), mdtError::Error);
+      MDT_ERROR_SET_SRC(pvLastError, "mdtModbusTcpPortManager");
+      pvLastError.commit();
       file.close();
       return false;
     }
@@ -506,16 +506,16 @@ bool mdtModbusTcpPortManager::getRegisterValues(int address, int n)
   }
   // Get reply and decode
   if(codec.decode(readenFrame(transactionId)) != 4){
-    mdtError e(MDT_DEVICE_ERROR, "Received unexptected response code, expeced 0x04 (FC4)", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
-    e.commit();
+//     mdtError e(MDT_DEVICE_ERROR, "Received unexptected response code, expeced 0x04 (FC4)", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+//     e.commit();
     return false;
   }
   // Store values
   if(codec.values().size() != n){
-    mdtError e(MDT_DEVICE_ERROR, "Received unexptected count of values", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
-    e.commit();
+//     mdtError e(MDT_DEVICE_ERROR, "Received unexptected count of values", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+//     e.commit();
     return false;
   }
   for(i=0; i<n; i++){
@@ -560,9 +560,9 @@ bool mdtModbusTcpPortManager::setRegisterValues(int startAddress, QList<int> &va
   }
   // Get reply and decode
   if(codec.decode(readenFrame(transactionId)) != 16){
-    mdtError e(MDT_DEVICE_ERROR, "Received unexptected response code, expeced 0x10 (FC16)", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
-    e.commit();
+//     mdtError e(MDT_DEVICE_ERROR, "Received unexptected response code, expeced 0x10 (FC16)", mdtError::Error);
+//     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+//     e.commit();
     return false;
   }
 
@@ -664,9 +664,9 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
       // If we have a pending transaction, remove it
       transaction = transactionPending(frame->transactionId());
       if(transaction == 0){
-        mdtError e(MDT_TCP_IO_ERROR, "Received a frame with unexpected transaction ID", mdtError::Warning);
-        MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
-        e.commit();
+//         mdtError e(MDT_TCP_IO_ERROR, "Received a frame with unexpected transaction ID", mdtError::Warning);
+//         MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
+//         e.commit();
       }else{
         /// \todo check about transaction ID ? Should be a assertion ?
         transaction->setId(frame->transactionId());

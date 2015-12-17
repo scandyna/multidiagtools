@@ -18,35 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ERROR_LOGGER_CONSOLE_BACKEND_H
-#define MDT_ERROR_LOGGER_CONSOLE_BACKEND_H
+#ifndef MDT_FILE_ERROR_H
+#define MDT_FILE_ERROR_H
 
-#include "LoggerBackend.h"
-#include <QString>
+#include "mdtError.h"
+#include <QFileDevice>
 
-namespace mdt{ namespace error {
-
-  /*! \brief Console backend for error Logger
+namespace mdtFileError
+{
+  /*! \brief Get a mdtError from given QFileDevice error
    */
-  class LoggerConsoleBackend : public LoggerBackend
-  {
-   public:
+  mdtError fromQFileDeviceError(const QFileDevice & device);
 
-    /*! \brief Destructor
-     */
-    ~LoggerConsoleBackend();
+} // namespace mdtFileError
 
-    /*! \brief Log given error
-     */
-    void logError(const mdtError & error);
-
-   private:
-
-    /*! \brief Get error informations
-     */
-    QString getErrorString(const mdtError & error) const;
-  };
-
-}}  // namespace mdt{ namespace error {
-
-#endif // #ifndef MDT_ERROR_LOGGER_CONSOLE_BACKEND_H
+#endif // #ifndef MDT_FILE_ERROR_H

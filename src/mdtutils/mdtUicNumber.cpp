@@ -53,7 +53,7 @@ bool mdtUicNumber::setNumber(const QString &uicNumber)
     number.remove(number.size()-1, 1);
   }
   if((number.size() != 6)&&(number.size() != 11)){
-    mdtError e(MDT_PARSE_ERROR, "UIC number has invalid digits count (allowed: 6, 7, 11 or 12 digits)", mdtError::Error);
+    auto e = mdtErrorNew("UIC number has invalid digits count (allowed: 6, 7, 11 or 12 digits)", mdtError::Error, "mdtUicNumber");
     MDT_ERROR_SET_SRC(e, "mdtUicNumber");
     e.commit();
     return false;
@@ -63,7 +63,7 @@ bool mdtUicNumber::setNumber(const QString &uicNumber)
   for(i=0; i<number.size(); ++i){
     digit = number.at(i).digitValue();
     if(digit<0){
-      mdtError e(MDT_PARSE_ERROR, "Invalid UIC number (contains unallowed chars)", mdtError::Error);
+      auto e = mdtErrorNew("Invalid UIC number (contains unallowed chars)", mdtError::Error, "mdtUicNumber");
       MDT_ERROR_SET_SRC(e, "mdtUicNumber");
       e.commit();
       pvUicNumberDigits.clear();
@@ -184,7 +184,7 @@ bool mdtUicNumber::isValid()
 {
   // Check if somethig was set
   if(pvUicNumberDigits.size() < 1){
-    mdtError e(MDT_PARSE_ERROR, "No valid UIC number was set", mdtError::Error);
+    auto e = mdtErrorNew("No valid UIC number was set", mdtError::Error, "mdtUicNumber");
     MDT_ERROR_SET_SRC(e, "mdtUicNumber");
     e.commit();
     return false;
@@ -257,7 +257,7 @@ bool mdtUicNumber::loadCountriesDb(const QString &dbPath)
   // Open file
   csv.setFileName(dbPath);
   if(!csv.open(QIODevice::ReadOnly | QIODevice::Text)){
-    mdtError e(MDT_PARSE_ERROR, "Cannot open file " + dbPath, mdtError::Error);
+    auto e = mdtErrorNew("Cannot open file " + dbPath, mdtError::Error, "mdtUicNumber");
     e.setSystemError(csv.error(), csv.errorString());
     MDT_ERROR_SET_SRC(e, "mdtUicNumber");
     e.commit();
@@ -265,7 +265,7 @@ bool mdtUicNumber::loadCountriesDb(const QString &dbPath)
   }
   // Read
   if(!csv.readLines(";", "\"")){
-    mdtError e(MDT_PARSE_ERROR, "Cannot parse CSV file " + dbPath, mdtError::Error);
+    auto e = mdtErrorNew("Cannot parse CSV file " + dbPath, mdtError::Error, "mdtUicNumber");
     e.setSystemError(csv.error(), csv.errorString());
     MDT_ERROR_SET_SRC(e, "mdtUicNumber");
     e.commit();
@@ -279,7 +279,7 @@ bool mdtUicNumber::loadCountriesDb(const QString &dbPath)
   for(i=1; i<db.size(); i++){
     // Check line size
     if(db.at(i).size() != 5){
-      mdtError e(MDT_PARSE_ERROR, "CSV file coloumn count false (expected: 5)", mdtError::Error);
+      auto e = mdtErrorNew("CSV file coloumn count false (expected: 5)", mdtError::Error, "mdtUicNumber");
       MDT_ERROR_SET_SRC(e, "mdtUicNumber");
       e.commit();
       return false;
@@ -291,7 +291,7 @@ bool mdtUicNumber::loadCountriesDb(const QString &dbPath)
       delete item;
       qDeleteAll(pvCountries);
       pvCountries.clear();
-      mdtError e(MDT_PARSE_ERROR, "CSV file: first coloumn is not a number", mdtError::Error);
+      auto e = mdtErrorNew("CSV file: first coloumn is not a number", mdtError::Error, "mdtUicNumber");
       MDT_ERROR_SET_SRC(e, "mdtUicNumber");
       e.commit();
       return false;
@@ -322,7 +322,7 @@ bool mdtUicNumber::loadUsagesDb(const QString &dbPath)
   // Open file
   csv.setFileName(dbPath);
   if(!csv.open(QIODevice::ReadOnly | QIODevice::Text)){
-    mdtError e(MDT_PARSE_ERROR, "Cannot open file " + dbPath, mdtError::Error);
+    auto e = mdtErrorNew("Cannot open file " + dbPath, mdtError::Error, "mdtUicNumber");
     e.setSystemError(csv.error(), csv.errorString());
     MDT_ERROR_SET_SRC(e, "mdtUicNumber");
     e.commit();
@@ -330,7 +330,7 @@ bool mdtUicNumber::loadUsagesDb(const QString &dbPath)
   }
   // Read
   if(!csv.readLines(";", "\"")){
-    mdtError e(MDT_PARSE_ERROR, "Cannot parse CSV file " + dbPath, mdtError::Error);
+    auto e = mdtErrorNew("Cannot parse CSV file " + dbPath, mdtError::Error, "mdtUicNumber");
     e.setSystemError(csv.error(), csv.errorString());
     MDT_ERROR_SET_SRC(e, "mdtUicNumber");
     e.commit();
@@ -344,7 +344,7 @@ bool mdtUicNumber::loadUsagesDb(const QString &dbPath)
   for(i=1; i<db.size(); i++){
     // Check line size
     if(db.at(i).size() != 4){
-      mdtError e(MDT_PARSE_ERROR, "CSV file coloumn count false (expected: 4)", mdtError::Error);
+      auto e = mdtErrorNew("CSV file coloumn count false (expected: 4)", mdtError::Error, "mdtUicNumber");
       MDT_ERROR_SET_SRC(e, "mdtUicNumber");
       e.commit();
       return false;
@@ -356,7 +356,7 @@ bool mdtUicNumber::loadUsagesDb(const QString &dbPath)
       delete item;
       qDeleteAll(pvUsages);
       pvUsages.clear();
-      mdtError e(MDT_PARSE_ERROR, "CSV file: first coloumn is not a number", mdtError::Error);
+      auto e = mdtErrorNew("CSV file: first coloumn is not a number", mdtError::Error, "mdtUicNumber");
       MDT_ERROR_SET_SRC(e, "mdtUicNumber");
       e.commit();
       return false;
@@ -386,7 +386,7 @@ bool mdtUicNumber::loadTypesDb(const QString &dbPath)
   // Open file
   csv.setFileName(dbPath);
   if(!csv.open(QIODevice::ReadOnly | QIODevice::Text)){
-    mdtError e(MDT_PARSE_ERROR, "Cannot open file " + dbPath, mdtError::Error);
+    auto e = mdtErrorNew("Cannot open file " + dbPath, mdtError::Error, "mdtUicNumber");
     e.setSystemError(csv.error(), csv.errorString());
     MDT_ERROR_SET_SRC(e, "mdtUicNumber");
     e.commit();
@@ -394,7 +394,7 @@ bool mdtUicNumber::loadTypesDb(const QString &dbPath)
   }
   // Read
   if(!csv.readLines(";", "\"")){
-    mdtError e(MDT_PARSE_ERROR, "Cannot parse CSV file " + dbPath, mdtError::Error);
+    auto e = mdtErrorNew("Cannot parse CSV file " + dbPath, mdtError::Error, "mdtUicNumber");
     e.setSystemError(csv.error(), csv.errorString());
     MDT_ERROR_SET_SRC(e, "mdtUicNumber");
     e.commit();
@@ -408,7 +408,7 @@ bool mdtUicNumber::loadTypesDb(const QString &dbPath)
   for(i=1; i<db.size(); i++){
     // Check line size
     if(db.at(i).size() != 4){
-      mdtError e(MDT_PARSE_ERROR, "CSV file coloumn count false (expected: 4)", mdtError::Error);
+      auto e = mdtErrorNew("CSV file coloumn count false (expected: 4)", mdtError::Error, "mdtUicNumber");
       MDT_ERROR_SET_SRC(e, "mdtUicNumber");
       e.commit();
       return false;
@@ -420,7 +420,7 @@ bool mdtUicNumber::loadTypesDb(const QString &dbPath)
       delete item;
       qDeleteAll(pvTypes);
       pvTypes.clear();
-      mdtError e(MDT_PARSE_ERROR, "CSV file: first coloumn is not a number", mdtError::Error);
+      auto e = mdtErrorNew("CSV file: first coloumn is not a number", mdtError::Error, "mdtUicNumber");
       MDT_ERROR_SET_SRC(e, "mdtUicNumber");
       e.commit();
       return false;
@@ -450,7 +450,7 @@ bool mdtUicNumber::loadSpeedAndHeatsDb(const QString &dbPath)
   // Open file
   csv.setFileName(dbPath);
   if(!csv.open(QIODevice::ReadOnly | QIODevice::Text)){
-    mdtError e(MDT_PARSE_ERROR, "Cannot open file " + dbPath, mdtError::Error);
+    auto e = mdtErrorNew("Cannot open file " + dbPath, mdtError::Error, "mdtUicNumber");
     e.setSystemError(csv.error(), csv.errorString());
     MDT_ERROR_SET_SRC(e, "mdtUicNumber");
     e.commit();
@@ -458,7 +458,7 @@ bool mdtUicNumber::loadSpeedAndHeatsDb(const QString &dbPath)
   }
   // Read
   if(!csv.readLines(";", "\"")){
-    mdtError e(MDT_PARSE_ERROR, "Cannot parse CSV file " + dbPath, mdtError::Error);
+    auto e = mdtErrorNew("Cannot parse CSV file " + dbPath, mdtError::Error, "mdtUicNumber");
     e.setSystemError(csv.error(), csv.errorString());
     MDT_ERROR_SET_SRC(e, "mdtUicNumber");
     e.commit();
@@ -472,7 +472,7 @@ bool mdtUicNumber::loadSpeedAndHeatsDb(const QString &dbPath)
   for(i=1; i<db.size(); i++){
     // Check line size
     if(db.at(i).size() != 4){
-      mdtError e(MDT_PARSE_ERROR, "CSV file coloumn count false (expected: 4)", mdtError::Error);
+      auto e = mdtErrorNew("CSV file coloumn count false (expected: 4)", mdtError::Error, "mdtUicNumber");
       MDT_ERROR_SET_SRC(e, "mdtUicNumber");
       e.commit();
       return false;
@@ -484,7 +484,7 @@ bool mdtUicNumber::loadSpeedAndHeatsDb(const QString &dbPath)
       delete item;
       qDeleteAll(pvSpeedAndHeats);
       pvSpeedAndHeats.clear();
-      mdtError e(MDT_PARSE_ERROR, "CSV file: first coloumn is not a number", mdtError::Error);
+      auto e = mdtErrorNew("CSV file: first coloumn is not a number", mdtError::Error, "mdtUicNumber");
       MDT_ERROR_SET_SRC(e, "mdtUicNumber");
       e.commit();
       return false;

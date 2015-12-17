@@ -25,31 +25,31 @@ mdtErrorDialog::mdtErrorDialog(QWidget* parent)
 {
 }
 
-mdtErrorDialog::mdtErrorDialog(const mdtErrorV2 & error, QWidget* parent)
+mdtErrorDialog::mdtErrorDialog(const mdtError & error, QWidget* parent)
  : QMessageBox(parent)
 {
   setError(error);
 }
 
-void mdtErrorDialog::setError(const mdtErrorV2 & error)
+void mdtErrorDialog::setError(const mdtError & error)
 {
   setIconFromLevel(error.level());
   setText(error.text());
 }
 
-void mdtErrorDialog::setIconFromLevel(mdtErrorV2::Level level)
+void mdtErrorDialog::setIconFromLevel(mdtError::Level level)
 {
   switch(level){
-    case mdtErrorV2::Error:
+    case mdtError::Error:
       setIcon(QMessageBox::Critical);
       break;
-    case mdtErrorV2::Warning:
+    case mdtError::Warning:
       setIcon(QMessageBox::Warning);
       break;
-    case mdtErrorV2::Info:
+    case mdtError::Info:
       setIcon(QMessageBox::Information);
       break;
-    case mdtErrorV2::NoError:
+    case mdtError::NoError:
       setIcon(QMessageBox::NoIcon);
       break;
   }

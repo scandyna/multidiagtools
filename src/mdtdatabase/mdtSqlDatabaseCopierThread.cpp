@@ -23,6 +23,7 @@
 #include "mdtAlgorithms.h"
 #include "mdtSqlTransaction.h"
 #include "mdtError.h"
+#include "mdtSqlError.h"
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -115,10 +116,8 @@ QSqlDatabase mdtSqlDatabaseCopierThread::createConnection(const QSqlDatabase & d
   db.setPassword(dbInfo.password());
   db.setConnectOptions(dbInfo.connectOptions());
   if(!db.open()){
-    QSqlError sqlError = db.lastError();
-    mdtError error(tr("Connection to database") + " '" + db.databaseName() + "' " + tr("failed."), mdtError::Error);
-    error.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseCopierThread");
+    auto error = mdtErrorNewQ(tr("Connection to database") + " '" + db.databaseName() + "' " + tr("failed."), mdtError::Error, this);
+    error.stackError(mdtSqlError::fromQSqlError(db.lastError()));
     error.commit();
     emit globalErrorOccured(error);
   }
@@ -199,10 +198,8 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
   // Get source table data
   sql = tm.getSqlForSourceTableSelect(sourceDatabase);
   if(!sourceQuery.exec(sql)){
-    QSqlError sqlError = sourceQuery.lastError();
-    mdtError error(tr("Cannot select data from  table '") + tm.sourceTableName() + tr("'"), mdtError::Error);
-    error.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseCopierThread");
+    auto error = mdtErrorNewQ(tr("Cannot select data from  table '") + tm.sourceTableName() + tr("'"), mdtError::Error, this);
+    error.stackError(mdtSqlError::fromQSqlError(sourceQuery.lastError()));
     error.commit();
     emit tableCopyErrorOccured(dbMappingModelRow, error);
     ///emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, tableName, 0);
@@ -224,10 +221,8 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
     // Prepare destination query for insertion
     sql = tm.getSqlForDestinationTableInsert(destinationDatabase);
     if(!destinationQuery.prepare(sql)){
-      QSqlError sqlError = sourceQuery.lastError();
-      mdtError error(tr("Cannot prepare stamenet for insertion into table '") + tm.destinationTableName() + tr("'"), mdtError::Error);
-      error.setSystemError(sqlError.number(), sqlError.text());
-      MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseCopierThread");
+      auto error = mdtErrorNewQ(tr("Cannot prepare stamenet for insertion into table '") + tm.destinationTableName() + tr("'"), mdtError::Error, this);
+      error.stackError(mdtSqlError::fromQSqlError(sourceQuery.lastError()));
       error.commit();
       emit tableCopyErrorOccured(dbMappingModelRow, error);
       ///emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, tableName, 0);
@@ -240,10 +235,8 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
     }
     // Copy this row
     if(!destinationQuery.exec()){
-      QSqlError sqlError = sourceQuery.lastError();
-      mdtError error(tr("Cannot execute query for insertion into table '") + tm.destinationTableName() + tr("'"), mdtError::Error);
-      error.setSystemError(sqlError.number(), sqlError.text());
-      MDT_ERROR_SET_SRC(error, "mdtSqlDatabaseCopierThread");
+      auto error = mdtErrorNewQ(tr("Cannot execute query for insertion into table '") + tm.destinationTableName() + tr("'"), mdtError::Error, this);
+      error.stackError(mdtSqlError::fromQSqlError(sourceQuery.lastError()));
       error.commit();
       emit tableCopyErrorOccured(dbMappingModelRow, error);
       ///emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, tableName, 0);

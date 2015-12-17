@@ -32,6 +32,7 @@
 #include "mdtClVehicleTypeLinkAssignationWidget.h"
 #include "mdtClLink.h"
 #include "mdtError.h"
+#include "mdtErrorDialog.h"
 #include <QWidget>
 #include <QModelIndex>
 #include <QSqlQuery>
@@ -785,11 +786,6 @@ void mdtClUnitLinkDialog::updateVehicleTypeAssignations(bool rebuildVehicleTypeL
 
 void mdtClUnitLinkDialog::displayError(const mdtError & error)
 {
-  QMessageBox msgBox(this);
-
-  msgBox.setText(error.text());
-  msgBox.setInformativeText(error.informativeText());
-  msgBox.setDetailedText(error.systemText());
-  ///msgBox.setIcon(error.levelIcon());
-  msgBox.exec();
+  mdtErrorDialog dialog(error, this);
+  dialog.exec();
 }

@@ -69,7 +69,7 @@ qint64 LoggerFileBackend::maxFileSize() const
   return pvMaxFileSize;
 }
 
-void LoggerFileBackend::logError(const mdtErrorV2 & error)
+void LoggerFileBackend::logError(const mdtError & error)
 {
   QFile file(pvFilePath);
 
@@ -119,7 +119,7 @@ bool LoggerFileBackend::openFile(QFile & file)
   return true;
 }
 
-QString LoggerFileBackend::getErrorString(const mdtErrorV2 & error) const
+QString LoggerFileBackend::getErrorString(const mdtError & error) const
 {
   QString str;
   QString informativeText;
@@ -141,16 +141,16 @@ QString LoggerFileBackend::getErrorString(const mdtErrorV2 & error) const
   return str;
 }
 
-QString LoggerFileBackend::errorLevelText(mdtErrorV2::Level level) const
+QString LoggerFileBackend::errorLevelText(mdtError::Level level) const
 {
   switch(level){
-    case mdtErrorV2::NoError:
+    case mdtError::NoError:
       return QLatin1String("[NoError]");
-    case mdtErrorV2::Error:
+    case mdtError::Error:
       return QLatin1String("[Error]");
-    case mdtErrorV2::Warning:
+    case mdtError::Warning:
       return QLatin1String("[Warning]");
-    case mdtErrorV2::Info:
+    case mdtError::Info:
       return QLatin1String("[Info]");
   }
   return QString();

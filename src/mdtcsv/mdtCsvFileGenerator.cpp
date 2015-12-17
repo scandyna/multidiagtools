@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtCsvFileGenerator.h"
 #include "mdtCsvStringGenerator.h"
+#include "mdtFileError.h"
 #include <QObject>
 #include <QDir>
 #include <QTextCodec>
@@ -64,8 +65,8 @@ bool mdtCsvFileGenerator::openFile(const QFileInfo & fileInfo, const QByteArray 
     QString msg = tr("Could not open file '") + fileInfo.fileName() + tr("'\n") \
                   + tr("Directory: '") + fileInfo.dir().absolutePath() + tr("'");
     pvLastError.setError(msg, mdtError::Error);
-    pvLastError.setSystemError(0, pvFile.errorString());
     MDT_ERROR_SET_SRC(pvLastError, "mdtCsvFileGenerator");
+    pvLastError.stackError(mdtFileError::fromQFileDeviceError(pvFile));
     pvLastError.commit();
     return false;
   }
@@ -85,8 +86,8 @@ bool mdtCsvFileGenerator::closeFile()
       QString msg = tr("Could not save file '") + fileInfo.fileName() + tr("'\n") \
                     + tr("Directory: '") + fileInfo.dir().absolutePath() + tr("'");
       pvLastError.setError(msg, mdtError::Error);
-      pvLastError.setSystemError(0, pvFile.errorString());
       MDT_ERROR_SET_SRC(pvLastError, "mdtCsvFileGenerator");
+      pvLastError.stackError(mdtFileError::fromQFileDeviceError(pvFile));
       pvLastError.commit();
       return false;
     }
@@ -109,8 +110,8 @@ bool mdtCsvFileGenerator::writeLine(const mdtCsvRecord & record)
     QString msg = tr("Could write to file '") + fileInfo.fileName() + tr("'\n") \
                   + tr("Directory: '") + fileInfo.dir().absolutePath() + tr("'");
     pvLastError.setError(msg, mdtError::Error);
-    pvLastError.setSystemError(0, pvFile.errorString());
     MDT_ERROR_SET_SRC(pvLastError, "mdtCsvFileGenerator");
+    pvLastError.stackError(mdtFileError::fromQFileDeviceError(pvFile));
     pvLastError.commit();
     return false;
   }

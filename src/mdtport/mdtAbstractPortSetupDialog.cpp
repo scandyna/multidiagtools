@@ -91,9 +91,9 @@ void mdtAbstractPortSetupDialog::setOkButtonEnabled(bool enabled)
 {
   QPushButton *button = buttonBox->button(QDialogButtonBox::Ok);
   if(button == 0){
-    mdtError e(MDT_GUI_ERROR, "Ok button not found in buttonBox", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtAbstractPortSetupDialog");
-    e.commit();
+//     mdtError e(MDT_GUI_ERROR, "Ok button not found in buttonBox", mdtError::Warning);
+//     MDT_ERROR_SET_SRC(e, "mdtAbstractPortSetupDialog");
+//     e.commit();
     return;
   }
   button->setEnabled(enabled);
@@ -103,9 +103,9 @@ void mdtAbstractPortSetupDialog::setApplyButtonEnabled(bool enabled)
 {
   QPushButton *button = buttonBox->button(QDialogButtonBox::Apply);
   if(button == 0){
-    mdtError e(MDT_GUI_ERROR, "Apply button not found in buttonBox", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtAbstractPortSetupDialog");
-    e.commit();
+//     mdtError e(MDT_GUI_ERROR, "Apply button not found in buttonBox", mdtError::Warning);
+//     MDT_ERROR_SET_SRC(e, "mdtAbstractPortSetupDialog");
+//     e.commit();
     return;
   }
   button->setEnabled(enabled);
@@ -115,9 +115,9 @@ void mdtAbstractPortSetupDialog::setCancelButtonEnabled(bool enabled)
 {
   QPushButton *button = buttonBox->button(QDialogButtonBox::Cancel);
   if(button == 0){
-    mdtError e(MDT_GUI_ERROR, "Cancel button not found in buttonBox", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtAbstractPortSetupDialog");
-    e.commit();
+//     mdtError e(MDT_GUI_ERROR, "Cancel button not found in buttonBox", mdtError::Warning);
+//     MDT_ERROR_SET_SRC(e, "mdtAbstractPortSetupDialog");
+//     e.commit();
     return;
   }
   button->setEnabled(enabled);
@@ -191,10 +191,10 @@ void mdtAbstractPortSetupDialog::on_buttonBox_clicked(QAbstractButton *button)
     case QDialogButtonBox::Cancel:
       close();
       break;
-    default:
-      mdtError e(MDT_GUI_ERROR, "Recived signal from buttonBox with unknown button type", mdtError::Warning);
-      MDT_ERROR_SET_SRC(e, "mdtAbstractPortSetupDialog");
-      e.commit();
+//     default:
+//       mdtError e(MDT_GUI_ERROR, "Recived signal from buttonBox with unknown button type", mdtError::Warning);
+//       MDT_ERROR_SET_SRC(e, "mdtAbstractPortSetupDialog");
+//       e.commit();
   }
 }
 
