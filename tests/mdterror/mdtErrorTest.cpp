@@ -56,8 +56,56 @@ class mdtErrorLoggerTestBackend : public mdt::error::LoggerBackend
  * mdtErrorTest implementation
  */
 
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+
+std::mutex mutex25;
+std::condition_variable cv;
+QString data;
+bool ready = false;
+bool proceed = false;
+
+void workerThreadFunction()
+{
+  // Wait until main sends data
+  std::unique_lock<std::mutex> lock(mutex25);
+  cv.wait(lock, []{return ready;});
+
+  // Woke up, take the lock
+  qDebug() << "Worker, processing...";
+  data += " after process";
+
+  // Notify processed
+  proceed = true;
+  qDebug() << "Worker, processing done";
+
+  // Unlock and notify
+  lock.unlock();
+  cv.notify_one();
+}
+
 void mdtErrorTest::sandbox()
 {
+  std::thread worker(workerThreadFunction);
+
+  data = "Example data";
+  // Send data to wroker
+  {
+    std::lock_guard<std::mutex> lock(mutex25);
+    ready = true;
+    qDebug() << "main: data ready";
+  }
+  cv.notify_one();
+
+  // Wait for the worker
+  {
+    std::unique_lock<std::mutex> lock(mutex25);
+    cv.wait(lock, []{return proceed;});
+  }
+  qDebug() << "Main: data: " << data;
+
+  worker.join();
 }
 
 
@@ -552,21 +600,24 @@ void mdtErrorTest::errorLoggerTest()
 
   fileBackend->setLogFilePath(tmpFile.fileName());
   
-  Logger::addBackend(std::make_shared<LoggerConsoleBackend>());
+  ///Logger::addBackend(std::make_shared<LoggerConsoleBackend>());
   Logger::addBackend(fileBackend);
   // Use our sentinel backend
   ///Logger::addBackend(std::make_shared<mdtErrorLoggerTestBackend>());
   Logger::addBackend(backend);
 
+  
+  
   auto error1 = mdtErrorNewTQ(int, 1, "error1", mdtErrorV2::Error, this);
   Logger::logError(error1);
-
   Logger::cleanup();
+  
+  /**
+   * \todo Mix logError() cleanup() without wait + wait between.
+   */
   
   QVERIFY(tmpFile.open());
   qDebug() << "Logfile: " << tmpFile.readAll();
-  
-  
 }
 
 void mdtErrorTest::errorLoggerConcurrentAccessTest()

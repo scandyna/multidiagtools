@@ -43,6 +43,9 @@ void Logger::cleanup()
 }
 
 Logger::Logger()
+ : pvEventForThread(NoEvent),
+   pvAllErrorsLogged(false),
+   pvThread(&Logger::run, std::ref(*this))
 {
 }
 
@@ -56,39 +59,40 @@ void Logger::logErrorImpl(const mdtErrorV2 & error)
 {
   Q_ASSERT(!error.isNull());
 
-  // Start thread if needed
-  if(!pvThread.joinable()){
-    start();
+  // Queue error and wake up thread
+  {
+    std::unique_lock<std::mutex> lock(pvMutex);
+    pvErrorQueue.push_back(error);
+    pvEventForThread = ErrorsToLog;
+    pvAllErrorsLogged = false;
   }
-  // Queue error ond wake up thread
-  std::unique_lock<std::mutex> lock(pvMutex);
-  pvErrorQueue.push_back(error);
-  pvNewWork.notify_one();
+  pvCv.notify_one();
 }
 
-void Logger::start()
-{
-  Q_ASSERT(!pvThread.joinable());
-
-  ///std::unique_lock<std::mutex> lock(pvMutex);
-  // Create thread
-  pvRunning = true;
-  pvThread = std::thread(&Logger::run, std::ref(*this));
-}
+// void Logger::start()
+// {
+//   Q_ASSERT(!pvThread.joinable());
+// 
+//   ///std::unique_lock<std::mutex> lock(pvMutex);
+//   // Create thread
+//   pvRunning = true;
+//   pvThread = std::thread(&Logger::run, std::ref(*this));
+// }
 
 void Logger::stop()
 {
-  // Let thread log pending errors
-  std::unique_lock<std::mutex> lock(pvMutex);
-  while(!pvErrorQueue.empty()){
-    qDebug() << "stop(): notify new work ...";
-    pvNewWork.notify_one();
-    qDebug() << "stop(): waiting job done ...";
-    pvWorkDone.wait(lock);
+  // Wait until all errors are logged
+  qDebug() << "Stop, wait all errors logged";
+  {
+    std::unique_lock<std::mutex> lock(pvMutex);
+    if(!pvAllErrorsLogged){
+      pvCv.wait(lock, [=]{return pvAllErrorsLogged;});
+    }
+    // Tell thread that it must stop
+    pvEventForThread = End;
+    pvCv.notify_one();
   }
-  // Now finish
-  pvRunning = false;
-  pvNewWork.notify_one();
+  qDebug() << "Stop, join...";
   if(pvThread.joinable()){
     pvThread.join();
   }
@@ -108,33 +112,69 @@ mdtErrorV2 Logger::takeError()
   return error;
 }
 
+void Logger::outputErrorToBackends(const mdtErrorV2 & error)
+{
+  Q_ASSERT(!error.isNull());
+
+  for(const auto & backend : pvBackends){
+    Q_ASSERT(backend);
+    backend->logError(error);
+  }
+}
+
 void Logger::run()
 {
   // Take a error from queue
   mdtErrorV2 error;
 
-  qDebug() << "started...";
+  qDebug() << "THD: started...";
   // Work..
-  while(pvRunning){
+  bool running = true;
+  while(running){
     // Wait for new job or end
-    qDebug() << "Going to wait ...";
-    std::unique_lock<std::mutex> lock(pvMutex);
-    pvNewWork.wait(lock);
+    qDebug() << "THD: Going to wait ...";
+    /*
+     * We must lock the mutex before wait.
+     * wait will then relese it.
+     * Once wait returns, the mutex is locked again.
+     * We only want to lock it to take a error from queue,
+     * not all the time.
+     */
+    {
+      std::unique_lock<std::mutex> lock(pvMutex);
+      pvCv.wait(lock, [=]{return pvEventForThread != NoEvent;});
+    }
+    qDebug() << "THD: woke up , pvEventForThread: " << pvEventForThread;
     // Log all available errors
     do{
       error = takeError();
-      // Output error for each backend
-      for(const auto & backend : pvBackends){
-        Q_ASSERT(backend);
-        backend->logError(error);
+      if(!error.isNull()){
+        qDebug() << "THD: logging error ...";
+        outputErrorToBackends(error);
       }
     }while(!error.isNull());
-    // Notify work done
-    pvWorkDone.notify_one();
+    // Notify that we logged all available errors
+    {
+      std::unique_lock<std::mutex> lock(pvMutex);
+      // Check special case of stopping
+      if(pvEventForThread == End){
+        running = false;
+      }else{
+        pvEventForThread = NoEvent;
+      }
+      pvAllErrorsLogged = true;
+    }
+    pvCv.notify_one();
   }
-
+//   // Make shure that we logged all errors when finished
+//   do{
+//     error = takeError();
+//     if(!error.isNull()){
+//       outputErrorToBackends(error);
+//     }
+//   }while(!error.isNull());
   
-  qDebug() << "END";
+  qDebug() << "THD: END";
 }
 
 /*

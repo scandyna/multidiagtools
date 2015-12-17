@@ -29,6 +29,9 @@
 #include <vector>
 #include <memory>
 
+
+/// \todo Check if a limit of number of errors in queue should be implemented
+
 namespace mdt{ namespace error {
 
   class LoggerBackend;
@@ -80,7 +83,7 @@ namespace mdt{ namespace error {
 
     /*! \brief Start worker thread
      */
-    void start();
+//     void start();
 
     /*! \brief Stop worker thread
      */
@@ -92,14 +95,29 @@ namespace mdt{ namespace error {
      */
     mdtErrorV2 takeError();
 
+    /*! \brief Output error to each backend
+     */
+    void outputErrorToBackends(const mdtErrorV2 & error);
+
     /*! \brief Worker thread function
      */
     void run();
 
+    enum Event
+    {
+      NoEvent,
+      ErrorsToLog,
+      End
+    };
+
     std::mutex pvMutex;
-    std::condition_variable pvNewWork;
-    std::condition_variable pvWorkDone;
-    std::atomic<bool> pvRunning;
+    std::condition_variable pvCv;
+    Event pvEventForThread;
+    ///bool pvNewErrorsToLog;
+    bool pvAllErrorsLogged;
+    
+    
+    ///std::atomic<bool> pvRunning;
     std::vector<mdtErrorV2> pvErrorQueue;
     std::vector<std::shared_ptr<LoggerBackend>> pvBackends;
     std::thread pvThread;

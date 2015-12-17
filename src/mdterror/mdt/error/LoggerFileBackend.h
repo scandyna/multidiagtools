@@ -56,7 +56,7 @@ namespace mdt{ namespace error {
      *       (changing file path while Logger
      *        is calling logError() is undefined behaviour).
      */
-    bool setLogFilePath(const QString & path, qint64 maxFileSize = 1024);
+    bool setLogFilePath(const QString & path, qint64 maxFileSize = 1024*1024);
 
     /*! \brief Get log file path
      */

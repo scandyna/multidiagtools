@@ -28,7 +28,7 @@
 namespace mdt{ namespace error {
 
 LoggerFileBackend::LoggerFileBackend()
- : pvMaxFileSize(1024)
+ : pvMaxFileSize(1024*1024)
 {
 }
 
