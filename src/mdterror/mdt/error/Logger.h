@@ -25,10 +25,9 @@
 #include <thread>
 #include <mutex>
 #include <condition_variable>
-#include <atomic>
 #include <vector>
 #include <memory>
-
+#include <queue>
 
 /// \todo Check if a limit of number of errors in queue should be implemented
 
@@ -83,7 +82,7 @@ namespace mdt{ namespace error {
 
     /*! \brief Start worker thread
      */
-//     void start();
+    void start();
 
     /*! \brief Stop worker thread
      */
@@ -113,12 +112,8 @@ namespace mdt{ namespace error {
     std::mutex pvMutex;
     std::condition_variable pvCv;
     Event pvEventForThread;
-    ///bool pvNewErrorsToLog;
     bool pvAllErrorsLogged;
-    
-    
-    ///std::atomic<bool> pvRunning;
-    std::vector<mdtErrorV2> pvErrorQueue;
+    std::queue<mdtErrorV2> pvErrorQueue;
     std::vector<std::shared_ptr<LoggerBackend>> pvBackends;
     std::thread pvThread;
   };

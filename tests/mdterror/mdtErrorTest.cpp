@@ -27,11 +27,13 @@
 #include "mdt/error/LoggerFileBackend.h"
 #include <QObject>
 #include <QMetaObject>
+#include <QMetaType>
 #include <QByteArray>
 #include <QLatin1String>
 #include <QString>
 #include <QTemporaryFile>
 #include <QFile>
+#include <QVector>
 #include <memory>
 #include <vector>
 
@@ -51,6 +53,12 @@ class mdtErrorLoggerTestBackend : public mdt::error::LoggerBackend
   }
   std::vector<mdtErrorV2> errorList;
 };
+
+/*
+ * For data driven tests
+ */
+typedef QVector<mdtErrorV2> ErrorVectorType;
+Q_DECLARE_METATYPE(ErrorVectorType);
 
 /*
  * mdtErrorTest implementation
@@ -106,6 +114,19 @@ void mdtErrorTest::sandbox()
   qDebug() << "Main: data: " << data;
 
   worker.join();
+}
+
+void workerThread2()
+{
+  qDebug() << "Worker thread 2";
+}
+
+void mdtErrorTest::sandbox2()
+{
+  for(int i = 0; i < 10; ++i){
+    std::thread thd(workerThread2);
+    thd.join();
+  }
 }
 
 
@@ -591,33 +612,65 @@ void mdtErrorTest::errorLoggerTest()
   using namespace mdt::error;
 
   LoggerGuard loggerGard;
-  auto fileBackend = std::make_shared<LoggerFileBackend>();
-  std::shared_ptr<mdtErrorLoggerTestBackend> backend(new mdtErrorLoggerTestBackend);
-  
-  QTemporaryFile tmpFile;
-  QVERIFY(tmpFile.open());
-  tmpFile.close();
+  auto testBackend = std::make_shared<mdtErrorLoggerTestBackend>();
+//   QVector<mdtErrorV2> errorList;
+  QFETCH(ErrorVectorType, errorList); // ErrorVectorType == QVector<mdtError>
+  QFETCH(int, interLogWaitTime);
+  QFETCH(int, endWaitTime);
 
-  fileBackend->setLogFilePath(tmpFile.fileName());
-  
-  ///Logger::addBackend(std::make_shared<LoggerConsoleBackend>());
-  Logger::addBackend(fileBackend);
-  // Use our sentinel backend
-  ///Logger::addBackend(std::make_shared<mdtErrorLoggerTestBackend>());
-  Logger::addBackend(backend);
-
-  
-  
-  auto error1 = mdtErrorNewTQ(int, 1, "error1", mdtErrorV2::Error, this);
-  Logger::logError(error1);
+  // Setup logger
+  Logger::addBackend(testBackend);
+  // Log errors
+  for(const auto & error : errorList){
+    QVERIFY(!error.isNull());
+    qDebug() << "Calling for log error " << error.text();
+    Logger::logError(error);
+    if(interLogWaitTime > 0){
+      QTest::qWait(interLogWaitTime);
+    }
+  }
+  // Explicitly cleanup here (to join thread)
+  if(endWaitTime > 0){
+    QTest::qWait(endWaitTime);
+  }
   Logger::cleanup();
+  // Check
+  QCOMPARE((int)testBackend->errorList.size(), errorList.size());
+  for(int i = 0; i < errorList.size(); ++i){
+    auto error = testBackend->errorList.at(i);
+    auto expectedError = errorList.at(i);
+    qDebug() << "error: " << error.text() << " , expected error: " << expectedError.text();
+    
+    QVERIFY(error.level() == expectedError.level());
+    QCOMPARE(error.text(), expectedError.text());
+    QCOMPARE(error.informativeText(), expectedError.informativeText());
+  }
+}
+
+void mdtErrorTest::errorLoggerTest_data()
+{
+  QTest::addColumn<ErrorVectorType>("errorList");
+  QTest::addColumn<int>("interLogWaitTime");
+  QTest::addColumn<int>("endWaitTime");
+
+  mdtErrorV2 error;
+  ErrorVectorType errorList;
+
+  // 1 error
+  error.setError("error1", mdtErrorV2::Error);
+  errorList.append(error);
+  QTest::newRow("1,0,0") << errorList << 0 << 0;
+  QTest::newRow("1,1,0") << errorList << 1 << 0;
+  QTest::newRow("1,0,1") << errorList << 0 << 1;
+  QTest::newRow("1,10,10") << errorList << 10 << 10;
+  // 2 errors
+  error.setError("error2", mdtErrorV2::Info);
+  errorList.append(error);
+  QTest::newRow("2,0,0") << errorList << 0 << 0;
+  QTest::newRow("2,1,0") << errorList << 1 << 0;
+  QTest::newRow("2,0,1") << errorList << 0 << 1;
+
   
-  /**
-   * \todo Mix logError() cleanup() without wait + wait between.
-   */
-  
-  QVERIFY(tmpFile.open());
-  qDebug() << "Logfile: " << tmpFile.readAll();
 }
 
 void mdtErrorTest::errorLoggerConcurrentAccessTest()

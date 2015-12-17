@@ -30,6 +30,7 @@ class mdtErrorTest : public mdtTest
  private slots:
 
   void sandbox();
+  void sandbox2();
 
   void constructAndCopyTest();
   void errorStackTest();
@@ -38,6 +39,7 @@ class mdtErrorTest : public mdtTest
   void errorLoggerConsoleBackendTest();
   void errorLoggerFileBackendTest();
   void errorLoggerTest();
+  void errorLoggerTest_data();
   void errorLoggerConcurrentAccessTest();
 };
 

@@ -40,13 +40,17 @@ void Logger::cleanup()
 {
   instance().stop();
   instance().pvBackends.clear();
+  if(!instance().pvErrorQueue.empty()){
+    qWarning() << "mdt::error::Logger::cleanup(): not all errors could be logged (this is a bug)";
+  }
 }
 
 Logger::Logger()
- : pvEventForThread(NoEvent),
-   pvAllErrorsLogged(false),
-   pvThread(&Logger::run, std::ref(*this))
+//  : pvEventForThread(NoEvent),
+//    pvAllErrorsLogged(false),
+//    pvThread(&Logger::run, std::ref(*this))
 {
+  qDebug() << "Logger::Logger()";
 }
 
 Logger& Logger::instance()
@@ -59,28 +63,35 @@ void Logger::logErrorImpl(const mdtErrorV2 & error)
 {
   Q_ASSERT(!error.isNull());
 
+  // Start thread if needed
+  if(!pvThread.joinable()){
+    start();
+  }
   // Queue error and wake up thread
   {
     std::unique_lock<std::mutex> lock(pvMutex);
-    pvErrorQueue.push_back(error);
+    pvErrorQueue.push(error);
     pvEventForThread = ErrorsToLog;
     pvAllErrorsLogged = false;
   }
   pvCv.notify_one();
 }
 
-// void Logger::start()
-// {
-//   Q_ASSERT(!pvThread.joinable());
-// 
-//   ///std::unique_lock<std::mutex> lock(pvMutex);
-//   // Create thread
-//   pvRunning = true;
-//   pvThread = std::thread(&Logger::run, std::ref(*this));
-// }
+void Logger::start()
+{
+  Q_ASSERT(!pvThread.joinable());
+
+  pvEventForThread = NoEvent;
+  pvAllErrorsLogged = false;
+  pvThread = std::thread(&Logger::run, std::ref(*this));
+}
 
 void Logger::stop()
 {
+  // If thread was never started, nothing to do
+  if(!pvThread.joinable()){
+    return;
+  }
   // Wait until all errors are logged
   qDebug() << "Stop, wait all errors logged";
   {
@@ -92,7 +103,15 @@ void Logger::stop()
     pvEventForThread = End;
     pvCv.notify_one();
   }
+//   qDebug() << "Stop, wake up thread..";
+//   // Tell thread that it must finish
+//   {
+//     std::unique_lock<std::mutex> lock(pvMutex);
+//     pvEventForThread = End;
+//     pvCv.notify_one();
+//   }
   qDebug() << "Stop, join...";
+  // Join thread
   if(pvThread.joinable()){
     pvThread.join();
   }
@@ -106,8 +125,8 @@ mdtErrorV2 Logger::takeError()
   if(pvErrorQueue.empty()){
     return error;
   }
-  error = pvErrorQueue.back();
-  pvErrorQueue.pop_back();
+  error = pvErrorQueue.front();
+  pvErrorQueue.pop();
 
   return error;
 }
@@ -124,12 +143,12 @@ void Logger::outputErrorToBackends(const mdtErrorV2 & error)
 
 void Logger::run()
 {
-  // Take a error from queue
+  qDebug() << "THD: starting...";
   mdtErrorV2 error;
+  bool running = true;
 
   qDebug() << "THD: started...";
   // Work..
-  bool running = true;
   while(running){
     // Wait for new job or end
     qDebug() << "THD: Going to wait ...";
@@ -149,7 +168,7 @@ void Logger::run()
     do{
       error = takeError();
       if(!error.isNull()){
-        qDebug() << "THD: logging error ...";
+        qDebug() << "THD: logging error " << error.text();
         outputErrorToBackends(error);
       }
     }while(!error.isNull());
@@ -166,14 +185,6 @@ void Logger::run()
     }
     pvCv.notify_one();
   }
-//   // Make shure that we logged all errors when finished
-//   do{
-//     error = takeError();
-//     if(!error.isNull()){
-//       outputErrorToBackends(error);
-//     }
-//   }while(!error.isNull());
-  
   qDebug() << "THD: END";
 }
 
