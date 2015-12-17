@@ -229,7 +229,7 @@ void mdtErrorOut::showDialog(mdtError error)
     instance()->pvDialog.setDetailedText(msg);
   }
   // Set the icon
-  instance()->pvDialog.setIcon(error.levelIcon());
+  ///instance()->pvDialog.setIcon(error.levelIcon());
   /**
   switch(error.level()){
     case mdtError::Info:

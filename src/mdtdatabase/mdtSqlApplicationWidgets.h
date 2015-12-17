@@ -277,7 +277,7 @@ void mdtSqlApplicationWidgets<T>::displayError(const mdtError & error)
 
   msgBox.setText(error.text());
   msgBox.setDetailedText(error.systemText());
-  msgBox.setIcon(error.levelIcon());
+  ///msgBox.setIcon(error.levelIcon());
   msgBox.exec();
 }
 

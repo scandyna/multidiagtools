@@ -225,6 +225,6 @@ void mdtUsbtmcPortSetupDialog::displayLastError()
 
   msgBox.setText(pvLastError.text());
   msgBox.setDetailedText(pvLastError.systemText());
-  msgBox.setIcon(pvLastError.levelIcon());
+  ///msgBox.setIcon(pvLastError.levelIcon());
   msgBox.exec();
 }

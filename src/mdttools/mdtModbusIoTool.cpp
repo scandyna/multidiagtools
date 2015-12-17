@@ -204,7 +204,7 @@ void mdtModbusIoTool::displayLastError()
   msgBox.setText(pvLastError.text());
   msgBox.setInformativeText(pvLastError.informativeText());
   msgBox.setDetailedText(pvLastError.systemText());
-  msgBox.setIcon(pvLastError.levelIcon());
+  ///msgBox.setIcon(pvLastError.levelIcon());
   msgBox.exec();
 }
 

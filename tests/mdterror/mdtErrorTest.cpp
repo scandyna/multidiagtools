@@ -458,6 +458,20 @@ void mdtErrorTest::setSourceTest()
   QCOMPARE(error2.fileName(), QString("file.cpp"));
   QCOMPARE(error2.fileLine(), 36);
   QCOMPARE(error2.functionName(), QString("C::F()"));
+  /*
+   * Check MDT_ERROR_SET_SRC and MDT_ERROR_SET_SRC_Q macros
+   */
+  // Check MDT_ERROR_SET_SRC
+  QVERIFY(!error1.isNull());
+  ///MDT_ERROR_SET_SRC(error1, this->metaObject()->className());
+  QCOMPARE(error1.fileName(), QString(__FILE__));
+  QCOMPARE(error1.functionName(), QString(this->metaObject()->className() + QLatin1String("::") + QLatin1String(__FUNCTION__) + QLatin1String("()")));
+  // Check MDT_ERROR_SET_SRC_Q
+  QVERIFY(!error2.isNull());
+  MDT_ERROR_SET_SRC_Q(error2, this);
+  QCOMPARE(error2.fileName(), QString(__FILE__));
+  QCOMPARE(error2.functionName(), QString(this->metaObject()->className() + QLatin1String("::") + QLatin1String(__FUNCTION__) + QLatin1String("()")));
+
 }
 
 void mdtErrorTest::errorLoggerConsoleBackendTest()

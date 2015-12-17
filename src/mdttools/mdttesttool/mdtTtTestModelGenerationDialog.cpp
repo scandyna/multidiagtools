@@ -301,7 +301,7 @@ void mdtTtTestModelGenerationDialog::displayError(const mdtError & error)
   msgBox.setText(error.text());
   msgBox.setInformativeText(error.informativeText());
   msgBox.setDetailedText(error.systemText());
-  msgBox.setIcon(error.levelIcon());
+  ///msgBox.setIcon(error.levelIcon());
   msgBox.exec();
 }
 
@@ -311,6 +311,6 @@ void mdtTtTestModelGenerationDialog::displayErrorAboutMissingParameter(const QSt
 
   msgBox.setText(tr("Some parameters are missing. Please complete them and try again."));
   msgBox.setInformativeText(missingParameterText);
-  msgBox.setIcon(QMessageBox::Warning);
+  ///msgBox.setIcon(QMessageBox::Warning);
   msgBox.exec();
 }

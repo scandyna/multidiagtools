@@ -162,6 +162,19 @@ class QObject;
  */
 #define mdtErrorNewTQ(T, error, text, level, obj) mdtErrorV2(static_cast<T>(error), text, level, __FILE__, __LINE__, obj, __FUNCTION__)
 
+/*! \brief Helper macro to set source file informations to a existing error
+ *
+ * \note If you create a error for a QObject subclass, you should use MDT_ERROR_SET_SRC_Q()
+ */
+///#define MDT_ERROR_SET_SRC(e, className) e.setSource(__FILE__, __LINE__, className, __FUNCTION__)
+
+/*! \brief Helper macro to set source file informations to a existing error
+ *
+ * This version accepts a QObject instance, witch avoids typing class name explicitly.
+ *  If you create a error for a object that is not a subclass of QObject, use MDT_ERROR_SET_SRC() .
+ */
+#define MDT_ERROR_SET_SRC_Q(e, obj) e.setSource(__FILE__, __LINE__, obj, __FUNCTION__)
+
 /*! \brief Value class that contain a error
  *
  * mdtError contains only a pointer to (implicitly) shared data (also known as copy-on-write).
@@ -336,6 +349,12 @@ class mdtErrorV2
     return static_cast<const mdtErrorPrivate<T>*>(pvShared.constData())->error;
   }
 
+  /*! \brief Update error text
+   *
+   * \sa stackError()
+   */
+  void updateText(const QString & text);
+
   /*! \brief Set informative text
    *
    * Can be set to give the user a fuller description of the error.
@@ -380,13 +399,29 @@ class mdtErrorV2
 
   /*! \brief Add the source of error
    *
-   *  It's possible to use the helper macro MDT_ERROR_SET_SRC()
+   * It's possible to use the helper macro MDT_ERROR_SET_SRC()
    *
    * \pre this error must not be null when calling this function
    */
   void setSource(const QString & fileName, int fileLine, const QString & className, const QString & functionName);
-  
+
+  /*! \brief Add the source of error
+   *
+   * Avoids typing className by hand.
+   *  Note that this only works on functions that are
+   *  QObject (subclasses).
+   *
+   * It's possible to use the helper macro MDT_ERROR_SET_SRC_Q()
+   *
+   * \pre this error must not be null when calling this function
+   */
   void setSource(const QString & fileName, int fileLine, const QObject * const obj, const QString & functionName);
+
+  /*! \brief Commit error
+   *
+   * Will use mdt::error::Logger to output the error.
+   */
+  void commit();
 
   /*! \brief Error source function
    */
@@ -399,6 +434,25 @@ class mdtErrorV2
   /*! \brief Error source line
    */
   int fileLine() const;
+
+  /*! \brief Set system error
+   *
+   * \deprecated Use stackError()
+   */
+  [[deprecated]]
+  void setSystemError(int number, const QString & text);
+
+  [[deprecated]]
+  QString systemText() const
+  {
+    return "deprecated!";
+  }
+
+  [[deprecated]]
+  int systemNumber() const
+  {
+    return 0;
+  }
 
  private:
 

@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtErrorV2.h"
+#include "mdt/error/Logger.h"
 #include <QLatin1String>
 #include <QObject>
 #include <QMetaObject>
@@ -34,6 +35,14 @@ mdtErrorV2::mdtErrorV2()
 void mdtErrorV2::clear()
 {
   pvShared.reset();
+}
+
+void mdtErrorV2::updateText(const QString & text)
+{
+  Q_ASSERT(!isNull());
+
+  pvShared.detach();
+  pvShared->text = text;
 }
 
 void mdtErrorV2::setInformativeText(const QString& text)
@@ -121,6 +130,11 @@ void mdtErrorV2::setSource(const QString& fileName, int fileLine, const QObject*
   setSource(fileName, fileLine, obj->metaObject()->className(), functionName);
 }
 
+void mdtErrorV2::commit()
+{
+  mdt::error::Logger::logError(*this);
+}
+
 QString mdtErrorV2::fileName() const
 {
   if(!pvShared){
@@ -143,6 +157,10 @@ QString mdtErrorV2::functionName() const
     return QString();
   }
   return pvShared->functionName;
+}
+
+void mdtErrorV2::setSystemError(int, const QString&)
+{
 }
 
 /*

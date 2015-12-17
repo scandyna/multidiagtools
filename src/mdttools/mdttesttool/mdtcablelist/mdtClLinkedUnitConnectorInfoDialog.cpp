@@ -370,10 +370,11 @@ void mdtClLinkedUnitConnectorInfoDialog::populateDirectLinkTable(const QVariant 
 
 void mdtClLinkedUnitConnectorInfoDialog::displayError(const mdtError & error) 
 {
+  /// \todo Used mdtErrorDialog
   QMessageBox msgBox;
 
   msgBox.setText(error.text());
   msgBox.setDetailedText(error.systemText());
-  msgBox.setIcon(error.levelIcon());
+  ///msgBox.setIcon(error.levelIcon());
   msgBox.exec();
 }

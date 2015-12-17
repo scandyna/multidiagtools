@@ -244,7 +244,7 @@ bool mdtSqlDatabaseManager::createDatabaseSqlite(const QDir & startDirectory, co
     msgBox.setText(pvLastError.text());
     msgBox.setInformativeText(pvLastError.informativeText());
     msgBox.setDetailedText(pvLastError.systemErrorString(&msgBox));
-    msgBox.setIcon(pvLastError.levelIcon());
+    ///msgBox.setIcon(pvLastError.levelIcon());
     msgBox.setWindowTitle(tr("Error during database creation."));
     msgBox.exec();
     return false;
