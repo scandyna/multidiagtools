@@ -1,8 +1,8 @@
 format 210
 
-classcanvas 128002 class_ref 1900930 // optional
+classcanvas 128002 class_ref 1900930 // mdtExpected
   classdiagramsettings member_max_width 0 end
-  xyz 112 158 2000
+  xyz 112 159 2000
 end
 note 128130 "operateur bool (p.ex.!), surtout pour les type bool.
 Permet: if(!openFile()){ heu..}"
@@ -27,5 +27,12 @@ if(r.hasError()){
   propagate(r.error());
 }
 Do other stuff.."
-  xyzwh 146 598 2000 461 133
+  xyzwh 172 707 2000 461 133
+note 129026 "mdtError , mdtWarning, etc... ?
+Think: mdtOptional: how to differientiate hasError() if it is just a warning ? 
+"
+  xyzwh -18.5 476.5 2005 203 185
+note 129154 "For default contructor: look what to do (we want to store expected to vectors, etc...).
+Maybe, mdtValue handle tis caes ???"
+  xyzwh 202 564 2005 511 119
 end

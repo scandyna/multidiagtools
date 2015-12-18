@@ -1,6 +1,13 @@
 window_sizes 1280 964 372 902 911 0
 cleanlooks_style
+diagrams
+  classdiagram_ref 1589250 // expected
+    721 728 100 4 0 0
+  active  classdiagram_ref 1782402 // Value
+    902 911 100 4 0 0
+end
 show_stereotypes
+selected classdiagram_ref 1782402 // Value
 open
   class_ref 2064514 // CInternalBase
   operation_ref 3193090 // mdtError
@@ -10,12 +17,9 @@ open
   attribute_ref 230402 // text
   classrelation_ref 2440962 // <generalisation>
   class_ref 2139522 // mdtErrorLoggerGuard
-  operation_ref 3229442 // mdtSqlRecord
-  operation_ref 3229826 // toDataRecord
-  class_ref 2125186 // QSharedData
-  class_ref 2132098 // QDebugStateSaver
-  class_ref 2132226 // QDebug
-  class_ref 2132482 // QMessageLogger
-  class_ref 2132866 // lock
+  attribute_ref 1959042 // HasValue
+  operation_ref 3272066 // mdtExpected
+  class_ref 2105474 // mdtDataRecord
+  operation_ref 3271682 // operator=
 end
 end

@@ -21,10 +21,189 @@
 #include "mdtValueTest.h"
 #include "mdtApplication.h"
 #include "mdtValue.h"
+#include "mdtExpected.h"
+#include "mdtError.h"
 #include <QVariant>
+#include <QVector>
 #include <limits>
+#include <vector>
 
-//#include <QDebug>
+#include <QDebug>
+
+void mdtValueTest::mdtExpectedTest()
+{
+  /*
+   * Check constructors
+   */
+  // Default constructor
+  mdtExpected<int> da;
+  QVERIFY(!da.hasValue());
+  QVERIFY(!da);
+  QVERIFY(da.hasError());
+  QVERIFY(da.error().text().isEmpty());
+  // Value constructor
+  int aVal = 1;
+  mdtExpected<int> a(aVal);
+  QVERIFY(a.hasValue());
+  QVERIFY(a);
+  QVERIFY(!a.hasError());
+  QCOMPARE(a.value(), 1);
+  QCOMPARE(aVal, 1);  // Do something with aVal to assure we using value constructor (not move)
+  // Copy constructor (case with value)
+  mdtExpected<int> b(a);
+  QVERIFY(b.hasValue());
+  QVERIFY(!b.hasError());
+  QCOMPARE(b.value(), 1);
+  // Value move constructor
+  mdtExpected<int> c(std::move(2));
+  QVERIFY(c.hasValue());
+  QVERIFY(c);
+  QVERIFY(!c.hasError());
+  QCOMPARE(c.value(), 2);
+  // Move constructor (case with value)
+  mdtExpected<int> d(std::move(mdtExpected<int>(3)));
+  QVERIFY(d.hasValue());
+  QVERIFY(d);
+  QVERIFY(!d.hasError());
+  QCOMPARE(d.value(), 3);
+  // Error constructor
+  auto error1 = mdtErrorNewQ("error1", mdtError::Error, this);
+  mdtExpected<int> e(error1);
+  QVERIFY(!e.hasValue());
+  QVERIFY(!e);
+  QVERIFY(e.hasError());
+  QCOMPARE(e.error().text(), error1.text());
+  // Copy constructor (case with error)
+  mdtExpected<int> f(e);
+  QVERIFY(!f.hasValue());
+  QVERIFY(!f);
+  QVERIFY(f.hasError());
+  QCOMPARE(f.error().text(), error1.text());
+  // Error move constructor
+  mdtExpected<int> g(std::move(mdtErrorNewQ("error2", mdtError::Warning, this)));
+  QVERIFY(!g.hasValue());
+  QVERIFY(!g);
+  QVERIFY(g.hasError());
+  QCOMPARE(g.error().text(), QString("error2"));
+  // Move constructor (case with error)
+  mdtExpected<int> h(std::move(mdtExpected<int>(mdtErrorNewQ("error3", mdtError::Info, this))));
+  QVERIFY(!h.hasValue());
+  QVERIFY(!h);
+  QVERIFY(h.hasError());
+  QCOMPARE(h.error().text(), QString("error3"));
+  /*
+   * Check assignment
+   */
+  mdtExpected<int> i;
+  // Assign from value
+  aVal = 5;
+  i = aVal;
+  QVERIFY(i.hasValue());
+  QVERIFY(!i.hasError());
+  QCOMPARE(i.value(), 5);
+  QCOMPARE(aVal, 5);
+  // Assign from value (move)
+  i = std::move(6);
+  QVERIFY(i.hasValue());
+  QVERIFY(!i.hasError());
+  QCOMPARE(i.value(), 6);
+  // Assign from a error
+  i = error1;
+  QVERIFY(!i.hasValue());
+  QVERIFY(!i);
+  QVERIFY(i.hasError());
+  QCOMPARE(i.error().text(), QString("error1"));
+  // Assign from a error (move)
+  i = std::move(mdtErrorNewQ("error4", mdtError::Info, this));
+  QVERIFY(!i.hasValue());
+  QVERIFY(!i);
+  QVERIFY(i.hasError());
+  QCOMPARE(i.error().text(), QString("error4"));
+  // Assign from a mdtExpected that has a value
+  i = a;
+  QVERIFY(i.hasValue());
+  QVERIFY(!i.hasError());
+  QCOMPARE(i.value(), 1);
+  // Assign from a mdtExpected that has a error
+  i = e;
+  QVERIFY(!i.hasValue());
+  QVERIFY(i.hasError());
+  QCOMPARE(i.error().text(), QString("error1"));
+  // Assign from same object
+  i = i;
+  QVERIFY(!i.hasValue());
+  QVERIFY(i.hasError());
+  QCOMPARE(i.error().text(), QString("error1"));
+  // Assign by moving a expected that has a value
+  i = std::move(mdtExpected<int>(7));
+  QVERIFY(i.hasValue());
+  QVERIFY(!i.hasError());
+  QCOMPARE(i.value(), 7);
+  // Assign by moving a expected that has a error
+  i = std::move(mdtExpected<int>(std::move(mdtErrorNewQ("error5", mdtError::Info, this))));
+  QVERIFY(!i.hasValue());
+  QVERIFY(i.hasError());
+  QCOMPARE(i.error().text(), QString("error5"));
+  /*
+   * Check that we can store to containers
+   */
+  // Check with std::vector
+  std::vector<mdtExpected<int>> v;
+  qDebug() << "std::vector with push_back";
+  v.push_back(a);
+  v.push_back(b);
+  v.push_back(c);
+  v.push_back(d);
+  v.push_back(e);
+  v.push_back(f);
+  v.push_back(g);
+  v.push_back(h);
+  QCOMPARE(v.at(0).value(), 1);
+  QCOMPARE(v.at(1).value(), 1);
+  QCOMPARE(v.at(2).value(), 2);
+  QCOMPARE(v.at(3).value(), 3);
+  QCOMPARE(v.at(4).error().text(), QString("error1"));
+  QCOMPARE(v.at(5).error().text(), QString("error1"));
+  QCOMPARE(v.at(6).error().text(), QString("error2"));
+  QCOMPARE(v.at(7).error().text(), QString("error3"));
+  v.clear();
+  // Check with emplace back
+  qDebug() << "std::vector with emplace_back";
+  v.emplace_back(10);
+  v.emplace_back(11);
+  v.emplace_back(mdtErrorNewQ("error12", mdtError::Error, this));
+  QCOMPARE(v.at(0).value(), 10);
+  QCOMPARE(v.at(1).value(), 11);
+  QCOMPARE(v.at(2).error().text(), QString("error12"));
+  v.clear();
+  // Check with QVector
+  QVector<mdtExpected<int>> qv;
+  qDebug() << "QVector with append";
+  qv.append(a);
+  qv.append(b);
+  qv.append(c);
+  qv.append(d);
+  qv.append(e);
+  qv.append(f);
+  qv.append(g);
+  qv.append(h);
+  QCOMPARE(qv.at(0).value(), 1);
+  QCOMPARE(qv.at(1).value(), 1);
+  QCOMPARE(qv.at(2).value(), 2);
+  QCOMPARE(qv.at(3).value(), 3);
+  QCOMPARE(qv.at(4).error().text(), QString("error1"));
+  QCOMPARE(qv.at(5).error().text(), QString("error1"));
+  QCOMPARE(qv.at(6).error().text(), QString("error2"));
+  QCOMPARE(qv.at(7).error().text(), QString("error3"));
+  qv.clear();
+
+
+}
+
+void mdtValueTest::mdtExpectedBenchmark()
+{
+
+}
 
 void mdtValueTest::valueDoubleTest()
 {

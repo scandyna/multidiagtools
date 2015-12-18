@@ -29,6 +29,9 @@ class mdtValueTest : public mdtTest
 
  private slots:
 
+  void mdtExpectedTest();
+  void mdtExpectedBenchmark();
+
   void valueDoubleTest();
   void valueDoubleBenchmark();
   void valueIntTest();
