@@ -1,0 +1,37 @@
+format 210
+
+classcanvas 128002 class_ref 910594 // QSqlQuery
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 449 57 2000
+end
+classcanvas 128130 class_ref 405122 // QSqlDatabase
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 623 43 2000
+end
+classcanvas 128258 class_ref 174210 // QSqlTableModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 394 154 2000
+end
+classcanvas 128386 class_ref 638338 // QTableView
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 217 109 2000
+end
+classcanvas 128514 class_ref 720002 // mdtSortFilterProxyModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 209 246 2000
+end
+classcanvas 128642 class_ref 2160130 // mdtSqlCsvExportDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 86 328 2000
+end
+classcanvas 128770 class_ref 2078850 // mdtCsvGeneratorSettings
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 505 331 2000
+end
+classcanvas 128898 class_ref 404994 // QSqlRecord
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 89 160 2005
+end
+note 129282 "Export a SQL Table (with maybe mapping)"
+  xyzwh 42 548 2000 257 69
+end

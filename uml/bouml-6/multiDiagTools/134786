@@ -1,6 +1,6 @@
 format 210
 "Qt" // Qt
-  revision 109
+  revision 110
   modified_by 2 "philippe"
   // class settings
   
@@ -2191,7 +2191,7 @@ ${inlines}
     end
   end
 
-  classview 141698 "ModelView"
+  classview 141698 "MV-Model"
     
     classdiagramsettings member_max_width 0 end
     
@@ -2249,6 +2249,38 @@ ${inlines}
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3287042 "canFetchMore"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "parent" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3287170 "fetchMore"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "parent" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
   ${body}}
 "
 	
@@ -2331,6 +2363,23 @@ ${inlines}
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3286914 "sort"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "column" explicit_type "int"
+	  param in name "order" explicit_type "Qt::SortOrder"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
   ${body}}
 "
 	
@@ -3556,9 +3605,10 @@ ${inlines}
       end
     end
 
-    class 638338 "QTableView"
+    class 1187074 "QModelIndexList"
       visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit} {
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
 ${members}};
 ${inlines}
 "
@@ -3569,12 +3619,155 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 1716866 // <unidirectional association>
-	relation 1701378 --->
+    end
+
+    classdiagram 1497090 "QIdentityProxyModel"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1752450 "QIdentityProxyModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2093058 // <generalisation>
+	relation 2076930 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2093058 // <generalisation>
+	  b parent class_ref 719618 // QAbstractProxyModel
+      end
+    end
+  end
+
+  classview 886914 "MV-View"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 1795586 "QAbstractItemView"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2160258 "QAbstractItemView"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2474114 // <generalisation>
+	relation 2457730 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2474114 // <generalisation>
+	  b parent class_ref 895874 // QAbstractScrollArea
+      end
+
+      classrelation 2474626 // <unidirectional association>
+	relation 2458242 --->
 	  a role_name "" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	    classrelation_ref 1716866 // <unidirectional association>
+	    classrelation_ref 2474626 // <unidirectional association>
+	  b parent class_ref 146946 // QAbstractItemModel
+      end
+
+      operation 3285506 "model"
+	public return_type class_ref 146946 // QAbstractItemModel
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3285890 "currentIndex"
+	public return_type class_ref 147330 // QModelIndex
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3286146 "selectionModel"
+	public return_type class_ref 1382914 // QItemSelectionModel
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3286018 "selectedIndexes"
+	protected return_type class_ref 1187074 // QModelIndexList
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 2474754 // <unidirectional association>
+	relation 2458370 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2474754 // <unidirectional association>
 	  b parent class_ref 1382914 // QItemSelectionModel
       end
     end
@@ -3598,22 +3791,91 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-    end
+      classrelation 2474242 // <generalisation>
+	relation 2457858 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2474242 // <generalisation>
+	  b parent class_ref 2160258 // QAbstractItemView
+      end
 
-    class 1187074 "QModelIndexList"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
+      operation 3286530 "isSectionHidden"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "logicalIndex" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3285634 "logicalIndex"
+	public explicit_return_type "int"
+	nparams 1
+	  param in name "visualIndex" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3285762 "visualIndex"
+	public explicit_return_type "int"
+	nparams 1
+	  param in name "logicalIndex" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3286658 "count"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3286786 "orientation"
+	public explicit_return_type "Qt::Orientation"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 1244802 "QItemSelectionModel"
@@ -3662,15 +3924,14 @@ ${inlines}
       end
     end
 
-    classdiagram 1497090 "QIdentityProxyModel"
+    classdiagram 1795714 "QTableView"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size B-Landscape
     end
 
-    class 1752450 "QIdentityProxyModel"
+    class 638338 "QTableView"
       visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
+      cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
 ${inlines}
 "
@@ -3681,12 +3942,83 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2093058 // <generalisation>
-	relation 2076930 ---|>
+      classrelation 2474370 // <generalisation>
+	relation 2457986 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 2093058 // <generalisation>
-	  b parent class_ref 719618 // QAbstractProxyModel
+	    classrelation_ref 2474370 // <generalisation>
+	  b parent class_ref 2160258 // QAbstractItemView
+      end
+
+      classrelation 2474498 // <unidirectional association>
+	relation 2458114 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2474498 // <unidirectional association>
+	  b parent class_ref 1133570 // QHeaderView
+      end
+
+      operation 3285250 "horizontalHeader"
+	public return_type class_ref 1133570 // QHeaderView
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3285378 "verticalHeader"
+	public return_type class_ref 1133570 // QHeaderView
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3286274 "isColumnHidden"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "column" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3286402 "isRowHidden"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "row" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end
@@ -4661,6 +4993,22 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 2473858 // <generalisation>
+	relation 2457474 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2473858 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 2473986 // <generalisation>
+	relation 2457602 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2473986 // <generalisation>
+	  b parent class_ref 2160386 // QPaintDevice
       end
     end
 
@@ -5946,6 +6294,27 @@ ${inlines}
 	
 	
       end
+    end
+
+    classdiagram 1795842 "QPaintDevice"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2160386 "QPaintDevice"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 

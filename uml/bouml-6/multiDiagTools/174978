@@ -1,6 +1,6 @@
 format 210
 "mdtutilsgui" // mdtutilsgui
-  revision 87
+  revision 88
   modified_by 2 "philippe"
   // class settings
   
@@ -3943,14 +3943,6 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
-      end
-
-      classrelation 771586 // <dependency>
-	relation 763138 -_->
-	  a default
-	    cpp default "#include in source"
-	    classrelation_ref 771586 // <dependency>
-	  b parent class_ref 390658 // mdtCsvFile
       end
 
       operation 1178114 "addRow"

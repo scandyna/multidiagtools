@@ -1,6 +1,6 @@
 format 210
 "mdtutils" // mdtutils
-  revision 159
+  revision 161
   modified_by 2 "philippe"
   // class settings
   
@@ -3165,14 +3165,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 538498 // <generalisation>
-	relation 537986 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 538498 // <generalisation>
-	  b parent class_ref 390658 // mdtCsvFileOld
-      end
-
       classrelation 538626 // pvSections (<directional composition>)
 	relation 538114 *-->
 	  stereotype "QMultiHash"
@@ -4428,14 +4420,6 @@ ${inlines}
 	
       end
 
-      classrelation 483970 // <dependency>
-	relation 483714 -_->
-	  a default
-	    cpp default "#include in source"
-	    classrelation_ref 483970 // <dependency>
-	  b parent class_ref 390658 // mdtCsvFileOld
-      end
-
       classrelation 484098 // <dependency>
 	relation 483842 -_->
 	  a default
@@ -5660,7 +5644,6 @@ ${namespace_end}"
     
     activitydiagramsettings
      end
-    associated_deployment_view deploymentview_ref 291586 // mdtIo
     classdiagram 515202 "mdtIo"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -6466,79 +6449,61 @@ ${inlines}
 	
       end
     end
-  end
 
-  deploymentview 291586 "mdtIo"
-    //deployment diagram settings
-    deploymentdiagramsettings
-     end
-    artifact 289410 "mdtAbstractIo"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 538882 // mdtAbstractIo
-      end
+    classdiagram 1788930 "IoValue"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
 
-    artifact 289538 "mdtAnalogIo"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
+    class 2152962 "mdtAnalogIoValue"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
 "
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 539010 // mdtAnalogIo
-      end
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
 
-    artifact 289666 "mdtDigitalIo"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
+    class 2153090 "mdtIoValue"
+      visibility package 
+      nformals 1
+      formal name "T" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
 "
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 539138 // mdtDigitalIo
-      end
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2153218 "mdtDigitalIoValue"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 
@@ -7991,6 +7956,86 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 2153346 "mdtValueDouble"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2153474 "mdtValueIntegral"
+      visibility package 
+      nformals 1
+      formal name "T" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2153602 "mdtMeasuredValue"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 3278594 "isPlusOl"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3278722 "isMinusOl"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "

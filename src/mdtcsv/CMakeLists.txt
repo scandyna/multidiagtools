@@ -12,7 +12,9 @@ set (SOURCES_FILES
           mdtCsvFileGenerator.cpp
           mdtCsvRecordFormat.cpp
           mdtCsvGeneratorSettingsWidget.cpp
+          mdtCsvFileGeneratorFileSettingsWidget.cpp
           mdtCsvFileGeneratorSettingsDialog.cpp
+          mdtCsvTableViewDataMapper.cpp
     )
 
 # Output library

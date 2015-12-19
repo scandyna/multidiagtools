@@ -30,7 +30,9 @@
 #include "mdtCsvData.h"
 #include "mdtCsvRecordFormat.h"
 #include "mdtCsvGeneratorSettingsWidget.h"
+#include "mdtCsvFileGeneratorFileSettingsWidget.h"
 #include "mdtCsvFileGeneratorSettingsDialog.h"
+#include "mdtCsvTableViewDataMapper.h"
 #include "mdtApplication.h"
 #include <QTemporaryFile>
 #include <QFile>
@@ -38,6 +40,13 @@
 #include <QByteArray>
 #include <QVector>
 #include <QtTest>
+#include <QTableView>
+#include <QAbstractItemView>
+#include <QHeaderView>
+#include <QStandardItemModel>
+#include <QStandardItem>
+#include <QAbstractItemModel>
+#include <QModelIndex>
 #include <string>
 #include <vector>
 
@@ -175,6 +184,27 @@ void mdtCsvTest::generatorSettingsWidgetTest()
 //   }
 }
 
+void mdtCsvTest::fileGeneratorSettingsWidgetTest()
+{
+  mdtCsvFileGeneratorFileSettingsWidget widget;
+
+  /*
+   * Set/get
+   */
+  // Set file settings
+  widget.setFileSettings("/path/to/csvfile.csv", "UTF-16");
+  // Check file settings
+  QCOMPARE(widget.filePath(), QString("/path/to/csvfile.csv"));
+  QCOMPARE(widget.fileEncoding(), QByteArray("UTF-16"));
+  /*
+   * Play
+   */
+  widget.show();
+  while(widget.isVisible()){
+    QTest::qWait(500);
+  }
+}
+
 void mdtCsvTest::fileGeneratorSettingsDialogTest()
 {
   mdtCsvFileGeneratorSettingsDialog dialog;
@@ -204,7 +234,7 @@ void mdtCsvTest::fileGeneratorSettingsDialogTest()
   /*
    * Play
    */
-//   dialog.exec();
+  dialog.exec();
 }
 
 void mdtCsvTest::recordTest()
@@ -1190,6 +1220,130 @@ void mdtCsvTest::csvFileGeneratorWriteAllTest()
 void mdtCsvTest::csvFileGeneratorWriteAllTest_data()
 {
   buildCsvGeneratorTestData();
+}
+
+void mdtCsvTest::csvTableViewDataMapperTest()
+{
+  const int rowCount = 8;
+  const int colCount = 5;
+  QStandardItemModel model(rowCount, colCount);
+  QTableView view;
+  mdtCsvTableViewDataMapper csvDataMapper;
+  mdtCsvRecord csvRecord;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(csvDataMapper.currentRow(), -1);
+
+  /*
+   * Build test data
+   */
+  for(int row = 0; row < model.rowCount(); ++row){
+    for(int col = 0; col < model.columnCount(); ++col){
+      auto *item = new QStandardItem(QString("%0%1").arg(QChar('A' + row)).arg(col+1));
+      model.setItem(row, col, item);
+    }
+  }
+  /*
+   * Setup view:
+   *  - Cross column "2" and "3" (index 1 and 2)
+   *  - Hide column "4"
+   *  - Cross row "3" (C) and "4" (D)
+   *  - Hide row "6" (F)
+   */
+  view.setModel(&model);
+  // Cross columns
+  QVERIFY(view.horizontalHeader() != nullptr);
+  view.horizontalHeader()->moveSection(1, 2); // Columns "2" and "3"
+  // Hide columns
+  view.horizontalHeader()->hideSection(3);    // Column "4"
+  // Cross rows
+  QVERIFY(view.verticalHeader() != nullptr);
+  view.verticalHeader()->moveSection(2, 3);   // Rows "3" and "4"
+  // Hide rows
+  view.verticalHeader()->hideSection(5);      // Row "6"
+  /*
+   * Setup mapper
+   */
+  csvDataMapper.setView(&view);
+  QCOMPARE(csvDataMapper.currentRow(), -1);
+  // Go to first row
+  QVERIFY(csvDataMapper.next());
+  QCOMPARE(csvDataMapper.currentRow(), 0);
+  csvRecord = csvDataMapper.getCurrentRecord();
+  QCOMPARE(csvRecord.columnDataList.size(), 4);
+  QCOMPARE(csvRecord.columnDataList.at(0), QVariant("A1"));
+  QCOMPARE(csvRecord.columnDataList.at(1), QVariant("A3"));
+  QCOMPARE(csvRecord.columnDataList.at(2), QVariant("A2"));
+  QCOMPARE(csvRecord.columnDataList.at(3), QVariant("A5"));
+  // Got to next row (B)
+  QVERIFY(csvDataMapper.next());
+  QCOMPARE(csvDataMapper.currentRow(), 1);
+  csvRecord = csvDataMapper.getCurrentRecord();
+  QCOMPARE(csvRecord.columnDataList.size(), 4);
+  QCOMPARE(csvRecord.columnDataList.at(0), QVariant("B1"));
+  QCOMPARE(csvRecord.columnDataList.at(1), QVariant("B3"));
+  QCOMPARE(csvRecord.columnDataList.at(2), QVariant("B2"));
+  QCOMPARE(csvRecord.columnDataList.at(3), QVariant("B5"));
+  // Got to next row (D)
+  QVERIFY(csvDataMapper.next());
+  QCOMPARE(csvDataMapper.currentRow(), 2);
+  csvRecord = csvDataMapper.getCurrentRecord();
+  QCOMPARE(csvRecord.columnDataList.size(), 4);
+  QCOMPARE(csvRecord.columnDataList.at(0), QVariant("D1"));
+  QCOMPARE(csvRecord.columnDataList.at(1), QVariant("D3"));
+  QCOMPARE(csvRecord.columnDataList.at(2), QVariant("D2"));
+  QCOMPARE(csvRecord.columnDataList.at(3), QVariant("D5"));
+  // Got to next row (C)
+  QVERIFY(csvDataMapper.next());
+  QCOMPARE(csvDataMapper.currentRow(), 3);
+  csvRecord = csvDataMapper.getCurrentRecord();
+  QCOMPARE(csvRecord.columnDataList.size(), 4);
+  QCOMPARE(csvRecord.columnDataList.at(0), QVariant("C1"));
+  QCOMPARE(csvRecord.columnDataList.at(1), QVariant("C3"));
+  QCOMPARE(csvRecord.columnDataList.at(2), QVariant("C2"));
+  QCOMPARE(csvRecord.columnDataList.at(3), QVariant("C5"));
+  // Got to next row (E)
+  QVERIFY(csvDataMapper.next());
+  QCOMPARE(csvDataMapper.currentRow(), 4);
+  csvRecord = csvDataMapper.getCurrentRecord();
+  QCOMPARE(csvRecord.columnDataList.size(), 4);
+  QCOMPARE(csvRecord.columnDataList.at(0), QVariant("E1"));
+  QCOMPARE(csvRecord.columnDataList.at(1), QVariant("E3"));
+  QCOMPARE(csvRecord.columnDataList.at(2), QVariant("E2"));
+  QCOMPARE(csvRecord.columnDataList.at(3), QVariant("E5"));
+  // Got to next row: row "6" (F) is hidden, it must be skipped, and we must be at row G after next()
+  QVERIFY(csvDataMapper.next());
+  QCOMPARE(csvDataMapper.currentRow(), 6);
+  csvRecord = csvDataMapper.getCurrentRecord();
+  QCOMPARE(csvRecord.columnDataList.size(), 4);
+  QCOMPARE(csvRecord.columnDataList.at(0), QVariant("G1"));
+  QCOMPARE(csvRecord.columnDataList.at(1), QVariant("G3"));
+  QCOMPARE(csvRecord.columnDataList.at(2), QVariant("G2"));
+  QCOMPARE(csvRecord.columnDataList.at(3), QVariant("G5"));
+  // Got to next row (H)
+  QVERIFY(csvDataMapper.next());
+  QCOMPARE(csvDataMapper.currentRow(), 7);
+  csvRecord = csvDataMapper.getCurrentRecord();
+  QCOMPARE(csvRecord.columnDataList.size(), 4);
+  QCOMPARE(csvRecord.columnDataList.at(0), QVariant("H1"));
+  QCOMPARE(csvRecord.columnDataList.at(1), QVariant("H3"));
+  QCOMPARE(csvRecord.columnDataList.at(2), QVariant("H2"));
+  QCOMPARE(csvRecord.columnDataList.at(3), QVariant("H5"));
+  // Now, next() must fail
+  QVERIFY(!csvDataMapper.next());
+
+  /*
+   * Play
+   */
+//   view.resize(400, 400);
+//   view.resizeColumnsToContents();
+//   view.resizeRowsToContents();
+//   view.show();
+//   while(view.isVisible()){
+//     QTest::qWait(500);
+//   }
 }
 
 void mdtCsvTest::buildCsvParserTestData()

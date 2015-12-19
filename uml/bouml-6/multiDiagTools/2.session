@@ -1,25 +1,30 @@
-window_sizes 1280 964 372 902 911 0
+window_sizes 1272 956 372 894 903 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 1589250 // expected
-    721 728 100 4 0 0
-  active  classdiagram_ref 1782402 // Value
-    902 911 100 4 0 0
+  classdiagram_ref 1729282 // csvFileGenerator
+    715 722 100 4 0 0
+  classdiagram_ref 1796098 // TableViewExport
+    120 106 100 4 0 0
+  classdiagram_ref 1795970 // sandbox
+    120 106 100 8 72 71
+  active  classdiagram_ref 1802626 // generatorSettings
+    894 903 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1782402 // Value
+selected classdiagram_ref 1802626 // generatorSettings
 open
-  class_ref 2064514 // CInternalBase
-  operation_ref 3193090 // mdtError
-  operation_ref 3236738 // setError
-  operation_ref 279298 // text
-  attribute_ref 236930 // level
-  attribute_ref 230402 // text
-  classrelation_ref 2440962 // <generalisation>
-  class_ref 2139522 // mdtErrorLoggerGuard
-  attribute_ref 1959042 // HasValue
-  operation_ref 3272066 // mdtExpected
-  class_ref 2105474 // mdtDataRecord
-  operation_ref 3271682 // operator=
+  classdiagram_ref 1729538 // csvSettings
+  class_ref 2078722 // mdtCsvFileGenerator
+  class_ref 2167426 // mdtCsvTableViewDataMapper
+  classview_ref 352898 // mdtIo
+  
+  package_ref 174978 // mdtutilsgui
+  classview_ref 807426 // ImportExportCopy
+  operation_ref 3287042 // canFetchMore
+  operation_ref 3287170 // fetchMore
+  operation_ref 3286914 // sort
+  operation_ref 3286146 // selectionModel
+  operation_ref 3286530 // isSectionHidden
+  class_ref 638338 // QTableView
 end
 end

@@ -38,6 +38,8 @@ set (SOURCES_FILES
           mdtSqlTransaction.cpp
           mdtSqlForeignKeySetting.cpp
           
+          # CSV data conversion
+          mdtCsvSqlData.cpp
           # Database schema
           mdtSqlDatabaseSchema.cpp
           mdtSqlDatabaseSchemaModel.cpp
@@ -79,6 +81,7 @@ endif(UNIX)
 add_library (mdtdatabase${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
 target_link_libraries(mdtdatabase${MDTLIB_VERSION_SUFFIX} Qt5::Widgets Qt5::Sql)
 target_link_libraries(mdtdatabase${MDTLIB_VERSION_SUFFIX} "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtdatabase${MDTLIB_VERSION_SUFFIX} "mdtcsv${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatabase${MDTLIB_VERSION_SUFFIX} "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 
 # Headers to install

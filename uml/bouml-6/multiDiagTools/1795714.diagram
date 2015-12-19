@@ -1,0 +1,56 @@
+format 210
+
+classcanvas 128002 class_ref 638338 // QTableView
+  classdiagramsettings member_max_width 0 end
+  xyz 42.8 345.8 2000
+end
+classcanvas 128130 class_ref 2160258 // QAbstractItemView
+  classdiagramsettings member_max_width 0 end
+  xyz 347.5 127.9 2000
+end
+classcanvas 128386 class_ref 1133570 // QHeaderView
+  classdiagramsettings member_max_width 0 end
+  xyz 338.5 338.2 2006
+end
+classcanvas 129538 class_ref 146946 // QAbstractItemModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 409 39.7 2000
+end
+classcanvas 129794 class_ref 1382914 // QItemSelectionModel
+  classdiagramsettings member_max_width 0 end
+  xyz 650.5 162.2 2006
+end
+relationcanvas 128258 relation_ref 2457986 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 513
+  from ref 128002 z 2001 to point 163 297
+  line 129282 z 2001 to point 479 297
+  line 129410 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 2457858 // <generalisation>
+  decenter_begin 512
+  decenter_end 513
+  from ref 128386 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 2458114 // <unidirectional association>
+  decenter_end 469
+  from ref 128002 z 2007 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 2458242 // <unidirectional association>
+  decenter_begin 513
+  from ref 128130 z 2001 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 2458370 // <unidirectional association>
+  from ref 128130 z 2007 to ref 129794
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

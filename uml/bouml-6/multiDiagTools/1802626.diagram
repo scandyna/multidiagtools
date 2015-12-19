@@ -1,0 +1,28 @@
+format 210
+
+classcanvas 128002 class_ref 2078850 // mdtCsvGeneratorSettings
+  classdiagramsettings member_max_width 0 end
+  xyz 553 216 2000
+end
+classcanvas 128130 class_ref 2078978 // mdtCsvCommonSettings
+  classdiagramsettings member_max_width 0 end
+  xyz 559 91 2006
+end
+classcanvas 128386 class_ref 2166914 // mdtCsvGeneratorSettingsWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 154 257 2000
+end
+classcanvas 128514 class_ref 2167042 // mdtCsvFileGeneratorSettingsDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 160 420 2000
+end
+classcanvas 128642 class_ref 2167554 // mdtCsvFileGeneratorFileSettingsWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 154 336 2000
+end
+relationcanvas 128258 relation_ref 2404098 // <generalisation>
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

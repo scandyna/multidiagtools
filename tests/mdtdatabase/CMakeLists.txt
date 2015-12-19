@@ -41,3 +41,9 @@ target_link_libraries(mdtsqlapplicationwidgetstest "mdtutils${MDTLIB_VERSION_SUF
 target_link_libraries(mdtsqlapplicationwidgetstest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtsqlapplicationwidgetstest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtsqlapplicationwidgetstest "mdttest")
+
+# * mdtCsvSqlTest executable *
+add_executable(mdtcsvsqltest "mdtCsvSqlTest.cpp")
+target_link_libraries(mdtcsvsqltest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcsvsqltest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcsvsqltest "mdttest")

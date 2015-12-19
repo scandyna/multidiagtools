@@ -32,6 +32,7 @@ class mdtCsvTest : public mdtTest
   void parserSettingsTest();
   void generatorSettingsTest();
   void generatorSettingsWidgetTest();
+  void fileGeneratorSettingsWidgetTest();
   void fileGeneratorSettingsDialogTest();
   void recordTest();
   void dataTest();
@@ -64,6 +65,8 @@ class mdtCsvTest : public mdtTest
   void csvFileGeneratorWriteLineTest_data();
   void csvFileGeneratorWriteAllTest();
   void csvFileGeneratorWriteAllTest_data();
+
+  void csvTableViewDataMapperTest();
 
  private:
 
