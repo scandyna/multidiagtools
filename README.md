@@ -4,6 +4,18 @@ Multidiagtools
 Multidiagtools is a library that should help (in some future) interacting with some common instruments.
 But, today it's just a set of C++ classes, and nothing is complete. Multidiagtool is based on Qt5, but some part of code is platform dependent.
 
+Modules
+=======
+
+mdtcsv
+------
+
+Provides some helper classes to read and write CSV (file or string in memory).
+A effort was made to follow most of the rules described in [CSV-1203](http://mastpoint.com/csv-1203) specifications,
+but with some tolerances (for example, empty fields are allowed).
+Internally, [Boost.Spirit V2](http://www.boost.org/doc/libs/1_60_0/libs/spirit/doc/html/index.html) is used.
+Some work was also done to support QString, and the ability to read or write line by line.
+
 Current state
 =============
 
@@ -49,7 +61,7 @@ The library was tested on Windows XP and Wine. I use MinGW, so I will explain ho
 * [CMake](http://www.cmake.org) 
 * [MinGW](http://www.mingw.org)
   *  The simplest way is to use the packaged version from TDM-GCC project. I switched to TDM-GCC because I had trouble with MinGW packages. With mingw-get-inst-20120426's integrated catalog, gdb does not work, and online updated catalog provides GCC 4.7, witch cannot run Qt 4.8 binary distributed library. TDM installs gcc 4.6, and all worked fine for me on Windows XP 32bits.
-*  [Qt4](http://qt-project.org/downloads)
+*  [Qt5](//http://www.qt.io/download/)
   *  Built version of Qt4 library are available. For example: Latest version Note: during install, a warning will be displayed, saying that winAPIversion is wrong. In my case, this was not a problem, all works fine (on native system).
 *  [NSIS](http://nsis.sourceforge.net/Download) (Optional, just to generate installer)
 
