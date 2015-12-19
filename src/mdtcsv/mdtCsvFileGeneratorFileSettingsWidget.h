@@ -23,7 +23,6 @@
 
 #include "mdtError.h"
 #include "mdtCsvSettings.h"
-#include "ui_mdtCsvFileGeneratorSettingsDialog.h"
 #include "ui_mdtCsvFileGeneratorFileSettingsWidget.h"
 #include <QWidget>
 #include <QString>

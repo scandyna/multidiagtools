@@ -39,6 +39,13 @@ void mdtCsvTableViewDataMapper::setView(QTableView* view)
   Q_ASSERT(view->verticalHeader() != nullptr);
 
   pvView = view;
+  reset();
+}
+
+void mdtCsvTableViewDataMapper::reset()
+{
+  Q_ASSERT(pvView != nullptr);
+
   pvCurrentRow = -1;
 }
 

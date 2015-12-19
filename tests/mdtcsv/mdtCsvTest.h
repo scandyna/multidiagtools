@@ -67,6 +67,8 @@ class mdtCsvTest : public mdtTest
   void csvFileGeneratorWriteAllTest_data();
 
   void csvTableViewDataMapperTest();
+  void csvTableViewExportThreadTest();
+  void csvTableViewExportDialogTest();
 
  private:
 

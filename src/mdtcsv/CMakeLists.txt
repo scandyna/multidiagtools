@@ -15,12 +15,16 @@ set (SOURCES_FILES
           mdtCsvFileGeneratorFileSettingsWidget.cpp
           mdtCsvFileGeneratorSettingsDialog.cpp
           mdtCsvTableViewDataMapper.cpp
+          mdtCsvTableViewExportThread.cpp
+          mdtCsvTableViewExportDialog.cpp
     )
 
 # Output library
 add_library (mdtcsv${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
 target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} Qt5::Core)
 target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} "qtsingleapplication${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} "mdterror${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
 
 # Translations - We generate a .pro file, that simplify the usage of lupdate
 file(WRITE "${PROJECT_SOURCE_DIR}/../../translations/mdtcsv.pro" "# Translations project file for lupdate/lrelease\n")

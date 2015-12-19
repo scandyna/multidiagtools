@@ -33,6 +33,7 @@
 #include "mdtCsvFileGeneratorFileSettingsWidget.h"
 #include "mdtCsvFileGeneratorSettingsDialog.h"
 #include "mdtCsvTableViewDataMapper.h"
+#include "mdtCsvTableViewExportDialog.h"
 #include "mdtApplication.h"
 #include <QTemporaryFile>
 #include <QFile>
@@ -1344,6 +1345,46 @@ void mdtCsvTest::csvTableViewDataMapperTest()
 //   while(view.isVisible()){
 //     QTest::qWait(500);
 //   }
+}
+
+void mdtCsvTest::csvTableViewExportThreadTest()
+{
+
+}
+
+void mdtCsvTest::csvTableViewExportDialogTest()
+{
+  mdtCsvTableViewExportDialog dialog;
+  const int rowCount = 1000;
+  const int colCount = 5;
+  QStandardItemModel model(rowCount, colCount);
+  QTableView view;
+  mdtCsvTableViewDataMapper csvDataMapper;
+  mdtCsvRecord csvRecord;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(csvDataMapper.currentRow(), -1);
+
+  /*
+   * Build test data
+   */
+  for(int row = 0; row < model.rowCount(); ++row){
+    for(int col = 0; col < model.columnCount(); ++col){
+      auto *item = new QStandardItem(QString("%0%1").arg(QChar('A' + (row%256))).arg(col+1));
+      model.setItem(row, col, item);
+    }
+  }
+  // Setup view
+  view.setModel(&model);
+  // Setup dialog
+  dialog.setView(&view);
+  
+  /*
+   * Play
+   */
+  dialog.exec();
 }
 
 void mdtCsvTest::buildCsvParserTestData()

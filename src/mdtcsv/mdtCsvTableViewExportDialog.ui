@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>CSV export</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
@@ -19,6 +19,11 @@
      <property name="title">
       <string>File</string>
      </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="mdtCsvFileGeneratorFileSettingsWidget" name="wFileSettings" native="true"/>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
@@ -28,7 +33,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="mdtCsvGeneratorSettingsWidget" name="widget" native="true"/>
+       <widget class="mdtCsvGeneratorSettingsWidget" name="wCsvSettings" native="true"/>
       </item>
      </layout>
     </widget>
@@ -41,7 +46,9 @@
         <string>Export</string>
        </property>
        <property name="icon">
-        <iconset theme="system-run"/>
+        <iconset theme="system-run">
+         <normaloff/>
+        </iconset>
        </property>
       </widget>
      </item>
@@ -51,7 +58,9 @@
         <string>Abort</string>
        </property>
        <property name="icon">
-        <iconset theme="process-stop"/>
+        <iconset theme="process-stop">
+         <normaloff/>
+        </iconset>
        </property>
       </widget>
      </item>
@@ -81,6 +90,12 @@
    <class>mdtCsvGeneratorSettingsWidget</class>
    <extends>QWidget</extends>
    <header>mdtCsvGeneratorSettingsWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>mdtCsvFileGeneratorFileSettingsWidget</class>
+   <extends>QWidget</extends>
+   <header>mdtCsvFileGeneratorFileSettingsWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -11,3 +11,5 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvGenerato
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvFileGeneratorFileSettingsWidget.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvFileGeneratorSettingsDialog.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvTableViewDataMapper.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvTableViewExportThread.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvTableViewExportDialog.cpp

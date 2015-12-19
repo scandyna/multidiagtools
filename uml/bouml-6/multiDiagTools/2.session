@@ -1,17 +1,17 @@
-window_sizes 1272 956 372 894 903 0
+window_sizes 1280 964 372 902 911 0
 cleanlooks_style
 diagrams
   classdiagram_ref 1729282 // csvFileGenerator
     715 722 100 4 0 0
-  classdiagram_ref 1796098 // TableViewExport
-    120 106 100 4 0 0
+  active  classdiagram_ref 1796098 // TableViewExport
+    902 911 100 4 0 0
   classdiagram_ref 1795970 // sandbox
     120 106 100 8 72 71
-  active  classdiagram_ref 1802626 // generatorSettings
+  classdiagram_ref 1802626 // generatorSettings
     894 903 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1802626 // generatorSettings
+selected classdiagram_ref 1796098 // TableViewExport
 open
   classdiagram_ref 1729538 // csvSettings
   class_ref 2078722 // mdtCsvFileGenerator

@@ -24,11 +24,13 @@
 #include "mdtError.h"
 #include "mdtCsvSettings.h"
 #include "ui_mdtCsvFileGeneratorSettingsDialog.h"
+#include "mdtCsvFileGeneratorFileSettingsWidget.h"
 #include <QDialog>
 #include <QString>
 #include <QByteArray>
 
 class QWidget;
+// class mdtCsvFileGeneratorFileSettingsWidget;
 
 /*! \brief CSV file generator settings dialog
  */
@@ -74,7 +76,7 @@ class mdtCsvFileGeneratorSettingsDialog : public QDialog, Ui::mdtCsvFileGenerato
 
   /*! \brief Select target file
    */
-  void selectFile();
+//   void selectFile();
 
   QString pvDefaultDirectory;
 };

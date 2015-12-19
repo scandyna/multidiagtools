@@ -18,28 +18,37 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CSV_TABLE_VIEW_DATA_MAPPER_H
-#define MDT_CSV_TABLE_VIEW_DATA_MAPPER_H
+#ifndef MDT_CSV_TABLE_VIEW_EXPORT_DIALOG_H
+#define MDT_CSV_TABLE_VIEW_EXPORT_DIALOG_H
 
-#include "mdtCsvData.h"
-#include <QPointer>
+#include "ui_mdtCsvTableViewExportDialog.h"
+#include "mdtError.h"
+#include <QDialog>
+#include <memory>
 
 class QTableView;
+class mdtCsvTableViewDataMapper;
 
-/*! \brief Helper class to get data in a model
+/*! \brief Dialog to export data comming from a QTableView to a CSV file
  *
- * This class is used to export data that are displayed in a QTableView
- *  as the user sees it.
- *  For this, we must take in acount that columns (and maybe rows)
- *  are hidden, colums moved, rows moved (typically sorted).
+ * This dialog can be used to export what the user see on a QTableView.
  */
-class mdtCsvTableViewDataMapper
+class mdtCsvTableViewExportDialog : public QDialog, Ui::mdtCsvTableViewExportDialog
 {
+ Q_OBJECT
+
  public:
 
-  /*! \brief Default constructor
+  /*! \brief Constructor
    */
-  mdtCsvTableViewDataMapper();
+  mdtCsvTableViewExportDialog(QWidget *parent = nullptr);
+
+  /*! \brief Destructor
+   */
+  ~mdtCsvTableViewExportDialog();
+
+  mdtCsvTableViewExportDialog(const mdtCsvTableViewExportDialog &) = delete;
+  mdtCsvTableViewExportDialog & operator=(const mdtCsvTableViewExportDialog &) = delete;
 
   /*! \brief Set table view
    *
@@ -49,38 +58,17 @@ class mdtCsvTableViewDataMapper
    */
   void setView(QTableView *view);
 
-  /*! \brief Reset
-   */
-  void reset();
-
-  /*! \brief Move to next row
-   *
-   * Returns true if next row is not out of bound.
-   *  Data is fetched from model if needed.
-   *
-   * \pre Table view must be set before.
-   */
-  bool next();
-
-  /*! \brief Get current row
-   */
-  int currentRow() const
-  {
-    return pvCurrentRow;
-  }
-
-  /*! \brief Get a CSV record for current row
-   *
-   * \note The CSV record is rebuilt at each call.
-   * \pre Table view must be set before.
-   * \pre Must be called only after next() returned true
-   */
-  mdtCsvRecord getCurrentRecord() const;
-
  private:
 
-  int pvCurrentRow;
-  QPointer<QTableView> pvView;
+  /*! \brief Export
+   */
+  void exportToCsv();
+
+  /*! \brief Display error
+   */
+  void displayError(const mdtError & error);
+
+  std::unique_ptr<mdtCsvTableViewDataMapper> pvMapper;
 };
 
-#endif // #ifndef MDT_CSV_TABLE_VIEW_DATA_MAPPER_H
+#endif // #ifndef MDT_CSV_TABLE_VIEW_EXPORT_DIALOG_H

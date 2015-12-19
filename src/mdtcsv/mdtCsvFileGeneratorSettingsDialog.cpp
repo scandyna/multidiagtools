@@ -33,39 +33,42 @@ mdtCsvFileGeneratorSettingsDialog::mdtCsvFileGeneratorSettingsDialog(QWidget *pa
 {
   setupUi(this);
   // Create select file action
-  QAction *selectFileAction = new QAction(this);
-  selectFileAction->setIcon(QIcon::fromTheme("document-open"));
-  leFilePath->addAction(selectFileAction, QLineEdit::TrailingPosition);
-  connect(selectFileAction, &QAction::triggered, this, &mdtCsvFileGeneratorSettingsDialog::selectFile);
-  // Fill encoding dialog
-  auto baCodecList = QTextCodec::availableCodecs();
-  QStringList codecList;
-  for(const auto & bac : baCodecList){
-    const QString sc = bac;
-    if(!codecList.contains(sc)){
-      codecList.append(sc);
-    }
-  }
-  codecList.sort();
-  cbFileEncoding->addItems(codecList);
-  cbFileEncoding->setCurrentText("UTF-8");
+//   QAction *selectFileAction = new QAction(this);
+//   selectFileAction->setIcon(QIcon::fromTheme("document-open"));
+//   leFilePath->addAction(selectFileAction, QLineEdit::TrailingPosition);
+//   connect(selectFileAction, &QAction::triggered, this, &mdtCsvFileGeneratorSettingsDialog::selectFile);
+//   // Fill encoding dialog
+//   auto baCodecList = QTextCodec::availableCodecs();
+//   QStringList codecList;
+//   for(const auto & bac : baCodecList){
+//     const QString sc = bac;
+//     if(!codecList.contains(sc)){
+//       codecList.append(sc);
+//     }
+//   }
+//   codecList.sort();
+//   cbFileEncoding->addItems(codecList);
+//   cbFileEncoding->setCurrentText("UTF-8");
 }
 
 void mdtCsvFileGeneratorSettingsDialog::setFileSettings(const QString & path, const QByteArray & encoding)
 {
-  leFilePath->setText(path);
-  const QString enc = QString::fromLatin1(encoding);
-  cbFileEncoding->setCurrentText(enc);
+  wFileSettings->setFileSettings(path, encoding);
+//   leFilePath->setText(path);
+//   const QString enc = QString::fromLatin1(encoding);
+//   cbFileEncoding->setCurrentText(enc);
 }
 
 QString mdtCsvFileGeneratorSettingsDialog::filePath() const
 {
-  return leFilePath->text();
+  return wFileSettings->filePath();
+//   return leFilePath->text();
 }
 
 QByteArray mdtCsvFileGeneratorSettingsDialog::fileEncoding() const
 {
-  return cbFileEncoding->currentText().toLatin1();
+  return wFileSettings->fileEncoding();
+//   return cbFileEncoding->currentText().toLatin1();
 }
 
 void mdtCsvFileGeneratorSettingsDialog::setCsvSettings(const mdtCsvGeneratorSettings& settings)
@@ -78,24 +81,24 @@ mdtCsvGeneratorSettings mdtCsvFileGeneratorSettingsDialog::getCsvSettings() cons
   return wCsvSettings->getSettings();
 }
 
-void mdtCsvFileGeneratorSettingsDialog::selectFile()
-{
-  QFileDialog dialog(this);
-  QFileInfo fileInfo;
-
-  // Setup and show dialog
-  dialog.setAcceptMode(QFileDialog::AcceptSave);
-  if(!pvDefaultDirectory.isEmpty()){
-    dialog.setDirectory(pvDefaultDirectory);
-  }
-  dialog.setNameFilter(tr("CSV file (*.csv)"));
-  dialog.setFileMode(QFileDialog::AnyFile);
-  dialog.setOption(QFileDialog::DontConfirmOverwrite, false);
-  if(dialog.exec() != QDialog::Accepted){
-    return;
-  }
-  Q_ASSERT(dialog.selectedFiles().size() == 1);
-  fileInfo.setFile(dialog.selectedFiles().at(0));
-  // Store file path
-  leFilePath->setText(fileInfo.absoluteFilePath());
-}
+// void mdtCsvFileGeneratorSettingsDialog::selectFile()
+// {
+//   QFileDialog dialog(this);
+//   QFileInfo fileInfo;
+// 
+//   // Setup and show dialog
+//   dialog.setAcceptMode(QFileDialog::AcceptSave);
+//   if(!pvDefaultDirectory.isEmpty()){
+//     dialog.setDirectory(pvDefaultDirectory);
+//   }
+//   dialog.setNameFilter(tr("CSV file (*.csv)"));
+//   dialog.setFileMode(QFileDialog::AnyFile);
+//   dialog.setOption(QFileDialog::DontConfirmOverwrite, false);
+//   if(dialog.exec() != QDialog::Accepted){
+//     return;
+//   }
+//   Q_ASSERT(dialog.selectedFiles().size() == 1);
+//   fileInfo.setFile(dialog.selectedFiles().at(0));
+//   // Store file path
+//   leFilePath->setText(fileInfo.absoluteFilePath());
+// }
