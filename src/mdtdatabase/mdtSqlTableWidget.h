@@ -407,20 +407,20 @@ class mdtSqlTableWidget :  public QWidget
    * Will export visible fields to given CSV file,
    *  regarding sorting.
    */
-  bool exportToCsvFile(const QFileInfo & csvFile, const mdtCsvFileSettings & csvSettings, bool includeHeader)
-  {
-    return exportToCsvFile(csvFile, csvSettings, includeHeader, visibleColumns());
-  }
+//   bool exportToCsvFile(const QFileInfo & csvFile, const mdtCsvFileSettings & csvSettings, bool includeHeader)
+//   {
+//     return exportToCsvFile(csvFile, csvSettings, includeHeader, visibleColumns());
+//   }
 
   /*! \brief Export table to CSV file
    *
    * Will export given fields to given CSV file,
    *  regarding sorting.
    */
-  bool exportToCsvFile(const QFileInfo & csvFile, const mdtCsvFileSettings & csvSettings, bool includeHeader, const QStringList & fieldNames)
-  {
-    return exportToCsvFile(csvFile, csvSettings, includeHeader, columnsOfFieldNames(fieldNames));
-  }
+//   bool exportToCsvFile(const QFileInfo & csvFile, const mdtCsvFileSettings & csvSettings, bool includeHeader, const QStringList & fieldNames)
+//   {
+//     return exportToCsvFile(csvFile, csvSettings, includeHeader, columnsOfFieldNames(fieldNames));
+//   }
 
  signals:
 
@@ -439,6 +439,10 @@ class mdtSqlTableWidget :  public QWidget
   /*! \brief Refresh data
    */
   void refresh();
+
+  /*! \brief Export table to CSV file
+   */
+  void exportToCsvFile();
 
  private slots:
 
@@ -462,7 +466,7 @@ class mdtSqlTableWidget :  public QWidget
    * Will export given columns to given CSV file,
    *  regarding sorting.
    */
-  bool exportToCsvFile(const QFileInfo & csvFile, const mdtCsvFileSettings & csvSettings, bool includeHeader, const std::vector<int> & columns);
+//   bool exportToCsvFile(const QFileInfo & csvFile, const mdtCsvFileSettings & csvSettings, bool includeHeader, const std::vector<int> & columns);
 
   /*! \brief Get a list of visible columns
    */

@@ -50,7 +50,14 @@ void mdtCsvTableViewExportDialog::setView(QTableView* view)
 
 void mdtCsvTableViewExportDialog::exportToCsv()
 {
-  mdtCsvFileGenerator generator(wCsvSettings->getSettings());
+  auto csvSettings = wCsvSettings->getSettings();
+  if(!csvSettings.isValid()){
+    auto error = mdtErrorNewQ(tr("There is somthing wrong with CSV options."), mdtError::Warning, this);
+    error.setInformativeText(tr("Maybe you choosed same character for field separator and text protection ?"));
+    displayError(error);
+    return;
+  }
+  mdtCsvFileGenerator generator(csvSettings);
   QString csvFilePath;
 
   // Open target file

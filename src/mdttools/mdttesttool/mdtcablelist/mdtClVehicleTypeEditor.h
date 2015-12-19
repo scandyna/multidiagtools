@@ -68,7 +68,7 @@ class mdtClVehicleTypeEditor : public mdtSqlForm
 
   /*! \brief Export markins to CSV file
    */
-  void exportMarkingsToCsvFile();
+//   void exportMarkingsToCsvFile();
 
  private:
 

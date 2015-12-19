@@ -21,6 +21,7 @@
 #include "mdtSqlTableWidget.h"
 #include "mdtSortFilterProxyModel.h"
 #include "mdtUiMessageHandler.h"
+#include "mdtCsvTableViewExportDialog.h"
 #include <QTableView>
 #include <QBoxLayout>
 #include <QVBoxLayout>
@@ -98,7 +99,7 @@ mdtSqlTableWidget::mdtSqlTableWidget(QWidget *parent)
   QVBoxLayout *layout = new QVBoxLayout;
   pvTopHorizontalLayout = new QHBoxLayout;
   pvBottomHorizontalLayout = new QHBoxLayout;
-  QPushButton *pb = new QPushButton;
+  QPushButton *pb;
 
   // Setup table view
   pvTableView = new QTableView;
@@ -129,6 +130,12 @@ mdtSqlTableWidget::mdtSqlTableWidget(QWidget *parent)
   pb->setIcon(QIcon::fromTheme("edit-copy"));
   pb->setToolTip(tr("Copy all data to clipboard"));
   connect(pb, SIGNAL(clicked()), this, SLOT(copyTableToClipBoard()));
+  pvTopHorizontalLayout->addWidget(pb);
+  // Button to export to CSV file
+  pb = new QPushButton;
+  pb->setIcon(QIcon::fromTheme("x-office-spreadsheet"));
+  pb->setToolTip(tr("Save to CSV file"));
+  connect(pb, &QPushButton::clicked, this, &mdtSqlTableWidget::exportToCsvFile);
   pvTopHorizontalLayout->addWidget(pb);
   pvTopHorizontalLayout->addStretch();
   // Layouts
@@ -337,6 +344,15 @@ void mdtSqlTableWidget::refresh()
   }
 }
 
+void mdtSqlTableWidget::exportToCsvFile()
+{
+  Q_ASSERT(pvTableView != nullptr);
+
+  mdtCsvTableViewExportDialog dialog(this);
+  dialog.setView(pvTableView);
+  dialog.exec();
+}
+
 // void mdtSqlTableWidget::onTableViewKnownKeyPressed(int key)
 // {
 //   Q_ASSERT(pvTableView->selectionModel() != 0);
@@ -425,69 +441,69 @@ void mdtSqlTableWidget::copyTableToClipBoard()
   clipboard->setMimeData(mimeData);
 }
 
-bool mdtSqlTableWidget::exportToCsvFile(const QFileInfo & csvFile, const mdtCsvFileSettings & csvSettings, bool includeHeader, const std::vector<int> & columns)
-{
-  mdtCsvFile file;
-  QStringList lineData;
-  int row;
-
-  /// \todo Re-implement once data/CSV data/Optional, etc.. are ready
-  return false;
-//   // Do some checks on existing csvFile
-//   if(csvFile.exists()){
-//     if(!csvFile.isFile()){
-//       mdtError e(tr("Cannot export data as CSV to path") + "'" + csvFile.absolutePath() + "'" , mdtError::Error);
-//       e.setInformativeText(tr("Given path is not a file."));
-//       MDT_ERROR_SET_SRC(e, "mdtSqlTableWidget");
-//       e.commit();
-//       pvController->setLastError(e);
-//       return false;
-//     }
-//     if(!csvFile.isWritable()){
-//       mdtError e(tr("Cannot export data to CSV file") + "'" + csvFile.absoluteFilePath() + "'" , mdtError::Error);
-//       e.setInformativeText(tr("No write access to given file."));
-//       MDT_ERROR_SET_SRC(e, "mdtSqlTableWidget");
-//       e.commit();
-//       pvController->setLastError(e);
-//       return false;
-//     }
-//   }
-//   // Open CSV file
-//   file.setFileName(csvFile.absoluteFilePath());
-//   if(!file.open(QIODevice::WriteOnly)){
-//     mdtError e(tr("Cannot export data to CSV file") + "'" + csvFile.absoluteFilePath() + "'" , mdtError::Error);
-//     MDT_ERROR_SET_SRC(e, "mdtSqlTableWidget");
-//     e.commit();
-//     pvController->setLastError(e);
-//     return false;
-//   }
-//   // We call sort, so all data will be fetched (and sorted)
-//   sort();
-//   // Write header if requested
-//   if(includeHeader){
-//     lineData = pvController->headerRowDataStr(columns);
-//     if(!file.writeLine(lineData, csvSettings)){
-//       mdtError e(tr("Error occured while exporting data to CSV file") + "'" + csvFile.absoluteFilePath() + "'" , mdtError::Error);
-//       MDT_ERROR_SET_SRC(e, "mdtSqlTableWidget");
-//       e.commit();
-//       pvController->setLastError(e);
-//       return false;
-//     }
-//   }
-//   // Write data part
-//   for(row = 0; row < pvController->rowCount(false); ++row){
-//     lineData = pvController->rowDataStr(row, columns);
-//     if(!file.writeLine(lineData, csvSettings)){
-//       mdtError e(tr("Error occured while exporting data to CSV file") + "'" + csvFile.absoluteFilePath() + "'" , mdtError::Error);
-//       MDT_ERROR_SET_SRC(e, "mdtSqlTableWidget");
-//       e.commit();
-//       pvController->setLastError(e);
-//       return false;
-//     }
-//   }
+// bool mdtSqlTableWidget::exportToCsvFile(const QFileInfo & csvFile, const mdtCsvFileSettings & csvSettings, bool includeHeader, const std::vector<int> & columns)
+// {
+//   mdtCsvFile file;
+//   QStringList lineData;
+//   int row;
 // 
-//   return true;
-}
+//   /// \todo Re-implement once data/CSV data/Optional, etc.. are ready
+//   return false;
+// //   // Do some checks on existing csvFile
+// //   if(csvFile.exists()){
+// //     if(!csvFile.isFile()){
+// //       mdtError e(tr("Cannot export data as CSV to path") + "'" + csvFile.absolutePath() + "'" , mdtError::Error);
+// //       e.setInformativeText(tr("Given path is not a file."));
+// //       MDT_ERROR_SET_SRC(e, "mdtSqlTableWidget");
+// //       e.commit();
+// //       pvController->setLastError(e);
+// //       return false;
+// //     }
+// //     if(!csvFile.isWritable()){
+// //       mdtError e(tr("Cannot export data to CSV file") + "'" + csvFile.absoluteFilePath() + "'" , mdtError::Error);
+// //       e.setInformativeText(tr("No write access to given file."));
+// //       MDT_ERROR_SET_SRC(e, "mdtSqlTableWidget");
+// //       e.commit();
+// //       pvController->setLastError(e);
+// //       return false;
+// //     }
+// //   }
+// //   // Open CSV file
+// //   file.setFileName(csvFile.absoluteFilePath());
+// //   if(!file.open(QIODevice::WriteOnly)){
+// //     mdtError e(tr("Cannot export data to CSV file") + "'" + csvFile.absoluteFilePath() + "'" , mdtError::Error);
+// //     MDT_ERROR_SET_SRC(e, "mdtSqlTableWidget");
+// //     e.commit();
+// //     pvController->setLastError(e);
+// //     return false;
+// //   }
+// //   // We call sort, so all data will be fetched (and sorted)
+// //   sort();
+// //   // Write header if requested
+// //   if(includeHeader){
+// //     lineData = pvController->headerRowDataStr(columns);
+// //     if(!file.writeLine(lineData, csvSettings)){
+// //       mdtError e(tr("Error occured while exporting data to CSV file") + "'" + csvFile.absoluteFilePath() + "'" , mdtError::Error);
+// //       MDT_ERROR_SET_SRC(e, "mdtSqlTableWidget");
+// //       e.commit();
+// //       pvController->setLastError(e);
+// //       return false;
+// //     }
+// //   }
+// //   // Write data part
+// //   for(row = 0; row < pvController->rowCount(false); ++row){
+// //     lineData = pvController->rowDataStr(row, columns);
+// //     if(!file.writeLine(lineData, csvSettings)){
+// //       mdtError e(tr("Error occured while exporting data to CSV file") + "'" + csvFile.absoluteFilePath() + "'" , mdtError::Error);
+// //       MDT_ERROR_SET_SRC(e, "mdtSqlTableWidget");
+// //       e.commit();
+// //       pvController->setLastError(e);
+// //       return false;
+// //     }
+// //   }
+// // 
+// //   return true;
+// }
 
 vector<int> mdtSqlTableWidget::visibleColumns() const
 {

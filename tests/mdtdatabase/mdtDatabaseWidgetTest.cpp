@@ -4008,7 +4008,7 @@ void mdtDatabaseWidgetTest::sqlTableWidgetCsvExportTest()
   /*
    * Export to CSV file and check
    */
-  QVERIFY(sqlTableWidget->exportToCsvFile(csvFile, csvSettings, true));
+  ///QVERIFY(sqlTableWidget->exportToCsvFile(csvFile, csvSettings, true));
   // Build expected result
   expecetedCsvData  = "Id_PK,FirstName,Remarks,SomeValueDouble\r\n";
   expecetedCsvData += "1,Andy,,\r\n";

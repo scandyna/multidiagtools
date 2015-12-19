@@ -35,6 +35,7 @@ void mdtErrorDialog::setError(const mdtError & error)
 {
   setIconFromLevel(error.level());
   setText(error.text());
+  setInformativeText(error.informativeText());
 }
 
 void mdtErrorDialog::setIconFromLevel(mdtError::Level level)

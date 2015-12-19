@@ -26,6 +26,8 @@
 #include <QWidget>
 #include <string>
 
+class QComboBox;
+
 /*! \brief CSV generator settings widget
  */
 class mdtCsvGeneratorSettingsWidget : public QWidget, Ui::mdtCsvGeneratorSettingsWidget
@@ -55,6 +57,14 @@ class mdtCsvGeneratorSettingsWidget : public QWidget, Ui::mdtCsvGeneratorSetting
   mdtCsvGeneratorSettings getSettings() const;
 
  private:
+
+  /*! \brief Find a item data for current text of given combobox
+   */
+  QVariant findItemDataForItemText(QComboBox *cb) const;
+
+  /*! \brief Extract char in var
+   */
+  char getCharFromVariant(const QVariant & var) const;
 
   /*! \brief Select field seperator
    */

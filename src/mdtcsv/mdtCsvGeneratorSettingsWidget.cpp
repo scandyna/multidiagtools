@@ -68,6 +68,38 @@ mdtCsvGeneratorSettings mdtCsvGeneratorSettingsWidget::getSettings() const
   return settings;
 }
 
+QVariant mdtCsvGeneratorSettingsWidget::findItemDataForItemText(QComboBox* cb) const
+{
+  Q_ASSERT(cb != nullptr);
+
+  QVariant var;
+  int index = cb->findText(cb->currentText());
+  if(index < 0){
+    return var;
+  }
+  var = cb->itemData(index);
+
+  return var;
+}
+
+char mdtCsvGeneratorSettingsWidget::getCharFromVariant(const QVariant& var) const
+{
+  switch(var.type()){
+    case QVariant::Char:
+    case QVariant::Int:
+      return var.toChar().toLatin1();
+    case QVariant::String:
+    {
+      QString str = var.toString();
+      if(str.length() == 1){
+        return str.at(0).toLatin1();
+      }
+    }
+    default:
+      return '\0';
+  }
+}
+
 void mdtCsvGeneratorSettingsWidget::selectFieldSeparator(char sep)
 {
   // Try to find in existing items
@@ -86,21 +118,14 @@ char mdtCsvGeneratorSettingsWidget::getSelectedFieldSeparator() const
   char sep = '\0';
   QVariant var;
 
-  // Try to find in existing items
-  int index = cbFieldSeparator->currentIndex();
-  if(index >= 0){
-    var = cbFieldSeparator->itemData(index);
-  }
+  // Try to find existing item related to current displayed text
+  var = findItemDataForItemText(cbFieldSeparator);
+  // If we have a null item, the user defined his own separator
   if(var.isNull()){
-    // User defined separator
-    QString str = cbFieldSeparator->currentText();
-    if(str.size() == 1){
-      sep = str.at(0).toLatin1();
-    }
-  }else{
-    // Existing item
-    sep = var.toChar().toLatin1();
+    var = cbFieldSeparator->currentText();
   }
+  // Set sep
+  sep = getCharFromVariant(var);
 
   return sep;
 }
@@ -120,26 +145,19 @@ void mdtCsvGeneratorSettingsWidget::selectFieldProtection(char protection)
 
 char mdtCsvGeneratorSettingsWidget::getSelectedFieldProtection() const
 {
-  char protection = '\0';
+  char sep = '\0';
   QVariant var;
 
-  // Try to find in existing items
-  int index = cbFieldProtection->currentIndex();
-  if(index >= 0){
-    var = cbFieldProtection->itemData(index);
-  }
+  // Try to find existing item related to current displayed text
+  var = findItemDataForItemText(cbFieldProtection);
+  // If we have a null item, the user defined his own separator
   if(var.isNull()){
-    // User defined protection
-    QString str = cbFieldProtection->currentText();
-    if(str.size() == 1){
-      protection = str.at(0).toLatin1();
-    }
-  }else{
-    // Existing item
-    protection = var.toChar().toLatin1();
+    var = cbFieldProtection->currentText();
   }
+  // Set sep
+  sep = getCharFromVariant(var);
 
-  return protection;
+  return sep;
 }
 
 void mdtCsvGeneratorSettingsWidget::selectEol(const std::string & eol)
