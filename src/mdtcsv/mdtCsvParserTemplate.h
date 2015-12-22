@@ -28,6 +28,7 @@
 #include <iostream>
 
 #include "mdtError.h"
+#include "mdtExpected.h"
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
 #include <boost/spirit/include/qi.hpp>
@@ -251,7 +252,8 @@ class mdtCsvParserTemplate
 
   /*! \brief Read one line of CSV data
    */
-  mdtCsvRecord readLine(SourceIterator & first, const SourceIterator & last)
+
+  mdtExpected<mdtCsvRecord> readLine(SourceIterator & first, const SourceIterator & last)
   {
     Q_ASSERT(first != last);
 
@@ -262,13 +264,15 @@ class mdtCsvParserTemplate
     // Parse a line
     bool ok = boost::spirit::qi::parse(first, last, pvRecordRule, record.columnDataList);
     if(!ok){
-      record.setErrorOccured();
+//       record.setErrorOccured();
       first = last;
       /// Store error \todo Better message needed..
       QString msg = tr("Parsing error occured.");
-      pvLastError.setError(msg, mdtError::Error);
-      MDT_ERROR_SET_SRC(pvLastError, "mdtCsvParserTemplate");
-      pvLastError.commit();
+      auto error = mdtErrorNew(msg, mdtError::Error, "mdtCsvParserTemplate");
+      return error;
+//       pvLastError.setError(msg, mdtError::Error);
+//       MDT_ERROR_SET_SRC(pvLastError, "mdtCsvParserTemplate");
+//       pvLastError.commit();
       /// \todo Witch place should the error message be genarated ? F.ex. File parser should output file name..
     }
 
@@ -277,10 +281,10 @@ class mdtCsvParserTemplate
 
   /*! \brief Get last error
    */
-  mdtError lastError() const
-  {
-    return pvLastError;
-  }
+//   mdtError lastError() const
+//   {
+//     return pvLastError;
+//   }
 
  private:
 
@@ -301,7 +305,7 @@ class mdtCsvParserTemplate
   boost::spirit::qi::rule<SourceIterator, wchar_t()> pvAnychar;
   boost::spirit::qi::rule<SourceIterator, wchar_t()> pvChar;
   boost::spirit::qi::rule<SourceIterator, wchar_t()> pvSafechar;
-  mdtError pvLastError;
+//   mdtError pvLastError;
 };
 
 #endif // #ifndef MDT_CSV_PARSER_TEMPLATE_H

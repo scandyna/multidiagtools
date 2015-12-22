@@ -108,7 +108,7 @@ QSqlDatabase mdtSqlDatabaseCopierThread::createConnection(const QSqlDatabase & d
   QSqlDatabase db;
   QString cnn = mdtAlgorithms::generateString(6, QSqlDatabase::connectionNames());
   db = QSqlDatabase::addDatabase(dbInfo.driverName(), cnn);
-  
+
   db.setDatabaseName(dbInfo.databaseName());
   db.setHostName(dbInfo.hostName());
   db.setPort(dbInfo.port());

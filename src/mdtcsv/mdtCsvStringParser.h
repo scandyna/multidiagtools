@@ -22,6 +22,7 @@
 #define MDT_CSV_STRING_PARSER_H
 
 #include "mdtError.h"
+#include "mdtExpected.h"
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
 #include "mdtCsvStringParserIterator.h"
@@ -84,11 +85,11 @@ class mdtCsvStringParser
    *  Reading line by line can also
    *  save some memory.
    */
-  mdtCsvRecord readLine();
+  mdtExpected<mdtCsvRecord> readLine();
 
   /*! \brief Read the entire CSV string
    */
-  mdtCsvData readAll();
+  mdtExpected<mdtCsvData> readAll();
 
   /*! \brief Get last error
    */

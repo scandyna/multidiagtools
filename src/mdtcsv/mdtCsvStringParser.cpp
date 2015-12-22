@@ -46,29 +46,33 @@ bool mdtCsvStringParser::atEnd() const
   return (pvCurrentPosition == pvEnd);
 }
 
-mdtCsvRecord mdtCsvStringParser::readLine()
+mdtExpected<mdtCsvRecord> mdtCsvStringParser::readLine()
 {
-  mdtCsvRecord record;
-
-  record = pvImpl->readLine(pvCurrentPosition, pvEnd);
-  if(record.errorOccured()){
-    pvLastError = pvImpl->lastError();
-  }
-
-  return record;
+  return pvImpl->readLine(pvCurrentPosition, pvEnd);
+//   mdtCsvRecord record;
+// 
+//   record = pvImpl->readLine(pvCurrentPosition, pvEnd);
+//   if(record.errorOccured()){
+//     pvLastError = pvImpl->lastError();
+//   }
+// 
+//   return record;
 }
 
-mdtCsvData mdtCsvStringParser::readAll()
+mdtExpected<mdtCsvData> mdtCsvStringParser::readAll()
 {
   mdtCsvData data;
 
   while(!atEnd()){
     auto record = readLine();
-    if(record.errorOccured()){
-      data.setErrorOccured();
-      return data;
+    if(!record){
+      return record.error();
     }
-    data.addRecord(record);
+//     if(record.errorOccured()){
+//       data.setErrorOccured();
+//       return data;
+//     }
+    data.addRecord(record.value());
   }
 
   return data;

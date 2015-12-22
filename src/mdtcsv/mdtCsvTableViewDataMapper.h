@@ -69,6 +69,13 @@ class mdtCsvTableViewDataMapper
     return pvCurrentRow;
   }
 
+  /*! \brief Get a CSV record for horizontal header
+   *
+   * \note The CSV record is rebuilt at each call.
+   * \pre Table view must be set before.
+   */
+  mdtCsvRecord getHeaderRecord() const;
+
   /*! \brief Get a CSV record for current row
    *
    * \note The CSV record is rebuilt at each call.

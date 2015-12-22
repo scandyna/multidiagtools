@@ -150,7 +150,7 @@ char mdtCsvGeneratorSettingsWidget::getSelectedFieldProtection() const
 
   // Try to find existing item related to current displayed text
   var = findItemDataForItemText(cbFieldProtection);
-  // If we have a null item, the user defined his own separator
+  // If we have a null item, the user defined his own protection
   if(var.isNull()){
     var = cbFieldProtection->currentText();
   }

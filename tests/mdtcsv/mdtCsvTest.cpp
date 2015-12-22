@@ -28,6 +28,8 @@
 #include "mdtCsvFileGenerator.h"
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
+#include "mdtCsvStringInfo.h"
+#include "mdtCsvFileInfo.h"
 #include "mdtCsvRecordFormat.h"
 #include "mdtCsvGeneratorSettingsWidget.h"
 #include "mdtCsvFileGeneratorFileSettingsWidget.h"
@@ -289,13 +291,17 @@ void mdtCsvTest::dataTest()
 
 void mdtCsvTest::recordFormatTest()
 {
-  mdtCsvRecordFormat fmt(5);
+  mdtCsvRecordFormat fmt;
   mdtCsvRecord record;
 
   /*
    * Initial state
    */
-  QCOMPARE(fmt.fieldCount(), 5);
+  QCOMPARE(fmt.fieldCount(), 0);
+  /*
+   * Set fields count
+   */
+  fmt.setFieldCount(5);
   QVERIFY(fmt.fieldType(0) == QMetaType::UnknownType);
   QVERIFY(fmt.fieldType(1) == QMetaType::UnknownType);
   QVERIFY(fmt.fieldType(2) == QMetaType::UnknownType);
@@ -380,6 +386,49 @@ void mdtCsvTest::recordFormatTest()
   QCOMPARE(record.columnDataList.at(3), QVariant("2"));
   QCOMPARE(record.columnDataList.at(4), QVariant("3"));
 
+}
+
+void mdtCsvTest::csvStringInfoTest()
+{
+  mdtCsvStringInfo csvStringInfo;
+  mdtCsvParserSettings csvSettings;
+  mdtCsvRecordFormat csvFormat;
+  QString csvString;
+
+  /*
+   * Prepare CSV source string
+   */
+  csvString  = "ID,Name,Remark\n";
+  csvString += "1,Name 1,Remark 1\n";
+  /*
+   * Initial state
+   */
+  QCOMPARE(csvStringInfo.fieldCount(), 0);
+  /*
+   * Set source and check
+   */
+  
+}
+
+void mdtCsvTest::csvFileInfoTest()
+{
+  mdtCsvFileInfo csvFileInfo;
+  QTemporaryFile file;
+  
+
+  /*
+   * Prepare CSV file
+   */
+//   QVERIFY(file.open());
+//   QFileInfo fi(file);
+//   QVERIFY(file.write("ID,Name,Remark\n") > 0);
+//   QVERIFY(file.write("1,Name 1,Remark 1\n") > 0);
+//   file.close();
+//   /*
+//    * Check
+//    */
+//   QVERIFY(csvFileInfo.setFile(file.fileName()));
+  
 }
 
 void mdtCsvTest::csvStringParserIteratorTest()
@@ -493,7 +542,7 @@ void mdtCsvTest::stringParserReadLineTest()
   QFETCH(bool, expectedOk);
   QFETCH(mdtCsvParserSettings, csvSettings);
   mdtCsvStringParser parser(csvSettings);
-  mdtCsvRecord record;
+  mdtExpected<mdtCsvRecord> record;
   mdtCsvData data;
 
   /*
@@ -505,17 +554,21 @@ void mdtCsvTest::stringParserReadLineTest()
   // Parse line by line
   while(!parser.atEnd()){
     record = parser.readLine();
-    QVERIFY(record.errorOccured() == !expectedOk);
-    data.addRecord(record);
+    if(expectedOk){
+      QVERIFY(record.hasValue());
+    }else{
+      QVERIFY(record.hasError());
+    }
+    data.addRecord(record.value());
   }
   // Check
   QCOMPARE(data.recordCount(), expectedData.recordCount());
   for(int row = 0; row < data.recordCount(); ++row){
-    record = data.recordList.at(row);
+    auto rec = data.recordList.at(row);
     auto expectedRecord = expectedData.recordList.at(row);
-    QCOMPARE(record.count(), expectedRecord.count());
-    for(int col = 0; col < record.count(); ++col){
-      auto colData = record.columnDataList.at(col);
+    QCOMPARE(rec.count(), expectedRecord.count());
+    for(int col = 0; col < rec.count(); ++col){
+      auto colData = rec.columnDataList.at(col);
       auto expectedColData = expectedRecord.columnDataList.at(col);
       QCOMPARE(colData, expectedColData);
     }
@@ -535,7 +588,7 @@ void mdtCsvTest::stringParserReadAllTest()
   QFETCH(mdtCsvParserSettings, csvSettings);
   mdtCsvStringParser parser(csvSettings);
   mdtCsvRecord record;
-  mdtCsvData data;
+  mdtExpected<mdtCsvData> data;
 
   /*
    * Initial state
@@ -545,11 +598,17 @@ void mdtCsvTest::stringParserReadAllTest()
   parser.setSource(sourceData);
   // Parse the entires string
   data = parser.readAll();
-  QVERIFY(data.errorOccured() == !expectedOk);
+  if(expectedOk){
+    QVERIFY(data.hasValue());
+  }else{
+    QVERIFY(data.hasError());
+    return;
+  }
+  QVERIFY(data.hasValue());
   // Check
-  QCOMPARE(data.recordCount(), expectedData.recordCount());
-  for(int row = 0; row < data.recordCount(); ++row){
-    record = data.recordList.at(row);
+  QCOMPARE(data.value().recordCount(), expectedData.recordCount());
+  for(int row = 0; row < data.value().recordCount(); ++row){
+    record = data.value().recordList.at(row);
     auto expectedRecord = expectedData.recordList.at(row);
     QCOMPARE(record.count(), expectedRecord.count());
     for(int col = 0; col < record.count(); ++col){
@@ -938,7 +997,7 @@ void mdtCsvTest::csvFileParserTest()
   mdtCsvFileParser parser;
   QTemporaryFile file;
   QString str;
-  mdtCsvRecord record;
+  mdtExpected<mdtCsvRecord> record;
 
   QVERIFY(QTextCodec::codecForName("UTF-8") != nullptr);
   /*
@@ -966,15 +1025,15 @@ void mdtCsvTest::csvFileParserTest()
   // Read first line
   QVERIFY(!parser.atEnd());
   record = parser.readLine();
-  QVERIFY(!record.errorOccured());
-  QCOMPARE(record.count(), 1);
-  QCOMPARE(record.columnDataList.at(0), QVariant("ABCDE"));
+  QVERIFY(record.hasValue());
+  QCOMPARE(record.value().count(), 1);
+  QCOMPARE(record.value().columnDataList.at(0), QVariant("ABCDE"));
   // Read second line
   QVERIFY(!parser.atEnd());
   record = parser.readLine();
-  QVERIFY(!record.errorOccured());
-  QCOMPARE(record.count(), 1);
-  QCOMPARE(record.columnDataList.at(0), QVariant("1234"));
+  QVERIFY(record.hasValue());
+  QCOMPARE(record.value().count(), 1);
+  QCOMPARE(record.value().columnDataList.at(0), QVariant("1234"));
   QVERIFY(parser.atEnd());
 }
 
@@ -1008,9 +1067,13 @@ void mdtCsvTest::csvFileParserReadLineTest()
   QVERIFY(parser.openFile(file.fileName(), "UTF-8"));
   // Parse line by line
   while(!parser.atEnd()){
-    record = parser.readLine();
-    QVERIFY(record.errorOccured() == !expectedOk);
-    data.addRecord(record);
+    auto rec = parser.readLine();
+    if(expectedOk){
+      QVERIFY(rec.hasValue());
+      data.addRecord(rec.value());
+    }else{
+      QVERIFY(rec.hasError());
+    }
   }
   // Check
   QCOMPARE(data.recordCount(), expectedData.recordCount());
@@ -1061,8 +1124,13 @@ void mdtCsvTest::csvFileParserReadAllTest()
   // Setup CSV parser
   QVERIFY(parser.openFile(file.fileName(), "UTF-8"));
   // Parse file
-  data = parser.readAll();
-  QVERIFY(data.errorOccured() == !expectedOk);
+  auto exData = parser.readAll();
+  if(expectedOk){
+    QVERIFY(exData.hasValue());
+    data = exData.value();
+  }else{
+    QVERIFY(exData.hasError());
+  }
   // Check
   QCOMPARE(data.recordCount(), expectedData.recordCount());
   for(int row = 0; row < data.recordCount(); ++row){
@@ -1269,6 +1337,16 @@ void mdtCsvTest::csvTableViewDataMapperTest()
    */
   csvDataMapper.setView(&view);
   QCOMPARE(csvDataMapper.currentRow(), -1);
+  /*
+   * Check
+   */
+  // Get header record
+  csvRecord = csvDataMapper.getHeaderRecord();
+  QCOMPARE(csvRecord.columnDataList.size(), 4);
+  QCOMPARE(csvRecord.columnDataList.at(0), QVariant("1"));
+  QCOMPARE(csvRecord.columnDataList.at(1), QVariant("3"));
+  QCOMPARE(csvRecord.columnDataList.at(2), QVariant("2"));
+  QCOMPARE(csvRecord.columnDataList.at(3), QVariant("5"));
   // Go to first row
   QVERIFY(csvDataMapper.next());
   QCOMPARE(csvDataMapper.currentRow(), 0);
@@ -1334,6 +1412,16 @@ void mdtCsvTest::csvTableViewDataMapperTest()
   QCOMPARE(csvRecord.columnDataList.at(3), QVariant("H5"));
   // Now, next() must fail
   QVERIFY(!csvDataMapper.next());
+  // Reset and check that we can restart
+  csvDataMapper.reset();
+  QVERIFY(csvDataMapper.next());
+  QCOMPARE(csvDataMapper.currentRow(), 0);
+  csvRecord = csvDataMapper.getCurrentRecord();
+  QCOMPARE(csvRecord.columnDataList.size(), 4);
+  QCOMPARE(csvRecord.columnDataList.at(0), QVariant("A1"));
+  QCOMPARE(csvRecord.columnDataList.at(1), QVariant("A3"));
+  QCOMPARE(csvRecord.columnDataList.at(2), QVariant("A2"));
+  QCOMPARE(csvRecord.columnDataList.at(3), QVariant("A5"));
 
   /*
    * Play

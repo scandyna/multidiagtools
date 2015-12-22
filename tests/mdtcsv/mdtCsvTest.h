@@ -37,6 +37,8 @@ class mdtCsvTest : public mdtTest
   void recordTest();
   void dataTest();
   void recordFormatTest();
+  void csvStringInfoTest();
+  void csvFileInfoTest();
 
   void csvStringParserIteratorTest();
   void csvStringParserIteratorBenchmark();

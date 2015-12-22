@@ -79,6 +79,7 @@ void mdtCsvFileGeneratorFileSettingsWidget::selectFile()
   }
   dialog.setNameFilter(tr("CSV file (*.csv)"));
   dialog.setFileMode(QFileDialog::AnyFile);
+  dialog.setDefaultSuffix("csv");
   dialog.setOption(QFileDialog::DontConfirmOverwrite, false);
   if(dialog.exec() != QDialog::Accepted){
     return;

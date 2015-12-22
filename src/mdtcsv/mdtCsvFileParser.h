@@ -25,6 +25,7 @@
 #include "mdtCsvData.h"
 #include "mdtCsvFileParserIterator.h"
 #include "mdtError.h"
+#include "mdtExpected.h"
 #include <QString>
 #include <QByteArray>
 #include <QFile>
@@ -81,11 +82,11 @@ class mdtCsvFileParser
 
   /*! \brief Read one line in CSV file
    */
-  mdtCsvRecord readLine();
+  mdtExpected<mdtCsvRecord> readLine();
 
   /*! \brief Read the entire CSV file
    */
-  mdtCsvData readAll();
+  mdtExpected<mdtCsvData> readAll();
 
   /*! \brief Get last error
    */

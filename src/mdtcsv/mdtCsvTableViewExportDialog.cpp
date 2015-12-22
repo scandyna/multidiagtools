@@ -73,6 +73,13 @@ void mdtCsvTableViewExportDialog::exportToCsv()
   }
   // Proceed..
   pvMapper->reset();
+  // Write header
+  auto header = pvMapper->getHeaderRecord();
+  if(!generator.writeLine(header)){
+    displayError(generator.lastError());
+    return;
+  }
+  // Write data
   while(pvMapper->next()){
     auto record = pvMapper->getCurrentRecord();
     if(!generator.writeLine(record)){

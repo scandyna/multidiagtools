@@ -11,10 +11,8 @@ set (SOURCES_FILES
 
 # Output library
 add_library (mdterrorgui${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
-# target_link_libraries(mdterrorgui${MDTLIB_VERSION_SUFFIX} Qt5::Core)
-# target_link_libraries(mdterrorgui${MDTLIB_VERSION_SUFFIX} Qt5::Gui)
-# target_link_libraries(mdterrorgui${MDTLIB_VERSION_SUFFIX} Qt5::Widgets)
-target_link_libraries(mdterrorgui${MDTLIB_VERSION_SUFFIX} "qtsingleapplication${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdterrorgui${MDTLIB_VERSION_SUFFIX} Qt5::Widgets)
+target_link_libraries(mdterrorgui${MDTLIB_VERSION_SUFFIX} "mdterror${MDTLIB_VERSION_SUFFIX}")
 
 # Translations - We generate a .pro file, that simplify the usage of lupdate
 file(WRITE "${PROJECT_SOURCE_DIR}/../../translations/mdterrorgui.pro" "# Translations project file for lupdate/lrelease\n")

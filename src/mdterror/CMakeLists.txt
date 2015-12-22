@@ -16,7 +16,6 @@ set (SOURCES_FILES
 # Output library
 add_library (mdterror${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
 target_link_libraries(mdterror${MDTLIB_VERSION_SUFFIX} Qt5::Core)
-target_link_libraries(mdterror${MDTLIB_VERSION_SUFFIX} "qtsingleapplication${MDTLIB_VERSION_SUFFIX}")
 
 # Translations - We generate a .pro file, that simplify the usage of lupdate
 file(WRITE "${PROJECT_SOURCE_DIR}/../../translations/mdterror.pro" "# Translations project file for lupdate/lrelease\n")

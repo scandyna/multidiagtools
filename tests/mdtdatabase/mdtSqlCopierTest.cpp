@@ -608,7 +608,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingDialogTest()
   sourceTables << "Client_tbl" << "Client2_tbl";
   dialog.setSourceTables(pvDatabase, sourceTables);
   dialog.setMapping(mapping);
-  //dialog.exec();
+  dialog.exec();
 }
 
 void mdtSqlCopierTest::sqlDatabaseCopierMappingTest()

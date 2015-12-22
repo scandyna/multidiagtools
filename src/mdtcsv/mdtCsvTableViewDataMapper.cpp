@@ -26,6 +26,8 @@
 #include <QVariant>
 #include <QString>
 
+///#include <QSqlQueryModel>
+
 mdtCsvTableViewDataMapper::mdtCsvTableViewDataMapper()
  : pvCurrentRow(-1)
 {
@@ -74,6 +76,27 @@ bool mdtCsvTableViewDataMapper::next()
   }
 
   return true;
+}
+
+mdtCsvRecord mdtCsvTableViewDataMapper::getHeaderRecord() const
+{
+  Q_ASSERT(pvView != nullptr);
+
+  mdtCsvRecord record;
+  auto *model = pvView->model();
+  Q_ASSERT(model != nullptr);
+  auto *hHeader = pvView->horizontalHeader();
+  Q_ASSERT(hHeader != nullptr);
+
+  record.columnDataList.reserve(model->columnCount());
+  for(int col = 0; col < model->columnCount(); ++col){
+    if(pvView->isColumnHidden(col)){
+      continue;
+    }
+    record.columnDataList.append(model->headerData(hHeader->logicalIndex(col), Qt::Horizontal));
+  }
+
+  return record;
 }
 
 mdtCsvRecord mdtCsvTableViewDataMapper::getCurrentRecord() const

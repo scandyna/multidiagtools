@@ -21,6 +21,12 @@
 #include "mdtCsvRecordFormat.h"
 #include <QObject>
 
+void mdtCsvRecordFormat::setFieldCount(int fieldCount)
+{
+  pvFieldTypes.clear();
+  pvFieldTypes.resize(fieldCount);
+}
+
 bool mdtCsvRecordFormat::formatRecord(mdtCsvRecord& record)
 {
   Q_ASSERT(record.count() == fieldCount());

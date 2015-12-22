@@ -46,8 +46,9 @@ bool mdtCsvFileParser::openFile(const QFileInfo & fileInfo, const QByteArray & e
     QString msg = tr("Could not open file '") + fileInfo.fileName() + tr("'\n") \
                   + tr("Directory: '") + fileInfo.dir().absolutePath() + tr("'");
     pvLastError.setError(msg, mdtError::Error);
-    pvLastError.setSystemError(0, pvFile.errorString());
     MDT_ERROR_SET_SRC(pvLastError, "mdtCsvFileParserIteratorSharedData");
+    auto sysError = mdtErrorNewT(QFileDevice::FileError, pvFile.error(), pvFile.errorString(), mdtError::Error, "mdtCsvFileParser");
+    pvLastError.stackError(sysError);
     pvLastError.commit();
     return false;
   }
@@ -71,38 +72,47 @@ bool mdtCsvFileParser::atEnd() const
   return pvFileIterator.isEof();
 }
 
-mdtCsvRecord mdtCsvFileParser::readLine()
+mdtExpected<mdtCsvRecord> mdtCsvFileParser::readLine()
 {
-  mdtCsvRecord record;
+  mdtExpected<mdtCsvRecord> record;
 
   // Create multi pass iterators
   auto first = mdtCsvFileParserMultiPassIterator(pvFileIterator);
   auto last = mdtCsvFileParserMultiPassIterator(mdtCsvFileParserIterator());
   // Parse a line
   record = pvParser->readLine(first, last);
-  if(record.errorOccured()){
+  if(!record){
     // Maybe a error on file
     if(pvFileIterator.errorOccured()){
-      pvLastError = pvFileIterator.lastError();
-    }else{
-      pvLastError = pvParser->lastError();
+      record.error().stackError(pvFileIterator.lastError());
     }
   }
+//   if(record.errorOccured()){
+//     // Maybe a error on file
+//     if(pvFileIterator.errorOccured()){
+//       pvLastError = pvFileIterator.lastError();
+//     }else{
+//       pvLastError = pvParser->lastError();
+//     }
+//   }
 
   return record;
 }
 
-mdtCsvData mdtCsvFileParser::readAll()
+mdtExpected<mdtCsvData> mdtCsvFileParser::readAll()
 {
   mdtCsvData data;
 
   while(!atEnd()){
     auto record = readLine();
-    if(record.errorOccured()){
-      data.setErrorOccured();
-      return data;
+    if(!record){
+      return record.error();
     }
-    data.addRecord(record);
+//     if(record.errorOccured()){
+//       data.setErrorOccured();
+//       return data;
+//     }
+    data.addRecord(record.value());
   }
 
   return data;

@@ -10,6 +10,9 @@ set (SOURCES_FILES
           mdtCsvFileParser.cpp
           mdtCsvStringGenerator.cpp
           mdtCsvFileGenerator.cpp
+          mdtCsvSourceInfo.cpp
+          mdtCsvStringInfo.cpp
+          mdtCsvFileInfo.cpp
           mdtCsvRecordFormat.cpp
           mdtCsvGeneratorSettingsWidget.cpp
           mdtCsvFileGeneratorFileSettingsWidget.cpp
@@ -21,8 +24,8 @@ set (SOURCES_FILES
 
 # Output library
 add_library (mdtcsv${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
-target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} Qt5::Core)
-target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} "qtsingleapplication${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} Qt5::Widgets)
+#target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} Qt5::Sql)
 target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} "mdterror${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
 

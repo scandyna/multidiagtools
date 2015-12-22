@@ -33,6 +33,14 @@ class mdtCsvRecordFormat
 {
  public:
 
+  /*! \brief Default construct
+   *
+   * Create a empty mdtCsvRecordFormat.
+   */
+  mdtCsvRecordFormat()
+  {
+  }
+
   /*! \brief Constructor
    *
    * Create a mdtCsvRecordFormat for fieldCount fields.
@@ -42,6 +50,12 @@ class mdtCsvRecordFormat
    : pvFieldTypes(fieldCount, QMetaType::UnknownType)
   {
   }
+
+  /*! \brief Set field count
+   *
+   * No format is assigned to the fields
+   */
+  void setFieldCount(int fieldCount);
 
   /*! \brief Get field count
    */
