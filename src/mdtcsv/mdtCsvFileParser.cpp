@@ -87,14 +87,6 @@ mdtExpected<mdtCsvRecord> mdtCsvFileParser::readLine()
       record.error().stackError(pvFileIterator.lastError());
     }
   }
-//   if(record.errorOccured()){
-//     // Maybe a error on file
-//     if(pvFileIterator.errorOccured()){
-//       pvLastError = pvFileIterator.lastError();
-//     }else{
-//       pvLastError = pvParser->lastError();
-//     }
-//   }
 
   return record;
 }
@@ -108,10 +100,6 @@ mdtExpected<mdtCsvData> mdtCsvFileParser::readAll()
     if(!record){
       return record.error();
     }
-//     if(record.errorOccured()){
-//       data.setErrorOccured();
-//       return data;
-//     }
     data.addRecord(record.value());
   }
 

@@ -49,14 +49,6 @@ bool mdtCsvStringParser::atEnd() const
 mdtExpected<mdtCsvRecord> mdtCsvStringParser::readLine()
 {
   return pvImpl->readLine(pvCurrentPosition, pvEnd);
-//   mdtCsvRecord record;
-// 
-//   record = pvImpl->readLine(pvCurrentPosition, pvEnd);
-//   if(record.errorOccured()){
-//     pvLastError = pvImpl->lastError();
-//   }
-// 
-//   return record;
 }
 
 mdtExpected<mdtCsvData> mdtCsvStringParser::readAll()
@@ -68,10 +60,6 @@ mdtExpected<mdtCsvData> mdtCsvStringParser::readAll()
     if(!record){
       return record.error();
     }
-//     if(record.errorOccured()){
-//       data.setErrorOccured();
-//       return data;
-//     }
     data.addRecord(record.value());
   }
 

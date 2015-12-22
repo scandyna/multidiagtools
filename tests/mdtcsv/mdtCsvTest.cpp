@@ -247,20 +247,16 @@ void mdtCsvTest::recordTest()
   /*
    * Initial state
    */
-  QVERIFY(!record.errorOccured());
   QCOMPARE(record.count(), 0);
   /*
    * Set
    */
-  record.setErrorOccured();
-  QVERIFY(record.errorOccured());
   record.columnDataList.append("A");
   QCOMPARE(record.count(), 1);
   /*
    * Clear
    */
   record.clear();
-  QVERIFY(!record.errorOccured());
   QCOMPARE(record.count(), 0);
 }
 
@@ -273,20 +269,16 @@ void mdtCsvTest::dataTest()
    * Initial state
    */
   QCOMPARE(data.recordCount(), 0);
-  QVERIFY(!data.errorOccured());
   /*
    * Set
    */
   data.addRecord(record);
   QCOMPARE(data.recordCount(), 1);
-  data.setErrorOccured();
-  QVERIFY(data.errorOccured());
   /*
    * Clear
    */
   data.clear();
   QCOMPARE(data.recordCount(), 0);
-  QVERIFY(!data.errorOccured());
 }
 
 void mdtCsvTest::recordFormatTest()
