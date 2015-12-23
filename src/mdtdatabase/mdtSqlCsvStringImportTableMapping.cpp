@@ -18,44 +18,14 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtCsvSourceInfo.h"
-#include <QLatin1String>
+#include "mdtSqlCsvStringImportTableMapping.h"
 
-void mdtCsvSourceInfo::setFormat(const mdtCsvRecordFormat& format)
+bool mdtSqlCsvStringImportTableMapping::setSourceCsvString(const QString & csv, const mdtCsvParserSettings & settings)
 {
-  Q_ASSERT(format.fieldCount() == pvHeader.count());
-  pvRecordFormat = format;
-}
-
-void mdtCsvSourceInfo::setSourceName(const QString & name)
-{
-  pvSourceName = name;
-}
-
-void mdtCsvSourceInfo::setHeader(const mdtCsvRecord & hdr)
-{
-  pvHeader = hdr;
-}
-
-int mdtCsvSourceInfo::fieldIndex(const QString & name) const
-{
-  return pvHeader.columnDataList.indexOf(name);
-}
-
-QString mdtCsvSourceInfo::fieldTypeName(int index) const
-{
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < pvRecordFormat.fieldCount());
-
-  auto type = pvRecordFormat.fieldType(index);
-  switch(type){
-    case QMetaType::QString:
-      return QLatin1String("String");
-    case QMetaType::Bool:
-      return QLatin1String("Boolean");
-    case QMetaType::Int:
-      return QLatin1String("Integer");
-    default:
-      return QMetaType::typeName(type);
+  auto ret = pvSourceTable.setSource(csv, settings);
+  if(!ret){
+    pvLastError = ret.error();
+    return false;
   }
+  return true;
 }

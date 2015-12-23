@@ -4,28 +4,21 @@ diagrams
   classdiagram_ref 1809282 // sqlCopierTableMapping
     120 106 100 4 0 0
   classdiagram_ref 1809154 // sqlCsvImportTableMapping
-    120 106 100 4 12 0
-  classdiagram_ref 1815938 // csvFileInfo
+    120 106 100 4 240 0
+  active  classdiagram_ref 1815938 // csvSourceInfo
     869 911 90 18 0 0
   classdiagram_ref 1596162 // SqlDatabaseCopierTableMapping
     120 106 100 4 0 0
-  classdiagram_ref 1809410 // sqlDatabaseCopierTableMappingModel
-    120 106 100 4 0 0
-  active  classdiagram_ref 1829122 // mdtSqlCopierTableMappingModel
-    869 911 100 4 0 0
 end
 show_stereotypes
-selected attribute_ref 2205058 // LastError
+selected classdiagram_ref 1815938 // csvSourceInfo
 open
   class_ref 2180738 // mdtCsvSourceInfo
-  operation_ref 3324546 // destinationTableName
-  operation_ref 3324802 // generateFieldMappingByName
-  attribute_ref 2205058 // LastError
-  class_ref 1941122 // mdtSqlDatabaseCopierThread
+  classview_ref 807426 // ImportExportCopy
+  classview_ref 893954 // sqlDatabaseCopy
   attribute_ref 2191234 // DestinationTable
+  operation_ref 3309186 // generateFieldMappingByName
   class_ref 2200578 // mdtSqlCsvStringImportTableMapping
-  operation_ref 3323138 // sourceTableName
-  operation_ref 3323266 // sourceFieldName
-  operation_ref 3323394 // sourceFieldTypeName
+  class_ref 2200706 // mdtSqlCsvFileImportTableMapping
 end
 end

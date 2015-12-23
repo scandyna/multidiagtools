@@ -39,7 +39,7 @@ set (SOURCES_FILES
           mdtSqlForeignKeySetting.cpp
           
           # CSV data conversion
-          mdtCsvSqlData.cpp
+          mdtSqlCsvData.cpp
           # Database schema
           mdtSqlDatabaseSchema.cpp
           mdtSqlDatabaseSchemaModel.cpp
@@ -68,6 +68,9 @@ set (SOURCES_FILES
           mdtSqlDatabaseCopierMappingModel.cpp
           mdtSqlDatabaseCopierDialog.cpp
           mdtSqlDatabaseCopierThread.cpp
+          # CSV import classes
+          mdtSqlCsvImportTableMapping.cpp
+          mdtSqlCsvStringImportTableMapping.cpp
     )
 
 # Platform specific files

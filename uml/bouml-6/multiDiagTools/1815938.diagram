@@ -6,28 +6,28 @@ classcanvas 128002 class_ref 2180738 // mdtCsvSourceInfo
 end
 classcanvas 128130 class_ref 2180610 // mdtSqlCsvImportTableMapping
   classdiagramsettings member_max_width 0 end
-  xyz 578.8 66.6 2000
+  xyz 580 66.8 2000
 end
 classcanvas 128258 class_ref 2187266 // mdtCsvStringInfo
   classdiagramsettings member_max_width 0 end
-  xyz -2.1 400.2 2000
+  xyz -2.9 400.2 2000
 end
 classcanvas 128386 class_ref 2187394 // mdtCsvFileInfo
   classdiagramsettings member_max_width 0 end
-  xyz 443 399.8 2000
+  xyz 443 400 2000
 end
 relationcanvas 128514 relation_ref 2478210 // <generalisation>
   geometry VHV
-  from ref 128258 z 2001 to point 211.4 334.8
-  line 128770 z 2001 to point 425.6 334.8
+  from ref 128258 z 2001 to point 211.2 335.8
+  line 128770 z 2001 to point 425.8 335.8
   line 128898 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128642 relation_ref 2478338 // <generalisation>
   geometry VHV
-  from ref 128386 z 2001 to point 727.2 332.2
-  line 129026 z 2001 to point 425.6 332.2
+  from ref 128386 z 2001 to point 727.6 334.4
+  line 129026 z 2001 to point 425.8 334.4
   line 129154 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

@@ -419,10 +419,25 @@ void mdtCsvTest::csvStringInfoTest()
   QCOMPARE(csvStringInfo.fieldName(0), QString("ID"));
   QCOMPARE(csvStringInfo.fieldName(1), QString("Name"));
   QCOMPARE(csvStringInfo.fieldName(2), QString("Remark"));
+  // Check field index
+  QCOMPARE(csvStringInfo.fieldIndex("ID"), 0);
+  QCOMPARE(csvStringInfo.fieldIndex("Name"), 1);
+  QCOMPARE(csvStringInfo.fieldIndex("Remark"), 2);
+  QCOMPARE(csvStringInfo.fieldIndex("NotExisting"), -1);
+  // Check field type - By default, all are String
+  QVERIFY(csvStringInfo.fieldType(0) == QMetaType::QString);
+  QVERIFY(csvStringInfo.fieldType(1) == QMetaType::QString);
+  QVERIFY(csvStringInfo.fieldType(2) == QMetaType::QString);
   // Check field type names - By default, all are String
   QCOMPARE(csvStringInfo.fieldTypeName(0), QString("String"));
   QCOMPARE(csvStringInfo.fieldTypeName(1), QString("String"));
   QCOMPARE(csvStringInfo.fieldTypeName(2), QString("String"));
+  // Check updating a field type
+  csvStringInfo.setFieldType(1, QMetaType::Int);
+  QVERIFY(csvStringInfo.fieldType(0) == QMetaType::QString);
+  QVERIFY(csvStringInfo.fieldType(1) == QMetaType::Int);
+  QVERIFY(csvStringInfo.fieldType(2) == QMetaType::QString);
+
 }
 
 void mdtCsvTest::csvFileInfoTest()
@@ -450,6 +465,11 @@ void mdtCsvTest::csvFileInfoTest()
   QCOMPARE(csvFileInfo.fieldName(0), QString("ID"));
   QCOMPARE(csvFileInfo.fieldName(1), QString("Name"));
   QCOMPARE(csvFileInfo.fieldName(2), QString("Remark"));
+  // Check field index
+  QCOMPARE(csvFileInfo.fieldIndex("ID"), 0);
+  QCOMPARE(csvFileInfo.fieldIndex("Name"), 1);
+  QCOMPARE(csvFileInfo.fieldIndex("Remark"), 2);
+  QCOMPARE(csvFileInfo.fieldIndex("NotExisting"), -1);
   // Check field type names - By default, all are String
   QCOMPARE(csvFileInfo.fieldTypeName(0), QString("String"));
   QCOMPARE(csvFileInfo.fieldTypeName(1), QString("String"));

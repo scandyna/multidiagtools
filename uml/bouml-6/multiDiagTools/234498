@@ -1,6 +1,6 @@
 format 210
 "mdtdatabase" // mdtdatabase
-  revision 90
+  revision 91
   modified_by 2 "philippe"
   // class settings
   
@@ -7651,7 +7651,7 @@ ${inlines}
       end
 
       operation 3307522 "generateFieldMappingByName"
-	abstract cpp_virtual protected explicit_return_type "void"
+	abstract cpp_virtual public explicit_return_type "void"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -8786,7 +8786,7 @@ ${inlines}
     end
 
     class 2180610 "mdtSqlCsvImportTableMapping"
-      visibility package 
+      abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -8881,8 +8881,8 @@ ${inlines}
 	
       end
 
-      operation 3309058 "resetFieldMapping"
-	cpp_virtual private explicit_return_type "void"
+      operation 3309186 "generateFieldMappingByName"
+	cpp_virtual public explicit_return_type "void"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -8896,20 +8896,17 @@ ${inlines}
 	
       end
 
-      operation 3309186 "generateFieldMappingByName"
-	cpp_virtual private explicit_return_type "void"
+      operation 3331458 "csvSourceInfo"
+	abstract cpp_virtual protected return_type class_ref 2180738 // mdtCsvSourceInfo
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
 "
 	
 	
 	
 	
       end
+
     end
 
     class 2200578 "mdtSqlCsvStringImportTableMapping"
@@ -8946,44 +8943,12 @@ ${inlines}
 	MysqlColumn
       end
 
-      operation 3308290 "sourceTableName"
-	cpp_virtual public return_type class_ref 161026 // QString
+      operation 3331586 "csvSourceInfo"
+	cpp_virtual protected return_type class_ref 2180738 // mdtCsvSourceInfo
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3308546 "sourceFieldName"
-	cpp_virtual public return_type class_ref 161026 // QString
-	nparams 1
-	  param in name "index" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3308674 "sourceFieldTypeName"
-	cpp_virtual public return_type class_ref 161026 // QString
-	nparams 1
-	  param in name "index" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -9028,44 +8993,12 @@ ${inlines}
 	MysqlColumn
       end
 
-      operation 3323138 "sourceTableName"
-	cpp_virtual public return_type class_ref 161026 // QString
+      operation 3331714 "csvSourceInfo"
+	cpp_virtual protected return_type class_ref 2180738 // mdtCsvSourceInfo
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3323266 "sourceFieldName"
-	cpp_virtual public return_type class_ref 161026 // QString
-	nparams 1
-	  param in name "index" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3323394 "sourceFieldTypeName"
-	cpp_virtual public return_type class_ref 161026 // QString
-	nparams 1
-	  param in name "index" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "

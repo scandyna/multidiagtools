@@ -37,6 +37,13 @@ class mdtCsvSourceInfo
    */
   void setFormat(const mdtCsvRecordFormat & format);
 
+  /*! \brief Get format
+   */
+  mdtCsvRecordFormat format() const
+  {
+    return pvRecordFormat;
+  }
+
   /*! \brief Set source name
    */
   void setSourceName(const QString & name);
@@ -64,6 +71,34 @@ class mdtCsvSourceInfo
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < pvHeader.count());
     return pvHeader.columnDataList.at(index).toString();
+  }
+
+  /*! \brief Get index of given field name
+   *
+   * Returns -1 if field not exists
+   */
+  int fieldIndex(const QString & name) const;
+
+  /*! \brief Set field type
+   *
+   * \pre index must be in valid range
+   */
+  void setFieldType(int index, QMetaType::Type type)
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < pvRecordFormat.fieldCount());
+    pvRecordFormat.setFieldType(index, type);
+  }
+
+  /*! \brief Get field type
+   *
+   * \pre index must be in valid range
+   */
+  QMetaType::Type fieldType(int index) const
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < pvRecordFormat.fieldCount());
+    return pvRecordFormat.fieldType(index);
   }
 
   /*! \brief Get (user friendly) field type name

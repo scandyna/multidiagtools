@@ -18,44 +18,43 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtCsvSourceInfo.h"
-#include <QLatin1String>
+#ifndef MDT_SQL_CSV_STRING_IMPORT_TABLE_MAPPING_H
+#define MDT_SQL_CSV_STRING_IMPORT_TABLE_MAPPING_H
 
-void mdtCsvSourceInfo::setFormat(const mdtCsvRecordFormat& format)
+#include "mdtSqlCsvImportTableMapping.h"
+#include "mdtCsvStringInfo.h"
+
+/*! \brief Table mapping for SQL CSV string import
+ */
+class mdtSqlCsvStringImportTableMapping : public mdtSqlCsvImportTableMapping
 {
-  Q_ASSERT(format.fieldCount() == pvHeader.count());
-  pvRecordFormat = format;
-}
+ public:
 
-void mdtCsvSourceInfo::setSourceName(const QString & name)
-{
-  pvSourceName = name;
-}
+  /*! \brief Set source CSV string
+   *
+   * Will also reset field mapping.
+   *
+   * \sa resetFieldMapping()
+   */
+  bool setSourceCsvString(const QString & csv, const mdtCsvParserSettings & settings);
 
-void mdtCsvSourceInfo::setHeader(const mdtCsvRecord & hdr)
-{
-  pvHeader = hdr;
-}
+ private:
 
-int mdtCsvSourceInfo::fieldIndex(const QString & name) const
-{
-  return pvHeader.columnDataList.indexOf(name);
-}
-
-QString mdtCsvSourceInfo::fieldTypeName(int index) const
-{
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < pvRecordFormat.fieldCount());
-
-  auto type = pvRecordFormat.fieldType(index);
-  switch(type){
-    case QMetaType::QString:
-      return QLatin1String("String");
-    case QMetaType::Bool:
-      return QLatin1String("Boolean");
-    case QMetaType::Int:
-      return QLatin1String("Integer");
-    default:
-      return QMetaType::typeName(type);
+  /*! \brief Reference CSV source info
+   */
+  mdtCsvSourceInfo & sourceTable()
+  {
+    return pvSourceTable;
   }
-}
+
+  /*! \brief Reference CSV source info (read only)
+   */
+  const mdtCsvSourceInfo & sourceTable() const
+  {
+    return pvSourceTable;
+  }
+
+  mdtCsvStringInfo pvSourceTable;
+};
+
+#endif // #ifndef MDT_SQL_CSV_STRING_IMPORT_TABLE_MAPPING_H

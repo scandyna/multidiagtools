@@ -1,6 +1,6 @@
 format 210
 "mdtcsv" // mdtcsv
-  revision 12
+  revision 13
   modified_by 2 "philippe"
   // class settings
   
@@ -347,7 +347,7 @@ ${inlines}
       end
     end
 
-    classdiagram 1815938 "csvFileInfo"
+    classdiagram 1815938 "csvSourceInfo"
       classdiagramsettings member_max_width 0 end
       size A4-Landscape
     end

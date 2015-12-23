@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtCsvSqlTest.h"
-#include "mdtCsvSqlData.h"
+#include "mdtSqlCsvTest.h"
+#include "mdtSqlCsvData.h"
 #include "mdtCsvData.h"
 #include "mdtCsvRecordFormat.h"
 #include "mdtApplication.h"
@@ -36,7 +36,20 @@
 
 #include <QDebug>
 
-void mdtCsvSqlTest::csvSqlRecordFormatTest()
+void mdtSqlCsvTest::fieldFormatTest()
+{
+  QVERIFY(mdtSqlCsvData::csvFieldTypeFromMdtSqlFieldType(mdtSqlFieldType::UnknownType) == QMetaType::UnknownType);
+  QVERIFY(mdtSqlCsvData::csvFieldTypeFromMdtSqlFieldType(mdtSqlFieldType::Boolean) == QMetaType::Bool);
+  QVERIFY(mdtSqlCsvData::csvFieldTypeFromMdtSqlFieldType(mdtSqlFieldType::Integer) == QMetaType::Int);
+  QVERIFY(mdtSqlCsvData::csvFieldTypeFromMdtSqlFieldType(mdtSqlFieldType::Float) == QMetaType::Float);
+  QVERIFY(mdtSqlCsvData::csvFieldTypeFromMdtSqlFieldType(mdtSqlFieldType::Double) == QMetaType::Double);
+  QVERIFY(mdtSqlCsvData::csvFieldTypeFromMdtSqlFieldType(mdtSqlFieldType::Varchar) == QMetaType::QString);
+  QVERIFY(mdtSqlCsvData::csvFieldTypeFromMdtSqlFieldType(mdtSqlFieldType::Date) == QMetaType::QDate);
+  QVERIFY(mdtSqlCsvData::csvFieldTypeFromMdtSqlFieldType(mdtSqlFieldType::Time) == QMetaType::QTime);
+  QVERIFY(mdtSqlCsvData::csvFieldTypeFromMdtSqlFieldType(mdtSqlFieldType::DateTime) == QMetaType::QDateTime);
+}
+
+void mdtSqlCsvTest::csvSqlRecordFormatTest()
 {
   QSqlRecord sqlRecord;
 
@@ -45,13 +58,13 @@ void mdtCsvSqlTest::csvSqlRecordFormatTest()
   sqlRecord.append(QSqlField("Id_PK", QVariant::Int));
   sqlRecord.append(QSqlField("Name", QVariant::String));
   // Get format and check
-  mdtCsvRecordFormat fmt = mdtCsvSqlData::recordFormatFromQsqlRecord(sqlRecord);
+  mdtCsvRecordFormat fmt = mdtSqlCsvData::csvRecordFormatFromQsqlRecord(sqlRecord);
   QCOMPARE(fmt.fieldCount(), sqlRecord.count());
   QVERIFY(fmt.fieldType(0) == QMetaType::Int);
   QVERIFY(fmt.fieldType(1) == QMetaType::QString);
 }
 
-void mdtCsvSqlTest::csvSqlRecordTest()
+void mdtSqlCsvTest::csvSqlRecordTest()
 {
   QSqlRecord sqlRecord;
   mdtCsvRecord csvRecord;
@@ -68,7 +81,7 @@ void mdtCsvSqlTest::csvSqlRecordTest()
   Name.setValue("Some name");
   sqlRecord.append(Name);
   // Get CSV record and check
-  csvRecord = mdtCsvSqlData::recordFromQsqlRecord(sqlRecord);
+  csvRecord = mdtSqlCsvData::csvRecordFromQsqlRecord(sqlRecord);
   QCOMPARE(csvRecord.count(), sqlRecord.count());
   QCOMPARE(csvRecord.columnDataList.at(0).type(), QVariant::Int);
   QCOMPARE(csvRecord.columnDataList.at(0), QVariant(1));
@@ -81,7 +94,7 @@ void mdtCsvSqlTest::csvSqlRecordTest()
   csvRecord.clear();
   csvRecord.columnDataList << "25" << "Another name";
   // Fill SQL record and check
-  QVERIFY(mdtCsvSqlData::fillQSqlRecord(sqlRecord, csvRecord));
+  QVERIFY(mdtSqlCsvData::fillQSqlRecord(sqlRecord, csvRecord));
   QVERIFY(sqlRecord.field(0).type() == QVariant::Int);
   QCOMPARE(sqlRecord.value(0), QVariant(25));
   QVERIFY(sqlRecord.field(1).type() == QVariant::String);
@@ -89,7 +102,7 @@ void mdtCsvSqlTest::csvSqlRecordTest()
   // Check also with data that are not convertible
   csvRecord.clear();
   csvRecord.columnDataList << "Non integral" << "Another name 2";
-  QVERIFY(!mdtCsvSqlData::fillQSqlRecord(sqlRecord, csvRecord));
+  QVERIFY(!mdtSqlCsvData::fillQSqlRecord(sqlRecord, csvRecord));
   // Also check that SQL record was not touched
   QCOMPARE(sqlRecord.value(0), QVariant(25));
   QCOMPARE(sqlRecord.value(1), QVariant("Another name"));
@@ -102,11 +115,11 @@ void mdtCsvSqlTest::csvSqlRecordTest()
 int main(int argc, char **argv)
 {
   mdtApplication app(argc, argv);
-  mdtCsvSqlTest csvSqlTest;
+  mdtSqlCsvTest test;
 
   if(!app.init()){
     return 1;
   }
 
-  return QTest::qExec(&csvSqlTest, argc, argv);
+  return QTest::qExec(&test, argc, argv);
 }

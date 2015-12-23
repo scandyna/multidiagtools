@@ -250,8 +250,8 @@ add_test (mdtStateMachineTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtstat
 
 # mdtCsvTest
 add_test (mdtCsvTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtcsv/mdtcsvtest)
-# mdtCsvSqlTest
-add_test (mdtCsvSqlTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtcsv/mdtcsvsqltest)
+# mdtSqlCsvTest
+add_test (mdtSqlCsvTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtcsv/mdtsqlcsvtest)
 
 # * mdtutilsgui *
 

@@ -18,44 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtCsvSourceInfo.h"
-#include <QLatin1String>
+#ifndef MDT_SQL_CSV_TEST_H
+#define MDT_SQL_CSV_TEST_H
 
-void mdtCsvSourceInfo::setFormat(const mdtCsvRecordFormat& format)
+#include "mdtTest.h"
+
+class mdtSqlCsvTest : public mdtTest
 {
-  Q_ASSERT(format.fieldCount() == pvHeader.count());
-  pvRecordFormat = format;
-}
+ Q_OBJECT
 
-void mdtCsvSourceInfo::setSourceName(const QString & name)
-{
-  pvSourceName = name;
-}
+ private slots:
 
-void mdtCsvSourceInfo::setHeader(const mdtCsvRecord & hdr)
-{
-  pvHeader = hdr;
-}
+  void fieldFormatTest();
+  void csvSqlRecordFormatTest();
+  void csvSqlRecordTest();
+};
 
-int mdtCsvSourceInfo::fieldIndex(const QString & name) const
-{
-  return pvHeader.columnDataList.indexOf(name);
-}
-
-QString mdtCsvSourceInfo::fieldTypeName(int index) const
-{
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < pvRecordFormat.fieldCount());
-
-  auto type = pvRecordFormat.fieldType(index);
-  switch(type){
-    case QMetaType::QString:
-      return QLatin1String("String");
-    case QMetaType::Bool:
-      return QLatin1String("Boolean");
-    case QMetaType::Int:
-      return QLatin1String("Integer");
-    default:
-      return QMetaType::typeName(type);
-  }
-}
+#endif // #ifndef MDT_SQL_CSV_TEST_H
