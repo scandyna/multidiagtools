@@ -44,10 +44,9 @@ class mdtCsvRecordFormat
   /*! \brief Constructor
    *
    * Create a mdtCsvRecordFormat for fieldCount fields.
-   *  No format is assigned to the fields.
    */
-  mdtCsvRecordFormat(int fieldCount)
-   : pvFieldTypes(fieldCount, QMetaType::UnknownType)
+  mdtCsvRecordFormat(int fieldCount, QMetaType::Type type = QMetaType::UnknownType)
+   : pvFieldTypes(fieldCount, type)
   {
   }
 

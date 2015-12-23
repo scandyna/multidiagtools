@@ -26,5 +26,13 @@ mdtExpected<bool> mdtCsvStringInfo::setSource(const QString & csvString, const m
   mdtCsvStringParser parser(csvSettings);
 
   parser.setSource(csvString);
-  /// \todo Finish once parser updated
+  auto record = parser.readLine();
+  if(!record){
+    return record.error();
+  }
+  setSourceName("CSV String");
+  setHeader(record.value());
+  setFormat(mdtCsvRecordFormat(fieldCount(), QMetaType::QString));
+
+  return true;
 }

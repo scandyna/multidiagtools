@@ -283,13 +283,25 @@ void mdtCsvTest::dataTest()
 
 void mdtCsvTest::recordFormatTest()
 {
-  mdtCsvRecordFormat fmt;
   mdtCsvRecord record;
 
   /*
-   * Initial state
+   * Constrcutors
    */
+  // Default constrcuted
+  mdtCsvRecordFormat fmt;
   QCOMPARE(fmt.fieldCount(), 0);
+  // Construct with fields and default type
+  mdtCsvRecordFormat fmt2(3);
+  QCOMPARE(fmt2.fieldCount(), 3);
+  QVERIFY(fmt2.fieldType(0) == QMetaType::UnknownType);
+  QVERIFY(fmt2.fieldType(1) == QMetaType::UnknownType);
+  QVERIFY(fmt2.fieldType(2) == QMetaType::UnknownType);
+  // Construct with fields and specified type
+  mdtCsvRecordFormat fmt3(2, QMetaType::QString);
+  QCOMPARE(fmt3.fieldCount(), 2);
+  QVERIFY(fmt3.fieldType(0) == QMetaType::QString);
+  QVERIFY(fmt3.fieldType(1) == QMetaType::QString);
   /*
    * Set fields count
    */
@@ -384,7 +396,7 @@ void mdtCsvTest::csvStringInfoTest()
 {
   mdtCsvStringInfo csvStringInfo;
   mdtCsvParserSettings csvSettings;
-  mdtCsvRecordFormat csvFormat;
+///  mdtCsvRecordFormat csvFormat;
   QString csvString;
 
   /*
@@ -399,28 +411,49 @@ void mdtCsvTest::csvStringInfoTest()
   /*
    * Set source and check
    */
-  
+  QVERIFY(csvStringInfo.setSource(csvString, csvSettings));
+  /// \todo Define what sort of source name should be set
+  ///QCOMPARE(csvStringInfo.sourceName(), "????");
+  QCOMPARE(csvStringInfo.fieldCount(), 3);
+  // Check field names
+  QCOMPARE(csvStringInfo.fieldName(0), QString("ID"));
+  QCOMPARE(csvStringInfo.fieldName(1), QString("Name"));
+  QCOMPARE(csvStringInfo.fieldName(2), QString("Remark"));
+  // Check field type names - By default, all are String
+  QCOMPARE(csvStringInfo.fieldTypeName(0), QString("String"));
+  QCOMPARE(csvStringInfo.fieldTypeName(1), QString("String"));
+  QCOMPARE(csvStringInfo.fieldTypeName(2), QString("String"));
 }
 
 void mdtCsvTest::csvFileInfoTest()
 {
   mdtCsvFileInfo csvFileInfo;
+  mdtCsvParserSettings csvSettings;
   QTemporaryFile file;
   
 
   /*
    * Prepare CSV file
    */
-//   QVERIFY(file.open());
-//   QFileInfo fi(file);
-//   QVERIFY(file.write("ID,Name,Remark\n") > 0);
-//   QVERIFY(file.write("1,Name 1,Remark 1\n") > 0);
-//   file.close();
-//   /*
-//    * Check
-//    */
-//   QVERIFY(csvFileInfo.setFile(file.fileName()));
-  
+  QVERIFY(file.open());
+  QFileInfo fi(file);
+  QVERIFY(file.write("ID,Name,Remark\n") > 0);
+  QVERIFY(file.write("1,Name 1,Remark 1\n") > 0);
+  file.close();
+  /*
+   * Set source and check
+   */
+  QVERIFY(csvFileInfo.setFile(fi, "UTF-8", csvSettings));
+  QCOMPARE(csvFileInfo.sourceName(), fi.fileName());
+  QCOMPARE(csvFileInfo.fieldCount(), 3);
+  // Check field names
+  QCOMPARE(csvFileInfo.fieldName(0), QString("ID"));
+  QCOMPARE(csvFileInfo.fieldName(1), QString("Name"));
+  QCOMPARE(csvFileInfo.fieldName(2), QString("Remark"));
+  // Check field type names - By default, all are String
+  QCOMPARE(csvFileInfo.fieldTypeName(0), QString("String"));
+  QCOMPARE(csvFileInfo.fieldTypeName(1), QString("String"));
+  QCOMPARE(csvFileInfo.fieldTypeName(2), QString("String"));
 }
 
 void mdtCsvTest::csvStringParserIteratorTest()

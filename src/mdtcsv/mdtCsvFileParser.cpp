@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtCsvFileParser.h"
 #include "mdtCsvParserTemplate.h"
+#include "mdtFileError.h"
 #include <boost/spirit/include/support_multi_pass.hpp>
 #include <QObject>
 #include <QDir>
@@ -47,8 +48,7 @@ bool mdtCsvFileParser::openFile(const QFileInfo & fileInfo, const QByteArray & e
                   + tr("Directory: '") + fileInfo.dir().absolutePath() + tr("'");
     pvLastError.setError(msg, mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtCsvFileParserIteratorSharedData");
-    auto sysError = mdtErrorNewT(QFileDevice::FileError, pvFile.error(), pvFile.errorString(), mdtError::Error, "mdtCsvFileParser");
-    pvLastError.stackError(sysError);
+    pvLastError.stackError(mdtFileError::fromQFileDeviceError(pvFile));
     pvLastError.commit();
     return false;
   }

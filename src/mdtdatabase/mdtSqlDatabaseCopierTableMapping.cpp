@@ -25,11 +25,6 @@
 
 //#include <QDebug>
 
-mdtSqlDatabaseCopierTableMapping::mdtSqlDatabaseCopierTableMapping()
- : pvMappingState(MappingNotSet)
-{
-}
-
 bool mdtSqlDatabaseCopierTableMapping::setSourceTable(const QString & tableName, const QSqlDatabase & db)
 {
   clearFieldMapping();
@@ -56,24 +51,6 @@ bool mdtSqlDatabaseCopierTableMapping::setDestinationTable(const QString & table
   return true;
 }
 
-void mdtSqlDatabaseCopierTableMapping::resetFieldMapping()
-{
-  int n = pvDestinationTable.fieldCount();
-
-  clearFieldMapping();
-  for(int i = 0; i < n; ++i){
-    mdtSqlCopierFieldMapping fm;
-    fm.destinationFieldIndex = i;
-    pvFieldMappingList.append(fm);
-  }
-}
-
-void mdtSqlDatabaseCopierTableMapping::clearFieldMapping()
-{
-  pvFieldMappingList.clear();
-  pvMappingState = MappingNotSet;
-}
-
 void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
 {
   auto sourceDriverType = mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName());
@@ -86,7 +63,7 @@ void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
   if(destinationDriverType == mdtSqlDriverType::Unknown){
     return;
   }
-  for(auto & fm : pvFieldMappingList){
+  for(auto & fm : fieldMappingList()){
     // Get source field
     Q_ASSERT(fm.destinationFieldIndex >= 0);
     Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
@@ -102,9 +79,9 @@ void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
 void mdtSqlDatabaseCopierTableMapping::setSourceField(int index, const QString & fieldName)
 {
   Q_ASSERT(index >= 0);
-  Q_ASSERT(index < pvFieldMappingList.size());
+  Q_ASSERT(index < fieldCount());
 
-  auto fm = pvFieldMappingList.at(index);
+  auto fm = fieldMappingAt(index);
   auto sourceDriverType = mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName());
   auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
 
@@ -120,7 +97,7 @@ void mdtSqlDatabaseCopierTableMapping::setSourceField(int index, const QString &
     fm.sourceFieldIndex = pvSourceTable.fieldIndex(fieldName);
   }
   updateFieldMappingState(fm, sourceDriverType, destinationDriverType);
-  pvFieldMappingList[index] = fm;
+  updateFieldMappingAt(index, fm);
   // Update table mapping state
   updateTableMappingState();
 }
@@ -128,9 +105,9 @@ void mdtSqlDatabaseCopierTableMapping::setSourceField(int index, const QString &
 QString mdtSqlDatabaseCopierTableMapping::sourceFieldName(int index) const
 {
   Q_ASSERT(index >= 0);
-  Q_ASSERT(index < pvFieldMappingList.size());
+  Q_ASSERT(index < fieldCount());
 
-  int sourceFieldIndex = pvFieldMappingList.at(index).sourceFieldIndex;
+  int sourceFieldIndex = fieldMappingAt(index).sourceFieldIndex;
   Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
   if(sourceFieldIndex < 0){
     return QString();
@@ -141,9 +118,9 @@ QString mdtSqlDatabaseCopierTableMapping::sourceFieldName(int index) const
 QString mdtSqlDatabaseCopierTableMapping::sourceFieldTypeName(int index) const
 {
   Q_ASSERT(index >= 0);
-  Q_ASSERT(index < pvFieldMappingList.size());
+  Q_ASSERT(index < fieldCount());
 
-  int sourceFieldIndex = pvFieldMappingList.at(index).sourceFieldIndex;
+  int sourceFieldIndex = fieldMappingAt(index).sourceFieldIndex;
   Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
   if(sourceFieldIndex < 0){
     return QString();
@@ -154,9 +131,9 @@ QString mdtSqlDatabaseCopierTableMapping::sourceFieldTypeName(int index) const
 QString mdtSqlDatabaseCopierTableMapping::destinationFieldName(int index) const
 {
   Q_ASSERT(index >= 0);
-  Q_ASSERT(index < pvFieldMappingList.size());
+  Q_ASSERT(index < fieldCount());
 
-  int destinationFieldIndex = pvFieldMappingList.at(index).destinationFieldIndex;
+  int destinationFieldIndex = fieldMappingAt(index).destinationFieldIndex;
   Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
   if(destinationFieldIndex < 0){
     return QString();
@@ -167,9 +144,9 @@ QString mdtSqlDatabaseCopierTableMapping::destinationFieldName(int index) const
 QString mdtSqlDatabaseCopierTableMapping::destinationFieldTypeName(int index) const
 {
   Q_ASSERT(index >= 0);
-  Q_ASSERT(index < pvFieldMappingList.size());
+  Q_ASSERT(index < fieldCount());
 
-  int destinationFieldIndex = pvFieldMappingList.at(index).destinationFieldIndex;
+  int destinationFieldIndex = fieldMappingAt(index).destinationFieldIndex;
   Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
   if(destinationFieldIndex < 0){
     return QString();
@@ -197,7 +174,7 @@ QString mdtSqlDatabaseCopierTableMapping::getSqlForSourceTableSelect(const QSqlD
   int lastIndex;
 
   // Build list of mapped fields
-  for(const auto & fm : pvFieldMappingList){
+  for(const auto & fm : constFieldMappingList()){
     if(fm.sourceFieldIndex >= 0){
       Q_ASSERT(fm.sourceFieldIndex < pvSourceTable.fieldCount());
       fields.append(pvSourceTable.fieldName(fm.sourceFieldIndex));
@@ -228,7 +205,7 @@ QString mdtSqlDatabaseCopierTableMapping::getSqlForDestinationTableInsert(const 
   int lastIndex;
 
   // Build list of mapped fields
-  for(const auto & fm : pvFieldMappingList){
+  for(const auto & fm : constFieldMappingList()){
     if(fm.sourceFieldIndex >= 0){
       Q_ASSERT(fm.destinationFieldIndex >= 0);
       Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
@@ -276,29 +253,4 @@ void mdtSqlDatabaseCopierTableMapping::updateFieldMappingState(mdtSqlCopierField
   }else{
     fm.mappingState = mdtSqlCopierFieldMapping::MappingError;
   }
-}
-
-void mdtSqlDatabaseCopierTableMapping::updateTableMappingState()
-{
-  // Check if both tables are set
-  if( pvSourceTable.tableName().isEmpty() || pvDestinationTable.tableName().isEmpty() ){
-    pvMappingState = MappingNotSet;
-    return;
-  }
-  // Check state of each field mapping and deduce table mapping state
-  for(const auto & fm : pvFieldMappingList){
-    switch(fm.mappingState){
-      case mdtSqlCopierFieldMapping::MappingError:
-        pvMappingState = MappingError;
-        return;
-      case mdtSqlCopierFieldMapping::MappingNotSet:
-      case mdtSqlCopierFieldMapping::MappingPartial:
-        pvMappingState = MappingPartial;
-        return;
-      case mdtSqlCopierFieldMapping::MappingComplete:
-        break;
-    }
-  }
-  // All checks successfully passed
-  pvMappingState = MappingComplete;
 }

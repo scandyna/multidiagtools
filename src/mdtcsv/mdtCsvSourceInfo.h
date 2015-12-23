@@ -31,6 +31,16 @@ class mdtCsvSourceInfo
 {
  public:
 
+  /*! \brief Set format
+   *
+   * \pre format must contain same count of fields that fieldCount()
+   */
+  void setFormat(const mdtCsvRecordFormat & format);
+
+  /*! \brief Set source name
+   */
+  void setSourceName(const QString & name);
+
   /*! \brief Get source name
    */
   QString sourceName() const
@@ -56,22 +66,17 @@ class mdtCsvSourceInfo
     return pvHeader.columnDataList.at(index).toString();
   }
 
-  /*! \brief Get field type name
+  /*! \brief Get (user friendly) field type name
    *
    * \pre index must be in valid range
    */
-  QString fieldTypeName(int index) const
-  {
-    Q_ASSERT(index >= 0);
-    Q_ASSERT(index < pvRecordFormat.fieldCount());
-    ///return pvHeader.columnDataList.at(index);
-  }
+  QString fieldTypeName(int index) const;
 
  protected:
 
-  /*! \brief Set source name
+  /*! \brief Set header
    */
-  void setSourceName(const QString & name);
+  void setHeader(const mdtCsvRecord & hdr);
 
  private:
 

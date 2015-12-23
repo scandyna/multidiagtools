@@ -21,40 +21,23 @@
 #ifndef MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_H
 #define MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_H
 
+#include "mdtSqlCopierTableMapping.h"
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlCopierFieldMapping.h"
 #include "mdtSqlDriverType.h"
-#include "mdtError.h"
 #include <QString>
 #include <QStringList>
-#include <QVector>
 #include <QSqlDatabase>
 
 /*! \brief Mapping used to copy 2 SQL tables
  */
-class mdtSqlDatabaseCopierTableMapping
+class mdtSqlDatabaseCopierTableMapping : public mdtSqlCopierTableMapping
 {
  public:
 
-  /*! \brief Table mapping state
-   */
-  enum MappingState
-  {
-    MappingNotSet,      /*!< Source or destination table was not set,
-                             or field mapping was not set. */
-    MappingComplete,    /*!< Source and destination table have been successfully set.
-                             Field mapping was done automatically without any mismatch,
-                             or confirmed by the user as complete. */
-    MappingPartial,     /*!< Source and destination table have been successfully set.
-                             Field mapping was done automatically, but some mismatch
-                             was detected, and a action is required from the user to fix it */
-    MappingError        /*!< A error was detected during source or detination table set,
-                             or during field mapping. Get more information with lastError() . */
-  };
-
   /*! \brief Constructor
    */
-  mdtSqlDatabaseCopierTableMapping();
+  mdtSqlDatabaseCopierTableMapping() = default;
 
   /*! \brief Set source table
    *
@@ -86,18 +69,6 @@ class mdtSqlDatabaseCopierTableMapping
     return pvDestinationTable.tableName();
   }
 
-  /*! \brief Reset field mapping
-   *
-   * Will clear field mapping,
-   *  then, generate it for each available field in destination table.
-   *  After this, no field from source table is assigned to destination table.
-   */
-  void resetFieldMapping();
-
-  /*! \brief Clear field mapping
-   */
-  void clearFieldMapping();
-
   /*! \brief Generate field mapping by name
    *
    * Will first reset field mapping.
@@ -114,22 +85,6 @@ class mdtSqlDatabaseCopierTableMapping
    * \pre index must be in a valid range
    */
   void setSourceField(int index, const QString & fieldName);
-
-  /*! \brief Get mapping state
-   */
-  MappingState mappingState() const
-  {
-    return pvMappingState;
-  }
-
-  /*! \brief Get field count
-   *
-   * Field count depends on number of field mapping set.
-   */
-  int fieldCount() const
-  {
-    return pvFieldMappingList.size();
-  }
 
   /*! \brief Get list of field names of source table
    */
@@ -169,13 +124,6 @@ class mdtSqlDatabaseCopierTableMapping
    */
   QString destinationFieldTypeName(int index) const;
 
-  /*! \brief Get last error
-   */
-  mdtError lastError() const
-  {
-    return pvLastError;
-  }
-
   /*! \brief Get SQL statement to count rows in source table
    *
    * \note We cannot use internal databases, because this function is called by mdtSqlDatabaseCopierThread
@@ -206,21 +154,23 @@ class mdtSqlDatabaseCopierTableMapping
 
  private:
 
+  /*! \brief Get field count of destination table
+   *
+   * Mainly used by resetFieldMapping()
+   */
+  int destinationTableFieldCount() const
+  {
+    return pvDestinationTable.fieldCount();
+  }
+
   /*! \brief Update given field maping state
    */
   void updateFieldMappingState(mdtSqlCopierFieldMapping & fm, mdtSqlDriverType::Type sourceDriverType, mdtSqlDriverType::Type destinationDriverType);
 
-  /*! \brief Update table mapping state
-   */
-  void updateTableMappingState();
-
-  MappingState pvMappingState;
   QSqlDatabase pvSourceDatabase;
   mdtSqlSchemaTable pvSourceTable;
   QSqlDatabase pvDestinationDatabase;
   mdtSqlSchemaTable pvDestinationTable;
-  QVector<mdtSqlCopierFieldMapping> pvFieldMappingList;
-  mdtError pvLastError;
 };
 
 #endif // #ifndef MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_H

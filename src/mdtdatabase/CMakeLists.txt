@@ -57,6 +57,9 @@ set (SOURCES_FILES
           mdtSqlFieldType.cpp
           mdtSqlFieldSetupWidget.cpp
           mdtSqlFieldSetupDialog.cpp
+          # Copier common classes
+          mdtSqlCopierTableMapping.cpp
+          mdtSqlCopierTableMappingModel.cpp
           # Database copier classes
           mdtSqlDatabaseCopierTableMapping.cpp
           mdtSqlDatabaseCopierTableMappingModel.cpp

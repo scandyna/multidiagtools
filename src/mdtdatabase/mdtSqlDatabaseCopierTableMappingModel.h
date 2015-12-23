@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_MODEL_H
 #define MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_MODEL_H
 
+#include "mdtSqlCopierTableMappingModel.h"
 #include "mdtSqlDatabaseCopierTableMapping.h"
 #include "mdtError.h"
 #include <QAbstractTableModel>
@@ -34,7 +35,7 @@ class mdtComboBoxItemDelegate;
  *
  * \sa mdtSqlDatabaseCopierTableMapping
  */
-class mdtSqlDatabaseCopierTableMappingModel : public QAbstractTableModel
+class mdtSqlDatabaseCopierTableMappingModel : public mdtSqlCopierTableMappingModel
 {
  Q_OBJECT
 
@@ -57,37 +58,11 @@ class mdtSqlDatabaseCopierTableMappingModel : public QAbstractTableModel
    */
   bool setSourceTable(const QString & tableName, const QSqlDatabase & db, mdtComboBoxItemDelegate *delegate = nullptr);
 
-  /*! \brief Get source table name
-   */
-  QString sourceTableName() const
-  {
-    return pvMapping.sourceTableName();
-  }
-
   /*! \brief Set destination table
    *
    * Will also reset field mapping.
    */
   bool setDestinationTable(const QString & tableName, const QSqlDatabase & db);
-
-  /*! \brief Get destination table name
-   */
-  QString destinationTableName() const
-  {
-    return pvMapping.destinationTableName();
-  }
-
-  /*! \brief Reset field mapping
-   *
-   * \sa mdtSqlDatabaseCopierTableMapping::resetFieldMapping()
-   */
-  void resetFieldMapping();
-
-  /*! \brief Generate field mapping by name
-   *
-   * \sa mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
-   */
-  void generateFieldMappingByName();
 
   /*! \brief Set mapping
    */
@@ -100,53 +75,23 @@ class mdtSqlDatabaseCopierTableMappingModel : public QAbstractTableModel
     return pvMapping;
   }
 
-  /*! \brief Get row count
-   *
-   * Returns the number of source table fields
-   */
-  int rowCount(const QModelIndex & parent = QModelIndex()) const;
-
-  /*! \brief Get column count
-   */
-  int columnCount(const QModelIndex & parent = QModelIndex()) const;
-
-  /*! \brief Get header data
-   */
-  QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-
-  /*! \brief Get data
-   */
-  QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
-
-  /*! \brief Get item flags
-   */
-  Qt::ItemFlags flags(const QModelIndex & index) const;
-
-  /*! \brief Set data
-   */
-  bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
-
-  /*! \brief Get last error
-   */
-  mdtError lastError() const
-  {
-    return pvLastError;
-  }
-
  private:
 
-  /*! \brief Column index
+  /*! \brief Reference internal table mapping
    */
-  enum ColumnIndex_t
+  const mdtSqlCopierTableMapping & mappingBase() const
   {
-    SourceNameIndex = 0,      /*!< Column index of source field name */
-    SourceTypeIndex = 1,      /*!< Column index of source field type */
-    DestinationNameIndex = 2, /*!< Column index of destination field name */
-    DestinationTypeIndex = 3  /*!< Column index of destination field type */
-  };
+    return pvMapping;
+  }
+
+  /*! \brief Reference internal table mapping
+   */
+  mdtSqlCopierTableMapping & mappingBase()
+  {
+    return pvMapping;
+  }
 
   mdtSqlDatabaseCopierTableMapping pvMapping;
-  mdtError pvLastError;
 };
 
 #endif // #ifndef MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_MODEL_H

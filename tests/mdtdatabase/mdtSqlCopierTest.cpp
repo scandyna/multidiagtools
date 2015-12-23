@@ -530,6 +530,9 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   QVERIFY(model.setSourceTable("Client_tbl", pvDatabase, delegate));
   QVERIFY(model.setDestinationTable("Client2_tbl", pvDatabase));
   model.generateFieldMappingByName();
+  // Check table names
+  QCOMPARE(model.sourceTableName(), QString("Client_tbl"));
+  QCOMPARE(model.destinationTableName(), QString("Client2_tbl"));
   // Check row 0
   index = model.index(0, sourceFieldNameColumn);
   QVERIFY(index.isValid());
@@ -583,6 +586,20 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   index = model.index(3, destinationFieldNameColumn);
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index), QVariant("FieldB"));
+  /*
+   * Check selecting a field in source table
+   */
+  // For row 2, we set back: source FieldA -> destination FieldA
+  index = model.index(2, sourceFieldNameColumn);
+  QVERIFY(index.isValid());
+  QVERIFY(model.setData(index, "FieldA"));
+  // Check row 2
+  index = model.index(2, sourceFieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("FieldA"));
+  index = model.index(2, destinationFieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("FieldA"));
 
   /*
    * Play

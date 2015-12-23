@@ -1,0 +1,18 @@
+format 210
+
+note 128002 "Think about \"pluggins\", mean f.ex. CAN232, ..."
+  xyzwh 82 36 2000 399 59
+note 128130 "Really, use QSerialPort, it's now avaliable, runs on many platforms, is debugged, tested, ...
+And, if allready using QTcpSocket (with success), why not QSerialPort ???"
+  xyzwh 91 129 2000 521 83
+note 128258 "Error: emit  QSerialPort::SerialPortError from thread, and create a mdtError from GUI thread ?"
+  xyzwh 101 248 2000 531 79
+classcanvas 128386 class_ref 2194050 // mdtSerialPort
+  classdiagramsettings member_max_width 0 end
+  xyz 195 464 2000
+end
+note 128514 "Think about asynch connect/open (then use wait if needed..)"
+  xyzwh 360 574 2000 343 105
+note 128642 "Think about Q_OBJECT problem with template class"
+  xyzwh 74 564 2000 231 87
+end

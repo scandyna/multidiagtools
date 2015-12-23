@@ -19,8 +19,22 @@
  **
  ****************************************************************************/
 #include "mdtCsvFileInfo.h"
+#include "mdtCsvFileParser.h"
 
 mdtExpected<bool> mdtCsvFileInfo::setFile(const QFileInfo& fileInfo, const QByteArray & fileEncoding, const mdtCsvParserSettings & settings)
 {
+  mdtCsvFileParser parser(settings);
 
+  if(!parser.openFile(fileInfo, fileEncoding)){
+    return parser.lastError();
+  }
+  auto record = parser.readLine();
+  if(!record){
+    return record.error();
+  }
+  setSourceName(fileInfo.fileName());
+  setHeader(record.value());
+  setFormat(mdtCsvRecordFormat(fieldCount(), QMetaType::QString));
+
+  return true;
 }

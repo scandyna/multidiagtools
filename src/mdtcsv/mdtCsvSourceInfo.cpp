@@ -19,8 +19,38 @@
  **
  ****************************************************************************/
 #include "mdtCsvSourceInfo.h"
+#include <QLatin1String>
+
+void mdtCsvSourceInfo::setFormat(const mdtCsvRecordFormat& format)
+{
+  Q_ASSERT(format.fieldCount() == pvHeader.count());
+  pvRecordFormat = format;
+}
 
 void mdtCsvSourceInfo::setSourceName(const QString & name)
 {
   pvSourceName = name;
+}
+
+void mdtCsvSourceInfo::setHeader(const mdtCsvRecord & hdr)
+{
+  pvHeader = hdr;
+}
+
+QString mdtCsvSourceInfo::fieldTypeName(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < pvRecordFormat.fieldCount());
+
+  auto type = pvRecordFormat.fieldType(index);
+  switch(type){
+    case QMetaType::QString:
+      return QLatin1String("String");
+    case QMetaType::Bool:
+      return QLatin1String("Boolean");
+    case QMetaType::Int:
+      return QLatin1String("Integer");
+    default:
+      return QMetaType::typeName(type);
+  }
 }
