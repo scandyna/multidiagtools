@@ -27,6 +27,8 @@
 #include <QString>
 
 /*! \brief Common base class for SQL copier table mapping
+ *
+ * \todo Copy should be disabled in this base class (slicing!)
  */
 class mdtSqlCopierTableMapping
 {
@@ -55,6 +57,9 @@ class mdtSqlCopierTableMapping
   /*! \brief Destructor
    */
   virtual ~mdtSqlCopierTableMapping() = default;
+
+//   mdtSqlCopierTableMapping(const mdtSqlCopierTableMapping &) = delete;
+//   mdtSqlCopierTableMapping & operator=(const mdtSqlCopierTableMapping &) = delete;
 
   /*! \brief Get mapping state
    */
@@ -141,6 +146,9 @@ class mdtSqlCopierTableMapping
   void clearFieldMapping();
 
  protected:
+
+//   mdtSqlCopierTableMapping(const mdtSqlCopierTableMapping &) = default;
+//   mdtSqlCopierTableMapping & operator=(const mdtSqlCopierTableMapping &) = default;
 
   /*! \brief Get field count of destination table
    *

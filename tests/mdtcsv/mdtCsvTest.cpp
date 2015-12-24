@@ -398,6 +398,7 @@ void mdtCsvTest::csvStringInfoTest()
   mdtCsvParserSettings csvSettings;
 ///  mdtCsvRecordFormat csvFormat;
   QString csvString;
+  QStringList fieldNames;
 
   /*
    * Prepare CSV source string
@@ -437,7 +438,12 @@ void mdtCsvTest::csvStringInfoTest()
   QVERIFY(csvStringInfo.fieldType(0) == QMetaType::QString);
   QVERIFY(csvStringInfo.fieldType(1) == QMetaType::Int);
   QVERIFY(csvStringInfo.fieldType(2) == QMetaType::QString);
-
+  // Check getting field names
+  fieldNames = csvStringInfo.getFieldNameList();
+  QCOMPARE(fieldNames.size(), 3);
+  QCOMPARE(fieldNames.at(0), QString("ID"));
+  QCOMPARE(fieldNames.at(1), QString("Name"));
+  QCOMPARE(fieldNames.at(2), QString("Remark"));
 }
 
 void mdtCsvTest::csvFileInfoTest()
@@ -445,7 +451,7 @@ void mdtCsvTest::csvFileInfoTest()
   mdtCsvFileInfo csvFileInfo;
   mdtCsvParserSettings csvSettings;
   QTemporaryFile file;
-  
+  QStringList fieldNames;
 
   /*
    * Prepare CSV file
@@ -474,6 +480,12 @@ void mdtCsvTest::csvFileInfoTest()
   QCOMPARE(csvFileInfo.fieldTypeName(0), QString("String"));
   QCOMPARE(csvFileInfo.fieldTypeName(1), QString("String"));
   QCOMPARE(csvFileInfo.fieldTypeName(2), QString("String"));
+  // Check getting field names
+  fieldNames = csvFileInfo.getFieldNameList();
+  QCOMPARE(fieldNames.size(), 3);
+  QCOMPARE(fieldNames.at(0), QString("ID"));
+  QCOMPARE(fieldNames.at(1), QString("Name"));
+  QCOMPARE(fieldNames.at(2), QString("Remark"));
 }
 
 void mdtCsvTest::csvStringParserIteratorTest()

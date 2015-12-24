@@ -71,6 +71,8 @@ set (SOURCES_FILES
           # CSV import classes
           mdtSqlCsvImportTableMapping.cpp
           mdtSqlCsvStringImportTableMapping.cpp
+          mdtSqlCsvStringImportTableMappingModel.cpp
+          mdtSqlCsvFileImportTableMapping.cpp
     )
 
 # Platform specific files

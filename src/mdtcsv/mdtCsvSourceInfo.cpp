@@ -59,3 +59,14 @@ QString mdtCsvSourceInfo::fieldTypeName(int index) const
       return QMetaType::typeName(type);
   }
 }
+
+QStringList mdtCsvSourceInfo::getFieldNameList() const
+{
+  QStringList fieldNames;
+
+  for(const auto & var : pvHeader.columnDataList){
+    fieldNames.append(var.toString());
+  }
+
+  return fieldNames;
+}

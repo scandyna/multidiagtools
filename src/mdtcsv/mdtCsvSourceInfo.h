@@ -24,6 +24,7 @@
 #include "mdtCsvData.h"
 #include "mdtCsvRecordFormat.h"
 #include <QString>
+#include <QStringList>
 
 /*! \brief Provides some informations about a CSV source
  */
@@ -106,6 +107,10 @@ class mdtCsvSourceInfo
    * \pre index must be in valid range
    */
   QString fieldTypeName(int index) const;
+
+  /*! \brief Get a list of field names
+   */
+  QStringList getFieldNameList() const;
 
  protected:
 

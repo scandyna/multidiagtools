@@ -39,6 +39,14 @@ class mdtSqlDatabaseCopierTableMapping : public mdtSqlCopierTableMapping
    */
   mdtSqlDatabaseCopierTableMapping() = default;
 
+  /*! \brief Copy constructor
+   */
+//   mdtSqlDatabaseCopierTableMapping(const mdtSqlDatabaseCopierTableMapping & other);
+
+  /*! \brief Copy assignation
+   */
+//   mdtSqlDatabaseCopierTableMapping & operator=(const mdtSqlDatabaseCopierTableMapping & other);
+
   /*! \brief Set source table
    *
    * Will also reset field mapping.

@@ -25,6 +25,23 @@
 
 //#include <QDebug>
 
+// mdtSqlDatabaseCopierTableMapping::mdtSqlDatabaseCopierTableMapping(const mdtSqlDatabaseCopierTableMapping & other)
+//  : mdtSqlCopierTableMapping(other),
+//    pvSourceDatabase(other.pvSourceDatabase),
+//    pvSourceTable(other.pvSourceTable),
+//    pvDestinationDatabase(other.pvDestinationDatabase),
+//    pvDestinationTable(other.pvDestinationTable)
+// {
+// }
+
+// mdtSqlDatabaseCopierTableMapping& mdtSqlDatabaseCopierTableMapping::operator=(const mdtSqlDatabaseCopierTableMapping & other)
+// {
+//   pvSourceDatabase = other.pvSourceDatabase;
+//   pvSourceTable = other.pvSourceTable;
+//   pvDestinationDatabase = other.pvDestinationDatabase;
+//   pvDestinationTable = other.pvDestinationTable;
+// }
+
 bool mdtSqlDatabaseCopierTableMapping::setSourceTable(const QString & tableName, const QSqlDatabase & db)
 {
   clearFieldMapping();

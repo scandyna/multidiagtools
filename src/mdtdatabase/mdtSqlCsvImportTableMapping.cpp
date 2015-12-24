@@ -21,6 +21,8 @@
 #include "mdtSqlCsvImportTableMapping.h"
 #include "mdtSqlCsvData.h"
 
+//#include <QDebug>
+
 bool mdtSqlCsvImportTableMapping::setDestinationTable(const QString & tableName, const QSqlDatabase & db)
 {
   clearFieldMapping();
@@ -111,7 +113,24 @@ QString mdtSqlCsvImportTableMapping::destinationFieldTypeName(int index) const
 
 void mdtSqlCsvImportTableMapping::generateFieldMappingByName()
 {
+  auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
 
+  resetFieldMapping();
+  if(destinationDriverType == mdtSqlDriverType::Unknown){
+    return;
+  }
+  for(auto & fm : fieldMappingList()){
+    // Get source field
+    Q_ASSERT(fm.destinationFieldIndex >= 0);
+    Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
+    mdtSqlField destinationField = pvDestinationTable.field(fm.destinationFieldIndex);
+    // Get source field index that matches destination field name
+    fm.sourceFieldIndex = sourceTable().fieldIndex(destinationField.name());
+    updateCsvSourceFormat(fm);
+    updateFieldMappingState(fm/*, destinationDriverType*/);
+  }
+  // Update table mapping state
+  updateTableMappingState();
 }
 
 void mdtSqlCsvImportTableMapping::updateFieldMappingState(mdtSqlCopierFieldMapping & fm/*, mdtSqlDriverType::Type destinationDriverType*/)
@@ -138,8 +157,9 @@ void mdtSqlCsvImportTableMapping::updateFieldMappingState(mdtSqlCopierFieldMappi
 
 void mdtSqlCsvImportTableMapping::updateCsvSourceFormat(mdtSqlCopierFieldMapping & fm)
 {
-  Q_ASSERT(!fm.isNull());
-
+  if(fm.isNull()){
+    return;
+  }
   Q_ASSERT(fm.sourceFieldIndex >= 0);
   Q_ASSERT(fm.sourceFieldIndex < sourceTable().fieldCount());
   Q_ASSERT(fm.destinationFieldIndex >= 0);

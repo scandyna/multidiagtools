@@ -65,6 +65,13 @@ class mdtSqlCsvImportTableMapping : public mdtSqlCopierTableMapping
    */
   void setSourceField(int index, const QString & fieldName);
 
+  /*! \brief Get list of field names of source table
+   */
+  QStringList getSourceFieldNameList() const
+  {
+    return sourceTable().getFieldNameList();
+  }
+
   /*! \brief Get source field name for given field mapping index
    *
    * \pre index must be in valid range.

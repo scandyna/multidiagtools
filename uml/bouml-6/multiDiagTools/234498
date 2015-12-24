@@ -1,6 +1,6 @@
 format 210
 "mdtdatabase" // mdtdatabase
-  revision 91
+  revision 92
   modified_by 2 "philippe"
   // class settings
   
@@ -7912,7 +7912,7 @@ ${inlines}
     
     activitydiagramsettings
      end
-    classdiagram 1596162 "SqlDatabaseCopierTableMapping"
+    classdiagram 1596162 "TableMapping"
       classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
       size A4
     end
@@ -8170,7 +8170,7 @@ ${inlines}
       end
     end
 
-    classdiagram 1809410 "sqlDatabaseCopierTableMappingModel"
+    classdiagram 1809410 "TableMappingModel"
       classdiagramsettings member_max_width 0 end
       size A4
     end
@@ -8305,7 +8305,7 @@ ${inlines}
       end
     end
 
-    classdiagram 1629058 "sqlDatabaseCopierTableMappingDialog"
+    classdiagram 1629058 "TableMappingDialog"
       classdiagramsettings member_max_width 0 end
       size A4
     end
@@ -8780,7 +8780,7 @@ ${inlines}
     
     activitydiagramsettings
      end
-    classdiagram 1809154 "sqlCsvImportTableMapping"
+    classdiagram 1809154 "TableMapping"
       classdiagramsettings member_max_width 0 end
       size A4
     end
@@ -8906,7 +8906,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     class 2200578 "mdtSqlCsvStringImportTableMapping"
@@ -9006,6 +9005,274 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    classdiagram 1835650 "TableMappingModel"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2207362 "mdtSqlCsvStringImportTableMappingModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2514690 // <generalisation>
+	relation 2498306 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2514690 // <generalisation>
+	  b parent class_ref 2200834 // mdtSqlCopierTableMappingModel
+      end
+
+      operation 3338754 "mdtSqlCsvStringImportTableMappingModel"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3339138 "setSourceCsvString"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "csv" type class_ref 161026 // QString
+	  param in name "settings" type class_ref 2050434 // mdtCsvParserSettings
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3339522 "setMapping"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "m" type class_ref 2200706 // mdtSqlCsvFileImportTableMapping
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3338498 "mapping"
+	public return_type class_ref 2200578 // mdtSqlCsvStringImportTableMapping
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3338242 "mappingBase"
+	cpp_virtual private return_type class_ref 2174082 // mdtSqlCopierTableMapping
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 2211586 "Mapping"
+	private type class_ref 2200578 // mdtSqlCsvStringImportTableMapping
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3339266 "setDestinationTable"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "tableName" type class_ref 161026 // QString
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 2207490 "mdtSqlCsvFileImportTableMappingModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2514818 // <generalisation>
+	relation 2498434 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2514818 // <generalisation>
+	  b parent class_ref 2200834 // mdtSqlCopierTableMappingModel
+      end
+
+      operation 3338882 "mdtSqlCsvFileImportTableMappingModel"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3339010 "setSourceCsvFile"
+	public explicit_return_type "bool"
+	nparams 3
+	  param in name "file" type class_ref 432386 // QFileInfo
+	  param in name "fileEncoding" type class_ref 236162 // QByteArray
+	  param in name "settings" type class_ref 2050434 // mdtCsvParserSettings
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3339394 "setDestinationTable"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "tableName" type class_ref 161026 // QString
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3339650 "setMapping"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "m" type class_ref 2200706 // mdtSqlCsvFileImportTableMapping
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3338626 "mapping"
+	public return_type class_ref 2200706 // mdtSqlCsvFileImportTableMapping
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3338370 "mappingBase"
+	cpp_virtual private return_type class_ref 2174082 // mdtSqlCopierTableMapping
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 2211714 "Mapping"
+	private type class_ref 2200706 // mdtSqlCsvFileImportTableMapping
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
   end

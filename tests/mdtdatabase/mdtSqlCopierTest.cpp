@@ -34,6 +34,8 @@
 #include "mdtSqlDatabaseCopierMappingModel.h"
 #include "mdtSqlDatabaseCopierDialog.h"
 #include "mdtSqlCsvStringImportTableMapping.h"
+#include "mdtSqlCsvFileImportTableMapping.h"
+#include "mdtSqlCsvStringImportTableMappingModel.h"
 #include "mdtComboBoxItemDelegate.h"
 #include "mdtProgressBarItemDelegate.h"
 #include "mdtProgressValue.h"
@@ -634,6 +636,7 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
   mdtSqlCsvStringImportTableMapping mapping;
   QString csvString;
   mdtCsvParserSettings csvSettings;
+  QStringList fieldNames;
 
   /*
    * Prepare CSV source string
@@ -664,6 +667,13 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
   // Check also source and destination type names
   QVERIFY(mapping.sourceFieldTypeName(0).isNull());
   QCOMPARE(mapping.destinationFieldTypeName(0), QString("INTEGER"));
+  // Check getting source field names
+  fieldNames = mapping.getSourceFieldNameList();
+  QCOMPARE(fieldNames.size(), 4);
+  QCOMPARE(fieldNames.at(0), QString("Id"));
+  QCOMPARE(fieldNames.at(1), QString("Name"));
+  QCOMPARE(fieldNames.at(2), QString("FieldA"));
+  QCOMPARE(fieldNames.at(3), QString("FieldB"));
   /*
    * Set a field mapping:
    *  - CSV.Id -> Client_tbl.Id_PK
@@ -731,17 +741,205 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
   QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
   QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
   QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
+  /*
+   * Reset
+   */
+  mapping.resetFieldMapping();
+  QCOMPARE(mapping.fieldCount(), 4);
+  QVERIFY(mapping.sourceFieldName(0).isNull());
+  QVERIFY(mapping.sourceFieldName(1).isNull());
+  QVERIFY(mapping.sourceFieldName(2).isNull());
+  QVERIFY(mapping.sourceFieldName(3).isNull());
+  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
+  /*
+   * Check field mapping generation by field name
+   */
+  mapping.generateFieldMappingByName();
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QCOMPARE(mapping.fieldCount(), 4);
+  QVERIFY(mapping.sourceFieldName(0).isNull());
+  QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
+  QCOMPARE(mapping.sourceFieldName(2), QString("FieldA"));
+  QCOMPARE(mapping.sourceFieldName(3), QString("FieldB"));
+  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
+  // Now, manually map CSV source Id -> Client_tbl Id_PK
+  mapping.setSourceField(0, "Id");
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
+  QCOMPARE(mapping.sourceFieldName(0), QString("Id"));
+  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+  /*
+   * Clear
+   */
+  mapping.clearFieldMapping();
+  QCOMPARE(mapping.fieldCount(), 0);
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
 
 }
 
 void mdtSqlCopierTest::sqlCsvStringImportTableMappingModelTest()
 {
+  QTableView tableView;
+  QTreeView treeView;
+  mdtSqlCsvStringImportTableMapping tm;
+  mdtSqlCsvStringImportTableMappingModel model;
+  const int sourceFieldNameColumn = 0;
+  const int destinationFieldNameColumn = 2;
+  QModelIndex index;
+  mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
+  QString csvString;
+  mdtCsvParserSettings csvSettings;
 
+  /*
+   * Prepare CSV source string
+   */
+  csvString  = "Id,Name,FieldA,FieldB\n";
+  csvString += "1,Name 1,A1,B1\n";
+  /*
+   * Setup views
+   */
+  // Setup table view
+  tableView.setModel(&model);
+  tableView.setItemDelegateForColumn(sourceFieldNameColumn, delegate);
+  tableView.resize(600, 200);
+  tableView.show();
+  // Setup tree view
+  treeView.setModel(&model);
+  treeView.show();
+  /*
+   * Check by generating by name
+   */
+  // Set tables and generate field mapping
+  QVERIFY(model.setSourceCsvString(csvString, csvSettings, delegate));
+  QVERIFY(model.setDestinationTable("Client2_tbl", pvDatabase));
+  model.generateFieldMappingByName();
+
+  /*
+   * Play
+   */
+  tableView.resizeColumnsToContents();
+  while(tableView.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
 {
+  mdtSqlCsvFileImportTableMapping mapping;
+  mdtCsvParserSettings csvSettings;
+  QTemporaryFile csvFile;
+  QStringList fieldNames;
 
+  /*
+   * Prepare CSV source file
+   */
+  QVERIFY(csvFile.open());
+  QVERIFY(csvFile.write("Id,Name,FieldA,FieldB\n") > 0);
+  QVERIFY(csvFile.write("1,Name 1,A1,B1\n") > 0);
+  csvFile.close();
+  /*
+   * Initial state
+   */
+  QCOMPARE(mapping.fieldCount(), 0);
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
+  /*
+   * Set source CSV and destination table
+   */
+  QVERIFY(mapping.setSourceCsvFile(csvFile, "UTF-8", csvSettings));
+  QVERIFY(mapping.setDestinationTable("Client_tbl", pvDatabase));
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
+  // Check attributes without any mapping set
+  QCOMPARE(mapping.fieldCount(), 4);
+  QVERIFY(mapping.sourceFieldName(0).isNull());
+  QVERIFY(mapping.sourceFieldName(1).isNull());
+  QVERIFY(mapping.sourceFieldName(2).isNull());
+  QVERIFY(mapping.sourceFieldName(3).isNull());
+  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
+  // Check also source and destination type names
+  QVERIFY(mapping.sourceFieldTypeName(0).isNull());
+  QCOMPARE(mapping.destinationFieldTypeName(0), QString("INTEGER"));
+  // Check getting source field names
+  fieldNames = mapping.getSourceFieldNameList();
+  QCOMPARE(fieldNames.size(), 4);
+  QCOMPARE(fieldNames.at(0), QString("Id"));
+  QCOMPARE(fieldNames.at(1), QString("Name"));
+  QCOMPARE(fieldNames.at(2), QString("FieldA"));
+  QCOMPARE(fieldNames.at(3), QString("FieldB"));
+  /*
+   * Set a field mapping:
+   *  - CSV.Id -> Client_tbl.Id_PK
+   */
+  mapping.setSourceField(0, "Id");
+  // Check attributes
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QCOMPARE(mapping.fieldCount(), 4);
+  QCOMPARE(mapping.sourceFieldName(0), QString("Id"));
+  QVERIFY(mapping.sourceFieldName(1).isNull());
+  QVERIFY(mapping.sourceFieldName(2).isNull());
+  QVERIFY(mapping.sourceFieldName(3).isNull());
+  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
+  // Check also source and destination type names
+  QCOMPARE(mapping.sourceFieldTypeName(0), QString("Integer"));
+  QCOMPARE(mapping.destinationFieldTypeName(0), QString("INTEGER"));
+  /*
+   * Set a field mapping:
+   *  - CSV.Name -> Client_tbl.Name
+   */
+  mapping.setSourceField(1, "Name");
+  // Check attributes
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QCOMPARE(mapping.fieldCount(), 4);
+  QCOMPARE(mapping.sourceFieldName(0), QString("Id"));
+  QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
+  QVERIFY(mapping.sourceFieldName(2).isNull());
+  QVERIFY(mapping.sourceFieldName(3).isNull());
+  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
+  /*
+   * Set a field mapping:
+   *  - CSV.FieldB -> Client_tbl.FieldA
+   */
+  mapping.setSourceField(2, "FieldB");
+  // Check attributes
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QCOMPARE(mapping.fieldCount(), 4);
+  QCOMPARE(mapping.sourceFieldName(0), QString("Id"));
+  QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
+  QCOMPARE(mapping.sourceFieldName(2), QString("FieldB"));
+  QVERIFY(mapping.sourceFieldName(3).isNull());
+  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
+  /*
+   * Set a field mapping:
+   *  - CSV.FieldA -> Client_tbl.FieldB
+   */
+  mapping.setSourceField(3, "FieldA");
+  // Check attributes
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
+  QCOMPARE(mapping.fieldCount(), 4);
+  QCOMPARE(mapping.sourceFieldName(0), QString("Id"));
+  QCOMPARE(mapping.sourceFieldName(1), QString("Name"));
+  QCOMPARE(mapping.sourceFieldName(2), QString("FieldB"));
+  QCOMPARE(mapping.sourceFieldName(3), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
 }
 
 void mdtSqlCopierTest::sqlCsvFileImportTableMappingModelTest()
