@@ -1,6 +1,6 @@
 format 210
 "mdtdatabase" // mdtdatabase
-  revision 92
+  revision 94
   modified_by 2 "philippe"
   // class settings
   
@@ -7432,7 +7432,7 @@ ${inlines}
       end
     end
 
-    classdiagram 1809282 "sqlCopierTableMapping"
+    classdiagram 1809282 "TableMapping"
       classdiagramsettings member_max_width 0 end
       size A4
     end
@@ -7660,9 +7660,26 @@ ${inlines}
 	
 	
       end
+
+      operation 3354498 "constFieldMappingList"
+	stereotype "QVector"
+	protected return_type class_ref 1772930 // mdtSqlCopierFieldMapping
+	multiplicity "*"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
-    classdiagram 1829122 "mdtSqlCopierTableMappingModel"
+    classdiagram 1829122 "TableMappingModel"
       classdiagramsettings member_max_width 0 end
       size A4
     end
@@ -7893,6 +7910,301 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
+    end
+
+    classdiagram 1842178 "TableMappingDialog"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2214018 "mdtSqlCopierTableMappingDialog"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2521346 // <generalisation>
+	relation 2504962 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2521346 // <generalisation>
+	  b parent class_ref 370434 // QDialog
+      end
+
+      attribute 2218242 "pvSourceFieldSelectionDelegate"
+	private type class_ref 1914754 // mdtComboBoxItemDelegate
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3346434 "mdtSqlCopierTableMappingDialog"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3346306 "mappingModelBase"
+	abstract cpp_virtual protected return_type class_ref 2200834 // mdtSqlCopierTableMappingModel
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 3346562 "setSourceTable"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "cbIndex" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3346690 "resetFieldMapping"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3346818 "mapByFieldName"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3346946 "resizeTableViewToContents"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 1848706 "CopierMapping"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2220546 "mdtSqlCopierMapping"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 2225026 "LastError"
+	protected type class_ref 182402 // mdtError
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3353474 "lastError"
+	public return_type class_ref 182402 // mdtError
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3353602 "clearTableMapping"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3353730 "resetTableMapping"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3353858 "generateTableMappingByName"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3354370 "tableMappingState"
+	public explicit_return_type "mdtSqlCopierTableMapping::MappingState"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3353986 "tableMappingCount"
+	abstract cpp_virtual public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 3354114 "sourceTableName"
+	abstract cpp_virtual public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "index" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 3354242 "destinationTableName"
+	abstract cpp_virtual public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "index" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 1848834 "CopierMappingModel"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2220674 "mdtSqlCopierMappingModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 
@@ -8324,16 +8636,40 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2284290 // <generalisation>
-	relation 2268034 ---|>
+      classrelation 2521474 // <generalisation>
+	relation 2505090 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 2284290 // <generalisation>
-	  b parent class_ref 370434 // QDialog
+	    classrelation_ref 2521474 // <generalisation>
+	  b parent class_ref 2214018 // mdtSqlCopierTableMappingDialog
+      end
+
+      attribute 2218370 "MappingModel"
+	private type class_ref 1921282 // mdtSqlDatabaseCopierTableMappingModel
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2218498 "SourceDatabase"
+	private type class_ref 405122 // QSqlDatabase
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 
-    classdiagram 1609346 "DatabaseCopierMapping"
+    classdiagram 1848962 "DatabaseCopierMapping"
       classdiagramsettings member_max_width 0 end
       size A4
     end
@@ -8508,6 +8844,19 @@ ${inlines}
 	
 	
       end
+
+      classrelation 2528002 // <generalisation>
+	relation 2511618 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2528002 // <generalisation>
+	  b parent class_ref 2220546 // mdtSqlCopierMapping
+      end
+    end
+
+    classdiagram 1609346 "DatabaseCopierMappingModel"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
 
     class 1927938 "mdtSqlDatabaseCopierMappingModel"

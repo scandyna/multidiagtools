@@ -18,11 +18,11 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_CSV_STRING_IMPORT_TABLE_MAPPING_MODEL_H
-#define MDT_SQL_CSV_STRING_IMPORT_TABLE_MAPPING_MODEL_H
+#ifndef MDT_SQL_CSV_FILE_IMPORT_TABLE_MAPPING_MODEL_H
+#define MDT_SQL_CSV_FILE_IMPORT_TABLE_MAPPING_MODEL_H
 
 #include "mdtSqlCopierTableMappingModel.h"
-#include "mdtSqlCsvStringImportTableMapping.h"
+#include "mdtSqlCsvFileImportTableMapping.h"
 #include "mdtError.h"
 #include <QModelIndex>
 #include <QSqlField>
@@ -31,11 +31,11 @@
 
 class mdtComboBoxItemDelegate;
 
-/*! \brief Table model to access SQL CSV string import table mapping
+/*! \brief Table model to access SQL CSV file import table mapping
  *
- * \sa mdtSqlCsvStringImportTableMapping
+ * \sa mdtSqlCsvFileImportTableMapping
  */
-class mdtSqlCsvStringImportTableMappingModel : public mdtSqlCopierTableMappingModel
+class mdtSqlCsvFileImportTableMappingModel : public mdtSqlCopierTableMappingModel
 {
  Q_OBJECT
 
@@ -43,16 +43,16 @@ class mdtSqlCsvStringImportTableMappingModel : public mdtSqlCopierTableMappingMo
 
   /*! \brief Constructor
    */
-  mdtSqlCsvStringImportTableMappingModel(QObject *parent = nullptr);
+  mdtSqlCsvFileImportTableMappingModel(QObject *parent = nullptr);
 
-  /*! \brief Set source CSV string
+  /*! \brief Set source CSV file
    *
    * Will also reset field mapping.
    *
    * If delegate is not null,
    *  its combobox will be populated with available fields.
    */
-  bool setSourceCsvString(const QString & csv, const mdtCsvParserSettings & settings, mdtComboBoxItemDelegate *delegate = nullptr);
+  bool setSourceCsvFile(const QFileInfo & csvFile, const QByteArray & csvFileEncoding, const mdtCsvParserSettings & settings, mdtComboBoxItemDelegate *delegate = nullptr);
 
   /*! \brief Set destination table
    *
@@ -76,7 +76,8 @@ class mdtSqlCsvStringImportTableMappingModel : public mdtSqlCopierTableMappingMo
     return pvMapping;
   }
 
-  mdtSqlCsvStringImportTableMapping pvMapping;
+  mdtSqlCsvFileImportTableMapping pvMapping;
+
 };
 
-#endif // #ifndef MDT_SQL_CSV_STRING_IMPORT_TABLE_MAPPING_MODEL_H
+#endif // #ifndef MDT_SQL_CSV_FILE_IMPORT_TABLE_MAPPING_MODEL_H

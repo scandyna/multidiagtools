@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtSqlCopierTableMappingModel.h"
+#include <QColor>
 
 mdtSqlCopierTableMappingModel::mdtSqlCopierTableMappingModel(QObject* parent)
  : QAbstractTableModel(parent)
@@ -50,7 +51,7 @@ int mdtSqlCopierTableMappingModel::rowCount(const QModelIndex & parent) const
 
 int mdtSqlCopierTableMappingModel::columnCount(const QModelIndex & /*parent*/) const
 {
-  return 4;
+  return 5;
 }
 
 QVariant mdtSqlCopierTableMappingModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -70,6 +71,8 @@ QVariant mdtSqlCopierTableMappingModel::headerData(int section, Qt::Orientation 
       return tr("Destination\nfield name");
     case DestinationTypeIndex:
       return tr("Destination\nfield type");
+    case FieldMappinStateIndex:
+      return tr("Field mapping\nstate");
   }
 
   return section;
@@ -80,12 +83,17 @@ QVariant mdtSqlCopierTableMappingModel::data(const QModelIndex & index, int role
   if(!index.isValid()){
     return QVariant();
   }
+  const int row = index.row();
+  const int column = index.column();
+  Q_ASSERT( (row >= 0) && (row < mappingBase().fieldCount()) );
+
+  if( (role == Qt::DecorationRole) && (column == FieldMappinStateIndex) ){
+    return fieldMappingStateDecoration(mappingBase().fieldMappingState(row));
+  }
   if( (role != Qt::DisplayRole) && (role != Qt::EditRole) ){
     return QVariant();
   }
-  int row = index.row();
-  Q_ASSERT( (row >= 0) && (row < mappingBase().fieldCount()) );
-  switch(index.column()){
+  switch(column){
     case SourceNameIndex:
       return mappingBase().sourceFieldName(row);
     case SourceTypeIndex:
@@ -94,6 +102,8 @@ QVariant mdtSqlCopierTableMappingModel::data(const QModelIndex & index, int role
       return mappingBase().destinationFieldName(row);
     case DestinationTypeIndex:
       return mappingBase().destinationFieldTypeName(row);
+    case FieldMappinStateIndex:
+      return fieldMappingStateText(mappingBase().fieldMappingState(row));
   }
 
   return QVariant();
@@ -126,4 +136,46 @@ Qt::ItemFlags mdtSqlCopierTableMappingModel::flags(const QModelIndex & index) co
     return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
   }
   return QAbstractTableModel::flags(index);
+}
+
+QVariant mdtSqlCopierTableMappingModel::fieldMappingStateData(int row, int role) const
+{
+  switch(role){
+    case Qt::DisplayRole:
+    case Qt::EditRole:
+      return fieldMappingStateText(mappingBase().fieldMappingState(row));
+    case Qt::DecorationRole:
+      return fieldMappingStateDecoration(mappingBase().fieldMappingState(row));
+    default:
+      return QVariant();
+  }
+}
+
+QVariant mdtSqlCopierTableMappingModel::fieldMappingStateText(mdtSqlCopierFieldMapping::MappingState state) const
+{
+  switch(state){
+    case mdtSqlCopierFieldMapping::MappingNotSet:
+    case mdtSqlCopierFieldMapping::MappingPartial:
+      return QString();
+    case mdtSqlCopierFieldMapping::MappingComplete:
+      return tr("Ok");
+    case mdtSqlCopierFieldMapping::MappingError:
+      return tr("Error");
+  }
+  return QVariant();
+}
+
+QVariant mdtSqlCopierTableMappingModel::fieldMappingStateDecoration(mdtSqlCopierFieldMapping::MappingState state) const
+{
+  switch(state){
+    case mdtSqlCopierFieldMapping::MappingNotSet:
+      return QVariant();
+    case mdtSqlCopierFieldMapping::MappingPartial:
+      return QColor(Qt::yellow);
+    case mdtSqlCopierFieldMapping::MappingComplete:
+      return QColor(Qt::green);
+    case mdtSqlCopierFieldMapping::MappingError:
+      return QColor(Qt::red);
+  }
+  return QString();
 }

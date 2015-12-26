@@ -27,6 +27,7 @@
 #include <QModelIndex>
 #include <QSqlField>
 #include <QVariant>
+#include <QVariant>
 
 /*! \brief Base table model to access SQL table copier mapping
  *
@@ -123,13 +124,25 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
     SourceNameIndex = 0,      /*!< Column index of source field name */
     SourceTypeIndex = 1,      /*!< Column index of source field type */
     DestinationNameIndex = 2, /*!< Column index of destination field name */
-    DestinationTypeIndex = 3  /*!< Column index of destination field type */
+    DestinationTypeIndex = 3, /*!< Column index of destination field type */
+    FieldMappinStateIndex = 4 /*!< Column index of destination field type */
   };
 
   mdtError pvLastError;
 
-//private:
+ private:
 
+  /*! \brief Get field mapping state data
+   */
+  QVariant fieldMappingStateData(int row, int role) const;
+
+  /*! \brief Get field mapping state text
+   */
+  QVariant fieldMappingStateText(mdtSqlCopierFieldMapping::MappingState state) const;
+
+  /*! \brief Get field mapping state decoration
+   */
+  QVariant fieldMappingStateDecoration(mdtSqlCopierFieldMapping::MappingState state) const;
 };
 
 #endif // #ifndef MDT_SQL_COPIER_TABLE_MAPPING_MODEL_H

@@ -132,34 +132,6 @@ class mdtSqlDatabaseCopierTableMapping : public mdtSqlCopierTableMapping
    */
   QString destinationFieldTypeName(int index) const;
 
-  /*! \brief Get SQL statement to count rows in source table
-   *
-   * \note We cannot use internal databases, because this function is called by mdtSqlDatabaseCopierThread
-   */
-  QString getSqlForSourceTableCount(const QSqlDatabase & db) const;
-
-  /*! \brief Get SQL statement to select source table data
-   *
-   * Will build a SQL SELECT statement that contains
-   *  fields regarding mapping.
-   *
-   * \note We cannot use internal databases, because this function is called by mdtSqlDatabaseCopierThread
-   */
-  QString getSqlForSourceTableSelect(const QSqlDatabase & db) const;
-
-  /*! \brief Get SQL statement to insert data into destination table
-   *
-   * Will build a INSERT INTO statement that contains
-   *  fields regarding mapping.
-   *  This stamenet can be used with QSqlQuery's bind vaue with positional placeholder.
-   *
-   * Format is:
-   *  INSERT INTO SourceTable (field0, field1, ..., fieldN) VALUES(?, ?, ..., ?)
-   *
-   * \note We cannot use internal databases, because this function is called by mdtSqlDatabaseCopierThread
-   */
-  QString getSqlForDestinationTableInsert(const QSqlDatabase & db) const;
-
  private:
 
   /*! \brief Get field count of destination table

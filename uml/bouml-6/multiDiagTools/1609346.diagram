@@ -1,4 +1,4 @@
-format 209
+format 210
 
 classcanvas 128002 class_ref 1927810 // mdtSqlDatabaseCopierMapping
   classdiagramsettings member_max_width 0 end
@@ -16,8 +16,6 @@ classcanvas 128386 class_ref 147202 // QAbstractTableModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 161 93 2000
 end
-note 128898 "Should be renamed  mdtSqlDatabaseCopierTableMapping ?"
-  xyzwh 340 19 2000 413 75
 note 129154 "!!! NOTE on table copy !!!
 
 Because reversing a schema is not reliable (loss of imformations), we should be able to hrecreate a schema (for example by a existing SQL script or some definition of a SQL schema), then map tables and fields, then import data to this new schema !!
@@ -34,13 +32,11 @@ end
 relationcanvas 128642 relation_ref 2248194 // <directional composition>
   from ref 128258 z 2001 to ref 128002
   no_role_a no_role_b
-  multiplicity_a_pos 218 369 3000 no_multiplicity_b
+  multiplicity_a_pos 217 365 3000 no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 2248322 // <directional composition>
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 496 456 3000 no_multiplicity_b
+  multiplicity_a_pos 496 447 3000 no_multiplicity_b
 end
-line 129026 -_-_
-  from ref 128898 z 2001 to ref 128130
 end

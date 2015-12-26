@@ -19,6 +19,9 @@
  **
  ****************************************************************************/
 #include "mdtSqlCopierTableMapping.h"
+#include <QSqlDatabase>
+#include <QSqlDriver>
+#include <QStringList>
 
 mdtSqlCopierTableMapping::mdtSqlCopierTableMapping()
  : pvMappingState(MappingNotSet)
@@ -41,6 +44,84 @@ void mdtSqlCopierTableMapping::clearFieldMapping()
 {
   pvFieldMappingList.clear();
   pvMappingState = MappingNotSet;
+}
+
+QString mdtSqlCopierTableMapping::getSqlForSourceTableCount(const QSqlDatabase & db) const
+{
+  QString sql;
+  QSqlDriver *driver = db.driver();
+  Q_ASSERT(driver != nullptr);
+
+  sql = "SELECT COUNT(*) FROM " + driver->escapeIdentifier(sourceTableName(), QSqlDriver::TableName);
+
+  return sql;
+}
+
+QString mdtSqlCopierTableMapping::getSqlForSourceTableSelect(const QSqlDatabase & db) const
+{
+  QString sql;
+  QStringList fields;
+  QSqlDriver *driver = db.driver();
+  Q_ASSERT(driver != nullptr);
+  int lastIndex;
+
+  // Build list of mapped fields
+  for(int i = 0; i < fieldCount(); ++i){
+    const auto fm = fieldMappingAt(i);
+    if(fm.sourceFieldIndex >= 0){
+      fields.append(sourceFieldName(i));
+    }
+  }
+  lastIndex = fields.size() - 1;
+  // If no mapping was set, simply return a empty statement
+  if(lastIndex < 0){
+    return sql;
+  }
+  // Build statement
+  sql = "SELECT ";
+  for(int i = 0; i < lastIndex; ++i){
+    sql += driver->escapeIdentifier(fields.at(i), QSqlDriver::FieldName) + ",";
+  }
+  sql += driver->escapeIdentifier(fields.at(lastIndex), QSqlDriver::FieldName);
+  sql += " FROM " + driver->escapeIdentifier(sourceTableName(), QSqlDriver::TableName);
+
+  return sql;
+}
+
+QString mdtSqlCopierTableMapping::getSqlForDestinationTableInsert(const QSqlDatabase & db) const
+{
+  QString sql;
+  QStringList fields;
+  QSqlDriver *driver = db.driver();
+  Q_ASSERT(driver != nullptr);
+  int lastIndex;
+
+  // Build list of mapped fields
+  for(int i = 0; i < fieldCount(); ++i){
+    const auto fm = fieldMappingAt(i);
+    if(fm.sourceFieldIndex >= 0){
+      fields.append(destinationFieldName(i));
+    }
+  }
+
+  lastIndex = fields.size() - 1;
+  // If no mapping was set, simply return a empty statement
+  if(lastIndex < 0){
+    return sql;
+  }
+  // Build statement
+  sql = "INSERT INTO " + driver->escapeIdentifier(destinationTableName(), QSqlDriver::TableName) + " (";
+  for(int i = 0; i < lastIndex; ++i){
+    sql += driver->escapeIdentifier(fields.at(i), QSqlDriver::FieldName) + ",";
+  }
+  sql += driver->escapeIdentifier(fields.at(lastIndex), QSqlDriver::FieldName);
+  sql += ") VALUES (";
+  for(int i = 0; i < lastIndex; ++i){
+    sql += "?,";
+  }
+  sql += "?)";
+
+  return sql;
 }
 
 void mdtSqlCopierTableMapping::updateTableMappingState()

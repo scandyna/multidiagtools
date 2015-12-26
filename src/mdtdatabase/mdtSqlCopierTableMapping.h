@@ -26,6 +26,8 @@
 #include <QVector>
 #include <QString>
 
+class QSqlDatabase;
+
 /*! \brief Common base class for SQL copier table mapping
  *
  * \todo Copy should be disabled in this base class (slicing!)
@@ -75,6 +77,17 @@ class mdtSqlCopierTableMapping
   int fieldCount() const
   {
     return pvFieldMappingList.size();
+  }
+
+  /*! \brief Get field mapping state for given index
+   *
+   * \pre index must be in a valid range
+   */
+  mdtSqlCopierFieldMapping::MappingState fieldMappingState(int index) const
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < pvFieldMappingList.size());
+    return pvFieldMappingList.at(index).mappingState;
   }
 
   /*! \brief Get source table name
@@ -144,6 +157,34 @@ class mdtSqlCopierTableMapping
   /*! \brief Clear field mapping
    */
   void clearFieldMapping();
+
+  /*! \brief Get SQL statement to count rows in source table
+   *
+   * \note We cannot use internal databases, because this function can be called from non main thread (f.ex. mdtSqlDatabaseCopierThread)
+   */
+  QString getSqlForSourceTableCount(const QSqlDatabase & db) const;
+
+  /*! \brief Get SQL statement to select source table data
+   *
+   * Will build a SQL SELECT statement that contains
+   *  fields regarding mapping.
+   *
+   * \note We cannot use internal databases, because this function can be called from non main thread (f.ex. mdtSqlDatabaseCopierThread)
+   */
+  QString getSqlForSourceTableSelect(const QSqlDatabase & db) const;
+
+  /*! \brief Get SQL statement to insert data into destination table
+   *
+   * Will build a INSERT INTO statement that contains
+   *  fields regarding mapping.
+   *  This stamenet can be used with QSqlQuery's bind vaue with positional placeholder.
+   *
+   * Format is:
+   *  INSERT INTO SourceTable (field0, field1, ..., fieldN) VALUES(?, ?, ..., ?)
+   *
+   * \note We cannot use internal databases, because this function can be called from non main thread (f.ex. mdtSqlDatabaseCopierThread)
+   */
+  QString getSqlForDestinationTableInsert(const QSqlDatabase & db) const;
 
  protected:
 
