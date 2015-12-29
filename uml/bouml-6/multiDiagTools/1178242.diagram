@@ -1,4 +1,4 @@
-format 206
+format 210
 
 classcanvas 128002 class_ref 1302274 // mdtDeviceContainer
   classdiagramsettings member_max_width 0 end
@@ -14,13 +14,17 @@ note 128386 "Fonctionnalités:
  - signal lorsque tous les devices sont dans un état
  - Attendre que tous les divices soient prêts, arrêtés
  - Note (future): démarrage et arrêt //"
-  xyzwh 76 443 2000 641 213
+  xyzwh 61 392 2000 641 213
 classcanvas 128514 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 420 25 2006
 end
+note 129026 "Notes:
+ - See Wait (in mdtutils)
+ - Type erasure ??"
+  xyzwh 59 618 2000 495 89
 relationcanvas 128258 relation_ref 1598082 // <directional composition>
-  from ref 128002 z 2001 stereotype "<<vector>>" xyz 532 265.5 3000 to ref 128130
+  from ref 128002 z 2001 stereotype "<<vector>>" xyz 532 265 3000 to ref 128130
   role_a_pos 632 245 3000 no_role_b
   multiplicity_a_pos 689 275 3000 no_multiplicity_b
 end

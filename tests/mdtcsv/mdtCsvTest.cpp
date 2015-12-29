@@ -32,7 +32,7 @@
 #include "mdtCsvFileInfo.h"
 #include "mdtCsvRecordFormat.h"
 #include "mdtCsvGeneratorSettingsWidget.h"
-#include "mdtCsvFileGeneratorFileSettingsWidget.h"
+#include "mdtCsvFileSettingsWidget.h"
 #include "mdtCsvFileGeneratorSettingsDialog.h"
 #include "mdtCsvTableViewDataMapper.h"
 #include "mdtCsvTableViewExportDialog.h"
@@ -187,9 +187,9 @@ void mdtCsvTest::generatorSettingsWidgetTest()
 //   }
 }
 
-void mdtCsvTest::fileGeneratorSettingsWidgetTest()
+void mdtCsvTest::fileSettingsWidgetTest()
 {
-  mdtCsvFileGeneratorFileSettingsWidget widget;
+  mdtCsvFileSettingsWidget widget;
 
   /*
    * Set/get
@@ -202,6 +202,7 @@ void mdtCsvTest::fileGeneratorSettingsWidgetTest()
   /*
    * Play
    */
+  widget.setSelectFileMode(mdtCsvFileSettingsWidget::SelectOpen);
   widget.show();
   while(widget.isVisible()){
     QTest::qWait(500);

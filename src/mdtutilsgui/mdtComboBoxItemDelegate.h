@@ -23,6 +23,7 @@
 
 #include <QStyledItemDelegate>
 #include <QStyleOptionViewItem>
+#include <QPointer>
 
 class QComboBox;
 class QIcon;
@@ -94,6 +95,14 @@ class mdtComboBoxItemDelegate : public QStyledItemDelegate
    */
   void clear();
 
+  /*! \brief Set combobox current index
+   */
+  void setCurrentIndex(int index);
+
+  /*! \brief Get combobox current index
+   */
+  int currentIndex() const;
+
   /*! \brief Reimplemented to display a combobox like item
    */
 //   void paint(QPainter *painter, const QStyleOptionViewItem & option, const QModelIndex & index) const;
@@ -118,15 +127,16 @@ class mdtComboBoxItemDelegate : public QStyledItemDelegate
    */
   void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem & option, const QModelIndex & index) const;
 
- private slots:
+//  private slots:
  
   /*! \internal Prevent double free if pvComboBox was parented
    */
-  void resetPvComboBoxPointer(QObject *obj);
+//   void resetPvComboBoxPointer(QObject *obj);
 
  private:
 
-  mutable QComboBox *pvComboBox;
+  ///mutable QComboBox *pvComboBox;
+  mutable QPointer<QComboBox> pvComboBox;
 };
 
 #endif // #ifndef MDT_COMBO_BOX_ITEM_DELEGATE_H

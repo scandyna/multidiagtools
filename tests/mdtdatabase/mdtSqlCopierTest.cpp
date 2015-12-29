@@ -64,58 +64,83 @@
 #include <QTextBlock>
 #include <QTextFragment>
 
+#include <QSqlQuery>
+
 #include <QDebug>
+
+// void mdtSqlCopierTest::sandbox()
+// {
+//   auto *clipboard = QApplication::clipboard();
+//   QVERIFY(clipboard != nullptr);
+//   auto *mimeData = clipboard->mimeData();
+//   QVERIFY(mimeData != nullptr);
+//   QTextEdit textEdit;
+//   QTextDocument doc;
+// 
+//   
+// 
+//   qDebug() << "Clipboard formats:";
+//   for(const auto & format : mimeData->formats()){
+//     qDebug() << format;
+//   }
+//   /**
+//   qDebug() << "data:";
+//   doc.setHtml(mimeData->data("text/html"));
+//   QTextFrame *root = doc.rootFrame();
+//   
+//   for(auto it = root->begin(); !it.atEnd(); ++it){
+//     QTextFrame *frame = it.currentFrame();
+//     if(frame != nullptr){
+//       auto *table = qobject_cast<QTextTable*>(frame);
+//       if(table != nullptr){
+//         for(int row = 0; row < table->rows(); ++row){
+//           for(int col = 0; col < table->columns(); ++col){
+//             QTextTableCell cell = table->cellAt(row, col);
+//             for(auto tableIt = cell.begin(); !tableIt.atEnd(); ++tableIt){
+//               QTextBlock textBlock = tableIt.currentBlock();
+//               for(auto blockIt = textBlock.begin(); !blockIt.atEnd(); ++blockIt){
+//                 QTextFragment fragment = blockIt.fragment();
+//                 qDebug() << fragment.text();
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+//   */
+//   
+//   ///textEdit.setText(mimeData->data("text/richtext"));
+//   ///textEdit.setHtml(mimeData->data("text/html"));
+//   textEdit.setPlainText(mimeData->data("text/plain"));
+//   
+//   textEdit.show();
+//   while(textEdit.isVisible()){
+//     QTest::qWait(500);
+//   }
+// }
 
 void mdtSqlCopierTest::sandbox()
 {
-  auto *clipboard = QApplication::clipboard();
-  QVERIFY(clipboard != nullptr);
-  auto *mimeData = clipboard->mimeData();
-  QVERIFY(mimeData != nullptr);
-  QTextEdit textEdit;
-  QTextDocument doc;
+  QSqlQuery query(pvDatabase);
+  QString sql;
+
+  sql = "INSERT OR IGNORE INTO Client_tbl (Id_PK,Name) VALUES ( (SELECT Id_PK FROM Client_tbl WHERE Name = :name) ,:name)";
+  QVERIFY(query.prepare(sql));
+  query.bindValue(":name", "Name 1");
+  QVERIFY(query.exec());
+  QVERIFY(query.prepare(sql));
+  query.bindValue(":name", "Name 1");
+  QVERIFY(query.exec());
 
   
 
-  qDebug() << "Clipboard formats:";
-  for(const auto & format : mimeData->formats()){
-    qDebug() << format;
+  query.exec("SELECT * FROM Client_tbl");
+  while(query.next()){
+    qDebug() << query.value(0) << "|" << query.value(1);
   }
-  /**
-  qDebug() << "data:";
-  doc.setHtml(mimeData->data("text/html"));
-  QTextFrame *root = doc.rootFrame();
   
-  for(auto it = root->begin(); !it.atEnd(); ++it){
-    QTextFrame *frame = it.currentFrame();
-    if(frame != nullptr){
-      auto *table = qobject_cast<QTextTable*>(frame);
-      if(table != nullptr){
-        for(int row = 0; row < table->rows(); ++row){
-          for(int col = 0; col < table->columns(); ++col){
-            QTextTableCell cell = table->cellAt(row, col);
-            for(auto tableIt = cell.begin(); !tableIt.atEnd(); ++tableIt){
-              QTextBlock textBlock = tableIt.currentBlock();
-              for(auto blockIt = textBlock.begin(); !blockIt.atEnd(); ++blockIt){
-                QTextFragment fragment = blockIt.fragment();
-                qDebug() << fragment.text();
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  */
-  
-  ///textEdit.setText(mimeData->data("text/richtext"));
-  ///textEdit.setHtml(mimeData->data("text/html"));
-  textEdit.setPlainText(mimeData->data("text/plain"));
-  
-  textEdit.show();
-  while(textEdit.isVisible()){
-    QTest::qWait(500);
-  }
+  QVERIFY(query.exec("DELETE FROM Client_tbl"));
 }
 
 
@@ -248,22 +273,33 @@ void mdtSqlCopierTest::fieldMappingDataTest()
 {
   mdtSqlCopierFieldMapping data;
 
-  // Initial state
+  /*
+   * Initial state
+   */
   QCOMPARE(data.sourceFieldIndex, -1);
   QCOMPARE(data.destinationFieldIndex, -1);
   QVERIFY(data.mappingState == mdtSqlCopierFieldMapping::MappingNotSet);
+  QVERIFY(data.sourceType == mdtSqlCopierFieldMapping::Field);
   QVERIFY(data.isNull());
-  // Set
+  /*
+   * Set
+   */
   data.sourceFieldIndex = 0;
   QVERIFY(data.isNull());
   data.destinationFieldIndex = 0;
   QVERIFY(!data.isNull());
   data.mappingState = mdtSqlCopierFieldMapping::MappingComplete;
-  // Clear
+  data.sourceType = mdtSqlCopierFieldMapping::FixedValue;
+  data.sourceFixedValue = "Fixed";
+  /*
+   * Clear
+   */
   data.clear();
   QCOMPARE(data.sourceFieldIndex, -1);
   QCOMPARE(data.destinationFieldIndex, -1);
   QVERIFY(data.mappingState == mdtSqlCopierFieldMapping::MappingNotSet);
+  QVERIFY(data.sourceType == mdtSqlCopierFieldMapping::Field);
+  QVERIFY(data.sourceFixedValue.isNull());
   QVERIFY(data.isNull());
 }
 
@@ -298,6 +334,11 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingNotSet);
   QVERIFY(mapping.fieldMappingState(2) == mdtSqlCopierFieldMapping::MappingNotSet);
   QVERIFY(mapping.fieldMappingState(3) == mdtSqlCopierFieldMapping::MappingNotSet);
+  // Check field key types
+  QVERIFY(mapping.sourceFieldKeyType(0) == mdtSqlCopierTableMapping::NotAKey);
+  QVERIFY(mapping.destinationFieldKeyType(0) == mdtSqlCopierTableMapping::PrimaryKey);
+  QVERIFY(mapping.sourceFieldKeyType(1) == mdtSqlCopierTableMapping::NotAKey);
+  QVERIFY(mapping.destinationFieldKeyType(1) == mdtSqlCopierTableMapping::NotAKey);
   /*
    * Set a field mapping:
    *  - Client_tbl.Id_PK -> Client2_tbl.Id_PK
@@ -319,6 +360,11 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingNotSet);
   QVERIFY(mapping.fieldMappingState(2) == mdtSqlCopierFieldMapping::MappingNotSet);
   QVERIFY(mapping.fieldMappingState(3) == mdtSqlCopierFieldMapping::MappingNotSet);
+  // Check field key types
+  QVERIFY(mapping.sourceFieldKeyType(0) == mdtSqlCopierTableMapping::PrimaryKey);
+  QVERIFY(mapping.destinationFieldKeyType(0) == mdtSqlCopierTableMapping::PrimaryKey);
+  QVERIFY(mapping.sourceFieldKeyType(1) == mdtSqlCopierTableMapping::NotAKey);
+  QVERIFY(mapping.destinationFieldKeyType(1) == mdtSqlCopierTableMapping::NotAKey);
   /*
    * Set a field mapping:
    *  - Client_tbl.Name -> Client2_tbl.Name
@@ -544,8 +590,8 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   QTableView tableView;
   QTreeView treeView;
   mdtSqlDatabaseCopierTableMappingModel model;
-  const int sourceFieldNameColumn = 0;
-  const int destinationFieldNameColumn = 2;
+  const int sourceFieldNameColumn = 2;
+  const int destinationFieldNameColumn = 5;
   QModelIndex index;
   mdtSqlDatabaseCopierTableMapping tm;
   mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
@@ -824,8 +870,8 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingModelTest()
   QTreeView treeView;
   mdtSqlCsvStringImportTableMapping tm;
   mdtSqlCsvStringImportTableMappingModel model;
-  const int sourceFieldNameColumn = 0;
-  const int destinationFieldNameColumn = 2;
+  const int sourceFieldNameColumn = 2;
+  const int destinationFieldNameColumn = 5;
   QModelIndex index;
   mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
   QString csvString;
@@ -984,8 +1030,8 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingModelTest()
   QTreeView treeView;
   mdtSqlCsvFileImportTableMapping tm;
   mdtSqlCsvFileImportTableMappingModel model;
-  const int sourceFieldNameColumn = 0;
-  const int destinationFieldNameColumn = 2;
+  const int sourceFieldNameColumn = 2;
+  const int destinationFieldNameColumn = 5;
   QModelIndex index;
   mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
   mdtCsvParserSettings csvSettings;

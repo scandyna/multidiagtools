@@ -37,13 +37,129 @@
 #include <QTableView>
 #include <QTreeView>
 #include <QComboBox>
+#include <QAbstractTableModel>
 #include <QSqlTableModel>
 #include <QStringListModel>
 #include <QStandardItemModel>
 #include <QStandardItem>
 #include <QColor>
+#include <QAbstractItemView>
+#include <QScrollArea>
+#include <QtTest/QtTest>
 
 #include <QDebug>
+
+/*
+ * Table model used for some tests
+ */
+class TestTableModel : public QAbstractTableModel
+{
+public:
+
+ TestTableModel(int rowCount, int columnCount, QObject* parent = 0)
+  : QAbstractTableModel(parent),
+    pvColumnCount(columnCount),
+    pvDisplayRoleData(rowCount),
+    pvEditRoleData(rowCount)
+ {
+   for(auto & v : pvDisplayRoleData){
+     v.resize(columnCount);
+   }
+   for(auto & v : pvEditRoleData){
+     v.resize(columnCount);
+   }
+ }
+
+ int columnCount(const QModelIndex & parent = QModelIndex()) const
+ {
+   Q_UNUSED(parent);
+   return pvColumnCount;
+ }
+
+ int rowCount(const QModelIndex & parent = QModelIndex()) const
+ {
+   if(parent.isValid()){
+     return 0;
+   }
+   return pvDisplayRoleData.size();
+ }
+
+ QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const
+ {
+   Q_ASSERT(index.row() >= 0);
+   Q_ASSERT(index.row() < pvDisplayRoleData.size());
+   Q_ASSERT(index.row() < pvEditRoleData.size());
+   Q_ASSERT(index.column() >= 0);
+   Q_ASSERT(index.column() < pvColumnCount);
+ 
+   switch(role){
+     case Qt::DisplayRole:
+       return pvDisplayRoleData.at(index.row()).at(index.column());
+     case Qt::EditRole:
+       return pvEditRoleData.at(index.row()).at(index.column());
+     default:
+       return QVariant();
+   }
+ }
+
+ Qt::ItemFlags flags(const QModelIndex & index) const
+ {
+   return QAbstractTableModel::flags(index)| Qt::ItemIsEditable;
+ }
+
+ bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole)
+ {
+   Q_ASSERT(index.row() >= 0);
+   Q_ASSERT(index.row() < pvDisplayRoleData.size());
+   Q_ASSERT(index.row() < pvEditRoleData.size());
+   Q_ASSERT(index.column() >= 0);
+   Q_ASSERT(index.column() < pvColumnCount);
+ 
+   switch(role){
+     case Qt::DisplayRole:
+       pvDisplayRoleData[index.row()][index.column()] = value;
+       break;
+     case Qt::EditRole:
+       pvEditRoleData[index.row()][index.column()] = value;
+       break;
+     default:
+       return false;
+   }
+   emit dataChanged(index, index);
+   return true;
+ }
+
+ void populate(bool setDisplayRoleData, bool setEditRoleData)
+ {
+   beginResetModel();
+   for (int row = 0; row < pvDisplayRoleData.size(); ++row) {
+     for (int column = 0; column < pvDisplayRoleData.at(row).size(); ++column) {
+       QString str = QString("%0,%1").arg(row).arg(column);
+       if(setDisplayRoleData){
+        pvDisplayRoleData[row][column] = str;
+       }else{
+         pvDisplayRoleData[row][column].clear();
+       }
+       if(setEditRoleData){
+        pvEditRoleData[row][column] = str;
+       }else{
+         pvEditRoleData[row][column].clear();
+       }
+     }
+   }
+   endResetModel();
+ }
+
+private:
+
+ int pvColumnCount;
+ QVector<QVector<QVariant>> pvDisplayRoleData;
+ QVector<QVector<QVariant>> pvEditRoleData;
+};
+
+/*
+ * Test implementation
+ */
 
 void mdtWidgetsTest::mdtDoubleValidatorTest()
 {
@@ -852,19 +968,196 @@ void mdtWidgetsTest::progressValueTest()
 
 void mdtWidgetsTest::comboBoxItemDelegateTest()
 {
-  QStandardItemModel model(4, 5);
+  TestTableModel model(4, 5);
   mdtComboBoxItemDelegate *delegate;
   QListView listView;
   QTableView tableView;
   QTreeView treeVidew;
+  QModelIndex index;
 
+  /**
+   * \todo Add functionnality of putting different values for DisplayRole and EditRole
+   *   NOTE: EditRole is the actual data type
+   *   See also SpinBox example: file:///usr/share/qt5/doc/qtwidgets/model-view-programming.html
+   */
   // Populate model with data
-  for (int row = 0; row < model.rowCount(); ++row) {
-    for (int column = 0; column < model.columnCount(); ++column) {
-        QStandardItem *item = new QStandardItem(QString("row %0, column %1").arg(row).arg(column));
-        model.setItem(row, column, item);
-    }
-  }
+  model.populate(true, false);
+//   for (int row = 0; row < model.rowCount(); ++row) {
+//     for (int column = 0; column < model.columnCount(); ++column) {
+//         QStandardItem *item = new QStandardItem(QString("row %0, column %1").arg(row).arg(column));
+//         model.setItem(row, column, item);
+//     }
+//   }
+  /*
+   * Setup a table view for tests
+   */
+  tableView.setModel(&model);
+  delegate = new mdtComboBoxItemDelegate(&tableView);
+  QVERIFY(model.columnCount() > 1);
+  tableView.setItemDelegateForColumn(1, delegate);
+  tableView.show();
+  /*
+   * Check using only text of combobox
+   */
+  // Populate delegate
+  delegate->clear();
+  delegate->addItem("A");
+  delegate->addItem("B");
+  delegate->addItem("C");
+  delegate->addItem("D");
+  // Edit row 0
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  beginEditing(tableView, index);
+  // Check that delegate displays A
+  QCOMPARE(delegate->currentIndex(), 0);
+  // Select B
+  delegate->setCurrentIndex(1);
+  // Finish editing and check
+  endEditing(tableView, index);
+  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("B"));
+  QCOMPARE(model.data(index, Qt::EditRole), QVariant());
+  QCOMPARE(delegate->currentIndex(), 1);
+  // Edit row 0 again
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  beginEditing(tableView, index);
+  // Check that delegate displays B
+  QCOMPARE(delegate->currentIndex(), 1);
+  // Select C
+  delegate->setCurrentIndex(2);
+  // Finish editing and check
+  endEditing(tableView, index);
+  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("C"));
+  QCOMPARE(model.data(index, Qt::EditRole), QVariant());
+  QCOMPARE(delegate->currentIndex(), 2);
+
+//   // Edit row 1 - Select B
+//   index = model.index(1, 1);
+//   beginEditing(tableView, index);
+//   delegate->setCurrentIndex(1);
+//   endEditing(tableView, index);
+//   // Check
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("A"));
+//   QCOMPARE(model.data(index, Qt::EditRole), QVariant());
+//   QCOMPARE(delegate->currentIndex(), 0);
+// 
+//   // Set data of row 0
+//   index = model.index(0, 1);
+//   QVERIFY(model.setData(index, "A", Qt::DisplayRole));
+//   // Check
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("A"));
+//   QCOMPARE(model.data(index, Qt::EditRole), QVariant());
+//   QCOMPARE(delegate->currentIndex(), 0);
+//   // Set data of row 0
+//   index = model.index(0, 1);
+//   QVERIFY(model.setData(index, "B", Qt::DisplayRole));
+//   
+//   // Check
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("B"));
+//   QCOMPARE(model.data(index, Qt::EditRole), QVariant());
+//   QCOMPARE(delegate->currentIndex(), 1);
+
+
+  /** \todo
+   *  See: qWaitForWindowActive() and/or qWaitForWindowExposed()
+   *  In file:///usr/share/qt5/doc/qttestlib/qtest.html
+   * And also QTestEventList in file:///usr/share/qt5/doc/qttestlib/qtesteventlist.html
+   * Check using also user data of combobox
+   */
+  /*
+   * Check using text and data of combobox
+   */
+  // Populate delegate
+  delegate->clear();
+  delegate->addItem("A", 1);
+  delegate->addItem("B", 2);
+  delegate->addItem("C", 3);
+  delegate->addItem("D", 4);
+  // Edit row 0
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  beginEditing(tableView, index);
+  // We not check what delegate displays now (depends on above tests)
+  // Select B
+  delegate->setCurrentIndex(1);
+  // Finish editing and check
+  endEditing(tableView, index);
+  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("B"));
+  QCOMPARE(model.data(index, Qt::EditRole), QVariant(2));
+  QCOMPARE(delegate->currentIndex(), 1);
+  // Edit row 0 again
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  beginEditing(tableView, index);
+  // Check that delegate displays B
+  QCOMPARE(delegate->currentIndex(), 1);
+  // Select C
+  delegate->setCurrentIndex(2);
+  // Finish editing and check
+  endEditing(tableView, index);
+  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("C"));
+  QCOMPARE(model.data(index, Qt::EditRole), QVariant(3));
+  QCOMPARE(delegate->currentIndex(), 2);
+
+  
+  
+  
+  
+  
+  
+  
+  // Edit row 0
+  index = model.index(0, 1);
+  beginEditing(tableView, index);
+  delegate->setCurrentIndex(0);
+  endEditing(tableView, index);
+  // Check
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(model.data(index, Qt::EditRole), QVariant(1));
+  QCOMPARE(delegate->currentIndex(), 0);
+  // Set display role data of row 0
+  index = model.index(0, 1);
+  QVERIFY(model.setData(index, "A", Qt::DisplayRole));
+  // Check
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(model.data(index, Qt::EditRole), QVariant(1));
+  QCOMPARE(delegate->currentIndex(), 0);
+  // Set edit role data of row 0
+  index = model.index(0, 1);
+  QVERIFY(model.setData(index, 1, Qt::EditRole));
+  // Check
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(model.data(index, Qt::EditRole), QVariant(1));
+  QCOMPARE(delegate->currentIndex(), 0);
+  // Set display role data of row 0
+  index = model.index(0, 1);
+  QVERIFY(model.setData(index, "B", Qt::DisplayRole));
+  // Check
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("B"));
+  QCOMPARE(model.data(index, Qt::EditRole), QVariant(2));
+  QCOMPARE(delegate->currentIndex(), 1);
+  // Set edit role data of row 0
+  index = model.index(0, 1);
+  QVERIFY(model.setData(index, 2, Qt::EditRole));
+  // Check
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("C"));
+  QCOMPARE(model.data(index, Qt::EditRole), QVariant(1));
+  QCOMPARE(delegate->currentIndex(), 2);
+
+  // Set data to row 0
+  ///QVERIFY(model.setData(index, "A", Qt::DisplayRole));
+  ///QVERIFY(model.setData(index, "A", Qt::EditRole));
+
   // Setup list view
   listView.setModel(&model);
   delegate = new mdtComboBoxItemDelegate(&listView);
@@ -872,13 +1165,6 @@ void mdtWidgetsTest::comboBoxItemDelegateTest()
   delegate->addItem("B");
   delegate->addItem("C");
   listView.setItemDelegate(delegate);
-  // Setup table view
-  tableView.setModel(&model);
-  delegate = new mdtComboBoxItemDelegate(&tableView);
-  delegate->addItem("E");
-  delegate->addItem("F");
-  delegate->addItem("G");
-  tableView.setItemDelegateForColumn(1, delegate);
   // Setup tree view
   treeVidew.setModel(&model);
   delegate = new mdtComboBoxItemDelegate(&treeVidew);
@@ -888,7 +1174,7 @@ void mdtWidgetsTest::comboBoxItemDelegateTest()
   treeVidew.setItemDelegateForColumn(1, delegate);
 
   listView.show();
-  tableView.show();
+  
   treeVidew.show();
   
   /*
@@ -899,6 +1185,46 @@ void mdtWidgetsTest::comboBoxItemDelegateTest()
   }
 }
 
+void mdtWidgetsTest::beginEditing(QAbstractItemView & view, const QModelIndex & index)
+{
+  QVERIFY(view.editTriggers() & QAbstractItemView::DoubleClicked);
+  QVERIFY(index.isValid());
+
+  // Get view port (witch is the widget to witch event must be sent)
+  QWidget *viewPort = view.viewport();
+  QVERIFY(viewPort != nullptr);
+  // Get center of region in view port that concerns given index
+  QRect rect = view.visualRect(index);
+  QPoint itemCenter = rect.center();
+  // Edition beginns after double click. With QTest, we must click before
+  QTest::mouseClick(viewPort, Qt::LeftButton, 0, itemCenter);
+  QTest::mouseDClick(viewPort, Qt::LeftButton, 0, itemCenter);
+}
+
+void mdtWidgetsTest::endEditing(QAbstractItemView & view, const QModelIndex & editingIndex)
+{
+  QVERIFY(!(view.editTriggers() & QAbstractItemView::SelectedClicked));
+  QVERIFY(editingIndex.isValid());
+  QVERIFY(view.model() != nullptr);
+  QVERIFY(view.model()->rowCount() > 1);
+
+  // Select a other row than witch we are editing
+  int row = editingIndex.row();
+  if(row == 0){
+    ++row;
+  }else{
+    --row;
+  }
+  QModelIndex index = view.model()->index(row, editingIndex.column());
+  // Get view port (witch is the widget to witch event must be sent)
+  QWidget *viewPort = view.viewport();
+  QVERIFY(viewPort != nullptr);
+  // Get center of region in view port that concerns given index
+  QRect rect = view.visualRect(index);
+  QPoint itemCenter = rect.center();
+  // Now, click to select new row
+  QTest::mouseClick(viewPort, Qt::LeftButton, 0, itemCenter);
+}
 
 /*
  * Main

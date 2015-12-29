@@ -113,6 +113,12 @@ class mdtSqlDatabaseCopierTableMapping : public mdtSqlCopierTableMapping
    */
   QString sourceFieldTypeName(int index) const;
 
+  /*! \brief Check if source field is part of a key
+   *
+   * \pre index must be in valid range.
+   */
+  FieldKeyType sourceFieldKeyType(int index) const;
+
   /*! \brief Get list of field names of destination table
    */
   QStringList getDestinationFieldNameList() const
@@ -131,6 +137,12 @@ class mdtSqlDatabaseCopierTableMapping : public mdtSqlCopierTableMapping
    * \pre index must be in valid range.
    */
   QString destinationFieldTypeName(int index) const;
+
+  /*! \brief Check if destination field is part of a key
+   *
+   * \pre index must be in valid range.
+   */
+  FieldKeyType destinationFieldKeyType(int index) const;
 
  private:
 

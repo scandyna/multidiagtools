@@ -121,16 +121,31 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
    */
   enum ColumnIndex_t
   {
-    SourceNameIndex = 0,      /*!< Column index of source field name */
-    SourceTypeIndex = 1,      /*!< Column index of source field type */
-    DestinationNameIndex = 2, /*!< Column index of destination field name */
-    DestinationTypeIndex = 3, /*!< Column index of destination field type */
-    FieldMappinStateIndex = 4 /*!< Column index of destination field type */
+    SourceTypeIndex = 0,        /*!< Column of source type (field or fixed value) */
+    SourceKeyTypeIndex,         /*!< Column index of source field key type */
+    SourceFieldNameIndex,       /*!< Column index of source field name */
+    SourceFieldTypeIndex,       /*!< Column index of source field type */
+    DestinationKeyTypeIndex,    /*!< Column index of destination field key type */
+    DestinationFieldNameIndex,  /*!< Column index of destination field name */
+    DestinationFieldTypeIndex,  /*!< Column index of destination field type */
+    FieldMappinStateIndex       /*!< Column index of destination field type */
   };
 
   mdtError pvLastError;
 
  private:
+
+  /*! \brief Get source type text
+   */
+  QVariant sourceTypeText(int row) const;
+
+  /*! \brief Get source field key type text
+   */
+  QVariant sourceFieldKeyTypeText(int row) const;
+
+  /*! \brief Get destination field key type text
+   */
+  QVariant destinationFieldKeyTypeText(int row) const;
 
   /*! \brief Get field mapping state data
    */

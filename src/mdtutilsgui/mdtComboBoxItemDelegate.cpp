@@ -30,7 +30,7 @@ mdtComboBoxItemDelegate::mdtComboBoxItemDelegate(QObject* parent)
  : QStyledItemDelegate(parent),
    pvComboBox(new QComboBox)
 {
-  connect(pvComboBox, &QComboBox::destroyed, this, &mdtComboBoxItemDelegate::resetPvComboBoxPointer);
+//   connect(pvComboBox, &QComboBox::destroyed, this, &mdtComboBoxItemDelegate::resetPvComboBoxPointer);
 }
 
 mdtComboBoxItemDelegate::~mdtComboBoxItemDelegate()
@@ -45,22 +45,26 @@ mdtComboBoxItemDelegate::~mdtComboBoxItemDelegate()
 
 void mdtComboBoxItemDelegate::addItem(const QString& text, const QVariant& userData)
 {
+  Q_ASSERT(pvComboBox != nullptr);
   pvComboBox->addItem(text, userData);
 }
 
 void mdtComboBoxItemDelegate::addItem(const QIcon& icon, const QString& text, const QVariant& userData)
 {
+  Q_ASSERT(pvComboBox != nullptr);
   pvComboBox->addItem(icon, text, userData);
 }
 
 void mdtComboBoxItemDelegate::addItems(const QStringList& texts)
 {
+  Q_ASSERT(pvComboBox != nullptr);
   pvComboBox->addItems(texts);
 }
 
 void mdtComboBoxItemDelegate::setModel(QAbstractItemModel* model, int modelColumn)
 {
   Q_ASSERT(model != nullptr);
+  Q_ASSERT(pvComboBox != nullptr);
   pvComboBox->setModel(model);
   pvComboBox->setModelColumn(modelColumn);
 }
@@ -68,6 +72,18 @@ void mdtComboBoxItemDelegate::setModel(QAbstractItemModel* model, int modelColum
 void mdtComboBoxItemDelegate::clear()
 {
   pvComboBox->clear();
+}
+
+void mdtComboBoxItemDelegate::setCurrentIndex(int index)
+{
+  Q_ASSERT(pvComboBox != nullptr);
+  pvComboBox->setCurrentIndex(index);
+}
+
+int mdtComboBoxItemDelegate::currentIndex() const
+{
+  Q_ASSERT(pvComboBox != nullptr);
+  return pvComboBox->currentIndex();
 }
 
 // void mdtComboBoxItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem & option, const QModelIndex & index) const
@@ -87,6 +103,8 @@ void mdtComboBoxItemDelegate::clear()
 
 QWidget* mdtComboBoxItemDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem &, const QModelIndex &) const
 {
+  Q_ASSERT(pvComboBox != nullptr);
+
   // Enshure that pvComboBox will be displayed on the right widget
   if(pvComboBox->parent() != parent){
     pvComboBox->setParent(parent);
@@ -102,17 +120,36 @@ void mdtComboBoxItemDelegate::destroyEditor(QWidget*, const QModelIndex &) const
 void mdtComboBoxItemDelegate::setEditorData(QWidget*, const QModelIndex & index) const
 {
   Q_ASSERT(index.model() != nullptr);
+  Q_ASSERT(pvComboBox != nullptr);
 
-  QString text = index.model()->data(index, Qt::EditRole).toString();
+  QString text = index.model()->data(index, Qt::DisplayRole).toString();
 
+  qDebug() << "setEditorData() for index " << index << ":";
+  qDebug() << "-> CB current index: " << pvComboBox->currentIndex();
+  qDebug() << "-> Setting text " << text << " ...";
+  
   pvComboBox->setCurrentText(text);
+  qDebug() << "-> CB current index: " << pvComboBox->currentIndex();
 }
 
 void mdtComboBoxItemDelegate::setModelData(QWidget*, QAbstractItemModel* model, const QModelIndex& index) const
 {
   Q_ASSERT(model != nullptr);
+  Q_ASSERT(pvComboBox != nullptr);
 
-  model->setData(index, pvComboBox->currentText(), Qt::EditRole);
+  qDebug() << "setModelData() for index " << index << ":";
+  qDebug() << "-> CB text: " << pvComboBox->currentText() << " , data: " << pvComboBox->currentData();
+  qDebug() << "-> Updating model ...";
+  /*
+   * Updating model will also recall setEditorData().
+   * For this, we must get a copy of combobox data before updating
+   */
+  auto data = pvComboBox->currentData();
+  auto text = pvComboBox->currentText();
+  model->setData(index, data, Qt::EditRole);
+  model->setData(index, text, Qt::DisplayRole);
+  qDebug() << "-> DisplayRole data: " << model->data(index, Qt::DisplayRole);
+  qDebug() << "-> EditRole data: " << model->data(index, Qt::EditRole);
 }
 
 void mdtComboBoxItemDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem & option, const QModelIndex &) const
@@ -122,7 +159,8 @@ void mdtComboBoxItemDelegate::updateEditorGeometry(QWidget* editor, const QStyle
   editor->setGeometry(option.rect);
 }
 
-void mdtComboBoxItemDelegate::resetPvComboBoxPointer(QObject *)
-{
-  pvComboBox = nullptr;
-}
+// void mdtComboBoxItemDelegate::resetPvComboBoxPointer(QObject *)
+// {
+//   qDebug() << "Reset CB..";
+//   pvComboBox = nullptr;
+// }

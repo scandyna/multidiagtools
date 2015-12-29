@@ -1,4 +1,4 @@
-format 209
+format 210
 
 classcanvas 128002 class_ref 1772930 // mdtSqlCopierFieldMapping
   classdiagramsettings member_max_width 0 end
@@ -15,11 +15,11 @@ end
 relationcanvas 128258 relation_ref 2104578 // <unidirectional association>
   from ref 128002 z 3006 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 238 451 3000 no_multiplicity_b
+  multiplicity_a_pos 249 447 3000 no_multiplicity_b
 end
 relationcanvas 128514 relation_ref 2104706 // <unidirectional association>
   from ref 128002 z 2007 to ref 128386
   no_role_a no_role_b
-  multiplicity_a_pos 488 451 3000 no_multiplicity_b
+  multiplicity_a_pos 481 447 3000 no_multiplicity_b
 end
 end

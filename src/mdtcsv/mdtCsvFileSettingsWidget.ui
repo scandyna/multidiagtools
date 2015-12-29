@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>mdtCsvFileGeneratorFileSettingsWidget</class>
- <widget class="QWidget" name="mdtCsvFileGeneratorFileSettingsWidget">
+ <class>mdtCsvFileSettingsWidget</class>
+ <widget class="QWidget" name="mdtCsvFileSettingsWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

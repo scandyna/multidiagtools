@@ -16,7 +16,7 @@ classcanvas 128514 class_ref 2167042 // mdtCsvFileGeneratorSettingsDialog
   classdiagramsettings member_max_width 0 end
   xyz 160 420 2000
 end
-classcanvas 128642 class_ref 2167554 // mdtCsvFileGeneratorFileSettingsWidget
+classcanvas 128642 class_ref 2167554 // mdtCsvFileSettingsWidget
   classdiagramsettings member_max_width 0 end
   xyz 154 336 2000
 end

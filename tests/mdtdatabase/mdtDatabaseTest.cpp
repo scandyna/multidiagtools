@@ -996,7 +996,6 @@ void mdtDatabaseTest::sqlTableSchemaTest()
    */
   QVERIFY(!ts.isTemporary());
   QCOMPARE(ts.fieldCount(), 0);
-  
   /*
    * Simple set/get
    */
@@ -1031,6 +1030,9 @@ void mdtDatabaseTest::sqlTableSchemaTest()
   QCOMPARE(ts.fieldIndex("Name"), 1);
   QCOMPARE(ts.field(1).name(), QString("Name"));
   QCOMPARE(ts.field("Name").name(), QString("Name"));
+  // Check is PK
+  QVERIFY(ts.isFieldPartOfPrimaryKey(0));
+  QVERIFY(!ts.isFieldPartOfPrimaryKey(1));
   /*
    * Setup Address_tbl
    */

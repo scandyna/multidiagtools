@@ -32,7 +32,7 @@ class mdtCsvTest : public mdtTest
   void parserSettingsTest();
   void generatorSettingsTest();
   void generatorSettingsWidgetTest();
-  void fileGeneratorSettingsWidgetTest();
+  void fileSettingsWidgetTest();
   void fileGeneratorSettingsDialogTest();
   void recordTest();
   void dataTest();

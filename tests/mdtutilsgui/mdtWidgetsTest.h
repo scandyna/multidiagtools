@@ -22,6 +22,9 @@
 #define MDT_WIDGETS_TEST_H
 
 #include "mdtTest.h"
+#include <QAbstractItemView>
+
+class QModelIndex;
 
 class mdtWidgetsTest : public mdtTest
 {
@@ -41,6 +44,12 @@ class mdtWidgetsTest : public mdtTest
 
   void progressValueTest();
   void comboBoxItemDelegateTest();
+
+ private:
+
+  // Helper function to begin and end editing in a QAbstractItemView
+  void beginEditing(QAbstractItemView & view, const QModelIndex & index);
+  void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex);
 };
 
 #endif // #ifndef MDT_WIDGETS_TEST_H

@@ -256,6 +256,12 @@ class mdtSqlSchemaTable
     return pvPrimaryKey;
   }
 
+  /*! \brief Check if field at given index is part of primary key
+   *
+   * \pre index must be in valid range
+   */
+  bool isFieldPartOfPrimaryKey(int index) const;
+
   /*! \brief Add a index
    *
    * \note The table name of given index is ignored.

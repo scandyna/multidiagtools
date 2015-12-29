@@ -32,7 +32,7 @@ mdtSqlDatabaseCopierTableMappingDialog::mdtSqlDatabaseCopierTableMappingDialog(Q
 {
   setupUi(this);
   tvMapping->setModel(pvMappingModel);
-  tvMapping->setItemDelegateForColumn(0, pvSourceFieldSelectionDelegate);
+  tvMapping->setItemDelegateForColumn(2, pvSourceFieldSelectionDelegate);
   connect(tbResetMapping, &QToolButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::resetFieldMapping);
   connect(tbMapByName, &QToolButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::mapByFieldName);
   connect(cbSourceTable, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),

@@ -1,6 +1,6 @@
 format 210
 "Qt" // Qt
-  revision 111
+  revision 112
   modified_by 2 "philippe"
   // class settings
   
@@ -6302,6 +6302,44 @@ ${inlines}
     end
 
     class 2160386 "QPaintDevice"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+  end
+
+  classview 907266 "QtWidgets"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 1855618 "QFileDialog"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2227202 "QFileDialog"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {

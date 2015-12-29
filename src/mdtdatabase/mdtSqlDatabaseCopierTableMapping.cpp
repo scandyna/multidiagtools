@@ -21,6 +21,7 @@
 #include "mdtSqlDatabaseCopierTableMapping.h"
 #include "mdtSqlField.h"
 #include "mdtSqlFieldType.h"
+#include "mdtSqlPrimaryKey.h"
 #include <QSqlDriver>
 
 //#include <QDebug>
@@ -145,6 +146,22 @@ QString mdtSqlDatabaseCopierTableMapping::sourceFieldTypeName(int index) const
   return pvSourceTable.fieldTypeName(sourceFieldIndex, mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName()));
 }
 
+mdtSqlCopierTableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::sourceFieldKeyType(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < fieldCount());
+
+  const int sourceFieldIndex = fieldMappingAt(index).sourceFieldIndex;
+  Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
+  if(sourceFieldIndex < 0){
+    return NotAKey;
+  }
+  if(pvSourceTable.isFieldPartOfPrimaryKey(sourceFieldIndex)){
+    return PrimaryKey;
+  }
+  return NotAKey;
+}
+
 QString mdtSqlDatabaseCopierTableMapping::destinationFieldName(int index) const
 {
   Q_ASSERT(index >= 0);
@@ -169,6 +186,22 @@ QString mdtSqlDatabaseCopierTableMapping::destinationFieldTypeName(int index) co
     return QString();
   }
   return pvDestinationTable.fieldTypeName(destinationFieldIndex, mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName()));
+}
+
+mdtSqlCopierTableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::destinationFieldKeyType(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < fieldCount());
+
+  const int destinationFieldIndex = fieldMappingAt(index).destinationFieldIndex;
+  Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
+  if(destinationFieldIndex < 0){
+    return NotAKey;
+  }
+  if(pvDestinationTable.isFieldPartOfPrimaryKey(destinationFieldIndex)){
+    return PrimaryKey;
+  }
+  return NotAKey;
 }
 
 void mdtSqlDatabaseCopierTableMapping::updateFieldMappingState(mdtSqlCopierFieldMapping & fm, mdtSqlDriverType::Type sourceDriverType, mdtSqlDriverType::Type destinationDriverType)

@@ -1,20 +1,24 @@
 window_sizes 1280 964 405 869 911 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1596162 // TableMapping
+  classdiagram_ref 1848706 // CopierMapping
+    695 732 100 4 0 0
+  classdiagram_ref 1848962 // DatabaseCopierMapping
+    120 106 100 4 12 0
+  active  classdiagram_ref 1576066 // FieldMapping
     869 911 100 4 0 0
+  classdiagram_ref 1809282 // TableMapping
+    120 106 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1596162 // TableMapping
+selected classdiagram_ref 1178242 // DeviceContainer
 open
-  classview_ref 887298 // Common
-  classview_ref 807426 // ImportExportCopy
-  classdiagram_ref 1609346 // DatabaseCopierMappingModel
-  operation_ref 3338754 // mdtSqlCsvStringImportTableMappingModel
-  operation_ref 3339138 // setSourceCsvString
-  operation_ref 3339522 // setMapping
-  operation_ref 3338882 // mdtSqlCsvFileImportTableMappingModel
-  operation_ref 3339010 // setSourceCsvFile
-  operation_ref 3339650 // setMapping
+  classview_ref 742146 // Wait
+  
+  package_ref 168322 // mdtport
+  classview_ref 240514 // mdtDevice
+  classview_ref 141698 // MV-Model
+  classview_ref 886914 // MV-View
+  classview_ref 907266 // QtWidgets
 end
 end

@@ -21,6 +21,8 @@
 #ifndef MDT_SQL_COPIER_FIELD_MAPPING_H
 #define MDT_SQL_COPIER_FIELD_MAPPING_H
 
+#include <QVariant>
+
 /*! \brief Field mapping data
  *
  * Contains only data for field mapping.
@@ -42,6 +44,14 @@ struct mdtSqlCopierFieldMapping
     MappingError        /*!< A error was detected in field mapping. */
   };
 
+  /*! \brief Source type
+   */
+  enum SourceType
+  {
+    Field,        /*!< Data will be copied regarding source and destination field mapping */
+    FixedValue    /*!< fixedValue will be copied to destination mapped field */
+  };
+
   /*! \brief Source field index
    */
   int sourceFieldIndex;
@@ -50,7 +60,19 @@ struct mdtSqlCopierFieldMapping
    */
   int destinationFieldIndex;
 
+  /*! \brief Field mapping state
+   */
   MappingState mappingState;
+
+  /*! \brief Source type
+   */
+  SourceType sourceType;
+
+  /*! \brief Source fixed value
+   *
+   * \note has only sense if sourceType is FixedValue.
+   */
+  QVariant sourceFixedValue;
 
   /*! \brief Default constructor
    *
@@ -59,7 +81,8 @@ struct mdtSqlCopierFieldMapping
   mdtSqlCopierFieldMapping()
    : sourceFieldIndex(-1),
      destinationFieldIndex(-1),
-     mappingState(mdtSqlCopierFieldMapping::MappingNotSet)
+     mappingState(mdtSqlCopierFieldMapping::MappingNotSet),
+     sourceType(Field)
   {
   }
 
@@ -81,6 +104,8 @@ struct mdtSqlCopierFieldMapping
     sourceFieldIndex = -1;
     destinationFieldIndex = -1;
     mappingState = MappingNotSet;
+    sourceType = Field;
+    sourceFixedValue.clear();
   }
 };
 

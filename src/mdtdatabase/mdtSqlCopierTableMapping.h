@@ -52,6 +52,14 @@ class mdtSqlCopierTableMapping
                              or during field mapping. Get more information with lastError() . */
   };
 
+  /*! \brief Field key type
+   */
+  enum FieldKeyType
+  {
+    NotAKey,    /*!< Field a not a key */
+    PrimaryKey  /*!< Field is part of primary key */
+  };
+
   /*! \brief Construct a empty table mapping
    */
   mdtSqlCopierTableMapping();
@@ -98,6 +106,17 @@ class mdtSqlCopierTableMapping
    */
   virtual QString destinationTableName() const = 0;
 
+  /*! \brief Get source type (field or fixed value)
+   *
+   * \pre index must be in a valid range
+   */
+  mdtSqlCopierFieldMapping::SourceType sourceType(int index) const
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < pvFieldMappingList.size());
+    return pvFieldMappingList.at(index).sourceType;
+  }
+
   /*! \brief Set source field for given field mapping index
    *
    * If source field name is empty,
@@ -119,6 +138,16 @@ class mdtSqlCopierTableMapping
    */
   virtual QString sourceFieldTypeName(int index) const = 0;
 
+  /*! \brief Check if source field is part of a key
+   *
+   * Default implementation allways returns NotAKey.
+   */
+  virtual FieldKeyType sourceFieldKeyType(int index) const
+  {
+    Q_UNUSED(index);
+    return NotAKey;
+  }
+
   /*! \brief Get destination field name for given field mapping index
    *
    * \pre index must be in valid range.
@@ -130,6 +159,16 @@ class mdtSqlCopierTableMapping
    * \pre index must be in valid range.
    */
   virtual QString destinationFieldTypeName(int index) const = 0;
+
+  /*! \brief Check if destination field is part of a key
+   *
+   * Default implementation allways returns NotAKey.
+   */
+  virtual FieldKeyType destinationFieldKeyType(int index) const
+  {
+    Q_UNUSED(index);
+    return NotAKey;
+  }
 
   /*! \brief Get last error
    */

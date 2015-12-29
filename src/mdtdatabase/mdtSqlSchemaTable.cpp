@@ -127,6 +127,13 @@ mdtSqlField mdtSqlSchemaTable::field(const QString& fieldName) const
   return mdtSqlField();
 }
 
+bool mdtSqlSchemaTable::isFieldPartOfPrimaryKey(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < pvFields.size());
+  return pvPrimaryKey.contains(fieldName(index));
+}
+
 // QSqlField mdtSqlSchemaTable::field(const QString & fieldName) const
 // {
 //   int i;

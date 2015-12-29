@@ -16,6 +16,10 @@ classcanvas 128514 class_ref 2193922 // mdtWaitSleep
   classdiagramsettings member_max_width 0 end
   xyz 139 249 2000
 end
+note 129282 "When want to connect to multiple devices, it will be good that all connections are initialized async. Then, wait until all are connected.
+Also more interesting for scan.
+See also mdtDeviceContainer"
+  xyzwh 94 387 2000 681 123
 relationcanvas 128258 relation_ref 2417922 // <generalisation>
   geometry VHV
   from ref 128130 z 2001 to point 404 195
