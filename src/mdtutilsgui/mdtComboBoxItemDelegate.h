@@ -42,6 +42,10 @@ class QAbstractItemModel;
  *   tableView->setModel(someUsefullModel);
  *   tableView->setItemDelegateForColumn(1, delegate); // Will use the combobox delegate only for column 1
  * \endcode
+ *
+ * If the model handles Qt::DisplayRole and Qt::EditRole differently,
+ *  it is also possible to use delegates userData (witch is simply forwarded to internal QComboBox userData).
+ *  In this case, combobox's textData will be used as Qt::DisplayRole and combobox's userData as Qt::EditRole.
  */
 class mdtComboBoxItemDelegate : public QStyledItemDelegate
 {
@@ -127,15 +131,8 @@ class mdtComboBoxItemDelegate : public QStyledItemDelegate
    */
   void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem & option, const QModelIndex & index) const;
 
-//  private slots:
- 
-  /*! \internal Prevent double free if pvComboBox was parented
-   */
-//   void resetPvComboBoxPointer(QObject *obj);
-
  private:
 
-  ///mutable QComboBox *pvComboBox;
   mutable QPointer<QComboBox> pvComboBox;
 };
 

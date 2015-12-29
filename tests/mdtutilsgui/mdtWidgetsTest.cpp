@@ -906,9 +906,9 @@ void mdtWidgetsTest::formatProxyModelTest()
   /*
    * Play
    */
-  while(tw.isVisible()){
-    QTest::qWait(500);
-  }
+//   while(tw.isVisible()){
+//     QTest::qWait(500);
+//   }
 }
 
 void mdtWidgetsTest::progressValueTest()
@@ -975,19 +975,8 @@ void mdtWidgetsTest::comboBoxItemDelegateTest()
   QTreeView treeVidew;
   QModelIndex index;
 
-  /**
-   * \todo Add functionnality of putting different values for DisplayRole and EditRole
-   *   NOTE: EditRole is the actual data type
-   *   See also SpinBox example: file:///usr/share/qt5/doc/qtwidgets/model-view-programming.html
-   */
   // Populate model with data
   model.populate(true, false);
-//   for (int row = 0; row < model.rowCount(); ++row) {
-//     for (int column = 0; column < model.columnCount(); ++column) {
-//         QStandardItem *item = new QStandardItem(QString("row %0, column %1").arg(row).arg(column));
-//         model.setItem(row, column, item);
-//     }
-//   }
   /*
    * Setup a table view for tests
    */
@@ -1031,43 +1020,6 @@ void mdtWidgetsTest::comboBoxItemDelegateTest()
   QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("C"));
   QCOMPARE(model.data(index, Qt::EditRole), QVariant());
   QCOMPARE(delegate->currentIndex(), 2);
-
-//   // Edit row 1 - Select B
-//   index = model.index(1, 1);
-//   beginEditing(tableView, index);
-//   delegate->setCurrentIndex(1);
-//   endEditing(tableView, index);
-//   // Check
-//   QVERIFY(index.isValid());
-//   QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("A"));
-//   QCOMPARE(model.data(index, Qt::EditRole), QVariant());
-//   QCOMPARE(delegate->currentIndex(), 0);
-// 
-//   // Set data of row 0
-//   index = model.index(0, 1);
-//   QVERIFY(model.setData(index, "A", Qt::DisplayRole));
-//   // Check
-//   QVERIFY(index.isValid());
-//   QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("A"));
-//   QCOMPARE(model.data(index, Qt::EditRole), QVariant());
-//   QCOMPARE(delegate->currentIndex(), 0);
-//   // Set data of row 0
-//   index = model.index(0, 1);
-//   QVERIFY(model.setData(index, "B", Qt::DisplayRole));
-//   
-//   // Check
-//   QVERIFY(index.isValid());
-//   QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("B"));
-//   QCOMPARE(model.data(index, Qt::EditRole), QVariant());
-//   QCOMPARE(delegate->currentIndex(), 1);
-
-
-  /** \todo
-   *  See: qWaitForWindowActive() and/or qWaitForWindowExposed()
-   *  In file:///usr/share/qt5/doc/qttestlib/qtest.html
-   * And also QTestEventList in file:///usr/share/qt5/doc/qttestlib/qtesteventlist.html
-   * Check using also user data of combobox
-   */
   /*
    * Check using text and data of combobox
    */
@@ -1103,61 +1055,6 @@ void mdtWidgetsTest::comboBoxItemDelegateTest()
   QCOMPARE(model.data(index, Qt::EditRole), QVariant(3));
   QCOMPARE(delegate->currentIndex(), 2);
 
-  
-  
-  
-  
-  
-  
-  
-  // Edit row 0
-  index = model.index(0, 1);
-  beginEditing(tableView, index);
-  delegate->setCurrentIndex(0);
-  endEditing(tableView, index);
-  // Check
-  index = model.index(0, 1);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("A"));
-  QCOMPARE(model.data(index, Qt::EditRole), QVariant(1));
-  QCOMPARE(delegate->currentIndex(), 0);
-  // Set display role data of row 0
-  index = model.index(0, 1);
-  QVERIFY(model.setData(index, "A", Qt::DisplayRole));
-  // Check
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("A"));
-  QCOMPARE(model.data(index, Qt::EditRole), QVariant(1));
-  QCOMPARE(delegate->currentIndex(), 0);
-  // Set edit role data of row 0
-  index = model.index(0, 1);
-  QVERIFY(model.setData(index, 1, Qt::EditRole));
-  // Check
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("A"));
-  QCOMPARE(model.data(index, Qt::EditRole), QVariant(1));
-  QCOMPARE(delegate->currentIndex(), 0);
-  // Set display role data of row 0
-  index = model.index(0, 1);
-  QVERIFY(model.setData(index, "B", Qt::DisplayRole));
-  // Check
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("B"));
-  QCOMPARE(model.data(index, Qt::EditRole), QVariant(2));
-  QCOMPARE(delegate->currentIndex(), 1);
-  // Set edit role data of row 0
-  index = model.index(0, 1);
-  QVERIFY(model.setData(index, 2, Qt::EditRole));
-  // Check
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("C"));
-  QCOMPARE(model.data(index, Qt::EditRole), QVariant(1));
-  QCOMPARE(delegate->currentIndex(), 2);
-
-  // Set data to row 0
-  ///QVERIFY(model.setData(index, "A", Qt::DisplayRole));
-  ///QVERIFY(model.setData(index, "A", Qt::EditRole));
-
   // Setup list view
   listView.setModel(&model);
   delegate = new mdtComboBoxItemDelegate(&listView);
@@ -1173,16 +1070,14 @@ void mdtWidgetsTest::comboBoxItemDelegateTest()
   delegate->addItem("3");
   treeVidew.setItemDelegateForColumn(1, delegate);
 
-  listView.show();
-  
-  treeVidew.show();
-  
   /*
    * Play
    */
-  while(listView.isVisible()){
-    QTest::qWait(500);
-  }
+//   listView.show();
+//   treeVidew.show();
+//   while(listView.isVisible()){
+//     QTest::qWait(500);
+//   }
 }
 
 void mdtWidgetsTest::beginEditing(QAbstractItemView & view, const QModelIndex & index)

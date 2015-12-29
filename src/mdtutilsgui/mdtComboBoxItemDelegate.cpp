@@ -24,13 +24,12 @@
 #include <QStyle>
 #include <QComboBox>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtComboBoxItemDelegate::mdtComboBoxItemDelegate(QObject* parent)
  : QStyledItemDelegate(parent),
    pvComboBox(new QComboBox)
 {
-//   connect(pvComboBox, &QComboBox::destroyed, this, &mdtComboBoxItemDelegate::resetPvComboBoxPointer);
 }
 
 mdtComboBoxItemDelegate::~mdtComboBoxItemDelegate()
@@ -94,9 +93,9 @@ int mdtComboBoxItemDelegate::currentIndex() const
 //   cbOption.rect = option.rect;
 //   cbOption.state = option.state;
 //   cbOption.currentText = "Test";
-//   
+//
 // ///  QWidget *w = qobject_cast<QWidget*>(option.styleObject);
-//   
+//
 //   QApplication::style()->drawComplexControl(QStyle::CC_ComboBox, &cbOption, painter, (QWidget*)parent());
 //   ///QApplication::style()->drawControl(QStyle::CE_ComboBoxLabel, &option, painter);
 // }
@@ -123,13 +122,7 @@ void mdtComboBoxItemDelegate::setEditorData(QWidget*, const QModelIndex & index)
   Q_ASSERT(pvComboBox != nullptr);
 
   QString text = index.model()->data(index, Qt::DisplayRole).toString();
-
-  qDebug() << "setEditorData() for index " << index << ":";
-  qDebug() << "-> CB current index: " << pvComboBox->currentIndex();
-  qDebug() << "-> Setting text " << text << " ...";
-  
   pvComboBox->setCurrentText(text);
-  qDebug() << "-> CB current index: " << pvComboBox->currentIndex();
 }
 
 void mdtComboBoxItemDelegate::setModelData(QWidget*, QAbstractItemModel* model, const QModelIndex& index) const
@@ -137,9 +130,6 @@ void mdtComboBoxItemDelegate::setModelData(QWidget*, QAbstractItemModel* model, 
   Q_ASSERT(model != nullptr);
   Q_ASSERT(pvComboBox != nullptr);
 
-  qDebug() << "setModelData() for index " << index << ":";
-  qDebug() << "-> CB text: " << pvComboBox->currentText() << " , data: " << pvComboBox->currentData();
-  qDebug() << "-> Updating model ...";
   /*
    * Updating model will also recall setEditorData().
    * For this, we must get a copy of combobox data before updating
@@ -148,8 +138,6 @@ void mdtComboBoxItemDelegate::setModelData(QWidget*, QAbstractItemModel* model, 
   auto text = pvComboBox->currentText();
   model->setData(index, data, Qt::EditRole);
   model->setData(index, text, Qt::DisplayRole);
-  qDebug() << "-> DisplayRole data: " << model->data(index, Qt::DisplayRole);
-  qDebug() << "-> EditRole data: " << model->data(index, Qt::EditRole);
 }
 
 void mdtComboBoxItemDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem & option, const QModelIndex &) const
@@ -158,9 +146,3 @@ void mdtComboBoxItemDelegate::updateEditorGeometry(QWidget* editor, const QStyle
 
   editor->setGeometry(option.rect);
 }
-
-// void mdtComboBoxItemDelegate::resetPvComboBoxPointer(QObject *)
-// {
-//   qDebug() << "Reset CB..";
-//   pvComboBox = nullptr;
-// }
