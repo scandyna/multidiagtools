@@ -92,7 +92,7 @@ class mdtSqlDatabaseCopierTableMapping : public mdtSqlCopierTableMapping
    *
    * \pre index must be in a valid range
    */
-  void setSourceField(int index, const QString & fieldName);
+//   void setSourceField(int index, const QString & fieldName);
 
   /*! \brief Get list of field names of source table
    */
@@ -154,6 +154,10 @@ class mdtSqlDatabaseCopierTableMapping : public mdtSqlCopierTableMapping
   {
     return pvDestinationTable.fieldCount();
   }
+
+  /*! \brief Set source field for given field mapping
+   */
+  void updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName);
 
   /*! \brief Update given field maping state
    */

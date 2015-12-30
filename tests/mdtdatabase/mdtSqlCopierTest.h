@@ -26,6 +26,9 @@
 #include <QSqlDatabase>
 #include <QTemporaryFile>
 
+class QModelIndex;
+class QAbstractItemView;
+
 class mdtSqlCopierTest : public mdtTest
 {
  Q_OBJECT
@@ -58,6 +61,10 @@ class mdtSqlCopierTest : public mdtTest
   void sqlDatabaseCopierThreadTest();
 
  private:
+
+  // Helper function to begin and end editing in a QAbstractItemView
+  void beginEditing(QAbstractItemView & view, const QModelIndex & index);
+  void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex);
 
   /*
    * Create the test database

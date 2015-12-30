@@ -94,31 +94,31 @@ void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
   updateTableMappingState();
 }
 
-void mdtSqlDatabaseCopierTableMapping::setSourceField(int index, const QString & fieldName)
-{
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < fieldCount());
-
-  auto fm = fieldMappingAt(index);
-  auto sourceDriverType = mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName());
-  auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
-
-  if(sourceDriverType == mdtSqlDriverType::Unknown){
-    return;
-  }
-  if(destinationDriverType == mdtSqlDriverType::Unknown){
-    return;
-  }
-  if(fieldName.isEmpty()){
-    fm.sourceFieldIndex = -1;
-  }else{
-    fm.sourceFieldIndex = pvSourceTable.fieldIndex(fieldName);
-  }
-  updateFieldMappingState(fm, sourceDriverType, destinationDriverType);
-  updateFieldMappingAt(index, fm);
-  // Update table mapping state
-  updateTableMappingState();
-}
+// void mdtSqlDatabaseCopierTableMapping::setSourceField(int index, const QString & fieldName)
+// {
+//   Q_ASSERT(index >= 0);
+//   Q_ASSERT(index < fieldCount());
+// 
+//   auto fm = fieldMappingAt(index);
+//   auto sourceDriverType = mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName());
+//   auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
+// 
+//   if(sourceDriverType == mdtSqlDriverType::Unknown){
+//     return;
+//   }
+//   if(destinationDriverType == mdtSqlDriverType::Unknown){
+//     return;
+//   }
+//   if(fieldName.isEmpty()){
+//     fm.sourceFieldIndex = -1;
+//   }else{
+//     fm.sourceFieldIndex = pvSourceTable.fieldIndex(fieldName);
+//   }
+//   updateFieldMappingState(fm, sourceDriverType, destinationDriverType);
+//   updateFieldMappingAt(index, fm);
+//   // Update table mapping state
+//   updateTableMappingState();
+// }
 
 QString mdtSqlDatabaseCopierTableMapping::sourceFieldName(int index) const
 {
@@ -202,6 +202,25 @@ mdtSqlCopierTableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::destina
     return PrimaryKey;
   }
   return NotAKey;
+}
+
+void mdtSqlDatabaseCopierTableMapping::updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName)
+{
+  auto sourceDriverType = mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName());
+  auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
+
+  if(sourceDriverType == mdtSqlDriverType::Unknown){
+    return;
+  }
+  if(destinationDriverType == mdtSqlDriverType::Unknown){
+    return;
+  }
+  if(sourceFieldName.isEmpty()){
+    fm.sourceFieldIndex = -1;
+  }else{
+    fm.sourceFieldIndex = pvSourceTable.fieldIndex(sourceFieldName);
+  }
+  updateFieldMappingState(fm, sourceDriverType, destinationDriverType);
 }
 
 void mdtSqlDatabaseCopierTableMapping::updateFieldMappingState(mdtSqlCopierFieldMapping & fm, mdtSqlDriverType::Type sourceDriverType, mdtSqlDriverType::Type destinationDriverType)

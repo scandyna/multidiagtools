@@ -29,6 +29,8 @@
 #include <QVariant>
 #include <QVariant>
 
+class mdtComboBoxItemDelegate;
+
 /*! \brief Base table model to access SQL table copier mapping
  *
  * \sa mdtSqlCopierTableMapping
@@ -47,6 +49,10 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
    */
   mdtSqlCopierTableMappingModel(const mdtSqlCopierTableMappingModel & other) = delete;
   mdtSqlCopierTableMappingModel & operator=(const mdtSqlCopierTableMappingModel &) = delete;
+
+  /*! \brief Setup source type delegate
+   */
+  void setupSourceTypeDelegate(mdtComboBoxItemDelegate * const delegate);
 
   /*! \brief Reset field mapping
    *

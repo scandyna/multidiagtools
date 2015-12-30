@@ -260,6 +260,8 @@ class mdtError
   // Copy construct is handled by QExplicitlySharedDataPointer
   mdtError(const mdtError &) = default;
 
+//   ~mdtError(){}
+
   //mdtErrorV2(mdtErrorV2 &&) = default;
 
   /*! \brief Check if error is null
@@ -472,7 +474,7 @@ class mdtError
 
   QExplicitlySharedDataPointer<mdtErrorPrivateBase> pvShared;
 };
-
-///Q_DECLARE_METATYPE(mdtError)
+//Q_DECLARE_METATYPE(mdtError)
+//Q_DECLARE_OPAQUE_POINTER(mdtError)
 
 #endif // #ifndef MDT_ERROR_H

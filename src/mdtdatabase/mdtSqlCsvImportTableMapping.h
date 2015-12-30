@@ -63,7 +63,7 @@ class mdtSqlCsvImportTableMapping : public mdtSqlCopierTableMapping
    *
    * \pre index must be in a valid range
    */
-  void setSourceField(int index, const QString & fieldName);
+//   void setSourceField(int index, const QString & fieldName);
 
   /*! \brief Get list of field names of source table
    */
@@ -124,6 +124,10 @@ class mdtSqlCsvImportTableMapping : public mdtSqlCopierTableMapping
   virtual const mdtCsvSourceInfo & sourceTable() const = 0;
 
  private:
+
+  /*! \brief Set source field for given field mapping
+   */
+  void updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName);
 
   /*! \brief Update given field maping state
    */

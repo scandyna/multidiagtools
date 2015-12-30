@@ -106,6 +106,12 @@ class mdtSqlCopierTableMapping
    */
   virtual QString destinationTableName() const = 0;
 
+  /*! \brief Set source type (field or fixed value)
+   *
+   * \pre index must be in a valid range
+   */
+  void setSourceType(int index, mdtSqlCopierFieldMapping::SourceType type);
+
   /*! \brief Get source type (field or fixed value)
    *
    * \pre index must be in a valid range
@@ -123,8 +129,29 @@ class mdtSqlCopierTableMapping
    *  the source field will be removed for given index.
    *
    * \pre index must be in a valid range
+   * \pre source type for given index must be mdtSqlCopierFieldMapping::Field
    */
-  virtual void setSourceField(int index, const QString & fieldName) = 0;
+  void setSourceField(int index, const QString & fieldName);
+
+  /*! \brief Set source fixed value for given field mapping index
+   *
+   * \pre index must be in a valid range
+   * \pre source type for given index must be mdtSqlCopierFieldMapping::FixedValue
+   */
+  void setSourceFixedValue(int index, const QVariant & value);
+
+  /*! \brief Get source fixed value for given field mapping index
+   *
+   * \pre index must be in a valid range
+   * \pre source type for given index must be mdtSqlCopierFieldMapping::FixedValue
+   */
+  QVariant sourceFixedValue(int index) const
+  {
+    Q_ASSERT(index >= 0);
+    Q_ASSERT(index < pvFieldMappingList.size());
+    Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::FixedValue);
+    return pvFieldMappingList.at(index).sourceFixedValue;
+  }
 
   /*! \brief Get source field name for given field mapping index
    *
@@ -235,6 +262,10 @@ class mdtSqlCopierTableMapping
    * Mainly used by resetFieldMapping()
    */
   virtual int destinationTableFieldCount() const = 0;
+
+  /*! \brief Set source field for given field mapping
+   */
+  virtual void updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName) = 0;
 
   /*! \brief Last error
    */

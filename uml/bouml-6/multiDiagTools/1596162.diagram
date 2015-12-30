@@ -2,7 +2,7 @@ format 210
 
 classcanvas 128258 class_ref 1914114 // mdtSqlDatabaseCopierTableMapping
   classdiagramsettings hide_attributes no hide_operations no member_max_width 0 end
-  xyz 79 521 2000
+  xyz 67 560 2000
 end
 classcanvas 128514 class_ref 910210 // mdtSqlSchemaTable
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
@@ -24,6 +24,6 @@ end
 relationcanvas 129666 relation_ref 2471554 // <directional composition>
   from ref 129410 z 2006 to ref 128642
   no_role_a no_role_b
-  multiplicity_a_pos 619 146 3000 no_multiplicity_b
+  multiplicity_a_pos 645 144 3000 no_multiplicity_b
 end
 end

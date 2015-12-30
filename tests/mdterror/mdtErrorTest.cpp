@@ -39,6 +39,11 @@
 
 #include <QDebug>
 
+/**
+ * \todo Try with QVariant (queued signal/slot)
+ *  See also Q_DECLARE_SHARED
+ */
+
 /*
  * Logger backend for tests
  */

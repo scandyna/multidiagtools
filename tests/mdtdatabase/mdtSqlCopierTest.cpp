@@ -52,6 +52,7 @@
 #include <QTableView>
 #include <QComboBox>
 #include <QTreeView>
+#include <QAbstractItemView>
 #include <memory>
 
 #include <QClipboard>
@@ -339,6 +340,11 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   QVERIFY(mapping.destinationFieldKeyType(0) == mdtSqlCopierTableMapping::PrimaryKey);
   QVERIFY(mapping.sourceFieldKeyType(1) == mdtSqlCopierTableMapping::NotAKey);
   QVERIFY(mapping.destinationFieldKeyType(1) == mdtSqlCopierTableMapping::NotAKey);
+  // Check that default source types are set
+  QVERIFY(mapping.sourceType(0) == mdtSqlCopierFieldMapping::Field);
+  QVERIFY(mapping.sourceType(1) == mdtSqlCopierFieldMapping::Field);
+  QVERIFY(mapping.sourceType(2) == mdtSqlCopierFieldMapping::Field);
+  QVERIFY(mapping.sourceType(3) == mdtSqlCopierFieldMapping::Field);
   /*
    * Set a field mapping:
    *  - Client_tbl.Id_PK -> Client2_tbl.Id_PK
@@ -465,6 +471,60 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingComplete);
   QVERIFY(mapping.fieldMappingState(2) == mdtSqlCopierFieldMapping::MappingComplete);
   QVERIFY(mapping.fieldMappingState(3) == mdtSqlCopierFieldMapping::MappingComplete);
+  /*
+   * Check field mapping with fixed value:
+   *  - Map source field Id_PK -> destination field Id_PK
+   *  - Map a fixed value -> destination Name
+   */
+  // Reset
+  mapping.resetFieldMapping();
+  // Check state after reset
+  QCOMPARE(mapping.fieldCount(), 4);
+  QVERIFY(mapping.sourceFieldName(0).isNull());
+  QVERIFY(mapping.sourceFieldName(1).isNull());
+  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+  // Check field mapping state
+  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingNotSet);
+  QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingNotSet);
+  // Check that default source types are set
+  QVERIFY(mapping.sourceType(0) == mdtSqlCopierFieldMapping::Field);
+  QVERIFY(mapping.sourceType(1) == mdtSqlCopierFieldMapping::Field);
+  /*
+   * Update source type for Name destination field
+   */
+  mapping.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
+  QVERIFY(mapping.sourceType(1) == mdtSqlCopierFieldMapping::FixedValue);
+  /*
+   * Map Client_tbl.Id_PK -> Client2_tbl.Id_PK
+   */
+  mapping.setSourceField(0, "Id_PK");
+  // Check attributes
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
+  QVERIFY(mapping.sourceFieldName(1).isNull());
+  QVERIFY(mapping.sourceFixedValue(1).isNull());
+  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+  // Check field mapping state
+  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
+  QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingNotSet);
+  /*
+   * Set a fixed value for Client2_tbl.Name
+   */
+  mapping.setSourceFixedValue(1, "Fixed name");
+  // Check mapping
+  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
+  QVERIFY(mapping.sourceFieldName(1).isNull());
+  QCOMPARE(mapping.sourceFixedValue(1), QVariant("Fixed name"));
+  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+  // Check field mapping state
+  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
+  QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingComplete);
+
+
   /*
    * Clear
    */
@@ -594,14 +654,16 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   const int destinationFieldNameColumn = 5;
   QModelIndex index;
   mdtSqlDatabaseCopierTableMapping tm;
-  mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
+  mdtComboBoxItemDelegate *sourceTypeDelegate = new mdtComboBoxItemDelegate(&tableView);
+  mdtComboBoxItemDelegate *sourceFieldNameDelegate = new mdtComboBoxItemDelegate(&tableView);
 
   /*
    * Setup views
    */
   // Setup table view
   tableView.setModel(&model);
-  tableView.setItemDelegateForColumn(sourceFieldNameColumn, delegate);
+  tableView.setItemDelegateForColumn(0, sourceTypeDelegate);
+  tableView.setItemDelegateForColumn(sourceFieldNameColumn, sourceFieldNameDelegate);
   tableView.resize(600, 200);
   tableView.show();
   // Setup tree view
@@ -612,7 +674,8 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
    * Check by generating by name
    */
   // Set tables and generate field mapping
-  QVERIFY(model.setSourceTable("Client_tbl", pvDatabase, delegate));
+  model.setupSourceTypeDelegate(sourceTypeDelegate);
+  QVERIFY(model.setSourceTable("Client_tbl", pvDatabase, sourceFieldNameDelegate));
   QVERIFY(model.setDestinationTable("Client2_tbl", pvDatabase));
   model.generateFieldMappingByName();
   // Check table names
@@ -689,12 +752,10 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   /*
    * Play
    */
-  /*
   tableView.resizeColumnsToContents();
   while(tableView.isVisible()){
     QTest::qWait(500);
   }
-  */
 }
 
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingDialogTest()
@@ -1342,6 +1403,50 @@ void mdtSqlCopierTest::sqlDatabaseCopierThreadTest()
   QVERIFY(query.exec("DELETE FROM Client2_tbl"));
 }
 
+/*
+ * Helper functions
+ */
+
+void mdtSqlCopierTest::beginEditing(QAbstractItemView& view, const QModelIndex& index)
+{
+  QVERIFY(view.editTriggers() & QAbstractItemView::DoubleClicked);
+  QVERIFY(index.isValid());
+
+  // Get view port (witch is the widget to witch event must be sent)
+  QWidget *viewPort = view.viewport();
+  QVERIFY(viewPort != nullptr);
+  // Get center of region in view port that concerns given index
+  QRect rect = view.visualRect(index);
+  QPoint itemCenter = rect.center();
+  // Edition beginns after double click. With QTest, we must click before
+  QTest::mouseClick(viewPort, Qt::LeftButton, 0, itemCenter);
+  QTest::mouseDClick(viewPort, Qt::LeftButton, 0, itemCenter);
+}
+
+void mdtSqlCopierTest::endEditing(QAbstractItemView& view, const QModelIndex& editingIndex)
+{
+  QVERIFY(!(view.editTriggers() & QAbstractItemView::SelectedClicked));
+  QVERIFY(editingIndex.isValid());
+  QVERIFY(view.model() != nullptr);
+  QVERIFY(view.model()->rowCount() > 1);
+
+  // Select a other row than witch we are editing
+  int row = editingIndex.row();
+  if(row == 0){
+    ++row;
+  }else{
+    --row;
+  }
+  QModelIndex index = view.model()->index(row, editingIndex.column());
+  // Get view port (witch is the widget to witch event must be sent)
+  QWidget *viewPort = view.viewport();
+  QVERIFY(viewPort != nullptr);
+  // Get center of region in view port that concerns given index
+  QRect rect = view.visualRect(index);
+  QPoint itemCenter = rect.center();
+  // Now, click to select new row
+  QTest::mouseClick(viewPort, Qt::LeftButton, 0, itemCenter);
+}
 
 
 /*

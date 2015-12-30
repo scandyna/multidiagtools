@@ -28,6 +28,36 @@ mdtSqlCopierTableMapping::mdtSqlCopierTableMapping()
 {
 }
 
+void mdtSqlCopierTableMapping::setSourceType(int index, mdtSqlCopierFieldMapping::SourceType type)
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < pvFieldMappingList.size());
+  pvFieldMappingList[index].sourceType = type;
+}
+
+void mdtSqlCopierTableMapping::setSourceField(int index, const QString & fieldName)
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < pvFieldMappingList.size());
+  Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::Field);
+
+  auto fm = pvFieldMappingList.at(index);
+
+  // Update source field
+  updateSourceField(fm, fieldName);
+  pvFieldMappingList[index] = fm;
+  // Update table mapping state
+  updateTableMappingState();
+}
+
+void mdtSqlCopierTableMapping::setSourceFixedValue(int index, const QVariant & value)
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < pvFieldMappingList.size());
+  Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::FixedValue);
+  pvFieldMappingList[index].sourceFixedValue = value;
+}
+
 void mdtSqlCopierTableMapping::resetFieldMapping()
 {
   int n = destinationTableFieldCount();

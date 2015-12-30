@@ -19,11 +19,21 @@
  **
  ****************************************************************************/
 #include "mdtSqlCopierTableMappingModel.h"
+#include "mdtComboBoxItemDelegate.h"
 #include <QColor>
 
 mdtSqlCopierTableMappingModel::mdtSqlCopierTableMappingModel(QObject* parent)
  : QAbstractTableModel(parent)
 {
+}
+
+void mdtSqlCopierTableMappingModel::setupSourceTypeDelegate(mdtComboBoxItemDelegate * const delegate)
+{
+  Q_ASSERT(delegate != nullptr);
+
+  delegate->clear();
+  delegate->addItem(tr("Field"), mdtSqlCopierFieldMapping::Field);
+  delegate->addItem(tr("Fixed value"), mdtSqlCopierFieldMapping::FixedValue);
 }
 
 void mdtSqlCopierTableMappingModel::resetFieldMapping()
@@ -138,9 +148,13 @@ bool mdtSqlCopierTableMappingModel::setData(const QModelIndex & index, const QVa
   if(role != Qt::EditRole){
     return false;
   }
-  Q_ASSERT(index.column() == SourceFieldNameIndex); /// Currently, we only support selecting source field name
-  int row = index.row();
+//   Q_ASSERT(index.column() == SourceFieldNameIndex); /// Currently, we only support selecting source field name
+  const int row = index.row();
   Q_ASSERT( (row >= 0) && (row < mappingBase().fieldCount()) );
+  const int column = index.column();
+  switch(column){
+    
+  }
   mappingBase().setSourceField(row, value.toString());
   // Signal that we updated data
   emit dataChanged(index, index);
@@ -153,7 +167,11 @@ Qt::ItemFlags mdtSqlCopierTableMappingModel::flags(const QModelIndex & index) co
   if(!index.isValid()){
     return QAbstractTableModel::flags(index);
   }
-  if(index.column() == SourceFieldNameIndex){
+  const int column = index.column();
+  if(column == SourceTypeIndex){
+    return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
+  }
+  if(column == SourceFieldNameIndex){
     return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
   }
   return QAbstractTableModel::flags(index);
