@@ -131,6 +131,7 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
     SourceKeyTypeIndex,         /*!< Column index of source field key type */
     SourceFieldNameIndex,       /*!< Column index of source field name */
     SourceFieldTypeIndex,       /*!< Column index of source field type */
+    SourceFixedValueIndex,      /*!< Column index of source fixed value */
     DestinationKeyTypeIndex,    /*!< Column index of destination field key type */
     DestinationFieldNameIndex,  /*!< Column index of destination field name */
     DestinationFieldTypeIndex,  /*!< Column index of destination field type */
@@ -141,13 +142,25 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
 
  private:
 
-  /*! \brief Get source type text
+  /*! \brief Get source type data
    */
-  QVariant sourceTypeText(int row) const;
+  QVariant sourceTypeData(int row, int role) const;
 
   /*! \brief Get source field key type text
    */
   QVariant sourceFieldKeyTypeText(int row) const;
+
+  /*! \brief Get source field name text
+   */
+  QVariant sourceFieldNameText(int row) const;
+
+  /*! \brief Get source field type name text
+   */
+  QVariant sourceFieldTypeNameText(int row) const;
+
+  /*! \brief Get source fixed value
+   */
+  QVariant sourceFixedValue(int row) const;
 
   /*! \brief Get destination field key type text
    */

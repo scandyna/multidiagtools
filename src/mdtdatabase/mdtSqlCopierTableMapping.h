@@ -149,13 +149,10 @@ class mdtSqlCopierTableMapping
 
   /*! \brief Check if source field is part of a key
    *
-   * Default implementation allways returns NotAKey.
+   * \pre index must be in valid range.
+   * \pre source type for given index must be mdtSqlCopierFieldMapping::Field
    */
-  virtual FieldKeyType sourceFieldKeyType(int index) const
-  {
-    Q_UNUSED(index);
-    return NotAKey;
-  }
+  FieldKeyType sourceFieldKeyType(int index) const;
 
   /*! \brief Set source fixed value for given field mapping index
    *
@@ -192,6 +189,7 @@ class mdtSqlCopierTableMapping
   /*! \brief Check if destination field is part of a key
    *
    * Default implementation allways returns NotAKey.
+   *
    */
   virtual FieldKeyType destinationFieldKeyType(int index) const
   {
@@ -276,6 +274,16 @@ class mdtSqlCopierTableMapping
   /*! \brief Get source field type name for given source field index
    */
   virtual QString fetchSourceFieldTypeName(int sourceFieldIndex) const = 0;
+
+  /*! \brief Check if source field is part of a key
+   *
+   * Default implementation allways returns NotAKey.
+   */
+  virtual FieldKeyType fetchSourceFieldKeyType(int sourceFieldIndex) const
+  {
+    Q_UNUSED(sourceFieldIndex);
+    return NotAKey;
+  }
 
   /*! \brief Last error
    */

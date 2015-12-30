@@ -34,7 +34,11 @@ void mdtSqlCopierTableMapping::setSourceType(int index, mdtSqlCopierFieldMapping
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < pvFieldMappingList.size());
-  pvFieldMappingList[index].sourceType = type;
+
+  auto & fm = pvFieldMappingList[index];
+
+  fm.sourceType = type;
+  updateFieldMappingState(fm);
 }
 
 void mdtSqlCopierTableMapping::setSourceField(int index, const QString & fieldName)
@@ -76,6 +80,19 @@ QString mdtSqlCopierTableMapping::sourceFieldTypeName(int index) const
     return QString();
   }
   return fetchSourceFieldTypeName(sourceFieldIndex);
+}
+
+mdtSqlCopierTableMapping::FieldKeyType mdtSqlCopierTableMapping::sourceFieldKeyType(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < pvFieldMappingList.size());
+  Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::Field);
+
+  const int sourceFieldIndex = fieldMappingAt(index).sourceFieldIndex;
+  if(sourceFieldIndex < 0){
+    return NotAKey;
+  }
+  return fetchSourceFieldKeyType(sourceFieldIndex);
 }
 
 void mdtSqlCopierTableMapping::setSourceFixedValue(int index, const QVariant & value)

@@ -553,6 +553,29 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
   QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingComplete);
   /*
+   * Check field mapping state after changing source type
+   */
+  // Reset
+  mapping.resetFieldMapping();
+  // Check state after reset
+  QCOMPARE(mapping.fieldCount(), 4);
+  QVERIFY(mapping.sourceFieldName(0).isNull());
+  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+  // Check field mapping state
+  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingNotSet);
+  // Check that default source types are set
+  QVERIFY(mapping.sourceType(0) == mdtSqlCopierFieldMapping::Field);
+  // Set a valid field mapping
+  mapping.setSourceField(0, "Id_PK");
+  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
+  // Change source type
+  mapping.setSourceType(0, mdtSqlCopierFieldMapping::FixedValue);
+  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingNotSet);
+  // Set a valid value
+  mapping.setSourceFixedValue(0, 5);
+  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
+
+  /*
    * Clear
    */
   mapping.clearFieldMapping();
@@ -688,9 +711,11 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   QTableView tableView;
   QTreeView treeView;
   mdtSqlDatabaseCopierTableMappingModel model;
+  const int sourceTypeColumn = 0;
   const int sourceFieldNameColumn = 2;
-  const int destinationFieldNameColumn = 5;
+  const int destinationFieldNameColumn = 6;
   QModelIndex index;
+  mdtSqlCopierFieldMapping::SourceType sourceType;
   mdtSqlDatabaseCopierTableMapping tm;
   mdtComboBoxItemDelegate *sourceTypeDelegate = new mdtComboBoxItemDelegate(&tableView);
   mdtComboBoxItemDelegate *sourceFieldNameDelegate = new mdtComboBoxItemDelegate(&tableView);
@@ -700,9 +725,9 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
    */
   // Setup table view
   tableView.setModel(&model);
-  tableView.setItemDelegateForColumn(0, sourceTypeDelegate);
+  tableView.setItemDelegateForColumn(sourceTypeColumn, sourceTypeDelegate);
   tableView.setItemDelegateForColumn(sourceFieldNameColumn, sourceFieldNameDelegate);
-  tableView.resize(600, 200);
+  tableView.resize(800, 200);
   tableView.show();
   // Setup tree view
   treeView.setModel(&model);
@@ -773,19 +798,66 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index), QVariant("FieldB"));
   /*
+   * Check selecting a source type
+   */
+  index = model.index(0, sourceTypeColumn);
+  QVERIFY(index.isValid());
+  // Select fixed value type
+  beginEditing(tableView, index);
+  sourceTypeDelegate->setCurrentIndex(1);
+  endEditing(tableView, index);
+  // Check that source type was updated
+  sourceType = static_cast<mdtSqlCopierFieldMapping::SourceType>(model.data(index, Qt::EditRole).toInt());
+  QVERIFY(sourceType == mdtSqlCopierFieldMapping::FixedValue);
+  // Check getting source field name - Must return a null value
+  index = model.index(0, sourceFieldNameColumn);
+  QVERIFY(index.isValid());
+  QVERIFY(model.data(index).isNull());
+  // Check getting source field type name - Must return a null value
+  index = model.index(0, sourceFieldNameColumn+1);
+  QVERIFY(index.isValid());
+  QVERIFY(model.data(index).isNull());
+
+  /*
    * Check selecting a field in source table
    */
-  // For row 2, we set back: source FieldA -> destination FieldA
-  index = model.index(2, sourceFieldNameColumn);
+  
+  qDebug() << tm.getSourceFieldNameList();
+  
+  // Check for row 1, witch is currently of Field type
+  index = model.index(1, sourceFieldNameColumn);
   QVERIFY(index.isValid());
-  QVERIFY(model.setData(index, "FieldA"));
-  // Check row 2
-  index = model.index(2, sourceFieldNameColumn);
-  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Name"));
+  // Select FieldA
+  beginEditing(tableView, index);
+  sourceFieldNameDelegate->setCurrentIndex(3);
+  endEditing(tableView, index);
+  // Check that source field name was updated
   QCOMPARE(model.data(index), QVariant("FieldA"));
-  index = model.index(2, destinationFieldNameColumn);
+  // Check for row 1, witch is currently of FixedValue type
+  index = model.index(0, sourceFieldNameColumn);
   QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("FieldA"));
+  QVERIFY(model.data(index).isNull());
+  // Select Name
+  beginEditing(tableView, index);
+  sourceFieldNameDelegate->setCurrentIndex(2);
+  endEditing(tableView, index);
+  // Check that nothing happened
+  QVERIFY(model.data(index).isNull());
+
+
+
+//   // For row 2, we set back: source FieldA -> destination FieldA
+//   index = model.index(2, sourceFieldNameColumn);
+//   QVERIFY(index.isValid());
+//   QVERIFY(model.setData(index, "FieldA"));
+//   // Check row 2
+//   index = model.index(2, sourceFieldNameColumn);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index), QVariant("FieldA"));
+//   index = model.index(2, destinationFieldNameColumn);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index), QVariant("FieldA"));
 
   /*
    * Play

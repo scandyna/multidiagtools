@@ -22,6 +22,8 @@
 #include "mdtComboBoxItemDelegate.h"
 #include <QColor>
 
+//#include <QDebug>
+
 mdtSqlCopierTableMappingModel::mdtSqlCopierTableMappingModel(QObject* parent)
  : QAbstractTableModel(parent)
 {
@@ -61,7 +63,7 @@ int mdtSqlCopierTableMappingModel::rowCount(const QModelIndex & parent) const
 
 int mdtSqlCopierTableMappingModel::columnCount(const QModelIndex & /*parent*/) const
 {
-  return 8;
+  return 9;
 }
 
 QVariant mdtSqlCopierTableMappingModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -81,6 +83,8 @@ QVariant mdtSqlCopierTableMappingModel::headerData(int section, Qt::Orientation 
       return tr("Source\nfield name");
     case SourceFieldTypeIndex:
       return tr("Source\nfield type");
+    case SourceFixedValueIndex:
+      return tr("Source\nfixed value");
     case DestinationKeyTypeIndex:
       return tr("Destination\nKey");
     case DestinationFieldNameIndex:
@@ -107,13 +111,15 @@ QVariant mdtSqlCopierTableMappingModel::data(const QModelIndex & index, int role
     // Text only attributes
     switch(column){
       case SourceTypeIndex:
-        return sourceTypeText(row);
+        return sourceTypeData(row, role);
       case SourceKeyTypeIndex:
         return sourceFieldKeyTypeText(row);
       case SourceFieldNameIndex:
-        return mappingBase().sourceFieldName(row);
+        return sourceFieldNameText(row);
       case SourceFieldTypeIndex:
-        return mappingBase().sourceFieldTypeName(row);
+        return sourceFieldTypeNameText(row);
+      case SourceFixedValueIndex:
+        return sourceFixedValue(row);
       case DestinationKeyTypeIndex:
         return destinationFieldKeyTypeText(row);
       case DestinationFieldNameIndex:
@@ -145,17 +151,25 @@ bool mdtSqlCopierTableMappingModel::setData(const QModelIndex & index, const QVa
   if(!index.isValid()){
     return false;
   }
-  if(role != Qt::EditRole){
-    return false;
-  }
-//   Q_ASSERT(index.column() == SourceFieldNameIndex); /// Currently, we only support selecting source field name
   const int row = index.row();
   Q_ASSERT( (row >= 0) && (row < mappingBase().fieldCount()) );
   const int column = index.column();
-  switch(column){
-    
+
+  if( (role == Qt::EditRole) && (column == SourceTypeIndex) ){
+    mappingBase().setSourceType(row, static_cast<mdtSqlCopierFieldMapping::SourceType>(value.toInt()));
+  }else if( (role == Qt::DisplayRole) && (column == SourceFieldNameIndex) ){
+    Q_ASSERT(mappingBase().sourceType(row) == mdtSqlCopierFieldMapping::Field);
+    mappingBase().setSourceField(row, value.toString());
+  }else if( (role == Qt::EditRole) && (column == SourceFixedValueIndex) ){
+    Q_ASSERT(mappingBase().sourceType(row) == mdtSqlCopierFieldMapping::FixedValue);
+    if( (value.type() == QVariant::String) && (value.toString().trimmed().isEmpty()) ){
+      mappingBase().setSourceFixedValue(row, QVariant());
+    }else{
+      mappingBase().setSourceFixedValue(row, value);
+    }
+  }else{
+    return false;
   }
-  mappingBase().setSourceField(row, value.toString());
   // Signal that we updated data
   emit dataChanged(index, index);
 
@@ -168,18 +182,29 @@ Qt::ItemFlags mdtSqlCopierTableMappingModel::flags(const QModelIndex & index) co
     return QAbstractTableModel::flags(index);
   }
   const int column = index.column();
+  const int row = index.row();
   if(column == SourceTypeIndex){
     return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
   }
-  if(column == SourceFieldNameIndex){
+  if( (column == SourceFieldNameIndex) && (mappingBase().sourceType(row) == mdtSqlCopierFieldMapping::Field) ){
+    return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
+  }
+  if( (column == SourceFixedValueIndex) && (mappingBase().sourceType(row) == mdtSqlCopierFieldMapping::FixedValue) ){
     return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
   }
   return QAbstractTableModel::flags(index);
 }
 
-QVariant mdtSqlCopierTableMappingModel::sourceTypeText(int row) const
+QVariant mdtSqlCopierTableMappingModel::sourceTypeData(int row, int role) const
 {
-  switch(mappingBase().sourceType(row)){
+  auto type = mappingBase().sourceType(row);
+  // For edit role, we return source type
+  if(role == Qt::EditRole){
+    return type;
+  }
+  Q_ASSERT(role == Qt::DisplayRole);
+  // For display role, we return source type text
+  switch(type){
     case mdtSqlCopierFieldMapping::Field:
       return tr("Field");
     case mdtSqlCopierFieldMapping::FixedValue:
@@ -190,6 +215,9 @@ QVariant mdtSqlCopierTableMappingModel::sourceTypeText(int row) const
 
 QVariant mdtSqlCopierTableMappingModel::sourceFieldKeyTypeText(int row) const
 {
+  if(mappingBase().sourceType(row) != mdtSqlCopierFieldMapping::Field){
+    return QVariant();
+  }
   switch(mappingBase().sourceFieldKeyType(row)){
     case mdtSqlCopierTableMapping::NotAKey:
       return QVariant();
@@ -197,6 +225,30 @@ QVariant mdtSqlCopierTableMappingModel::sourceFieldKeyTypeText(int row) const
       return "PK";
   }
   return QVariant();
+}
+
+QVariant mdtSqlCopierTableMappingModel::sourceFieldNameText(int row) const
+{
+  if(mappingBase().sourceType(row) != mdtSqlCopierFieldMapping::Field){
+    return QVariant();
+  }
+  return mappingBase().sourceFieldName(row);
+}
+
+QVariant mdtSqlCopierTableMappingModel::sourceFieldTypeNameText(int row) const
+{
+  if(mappingBase().sourceType(row) != mdtSqlCopierFieldMapping::Field){
+    return QVariant();
+  }
+  return mappingBase().sourceFieldTypeName(row);
+}
+
+QVariant mdtSqlCopierTableMappingModel::sourceFixedValue(int row) const
+{
+  if(mappingBase().sourceType(row) != mdtSqlCopierFieldMapping::FixedValue){
+    return QVariant();
+  }
+  return mappingBase().sourceFixedValue(row);
 }
 
 QVariant mdtSqlCopierTableMappingModel::destinationFieldKeyTypeText(int row) const
