@@ -133,6 +133,30 @@ class mdtSqlCopierTableMapping
    */
   void setSourceField(int index, const QString & fieldName);
 
+  /*! \brief Get source field name for given field mapping index
+   *
+   * \pre index must be in valid range.
+   * \pre source type for given index must be mdtSqlCopierFieldMapping::Field
+   */
+  QString sourceFieldName(int index) const;
+
+  /*! \brief Get source field type name for given field mapping index
+   *
+   * \pre index must be in valid range.
+   * \pre source type for given index must be mdtSqlCopierFieldMapping::Field
+   */
+  QString sourceFieldTypeName(int index) const;
+
+  /*! \brief Check if source field is part of a key
+   *
+   * Default implementation allways returns NotAKey.
+   */
+  virtual FieldKeyType sourceFieldKeyType(int index) const
+  {
+    Q_UNUSED(index);
+    return NotAKey;
+  }
+
   /*! \brief Set source fixed value for given field mapping index
    *
    * \pre index must be in a valid range
@@ -151,28 +175,6 @@ class mdtSqlCopierTableMapping
     Q_ASSERT(index < pvFieldMappingList.size());
     Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::FixedValue);
     return pvFieldMappingList.at(index).sourceFixedValue;
-  }
-
-  /*! \brief Get source field name for given field mapping index
-   *
-   * \pre index must be in valid range.
-   */
-  virtual QString sourceFieldName(int index) const = 0;
-
-  /*! \brief Get source field type name for given field mapping index
-   *
-   * \pre index must be in valid range.
-   */
-  virtual QString sourceFieldTypeName(int index) const = 0;
-
-  /*! \brief Check if source field is part of a key
-   *
-   * Default implementation allways returns NotAKey.
-   */
-  virtual FieldKeyType sourceFieldKeyType(int index) const
-  {
-    Q_UNUSED(index);
-    return NotAKey;
   }
 
   /*! \brief Get destination field name for given field mapping index
@@ -267,6 +269,14 @@ class mdtSqlCopierTableMapping
    */
   virtual void updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName) = 0;
 
+  /*! \brief Get source field name for given source field index
+   */
+  virtual QString fetchSourceFieldName(int sourceFieldIndex) const = 0;
+
+  /*! \brief Get source field type name for given source field index
+   */
+  virtual QString fetchSourceFieldTypeName(int sourceFieldIndex) const = 0;
+
   /*! \brief Last error
    */
   mdtError pvLastError;
@@ -306,6 +316,17 @@ class mdtSqlCopierTableMapping
     Q_ASSERT(index < pvFieldMappingList.size());
     pvFieldMappingList[index] = fm;
   }
+
+  /*! \brief Check if source field is compatible with destination field
+   *
+   * Subclass should return true if it is possible
+   *  to copy data from source field to destination field.
+   */
+  virtual bool areFieldsCompatible(int sourceFieldIndex, int destinationFieldIndex) const = 0;
+
+  /*! \brief Update given field mapping state
+   */
+  void updateFieldMappingState(mdtSqlCopierFieldMapping & fm);
 
   /*! \brief Update table mapping state
    */

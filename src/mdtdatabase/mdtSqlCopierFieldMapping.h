@@ -88,11 +88,20 @@ struct mdtSqlCopierFieldMapping
 
   /*! \brief Check if mapping data is null
    *
-   * Mapping data is null if source or destination field index is < 0
+   * For case of Field source type,
+   *  mapping data is null if source or destination field index is < 0
+   * For case FixedValue source type,
+   *  mapping is null if sourceFixedValue is null or destination field index is < 0
    */
   bool isNull() const
   {
-    return ( (sourceFieldIndex < 0) || (destinationFieldIndex < 0) );
+    switch(sourceType){
+      case Field:
+        return ( (sourceFieldIndex < 0) || (destinationFieldIndex < 0) );
+      case FixedValue:
+        return ( sourceFixedValue.isNull() || (destinationFieldIndex < 0) );
+    }
+    return true;
   }
 
   /*! \brief Clear

@@ -134,11 +134,20 @@ void mdtSqlCopierTest::sandbox()
   query.bindValue(":name", "Name 1");
   QVERIFY(query.exec());
 
-  
+  sql = "INSERT INTO Client_tbl (Id_PK,Name,FieldA) VALUES (?,'Fixed',?)";
+  QVERIFY(query.prepare(sql));
+  query.bindValue(0, 2);
+  query.bindValue(1, "Field A 2");
+  QVERIFY(query.exec());
+  sql = "INSERT INTO Client_tbl (Id_PK,Name,FieldA) VALUES ('3','Fixed',?)";
+  QVERIFY(query.prepare(sql));
+  query.bindValue(0, "Field A 3");
+  QVERIFY(query.exec());
+
 
   query.exec("SELECT * FROM Client_tbl");
   while(query.next()){
-    qDebug() << query.value(0) << "|" << query.value(1);
+    qDebug() << query.value(0) << "|" << query.value(1) << "|" << query.value(2) << "|" << query.value(3);
   }
   
   QVERIFY(query.exec("DELETE FROM Client_tbl"));
@@ -283,12 +292,14 @@ void mdtSqlCopierTest::fieldMappingDataTest()
   QVERIFY(data.sourceType == mdtSqlCopierFieldMapping::Field);
   QVERIFY(data.isNull());
   /*
-   * Set
+   * Set with Field source type
    */
+  // Check when simply set source and destination field index
   data.sourceFieldIndex = 0;
   QVERIFY(data.isNull());
   data.destinationFieldIndex = 0;
   QVERIFY(!data.isNull());
+  // Set some other members to check clear
   data.mappingState = mdtSqlCopierFieldMapping::MappingComplete;
   data.sourceType = mdtSqlCopierFieldMapping::FixedValue;
   data.sourceFixedValue = "Fixed";
@@ -302,6 +313,26 @@ void mdtSqlCopierTest::fieldMappingDataTest()
   QVERIFY(data.sourceType == mdtSqlCopierFieldMapping::Field);
   QVERIFY(data.sourceFixedValue.isNull());
   QVERIFY(data.isNull());
+  /*
+   * Set with FixedValue source type
+   */
+  data.sourceType = mdtSqlCopierFieldMapping::FixedValue;
+  // Set normally
+  QVERIFY(data.isNull());
+  data.sourceFixedValue = "Fixed value";
+  QVERIFY(data.isNull());
+  data.destinationFieldIndex = 0;
+  QVERIFY(!data.isNull());
+  // Set a valid source index (must be ignored)
+  data.clear();
+  data.sourceType = mdtSqlCopierFieldMapping::FixedValue;
+  QVERIFY(data.isNull());
+  data.destinationFieldIndex = 0;
+  QVERIFY(data.isNull());
+  data.sourceFieldIndex = 0;
+  QVERIFY(data.isNull());
+  data.sourceFixedValue = "Fixed value";
+  QVERIFY(!data.isNull());
 }
 
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
@@ -502,7 +533,6 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   // Check attributes
   QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
   QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
-  QVERIFY(mapping.sourceFieldName(1).isNull());
   QVERIFY(mapping.sourceFixedValue(1).isNull());
   QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
   QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
@@ -516,15 +546,12 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   // Check mapping
   QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
   QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
-  QVERIFY(mapping.sourceFieldName(1).isNull());
   QCOMPARE(mapping.sourceFixedValue(1), QVariant("Fixed name"));
   QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
   QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
   // Check field mapping state
   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
   QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingComplete);
-
-
   /*
    * Clear
    */
@@ -641,6 +668,17 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
   QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
   // Check SQL to insert into destination table
   expectedSql = "INSERT INTO \"Client2_tbl\" (\"Id_PK\",\"Name\",\"FieldA\",\"FieldB\") VALUES (?,?,?,?)";
+  QCOMPARE(mapping.getSqlForDestinationTableInsert(db), expectedSql);
+  /*
+   * Check with source fixed value for Client2_tbl.Name
+   */
+  mapping.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
+  mapping.setSourceFixedValue(1, "Fixed name");
+  // Check SQL select data in source table
+  expectedSql = "SELECT \"Id_PK\",\"FieldB\",\"FieldA\" FROM \"Client_tbl\"";
+  QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
+  // Check SQL to insert into destination table
+  expectedSql = "INSERT INTO \"Client2_tbl\" (\"Id_PK\",\"Name\",\"FieldA\",\"FieldB\") VALUES (?,'Fixed name',?,?)";
   QCOMPARE(mapping.getSqlForDestinationTableInsert(db), expectedSql);
 
 }
@@ -1362,14 +1400,15 @@ void mdtSqlCopierTest::sqlDatabaseCopierThreadTest()
    *  Table Client_tbl -> Client2_tbl
    *  Fields:
    *   Client_tbl.Id_PK -> Client2_tbl.Id_PK
-   *   Client_tbl.Name -> Client2_tbl.Name
+   *   'Fixed name' -> Client2_tbl.Name
    *   Client_tbl.FieldB -> Client2_tbl.FieldA
    *   Client_tbl.FieldA -> Client2_tbl.FieldB
    */
   auto tm = mapping.tableMapping(0);
   QVERIFY(tm.setSourceTable("Client_tbl", pvDatabase));
   tm.setSourceField(0, "Id_PK");
-  tm.setSourceField(1, "Name");
+  tm.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
+  tm.setSourceFixedValue(1, "Fixed name");
   tm.setSourceField(2, "FieldB");
   tm.setSourceField(3, "FieldA");
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
@@ -1388,13 +1427,13 @@ void mdtSqlCopierTest::sqlDatabaseCopierThreadTest()
   // Row for Id_PK = 1
   QVERIFY(query.next());
   QCOMPARE(query.value(0), QVariant(1));
-  QCOMPARE(query.value(1), QVariant("Name 1"));
+  QCOMPARE(query.value(1), QVariant("Fixed name"));
   QCOMPARE(query.value(2), QVariant("FieldB 1"));
   QCOMPARE(query.value(3), QVariant("FieldA 1"));
   // Row for Id_PK = 2
   QVERIFY(query.next());
   QCOMPARE(query.value(0), QVariant(2));
-  QCOMPARE(query.value(1), QVariant("Name 2"));
+  QCOMPARE(query.value(1), QVariant("Fixed name"));
   QCOMPARE(query.value(2), QVariant("FieldB 2"));
   QCOMPARE(query.value(3), QVariant("FieldA 2"));
   /*

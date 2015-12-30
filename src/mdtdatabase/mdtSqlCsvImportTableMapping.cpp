@@ -36,55 +36,6 @@ bool mdtSqlCsvImportTableMapping::setDestinationTable(const QString & tableName,
   return true;
 }
 
-// void mdtSqlCsvImportTableMapping::setSourceField(int index, const QString & fieldName)
-// {
-//   Q_ASSERT(index >= 0);
-//   Q_ASSERT(index < fieldCount());
-// 
-//   auto fm = fieldMappingAt(index);
-// //   auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
-// // 
-// //   if(destinationDriverType == mdtSqlDriverType::Unknown){
-// //     return;
-// //   }
-//   if(fieldName.isEmpty()){
-//     fm.sourceFieldIndex = -1;
-//   }else{
-//     fm.sourceFieldIndex = sourceTable().fieldIndex(fieldName);
-//   }
-//   updateCsvSourceFormat(fm);
-//   updateFieldMappingState(fm/*, destinationDriverType*/);
-//   updateFieldMappingAt(index, fm);
-//   // Update table mapping state
-//   updateTableMappingState();
-// }
-
-QString mdtSqlCsvImportTableMapping::sourceFieldName(int index) const
-{
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < fieldCount());
-
-  const int sourceFieldIndex = fieldMappingAt(index).sourceFieldIndex;
-  Q_ASSERT(sourceFieldIndex < sourceTable().fieldCount());
-  if(sourceFieldIndex < 0){
-    return QString();
-  }
-  return sourceTable().fieldName(sourceFieldIndex);
-}
-
-QString mdtSqlCsvImportTableMapping::sourceFieldTypeName(int index) const
-{
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < fieldCount());
-
-  const int sourceFieldIndex = fieldMappingAt(index).sourceFieldIndex;
-  Q_ASSERT(sourceFieldIndex < sourceTable().fieldCount());
-  if(sourceFieldIndex < 0){
-    return QString();
-  }
-  return sourceTable().fieldTypeName(sourceFieldIndex);
-}
-
 QString mdtSqlCsvImportTableMapping::destinationFieldName(int index) const
 {
   Q_ASSERT(index >= 0);
@@ -127,7 +78,7 @@ void mdtSqlCsvImportTableMapping::generateFieldMappingByName()
     // Get source field index that matches destination field name
     fm.sourceFieldIndex = sourceTable().fieldIndex(destinationField.name());
     updateCsvSourceFormat(fm);
-    updateFieldMappingState(fm/*, destinationDriverType*/);
+    updateFieldMappingState(fm);
   }
   // Update table mapping state
   updateTableMappingState();
@@ -135,40 +86,41 @@ void mdtSqlCsvImportTableMapping::generateFieldMappingByName()
 
 void mdtSqlCsvImportTableMapping::updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName)
 {
-//   auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
-// 
-//   if(destinationDriverType == mdtSqlDriverType::Unknown){
-//     return;
-//   }
   if(sourceFieldName.isEmpty()){
     fm.sourceFieldIndex = -1;
   }else{
     fm.sourceFieldIndex = sourceTable().fieldIndex(sourceFieldName);
   }
   updateCsvSourceFormat(fm);
-  updateFieldMappingState(fm/*, destinationDriverType*/);
 }
 
-void mdtSqlCsvImportTableMapping::updateFieldMappingState(mdtSqlCopierFieldMapping & fm/*, mdtSqlDriverType::Type destinationDriverType*/)
+QString mdtSqlCsvImportTableMapping::fetchSourceFieldName(int sourceFieldIndex) const
 {
-//   Q_ASSERT(destinationDriverType != mdtSqlDriverType::Unknown);
+  Q_ASSERT(sourceFieldIndex >= 0);
+  Q_ASSERT(sourceFieldIndex < sourceTable().fieldCount());
+  return sourceTable().fieldName(sourceFieldIndex);
+}
 
-  if(fm.isNull()){
-    fm.mappingState = mdtSqlCopierFieldMapping::MappingNotSet;
-    return;
-  }
-  Q_ASSERT(fm.sourceFieldIndex >= 0);
-  Q_ASSERT(fm.sourceFieldIndex < sourceTable().fieldCount());
-  Q_ASSERT(fm.destinationFieldIndex >= 0);
-  Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
+QString mdtSqlCsvImportTableMapping::fetchSourceFieldTypeName(int sourceFieldIndex) const
+{
+  Q_ASSERT(sourceFieldIndex >= 0);
+  Q_ASSERT(sourceFieldIndex < sourceTable().fieldCount());
+  return sourceTable().fieldTypeName(sourceFieldIndex);
+}
+
+bool mdtSqlCsvImportTableMapping::areFieldsCompatible(int sourceFieldIndex, int destinationFieldIndex) const
+{
+  Q_ASSERT(sourceFieldIndex < sourceTable().fieldCount());
+  Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
+
   // Do checks regarding field types
-  auto sourceFieldType = sourceTable().fieldType(fm.sourceFieldIndex);
-  auto destinationFieldType = pvDestinationTable.field(fm.destinationFieldIndex).type();
+  auto sourceFieldType = sourceTable().fieldType(sourceFieldIndex);
+  auto destinationFieldType = pvDestinationTable.field(destinationFieldIndex).type();
   if(sourceFieldType == mdtSqlCsvData::csvFieldTypeFromMdtSqlFieldType(destinationFieldType)){
-    fm.mappingState = mdtSqlCopierFieldMapping::MappingComplete;
-  }else{
-    fm.mappingState = mdtSqlCopierFieldMapping::MappingError;
+    return true;
   }
+
+  return false;
 }
 
 void mdtSqlCsvImportTableMapping::updateCsvSourceFormat(mdtSqlCopierFieldMapping & fm)

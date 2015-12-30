@@ -71,16 +71,16 @@ bool mdtSqlDatabaseCopierTableMapping::setDestinationTable(const QString & table
 
 void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
 {
-  auto sourceDriverType = mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName());
-  auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
+//   auto sourceDriverType = mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName());
+//   auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
 
   resetFieldMapping();
-  if(sourceDriverType == mdtSqlDriverType::Unknown){
-    return;
-  }
-  if(destinationDriverType == mdtSqlDriverType::Unknown){
-    return;
-  }
+//   if(sourceDriverType == mdtSqlDriverType::Unknown){
+//     return;
+//   }
+//   if(destinationDriverType == mdtSqlDriverType::Unknown){
+//     return;
+//   }
   for(auto & fm : fieldMappingList()){
     // Get source field
     Q_ASSERT(fm.destinationFieldIndex >= 0);
@@ -88,62 +88,10 @@ void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
     mdtSqlField destinationField = pvDestinationTable.field(fm.destinationFieldIndex);
     // Get source field index that matches destination field name
     fm.sourceFieldIndex = pvSourceTable.fieldIndex(destinationField.name());
-    updateFieldMappingState(fm, sourceDriverType, destinationDriverType);
+    updateFieldMappingState(fm);
   }
   // Update table mapping state
   updateTableMappingState();
-}
-
-// void mdtSqlDatabaseCopierTableMapping::setSourceField(int index, const QString & fieldName)
-// {
-//   Q_ASSERT(index >= 0);
-//   Q_ASSERT(index < fieldCount());
-// 
-//   auto fm = fieldMappingAt(index);
-//   auto sourceDriverType = mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName());
-//   auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
-// 
-//   if(sourceDriverType == mdtSqlDriverType::Unknown){
-//     return;
-//   }
-//   if(destinationDriverType == mdtSqlDriverType::Unknown){
-//     return;
-//   }
-//   if(fieldName.isEmpty()){
-//     fm.sourceFieldIndex = -1;
-//   }else{
-//     fm.sourceFieldIndex = pvSourceTable.fieldIndex(fieldName);
-//   }
-//   updateFieldMappingState(fm, sourceDriverType, destinationDriverType);
-//   updateFieldMappingAt(index, fm);
-//   // Update table mapping state
-//   updateTableMappingState();
-// }
-
-QString mdtSqlDatabaseCopierTableMapping::sourceFieldName(int index) const
-{
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < fieldCount());
-
-  int sourceFieldIndex = fieldMappingAt(index).sourceFieldIndex;
-  Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
-  if(sourceFieldIndex < 0){
-    return QString();
-  }
-  return pvSourceTable.fieldName(sourceFieldIndex);
-}
-
-QString mdtSqlDatabaseCopierTableMapping::sourceFieldTypeName(int index) const
-{
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < fieldCount());
-
-  int sourceFieldIndex = fieldMappingAt(index).sourceFieldIndex;
-  Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
-  if(sourceFieldIndex < 0){
-    return QString();
-  }
-  return pvSourceTable.fieldTypeName(sourceFieldIndex, mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName()));
 }
 
 mdtSqlCopierTableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::sourceFieldKeyType(int index) const
@@ -220,28 +168,44 @@ void mdtSqlDatabaseCopierTableMapping::updateSourceField(mdtSqlCopierFieldMappin
   }else{
     fm.sourceFieldIndex = pvSourceTable.fieldIndex(sourceFieldName);
   }
-  updateFieldMappingState(fm, sourceDriverType, destinationDriverType);
 }
 
-void mdtSqlDatabaseCopierTableMapping::updateFieldMappingState(mdtSqlCopierFieldMapping & fm, mdtSqlDriverType::Type sourceDriverType, mdtSqlDriverType::Type destinationDriverType)
+QString mdtSqlDatabaseCopierTableMapping::fetchSourceFieldName(int sourceFieldIndex) const
 {
-  Q_ASSERT(sourceDriverType != mdtSqlDriverType::Unknown);
-  Q_ASSERT(destinationDriverType != mdtSqlDriverType::Unknown);
+  Q_ASSERT(sourceFieldIndex >= 0);
+  Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
+  return pvSourceTable.fieldName(sourceFieldIndex);
+}
 
-  if(fm.isNull()){
-    fm.mappingState = mdtSqlCopierFieldMapping::MappingNotSet;
-    return;
+QString mdtSqlDatabaseCopierTableMapping::fetchSourceFieldTypeName(int sourceFieldIndex) const
+{
+  Q_ASSERT(sourceFieldIndex >= 0);
+  Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
+  return pvSourceTable.fieldTypeName(sourceFieldIndex, mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName()));
+}
+
+bool mdtSqlDatabaseCopierTableMapping::areFieldsCompatible(int sourceFieldIndex, int destinationFieldIndex) const
+{
+  Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
+  Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
+
+  // Get driver types needed for fetching field informations
+  auto sourceDriverType = mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName());
+  auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
+  // Ww cannot check anything without a known DB driver
+  if(sourceDriverType == mdtSqlDriverType::Unknown){
+    return false;
   }
-  Q_ASSERT(fm.sourceFieldIndex >= 0);
-  Q_ASSERT(fm.sourceFieldIndex < pvSourceTable.fieldCount());
-  Q_ASSERT(fm.destinationFieldIndex >= 0);
-  Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
+  if(destinationDriverType == mdtSqlDriverType::Unknown){
+    return false;
+  }
   // Do checks regarding field types
-  auto sourceFieldType = pvSourceTable.field(fm.sourceFieldIndex).getFieldType(sourceDriverType);
-  auto destinationFieldType = pvDestinationTable.field(fm.destinationFieldIndex).getFieldType(destinationDriverType);
+  auto sourceFieldType = pvSourceTable.field(sourceFieldIndex).getFieldType(sourceDriverType);
+  auto destinationFieldType = pvDestinationTable.field(destinationFieldIndex).getFieldType(destinationDriverType);
   if(sourceFieldType == destinationFieldType){
-    fm.mappingState = mdtSqlCopierFieldMapping::MappingComplete;
-  }else{
-    fm.mappingState = mdtSqlCopierFieldMapping::MappingError;
+    /// \todo Add length checking
+    return true;
   }
+
+  return false;
 }

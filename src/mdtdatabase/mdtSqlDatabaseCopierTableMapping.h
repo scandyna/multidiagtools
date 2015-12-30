@@ -85,33 +85,12 @@ class mdtSqlDatabaseCopierTableMapping : public mdtSqlCopierTableMapping
    */
   void generateFieldMappingByName();
 
-  /*! \brief Set source field for given field mapping index
-   *
-   * If source field name is empty,
-   *  the source field will be removed for given index.
-   *
-   * \pre index must be in a valid range
-   */
-//   void setSourceField(int index, const QString & fieldName);
-
   /*! \brief Get list of field names of source table
    */
   QStringList getSourceFieldNameList() const
   {
     return pvSourceTable.getFieldNameList();
   }
-
-  /*! \brief Get source field name for given field mapping index
-   *
-   * \pre index must be in valid range.
-   */
-  QString sourceFieldName(int index) const;
-
-  /*! \brief Get source field type name for given field mapping index
-   *
-   * \pre index must be in valid range.
-   */
-  QString sourceFieldTypeName(int index) const;
 
   /*! \brief Check if source field is part of a key
    *
@@ -159,9 +138,17 @@ class mdtSqlDatabaseCopierTableMapping : public mdtSqlCopierTableMapping
    */
   void updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName);
 
-  /*! \brief Update given field maping state
+  /*! \brief Get source field name for given source field index
    */
-  void updateFieldMappingState(mdtSqlCopierFieldMapping & fm, mdtSqlDriverType::Type sourceDriverType, mdtSqlDriverType::Type destinationDriverType);
+  QString fetchSourceFieldName(int sourceFieldIndex) const;
+
+  /*! \brief Get source field type name for given source field index
+   */
+  QString fetchSourceFieldTypeName(int sourceFieldIndex) const;
+
+  /*! \brief Check if source field is compatible with destination field
+   */
+  bool areFieldsCompatible(int sourceFieldIndex, int destinationFieldIndex) const;
 
   QSqlDatabase pvSourceDatabase;
   mdtSqlSchemaTable pvSourceTable;

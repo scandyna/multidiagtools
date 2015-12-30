@@ -56,33 +56,12 @@ class mdtSqlCsvImportTableMapping : public mdtSqlCopierTableMapping
     return pvDestinationTable.tableName();
   }
 
-  /*! \brief Set source field for given field mapping index
-   *
-   * If source field name is empty,
-   *  the source field will be removed for given index.
-   *
-   * \pre index must be in a valid range
-   */
-//   void setSourceField(int index, const QString & fieldName);
-
   /*! \brief Get list of field names of source table
    */
   QStringList getSourceFieldNameList() const
   {
     return sourceTable().getFieldNameList();
   }
-
-  /*! \brief Get source field name for given field mapping index
-   *
-   * \pre index must be in valid range.
-   */
-  QString sourceFieldName(int index) const;
-
-  /*! \brief Get source field type name for given field mapping index
-   *
-   * \pre index must be in valid range.
-   */
-  QString sourceFieldTypeName(int index) const;
 
   /*! \brief Get destination field name for given field mapping index
    *
@@ -129,9 +108,17 @@ class mdtSqlCsvImportTableMapping : public mdtSqlCopierTableMapping
    */
   void updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName);
 
-  /*! \brief Update given field maping state
+  /*! \brief Get source field name for given source field index
    */
-  void updateFieldMappingState(mdtSqlCopierFieldMapping & fm/*, mdtSqlDriverType::Type destinationDriverType*/);
+  QString fetchSourceFieldName(int sourceFieldIndex) const;
+
+  /*! \brief Get source field type name for given source field index
+   */
+  QString fetchSourceFieldTypeName(int sourceFieldIndex) const;
+
+  /*! \brief Check if source field is compatible with destination field
+   */
+  bool areFieldsCompatible(int sourceFieldIndex, int destinationFieldIndex) const;
 
   /*! \brief Update CSV source format regarding destination table
    *

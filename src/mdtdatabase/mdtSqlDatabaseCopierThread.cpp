@@ -236,7 +236,7 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
     // Copy this row
     if(!destinationQuery.exec()){
       auto error = mdtErrorNewQ(tr("Cannot execute query for insertion into table '") + tm.destinationTableName() + tr("'"), mdtError::Error, this);
-      error.stackError(mdtSqlError::fromQSqlError(sourceQuery.lastError()));
+      error.stackError(mdtSqlError::fromQSqlError(destinationQuery.lastError()));
       error.commit();
       emit tableCopyErrorOccured(dbMappingModelRow, error);
       ///emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, tableName, 0);

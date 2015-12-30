@@ -23,6 +23,8 @@
 #include <QSqlDriver>
 #include <QStringList>
 
+//#include <QDebug>
+
 mdtSqlCopierTableMapping::mdtSqlCopierTableMapping()
  : pvMappingState(MappingNotSet)
 {
@@ -41,13 +43,39 @@ void mdtSqlCopierTableMapping::setSourceField(int index, const QString & fieldNa
   Q_ASSERT(index < pvFieldMappingList.size());
   Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::Field);
 
-  auto fm = pvFieldMappingList.at(index);
+  auto & fm = pvFieldMappingList[index];
 
   // Update source field
   updateSourceField(fm, fieldName);
-  pvFieldMappingList[index] = fm;
+  updateFieldMappingState(fm);
   // Update table mapping state
   updateTableMappingState();
+}
+
+QString mdtSqlCopierTableMapping::sourceFieldName(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < fieldCount());
+  Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::Field);
+
+  int sourceFieldIndex = pvFieldMappingList.at(index).sourceFieldIndex;
+  if(sourceFieldIndex < 0){
+    return QString();
+  }
+  return fetchSourceFieldName(sourceFieldIndex);
+}
+
+QString mdtSqlCopierTableMapping::sourceFieldTypeName(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < fieldCount());
+  Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::Field);
+
+  int sourceFieldIndex = pvFieldMappingList.at(index).sourceFieldIndex;
+  if(sourceFieldIndex < 0){
+    return QString();
+  }
+  return fetchSourceFieldTypeName(sourceFieldIndex);
 }
 
 void mdtSqlCopierTableMapping::setSourceFixedValue(int index, const QVariant & value)
@@ -55,7 +83,14 @@ void mdtSqlCopierTableMapping::setSourceFixedValue(int index, const QVariant & v
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < pvFieldMappingList.size());
   Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::FixedValue);
-  pvFieldMappingList[index].sourceFixedValue = value;
+
+  auto & fm = pvFieldMappingList[index];
+
+  // Update source field
+  fm.sourceFixedValue = value;
+  updateFieldMappingState(fm);
+  // Update table mapping state
+  updateTableMappingState();
 }
 
 void mdtSqlCopierTableMapping::resetFieldMapping()
@@ -98,7 +133,7 @@ QString mdtSqlCopierTableMapping::getSqlForSourceTableSelect(const QSqlDatabase 
   // Build list of mapped fields
   for(int i = 0; i < fieldCount(); ++i){
     const auto fm = fieldMappingAt(i);
-    if(fm.sourceFieldIndex >= 0){
+    if( (fm.sourceFieldIndex >= 0) && (fm.sourceType == mdtSqlCopierFieldMapping::Field) ){
       fields.append(sourceFieldName(i));
     }
   }
@@ -121,18 +156,25 @@ QString mdtSqlCopierTableMapping::getSqlForSourceTableSelect(const QSqlDatabase 
 QString mdtSqlCopierTableMapping::getSqlForDestinationTableInsert(const QSqlDatabase & db) const
 {
   QString sql;
-  QStringList fields;
+  QVector<QString> fields;
+  QVector<QString> values;
   QSqlDriver *driver = db.driver();
   Q_ASSERT(driver != nullptr);
   int lastIndex;
 
-  // Build list of mapped fields
+  // Build list of fields and values
   for(int i = 0; i < fieldCount(); ++i){
     const auto fm = fieldMappingAt(i);
-    if(fm.sourceFieldIndex >= 0){
+    if(!fm.isNull()){
       fields.append(destinationFieldName(i));
+      if(fm.sourceType == mdtSqlCopierFieldMapping::Field){
+        values.append("?");
+      }else{
+        values.append("'" + fm.sourceFixedValue.toString() + "'");
+      }
     }
   }
+  Q_ASSERT(fields.size() == values.size());
 
   lastIndex = fields.size() - 1;
   // If no mapping was set, simply return a empty statement
@@ -147,11 +189,42 @@ QString mdtSqlCopierTableMapping::getSqlForDestinationTableInsert(const QSqlData
   sql += driver->escapeIdentifier(fields.at(lastIndex), QSqlDriver::FieldName);
   sql += ") VALUES (";
   for(int i = 0; i < lastIndex; ++i){
-    sql += "?,";
+    sql += values.at(i) + ",";
   }
-  sql += "?)";
+  sql += values.at(lastIndex) + ")";
 
   return sql;
+}
+
+void mdtSqlCopierTableMapping::updateFieldMappingState(mdtSqlCopierFieldMapping & fm)
+{
+  // Check about null mapping
+  if(fm.isNull()){
+    fm.mappingState = mdtSqlCopierFieldMapping::MappingNotSet;
+    return;
+  }
+  // Check for case of fixed value source
+  if(fm.sourceType == mdtSqlCopierFieldMapping::FixedValue){
+    if(fm.sourceFixedValue.isNull()){
+      fm.mappingState = mdtSqlCopierFieldMapping::MappingError;
+    }else{
+      fm.mappingState = mdtSqlCopierFieldMapping::MappingComplete;
+    }
+    return;
+  }
+  // We have a field source, do checks
+  Q_ASSERT(fm.sourceType == mdtSqlCopierFieldMapping::Field);
+  const int sourceFieldIndex = fm.sourceFieldIndex;
+  const int destinationFieldIndex = fm.destinationFieldIndex;
+  Q_ASSERT(sourceFieldIndex >= 0);
+  Q_ASSERT(destinationFieldIndex >= 0);
+  // Check field compatibility
+  if(!areFieldsCompatible(sourceFieldIndex, destinationFieldIndex)){
+    fm.mappingState = mdtSqlCopierFieldMapping::MappingError;
+    return;
+  }
+  // Done for this field
+  fm.mappingState = mdtSqlCopierFieldMapping::MappingComplete;
 }
 
 void mdtSqlCopierTableMapping::updateTableMappingState()
