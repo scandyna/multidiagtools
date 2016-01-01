@@ -76,7 +76,8 @@ void mdtSqlCsvImportTableMapping::generateFieldMappingByName()
     Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
     mdtSqlField destinationField = pvDestinationTable.field(fm.destinationFieldIndex);
     // Get source field index that matches destination field name
-    fm.sourceFieldIndex = sourceTable().fieldIndex(destinationField.name());
+//     fm.sourceFieldIndex = sourceTable().fieldIndex(destinationField.name());
+    fm.sourceField.setFieldIndex(sourceTable().fieldIndex(destinationField.name()));
     updateCsvSourceFormat(fm);
     updateFieldMappingState(fm);
   }
@@ -84,13 +85,22 @@ void mdtSqlCsvImportTableMapping::generateFieldMappingByName()
   updateTableMappingState();
 }
 
-void mdtSqlCsvImportTableMapping::updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName)
+// void mdtSqlCsvImportTableMapping::updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName)
+// {
+//   if(sourceFieldName.isEmpty()){
+//     fm.sourceFieldIndex = -1;
+//   }else{
+//     fm.sourceFieldIndex = sourceTable().fieldIndex(sourceFieldName);
+//   }
+//   updateCsvSourceFormat(fm);
+// }
+
+void mdtSqlCsvImportTableMapping::setSourceFieldIndex(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName)
 {
-  if(sourceFieldName.isEmpty()){
-    fm.sourceFieldIndex = -1;
-  }else{
-    fm.sourceFieldIndex = sourceTable().fieldIndex(sourceFieldName);
-  }
+  Q_ASSERT(!sourceFieldName.isEmpty());
+
+  const int index = sourceTable().fieldIndex(sourceFieldName);
+  fm.sourceField.setFieldIndex(index);
   updateCsvSourceFormat(fm);
 }
 
@@ -128,12 +138,15 @@ void mdtSqlCsvImportTableMapping::updateCsvSourceFormat(mdtSqlCopierFieldMapping
   if(fm.isNull()){
     return;
   }
-  Q_ASSERT(fm.sourceFieldIndex >= 0);
-  Q_ASSERT(fm.sourceFieldIndex < sourceTable().fieldCount());
+//   Q_ASSERT(fm.sourceFieldIndex >= 0);
+//   Q_ASSERT(fm.sourceFieldIndex < sourceTable().fieldCount());
+  Q_ASSERT(fm.sourceField.fieldIndex() >= 0);
+  Q_ASSERT(fm.sourceField.fieldIndex() < sourceTable().fieldCount());
   Q_ASSERT(fm.destinationFieldIndex >= 0);
   Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
 
   auto destinationFieldFormat = pvDestinationTable.field(fm.destinationFieldIndex).type();
   auto csvFieldFormat = mdtSqlCsvData::csvFieldTypeFromMdtSqlFieldType(destinationFieldFormat);
-  sourceTable().setFieldType(fm.sourceFieldIndex, csvFieldFormat);
+//   sourceTable().setFieldType(fm.sourceFieldIndex, csvFieldFormat);
+  sourceTable().setFieldType(fm.sourceField.fieldIndex(), csvFieldFormat);
 }

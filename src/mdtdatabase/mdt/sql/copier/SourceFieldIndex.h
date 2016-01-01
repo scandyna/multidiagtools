@@ -37,19 +37,16 @@ namespace mdt{ namespace sql{ namespace copier{
      : AbstractSourceField(),
        pvFieldIndex(-1)
     {
-      qDebug() << "C SourceFieldIndex::SourceFieldIndex() ...";
     }
 
     ~SourceFieldIndex()
     {
-      qDebug() << "D SourceFieldIndex::~SourceFieldIndex() ...";
     }
 
     /*! \brief Polymorphic copy
      */
     SourceFieldIndex* clone() const override
     {
-      qDebug() << "SourceFieldIndex::clone() ...";
       return new SourceFieldIndex(pvFieldIndex);
     }
 
@@ -89,7 +86,6 @@ namespace mdt{ namespace sql{ namespace copier{
      : AbstractSourceField(),
        pvFieldIndex(index)
     {
-      qDebug() << "C SourceFieldIndex::SourceFieldIndex(" << index << ") ...";
     }
 
     int pvFieldIndex;

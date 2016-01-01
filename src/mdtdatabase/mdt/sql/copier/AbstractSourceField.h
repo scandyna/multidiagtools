@@ -24,7 +24,7 @@
 #include <QSharedData>
 #include <QVariant>
 
-#include <QDebug>
+//#include <QDebug>
 
 namespace mdt{ namespace sql{ namespace copier{
 
@@ -39,14 +39,12 @@ namespace mdt{ namespace sql{ namespace copier{
     AbstractSourceField()
      : QSharedData()
     {
-      qDebug() << "C AbstractSourceField::AbstractSourceField() ...";
     }
 
     /*! \brief Destructor
      */
     virtual ~AbstractSourceField()
     {
-      qDebug() << "D AbstractSourceField::~AbstractSourceField() ...";
     }
 
     // Disable copy (must use clone())
@@ -101,7 +99,6 @@ namespace mdt{ namespace sql{ namespace copier{
       return QVariant();
     }
 
-  private:
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

@@ -28,7 +28,6 @@ namespace mdt{ namespace sql{ namespace copier{
 SourceField::SourceField(SourceField::Type type)
  : pvType(type)
 {
-  qDebug() << "C SourceField::SourceField() ...";
   constructShared();
 }
 
@@ -37,19 +36,16 @@ SourceField::SourceField(const SourceField& other)
  : pvType(other.pvType),
    pvShared(other.pvShared)
 {
-  qDebug() << "C SourceField::SourceField(other) ...";
 }
 
 // Must be implemented here because AbstractSourceField is not defined in header
 SourceField::~SourceField()
 {
-  qDebug() << "D SourceField::~SourceField() ...";
 }
 
 // Must be implemented here because AbstractSourceField is not defined in header
 SourceField& SourceField::operator=(const SourceField & other)
 {
-  qDebug() << "SourceField::operator=() ...";
   if(&other != this){
     pvType = other.pvType;
     pvShared = other.pvShared;
@@ -104,19 +100,14 @@ void SourceField::reset(SourceField::Type type)
   Q_ASSERT(type != pvType);
 
   pvType = type;
-  qDebug() << "SourceField::reset() ...";
   if(pvShared){
-    qDebug() << "-> delete..";
     pvShared.~QSharedDataPointer();
   }
-  qDebug() << "-> create..";
   constructShared();
 }
 
 void SourceField::constructShared()
 {
-  ///Q_ASSERT(!pvShared);
-
   switch(pvType){
     case SourceFieldIndexType:
       pvShared = new SourceFieldIndex;

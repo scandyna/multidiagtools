@@ -37,19 +37,16 @@ namespace mdt{ namespace sql{ namespace copier{
     SourceFixedValue()
      : AbstractSourceField()
     {
-      qDebug() << "C SourceFixedValue::SourceFixedValue() ...";
     }
 
     ~SourceFixedValue()
     {
-      qDebug() << "D SourceFixedValue::~SourceFixedValue() ...";
     }
 
     /*! \brief Polymorphic copy
      */
     SourceFixedValue* clone() const override
     {
-      qDebug() << "SourceFixedValue::clone() ...";
       return new SourceFixedValue(pvValue);
     }
 
@@ -86,9 +83,9 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Construct a initalized value (used by clone())
      */
     SourceFixedValue(const QVariant & value)
-     : AbstractSourceField()
+     : AbstractSourceField(),
+       pvValue(value)
     {
-      qDebug() << "C SourceFixedValue::SourceFixedValue(" << value << ") ...";
     }
 
     QVariant pvValue;

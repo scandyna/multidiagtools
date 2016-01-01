@@ -132,7 +132,11 @@ class mdtSqlDatabaseCopierTableMapping : public mdtSqlCopierTableMapping
 
   /*! \brief Set source field for given field mapping
    */
-  void updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName);
+//   void updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName);
+
+  /*! \brief Set source field index for given field mapping
+   */
+  void setSourceFieldIndex(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName) override;
 
   /*! \brief Get source field name for given source field index
    */

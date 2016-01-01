@@ -440,47 +440,39 @@ void mdtSqlCopierTest::sourceFieldTest()
    * Copy construction of different types
    */
   // Set sf1 as copy of sourceFieldIndex1
-  qDebug() << "TEST: SourceField sf1(sourceFieldIndex1);";
   SourceField sf1(sourceFieldIndex1);
   QVERIFY(sf1.type() == SourceField::SourceFieldIndexType);
   QCOMPARE(sf1.fieldIndex(), 1);
   // Update sf1
-  qDebug() << "TEST: update sf1";
   sf1.setFieldIndex(11);
   QCOMPARE(sf1.fieldIndex(), 11);
   QCOMPARE(sourceFieldIndex1.fieldIndex(), 1);
   // Set sf2 as copy of fixedValue2
-  qDebug() << "TEST: SourceField sf2(fixedValue2);";
   SourceField sf2(fixedValue2);
   QVERIFY(sf2.type() == SourceField::SourceFixedValueType);
   QCOMPARE(sf2.fixedValue(), QVariant("value 2"));
   // Update sf2
-  qDebug() << "TEST: update sf2";
   sf2.setFixedValue("value 22");
   QCOMPARE(sf2.fixedValue(), QVariant("value 22"));
   QCOMPARE(fixedValue2.fixedValue(), QVariant("value 2"));
   /*
    * Copy assignment of different types
    */
-  qDebug() << "TEST: sf2 = sf1;";
   sf2 = sf1;
   QVERIFY(sf2.type() == SourceField::SourceFieldIndexType);
   QCOMPARE(sf2.fieldIndex(), 11);
   // Update sf1
-  qDebug() << "TEST: update sf1";
   sf1.setFieldIndex(111);
   QVERIFY(sf1.type() == SourceField::SourceFieldIndexType);
   QVERIFY(sf2.type() == SourceField::SourceFieldIndexType);
   QCOMPARE(sf1.fieldIndex(), 111);
   QCOMPARE(sf2.fieldIndex(), 11);
   // Update sf2
-  qDebug() << "TEST: update sf2";
   sf2.setFieldIndex(1111);
   QVERIFY(sf1.type() == SourceField::SourceFieldIndexType);
   QVERIFY(sf2.type() == SourceField::SourceFieldIndexType);
   QCOMPARE(sf1.fieldIndex(), 111);
   QCOMPARE(sf2.fieldIndex(), 1111);
-  qDebug() << "TEST: ply copy done";
   /*
    * Check setting different type of one existing SourceField object works
    */
@@ -499,62 +491,71 @@ void mdtSqlCopierTest::sourceFieldTest()
 
 void mdtSqlCopierTest::fieldMappingDataTest()
 {
+  using mdt::sql::copier::SourceField;
   mdtSqlCopierFieldMapping data;
 
   /*
    * Initial state
    */
-  QCOMPARE(data.sourceFieldIndex, -1);
+  QVERIFY(data.sourceField.type() == SourceField::SourceFieldIndexType);
+  QVERIFY(data.sourceField.isNull());
+  ///QCOMPARE(data.sourceFieldIndex, -1);
   QCOMPARE(data.destinationFieldIndex, -1);
   QVERIFY(data.mappingState == mdtSqlCopierFieldMapping::MappingNotSet);
-  QVERIFY(data.sourceType == mdtSqlCopierFieldMapping::Field);
+  ///QVERIFY(data.sourceType == mdtSqlCopierFieldMapping::Field);
   QVERIFY(data.isNull());
   /*
    * Set with Field source type
    */
   // Check when simply set source and destination field index
-  data.sourceFieldIndex = 0;
+  ///data.sourceFieldIndex = 0;
+  data.sourceField.setFieldIndex(0);
   QVERIFY(data.isNull());
   data.destinationFieldIndex = 0;
   QVERIFY(!data.isNull());
   // Set some other members to check clear
   data.mappingState = mdtSqlCopierFieldMapping::MappingComplete;
-  data.sourceType = mdtSqlCopierFieldMapping::FixedValue;
-  data.sourceFixedValue = "Fixed";
+  ///data.sourceType = mdtSqlCopierFieldMapping::FixedValue;
+  ///data.sourceFixedValue = "Fixed";
   /*
    * Clear
    */
   data.clear();
-  QCOMPARE(data.sourceFieldIndex, -1);
+  ///QCOMPARE(data.sourceFieldIndex, -1);
+  QVERIFY(data.sourceField.isNull());
   QCOMPARE(data.destinationFieldIndex, -1);
   QVERIFY(data.mappingState == mdtSqlCopierFieldMapping::MappingNotSet);
-  QVERIFY(data.sourceType == mdtSqlCopierFieldMapping::Field);
-  QVERIFY(data.sourceFixedValue.isNull());
+  ///QVERIFY(data.sourceType == mdtSqlCopierFieldMapping::Field);
+  ///QVERIFY(data.sourceFixedValue.isNull());
   QVERIFY(data.isNull());
   /*
    * Set with FixedValue source type
    */
-  data.sourceType = mdtSqlCopierFieldMapping::FixedValue;
+  ///data.sourceType = mdtSqlCopierFieldMapping::FixedValue;
   // Set normally
   QVERIFY(data.isNull());
-  data.sourceFixedValue = "Fixed value";
+  data.sourceField.setFixedValue("Fixed value");
+  ///data.sourceFixedValue = "Fixed value";
   QVERIFY(data.isNull());
   data.destinationFieldIndex = 0;
   QVERIFY(!data.isNull());
   // Set a valid source index (must be ignored)
-  data.clear();
-  data.sourceType = mdtSqlCopierFieldMapping::FixedValue;
-  QVERIFY(data.isNull());
-  data.destinationFieldIndex = 0;
-  QVERIFY(data.isNull());
-  data.sourceFieldIndex = 0;
-  QVERIFY(data.isNull());
-  data.sourceFixedValue = "Fixed value";
-  QVERIFY(!data.isNull());
+//   data.clear();
+//   ///data.sourceType = mdtSqlCopierFieldMapping::FixedValue;
+//   QVERIFY(data.isNull());
+//   data.destinationFieldIndex = 0;
+//   QVERIFY(data.isNull());
+//   data.sou
+//   data.sourceFieldIndex = 0;
+//   QVERIFY(data.isNull());
+//   data.sourceFixedValue = "Fixed value";
+//   QVERIFY(!data.isNull());
 }
 
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
 {
+  using mdt::sql::copier::SourceField;
+
   mdtSqlDatabaseCopierTableMapping mapping;
 
   /*
@@ -590,10 +591,14 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   QVERIFY(mapping.sourceFieldKeyType(1) == mdtSqlCopierTableMapping::NotAKey);
   QVERIFY(mapping.destinationFieldKeyType(1) == mdtSqlCopierTableMapping::NotAKey);
   // Check that default source types are set
-  QVERIFY(mapping.sourceType(0) == mdtSqlCopierFieldMapping::Field);
-  QVERIFY(mapping.sourceType(1) == mdtSqlCopierFieldMapping::Field);
-  QVERIFY(mapping.sourceType(2) == mdtSqlCopierFieldMapping::Field);
-  QVERIFY(mapping.sourceType(3) == mdtSqlCopierFieldMapping::Field);
+  QVERIFY(mapping.sourceType(0) == SourceField::SourceFieldIndexType);
+  QVERIFY(mapping.sourceType(1) == SourceField::SourceFieldIndexType);
+  QVERIFY(mapping.sourceType(2) == SourceField::SourceFieldIndexType);
+  QVERIFY(mapping.sourceType(3) == SourceField::SourceFieldIndexType);
+//   QVERIFY(mapping.sourceType(0) == mdtSqlCopierFieldMapping::Field);
+//   QVERIFY(mapping.sourceType(1) == mdtSqlCopierFieldMapping::Field);
+//   QVERIFY(mapping.sourceType(2) == mdtSqlCopierFieldMapping::Field);
+//   QVERIFY(mapping.sourceType(3) == mdtSqlCopierFieldMapping::Field);
   /*
    * Set a field mapping:
    *  - Client_tbl.Id_PK -> Client2_tbl.Id_PK
@@ -737,13 +742,15 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingNotSet);
   QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingNotSet);
   // Check that default source types are set
-  QVERIFY(mapping.sourceType(0) == mdtSqlCopierFieldMapping::Field);
-  QVERIFY(mapping.sourceType(1) == mdtSqlCopierFieldMapping::Field);
+  QVERIFY(mapping.sourceType(0) == SourceField::SourceFieldIndexType);
+  QVERIFY(mapping.sourceType(1) == SourceField::SourceFieldIndexType);
+//   QVERIFY(mapping.sourceType(0) == mdtSqlCopierFieldMapping::Field);
+//   QVERIFY(mapping.sourceType(1) == mdtSqlCopierFieldMapping::Field);
   /*
    * Update source type for Name destination field
    */
-  mapping.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
-  QVERIFY(mapping.sourceType(1) == mdtSqlCopierFieldMapping::FixedValue);
+//   mapping.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
+//   QVERIFY(mapping.sourceType(1) == mdtSqlCopierFieldMapping::FixedValue);
   /*
    * Map Client_tbl.Id_PK -> Client2_tbl.Id_PK
    */
@@ -751,7 +758,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   // Check attributes
   QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
   QCOMPARE(mapping.sourceFieldName(0), QString("Id_PK"));
-  QVERIFY(mapping.sourceFixedValue(1).isNull());
+//   QVERIFY(mapping.sourceFixedValue(1).isNull());
   QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
   QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
   // Check field mapping state
@@ -770,6 +777,9 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   // Check field mapping state
   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
   QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingComplete);
+  // Check also that source type are set
+  QVERIFY(mapping.sourceType(0) == SourceField::SourceFieldIndexType);
+  QVERIFY(mapping.sourceType(1) == SourceField::SourceFixedValueType);
   /*
    * Check field mapping state after changing source type
    */
@@ -782,13 +792,14 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   // Check field mapping state
   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingNotSet);
   // Check that default source types are set
-  QVERIFY(mapping.sourceType(0) == mdtSqlCopierFieldMapping::Field);
+//   QVERIFY(mapping.sourceType(0) == mdtSqlCopierFieldMapping::Field);
+  QVERIFY(mapping.sourceType(0) == SourceField::SourceFieldIndexType);
   // Set a valid field mapping
   mapping.setSourceField(0, "Id_PK");
   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
   // Change source type
-  mapping.setSourceType(0, mdtSqlCopierFieldMapping::FixedValue);
-  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingNotSet);
+//   mapping.setSourceType(0, mdtSqlCopierFieldMapping::FixedValue);
+//   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingNotSet);
   // Set a valid value
   mapping.setSourceFixedValue(0, 5);
   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
@@ -913,7 +924,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
   /*
    * Check with source fixed value for Client2_tbl.Name
    */
-  mapping.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
+//   mapping.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
   mapping.setSourceFixedValue(1, "Fixed name");
   // Check SQL select data in source table
   expectedSql = "SELECT \"Id_PK\",\"FieldB\",\"FieldA\" FROM \"Client_tbl\"";
@@ -926,6 +937,8 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
 
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
 {
+  using mdt::sql::copier::SourceField;
+
   QTableView tableView;
   QTreeView treeView;
   mdtSqlDatabaseCopierTableMappingModel model;
@@ -933,7 +946,8 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   const int sourceFieldNameColumn = 2;
   const int destinationFieldNameColumn = 6;
   QModelIndex index;
-  mdtSqlCopierFieldMapping::SourceType sourceType;
+//   mdtSqlCopierFieldMapping::SourceType sourceType;
+  SourceField::Type sourceType;
   mdtSqlDatabaseCopierTableMapping tm;
   mdtComboBoxItemDelegate *sourceTypeDelegate = new mdtComboBoxItemDelegate(&tableView);
   mdtComboBoxItemDelegate *sourceFieldNameDelegate = new mdtComboBoxItemDelegate(&tableView);
@@ -1025,8 +1039,10 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   sourceTypeDelegate->setCurrentIndex(1);
   endEditing(tableView, index);
   // Check that source type was updated
-  sourceType = static_cast<mdtSqlCopierFieldMapping::SourceType>(model.data(index, Qt::EditRole).toInt());
-  QVERIFY(sourceType == mdtSqlCopierFieldMapping::FixedValue);
+//   sourceType = static_cast<mdtSqlCopierFieldMapping::SourceType>(model.data(index, Qt::EditRole).toInt());
+  sourceType = static_cast<SourceField::Type>(model.data(index, Qt::EditRole).toInt());
+  QVERIFY(sourceType == SourceField::SourceFixedValueType);
+//   QVERIFY(sourceType == mdtSqlCopierFieldMapping::FixedValue);
   // Check getting source field name - Must return a null value
   index = model.index(0, sourceFieldNameColumn);
   QVERIFY(index.isValid());
@@ -1185,7 +1201,7 @@ void mdtSqlCopierTest::sqlCopierDataMappingTest()
   /*
    * Check with source fixed value for Client2_tbl.Name
    */
-  mapping.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
+//   mapping.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
   mapping.setSourceFixedValue(1, "Fixed name");
   // Get source data
   sql = mapping.getSqlForSourceTableSelect(db);
@@ -1796,7 +1812,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierThreadTest()
   auto tm = mapping.tableMapping(0);
   QVERIFY(tm.setSourceTable("Client_tbl", pvDatabase));
   tm.setSourceField(0, "Id_PK");
-  tm.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
+//   tm.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
   tm.setSourceFixedValue(1, "Fixed name");
   tm.setSourceField(2, "FieldB");
   tm.setSourceField(3, "FieldA");

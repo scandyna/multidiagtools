@@ -1,4 +1,4 @@
-window_sizes 1272 956 358 908 903 0
+window_sizes 1280 964 358 916 911 0
 cleanlooks_style
 diagrams
   classdiagram_ref 1809282 // TableMapping
@@ -10,7 +10,7 @@ diagrams
   classdiagram_ref 1576066 // FieldMapping
     120 106 100 4 0 0
   active  classdiagram_ref 1876482 // SourceField
-    908 903 100 7 48 27
+    916 911 100 7 12 27
 end
 show_stereotypes
 selected operation_ref 3399042 // fixedValue
@@ -27,6 +27,6 @@ open
   attribute_ref 2259970 // FieldIndex
   operation_ref 3390082 // clone
   
-  package_ref 260866 // Boost
+package_ref 260866 // Boost
 end
 end

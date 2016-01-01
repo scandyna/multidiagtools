@@ -88,7 +88,8 @@ void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
     Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
     mdtSqlField destinationField = pvDestinationTable.field(fm.destinationFieldIndex);
     // Get source field index that matches destination field name
-    fm.sourceFieldIndex = pvSourceTable.fieldIndex(destinationField.name());
+//     fm.sourceFieldIndex = pvSourceTable.fieldIndex(destinationField.name());
+    fm.sourceField.setFieldIndex(pvSourceTable.fieldIndex(destinationField.name()));
     updateFieldMappingState(fm);
   }
   // Update table mapping state
@@ -137,22 +138,30 @@ mdtSqlCopierTableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::destina
   return NotAKey;
 }
 
-void mdtSqlDatabaseCopierTableMapping::updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName)
-{
-  auto sourceDriverType = mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName());
-  auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
+// void mdtSqlDatabaseCopierTableMapping::updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName)
+// {
+//   auto sourceDriverType = mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName());
+//   auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
+// 
+//   if(sourceDriverType == mdtSqlDriverType::Unknown){
+//     return;
+//   }
+//   if(destinationDriverType == mdtSqlDriverType::Unknown){
+//     return;
+//   }
+//   if(sourceFieldName.isEmpty()){
+//     fm.sourceFieldIndex = -1;
+//   }else{
+//     fm.sourceFieldIndex = pvSourceTable.fieldIndex(sourceFieldName);
+//   }
+// }
 
-  if(sourceDriverType == mdtSqlDriverType::Unknown){
-    return;
-  }
-  if(destinationDriverType == mdtSqlDriverType::Unknown){
-    return;
-  }
-  if(sourceFieldName.isEmpty()){
-    fm.sourceFieldIndex = -1;
-  }else{
-    fm.sourceFieldIndex = pvSourceTable.fieldIndex(sourceFieldName);
-  }
+void mdtSqlDatabaseCopierTableMapping::setSourceFieldIndex(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName)
+{
+  Q_ASSERT(!sourceFieldName.isEmpty());
+
+  const int index = pvSourceTable.fieldIndex(sourceFieldName);
+  fm.sourceField.setFieldIndex(index);
 }
 
 QString mdtSqlDatabaseCopierTableMapping::fetchSourceFieldName(int sourceFieldIndex) const

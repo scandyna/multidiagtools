@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_COPIER_FIELD_MAPPING_H
 #define MDT_SQL_COPIER_FIELD_MAPPING_H
 
+#include "mdt/sql/copier/SourceField.h"
 #include <QVariant>
 
 /*! \brief Field mapping data
@@ -44,17 +45,21 @@ struct mdtSqlCopierFieldMapping
     MappingError        /*!< A error was detected in field mapping. */
   };
 
-  /*! \brief Source type
+  /*! \brief Source field
    */
-  enum SourceType
-  {
-    Field,        /*!< Data will be copied regarding source and destination field mapping */
-    FixedValue    /*!< fixedValue will be copied to destination mapped field */
-  };
+  mdt::sql::copier::SourceField sourceField;
+
+//   /*! \brief Source type
+//    */
+//   enum SourceType
+//   {
+//     Field,        /*!< Data will be copied regarding source and destination field mapping */
+//     FixedValue    /*!< fixedValue will be copied to destination mapped field */
+//   };
 
   /*! \brief Source field index
    */
-  int sourceFieldIndex;
+//   int sourceFieldIndex;
 
   /*! \brief Destination field index
    */
@@ -66,42 +71,39 @@ struct mdtSqlCopierFieldMapping
 
   /*! \brief Source type
    */
-  SourceType sourceType;
+//   SourceType sourceType;
 
   /*! \brief Source fixed value
    *
    * \note has only sense if sourceType is FixedValue.
    */
-  QVariant sourceFixedValue;
+//   QVariant sourceFixedValue;
 
   /*! \brief Default constructor
    *
    * Will set source and destination field indexes to -1
    */
   mdtSqlCopierFieldMapping()
-   : sourceFieldIndex(-1),
+   : sourceField(mdt::sql::copier::SourceField::SourceFieldIndexType),
+     /*sourceFieldIndex(-1),*/
      destinationFieldIndex(-1),
-     mappingState(mdtSqlCopierFieldMapping::MappingNotSet),
-     sourceType(Field)
+     mappingState(mdtSqlCopierFieldMapping::MappingNotSet)
+//      sourceType(Field)
   {
   }
 
   /*! \brief Check if mapping data is null
-   *
-   * For case of Field source type,
-   *  mapping data is null if source or destination field index is < 0
-   * For case FixedValue source type,
-   *  mapping is null if sourceFixedValue is null or destination field index is < 0
    */
   bool isNull() const
   {
-    switch(sourceType){
-      case Field:
-        return ( (sourceFieldIndex < 0) || (destinationFieldIndex < 0) );
-      case FixedValue:
-        return ( sourceFixedValue.isNull() || (destinationFieldIndex < 0) );
-    }
-    return true;
+    return (sourceField.isNull() || destinationFieldIndex < 0);
+//     switch(sourceType){
+//       case Field:
+//         return ( (sourceFieldIndex < 0) || (destinationFieldIndex < 0) );
+//       case FixedValue:
+//         return ( sourceFixedValue.isNull() || (destinationFieldIndex < 0) );
+//     }
+//     return true;
   }
 
   /*! \brief Clear
@@ -110,11 +112,12 @@ struct mdtSqlCopierFieldMapping
    */
   void clear()
   {
-    sourceFieldIndex = -1;
+    sourceField.clear();
+//     sourceFieldIndex = -1;
     destinationFieldIndex = -1;
     mappingState = MappingNotSet;
-    sourceType = Field;
-    sourceFixedValue.clear();
+//     sourceType = Field;
+//     sourceFixedValue.clear();
   }
 };
 

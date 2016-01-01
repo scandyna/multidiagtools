@@ -110,18 +110,25 @@ class mdtSqlCopierTableMapping
    *
    * \pre index must be in a valid range
    */
-  void setSourceType(int index, mdtSqlCopierFieldMapping::SourceType type);
+//   void setSourceType(int index, mdtSqlCopierFieldMapping::SourceType type);
 
   /*! \brief Get source type (field or fixed value)
    *
    * \pre index must be in a valid range
    */
-  mdtSqlCopierFieldMapping::SourceType sourceType(int index) const
+  mdt::sql::copier::SourceField::Type sourceType(int index) const
   {
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < pvFieldMappingList.size());
-    return pvFieldMappingList.at(index).sourceType;
+    return pvFieldMappingList.at(index).sourceField.type();
   }
+
+//   mdtSqlCopierFieldMapping::SourceType sourceType(int index) const
+//   {
+//     Q_ASSERT(index >= 0);
+//     Q_ASSERT(index < pvFieldMappingList.size());
+//     return pvFieldMappingList.at(index).sourceType;
+//   }
 
   /*! \brief Set source field for given field mapping index
    *
@@ -129,7 +136,6 @@ class mdtSqlCopierTableMapping
    *  the source field will be removed for given index.
    *
    * \pre index must be in a valid range
-   * \pre source type for given index must be mdtSqlCopierFieldMapping::Field
    */
   void setSourceField(int index, const QString & fieldName);
 
@@ -170,8 +176,10 @@ class mdtSqlCopierTableMapping
   {
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < pvFieldMappingList.size());
-    Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::FixedValue);
-    return pvFieldMappingList.at(index).sourceFixedValue;
+//     Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::FixedValue);
+    Q_ASSERT(pvFieldMappingList.at(index).sourceField.type() == mdt::sql::copier::SourceField::SourceFixedValueType);
+//     return pvFieldMappingList.at(index).sourceFixedValue;
+    return pvFieldMappingList.at(index).sourceField.fixedValue();
   }
 
   /*! \brief Get destination field name for given field mapping index
@@ -265,7 +273,11 @@ class mdtSqlCopierTableMapping
 
   /*! \brief Set source field for given field mapping
    */
-  virtual void updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName) = 0;
+//   virtual void updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName) = 0;
+
+  /*! \brief Set source field index for given field mapping
+   */
+  virtual void setSourceFieldIndex(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName) = 0;
 
   /*! \brief Get source field name for given source field index
    */
@@ -317,6 +329,8 @@ class mdtSqlCopierTableMapping
   /*! \brief Update field mapping at given index
    *
    * \pre index must be valid
+   * 
+   * \todo Check if used
    */
   void updateFieldMappingAt(int index, const mdtSqlCopierFieldMapping & fm)
   {
