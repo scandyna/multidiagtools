@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -49,18 +49,6 @@ struct mdtSqlCopierFieldMapping
    */
   mdt::sql::copier::SourceField sourceField;
 
-//   /*! \brief Source type
-//    */
-//   enum SourceType
-//   {
-//     Field,        /*!< Data will be copied regarding source and destination field mapping */
-//     FixedValue    /*!< fixedValue will be copied to destination mapped field */
-//   };
-
-  /*! \brief Source field index
-   */
-//   int sourceFieldIndex;
-
   /*! \brief Destination field index
    */
   int destinationFieldIndex;
@@ -69,26 +57,14 @@ struct mdtSqlCopierFieldMapping
    */
   MappingState mappingState;
 
-  /*! \brief Source type
-   */
-//   SourceType sourceType;
-
-  /*! \brief Source fixed value
-   *
-   * \note has only sense if sourceType is FixedValue.
-   */
-//   QVariant sourceFixedValue;
-
   /*! \brief Default constructor
    *
    * Will set source and destination field indexes to -1
    */
   mdtSqlCopierFieldMapping()
    : sourceField(mdt::sql::copier::SourceField::SourceFieldIndexType),
-     /*sourceFieldIndex(-1),*/
      destinationFieldIndex(-1),
      mappingState(mdtSqlCopierFieldMapping::MappingNotSet)
-//      sourceType(Field)
   {
   }
 
@@ -97,13 +73,6 @@ struct mdtSqlCopierFieldMapping
   bool isNull() const
   {
     return (sourceField.isNull() || destinationFieldIndex < 0);
-//     switch(sourceType){
-//       case Field:
-//         return ( (sourceFieldIndex < 0) || (destinationFieldIndex < 0) );
-//       case FixedValue:
-//         return ( sourceFixedValue.isNull() || (destinationFieldIndex < 0) );
-//     }
-//     return true;
   }
 
   /*! \brief Clear
@@ -113,11 +82,8 @@ struct mdtSqlCopierFieldMapping
   void clear()
   {
     sourceField.clear();
-//     sourceFieldIndex = -1;
     destinationFieldIndex = -1;
     mappingState = MappingNotSet;
-//     sourceType = Field;
-//     sourceFixedValue.clear();
   }
 };
 

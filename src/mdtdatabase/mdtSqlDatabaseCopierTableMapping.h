@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -129,10 +129,6 @@ class mdtSqlDatabaseCopierTableMapping : public mdtSqlCopierTableMapping
   {
     return pvDestinationTable.fieldCount();
   }
-
-  /*! \brief Set source field for given field mapping
-   */
-//   void updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName);
 
   /*! \brief Set source field index for given field mapping
    */

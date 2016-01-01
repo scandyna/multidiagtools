@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -76,7 +76,6 @@ void mdtSqlCsvImportTableMapping::generateFieldMappingByName()
     Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
     mdtSqlField destinationField = pvDestinationTable.field(fm.destinationFieldIndex);
     // Get source field index that matches destination field name
-//     fm.sourceFieldIndex = sourceTable().fieldIndex(destinationField.name());
     fm.sourceField.setFieldIndex(sourceTable().fieldIndex(destinationField.name()));
     updateCsvSourceFormat(fm);
     updateFieldMappingState(fm);
@@ -84,16 +83,6 @@ void mdtSqlCsvImportTableMapping::generateFieldMappingByName()
   // Update table mapping state
   updateTableMappingState();
 }
-
-// void mdtSqlCsvImportTableMapping::updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName)
-// {
-//   if(sourceFieldName.isEmpty()){
-//     fm.sourceFieldIndex = -1;
-//   }else{
-//     fm.sourceFieldIndex = sourceTable().fieldIndex(sourceFieldName);
-//   }
-//   updateCsvSourceFormat(fm);
-// }
 
 void mdtSqlCsvImportTableMapping::setSourceFieldIndex(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName)
 {
@@ -138,8 +127,6 @@ void mdtSqlCsvImportTableMapping::updateCsvSourceFormat(mdtSqlCopierFieldMapping
   if(fm.isNull()){
     return;
   }
-//   Q_ASSERT(fm.sourceFieldIndex >= 0);
-//   Q_ASSERT(fm.sourceFieldIndex < sourceTable().fieldCount());
   Q_ASSERT(fm.sourceField.fieldIndex() >= 0);
   Q_ASSERT(fm.sourceField.fieldIndex() < sourceTable().fieldCount());
   Q_ASSERT(fm.destinationFieldIndex >= 0);
@@ -147,6 +134,5 @@ void mdtSqlCsvImportTableMapping::updateCsvSourceFormat(mdtSqlCopierFieldMapping
 
   auto destinationFieldFormat = pvDestinationTable.field(fm.destinationFieldIndex).type();
   auto csvFieldFormat = mdtSqlCsvData::csvFieldTypeFromMdtSqlFieldType(destinationFieldFormat);
-//   sourceTable().setFieldType(fm.sourceFieldIndex, csvFieldFormat);
   sourceTable().setFieldType(fm.sourceField.fieldIndex(), csvFieldFormat);
 }

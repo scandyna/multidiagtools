@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -103,10 +103,6 @@ class mdtSqlCsvImportTableMapping : public mdtSqlCopierTableMapping
   virtual const mdtCsvSourceInfo & sourceTable() const = 0;
 
  private:
-
-  /*! \brief Set source field for given field mapping
-   */
-//   void updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName);
 
   /*! \brief Set source field index for given field mapping
    */

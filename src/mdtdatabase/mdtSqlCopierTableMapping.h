@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -123,13 +123,6 @@ class mdtSqlCopierTableMapping
     return pvFieldMappingList.at(index).sourceField.type();
   }
 
-//   mdtSqlCopierFieldMapping::SourceType sourceType(int index) const
-//   {
-//     Q_ASSERT(index >= 0);
-//     Q_ASSERT(index < pvFieldMappingList.size());
-//     return pvFieldMappingList.at(index).sourceType;
-//   }
-
   /*! \brief Set source field for given field mapping index
    *
    * If source field name is empty,
@@ -176,9 +169,7 @@ class mdtSqlCopierTableMapping
   {
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < pvFieldMappingList.size());
-//     Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::FixedValue);
     Q_ASSERT(pvFieldMappingList.at(index).sourceField.type() == mdt::sql::copier::SourceField::SourceFixedValueType);
-//     return pvFieldMappingList.at(index).sourceFixedValue;
     return pvFieldMappingList.at(index).sourceField.fixedValue();
   }
 
@@ -270,10 +261,6 @@ class mdtSqlCopierTableMapping
    * Mainly used by resetFieldMapping()
    */
   virtual int destinationTableFieldCount() const = 0;
-
-  /*! \brief Set source field for given field mapping
-   */
-//   virtual void updateSourceField(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName) = 0;
 
   /*! \brief Set source field index for given field mapping
    */

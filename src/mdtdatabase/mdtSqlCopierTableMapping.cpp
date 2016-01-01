@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -45,7 +45,6 @@ void mdtSqlCopierTableMapping::setSourceField(int index, const QString & fieldNa
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < pvFieldMappingList.size());
-//   Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::Field);
 
   auto & fm = pvFieldMappingList[index];
 
@@ -64,7 +63,6 @@ QString mdtSqlCopierTableMapping::sourceFieldName(int index) const
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < fieldCount());
-//   Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::Field);
   Q_ASSERT(pvFieldMappingList.at(index).sourceField.type() == mdt::sql::copier::SourceField::SourceFieldIndexType);
 
   int sourceFieldIndex = pvFieldMappingList.at(index).sourceField.fieldIndex();
@@ -78,7 +76,6 @@ QString mdtSqlCopierTableMapping::sourceFieldTypeName(int index) const
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < fieldCount());
-//   Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::Field);
   Q_ASSERT(pvFieldMappingList.at(index).sourceField.type() == mdt::sql::copier::SourceField::SourceFieldIndexType);
 
   int sourceFieldIndex = pvFieldMappingList.at(index).sourceField.fieldIndex();
@@ -92,7 +89,6 @@ mdtSqlCopierTableMapping::FieldKeyType mdtSqlCopierTableMapping::sourceFieldKeyT
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < pvFieldMappingList.size());
-//   Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::Field);
   Q_ASSERT(pvFieldMappingList.at(index).sourceField.type() == mdt::sql::copier::SourceField::SourceFieldIndexType);
 
   const int sourceFieldIndex = fieldMappingAt(index).sourceField.fieldIndex();
@@ -106,12 +102,10 @@ void mdtSqlCopierTableMapping::setSourceFixedValue(int index, const QVariant & v
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < pvFieldMappingList.size());
-//   Q_ASSERT(pvFieldMappingList.at(index).sourceType == mdtSqlCopierFieldMapping::FixedValue);
 
   auto & fm = pvFieldMappingList[index];
 
   // Update source field
-//   fm.sourceFixedValue = value;
   fm.sourceField.setFixedValue(value);
   updateFieldMappingState(fm);
   // Update table mapping state
@@ -163,9 +157,6 @@ QString mdtSqlCopierTableMapping::getSqlForSourceTableSelect(const QSqlDatabase 
     if( (!fm.sourceField.isNull()) && (fm.sourceField.type() == SourceField::SourceFieldIndexType) ){
       fields.append(sourceFieldName(i));
     }
-//     if( (fm.sourceFieldIndex >= 0) && (fm.sourceType == mdtSqlCopierFieldMapping::Field) ){
-//       fields.append(sourceFieldName(i));
-//     }
   }
   lastIndex = fields.size() - 1;
   // If no mapping was set, simply return a empty statement
@@ -201,10 +192,8 @@ QString mdtSqlCopierTableMapping::getSqlForDestinationTableInsert(const QSqlData
       fields.append(destinationFieldName(i));
       if(fm.sourceField.type() == SourceField::SourceFieldIndexType){
         /// \todo We could create a helper in SourceField class that returns the correct string
-//       if(fm.sourceType == mdtSqlCopierFieldMapping::Field){
         values.append("?");
       }else{
-//         values.append("'" + fm.sourceFixedValue.toString() + "'");
         values.append("'" + fm.sourceField.fixedValue().toString() + "'");
       }
     }
@@ -249,16 +238,7 @@ void mdtSqlCopierTableMapping::updateFieldMappingState(mdtSqlCopierFieldMapping 
     }
     return;
   }
-//   if(fm.sourceType == mdtSqlCopierFieldMapping::FixedValue){
-//     if(fm.sourceFixedValue.isNull()){
-//       fm.mappingState = mdtSqlCopierFieldMapping::MappingError;
-//     }else{
-//       fm.mappingState = mdtSqlCopierFieldMapping::MappingComplete;
-//     }
-//     return;
-//   }
   // We have a field source, do checks
-//   Q_ASSERT(fm.sourceType == mdtSqlCopierFieldMapping::Field);
   Q_ASSERT(fm.sourceField.type() == SourceField::SourceFieldIndexType);
   const int sourceFieldIndex = fm.sourceField.fieldIndex();
   const int destinationFieldIndex = fm.destinationFieldIndex;
