@@ -36,12 +36,17 @@ class mdtSqlCopierTest : public mdtTest
  private slots:
 
   void sandbox();
+  void sandbox2();
 
   void initTestCase();
   void cleanupTestCase();
 
   void sqlFieldSetupDataTest();
 
+  void sourceFieldIndexTest();
+  void sourceFixedValueTest();
+  void sourceFieldExpressionTest();
+  void sourceFieldTest();
   void fieldMappingDataTest();
 
   void sqlDatabaseCopierTableMappingTest();
@@ -49,6 +54,8 @@ class mdtSqlCopierTest : public mdtTest
   void sqlDatabaseCopierTableMappingSqliteTest();
   void sqlDatabaseCopierTableMappingModelTest();
   void sqlDatabaseCopierTableMappingDialogTest();
+
+  void sqlCopierDataMappingTest();
 
   void sqlCsvStringImportTableMappingTest();
   void sqlCsvFileImportTableMappingTest();

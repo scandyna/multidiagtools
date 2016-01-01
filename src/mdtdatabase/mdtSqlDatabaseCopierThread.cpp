@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtSqlDatabaseCopierThread.h"
 #include "mdtSqlDatabaseCopierMappingModel.h"
+#include "mdtSqlCopierDataMapping.h"
 #include "mdtAlgorithms.h"
 #include "mdtSqlTransaction.h"
 #include "mdtError.h"
@@ -184,6 +185,7 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
   QString sql;
   mdtProgressValue<int64_t> progress;
   auto totalRows = tableSize(dbMappingModelRow);
+  mdtSqlCopierDataMapping dataMapping;
 
   if(pvAbort){
     return true;
@@ -229,9 +231,9 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
       return false;
     }
     // Bind values for each field
-    int fieldCount = sourceQuery.record().count();
-    for(int i = 0; i < fieldCount; ++i){
-      destinationQuery.bindValue(i, sourceQuery.value(i));
+    dataMapping.setSourceRecord(sourceQuery.record(), tm);
+    for(const auto & value : dataMapping.destinationRecord){
+      destinationQuery.addBindValue(value);
     }
     // Copy this row
     if(!destinationQuery.exec()){

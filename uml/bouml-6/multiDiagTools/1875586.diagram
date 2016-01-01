@@ -1,0 +1,13 @@
+format 210
+
+classcanvas 128002 class_ref 2247554 // EdgeData
+  classdiagramsettings member_max_width 0 end
+  xyz 132 332 2000
+end
+classcanvas 128130 class_ref 2247682 // Visitor
+  classdiagramsettings member_max_width 0 end
+  xyz 247 309 2000
+end
+note 128258 "Voir: notion d'itérateurs"
+  xyzwh 225 79 2000 389 49
+end

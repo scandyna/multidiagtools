@@ -1,0 +1,16 @@
+format 210
+
+classcanvas 128002 class_ref 2249218 // mdtSqlCopierDataMapping
+  classdiagramsettings member_max_width 0 end
+  xyz 27 118 2000
+end
+classcanvas 128130 class_ref 2174082 // mdtSqlCopierTableMapping
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 614 436 2000
+end
+relationcanvas 128258 relation_ref 2526722 // <dependency>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

@@ -1,0 +1,65 @@
+format 210
+
+classcanvas 128002 class_ref 895234 // QGraphicsItem
+  classdiagramsettings member_max_width 0 end
+  xyz 37.5 40.75 2000
+end
+classcanvas 128130 class_ref 2248066 // Connection
+  classdiagramsettings member_max_width 0 end
+  xyz 290.5 274.5 2000
+end
+classcanvas 128258 class_ref 2248194 // Pin
+  classdiagramsettings member_max_width 0 end
+  xyz 76.5 400.5 2000
+end
+classcanvas 128386 class_ref 2248322 // Socket
+  classdiagramsettings member_max_width 0 end
+  xyz 162.75 400.5 2000
+end
+classcanvas 129538 class_ref 2248578 // Terminal
+  classdiagramsettings member_max_width 0 end
+  xyz 445.75 400.5 2000
+end
+note 130178 "Notion de texte à afficher.
+On peut voir une classe commune (qui gère boundingResct() et paint() et...)"
+  xyzwh 502.5 250.5 2000 293 95
+classcanvas 130306 class_ref 2248834 // ConnectedSocketPin
+  classdiagramsettings member_max_width 0 end
+  xyz 260.5 400.5 2000
+end
+relationcanvas 130434 relation_ref 2525954 // <generalisation>
+  geometry VHV unfixed
+  from ref 129538 z 2001 to point 476 360
+  line 131586 z 2001 to point 330 360
+  line 131714 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130562 relation_ref 2526082 // <generalisation>
+  geometry VHV unfixed
+  from ref 128258 z 2001 to point 96 360
+  line 131074 z 2001 to point 330 360
+  line 131202 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130690 relation_ref 2526210 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 543
+  from ref 128386 z 2001 to point 190 360
+  line 131330 z 2001 to point 330 360
+  line 131458 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130818 relation_ref 2526338 // <generalisation>
+  from ref 130306 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130946 relation_ref 2526466 // <generalisation>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

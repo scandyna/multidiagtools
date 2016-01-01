@@ -29,6 +29,8 @@
 #include <QStringList>
 #include <QSqlDatabase>
 
+class QSqlRecord;
+
 /*! \brief Mapping used to copy 2 SQL tables
  */
 class mdtSqlDatabaseCopierTableMapping : public mdtSqlCopierTableMapping
@@ -91,12 +93,6 @@ class mdtSqlDatabaseCopierTableMapping : public mdtSqlCopierTableMapping
   {
     return pvSourceTable.getFieldNameList();
   }
-
-  /*! \brief Check if source field is part of a key
-   *
-   * \pre index must be in valid range.
-   */
-//   FieldKeyType sourceFieldKeyType(int index) const;
 
   /*! \brief Get list of field names of destination table
    */

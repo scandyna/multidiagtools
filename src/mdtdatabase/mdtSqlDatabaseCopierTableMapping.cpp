@@ -23,6 +23,7 @@
 #include "mdtSqlFieldType.h"
 #include "mdtSqlPrimaryKey.h"
 #include <QSqlDriver>
+#include <QSqlRecord>
 
 //#include <QDebug>
 
@@ -93,22 +94,6 @@ void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
   // Update table mapping state
   updateTableMappingState();
 }
-
-// mdtSqlCopierTableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::sourceFieldKeyType(int index) const
-// {
-//   Q_ASSERT(index >= 0);
-//   Q_ASSERT(index < fieldCount());
-// 
-//   const int sourceFieldIndex = fieldMappingAt(index).sourceFieldIndex;
-//   Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
-//   if(sourceFieldIndex < 0){
-//     return NotAKey;
-//   }
-//   if(pvSourceTable.isFieldPartOfPrimaryKey(sourceFieldIndex)){
-//     return PrimaryKey;
-//   }
-//   return NotAKey;
-// }
 
 QString mdtSqlDatabaseCopierTableMapping::destinationFieldName(int index) const
 {

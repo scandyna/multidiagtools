@@ -1,6 +1,6 @@
 format 210
 "Qt" // Qt
-  revision 112
+  revision 113
   modified_by 2 "philippe"
   // class settings
   
@@ -5737,6 +5737,11 @@ ${inlines}
       end
     end
 
+    classdiagram 1875202 "GraphicsViewOverview"
+      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+      size A4
+    end
+
     classdiagram 859266 "QGraphicsTextItem"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -5905,6 +5910,10 @@ ${inlines}
 	
 	
       end
+
+      classrelation 2541698 // <composition>
+	relation_ref 2525186 // <composition>
+      end
     end
 
     classdiagram 859650 "QGraphicsItemGroup"
@@ -6004,6 +6013,46 @@ ${inlines}
 	
 	
       end
+
+      classrelation 2541570 // <composition>
+	relation 2525186 *---
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2541570 // <composition>
+	  b role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2541698 // <composition>
+      end
+    end
+
+    classdiagram 1875458 "QGraphicsSceneEvent"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2247426 "QGraphicsSceneEvent"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2541826 // <generalisation>
+	relation 2525314 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2541826 // <generalisation>
+	  b parent class_ref 2247298 // QEvent
+      end
     end
 
     classdiagram 860034 "QGraphicsView"
@@ -6031,6 +6080,15 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 1108738 // <generalisation>
 	  b parent class_ref 895874 // QAbstractScrollArea
+      end
+
+      classrelation 2541442 // <unidirectional association>
+	relation 2525058 --->
+	  a role_name "" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2541442 // <unidirectional association>
+	  b multiplicity "*" parent class_ref 895618 // QGraphicsScene
       end
     end
 
@@ -6719,6 +6777,27 @@ ${inlines}
 	
 	
       end
+    end
+
+    classdiagram 1875330 "QEvent"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2247298 "QEvent"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 

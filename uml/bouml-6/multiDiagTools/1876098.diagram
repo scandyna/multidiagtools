@@ -1,0 +1,12 @@
+format 210
+
+note 128002 "Layouts:
+ - Auto
+ - Selon dispositions (coordonnées xyz)
+ - Selon tableaux ?"
+  xyzwh 125.5 52.5 2000 565 117
+classcanvas 128130 class_ref 2248450 // Coordinate
+  classdiagramsettings member_max_width 0 end
+  xyz 233 390 2000
+end
+end

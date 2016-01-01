@@ -1,0 +1,71 @@
+format 210
+
+classcanvas 128002 class_ref 2249346 // SourceField
+  classdiagramsettings member_max_width 0 end
+  xyz 641 122 2000
+end
+classcanvas 128130 class_ref 2248962 // SourceFieldExpression
+  classdiagramsettings member_max_width 0 end
+  xyz 346 458 2000
+end
+classcanvas 128258 class_ref 2249474 // SourceFixedValue
+  classdiagramsettings member_max_width 0 end
+  xyz 41 456 2000
+end
+classcanvas 128386 class_ref 2249602 // SourceFieldIndex
+  classdiagramsettings member_max_width 0 end
+  xyz 637 455 2000
+end
+classcanvas 128514 class_ref 2249730 // AbstractSourceField
+  classdiagramsettings member_max_width 0 end
+  xyz 337 130 2000
+end
+classcanvas 129666 class_ref 2125186 // QSharedData
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 424 42 2000
+end
+note 130050 "Notes:
+ - Npr virtual function calls in constructor
+ - Use override keyword in derived classes (prevents  error if signature of derived function not matches)
+ - Make copy deleted in abstract class
+ - Check copy  of SourceFiled
+ - Check slo move"
+  xyzwh 40.5 720.5 2000 669 149
+relationcanvas 128642 relation_ref 2526850 // <directional composition>
+  from ref 128002 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 2526978 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 479
+  decenter_end 513
+  from ref 128386 z 2001 to point 741 416
+  line 129410 z 2001 to point 469 416
+  line 129538 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 2527106 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 482
+  decenter_end 513
+  from ref 128258 z 2001 to point 165 416
+  line 129154 z 2001 to point 469 416
+  line 129282 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 2527234 // <generalisation>
+  decenter_end 513
+  from ref 128130 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 2527362 // <generalisation>
+  decenter_begin 513
+  from ref 128514 z 2001 to ref 129666
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

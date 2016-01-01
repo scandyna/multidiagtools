@@ -1,6 +1,6 @@
 format 210
 "mdtdatabase" // mdtdatabase
-  revision 97
+  revision 100
   modified_by 2 "philippe"
   // class settings
   
@@ -5240,6 +5240,18 @@ ${inlines}
 	
 	
       end
+
+      attribute 2252162 "Fields"
+	private type class_ref 160770 // QStringList
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
     end
 
     class 1987842 "mdtSqlPrimaryKey"
@@ -7805,6 +7817,81 @@ ${inlines}
       end
     end
 
+    classdiagram 1876354 "DataMapping"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2249218 "mdtSqlCopierDataMapping"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2543234 // <dependency>
+	relation 2526722 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2543234 // <dependency>
+	  b parent class_ref 2174082 // mdtSqlCopierTableMapping
+      end
+
+      attribute 2253314 "destinationRecord"
+	private type class_ref 161154 // QVariant
+	multiplicity "*"
+	stereotype "QVector"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3388802 "addSourceRecordItem"
+	public explicit_return_type "void"
+	nparams 3
+	  param in name "sourceRecordIndex" explicit_type "int"
+	  param in name "sourceRecordItem" type class_ref 161154 // QVariant
+	  param in name "mapping" type class_ref 2174082 // mdtSqlCopierTableMapping
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3388930 "size"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
     classdiagram 1829122 "TableMappingModel"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -8605,6 +8692,24 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 2487810 // <generalisation>
 	  b parent class_ref 2174082 // mdtSqlCopierTableMapping
+      end
+
+      operation 3388674 "getDestinationDataList"
+	stereotype "QVector"
+	public return_type class_ref 161154 // QVariant
+	multiplicity "*"
+	nparams 1
+	  param in name "sourceRecord" type class_ref 404994 // QSqlRecord
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -9789,4 +9894,6 @@ ${inlines}
       
     end
   end
+
+  package_ref 302338 // mdt
 end

@@ -12,6 +12,10 @@ classcanvas 128386 class_ref 1787394 // mdtFieldMappingCatParameters
   classdiagramsettings member_max_width 0 end
   xyz 434 474 2006
 end
+classcanvas 128770 class_ref 2249346 // SourceField
+  classdiagramsettings member_max_width 0 end
+  xyz 184 56 2000
+end
 relationcanvas 128258 relation_ref 2104578 // <unidirectional association>
   from ref 128002 z 3006 to ref 128130
   no_role_a no_role_b
