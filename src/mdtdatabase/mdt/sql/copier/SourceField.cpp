@@ -22,6 +22,7 @@
 #include "AbstractSourceField.h"
 #include "SourceFieldIndex.h"
 #include "SourceFixedValue.h"
+#include "SourceFieldExpression.h"
 
 namespace mdt{ namespace sql{ namespace copier{
 
@@ -114,6 +115,9 @@ void SourceField::constructShared()
       break;
     case SourceFixedValueType:
       pvShared = new SourceFixedValue;
+      break;
+    case SourceFieldExpressionType:
+      pvShared = new SourceFieldExpression;
       break;
   }
 }

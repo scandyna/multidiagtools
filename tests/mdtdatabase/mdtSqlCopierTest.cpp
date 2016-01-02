@@ -27,9 +27,14 @@
 #include "mdtSqlRecord.h"
 #include "mdtSqlTransaction.h"
 #include "mdtSqlCopierDataMapping.h"
+
 #include "mdt/sql/copier/SourceField.h"
 #include "mdt/sql/copier/SourceFieldIndex.h"
 #include "mdt/sql/copier/SourceFixedValue.h"
+#include "mdt/sql/copier/SourceFieldExpression.h"
+
+#include "mdt/sql/copier/TableMappingItem.h"
+
 #include "mdtSqlDatabaseCopierTableMapping.h"
 #include "mdtSqlDatabaseCopierTableMappingModel.h"
 #include "mdtSqlDatabaseCopierTableMappingDialog.h"
@@ -164,7 +169,16 @@ void mdtSqlCopierTest::sandbox()
 
 void mdtSqlCopierTest::sandbox2()
 {
+  using mdt::sql::copier::SourceFieldExpression;
+  using mdt::sql::copier::SourceFieldExpressionMatchItem;
 
+  SourceFieldExpression exp;
+
+  exp.setTablesForUniqueInsert("SomeSourceTable", "Client_tbl");
+  exp.addMatchItemForUniqueInsert("SrcName", "Name");
+  exp.addMatchItemForUniqueInsert(SourceFieldExpressionMatchItem::And, "rem", "REM");
+  
+  qDebug() << "SQL: " << exp.getSql(pvDatabase, "Id_PK");
 }
 
 
@@ -485,6 +499,33 @@ void mdtSqlCopierTest::sourceFieldTest()
   sf.setFixedValue("value 5");
   QVERIFY(sf.type() == SourceField::SourceFixedValueType);
   QCOMPARE(sf.fixedValue(), QVariant("value 5"));
+  /*
+   * Construction of expression
+   */
+  SourceField expression1(SourceField::SourceFieldExpressionType);
+  QVERIFY(expression1.type() == SourceField::SourceFieldExpressionType);
+  QVERIFY(expression1.isNull());
+  /*
+   * Copy construction of expression
+   */
+  /// \todo Implement
+  // Set some value to expression1
+  
+  // Construct expression2 as copy of expression1
+  SourceField expression2(expression1);
+  
+  // Update expression2
+  
+  /*
+   * Copy assignmenet
+   */
+  /// \todo Implement
+  // Create expression3
+  SourceField expression3(SourceField::SourceFieldExpressionType);
+  // Assign
+  expression3 = expression1;
+  
+  // Update expression3
   
 
 }
@@ -550,6 +591,49 @@ void mdtSqlCopierTest::fieldMappingDataTest()
 //   QVERIFY(data.isNull());
 //   data.sourceFixedValue = "Fixed value";
 //   QVERIFY(!data.isNull());
+}
+
+void mdtSqlCopierTest::tableMappingItemTest()
+{
+  using mdt::sql::copier::TableMappingItem;
+
+  /*
+   * Construction of field mapping item
+   */
+  TableMappingItem fm1(TableMappingItem::FieldMappingType);
+  
+  /*
+   * Copy construction of field mapping item
+   */
+
+  /*
+   * Copy assignment of field mapping item
+   */
+
+  /*
+   * Construction of fixed value item
+   */
+
+  /*
+   * Copy construction of fixed value item
+   */
+
+  /*
+   * Copy assignment of fixes value item
+   */
+
+  /*
+   * Copy construction of different types
+   */
+
+  /*
+   * Copy assignment of different types
+   */
+
+  /*
+   * Check setting different type of one existing items object works
+   */
+
 }
 
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()

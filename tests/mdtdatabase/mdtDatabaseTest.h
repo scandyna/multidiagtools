@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -33,6 +33,8 @@ class mdtDatabaseTest : public mdtTest
 
   void initTestCase();
   void cleanupTestCase();
+
+  void whereOperatorTest();
 
   void sqlDriverTypeTest();
 

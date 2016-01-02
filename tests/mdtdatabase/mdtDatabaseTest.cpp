@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -54,6 +54,7 @@
 #include "mdtSqlTransaction.h"
 #include "mdtSqlDriverType.h"
 #include "mdtSqlFieldType.h"
+#include "mdtSqlWhereOperator.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -95,6 +96,46 @@ void mdtDatabaseTest::initTestCase()
 {
   createTestDatabase();
   clearTestDatabaseData();
+}
+
+void mdtDatabaseTest::whereOperatorTest()
+{
+  mdtSqlWhereOperator op;
+
+  // Initial state
+  QVERIFY(op == mdtSqlWhereOperator::Null);
+  QVERIFY(op.toString().isEmpty());
+  /*
+   * Affectation
+   */
+  mdtSqlWhereOperator op1 = mdtSqlWhereOperator::And;
+  QVERIFY(op1.value == mdtSqlWhereOperator::And);
+  auto op2 = op1;
+  QVERIFY(op2.value == mdtSqlWhereOperator::And);
+  /*
+   * Comprison operators
+   */
+  QVERIFY(op1 == op2);
+  QVERIFY(op1.value == op2);
+  QVERIFY(op1 == op2.value);
+  QVERIFY(op1.value == op2.value);
+  QVERIFY(!(op1 != op2));
+  QVERIFY(!(op1.value != op2));
+  QVERIFY(!(op1 != op2.value));
+  QVERIFY(!(op1.value != op2.value));
+  /*
+   * String representation
+   */
+  QVERIFY(mdtSqlWhereOperatorString(mdtSqlWhereOperator::Null).isEmpty());
+  QCOMPARE(mdtSqlWhereOperatorString(mdtSqlWhereOperator::And), QString("AND"));
+  QCOMPARE(mdtSqlWhereOperatorString(mdtSqlWhereOperator::Or), QString("OR"));
+  // Check object function
+  op = mdtSqlWhereOperator::Null;
+  QVERIFY(op.toString().isEmpty());
+  op = mdtSqlWhereOperator::And;
+  QCOMPARE(op.toString(), QString("AND"));
+  op = mdtSqlWhereOperator::Or;
+  QCOMPARE(op.toString(), QString("OR"));
 }
 
 void mdtDatabaseTest::sqlDriverTypeTest()

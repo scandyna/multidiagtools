@@ -2,7 +2,7 @@ format 210
 
 classcanvas 128002 class_ref 2249346 // SourceField
   classdiagramsettings member_max_width 0 end
-  xyz 641 122 2000
+  xyz 40 125 2000
 end
 classcanvas 128130 class_ref 2248962 // SourceFieldExpression
   classdiagramsettings member_max_width 0 end

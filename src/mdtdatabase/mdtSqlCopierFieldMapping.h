@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_COPIER_FIELD_MAPPING_H
-#define MDT_SQL_COPIER_FIELD_MAPPING_H
+#ifndef MDT_SQL_COPIER_FIELD_MAPPING_OLD_H
+#define MDT_SQL_COPIER_FIELD_MAPPING_OLD_H
 
 #include "mdt/sql/copier/SourceField.h"
 #include <QVariant>
@@ -87,4 +87,4 @@ struct mdtSqlCopierFieldMapping
   }
 };
 
-#endif // MDT_SQL_COPIER_FIELD_MAPPING_H
+#endif // MDT_SQL_COPIER_FIELD_MAPPING_OLD_H

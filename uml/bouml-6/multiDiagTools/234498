@@ -1,6 +1,6 @@
 format 210
 "mdtdatabase" // mdtdatabase
-  revision 100
+  revision 101
   modified_by 2 "philippe"
   // class settings
   
@@ -9896,4 +9896,42 @@ ${inlines}
   end
 
   package_ref 302338 // mdt
+
+  classview 927362 "Operators"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 1883010 "WhereOperator"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2256258 "mdtSqlWhereOperator"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+  end
 end
