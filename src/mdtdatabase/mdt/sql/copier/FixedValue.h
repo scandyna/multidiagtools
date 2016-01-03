@@ -18,74 +18,74 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_COPIER_FIELD_MAPPING_H
-#define MDT_SQL_COPIER_FIELD_MAPPING_H
+#ifndef MDT_SQL_COPIER_FIXED_VALUE_H
+#define MDT_SQL_COPIER_FIXED_VALUE_H
 
 #include "AbstractTableMappingItem.h"
+#include <QVariant>
 
 namespace mdt{ namespace sql{ namespace copier{
 
-  /*! \brief Table mapping item implementation for field mapping
+  /*! \brief Fixed value to copy to destination for SQL copier
    */
-  class FieldMapping : public AbstractTableMappingItem
+  class FixedValue : public AbstractTableMappingItem
   {
    public:
 
-    /*! \brief Create a invalid field mapping
+    /*! \brief Create a invalid fixed value
      */
-    FieldMapping()
+    FixedValue()
      : AbstractTableMappingItem(),
-       pvSourceFieldIndex(-1),
        pvDestinationFieldIndex(-1)
     {
-      qDebug() << "C  FieldMapping::FieldMapping() - ref: " << ref.load();
+      qDebug() << "C  FixedValue::FixedValue() - ref: " << ref.load();
     }
 
     /*! \brief Destructor
      */
-    ~FieldMapping()
+    ~FixedValue()
     {
-      qDebug() << "D  FieldMapping::~FieldMapping() - ref: " << ref.load();
+      qDebug() << "D  FixedValue::~FixedValue() - ref: " << ref.load();
     }
 
     /*! \brief Polymorphic copy
      */
-    FieldMapping* clone() const override
+    FixedValue* clone() const override
     {
-      qDebug() << " FieldMapping::clone() - ref: " << ref.load();
-      return new FieldMapping(*this);
+      qDebug() << " FixedValue::clone() - ref: " << ref.load();
+      return new FixedValue(*this);
     }
 
-    /*! \brief Check if field mapping is null
+    /*! \brief Check if fixed value is null
      *
-     * Fiel mapping is null if at least source or destination field index is < 0
+     * Fixed value is null if value is null or destination field index is < 0
      */
     bool isNull() const override
     {
-      return ( (pvSourceFieldIndex < 0) || (pvDestinationFieldIndex < 0) );
+      return ( pvValue.isNull() || (pvDestinationFieldIndex < 0) );
     }
 
-    /*! \brief Clear field mapping
+    /*! \brief Clear fixed value
      */
     void clear() override
     {
-      pvSourceFieldIndex = -1;
+      pvValue.clear();
       pvDestinationFieldIndex = -1;
     }
 
-    /*! \brief Set a field mapping
+    /*! \brief Set fixed value
      */
-    void setFieldMapping(int sourceFieldIndex, int destinationFieldIndex) override
+    void setFixedValue(const QVariant & value, int destinationFieldIndex) override
     {
-      pvSourceFieldIndex = sourceFieldIndex;
+      pvValue = value;
       pvDestinationFieldIndex = destinationFieldIndex;
     }
 
-    /*! \brief Get source field index
+    /*! \brief Get fixed value
      */
-    int sourceFieldIndex() const override
+    QVariant fixedValue() const override
     {
-      return pvSourceFieldIndex;
+      return pvValue;
     }
 
     /*! \brief Get destination field index
@@ -99,16 +99,17 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Copy constructor (used by clone)
      */
-    FieldMapping(const FieldMapping & other)
+    FixedValue(const FixedValue & other)
      : AbstractTableMappingItem(other)
     {
-      qDebug() << "CPY  FieldMapping::FieldMapping(other) - ref: " << ref.load();
+      qDebug() << "CPY  FixedValue::FixedValue(other) - ref: " << ref.load();
     }
 
-    int pvSourceFieldIndex;
     int pvDestinationFieldIndex;
+    QVariant pvValue;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{
 
-#endif // #ifndef MDT_SQL_COPIER_FIELD_MAPPING_H
+#endif // #ifndef MDT_SQL_COPIER_FIXED_VALUE_H
+

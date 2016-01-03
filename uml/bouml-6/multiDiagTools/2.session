@@ -12,26 +12,27 @@ diagrams
   classdiagram_ref 1876482 // SourceField
     916 911 100 7 12 27
   classdiagram_ref 1883138 // TableMappingItem
-    120 106 100 21 0 175
-  active  classdiagram_ref 1883266 // AbstractTableMappingItem
+    916 911 90 21 0 0
+  classdiagram_ref 1883266 // AbstractTableMappingItem
     916 911 100 4 0 0
-  classdiagram_ref 1883394 // UniqueInsertExpression
-    120 106 100 4 0 0
+  active  classdiagram_ref 1883394 // UniqueInsertExpression
+    916 911 100 18 0 0
   classdiagram_ref 1883522 // ReferringTableInsertExpression
     120 106 100 4 0 0
   classdiagram_ref 1883650 // TableMappingItemSql
     120 106 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 3407874 // isNull
+selected operation_ref 3415938 // clear
 open
   classview_ref 807426 // ImportExportCopy
   classview_ref 893954 // sqlDatabaseCopy
   classview_ref 920834 // SourceFieldExpression
-  class_ref 2256386 // TableMappingItem
+  operation_ref 3415682 // fixedValue
   class_ref 2256514 // AbstractTableMappingItem
   attribute_ref 2266882 // sourceFieldIndex
   attribute_ref 2267010 // destinationFieldIndex
+  operation_ref 3414658 // clone
   attribute_ref 2266754 // destinationFieldIndex
   class_ref 2256898 // UniqueInsertExpression
   class_ref 2257026 // UniqueInsertMatchItem

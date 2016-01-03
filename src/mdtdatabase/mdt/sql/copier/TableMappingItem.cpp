@@ -21,37 +21,129 @@
 #include "TableMappingItem.h"
 #include "AbstractTableMappingItem.h"
 #include "FieldMapping.h"
+#include "FixedValue.h"
+#include "UniqueInsertExpression.h"
 
 namespace mdt{ namespace sql{ namespace copier{
 
 TableMappingItem::TableMappingItem(TableMappingItem::Type type)
+ : pvType(type)
 {
-
+  qDebug() << "C TableMappingItem::TableMappingItem() .";
+  constructShared();
 }
 
 TableMappingItem::TableMappingItem(const TableMappingItem & other)
+ : pvType(other.pvType),
+   pvShared(other.pvShared)
 {
-
+  qDebug() << "CPY TableMappingItem::TableMappingItem(other) .";
 }
 
 TableMappingItem::~TableMappingItem()
 {
-
+  qDebug() << "D TableMappingItem::~TableMappingItem() .";
 }
 
 TableMappingItem& TableMappingItem::operator=(const TableMappingItem & other)
 {
-
+  qDebug() << "CPY TableMappingItem::operator=(other) .";
+  if(&other != this){
+    pvType = other.pvType;
+    pvShared = other.pvShared;
+  }
+  return *this;
 }
 
 bool TableMappingItem::isNull() const
 {
-
+  Q_ASSERT(pvShared);
+  return pvShared->isNull();
 }
 
 void TableMappingItem::clear()
 {
+  Q_ASSERT(pvShared);
+  pvShared->clear();
+}
 
+void TableMappingItem::setFieldMapping(int sourceFieldIndex, int destinationFieldIndex)
+{
+  if(pvType != FieldMappingType){
+    reset(FieldMappingType);
+  }
+  Q_ASSERT(pvShared);
+  pvShared->setFieldMapping(sourceFieldIndex, destinationFieldIndex);
+}
+
+int TableMappingItem::sourceFieldIndex() const
+{
+  Q_ASSERT(pvShared);
+  return pvShared->sourceFieldIndex();
+}
+
+int TableMappingItem::destinationFieldIndex() const
+{
+  Q_ASSERT(pvShared);
+  return pvShared->destinationFieldIndex();
+}
+
+void TableMappingItem::setFixedValue(const QVariant& value, int destinationFieldIndex)
+{
+  if(pvType != FixedValueType){
+    reset(FixedValueType);
+  }
+  Q_ASSERT(pvShared);
+  pvShared->setFixedValue(value, destinationFieldIndex);
+}
+
+QVariant TableMappingItem::fixedValue() const
+{
+  Q_ASSERT(pvShared);
+  return pvShared->fixedValue();
+}
+
+void TableMappingItem::setUniqueInsertExpression(const UniqueInsertExpression & exp)
+{
+  pvType = UniqueInsertExpressionType;
+  pvShared = new UniqueInsertExpression(exp);
+}
+
+void TableMappingItem::reset(TableMappingItem::Type type)
+{
+  Q_ASSERT(type != pvType);
+
+  pvType = type;
+  if(pvShared){
+    pvShared.~QSharedDataPointer();
+  }
+  constructShared();
+}
+
+void TableMappingItem::constructShared()
+{
+  switch(pvType){
+    case FieldMappingType:
+      pvShared = new FieldMapping;
+      break;
+    case FixedValueType:
+      pvShared = new FixedValue;
+      break;
+    case UniqueInsertExpressionType:
+      pvShared = new UniqueInsertExpression;
+      break;
+  }
 }
 
 }}} // namespace mdt{ namespace sql{ namespace copier{
+
+/*
+ * Clone template specialization:
+ * We have a QSharedDataPointer<AbstractTableMappingItem>,
+ * but we must return a new object using the right clone() function.
+ */
+template <>
+mdt::sql::copier::AbstractTableMappingItem *QSharedDataPointer<mdt::sql::copier::AbstractTableMappingItem>::clone()
+{
+  return d->clone();
+}

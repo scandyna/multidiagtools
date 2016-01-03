@@ -34,6 +34,9 @@
 #include "mdt/sql/copier/SourceFieldExpression.h"
 
 #include "mdt/sql/copier/TableMappingItem.h"
+#include "mdt/sql/copier/FieldMapping.h"
+#include "mdt/sql/copier/FixedValue.h"
+#include "mdt/sql/copier/UniqueInsertExpression.h"
 
 #include "mdtSqlDatabaseCopierTableMapping.h"
 #include "mdtSqlDatabaseCopierTableMappingModel.h"
@@ -593,6 +596,107 @@ void mdtSqlCopierTest::fieldMappingDataTest()
 //   QVERIFY(!data.isNull());
 }
 
+void mdtSqlCopierTest::fieldMappingTest()
+{
+  using mdt::sql::copier::FieldMapping;
+
+  /*
+   * Initial state
+   */
+  FieldMapping fm;
+  QCOMPARE(fm.sourceFieldIndex(), -1);
+  QCOMPARE(fm.destinationFieldIndex(), -1);
+  QVERIFY(fm.isNull());
+  /*
+   * Set
+   */
+  fm.setFieldMapping(1, 2);
+  QCOMPARE(fm.sourceFieldIndex(), 1);
+  QCOMPARE(fm.destinationFieldIndex(), 2);
+  QVERIFY(!fm.isNull());
+  /*
+   * Clear
+   */
+  fm.clear();
+  QCOMPARE(fm.sourceFieldIndex(), -1);
+  QCOMPARE(fm.destinationFieldIndex(), -1);
+  QVERIFY(fm.isNull());
+  /*
+   * Copy of FieldMapping is not allowed
+   */
+  // FieldMapping fm2(fm);        // Does not compile
+  // FieldMapping fm3; fm3 = fm;  // Does not compile
+}
+
+void mdtSqlCopierTest::fixedValueTest()
+{
+  using mdt::sql::copier::FixedValue;
+
+  /*
+   * Initial state
+   */
+  FixedValue fv;
+  QVERIFY(fv.fixedValue().isNull());
+  QCOMPARE(fv.destinationFieldIndex(), -1);
+  QVERIFY(fv.isNull());
+  /*
+   * Set
+   */
+  fv.setFixedValue("Fixed", 3);
+  QCOMPARE(fv.fixedValue(), QVariant("Fixed"));
+  QCOMPARE(fv.destinationFieldIndex(), 3);
+  QVERIFY(!fv.isNull());
+  /*
+   * Clear
+   */
+  fv.clear();
+  QVERIFY(fv.fixedValue().isNull());
+  QCOMPARE(fv.destinationFieldIndex(), -1);
+  QVERIFY(fv.isNull());
+  /*
+   * Copy of FixedValue is not allowed
+   */
+  // FixedValue fv2(fv);        // Does not compile
+  // FixedValue fv3; fv3 = fv;  // Does not compile
+}
+
+void mdtSqlCopierTest::uniqueInsertExpressionTest()
+{
+  using mdt::sql::copier::UniqueInsertExpression;
+  using mdt::sql::copier::UniqueInsertMatchExpressionItem;
+
+  /*
+   * Match item tests
+   */
+  // Constructs
+  UniqueInsertMatchExpressionItem item1(-1, -1);
+  QVERIFY(item1.isNull());
+  UniqueInsertMatchExpressionItem item2(0, -1);
+  QVERIFY(item2.isNull());
+  UniqueInsertMatchExpressionItem item3(-1, 0);
+  QVERIFY(item3.isNull());
+  // Construct a not null item
+  UniqueInsertMatchExpressionItem item4(1, 2);
+  QCOMPARE(item4.sourceValueFieldIndex, 1);
+  QCOMPARE(item4.destinationFieldIndex, 2);
+  QVERIFY(item4.operatorWithPrevious == mdtSqlWhereOperator::Null);
+  QVERIFY(!item4.isNull());
+  // Construct a non null item with operator
+  UniqueInsertMatchExpressionItem item5(mdtSqlWhereOperator::And, 3, 4);
+  QCOMPARE(item5.sourceValueFieldIndex, 3);
+  QCOMPARE(item5.destinationFieldIndex, 4);
+  QVERIFY(item5.operatorWithPrevious == mdtSqlWhereOperator::And);
+  QVERIFY(!item5.isNull());
+  // Clear
+  ///item5.cl
+  /*
+   * Initial state
+   */
+  UniqueInsertExpression exp;
+  
+  QVERIFY(exp.isNull());
+}
+
 void mdtSqlCopierTest::tableMappingItemTest()
 {
   using mdt::sql::copier::TableMappingItem;
@@ -601,26 +705,138 @@ void mdtSqlCopierTest::tableMappingItemTest()
    * Construction of field mapping item
    */
   TableMappingItem fm1(TableMappingItem::FieldMappingType);
-  
+  QVERIFY(fm1.type() == TableMappingItem::FieldMappingType);
+  QCOMPARE(fm1.sourceFieldIndex(), -1);
+  QCOMPARE(fm1.destinationFieldIndex(), -1);
+  QVERIFY(fm1.isNull());
   /*
    * Copy construction of field mapping item
    */
-
+  // Set some value to fm1
+  fm1.setFieldMapping(1, 11);
+  QCOMPARE(fm1.sourceFieldIndex(), 1);
+  QCOMPARE(fm1.destinationFieldIndex(), 11);
+  QVERIFY(!fm1.isNull());
+  // Construct fm2 on base of fm1
+  TableMappingItem fm2(fm1);
+  QVERIFY(fm2.type() == TableMappingItem::FieldMappingType);
+  QCOMPARE(fm2.sourceFieldIndex(), 1);
+  QCOMPARE(fm2.destinationFieldIndex(), 11);
+  QVERIFY(!fm2.isNull());
+  // Update fm2
+  fm2.setFieldMapping(2, 22);
+  QCOMPARE(fm1.sourceFieldIndex(), 1);
+  QCOMPARE(fm1.destinationFieldIndex(), 11);
+  QCOMPARE(fm2.sourceFieldIndex(), 2);
+  QCOMPARE(fm2.destinationFieldIndex(), 22);
   /*
    * Copy assignment of field mapping item
    */
-
+  // Create fm3
+  TableMappingItem fm3(TableMappingItem::FieldMappingType);
+  QVERIFY(fm3.isNull());
+  // Assign
+  fm3 = fm1;
+  QVERIFY(fm3.type() == TableMappingItem::FieldMappingType);
+  QCOMPARE(fm3.sourceFieldIndex(), 1);
+  QCOMPARE(fm3.destinationFieldIndex(), 11);
+  // Update fm3
+  fm3.setFieldMapping(3, 33);
+  QCOMPARE(fm1.sourceFieldIndex(), 1);
+  QCOMPARE(fm1.destinationFieldIndex(), 11);
+  QCOMPARE(fm3.sourceFieldIndex(), 3);
+  QCOMPARE(fm3.destinationFieldIndex(), 33);
+  /*
+   * Copy assignment of different type
+   */
+  TableMappingItem fm4(TableMappingItem::FixedValueType);
+  QVERIFY(fm4.type() == TableMappingItem::FixedValueType);
+  QVERIFY(fm4.isNull());
+  // Assign
+  fm4 = fm1;
+  QVERIFY(fm4.type() == TableMappingItem::FieldMappingType);
+  QCOMPARE(fm4.sourceFieldIndex(), 1);
+  QCOMPARE(fm4.destinationFieldIndex(), 11);
+  // Update fm4
+  fm4.setFieldMapping(4, 44);
+  QCOMPARE(fm1.sourceFieldIndex(), 1);
+  QCOMPARE(fm1.destinationFieldIndex(), 11);
+  QCOMPARE(fm4.sourceFieldIndex(), 4);
+  QCOMPARE(fm4.destinationFieldIndex(), 44);
   /*
    * Construction of fixed value item
    */
-
+  TableMappingItem fv1(TableMappingItem::FixedValueType);
+  QVERIFY(fv1.type() == TableMappingItem::FixedValueType);
+  QVERIFY(fv1.isNull());
   /*
    * Copy construction of fixed value item
    */
-
+  // Set some value to fv1
+  fv1.setFixedValue("Fixed 1", 1);
+  QCOMPARE(fv1.fixedValue(), QVariant("Fixed 1"));
+  QCOMPARE(fv1.destinationFieldIndex(), 1);
+  QVERIFY(!fv1.isNull());
+  // Construct fv2 on base of fv1
+  TableMappingItem fv2(fv1);
+  QVERIFY(fv2.type() == TableMappingItem::FixedValueType);
+  QCOMPARE(fv2.fixedValue(), QVariant("Fixed 1"));
+  QCOMPARE(fv2.destinationFieldIndex(), 1);
+  QVERIFY(!fv2.isNull());
+  // Update fv2
+  fv2.setFixedValue("Fixed 2", 2);
+  QCOMPARE(fv1.fixedValue(), QVariant("Fixed 1"));
+  QCOMPARE(fv1.destinationFieldIndex(), 1);
+  QCOMPARE(fv2.fixedValue(), QVariant("Fixed 2"));
+  QCOMPARE(fv2.destinationFieldIndex(), 2);
   /*
    * Copy assignment of fixes value item
    */
+  // Create fv3
+  TableMappingItem fv3(TableMappingItem::FixedValueType);
+  QVERIFY(fv3.type() == TableMappingItem::FixedValueType);
+  QVERIFY(fv3.isNull());
+  // Assign
+  fv3 = fv1;
+  QCOMPARE(fv3.fixedValue(), QVariant("Fixed 1"));
+  QCOMPARE(fv3.destinationFieldIndex(), 1);
+  // Update fv3
+  fv3.setFixedValue("Fixed 3", 3);
+  QCOMPARE(fv1.fixedValue(), QVariant("Fixed 1"));
+  QCOMPARE(fv1.destinationFieldIndex(), 1);
+  QCOMPARE(fv3.fixedValue(), QVariant("Fixed 3"));
+  QCOMPARE(fv3.destinationFieldIndex(), 3);
+  /*
+   * Copy construct of fixed value on base of a field mapping
+   */
+  TableMappingItem fv4(fm1);
+  QVERIFY(fv4.type() == TableMappingItem::FieldMappingType);
+  QCOMPARE(fv4.sourceFieldIndex(), 1);
+  QCOMPARE(fv4.destinationFieldIndex(), 11);
+  // Set fixed value to fv4
+  fv4.setFixedValue("Fixed 4", 4);
+  QVERIFY(fm1.type() == TableMappingItem::FieldMappingType);
+  QCOMPARE(fm1.sourceFieldIndex(), 1);
+  QCOMPARE(fm1.destinationFieldIndex(), 11);
+  QVERIFY(fv4.type() == TableMappingItem::FixedValueType);
+  QCOMPARE(fv4.fixedValue(), QVariant("Fixed 4"));
+  QCOMPARE(fv4.destinationFieldIndex(), 4);
+  /*
+   * Assign fm1 -> fv2
+   */
+  QVERIFY(fv2.type() == TableMappingItem::FixedValueType);
+  fv2 = fm1;
+  QVERIFY(fv2.type() == TableMappingItem::FieldMappingType);
+  QCOMPARE(fv2.sourceFieldIndex(), 1);
+  QCOMPARE(fv2.destinationFieldIndex(), 11);
+  // Set fixed value to fv2
+  fv2.setFixedValue("Fixed 22", 22);
+  QVERIFY(fm1.type() == TableMappingItem::FieldMappingType);
+  QCOMPARE(fm1.sourceFieldIndex(), 1);
+  QCOMPARE(fm1.destinationFieldIndex(), 11);
+  QVERIFY(fv2.type() == TableMappingItem::FixedValueType);
+  QCOMPARE(fv2.fixedValue(), QVariant("Fixed 22"));
+  QCOMPARE(fv2.destinationFieldIndex(), 22);
 
   /*
    * Copy construction of different types

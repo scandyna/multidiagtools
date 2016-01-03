@@ -43,11 +43,11 @@ class mdtSqlDatabaseCopierTableMapping : public mdtSqlCopierTableMapping
 
   /*! \brief Copy constructor
    */
-//   mdtSqlDatabaseCopierTableMapping(const mdtSqlDatabaseCopierTableMapping & other);
+//    mdtSqlDatabaseCopierTableMapping(const mdtSqlDatabaseCopierTableMapping & other) = default;
 
   /*! \brief Copy assignation
    */
-//   mdtSqlDatabaseCopierTableMapping & operator=(const mdtSqlDatabaseCopierTableMapping & other);
+//    mdtSqlDatabaseCopierTableMapping & operator=(const mdtSqlDatabaseCopierTableMapping & other) = default;
 
   /*! \brief Set source table
    *

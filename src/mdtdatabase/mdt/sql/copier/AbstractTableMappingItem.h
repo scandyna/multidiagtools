@@ -22,8 +22,9 @@
 #define MDT_SQL_COPIER_ABSTRACT_TABLE_MAPPING_ITEM_H
 
 #include <QSharedData>
+#include <QVariant>
 
-//#include <QDebug>
+#include <QDebug>
 
 namespace mdt{ namespace sql{ namespace copier{
 
@@ -38,21 +39,85 @@ namespace mdt{ namespace sql{ namespace copier{
     AbstractTableMappingItem()
      : QSharedData()
     {
+      qDebug() << "C AbstractTableMappingItem::AbstractTableMappingItem() - ref: " << ref.load();
     }
 
     /*! \brief Destructor
      */
     virtual ~AbstractTableMappingItem()
     {
+      qDebug() << "D AbstractTableMappingItem::~AbstractTableMappingItem() - ref: " << ref.load();
     }
 
     // Disable copy (must use clone())
-    AbstractTableMappingItem(const AbstractTableMappingItem &) = delete;
     AbstractTableMappingItem & operator=(const AbstractTableMappingItem &) = delete;
+
+    /*! \brief Polymorphic copy
+     */
+    virtual AbstractTableMappingItem* clone() const = 0;
 
     /*! \brief Check if mapping item is null
      */
     virtual bool isNull() const = 0;
+
+    /*! \brief Clear mapping item
+     */
+    virtual void clear() = 0;
+
+    /*! \brief Set a field mapping
+     *
+     * This default implementation does nothing
+     */
+    virtual void setFieldMapping(int sourceFieldIndex, int destinationFieldIndex)
+    {
+      Q_UNUSED(sourceFieldIndex);
+      Q_UNUSED(destinationFieldIndex);
+    }
+
+    /*! \brief Get source field index
+     *
+     * This default implementation allways returns -1.
+     */
+    virtual int sourceFieldIndex() const
+    {
+      return -1;
+    }
+
+    /*! \brief Get destination field index
+     *
+     * This default implementation allways returns -1.
+     */
+    virtual int destinationFieldIndex() const
+    {
+      return -1;
+    }
+
+    /*! \brief Set fixed value
+     *
+     * This default implementation does nothing
+     */
+    virtual void setFixedValue(const QVariant & value, int destinationFieldIndex)
+    {
+      Q_UNUSED(value);
+      Q_UNUSED(destinationFieldIndex);
+    }
+
+    /*! \brief Get fixed value
+     *
+     * This default implementation allways returns a null value.
+     */
+    virtual QVariant fixedValue() const
+    {
+      return QVariant();
+    }
+
+   protected:
+
+    AbstractTableMappingItem(const AbstractTableMappingItem & other)
+     : QSharedData(other)
+    {
+      qDebug() << "CPY AbstractTableMappingItem::AbstractTableMappingItem(other) - ref: " << ref.load();
+    }
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

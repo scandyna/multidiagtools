@@ -49,6 +49,9 @@ class mdtSqlCopierTest : public mdtTest
   void sourceFieldTest();
   void fieldMappingDataTest();
 
+  void fieldMappingTest();
+  void fixedValueTest();
+  void uniqueInsertExpressionTest();
   void tableMappingItemTest();
 
   void sqlDatabaseCopierTableMappingTest();

@@ -2,35 +2,35 @@ format 210
 
 classcanvas 128002 class_ref 2256386 // TableMappingItem
   classdiagramsettings hide_attributes no hide_operations no member_max_width 0 end
-  xyz 39 37 2000
+  xyz 456.4 41 2000
 end
 classcanvas 128130 class_ref 2256514 // AbstractTableMappingItem
   classdiagramsettings member_max_width 0 end
-  xyz 561 130 2000
+  xyz 232.9 178 2000
 end
 classcanvas 128386 class_ref 2256642 // FieldMapping
   classdiagramsettings member_max_width 0 end
-  xyz 515 346 2000
+  xyz 280 442 2000
 end
 classcanvas 128898 class_ref 2256770 // FixedValue
   classdiagramsettings member_max_width 0 end
-  xyz 399 346 2000
+  xyz 159 442 2000
 end
 classcanvas 129154 class_ref 2256898 // UniqueInsertExpression
   classdiagramsettings member_max_width 0 end
-  xyz 890 346 2000
+  xyz 38 531 2000
 end
 classcanvas 129922 class_ref 2257026 // UniqueInsertMatchItem
   classdiagramsettings member_max_width 0 end
-  xyz 689 346 2006
+  xyz 241 529 2006
 end
 classcanvas 130178 class_ref 2257154 // ReferringTableInsertExpression
   classdiagramsettings member_max_width 0 end
-  xyz 546 434 2000
+  xyz 626 442 2000
 end
 classcanvas 130690 class_ref 2257282 // ReferringTableMatchItem
   classdiagramsettings member_max_width 0 end
-  xyz 799 434 3005
+  xyz 415 442 3005
 end
 relationcanvas 128258 relation_ref 2533890 // <directional composition>
   from ref 128002 z 2001 to ref 128130
@@ -38,30 +38,25 @@ relationcanvas 128258 relation_ref 2533890 // <directional composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 2534146 // <generalisation>
-  geometry VHV unfixed
-  decenter_begin 454
-  decenter_end 475
-  from ref 128386 z 2001 to point 557 304
-  line 130434 z 2001 to point 645 304
-  line 130562 z 2001 to ref 128130
+  decenter_end 519
+  from ref 128386 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129026 relation_ref 2534274 // <generalisation>
   geometry VHV unfixed
-  decenter_end 475
-  from ref 128898 z 2001 to point 438 304
-  line 129410 z 2001 to point 645 304
+  decenter_end 519
+  from ref 128898 z 2001 to point 198 399.8
+  line 129410 z 2001 to point 324 399.8
   line 129538 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129282 relation_ref 2534402 // <generalisation>
   geometry VHV unfixed
-  decenter_begin 521
-  decenter_end 475
-  from ref 129154 z 2001 to point 973 304
-  line 129666 z 2001 to point 645 304
+  decenter_end 519
+  from ref 129154 z 2001 to point 118 399.8
+  line 129666 z 2001 to point 324 399.8
   line 129794 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -69,18 +64,21 @@ end
 relationcanvas 130050 relation_ref 2534530 // <directional composition>
   from ref 129154 z 2007 to ref 129922
   no_role_a no_role_b
-  multiplicity_a_pos 857 378 3000 no_multiplicity_b
+  multiplicity_a_pos 224 561 3000 no_multiplicity_b
 end
 relationcanvas 130306 relation_ref 2534786 // <generalisation>
+  geometry VHV unfixed
   decenter_begin 478
-  decenter_end 475
-  from ref 130178 z 2001 to ref 128130
+  decenter_end 519
+  from ref 130178 z 2001 to point 725 399.7
+  line 130946 z 2001 to point 324 399.7
+  line 131074 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130818 relation_ref 2534658 // <directional composition>
   from ref 130178 z 3006 to ref 130690
   no_role_a no_role_b
-  multiplicity_a_pos 783 466 3000 no_multiplicity_b
+  multiplicity_a_pos 595 474 3000 no_multiplicity_b
 end
 end

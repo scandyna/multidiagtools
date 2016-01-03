@@ -68,8 +68,8 @@ class mdtSqlCopierTableMapping
    */
   virtual ~mdtSqlCopierTableMapping() = default;
 
-//   mdtSqlCopierTableMapping(const mdtSqlCopierTableMapping &) = delete;
-//   mdtSqlCopierTableMapping & operator=(const mdtSqlCopierTableMapping &) = delete;
+//    mdtSqlCopierTableMapping(const mdtSqlCopierTableMapping &) = delete;
+//    mdtSqlCopierTableMapping & operator=(const mdtSqlCopierTableMapping &) = delete;
 
   /*! \brief Get mapping state
    */

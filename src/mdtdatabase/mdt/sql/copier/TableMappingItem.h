@@ -22,10 +22,12 @@
 #define MDT_SQL_COPIER_TABLE_MAPPING_ITEM_H
 
 #include <QSharedDataPointer>
+#include <QVariant>
 
 namespace mdt{ namespace sql{ namespace copier{
 
   class AbstractTableMappingItem;
+  class UniqueInsertExpression;
 
   /*! \brief Mapping item of mdtSqlCopierTableMapping
    */
@@ -37,10 +39,10 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     enum Type
     {
-      FieldMappingType,       /*!< A mapping of source field to destination field */
-      FixedValueType,         /*!< A fixed value will be copied to defined destination field */
-      UniqueInsertExpression  /*!< A expression that search a (primary) key by matching fields in destination table
-                                   with values in source table. */
+      FieldMappingType,           /*!< A mapping of source field to destination field */
+      FixedValueType,             /*!< A fixed value will be copied to defined destination field */
+      UniqueInsertExpressionType  /*!< A expression that search a (primary) key by matching fields in destination table
+                                       with values in source table. */
     };
 
     /*! \brief Construct a mapping item of given type
@@ -74,7 +76,45 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void clear();
 
+    /*! \brief Set a field mapping
+     */
+    void setFieldMapping(int sourceFieldIndex, int destinationFieldIndex);
+
+    /*! \brief Get source field index
+     *
+     * Has sense for FieldMappingType only.
+     */
+    int sourceFieldIndex() const;
+
+    /*! \brief Get destination field index
+     *
+     * Has sense for FieldMappingType or FixedValueType.
+     */
+    int destinationFieldIndex() const;
+
+    /*! \brief Set fixed value
+     */
+    void setFixedValue(const QVariant & value, int destinationFieldIndex);
+
+    /*! \brief Get fixed value
+     *
+     * Has sense for FixedValueType only.
+     */
+    QVariant fixedValue() const;
+
+    /*! \brief Set a unique insert expression
+     */
+    void setUniqueInsertExpression(const UniqueInsertExpression & exp);
+
    private:
+
+    /*! \brief Reset to new type
+     */
+    void reset(Type type);
+
+    /*! \brief Construct shared data
+     */
+    void constructShared();
 
     Type pvType;
     QSharedDataPointer<AbstractTableMappingItem> pvShared;
