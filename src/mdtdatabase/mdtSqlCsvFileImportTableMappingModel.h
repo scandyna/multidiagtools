@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -64,14 +64,14 @@ class mdtSqlCsvFileImportTableMappingModel : public mdtSqlCopierTableMappingMode
 
   /*! \brief Reference internal table mapping
    */
-  const mdtSqlCopierTableMapping & mappingBase() const
+  const mdt::sql::copier::TableMapping & mappingBase() const
   {
     return pvMapping;
   }
 
   /*! \brief Reference internal table mapping
    */
-  mdtSqlCopierTableMapping & mappingBase()
+  mdt::sql::copier::TableMapping & mappingBase()
   {
     return pvMapping;
   }

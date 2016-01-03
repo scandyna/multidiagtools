@@ -109,6 +109,18 @@ void TableMappingItem::setUniqueInsertExpression(const UniqueInsertExpression & 
   pvShared = new UniqueInsertExpression(exp);
 }
 
+void TableMappingItem::setMappingState(TableMappingItemState state)
+{
+  Q_ASSERT(pvShared);
+  pvShared->setMappingState(state);
+}
+
+TableMappingItemState TableMappingItem::mappingState() const
+{
+  Q_ASSERT(pvShared);
+  return pvShared->mappingState();
+}
+
 void TableMappingItem::reset(TableMappingItem::Type type)
 {
   Q_ASSERT(type != pvType);

@@ -646,6 +646,7 @@ void mdtSqlCopierTest::fieldMappingDataTest()
 void mdtSqlCopierTest::fieldMappingTest()
 {
   using mdt::sql::copier::FieldMapping;
+  using mdt::sql::copier::TableMappingItemState;
 
   /*
    * Initial state
@@ -653,7 +654,7 @@ void mdtSqlCopierTest::fieldMappingTest()
   FieldMapping fm;
   QCOMPARE(fm.sourceFieldIndex(), -1);
   QCOMPARE(fm.destinationFieldIndexList().size(), 0);
-//   QCOMPARE(fm.destinationFieldIndex(), -1);
+  QVERIFY(fm.mappingState() == TableMappingItemState::MappingNotSet);
   QVERIFY(fm.isNull());
   /*
    * Set
@@ -662,15 +663,16 @@ void mdtSqlCopierTest::fieldMappingTest()
   QCOMPARE(fm.sourceFieldIndex(), 1);
   QCOMPARE(fm.destinationFieldIndexList().size(), 1);
   QCOMPARE(fm.destinationFieldIndexList().at(0), 2);
-//   QCOMPARE(fm.destinationFieldIndex(), 2);
   QVERIFY(!fm.isNull());
+  fm.setMappingState(TableMappingItemState::MappingComplete);
+  QVERIFY(fm.mappingState() == TableMappingItemState::MappingComplete);
   /*
    * Clear
    */
   fm.clear();
   QCOMPARE(fm.sourceFieldIndex(), -1);
-//   QCOMPARE(fm.destinationFieldIndex(), -1);
   QCOMPARE(fm.destinationFieldIndexList().size(), 0);
+  QVERIFY(fm.mappingState() == TableMappingItemState::MappingNotSet);
   QVERIFY(fm.isNull());
   /*
    * Copy of FieldMapping is not allowed
@@ -682,13 +684,14 @@ void mdtSqlCopierTest::fieldMappingTest()
 void mdtSqlCopierTest::fixedValueTest()
 {
   using mdt::sql::copier::FixedValue;
+  using mdt::sql::copier::TableMappingItemState;
 
   /*
    * Initial state
    */
   FixedValue fv;
   QVERIFY(fv.fixedValue().isNull());
-//   QCOMPARE(fv.destinationFieldIndex(), -1);
+  QVERIFY(fv.mappingState() == TableMappingItemState::MappingNotSet);
   QCOMPARE(fv.destinationFieldIndexList().size(), 0);
   QVERIFY(fv.isNull());
   /*
@@ -696,18 +699,19 @@ void mdtSqlCopierTest::fixedValueTest()
    */
   fv.setFixedValue("Fixed", 3);
   QCOMPARE(fv.fixedValue(), QVariant("Fixed"));
-//   QCOMPARE(fv.destinationFieldIndex(), 3);
   QCOMPARE(fv.destinationFieldIndexList().size(), 1);
   QCOMPARE(fv.destinationFieldIndexList().at(0), 3);
   QVERIFY(!fv.isNull());
+  fv.setMappingState(TableMappingItemState::MappingComplete);
+  QVERIFY(fv.mappingState() == TableMappingItemState::MappingComplete);
   /*
    * Clear
    */
   fv.clear();
   QVERIFY(fv.fixedValue().isNull());
-//   QCOMPARE(fv.destinationFieldIndex(), -1);
   QCOMPARE(fv.destinationFieldIndexList().size(), 0);
   QVERIFY(fv.isNull());
+  QVERIFY(fv.mappingState() == TableMappingItemState::MappingNotSet);
   /*
    * Copy of FixedValue is not allowed
    */
@@ -719,6 +723,7 @@ void mdtSqlCopierTest::uniqueInsertExpressionTest()
 {
   using mdt::sql::copier::UniqueInsertExpression;
   using mdt::sql::copier::UniqueInsertMatchExpressionItem;
+  using mdt::sql::copier::TableMappingItemState;
 
   /*
    * Match item tests
@@ -748,6 +753,7 @@ void mdtSqlCopierTest::uniqueInsertExpressionTest()
    * Initial state
    */
   UniqueInsertExpression exp;
+  QVERIFY(exp.mappingState() == TableMappingItemState::MappingNotSet);
   QCOMPARE(exp.destinationFieldIndexList().size(), 0);
   QCOMPARE(exp.getSourceValueFieldIndexList().size(), 0);
   QVERIFY(exp.isNull());
@@ -789,6 +795,7 @@ void mdtSqlCopierTest::uniqueInsertExpressionTest()
 void mdtSqlCopierTest::tableMappingItemTest()
 {
   using mdt::sql::copier::TableMappingItem;
+  using mdt::sql::copier::TableMappingItemState;
 
   /*
    * Construction of field mapping item
@@ -796,7 +803,7 @@ void mdtSqlCopierTest::tableMappingItemTest()
   TableMappingItem fm1(TableMappingItem::FieldMappingType);
   QVERIFY(fm1.type() == TableMappingItem::FieldMappingType);
   QCOMPARE(fm1.sourceFieldIndex(), -1);
-//   QCOMPARE(fm1.destinationFieldIndex(), -1);
+  QVERIFY(fm1.mappingState() == TableMappingItemState::MappingNotSet);
   QCOMPARE(fm1.destinationFieldIndexList().size(), 0);
   QVERIFY(fm1.isNull());
   /*
@@ -990,6 +997,7 @@ void mdtSqlCopierTest::tableMappingItemTest()
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
 {
   using mdt::sql::copier::SourceField;
+  using mdt::sql::copier::TableMapping;
 
   mdtSqlDatabaseCopierTableMapping mapping;
 
@@ -1021,10 +1029,10 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   QVERIFY(mapping.fieldMappingState(2) == mdtSqlCopierFieldMapping::MappingNotSet);
   QVERIFY(mapping.fieldMappingState(3) == mdtSqlCopierFieldMapping::MappingNotSet);
   // Check field key types
-  QVERIFY(mapping.sourceFieldKeyType(0) == mdtSqlCopierTableMapping::NotAKey);
-  QVERIFY(mapping.destinationFieldKeyType(0) == mdtSqlCopierTableMapping::PrimaryKey);
-  QVERIFY(mapping.sourceFieldKeyType(1) == mdtSqlCopierTableMapping::NotAKey);
-  QVERIFY(mapping.destinationFieldKeyType(1) == mdtSqlCopierTableMapping::NotAKey);
+  QVERIFY(mapping.sourceFieldKeyType(0) == TableMapping::NotAKey);
+  QVERIFY(mapping.destinationFieldKeyType(0) == TableMapping::PrimaryKey);
+  QVERIFY(mapping.sourceFieldKeyType(1) == TableMapping::NotAKey);
+  QVERIFY(mapping.destinationFieldKeyType(1) == TableMapping::NotAKey);
   // Check that default source types are set
   QVERIFY(mapping.sourceType(0) == SourceField::SourceFieldIndexType);
   QVERIFY(mapping.sourceType(1) == SourceField::SourceFieldIndexType);
@@ -1056,10 +1064,10 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   QVERIFY(mapping.fieldMappingState(2) == mdtSqlCopierFieldMapping::MappingNotSet);
   QVERIFY(mapping.fieldMappingState(3) == mdtSqlCopierFieldMapping::MappingNotSet);
   // Check field key types
-  QVERIFY(mapping.sourceFieldKeyType(0) == mdtSqlCopierTableMapping::PrimaryKey);
-  QVERIFY(mapping.destinationFieldKeyType(0) == mdtSqlCopierTableMapping::PrimaryKey);
-  QVERIFY(mapping.sourceFieldKeyType(1) == mdtSqlCopierTableMapping::NotAKey);
-  QVERIFY(mapping.destinationFieldKeyType(1) == mdtSqlCopierTableMapping::NotAKey);
+  QVERIFY(mapping.sourceFieldKeyType(0) == TableMapping::PrimaryKey);
+  QVERIFY(mapping.destinationFieldKeyType(0) == TableMapping::PrimaryKey);
+  QVERIFY(mapping.sourceFieldKeyType(1) == TableMapping::NotAKey);
+  QVERIFY(mapping.destinationFieldKeyType(1) == TableMapping::NotAKey);
   /*
    * Set a field mapping:
    *  - Client_tbl.Name -> Client2_tbl.Name

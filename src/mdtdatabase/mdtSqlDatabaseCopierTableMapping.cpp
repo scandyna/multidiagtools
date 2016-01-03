@@ -27,6 +27,8 @@
 
 //#include <QDebug>
 
+using mdt::sql::copier::TableMapping;
+
 // mdtSqlDatabaseCopierTableMapping::mdtSqlDatabaseCopierTableMapping(const mdtSqlDatabaseCopierTableMapping & other)
 //  : mdtSqlCopierTableMapping(other),
 //    pvSourceDatabase(other.pvSourceDatabase),
@@ -112,7 +114,7 @@ QString mdtSqlDatabaseCopierTableMapping::destinationFieldTypeName(int index) co
   return pvDestinationTable.fieldTypeName(destinationFieldIndex, mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName()));
 }
 
-mdtSqlCopierTableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::destinationFieldKeyType(int index) const
+TableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::destinationFieldKeyType(int index) const
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < fieldCount());
@@ -150,7 +152,7 @@ QString mdtSqlDatabaseCopierTableMapping::fetchSourceFieldTypeName(int sourceFie
   return pvSourceTable.fieldTypeName(sourceFieldIndex, mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName()));
 }
 
-mdtSqlCopierTableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::fetchSourceFieldKeyType(int sourceFieldIndex) const
+TableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::fetchSourceFieldKeyType(int sourceFieldIndex) const
 {
   Q_ASSERT(sourceFieldIndex >= 0);
   Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());

@@ -2,28 +2,29 @@ format 210
 
 classcanvas 128002 class_ref 1772930 // mdtSqlCopierFieldMapping
   classdiagramsettings member_max_width 0 end
-  xyz 182 203 2000
+  xyz 40 309 2000
 end
 classcanvas 128130 class_ref 1787266 // mdtFieldMappingSplitParameters
   classdiagramsettings member_max_width 0 end
-  xyz 64 474 3005
+  xyz 120 41 3005
 end
 classcanvas 128386 class_ref 1787394 // mdtFieldMappingCatParameters
   classdiagramsettings member_max_width 0 end
-  xyz 434 474 2006
+  xyz 466 375 2006
 end
 classcanvas 128770 class_ref 2249346 // SourceField
   classdiagramsettings member_max_width 0 end
-  xyz 184 56 2000
+  xyz 40.5 616.5 2000
 end
 relationcanvas 128258 relation_ref 2104578 // <unidirectional association>
+  decenter_end 480
   from ref 128002 z 3006 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 249 447 3000 no_multiplicity_b
+  multiplicity_a_pos 214 281 3000 no_multiplicity_b
 end
 relationcanvas 128514 relation_ref 2104706 // <unidirectional association>
   from ref 128002 z 2007 to ref 128386
   no_role_a no_role_b
-  multiplicity_a_pos 481 447 3000 no_multiplicity_b
+  multiplicity_a_pos 448 434 3000 no_multiplicity_b
 end
 end

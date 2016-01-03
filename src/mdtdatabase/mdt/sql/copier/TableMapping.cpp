@@ -18,14 +18,16 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtSqlCopierTableMapping.h"
+#include "TableMapping.h"
 #include <QSqlDatabase>
 #include <QSqlDriver>
 #include <QStringList>
 
 //#include <QDebug>
 
-mdtSqlCopierTableMapping::mdtSqlCopierTableMapping()
+namespace mdt{ namespace sql{ namespace copier{
+
+TableMapping::TableMapping()
  : pvMappingState(MappingNotSet)
 {
 }
@@ -41,7 +43,7 @@ mdtSqlCopierTableMapping::mdtSqlCopierTableMapping()
 //   updateFieldMappingState(fm);
 // }
 
-void mdtSqlCopierTableMapping::setSourceField(int index, const QString & fieldName)
+void TableMapping::setSourceField(int index, const QString & fieldName)
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < pvFieldMappingList.size());
@@ -59,7 +61,7 @@ void mdtSqlCopierTableMapping::setSourceField(int index, const QString & fieldNa
   updateTableMappingState();
 }
 
-QString mdtSqlCopierTableMapping::sourceFieldName(int index) const
+QString TableMapping::sourceFieldName(int index) const
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < fieldCount());
@@ -72,7 +74,7 @@ QString mdtSqlCopierTableMapping::sourceFieldName(int index) const
   return fetchSourceFieldName(sourceFieldIndex);
 }
 
-QString mdtSqlCopierTableMapping::sourceFieldTypeName(int index) const
+QString TableMapping::sourceFieldTypeName(int index) const
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < fieldCount());
@@ -85,7 +87,7 @@ QString mdtSqlCopierTableMapping::sourceFieldTypeName(int index) const
   return fetchSourceFieldTypeName(sourceFieldIndex);
 }
 
-mdtSqlCopierTableMapping::FieldKeyType mdtSqlCopierTableMapping::sourceFieldKeyType(int index) const
+TableMapping::FieldKeyType TableMapping::sourceFieldKeyType(int index) const
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < pvFieldMappingList.size());
@@ -98,7 +100,7 @@ mdtSqlCopierTableMapping::FieldKeyType mdtSqlCopierTableMapping::sourceFieldKeyT
   return fetchSourceFieldKeyType(sourceFieldIndex);
 }
 
-void mdtSqlCopierTableMapping::setSourceFixedValue(int index, const QVariant & value)
+void TableMapping::setSourceFixedValue(int index, const QVariant & value)
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < pvFieldMappingList.size());
@@ -112,7 +114,7 @@ void mdtSqlCopierTableMapping::setSourceFixedValue(int index, const QVariant & v
   updateTableMappingState();
 }
 
-void mdtSqlCopierTableMapping::resetFieldMapping()
+void TableMapping::resetFieldMapping()
 {
   int n = destinationTableFieldCount();
 
@@ -124,13 +126,13 @@ void mdtSqlCopierTableMapping::resetFieldMapping()
   }
 }
 
-void mdtSqlCopierTableMapping::clearFieldMapping()
+void TableMapping::clearFieldMapping()
 {
   pvFieldMappingList.clear();
   pvMappingState = MappingNotSet;
 }
 
-QString mdtSqlCopierTableMapping::getSqlForSourceTableCount(const QSqlDatabase & db) const
+QString TableMapping::getSqlForSourceTableCount(const QSqlDatabase & db) const
 {
   QString sql;
   QSqlDriver *driver = db.driver();
@@ -141,7 +143,7 @@ QString mdtSqlCopierTableMapping::getSqlForSourceTableCount(const QSqlDatabase &
   return sql;
 }
 
-QString mdtSqlCopierTableMapping::getSqlForSourceTableSelect(const QSqlDatabase & db) const
+QString TableMapping::getSqlForSourceTableSelect(const QSqlDatabase & db) const
 {
   using mdt::sql::copier::SourceField;
 
@@ -174,7 +176,7 @@ QString mdtSqlCopierTableMapping::getSqlForSourceTableSelect(const QSqlDatabase 
   return sql;
 }
 
-QString mdtSqlCopierTableMapping::getSqlForDestinationTableInsert(const QSqlDatabase & db) const
+QString TableMapping::getSqlForDestinationTableInsert(const QSqlDatabase & db) const
 {
   using mdt::sql::copier::SourceField;
 
@@ -220,7 +222,7 @@ QString mdtSqlCopierTableMapping::getSqlForDestinationTableInsert(const QSqlData
   return sql;
 }
 
-void mdtSqlCopierTableMapping::updateFieldMappingState(mdtSqlCopierFieldMapping & fm)
+void TableMapping::updateFieldMappingState(mdtSqlCopierFieldMapping & fm)
 {
   using mdt::sql::copier::SourceField;
 
@@ -253,7 +255,7 @@ void mdtSqlCopierTableMapping::updateFieldMappingState(mdtSqlCopierFieldMapping 
   fm.mappingState = mdtSqlCopierFieldMapping::MappingComplete;
 }
 
-void mdtSqlCopierTableMapping::updateTableMappingState()
+void TableMapping::updateTableMappingState()
 {
   // Check if both tables are set
   if( sourceTableName().isEmpty() || destinationTableName().isEmpty() ){
@@ -277,3 +279,5 @@ void mdtSqlCopierTableMapping::updateTableMappingState()
   // All checks successfully passed
   pvMappingState = MappingComplete;
 }
+
+}}} // namespace mdt{ namespace sql{ namespace copier{

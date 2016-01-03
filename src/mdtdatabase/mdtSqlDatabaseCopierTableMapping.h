@@ -21,9 +21,9 @@
 #ifndef MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_H
 #define MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_H
 
-#include "mdtSqlCopierTableMapping.h"
+#include "mdt/sql/copier/TableMapping.h"
+#include "mdt/sql/copier/mdtSqlCopierFieldMapping.h"
 #include "mdtSqlSchemaTable.h"
-#include "mdtSqlCopierFieldMapping.h"
 #include "mdtSqlDriverType.h"
 #include <QString>
 #include <QStringList>
@@ -33,7 +33,7 @@ class QSqlRecord;
 
 /*! \brief Mapping used to copy 2 SQL tables
  */
-class mdtSqlDatabaseCopierTableMapping : public mdtSqlCopierTableMapping
+class mdtSqlDatabaseCopierTableMapping : public mdt::sql::copier::TableMapping
 {
  public:
 

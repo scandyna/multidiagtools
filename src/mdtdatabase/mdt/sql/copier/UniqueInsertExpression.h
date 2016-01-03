@@ -127,12 +127,6 @@ namespace mdt{ namespace sql{ namespace copier{
       return ( pvMatchItems.empty() || (destinationFieldIndexCount() < 1) );
     }
 
-    /*! \brief Clear expression
-     */
-    void clear() override
-    {
-    }
-
     /*! \brief Add a destination field index
      */
     void addDestinationFieldIndex(int index)
@@ -194,7 +188,12 @@ namespace mdt{ namespace sql{ namespace copier{
 
   private:
 
-//     QVector<UniqueInsertMatchExpressionItem> pvMatchItems;
+    /*! \brief Clear expression
+     */
+    void clearItem() override
+    {
+    }
+
     std::vector<UniqueInsertMatchExpressionItem> pvMatchItems;
   };
 

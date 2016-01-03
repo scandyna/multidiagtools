@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_COPIER_ABSTRACT_TABLE_MAPPING_ITEM_H
 #define MDT_SQL_COPIER_ABSTRACT_TABLE_MAPPING_ITEM_H
 
+#include "TableMappingItemState.h"
 #include <QSharedData>
 #include <QVariant>
 #include <QVector>
@@ -38,7 +39,8 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Default constructor
      */
     AbstractTableMappingItem()
-     : QSharedData()
+     : QSharedData(),
+       pvMappingState(TableMappingItemState::MappingNotSet)
     {
       qDebug() << "C AbstractTableMappingItem::AbstractTableMappingItem() - ref: " << ref.load();
     }
@@ -63,7 +65,12 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Clear mapping item
      */
-    virtual void clear() = 0;
+    void clear()
+    {
+      pvMappingState = TableMappingItemState::MappingNotSet;
+      pvDestinationFieldIndexList.clear();
+      clearItem();
+    }
 
     /*! \brief Set a field mapping
      *
@@ -117,7 +124,25 @@ namespace mdt{ namespace sql{ namespace copier{
       return QVariant();
     }
 
+    /*! \brief Set mapping state for this mapping item
+     */
+    void setMappingState(TableMappingItemState state)
+    {
+      pvMappingState = state;
+    }
+
+    /*! \brief Get mapping state for this mapping item
+     */
+    TableMappingItemState mappingState() const
+    {
+      return pvMappingState;
+    }
+
    protected:
+
+    /*! \brief Clear
+     */
+    virtual void clearItem() = 0;
 
     /*! \brief Set destination field index
      */
@@ -147,6 +172,7 @@ namespace mdt{ namespace sql{ namespace copier{
       qDebug() << "CPY AbstractTableMappingItem::AbstractTableMappingItem(other) - ref: " << ref.load();
     }
 
+    TableMappingItemState pvMappingState;
     QVector<int> pvDestinationFieldIndexList;
   };
 

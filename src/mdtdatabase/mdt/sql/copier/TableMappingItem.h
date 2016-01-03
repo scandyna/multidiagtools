@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_COPIER_TABLE_MAPPING_ITEM_H
 #define MDT_SQL_COPIER_TABLE_MAPPING_ITEM_H
 
+#include "TableMappingItemState.h"
 #include <QSharedDataPointer>
 #include <QVariant>
 #include <QVector>
@@ -104,6 +105,14 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Set a unique insert expression
      */
     void setUniqueInsertExpression(const UniqueInsertExpression & exp);
+
+    /*! \brief Set mapping state for this mapping item
+     */
+    void setMappingState(TableMappingItemState state);
+
+    /*! \brief Get mapping state for this mapping item
+     */
+    TableMappingItemState mappingState() const;
 
    private:
 

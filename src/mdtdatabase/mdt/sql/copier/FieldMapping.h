@@ -64,14 +64,6 @@ namespace mdt{ namespace sql{ namespace copier{
       return ( (pvSourceFieldIndex < 0) || (destinationFieldIndexCount() < 1) );
     }
 
-    /*! \brief Clear field mapping
-     */
-    void clear() override
-    {
-      pvSourceFieldIndex = -1;
-      clearDestinationFieldIndexList();
-    }
-
     /*! \brief Set a field mapping
      */
     void setFieldMapping(int sourceFieldIndex, int destinationFieldIndex) override
@@ -88,6 +80,13 @@ namespace mdt{ namespace sql{ namespace copier{
     }
 
    private:
+
+    /*! \brief Clear field mapping
+     */
+    void clearItem() override
+    {
+      pvSourceFieldIndex = -1;
+    }
 
     /*! \brief Copy constructor (used by clone)
      */

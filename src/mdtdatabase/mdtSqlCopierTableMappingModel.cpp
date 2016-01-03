@@ -24,6 +24,8 @@
 
 //#include <QDebug>
 
+using mdt::sql::copier::TableMapping;
+
 mdtSqlCopierTableMappingModel::mdtSqlCopierTableMappingModel(QObject* parent)
  : QAbstractTableModel(parent)
 {
@@ -225,9 +227,9 @@ QVariant mdtSqlCopierTableMappingModel::sourceFieldKeyTypeText(int row) const
     return QVariant();
   }
   switch(mappingBase().sourceFieldKeyType(row)){
-    case mdtSqlCopierTableMapping::NotAKey:
+    case TableMapping::NotAKey:
       return QVariant();
-    case mdtSqlCopierTableMapping::PrimaryKey:
+    case TableMapping::PrimaryKey:
       return "PK";
   }
   return QVariant();
@@ -266,9 +268,9 @@ QVariant mdtSqlCopierTableMappingModel::sourceFixedValue(int row) const
 QVariant mdtSqlCopierTableMappingModel::destinationFieldKeyTypeText(int row) const
 {
   switch(mappingBase().destinationFieldKeyType(row)){
-    case mdtSqlCopierTableMapping::NotAKey:
+    case TableMapping::NotAKey:
       return QVariant();
-    case mdtSqlCopierTableMapping::PrimaryKey:
+    case TableMapping::PrimaryKey:
       return "PK";
   }
   return QVariant();

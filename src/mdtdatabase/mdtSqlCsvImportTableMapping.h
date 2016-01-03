@@ -21,7 +21,7 @@
 #ifndef MDT_SQL_CSV_IMPORT_TABLE_MAPPING_H
 #define MDT_SQL_CSV_IMPORT_TABLE_MAPPING_H
 
-#include "mdtSqlCopierTableMapping.h"
+#include "mdt/sql/copier/TableMapping.h"
 #include "mdtCsvSourceInfo.h"
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlDriverType.h"
@@ -30,9 +30,13 @@
 
 /*! \brief Table mapping for SQL CSV import
  */
-class mdtSqlCsvImportTableMapping : public mdtSqlCopierTableMapping
+class mdtSqlCsvImportTableMapping : public mdt::sql::copier::TableMapping
 {
  public:
+
+  /*! \brief Constructor
+   */
+  mdtSqlCsvImportTableMapping() = default;
 
   /*! \brief Set destination table
    *
@@ -84,6 +88,10 @@ class mdtSqlCsvImportTableMapping : public mdtSqlCopierTableMapping
   void generateFieldMappingByName();
 
  protected:
+
+  // Permit only concrete classes to be copied
+  mdtSqlCsvImportTableMapping(const mdtSqlCsvImportTableMapping &) = default;
+  mdtSqlCsvImportTableMapping & operator=(const mdtSqlCsvImportTableMapping &) = default;
 
   /*! \brief Get field count of destination table
    *

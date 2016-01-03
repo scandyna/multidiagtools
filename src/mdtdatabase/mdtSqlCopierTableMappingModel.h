@@ -21,7 +21,7 @@
 #ifndef MDT_SQL_COPIER_TABLE_MAPPING_MODEL_H
 #define MDT_SQL_COPIER_TABLE_MAPPING_MODEL_H
 
-#include "mdtSqlCopierTableMapping.h"
+#include "mdt/sql/copier/TableMapping.h"
 #include "mdtError.h"
 #include <QAbstractTableModel>
 #include <QModelIndex>
@@ -117,11 +117,11 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
 
   /*! \brief Reference internal table mapping (read only version)
    */
-  virtual const mdtSqlCopierTableMapping & mappingBase() const = 0;
+  virtual const mdt::sql::copier::TableMapping & mappingBase() const = 0;
 
   /*! \brief Reference internal table mapping
    */
-  virtual mdtSqlCopierTableMapping & mappingBase() = 0;
+  virtual mdt::sql::copier::TableMapping & mappingBase() = 0;
 
   /*! \brief Column index
    */

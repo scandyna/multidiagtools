@@ -64,14 +64,6 @@ namespace mdt{ namespace sql{ namespace copier{
       return ( pvValue.isNull() || (destinationFieldIndexCount() < 1) );
     }
 
-    /*! \brief Clear fixed value
-     */
-    void clear() override
-    {
-      pvValue.clear();
-      clearDestinationFieldIndexList();
-    }
-
     /*! \brief Set fixed value
      */
     void setFixedValue(const QVariant & value, int destinationFieldIndex) override
@@ -88,6 +80,13 @@ namespace mdt{ namespace sql{ namespace copier{
     }
 
    private:
+
+    /*! \brief Clear fixed value
+     */
+    void clearItem() override
+    {
+      pvValue.clear();
+    }
 
     /*! \brief Copy constructor (used by clone)
      */

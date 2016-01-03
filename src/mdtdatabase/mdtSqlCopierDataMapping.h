@@ -24,7 +24,9 @@
 #include <QVector>
 #include <QVariant>
 
-class mdtSqlCopierTableMapping;
+namespace mdt{ namespace sql{ namespace copier{
+  class TableMapping;
+}}}
 class QSqlRecord;
 
 /*! \brief Helper class to build destination record when using mdtSqlCopierTableMapping
@@ -73,7 +75,7 @@ struct mdtSqlCopierDataMapping
    * \param sourceRecord Record that contains data from source
    * \param tableMapping Used to map data
    */
-  void setSourceRecord(const QSqlRecord & sourceRecord, const mdtSqlCopierTableMapping & mapping);
+  void setSourceRecord(const QSqlRecord & sourceRecord, const mdt::sql::copier::TableMapping & mapping);
 
   /*! \brief Add source record item
    *
@@ -83,7 +85,7 @@ struct mdtSqlCopierDataMapping
    * \param sourceRecordItem Data item in source record
    * \param tableMapping Used to map data
    */
-  void addSourceRecordItem(int sourceRecordIndex, const QVariant & sourceRecordItem, const mdtSqlCopierTableMapping & mapping);
+  void addSourceRecordItem(int sourceRecordIndex, const QVariant & sourceRecordItem, const mdt::sql::copier::TableMapping & mapping);
 
   /*! \brief Get count of destination record fields
    */

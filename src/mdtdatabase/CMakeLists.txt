@@ -60,8 +60,8 @@ set (SOURCES_FILES
           # Copier common classes
           mdt/sql/copier/SourceField.cpp
           
+          mdt/sql/copier/TableMapping.cpp
           mdt/sql/copier/TableMappingItem.cpp
-          mdtSqlCopierTableMapping.cpp
           mdtSqlCopierTableMappingModel.cpp
           mdtSqlCopierDataMapping.cpp
           # Database copier classes
