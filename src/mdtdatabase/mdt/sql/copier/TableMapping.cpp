@@ -61,6 +61,31 @@ void TableMapping::setSourceField(int index, const QString & fieldName)
   updateTableMappingState();
 }
 
+QString TableMapping::sourceTableFieldNameAt(int fieldIndex) const
+{
+  Q_ASSERT(fieldIndex >= 0);
+  Q_ASSERT(fieldIndex < sourceTableFieldCount());
+
+  return fetchSourceTableFieldNameAt(fieldIndex);
+}
+
+QString TableMapping::sourceFieldNameAtItem(int itemIndex) const
+{
+  /// \todo Provisoire !!
+  return sourceFieldName(itemIndex);
+
+  Q_ASSERT(itemIndex >= 0);
+  Q_ASSERT(itemIndex < pvItems.size());
+
+  const int sourceFieldIndex = pvItems.at(itemIndex).sourceFieldIndex();
+  if(sourceFieldIndex < 0){
+    return QString();
+  }
+  Q_ASSERT(sourceFieldIndex < sourceTableFieldCount());
+
+  return fetchSourceTableFieldNameAt(sourceFieldIndex);
+}
+
 QString TableMapping::sourceFieldName(int index) const
 {
   Q_ASSERT(index >= 0);
@@ -71,7 +96,7 @@ QString TableMapping::sourceFieldName(int index) const
   if(sourceFieldIndex < 0){
     return QString();
   }
-  return fetchSourceFieldName(sourceFieldIndex);
+  return fetchSourceTableFieldNameAt(sourceFieldIndex);
 }
 
 QString TableMapping::sourceFieldTypeName(int index) const
@@ -112,6 +137,14 @@ void TableMapping::setSourceFixedValue(int index, const QVariant & value)
   updateFieldMappingState(fm);
   // Update table mapping state
   updateTableMappingState();
+}
+
+QString TableMapping::destinationTableFieldNameAt(int fieldIndex) const
+{
+  Q_ASSERT(fieldIndex >= 0);
+  Q_ASSERT(fieldIndex < destinationTableFieldCount());
+
+  return fetchDestinationTableFieldNameAt(fieldIndex);
 }
 
 void TableMapping::resetFieldMapping()

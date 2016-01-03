@@ -79,6 +79,20 @@ class mdtSqlDatabaseCopierTableMapping : public mdt::sql::copier::TableMapping
     return pvDestinationTable.tableName();
   }
 
+  /*! \brief Get field count in source table
+    */
+  int sourceTableFieldCount() const override
+  {
+    return pvSourceTable.fieldCount();
+  }
+
+  /*! \brief Get field count in destination table
+    */
+  int destinationTableFieldCount() const override
+  {
+    return pvDestinationTable.fieldCount();
+  }
+
   /*! \brief Generate field mapping by name
    *
    * Will first reset field mapping.
@@ -125,18 +139,25 @@ class mdtSqlDatabaseCopierTableMapping : public mdt::sql::copier::TableMapping
    *
    * Mainly used by resetFieldMapping()
    */
-  int destinationTableFieldCount() const
-  {
-    return pvDestinationTable.fieldCount();
-  }
+//   int destinationTableFieldCount() const
+//   {
+//     return pvDestinationTable.fieldCount();
+//   }
 
   /*! \brief Set source field index for given field mapping
    */
   void setSourceFieldIndex(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName) override;
 
+  /*! \brief Get field name for given fieldIndex in source table
+   */
+  QString fetchSourceTableFieldNameAt(int fieldIndex) const override
+  {
+    return pvSourceTable.fieldName(fieldIndex);
+  }
+
   /*! \brief Get source field name for given source field index
    */
-  QString fetchSourceFieldName(int sourceFieldIndex) const;
+//   QString fetchSourceFieldName(int sourceFieldIndex) const;
 
   /*! \brief Get source field type name for given source field index
    */
@@ -145,6 +166,13 @@ class mdtSqlDatabaseCopierTableMapping : public mdt::sql::copier::TableMapping
   /*! \brief Check if source field is part of a key
    */
   FieldKeyType fetchSourceFieldKeyType(int sourceFieldIndex) const;
+
+  /*! \brief Get field name for given fieldIndex in destination table
+   */
+  QString fetchDestinationTableFieldNameAt(int fieldIndex) const override
+  {
+    return pvDestinationTable.fieldName(fieldIndex);
+  }
 
   /*! \brief Check if source field is compatible with destination field
    */

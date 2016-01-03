@@ -138,12 +138,17 @@ void mdtSqlDatabaseCopierTableMapping::setSourceFieldIndex(mdtSqlCopierFieldMapp
   fm.sourceField.setFieldIndex(index);
 }
 
-QString mdtSqlDatabaseCopierTableMapping::fetchSourceFieldName(int sourceFieldIndex) const
-{
-  Q_ASSERT(sourceFieldIndex >= 0);
-  Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
-  return pvSourceTable.fieldName(sourceFieldIndex);
-}
+// QString mdtSqlDatabaseCopierTableMapping::fetchSourceTableFieldNameAt(int fieldIndex) const
+// {
+//   return pvSourceTable.fieldName(fieldIndex);
+// }
+
+// QString mdtSqlDatabaseCopierTableMapping::fetchSourceFieldName(int sourceFieldIndex) const
+// {
+//   Q_ASSERT(sourceFieldIndex >= 0);
+//   Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
+//   return pvSourceTable.fieldName(sourceFieldIndex);
+// }
 
 QString mdtSqlDatabaseCopierTableMapping::fetchSourceFieldTypeName(int sourceFieldIndex) const
 {
