@@ -82,10 +82,16 @@ int TableMappingItem::sourceFieldIndex() const
   return pvShared->sourceFieldIndex();
 }
 
-int TableMappingItem::destinationFieldIndex() const
+// int TableMappingItem::destinationFieldIndex() const
+// {
+//   Q_ASSERT(pvShared);
+//   return pvShared->destinationFieldIndex();
+// }
+
+QVector<int> TableMappingItem::destinationFieldIndexList() const
 {
   Q_ASSERT(pvShared);
-  return pvShared->destinationFieldIndex();
+  return pvShared->destinationFieldIndexList();
 }
 
 void TableMappingItem::setFixedValue(const QVariant& value, int destinationFieldIndex)

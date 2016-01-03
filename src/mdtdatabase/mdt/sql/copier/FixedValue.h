@@ -35,8 +35,8 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Create a invalid fixed value
      */
     FixedValue()
-     : AbstractTableMappingItem(),
-       pvDestinationFieldIndex(-1)
+     : AbstractTableMappingItem()/*,
+       pvDestinationFieldIndex(-1)*/
     {
       qDebug() << "C  FixedValue::FixedValue() - ref: " << ref.load();
     }
@@ -58,11 +58,11 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Check if fixed value is null
      *
-     * Fixed value is null if value is null or destination field index is < 0
+     * Fixed value is null if value is null or no destination field was set
      */
     bool isNull() const override
     {
-      return ( pvValue.isNull() || (pvDestinationFieldIndex < 0) );
+      return ( pvValue.isNull() || (destinationFieldIndexCount() < 1) );
     }
 
     /*! \brief Clear fixed value
@@ -70,7 +70,8 @@ namespace mdt{ namespace sql{ namespace copier{
     void clear() override
     {
       pvValue.clear();
-      pvDestinationFieldIndex = -1;
+      clearDestinationFieldIndexList();
+//       pvDestinationFieldIndex = -1;
     }
 
     /*! \brief Set fixed value
@@ -78,7 +79,8 @@ namespace mdt{ namespace sql{ namespace copier{
     void setFixedValue(const QVariant & value, int destinationFieldIndex) override
     {
       pvValue = value;
-      pvDestinationFieldIndex = destinationFieldIndex;
+      setDestinationFieldIndex(destinationFieldIndex);
+//       pvDestinationFieldIndex = destinationFieldIndex;
     }
 
     /*! \brief Get fixed value
@@ -90,10 +92,10 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Get destination field index
      */
-    int destinationFieldIndex() const override
-    {
-      return pvDestinationFieldIndex;
-    }
+//     int destinationFieldIndex() const override
+//     {
+//       return pvDestinationFieldIndex;
+//     }
 
    private:
 
@@ -105,7 +107,7 @@ namespace mdt{ namespace sql{ namespace copier{
       qDebug() << "CPY  FixedValue::FixedValue(other) - ref: " << ref.load();
     }
 
-    int pvDestinationFieldIndex;
+//     int pvDestinationFieldIndex;
     QVariant pvValue;
   };
 

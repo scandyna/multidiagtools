@@ -23,6 +23,7 @@
 
 #include <QSharedDataPointer>
 #include <QVariant>
+#include <QVector>
 
 namespace mdt{ namespace sql{ namespace copier{
 
@@ -90,7 +91,11 @@ namespace mdt{ namespace sql{ namespace copier{
      *
      * Has sense for FieldMappingType or FixedValueType.
      */
-    int destinationFieldIndex() const;
+//     int destinationFieldIndex() const;
+
+    /*! \brief Get list of destination field indexes
+     */
+    QVector<int> destinationFieldIndexList() const;
 
     /*! \brief Set fixed value
      */

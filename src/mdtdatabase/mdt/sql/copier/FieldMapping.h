@@ -35,8 +35,8 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     FieldMapping()
      : AbstractTableMappingItem(),
-       pvSourceFieldIndex(-1),
-       pvDestinationFieldIndex(-1)
+       pvSourceFieldIndex(-1)/*,
+       pvDestinationFieldIndex(-1)*/
     {
       qDebug() << "C  FieldMapping::FieldMapping() - ref: " << ref.load();
     }
@@ -58,11 +58,11 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Check if field mapping is null
      *
-     * Fiel mapping is null if at least source or destination field index is < 0
+     * Field mapping is null if source field index is < 0 or no destination field index was set.
      */
     bool isNull() const override
     {
-      return ( (pvSourceFieldIndex < 0) || (pvDestinationFieldIndex < 0) );
+      return ( (pvSourceFieldIndex < 0) || (destinationFieldIndexCount() < 1) );
     }
 
     /*! \brief Clear field mapping
@@ -70,7 +70,8 @@ namespace mdt{ namespace sql{ namespace copier{
     void clear() override
     {
       pvSourceFieldIndex = -1;
-      pvDestinationFieldIndex = -1;
+      clearDestinationFieldIndexList();
+//       pvDestinationFieldIndex = -1;
     }
 
     /*! \brief Set a field mapping
@@ -78,7 +79,8 @@ namespace mdt{ namespace sql{ namespace copier{
     void setFieldMapping(int sourceFieldIndex, int destinationFieldIndex) override
     {
       pvSourceFieldIndex = sourceFieldIndex;
-      pvDestinationFieldIndex = destinationFieldIndex;
+      setDestinationFieldIndex(destinationFieldIndex);
+//       pvDestinationFieldIndex = destinationFieldIndex;
     }
 
     /*! \brief Get source field index
@@ -90,10 +92,10 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Get destination field index
      */
-    int destinationFieldIndex() const override
-    {
-      return pvDestinationFieldIndex;
-    }
+//     int destinationFieldIndex() const override
+//     {
+//       return pvDestinationFieldIndex;
+//     }
 
    private:
 
@@ -106,7 +108,7 @@ namespace mdt{ namespace sql{ namespace copier{
     }
 
     int pvSourceFieldIndex;
-    int pvDestinationFieldIndex;
+//     int pvDestinationFieldIndex;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

@@ -23,6 +23,7 @@
 
 #include <QSharedData>
 #include <QVariant>
+#include <QVector>
 
 #include <QDebug>
 
@@ -87,9 +88,23 @@ namespace mdt{ namespace sql{ namespace copier{
      *
      * This default implementation allways returns -1.
      */
-    virtual int destinationFieldIndex() const
+//     virtual int destinationFieldIndex() const
+//     {
+//       return -1;
+//     }
+
+    /*! \brief Get list of destination field indexes
+     */
+    QVector<int> destinationFieldIndexList() const
     {
-      return -1;
+      return pvDestinationFieldIndexList;
+    }
+
+    /*! \brief Get count of destination field indexes
+     */
+    int destinationFieldIndexCount() const
+    {
+      return pvDestinationFieldIndexList.size();
     }
 
     /*! \brief Set fixed value
@@ -113,11 +128,28 @@ namespace mdt{ namespace sql{ namespace copier{
 
    protected:
 
+    /*! \brief Set destination field index
+     */
+    void setDestinationFieldIndex(int index)
+    {
+      pvDestinationFieldIndexList.clear();
+      pvDestinationFieldIndexList.append(index);
+    }
+
+    /*! \brief Clear destination field index list
+     */
+    void clearDestinationFieldIndexList()
+    {
+      pvDestinationFieldIndexList.clear();
+    }
+
     AbstractTableMappingItem(const AbstractTableMappingItem & other)
      : QSharedData(other)
     {
       qDebug() << "CPY AbstractTableMappingItem::AbstractTableMappingItem(other) - ref: " << ref.load();
     }
+
+    QVector<int> pvDestinationFieldIndexList;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{
