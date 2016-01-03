@@ -37,6 +37,7 @@ class mdtSqlCopierTest : public mdtTest
 
   void sandbox();
   void sandbox2();
+  void bechSandBox();
 
   void initTestCase();
   void cleanupTestCase();

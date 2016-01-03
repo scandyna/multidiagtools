@@ -23,6 +23,8 @@
 
 #include "AbstractTableMappingItem.h"
 #include "mdtSqlWhereOperator.h"
+#include <QVector>
+#include <vector>
 
 namespace mdt{ namespace sql{ namespace copier{
 
@@ -52,7 +54,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Construct a match item
      */
-    UniqueInsertMatchExpressionItem(const mdtSqlWhereOperator & op, int sourceValueFieldIndex, int destinationFieldIndex)
+    UniqueInsertMatchExpressionItem(mdtSqlWhereOperator::Type op, int sourceValueFieldIndex, int destinationFieldIndex)
      : sourceValueFieldIndex(sourceValueFieldIndex),
        destinationFieldIndex(destinationFieldIndex),
        operatorWithPrevious(op)
@@ -118,11 +120,11 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Check if field mapping is null
      *
-     * 
+     * Expression is null if not match was set or not destination was set
      */
     bool isNull() const override
     {
-      ///return ( (sourceFieldIndex < 0) || (destinationFieldIndex < 0) );
+      return ( pvMatchItems.empty() || (destinationFieldIndexCount() < 1) );
     }
 
     /*! \brief Clear expression
@@ -131,6 +133,69 @@ namespace mdt{ namespace sql{ namespace copier{
     {
     }
 
+    /*! \brief Add a destination field index
+     */
+    void addDestinationFieldIndex(int index)
+    {
+      Q_ASSERT(index >= 0);
+      AbstractTableMappingItem::addDestinationFieldIndex(index);
+    }
+
+    /*! \brief Add a match item
+     *
+     * A match item is a criteria between a value of source
+     *  and a field in destination.
+     *
+     * \param sourceValueFieldIndex Index of field, in source, in which value will be fetched during copy
+     * \param destinationFieldIndex Index of field, in destination, for which the value must match
+     * \pre sourceValueFieldIndex and destinationFieldIndex must be >= 0
+     */
+    void addMatchItem(int sourceValueFieldIndex, int destinationFieldIndex)
+    {
+      Q_ASSERT(sourceValueFieldIndex >= 0);
+      Q_ASSERT(destinationFieldIndex >= 0);
+      pvMatchItems.emplace_back(sourceValueFieldIndex, destinationFieldIndex);
+    }
+
+    /*! \brief Add a match item
+     *
+     * A match item is a criteria between a value of source
+     *  and a field in destination.
+     *
+     * \param operatorWithPrevious WHERE clause operator (AND, OR) with previous match item
+     * \param sourceValueFieldIndex Index of field, in source, in which value will be fetched during copy
+     * \param destinationFieldIndex Index of field, in destination, for which the value must match
+     * \pre sourceValueFieldIndex and destinationFieldIndex must be >= 0
+     */
+    void addMatchItem(mdtSqlWhereOperator::Type operatorWithPrevious, int sourceValueFieldIndex, int destinationFieldIndex)
+    {
+      Q_ASSERT(sourceValueFieldIndex >= 0);
+      Q_ASSERT(destinationFieldIndex >= 0);
+      pvMatchItems.emplace_back(operatorWithPrevious, sourceValueFieldIndex, destinationFieldIndex);
+    }
+
+    /*! \brief Get list of source value field indexes
+     *
+     * Will collect, in a unique way, source value field indexe for each match item.
+     */
+    QVector<int> getSourceValueFieldIndexList() const
+    {
+      QVector<int> indexList;
+
+      for(const auto & item : pvMatchItems){
+        const int idx = item.sourceValueFieldIndex;
+        if(!indexList.contains(idx)){
+          indexList.append(idx);
+        }
+      }
+
+      return indexList;
+    }
+
+  private:
+
+//     QVector<UniqueInsertMatchExpressionItem> pvMatchItems;
+    std::vector<UniqueInsertMatchExpressionItem> pvMatchItems;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

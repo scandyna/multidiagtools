@@ -167,7 +167,20 @@ void mdtSqlCopierTest::sandbox()
     qDebug() << query.value(0) << "|" << query.value(1) << "|" << query.value(2) << "|" << query.value(3);
   }
   
+  qDebug() << "TEST - SELECT test ...";
+  query.prepare("SELECT * FROM Client_tbl WHERE Name = :0 AND FieldA = :1");
+  query.bindValue(":0", "Fixed");
+  query.bindValue(":1", "Field A 3");
+  QVERIFY(query.exec());
+  while(query.next()){
+    qDebug() << query.value(0) << "|" << query.value(1) << "|" << query.value(2) << "|" << query.value(3);
+  }
+  qDebug() << "TEST - SELECT test DONE";
+
+  
   QVERIFY(query.exec("DELETE FROM Client_tbl"));
+  
+
 }
 
 void mdtSqlCopierTest::sandbox2()
@@ -182,6 +195,40 @@ void mdtSqlCopierTest::sandbox2()
   exp.addMatchItemForUniqueInsert(SourceFieldExpressionMatchItem::And, "rem", "REM");
   
   qDebug() << "SQL: " << exp.getSql(pvDatabase, "Id_PK");
+}
+
+void mdtSqlCopierTest::bechSandBox()
+{
+  std::vector<QString> inLst;
+  QStringList lst;
+  ///QVector<QString> lst;
+  const int N = 100;
+
+  for(int i = 0; i < N; ++i){
+    inLst.push_back(QString("Field%0").arg(i));
+  }
+  qDebug() << "Insert benchmark...";
+  QBENCHMARK{
+    lst.clear();
+    for(const auto & s : inLst){
+      lst.append(s);
+    }
+  }
+  qDebug() << lst.size();
+  qDebug() << "Search benchmark...";
+  QString match = QString("Field%0").arg(N-1);
+  int idx = -1;
+  QBENCHMARK{
+    int i = 0;
+    for(const auto & s : lst){
+      if(s == match){
+        idx = i;
+        break;
+      }
+      ++i;
+    }
+  }
+  qDebug() << "Found '" << match << "' at idx: " << idx;
 }
 
 
@@ -701,8 +748,42 @@ void mdtSqlCopierTest::uniqueInsertExpressionTest()
    * Initial state
    */
   UniqueInsertExpression exp;
-  
+  QCOMPARE(exp.destinationFieldIndexList().size(), 0);
+  QCOMPARE(exp.getSourceValueFieldIndexList().size(), 0);
   QVERIFY(exp.isNull());
+  /*
+   * Setup expression
+   */
+  exp.clear();
+  // Set destination field indexes
+  exp.addDestinationFieldIndex(1);
+  QCOMPARE(exp.destinationFieldIndexList().size(), 1);
+  QCOMPARE(exp.destinationFieldIndexList().at(0), 1);
+  QCOMPARE(exp.getSourceValueFieldIndexList().size(), 0);
+  QVERIFY(exp.isNull());
+  // Add a match item
+  exp.addMatchItem(3, 4);
+  QCOMPARE(exp.getSourceValueFieldIndexList().size(), 1);
+  QCOMPARE(exp.getSourceValueFieldIndexList().at(0), 3);
+  QVERIFY(!exp.isNull());
+  // Add a match item
+  exp.addMatchItem(5, 6);
+  QCOMPARE(exp.getSourceValueFieldIndexList().size(), 2);
+  QCOMPARE(exp.getSourceValueFieldIndexList().at(0), 3);
+  QCOMPARE(exp.getSourceValueFieldIndexList().at(1), 5);
+  QVERIFY(!exp.isNull());
+
+  /*
+   * Copy construction
+   */
+  
+  /*
+   * Copy assignment
+   */
+  
+  /*
+   * Clear
+   */
 }
 
 void mdtSqlCopierTest::tableMappingItemTest()

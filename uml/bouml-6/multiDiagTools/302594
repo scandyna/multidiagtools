@@ -1,6 +1,6 @@
 format 210
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 6
+  revision 7
   modified_by 2 "philippe"
   // class settings
   
@@ -777,7 +777,7 @@ ${inlines}
     end
 
     class 2256386 "TableMappingItem"
-      abstract visibility package 
+      visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -1002,8 +1002,8 @@ ${inlines}
     end
 
     classdiagram 1883266 "AbstractTableMappingItem"
-      classdiagramsettings member_max_width 0 end
-      size A4
+      classdiagramsettings hide_operations yes member_max_width 0 end
+      size B-Landscape
     end
 
     class 2256514 "AbstractTableMappingItem"
@@ -1171,6 +1171,11 @@ ${inlines}
       end
     end
 
+    classdiagram 1890178 "FieldMapping"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
     class 2256642 "FieldMapping"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -1249,6 +1254,43 @@ ${inlines}
 	
 	
       end
+
+      operation 3430018 "setFieldMapping"
+	cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param in name "sourceFieldIndex" explicit_type "int"
+	  param in name "destinationFieldIndex" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3430146 "sourceFieldIndex"
+	cpp_virtual public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 1890306 "FixedValue"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
 
     class 2256770 "FixedValue"
@@ -1283,6 +1325,83 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      operation 3429378 "clone"
+	cpp_virtual public explicit_return_type "AbstractTableMappingItem"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3429506 "isNull"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3429634 "clear"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3429762 "setFixedValue"
+	cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param in name "value" type class_ref 161154 // QVariant
+	  param in name "destinationFieldIndex" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3429890 "fixedValue"
+	cpp_virtual public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -1320,6 +1439,103 @@ ${inlines}
 "
 	    classrelation_ref 2551042 // <directional composition>
 	  b parent class_ref 2257026 // UniqueInsertMatchItem
+      end
+
+      operation 3428994 "clone"
+	cpp_virtual public explicit_return_type "AbstractTableMappingItem"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3429122 "isNull"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3429250 "clear"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3431042 "addMatchItem"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "sourceValueFieldIndex" explicit_type "int"
+	  param in name "destinationFieldIndex" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3431170 "addMatchItem"
+	public explicit_return_type "void"
+	nparams 3
+	  param in name "op" type class_ref 2256258 // mdtSqlWhereOperator
+	  param in name "sourceValueFieldIndex" explicit_type "int"
+	  param in name "destinationFieldIndex" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3430914 "getSourceValueFieldIndexList"
+	stereotype "vector"
+	public explicit_return_type "int"
+	multiplicity "*"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -1457,41 +1673,5 @@ ${inlines}
       
     end
 
-    classdiagram 1883650 "TableMappingItemSql"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 2257410 "TableMappingItemSql"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      operation 3405826 "getSqlForDestinationTableInsert"
-	public return_type class_ref 161026 // QString
-	nparams 2
-	  param in name "db" type class_ref 405122 // QSqlDatabase
-	  param in name "tm" type class_ref 2174082 // mdtSqlCopierTableMapping
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
   end
 end

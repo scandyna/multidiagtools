@@ -13,29 +13,20 @@ diagrams
     916 911 100 7 12 27
   classdiagram_ref 1883138 // TableMappingItem
     916 911 90 21 0 0
-  active  classdiagram_ref 1883266 // AbstractTableMappingItem
-    916 911 100 4 0 0
-  classdiagram_ref 1883394 // UniqueInsertExpression
+  classdiagram_ref 1883266 // AbstractTableMappingItem
+    916 911 100 21 0 0
+  active  classdiagram_ref 1883394 // UniqueInsertExpression
     916 911 100 18 0 0
   classdiagram_ref 1883522 // ReferringTableInsertExpression
     120 106 100 4 0 0
-  classdiagram_ref 1883650 // TableMappingItemSql
-    120 106 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 3415170 // destinationFieldIndexList
+selected operation_ref 3431170 // addMatchItem
 open
-  classview_ref 807426 // ImportExportCopy
-  classview_ref 893954 // sqlDatabaseCopy
-  classview_ref 920834 // SourceFieldExpression
-  operation_ref 3415682 // fixedValue
-  class_ref 2256514 // AbstractTableMappingItem
-  attribute_ref 2266882 // sourceFieldIndex
-  operation_ref 3414658 // clone
-  class_ref 2256770 // FixedValue
-  class_ref 2256898 // UniqueInsertExpression
-  class_ref 2257026 // UniqueInsertMatchItem
-  class_ref 2257410 // TableMappingItemSql
+  class_ref 2263938 // mdtSqlCopierQueryBuilder
+  class_ref 2264066 // XYH
+  operation_ref 3431042 // addMatchItem
+  operation_ref 3431170 // addMatchItem
   
   package_ref 260866 // Boost
 end

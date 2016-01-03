@@ -84,15 +84,6 @@ namespace mdt{ namespace sql{ namespace copier{
       return -1;
     }
 
-    /*! \brief Get destination field index
-     *
-     * This default implementation allways returns -1.
-     */
-//     virtual int destinationFieldIndex() const
-//     {
-//       return -1;
-//     }
-
     /*! \brief Get list of destination field indexes
      */
     QVector<int> destinationFieldIndexList() const
@@ -133,6 +124,13 @@ namespace mdt{ namespace sql{ namespace copier{
     void setDestinationFieldIndex(int index)
     {
       pvDestinationFieldIndexList.clear();
+      pvDestinationFieldIndexList.append(index);
+    }
+
+    /*! \brief Add a destination field index
+     */
+    void addDestinationFieldIndex(int index)
+    {
       pvDestinationFieldIndexList.append(index);
     }
 

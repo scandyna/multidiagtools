@@ -35,8 +35,7 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Create a invalid fixed value
      */
     FixedValue()
-     : AbstractTableMappingItem()/*,
-       pvDestinationFieldIndex(-1)*/
+     : AbstractTableMappingItem()
     {
       qDebug() << "C  FixedValue::FixedValue() - ref: " << ref.load();
     }
@@ -71,7 +70,6 @@ namespace mdt{ namespace sql{ namespace copier{
     {
       pvValue.clear();
       clearDestinationFieldIndexList();
-//       pvDestinationFieldIndex = -1;
     }
 
     /*! \brief Set fixed value
@@ -80,7 +78,6 @@ namespace mdt{ namespace sql{ namespace copier{
     {
       pvValue = value;
       setDestinationFieldIndex(destinationFieldIndex);
-//       pvDestinationFieldIndex = destinationFieldIndex;
     }
 
     /*! \brief Get fixed value
@@ -89,13 +86,6 @@ namespace mdt{ namespace sql{ namespace copier{
     {
       return pvValue;
     }
-
-    /*! \brief Get destination field index
-     */
-//     int destinationFieldIndex() const override
-//     {
-//       return pvDestinationFieldIndex;
-//     }
 
    private:
 
@@ -107,7 +97,6 @@ namespace mdt{ namespace sql{ namespace copier{
       qDebug() << "CPY  FixedValue::FixedValue(other) - ref: " << ref.load();
     }
 
-//     int pvDestinationFieldIndex;
     QVariant pvValue;
   };
 

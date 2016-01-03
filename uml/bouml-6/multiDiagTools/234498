@@ -1,6 +1,6 @@
 format 210
 "mdtdatabase" // mdtdatabase
-  revision 101
+  revision 102
   modified_by 2 "philippe"
   // class settings
   
@@ -7817,6 +7817,95 @@ ${inlines}
       end
     end
 
+    classdiagram 1890434 "QueryHelper"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2263938 "mdtSqlCopierQueryBuilder"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 3430274 "getSqlForSourceTableCount"
+	public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	  param in name "tm" type class_ref 2174082 // mdtSqlCopierTableMapping
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3430402 "getSqlForSourceTableSelect"
+	public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	  param in name "tm" type class_ref 2174082 // mdtSqlCopierTableMapping
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3430530 "getSqlForDestinationTableInsert"
+	public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	  param in name "tm" type class_ref 2174082 // mdtSqlCopierTableMapping
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3430658 "populateDestinationQuery"
+	public explicit_return_type "??"
+	nparams 3
+	  param in name "query" type class_ref 910594 // QSqlQuery
+	  param in name "sourceRecord" type class_ref 404994 // QSqlRecord
+	  param in name "tm" type class_ref 2174082 // mdtSqlCopierTableMapping
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
     classdiagram 1876354 "DataMapping"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -8418,6 +8507,37 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    class 2264066 "XYH"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 3430786 "getSourceRecord"
+	public explicit_return_type "??"
+	nparams 1
+	  param in name "??" explicit_type "??"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 

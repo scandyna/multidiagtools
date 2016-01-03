@@ -35,8 +35,7 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     FieldMapping()
      : AbstractTableMappingItem(),
-       pvSourceFieldIndex(-1)/*,
-       pvDestinationFieldIndex(-1)*/
+       pvSourceFieldIndex(-1)
     {
       qDebug() << "C  FieldMapping::FieldMapping() - ref: " << ref.load();
     }
@@ -71,7 +70,6 @@ namespace mdt{ namespace sql{ namespace copier{
     {
       pvSourceFieldIndex = -1;
       clearDestinationFieldIndexList();
-//       pvDestinationFieldIndex = -1;
     }
 
     /*! \brief Set a field mapping
@@ -80,7 +78,6 @@ namespace mdt{ namespace sql{ namespace copier{
     {
       pvSourceFieldIndex = sourceFieldIndex;
       setDestinationFieldIndex(destinationFieldIndex);
-//       pvDestinationFieldIndex = destinationFieldIndex;
     }
 
     /*! \brief Get source field index
@@ -89,13 +86,6 @@ namespace mdt{ namespace sql{ namespace copier{
     {
       return pvSourceFieldIndex;
     }
-
-    /*! \brief Get destination field index
-     */
-//     int destinationFieldIndex() const override
-//     {
-//       return pvDestinationFieldIndex;
-//     }
 
    private:
 
@@ -108,7 +98,6 @@ namespace mdt{ namespace sql{ namespace copier{
     }
 
     int pvSourceFieldIndex;
-//     int pvDestinationFieldIndex;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

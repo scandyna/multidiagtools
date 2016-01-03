@@ -87,12 +87,6 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     int sourceFieldIndex() const;
 
-    /*! \brief Get destination field index
-     *
-     * Has sense for FieldMappingType or FixedValueType.
-     */
-//     int destinationFieldIndex() const;
-
     /*! \brief Get list of destination field indexes
      */
     QVector<int> destinationFieldIndexList() const;
