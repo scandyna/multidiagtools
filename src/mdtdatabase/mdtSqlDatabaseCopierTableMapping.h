@@ -155,17 +155,25 @@ class mdtSqlDatabaseCopierTableMapping : public mdt::sql::copier::TableMapping
     return pvSourceTable.fieldName(fieldIndex);
   }
 
+  /*! \brief Get field type name for given fieldIndex in source table
+   */
+  QString fetchSourceTableFieldTypeNameAt(int fieldIndex) const override;
+
+  /*! \brief Check if field is part of a key for given field index in source table
+   */
+  FieldKeyType fetchSourceTableFieldKeyType(int fieldIndex) const override;
+
   /*! \brief Get source field name for given source field index
    */
 //   QString fetchSourceFieldName(int sourceFieldIndex) const;
 
   /*! \brief Get source field type name for given source field index
    */
-  QString fetchSourceFieldTypeName(int sourceFieldIndex) const;
+//   QString fetchSourceFieldTypeName(int sourceFieldIndex) const;
 
   /*! \brief Check if source field is part of a key
    */
-  FieldKeyType fetchSourceFieldKeyType(int sourceFieldIndex) const;
+//   FieldKeyType fetchSourceFieldKeyType(int sourceFieldIndex) const;
 
   /*! \brief Get field name for given fieldIndex in destination table
    */

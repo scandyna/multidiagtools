@@ -100,12 +100,12 @@ void mdtSqlCsvImportTableMapping::setSourceFieldIndex(mdtSqlCopierFieldMapping &
 //   return sourceTable().fieldName(sourceFieldIndex);
 // }
 
-QString mdtSqlCsvImportTableMapping::fetchSourceFieldTypeName(int sourceFieldIndex) const
-{
-  Q_ASSERT(sourceFieldIndex >= 0);
-  Q_ASSERT(sourceFieldIndex < sourceTable().fieldCount());
-  return sourceTable().fieldTypeName(sourceFieldIndex);
-}
+// QString mdtSqlCsvImportTableMapping::fetchSourceFieldTypeName(int sourceFieldIndex) const
+// {
+//   Q_ASSERT(sourceFieldIndex >= 0);
+//   Q_ASSERT(sourceFieldIndex < sourceTable().fieldCount());
+//   return sourceTable().fieldTypeName(sourceFieldIndex);
+// }
 
 bool mdtSqlCsvImportTableMapping::areFieldsCompatible(int sourceFieldIndex, int destinationFieldIndex) const
 {

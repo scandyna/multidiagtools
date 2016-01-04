@@ -25,6 +25,7 @@
 #include "TableMappingItem.h"
 #include <QVector>
 #include <QString>
+#include <QStringList>
 
 #include "mdtSqlCopierFieldMapping.h"
 
@@ -234,9 +235,17 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     QString destinationTableFieldNameAt(int fieldIndex) const;
 
+    /*! \brief Get destination field name list for map item at given index
+     *
+     * \pre itemIndex must be in valid range
+     */
+    QStringList destinationFieldNameListAtItem(int itemIndex) const;
+
     /*! \brief Get destination field name for given field mapping index
     *
     * \pre index must be in valid range.
+    *
+    * \deprecated use destinationFieldNameListAtItem
     */
     virtual QString destinationFieldName(int index) const = 0;
 
@@ -326,23 +335,37 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     virtual QString fetchSourceTableFieldNameAt(int fieldIndex) const = 0;
 
+    /*! \brief Get field type name for given fieldIndex in source table
+     */
+    virtual QString fetchSourceTableFieldTypeNameAt(int fieldIndex) const = 0;
+
+    /*! \brief Check if field is part of a key for given field index in source table
+     *
+     * Default implementation allways returns NotAKey.
+     */
+    virtual FieldKeyType fetchSourceTableFieldKeyType(int fieldIndex) const
+    {
+      Q_UNUSED(fieldIndex);
+      return NotAKey;
+    }
+
     /*! \brief Get source field name for given source field index
     */
 //     virtual QString fetchSourceFieldName(int sourceFieldIndex) const = 0;
 
     /*! \brief Get source field type name for given source field index
     */
-    virtual QString fetchSourceFieldTypeName(int sourceFieldIndex) const = 0;
+//     virtual QString fetchSourceFieldTypeName(int sourceFieldIndex) const = 0;
 
     /*! \brief Check if source field is part of a key
     *
     * Default implementation allways returns NotAKey.
     */
-    virtual FieldKeyType fetchSourceFieldKeyType(int sourceFieldIndex) const
-    {
-      Q_UNUSED(sourceFieldIndex);
-      return NotAKey;
-    }
+//     virtual FieldKeyType fetchSourceFieldKeyType(int sourceFieldIndex) const
+//     {
+//       Q_UNUSED(sourceFieldIndex);
+//       return NotAKey;
+//     }
 
     /*! \brief Get field name for given fieldIndex in destination table
      */
