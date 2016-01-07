@@ -71,9 +71,6 @@ QString TableMapping::sourceTableFieldNameAt(int fieldIndex) const
 
 QString TableMapping::sourceFieldNameAtItem(int itemIndex) const
 {
-  /// \todo Provisoire !!
-  return sourceFieldName(itemIndex);
-
   Q_ASSERT(itemIndex >= 0);
   Q_ASSERT(itemIndex < pvItems.size());
 
@@ -84,6 +81,36 @@ QString TableMapping::sourceFieldNameAtItem(int itemIndex) const
   Q_ASSERT(sourceFieldIndex < sourceTableFieldCount());
 
   return fetchSourceTableFieldNameAt(sourceFieldIndex);
+}
+
+QString TableMapping::sourceFieldTypeNameAtItem(int itemIndex) const
+{
+  Q_ASSERT(itemIndex >= 0);
+  Q_ASSERT(itemIndex < pvItems.size());
+  Q_ASSERT(pvItems.at(itemIndex).type() == TableMappingItem::FieldMappingType);
+
+  const int sourceFieldIndex = pvItems.at(itemIndex).sourceFieldIndex();
+  if(sourceFieldIndex < 0){
+    return QString();
+  }
+  Q_ASSERT(sourceFieldIndex < sourceTableFieldCount());
+
+  return fetchSourceTableFieldTypeNameAt(sourceFieldIndex);
+}
+
+TableMapping::FieldKeyType TableMapping::sourceFieldKeyTypeAtItem(int itemIndex) const
+{
+  Q_ASSERT(itemIndex >= 0);
+  Q_ASSERT(itemIndex < pvItems.size());
+  Q_ASSERT(pvItems.at(itemIndex).type() == TableMappingItem::FieldMappingType);
+
+  const int sourceFieldIndex = pvItems.at(itemIndex).sourceFieldIndex();
+  if(sourceFieldIndex < 0){
+    return NotAKey;
+  }
+  Q_ASSERT(sourceFieldIndex < sourceTableFieldCount());
+
+  return fetchSourceTableFieldKeyType(sourceFieldIndex);
 }
 
 QString TableMapping::sourceFieldName(int index) const
@@ -125,7 +152,6 @@ TableMapping::FieldKeyType TableMapping::sourceFieldKeyType(int index) const
   }
   Q_ASSERT(sourceFieldIndex < sourceTableFieldCount());
   return fetchSourceTableFieldKeyType(sourceFieldIndex);
-//   return fetchSourceFieldKeyType(sourceFieldIndex);
 }
 
 void TableMapping::setSourceFixedValue(int index, const QVariant & value)
@@ -166,6 +192,42 @@ QStringList TableMapping::destinationFieldNameListAtItem(int itemIndex) const
   }
 
   return fieldNameList;
+}
+
+QStringList TableMapping::destinationFieldTypeNameListAtItem(int itemIndex) const
+{
+  Q_ASSERT(itemIndex >= 0);
+  Q_ASSERT(itemIndex < pvItems.size());
+
+  QStringList fieldNameList;
+
+  auto item = pvItems.at(itemIndex);
+  const auto fieldIndexList = item.destinationFieldIndexList();
+  for(const auto & fieldIndex : fieldIndexList){
+    Q_ASSERT(fieldIndex >= 0);
+    Q_ASSERT(fieldIndex < destinationTableFieldCount());
+    fieldNameList.append(fetchDestinationTableFieldTypeNameAt(fieldIndex));
+  }
+
+  return fieldNameList;
+}
+
+QVector<TableMapping::FieldKeyType> TableMapping::destinationFieldKeyTypeListAtItem(int itemIndex) const
+{
+  Q_ASSERT(itemIndex >= 0);
+  Q_ASSERT(itemIndex < pvItems.size());
+
+  QVector<FieldKeyType> fieldKeyTypeList;
+
+  auto item = pvItems.at(itemIndex);
+  const auto fieldIndexList = item.destinationFieldIndexList();
+  for(const auto & fieldIndex : fieldIndexList){
+    Q_ASSERT(fieldIndex >= 0);
+    Q_ASSERT(fieldIndex < destinationTableFieldCount());
+    fieldKeyTypeList.append(fetchDestinationTableFieldKeyType(fieldIndex));
+  }
+
+  return fieldKeyTypeList;
 }
 
 void TableMapping::resetFieldMapping()

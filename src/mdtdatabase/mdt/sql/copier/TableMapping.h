@@ -185,12 +185,26 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     QString sourceFieldNameAtItem(int itemIndex) const;
 
+    /*! \brief Get source field type name for map item at given index
+     *
+     * \pre itemIndex must be in valid range
+     * \pre map item for given itemIndex must be TableMappingItem::FieldMappingType
+     */
+    QString sourceFieldTypeNameAtItem(int itemIndex) const;
+
+    /*! \brief Check if source field is part of a key for map item at given index
+     *
+     * \pre itemIndex must be in valid range
+     * \pre map item for given itemIndex must be TableMappingItem::FieldMappingType
+     */
+    FieldKeyType sourceFieldKeyTypeAtItem(int itemIndex) const;
+
     /*! \brief Get source field name for given field mapping index
     *
     * \pre index must be in valid range.
     * \pre source type for given index must be mdtSqlCopierFieldMapping::Field
     *
-    * \deprecated use sourceFieldNameAtItem
+    * \deprecated use sourceFieldNameAtItem()
     */
     [[deprecated]]
     QString sourceFieldName(int index) const;
@@ -199,6 +213,8 @@ namespace mdt{ namespace sql{ namespace copier{
     *
     * \pre index must be in valid range.
     * \pre source type for given index must be mdtSqlCopierFieldMapping::Field
+    *
+    * \deprecated use sourceFieldTypeNameAtItem()
     */
     QString sourceFieldTypeName(int index) const;
 
@@ -206,6 +222,8 @@ namespace mdt{ namespace sql{ namespace copier{
     *
     * \pre index must be in valid range.
     * \pre source type for given index must be mdtSqlCopierFieldMapping::Field
+    *
+    * \deprecated use sourceFieldKeyTypeAtItem()
     */
     FieldKeyType sourceFieldKeyType(int index) const;
 
@@ -241,17 +259,31 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     QStringList destinationFieldNameListAtItem(int itemIndex) const;
 
+    /*! \brief Get destination field type name list for map item at given index
+     *
+     * \pre itemIndex must be in valid range
+     */
+    QStringList destinationFieldTypeNameListAtItem(int itemIndex) const;
+
+    /*! \brief Check if destination fields are part of a key for map item at given index
+     *
+     * \pre itemIndex must be in valid range
+     */
+    QVector<FieldKeyType> destinationFieldKeyTypeListAtItem(int itemIndex) const;
+
     /*! \brief Get destination field name for given field mapping index
     *
     * \pre index must be in valid range.
     *
-    * \deprecated use destinationFieldNameListAtItem
+    * \deprecated use destinationFieldNameListAtItem()
     */
     virtual QString destinationFieldName(int index) const = 0;
 
     /*! \brief Get destination field type name for given field mapping index
     *
     * \pre index must be in valid range.
+    *
+    * \deprecated use destinationFieldTypeNameListAtItem()
     */
     virtual QString destinationFieldTypeName(int index) const = 0;
 
@@ -259,6 +291,7 @@ namespace mdt{ namespace sql{ namespace copier{
     *
     * Default implementation allways returns NotAKey.
     *
+    * \deprecated use destinationFieldKeyTypeListAtItem()
     */
     virtual FieldKeyType destinationFieldKeyType(int index) const
     {
@@ -349,27 +382,23 @@ namespace mdt{ namespace sql{ namespace copier{
       return NotAKey;
     }
 
-    /*! \brief Get source field name for given source field index
-    */
-//     virtual QString fetchSourceFieldName(int sourceFieldIndex) const = 0;
-
-    /*! \brief Get source field type name for given source field index
-    */
-//     virtual QString fetchSourceFieldTypeName(int sourceFieldIndex) const = 0;
-
-    /*! \brief Check if source field is part of a key
-    *
-    * Default implementation allways returns NotAKey.
-    */
-//     virtual FieldKeyType fetchSourceFieldKeyType(int sourceFieldIndex) const
-//     {
-//       Q_UNUSED(sourceFieldIndex);
-//       return NotAKey;
-//     }
-
     /*! \brief Get field name for given fieldIndex in destination table
      */
     virtual QString fetchDestinationTableFieldNameAt(int fieldIndex) const = 0;
+
+    /*! \brief Get field type name for given fieldIndex in destination table
+     */
+    virtual QString fetchDestinationTableFieldTypeNameAt(int fieldIndex) const = 0;
+
+    /*! \brief Check if field is part of a key for given field index in destination table
+     *
+     * Default implementation allways returns NotAKey.
+     */
+    virtual FieldKeyType fetchDestinationTableFieldKeyType(int fieldIndex) const
+    {
+      Q_UNUSED(fieldIndex);
+      return NotAKey;
+    }
 
     /*! \brief Last error
     */

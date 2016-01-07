@@ -7,7 +7,7 @@ diagrams
     120 106 100 4 0 0
   classdiagram_ref 1876482 // SourceField
     916 911 100 7 12 27
-  active  classdiagram_ref 1883138 // TableMappingItem
+  classdiagram_ref 1883138 // TableMappingItem
     916 911 90 21 0 0
   classdiagram_ref 1883266 // AbstractTableMappingItem
     916 916 100 21 0 0
@@ -15,9 +15,13 @@ diagrams
     916 911 100 18 0 0
   classdiagram_ref 1883522 // ReferringTableInsertExpression
     120 106 100 4 0 0
+  classdiagram_ref 1890178 // FieldMapping
+    120 106 100 4 0 0
+  active  classdiagram_ref 1896962 // Edit
+    916 911 100 18 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1883138 // TableMappingItem
+selected operation_ref 3451138 // getItemsToRemoveIndexList
 open
   class_ref 2263938 // mdtSqlCopierQueryBuilder
   class_ref 2264066 // XYH
@@ -25,8 +29,9 @@ open
   operation_ref 3444610 // mappingState
   operation_ref 3444354 // setMappingState
   operation_ref 3437698 // mappingState
-  classview_ref 934018 // TableMapping
+  classdiagram_ref 1896962 // Edit
+  class_ref 2270594 // TableMappingEditHelper
   
-package_ref 260866 // Boost
+  package_ref 260866 // Boost
 end
 end

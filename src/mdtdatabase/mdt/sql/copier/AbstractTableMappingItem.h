@@ -166,8 +166,12 @@ namespace mdt{ namespace sql{ namespace copier{
       pvDestinationFieldIndexList.clear();
     }
 
+    /*! \brief Copy constructor
+     */
     AbstractTableMappingItem(const AbstractTableMappingItem & other)
-     : QSharedData(other)
+     : QSharedData(other),
+       pvMappingState(other.pvMappingState),
+       pvDestinationFieldIndexList(other.pvDestinationFieldIndexList)
     {
       qDebug() << "CPY AbstractTableMappingItem::AbstractTableMappingItem(other) - ref: " << ref.load();
     }

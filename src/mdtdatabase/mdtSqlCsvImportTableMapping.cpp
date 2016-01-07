@@ -23,6 +23,8 @@
 
 //#include <QDebug>
 
+using mdt::sql::copier::TableMapping;
+
 bool mdtSqlCsvImportTableMapping::setDestinationTable(const QString & tableName, const QSqlDatabase & db)
 {
   clearFieldMapping();
@@ -93,19 +95,18 @@ void mdtSqlCsvImportTableMapping::setSourceFieldIndex(mdtSqlCopierFieldMapping &
   updateCsvSourceFormat(fm);
 }
 
-// QString mdtSqlCsvImportTableMapping::fetchSourceFieldName(int sourceFieldIndex) const
-// {
-//   Q_ASSERT(sourceFieldIndex >= 0);
-//   Q_ASSERT(sourceFieldIndex < sourceTable().fieldCount());
-//   return sourceTable().fieldName(sourceFieldIndex);
-// }
+QString mdtSqlCsvImportTableMapping::fetchDestinationTableFieldTypeNameAt(int fieldIndex) const
+{
+  return pvDestinationTable.fieldTypeName(fieldIndex, mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName()));
+}
 
-// QString mdtSqlCsvImportTableMapping::fetchSourceFieldTypeName(int sourceFieldIndex) const
-// {
-//   Q_ASSERT(sourceFieldIndex >= 0);
-//   Q_ASSERT(sourceFieldIndex < sourceTable().fieldCount());
-//   return sourceTable().fieldTypeName(sourceFieldIndex);
-// }
+TableMapping::FieldKeyType mdtSqlCsvImportTableMapping::fetchDestinationTableFieldKeyType(int fieldIndex) const
+{
+  if(pvDestinationTable.isFieldPartOfPrimaryKey(fieldIndex)){
+    return PrimaryKey;
+  }
+  return NotAKey;
+}
 
 bool mdtSqlCsvImportTableMapping::areFieldsCompatible(int sourceFieldIndex, int destinationFieldIndex) const
 {

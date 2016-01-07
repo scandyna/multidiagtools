@@ -29,23 +29,6 @@
 
 using mdt::sql::copier::TableMapping;
 
-// mdtSqlDatabaseCopierTableMapping::mdtSqlDatabaseCopierTableMapping(const mdtSqlDatabaseCopierTableMapping & other)
-//  : mdtSqlCopierTableMapping(other),
-//    pvSourceDatabase(other.pvSourceDatabase),
-//    pvSourceTable(other.pvSourceTable),
-//    pvDestinationDatabase(other.pvDestinationDatabase),
-//    pvDestinationTable(other.pvDestinationTable)
-// {
-// }
-
-// mdtSqlDatabaseCopierTableMapping& mdtSqlDatabaseCopierTableMapping::operator=(const mdtSqlDatabaseCopierTableMapping & other)
-// {
-//   pvSourceDatabase = other.pvSourceDatabase;
-//   pvSourceTable = other.pvSourceTable;
-//   pvDestinationDatabase = other.pvDestinationDatabase;
-//   pvDestinationTable = other.pvDestinationTable;
-// }
-
 bool mdtSqlDatabaseCopierTableMapping::setSourceTable(const QString & tableName, const QSqlDatabase & db)
 {
   clearFieldMapping();
@@ -138,18 +121,6 @@ void mdtSqlDatabaseCopierTableMapping::setSourceFieldIndex(mdtSqlCopierFieldMapp
   fm.sourceField.setFieldIndex(index);
 }
 
-// QString mdtSqlDatabaseCopierTableMapping::fetchSourceTableFieldNameAt(int fieldIndex) const
-// {
-//   return pvSourceTable.fieldName(fieldIndex);
-// }
-
-// QString mdtSqlDatabaseCopierTableMapping::fetchSourceFieldName(int sourceFieldIndex) const
-// {
-//   Q_ASSERT(sourceFieldIndex >= 0);
-//   Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
-//   return pvSourceTable.fieldName(sourceFieldIndex);
-// }
-
 QString mdtSqlDatabaseCopierTableMapping::fetchSourceTableFieldTypeNameAt(int fieldIndex) const
 {
   return pvSourceTable.fieldTypeName(fieldIndex, mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName()));
@@ -163,23 +134,18 @@ TableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::fetchSourceTableFie
   return NotAKey;
 }
 
-// QString mdtSqlDatabaseCopierTableMapping::fetchSourceFieldTypeName(int sourceFieldIndex) const
-// {
-//   Q_ASSERT(sourceFieldIndex >= 0);
-//   Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
-//   return pvSourceTable.fieldTypeName(sourceFieldIndex, mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName()));
-// }
+QString mdtSqlDatabaseCopierTableMapping::fetchDestinationTableFieldTypeNameAt(int fieldIndex) const
+{
+  return pvDestinationTable.fieldTypeName(fieldIndex, mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName()));
+}
 
-// TableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::fetchSourceFieldKeyType(int sourceFieldIndex) const
-// {
-//   Q_ASSERT(sourceFieldIndex >= 0);
-//   Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
-// 
-//   if(pvSourceTable.isFieldPartOfPrimaryKey(sourceFieldIndex)){
-//     return PrimaryKey;
-//   }
-//   return NotAKey;
-// }
+TableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::fetchDestinationTableFieldKeyType(int fieldIndex) const
+{
+  if(pvDestinationTable.isFieldPartOfPrimaryKey(fieldIndex)){
+    return PrimaryKey;
+  }
+  return NotAKey;
+}
 
 bool mdtSqlDatabaseCopierTableMapping::areFieldsCompatible(int sourceFieldIndex, int destinationFieldIndex) const
 {

@@ -144,20 +144,20 @@ class mdtSqlCsvImportTableMapping : public mdt::sql::copier::TableMapping
     return sourceTable().fieldTypeName(fieldIndex);
   }
 
-  /*! \brief Get source field name for given source field index
-   */
-//   QString fetchSourceFieldName(int sourceFieldIndex) const;
-
-  /*! \brief Get source field type name for given source field index
-   */
-//   QString fetchSourceFieldTypeName(int sourceFieldIndex) const;
-
   /*! \brief Get field name for given fieldIndex in destination table
    */
   QString fetchDestinationTableFieldNameAt(int fieldIndex) const override
   {
     return pvDestinationTable.fieldName(fieldIndex);
   }
+
+  /*! \brief Get field type name for given fieldIndex in destination table
+   */
+  QString fetchDestinationTableFieldTypeNameAt(int fieldIndex) const override;
+
+  /*! \brief Check if field is part of a key for given field index in destination table
+   */
+  FieldKeyType fetchDestinationTableFieldKeyType(int fieldIndex) const override;
 
   /*! \brief Check if source field is compatible with destination field
    */

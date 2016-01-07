@@ -49,7 +49,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Construct a mapping item of given type
      */
-    TableMappingItem(Type type);
+    TableMappingItem(Type type = FieldMappingType);
 
     /*! \brief Copy constructor
      */

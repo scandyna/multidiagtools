@@ -105,7 +105,8 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Copy constructor
      */
     UniqueInsertExpression(const UniqueInsertExpression & other)
-     : AbstractTableMappingItem(other)
+     : AbstractTableMappingItem(other),
+       pvMatchItems(other.pvMatchItems)
     {
       qDebug() << "CPY  UniqueInsertExpression::UniqueInsertExpression(other) - ref: " << ref.load();
     }
@@ -192,6 +193,7 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void clearItem() override
     {
+      pvMatchItems.clear();
     }
 
     std::vector<UniqueInsertMatchExpressionItem> pvMatchItems;

@@ -1,6 +1,6 @@
 format 210
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 9
+  revision 11
   modified_by 2 "philippe"
   // class settings
   
@@ -2121,6 +2121,47 @@ ${inlines}
 "
 	    classrelation_ref 2557826 // <directional composition>
 	  b parent class_ref 2256386 // TableMappingItem
+      end
+    end
+
+    classdiagram 1896962 "Edit"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
+    class 2270594 "TableMappingEditHelper"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 3451138 "getItemsToRemoveIndexList"
+	stereotype "vector"
+	class_operation public explicit_return_type "int"
+	multiplicity "*"
+	nparams 3
+	  param in name "newItem" type class_ref 2256386 // TableMappingItem
+	  param in name "newItemIndex" explicit_type "int"
+	  param in name "allItemsList" type class_ref 2256386 // TableMappingItem
+	multiplicity "*"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end
