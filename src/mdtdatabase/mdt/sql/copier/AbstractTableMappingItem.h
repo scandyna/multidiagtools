@@ -22,6 +22,7 @@
 #define MDT_SQL_COPIER_ABSTRACT_TABLE_MAPPING_ITEM_H
 
 #include "TableMappingItemState.h"
+#include "FieldIndexList.h"
 #include <QSharedData>
 #include <QVariant>
 #include <QVector>
@@ -93,7 +94,8 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Get list of destination field indexes
      */
-    QVector<int> destinationFieldIndexList() const
+//     QVector<int> destinationFieldIndexList() const
+    FieldIndexList destinationFieldIndexList() const
     {
       return pvDestinationFieldIndexList;
     }
@@ -102,7 +104,7 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     int destinationFieldIndexCount() const
     {
-      return pvDestinationFieldIndexList.size();
+      return pvDestinationFieldIndexList.count();
     }
 
     /*! \brief Set fixed value
@@ -177,7 +179,8 @@ namespace mdt{ namespace sql{ namespace copier{
     }
 
     TableMappingItemState pvMappingState;
-    QVector<int> pvDestinationFieldIndexList;
+//     QVector<int> pvDestinationFieldIndexList;
+    FieldIndexList pvDestinationFieldIndexList;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

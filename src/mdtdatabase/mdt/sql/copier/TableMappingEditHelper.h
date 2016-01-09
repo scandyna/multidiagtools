@@ -56,9 +56,44 @@ namespace mdt{ namespace sql{ namespace copier{
   {
    public:
 
+    /*! \brief Check if item a is less that item b by regarding there destination addresses
+     *
+     * Compares the smallest field index of a and b
+     */
+//     static bool itemIsLessThanByDestinationFieldIndexes(const TableMappingItem & a, const TableMappingItem & b)
+//     {
+//       qDebug() << "CMP, a: " << a.destinationFieldIndexList() << " , b: " << b.destinationFieldIndexList();
+//       const auto aDFIndexes = a.destinationFieldIndexList();
+//       const auto bDFIndexes = b.destinationFieldIndexList();
+// 
+//       if( aDFIndexes.isEmpty() || bDFIndexes.isEmpty() ){
+//         return false;
+//       }
+//       return ( std::min_element(aDFIndexes.cbegin(), aDFIndexes.cend()) <
+//                std::min_element(bDFIndexes.cbegin(), bDFIndexes.cend()) );
+//     }
+
+    /*! \brief Check if field index list a is less than field index b
+     *
+     * Will compare the smallest element of a and b
+     */
+//     static bool fieldIndexLlistIsLessThan(const QVector<int> & a, const QVector<int> & b)
+//     {
+//       auto itA = std::min_element(a.cbegin(), a.cend());
+//       auto itB = std::min_element(b.cbegin(), b.cend());
+// 
+//       // Case of a empty vector
+//       if( (itA == a.cend()) || (itB == b.cend()) ){
+//         return false;
+//       }
+//       qDebug() << "minA: " << *itA << " , minB: " << *itB;
+// 
+//       return (*itA < *itB);
+//     }
+
     /*! \brief Check if given item refers to to at least one of given detsination field indexes
      */
-    static bool itemContainsDestinationFieldIndex(const TableMappingItem & item, const QVector<int> & destinationFieldIndexList)
+    static bool itemContainsDestinationFieldIndex(const TableMappingItem & item, const FieldIndexList & destinationFieldIndexList)
     {
       const auto itemDFIndexes = item.destinationFieldIndexList();
 
@@ -89,7 +124,7 @@ namespace mdt{ namespace sql{ namespace copier{
       QVector<int> itemsToRemove;
       const auto newItemDFIndexes = newItem.destinationFieldIndexList();
       const auto currentItemDFIndexes = allItemsList.at(newItemIndex).destinationFieldIndexList();
-      QVector<int> destinationFieldIndexList;
+      FieldIndexList destinationFieldIndexList;
 
       // Get list of newItem's destination field indexes, excluding those of currentItem's ones
       std::set_difference( newItemDFIndexes.cbegin(), newItemDFIndexes.cend(),
@@ -104,6 +139,68 @@ namespace mdt{ namespace sql{ namespace copier{
 
       return itemsToRemove;
     }
+
+    /*! \brief Get index where to insert a item regarding its destination field indexes
+     *
+     * \param destinationFieldIndexList Destination field indexes of item that was freshly edited
+     * \param allItemsList The actual items list (before inserting newItem)
+     */
+    static int getIndexOfItemToInsertByDFIndexes(const FieldIndexList & destinationFieldIndexList, const QVector<TableMappingItem> & allItemsList)
+    {
+      for(int i = 0; i < allItemsList.size(); ++i){
+        if( destinationFieldIndexList < allItemsList.at(i).destinationFieldIndexList() ){
+          return i;
+        }
+      }
+      return allItemsList.size();
+    }
+
+    static int getIndexOfItemToInsertByDFIndexes(int destinationFieldIndex, const QVector<TableMappingItem> & allItemsList)
+    {
+      FieldIndexList destinationFieldIndexList;
+      destinationFieldIndexList.append(destinationFieldIndex);
+      return getIndexOfItemToInsertByDFIndexes(destinationFieldIndexList, allItemsList);
+    }
+
+    /*! \brief Get a list of items to add when editing a item
+     *
+     * \param newItem The item that was freshly edited
+     * \param newItemIndex Index of newItem in allItemsList
+     * \param allItemsList The actual items list (before inserting newItem)
+     * \pre newItemIndex must be in valid range: 0 <= newItemIndex < allItemsList size
+     */
+    static QVector<int> getItemsToAddIndexList(const TableMappingItem & newItem, int newItemIndex, const QVector<TableMappingItem> & allItemsList)
+    {
+      Q_ASSERT(newItemIndex >= 0);
+      Q_ASSERT(newItemIndex < allItemsList.size());
+
+      QVector<int> itemsToAdd;
+      const auto newItemDFIndexes = newItem.destinationFieldIndexList();
+      const auto currentItemDFIndexes = allItemsList.at(newItemIndex).destinationFieldIndexList();
+      FieldIndexList destinationFieldIndexList;
+
+      // Get list of currentItem's destination field indexes, excluding those of newItem's ones
+      std::set_difference( currentItemDFIndexes.cbegin(), currentItemDFIndexes.cend(),
+                           newItemDFIndexes.cbegin(), newItemDFIndexes.cend(),
+                           std::back_inserter(destinationFieldIndexList) );
+      /*
+       * For each DF index in destinationFieldIndexList, a new item must be added.
+       * Find index where to insert for each item.
+       */
+      for(const auto dfIndex : destinationFieldIndexList){
+//         qDebug() << "dfIndex: " << dfIndex << " , item IDX: " << getIndexOfItemToInsertByDFIndexes({dfIndex}, allItemsList);
+        itemsToAdd.append( getIndexOfItemToInsertByDFIndexes(dfIndex, allItemsList) );
+      }
+//       // Get list of items indexes that have destination field index of this list
+//       for(int idx = 0; idx < allItemsList.size(); ++idx){
+//         if(itemContainsDestinationFieldIndex(allItemsList.at(idx), destinationFieldIndexList)){
+//           itemsToAdd.append(idx);
+//         }
+//       }
+
+      return itemsToAdd;
+    }
+
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

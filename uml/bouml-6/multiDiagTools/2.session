@@ -17,18 +17,17 @@ diagrams
     120 106 100 4 0 0
   classdiagram_ref 1890178 // FieldMapping
     120 106 100 4 0 0
-  active  classdiagram_ref 1896962 // Edit
-    916 911 100 18 0 0
+  active  classdiagram_ref 1903490 // FieldIndexList
+    916 911 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 3451138 // getItemsToRemoveIndexList
+selected operation_ref 3457666 // count
 open
   class_ref 2263938 // mdtSqlCopierQueryBuilder
   class_ref 2264066 // XYH
-  operation_ref 3444482 // setMappingState
-  operation_ref 3444610 // mappingState
-  operation_ref 3444354 // setMappingState
-  operation_ref 3437698 // mappingState
+  operation_ref 3458050 // append
+  operation_ref 3457922 // clear
+  operation_ref 3457666 // count
   classdiagram_ref 1896962 // Edit
   class_ref 2270594 // TableMappingEditHelper
   

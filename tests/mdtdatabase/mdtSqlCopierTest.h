@@ -50,6 +50,8 @@ class mdtSqlCopierTest : public mdtTest
   void sourceFieldTest();
   void fieldMappingDataTest();
 
+  void fieldIndexListTest();
+
   void fieldMappingTest();
   void fixedValueTest();
   void uniqueInsertExpressionTest();
