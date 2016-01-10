@@ -105,7 +105,7 @@ namespace mdt{ namespace sql{ namespace copier{
     TableMappingItemState itemMappingState(int index) const
     {
       Q_ASSERT(index >= 0);
-      Q_ASSERT(index < pvFieldMappingList.size());
+      Q_ASSERT(index < pvItems.size());
       return pvItems.at(index).mappingState();
     }
 
@@ -141,13 +141,14 @@ namespace mdt{ namespace sql{ namespace copier{
     TableMappingItem::Type itemType(int index) const
     {
       Q_ASSERT(index >= 0);
-      Q_ASSERT(index < pvFieldMappingList.size());
+      Q_ASSERT(index < pvItems.size());
       return pvItems.at(index).type();
     }
 
     /*! \brief Get source type (field or fixed value)
     *
     * \pre index must be in a valid range
+    * \deprecated
     */
     mdt::sql::copier::SourceField::Type sourceType(int index) const
     {
@@ -164,12 +165,26 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     virtual int destinationTableFieldCount() const = 0;
 
+    /*! \brief Set source field at given item index
+     *
+     * The mapping item at given index will become
+     *  a FieldMappingType (if not allready is).
+     *
+     * If source field name is empty,
+     *  the field mapping item will become null.
+     *
+     * \pre itemIndex must be in a valid range
+     * \pre Current mapping item at itemIndex must have exactly 1 destination field index
+     */
+    void setSourceFieldAtItem(int itemIndex, const QString & fieldName);
+
     /*! \brief Set source field for given field mapping index
     *
     * If source field name is empty,
     *  the source field will be removed for given index.
     *
     * \pre index must be in a valid range
+    * \deprecated use setSourceFieldAtItem()
     */
     void setSourceField(int index, const QString & fieldName);
 
@@ -364,6 +379,10 @@ namespace mdt{ namespace sql{ namespace copier{
     */
     virtual void setSourceFieldIndex(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName) = 0;
 
+    /*! \brief Get field index of given field name in source table
+     */
+    virtual int fetchSourceTableFieldIndexOf(const QString & fieldName) const = 0;
+
     /*! \brief Get field name for given fieldIndex in source table
      */
     virtual QString fetchSourceTableFieldNameAt(int fieldIndex) const = 0;
@@ -452,6 +471,10 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Update given field mapping state
     */
     void updateFieldMappingState(mdtSqlCopierFieldMapping & fm);
+
+    /*! \brief Update given mapping item state
+     */
+    void updateMappingItemState(TableMappingItem & item);
 
     /*! \brief Update table mapping state
     */

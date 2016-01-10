@@ -19,6 +19,8 @@
  **
  ****************************************************************************/
 #include "TableMapping.h"
+#include "TableMappingItemState.h"
+#include "TableMappingEditHelper.h"
 #include <QSqlDatabase>
 #include <QSqlDriver>
 #include <QStringList>
@@ -42,6 +44,23 @@ TableMapping::TableMapping()
 //   fm.sourceType = type;
 //   updateFieldMappingState(fm);
 // }
+
+void TableMapping::setSourceFieldAtItem(int itemIndex, const QString & fieldName)
+{
+  Q_ASSERT(itemIndex >= 0);
+  Q_ASSERT(itemIndex < pvItems.size());
+
+  auto & item = pvItems[itemIndex];
+  Q_ASSERT(item.destinationFieldIndexList().count() == 1);
+  const int sourceFieldIndex = fetchSourceTableFieldIndexOf(fieldName);
+  const int destinationFieldIndex = item.destinationFieldIndexList().at(0);
+
+  item.setFieldMapping(sourceFieldIndex, destinationFieldIndex);
+  // Update item mapping state
+  updateMappingItemState(item);
+  // Update table mapping state
+  updateTableMappingState();
+}
 
 void TableMapping::setSourceField(int index, const QString & fieldName)
 {
@@ -235,16 +254,23 @@ void TableMapping::resetFieldMapping()
   int n = destinationTableFieldCount();
 
   clearFieldMapping();
+  pvItems.reserve(n);
   for(int i = 0; i < n; ++i){
-    mdtSqlCopierFieldMapping fm;
-    fm.destinationFieldIndex = i;
-    pvFieldMappingList.append(fm);
+    TableMappingItem item(TableMappingItem::FieldMappingType);
+    item.setFieldMapping(-1, i);
+    pvItems.append(item);
   }
+//   for(int i = 0; i < n; ++i){
+//     mdtSqlCopierFieldMapping fm;
+//     fm.destinationFieldIndex = i;
+//     pvFieldMappingList.append(fm);
+//   }
 }
 
 void TableMapping::clearFieldMapping()
 {
-  pvFieldMappingList.clear();
+//   pvFieldMappingList.clear();
+  pvItems.clear();
   pvMappingState = MappingNotSet;
 }
 
@@ -371,6 +397,41 @@ void TableMapping::updateFieldMappingState(mdtSqlCopierFieldMapping & fm)
   fm.mappingState = mdtSqlCopierFieldMapping::MappingComplete;
 }
 
+void TableMapping::updateMappingItemState(TableMappingItem& item)
+{
+  // Check about null mapping
+  if(item.isNull()){
+    item.setMappingState(TableMappingItemState::MappingNotSet);
+    return;
+  }
+  // Check for case of fixed value source
+  if(item.type() == TableMappingItem::FixedValueType){
+    if(item.fixedValue().isNull()){
+      item.setMappingState(TableMappingItemState::MappingError);
+    }else{
+      item.setMappingState(TableMappingItemState::MappingComplete);
+    }
+    return;
+  }
+  // Check case of field mapping
+  if(item.type() == TableMappingItem::FieldMappingType){
+    Q_ASSERT(item.destinationFieldIndexList().count() == 1);
+    const int sourceFieldIndex = item.sourceFieldIndex();
+    const int destinationFieldIndex = item.destinationFieldIndexList().at(0);
+    Q_ASSERT(sourceFieldIndex >= 0);
+    Q_ASSERT(destinationFieldIndex >= 0);
+    // Check field compatibility
+    if(!areFieldsCompatible(sourceFieldIndex, destinationFieldIndex)){
+      item.setMappingState(TableMappingItemState::MappingError);
+      return;
+    }
+  }
+  /// Expressions ...
+  
+  // Done
+  item.setMappingState(TableMappingItemState::MappingComplete);
+}
+
 void TableMapping::updateTableMappingState()
 {
   // Check if both tables are set
@@ -378,22 +439,47 @@ void TableMapping::updateTableMappingState()
     pvMappingState = MappingNotSet;
     return;
   }
-  // Check state of each field mapping and deduce table mapping state
-  for(const auto & fm : pvFieldMappingList){
-    switch(fm.mappingState){
-      case mdtSqlCopierFieldMapping::MappingError:
+  // Check state of each mapping item and deduce table mapping state
+  for(const auto & item : pvItems){
+    switch(item.mappingState()){
+      case TableMappingItemState::MappingError:
         pvMappingState = MappingError;
         return;
-      case mdtSqlCopierFieldMapping::MappingNotSet:
-      case mdtSqlCopierFieldMapping::MappingPartial:
+      case TableMappingItemState::MappingNotSet:
+      case TableMappingItemState::MappingPartial:
         pvMappingState = MappingPartial;
         return;
-      case mdtSqlCopierFieldMapping::MappingComplete:
+      case TableMappingItemState::MappingComplete:
         break;
     }
   }
   // All checks successfully passed
   pvMappingState = MappingComplete;
 }
+
+// void TableMapping::updateTableMappingState()
+// {
+//   // Check if both tables are set
+//   if( sourceTableName().isEmpty() || destinationTableName().isEmpty() ){
+//     pvMappingState = MappingNotSet;
+//     return;
+//   }
+//   // Check state of each field mapping and deduce table mapping state
+//   for(const auto & fm : pvFieldMappingList){
+//     switch(fm.mappingState){
+//       case mdtSqlCopierFieldMapping::MappingError:
+//         pvMappingState = MappingError;
+//         return;
+//       case mdtSqlCopierFieldMapping::MappingNotSet:
+//       case mdtSqlCopierFieldMapping::MappingPartial:
+//         pvMappingState = MappingPartial;
+//         return;
+//       case mdtSqlCopierFieldMapping::MappingComplete:
+//         break;
+//     }
+//   }
+//   // All checks successfully passed
+//   pvMappingState = MappingComplete;
+// }
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

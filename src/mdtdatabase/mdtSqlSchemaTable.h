@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -201,7 +201,7 @@ class mdtSqlSchemaTable
    *
    * If field name does not exist, -1 is returned.
    */
-  int fieldIndex(const QString & name)
+  int fieldIndex(const QString & name) const
   {
     for(int i = 0; i < pvFields.size(); ++i){
       if(pvFields.at(i).name() == name){

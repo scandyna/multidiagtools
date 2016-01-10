@@ -139,6 +139,13 @@ class mdtSqlDatabaseCopierTableMapping : public mdt::sql::copier::TableMapping
    */
   void setSourceFieldIndex(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName) override;
 
+  /*! \brief Get field index of given field name in source table
+   */
+  int fetchSourceTableFieldIndexOf(const QString & fieldName) const override
+  {
+    return pvSourceTable.fieldIndex(fieldName);
+  }
+
   /*! \brief Get field name for given fieldIndex in source table
    */
   QString fetchSourceTableFieldNameAt(int fieldIndex) const override
