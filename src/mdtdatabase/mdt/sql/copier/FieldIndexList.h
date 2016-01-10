@@ -22,6 +22,7 @@
 #define MDT_SQL_COPIER_FIELD_INDEX_LIST_H
 
 #include <QVector>
+#include <QMetaType>
 #include <algorithm>
 
 //#include <QDebug>
@@ -172,5 +173,7 @@ namespace mdt{ namespace sql{ namespace copier{
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{
+
+Q_DECLARE_METATYPE(mdt::sql::copier::FieldIndexList)
 
 #endif // #ifndef MDT_SQL_COPIER_FIELD_INDEX_LIST_H

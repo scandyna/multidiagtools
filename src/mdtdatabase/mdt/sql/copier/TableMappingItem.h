@@ -23,6 +23,7 @@
 
 #include "TableMappingItemState.h"
 #include "FieldIndexList.h"
+#include <QMetaType>
 #include <QSharedDataPointer>
 #include <QVariant>
 #include <QVector>
@@ -131,5 +132,7 @@ namespace mdt{ namespace sql{ namespace copier{
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{
+
+Q_DECLARE_METATYPE(mdt::sql::copier::TableMappingItem);
 
 #endif // #ifndef MDT_SQL_COPIER_TABLE_MAPPING_ITEM_H

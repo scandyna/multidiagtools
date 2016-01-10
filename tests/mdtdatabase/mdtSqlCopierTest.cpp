@@ -54,6 +54,7 @@
 #include "mdtComboBoxItemDelegate.h"
 #include "mdtProgressBarItemDelegate.h"
 #include "mdtProgressValue.h"
+#include <QtTest>
 #include <QTemporaryFile>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -1090,6 +1091,74 @@ void mdtSqlCopierTest::tableMappingItemTest()
 
 }
 
+void mdtSqlCopierTest::tableMappingEditHelperContainsDFIdexesTest()
+{
+  using mdt::sql::copier::TableMappingEditHelper;
+  using mdt::sql::copier::TableMappingItem;
+  using mdt::sql::copier::FieldIndexList;
+
+  QFETCH(TableMappingItem, item);
+  QFETCH(FieldIndexList, fieldIndexList);
+  QFETCH(bool, expectedMatch);
+
+  QVERIFY(TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList) == expectedMatch);
+}
+
+void mdtSqlCopierTest::tableMappingEditHelperContainsDFIdexesTest_data()
+{
+  using mdt::sql::copier::TableMappingItem;
+  using mdt::sql::copier::FieldIndexList;
+
+  QTest::addColumn<TableMappingItem>("item");
+  QTest::addColumn<FieldIndexList>("fieldIndexList");
+  QTest::addColumn<bool>("expectedMatch");
+
+  TableMappingItem item;
+  FieldIndexList fieldIndexList;
+
+  /*
+   * Empty item
+   */
+  fieldIndexList.clear();
+  QTest::newRow("") << item << fieldIndexList << false;
+  fieldIndexList = {0};
+  QTest::newRow("") << item << fieldIndexList << false;
+  fieldIndexList = {1};
+  QTest::newRow("") << item << fieldIndexList << false;
+  fieldIndexList = {2};
+  QTest::newRow("") << item << fieldIndexList << false;
+  fieldIndexList = {0,1};
+  QTest::newRow("") << item << fieldIndexList << false;
+  /*
+   * Field mapping item
+   */
+  item.setFieldMapping(1, 2);
+  fieldIndexList.clear();
+  QTest::newRow("") << item << fieldIndexList << false;
+  fieldIndexList = {0};
+  QTest::newRow("") << item << fieldIndexList << false;
+  fieldIndexList = {1};
+  QTest::newRow("") << item << fieldIndexList << false;
+  fieldIndexList = {2};
+  QTest::newRow("") << item << fieldIndexList << true;
+  fieldIndexList = {0,1};
+  QTest::newRow("") << item << fieldIndexList << false;
+  fieldIndexList = {0,1,2};
+  QTest::newRow("") << item << fieldIndexList << true;
+}
+
+void mdtSqlCopierTest::tableMappingEditHelperItemIdexByDFIndexesTest()
+{
+  using mdt::sql::copier::TableMappingItem;
+  using mdt::sql::copier::FieldIndexList;
+
+}
+
+void mdtSqlCopierTest::tableMappingEditHelperItemIdexByDFIndexesTest_data()
+{
+
+}
+
 void mdtSqlCopierTest::tableMappingEditHelperTest()
 {
   using mdt::sql::copier::TableMappingEditHelper;
@@ -1098,41 +1167,36 @@ void mdtSqlCopierTest::tableMappingEditHelperTest()
   using mdt::sql::copier::FieldIndexList;
 
   QVector<TableMappingItem> allItems;
+  QVector<TableMappingItem> itemsList;
   QVector<int> itemsIndexList;
   TableMappingItem item(TableMappingItem::FieldMappingType);
   UniqueInsertExpression exp;
   FieldIndexList fieldIndexList;
 
   /*
-   * Check less than by destination field indexes
-   */
-//   QVERIFY(!TableMappingEditHelper::fieldIndexLlistIsLessThan({}, {}));
-//   QVERIFY(!TableMappingEditHelper::fieldIndexLlistIsLessThan({0}, {0}));
-//   QVERIFY(TableMappingEditHelper::fieldIndexLlistIsLessThan({0}, {1}));
-  /*
    * Checking if item contains destinations fields test
    */
   // Check with empty item
-  item.clear();
-  QCOMPARE(item.destinationFieldIndexList().count(), 0);
-  fieldIndexList = {0};
-  QVERIFY(!TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList));
-  fieldIndexList = {2};
-  QVERIFY(!TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList));
-  fieldIndexList.clear();
-  QVERIFY(!TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList));
-  // Setup a field mapping
-  item.setFieldMapping(1, 2);
-  fieldIndexList = {0};
-  QVERIFY(!TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList));
-  fieldIndexList = {2};
-  QVERIFY(TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList));
-  fieldIndexList = {0,3};
-  QVERIFY(!TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList));
-  fieldIndexList = {0,1,2};
-  QVERIFY(TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList));
-  fieldIndexList.clear();
-  QVERIFY(!TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList));
+//   item.clear();
+//   QCOMPARE(item.destinationFieldIndexList().count(), 0);
+//   fieldIndexList = {0};
+//   QVERIFY(!TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList));
+//   fieldIndexList = {2};
+//   QVERIFY(!TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList));
+//   fieldIndexList.clear();
+//   QVERIFY(!TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList));
+//   // Setup a field mapping
+//   item.setFieldMapping(1, 2);
+//   fieldIndexList = {0};
+//   QVERIFY(!TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList));
+//   fieldIndexList = {2};
+//   QVERIFY(TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList));
+//   fieldIndexList = {0,3};
+//   QVERIFY(!TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList));
+//   fieldIndexList = {0,1,2};
+//   QVERIFY(TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList));
+//   fieldIndexList.clear();
+//   QVERIFY(!TableMappingEditHelper::itemContainsDestinationFieldIndex(item, fieldIndexList));
 
   /*
    * Build a list of TableMappingItem:
@@ -1175,9 +1239,11 @@ void mdtSqlCopierTest::tableMappingEditHelperTest()
   itemsIndexList = TableMappingEditHelper::getItemsToRemoveIndexList(item, 1, allItems);
   QCOMPARE(itemsIndexList.size(), 1);
   QCOMPARE(itemsIndexList.at(0), 0);
-  // Indexes of items to add: -
-  itemsIndexList = TableMappingEditHelper::getItemsToAddIndexList(item, 1, allItems);
-  QCOMPARE(itemsIndexList.size(), 0);
+  // Items to add: -
+  itemsList = TableMappingEditHelper::getItemsToAddList(item, 1, allItems);
+  QCOMPARE(itemsList.size(), 0);
+//   itemsIndexList = TableMappingEditHelper::getItemsToAddIndexList(item, 1, allItems);
+//   QCOMPARE(itemsIndexList.size(), 0);
   /*
    * Now we have following table mapping:
    * -----------------------------
@@ -1222,11 +1288,37 @@ void mdtSqlCopierTest::tableMappingEditHelperTest()
   // Indexes of items to remove: none
   itemsIndexList = TableMappingEditHelper::getItemsToRemoveIndexList(item, 0, allItems);
   QCOMPARE(itemsIndexList.size(), 0);
+  // Items to add: -
+  /*
+   * Items to add:
+   * ----------------------
+   * | Src fld | Dest fld |
+   * ----------------------
+   * |         |    1     |
+   * ----------------------
+   */
+  itemsList = TableMappingEditHelper::getItemsToAddList(item, 0, allItems);
+  QCOMPARE(itemsList.size(), 1);
+  QCOMPARE(itemsList.at(0).destinationFieldIndexList().count(), 1);
+  QCOMPARE(itemsList.at(0).destinationFieldIndexList().at(0), 1);
   // Index of items to add: 1
-  itemsIndexList = TableMappingEditHelper::getItemsToAddIndexList(item, 0, allItems);
-  QCOMPARE(itemsIndexList.size(), 1);
-  QCOMPARE(itemsIndexList.at(0), 1);
-  qDebug() << "Count of X: " << itemsIndexList.size();
+//   itemsIndexList = TableMappingEditHelper::getItemsToAddIndexList(item, 0, allItems);
+//   QCOMPARE(itemsIndexList.size(), 1);
+//   QCOMPARE(itemsIndexList.at(0), 1);
+  /*
+   * Update table mapping, witch conducts to:
+   * -----------------------------
+   * | Item | Src fld | Dest fld |
+   * -----------------------------
+   * |   0  |    1    |    0     |
+   * -----------------------------
+   * |   1  |         |    1     |
+   * -----------------------------
+   * |   2  |    2    |    2     |
+   * -----------------------------
+   */
+  // Update table mapping
+  /// \todo implement
 
 }
 

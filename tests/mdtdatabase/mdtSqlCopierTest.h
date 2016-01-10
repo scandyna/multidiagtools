@@ -57,6 +57,10 @@ class mdtSqlCopierTest : public mdtTest
   void uniqueInsertExpressionTest();
   void tableMappingItemTest();
 
+  void tableMappingEditHelperContainsDFIdexesTest();
+  void tableMappingEditHelperContainsDFIdexesTest_data();
+  void tableMappingEditHelperItemIdexByDFIndexesTest();
+  void tableMappingEditHelperItemIdexByDFIndexesTest_data();
   void tableMappingEditHelperTest();
 
   void sqlDatabaseCopierTableMappingTest();
