@@ -51,9 +51,9 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
   mdtSqlCopierTableMappingModel(const mdtSqlCopierTableMappingModel & other) = delete;
   mdtSqlCopierTableMappingModel & operator=(const mdtSqlCopierTableMappingModel &) = delete;
 
-  /*! \brief Setup source type delegate
+  /*! \brief Setup mappin item type delegate
    */
-  void setupSourceTypeDelegate(mdtComboBoxItemDelegate * const delegate);
+  void setupItemTypeDelegate(mdtComboBoxItemDelegate * const delegate);
 
   /*! \brief Reset field mapping
    *
@@ -147,10 +147,6 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
    */
   QVariant mapItemTypeData(int row, int role) const;
 
-  /*! \brief Get source type data
-   */
-//   QVariant sourceTypeData(int row, int role) const;
-
   /*! \brief Get source field key type text
    */
   QVariant sourceFieldKeyTypeText(int row) const;
@@ -171,6 +167,14 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
    */
   QVariant destinationFieldKeyTypeText(int row) const;
 
+  /*! \brief Get destination field names text
+   */
+  QVariant destinationFieldNamesText(int row) const;
+
+  /*! \brief Get destination field types text
+   */
+  QVariant destinationFieldTypesText(int row) const;
+
   /*! \brief Get table mapping item state data
    */
   QVariant mapItemMappingStateData(int row, int role) const;
@@ -182,18 +186,6 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
   /*! \brief Get table mapping item state decoration
    */
   QVariant mapItemMappingStateDecoration(mdt::sql::copier::TableMappingItemState state) const;
-
-  /*! \brief Get field mapping state data
-   */
-//   QVariant fieldMappingStateData(int row, int role) const;
-
-  /*! \brief Get field mapping state text
-   */
-//   QVariant fieldMappingStateText(mdtSqlCopierFieldMapping::MappingState state) const;
-
-  /*! \brief Get field mapping state decoration
-   */
-//   QVariant fieldMappingStateDecoration(mdtSqlCopierFieldMapping::MappingState state) const;
 
   /*! \brief Helper function to get field key type text
    */

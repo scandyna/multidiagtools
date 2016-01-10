@@ -1741,7 +1741,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
 
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
 {
-  using mdt::sql::copier::SourceField;
+  using mdt::sql::copier::TableMappingItem;
 
   QTableView tableView;
   QTreeView treeView;
@@ -1751,7 +1751,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   const int destinationFieldNameColumn = 6;
   QModelIndex index;
 //   mdtSqlCopierFieldMapping::SourceType sourceType;
-  SourceField::Type sourceType;
+  TableMappingItem::Type itemTyppe;
   mdtSqlDatabaseCopierTableMapping tm;
   mdtComboBoxItemDelegate *sourceTypeDelegate = new mdtComboBoxItemDelegate(&tableView);
   mdtComboBoxItemDelegate *sourceFieldNameDelegate = new mdtComboBoxItemDelegate(&tableView);
@@ -1773,7 +1773,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
    * Check by generating by name
    */
   // Set tables and generate field mapping
-  model.setupSourceTypeDelegate(sourceTypeDelegate);
+  model.setupItemTypeDelegate(sourceTypeDelegate);
   QVERIFY(model.setSourceTable("Client_tbl", pvDatabase, sourceFieldNameDelegate));
   QVERIFY(model.setDestinationTable("Client2_tbl", pvDatabase));
   model.generateFieldMappingByName();
@@ -1812,11 +1812,11 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
    * Check updating mapping
    */
   tm = model.mapping();
-  QCOMPARE(tm.fieldCount(), 4);
+  QCOMPARE(tm.itemsCount(), 4);
   // Update: source FieldB -> destination FieldA
-  tm.setSourceField(2, "FieldB");
+  tm.setSourceFieldAtItem(2, "FieldB");
   // Update: source FieldA -> destination FieldB
-  tm.setSourceField(3, "FieldA");
+  tm.setSourceFieldAtItem(3, "FieldA");
   // Update model
   model.setMapping(tm);
   // Check row 2
@@ -1844,8 +1844,10 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   endEditing(tableView, index);
   // Check that source type was updated
 //   sourceType = static_cast<mdtSqlCopierFieldMapping::SourceType>(model.data(index, Qt::EditRole).toInt());
-  sourceType = static_cast<SourceField::Type>(model.data(index, Qt::EditRole).toInt());
-  QVERIFY(sourceType == SourceField::SourceFixedValueType);
+//   sourceType = static_cast<SourceField::Type>(model.data(index, Qt::EditRole).toInt());
+  itemTyppe = static_cast<TableMappingItem::Type>(model.data(index, Qt::EditRole).toInt());
+  QVERIFY(itemTyppe == TableMappingItem::FixedValueType);
+//   QVERIFY(sourceType == SourceField::SourceFixedValueType);
 //   QVERIFY(sourceType == mdtSqlCopierFieldMapping::FixedValue);
   // Check getting source field name - Must return a null value
   index = model.index(0, sourceFieldNameColumn);

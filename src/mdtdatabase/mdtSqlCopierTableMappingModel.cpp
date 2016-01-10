@@ -31,16 +31,16 @@ mdtSqlCopierTableMappingModel::mdtSqlCopierTableMappingModel(QObject* parent)
 {
 }
 
-void mdtSqlCopierTableMappingModel::setupSourceTypeDelegate(mdtComboBoxItemDelegate * const delegate)
+void mdtSqlCopierTableMappingModel::setupItemTypeDelegate(mdtComboBoxItemDelegate * const delegate)
 {
   Q_ASSERT(delegate != nullptr);
 
-  using mdt::sql::copier::SourceField;
+  using mdt::sql::copier::TableMappingItem;
 
   delegate->clear();
-  delegate->addItem(tr("Field"), SourceField::SourceFieldIndexType);
-  delegate->addItem(tr("Fixed value"), SourceField::SourceFixedValueType);
-  delegate->addItem(tr("Expression"), SourceField::SourceFieldExpressionType);
+  delegate->addItem(tr("Field"), TableMappingItem::FieldMappingType);
+  delegate->addItem(tr("Fixed value"), TableMappingItem::FixedValueType);
+  delegate->addItem(tr("Unique insert expression"), TableMappingItem::UniqueInsertExpressionType);
 }
 
 void mdtSqlCopierTableMappingModel::resetFieldMapping()
@@ -129,9 +129,9 @@ QVariant mdtSqlCopierTableMappingModel::data(const QModelIndex & index, int role
       case DestinationKeyTypeIndex:
         return destinationFieldKeyTypeText(row);
       case DestinationFieldNameIndex:
-        return mappingBase().destinationFieldName(row);
+        return destinationFieldNamesText(row);
       case DestinationFieldTypeIndex:
-        return mappingBase().destinationFieldTypeName(row);
+        return destinationFieldTypesText(row);
       case ItemMappinStateIndex:
         return mapItemMappingStateText(mappingBase().itemMappingState(row));
     }
@@ -158,18 +158,18 @@ bool mdtSqlCopierTableMappingModel::setData(const QModelIndex & index, const QVa
     return false;
   }
   const int row = index.row();
-  Q_ASSERT( (row >= 0) && (row < mappingBase().fieldCount()) );
+  Q_ASSERT( (row >= 0) && (row < mappingBase().itemsCount()) );
   const int column = index.column();
 
   /*if( (role == Qt::EditRole) && (column == SourceTypeIndex) ){
     mappingBase().setSourceType(row, static_cast<mdtSqlCopierFieldMapping::SourceType>(value.toInt()));
   }else */ if( (role == Qt::DisplayRole) && (column == SourceFieldNameIndex) ){
-    mappingBase().setSourceField(row, value.toString());
+    mappingBase().setSourceFieldAtItem(row, value.toString());
   }else if( (role == Qt::EditRole) && (column == SourceFixedValueIndex) ){
     if( (value.type() == QVariant::String) && (value.toString().trimmed().isEmpty()) ){
-      mappingBase().setSourceFixedValue(row, QVariant());
+      mappingBase().setSourceFixedValueAtItem(row, QVariant());
     }else{
-      mappingBase().setSourceFixedValue(row, value);
+      mappingBase().setSourceFixedValueAtItem(row, value);
     }
   }else{
     return false;
@@ -220,28 +220,6 @@ QVariant mdtSqlCopierTableMappingModel::mapItemTypeData(int row, int role) const
   return QVariant();
 }
 
-// QVariant mdtSqlCopierTableMappingModel::sourceTypeData(int row, int role) const
-// {
-//   using mdt::sql::copier::SourceField;
-// 
-//   auto type = mappingBase().sourceType(row);
-//   // For edit role, we return source type
-//   if(role == Qt::EditRole){
-//     return type;
-//   }
-//   Q_ASSERT(role == Qt::DisplayRole);
-//   // For display role, we return source type text
-//   switch(type){
-//     case SourceField::SourceFieldIndexType:
-//       return tr("Field");
-//     case SourceField::SourceFixedValueType:
-//       return tr("Fixed value");
-//     case SourceField::SourceFieldExpressionType:
-//       return tr("Expression");
-//   }
-//   return QVariant();
-// }
-
 QVariant mdtSqlCopierTableMappingModel::sourceFieldKeyTypeText(int row) const
 {
   using mdt::sql::copier::TableMappingItem;
@@ -251,22 +229,6 @@ QVariant mdtSqlCopierTableMappingModel::sourceFieldKeyTypeText(int row) const
   }
   return keyTypeName(mappingBase().sourceFieldKeyTypeAtItem(row));
 }
-
-// QVariant mdtSqlCopierTableMappingModel::sourceFieldKeyTypeText(int row) const
-// {
-//   using mdt::sql::copier::SourceField;
-// 
-//   if(mappingBase().sourceType(row) != SourceField::SourceFieldIndexType){
-//     return QVariant();
-//   }
-//   switch(mappingBase().sourceFieldKeyType(row)){
-//     case TableMapping::NotAKey:
-//       return QVariant();
-//     case TableMapping::PrimaryKey:
-//       return "PK";
-//   }
-//   return QVariant();
-// }
 
 QVariant mdtSqlCopierTableMappingModel::sourceFieldNameText(int row) const
 {
@@ -278,16 +240,6 @@ QVariant mdtSqlCopierTableMappingModel::sourceFieldNameText(int row) const
   return mappingBase().sourceFieldNameAtItem(row);
 }
 
-// QVariant mdtSqlCopierTableMappingModel::sourceFieldNameText(int row) const
-// {
-//   using mdt::sql::copier::SourceField;
-// 
-//   if(mappingBase().sourceType(row) != SourceField::SourceFieldIndexType){
-//     return QVariant();
-//   }
-//   return mappingBase().sourceFieldName(row);
-// }
-
 QVariant mdtSqlCopierTableMappingModel::sourceFieldTypeNameText(int row) const
 {
   using mdt::sql::copier::TableMappingItem;
@@ -298,16 +250,6 @@ QVariant mdtSqlCopierTableMappingModel::sourceFieldTypeNameText(int row) const
   return mappingBase().sourceFieldTypeNameAtItem(row);
 }
 
-// QVariant mdtSqlCopierTableMappingModel::sourceFieldTypeNameText(int row) const
-// {
-//   using mdt::sql::copier::SourceField;
-// 
-//   if(mappingBase().sourceType(row) != SourceField::SourceFieldIndexType){
-//     return QVariant();
-//   }
-//   return mappingBase().sourceFieldTypeName(row);
-// }
-
 QVariant mdtSqlCopierTableMappingModel::sourceFixedValue(int row) const
 {
   using mdt::sql::copier::TableMappingItem;
@@ -317,16 +259,6 @@ QVariant mdtSqlCopierTableMappingModel::sourceFixedValue(int row) const
   }
   return mappingBase().sourceFixedValueAtItem(row);
 }
-
-// QVariant mdtSqlCopierTableMappingModel::sourceFixedValue(int row) const
-// {
-//   using mdt::sql::copier::SourceField;
-// 
-//   if(mappingBase().sourceType(row) != SourceField::SourceFixedValueType){
-//     return QVariant();
-//   }
-//   return mappingBase().sourceFixedValue(row);
-// }
 
 QVariant mdtSqlCopierTableMappingModel::destinationFieldKeyTypeText(int row) const
 {
@@ -345,16 +277,39 @@ QVariant mdtSqlCopierTableMappingModel::destinationFieldKeyTypeText(int row) con
   return str;
 }
 
-// QVariant mdtSqlCopierTableMappingModel::destinationFieldKeyTypeText(int row) const
-// {
-//   switch(mappingBase().destinationFieldKeyType(row)){
-//     case TableMapping::NotAKey:
-//       return QVariant();
-//     case TableMapping::PrimaryKey:
-//       return "PK";
-//   }
-//   return QVariant();
-// }
+QVariant mdtSqlCopierTableMappingModel::destinationFieldNamesText(int row) const
+{
+  QString str;
+  auto fieldNameList = mappingBase().destinationFieldNameListAtItem(row);
+  const int lastIndex = fieldNameList.size() - 1;
+
+  if(lastIndex < 0){
+    return str;
+  }
+  for(int i = 0; i < lastIndex; ++i){
+    str += fieldNameList.at(i) + ",";
+  }
+  str += fieldNameList.at(lastIndex);
+
+  return str;
+}
+
+QVariant mdtSqlCopierTableMappingModel::destinationFieldTypesText(int row) const
+{
+  QString str;
+  auto typeNames = mappingBase().destinationFieldTypeNameListAtItem(row);
+  const int lastIndex = typeNames.size() - 1;
+
+  if(lastIndex < 0){
+    return str;
+  }
+  for(int i = 0; i < lastIndex; ++i){
+    str += typeNames.at(i) + ",";
+  }
+  str += typeNames.at(lastIndex);
+
+  return str;
+}
 
 QVariant mdtSqlCopierTableMappingModel::mapItemMappingStateData(int row, int role) const
 {
@@ -401,48 +356,6 @@ QVariant mdtSqlCopierTableMappingModel::mapItemMappingStateDecoration(mdt::sql::
   }
   return QVariant();
 }
-
-// QVariant mdtSqlCopierTableMappingModel::fieldMappingStateData(int row, int role) const
-// {
-//   switch(role){
-//     case Qt::DisplayRole:
-//     case Qt::EditRole:
-//       return fieldMappingStateText(mappingBase().fieldMappingState(row));
-//     case Qt::DecorationRole:
-//       return fieldMappingStateDecoration(mappingBase().fieldMappingState(row));
-//     default:
-//       return QVariant();
-//   }
-// }
-
-// QVariant mdtSqlCopierTableMappingModel::fieldMappingStateText(mdtSqlCopierFieldMapping::MappingState state) const
-// {
-//   switch(state){
-//     case mdtSqlCopierFieldMapping::MappingNotSet:
-//     case mdtSqlCopierFieldMapping::MappingPartial:
-//       return QString();
-//     case mdtSqlCopierFieldMapping::MappingComplete:
-//       return tr("Ok");
-//     case mdtSqlCopierFieldMapping::MappingError:
-//       return tr("Error");
-//   }
-//   return QVariant();
-// }
-
-// QVariant mdtSqlCopierTableMappingModel::fieldMappingStateDecoration(mdtSqlCopierFieldMapping::MappingState state) const
-// {
-//   switch(state){
-//     case mdtSqlCopierFieldMapping::MappingNotSet:
-//       return QVariant();
-//     case mdtSqlCopierFieldMapping::MappingPartial:
-//       return QColor(Qt::yellow);
-//     case mdtSqlCopierFieldMapping::MappingComplete:
-//       return QColor(Qt::green);
-//     case mdtSqlCopierFieldMapping::MappingError:
-//       return QColor(Qt::red);
-//   }
-//   return QString();
-// }
 
 QString mdtSqlCopierTableMappingModel::keyTypeName(TableMapping::FieldKeyType type) const
 {
