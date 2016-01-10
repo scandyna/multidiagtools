@@ -1611,74 +1611,12 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   QVERIFY(mapping.itemMappingState(0) == TableMappingItemState::MappingComplete);
   QVERIFY(mapping.itemMappingState(1) == TableMappingItemState::MappingComplete);
   QVERIFY(mapping.mappingState() == TableMapping::MappingPartial);
-
-//   QVERIFY(mapping.sourceType(0) == mdtSqlCopierFieldMapping::Field);
-//   QVERIFY(mapping.sourceType(1) == mdtSqlCopierFieldMapping::Field);
-  /*
-   * Update source type for Name destination field
-   */
-//   mapping.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
-//   QVERIFY(mapping.sourceType(1) == mdtSqlCopierFieldMapping::FixedValue);
-  /*
-   * Map Client_tbl.Id_PK -> Client2_tbl.Id_PK
-   */
-//   mapping.setSourceField(0, "Id_PK");
-//   // Check attributes
-//   QVERIFY(mapping.mappingState() == TableMapping::MappingPartial);
-//   QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id_PK"));
-// //   QVERIFY(mapping.sourceFixedValue(1).isNull());
-//   QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
-//   QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
-//   // Check field mapping state
-//   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
-//   QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingNotSet);
-  /*
-   * Set a fixed value for Client2_tbl.Name
-   */
-//   mapping.setSourceFixedValue(1, "Fixed name");
-//   // Check mapping
-//   QVERIFY(mapping.mappingState() == TableMapping::MappingPartial);
-//   QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id_PK"));
-//   QCOMPARE(mapping.sourceFixedValue(1), QVariant("Fixed name"));
-//   QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
-//   QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
-//   // Check field mapping state
-//   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
-//   QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingComplete);
-//   // Check also that source type are set
-//   QVERIFY(mapping.sourceType(0) == SourceField::SourceFieldIndexType);
-//   QVERIFY(mapping.sourceType(1) == SourceField::SourceFixedValueType);
-  /*
-   * Check field mapping state after changing source type
-   */
-  // Reset
-//   mapping.resetFieldMapping();
-//   // Check state after reset
-//   QCOMPARE(mapping.fieldCount(), 4);
-//   QVERIFY(mapping.sourceFieldNameAtItem(0).isNull());
-//   QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
-//   // Check field mapping state
-//   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingNotSet);
-//   // Check that default source types are set
-// //   QVERIFY(mapping.sourceType(0) == mdtSqlCopierFieldMapping::Field);
-//   QVERIFY(mapping.sourceType(0) == SourceField::SourceFieldIndexType);
-//   // Set a valid field mapping
-//   mapping.setSourceField(0, "Id_PK");
-//   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
-//   // Change source type
-// //   mapping.setSourceType(0, mdtSqlCopierFieldMapping::FixedValue);
-// //   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingNotSet);
-//   // Set a valid value
-//   mapping.setSourceFixedValue(0, 5);
-//   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
-
   /*
    * Clear
    */
   mapping.clearFieldMapping();
   QCOMPARE(mapping.itemsCount(), 0);
   QVERIFY(mapping.mappingState() == TableMapping::MappingNotSet);
-
 }
 
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingStateTest()
@@ -1688,7 +1626,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingStateTest()
   /*
    * Initial state
    */
-  QCOMPARE(tm.fieldCount(), 0);
+  QCOMPARE(tm.itemsCount(), 0);
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
   /*
    * Set source and destination tables
@@ -1696,7 +1634,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingStateTest()
    */
   QVERIFY(tm.setSourceTable("Client_tbl", pvDatabase));
   QVERIFY(tm.setDestinationTable("Client2_tbl", pvDatabase));
-  QCOMPARE(tm.fieldCount(), 4);
+  QCOMPARE(tm.itemsCount(), 4);
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
   /*
    * Map by name and check: we know that Client_tbl and Client2_tbl have exactly the same schema
@@ -1708,23 +1646,21 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingStateTest()
    */
   // Clear previous mapping
   tm.resetFieldMapping();
-  QCOMPARE(tm.fieldCount(), 4);
+  QCOMPARE(tm.itemsCount(), 4);
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
-  tm.setSourceField(0, "Id_PK");
+  tm.setSourceFieldAtItem(0, "Id_PK");
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
-  tm.setSourceField(1, "Name");
+  tm.setSourceFieldAtItem(1, "Name");
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
-  tm.setSourceField(2, "FieldA");
+  tm.setSourceFieldAtItem(2, "FieldA");
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
-  tm.setSourceField(3, "FieldB");
+  tm.setSourceFieldAtItem(3, "FieldB");
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
   /*
    * Map incompatible field types
    */
-  tm.setSourceField(0, "Name");
+  tm.setSourceFieldAtItem(0, "Name");
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingError);
-
-
 }
 
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
@@ -1743,7 +1679,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
    * Add field mapping:
    * - Client_tbl.Id_PK -> Client2_tbl.Id_PK
    */
-  mapping.setSourceField(0, "Id_PK");
+  mapping.setSourceFieldAtItem(0, "Id_PK");
   // Check SQL for count in source table
   expectedSql = "SELECT COUNT(*) FROM \"Client_tbl\"";
   QCOMPARE(mapping.getSqlForSourceTableCount(db), expectedSql);

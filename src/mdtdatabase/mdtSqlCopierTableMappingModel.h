@@ -22,6 +22,7 @@
 #define MDT_SQL_COPIER_TABLE_MAPPING_MODEL_H
 
 #include "mdt/sql/copier/TableMapping.h"
+#include "mdt/sql/copier/TableMappingItemState.h"
 #include "mdtError.h"
 #include <QAbstractTableModel>
 #include <QModelIndex>
@@ -127,7 +128,7 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
    */
   enum ColumnIndex_t
   {
-    SourceTypeIndex = 0,        /*!< Column of source type (field or fixed value) */
+    ItemTypeIndex = 0,          /*!< Column of map item type */
     SourceKeyTypeIndex,         /*!< Column index of source field key type */
     SourceFieldNameIndex,       /*!< Column index of source field name */
     SourceFieldTypeIndex,       /*!< Column index of source field type */
@@ -135,16 +136,20 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
     DestinationKeyTypeIndex,    /*!< Column index of destination field key type */
     DestinationFieldNameIndex,  /*!< Column index of destination field name */
     DestinationFieldTypeIndex,  /*!< Column index of destination field type */
-    FieldMappinStateIndex       /*!< Column index of destination field type */
+    ItemMappinStateIndex        /*!< Column index of map item state */
   };
 
   mdtError pvLastError;
 
  private:
 
+  /*! \brief Get mapping item type
+   */
+  QVariant mapItemTypeData(int row, int role) const;
+
   /*! \brief Get source type data
    */
-  QVariant sourceTypeData(int row, int role) const;
+//   QVariant sourceTypeData(int row, int role) const;
 
   /*! \brief Get source field key type text
    */
@@ -166,17 +171,33 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
    */
   QVariant destinationFieldKeyTypeText(int row) const;
 
+  /*! \brief Get table mapping item state data
+   */
+  QVariant mapItemMappingStateData(int row, int role) const;
+
+  /*! \brief Get table mapping item state text
+   */
+  QVariant mapItemMappingStateText(mdt::sql::copier::TableMappingItemState state) const;
+
+  /*! \brief Get table mapping item state decoration
+   */
+  QVariant mapItemMappingStateDecoration(mdt::sql::copier::TableMappingItemState state) const;
+
   /*! \brief Get field mapping state data
    */
-  QVariant fieldMappingStateData(int row, int role) const;
+//   QVariant fieldMappingStateData(int row, int role) const;
 
   /*! \brief Get field mapping state text
    */
-  QVariant fieldMappingStateText(mdtSqlCopierFieldMapping::MappingState state) const;
+//   QVariant fieldMappingStateText(mdtSqlCopierFieldMapping::MappingState state) const;
 
   /*! \brief Get field mapping state decoration
    */
-  QVariant fieldMappingStateDecoration(mdtSqlCopierFieldMapping::MappingState state) const;
+//   QVariant fieldMappingStateDecoration(mdtSqlCopierFieldMapping::MappingState state) const;
+
+  /*! \brief Helper function to get field key type text
+   */
+  QString keyTypeName(mdt::sql::copier::TableMapping::FieldKeyType type) const;
 };
 
 #endif // #ifndef MDT_SQL_COPIER_TABLE_MAPPING_MODEL_H
