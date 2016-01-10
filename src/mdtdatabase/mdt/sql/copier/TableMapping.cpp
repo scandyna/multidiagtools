@@ -173,6 +173,22 @@ TableMapping::FieldKeyType TableMapping::sourceFieldKeyType(int index) const
   return fetchSourceTableFieldKeyType(sourceFieldIndex);
 }
 
+void TableMapping::setSourceFixedValueAtItem(int itemIndex, const QVariant & value)
+{
+  Q_ASSERT(itemIndex >= 0);
+  Q_ASSERT(itemIndex < pvItems.size());
+
+  auto & item = pvItems[itemIndex];
+  Q_ASSERT(item.destinationFieldIndexList().count() == 1);
+  const int destinationFieldIndex = item.destinationFieldIndexList().at(0);
+
+  item.setFixedValue(value, destinationFieldIndex);
+  // Update item mapping state
+  updateMappingItemState(item);
+  // Update table mapping state
+  updateTableMappingState();
+}
+
 void TableMapping::setSourceFixedValue(int index, const QVariant & value)
 {
   Q_ASSERT(index >= 0);
@@ -249,6 +265,26 @@ QVector<TableMapping::FieldKeyType> TableMapping::destinationFieldKeyTypeListAtI
   return fieldKeyTypeList;
 }
 
+void TableMapping::generateFieldMappingByName()
+{
+  resetFieldMapping();
+  for(auto & item : pvItems){
+    Q_ASSERT(item.destinationFieldIndexList().count() == 1);
+    // Get destination field index
+    const int destinationFieldIndex = item.destinationFieldIndexList().at(0);
+    Q_ASSERT(destinationFieldIndex >= 0);
+    Q_ASSERT(destinationFieldIndex < destinationTableFieldCount());
+    // Get current destination field name
+    const QString destinationFieldName = fetchDestinationTableFieldNameAt(destinationFieldIndex);
+    // Get source field index that matches destination field name
+    const int sourceFieldIndex = fetchSourceTableFieldIndexOf(destinationFieldName);
+    // Set item and update its state
+    item.setFieldMapping(sourceFieldIndex, destinationFieldIndex);
+    updateMappingItemState(item);
+  }
+  updateTableMappingState();
+}
+
 void TableMapping::resetFieldMapping()
 {
   int n = destinationTableFieldCount();
@@ -260,11 +296,6 @@ void TableMapping::resetFieldMapping()
     item.setFieldMapping(-1, i);
     pvItems.append(item);
   }
-//   for(int i = 0; i < n; ++i){
-//     mdtSqlCopierFieldMapping fm;
-//     fm.destinationFieldIndex = i;
-//     pvFieldMappingList.append(fm);
-//   }
 }
 
 void TableMapping::clearFieldMapping()

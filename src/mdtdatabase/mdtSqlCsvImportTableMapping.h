@@ -99,7 +99,7 @@ class mdtSqlCsvImportTableMapping : public mdt::sql::copier::TableMapping
    *  Then, for each field in destination table,
    *  source field is defined by destination field name.
    */
-  void generateFieldMappingByName();
+//   void generateFieldMappingByName();
 
  protected:
 

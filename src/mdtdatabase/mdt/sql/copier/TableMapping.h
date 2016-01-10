@@ -242,10 +242,34 @@ namespace mdt{ namespace sql{ namespace copier{
     */
     FieldKeyType sourceFieldKeyType(int index) const;
 
+    /*! \brief Set source fixed value for given mapping item index
+     *
+     * The mapping item at given index will become
+     *  a FixedValueType (if not allready is).
+     *
+     * \pre itemIndex must be in a valid range
+     * \pre Current mapping item at itemIndex must have exactly 1 destination field index
+     */
+    void setSourceFixedValueAtItem(int itemIndex, const QVariant & value);
+
+    /*! \brief Get source fixed value for given mapping item index
+     *
+     * \pre itemIndex must be in a valid range
+     * \pre item at itemIndex must be of type TableMappingItem::FixedValueType
+     */
+    QVariant sourceFixedValueAtItem(int itemIndex) const
+    {
+      Q_ASSERT(itemIndex >= 0);
+      Q_ASSERT(itemIndex < pvItems.size());
+      Q_ASSERT(pvItems.at(itemIndex).type() == TableMappingItem::FixedValueType);
+      return pvItems.at(itemIndex).fixedValue();
+    }
+
     /*! \brief Set source fixed value for given field mapping index
     *
     * \pre index must be in a valid range
     * \pre source type for given index must be mdtSqlCopierFieldMapping::FixedValue
+    * \deprecated use setSourceFixedValueAtItem()
     */
     void setSourceFixedValue(int index, const QVariant & value);
 
@@ -327,7 +351,7 @@ namespace mdt{ namespace sql{ namespace copier{
     *  Then, for each field in destination table,
     *  source field is defined by destination field name.
     */
-    virtual void generateFieldMappingByName() = 0;
+    void generateFieldMappingByName();
 
     /*! \brief Reset field mapping
     *

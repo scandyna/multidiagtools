@@ -1376,7 +1376,6 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   /*
    * Check attributes without any mapping set
    */
-//   QCOMPARE(mapping.fieldCount(), 4);
   QCOMPARE(mapping.itemsCount(), 4);
   QVERIFY(mapping.sourceFieldNameAtItem(0).isNull());
   QVERIFY(mapping.sourceFieldNameAtItem(1).isNull());
@@ -1390,10 +1389,6 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   QCOMPARE(mapping.destinationFieldNameListAtItem(2).at(0), QString("FieldA"));
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).size(), 1);
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).at(0), QString("FieldB"));
-//   QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
-//   QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
-//   QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
-//   QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
   // Check that default mapping type where choosen
   QVERIFY(mapping.itemType(0) == TableMappingItem::FieldMappingType);
   QVERIFY(mapping.itemType(1) == TableMappingItem::FieldMappingType);
@@ -1404,37 +1399,20 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   QVERIFY(mapping.itemMappingState(1) == TableMappingItemState::MappingNotSet);
   QVERIFY(mapping.itemMappingState(2) == TableMappingItemState::MappingNotSet);
   QVERIFY(mapping.itemMappingState(3) == TableMappingItemState::MappingNotSet);
-//   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingNotSet);
-//   QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingNotSet);
-//   QVERIFY(mapping.fieldMappingState(2) == mdtSqlCopierFieldMapping::MappingNotSet);
-//   QVERIFY(mapping.fieldMappingState(3) == mdtSqlCopierFieldMapping::MappingNotSet);
   // Check field key types
   QVERIFY(mapping.sourceFieldKeyTypeAtItem(0) == TableMapping::NotAKey);
   QCOMPARE(mapping.destinationFieldKeyTypeListAtItem(0).size(), 1);
   QVERIFY(mapping.destinationFieldKeyTypeListAtItem(0).at(0) == TableMapping::PrimaryKey);
-//   QVERIFY(mapping.destinationFieldKeyType(0) == TableMapping::PrimaryKey);
   QVERIFY(mapping.sourceFieldKeyTypeAtItem(1) == TableMapping::NotAKey);
   QCOMPARE(mapping.destinationFieldKeyTypeListAtItem(1).size(), 1);
   QVERIFY(mapping.destinationFieldKeyTypeListAtItem(1).at(0) == TableMapping::NotAKey);
-//   QVERIFY(mapping.destinationFieldKeyType(1) == TableMapping::NotAKey);
-  // Check that default source types are set
-//   QVERIFY(mapping.sourceType(0) == SourceField::SourceFieldIndexType);
-//   QVERIFY(mapping.sourceType(1) == SourceField::SourceFieldIndexType);
-//   QVERIFY(mapping.sourceType(2) == SourceField::SourceFieldIndexType);
-//   QVERIFY(mapping.sourceType(3) == SourceField::SourceFieldIndexType);
-//   QVERIFY(mapping.sourceType(0) == mdtSqlCopierFieldMapping::Field);
-//   QVERIFY(mapping.sourceType(1) == mdtSqlCopierFieldMapping::Field);
-//   QVERIFY(mapping.sourceType(2) == mdtSqlCopierFieldMapping::Field);
-//   QVERIFY(mapping.sourceType(3) == mdtSqlCopierFieldMapping::Field);
   /*
    * Set a field mapping:
    *  - Client_tbl.Id_PK -> Client2_tbl.Id_PK
    */
   mapping.setSourceFieldAtItem(0, "Id_PK");
-//   mapping.setSourceField(0, "Id_PK");
   // Check attributes
   QVERIFY(mapping.mappingState() == TableMapping::MappingPartial);
-//   QCOMPARE(mapping.fieldCount(), 4);
   QCOMPARE(mapping.itemsCount(), 4);
   QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id_PK"));
   QVERIFY(mapping.sourceFieldNameAtItem(1).isNull());
@@ -1448,137 +1426,138 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   QCOMPARE(mapping.destinationFieldNameListAtItem(2).at(0), QString("FieldA"));
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).size(), 1);
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).at(0), QString("FieldB"));
-//   QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id_PK"));
-//   QVERIFY(mapping.sourceFieldNameAtItem(1).isNull());
-//   QVERIFY(mapping.sourceFieldNameAtItem(2).isNull());
-//   QVERIFY(mapping.sourceFieldNameAtItem(3).isNull());
-//   QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
-//   QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
-//   QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
-//   QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
   // Check items mapping state
   QVERIFY(mapping.itemMappingState(0) == TableMappingItemState::MappingComplete);
   QVERIFY(mapping.itemMappingState(1) == TableMappingItemState::MappingNotSet);
   QVERIFY(mapping.itemMappingState(2) == TableMappingItemState::MappingNotSet);
   QVERIFY(mapping.itemMappingState(3) == TableMappingItemState::MappingNotSet);
-//   // Check field mapping state
-//   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
-//   QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingNotSet);
-//   QVERIFY(mapping.fieldMappingState(2) == mdtSqlCopierFieldMapping::MappingNotSet);
-//   QVERIFY(mapping.fieldMappingState(3) == mdtSqlCopierFieldMapping::MappingNotSet);
   // Check field key types
   QVERIFY(mapping.sourceFieldKeyTypeAtItem(0) == TableMapping::PrimaryKey);
   QCOMPARE(mapping.destinationFieldKeyTypeListAtItem(0).size(), 1);
   QVERIFY(mapping.destinationFieldKeyTypeListAtItem(0).at(0) == TableMapping::PrimaryKey);
-//   QVERIFY(mapping.destinationFieldKeyType(0) == TableMapping::PrimaryKey);
   QVERIFY(mapping.sourceFieldKeyTypeAtItem(1) == TableMapping::NotAKey);
   QCOMPARE(mapping.destinationFieldKeyTypeListAtItem(1).size(), 1);
   QVERIFY(mapping.destinationFieldKeyTypeListAtItem(1).at(0) == TableMapping::NotAKey);
-//   // Check field key types
-//   QVERIFY(mapping.sourceFieldKeyType(0) == TableMapping::PrimaryKey);
-//   QVERIFY(mapping.destinationFieldKeyType(0) == TableMapping::PrimaryKey);
-//   QVERIFY(mapping.sourceFieldKeyType(1) == TableMapping::NotAKey);
-//   QVERIFY(mapping.destinationFieldKeyType(1) == TableMapping::NotAKey);
   /*
    * Set a field mapping:
    *  - Client_tbl.Name -> Client2_tbl.Name
    */
-  mapping.setSourceField(1, "Name");
+  mapping.setSourceFieldAtItem(1, "Name");
   // Check attributes
   QVERIFY(mapping.mappingState() == TableMapping::MappingPartial);
-  QCOMPARE(mapping.fieldCount(), 4);
+  QCOMPARE(mapping.itemsCount(), 4);
   QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id_PK"));
   QCOMPARE(mapping.sourceFieldNameAtItem(1), QString("Name"));
   QVERIFY(mapping.sourceFieldNameAtItem(2).isNull());
   QVERIFY(mapping.sourceFieldNameAtItem(3).isNull());
-  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
-  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
-  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
-  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
-  // Check field mapping state
-  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
-  QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingComplete);
-  QVERIFY(mapping.fieldMappingState(2) == mdtSqlCopierFieldMapping::MappingNotSet);
-  QVERIFY(mapping.fieldMappingState(3) == mdtSqlCopierFieldMapping::MappingNotSet);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).at(0), QString("Name"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(2).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(2).at(0), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(3).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(3).at(0), QString("FieldB"));
+  // Check items mapping state
+  QVERIFY(mapping.itemMappingState(0) == TableMappingItemState::MappingComplete);
+  QVERIFY(mapping.itemMappingState(1) == TableMappingItemState::MappingComplete);
+  QVERIFY(mapping.itemMappingState(2) == TableMappingItemState::MappingNotSet);
+  QVERIFY(mapping.itemMappingState(3) == TableMappingItemState::MappingNotSet);
   /*
    * Set a field mapping:
    *  - Client_tbl.FieldB -> Client2_tbl.FieldA
    */
-  mapping.setSourceField(2, "FieldB");
+  mapping.setSourceFieldAtItem(2, "FieldB");
   // Check attributes
   QVERIFY(mapping.mappingState() == TableMapping::MappingPartial);
-  QCOMPARE(mapping.fieldCount(), 4);
+  QCOMPARE(mapping.itemsCount(), 4);
   QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id_PK"));
   QCOMPARE(mapping.sourceFieldNameAtItem(1), QString("Name"));
   QCOMPARE(mapping.sourceFieldNameAtItem(2), QString("FieldB"));
   QVERIFY(mapping.sourceFieldNameAtItem(3).isNull());
-  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
-  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
-  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
-  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
-  // Check field mapping state
-  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
-  QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingComplete);
-  QVERIFY(mapping.fieldMappingState(2) == mdtSqlCopierFieldMapping::MappingComplete);
-  QVERIFY(mapping.fieldMappingState(3) == mdtSqlCopierFieldMapping::MappingNotSet);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).at(0), QString("Name"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(2).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(2).at(0), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(3).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(3).at(0), QString("FieldB"));
+  // Check items mapping state
+  QVERIFY(mapping.itemMappingState(0) == TableMappingItemState::MappingComplete);
+  QVERIFY(mapping.itemMappingState(1) == TableMappingItemState::MappingComplete);
+  QVERIFY(mapping.itemMappingState(2) == TableMappingItemState::MappingComplete);
+  QVERIFY(mapping.itemMappingState(3) == TableMappingItemState::MappingNotSet);
   /*
    * Set a field mapping:
    *  - Client_tbl.FieldA -> Client2_tbl.FieldB
    */
-  mapping.setSourceField(3, "FieldA");
+  mapping.setSourceFieldAtItem(3, "FieldA");
   // Check attributes
   QVERIFY(mapping.mappingState() == TableMapping::MappingComplete);
-  QCOMPARE(mapping.fieldCount(), 4);
+  QCOMPARE(mapping.itemsCount(), 4);
   QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id_PK"));
   QCOMPARE(mapping.sourceFieldNameAtItem(1), QString("Name"));
   QCOMPARE(mapping.sourceFieldNameAtItem(2), QString("FieldB"));
   QCOMPARE(mapping.sourceFieldNameAtItem(3), QString("FieldA"));
-  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
-  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
-  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
-  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
-  // Check field mapping state
-  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
-  QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingComplete);
-  QVERIFY(mapping.fieldMappingState(2) == mdtSqlCopierFieldMapping::MappingComplete);
-  QVERIFY(mapping.fieldMappingState(3) == mdtSqlCopierFieldMapping::MappingComplete);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).at(0), QString("Name"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(2).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(2).at(0), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(3).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(3).at(0), QString("FieldB"));
+  // Check items mapping state
+  QVERIFY(mapping.itemMappingState(0) == TableMappingItemState::MappingComplete);
+  QVERIFY(mapping.itemMappingState(1) == TableMappingItemState::MappingComplete);
+  QVERIFY(mapping.itemMappingState(2) == TableMappingItemState::MappingComplete);
+  QVERIFY(mapping.itemMappingState(3) == TableMappingItemState::MappingComplete);
   /*
    * Reset
    */
   mapping.resetFieldMapping();
-  QCOMPARE(mapping.fieldCount(), 4);
+  QCOMPARE(mapping.itemsCount(), 4);
   QVERIFY(mapping.sourceFieldNameAtItem(0).isNull());
   QVERIFY(mapping.sourceFieldNameAtItem(1).isNull());
   QVERIFY(mapping.sourceFieldNameAtItem(2).isNull());
   QVERIFY(mapping.sourceFieldNameAtItem(3).isNull());
-  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
-  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
-  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
-  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
-  // Check field mapping state
-  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingNotSet);
-  QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingNotSet);
-  QVERIFY(mapping.fieldMappingState(2) == mdtSqlCopierFieldMapping::MappingNotSet);
-  QVERIFY(mapping.fieldMappingState(3) == mdtSqlCopierFieldMapping::MappingNotSet);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).at(0), QString("Name"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(2).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(2).at(0), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(3).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(3).at(0), QString("FieldB"));
+  // Check items mapping state
+  QVERIFY(mapping.itemMappingState(0) == TableMappingItemState::MappingNotSet);
+  QVERIFY(mapping.itemMappingState(1) == TableMappingItemState::MappingNotSet);
+  QVERIFY(mapping.itemMappingState(2) == TableMappingItemState::MappingNotSet);
+  QVERIFY(mapping.itemMappingState(3) == TableMappingItemState::MappingNotSet);
   /*
    * Check field mapping generation by field name
    */
   mapping.generateFieldMappingByName();
-  QVERIFY(mapping.mappingState() == TableMapping::MappingComplete);
-  QCOMPARE(mapping.fieldCount(), 4);
+  QCOMPARE(mapping.itemsCount(), 4);
   QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id_PK"));
   QCOMPARE(mapping.sourceFieldNameAtItem(1), QString("Name"));
   QCOMPARE(mapping.sourceFieldNameAtItem(2), QString("FieldA"));
   QCOMPARE(mapping.sourceFieldNameAtItem(3), QString("FieldB"));
-  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
-  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
-  QCOMPARE(mapping.destinationFieldName(2), QString("FieldA"));
-  QCOMPARE(mapping.destinationFieldName(3), QString("FieldB"));
-  // Check field mapping state
-  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
-  QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingComplete);
-  QVERIFY(mapping.fieldMappingState(2) == mdtSqlCopierFieldMapping::MappingComplete);
-  QVERIFY(mapping.fieldMappingState(3) == mdtSqlCopierFieldMapping::MappingComplete);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).at(0), QString("Name"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(2).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(2).at(0), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(3).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(3).at(0), QString("FieldB"));
+  // Check mapping state
+  QVERIFY(mapping.itemMappingState(0) == TableMappingItemState::MappingComplete);
+  QVERIFY(mapping.itemMappingState(1) == TableMappingItemState::MappingComplete);
+  QVERIFY(mapping.itemMappingState(2) == TableMappingItemState::MappingComplete);
+  QVERIFY(mapping.itemMappingState(3) == TableMappingItemState::MappingComplete);
+  QVERIFY(mapping.mappingState() == TableMapping::MappingComplete);
   /*
    * Check field mapping with fixed value:
    *  - Map source field Id_PK -> destination field Id_PK
@@ -1587,17 +1566,52 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   // Reset
   mapping.resetFieldMapping();
   // Check state after reset
-  QCOMPARE(mapping.fieldCount(), 4);
+  QCOMPARE(mapping.itemsCount(), 4);
   QVERIFY(mapping.sourceFieldNameAtItem(0).isNull());
   QVERIFY(mapping.sourceFieldNameAtItem(1).isNull());
-  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
-  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
-  // Check field mapping state
-  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingNotSet);
-  QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingNotSet);
-  // Check that default source types are set
-  QVERIFY(mapping.sourceType(0) == SourceField::SourceFieldIndexType);
-  QVERIFY(mapping.sourceType(1) == SourceField::SourceFieldIndexType);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).at(0), QString("Name"));
+  // Check items mapping state
+  QVERIFY(mapping.itemMappingState(0) == TableMappingItemState::MappingNotSet);
+  QVERIFY(mapping.itemMappingState(1) == TableMappingItemState::MappingNotSet);
+  // Check that default mapping type where choosen
+  QVERIFY(mapping.itemType(0) == TableMappingItem::FieldMappingType);
+  QVERIFY(mapping.itemType(1) == TableMappingItem::FieldMappingType);
+  /*
+   * Map Client_tbl.Id_PK -> Client2_tbl.Id_PK
+   */
+  mapping.setSourceFieldAtItem(0, "Id_PK");
+  // Check attributes
+  QCOMPARE(mapping.itemsCount(), 4);
+  QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id_PK"));
+  QVERIFY(mapping.sourceFieldNameAtItem(1).isNull());
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).at(0), QString("Name"));
+  // Check mapping state
+  QVERIFY(mapping.itemMappingState(0) == TableMappingItemState::MappingComplete);
+  QVERIFY(mapping.itemMappingState(1) == TableMappingItemState::MappingNotSet);
+  QVERIFY(mapping.mappingState() == TableMapping::MappingPartial);
+  /*
+   * Set a fixed value for Client2_tbl.Name
+   */
+  mapping.setSourceFixedValueAtItem(1, "Fixed name");
+  // Check attributes
+  QCOMPARE(mapping.itemsCount(), 4);
+  QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id_PK"));
+  QCOMPARE(mapping.sourceFixedValueAtItem(1), QVariant("Fixed name"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).at(0), QString("Name"));
+  // Check mapping state
+  QVERIFY(mapping.itemMappingState(0) == TableMappingItemState::MappingComplete);
+  QVERIFY(mapping.itemMappingState(1) == TableMappingItemState::MappingComplete);
+  QVERIFY(mapping.mappingState() == TableMapping::MappingPartial);
+
 //   QVERIFY(mapping.sourceType(0) == mdtSqlCopierFieldMapping::Field);
 //   QVERIFY(mapping.sourceType(1) == mdtSqlCopierFieldMapping::Field);
   /*
@@ -1608,61 +1622,61 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   /*
    * Map Client_tbl.Id_PK -> Client2_tbl.Id_PK
    */
-  mapping.setSourceField(0, "Id_PK");
-  // Check attributes
-  QVERIFY(mapping.mappingState() == TableMapping::MappingPartial);
-  QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id_PK"));
-//   QVERIFY(mapping.sourceFixedValue(1).isNull());
-  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
-  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
-  // Check field mapping state
-  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
-  QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingNotSet);
+//   mapping.setSourceField(0, "Id_PK");
+//   // Check attributes
+//   QVERIFY(mapping.mappingState() == TableMapping::MappingPartial);
+//   QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id_PK"));
+// //   QVERIFY(mapping.sourceFixedValue(1).isNull());
+//   QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+//   QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+//   // Check field mapping state
+//   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
+//   QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingNotSet);
   /*
    * Set a fixed value for Client2_tbl.Name
    */
-  mapping.setSourceFixedValue(1, "Fixed name");
-  // Check mapping
-  QVERIFY(mapping.mappingState() == TableMapping::MappingPartial);
-  QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id_PK"));
-  QCOMPARE(mapping.sourceFixedValue(1), QVariant("Fixed name"));
-  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
-  QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
-  // Check field mapping state
-  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
-  QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingComplete);
-  // Check also that source type are set
-  QVERIFY(mapping.sourceType(0) == SourceField::SourceFieldIndexType);
-  QVERIFY(mapping.sourceType(1) == SourceField::SourceFixedValueType);
+//   mapping.setSourceFixedValue(1, "Fixed name");
+//   // Check mapping
+//   QVERIFY(mapping.mappingState() == TableMapping::MappingPartial);
+//   QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id_PK"));
+//   QCOMPARE(mapping.sourceFixedValue(1), QVariant("Fixed name"));
+//   QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+//   QCOMPARE(mapping.destinationFieldName(1), QString("Name"));
+//   // Check field mapping state
+//   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
+//   QVERIFY(mapping.fieldMappingState(1) == mdtSqlCopierFieldMapping::MappingComplete);
+//   // Check also that source type are set
+//   QVERIFY(mapping.sourceType(0) == SourceField::SourceFieldIndexType);
+//   QVERIFY(mapping.sourceType(1) == SourceField::SourceFixedValueType);
   /*
    * Check field mapping state after changing source type
    */
   // Reset
-  mapping.resetFieldMapping();
-  // Check state after reset
-  QCOMPARE(mapping.fieldCount(), 4);
-  QVERIFY(mapping.sourceFieldNameAtItem(0).isNull());
-  QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
-  // Check field mapping state
-  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingNotSet);
-  // Check that default source types are set
-//   QVERIFY(mapping.sourceType(0) == mdtSqlCopierFieldMapping::Field);
-  QVERIFY(mapping.sourceType(0) == SourceField::SourceFieldIndexType);
-  // Set a valid field mapping
-  mapping.setSourceField(0, "Id_PK");
-  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
-  // Change source type
-//   mapping.setSourceType(0, mdtSqlCopierFieldMapping::FixedValue);
+//   mapping.resetFieldMapping();
+//   // Check state after reset
+//   QCOMPARE(mapping.fieldCount(), 4);
+//   QVERIFY(mapping.sourceFieldNameAtItem(0).isNull());
+//   QCOMPARE(mapping.destinationFieldName(0), QString("Id_PK"));
+//   // Check field mapping state
 //   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingNotSet);
-  // Set a valid value
-  mapping.setSourceFixedValue(0, 5);
-  QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
+//   // Check that default source types are set
+// //   QVERIFY(mapping.sourceType(0) == mdtSqlCopierFieldMapping::Field);
+//   QVERIFY(mapping.sourceType(0) == SourceField::SourceFieldIndexType);
+//   // Set a valid field mapping
+//   mapping.setSourceField(0, "Id_PK");
+//   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
+//   // Change source type
+// //   mapping.setSourceType(0, mdtSqlCopierFieldMapping::FixedValue);
+// //   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingNotSet);
+//   // Set a valid value
+//   mapping.setSourceFixedValue(0, 5);
+//   QVERIFY(mapping.fieldMappingState(0) == mdtSqlCopierFieldMapping::MappingComplete);
 
   /*
    * Clear
    */
   mapping.clearFieldMapping();
-  QCOMPARE(mapping.fieldCount(), 0);
+  QCOMPARE(mapping.itemsCount(), 0);
   QVERIFY(mapping.mappingState() == TableMapping::MappingNotSet);
 
 }

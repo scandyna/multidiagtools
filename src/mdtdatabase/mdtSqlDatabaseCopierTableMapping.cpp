@@ -55,21 +55,21 @@ bool mdtSqlDatabaseCopierTableMapping::setDestinationTable(const QString & table
   return true;
 }
 
-void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
-{
-  resetFieldMapping();
-  for(auto & fm : fieldMappingList()){
-    // Get source field
-    Q_ASSERT(fm.destinationFieldIndex >= 0);
-    Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
-    mdtSqlField destinationField = pvDestinationTable.field(fm.destinationFieldIndex);
-    // Get source field index that matches destination field name
-    fm.sourceField.setFieldIndex(pvSourceTable.fieldIndex(destinationField.name()));
-    updateFieldMappingState(fm);
-  }
-  // Update table mapping state
-  updateTableMappingState();
-}
+// void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
+// {
+//   resetFieldMapping();
+//   for(auto & fm : fieldMappingList()){
+//     // Get source field
+//     Q_ASSERT(fm.destinationFieldIndex >= 0);
+//     Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
+//     mdtSqlField destinationField = pvDestinationTable.field(fm.destinationFieldIndex);
+//     // Get source field index that matches destination field name
+//     fm.sourceField.setFieldIndex(pvSourceTable.fieldIndex(destinationField.name()));
+//     updateFieldMappingState(fm);
+//   }
+//   // Update table mapping state
+//   updateTableMappingState();
+// }
 
 QString mdtSqlDatabaseCopierTableMapping::destinationFieldName(int index) const
 {

@@ -64,27 +64,27 @@ QString mdtSqlCsvImportTableMapping::destinationFieldTypeName(int index) const
   return pvDestinationTable.fieldTypeName(destinationFieldIndex, mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName()));
 }
 
-void mdtSqlCsvImportTableMapping::generateFieldMappingByName()
-{
-  auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
-
-  resetFieldMapping();
-  if(destinationDriverType == mdtSqlDriverType::Unknown){
-    return;
-  }
-  for(auto & fm : fieldMappingList()){
-    // Get source field
-    Q_ASSERT(fm.destinationFieldIndex >= 0);
-    Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
-    mdtSqlField destinationField = pvDestinationTable.field(fm.destinationFieldIndex);
-    // Get source field index that matches destination field name
-    fm.sourceField.setFieldIndex(sourceTable().fieldIndex(destinationField.name()));
-    updateCsvSourceFormat(fm);
-    updateFieldMappingState(fm);
-  }
-  // Update table mapping state
-  updateTableMappingState();
-}
+// void mdtSqlCsvImportTableMapping::generateFieldMappingByName()
+// {
+//   auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
+// 
+//   resetFieldMapping();
+//   if(destinationDriverType == mdtSqlDriverType::Unknown){
+//     return;
+//   }
+//   for(auto & fm : fieldMappingList()){
+//     // Get source field
+//     Q_ASSERT(fm.destinationFieldIndex >= 0);
+//     Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
+//     mdtSqlField destinationField = pvDestinationTable.field(fm.destinationFieldIndex);
+//     // Get source field index that matches destination field name
+//     fm.sourceField.setFieldIndex(sourceTable().fieldIndex(destinationField.name()));
+//     updateCsvSourceFormat(fm);
+//     updateFieldMappingState(fm);
+//   }
+//   // Update table mapping state
+//   updateTableMappingState();
+// }
 
 void mdtSqlCsvImportTableMapping::setSourceFieldIndex(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName)
 {
