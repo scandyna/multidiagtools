@@ -74,6 +74,30 @@ namespace mdt{ namespace sql{ namespace copier{
                                 ) != itemDFIndexes.cend() );
     }
 
+    /*! \brief Get a list of destination field indexes to remove when inserting a item
+     *
+     * \param newItem The item that was freshly edited
+     * \param newItemIndex Index of newItem in allItemsList
+     * \param allItemsList The actual items list (before inserting newItem)
+     * \pre newItemIndex must be in valid range: 0 <= newItemIndex < allItemsList size
+     */
+    static FieldIndexList getDestinationFieldIndexToRemoveList(const TableMappingItem & newItem, int newItemIndex, const QVector<TableMappingItem> & allItemsList)
+    {
+      Q_ASSERT(newItemIndex >= 0);
+      Q_ASSERT(newItemIndex < allItemsList.size());
+
+      FieldIndexList DFIndexToRemoveList;
+      const auto newItemDFIndexes = newItem.destinationFieldIndexList();
+      const auto currentItemDFIndexes = allItemsList.at(newItemIndex).destinationFieldIndexList();
+
+      // Get list of newItem's destination field indexes, excluding those of currentItem's ones
+      std::set_difference( newItemDFIndexes.cbegin(), newItemDFIndexes.cend(),
+                           currentItemDFIndexes.cbegin(), currentItemDFIndexes.cend(),
+                           std::back_inserter(DFIndexToRemoveList) );
+
+      return DFIndexToRemoveList;
+    }
+
     /*! \brief Get a list of items to remove when editing a item
      *
      * \param newItem The item that was freshly edited
@@ -87,44 +111,23 @@ namespace mdt{ namespace sql{ namespace copier{
       Q_ASSERT(newItemIndex < allItemsList.size());
 
       QVector<int> itemsToRemove;
-      const auto newItemDFIndexes = newItem.destinationFieldIndexList();
-      const auto currentItemDFIndexes = allItemsList.at(newItemIndex).destinationFieldIndexList();
-      FieldIndexList destinationFieldIndexList;
+      const auto DFIndexToRemoveList = getDestinationFieldIndexToRemoveList(newItem, newItemIndex, allItemsList);
+//       const auto newItemDFIndexes = newItem.destinationFieldIndexList();
+//       const auto currentItemDFIndexes = allItemsList.at(newItemIndex).destinationFieldIndexList();
+//       FieldIndexList destinationFieldIndexList;
 
-      // Get list of newItem's destination field indexes, excluding those of currentItem's ones
-      std::set_difference( newItemDFIndexes.cbegin(), newItemDFIndexes.cend(),
-                           currentItemDFIndexes.cbegin(), currentItemDFIndexes.cend(),
-                           std::back_inserter(destinationFieldIndexList) );
+//       // Get list of newItem's destination field indexes, excluding those of currentItem's ones
+//       std::set_difference( newItemDFIndexes.cbegin(), newItemDFIndexes.cend(),
+//                            currentItemDFIndexes.cbegin(), currentItemDFIndexes.cend(),
+//                            std::back_inserter(destinationFieldIndexList) );
       // Get list of items indexes that have destination field index of this list
       for(int idx = 0; idx < allItemsList.size(); ++idx){
-        if(itemContainsDestinationFieldIndex(allItemsList.at(idx), destinationFieldIndexList)){
+        if(itemContainsDestinationFieldIndex(allItemsList.at(idx), DFIndexToRemoveList)){
           itemsToRemove.append(idx);
         }
       }
 
       return itemsToRemove;
-    }
-
-    /*! \brief Get index where to insert a item regarding its destination field indexes
-     *
-     * \param destinationFieldIndexList Destination field indexes of item that was freshly edited
-     * \param allItemsList The actual items list (before inserting newItem)
-     */
-    static int getIndexOfItemToInsertByDFIndexes(const FieldIndexList & destinationFieldIndexList, const QVector<TableMappingItem> & allItemsList)
-    {
-      for(int i = 0; i < allItemsList.size(); ++i){
-        if( destinationFieldIndexList < allItemsList.at(i).destinationFieldIndexList() ){
-          return i;
-        }
-      }
-      return allItemsList.size();
-    }
-
-    static int getIndexOfItemToInsertByDFIndexes(int destinationFieldIndex, const QVector<TableMappingItem> & allItemsList)
-    {
-      FieldIndexList destinationFieldIndexList;
-      destinationFieldIndexList.append(destinationFieldIndex);
-      return getIndexOfItemToInsertByDFIndexes(destinationFieldIndexList, allItemsList);
     }
 
     /*! \brief Get a list of items to add when editing a item
@@ -160,40 +163,77 @@ namespace mdt{ namespace sql{ namespace copier{
       return itemsToAdd;
     }
 
-    /*! \brief Get a list of items to add when editing a item
+    /*! \brief Get index where to insert a item regarding its destination field indexes
+     *
+     * \param destinationFieldIndexList Destination field indexes of item that was freshly edited
+     * \param allItemsList The actual items list (before inserting newItem)
+     */
+    static int getIndexOfItemToInsertByDFIndexes(const FieldIndexList & destinationFieldIndexList, const QVector<TableMappingItem> & allItemsList)
+    {
+      for(int i = 0; i < allItemsList.size(); ++i){
+        if( destinationFieldIndexList < allItemsList.at(i).destinationFieldIndexList() ){
+          return i;
+        }
+      }
+      return allItemsList.size();
+    }
+
+    static int getIndexOfItemToInsertByDFIndexes(int destinationFieldIndex, const QVector<TableMappingItem> & allItemsList)
+    {
+      FieldIndexList destinationFieldIndexList;
+      destinationFieldIndexList.append(destinationFieldIndex);
+      return getIndexOfItemToInsertByDFIndexes(destinationFieldIndexList, allItemsList);
+    }
+
+    /*! \brief Update table mapping list by inserting given item
      *
      * \param newItem The item that was freshly edited
-     * \param newItemIndex Index of newItem in allItemsList
+     * \param newItemIndex Current index of newItem in allItemsList
      * \param allItemsList The actual items list (before inserting newItem)
      * \pre newItemIndex must be in valid range: 0 <= newItemIndex < allItemsList size
      */
-//     static QVector<int> getItemsToAddIndexList(const TableMappingItem & newItem, int newItemIndex, const QVector<TableMappingItem> & allItemsList)
-//     {
-//       Q_ASSERT(newItemIndex >= 0);
-//       Q_ASSERT(newItemIndex < allItemsList.size());
-// 
-//       QVector<int> itemsToAdd;
-//       const auto newItemDFIndexes = newItem.destinationFieldIndexList();
-//       const auto currentItemDFIndexes = allItemsList.at(newItemIndex).destinationFieldIndexList();
-//       FieldIndexList destinationFieldIndexList;
-// 
-//       // Get list of currentItem's destination field indexes, excluding those of newItem's ones
-//       std::set_difference( currentItemDFIndexes.cbegin(), currentItemDFIndexes.cend(),
-//                            newItemDFIndexes.cbegin(), newItemDFIndexes.cend(),
-//                            std::back_inserter(destinationFieldIndexList) );
-//       /*
-//        * For each DF index in destinationFieldIndexList, a new item must be added.
-//        * Find index where to insert for each item.
-//        */
-//       for(const auto dfIndex : destinationFieldIndexList){
-//         itemsToAdd.append( getIndexOfItemToInsertByDFIndexes(dfIndex, allItemsList) );
-//       }
-// 
-//       return itemsToAdd;
-//     }
+    static void insertItem(const TableMappingItem & newItem, int newItemIndex, QVector<TableMappingItem> & allItemsList)
+    {
+      Q_ASSERT(newItemIndex >= 0);
+      Q_ASSERT(newItemIndex < allItemsList.size());
 
-    /*! \brief Update table mapping list by inserting given item
-     */
+      QVector<TableMappingItem> editedItemsList;
+//       const auto itemsToRemoveIndexList = getItemsToRemoveIndexList(newItem, newItemIndex, allItemsList);
+      const auto DFIndexToRemoveList = getDestinationFieldIndexToRemoveList(newItem, newItemIndex, allItemsList);
+      const auto itemsToAddList = getItemsToAddList(newItem, newItemIndex, allItemsList);
+
+      // Remove the item that is in edition
+      qDebug() << "-> Removing item at index " << newItemIndex;
+      allItemsList.remove(newItemIndex);
+      // Copy items from allItemsList that have not DF that must be removed
+      for(const auto & item : allItemsList){
+        if(!itemContainsDestinationFieldIndex(item, DFIndexToRemoveList)){
+          qDebug() << "-> Copy to edited, item DF " << debugFIL(item.destinationFieldIndexList());
+          editedItemsList.append(item);
+        }
+      }
+      // Insert new items
+      for(const auto & item : itemsToAddList){
+        const int idx = getIndexOfItemToInsertByDFIndexes(item.destinationFieldIndexList(), allItemsList);
+        qDebug() << "-> Insert at idx " << idx << " , item DF " << debugFIL(item.destinationFieldIndexList());
+        editedItemsList.insert(idx, item);
+      }
+      // Insert edited item
+      const int idx = getIndexOfItemToInsertByDFIndexes(newItem.destinationFieldIndexList(), allItemsList);
+      qDebug() << "-> Insert E at idx " << idx << " , item DF " << debugFIL(newItem.destinationFieldIndexList());
+      editedItemsList.insert(idx, newItem);
+      // Affect new table mapping
+      allItemsList = editedItemsList;
+    }
+
+    static QString debugFIL(const FieldIndexList & dfil)
+    {
+      QString str;
+      for(const auto & dfi : dfil){
+        str += QString::number(dfi) + ",";
+      }
+      return str;
+    }
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{
