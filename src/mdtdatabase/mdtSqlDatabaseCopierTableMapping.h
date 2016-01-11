@@ -22,7 +22,6 @@
 #define MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_H
 
 #include "mdt/sql/copier/TableMapping.h"
-#include "mdt/sql/copier/mdtSqlCopierFieldMapping.h"
 #include "mdtSqlSchemaTable.h"
 #include "mdtSqlDriverType.h"
 #include <QString>
