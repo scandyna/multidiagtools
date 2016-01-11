@@ -71,56 +71,6 @@ bool mdtSqlDatabaseCopierTableMapping::setDestinationTable(const QString & table
 //   updateTableMappingState();
 // }
 
-QString mdtSqlDatabaseCopierTableMapping::destinationFieldName(int index) const
-{
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < fieldCount());
-
-  int destinationFieldIndex = fieldMappingAt(index).destinationFieldIndex;
-  Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
-  if(destinationFieldIndex < 0){
-    return QString();
-  }
-  return pvDestinationTable.fieldName(destinationFieldIndex);
-}
-
-QString mdtSqlDatabaseCopierTableMapping::destinationFieldTypeName(int index) const
-{
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < fieldCount());
-
-  int destinationFieldIndex = fieldMappingAt(index).destinationFieldIndex;
-  Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
-  if(destinationFieldIndex < 0){
-    return QString();
-  }
-  return pvDestinationTable.fieldTypeName(destinationFieldIndex, mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName()));
-}
-
-TableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::destinationFieldKeyType(int index) const
-{
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < fieldCount());
-
-  const int destinationFieldIndex = fieldMappingAt(index).destinationFieldIndex;
-  Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
-  if(destinationFieldIndex < 0){
-    return NotAKey;
-  }
-  if(pvDestinationTable.isFieldPartOfPrimaryKey(destinationFieldIndex)){
-    return PrimaryKey;
-  }
-  return NotAKey;
-}
-
-void mdtSqlDatabaseCopierTableMapping::setSourceFieldIndex(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName)
-{
-  Q_ASSERT(!sourceFieldName.isEmpty());
-
-  const int index = pvSourceTable.fieldIndex(sourceFieldName);
-  fm.sourceField.setFieldIndex(index);
-}
-
 QString mdtSqlDatabaseCopierTableMapping::fetchSourceTableFieldTypeNameAt(int fieldIndex) const
 {
   return pvSourceTable.fieldTypeName(fieldIndex, mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName()));

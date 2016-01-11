@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -28,10 +28,10 @@
 #include "mdtSqlTransaction.h"
 #include "mdtSqlCopierDataMapping.h"
 
-#include "mdt/sql/copier/SourceField.h"
-#include "mdt/sql/copier/SourceFieldIndex.h"
-#include "mdt/sql/copier/SourceFixedValue.h"
-#include "mdt/sql/copier/SourceFieldExpression.h"
+// #include "mdt/sql/copier/SourceField.h"
+// #include "mdt/sql/copier/SourceFieldIndex.h"
+// #include "mdt/sql/copier/SourceFixedValue.h"
+// #include "mdt/sql/copier/SourceFieldExpression.h"
 
 #include "mdt/sql/copier/FieldIndexList.h"
 #include "mdt/sql/copier/TableMappingItem.h"
@@ -189,16 +189,16 @@ void mdtSqlCopierTest::sandbox()
 
 void mdtSqlCopierTest::sandbox2()
 {
-  using mdt::sql::copier::SourceFieldExpression;
-  using mdt::sql::copier::SourceFieldExpressionMatchItem;
-
-  SourceFieldExpression exp;
-
-  exp.setTablesForUniqueInsert("SomeSourceTable", "Client_tbl");
-  exp.addMatchItemForUniqueInsert("SrcName", "Name");
-  exp.addMatchItemForUniqueInsert(SourceFieldExpressionMatchItem::And, "rem", "REM");
-  
-  qDebug() << "SQL: " << exp.getSql(pvDatabase, "Id_PK");
+//   using mdt::sql::copier::SourceFieldExpression;
+//   using mdt::sql::copier::SourceFieldExpressionMatchItem;
+// 
+//   SourceFieldExpression exp;
+// 
+//   exp.setTablesForUniqueInsert("SomeSourceTable", "Client_tbl");
+//   exp.addMatchItemForUniqueInsert("SrcName", "Name");
+//   exp.addMatchItemForUniqueInsert(SourceFieldExpressionMatchItem::And, "rem", "REM");
+//   
+//   qDebug() << "SQL: " << exp.getSql(pvDatabase, "Id_PK");
 }
 
 void mdtSqlCopierTest::bechSandBox()
@@ -360,292 +360,292 @@ void mdtSqlCopierTest::sqlFieldSetupDataTest()
   QVERIFY(data.isNull());
 }
 
-void mdtSqlCopierTest::sourceFieldIndexTest()
-{
-  using mdt::sql::copier::SourceFieldIndex;
-  using mdt::sql::copier::AbstractSourceField;
+// void mdtSqlCopierTest::sourceFieldIndexTest()
+// {
+//   using mdt::sql::copier::SourceFieldIndex;
+//   using mdt::sql::copier::AbstractSourceField;
+// 
+//   std::unique_ptr<AbstractSourceField> asf;
+// 
+//   /*
+//    * Constructions
+//    */
+//   SourceFieldIndex index1;
+//   QCOMPARE(index1.fieldIndex(), -1);
+//   QVERIFY(index1.isNull());
+//   /*
+//    * Simple set/get
+//    */
+//   index1.setFieldIndex(2);
+//   QCOMPARE(index1.fieldIndex(), 2);
+//   QVERIFY(!index1.isNull());
+//   // Also check using base class pointer
+//   asf.reset(new SourceFieldIndex);
+//   QVERIFY(asf->isNull());
+//   asf->setFieldIndex(3);
+//   QCOMPARE(asf->fieldIndex(), 3);
+//   QVERIFY(!asf->isNull());
+//   /*
+//    * Clear
+//    */
+//   QVERIFY(asf.get() != nullptr);
+//   // Set all members
+//   asf->setFieldIndex(5);
+//   QCOMPARE(asf->fieldIndex(), 5);
+//   QVERIFY(!asf->isNull());
+//   // Clear and check
+//   asf->clear();
+//   QCOMPARE(asf->fieldIndex(), -1);
+//   QVERIFY(asf->isNull());
+// 
+// }
 
-  std::unique_ptr<AbstractSourceField> asf;
+// void mdtSqlCopierTest::sourceFixedValueTest()
+// {
+//   using mdt::sql::copier::SourceFixedValue;
+//   using mdt::sql::copier::AbstractSourceField;
+// 
+//   std::unique_ptr<AbstractSourceField> asf;
+// 
+//   /*
+//    * Constructions
+//    */
+//   asf.reset(new SourceFixedValue);
+//   QVERIFY(asf->fixedValue().isNull());
+//   QVERIFY(asf->isNull());
+//   /*
+//    * Simple set/get
+//    */
+//   asf->setFixedValue("Fixed value");
+//   QVERIFY(!asf->isNull());
+//   QCOMPARE(asf->fixedValue(), QVariant("Fixed value"));
+//   /*
+//    * Clear
+//    */
+//   asf->clear();
+//   QVERIFY(asf->fixedValue().isNull());
+//   QVERIFY(asf->isNull());
+// }
 
-  /*
-   * Constructions
-   */
-  SourceFieldIndex index1;
-  QCOMPARE(index1.fieldIndex(), -1);
-  QVERIFY(index1.isNull());
-  /*
-   * Simple set/get
-   */
-  index1.setFieldIndex(2);
-  QCOMPARE(index1.fieldIndex(), 2);
-  QVERIFY(!index1.isNull());
-  // Also check using base class pointer
-  asf.reset(new SourceFieldIndex);
-  QVERIFY(asf->isNull());
-  asf->setFieldIndex(3);
-  QCOMPARE(asf->fieldIndex(), 3);
-  QVERIFY(!asf->isNull());
-  /*
-   * Clear
-   */
-  QVERIFY(asf.get() != nullptr);
-  // Set all members
-  asf->setFieldIndex(5);
-  QCOMPARE(asf->fieldIndex(), 5);
-  QVERIFY(!asf->isNull());
-  // Clear and check
-  asf->clear();
-  QCOMPARE(asf->fieldIndex(), -1);
-  QVERIFY(asf->isNull());
+// void mdtSqlCopierTest::sourceFieldExpressionTest()
+// {
+// 
+// }
 
-}
+// void mdtSqlCopierTest::sourceFieldTest()
+// {
+//   using mdt::sql::copier::SourceField;
+// 
+//   /*
+//    * Constructions of field indexes
+//    */
+//   SourceField sourceFieldIndex1(SourceField::SourceFieldIndexType);
+//   QVERIFY(sourceFieldIndex1.type() == SourceField::SourceFieldIndexType);
+//   QCOMPARE(sourceFieldIndex1.fieldIndex(), -1);
+//   QVERIFY(sourceFieldIndex1.isNull());
+//   /*
+//    * Copy construction of field indexes
+//    */
+//   // Set some values to sourceFieldIndex1
+//   sourceFieldIndex1.setFieldIndex(1);
+//   QCOMPARE(sourceFieldIndex1.fieldIndex(), 1);
+//   // Copy construct sourceFieldIndex2 and check
+//   SourceField sourceFieldIndex2(sourceFieldIndex1);
+//   QCOMPARE(sourceFieldIndex2.fieldIndex(), 1);
+//   // Now, update sourceFieldIndex2 (will detach and clone) and check
+//   sourceFieldIndex2.setFieldIndex(2);
+//   QCOMPARE(sourceFieldIndex1.fieldIndex(), 1);
+//   QCOMPARE(sourceFieldIndex2.fieldIndex(), 2);
+//   /*
+//    * Copy assignement of field indexes
+//    */
+//   // Create sourceFieldIndex3 and set it (prevent the compiler to make copy construct)
+//   SourceField sourceFieldIndex3(SourceField::SourceFieldIndexType);
+//   sourceFieldIndex3.setFieldIndex(3);
+//   QCOMPARE(sourceFieldIndex3.fieldIndex(), 3);
+//   // Assign
+//   sourceFieldIndex3 = sourceFieldIndex1;
+//   QCOMPARE(sourceFieldIndex1.fieldIndex(), 1);
+//   QCOMPARE(sourceFieldIndex3.fieldIndex(), 1);
+//   // Update sourceFieldIndex3 and check
+//   sourceFieldIndex3.setFieldIndex(3);
+//   QCOMPARE(sourceFieldIndex1.fieldIndex(), 1);
+//   QCOMPARE(sourceFieldIndex2.fieldIndex(), 2);
+//   QCOMPARE(sourceFieldIndex3.fieldIndex(), 3);
+//   /*
+//    * Construction of fixed values
+//    */
+//   SourceField fixedValue1(SourceField::SourceFixedValueType);
+//   QVERIFY(fixedValue1.type() == SourceField::SourceFixedValueType);
+//   QVERIFY(fixedValue1.isNull());
+//   /*
+//    * Copy construction of fixed values
+//    */
+//   // Set some value to fixedValue1
+//   fixedValue1.setFixedValue("value 1");
+//   QCOMPARE(fixedValue1.fixedValue(), QVariant("value 1"));
+//   // Create fixedValue2 as copy of fixedValue1
+//   SourceField fixedValue2(fixedValue1);
+//   QCOMPARE(fixedValue2.fixedValue(), QVariant("value 1"));
+//   // Update fixedValue2
+//   fixedValue2.setFixedValue("value 2");
+//   QCOMPARE(fixedValue1.fixedValue(), QVariant("value 1"));
+//   QCOMPARE(fixedValue2.fixedValue(), QVariant("value 2"));
+//   /*
+//    * Copy assignemnt of fixed values
+//    */
+//   // Create fixedValue3
+//   SourceField fixedValue3(SourceField::SourceFixedValueType);
+//   // Assign
+//   fixedValue3 = fixedValue1;
+//   QCOMPARE(fixedValue3.fixedValue(), QVariant("value 1"));
+//   // Update fixedValue3
+//   fixedValue3.setFixedValue("value 3");
+//   QCOMPARE(fixedValue1.fixedValue(), QVariant("value 1"));
+//   QCOMPARE(fixedValue2.fixedValue(), QVariant("value 2"));
+//   QCOMPARE(fixedValue3.fixedValue(), QVariant("value 3"));
+//   /*
+//    * Copy construction of different types
+//    */
+//   // Set sf1 as copy of sourceFieldIndex1
+//   SourceField sf1(sourceFieldIndex1);
+//   QVERIFY(sf1.type() == SourceField::SourceFieldIndexType);
+//   QCOMPARE(sf1.fieldIndex(), 1);
+//   // Update sf1
+//   sf1.setFieldIndex(11);
+//   QCOMPARE(sf1.fieldIndex(), 11);
+//   QCOMPARE(sourceFieldIndex1.fieldIndex(), 1);
+//   // Set sf2 as copy of fixedValue2
+//   SourceField sf2(fixedValue2);
+//   QVERIFY(sf2.type() == SourceField::SourceFixedValueType);
+//   QCOMPARE(sf2.fixedValue(), QVariant("value 2"));
+//   // Update sf2
+//   sf2.setFixedValue("value 22");
+//   QCOMPARE(sf2.fixedValue(), QVariant("value 22"));
+//   QCOMPARE(fixedValue2.fixedValue(), QVariant("value 2"));
+//   /*
+//    * Copy assignment of different types
+//    */
+//   sf2 = sf1;
+//   QVERIFY(sf2.type() == SourceField::SourceFieldIndexType);
+//   QCOMPARE(sf2.fieldIndex(), 11);
+//   // Update sf1
+//   sf1.setFieldIndex(111);
+//   QVERIFY(sf1.type() == SourceField::SourceFieldIndexType);
+//   QVERIFY(sf2.type() == SourceField::SourceFieldIndexType);
+//   QCOMPARE(sf1.fieldIndex(), 111);
+//   QCOMPARE(sf2.fieldIndex(), 11);
+//   // Update sf2
+//   sf2.setFieldIndex(1111);
+//   QVERIFY(sf1.type() == SourceField::SourceFieldIndexType);
+//   QVERIFY(sf2.type() == SourceField::SourceFieldIndexType);
+//   QCOMPARE(sf1.fieldIndex(), 111);
+//   QCOMPARE(sf2.fieldIndex(), 1111);
+//   /*
+//    * Check setting different type of one existing SourceField object works
+//    */
+//   SourceField sf(SourceField::SourceFieldIndexType);
+//   // Set a field index
+//   sf.setFieldIndex(5);
+//   QVERIFY(sf.type() == SourceField::SourceFieldIndexType);
+//   QCOMPARE(sf.fieldIndex(), 5);
+//   // Set a fixed value
+//   sf.setFixedValue("value 5");
+//   QVERIFY(sf.type() == SourceField::SourceFixedValueType);
+//   QCOMPARE(sf.fixedValue(), QVariant("value 5"));
+//   /*
+//    * Construction of expression
+//    */
+//   SourceField expression1(SourceField::SourceFieldExpressionType);
+//   QVERIFY(expression1.type() == SourceField::SourceFieldExpressionType);
+//   QVERIFY(expression1.isNull());
+//   /*
+//    * Copy construction of expression
+//    */
+//   /// \todo Implement
+//   // Set some value to expression1
+//   
+//   // Construct expression2 as copy of expression1
+//   SourceField expression2(expression1);
+//   
+//   // Update expression2
+//   
+//   /*
+//    * Copy assignmenet
+//    */
+//   /// \todo Implement
+//   // Create expression3
+//   SourceField expression3(SourceField::SourceFieldExpressionType);
+//   // Assign
+//   expression3 = expression1;
+//   
+//   // Update expression3
+//   
+// 
+// }
 
-void mdtSqlCopierTest::sourceFixedValueTest()
-{
-  using mdt::sql::copier::SourceFixedValue;
-  using mdt::sql::copier::AbstractSourceField;
-
-  std::unique_ptr<AbstractSourceField> asf;
-
-  /*
-   * Constructions
-   */
-  asf.reset(new SourceFixedValue);
-  QVERIFY(asf->fixedValue().isNull());
-  QVERIFY(asf->isNull());
-  /*
-   * Simple set/get
-   */
-  asf->setFixedValue("Fixed value");
-  QVERIFY(!asf->isNull());
-  QCOMPARE(asf->fixedValue(), QVariant("Fixed value"));
-  /*
-   * Clear
-   */
-  asf->clear();
-  QVERIFY(asf->fixedValue().isNull());
-  QVERIFY(asf->isNull());
-}
-
-void mdtSqlCopierTest::sourceFieldExpressionTest()
-{
-
-}
-
-void mdtSqlCopierTest::sourceFieldTest()
-{
-  using mdt::sql::copier::SourceField;
-
-  /*
-   * Constructions of field indexes
-   */
-  SourceField sourceFieldIndex1(SourceField::SourceFieldIndexType);
-  QVERIFY(sourceFieldIndex1.type() == SourceField::SourceFieldIndexType);
-  QCOMPARE(sourceFieldIndex1.fieldIndex(), -1);
-  QVERIFY(sourceFieldIndex1.isNull());
-  /*
-   * Copy construction of field indexes
-   */
-  // Set some values to sourceFieldIndex1
-  sourceFieldIndex1.setFieldIndex(1);
-  QCOMPARE(sourceFieldIndex1.fieldIndex(), 1);
-  // Copy construct sourceFieldIndex2 and check
-  SourceField sourceFieldIndex2(sourceFieldIndex1);
-  QCOMPARE(sourceFieldIndex2.fieldIndex(), 1);
-  // Now, update sourceFieldIndex2 (will detach and clone) and check
-  sourceFieldIndex2.setFieldIndex(2);
-  QCOMPARE(sourceFieldIndex1.fieldIndex(), 1);
-  QCOMPARE(sourceFieldIndex2.fieldIndex(), 2);
-  /*
-   * Copy assignement of field indexes
-   */
-  // Create sourceFieldIndex3 and set it (prevent the compiler to make copy construct)
-  SourceField sourceFieldIndex3(SourceField::SourceFieldIndexType);
-  sourceFieldIndex3.setFieldIndex(3);
-  QCOMPARE(sourceFieldIndex3.fieldIndex(), 3);
-  // Assign
-  sourceFieldIndex3 = sourceFieldIndex1;
-  QCOMPARE(sourceFieldIndex1.fieldIndex(), 1);
-  QCOMPARE(sourceFieldIndex3.fieldIndex(), 1);
-  // Update sourceFieldIndex3 and check
-  sourceFieldIndex3.setFieldIndex(3);
-  QCOMPARE(sourceFieldIndex1.fieldIndex(), 1);
-  QCOMPARE(sourceFieldIndex2.fieldIndex(), 2);
-  QCOMPARE(sourceFieldIndex3.fieldIndex(), 3);
-  /*
-   * Construction of fixed values
-   */
-  SourceField fixedValue1(SourceField::SourceFixedValueType);
-  QVERIFY(fixedValue1.type() == SourceField::SourceFixedValueType);
-  QVERIFY(fixedValue1.isNull());
-  /*
-   * Copy construction of fixed values
-   */
-  // Set some value to fixedValue1
-  fixedValue1.setFixedValue("value 1");
-  QCOMPARE(fixedValue1.fixedValue(), QVariant("value 1"));
-  // Create fixedValue2 as copy of fixedValue1
-  SourceField fixedValue2(fixedValue1);
-  QCOMPARE(fixedValue2.fixedValue(), QVariant("value 1"));
-  // Update fixedValue2
-  fixedValue2.setFixedValue("value 2");
-  QCOMPARE(fixedValue1.fixedValue(), QVariant("value 1"));
-  QCOMPARE(fixedValue2.fixedValue(), QVariant("value 2"));
-  /*
-   * Copy assignemnt of fixed values
-   */
-  // Create fixedValue3
-  SourceField fixedValue3(SourceField::SourceFixedValueType);
-  // Assign
-  fixedValue3 = fixedValue1;
-  QCOMPARE(fixedValue3.fixedValue(), QVariant("value 1"));
-  // Update fixedValue3
-  fixedValue3.setFixedValue("value 3");
-  QCOMPARE(fixedValue1.fixedValue(), QVariant("value 1"));
-  QCOMPARE(fixedValue2.fixedValue(), QVariant("value 2"));
-  QCOMPARE(fixedValue3.fixedValue(), QVariant("value 3"));
-  /*
-   * Copy construction of different types
-   */
-  // Set sf1 as copy of sourceFieldIndex1
-  SourceField sf1(sourceFieldIndex1);
-  QVERIFY(sf1.type() == SourceField::SourceFieldIndexType);
-  QCOMPARE(sf1.fieldIndex(), 1);
-  // Update sf1
-  sf1.setFieldIndex(11);
-  QCOMPARE(sf1.fieldIndex(), 11);
-  QCOMPARE(sourceFieldIndex1.fieldIndex(), 1);
-  // Set sf2 as copy of fixedValue2
-  SourceField sf2(fixedValue2);
-  QVERIFY(sf2.type() == SourceField::SourceFixedValueType);
-  QCOMPARE(sf2.fixedValue(), QVariant("value 2"));
-  // Update sf2
-  sf2.setFixedValue("value 22");
-  QCOMPARE(sf2.fixedValue(), QVariant("value 22"));
-  QCOMPARE(fixedValue2.fixedValue(), QVariant("value 2"));
-  /*
-   * Copy assignment of different types
-   */
-  sf2 = sf1;
-  QVERIFY(sf2.type() == SourceField::SourceFieldIndexType);
-  QCOMPARE(sf2.fieldIndex(), 11);
-  // Update sf1
-  sf1.setFieldIndex(111);
-  QVERIFY(sf1.type() == SourceField::SourceFieldIndexType);
-  QVERIFY(sf2.type() == SourceField::SourceFieldIndexType);
-  QCOMPARE(sf1.fieldIndex(), 111);
-  QCOMPARE(sf2.fieldIndex(), 11);
-  // Update sf2
-  sf2.setFieldIndex(1111);
-  QVERIFY(sf1.type() == SourceField::SourceFieldIndexType);
-  QVERIFY(sf2.type() == SourceField::SourceFieldIndexType);
-  QCOMPARE(sf1.fieldIndex(), 111);
-  QCOMPARE(sf2.fieldIndex(), 1111);
-  /*
-   * Check setting different type of one existing SourceField object works
-   */
-  SourceField sf(SourceField::SourceFieldIndexType);
-  // Set a field index
-  sf.setFieldIndex(5);
-  QVERIFY(sf.type() == SourceField::SourceFieldIndexType);
-  QCOMPARE(sf.fieldIndex(), 5);
-  // Set a fixed value
-  sf.setFixedValue("value 5");
-  QVERIFY(sf.type() == SourceField::SourceFixedValueType);
-  QCOMPARE(sf.fixedValue(), QVariant("value 5"));
-  /*
-   * Construction of expression
-   */
-  SourceField expression1(SourceField::SourceFieldExpressionType);
-  QVERIFY(expression1.type() == SourceField::SourceFieldExpressionType);
-  QVERIFY(expression1.isNull());
-  /*
-   * Copy construction of expression
-   */
-  /// \todo Implement
-  // Set some value to expression1
-  
-  // Construct expression2 as copy of expression1
-  SourceField expression2(expression1);
-  
-  // Update expression2
-  
-  /*
-   * Copy assignmenet
-   */
-  /// \todo Implement
-  // Create expression3
-  SourceField expression3(SourceField::SourceFieldExpressionType);
-  // Assign
-  expression3 = expression1;
-  
-  // Update expression3
-  
-
-}
-
-void mdtSqlCopierTest::fieldMappingDataTest()
-{
-  using mdt::sql::copier::SourceField;
-  mdtSqlCopierFieldMapping data;
-
-  /*
-   * Initial state
-   */
-  QVERIFY(data.sourceField.type() == SourceField::SourceFieldIndexType);
-  QVERIFY(data.sourceField.isNull());
-  ///QCOMPARE(data.sourceFieldIndex, -1);
-  QCOMPARE(data.destinationFieldIndex, -1);
-  QVERIFY(data.mappingState == mdtSqlCopierFieldMapping::MappingNotSet);
-  ///QVERIFY(data.sourceType == mdtSqlCopierFieldMapping::Field);
-  QVERIFY(data.isNull());
-  /*
-   * Set with Field source type
-   */
-  // Check when simply set source and destination field index
-  ///data.sourceFieldIndex = 0;
-  data.sourceField.setFieldIndex(0);
-  QVERIFY(data.isNull());
-  data.destinationFieldIndex = 0;
-  QVERIFY(!data.isNull());
-  // Set some other members to check clear
-  data.mappingState = mdtSqlCopierFieldMapping::MappingComplete;
-  ///data.sourceType = mdtSqlCopierFieldMapping::FixedValue;
-  ///data.sourceFixedValue = "Fixed";
-  /*
-   * Clear
-   */
-  data.clear();
-  ///QCOMPARE(data.sourceFieldIndex, -1);
-  QVERIFY(data.sourceField.isNull());
-  QCOMPARE(data.destinationFieldIndex, -1);
-  QVERIFY(data.mappingState == mdtSqlCopierFieldMapping::MappingNotSet);
-  ///QVERIFY(data.sourceType == mdtSqlCopierFieldMapping::Field);
-  ///QVERIFY(data.sourceFixedValue.isNull());
-  QVERIFY(data.isNull());
-  /*
-   * Set with FixedValue source type
-   */
-  ///data.sourceType = mdtSqlCopierFieldMapping::FixedValue;
-  // Set normally
-  QVERIFY(data.isNull());
-  data.sourceField.setFixedValue("Fixed value");
-  ///data.sourceFixedValue = "Fixed value";
-  QVERIFY(data.isNull());
-  data.destinationFieldIndex = 0;
-  QVERIFY(!data.isNull());
-  // Set a valid source index (must be ignored)
-//   data.clear();
-//   ///data.sourceType = mdtSqlCopierFieldMapping::FixedValue;
+// void mdtSqlCopierTest::fieldMappingDataTest()
+// {
+//   using mdt::sql::copier::SourceField;
+//   mdtSqlCopierFieldMapping data;
+// 
+//   /*
+//    * Initial state
+//    */
+//   QVERIFY(data.sourceField.type() == SourceField::SourceFieldIndexType);
+//   QVERIFY(data.sourceField.isNull());
+//   ///QCOMPARE(data.sourceFieldIndex, -1);
+//   QCOMPARE(data.destinationFieldIndex, -1);
+//   QVERIFY(data.mappingState == mdtSqlCopierFieldMapping::MappingNotSet);
+//   ///QVERIFY(data.sourceType == mdtSqlCopierFieldMapping::Field);
+//   QVERIFY(data.isNull());
+//   /*
+//    * Set with Field source type
+//    */
+//   // Check when simply set source and destination field index
+//   ///data.sourceFieldIndex = 0;
+//   data.sourceField.setFieldIndex(0);
 //   QVERIFY(data.isNull());
 //   data.destinationFieldIndex = 0;
-//   QVERIFY(data.isNull());
-//   data.sou
-//   data.sourceFieldIndex = 0;
-//   QVERIFY(data.isNull());
-//   data.sourceFixedValue = "Fixed value";
 //   QVERIFY(!data.isNull());
-}
+//   // Set some other members to check clear
+//   data.mappingState = mdtSqlCopierFieldMapping::MappingComplete;
+//   ///data.sourceType = mdtSqlCopierFieldMapping::FixedValue;
+//   ///data.sourceFixedValue = "Fixed";
+//   /*
+//    * Clear
+//    */
+//   data.clear();
+//   ///QCOMPARE(data.sourceFieldIndex, -1);
+//   QVERIFY(data.sourceField.isNull());
+//   QCOMPARE(data.destinationFieldIndex, -1);
+//   QVERIFY(data.mappingState == mdtSqlCopierFieldMapping::MappingNotSet);
+//   ///QVERIFY(data.sourceType == mdtSqlCopierFieldMapping::Field);
+//   ///QVERIFY(data.sourceFixedValue.isNull());
+//   QVERIFY(data.isNull());
+//   /*
+//    * Set with FixedValue source type
+//    */
+//   ///data.sourceType = mdtSqlCopierFieldMapping::FixedValue;
+//   // Set normally
+//   QVERIFY(data.isNull());
+//   data.sourceField.setFixedValue("Fixed value");
+//   ///data.sourceFixedValue = "Fixed value";
+//   QVERIFY(data.isNull());
+//   data.destinationFieldIndex = 0;
+//   QVERIFY(!data.isNull());
+//   // Set a valid source index (must be ignored)
+// //   data.clear();
+// //   ///data.sourceType = mdtSqlCopierFieldMapping::FixedValue;
+// //   QVERIFY(data.isNull());
+// //   data.destinationFieldIndex = 0;
+// //   QVERIFY(data.isNull());
+// //   data.sou
+// //   data.sourceFieldIndex = 0;
+// //   QVERIFY(data.isNull());
+// //   data.sourceFixedValue = "Fixed value";
+// //   QVERIFY(!data.isNull());
+// }
 
 void mdtSqlCopierTest::fieldIndexListTest()
 {
@@ -1346,7 +1346,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   /*
    * Initial state
    */
-  QCOMPARE(mapping.fieldCount(), 0);
+  QCOMPARE(mapping.itemsCount(), 0);
   QVERIFY(mapping.mappingState() == TableMapping::MappingNotSet);
   
 
@@ -1693,7 +1693,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
    * Add field mapping:
    * - Client_tbl.Name -> Client2_tbl.Name
    */
-  mapping.setSourceField(1, "Name");
+  mapping.setSourceFieldAtItem(1, "Name");
   // Check SQL for count in source table
   expectedSql = "SELECT COUNT(*) FROM \"Client_tbl\"";
   QCOMPARE(mapping.getSqlForSourceTableCount(db), expectedSql);
@@ -1707,7 +1707,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
    * Add field mapping:
    * - Client_tbl.FieldB -> Client2_tbl.FieldA
    */
-  mapping.setSourceField(2, "FieldB");
+  mapping.setSourceFieldAtItem(2, "FieldB");
   // Check SQL select data in source table
   expectedSql = "SELECT \"Id_PK\",\"Name\",\"FieldB\" FROM \"Client_tbl\"";
   QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
@@ -1718,7 +1718,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
    * Add field mapping:
    * - Client_tbl.FieldA -> Client2_tbl.FieldB
    */
-  mapping.setSourceField(3, "FieldA");
+  mapping.setSourceFieldAtItem(3, "FieldA");
   // Check SQL select data in source table
   expectedSql = "SELECT \"Id_PK\",\"Name\",\"FieldB\",\"FieldA\" FROM \"Client_tbl\"";
   QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
@@ -1729,7 +1729,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
    * Check with source fixed value for Client2_tbl.Name
    */
 //   mapping.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
-  mapping.setSourceFixedValue(1, "Fixed name");
+  mapping.setSourceFixedValueAtItem(1, "Fixed name");
   // Check SQL select data in source table
   expectedSql = "SELECT \"Id_PK\",\"FieldB\",\"FieldA\" FROM \"Client_tbl\"";
   QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
@@ -1946,7 +1946,7 @@ void mdtSqlCopierTest::sqlCopierDataMappingTest()
    * Add field mapping:
    * - Client_tbl.Id_PK -> Client2_tbl.Id_PK
    */
-  mapping.setSourceField(0, "Id_PK");
+  mapping.setSourceFieldAtItem(0, "Id_PK");
   // Get source data
   sql = mapping.getSqlForSourceTableSelect(db);
   QVERIFY(sourceQuery.exec(sql));
@@ -1960,7 +1960,7 @@ void mdtSqlCopierTest::sqlCopierDataMappingTest()
    * Add field mapping:
    * - Client_tbl.Name -> Client2_tbl.Name
    */
-  mapping.setSourceField(1, "Name");
+  mapping.setSourceFieldAtItem(1, "Name");
   // Get source data
   sql = mapping.getSqlForSourceTableSelect(db);
   QVERIFY(sourceQuery.exec(sql));
@@ -1975,7 +1975,7 @@ void mdtSqlCopierTest::sqlCopierDataMappingTest()
    * Add field mapping:
    * - Client_tbl.FieldB -> Client2_tbl.FieldA
    */
-  mapping.setSourceField(2, "FieldB");
+  mapping.setSourceFieldAtItem(2, "FieldB");
   // Get source data
   sql = mapping.getSqlForSourceTableSelect(db);
   QVERIFY(sourceQuery.exec(sql));
@@ -1991,7 +1991,7 @@ void mdtSqlCopierTest::sqlCopierDataMappingTest()
    * Add field mapping:
    * - Client_tbl.FieldA -> Client2_tbl.FieldB
    */
-  mapping.setSourceField(3, "FieldA");
+  mapping.setSourceFieldAtItem(3, "FieldA");
   // Get source data
   sql = mapping.getSqlForSourceTableSelect(db);
   QVERIFY(sourceQuery.exec(sql));
@@ -2008,7 +2008,7 @@ void mdtSqlCopierTest::sqlCopierDataMappingTest()
    * Check with source fixed value for Client2_tbl.Name
    */
 //   mapping.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
-  mapping.setSourceFixedValue(1, "Fixed name");
+  mapping.setSourceFixedValueAtItem(1, "Fixed name");
   // Get source data
   sql = mapping.getSqlForSourceTableSelect(db);
   QVERIFY(sourceQuery.exec(sql));
@@ -2579,10 +2579,10 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingTest()
    */
   auto tm = mapping.tableMapping(0);
   QVERIFY(tm.setSourceTable("Client_tbl", pvDatabase));
-  tm.setSourceField(0, "Id_PK");
-  tm.setSourceField(1, "Name");
-  tm.setSourceField(2, "FieldB");
-  tm.setSourceField(3, "FieldA");
+  tm.setSourceFieldAtItem(0, "Id_PK");
+  tm.setSourceFieldAtItem(1, "Name");
+  tm.setSourceFieldAtItem(2, "FieldB");
+  tm.setSourceFieldAtItem(3, "FieldA");
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
   mapping.setTableMapping(0, tm);
   QCOMPARE(mapping.tableMappingCount(), 2);
@@ -2663,14 +2663,16 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
   tm = model.tableMapping(0);
   QCOMPARE(tm.sourceTableName(), QString("Client2_tbl"));
   QCOMPARE(tm.destinationTableName(), QString("Client2_tbl"));
-  QCOMPARE(tm.fieldCount(), 4);
-  QCOMPARE(tm.destinationFieldName(0), QString("Id_PK"));
+  QCOMPARE(tm.itemsCount(), 4);
+  QCOMPARE(tm.destinationFieldNameListAtItem(0).size(), 1);
+  QCOMPARE(tm.destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
   // Check row 1
   tm = model.tableMapping(1);
   QCOMPARE(tm.sourceTableName(), QString("Client_tbl"));
   QCOMPARE(tm.destinationTableName(), QString("Client_tbl"));
-  QCOMPARE(tm.fieldCount(), 4);
-  QCOMPARE(tm.destinationFieldName(0), QString("Id_PK"));
+  QCOMPARE(tm.itemsCount(), 4);
+  QCOMPARE(tm.destinationFieldNameListAtItem(0).size(), 1);
+  QCOMPARE(tm.destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
 
   /** \todo
    * Check updating model
@@ -2770,11 +2772,11 @@ void mdtSqlCopierTest::sqlDatabaseCopierThreadTest()
    */
   auto tm = mapping.tableMapping(0);
   QVERIFY(tm.setSourceTable("Client_tbl", pvDatabase));
-  tm.setSourceField(0, "Id_PK");
+  tm.setSourceFieldAtItem(0, "Id_PK");
 //   tm.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
-  tm.setSourceFixedValue(1, "Fixed name");
-  tm.setSourceField(2, "FieldB");
-  tm.setSourceField(3, "FieldA");
+  tm.setSourceFixedValueAtItem(1, "Fixed name");
+  tm.setSourceFieldAtItem(2, "FieldB");
+  tm.setSourceFieldAtItem(3, "FieldA");
   QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
   mapping.setTableMapping(0, tm);
   QCOMPARE(mapping.tableMappingCount(), 2);

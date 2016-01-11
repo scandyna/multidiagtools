@@ -81,18 +81,6 @@ class mdtSqlCsvImportTableMapping : public mdt::sql::copier::TableMapping
     return sourceTable().getFieldNameList();
   }
 
-  /*! \brief Get destination field name for given field mapping index
-   *
-   * \pre index must be in valid range.
-   */
-  QString destinationFieldName(int index) const;
-
-  /*! \brief Get destination field type name for given field mapping index
-   *
-   * \pre index must be in valid range.
-   */
-  QString destinationFieldTypeName(int index) const;
-
   /*! \brief Generate field mapping by name
    *
    * Will first reset field mapping.
@@ -107,15 +95,6 @@ class mdtSqlCsvImportTableMapping : public mdt::sql::copier::TableMapping
   mdtSqlCsvImportTableMapping(const mdtSqlCsvImportTableMapping &) = default;
   mdtSqlCsvImportTableMapping & operator=(const mdtSqlCsvImportTableMapping &) = default;
 
-  /*! \brief Get field count of destination table
-   *
-   * Mainly used by resetFieldMapping()
-   */
-//   int destinationTableFieldCount() const
-//   {
-//     return pvDestinationTable.fieldCount();
-//   }
-
   /*! \brief Reference CSV source info
    */
   virtual mdtCsvSourceInfo & sourceTable() = 0;
@@ -125,10 +104,6 @@ class mdtSqlCsvImportTableMapping : public mdt::sql::copier::TableMapping
   virtual const mdtCsvSourceInfo & sourceTable() const = 0;
 
  private:
-
-  /*! \brief Set source field index for given field mapping
-   */
-  void setSourceFieldIndex(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName) override;
 
   /*! \brief Get field index of given field name in source table
    */
@@ -175,7 +150,7 @@ class mdtSqlCsvImportTableMapping : public mdt::sql::copier::TableMapping
    * Will set CSV source format for given field map.
    * \note No check is done on CSV source data. Errors will be detected during import.
    */
-  void updateCsvSourceFormat(mdtSqlCopierFieldMapping & fm);
+//   void updateCsvSourceFormat(mdtSqlCopierFieldMapping & fm);
 
   mdtSqlSchemaTable pvDestinationTable;
   QSqlDatabase pvDestinationDatabase;

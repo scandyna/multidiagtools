@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -44,11 +44,11 @@ class mdtSqlCopierTest : public mdtTest
 
   void sqlFieldSetupDataTest();
 
-  void sourceFieldIndexTest();
-  void sourceFixedValueTest();
-  void sourceFieldExpressionTest();
-  void sourceFieldTest();
-  void fieldMappingDataTest();
+//   void sourceFieldIndexTest();
+//   void sourceFixedValueTest();
+//   void sourceFieldExpressionTest();
+//   void sourceFieldTest();
+//   void fieldMappingDataTest();
 
   void fieldIndexListTest();
 

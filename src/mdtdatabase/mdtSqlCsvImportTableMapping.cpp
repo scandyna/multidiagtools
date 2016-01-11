@@ -38,32 +38,6 @@ bool mdtSqlCsvImportTableMapping::setDestinationTable(const QString & tableName,
   return true;
 }
 
-QString mdtSqlCsvImportTableMapping::destinationFieldName(int index) const
-{
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < fieldCount());
-
-  const int destinationFieldIndex = fieldMappingAt(index).destinationFieldIndex;
-  Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
-  if(destinationFieldIndex < 0){
-    return QString();
-  }
-  return pvDestinationTable.fieldName(destinationFieldIndex);
-}
-
-QString mdtSqlCsvImportTableMapping::destinationFieldTypeName(int index) const
-{
-  Q_ASSERT(index >= 0);
-  Q_ASSERT(index < fieldCount());
-
-  const int destinationFieldIndex = fieldMappingAt(index).destinationFieldIndex;
-  Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
-  if(destinationFieldIndex < 0){
-    return QString();
-  }
-  return pvDestinationTable.fieldTypeName(destinationFieldIndex, mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName()));
-}
-
 // void mdtSqlCsvImportTableMapping::generateFieldMappingByName()
 // {
 //   auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
@@ -86,14 +60,14 @@ QString mdtSqlCsvImportTableMapping::destinationFieldTypeName(int index) const
 //   updateTableMappingState();
 // }
 
-void mdtSqlCsvImportTableMapping::setSourceFieldIndex(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName)
-{
-  Q_ASSERT(!sourceFieldName.isEmpty());
-
-  const int index = sourceTable().fieldIndex(sourceFieldName);
-  fm.sourceField.setFieldIndex(index);
-  updateCsvSourceFormat(fm);
-}
+// void mdtSqlCsvImportTableMapping::setSourceFieldIndex(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName)
+// {
+//   Q_ASSERT(!sourceFieldName.isEmpty());
+// 
+//   const int index = sourceTable().fieldIndex(sourceFieldName);
+//   fm.sourceField.setFieldIndex(index);
+//   updateCsvSourceFormat(fm);
+// }
 
 QString mdtSqlCsvImportTableMapping::fetchDestinationTableFieldTypeNameAt(int fieldIndex) const
 {
@@ -123,17 +97,18 @@ bool mdtSqlCsvImportTableMapping::areFieldsCompatible(int sourceFieldIndex, int 
   return false;
 }
 
-void mdtSqlCsvImportTableMapping::updateCsvSourceFormat(mdtSqlCopierFieldMapping & fm)
-{
-  if(fm.isNull()){
-    return;
-  }
-  Q_ASSERT(fm.sourceField.fieldIndex() >= 0);
-  Q_ASSERT(fm.sourceField.fieldIndex() < sourceTable().fieldCount());
-  Q_ASSERT(fm.destinationFieldIndex >= 0);
-  Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
-
-  auto destinationFieldFormat = pvDestinationTable.field(fm.destinationFieldIndex).type();
-  auto csvFieldFormat = mdtSqlCsvData::csvFieldTypeFromMdtSqlFieldType(destinationFieldFormat);
-  sourceTable().setFieldType(fm.sourceField.fieldIndex(), csvFieldFormat);
-}
+/// Keep until new version was written
+// void mdtSqlCsvImportTableMapping::updateCsvSourceFormat(mdtSqlCopierFieldMapping & fm)
+// {
+//   if(fm.isNull()){
+//     return;
+//   }
+//   Q_ASSERT(fm.sourceField.fieldIndex() >= 0);
+//   Q_ASSERT(fm.sourceField.fieldIndex() < sourceTable().fieldCount());
+//   Q_ASSERT(fm.destinationFieldIndex >= 0);
+//   Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
+// 
+//   auto destinationFieldFormat = pvDestinationTable.field(fm.destinationFieldIndex).type();
+//   auto csvFieldFormat = mdtSqlCsvData::csvFieldTypeFromMdtSqlFieldType(destinationFieldFormat);
+//   sourceTable().setFieldType(fm.sourceField.fieldIndex(), csvFieldFormat);
+// }

@@ -115,29 +115,7 @@ class mdtSqlDatabaseCopierTableMapping : public mdt::sql::copier::TableMapping
     return pvDestinationTable.getFieldNameList();
   }
 
-  /*! \brief Get destination field name for given field mapping index
-   *
-   * \pre index must be in valid range.
-   */
-  QString destinationFieldName(int index) const;
-
-  /*! \brief Get destination field type name for given field mapping index
-   *
-   * \pre index must be in valid range.
-   */
-  QString destinationFieldTypeName(int index) const;
-
-  /*! \brief Check if destination field is part of a key
-   *
-   * \pre index must be in valid range.
-   */
-  FieldKeyType destinationFieldKeyType(int index) const;
-
  private:
-
-  /*! \brief Set source field index for given field mapping
-   */
-  void setSourceFieldIndex(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName) override;
 
   /*! \brief Get field index of given field name in source table
    */
