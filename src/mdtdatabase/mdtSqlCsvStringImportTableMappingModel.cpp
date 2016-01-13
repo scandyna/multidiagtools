@@ -35,7 +35,7 @@ bool mdtSqlCsvStringImportTableMappingModel::setSourceCsvString(const QString & 
   if( (ok) && (delegate != nullptr) ){
     delegate->clear();
     delegate->addItem("");
-    delegate->addItems(pvMapping.getSourceFieldNameList());
+    delegate->addItems(pvMapping.getSourceTableFieldNameList());
   }
   endResetModel();
   if(!ok){

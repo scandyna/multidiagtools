@@ -100,21 +100,21 @@ class mdtSqlDatabaseCopierTableMapping : public mdt::sql::copier::TableMapping
    */
 //   void generateFieldMappingByName();
 
-  /*! \brief Get list of field names of source table
+ private:
+
+  /*! \brief Get a list of available field names in source table
    */
-  QStringList getSourceFieldNameList() const
+  QStringList fetchSourceTableFieldNameList() const override
   {
     return pvSourceTable.getFieldNameList();
   }
 
-  /*! \brief Get list of field names of destination table
+  /*! \brief Get a list of available field names in destination table
    */
-  QStringList getDestinationFieldNameList() const
+  QStringList fetchDestinationTableFieldNameList() const override
   {
     return pvDestinationTable.getFieldNameList();
   }
-
- private:
 
   /*! \brief Get field index of given field name in source table
    */
@@ -137,6 +137,13 @@ class mdtSqlDatabaseCopierTableMapping : public mdt::sql::copier::TableMapping
   /*! \brief Check if field is part of a key for given field index in source table
    */
   FieldKeyType fetchSourceTableFieldKeyType(int fieldIndex) const override;
+
+  /*! \brief Get field index of given field name in destination table
+   */
+  int fetchDestinationTableFieldIndexOf(const QString & fieldName) const override
+  {
+    return pvDestinationTable.fieldIndex(fieldName);
+  }
 
   /*! \brief Get field name for given fieldIndex in destination table
    */

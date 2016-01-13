@@ -32,6 +32,7 @@
 #include "mdt/sql/copier/FieldMapping.h"
 #include "mdt/sql/copier/FixedValue.h"
 #include "mdt/sql/copier/UniqueInsertExpression.h"
+#include "mdt/sql/copier/UniqueInsertExpressionModel.h"
 #include "mdt/sql/copier/TableMappingEditHelper.h"
 #include "mdtSqlDatabaseCopierTableMapping.h"
 #include "mdtSqlDatabaseCopierTableMappingModel.h"
@@ -178,20 +179,6 @@ void mdtSqlCopierTest::sandbox()
   QVERIFY(query.exec("DELETE FROM Client_tbl"));
   
 
-}
-
-void mdtSqlCopierTest::sandbox2()
-{
-//   using mdt::sql::copier::SourceFieldExpression;
-//   using mdt::sql::copier::SourceFieldExpressionMatchItem;
-// 
-//   SourceFieldExpression exp;
-// 
-//   exp.setTablesForUniqueInsert("SomeSourceTable", "Client_tbl");
-//   exp.addMatchItemForUniqueInsert("SrcName", "Name");
-//   exp.addMatchItemForUniqueInsert(SourceFieldExpressionMatchItem::And, "rem", "REM");
-//   
-//   qDebug() << "SQL: " << exp.getSql(pvDatabase, "Id_PK");
 }
 
 void mdtSqlCopierTest::bechSandBox()
@@ -524,6 +511,7 @@ void mdtSqlCopierTest::uniqueInsertExpressionTest()
    */
   UniqueInsertExpression exp;
   QVERIFY(exp.mappingState() == TableMappingItemState::MappingNotSet);
+  QCOMPARE(exp.matchItemsCount(), 0);
   QCOMPARE(exp.destinationFieldIndexList().count(), 0);
   QCOMPARE(exp.getSourceValueFieldIndexList().size(), 0);
   QVERIFY(exp.isNull());
@@ -539,11 +527,13 @@ void mdtSqlCopierTest::uniqueInsertExpressionTest()
   QVERIFY(exp.isNull());
   // Add a match item
   exp.addMatchItem(3, 4);
+  QCOMPARE(exp.matchItemsCount(), 1);
   QCOMPARE(exp.getSourceValueFieldIndexList().size(), 1);
   QCOMPARE(exp.getSourceValueFieldIndexList().at(0), 3);
   QVERIFY(!exp.isNull());
   // Add a match item
   exp.addMatchItem(5, 6);
+  QCOMPARE(exp.matchItemsCount(), 2);
   QCOMPARE(exp.getSourceValueFieldIndexList().size(), 2);
   QCOMPARE(exp.getSourceValueFieldIndexList().at(0), 3);
   QCOMPARE(exp.getSourceValueFieldIndexList().at(1), 5);
@@ -581,9 +571,134 @@ void mdtSqlCopierTest::uniqueInsertExpressionTest()
   QVERIFY(exp.mappingState() != TableMappingItemState::MappingNotSet);
   // Clear
   exp.clear();
+  QCOMPARE(exp.matchItemsCount(), 0);
   QCOMPARE(exp.destinationFieldIndexList().count(), 0);
   QCOMPARE(exp.getSourceValueFieldIndexList().size(), 0);
   QVERIFY(exp.mappingState() == TableMappingItemState::MappingNotSet);
+  /*
+   * Remove test
+   */
+  exp.addMatchItem(0, 1);
+  exp.addMatchItem(2, 3);
+  exp.addMatchItem(4, 5);
+  QCOMPARE(exp.matchItemsCount(), 3);
+  // Remove 2 last items
+  exp.removeMatchItems(1, 2);
+  QCOMPARE(exp.matchItemsCount(), 1);
+  QCOMPARE(exp.matchItemAt(0).destinationFieldIndex, 1);
+  // Remove last item
+  exp.removeMatchItems(0, 1);
+  QCOMPARE(exp.matchItemsCount(), 0);
+}
+
+void mdtSqlCopierTest::uniqueInsertExpressionModelTest()
+{
+  using mdt::sql::copier::UniqueInsertExpression;
+  using mdt::sql::copier::UniqueInsertExpressionModel;
+
+  QSqlDatabase db = pvDatabase;
+  mdtSqlDatabaseCopierTableMapping mapping;
+  UniqueInsertExpression exp;
+  UniqueInsertExpressionModel model(mapping, exp);
+  const int sourceFieldColumn = 3;
+  const int destinationFieldColumn = 1;
+  QTableView tableView;
+  QTreeView treeView;
+  QModelIndex index;
+
+  /*
+   * Setup table mapping
+   */
+  QVERIFY(mapping.setSourceTable("Client_tbl", db));
+  QVERIFY(mapping.setDestinationTable("Client2_tbl", db));
+  /*
+   * Add a match item:
+   *  Client2_tbl.FieldB = Client2_tbl.FieldA
+   */
+  exp.addMatchItem(2, 3);
+  QCOMPARE(model.rowCount(), 1);
+  // Check OP
+  index = model.index(0, 0);
+  QVERIFY(model.data(index).isNull());
+  // Check destination field name
+  index = model.index(0, sourceFieldColumn);
+  QCOMPARE(model.data(index), QVariant("FieldA"));
+  // Check source value field name
+  index = model.index(0, destinationFieldColumn);
+  QCOMPARE(model.data(index), QVariant("FieldB"));
+  /*
+   * Add a match item:
+   *  Client2_tbl.Name = Client2_tbl.Name
+   */
+  exp.addMatchItem(mdtSqlWhereOperator::And, 1, 1);
+  QCOMPARE(model.rowCount(), 2);
+  // Check OP
+  index = model.index(1, 0);
+  QCOMPARE(model.data(index), QVariant("AND"));
+  // Check destination field name
+  index = model.index(1, sourceFieldColumn);
+  QCOMPARE(model.data(index), QVariant("Name"));
+  // Check source value field name
+  index = model.index(1, destinationFieldColumn);
+  QCOMPARE(model.data(index), QVariant("Name"));
+  /*
+   * Edit match item at row 0:
+   *  Client2_tbl.FieldA = Client2_tbl.FieldB
+   */
+  // Update model
+  index = model.index(0, sourceFieldColumn);
+  QVERIFY(model.setData(index, "FieldB", Qt::DisplayRole));
+  index = model.index(0, destinationFieldColumn);
+  QVERIFY(model.setData(index, "FieldA", Qt::DisplayRole));
+  // Check destination field name
+  index = model.index(0, sourceFieldColumn);
+  QCOMPARE(model.data(index), QVariant("FieldB"));
+  // Check source value field name
+  index = model.index(0, destinationFieldColumn);
+  QCOMPARE(model.data(index), QVariant("FieldA"));
+  /*
+   * Add a match item via model:
+   *  Client2_tbl.Id_PK = Client2_tbl.Id_PK
+   */
+  // Insert item
+  QVERIFY(model.insertRows(1, 1));
+  QCOMPARE(model.rowCount(), 3);
+  // Update item
+  index = model.index(2, sourceFieldColumn);
+  QVERIFY(model.setData(index, "Id_PK", Qt::DisplayRole));
+  index = model.index(2, destinationFieldColumn);
+  QVERIFY(model.setData(index, "Id_PK", Qt::DisplayRole));
+  // Check destination field name
+  index = model.index(2, sourceFieldColumn);
+  QCOMPARE(model.data(index), QVariant("Id_PK"));
+  // Check source value field name
+  index = model.index(2, destinationFieldColumn);
+  QCOMPARE(model.data(index), QVariant("Id_PK"));
+  /*
+   * Remove item et row 1
+   */
+  QVERIFY(model.removeRows(1, 1));
+  QCOMPARE(model.rowCount(), 2);
+
+  /*
+   * Setup views
+   */
+  // Setup table view
+  tableView.setModel(&model);
+//   tableView.setItemDelegateForColumn(sourceTypeColumn, sourceTypeDelegate);
+//   tableView.setItemDelegateForColumn(sourceFieldNameColumn, sourceFieldNameDelegate);
+  tableView.resize(800, 200);
+  tableView.show();
+  // Setup tree view
+  treeView.setModel(&model);
+  treeView.show();
+
+  /*
+   * Play
+   */
+  while(tableView.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 void mdtSqlCopierTest::tableMappingItemTest()
@@ -1053,7 +1168,6 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
    */
   QCOMPARE(mapping.itemsCount(), 0);
   QVERIFY(mapping.mappingState() == TableMapping::MappingNotSet);
-  
 
   /*
    * Setup databases and tables
@@ -1064,20 +1178,34 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingTest()
   /*
    * Check fetching tables specific informations
    */
-  // Check for source table
+  // Check for source table name
   QCOMPARE(mapping.sourceTableName(), QString("Client_tbl"));
+  // Check getting source table field name
   QCOMPARE(mapping.sourceTableFieldCount(), 4);
   QCOMPARE(mapping.sourceTableFieldNameAt(0), QString("Id_PK"));
   QCOMPARE(mapping.sourceTableFieldNameAt(1), QString("Name"));
   QCOMPARE(mapping.sourceTableFieldNameAt(2), QString("FieldA"));
   QCOMPARE(mapping.sourceTableFieldNameAt(3), QString("FieldB"));
-  // Check for destination table
+  QCOMPARE(mapping.getSourceTableFieldNameList().size(), 4);
+  // Check getting source table field index
+  QCOMPARE(mapping.sourceTableFieldIndexOf("Id_PK"), 0);
+  QCOMPARE(mapping.sourceTableFieldIndexOf("Name"), 1);
+  QCOMPARE(mapping.sourceTableFieldIndexOf("FieldA"), 2);
+  QCOMPARE(mapping.sourceTableFieldIndexOf("FieldB"), 3);
+  // Check for destination table name
   QCOMPARE(mapping.destinationTableName(), QString("Client2_tbl"));
   QCOMPARE(mapping.destinationTableFieldCount(), 4);
+  // Check getting destination table field name
   QCOMPARE(mapping.destinationTableFieldNameAt(0), QString("Id_PK"));
   QCOMPARE(mapping.destinationTableFieldNameAt(1), QString("Name"));
   QCOMPARE(mapping.destinationTableFieldNameAt(2), QString("FieldA"));
   QCOMPARE(mapping.destinationTableFieldNameAt(3), QString("FieldB"));
+  QCOMPARE(mapping.getDestinationTableFieldNameList().size(), 4);
+  // Check getting destination table field index
+  QCOMPARE(mapping.destinationTableFieldIndexOf("Id_PK"), 0);
+  QCOMPARE(mapping.destinationTableFieldIndexOf("Name"), 1);
+  QCOMPARE(mapping.destinationTableFieldIndexOf("FieldA"), 2);
+  QCOMPARE(mapping.destinationTableFieldIndexOf("FieldB"), 3);
   /*
    * Check attributes without any mapping set
    */
@@ -1566,9 +1694,6 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   /*
    * Check selecting a field in source table
    */
-  
-  qDebug() << tm.getSourceFieldNameList();
-  
   // Check for row 1, witch is currently of Field type
   index = model.index(1, sourceFieldNameColumn);
   QVERIFY(index.isValid());
@@ -1761,17 +1886,31 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
   // Check for source table
   QCOMPARE(mapping.sourceTableName(), QString("CSV String")); /// \todo Define what name it should be
   QCOMPARE(mapping.sourceTableFieldCount(), 4);
+  // Check getting source table field name
   QCOMPARE(mapping.sourceTableFieldNameAt(0), QString("Id"));
   QCOMPARE(mapping.sourceTableFieldNameAt(1), QString("Name"));
   QCOMPARE(mapping.sourceTableFieldNameAt(2), QString("FieldA"));
   QCOMPARE(mapping.sourceTableFieldNameAt(3), QString("FieldB"));
+  QCOMPARE(mapping.getSourceTableFieldNameList().size(), 4);
+  // Check getting source table field index
+  QCOMPARE(mapping.sourceTableFieldIndexOf("Id"), 0);
+  QCOMPARE(mapping.sourceTableFieldIndexOf("Name"), 1);
+  QCOMPARE(mapping.sourceTableFieldIndexOf("FieldA"), 2);
+  QCOMPARE(mapping.sourceTableFieldIndexOf("FieldB"), 3);
   // Check for destination table
   QCOMPARE(mapping.destinationTableName(), QString("Client_tbl"));
   QCOMPARE(mapping.destinationTableFieldCount(), 4);
+  // Check getting destination table field name
   QCOMPARE(mapping.destinationTableFieldNameAt(0), QString("Id_PK"));
   QCOMPARE(mapping.destinationTableFieldNameAt(1), QString("Name"));
   QCOMPARE(mapping.destinationTableFieldNameAt(2), QString("FieldA"));
   QCOMPARE(mapping.destinationTableFieldNameAt(3), QString("FieldB"));
+  QCOMPARE(mapping.getDestinationTableFieldNameList().size(), 4);
+  // Check getting destination table field index
+  QCOMPARE(mapping.destinationTableFieldIndexOf("Id_PK"), 0);
+  QCOMPARE(mapping.destinationTableFieldIndexOf("Name"), 1);
+  QCOMPARE(mapping.destinationTableFieldIndexOf("FieldA"), 2);
+  QCOMPARE(mapping.destinationTableFieldIndexOf("FieldB"), 3);
   /*
    * Check attributes without any mapping set
    */
@@ -1810,7 +1949,7 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
   QCOMPARE(mapping.destinationFieldTypeNameListAtItem(0).size(), 1);
   QCOMPARE(mapping.destinationFieldTypeNameListAtItem(0).at(0), QString("INTEGER"));
   // Check getting source field names
-  fieldNames = mapping.getSourceFieldNameList();
+  fieldNames = mapping.getSourceTableFieldNameList();
   QCOMPARE(fieldNames.size(), 4);
   QCOMPARE(fieldNames.at(0), QString("Id"));
   QCOMPARE(fieldNames.at(1), QString("Name"));
@@ -2090,7 +2229,7 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
   QCOMPARE(mapping.destinationFieldTypeNameListAtItem(0).size(), 1);
   QCOMPARE(mapping.destinationFieldTypeNameListAtItem(0).at(0), QString("INTEGER"));
   // Check getting source field names
-  fieldNames = mapping.getSourceFieldNameList();
+  fieldNames = mapping.getSourceTableFieldNameList();
   QCOMPARE(fieldNames.size(), 4);
   QCOMPARE(fieldNames.at(0), QString("Id"));
   QCOMPARE(fieldNames.at(1), QString("Name"));

@@ -123,6 +123,14 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     virtual int destinationTableFieldCount() const = 0;
 
+    /*! \brief Get a list of available field names in source table
+     */
+    QStringList getSourceTableFieldNameList() const;
+
+    /*! \brief Get a list of available field names in destination table
+     */
+    QStringList getDestinationTableFieldNameList() const;
+
     /*! \brief Set source field at given item index
      *
      * The mapping item at given index will become
@@ -141,6 +149,13 @@ namespace mdt{ namespace sql{ namespace copier{
      * \pre fieldIndex must be in valid range
      */
     QString sourceTableFieldNameAt(int fieldIndex) const;
+
+    /*! \brief Get field index for given fieldName in source table
+     */
+    int sourceTableFieldIndexOf(const QString & fieldName) const
+    {
+      return fetchSourceTableFieldIndexOf(fieldName);
+    }
 
     /*! \brief Get source field name for map item at given index
      *
@@ -190,6 +205,13 @@ namespace mdt{ namespace sql{ namespace copier{
      * \pre fieldIndex must be in valid range
      */
     QString destinationTableFieldNameAt(int fieldIndex) const;
+
+    /*! \brief Get field index for given fieldName in destination table
+     */
+    int destinationTableFieldIndexOf(const QString & fieldName) const
+    {
+      return fetchDestinationTableFieldIndexOf(fieldName);
+    }
 
     /*! \brief Get destination field name list for map item at given index
      *
@@ -270,6 +292,14 @@ namespace mdt{ namespace sql{ namespace copier{
     TableMapping(const TableMapping &) = default;
     TableMapping & operator=(const TableMapping &) = default;
 
+    /*! \brief Get a list of available field names in source table
+     */
+    virtual QStringList fetchSourceTableFieldNameList() const = 0;
+
+    /*! \brief Get a list of available field names in destination table
+     */
+    virtual QStringList fetchDestinationTableFieldNameList() const = 0;
+
     /*! \brief Get field index of given field name in source table
      */
     virtual int fetchSourceTableFieldIndexOf(const QString & fieldName) const = 0;
@@ -291,6 +321,10 @@ namespace mdt{ namespace sql{ namespace copier{
       Q_UNUSED(fieldIndex);
       return NotAKey;
     }
+
+    /*! \brief Get field index of given field name in destination table
+     */
+    virtual int fetchDestinationTableFieldIndexOf(const QString & fieldName) const = 0;
 
     /*! \brief Get field name for given fieldIndex in destination table
      */

@@ -1,4 +1,4 @@
-format 210
+format 211
 
 classcanvas 128002 class_ref 2256514 // AbstractTableMappingItem
   classdiagramsettings hide_attributes no hide_operations no member_max_width 0 end

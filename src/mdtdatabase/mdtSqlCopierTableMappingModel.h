@@ -28,7 +28,6 @@
 #include <QModelIndex>
 #include <QSqlField>
 #include <QVariant>
-#include <QVariant>
 
 class mdtComboBoxItemDelegate;
 

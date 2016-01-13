@@ -34,6 +34,16 @@ TableMapping::TableMapping()
 {
 }
 
+QStringList TableMapping::getSourceTableFieldNameList() const
+{
+  return fetchSourceTableFieldNameList();
+}
+
+QStringList TableMapping::getDestinationTableFieldNameList() const
+{
+  return fetchDestinationTableFieldNameList();
+}
+
 void TableMapping::setSourceFieldAtItem(int itemIndex, const QString & fieldName)
 {
   Q_ASSERT(itemIndex >= 0);

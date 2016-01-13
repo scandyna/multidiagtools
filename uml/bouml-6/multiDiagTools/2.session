@@ -3,10 +3,6 @@ cleanlooks_style
 diagrams
   classdiagram_ref 1809154 // TableMapping
     869 911 100 4 12 0
-  classdiagram_ref 1862146 // SourceFieldExpression
-    120 106 100 4 0 0
-  classdiagram_ref 1876482 // SourceField
-    916 911 100 7 12 27
   classdiagram_ref 1883138 // TableMappingItem
     916 911 90 21 0 0
   classdiagram_ref 1883266 // AbstractTableMappingItem
@@ -17,17 +13,18 @@ diagrams
     120 106 100 4 0 0
   classdiagram_ref 1890178 // FieldMapping
     120 106 100 4 0 0
-  active  classdiagram_ref 1903490 // FieldIndexList
-    916 911 100 4 0 0
+  classdiagram_ref 1809282 // TableMapping
+    120 106 100 4 60 0
+  active  classdiagram_ref 1910018 // UniqueInsertExpressionModel
+    916 911 100 21 0 544
 end
 show_stereotypes
-selected operation_ref 3457666 // count
+selected operation_ref 3466114 // matchItemAt
 open
-  class_ref 2263938 // mdtSqlCopierQueryBuilder
   class_ref 2264066 // XYH
-  operation_ref 3458050 // append
-  operation_ref 3457922 // clear
-  operation_ref 3457666 // count
+  operation_ref 3465986 // matchItemsCount
+  operation_ref 3466114 // matchItemAt
+  class_ref 2283650 // UniqueInsertExpressionModel
   classdiagram_ref 1896962 // Edit
   class_ref 2270594 // TableMappingEditHelper
   

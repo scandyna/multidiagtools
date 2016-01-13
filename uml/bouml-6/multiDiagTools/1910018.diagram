@@ -1,0 +1,47 @@
+format 211
+
+classcanvas 128002 class_ref 2283650 // UniqueInsertExpressionModel
+  classdiagramsettings member_max_width 0 end
+  xyz 183 126 2000
+end
+classcanvas 128130 class_ref 147202 // QAbstractTableModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 322 42 2000
+end
+classcanvas 128386 class_ref 2257026 // UniqueInsertMatchExpressionItem
+  classdiagramsettings member_max_width 0 end
+  xyz 839 345 2000
+end
+classcanvas 128514 class_ref 2256898 // UniqueInsertExpression
+  classdiagramsettings member_max_width 0 end
+  xyz 648 93 3005
+end
+classcanvas 128770 class_ref 2174082 // TableMapping
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 42 178 3011
+end
+relationcanvas 128258 relation_ref 2547842 // <generalisation>
+  decenter_begin 489
+  decenter_end 469
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 2534530 // <directional composition>
+  decenter_begin 493
+  decenter_end 484
+  from ref 128514 z 3006 to ref 128386
+  no_role_a no_role_b
+  multiplicity_a_pos 968 318 3000 no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 2547970 // <unidirectional association>
+  from ref 128002 z 3012 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 2548098 // <unidirectional association>
+  from ref 128002 z 3006 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

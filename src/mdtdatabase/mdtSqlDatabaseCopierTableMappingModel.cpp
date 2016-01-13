@@ -37,7 +37,7 @@ bool mdtSqlDatabaseCopierTableMappingModel::setSourceTable(const QString & table
   if( (ok) && (delegate != nullptr) ){
     delegate->clear();
     delegate->addItem("");
-    delegate->addItems(pvMapping.getSourceFieldNameList());
+    delegate->addItems(pvMapping.getSourceTableFieldNameList());
   }
   endResetModel();
   if(!ok){

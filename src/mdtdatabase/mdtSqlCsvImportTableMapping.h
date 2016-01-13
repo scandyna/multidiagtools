@@ -74,13 +74,6 @@ class mdtSqlCsvImportTableMapping : public mdt::sql::copier::TableMapping
     return pvDestinationTable.fieldCount();
   }
 
-  /*! \brief Get list of field names of source table
-   */
-  QStringList getSourceFieldNameList() const
-  {
-    return sourceTable().getFieldNameList();
-  }
-
   /*! \brief Generate field mapping by name
    *
    * Will first reset field mapping.
@@ -105,6 +98,20 @@ class mdtSqlCsvImportTableMapping : public mdt::sql::copier::TableMapping
 
  private:
 
+  /*! \brief Get a list of available field names in source table
+   */
+  QStringList fetchSourceTableFieldNameList() const override
+  {
+    return sourceTable().getFieldNameList();
+  }
+
+  /*! \brief Get a list of available field names in destination table
+   */
+  QStringList fetchDestinationTableFieldNameList() const override
+  {
+    return pvDestinationTable.getFieldNameList();
+  }
+
   /*! \brief Get field index of given field name in source table
    */
   int fetchSourceTableFieldIndexOf(const QString & fieldName) const override
@@ -124,6 +131,13 @@ class mdtSqlCsvImportTableMapping : public mdt::sql::copier::TableMapping
   QString fetchSourceTableFieldTypeNameAt(int fieldIndex) const override
   {
     return sourceTable().fieldTypeName(fieldIndex);
+  }
+
+  /*! \brief Get field index of given field name in destination table
+   */
+  int fetchDestinationTableFieldIndexOf(const QString & fieldName) const override
+  {
+    return pvDestinationTable.fieldIndex(fieldName);
   }
 
   /*! \brief Get field name for given fieldIndex in destination table

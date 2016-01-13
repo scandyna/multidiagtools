@@ -147,8 +147,8 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void addMatchItem(int sourceValueFieldIndex, int destinationFieldIndex)
     {
-      Q_ASSERT(sourceValueFieldIndex >= 0);
-      Q_ASSERT(destinationFieldIndex >= 0);
+//       Q_ASSERT(sourceValueFieldIndex >= 0);
+//       Q_ASSERT(destinationFieldIndex >= 0);
       pvMatchItems.emplace_back(sourceValueFieldIndex, destinationFieldIndex);
     }
 
@@ -164,9 +164,54 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void addMatchItem(mdtSqlWhereOperator::Type operatorWithPrevious, int sourceValueFieldIndex, int destinationFieldIndex)
     {
-      Q_ASSERT(sourceValueFieldIndex >= 0);
-      Q_ASSERT(destinationFieldIndex >= 0);
+//       Q_ASSERT(sourceValueFieldIndex >= 0);
+//       Q_ASSERT(destinationFieldIndex >= 0);
       pvMatchItems.emplace_back(operatorWithPrevious, sourceValueFieldIndex, destinationFieldIndex);
+    }
+
+    /*! \brief Remove match items
+     *
+     * \param startIndex Index of first item to remove
+     * \param count Count of items to remove, starting from startIndex
+     * \pre startIndex + count must be <= matchItemsCount()
+     */
+    void removeMatchItems(int startIndex, int count)
+    {
+      Q_ASSERT((startIndex + count) <= matchItemsCount());
+
+      auto first = pvMatchItems.cbegin() + startIndex;
+      auto last = first + count;
+
+      pvMatchItems.erase(first, last);
+    }
+
+    /*! \brief Get count of match items
+     */
+    int matchItemsCount() const
+    {
+      return pvMatchItems.size();
+    }
+
+    /*! \brief Set match item at given itemIndex
+     *
+     * \pre itemIndex must be valid
+     */
+    void setMatchItemAt(int itemIndex, const UniqueInsertMatchExpressionItem & item)
+    {
+      Q_ASSERT(itemIndex >= 0);
+      Q_ASSERT(itemIndex < matchItemsCount());
+      pvMatchItems[itemIndex] = item;
+    }
+
+    /*! \brief Get match item at given itemIndex
+     *
+     * \pre itemIndex must be valid
+     */
+    UniqueInsertMatchExpressionItem matchItemAt(int itemIndex) const
+    {
+      Q_ASSERT(itemIndex >= 0);
+      Q_ASSERT(itemIndex < matchItemsCount());
+      return pvMatchItems[itemIndex];
     }
 
     /*! \brief Get list of source value field indexes

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -57,7 +57,7 @@ void mdtSqlDatabaseCopierTableMappingDialog::setMapping(const mdtSqlDatabaseCopi
   // Setup source field selection delegate
   pvSourceFieldSelectionDelegate->clear();
   pvSourceFieldSelectionDelegate->addItem("");
-  pvSourceFieldSelectionDelegate->addItems(m.getSourceFieldNameList());
+  pvSourceFieldSelectionDelegate->addItems(m.getSourceTableFieldNameList());
   // Update source and destination table names
   previousCbIndex = cbSourceTable->currentIndex();
   newCbIndex = cbSourceTable->findText(m.sourceTableName());

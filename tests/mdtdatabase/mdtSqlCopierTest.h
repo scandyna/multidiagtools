@@ -36,7 +36,6 @@ class mdtSqlCopierTest : public mdtTest
  private slots:
 
   void sandbox();
-  void sandbox2();
   void bechSandBox();
 
   void initTestCase();
@@ -44,23 +43,16 @@ class mdtSqlCopierTest : public mdtTest
 
   void sqlFieldSetupDataTest();
 
-//   void sourceFieldIndexTest();
-//   void sourceFixedValueTest();
-//   void sourceFieldExpressionTest();
-//   void sourceFieldTest();
-//   void fieldMappingDataTest();
-
   void fieldIndexListTest();
 
   void fieldMappingTest();
   void fixedValueTest();
   void uniqueInsertExpressionTest();
+  void uniqueInsertExpressionModelTest();
   void tableMappingItemTest();
 
   void tableMappingEditHelperContainsDFIdexesTest();
   void tableMappingEditHelperContainsDFIdexesTest_data();
-//   void tableMappingEditHelperItemIdexByDFIndexesTest();
-//   void tableMappingEditHelperItemIdexByDFIndexesTest_data();
   void tableMappingEditHelperTest();
 
   void sqlDatabaseCopierTableMappingTest();
