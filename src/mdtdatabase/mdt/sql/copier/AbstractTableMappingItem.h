@@ -178,6 +178,16 @@ namespace mdt{ namespace sql{ namespace copier{
       qDebug() << "CPY AbstractTableMappingItem::AbstractTableMappingItem(other) - ref: " << ref.load();
     }
 
+    /*! \brief Copy members from other to this
+     *
+     * Can be used by subclass if operator=() is defined
+     */
+    void copyMembersOfAbstract(const AbstractTableMappingItem & other)
+    {
+      pvMappingState = other.pvMappingState;
+      pvDestinationFieldIndexList = other.pvDestinationFieldIndexList;
+    }
+
     TableMappingItemState pvMappingState;
 //     QVector<int> pvDestinationFieldIndexList;
     FieldIndexList pvDestinationFieldIndexList;

@@ -49,11 +49,16 @@ class mdtSqlCopierTest : public mdtTest
   void fixedValueTest();
   void uniqueInsertExpressionTest();
   void uniqueInsertExpressionModelTest();
+  void uniqueInsertExpressionDialogTest();
   void tableMappingItemTest();
 
   void tableMappingEditHelperContainsDFIdexesTest();
   void tableMappingEditHelperContainsDFIdexesTest_data();
   void tableMappingEditHelperTest();
+
+  void databaseCopierTableMappingTableFetchTest();
+  void databaseCopierTableMappingFieldMapTest();
+  void databaseCopierTableMappingFixedValueTest();
 
   void sqlDatabaseCopierTableMappingTest();
   void sqlDatabaseCopierTableMappingStateTest();

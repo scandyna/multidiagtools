@@ -63,6 +63,7 @@ set (SOURCES_FILES
           mdtSqlCopierTableMappingModel.cpp
           mdtSqlCopierDataMapping.cpp
           mdt/sql/copier/UniqueInsertExpressionModel.cpp
+          mdt/sql/copier/UniqueInsertExpressionDialog.cpp
           # Database copier classes
           mdtSqlDatabaseCopierTableMapping.cpp
           mdtSqlDatabaseCopierTableMappingModel.cpp

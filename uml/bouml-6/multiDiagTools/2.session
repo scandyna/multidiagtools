@@ -1,30 +1,33 @@
-window_sizes 1280 964 358 916 911 0
+window_sizes 1280 964 399 875 911 0
 cleanlooks_style
 diagrams
   classdiagram_ref 1809154 // TableMapping
     869 911 100 4 12 0
   classdiagram_ref 1883138 // TableMappingItem
-    916 911 90 21 0 0
+    867 903 90 21 0 0
   classdiagram_ref 1883266 // AbstractTableMappingItem
     916 916 100 21 0 0
   classdiagram_ref 1883394 // UniqueInsertExpression
-    916 911 100 18 0 0
+    875 911 100 18 0 0
   classdiagram_ref 1883522 // ReferringTableInsertExpression
     120 106 100 4 0 0
   classdiagram_ref 1890178 // FieldMapping
     120 106 100 4 0 0
   classdiagram_ref 1809282 // TableMapping
     120 106 100 4 60 0
-  active  classdiagram_ref 1910018 // UniqueInsertExpressionModel
-    916 911 100 21 0 544
+  classdiagram_ref 1910018 // UniqueInsertExpressionModel
+    916 911 100 21 0 339
+  active  classdiagram_ref 1916546 // UniqueInsertExpressionDialog
+    875 911 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 3466114 // matchItemAt
+selected operation_ref 3479298 // UniqueInsertExpressionDialog
 open
   class_ref 2264066 // XYH
-  operation_ref 3465986 // matchItemsCount
-  operation_ref 3466114 // matchItemAt
+  operation_ref 3472642 // setUniqueInsertExpression
+  operation_ref 3472770 // uniqueInsertExpression
   class_ref 2283650 // UniqueInsertExpressionModel
+  class_ref 2290178 // UniqueInsertExpressionDialog
   classdiagram_ref 1896962 // Edit
   class_ref 2270594 // TableMappingEditHelper
   

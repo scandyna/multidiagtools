@@ -111,6 +111,17 @@ namespace mdt{ namespace sql{ namespace copier{
       qDebug() << "CPY  UniqueInsertExpression::UniqueInsertExpression(other) - ref: " << ref.load();
     }
 
+    /*! \brief Copy assignment
+     */
+    UniqueInsertExpression & operator=(const UniqueInsertExpression & other)
+    {
+      if(&other != this){
+        copyMembersOfAbstract(other);
+        pvMatchItems = other.pvMatchItems;
+      }
+      return *this;
+    }
+
     /*! \brief Polymorphic copy
      */
     UniqueInsertExpression* clone() const override

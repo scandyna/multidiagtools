@@ -92,7 +92,6 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Get list of destination field indexes
      */
-//     QVector<int> destinationFieldIndexList() const;
     FieldIndexList destinationFieldIndexList() const;
 
     /*! \brief Set fixed value
@@ -108,6 +107,14 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Set a unique insert expression
      */
     void setUniqueInsertExpression(const UniqueInsertExpression & exp);
+
+    /*! \brief Get a unique insert expression
+     *
+     * If this item is UniqueInsertExpressionType,
+     *  the current expression is returned,
+     *  else, a default constructed UniqueInsertExpression is returned.
+     */
+    UniqueInsertExpression uniqueInsertExpression() const;
 
     /*! \brief Set mapping state for this mapping item
      */

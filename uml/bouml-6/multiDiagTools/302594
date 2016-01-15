@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 14
+  revision 17
   modified_by 2 "philippe"
   // class settings
   
@@ -258,6 +258,37 @@ ${inlines}
 
       operation 3415682 "fixedValue"
 	cpp_virtual public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3472642 "setUniqueInsertExpression"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "exp" type class_ref 2256898 // UniqueInsertExpression
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3472770 "uniqueInsertExpression"
+	public return_type class_ref 2256898 // UniqueInsertExpression
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1036,11 +1067,13 @@ ${inlines}
 
       operation 3465346 "UniqueInsertExpressionModel"
 	public explicit_return_type ""
-	nparams 1
+	nparams 3
+	  param in name "tm" type class_ref 2174082 // TableMapping
+	  param in name "exp" type class_ref 2256898 // UniqueInsertExpression
 	  param in name "parent" type class_ref 138626 // QObject
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${volatile}${throw};
 "
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${volatile}${throw} 
 {
   ${body}}
 "
@@ -1132,6 +1165,11 @@ ${inlines}
 	    classrelation_ref 2564610 // <unidirectional association>
 	  b parent class_ref 2256898 // UniqueInsertExpression
       end
+    end
+
+    classdiagram 1916546 "UniqueInsertExpressionDialog"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
 
     classdiagram 1883522 "ReferringTableInsertExpression"
@@ -1369,6 +1407,57 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 2290178 "UniqueInsertExpressionDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2571138 // <unidirectional association>
+	relation 2554626 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2571138 // <unidirectional association>
+	  b parent class_ref 2174082 // TableMapping
+      end
+
+      classrelation 2571266 // <directional composition>
+	relation 2554754 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2571266 // <directional composition>
+	  b parent class_ref 2283650 // UniqueInsertExpressionModel
+      end
+
+      operation 3479298 "UniqueInsertExpressionDialog"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "tm" type class_ref 2174082 // TableMapping
+	  param in name "itemIndex" explicit_type "int"
+	  param in name "parent" type class_ref 316162 // QWidget
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, const ${t2} & ${p2}${)}${volatile}${throw} 
 {
   ${body}}
 "

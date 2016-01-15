@@ -110,6 +110,16 @@ void TableMappingItem::setUniqueInsertExpression(const UniqueInsertExpression & 
   pvShared = new UniqueInsertExpression(exp);
 }
 
+UniqueInsertExpression TableMappingItem::uniqueInsertExpression() const
+{
+  if(pvType == UniqueInsertExpressionType){
+    const auto *exp = dynamic_cast<const UniqueInsertExpression*>(pvShared.constData());
+    Q_ASSERT(exp != nullptr);
+    return *exp;
+  }
+  return UniqueInsertExpression();
+}
+
 void TableMappingItem::setMappingState(TableMappingItemState state)
 {
   Q_ASSERT(pvShared);
