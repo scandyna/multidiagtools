@@ -91,7 +91,8 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Copy constructor (used by clone)
      */
     FixedValue(const FixedValue & other)
-     : AbstractTableMappingItem(other)
+     : AbstractTableMappingItem(other),
+       pvValue(other.pvValue)
     {
       qDebug() << "CPY  FixedValue::FixedValue(other) - ref: " << ref.load();
     }

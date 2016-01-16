@@ -54,13 +54,20 @@ class mdtSqlCopierTest : public mdtTest
 
   void tableMappingEditHelperContainsDFIdexesTest();
   void tableMappingEditHelperContainsDFIdexesTest_data();
+  void tableMappingEditHelperItemIndexToRemoveTest();
+  void tableMappingEditHelperItemIndexToRemoveTest_data();
+  void tableMappingEditHelperDfiToAddTest();
+  void tableMappingEditHelperDfiToAddTest_data();
+  void tableMappingEditHelperItemDfiToAddTest();
+  void tableMappingEditHelperItemDfiToAddTest_data();
+  
   void tableMappingEditHelperTest();
 
+  void databaseCopierTableMappingUpdateItemsTest();
   void databaseCopierTableMappingTableFetchTest();
   void databaseCopierTableMappingFieldMapTest();
   void databaseCopierTableMappingFixedValueTest();
 
-  void sqlDatabaseCopierTableMappingTest();
   void sqlDatabaseCopierTableMappingStateTest();
   void sqlDatabaseCopierTableMappingSqliteTest();
   void sqlDatabaseCopierTableMappingModelTest();

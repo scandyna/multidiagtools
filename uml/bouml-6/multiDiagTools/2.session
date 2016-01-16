@@ -13,23 +13,19 @@ diagrams
     120 106 100 4 0 0
   classdiagram_ref 1890178 // FieldMapping
     120 106 100 4 0 0
-  classdiagram_ref 1809282 // TableMapping
-    120 106 100 4 60 0
-  classdiagram_ref 1910018 // UniqueInsertExpressionModel
-    916 911 100 21 0 339
-  active  classdiagram_ref 1916546 // UniqueInsertExpressionDialog
-    875 911 100 4 0 0
+  active  classdiagram_ref 1896962 // Edit
+    875 911 100 18 0 0
 end
 show_stereotypes
-selected operation_ref 3479298 // UniqueInsertExpressionDialog
+selected operation_ref 3486466 // getDfiListToAdd
 open
   class_ref 2264066 // XYH
-  operation_ref 3472642 // setUniqueInsertExpression
-  operation_ref 3472770 // uniqueInsertExpression
-  class_ref 2283650 // UniqueInsertExpressionModel
-  class_ref 2290178 // UniqueInsertExpressionDialog
-  classdiagram_ref 1896962 // Edit
-  class_ref 2270594 // TableMappingEditHelper
+  classview_ref 927490 // TableMappingItem
+  operation_ref 3486338 // itemContainsDfiList
+  operation_ref 3451138 // getItemsToRemoveIndexList
+  operation_ref 3486466 // getDfiListToAdd
+  attribute_ref 2287234 // itemIndex
+  attribute_ref 2287362 // destinationFieldIndexList
   
   package_ref 260866 // Boost
 end

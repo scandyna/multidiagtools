@@ -85,6 +85,28 @@ namespace mdt{ namespace sql{ namespace copier{
       return pvItems.size();
     }
 
+    /*! \brief Set item at itemIndex
+     *
+     * Depending on destination field index count
+     *  of item, this can change the table mapping.
+     *  itemsCount() can also return a different size
+     *  after item was set.
+     *
+     * \pre itemIndex must be in valid range
+     */
+    void setItemAt(int itemIndex, TableMappingItem item);
+
+    /*! \brief Get map item at itemIndex
+     *
+     * \pre itemIndex must be in valid range
+     */
+    TableMappingItem itemAt(int itemIndex) const
+    {
+      Q_ASSERT(itemIndex >= 0);
+      Q_ASSERT(itemIndex < pvItems.size());
+      return pvItems.at(itemIndex);
+    }
+
     /*! \brief Get table mapping item's mapping state
      *
      * \pre index must be in a valid range

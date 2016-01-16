@@ -91,7 +91,8 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Copy constructor (used by clone)
      */
     FieldMapping(const FieldMapping & other)
-     : AbstractTableMappingItem(other)
+     : AbstractTableMappingItem(other),
+       pvSourceFieldIndex(other.pvSourceFieldIndex)
     {
       qDebug() << "CPY  FieldMapping::FieldMapping(other) - ref: " << ref.load();
     }

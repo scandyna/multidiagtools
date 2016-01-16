@@ -34,6 +34,16 @@ TableMapping::TableMapping()
 {
 }
 
+void TableMapping::setItemAt(int itemIndex, TableMappingItem item)
+{
+  Q_ASSERT(itemIndex >= 0);
+  Q_ASSERT(itemIndex < pvItems.size());
+
+  updateMappingItemState(item);
+  TableMappingEditHelper::insertItem(itemIndex, item, pvItems);
+  updateTableMappingState();
+}
+
 QStringList TableMapping::getSourceTableFieldNameList() const
 {
   return fetchSourceTableFieldNameList();
