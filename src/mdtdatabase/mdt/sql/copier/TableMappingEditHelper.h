@@ -95,38 +95,56 @@ namespace mdt{ namespace sql{ namespace copier{
      * \param itemDfiList List of destination field indexes of item to insert
      * \param dfiList List of destination field indexes of item to compare
      */
-    static FieldIndexList getDfiToAddList(const FieldIndexList & itemDfiList, const FieldIndexList & dfiList)
-    {
-      FieldIndexList toAddDfiList;
+//     static FieldIndexList getDfiToAddList(const FieldIndexList & itemDfiList, const FieldIndexList & dfiList)
+//     {
+//       FieldIndexList toAddDfiList;
+// 
+// //       if(dfiList.count() < 2){
+// //         return toAddDfiList;
+// //       }
+//       // Get list of newItem's destination field indexes, excluding those of currentItem's ones
+//       // Get itemDfiList (item to insert), excluding those of dfiList (item to compare)
+//       std::set_difference( itemDfiList.cbegin(), itemDfiList.cend(),
+//                            dfiList.cbegin(), dfiList.cend(),
+//                            std::back_inserter(toAddDfiList) );
+// 
+//       return toAddDfiList;
+//     }
 
-//       if(dfiList.count() < 2){
-//         return toAddDfiList;
-//       }
-      // Get list of newItem's destination field indexes, excluding those of currentItem's ones
-      // Get itemDfiList (item to insert), excluding those of dfiList (item to compare)
-      std::set_difference( itemDfiList.cbegin(), itemDfiList.cend(),
-                           dfiList.cbegin(), dfiList.cend(),
-                           std::back_inserter(toAddDfiList) );
-
-      return toAddDfiList;
-    }
-
-    /*! \brief Get a list of items destination field indexes to add when inserting a item
+    /*! \brief Get a list of destination field indexes to create to end up with a complete table mapping
      *
      * \param itemDfiList List of destination field indexes of item to insert
-     * \param allDfi List of destination field index of all items
+     * \param tmDfiList List of destination field index of all items, excluding those to remove
      */
-    static std::vector<FieldIndexList> getItemsToAddDfiList(const FieldIndexList & itemDfiList, const std::vector<FieldIndexList> & allDfi)
+    static FieldIndexList getItemsToAddDfiList(const FieldIndexList & itemDfiList, const std::vector<FieldIndexList> & tmDfiList)
     {
-      std::vector<FieldIndexList> itemIndexList;
+      FieldIndexList toCreateDfiList;
+      FieldIndexList currentDfiList;
+      FieldIndexList newDfiList;
 
-//       for(size_t index = 0; index < allDfi.size(); ++index){
-//         if(itemContainsDfiList(allDfi[index], itemDfiList)){
-//           itemIndexList.push_back(index);
-//         }
-//       }
+      // Build current DFI list, which contains those of given table mapping
+      for(const auto & dfiList : tmDfiList){
+        std::copy(dfiList.cbegin(), dfiList.cend(), std::back_inserter(currentDfiList));
+      }
+      // Add item's to insert DFI list to current
+      std::copy(itemDfiList.cbegin(), itemDfiList.cend(), std::back_inserter(currentDfiList));
+      // Get the max DFI in current DFI list
+      auto maxDfiIt = std::max_element(currentDfiList.cbegin(), currentDfiList.cend());
+      if(maxDfiIt == currentDfiList.cend()){
+        return toCreateDfiList;
+      }
+      int maxDfi = *maxDfiIt;
+      // Create new DFI list
+      newDfiList.reserve(maxDfi+1);
+      for(int i = 0; i <= maxDfi; ++i){
+        newDfiList.append(i);
+      }
+      // Build list of DFI to create, which is newDfiList - currentDfiList
+      std::set_difference( newDfiList.cbegin(), newDfiList.cend(),
+                           currentDfiList.cbegin(), currentDfiList.cend(),
+                           std::back_inserter(toCreateDfiList) );
 
-      return itemIndexList;
+      return toCreateDfiList;
     }
 
     /*! \brief Check if given item refers to to at least one of given detsination field indexes

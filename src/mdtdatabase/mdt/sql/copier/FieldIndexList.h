@@ -55,6 +55,13 @@ namespace mdt{ namespace sql{ namespace copier{
       return *this;
     }
 
+    /*! \brief Reserve memory for size elements
+     */
+    void reserve(int size)
+    {
+      pvIndexes.reserve(size);
+    }
+
     /*! \brief Append a field index
      */
     void append(int fieldIndex)

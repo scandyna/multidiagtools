@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 18
+  revision 19
   modified_by 2 "philippe"
   // class settings
   
@@ -1890,30 +1890,11 @@ ${inlines}
 	
       end
 
-      operation 3486466 "getDfiListToAdd"
-	class_operation public return_type class_ref 2277122 // FieldIndexList
-	nparams 2
-	  param in name "itemDfi" type class_ref 2277122 // FieldIndexList
-	  param in name "dfi" type class_ref 2277122 // FieldIndexList
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 3486082 "getItemsToAddDfiList"
-	stereotype "vector"
 	class_operation public return_type class_ref 2277122 // FieldIndexList
-	multiplicity "*"
 	nparams 2
-	  param in name "dfil" type class_ref 2277122 // FieldIndexList
-	  param in name "allDfi" type class_ref 2277122 // FieldIndexList
+	  param in name "itemDfiList" type class_ref 2277122 // FieldIndexList
+	  param in name "tmDfiList" type class_ref 2277122 // FieldIndexList
 	multiplicity "*"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
