@@ -75,19 +75,35 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Get a list of item indexes to remove when inserting a item
      *
      * \param itemDfiList List of destination field indexes of item to insert
-     * \param allDfi List of destination field index of all items
+     * \param tmItemList All items from table mapping
      */
-    static std::vector<int> getItemsToRemoveIndexList(const FieldIndexList & itemDfiList, const std::vector<FieldIndexList> & allDfi)
+    ///static std::vector<int> getItemsToRemoveIndexList(const FieldIndexList & itemDfiList, const std::vector<FieldIndexList> & allDfi)
+    static std::vector<int> getItemsToRemoveIndexList(const FieldIndexList & itemDfiList, const QVector<TableMappingItem> & tmItemList)
     {
       std::vector<int> itemIndexList;
 
-      for(size_t index = 0; index < allDfi.size(); ++index){
-        if(itemContainsDfiList(allDfi[index], itemDfiList)){
+      for(int index = 0; index < tmItemList.size(); ++index){
+        if(itemContainsDfiList(tmItemList.at(index).destinationFieldIndexList(), itemDfiList)){
           itemIndexList.push_back(index);
         }
       }
 
       return itemIndexList;
+    }
+
+    /*! \brief Remove items to remove when inserting a item
+     *
+     * \param itemDfiList List of destination field indexes of item to insert
+     * \param tmItemList All items from table mapping
+     */
+    static void removeItems(const FieldIndexList & itemDfiList, QVector<TableMappingItem> & tmItemList)
+    {
+      auto pred = [&itemDfiList](const TableMappingItem & item){ return itemContainsDfiList(item.destinationFieldIndexList(), itemDfiList); };
+      auto newEnd = std::remove_if(tmItemList.begin(), tmItemList.end(), pred);
+      if(newEnd == tmItemList.end()){
+        return;
+      }
+      tmItemList.erase(newEnd);
     }
 
     /*! \brief Get a list of destination field indexes to add when inserting a item

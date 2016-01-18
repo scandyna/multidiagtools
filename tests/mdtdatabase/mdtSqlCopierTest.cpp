@@ -1060,16 +1060,48 @@ void mdtSqlCopierTest::tableMappingEditHelperItemIndexToRemoveTest()
 {
   using mdt::sql::copier::TableMappingEditHelper;
   using mdt::sql::copier::FieldIndexList;
+  using mdt::sql::copier::TableMappingItem;
+  using mdt::sql::copier::UniqueInsertExpression;
 
   QFETCH(QVector<FieldIndexList>, allItems);
   QFETCH(FieldIndexList, item);
   QFETCH(QVector<int>, expectedItemsToRemove);
+  QFETCH(QVector<FieldIndexList>, expectedNewAllItems);
+  QVector<TableMappingItem> tmItemsList;
+//   UniqueInsertExpression exp;
 
-  auto itemsToRemove = TableMappingEditHelper::getItemsToRemoveIndexList(item, allItems.toStdVector());
-
+  /*
+   * Check getting list of indexes to remove
+   */
+  // Build a expression with DFI list for each item in allItems
+  for(const auto & dfiList : allItems){
+    TableMappingItem tmi(TableMappingItem::UniqueInsertExpressionType);
+    UniqueInsertExpression exp;
+    for(int dfi : dfiList){
+      exp.addDestinationFieldIndex(dfi);
+    }
+    tmi.setUniqueInsertExpression(exp);
+    tmItemsList.append(tmi);
+  }
+  // Get indexes of items to remove
+  auto itemsToRemove = TableMappingEditHelper::getItemsToRemoveIndexList(item, tmItemsList);
+  // Check
   QCOMPARE((int)itemsToRemove.size(), expectedItemsToRemove.size());
   for(int i = 0; i < expectedItemsToRemove.size(); ++i){
     QCOMPARE(itemsToRemove.at(i) , expectedItemsToRemove.at(i));
+  }
+  /*
+   * Check removin items
+   */
+  // Remove items
+  TableMappingEditHelper::removeItems(item, tmItemsList);
+  // Check
+  QCOMPARE(tmItemsList.size(), expectedNewAllItems.size());
+  for(int i = 0; i < expectedNewAllItems.size(); ++i){
+    QCOMPARE(tmItemsList.at(i).destinationFieldIndexList().count(), expectedNewAllItems.at(i).count());
+    for(int k = 0; k < expectedNewAllItems.at(i).count(); ++k){
+      QCOMPARE(tmItemsList.at(i).destinationFieldIndexList().at(k), expectedNewAllItems.at(i).at(k));
+    }
   }
 }
 
@@ -1080,16 +1112,18 @@ void mdtSqlCopierTest::tableMappingEditHelperItemIndexToRemoveTest_data()
   QTest::addColumn<QVector<FieldIndexList>>("allItems");
   QTest::addColumn<FieldIndexList>("item");
   QTest::addColumn<QVector<int>>("expectedItemsToRemove");
+  QTest::addColumn<QVector<FieldIndexList>>("expectedNewAllItems");
 
   QVector<FieldIndexList> allItems;
   FieldIndexList item;
   QVector<int> expectedItemsToRemove;
+  QVector<FieldIndexList> expectedNewAllItems;
   FieldIndexList dfi;
 
   /*
    * Empty TM
    */
-  QTest::newRow("EmptyTM") << allItems << item << expectedItemsToRemove;
+  QTest::newRow("EmptyTM") << allItems << item << expectedItemsToRemove << expectedNewAllItems;
   /*
    * TM:
    * --------------
@@ -1109,126 +1143,67 @@ void mdtSqlCopierTest::tableMappingEditHelperItemIndexToRemoveTest_data()
    */
   // Setup item
   item = {0};
-  // Setup expected TM
+  // Setup expected list of indexes to remove from TM
   expectedItemsToRemove.clear();
+  // Setup expected TM
+  expectedNewAllItems = allItems;
   // Add to check list
-  QTest::newRow("") << allItems << item << expectedItemsToRemove;
+  QTest::newRow("") << allItems << item << expectedItemsToRemove << expectedNewAllItems;
   /*
    * Item's DFI: 1
    * Index of items to remove: 0
    */
   // Setup item
   item = {1};
-  // Setup expected TM
+  // Setup expected list of indexes to remove from TM
   expectedItemsToRemove.clear();
   expectedItemsToRemove << 0;
+  // Setup expected TM
+  expectedNewAllItems.clear();
   // Add to check list
-  QTest::newRow("") << allItems << item << expectedItemsToRemove;
+  QTest::newRow("") << allItems << item << expectedItemsToRemove << expectedNewAllItems;
   /*
    * Item's DFI: 0,1
    * Index of items to remove: 0
    */
   // Setup item
   item = {0,1};
-  // Setup expected TM
+  // Setup expected list of indexes to remove from TM
   expectedItemsToRemove.clear();
   expectedItemsToRemove << 0;
+  // Setup expected TM
+  expectedNewAllItems.clear();
   // Add to check list
-  QTest::newRow("") << allItems << item << expectedItemsToRemove;
+  QTest::newRow("") << allItems << item << expectedItemsToRemove << expectedNewAllItems;
   /*
    * Item's DFI: 0,2
    * Index of items to remove: -
    */
   // Setup item
   item = {0,2};
-  // Setup expected TM
+  // Setup expected list of indexes to remove from TM
   expectedItemsToRemove.clear();
+  // Setup expected TM
+  expectedNewAllItems = allItems;
   // Add to check list
-  QTest::newRow("") << allItems << item << expectedItemsToRemove;
+  QTest::newRow("") << allItems << item << expectedItemsToRemove << expectedNewAllItems;
 
 }
 
-// void mdtSqlCopierTest::tableMappingEditHelperDfiToAddTest()
+// void mdtSqlCopierTest::tableMappingEditHelperRemoveItemsTest()
 // {
 //   using mdt::sql::copier::TableMappingEditHelper;
-//   using mdt::sql::copier::FieldIndexList;
+//   using mdt::sql::copier::TableMappingItem;
 // 
-//   QFETCH(FieldIndexList, toInsertItem);
-//   QFETCH(FieldIndexList, toCompareItem);
-//   QFETCH(FieldIndexList, expectedDfiListToAdd);
+//   QVector<TableMappingItem> itemsList;
 // 
-//   auto dfiListToAdd = TableMappingEditHelper::getDfiToAddList(toInsertItem, toCompareItem);
+//   QVector<int> v{1,2,3,4,5};
 // 
-//   QCOMPARE(dfiListToAdd.count(), expectedDfiListToAdd.count());
-//   for(int i = 0; i < expectedDfiListToAdd.count(); ++i){
-//     QCOMPARE(dfiListToAdd.at(i), expectedDfiListToAdd.at(i));
-//   }
-// }
-
-// void mdtSqlCopierTest::tableMappingEditHelperDfiToAddTest_data()
-// {
-//   using mdt::sql::copier::FieldIndexList;
-// 
-//   QTest::addColumn<FieldIndexList>("toInsertItem");
-//   QTest::addColumn<FieldIndexList>("toCompareItem");
-//   QTest::addColumn<FieldIndexList>("expectedDfiListToAdd");
-// 
-//   QVector<FieldIndexList> allItems;
-//   FieldIndexList toInsertItem;
-//   FieldIndexList toCompareItem;
-//   FieldIndexList expectedDfiListToAdd;
-//   FieldIndexList dfi;
-// 
-//   /*
-//    * Empty TM
-//    */
-//   QTest::newRow("Empty") << toInsertItem << toCompareItem << expectedDfiListToAdd;
-//   /*
-//    * Item to insert DFI: 1
-//    * Item to compare to DFI: 0
-//    * DFI to add: -
-//    */
-//   toInsertItem = {1};
-//   toCompareItem = {0};
-//   expectedDfiListToAdd.clear();
-//   QTest::newRow("") << toInsertItem << toCompareItem << expectedDfiListToAdd;
-//   /*
-//    * Item to insert DFI: 1
-//    * Item to compare to DFI: 1
-//    * DFI to add: -
-//    */
-//   toInsertItem = {1};
-//   toCompareItem = {1};
-//   expectedDfiListToAdd.clear();
-//   QTest::newRow("") << toInsertItem << toCompareItem << expectedDfiListToAdd;
-//   /*
-//    * Item to insert DFI: 0,1
-//    * Item to compare to DFI: 0
-//    * DFI to add: 1
-//    */
-//   toInsertItem = {0,1};
-//   toCompareItem = {0};
-//   expectedDfiListToAdd = {1};
-//   QTest::newRow("") << toInsertItem << toCompareItem << expectedDfiListToAdd;
-//   /*
-//    * Item to insert DFI: 0,1
-//    * Item to compare to DFI: 1
-//    * DFI to add: 0
-//    */
-//   toInsertItem = {0,1};
-//   toCompareItem = {1};
-//   expectedDfiListToAdd = {0};
-//   QTest::newRow("") << toInsertItem << toCompareItem << expectedDfiListToAdd;
-//   /*
-//    * Item to insert DFI: 0,1
-//    * Item to compare to DFI: 2
-//    * DFI to add: -
-//    */
-//   toInsertItem = {0,1};
-//   toCompareItem = {2};
-//   expectedDfiListToAdd.clear();
-//   QTest::newRow("") << toInsertItem << toCompareItem << expectedDfiListToAdd;
-// 
+//   qDebug() << "v size: " << v.size() << " , v: " << v;
+// //   std::remove_if(v.begin(), v.end(), [](int i){return (i == 3);});
+// //   qDebug() << "v size: " << v.size() << " , v: " << v;
+//   v.erase( std::remove_if(v.begin(), v.end(), [](int i){return (i == 3);}), v.end() );
+//   qDebug() << "v size: " << v.size() << " , v: " << v;
 // }
 
 void mdtSqlCopierTest::tableMappingEditHelperItemDfiToAddTest()
@@ -1246,13 +1221,6 @@ void mdtSqlCopierTest::tableMappingEditHelperItemDfiToAddTest()
   for(int i = 0; i < expectedItemsToCreate.count(); ++i){
     QCOMPARE(itemsToCreate.at(i), expectedItemsToCreate.at(i));
   }
-//   QCOMPARE((int)itemsToAdd.size(), expectedItemsToAdd.size());
-//   for(int i = 0; i < expectedItemsToAdd.size(); ++i){
-//     QCOMPARE(itemsToAdd.at(i).count(), expectedItemsToAdd.at(i).count());
-//     for(int j = 0; j < expectedItemsToAdd.at(i).count(); ++j){
-//       QCOMPARE(itemsToAdd.at(i).at(j), expectedItemsToAdd.at(i).at(j));
-//     }
-//   }
 }
 
 void mdtSqlCopierTest::tableMappingEditHelperItemDfiToAddTest_data()

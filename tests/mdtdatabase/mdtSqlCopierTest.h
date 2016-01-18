@@ -56,8 +56,7 @@ class mdtSqlCopierTest : public mdtTest
   void tableMappingEditHelperContainsDFIdexesTest_data();
   void tableMappingEditHelperItemIndexToRemoveTest();
   void tableMappingEditHelperItemIndexToRemoveTest_data();
-//   void tableMappingEditHelperDfiToAddTest();
-//   void tableMappingEditHelperDfiToAddTest_data();
+//   void tableMappingEditHelperRemoveItemsTest();
   void tableMappingEditHelperItemDfiToAddTest();
   void tableMappingEditHelperItemDfiToAddTest_data();
   
