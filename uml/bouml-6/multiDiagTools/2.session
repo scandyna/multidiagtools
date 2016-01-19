@@ -17,14 +17,11 @@ diagrams
     875 911 100 18 0 0
 end
 show_stereotypes
-selected operation_ref 3486082 // getItemsToAddDfiList
+selected operation_ref 3451138 // getItemsToRemoveIndexList
 open
   class_ref 2264066 // XYH
   classview_ref 927490 // TableMappingItem
   operation_ref 3486338 // itemContainsDfiList
-  operation_ref 3451138 // getItemsToRemoveIndexList
-  attribute_ref 2287234 // itemIndex
-  attribute_ref 2287362 // destinationFieldIndexList
   
   package_ref 260866 // Boost
 end

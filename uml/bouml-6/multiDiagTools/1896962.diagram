@@ -4,8 +4,4 @@ classcanvas 128002 class_ref 2270594 // TableMappingEditHelper
   classdiagramsettings member_max_width 0 end
   xyz 28.8 319.5 2000
 end
-classcanvas 128258 class_ref 2296834 // TableMappingItemIndex
-  classdiagramsettings member_max_width 0 end
-  xyz 185 119 2000
-end
 end

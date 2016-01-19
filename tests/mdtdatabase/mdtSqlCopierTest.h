@@ -52,13 +52,14 @@ class mdtSqlCopierTest : public mdtTest
   void uniqueInsertExpressionDialogTest();
   void tableMappingItemTest();
 
-  void tableMappingEditHelperContainsDFIdexesTest();
-  void tableMappingEditHelperContainsDFIdexesTest_data();
-  void tableMappingEditHelperItemIndexToRemoveTest();
-  void tableMappingEditHelperItemIndexToRemoveTest_data();
-//   void tableMappingEditHelperRemoveItemsTest();
+  void tableMappingEditHelperContainsDFIndexesTest();
+  void tableMappingEditHelperContainsDFIndexesTest_data();
+  void tableMappingEditHelperRemoveItemsTest();
+  void tableMappingEditHelperRemoveItemsTest_data();
   void tableMappingEditHelperItemDfiToAddTest();
   void tableMappingEditHelperItemDfiToAddTest_data();
+  void tableMappingEditHelperInsertTest();
+  void tableMappingEditHelperInsertTest_data();
   
   void tableMappingEditHelperTest();
 

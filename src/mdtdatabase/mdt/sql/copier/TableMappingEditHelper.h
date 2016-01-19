@@ -127,19 +127,21 @@ namespace mdt{ namespace sql{ namespace copier{
 //       return toAddDfiList;
 //     }
 
-    /*! \brief Get a list of destination field indexes to create to end up with a complete table mapping
+    /*! \brief Get a list of table mapping items to create to end up with a complete table mapping
      *
      * \param itemDfiList List of destination field indexes of item to insert
-     * \param tmDfiList List of destination field index of all items, excluding those to remove
+     * \param tmItemList All items from table mapping
      */
-    static FieldIndexList getItemsToAddDfiList(const FieldIndexList & itemDfiList, const std::vector<FieldIndexList> & tmDfiList)
+    static QVector<TableMappingItem> getItemsToCreateList(const FieldIndexList & itemDfiList, const QVector<TableMappingItem> & tmItemList)
     {
+      QVector<TableMappingItem> toCreateItems;
       FieldIndexList toCreateDfiList;
       FieldIndexList currentDfiList;
       FieldIndexList newDfiList;
 
       // Build current DFI list, which contains those of given table mapping
-      for(const auto & dfiList : tmDfiList){
+      for(const auto & item : tmItemList){
+        const auto & dfiList = item.destinationFieldIndexList();
         std::copy(dfiList.cbegin(), dfiList.cend(), std::back_inserter(currentDfiList));
       }
       // Add item's to insert DFI list to current
@@ -147,7 +149,7 @@ namespace mdt{ namespace sql{ namespace copier{
       // Get the max DFI in current DFI list
       auto maxDfiIt = std::max_element(currentDfiList.cbegin(), currentDfiList.cend());
       if(maxDfiIt == currentDfiList.cend()){
-        return toCreateDfiList;
+        return toCreateItems;
       }
       int maxDfi = *maxDfiIt;
       // Create new DFI list
@@ -159,9 +161,73 @@ namespace mdt{ namespace sql{ namespace copier{
       std::set_difference( newDfiList.cbegin(), newDfiList.cend(),
                            currentDfiList.cbegin(), currentDfiList.cend(),
                            std::back_inserter(toCreateDfiList) );
+      // Create a field mapping (with no source field) for each DFI to create
+      for(int dfi : toCreateDfiList){
+        TableMappingItem item(TableMappingItem::FieldMappingType);
+        item.setFieldMapping(-1, dfi);
+        toCreateItems.append(item);
+      }
 
-      return toCreateDfiList;
+      return toCreateItems;
     }
+
+    /*! \brief Insert given item in given table mapping item list
+     *
+     * \param item item to insert
+     * \param tmItemList All items from table mapping
+     * \pre item must have at least 1 DFI set
+     */
+    static void insertItem(const TableMappingItem & item, QVector<TableMappingItem> & tmItemList)
+    {
+      Q_ASSERT(!item.destinationFieldIndexList().isEmpty());
+      Q_ASSERT(item.destinationFieldIndexList().at(0) >= 0);
+
+      // Remove items that must be
+      removeItems(item.destinationFieldIndexList(), tmItemList);
+      // Create items that must be
+      const auto itemsToCreate = getItemsToCreateList(item.destinationFieldIndexList(), tmItemList);
+      std::copy(itemsToCreate.cbegin(), itemsToCreate.cend(), std::back_inserter(tmItemList));
+      // Add item
+      tmItemList.append(item);
+      // Sort items by DFI
+      std::sort(tmItemList.begin(), tmItemList.end());
+    }
+
+    /*! \brief Get a list of destination field indexes to create to end up with a complete table mapping
+     *
+     * \param itemDfiList List of destination field indexes of item to insert
+     * \param tmDfiList List of destination field index of all items, excluding those to remove
+     */
+//     static FieldIndexList getItemsToAddDfiList(const FieldIndexList & itemDfiList, const std::vector<FieldIndexList> & tmDfiList)
+//     {
+//       FieldIndexList toCreateDfiList;
+//       FieldIndexList currentDfiList;
+//       FieldIndexList newDfiList;
+// 
+//       // Build current DFI list, which contains those of given table mapping
+//       for(const auto & dfiList : tmDfiList){
+//         std::copy(dfiList.cbegin(), dfiList.cend(), std::back_inserter(currentDfiList));
+//       }
+//       // Add item's to insert DFI list to current
+//       std::copy(itemDfiList.cbegin(), itemDfiList.cend(), std::back_inserter(currentDfiList));
+//       // Get the max DFI in current DFI list
+//       auto maxDfiIt = std::max_element(currentDfiList.cbegin(), currentDfiList.cend());
+//       if(maxDfiIt == currentDfiList.cend()){
+//         return toCreateDfiList;
+//       }
+//       int maxDfi = *maxDfiIt;
+//       // Create new DFI list
+//       newDfiList.reserve(maxDfi+1);
+//       for(int i = 0; i <= maxDfi; ++i){
+//         newDfiList.append(i);
+//       }
+//       // Build list of DFI to create, which is newDfiList - currentDfiList
+//       std::set_difference( newDfiList.cbegin(), newDfiList.cend(),
+//                            currentDfiList.cbegin(), currentDfiList.cend(),
+//                            std::back_inserter(toCreateDfiList) );
+// 
+//       return toCreateDfiList;
+//     }
 
     /*! \brief Check if given item refers to to at least one of given detsination field indexes
      *

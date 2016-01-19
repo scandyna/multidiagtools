@@ -1001,7 +1001,7 @@ void mdtSqlCopierTest::tableMappingItemTest()
 
 }
 
-void mdtSqlCopierTest::tableMappingEditHelperContainsDFIdexesTest()
+void mdtSqlCopierTest::tableMappingEditHelperContainsDFIndexesTest()
 {
   using mdt::sql::copier::TableMappingEditHelper;
   using mdt::sql::copier::FieldIndexList;
@@ -1013,7 +1013,7 @@ void mdtSqlCopierTest::tableMappingEditHelperContainsDFIdexesTest()
   QVERIFY(TableMappingEditHelper::itemContainsDfiList(itemDfiList, dfiList) == expectedMatch);
 }
 
-void mdtSqlCopierTest::tableMappingEditHelperContainsDFIdexesTest_data()
+void mdtSqlCopierTest::tableMappingEditHelperContainsDFIndexesTest_data()
 {
   using mdt::sql::copier::FieldIndexList;
 
@@ -1056,7 +1056,7 @@ void mdtSqlCopierTest::tableMappingEditHelperContainsDFIdexesTest_data()
   QTest::newRow("") << itemDfiList << dfiList << true;
 }
 
-void mdtSqlCopierTest::tableMappingEditHelperItemIndexToRemoveTest()
+void mdtSqlCopierTest::tableMappingEditHelperRemoveItemsTest()
 {
   using mdt::sql::copier::TableMappingEditHelper;
   using mdt::sql::copier::FieldIndexList;
@@ -1068,11 +1068,7 @@ void mdtSqlCopierTest::tableMappingEditHelperItemIndexToRemoveTest()
   QFETCH(QVector<int>, expectedItemsToRemove);
   QFETCH(QVector<FieldIndexList>, expectedNewAllItems);
   QVector<TableMappingItem> tmItemsList;
-//   UniqueInsertExpression exp;
 
-  /*
-   * Check getting list of indexes to remove
-   */
   // Build a expression with DFI list for each item in allItems
   for(const auto & dfiList : allItems){
     TableMappingItem tmi(TableMappingItem::UniqueInsertExpressionType);
@@ -1083,6 +1079,9 @@ void mdtSqlCopierTest::tableMappingEditHelperItemIndexToRemoveTest()
     tmi.setUniqueInsertExpression(exp);
     tmItemsList.append(tmi);
   }
+  /*
+   * Check getting list of indexes to remove
+   */
   // Get indexes of items to remove
   auto itemsToRemove = TableMappingEditHelper::getItemsToRemoveIndexList(item, tmItemsList);
   // Check
@@ -1105,7 +1104,7 @@ void mdtSqlCopierTest::tableMappingEditHelperItemIndexToRemoveTest()
   }
 }
 
-void mdtSqlCopierTest::tableMappingEditHelperItemIndexToRemoveTest_data()
+void mdtSqlCopierTest::tableMappingEditHelperRemoveItemsTest_data()
 {
   using mdt::sql::copier::FieldIndexList;
 
@@ -1190,36 +1189,35 @@ void mdtSqlCopierTest::tableMappingEditHelperItemIndexToRemoveTest_data()
 
 }
 
-// void mdtSqlCopierTest::tableMappingEditHelperRemoveItemsTest()
-// {
-//   using mdt::sql::copier::TableMappingEditHelper;
-//   using mdt::sql::copier::TableMappingItem;
-// 
-//   QVector<TableMappingItem> itemsList;
-// 
-//   QVector<int> v{1,2,3,4,5};
-// 
-//   qDebug() << "v size: " << v.size() << " , v: " << v;
-// //   std::remove_if(v.begin(), v.end(), [](int i){return (i == 3);});
-// //   qDebug() << "v size: " << v.size() << " , v: " << v;
-//   v.erase( std::remove_if(v.begin(), v.end(), [](int i){return (i == 3);}), v.end() );
-//   qDebug() << "v size: " << v.size() << " , v: " << v;
-// }
-
 void mdtSqlCopierTest::tableMappingEditHelperItemDfiToAddTest()
 {
   using mdt::sql::copier::TableMappingEditHelper;
   using mdt::sql::copier::FieldIndexList;
+  using mdt::sql::copier::TableMappingItem;
+  using mdt::sql::copier::UniqueInsertExpression;
 
   QFETCH(QVector<FieldIndexList>, allItems);
   QFETCH(FieldIndexList, item);
   QFETCH(FieldIndexList, expectedItemsToCreate);
+  QVector<TableMappingItem> tmItemsList;
 
-  auto itemsToCreate = TableMappingEditHelper::getItemsToAddDfiList(item, allItems.toStdVector());
-
+  // Build a expression with DFI list for each item in allItems
+  for(const auto & dfiList : allItems){
+    TableMappingItem tmi(TableMappingItem::UniqueInsertExpressionType);
+    UniqueInsertExpression exp;
+    for(int dfi : dfiList){
+      exp.addDestinationFieldIndex(dfi);
+    }
+    tmi.setUniqueInsertExpression(exp);
+    tmItemsList.append(tmi);
+  }
+  // Get items to create
+  auto itemsToCreate = TableMappingEditHelper::getItemsToCreateList(item, tmItemsList);
+  // Check
   QCOMPARE(itemsToCreate.count(), expectedItemsToCreate.count());
   for(int i = 0; i < expectedItemsToCreate.count(); ++i){
-    QCOMPARE(itemsToCreate.at(i), expectedItemsToCreate.at(i));
+    QCOMPARE(itemsToCreate.at(i).destinationFieldIndexList().count(), 1);
+    QCOMPARE(itemsToCreate.at(i).destinationFieldIndexList().at(0), expectedItemsToCreate.at(0));
   }
 }
 
@@ -1371,6 +1369,89 @@ void mdtSqlCopierTest::tableMappingEditHelperItemDfiToAddTest_data()
   expectedItemsToCreate.clear();
   // Add to check list
   QTest::newRow("") << allItems << item << expectedItemsToCreate;
+
+}
+
+void mdtSqlCopierTest::tableMappingEditHelperInsertTest()
+{
+  using mdt::sql::copier::TableMappingItem;
+  using mdt::sql::copier::TableMappingEditHelper;
+
+  QFETCH(QVector<TableMappingItem>, tmItemList);
+  QFETCH(TableMappingItem, item);
+  QFETCH(QVector<TableMappingItem>, expectedTmItemList);
+
+  // Insert item
+  TableMappingEditHelper::insertItem(item, tmItemList);
+  // Check
+  QCOMPARE(tmItemList.size(), expectedTmItemList.size());
+  for(int i = 0; i < expectedTmItemList.size(); ++i){
+    auto item = tmItemList.at(i);
+    auto expectedItem = expectedTmItemList.at(i);
+    QCOMPARE(item.sourceFieldIndex(), expectedItem.sourceFieldIndex());
+    QCOMPARE(item.destinationFieldIndexList().count(), expectedItem.destinationFieldIndexList().count());
+    for(int k = 0; k < expectedItem.destinationFieldIndexList().count(); ++k){
+      QCOMPARE(item.destinationFieldIndexList().at(k), expectedItem.destinationFieldIndexList().at(k));
+    }
+  }
+}
+
+void mdtSqlCopierTest::tableMappingEditHelperInsertTest_data()
+{
+  using mdt::sql::copier::FieldIndexList;
+  using mdt::sql::copier::TableMappingItem;
+  using mdt::sql::copier::UniqueInsertExpression;
+
+  QTest::addColumn<QVector<TableMappingItem>>("tmItemList");
+  QTest::addColumn<TableMappingItem>("item");
+  QTest::addColumn<QVector<TableMappingItem>>("expectedTmItemList");
+
+  QVector<TableMappingItem> tmItemList;
+  QVector<TableMappingItem> expectedTmItemList;
+  TableMappingItem item;
+
+  /*
+   * Empty TM
+   */
+  ///QTest::newRow("EmptyTM") << tmItemList << item << expectedTmItemList;
+  /*
+   * TM:
+   * --------------------
+   * | Item | SFI | DFI |
+   * --------------------
+   * |  0   | 10  | 0   |
+   * --------------------
+   *
+   * Item to insert:
+   * -------------
+   * | SFI | DFI |
+   * -------------
+   * | 11  | 1   |
+   * -------------
+   *
+   * Resulting TM:
+   * --------------------
+   * | Item | SFI | DFI |
+   * --------------------
+   * |  0   | 10  | 0   |
+   * --------------------
+   * |  1   | 11  | 1   |
+   * --------------------
+   */
+  // Setup TM
+  tmItemList.clear();
+  item.setFieldMapping(10, 0);
+  tmItemList << item;
+  // Setup item to insert
+  item.setFieldMapping(11, 1);
+  // Setup expeced resulting TM
+  expectedTmItemList.clear();
+  item.setFieldMapping(10, 0);
+  expectedTmItemList << item;
+  item.setFieldMapping(11, 1);
+  expectedTmItemList << item;
+  // Add to check list
+  QTest::newRow("EmptyTM") << tmItemList << item << expectedTmItemList;
 
 }
 

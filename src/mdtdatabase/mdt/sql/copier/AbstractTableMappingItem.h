@@ -140,6 +140,14 @@ namespace mdt{ namespace sql{ namespace copier{
       return pvMappingState;
     }
 
+    /*! \brief Check if item a is < item b
+     */
+    friend
+    bool operator<(const AbstractTableMappingItem & a, const AbstractTableMappingItem & b)
+    {
+      return a.pvDestinationFieldIndexList < b.pvDestinationFieldIndexList;
+    }
+
    protected:
 
     /*! \brief Clear

@@ -124,6 +124,11 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     TableMappingItemState mappingState() const;
 
+    /*! \brief Check if item a is < item b
+     */
+    friend
+    bool operator<(const TableMappingItem & a, const TableMappingItem & b);
+
    private:
 
     /*! \brief Reset to new type

@@ -158,6 +158,13 @@ void TableMappingItem::constructShared()
   }
 }
 
+bool operator<(const TableMappingItem & a, const TableMappingItem & b)
+{
+  Q_ASSERT(a.pvShared);
+  Q_ASSERT(b.pvShared);
+  return (*a.pvShared < *b.pvShared);
+}
+
 }}} // namespace mdt{ namespace sql{ namespace copier{
 
 /*
