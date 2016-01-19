@@ -87,6 +87,7 @@ namespace mdt{ namespace sql{ namespace copier{
           itemIndexList.push_back(index);
         }
       }
+      qDebug() << "--> indexes to remove: " << itemIndexList.size();
 
       return itemIndexList;
     }
@@ -98,12 +99,17 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     static void removeItems(const FieldIndexList & itemDfiList, QVector<TableMappingItem> & tmItemList)
     {
-      auto pred = [&itemDfiList](const TableMappingItem & item){ return itemContainsDfiList(item.destinationFieldIndexList(), itemDfiList); };
+      qDebug() << "--> Remove items, tmItemList size: " << tmItemList.size() << " , remove ...";
+      auto pred = [&itemDfiList](const TableMappingItem & item){
+        qDebug() << "--> Contains: " << itemContainsDfiList(item.destinationFieldIndexList(), itemDfiList);
+        return itemContainsDfiList(item.destinationFieldIndexList(), itemDfiList);
+      };
       auto newEnd = std::remove_if(tmItemList.begin(), tmItemList.end(), pred);
       if(newEnd == tmItemList.end()){
         return;
       }
-      tmItemList.erase(newEnd);
+      tmItemList.erase(newEnd, tmItemList.end());
+      qDebug() << "--> Remove items done, tmItemList size: " << tmItemList.size();
     }
 
     /*! \brief Get a list of destination field indexes to add when inserting a item
@@ -158,6 +164,8 @@ namespace mdt{ namespace sql{ namespace copier{
         newDfiList.append(i);
       }
       // Build list of DFI to create, which is newDfiList - currentDfiList
+      std::sort(newDfiList.begin(), newDfiList.end());
+      std::sort(currentDfiList.begin(), currentDfiList.end());
       std::set_difference( newDfiList.cbegin(), newDfiList.cend(),
                            currentDfiList.cbegin(), currentDfiList.cend(),
                            std::back_inserter(toCreateDfiList) );

@@ -34,13 +34,23 @@ TableMapping::TableMapping()
 {
 }
 
-void TableMapping::setItemAt(int itemIndex, TableMappingItem item)
+// void TableMapping::setItemAt(int itemIndex, TableMappingItem item)
+// {
+//   Q_ASSERT(itemIndex >= 0);
+//   Q_ASSERT(itemIndex < pvItems.size());
+// 
+//   updateMappingItemState(item);
+//   TableMappingEditHelper::insertItem(itemIndex, item, pvItems);
+//   updateTableMappingState();
+// }
+
+void TableMapping::insertItem(TableMappingItem item)
 {
-  Q_ASSERT(itemIndex >= 0);
-  Q_ASSERT(itemIndex < pvItems.size());
+  Q_ASSERT(!item.destinationFieldIndexList().isEmpty());
+  Q_ASSERT(item.destinationFieldIndexList().at(0) >= 0);
 
   updateMappingItemState(item);
-  TableMappingEditHelper::insertItem(itemIndex, item, pvItems);
+  TableMappingEditHelper::insertItem(item, pvItems);
   updateTableMappingState();
 }
 

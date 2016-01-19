@@ -94,7 +94,18 @@ namespace mdt{ namespace sql{ namespace copier{
      *
      * \pre itemIndex must be in valid range
      */
-    void setItemAt(int itemIndex, TableMappingItem item);
+//     void setItemAt(int itemIndex, TableMappingItem item);
+
+    /*! \brief Insert a item
+     *
+     * Depending on destination field index count
+     *  of item, this can change the table mapping.
+     *  itemsCount() can also return a different size
+     *  after item was set.
+     *
+     * \pre item must at least have 1 valid destination field index set
+     */
+    void insertItem(TableMappingItem item);
 
     /*! \brief Get map item at itemIndex
      *

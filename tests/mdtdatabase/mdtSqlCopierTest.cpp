@@ -1128,6 +1128,168 @@ void mdtSqlCopierTest::tableMappingEditHelperRemoveItemsTest_data()
    * --------------
    * | Item | DFI |
    * --------------
+   * |  0   |  0  |
+   * --------------
+   *
+   * Item to insert:
+   * -------
+   * | DFI |
+   * -------
+   * | 0   |
+   * -------
+   *
+   * Indexes of items to remove: {0}
+   *
+   * TM after removed items that must be:
+   * --------------
+   * | Item | DFI |
+   * --------------
+   * --------------
+   * expectedNewAllItems (=TM after remove): {}
+   */
+  // Setup TM
+  allItems.clear();
+  dfi = {0};
+  allItems << dfi;
+  // Setup item to insert
+  item = {0};
+  // Setup expected indexes of items to remove
+  expectedItemsToRemove = {0};
+  // Setup expected TM after remove
+  expectedNewAllItems.clear();
+  // Add to check list
+  QTest::newRow("[{0}]->[{}]") << allItems << item << expectedItemsToRemove << expectedNewAllItems;
+  /*
+   * TM:
+   * --------------
+   * | Item | DFI |
+   * --------------
+   * |  0   |  1  |
+   * --------------
+   *
+   * Item to insert:
+   * -------
+   * | DFI |
+   * -------
+   * | 0   |
+   * -------
+   *
+   * Indexes of items to remove: {}
+   *
+   * TM after removed items that must be:
+   * --------------
+   * | Item | DFI |
+   * --------------
+   * |  0   |  1  |
+   * --------------
+   * expectedNewAllItems (=TM after remove): {}
+   */
+  // Setup TM
+  allItems.clear();
+  dfi = {1};
+  allItems << dfi;
+  // Setup item to insert
+  item = {0};
+  // Setup expected indexes of items to remove
+  expectedItemsToRemove.clear();
+  // Setup expected TM after remove
+  expectedNewAllItems.clear();
+  dfi = {1};
+  expectedNewAllItems << dfi;
+  // Add to check list
+  QTest::newRow("[{1}]->[{1}]") << allItems << item << expectedItemsToRemove << expectedNewAllItems;
+  /*
+   * TM:
+   * --------------
+   * | Item | DFI |
+   * --------------
+   * |  0   |  0  |
+   * --------------
+   *
+   * Item to insert:
+   * -------
+   * | DFI |
+   * -------
+   * | 1,2 |
+   * -------
+   *
+   * Indexes of items to remove: {}
+   *
+   * TM after removed items that must be:
+   * --------------
+   * | Item | DFI |
+   * --------------
+   * |  0   |  0  |
+   * --------------
+   * expectedNewAllItems (=TM after remove): {}
+   */
+  // Setup TM
+  allItems.clear();
+  dfi = {0};
+  allItems << dfi;
+  // Setup item to insert
+  item = {1,2};
+  // Setup expected indexes of items to remove
+  expectedItemsToRemove.clear();
+  // Setup expected TM after remove
+  expectedNewAllItems.clear();
+  dfi = {0};
+  expectedNewAllItems << dfi;
+  // Add to check list
+  QTest::newRow("[{0}]->[{0}]") << allItems << item << expectedItemsToRemove << expectedNewAllItems;
+  /*
+   * TM:
+   * --------------
+   * | Item | DFI |
+   * --------------
+   * |  0   |  0  |
+   * --------------
+   * |  1   |  1  |
+   * --------------
+   * |  2   |  2  |
+   * --------------
+   *
+   * Item to insert:
+   * -------
+   * | DFI |
+   * -------
+   * | 1,2 |
+   * -------
+   *
+   * Indexes of items to remove: {1,2}
+   *
+   * TM after removed items that must be:
+   * --------------
+   * | Item | DFI |
+   * --------------
+   * |  0   |  0  |
+   * --------------
+   * expectedNewAllItems (=TM after remove): {}
+   */
+  // Setup TM
+  allItems.clear();
+  dfi = {0};
+  allItems << dfi;
+  dfi = {1};
+  allItems << dfi;
+  dfi = {2};
+  allItems << dfi;
+  // Setup item to insert
+  item = {1,2};
+  // Setup expected indexes of items to remove
+  expectedItemsToRemove = {1,2};
+  // Setup expected TM after remove
+  expectedNewAllItems.clear();
+  dfi = {0};
+  expectedNewAllItems << dfi;
+  // Add to check list
+  QTest::newRow("[{0},{1},{2}]->[{0}]") << allItems << item << expectedItemsToRemove << expectedNewAllItems;
+
+  /*
+   * TM:
+   * --------------
+   * | Item | DFI |
+   * --------------
    * |  0   |  1  |
    * --------------
    */
@@ -1310,6 +1472,43 @@ void mdtSqlCopierTest::tableMappingEditHelperItemDfiToAddTest_data()
    * --------------
    * | Item | DFI |
    * --------------
+   * |  0   |  0  |
+   * --------------
+   * |  1   |  1  |
+   * --------------
+   *
+   * Item to insert:
+   * -------
+   * | DFI |
+   * -------
+   * | 0   |
+   * -------
+   *
+   * TM after removed items that must be:
+   * --------------
+   * | Item | DFI |
+   * --------------
+   * |  1   |  1  |
+   * --------------
+   * allItems (=TM after remove): {}
+   *
+   * DFI to create: {}
+   */
+  // Setup item to insert
+  item = {0};
+  // Setup allItems
+  allItems.clear();
+  dfi = {1};
+  allItems << dfi;
+  // Setup expected DFI to create list
+  expectedItemsToCreate.clear();
+  // Add to check list
+  QTest::newRow("") << allItems << item << expectedItemsToCreate;
+  /*
+   * TM:
+   * --------------
+   * | Item | DFI |
+   * --------------
    * |  0   | 0,1 |
    * --------------
    *
@@ -1388,6 +1587,7 @@ void mdtSqlCopierTest::tableMappingEditHelperInsertTest()
   for(int i = 0; i < expectedTmItemList.size(); ++i){
     auto item = tmItemList.at(i);
     auto expectedItem = expectedTmItemList.at(i);
+    qDebug() << "item src: " << item.sourceFieldIndex() << " , Expec " << expectedItem.sourceFieldIndex();
     QCOMPARE(item.sourceFieldIndex(), expectedItem.sourceFieldIndex());
     QCOMPARE(item.destinationFieldIndexList().count(), expectedItem.destinationFieldIndexList().count());
     for(int k = 0; k < expectedItem.destinationFieldIndexList().count(); ++k){
@@ -1409,6 +1609,7 @@ void mdtSqlCopierTest::tableMappingEditHelperInsertTest_data()
   QVector<TableMappingItem> tmItemList;
   QVector<TableMappingItem> expectedTmItemList;
   TableMappingItem item;
+  UniqueInsertExpression exp;
 
   /*
    * Empty TM
@@ -1442,16 +1643,106 @@ void mdtSqlCopierTest::tableMappingEditHelperInsertTest_data()
   tmItemList.clear();
   item.setFieldMapping(10, 0);
   tmItemList << item;
-  // Setup item to insert
-  item.setFieldMapping(11, 1);
   // Setup expeced resulting TM
   expectedTmItemList.clear();
   item.setFieldMapping(10, 0);
   expectedTmItemList << item;
   item.setFieldMapping(11, 1);
   expectedTmItemList << item;
+  // Setup item to insert
+  item.setFieldMapping(11, 1);
   // Add to check list
-  QTest::newRow("EmptyTM") << tmItemList << item << expectedTmItemList;
+  QTest::newRow("[{0}]->[{0},{1}]") << tmItemList << item << expectedTmItemList;
+  /*
+   * TM:
+   * --------------------
+   * | Item | SFI | DFI |
+   * --------------------
+   * |  0   | 10  | 0   |
+   * --------------------
+   * |  1   | 11  | 1   |
+   * --------------------
+   *
+   * Item to insert:
+   * -------------
+   * | SFI | DFI |
+   * -------------
+   * | 20  | 0   |
+   * -------------
+   *
+   * Resulting TM:
+   * --------------------
+   * | Item | SFI | DFI |
+   * --------------------
+   * |  0   | 20  | 0   |
+   * --------------------
+   * |  1   | 11  | 1   |
+   * --------------------
+   */
+  // Setup TM
+  tmItemList.clear();
+  item.setFieldMapping(10, 0);
+  tmItemList << item;
+  item.setFieldMapping(11, 1);
+  tmItemList << item;
+  // Setup expeced resulting TM
+  expectedTmItemList.clear();
+  item.setFieldMapping(20, 0);
+  expectedTmItemList << item;
+  item.setFieldMapping(11, 1);
+  expectedTmItemList << item;
+  // Setup item to insert
+  item.setFieldMapping(20, 0);
+  // Add to check list
+  QTest::newRow("[{0},{1}]->[{0},{1}]") << tmItemList << item << expectedTmItemList;
+  /*
+   * TM:
+   * --------------------
+   * | Item | SFI | DFI |
+   * --------------------
+   * |  0   | 10  | 0   |
+   * --------------------
+   *
+   * Item to insert:
+   * -------------
+   * | SFI | DFI |
+   * -------------
+   * | -   | 2,3 |
+   * -------------
+   *
+   * Resulting TM:
+   * --------------------
+   * | Item | SFI | DFI |
+   * --------------------
+   * |  0   | 10  | 0   |
+   * --------------------
+   * |  1   | -   | 1   |
+   * --------------------
+   * |  2   | -   | 2,3 |
+   * --------------------
+   */
+  // Setup TM
+  tmItemList.clear();
+  item.setFieldMapping(10, 0);
+  tmItemList << item;
+  // Setup expeced resulting TM
+  expectedTmItemList.clear();
+  item.setFieldMapping(10, 0);
+  expectedTmItemList << item;
+  item.setFieldMapping(-1, 1);
+  expectedTmItemList << item;
+  exp.clear();
+  exp.addDestinationFieldIndex(2);
+  exp.addDestinationFieldIndex(3);
+  item.setUniqueInsertExpression(exp);
+  expectedTmItemList << item;
+  // Setup item to insert
+  exp.clear();
+  exp.addDestinationFieldIndex(2);
+  exp.addDestinationFieldIndex(3);
+  item.setUniqueInsertExpression(exp);
+  // Add to check list
+  QTest::newRow("[{0}]->[{0},{1},{2,3}]") << tmItemList << item << expectedTmItemList;
 
 }
 
@@ -1688,7 +1979,7 @@ void mdtSqlCopierTest::databaseCopierTableMappingUpdateItemsTest()
    *  - Client_tbl.Id_PK -> Client2_tbl.Id_PK
    */
   item.setFieldMapping(0, 0);
-  mapping.setItemAt(0, item);
+  mapping.insertItem(item);
   // Check
   QCOMPARE(mapping.itemsCount(), 4);
   item = mapping.itemAt(0);
@@ -1706,8 +1997,43 @@ void mdtSqlCopierTest::databaseCopierTableMappingUpdateItemsTest()
   uiexp.addDestinationFieldIndex(3);
   // Set expression to item and update TM
   item.setUniqueInsertExpression(uiexp);
-  ///mapping.setItemAt();
+  mapping.insertItem(item);
+  // Check TM
+  QCOMPARE(mapping.itemsCount(), 3);
+  QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
+  QVERIFY(mapping.sourceFieldNameAtItem(1).isNull());
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).at(0), QString("Name"));
+  QVERIFY(mapping.sourceFieldNameAtItem(2).isNull());
+  QCOMPARE(mapping.destinationFieldNameListAtItem(2).size(), 2);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(2).at(0), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(2).at(1), QString("FieldB"));
+  /*
+   * Set a fixed value:
+   *  - Client2_tbl.Name: "Fixed name"
+   */
+  item.setFixedValue("Fixed name", 1);
+  mapping.insertItem(item);
+  // Check TM
+  QCOMPARE(mapping.itemsCount(), 3);
+  QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id_PK"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
+  QVERIFY(mapping.sourceFieldNameAtItem(1).isNull());
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).size(), 1);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(1).at(0), QString("Name"));
+  QCOMPARE(mapping.sourceFixedValueAtItem(1), QVariant("Fixed name"));
+  QVERIFY(mapping.sourceFieldNameAtItem(2).isNull());
+  QCOMPARE(mapping.destinationFieldNameListAtItem(2).size(), 2);
+  QCOMPARE(mapping.destinationFieldNameListAtItem(2).at(0), QString("FieldA"));
+  QCOMPARE(mapping.destinationFieldNameListAtItem(2).at(1), QString("FieldB"));
+  
+  /// \todo Check setting a field mapping byidirectly uie mapping.setFieldMapping()
 
+
+  return;
   
   QVERIFY(mapping.sourceFieldNameAtItem(0).isNull());
   QVERIFY(mapping.sourceFieldNameAtItem(1).isNull());

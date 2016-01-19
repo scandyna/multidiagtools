@@ -103,6 +103,13 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Get STL-style begin iterator
      */
+    QVector<int>::iterator begin()
+    {
+      return pvIndexes.begin();
+    }
+
+    /*! \brief Get STL-style begin iterator
+     */
     QVector<int>::const_iterator begin() const
     {
       return pvIndexes.begin();
@@ -113,6 +120,13 @@ namespace mdt{ namespace sql{ namespace copier{
     QVector<int>::const_iterator cbegin() const
     {
       return pvIndexes.cbegin();
+    }
+
+    /*! \brief Get STL-style end iterator
+     */
+    QVector<int>::iterator end()
+    {
+      return pvIndexes.end();
     }
 
     /*! \brief Get STL-style end iterator
