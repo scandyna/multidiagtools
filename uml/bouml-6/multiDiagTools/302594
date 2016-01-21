@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 20
+  revision 21
   modified_by 2 "philippe"
   // class settings
   
@@ -1485,6 +1485,11 @@ ${inlines}
     
     activitydiagramsettings
      end
+    classdiagram 1936514 "TMoverview"
+      classdiagramsettings hide_operations yes member_max_width 0 end
+      size B-Landscape
+    end
+
     classdiagram 1809282 "TableMapping"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -1926,5 +1931,14 @@ ${inlines}
       end
     end
 
+    classdiagram 1936258 "TableMappingModel"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    classdiagram 1936386 "TableMappingDialog"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
   end
 end

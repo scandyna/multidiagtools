@@ -21,7 +21,9 @@
 #include "mdtSqlDatabaseCopierTableMappingDialog.h"
 #include "mdtSqlDatabaseCopierTableMappingModel.h"
 #include "mdtComboBoxItemDelegate.h"
+#include "mdt/sql/copier/UniqueInsertExpressionDialog.h"
 #include <QToolButton>
+#include <QPushButton>
 
 //#include <QDebug>
 
@@ -40,6 +42,7 @@ mdtSqlDatabaseCopierTableMappingDialog::mdtSqlDatabaseCopierTableMappingDialog(Q
   connect(tbMapByName, &QToolButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::mapByFieldName);
   connect(cbSourceTable, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
           this, &mdtSqlDatabaseCopierTableMappingDialog::setSourceTable);
+  connect(pbUniqueInsertExpression, &QPushButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::editUniqueInsertExpression);
 }
 
 void mdtSqlDatabaseCopierTableMappingDialog::setSourceTables(const QSqlDatabase & db, const QStringList & tables)
@@ -96,6 +99,14 @@ void mdtSqlDatabaseCopierTableMappingDialog::mapByFieldName()
 {
   pvMappingModel->generateFieldMappingByName();
   resizeTableViewToContents();
+}
+
+void mdtSqlDatabaseCopierTableMappingDialog::editUniqueInsertExpression()
+{
+  using mdt::sql::copier::UniqueInsertExpressionDialog;
+
+  UniqueInsertExpressionDialog dialog(pvMappingModel->mapping(), 0);
+  dialog.exec();
 }
 
 void mdtSqlDatabaseCopierTableMappingDialog::resizeTableViewToContents()

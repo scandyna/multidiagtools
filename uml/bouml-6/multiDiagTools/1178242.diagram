@@ -1,4 +1,4 @@
-format 210
+format 211
 
 classcanvas 128002 class_ref 1302274 // mdtDeviceContainer
   classdiagramsettings member_max_width 0 end
@@ -23,6 +23,10 @@ note 129026 "Notes:
  - See Wait (in mdtutils)
  - Type erasure ??"
   xyzwh 59 618 2000 495 89
+note 129154 "Notion de conteneur ?
+-> Type erasure sans copie ?
+-> Shared xy ?"
+  xyzwh 59 717 2000 533 93
 relationcanvas 128258 relation_ref 1598082 // <directional composition>
   from ref 128002 z 2001 stereotype "<<vector>>" xyz 532 265 3000 to ref 128130
   role_a_pos 632 245 3000 no_role_b

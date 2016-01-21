@@ -62,7 +62,7 @@
         <item>
          <widget class="QLabel" name="lbDestinationTable">
           <property name="text">
-           <string>    </string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -111,6 +111,13 @@
          <widget class="QToolButton" name="tbMapByName">
           <property name="text">
            <string>Map by name</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbUniqueInsertExpression">
+          <property name="text">
+           <string>Unique insert expression</string>
           </property>
          </widget>
         </item>

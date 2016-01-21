@@ -1,6 +1,6 @@
-format 210
+format 211
 "mdtdevice" // mdtdevice
-  revision 56
+  revision 57
   modified_by 2 "philippe"
   // class settings
   
@@ -974,6 +974,119 @@ ${inlines}
 	    classrelation_ref 1982082 // <generalisation>
 	  b parent class_ref 309250 // mdtDevice
       end
+    end
+  end
+
+  classview 940546 "deviceHandle"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 1923074 "sandbox"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2296706 "mdtDeviceHandle"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2578178 // <directional composition>
+	relation 2561666 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2578178 // <directional composition>
+	  b parent class_ref 2296834 // mdtDeviceHandleBase
+      end
+    end
+
+    class 2296834 "mdtDeviceHandleBase"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2296962 "someDeviceHandle"
+      visibility package 
+      nformals 1
+      formal name "T" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2577794 // <generalisation>
+	relation 2561282 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2577794 // <generalisation>
+	  b parent class_ref 2296834 // mdtDeviceHandleBase
+      end
+
+      classrelation 2578050 // <directional composition>
+	relation 2561538 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2578050 // <directional composition>
+	  b parent class_ref 2297090 // someDevice
+      end
+    end
+
+    class 2297090 "someDevice"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 

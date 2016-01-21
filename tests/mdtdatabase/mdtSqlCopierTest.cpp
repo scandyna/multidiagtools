@@ -733,15 +733,18 @@ void mdtSqlCopierTest::uniqueInsertExpressionDialogTest()
 {
   using mdt::sql::copier::UniqueInsertExpression;
   using mdt::sql::copier::UniqueInsertExpressionDialog;
+  using mdt::sql::copier::TableMappingItem;
 
   QSqlDatabase db = pvDatabase;
   mdtSqlDatabaseCopierTableMapping mapping;
   UniqueInsertExpression exp;
+  TableMappingItem item;
 
   /*
    * Setup expression
    */
   exp.addDestinationFieldIndex(0);
+  exp.addMatchItem(1, 2);
   /*
    * Setup table mapping
    */
@@ -749,9 +752,10 @@ void mdtSqlCopierTest::uniqueInsertExpressionDialogTest()
   QVERIFY(mapping.setSourceTable("Client_tbl", db));
   QVERIFY(mapping.setDestinationTable("Client2_tbl", db));
   // Add expression
-  
+  item.setUniqueInsertExpression(exp);
+  mapping.insertItem(item);
 
-  UniqueInsertExpressionDialog dialog(mapping, exp);
+  UniqueInsertExpressionDialog dialog(mapping, 0);
 
   /*
    * Play

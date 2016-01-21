@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -73,6 +73,10 @@ class mdtSqlDatabaseCopierTableMappingDialog : public QDialog, Ui::mdtSqlDatabas
   /*! \brief Map by field names
    */
   void mapByFieldName();
+
+  /*! \brief Edit unique insert expression
+   */
+  void editUniqueInsertExpression();
 
   /*! \brief Resize table view
    */

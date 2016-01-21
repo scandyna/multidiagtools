@@ -1,6 +1,6 @@
-format 210
+format 211
 "mdterror" // mdterror
-  revision 10
+  revision 11
   modified_by 2 "philippe"
   // class settings
   
@@ -557,7 +557,7 @@ ${inlines}
 ${members}};
 ${inlines}
 "
-      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
 ${members}}
 "
       php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {

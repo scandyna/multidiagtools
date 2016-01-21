@@ -1,6 +1,6 @@
 format 211
 "mdtdatabase" // mdtdatabase
-  revision 104
+  revision 105
   modified_by 2 "philippe"
   // class settings
   
@@ -7509,15 +7509,6 @@ ${inlines}
 	  b parent class_ref 147202 // QAbstractTableModel
       end
 
-      classrelation 2508162 // <directional composition>
-	relation 2491778 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 2508162 // <directional composition>
-	  b parent class_ref 1914114 // mdtSqlDatabaseCopierTableMapping
-      end
-
       operation 3323522 "columnCount"
 	public explicit_return_type "int"
 	nparams 1
@@ -7712,6 +7703,22 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      operation 3500418 "mapping"
+	stereotype "template"
+	public explicit_return_type "T"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -8466,6 +8473,14 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 2591234 // <generalisation>
+	relation 2574722 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2591234 // <generalisation>
+	  b parent class_ref 2200834 // mdtSqlCopierTableMappingModel
       end
     end
 
@@ -9343,6 +9358,15 @@ ${inlines}
 	
 	
       end
+
+      classrelation 2591362 // <directional composition>
+	relation 2574850 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2591362 // <directional composition>
+	  b parent class_ref 2200578 // mdtSqlCsvStringImportTableMapping
+      end
     end
 
     class 2207490 "mdtSqlCsvFileImportTableMappingModel"
@@ -9474,6 +9498,15 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      classrelation 2591490 // <directional composition>
+	relation 2574978 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2591490 // <directional composition>
+	  b parent class_ref 2200706 // mdtSqlCsvFileImportTableMapping
       end
     end
   end

@@ -77,7 +77,6 @@ namespace mdt{ namespace sql{ namespace copier{
      * \param itemDfiList List of destination field indexes of item to insert
      * \param tmItemList All items from table mapping
      */
-    ///static std::vector<int> getItemsToRemoveIndexList(const FieldIndexList & itemDfiList, const std::vector<FieldIndexList> & allDfi)
     static std::vector<int> getItemsToRemoveIndexList(const FieldIndexList & itemDfiList, const QVector<TableMappingItem> & tmItemList)
     {
       std::vector<int> itemIndexList;
@@ -263,6 +262,7 @@ namespace mdt{ namespace sql{ namespace copier{
      * \param newItem The item that was freshly edited
      * \param allItemsList The actual items list (before inserting newItem)
      * \pre newItemIndex must be in valid range: 0 <= newItemIndex < allItemsList size
+     * \deprecated
      */
     static FieldIndexList getDestinationFieldIndexToRemoveList(int newItemIndex, const TableMappingItem & newItem, const QVector<TableMappingItem> & allItemsList)
     {
@@ -287,6 +287,7 @@ namespace mdt{ namespace sql{ namespace copier{
      * \param newItem The item that was freshly edited
      * \param allItemsList The actual items list (before inserting newItem)
      * \pre newItemIndex must be in valid range: 0 <= newItemIndex < allItemsList size
+     * \deprecated
      */
     static QVector<int> getItemsToRemoveIndexList(int newItemIndex, const TableMappingItem & newItem, const QVector<TableMappingItem> & allItemsList)
     {
@@ -319,6 +320,7 @@ namespace mdt{ namespace sql{ namespace copier{
      * \param newItem The item that was freshly edited
      * \param allItemsList The actual items list (before inserting newItem)
      * \pre newItemIndex must be in valid range: 0 <= newItemIndex < allItemsList size
+     * \deprecated
      */
     static QVector<TableMappingItem> getItemsToAddList(int newItemIndex, const TableMappingItem & newItem, const QVector<TableMappingItem> & allItemsList)
     {
@@ -350,6 +352,7 @@ namespace mdt{ namespace sql{ namespace copier{
      *
      * \param destinationFieldIndexList Destination field indexes of item that was freshly edited
      * \param allItemsList The actual items list (before inserting newItem)
+     * \deprecated
      */
     static int getIndexOfItemToInsertByDFIndexes(const FieldIndexList & destinationFieldIndexList, const QVector<TableMappingItem> & allItemsList)
     {
@@ -374,6 +377,7 @@ namespace mdt{ namespace sql{ namespace copier{
      * \param newItem The item that was freshly edited
      * \param allItemsList The actual items list (before inserting newItem)
      * \pre newItemIndex must be in valid range: 0 <= newItemIndex < allItemsList size
+     * \deprecated
      */
     static void insertItem(int newItemIndex, const TableMappingItem & newItem, QVector<TableMappingItem> & allItemsList)
     {

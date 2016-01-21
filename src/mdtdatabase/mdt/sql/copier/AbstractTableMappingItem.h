@@ -107,6 +107,13 @@ namespace mdt{ namespace sql{ namespace copier{
       return pvDestinationFieldIndexList.count();
     }
 
+    /*! \brief Clear destination field index list
+     */
+    void clearDestinationFieldIndexList()
+    {
+      pvDestinationFieldIndexList.clear();
+    }
+
     /*! \brief Set fixed value
      *
      * This default implementation does nothing
@@ -167,13 +174,6 @@ namespace mdt{ namespace sql{ namespace copier{
     void addDestinationFieldIndex(int index)
     {
       pvDestinationFieldIndexList.append(index);
-    }
-
-    /*! \brief Clear destination field index list
-     */
-    void clearDestinationFieldIndexList()
-    {
-      pvDestinationFieldIndexList.clear();
     }
 
     /*! \brief Copy constructor

@@ -41,7 +41,15 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Constructor
      */
-    UniqueInsertExpressionDialog(const TableMapping & tm, UniqueInsertExpression & exp, QWidget* parent = nullptr);
+//     UniqueInsertExpressionDialog(const TableMapping & tm, UniqueInsertExpression & exp, QWidget* parent = nullptr);
+
+    /*! \brief Construct dialog to edit expression at given itemIndex in table mapping
+     */
+    UniqueInsertExpressionDialog(const TableMapping & tm, int itemIndex, QWidget *parent = nullptr);
+
+    /*! \brief Construct dialog to edit a new expression
+     */
+    UniqueInsertExpressionDialog(const TableMapping & tm, QWidget *parent = nullptr);
 
    private:
 
@@ -53,9 +61,17 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void removeSelectedMatchItems();
 
+    /*! \brief Clear destination key
+     */
+    void clearDestinationKey();
+
+    /*! \brief Add a field to destination key
+     */
+    void addFieldToDestinationKey();
+
     /*! \brief Display destination key
      */
-    void displayDestinationKey(const UniqueInsertExpression & exp);
+    void displayDestinationKey();
 
     /*! \brief Resize table view's contents
      */
@@ -63,6 +79,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     
     const TableMapping & pvTableMapping;
+    UniqueInsertExpression pvExpression;
     UniqueInsertExpressionModel *pvModel;
   };
 

@@ -1,27 +1,26 @@
-window_sizes 1280 964 399 875 911 0
+window_sizes 1280 964 299 975 911 0
 cleanlooks_style
 diagrams
   classdiagram_ref 1809154 // TableMapping
     869 911 100 4 12 0
   classdiagram_ref 1883138 // TableMappingItem
     867 903 90 21 0 0
-  classdiagram_ref 1883266 // AbstractTableMappingItem
-    916 916 100 21 0 0
-  classdiagram_ref 1883394 // UniqueInsertExpression
-    875 911 100 18 0 0
-  classdiagram_ref 1883522 // ReferringTableInsertExpression
-    120 106 100 4 0 0
-  classdiagram_ref 1890178 // FieldMapping
-    120 106 100 4 0 0
-  active  classdiagram_ref 1896962 // Edit
-    875 911 100 18 0 0
+  classdiagram_ref 1936514 // TMoverview
+    120 106 70 21 0 59
+  active  classdiagram_ref 1829122 // TableMappingModel
+    975 911 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 3451138 // getItemsToRemoveIndexList
+selected operation_ref 3500418 // mapping
 open
-  class_ref 2264066 // XYH
-  classview_ref 927490 // TableMappingItem
-  operation_ref 3486338 // itemContainsDfiList
+  classview_ref 887298 // Common
+  class_ref 2200834 // mdtSqlCopierTableMappingModel
+  classview_ref 893954 // sqlDatabaseCopy
+  classview_ref 894082 // sqlCsvImport
+  classview_ref 934018 // TableMapping
+  operation_ref 3492994 // columnCount
+  operation_ref 3493890 // excludeFieldIndexes
+  class_ref 2303746 // FieldSelectionModelSource
   
   package_ref 260866 // Boost
 end
