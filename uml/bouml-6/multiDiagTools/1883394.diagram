@@ -2,22 +2,23 @@ format 211
 
 classcanvas 128002 class_ref 2256898 // UniqueInsertExpression
   classdiagramsettings member_max_width 0 end
-  xyz 372 463 2000
+  xyz 376 525 2000
 end
 classcanvas 128130 class_ref 2257026 // UniqueInsertMatchExpressionItem
   classdiagramsettings member_max_width 0 end
-  xyz 39 473 2000
+  xyz 39 561 2000
 end
 classcanvas 128386 class_ref 2256514 // AbstractTableMappingItem
   classdiagramsettings member_max_width 0 end
-  xyz 471 40 3005
+  xyz 471 39 3005
 end
 relationcanvas 128258 relation_ref 2534530 // <directional composition>
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 347 560 3000 no_multiplicity_b
+  multiplicity_a_pos 347 643 3000 no_multiplicity_b
 end
 relationcanvas 128514 relation_ref 2534402 // <generalisation>
+  decenter_begin 493
   from ref 128002 z 3006 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

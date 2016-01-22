@@ -92,12 +92,12 @@ namespace mdt{ namespace sql{ namespace copier{
       return -1;
     }
 
-    /*! \brief Get list of destination field indexes
+    /*! \brief Set destination field index
      */
-//     QVector<int> destinationFieldIndexList() const
-    FieldIndexList destinationFieldIndexList() const
+    void setDestinationFieldIndex(int index)
     {
-      return pvDestinationFieldIndexList;
+      pvDestinationFieldIndexList.clear();
+      pvDestinationFieldIndexList.append(index);
     }
 
     /*! \brief Get count of destination field indexes
@@ -105,6 +105,13 @@ namespace mdt{ namespace sql{ namespace copier{
     int destinationFieldIndexCount() const
     {
       return pvDestinationFieldIndexList.count();
+    }
+
+    /*! \brief Get list of destination field indexes
+     */
+    FieldIndexList destinationFieldIndexList() const
+    {
+      return pvDestinationFieldIndexList;
     }
 
     /*! \brief Clear destination field index list
@@ -161,12 +168,14 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     virtual void clearItem() = 0;
 
-    /*! \brief Set destination field index
+    /*! \brief Copy constructor
      */
-    void setDestinationFieldIndex(int index)
+    AbstractTableMappingItem(const AbstractTableMappingItem & other)
+     : QSharedData(other),
+       pvMappingState(other.pvMappingState),
+       pvDestinationFieldIndexList(other.pvDestinationFieldIndexList)
     {
-      pvDestinationFieldIndexList.clear();
-      pvDestinationFieldIndexList.append(index);
+      qDebug() << "CPY AbstractTableMappingItem::AbstractTableMappingItem(other) - ref: " << ref.load();
     }
 
     /*! \brief Add a destination field index
@@ -176,14 +185,11 @@ namespace mdt{ namespace sql{ namespace copier{
       pvDestinationFieldIndexList.append(index);
     }
 
-    /*! \brief Copy constructor
+    /*! \brief Set destination field index list
      */
-    AbstractTableMappingItem(const AbstractTableMappingItem & other)
-     : QSharedData(other),
-       pvMappingState(other.pvMappingState),
-       pvDestinationFieldIndexList(other.pvDestinationFieldIndexList)
+    void setDestinationFieldIndexList(const FieldIndexList & indexList)
     {
-      qDebug() << "CPY AbstractTableMappingItem::AbstractTableMappingItem(other) - ref: " << ref.load();
+      pvDestinationFieldIndexList = indexList;
     }
 
     /*! \brief Copy members from other to this
@@ -197,7 +203,6 @@ namespace mdt{ namespace sql{ namespace copier{
     }
 
     TableMappingItemState pvMappingState;
-//     QVector<int> pvDestinationFieldIndexList;
     FieldIndexList pvDestinationFieldIndexList;
   };
 

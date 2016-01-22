@@ -71,6 +71,9 @@ namespace mdt{ namespace sql{ namespace copier{
     */
     virtual ~TableMapping() = default;
 
+    TableMapping(const TableMapping &) = delete;
+    TableMapping & operator=(const TableMapping &) = delete;
+
     /*! \brief Get table mapping state
     */
     MappingState mappingState() const
@@ -95,6 +98,12 @@ namespace mdt{ namespace sql{ namespace copier{
      * \pre itemIndex must be in valid range
      */
 //     void setItemAt(int itemIndex, TableMappingItem item);
+
+    /*! \brief Get a list of item indexes to remove when inserting a item
+     *
+     * \param itemDfiList List of destination field indexes of item to insert
+     */
+    QVector<int> getItemsToRemoveIndexList(const FieldIndexList & itemDfiList) const;
 
     /*! \brief Insert a item
      *
@@ -322,8 +331,10 @@ namespace mdt{ namespace sql{ namespace copier{
   protected:
 
     // Copy of this base class is not allowed
+    /**
     TableMapping(const TableMapping &) = default;
     TableMapping & operator=(const TableMapping &) = default;
+    */
 
     /*! \brief Get a list of available field names in source table
      */

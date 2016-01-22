@@ -67,10 +67,6 @@ namespace mdt{ namespace sql{ namespace copier{
     {
       return ( (sourceValueFieldIndex < 0) || (destinationFieldIndex < 0) );
     }
-
-    /*! \brief Clear match item
-     */
-    
   };
 
   /*! \brief Unique insert expression for SQL copier
@@ -145,6 +141,13 @@ namespace mdt{ namespace sql{ namespace copier{
     {
       Q_ASSERT(index >= 0);
       AbstractTableMappingItem::addDestinationFieldIndex(index);
+    }
+
+    /*! \brief Set destination field index list
+     */
+    void setDestinationFieldIndexList(const FieldIndexList & indexList)
+    {
+      AbstractTableMappingItem::setDestinationFieldIndexList(indexList);
     }
 
     /*! \brief Add a match item

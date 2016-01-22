@@ -76,12 +76,18 @@ namespace mdt{ namespace sql{ namespace copier{
      *
      * \param itemDfiList List of destination field indexes of item to insert
      * \param tmItemList All items from table mapping
+     * \param ignoreNotMappedItems If true, items that are not mapped will not be added to the list
      */
-    static std::vector<int> getItemsToRemoveIndexList(const FieldIndexList & itemDfiList, const QVector<TableMappingItem> & tmItemList)
+    //static std::vector<int> getItemsToRemoveIndexList(const FieldIndexList & itemDfiList, const QVector<TableMappingItem> & tmItemList)
+    static QVector<int> getItemsToRemoveIndexList(const FieldIndexList & itemDfiList, const QVector<TableMappingItem> & tmItemList, bool ignoreNotMappedItems)
     {
-      std::vector<int> itemIndexList;
+      //std::vector<int> itemIndexList;
+      QVector<int> itemIndexList;
 
       for(int index = 0; index < tmItemList.size(); ++index){
+        if(ignoreNotMappedItems && (tmItemList.at(index).mappingState() == TableMappingItemState::MappingNotSet) ){
+          continue;
+        }
         if(itemContainsDfiList(tmItemList.at(index).destinationFieldIndexList(), itemDfiList)){
           itemIndexList.push_back(index);
         }

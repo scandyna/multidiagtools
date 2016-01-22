@@ -111,8 +111,8 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Get a unique insert expression
      *
      * If this item is UniqueInsertExpressionType,
-     *  the current expression is returned,
-     *  else, a default constructed UniqueInsertExpression is returned.
+     *  the current expression is returned.
+     *  Else, a UniqueInsertExpression with items's destination field indexes set is returned.
      */
     UniqueInsertExpression uniqueInsertExpression() const;
 

@@ -21,6 +21,7 @@
 #include "UniqueInsertExpressionDialog.h"
 #include "UniqueInsertExpressionModel.h"
 #include "mdtComboBoxItemDelegate.h"
+#include "ExpressionKeyFieldSelectionDialog.h"
 #include <QToolButton>
 #include <QString>
 #include <QStringList>
@@ -80,6 +81,7 @@ UniqueInsertExpressionDialog::UniqueInsertExpressionDialog(const std::shared_ptr
     Q_ASSERT(itemIndex < tm->itemsCount());
     pvExpression = pvTableMapping->itemAt(itemIndex).uniqueInsertExpression();
   }
+  pvInitialKey = pvExpression.destinationFieldIndexList();
   // Setup match item model
   pvModel = new UniqueInsertExpressionModel(pvTableMapping, pvExpression, this);
   // Setup match item view
@@ -143,36 +145,49 @@ void UniqueInsertExpressionDialog::clearDestinationKey()
 
 void UniqueInsertExpressionDialog::addFieldToDestinationKey()
 {
-  // List all available fields in destination table
-  std::vector<int> allAvailableFieldIndexList(pvTableMapping->destinationTableFieldCount());
-  std::iota(allAvailableFieldIndexList.begin(), allAvailableFieldIndexList.end(), 0);
-  // List fields used in key
-  const auto keyFieldIndexList = pvExpression.destinationFieldIndexList();
-  // List unused fields
-  std::vector<int> unusedFieldIndexList;
-  std::set_difference(allAvailableFieldIndexList.cbegin(), allAvailableFieldIndexList.cend(),
-                      keyFieldIndexList.cbegin(), keyFieldIndexList.cend(),
-                      std::back_inserter(unusedFieldIndexList) );
-  if(unusedFieldIndexList.empty()){
+  ExpressionKeyFieldSelectionDialog fieldSelectDialog(pvTableMapping, this);
+
+  // Setup and show field selection dialog
+  fieldSelectDialog.setKey(pvExpression.destinationFieldIndexList());
+  fieldSelectDialog.setInitialKey(pvInitialKey);
+  if(fieldSelectDialog.exec() != QDialog::Accepted){
     return;
   }
-  // Build available field name list
-  QStringList fieldNameList;
-  fieldNameList.reserve(unusedFieldIndexList.size());
-  for(const int fi : unusedFieldIndexList){
-    fieldNameList.append(pvTableMapping->destinationTableFieldNameAt(fi));
-  }
-  // Setup field selection dialog
-  QInputDialog dialog(this);
-  dialog.setWindowTitle(tr("Field selection"));
-  dialog.setLabelText(tr("Field to add:"));
-  dialog.setComboBoxItems(fieldNameList);
-  if(dialog.exec() != QDialog::Accepted){
-    return;
-  }
-  int selectedFieldIndex = pvTableMapping->destinationTableFieldIndexOf(dialog.textValue());
-  pvExpression.addDestinationFieldIndex(selectedFieldIndex);
+  // Update expression with selected field
+  Q_ASSERT(fieldSelectDialog.selectedFieldIndex() >= 0);
+  pvExpression.addDestinationFieldIndex(fieldSelectDialog.selectedFieldIndex());
   displayDestinationKey();
+
+//   // List all available fields in destination table
+//   std::vector<int> allAvailableFieldIndexList(pvTableMapping->destinationTableFieldCount());
+//   std::iota(allAvailableFieldIndexList.begin(), allAvailableFieldIndexList.end(), 0);
+//   // List fields used in key
+//   const auto keyFieldIndexList = pvExpression.destinationFieldIndexList();
+//   // List unused fields
+//   std::vector<int> unusedFieldIndexList;
+//   std::set_difference(allAvailableFieldIndexList.cbegin(), allAvailableFieldIndexList.cend(),
+//                       keyFieldIndexList.cbegin(), keyFieldIndexList.cend(),
+//                       std::back_inserter(unusedFieldIndexList) );
+//   if(unusedFieldIndexList.empty()){
+//     return;
+//   }
+//   // Build available field name list
+//   QStringList fieldNameList;
+//   fieldNameList.reserve(unusedFieldIndexList.size());
+//   for(const int fi : unusedFieldIndexList){
+//     fieldNameList.append(pvTableMapping->destinationTableFieldNameAt(fi));
+//   }
+//   // Setup field selection dialog
+//   QInputDialog dialog(this);
+//   dialog.setWindowTitle(tr("Field selection"));
+//   dialog.setLabelText(tr("Field to add:"));
+//   dialog.setComboBoxItems(fieldNameList);
+//   if(dialog.exec() != QDialog::Accepted){
+//     return;
+//   }
+//   int selectedFieldIndex = pvTableMapping->destinationTableFieldIndexOf(dialog.textValue());
+//   pvExpression.addDestinationFieldIndex(selectedFieldIndex);
+//   displayDestinationKey();
 }
 
 void UniqueInsertExpressionDialog::displayDestinationKey()
@@ -186,7 +201,7 @@ void UniqueInsertExpressionDialog::displayDestinationKey()
     return;
   }
   for(int i = 0; i < lastIndex; ++i){
-    str += pvTableMapping->destinationTableFieldNameAt(keyList.at(i)) + ",";
+    str += pvTableMapping->destinationTableFieldNameAt(keyList.at(i)) + ", ";
   }
   str += pvTableMapping->destinationTableFieldNameAt(keyList.at(lastIndex));
   leDestinationKey->setText(str);

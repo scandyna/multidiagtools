@@ -1,26 +1,25 @@
-window_sizes 1280 964 312 962 911 0
+window_sizes 1280 969 396 878 916 0
 cleanlooks_style
 diagrams
   classdiagram_ref 1809154 // TableMapping
     869 911 100 4 12 0
   classdiagram_ref 1883138 // TableMappingItem
     867 903 90 21 0 0
-  classdiagram_ref 1829122 // TableMappingModel
-    819 916 100 4 0 0
-  classdiagram_ref 1936514 // overview
-    120 106 80 21 0 0
-  active  classdiagram_ref 1943042 // TMoverview
-    962 911 100 18 0 9
+  classdiagram_ref 1883266 // AbstractTableMappingItem
+    120 106 100 21 0 0
+  classdiagram_ref 1883394 // UniqueInsertExpression
+    120 106 100 18 0 0
+  active  classdiagram_ref 1949570 // selectXy
+    878 916 100 4 0 0
 end
 show_stereotypes
-selected attribute_ref 2184578 // Items
+selected 
+  package_ref 128002 // mdtutils
 open
   classview_ref 887298 // Common
   classview_ref 894082 // sqlCsvImport
-  class_ref 2174082 // TableMapping
-  operation_ref 3492994 // columnCount
-  operation_ref 3493890 // excludeFieldIndexes
-  class_ref 2303746 // FieldSelectionModelSource
+  class_ref 2310274 // ExpressionKeyFieldSelectionDialog
+  classview_ref 934018 // TableMapping
   
   package_ref 260866 // Boost
 end

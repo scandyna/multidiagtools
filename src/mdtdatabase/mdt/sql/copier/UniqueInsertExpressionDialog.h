@@ -81,6 +81,7 @@ namespace mdt{ namespace sql{ namespace copier{
     ///const TableMapping & pvTableMapping;
     std::shared_ptr<const TableMapping> pvTableMapping;
     UniqueInsertExpression pvExpression;
+    FieldIndexList pvInitialKey;
     UniqueInsertExpressionModel *pvModel;
   };
 

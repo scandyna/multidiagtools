@@ -44,6 +44,11 @@ TableMapping::TableMapping()
 //   updateTableMappingState();
 // }
 
+QVector<int> TableMapping::getItemsToRemoveIndexList(const FieldIndexList& itemDfiList) const
+{
+  return TableMappingEditHelper::getItemsToRemoveIndexList(itemDfiList, pvItems, true);
+}
+
 void TableMapping::insertItem(TableMappingItem item)
 {
   Q_ASSERT(!item.destinationFieldIndexList().isEmpty());

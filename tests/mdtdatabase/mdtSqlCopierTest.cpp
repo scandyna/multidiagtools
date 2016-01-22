@@ -982,15 +982,17 @@ void mdtSqlCopierTest::tableMappingItemTest()
    *  when item is not a unique expression
    */
   // Assure test data
-  
   uniqueInsertExpression.clear();
   QVERIFY(uniqueInsertExpression.isNull());
   QVERIFY(fm1.type() == TableMappingItem::FieldMappingType);
+  QVERIFY(fm1.destinationFieldIndexList().count() > 0);
   // Get expression
   uniqueInsertExpression = fm1.uniqueInsertExpression();
   // Check that this not effects fm1
   QVERIFY(fm1.type() == TableMappingItem::FieldMappingType);
   // Check expression
+  QCOMPARE(uniqueInsertExpression.destinationFieldIndexCount(), fm1.destinationFieldIndexList().count());
+  QVERIFY(uniqueInsertExpression.mappingState() == TableMappingItemState::MappingNotSet);
   QVERIFY(uniqueInsertExpression.isNull());
 
   /*
@@ -1089,7 +1091,7 @@ void mdtSqlCopierTest::tableMappingEditHelperRemoveItemsTest()
    * Check getting list of indexes to remove
    */
   // Get indexes of items to remove
-  auto itemsToRemove = TableMappingEditHelper::getItemsToRemoveIndexList(item, tmItemsList);
+  auto itemsToRemove = TableMappingEditHelper::getItemsToRemoveIndexList(item, tmItemsList, false);
   // Check
   QCOMPARE((int)itemsToRemove.size(), expectedItemsToRemove.size());
   for(int i = 0; i < expectedItemsToRemove.size(); ++i){

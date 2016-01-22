@@ -1,6 +1,6 @@
-format 210
+format 211
 "mdtutils" // mdtutils
-  revision 163
+  revision 164
   modified_by 2 "philippe"
   // class settings
   
@@ -26,6 +26,8 @@ format 210
   activitydiagramsettings
    end
   
+  package_ref 309122 // mdt
+
   classview 134530 "mdtBuffer"
     
     classdiagramsettings member_max_width 0 end
@@ -7652,7 +7654,7 @@ ${inlines}
 ${members}};
 ${inlines}
 "
-      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
 ${members}}
 "
       php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {

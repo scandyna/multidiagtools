@@ -112,7 +112,7 @@ void mdtSqlDatabaseCopierTableMappingDialog::editUniqueInsertExpression()
 {
   using mdt::sql::copier::UniqueInsertExpressionDialog;
 
-  UniqueInsertExpressionDialog dialog(pvMappingModel->mapping(), 0);
+  UniqueInsertExpressionDialog dialog(pvMappingModel->mapping(), 0, this);
   dialog.exec();
 }
 

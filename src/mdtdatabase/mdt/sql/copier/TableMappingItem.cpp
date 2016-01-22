@@ -112,12 +112,17 @@ void TableMappingItem::setUniqueInsertExpression(const UniqueInsertExpression & 
 
 UniqueInsertExpression TableMappingItem::uniqueInsertExpression() const
 {
+  UniqueInsertExpression exp;
+
   if(pvType == UniqueInsertExpressionType){
-    const auto *exp = dynamic_cast<const UniqueInsertExpression*>(pvShared.constData());
-    Q_ASSERT(exp != nullptr);
-    return *exp;
+    const auto *pexp = dynamic_cast<const UniqueInsertExpression*>(pvShared.constData());
+    Q_ASSERT(pexp != nullptr);
+    exp = *pexp;
+  }else{
+    exp.setDestinationFieldIndexList(destinationFieldIndexList());
   }
-  return UniqueInsertExpression();
+
+  return exp;
 }
 
 void TableMappingItem::setMappingState(TableMappingItemState state)
