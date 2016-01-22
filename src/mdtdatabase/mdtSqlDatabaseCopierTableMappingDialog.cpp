@@ -24,6 +24,11 @@
 #include "mdt/sql/copier/UniqueInsertExpressionDialog.h"
 #include <QToolButton>
 #include <QPushButton>
+#include <QTableView>
+#include <QAbstractItemView>
+#include <QItemSelectionModel>
+#include <QItemSelection>
+#include <QModelIndex>
 
 //#include <QDebug>
 
@@ -33,16 +38,21 @@ mdtSqlDatabaseCopierTableMappingDialog::mdtSqlDatabaseCopierTableMappingDialog(Q
    pvSourceFieldSelectionDelegate(new mdtComboBoxItemDelegate(this))
 {
   setupUi(this);
+  tvMapping->setSelectionBehavior(QAbstractItemView::SelectItems);
+  tvMapping->setSelectionMode(QAbstractItemView::SingleSelection);
   tvMapping->setModel(pvMappingModel);
   auto *sourceTypeDelegate = new mdtComboBoxItemDelegate(this);
   pvMappingModel->setupItemTypeDelegate(sourceTypeDelegate);
   tvMapping->setItemDelegateForColumn(0, sourceTypeDelegate);
   tvMapping->setItemDelegateForColumn(2, pvSourceFieldSelectionDelegate);
+  Q_ASSERT(tvMapping->selectionModel() != nullptr);
+  connect(tvMapping->selectionModel(), &QItemSelectionModel::selectionChanged, this, &mdtSqlDatabaseCopierTableMappingDialog::setSelectedRowFromSelection);
   connect(tbResetMapping, &QToolButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::resetFieldMapping);
   connect(tbMapByName, &QToolButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::mapByFieldName);
   connect(cbSourceTable, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
           this, &mdtSqlDatabaseCopierTableMappingDialog::setSourceTable);
   connect(pbUniqueInsertExpression, &QPushButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::editUniqueInsertExpression);
+  setSelectedRow(-1);
 }
 
 void mdtSqlDatabaseCopierTableMappingDialog::setSourceTables(const QSqlDatabase & db, const QStringList & tables)
@@ -100,24 +110,53 @@ void mdtSqlDatabaseCopierTableMappingDialog::setSourceTable(int cbIndex)
 void mdtSqlDatabaseCopierTableMappingDialog::resetFieldMapping()
 {
   pvMappingModel->resetFieldMapping();
+  setSelectedRow(-1);
 }
 
 void mdtSqlDatabaseCopierTableMappingDialog::mapByFieldName()
 {
   pvMappingModel->generateFieldMappingByName();
+  setSelectedRow(-1);
   resizeTableViewToContents();
 }
 
 void mdtSqlDatabaseCopierTableMappingDialog::editUniqueInsertExpression()
 {
   using mdt::sql::copier::UniqueInsertExpressionDialog;
+  using mdt::sql::copier::TableMappingItem;
 
-  UniqueInsertExpressionDialog dialog(pvMappingModel->mapping(), 0, this);
-  dialog.exec();
+  if(pvSelectedRow < 0){
+    return;
+  }
+  UniqueInsertExpressionDialog dialog(pvMappingModel->mapping(), pvSelectedRow, this);
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  TableMappingItem item(TableMappingItem::UniqueInsertExpressionType);
+  item.setUniqueInsertExpression(dialog.expression());
+  pvMappingModel->insertItem(item);
+  resizeTableViewToContents();
 }
 
 void mdtSqlDatabaseCopierTableMappingDialog::resizeTableViewToContents()
 {
   tvMapping->resizeColumnsToContents();
   tvMapping->resizeRowsToContents();
+}
+
+void mdtSqlDatabaseCopierTableMappingDialog::setSelectedRowFromSelection(const QItemSelection & selected, const QItemSelection &/* deselected*/)
+{
+  const auto indexes = selected.indexes();
+
+  if(indexes.isEmpty()){
+    pvSelectedRow = -1;
+  }
+  Q_ASSERT(indexes.size() == 1);
+  setSelectedRow(indexes.at(0).row());
+}
+
+void mdtSqlDatabaseCopierTableMappingDialog::setSelectedRow(int row)
+{
+  pvSelectedRow = row;
+  pbUniqueInsertExpression->setEnabled(row >= 0);
 }

@@ -29,15 +29,14 @@ namespace mdt{ namespace sql{ namespace copier{
 using mdt::sql::copier::TableMapping;
 
 TableMappingModel::TableMappingModel(QObject* parent)
- : QAbstractTableModel(parent)
+ : QAbstractTableModel(parent),
+   pvEditableItemIcon(QIcon::fromTheme("document-edit"))
 {
 }
 
 void TableMappingModel::setupItemTypeDelegate(mdtComboBoxItemDelegate * const delegate)
 {
   Q_ASSERT(delegate != nullptr);
-
-  using mdt::sql::copier::TableMappingItem;
 
   delegate->clear();
   delegate->addItem(tr("Field"), TableMappingItem::FieldMappingType);
@@ -56,6 +55,13 @@ void TableMappingModel::generateFieldMappingByName()
 {
   beginResetModel();
   mappingBase()->generateFieldMappingByName();
+  endResetModel();
+}
+
+void TableMappingModel::insertItem(const TableMappingItem& item)
+{
+  beginResetModel();
+  mappingBase()->insertItem(item);
   endResetModel();
 }
 
@@ -142,6 +148,9 @@ QVariant TableMappingModel::data(const QModelIndex & index, int role) const
     switch(column){
       case SourceKeyTypeIndex:
         return QVariant();  // For future implementation
+      case SourceFieldNameIndex:
+      case SourceFixedValueIndex:
+        return editFlagDecorationData(index);
       case DestinationKeyTypeIndex:
         return QVariant();  // For future implementation
       case ItemMappinStateIndex:
@@ -188,13 +197,16 @@ Qt::ItemFlags TableMappingModel::flags(const QModelIndex & index) const
     return QAbstractTableModel::flags(index);
   }
   const int column = index.column();
+  const int row = index.row();
+  Q_ASSERT(row < mappingBase()->itemsCount());
+
   if(column == ItemTypeIndex){
     return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
   }
-  if(column == SourceFieldNameIndex){
+  if( (column == SourceFieldNameIndex) && (mappingBase()->itemAt(row).destinationFieldIndexList().count() == 1) ){
     return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
   }
-  if(column == SourceFixedValueIndex){
+  if( (column == SourceFixedValueIndex) && (mappingBase()->itemAt(row).destinationFieldIndexList().count() == 1) ){
     return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
   }
   return QAbstractTableModel::flags(index);
@@ -202,8 +214,6 @@ Qt::ItemFlags TableMappingModel::flags(const QModelIndex & index) const
 
 QVariant TableMappingModel::mapItemTypeData(int row, int role) const
 {
-  using mdt::sql::copier::TableMappingItem;
-
   auto type = mappingBase()->itemType(row);
   // For edit role, we return map item type
   if(role == Qt::EditRole){
@@ -224,8 +234,6 @@ QVariant TableMappingModel::mapItemTypeData(int row, int role) const
 
 QVariant TableMappingModel::sourceFieldKeyTypeText(int row) const
 {
-  using mdt::sql::copier::TableMappingItem;
-
   if(mappingBase()->itemType(row) != TableMappingItem::FieldMappingType){
     return QVariant();
   }
@@ -234,8 +242,6 @@ QVariant TableMappingModel::sourceFieldKeyTypeText(int row) const
 
 QVariant TableMappingModel::sourceFieldNameText(int row) const
 {
-  using mdt::sql::copier::TableMappingItem;
-
   if(mappingBase()->itemType(row) != TableMappingItem::FieldMappingType){
     return QVariant();
   }
@@ -244,8 +250,6 @@ QVariant TableMappingModel::sourceFieldNameText(int row) const
 
 QVariant TableMappingModel::sourceFieldTypeNameText(int row) const
 {
-  using mdt::sql::copier::TableMappingItem;
-
   if(mappingBase()->itemType(row) != TableMappingItem::FieldMappingType){
     return QVariant();
   }
@@ -254,8 +258,6 @@ QVariant TableMappingModel::sourceFieldTypeNameText(int row) const
 
 QVariant TableMappingModel::sourceFixedValue(int row) const
 {
-  using mdt::sql::copier::TableMappingItem;
-
   if(mappingBase()->itemType(row) != TableMappingItem::FixedValueType){
     return QVariant();
   }
@@ -264,53 +266,28 @@ QVariant TableMappingModel::sourceFixedValue(int row) const
 
 QVariant TableMappingModel::destinationFieldKeyTypeText(int row) const
 {
-  QString str;
+  QString ktName;
+  QStringList ktNameList;
   auto fieldKeyTypeList = mappingBase()->destinationFieldKeyTypeListAtItem(row);
-  const int lastIndex = fieldKeyTypeList.size() - 1;
 
-  if(lastIndex < 0){
-    return str;
+  for(const auto & kt : fieldKeyTypeList){
+    ktName = keyTypeName(kt);
+    if(!ktName.isEmpty()){
+      ktNameList.append(ktName);
+    }
   }
-  for(int i = 0; i < lastIndex; ++i){
-    str += keyTypeName(fieldKeyTypeList.at(i)) + ",";
-  }
-  str += keyTypeName(fieldKeyTypeList.at(lastIndex));
 
-  return str;
+  return ktNameList.join(QStringLiteral(", "));
 }
 
 QVariant TableMappingModel::destinationFieldNamesText(int row) const
 {
-  QString str;
-  auto fieldNameList = mappingBase()->destinationFieldNameListAtItem(row);
-  const int lastIndex = fieldNameList.size() - 1;
-
-  if(lastIndex < 0){
-    return str;
-  }
-  for(int i = 0; i < lastIndex; ++i){
-    str += fieldNameList.at(i) + ",";
-  }
-  str += fieldNameList.at(lastIndex);
-
-  return str;
+  return mappingBase()->destinationFieldNameListAtItem(row).join(QStringLiteral(", "));
 }
 
 QVariant TableMappingModel::destinationFieldTypesText(int row) const
 {
-  QString str;
-  auto typeNames = mappingBase()->destinationFieldTypeNameListAtItem(row);
-  const int lastIndex = typeNames.size() - 1;
-
-  if(lastIndex < 0){
-    return str;
-  }
-  for(int i = 0; i < lastIndex; ++i){
-    str += typeNames.at(i) + ",";
-  }
-  str += typeNames.at(lastIndex);
-
-  return str;
+  return mappingBase()->destinationFieldTypeNameListAtItem(row).join(QStringLiteral(", "));
 }
 
 QVariant TableMappingModel::mapItemMappingStateData(int row, int role) const
@@ -328,8 +305,6 @@ QVariant TableMappingModel::mapItemMappingStateData(int row, int role) const
 
 QVariant TableMappingModel::mapItemMappingStateText(mdt::sql::copier::TableMappingItemState state) const
 {
-  using mdt::sql::copier::TableMappingItemState;
-
   switch(state){
     case TableMappingItemState::MappingNotSet:
     case TableMappingItemState::MappingPartial:
@@ -344,8 +319,6 @@ QVariant TableMappingModel::mapItemMappingStateText(mdt::sql::copier::TableMappi
 
 QVariant TableMappingModel::mapItemMappingStateDecoration(mdt::sql::copier::TableMappingItemState state) const
 {
-  using mdt::sql::copier::TableMappingItemState;
-
   switch(state){
     case TableMappingItemState::MappingNotSet:
       return QVariant();
@@ -365,9 +338,17 @@ QString TableMappingModel::keyTypeName(TableMapping::FieldKeyType type) const
     case TableMapping::NotAKey:
       return QString();
     case TableMapping::PrimaryKey:
-      return "PK";
+      return QStringLiteral("PK");
   }
   return QString();
+}
+
+QVariant TableMappingModel::editFlagDecorationData(const QModelIndex & index) const
+{
+  if(flags(index) & Qt::ItemIsEditable){
+    return pvEditableItemIcon;
+  }
+  return QVariant();
 }
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

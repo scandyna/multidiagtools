@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -183,8 +183,8 @@ QByteArray mdtUsbtmcPort::sendQuery(const QByteArray& query, int timeout)
 {
   Q_ASSERT(pvTransferHandler != 0);
 
-  mdtUsbtmcTxMessage txMessage(query);
   QByteArray rxBa;
+  mdtUsbtmcTxMessage txMessage(query);
   mdtUsbtmcRxMessage rxMessage(rxBa);
 
   /*
@@ -200,7 +200,7 @@ QByteArray mdtUsbtmcPort::sendQuery(const QByteArray& query, int timeout)
   if(!pvTransferHandler->submitCommand(txMessage, true, timeout)){
     setError(pvTransferHandler->lastError());
     /// \todo We should abort message here (CLEAR, not Bulk I/O, because bulk transfer it was not submited now)
-    return false;
+    return rxBa;
   }
   waitTransactionFinished();
   if(pvTransactionState != TransactionState_t::Done){

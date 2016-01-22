@@ -52,6 +52,17 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     UniqueInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, QWidget *parent = nullptr);
 
+    /*! \brief Get expression
+     */
+    UniqueInsertExpression expression() const
+    {
+      return pvExpression;
+    }
+
+    /*! \brief Do checks and accept if ok
+     */
+    void accept() override;
+
    private:
 
     /*! \brief Add a match item

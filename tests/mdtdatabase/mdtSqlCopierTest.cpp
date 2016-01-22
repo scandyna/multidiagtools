@@ -2617,6 +2617,16 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   index = model.index(3, destinationFieldNameColumn);
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index), QVariant("FieldB"));
+  
+  /**
+   * Play
+   */
+  tableView.resizeColumnsToContents();
+  while(tableView.isVisible()){
+    QTest::qWait(500);
+  }
+
+  
   /*
    * Check selecting a source type
    */

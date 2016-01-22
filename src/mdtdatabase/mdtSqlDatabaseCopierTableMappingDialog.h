@@ -28,6 +28,7 @@
 
 class mdtSqlDatabaseCopierTableMappingModel;
 class mdtComboBoxItemDelegate;
+class QItemSelection;
 
 /*! \brief SQL database copier table mapping dialog
  */
@@ -84,10 +85,23 @@ class mdtSqlDatabaseCopierTableMappingDialog : public QDialog, Ui::mdtSqlDatabas
    */
   void resizeTableViewToContents();
 
+  /*! \brief Set selected row
+   *
+   * \note this will just update pvSelectedRow
+   */
+  void setSelectedRowFromSelection(const QItemSelection & selected, const QItemSelection & deselected);
+
  private:
+
+  /*! \brief Set selected row
+   *
+   * \note this will just update pvSelectedRow
+   */
+  void setSelectedRow(int row);
 
   mdtSqlDatabaseCopierTableMappingModel *pvMappingModel;
   mdtComboBoxItemDelegate *pvSourceFieldSelectionDelegate;
+  int pvSelectedRow;
   QSqlDatabase pvSourceDatabase;
 };
 

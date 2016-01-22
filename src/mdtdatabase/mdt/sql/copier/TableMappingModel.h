@@ -21,13 +21,14 @@
 #ifndef MDT_SQL_COPIER_TABLE_MAPPING_MODEL_H
 #define MDT_SQL_COPIER_TABLE_MAPPING_MODEL_H
 
-#include "mdt/sql/copier/TableMapping.h"
-#include "mdt/sql/copier/TableMappingItemState.h"
+#include "TableMapping.h"
+#include "TableMappingItemState.h"
 #include "mdtError.h"
 #include <QAbstractTableModel>
 #include <QModelIndex>
 #include <QSqlField>
 #include <QVariant>
+#include <QIcon>
 #include <memory>
 
 class mdtComboBoxItemDelegate;
@@ -68,6 +69,10 @@ class TableMappingModel : public QAbstractTableModel
    * \sa mdtSqlCopierTableMapping::generateFieldMappingByName()
    */
   void generateFieldMappingByName();
+
+  /*! \brief Insert a table mapping item
+   */
+  void insertItem(const TableMappingItem & item);
 
   /*! \brief Get source table name
    */
@@ -194,6 +199,12 @@ class TableMappingModel : public QAbstractTableModel
   /*! \brief Helper function to get field key type text
    */
   QString keyTypeName(mdt::sql::copier::TableMapping::FieldKeyType type) const;
+
+  /*! \brief Get edit flag decoration data
+   */
+  QVariant editFlagDecorationData(const QModelIndex & index) const;
+
+  QIcon pvEditableItemIcon;
 };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

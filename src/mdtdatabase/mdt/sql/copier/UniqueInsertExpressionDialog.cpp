@@ -118,6 +118,15 @@ UniqueInsertExpressionDialog::UniqueInsertExpressionDialog(const std::shared_ptr
 {
 }
 
+void UniqueInsertExpressionDialog::accept()
+{
+  if(pvExpression.destinationFieldIndexCount() < 1){
+    return;
+  }
+
+  QDialog::accept();
+}
+
 void UniqueInsertExpressionDialog::addMatchItem()
 {
   pvModel->insertRows(pvModel->rowCount()-1, 1);
@@ -157,37 +166,6 @@ void UniqueInsertExpressionDialog::addFieldToDestinationKey()
   Q_ASSERT(fieldSelectDialog.selectedFieldIndex() >= 0);
   pvExpression.addDestinationFieldIndex(fieldSelectDialog.selectedFieldIndex());
   displayDestinationKey();
-
-//   // List all available fields in destination table
-//   std::vector<int> allAvailableFieldIndexList(pvTableMapping->destinationTableFieldCount());
-//   std::iota(allAvailableFieldIndexList.begin(), allAvailableFieldIndexList.end(), 0);
-//   // List fields used in key
-//   const auto keyFieldIndexList = pvExpression.destinationFieldIndexList();
-//   // List unused fields
-//   std::vector<int> unusedFieldIndexList;
-//   std::set_difference(allAvailableFieldIndexList.cbegin(), allAvailableFieldIndexList.cend(),
-//                       keyFieldIndexList.cbegin(), keyFieldIndexList.cend(),
-//                       std::back_inserter(unusedFieldIndexList) );
-//   if(unusedFieldIndexList.empty()){
-//     return;
-//   }
-//   // Build available field name list
-//   QStringList fieldNameList;
-//   fieldNameList.reserve(unusedFieldIndexList.size());
-//   for(const int fi : unusedFieldIndexList){
-//     fieldNameList.append(pvTableMapping->destinationTableFieldNameAt(fi));
-//   }
-//   // Setup field selection dialog
-//   QInputDialog dialog(this);
-//   dialog.setWindowTitle(tr("Field selection"));
-//   dialog.setLabelText(tr("Field to add:"));
-//   dialog.setComboBoxItems(fieldNameList);
-//   if(dialog.exec() != QDialog::Accepted){
-//     return;
-//   }
-//   int selectedFieldIndex = pvTableMapping->destinationTableFieldIndexOf(dialog.textValue());
-//   pvExpression.addDestinationFieldIndex(selectedFieldIndex);
-//   displayDestinationKey();
 }
 
 void UniqueInsertExpressionDialog::displayDestinationKey()
