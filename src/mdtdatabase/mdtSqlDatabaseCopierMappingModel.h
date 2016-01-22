@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -120,13 +120,13 @@ class mdtSqlDatabaseCopierMappingModel : public QAbstractTableModel
    *
    * \pre row must be in a valid range
    */
-  mdtSqlDatabaseCopierTableMapping tableMapping(int row) const;
+  std::shared_ptr<mdtSqlDatabaseCopierTableMapping> tableMapping(int row) const;
 
   /*! \brief Set table mapping for given row
    *
    * \pre row must be in a valid range
    */
-  void setTableMapping(int row, const mdtSqlDatabaseCopierTableMapping & tm);
+  void setTableMapping(int row, const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & tm);
 
   /*! \brief Get database mapping
    */

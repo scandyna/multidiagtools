@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -94,7 +94,8 @@ void mdtSqlDatabaseCopierThread::run()
      */
     for(int i = 0; i < tableMappingList.size(); ++i){
       auto tm = tableMappingList.at(i);
-      if(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete){
+      Q_ASSERT(tm);
+      if(tm->mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete){
         /// \todo return value
         copyTable(tm, i, sourceDatabase, destinationDatabase, globalProgress);
       }
@@ -143,8 +144,8 @@ void mdtSqlDatabaseCopierThread::calculateTableSizes(const QSqlDatabase & source
   // Calculate table siz for each valid mapping
   for(int i = 0; i < tableMappingList.size(); ++i){
     auto tm = tableMappingList.at(i);
-    if(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete){
-      sql = tm.getSqlForSourceTableCount(sourceDatabase);
+    if(tm->mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete){
+      sql = tm->getSqlForSourceTableCount(sourceDatabase);
       if( (query.exec(sql)) && (query.next()) ){
         pvTableSizeList[i] = query.value(0).toLongLong();
       }else{
@@ -175,10 +176,12 @@ int64_t mdtSqlDatabaseCopierThread::getTotalCopySize() const
   return totalSize;
 }
 
-bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMapping & tm, int dbMappingModelRow,
+bool mdtSqlDatabaseCopierThread::copyTable(const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & tm, int dbMappingModelRow,
                                            const QSqlDatabase & sourceDatabase, const QSqlDatabase& destinationDatabase,
                                            mdtProgressValue<int64_t> & globalProgress)
 {
+  Q_ASSERT(tm);
+
   QSqlQuery sourceQuery(sourceDatabase);
   QSqlQuery destinationQuery(destinationDatabase);
   mdtSqlTransaction transaction(destinationDatabase);
@@ -198,9 +201,9 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
     progress.setRange(0, totalRows);
   }
   // Get source table data
-  sql = tm.getSqlForSourceTableSelect(sourceDatabase);
+  sql = tm->getSqlForSourceTableSelect(sourceDatabase);
   if(!sourceQuery.exec(sql)){
-    auto error = mdtErrorNewQ(tr("Cannot select data from  table '") + tm.sourceTableName() + tr("'"), mdtError::Error, this);
+    auto error = mdtErrorNewQ(tr("Cannot select data from  table '") + tm->sourceTableName() + tr("'"), mdtError::Error, this);
     error.stackError(mdtSqlError::fromQSqlError(sourceQuery.lastError()));
     error.commit();
     emit tableCopyErrorOccured(dbMappingModelRow, error);
@@ -221,9 +224,9 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
       return true;
     }
     // Prepare destination query for insertion
-    sql = tm.getSqlForDestinationTableInsert(destinationDatabase);
+    sql = tm->getSqlForDestinationTableInsert(destinationDatabase);
     if(!destinationQuery.prepare(sql)){
-      auto error = mdtErrorNewQ(tr("Cannot prepare stamenet for insertion into table '") + tm.destinationTableName() + tr("'"), mdtError::Error, this);
+      auto error = mdtErrorNewQ(tr("Cannot prepare stamenet for insertion into table '") + tm->destinationTableName() + tr("'"), mdtError::Error, this);
       error.stackError(mdtSqlError::fromQSqlError(sourceQuery.lastError()));
       error.commit();
       emit tableCopyErrorOccured(dbMappingModelRow, error);
@@ -237,7 +240,7 @@ bool mdtSqlDatabaseCopierThread::copyTable(const mdtSqlDatabaseCopierTableMappin
     }
     // Copy this row
     if(!destinationQuery.exec()){
-      auto error = mdtErrorNewQ(tr("Cannot execute query for insertion into table '") + tm.destinationTableName() + tr("'"), mdtError::Error, this);
+      auto error = mdtErrorNewQ(tr("Cannot execute query for insertion into table '") + tm->destinationTableName() + tr("'"), mdtError::Error, this);
       error.stackError(mdtSqlError::fromQSqlError(destinationQuery.lastError()));
       error.commit();
       emit tableCopyErrorOccured(dbMappingModelRow, error);

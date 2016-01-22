@@ -21,13 +21,14 @@
 #ifndef MDT_SQL_CSV_STRING_IMPORT_TABLE_MAPPING_MODEL_H
 #define MDT_SQL_CSV_STRING_IMPORT_TABLE_MAPPING_MODEL_H
 
-#include "mdtSqlCopierTableMappingModel.h"
+#include "mdt/sql/copier/TableMappingModel.h"
 #include "mdtSqlCsvStringImportTableMapping.h"
 #include "mdtError.h"
 #include <QModelIndex>
 #include <QSqlField>
 #include <QVariant>
 #include <QString>
+#include <memory>
 
 class mdtComboBoxItemDelegate;
 
@@ -35,7 +36,7 @@ class mdtComboBoxItemDelegate;
  *
  * \sa mdtSqlCsvStringImportTableMapping
  */
-class mdtSqlCsvStringImportTableMappingModel : public mdtSqlCopierTableMappingModel
+class mdtSqlCsvStringImportTableMappingModel : public mdt::sql::copier::TableMappingModel
 {
  Q_OBJECT
 
@@ -64,19 +65,30 @@ class mdtSqlCsvStringImportTableMappingModel : public mdtSqlCopierTableMappingMo
 
   /*! \brief Reference internal table mapping
    */
-  const mdt::sql::copier::TableMapping & mappingBase() const
+  const std::shared_ptr<const mdt::sql::copier::TableMapping> mappingBase() const override
   {
     return pvMapping;
   }
+
+//   const mdt::sql::copier::TableMapping & mappingBase() const
+//   {
+//     return pvMapping;
+//   }
 
   /*! \brief Reference internal table mapping
    */
-  mdt::sql::copier::TableMapping & mappingBase()
+  const std::shared_ptr<mdt::sql::copier::TableMapping> mappingBase() override
   {
     return pvMapping;
   }
 
-  mdtSqlCsvStringImportTableMapping pvMapping;
+//   mdt::sql::copier::TableMapping & mappingBase()
+//   {
+//     return pvMapping;
+//   }
+
+  ///mdtSqlCsvStringImportTableMapping pvMapping;
+  std::shared_ptr<mdtSqlCsvStringImportTableMapping> pvMapping;
 };
 
 #endif // #ifndef MDT_SQL_CSV_STRING_IMPORT_TABLE_MAPPING_MODEL_H

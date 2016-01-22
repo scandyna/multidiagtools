@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -52,12 +52,14 @@ bool mdtSqlDatabaseCopierMapping::resetTableMapping()
   QStringList destinationTableNameList = getTables(pvDestinationDatabase);
 
   pvTableMappingList.clear();
+  pvTableMappingList.reserve(destinationTableNameList.size());
   destinationTableNameList.sort();
   for(const auto & destinationTableName : destinationTableNameList){
-    mdtSqlDatabaseCopierTableMapping tm;
-    if(!tm.setDestinationTable(destinationTableName, pvDestinationDatabase)){
+    auto tm = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
+    ///mdtSqlDatabaseCopierTableMapping tm;
+    if(!tm->setDestinationTable(destinationTableName, pvDestinationDatabase)){
       clearTableMapping();
-      pvLastError = tm.lastError();
+      pvLastError = tm->lastError();
       return false;
     }
     pvTableMappingList.append(tm);
@@ -78,11 +80,11 @@ bool mdtSqlDatabaseCopierMapping::generateTableMappingByName()
   }
   QStringList sourceTableNameList = getTables(pvSourceDatabase);
   for(auto & tm : pvTableMappingList){
-    QString destinationTableName = tm.destinationTableName();
+    QString destinationTableName = tm->destinationTableName();
     if(sourceTableNameList.contains(destinationTableName)){
       /// \todo We ignore errors, the mapping state will indicate failures
-      tm.setSourceTable(destinationTableName, pvSourceDatabase);
-      tm.generateFieldMappingByName();
+      tm->setSourceTable(destinationTableName, pvSourceDatabase);
+      tm->generateFieldMappingByName();
     }
   }
 

@@ -52,33 +52,40 @@ void mdtSqlDatabaseCopierTableMappingDialog::setSourceTables(const QSqlDatabase 
   cbSourceTable->addItems(tables);
 }
 
-void mdtSqlDatabaseCopierTableMappingDialog::setMapping(const mdtSqlDatabaseCopierTableMapping & m)
+void mdtSqlDatabaseCopierTableMappingDialog::setMapping(const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & m)
 {
+  Q_ASSERT(m);
+
   int previousCbIndex;
   int newCbIndex;
 
   // Setup source field selection delegate
   pvSourceFieldSelectionDelegate->clear();
   pvSourceFieldSelectionDelegate->addItem("");
-  pvSourceFieldSelectionDelegate->addItems(m.getSourceTableFieldNameList());
+  pvSourceFieldSelectionDelegate->addItems(m->getSourceTableFieldNameList());
   // Update source and destination table names
   previousCbIndex = cbSourceTable->currentIndex();
-  newCbIndex = cbSourceTable->findText(m.sourceTableName());
+  newCbIndex = cbSourceTable->findText(m->sourceTableName());
   cbSourceTable->setCurrentIndex(newCbIndex);
   if(newCbIndex == previousCbIndex){
     setSourceTable(newCbIndex);
   }
-  lbDestinationTable->setText(m.destinationTableName());
+  lbDestinationTable->setText(m->destinationTableName());
   // Update mapping model
   pvMappingModel->setMapping(m);
 
   resizeTableViewToContents();
 }
 
-mdtSqlDatabaseCopierTableMapping mdtSqlDatabaseCopierTableMappingDialog::mapping() const
+std::shared_ptr<mdtSqlDatabaseCopierTableMapping> mdtSqlDatabaseCopierTableMappingDialog::mapping() const
 {
   return pvMappingModel->mapping();
 }
+
+// mdtSqlDatabaseCopierTableMapping mdtSqlDatabaseCopierTableMappingDialog::mapping() const
+// {
+//   return pvMappingModel->mapping();
+// }
 
 void mdtSqlDatabaseCopierTableMappingDialog::setSourceTable(int cbIndex)
 {

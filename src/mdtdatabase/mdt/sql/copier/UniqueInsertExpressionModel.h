@@ -26,6 +26,7 @@
 #include <QAbstractTableModel>
 #include <QModelIndex>
 #include <QVariant>
+#include <memory>
 
 namespace mdt{ namespace sql{ namespace copier{
 
@@ -39,7 +40,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Constructor
      */
-    UniqueInsertExpressionModel(const TableMapping & tm, UniqueInsertExpression & exp, QObject *parent = nullptr);
+    UniqueInsertExpressionModel(const std::shared_ptr<const TableMapping> & tm, UniqueInsertExpression & exp, QObject *parent = nullptr);
 
     // Copy is disabled
     UniqueInsertExpressionModel(const UniqueInsertExpressionModel &) = delete;
@@ -111,7 +112,8 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     QVariant sourceValueFieldName(const UniqueInsertMatchExpressionItem & item) const;
 
-    const TableMapping & pvTableMapping;
+    ///const TableMapping & pvTableMapping;
+    std::shared_ptr<const TableMapping> pvTableMapping;
     UniqueInsertExpression & pvExpression;
   };
 

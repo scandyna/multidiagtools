@@ -24,6 +24,7 @@
 #include "ui_mdtSqlDatabaseCopierTableMappingDialog.h"
 #include "mdtSqlDatabaseCopierTableMapping.h"
 #include <QDialog>
+#include <memory>
 
 class mdtSqlDatabaseCopierTableMappingModel;
 class mdtComboBoxItemDelegate;
@@ -52,11 +53,12 @@ class mdtSqlDatabaseCopierTableMappingDialog : public QDialog, Ui::mdtSqlDatabas
 
   /*! \brief Set table mapping
    */
-  void setMapping(const mdtSqlDatabaseCopierTableMapping & m);
+  void setMapping(const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & m);
 
   /*! \brief Get table mapping
    */
-  mdtSqlDatabaseCopierTableMapping mapping() const;
+  std::shared_ptr<mdtSqlDatabaseCopierTableMapping> mapping() const;
+  ///mdtSqlDatabaseCopierTableMapping mapping() const;
 
  private slots:
 

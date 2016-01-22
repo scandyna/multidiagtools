@@ -2,47 +2,47 @@ format 211
 
 classcanvas 128002 class_ref 2174082 // TableMapping
   classdiagramsettings member_max_width 0 end
-  xyz 1247.2 40.8 2000
+  xyz 953.4 42.4 2000
 end
 classcanvas 128130 class_ref 1914114 // mdtSqlDatabaseCopierTableMapping
   classdiagramsettings member_max_width 0 end
-  xyz 1319.2 599 2006
+  xyz 1024.8 264 2006
 end
 classcanvas 128386 class_ref 2180610 // mdtSqlCsvImportTableMapping
   classdiagramsettings member_max_width 0 end
-  xyz 1031 226.4 2012
+  xyz 200.4 226.6 2012
 end
 classcanvas 128642 class_ref 2200578 // mdtSqlCsvStringImportTableMapping
   classdiagramsettings member_max_width 0 end
-  xyz 1031.4 514.6 2018
+  xyz 204.4 370 2018
 end
 classcanvas 128898 class_ref 2200706 // mdtSqlCsvFileImportTableMapping
   classdiagramsettings member_max_width 0 end
-  xyz 35.8 514.6 2018
+  xyz 39.6 475 2018
 end
-classcanvas 129666 class_ref 2200834 // mdtSqlCopierTableMappingModel
+classcanvas 129666 class_ref 2200834 // TableMappingModel
   classdiagramsettings member_max_width 0 end
-  xyz 567.3 370 2012
+  xyz 577.4 619.4 2012
 end
 classcanvas 129922 class_ref 1921282 // mdtSqlDatabaseCopierTableMappingModel
   classdiagramsettings member_max_width 0 end
-  xyz 497 618 2012
+  xyz 697 283 2012
 end
 classcanvas 130178 class_ref 2207362 // mdtSqlCsvStringImportTableMappingModel
   classdiagramsettings member_max_width 0 end
-  xyz 682.4 514.6 2018
+  xyz 491 370 2018
 end
 classcanvas 130434 class_ref 2207490 // mdtSqlCsvFileImportTableMappingModel
   classdiagramsettings member_max_width 0 end
-  xyz 304.8 514.6 2018
+  xyz 312 475 2018
 end
 classcanvas 130946 class_ref 2214018 // mdtSqlCopierTableMappingDialog
   classdiagramsettings member_max_width 0 end
-  xyz 41 762.8 2000
+  xyz 41 763.8 2000
 end
 classcanvas 131074 class_ref 1947650 // mdtSqlDatabaseCopierTableMappingDialog
   classdiagramsettings member_max_width 0 end
-  xyz 49 863.6 2006
+  xyz 49 864 2006
 end
 relationcanvas 128258 relation_ref 2471426 // <generalisation>
   from ref 128130 z 2007 to ref 128002
@@ -51,22 +51,22 @@ relationcanvas 128258 relation_ref 2471426 // <generalisation>
 end
 relationcanvas 128514 relation_ref 2471682 // <generalisation>
   geometry VHV unfixed
-  from ref 128386 z 2013 to point 1158 184.8
-  line 129154 z 2013 to point 1446.2 184.8
+  from ref 128386 z 2013 to point 326 183.8
+  line 129154 z 2013 to point 1092 183.8
   line 129282 z 2013 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 2491394 // <generalisation>
-  decenter_begin 513
   from ref 128642 z 2019 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129026 relation_ref 2491522 // <generalisation>
   geometry VHV unfixed
-  from ref 128898 z 2019 to point 150.8 329
-  line 129410 z 2019 to point 1158 329
+  decenter_begin 514
+  from ref 128898 z 2019 to point 157 328
+  line 129410 z 2019 to point 326 328
   line 129538 z 2019 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -77,19 +77,16 @@ relationcanvas 130050 relation_ref 2241538 // <directional composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130306 relation_ref 2498306 // <generalisation>
-  geometry VHV unfixed
   decenter_begin 510
-  from ref 130178 z 2019 to point 837 471.5
-  line 131586 z 2019 to point 678 471.5
-  line 131714 z 2019 to ref 129666
+  from ref 130178 z 2019 to ref 129666
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130562 relation_ref 2498434 // <generalisation>
   geometry VHV unfixed
-  decenter_begin 510
-  from ref 130434 z 2019 to point 453 471.5
-  line 130690 z 2019 to point 637 471.5
+  decenter_begin 484
+  from ref 130434 z 2019 to point 453 576.4
+  line 130690 z 2019 to point 624 576.4
   line 130818 z 2019 to ref 129666
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -101,8 +98,8 @@ relationcanvas 131202 relation_ref 2505090 // <generalisation>
 end
 relationcanvas 131330 relation_ref 2574722 // <generalisation>
   geometry VHV unfixed
-  from ref 129922 z 2013 to point 638 472.6
-  line 132098 z 2013 to point 677 472.6
+  from ref 129922 z 2013 to point 838 576.4
+  line 132098 z 2013 to point 646.4 576.4
   line 132226 z 2013 to ref 129666
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

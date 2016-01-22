@@ -22,15 +22,17 @@
 #include "mdt/sql/copier/TableMapping.h"
 #include <QSqlRecord>
 
-void mdtSqlCopierDataMapping::setSourceRecord(const QSqlRecord & sourceRecord, const mdt::sql::copier::TableMapping & mapping)
+void mdtSqlCopierDataMapping::setSourceRecord(const QSqlRecord & sourceRecord, const std::shared_ptr<mdt::sql::copier::TableMapping> & mapping)
 {
+  Q_ASSERT(mapping);
+
   clear();
   for(int i = 0; i < sourceRecord.count(); ++i){
     addSourceRecordItem(i, sourceRecord.value(i), mapping);
   }
 }
 
-void mdtSqlCopierDataMapping::addSourceRecordItem(int sourceRecordIndex, const QVariant & sourceRecordItem, const mdt::sql::copier::TableMapping & mapping)
+void mdtSqlCopierDataMapping::addSourceRecordItem(int sourceRecordIndex, const QVariant & sourceRecordItem, const std::shared_ptr<mdt::sql::copier::TableMapping> & mapping)
 {
   destinationRecord.append(sourceRecordItem);
 }

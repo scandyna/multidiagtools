@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -94,7 +94,7 @@ bool mdtSqlDatabaseCopierMappingModel::resetTableMapping()
   return true;
 }
 
-mdtSqlDatabaseCopierTableMapping mdtSqlDatabaseCopierMappingModel::tableMapping(int row) const
+std::shared_ptr<mdtSqlDatabaseCopierTableMapping> mdtSqlDatabaseCopierMappingModel::tableMapping(int row) const
 {
   Q_ASSERT(row >= 0);
   Q_ASSERT(row < pvMapping.tableMappingCount());
@@ -102,8 +102,9 @@ mdtSqlDatabaseCopierTableMapping mdtSqlDatabaseCopierMappingModel::tableMapping(
   return pvMapping.tableMapping(row);
 }
 
-void mdtSqlDatabaseCopierMappingModel::setTableMapping(int row, const mdtSqlDatabaseCopierTableMapping& tm)
+void mdtSqlDatabaseCopierMappingModel::setTableMapping(int row, const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & tm)
 {
+  Q_ASSERT(tm);
   Q_ASSERT(row >= 0);
   Q_ASSERT(row < pvMapping.tableMappingCount());
 

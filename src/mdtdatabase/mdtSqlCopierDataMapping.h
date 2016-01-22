@@ -23,6 +23,7 @@
 
 #include <QVector>
 #include <QVariant>
+#include <memory>
 
 namespace mdt{ namespace sql{ namespace copier{
   class TableMapping;
@@ -75,7 +76,7 @@ struct mdtSqlCopierDataMapping
    * \param sourceRecord Record that contains data from source
    * \param tableMapping Used to map data
    */
-  void setSourceRecord(const QSqlRecord & sourceRecord, const mdt::sql::copier::TableMapping & mapping);
+  void setSourceRecord(const QSqlRecord & sourceRecord, const std::shared_ptr<mdt::sql::copier::TableMapping> & mapping);
 
   /*! \brief Add source record item
    *
@@ -85,7 +86,7 @@ struct mdtSqlCopierDataMapping
    * \param sourceRecordItem Data item in source record
    * \param tableMapping Used to map data
    */
-  void addSourceRecordItem(int sourceRecordIndex, const QVariant & sourceRecordItem, const mdt::sql::copier::TableMapping & mapping);
+  void addSourceRecordItem(int sourceRecordIndex, const QVariant & sourceRecordItem, const std::shared_ptr<mdt::sql::copier::TableMapping> & mapping);
 
   /*! \brief Get count of destination record fields
    */

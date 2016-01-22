@@ -24,7 +24,8 @@
 #include <QDebug>
 
 mdtSqlDatabaseCopierTableMappingModel::mdtSqlDatabaseCopierTableMappingModel(QObject* parent)
- : mdtSqlCopierTableMappingModel(parent)
+ : TableMappingModel(parent),
+   pvMapping(std::make_shared<mdtSqlDatabaseCopierTableMapping>())
 {
 }
 
@@ -33,15 +34,15 @@ bool mdtSqlDatabaseCopierTableMappingModel::setSourceTable(const QString & table
   bool ok;
 
   beginResetModel();
-  ok = pvMapping.setSourceTable(tableName, db);
+  ok = pvMapping->setSourceTable(tableName, db);
   if( (ok) && (delegate != nullptr) ){
     delegate->clear();
     delegate->addItem("");
-    delegate->addItems(pvMapping.getSourceTableFieldNameList());
+    delegate->addItems(pvMapping->getSourceTableFieldNameList());
   }
   endResetModel();
   if(!ok){
-    pvLastError = pvMapping.lastError();
+    pvLastError = pvMapping->lastError();
     return false;
   }
 
@@ -53,18 +54,20 @@ bool mdtSqlDatabaseCopierTableMappingModel::setDestinationTable(const QString & 
   bool ok;
 
   beginResetModel();
-  ok = pvMapping.setDestinationTable(tableName, db);
+  ok = pvMapping->setDestinationTable(tableName, db);
   endResetModel();
   if(!ok){
-    pvLastError = pvMapping.lastError();
+    pvLastError = pvMapping->lastError();
     return false;
   }
 
   return true;
 }
 
-void mdtSqlDatabaseCopierTableMappingModel::setMapping(const mdtSqlDatabaseCopierTableMapping & m)
+void mdtSqlDatabaseCopierTableMappingModel::setMapping(const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & m)
 {
+  Q_ASSERT(m);
+
   beginResetModel();
   pvMapping = m;
   endResetModel();

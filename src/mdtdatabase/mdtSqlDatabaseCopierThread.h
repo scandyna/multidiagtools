@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -135,7 +135,7 @@ class mdtSqlDatabaseCopierThread : public QThread
 
   /*! \brief Copy source table to destination table regarding table mapping
    */
-  bool copyTable(const mdtSqlDatabaseCopierTableMapping & tm, int dbMappingModelRow,
+  bool copyTable(const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & tm, int dbMappingModelRow,
                  const QSqlDatabase & sourceDatabase, const QSqlDatabase & destinationDatabase,
                  mdtProgressValue<int64_t> & globalProgress);
 

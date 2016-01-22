@@ -21,13 +21,14 @@
 #ifndef MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_MODEL_H
 #define MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_MODEL_H
 
-#include "mdtSqlCopierTableMappingModel.h"
+#include "mdt/sql/copier/TableMappingModel.h"
 #include "mdtSqlDatabaseCopierTableMapping.h"
 #include "mdtError.h"
 #include <QAbstractTableModel>
 #include <QModelIndex>
 #include <QSqlField>
 #include <QVariant>
+#include <memory>
 
 class mdtComboBoxItemDelegate;
 
@@ -35,7 +36,7 @@ class mdtComboBoxItemDelegate;
  *
  * \sa mdtSqlDatabaseCopierTableMapping
  */
-class mdtSqlDatabaseCopierTableMappingModel : public mdtSqlCopierTableMappingModel
+class mdtSqlDatabaseCopierTableMappingModel : public mdt::sql::copier::TableMappingModel
 {
  Q_OBJECT
 
@@ -66,32 +67,46 @@ class mdtSqlDatabaseCopierTableMappingModel : public mdtSqlCopierTableMappingMod
 
   /*! \brief Set mapping
    */
-  void setMapping(const mdtSqlDatabaseCopierTableMapping & m);
+  void setMapping(const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & m);
 
   /*! \brief Get mapping
    */
-  mdtSqlDatabaseCopierTableMapping mapping() const
+  std::shared_ptr<mdtSqlDatabaseCopierTableMapping> mapping() const
   {
     return pvMapping;
   }
+//   mdtSqlDatabaseCopierTableMapping mapping() const
+//   {
+//     return pvMapping;
+//   }
 
  private:
 
   /*! \brief Reference internal table mapping
    */
-  const mdt::sql::copier::TableMapping & mappingBase() const
+  const std::shared_ptr<const mdt::sql::copier::TableMapping> mappingBase() const override
   {
     return pvMapping;
   }
+//   const mdt::sql::copier::TableMapping & mappingBase() const
+//   {
+//     return pvMapping;
+//   }
 
   /*! \brief Reference internal table mapping
    */
-  mdt::sql::copier::TableMapping & mappingBase()
+  const std::shared_ptr<mdt::sql::copier::TableMapping> mappingBase() override
   {
     return pvMapping;
   }
 
-  mdtSqlDatabaseCopierTableMapping pvMapping;
+//   mdt::sql::copier::TableMapping & mappingBase()
+//   {
+//     return pvMapping;
+//   }
+
+  ///mdtSqlDatabaseCopierTableMapping pvMapping;
+  std::shared_ptr<mdtSqlDatabaseCopierTableMapping> pvMapping;
 };
 
 #endif // #ifndef MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_MODEL_H

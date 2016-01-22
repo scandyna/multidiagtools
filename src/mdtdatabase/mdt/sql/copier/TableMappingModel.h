@@ -28,14 +28,17 @@
 #include <QModelIndex>
 #include <QSqlField>
 #include <QVariant>
+#include <memory>
 
 class mdtComboBoxItemDelegate;
+
+namespace mdt{ namespace sql{ namespace copier{
 
 /*! \brief Base table model to access SQL table copier mapping
  *
  * \sa mdtSqlCopierTableMapping
  */
-class mdtSqlCopierTableMappingModel : public QAbstractTableModel
+class TableMappingModel : public QAbstractTableModel
 {
  Q_OBJECT
 
@@ -43,12 +46,12 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
 
   /*! \brief Constructor
    */
-  mdtSqlCopierTableMappingModel(QObject *parent = nullptr);
+  TableMappingModel(QObject *parent = nullptr);
 
   /*! \internal Copy disabled
    */
-  mdtSqlCopierTableMappingModel(const mdtSqlCopierTableMappingModel & other) = delete;
-  mdtSqlCopierTableMappingModel & operator=(const mdtSqlCopierTableMappingModel &) = delete;
+  TableMappingModel(const TableMappingModel & other) = delete;
+  TableMappingModel & operator=(const TableMappingModel &) = delete;
 
   /*! \brief Setup mappin item type delegate
    */
@@ -70,14 +73,14 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
    */
   QString sourceTableName() const
   {
-    return mappingBase().sourceTableName();
+    return mappingBase()->sourceTableName();
   }
 
   /*! \brief Get destination table name
    */
   QString destinationTableName() const
   {
-    return mappingBase().destinationTableName();
+    return mappingBase()->destinationTableName();
   }
 
   /*! \brief Get row count
@@ -117,11 +120,13 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
 
   /*! \brief Reference internal table mapping (read only version)
    */
-  virtual const mdt::sql::copier::TableMapping & mappingBase() const = 0;
+  virtual const std::shared_ptr<const TableMapping> mappingBase() const = 0;
+//   virtual const mdt::sql::copier::TableMapping & mappingBase() const = 0;
 
   /*! \brief Reference internal table mapping
    */
-  virtual mdt::sql::copier::TableMapping & mappingBase() = 0;
+  virtual const std::shared_ptr<TableMapping> mappingBase() = 0;
+//   virtual mdt::sql::copier::TableMapping & mappingBase() = 0;
 
   /*! \brief Column index
    */
@@ -190,5 +195,7 @@ class mdtSqlCopierTableMappingModel : public QAbstractTableModel
    */
   QString keyTypeName(mdt::sql::copier::TableMapping::FieldKeyType type) const;
 };
+
+}}} // namespace mdt{ namespace sql{ namespace copier{
 
 #endif // #ifndef MDT_SQL_COPIER_TABLE_MAPPING_MODEL_H

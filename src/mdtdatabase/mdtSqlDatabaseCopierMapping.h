@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,6 +25,7 @@
 #include <QSqlDatabase>
 #include <QVector>
 #include <QStringList>
+#include <memory>
 
 /*! \brief Store SQL database copy mapping
  */
@@ -112,7 +113,7 @@ class mdtSqlDatabaseCopierMapping
   {
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < pvTableMappingList.size());
-    return pvTableMappingList.at(index).sourceTableName();
+    return pvTableMappingList.at(index)->sourceTableName();
   }
 
   /*! \brief Get destination table name for given mapping index
@@ -123,7 +124,7 @@ class mdtSqlDatabaseCopierMapping
   {
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < pvTableMappingList.size());
-    return pvTableMappingList.at(index).destinationTableName();
+    return pvTableMappingList.at(index)->destinationTableName();
   }
 
   /*! \brief Get table mapping state for given mapping index
@@ -134,14 +135,14 @@ class mdtSqlDatabaseCopierMapping
   {
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < pvTableMappingList.size());
-    return pvTableMappingList.at(index).mappingState();
+    return pvTableMappingList.at(index)->mappingState();
   }
 
   /*! \brief Get table mapping at given index
    *
    * \pre index must be in a valid range
    */
-  mdtSqlDatabaseCopierTableMapping tableMapping(int index) const
+  const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> tableMapping(int index) const
   {
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < pvTableMappingList.size());
@@ -152,8 +153,9 @@ class mdtSqlDatabaseCopierMapping
    *
    * \pre index must be in a valid range
    */
-  void setTableMapping(int index, const mdtSqlDatabaseCopierTableMapping & tm)
+  void setTableMapping(int index, const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & tm)
   {
+    Q_ASSERT(tm);
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < pvTableMappingList.size());
     pvTableMappingList[index] = tm;
@@ -161,7 +163,7 @@ class mdtSqlDatabaseCopierMapping
 
   /*! \brief Get table mapping list
    */
-  QVector<mdtSqlDatabaseCopierTableMapping> tableMappingList() const
+  QVector<std::shared_ptr<mdtSqlDatabaseCopierTableMapping>> tableMappingList() const
   {
     return pvTableMappingList;
   }
@@ -193,7 +195,8 @@ class mdtSqlDatabaseCopierMapping
 
   QSqlDatabase pvSourceDatabase;
   QSqlDatabase pvDestinationDatabase;
-  QVector<mdtSqlDatabaseCopierTableMapping> pvTableMappingList;
+  QVector<std::shared_ptr<mdtSqlDatabaseCopierTableMapping>> pvTableMappingList;
+  ///QVector<mdtSqlDatabaseCopierTableMapping> pvTableMappingList;
   mdtError pvLastError;
 };
 

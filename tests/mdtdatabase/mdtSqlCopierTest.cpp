@@ -625,7 +625,8 @@ void mdtSqlCopierTest::uniqueInsertExpressionModelTest()
   using mdt::sql::copier::UniqueInsertExpressionModel;
 
   QSqlDatabase db = pvDatabase;
-  mdtSqlDatabaseCopierTableMapping mapping;
+  auto mapping = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
+  ///mdtSqlDatabaseCopierTableMapping mapping;
   UniqueInsertExpression exp;
   UniqueInsertExpressionModel model(mapping, exp);
   const int sourceFieldColumn = 3;
@@ -637,8 +638,8 @@ void mdtSqlCopierTest::uniqueInsertExpressionModelTest()
   /*
    * Setup table mapping
    */
-  QVERIFY(mapping.setSourceTable("Client_tbl", db));
-  QVERIFY(mapping.setDestinationTable("Client2_tbl", db));
+  QVERIFY(mapping->setSourceTable("Client_tbl", db));
+  QVERIFY(mapping->setDestinationTable("Client2_tbl", db));
   /*
    * Add a match item:
    *  Client2_tbl.FieldB = Client2_tbl.FieldA
@@ -736,7 +737,8 @@ void mdtSqlCopierTest::uniqueInsertExpressionDialogTest()
   using mdt::sql::copier::TableMappingItem;
 
   QSqlDatabase db = pvDatabase;
-  mdtSqlDatabaseCopierTableMapping mapping;
+  auto mapping = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
+  ///mdtSqlDatabaseCopierTableMapping mapping;
   UniqueInsertExpression exp;
   TableMappingItem item;
 
@@ -749,11 +751,11 @@ void mdtSqlCopierTest::uniqueInsertExpressionDialogTest()
    * Setup table mapping
    */
   // Set source and destination
-  QVERIFY(mapping.setSourceTable("Client_tbl", db));
-  QVERIFY(mapping.setDestinationTable("Client2_tbl", db));
+  QVERIFY(mapping->setSourceTable("Client_tbl", db));
+  QVERIFY(mapping->setDestinationTable("Client2_tbl", db));
   // Add expression
   item.setUniqueInsertExpression(exp);
-  mapping.insertItem(item);
+  mapping->insertItem(item);
 
   UniqueInsertExpressionDialog dialog(mapping, 0);
 
@@ -2531,7 +2533,8 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   QModelIndex index;
 //   mdtSqlCopierFieldMapping::SourceType sourceType;
   TableMappingItem::Type itemTyppe;
-  mdtSqlDatabaseCopierTableMapping tm;
+  ///mdtSqlDatabaseCopierTableMapping tm;
+  std::shared_ptr<mdtSqlDatabaseCopierTableMapping> tm;
   mdtComboBoxItemDelegate *sourceTypeDelegate = new mdtComboBoxItemDelegate(&tableView);
   mdtComboBoxItemDelegate *sourceFieldNameDelegate = new mdtComboBoxItemDelegate(&tableView);
 
@@ -2591,11 +2594,11 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
    * Check updating mapping
    */
   tm = model.mapping();
-  QCOMPARE(tm.itemsCount(), 4);
+  QCOMPARE(tm->itemsCount(), 4);
   // Update: source FieldB -> destination FieldA
-  tm.setSourceFieldAtItem(2, "FieldB");
+  tm->setSourceFieldAtItem(2, "FieldB");
   // Update: source FieldA -> destination FieldB
-  tm.setSourceFieldAtItem(3, "FieldA");
+  tm->setSourceFieldAtItem(3, "FieldA");
   // Update model
   model.setMapping(tm);
   // Check row 2
@@ -2687,12 +2690,13 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingDialogTest()
 {
   mdtSqlDatabaseCopierTableMappingDialog dialog;
-  mdtSqlDatabaseCopierTableMapping mapping;
+  ///mdtSqlDatabaseCopierTableMapping mapping;
+  auto mapping = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
   QStringList sourceTables;
 
-  QVERIFY(mapping.setSourceTable("Client_tbl", pvDatabase));
-  QVERIFY(mapping.setDestinationTable("Client2_tbl", pvDatabase));
-  mapping.generateFieldMappingByName();
+  QVERIFY(mapping->setSourceTable("Client_tbl", pvDatabase));
+  QVERIFY(mapping->setDestinationTable("Client2_tbl", pvDatabase));
+  mapping->generateFieldMappingByName();
 
   sourceTables << "Client_tbl" << "Client2_tbl";
   dialog.setSourceTables(pvDatabase, sourceTables);
@@ -2702,7 +2706,8 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingDialogTest()
 
 void mdtSqlCopierTest::sqlCopierDataMappingTest()
 {
-  mdtSqlDatabaseCopierTableMapping mapping;
+  auto mapping = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
+  ///mdtSqlDatabaseCopierTableMapping mapping;
   mdtSqlCopierDataMapping dataMapping;
   QSqlDatabase db = pvDatabase;
   QSqlQuery sourceQuery(db);
@@ -2716,15 +2721,15 @@ void mdtSqlCopierTest::sqlCopierDataMappingTest()
   /*
    * Setup databases and tables
    */
-  QVERIFY(mapping.setSourceTable("Client_tbl", db));
-  QVERIFY(mapping.setDestinationTable("Client2_tbl", db));
+  QVERIFY(mapping->setSourceTable("Client_tbl", db));
+  QVERIFY(mapping->setDestinationTable("Client2_tbl", db));
   /*
    * Add field mapping:
    * - Client_tbl.Id_PK -> Client2_tbl.Id_PK
    */
-  mapping.setSourceFieldAtItem(0, "Id_PK");
+  mapping->setSourceFieldAtItem(0, "Id_PK");
   // Get source data
-  sql = mapping.getSqlForSourceTableSelect(db);
+  sql = mapping->getSqlForSourceTableSelect(db);
   QVERIFY(sourceQuery.exec(sql));
   QVERIFY(sourceQuery.next());
   QCOMPARE(sourceQuery.record().count(), 1);
@@ -2736,9 +2741,9 @@ void mdtSqlCopierTest::sqlCopierDataMappingTest()
    * Add field mapping:
    * - Client_tbl.Name -> Client2_tbl.Name
    */
-  mapping.setSourceFieldAtItem(1, "Name");
+  mapping->setSourceFieldAtItem(1, "Name");
   // Get source data
-  sql = mapping.getSqlForSourceTableSelect(db);
+  sql = mapping->getSqlForSourceTableSelect(db);
   QVERIFY(sourceQuery.exec(sql));
   QVERIFY(sourceQuery.next());
   QCOMPARE(sourceQuery.record().count(), 2);
@@ -2751,9 +2756,9 @@ void mdtSqlCopierTest::sqlCopierDataMappingTest()
    * Add field mapping:
    * - Client_tbl.FieldB -> Client2_tbl.FieldA
    */
-  mapping.setSourceFieldAtItem(2, "FieldB");
+  mapping->setSourceFieldAtItem(2, "FieldB");
   // Get source data
-  sql = mapping.getSqlForSourceTableSelect(db);
+  sql = mapping->getSqlForSourceTableSelect(db);
   QVERIFY(sourceQuery.exec(sql));
   QVERIFY(sourceQuery.next());
   QCOMPARE(sourceQuery.record().count(), 3);
@@ -2767,9 +2772,9 @@ void mdtSqlCopierTest::sqlCopierDataMappingTest()
    * Add field mapping:
    * - Client_tbl.FieldA -> Client2_tbl.FieldB
    */
-  mapping.setSourceFieldAtItem(3, "FieldA");
+  mapping->setSourceFieldAtItem(3, "FieldA");
   // Get source data
-  sql = mapping.getSqlForSourceTableSelect(db);
+  sql = mapping->getSqlForSourceTableSelect(db);
   QVERIFY(sourceQuery.exec(sql));
   QVERIFY(sourceQuery.next());
   QCOMPARE(sourceQuery.record().count(), 4);
@@ -2783,10 +2788,10 @@ void mdtSqlCopierTest::sqlCopierDataMappingTest()
   /*
    * Check with source fixed value for Client2_tbl.Name
    */
-//   mapping.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
-  mapping.setSourceFixedValueAtItem(1, "Fixed name");
+//   mapping->setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
+  mapping->setSourceFixedValueAtItem(1, "Fixed name");
   // Get source data
-  sql = mapping.getSqlForSourceTableSelect(db);
+  sql = mapping->getSqlForSourceTableSelect(db);
   QVERIFY(sourceQuery.exec(sql));
   QVERIFY(sourceQuery.next());
   QCOMPARE(sourceQuery.record().count(), 3);
@@ -3366,12 +3371,12 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingTest()
    *   Client_tbl.FieldA -> Client2_tbl.FieldB
    */
   auto tm = mapping.tableMapping(0);
-  QVERIFY(tm.setSourceTable("Client_tbl", pvDatabase));
-  tm.setSourceFieldAtItem(0, "Id_PK");
-  tm.setSourceFieldAtItem(1, "Name");
-  tm.setSourceFieldAtItem(2, "FieldB");
-  tm.setSourceFieldAtItem(3, "FieldA");
-  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
+  QVERIFY(tm->setSourceTable("Client_tbl", pvDatabase));
+  tm->setSourceFieldAtItem(0, "Id_PK");
+  tm->setSourceFieldAtItem(1, "Name");
+  tm->setSourceFieldAtItem(2, "FieldB");
+  tm->setSourceFieldAtItem(3, "FieldA");
+  QVERIFY(tm->mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
   mapping.setTableMapping(0, tm);
   QCOMPARE(mapping.tableMappingCount(), 2);
   QCOMPARE(mapping.tableMappingList().size(), 2);
@@ -3405,7 +3410,8 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
   const int destinationTableNameColumn = 1;
   QModelIndex index;
   ///mdtSqlDatabaseCopierMapping dbm;
-  mdtSqlDatabaseCopierTableMapping tm;
+  std::shared_ptr<mdtSqlDatabaseCopierTableMapping> tm;
+  ///mdtSqlDatabaseCopierTableMapping tm;
   ///mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
   mdtProgressBarItemDelegate *progressDelegate = new mdtProgressBarItemDelegate(&tableView);
   mdtProgressValue<int> progress;
@@ -3449,18 +3455,18 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
    */
   // Check row 0
   tm = model.tableMapping(0);
-  QCOMPARE(tm.sourceTableName(), QString("Client2_tbl"));
-  QCOMPARE(tm.destinationTableName(), QString("Client2_tbl"));
-  QCOMPARE(tm.itemsCount(), 4);
-  QCOMPARE(tm.destinationFieldNameListAtItem(0).size(), 1);
-  QCOMPARE(tm.destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
+  QCOMPARE(tm->sourceTableName(), QString("Client2_tbl"));
+  QCOMPARE(tm->destinationTableName(), QString("Client2_tbl"));
+  QCOMPARE(tm->itemsCount(), 4);
+  QCOMPARE(tm->destinationFieldNameListAtItem(0).size(), 1);
+  QCOMPARE(tm->destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
   // Check row 1
   tm = model.tableMapping(1);
-  QCOMPARE(tm.sourceTableName(), QString("Client_tbl"));
-  QCOMPARE(tm.destinationTableName(), QString("Client_tbl"));
-  QCOMPARE(tm.itemsCount(), 4);
-  QCOMPARE(tm.destinationFieldNameListAtItem(0).size(), 1);
-  QCOMPARE(tm.destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
+  QCOMPARE(tm->sourceTableName(), QString("Client_tbl"));
+  QCOMPARE(tm->destinationTableName(), QString("Client_tbl"));
+  QCOMPARE(tm->itemsCount(), 4);
+  QCOMPARE(tm->destinationFieldNameListAtItem(0).size(), 1);
+  QCOMPARE(tm->destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
 
   /** \todo
    * Check updating model
@@ -3559,13 +3565,13 @@ void mdtSqlCopierTest::sqlDatabaseCopierThreadTest()
    *   Client_tbl.FieldA -> Client2_tbl.FieldB
    */
   auto tm = mapping.tableMapping(0);
-  QVERIFY(tm.setSourceTable("Client_tbl", pvDatabase));
-  tm.setSourceFieldAtItem(0, "Id_PK");
-//   tm.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
-  tm.setSourceFixedValueAtItem(1, "Fixed name");
-  tm.setSourceFieldAtItem(2, "FieldB");
-  tm.setSourceFieldAtItem(3, "FieldA");
-  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
+  QVERIFY(tm->setSourceTable("Client_tbl", pvDatabase));
+  tm->setSourceFieldAtItem(0, "Id_PK");
+//   tm->setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
+  tm->setSourceFixedValueAtItem(1, "Fixed name");
+  tm->setSourceFieldAtItem(2, "FieldB");
+  tm->setSourceFieldAtItem(3, "FieldA");
+  QVERIFY(tm->mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
   mapping.setTableMapping(0, tm);
   QCOMPARE(mapping.tableMappingCount(), 2);
   QCOMPARE(mapping.tableMappingList().size(), 2);

@@ -18,20 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtSqlCopierTableMappingModel.h"
+#include "TableMappingModel.h"
 #include "mdtComboBoxItemDelegate.h"
 #include <QColor>
 
 //#include <QDebug>
 
+namespace mdt{ namespace sql{ namespace copier{
+
 using mdt::sql::copier::TableMapping;
 
-mdtSqlCopierTableMappingModel::mdtSqlCopierTableMappingModel(QObject* parent)
+TableMappingModel::TableMappingModel(QObject* parent)
  : QAbstractTableModel(parent)
 {
 }
 
-void mdtSqlCopierTableMappingModel::setupItemTypeDelegate(mdtComboBoxItemDelegate * const delegate)
+void TableMappingModel::setupItemTypeDelegate(mdtComboBoxItemDelegate * const delegate)
 {
   Q_ASSERT(delegate != nullptr);
 
@@ -43,35 +45,35 @@ void mdtSqlCopierTableMappingModel::setupItemTypeDelegate(mdtComboBoxItemDelegat
   delegate->addItem(tr("Unique insert expression"), TableMappingItem::UniqueInsertExpressionType);
 }
 
-void mdtSqlCopierTableMappingModel::resetFieldMapping()
+void TableMappingModel::resetFieldMapping()
 {
   beginResetModel();
-  mappingBase().resetFieldMapping();
+  mappingBase()->resetFieldMapping();
   endResetModel();
 }
 
-void mdtSqlCopierTableMappingModel::generateFieldMappingByName()
+void TableMappingModel::generateFieldMappingByName()
 {
   beginResetModel();
-  mappingBase().generateFieldMappingByName();
+  mappingBase()->generateFieldMappingByName();
   endResetModel();
 }
 
-int mdtSqlCopierTableMappingModel::rowCount(const QModelIndex & parent) const
+int TableMappingModel::rowCount(const QModelIndex & parent) const
 {
   // Check parent validity (case of use with a tree view)
   if(parent.isValid()){
     return 0;
   }
-  return mappingBase().itemsCount();
+  return mappingBase()->itemsCount();
 }
 
-int mdtSqlCopierTableMappingModel::columnCount(const QModelIndex & /*parent*/) const
+int TableMappingModel::columnCount(const QModelIndex & /*parent*/) const
 {
   return 9;
 }
 
-QVariant mdtSqlCopierTableMappingModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant TableMappingModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
   if(orientation != Qt::Horizontal){
     return QAbstractTableModel::headerData(section, orientation, role);
@@ -103,7 +105,7 @@ QVariant mdtSqlCopierTableMappingModel::headerData(int section, Qt::Orientation 
   return section;
 }
 
-QVariant mdtSqlCopierTableMappingModel::data(const QModelIndex & index, int role) const
+QVariant TableMappingModel::data(const QModelIndex & index, int role) const
 {
   if(!index.isValid()){
     return QVariant();
@@ -111,7 +113,7 @@ QVariant mdtSqlCopierTableMappingModel::data(const QModelIndex & index, int role
   const int row = index.row();
   const int column = index.column();
   Q_ASSERT(row >= 0);
-  Q_ASSERT(row < mappingBase().itemsCount());
+  Q_ASSERT(row < mappingBase()->itemsCount());
 
   if( (role == Qt::DisplayRole) || (role == Qt::EditRole) ){
     // Text only attributes
@@ -133,7 +135,7 @@ QVariant mdtSqlCopierTableMappingModel::data(const QModelIndex & index, int role
       case DestinationFieldTypeIndex:
         return destinationFieldTypesText(row);
       case ItemMappinStateIndex:
-        return mapItemMappingStateText(mappingBase().itemMappingState(row));
+        return mapItemMappingStateText(mappingBase()->itemMappingState(row));
     }
   }else if(role == Qt::DecorationRole){
     // Decoration attributes
@@ -143,7 +145,7 @@ QVariant mdtSqlCopierTableMappingModel::data(const QModelIndex & index, int role
       case DestinationKeyTypeIndex:
         return QVariant();  // For future implementation
       case ItemMappinStateIndex:
-        return mapItemMappingStateDecoration(mappingBase().itemMappingState(row));
+        return mapItemMappingStateDecoration(mappingBase()->itemMappingState(row));
       default:
         return QVariant();
     }
@@ -152,24 +154,24 @@ QVariant mdtSqlCopierTableMappingModel::data(const QModelIndex & index, int role
   return QVariant();
 }
 
-bool mdtSqlCopierTableMappingModel::setData(const QModelIndex & index, const QVariant & value, int role)
+bool TableMappingModel::setData(const QModelIndex & index, const QVariant & value, int role)
 {
   if(!index.isValid()){
     return false;
   }
   const int row = index.row();
-  Q_ASSERT( (row >= 0) && (row < mappingBase().itemsCount()) );
+  Q_ASSERT( (row >= 0) && (row < mappingBase()->itemsCount()) );
   const int column = index.column();
 
   /*if( (role == Qt::EditRole) && (column == SourceTypeIndex) ){
-    mappingBase().setSourceType(row, static_cast<mdtSqlCopierFieldMapping::SourceType>(value.toInt()));
+    mappingBase()->setSourceType(row, static_cast<mdtSqlCopierFieldMapping::SourceType>(value.toInt()));
   }else */ if( (role == Qt::DisplayRole) && (column == SourceFieldNameIndex) ){
-    mappingBase().setSourceFieldAtItem(row, value.toString());
+    mappingBase()->setSourceFieldAtItem(row, value.toString());
   }else if( (role == Qt::EditRole) && (column == SourceFixedValueIndex) ){
     if( (value.type() == QVariant::String) && (value.toString().trimmed().isEmpty()) ){
-      mappingBase().setSourceFixedValueAtItem(row, QVariant());
+      mappingBase()->setSourceFixedValueAtItem(row, QVariant());
     }else{
-      mappingBase().setSourceFixedValueAtItem(row, value);
+      mappingBase()->setSourceFixedValueAtItem(row, value);
     }
   }else{
     return false;
@@ -180,7 +182,7 @@ bool mdtSqlCopierTableMappingModel::setData(const QModelIndex & index, const QVa
   return true;
 }
 
-Qt::ItemFlags mdtSqlCopierTableMappingModel::flags(const QModelIndex & index) const
+Qt::ItemFlags TableMappingModel::flags(const QModelIndex & index) const
 {
   if(!index.isValid()){
     return QAbstractTableModel::flags(index);
@@ -198,11 +200,11 @@ Qt::ItemFlags mdtSqlCopierTableMappingModel::flags(const QModelIndex & index) co
   return QAbstractTableModel::flags(index);
 }
 
-QVariant mdtSqlCopierTableMappingModel::mapItemTypeData(int row, int role) const
+QVariant TableMappingModel::mapItemTypeData(int row, int role) const
 {
   using mdt::sql::copier::TableMappingItem;
 
-  auto type = mappingBase().itemType(row);
+  auto type = mappingBase()->itemType(row);
   // For edit role, we return map item type
   if(role == Qt::EditRole){
     return type;
@@ -220,50 +222,50 @@ QVariant mdtSqlCopierTableMappingModel::mapItemTypeData(int row, int role) const
   return QVariant();
 }
 
-QVariant mdtSqlCopierTableMappingModel::sourceFieldKeyTypeText(int row) const
+QVariant TableMappingModel::sourceFieldKeyTypeText(int row) const
 {
   using mdt::sql::copier::TableMappingItem;
 
-  if(mappingBase().itemType(row) != TableMappingItem::FieldMappingType){
+  if(mappingBase()->itemType(row) != TableMappingItem::FieldMappingType){
     return QVariant();
   }
-  return keyTypeName(mappingBase().sourceFieldKeyTypeAtItem(row));
+  return keyTypeName(mappingBase()->sourceFieldKeyTypeAtItem(row));
 }
 
-QVariant mdtSqlCopierTableMappingModel::sourceFieldNameText(int row) const
+QVariant TableMappingModel::sourceFieldNameText(int row) const
 {
   using mdt::sql::copier::TableMappingItem;
 
-  if(mappingBase().itemType(row) != TableMappingItem::FieldMappingType){
+  if(mappingBase()->itemType(row) != TableMappingItem::FieldMappingType){
     return QVariant();
   }
-  return mappingBase().sourceFieldNameAtItem(row);
+  return mappingBase()->sourceFieldNameAtItem(row);
 }
 
-QVariant mdtSqlCopierTableMappingModel::sourceFieldTypeNameText(int row) const
+QVariant TableMappingModel::sourceFieldTypeNameText(int row) const
 {
   using mdt::sql::copier::TableMappingItem;
 
-  if(mappingBase().itemType(row) != TableMappingItem::FieldMappingType){
+  if(mappingBase()->itemType(row) != TableMappingItem::FieldMappingType){
     return QVariant();
   }
-  return mappingBase().sourceFieldTypeNameAtItem(row);
+  return mappingBase()->sourceFieldTypeNameAtItem(row);
 }
 
-QVariant mdtSqlCopierTableMappingModel::sourceFixedValue(int row) const
+QVariant TableMappingModel::sourceFixedValue(int row) const
 {
   using mdt::sql::copier::TableMappingItem;
 
-  if(mappingBase().itemType(row) != TableMappingItem::FixedValueType){
+  if(mappingBase()->itemType(row) != TableMappingItem::FixedValueType){
     return QVariant();
   }
-  return mappingBase().sourceFixedValueAtItem(row);
+  return mappingBase()->sourceFixedValueAtItem(row);
 }
 
-QVariant mdtSqlCopierTableMappingModel::destinationFieldKeyTypeText(int row) const
+QVariant TableMappingModel::destinationFieldKeyTypeText(int row) const
 {
   QString str;
-  auto fieldKeyTypeList = mappingBase().destinationFieldKeyTypeListAtItem(row);
+  auto fieldKeyTypeList = mappingBase()->destinationFieldKeyTypeListAtItem(row);
   const int lastIndex = fieldKeyTypeList.size() - 1;
 
   if(lastIndex < 0){
@@ -277,10 +279,10 @@ QVariant mdtSqlCopierTableMappingModel::destinationFieldKeyTypeText(int row) con
   return str;
 }
 
-QVariant mdtSqlCopierTableMappingModel::destinationFieldNamesText(int row) const
+QVariant TableMappingModel::destinationFieldNamesText(int row) const
 {
   QString str;
-  auto fieldNameList = mappingBase().destinationFieldNameListAtItem(row);
+  auto fieldNameList = mappingBase()->destinationFieldNameListAtItem(row);
   const int lastIndex = fieldNameList.size() - 1;
 
   if(lastIndex < 0){
@@ -294,10 +296,10 @@ QVariant mdtSqlCopierTableMappingModel::destinationFieldNamesText(int row) const
   return str;
 }
 
-QVariant mdtSqlCopierTableMappingModel::destinationFieldTypesText(int row) const
+QVariant TableMappingModel::destinationFieldTypesText(int row) const
 {
   QString str;
-  auto typeNames = mappingBase().destinationFieldTypeNameListAtItem(row);
+  auto typeNames = mappingBase()->destinationFieldTypeNameListAtItem(row);
   const int lastIndex = typeNames.size() - 1;
 
   if(lastIndex < 0){
@@ -311,20 +313,20 @@ QVariant mdtSqlCopierTableMappingModel::destinationFieldTypesText(int row) const
   return str;
 }
 
-QVariant mdtSqlCopierTableMappingModel::mapItemMappingStateData(int row, int role) const
+QVariant TableMappingModel::mapItemMappingStateData(int row, int role) const
 {
   switch(role){
     case Qt::DisplayRole:
     case Qt::EditRole:
-      return mapItemMappingStateText(mappingBase().itemMappingState(row));
+      return mapItemMappingStateText(mappingBase()->itemMappingState(row));
     case Qt::DecorationRole:
-      return mapItemMappingStateDecoration(mappingBase().itemMappingState(row));
+      return mapItemMappingStateDecoration(mappingBase()->itemMappingState(row));
     default:
       return QVariant();
   }
 }
 
-QVariant mdtSqlCopierTableMappingModel::mapItemMappingStateText(mdt::sql::copier::TableMappingItemState state) const
+QVariant TableMappingModel::mapItemMappingStateText(mdt::sql::copier::TableMappingItemState state) const
 {
   using mdt::sql::copier::TableMappingItemState;
 
@@ -340,7 +342,7 @@ QVariant mdtSqlCopierTableMappingModel::mapItemMappingStateText(mdt::sql::copier
   return QVariant();
 }
 
-QVariant mdtSqlCopierTableMappingModel::mapItemMappingStateDecoration(mdt::sql::copier::TableMappingItemState state) const
+QVariant TableMappingModel::mapItemMappingStateDecoration(mdt::sql::copier::TableMappingItemState state) const
 {
   using mdt::sql::copier::TableMappingItemState;
 
@@ -357,7 +359,7 @@ QVariant mdtSqlCopierTableMappingModel::mapItemMappingStateDecoration(mdt::sql::
   return QVariant();
 }
 
-QString mdtSqlCopierTableMappingModel::keyTypeName(TableMapping::FieldKeyType type) const
+QString TableMappingModel::keyTypeName(TableMapping::FieldKeyType type) const
 {
   switch(type){
     case TableMapping::NotAKey:
@@ -367,3 +369,5 @@ QString mdtSqlCopierTableMappingModel::keyTypeName(TableMapping::FieldKeyType ty
   }
   return QString();
 }
+
+}}} // namespace mdt{ namespace sql{ namespace copier{

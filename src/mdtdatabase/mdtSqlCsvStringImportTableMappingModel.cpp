@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,7 +22,8 @@
 #include "mdtComboBoxItemDelegate.h"
 
 mdtSqlCsvStringImportTableMappingModel::mdtSqlCsvStringImportTableMappingModel(QObject* parent)
- : mdtSqlCopierTableMappingModel(parent)
+ : mdt::sql::copier::TableMappingModel(parent),
+   pvMapping(std::make_shared<mdtSqlCsvStringImportTableMapping>())
 {
 }
 
@@ -31,15 +32,15 @@ bool mdtSqlCsvStringImportTableMappingModel::setSourceCsvString(const QString & 
   bool ok;
 
   beginResetModel();
-  ok = pvMapping.setSourceCsvString(csv, settings);
+  ok = pvMapping->setSourceCsvString(csv, settings);
   if( (ok) && (delegate != nullptr) ){
     delegate->clear();
     delegate->addItem("");
-    delegate->addItems(pvMapping.getSourceTableFieldNameList());
+    delegate->addItems(pvMapping->getSourceTableFieldNameList());
   }
   endResetModel();
   if(!ok){
-    pvLastError = pvMapping.lastError();
+    pvLastError = pvMapping->lastError();
     return false;
   }
 
@@ -51,10 +52,10 @@ bool mdtSqlCsvStringImportTableMappingModel::setDestinationTable(const QString &
   bool ok;
 
   beginResetModel();
-  ok = pvMapping.setDestinationTable(tableName, db);
+  ok = pvMapping->setDestinationTable(tableName, db);
   endResetModel();
   if(!ok){
-    pvLastError = pvMapping.lastError();
+    pvLastError = pvMapping->lastError();
     return false;
   }
 

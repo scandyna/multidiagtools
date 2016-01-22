@@ -24,11 +24,12 @@
 
 namespace mdt{ namespace sql{ namespace copier{
 
-UniqueInsertExpressionModel::UniqueInsertExpressionModel(const TableMapping & tm, UniqueInsertExpression & exp, QObject* parent)
+UniqueInsertExpressionModel::UniqueInsertExpressionModel(const std::shared_ptr<const TableMapping> & tm, UniqueInsertExpression & exp, QObject* parent)
  : QAbstractTableModel(parent),
    pvTableMapping(tm),
    pvExpression(exp)
 {
+  Q_ASSERT(pvTableMapping);
 }
 
 int UniqueInsertExpressionModel::rowCount(const QModelIndex & parent) const
@@ -194,34 +195,34 @@ QVariant UniqueInsertExpressionModel::operatorWithPreviousText(const UniqueInser
 
 void UniqueInsertExpressionModel::setDestinationField(UniqueInsertMatchExpressionItem & item, const QString & fieldName)
 {
-  item.destinationFieldIndex = pvTableMapping.destinationTableFieldIndexOf(fieldName);
+  item.destinationFieldIndex = pvTableMapping->destinationTableFieldIndexOf(fieldName);
 }
 
 QVariant UniqueInsertExpressionModel::destinationFieldName(const UniqueInsertMatchExpressionItem & item) const
 {
   const int fieldIndex = item.destinationFieldIndex;
-  Q_ASSERT(fieldIndex < pvTableMapping.destinationTableFieldCount());
+  Q_ASSERT(fieldIndex < pvTableMapping->destinationTableFieldCount());
 
   if(fieldIndex < 0){
     return QVariant();
   }
-  return pvTableMapping.destinationTableFieldNameAt(fieldIndex);
+  return pvTableMapping->destinationTableFieldNameAt(fieldIndex);
 }
 
 void UniqueInsertExpressionModel::setSourceValueField(UniqueInsertMatchExpressionItem & item, const QString & fieldName)
 {
-  item.sourceValueFieldIndex = pvTableMapping.sourceTableFieldIndexOf(fieldName);
+  item.sourceValueFieldIndex = pvTableMapping->sourceTableFieldIndexOf(fieldName);
 }
 
 QVariant UniqueInsertExpressionModel::sourceValueFieldName(const UniqueInsertMatchExpressionItem & item) const
 {
   const int fieldIndex = item.sourceValueFieldIndex;
-  Q_ASSERT(fieldIndex < pvTableMapping.sourceTableFieldCount());
+  Q_ASSERT(fieldIndex < pvTableMapping->sourceTableFieldCount());
 
   if(fieldIndex < 0){
     return QVariant();
   }
-  return pvTableMapping.sourceTableFieldNameAt(fieldIndex);
+  return pvTableMapping->sourceTableFieldNameAt(fieldIndex);
 }
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

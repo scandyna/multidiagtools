@@ -60,7 +60,7 @@ set (SOURCES_FILES
           # Copier common classes
           mdt/sql/copier/TableMapping.cpp
           mdt/sql/copier/TableMappingItem.cpp
-          mdtSqlCopierTableMappingModel.cpp
+          mdt/sql/copier/TableMappingModel.cpp
           mdtSqlCopierDataMapping.cpp
           mdt/sql/copier/UniqueInsertExpressionModel.cpp
           mdt/sql/copier/UniqueInsertExpressionDialog.cpp

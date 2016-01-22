@@ -26,6 +26,7 @@
 #include "TableMapping.h"
 #include "TableMappingItem.h"
 #include <QDialog>
+#include <memory>
 
 namespace mdt{ namespace sql{ namespace copier{
 
@@ -45,11 +46,11 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Construct dialog to edit expression at given itemIndex in table mapping
      */
-    UniqueInsertExpressionDialog(const TableMapping & tm, int itemIndex, QWidget *parent = nullptr);
+    UniqueInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, int itemIndex, QWidget *parent = nullptr);
 
     /*! \brief Construct dialog to edit a new expression
      */
-    UniqueInsertExpressionDialog(const TableMapping & tm, QWidget *parent = nullptr);
+    UniqueInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, QWidget *parent = nullptr);
 
    private:
 
@@ -77,8 +78,8 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void resizeMatchItemViewToContents();
 
-    
-    const TableMapping & pvTableMapping;
+    ///const TableMapping & pvTableMapping;
+    std::shared_ptr<const TableMapping> pvTableMapping;
     UniqueInsertExpression pvExpression;
     UniqueInsertExpressionModel *pvModel;
   };

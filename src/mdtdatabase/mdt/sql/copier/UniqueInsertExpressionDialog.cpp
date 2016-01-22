@@ -48,17 +48,17 @@ namespace mdt{ namespace sql{ namespace copier{
 //   twMatchItems->setModel(pvModel);
 //   twMatchItems->setSelectionMode(QAbstractItemView::SingleSelection);
 //   // Display current source
-//   lbSourceTable->setText(tm.sourceTableName());
+//   lbSourceTable->setText(tm->sourceTableName());
 //   // Display current destination
-//   lbDestinationTable->setText(tm.destinationTableName());
+//   lbDestinationTable->setText(tm->destinationTableName());
 //   displayDestinationKey(exp);
 //   // Setup destination field selection combobox
 //   auto *cb = new mdtComboBoxItemDelegate(this);
-//   cb->addItems(tm.getDestinationTableFieldNameList());
+//   cb->addItems(tm->getDestinationTableFieldNameList());
 //   twMatchItems->setItemDelegateForColumn(1, cb);
 //   // Setup source value field selection combobox
 //   cb = new mdtComboBoxItemDelegate(this);
-//   cb->addItems(tm.getSourceTableFieldNameList());
+//   cb->addItems(tm->getSourceTableFieldNameList());
 //   twMatchItems->setItemDelegateForColumn(3, cb);
 //   // Signal slot connections
 //   connect(tbAddMatchItem, &QToolButton::clicked, this, &UniqueInsertExpressionDialog::addMatchItem);
@@ -68,15 +68,17 @@ namespace mdt{ namespace sql{ namespace copier{
 //   resizeMatchItemViewToContents();
 // }
 
-UniqueInsertExpressionDialog::UniqueInsertExpressionDialog(const TableMapping & tm, int itemIndex, QWidget* parent)
+UniqueInsertExpressionDialog::UniqueInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, int itemIndex, QWidget* parent)
  : QDialog(parent),
    pvTableMapping(tm)
 {
+  Q_ASSERT(tm);
+
   setupUi(this);
   // Init expression
   if(itemIndex >= 0){
-    Q_ASSERT(itemIndex < tm.itemsCount());
-    pvExpression = pvTableMapping.itemAt(itemIndex).uniqueInsertExpression();
+    Q_ASSERT(itemIndex < tm->itemsCount());
+    pvExpression = pvTableMapping->itemAt(itemIndex).uniqueInsertExpression();
   }
   // Setup match item model
   pvModel = new UniqueInsertExpressionModel(pvTableMapping, pvExpression, this);
@@ -84,9 +86,9 @@ UniqueInsertExpressionDialog::UniqueInsertExpressionDialog(const TableMapping & 
   twMatchItems->setModel(pvModel);
   twMatchItems->setSelectionMode(QAbstractItemView::SingleSelection);
   // Display current source
-  lbSourceTable->setText(tm.sourceTableName());
+  lbSourceTable->setText(tm->sourceTableName());
   // Display current destination
-  lbDestinationTable->setText(tm.destinationTableName());
+  lbDestinationTable->setText(tm->destinationTableName());
   // Setup destination key edition
   auto *addFieldAction = leDestinationKey->addAction(QIcon::fromTheme("list-add"), QLineEdit::TrailingPosition);
   connect(addFieldAction, &QAction::triggered, this, &UniqueInsertExpressionDialog::addFieldToDestinationKey);
@@ -95,11 +97,11 @@ UniqueInsertExpressionDialog::UniqueInsertExpressionDialog(const TableMapping & 
   displayDestinationKey();
   // Setup destination field selection combobox
   auto *cb = new mdtComboBoxItemDelegate(this);
-  cb->addItems(tm.getDestinationTableFieldNameList());
+  cb->addItems(tm->getDestinationTableFieldNameList());
   twMatchItems->setItemDelegateForColumn(1, cb);
   // Setup source value field selection combobox
   cb = new mdtComboBoxItemDelegate(this);
-  cb->addItems(tm.getSourceTableFieldNameList());
+  cb->addItems(tm->getSourceTableFieldNameList());
   twMatchItems->setItemDelegateForColumn(3, cb);
   // Signal slot connections
   connect(tbAddMatchItem, &QToolButton::clicked, this, &UniqueInsertExpressionDialog::addMatchItem);
@@ -109,7 +111,7 @@ UniqueInsertExpressionDialog::UniqueInsertExpressionDialog(const TableMapping & 
   resizeMatchItemViewToContents();
 }
 
-UniqueInsertExpressionDialog::UniqueInsertExpressionDialog(const TableMapping & tm, QWidget* parent)
+UniqueInsertExpressionDialog::UniqueInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, QWidget* parent)
  : UniqueInsertExpressionDialog(tm, -1, parent)
 {
 }
@@ -142,7 +144,7 @@ void UniqueInsertExpressionDialog::clearDestinationKey()
 void UniqueInsertExpressionDialog::addFieldToDestinationKey()
 {
   // List all available fields in destination table
-  std::vector<int> allAvailableFieldIndexList(pvTableMapping.destinationTableFieldCount());
+  std::vector<int> allAvailableFieldIndexList(pvTableMapping->destinationTableFieldCount());
   std::iota(allAvailableFieldIndexList.begin(), allAvailableFieldIndexList.end(), 0);
   // List fields used in key
   const auto keyFieldIndexList = pvExpression.destinationFieldIndexList();
@@ -158,7 +160,7 @@ void UniqueInsertExpressionDialog::addFieldToDestinationKey()
   QStringList fieldNameList;
   fieldNameList.reserve(unusedFieldIndexList.size());
   for(const int fi : unusedFieldIndexList){
-    fieldNameList.append(pvTableMapping.destinationTableFieldNameAt(fi));
+    fieldNameList.append(pvTableMapping->destinationTableFieldNameAt(fi));
   }
   // Setup field selection dialog
   QInputDialog dialog(this);
@@ -168,7 +170,7 @@ void UniqueInsertExpressionDialog::addFieldToDestinationKey()
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
-  int selectedFieldIndex = pvTableMapping.destinationTableFieldIndexOf(dialog.textValue());
+  int selectedFieldIndex = pvTableMapping->destinationTableFieldIndexOf(dialog.textValue());
   pvExpression.addDestinationFieldIndex(selectedFieldIndex);
   displayDestinationKey();
 }
@@ -184,9 +186,9 @@ void UniqueInsertExpressionDialog::displayDestinationKey()
     return;
   }
   for(int i = 0; i < lastIndex; ++i){
-    str += pvTableMapping.destinationTableFieldNameAt(keyList.at(i)) + ",";
+    str += pvTableMapping->destinationTableFieldNameAt(keyList.at(i)) + ",";
   }
-  str += pvTableMapping.destinationTableFieldNameAt(keyList.at(lastIndex));
+  str += pvTableMapping->destinationTableFieldNameAt(keyList.at(lastIndex));
   leDestinationKey->setText(str);
 }
 
