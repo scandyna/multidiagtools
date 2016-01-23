@@ -1754,192 +1754,180 @@ void mdtSqlCopierTest::tableMappingEditHelperInsertTest_data()
 
 }
 
-// void mdtSqlCopierTest::tableMappingEditHelperItemIdexByDFIndexesTest()
+// void mdtSqlCopierTest::tableMappingEditHelperTest()
 // {
+//   using mdt::sql::copier::TableMappingEditHelper;
 //   using mdt::sql::copier::TableMappingItem;
+//   using mdt::sql::copier::UniqueInsertExpression;
 //   using mdt::sql::copier::FieldIndexList;
 // 
-// }
+//   QVector<TableMappingItem> allItems;
+//   QVector<TableMappingItem> itemsList;
+//   QVector<int> itemsIndexList;
+//   TableMappingItem item(TableMappingItem::FieldMappingType);
+//   UniqueInsertExpression exp;
+//   FieldIndexList fieldIndexList;
 // 
-// void mdtSqlCopierTest::tableMappingEditHelperItemIdexByDFIndexesTest_data()
-// {
-// 
-// }
-
-void mdtSqlCopierTest::tableMappingEditHelperTest()
-{
-  using mdt::sql::copier::TableMappingEditHelper;
-  using mdt::sql::copier::TableMappingItem;
-  using mdt::sql::copier::UniqueInsertExpression;
-  using mdt::sql::copier::FieldIndexList;
-
-  QVector<TableMappingItem> allItems;
-  QVector<TableMappingItem> itemsList;
-  QVector<int> itemsIndexList;
-  TableMappingItem item(TableMappingItem::FieldMappingType);
-  UniqueInsertExpression exp;
-  FieldIndexList fieldIndexList;
-
-  /*
-   * Build a list of TableMappingItem:
-   * -----------------------------
-   * | Item | Src fld | Dest fld |
-   * -----------------------------
-   * |   0  |    1    |    0     |
-   * -----------------------------
-   * |   1  |    0    |    1     |
-   * -----------------------------
-   * |   2  |    2    |    2     |
-   * -----------------------------
-   */
-  allItems.clear();
-  // Index 0 : field mapping
-  item.setFieldMapping(1, 0);
-  allItems << item;
-  // Index 1 : field mapping
-  item.setFieldMapping(0, 1);
-  allItems << item;
-  // Index 2 : field mapping
-  item.setFieldMapping(2, 2);
-  allItems << item;
-  QCOMPARE(allItems.size(), 3);
-  /*
-   * Edit item at index 1:
-   *  Type: expression
-   *  Source field index: -
-   *  Destination field indexes: 0,1
-   */
-  // Setup expression
-  exp.clear();
-  exp.addDestinationFieldIndex(0);
-  exp.addDestinationFieldIndex(1);
-  item.setUniqueInsertExpression(exp);
-  /*
-   * Checks
-   */
-  // Indexes of items to remove: 0
-  itemsIndexList = TableMappingEditHelper::getItemsToRemoveIndexList(1, item, allItems);
-  QCOMPARE(itemsIndexList.size(), 1);
-  QCOMPARE(itemsIndexList.at(0), 0);
-  // Items to add: -
-  itemsList = TableMappingEditHelper::getItemsToAddList(1, item, allItems);
-  QCOMPARE(itemsList.size(), 0);
-  /*
-   * Check getting index of item to insert regarding its destination field indexes
-   */
-  ///QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes({}, allItems) , 0);
-  fieldIndexList = {0};
-  QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 0);
-  fieldIndexList = {1};
-  QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 1);
-  fieldIndexList = {0,1};
-  QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 0);
-
-  /*
-   * Update table mapping, witch conducts to:
-   * -----------------------------
-   * | Item | Src fld | Dest fld |
-   * -----------------------------
-   * |   0  |    -    |    0,1   |
-   * -----------------------------
-   * |   1  |    2    |    2     |
-   * -----------------------------
-   */
-  // Update table mapping
-  TableMappingEditHelper::insertItem(1, item, allItems);
-  // Check new table mapping
-  QCOMPARE(allItems.size(), 2);
-  // Check item at index 0
-  item = allItems.at(0);
-  ///QCOMPARE(item.sourceFieldIndex(), 1);
-  QCOMPARE(item.destinationFieldIndexList().count(), 2);
-  QCOMPARE(item.destinationFieldIndexList().at(0), 0);
-  QCOMPARE(item.destinationFieldIndexList().at(1), 1);
-  // Check item at index 1
-  item = allItems.at(1);
-  QCOMPARE(item.sourceFieldIndex(), 2);
-  QCOMPARE(item.destinationFieldIndexList().count(), 1);
-  QCOMPARE(item.destinationFieldIndexList().at(0), 2);
-
+//   /*
+//    * Build a list of TableMappingItem:
+//    * -----------------------------
+//    * | Item | Src fld | Dest fld |
+//    * -----------------------------
+//    * |   0  |    1    |    0     |
+//    * -----------------------------
+//    * |   1  |    0    |    1     |
+//    * -----------------------------
+//    * |   2  |    2    |    2     |
+//    * -----------------------------
+//    */
 //   allItems.clear();
-//   // Index 0 : expression
-//   item.setUniqueInsertExpression(exp);
-//   QCOMPARE(item.destinationFieldIndexList().count(), 2);
+//   // Index 0 : field mapping
+//   item.setFieldMapping(1, 0);
 //   allItems << item;
 //   // Index 1 : field mapping
+//   item.setFieldMapping(0, 1);
+//   allItems << item;
+//   // Index 2 : field mapping
 //   item.setFieldMapping(2, 2);
 //   allItems << item;
+//   QCOMPARE(allItems.size(), 3);
+//   /*
+//    * Edit item at index 1:
+//    *  Type: expression
+//    *  Source field index: -
+//    *  Destination field indexes: 0,1
+//    */
+//   // Setup expression
+//   exp.clear();
+//   exp.addDestinationFieldIndex(0);
+//   exp.addDestinationFieldIndex(1);
+//   item.setUniqueInsertExpression(exp);
+//   /*
+//    * Checks
+//    */
+//   // Indexes of items to remove: 0
+//   itemsIndexList = TableMappingEditHelper::getItemsToRemoveIndexList(1, item, allItems);
+//   QCOMPARE(itemsIndexList.size(), 1);
+//   QCOMPARE(itemsIndexList.at(0), 0);
+//   // Items to add: -
+//   itemsList = TableMappingEditHelper::getItemsToAddList(1, item, allItems);
+//   QCOMPARE(itemsList.size(), 0);
+//   /*
+//    * Check getting index of item to insert regarding its destination field indexes
+//    */
+//   ///QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes({}, allItems) , 0);
+//   fieldIndexList = {0};
+//   QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 0);
+//   fieldIndexList = {1};
+//   QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 1);
+//   fieldIndexList = {0,1};
+//   QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 0);
+// 
+//   /*
+//    * Update table mapping, witch conducts to:
+//    * -----------------------------
+//    * | Item | Src fld | Dest fld |
+//    * -----------------------------
+//    * |   0  |    -    |    0,1   |
+//    * -----------------------------
+//    * |   1  |    2    |    2     |
+//    * -----------------------------
+//    */
+//   // Update table mapping
+//   TableMappingEditHelper::insertItem(1, item, allItems);
+//   // Check new table mapping
 //   QCOMPARE(allItems.size(), 2);
-  /*
-   * Check getting index of item to insert regarding its destination field indexes
-   */
-  ///QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes({}, allItems) , 0);
-  fieldIndexList = {0};
-  QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 1);
-  fieldIndexList = {1};
-  QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 1);
-  fieldIndexList = {2};
-  QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 2);
-  fieldIndexList = {3};
-  QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 2);
-  /*
-   * Edit item at index 0:
-   *  Type: field mapping
-   *  Source field index: 1
-   *  Destination field index: 0
-   */
-  item.setFieldMapping(1, 0);
-  /*
-   * Checks
-   */
-  // Indexes of items to remove: none
-  itemsIndexList = TableMappingEditHelper::getItemsToRemoveIndexList(0, item, allItems);
-  QCOMPARE(itemsIndexList.size(), 0);
-  // Items to add: -
-  /*
-   * Items to add:
-   * ----------------------
-   * | Src fld | Dest fld |
-   * ----------------------
-   * |         |    1     |
-   * ----------------------
-   */
-  itemsList = TableMappingEditHelper::getItemsToAddList(0, item, allItems);
-  QCOMPARE(itemsList.size(), 1);
-  QCOMPARE(itemsList.at(0).destinationFieldIndexList().count(), 1);
-  QCOMPARE(itemsList.at(0).destinationFieldIndexList().at(0), 1);
-  /*
-   * Update table mapping, witch conducts to:
-   * -----------------------------
-   * | Item | Src fld | Dest fld |
-   * -----------------------------
-   * |   0  |    1    |    0     |
-   * -----------------------------
-   * |   1  |         |    1     |
-   * -----------------------------
-   * |   2  |    2    |    2     |
-   * -----------------------------
-   */
-  // Update table mapping
-  TableMappingEditHelper::insertItem(0, item, allItems);
-  // Check new table mapping
-  QCOMPARE(allItems.size(), 3);
-  // Check item at index 0
-  item = allItems.at(0);
-  QCOMPARE(item.sourceFieldIndex(), 1);
-  QCOMPARE(item.destinationFieldIndexList().count(), 1);
-  QCOMPARE(item.destinationFieldIndexList().at(0), 0);
-  // Check item at index 1
-  item = allItems.at(1);
-  ///QCOMPARE(item.sourceFieldIndex(), 1);
-  QCOMPARE(item.destinationFieldIndexList().count(), 1);
-  QCOMPARE(item.destinationFieldIndexList().at(0), 1);
-  // Check item at index 2
-  item = allItems.at(2);
-  QCOMPARE(item.sourceFieldIndex(), 2);
-  QCOMPARE(item.destinationFieldIndexList().count(), 1);
-  QCOMPARE(item.destinationFieldIndexList().at(0), 2);
-}
+//   // Check item at index 0
+//   item = allItems.at(0);
+//   ///QCOMPARE(item.sourceFieldIndex(), 1);
+//   QCOMPARE(item.destinationFieldIndexList().count(), 2);
+//   QCOMPARE(item.destinationFieldIndexList().at(0), 0);
+//   QCOMPARE(item.destinationFieldIndexList().at(1), 1);
+//   // Check item at index 1
+//   item = allItems.at(1);
+//   QCOMPARE(item.sourceFieldIndex(), 2);
+//   QCOMPARE(item.destinationFieldIndexList().count(), 1);
+//   QCOMPARE(item.destinationFieldIndexList().at(0), 2);
+// 
+// //   allItems.clear();
+// //   // Index 0 : expression
+// //   item.setUniqueInsertExpression(exp);
+// //   QCOMPARE(item.destinationFieldIndexList().count(), 2);
+// //   allItems << item;
+// //   // Index 1 : field mapping
+// //   item.setFieldMapping(2, 2);
+// //   allItems << item;
+// //   QCOMPARE(allItems.size(), 2);
+//   /*
+//    * Check getting index of item to insert regarding its destination field indexes
+//    */
+//   ///QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes({}, allItems) , 0);
+//   fieldIndexList = {0};
+//   QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 1);
+//   fieldIndexList = {1};
+//   QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 1);
+//   fieldIndexList = {2};
+//   QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 2);
+//   fieldIndexList = {3};
+//   QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 2);
+//   /*
+//    * Edit item at index 0:
+//    *  Type: field mapping
+//    *  Source field index: 1
+//    *  Destination field index: 0
+//    */
+//   item.setFieldMapping(1, 0);
+//   /*
+//    * Checks
+//    */
+//   // Indexes of items to remove: none
+//   itemsIndexList = TableMappingEditHelper::getItemsToRemoveIndexList(0, item, allItems);
+//   QCOMPARE(itemsIndexList.size(), 0);
+//   // Items to add: -
+//   /*
+//    * Items to add:
+//    * ----------------------
+//    * | Src fld | Dest fld |
+//    * ----------------------
+//    * |         |    1     |
+//    * ----------------------
+//    */
+//   itemsList = TableMappingEditHelper::getItemsToAddList(0, item, allItems);
+//   QCOMPARE(itemsList.size(), 1);
+//   QCOMPARE(itemsList.at(0).destinationFieldIndexList().count(), 1);
+//   QCOMPARE(itemsList.at(0).destinationFieldIndexList().at(0), 1);
+//   /*
+//    * Update table mapping, witch conducts to:
+//    * -----------------------------
+//    * | Item | Src fld | Dest fld |
+//    * -----------------------------
+//    * |   0  |    1    |    0     |
+//    * -----------------------------
+//    * |   1  |         |    1     |
+//    * -----------------------------
+//    * |   2  |    2    |    2     |
+//    * -----------------------------
+//    */
+//   // Update table mapping
+//   TableMappingEditHelper::insertItem(0, item, allItems);
+//   // Check new table mapping
+//   QCOMPARE(allItems.size(), 3);
+//   // Check item at index 0
+//   item = allItems.at(0);
+//   QCOMPARE(item.sourceFieldIndex(), 1);
+//   QCOMPARE(item.destinationFieldIndexList().count(), 1);
+//   QCOMPARE(item.destinationFieldIndexList().at(0), 0);
+//   // Check item at index 1
+//   item = allItems.at(1);
+//   ///QCOMPARE(item.sourceFieldIndex(), 1);
+//   QCOMPARE(item.destinationFieldIndexList().count(), 1);
+//   QCOMPARE(item.destinationFieldIndexList().at(0), 1);
+//   // Check item at index 2
+//   item = allItems.at(2);
+//   QCOMPARE(item.sourceFieldIndex(), 2);
+//   QCOMPARE(item.destinationFieldIndexList().count(), 1);
+//   QCOMPARE(item.destinationFieldIndexList().at(0), 2);
+// }
 
 void mdtSqlCopierTest::databaseCopierTableMappingUpdateItemsTest()
 {
