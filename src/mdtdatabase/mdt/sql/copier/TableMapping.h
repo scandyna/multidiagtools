@@ -188,7 +188,6 @@ namespace mdt{ namespace sql{ namespace copier{
       return fetchSourceTableFieldIndexOf(fieldName);
     }
 
-
     /*! \brief Get source field name list for map item at given index
      *
      * \pre itemIndex must be in valid range
@@ -208,29 +207,6 @@ namespace mdt{ namespace sql{ namespace copier{
      * \pre map item for given itemIndex must be TableMappingItem::FieldMappingType
      */
     QVector<FieldKeyType> sourceFieldKeyTypeListAtItem(int itemIndex) const;
-
-    /*! \brief Get source field name for map item at given index
-     *
-     * \pre itemIndex must be in valid range
-     */
-//     [[deprecated]]
-//     QString sourceFieldNameAtItem(int itemIndex) const;
-
-    /*! \brief Get source field type name for map item at given index
-     *
-     * \pre itemIndex must be in valid range
-     * \pre map item for given itemIndex must be TableMappingItem::FieldMappingType
-     */
-//     [[deprecated]]
-//     QString sourceFieldTypeNameAtItem(int itemIndex) const;
-
-    /*! \brief Check if source field is part of a key for map item at given index
-     *
-     * \pre itemIndex must be in valid range
-     * \pre map item for given itemIndex must be TableMappingItem::FieldMappingType
-     */
-//     [[deprecated]]
-//     FieldKeyType sourceFieldKeyTypeAtItem(int itemIndex) const;
 
     /*! \brief Set source fixed value for given mapping item index
      *

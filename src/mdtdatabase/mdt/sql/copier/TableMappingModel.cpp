@@ -249,7 +249,6 @@ QVariant TableMappingModel::sourceFieldKeyTypeText(int row) const
   }
 
   return ktNameList.join(QStringLiteral(", "));
-//   return keyTypeName(mappingBase()->sourceFieldKeyTypeAtItem(row));
 }
 
 QVariant TableMappingModel::sourceFieldNameText(int row) const
@@ -258,7 +257,6 @@ QVariant TableMappingModel::sourceFieldNameText(int row) const
     return QVariant();
   }
   return mappingBase()->sourceFieldNameListAtItem(row).join(", ");
-//   return mappingBase()->sourceFieldNameAtItem(row);
 }
 
 QVariant TableMappingModel::sourceFieldTypeNameText(int row) const
@@ -267,7 +265,6 @@ QVariant TableMappingModel::sourceFieldTypeNameText(int row) const
     return QVariant();
   }
   return mappingBase()->sourceFieldTypeNameListAtItem(row).join(", ");
-//   return mappingBase()->sourceFieldTypeNameAtItem(row);
 }
 
 QVariant TableMappingModel::sourceFixedValue(int row) const
