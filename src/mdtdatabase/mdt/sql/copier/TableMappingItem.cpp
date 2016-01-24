@@ -82,11 +82,11 @@ FieldIndexList TableMappingItem::sourceFieldIndexList() const
   return pvShared->sourceFieldIndexList();
 }
 
-int TableMappingItem::sourceFieldIndex() const
-{
-  Q_ASSERT(pvShared);
-  return pvShared->sourceFieldIndex();
-}
+// int TableMappingItem::sourceFieldIndex() const
+// {
+//   Q_ASSERT(pvShared);
+//   return pvShared->sourceFieldIndex();
+// }
 
 FieldIndexList TableMappingItem::destinationFieldIndexList() const
 {

@@ -237,7 +237,19 @@ QVariant TableMappingModel::sourceFieldKeyTypeText(int row) const
   if(mappingBase()->itemType(row) != TableMappingItem::FieldMappingType){
     return QVariant();
   }
-  return keyTypeName(mappingBase()->sourceFieldKeyTypeAtItem(row));
+  QString ktName;
+  QStringList ktNameList;
+  auto fieldKeyTypeList = mappingBase()->sourceFieldKeyTypeListAtItem(row);
+
+  for(const auto & kt : fieldKeyTypeList){
+    ktName = keyTypeName(kt);
+    if(!ktName.isEmpty()){
+      ktNameList.append(ktName);
+    }
+  }
+
+  return ktNameList.join(QStringLiteral(", "));
+//   return keyTypeName(mappingBase()->sourceFieldKeyTypeAtItem(row));
 }
 
 QVariant TableMappingModel::sourceFieldNameText(int row) const
@@ -245,7 +257,8 @@ QVariant TableMappingModel::sourceFieldNameText(int row) const
   if(mappingBase()->itemType(row) != TableMappingItem::FieldMappingType){
     return QVariant();
   }
-  return mappingBase()->sourceFieldNameAtItem(row);
+  return mappingBase()->sourceFieldNameListAtItem(row).join(", ");
+//   return mappingBase()->sourceFieldNameAtItem(row);
 }
 
 QVariant TableMappingModel::sourceFieldTypeNameText(int row) const
@@ -253,7 +266,8 @@ QVariant TableMappingModel::sourceFieldTypeNameText(int row) const
   if(mappingBase()->itemType(row) != TableMappingItem::FieldMappingType){
     return QVariant();
   }
-  return mappingBase()->sourceFieldTypeNameAtItem(row);
+  return mappingBase()->sourceFieldTypeNameListAtItem(row).join(", ");
+//   return mappingBase()->sourceFieldTypeNameAtItem(row);
 }
 
 QVariant TableMappingModel::sourceFixedValue(int row) const

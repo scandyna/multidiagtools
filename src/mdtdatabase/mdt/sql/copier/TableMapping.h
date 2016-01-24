@@ -188,25 +188,49 @@ namespace mdt{ namespace sql{ namespace copier{
       return fetchSourceTableFieldIndexOf(fieldName);
     }
 
+
+    /*! \brief Get source field name list for map item at given index
+     *
+     * \pre itemIndex must be in valid range
+     */
+    QStringList sourceFieldNameListAtItem(int itemIndex) const;
+
+    /*! \brief Get source field type name list for map item at given index
+     *
+     * \pre itemIndex must be in valid range
+     * \pre map item for given itemIndex must be TableMappingItem::FieldMappingType
+     */
+    QStringList sourceFieldTypeNameListAtItem(int itemIndex) const;
+
+    /*! \brief Check if source fields are part of a key for map item at given index
+     *
+     * \pre itemIndex must be in valid range
+     * \pre map item for given itemIndex must be TableMappingItem::FieldMappingType
+     */
+    QVector<FieldKeyType> sourceFieldKeyTypeListAtItem(int itemIndex) const;
+
     /*! \brief Get source field name for map item at given index
      *
      * \pre itemIndex must be in valid range
      */
-    QString sourceFieldNameAtItem(int itemIndex) const;
+//     [[deprecated]]
+//     QString sourceFieldNameAtItem(int itemIndex) const;
 
     /*! \brief Get source field type name for map item at given index
      *
      * \pre itemIndex must be in valid range
      * \pre map item for given itemIndex must be TableMappingItem::FieldMappingType
      */
-    QString sourceFieldTypeNameAtItem(int itemIndex) const;
+//     [[deprecated]]
+//     QString sourceFieldTypeNameAtItem(int itemIndex) const;
 
     /*! \brief Check if source field is part of a key for map item at given index
      *
      * \pre itemIndex must be in valid range
      * \pre map item for given itemIndex must be TableMappingItem::FieldMappingType
      */
-    FieldKeyType sourceFieldKeyTypeAtItem(int itemIndex) const;
+//     [[deprecated]]
+//     FieldKeyType sourceFieldKeyTypeAtItem(int itemIndex) const;
 
     /*! \brief Set source fixed value for given mapping item index
      *

@@ -92,7 +92,8 @@ namespace mdt{ namespace sql{ namespace copier{
      *
      * Has sense for FieldMappingType only.
      */
-    int sourceFieldIndex() const;
+//     [[deprecated]]
+//     int sourceFieldIndex() const;
 
     /*! \brief Get list of destination field indexes
      */
