@@ -76,13 +76,18 @@ void TableMappingItem::setFieldMapping(int sourceFieldIndex, int destinationFiel
   pvShared->setFieldMapping(sourceFieldIndex, destinationFieldIndex);
 }
 
+FieldIndexList TableMappingItem::sourceFieldIndexList() const
+{
+  Q_ASSERT(pvShared);
+  return pvShared->sourceFieldIndexList();
+}
+
 int TableMappingItem::sourceFieldIndex() const
 {
   Q_ASSERT(pvShared);
   return pvShared->sourceFieldIndex();
 }
 
-// QVector<int> TableMappingItem::destinationFieldIndexList() const
 FieldIndexList TableMappingItem::destinationFieldIndexList() const
 {
   Q_ASSERT(pvShared);

@@ -40,35 +40,6 @@
 
 namespace mdt{ namespace sql{ namespace copier{
 
-// UniqueInsertExpressionDialog::UniqueInsertExpressionDialog(const TableMapping & tm, UniqueInsertExpression & exp, QWidget* parent)
-//  : QDialog(parent),
-//    pvModel(new UniqueInsertExpressionModel(tm, exp, this)),
-//    pvTableMapping(tm)
-// {
-//   setupUi(this);
-//   twMatchItems->setModel(pvModel);
-//   twMatchItems->setSelectionMode(QAbstractItemView::SingleSelection);
-//   // Display current source
-//   lbSourceTable->setText(tm->sourceTableName());
-//   // Display current destination
-//   lbDestinationTable->setText(tm->destinationTableName());
-//   displayDestinationKey(exp);
-//   // Setup destination field selection combobox
-//   auto *cb = new mdtComboBoxItemDelegate(this);
-//   cb->addItems(tm->getDestinationTableFieldNameList());
-//   twMatchItems->setItemDelegateForColumn(1, cb);
-//   // Setup source value field selection combobox
-//   cb = new mdtComboBoxItemDelegate(this);
-//   cb->addItems(tm->getSourceTableFieldNameList());
-//   twMatchItems->setItemDelegateForColumn(3, cb);
-//   // Signal slot connections
-//   connect(tbAddMatchItem, &QToolButton::clicked, this, &UniqueInsertExpressionDialog::addMatchItem);
-//   connect(tbRemoveMatchItem, &QToolButton::clicked, this, &UniqueInsertExpressionDialog::removeSelectedMatchItems);
-//   connect(tbResizeView, &QToolButton::clicked, this, &UniqueInsertExpressionDialog::resizeMatchItemViewToContents);
-// 
-//   resizeMatchItemViewToContents();
-// }
-
 UniqueInsertExpressionDialog::UniqueInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, int itemIndex, QWidget* parent)
  : QDialog(parent),
    pvTableMapping(tm)

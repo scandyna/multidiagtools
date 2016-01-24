@@ -88,17 +88,6 @@ namespace mdt{ namespace sql{ namespace copier{
       return pvItems.size();
     }
 
-    /*! \brief Set item at itemIndex
-     *
-     * Depending on destination field index count
-     *  of item, this can change the table mapping.
-     *  itemsCount() can also return a different size
-     *  after item was set.
-     *
-     * \pre itemIndex must be in valid range
-     */
-//     void setItemAt(int itemIndex, TableMappingItem item);
-
     /*! \brief Get a list of item indexes to remove when inserting a item
      *
      * \param itemDfiList List of destination field indexes of item to insert

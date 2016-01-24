@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 24
+  revision 27
   modified_by 2 "philippe"
   // class settings
   
@@ -449,6 +449,29 @@ ${inlines}
 	
       end
 
+      operation 3520898 "sourceFieldIndexCount"
+	abstract cpp_virtual public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 3521026 "sourceFieldIndexList"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "indexList" type class_ref 2277122 // FieldIndexList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
       operation 3415042 "sourceFieldIndex"
 	abstract cpp_virtual public explicit_return_type "int"
 	nparams 0
@@ -837,7 +860,7 @@ ${inlines}
 
     classdiagram 1883394 "UniqueInsertExpression"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size B
     end
 
     class 2256898 "UniqueInsertExpression"
@@ -1527,7 +1550,7 @@ ${inlines}
       end
     end
 
-    classdiagram 1949570 "selectXy"
+    classdiagram 1949570 "ExpressionKeyFieldSelectionDialog"
       classdiagramsettings member_max_width 0 end
       size A4
     end
@@ -1614,7 +1637,6 @@ ${inlines}
 	
       end
     end
-
   end
 
   classview 934018 "TableMapping"
@@ -2327,6 +2349,61 @@ ${inlines}
     classdiagram 1936386 "TableMappingDialog"
       classdiagramsettings member_max_width 0 end
       size A4
+    end
+  end
+
+  classview 953602 "SqlHelper"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 1956098 "SqlHelper"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2316802 "SqlHelper"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 3514370 "getSourceTableData"
+	class_operation public return_type class_ref 1900930 // mdtExpected
+	nparams 3
+	  param inout name "query" type class_ref 910594 // QSqlQuery
+	  param in name "tm" type class_ref 2174082 // TableMapping
+	  param in name "itemIndex" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 end

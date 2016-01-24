@@ -40,10 +40,6 @@ namespace mdt{ namespace sql{ namespace copier{
 
    public:
 
-    /*! \brief Constructor
-     */
-//     UniqueInsertExpressionDialog(const TableMapping & tm, UniqueInsertExpression & exp, QWidget* parent = nullptr);
-
     /*! \brief Construct dialog to edit expression at given itemIndex in table mapping
      */
     UniqueInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, int itemIndex, QWidget *parent = nullptr);

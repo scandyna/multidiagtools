@@ -2,40 +2,40 @@ format 211
 
 classcanvas 128002 class_ref 2256514 // AbstractTableMappingItem
   classdiagramsettings hide_attributes no hide_operations no member_max_width 0 end
-  xyz 39 40 2000
+  xyz 47 39 2000
 end
 classcanvas 128130 class_ref 2256642 // FieldMapping
   classdiagramsettings member_max_width 0 end
-  xyz 399 506 2006
+  xyz 39 570 2006
 end
 classcanvas 128386 class_ref 2256770 // FixedValue
   classdiagramsettings member_max_width 0 end
-  xyz 39 506 2006
+  xyz 227 570 2006
 end
 classcanvas 128898 class_ref 2256898 // UniqueInsertExpression
   classdiagramsettings member_max_width 0 end
-  xyz 198 506 2006
+  xyz 386 570 2006
 end
 relationcanvas 128258 relation_ref 2534146 // <generalisation>
   geometry VHV unfixed
-  decenter_begin 522
-  from ref 128130 z 2007 to point 477 464
-  line 130434 z 2007 to point 278 464
+  decenter_begin 470
+  from ref 128130 z 2007 to point 109 528
+  line 130434 z 2007 to point 286 528
   line 130562 z 2007 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128514 relation_ref 2534274 // <generalisation>
-  geometry VHV unfixed
-  decenter_begin 463
-  from ref 128386 z 2007 to point 93 464
-  line 130178 z 2007 to point 278 464
-  line 130306 z 2007 to ref 128002
+  from ref 128386 z 2007 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129026 relation_ref 2534402 // <generalisation>
-  from ref 128898 z 2007 to ref 128002
+  geometry VHV unfixed
+  decenter_begin 521
+  from ref 128898 z 2007 to point 469 528
+  line 130690 z 2007 to point 286 528
+  line 130818 z 2007 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

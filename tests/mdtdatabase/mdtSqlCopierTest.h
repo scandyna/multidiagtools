@@ -60,8 +60,6 @@ class mdtSqlCopierTest : public mdtTest
   void tableMappingEditHelperItemDfiToAddTest_data();
   void tableMappingEditHelperInsertTest();
   void tableMappingEditHelperInsertTest_data();
-  
-//   void tableMappingEditHelperTest();
 
   void databaseCopierTableMappingUpdateItemsTest();
   void databaseCopierTableMappingTableFetchTest();

@@ -410,7 +410,8 @@ void mdtSqlCopierTest::fieldMappingTest()
    * Initial state
    */
   FieldMapping fm;
-  QCOMPARE(fm.sourceFieldIndex(), -1);
+  QCOMPARE(fm.sourceFieldIndexCount(), 0);
+//   QCOMPARE(fm.sourceFieldIndex(), -1);
   QCOMPARE(fm.destinationFieldIndexList().count(), 0);
   QVERIFY(fm.mappingState() == TableMappingItemState::MappingNotSet);
   QVERIFY(fm.isNull());
@@ -418,7 +419,9 @@ void mdtSqlCopierTest::fieldMappingTest()
    * Set
    */
   fm.setFieldMapping(1, 2);
-  QCOMPARE(fm.sourceFieldIndex(), 1);
+  QCOMPARE(fm.sourceFieldIndexCount(), 1);
+  QCOMPARE(fm.sourceFieldIndexList().at(0), 1);
+//   QCOMPARE(fm.sourceFieldIndex(), 1);
   QCOMPARE(fm.destinationFieldIndexList().count(), 1);
   QCOMPARE(fm.destinationFieldIndexList().at(0), 2);
   QVERIFY(!fm.isNull());
@@ -429,7 +432,9 @@ void mdtSqlCopierTest::fieldMappingTest()
    */
   FieldMapping *fmc = fm.clone();
   QVERIFY(fmc != nullptr);
-  QCOMPARE(fmc->sourceFieldIndex(), 1);
+  QCOMPARE(fmc->sourceFieldIndexCount(), 1);
+  QCOMPARE(fmc->sourceFieldIndexList().at(0), 1);
+//   QCOMPARE(fmc->sourceFieldIndex(), 1);
   QCOMPARE(fmc->destinationFieldIndexCount(), 1);
   QCOMPARE(fmc->destinationFieldIndexList().at(0), 2);
   /*
@@ -776,7 +781,8 @@ void mdtSqlCopierTest::tableMappingItemTest()
    */
   TableMappingItem fm1(TableMappingItem::FieldMappingType);
   QVERIFY(fm1.type() == TableMappingItem::FieldMappingType);
-  QCOMPARE(fm1.sourceFieldIndex(), -1);
+  QCOMPARE(fm1.sourceFieldIndexList().count(), 0);
+//   QCOMPARE(fm1.sourceFieldIndex(), -1);
   QVERIFY(fm1.mappingState() == TableMappingItemState::MappingNotSet);
   QCOMPARE(fm1.destinationFieldIndexList().count(), 0);
   QVERIFY(fm1.isNull());
@@ -785,14 +791,18 @@ void mdtSqlCopierTest::tableMappingItemTest()
    */
   // Set some value to fm1
   fm1.setFieldMapping(1, 11);
-  QCOMPARE(fm1.sourceFieldIndex(), 1);
+  QCOMPARE(fm1.sourceFieldIndexList().count(), 1);
+  QCOMPARE(fm1.sourceFieldIndexList().at(0), 1);
+//   QCOMPARE(fm1.sourceFieldIndex(), 1);
   QCOMPARE(fm1.destinationFieldIndexList().count(), 1);
   QCOMPARE(fm1.destinationFieldIndexList().at(0), 11);
   QVERIFY(!fm1.isNull());
   // Construct fm2 on base of fm1
   TableMappingItem fm2(fm1);
   QVERIFY(fm2.type() == TableMappingItem::FieldMappingType);
-  QCOMPARE(fm2.sourceFieldIndex(), 1);
+  QCOMPARE(fm2.sourceFieldIndexList().count(), 1);
+  QCOMPARE(fm2.sourceFieldIndexList().at(0), 1);
+//   QCOMPARE(fm2.sourceFieldIndex(), 1);
   QCOMPARE(fm2.destinationFieldIndexList().count(), 1);
   QCOMPARE(fm2.destinationFieldIndexList().at(0), 11);
   QVERIFY(!fm2.isNull());
@@ -800,11 +810,15 @@ void mdtSqlCopierTest::tableMappingItemTest()
   qDebug() << "TEST: fm2.setFieldMapping() ...";
   fm2.setFieldMapping(2, 22);
   qDebug() << "TEST: check fm1 ...";
-  QCOMPARE(fm1.sourceFieldIndex(), 1);
+  QCOMPARE(fm1.sourceFieldIndexList().count(), 1);
+  QCOMPARE(fm1.sourceFieldIndexList().at(0), 1);
+//   QCOMPARE(fm1.sourceFieldIndex(), 1);
   QCOMPARE(fm1.destinationFieldIndexList().count(), 1);
   QCOMPARE(fm1.destinationFieldIndexList().at(0), 11);
   qDebug() << "TEST: check fm2 ...";
-  QCOMPARE(fm2.sourceFieldIndex(), 2);
+  QCOMPARE(fm2.sourceFieldIndexList().count(), 1);
+  QCOMPARE(fm2.sourceFieldIndexList().at(0), 2);
+//   QCOMPARE(fm2.sourceFieldIndex(), 2);
   QCOMPARE(fm2.destinationFieldIndexList().count(), 1);
   QCOMPARE(fm2.destinationFieldIndexList().at(0), 22);
   qDebug() << "TEST: check fm1 and fm2 OK";
@@ -817,17 +831,23 @@ void mdtSqlCopierTest::tableMappingItemTest()
   // Assign
   fm3 = fm1;
   QVERIFY(fm3.type() == TableMappingItem::FieldMappingType);
-  QCOMPARE(fm3.sourceFieldIndex(), 1);
+  QCOMPARE(fm3.sourceFieldIndexList().count(), 1);
+  QCOMPARE(fm3.sourceFieldIndexList().at(0), 1);
+//   QCOMPARE(fm3.sourceFieldIndex(), 1);
 //   QCOMPARE(fm3.destinationFieldIndex(), 11);
   QCOMPARE(fm3.destinationFieldIndexList().count(), 1);
   QCOMPARE(fm3.destinationFieldIndexList().at(0), 11);
   // Update fm3
   fm3.setFieldMapping(3, 33);
-  QCOMPARE(fm1.sourceFieldIndex(), 1);
+  QCOMPARE(fm1.sourceFieldIndexList().count(), 1);
+  QCOMPARE(fm1.sourceFieldIndexList().at(0), 1);
+//   QCOMPARE(fm1.sourceFieldIndex(), 1);
 //   QCOMPARE(fm1.destinationFieldIndex(), 11);
   QCOMPARE(fm1.destinationFieldIndexList().count(), 1);
   QCOMPARE(fm1.destinationFieldIndexList().at(0), 11);
-  QCOMPARE(fm3.sourceFieldIndex(), 3);
+  QCOMPARE(fm3.sourceFieldIndexList().count(), 1);
+  QCOMPARE(fm3.sourceFieldIndexList().at(0), 3);
+//   QCOMPARE(fm3.sourceFieldIndex(), 3);
 //   QCOMPARE(fm3.destinationFieldIndex(), 33);
   QCOMPARE(fm3.destinationFieldIndexList().count(), 1);
   QCOMPARE(fm3.destinationFieldIndexList().at(0), 33);
@@ -840,17 +860,23 @@ void mdtSqlCopierTest::tableMappingItemTest()
   // Assign
   fm4 = fm1;
   QVERIFY(fm4.type() == TableMappingItem::FieldMappingType);
-  QCOMPARE(fm4.sourceFieldIndex(), 1);
+  QCOMPARE(fm4.sourceFieldIndexList().count(), 1);
+  QCOMPARE(fm4.sourceFieldIndexList().at(0), 1);
+//   QCOMPARE(fm4.sourceFieldIndex(), 1);
 //   QCOMPARE(fm4.destinationFieldIndex(), 11);
   QCOMPARE(fm4.destinationFieldIndexList().count(), 1);
   QCOMPARE(fm4.destinationFieldIndexList().at(0), 11);
   // Update fm4
   fm4.setFieldMapping(4, 44);
-  QCOMPARE(fm1.sourceFieldIndex(), 1);
+  QCOMPARE(fm1.sourceFieldIndexList().count(), 1);
+  QCOMPARE(fm1.sourceFieldIndexList().at(0), 1);
+//   QCOMPARE(fm1.sourceFieldIndex(), 1);
 //   QCOMPARE(fm1.destinationFieldIndex(), 11);
   QCOMPARE(fm1.destinationFieldIndexList().count(), 1);
   QCOMPARE(fm1.destinationFieldIndexList().at(0), 11);
-  QCOMPARE(fm4.sourceFieldIndex(), 4);
+  QCOMPARE(fm4.sourceFieldIndexList().count(), 1);
+  QCOMPARE(fm4.sourceFieldIndexList().at(0), 4);
+//   QCOMPARE(fm4.sourceFieldIndex(), 4);
 //   QCOMPARE(fm4.destinationFieldIndex(), 44);
   QCOMPARE(fm4.destinationFieldIndexList().count(), 1);
   QCOMPARE(fm4.destinationFieldIndexList().at(0), 44);
@@ -909,13 +935,17 @@ void mdtSqlCopierTest::tableMappingItemTest()
    */
   TableMappingItem fv4(fm1);
   QVERIFY(fv4.type() == TableMappingItem::FieldMappingType);
-  QCOMPARE(fv4.sourceFieldIndex(), 1);
+  QCOMPARE(fv4.sourceFieldIndexList().count(), 1);
+  QCOMPARE(fv4.sourceFieldIndexList().at(0), 1);
+//   QCOMPARE(fv4.sourceFieldIndex(), 1);
   QCOMPARE(fv4.destinationFieldIndexList().count(), 1);
   QCOMPARE(fv4.destinationFieldIndexList().at(0), 11);
   // Set fixed value to fv4
   fv4.setFixedValue("Fixed 4", 4);
   QVERIFY(fm1.type() == TableMappingItem::FieldMappingType);
-  QCOMPARE(fm1.sourceFieldIndex(), 1);
+  QCOMPARE(fm1.sourceFieldIndexList().count(), 1);
+  QCOMPARE(fm1.sourceFieldIndexList().at(0), 1);
+//   QCOMPARE(fm1.sourceFieldIndex(), 1);
   QCOMPARE(fm1.destinationFieldIndexList().count(), 1);
   QCOMPARE(fm1.destinationFieldIndexList().at(0), 11);
   QVERIFY(fv4.type() == TableMappingItem::FixedValueType);
@@ -928,13 +958,17 @@ void mdtSqlCopierTest::tableMappingItemTest()
   QVERIFY(fv2.type() == TableMappingItem::FixedValueType);
   fv2 = fm1;
   QVERIFY(fv2.type() == TableMappingItem::FieldMappingType);
-  QCOMPARE(fv2.sourceFieldIndex(), 1);
+  QCOMPARE(fv2.sourceFieldIndexList().count(), 1);
+  QCOMPARE(fv2.sourceFieldIndexList().at(0), 1);
+//   QCOMPARE(fv2.sourceFieldIndex(), 1);
   QCOMPARE(fv2.destinationFieldIndexList().count(), 1);
   QCOMPARE(fv2.destinationFieldIndexList().at(0), 11);
   // Set fixed value to fv2
   fv2.setFixedValue("Fixed 22", 22);
   QVERIFY(fm1.type() == TableMappingItem::FieldMappingType);
-  QCOMPARE(fm1.sourceFieldIndex(), 1);
+  QCOMPARE(fm1.sourceFieldIndexList().count(), 1);
+  QCOMPARE(fm1.sourceFieldIndexList().at(0), 1);
+//   QCOMPARE(fm1.sourceFieldIndex(), 1);
   QCOMPARE(fm1.destinationFieldIndexList().count(), 1);
   QCOMPARE(fm1.destinationFieldIndexList().at(0), 11);
   QVERIFY(fv2.type() == TableMappingItem::FixedValueType);
@@ -958,7 +992,8 @@ void mdtSqlCopierTest::tableMappingItemTest()
   uiexp.setUniqueInsertExpression(uniqueInsertExpression);
   QVERIFY(uiexp.type() == TableMappingItem::UniqueInsertExpressionType);
   QCOMPARE(uiexp.destinationFieldIndexList().count(), 2);
-  QCOMPARE(uiexp.sourceFieldIndex(), -1);
+  QCOMPARE(uiexp.sourceFieldIndexList().count(), 0);
+//   QCOMPARE(uiexp.sourceFieldIndex(), -1);
   QCOMPARE(uiexp.destinationFieldIndexList().at(0), 1);
   QCOMPARE(uiexp.destinationFieldIndexList().at(1), 2);
   QVERIFY(!uiexp.isNull());
@@ -1753,181 +1788,6 @@ void mdtSqlCopierTest::tableMappingEditHelperInsertTest_data()
   QTest::newRow("[{0}]->[{0},{1},{2,3}]") << tmItemList << item << expectedTmItemList;
 
 }
-
-// void mdtSqlCopierTest::tableMappingEditHelperTest()
-// {
-//   using mdt::sql::copier::TableMappingEditHelper;
-//   using mdt::sql::copier::TableMappingItem;
-//   using mdt::sql::copier::UniqueInsertExpression;
-//   using mdt::sql::copier::FieldIndexList;
-// 
-//   QVector<TableMappingItem> allItems;
-//   QVector<TableMappingItem> itemsList;
-//   QVector<int> itemsIndexList;
-//   TableMappingItem item(TableMappingItem::FieldMappingType);
-//   UniqueInsertExpression exp;
-//   FieldIndexList fieldIndexList;
-// 
-//   /*
-//    * Build a list of TableMappingItem:
-//    * -----------------------------
-//    * | Item | Src fld | Dest fld |
-//    * -----------------------------
-//    * |   0  |    1    |    0     |
-//    * -----------------------------
-//    * |   1  |    0    |    1     |
-//    * -----------------------------
-//    * |   2  |    2    |    2     |
-//    * -----------------------------
-//    */
-//   allItems.clear();
-//   // Index 0 : field mapping
-//   item.setFieldMapping(1, 0);
-//   allItems << item;
-//   // Index 1 : field mapping
-//   item.setFieldMapping(0, 1);
-//   allItems << item;
-//   // Index 2 : field mapping
-//   item.setFieldMapping(2, 2);
-//   allItems << item;
-//   QCOMPARE(allItems.size(), 3);
-//   /*
-//    * Edit item at index 1:
-//    *  Type: expression
-//    *  Source field index: -
-//    *  Destination field indexes: 0,1
-//    */
-//   // Setup expression
-//   exp.clear();
-//   exp.addDestinationFieldIndex(0);
-//   exp.addDestinationFieldIndex(1);
-//   item.setUniqueInsertExpression(exp);
-//   /*
-//    * Checks
-//    */
-//   // Indexes of items to remove: 0
-//   itemsIndexList = TableMappingEditHelper::getItemsToRemoveIndexList(1, item, allItems);
-//   QCOMPARE(itemsIndexList.size(), 1);
-//   QCOMPARE(itemsIndexList.at(0), 0);
-//   // Items to add: -
-//   itemsList = TableMappingEditHelper::getItemsToAddList(1, item, allItems);
-//   QCOMPARE(itemsList.size(), 0);
-//   /*
-//    * Check getting index of item to insert regarding its destination field indexes
-//    */
-//   ///QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes({}, allItems) , 0);
-//   fieldIndexList = {0};
-//   QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 0);
-//   fieldIndexList = {1};
-//   QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 1);
-//   fieldIndexList = {0,1};
-//   QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 0);
-// 
-//   /*
-//    * Update table mapping, witch conducts to:
-//    * -----------------------------
-//    * | Item | Src fld | Dest fld |
-//    * -----------------------------
-//    * |   0  |    -    |    0,1   |
-//    * -----------------------------
-//    * |   1  |    2    |    2     |
-//    * -----------------------------
-//    */
-//   // Update table mapping
-//   TableMappingEditHelper::insertItem(1, item, allItems);
-//   // Check new table mapping
-//   QCOMPARE(allItems.size(), 2);
-//   // Check item at index 0
-//   item = allItems.at(0);
-//   ///QCOMPARE(item.sourceFieldIndex(), 1);
-//   QCOMPARE(item.destinationFieldIndexList().count(), 2);
-//   QCOMPARE(item.destinationFieldIndexList().at(0), 0);
-//   QCOMPARE(item.destinationFieldIndexList().at(1), 1);
-//   // Check item at index 1
-//   item = allItems.at(1);
-//   QCOMPARE(item.sourceFieldIndex(), 2);
-//   QCOMPARE(item.destinationFieldIndexList().count(), 1);
-//   QCOMPARE(item.destinationFieldIndexList().at(0), 2);
-// 
-// //   allItems.clear();
-// //   // Index 0 : expression
-// //   item.setUniqueInsertExpression(exp);
-// //   QCOMPARE(item.destinationFieldIndexList().count(), 2);
-// //   allItems << item;
-// //   // Index 1 : field mapping
-// //   item.setFieldMapping(2, 2);
-// //   allItems << item;
-// //   QCOMPARE(allItems.size(), 2);
-//   /*
-//    * Check getting index of item to insert regarding its destination field indexes
-//    */
-//   ///QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes({}, allItems) , 0);
-//   fieldIndexList = {0};
-//   QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 1);
-//   fieldIndexList = {1};
-//   QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 1);
-//   fieldIndexList = {2};
-//   QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 2);
-//   fieldIndexList = {3};
-//   QCOMPARE(TableMappingEditHelper::getIndexOfItemToInsertByDFIndexes(fieldIndexList, allItems) , 2);
-//   /*
-//    * Edit item at index 0:
-//    *  Type: field mapping
-//    *  Source field index: 1
-//    *  Destination field index: 0
-//    */
-//   item.setFieldMapping(1, 0);
-//   /*
-//    * Checks
-//    */
-//   // Indexes of items to remove: none
-//   itemsIndexList = TableMappingEditHelper::getItemsToRemoveIndexList(0, item, allItems);
-//   QCOMPARE(itemsIndexList.size(), 0);
-//   // Items to add: -
-//   /*
-//    * Items to add:
-//    * ----------------------
-//    * | Src fld | Dest fld |
-//    * ----------------------
-//    * |         |    1     |
-//    * ----------------------
-//    */
-//   itemsList = TableMappingEditHelper::getItemsToAddList(0, item, allItems);
-//   QCOMPARE(itemsList.size(), 1);
-//   QCOMPARE(itemsList.at(0).destinationFieldIndexList().count(), 1);
-//   QCOMPARE(itemsList.at(0).destinationFieldIndexList().at(0), 1);
-//   /*
-//    * Update table mapping, witch conducts to:
-//    * -----------------------------
-//    * | Item | Src fld | Dest fld |
-//    * -----------------------------
-//    * |   0  |    1    |    0     |
-//    * -----------------------------
-//    * |   1  |         |    1     |
-//    * -----------------------------
-//    * |   2  |    2    |    2     |
-//    * -----------------------------
-//    */
-//   // Update table mapping
-//   TableMappingEditHelper::insertItem(0, item, allItems);
-//   // Check new table mapping
-//   QCOMPARE(allItems.size(), 3);
-//   // Check item at index 0
-//   item = allItems.at(0);
-//   QCOMPARE(item.sourceFieldIndex(), 1);
-//   QCOMPARE(item.destinationFieldIndexList().count(), 1);
-//   QCOMPARE(item.destinationFieldIndexList().at(0), 0);
-//   // Check item at index 1
-//   item = allItems.at(1);
-//   ///QCOMPARE(item.sourceFieldIndex(), 1);
-//   QCOMPARE(item.destinationFieldIndexList().count(), 1);
-//   QCOMPARE(item.destinationFieldIndexList().at(0), 1);
-//   // Check item at index 2
-//   item = allItems.at(2);
-//   QCOMPARE(item.sourceFieldIndex(), 2);
-//   QCOMPARE(item.destinationFieldIndexList().count(), 1);
-//   QCOMPARE(item.destinationFieldIndexList().at(0), 2);
-// }
 
 void mdtSqlCopierTest::databaseCopierTableMappingUpdateItemsTest()
 {

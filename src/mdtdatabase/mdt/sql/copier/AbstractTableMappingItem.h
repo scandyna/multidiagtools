@@ -83,6 +83,24 @@ namespace mdt{ namespace sql{ namespace copier{
       Q_UNUSED(destinationFieldIndex);
     }
 
+    /*! \brief Get count of source field indexes
+     *
+     * This default implementation allways returns 0.
+     */
+    virtual int sourceFieldIndexCount() const
+    {
+      return 0;
+    }
+
+    /*! \brief Get list of source field indexes
+     *
+     * This default implementation allways returns a empty list.
+     */
+    virtual FieldIndexList sourceFieldIndexList() const
+    {
+      return FieldIndexList();
+    }
+
     /*! \brief Get source field index
      *
      * This default implementation allways returns -1.

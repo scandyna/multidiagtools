@@ -1,12 +1,12 @@
-format 210
+format 211
 
 classcanvas 128002 class_ref 2256514 // AbstractTableMappingItem
   classdiagramsettings member_max_width 0 end
-  xyz 39 40 2000
+  xyz 39 41 2000
 end
 classcanvas 128130 class_ref 2256642 // FieldMapping
   classdiagramsettings member_max_width 0 end
-  xyz 39 466 2006
+  xyz 39 578 2006
 end
 relationcanvas 128258 relation_ref 2534146 // <generalisation>
   from ref 128130 z 2007 to ref 128002

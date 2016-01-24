@@ -84,6 +84,10 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void setFieldMapping(int sourceFieldIndex, int destinationFieldIndex);
 
+    /*! \brief Get list of source field indexes
+     */
+    FieldIndexList sourceFieldIndexList() const;
+
     /*! \brief Get source field index
      *
      * Has sense for FieldMappingType only.

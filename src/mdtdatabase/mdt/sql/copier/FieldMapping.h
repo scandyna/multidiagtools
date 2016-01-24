@@ -22,6 +22,7 @@
 #define MDT_SQL_COPIER_FIELD_MAPPING_H
 
 #include "AbstractTableMappingItem.h"
+#include "FieldIndexList.h"
 
 namespace mdt{ namespace sql{ namespace copier{
 
@@ -34,8 +35,8 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Create a invalid field mapping
      */
     FieldMapping()
-     : AbstractTableMappingItem(),
-       pvSourceFieldIndex(-1)
+     : AbstractTableMappingItem() /*,
+       pvSourceFieldIndex(-1)*/
     {
       qDebug() << "C  FieldMapping::FieldMapping() - ref: " << ref.load();
     }
@@ -61,23 +62,42 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     bool isNull() const override
     {
-      return ( (pvSourceFieldIndex < 0) || (destinationFieldIndexCount() < 1) );
+      return ( pvSourceFieldIndex.isEmpty() || (destinationFieldIndexCount() < 1) );
+//       return ( (pvSourceFieldIndex < 0) || (destinationFieldIndexCount() < 1) );
     }
 
     /*! \brief Set a field mapping
      */
     void setFieldMapping(int sourceFieldIndex, int destinationFieldIndex) override
     {
-      pvSourceFieldIndex = sourceFieldIndex;
+//       pvSourceFieldIndex = sourceFieldIndex;
+      pvSourceFieldIndex.clear();
+      if(sourceFieldIndex > -1){
+        pvSourceFieldIndex.append(sourceFieldIndex);
+      }
       setDestinationFieldIndex(destinationFieldIndex);
+    }
+
+    /*! \brief Get count of source field indexes
+     */
+    int sourceFieldIndexCount() const override
+    {
+      return pvSourceFieldIndex.count();
+    }
+
+    /*! \brief Get list of source field indexes
+     */
+    FieldIndexList sourceFieldIndexList() const override
+    {
+      return pvSourceFieldIndex;
     }
 
     /*! \brief Get source field index
      */
-    int sourceFieldIndex() const override
-    {
-      return pvSourceFieldIndex;
-    }
+//     int sourceFieldIndex() const override
+//     {
+//       return pvSourceFieldIndex;
+//     }
 
    private:
 
@@ -85,7 +105,8 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void clearItem() override
     {
-      pvSourceFieldIndex = -1;
+      pvSourceFieldIndex.clear();
+//       pvSourceFieldIndex = -1;
     }
 
     /*! \brief Copy constructor (used by clone)
@@ -97,7 +118,8 @@ namespace mdt{ namespace sql{ namespace copier{
       qDebug() << "CPY  FieldMapping::FieldMapping(other) - ref: " << ref.load();
     }
 
-    int pvSourceFieldIndex;
+    FieldIndexList pvSourceFieldIndex;
+    ///int pvSourceFieldIndex;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{
