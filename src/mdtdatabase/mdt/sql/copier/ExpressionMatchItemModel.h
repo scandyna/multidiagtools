@@ -132,4 +132,3 @@ namespace mdt{ namespace sql{ namespace copier{
 }}} // namespace mdt{ namespace sql{ namespace copier{
 
 #endif // #ifndef MDT_SQL_COPIER_EXPRESSION_MATCH_ITEM_MODEL_H
-

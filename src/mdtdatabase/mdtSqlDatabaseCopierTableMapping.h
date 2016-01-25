@@ -64,6 +64,20 @@ class mdtSqlDatabaseCopierTableMapping : public mdt::sql::copier::TableMapping
    */
   bool setDestinationTable(const QString & tableName, const QSqlDatabase & db);
 
+  /*! \brief Get source database
+   */
+  QSqlDatabase sourceDatabase() const override
+  {
+    return pvSourceDatabase;
+  }
+
+  /*! \brief Get destination database
+   */
+  QSqlDatabase destinationDatabase() const override
+  {
+    return pvDestinationDatabase;
+  }
+
   /*! \brief Get source table name
    */
   QString sourceTableName() const

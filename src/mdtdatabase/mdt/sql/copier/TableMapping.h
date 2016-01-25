@@ -26,8 +26,7 @@
 #include <QVector>
 #include <QString>
 #include <QStringList>
-
-class QSqlDatabase;
+#include <QSqlDatabase>
 
 namespace mdt{ namespace sql{ namespace copier{
 
@@ -125,6 +124,24 @@ namespace mdt{ namespace sql{ namespace copier{
       Q_ASSERT(index >= 0);
       Q_ASSERT(index < pvItems.size());
       return pvItems.at(index).mappingState();
+    }
+
+    /*! \brief Get source database
+     *
+     * This default implementation return a invalid databse object.
+     */
+    virtual QSqlDatabase sourceDatabase() const
+    {
+      return QSqlDatabase();
+    }
+
+    /*! \brief Get destination database
+     *
+     * This default implementation return a invalid databse object.
+     */
+    virtual QSqlDatabase destinationDatabase() const
+    {
+      return QSqlDatabase();
     }
 
     /*! \brief Get source table name

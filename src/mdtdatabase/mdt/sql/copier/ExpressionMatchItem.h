@@ -68,7 +68,4 @@ namespace mdt{ namespace sql{ namespace copier{
 
 }}} // namespace mdt{ namespace sql{ namespace copier{
 
-// Q_DECLARE_TYPEINFO(mdt::sql::copier::ExpressionMatchItem, Q_MOVABLE_TYPE);
-
 #endif // #ifndef MDT_SQL_COPIER_EXPRESSION_MATCH_ITEM_H
-

@@ -30,7 +30,6 @@
 
 namespace mdt{ namespace sql{ namespace copier{
 
-//   class UniqueInsertExpressionModel;
   class ExpressionMatchItemModel;
 
   /*! \brief Dialog to edit unique insert expression for SQL copier
@@ -86,11 +85,9 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void resizeMatchItemViewToContents();
 
-    ///const TableMapping & pvTableMapping;
     std::shared_ptr<const TableMapping> pvTableMapping;
     UniqueInsertExpression pvExpression;
     FieldIndexList pvInitialKey;
-//     UniqueInsertExpressionModel *pvModel;
     ExpressionMatchItemModel *pvModel;
   };
 

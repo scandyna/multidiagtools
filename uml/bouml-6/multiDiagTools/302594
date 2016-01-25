@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 31
+  revision 32
   modified_by 2 "philippe"
   // class settings
   
@@ -199,21 +199,6 @@ ${inlines}
 	
 	
       end
-
-      operation 3415938 "clear"
-	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
     end
 
     classdiagram 1969538 "MatchItemModel"
@@ -222,7 +207,7 @@ ${inlines}
     end
 
     class 2283650 "ExpressionMatchItemModel"
-      visibility package 
+      abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -251,6 +236,40 @@ ${inlines}
 	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3529474 "setMatchItemList"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "itemList" type class_ref 2257026 // ExpressionMatchItem
+	multiplicity "*"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3529602 "matchItemList"
+	stereotype "vector"
+	public return_type class_ref 2257026 // ExpressionMatchItem
+	multiplicity "*"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -341,6 +360,136 @@ ${inlines}
 "
 	    classrelation_ref 2604930 // <directional composition>
 	  b parent class_ref 2257026 // ExpressionMatchItem
+      end
+
+      operation 3528706 "fetchDestinationFieldName"
+	abstract cpp_virtual protected return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "fieldIndex" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 3528834 "fetchDestinationFieldIndexOf"
+	abstract cpp_virtual protected explicit_return_type "int"
+	nparams 1
+	  param in name "fieldName" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 3529090 "fetchSourceValueFieldName"
+	abstract cpp_virtual protected return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "fieldIndex" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 3529218 "fetchSourceValueFieldIndexOf"
+	abstract cpp_virtual protected explicit_return_type "int"
+	nparams 1
+	  param in name "fieldName" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 3528322 "operatorWithPreviousText"
+	private return_type class_ref 161154 // QVariant
+	nparams 1
+	  param in name "item" type class_ref 2257026 // ExpressionMatchItem
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3528450 "setDestinationField"
+	cpp_virtual private explicit_return_type "void"
+	nparams 2
+	  param out name "item" type class_ref 2257026 // ExpressionMatchItem
+	  param in name "fieldName" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3528578 "destinationFieldName"
+	private return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "item" type class_ref 2257026 // ExpressionMatchItem
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3528962 "setSourceValueField"
+	cpp_virtual private explicit_return_type "void"
+	nparams 2
+	  param out name "item" type class_ref 2257026 // ExpressionMatchItem
+	  param in name "fieldName" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3529346 "sourceValueFieldName"
+	private return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "item" type class_ref 2257026 // ExpressionMatchItem
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -537,6 +686,11 @@ ${inlines}
       end
     end
 
+    classdiagram 1976194 "UniqueCheckMatchItemModel"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
     classdiagram 1916546 "UniqueCheckExpressionDialog"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -602,12 +756,12 @@ ${inlines}
       end
     end
 
-    classdiagram 1969282 "EXP"
+    classdiagram 1969282 "RelatedTableInsertExpression"
       classdiagramsettings member_max_width 0 end
       size A4
     end
 
-    class 2330242 "EXP"
+    class 2330242 "RelatedTableInsertExpression"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -627,6 +781,18 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 2604546 // <generalisation>
 	  b parent class_ref 2256514 // AbstractTableMappingItem
+      end
+
+      attribute 2294018 "SourceRelatedTableName"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
 
       attribute 2294146 "DestinationRelatedTableName"
@@ -653,17 +819,67 @@ ${inlines}
 	MysqlColumn
       end
 
-      classrelation 2604674 // <directional composition>
-	relation 2588162 *-->
+      classrelation 2611970 // <directional composition>
+	relation 2595458 *-->
 	  a role_name "" multiplicity "*" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
-	    classrelation_ref 2604674 // <directional composition>
+	    classrelation_ref 2611970 // <directional composition>
 	  b parent class_ref 2257026 // ExpressionMatchItem
+      end
+
+      operation 3527554 "clone"
+	cpp_virtual public explicit_return_type "AbstractTableMappingItem"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3527682 "isNull"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3528194 "clearItem"
+	cpp_virtual private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
-    class 2330370 "EXP2"
+    classdiagram 1976066 "RelatedTableInsertMatchItemModel"
+      classdiagramsettings member_max_width 0 end
+      size B-Landscape
+    end
+
+    class 2336898 "RelatedTableInsertMatchItemModel"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -677,16 +893,16 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2604802 // <generalisation>
-	relation 2588290 ---|>
+      classrelation 2618498 // <generalisation>
+	relation 2601986 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 2604802 // <generalisation>
-	  b parent class_ref 2330242 // EXP
+	    classrelation_ref 2618498 // <generalisation>
+	  b parent class_ref 2283650 // ExpressionMatchItemModel
       end
 
-      attribute 2294018 "SourceRelatedTableName"
-	private type class_ref 161026 // QString
+      attribute 2300930 "SourceRelatedTable"
+	private type class_ref 910210 // mdtSqlSchemaTable
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -695,6 +911,115 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      attribute 2301058 "DestinationRelatedTable"
+	private type class_ref 910210 // mdtSqlSchemaTable
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3530498 "RelatedTableInsertMatchItemModel"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "tm" type class_ref 2174082 // TableMapping
+	  param in name "parent" type class_ref 138626 // QObject
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3529730 "setExpression"
+	public return_type class_ref 1900930 // mdtExpected
+	nparams 1
+	  param in name "exp" type class_ref 2330242 // RelatedTableInsertExpression
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3529986 "fetchDestinationFieldName"
+	cpp_virtual private return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "fieldIndex" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3530114 "fetchDestinationFieldIndexOf"
+	cpp_virtual private explicit_return_type "int"
+	nparams 1
+	  param in name "fieldName" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3530242 "fetchSourceValueFieldName"
+	cpp_virtual private return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "fieldIndex" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3530370 "fetchSourceValueFieldIndexOf"
+	cpp_virtual private explicit_return_type "int"
+	nparams 1
+	  param in name "fieldName" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end
@@ -1330,17 +1655,6 @@ ${inlines}
 	nparams 1
 	  param in name "indexList" type class_ref 2277122 // FieldIndexList
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 3415042 "sourceFieldIndex"
-	abstract cpp_virtual public explicit_return_type "int"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	

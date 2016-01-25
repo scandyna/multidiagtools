@@ -1,6 +1,6 @@
-format 210
+format 211
 "Qt" // Qt
-  revision 113
+  revision 114
   modified_by 2 "philippe"
   // class settings
   
@@ -2611,7 +2611,7 @@ ${inlines}
     end
 
     class 147202 "QAbstractTableModel"
-      visibility package 
+      abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
 ${inlines}

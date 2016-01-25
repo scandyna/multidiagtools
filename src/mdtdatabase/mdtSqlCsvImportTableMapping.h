@@ -46,6 +46,13 @@ class mdtSqlCsvImportTableMapping : public mdt::sql::copier::TableMapping
    */
   bool setDestinationTable(const QString & tableName, const QSqlDatabase & db);
 
+  /*! \brief Get destination database
+   */
+  QSqlDatabase destinationDatabase() const override
+  {
+    return pvDestinationDatabase;
+  }
+
   /*! \brief Get source table name
    */
   QString sourceTableName() const

@@ -101,15 +101,6 @@ namespace mdt{ namespace sql{ namespace copier{
       return FieldIndexList();
     }
 
-    /*! \brief Get source field index
-     *
-     * This default implementation allways returns -1.
-     */
-    virtual int sourceFieldIndex() const
-    {
-      return -1;
-    }
-
     /*! \brief Set destination field index
      */
     void setDestinationFieldIndex(int index)

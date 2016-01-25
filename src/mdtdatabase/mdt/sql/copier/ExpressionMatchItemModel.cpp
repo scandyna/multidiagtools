@@ -231,5 +231,4 @@ QVariant ExpressionMatchItemModel::sourceValueFieldName(const ExpressionMatchIte
   return pvTableMapping->sourceTableFieldNameAt(fieldIndex);
 }
 
-
 }}} // namespace mdt{ namespace sql{ namespace copier{
