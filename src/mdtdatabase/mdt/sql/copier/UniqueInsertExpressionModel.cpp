@@ -85,13 +85,13 @@ QVariant UniqueInsertExpressionModel::data(const QModelIndex & index, int role) 
     // Return requested data
     switch(column){
       case OperatorWithPreviousIndex:
-        return operatorWithPreviousText(item);
+        ;///return operatorWithPreviousText(item);
       case DestinationFieldNameIndex:
-        return destinationFieldName(item);
+        ;///return destinationFieldName(item);
       case MatchOperatorIndex:
         return "=";
       case SourceValueFieldNameIndex:
-        return sourceValueFieldName(item);
+        ;///return sourceValueFieldName(item);
     }
   }
 
@@ -114,16 +114,16 @@ bool UniqueInsertExpressionModel::setData(const QModelIndex& index, const QVaria
   auto item = pvExpression.matchItemAt(row);
   switch(column){
     case DestinationFieldNameIndex:
-      setDestinationField(item, value.toString());
+      ///setDestinationField(item, value.toString());
       break;
     case SourceValueFieldNameIndex:
-      setSourceValueField(item, value.toString());
+      ///setSourceValueField(item, value.toString());
       break;
     default:
       return false;
   }
   // Update and signal
-  pvExpression.setMatchItemAt(row, item);
+  ///pvExpression.setMatchItemAt(row, item);
   emit dataChanged(index, index);
 
   return true;

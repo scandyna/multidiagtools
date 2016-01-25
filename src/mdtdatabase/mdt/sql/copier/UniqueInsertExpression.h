@@ -209,11 +209,26 @@ namespace mdt{ namespace sql{ namespace copier{
       return pvMatchItems.size();
     }
 
+    /*! \brief Set match items
+     */
+    void setMatchItems(const std::vector<ExpressionMatchItem> & items)
+    {
+      pvMatchItems = items;
+    }
+
+    /*! \brief Get match items
+     */
+    std::vector<ExpressionMatchItem> matchItems() const
+    {
+      return pvMatchItems;
+    }
+
     /*! \brief Set match item at given itemIndex
      *
      * \pre itemIndex must be valid
      */
-    void setMatchItemAt(int itemIndex, const UniqueInsertMatchExpressionItem & item)
+//     void setMatchItemAt(int itemIndex, const UniqueInsertMatchExpressionItem & item)
+    void setMatchItemAt(int itemIndex, const ExpressionMatchItem & item)
     {
       Q_ASSERT(itemIndex >= 0);
       Q_ASSERT(itemIndex < matchItemsCount());
@@ -224,7 +239,8 @@ namespace mdt{ namespace sql{ namespace copier{
      *
      * \pre itemIndex must be valid
      */
-    UniqueInsertMatchExpressionItem matchItemAt(int itemIndex) const
+//     UniqueInsertMatchExpressionItem matchItemAt(int itemIndex) const
+    ExpressionMatchItem matchItemAt(int itemIndex) const
     {
       Q_ASSERT(itemIndex >= 0);
       Q_ASSERT(itemIndex < matchItemsCount());
@@ -258,7 +274,8 @@ namespace mdt{ namespace sql{ namespace copier{
       pvMatchItems.clear();
     }
 
-    std::vector<UniqueInsertMatchExpressionItem> pvMatchItems;
+//     std::vector<UniqueInsertMatchExpressionItem> pvMatchItems;
+    std::vector<ExpressionMatchItem> pvMatchItems;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

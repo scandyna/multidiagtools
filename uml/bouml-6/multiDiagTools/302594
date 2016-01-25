@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 30
+  revision 31
   modified_by 2 "philippe"
   // class settings
   
@@ -344,7 +344,7 @@ ${inlines}
       end
     end
 
-    classdiagram 1883394 "UniqueInsertExpression"
+    classdiagram 1883394 "UniqueCheckExpression"
       classdiagramsettings member_max_width 0 end
       size B
     end
@@ -537,12 +537,12 @@ ${inlines}
       end
     end
 
-    classdiagram 1916546 "UniqueInsertExpressionDialog"
+    classdiagram 1916546 "UniqueCheckExpressionDialog"
       classdiagramsettings member_max_width 0 end
       size A4
     end
 
-    class 2290178 "UniqueInsertExpressionDialog"
+    class 2290178 "UniqueCheckExpressionDialog"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -565,16 +565,7 @@ ${inlines}
 	  b parent class_ref 2174082 // TableMapping
       end
 
-      classrelation 2571266 // <directional composition>
-	relation 2554754 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 2571266 // <directional composition>
-	  b parent class_ref 2283650 // ExpressionMatchItemModel
-      end
-
-      operation 3479298 "UniqueInsertExpressionDialog"
+      operation 3479298 "UniqueCheckExpressionDialog"
 	public explicit_return_type ""
 	nparams 3
 	  param in name "tm" type class_ref 2174082 // TableMapping
@@ -590,6 +581,24 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 2611458 // <directional composition>
+	relation 2594946 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2611458 // <directional composition>
+	  b parent class_ref 2256898 // UniqueInsertExpression
+      end
+
+      classrelation 2611586 // <directional composition>
+	relation 2595074 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2611586 // <directional composition>
+	  b parent class_ref 2283650 // ExpressionMatchItemModel
       end
     end
 

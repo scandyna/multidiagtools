@@ -19,7 +19,11 @@
  **
  ****************************************************************************/
 #include "UniqueInsertExpressionDialog.h"
+
 #include "UniqueInsertExpressionModel.h"
+
+#include "ExpressionMatchItemModel.h"
+
 #include "mdtComboBoxItemDelegate.h"
 #include "ExpressionKeyFieldSelectionDialog.h"
 #include <QToolButton>
@@ -54,7 +58,9 @@ UniqueInsertExpressionDialog::UniqueInsertExpressionDialog(const std::shared_ptr
   }
   pvInitialKey = pvExpression.destinationFieldIndexList();
   // Setup match item model
-  pvModel = new UniqueInsertExpressionModel(pvTableMapping, pvExpression, this);
+//   pvModel = new UniqueInsertExpressionModel(pvTableMapping, pvExpression, this);
+  pvModel = new ExpressionMatchItemModel(pvTableMapping, this);
+  pvModel->setExpressionMatchItemList(pvExpression.matchItems());
   // Setup match item view
   twMatchItems->setModel(pvModel);
   twMatchItems->setSelectionMode(QAbstractItemView::SingleSelection);

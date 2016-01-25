@@ -16,7 +16,7 @@ note 128642 "Il faut pouvoir définir quoi insérer dans les champs de destination
  - Table mapping doit supporter plusieur champs source
   (contraintes pas identique au destination fields..)
  - Màj expression dialog, etc.."
-  xyzwh 261.5 827 2000 363 194
+  xyzwh 258.5 844 2000 363 194
 relationcanvas 128258 relation_ref 2534530 // <directional composition>
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
