@@ -2,27 +2,28 @@ format 211
 
 classcanvas 128002 class_ref 2256898 // UniqueInsertExpression
   classdiagramsettings member_max_width 0 end
-  xyz 36 578 2000
+  xyz 40 578 2000
 end
-classcanvas 128130 class_ref 2257026 // UniqueInsertMatchExpressionItem
+classcanvas 128130 class_ref 2257026 // ExpressionMatchItem
   classdiagramsettings member_max_width 0 end
-  xyz 751 625 2000
+  xyz 759 625 2000
 end
 classcanvas 128386 class_ref 2256514 // AbstractTableMappingItem
   classdiagramsettings member_max_width 0 end
-  xyz 135 41 3005
+  xyz 143 41 3005
 end
 note 128642 "Il faut pouvoir définir quoi insérer dans les champs de destination (cas de clé pas auto inc). Pour ça il faut:
  - Table mapping doit supporter plusieur champs source
   (contraintes pas identique au destination fields..)
  - Màj expression dialog, etc.."
-  xyzwh 40.5 896 2000 363 194
+  xyzwh 261.5 827 2000 363 194
 relationcanvas 128258 relation_ref 2534530 // <directional composition>
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 735 706 3000 no_multiplicity_b
+  multiplicity_a_pos 743 707 3000 no_multiplicity_b
 end
 relationcanvas 128514 relation_ref 2534402 // <generalisation>
+  decenter_begin 505
   from ref 128002 z 3006 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

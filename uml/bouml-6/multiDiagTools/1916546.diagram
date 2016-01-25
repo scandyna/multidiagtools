@@ -8,7 +8,7 @@ classcanvas 128130 class_ref 2174082 // TableMapping
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 418 146 2000
 end
-classcanvas 128386 class_ref 2283650 // UniqueInsertExpressionModel
+classcanvas 128386 class_ref 2283650 // ExpressionMatchItemModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 42 146 2006
 end
@@ -26,7 +26,7 @@ relationcanvas 128514 relation_ref 2547970 // <unidirectional association>
 end
 relationcanvas 128642 relation_ref 2554754 // <directional composition>
   geometry HV unfixed
-  from ref 128002 z 2007 to point 142 70
+  from ref 128002 z 2007 to point 134 70
   line 128770 z 2007 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

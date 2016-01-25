@@ -31,6 +31,7 @@
 #include "mdt/sql/copier/TableMappingItem.h"
 #include "mdt/sql/copier/FieldMapping.h"
 #include "mdt/sql/copier/FixedValue.h"
+#include "mdt/sql/copier/ExpressionMatchItemModel.h"
 #include "mdt/sql/copier/UniqueInsertExpression.h"
 #include "mdt/sql/copier/UniqueInsertExpressionModel.h"
 #include "mdt/sql/copier/UniqueInsertExpressionDialog.h"
@@ -505,27 +506,27 @@ void mdtSqlCopierTest::uniqueInsertExpressionTest()
   /*
    * Match item tests
    */
-  // Constructs
-  UniqueInsertMatchExpressionItem item1(-1, -1);
-  QVERIFY(item1.isNull());
-  UniqueInsertMatchExpressionItem item2(0, -1);
-  QVERIFY(item2.isNull());
-  UniqueInsertMatchExpressionItem item3(-1, 0);
-  QVERIFY(item3.isNull());
-  // Construct a not null item
-  UniqueInsertMatchExpressionItem item4(1, 2);
-  QCOMPARE(item4.sourceValueFieldIndex, 1);
-  QCOMPARE(item4.destinationFieldIndex, 2);
-  QVERIFY(item4.operatorWithPrevious == mdtSqlWhereOperator::Null);
-  QVERIFY(!item4.isNull());
-  // Construct a non null item with operator
-  UniqueInsertMatchExpressionItem item5(mdtSqlWhereOperator::And, 3, 4);
-  QCOMPARE(item5.sourceValueFieldIndex, 3);
-  QCOMPARE(item5.destinationFieldIndex, 4);
-  QVERIFY(item5.operatorWithPrevious == mdtSqlWhereOperator::And);
-  QVERIFY(!item5.isNull());
-  // Clear
-  ///item5.cl
+//   // Constructs
+//   UniqueInsertMatchExpressionItem item1(-1, -1);
+//   QVERIFY(item1.isNull());
+//   UniqueInsertMatchExpressionItem item2(0, -1);
+//   QVERIFY(item2.isNull());
+//   UniqueInsertMatchExpressionItem item3(-1, 0);
+//   QVERIFY(item3.isNull());
+//   // Construct a not null item
+//   UniqueInsertMatchExpressionItem item4(1, 2);
+//   QCOMPARE(item4.sourceValueFieldIndex, 1);
+//   QCOMPARE(item4.destinationFieldIndex, 2);
+//   QVERIFY(item4.operatorWithPrevious == mdtSqlWhereOperator::Null);
+//   QVERIFY(!item4.isNull());
+//   // Construct a non null item with operator
+//   UniqueInsertMatchExpressionItem item5(mdtSqlWhereOperator::And, 3, 4);
+//   QCOMPARE(item5.sourceValueFieldIndex, 3);
+//   QCOMPARE(item5.destinationFieldIndex, 4);
+//   QVERIFY(item5.operatorWithPrevious == mdtSqlWhereOperator::And);
+//   QVERIFY(!item5.isNull());
+//   // Clear
+//   ///item5.cl
   /*
    * Initial state
    */
@@ -2290,6 +2291,145 @@ void mdtSqlCopierTest::databaseCopierTableMappingFixedValueTest()
   mapping.clearFieldMapping();
   QCOMPARE(mapping.itemsCount(), 0);
   QVERIFY(mapping.mappingState() == TableMapping::MappingNotSet);
+}
+
+void mdtSqlCopierTest::expressionMatchItemTest()
+{
+  using mdt::sql::copier::ExpressionMatchItem;
+
+  // Constructs
+  ExpressionMatchItem item1(-1, -1);
+  QVERIFY(item1.isNull());
+  ExpressionMatchItem item2(0, -1);
+  QVERIFY(item2.isNull());
+  ExpressionMatchItem item3(-1, 0);
+  QVERIFY(item3.isNull());
+  // Construct a not null item
+  ExpressionMatchItem item4(1, 2);
+  QCOMPARE(item4.sourceValueFieldIndex, 1);
+  QCOMPARE(item4.destinationFieldIndex, 2);
+  QVERIFY(item4.operatorWithPrevious == mdtSqlWhereOperator::Null);
+  QVERIFY(!item4.isNull());
+  // Construct a non null item with operator
+  ExpressionMatchItem item5(mdtSqlWhereOperator::And, 3, 4);
+  QCOMPARE(item5.sourceValueFieldIndex, 3);
+  QCOMPARE(item5.destinationFieldIndex, 4);
+  QVERIFY(item5.operatorWithPrevious == mdtSqlWhereOperator::And);
+  QVERIFY(!item5.isNull());
+}
+
+void mdtSqlCopierTest::expressionMatchItemModelTest()
+{
+  using mdt::sql::copier::ExpressionMatchItem;
+  using mdt::sql::copier::ExpressionMatchItemModel;
+  using mdt::sql::copier::TableMapping;
+
+  QSqlDatabase db = pvDatabase;
+  auto mapping = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
+  std::vector<ExpressionMatchItem> itemList;
+  ExpressionMatchItemModel model(mapping);
+  const int sourceFieldColumn = 3;
+  const int destinationFieldColumn = 1;
+  QTableView tableView;
+  QTreeView treeView;
+  QModelIndex index;
+
+  /*
+   * Setup table mapping
+   */
+  QVERIFY(mapping->setSourceTable("Client_tbl", db));
+  QVERIFY(mapping->setDestinationTable("Client2_tbl", db));
+  /*
+   * Add a match item:
+   *  Client2_tbl.FieldB = Client2_tbl.FieldA
+   */
+  itemList.emplace_back(2, 3);
+  model.setExpressionMatchItemList(itemList);
+  QCOMPARE(model.rowCount(), 1);
+  // Check OP
+  index = model.index(0, 0);
+  QVERIFY(model.data(index).isNull());
+  // Check destination field name
+  index = model.index(0, sourceFieldColumn);
+  QCOMPARE(model.data(index), QVariant("FieldA"));
+  // Check source value field name
+  index = model.index(0, destinationFieldColumn);
+  QCOMPARE(model.data(index), QVariant("FieldB"));
+  /*
+   * Add a match item:
+   *  Client2_tbl.Name = Client2_tbl.Name
+   */
+  itemList.emplace_back(mdtSqlWhereOperator::And, 1, 1);
+  model.setExpressionMatchItemList(itemList);
+  QCOMPARE(model.rowCount(), 2);
+  // Check OP
+  index = model.index(1, 0);
+  QCOMPARE(model.data(index), QVariant("AND"));
+  // Check destination field name
+  index = model.index(1, sourceFieldColumn);
+  QCOMPARE(model.data(index), QVariant("Name"));
+  // Check source value field name
+  index = model.index(1, destinationFieldColumn);
+  QCOMPARE(model.data(index), QVariant("Name"));
+  /*
+   * Edit match item at row 0:
+   *  Client2_tbl.FieldA = Client2_tbl.FieldB
+   */
+  // Update model
+  index = model.index(0, sourceFieldColumn);
+  QVERIFY(model.setData(index, "FieldB", Qt::DisplayRole));
+  index = model.index(0, destinationFieldColumn);
+  QVERIFY(model.setData(index, "FieldA", Qt::DisplayRole));
+  // Check destination field name
+  index = model.index(0, sourceFieldColumn);
+  QCOMPARE(model.data(index), QVariant("FieldB"));
+  // Check source value field name
+  index = model.index(0, destinationFieldColumn);
+  QCOMPARE(model.data(index), QVariant("FieldA"));
+  /*
+   * Add a match item via model:
+   *  Client2_tbl.Id_PK = Client2_tbl.Id_PK
+   */
+  // Insert item
+  QVERIFY(model.insertRows(1, 1));
+  QCOMPARE(model.rowCount(), 3);
+  // Update item
+  index = model.index(2, sourceFieldColumn);
+  QVERIFY(model.setData(index, "Id_PK", Qt::DisplayRole));
+  index = model.index(2, destinationFieldColumn);
+  QVERIFY(model.setData(index, "Id_PK", Qt::DisplayRole));
+  // Check destination field name
+  index = model.index(2, sourceFieldColumn);
+  QCOMPARE(model.data(index), QVariant("Id_PK"));
+  // Check source value field name
+  index = model.index(2, destinationFieldColumn);
+  QCOMPARE(model.data(index), QVariant("Id_PK"));
+  /*
+   * Remove item et row 1
+   */
+  QVERIFY(model.removeRows(1, 1));
+  QCOMPARE(model.rowCount(), 2);
+
+  /*
+   * Setup views
+   */
+  // Setup table view
+  tableView.setModel(&model);
+//   tableView.setItemDelegateForColumn(sourceTypeColumn, sourceTypeDelegate);
+//   tableView.setItemDelegateForColumn(sourceFieldNameColumn, sourceFieldNameDelegate);
+  tableView.resize(800, 200);
+  tableView.show();
+  // Setup tree view
+  treeView.setModel(&model);
+  treeView.show();
+
+  /*
+   * Play
+   */
+  while(tableView.isVisible()){
+    QTest::qWait(500);
+  }
+
 }
 
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingStateTest()

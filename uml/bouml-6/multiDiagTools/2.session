@@ -1,24 +1,16 @@
 window_sizes 1280 964 396 878 911 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 1809154 // TableMapping
-    869 911 100 4 12 0
-  classdiagram_ref 1883266 // AbstractTableMappingItem
-    120 106 100 21 0 0
-  classdiagram_ref 1956098 // SqlHelper
-    878 911 100 4 0 0
-  classdiagram_ref 1883394 // UniqueInsertExpression
-    878 916 100 7 72 19
-  active  classdiagram_ref 1890178 // FieldMapping
-    878 911 100 4 48 0
+  classdiagram_ref 1969410 // MatchItem
+    702 732 100 4 0 0
+  active  classdiagram_ref 1969538 // MatchItemModel
+    878 911 100 18 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1890178 // FieldMapping
+selected classdiagram_ref 1969282 // EXP
 open
-  classview_ref 887298 // Common
   classview_ref 894082 // sqlCsvImport
-  classview_ref 927490 // TableMappingItem
-  classview_ref 934018 // TableMapping
+  class_ref 2283650 // ExpressionMatchItemModel
   class_ref 2316802 // SqlHelper
   
   package_ref 260866 // Boost

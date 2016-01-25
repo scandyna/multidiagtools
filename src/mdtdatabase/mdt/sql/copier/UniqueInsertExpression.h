@@ -22,7 +22,10 @@
 #define MDT_SQL_COPIER_UNIQUE_INSERT_EXPRESSION_H
 
 #include "AbstractTableMappingItem.h"
+#include "ExpressionMatchItem.h"
+
 #include "mdtSqlWhereOperator.h"
+
 #include <QVector>
 #include <vector>
 
