@@ -191,6 +191,26 @@ bool ExpressionMatchItemModel::removeRows(int row, int count, const QModelIndex&
   return true;
 }
 
+QString ExpressionMatchItemModel::fetchDestinationFieldName(int fieldIndex) const
+{
+  return pvTableMapping->destinationTableFieldNameAt(fieldIndex);
+}
+
+int ExpressionMatchItemModel::fetchDestinationFieldIndexOf(const QString & fieldName) const
+{
+  return pvTableMapping->destinationTableFieldIndexOf(fieldName);
+}
+
+QString ExpressionMatchItemModel::fetchSourceValueFieldName(int fieldIndex) const
+{
+  return pvTableMapping->sourceTableFieldNameAt(fieldIndex);
+}
+
+int ExpressionMatchItemModel::fetchSourceValueFieldIndexOf(const QString & fieldName) const
+{
+  return pvTableMapping->sourceTableFieldIndexOf(fieldName);
+}
+
 QVariant ExpressionMatchItemModel::operatorWithPreviousText(const ExpressionMatchItem & item) const
 {
   if(item.operatorWithPrevious == mdtSqlWhereOperator::Null){
@@ -201,7 +221,7 @@ QVariant ExpressionMatchItemModel::operatorWithPreviousText(const ExpressionMatc
 
 void ExpressionMatchItemModel::setDestinationField(ExpressionMatchItem & item, const QString & fieldName)
 {
-  item.destinationFieldIndex = pvTableMapping->destinationTableFieldIndexOf(fieldName);
+  item.destinationFieldIndex = fetchDestinationFieldIndexOf(fieldName);
 }
 
 QVariant ExpressionMatchItemModel::destinationFieldName(const ExpressionMatchItem & item) const
@@ -212,12 +232,12 @@ QVariant ExpressionMatchItemModel::destinationFieldName(const ExpressionMatchIte
   if(fieldIndex < 0){
     return QVariant();
   }
-  return pvTableMapping->destinationTableFieldNameAt(fieldIndex);
+  return fetchDestinationFieldName(fieldIndex);
 }
 
 void ExpressionMatchItemModel::setSourceValueField(ExpressionMatchItem & item, const QString & fieldName)
 {
-  item.sourceValueFieldIndex = pvTableMapping->sourceTableFieldIndexOf(fieldName);
+  item.sourceValueFieldIndex = fetchSourceValueFieldIndexOf(fieldName);
 }
 
 QVariant ExpressionMatchItemModel::sourceValueFieldName(const ExpressionMatchItem & item) const
@@ -228,7 +248,7 @@ QVariant ExpressionMatchItemModel::sourceValueFieldName(const ExpressionMatchIte
   if(fieldIndex < 0){
     return QVariant();
   }
-  return pvTableMapping->sourceTableFieldNameAt(fieldIndex);
+  return fetchSourceValueFieldName(fieldIndex);
 }
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

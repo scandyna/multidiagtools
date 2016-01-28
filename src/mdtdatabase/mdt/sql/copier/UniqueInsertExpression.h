@@ -33,44 +33,44 @@ namespace mdt{ namespace sql{ namespace copier{
 
   /*! \brief Container for UniqueInsertExpression
    */
-  struct UniqueInsertMatchExpressionItem
-  {
-    /*! \brief Field index for matching value in source
-     */
-    int sourceValueFieldIndex;
-
-    /*! \brief Field index to match in destination
-     */
-    int destinationFieldIndex;
-
-    /*! \brief WHERE operator with previous match item
-     */
-    mdtSqlWhereOperator operatorWithPrevious;
-
-    /*! \brief Construct a match item
-     */
-    UniqueInsertMatchExpressionItem(int sourceValueFieldIndex, int destinationFieldIndex)
-     : sourceValueFieldIndex(sourceValueFieldIndex),
-       destinationFieldIndex(destinationFieldIndex)
-    {
-    }
-
-    /*! \brief Construct a match item
-     */
-    UniqueInsertMatchExpressionItem(mdtSqlWhereOperator::Type op, int sourceValueFieldIndex, int destinationFieldIndex)
-     : sourceValueFieldIndex(sourceValueFieldIndex),
-       destinationFieldIndex(destinationFieldIndex),
-       operatorWithPrevious(op)
-    {
-    }
-
-    /*! \brief Check if match item is null
-     */
-    bool isNull() const
-    {
-      return ( (sourceValueFieldIndex < 0) || (destinationFieldIndex < 0) );
-    }
-  };
+//   struct UniqueInsertMatchExpressionItem
+//   {
+//     /*! \brief Field index for matching value in source
+//      */
+//     int sourceValueFieldIndex;
+// 
+//     /*! \brief Field index to match in destination
+//      */
+//     int destinationFieldIndex;
+// 
+//     /*! \brief WHERE operator with previous match item
+//      */
+//     mdtSqlWhereOperator operatorWithPrevious;
+// 
+//     /*! \brief Construct a match item
+//      */
+//     UniqueInsertMatchExpressionItem(int sourceValueFieldIndex, int destinationFieldIndex)
+//      : sourceValueFieldIndex(sourceValueFieldIndex),
+//        destinationFieldIndex(destinationFieldIndex)
+//     {
+//     }
+// 
+//     /*! \brief Construct a match item
+//      */
+//     UniqueInsertMatchExpressionItem(mdtSqlWhereOperator::Type op, int sourceValueFieldIndex, int destinationFieldIndex)
+//      : sourceValueFieldIndex(sourceValueFieldIndex),
+//        destinationFieldIndex(destinationFieldIndex),
+//        operatorWithPrevious(op)
+//     {
+//     }
+// 
+//     /*! \brief Check if match item is null
+//      */
+//     bool isNull() const
+//     {
+//       return ( (sourceValueFieldIndex < 0) || (destinationFieldIndex < 0) );
+//     }
+//   };
 
   /*! \brief Unique insert expression for SQL copier
    *

@@ -43,7 +43,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Construct a match item
      */
-    ExpressionMatchItem(int sourceValueFieldIndex, int destinationFieldIndex)
+    constexpr ExpressionMatchItem(int sourceValueFieldIndex, int destinationFieldIndex) noexcept
      : sourceValueFieldIndex(sourceValueFieldIndex),
        destinationFieldIndex(destinationFieldIndex)
     {
@@ -51,7 +51,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Construct a match item
      */
-    ExpressionMatchItem(mdtSqlWhereOperator::Type op, int sourceValueFieldIndex, int destinationFieldIndex)
+    constexpr ExpressionMatchItem(mdtSqlWhereOperator::Type op, int sourceValueFieldIndex, int destinationFieldIndex) noexcept
      : sourceValueFieldIndex(sourceValueFieldIndex),
        destinationFieldIndex(destinationFieldIndex),
        operatorWithPrevious(op)
@@ -60,7 +60,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Check if match item is null
      */
-    bool isNull() const
+    constexpr bool isNull() const noexcept
     {
       return ( (sourceValueFieldIndex < 0) || (destinationFieldIndex < 0) );
     }

@@ -32,6 +32,9 @@
 #include "mdt/sql/copier/FieldMapping.h"
 #include "mdt/sql/copier/FixedValue.h"
 #include "mdt/sql/copier/ExpressionMatchItemModel.h"
+#include "mdt/sql/copier/RelatedTableInsertExpression.h"
+#include "mdt/sql/copier/RelatedTableInsertMatchItemModel.h"
+#include "mdt/sql/copier/RelatedTableInsertExpressionDialog.h"
 #include "mdt/sql/copier/UniqueInsertExpression.h"
 #include "mdt/sql/copier/UniqueInsertExpressionDialog.h"
 #include "mdt/sql/copier/TableMappingEditHelper.h"
@@ -293,6 +296,86 @@ void clientTableTestDataSet::clear()
   // Remove data
   if(!query.exec(sql)){
     qDebug() << "Removing test data from Client_tbl failed, error: " << query.lastError();
+  }
+}
+
+/*
+ * Populate Address_tbl with test data
+ */
+class addressTableTestDataSet
+{
+ public:
+
+  addressTableTestDataSet(const QSqlDatabase & db)
+   : pvDatabase(db)
+  {
+    Q_ASSERT(db.isValid());
+  }
+  ~addressTableTestDataSet()
+  {
+    clear();
+  }
+  bool populate();
+  void clear();
+
+ private:
+
+  mdtSqlTablePopulationSchema pvPopulationSchema;
+  QSqlDatabase pvDatabase;
+};
+
+bool addressTableTestDataSet::populate()
+{
+  QSqlQuery query(pvDatabase);
+  QString sql;
+
+  pvPopulationSchema.clear();
+  pvPopulationSchema.setName("addressTableTestDataSet");
+  pvPopulationSchema.setTableName("Address_tbl");
+  pvPopulationSchema.addFieldName("Id_PK");
+  pvPopulationSchema.addFieldName("Client_Id_FK");
+  pvPopulationSchema.addFieldName("Street");
+  // Add data
+  pvPopulationSchema.currentRowData() << 11 << 1 << "Address 11";
+  pvPopulationSchema.commitCurrentRowData();
+  pvPopulationSchema.currentRowData() << 12 << 1 << "Address 12";
+  pvPopulationSchema.commitCurrentRowData();
+  pvPopulationSchema.currentRowData() << 21 << 2 << "Address 21";
+  pvPopulationSchema.commitCurrentRowData();
+  // Insert to Address_tbl
+  for(int row = 0; row < pvPopulationSchema.rowDataCount(); ++row){
+    sql = pvPopulationSchema.sqlForInsert(pvDatabase.driver());
+    if(!query.prepare(sql)){
+      qDebug() << "Prepare for insertion into Address_tbl failed, error: " << query.lastError();
+      return false;
+    }
+    for(const auto & data : pvPopulationSchema.rowData(row)){
+      query.addBindValue(data);
+    }
+    if(!query.exec()){
+      qDebug() << "Insertion into Address_tbl failed, error: " << query.lastError();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+void addressTableTestDataSet::clear()
+{
+  QSqlQuery query(pvDatabase);
+  QString sql;
+  int lastRow = pvPopulationSchema.rowDataCount() - 1;
+
+  // Build SQL
+  sql = "DELETE FROM Address_tbl WHERE Id_PK IN(";
+  for(int row = 0; row < lastRow; ++row){
+    sql += pvPopulationSchema.rowData(row).at(0).toString() + ",";
+  }
+  sql += pvPopulationSchema.rowData(lastRow).at(0).toString() + ")";
+  // Remove data
+  if(!query.exec(sql)){
+    qDebug() << "Removing test data from Address_tbl failed, error: " << query.lastError();
   }
 }
 
@@ -636,10 +719,99 @@ void mdtSqlCopierTest::expressionMatchItemModelTest()
 
 }
 
+void mdtSqlCopierTest::relatedTableInsertExpressionTest()
+{
+  using mdt::sql::copier::RelatedTableInsertExpression;
+  using mdt::sql::copier::TableMappingItemState;
+
+  /*
+   * Initial state
+   */
+  RelatedTableInsertExpression exp;
+  QVERIFY(exp.mappingState() == TableMappingItemState::MappingNotSet);
+  QCOMPARE(exp.destinationFieldIndexList().count(), 0);
+  QVERIFY(exp.sourceRelatedTableName().isEmpty());
+  
+  QVERIFY(exp.isNull());
+
+  
+}
+
+void mdtSqlCopierTest::relatedTableInsertMatchItemModelTest()
+{
+  using mdt::sql::copier::RelatedTableInsertExpression;
+  using mdt::sql::copier::RelatedTableInsertMatchItemModel;
+
+  QSqlDatabase db = pvDatabase;
+  auto mapping = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
+  RelatedTableInsertMatchItemModel model(mapping);
+  const int sourceFieldColumn = 3;
+  const int destinationFieldColumn = 1;
+  QTableView tableView;
+  QTreeView treeView;
+  QModelIndex index;
+
+  /*
+   * Setup table mapping
+   */
+  QVERIFY(mapping->setSourceTable("Address_tbl", db));
+  QVERIFY(mapping->setDestinationTable("Address2_tbl", db));
+
+  /*
+   * Setup expression
+   */
+  
+
+  /*
+   * Setup views
+   */
+  // Setup table view
+  tableView.setModel(&model);
+//   tableView.setItemDelegateForColumn(sourceTypeColumn, sourceTypeDelegate);
+//   tableView.setItemDelegateForColumn(sourceFieldNameColumn, sourceFieldNameDelegate);
+  tableView.resize(800, 200);
+  tableView.show();
+  // Setup tree view
+  treeView.setModel(&model);
+  treeView.show();
+
+  /*
+   * Play
+   */
+  while(tableView.isVisible()){
+    QTest::qWait(500);
+  }
+}
+
+void mdtSqlCopierTest::relatedTableInsertExpressionDialogTest()
+{
+  using mdt::sql::copier::RelatedTableInsertExpression;
+  using mdt::sql::copier::RelatedTableInsertExpressionDialog;
+
+  QSqlDatabase db = pvDatabase;
+  auto mapping = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
+
+  /*
+   * Setup table mapping
+   */
+  QVERIFY(mapping->setSourceTable("Address_tbl", db));
+  QVERIFY(mapping->setDestinationTable("Address2_tbl", db));
+  /*
+   * Setup expression
+   */
+  
+
+  RelatedTableInsertExpressionDialog dialog(mapping);
+  
+  /*
+   * Play
+   */
+  dialog.exec();
+}
+
 void mdtSqlCopierTest::uniqueInsertExpressionTest()
 {
   using mdt::sql::copier::UniqueInsertExpression;
-  using mdt::sql::copier::UniqueInsertMatchExpressionItem;
   using mdt::sql::copier::TableMappingItemState;
 
   /*
@@ -3661,8 +3833,9 @@ void mdtSqlCopierTest::createTestDatabase()
 {
   mdtSqlSchemaTable table;
   mdtSqlDatabaseSchema s;
-  ///mdtSqlForeignKey fk;
   mdtSqlField field;
+  mdtSqlField Client_Id_FK;
+  mdtSqlForeignKey fk_Client_Id_FK;
 
   /*
    * Init and open database
@@ -3703,6 +3876,33 @@ void mdtSqlCopierTest::createTestDatabase()
   field.setLength(50);
   table.addField(field, false);
   s.addTable(table);
+  // Create Address_tbl
+  table.clear();
+  table.setTableName("Address_tbl", "UTF8");
+  // Id_PK
+  field.clear();
+  field.setName("Id_PK");
+  field.setType(mdtSqlFieldType::Integer);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // Client_Id_FK
+  Client_Id_FK.clear();
+  Client_Id_FK.setName("Client_Id_FK");
+  Client_Id_FK.setType(mdtSqlFieldType::Integer);
+  Client_Id_FK.setRequired(true);
+  table.addField(Client_Id_FK, false);
+  // Street
+  field.clear();
+  field.setName("Street");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(150);
+  table.addField(field, false);
+  // fk_Client_Id_FK
+  fk_Client_Id_FK.clear();
+  fk_Client_Id_FK.setParentTableName("Client_tbl");
+  fk_Client_Id_FK.addKeyFields("Id_PK", Client_Id_FK);
+  table.addForeignKey(fk_Client_Id_FK);
+  s.addTable(table);
   // Create Client2_tbl
   table.clear();
   table.setTableName("Client2_tbl", "UTF8");
@@ -3731,6 +3931,34 @@ void mdtSqlCopierTest::createTestDatabase()
   field.setLength(50);
   table.addField(field, false);
   s.addTable(table);
+  // Create Address2_tbl
+  table.clear();
+  table.setTableName("Address2_tbl", "UTF8");
+  // Id_PK
+  field.clear();
+  field.setName("Id_PK");
+  field.setType(mdtSqlFieldType::Integer);
+  field.setAutoValue(true);
+  table.addField(field, true);
+  // Client_Id_FK
+  Client_Id_FK.clear();
+  Client_Id_FK.setName("Client_Id_FK");
+  Client_Id_FK.setType(mdtSqlFieldType::Integer);
+  Client_Id_FK.setRequired(true);
+  table.addField(Client_Id_FK, false);
+  // Street
+  field.clear();
+  field.setName("Street");
+  field.setType(mdtSqlFieldType::Varchar);
+  field.setLength(150);
+  table.addField(field, false);
+  // fk_Client_Id_FK
+  fk_Client_Id_FK.clear();
+  fk_Client_Id_FK.setParentTableName("Client2_tbl");
+  fk_Client_Id_FK.addKeyFields("Id_PK", Client_Id_FK);
+  table.addForeignKey(fk_Client_Id_FK);
+  s.addTable(table);
+
   // Create schema
   QVERIFY(s.createSchema(pvDatabase));
 }

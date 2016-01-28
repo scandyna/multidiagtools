@@ -14,7 +14,7 @@ classcanvas 128386 class_ref 2257026 // ExpressionMatchItem
 end
 note 129666 "If SourceRelatedTableName is set, source values refers this table (source must be DB type)
 Else, source values refers to TM source table"
-  xyzwh 40.5 408.5 2000 607 65
+  xyzwh 46.5 368.5 2000 607 65
 relationcanvas 128258 relation_ref 2588034 // <generalisation>
   from ref 128002 z 2006 to ref 128130
   no_role_a no_role_b

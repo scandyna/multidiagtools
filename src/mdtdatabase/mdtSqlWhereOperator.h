@@ -28,7 +28,7 @@ struct mdtSqlWhereOperator;
 
 /*! \brief Operator that can be used in SQL WHERE clause
  */
-struct mdtSqlWhereOperator
+struct mdtSqlWhereOperator final
 {
   /*! \brief This enum describes some operators that can be used in SQL WHERE clause
    */
@@ -45,14 +45,14 @@ struct mdtSqlWhereOperator
 
   /*! \brief Create a operator
    */
-  mdtSqlWhereOperator(Type op = Null)
+  constexpr mdtSqlWhereOperator(Type op = Null) noexcept
    : value(op)
   {
   }
 
   /*! \brief Assign operator
    */
-  mdtSqlWhereOperator & operator=(mdtSqlWhereOperator::Type op)
+  mdtSqlWhereOperator & operator=(mdtSqlWhereOperator::Type op) noexcept
   {
     value = op;
     return *this;
@@ -61,7 +61,7 @@ struct mdtSqlWhereOperator
   /*! \brief Check if operator a and b are equal
    */
   friend
-  bool operator==(const mdtSqlWhereOperator & a, mdtSqlWhereOperator::Type b)
+  constexpr bool operator==(const mdtSqlWhereOperator & a, mdtSqlWhereOperator::Type b) noexcept
   {
     return (a.value == b);
   }
@@ -69,7 +69,7 @@ struct mdtSqlWhereOperator
   /*! \brief Check if operator a and b are different
    */
   friend
-  bool operator!=(const mdtSqlWhereOperator & a, mdtSqlWhereOperator::Type b)
+  constexpr bool operator!=(const mdtSqlWhereOperator & a, mdtSqlWhereOperator::Type b) noexcept
   {
     return (a.value != b);
   }
@@ -77,7 +77,7 @@ struct mdtSqlWhereOperator
   /*! \brief Check if operator a and b are equal
    */
   friend
-  bool operator==(mdtSqlWhereOperator::Type a, const mdtSqlWhereOperator & b)
+  constexpr bool operator==(mdtSqlWhereOperator::Type a, const mdtSqlWhereOperator & b) noexcept
   {
     return (a == b.value);
   }
@@ -85,7 +85,7 @@ struct mdtSqlWhereOperator
   /*! \brief Check if operator a and b are different
    */
   friend
-  bool operator!=(mdtSqlWhereOperator::Type a, const mdtSqlWhereOperator & b)
+  constexpr bool operator!=(mdtSqlWhereOperator::Type a, const mdtSqlWhereOperator & b) noexcept
   {
     return (a != b.value);
   }
@@ -93,7 +93,7 @@ struct mdtSqlWhereOperator
   /*! \brief Check if operator a and b are equal
    */
   friend
-  bool operator==(const mdtSqlWhereOperator & a, const mdtSqlWhereOperator & b)
+  constexpr bool operator==(const mdtSqlWhereOperator & a, const mdtSqlWhereOperator & b) noexcept
   {
     return (a.value == b.value);
   }
@@ -101,7 +101,7 @@ struct mdtSqlWhereOperator
   /*! \brief Check if operator a and b are different
    */
   friend
-  bool operator!=(const mdtSqlWhereOperator & a, const mdtSqlWhereOperator & b)
+  constexpr bool operator!=(const mdtSqlWhereOperator & a, const mdtSqlWhereOperator & b) noexcept
   {
     return !(a == b);
   }

@@ -1,20 +1,26 @@
-window_sizes 1280 969 377 897 916 0
+window_sizes 1280 969 354 920 916 0
 cleanlooks_style
 diagrams
   classdiagram_ref 1969282 // RelatedTableInsertExpression
     970 916 100 4 0 0
-  active  classdiagram_ref 1976066 // RelatedTableInsertMatchItemModel
-    897 916 100 21 60 89
+  classdiagram_ref 1976066 // RelatedTableInsertMatchItemModel
+    920 911 90 21 0 0
   classdiagram_ref 1976194 // UniqueCheckMatchItemModel
     120 106 100 18 0 0
+  classdiagram_ref 1982722 // RelatedTableInsertExpressionDialog
+    120 106 100 18 0 0
+  classdiagram_ref 1929602 // sandbox
+    120 106 100 4 0 0
+  active  classdiagram_ref 1929730 // FieldSelectionModel
+    920 916 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 3529730 // setExpression
+selected classview_ref 648706 // mdtSqlTableSelection
 open
+  classview_ref 794370 // SqlSchema
   classview_ref 894082 // sqlCsvImport
-  operation_ref 3530498 // RelatedTableInsertMatchItemModel
-  class_ref 2256514 // AbstractTableMappingItem
-  class_ref 2316802 // SqlHelper
+  
+  package_ref 302466 // sql
   
   package_ref 260866 // Boost
 end

@@ -8,20 +8,17 @@ classcanvas 128130 class_ref 2303618 // FieldSelectionModel
   classdiagramsettings member_max_width 0 end
   xyz 35 129 2000
 end
-classcanvas 128386 class_ref 2303746 // FieldSelectionModelSource
-  classdiagramsettings member_max_width 0 end
-  xyz 586 95 2000
-end
 classcanvas 128642 class_ref 910210 // mdtSqlSchemaTable
   classdiagramsettings member_max_width 0 end
   xyz 75 423 2000
 end
-classcanvas 128770 class_ref 2180738 // mdtCsvSourceInfo
-  classdiagramsettings member_max_width 0 end
-  xyz 512 171 2005
-end
 relationcanvas 128258 relation_ref 2568194 // <generalisation>
   from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 2621698 // <directional composition>
+  from ref 128130 z 2001 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

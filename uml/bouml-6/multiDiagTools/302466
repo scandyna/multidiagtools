@@ -1,6 +1,6 @@
 format 211
 "sql" // mdtdatabase::mdt::sql
-  revision 2
+  revision 3
   modified_by 2 "philippe"
   // class settings
   
@@ -192,6 +192,15 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 2638210 // <directional composition>
+	relation 2621698 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2638210 // <directional composition>
+	  b parent class_ref 910210 // mdtSqlSchemaTable
       end
     end
 

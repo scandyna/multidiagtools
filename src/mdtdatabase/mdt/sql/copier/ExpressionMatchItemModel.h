@@ -93,6 +93,32 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
 
+   protected:
+
+    /*! \brief Get destination field name
+     *
+     * This default implementation get field name from table mapping.
+     */
+    virtual QString fetchDestinationFieldName(int fieldIndex) const;
+
+    /*! \brief Get field index of given field name in destination
+     *
+     * This default implementation get field index from table mapping.
+     */
+    virtual int fetchDestinationFieldIndexOf(const QString & fieldName) const;
+
+    /*! \brief Get source value field name
+     *
+     * This default implementation get field name from table mapping.
+     */
+    virtual QString fetchSourceValueFieldName(int fieldIndex) const;
+
+    /*! \brief Get field index of given field name in source
+     *
+     * This default implementation get field index from table mapping.
+     */
+    virtual int fetchSourceValueFieldIndexOf(const QString & fieldName) const;
+
    private:
 
     /*! \brief Column index

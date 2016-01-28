@@ -51,6 +51,10 @@ class mdtSqlCopierTest : public mdtTest
   void expressionMatchItemTest();
   void expressionMatchItemModelTest();
 
+  void relatedTableInsertExpressionTest();
+  void relatedTableInsertMatchItemModelTest();
+  void relatedTableInsertExpressionDialogTest();
+
   void uniqueInsertExpressionTest();
   void uniqueInsertExpressionDialogTest();
 
