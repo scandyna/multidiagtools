@@ -22,7 +22,7 @@
 #define MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_H
 
 #include "mdt/sql/copier/TableMapping.h"
-#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSchema.h"
 #include "mdtSqlDriverType.h"
 #include <QString>
 #include <QStringList>
@@ -179,9 +179,9 @@ class mdtSqlDatabaseCopierTableMapping : public mdt::sql::copier::TableMapping
   bool areFieldsCompatible(int sourceFieldIndex, int destinationFieldIndex) const;
 
   QSqlDatabase pvSourceDatabase;
-  mdtSqlSchemaTable pvSourceTable;
+  mdtSqlTableSchema pvSourceTable;
   QSqlDatabase pvDestinationDatabase;
-  mdtSqlSchemaTable pvDestinationTable;
+  mdtSqlTableSchema pvDestinationTable;
 };
 
 #endif // #ifndef MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_H

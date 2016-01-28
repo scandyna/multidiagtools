@@ -21,7 +21,7 @@
 #ifndef MDT_SQL_DATABASE_SCHEMA_H
 #define MDT_SQL_DATABASE_SCHEMA_H
 
-#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSchema.h"
 #include "mdtSqlTablePopulationSchema.h"
 #include "mdtSqlViewSchema.h"
 #include "mdtSqlTriggerSchema.h"
@@ -43,7 +43,7 @@ class mdtSqlDatabaseSchema
 
   /*! \brief Add a table schema
    */
-  void addTable(const mdtSqlSchemaTable & st);
+  void addTable(const mdtSqlTableSchema & st);
 
   /*! \brief Get tables count
    */
@@ -54,11 +54,11 @@ class mdtSqlDatabaseSchema
 
   /*! \brief Get table schema for requested table name
    */
-  mdtSqlSchemaTable table(const QString & tableName) const;
+  mdtSqlTableSchema table(const QString & tableName) const;
 
   /*! \brief Get table list
    */
-  QList<mdtSqlSchemaTable> tableList() const
+  QList<mdtSqlTableSchema> tableList() const
   {
     return pvTableList;
   }
@@ -191,7 +191,7 @@ class mdtSqlDatabaseSchema
 
  private:
 
-  QList<mdtSqlSchemaTable> pvTableList;
+  QList<mdtSqlTableSchema> pvTableList;
   QList<mdtSqlViewSchema::Schema> pvViewList;
   QList<mdtSqlTablePopulationSchema> pvTablePopulationSchemaList;
   QList<mdtSqlTriggerSchema> pvTriggerList;

@@ -22,7 +22,7 @@
 #include "mdtSqlFieldHandler.h"
 #include "mdtError.h"
 #include "mdtSqlFormWidgetDataValidator.h"
-#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSchema.h"
 #include "mdtSortFilterProxyModel.h"
 #include <QSortFilterProxyModel>
 #include <QSqlDatabase>
@@ -56,7 +56,7 @@ bool mdtSqlDataWidgetController::mapFormWidgets(QWidget* widget, const QString& 
   Q_ASSERT(currentState() == Stopped);
 
   QString fieldName;
-  mdtSqlSchemaTable st;
+  mdtSqlTableSchema st;
   bool isFirstWidgetInTabOrder;
   QList<QWidget*> foundWidgets;
 
@@ -101,7 +101,7 @@ bool mdtSqlDataWidgetController::addMapping(QWidget* widget, const QString& fiel
   Q_ASSERT(model());
   Q_ASSERT(currentState() == Stopped);
 
-  mdtSqlSchemaTable st;
+  mdtSqlTableSchema st;
 
   if(!st.setupFromTable(model()->tableName(), model()->database())){
     pvLastError = st.lastError();
@@ -111,7 +111,7 @@ bool mdtSqlDataWidgetController::addMapping(QWidget* widget, const QString& fiel
   return addMapping(widget, fieldName, st, isFirstWidgetInTabOrder);
 }
 
-bool mdtSqlDataWidgetController::addMapping(QWidget* widget, const QString& fieldName, const mdtSqlSchemaTable& st, bool isFirstWidgetInTabOrder)
+bool mdtSqlDataWidgetController::addMapping(QWidget* widget, const QString& fieldName, const mdtSqlTableSchema& st, bool isFirstWidgetInTabOrder)
 {
   Q_ASSERT(widget != 0);
   Q_ASSERT(model());

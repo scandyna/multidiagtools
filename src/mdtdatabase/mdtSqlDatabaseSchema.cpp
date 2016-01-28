@@ -24,19 +24,19 @@
 #include <QByteArray>
 #endif // #ifndef QT_NO_DEBUG
 
-void mdtSqlDatabaseSchema::addTable(const mdtSqlSchemaTable & st)
+void mdtSqlDatabaseSchema::addTable(const mdtSqlTableSchema & st)
 {
   pvTableList.append(st);
 }
 
-mdtSqlSchemaTable mdtSqlDatabaseSchema::table(const QString & tableName) const
+mdtSqlTableSchema mdtSqlDatabaseSchema::table(const QString & tableName) const
 {
   for(const auto & ts : pvTableList){
     if(ts.tableName() == tableName){
       return ts;
     }
   }
-  return mdtSqlSchemaTable();
+  return mdtSqlTableSchema();
 }
 
 mdtSqlViewSchema::JoinClause mdtSqlDatabaseSchema::joinClause(const mdtSqlViewSchema::Table & mainTable, const mdtSqlViewSchema::Table & tableToJoin) const
@@ -44,8 +44,8 @@ mdtSqlViewSchema::JoinClause mdtSqlDatabaseSchema::joinClause(const mdtSqlViewSc
   using namespace mdtSqlViewSchema;
 
   JoinClause join;
-  mdtSqlSchemaTable mainTableSchema;
-  mdtSqlSchemaTable tableToJoinSchema;
+  mdtSqlTableSchema mainTableSchema;
+  mdtSqlTableSchema tableToJoinSchema;
   mdtSqlForeignKey fk;
   bool revserse = false;  // true if main table is child table in relation
 #ifndef QT_NO_DEBUG

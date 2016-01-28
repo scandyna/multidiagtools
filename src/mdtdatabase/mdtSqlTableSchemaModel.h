@@ -21,7 +21,7 @@
 #ifndef MDT_SQL_TABLE_SCHEMA_MODEL_H
 #define MDT_SQL_TABLE_SCHEMA_MODEL_H
 
-#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSchema.h"
 #include "mdtSqlField.h"
 #include "mdtSqlDriverType.h"
 #include <QAbstractTableModel>
@@ -67,7 +67,7 @@ class mdtSqlTableSchemaModel : public QAbstractTableModel
 
   /*! \brief Set table schema
    */
-  void setTableSchema(const mdtSqlSchemaTable & st, mdtSqlDriverType::Type driverType);
+  void setTableSchema(const mdtSqlTableSchema & st, mdtSqlDriverType::Type driverType);
 
   /*! \brief Get field at given row
    *
@@ -119,7 +119,7 @@ class mdtSqlTableSchemaModel : public QAbstractTableModel
 
   Q_DISABLE_COPY(mdtSqlTableSchemaModel)
 
-  mdtSqlSchemaTable pvSchema;
+  mdtSqlTableSchema pvSchema;
   mdtSqlDriverType::Type pvDriverType;
 };
 

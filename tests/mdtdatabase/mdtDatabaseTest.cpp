@@ -36,7 +36,7 @@
 #include "mdtSqlIndex.h"
 #include "mdtSqlPrimaryKey.h"
 #include "mdtSqlForeignKey.h"
-#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSchema.h"
 #include "mdtSqlTableSchemaModel.h"
 #include "mdtSqlViewSchema.h"
 #include "mdtSqlTriggerSchema.h"
@@ -1028,7 +1028,7 @@ void mdtDatabaseTest::sqlForeignKeySqliteTest()
 
 void mdtDatabaseTest::sqlTableSchemaTest()
 {
-  mdtSqlSchemaTable ts;
+  mdtSqlTableSchema ts;
   mdtSqlField field;
   mdtSqlForeignKey fk;
 
@@ -1129,7 +1129,7 @@ void mdtDatabaseTest::sqlTableSchemaTest()
 
 void mdtDatabaseTest::sqlTableSchemaGetSqlMySqlTest()
 {
-  mdtSqlSchemaTable ts;
+  mdtSqlTableSchema ts;
   mdtSqlField field;
   mdtSqlIndex index;
   mdtSqlForeignKey fk;
@@ -1333,7 +1333,7 @@ void mdtDatabaseTest::sqlTableSchemaGetSqlMySqlTest()
 
 void mdtDatabaseTest::sqlTableSchemaGetSqlSqliteTest()
 {
-  mdtSqlSchemaTable ts;
+  mdtSqlTableSchema ts;
   mdtSqlField field;
   mdtSqlIndex index;
   mdtSqlForeignKey fk;
@@ -1794,7 +1794,7 @@ void mdtDatabaseTest::sqlTableSchemaCreateSqliteTest()
   QFileInfo dbFileInfo;
   QSqlDatabase db;
   QString sql;
-  mdtSqlSchemaTable ts;
+  mdtSqlTableSchema ts;
   QSqlRecord record;
   mdtSqlField field;
   mdtSqlIndex index;
@@ -2304,7 +2304,7 @@ void mdtDatabaseTest::sqlTableSchemaCreateSqliteTest()
 void mdtDatabaseTest::sqlTableSchemaModelTest()
 {
   mdtSqlTableSchemaModel model;
-  mdtSqlSchemaTable st;
+  mdtSqlTableSchema st;
   QTableView tableView;
   QTreeView treeView;
   QComboBox cb;
@@ -2920,7 +2920,7 @@ void mdtDatabaseTest::sqlDatabaseSchemaTest()
 {
   QString expectedSql;
   mdtSqlDatabaseSchema s;
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField field;
   mdtSqlForeignKey fk;
   mdtSqlTriggerSchema trigger;
@@ -3004,7 +3004,7 @@ void mdtDatabaseTest::sqlDatabaseSchemaGetJoinClauseTest()
   using namespace mdtSqlViewSchema;
   QString expectedSql;
   mdtSqlDatabaseSchema s;
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField field;
   mdtSqlForeignKey fk;
   JoinClause join;
@@ -3160,7 +3160,7 @@ void mdtDatabaseTest::sqlDatabaseSchemaModelTest()
   const int statusColumn = 2;
   mdtSqlDatabaseSchema s;
   mdtSqlDatabaseSchemaModel model;
-  mdtSqlSchemaTable ts;
+  mdtSqlTableSchema ts;
   mdtSqlViewSchema::Schema vs;
   mdtSqlTablePopulationSchema tps;
   mdtSqlTriggerSchema trigger;
@@ -3340,7 +3340,7 @@ void mdtDatabaseTest::sqlDatabaseSchemaDialogTest()
 {
   mdtSqlDatabaseSchemaDialog dialog;
   mdtSqlDatabaseSchema s;
-  mdtSqlSchemaTable ts;
+  mdtSqlTableSchema ts;
   mdtSqlViewSchema::Schema vs;
   mdtSqlTablePopulationSchema tps;
   mdtSqlTriggerSchema trigger;
@@ -3412,7 +3412,7 @@ void mdtDatabaseTest::sqlDatabaseSchemaThreadTest()
   QSqlDatabase db;
   QString sql;
   mdtSqlDatabaseSchema s;
-  mdtSqlSchemaTable ts;
+  mdtSqlTableSchema ts;
   mdtSqlTablePopulationSchema tps;
   mdtSqlTriggerSchema trigger;
   ///QSqlRecord record;
@@ -3744,7 +3744,7 @@ void mdtDatabaseTest::databaseDialogSqliteTest()
 void mdtDatabaseTest::databaseManagerTest()
 {
   mdtSqlDatabaseManager m;
-  mdtSqlSchemaTable st;
+  mdtSqlTableSchema st;
   mdtSqlField field;
 
   QTemporaryFile dbFile;

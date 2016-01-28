@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 35
+  revision 36
   modified_by 2 "philippe"
   // class settings
   
@@ -953,7 +953,7 @@ ${inlines}
       end
 
       attribute 2300930 "SourceRelatedTable"
-	private type class_ref 910210 // mdtSqlSchemaTable
+	private type class_ref 910210 // mdtSqlTableSchema
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -965,7 +965,7 @@ ${inlines}
       end
 
       attribute 2301058 "DestinationRelatedTable"
-	private type class_ref 910210 // mdtSqlSchemaTable
+	private type class_ref 910210 // mdtSqlTableSchema
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""

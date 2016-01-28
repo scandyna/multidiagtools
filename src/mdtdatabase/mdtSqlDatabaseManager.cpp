@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtSqlDatabaseManager.h"
-#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSchema.h"
 #include "mdtSqlForeignKeySetting.h"
 #include <QWidget>
 #include <QFile>
@@ -393,7 +393,7 @@ bool mdtSqlDatabaseManager::createDatabaseSqlite(const QFileInfo & fileInfo, cre
   return true;
 }
 
-bool mdtSqlDatabaseManager::createTable(mdtSqlSchemaTable & table, createMode_t createMode) 
+bool mdtSqlDatabaseManager::createTable(mdtSqlTableSchema & table, createMode_t createMode) 
 {
   QString sql;
   QSqlError sqlError;

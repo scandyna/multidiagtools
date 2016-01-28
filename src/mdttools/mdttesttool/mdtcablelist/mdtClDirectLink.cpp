@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtClDirectLink.h"
-#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSchema.h"
 #include "mdtClUnit.h"
 #include "mdtClPathGraph.h"
 #include <QSqlQuery>
@@ -403,7 +403,7 @@ bool mdtClDirectLink::connectionsAreTheSame(const QSqlRecord & A, const QSqlReco
 
 bool mdtClDirectLink::createDirectLinkTable() 
 {
-  mdtSqlSchemaTable st;
+  mdtSqlTableSchema st;
   QSqlQuery query(database());
 
   if(!removeDirectLinkTable()){

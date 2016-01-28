@@ -1,6 +1,6 @@
 format 211
 "mdtdatabase" // mdtdatabase
-  revision 107
+  revision 108
   modified_by 2 "philippe"
   // class settings
   
@@ -3790,7 +3790,7 @@ ${inlines}
       size B-Landscape
     end
 
-    class 910210 "mdtSqlSchemaTable"
+    class 910210 "mdtSqlTableSchema"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -4255,7 +4255,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 2149378 // <unidirectional association>
-	  b parent class_ref 910210 // mdtSqlSchemaTable
+	  b parent class_ref 910210 // mdtSqlTableSchema
       end
     end
 
@@ -4411,7 +4411,7 @@ ${inlines}
       operation 2848898 "setTable"
 	public explicit_return_type "bool"
 	nparams 2
-	  param in name "tableSchema" type class_ref 910210 // mdtSqlSchemaTable
+	  param in name "tableSchema" type class_ref 910210 // mdtSqlTableSchema
 	  param in name "db" type class_ref 405122 // QSqlDatabase
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
@@ -5518,7 +5518,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
 	    classrelation_ref 2290818 // <directional composition>
-	  b parent class_ref 910210 // mdtSqlSchemaTable
+	  b parent class_ref 910210 // mdtSqlTableSchema
       end
 
       operation 3044738 "clear"
@@ -5554,7 +5554,7 @@ ${inlines}
       operation 3044994 "addTable"
 	public explicit_return_type ""
 	nparams 1
-	  param in name "ts" type class_ref 910210 // mdtSqlSchemaTable
+	  param in name "ts" type class_ref 910210 // mdtSqlTableSchema
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -5568,7 +5568,7 @@ ${inlines}
       end
 
       operation 3053058 "table"
-	public return_type class_ref 910210 // mdtSqlSchemaTable
+	public return_type class_ref 910210 // mdtSqlTableSchema
 	nparams 1
 	  param in name "index" explicit_type "int"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
@@ -5587,7 +5587,7 @@ ${inlines}
 	public explicit_return_type "void"
 	nparams 2
 	  param in name "index" explicit_type "int"
-	  param in name "ts" type class_ref 910210 // mdtSqlSchemaTable
+	  param in name "ts" type class_ref 910210 // mdtSqlTableSchema
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
@@ -7845,7 +7845,7 @@ ${inlines}
       mysql_decl ""
       
       attribute 1965570 "SourceTable"
-	private type class_ref 910210 // mdtSqlSchemaTable
+	private type class_ref 910210 // mdtSqlTableSchema
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -7857,7 +7857,7 @@ ${inlines}
       end
 
       attribute 1965698 "DestinationTable"
-	private type class_ref 910210 // mdtSqlSchemaTable
+	private type class_ref 910210 // mdtSqlTableSchema
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -8784,7 +8784,7 @@ ${inlines}
       end
 
       attribute 2191234 "DestinationTable"
-	private type class_ref 910210 // mdtSqlSchemaTable
+	private type class_ref 910210 // mdtSqlTableSchema
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""

@@ -23,7 +23,7 @@
 
 #include "mdt/sql/copier/TableMapping.h"
 #include "mdtCsvSourceInfo.h"
-#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSchema.h"
 #include "mdtSqlDriverType.h"
 #include <QSqlDatabase>
 #include <QString>
@@ -173,7 +173,7 @@ class mdtSqlCsvImportTableMapping : public mdt::sql::copier::TableMapping
    */
 //   void updateCsvSourceFormat(mdtSqlCopierFieldMapping & fm);
 
-  mdtSqlSchemaTable pvDestinationTable;
+  mdtSqlTableSchema pvDestinationTable;
   QSqlDatabase pvDestinationDatabase;
 };
 

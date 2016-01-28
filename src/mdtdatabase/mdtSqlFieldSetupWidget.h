@@ -30,7 +30,7 @@
 #include <QVariant>
 #include <QString>
 
-class mdtSqlSchemaTable;
+class mdtSqlTableSchema;
 class mdtSqlTableSchemaModel;
 
 /*! \brief Field setup edition mode
@@ -80,7 +80,7 @@ class mdtSqlFieldSetupWidget : public QWidget, Ui::mdtSqlFieldSetupWidget
    *
    * Will also list all aviable fields
    */
-  bool setTable(const mdtSqlSchemaTable & tableSchema, QSqlDatabase db);
+  bool setTable(const mdtSqlTableSchema & tableSchema, QSqlDatabase db);
 
   /*! \brief Set given field index as selected one
    */

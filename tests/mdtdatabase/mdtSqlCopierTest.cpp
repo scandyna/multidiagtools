@@ -23,7 +23,7 @@
 #include "mdtApplication.h"
 #include "mdtSqlDatabaseSchema.h"
 #include "mdtSqlTablePopulationSchema.h"
-#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSchema.h"
 #include "mdtSqlRecord.h"
 #include "mdtSqlTransaction.h"
 #include "mdtSqlCopierDataMapping.h"
@@ -3831,7 +3831,7 @@ void mdtSqlCopierTest::endEditing(QAbstractItemView& view, const QModelIndex& ed
 
 void mdtSqlCopierTest::createTestDatabase()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlDatabaseSchema s;
   mdtSqlField field;
   mdtSqlField Client_Id_FK;

@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtSqlFieldSetupWidget.h"
 #include "mdtSqlTableSchemaModel.h"
-#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSchema.h"
 #include "mdtSqlDriverType.h"
 #include "mdtSqlFieldType.h"
 
@@ -54,7 +54,7 @@ void mdtSqlFieldSetupWidget::setEditionMode(mdtSqlFieldSetupEditionMode mode)
 
 bool mdtSqlFieldSetupWidget::setTable(const QString & tableName, QSqlDatabase db)
 {
-  mdtSqlSchemaTable st;
+  mdtSqlTableSchema st;
 
   // Reverse table
   if(!st.setupFromTable(tableName, db)){
@@ -65,7 +65,7 @@ bool mdtSqlFieldSetupWidget::setTable(const QString & tableName, QSqlDatabase db
   return setTable(st, db);
 }
 
-bool mdtSqlFieldSetupWidget::setTable(const mdtSqlSchemaTable & tableSchema, QSqlDatabase db)
+bool mdtSqlFieldSetupWidget::setTable(const mdtSqlTableSchema & tableSchema, QSqlDatabase db)
 {
   // Fill available field types
   if(!populateFieldTypeCombobox(db.driverName())){

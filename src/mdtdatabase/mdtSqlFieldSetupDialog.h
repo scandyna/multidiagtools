@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -58,7 +58,7 @@ class mdtSqlFieldSetupDialog : public QDialog, Ui::mdtSqlFieldSetupDialog
    *
    * Will also list all aviable fields
    */
-  bool setTable(const mdtSqlSchemaTable & tableSchema, QSqlDatabase db)
+  bool setTable(const mdtSqlTableSchema & tableSchema, QSqlDatabase db)
   {
     return wSetupWidget->setTable(tableSchema, db);
   }

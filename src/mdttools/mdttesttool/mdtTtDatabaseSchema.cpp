@@ -553,7 +553,7 @@ bool mdtTtDatabaseSchema::createViews()
 
 void mdtTtDatabaseSchema::setupVehicleTypeTable() 
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Id_PK;
   mdtSqlField Type;
   mdtSqlField SubType;
@@ -586,7 +586,7 @@ void mdtTtDatabaseSchema::setupVehicleTypeTable()
 
 void mdtTtDatabaseSchema::setupVehicleTypeUnitTable() 
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField VehicleType_Id_FK;
   mdtSqlField Unit_Id_FK;
   mdtSqlForeignKey fk_VehicleType_Id_FK;
@@ -621,7 +621,7 @@ void mdtTtDatabaseSchema::setupVehicleTypeUnitTable()
 
 void mdtTtDatabaseSchema::setupVehicleTypeLinkTable() 
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField VehicleTypeStart_Id_FK;
   mdtSqlForeignKey fk_VehicleTypeStart_Id_FK;
   mdtSqlField VehicleTypeEnd_Id_FK;
@@ -692,7 +692,7 @@ void mdtTtDatabaseSchema::setupVehicleTypeLinkTable()
 
 void mdtTtDatabaseSchema::setupConnectionTypeTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Code_PK;
   mdtSqlField NameEN;
   mdtSqlField NameFR;
@@ -731,7 +731,7 @@ void mdtTtDatabaseSchema::setupConnectionTypeTable()
 
 void mdtTtDatabaseSchema::setupConnectorTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Id_PK;
   mdtSqlField Gender;
   mdtSqlField ContactQty;
@@ -805,7 +805,7 @@ void mdtTtDatabaseSchema::setupConnectorTable()
 
 void mdtTtDatabaseSchema::setupConnectorContactTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Id_PK;
   mdtSqlField Connector_Id_FK;
   mdtSqlField Name;
@@ -853,7 +853,7 @@ void mdtTtDatabaseSchema::setupConnectorContactTable()
 
 void mdtTtDatabaseSchema::setupArticleTable() 
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Id_PK;
   mdtSqlField ArticleCode;
   mdtSqlField DesignationEN;
@@ -936,7 +936,7 @@ void mdtTtDatabaseSchema::setupArticleTable()
 
 void mdtTtDatabaseSchema::setupArticleComponentTable() 
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Composite_Id_FK;
   mdtSqlField Component_Id_FK;
   mdtSqlField ComponentQty;
@@ -982,7 +982,7 @@ void mdtTtDatabaseSchema::setupArticleComponentTable()
 
 void mdtTtDatabaseSchema::setupArticleConnectorTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Id_PK;
   mdtSqlField Article_Id_FK;
   mdtSqlField Connector_Id_FK;
@@ -1028,7 +1028,7 @@ void mdtTtDatabaseSchema::setupArticleConnectorTable()
 
 void mdtTtDatabaseSchema::setupArticleConnectionTable() 
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Id_PK;
   mdtSqlField Article_Id_FK;
   mdtSqlForeignKey fk_Article_Id_FK;
@@ -1125,7 +1125,7 @@ void mdtTtDatabaseSchema::setupArticleConnectionTable()
 
 void mdtTtDatabaseSchema::setupArticleLinkTable() 
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField ArticleConnectionStart_Id_FK;
   mdtSqlForeignKey fk_ArticleConnectionStart;
   mdtSqlField ArticleConnectionEnd_Id_FK;
@@ -1210,7 +1210,7 @@ void mdtTtDatabaseSchema::setupArticleLinkTable()
 
 void mdtTtDatabaseSchema::setupUnitTable() 
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Id_PK;
   mdtSqlField Composite_Id_FK;
   mdtSqlForeignKey fk_Composite_Id_FK;
@@ -1273,7 +1273,7 @@ void mdtTtDatabaseSchema::setupUnitTable()
 
 void mdtTtDatabaseSchema::setupUnitConnectorTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Id_PK;
   mdtSqlField Unit_Id_FK;
   mdtSqlForeignKey fk_Unit;
@@ -1331,7 +1331,7 @@ void mdtTtDatabaseSchema::setupUnitConnectorTable()
 
 void mdtTtDatabaseSchema::setupUnitConnectionTable() 
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Id_PK;
   mdtSqlField Unit_Id_FK;
   mdtSqlForeignKey fk_Unit;
@@ -1455,7 +1455,7 @@ void mdtTtDatabaseSchema::setupUnitConnectionTable()
 
 void mdtTtDatabaseSchema::setupWireTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Id_PK;
   mdtSqlField ArticleCode;
   mdtSqlField Model;
@@ -1533,7 +1533,7 @@ void mdtTtDatabaseSchema::setupWireTable()
 
 void mdtTtDatabaseSchema::setupModificationTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Code_PK;
   mdtSqlField SortOrder;
   mdtSqlField NameEN;
@@ -1653,7 +1653,7 @@ void mdtTtDatabaseSchema::setupModificationTable()
 
 void mdtTtDatabaseSchema::setupLinkVersionTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Version_PK;
   mdtSqlField Version;
 
@@ -1746,7 +1746,7 @@ void mdtTtDatabaseSchema::setupOnLinkVersionAfterInsertTrigger()
 
 void mdtTtDatabaseSchema::setupLinkTable() 
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField UnitConnectionStart_Id_FK;
   mdtSqlForeignKey fk_UnitConnectionStart;
   mdtSqlField UnitConnectionEnd_Id_FK;
@@ -1900,7 +1900,7 @@ void mdtTtDatabaseSchema::setupLinkTable()
 
 void mdtTtDatabaseSchema::setupLinkBeamTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Id_PK;
   mdtSqlField Identification;
 
@@ -1921,7 +1921,7 @@ void mdtTtDatabaseSchema::setupLinkBeamTable()
 
 void mdtTtDatabaseSchema::setupLinkBeamUnitStartTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Unit_Id_FK;
   mdtSqlForeignKey fk_Unit;
   mdtSqlField LinkBeam_Id_FK;
@@ -1957,7 +1957,7 @@ void mdtTtDatabaseSchema::setupLinkBeamUnitStartTable()
 
 void mdtTtDatabaseSchema::setupLinkBeamUnitEndTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Unit_Id_FK;
   mdtSqlForeignKey fk_Unit;
   mdtSqlField LinkBeam_Id_FK;
@@ -1993,7 +1993,7 @@ void mdtTtDatabaseSchema::setupLinkBeamUnitEndTable()
 
 void mdtTtDatabaseSchema::setupLinkDirectionTable() 
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Code_PK;
   mdtSqlField PictureAscii;
   mdtSqlField NameEN;
@@ -2038,7 +2038,7 @@ void mdtTtDatabaseSchema::setupLinkDirectionTable()
 
 void mdtTtDatabaseSchema::setupLinkTypeTable() 
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Code_PK;
   mdtSqlField NameEN;
   mdtSqlField NameFR;
@@ -2083,7 +2083,7 @@ void mdtTtDatabaseSchema::setupLinkTypeTable()
 
 void mdtTtDatabaseSchema::setupTestSystemTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Id_PK;
   mdtSqlField NameEN;
   mdtSqlField NameFR;
@@ -2122,7 +2122,7 @@ void mdtTtDatabaseSchema::setupTestSystemTable()
 
 void mdtTtDatabaseSchema::setupTestSystemComponentTypeTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Code_PK;
   mdtSqlField NameEN;
   mdtSqlField NameFR;
@@ -2161,7 +2161,7 @@ void mdtTtDatabaseSchema::setupTestSystemComponentTypeTable()
 
 void mdtTtDatabaseSchema::setupTestSystemComponentTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Id_PK;
   mdtSqlField Type_Code_FK;
   mdtSqlForeignKey fk_Type;
@@ -2245,7 +2245,7 @@ void mdtTtDatabaseSchema::setupTestSystemComponentTable()
 
 void mdtTtDatabaseSchema::setupTestSystem_TestSystemComponentTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField TestSystem_Id_FK;
   mdtSqlForeignKey fk_TestSystem;
   mdtSqlField TestSystemComponent_Id_FK;
@@ -2278,7 +2278,7 @@ void mdtTtDatabaseSchema::setupTestSystem_TestSystemComponentTable()
 
 void mdtTtDatabaseSchema::setupTestSystemUnitTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Code_PK;
   mdtSqlField NameEN;
   mdtSqlField NameFR;
@@ -2318,7 +2318,7 @@ void mdtTtDatabaseSchema::setupTestSystemUnitTable()
 
 void mdtTtDatabaseSchema::setupTestSystemUnitTypeTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   mdtSqlField Unit_Id_FK_PK;
   mdtSqlForeignKey fk_Unit;
   mdtSqlField TestSystemComponent_Id_FK;
@@ -2380,7 +2380,7 @@ void mdtTtDatabaseSchema::setupTestSystemUnitTypeTable()
 
 bool mdtTtDatabaseSchema::setupTestNodeTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("TestNode_tbl", "UTF8");
@@ -2432,7 +2432,7 @@ bool mdtTtDatabaseSchema::setupTestNodeTable()
     return false;
   }
   // Foreign keys
-  table.addForeignKey("VehicleType_Id_FK_PK_fk", "VehicleType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("VehicleType_Id_FK_PK_fk", "VehicleType_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("VehicleType_Id_FK_PK_fk", "VehicleType_Id_FK_PK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
@@ -2445,7 +2445,7 @@ bool mdtTtDatabaseSchema::setupTestNodeTable()
 
 bool mdtTtDatabaseSchema::setupTestNodeUnitTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("TestNodeUnit_tbl", "UTF8");
@@ -2498,17 +2498,17 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitTable()
     return false;
   }
   // Foreign keys
-  table.addForeignKey("Unit_Id_FK_PK_fk", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("Unit_Id_FK_PK_fk", "Unit_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("Unit_Id_FK_PK_fk", "Unit_Id_FK_PK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("TestNode_Id_FK_fk", "TestNode_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestNode_Id_FK_fk", "TestNode_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestNode_Id_FK_fk", "TestNode_Id_FK", "VehicleType_Id_FK_PK")){
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("Type_Code_FK_fk", "TestNodeUnitType_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("Type_Code_FK_fk", "TestNodeUnitType_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("Type_Code_FK_fk", "Type_Code_FK", "Code_PK")){
     pvLastError = table.lastError();
     return false;
@@ -2521,7 +2521,7 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitTable()
 
 bool mdtTtDatabaseSchema::setupTestNodeUnitConnectionTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("TestNodeUnitConnection_tbl", "UTF8");
@@ -2552,12 +2552,12 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitConnectionTable()
 //     return false;
 //   }
   // Foreign keys
-  table.addForeignKey("UnitConnection_Id_FK_PK_fk", "UnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("UnitConnection_Id_FK_PK_fk", "UnitConnection_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("UnitConnection_Id_FK_PK_fk", "UnitConnection_Id_FK_PK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("TestNodeUnit_Id_FK_fk2", "TestNodeUnit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestNodeUnit_Id_FK_fk2", "TestNodeUnit_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestNodeUnit_Id_FK_fk2", "TestNodeUnit_Id_FK", "Unit_Id_FK_PK")){
     pvLastError = table.lastError();
     return false;
@@ -2575,7 +2575,7 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitConnectionTable()
 
 bool mdtTtDatabaseSchema::setupTestNodeRouteTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("TestNodeRoute_tbl", "UTF8");
@@ -2654,17 +2654,17 @@ bool mdtTtDatabaseSchema::setupTestNodeRouteTable()
   }
   */
   // Foreign keys
-  table.addForeignKey("TestNode_Id_FK_fk4", "TestNode_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestNode_Id_FK_fk4", "TestNode_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestNode_Id_FK_fk4", "TestNode_Id_FK", "VehicleType_Id_FK_PK")){
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("TestNodeUnitConnectionA_Id_FK_fk", "TestNodeUnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestNodeUnitConnectionA_Id_FK_fk", "TestNodeUnitConnection_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestNodeUnitConnectionA_Id_FK_fk", "TestNodeUnitConnectionA_Id_FK", "UnitConnection_Id_FK_PK")){
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("TestNodeUnitConnectionB_Id_FK_fk", "TestNodeUnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestNodeUnitConnectionB_Id_FK_fk", "TestNodeUnitConnection_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestNodeUnitConnectionB_Id_FK_fk", "TestNodeUnitConnectionB_Id_FK", "UnitConnection_Id_FK_PK")){
     pvLastError = table.lastError();
     return false;
@@ -2677,7 +2677,7 @@ bool mdtTtDatabaseSchema::setupTestNodeRouteTable()
 
 bool mdtTtDatabaseSchema::setupTestNodeRouteUnitTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("TestNodeRouteUnit_tbl", "UTF8");
@@ -2691,12 +2691,12 @@ bool mdtTtDatabaseSchema::setupTestNodeRouteUnitTable()
   field.setType(QVariant::Int);
   table.addField(field, true);
   // Foreign keys
-  table.addForeignKey("TestNodeRoute_Id_FK_fk4", "TestNodeRoute_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestNodeRoute_Id_FK_fk4", "TestNodeRoute_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestNodeRoute_Id_FK_fk4", "TestNodeRoute_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("TestNodeUnit_Id_FK_kf4", "TestNodeUnit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestNodeUnit_Id_FK_kf4", "TestNodeUnit_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestNodeUnit_Id_FK_kf4", "TestNodeUnit_Id_FK", "Unit_Id_FK_PK")){
     pvLastError = table.lastError();
     return false;
@@ -2709,7 +2709,7 @@ bool mdtTtDatabaseSchema::setupTestNodeRouteUnitTable()
 
 bool mdtTtDatabaseSchema::setupTestNodeUnitTypeTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("TestNodeUnitType_tbl", "UTF8");
@@ -2750,7 +2750,7 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitTypeTable()
 
 bool mdtTtDatabaseSchema::setupTestCableTestNodeUnitTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("LogicalTestCable_TestNodeUnit_tbl", "UTF8");
@@ -2764,12 +2764,12 @@ bool mdtTtDatabaseSchema::setupTestCableTestNodeUnitTable()
   field.setType(QVariant::Int);
   table.addField(field, true);
   // Foreign keys
-  table.addForeignKey("TestNodeUnit_Id_FK_fk3", "TestNodeUnit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestNodeUnit_Id_FK_fk3", "TestNodeUnit_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestNodeUnit_Id_FK_fk3", "TestNodeUnit_Id_FK", "Unit_Id_FK_PK")){
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("LogicalTestCable_Id_FK_fk2", "LogicalTestCable_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("LogicalTestCable_Id_FK_fk2", "LogicalTestCable_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("LogicalTestCable_Id_FK_fk2", "LogicalTestCable_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
@@ -2782,7 +2782,7 @@ bool mdtTtDatabaseSchema::setupTestCableTestNodeUnitTable()
 
 bool mdtTtDatabaseSchema::setupTestCableDutUnitTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("LogicalTestCable_DutUnit_tbl", "UTF8");
@@ -2796,12 +2796,12 @@ bool mdtTtDatabaseSchema::setupTestCableDutUnitTable()
   field.setType(QVariant::Int);
   table.addField(field, true);
   // Foreign keys
-  table.addForeignKey("DutUnit_Id_FK_fk", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("DutUnit_Id_FK_fk", "Unit_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("DutUnit_Id_FK_fk", "DutUnit_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("LogicalTestCable_Id_FK_fk3", "LogicalTestCable_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("LogicalTestCable_Id_FK_fk3", "LogicalTestCable_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("LogicalTestCable_Id_FK_fk3", "LogicalTestCable_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
@@ -2814,7 +2814,7 @@ bool mdtTtDatabaseSchema::setupTestCableDutUnitTable()
 
 bool mdtTtDatabaseSchema::setupTestCableTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("TestCable_tbl", "UTF8");
@@ -2845,12 +2845,12 @@ bool mdtTtDatabaseSchema::setupTestCableTable()
   field.setType(QVariant::DateTime);
   table.addField(field, false);
   // Foreign keys
-  table.addForeignKey("Unit_Id_FK_PK_fk2", "Unit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("Unit_Id_FK_PK_fk2", "Unit_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("Unit_Id_FK_PK_fk2", "Unit_Id_FK_PK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("OffsetResetTestModel_Id_FK_fk", "TestModel_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("OffsetResetTestModel_Id_FK_fk", "TestModel_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("OffsetResetTestModel_Id_FK_fk", "OffsetResetTestModel_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
@@ -2863,7 +2863,7 @@ bool mdtTtDatabaseSchema::setupTestCableTable()
 
 bool mdtTtDatabaseSchema::setupLogicalTestCableTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("LogicalTestCable_tbl", "UTF8");
@@ -2891,7 +2891,7 @@ bool mdtTtDatabaseSchema::setupLogicalTestCableTable()
     return false;
   }
   // Foreign keys
-  table.addForeignKey("TestCable_Id_FK_fk", "TestCable_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestCable_Id_FK_fk", "TestCable_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestCable_Id_FK_fk", "TestCable_Id_FK", "Unit_Id_FK_PK")){
     pvLastError = table.lastError();
     return false;
@@ -2904,7 +2904,7 @@ bool mdtTtDatabaseSchema::setupLogicalTestCableTable()
 
 bool mdtTtDatabaseSchema::setupTestLinkTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("TestLink_tbl", "UTF8");
@@ -2994,17 +2994,17 @@ bool mdtTtDatabaseSchema::setupTestLinkTable()
     return false;
   }
   */
-  table.addForeignKey("TestConnection_Id_FK_fk2", "TestNodeUnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestConnection_Id_FK_fk2", "TestNodeUnitConnection_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestConnection_Id_FK_fk2", "TestConnection_Id_FK", "UnitConnection_Id_FK_PK")){
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("DutConnection_Id_FK_fk", "UnitConnection_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("DutConnection_Id_FK_fk", "UnitConnection_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("DutConnection_Id_FK_fk", "DutConnection_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("LogicalTestCable_Id_FK_fk", "LogicalTestCable_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("LogicalTestCable_Id_FK_fk", "LogicalTestCable_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("LogicalTestCable_Id_FK_fk", "LogicalTestCable_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
@@ -3017,7 +3017,7 @@ bool mdtTtDatabaseSchema::setupTestLinkTable()
 
 bool mdtTtDatabaseSchema::setupTestModelTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("TestModel_tbl", "UTF8");
@@ -3052,7 +3052,7 @@ bool mdtTtDatabaseSchema::setupTestModelTable()
 
 bool mdtTtDatabaseSchema::setupTestModelTestNodeTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("TestModel_TestNode_tbl", "UTF8");
@@ -3066,12 +3066,12 @@ bool mdtTtDatabaseSchema::setupTestModelTestNodeTable()
   field.setType(QVariant::Int);
   table.addField(field, true);
   // Foreign keys
-  table.addForeignKey("TestModel_Id_FK_fk3", "TestModel_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestModel_Id_FK_fk3", "TestModel_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestModel_Id_FK_fk3", "TestModel_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("TestNode_Id_FK_fk3", "TestNode_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestNode_Id_FK_fk3", "TestNode_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestNode_Id_FK_fk3", "TestNode_Id_FK", "VehicleType_Id_FK_PK")){
     pvLastError = table.lastError();
     return false;
@@ -3084,7 +3084,7 @@ bool mdtTtDatabaseSchema::setupTestModelTestNodeTable()
 
 bool mdtTtDatabaseSchema::setupTestModelItemTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("TestModelItem_tbl", "UTF8");
@@ -3172,7 +3172,7 @@ bool mdtTtDatabaseSchema::setupTestModelItemTable()
   }
   */
   // Foreign keys
-  table.addForeignKey("TestModel_Id_FK_fk", "TestModel_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestModel_Id_FK_fk", "TestModel_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestModel_Id_FK_fk", "TestModel_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
@@ -3197,7 +3197,7 @@ bool mdtTtDatabaseSchema::setupTestModelItemTable()
 
 bool mdtTtDatabaseSchema::setupTestModelItemTestLinkTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("TestModelItem_TestLink_tbl", "UTF8");
@@ -3212,12 +3212,12 @@ bool mdtTtDatabaseSchema::setupTestModelItemTestLinkTable()
   field.setType(QVariant::Int);
   table.addField(field, true);
   // Foreign keys
-  table.addForeignKey("TestModelItem_Id_FK_fk3", "TestModelItem_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestModelItem_Id_FK_fk3", "TestModelItem_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestModelItem_Id_FK_fk3", "TestModelItem_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("TestLink_Id_FK_fk", "TestLink_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestLink_Id_FK_fk", "TestLink_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestLink_Id_FK_fk", "TestLink_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
@@ -3230,7 +3230,7 @@ bool mdtTtDatabaseSchema::setupTestModelItemTestLinkTable()
 
 bool mdtTtDatabaseSchema::setupTestNodeUnitSetupTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("TestNodeUnitSetup_tbl", "UTF8");
@@ -3312,12 +3312,12 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitSetupTable()
   }
   */
   // Foreign keys
-  table.addForeignKey("TestModelItem_Id_FK_fk", "TestModelItem_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestModelItem_Id_FK_fk", "TestModelItem_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestModelItem_Id_FK_fk", "TestModelItem_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("TestNodeUnit_Id_FK_fk", "TestNodeUnit_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestNodeUnit_Id_FK_fk", "TestNodeUnit_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestNodeUnit_Id_FK_fk", "TestNodeUnit_Id_FK", "Unit_Id_FK_PK")){
     pvLastError = table.lastError();
     return false;
@@ -3342,7 +3342,7 @@ bool mdtTtDatabaseSchema::setupTestNodeUnitSetupTable()
 
 bool mdtTtDatabaseSchema::setupTestTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("Test_tbl", "UTF8");
@@ -3380,7 +3380,7 @@ bool mdtTtDatabaseSchema::setupTestTable()
     return false;
   }
   // Foreign keys
-  table.addForeignKey("TestModel_Id_FK_fk2", "TestModel_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestModel_Id_FK_fk2", "TestModel_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestModel_Id_FK_fk2", "TestModel_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
@@ -3393,7 +3393,7 @@ bool mdtTtDatabaseSchema::setupTestTable()
 
 bool mdtTtDatabaseSchema::setupTestItemTable()
 {
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QSqlField field;
 
   table.setTableName("TestItem_tbl", "UTF8");
@@ -3461,12 +3461,12 @@ bool mdtTtDatabaseSchema::setupTestItemTable()
     return false;
   }
   // Foreign keys
-  table.addForeignKey("Test_Id_FK_fk", "Test_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("Test_Id_FK_fk", "Test_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("Test_Id_FK_fk", "Test_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;
   }
-  table.addForeignKey("TestModelItem_Id_FK_fk2", "TestModelItem_tbl", mdtSqlSchemaTable::Restrict, mdtSqlSchemaTable::Cascade);
+  table.addForeignKey("TestModelItem_Id_FK_fk2", "TestModelItem_tbl", mdtSqlTableSchema::Restrict, mdtSqlTableSchema::Cascade);
   if(!table.addFieldToForeignKey("TestModelItem_Id_FK_fk2", "TestModelItem_Id_FK", "Id_PK")){
     pvLastError = table.lastError();
     return false;

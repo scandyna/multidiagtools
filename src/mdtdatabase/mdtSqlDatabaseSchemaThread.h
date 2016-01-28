@@ -22,7 +22,7 @@
 #define MDT_SQL_DATABASE_SCHEMA_THREAD_H
 
 #include "mdtSqlDatabaseSchema.h"
-#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSchema.h"
 #include "mdtSqlTablePopulationSchema.h"
 #include "mdtSqlViewSchema.h"
 #include "mdtSqlTriggerSchema.h"
@@ -122,12 +122,12 @@ class mdtSqlDatabaseSchemaThread : public QThread
 
   /*! \brief Create tables
    */
-  void createTables(QList<mdtSqlSchemaTable> & tables, const QSqlDatabase & db,
+  void createTables(QList<mdtSqlTableSchema> & tables, const QSqlDatabase & db,
                     double & globalProgress, double globalProgressStep);
 
   /*! \brief Create a table
    */
-  bool createTable(const mdtSqlSchemaTable & ts, const QSqlDatabase & db);
+  bool createTable(const mdtSqlTableSchema & ts, const QSqlDatabase & db);
 
   /*! \brief Populate tables
    */

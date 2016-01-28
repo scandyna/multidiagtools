@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,7 +21,7 @@
 #include "mdtDatabaseWidgetTest.h"
 ///#include "mdtSqlDatabaseSqlite.h"
 #include "mdtSqlForeignKey.h"
-#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSchema.h"
 #include "mdtSqlDatabaseSchema.h"
 #include "mdtSqlForeignKeySetting.h"
 #include "mdtApplication.h"
@@ -4201,6 +4201,7 @@ void mdtDatabaseWidgetTest::sqlFieldSelectionDialogTest()
   QCOMPARE(fnList.at(0), QString("D"));
   QCOMPARE(fnList.at(1), QString("B"));
 
+  fsDialog.exec();
 }
 
 /*
@@ -4210,7 +4211,7 @@ void mdtDatabaseWidgetTest::sqlFieldSelectionDialogTest()
 void mdtDatabaseWidgetTest::createDatabaseSchema()
 {
   mdtSqlDatabaseSchema s;
-  mdtSqlSchemaTable ts;
+  mdtSqlTableSchema ts;
   mdtSqlForeignKey fk;
   mdtSqlField field;
 

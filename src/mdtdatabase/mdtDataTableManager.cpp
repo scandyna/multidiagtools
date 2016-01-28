@@ -122,7 +122,7 @@ QString mdtDataTableManager::getTableName(const QString &dataSetName)
   return tableName;
 }
 
-bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, mdtSqlSchemaTable &table, mdtSqlDatabaseManager::createMode_t mode)
+bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, mdtSqlTableSchema &table, mdtSqlDatabaseManager::createMode_t mode)
 {
   QFile file;
   QFileInfo fileInfo;
@@ -199,7 +199,7 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, mdtSqlDa
   QList<mdtFieldMapItem*> mapItems;
   int csvFieldIndex;
   int modelFieldIndex;
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QProgressDialog *progress = 0;
   int totalLineCount;
   int dataLossCount;
@@ -380,7 +380,7 @@ bool mdtDataTableManager::copyTable(const QString & sourceTableName, const QStri
   QList<mdtFieldMapItem*> mapItems;
   mdtFieldMapItem *mapItem;
   int i, sourceFieldIndex, destinationFieldIndex;
-  mdtSqlSchemaTable destinationTable;
+  mdtSqlTableSchema destinationTable;
   QSqlIndex pkFields;
   QProgressDialog *progress = 0;
   int lineCount, totalLineCount;

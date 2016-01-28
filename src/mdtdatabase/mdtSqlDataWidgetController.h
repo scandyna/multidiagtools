@@ -30,7 +30,7 @@
 class mdtSqlFieldHandler;
 class QSqlTableModel;
 class QLayoutItem;
-class mdtSqlSchemaTable;
+class mdtSqlTableSchema;
 
 /*! \brief
  */
@@ -80,7 +80,7 @@ class mdtSqlDataWidgetController : public mdtAbstractSqlTableController
    * \param schemaTable Is used to fetch field informations. Must be initialized with mdtSqlSchemaTable::setupFromTable().
    * \param isFirstWidgetInTabOrder If true, given widget will obtain focus during insertion.
    */
-  bool addMapping(QWidget *widget, const QString & fieldName, const mdtSqlSchemaTable & st, bool isFirstWidgetInTabOrder = false);
+  bool addMapping(QWidget *widget, const QString & fieldName, const mdtSqlTableSchema & st, bool isFirstWidgetInTabOrder = false);
 
  public slots:
 

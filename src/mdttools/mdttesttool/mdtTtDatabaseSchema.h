@@ -21,7 +21,7 @@
 #ifndef MDT_TT_DATABASE_SCHEMA_H
 #define MDT_TT_DATABASE_SCHEMA_H
 
-#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSchema.h"
 
 #include "mdtSqlDatabaseSchema.h"
 #include "mdtError.h"
@@ -587,7 +587,7 @@ class mdtTtDatabaseSchema
   mdtSqlDatabaseSchema pvSchema;
   
   mdtSqlDatabaseManager *pvDatabaseManager;
-  QList<mdtSqlSchemaTable> pvTables;
+  QList<mdtSqlTableSchema> pvTables;
   mdtError pvLastError;
 };
 

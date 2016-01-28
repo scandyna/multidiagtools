@@ -31,7 +31,7 @@
 #include "mdtFieldListEditionDialog.h"
 
 #include "mdtSqlQueryWidget.h"
-#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSchema.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -242,7 +242,7 @@ void mdtDataTableTest::createDataSetTest()
   QSqlField field;
   QString dataSetName;
   QString dataSetTableName;
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
 
   // Build fields
   field = QSqlField();
@@ -323,7 +323,7 @@ void mdtDataTableTest::editDataTest()
   mdtFieldMapItem *mapItem;
   QStringList rowData3;
   QList<QStringList> rowsData4;
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
 
   // Build fields
   field = QSqlField();
@@ -1541,7 +1541,7 @@ void mdtDataTableTest::csvExportTest()
   QString dataSetName;
   QString dataSetTableName;
   QMap<QString,QVariant> rowData;
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
 
   // Build fields
   field = QSqlField();
@@ -1797,7 +1797,7 @@ void mdtDataTableTest::copyTableTest()
   QTemporaryFile f1, f2;
   QFileInfo fileInfo;
   QSqlField field;
-  mdtSqlSchemaTable table;
+  mdtSqlTableSchema table;
   QString sourceTableName, destinationTableName;
   QSqlQuery *query;
   QString sql;

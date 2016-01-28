@@ -41,7 +41,7 @@
 /*
  * Container for foreign keys informations
  */
-struct mdtSqlSchemaTableForeignKeyInfo
+struct mdtSqlTableSchemaForeignKeyInfo
 {
   QString referingTableName;
   QSqlRecord fields;
@@ -85,7 +85,7 @@ struct mdtSqlSchemaTableForeignKeyInfo
  * table.addForeignKey(fk_Client_Id_FK);
  * \endcode
  */
-class mdtSqlSchemaTable
+class mdtSqlTableSchema
 {
  public:
 
@@ -100,11 +100,11 @@ class mdtSqlSchemaTable
 
   /*! \brief Constructor
    */
-  mdtSqlSchemaTable();
+  mdtSqlTableSchema();
 
   /*! \brief Destructor
    */
-  ~mdtSqlSchemaTable();
+  ~mdtSqlTableSchema();
 
   /*! \brief Clear
    */

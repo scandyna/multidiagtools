@@ -28,7 +28,7 @@
 #include <QFileInfo>
 #include <QDir>
 
-class mdtSqlSchemaTable;
+class mdtSqlTableSchema;
 class QWidget;  
 
 /*! \brief Helper class to create and open (connect to) database
@@ -121,7 +121,7 @@ class /* [[deprecated("Use mdtSqliteDatabase for SQLite")]] Does MOC support thi
    *
    * Will also setup database specific thing (like driver name) on table.
    */
-  bool createTable(mdtSqlSchemaTable & table, createMode_t createMode);
+  bool createTable(mdtSqlTableSchema & table, createMode_t createMode);
 
  private:
 

@@ -152,7 +152,7 @@ QSqlDatabase mdtSqlDatabaseSchemaThread::createConnection()
   return db;
 }
 
-void mdtSqlDatabaseSchemaThread::createTables(QList<mdtSqlSchemaTable> & tables, const QSqlDatabase & db,
+void mdtSqlDatabaseSchemaThread::createTables(QList<mdtSqlTableSchema> & tables, const QSqlDatabase & db,
                                               double & globalProgress, double globalProgressStep)
 {
   bool errorOccured = false;
@@ -187,7 +187,7 @@ void mdtSqlDatabaseSchemaThread::createTables(QList<mdtSqlSchemaTable> & tables,
   }
 }
 
-bool mdtSqlDatabaseSchemaThread::createTable(const mdtSqlSchemaTable & ts, const QSqlDatabase & db)
+bool mdtSqlDatabaseSchemaThread::createTable(const mdtSqlTableSchema & ts, const QSqlDatabase & db)
 {
   QSqlQuery query(db);
   QString tableName = ts.tableName();

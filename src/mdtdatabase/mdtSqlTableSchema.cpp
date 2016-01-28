@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,7 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtSqlSchemaTable.h"
+#include "mdtSqlTableSchema.h"
 #include "mdtSqlFieldType.h"
 #include <QSqlQuery>
 #include <QSqlError>
@@ -28,16 +28,16 @@
 
 #include <QDebug>
 
-mdtSqlSchemaTable::mdtSqlSchemaTable()
+mdtSqlTableSchema::mdtSqlTableSchema()
  : pvIsTemporary(false)
 {
 }
 
-mdtSqlSchemaTable::~mdtSqlSchemaTable()
+mdtSqlTableSchema::~mdtSqlTableSchema()
 {
 }
 
-void mdtSqlSchemaTable::clear()
+void mdtSqlTableSchema::clear()
 {
   pvIsTemporary = false;
   pvDriverType.clear();
@@ -51,7 +51,7 @@ void mdtSqlSchemaTable::clear()
   pvForeignKeys.clear();
 }
 
-bool mdtSqlSchemaTable::setDriverName(const QString & name) 
+bool mdtSqlTableSchema::setDriverName(const QString & name) 
 {
   if(!pvDriverType.setType(name)){
     pvLastError.setError("Driver name '" + name + "' is not supported.", mdtError::Error);
@@ -62,12 +62,12 @@ bool mdtSqlSchemaTable::setDriverName(const QString & name)
   return true;
 }
 
-void mdtSqlSchemaTable::setDatabaseName(const QString & name) 
+void mdtSqlTableSchema::setDatabaseName(const QString & name) 
 {
   pvDatabaseName = name;
 }
 
-void mdtSqlSchemaTable::setTableName(const QString & name, const QString &charset, Qt::CaseSensitivity cs) 
+void mdtSqlTableSchema::setTableName(const QString & name, const QString &charset, Qt::CaseSensitivity cs) 
 {
   pvTableName = name;
   pvCollation.clear();
@@ -75,22 +75,22 @@ void mdtSqlSchemaTable::setTableName(const QString & name, const QString &charse
   pvCollation.setCaseSensitive(cs == Qt::CaseSensitive);
 }
 
-QString mdtSqlSchemaTable::tableName() const
+QString mdtSqlTableSchema::tableName() const
 {
   return pvTableName;
 }
 
-void mdtSqlSchemaTable::setTemporary(bool temporary)
+void mdtSqlTableSchema::setTemporary(bool temporary)
 {
   pvIsTemporary = temporary;
 }
 
-void mdtSqlSchemaTable::setStorageEngineName(const QString & name) 
+void mdtSqlTableSchema::setStorageEngineName(const QString & name) 
 {
   pvStorageEngineName = name;
 }
 
-void mdtSqlSchemaTable::addField(const mdtSqlField & field, bool isPartOfPrimaryKey)
+void mdtSqlTableSchema::addField(const mdtSqlField & field, bool isPartOfPrimaryKey)
 {
   pvFields.append(field);
   if(isPartOfPrimaryKey){
@@ -98,7 +98,7 @@ void mdtSqlSchemaTable::addField(const mdtSqlField & field, bool isPartOfPrimary
   }
 }
 
-void mdtSqlSchemaTable::addField(const QSqlField & field, bool isPartOfPrimaryKey) 
+void mdtSqlTableSchema::addField(const QSqlField & field, bool isPartOfPrimaryKey) 
 {
 //   pvFields.append(field);
 //   if(isPartOfPrimaryKey){
@@ -106,7 +106,7 @@ void mdtSqlSchemaTable::addField(const QSqlField & field, bool isPartOfPrimaryKe
 //   }
 }
 
-QStringList mdtSqlSchemaTable::getFieldNameList() const
+QStringList mdtSqlTableSchema::getFieldNameList() const
 {
   QStringList names;
 
@@ -117,7 +117,7 @@ QStringList mdtSqlSchemaTable::getFieldNameList() const
   return names;
 }
 
-mdtSqlField mdtSqlSchemaTable::field(const QString& fieldName) const
+mdtSqlField mdtSqlTableSchema::field(const QString& fieldName) const
 {
   for(const auto & field : pvFields){
     if(field.name() == fieldName){
@@ -127,7 +127,7 @@ mdtSqlField mdtSqlSchemaTable::field(const QString& fieldName) const
   return mdtSqlField();
 }
 
-bool mdtSqlSchemaTable::isFieldPartOfPrimaryKey(int index) const
+bool mdtSqlTableSchema::isFieldPartOfPrimaryKey(int index) const
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < pvFields.size());
@@ -166,19 +166,19 @@ bool mdtSqlSchemaTable::isFieldPartOfPrimaryKey(int index) const
 //   return mdtSqlFieldType::nameFromType(pvFields.at(index).type(), driverType);
 // }
 
-void mdtSqlSchemaTable::addIndex(const mdtSqlIndex & index)
+void mdtSqlTableSchema::addIndex(const mdtSqlIndex & index)
 {
   pvIndexes.append(index);
 }
 
-void mdtSqlSchemaTable::addForeignKey(const mdtSqlForeignKey & fk)
+void mdtSqlTableSchema::addForeignKey(const mdtSqlForeignKey & fk)
 {
   Q_ASSERT(!fk.parentTableName().isEmpty());
   Q_ASSERT(childFieldsExistsInTable(fk));
   pvForeignKeys.append(fk);
 }
 
-void mdtSqlSchemaTable::setForeignKeyAt(int index, const mdtSqlForeignKey& fk)
+void mdtSqlTableSchema::setForeignKeyAt(int index, const mdtSqlForeignKey& fk)
 {
   Q_ASSERT(!fk.parentTableName().isEmpty());
   Q_ASSERT(childFieldsExistsInTable(fk));
@@ -187,7 +187,7 @@ void mdtSqlSchemaTable::setForeignKeyAt(int index, const mdtSqlForeignKey& fk)
   pvForeignKeys[index] = fk;
 }
 
-mdtSqlForeignKey mdtSqlSchemaTable::foreignKeyReferencing(const QString & parentTableName) const
+mdtSqlForeignKey mdtSqlTableSchema::foreignKeyReferencing(const QString & parentTableName) const
 {
   mdtSqlForeignKey fk;
 
@@ -202,7 +202,7 @@ mdtSqlForeignKey mdtSqlSchemaTable::foreignKeyReferencing(const QString & parent
   return fk;
 }
 
-void mdtSqlSchemaTable::addIndex(const QString & name, bool unique) 
+void mdtSqlTableSchema::addIndex(const QString & name, bool unique) 
 {
 //   if(pvIndexes.contains(name)){
 //     return;
@@ -211,7 +211,7 @@ void mdtSqlSchemaTable::addIndex(const QString & name, bool unique)
 //   pvIndexeAtIsUnique.insert(name, unique);
 }
 
-bool mdtSqlSchemaTable::addFieldToIndex(const QString & indexName, const QString & fieldName) 
+bool mdtSqlTableSchema::addFieldToIndex(const QString & indexName, const QString & fieldName) 
 {
 //   QSqlField field;
 //   int i;
@@ -241,7 +241,7 @@ bool mdtSqlSchemaTable::addFieldToIndex(const QString & indexName, const QString
 //   return true;
 }
 
-void mdtSqlSchemaTable::addForeignKey(const QString & name, const QString & referingTableName, const foreignKeyAction_t & actionOnDelete, const foreignKeyAction_t & actionOnUpdate) 
+void mdtSqlTableSchema::addForeignKey(const QString & name, const QString & referingTableName, const foreignKeyAction_t & actionOnDelete, const foreignKeyAction_t & actionOnUpdate) 
 {
 //   mdtSqlSchemaTableForeignKeyInfo info;
 // 
@@ -254,7 +254,7 @@ void mdtSqlSchemaTable::addForeignKey(const QString & name, const QString & refe
 //   pvForeignKeys.insert(name, info);
 }
 
-bool mdtSqlSchemaTable::addFieldToForeignKey(const QString & foreignKeyName, const QString & fieldName, const QString & referingFieldName) 
+bool mdtSqlTableSchema::addFieldToForeignKey(const QString & foreignKeyName, const QString & fieldName, const QString & referingFieldName) 
 {
 //   QSqlField field, referingField;
 //   int i;
@@ -285,7 +285,7 @@ bool mdtSqlSchemaTable::addFieldToForeignKey(const QString & foreignKeyName, con
 //   return true;
 }
 
-bool mdtSqlSchemaTable::updateForeignKeyReferingTable(const QString & name, const QString & referingTableName)
+bool mdtSqlTableSchema::updateForeignKeyReferingTable(const QString & name, const QString & referingTableName)
 {
 //   if(!pvForeignKeys.contains(name)){
 //     pvLastError.setError("Table '" + pvTableName + "' : cannot update refering table for foreign key '" + name\
@@ -299,7 +299,7 @@ bool mdtSqlSchemaTable::updateForeignKeyReferingTable(const QString & name, cons
 //   return true;
 }
 
-bool mdtSqlSchemaTable::setupFromTable(const QString & name, QSqlDatabase db)
+bool mdtSqlTableSchema::setupFromTable(const QString & name, QSqlDatabase db)
 {
   Q_ASSERT(db.isOpen());
 
@@ -347,7 +347,7 @@ bool mdtSqlSchemaTable::setupFromTable(const QString & name, QSqlDatabase db)
   return true;
 }
 
-QStringList mdtSqlSchemaTable::getSqlForCreateTable(const QSqlDatabase & db) const
+QStringList mdtSqlTableSchema::getSqlForCreateTable(const QSqlDatabase & db) const
 {
   Q_ASSERT(db.isValid());
 
@@ -430,7 +430,7 @@ QStringList mdtSqlSchemaTable::getSqlForCreateTable(const QSqlDatabase & db) con
   return sqlList;
 }
 
-QStringList mdtSqlSchemaTable::getSqlForDropTable(const QSqlDatabase & db) const
+QStringList mdtSqlTableSchema::getSqlForDropTable(const QSqlDatabase & db) const
 {
   Q_ASSERT(db.isValid());
 
@@ -473,7 +473,7 @@ QStringList mdtSqlSchemaTable::getSqlForDropTable(const QSqlDatabase & db) const
   return sqlList;
 }
 
-QString mdtSqlSchemaTable::sqlForCreateTable()
+QString mdtSqlTableSchema::sqlForCreateTable()
 {
   QString sql;
 
@@ -503,7 +503,7 @@ QString mdtSqlSchemaTable::sqlForCreateTable()
   return sql;
 }
 
-QString mdtSqlSchemaTable::sqlForDropTable() const
+QString mdtSqlTableSchema::sqlForDropTable() const
 {
   QString sql;
 //   QString delimiter;
@@ -531,14 +531,14 @@ QString mdtSqlSchemaTable::sqlForDropTable() const
   return sql;
 }
 
-bool mdtSqlSchemaTable::includePrimaryKeyDefinitionInField(const QString & fieldName) const
+bool mdtSqlTableSchema::includePrimaryKeyDefinitionInField(const QString & fieldName) const
 {
   auto pk = pvPrimaryKey;
 
   return ( (pk.fieldCount() == 1) && (pk.fieldName(0) == fieldName) );
 }
 
-bool mdtSqlSchemaTable::childFieldsExistsInTable(const mdtSqlForeignKey & fk)
+bool mdtSqlTableSchema::childFieldsExistsInTable(const mdtSqlForeignKey & fk)
 {
   for(const auto & childTableFieldName : fk.childTableFields()){
     if(fieldIndex(childTableFieldName) >= 0){
@@ -548,7 +548,7 @@ bool mdtSqlSchemaTable::childFieldsExistsInTable(const mdtSqlForeignKey & fk)
   return false;
 }
 
-mdtSqlSchemaTable::foreignKeyAction_t mdtSqlSchemaTable::foreignKeyActionFromName(const QString & name) const
+mdtSqlTableSchema::foreignKeyAction_t mdtSqlTableSchema::foreignKeyActionFromName(const QString & name) const
 {
 //   if(name.toUpper() == "CASCADE"){
 //     return Cascade;
@@ -562,7 +562,7 @@ mdtSqlSchemaTable::foreignKeyAction_t mdtSqlSchemaTable::foreignKeyActionFromNam
 //   return NoAction;
 }
 
-bool mdtSqlSchemaTable::setupFieldsFromDatabase(const QSqlDatabase & db)
+bool mdtSqlTableSchema::setupFieldsFromDatabase(const QSqlDatabase & db)
 {
   mdtSqlDriverType::Type driverType = mdtSqlDriverType::typeFromName(db.driverName());
 
@@ -586,7 +586,7 @@ bool mdtSqlSchemaTable::setupFieldsFromDatabase(const QSqlDatabase & db)
   return true;
 }
 
-bool mdtSqlSchemaTable::setupFieldsFromDatabaseSqlite(const QSqlDatabase & db)
+bool mdtSqlTableSchema::setupFieldsFromDatabaseSqlite(const QSqlDatabase & db)
 {
   QSqlRecord dbRecord = db.record(pvTableName);
   ///QSqlRecord record;
@@ -638,7 +638,7 @@ bool mdtSqlSchemaTable::setupFieldsFromDatabaseSqlite(const QSqlDatabase & db)
   return true;
 }
 
-bool mdtSqlSchemaTable::setupIndexesFromDatabase(const QSqlDatabase & db)
+bool mdtSqlTableSchema::setupIndexesFromDatabase(const QSqlDatabase & db)
 {
   switch(mdtSqlDriverType::typeFromName(db.driverName())){
     case mdtSqlDriverType::SQLite:
@@ -654,7 +654,7 @@ bool mdtSqlSchemaTable::setupIndexesFromDatabase(const QSqlDatabase & db)
   return false;
 }
 
-bool mdtSqlSchemaTable::setupIndexesFromDatabaseSqlite(const QSqlDatabase & db)
+bool mdtSqlTableSchema::setupIndexesFromDatabaseSqlite(const QSqlDatabase & db)
 {
   QSqlQuery query(db);
   QString sql;
@@ -723,7 +723,7 @@ bool mdtSqlSchemaTable::setupIndexesFromDatabaseSqlite(const QSqlDatabase & db)
   return true;
 }
 
-bool mdtSqlSchemaTable::setupForeignKeysFromDatabase(const QSqlDatabase & db)
+bool mdtSqlTableSchema::setupForeignKeysFromDatabase(const QSqlDatabase & db)
 {
   switch(mdtSqlDriverType::typeFromName(db.driverName())){
     case mdtSqlDriverType::SQLite:
@@ -739,7 +739,7 @@ bool mdtSqlSchemaTable::setupForeignKeysFromDatabase(const QSqlDatabase & db)
   return false;
 }
 
-bool mdtSqlSchemaTable::setupForeignKeysFromDatabaseSqlite(const QSqlDatabase & db)
+bool mdtSqlTableSchema::setupForeignKeysFromDatabaseSqlite(const QSqlDatabase & db)
 {
   QSqlQuery query(db);
   QString sql;
