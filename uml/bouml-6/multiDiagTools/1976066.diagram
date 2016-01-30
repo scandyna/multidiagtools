@@ -2,11 +2,11 @@ format 211
 
 classcanvas 128002 class_ref 147202 // QAbstractTableModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 206 42.2 2000
+  xyz 206 41.3 2000
 end
 classcanvas 128130 class_ref 2283650 // ExpressionMatchItemModel
   classdiagramsettings member_max_width 0 end
-  xyz 186 130.6 2006
+  xyz 186 130.4 2006
 end
 classcanvas 128386 class_ref 2336898 // RelatedTableInsertMatchItemModel
   classdiagramsettings hide_operations no member_max_width 0 end
@@ -14,15 +14,15 @@ classcanvas 128386 class_ref 2336898 // RelatedTableInsertMatchItemModel
 end
 classcanvas 128642 class_ref 2174082 // TableMapping
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 799.6 96.4 2012
+  xyz 799.6 96.6 2012
 end
 classcanvas 128898 class_ref 2257026 // ExpressionMatchItem
   classdiagramsettings member_max_width 0 end
-  xyz 887.8 304.8 3005
+  xyz 888.7 305.7 3005
 end
 classcanvas 129154 class_ref 2330242 // RelatedTableInsertExpression
   classdiagramsettings member_max_width 0 end
-  xyz 560.2 304.8 3011
+  xyz 558.1 306.9 3011
 end
 relationcanvas 128258 relation_ref 2547842 // <generalisation>
   from ref 128130 z 2007 to ref 128002
@@ -44,18 +44,18 @@ relationcanvas 129026 relation_ref 2588418 // <directional composition>
   geometry VHV unfixed
   decenter_begin 920
   decenter_end 56
-  from ref 128130 z 3006 to point 357 216.2
-  line 129538 z 3006 to point 901 216.2
+  from ref 128130 z 3006 to point 357 216.4
+  line 129538 z 3006 to point 902 216.4
   line 129666 z 3006 to ref 128898
   no_role_a no_role_b
-  multiplicity_a_pos 888 277 3000 no_multiplicity_b
+  multiplicity_a_pos 888 280 3000 no_multiplicity_b
 end
 relationcanvas 129282 relation_ref 2595458 // <directional composition>
   decenter_begin 533
   decenter_end 533
   from ref 129154 z 3012 to ref 128898
   no_role_a no_role_b
-  multiplicity_a_pos 871 369 3000 no_multiplicity_b
+  multiplicity_a_pos 870 370 3000 no_multiplicity_b
 end
 relationcanvas 129410 relation_ref 2608514 // <dependency>
   decenter_end 533

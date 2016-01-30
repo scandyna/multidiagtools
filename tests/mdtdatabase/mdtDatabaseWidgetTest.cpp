@@ -22,6 +22,7 @@
 ///#include "mdtSqlDatabaseSqlite.h"
 #include "mdtSqlForeignKey.h"
 #include "mdtSqlTableSchema.h"
+#include "mdtSqlTableSchemaModel.h"
 #include "mdtSqlDatabaseSchema.h"
 #include "mdtSqlForeignKeySetting.h"
 #include "mdtApplication.h"
@@ -37,6 +38,8 @@
 #include "mdtSqlTableViewController.h"
 #include "mdtUiMessageHandler.h"
 #include "mdtSqlForm.h"
+#include "mdt/sql/FieldSelectionProxyModel.h"
+#include "mdt/sql/FieldSelectionDialog.h"
 #include "mdtSqlFieldSelectionDialog.h"
 #include "mdtDoubleEdit.h"
 #include "mdtSqlDialog.h"
@@ -66,6 +69,7 @@
 #include <QList>
 #include <QFileInfo>
 #include <QTableView>
+#include <QTreeView>
 #include <QItemSelectionModel>
 #include <QVBoxLayout>
 #include <QPoint>
@@ -4141,6 +4145,167 @@ void mdtDatabaseWidgetTest::mdtSqlDialogTest()
   }
   */
 
+}
+
+void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
+{
+  using mdt::sql::FieldSelectionProxyModel;
+  using mdt::sql::FieldIndexList;
+
+  const int fieldNameColumn = 1;
+  QSqlDatabase db = pvDatabase;
+  mdtSqlTableSchema ts;
+  mdtSqlTableSchemaModel tsModel;
+  FieldSelectionProxyModel proxyModel;
+  FieldIndexList fiList;
+  QModelIndex index;
+  QTableView tableView;
+  QTreeView treeView;
+  QComboBox combobox;
+
+  /** \todo Add support of getting selected field indexes and check it
+   */
+  /*
+   * Setup models
+   */
+  QVERIFY(ts.setupFromTable("Client_tbl", db));
+  tsModel.setTableSchema(ts, mdtSqlDriverType::typeFromName(db.driverName()));
+  proxyModel.setSourceModel(&tsModel);
+  /*
+   * Setup views
+   */
+  tableView.setModel(&proxyModel);
+  tableView.resize(600, 300);
+  tableView.show();
+  treeView.setModel(&proxyModel);
+  treeView.show();
+  combobox.setModel(&proxyModel);
+  combobox.setModelColumn(fieldNameColumn);
+  combobox.show();
+  /*
+   * Initial state
+   */
+  QCOMPARE(proxyModel.rowCount(), 4);
+  // Check row 0
+  index = proxyModel.index(0, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("Id_PK"));
+  // Check row 1
+  index = proxyModel.index(1, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("FirstName"));
+  // Check row 2
+  index = proxyModel.index(2, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("Remarks"));
+  // Check row 3
+  index = proxyModel.index(3, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("SomeValueDouble"));
+  /*
+   * Hide FirstName field
+   */
+  fiList.clear();
+  fiList.append(1);
+  proxyModel.setFieldIndexesToHide(fiList);
+  QCOMPARE(proxyModel.rowCount(), 3);
+  // Check row 0
+  index = proxyModel.index(0, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("Id_PK"));
+  // Check row 1
+  index = proxyModel.index(1, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("Remarks"));
+  // Check row 2
+  index = proxyModel.index(2, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("SomeValueDouble"));
+  /*
+   * Sort ascending and check
+   */
+  proxyModel.sort(fieldNameColumn, Qt::AscendingOrder);
+  // Check row 0
+  index = proxyModel.index(0, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("Id_PK"));
+  // Check row 1
+  index = proxyModel.index(1, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("Remarks"));
+  // Check row 2
+  index = proxyModel.index(2, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("SomeValueDouble"));
+  /*
+   * Sort descending and check
+   */
+  proxyModel.sort(fieldNameColumn, Qt::DescendingOrder);
+  // Check row 0
+  index = proxyModel.index(0, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("SomeValueDouble"));
+  // Check row 1
+  index = proxyModel.index(1, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("Remarks"));
+  // Check row 2
+  index = proxyModel.index(2, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("Id_PK"));
+  /*
+   * Show all fields again
+   */
+  proxyModel.showAllFieldIndexes();
+  proxyModel.sort(fieldNameColumn, Qt::AscendingOrder);
+  QCOMPARE(proxyModel.rowCount(), 4);
+  // Check row 0
+  index = proxyModel.index(0, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("FirstName"));
+  // Check row 1
+  index = proxyModel.index(1, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("Id_PK"));
+  // Check row 2
+  index = proxyModel.index(2, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("Remarks"));
+  // Check row 3
+  index = proxyModel.index(3, fieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("SomeValueDouble"));
+
+  /*
+   * Play
+   */
+  while(tableView.isVisible()){
+    QTest::qWait(500);
+  }
+}
+
+void mdtDatabaseWidgetTest::fieldSelectionDialogTest()
+{
+  using mdt::sql::FieldSelectionDialog;
+
+  FieldSelectionDialog dialog;
+  auto db = pvDatabase;
+  mdtExpected<bool> ret;
+
+  /*
+   * Initial state
+   */
+  
+  /*
+   * Set table
+   */
+  ret = dialog.setTable("Client_tbl", db);
+  QVERIFY(ret);
+  
+  /*
+   * Play
+   */
+  dialog.exec();
 }
 
 void mdtDatabaseWidgetTest::sqlFieldSelectionDialogTest()

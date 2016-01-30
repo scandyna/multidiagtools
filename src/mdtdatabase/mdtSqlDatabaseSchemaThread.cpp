@@ -21,7 +21,7 @@
 #include "mdtSqlDatabaseSchemaThread.h"
 #include "mdtSqlDatabaseSchemaModel.h"
 #include "mdtAlgorithms.h"
-#include "mdtSqlError.h"
+#include "mdt/sql/error/Error.h"
 #include <QSqlError>
 #include <QSqlQuery>
 
@@ -144,7 +144,7 @@ QSqlDatabase mdtSqlDatabaseSchemaThread::createConnection()
   db.setConnectOptions(pvDatabaseInfo.connectOptions());
   if(!db.open()){
     auto error = mdtErrorNewQ(tr("Connection to database") + " '" + db.databaseName() + "' " + tr("failed."), mdtError::Error, this);
-    error.stackError(mdtSqlError::fromQSqlError(db.lastError()));
+    error.stackError(mdt::sql::error::fromQSqlError(db.lastError()));
     error.commit();
     emit globalErrorOccured(error);
   }
@@ -196,7 +196,7 @@ bool mdtSqlDatabaseSchemaThread::createTable(const mdtSqlTableSchema & ts, const
   for(const auto & sql : ts.getSqlForCreateTable(db)){
     if(!query.exec(sql)){
       auto error = mdtErrorNewQ(tr("Cannot create table '") + tableName + tr("'"), mdtError::Error, this);
-      error.stackError(mdtSqlError::fromQSqlError(query.lastError()));
+      error.stackError(mdt::sql::error::fromQSqlError(query.lastError()));
       error.commit();
       emit objectErrorOccured(mdtSqlDatabaseSchemaModel::Table, tableName, error);
       emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Table, tableName, 0);
@@ -255,7 +255,7 @@ bool mdtSqlDatabaseSchemaThread::populateTable(const mdtSqlTablePopulationSchema
     // Build prepare statement
     if(!query.prepare(sql)){
       auto error = mdtErrorNewQ(tr("Cannot populate table '") + tps.tableName() + tr("'"), mdtError::Error, this);
-      error.stackError(mdtSqlError::fromQSqlError(query.lastError()));
+      error.stackError(mdt::sql::error::fromQSqlError(query.lastError()));
       error.commit();
       emit objectErrorOccured(mdtSqlDatabaseSchemaModel::TablePopulation, name, error);
       emit objectProgressChanged(mdtSqlDatabaseSchemaModel::TablePopulation, name, 0);
@@ -268,7 +268,7 @@ bool mdtSqlDatabaseSchemaThread::populateTable(const mdtSqlTablePopulationSchema
     // Exec query
     if(!query.exec()){
       auto error = mdtErrorNewQ(tr("Cannot populate table '") + tps.tableName() + tr("'"), mdtError::Error, this);
-      error.stackError(mdtSqlError::fromQSqlError(query.lastError()));
+      error.stackError(mdt::sql::error::fromQSqlError(query.lastError()));
       error.commit();
       emit objectErrorOccured(mdtSqlDatabaseSchemaModel::TablePopulation, name, error);
       emit objectProgressChanged(mdtSqlDatabaseSchemaModel::TablePopulation, name, 0);
@@ -327,7 +327,7 @@ bool mdtSqlDatabaseSchemaThread::createView(const mdtSqlViewSchema::Schema & vs,
   sql = vs.getSqlForDrop(db.driver());
   if(!query.exec(sql)){
     auto error = mdtErrorNewQ(tr("Cannot drop view '") + name + tr("'"), mdtError::Error, this);
-    error.stackError(mdtSqlError::fromQSqlError(query.lastError()));
+    error.stackError(mdt::sql::error::fromQSqlError(query.lastError()));
     error.commit();
     emit objectErrorOccured(mdtSqlDatabaseSchemaModel::View, name, error);
     emit objectProgressChanged(mdtSqlDatabaseSchemaModel::View, name, 0);
@@ -337,7 +337,7 @@ bool mdtSqlDatabaseSchemaThread::createView(const mdtSqlViewSchema::Schema & vs,
   sql = vs.getSqlForCreate(db.driver());
   if(!query.exec(sql)){
     auto error = mdtErrorNewQ(tr("Cannot create view '") + name + tr("'"), mdtError::Error, this);
-    error.stackError(mdtSqlError::fromQSqlError(query.lastError()));
+    error.stackError(mdt::sql::error::fromQSqlError(query.lastError()));
     error.commit();
     emit objectErrorOccured(mdtSqlDatabaseSchemaModel::View, name, error);
     emit objectProgressChanged(mdtSqlDatabaseSchemaModel::View, name, 0);
@@ -395,7 +395,7 @@ bool mdtSqlDatabaseSchemaThread::createTrigger(const mdtSqlTriggerSchema& trigge
   sql = trigger.getSqlForDropTrigger(db);
   if(!query.exec(sql)){
     auto error = mdtErrorNewQ(tr("Cannot drop trigger '") + name + tr("'"), mdtError::Error, this);
-    error.stackError(mdtSqlError::fromQSqlError(query.lastError()));
+    error.stackError(mdt::sql::error::fromQSqlError(query.lastError()));
     error.commit();
     emit objectErrorOccured(mdtSqlDatabaseSchemaModel::Trigger, name, error);
     emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Trigger, name, 0);
@@ -405,7 +405,7 @@ bool mdtSqlDatabaseSchemaThread::createTrigger(const mdtSqlTriggerSchema& trigge
   sql = trigger.getSqlForCreateTrigger(db);
   if(!query.exec(sql)){
     auto error = mdtErrorNewQ(tr("Cannot create trigger '") + name + tr("'"), mdtError::Error, this);
-    error.stackError(mdtSqlError::fromQSqlError(query.lastError()));
+    error.stackError(mdt::sql::error::fromQSqlError(query.lastError()));
     error.commit();
     emit objectErrorOccured(mdtSqlDatabaseSchemaModel::Trigger, name, error);
     emit objectProgressChanged(mdtSqlDatabaseSchemaModel::Trigger, name, 0);

@@ -32,6 +32,7 @@
 #include "mdtSqlTableSetupWidget.h"
 
 #include "mdtSqlField.h"
+#include "mdt/sql/FieldIndexList.h"
 #include "mdtSqlIndexBase.h"
 #include "mdtSqlIndex.h"
 #include "mdtSqlPrimaryKey.h"
@@ -421,6 +422,65 @@ void mdtDatabaseTest::sqlCollationTest()
   collation.setCaseSensitive(true);
   expectedSql = "BINARY";
   QCOMPARE(collation.getSql(mdtSqlDriverType::SQLite), expectedSql);
+}
+
+void mdtDatabaseTest::fieldIndexListTest()
+{
+  using mdt::sql::FieldIndexList;
+
+  FieldIndexList dfIndexList;
+  FieldIndexList a, b;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(dfIndexList.count(), 0);
+  QVERIFY(dfIndexList.isEmpty());
+  /*
+   * Set / get
+   */
+  // Add a field index
+  dfIndexList.append(10);
+  QCOMPARE(dfIndexList.count(), 1);
+  QVERIFY(!dfIndexList.isEmpty());
+  // Getters
+  QCOMPARE(dfIndexList.at(0), 10);
+  // Check iterating
+  for(const auto i : dfIndexList){
+    QCOMPARE(i, 10);
+  }
+  // Check assignation of a vector
+  dfIndexList = {11, 12};
+  QCOMPARE(dfIndexList.count(), 2);
+  QCOMPARE(dfIndexList.at(0), 11);
+  QCOMPARE(dfIndexList.at(1), 12);
+  /*
+   * Clear
+   */
+  dfIndexList.clear();
+  QCOMPARE(dfIndexList.count(), 0);
+  QVERIFY(dfIndexList.isEmpty());
+  /*
+   * Comparisons
+   */
+  // a == b with 1 field index
+  a = {0};
+  b = {0};
+  QVERIFY(a == b);
+  QVERIFY(!(a < b));
+  QVERIFY(a <= b);
+  // a < b with 1 field index
+  a = {0};
+  b = {1};
+  QVERIFY(!(a == b));
+  QVERIFY(a < b);
+  QVERIFY(a <= b);
+  // a > b with 1 field index
+  a = {1};
+  b = {0};
+  QVERIFY(!(a == b));
+  QVERIFY(!(a < b));
+  QVERIFY(!(a <= b));
 }
 
 void mdtDatabaseTest::sqlFieldTest()

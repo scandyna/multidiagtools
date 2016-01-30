@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_COPIER_FIELD_INDEX_LIST_H
-#define MDT_SQL_COPIER_FIELD_INDEX_LIST_H
+#ifndef MDT_SQL_FIELD_INDEX_LIST_H
+#define MDT_SQL_FIELD_INDEX_LIST_H
 
 #include <QVector>
 #include <QMetaType>
@@ -27,9 +27,9 @@
 
 //#include <QDebug>
 
-namespace mdt{ namespace sql{ namespace copier{
+namespace mdt{ namespace sql{
 
-  /*! \brief List of field indexes used in TableMapping
+  /*! \brief List of field indexes used in database module
    */
   class FieldIndexList
   {
@@ -193,8 +193,8 @@ namespace mdt{ namespace sql{ namespace copier{
     QVector<int> pvIndexes;
   };
 
-}}} // namespace mdt{ namespace sql{ namespace copier{
+}} // namespace mdt{ namespace sql{
 
-Q_DECLARE_METATYPE(mdt::sql::copier::FieldIndexList)
+Q_DECLARE_METATYPE(mdt::sql::FieldIndexList)
 
-#endif // #ifndef MDT_SQL_COPIER_FIELD_INDEX_LIST_H
+#endif // #ifndef MDT_SQL_FIELD_INDEX_LIST_H

@@ -43,8 +43,6 @@ class mdtSqlCopierTest : public mdtTest
 
   void sqlFieldSetupDataTest();
 
-  void fieldIndexListTest();
-
   void fieldMappingTest();
   void fixedValueTest();
 

@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 114
+  revision 115
   modified_by 2 "philippe"
   // class settings
   
@@ -3392,6 +3392,19 @@ ${inlines}
 	  param in name "left" type class_ref 147330 // QModelIndex
 	  param in name "right" type class_ref 147330 // QModelIndex
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 3550466 "filterAcceptsRow"
+	abstract cpp_virtual protected explicit_return_type "bool"
+	nparams 2
+	  param in name "source_row" explicit_type "int"
+	  param in name "source_parent" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	

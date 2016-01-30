@@ -21,7 +21,7 @@
 #include "mdtSqlDatabaseSqlite.h"
 #include "mdtSqlDriverType.h"
 #include "mdtSqlForeignKeySetting.h"
-#include "mdtSqlError.h"
+#include "mdt/sql/error/Error.h"
 #include "mdtFileError.h"
 #include <QString>
 #include <QSqlQuery>
@@ -208,7 +208,7 @@ bool mdtSqlDatabaseSqlite::openDatabasePv()
     pvLastError.setError(tr("Cannot open database '") + fileInfo.fileName() + "'", mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseSqlite");
     pvLastError.setInformativeText(tr("Check that you have write access to directory '") + fileInfo.absoluteDir().path() + tr("'."));
-    pvLastError.stackError(mdtSqlError::fromQSqlError(pvDatabase.lastError()));
+    pvLastError.stackError(mdt::sql::error::fromQSqlError(pvDatabase.lastError()));
     pvLastError.commit();
     return false;
   }
@@ -226,7 +226,7 @@ bool mdtSqlDatabaseSqlite::openDatabasePv()
   if(!query.exec("PRAGMA synchronous = NORMAL")){
     pvLastError.setError(tr("Cannot set PRAGMA synchronous to NORMAL (its probably set to FULL now). Database: '") + pvDatabase.databaseName() + "'", mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlDatabaseSqlite");
-    pvLastError.stackError(mdtSqlError::fromQSqlError(pvDatabase.lastError()));
+    pvLastError.stackError(mdt::sql::error::fromQSqlError(pvDatabase.lastError()));
     pvLastError.commit();
     close();
     return false;

@@ -1,0 +1,38 @@
+format 211
+
+classcanvas 128002 class_ref 2349954 // FieldSelectionProxyModel
+  classdiagramsettings hide_attributes no hide_operations no member_max_width 0 end
+  xyz 226 303 2000
+end
+classcanvas 128130 class_ref 719874 // QSortFilterProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 386 218 2000
+end
+classcanvas 128386 class_ref 146946 // QAbstractItemModel
+  classdiagramsettings member_max_width 0 end
+  xyz 393 42 2011
+end
+classcanvas 128642 class_ref 719618 // QAbstractProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 388 130 2017
+end
+classcanvas 129410 class_ref 910210 // mdtSqlTableSchema
+  classdiagramsettings member_max_width 0 end
+  xyz 41 322 2000
+end
+relationcanvas 128770 relation_ref 901890 // <generalisation>
+  from ref 128642 z 2018 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 902146 // <generalisation>
+  from ref 128130 z 2018 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 2621698 // <generalisation>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

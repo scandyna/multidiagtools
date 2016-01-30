@@ -23,7 +23,7 @@
 
 #include "AbstractTableMappingItem.h"
 #include "ExpressionMatchItem.h"
-#include "FieldIndexList.h"
+#include "mdt/sql/FieldIndexList.h"
 #include <QString>
 #include <vector>
 

@@ -22,7 +22,7 @@
 #define MDT_SQL_COPIER_FIELD_MAPPING_H
 
 #include "AbstractTableMappingItem.h"
-#include "FieldIndexList.h"
+#include "mdt/sql/FieldIndexList.h"
 
 namespace mdt{ namespace sql{ namespace copier{
 

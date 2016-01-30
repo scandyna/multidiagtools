@@ -129,6 +129,9 @@ class mdtDatabaseWidgetTest : public mdtTest
   void sqlFormTest();
   void mdtSqlDialogTest();
 
+  void fieldSelectionProxyModelTest();
+  void fieldSelectionDialogTest();
+
   void sqlFieldSelectionDialogTest();
 
 //   void sqlApplicationWidgetsTest();

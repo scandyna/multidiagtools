@@ -22,7 +22,7 @@
 #define MDT_SQL_COPIER_TABLE_MAPPING_ITEM_H
 
 #include "TableMappingItemState.h"
-#include "FieldIndexList.h"
+#include "mdt/sql/FieldIndexList.h"
 #include <QMetaType>
 #include <QSharedDataPointer>
 #include <QVariant>

@@ -7,14 +7,26 @@ diagrams
     920 911 90 21 0 0
   classdiagram_ref 1976194 // UniqueCheckMatchItemModel
     120 106 100 18 0 0
-  active  classdiagram_ref 1982722 // RelatedTableInsertExpressionDialog
+  classdiagram_ref 1982722 // RelatedTableInsertExpressionDialog
     920 911 100 18 0 0
+  classdiagram_ref 1929602 // sandbox
+    120 106 100 4 0 0
+  classdiagram_ref 1989250 // FieldSelectionProxyModel
+    920 916 100 4 0 0
+  active  classdiagram_ref 1995778 // FieldSelectionDialog
+    920 911 100 4 0 0
 end
 show_stereotypes
+selected 
+package_ref 129 // multiDiagTools
 open
-  classview_ref 894082 // sqlCsvImport
-  classview_ref 947074 // FieldSelection
   
-  package_ref 260866 // Boost
+package_ref 315650 // error
+  classview_ref 927490 // TableMappingItem
+  class_ref 2349954 // FieldSelectionProxyModel
+  class_ref 2356482 // FieldSelectionDialog
+  class_ref 719874 // QSortFilterProxyModel
+  
+package_ref 260866 // Boost
 end
 end

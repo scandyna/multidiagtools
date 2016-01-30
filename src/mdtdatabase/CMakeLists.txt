@@ -7,7 +7,7 @@ project (multidiagtools)
 
 # Liste des fichiers sources
 set (SOURCES_FILES
-          mdtSqlError.cpp
+          mdt/sql/error/Error.cpp
           mdtAbstractSqlTableController.cpp
           mdtSqlFieldHandler.cpp
           mdtSqlDataValidator.cpp
@@ -33,8 +33,11 @@ set (SOURCES_FILES
           mdtSqlDatabaseBasicInfoWidget.cpp
           mdtSqlDatabaseSqlite.cpp
           mdtSqlDatabaseDialogSqlite.cpp
-          
+          # Field selection
+          mdt/sql/FieldSelectionProxyModel.cpp
+          mdt/sql/FieldSelectionDialog.cpp
           mdtSqlFieldSelectionDialog.cpp
+
           mdtSqlTransaction.cpp
           mdtSqlForeignKeySetting.cpp
           

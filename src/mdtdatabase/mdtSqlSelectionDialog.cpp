@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtSqlSelectionDialog.h"
 #include "mdtSortFilterProxyModel.h"
-#include "mdtSqlError.h"
+#include "mdt/sql/error/Error.h"
 #include <QSqlQueryModel>
 #include <QSqlField>
 #include <QDialogButtonBox>
@@ -71,7 +71,7 @@ bool mdtSqlSelectionDialog::setQuery(const QString& sql, QSqlDatabase db, bool a
   if(sqlError.isValid()){
     pvLastError.setError(tr("Unable to get data for given SQL query") + ": '" + sql + "'", mdtError::Error);
     MDT_ERROR_SET_SRC(pvLastError, "mdtSqlSelectionDialog");
-    pvLastError.stackError(mdtSqlError::fromQSqlError(sqlError));
+    pvLastError.stackError(mdt::sql::error::fromQSqlError(sqlError));
     pvLastError.commit();
     return false;
   }

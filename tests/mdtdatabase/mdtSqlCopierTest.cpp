@@ -27,7 +27,7 @@
 #include "mdtSqlRecord.h"
 #include "mdtSqlTransaction.h"
 #include "mdtSqlCopierDataMapping.h"
-#include "mdt/sql/copier/FieldIndexList.h"
+///#include "mdt/sql/FieldIndexList.h"
 #include "mdt/sql/copier/TableMappingItem.h"
 #include "mdt/sql/copier/FieldMapping.h"
 #include "mdt/sql/copier/FixedValue.h"
@@ -424,65 +424,65 @@ void mdtSqlCopierTest::sqlFieldSetupDataTest()
   QVERIFY(data.isNull());
 }
 
-void mdtSqlCopierTest::fieldIndexListTest()
-{
-  using mdt::sql::copier::FieldIndexList;
-
-  FieldIndexList dfIndexList;
-  FieldIndexList a, b;
-
-  /*
-   * Initial state
-   */
-  QCOMPARE(dfIndexList.count(), 0);
-  QVERIFY(dfIndexList.isEmpty());
-  /*
-   * Set / get
-   */
-  // Add a field index
-  dfIndexList.append(10);
-  QCOMPARE(dfIndexList.count(), 1);
-  QVERIFY(!dfIndexList.isEmpty());
-  // Getters
-  QCOMPARE(dfIndexList.at(0), 10);
-  // Check iterating
-  for(const auto i : dfIndexList){
-    QCOMPARE(i, 10);
-  }
-  // Check assignation of a vector
-  dfIndexList = {11, 12};
-  QCOMPARE(dfIndexList.count(), 2);
-  QCOMPARE(dfIndexList.at(0), 11);
-  QCOMPARE(dfIndexList.at(1), 12);
-  /*
-   * Clear
-   */
-  dfIndexList.clear();
-  QCOMPARE(dfIndexList.count(), 0);
-  QVERIFY(dfIndexList.isEmpty());
-  /*
-   * Comparisons
-   */
-  // a == b with 1 field index
-  a = {0};
-  b = {0};
-  QVERIFY(a == b);
-  QVERIFY(!(a < b));
-  QVERIFY(a <= b);
-  // a < b with 1 field index
-  a = {0};
-  b = {1};
-  QVERIFY(!(a == b));
-  QVERIFY(a < b);
-  QVERIFY(a <= b);
-  // a > b with 1 field index
-  a = {1};
-  b = {0};
-  QVERIFY(!(a == b));
-  QVERIFY(!(a < b));
-  QVERIFY(!(a <= b));
-
-}
+// void mdtSqlCopierTest::fieldIndexListTest()
+// {
+//   using mdt::sql::FieldIndexList;
+// 
+//   FieldIndexList dfIndexList;
+//   FieldIndexList a, b;
+// 
+//   /*
+//    * Initial state
+//    */
+//   QCOMPARE(dfIndexList.count(), 0);
+//   QVERIFY(dfIndexList.isEmpty());
+//   /*
+//    * Set / get
+//    */
+//   // Add a field index
+//   dfIndexList.append(10);
+//   QCOMPARE(dfIndexList.count(), 1);
+//   QVERIFY(!dfIndexList.isEmpty());
+//   // Getters
+//   QCOMPARE(dfIndexList.at(0), 10);
+//   // Check iterating
+//   for(const auto i : dfIndexList){
+//     QCOMPARE(i, 10);
+//   }
+//   // Check assignation of a vector
+//   dfIndexList = {11, 12};
+//   QCOMPARE(dfIndexList.count(), 2);
+//   QCOMPARE(dfIndexList.at(0), 11);
+//   QCOMPARE(dfIndexList.at(1), 12);
+//   /*
+//    * Clear
+//    */
+//   dfIndexList.clear();
+//   QCOMPARE(dfIndexList.count(), 0);
+//   QVERIFY(dfIndexList.isEmpty());
+//   /*
+//    * Comparisons
+//    */
+//   // a == b with 1 field index
+//   a = {0};
+//   b = {0};
+//   QVERIFY(a == b);
+//   QVERIFY(!(a < b));
+//   QVERIFY(a <= b);
+//   // a < b with 1 field index
+//   a = {0};
+//   b = {1};
+//   QVERIFY(!(a == b));
+//   QVERIFY(a < b);
+//   QVERIFY(a <= b);
+//   // a > b with 1 field index
+//   a = {1};
+//   b = {0};
+//   QVERIFY(!(a == b));
+//   QVERIFY(!(a < b));
+//   QVERIFY(!(a <= b));
+// 
+// }
 
 void mdtSqlCopierTest::fieldMappingTest()
 {
@@ -1199,7 +1199,7 @@ void mdtSqlCopierTest::tableMappingItemTest()
 void mdtSqlCopierTest::tableMappingEditHelperContainsDFIndexesTest()
 {
   using mdt::sql::copier::TableMappingEditHelper;
-  using mdt::sql::copier::FieldIndexList;
+  using mdt::sql::FieldIndexList;
 
   QFETCH(FieldIndexList, itemDfiList);
   QFETCH(FieldIndexList, dfiList);
@@ -1210,7 +1210,7 @@ void mdtSqlCopierTest::tableMappingEditHelperContainsDFIndexesTest()
 
 void mdtSqlCopierTest::tableMappingEditHelperContainsDFIndexesTest_data()
 {
-  using mdt::sql::copier::FieldIndexList;
+  using mdt::sql::FieldIndexList;
 
   QTest::addColumn<FieldIndexList>("itemDfiList");
   QTest::addColumn<FieldIndexList>("dfiList");
@@ -1254,7 +1254,7 @@ void mdtSqlCopierTest::tableMappingEditHelperContainsDFIndexesTest_data()
 void mdtSqlCopierTest::tableMappingEditHelperRemoveItemsTest()
 {
   using mdt::sql::copier::TableMappingEditHelper;
-  using mdt::sql::copier::FieldIndexList;
+  using mdt::sql::FieldIndexList;
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::UniqueInsertExpression;
 
@@ -1301,7 +1301,7 @@ void mdtSqlCopierTest::tableMappingEditHelperRemoveItemsTest()
 
 void mdtSqlCopierTest::tableMappingEditHelperRemoveItemsTest_data()
 {
-  using mdt::sql::copier::FieldIndexList;
+  using mdt::sql::FieldIndexList;
 
   QTest::addColumn<QVector<FieldIndexList>>("allItems");
   QTest::addColumn<FieldIndexList>("item");
@@ -1549,7 +1549,7 @@ void mdtSqlCopierTest::tableMappingEditHelperRemoveItemsTest_data()
 void mdtSqlCopierTest::tableMappingEditHelperItemDfiToAddTest()
 {
   using mdt::sql::copier::TableMappingEditHelper;
-  using mdt::sql::copier::FieldIndexList;
+  using mdt::sql::FieldIndexList;
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::UniqueInsertExpression;
 
@@ -1580,7 +1580,7 @@ void mdtSqlCopierTest::tableMappingEditHelperItemDfiToAddTest()
 
 void mdtSqlCopierTest::tableMappingEditHelperItemDfiToAddTest_data()
 {
-  using mdt::sql::copier::FieldIndexList;
+  using mdt::sql::FieldIndexList;
 
   QTest::addColumn<QVector<FieldIndexList>>("allItems");
   QTest::addColumn<FieldIndexList>("item");
@@ -1796,7 +1796,7 @@ void mdtSqlCopierTest::tableMappingEditHelperInsertTest()
 
 void mdtSqlCopierTest::tableMappingEditHelperInsertTest_data()
 {
-  using mdt::sql::copier::FieldIndexList;
+  using mdt::sql::FieldIndexList;
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::UniqueInsertExpression;
 

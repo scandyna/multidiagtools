@@ -29,10 +29,10 @@ mdtSqlTableSchemaModel::mdtSqlTableSchemaModel(QObject *parent)
 {
 }
 
-void mdtSqlTableSchemaModel::setTableSchema(const mdtSqlTableSchema & st, mdtSqlDriverType::Type driverType)
+void mdtSqlTableSchemaModel::setTableSchema(const mdtSqlTableSchema & ts, mdtSqlDriverType::Type driverType)
 {
   beginResetModel();
-  pvSchema = st;
+  pvSchema = ts;
   pvDriverType = driverType;
   endResetModel();
 }

@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_FIELD_SELECTION_DIALOG_H
-#define MDT_SQL_FIELD_SELECTION_DIALOG_H
+#ifndef MDT_SQL_FIELD_SELECTION_DIALOG_OLD_H
+#define MDT_SQL_FIELD_SELECTION_DIALOG_OLD_H
 
 #include "ui_mdtSqlFieldSelectionDialog.h"
 #include <QString>
@@ -53,6 +53,7 @@ class mdtSqlFieldSelectionDialog : public QDialog, Ui::mdtSqlFieldSelectionDialo
 
   /*! \brief Constructor
    */
+  [[deprecated]]
   mdtSqlFieldSelectionDialog(QWidget * parent);
 
   /*! \brief Set message
@@ -98,4 +99,4 @@ class mdtSqlFieldSelectionDialog : public QDialog, Ui::mdtSqlFieldSelectionDialo
   QList<mdtSqlFieldSelectionDialogPrivate::selectionItem> pvItemList;
 };
 
-#endif // #ifndef MDT_SQL_FIELD_SELECTION_DIALOG_H
+#endif // #ifndef MDT_SQL_FIELD_SELECTION_DIALOG_OLD_H

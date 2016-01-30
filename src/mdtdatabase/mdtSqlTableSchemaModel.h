@@ -67,7 +67,7 @@ class mdtSqlTableSchemaModel : public QAbstractTableModel
 
   /*! \brief Set table schema
    */
-  void setTableSchema(const mdtSqlTableSchema & st, mdtSqlDriverType::Type driverType);
+  void setTableSchema(const mdtSqlTableSchema & ts, mdtSqlDriverType::Type driverType);
 
   /*! \brief Get field at given row
    *

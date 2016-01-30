@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,18 +18,17 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_ERROR_H
-#define MDT_SQL_ERROR_H
+#include "Error.h"
 
-#include "mdtError.h"
-#include <QSqlError>
+namespace mdt{ namespace sql{ namespace error{
 
-namespace mdtSqlError
+/*! \brief Get a mdtError from given QSqlError
+  */
+mdtError fromQSqlError(const QSqlError & sqlError)
 {
-  /*! \brief Get a mdtError from given QSqlError
-   */
-  mdtError fromQSqlError(const QSqlError & sqlError);
+  mdtError error;
+  error.setError<QSqlError::ErrorType>(sqlError.type(), sqlError.text(), mdtError::Error);
+  return error;
+}
 
-} // namespace mdtError
-
-#endif // #ifndef MDT_SQL_ERROR_H
+}}} // namespace mdt{ namespace sql{ namespace error{

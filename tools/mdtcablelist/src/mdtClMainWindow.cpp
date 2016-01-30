@@ -45,7 +45,7 @@
 #include "mdtTtBasicTester.h"
 #include "mdtTtBasicTesterWindow.h"
 #include "mdtTtBasicTestNodeCalibrationWindow.h"
-#include "mdtSqlError.h"
+#include "mdt/sql/error/Error.h"
 #include "mdtErrorDialog.h"
 #include <QAction>
 #include <QMessageBox>
@@ -664,7 +664,7 @@ bool mdtClMainWindow::createVehicleTypeActions()
   sql = "SELECT Id_PK, Type, SubType, SeriesNumber FROM VehicleType_tbl";
   if(!query.exec(sql)){
     auto error = mdtErrorNewQ(tr("Unable to get vehicle type list."), mdtError::Error, this);
-    error.stackError(mdtSqlError::fromQSqlError(query.lastError()));
+    error.stackError(mdt::sql::error::fromQSqlError(query.lastError()));
     error.commit();
     displayError(error);
     return false;

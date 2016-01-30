@@ -43,6 +43,8 @@ class mdtDatabaseTest : public mdtTest
 
   void sqlCollationTest();
 
+  void fieldIndexListTest();
+
   void sqlFieldTest();
   void sqlFieldSQLiteTest();
   void sqlFieldMySQLTest();

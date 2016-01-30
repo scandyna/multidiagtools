@@ -22,7 +22,7 @@
 #define MDT_SQL_COPIER_EXPRESSION_KEY_FIELD_SELECTION_DIALOG_H
 
 #include "ui_ExpressionKeyFieldSelectionDialog.h"
-#include "FieldIndexList.h"
+#include "mdt/sql/FieldIndexList.h"
 #include <QDialog>
 #include <QStringList>
 #include <memory>
