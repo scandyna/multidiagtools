@@ -23,7 +23,9 @@
 
 #include "FieldIndexList.h"
 #include <QSortFilterProxyModel>
-#include <vector>
+#include <QBitArray>
+
+///#include <vector>
 
 namespace mdt{ namespace sql{
 
@@ -42,6 +44,14 @@ namespace mdt{ namespace sql{
 
    public:
 
+    /*! \brief Field selection mode
+     */
+    enum FieldSelectionMode
+    {
+      MultiSelection,   /*!< Its possible to select more that 1 field (this is the default) */
+      SingleSelection   /*!< Only 1 field can be selected */
+    };
+
     /*! \brief Constructor
      */
     FieldSelectionProxyModel(QObject* parent = 0);
@@ -57,6 +67,34 @@ namespace mdt{ namespace sql{
     /*! \brief Show all field indexes
      */
     void showAllFieldIndexes();
+
+    /*! \brief Set field selection mode
+     *
+     * Will also clear current field selection.
+     */
+    void setFieldSelectionMode(FieldSelectionMode mode);
+
+    /*! \brief Get field selection mode
+     */
+    FieldSelectionMode fieldSelectionMode() const
+    {
+      return pvFieldSelectionMode;
+    }
+
+    /*! \brief Select or deselect field index
+     *
+     * \param fieldIndex Field index (can be different from row in this model)
+     * \param select If true, field index will be selected, else deselected
+     */
+    void setFieldIndexSelected(int fieldIndex, bool select);
+
+    /*! \brief Clear field index selection
+     */
+    void clearFieldIndexSelection();
+
+    /*! \brief Get list of selected field indexes
+     */
+    FieldIndexList getSelectedFieldIndexes() const;
 
     /*! \brief Get count of columns
      */
@@ -102,6 +140,17 @@ namespace mdt{ namespace sql{
      */
     bool setSelectionColumnData(int row, const QVariant & value, int role);
 
+    /*! \brief Set selection column value at row
+     */
+    void setSelectionColumnAt(int row, bool state);
+
+    /*! \brief Signal that field selection changed
+     *
+     * In MultiSelection mode, only given index will be signaled,
+     *  else all selections will
+     */
+    void signalSelectionColumnDataChanged(const QModelIndex & updatedIndex);
+
     /*! \brief Reset selection list
      */
     void resetSelectionList();
@@ -111,7 +160,8 @@ namespace mdt{ namespace sql{
     bool filterAcceptsRow(int source_row, const QModelIndex & source_parent) const override;
 
     FieldIndexList pvFieldIndexesToHide;
-    std::vector<bool> pvSelectionColumnList;
+    QBitArray pvSelectionColumnList;
+    FieldSelectionMode pvFieldSelectionMode;
   };
 
 }} // namespace mdt{ namespace sql{

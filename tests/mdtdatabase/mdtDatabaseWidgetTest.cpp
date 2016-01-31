@@ -4186,6 +4186,7 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
    * Initial state
    */
   QCOMPARE(proxyModel.rowCount(), 4);
+  QVERIFY(proxyModel.fieldSelectionMode() == FieldSelectionProxyModel::MultiSelection);
   // Check row 0
   index = proxyModel.index(0, fieldNameColumn);
   QVERIFY(index.isValid());
@@ -4202,6 +4203,24 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
   index = proxyModel.index(3, fieldNameColumn);
   QVERIFY(index.isValid());
   QCOMPARE(proxyModel.data(index), QVariant("SomeValueDouble"));
+  // Check selection
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 0);
+  // Select Id_PK and check
+  proxyModel.setFieldIndexSelected(0, true);
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 1);
+  QCOMPARE(fiList.at(0), 0);
+  // Select Remarks and check
+  proxyModel.setFieldIndexSelected(2, true);
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 2);
+  QCOMPARE(fiList.at(0), 0);
+  QCOMPARE(fiList.at(1), 2);
+  // Clear selection and check
+  proxyModel.clearFieldIndexSelection();
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 0);
   /*
    * Hide FirstName field
    */
@@ -4221,6 +4240,21 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
   index = proxyModel.index(2, fieldNameColumn);
   QVERIFY(index.isValid());
   QCOMPARE(proxyModel.data(index), QVariant("SomeValueDouble"));
+  // Clear selection and check
+  proxyModel.clearFieldIndexSelection();
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 0);
+  // Select Id_PK and check
+  proxyModel.setFieldIndexSelected(0, true);
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 1);
+  QCOMPARE(fiList.at(0), 0);
+  // Select Remarks and check
+  proxyModel.setFieldIndexSelected(2, true);
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 2);
+  QCOMPARE(fiList.at(0), 0);
+  QCOMPARE(fiList.at(1), 2);
   /*
    * Sort ascending and check
    */
@@ -4237,6 +4271,21 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
   index = proxyModel.index(2, fieldNameColumn);
   QVERIFY(index.isValid());
   QCOMPARE(proxyModel.data(index), QVariant("SomeValueDouble"));
+  // Clear selection and check
+  proxyModel.clearFieldIndexSelection();
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 0);
+  // Select Id_PK and check
+  proxyModel.setFieldIndexSelected(0, true);
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 1);
+  QCOMPARE(fiList.at(0), 0);
+  // Select Remarks and check
+  proxyModel.setFieldIndexSelected(2, true);
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 2);
+  QCOMPARE(fiList.at(0), 0);
+  QCOMPARE(fiList.at(1), 2);
   /*
    * Sort descending and check
    */
@@ -4253,6 +4302,21 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
   index = proxyModel.index(2, fieldNameColumn);
   QVERIFY(index.isValid());
   QCOMPARE(proxyModel.data(index), QVariant("Id_PK"));
+  // Clear selection and check
+  proxyModel.clearFieldIndexSelection();
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 0);
+  // Select Id_PK and check
+  proxyModel.setFieldIndexSelected(0, true);
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 1);
+  QCOMPARE(fiList.at(0), 0);
+  // Select Remarks and check
+  proxyModel.setFieldIndexSelected(2, true);
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 2);
+  QCOMPARE(fiList.at(0), 0);
+  QCOMPARE(fiList.at(1), 2);
   /*
    * Show all fields again
    */
@@ -4275,6 +4339,39 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
   index = proxyModel.index(3, fieldNameColumn);
   QVERIFY(index.isValid());
   QCOMPARE(proxyModel.data(index), QVariant("SomeValueDouble"));
+  // Clear selection and check
+  proxyModel.clearFieldIndexSelection();
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 0);
+  // Select Id_PK and check
+  proxyModel.setFieldIndexSelected(0, true);
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 1);
+  QCOMPARE(fiList.at(0), 0);
+  // Select Remarks and check
+  proxyModel.setFieldIndexSelected(2, true);
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 2);
+  QCOMPARE(fiList.at(0), 0);
+  QCOMPARE(fiList.at(1), 2);
+  /*
+   * Check single selection
+   */
+  proxyModel.setFieldSelectionMode(FieldSelectionProxyModel::SingleSelection);
+  QVERIFY(proxyModel.fieldSelectionMode() == FieldSelectionProxyModel::SingleSelection);
+  // Must also clear current selection
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 0);
+  // Select Id_PK and check
+  proxyModel.setFieldIndexSelected(0, true);
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 1);
+  QCOMPARE(fiList.at(0), 0);
+  // Select Remarks and check
+  proxyModel.setFieldIndexSelected(2, true);
+  fiList = proxyModel.getSelectedFieldIndexes();
+  QCOMPARE(fiList.count(), 1);
+  QCOMPARE(fiList.at(0), 2);
 
   /*
    * Play
