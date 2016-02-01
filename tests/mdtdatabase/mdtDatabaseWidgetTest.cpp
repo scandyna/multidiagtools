@@ -4152,7 +4152,7 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
   using mdt::sql::FieldSelectionProxyModel;
   using mdt::sql::FieldIndexList;
 
-  const int fieldNameColumn = 1;
+  const int fieldNameColumn = 0;
   QSqlDatabase db = pvDatabase;
   mdtSqlTableSchema ts;
   mdtSqlTableSchemaModel tsModel;
@@ -4163,8 +4163,6 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
   QTreeView treeView;
   QComboBox combobox;
 
-  /** \todo Add support of getting selected field indexes and check it
-   */
   /*
    * Setup models
    */
@@ -4186,11 +4184,24 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
    * Initial state
    */
   QCOMPARE(proxyModel.rowCount(), 4);
+  QCOMPARE(proxyModel.columnCount(), tsModel.columnCount());
   QVERIFY(proxyModel.fieldSelectionMode() == FieldSelectionProxyModel::MultiSelection);
-  // Check row 0
+  // Check row 0 - Field name
   index = proxyModel.index(0, fieldNameColumn);
   QVERIFY(index.isValid());
   QCOMPARE(proxyModel.data(index), QVariant("Id_PK"));
+  // Check row 0 - Field type
+  index = proxyModel.index(0, fieldNameColumn+1);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("INTEGER"));
+  // Check row 0 - Field length
+  index = proxyModel.index(0, fieldNameColumn+2);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant());
+  // Check row 0 - PK
+  index = proxyModel.index(0, fieldNameColumn+3);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("PK"));
   // Check row 1
   index = proxyModel.index(1, fieldNameColumn);
   QVERIFY(index.isValid());

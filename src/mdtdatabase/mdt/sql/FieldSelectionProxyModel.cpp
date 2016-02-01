@@ -61,11 +61,8 @@ void FieldSelectionProxyModel::setFieldIndexSelected(int fieldIndex, bool select
   Q_ASSERT(proxyIndex.isValid());
   Q_ASSERT(proxyIndex.row() < pvSelectionColumnList.size());
 
-  qDebug() << "setFieldIndexSelected(" << fieldIndex << " , " << select << ") ...";
-  
   setSelectionColumnAt(proxyIndex.row(), select);
   signalSelectionColumnDataChanged(proxyIndex);
-  ///emit dataChanged(proxyIndex, proxyIndex);
 }
 
 void FieldSelectionProxyModel::clearFieldIndexSelection()
@@ -85,7 +82,6 @@ FieldIndexList FieldSelectionProxyModel::getSelectedFieldIndexes() const
     if(pvSelectionColumnList.testBit(proxyRow)){
       QModelIndex proxyIndex = index(proxyRow, 0);
       QModelIndex sourceIndex = mapToSource(proxyIndex);
-      qDebug() << "Adding selected - proxyIndex: " << proxyIndex << " , sourceIndex: " << sourceIndex;
       Q_ASSERT(sourceIndex.isValid());
       selectedFields.append(sourceIndex.row());
     }
@@ -97,43 +93,84 @@ FieldIndexList FieldSelectionProxyModel::getSelectedFieldIndexes() const
   return selectedFields;
 }
 
-int FieldSelectionProxyModel::columnCount(const QModelIndex& parent) const
-{
-  if(parent.isValid()){
-    return QSortFilterProxyModel::columnCount(parent);
-  }
-  return QSortFilterProxyModel::columnCount(parent) + 1;
-}
+// int FieldSelectionProxyModel::columnCount(const QModelIndex& parent) const
+// {
+//   if(parent.isValid()){
+//     return QSortFilterProxyModel::columnCount(parent);
+//   }
+//   return QSortFilterProxyModel::columnCount(parent) + 1;
+// }
 
-QVariant FieldSelectionProxyModel::headerData(int section, Qt::Orientation orientation, int role) const
-{
-  Q_ASSERT(section >= 0);
+// QModelIndex FieldSelectionProxyModel::mapToSource(const QModelIndex &proxyIndex) const
+// {
+//   Q_ASSERT(sourceModel() != nullptr);
+// 
+//   qDebug() << "mapToSource() - proxyIndex: " << proxyIndex;
+//   
+//   if(!proxyIndex.isValid()){
+//     return QModelIndex();
+//   }
+//   if(proxyIndex.column() == 0){
+//     return QModelIndex();
+//   }
+//   auto idx = sourceModel()->index(proxyIndex.row(), proxyIndex.column()-1, proxyIndex.parent());
+//   
+//   return QSortFilterProxyModel::mapToSource(idx);
+// }
 
-  if(orientation != Qt::Horizontal){
-    return QSortFilterProxyModel::headerData(section, orientation, role);
-  }
-  if(section == 0){
-    switch(role){
-      case Qt::DisplayRole:
-        return tr("Sel");
-      default:
-        return QVariant();
-    }
-  }
-  return QSortFilterProxyModel::headerData(section-1, orientation, role);
-}
+// QModelIndex FieldSelectionProxyModel::index(int row, int column, const QModelIndex &parent) const
+// {
+//   if(parent.isValid()){
+//     return QModelIndex();
+//   }
+//   return createIndex(row, column);
+// //   if( (column == 0) && (!parent.isValid()) ){
+// //     return createIndex(row, column);
+// //   }
+//   ///return QSortFilterProxyModel::index(row, column, parent);
+// }
+
+// QVariant FieldSelectionProxyModel::headerData(int section, Qt::Orientation orientation, int role) const
+// {
+//   Q_ASSERT(section >= 0);
+// 
+//   if(orientation != Qt::Horizontal){
+//     return QSortFilterProxyModel::headerData(section, orientation, role);
+//   }
+//   if(section == 0){
+//     switch(role){
+//       case Qt::DisplayRole:
+//         return tr("Sel");
+//       default:
+//         return QVariant();
+//     }
+//   }
+//   return QSortFilterProxyModel::headerData(section-1, orientation, role);
+// }
 
 QVariant FieldSelectionProxyModel::data(const QModelIndex & originalIndex, int role) const
 {
   if(!originalIndex.isValid()){
     return QVariant();
   }
-  if(originalIndex.column() == 0){
-    return selectionColumnData(originalIndex.row(), role);
+  if( (originalIndex.column() == 0) && (role == Qt::CheckStateRole) ){
+    Q_ASSERT(originalIndex.row() >= 0);
+    Q_ASSERT(originalIndex.row() < pvSelectionColumnList.size());
+    if(pvSelectionColumnList.testBit(originalIndex.row())){
+      return Qt::Checked;
+    }else{
+      return Qt::Unchecked;
+    }
+    ///return selectionColumnData(originalIndex.row(), role);
   }
-  auto idx = index(originalIndex.row(), originalIndex.column()-1, originalIndex.parent());
+  qDebug() << "data():";
+  ///auto idx = index(originalIndex.row(), originalIndex.column()-1, originalIndex.parent());
+  ///auto idx = mapToSource(originalIndex);
+  qDebug() << " originalIndex: " << originalIndex;
+  ///qDebug() << " idx:           " << idx;
 
-  return QSortFilterProxyModel::data(idx, role);
+  ///return QSortFilterProxyModel::data(idx, role);
+  return QSortFilterProxyModel::data(originalIndex, role);
 }
 
 Qt::ItemFlags FieldSelectionProxyModel::flags(const QModelIndex & index) const
@@ -151,7 +188,6 @@ bool FieldSelectionProxyModel::setData(const QModelIndex & originalIndex, const 
   }
   if(originalIndex.column() == 0){
     if( setSelectionColumnData(originalIndex.row(), value, role) ){
-      ///emit dataChanged(originalIndex, originalIndex);
       signalSelectionColumnDataChanged(originalIndex);
       return true;
     }
@@ -162,12 +198,12 @@ bool FieldSelectionProxyModel::setData(const QModelIndex & originalIndex, const 
   return QSortFilterProxyModel::setData(idx, value, role);
 }
 
-void FieldSelectionProxyModel::sort(int column, Qt::SortOrder sortOrder)
-{
-  if(column > 0){
-    QSortFilterProxyModel::sort(column-1, sortOrder);
-  }
-}
+// void FieldSelectionProxyModel::sort(int column, Qt::SortOrder sortOrder)
+// {
+//   if(column > 0){
+//     QSortFilterProxyModel::sort(column-1, sortOrder);
+//   }
+// }
 
 QVariant FieldSelectionProxyModel::selectionColumnData(int row, int role) const
 {
@@ -176,7 +212,6 @@ QVariant FieldSelectionProxyModel::selectionColumnData(int row, int role) const
 
   switch(role){
     case Qt::CheckStateRole:
-      ///if(pvSelectionColumnList.at(row)){
       if(pvSelectionColumnList.testBit(row)){
         return Qt::Checked;
       }
@@ -191,10 +226,7 @@ bool FieldSelectionProxyModel::setSelectionColumnData(int row, const QVariant & 
   Q_ASSERT(row >= 0);
   Q_ASSERT(row < pvSelectionColumnList.size());
 
-  qDebug() << "setSelectionColumnData() - row: " << row << ", value: " << value << " , role: " << role;
-
   if(role == Qt::CheckStateRole){
-    ///pvSelectionColumnList[row] = value.toBool();
     setSelectionColumnAt(row, value.toBool());
     return true;
   }
@@ -206,13 +238,10 @@ void FieldSelectionProxyModel::setSelectionColumnAt(int row, bool state)
   Q_ASSERT(row >= 0);
   Q_ASSERT(row < pvSelectionColumnList.size());
 
-  ///pvSelectionColumnList[row] = state;
   if(pvFieldSelectionMode == SingleSelection){
     pvSelectionColumnList.fill(false);
   }
   pvSelectionColumnList.setBit(row, state);
-
-  qDebug() << "setSelectionColumnAt() - selection: " << pvSelectionColumnList;
 }
 
 void FieldSelectionProxyModel::signalSelectionColumnDataChanged(const QModelIndex & updatedIndex)
@@ -231,37 +260,8 @@ void FieldSelectionProxyModel::signalSelectionColumnDataChanged(const QModelInde
 
 void FieldSelectionProxyModel::resetSelectionList()
 {
-  qDebug() << "-- Reset, rows: " << rowCount();
   pvSelectionColumnList.fill(false, rowCount());
 }
-
-// QModelIndex FieldSelectionProxyModel::mapToSource(const QModelIndex & proxyIndex) const
-// {
-//   if( (!proxyIndex.isValid()) || (proxyIndex.parent().isValid()) ){
-//     return QSortFilterProxyModel::mapToSource(proxyIndex);
-//   }
-//   qDebug() << "mapToSource(): proxyIndex: " << proxyIndex;
-//   auto idx = index(proxyIndex.row(), proxyIndex.column()-1, proxyIndex.parent());
-//   qDebug() << " mapToSource(): idx: " << idx;
-//   return QSortFilterProxyModel::mapToSource(idx);
-// }
-
-// QModelIndex FieldSelectionProxyModel::mapFromSource(const QModelIndex & sourceIndex) const
-// {
-//   if( (!sourceIndex.isValid()) || (sourceIndex.parent().isValid()) ){
-//     return QSortFilterProxyModel::mapFromSource(sourceIndex);
-//   }
-//   qDebug() << "mapFromSource(): sourceIndex: " << sourceIndex;
-//   auto idx = index(sourceIndex.row(), sourceIndex.column()+1, sourceIndex.parent());
-//   qDebug() << " mapFromSource(): idx: " << idx;
-//   return QSortFilterProxyModel::mapFromSource(idx);
-// }
-
-// QModelIndex FieldSelectionProxyModel::index(int row, int column, const QModelIndex& parent) const
-// {
-//   return QSortFilterProxyModel::index(row, column+1, parent);
-// }
-
 
 bool FieldSelectionProxyModel::filterAcceptsRow(int source_row, const QModelIndex & /* source_parent*/) const
 {

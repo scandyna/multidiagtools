@@ -25,8 +25,6 @@
 #include <QSortFilterProxyModel>
 #include <QBitArray>
 
-///#include <vector>
-
 namespace mdt{ namespace sql{
 
   /*! \brief SQL field selection proxy model
@@ -98,11 +96,15 @@ namespace mdt{ namespace sql{
 
     /*! \brief Get count of columns
      */
-    int columnCount(const QModelIndex & parent = QModelIndex()) const override;
+//     int columnCount(const QModelIndex & parent = QModelIndex()) const override;
+
+//     QModelIndex mapToSource(const QModelIndex & proxyIndex) const override;
+// 
+//     QModelIndex index(int row, int column, const QModelIndex & parent = QModelIndex()) const override;
 
     /*! \brief Get header data
      */
-    QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+//     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
     /*! \brief Get data
      */
@@ -118,17 +120,7 @@ namespace mdt{ namespace sql{
 
     /*! \brief Sort
      */
-    void sort(int column, Qt::SortOrder sortOrder = Qt::AscendingOrder) override;
-
-    /*! \brief Reimplemented to shift columns
-     */
-//     QModelIndex mapToSource(const QModelIndex & proxyIndex) const override;
-
-    /*! \brief Reimplemented to shift columns
-     */
-//     QModelIndex mapFromSource(const QModelIndex & sourceIndex) const override;
-
-  //     QModelIndex index(int row, int column, const QModelIndex & parent = QModelIndex()) const override;
+//     void sort(int column, Qt::SortOrder sortOrder = Qt::AscendingOrder) override;
 
    private:
 
