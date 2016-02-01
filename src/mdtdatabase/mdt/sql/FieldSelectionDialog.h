@@ -23,6 +23,7 @@
 
 #include "ui_FieldSelectionDialog.h"
 #include "FieldIndexList.h"
+#include "FieldSelectionMode.h"
 #include "mdtExpected.h"
 #include <QDialog>
 #include <QString>
@@ -68,6 +69,12 @@ namespace mdt{ namespace sql{
     /*! \brief Show all field indexes
      */
     void showAllFieldIndexes();
+
+    /*! \brief Set field selection mode
+     *
+     * Will also clear current field selection.
+     */
+    void setFieldSelectionMode(FieldSelectionMode mode);
 
     /*! \brief Get list of selected field indexes
      */

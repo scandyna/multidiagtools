@@ -73,9 +73,14 @@ void FieldSelectionDialog::showAllFieldIndexes()
   pvProxyModel->showAllFieldIndexes();
 }
 
+void FieldSelectionDialog::setFieldSelectionMode(FieldSelectionMode mode)
+{
+  pvProxyModel->setFieldSelectionMode(mode);
+}
+
 FieldIndexList FieldSelectionDialog::getSelectedFieldIndexList() const
 {
-
+  return pvProxyModel->getSelectedFieldIndexList();
 }
 
 void FieldSelectionDialog::resizeTvToContents()

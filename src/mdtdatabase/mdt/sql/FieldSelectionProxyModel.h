@@ -22,8 +22,10 @@
 #define MDT_SQL_FIELD_SELECTION_PROXY_MODEL_H
 
 #include "FieldIndexList.h"
+#include "FieldSelectionMode.h"
 #include <QSortFilterProxyModel>
 #include <QBitArray>
+#include <QStringList>
 
 namespace mdt{ namespace sql{
 
@@ -41,14 +43,6 @@ namespace mdt{ namespace sql{
    Q_OBJECT
 
    public:
-
-    /*! \brief Field selection mode
-     */
-    enum FieldSelectionMode
-    {
-      MultiSelection,   /*!< Its possible to select more that 1 field (this is the default) */
-      SingleSelection   /*!< Only 1 field can be selected */
-    };
 
     /*! \brief Constructor
      */
@@ -92,23 +86,15 @@ namespace mdt{ namespace sql{
 
     /*! \brief Get list of selected field indexes
      */
-    FieldIndexList getSelectedFieldIndexes() const;
+    FieldIndexList getSelectedFieldIndexList() const;
 
-    /*! \brief Get count of columns
+    /*! \brief Get a list of selected field names
      */
-//     int columnCount(const QModelIndex & parent = QModelIndex()) const override;
-
-//     QModelIndex mapToSource(const QModelIndex & proxyIndex) const override;
-// 
-//     QModelIndex index(int row, int column, const QModelIndex & parent = QModelIndex()) const override;
-
-    /*! \brief Get header data
-     */
-//     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+    QStringList getSelectedFieldNameList() const;
 
     /*! \brief Get data
      */
-    QVariant data(const QModelIndex & originalIndex, int role = Qt::DisplayRole) const override;
+    QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
 
     /*! \brief Get flags
      */
@@ -116,32 +102,20 @@ namespace mdt{ namespace sql{
 
     /*! \brief Set data
      */
-    bool setData(const QModelIndex & originalIndex, const QVariant & value, int role = Qt::EditRole) override;
-
-    /*! \brief Sort
-     */
-//     void sort(int column, Qt::SortOrder sortOrder = Qt::AscendingOrder) override;
+    bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole) override;
 
    private:
 
-    /*! \brief Get selection column data
+    /*! \brief Set field select state at proxy row
      */
-    QVariant selectionColumnData(int row, int role) const;
-
-    /*! \brief Set selection column data
-     */
-    bool setSelectionColumnData(int row, const QVariant & value, int role);
-
-    /*! \brief Set selection column value at row
-     */
-    void setSelectionColumnAt(int row, bool state);
+    void setFieldAtProxyRowSelected(int row, bool state);
 
     /*! \brief Signal that field selection changed
      *
      * In MultiSelection mode, only given index will be signaled,
      *  else all selections will
      */
-    void signalSelectionColumnDataChanged(const QModelIndex & updatedIndex);
+    void signalFieldSelectionChanged(const QModelIndex & updatedProxyIndex);
 
     /*! \brief Reset selection list
      */
@@ -152,7 +126,7 @@ namespace mdt{ namespace sql{
     bool filterAcceptsRow(int source_row, const QModelIndex & source_parent) const override;
 
     FieldIndexList pvFieldIndexesToHide;
-    QBitArray pvSelectionColumnList;
+    QBitArray pvSelectedFieldProxyStateList;
     FieldSelectionMode pvFieldSelectionMode;
   };
 

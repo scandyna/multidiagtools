@@ -4151,6 +4151,7 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
 {
   using mdt::sql::FieldSelectionProxyModel;
   using mdt::sql::FieldIndexList;
+  using mdt::sql::FieldSelectionMode;
 
   const int fieldNameColumn = 0;
   QSqlDatabase db = pvDatabase;
@@ -4158,6 +4159,7 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
   mdtSqlTableSchemaModel tsModel;
   FieldSelectionProxyModel proxyModel;
   FieldIndexList fiList;
+  QStringList fieldNameList;
   QModelIndex index;
   QTableView tableView;
   QTreeView treeView;
@@ -4185,7 +4187,7 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
    */
   QCOMPARE(proxyModel.rowCount(), 4);
   QCOMPARE(proxyModel.columnCount(), tsModel.columnCount());
-  QVERIFY(proxyModel.fieldSelectionMode() == FieldSelectionProxyModel::MultiSelection);
+  QVERIFY(proxyModel.fieldSelectionMode() == FieldSelectionMode::MultiSelection);
   // Check row 0 - Field name
   index = proxyModel.index(0, fieldNameColumn);
   QVERIFY(index.isValid());
@@ -4215,22 +4217,22 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
   QVERIFY(index.isValid());
   QCOMPARE(proxyModel.data(index), QVariant("SomeValueDouble"));
   // Check selection
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 0);
   // Select Id_PK and check
   proxyModel.setFieldIndexSelected(0, true);
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 1);
   QCOMPARE(fiList.at(0), 0);
   // Select Remarks and check
   proxyModel.setFieldIndexSelected(2, true);
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 2);
   QCOMPARE(fiList.at(0), 0);
   QCOMPARE(fiList.at(1), 2);
   // Clear selection and check
   proxyModel.clearFieldIndexSelection();
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 0);
   /*
    * Hide FirstName field
@@ -4253,19 +4255,24 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
   QCOMPARE(proxyModel.data(index), QVariant("SomeValueDouble"));
   // Clear selection and check
   proxyModel.clearFieldIndexSelection();
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 0);
   // Select Id_PK and check
   proxyModel.setFieldIndexSelected(0, true);
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 1);
   QCOMPARE(fiList.at(0), 0);
   // Select Remarks and check
   proxyModel.setFieldIndexSelected(2, true);
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 2);
   QCOMPARE(fiList.at(0), 0);
   QCOMPARE(fiList.at(1), 2);
+  // Check also getting selected field name list
+  fieldNameList = proxyModel.getSelectedFieldNameList();
+  QCOMPARE(fieldNameList.count(), 2);
+  QCOMPARE(fieldNameList.at(0), QString("Id_PK"));
+  QCOMPARE(fieldNameList.at(1), QString("Remarks"));
   /*
    * Sort ascending and check
    */
@@ -4284,16 +4291,16 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
   QCOMPARE(proxyModel.data(index), QVariant("SomeValueDouble"));
   // Clear selection and check
   proxyModel.clearFieldIndexSelection();
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 0);
   // Select Id_PK and check
   proxyModel.setFieldIndexSelected(0, true);
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 1);
   QCOMPARE(fiList.at(0), 0);
   // Select Remarks and check
   proxyModel.setFieldIndexSelected(2, true);
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 2);
   QCOMPARE(fiList.at(0), 0);
   QCOMPARE(fiList.at(1), 2);
@@ -4315,16 +4322,16 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
   QCOMPARE(proxyModel.data(index), QVariant("Id_PK"));
   // Clear selection and check
   proxyModel.clearFieldIndexSelection();
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 0);
   // Select Id_PK and check
   proxyModel.setFieldIndexSelected(0, true);
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 1);
   QCOMPARE(fiList.at(0), 0);
   // Select Remarks and check
   proxyModel.setFieldIndexSelected(2, true);
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 2);
   QCOMPARE(fiList.at(0), 0);
   QCOMPARE(fiList.at(1), 2);
@@ -4352,49 +4359,50 @@ void mdtDatabaseWidgetTest::fieldSelectionProxyModelTest()
   QCOMPARE(proxyModel.data(index), QVariant("SomeValueDouble"));
   // Clear selection and check
   proxyModel.clearFieldIndexSelection();
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 0);
   // Select Id_PK and check
   proxyModel.setFieldIndexSelected(0, true);
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 1);
   QCOMPARE(fiList.at(0), 0);
   // Select Remarks and check
   proxyModel.setFieldIndexSelected(2, true);
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 2);
   QCOMPARE(fiList.at(0), 0);
   QCOMPARE(fiList.at(1), 2);
   /*
    * Check single selection
    */
-  proxyModel.setFieldSelectionMode(FieldSelectionProxyModel::SingleSelection);
-  QVERIFY(proxyModel.fieldSelectionMode() == FieldSelectionProxyModel::SingleSelection);
+  proxyModel.setFieldSelectionMode(FieldSelectionMode::SingleSelection);
+  QVERIFY(proxyModel.fieldSelectionMode() == FieldSelectionMode::SingleSelection);
   // Must also clear current selection
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 0);
   // Select Id_PK and check
   proxyModel.setFieldIndexSelected(0, true);
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 1);
   QCOMPARE(fiList.at(0), 0);
   // Select Remarks and check
   proxyModel.setFieldIndexSelected(2, true);
-  fiList = proxyModel.getSelectedFieldIndexes();
+  fiList = proxyModel.getSelectedFieldIndexList();
   QCOMPARE(fiList.count(), 1);
   QCOMPARE(fiList.at(0), 2);
 
   /*
    * Play
    */
-  while(tableView.isVisible()){
-    QTest::qWait(500);
-  }
+//   while(tableView.isVisible()){
+//     QTest::qWait(500);
+//   }
 }
 
 void mdtDatabaseWidgetTest::fieldSelectionDialogTest()
 {
   using mdt::sql::FieldSelectionDialog;
+  using mdt::sql::FieldSelectionMode;
 
   FieldSelectionDialog dialog;
   auto db = pvDatabase;
@@ -4409,7 +4417,7 @@ void mdtDatabaseWidgetTest::fieldSelectionDialogTest()
    */
   ret = dialog.setTable("Client_tbl", db);
   QVERIFY(ret);
-  
+  dialog.setFieldSelectionMode(FieldSelectionMode::SingleSelection);
   /*
    * Play
    */
