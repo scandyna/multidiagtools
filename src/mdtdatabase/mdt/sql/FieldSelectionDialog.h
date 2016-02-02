@@ -60,7 +60,7 @@ namespace mdt{ namespace sql{
 
     /*! \brief Sort fields
      */
-    void sort(Qt::SortOrder sortOrder);
+    void sort(Qt::SortOrder sortOrder = Qt::AscendingOrder);
 
     /*! \brief Set list of field indexes to hide
      */
@@ -79,6 +79,10 @@ namespace mdt{ namespace sql{
     /*! \brief Get list of selected field indexes
      */
     FieldIndexList getSelectedFieldIndexList() const;
+
+    /*! \brief Get a list of selected field names
+     */
+    QStringList getSelectedFieldNameList() const;
 
    private:
 

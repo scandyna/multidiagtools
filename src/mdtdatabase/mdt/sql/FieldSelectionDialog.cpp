@@ -83,6 +83,11 @@ FieldIndexList FieldSelectionDialog::getSelectedFieldIndexList() const
   return pvProxyModel->getSelectedFieldIndexList();
 }
 
+QStringList FieldSelectionDialog::getSelectedFieldNameList() const
+{
+  return pvProxyModel->getSelectedFieldNameList();
+}
+
 void FieldSelectionDialog::resizeTvToContents()
 {
   tvFields->resizeRowsToContents();

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -32,7 +32,9 @@
 #include "mdtSqlTableSelection.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtSqlSelectionDialog.h"
+#include "mdtExpected.h"
 #include "mdtError.h"
+#include "mdtErrorDialog.h"
 #include "mdtClArticleComponentDialog.h"
 #include "mdtClArticleConnectionDialog.h"
 #include "mdtClArticleLinkDialog.h"
@@ -41,7 +43,8 @@
 #include "mdtClArticleConnectorData.h"
 #include "mdtClArticleConnectionData.h"
 #include "mdtSqlRecord.h"
-#include "mdtSqlFieldSelectionDialog.h"
+///#include "mdtSqlFieldSelectionDialog.h"
+#include "mdt/sql/FieldSelectionDialog.h"
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
@@ -235,7 +238,8 @@ void mdtClArticleEditor::editConnection(const QSqlRecord & record)
 void mdtClArticleEditor::updateRelatedUnitConnections()
 {
   mdtClArticle art(this, database());
-  mdtSqlFieldSelectionDialog fsDialog(this);
+  ///mdtSqlFieldSelectionDialog fsDialog(this);
+  mdt::sql::FieldSelectionDialog fsDialog(this);
   QMessageBox msgBox(this);
   mdtSqlTableSelection s;
   mdtSqlTableWidget *widget;
@@ -255,18 +259,24 @@ void mdtClArticleEditor::updateRelatedUnitConnections()
     return;
   }
   // Setup and show dialog
+  auto ret = fsDialog.setTable("ArticleConnection_view", database());
+  if(!ret){
+    mdtErrorDialog dialog(ret.error());
+    dialog.exec();
+    return;
+  }
   fsDialog.setMessage(tr("Select fields that must be updated in related unit connections:"));
-  fsDialog.addField("ArticleContactName", tr("Contact name"), false);
-  fsDialog.addField("Resistance", tr("Connection resistance"), false);
-  fsDialog.addField("FunctionFR", tr("Function (French)"), false);
-  fsDialog.addField("FunctionEN", tr("Function (English)"), false);
-  fsDialog.addField("FunctionDE", tr("Function (German)"), false);
-  fsDialog.addField("FunctionIT", tr("Function (Italian)"), false);
+//   fsDialog.addField("ArticleContactName", tr("Contact name"), false);
+//   fsDialog.addField("Resistance", tr("Connection resistance"), false);
+//   fsDialog.addField("FunctionFR", tr("Function (French)"), false);
+//   fsDialog.addField("FunctionEN", tr("Function (English)"), false);
+//   fsDialog.addField("FunctionDE", tr("Function (German)"), false);
+//   fsDialog.addField("FunctionIT", tr("Function (Italian)"), false);
   fsDialog.sort();
   if(fsDialog.exec() != QDialog::Accepted){
     return;
   }
-  fields = fsDialog.getSelectedFieldNames();
+  fields = fsDialog.getSelectedFieldNameList();
   if(fields.isEmpty()){
     return;
   }

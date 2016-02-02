@@ -40,7 +40,7 @@
 #include "mdtSqlForm.h"
 #include "mdt/sql/FieldSelectionProxyModel.h"
 #include "mdt/sql/FieldSelectionDialog.h"
-#include "mdtSqlFieldSelectionDialog.h"
+///#include "mdtSqlFieldSelectionDialog.h"
 #include "mdtDoubleEdit.h"
 #include "mdtSqlDialog.h"
 #include <QSqlQuery>
@@ -4424,66 +4424,66 @@ void mdtDatabaseWidgetTest::fieldSelectionDialogTest()
   dialog.exec();
 }
 
-void mdtDatabaseWidgetTest::sqlFieldSelectionDialogTest()
-{
-  mdtSqlFieldSelectionDialog fsDialog(0);
-  QStringList fnList;
-
-  QVERIFY(fsDialog.getFieldNames().isEmpty());
-  QVERIFY(fsDialog.getSelectedFieldNames().isEmpty());
-  // Check sort on empty list - must not crach
-  fsDialog.sort();
-  fsDialog.sort(Qt::DescendingOrder);
-  // Add fields
-  fsDialog.addField("A", "a", false);
-  fsDialog.addField("F", "f", false);
-  fsDialog.addField("B", "b", true);
-  fsDialog.addField("D", "d", true);
-  fsDialog.addField("C", "c", false);
-  // Check added field names
-  fnList = fsDialog.getFieldNames();
-  QCOMPARE(fnList.size(), 5);
-  QCOMPARE(fnList.at(0), QString("A"));
-  QCOMPARE(fnList.at(1), QString("F"));
-  QCOMPARE(fnList.at(2), QString("B"));
-  QCOMPARE(fnList.at(3), QString("D"));
-  QCOMPARE(fnList.at(4), QString("C"));
-  // Check selected field names
-  fnList = fsDialog.getSelectedFieldNames();
-  QCOMPARE(fnList.size(), 2);
-  QCOMPARE(fnList.at(0), QString("B"));
-  QCOMPARE(fnList.at(1), QString("D"));
-  // Sort and check again
-  fsDialog.sort();
-  fnList = fsDialog.getFieldNames();
-  QCOMPARE(fnList.size(), 5);
-  QCOMPARE(fnList.at(0), QString("A"));
-  QCOMPARE(fnList.at(1), QString("B"));
-  QCOMPARE(fnList.at(2), QString("C"));
-  QCOMPARE(fnList.at(3), QString("D"));
-  QCOMPARE(fnList.at(4), QString("F"));
-  // Check selected field names
-  fnList = fsDialog.getSelectedFieldNames();
-  QCOMPARE(fnList.size(), 2);
-  QCOMPARE(fnList.at(0), QString("B"));
-  QCOMPARE(fnList.at(1), QString("D"));
-  // Sort descendning and check again
-  fsDialog.sort(Qt::DescendingOrder);
-  fnList = fsDialog.getFieldNames();
-  QCOMPARE(fnList.size(), 5);
-  QCOMPARE(fnList.at(0), QString("F"));
-  QCOMPARE(fnList.at(1), QString("D"));
-  QCOMPARE(fnList.at(2), QString("C"));
-  QCOMPARE(fnList.at(3), QString("B"));
-  QCOMPARE(fnList.at(4), QString("A"));
-  // Check selected field names
-  fnList = fsDialog.getSelectedFieldNames();
-  QCOMPARE(fnList.size(), 2);
-  QCOMPARE(fnList.at(0), QString("D"));
-  QCOMPARE(fnList.at(1), QString("B"));
-
-  fsDialog.exec();
-}
+// void mdtDatabaseWidgetTest::sqlFieldSelectionDialogTest()
+// {
+//   mdtSqlFieldSelectionDialog fsDialog(0);
+//   QStringList fnList;
+// 
+//   QVERIFY(fsDialog.getFieldNames().isEmpty());
+//   QVERIFY(fsDialog.getSelectedFieldNames().isEmpty());
+//   // Check sort on empty list - must not crach
+//   fsDialog.sort();
+//   fsDialog.sort(Qt::DescendingOrder);
+//   // Add fields
+//   fsDialog.addField("A", "a", false);
+//   fsDialog.addField("F", "f", false);
+//   fsDialog.addField("B", "b", true);
+//   fsDialog.addField("D", "d", true);
+//   fsDialog.addField("C", "c", false);
+//   // Check added field names
+//   fnList = fsDialog.getFieldNames();
+//   QCOMPARE(fnList.size(), 5);
+//   QCOMPARE(fnList.at(0), QString("A"));
+//   QCOMPARE(fnList.at(1), QString("F"));
+//   QCOMPARE(fnList.at(2), QString("B"));
+//   QCOMPARE(fnList.at(3), QString("D"));
+//   QCOMPARE(fnList.at(4), QString("C"));
+//   // Check selected field names
+//   fnList = fsDialog.getSelectedFieldNames();
+//   QCOMPARE(fnList.size(), 2);
+//   QCOMPARE(fnList.at(0), QString("B"));
+//   QCOMPARE(fnList.at(1), QString("D"));
+//   // Sort and check again
+//   fsDialog.sort();
+//   fnList = fsDialog.getFieldNames();
+//   QCOMPARE(fnList.size(), 5);
+//   QCOMPARE(fnList.at(0), QString("A"));
+//   QCOMPARE(fnList.at(1), QString("B"));
+//   QCOMPARE(fnList.at(2), QString("C"));
+//   QCOMPARE(fnList.at(3), QString("D"));
+//   QCOMPARE(fnList.at(4), QString("F"));
+//   // Check selected field names
+//   fnList = fsDialog.getSelectedFieldNames();
+//   QCOMPARE(fnList.size(), 2);
+//   QCOMPARE(fnList.at(0), QString("B"));
+//   QCOMPARE(fnList.at(1), QString("D"));
+//   // Sort descendning and check again
+//   fsDialog.sort(Qt::DescendingOrder);
+//   fnList = fsDialog.getFieldNames();
+//   QCOMPARE(fnList.size(), 5);
+//   QCOMPARE(fnList.at(0), QString("F"));
+//   QCOMPARE(fnList.at(1), QString("D"));
+//   QCOMPARE(fnList.at(2), QString("C"));
+//   QCOMPARE(fnList.at(3), QString("B"));
+//   QCOMPARE(fnList.at(4), QString("A"));
+//   // Check selected field names
+//   fnList = fsDialog.getSelectedFieldNames();
+//   QCOMPARE(fnList.size(), 2);
+//   QCOMPARE(fnList.at(0), QString("D"));
+//   QCOMPARE(fnList.at(1), QString("B"));
+// 
+//   fsDialog.exec();
+// }
 
 /*
  * Helper methods

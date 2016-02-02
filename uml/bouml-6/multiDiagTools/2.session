@@ -1,4 +1,4 @@
-window_sizes 1280 964 354 920 911 0
+window_sizes 1272 956 354 912 903 0
 cleanlooks_style
 diagrams
   classdiagram_ref 1969282 // RelatedTableInsertExpression
@@ -14,7 +14,7 @@ diagrams
   classdiagram_ref 1989250 // FieldSelectionProxyModel
     920 916 100 4 0 0
   active  classdiagram_ref 1995778 // FieldSelectionDialog
-    920 911 100 4 0 0
+    912 903 100 4 0 0
 end
 show_stereotypes
 selected 
