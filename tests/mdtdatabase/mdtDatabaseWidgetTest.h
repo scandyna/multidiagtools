@@ -132,8 +132,6 @@ class mdtDatabaseWidgetTest : public mdtTest
   void fieldSelectionProxyModelTest();
   void fieldSelectionDialogTest();
 
-//   void sqlFieldSelectionDialogTest();
-
 //   void sqlApplicationWidgetsTest();
 
  private:
