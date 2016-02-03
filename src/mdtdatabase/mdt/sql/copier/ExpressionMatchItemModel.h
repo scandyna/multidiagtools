@@ -59,6 +59,10 @@ namespace mdt{ namespace sql{ namespace copier{
       return pvItems;
     }
 
+    /*! \brief Clear match expression items
+     */
+    void clearMatchItemList();
+
     /*! \brief Get row count
      *
      * Returns the number of expression match items
@@ -93,7 +97,22 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
 
+    /*! \brief Get destination field count
+     */
+    virtual int destinationFieldCount() const;
+
+    /*! \brief Get source field count
+     */
+    virtual int sourceFieldCount() const;
+
    protected:
+
+    /*! \brief Access table mapping
+     */
+    const TableMapping *tableMapping() const
+    {
+      return pvTableMapping.get();
+    }
 
     /*! \brief Get destination field name
      *

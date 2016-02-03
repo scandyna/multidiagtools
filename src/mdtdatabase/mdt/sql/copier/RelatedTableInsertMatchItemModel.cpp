@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "RelatedTableInsertMatchItemModel.h"
+#include "TableMapping.h"
 
 namespace mdt{ namespace sql{ namespace copier{
 
@@ -27,5 +28,88 @@ RelatedTableInsertMatchItemModel::RelatedTableInsertMatchItemModel(const std::sh
 {
 }
 
+mdtExpected<bool> RelatedTableInsertMatchItemModel::setSourceRelatedTable(const QString & tableName)
+{
+  if(tableName == pvSourceRelatedTable.tableName()){
+    return true;
+  }
+  pvSourceRelatedTable.clear();
+  if(tableName == tableMapping()->sourceTableName()){
+    return true;
+  }
+  // Relates to another source table
+  Q_ASSERT(tableMapping()->sourceDatabase().isValid());
+  Q_ASSERT(tableMapping()->sourceDatabase().isOpen());
+  if(!pvSourceRelatedTable.setupFromTable(tableName, tableMapping()->sourceDatabase())){
+    return pvSourceRelatedTable.lastError();
+  }
+  return true;
+}
+
+mdtExpected< bool > RelatedTableInsertMatchItemModel::setDestinationRelatedTable(const QString &tableName)
+{
+  if(tableName == pvDestinationRelatedTable.tableName()){
+    return true;
+  }
+  pvDestinationRelatedTable.clear();
+  Q_ASSERT(tableMapping()->destinationDatabase().isValid());
+  Q_ASSERT(tableMapping()->destinationDatabase().isOpen());
+  if(!pvDestinationRelatedTable.setupFromTable(tableName, tableMapping()->destinationDatabase())){
+    return pvDestinationRelatedTable.lastError();
+  }
+  return true;
+}
+
+QStringList RelatedTableInsertMatchItemModel::getSourceRelatedTableFieldNameList() const
+{
+  if(!pvSourceRelatedTable.tableName().isEmpty()){
+    return pvSourceRelatedTable.getFieldNameList();
+  }
+  return tableMapping()->getSourceTableFieldNameList();
+}
+
+QStringList RelatedTableInsertMatchItemModel::getDestinationRelatedTableFieldNameList() const
+{
+  return pvDestinationRelatedTable.getFieldNameList();
+}
+
+int RelatedTableInsertMatchItemModel::sourceFieldCount() const
+{
+  if(!pvSourceRelatedTable.tableName().isEmpty()){
+    return pvSourceRelatedTable.fieldCount();
+  }
+  return tableMapping()->sourceTableFieldCount();
+}
+
+int RelatedTableInsertMatchItemModel::destinationFieldCount() const
+{
+  return pvDestinationRelatedTable.fieldCount();
+}
+
+QString RelatedTableInsertMatchItemModel::fetchDestinationFieldName(int fieldIndex) const
+{
+  return pvDestinationRelatedTable.fieldName(fieldIndex);
+}
+
+int RelatedTableInsertMatchItemModel::fetchDestinationFieldIndexOf(const QString &fieldName) const
+{
+  return pvDestinationRelatedTable.fieldIndex(fieldName);
+}
+
+QString RelatedTableInsertMatchItemModel::fetchSourceValueFieldName(int fieldIndex) const
+{
+  if(!pvSourceRelatedTable.tableName().isEmpty()){
+    return pvSourceRelatedTable.fieldName(fieldIndex);
+  }
+  return tableMapping()->sourceTableFieldNameAt(fieldIndex);
+}
+
+int RelatedTableInsertMatchItemModel::fetchSourceValueFieldIndexOf(const QString &fieldName) const
+{
+  if(!pvSourceRelatedTable.tableName().isEmpty()){
+    return pvSourceRelatedTable.fieldIndex(fieldName);
+  }
+  return tableMapping()->sourceTableFieldIndexOf(fieldName);
+}
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

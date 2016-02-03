@@ -1,32 +1,26 @@
-window_sizes 1272 956 354 912 903 0
+window_sizes 1280 964 354 920 911 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 1969282 // RelatedTableInsertExpression
-    970 916 100 4 0 0
+  active  classdiagram_ref 1969282 // RelatedTableInsertExpression
+    920 911 100 4 0 0
   classdiagram_ref 1976066 // RelatedTableInsertMatchItemModel
     920 911 90 21 0 0
   classdiagram_ref 1976194 // UniqueCheckMatchItemModel
     120 106 100 18 0 0
   classdiagram_ref 1982722 // RelatedTableInsertExpressionDialog
     920 911 100 18 0 0
-  classdiagram_ref 1929602 // sandbox
-    120 106 100 4 0 0
-  classdiagram_ref 1989250 // FieldSelectionProxyModel
-    920 916 100 4 0 0
-  active  classdiagram_ref 1995778 // FieldSelectionDialog
-    912 903 100 4 0 0
 end
 show_stereotypes
-selected 
-package_ref 129 // multiDiagTools
+selected operation_ref 3571586 // destinationRelatedTableKey
 open
   
-package_ref 315650 // error
-  classview_ref 927490 // TableMappingItem
-  class_ref 2349954 // FieldSelectionProxyModel
-  class_ref 2356482 // FieldSelectionDialog
+  package_ref 315650 // error
+  operation_ref 3571458 // addDestinationRelatedFieldIndex
+  operation_ref 3571586 // destinationRelatedTableKey
+  operation_ref 3564802 // setSourceRelatedTable
+  operation_ref 3564930 // setDestinationRelatedTable
   class_ref 719874 // QSortFilterProxyModel
   
-package_ref 260866 // Boost
+  package_ref 260866 // Boost
 end
 end

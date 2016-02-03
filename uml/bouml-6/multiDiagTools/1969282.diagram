@@ -2,29 +2,28 @@ format 211
 
 classcanvas 128002 class_ref 2330242 // RelatedTableInsertExpression
   classdiagramsettings member_max_width 0 end
-  xyz 376 162 2000
+  xyz 42 160 2000
 end
 classcanvas 128130 class_ref 2256514 // AbstractTableMappingItem
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 386 39 2005
+  xyz 90 39 2005
 end
 classcanvas 128386 class_ref 2257026 // ExpressionMatchItem
   classdiagramsettings member_max_width 0 end
-  xyz 39 184 2000
+  xyz 447 200 2000
 end
 note 129666 "If SourceRelatedTableName is set, source values refers this table (source must be DB type)
 Else, source values refers to TM source table"
-  xyzwh 46.5 368.5 2000 607 65
+  xyzwh 40.5 448.5 2000 607 65
 relationcanvas 128258 relation_ref 2588034 // <generalisation>
   from ref 128002 z 2006 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129538 relation_ref 2595458 // <directional composition>
-  decenter_begin 472
-  decenter_end 462
+  decenter_end 528
   from ref 128002 z 2001 to ref 128386
   no_role_a no_role_b
-  multiplicity_a_pos 347 249 3000 no_multiplicity_b
+  multiplicity_a_pos 431 273 3000 no_multiplicity_b
 end
 end

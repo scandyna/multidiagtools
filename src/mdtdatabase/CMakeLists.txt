@@ -36,11 +36,9 @@ set (SOURCES_FILES
           # Field selection
           mdt/sql/FieldSelectionProxyModel.cpp
           mdt/sql/FieldSelectionDialog.cpp
-#           mdtSqlFieldSelectionDialog.cpp
-
           mdtSqlTransaction.cpp
           mdtSqlForeignKeySetting.cpp
-          
+
           # CSV data conversion
           mdtSqlCsvData.cpp
           # Database schema

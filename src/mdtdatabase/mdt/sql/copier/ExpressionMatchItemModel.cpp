@@ -37,6 +37,13 @@ void ExpressionMatchItemModel::setExpressionMatchItemList(const std::vector<Expr
   endResetModel();
 }
 
+void ExpressionMatchItemModel::clearMatchItemList()
+{
+  beginResetModel();
+  pvItems.clear();
+  endResetModel();
+}
+
 int ExpressionMatchItemModel::rowCount(const QModelIndex & parent) const
 {
   // Check parent validity (case of use with a tree view)
@@ -191,6 +198,16 @@ bool ExpressionMatchItemModel::removeRows(int row, int count, const QModelIndex&
   return true;
 }
 
+int ExpressionMatchItemModel::destinationFieldCount() const
+{
+  return pvTableMapping->destinationTableFieldCount();
+}
+
+int ExpressionMatchItemModel::sourceFieldCount() const
+{
+  return pvTableMapping->sourceTableFieldCount();
+}
+
 QString ExpressionMatchItemModel::fetchDestinationFieldName(int fieldIndex) const
 {
   return pvTableMapping->destinationTableFieldNameAt(fieldIndex);
@@ -227,7 +244,7 @@ void ExpressionMatchItemModel::setDestinationField(ExpressionMatchItem & item, c
 QVariant ExpressionMatchItemModel::destinationFieldName(const ExpressionMatchItem & item) const
 {
   const int fieldIndex = item.destinationFieldIndex;
-  Q_ASSERT(fieldIndex < pvTableMapping->destinationTableFieldCount());
+  Q_ASSERT(fieldIndex < destinationFieldCount());
 
   if(fieldIndex < 0){
     return QVariant();
@@ -243,7 +260,7 @@ void ExpressionMatchItemModel::setSourceValueField(ExpressionMatchItem & item, c
 QVariant ExpressionMatchItemModel::sourceValueFieldName(const ExpressionMatchItem & item) const
 {
   const int fieldIndex = item.sourceValueFieldIndex;
-  Q_ASSERT(fieldIndex < pvTableMapping->sourceTableFieldCount());
+  Q_ASSERT(fieldIndex < sourceFieldCount());
 
   if(fieldIndex < 0){
     return QVariant();

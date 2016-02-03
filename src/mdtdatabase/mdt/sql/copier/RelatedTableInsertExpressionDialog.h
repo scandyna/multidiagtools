@@ -26,6 +26,8 @@
 #include <QDialog>
 #include <memory>
 
+class mdtComboBoxItemDelegate;
+
 namespace mdt{ namespace sql{ namespace copier{
 
   class TableMapping;
@@ -65,9 +67,47 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void populateValueSourceCombobox();
 
+    /*! \brief Update when value source changed
+     */
+    void onValueSourceChanged(int cbIndex);
+
+    /*! \brief Populate destination related table combobox
+     */
+    void populateDestinationRelatedTableCombobox();
+
+    /*! \brief Update when destination related table changed
+     */
+    void onDestinationRelatedTableChanged(int cbIndex);
+
+    /*! \brief Add a field to destination related key
+     */
+    void addFieldToDestinationRelatedTableKey();
+
+    /*! \brief Clear destination related key
+     */
+    void clearDestinationRelatedTableKey();
+
+    /*! \brief Display destination related table key
+     */
+    void displayDestinationRelatedTableKey();
+
+    /*! \brief Add a match item
+     */
+    void addMatchItem();
+
+    /*! \brief Remove selected match items
+     */
+    void removeSelectedMatchItems();
+
+    /*! \brief Resize table view's contents
+     */
+    void resizeMatchItemViewToContents();
+
     std::shared_ptr<const TableMapping> pvTableMapping;
     RelatedTableInsertExpression pvExpression;
     RelatedTableInsertMatchItemModel *pvMatchItemModel;
+    mdtComboBoxItemDelegate *pvRelatedSourceFieldCombobox;
+    mdtComboBoxItemDelegate *pvRelatedDestinationFieldCombobox;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

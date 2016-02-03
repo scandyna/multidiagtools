@@ -106,6 +106,27 @@ namespace mdt{ namespace sql{ namespace copier{
       return pvSourceRelatedTableName;
     }
 
+    /*! \brief Add a field index to destination related table key
+     */
+    void addDestinationRelatedFieldIndex(int fieldIndex)
+    {
+      pvDestinationRelatedTableKey.append(fieldIndex);
+    }
+
+    /*! \brief Get destination related table key
+     */
+    FieldIndexList destinationRelatedTableKey() const
+    {
+      return pvDestinationRelatedTableKey;
+    }
+
+    /*! \brief Clear destination related table key
+     */
+    void clearDestinationRelatedTableKey()
+    {
+      pvDestinationRelatedTableKey.clear();
+    }
+
     /*! \brief Check if expression is null
      *
      * Expression is null if:

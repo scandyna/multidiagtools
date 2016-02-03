@@ -132,7 +132,9 @@
            <string>...</string>
           </property>
           <property name="icon">
-           <iconset theme="list-remove"/>
+           <iconset theme="list-remove">
+            <normaloff/>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -142,17 +144,21 @@
            <string>...</string>
           </property>
           <property name="icon">
-           <iconset theme="list-add"/>
+           <iconset theme="list-add">
+            <normaloff/>
+           </iconset>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="tbResizeViewToContents">
+         <widget class="QToolButton" name="tbResizeMatchItemView">
           <property name="text">
            <string>...</string>
           </property>
           <property name="icon">
-           <iconset theme="zoom-fit-best"/>
+           <iconset theme="zoom-fit-best">
+            <normaloff/>
+           </iconset>
           </property>
          </widget>
         </item>
