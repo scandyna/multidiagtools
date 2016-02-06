@@ -95,7 +95,6 @@ void mdtValueTest::mdtExpectedTest()
    * Value assignment by copy
    */
   mdtExpected<int> i;
-  qDebug() << "TEST: copy value assignments ...";
   // Assign a value to expected that has a value
   aVal = 5;
   QCOMPARE(aVal, 5);  // Use aVal to avoid move
@@ -131,7 +130,6 @@ void mdtValueTest::mdtExpectedTest()
    */
   i = 7;
   QVERIFY(i.hasValue());
-  qDebug() << "TEST: move value assignments ...";
   // Assign a value to expected that has a value
   i = std::move(8);
   QVERIFY(i.hasValue());
@@ -161,7 +159,6 @@ void mdtValueTest::mdtExpectedTest()
    */
   i = 5;
   QVERIFY(i.hasValue());
-  qDebug() << "TEST: copy expected assignments ...";
   // Assign expected with a value to expected that has a value
   QVERIFY(a.hasValue());
   QCOMPARE(a.value(), 1);
@@ -204,7 +201,6 @@ void mdtValueTest::mdtExpectedTest()
    */
   i = 1;
   QVERIFY(i.hasValue());
-  qDebug() << "TEST: move expected assignments ...";
   // Assign expected with a value to expected that has a value
   i = std::move(10);
   QVERIFY(i.hasValue());
@@ -229,67 +225,11 @@ void mdtValueTest::mdtExpectedTest()
   QVERIFY(!i);
   QVERIFY(i.hasError());
   QCOMPARE(i.error().text(), QString("error11"));
-
-  qDebug() << "TEST: assignment tests DONE";
-  /*
-   * Check assignment
-   */
-///  mdtExpected<int> i;
-  // Assign from value
-//   aVal = 5;
-//   i = aVal;
-//   QVERIFY(i.hasValue());
-//   QVERIFY(!i.hasError());
-//   QCOMPARE(i.value(), 5);
-//   QCOMPARE(aVal, 5);
-//   // Assign from value (move)
-//   i = std::move(6);
-//   QVERIFY(i.hasValue());
-//   QVERIFY(!i.hasError());
-//   QCOMPARE(i.value(), 6);
-//   // Assign from a error
-//   i = error1;
-//   QVERIFY(!i.hasValue());
-//   QVERIFY(!i);
-//   QVERIFY(i.hasError());
-//   QCOMPARE(i.error().text(), QString("error1"));
-//   // Assign from a error (move)
-//   i = std::move(mdtErrorNewQ("error4", mdtError::Info, this));
-//   QVERIFY(!i.hasValue());
-//   QVERIFY(!i);
-//   QVERIFY(i.hasError());
-//   QCOMPARE(i.error().text(), QString("error4"));
-//   // Assign from a mdtExpected that has a value
-//   i = a;
-//   QVERIFY(i.hasValue());
-//   QVERIFY(!i.hasError());
-//   QCOMPARE(i.value(), 1);
-//   // Assign from a mdtExpected that has a error
-//   i = e;
-//   QVERIFY(!i.hasValue());
-//   QVERIFY(i.hasError());
-//   QCOMPARE(i.error().text(), QString("error1"));
-//   // Assign from same object
-//   i = i;
-//   QVERIFY(!i.hasValue());
-//   QVERIFY(i.hasError());
-//   QCOMPARE(i.error().text(), QString("error1"));
-//   // Assign by moving a expected that has a value
-//   i = std::move(mdtExpected<int>(7));
-//   QVERIFY(i.hasValue());
-//   QVERIFY(!i.hasError());
-//   QCOMPARE(i.value(), 7);
-//   // Assign by moving a expected that has a error
-//   i = std::move(mdtExpected<int>(std::move(mdtErrorNewQ("error5", mdtError::Info, this))));
-//   QVERIFY(!i.hasValue());
-//   QVERIFY(i.hasError());
-//   QCOMPARE(i.error().text(), QString("error5"));
   /*
    * Check that we can store to containers
    */
   // Check with std::vector
   std::vector<mdtExpected<int>> v;
-  qDebug() << "std::vector with push_back";
   v.push_back(a);
   v.push_back(b);
   v.push_back(c);
@@ -308,7 +248,6 @@ void mdtValueTest::mdtExpectedTest()
   QCOMPARE(v.at(7).error().text(), QString("error3"));
   v.clear();
   // Check with emplace back
-  qDebug() << "std::vector with emplace_back";
   v.emplace_back(10);
   v.emplace_back(11);
   v.emplace_back(mdtErrorNewQ("error12", mdtError::Error, this));
@@ -318,7 +257,6 @@ void mdtValueTest::mdtExpectedTest()
   v.clear();
   // Check with QVector
   QVector<mdtExpected<int>> qv;
-  qDebug() << "QVector with append";
   qv.append(a);
   qv.append(b);
   qv.append(c);
@@ -343,8 +281,6 @@ void mdtValueTest::mdtExpectedTest()
   mdtExpected<bool> b1(std::move(true));
   QVERIFY(b1);
   b1 = std::move(mdtExpected<bool>(std::move(true)));
-  
-
 
 }
 

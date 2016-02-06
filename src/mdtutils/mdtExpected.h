@@ -24,7 +24,7 @@
 #include "mdtError.h"
 #include <utility>
 
-#include <QDebug>
+//#include <QDebug>
 
 /*! \brief Contains a value or a error
  *
@@ -60,7 +60,6 @@ class mdtExpected
    : pvHasValue(false),
      pvError(mdtError())
   {
-    qDebug() << "mdtExpected::mdtExpected()";
   }
 
   /*! \brief Construct a expected with a value
@@ -69,7 +68,6 @@ class mdtExpected
    : pvHasValue(true),
      pvValue(v)
   {
-    qDebug() << "mdtExpected::mdtExpected(const T & v)";
   }
 
   /*! \brief Construct a expected with a value
@@ -78,7 +76,6 @@ class mdtExpected
    : pvHasValue(true),
      pvValue(std::move(v))
   {
-    qDebug() << "mdtExpected::mdtExpected(T && v)";
   }
 
   /*! \brief Construct a expected with a error
@@ -87,7 +84,6 @@ class mdtExpected
    : pvHasValue(false),
      pvError(e)
   {
-    qDebug() << "mdtExpected::mdtExpected(const mdtError & e)";
   }
 
   /*! \brief Construct a expected with a error
@@ -96,7 +92,6 @@ class mdtExpected
    : pvHasValue(false),
      pvError(std::move(e))
   {
-    qDebug() << "mdtExpected::mdtExpected(mdtError && e)";
   }
 
   /*! \brief Construct a copy of other
@@ -104,7 +99,6 @@ class mdtExpected
   mdtExpected(const mdtExpected & other)
    : pvHasValue(other.pvHasValue)
   {
-    qDebug() << "mdtExpected::mdtExpected(const mdtExpected & other)";
     if(pvHasValue){
       new(&pvValue) T(other.pvValue);
     }else{
@@ -117,7 +111,6 @@ class mdtExpected
   mdtExpected(mdtExpected && other)
    : pvHasValue(other.pvHasValue)
   {
-    qDebug() << "mdtExpected::mdtExpected(mdtExpected && other)";
     if(pvHasValue){
       new(&pvValue) T(std::move(other.pvValue));
     }else{
@@ -129,7 +122,6 @@ class mdtExpected
    */
   ~mdtExpected()
   {
-    qDebug() << "mdtExpected::~mdtExpected()";
     if(pvHasValue){
       pvValue.~T();
     }else{
@@ -141,7 +133,6 @@ class mdtExpected
    */
   mdtExpected & operator=(const T & v)
   {
-    qDebug() << "mdtExpected::operator=(const T & v)";
     if(!pvHasValue){
       pvError.~mdtError();
     }
@@ -154,7 +145,6 @@ class mdtExpected
    */
   mdtExpected & operator=(T && v)
   {
-    qDebug() << "mdtExpected::operator=(T && v)";
     if(!pvHasValue){
       pvError.~mdtError();
     }
@@ -167,7 +157,6 @@ class mdtExpected
    */
   mdtExpected & operator=(const mdtError & e)
   {
-    qDebug() << "mdtExpected::operator=(const mdtError & e)";
     if(pvHasValue){
       pvValue.~T();
     }
@@ -180,7 +169,6 @@ class mdtExpected
    */
   mdtExpected & operator=(mdtError && e)
   {
-    qDebug() << "mdtExpected::operator=(mdtError && e)";
     if(pvHasValue){
       pvValue.~T();
     }
@@ -193,14 +181,11 @@ class mdtExpected
    */
   mdtExpected & operator=(const mdtExpected & other)
   {
-    qDebug() << "mdtExpected::operator=(const mdtExpected & other)";
     if(&other == this){
       return *this;
     }
     pvHasValue = other.pvHasValue;
-    qDebug() << "-> pvHasValue: " << pvHasValue;
     if(pvHasValue){
-      qDebug() << "--> delete error and create value ..";
       pvError.~mdtError();
       new(&pvValue) T(other.pvValue);
     }else{
@@ -214,7 +199,6 @@ class mdtExpected
    */
   mdtExpected & operator=(mdtExpected && other)
   {
-    qDebug() << "mdtExpected::operator=(mdtExpected && other)";
     if(&other == this){
       return *this;
     }
@@ -235,17 +219,6 @@ class mdtExpected
     }
     pvHasValue = other.pvHasValue;
 
-//     pvHasValue = other.pvHasValue;
-//     qDebug() << "-> pvHasValue: " << pvHasValue;
-//     if(pvHasValue){
-//       qDebug() << "--> delete error ..";
-//       pvError.~mdtError();
-//       qDebug() << "--> create value ..";
-//       new(&pvValue) T(std::move(other.pvValue));
-//     }else{
-//       pvValue.~T();
-//       new(&pvError) mdtError(std::move(other.pvError));
-//     }
     return *this;
   }
 
