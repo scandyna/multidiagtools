@@ -57,6 +57,7 @@ class mdtSqlCopierTest : public mdtTest
   void uniqueInsertExpressionDialogTest();
 
   void tableMappingItemTest();
+  void tableMappingItemRelatedTableExpTest();
 
   void tableMappingEditHelperContainsDFIndexesTest();
   void tableMappingEditHelperContainsDFIndexesTest_data();

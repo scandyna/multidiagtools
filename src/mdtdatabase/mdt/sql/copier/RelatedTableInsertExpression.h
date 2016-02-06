@@ -62,6 +62,21 @@ namespace mdt{ namespace sql{ namespace copier{
       qDebug() << "CPY  RelatedTableInsertExpression::RelatedTableInsertExpression(other) - ref: " << ref.load();
     }
 
+    /*! \brief Copy assignment
+     */
+    RelatedTableInsertExpression & operator=(const RelatedTableInsertExpression & other)
+    {
+      if(&other != this){
+        qDebug() << "CPY  RelatedTableInsertExpression::operator=(other) - ref: " << ref.load();
+        copyMembersOfAbstract(other);
+        pvSourceRelatedTableName = other.pvSourceRelatedTableName;
+        pvDestinationRelatedTableName = other.pvDestinationRelatedTableName;
+        pvDestinationRelatedTableKey = other.pvDestinationRelatedTableKey;
+        pvMatchItems = other.pvMatchItems;
+      }
+      return *this;
+    }
+
     /*! \brief Polymorphic copy
      */
     RelatedTableInsertExpression* clone() const override
@@ -78,12 +93,19 @@ namespace mdt{ namespace sql{ namespace copier{
       AbstractTableMappingItem::addDestinationFieldIndex(index);
     }
 
+    /*! \brief Set destination field index list
+     */
+    void setDestinationFieldIndexList(const FieldIndexList & indexList)
+    {
+      AbstractTableMappingItem::setDestinationFieldIndexList(indexList);
+    }
+
     /*! \brief Set source related table name
      *
      * By default, if no sourceRelatedTableName is set,
      *  source value fields refers to source table of table mapping.
      *
-     * If table mapping's source is a database table,
+     * If table mapping's source is a database,
      *  it is possible to fetch source values
      *  from a other table in source database
      *  by specifying its name here.
@@ -106,6 +128,20 @@ namespace mdt{ namespace sql{ namespace copier{
       return pvSourceRelatedTableName;
     }
 
+    /*! \brief Set destination related table name
+     */
+    void setDestinationRelatedTableName(const QString & tableName)
+    {
+      pvDestinationRelatedTableName = tableName;
+    }
+
+    /*! \brief Set destination related table name
+     */
+    QString destinationRelatedTableName() const
+    {
+      return pvDestinationRelatedTableName;
+    }
+
     /*! \brief Add a field index to destination related table key
      */
     void addDestinationRelatedFieldIndex(int fieldIndex)
@@ -125,6 +161,27 @@ namespace mdt{ namespace sql{ namespace copier{
     void clearDestinationRelatedTableKey()
     {
       pvDestinationRelatedTableKey.clear();
+    }
+
+    /*! \brief Get count of match items
+     */
+    int matchItemsCount() const
+    {
+      return pvMatchItems.size();
+    }
+
+    /*! \brief Set match items
+     */
+    void setMatchItems(const std::vector<ExpressionMatchItem> & items)
+    {
+      pvMatchItems = items;
+    }
+
+    /*! \brief Get match items
+     */
+    std::vector<ExpressionMatchItem> matchItems() const
+    {
+      return pvMatchItems;
     }
 
     /*! \brief Check if expression is null

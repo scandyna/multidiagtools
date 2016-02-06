@@ -41,13 +41,29 @@ namespace mdt{ namespace sql{ namespace copier{
 
    public:
 
-    /*! \brief Construct dialog to edit expression at given itemIndex in table mapping
+    /*! \brief Construct dialog
      */
-    RelatedTableInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, int itemIndex, QWidget *parent = nullptr);
+    RelatedTableInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, QWidget *parent = nullptr);
 
     /*! \brief Construct dialog to edit a new expression
      */
-    RelatedTableInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, QWidget *parent = nullptr);
+//     RelatedTableInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, QWidget *parent = nullptr);
+
+    /*! \brief Set index of item to edit in table mapping
+     *
+     * Will get table mapping item at given itemIndex
+     *  and update dialog.
+     *
+     * \pre itemIndex must be in valid range
+     */
+    bool setTableMappingItemIndex(int itemIndex);
+
+    /*! \brief Get expression
+     */
+    RelatedTableInsertExpression expression() const
+    {
+      return pvExpression;
+    }
 
    private:
 
@@ -61,7 +77,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Display destination fields
      */
-    void displayDestinationFields();
+    void displayDestinationFields() const;
 
     /*! \brief Populate value source combobox
      */
@@ -89,7 +105,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Display destination related table key
      */
-    void displayDestinationRelatedTableKey();
+    void displayDestinationRelatedTableKey() const;
 
     /*! \brief Add a match item
      */

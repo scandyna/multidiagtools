@@ -22,6 +22,7 @@
 #define MDT_SQL_COPIER_RELATED_TABLE_INSERT_MATCH_ITEM_MODEL_H
 
 #include "ExpressionMatchItemModel.h"
+#include "RelatedTableInsertExpression.h"
 #include "mdtSqlTableSchema.h"
 #include "mdtExpected.h"
 #include <QString>
@@ -59,6 +60,20 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     mdtExpected<bool> setDestinationRelatedTable(const QString & tableName);
 
+    /*! \brief Set expression
+     *
+     * Will set related source and destination tables
+     *  and match items from given expression.
+     *
+     * \sa setSourceRelatedTable()
+     * \sa setDestinationRelatedTable()
+     */
+    mdtExpected<bool> setExpression(const RelatedTableInsertExpression & exp);
+
+    /*! \brief Clear
+     */
+    void clear();
+
     /*! \brief Get list of source related table fields
      */
     QStringList getSourceRelatedTableFieldNameList() const;
@@ -67,6 +82,14 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     QStringList getDestinationRelatedTableFieldNameList() const;
 
+    /*! \brief Get destination table name
+     */
+    QString destinationTableName() const override;
+
+    /*! \brief Get source table name
+     */
+    QString sourceTableName() const override;
+
     /*! \brief Get source field count
      */
     int sourceFieldCount() const override;
@@ -74,7 +97,6 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Get destination field count
      */
     int destinationFieldCount() const override;
-
 
    private:
 

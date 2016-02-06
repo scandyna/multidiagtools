@@ -22,6 +22,7 @@
 #include "AbstractTableMappingItem.h"
 #include "FieldMapping.h"
 #include "FixedValue.h"
+#include "RelatedTableInsertExpression.h"
 #include "UniqueInsertExpression.h"
 
 namespace mdt{ namespace sql{ namespace copier{
@@ -101,6 +102,27 @@ QVariant TableMappingItem::fixedValue() const
 {
   Q_ASSERT(pvShared);
   return pvShared->fixedValue();
+}
+
+void TableMappingItem::setRelatedTableInsertExpression(const RelatedTableInsertExpression & exp)
+{
+  pvType = RelatedTableInsertExpressionType;
+  pvShared = new RelatedTableInsertExpression(exp);
+}
+
+RelatedTableInsertExpression TableMappingItem::relatedTableInsertExpression() const
+{
+  RelatedTableInsertExpression exp;
+
+  if(pvType == RelatedTableInsertExpressionType){
+    const auto *pexp = dynamic_cast<const RelatedTableInsertExpression*>(pvShared.constData());
+    Q_ASSERT(pexp != nullptr);
+    exp = *pexp;
+  }else{
+    exp.setDestinationFieldIndexList(destinationFieldIndexList());
+  }
+
+  return exp;
 }
 
 void TableMappingItem::setUniqueInsertExpression(const UniqueInsertExpression & exp)

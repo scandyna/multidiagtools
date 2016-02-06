@@ -34,7 +34,7 @@
 
 namespace mdt{ namespace sql{ namespace copier{
 
-RelatedTableInsertExpressionDialog::RelatedTableInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, int itemIndex, QWidget* parent)
+RelatedTableInsertExpressionDialog::RelatedTableInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, QWidget* parent)
  : QDialog(parent),
    pvTableMapping(tm)
 {
@@ -44,10 +44,10 @@ RelatedTableInsertExpressionDialog::RelatedTableInsertExpressionDialog(const std
 
   setupUi(this);
   // Init expression
-  if(itemIndex >= 0){
-    Q_ASSERT(itemIndex < tm->itemsCount());
-///    pvExpression = pvTableMapping->itemAt(itemIndex).uniqueInsertExpression();
-  }
+//   if(itemIndex >= 0){
+//     Q_ASSERT(itemIndex < tm->itemsCount());
+//     pvExpression = pvTableMapping->itemAt(itemIndex).relatedTableInsertExpression();
+//   }
   // Setup match item model
   pvMatchItemModel = new RelatedTableInsertMatchItemModel(pvTableMapping, this);
   /// set exp
@@ -89,9 +89,33 @@ RelatedTableInsertExpressionDialog::RelatedTableInsertExpressionDialog(const std
   displayDestinationRelatedTableKey();
 }
 
-RelatedTableInsertExpressionDialog::RelatedTableInsertExpressionDialog(const std::shared_ptr<const TableMapping>& tm, QWidget* parent)
- : RelatedTableInsertExpressionDialog(tm, -1, parent)
+// RelatedTableInsertExpressionDialog::RelatedTableInsertExpressionDialog(const std::shared_ptr<const TableMapping>& tm, QWidget* parent)
+//  : RelatedTableInsertExpressionDialog(tm, -1, parent)
+// {
+// }
+
+bool RelatedTableInsertExpressionDialog::setTableMappingItemIndex(int itemIndex)
 {
+  Q_ASSERT(itemIndex >= 0);
+  Q_ASSERT(itemIndex < pvTableMapping->itemsCount());
+
+  const auto exp = pvTableMapping->itemAt(itemIndex).relatedTableInsertExpression();
+
+  // Update related tables comboboxs, witch will alter pvExpression
+  cbSourceValueTable->setCurrentText(exp.sourceRelatedTableName());  /// \todo Ok ?
+  cbDestinationRelatedTable->setCurrentText(exp.destinationRelatedTableName());
+  // Store expression and update the rest
+  pvExpression = exp;
+  displayDestinationFields();
+  auto ret = pvMatchItemModel->setExpression(pvExpression);
+  if(!ret){
+    mdtErrorDialog dialog(ret.error());
+    dialog.exec();
+    return false;
+  }
+  displayDestinationRelatedTableKey();
+
+  return true;
 }
 
 void RelatedTableInsertExpressionDialog::addDestinationField()
@@ -116,7 +140,7 @@ void RelatedTableInsertExpressionDialog::clearDestinationFields()
   displayDestinationFields();
 }
 
-void RelatedTableInsertExpressionDialog::displayDestinationFields()
+void RelatedTableInsertExpressionDialog::displayDestinationFields() const
 {
   const auto dfiList = pvExpression.destinationFieldIndexList();
   QStringList fnList;
@@ -134,7 +158,7 @@ void RelatedTableInsertExpressionDialog::populateValueSourceCombobox()
   cbSourceValueTable->clear();
   if(db.isValid() && db.isOpen()){
     auto tableList = db.tables(QSql::Tables);
-    tableList.removeAll(pvTableMapping->sourceTableName());
+//     tableList.removeAll(pvTableMapping->sourceTableName());
     tableList.sort();
     cbSourceValueTable->addItem("");
     cbSourceValueTable->addItems(tableList);
@@ -149,11 +173,7 @@ void RelatedTableInsertExpressionDialog::onValueSourceChanged(int /*cbIndex*/)
   pvMatchItemModel->clearMatchItemList();
   pvRelatedSourceFieldCombobox->clear();
   // Update source related table
-  QString tableName = cbSourceValueTable->currentText();
-  if(tableName.isEmpty()){
-    return;
-  }
-  auto ret = pvMatchItemModel->setSourceRelatedTable(tableName);
+  auto ret = pvMatchItemModel->setSourceRelatedTable(cbSourceValueTable->currentText());
   if(!ret){
     mdtErrorDialog dialog(ret.error());
     dialog.exec();
@@ -161,6 +181,7 @@ void RelatedTableInsertExpressionDialog::onValueSourceChanged(int /*cbIndex*/)
   }
   // Populate related source field selection combobox
   pvRelatedSourceFieldCombobox->addItems(pvMatchItemModel->getSourceRelatedTableFieldNameList());
+  resizeMatchItemViewToContents();
 }
 
 void RelatedTableInsertExpressionDialog::populateDestinationRelatedTableCombobox()
@@ -185,11 +206,7 @@ void RelatedTableInsertExpressionDialog::onDestinationRelatedTableChanged(int /*
   pvExpression.clearDestinationRelatedTableKey();
   displayDestinationRelatedTableKey();
   // Update destination related table
-  QString tableName = cbDestinationRelatedTable->currentText();
-  if(tableName.isEmpty()){
-    return;
-  }
-  auto ret = pvMatchItemModel->setDestinationRelatedTable(tableName);
+  auto ret = pvMatchItemModel->setDestinationRelatedTable(cbDestinationRelatedTable->currentText());
   if(!ret){
     mdtErrorDialog dialog(ret.error());
     dialog.exec();
@@ -197,6 +214,7 @@ void RelatedTableInsertExpressionDialog::onDestinationRelatedTableChanged(int /*
   }
   // Populate related destination field selection combobox
   pvRelatedDestinationFieldCombobox->addItems(pvMatchItemModel->getDestinationRelatedTableFieldNameList());
+  resizeMatchItemViewToContents();
 }
 
 void RelatedTableInsertExpressionDialog::addFieldToDestinationRelatedTableKey()
@@ -240,7 +258,7 @@ void RelatedTableInsertExpressionDialog::clearDestinationRelatedTableKey()
   displayDestinationRelatedTableKey();
 }
 
-void RelatedTableInsertExpressionDialog::displayDestinationRelatedTableKey()
+void RelatedTableInsertExpressionDialog::displayDestinationRelatedTableKey() const
 {
   const auto tableFnList = pvMatchItemModel->getDestinationRelatedTableFieldNameList();
   const auto keyFiList = pvExpression.destinationRelatedTableKey();

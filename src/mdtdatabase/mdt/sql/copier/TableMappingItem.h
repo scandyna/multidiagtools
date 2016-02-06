@@ -31,6 +31,7 @@
 namespace mdt{ namespace sql{ namespace copier{
 
   class AbstractTableMappingItem;
+  class RelatedTableInsertExpression;
   class UniqueInsertExpression;
 
   /*! \brief Mapping item of mdtSqlCopierTableMapping
@@ -43,10 +44,12 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     enum Type
     {
-      FieldMappingType,           /*!< A mapping of source field to destination field */
-      FixedValueType,             /*!< A fixed value will be copied to defined destination field */
-      UniqueInsertExpressionType  /*!< A expression that search a (primary) key by matching fields in destination table
-                                       with values in source table. */
+      FieldMappingType,                 /*!< A mapping of source field to destination field */
+      FixedValueType,                   /*!< A fixed value will be copied to defined destination field */
+      RelatedTableInsertExpressionType, /*!< A expression that fills destination fields by matching fields
+                                             in a related destination table, and, optionally, in a related source table */
+      UniqueInsertExpressionType        /*!< A expression that search a (primary) key by matching fields in destination table
+                                             with values in source table. */
     };
 
     /*! \brief Construct a mapping item of given type
@@ -101,6 +104,18 @@ namespace mdt{ namespace sql{ namespace copier{
      * Has sense for FixedValueType only.
      */
     QVariant fixedValue() const;
+
+    /*! \brief Set a related table insert expression
+     */
+    void setRelatedTableInsertExpression(const RelatedTableInsertExpression & exp);
+
+    /*! \brief Get a related table insert expression
+     *
+     * If this item is RelatedTableInsertExpressionType,
+     *  the current expression is returned.
+     *  Else, a RelatedTableInsertExpression with items's destination field indexes set is returned.
+     */
+    RelatedTableInsertExpression relatedTableInsertExpression() const;
 
     /*! \brief Set a unique insert expression
      */

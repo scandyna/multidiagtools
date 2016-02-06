@@ -21,6 +21,8 @@
 #include "RelatedTableInsertMatchItemModel.h"
 #include "TableMapping.h"
 
+#include <QDebug>
+
 namespace mdt{ namespace sql{ namespace copier{
 
 RelatedTableInsertMatchItemModel::RelatedTableInsertMatchItemModel(const std::shared_ptr<const TableMapping> & tm, QObject* parent)
@@ -34,6 +36,9 @@ mdtExpected<bool> RelatedTableInsertMatchItemModel::setSourceRelatedTable(const 
     return true;
   }
   pvSourceRelatedTable.clear();
+  if(tableName.isEmpty()){
+    return true;
+  }
   if(tableName == tableMapping()->sourceTableName()){
     return true;
   }
@@ -52,12 +57,37 @@ mdtExpected< bool > RelatedTableInsertMatchItemModel::setDestinationRelatedTable
     return true;
   }
   pvDestinationRelatedTable.clear();
+  if(tableName.isEmpty()){
+    return true;
+  }
   Q_ASSERT(tableMapping()->destinationDatabase().isValid());
   Q_ASSERT(tableMapping()->destinationDatabase().isOpen());
   if(!pvDestinationRelatedTable.setupFromTable(tableName, tableMapping()->destinationDatabase())){
     return pvDestinationRelatedTable.lastError();
   }
   return true;
+}
+
+mdtExpected<bool> RelatedTableInsertMatchItemModel::setExpression(const RelatedTableInsertExpression & exp)
+{
+  auto ret = setSourceRelatedTable(exp.sourceRelatedTableName());
+  if(!ret){
+    return ret;
+  }
+  ret = setDestinationRelatedTable(exp.destinationRelatedTableName());
+  if(!ret){
+    return ret;
+  }
+  setExpressionMatchItemList(exp.matchItems());
+
+  return true;
+}
+
+void RelatedTableInsertMatchItemModel::clear()
+{
+  clearMatchItemList();
+  pvSourceRelatedTable.clear();
+  pvDestinationRelatedTable.clear();
 }
 
 QStringList RelatedTableInsertMatchItemModel::getSourceRelatedTableFieldNameList() const
@@ -71,6 +101,19 @@ QStringList RelatedTableInsertMatchItemModel::getSourceRelatedTableFieldNameList
 QStringList RelatedTableInsertMatchItemModel::getDestinationRelatedTableFieldNameList() const
 {
   return pvDestinationRelatedTable.getFieldNameList();
+}
+
+QString RelatedTableInsertMatchItemModel::destinationTableName() const
+{
+  return pvDestinationRelatedTable.tableName();
+}
+
+QString RelatedTableInsertMatchItemModel::sourceTableName() const
+{
+  if(!pvSourceRelatedTable.tableName().isEmpty()){
+    return pvSourceRelatedTable.tableName();
+  }
+  return tableMapping()->sourceTableName();
 }
 
 int RelatedTableInsertMatchItemModel::sourceFieldCount() const

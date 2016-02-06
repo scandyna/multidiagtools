@@ -71,11 +71,11 @@ QVariant ExpressionMatchItemModel::headerData(int section, Qt::Orientation orien
     case OperatorWithPreviousIndex:
       return tr("OP");
     case DestinationFieldNameIndex:
-      return tr("Destination\nfield");
+      return destinationFieldHeaderText();
     case MatchOperatorIndex:
       return tr("OP");
     case SourceValueFieldNameIndex:
-      return tr("Source value\nfield");
+      return sourceFieldHeaderText();
   }
 
   return section;
@@ -198,6 +198,16 @@ bool ExpressionMatchItemModel::removeRows(int row, int count, const QModelIndex&
   return true;
 }
 
+QString ExpressionMatchItemModel::destinationTableName() const
+{
+  return pvTableMapping->destinationTableName();
+}
+
+QString ExpressionMatchItemModel::sourceTableName() const
+{
+  return pvTableMapping->sourceTableName();
+}
+
 int ExpressionMatchItemModel::destinationFieldCount() const
 {
   return pvTableMapping->destinationTableFieldCount();
@@ -226,6 +236,34 @@ QString ExpressionMatchItemModel::fetchSourceValueFieldName(int fieldIndex) cons
 int ExpressionMatchItemModel::fetchSourceValueFieldIndexOf(const QString & fieldName) const
 {
   return pvTableMapping->sourceTableFieldIndexOf(fieldName);
+}
+
+QString ExpressionMatchItemModel::destinationFieldHeaderText() const
+{
+  QString text;
+  auto tableName = destinationTableName();
+
+  if(tableName.isEmpty()){
+    text = tr("Destination\nfield");
+  }else{
+    text = tr("Field in\n") + tableName;
+  }
+
+  return text;
+}
+
+QString ExpressionMatchItemModel::sourceFieldHeaderText() const
+{
+  QString text;
+  auto tableName = sourceTableName();
+
+  if(tableName.isEmpty()){
+    text = tr("Source\nfield");
+  }else{
+    text = tr("Field in\n") + tableName;
+  }
+
+  return text;
 }
 
 QVariant ExpressionMatchItemModel::operatorWithPreviousText(const ExpressionMatchItem & item) const

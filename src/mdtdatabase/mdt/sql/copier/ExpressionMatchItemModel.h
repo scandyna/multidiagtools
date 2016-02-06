@@ -97,6 +97,18 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
 
+    /*! \brief Get destination table name
+     *
+     * This default implementation returns table mapping destination table name
+     */
+    virtual QString destinationTableName() const;
+
+    /*! \brief Get source table name
+     *
+     * This default implementation returns table mapping source table name
+     */
+    virtual QString sourceTableName() const;
+
     /*! \brief Get destination field count
      */
     virtual int destinationFieldCount() const;
@@ -149,6 +161,14 @@ namespace mdt{ namespace sql{ namespace copier{
       MatchOperatorIndex,         /*!< Column index of operator between destination field and source value field */
       SourceValueFieldNameIndex   /*!< Column index of source value field name */
     };
+
+    /*! \brief Get text for destination field header
+     */
+    QString destinationFieldHeaderText() const;
+
+    /*! \brief Get text for source field header
+     */
+    QString sourceFieldHeaderText() const;
 
     /*! \brief Get operator with previous text
      */
