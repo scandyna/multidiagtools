@@ -1,28 +1,25 @@
-window_sizes 1280 964 415 859 911 0
+window_sizes 1280 964 345 929 911 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1969282 // RelatedTableInsertExpression
-    859 911 100 4 0 0
   classdiagram_ref 1976194 // UniqueCheckMatchItemModel
     120 106 100 18 0 0
   classdiagram_ref 1982722 // RelatedTableInsertExpressionDialog
     920 911 100 18 0 0
   classdiagram_ref 1883138 // TableMappingItem
     120 106 100 21 0 190
-  classdiagram_ref 1969538 // MatchItemModel
-    120 106 100 21 0 0
-  classdiagram_ref 1976066 // RelatedTableInsertMatchItemModel
-    859 911 100 21 0 0
+  active  classdiagram_ref 2002306 // CopyHelper
+    929 911 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1976066 // RelatedTableInsertMatchItemModel
+selected classdiagram_ref 1969282 // RelatedTableInsertExpression
 open
   
-package_ref 315650 // error
+  package_ref 315650 // error
   classview_ref 966786 // Expression
-  classview_ref 927490 // TableMappingItem
+  operation_ref 3578626 // getSourceSelectSql
+  operation_ref 3578114 // getDestinationRecord
   class_ref 719874 // QSortFilterProxyModel
   
-package_ref 260866 // Boost
+  package_ref 260866 // Boost
 end
 end

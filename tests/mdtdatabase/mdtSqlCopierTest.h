@@ -74,7 +74,9 @@ class mdtSqlCopierTest : public mdtTest
   void databaseCopierTableMappingFixedValueTest();
 
   void sqlDatabaseCopierTableMappingStateTest();
+  
   void sqlDatabaseCopierTableMappingSqliteTest();
+  
   void sqlDatabaseCopierTableMappingModelTest();
   void sqlDatabaseCopierTableMappingDialogTest();
 
@@ -84,6 +86,8 @@ class mdtSqlCopierTest : public mdtTest
   void sqlCsvFileImportTableMappingTest();
   void sqlCsvStringImportTableMappingModelTest();
   void sqlCsvFileImportTableMappingModelTest();
+
+  void copyHelperSqlTest();
 
   void sqlDatabaseCopierMappingTest();
   void sqlDatabaseCopierMappingModelTest();

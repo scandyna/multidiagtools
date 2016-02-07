@@ -28,6 +28,10 @@ classcanvas 130562 class_ref 1987842 // mdtSqlPrimaryKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 93.1 586.1 3005
 end
+note 131330 "For reverse:
+ - Option to only reverse current table (with PK)
+ - Option to reverse FK ?"
+  xyzwh 134 741 2000 473 91
 relationcanvas 129794 relation_ref 1119362 // <dependency>
   decenter_begin 948
   decenter_end 581

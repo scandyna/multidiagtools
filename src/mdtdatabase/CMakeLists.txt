@@ -68,6 +68,7 @@ set (SOURCES_FILES
           mdt/sql/copier/RelatedTableInsertMatchItemModel.cpp
           mdt/sql/copier/RelatedTableInsertExpressionDialog.cpp
           mdt/sql/copier/UniqueInsertExpressionDialog.cpp
+          mdt/sql/copier/CopyHelper.cpp
           # Database copier classes
           mdtSqlDatabaseCopierTableMapping.cpp
           mdtSqlDatabaseCopierTableMappingModel.cpp
