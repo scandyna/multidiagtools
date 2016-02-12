@@ -1,6 +1,6 @@
-format 209
+format 211
 "mdttesttool" // mdttools::mdttesttool
-  revision 77
+  revision 78
   modified_by 2 "philippe"
   // class settings
   
@@ -29,6 +29,8 @@ format 209
   package_ref 227714 // DatabaseConceptual
 
   package_ref 227842 // DatabaseLogical
+
+  package_ref 322178 // mdt
 
   package_ref 247554 // mdtcablelist
 
@@ -74,7 +76,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
 	    classrelation_ref 1144194 // pvTables (<directional composition>)
-	  b parent class_ref 910210 // mdtSqlSchemaTable
+	  b parent class_ref 910210 // mdtSqlTableSchema
       end
 
       operation 1675906 "mdtTtDatabaseSchema"

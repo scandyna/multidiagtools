@@ -49,24 +49,6 @@ QString CopyHelper::getSourceTableSelectSql(const TableMapping *const tm, const 
   return sql;
 }
 
-// QStringList CopyHelper::getExpressionDestinationFieldNameList(const TableMapping *const tm, const RelatedTableInsertExpression & exp)
-// {
-//   Q_ASSERT(tm != nullptr);
-//   Q_ASSERT(tm->destinationDatabase().isOpen());
-// 
-//   using mdt::sql::FieldIndexList;
-// 
-//   QStringList fieldNameList;
-//   const auto dfiList = exp.destinationFieldIndexList();
-// 
-//   fieldNameList.reserve(dfiList.count());
-//   for(auto dfi : dfiList){
-//     fieldNameList.append(tm->destinationTableFieldNameAt(dfi));
-//   }
-// 
-//   return fieldNameList;
-// }
-
 CopyHelperFieldNameLists CopyHelper::getDestinationFieldNameLists(const TableMapping *const tm)
 {
   Q_ASSERT(tm != nullptr);
@@ -136,6 +118,55 @@ QString CopyHelper::getDestinationInsertSql(const mdt::sql::copier::TableMapping
       % QStringLiteral(") VALUES (") \
       % valuesPlaceHolderString \
       % QStringLiteral(")");
+
+  return sql;
+}
+
+mdtExpected<QString> CopyHelper::getSqlForRelatedTableInsertExpressionKey(const RelatedTableInsertExpression & exp, const QSqlDatabase & destinationDb)
+{
+  Q_ASSERT(destinationDb.isOpen());
+
+  QString sql;
+  auto *driver = destinationDb.driver();
+  Q_ASSERT(driver != nullptr);
+  mdtSqlTableSchema relatedTable;
+  const auto key = exp.destinationRelatedTableKey();
+  QStringList keyFieldNameList;
+  const auto matchItemList = exp.matchItems();
+  QStringList matchItemSqlList;
+
+  // Build related table schema
+  if(!relatedTable.setupFromTable(exp.destinationRelatedTableName(), destinationDb)){
+    return relatedTable.lastError();
+  }
+  // Build key field names
+  keyFieldNameList.reserve(key.count());
+  for(const int fi : key){
+    Q_ASSERT(fi >= 0);
+    Q_ASSERT(fi < relatedTable.fieldCount());
+    keyFieldNameList.append( driver->escapeIdentifier(relatedTable.fieldName(fi), QSqlDriver::FieldName) );
+  }
+  // Build match items list
+  matchItemSqlList.reserve(matchItemList.size());
+  for(const auto & matchItem : matchItemList){
+    const int fi = matchItem.destinationFieldIndex;
+    Q_ASSERT(fi >= 0);
+    Q_ASSERT(fi < relatedTable.fieldCount());
+    const auto opString = matchItem.operatorWithPrevious.toString();
+    const auto fieldName = driver->escapeIdentifier(relatedTable.fieldName(fi), QSqlDriver::FieldName);
+    if(opString.isEmpty()){
+      matchItemSqlList.append( fieldName % QStringLiteral("=?") );
+    }else{
+      matchItemSqlList.append( opString % QStringLiteral(" ") % fieldName % QStringLiteral("=?") );
+    }
+  }
+  // Build SQL
+  sql = "SELECT " \
+      % keyFieldNameList.join(',') \
+      % QStringLiteral(" FROM ") \
+      % driver->escapeIdentifier(exp.destinationRelatedTableName(), QSqlDriver::TableName) \
+      % QStringLiteral(" WHERE ") \
+      % matchItemSqlList.join(' ');
 
   return sql;
 }

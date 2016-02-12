@@ -1,6 +1,6 @@
-format 210
+format 211
 "pathgraph" // mdttools::mdttesttool::mdtcablelist::mdt::cl::pathgraph
-  revision 1
+  revision 2
   modified_by 2 "philippe"
   // class settings
   

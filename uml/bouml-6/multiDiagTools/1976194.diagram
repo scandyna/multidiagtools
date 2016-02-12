@@ -2,21 +2,22 @@ format 211
 
 classcanvas 128002 class_ref 147202 // QAbstractTableModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 558 42 2000
+  xyz 242 42 2000
 end
 classcanvas 128130 class_ref 2174082 // TableMapping
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 491 512 2000
+  xyz 623 300 2000
 end
 classcanvas 128258 class_ref 2283650 // ExpressionMatchItemModel
   classdiagramsettings member_max_width 0 end
-  xyz 374 127 2006
+  xyz 41 124 2006
 end
 classcanvas 128642 class_ref 2257026 // ExpressionMatchItem
   classdiagramsettings member_max_width 0 end
-  xyz 39 240 2012
+  xyz 167 616 2012
 end
 relationcanvas 128386 relation_ref 2547842 // <generalisation>
+  decenter_end 469
   from ref 128258 z 2007 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -27,10 +28,9 @@ relationcanvas 128514 relation_ref 2547970 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 2588418 // <directional composition>
-  decenter_begin 487
-  decenter_end 462
+  decenter_end 484
   from ref 128258 z 2013 to ref 128642
   no_role_a no_role_b
-  multiplicity_a_pos 328 305 3000 no_multiplicity_b
+  multiplicity_a_pos 296 589 3000 no_multiplicity_b
 end
 end

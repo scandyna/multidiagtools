@@ -1,6 +1,6 @@
-format 210
+format 211
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 81
+  revision 82
   modified_by 2 "philippe"
   // class settings
   
@@ -26,6 +26,8 @@ format 210
   activitydiagramsettings
    end
   
+  package_ref 301954 // mdt
+
   classview 668802 "Main"
     
     classdiagramsettings member_max_width 0 end
@@ -8595,8 +8597,6 @@ This is alos the data container (=Property in Boost Graph) for Graph edges."
       end
     end
   end
-
-  package_ref 301954 // mdt
 
   classview 920578 "LinkPathView"
     

@@ -24,6 +24,7 @@
 #include "mdtSqlDatabaseSchema.h"
 #include "mdtSqlTablePopulationSchema.h"
 #include "mdtSqlTableSchema.h"
+#include "mdtSqlViewSchema.h"
 #include "mdtSqlRecord.h"
 #include "mdtSqlTransaction.h"
 #include "mdtSqlCopierDataMapping.h"
@@ -907,7 +908,8 @@ void mdtSqlCopierTest::relatedTableInsertExpressionDialogTest()
   /*
    * Setup table mapping
    */
-  QVERIFY(mapping->setSourceTable("Address_tbl", db));
+  ///QVERIFY(mapping->setSourceTable("Address_tbl", db));
+  QVERIFY(mapping->setSourceTable("Address_Client_view", db));
   QVERIFY(mapping->setDestinationTable("Address2_tbl", db));
   /*
    * Update table mapping with expression
@@ -915,11 +917,11 @@ void mdtSqlCopierTest::relatedTableInsertExpressionDialogTest()
   // Setup expression
   exp.clear();
   exp.addDestinationFieldIndex(1);
-  exp.setSourceRelatedTableName("Client_tbl");
+  ///exp.setSourceRelatedTableName("Client_tbl");
   exp.setDestinationRelatedTableName("Client2_tbl");
   exp.addDestinationRelatedFieldIndex(0);
   std::vector<ExpressionMatchItem> matchItems;
-  matchItems.emplace_back(2, 3);
+  matchItems.emplace_back(5, 1);
   exp.setMatchItems(matchItems);
   // Set expression to table mapping
   tmItem.setRelatedTableInsertExpression(exp);
@@ -935,13 +937,13 @@ void mdtSqlCopierTest::relatedTableInsertExpressionDialogTest()
   exp.clear();
   exp = dialog.expression();
   QCOMPARE(exp.destinationFieldIndexCount(), 1);
-  QCOMPARE(exp.sourceRelatedTableName(), QString("Client_tbl"));
+  ///QCOMPARE(exp.sourceRelatedTableName(), QString("Client_tbl"));
   QCOMPARE(exp.destinationRelatedTableName(), QString("Client2_tbl"));
   QCOMPARE(exp.destinationRelatedTableKey().count(), 1);
   QCOMPARE(exp.destinationRelatedTableKey().at(0), 0);
   QCOMPARE(exp.matchItemsCount(), 1);
-  QCOMPARE(exp.matchItems().at(0).sourceValueFieldIndex, 2);
-  QCOMPARE(exp.matchItems().at(0).destinationFieldIndex, 3);
+  QCOMPARE(exp.matchItems().at(0).sourceValueFieldIndex, 5);
+  QCOMPARE(exp.matchItems().at(0).destinationFieldIndex, 1);
   /*
    * Play
    */
@@ -3727,40 +3729,49 @@ void mdtSqlCopierTest::copyHelperSqlTest()
   TableMappingItem tmi;
   QSqlDatabase db = pvDatabase;
   QString expectedSql;
+  mdtExpected<QString> optSql;
   QStringList expecedFieldNameList;
+  QVector<QVariant> sourceRecord;
+  QVector<QVariant> destinationRecord;
+  QVector<QVariant> keyRecord;
+  mdtExpected< QVector<QVariant> > optRecord;
+//   QVector<QVariant> expectedRecord;
 
   QCOMPARE(db.driverName(), QString("QSQLITE"));
   QVERIFY(db.isOpen());
   /*
    * Setup rtExp:
    *  - DFI: 1 (Client_Id_FK)
+   *  - Fetch from: Client2_tbl.Id_PK
+   *  - Match: Client2_tbl.Name = Address_Client_view.ClientName
    */
   rtExp.clear();
   rtExp.addDestinationFieldIndex(1);
   rtExp.setDestinationRelatedTableName("Client2_tbl");
   rtExp.addDestinationRelatedFieldIndex(0);
+  rtExp.setSourceRelatedTableName("Client_tbl");
   expMatchItems.clear();
-  expMatchItems.emplace_back(0, 0);
+  expMatchItems.emplace_back(5, 1);
   rtExp.setMatchItems(expMatchItems);
   QVERIFY(!rtExp.isNull());
   /*
    * Create table mapping:
-   * ----------------------------------------
-   * |  Source field    | Destination field |
-   * | (in Address_tbl) | (in Address2_tbl) |
-   * |------------------|-------------------|
-   * |       --         | 0 (Id_PK)         |
-   * |------------------|-------------------|
-   * | rtExp            | 1 (Client_Id_FK)  |
-   * |------------------|-------------------|
-   * | 2 (Street)       | 2 (Street)        |
-   * |------------------|-------------------|
-   * | Fixed            | 3 (FieldAA)       |
-   * |------------------|-------------------|
-   * | 3 (FieldAA)      | 4 (FieldAB)       |
-   * |--------------------------------------|
+   * ------------------------------------------------
+   * |        Source field      | Destination field |
+   * | (in Address_Client_view) | (in Address2_tbl) |
+   * |--------------------------|-------------------|
+   * |           --             | 0 (Id_PK)         |
+   * |--------------------------|-------------------|
+   * | rtExp                    | 1 (Client_Id_FK)  |
+   * |--------------------------|-------------------|
+   * | 2 (Street)               | 2 (Street)        |
+   * |--------------------------|-------------------|
+   * | Fixed                    | 3 (FieldAA)       |
+   * |--------------------------|-------------------|
+   * | 3 (FieldAA)              | 4 (FieldAB)       |
+   * |----------------------------------------------|
    */
-  QVERIFY(tm.setSourceTable("Address_tbl", db));
+  QVERIFY(tm.setSourceTable("Address_Client_view", db));
   QVERIFY(tm.setDestinationTable("Address2_tbl", db));
   QCOMPARE(tm.itemsCount(), 5);
   tmi.setRelatedTableInsertExpression(rtExp);
@@ -3772,20 +3783,21 @@ void mdtSqlCopierTest::copyHelperSqlTest()
   QVERIFY(tm.itemAt(0).isNull());
   QVERIFY(!tm.itemAt(1).isNull());
   QVERIFY(!tm.itemAt(2).isNull());
+  QCOMPARE(tm.itemAt(2).sourceFieldIndexList().count(), 1);
+  QCOMPARE(tm.itemAt(2).sourceFieldIndexList().at(0), 2);
   QVERIFY(!tm.itemAt(3).isNull());
   QVERIFY(!tm.itemAt(4).isNull());
+  QCOMPARE(tm.itemAt(4).sourceFieldIndexList().count(), 1);
+  QCOMPARE(tm.itemAt(4).sourceFieldIndexList().at(0), 3);
   /*
    * Check getting SQL for source table select
    */
-  expectedSql = "SELECT \"Id_PK\",\"Client_Id_FK\",\"Street\",\"FieldAA\",\"FieldAB\" FROM \"Address_tbl\"";
+  expectedSql = "SELECT \"Id_PK\",\"Client_Id_FK\",\"Street\",\"FieldAA\",\"FieldAB\",\"ClientName\",\"ClientFieldA\",\"ClientFieldB\" " \
+                "FROM \"Address_Client_view\"";
   QCOMPARE(CopyHelper::getSourceTableSelectSql(&tm, db), expectedSql);
   /*
    * Check getting destination field name lsists
    */
-  // Check for related table insert expression
-//   expecedFieldNameList.clear();
-//   expecedFieldNameList << "Client_Id_FK";
-//   QCOMPARE(CopyHelper::getExpressionDestinationFieldNameList(&tm, rtExp), expecedFieldNameList);
   // Get all fields in table mapping
   auto fieldNameLists = CopyHelper::getDestinationFieldNameLists(&tm);
   // Check related table insert expression part
@@ -3807,6 +3819,82 @@ void mdtSqlCopierTest::copyHelperSqlTest()
   expectedSql += " (\"Client_Id_FK\",\"Street\",\"FieldAB\",\"FieldAA\")";
   expectedSql += " VALUES (?,?,?,?)";
   QCOMPARE(CopyHelper::getDestinationInsertSql(&tm, db), expectedSql);
+  /*
+   * Populate database for next tests
+   *
+   * Address_Client_view:
+   * -------------------------------------
+   * | Id_PK | Client_Id_FK | ClientName |
+   * |-------|--------------|------------|
+   * |  11   |      1       | Name 1     |
+   * |-------|--------------|------------|
+   * |  12   |      1       | Name 1     |
+   * |-------|--------------|------------|
+   * |  21   |      2       | Name 2     |
+   * |-------|--------------|------------|
+   *
+   * Client2_tbl:
+   * ------------------
+   * | Id_PK |  Name  |
+   * |-------|--------|
+   * |   10  | Name 1 |
+   * |-------|--------|
+   * |   20  | Name 2 |
+   * |-------|--------|
+   */
+  // Populate Client_tbl
+  clientTableTestDataSet clientDataSet(db);
+  QVERIFY(clientDataSet.populate());
+  // Populate Address_tbl
+  addressTableTestDataSet addressDataSet(db);
+  QVERIFY(addressDataSet.populate());
+  // Populate Client2_tbl
+  QSqlQuery query(db);
+  QVERIFY(query.exec("INSERT INTO Client2_tbl (Id_PK, Name) VALUES (10, 'Name 1')"));
+  QVERIFY(query.exec("INSERT INTO Client2_tbl (Id_PK, Name) VALUES (20, 'Name 2')"));
+  /*
+   * Check getting related table insert expression
+   */
+  // Get SQL to get destination related key
+  optSql = CopyHelper::getSqlForRelatedTableInsertExpressionKey(rtExp, db);
+  QVERIFY(optSql);
+  expectedSql = "SELECT \"Id_PK\" FROM \"Client2_tbl\" WHERE \"Name\"=?";
+  QCOMPARE(optSql.value(), expectedSql);
+  // Check also with more than 1 match item
+  auto rtExp2 = rtExp;
+  expMatchItems = rtExp.matchItems();
+  expMatchItems.emplace_back(mdtSqlWhereOperator::And, 2, 2);
+  rtExp2.setMatchItems(expMatchItems);
+  optSql = CopyHelper::getSqlForRelatedTableInsertExpressionKey(rtExp2, db);
+  QVERIFY(optSql);
+  expectedSql = "SELECT \"Id_PK\" FROM \"Client2_tbl\" WHERE \"Name\"=? AND \"FieldA\"=?";
+  QCOMPARE(optSql.value(), expectedSql);
+  /*
+   * Check getting destination record
+   */
+  // Build source record
+  sourceRecord.clear();
+  sourceRecord << 11 << 1 << "Street 11" << "FieldAA 11" << "FieldAB 11" << "Name 1" << "FieldA 1" << "FieldB 1";
+  // Check getting key of related table isert expression
+  optRecord = CopyHelper::getRelatedTableInsertExpressionKey(sourceRecord, rtExp, db);
+  QVERIFY(optRecord);
+  keyRecord = optRecord.value();
+  QCOMPARE(keyRecord.size(), 1);
+  QCOMPARE(keyRecord.at(0), QVariant(10));
+  // Check
+  ///destinationRecord = CopyHelper::getDestinationRecord(sourceRecord, &tm);
+  optRecord = CopyHelper::getDestinationRecord(sourceRecord, &tm, db);
+  QVERIFY(optRecord);
+  destinationRecord = optRecord.value();
+  QCOMPARE(destinationRecord.size(), 4);
+  QCOMPARE(destinationRecord.at(0), QVariant(10));
+  QCOMPARE(destinationRecord.at(1), QVariant("Street 11"));
+  QCOMPARE(destinationRecord.at(2), QVariant("FieldAA 11"));
+  QCOMPARE(destinationRecord.at(3), QVariant("Fixed"));
+  /*
+   * Cleanup Client2_tbl
+   */
+  QVERIFY(query.exec("DELETE FROM Client2_tbl"));
 }
 
 void mdtSqlCopierTest::sqlDatabaseCopierMappingTest()
@@ -4135,6 +4223,8 @@ void mdtSqlCopierTest::endEditing(QAbstractItemView& view, const QModelIndex& ed
 
 void mdtSqlCopierTest::createTestDatabase()
 {
+  using mdtSqlViewSchema::SelectField;
+
   mdtSqlTableSchema table;
   mdtSqlDatabaseSchema s;
   mdtSqlField field;
@@ -4220,6 +4310,27 @@ void mdtSqlCopierTest::createTestDatabase()
   fk_Client_Id_FK.addKeyFields("Id_PK", Client_Id_FK);
   table.addForeignKey(fk_Client_Id_FK);
   s.addTable(table);
+  /*
+   * Create Address_Client_view
+   */
+  mdtSqlViewSchema::Schema ADR_CLI_view;
+  mdtSqlViewSchema::Table CLI("Client_tbl", "CLI");
+  mdtSqlViewSchema::Table ADR("Address_tbl", "ADR");
+  mdtSqlViewSchema::JoinClause ADR_CLI_join;
+  ADR_CLI_view.setName("Address_Client_view");
+  ADR_CLI_view.setTable(ADR);
+  ADR_CLI_view.addSelectField(ADR, SelectField("Id_PK"));
+  ADR_CLI_view.addSelectField(ADR, SelectField("Client_Id_FK"));
+  ADR_CLI_view.addSelectField(ADR, SelectField("Street"));
+  ADR_CLI_view.addSelectField(ADR, SelectField("FieldAA"));
+  ADR_CLI_view.addSelectField(ADR, SelectField("FieldAB"));
+  ADR_CLI_view.addSelectField(CLI, SelectField("Name", "ClientName"));
+  ADR_CLI_view.addSelectField(CLI, SelectField("FieldA", "ClientFieldA"));
+  ADR_CLI_view.addSelectField(CLI, SelectField("FieldB", "ClientFieldB"));
+  ADR_CLI_join = s.joinClause(ADR, CLI);
+  QVERIFY(!ADR_CLI_join.isNull());
+  ADR_CLI_view.addJoinClause(ADR_CLI_join);
+  s.addView(ADR_CLI_view);
   /*
    * Create Client2_tbl
    */

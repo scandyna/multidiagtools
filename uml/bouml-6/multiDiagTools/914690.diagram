@@ -1,4 +1,4 @@
-format 210
+format 211
 
 classcanvas 128002 class_ref 894850 // mdtClPathGraph
   classdiagramsettings member_max_width 0 end
@@ -8,4 +8,10 @@ classcanvas 128130 class_ref 894722 // mdtClPathGraphEdgeData
   classdiagramsettings member_max_width 0 end
   xyz 140 540 2000
 end
+note 128258 "Function to find a vertex from a UnitConnection"
+  xyzwh 105 17 2000 377 43
+note 128386 "Store (unsigned) long long int in the graph (with UCNX_PK  with precondition not null as input)."
+  xyzwh 104 71 2000 595 47
+note 128514 "See iterator in BGL"
+  xyzwh 108 132 2000 387 43
 end

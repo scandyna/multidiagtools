@@ -100,7 +100,9 @@ namespace mdt{ namespace sql{ namespace copier{
       AbstractTableMappingItem::setDestinationFieldIndexList(indexList);
     }
 
-    /*! \brief Set source related table name
+    /*! \brief Set source matching table name
+     *
+     * \todo should be renamed
      *
      * By default, if no sourceRelatedTableName is set,
      *  source value fields refers to source table of table mapping.
@@ -119,7 +121,9 @@ namespace mdt{ namespace sql{ namespace copier{
       pvSourceRelatedTableName = tableName;
     }
 
-    /*! \brief Get source related table name
+    /*! \brief Get source matching table name
+     *
+     * \todo should be renamed
      *
      * \sa setSourceRelatedTableName()
      */

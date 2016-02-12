@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 42
+  revision 44
   modified_by 2 "philippe"
   // class settings
   
