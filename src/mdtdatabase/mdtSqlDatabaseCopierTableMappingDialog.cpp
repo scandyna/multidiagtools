@@ -21,6 +21,7 @@
 #include "mdtSqlDatabaseCopierTableMappingDialog.h"
 #include "mdtSqlDatabaseCopierTableMappingModel.h"
 #include "mdtComboBoxItemDelegate.h"
+#include "mdt/sql/copier/RelatedTableInsertExpressionDialog.h"
 #include "mdt/sql/copier/UniqueInsertExpressionDialog.h"
 #include <QToolButton>
 #include <QPushButton>
@@ -51,6 +52,7 @@ mdtSqlDatabaseCopierTableMappingDialog::mdtSqlDatabaseCopierTableMappingDialog(Q
   connect(tbMapByName, &QToolButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::mapByFieldName);
   connect(cbSourceTable, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
           this, &mdtSqlDatabaseCopierTableMappingDialog::setSourceTable);
+  connect(tbRelatedTableExpression, &QToolButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::editRelatedTableExpression);
   connect(pbUniqueInsertExpression, &QPushButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::editUniqueInsertExpression);
   setSelectedRow(-1);
 }
@@ -117,6 +119,27 @@ void mdtSqlDatabaseCopierTableMappingDialog::mapByFieldName()
 {
   pvMappingModel->generateFieldMappingByName();
   setSelectedRow(-1);
+  resizeTableViewToContents();
+}
+
+void mdtSqlDatabaseCopierTableMappingDialog::editRelatedTableExpression()
+{
+  using mdt::sql::copier::RelatedTableInsertExpressionDialog;
+  using mdt::sql::copier::TableMappingItem;
+
+  if(pvSelectedRow < 0){
+    return;
+  }
+  RelatedTableInsertExpressionDialog dialog(pvMappingModel->mapping(), this);
+  if(!dialog.setTableMappingItemIndex(pvSelectedRow)){
+    return;
+  }
+  if(dialog.exec() != QDialog::Accepted){
+    return;
+  }
+  TableMappingItem item(TableMappingItem::RelatedTableInsertExpressionType);
+  item.setRelatedTableInsertExpression(dialog.expression());
+  pvMappingModel->insertItem(item);
   resizeTableViewToContents();
 }
 

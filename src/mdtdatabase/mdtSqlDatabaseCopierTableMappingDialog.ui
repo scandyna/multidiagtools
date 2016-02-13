@@ -115,6 +115,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QToolButton" name="tbRelatedTableExpression">
+          <property name="text">
+           <string>Related table expression</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="pbUniqueInsertExpression">
           <property name="text">
            <string>Unique insert expression</string>

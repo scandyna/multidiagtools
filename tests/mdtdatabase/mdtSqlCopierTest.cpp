@@ -3715,7 +3715,7 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingModelTest()
   }
 }
 
-void mdtSqlCopierTest::copyHelperSqlTest()
+void mdtSqlCopierTest::copyHelperTest()
 {
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::RelatedTableInsertExpression;

@@ -77,6 +77,10 @@ class mdtSqlDatabaseCopierTableMappingDialog : public QDialog, Ui::mdtSqlDatabas
    */
   void mapByFieldName();
 
+  /*! \brief Edit related table expression
+   */
+  void editRelatedTableExpression();
+
   /*! \brief Edit unique insert expression
    */
   void editUniqueInsertExpression();
