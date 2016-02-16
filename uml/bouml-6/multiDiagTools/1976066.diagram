@@ -44,8 +44,8 @@ relationcanvas 129026 relation_ref 2588418 // <directional composition>
   geometry VHV unfixed
   decenter_begin 920
   decenter_end 56
-  from ref 128130 z 3006 to point 357 216.6
-  line 129538 z 3006 to point 902 216.6
+  from ref 128130 z 3006 to point 357 216
+  line 129538 z 3006 to point 902 216
   line 129666 z 3006 to ref 128898
   no_role_a no_role_b
   multiplicity_a_pos 888 280 3000 no_multiplicity_b

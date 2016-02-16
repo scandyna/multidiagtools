@@ -74,9 +74,9 @@ RelatedTableInsertExpressionDialog::RelatedTableInsertExpressionDialog(const std
   connect(tbResizeMatchItemView, &QToolButton::clicked, this, &RelatedTableInsertExpressionDialog::resizeMatchItemViewToContents);
   resizeMatchItemViewToContents();
   // Setup value source (table) selection
-  connect(cbSourceValueTable, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-          this, &RelatedTableInsertExpressionDialog::onValueSourceChanged);
-  populateValueSourceCombobox();
+//   connect(cbSourceValueTable, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+//           this, &RelatedTableInsertExpressionDialog::onValueSourceChanged);
+//   populateValueSourceCombobox();
   // Setup destination related table selection
   connect(cbDestinationRelatedTable, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
           this, &RelatedTableInsertExpressionDialog::onDestinationRelatedTableChanged);
@@ -102,7 +102,7 @@ bool RelatedTableInsertExpressionDialog::setTableMappingItemIndex(int itemIndex)
   const auto exp = pvTableMapping->itemAt(itemIndex).relatedTableInsertExpression();
 
   // Update related tables comboboxs, witch will alter pvExpression
-  cbSourceValueTable->setCurrentText(exp.sourceRelatedTableName());  /// \todo Ok ?
+//   cbSourceValueTable->setCurrentText(exp.sourceRelatedTableName());  /// \todo Ok ?
   cbDestinationRelatedTable->setCurrentText(exp.destinationRelatedTableName());
   // Store expression and update the rest
   pvExpression = exp;
@@ -151,38 +151,38 @@ void RelatedTableInsertExpressionDialog::displayDestinationFields() const
   leDestinationFields->setText(fnList.join(", "));
 }
 
-void RelatedTableInsertExpressionDialog::populateValueSourceCombobox()
-{
-  auto db = pvTableMapping->sourceDatabase();
+// void RelatedTableInsertExpressionDialog::populateValueSourceCombobox()
+// {
+//   auto db = pvTableMapping->sourceDatabase();
+// 
+//   cbSourceValueTable->clear();
+//   if(db.isValid() && db.isOpen()){
+//     auto tableList = db.tables(QSql::Tables);
+// //     tableList.removeAll(pvTableMapping->sourceTableName());
+//     tableList.sort();
+//     cbSourceValueTable->addItem("");
+//     cbSourceValueTable->addItems(tableList);
+//   }else{
+//     cbSourceValueTable->addItem(pvTableMapping->sourceTableName());
+//   }
+// }
 
-  cbSourceValueTable->clear();
-  if(db.isValid() && db.isOpen()){
-    auto tableList = db.tables(QSql::Tables);
-//     tableList.removeAll(pvTableMapping->sourceTableName());
-    tableList.sort();
-    cbSourceValueTable->addItem("");
-    cbSourceValueTable->addItems(tableList);
-  }else{
-    cbSourceValueTable->addItem(pvTableMapping->sourceTableName());
-  }
-}
-
-void RelatedTableInsertExpressionDialog::onValueSourceChanged(int /*cbIndex*/)
-{
-  // Clear
-  pvMatchItemModel->clearMatchItemList();
-  pvRelatedSourceFieldCombobox->clear();
-  // Update source related table
-  auto ret = pvMatchItemModel->setSourceRelatedTable(cbSourceValueTable->currentText());
-  if(!ret){
-    mdtErrorDialog dialog(ret.error());
-    dialog.exec();
-    return;
-  }
-  // Populate related source field selection combobox
-  pvRelatedSourceFieldCombobox->addItems(pvMatchItemModel->getSourceRelatedTableFieldNameList());
-  resizeMatchItemViewToContents();
-}
+// void RelatedTableInsertExpressionDialog::onValueSourceChanged(int /*cbIndex*/)
+// {
+//   // Clear
+//   pvMatchItemModel->clearMatchItemList();
+//   pvRelatedSourceFieldCombobox->clear();
+//   // Update source related table
+//   auto ret = pvMatchItemModel->setSourceRelatedTable(cbSourceValueTable->currentText());
+//   if(!ret){
+//     mdtErrorDialog dialog(ret.error());
+//     dialog.exec();
+//     return;
+//   }
+//   // Populate related source field selection combobox
+//   pvRelatedSourceFieldCombobox->addItems(pvMatchItemModel->getSourceRelatedTableFieldNameList());
+//   resizeMatchItemViewToContents();
+// }
 
 void RelatedTableInsertExpressionDialog::populateDestinationRelatedTableCombobox()
 {

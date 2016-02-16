@@ -54,7 +54,7 @@ namespace mdt{ namespace sql{ namespace copier{
      * \pre If tableName is different than table mapping's source table name,
      *       table mapping's source must be a database table.
      */
-    mdtExpected<bool> setSourceRelatedTable(const QString & tableName);
+//     mdtExpected<bool> setSourceRelatedTable(const QString & tableName);
 
     /*! \brief Set destination related table
      */
@@ -82,17 +82,17 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     QStringList getDestinationRelatedTableFieldNameList() const;
 
+    /*! \brief Get source table name
+     */
+//     QString sourceTableName() const override;
+
     /*! \brief Get destination table name
      */
     QString destinationTableName() const override;
 
-    /*! \brief Get source table name
-     */
-    QString sourceTableName() const override;
-
     /*! \brief Get source field count
      */
-    int sourceFieldCount() const override;
+//     int sourceFieldCount() const override;
 
     /*! \brief Get destination field count
      */
@@ -110,13 +110,13 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Get source value field name
      */
-    QString fetchSourceValueFieldName(int fieldIndex) const override;
+//     QString fetchSourceValueFieldName(int fieldIndex) const override;
 
     /*! \brief Get field index of given field name in source
      */
-    int fetchSourceValueFieldIndexOf(const QString & fieldName) const override;
+//     int fetchSourceValueFieldIndexOf(const QString & fieldName) const override;
 
-    mdtSqlTableSchema pvSourceRelatedTable;
+//     mdtSqlTableSchema pvSourceRelatedTable;
     mdtSqlTableSchema pvDestinationRelatedTable;
   };
 

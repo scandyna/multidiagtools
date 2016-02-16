@@ -81,11 +81,11 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Populate value source combobox
      */
-    void populateValueSourceCombobox();
+//     void populateValueSourceCombobox();
 
     /*! \brief Update when value source changed
      */
-    void onValueSourceChanged(int cbIndex);
+//     void onValueSourceChanged(int cbIndex);
 
     /*! \brief Populate destination related table combobox
      */

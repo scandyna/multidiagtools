@@ -785,19 +785,22 @@ void mdtSqlCopierTest::relatedTableInsertMatchItemModelTest()
   /*
    * Setup table mapping
    */
-  QVERIFY(mapping->setSourceTable("Address_tbl", db));
+  QVERIFY(mapping->setSourceTable("Address_Client_view", db));
   QVERIFY(mapping->setDestinationTable("Address2_tbl", db));
   /*
    * Check attributes
    */
   // Check getting source related attributes
-  QCOMPARE(model.sourceTableName(), QString("Address_tbl"));
-  QCOMPARE(model.getSourceRelatedTableFieldNameList().size(), 5);
+  QCOMPARE(model.sourceTableName(), QString("Address_Client_view"));
+  QCOMPARE(model.getSourceRelatedTableFieldNameList().size(), 8);
   QCOMPARE(model.getSourceRelatedTableFieldNameList().at(0), QString("Id_PK"));
   QCOMPARE(model.getSourceRelatedTableFieldNameList().at(1), QString("Client_Id_FK"));
   QCOMPARE(model.getSourceRelatedTableFieldNameList().at(2), QString("Street"));
   QCOMPARE(model.getSourceRelatedTableFieldNameList().at(3), QString("FieldAA"));
   QCOMPARE(model.getSourceRelatedTableFieldNameList().at(4), QString("FieldAB"));
+  QCOMPARE(model.getSourceRelatedTableFieldNameList().at(5), QString("ClientName"));
+  QCOMPARE(model.getSourceRelatedTableFieldNameList().at(6), QString("ClientFieldA"));
+  QCOMPARE(model.getSourceRelatedTableFieldNameList().at(7), QString("ClientFieldB"));
   // Set destination related table
   QVERIFY(model.setDestinationRelatedTable("Client2_tbl"));
   // Check getting destination related attributes
@@ -809,68 +812,68 @@ void mdtSqlCopierTest::relatedTableInsertMatchItemModelTest()
   QCOMPARE(model.getDestinationRelatedTableFieldNameList().at(3), QString("FieldB"));
   /*
    * Set a match item:
-   *  Client2_tbl.FieldB = Address_tbl.Street
+   *  Client2_tbl.Name = Address_Client_view.ClientName
    */
   itemList.clear();
-  itemList.emplace_back(2, 3);
+  itemList.emplace_back(5, 1);
   model.setExpressionMatchItemList(itemList);
   QCOMPARE(model.rowCount(), 1);
   // Check related source value field name
   index = model.index(0, sourceFieldColumn);
-  QCOMPARE(model.data(index), QVariant("Street"));
+  QCOMPARE(model.data(index), QVariant("ClientName"));
   // Check related destination field name
   index = model.index(0, destinationFieldColumn);
-  QCOMPARE(model.data(index), QVariant("FieldB"));
-  /*
-   * Change source related table
-   */
-  QVERIFY(model.setSourceRelatedTable("Client_tbl"));
-  // Check getting source related attributes
-  QCOMPARE(model.sourceTableName(), QString("Client_tbl"));
-  QCOMPARE(model.getSourceRelatedTableFieldNameList().size(), 4);
-  QCOMPARE(model.getSourceRelatedTableFieldNameList().at(0), QString("Id_PK"));
-  QCOMPARE(model.getSourceRelatedTableFieldNameList().at(1), QString("Name"));
-  QCOMPARE(model.getSourceRelatedTableFieldNameList().at(2), QString("FieldA"));
-  QCOMPARE(model.getSourceRelatedTableFieldNameList().at(3), QString("FieldB"));
-  /*
-   * Set a match item:
-   *  Client2_tbl.FieldB = Client_tbl.FieldA
-   */
-  itemList.clear();
-  itemList.emplace_back(2, 3);
-  model.setExpressionMatchItemList(itemList);
-  QCOMPARE(model.rowCount(), 1);
-  // Check related source value field name
-  index = model.index(0, sourceFieldColumn);
-  QCOMPARE(model.data(index), QVariant("FieldA"));
-  // Check related destination field name
-  index = model.index(0, destinationFieldColumn);
-  QCOMPARE(model.data(index), QVariant("FieldB"));
+  QCOMPARE(model.data(index), QVariant("Name"));
+//   /*
+//    * Change source related table
+//    */
+//   QVERIFY(model.setSourceRelatedTable("Client_tbl"));
+//   // Check getting source related attributes
+//   QCOMPARE(model.sourceTableName(), QString("Client_tbl"));
+//   QCOMPARE(model.getSourceRelatedTableFieldNameList().size(), 4);
+//   QCOMPARE(model.getSourceRelatedTableFieldNameList().at(0), QString("Id_PK"));
+//   QCOMPARE(model.getSourceRelatedTableFieldNameList().at(1), QString("Name"));
+//   QCOMPARE(model.getSourceRelatedTableFieldNameList().at(2), QString("FieldA"));
+//   QCOMPARE(model.getSourceRelatedTableFieldNameList().at(3), QString("FieldB"));
+//   /*
+//    * Set a match item:
+//    *  Client2_tbl.FieldB = Client_tbl.FieldA
+//    */
+//   itemList.clear();
+//   itemList.emplace_back(2, 3);
+//   model.setExpressionMatchItemList(itemList);
+//   QCOMPARE(model.rowCount(), 1);
+//   // Check related source value field name
+//   index = model.index(0, sourceFieldColumn);
+//   QCOMPARE(model.data(index), QVariant("FieldA"));
+//   // Check related destination field name
+//   index = model.index(0, destinationFieldColumn);
+//   QCOMPARE(model.data(index), QVariant("FieldB"));
   /*
    * Clear
    */
   model.clear();
   QCOMPARE(model.rowCount(), 0);
-  QCOMPARE(model.sourceFieldCount(), 5);  // Falls back to Address_tbl
+  QCOMPARE(model.sourceFieldCount(), 8);
   QCOMPARE(model.destinationFieldCount(), 0);
-  QCOMPARE(model.getSourceRelatedTableFieldNameList().size(), 5); // Falls back to Address_tbl
+  QCOMPARE(model.getSourceRelatedTableFieldNameList().size(), 8);
   QCOMPARE(model.getDestinationRelatedTableFieldNameList().size(), 0);
   /*
    * Setup model from a expression
    */
   // Setup expression
   RelatedTableInsertExpression exp;
-  exp.setSourceRelatedTableName("Client_tbl");
+//   exp.setSourceRelatedTableName("Client_tbl");
   exp.setDestinationRelatedTableName("Client2_tbl");
   std::vector<ExpressionMatchItem> matchItems;
-  matchItems.emplace_back(2, 3);
+  matchItems.emplace_back(7, 3);
   exp.setMatchItems(matchItems);
   // Set expression to model and check
   QVERIFY(model.setExpression(exp));
   QCOMPARE(model.rowCount(), 1);
-  QCOMPARE(model.sourceFieldCount(), 4);
+  QCOMPARE(model.sourceFieldCount(), 8);
   QCOMPARE(model.destinationFieldCount(), 4);
-  QCOMPARE(model.getSourceRelatedTableFieldNameList().size(), 4);
+  QCOMPARE(model.getSourceRelatedTableFieldNameList().size(), 8);
   QCOMPARE(model.getDestinationRelatedTableFieldNameList().size(), 4);
   /*
    * Setup views

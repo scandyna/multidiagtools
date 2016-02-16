@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 44
+  revision 46
   modified_by 2 "philippe"
   // class settings
   
@@ -983,18 +983,6 @@ ${inlines}
 	  b parent class_ref 2283650 // ExpressionMatchItemModel
       end
 
-      attribute 2300930 "SourceRelatedTable"
-	private type class_ref 910210 // mdtSqlTableSchema
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
       attribute 2301058 "DestinationRelatedTable"
 	private type class_ref 910210 // mdtSqlTableSchema
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -1015,22 +1003,6 @@ ${inlines}
 	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3564802 "setSourceRelatedTable"
-	public return_type class_ref 1900930 // mdtExpected
-	nparams 1
-	  param in name "tableName" type class_ref 161026 // QString
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -1119,38 +1091,6 @@ ${inlines}
       end
 
       operation 3530114 "fetchDestinationFieldIndexOf"
-	cpp_virtual private explicit_return_type "int"
-	nparams 1
-	  param in name "fieldName" type class_ref 161026 // QString
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3530242 "fetchSourceValueFieldName"
-	cpp_virtual private return_type class_ref 161026 // QString
-	nparams 1
-	  param in name "fieldIndex" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3530370 "fetchSourceValueFieldIndexOf"
 	cpp_virtual private explicit_return_type "int"
 	nparams 1
 	  param in name "fieldName" type class_ref 161026 // QString

@@ -30,26 +30,26 @@ RelatedTableInsertMatchItemModel::RelatedTableInsertMatchItemModel(const std::sh
 {
 }
 
-mdtExpected<bool> RelatedTableInsertMatchItemModel::setSourceRelatedTable(const QString & tableName)
-{
-  if(tableName == pvSourceRelatedTable.tableName()){
-    return true;
-  }
-  pvSourceRelatedTable.clear();
-  if(tableName.isEmpty()){
-    return true;
-  }
-  if(tableName == tableMapping()->sourceTableName()){
-    return true;
-  }
-  // Relates to another source table
-  Q_ASSERT(tableMapping()->sourceDatabase().isValid());
-  Q_ASSERT(tableMapping()->sourceDatabase().isOpen());
-  if(!pvSourceRelatedTable.setupFromTable(tableName, tableMapping()->sourceDatabase())){
-    return pvSourceRelatedTable.lastError();
-  }
-  return true;
-}
+// mdtExpected<bool> RelatedTableInsertMatchItemModel::setSourceRelatedTable(const QString & tableName)
+// {
+//   if(tableName == pvSourceRelatedTable.tableName()){
+//     return true;
+//   }
+//   pvSourceRelatedTable.clear();
+//   if(tableName.isEmpty()){
+//     return true;
+//   }
+//   if(tableName == tableMapping()->sourceTableName()){
+//     return true;
+//   }
+//   // Relates to another source table
+//   Q_ASSERT(tableMapping()->sourceDatabase().isValid());
+//   Q_ASSERT(tableMapping()->sourceDatabase().isOpen());
+//   if(!pvSourceRelatedTable.setupFromTable(tableName, tableMapping()->sourceDatabase())){
+//     return pvSourceRelatedTable.lastError();
+//   }
+//   return true;
+// }
 
 mdtExpected< bool > RelatedTableInsertMatchItemModel::setDestinationRelatedTable(const QString &tableName)
 {
@@ -70,11 +70,11 @@ mdtExpected< bool > RelatedTableInsertMatchItemModel::setDestinationRelatedTable
 
 mdtExpected<bool> RelatedTableInsertMatchItemModel::setExpression(const RelatedTableInsertExpression & exp)
 {
-  auto ret = setSourceRelatedTable(exp.sourceRelatedTableName());
-  if(!ret){
-    return ret;
-  }
-  ret = setDestinationRelatedTable(exp.destinationRelatedTableName());
+//   auto ret = setSourceRelatedTable(exp.sourceRelatedTableName());
+//   if(!ret){
+//     return ret;
+//   }
+  auto ret = setDestinationRelatedTable(exp.destinationRelatedTableName());
   if(!ret){
     return ret;
   }
@@ -86,15 +86,15 @@ mdtExpected<bool> RelatedTableInsertMatchItemModel::setExpression(const RelatedT
 void RelatedTableInsertMatchItemModel::clear()
 {
   clearMatchItemList();
-  pvSourceRelatedTable.clear();
+//   pvSourceRelatedTable.clear();
   pvDestinationRelatedTable.clear();
 }
 
 QStringList RelatedTableInsertMatchItemModel::getSourceRelatedTableFieldNameList() const
 {
-  if(!pvSourceRelatedTable.tableName().isEmpty()){
-    return pvSourceRelatedTable.getFieldNameList();
-  }
+//   if(!pvSourceRelatedTable.tableName().isEmpty()){
+//     return pvSourceRelatedTable.getFieldNameList();
+//   }
   return tableMapping()->getSourceTableFieldNameList();
 }
 
@@ -103,26 +103,26 @@ QStringList RelatedTableInsertMatchItemModel::getDestinationRelatedTableFieldNam
   return pvDestinationRelatedTable.getFieldNameList();
 }
 
+// QString RelatedTableInsertMatchItemModel::sourceTableName() const
+// {
+//   if(!pvSourceRelatedTable.tableName().isEmpty()){
+//     return pvSourceRelatedTable.tableName();
+//   }
+//   return tableMapping()->sourceTableName();
+// }
+
 QString RelatedTableInsertMatchItemModel::destinationTableName() const
 {
   return pvDestinationRelatedTable.tableName();
 }
 
-QString RelatedTableInsertMatchItemModel::sourceTableName() const
-{
-  if(!pvSourceRelatedTable.tableName().isEmpty()){
-    return pvSourceRelatedTable.tableName();
-  }
-  return tableMapping()->sourceTableName();
-}
-
-int RelatedTableInsertMatchItemModel::sourceFieldCount() const
-{
-  if(!pvSourceRelatedTable.tableName().isEmpty()){
-    return pvSourceRelatedTable.fieldCount();
-  }
-  return tableMapping()->sourceTableFieldCount();
-}
+// int RelatedTableInsertMatchItemModel::sourceFieldCount() const
+// {
+//   if(!pvSourceRelatedTable.tableName().isEmpty()){
+//     return pvSourceRelatedTable.fieldCount();
+//   }
+//   return tableMapping()->sourceTableFieldCount();
+// }
 
 int RelatedTableInsertMatchItemModel::destinationFieldCount() const
 {
@@ -139,20 +139,20 @@ int RelatedTableInsertMatchItemModel::fetchDestinationFieldIndexOf(const QString
   return pvDestinationRelatedTable.fieldIndex(fieldName);
 }
 
-QString RelatedTableInsertMatchItemModel::fetchSourceValueFieldName(int fieldIndex) const
-{
-  if(!pvSourceRelatedTable.tableName().isEmpty()){
-    return pvSourceRelatedTable.fieldName(fieldIndex);
-  }
-  return tableMapping()->sourceTableFieldNameAt(fieldIndex);
-}
+// QString RelatedTableInsertMatchItemModel::fetchSourceValueFieldName(int fieldIndex) const
+// {
+//   if(!pvSourceRelatedTable.tableName().isEmpty()){
+//     return pvSourceRelatedTable.fieldName(fieldIndex);
+//   }
+//   return tableMapping()->sourceTableFieldNameAt(fieldIndex);
+// }
 
-int RelatedTableInsertMatchItemModel::fetchSourceValueFieldIndexOf(const QString &fieldName) const
-{
-  if(!pvSourceRelatedTable.tableName().isEmpty()){
-    return pvSourceRelatedTable.fieldIndex(fieldName);
-  }
-  return tableMapping()->sourceTableFieldIndexOf(fieldName);
-}
+// int RelatedTableInsertMatchItemModel::fetchSourceValueFieldIndexOf(const QString &fieldName) const
+// {
+//   if(!pvSourceRelatedTable.tableName().isEmpty()){
+//     return pvSourceRelatedTable.fieldIndex(fieldName);
+//   }
+//   return tableMapping()->sourceTableFieldIndexOf(fieldName);
+// }
 
 }}} // namespace mdt{ namespace sql{ namespace copier{
