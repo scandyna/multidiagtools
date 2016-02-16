@@ -54,7 +54,7 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     RelatedTableInsertExpression(const RelatedTableInsertExpression & other)
      : AbstractTableMappingItem(other),
-       pvSourceRelatedTableName(other.pvSourceRelatedTableName),
+       /*pvSourceRelatedTableName(other.pvSourceRelatedTableName),*/
        pvDestinationRelatedTableName(other.pvDestinationRelatedTableName),
        pvDestinationRelatedTableKey(other.pvDestinationRelatedTableKey),
        pvMatchItems(other.pvMatchItems)
@@ -69,7 +69,7 @@ namespace mdt{ namespace sql{ namespace copier{
       if(&other != this){
         qDebug() << "CPY  RelatedTableInsertExpression::operator=(other) - ref: " << ref.load();
         copyMembersOfAbstract(other);
-        pvSourceRelatedTableName = other.pvSourceRelatedTableName;
+        /*pvSourceRelatedTableName = other.pvSourceRelatedTableName;*/
         pvDestinationRelatedTableName = other.pvDestinationRelatedTableName;
         pvDestinationRelatedTableKey = other.pvDestinationRelatedTableKey;
         pvMatchItems = other.pvMatchItems;
@@ -116,10 +116,10 @@ namespace mdt{ namespace sql{ namespace copier{
      *
      * \sa sourceRelatedTableName()
      */
-    void setSourceRelatedTableName(const QString & tableName)
-    {
-      pvSourceRelatedTableName = tableName;
-    }
+//     void setSourceRelatedTableName(const QString & tableName)
+//     {
+//       pvSourceRelatedTableName = tableName;
+//     }
 
     /*! \brief Get source matching table name
      *
@@ -127,10 +127,10 @@ namespace mdt{ namespace sql{ namespace copier{
      *
      * \sa setSourceRelatedTableName()
      */
-    QString sourceRelatedTableName() const
-    {
-      return pvSourceRelatedTableName;
-    }
+//     QString sourceRelatedTableName() const
+//     {
+//       return pvSourceRelatedTableName;
+//     }
 
     /*! \brief Set destination related table name
      */
@@ -211,13 +211,13 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void clearItem() override
     {
-      pvSourceRelatedTableName.clear();
+//       pvSourceRelatedTableName.clear();
       pvDestinationRelatedTableName.clear();
       pvDestinationRelatedTableKey.clear();
       pvMatchItems.clear();
     }
 
-    QString pvSourceRelatedTableName;
+//     QString pvSourceRelatedTableName;
     QString pvDestinationRelatedTableName;
     FieldIndexList pvDestinationRelatedTableKey;
     std::vector<ExpressionMatchItem> pvMatchItems;

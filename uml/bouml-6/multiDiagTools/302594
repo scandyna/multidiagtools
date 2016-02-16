@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 46
+  revision 47
   modified_by 2 "philippe"
   // class settings
   
@@ -832,18 +832,6 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 2604546 // <generalisation>
 	  b parent class_ref 2256514 // AbstractTableMappingItem
-      end
-
-      attribute 2294018 "SourceRelatedTableName"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
       end
 
       attribute 2294146 "DestinationRelatedTableName"

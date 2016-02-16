@@ -45,10 +45,6 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     RelatedTableInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, QWidget *parent = nullptr);
 
-    /*! \brief Construct dialog to edit a new expression
-     */
-//     RelatedTableInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, QWidget *parent = nullptr);
-
     /*! \brief Set index of item to edit in table mapping
      *
      * Will get table mapping item at given itemIndex
@@ -78,14 +74,6 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Display destination fields
      */
     void displayDestinationFields() const;
-
-    /*! \brief Populate value source combobox
-     */
-//     void populateValueSourceCombobox();
-
-    /*! \brief Update when value source changed
-     */
-//     void onValueSourceChanged(int cbIndex);
 
     /*! \brief Populate destination related table combobox
      */
@@ -122,7 +110,7 @@ namespace mdt{ namespace sql{ namespace copier{
     std::shared_ptr<const TableMapping> pvTableMapping;
     RelatedTableInsertExpression pvExpression;
     RelatedTableInsertMatchItemModel *pvMatchItemModel;
-    mdtComboBoxItemDelegate *pvRelatedSourceFieldCombobox;
+    mdtComboBoxItemDelegate *pvSourceFieldCombobox;
     mdtComboBoxItemDelegate *pvRelatedDestinationFieldCombobox;
   };
 
