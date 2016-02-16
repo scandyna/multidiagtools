@@ -54,7 +54,6 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     RelatedTableInsertExpression(const RelatedTableInsertExpression & other)
      : AbstractTableMappingItem(other),
-       /*pvSourceRelatedTableName(other.pvSourceRelatedTableName),*/
        pvDestinationRelatedTableName(other.pvDestinationRelatedTableName),
        pvDestinationRelatedTableKey(other.pvDestinationRelatedTableKey),
        pvMatchItems(other.pvMatchItems)
@@ -69,7 +68,6 @@ namespace mdt{ namespace sql{ namespace copier{
       if(&other != this){
         qDebug() << "CPY  RelatedTableInsertExpression::operator=(other) - ref: " << ref.load();
         copyMembersOfAbstract(other);
-        /*pvSourceRelatedTableName = other.pvSourceRelatedTableName;*/
         pvDestinationRelatedTableName = other.pvDestinationRelatedTableName;
         pvDestinationRelatedTableKey = other.pvDestinationRelatedTableKey;
         pvMatchItems = other.pvMatchItems;
@@ -99,38 +97,6 @@ namespace mdt{ namespace sql{ namespace copier{
     {
       AbstractTableMappingItem::setDestinationFieldIndexList(indexList);
     }
-
-    /*! \brief Set source matching table name
-     *
-     * \todo should be renamed
-     *
-     * By default, if no sourceRelatedTableName is set,
-     *  source value fields refers to source table of table mapping.
-     *
-     * If table mapping's source is a database,
-     *  it is possible to fetch source values
-     *  from a other table in source database
-     *  by specifying its name here.
-     *  In this case, source value fields will refer
-     *  to the specified table.
-     *
-     * \sa sourceRelatedTableName()
-     */
-//     void setSourceRelatedTableName(const QString & tableName)
-//     {
-//       pvSourceRelatedTableName = tableName;
-//     }
-
-    /*! \brief Get source matching table name
-     *
-     * \todo should be renamed
-     *
-     * \sa setSourceRelatedTableName()
-     */
-//     QString sourceRelatedTableName() const
-//     {
-//       return pvSourceRelatedTableName;
-//     }
 
     /*! \brief Set destination related table name
      */
@@ -211,13 +177,11 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void clearItem() override
     {
-//       pvSourceRelatedTableName.clear();
       pvDestinationRelatedTableName.clear();
       pvDestinationRelatedTableKey.clear();
       pvMatchItems.clear();
     }
 
-//     QString pvSourceRelatedTableName;
     QString pvDestinationRelatedTableName;
     FieldIndexList pvDestinationRelatedTableKey;
     std::vector<ExpressionMatchItem> pvMatchItems;

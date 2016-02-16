@@ -679,7 +679,6 @@ void mdtSqlCopierTest::relatedTableInsertExpressionTest()
   QVERIFY(exp.mappingState() == TableMappingItemState::MappingNotSet);
   QCOMPARE(exp.sourceFieldIndexCount(), 0);
   QCOMPARE(exp.destinationFieldIndexCount(), 0);
-//   QVERIFY(exp.sourceRelatedTableName().isEmpty());
   QVERIFY(exp.destinationRelatedTableName().isEmpty());
   QVERIFY(exp.destinationRelatedTableKey().isEmpty());
   QCOMPARE(exp.matchItemsCount(), 0);
@@ -692,10 +691,6 @@ void mdtSqlCopierTest::relatedTableInsertExpressionTest()
   QCOMPARE(exp.destinationFieldIndexCount(), 1);
   QCOMPARE(exp.destinationFieldIndexList().at(0), 11);
   QVERIFY(exp.isNull());
-  // Source related table name
-//   exp.setSourceRelatedTableName("Client_tbl");
-//   QCOMPARE(exp.sourceRelatedTableName(), QString("Client_tbl"));
-//   QVERIFY(exp.isNull());
   // Destination related table name
   exp.setDestinationRelatedTableName("Client2_tbl");
   QCOMPARE(exp.destinationRelatedTableName(), QString("Client2_tbl"));
@@ -722,7 +717,6 @@ void mdtSqlCopierTest::relatedTableInsertExpressionTest()
   RelatedTableInsertExpression exp2(exp);
   QCOMPARE(exp2.destinationFieldIndexCount(), 1);
   QCOMPARE(exp2.destinationFieldIndexList().at(0), 11);
-//   QCOMPARE(exp2.sourceRelatedTableName(), QString("Client_tbl"));
   QCOMPARE(exp2.destinationRelatedTableName(), QString("Client2_tbl"));
   QCOMPARE(exp2.destinationRelatedTableKey().count(), 1);
   QCOMPARE(exp2.destinationRelatedTableKey().at(0), 21);
@@ -743,7 +737,6 @@ void mdtSqlCopierTest::relatedTableInsertExpressionTest()
   exp3 = exp;
   QCOMPARE(exp3.destinationFieldIndexCount(), 1);
   QCOMPARE(exp3.destinationFieldIndexList().at(0), 11);
-//   QCOMPARE(exp3.sourceRelatedTableName(), QString("Client_tbl"));
   QCOMPARE(exp3.destinationRelatedTableName(), QString("Client2_tbl"));
   QCOMPARE(exp3.destinationRelatedTableKey().count(), 1);
   QCOMPARE(exp3.destinationRelatedTableKey().at(0), 21);
@@ -759,7 +752,6 @@ void mdtSqlCopierTest::relatedTableInsertExpressionTest()
   QVERIFY(exp.mappingState() == TableMappingItemState::MappingNotSet);
   QCOMPARE(exp.sourceFieldIndexCount(), 0);
   QCOMPARE(exp.destinationFieldIndexCount(), 0);
-//   QVERIFY(exp.sourceRelatedTableName().isEmpty());
   QVERIFY(exp.destinationRelatedTableName().isEmpty());
   QVERIFY(exp.destinationRelatedTableKey().isEmpty());
   QCOMPARE(exp.matchItemsCount(), 0);
