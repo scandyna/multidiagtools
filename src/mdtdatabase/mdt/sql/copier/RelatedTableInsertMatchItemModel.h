@@ -64,10 +64,6 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void clear();
 
-    /*! \brief Get list of source related table fields
-     */
-    QStringList getSourceRelatedTableFieldNameList() const;
-
     /*! \brief Get list of destination related table fields
      */
     QStringList getDestinationRelatedTableFieldNameList() const;

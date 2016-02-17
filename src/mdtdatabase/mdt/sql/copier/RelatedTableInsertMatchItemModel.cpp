@@ -64,11 +64,6 @@ void RelatedTableInsertMatchItemModel::clear()
   pvDestinationRelatedTable.clear();
 }
 
-QStringList RelatedTableInsertMatchItemModel::getSourceRelatedTableFieldNameList() const
-{
-  return tableMapping()->getSourceTableFieldNameList();
-}
-
 QStringList RelatedTableInsertMatchItemModel::getDestinationRelatedTableFieldNameList() const
 {
   return pvDestinationRelatedTable.getFieldNameList();

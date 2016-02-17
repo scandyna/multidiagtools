@@ -72,6 +72,7 @@ class mdtSqlCopierTest : public mdtTest
   void databaseCopierTableMappingTableFetchTest();
   void databaseCopierTableMappingFieldMapTest();
   void databaseCopierTableMappingFixedValueTest();
+  void databaseCopierTableMappingRelatedTableExpressionTest();
 
   void sqlDatabaseCopierTableMappingStateTest();
   

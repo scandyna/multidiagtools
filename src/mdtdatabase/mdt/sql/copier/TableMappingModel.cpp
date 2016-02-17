@@ -226,8 +226,8 @@ QVariant TableMappingModel::mapItemTypeData(int row, int role) const
       return tr("Field");
     case TableMappingItem::FixedValueType:
       return tr("Fixed value");
-    case TableMappingItem::UniqueInsertExpressionType:
-      return tr("Unique insert expression");
+    case TableMappingItem::RelatedTableInsertExpressionType:
+      return tr("RT expression");
   }
   return QVariant();
 }

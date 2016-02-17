@@ -137,6 +137,7 @@ void mdtSqlDatabaseCopierTableMappingDialog::editRelatedTableExpression()
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
+  Q_ASSERT(!dialog.expression().isNull());
   TableMappingItem item(TableMappingItem::RelatedTableInsertExpressionType);
   item.setRelatedTableInsertExpression(dialog.expression());
   pvMappingModel->insertItem(item);

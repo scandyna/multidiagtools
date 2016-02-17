@@ -157,21 +157,34 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Check if expression is null
      *
      * Expression is null if:
-     *  - not match item was set
      *  - no destination field index was set
      *  - destination related table name was not set
      *  - destination related table key was not set
+     *  - not match item was set or one of them is null
      */
     bool isNull() const override
     {
-      return ( pvMatchItems.empty()
-               || (destinationFieldIndexCount() < 1)
+      return ( (destinationFieldIndexCount() < 1)
                || pvDestinationRelatedTableName.isEmpty()
                || pvDestinationRelatedTableKey.isEmpty()
+               || pvMatchItems.empty()
+               || oneMatchItemIsNull()
              );
     }
 
    private:
+
+    /*! \brief Check if one match item is null
+     */
+    bool oneMatchItemIsNull() const
+    {
+      for(const auto & item : pvMatchItems){
+        if( (item.sourceValueFieldIndex < 0) || (item.destinationFieldIndex < 0) ){
+          return true;
+        }
+      }
+      return false;
+    }
 
     /*! \brief Clear expression
      */

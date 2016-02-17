@@ -61,7 +61,15 @@ namespace mdt{ namespace sql{ namespace copier{
       return pvExpression;
     }
 
+    /*! \brief Do checks and accept if ok
+     */
+    void accept() override;
+
    private:
+
+    /*! \brief Populate source field selection combobox
+     */
+    void populateSourceFieldCombobox();
 
     /*! \brief Add a destination field
      */

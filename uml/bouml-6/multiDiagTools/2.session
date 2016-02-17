@@ -5,13 +5,12 @@ diagrams
     929 911 100 4 0 0
   classdiagram_ref 1982722 // RelatedTableInsertExpressionDialog
     120 106 100 18 0 0
-  classdiagram_ref 1976066 // RelatedTableInsertMatchItemModel
-    929 911 100 21 0 0
 end
 show_stereotypes
+selected classdiagram_ref 1976066 // RelatedTableInsertMatchItemModel
 open
   
-  package_ref 315650 // error
+package_ref 315650 // error
   class_ref 2330242 // RelatedTableInsertExpression
   class_ref 2336898 // RelatedTableInsertMatchItemModel
   classview_ref 927490 // TableMappingItem
@@ -19,6 +18,6 @@ open
   operation_ref 3578114 // getDestinationRecord
   class_ref 719874 // QSortFilterProxyModel
   
-  package_ref 260866 // Boost
+package_ref 260866 // Boost
 end
 end
