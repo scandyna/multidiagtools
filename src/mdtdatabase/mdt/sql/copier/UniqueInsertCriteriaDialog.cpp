@@ -120,7 +120,7 @@ UniqueInsertCriteriaDialog::UniqueInsertCriteriaDialog(const std::shared_ptr<con
 
 void UniqueInsertCriteriaDialog::accept()
 {
-  if(pvExpression.destinationFieldIndexCount() < 1){
+  if(pvExpression.isNull()){
     return;
   }
 

@@ -21,7 +21,7 @@
 #ifndef MDT_SQL_COPIER_UNIQUE_INSERT_CRITERIA_H
 #define MDT_SQL_COPIER_UNIQUE_INSERT_CRITERIA_H
 
-#include "AbstractTableMappingItem.h"
+// #include "AbstractTableMappingItem.h"
 #include "ExpressionMatchItem.h"
 
 #include "mdtSqlWhereOperator.h"
@@ -41,76 +41,90 @@ namespace mdt{ namespace sql{ namespace copier{
    * Then, at insertion time (into destination),
    *  the defined (primary) key is fetched.
    */
-  class UniqueInsertCriteria : public AbstractTableMappingItem
+  class UniqueInsertCriteria /* : public AbstractTableMappingItem */
   {
    public:
 
     /*! \brief Create a invalid expression
      */
-    UniqueInsertCriteria()
-     : AbstractTableMappingItem()
-    {
-//       qDebug() << "C  UniqueInsertExpression::UniqueInsertExpression() - ref: " << ref.load();
-    }
+//     UniqueInsertCriteria()
+//      : AbstractTableMappingItem()
+//     {
+// //       qDebug() << "C  UniqueInsertExpression::UniqueInsertExpression() - ref: " << ref.load();
+//     }
 
     /*! \brief Destructor
      */
-    ~UniqueInsertCriteria()
-    {
-//       qDebug() << "D  UniqueInsertExpression::~UniqueInsertExpression() - ref: " << ref.load();
-    }
+//     ~UniqueInsertCriteria()
+//     {
+// //       qDebug() << "D  UniqueInsertExpression::~UniqueInsertExpression() - ref: " << ref.load();
+//     }
 
     /*! \brief Copy constructor
      */
-    UniqueInsertCriteria(const UniqueInsertCriteria & other)
-     : AbstractTableMappingItem(other),
-       pvMatchItems(other.pvMatchItems)
-    {
-//       qDebug() << "CPY  UniqueInsertExpression::UniqueInsertExpression(other) - ref: " << ref.load();
-    }
+//     UniqueInsertCriteria(const UniqueInsertCriteria & other)
+//      : AbstractTableMappingItem(other),
+//        pvMatchItems(other.pvMatchItems)
+//     {
+// //       qDebug() << "CPY  UniqueInsertExpression::UniqueInsertExpression(other) - ref: " << ref.load();
+//     }
 
     /*! \brief Copy assignment
      */
-    UniqueInsertCriteria & operator=(const UniqueInsertCriteria & other)
-    {
-      if(&other != this){
-        copyMembersOfAbstract(other);
-        pvMatchItems = other.pvMatchItems;
-      }
-      return *this;
-    }
+//     UniqueInsertCriteria & operator=(const UniqueInsertCriteria & other)
+//     {
+//       if(&other != this){
+//         copyMembersOfAbstract(other);
+//         pvMatchItems = other.pvMatchItems;
+//       }
+//       return *this;
+//     }
 
     /*! \brief Polymorphic copy
      */
-    UniqueInsertCriteria* clone() const override
+//     UniqueInsertCriteria* clone() const override
+//     {
+// //       qDebug() << " UniqueInsertExpression::clone() - ref: " << ref.load();
+//       return new UniqueInsertCriteria(*this);
+//     }
+
+    /*! \brief Check if unique insert criteria is null
+     */
+    bool isNull() const
     {
-//       qDebug() << " UniqueInsertExpression::clone() - ref: " << ref.load();
-      return new UniqueInsertCriteria(*this);
+      return pvMatchItems.empty();
+    }
+
+    /*! \brief Clear
+     */
+    void clear()
+    {
+      pvMatchItems.clear();
     }
 
     /*! \brief Check if field mapping is null
      *
      * Expression is null if not match was set or not destination was set
      */
-    bool isNull() const override
-    {
-      return ( pvMatchItems.empty() || (destinationFieldIndexCount() < 1) );
-    }
+//     bool isNull() const override
+//     {
+//       return ( pvMatchItems.empty() || (destinationFieldIndexCount() < 1) );
+//     }
 
     /*! \brief Add a destination field index
      */
-    void addDestinationFieldIndex(int index)
-    {
-      Q_ASSERT(index >= 0);
-      AbstractTableMappingItem::addDestinationFieldIndex(index);
-    }
+//     void addDestinationFieldIndex(int index)
+//     {
+//       Q_ASSERT(index >= 0);
+//       AbstractTableMappingItem::addDestinationFieldIndex(index);
+//     }
 
     /*! \brief Set destination field index list
      */
-    void setDestinationFieldIndexList(const FieldIndexList & indexList)
-    {
-      AbstractTableMappingItem::setDestinationFieldIndexList(indexList);
-    }
+//     void setDestinationFieldIndexList(const FieldIndexList & indexList)
+//     {
+//       AbstractTableMappingItem::setDestinationFieldIndexList(indexList);
+//     }
 
     /*! \brief Add a match item
      *
@@ -151,15 +165,15 @@ namespace mdt{ namespace sql{ namespace copier{
      * \param count Count of items to remove, starting from startIndex
      * \pre startIndex + count must be <= matchItemsCount()
      */
-    void removeMatchItems(int startIndex, int count)
-    {
-      Q_ASSERT((startIndex + count) <= matchItemsCount());
-
-      auto first = pvMatchItems.cbegin() + startIndex;
-      auto last = first + count;
-
-      pvMatchItems.erase(first, last);
-    }
+//     void removeMatchItems(int startIndex, int count)
+//     {
+//       Q_ASSERT((startIndex + count) <= matchItemsCount());
+// 
+//       auto first = pvMatchItems.cbegin() + startIndex;
+//       auto last = first + count;
+// 
+//       pvMatchItems.erase(first, last);
+//     }
 
     /*! \brief Get count of match items
      */
@@ -187,51 +201,51 @@ namespace mdt{ namespace sql{ namespace copier{
      * \pre itemIndex must be valid
      */
 //     void setMatchItemAt(int itemIndex, const UniqueInsertMatchExpressionItem & item)
-    void setMatchItemAt(int itemIndex, const ExpressionMatchItem & item)
-    {
-      Q_ASSERT(itemIndex >= 0);
-      Q_ASSERT(itemIndex < matchItemsCount());
-      pvMatchItems[itemIndex] = item;
-    }
+//     void setMatchItemAt(int itemIndex, const ExpressionMatchItem & item)
+//     {
+//       Q_ASSERT(itemIndex >= 0);
+//       Q_ASSERT(itemIndex < matchItemsCount());
+//       pvMatchItems[itemIndex] = item;
+//     }
 
     /*! \brief Get match item at given itemIndex
      *
      * \pre itemIndex must be valid
      */
 //     UniqueInsertMatchExpressionItem matchItemAt(int itemIndex) const
-    ExpressionMatchItem matchItemAt(int itemIndex) const
-    {
-      Q_ASSERT(itemIndex >= 0);
-      Q_ASSERT(itemIndex < matchItemsCount());
-      return pvMatchItems[itemIndex];
-    }
+//     ExpressionMatchItem matchItemAt(int itemIndex) const
+//     {
+//       Q_ASSERT(itemIndex >= 0);
+//       Q_ASSERT(itemIndex < matchItemsCount());
+//       return pvMatchItems[itemIndex];
+//     }
 
     /*! \brief Get list of source value field indexes
      *
      * Will collect, in a unique way, source value field indexe for each match item.
      */
-    QVector<int> getSourceValueFieldIndexList() const
-    {
-      QVector<int> indexList;
-
-      for(const auto & item : pvMatchItems){
-        const int idx = item.sourceValueFieldIndex;
-        if(!indexList.contains(idx)){
-          indexList.append(idx);
-        }
-      }
-
-      return indexList;
-    }
+//     QVector<int> getSourceValueFieldIndexList() const
+//     {
+//       QVector<int> indexList;
+// 
+//       for(const auto & item : pvMatchItems){
+//         const int idx = item.sourceValueFieldIndex;
+//         if(!indexList.contains(idx)){
+//           indexList.append(idx);
+//         }
+//       }
+// 
+//       return indexList;
+//     }
 
   private:
 
     /*! \brief Clear expression
      */
-    void clearItem() override
-    {
-      pvMatchItems.clear();
-    }
+//     void clearItem() override
+//     {
+//       pvMatchItems.clear();
+//     }
 
 //     std::vector<UniqueInsertMatchExpressionItem> pvMatchItems;
     std::vector<ExpressionMatchItem> pvMatchItems;
