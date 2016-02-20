@@ -23,6 +23,7 @@
 
 #include "mdtError.h"
 #include "TableMappingItem.h"
+#include "UniqueInsertCriteria.h"
 #include <QVector>
 #include <QString>
 #include <QStringList>
@@ -31,9 +32,7 @@
 namespace mdt{ namespace sql{ namespace copier{
 
   /*! \brief Common base class for SQL copier table mapping
-  *
-  * \todo Copy should be disabled in this base class (slicing!)
-  */
+   */
   class TableMapping
   {
   public:
@@ -78,6 +77,17 @@ namespace mdt{ namespace sql{ namespace copier{
     MappingState mappingState() const
     {
       return pvMappingState;
+    }
+
+    /*! \brief Set unique insert criteria
+     */
+    void setUniqueInsertCriteria(const UniqueInsertCriteria & c);
+
+    /*! \brief Get unique insert criteria
+     */
+    UniqueInsertCriteria uniqueInsertCriteria() const
+    {
+      return pvUniqueInsertCriteria;
     }
 
     /*! \brief Get count of map items
@@ -417,6 +427,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     MappingState pvMappingState;
     QVector<TableMappingItem> pvItems;
+    UniqueInsertCriteria pvUniqueInsertCriteria;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

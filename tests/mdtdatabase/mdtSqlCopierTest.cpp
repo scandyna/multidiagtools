@@ -1043,28 +1043,26 @@ void mdtSqlCopierTest::uniqueInsertCriteriaDialogTest()
 {
   using mdt::sql::copier::UniqueInsertCriteria;
   using mdt::sql::copier::UniqueInsertCriteriaDialog;
-  using mdt::sql::copier::TableMappingItem;
+  using mdt::sql::copier::ExpressionMatchItem;
 
   QSqlDatabase db = pvDatabase;
   auto mapping = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
   ///mdtSqlDatabaseCopierTableMapping mapping;
-  UniqueInsertCriteria exp;
-  TableMappingItem item;
+  UniqueInsertCriteria uic;
+  std::vector<ExpressionMatchItem> matchItems;
 
-  /*
-   * Setup expression
-   */
-//   exp.addDestinationFieldIndex(0);
-  exp.addMatchItem(1, 2);
   /*
    * Setup table mapping
    */
   // Set source and destination
   QVERIFY(mapping->setSourceTable("Client_tbl", db));
   QVERIFY(mapping->setDestinationTable("Client2_tbl", db));
-  // Add expression
-//   item.setUniqueInsertExpression(exp);
-//   mapping->insertItem(item);
+  /*
+   * Setup criteria
+   */
+  matchItems.emplace_back(1, 2);
+  uic.setMatchItems(matchItems);
+  mapping->setUniqueInsertCriteria(uic);
 
   UniqueInsertCriteriaDialog dialog(mapping);
 

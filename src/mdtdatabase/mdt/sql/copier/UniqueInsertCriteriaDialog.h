@@ -40,19 +40,19 @@ namespace mdt{ namespace sql{ namespace copier{
 
    public:
 
-    /*! \brief Construct dialog to edit expression at given itemIndex in table mapping
-     */
-//     UniqueInsertCriteriaDialog(const std::shared_ptr<const TableMapping> & tm, int itemIndex, QWidget *parent = nullptr);
-
-    /*! \brief Construct dialog to edit a new expression
+    /*! \brief Construct dialog to edit unique insert expression (contained in table mapping)
      */
     UniqueInsertCriteriaDialog(const std::shared_ptr<const TableMapping> & tm, QWidget *parent = nullptr);
 
-    /*! \brief Get expression
+    /*! \brief Set criteria
      */
-    UniqueInsertCriteria expression() const
+//     void setCriteria(const UniqueInsertCriteria & c);
+
+    /*! \brief Get criteria
+     */
+    UniqueInsertCriteria criteria() const
     {
-      return pvExpression;
+      return pvCriteria;
     }
 
     /*! \brief Do checks and accept if ok
@@ -69,25 +69,12 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void removeSelectedMatchItems();
 
-    /*! \brief Clear destination key
-     */
-//     void clearDestinationKey();
-
-    /*! \brief Add a field to destination key
-     */
-//     void addFieldToDestinationKey();
-
-    /*! \brief Display destination key
-     */
-//     void displayDestinationKey();
-
     /*! \brief Resize table view's contents
      */
     void resizeMatchItemViewToContents();
 
     std::shared_ptr<const TableMapping> pvTableMapping;
-    UniqueInsertCriteria pvExpression;
-//     FieldIndexList pvInitialKey;
+    UniqueInsertCriteria pvCriteria;
     ExpressionMatchItemModel *pvModel;
   };
 

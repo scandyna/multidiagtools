@@ -34,15 +34,10 @@ TableMapping::TableMapping()
 {
 }
 
-// void TableMapping::setItemAt(int itemIndex, TableMappingItem item)
-// {
-//   Q_ASSERT(itemIndex >= 0);
-//   Q_ASSERT(itemIndex < pvItems.size());
-// 
-//   updateMappingItemState(item);
-//   TableMappingEditHelper::insertItem(itemIndex, item, pvItems);
-//   updateTableMappingState();
-// }
+void TableMapping::setUniqueInsertCriteria(const UniqueInsertCriteria &c)
+{
+  pvUniqueInsertCriteria = c;
+}
 
 QVector<int> TableMapping::getItemsToRemoveIndexList(const FieldIndexList& itemDfiList) const
 {

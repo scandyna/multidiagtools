@@ -40,51 +40,6 @@
 
 namespace mdt{ namespace sql{ namespace copier{
 
-// UniqueInsertCriteriaDialog::UniqueInsertCriteriaDialog(const std::shared_ptr<const TableMapping> & tm, int itemIndex, QWidget* parent)
-//  : QDialog(parent),
-//    pvTableMapping(tm)
-// {
-//   Q_ASSERT(tm);
-// 
-//   setupUi(this);
-//   // Init expression
-//   if(itemIndex >= 0){
-//     Q_ASSERT(itemIndex < tm->itemsCount());
-//     pvExpression = pvTableMapping->itemAt(itemIndex).uniqueInsertExpression();
-//   }
-//   pvInitialKey = pvExpression.destinationFieldIndexList();
-//   // Setup match item model
-//   pvModel = new ExpressionMatchItemModel(pvTableMapping, this);
-//   pvModel->setExpressionMatchItemList(pvExpression.matchItems());
-//   // Setup match item view
-//   twMatchItems->setModel(pvModel);
-//   twMatchItems->setSelectionMode(QAbstractItemView::SingleSelection);
-//   // Display current source
-//   lbSourceTable->setText(tm->sourceTableName());
-//   // Display current destination
-//   lbDestinationTable->setText(tm->destinationTableName());
-//   // Setup destination key edition
-// //   auto *addFieldAction = leDestinationKey->addAction(QIcon::fromTheme("list-add"), QLineEdit::TrailingPosition);
-// //   connect(addFieldAction, &QAction::triggered, this, &UniqueInsertCriteriaDialog::addFieldToDestinationKey);
-// //   auto *clearKeyAction = leDestinationKey->addAction(QIcon::fromTheme("edit-clear"), QLineEdit::TrailingPosition);
-// //   connect(clearKeyAction, &QAction::triggered, this, &UniqueInsertCriteriaDialog::clearDestinationKey);
-// //   displayDestinationKey();
-//   // Setup destination field selection combobox
-//   auto *cb = new mdtComboBoxItemDelegate(this);
-//   cb->addItems(tm->getDestinationTableFieldNameList());
-//   twMatchItems->setItemDelegateForColumn(1, cb);
-//   // Setup source value field selection combobox
-//   cb = new mdtComboBoxItemDelegate(this);
-//   cb->addItems(tm->getSourceTableFieldNameList());
-//   twMatchItems->setItemDelegateForColumn(3, cb);
-//   // Signal slot connections
-//   connect(tbAddMatchItem, &QToolButton::clicked, this, &UniqueInsertCriteriaDialog::addMatchItem);
-//   connect(tbRemoveMatchItem, &QToolButton::clicked, this, &UniqueInsertCriteriaDialog::removeSelectedMatchItems);
-//   connect(tbResizeView, &QToolButton::clicked, this, &UniqueInsertCriteriaDialog::resizeMatchItemViewToContents);
-// 
-//   resizeMatchItemViewToContents();
-// }
-
 UniqueInsertCriteriaDialog::UniqueInsertCriteriaDialog(const std::shared_ptr<const TableMapping> & tm, QWidget* parent)
  : QDialog(parent),
    pvTableMapping(tm)
@@ -94,7 +49,8 @@ UniqueInsertCriteriaDialog::UniqueInsertCriteriaDialog(const std::shared_ptr<con
   setupUi(this);
   // Setup match item model
   pvModel = new ExpressionMatchItemModel(pvTableMapping, this);
-  pvModel->setExpressionMatchItemList(pvExpression.matchItems());
+  pvCriteria = pvTableMapping->uniqueInsertCriteria();
+  pvModel->setExpressionMatchItemList(pvCriteria.matchItems());
   // Setup match item view
   twMatchItems->setModel(pvModel);
   twMatchItems->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -118,9 +74,16 @@ UniqueInsertCriteriaDialog::UniqueInsertCriteriaDialog(const std::shared_ptr<con
   resizeMatchItemViewToContents();
 }
 
+// void UniqueInsertCriteriaDialog::setCriteria(const UniqueInsertCriteria & c)
+// {
+//   pvCriteria = c;
+//   pvModel->setExpressionMatchItemList(pvCriteria.matchItems());
+// }
+
 void UniqueInsertCriteriaDialog::accept()
 {
-  if(pvExpression.isNull()){
+  pvCriteria.setMatchItems(pvCriteria.matchItems());
+  if(pvCriteria.isNull()){
     return;
   }
 
@@ -145,45 +108,6 @@ void UniqueInsertCriteriaDialog::removeSelectedMatchItems()
   }
   pvModel->removeRows(indexList.at(0).row(), 1);
 }
-
-// void UniqueInsertCriteriaDialog::clearDestinationKey()
-// {
-//   pvExpression.clearDestinationFieldIndexList();
-//   displayDestinationKey();
-// }
-
-// void UniqueInsertCriteriaDialog::addFieldToDestinationKey()
-// {
-//   ExpressionKeyFieldSelectionDialog fieldSelectDialog(pvTableMapping, this);
-// 
-//   // Setup and show field selection dialog
-//   fieldSelectDialog.setKey(pvExpression.destinationFieldIndexList());
-//   fieldSelectDialog.setInitialKey(pvInitialKey);
-//   if(fieldSelectDialog.exec() != QDialog::Accepted){
-//     return;
-//   }
-//   // Update expression with selected field
-//   Q_ASSERT(fieldSelectDialog.selectedFieldIndex() >= 0);
-//   pvExpression.addDestinationFieldIndex(fieldSelectDialog.selectedFieldIndex());
-//   displayDestinationKey();
-// }
-
-// void UniqueInsertCriteriaDialog::displayDestinationKey()
-// {
-//   QString str;
-//   auto keyList = pvExpression.destinationFieldIndexList();
-//   const int lastIndex = keyList.count() - 1;
-// 
-//   leDestinationKey->clear();
-//   if(lastIndex < 0){
-//     return;
-//   }
-//   for(int i = 0; i < lastIndex; ++i){
-//     str += pvTableMapping->destinationTableFieldNameAt(keyList.at(i)) + ", ";
-//   }
-//   str += pvTableMapping->destinationTableFieldNameAt(keyList.at(lastIndex));
-//   leDestinationKey->setText(str);
-// }
 
 void UniqueInsertCriteriaDialog::resizeMatchItemViewToContents()
 {
