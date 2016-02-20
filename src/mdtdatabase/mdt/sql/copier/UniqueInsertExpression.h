@@ -50,14 +50,14 @@ namespace mdt{ namespace sql{ namespace copier{
     UniqueInsertExpression()
      : AbstractTableMappingItem()
     {
-      qDebug() << "C  UniqueInsertExpression::UniqueInsertExpression() - ref: " << ref.load();
+//       qDebug() << "C  UniqueInsertExpression::UniqueInsertExpression() - ref: " << ref.load();
     }
 
     /*! \brief Destructor
      */
     ~UniqueInsertExpression()
     {
-      qDebug() << "D  UniqueInsertExpression::~UniqueInsertExpression() - ref: " << ref.load();
+//       qDebug() << "D  UniqueInsertExpression::~UniqueInsertExpression() - ref: " << ref.load();
     }
 
     /*! \brief Copy constructor
@@ -66,7 +66,7 @@ namespace mdt{ namespace sql{ namespace copier{
      : AbstractTableMappingItem(other),
        pvMatchItems(other.pvMatchItems)
     {
-      qDebug() << "CPY  UniqueInsertExpression::UniqueInsertExpression(other) - ref: " << ref.load();
+//       qDebug() << "CPY  UniqueInsertExpression::UniqueInsertExpression(other) - ref: " << ref.load();
     }
 
     /*! \brief Copy assignment
@@ -84,7 +84,7 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     UniqueInsertExpression* clone() const override
     {
-      qDebug() << " UniqueInsertExpression::clone() - ref: " << ref.load();
+//       qDebug() << " UniqueInsertExpression::clone() - ref: " << ref.load();
       return new UniqueInsertExpression(*this);
     }
 

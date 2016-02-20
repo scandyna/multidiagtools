@@ -1328,7 +1328,6 @@ void mdtSqlCopierTest::tableMappingItemRelatedTableExpTest()
 
   RelatedTableInsertExpression exp;
   std::vector<ExpressionMatchItem> matchItems;
-  
 
   /*
    * Construct a related table expression
@@ -3930,7 +3929,7 @@ void mdtSqlCopierTest::copyHelperTest()
                 "FROM \"Address_Client_view\"";
   QCOMPARE(CopyHelper::getSourceTableSelectSql(&tm, db), expectedSql);
   /*
-   * Check getting destination field name lsists
+   * Check getting destination field name lists
    */
   // Get all fields in table mapping
   auto fieldNameLists = CopyHelper::getDestinationFieldNameLists(&tm);

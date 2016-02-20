@@ -27,7 +27,7 @@
 #include <QVariant>
 #include <QVector>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace mdt{ namespace sql{ namespace copier{
 
@@ -43,14 +43,14 @@ namespace mdt{ namespace sql{ namespace copier{
      : QSharedData(),
        pvMappingState(TableMappingItemState::MappingNotSet)
     {
-      qDebug() << "C AbstractTableMappingItem::AbstractTableMappingItem() - ref: " << ref.load();
+//       qDebug() << "C AbstractTableMappingItem::AbstractTableMappingItem() - ref: " << ref.load();
     }
 
     /*! \brief Destructor
      */
     virtual ~AbstractTableMappingItem()
     {
-      qDebug() << "D AbstractTableMappingItem::~AbstractTableMappingItem() - ref: " << ref.load();
+//       qDebug() << "D AbstractTableMappingItem::~AbstractTableMappingItem() - ref: " << ref.load();
     }
 
     // Disable copy (must use clone())
@@ -184,7 +184,7 @@ namespace mdt{ namespace sql{ namespace copier{
        pvMappingState(other.pvMappingState),
        pvDestinationFieldIndexList(other.pvDestinationFieldIndexList)
     {
-      qDebug() << "CPY AbstractTableMappingItem::AbstractTableMappingItem(other) - ref: " << ref.load();
+//       qDebug() << "CPY AbstractTableMappingItem::AbstractTableMappingItem(other) - ref: " << ref.load();
     }
 
     /*! \brief Add a destination field index

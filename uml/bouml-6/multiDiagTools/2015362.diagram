@@ -1,0 +1,9 @@
+format 211
+
+note 128002 "Notion/classe path (sub-graph???)
+-> NON, le graph existe, redoandant !"
+  xyzwh 108 89 2000 315 69
+note 128130 "Graph Ok, BGL fait le job.
+Problème: comment dessiner un graphe !"
+  xyzwh 116 231 2000 409 71
+end

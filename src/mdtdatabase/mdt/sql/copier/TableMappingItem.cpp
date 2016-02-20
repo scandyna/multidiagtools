@@ -30,7 +30,7 @@ namespace mdt{ namespace sql{ namespace copier{
 TableMappingItem::TableMappingItem(TableMappingItem::Type type)
  : pvType(type)
 {
-  qDebug() << "C TableMappingItem::TableMappingItem() .";
+//   qDebug() << "C TableMappingItem::TableMappingItem() .";
   constructShared();
 }
 
@@ -38,17 +38,17 @@ TableMappingItem::TableMappingItem(const TableMappingItem & other)
  : pvType(other.pvType),
    pvShared(other.pvShared)
 {
-  qDebug() << "CPY TableMappingItem::TableMappingItem(other) .";
+//   qDebug() << "CPY TableMappingItem::TableMappingItem(other) .";
 }
 
 TableMappingItem::~TableMappingItem()
 {
-  qDebug() << "D TableMappingItem::~TableMappingItem() .";
+//   qDebug() << "D TableMappingItem::~TableMappingItem() .";
 }
 
 TableMappingItem& TableMappingItem::operator=(const TableMappingItem & other)
 {
-  qDebug() << "CPY TableMappingItem::operator=(other) .";
+//   qDebug() << "CPY TableMappingItem::operator=(other) .";
   if(&other != this){
     pvType = other.pvType;
     pvShared = other.pvShared;

@@ -1,6 +1,6 @@
 format 211
-"cablelist" // mdttools::mdttesttool::mdt::cablelist
-  revision 2
+"mdt" // mdtport::mdt
+  revision 1
   modified_by 2 "philippe"
   // class settings
   
@@ -26,5 +26,5 @@ format 211
   activitydiagramsettings
    end
   
-  package_ref 335490 // dbschema
+  package_ref 328962 // usb
 end

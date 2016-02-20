@@ -25,6 +25,7 @@
 #include "mdt/sql/copier/UniqueInsertExpressionDialog.h"
 #include <QToolButton>
 #include <QPushButton>
+#include <QCheckBox>
 #include <QTableView>
 #include <QAbstractItemView>
 #include <QItemSelectionModel>
@@ -53,7 +54,12 @@ mdtSqlDatabaseCopierTableMappingDialog::mdtSqlDatabaseCopierTableMappingDialog(Q
   connect(cbSourceTable, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
           this, &mdtSqlDatabaseCopierTableMappingDialog::setSourceTable);
   connect(tbRelatedTableExpression, &QToolButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::editRelatedTableExpression);
-  connect(pbUniqueInsertExpression, &QPushButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::editUniqueInsertExpression);
+  
+  ///connect(pbUniqueInsertExpression, &QPushButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::editUniqueInsertExpression);
+  connect(cbUniqueInsertCriteria, &QCheckBox::toggled, this, &mdtSqlDatabaseCopierTableMappingDialog::setUniqueInsertCriteriaEnabled);
+  connect(tbUniqueInsertCriteria, &QToolButton::clicked, this, &mdtSqlDatabaseCopierTableMappingDialog::editUniqueInsertCriteria);
+  cbUniqueInsertCriteria->setChecked(false);
+  setUniqueInsertCriteriaEnabled(false);
   setSelectedRow(-1);
 }
 
@@ -144,23 +150,38 @@ void mdtSqlDatabaseCopierTableMappingDialog::editRelatedTableExpression()
   resizeTableViewToContents();
 }
 
-void mdtSqlDatabaseCopierTableMappingDialog::editUniqueInsertExpression()
+void mdtSqlDatabaseCopierTableMappingDialog::setUniqueInsertCriteriaEnabled(bool enable)
+{
+  tbUniqueInsertCriteria->setEnabled(enable);
+}
+
+void mdtSqlDatabaseCopierTableMappingDialog::editUniqueInsertCriteria()
 {
   using mdt::sql::copier::UniqueInsertExpressionDialog;
-  using mdt::sql::copier::TableMappingItem;
 
-  if(pvSelectedRow < 0){
-    return;
-  }
-  UniqueInsertExpressionDialog dialog(pvMappingModel->mapping(), pvSelectedRow, this);
+  UniqueInsertExpressionDialog dialog(pvMappingModel->mapping(), this);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
-  TableMappingItem item(TableMappingItem::UniqueInsertExpressionType);
-  item.setUniqueInsertExpression(dialog.expression());
-  pvMappingModel->insertItem(item);
-  resizeTableViewToContents();
 }
+
+// void mdtSqlDatabaseCopierTableMappingDialog::editUniqueInsertExpression()
+// {
+//   using mdt::sql::copier::UniqueInsertExpressionDialog;
+//   using mdt::sql::copier::TableMappingItem;
+// 
+//   if(pvSelectedRow < 0){
+//     return;
+//   }
+//   UniqueInsertExpressionDialog dialog(pvMappingModel->mapping(), pvSelectedRow, this);
+//   if(dialog.exec() != QDialog::Accepted){
+//     return;
+//   }
+//   TableMappingItem item(TableMappingItem::UniqueInsertExpressionType);
+//   item.setUniqueInsertExpression(dialog.expression());
+//   pvMappingModel->insertItem(item);
+//   resizeTableViewToContents();
+// }
 
 void mdtSqlDatabaseCopierTableMappingDialog::resizeTableViewToContents()
 {
@@ -182,5 +203,6 @@ void mdtSqlDatabaseCopierTableMappingDialog::setSelectedRowFromSelection(const Q
 void mdtSqlDatabaseCopierTableMappingDialog::setSelectedRow(int row)
 {
   pvSelectedRow = row;
+  tbRelatedTableExpression->setEnabled(row >= 0);
   pbUniqueInsertExpression->setEnabled(row >= 0);
 }

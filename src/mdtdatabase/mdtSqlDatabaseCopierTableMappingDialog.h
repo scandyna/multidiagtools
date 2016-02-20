@@ -81,9 +81,17 @@ class mdtSqlDatabaseCopierTableMappingDialog : public QDialog, Ui::mdtSqlDatabas
    */
   void editRelatedTableExpression();
 
+  /*! \brief Set unique insert criteria enabled/disabled
+   */
+  void setUniqueInsertCriteriaEnabled(bool enable);
+
+  /*! \brief Edit unique insert criteria
+   */
+  void editUniqueInsertCriteria();
+
   /*! \brief Edit unique insert expression
    */
-  void editUniqueInsertExpression();
+//   void editUniqueInsertExpression();
 
   /*! \brief Resize table view
    */

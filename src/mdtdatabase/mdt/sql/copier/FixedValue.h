@@ -37,21 +37,21 @@ namespace mdt{ namespace sql{ namespace copier{
     FixedValue()
      : AbstractTableMappingItem()
     {
-      qDebug() << "C  FixedValue::FixedValue() - ref: " << ref.load();
+//       qDebug() << "C  FixedValue::FixedValue() - ref: " << ref.load();
     }
 
     /*! \brief Destructor
      */
     ~FixedValue()
     {
-      qDebug() << "D  FixedValue::~FixedValue() - ref: " << ref.load();
+//       qDebug() << "D  FixedValue::~FixedValue() - ref: " << ref.load();
     }
 
     /*! \brief Polymorphic copy
      */
     FixedValue* clone() const override
     {
-      qDebug() << " FixedValue::clone() - ref: " << ref.load();
+//       qDebug() << " FixedValue::clone() - ref: " << ref.load();
       return new FixedValue(*this);
     }
 
@@ -94,7 +94,7 @@ namespace mdt{ namespace sql{ namespace copier{
      : AbstractTableMappingItem(other),
        pvValue(other.pvValue)
     {
-      qDebug() << "CPY  FixedValue::FixedValue(other) - ref: " << ref.load();
+//       qDebug() << "CPY  FixedValue::FixedValue(other) - ref: " << ref.load();
     }
 
     QVariant pvValue;

@@ -1,6 +1,6 @@
-format 208
+format 211
 "mdtport" // mdtport
-  revision 58
+  revision 59
   modified_by 2 "philippe"
   // class settings
   
@@ -26,6 +26,8 @@ format 208
   activitydiagramsettings
    end
   
+  package_ref 328834 // mdt
+
   package_ref 260738 // newPortApiSandbox
 
   classview 201218 "mdtPort"

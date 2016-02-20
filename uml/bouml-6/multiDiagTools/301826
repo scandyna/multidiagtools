@@ -1,6 +1,6 @@
 format 211
 "pathgraph" // mdttools::mdttesttool::mdtcablelist::mdt::cl::pathgraph
-  revision 2
+  revision 3
   modified_by 2 "philippe"
   // class settings
   
@@ -265,6 +265,28 @@ ${inlines}
 	
 	
       end
+    end
+  end
+
+  classview 992898 "sandbox"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2015362 "sandbox"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
   end
 end

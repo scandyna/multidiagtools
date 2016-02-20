@@ -37,21 +37,21 @@ namespace mdt{ namespace sql{ namespace copier{
     FieldMapping()
      : AbstractTableMappingItem()
     {
-      qDebug() << "C  FieldMapping::FieldMapping() - ref: " << ref.load();
+//       qDebug() << "C  FieldMapping::FieldMapping() - ref: " << ref.load();
     }
 
     /*! \brief Destructor
      */
     ~FieldMapping()
     {
-      qDebug() << "D  FieldMapping::~FieldMapping() - ref: " << ref.load();
+//       qDebug() << "D  FieldMapping::~FieldMapping() - ref: " << ref.load();
     }
 
     /*! \brief Polymorphic copy
      */
     FieldMapping* clone() const override
     {
-      qDebug() << " FieldMapping::clone() - ref: " << ref.load();
+//       qDebug() << " FieldMapping::clone() - ref: " << ref.load();
       return new FieldMapping(*this);
     }
 
@@ -104,7 +104,7 @@ namespace mdt{ namespace sql{ namespace copier{
      : AbstractTableMappingItem(other),
        pvSourceFieldIndex(other.pvSourceFieldIndex)
     {
-      qDebug() << "CPY  FieldMapping::FieldMapping(other) - ref: " << ref.load();
+//       qDebug() << "CPY  FieldMapping::FieldMapping(other) - ref: " << ref.load();
     }
 
     FieldIndexList pvSourceFieldIndex;

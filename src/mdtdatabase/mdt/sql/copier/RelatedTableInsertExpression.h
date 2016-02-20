@@ -40,14 +40,14 @@ namespace mdt{ namespace sql{ namespace copier{
     RelatedTableInsertExpression()
      : AbstractTableMappingItem()
     {
-      qDebug() << "C  RelatedTableInsertExpression::RelatedTableInsertExpression() - ref: " << ref.load();
+//       qDebug() << "C  RelatedTableInsertExpression::RelatedTableInsertExpression() - ref: " << ref.load();
     }
 
     /*! \brief Destructor
      */
     ~RelatedTableInsertExpression()
     {
-      qDebug() << "D  RelatedTableInsertExpression::~RelatedTableInsertExpression() - ref: " << ref.load();
+//       qDebug() << "D  RelatedTableInsertExpression::~RelatedTableInsertExpression() - ref: " << ref.load();
     }
 
     /*! \brief Copy constructor
@@ -58,7 +58,7 @@ namespace mdt{ namespace sql{ namespace copier{
        pvDestinationRelatedTableKey(other.pvDestinationRelatedTableKey),
        pvMatchItems(other.pvMatchItems)
     {
-      qDebug() << "CPY  RelatedTableInsertExpression::RelatedTableInsertExpression(other) - ref: " << ref.load();
+//       qDebug() << "CPY  RelatedTableInsertExpression::RelatedTableInsertExpression(other) - ref: " << ref.load();
     }
 
     /*! \brief Copy assignment
@@ -66,7 +66,7 @@ namespace mdt{ namespace sql{ namespace copier{
     RelatedTableInsertExpression & operator=(const RelatedTableInsertExpression & other)
     {
       if(&other != this){
-        qDebug() << "CPY  RelatedTableInsertExpression::operator=(other) - ref: " << ref.load();
+//         qDebug() << "CPY  RelatedTableInsertExpression::operator=(other) - ref: " << ref.load();
         copyMembersOfAbstract(other);
         pvDestinationRelatedTableName = other.pvDestinationRelatedTableName;
         pvDestinationRelatedTableKey = other.pvDestinationRelatedTableKey;
@@ -79,7 +79,7 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     RelatedTableInsertExpression* clone() const override
     {
-      qDebug() << " RelatedTableInsertExpression::clone() - ref: " << ref.load();
+//       qDebug() << " RelatedTableInsertExpression::clone() - ref: " << ref.load();
       return new RelatedTableInsertExpression(*this);
     }
 
