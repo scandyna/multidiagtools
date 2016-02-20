@@ -23,7 +23,7 @@
 #include "FieldMapping.h"
 #include "FixedValue.h"
 #include "RelatedTableInsertExpression.h"
-#include "UniqueInsertExpression.h"
+// #include "UniqueInsertExpression.h"
 
 namespace mdt{ namespace sql{ namespace copier{
 
@@ -125,26 +125,26 @@ RelatedTableInsertExpression TableMappingItem::relatedTableInsertExpression() co
   return exp;
 }
 
-void TableMappingItem::setUniqueInsertExpression(const UniqueInsertExpression & exp)
-{
-  pvType = UniqueInsertExpressionType;
-  pvShared = new UniqueInsertExpression(exp);
-}
+// void TableMappingItem::setUniqueInsertExpression(const UniqueInsertExpression & exp)
+// {
+//   pvType = UniqueInsertExpressionType;
+//   pvShared = new UniqueInsertExpression(exp);
+// }
 
-UniqueInsertExpression TableMappingItem::uniqueInsertExpression() const
-{
-  UniqueInsertExpression exp;
-
-  if(pvType == UniqueInsertExpressionType){
-    const auto *pexp = dynamic_cast<const UniqueInsertExpression*>(pvShared.constData());
-    Q_ASSERT(pexp != nullptr);
-    exp = *pexp;
-  }else{
-    exp.setDestinationFieldIndexList(destinationFieldIndexList());
-  }
-
-  return exp;
-}
+// UniqueInsertExpression TableMappingItem::uniqueInsertExpression() const
+// {
+//   UniqueInsertExpression exp;
+// 
+//   if(pvType == UniqueInsertExpressionType){
+//     const auto *pexp = dynamic_cast<const UniqueInsertExpression*>(pvShared.constData());
+//     Q_ASSERT(pexp != nullptr);
+//     exp = *pexp;
+//   }else{
+//     exp.setDestinationFieldIndexList(destinationFieldIndexList());
+//   }
+// 
+//   return exp;
+// }
 
 void TableMappingItem::setMappingState(TableMappingItemState state)
 {
@@ -178,9 +178,12 @@ void TableMappingItem::constructShared()
     case FixedValueType:
       pvShared = new FixedValue;
       break;
-    case UniqueInsertExpressionType:
-      pvShared = new UniqueInsertExpression;
+    case RelatedTableInsertExpressionType:
+      pvShared = new RelatedTableInsertExpression;
       break;
+//     case UniqueInsertExpressionType:
+//       pvShared = new UniqueInsertExpression;
+//       break;
   }
 }
 

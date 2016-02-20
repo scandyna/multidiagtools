@@ -22,7 +22,7 @@
 #include "mdtSqlDatabaseCopierTableMappingModel.h"
 #include "mdtComboBoxItemDelegate.h"
 #include "mdt/sql/copier/RelatedTableInsertExpressionDialog.h"
-#include "mdt/sql/copier/UniqueInsertExpressionDialog.h"
+#include "mdt/sql/copier/UniqueInsertCriteriaDialog.h"
 #include <QToolButton>
 #include <QPushButton>
 #include <QCheckBox>
@@ -157,9 +157,9 @@ void mdtSqlDatabaseCopierTableMappingDialog::setUniqueInsertCriteriaEnabled(bool
 
 void mdtSqlDatabaseCopierTableMappingDialog::editUniqueInsertCriteria()
 {
-  using mdt::sql::copier::UniqueInsertExpressionDialog;
+  using mdt::sql::copier::UniqueInsertCriteriaDialog;
 
-  UniqueInsertExpressionDialog dialog(pvMappingModel->mapping(), this);
+  UniqueInsertCriteriaDialog dialog(pvMappingModel->mapping(), this);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }

@@ -41,7 +41,7 @@ void TableMappingModel::setupItemTypeDelegate(mdtComboBoxItemDelegate * const de
   delegate->clear();
   delegate->addItem(tr("Field"), TableMappingItem::FieldMappingType);
   delegate->addItem(tr("Fixed value"), TableMappingItem::FixedValueType);
-  delegate->addItem(tr("Unique insert expression"), TableMappingItem::UniqueInsertExpressionType);
+//   delegate->addItem(tr("Unique insert expression"), TableMappingItem::UniqueInsertExpressionType);
 }
 
 void TableMappingModel::resetFieldMapping()

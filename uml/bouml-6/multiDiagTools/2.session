@@ -5,19 +5,24 @@ diagrams
     929 911 100 4 0 0
   classdiagram_ref 1982722 // RelatedTableInsertExpressionDialog
     120 106 100 18 0 0
-  active  classdiagram_ref 1883394 // UniqueCheckExpression
-    929 911 100 7 252 0
+  active  classdiagram_ref 1883394 // UniqueInsertCriteria
+    929 911 100 7 0 15
+  classdiagram_ref 1976194 // UniqueCheckMatchItemModel
+    120 106 100 18 0 0
+  classdiagram_ref 1969538 // MatchItemModel
+    120 106 100 21 0 122
+  classdiagram_ref 1916546 // UniqueInsertCriteriaDialog
+    120 106 100 18 0 0
 end
 show_stereotypes
-selected classdiagram_ref 1883394 // UniqueCheckExpression
 open
   
-package_ref 315650 // error
-  classview_ref 966786 // Expression
+  package_ref 315650 // error
+  class_ref 2256898 // UniqueInsertCriteria
   classview_ref 927490 // TableMappingItem
   operation_ref 3578626 // getSourceSelectSql
   operation_ref 3578114 // getDestinationRecord
   
-package_ref 260866 // Boost
+  package_ref 260866 // Boost
 end
 end

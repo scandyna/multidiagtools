@@ -36,8 +36,8 @@
 #include "mdt/sql/copier/RelatedTableInsertExpression.h"
 #include "mdt/sql/copier/RelatedTableInsertMatchItemModel.h"
 #include "mdt/sql/copier/RelatedTableInsertExpressionDialog.h"
-#include "mdt/sql/copier/UniqueInsertExpression.h"
-#include "mdt/sql/copier/UniqueInsertExpressionDialog.h"
+#include "mdt/sql/copier/UniqueInsertCriteria.h"
+#include "mdt/sql/copier/UniqueInsertCriteriaDialog.h"
 #include "mdt/sql/copier/TableMappingEditHelper.h"
 #include "mdtSqlDatabaseCopierTableMapping.h"
 #include "mdtSqlDatabaseCopierTableMappingModel.h"
@@ -932,15 +932,15 @@ void mdtSqlCopierTest::relatedTableInsertExpressionDialogTest()
   dialog.exec();
 }
 
-void mdtSqlCopierTest::uniqueInsertExpressionTest()
+void mdtSqlCopierTest::uniqueInsertCriteriaTest()
 {
-  using mdt::sql::copier::UniqueInsertExpression;
+  using mdt::sql::copier::UniqueInsertCriteria;
   using mdt::sql::copier::TableMappingItemState;
 
   /*
    * Initial state
    */
-  UniqueInsertExpression exp;
+  UniqueInsertCriteria exp;
   QVERIFY(exp.mappingState() == TableMappingItemState::MappingNotSet);
   QCOMPARE(exp.matchItemsCount(), 0);
   QCOMPARE(exp.destinationFieldIndexList().count(), 0);
@@ -975,7 +975,7 @@ void mdtSqlCopierTest::uniqueInsertExpressionTest()
   /*
    * Copy construction
    */
-  UniqueInsertExpression exp2(exp);
+  UniqueInsertCriteria exp2(exp);
   QCOMPARE(exp2.destinationFieldIndexList().count(), 1);
   QCOMPARE(exp2.destinationFieldIndexList().at(0), 1);
   QCOMPARE(exp2.getSourceValueFieldIndexList().size(), 2);
@@ -987,7 +987,7 @@ void mdtSqlCopierTest::uniqueInsertExpressionTest()
    * Copy assignment
    */
   // Create exp3 and set it (make shure compiler don't use copy constructor)
-  UniqueInsertExpression exp3;
+  UniqueInsertCriteria exp3;
   exp3.addDestinationFieldIndex(6);
   QCOMPARE(exp3.destinationFieldIndexList().count(), 1);
   exp3.clear();
@@ -1032,16 +1032,16 @@ void mdtSqlCopierTest::uniqueInsertExpressionTest()
   QCOMPARE(exp.matchItemsCount(), 0);
 }
 
-void mdtSqlCopierTest::uniqueInsertExpressionDialogTest()
+void mdtSqlCopierTest::uniqueInsertCriteriaDialogTest()
 {
-  using mdt::sql::copier::UniqueInsertExpression;
-  using mdt::sql::copier::UniqueInsertExpressionDialog;
+  using mdt::sql::copier::UniqueInsertCriteria;
+  using mdt::sql::copier::UniqueInsertCriteriaDialog;
   using mdt::sql::copier::TableMappingItem;
 
   QSqlDatabase db = pvDatabase;
   auto mapping = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
   ///mdtSqlDatabaseCopierTableMapping mapping;
-  UniqueInsertExpression exp;
+  UniqueInsertCriteria exp;
   TableMappingItem item;
 
   /*
@@ -1056,10 +1056,10 @@ void mdtSqlCopierTest::uniqueInsertExpressionDialogTest()
   QVERIFY(mapping->setSourceTable("Client_tbl", db));
   QVERIFY(mapping->setDestinationTable("Client2_tbl", db));
   // Add expression
-  item.setUniqueInsertExpression(exp);
-  mapping->insertItem(item);
+//   item.setUniqueInsertExpression(exp);
+//   mapping->insertItem(item);
 
-  UniqueInsertExpressionDialog dialog(mapping, 0);
+  UniqueInsertCriteriaDialog dialog(mapping);
 
   /*
    * Play
@@ -1071,7 +1071,7 @@ void mdtSqlCopierTest::tableMappingItemTest()
 {
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::TableMappingItemState;
-  using mdt::sql::copier::UniqueInsertExpression;
+//   using mdt::sql::copier::UniqueInsertExpression;
 
   /*
    * Construction of field mapping item
@@ -1255,55 +1255,55 @@ void mdtSqlCopierTest::tableMappingItemTest()
    * Construct a unique insert expression
    */
   // Setup expression
-  UniqueInsertExpression uniqueInsertExpression;
-  uniqueInsertExpression.addDestinationFieldIndex(1);
-  uniqueInsertExpression.addDestinationFieldIndex(2);
-  uniqueInsertExpression.addMatchItem(3, 4);
-  uniqueInsertExpression.addMatchItem(mdtSqlWhereOperator::And, 5, 6);
-  // Create table mapping item
-  TableMappingItem uiexp(TableMappingItem::UniqueInsertExpressionType);
-  QVERIFY(uiexp.type() == TableMappingItem::UniqueInsertExpressionType);
-  QVERIFY(uiexp.isNull());
-  // Set expression
-  uiexp.setUniqueInsertExpression(uniqueInsertExpression);
-  QVERIFY(uiexp.type() == TableMappingItem::UniqueInsertExpressionType);
-  QCOMPARE(uiexp.destinationFieldIndexList().count(), 2);
-  QCOMPARE(uiexp.sourceFieldIndexList().count(), 0);
-  QCOMPARE(uiexp.destinationFieldIndexList().at(0), 1);
-  QCOMPARE(uiexp.destinationFieldIndexList().at(1), 2);
-  QVERIFY(!uiexp.isNull());
-  /*
-   * Check getting unique insert expression from table mapping item
-   *  when item is allready a unique expression
-   */
-  uniqueInsertExpression.clear();
-  QVERIFY(uniqueInsertExpression.isNull());
-  uniqueInsertExpression = uiexp.uniqueInsertExpression();
-  QCOMPARE(uniqueInsertExpression.destinationFieldIndexCount(), 2);
-  QCOMPARE(uniqueInsertExpression.destinationFieldIndexList().at(0), 1);
-  QCOMPARE(uniqueInsertExpression.destinationFieldIndexList().at(1), 2);
-  QCOMPARE(uniqueInsertExpression.matchItemsCount(), 2);
-  QCOMPARE(uniqueInsertExpression.matchItemAt(0).sourceValueFieldIndex, 3);
-  QCOMPARE(uniqueInsertExpression.matchItemAt(0).destinationFieldIndex, 4);
-  QCOMPARE(uniqueInsertExpression.matchItemAt(1).sourceValueFieldIndex, 5);
-  QCOMPARE(uniqueInsertExpression.matchItemAt(1).destinationFieldIndex, 6);
-  /*
-   * Check getting unique insert expression from table mapping item
-   *  when item is not a unique expression
-   */
-  // Assure test data
-  uniqueInsertExpression.clear();
-  QVERIFY(uniqueInsertExpression.isNull());
-  QVERIFY(fm1.type() == TableMappingItem::FieldMappingType);
-  QVERIFY(fm1.destinationFieldIndexList().count() > 0);
-  // Get expression
-  uniqueInsertExpression = fm1.uniqueInsertExpression();
-  // Check that this not effects fm1
-  QVERIFY(fm1.type() == TableMappingItem::FieldMappingType);
-  // Check expression
-  QCOMPARE(uniqueInsertExpression.destinationFieldIndexCount(), fm1.destinationFieldIndexList().count());
-  QVERIFY(uniqueInsertExpression.mappingState() == TableMappingItemState::MappingNotSet);
-  QVERIFY(uniqueInsertExpression.isNull());
+//   UniqueInsertExpression uniqueInsertExpression;
+//   uniqueInsertExpression.addDestinationFieldIndex(1);
+//   uniqueInsertExpression.addDestinationFieldIndex(2);
+//   uniqueInsertExpression.addMatchItem(3, 4);
+//   uniqueInsertExpression.addMatchItem(mdtSqlWhereOperator::And, 5, 6);
+//   // Create table mapping item
+//   TableMappingItem uiexp(TableMappingItem::UniqueInsertExpressionType);
+//   QVERIFY(uiexp.type() == TableMappingItem::UniqueInsertExpressionType);
+//   QVERIFY(uiexp.isNull());
+//   // Set expression
+//   uiexp.setUniqueInsertExpression(uniqueInsertExpression);
+//   QVERIFY(uiexp.type() == TableMappingItem::UniqueInsertExpressionType);
+//   QCOMPARE(uiexp.destinationFieldIndexList().count(), 2);
+//   QCOMPARE(uiexp.sourceFieldIndexList().count(), 0);
+//   QCOMPARE(uiexp.destinationFieldIndexList().at(0), 1);
+//   QCOMPARE(uiexp.destinationFieldIndexList().at(1), 2);
+//   QVERIFY(!uiexp.isNull());
+//   /*
+//    * Check getting unique insert expression from table mapping item
+//    *  when item is allready a unique expression
+//    */
+//   uniqueInsertExpression.clear();
+//   QVERIFY(uniqueInsertExpression.isNull());
+//   uniqueInsertExpression = uiexp.uniqueInsertExpression();
+//   QCOMPARE(uniqueInsertExpression.destinationFieldIndexCount(), 2);
+//   QCOMPARE(uniqueInsertExpression.destinationFieldIndexList().at(0), 1);
+//   QCOMPARE(uniqueInsertExpression.destinationFieldIndexList().at(1), 2);
+//   QCOMPARE(uniqueInsertExpression.matchItemsCount(), 2);
+//   QCOMPARE(uniqueInsertExpression.matchItemAt(0).sourceValueFieldIndex, 3);
+//   QCOMPARE(uniqueInsertExpression.matchItemAt(0).destinationFieldIndex, 4);
+//   QCOMPARE(uniqueInsertExpression.matchItemAt(1).sourceValueFieldIndex, 5);
+//   QCOMPARE(uniqueInsertExpression.matchItemAt(1).destinationFieldIndex, 6);
+//   /*
+//    * Check getting unique insert expression from table mapping item
+//    *  when item is not a unique expression
+//    */
+//   // Assure test data
+//   uniqueInsertExpression.clear();
+//   QVERIFY(uniqueInsertExpression.isNull());
+//   QVERIFY(fm1.type() == TableMappingItem::FieldMappingType);
+//   QVERIFY(fm1.destinationFieldIndexList().count() > 0);
+//   // Get expression
+//   uniqueInsertExpression = fm1.uniqueInsertExpression();
+//   // Check that this not effects fm1
+//   QVERIFY(fm1.type() == TableMappingItem::FieldMappingType);
+//   // Check expression
+//   QCOMPARE(uniqueInsertExpression.destinationFieldIndexCount(), fm1.destinationFieldIndexList().count());
+//   QVERIFY(uniqueInsertExpression.mappingState() == TableMappingItemState::MappingNotSet);
+//   QVERIFY(uniqueInsertExpression.isNull());
 
   /*
    * Copy construction of different types
@@ -1329,6 +1329,15 @@ void mdtSqlCopierTest::tableMappingItemRelatedTableExpTest()
   RelatedTableInsertExpression exp;
   std::vector<ExpressionMatchItem> matchItems;
 
+  /*
+   * Construct a table mapping item of related table insert expression type
+   */
+  TableMappingItem tmExp0(TableMappingItem::RelatedTableInsertExpressionType);
+  QVERIFY(tmExp0.type() == TableMappingItem::RelatedTableInsertExpressionType);
+  QCOMPARE(tmExp0.sourceFieldIndexList().count(), 0);
+  QVERIFY(tmExp0.mappingState() == TableMappingItemState::MappingNotSet);
+  QCOMPARE(tmExp0.destinationFieldIndexList().count(), 0);
+  QVERIFY(tmExp0.isNull());
   /*
    * Construct a related table expression
    */
@@ -1457,7 +1466,7 @@ void mdtSqlCopierTest::tableMappingEditHelperRemoveItemsTest()
   using mdt::sql::copier::TableMappingEditHelper;
   using mdt::sql::FieldIndexList;
   using mdt::sql::copier::TableMappingItem;
-  using mdt::sql::copier::UniqueInsertExpression;
+  using mdt::sql::copier::RelatedTableInsertExpression;
 
   QFETCH(QVector<FieldIndexList>, allItems);
   QFETCH(FieldIndexList, item);
@@ -1467,12 +1476,12 @@ void mdtSqlCopierTest::tableMappingEditHelperRemoveItemsTest()
 
   // Build a expression with DFI list for each item in allItems
   for(const auto & dfiList : allItems){
-    TableMappingItem tmi(TableMappingItem::UniqueInsertExpressionType);
-    UniqueInsertExpression exp;
+    TableMappingItem tmi(TableMappingItem::RelatedTableInsertExpressionType);
+    RelatedTableInsertExpression exp;
     for(int dfi : dfiList){
       exp.addDestinationFieldIndex(dfi);
     }
-    tmi.setUniqueInsertExpression(exp);
+    tmi.setRelatedTableInsertExpression(exp);
     tmItemsList.append(tmi);
   }
   /*
@@ -1752,7 +1761,7 @@ void mdtSqlCopierTest::tableMappingEditHelperItemDfiToAddTest()
   using mdt::sql::copier::TableMappingEditHelper;
   using mdt::sql::FieldIndexList;
   using mdt::sql::copier::TableMappingItem;
-  using mdt::sql::copier::UniqueInsertExpression;
+  using mdt::sql::copier::RelatedTableInsertExpression;
 
   QFETCH(QVector<FieldIndexList>, allItems);
   QFETCH(FieldIndexList, item);
@@ -1761,12 +1770,12 @@ void mdtSqlCopierTest::tableMappingEditHelperItemDfiToAddTest()
 
   // Build a expression with DFI list for each item in allItems
   for(const auto & dfiList : allItems){
-    TableMappingItem tmi(TableMappingItem::UniqueInsertExpressionType);
-    UniqueInsertExpression exp;
+    TableMappingItem tmi(TableMappingItem::RelatedTableInsertExpressionType);
+    RelatedTableInsertExpression exp;
     for(int dfi : dfiList){
       exp.addDestinationFieldIndex(dfi);
     }
-    tmi.setUniqueInsertExpression(exp);
+    tmi.setRelatedTableInsertExpression(exp);
     tmItemsList.append(tmi);
   }
   // Get items to create
@@ -1999,7 +2008,7 @@ void mdtSqlCopierTest::tableMappingEditHelperInsertTest_data()
 {
   using mdt::sql::FieldIndexList;
   using mdt::sql::copier::TableMappingItem;
-  using mdt::sql::copier::UniqueInsertExpression;
+  using mdt::sql::copier::RelatedTableInsertExpression;
 
   QTest::addColumn<QVector<TableMappingItem>>("tmItemList");
   QTest::addColumn<TableMappingItem>("item");
@@ -2008,7 +2017,7 @@ void mdtSqlCopierTest::tableMappingEditHelperInsertTest_data()
   QVector<TableMappingItem> tmItemList;
   QVector<TableMappingItem> expectedTmItemList;
   TableMappingItem item;
-  UniqueInsertExpression exp;
+  RelatedTableInsertExpression exp;
 
   /*
    * Empty TM
@@ -2133,13 +2142,13 @@ void mdtSqlCopierTest::tableMappingEditHelperInsertTest_data()
   exp.clear();
   exp.addDestinationFieldIndex(2);
   exp.addDestinationFieldIndex(3);
-  item.setUniqueInsertExpression(exp);
+  item.setRelatedTableInsertExpression(exp);
   expectedTmItemList << item;
   // Setup item to insert
   exp.clear();
   exp.addDestinationFieldIndex(2);
   exp.addDestinationFieldIndex(3);
-  item.setUniqueInsertExpression(exp);
+  item.setRelatedTableInsertExpression(exp);
   // Add to check list
   QTest::newRow("[{0}]->[{0},{1},{2,3}]") << tmItemList << item << expectedTmItemList;
 
@@ -2150,11 +2159,11 @@ void mdtSqlCopierTest::databaseCopierTableMappingUpdateItemsTest()
   using mdt::sql::copier::TableMapping;
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::TableMappingItemState;
-  using mdt::sql::copier::UniqueInsertExpression;
+  using mdt::sql::copier::RelatedTableInsertExpression;
 
   mdtSqlDatabaseCopierTableMapping mapping;
   TableMappingItem item;
-  UniqueInsertExpression uiexp;
+  RelatedTableInsertExpression rtiExp;
   /*
    * Initial state
    */
@@ -2201,15 +2210,15 @@ void mdtSqlCopierTest::databaseCopierTableMappingUpdateItemsTest()
   QCOMPARE(item.destinationFieldIndexList().count(), 1);
   QCOMPARE(item.destinationFieldIndexList().at(0), 0);
   /*
-   * Set a unique insert expression:
+   * Set a related table insert expression:
    *  - Client2_tbl fields: FieldA, FieldB
    */
   // Setup expression
-  uiexp.clear();
-  uiexp.addDestinationFieldIndex(2);
-  uiexp.addDestinationFieldIndex(3);
+  rtiExp.clear();
+  rtiExp.addDestinationFieldIndex(2);
+  rtiExp.addDestinationFieldIndex(3);
   // Set expression to item and update TM
-  item.setUniqueInsertExpression(uiexp);
+  item.setRelatedTableInsertExpression(rtiExp);
   mapping.insertItem(item);
   // Check TM
   QCOMPARE(mapping.itemsCount(), 3);

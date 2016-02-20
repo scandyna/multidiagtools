@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_COPIER_UNIQUE_INSERT_EXPRESSION_H
-#define MDT_SQL_COPIER_UNIQUE_INSERT_EXPRESSION_H
+#ifndef MDT_SQL_COPIER_UNIQUE_INSERT_CRITERIA_H
+#define MDT_SQL_COPIER_UNIQUE_INSERT_CRITERIA_H
 
 #include "AbstractTableMappingItem.h"
 #include "ExpressionMatchItem.h"
@@ -41,13 +41,13 @@ namespace mdt{ namespace sql{ namespace copier{
    * Then, at insertion time (into destination),
    *  the defined (primary) key is fetched.
    */
-  class UniqueInsertExpression : public AbstractTableMappingItem
+  class UniqueInsertCriteria : public AbstractTableMappingItem
   {
    public:
 
     /*! \brief Create a invalid expression
      */
-    UniqueInsertExpression()
+    UniqueInsertCriteria()
      : AbstractTableMappingItem()
     {
 //       qDebug() << "C  UniqueInsertExpression::UniqueInsertExpression() - ref: " << ref.load();
@@ -55,14 +55,14 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Destructor
      */
-    ~UniqueInsertExpression()
+    ~UniqueInsertCriteria()
     {
 //       qDebug() << "D  UniqueInsertExpression::~UniqueInsertExpression() - ref: " << ref.load();
     }
 
     /*! \brief Copy constructor
      */
-    UniqueInsertExpression(const UniqueInsertExpression & other)
+    UniqueInsertCriteria(const UniqueInsertCriteria & other)
      : AbstractTableMappingItem(other),
        pvMatchItems(other.pvMatchItems)
     {
@@ -71,7 +71,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Copy assignment
      */
-    UniqueInsertExpression & operator=(const UniqueInsertExpression & other)
+    UniqueInsertCriteria & operator=(const UniqueInsertCriteria & other)
     {
       if(&other != this){
         copyMembersOfAbstract(other);
@@ -82,10 +82,10 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Polymorphic copy
      */
-    UniqueInsertExpression* clone() const override
+    UniqueInsertCriteria* clone() const override
     {
 //       qDebug() << " UniqueInsertExpression::clone() - ref: " << ref.load();
-      return new UniqueInsertExpression(*this);
+      return new UniqueInsertCriteria(*this);
     }
 
     /*! \brief Check if field mapping is null
@@ -239,4 +239,4 @@ namespace mdt{ namespace sql{ namespace copier{
 
 }}} // namespace mdt{ namespace sql{ namespace copier{
 
-#endif // #ifndef MDT_SQL_COPIER_UNIQUE_INSERT_EXPRESSION_H
+#endif // #ifndef MDT_SQL_COPIER_UNIQUE_INSERT_CRITERIA_H

@@ -18,11 +18,11 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_COPIER_UNIQUE_INSERT_EXPRESSION_DIALOG_H
-#define MDT_SQL_COPIER_UNIQUE_INSERT_EXPRESSION_DIALOG_H
+#ifndef MDT_SQL_COPIER_UNIQUE_INSERT_CRITERIA_DIALOG_H
+#define MDT_SQL_COPIER_UNIQUE_INSERT_CRITERIA_DIALOG_H
 
-#include "ui_UniqueInsertExpressionDialog.h"
-#include "UniqueInsertExpression.h"
+#include "ui_UniqueInsertCriteriaDialog.h"
+#include "UniqueInsertCriteria.h"
 #include "TableMapping.h"
 #include "TableMappingItem.h"
 #include <QDialog>
@@ -34,7 +34,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
   /*! \brief Dialog to edit unique insert expression for SQL copier
    */
-  class UniqueInsertExpressionDialog : public QDialog, Ui::UniqueInsertExpressionDialog
+  class UniqueInsertCriteriaDialog : public QDialog, Ui::UniqueInsertCriteriaDialog
   {
    Q_OBJECT
 
@@ -42,15 +42,15 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Construct dialog to edit expression at given itemIndex in table mapping
      */
-    UniqueInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, int itemIndex, QWidget *parent = nullptr);
+//     UniqueInsertCriteriaDialog(const std::shared_ptr<const TableMapping> & tm, int itemIndex, QWidget *parent = nullptr);
 
     /*! \brief Construct dialog to edit a new expression
      */
-    UniqueInsertExpressionDialog(const std::shared_ptr<const TableMapping> & tm, QWidget *parent = nullptr);
+    UniqueInsertCriteriaDialog(const std::shared_ptr<const TableMapping> & tm, QWidget *parent = nullptr);
 
     /*! \brief Get expression
      */
-    UniqueInsertExpression expression() const
+    UniqueInsertCriteria expression() const
     {
       return pvExpression;
     }
@@ -71,26 +71,26 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Clear destination key
      */
-    void clearDestinationKey();
+//     void clearDestinationKey();
 
     /*! \brief Add a field to destination key
      */
-    void addFieldToDestinationKey();
+//     void addFieldToDestinationKey();
 
     /*! \brief Display destination key
      */
-    void displayDestinationKey();
+//     void displayDestinationKey();
 
     /*! \brief Resize table view's contents
      */
     void resizeMatchItemViewToContents();
 
     std::shared_ptr<const TableMapping> pvTableMapping;
-    UniqueInsertExpression pvExpression;
-    FieldIndexList pvInitialKey;
+    UniqueInsertCriteria pvExpression;
+//     FieldIndexList pvInitialKey;
     ExpressionMatchItemModel *pvModel;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{
 
-#endif // #ifndef MDT_SQL_COPIER_UNIQUE_INSERT_EXPRESSION_DIALOG_H
+#endif // #ifndef MDT_SQL_COPIER_UNIQUE_INSERT_CRITERIA_DIALOG_H

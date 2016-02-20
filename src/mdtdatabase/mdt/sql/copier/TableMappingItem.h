@@ -32,7 +32,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
   class AbstractTableMappingItem;
   class RelatedTableInsertExpression;
-  class UniqueInsertExpression;
+//   class UniqueInsertExpression;
 
   /*! \brief Mapping item of mdtSqlCopierTableMapping
    */
@@ -46,10 +46,10 @@ namespace mdt{ namespace sql{ namespace copier{
     {
       FieldMappingType,                 /*!< A mapping of source field to destination field */
       FixedValueType,                   /*!< A fixed value will be copied to defined destination field */
-      RelatedTableInsertExpressionType, /*!< A expression that fills destination fields by matching fields
+      RelatedTableInsertExpressionType /*,*/ /*!< A expression that fills destination fields by matching fields
                                              in a related destination table, and, optionally, in a related source table */
-      UniqueInsertExpressionType        /*!< A expression that search a (primary) key by matching fields in destination table
-                                             with values in source table. */
+//       UniqueInsertExpressionType        /*!< A expression that search a (primary) key by matching fields in destination table
+//                                              with values in source table. */
     };
 
     /*! \brief Construct a mapping item of given type
@@ -119,7 +119,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Set a unique insert expression
      */
-    void setUniqueInsertExpression(const UniqueInsertExpression & exp);
+//     void setUniqueInsertExpression(const UniqueInsertExpression & exp);
 
     /*! \brief Get a unique insert expression
      *
@@ -127,7 +127,7 @@ namespace mdt{ namespace sql{ namespace copier{
      *  the current expression is returned.
      *  Else, a UniqueInsertExpression with items's destination field indexes set is returned.
      */
-    UniqueInsertExpression uniqueInsertExpression() const;
+//     UniqueInsertExpression uniqueInsertExpression() const;
 
     /*! \brief Set mapping state for this mapping item
      */
