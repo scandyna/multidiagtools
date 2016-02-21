@@ -40,13 +40,13 @@ namespace mdt{ namespace sql{ namespace copier{
 
    public:
 
-    /*! \brief Construct dialog to edit unique insert expression (contained in table mapping)
+    /*! \brief Construct dialog
      */
     UniqueInsertCriteriaDialog(const std::shared_ptr<const TableMapping> & tm, QWidget *parent = nullptr);
 
     /*! \brief Set criteria
      */
-//     void setCriteria(const UniqueInsertCriteria & c);
+    void setCriteria(const UniqueInsertCriteria & c);
 
     /*! \brief Get criteria
      */

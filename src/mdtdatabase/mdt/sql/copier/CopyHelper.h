@@ -22,6 +22,7 @@
 #define MDT_SQL_COPIER_COPY_HELPER_H
 
 #include "TableMapping.h"
+#include "UniqueInsertCriteria.h"
 #include "TableMappingItem.h"
 #include "RelatedTableInsertExpression.h"
 #include "mdtExpected.h"
@@ -61,6 +62,59 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Get SQL to select data in source table
      */
     static QString getSourceTableSelectSql(const TableMapping * const tm, const QSqlDatabase & sourceDb);
+
+    /*! \brief Get SQL to count number of records existing in destination table regarding criteria
+     *
+     * \pre matchItemList must not be empty
+     * \pre destinationDb must be valid and open
+     */
+    static QString getUniqueInsertCriteriaSql(const TableMapping * const tm, const std::vector<ExpressionMatchItem> & matchItemList, const QSqlDatabase & destinationDb);
+
+    /*! \brief Check if given record exists in destination table regarding criteria
+     *
+     * \pre tm's unique insert criteria must not be null
+     * \pre destinationDb must be valid and open
+     */
+    template<typename T>
+    static mdtExpected<bool> checkExistsInDestinationTable(const T & sourceRecord, const TableMapping * const tm, const QSqlDatabase & destinationDb)
+    {
+      Q_ASSERT(tm);
+      Q_ASSERT(destinationDb.isOpen());
+      auto uic = tm->uniqueInsertCriteria();
+      Q_ASSERT(!uic.isNull());
+      const auto matchItemList = uic.matchItems();
+      QSqlQuery query(destinationDb);
+
+      // Prepare query
+      if(!query.prepare(getUniqueInsertCriteriaSql(tm, matchItemList, destinationDb))){
+        auto error = mdtErrorNew(tr("Preparation of query to check if record allready exists failed"), mdtError::Error, "CopyHelper");
+        error.stackError(mdt::sql::error::fromQSqlError(query.lastError()));
+        error.commit();
+        return error;
+      }
+      // Bind match items values
+      for(const auto & matchItem : matchItemList){
+        const int fi = matchItem.sourceValueFieldIndex;
+        Q_ASSERT(fi >= 0);
+        Q_ASSERT(fi < sourceRecord.count());
+        query.addBindValue(sourceRecord.value(fi));
+      }
+      // Exec query
+      if(!query.exec()){
+        auto error = mdtErrorNew(tr("Execution of query to check if record allready exists failed"), mdtError::Error, "CopyHelper");
+        error.stackError(mdt::sql::error::fromQSqlError(query.lastError()));
+        error.commit();
+        return error;
+      }
+      // Fetch result
+      if(!query.next()){
+        auto error = mdtErrorNew(tr("Query to check if record allready exists did not return any result"), mdtError::Error, "CopyHelper");
+        error.commit();
+        return error;
+      }
+
+      return (query.value(0).toInt() > 0);
+    }
 
     /*! \brief Get list of destination field names
      */

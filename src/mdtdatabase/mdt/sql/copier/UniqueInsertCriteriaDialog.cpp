@@ -49,8 +49,8 @@ UniqueInsertCriteriaDialog::UniqueInsertCriteriaDialog(const std::shared_ptr<con
   setupUi(this);
   // Setup match item model
   pvModel = new ExpressionMatchItemModel(pvTableMapping, this);
-  pvCriteria = pvTableMapping->uniqueInsertCriteria();
-  pvModel->setExpressionMatchItemList(pvCriteria.matchItems());
+//   pvCriteria = pvTableMapping->uniqueInsertCriteria();
+//   pvModel->setExpressionMatchItemList(pvCriteria.matchItems());
   // Setup match item view
   twMatchItems->setModel(pvModel);
   twMatchItems->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -74,15 +74,15 @@ UniqueInsertCriteriaDialog::UniqueInsertCriteriaDialog(const std::shared_ptr<con
   resizeMatchItemViewToContents();
 }
 
-// void UniqueInsertCriteriaDialog::setCriteria(const UniqueInsertCriteria & c)
-// {
-//   pvCriteria = c;
-//   pvModel->setExpressionMatchItemList(pvCriteria.matchItems());
-// }
+void UniqueInsertCriteriaDialog::setCriteria(const UniqueInsertCriteria & c)
+{
+  pvCriteria = c;
+  pvModel->setExpressionMatchItemList(pvCriteria.matchItems());
+}
 
 void UniqueInsertCriteriaDialog::accept()
 {
-  pvCriteria.setMatchItems(pvCriteria.matchItems());
+  pvCriteria.setMatchItems(pvModel->expressionMatchItemList());
   if(pvCriteria.isNull()){
     return;
   }

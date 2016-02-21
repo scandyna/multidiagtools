@@ -152,17 +152,29 @@ void mdtSqlDatabaseCopierTableMappingDialog::editRelatedTableExpression()
 
 void mdtSqlDatabaseCopierTableMappingDialog::setUniqueInsertCriteriaEnabled(bool enable)
 {
+  using mdt::sql::copier::UniqueInsertCriteria;
+
   tbUniqueInsertCriteria->setEnabled(enable);
+  if(enable){
+    pvMappingModel->setUniqueInsertCriteria(pvEditingUniqueInsertCriteria);
+  }else{
+    pvMappingModel->setUniqueInsertCriteria(UniqueInsertCriteria());
+  }
 }
 
 void mdtSqlDatabaseCopierTableMappingDialog::editUniqueInsertCriteria()
 {
+//   using mdt::sql::copier::UniqueInsertCriteria;
   using mdt::sql::copier::UniqueInsertCriteriaDialog;
 
   UniqueInsertCriteriaDialog dialog(pvMappingModel->mapping(), this);
+  dialog.setCriteria(pvEditingUniqueInsertCriteria);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
+  pvEditingUniqueInsertCriteria = dialog.criteria();
+  Q_ASSERT(!pvEditingUniqueInsertCriteria.isNull());
+  pvMappingModel->setUniqueInsertCriteria(pvEditingUniqueInsertCriteria);
 }
 
 // void mdtSqlDatabaseCopierTableMappingDialog::editUniqueInsertExpression()

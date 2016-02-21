@@ -23,6 +23,7 @@
 
 #include "ui_mdtSqlDatabaseCopierTableMappingDialog.h"
 #include "mdtSqlDatabaseCopierTableMapping.h"
+#include "mdt/sql/copier/UniqueInsertCriteria.h"
 #include <QDialog>
 #include <memory>
 
@@ -115,6 +116,7 @@ class mdtSqlDatabaseCopierTableMappingDialog : public QDialog, Ui::mdtSqlDatabas
   mdtComboBoxItemDelegate *pvSourceFieldSelectionDelegate;
   int pvSelectedRow;
   QSqlDatabase pvSourceDatabase;
+  mdt::sql::copier::UniqueInsertCriteria pvEditingUniqueInsertCriteria;
 };
 
 #endif // #ifndef MDT_SQL_DATABASE_COPIER_TABLE_MAPPING_DIALOG_H

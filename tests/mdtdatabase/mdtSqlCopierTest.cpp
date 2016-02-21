@@ -935,8 +935,44 @@ void mdtSqlCopierTest::relatedTableInsertExpressionDialogTest()
 void mdtSqlCopierTest::uniqueInsertCriteriaTest()
 {
   using mdt::sql::copier::UniqueInsertCriteria;
+  using mdt::sql::copier::ExpressionMatchItem;
 
   UniqueInsertCriteria uic;
+  std::vector<ExpressionMatchItem> matchItems;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(uic.matchItemsCount(), 0);
+  QVERIFY(uic.isNull());
+  /*
+   * Set
+   */
+  matchItems.clear();
+  matchItems.emplace_back(1, 2);
+  uic.setMatchItems(matchItems);
+  QCOMPARE(uic.matchItemsCount(), 1);
+  QVERIFY(!uic.isNull());
+  /*
+   * Clear
+   */
+  uic.clear();
+  QCOMPARE(uic.matchItemsCount(), 0);
+  QVERIFY(uic.isNull());
+  /*
+   * Check setting invalid field indexes in match items
+   */
+  matchItems.clear();
+  matchItems.emplace_back(-1, 2);
+  uic.setMatchItems(matchItems);
+  QCOMPARE(uic.matchItemsCount(), 1);
+  QVERIFY(uic.isNull());
+  matchItems.clear();
+  matchItems.emplace_back(2, -1);
+  uic.setMatchItems(matchItems);
+  QCOMPARE(uic.matchItemsCount(), 1);
+  QVERIFY(uic.isNull());
+
 }
 
 // void mdtSqlCopierTest::uniqueInsertCriteriaTest()
@@ -3865,12 +3901,14 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingModelTest()
 void mdtSqlCopierTest::copyHelperTest()
 {
   using mdt::sql::copier::TableMappingItem;
+  using mdt::sql::copier::UniqueInsertCriteria;
   using mdt::sql::copier::RelatedTableInsertExpression;
   using mdt::sql::copier::ExpressionMatchItem;
   using mdt::sql::copier::CopyHelper;
   using mdt::sql::FieldIndexList;
 
   RelatedTableInsertExpression rtExp;
+  UniqueInsertCriteria uic;
   std::vector<ExpressionMatchItem> expMatchItems;
   mdtSqlDatabaseCopierTableMapping tm;
   TableMappingItem tmi;
@@ -3882,6 +3920,7 @@ void mdtSqlCopierTest::copyHelperTest()
   QVector<QVariant> destinationRecord;
   QVector<QVariant> keyRecord;
   mdtExpected< QVector<QVariant> > optRecord;
+  mdtExpected<bool> optBool;
 //   QVector<QVariant> expectedRecord;
 
   QCOMPARE(db.driverName(), QString("QSQLITE"));
@@ -3896,11 +3935,20 @@ void mdtSqlCopierTest::copyHelperTest()
   rtExp.addDestinationFieldIndex(1);
   rtExp.setDestinationRelatedTableName("Client2_tbl");
   rtExp.addDestinationRelatedFieldIndex(0);
-//   rtExp.setSourceRelatedTableName("Client_tbl");
   expMatchItems.clear();
   expMatchItems.emplace_back(5, 1);
   rtExp.setMatchItems(expMatchItems);
   QVERIFY(!rtExp.isNull());
+  /*
+   * Setup unique insert criteria:
+   *  - Match: Address2_tbl.FieldAA = Address_Client_view.FieldAB AND Address2_tbl.FieldAB = Address_Client_view.FieldAA
+   */
+  uic.clear();
+  expMatchItems.clear();
+  expMatchItems.emplace_back(4, 3);
+  expMatchItems.emplace_back(mdtSqlWhereOperator::And, 3, 4);
+  uic.setMatchItems(expMatchItems);
+  QVERIFY(!uic.isNull());
   /*
    * Create table mapping:
    * ------------------------------------------------
@@ -3920,6 +3968,7 @@ void mdtSqlCopierTest::copyHelperTest()
    */
   QVERIFY(tm.setSourceTable("Address_Client_view", db));
   QVERIFY(tm.setDestinationTable("Address2_tbl", db));
+  tm.setUniqueInsertCriteria(uic);
   QCOMPARE(tm.itemsCount(), 5);
   tmi.setRelatedTableInsertExpression(rtExp);
   tm.insertItem(tmi);
@@ -3942,6 +3991,11 @@ void mdtSqlCopierTest::copyHelperTest()
   expectedSql = "SELECT \"Id_PK\",\"Client_Id_FK\",\"Street\",\"FieldAA\",\"FieldAB\",\"ClientName\",\"ClientFieldA\",\"ClientFieldB\" " \
                 "FROM \"Address_Client_view\"";
   QCOMPARE(CopyHelper::getSourceTableSelectSql(&tm, db), expectedSql);
+  /*
+   * Check getting SQL to count records for unique insert criteria
+   */
+  expectedSql = "SELECT COUNT(*) FROM \"Address2_tbl\" WHERE \"FieldAA\"=? AND \"FieldAB\"=?";
+  QCOMPARE(CopyHelper::getUniqueInsertCriteriaSql(&tm, uic.matchItems(), db), expectedSql);
   /*
    * Check getting destination field name lists
    */
@@ -4039,9 +4093,30 @@ void mdtSqlCopierTest::copyHelperTest()
   QCOMPARE(destinationRecord.at(2), QVariant("FieldAA 11"));
   QCOMPARE(destinationRecord.at(3), QVariant("Fixed"));
   /*
-   * Cleanup Client2_tbl
+   * Checking if record exists in destination table
+   */
+  // Populate destination table
+  QVERIFY(query.exec("INSERT INTO Address2_tbl (Id_PK, Client_Id_FK, Street, FieldAA, FieldAB) VALUES (10, 1, 'Street 10', 'FieldAA 10', 'FieldAB 10')"));
+  QVERIFY(query.exec("INSERT INTO Address2_tbl (Id_PK, Client_Id_FK, Street, FieldAA, FieldAB) VALUES (11, 1, 'Street 11', 'FieldAA 11', 'FieldAB 11')"));
+  // Build source record that matches
+  sourceRecord.clear();
+  sourceRecord << 100 << 1 << "Street 10" << "FieldAB 10" << "FieldAA 10" << "Name 1" << "FieldA 1" << "FieldB 1";
+  // Check
+  optBool = CopyHelper::checkExistsInDestinationTable(sourceRecord, &tm, db);
+  QVERIFY(optBool);
+  QVERIFY(optBool.value() == true);
+  // Build source record that does not matche
+  sourceRecord.clear();
+  sourceRecord << 100 << 1 << "Street 10" << "FieldAB 20" << "FieldAA 20" << "Name 1" << "FieldA 1" << "FieldB 1";
+  // Check
+  optBool = CopyHelper::checkExistsInDestinationTable(sourceRecord, &tm, db);
+  QVERIFY(optBool);
+  QVERIFY(optBool.value() == false);
+  /*
+   * Cleanup Client2_tbl and Address2_tbl
    */
   QVERIFY(query.exec("DELETE FROM Client2_tbl"));
+  QVERIFY(query.exec("DELETE FROM Address2_tbl"));
 }
 
 void mdtSqlCopierTest::sqlDatabaseCopierMappingTest()

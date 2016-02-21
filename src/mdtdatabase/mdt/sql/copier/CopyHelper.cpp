@@ -49,6 +49,43 @@ QString CopyHelper::getSourceTableSelectSql(const TableMapping *const tm, const 
   return sql;
 }
 
+QString CopyHelper::getUniqueInsertCriteriaSql(const TableMapping *const tm, const std::vector<ExpressionMatchItem> & matchItemList, const QSqlDatabase & destinationDb)
+{
+  Q_ASSERT(tm != nullptr);
+  Q_ASSERT(destinationDb.isOpen());
+  Q_ASSERT(!matchItemList.empty());
+
+  QString sql;
+  auto *driver = destinationDb.driver();
+  Q_ASSERT(driver != nullptr);
+//   auto uic = tm->uniqueInsertCriteria();
+//   Q_ASSERT(!uic.isNull());
+//   const auto matchItemList = uic.matchItems();
+  QStringList matchItemSqlList;
+
+  // Build match items list
+  matchItemSqlList.reserve(matchItemList.size());
+  for(const auto & matchItem : matchItemList){
+    const int fi = matchItem.destinationFieldIndex;
+    Q_ASSERT(fi >= 0);
+    Q_ASSERT(fi < tm->destinationTableFieldCount());
+    const auto opString = matchItem.operatorWithPrevious.toString();
+    const auto fieldName = driver->escapeIdentifier(tm->destinationTableFieldNameAt(fi), QSqlDriver::FieldName);
+    if(opString.isEmpty()){
+      matchItemSqlList.append( fieldName % QStringLiteral("=?") );
+    }else{
+      matchItemSqlList.append( opString % QStringLiteral(" ") % fieldName % QStringLiteral("=?") );
+    }
+  }
+  // Build SQL
+  sql = QStringLiteral("SELECT COUNT(*) FROM ") \
+      % driver->escapeIdentifier(tm->destinationTableName(), QSqlDriver::TableName) \
+      % QStringLiteral(" WHERE ") \
+      % matchItemSqlList.join(' ');
+
+  return sql;
+}
+
 CopyHelperFieldNameLists CopyHelper::getDestinationFieldNameLists(const TableMapping *const tm)
 {
   Q_ASSERT(tm != nullptr);

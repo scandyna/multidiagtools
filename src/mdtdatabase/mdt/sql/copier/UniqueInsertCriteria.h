@@ -40,7 +40,15 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     bool isNull() const
     {
-      return pvMatchItems.empty();
+      if(pvMatchItems.empty()){
+        return true;
+      }
+      for(const auto & item : pvMatchItems){
+        if( (item.sourceValueFieldIndex < 0) || (item.destinationFieldIndex < 0) ){
+          return true;
+        }
+      }
+      return false;
     }
 
     /*! \brief Clear
