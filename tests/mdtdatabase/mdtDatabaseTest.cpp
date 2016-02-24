@@ -25,6 +25,7 @@
 
 #include "mdtSqlConnectionNameWidget.h"
 #include "mdtSqlDatabaseBasicInfoWidget.h"
+#include "mdt/sql/Database.h"
 #include "mdtSqlDatabaseSqlite.h"
 #include "mdtSqlDatabaseDialogSqlite.h"
 #include "mdtSqlDatabaseSchemaThread.h"
@@ -3663,6 +3664,35 @@ void mdtDatabaseTest::basicInfoWidgetTest()
   }
 }
 
+void mdtDatabaseTest::databaseGetTableTest()
+{
+  using mdt::sql::Database;
+
+  QStringList tableList;
+  QStringList expectedTableList;
+  QSqlDatabase db = pvDatabase;
+  QCOMPARE(db.driverName(), QString("QSQLITE"));
+
+  // Check getting only tables
+  expectedTableList.clear();
+  expectedTableList << "Address_tbl" << "Client_tbl" << "Value_tbl";
+  tableList = Database::getTables(db, Database::Tables);
+  tableList.sort();
+  QCOMPARE(tableList, expectedTableList);
+  // Check getting only system tables
+  expectedTableList.clear();
+  expectedTableList << "sqlite_master" << "sqlite_sequence";
+  tableList = Database::getTables(db, Database::SystemTables);
+  tableList.sort();
+  QCOMPARE(tableList, expectedTableList);
+  // Check getting tables and views
+  expectedTableList.clear();
+  expectedTableList << "Address_Client_view" << "Address_tbl" << "Client_tbl" << "Value_tbl";
+  tableList = Database::getTables(db, Database::Tables | Database::Views);
+  tableList.sort();
+  QCOMPARE(tableList, expectedTableList);
+}
+
 void mdtDatabaseTest::databaseSqliteTest()
 {
   /*
@@ -4278,6 +4308,16 @@ void mdtDatabaseTest::createTestDatabase()
   QVERIFY(fld.requiredStatus() == QSqlField::Required);
   fld = pvDatabase.record("Address_tbl").field("Client_Id_FK");
   QVERIFY(fld.requiredStatus() == QSqlField::Required);
+
+  /*
+   * Create Address_Client_view
+   */
+  sql = "CREATE VIEW Address_Client_view AS";
+  sql += " SELECT Address_tbl.Id_PK, StreetName, StreetNumber,";
+  sql += " Client_Id_FK, FirstName AS ClientFirstName, Remarks AS ClientRemarks";
+  sql += " FROM Address_tbl JOIN Client_tbl";
+  sql += "  ON Address_tbl.Client_Id_FK = Client_tbl.Id_PK";
+  QVERIFY(q.exec(sql));
 
   /*
    * Create Value_tbl table

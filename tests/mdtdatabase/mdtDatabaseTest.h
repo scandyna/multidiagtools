@@ -86,6 +86,7 @@ class mdtDatabaseTest : public mdtTest
 
   void connectionNameWidgetTest();
   void basicInfoWidgetTest();
+  void databaseGetTableTest();
   void databaseSqliteTest();
   void databaseDialogSqliteTest();
 
