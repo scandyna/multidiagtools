@@ -63,56 +63,6 @@ QStringList Database::getTables(const QSqlDatabase & db, TableTypes types)
   if(types & Views){
     tables += db.tables(QSql::Views);
   }
-//   auto driverType = mdtSqlDriverType::typeFromName(db.driverName());
-// 
-//   switch(driverType){
-//     case mdtSqlDriverType::SQLite:
-//       tables = getTablesSqlite(db, types);
-//       break;
-//     case mdtSqlDriverType::MariaDB:
-//     case mdtSqlDriverType::MySQL:
-//     case mdtSqlDriverType::Unknown:
-//       if(types & AllTables){
-//         tables = db.tables(QSql::AllTables);
-//       }else{
-//         if(types & Tables){
-//           tables += db.tables(QSql::Tables);
-//         }
-//         if(types & SystemTables){
-//           tables += db.tables(QSql::SystemTables);
-//         }
-//         if(types & Views){
-//           tables += db.tables(QSql::Views);
-//         }
-//       }
-//       break;
-//   }
-
-  return tables;
-}
-
-QStringList Database::getTablesSqlite(const QSqlDatabase & db, TableTypes types)
-{
-  QStringList tables;
-
-  if(types == Views){
-    tables = db.tables(QSql::Views);
-  }else{
-    /*
-     * QSqlDatabase::tables(QSql::Tables) returns also
-     *  tyble that we consider as system tables (f.ex. sqlite_sequence).
-     * QSqlDatabase::tables(QSql::SystemTables) does not return
-     *  tables like sqlite_sequence.
-     */
-    const auto allTables = db.tables(QSql::Tables) + db.tables(QSql::SystemTables);
-    for(const auto & table : allTables){
-      
-    }
-    /*
-     * If views are also requested, add them here (or not?)
-     */
-    
-  }
 
   return tables;
 }

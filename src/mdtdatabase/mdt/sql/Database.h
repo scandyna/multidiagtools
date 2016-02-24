@@ -58,10 +58,6 @@ namespace mdt{ namespace sql{
 
    private:
 
-    /*! \brief SQLite implementation of getTables()
-     */
-    static QStringList getTablesSqlite(const QSqlDatabase & db, TableTypes types);
-
     /*! \brief Get tables and/or system table in a SQLite database
      */
     static QStringList getTablesSqlite(const QSqlDatabase & db, bool userTables, bool systemTables);
