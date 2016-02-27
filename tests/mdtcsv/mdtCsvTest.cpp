@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -31,8 +31,10 @@
 #include "mdtCsvStringInfo.h"
 #include "mdtCsvFileInfo.h"
 #include "mdtCsvRecordFormat.h"
+#include "mdtCsvParserSettingsWidget.h"
 #include "mdtCsvGeneratorSettingsWidget.h"
 #include "mdtCsvFileSettingsWidget.h"
+#include "mdtCsvFileParserSettingsDialog.h"
 #include "mdtCsvFileGeneratorSettingsDialog.h"
 #include "mdtCsvTableViewDataMapper.h"
 #include "mdtCsvTableViewExportDialog.h"
@@ -60,6 +62,27 @@
  *         do automatic data protection. Also double quote, etc...
  */
 
+void mdtCsvTest::fileSettingsWidgetTest()
+{
+  mdtCsvFileSettingsWidget widget;
+
+  /*
+   * Set/get
+   */
+  // Set file settings
+  widget.setFileSettings("/path/to/csvfile.csv", "UTF-16");
+  // Check file settings
+  QCOMPARE(widget.filePath(), QString("/path/to/csvfile.csv"));
+  QCOMPARE(widget.fileEncoding(), QByteArray("UTF-16"));
+  /*
+   * Play
+   */
+  widget.setSelectFileMode(mdtCsvFileSettingsWidget::SelectOpen);
+  widget.show();
+  while(widget.isVisible()){
+    QTest::qWait(500);
+  }
+}
 
 void mdtCsvTest::parserSettingsTest()
 {
@@ -98,6 +121,92 @@ void mdtCsvTest::parserSettingsTest()
   QCOMPARE(s.fieldProtection, '\"');
   QCOMPARE(s.parseExp, true);
   QVERIFY(s.isValid());
+}
+
+void mdtCsvTest::parserSettingsWidgetTest()
+{
+  mdtCsvParserSettings settings;
+  mdtCsvParserSettingsWidget widget;
+
+  /*
+   * Initial state
+   */
+  settings = widget.getSettings();
+  QCOMPARE(settings.fieldSeparator, ',');
+  QCOMPARE(settings.fieldProtection, '\"');
+  QCOMPARE(settings.parseExp, true);
+  QVERIFY(settings.isValid());
+  /*
+   * Set/get
+   */
+  // Set some known settings
+  settings.fieldSeparator = ':';
+  settings.fieldProtection = '\'';
+  settings.parseExp = true;
+  widget.setSettings(settings);
+  // Get settings back and check
+  settings = widget.getSettings();
+  QCOMPARE(settings.fieldSeparator, ':');
+  QCOMPARE(settings.fieldProtection, '\'');
+  QCOMPARE(settings.parseExp, true);
+  QVERIFY(settings.isValid());
+  // Set some known settings (TAB)
+  settings.fieldSeparator = '\t';
+  settings.fieldProtection = '\"';
+  settings.parseExp = false;
+  widget.setSettings(settings);
+  // Get settings back and check
+  settings = widget.getSettings();
+  QCOMPARE(settings.fieldSeparator, '\t');
+  QCOMPARE(settings.fieldProtection, '\"');
+  QCOMPARE(settings.parseExp, false);
+  QVERIFY(settings.isValid());
+  // Set some unknown settings
+  settings.fieldSeparator = 'a';
+  settings.fieldProtection = 'b';
+  widget.setSettings(settings);
+  // Get settings back and check
+  settings = widget.getSettings();
+  QCOMPARE(settings.fieldSeparator, 'a');
+  QCOMPARE(settings.fieldProtection, 'b');
+
+  /*
+   * Play
+   */
+//   widget.show();
+//   while(widget.isVisible()){
+//     QTest::qWait(500);
+//   }
+}
+
+void mdtCsvTest::fileParserSettingsDialogTest()
+{
+  mdtCsvFileParserSettingsDialog dialog;
+  mdtCsvParserSettings settings;
+
+  /*
+   * Set/get
+   */
+  // Set file settings
+  dialog.setFileSettings("/path/to/csvfile.csv", "UTF-16");
+  // Set CSV settings
+  settings.fieldSeparator = ':';
+  settings.fieldProtection = '\'';
+  settings.parseExp = true;
+  dialog.setCsvSettings(settings);
+  // Check file settings
+  QCOMPARE(dialog.filePath(), QString("/path/to/csvfile.csv"));
+  QCOMPARE(dialog.fileEncoding(), QByteArray("UTF-16"));
+  // Check CSV setting
+  settings = dialog.getCsvSettings();
+  QCOMPARE(settings.fieldSeparator, ':');
+  QCOMPARE(settings.fieldProtection, '\'');
+  QVERIFY(settings.parseExp);
+
+  /*
+   * Play
+   */
+  dialog.exec();
 }
 
 void mdtCsvTest::generatorSettingsTest()
@@ -181,32 +290,10 @@ void mdtCsvTest::generatorSettingsWidgetTest()
   /*
    * Play
    */
-  widget.show();
-  while(widget.isVisible()){
-    QTest::qWait(500);
-  }
-}
-
-void mdtCsvTest::fileSettingsWidgetTest()
-{
-  mdtCsvFileSettingsWidget widget;
-
-  /*
-   * Set/get
-   */
-  // Set file settings
-  widget.setFileSettings("/path/to/csvfile.csv", "UTF-16");
-  // Check file settings
-  QCOMPARE(widget.filePath(), QString("/path/to/csvfile.csv"));
-  QCOMPARE(widget.fileEncoding(), QByteArray("UTF-16"));
-  /*
-   * Play
-   */
-  widget.setSelectFileMode(mdtCsvFileSettingsWidget::SelectOpen);
-  widget.show();
-  while(widget.isVisible()){
-    QTest::qWait(500);
-  }
+//   widget.show();
+//   while(widget.isVisible()){
+//     QTest::qWait(500);
+//   }
 }
 
 void mdtCsvTest::fileGeneratorSettingsDialogTest()

@@ -18,39 +18,31 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtCsvGeneratorSettingsWidget.h"
-#include <QComboBox>
-#include <QCheckBox>
-#include <QString>
-#include <QChar>
-#include <QVariant>
+#include "mdtCsvParserSettingsWidget.h"
 
-//#include <QDebug>
-
-mdtCsvGeneratorSettingsWidget::mdtCsvGeneratorSettingsWidget(QWidget *parent)
+mdtCsvParserSettingsWidget::mdtCsvParserSettingsWidget(QWidget *parent)
  : mdtCsvSettingsWidget(parent)
 {
-  setParseExpVisible(false);
+  setEolVisible(false);
+  setAllwaysProtectTextFieldsVisible(false);
   // Update regarding default settings
-  setSettings(mdtCsvGeneratorSettings());
+  setSettings(mdtCsvParserSettings());
 }
 
-void mdtCsvGeneratorSettingsWidget::setSettings(const mdtCsvGeneratorSettings& settings)
+void mdtCsvParserSettingsWidget::setSettings(const mdtCsvParserSettings &settings)
 {
   selectFieldSeparator(settings.fieldSeparator);
   selectFieldProtection(settings.fieldProtection);
-  selectEol(settings.eol);
-  setAllwaysProtectTextFields(settings.allwaysProtectTextFields);
+  setParseExp(settings.parseExp);
 }
 
-mdtCsvGeneratorSettings mdtCsvGeneratorSettingsWidget::getSettings() const
+mdtCsvParserSettings mdtCsvParserSettingsWidget::getSettings() const
 {
-  mdtCsvGeneratorSettings settings;
+  mdtCsvParserSettings settings;
 
   settings.fieldSeparator = getSelectedFieldSeparator();
   settings.fieldProtection = getSelectedFieldProtection();
-  settings.eol = getSelectedEol();
-  settings.allwaysProtectTextFields = allwaysProtectTextFields();
+  settings.parseExp = parseExp();
 
   return settings;
 }

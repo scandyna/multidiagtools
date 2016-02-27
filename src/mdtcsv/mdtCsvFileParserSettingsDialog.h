@@ -18,12 +18,11 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CSV_FILE_GENERATOR_SETTINGS_DIALOG_H
-#define MDT_CSV_FILE_GENERATOR_SETTINGS_DIALOG_H
+#ifndef MDT_CSV_FILE_PARSER_SETTINGS_DIALOG_H
+#define MDT_CSV_FILE_PARSER_SETTINGS_DIALOG_H
 
-#include "mdtError.h"
 #include "mdtCsvSettings.h"
-#include "ui_mdtCsvFileGeneratorSettingsDialog.h"
+#include "ui_mdtCsvFileParserSettingsDialog.h"
 #include "mdtCsvFileGeneratorFileSettingsWidget.h"
 #include <QDialog>
 #include <QString>
@@ -33,7 +32,8 @@ class QWidget;
 
 /*! \brief CSV file generator settings dialog
  */
-class mdtCsvFileGeneratorSettingsDialog : public QDialog, Ui::mdtCsvFileGeneratorSettingsDialog
+
+class mdtCsvFileParserSettingsDialog : public QDialog, Ui::mdtCsvFileParserSettingsDialog
 {
  Q_OBJECT
 
@@ -41,15 +41,15 @@ class mdtCsvFileGeneratorSettingsDialog : public QDialog, Ui::mdtCsvFileGenerato
 
   /*! \brief Constructor
    */
-  mdtCsvFileGeneratorSettingsDialog(QWidget *parent = nullptr);
+  mdtCsvFileParserSettingsDialog(QWidget *parent = nullptr);
 
   /*! \brief Copy disabled
    */
-  mdtCsvFileGeneratorSettingsDialog(const mdtCsvFileGeneratorSettingsDialog &) = delete;
+  mdtCsvFileParserSettingsDialog(const mdtCsvFileParserSettingsDialog &) = delete;
 
   /*! \brief Copy disabled
    */
-  mdtCsvFileGeneratorSettingsDialog & operator=(const mdtCsvFileGeneratorSettingsDialog &) = delete;
+  mdtCsvFileParserSettingsDialog & operator=(const mdtCsvFileParserSettingsDialog &) = delete;
 
   /*! \brief Set file settings
    */
@@ -65,11 +65,11 @@ class mdtCsvFileGeneratorSettingsDialog : public QDialog, Ui::mdtCsvFileGenerato
 
   /*! \brief Set CSV settings
    */
-  void setCsvSettings(const mdtCsvGeneratorSettings & settings);
+  void setCsvSettings(const mdtCsvParserSettings & settings);
 
   /*! \brief Get CSV settings
    */
-  mdtCsvGeneratorSettings getCsvSettings() const;
+  mdtCsvParserSettings getCsvSettings() const;
 };
 
-#endif // MDT_CSV_FILE_GENERATOR_SETTINGS_DIALOG_H
+#endif // #ifndef MDT_CSV_FILE_PARSER_SETTINGS_DIALOG_H

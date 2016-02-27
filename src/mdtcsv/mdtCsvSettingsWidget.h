@@ -28,7 +28,7 @@
 
 class QComboBox;
 
-/*! \brief CSV generator settings widget
+/*! \brief Common base for CSV settings widget
  */
 class mdtCsvSettingsWidget : public QWidget, Ui::mdtCsvSettingsWidget
 {
@@ -49,6 +49,18 @@ class mdtCsvSettingsWidget : public QWidget, Ui::mdtCsvSettingsWidget
   mdtCsvSettingsWidget & operator=(const mdtCsvSettingsWidget &) = delete;
 
  protected:
+
+  /*! \brief Set cbParseExp visibility
+   */
+  void setParseExpVisible(bool visible);
+
+  /*! \brief Set EOL combobox visibility
+   */
+  void setEolVisible(bool visible);
+
+  /*! \brief Set allways protect text fields visibility
+   */
+  void setAllwaysProtectTextFieldsVisible(bool visible);
 
   /*! \brief Select field seperator
    */
@@ -81,6 +93,14 @@ class mdtCsvSettingsWidget : public QWidget, Ui::mdtCsvSettingsWidget
   /*! \brief Get allways protect text fields (generator specific)
    */
   bool allwaysProtectTextFields() const;
+
+  /*! \brief Set parse EXP (parser specific)
+   */
+  void setParseExp(bool set);
+
+  /*! \brief Get parse EXP (parser specific)
+   */
+  bool parseExp() const;
 
  private:
 

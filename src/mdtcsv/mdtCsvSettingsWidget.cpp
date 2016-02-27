@@ -21,6 +21,7 @@
 #include "mdtCsvSettingsWidget.h"
 #include <QComboBox>
 #include <QCheckBox>
+#include <QLineEdit>
 #include <QString>
 #include <QChar>
 #include <QVariant>
@@ -30,8 +31,13 @@
 mdtCsvSettingsWidget::mdtCsvSettingsWidget(QWidget *parent)
  : QWidget(parent)
 {
+  QLineEdit *cbEdit;
+
   setupUi(this);
-  // Fill field separator combobox
+  // Setup and fill field separator combobox
+//   cbEdit = cbEol->lineEdit();
+//   Q_ASSERT(cbEdit != nullptr);
+//   cbEdit->setMaxLength(1);
   cbFieldSeparator->addItem(",", ',');
   cbFieldSeparator->addItem(";", ';');
   cbFieldSeparator->addItem(":", ':');
@@ -44,6 +50,22 @@ mdtCsvSettingsWidget::mdtCsvSettingsWidget(QWidget *parent)
   cbEol->addItem("LF (Unix, OS X)", "\n");
   cbEol->addItem("CR (Old Mac OS)", "\r");
   cbEol->addItem("CRLF (Dos, Windows)", "\r\n");
+}
+
+void mdtCsvSettingsWidget::setParseExpVisible(bool visible)
+{
+  cbParseExp->setVisible(visible);
+}
+
+void mdtCsvSettingsWidget::setEolVisible(bool visible)
+{
+  cbEol->setVisible(visible);
+  lbEol->setVisible(visible);
+}
+
+void mdtCsvSettingsWidget::setAllwaysProtectTextFieldsVisible(bool visible)
+{
+  cballwaysProtectTextFields->setVisible(visible);
 }
 
 void mdtCsvSettingsWidget::selectFieldSeparator(char sep)
@@ -130,6 +152,16 @@ void mdtCsvSettingsWidget::setAllwaysProtectTextFields(bool set)
 bool mdtCsvSettingsWidget::allwaysProtectTextFields() const
 {
   return cballwaysProtectTextFields->isChecked();
+}
+
+void mdtCsvSettingsWidget::setParseExp(bool set)
+{
+  cbParseExp->setChecked(set);
+}
+
+bool mdtCsvSettingsWidget::parseExp() const
+{
+  return cbParseExp->isChecked();
 }
 
 QVariant mdtCsvSettingsWidget::findItemDataForItemText(QComboBox* cb) const

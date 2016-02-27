@@ -15,8 +15,10 @@ set (SOURCES_FILES
           mdtCsvFileInfo.cpp
           mdtCsvRecordFormat.cpp
           mdtCsvSettingsWidget.cpp
+          mdtCsvParserSettingsWidget.cpp
           mdtCsvGeneratorSettingsWidget.cpp
           mdtCsvFileSettingsWidget.cpp
+          mdtCsvFileParserSettingsDialog.cpp
           mdtCsvFileGeneratorSettingsDialog.cpp
           mdtCsvTableViewDataMapper.cpp
           mdtCsvTableViewExportThread.cpp

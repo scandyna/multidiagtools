@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CSV_GENERATOR_SETTINGS_WIDGET_H
-#define MDT_CSV_GENERATOR_SETTINGS_WIDGET_H
+#ifndef MDT_CSV_PARSER_SETTINGS_WIDGET_H
+#define MDT_CSV_PARSER_SETTINGS_WIDGET_H
 
 #include "mdtCsvSettings.h"
 #include "mdtCsvSettingsWidget.h"
@@ -28,9 +28,9 @@
 
 class QComboBox;
 
-/*! \brief CSV generator settings widget
+/*! \brief CSV parser settings widget
  */
-class mdtCsvGeneratorSettingsWidget : public mdtCsvSettingsWidget
+class mdtCsvParserSettingsWidget : public mdtCsvSettingsWidget
 {
  Q_OBJECT
 
@@ -38,23 +38,24 @@ class mdtCsvGeneratorSettingsWidget : public mdtCsvSettingsWidget
 
   /*! \brief Constructor
    */
-  mdtCsvGeneratorSettingsWidget(QWidget *parent = nullptr);
+  mdtCsvParserSettingsWidget(QWidget *parent = nullptr);
 
   /*! \brief Copy disabled
    */
-  mdtCsvGeneratorSettingsWidget(const mdtCsvGeneratorSettingsWidget &) = delete;
+  mdtCsvParserSettingsWidget(const mdtCsvParserSettingsWidget &) = delete;
 
   /*! \brief Copy disabled
    */
-  mdtCsvGeneratorSettingsWidget & operator=(const mdtCsvGeneratorSettingsWidget &) = delete;
+  mdtCsvParserSettingsWidget & operator=(const mdtCsvParserSettingsWidget &) = delete;
 
   /*! \brief Set settings
    */
-  void setSettings(const mdtCsvGeneratorSettings & settings);
+  void setSettings(const mdtCsvParserSettings & settings);
 
   /*! \brief Get settings
    */
-  mdtCsvGeneratorSettings getSettings() const;
+  mdtCsvParserSettings getSettings() const;
 };
 
-#endif // #ifndef MDT_CSV_GENERATOR_SETTINGS_WIDGET_H
+#endif // #ifndef MDT_CSV_PARSER_SETTINGS_WIDGET_H
+

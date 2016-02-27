@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -29,10 +29,12 @@ class mdtCsvTest : public mdtTest
 
  private slots:
 
+  void fileSettingsWidgetTest();
   void parserSettingsTest();
+  void parserSettingsWidgetTest();
+  void fileParserSettingsDialogTest();
   void generatorSettingsTest();
   void generatorSettingsWidgetTest();
-  void fileSettingsWidgetTest();
   void fileGeneratorSettingsDialogTest();
   void recordTest();
   void dataTest();

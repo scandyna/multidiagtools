@@ -18,44 +18,36 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtCsvFileGeneratorSettingsDialog.h"
-#include "mdtCsvGeneratorSettingsWidget.h"
-#include <QAction>
-#include <QIcon>
-#include <QFileDialog>
-#include <QFileInfo>
-#include <QList>
-#include <QStringList>
-#include <QTextCodec>
+#include "mdtCsvFileParserSettingsDialog.h"
 
-mdtCsvFileGeneratorSettingsDialog::mdtCsvFileGeneratorSettingsDialog(QWidget *parent)
+mdtCsvFileParserSettingsDialog::mdtCsvFileParserSettingsDialog(QWidget *parent)
  : QDialog(parent)
 {
   setupUi(this);
-  wFileSettings->setSelectFileMode(mdtCsvFileSettingsWidget::SelectSave);
+  wFileSettings->setSelectFileMode(mdtCsvFileSettingsWidget::SelectOpen);
 }
 
-void mdtCsvFileGeneratorSettingsDialog::setFileSettings(const QString & path, const QByteArray & encoding)
+void mdtCsvFileParserSettingsDialog::setFileSettings(const QString &path, const QByteArray &encoding)
 {
   wFileSettings->setFileSettings(path, encoding);
 }
 
-QString mdtCsvFileGeneratorSettingsDialog::filePath() const
+QString mdtCsvFileParserSettingsDialog::filePath() const
 {
   return wFileSettings->filePath();
 }
 
-QByteArray mdtCsvFileGeneratorSettingsDialog::fileEncoding() const
+QByteArray mdtCsvFileParserSettingsDialog::fileEncoding() const
 {
   return wFileSettings->fileEncoding();
 }
 
-void mdtCsvFileGeneratorSettingsDialog::setCsvSettings(const mdtCsvGeneratorSettings& settings)
+void mdtCsvFileParserSettingsDialog::setCsvSettings(const mdtCsvParserSettings &settings)
 {
   wCsvSettings->setSettings(settings);
 }
 
-mdtCsvGeneratorSettings mdtCsvFileGeneratorSettingsDialog::getCsvSettings() const
+mdtCsvParserSettings mdtCsvFileParserSettingsDialog::getCsvSettings() const
 {
   return wCsvSettings->getSettings();
 }
