@@ -1,6 +1,6 @@
-format 210
+format 211
 "mdtcsv" // mdtcsv
-  revision 15
+  revision 17
   modified_by 2 "philippe"
   // class settings
   
@@ -86,7 +86,7 @@ ${inlines}
       end
     end
 
-    class 2050434 "mdtCsvParserSettings"
+    class 2376962 "mdtCsvSettingsWidget"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -100,24 +100,184 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2420354 // <generalisation>
-	relation 2403970 ---|>
+      classrelation 2665346 // <generalisation>
+	relation 2648834 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 2420354 // <generalisation>
-	  b parent class_ref 2078978 // mdtCsvCommonSettings
+	    classrelation_ref 2665346 // <generalisation>
+	  b parent class_ref 316162 // QWidget
       end
 
-      attribute 2138242 "parseExp"
-	private explicit_type "bool"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+      operation 3608322 "mdtCsvSettingsWidget"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
 "
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3608450 "selectFieldSeparator"
+	protected explicit_return_type "void"
+	nparams 1
+	  param in name "sep" explicit_type "char"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3608578 "getSelectedFieldSeparator"
+	protected explicit_return_type "char"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3608706 "selectFieldProtection"
+	protected explicit_return_type "void"
+	nparams 1
+	  param in name "protection" explicit_type "char"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3608834 "getSelectedFieldProtection"
+	protected explicit_return_type "char"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3608962 "selectEol"
+	protected explicit_return_type "void"
+	nparams 1
+	  param in name "eol" explicit_type "string"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3609090 "getSelectedEol"
+	protected explicit_return_type "string"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3617410 "setProtectAllTextFields"
+	protected explicit_return_type "void"
+	nparams 1
+	  param in name "set" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3617538 "protectAllTextFields"
+	protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3609218 "findItemDataForItemText"
+	private return_type class_ref 161154 // QVariant
+	nparams 1
+	  param in name "cb" type class_ref 505218 // QComboBox
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3609346 "getCharFromVariant"
+	private explicit_return_type "char"
+	nparams 1
+	  param in name "var" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -1382,6 +1542,243 @@ ${inlines}
 	  b parent class_ref 2043778 // mdtCsvStringParser
       end
     end
+
+    classdiagram 2028546 "parserSettings"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
+    class 2050434 "mdtCsvParserSettings"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2420354 // <generalisation>
+	relation 2403970 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2420354 // <generalisation>
+	  b parent class_ref 2078978 // mdtCsvCommonSettings
+      end
+
+      attribute 2138242 "parseExp"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 2376706 "mdtCsvParserSettingsWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2671874 // <generalisation>
+	relation 2655362 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2671874 // <generalisation>
+	  b parent class_ref 2376962 // mdtCsvSettingsWidget
+      end
+
+      operation 3615874 "mdtCsvParserSettingsWidget"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3616002 "setSettings"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "settings" type class_ref 2050434 // mdtCsvParserSettings
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3616130 "getSettings"
+	public return_type class_ref 2050434 // mdtCsvParserSettings
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 2376834 "mdtCsvFileParserSettingsDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2672002 // <directional composition>
+	relation 2655490 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2672002 // <directional composition>
+	  b parent class_ref 2376706 // mdtCsvParserSettingsWidget
+      end
+
+      operation 3616258 "mdtCsvFileParserSettingsDialog"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3616386 "setFileSettings"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "path" type class_ref 161026 // QString
+	  param in name "encoding" type class_ref 236162 // QByteArray
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3616514 "filePath"
+	public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3616642 "fileEncoding"
+	public return_type class_ref 236162 // QByteArray
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3616770 "setCsvSettings"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "settings" type class_ref 2050434 // mdtCsvParserSettings
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3616898 "getCsvSettings"
+	public return_type class_ref 2050434 // mdtCsvParserSettings
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 2672514 // <directional composition>
+	relation 2656002 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2672514 // <directional composition>
+	  b parent class_ref 2167554 // mdtCsvFileSettingsWidget
+      end
+    end
   end
 
   classview 887426 "Generator"
@@ -1512,7 +1909,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 2138498 "protectAllTextFields"
+      attribute 2138498 "allwaysProtectTextFields"
 	public explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -1539,6 +1936,60 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      operation 3617026 "mdtCsvGeneratorSettingsWidget"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3617154 "setSettings"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "settings" type class_ref 2078850 // mdtCsvGeneratorSettings
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3617282 "getSettings"
+	public return_type class_ref 2078850 // mdtCsvGeneratorSettings
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 2672642 // <generalisation>
+	relation 2656130 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2672642 // <generalisation>
+	  b parent class_ref 2376962 // mdtCsvSettingsWidget
+      end
     end
 
     class 2167042 "mdtCsvFileGeneratorSettingsDialog"
@@ -1555,6 +2006,23 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      classrelation 2672258 // <directional composition>
+	relation 2655746 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2672258 // <directional composition>
+	  b parent class_ref 2166914 // mdtCsvGeneratorSettingsWidget
+      end
+
+      classrelation 2672386 // <directional composition>
+	relation 2655874 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2672386 // <directional composition>
+	  b parent class_ref 2167554 // mdtCsvFileSettingsWidget
+      end
     end
   end
 

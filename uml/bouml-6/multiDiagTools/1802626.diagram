@@ -1,27 +1,46 @@
-format 210
+format 211
 
 classcanvas 128002 class_ref 2078850 // mdtCsvGeneratorSettings
   classdiagramsettings member_max_width 0 end
-  xyz 553 216 2000
+  xyz 39 751 2000
 end
 classcanvas 128130 class_ref 2078978 // mdtCsvCommonSettings
   classdiagramsettings member_max_width 0 end
-  xyz 559 91 2006
+  xyz 43 631 2006
 end
 classcanvas 128386 class_ref 2166914 // mdtCsvGeneratorSettingsWidget
   classdiagramsettings member_max_width 0 end
-  xyz 154 257 2000
+  xyz 315 360 2000
 end
 classcanvas 128514 class_ref 2167042 // mdtCsvFileGeneratorSettingsDialog
   classdiagramsettings member_max_width 0 end
-  xyz 160 420 2000
+  xyz 40 386 2000
 end
-classcanvas 128642 class_ref 2167554 // mdtCsvFileSettingsWidget
+classcanvas 129026 class_ref 2167554 // mdtCsvFileSettingsWidget
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 49 471 2000
+end
+classcanvas 129282 class_ref 2376962 // mdtCsvSettingsWidget
   classdiagramsettings member_max_width 0 end
-  xyz 154 336 2000
+  xyz 316 40 2005
 end
 relationcanvas 128258 relation_ref 2404098 // <generalisation>
   from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 2655746 // <directional composition>
+  from ref 128514 z 2001 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 2655874 // <directional composition>
+  from ref 128514 z 2001 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 2656130 // <generalisation>
+  from ref 128386 z 2006 to ref 129282
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

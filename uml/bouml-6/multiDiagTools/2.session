@@ -1,27 +1,38 @@
-window_sizes 1280 964 345 929 911 0
+window_sizes 1280 964 355 919 911 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 1969282 // RelatedTableInsertExpression
-    929 911 100 4 0 0
-  classdiagram_ref 1982722 // RelatedTableInsertExpressionDialog
+  classdiagram_ref 1848962 // DatabaseCopierMapping
+    743 728 100 4 0 0
+  classdiagram_ref 1596162 // TableMapping
+    120 106 100 4 0 0
+  classdiagram_ref 1936514 // overview
+    120 106 90 21 0 39
+  classdiagram_ref 1943042 // TMoverview
     120 106 100 18 0 0
-  active  classdiagram_ref 1883394 // UniqueInsertCriteria
-    929 911 100 7 0 15
-  classdiagram_ref 1976194 // UniqueCheckMatchItemModel
-    120 106 100 18 0 0
-  classdiagram_ref 1969538 // MatchItemModel
-    120 106 100 21 0 122
-  classdiagram_ref 1916546 // UniqueInsertCriteriaDialog
+  classdiagram_ref 1936386 // TableMappingDialog
+    120 106 100 7 0 0
+  classdiagram_ref 2021890 // TableSelection
+    919 911 100 18 0 0
+  classdiagram_ref 1729538 // csvSettings
+    919 911 100 4 0 0
+  active  classdiagram_ref 1802626 // generatorSettings
+    919 911 100 4 0 0
+  classdiagram_ref 2028546 // parserSettings
     120 106 100 18 0 0
 end
 show_stereotypes
+selected attribute_ref 2138498 // allwaysProtectTextFields
 open
+  operation_ref 3617538 // protectAllTextFields
+  class_ref 2376706 // mdtCsvParserSettingsWidget
+  class_ref 2376834 // mdtCsvFileParserSettingsDialog
+  class_ref 2078850 // mdtCsvGeneratorSettings
+  class_ref 2166914 // mdtCsvGeneratorSettingsWidget
+  classview_ref 800898 // sqlDatabase
+  classview_ref 893954 // sqlDatabaseCopy
   
   package_ref 315650 // error
-  class_ref 2256898 // UniqueInsertCriteria
-  classview_ref 927490 // TableMappingItem
-  operation_ref 3578626 // getSourceSelectSql
-  operation_ref 3578114 // getDestinationRecord
+  class_ref 2370050 // CsvFileSelectionWidget
   
   package_ref 260866 // Boost
 end

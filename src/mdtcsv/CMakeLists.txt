@@ -14,6 +14,7 @@ set (SOURCES_FILES
           mdtCsvStringInfo.cpp
           mdtCsvFileInfo.cpp
           mdtCsvRecordFormat.cpp
+          mdtCsvSettingsWidget.cpp
           mdtCsvGeneratorSettingsWidget.cpp
           mdtCsvFileSettingsWidget.cpp
           mdtCsvFileGeneratorSettingsDialog.cpp

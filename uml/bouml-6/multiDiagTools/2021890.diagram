@@ -1,0 +1,39 @@
+format 211
+
+classcanvas 128002 class_ref 316162 // QWidget
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 529.6 41.45 2000
+end
+classcanvas 128130 class_ref 2369922 // DatabaseTableSelectionWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 39.9 166.5 2000
+end
+classcanvas 128386 class_ref 2370050 // CsvFileSelectionWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 442.6 278 2000
+end
+classcanvas 129154 class_ref 2167554 // mdtCsvFileSettingsWidget
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 221.35 286 2000
+end
+note 129410 "There is missing a class like mdtCsvGeneratorSettingsWidget for file parser settings"
+  xyzwh 221 406 2000 537 55
+relationcanvas 128258 relation_ref 2635650 // <generalisation>
+  geometry VHV unfixed
+  from ref 128130 z 2001 to point 218 127
+  line 128898 z 2001 to point 560 127
+  line 129026 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 2635778 // <generalisation>
+  from ref 128386 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 2642306 // <directional composition>
+  from ref 128386 z 2001 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

@@ -1,6 +1,6 @@
 format 211
 "mdtdatabase" // mdtdatabase
-  revision 110
+  revision 111
   modified_by 2 "philippe"
   // class settings
   
@@ -7501,14 +7501,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2521346 // <generalisation>
-	relation 2504962 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 2521346 // <generalisation>
-	  b parent class_ref 370434 // QDialog
-      end
-
       attribute 2218242 "pvSourceFieldSelectionDelegate"
 	private type class_ref 1914754 // mdtComboBoxItemDelegate
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};

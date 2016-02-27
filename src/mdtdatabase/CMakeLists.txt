@@ -8,6 +8,7 @@ project (multidiagtools)
 # Liste des fichiers sources
 set (SOURCES_FILES
           mdt/sql/error/Error.cpp
+          mdt/sql/Database.cpp
           mdtAbstractSqlTableController.cpp
           mdtSqlFieldHandler.cpp
           mdtSqlDataValidator.cpp

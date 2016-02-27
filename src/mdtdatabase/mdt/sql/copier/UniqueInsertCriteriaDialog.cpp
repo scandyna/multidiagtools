@@ -49,8 +49,6 @@ UniqueInsertCriteriaDialog::UniqueInsertCriteriaDialog(const std::shared_ptr<con
   setupUi(this);
   // Setup match item model
   pvModel = new ExpressionMatchItemModel(pvTableMapping, this);
-//   pvCriteria = pvTableMapping->uniqueInsertCriteria();
-//   pvModel->setExpressionMatchItemList(pvCriteria.matchItems());
   // Setup match item view
   twMatchItems->setModel(pvModel);
   twMatchItems->setSelectionMode(QAbstractItemView::SingleSelection);

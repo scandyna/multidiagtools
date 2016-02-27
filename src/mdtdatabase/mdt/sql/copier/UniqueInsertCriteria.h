@@ -22,17 +22,13 @@
 #define MDT_SQL_COPIER_UNIQUE_INSERT_CRITERIA_H
 
 #include "ExpressionMatchItem.h"
-
-#include "mdtSqlWhereOperator.h"
-
-#include <QVector>
 #include <vector>
 
 namespace mdt{ namespace sql{ namespace copier{
 
   /*! \brief Unique insert criteria for SQL copier
    */
-  class UniqueInsertCriteria /* : public AbstractTableMappingItem */
+  class UniqueInsertCriteria
   {
    public:
 
@@ -56,39 +52,6 @@ namespace mdt{ namespace sql{ namespace copier{
     void clear()
     {
       pvMatchItems.clear();
-    }
-
-    /*! \brief Add a match item
-     *
-     * A match item is a criteria between a value of source
-     *  and a field in destination.
-     *
-     * \param sourceValueFieldIndex Index of field, in source, in which value will be fetched during copy
-     * \param destinationFieldIndex Index of field, in destination, for which the value must match
-     * \pre sourceValueFieldIndex and destinationFieldIndex must be >= 0
-     */
-    void addMatchItem(int sourceValueFieldIndex, int destinationFieldIndex)
-    {
-//       Q_ASSERT(sourceValueFieldIndex >= 0);
-//       Q_ASSERT(destinationFieldIndex >= 0);
-      pvMatchItems.emplace_back(sourceValueFieldIndex, destinationFieldIndex);
-    }
-
-    /*! \brief Add a match item
-     *
-     * A match item is a criteria between a value of source
-     *  and a field in destination.
-     *
-     * \param operatorWithPrevious WHERE clause operator (AND, OR) with previous match item
-     * \param sourceValueFieldIndex Index of field, in source, in which value will be fetched during copy
-     * \param destinationFieldIndex Index of field, in destination, for which the value must match
-     * \pre sourceValueFieldIndex and destinationFieldIndex must be >= 0
-     */
-    void addMatchItem(mdtSqlWhereOperator::Type operatorWithPrevious, int sourceValueFieldIndex, int destinationFieldIndex)
-    {
-//       Q_ASSERT(sourceValueFieldIndex >= 0);
-//       Q_ASSERT(destinationFieldIndex >= 0);
-      pvMatchItems.emplace_back(operatorWithPrevious, sourceValueFieldIndex, destinationFieldIndex);
     }
 
     /*! \brief Get count of match items

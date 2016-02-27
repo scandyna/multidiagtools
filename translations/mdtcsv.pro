@@ -10,6 +10,7 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvSourceIn
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvStringInfo.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvFileInfo.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvRecordFormat.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvSettingsWidget.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvGeneratorSettingsWidget.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvFileSettingsWidget.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvFileGeneratorSettingsDialog.cpp

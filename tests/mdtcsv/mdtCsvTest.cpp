@@ -181,10 +181,10 @@ void mdtCsvTest::generatorSettingsWidgetTest()
   /*
    * Play
    */
-//   widget.show();
-//   while(widget.isVisible()){
-//     QTest::qWait(500);
-//   }
+  widget.show();
+  while(widget.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 void mdtCsvTest::fileSettingsWidgetTest()

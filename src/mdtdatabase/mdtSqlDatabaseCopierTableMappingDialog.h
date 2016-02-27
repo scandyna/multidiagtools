@@ -60,7 +60,6 @@ class mdtSqlDatabaseCopierTableMappingDialog : public QDialog, Ui::mdtSqlDatabas
   /*! \brief Get table mapping
    */
   std::shared_ptr<mdtSqlDatabaseCopierTableMapping> mapping() const;
-  ///mdtSqlDatabaseCopierTableMapping mapping() const;
 
  private slots:
 
@@ -89,10 +88,6 @@ class mdtSqlDatabaseCopierTableMappingDialog : public QDialog, Ui::mdtSqlDatabas
   /*! \brief Edit unique insert criteria
    */
   void editUniqueInsertCriteria();
-
-  /*! \brief Edit unique insert expression
-   */
-//   void editUniqueInsertExpression();
 
   /*! \brief Resize table view
    */

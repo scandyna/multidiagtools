@@ -55,22 +55,6 @@ bool mdtSqlDatabaseCopierTableMapping::setDestinationTable(const QString & table
   return true;
 }
 
-// void mdtSqlDatabaseCopierTableMapping::generateFieldMappingByName()
-// {
-//   resetFieldMapping();
-//   for(auto & fm : fieldMappingList()){
-//     // Get source field
-//     Q_ASSERT(fm.destinationFieldIndex >= 0);
-//     Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
-//     mdtSqlField destinationField = pvDestinationTable.field(fm.destinationFieldIndex);
-//     // Get source field index that matches destination field name
-//     fm.sourceField.setFieldIndex(pvSourceTable.fieldIndex(destinationField.name()));
-//     updateFieldMappingState(fm);
-//   }
-//   // Update table mapping state
-//   updateTableMappingState();
-// }
-
 QString mdtSqlDatabaseCopierTableMapping::fetchSourceTableFieldTypeNameAt(int fieldIndex) const
 {
   return pvSourceTable.fieldTypeName(fieldIndex, mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName()));
@@ -105,7 +89,7 @@ bool mdtSqlDatabaseCopierTableMapping::areFieldsCompatible(int sourceFieldIndex,
   // Get driver types needed for fetching field informations
   auto sourceDriverType = mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName());
   auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
-  // Ww cannot check anything without a known DB driver
+  // We cannot check anything without a known DB driver
   if(sourceDriverType == mdtSqlDriverType::Unknown){
     return false;
   }

@@ -54,19 +54,19 @@ class TableMappingModel : public QAbstractTableModel
   TableMappingModel(const TableMappingModel & other) = delete;
   TableMappingModel & operator=(const TableMappingModel &) = delete;
 
-    /*! \brief Set unique insert criteria
-     */
-    void setUniqueInsertCriteria(const UniqueInsertCriteria & c)
-    {
-      mappingBase()->setUniqueInsertCriteria(c);
-    }
+  /*! \brief Set unique insert criteria
+   */
+  void setUniqueInsertCriteria(const UniqueInsertCriteria & c)
+  {
+    mappingBase()->setUniqueInsertCriteria(c);
+  }
 
-    /*! \brief Get unique insert criteria
-     */
-    UniqueInsertCriteria uniqueInsertCriteria() const
-    {
-      return mappingBase()->uniqueInsertCriteria();
-    }
+  /*! \brief Get unique insert criteria
+   */
+  UniqueInsertCriteria uniqueInsertCriteria() const
+  {
+    return mappingBase()->uniqueInsertCriteria();
+  }
 
   /*! \brief Setup mappin item type delegate
    */
