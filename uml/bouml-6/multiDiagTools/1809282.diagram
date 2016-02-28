@@ -2,15 +2,25 @@ format 211
 
 classcanvas 128002 class_ref 2174082 // TableMapping
   classdiagramsettings member_max_width 0 end
-  xyz 47 114 2000
+  xyz 41 40 2000
 end
 classcanvas 128386 class_ref 2256386 // TableMappingItem
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 667 279 2000
+  xyz 648 298 2000
+end
+classcanvas 128642 class_ref 1914114 // DatabaseCopierTableMapping
+  classdiagramsettings member_max_width 0 end
+  xyz 71 640 2006
 end
 relationcanvas 128514 relation_ref 2541314 // <directional composition>
   from ref 128002 z 2001 to ref 128386
   no_role_a no_role_b
-  multiplicity_a_pos 651 321 3000 no_multiplicity_b
+  multiplicity_a_pos 632 330 3000 no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 2471426 // <generalisation>
+  decenter_end 505
+  from ref 128642 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end

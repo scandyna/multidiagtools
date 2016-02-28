@@ -4,7 +4,7 @@ classcanvas 128002 class_ref 2174082 // TableMapping
   classdiagramsettings member_max_width 0 end
   xyz 591 40 2000
 end
-classcanvas 128130 class_ref 1914114 // mdtSqlDatabaseCopierTableMapping
+classcanvas 128130 class_ref 1914114 // DatabaseCopierTableMapping
   classdiagramsettings member_max_width 0 end
   xyz 607 223 2006
 end

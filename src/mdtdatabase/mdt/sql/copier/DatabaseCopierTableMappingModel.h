@@ -30,8 +30,6 @@
 #include <QVariant>
 #include <memory>
 
-class mdtComboBoxItemDelegate;
-
 namespace mdt{ namespace sql{ namespace copier{
 
   /*! \brief Table model to access SQL table copier mapping
@@ -61,21 +59,8 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Set source table
      *
      * Will also reset field mapping.
-     *
-     * If delegate is not null,
-     *  its combobox will be populated with available fields.   \todo Should disapear
      */
-    bool setSourceTable(const QString & tableName, mdtComboBoxItemDelegate *delegate = nullptr);
-
-    /*! \brief Set source table
-     *
-     * Will also reset field mapping.
-     *
-     * If delegate is not null,
-     *  its combobox will be populated with available fields.
-     */
-    [[deprecated]]
-    bool setSourceTable(const QString & tableName, const QSqlDatabase & db, mdtComboBoxItemDelegate *delegate = nullptr);
+    bool setSourceTable(const QString & tableName);
 
     /*! \brief Set destination table
      *

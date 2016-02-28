@@ -2954,7 +2954,10 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   // Set tables and generate field mapping
   model.setupItemTypeDelegate(sourceTypeDelegate);
   model.setSourceDatabase(db);
-  QVERIFY(model.setSourceTable("Client_tbl", sourceFieldNameDelegate));
+  QVERIFY(model.setSourceTable("Client_tbl"));
+  sourceFieldNameDelegate->clear();
+  sourceFieldNameDelegate->addItem("");
+  sourceFieldNameDelegate->addItems(model.mapping()->getSourceTableFieldNameList());
   QVERIFY(model.setDestinationTable("Client2_tbl", db));
   model.generateFieldMappingByName();
   // Check table names
@@ -3032,7 +3035,10 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
    */
   // Set tables
   model.setupItemTypeDelegate(sourceTypeDelegate);
-  QVERIFY(model.setSourceTable("Address_Client_view", sourceFieldNameDelegate));
+  QVERIFY(model.setSourceTable("Address_Client_view"));
+  sourceFieldNameDelegate->clear();
+  sourceFieldNameDelegate->addItem("");
+  sourceFieldNameDelegate->addItems(model.mapping()->getSourceTableFieldNameList());
   QVERIFY(model.setDestinationTable("Address2_tbl", db));
   QCOMPARE(model.rowCount(), 5);
   // Item[0] is not mapped

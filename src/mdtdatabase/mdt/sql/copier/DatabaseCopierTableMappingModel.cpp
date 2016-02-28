@@ -19,9 +19,8 @@
  **
  ****************************************************************************/
 #include "DatabaseCopierTableMappingModel.h"
-#include "mdtComboBoxItemDelegate.h"
 
-#include <QDebug>
+//#include <QDebug>
 
 namespace mdt{ namespace sql{ namespace copier{
 
@@ -40,37 +39,12 @@ void DatabaseCopierTableMappingModel::setSourceDatabase(const QSqlDatabase & db)
   endResetModel();
 }
 
-bool DatabaseCopierTableMappingModel::setSourceTable(const QString & tableName, mdtComboBoxItemDelegate *delegate)
+bool DatabaseCopierTableMappingModel::setSourceTable(const QString & tableName)
 {
   bool ok;
 
   beginResetModel();
   ok = pvMapping->setSourceTable(tableName);
-  if( (ok) && (delegate != nullptr) ){
-    delegate->clear();
-    delegate->addItem("");
-    delegate->addItems(pvMapping->getSourceTableFieldNameList());
-  }
-  endResetModel();
-  if(!ok){
-    pvLastError = pvMapping->lastError();
-    return false;
-  }
-
-  return true;
-}
-
-bool DatabaseCopierTableMappingModel::setSourceTable(const QString & tableName, const QSqlDatabase & db, mdtComboBoxItemDelegate* delegate)
-{
-  bool ok;
-
-  beginResetModel();
-  ok = pvMapping->setSourceTable(tableName, db);
-  if( (ok) && (delegate != nullptr) ){
-    delegate->clear();
-    delegate->addItem("");
-    delegate->addItems(pvMapping->getSourceTableFieldNameList());
-  }
   endResetModel();
   if(!ok){
     pvLastError = pvMapping->lastError();
