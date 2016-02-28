@@ -9,14 +9,16 @@ diagrams
     968 911 100 7 0 24
 end
 show_stereotypes
-selected classdiagram_ref 1936386 // TableMappingDialog
+selected operation_ref 3586690 // updateMapping
 open
   
-package_ref 315650 // error
-  classview_ref 934018 // TableMapping
+  package_ref 315650 // error
+  operation_ref 3624194 // setModel
+  operation_ref 3624066 // mappingBase
+  class_ref 2369666 // DatabaseCopierTableMappingDialog
   classview_ref 999426 // Database
   classview_ref 1005954 // Query
   
-package_ref 260866 // Boost
+  package_ref 260866 // Boost
 end
 end

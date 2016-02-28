@@ -50,6 +50,12 @@ class mdtSqlDatabaseCopierTableMappingModel : public mdt::sql::copier::TableMapp
    */
   mdtSqlDatabaseCopierTableMappingModel(const mdtSqlDatabaseCopierTableMappingModel & other) = delete;
 
+  /*! \brief Set source database
+   *
+   * Will also reset field mapping.
+   */
+  void setSourceDatabase(const QSqlDatabase & db);
+
   /*! \brief Set source table
    *
    * Will also reset field mapping.
@@ -57,6 +63,16 @@ class mdtSqlDatabaseCopierTableMappingModel : public mdt::sql::copier::TableMapp
    * If delegate is not null,
    *  its combobox will be populated with available fields.
    */
+  bool setSourceTable(const QString & tableName, mdtComboBoxItemDelegate *delegate = nullptr);
+
+  /*! \brief Set source table
+   *
+   * Will also reset field mapping.
+   *
+   * If delegate is not null,
+   *  its combobox will be populated with available fields.
+   */
+  [[deprecated]]
   bool setSourceTable(const QString & tableName, const QSqlDatabase & db, mdtComboBoxItemDelegate *delegate = nullptr);
 
   /*! \brief Set destination table

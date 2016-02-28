@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 56
+  revision 57
   modified_by 2 "philippe"
   // class settings
   
@@ -2845,8 +2845,23 @@ ${inlines}
 
       operation 3586690 "updateMapping"
 	protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3624194 "setModel"
+	protected explicit_return_type "void"
 	nparams 1
-	  param in name "tm" type class_ref 2174082 // TableMapping
+	  param in name "model" type class_ref 2200834 // TableMappingModel
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -2861,6 +2876,17 @@ ${inlines}
 
       operation 3586946 "mappingModelBase"
 	abstract cpp_virtual protected return_type class_ref 2200834 // TableMappingModel
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 3624066 "mappingBase"
+	abstract cpp_virtual protected return_type class_ref 2174082 // TableMapping
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3068,14 +3094,13 @@ ${inlines}
 	
       end
 
-      operation 3585666 "setSourceTables"
+      operation 3585666 "setSourceDatabase"
 	public explicit_return_type "void"
-	nparams 2
+	nparams 1
 	  param in name "db" type class_ref 405122 // QSqlDatabase
-	  param in name "tables" type class_ref 160770 // QStringList
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "

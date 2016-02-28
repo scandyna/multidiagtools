@@ -29,6 +29,35 @@ mdtSqlDatabaseCopierTableMappingModel::mdtSqlDatabaseCopierTableMappingModel(QOb
 {
 }
 
+void mdtSqlDatabaseCopierTableMappingModel::setSourceDatabase(const QSqlDatabase & db)
+{
+  Q_ASSERT(db.isOpen());
+
+  beginResetModel();
+  pvMapping->setSourceDatabase(db);
+  endResetModel();
+}
+
+bool mdtSqlDatabaseCopierTableMappingModel::setSourceTable(const QString & tableName, mdtComboBoxItemDelegate *delegate)
+{
+  bool ok;
+
+  beginResetModel();
+  ok = pvMapping->setSourceTable(tableName);
+  if( (ok) && (delegate != nullptr) ){
+    delegate->clear();
+    delegate->addItem("");
+    delegate->addItems(pvMapping->getSourceTableFieldNameList());
+  }
+  endResetModel();
+  if(!ok){
+    pvLastError = pvMapping->lastError();
+    return false;
+  }
+
+  return true;
+}
+
 bool mdtSqlDatabaseCopierTableMappingModel::setSourceTable(const QString & tableName, const QSqlDatabase & db, mdtComboBoxItemDelegate* delegate)
 {
   bool ok;

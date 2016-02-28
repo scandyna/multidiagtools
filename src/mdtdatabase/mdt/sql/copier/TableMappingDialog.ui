@@ -27,11 +27,6 @@
        <property name="title">
         <string>Source table</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QComboBox" name="cbSourceTable"/>
-        </item>
-       </layout>
       </widget>
      </item>
      <item>

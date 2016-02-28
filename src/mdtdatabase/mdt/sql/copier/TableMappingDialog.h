@@ -22,18 +22,20 @@
 #define MDT_SQL_COPIER_TABLE_MAPPING_DIALOG_H
 
 #include "ui_TableMappingDialog.h"
-// #include "mdtSqlDatabaseCopierTableMapping.h"
 #include "UniqueInsertCriteria.h"
 #include <QDialog>
 #include <memory>
 
-class mdtSqlDatabaseCopierTableMappingModel;
 class mdtComboBoxItemDelegate;
 class QItemSelection;
+class QLayout;
 
 namespace mdt{ namespace sql{ namespace copier{
 
-  /*! \brief SQL database copier table mapping dialog
+  class TableMapping;
+  class TableMappingModel;
+
+  /*! \brief SQL copier table mapping dialog
    */
   class TableMappingDialog : public QDialog, Ui::mdtSqlCopierTableMappingDialog
   {
@@ -49,27 +51,52 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     TableMappingDialog(const TableMappingDialog & other) = delete;
 
-    /*! \brief Set source database and list of source tables to display
+  protected:
+
+    /*! \brief Set layout that contains source selection widgets
+     */
+    void setSourceTableLayout(QLayout *l);
+
+    /*! \brief Set table mapping model
      *
-     * \note db will be reused to fetch selected source table informations.
+     * \pre Subclass must call this function exactly once
      */
-//     void setSourceTables(const QSqlDatabase & db, const QStringList & tables);
+    void setModel(TableMappingModel *model);
 
-    /*! \brief Set table mapping
+    /*! \brief Update table mapping
+     *
+     * Must be called by subclass each time its table mapping changed
      */
-//     void setMapping(const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & m);
+    void updateMapping();
 
-    /*! \brief Get table mapping
+    /*! \brief Update source table field selection delegate
      */
-//     std::shared_ptr<mdtSqlDatabaseCopierTableMapping> mapping() const;
+    void updateSourceTableFieldSelectionDelegate();
+
+//     /*! \brief Access source field selection delegate
+//      */
+//     mdtComboBoxItemDelegate *sourceFieldSelectionDelegate()
+//     {
+//       return pvSourceFieldSelectionDelegate;
+//     }
+
+    /*! \brief Reference internal table mapping (read only version)
+     */
+    virtual const std::shared_ptr<const TableMapping> mappingBase() const = 0;
+
+    /*! \brief Reference internal table mapping
+     */
+    virtual const std::shared_ptr<TableMapping> mappingBase() = 0;
+
+    /*! \brief Get table mapping model base
+     */
+    virtual TableMappingModel *mappingModelBase() = 0;
 
   private slots:
 
-    /*! \brief Set source table
-     *
-     * Called when cbSourceTable's index changed.
+    /*! \brief Resize table view
      */
-//     void setSourceTable(int cbIndex);
+    void resizeTableViewToContents();
 
     /*! \brief Reset field mapping
      */
@@ -91,10 +118,6 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void editUniqueInsertCriteria();
 
-    /*! \brief Resize table view
-     */
-    void resizeTableViewToContents();
-
     /*! \brief Set selected row
      *
      * \note this will just update pvSelectedRow
@@ -109,11 +132,9 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void setSelectedRow(int row);
 
-//     mdtSqlDatabaseCopierTableMappingModel *pvMappingModel;
     mdtComboBoxItemDelegate *pvSourceFieldSelectionDelegate;
     int pvSelectedRow;
-    ///QSqlDatabase pvSourceDatabase;
-    mdt::sql::copier::UniqueInsertCriteria pvEditingUniqueInsertCriteria;
+    UniqueInsertCriteria pvEditingUniqueInsertCriteria;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

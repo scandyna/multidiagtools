@@ -29,6 +29,29 @@
 
 using mdt::sql::copier::TableMapping;
 
+void mdtSqlDatabaseCopierTableMapping::setSourceDatabase(const QSqlDatabase & db)
+{
+  Q_ASSERT(db.isOpen());
+
+  clearFieldMapping();
+  pvSourceDatabase = db;
+  resetFieldMapping();
+}
+
+bool mdtSqlDatabaseCopierTableMapping::setSourceTable(const QString & tableName)
+{
+  Q_ASSERT(pvSourceDatabase.isOpen());
+
+  clearFieldMapping();
+  if(!pvSourceTable.setupFromTable(tableName, pvSourceDatabase)){
+    pvLastError = pvSourceTable.lastError();
+    return false;
+  }
+  resetFieldMapping();
+
+  return true;
+}
+
 bool mdtSqlDatabaseCopierTableMapping::setSourceTable(const QString & tableName, const QSqlDatabase & db)
 {
   clearFieldMapping();

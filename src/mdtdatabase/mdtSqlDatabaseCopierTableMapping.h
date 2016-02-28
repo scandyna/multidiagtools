@@ -48,12 +48,30 @@ class mdtSqlDatabaseCopierTableMapping : public mdt::sql::copier::TableMapping
    */
 //    mdtSqlDatabaseCopierTableMapping & operator=(const mdtSqlDatabaseCopierTableMapping & other) = default;
 
+  /*! \brief Set source database
+   *
+   * Will also reset field mapping.
+   *
+   * \sa resetFieldMapping()
+   */
+  void setSourceDatabase(const QSqlDatabase & db);
+
+  /*! \brief Set source table
+   *
+   * Will also reset field mapping.
+   *
+   * \sa resetFieldMapping()
+   * \pre Source database must be set before calling this function
+   */
+  bool setSourceTable(const QString & tableName);
+
   /*! \brief Set source table
    *
    * Will also reset field mapping.
    *
    * \sa resetFieldMapping()
    */
+  [[deprecated]]
   bool setSourceTable(const QString & tableName, const QSqlDatabase & db);
 
   /*! \brief Set destination table

@@ -110,7 +110,7 @@ void mdtSqlDatabaseCopierTableMappingDialog::setSourceTable(int cbIndex)
   if(cbIndex < 0){
     return;
   }
-  pvMappingModel->setSourceTable(tableName, pvSourceDatabase, pvSourceFieldSelectionDelegate);
+  ///pvMappingModel->setSourceTable(tableName, pvSourceDatabase, pvSourceFieldSelectionDelegate);
 }
 
 void mdtSqlDatabaseCopierTableMappingDialog::resetFieldMapping()
