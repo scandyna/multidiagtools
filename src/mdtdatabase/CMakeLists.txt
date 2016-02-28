@@ -63,6 +63,7 @@ set (SOURCES_FILES
           mdt/sql/copier/TableMapping.cpp
           mdt/sql/copier/TableMappingItem.cpp
           mdt/sql/copier/TableMappingModel.cpp
+          mdt/sql/copier/TableMappingDialog.cpp
           mdtSqlCopierDataMapping.cpp
           mdt/sql/copier/ExpressionKeyFieldSelectionDialog.cpp
           mdt/sql/copier/ExpressionMatchItemModel.cpp

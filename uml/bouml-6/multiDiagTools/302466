@@ -1,6 +1,6 @@
 format 211
 "sql" // mdtdatabase::mdt::sql
-  revision 7
+  revision 8
   modified_by 2 "philippe"
   // class settings
   
@@ -526,6 +526,44 @@ ${inlines}
 	
 	
       end
+    end
+  end
+
+  classview 1005954 "Query"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2035074 "Query"
+      classdiagramsettings member_max_width 0 end
+      size B
+    end
+
+    class 2383490 "Query"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 end

@@ -1,6 +1,6 @@
 format 211
 "mdtdatabase" // mdtdatabase
-  revision 111
+  revision 112
   modified_by 2 "philippe"
   // class settings
   
@@ -26,6 +26,8 @@ format 211
   activitydiagramsettings
    end
   
+  package_ref 302338 // mdt
+
   package_ref 241026 // Ideas
 
   classview 582786 "GUI"
@@ -9300,8 +9302,6 @@ ${inlines}
       
     end
   end
-
-  package_ref 302338 // mdt
 
   classview 927362 "Operators"
     

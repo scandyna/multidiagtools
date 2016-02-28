@@ -1,6 +1,6 @@
-format 210
+format 211
 "mdtserialport" // mdtserialport
-  revision 2
+  revision 3
   modified_by 2 "philippe"
   // class settings
   
@@ -26,6 +26,8 @@ format 210
   activitydiagramsettings
    end
   
+  package_ref 342018 // mdt
+
   classview 860674 "sandbox"
     
     classdiagramsettings member_max_width 0 end

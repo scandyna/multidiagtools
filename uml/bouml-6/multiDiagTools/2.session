@@ -1,36 +1,21 @@
-window_sizes 1280 964 355 919 911 0
+window_sizes 1280 964 306 968 911 0
 cleanlooks_style
 diagrams
   classdiagram_ref 1848962 // DatabaseCopierMapping
     743 728 100 4 0 0
-  classdiagram_ref 1596162 // TableMapping
-    120 106 100 4 0 0
-  classdiagram_ref 1936514 // overview
-    120 106 90 21 0 39
   classdiagram_ref 1943042 // TMoverview
     120 106 100 18 0 0
-  classdiagram_ref 1936386 // TableMappingDialog
-    120 106 100 7 0 0
-  classdiagram_ref 2021890 // TableSelection
-    919 911 100 18 0 0
-  classdiagram_ref 1729538 // csvSettings
-    919 911 100 4 0 0
-  active  classdiagram_ref 2028546 // parserSettings
-    919 911 100 18 0 0
+  active  classdiagram_ref 1936386 // TableMappingDialog
+    968 911 100 7 0 24
 end
 show_stereotypes
-selected classdiagram_ref 1802626 // generatorSettings
+selected classdiagram_ref 1936386 // TableMappingDialog
 open
-  operation_ref 3617538 // protectAllTextFields
-  class_ref 2376706 // mdtCsvParserSettingsWidget
-  class_ref 2376834 // mdtCsvFileParserSettingsDialog
-  class_ref 2078850 // mdtCsvGeneratorSettings
-  class_ref 2166914 // mdtCsvGeneratorSettingsWidget
-  classview_ref 800898 // sqlDatabase
-  classview_ref 893954 // sqlDatabaseCopy
   
 package_ref 315650 // error
-  class_ref 2370050 // CsvFileSelectionWidget
+  classview_ref 934018 // TableMapping
+  classview_ref 999426 // Database
+  classview_ref 1005954 // Query
   
 package_ref 260866 // Boost
 end

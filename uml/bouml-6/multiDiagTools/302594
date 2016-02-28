@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 55
+  revision 56
   modified_by 2 "philippe"
   // class settings
   
@@ -2703,13 +2703,48 @@ ${inlines}
 	
       end
 
-      classrelation 2658818 // <directional composition>
-	relation 2642306 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+      attribute 2321154 "FileInfo"
+	private type class_ref 432386 // QFileInfo
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
-	    classrelation_ref 2658818 // <directional composition>
-	  b parent class_ref 2167554 // mdtCsvFileSettingsWidget
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2321282 "FileEncoding"
+	private type class_ref 236162 // QByteArray
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2321410 "CsvSettings"
+	private type class_ref 2050434 // mdtCsvParserSettings
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 2679170 // <dependency>
+	relation 2662658 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2679170 // <dependency>
+	  b parent class_ref 2376834 // mdtCsvFileParserSettingsDialog
       end
     end
 
@@ -2964,6 +2999,22 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 2679298 // <dependency>
+	relation 2662786 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2679298 // <dependency>
+	  b parent class_ref 2369922 // DatabaseTableSelectionWidget
+      end
+
+      classrelation 2679426 // <dependency>
+	relation 2662914 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2679426 // <dependency>
+	  b parent class_ref 2370050 // CsvFileSelectionWidget
       end
     end
 
