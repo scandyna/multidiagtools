@@ -23,6 +23,8 @@
 
 //#include <QDebug>
 
+using mdt::sql::copier::DatabaseCopierTableMapping;
+
 mdtSqlDatabaseCopierMappingModel::mdtSqlDatabaseCopierMappingModel(QObject* parent)
  : QAbstractTableModel(parent)
 {
@@ -94,7 +96,7 @@ bool mdtSqlDatabaseCopierMappingModel::resetTableMapping()
   return true;
 }
 
-std::shared_ptr<mdtSqlDatabaseCopierTableMapping> mdtSqlDatabaseCopierMappingModel::tableMapping(int row) const
+std::shared_ptr<DatabaseCopierTableMapping> mdtSqlDatabaseCopierMappingModel::tableMapping(int row) const
 {
   Q_ASSERT(row >= 0);
   Q_ASSERT(row < pvMapping.tableMappingCount());
@@ -102,7 +104,7 @@ std::shared_ptr<mdtSqlDatabaseCopierTableMapping> mdtSqlDatabaseCopierMappingMod
   return pvMapping.tableMapping(row);
 }
 
-void mdtSqlDatabaseCopierMappingModel::setTableMapping(int row, const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & tm)
+void mdtSqlDatabaseCopierMappingModel::setTableMapping(int row, const std::shared_ptr<DatabaseCopierTableMapping> & tm)
 {
   Q_ASSERT(tm);
   Q_ASSERT(row >= 0);
@@ -259,31 +261,31 @@ QVariant mdtSqlDatabaseCopierMappingModel::tableMappingStateData(int row, int ro
   }
 }
 
-QString mdtSqlDatabaseCopierMappingModel::tableMappingStateText(mdtSqlDatabaseCopierTableMapping::MappingState state) const
+QString mdtSqlDatabaseCopierMappingModel::tableMappingStateText(DatabaseCopierTableMapping::MappingState state) const
 {
   switch(state){
-    case mdtSqlDatabaseCopierTableMapping::MappingNotSet:
+    case DatabaseCopierTableMapping::MappingNotSet:
       return "";
-    case mdtSqlDatabaseCopierTableMapping::MappingComplete:
+    case DatabaseCopierTableMapping::MappingComplete:
       return tr("Ok");
-    case mdtSqlDatabaseCopierTableMapping::MappingPartial:
+    case DatabaseCopierTableMapping::MappingPartial:
       return tr("Partial");
-    case mdtSqlDatabaseCopierTableMapping::MappingError:
+    case DatabaseCopierTableMapping::MappingError:
       return tr("Error");
   }
   return "";
 }
 
-QVariant mdtSqlDatabaseCopierMappingModel::tableMappingStateDecoration(mdtSqlDatabaseCopierTableMapping::MappingState state) const
+QVariant mdtSqlDatabaseCopierMappingModel::tableMappingStateDecoration(DatabaseCopierTableMapping::MappingState state) const
 {
   switch(state){
-    case mdtSqlDatabaseCopierTableMapping::MappingNotSet:
+    case DatabaseCopierTableMapping::MappingNotSet:
       return QVariant();
-    case mdtSqlDatabaseCopierTableMapping::MappingComplete:
+    case DatabaseCopierTableMapping::MappingComplete:
       return QColor(Qt::green);
-    case mdtSqlDatabaseCopierTableMapping::MappingPartial:
+    case DatabaseCopierTableMapping::MappingPartial:
       return QColor(Qt::yellow);
-    case mdtSqlDatabaseCopierTableMapping::MappingError:
+    case DatabaseCopierTableMapping::MappingError:
       return QColor(Qt::red);
   }
   return QVariant();

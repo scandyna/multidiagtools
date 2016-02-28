@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "DatabaseCopierTableMappingDialog.h"
-#include "mdtSqlDatabaseCopierTableMappingModel.h"
+#include "DatabaseCopierTableMappingModel.h"
 #include "mdt/sql/Database.h"
 #include <QComboBox>
 #include <QVBoxLayout>
@@ -30,7 +30,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
 DatabaseCopierTableMappingDialog::DatabaseCopierTableMappingDialog(QWidget *parent)
  : TableMappingDialog(parent),
-   pvMappingModel(new mdtSqlDatabaseCopierTableMappingModel(this)),
+   pvMappingModel(new DatabaseCopierTableMappingModel(this)),
    cbSourceTable(new QComboBox)
 {
   setModel(pvMappingModel);
@@ -50,7 +50,7 @@ void DatabaseCopierTableMappingDialog::setSourceDatabase(const QSqlDatabase & db
   populateSourceTableCombobox(pvMappingModel->mapping().get());
 }
 
-void DatabaseCopierTableMappingDialog::setMapping(const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & m)
+void DatabaseCopierTableMappingDialog::setMapping(const std::shared_ptr<DatabaseCopierTableMapping> & m)
 {
   Q_ASSERT(m);
   Q_ASSERT(m->sourceDatabase().isOpen());
@@ -76,7 +76,7 @@ void DatabaseCopierTableMappingDialog::setMapping(const std::shared_ptr<mdtSqlDa
   updateMapping();
 }
 
-std::shared_ptr<mdtSqlDatabaseCopierTableMapping> DatabaseCopierTableMappingDialog::mapping() const
+std::shared_ptr<DatabaseCopierTableMapping> DatabaseCopierTableMappingDialog::mapping() const
 {
   return pvMappingModel->mapping();
 }
@@ -109,7 +109,7 @@ TableMappingModel *DatabaseCopierTableMappingDialog::mappingModelBase()
   return pvMappingModel;
 }
 
-void DatabaseCopierTableMappingDialog::populateSourceTableCombobox(const mdtSqlDatabaseCopierTableMapping * const tm)
+void DatabaseCopierTableMappingDialog::populateSourceTableCombobox(const DatabaseCopierTableMapping * const tm)
 {
   Q_ASSERT(tm != nullptr);
 

@@ -21,7 +21,7 @@
 #ifndef MDT_SQL_DATABASE_COPIER_MAPPING_H
 #define MDT_SQL_DATABASE_COPIER_MAPPING_H
 
-#include "mdtSqlDatabaseCopierTableMapping.h"
+#include "mdt/sql/copier/DatabaseCopierTableMapping.h"
 #include <QSqlDatabase>
 #include <QVector>
 #include <QStringList>
@@ -131,7 +131,7 @@ class mdtSqlDatabaseCopierMapping
    *
    * \pre index must be in a valid range
    */
-  mdtSqlDatabaseCopierTableMapping::MappingState tableMappingState(int index) const
+  mdt::sql::copier::DatabaseCopierTableMapping::MappingState tableMappingState(int index) const
   {
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < pvTableMappingList.size());
@@ -142,7 +142,7 @@ class mdtSqlDatabaseCopierMapping
    *
    * \pre index must be in a valid range
    */
-  const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> tableMapping(int index) const
+  const std::shared_ptr<mdt::sql::copier::DatabaseCopierTableMapping> tableMapping(int index) const
   {
     Q_ASSERT(index >= 0);
     Q_ASSERT(index < pvTableMappingList.size());
@@ -153,7 +153,7 @@ class mdtSqlDatabaseCopierMapping
    *
    * \pre index must be in a valid range
    */
-  void setTableMapping(int index, const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & tm)
+  void setTableMapping(int index, const std::shared_ptr<mdt::sql::copier::DatabaseCopierTableMapping> & tm)
   {
     Q_ASSERT(tm);
     Q_ASSERT(index >= 0);
@@ -163,7 +163,7 @@ class mdtSqlDatabaseCopierMapping
 
   /*! \brief Get table mapping list
    */
-  QVector<std::shared_ptr<mdtSqlDatabaseCopierTableMapping>> tableMappingList() const
+  QVector<std::shared_ptr<mdt::sql::copier::DatabaseCopierTableMapping>> tableMappingList() const
   {
     return pvTableMappingList;
   }
@@ -195,8 +195,8 @@ class mdtSqlDatabaseCopierMapping
 
   QSqlDatabase pvSourceDatabase;
   QSqlDatabase pvDestinationDatabase;
-  QVector<std::shared_ptr<mdtSqlDatabaseCopierTableMapping>> pvTableMappingList;
-  ///QVector<mdtSqlDatabaseCopierTableMapping> pvTableMappingList;
+  QVector<std::shared_ptr<mdt::sql::copier::DatabaseCopierTableMapping>> pvTableMappingList;
+  ///QVector<mdt::sql::copier::DatabaseCopierTableMapping> pvTableMappingList;
   mdtError pvLastError;
 };
 

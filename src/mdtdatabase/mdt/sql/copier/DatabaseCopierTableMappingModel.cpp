@@ -18,18 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtSqlDatabaseCopierTableMappingModel.h"
+#include "DatabaseCopierTableMappingModel.h"
 #include "mdtComboBoxItemDelegate.h"
 
 #include <QDebug>
 
-mdtSqlDatabaseCopierTableMappingModel::mdtSqlDatabaseCopierTableMappingModel(QObject* parent)
+namespace mdt{ namespace sql{ namespace copier{
+
+DatabaseCopierTableMappingModel::DatabaseCopierTableMappingModel(QObject* parent)
  : TableMappingModel(parent),
-   pvMapping(std::make_shared<mdtSqlDatabaseCopierTableMapping>())
+   pvMapping(std::make_shared<DatabaseCopierTableMapping>())
 {
 }
 
-void mdtSqlDatabaseCopierTableMappingModel::setSourceDatabase(const QSqlDatabase & db)
+void DatabaseCopierTableMappingModel::setSourceDatabase(const QSqlDatabase & db)
 {
   Q_ASSERT(db.isOpen());
 
@@ -38,7 +40,7 @@ void mdtSqlDatabaseCopierTableMappingModel::setSourceDatabase(const QSqlDatabase
   endResetModel();
 }
 
-bool mdtSqlDatabaseCopierTableMappingModel::setSourceTable(const QString & tableName, mdtComboBoxItemDelegate *delegate)
+bool DatabaseCopierTableMappingModel::setSourceTable(const QString & tableName, mdtComboBoxItemDelegate *delegate)
 {
   bool ok;
 
@@ -58,7 +60,7 @@ bool mdtSqlDatabaseCopierTableMappingModel::setSourceTable(const QString & table
   return true;
 }
 
-bool mdtSqlDatabaseCopierTableMappingModel::setSourceTable(const QString & tableName, const QSqlDatabase & db, mdtComboBoxItemDelegate* delegate)
+bool DatabaseCopierTableMappingModel::setSourceTable(const QString & tableName, const QSqlDatabase & db, mdtComboBoxItemDelegate* delegate)
 {
   bool ok;
 
@@ -78,7 +80,7 @@ bool mdtSqlDatabaseCopierTableMappingModel::setSourceTable(const QString & table
   return true;
 }
 
-bool mdtSqlDatabaseCopierTableMappingModel::setDestinationTable(const QString & tableName, const QSqlDatabase & db)
+bool DatabaseCopierTableMappingModel::setDestinationTable(const QString & tableName, const QSqlDatabase & db)
 {
   bool ok;
 
@@ -93,7 +95,7 @@ bool mdtSqlDatabaseCopierTableMappingModel::setDestinationTable(const QString & 
   return true;
 }
 
-void mdtSqlDatabaseCopierTableMappingModel::setMapping(const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & m)
+void DatabaseCopierTableMappingModel::setMapping(const std::shared_ptr<DatabaseCopierTableMapping> & m)
 {
   Q_ASSERT(m);
 
@@ -101,3 +103,5 @@ void mdtSqlDatabaseCopierTableMappingModel::setMapping(const std::shared_ptr<mdt
   pvMapping = m;
   endResetModel();
 }
+
+}}} // namespace mdt{ namespace sql{ namespace copier{

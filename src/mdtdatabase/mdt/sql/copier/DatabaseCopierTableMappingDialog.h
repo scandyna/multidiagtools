@@ -22,13 +22,14 @@
 #define MDT_SQL_COPIER_DATABASE_COPIER_TABLE_MAPPING_DIALOG_H
 
 #include "TableMappingDialog.h"
-#include "mdtSqlDatabaseCopierTableMapping.h"
+#include "DatabaseCopierTableMapping.h"
 #include <QSqlDatabase>
 
-class mdtSqlDatabaseCopierTableMappingModel;
 class QComboBox;
 
 namespace mdt{ namespace sql{ namespace copier{
+
+  class DatabaseCopierTableMappingModel;
 
   /*! \brief SQL database copier table mapping dialog
    */
@@ -48,11 +49,11 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Set table mapping
      */
-    void setMapping(const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & m);
+    void setMapping(const std::shared_ptr<DatabaseCopierTableMapping> & m);
 
     /*! \brief Get table mapping
      */
-    std::shared_ptr<mdtSqlDatabaseCopierTableMapping> mapping() const;
+    std::shared_ptr<DatabaseCopierTableMapping> mapping() const;
 
    private slots:
 
@@ -78,9 +79,9 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief (Re-)populate source tables combobox
      */
-    void populateSourceTableCombobox(const mdtSqlDatabaseCopierTableMapping * const tm);
+    void populateSourceTableCombobox(const DatabaseCopierTableMapping * const tm);
 
-    mdtSqlDatabaseCopierTableMappingModel *pvMappingModel;
+    DatabaseCopierTableMappingModel *pvMappingModel;
     QComboBox *cbSourceTable;
   };
 

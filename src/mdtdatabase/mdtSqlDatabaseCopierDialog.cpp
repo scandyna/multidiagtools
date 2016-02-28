@@ -21,7 +21,10 @@
 #include "mdtSqlDatabaseCopierDialog.h"
 #include "mdtSqlDatabaseDialogSqlite.h"
 #include "mdtSqlDatabaseCopierMappingModel.h"
-#include "mdtSqlDatabaseCopierTableMappingDialog.h"
+
+// #include "mdtSqlDatabaseCopierTableMappingDialog.h"
+
+#include "mdt/sql/copier/DatabaseCopierTableMappingDialog.h"
 #include "mdtSqlDatabaseCopierThread.h"
 #include "mdtProgressBarItemDelegate.h"
 #include "mdtAlgorithms.h"
@@ -178,16 +181,22 @@ void mdtSqlDatabaseCopierDialog::mapByName()
 
 void mdtSqlDatabaseCopierDialog::editTableMapping(const QModelIndex& index)
 {
+  Q_ASSERT(pvMappingModel->sourceDatabase().isOpen());
+  Q_ASSERT(pvMappingModel->destinationDatabase().isOpen());
+
   if(pvState == ProcessingCopy){
     return;
   }
   if(!index.isValid()){
     return;
   }
+  mdt::sql::copier::DatabaseCopierTableMappingDialog dialog(this);
   int row = index.row();
   auto tm = pvMappingModel->tableMapping(row);
-  mdtSqlDatabaseCopierTableMappingDialog dialog(this);
-  dialog.setSourceTables(pvMappingModel->sourceDatabase(), pvMappingModel->getAvailableSourceTableNameList());
+  Q_ASSERT(tm->destinationDatabase().isOpen());
+  if(!tm->sourceDatabase().isOpen()){
+    tm->setSourceDatabase(pvMappingModel->sourceDatabase());
+  }
   dialog.setMapping(tm);
   if(dialog.exec() != QDialog::Accepted){
     return;

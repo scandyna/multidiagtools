@@ -18,7 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtSqlDatabaseCopierTableMapping.h"
+#include "DatabaseCopierTableMapping.h"
 #include "mdtSqlField.h"
 #include "mdtSqlFieldType.h"
 #include "mdtSqlPrimaryKey.h"
@@ -27,9 +27,11 @@
 
 //#include <QDebug>
 
-using mdt::sql::copier::TableMapping;
+namespace mdt{ namespace sql{ namespace copier{
 
-void mdtSqlDatabaseCopierTableMapping::setSourceDatabase(const QSqlDatabase & db)
+// using mdt::sql::copier::TableMapping;
+
+void DatabaseCopierTableMapping::setSourceDatabase(const QSqlDatabase & db)
 {
   Q_ASSERT(db.isOpen());
 
@@ -38,7 +40,7 @@ void mdtSqlDatabaseCopierTableMapping::setSourceDatabase(const QSqlDatabase & db
   resetFieldMapping();
 }
 
-bool mdtSqlDatabaseCopierTableMapping::setSourceTable(const QString & tableName)
+bool DatabaseCopierTableMapping::setSourceTable(const QString & tableName)
 {
   Q_ASSERT(pvSourceDatabase.isOpen());
 
@@ -52,7 +54,7 @@ bool mdtSqlDatabaseCopierTableMapping::setSourceTable(const QString & tableName)
   return true;
 }
 
-bool mdtSqlDatabaseCopierTableMapping::setSourceTable(const QString & tableName, const QSqlDatabase & db)
+bool DatabaseCopierTableMapping::setSourceTable(const QString & tableName, const QSqlDatabase & db)
 {
   clearFieldMapping();
   if(!pvSourceTable.setupFromTable(tableName, db)){
@@ -65,7 +67,7 @@ bool mdtSqlDatabaseCopierTableMapping::setSourceTable(const QString & tableName,
   return true;
 }
 
-bool mdtSqlDatabaseCopierTableMapping::setDestinationTable(const QString & tableName, const QSqlDatabase & db)
+bool DatabaseCopierTableMapping::setDestinationTable(const QString & tableName, const QSqlDatabase & db)
 {
   clearFieldMapping();
   if(!pvDestinationTable.setupFromTable(tableName, db)){
@@ -78,12 +80,12 @@ bool mdtSqlDatabaseCopierTableMapping::setDestinationTable(const QString & table
   return true;
 }
 
-QString mdtSqlDatabaseCopierTableMapping::fetchSourceTableFieldTypeNameAt(int fieldIndex) const
+QString DatabaseCopierTableMapping::fetchSourceTableFieldTypeNameAt(int fieldIndex) const
 {
   return pvSourceTable.fieldTypeName(fieldIndex, mdtSqlDriverType::typeFromName(pvSourceDatabase.driverName()));
 }
 
-TableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::fetchSourceTableFieldKeyType(int fieldIndex) const
+TableMapping::FieldKeyType DatabaseCopierTableMapping::fetchSourceTableFieldKeyType(int fieldIndex) const
 {
   if(pvSourceTable.isFieldPartOfPrimaryKey(fieldIndex)){
     return PrimaryKey;
@@ -91,12 +93,12 @@ TableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::fetchSourceTableFie
   return NotAKey;
 }
 
-QString mdtSqlDatabaseCopierTableMapping::fetchDestinationTableFieldTypeNameAt(int fieldIndex) const
+QString DatabaseCopierTableMapping::fetchDestinationTableFieldTypeNameAt(int fieldIndex) const
 {
   return pvDestinationTable.fieldTypeName(fieldIndex, mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName()));
 }
 
-TableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::fetchDestinationTableFieldKeyType(int fieldIndex) const
+TableMapping::FieldKeyType DatabaseCopierTableMapping::fetchDestinationTableFieldKeyType(int fieldIndex) const
 {
   if(pvDestinationTable.isFieldPartOfPrimaryKey(fieldIndex)){
     return PrimaryKey;
@@ -104,7 +106,7 @@ TableMapping::FieldKeyType mdtSqlDatabaseCopierTableMapping::fetchDestinationTab
   return NotAKey;
 }
 
-bool mdtSqlDatabaseCopierTableMapping::areFieldsCompatible(int sourceFieldIndex, int destinationFieldIndex) const
+bool DatabaseCopierTableMapping::areFieldsCompatible(int sourceFieldIndex, int destinationFieldIndex) const
 {
   Q_ASSERT(sourceFieldIndex < pvSourceTable.fieldCount());
   Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
@@ -129,3 +131,5 @@ bool mdtSqlDatabaseCopierTableMapping::areFieldsCompatible(int sourceFieldIndex,
 
   return false;
 }
+
+}}} // namespace mdt{ namespace sql{ namespace copier{

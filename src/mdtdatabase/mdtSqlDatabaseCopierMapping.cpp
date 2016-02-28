@@ -55,8 +55,7 @@ bool mdtSqlDatabaseCopierMapping::resetTableMapping()
   pvTableMappingList.reserve(destinationTableNameList.size());
   destinationTableNameList.sort();
   for(const auto & destinationTableName : destinationTableNameList){
-    auto tm = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
-    ///mdtSqlDatabaseCopierTableMapping tm;
+    auto tm = std::make_shared<mdt::sql::copier::DatabaseCopierTableMapping>();
     if(!tm->setDestinationTable(destinationTableName, pvDestinationDatabase)){
       clearTableMapping();
       pvLastError = tm->lastError();

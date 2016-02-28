@@ -39,12 +39,9 @@
 #include "mdt/sql/copier/UniqueInsertCriteria.h"
 #include "mdt/sql/copier/UniqueInsertCriteriaDialog.h"
 #include "mdt/sql/copier/TableMappingEditHelper.h"
-#include "mdtSqlDatabaseCopierTableMapping.h"
-#include "mdtSqlDatabaseCopierTableMappingModel.h"
-
+#include "mdt/sql/copier/DatabaseCopierTableMapping.h"
+#include "mdt/sql/copier/DatabaseCopierTableMappingModel.h"
 #include "mdt/sql/copier/DatabaseCopierTableMappingDialog.h"
-#include "mdtSqlDatabaseCopierTableMappingDialog.h"
-
 #include "mdtSqlDatabaseCopierThread.h"
 #include "mdtSqlDatabaseCopierMapping.h"
 #include "mdtSqlDatabaseCopierMappingModel.h"
@@ -554,9 +551,10 @@ void mdtSqlCopierTest::expressionMatchItemModelTest()
   using mdt::sql::copier::ExpressionMatchItem;
   using mdt::sql::copier::ExpressionMatchItemModel;
   using mdt::sql::copier::TableMapping;
+  using mdt::sql::copier::DatabaseCopierTableMapping;
 
   QSqlDatabase db = pvDatabase;
-  auto mapping = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
+  auto mapping = std::make_shared<DatabaseCopierTableMapping>();
   std::vector<ExpressionMatchItem> itemList;
   ExpressionMatchItemModel model(mapping);
   const int sourceFieldColumn = 3;
@@ -780,9 +778,10 @@ void mdtSqlCopierTest::relatedTableInsertMatchItemModelTest()
   using mdt::sql::copier::RelatedTableInsertExpression;
   using mdt::sql::copier::RelatedTableInsertMatchItemModel;
   using mdt::sql::copier::ExpressionMatchItem;
+  using mdt::sql::copier::DatabaseCopierTableMapping;
 
   QSqlDatabase db = pvDatabase;
-  auto mapping = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
+  auto mapping = std::make_shared<DatabaseCopierTableMapping>();
   RelatedTableInsertMatchItemModel model(mapping);
   std::vector<ExpressionMatchItem> itemList;
   const int sourceFieldColumn = 3;
@@ -887,11 +886,12 @@ void mdtSqlCopierTest::relatedTableInsertExpressionDialogTest()
   using mdt::sql::copier::RelatedTableInsertExpressionDialog;
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::TableMappingItemState;
+  using mdt::sql::copier::DatabaseCopierTableMapping;
 
   QSqlDatabase db = pvDatabase;
   RelatedTableInsertExpression exp;
   TableMappingItem tmItem;
-  auto mapping = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
+  auto mapping = std::make_shared<DatabaseCopierTableMapping>();
 
   /*
    * Setup table mapping
@@ -1086,10 +1086,11 @@ void mdtSqlCopierTest::uniqueInsertCriteriaDialogTest()
   using mdt::sql::copier::UniqueInsertCriteria;
   using mdt::sql::copier::UniqueInsertCriteriaDialog;
   using mdt::sql::copier::ExpressionMatchItem;
+  using mdt::sql::copier::DatabaseCopierTableMapping;
 
   QSqlDatabase db = pvDatabase;
-  auto mapping = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
-  ///mdtSqlDatabaseCopierTableMapping mapping;
+  auto mapping = std::make_shared<DatabaseCopierTableMapping>();
+  ///DatabaseCopierTableMapping mapping;
   UniqueInsertCriteria uic;
   std::vector<ExpressionMatchItem> matchItems;
 
@@ -2208,8 +2209,9 @@ void mdtSqlCopierTest::databaseCopierTableMappingUpdateItemsTest()
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::TableMappingItemState;
   using mdt::sql::copier::RelatedTableInsertExpression;
+  using mdt::sql::copier::DatabaseCopierTableMapping;
 
-  mdtSqlDatabaseCopierTableMapping mapping;
+  DatabaseCopierTableMapping mapping;
   TableMappingItem item;
   RelatedTableInsertExpression rtiExp;
   /*
@@ -2337,8 +2339,9 @@ void mdtSqlCopierTest::databaseCopierTableMappingTableFetchTest()
   using mdt::sql::copier::TableMapping;
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::TableMappingItemState;
+  using mdt::sql::copier::DatabaseCopierTableMapping;
 
-  mdtSqlDatabaseCopierTableMapping mapping;
+  DatabaseCopierTableMapping mapping;
   /*
    * Initial state
    */
@@ -2394,8 +2397,9 @@ void mdtSqlCopierTest::databaseCopierTableMappingFieldMapTest()
   using mdt::sql::copier::TableMapping;
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::TableMappingItemState;
+  using mdt::sql::copier::DatabaseCopierTableMapping;
 
-  mdtSqlDatabaseCopierTableMapping mapping;
+  DatabaseCopierTableMapping mapping;
   /*
    * Initial state
    */
@@ -2631,8 +2635,9 @@ void mdtSqlCopierTest::databaseCopierTableMappingFixedValueTest()
   using mdt::sql::copier::TableMapping;
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::TableMappingItemState;
+  using mdt::sql::copier::DatabaseCopierTableMapping;
 
-  mdtSqlDatabaseCopierTableMapping mapping;
+  DatabaseCopierTableMapping mapping;
   /*
    * Initial state
    */
@@ -2713,8 +2718,9 @@ void mdtSqlCopierTest::databaseCopierTableMappingRelatedTableExpressionTest()
   using mdt::sql::copier::TableMappingItemState;
   using mdt::sql::copier::RelatedTableInsertExpression;
   using mdt::sql::copier::ExpressionMatchItem;
+  using mdt::sql::copier::DatabaseCopierTableMapping;
 
-  mdtSqlDatabaseCopierTableMapping mapping;
+  DatabaseCopierTableMapping mapping;
   RelatedTableInsertExpression exp;
   std::vector<ExpressionMatchItem> matchItems;
   TableMappingItem tmItem;
@@ -2776,13 +2782,15 @@ void mdtSqlCopierTest::databaseCopierTableMappingRelatedTableExpressionTest()
 
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingStateTest()
 {
-  mdtSqlDatabaseCopierTableMapping tm;
+  using mdt::sql::copier::DatabaseCopierTableMapping;
+
+  DatabaseCopierTableMapping tm;
 
   /*
    * Initial state
    */
   QCOMPARE(tm.itemsCount(), 0);
-  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
+  QVERIFY(tm.mappingState() == DatabaseCopierTableMapping::MappingNotSet);
   /*
    * Set source and destination tables
    * and set mapping by name.
@@ -2791,37 +2799,39 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingStateTest()
   QVERIFY(tm.setSourceTable("Client_tbl"));
   QVERIFY(tm.setDestinationTable("Client2_tbl", pvDatabase));
   QCOMPARE(tm.itemsCount(), 4);
-  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
+  QVERIFY(tm.mappingState() == DatabaseCopierTableMapping::MappingNotSet);
   /*
    * Map by name and check: we know that Client_tbl and Client2_tbl have exactly the same schema
    */
   tm.generateFieldMappingByName();
-  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
+  QVERIFY(tm.mappingState() == DatabaseCopierTableMapping::MappingComplete);
   /*
    * Setup a valid mapping "by hand" and check state
    */
   // Clear previous mapping
   tm.resetFieldMapping();
   QCOMPARE(tm.itemsCount(), 4);
-  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
+  QVERIFY(tm.mappingState() == DatabaseCopierTableMapping::MappingNotSet);
   tm.setSourceFieldAtItem(0, "Id_PK");
-  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QVERIFY(tm.mappingState() == DatabaseCopierTableMapping::MappingPartial);
   tm.setSourceFieldAtItem(1, "Name");
-  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QVERIFY(tm.mappingState() == DatabaseCopierTableMapping::MappingPartial);
   tm.setSourceFieldAtItem(2, "FieldA");
-  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QVERIFY(tm.mappingState() == DatabaseCopierTableMapping::MappingPartial);
   tm.setSourceFieldAtItem(3, "FieldB");
-  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
+  QVERIFY(tm.mappingState() == DatabaseCopierTableMapping::MappingComplete);
   /*
    * Map incompatible field types
    */
   tm.setSourceFieldAtItem(0, "Name");
-  QVERIFY(tm.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingError);
+  QVERIFY(tm.mappingState() == DatabaseCopierTableMapping::MappingError);
 }
 
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
 {
-  mdtSqlDatabaseCopierTableMapping mapping;
+  using mdt::sql::copier::DatabaseCopierTableMapping;
+
+  DatabaseCopierTableMapping mapping;
   QSqlDatabase db = pvDatabase;
   QString expectedSql;
 
@@ -2901,19 +2911,21 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
   using mdt::sql::copier::TableMapping;
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::TableMappingItemState;
+  using mdt::sql::copier::DatabaseCopierTableMappingModel;
   using mdt::sql::copier::RelatedTableInsertExpression;
   using mdt::sql::copier::ExpressionMatchItem;
+  using mdt::sql::copier::DatabaseCopierTableMapping;
 
   QTableView tableView;
   QTreeView treeView;
-  mdtSqlDatabaseCopierTableMappingModel model;
+  DatabaseCopierTableMappingModel model;
   const int sourceTypeColumn = 0;
   const int sourceFieldNameColumn = 2;
   const int sourceFixedValueColumn = 4;
   const int destinationFieldNameColumn = 6;
   QModelIndex index;
   TableMappingItem::Type itemTyppe;
-  std::shared_ptr<mdtSqlDatabaseCopierTableMapping> tm;
+  std::shared_ptr<DatabaseCopierTableMapping> tm;
   TableMappingItem tmi;
   mdtComboBoxItemDelegate *sourceTypeDelegate = new mdtComboBoxItemDelegate(&tableView);
   mdtComboBoxItemDelegate *sourceFieldNameDelegate = new mdtComboBoxItemDelegate(&tableView);
@@ -3189,8 +3201,10 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingDialogTest()
 {
   using mdt::sql::copier::TableMapping;
+  using mdt::sql::copier::DatabaseCopierTableMapping;
+
   mdt::sql::copier::DatabaseCopierTableMappingDialog dialog;
-  auto mapping = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
+  auto mapping = std::make_shared<DatabaseCopierTableMapping>();
 
   mapping->setSourceDatabase(pvDatabase);
   QVERIFY(mapping->setSourceTable("Client_tbl"));
@@ -3213,7 +3227,9 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingDialogTest()
 
 void mdtSqlCopierTest::sqlCopierDataMappingTest()
 {
-  auto mapping = std::make_shared<mdtSqlDatabaseCopierTableMapping>();
+  using mdt::sql::copier::DatabaseCopierTableMapping;
+
+  auto mapping = std::make_shared<DatabaseCopierTableMapping>();
   mdtSqlCopierDataMapping dataMapping;
   QSqlDatabase db = pvDatabase;
   QSqlQuery sourceQuery(db);
@@ -3316,6 +3332,7 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
   using mdt::sql::copier::TableMapping;
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::TableMappingItemState;
+  using mdt::sql::copier::DatabaseCopierTableMapping;
 
   mdtSqlCsvStringImportTableMapping mapping;
   QString csvString;
@@ -3331,13 +3348,13 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
    * Initial state
    */
   QCOMPARE(mapping.itemsCount(), 0);
-  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
+  QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingNotSet);
   /*
    * Set source CSV and destination table
    */
   QVERIFY(mapping.setSourceCsvString(csvString, csvSettings));
   QVERIFY(mapping.setDestinationTable("Client_tbl", pvDatabase));
-  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
+  QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingNotSet);
   /*
    * Check fetching database objects
    */
@@ -3462,7 +3479,7 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
   QVERIFY(mapping.itemMappingState(1) == TableMappingItemState::MappingNotSet);
   QVERIFY(mapping.itemMappingState(2) == TableMappingItemState::MappingNotSet);
   QVERIFY(mapping.itemMappingState(3) == TableMappingItemState::MappingNotSet);
-  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingPartial);
   /*
    * Set a field mapping:
    *  - CSV.Name -> Client_tbl.Name
@@ -3489,7 +3506,7 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).size(), 1);
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).at(0), QString("FieldB"));
   // Check mapping state
-  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingPartial);
   /*
    * Set a field mapping:
    *  - CSV.FieldB -> Client_tbl.FieldA
@@ -3517,7 +3534,7 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).size(), 1);
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).at(0), QString("FieldB"));
   // Check mapping state
-  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingPartial);
   /*
    * Set a field mapping:
    *  - CSV.FieldA -> Client_tbl.FieldB
@@ -3546,7 +3563,7 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).size(), 1);
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).at(0), QString("FieldB"));
   // Check mapping state
-  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
+  QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingComplete);
   /*
    * Reset
    */
@@ -3594,10 +3611,10 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).size(), 1);
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).at(0), QString("FieldB"));
   // Check mapping state
-  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingPartial);
   // Now, manually map CSV source Id -> Client_tbl Id_PK
   mapping.setSourceFieldAtItem(0, "Id");
-  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
+  QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingComplete);
 //   QCOMPARE(mapping.sourceFieldNameAtItem(0), QString("Id"));
   QCOMPARE(mapping.destinationFieldNameListAtItem(0).size(), 1);
   QCOMPARE(mapping.destinationFieldNameListAtItem(0).at(0), QString("Id"));
@@ -3609,7 +3626,7 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
    */
   mapping.clearFieldMapping();
   QCOMPARE(mapping.itemsCount(), 0);
-  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
+  QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingNotSet);
 
 }
 
@@ -3662,6 +3679,7 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingModelTest()
 void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
 {
   using mdt::sql::copier::TableMapping;
+  using mdt::sql::copier::DatabaseCopierTableMapping;
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::TableMappingItemState;
 
@@ -3681,13 +3699,13 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
    * Initial state
    */
   QCOMPARE(mapping.itemsCount(), 0);
-  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
+  QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingNotSet);
   /*
    * Set source CSV and destination table
    */
   QVERIFY(mapping.setSourceCsvFile(csvFile, "UTF-8", csvSettings));
   QVERIFY(mapping.setDestinationTable("Client_tbl", pvDatabase));
-  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingNotSet);
+  QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingNotSet);
   /*
    * Check fetching tables specific informations
    */
@@ -3793,7 +3811,7 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
   QVERIFY(mapping.itemMappingState(1) == TableMappingItemState::MappingNotSet);
   QVERIFY(mapping.itemMappingState(2) == TableMappingItemState::MappingNotSet);
   QVERIFY(mapping.itemMappingState(3) == TableMappingItemState::MappingNotSet);
-  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingPartial);
   /*
    * Set a field mapping:
    *  - CSV.Name -> Client_tbl.Name
@@ -3820,7 +3838,7 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).size(), 1);
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).at(0), QString("FieldB"));
   // Check mapping state
-  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingPartial);
   /*
    * Set a field mapping:
    *  - CSV.FieldB -> Client_tbl.FieldA
@@ -3848,7 +3866,7 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).size(), 1);
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).at(0), QString("FieldB"));
   // Check mapping state
-  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingPartial);
+  QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingPartial);
   /*
    * Set a field mapping:
    *  - CSV.FieldA -> Client_tbl.FieldB
@@ -3877,7 +3895,7 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).size(), 1);
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).at(0), QString("FieldB"));
   // Check mapping state
-  QVERIFY(mapping.mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
+  QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingComplete);
 }
 
 void mdtSqlCopierTest::sqlCsvFileImportTableMappingModelTest()
@@ -3930,6 +3948,7 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingModelTest()
 
 void mdtSqlCopierTest::copyHelperTest()
 {
+  using mdt::sql::copier::DatabaseCopierTableMapping;
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::UniqueInsertCriteria;
   using mdt::sql::copier::RelatedTableInsertExpression;
@@ -3940,7 +3959,7 @@ void mdtSqlCopierTest::copyHelperTest()
   RelatedTableInsertExpression rtExp;
   UniqueInsertCriteria uic;
   std::vector<ExpressionMatchItem> expMatchItems;
-  mdtSqlDatabaseCopierTableMapping tm;
+  DatabaseCopierTableMapping tm;
   TableMappingItem tmi;
   QSqlDatabase db = pvDatabase;
   QString expectedSql;
@@ -4152,6 +4171,8 @@ void mdtSqlCopierTest::copyHelperTest()
 
 void mdtSqlCopierTest::sqlDatabaseCopierMappingTest()
 {
+  using mdt::sql::copier::DatabaseCopierTableMapping;
+
   mdtSqlDatabaseCopierMapping mapping;
 
   /*
@@ -4199,7 +4220,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingTest()
   tm->setSourceFieldAtItem(1, "Name");
   tm->setSourceFieldAtItem(2, "FieldB");
   tm->setSourceFieldAtItem(3, "FieldA");
-  QVERIFY(tm->mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
+  QVERIFY(tm->mappingState() == DatabaseCopierTableMapping::MappingComplete);
   mapping.setTableMapping(0, tm);
   QCOMPARE(mapping.tableMappingCount(), 2);
   QCOMPARE(mapping.tableMappingList().size(), 2);
@@ -4226,6 +4247,8 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingTest()
 
 void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
 {
+  using mdt::sql::copier::DatabaseCopierTableMapping;
+
   QTableView tableView;
   QTreeView treeView;
   mdtSqlDatabaseCopierMappingModel model;
@@ -4233,8 +4256,8 @@ void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
   const int destinationTableNameColumn = 1;
   QModelIndex index;
   ///mdtSqlDatabaseCopierMapping dbm;
-  std::shared_ptr<mdtSqlDatabaseCopierTableMapping> tm;
-  ///mdtSqlDatabaseCopierTableMapping tm;
+  std::shared_ptr<DatabaseCopierTableMapping> tm;
+  ///DatabaseCopierTableMapping tm;
   ///mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
   mdtProgressBarItemDelegate *progressDelegate = new mdtProgressBarItemDelegate(&tableView);
   mdtProgressValue<int> progress;
@@ -4356,6 +4379,8 @@ void mdtSqlCopierTest::sqlDatabaseCopierDialogTest()
 
 void mdtSqlCopierTest::sqlDatabaseCopierThreadTest()
 {
+  using mdt::sql::copier::DatabaseCopierTableMapping;
+
   mdtSqlDatabaseCopierThread thread;
   mdtSqlDatabaseCopierMapping mapping;
   QSqlDatabase db = pvDatabase;
@@ -4395,7 +4420,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierThreadTest()
   tm->setSourceFixedValueAtItem(1, "Fixed name");
   tm->setSourceFieldAtItem(2, "FieldB");
   tm->setSourceFieldAtItem(3, "FieldA");
-  QVERIFY(tm->mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete);
+  QVERIFY(tm->mappingState() == DatabaseCopierTableMapping::MappingComplete);
   mapping.setTableMapping(0, tm);
   QCOMPARE(mapping.tableMappingCount(), 2);
   QCOMPARE(mapping.tableMappingList().size(), 2);

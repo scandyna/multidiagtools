@@ -31,6 +31,8 @@
 
 //#include <QDebug>
 
+using mdt::sql::copier::DatabaseCopierTableMapping;
+
 mdtSqlDatabaseCopierThread::mdtSqlDatabaseCopierThread(QObject* parent)
  : QThread(parent),
    pvAbort(false)
@@ -95,7 +97,7 @@ void mdtSqlDatabaseCopierThread::run()
     for(int i = 0; i < tableMappingList.size(); ++i){
       auto tm = tableMappingList.at(i);
       Q_ASSERT(tm);
-      if(tm->mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete){
+      if(tm->mappingState() == DatabaseCopierTableMapping::MappingComplete){
         /// \todo return value
         copyTable(tm, i, sourceDatabase, destinationDatabase, globalProgress);
       }
@@ -144,7 +146,7 @@ void mdtSqlDatabaseCopierThread::calculateTableSizes(const QSqlDatabase & source
   // Calculate table siz for each valid mapping
   for(int i = 0; i < tableMappingList.size(); ++i){
     auto tm = tableMappingList.at(i);
-    if(tm->mappingState() == mdtSqlDatabaseCopierTableMapping::MappingComplete){
+    if(tm->mappingState() == DatabaseCopierTableMapping::MappingComplete){
       sql = tm->getSqlForSourceTableCount(sourceDatabase);
       if( (query.exec(sql)) && (query.next()) ){
         pvTableSizeList[i] = query.value(0).toLongLong();
@@ -176,7 +178,7 @@ int64_t mdtSqlDatabaseCopierThread::getTotalCopySize() const
   return totalSize;
 }
 
-bool mdtSqlDatabaseCopierThread::copyTable(const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & tm, int dbMappingModelRow,
+bool mdtSqlDatabaseCopierThread::copyTable(const std::shared_ptr<DatabaseCopierTableMapping> & tm, int dbMappingModelRow,
                                            const QSqlDatabase & sourceDatabase, const QSqlDatabase& destinationDatabase,
                                            mdtProgressValue<int64_t> & globalProgress)
 {

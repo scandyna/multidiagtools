@@ -22,7 +22,7 @@
 #define MDT_SQL_DATABASE_COPIER_MAPPING_MODEL_H
 
 #include "mdtSqlDatabaseCopierMapping.h"
-#include "mdtSqlDatabaseCopierTableMapping.h"
+#include "mdt/sql/copier/DatabaseCopierTableMapping.h"
 #include "mdtError.h"
 #include <QAbstractTableModel>
 #include <QModelIndex>
@@ -120,13 +120,13 @@ class mdtSqlDatabaseCopierMappingModel : public QAbstractTableModel
    *
    * \pre row must be in a valid range
    */
-  std::shared_ptr<mdtSqlDatabaseCopierTableMapping> tableMapping(int row) const;
+  std::shared_ptr<mdt::sql::copier::DatabaseCopierTableMapping> tableMapping(int row) const;
 
   /*! \brief Set table mapping for given row
    *
    * \pre row must be in a valid range
    */
-  void setTableMapping(int row, const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & tm);
+  void setTableMapping(int row, const std::shared_ptr<mdt::sql::copier::DatabaseCopierTableMapping> & tm);
 
   /*! \brief Get database mapping
    */
@@ -189,11 +189,11 @@ class mdtSqlDatabaseCopierMappingModel : public QAbstractTableModel
 
   /*! \brief Get table mapping state text
    */
-  QString tableMappingStateText(mdtSqlDatabaseCopierTableMapping::MappingState state) const;
+  QString tableMappingStateText(mdt::sql::copier::DatabaseCopierTableMapping::MappingState state) const;
 
   /*! \brief Get table mapping state decoration
    */
-  QVariant tableMappingStateDecoration(mdtSqlDatabaseCopierTableMapping::MappingState state) const;
+  QVariant tableMappingStateDecoration(mdt::sql::copier::DatabaseCopierTableMapping::MappingState state) const;
 
   /*! \brief Get table copy progress
    */

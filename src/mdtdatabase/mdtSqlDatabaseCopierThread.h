@@ -22,7 +22,7 @@
 #define MDT_SQL_DATABASE_COPIER_THREAD_H
 
 #include "mdtSqlDatabaseCopierMapping.h"
-#include "mdtSqlDatabaseCopierTableMapping.h"
+#include "mdt/sql/copier/DatabaseCopierTableMapping.h"
 #include "mdtProgressValue.h"
 #include "mdtError.h"
 #include <QThread>
@@ -135,7 +135,7 @@ class mdtSqlDatabaseCopierThread : public QThread
 
   /*! \brief Copy source table to destination table regarding table mapping
    */
-  bool copyTable(const std::shared_ptr<mdtSqlDatabaseCopierTableMapping> & tm, int dbMappingModelRow,
+  bool copyTable(const std::shared_ptr<mdt::sql::copier::DatabaseCopierTableMapping> & tm, int dbMappingModelRow,
                  const QSqlDatabase & sourceDatabase, const QSqlDatabase & destinationDatabase,
                  mdtProgressValue<int64_t> & globalProgress);
 

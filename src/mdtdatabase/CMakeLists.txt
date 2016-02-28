@@ -72,12 +72,9 @@ set (SOURCES_FILES
           mdt/sql/copier/UniqueInsertCriteriaDialog.cpp
           mdt/sql/copier/CopyHelper.cpp
           # Database copier classes
-          mdtSqlDatabaseCopierTableMapping.cpp
-          mdtSqlDatabaseCopierTableMappingModel.cpp
+          mdt/sql/copier/DatabaseCopierTableMapping.cpp
+          mdt/sql/copier/DatabaseCopierTableMappingModel.cpp
           mdt/sql/copier/DatabaseCopierTableMappingDialog.cpp
-          
-          mdtSqlDatabaseCopierTableMappingDialog.cpp
-          
           mdtSqlDatabaseCopierMapping.cpp
           mdtSqlDatabaseCopierMappingModel.cpp
           mdtSqlDatabaseCopierDialog.cpp
