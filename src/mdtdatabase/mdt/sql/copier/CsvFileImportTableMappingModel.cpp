@@ -18,26 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtSqlCsvStringImportTableMappingModel.h"
-#include "mdtComboBoxItemDelegate.h"
+#include "CsvFileImportTableMappingModel.h"
 
-mdtSqlCsvStringImportTableMappingModel::mdtSqlCsvStringImportTableMappingModel(QObject* parent)
+namespace mdt{ namespace sql{ namespace copier{
+
+CsvFileImportTableMappingModel::CsvFileImportTableMappingModel(QObject* parent)
  : mdt::sql::copier::TableMappingModel(parent),
-   pvMapping(std::make_shared<mdtSqlCsvStringImportTableMapping>())
+   pvMapping(std::make_shared<CsvFileImportTableMapping>())
 {
 }
 
-bool mdtSqlCsvStringImportTableMappingModel::setSourceCsvString(const QString & csv, const mdtCsvParserSettings & settings, mdtComboBoxItemDelegate* delegate)
+bool CsvFileImportTableMappingModel::setSourceCsvFile(const QFileInfo & csvFile, const QByteArray & csvFileEncoding, const mdtCsvParserSettings & settings)
 {
   bool ok;
 
   beginResetModel();
-  ok = pvMapping->setSourceCsvString(csv, settings);
-  if( (ok) && (delegate != nullptr) ){
-    delegate->clear();
-    delegate->addItem("");
-    delegate->addItems(pvMapping->getSourceTableFieldNameList());
-  }
+  ok = pvMapping->setSourceCsvFile(csvFile, csvFileEncoding, settings);
   endResetModel();
   if(!ok){
     pvLastError = pvMapping->lastError();
@@ -47,7 +43,7 @@ bool mdtSqlCsvStringImportTableMappingModel::setSourceCsvString(const QString & 
   return true;
 }
 
-bool mdtSqlCsvStringImportTableMappingModel::setDestinationTable(const QString & tableName, const QSqlDatabase & db)
+bool CsvFileImportTableMappingModel::setDestinationTable(const QString & tableName, const QSqlDatabase & db)
 {
   bool ok;
 
@@ -61,3 +57,5 @@ bool mdtSqlCsvStringImportTableMappingModel::setDestinationTable(const QString &
 
   return true;
 }
+
+}}} // namespace mdt{ namespace sql{ namespace copier{

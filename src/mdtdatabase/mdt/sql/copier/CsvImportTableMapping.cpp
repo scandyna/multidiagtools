@@ -18,14 +18,16 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtSqlCsvImportTableMapping.h"
+#include "CsvImportTableMapping.h"
 #include "mdtSqlCsvData.h"
 
 //#include <QDebug>
 
-using mdt::sql::copier::TableMapping;
+namespace mdt{ namespace sql{ namespace copier{
 
-bool mdtSqlCsvImportTableMapping::setDestinationTable(const QString & tableName, const QSqlDatabase & db)
+///using mdt::sql::copier::TableMapping;
+
+bool CsvImportTableMapping::setDestinationTable(const QString & tableName, const QSqlDatabase & db)
 {
   clearFieldMapping();
   if(!pvDestinationTable.setupFromTable(tableName, db)){
@@ -69,12 +71,12 @@ bool mdtSqlCsvImportTableMapping::setDestinationTable(const QString & tableName,
 //   updateCsvSourceFormat(fm);
 // }
 
-QString mdtSqlCsvImportTableMapping::fetchDestinationTableFieldTypeNameAt(int fieldIndex) const
+QString CsvImportTableMapping::fetchDestinationTableFieldTypeNameAt(int fieldIndex) const
 {
   return pvDestinationTable.fieldTypeName(fieldIndex, mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName()));
 }
 
-TableMapping::FieldKeyType mdtSqlCsvImportTableMapping::fetchDestinationTableFieldKeyType(int fieldIndex) const
+TableMapping::FieldKeyType CsvImportTableMapping::fetchDestinationTableFieldKeyType(int fieldIndex) const
 {
   if(pvDestinationTable.isFieldPartOfPrimaryKey(fieldIndex)){
     return PrimaryKey;
@@ -82,7 +84,7 @@ TableMapping::FieldKeyType mdtSqlCsvImportTableMapping::fetchDestinationTableFie
   return NotAKey;
 }
 
-bool mdtSqlCsvImportTableMapping::areFieldsCompatible(int sourceFieldIndex, int destinationFieldIndex) const
+bool CsvImportTableMapping::areFieldsCompatible(int sourceFieldIndex, int destinationFieldIndex) const
 {
   Q_ASSERT(sourceFieldIndex < sourceTable().fieldCount());
   Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
@@ -112,3 +114,5 @@ bool mdtSqlCsvImportTableMapping::areFieldsCompatible(int sourceFieldIndex, int 
 //   auto csvFieldFormat = mdtSqlCsvData::csvFieldTypeFromMdtSqlFieldType(destinationFieldFormat);
 //   sourceTable().setFieldType(fm.sourceField.fieldIndex(), csvFieldFormat);
 // }
+
+}}} // namespace mdt{ namespace sql{ namespace copier{

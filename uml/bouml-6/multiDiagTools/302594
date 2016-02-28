@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 58
+  revision 59
   modified_by 2 "philippe"
   // class settings
   
@@ -1925,7 +1925,7 @@ ${inlines}
 
     classdiagram 1809282 "TableMapping"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size C
     end
 
     class 2174082 "TableMapping"
@@ -2543,6 +2543,229 @@ ${inlines}
       end
     end
 
+    class 2180610 "CsvImportTableMapping"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2488066 // <generalisation>
+	relation 2471682 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2488066 // <generalisation>
+	  b parent class_ref 2174082 // TableMapping
+      end
+
+      attribute 2191234 "DestinationTable"
+	private type class_ref 910210 // mdtSqlTableSchema
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3308162 "CsvImportTableMapping"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3308418 "destinationTableName"
+	cpp_virtual public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3308802 "destinationFieldName"
+	cpp_virtual public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "index" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3308930 "destinationFieldTypeName"
+	cpp_virtual public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "index" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3309186 "generateFieldMappingByName"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3331458 "csvSourceInfo"
+	abstract cpp_virtual protected return_type class_ref 2180738 // mdtCsvSourceInfo
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 2200578 "CsvStringImportTableMapping"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2507778 // <generalisation>
+	relation 2491394 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2507778 // <generalisation>
+	  b parent class_ref 2180610 // CsvImportTableMapping
+      end
+
+      attribute 2204674 "SourceTable"
+	private type class_ref 2187266 // mdtCsvStringInfo
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3331586 "csvSourceInfo"
+	cpp_virtual protected return_type class_ref 2180738 // mdtCsvSourceInfo
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 2200706 "CsvFileImportTableMapping"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2507906 // <generalisation>
+	relation 2491522 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2507906 // <generalisation>
+	  b parent class_ref 2180610 // CsvImportTableMapping
+      end
+
+      attribute 2204802 "SourceTable"
+	private type class_ref 2187394 // mdtCsvFileInfo
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3331714 "csvSourceInfo"
+	cpp_virtual protected return_type class_ref 2180738 // mdtCsvSourceInfo
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
     classdiagram 1896962 "Edit"
       classdiagramsettings member_max_width 0 end
       size A4-Landscape
@@ -2637,7 +2860,7 @@ ${inlines}
 
     classdiagram 1829122 "TableMappingModel"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size C-Landscape
     end
 
     class 2200834 "TableMappingModel"
@@ -3002,6 +3225,287 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 2591234 // <generalisation>
 	  b parent class_ref 2200834 // TableMappingModel
+      end
+    end
+
+    class 2207362 "CsvStringImportTableMappingModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2514690 // <generalisation>
+	relation 2498306 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2514690 // <generalisation>
+	  b parent class_ref 2200834 // TableMappingModel
+      end
+
+      operation 3338754 "CsvStringImportTableMappingModel"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3339138 "setSourceCsvString"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "csv" type class_ref 161026 // QString
+	  param in name "settings" type class_ref 2050434 // mdtCsvParserSettings
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3339522 "setMapping"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "m" type class_ref 2200706 // CsvFileImportTableMapping
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3338498 "mapping"
+	public return_type class_ref 2200578 // CsvStringImportTableMapping
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3338242 "mappingBase"
+	cpp_virtual private return_type class_ref 2174082 // TableMapping
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 2211586 "Mapping"
+	private type class_ref 2200578 // CsvStringImportTableMapping
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3339266 "setDestinationTable"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "tableName" type class_ref 161026 // QString
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 2591362 // <directional composition>
+	relation 2574850 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2591362 // <directional composition>
+	  b parent class_ref 2200578 // CsvStringImportTableMapping
+      end
+    end
+
+    class 2207490 "CsvFileImportTableMappingModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2514818 // <generalisation>
+	relation 2498434 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2514818 // <generalisation>
+	  b parent class_ref 2200834 // TableMappingModel
+      end
+
+      operation 3338882 "CsvFileImportTableMappingModel"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3339010 "setSourceCsvFile"
+	public explicit_return_type "bool"
+	nparams 3
+	  param in name "file" type class_ref 432386 // QFileInfo
+	  param in name "fileEncoding" type class_ref 236162 // QByteArray
+	  param in name "settings" type class_ref 2050434 // mdtCsvParserSettings
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3339394 "setDestinationTable"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "tableName" type class_ref 161026 // QString
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3339650 "setMapping"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "m" type class_ref 2200706 // CsvFileImportTableMapping
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3338626 "mapping"
+	public return_type class_ref 2200706 // CsvFileImportTableMapping
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3338370 "mappingBase"
+	cpp_virtual private return_type class_ref 2174082 // TableMapping
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 2211714 "Mapping"
+	private type class_ref 2200706 // CsvFileImportTableMapping
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 2591490 // <directional composition>
+	relation 2574978 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2591490 // <directional composition>
+	  b parent class_ref 2200706 // CsvFileImportTableMapping
       end
     end
 
@@ -3598,7 +4102,7 @@ ${inlines}
       end
 
       attribute 2314370 "MappingModel"
-	private type class_ref 2207490 // mdtSqlCsvFileImportTableMappingModel
+	private type class_ref 2207490 // CsvFileImportTableMappingModel
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -3628,7 +4132,7 @@ ${inlines}
       operation 3585922 "setMapping"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "tm" type class_ref 2200706 // mdtSqlCsvFileImportTableMapping
+	  param in name "tm" type class_ref 2200706 // CsvFileImportTableMapping
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -3642,7 +4146,7 @@ ${inlines}
       end
 
       operation 3586178 "mapping"
-	public return_type class_ref 2180610 // mdtSqlCsvImportTableMapping
+	public return_type class_ref 2180610 // CsvImportTableMapping
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "

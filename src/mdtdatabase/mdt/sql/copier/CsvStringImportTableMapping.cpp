@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,14 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtSqlCsvFileImportTableMapping.h"
+#include "CsvStringImportTableMapping.h"
 
-bool mdtSqlCsvFileImportTableMapping::setSourceCsvFile(const QFileInfo & file, const QByteArray & fileEncoding, const mdtCsvParserSettings & settings)
+namespace mdt{ namespace sql{ namespace copier{
+
+bool CsvStringImportTableMapping::setSourceCsvString(const QString & csv, const mdtCsvParserSettings & settings)
 {
-  auto ret = pvSourceTable.setFile(file, fileEncoding, settings);
+  auto ret = pvSourceTable.setSource(csv, settings);
   if(!ret){
     pvLastError = ret.error();
     return false;
   }
   return true;
 }
+
+}}} // namespace mdt{ namespace sql{ namespace copier{

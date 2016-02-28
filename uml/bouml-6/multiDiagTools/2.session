@@ -1,25 +1,15 @@
-window_sizes 1280 969 514 760 916 0
+window_sizes 1280 964 340 934 911 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 1848962 // DatabaseCopierMapping
-    743 728 100 4 0 0
-  classdiagram_ref 1943042 // TMoverview
-    120 106 100 18 0 0
-  classdiagram_ref 1936386 // TableMappingDialog
-    968 911 100 7 0 24
-  classdiagram_ref 1809282 // TableMapping
-    120 106 100 4 0 0
-  active  classdiagram_ref 1829122 // TableMappingModel
-    760 916 100 4 0 0
+  active  classdiagram_ref 1809282 // TableMapping
+    934 911 90 8 288 0
 end
 show_stereotypes
+selected classdiagram_ref 1829122 // TableMappingModel
 open
   
   package_ref 315650 // error
   classview_ref 934018 // TableMapping
-  classview_ref 999426 // Database
-  classview_ref 1005954 // Query
-  classview_ref 893954 // sqlDatabaseCopy
   
   package_ref 260866 // Boost
 end

@@ -80,11 +80,11 @@ set (SOURCES_FILES
           mdtSqlDatabaseCopierDialog.cpp
           mdtSqlDatabaseCopierThread.cpp
           # CSV import classes
-          mdtSqlCsvImportTableMapping.cpp
-          mdtSqlCsvStringImportTableMapping.cpp
-          mdtSqlCsvStringImportTableMappingModel.cpp
-          mdtSqlCsvFileImportTableMapping.cpp
-          mdtSqlCsvFileImportTableMappingModel.cpp
+          mdt/sql/copier/CsvImportTableMapping.cpp
+          mdt/sql/copier/CsvStringImportTableMapping.cpp
+          mdt/sql/copier/CsvStringImportTableMappingModel.cpp
+          mdt/sql/copier/CsvFileImportTableMapping.cpp
+          mdt/sql/copier/CsvFileImportTableMappingModel.cpp
     )
 
 # Platform specific files

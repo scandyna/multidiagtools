@@ -46,10 +46,10 @@
 #include "mdtSqlDatabaseCopierMapping.h"
 #include "mdtSqlDatabaseCopierMappingModel.h"
 #include "mdtSqlDatabaseCopierDialog.h"
-#include "mdtSqlCsvStringImportTableMapping.h"
-#include "mdtSqlCsvFileImportTableMapping.h"
-#include "mdtSqlCsvStringImportTableMappingModel.h"
-#include "mdtSqlCsvFileImportTableMappingModel.h"
+#include "mdt/sql/copier/CsvStringImportTableMapping.h"
+#include "mdt/sql/copier/CsvFileImportTableMapping.h"
+#include "mdt/sql/copier/CsvStringImportTableMappingModel.h"
+#include "mdt/sql/copier/CsvFileImportTableMappingModel.h"
 #include "mdtComboBoxItemDelegate.h"
 #include "mdtProgressBarItemDelegate.h"
 #include "mdtProgressValue.h"
@@ -3336,11 +3336,12 @@ void mdtSqlCopierTest::sqlCopierDataMappingTest()
 void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
 {
   using mdt::sql::copier::TableMapping;
+  using mdt::sql::copier::CsvStringImportTableMapping;
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::TableMappingItemState;
   using mdt::sql::copier::DatabaseCopierTableMapping;
 
-  mdtSqlCsvStringImportTableMapping mapping;
+  CsvStringImportTableMapping mapping;
   QString csvString;
   mdtCsvParserSettings csvSettings;
   QStringList fieldNames;
@@ -3638,10 +3639,12 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
 
 void mdtSqlCopierTest::sqlCsvStringImportTableMappingModelTest()
 {
+  using mdt::sql::copier::CsvStringImportTableMappingModel;
+//   using mdt::sql::copier::CsvStringImportTableMapping;
+
   QTableView tableView;
   QTreeView treeView;
-  mdtSqlCsvStringImportTableMapping tm;
-  mdtSqlCsvStringImportTableMappingModel model;
+  CsvStringImportTableMappingModel model;
   const int sourceFieldNameColumn = 2;
   const int destinationFieldNameColumn = 5;
   QModelIndex index;
@@ -3669,7 +3672,10 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingModelTest()
    * Check by generating by name
    */
   // Set tables and generate field mapping
-  QVERIFY(model.setSourceCsvString(csvString, csvSettings, delegate));
+  QVERIFY(model.setSourceCsvString(csvString, csvSettings));
+  delegate->clear();
+  delegate->addItem("");
+  delegate->addItems(model.mapping()->getSourceTableFieldNameList());
   QVERIFY(model.setDestinationTable("Client_tbl", pvDatabase));
   model.generateFieldMappingByName();
 
@@ -3685,11 +3691,12 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingModelTest()
 void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
 {
   using mdt::sql::copier::TableMapping;
+  using mdt::sql::copier::CsvFileImportTableMapping;
   using mdt::sql::copier::DatabaseCopierTableMapping;
   using mdt::sql::copier::TableMappingItem;
   using mdt::sql::copier::TableMappingItemState;
 
-  mdtSqlCsvFileImportTableMapping mapping;
+  CsvFileImportTableMapping mapping;
   mdtCsvParserSettings csvSettings;
   QTemporaryFile csvFile;
   QStringList fieldNames;
@@ -3906,10 +3913,11 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
 
 void mdtSqlCopierTest::sqlCsvFileImportTableMappingModelTest()
 {
+  using mdt::sql::copier::CsvFileImportTableMappingModel;
+
   QTableView tableView;
   QTreeView treeView;
-  mdtSqlCsvFileImportTableMapping tm;
-  mdtSqlCsvFileImportTableMappingModel model;
+  CsvFileImportTableMappingModel model;
   const int sourceFieldNameColumn = 2;
   const int destinationFieldNameColumn = 5;
   QModelIndex index;
@@ -3939,7 +3947,10 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingModelTest()
    * Check by generating by name
    */
   // Set tables and generate field mapping
-  QVERIFY(model.setSourceCsvFile(csvFile, "UTF-8", csvSettings, delegate));
+  QVERIFY(model.setSourceCsvFile(csvFile, "UTF-8", csvSettings));
+  delegate->clear();
+  delegate->addItem("");
+  delegate->addItems(model.mapping()->getSourceTableFieldNameList());
   QVERIFY(model.setDestinationTable("Client_tbl", pvDatabase));
   model.generateFieldMappingByName();
 
