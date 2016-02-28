@@ -73,13 +73,6 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void updateSourceTableFieldSelectionDelegate();
 
-//     /*! \brief Access source field selection delegate
-//      */
-//     mdtComboBoxItemDelegate *sourceFieldSelectionDelegate()
-//     {
-//       return pvSourceFieldSelectionDelegate;
-//     }
-
     /*! \brief Reference internal table mapping (read only version)
      */
     virtual const std::shared_ptr<const TableMapping> mappingBase() const = 0;

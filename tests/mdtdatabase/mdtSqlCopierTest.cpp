@@ -50,6 +50,7 @@
 #include "mdt/sql/copier/CsvFileImportTableMapping.h"
 #include "mdt/sql/copier/CsvStringImportTableMappingModel.h"
 #include "mdt/sql/copier/CsvFileImportTableMappingModel.h"
+#include "mdt/sql/copier/CsvFileImportTableMappingDialog.h"
 #include "mdtComboBoxItemDelegate.h"
 #include "mdtProgressBarItemDelegate.h"
 #include "mdtProgressValue.h"
@@ -3961,6 +3962,16 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingModelTest()
   while(tableView.isVisible()){
     QTest::qWait(500);
   }
+}
+
+void mdtSqlCopierTest::csvFileImportTableMappingDialogTest()
+{
+  mdt::sql::copier::CsvFileImportTableMappingDialog dialog;
+
+  /*
+   * Play
+   */
+  dialog.exec();
 }
 
 void mdtSqlCopierTest::copyHelperTest()
