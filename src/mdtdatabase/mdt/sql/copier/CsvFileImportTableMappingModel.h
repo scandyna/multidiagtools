@@ -58,6 +58,10 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     bool setDestinationTable(const QString & tableName, const QSqlDatabase & db);
 
+    /*! \brief Set mapping
+     */
+    void setMapping(const std::shared_ptr<CsvFileImportTableMapping> & m);
+
     /*! \brief Get table mapping
      */
     std::shared_ptr<CsvFileImportTableMapping> mapping() const

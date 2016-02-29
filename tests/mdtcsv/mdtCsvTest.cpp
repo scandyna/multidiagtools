@@ -544,6 +544,7 @@ void mdtCsvTest::csvFileInfoTest()
   /*
    * Prepare CSV file
    */
+  csvSettings.parseExp = false;
   QVERIFY(file.open());
   QFileInfo fi(file);
   QVERIFY(file.write("ID,Name,Remark\n") > 0);
@@ -555,6 +556,9 @@ void mdtCsvTest::csvFileInfoTest()
   QVERIFY(csvFileInfo.setFile(fi, "UTF-8", csvSettings));
   QCOMPARE(csvFileInfo.sourceName(), fi.fileName());
   QCOMPARE(csvFileInfo.fieldCount(), 3);
+  QCOMPARE(csvFileInfo.fileInfo().absoluteFilePath(), fi.absoluteFilePath());
+  QCOMPARE(csvFileInfo.fileEncoding(), QByteArray("UTF-8"));
+  QCOMPARE(csvFileInfo.csvSettings().parseExp, false);
   // Check field names
   QCOMPARE(csvFileInfo.fieldName(0), QString("ID"));
   QCOMPARE(csvFileInfo.fieldName(1), QString("Name"));

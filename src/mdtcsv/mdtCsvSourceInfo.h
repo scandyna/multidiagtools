@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,6 +23,7 @@
 
 #include "mdtCsvData.h"
 #include "mdtCsvRecordFormat.h"
+#include "mdtCsvSettings.h"
 #include <QString>
 #include <QStringList>
 
@@ -54,6 +55,17 @@ class mdtCsvSourceInfo
   QString sourceName() const
   {
     return pvSourceName;
+  }
+
+  /*! \brief Set CSV settings
+   */
+  void setCsvSettings(const mdtCsvParserSettings & settings);
+
+  /*! \brief Get CSV settings
+   */
+  mdtCsvParserSettings csvSettings() const
+  {
+    return pvCsvSettings;
   }
 
   /*! \brief Get field count
@@ -123,6 +135,7 @@ class mdtCsvSourceInfo
   mdtCsvRecord pvHeader;
   mdtCsvRecordFormat pvRecordFormat;
   QString pvSourceName;
+  mdtCsvParserSettings pvCsvSettings;
 };
 
 #endif // #ifndef MDT_CSV_SOURCE_INFO_H

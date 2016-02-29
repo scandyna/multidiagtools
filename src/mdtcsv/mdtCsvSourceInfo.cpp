@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -30,6 +30,11 @@ void mdtCsvSourceInfo::setFormat(const mdtCsvRecordFormat& format)
 void mdtCsvSourceInfo::setSourceName(const QString & name)
 {
   pvSourceName = name;
+}
+
+void mdtCsvSourceInfo::setCsvSettings(const mdtCsvParserSettings &settings)
+{
+  pvCsvSettings = settings;
 }
 
 void mdtCsvSourceInfo::setHeader(const mdtCsvRecord & hdr)

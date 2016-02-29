@@ -1,0 +1,84 @@
+format 211
+
+classcanvas 128002 class_ref 2390786 // SerialPort
+  classdiagramsettings member_max_width 0 end
+  xyz 40.05 126.3 2000
+end
+classcanvas 128130 class_ref 2390530 // Thread
+  classdiagramsettings member_max_width 0 end
+  xyz 257.1 227.45 2005
+end
+note 128258 "Need type erasure ??"
+  xyzwh 31.5 449.8 2000 263 57
+classcanvas 128386 class_ref 138626 // QObject
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 45.05 40.8 2005
+end
+classcanvas 128642 class_ref 2390914 // ThreadBase
+  classdiagramsettings member_max_width 0 end
+  xyz 154.1 104.45 2011
+end
+classcanvas 129026 class_ref 2390274 // FrameQueue
+  classdiagramsettings member_max_width 0 end
+  xyz 444.3 227.45 2011
+end
+classcanvas 129282 class_ref 2390402 // FrameXy
+  classdiagramsettings member_max_width 0 end
+  xyz 456.3 143.4 2017
+end
+classcanvas 129538 class_ref 2092162 // QSerialPort
+  classdiagramsettings member_max_width 0 end
+  xyz 243.1 331.5 2011
+end
+note 129794 "A voir: utiliser le runtime polymorphisme avec une AbstractFrame ?
+Il faudrait mesurer !
+-> Plus simple..
+-> Rappel: overhead appel virtual faible, voir non perceptible pour passer des octets par serial port..
+-> Design bien plus simple (on peut même hériter de QThread bien pour eventLoop, etc..)
+--> Par contre: WW pour copie ! mais, veut-on copier des frames ??"
+  xyzwh 43 525 2000 723 149
+note 129922 "Se concentrer en premier sur l'échange des frames !"
+  xyzwh 43 685 2000 535 45
+note 130050 "Note: frame, uniquement  storage (=1 classe)
+Voir pour une classe fonctionnelle, avec héritage (problème de copie écarté).
+Cette classe implémentreait le différentes méthoide pour ajouter les octets reçus.
+-> ou pas, car une frame est spécifique (rawFrame , ModubusFrame, ZmsFrame, CanBusFrame, ...)
+-> Aussi, le type contenu varie ?? (char, ...)
+ -> Voir comment Qt SeriailBus résolvent ce problème.."
+  xyzwh 41 744 2000 575 155
+relationcanvas 128514 relation_ref 2669698 // <generalisation>
+  decenter_begin 533
+  decenter_end 538
+  from ref 128002 z 2006 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 2669826 // <generalisation>
+  from ref 128130 z 2012 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 2669954 // <directional composition>
+  decenter_end 530
+  from ref 128002 z 2012 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 2669314 // <directional composition>
+  decenter_begin 538
+  decenter_end 538
+  from ref 128130 z 2012 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 2669186 // <directional composition>
+  from ref 129026 z 2018 to ref 129282
+  no_role_a no_role_b
+  multiplicity_a_pos 475 197 3000 no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 2669442 // <directional composition>
+  from ref 128130 z 2012 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

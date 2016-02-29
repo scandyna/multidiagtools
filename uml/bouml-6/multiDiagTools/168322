@@ -1,6 +1,6 @@
 format 211
 "mdtport" // mdtport
-  revision 59
+  revision 60
   modified_by 2 "philippe"
   // class settings
   
@@ -2762,7 +2762,6 @@ ${inlines}
     
     activitydiagramsettings
      end
-    associated_deployment_view deploymentview_ref 409090 // mdtPortManager
     classdiagram 294658 "mdtPortManager"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -5703,7 +5702,7 @@ ${inlines}
      end
     classdiagram 468610 "mdtUsbPort"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size C
     end
 
     class 471938 "mdtUsbPort"
@@ -9977,34 +9976,6 @@ ${inlines}
     sequencediagram 660098 "TCPsocketStop"
       sequencediagramsettings end
       overlapping_bars size A4
-    end
-  end
-
-  deploymentview 409090 "mdtPortManager"
-    //deployment diagram settings
-    deploymentdiagramsettings
-     end
-    artifact 519426 "mdtPortManagerStateMachine"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 845442 // mdtPortManagerStateMachine
-      end
     end
   end
 

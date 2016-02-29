@@ -1,6 +1,6 @@
 format 211
 "mdt" // mdtserialport::mdt
-  revision 1
+  revision 2
   modified_by 2 "philippe"
   // class settings
   
@@ -26,5 +26,59 @@ format 211
   activitydiagramsettings
    end
   
-  package_ref 342146 // serialport
+  package_ref 342146 // serialportPrivate
+
+  classview 1012610 "sandbox"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2041858 "sandbox"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2390786 "SerialPort"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2686210 // <generalisation>
+	relation 2669698 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2686210 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 2686466 // <directional composition>
+	relation 2669954 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2686466 // <directional composition>
+	  b parent class_ref 2390914 // ThreadBase
+      end
+    end
+  end
 end

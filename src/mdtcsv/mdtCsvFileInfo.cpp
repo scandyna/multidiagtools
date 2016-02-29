@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -33,8 +33,11 @@ mdtExpected<bool> mdtCsvFileInfo::setFile(const QFileInfo& fileInfo, const QByte
     return record.error();
   }
   setSourceName(fileInfo.fileName());
+  setCsvSettings(settings);
   setHeader(record.value());
   setFormat(mdtCsvRecordFormat(fieldCount(), QMetaType::QString));
+  pvFileInfo = fileInfo;
+  pvFileEncoding = fileEncoding;
 
   return true;
 }

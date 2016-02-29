@@ -1,43 +1,44 @@
-format 208
+format 211
 
 classcanvas 128002 class_ref 1538690 // mdtTcpipDeviceAddress
   classdiagramsettings member_max_width 0 end
-  xyz 834.1 287.8 2000
+  xyz 570 258 2000
 end
 classcanvas 128130 class_ref 1538562 // mdtAsrlDeviceAddress
   classdiagramsettings member_max_width 0 end
-  xyz 795.4 436.8 2000
+  xyz -2 276 2000
 end
 classcanvas 128258 class_ref 1538434 // mdtUsbDeviceAddress
   classdiagramsettings member_max_width 0 end
-  xyz 810.4 106.9 2000
+  xyz 277 16 2000
 end
 classcanvas 128386 class_ref 1538178 // mdtDeviceAddress
   classdiagramsettings member_max_width 0 end
-  xyz 442.7 232.3 2006
+  xyz 272 203 2006
 end
 classcanvas 128898 class_ref 1538306 // mdtDeviceAddressList
   classdiagramsettings member_max_width 0 end
-  xyz 96.5 300.7 2012
+  xyz 277 445 2012
 end
 relationcanvas 128514 relation_ref 1911554 // <directional composition>
-  from ref 128386 z 2007 stereotype "<<union>>" xyz 696 323 2007 to ref 128002
-  role_a_pos 726 300 3000 no_role_b
-  multiplicity_a_pos 815 332 3000 no_multiplicity_b
+  from ref 128386 z 2007 stereotype "<<union>>" xyz 479 294 2007 to ref 128002
+  role_a_pos 465 271 3000 no_role_b
+  multiplicity_a_pos 552 307 3000 no_multiplicity_b
 end
 relationcanvas 128642 relation_ref 1911682 // <directional composition>
-  from ref 128386 z 2007 stereotype "<<union>>" xyz 696 399 2007 to ref 128130
-  role_a_pos 732 416 3000 no_role_b
-  multiplicity_a_pos 810 449 3000 no_multiplicity_b
+  from ref 128386 z 2007 stereotype "<<union>>" xyz 190 298 2007 to ref 128130
+  role_a_pos 166 271 3000 no_role_b
+  multiplicity_a_pos 166 307 3000 no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 1911810 // <directional composition>
-  from ref 128386 z 2007 stereotype "<<union>>" xyz 680 243 2007 to ref 128258
-  role_a_pos 711 173 3000 no_role_b
-  multiplicity_a_pos 791 205 3000 no_multiplicity_b
+  decenter_end 475
+  from ref 128386 z 2007 stereotype "<<union>>" xyz 327 169.5 2007 to ref 128258
+  role_a_pos 372 152 3000 no_role_b
+  multiplicity_a_pos 345 152 3000 no_multiplicity_b
 end
 relationcanvas 129026 relation_ref 1911426 // <directional composition>
   from ref 128898 z 2013 to ref 128386
-  role_a_pos 311 298 3000 no_role_b
-  multiplicity_a_pos 424 330 3000 no_multiplicity_b
+  role_a_pos 366 399 3000 no_role_b
+  multiplicity_a_pos 341 399 3000 no_multiplicity_b
 end
 end

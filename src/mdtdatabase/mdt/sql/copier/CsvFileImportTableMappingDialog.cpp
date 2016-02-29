@@ -21,6 +21,8 @@
 #include "CsvFileImportTableMappingDialog.h"
 #include "CsvFileImportTableMappingModel.h"
 #include "mdtCsvFileParserSettingsDialog.h"
+#include "mdtCsvFileInfo.h"
+#include "mdtErrorDialog.h"
 #include <QLabel>
 #include <QToolButton>
 #include <QHBoxLayout>
@@ -31,6 +33,7 @@ CsvFileImportTableMappingDialog::CsvFileImportTableMappingDialog(QWidget *parent
  : TableMappingDialog(parent),
    pvMappingModel(new CsvFileImportTableMappingModel)
 {
+  setModel(pvMappingModel);
   // Setup source table widgets
   QHBoxLayout *l = new QHBoxLayout;
   lbSourceTable = new QLabel;
@@ -42,13 +45,48 @@ CsvFileImportTableMappingDialog::CsvFileImportTableMappingDialog(QWidget *parent
   connect(tb, &QToolButton::clicked, this, &CsvFileImportTableMappingDialog::setupSourceFile);
 }
 
+void CsvFileImportTableMappingDialog::setMapping(const std::shared_ptr<CsvFileImportTableMapping> & m)
+{
+  Q_ASSERT(m);
+//   Q_ASSERT(m->sourceDatabase().isOpen());
+  Q_ASSERT(m->destinationDatabase().isOpen());
+
+  // Update mapping
+  pvMappingModel->setMapping(m);
+  updateMapping();
+  displaySourceTable();
+}
+
+std::shared_ptr<CsvFileImportTableMapping> CsvFileImportTableMappingDialog::mapping() const
+{
+  return pvMappingModel->mapping();
+}
+
 void CsvFileImportTableMappingDialog::setupSourceFile()
 {
   mdtCsvFileParserSettingsDialog dialog(this);
+  auto tm = pvMappingModel->mapping();
+  Q_ASSERT(tm);
 
+  // Setup and show dialog
+  dialog.setFileSettings(tm->sourceFileInfo().absoluteFilePath(), tm->sourceFileEncoding());
+  dialog.setCsvSettings(tm->sourceCsvSettings());
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
+  // Update source
+  if(!pvMappingModel->setSourceCsvFile(dialog.filePath(), dialog.fileEncoding(), dialog.getCsvSettings())){
+    auto error = pvMappingModel->lastError();
+    mdtErrorDialog errorDialog(error);
+    errorDialog.exec();
+    return;
+  }
+  displaySourceTable();
+}
+
+void CsvFileImportTableMappingDialog::displaySourceTable()
+{
+  lbSourceTable->setText(pvMappingModel->sourceTableName());
 }
 
 const std::shared_ptr<const TableMapping> CsvFileImportTableMappingDialog::mappingBase() const

@@ -42,6 +42,27 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     bool setSourceCsvFile(const QFileInfo & file, const QByteArray & fileEncoding, const mdtCsvParserSettings & settings);
 
+    /*! \brief Get source file info
+     */
+    QFileInfo sourceFileInfo() const
+    {
+      return pvSourceTable.fileInfo();
+    }
+
+    /*! \brief Get source file encoding
+     */
+    QByteArray sourceFileEncoding() const
+    {
+      return pvSourceTable.fileEncoding();
+    }
+
+    /*! \brief Get source CSV settings
+     */
+    mdtCsvParserSettings sourceCsvSettings() const
+    {
+      return pvSourceTable.csvSettings();
+    }
+
   private:
 
     /*! \brief Reference CSV source info

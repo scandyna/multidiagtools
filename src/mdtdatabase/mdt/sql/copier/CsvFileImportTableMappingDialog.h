@@ -44,6 +44,14 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     CsvFileImportTableMappingDialog(QWidget *parent = nullptr);
 
+    /*! \brief Set table mapping
+     */
+    void setMapping(const std::shared_ptr<CsvFileImportTableMapping> & m);
+
+    /*! \brief Get table mapping
+     */
+    std::shared_ptr<CsvFileImportTableMapping> mapping() const;
+
    private slots:
 
     /*! \brief Setup source CSV file
@@ -51,6 +59,10 @@ namespace mdt{ namespace sql{ namespace copier{
     void setupSourceFile();
 
    private:
+
+    /*! \brief Display source table
+     */
+    void displaySourceTable();
 
     /*! \brief Reference internal table mapping (read only version)
      */

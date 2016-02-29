@@ -58,4 +58,13 @@ bool CsvFileImportTableMappingModel::setDestinationTable(const QString & tableNa
   return true;
 }
 
+void CsvFileImportTableMappingModel::setMapping(const std::shared_ptr<CsvFileImportTableMapping> & m)
+{
+  Q_ASSERT(m);
+
+  beginResetModel();
+  pvMapping = m;
+  endResetModel();
+}
+
 }}} // namespace mdt{ namespace sql{ namespace copier{

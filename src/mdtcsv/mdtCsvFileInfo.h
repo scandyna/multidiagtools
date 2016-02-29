@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -38,10 +38,24 @@ class mdtCsvFileInfo : public mdtCsvSourceInfo
    */
   mdtExpected<bool> setFile(const QFileInfo & fileInfo, const QByteArray & fileEncoding, const mdtCsvParserSettings & settings);
 
+  /*! \brief Get file info
+   */
+  QFileInfo fileInfo() const
+  {
+    return pvFileInfo;
+  }
+
+  /*! \brief Get file encoding
+   */
+  QByteArray fileEncoding() const
+  {
+    return pvFileEncoding;
+  }
+
  private:
 
-  mdtCsvRecordFormat pvRecordFormat;
   QFileInfo pvFileInfo;
+  QByteArray pvFileEncoding;
 };
 
 #endif // #ifndef MDT_CSV_FILE_INFO_H

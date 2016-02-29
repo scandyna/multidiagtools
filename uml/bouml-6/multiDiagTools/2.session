@@ -5,15 +5,22 @@ diagrams
     934 911 100 7 0 0
 end
 show_stereotypes
-selected operation_ref 3585410 // CsvFileImportTableMappingDialog
+selected 
+package_ref 129 // multiDiagTools
 open
+  classview_ref 161666 // mdtError
   
-  package_ref 315650 // error
+package_ref 315650 // error
   attribute_ref 2321154 // FileInfo
   attribute_ref 2321282 // FileEncoding
   attribute_ref 2321410 // CsvSettings
   attribute_ref 2314370 // MappingModel
+  class_ref 2390530 // Thread
+  class_ref 2390914 // ThreadBase
+  classview_ref 1012610 // sandbox
   
-  package_ref 260866 // Boost
+package_ref 148226 // mdtserialportLEGACY
+  
+package_ref 260866 // Boost
 end
 end
