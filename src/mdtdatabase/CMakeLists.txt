@@ -64,7 +64,10 @@ set (SOURCES_FILES
           mdt/sql/copier/TableMappingItem.cpp
           mdt/sql/copier/TableMappingModel.cpp
           mdt/sql/copier/TableMappingDialog.cpp
+          mdt/sql/copier/MappingModel.cpp
+          
           mdtSqlCopierDataMapping.cpp
+
           mdt/sql/copier/ExpressionKeyFieldSelectionDialog.cpp
           mdt/sql/copier/ExpressionMatchItemModel.cpp
           mdt/sql/copier/RelatedTableInsertMatchItemModel.cpp
@@ -76,6 +79,7 @@ set (SOURCES_FILES
           mdt/sql/copier/DatabaseCopierTableMappingModel.cpp
           mdt/sql/copier/DatabaseCopierTableMappingDialog.cpp
           mdt/sql/copier/DatabaseMapping.cpp
+          mdt/sql/copier/DatabaseMappingModel.cpp
           
           mdtSqlDatabaseCopierMapping.cpp
           mdtSqlDatabaseCopierMappingModel.cpp

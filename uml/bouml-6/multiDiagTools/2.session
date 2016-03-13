@@ -1,24 +1,15 @@
 window_sizes 1280 964 340 934 911 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 1936386 // TableMappingDialog
-    934 911 100 7 12 0
-  classdiagram_ref 1848962 // DatabaseCopierMapping
-    120 106 100 4 0 0
-  classdiagram_ref 1609346 // DatabaseCopierMappingModel
-    120 106 100 4 0 0
-  active  classdiagram_ref 2048386 // DatabaseMapping
+  active  classdiagram_ref 2048642 // MappingModel
     934 911 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2048642 // MappingModel
+selected classdiagram_ref 2055170 // DatabaseMappingModel
 open
   
 package_ref 315650 // error
-  attribute_ref 2335362 // DatabaseCopierTableMapping
-  operation_ref 3647234 // destinationDatabase
-  operation_ref 3647618 // generateMappingByName
-  operation_ref 3647490 // clearMapping
+  classview_ref 1019138 // CopyMapping
   classview_ref 893954 // sqlDatabaseCopy
 end
 end
