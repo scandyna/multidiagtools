@@ -25,10 +25,14 @@ namespace mdt{ namespace sql{ namespace copier{
 bool CsvFileImportTableMapping::setSourceCsvFile(const QFileInfo & file, const QByteArray & fileEncoding, const mdtCsvParserSettings & settings)
 {
   auto ret = pvSourceTable.setFile(file, fileEncoding, settings);
+
+  clearFieldMapping();
   if(!ret){
     pvLastError = ret.error();
     return false;
   }
+  resetFieldMapping();
+
   return true;
 }
 

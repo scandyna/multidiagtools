@@ -538,13 +538,16 @@ void mdtCsvTest::csvFileInfoTest()
 {
   mdtCsvFileInfo csvFileInfo;
   mdtCsvParserSettings csvSettings;
-  QTemporaryFile file;
   QStringList fieldNames;
 
   /*
-   * Prepare CSV file
+   * CSV settings
    */
   csvSettings.parseExp = false;
+  /*
+   * Prepare CSV file
+   */
+  QTemporaryFile file;
   QVERIFY(file.open());
   QFileInfo fi(file);
   QVERIFY(file.write("ID,Name,Remark\n") > 0);
@@ -578,6 +581,27 @@ void mdtCsvTest::csvFileInfoTest()
   QCOMPARE(fieldNames.at(0), QString("ID"));
   QCOMPARE(fieldNames.at(1), QString("Name"));
   QCOMPARE(fieldNames.at(2), QString("Remark"));
+  /*
+   * Prepare a other CSV file
+   *  with different field count
+   *  (Bug of 20160301)
+   */
+  QTemporaryFile file2;
+  QVERIFY(file2.open());
+  fi.setFile(file2);
+  QVERIFY(file2.write("ID,Street,ClientName,Remark\n") > 0);
+  QVERIFY(file2.write("1,Street 1,Name 1,Remark 1\n") > 0);
+  file2.close();
+  /*
+   * Set source and check
+   */
+  QVERIFY(csvFileInfo.setFile(fi, "UTF-8", csvSettings));
+  QCOMPARE(csvFileInfo.sourceName(), fi.fileName());
+  QCOMPARE(csvFileInfo.fieldCount(), 4);
+  QCOMPARE(csvFileInfo.fileInfo().absoluteFilePath(), fi.absoluteFilePath());
+  QCOMPARE(csvFileInfo.fileEncoding(), QByteArray("UTF-8"));
+  QCOMPARE(csvFileInfo.csvSettings().parseExp, false);
+
 }
 
 void mdtCsvTest::csvStringParserIteratorTest()

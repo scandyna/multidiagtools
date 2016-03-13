@@ -82,6 +82,7 @@ void CsvFileImportTableMappingDialog::setupSourceFile()
     return;
   }
   displaySourceTable();
+  updateSourceTableFieldSelectionDelegate();
 }
 
 void CsvFileImportTableMappingDialog::displaySourceTable()

@@ -1,10 +1,10 @@
-format 210
+format 211
 
 classcanvas 128002 class_ref 1927810 // mdtSqlDatabaseCopierMapping
   classdiagramsettings member_max_width 0 end
   xyz 66 392 2000
 end
-classcanvas 128130 class_ref 1914114 // mdtSqlDatabaseCopierTableMapping
+classcanvas 128130 class_ref 1914114 // DatabaseCopierTableMapping
   classdiagramsettings member_max_width 0 end
   xyz 512 203 2000
 end
@@ -23,7 +23,7 @@ Because reversing a schema is not reliable (loss of imformations), we should be 
 If a widget proposes to create a table based on sa source table, the user must be warned that this functionnality is not propoerly supported (field tapes, no FK support, no index supposrt, etc...) !!!
 
 For database schema, set a flag (a hint) for tables that are populated by creation tim, and that sould not be touched after.."
-  xyzwh 44.5 661.5 2000 697 211
+  xyzwh 44.5 662.5 2000 761 229
 relationcanvas 128514 relation_ref 2248066 // <generalisation>
   from ref 128258 z 2001 to ref 128386
   no_role_a no_role_b
@@ -37,6 +37,6 @@ end
 relationcanvas 128770 relation_ref 2248322 // <directional composition>
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 496 447 3000 no_multiplicity_b
+  multiplicity_a_pos 496 472 3000 no_multiplicity_b
 end
 end

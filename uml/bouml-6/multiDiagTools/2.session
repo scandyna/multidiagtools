@@ -1,26 +1,24 @@
 window_sizes 1280 964 340 934 911 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 1936386 // TableMappingDialog
-    934 911 100 7 0 0
+  classdiagram_ref 1936386 // TableMappingDialog
+    934 911 100 7 12 0
+  classdiagram_ref 1848962 // DatabaseCopierMapping
+    120 106 100 4 0 0
+  classdiagram_ref 1609346 // DatabaseCopierMappingModel
+    120 106 100 4 0 0
+  active  classdiagram_ref 2048386 // DatabaseMapping
+    934 911 100 4 0 0
 end
 show_stereotypes
-selected 
-package_ref 129 // multiDiagTools
+selected classdiagram_ref 2048642 // MappingModel
 open
-  classview_ref 161666 // mdtError
   
 package_ref 315650 // error
-  attribute_ref 2321154 // FileInfo
-  attribute_ref 2321282 // FileEncoding
-  attribute_ref 2321410 // CsvSettings
-  attribute_ref 2314370 // MappingModel
-  class_ref 2390530 // Thread
-  class_ref 2390914 // ThreadBase
-  classview_ref 1012610 // sandbox
-  
-package_ref 148226 // mdtserialportLEGACY
-  
-package_ref 260866 // Boost
+  attribute_ref 2335362 // DatabaseCopierTableMapping
+  operation_ref 3647234 // destinationDatabase
+  operation_ref 3647618 // generateMappingByName
+  operation_ref 3647490 // clearMapping
+  classview_ref 893954 // sqlDatabaseCopy
 end
 end

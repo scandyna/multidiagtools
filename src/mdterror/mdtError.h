@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -378,10 +378,17 @@ class mdtError
    *
    * If no error was set,
    *  NoError is returned.
+   *
+   * \sa isNull()
    */
   Level level() const;
 
   /*! \brief Get error text
+   *
+   * If no error was set,
+   *  a empty string is returned.
+   *
+   * \sa isNull()
    */
   QString text() const;
 
@@ -394,8 +401,12 @@ class mdtError
 
   /*! \brief Get error stack
    *
+   * If no error was set,
+   *  a empty stack is returned.
+   *
    * \note The returned stack is rebuilt at each call.
    * \sa stackError()
+   * \sa isNull()
    */
   std::vector<mdtError> getErrorStack() const;
 
@@ -425,15 +436,25 @@ class mdtError
    */
   void commit();
 
-  /*! \brief Error source function
+  /*! \brief Ger error source function
+   *
+   * If no error was set,
+   *  a empty string is returned.
+   *
+   * \sa isNull()
    */
   QString functionName() const;
 
-  /*! \brief Error source file (name only)
+  /*! \brief Get error source file (name only)
+   *
+   * If no error was set,
+   *  a empty string is returned.
+   *
+   * \sa isNull()
    */
   QString fileName() const;
 
-  /*! \brief Error source line
+  /*! \brief Get error source line
    */
   int fileLine() const;
 

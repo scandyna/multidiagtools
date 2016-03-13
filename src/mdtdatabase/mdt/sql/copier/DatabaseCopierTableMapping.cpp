@@ -29,8 +29,6 @@
 
 namespace mdt{ namespace sql{ namespace copier{
 
-// using mdt::sql::copier::TableMapping;
-
 void DatabaseCopierTableMapping::setSourceDatabase(const QSqlDatabase & db)
 {
   Q_ASSERT(db.isOpen());

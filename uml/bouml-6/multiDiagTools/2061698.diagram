@@ -1,0 +1,20 @@
+format 211
+
+classcanvas 128002 class_ref 2410626 // Mapping
+  classdiagramsettings member_max_width 0 end
+  xyz 254 51 2000
+end
+classcanvas 128130 class_ref 2403970 // DatabaseMapping
+  classdiagramsettings member_max_width 0 end
+  xyz 185 241 2000
+end
+classcanvas 128386 class_ref 2397442 // MappingModel
+  classdiagramsettings member_max_width 0 end
+  xyz 588.5 62.5 2000
+end
+relationcanvas 128258 relation_ref 2689794 // <generalisation>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end
