@@ -1,0 +1,122 @@
+format 211
+
+classcanvas 128002 class_ref 2410882 // SerialPortFrame
+  classdiagramsettings member_max_width 0 end
+  xyz 87 495.75 2000
+end
+classcanvas 128130 class_ref 2411010 // FramePool
+  classdiagramsettings member_max_width 0 end
+  xyz 533 495.75 2000
+end
+classcanvas 128258 class_ref 2411138 // SomeCompletionHandler
+  classdiagramsettings member_max_width 0 end
+  xyz 280 248.75 2000
+end
+classcanvas 128386 class_ref 138626 // QObject
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 541 40.75 2005
+end
+classcanvas 128642 class_ref 2411266 // AbstractCompletionHandler
+  classdiagramsettings member_max_width 0 end
+  xyz 46.75 372.25 2005
+end
+classcanvas 129538 class_ref 2411394 // SerialPortThread
+  classdiagramsettings member_max_width 0 end
+  xyz 514 372.25 2000
+end
+note 130562 "1) No Abstract base for frame, OK (real, performant value class)
+2) No template (impossible with QObject, especially MOC)
+3) Completion handler can be custom. No copy problem (handler has not to be copiabel..)"
+  xyzwh 40.5 621 2000 769 119
+classcanvas 130690 class_ref 2092162 // QSerialPort
+  classdiagramsettings member_max_width 0 end
+  xyz 670.75 372.25 2000
+end
+classcanvas 130946 class_ref 222722 // QThread
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 540 164.25 2011
+end
+classcanvas 131330 class_ref 2412418 // RawFrameCompletionHandler
+  classdiagramsettings member_max_width 0 end
+  xyz 39.75 248.75 2000
+end
+classcanvas 132482 class_ref 2412546 // mdtSerialPort
+  classdiagramsettings member_max_width 0 end
+  xyz 403.75 164.25 2000
+end
+relationcanvas 128898 relation_ref 2690434 // <directional composition>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 211 523 3000 no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 2690690 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 518
+  from ref 128258 z 2006 to point 363 332
+  line 131586 z 2006 to point 141 332
+  line 131714 z 2006 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 2691074 // <unidirectional association>
+  decenter_begin 422
+  decenter_end 422
+  from ref 129538 z 2006 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130434 relation_ref 2691202 // <directional composition>
+  from ref 129538 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130818 relation_ref 2691330 // <directional composition>
+  decenter_begin 422
+  decenter_end 422
+  from ref 129538 z 2001 to ref 130690
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131074 relation_ref 1508354 // <generalisation>
+  from ref 130946 z 2012 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131202 relation_ref 2691458 // <generalisation>
+  from ref 129538 z 2012 to ref 130946
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131458 relation_ref 2692738 // <generalisation>
+  decenter_begin 517
+  decenter_end 518
+  from ref 131330 z 2006 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131842 relation_ref 2692866 // <dependency>
+  decenter_begin 518
+  from ref 128642 z 2006 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132610 relation_ref 2692994 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 535
+  from ref 132482 z 2006 to point 453 125.6
+  line 134274 z 2006 to point 571 125.6
+  line 134402 z 2006 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133634 relation_ref 2693250 // <association>
+  geometry VHV unfixed
+  decenter_begin 117
+  decenter_end 868
+  from ref 129538 z 2001 to point 525 248
+  line 133762 z 2001 to point 486 248
+  line 133890 z 2001 to ref 132482
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

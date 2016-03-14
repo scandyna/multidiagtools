@@ -43,21 +43,39 @@ void MappingModel::setTableCopyStatus(int row, int status)
 {
   Q_ASSERT(row >= 0);
   Q_ASSERT(row < (int)pvRowCopyStatus.size());
-//   Q_ASSERT(row < (int)pvRowCopyStatusText.size());
+  Q_ASSERT(row < (int)pvRowCopyError.size());
 
   pvRowCopyStatus[row] = static_cast<CopyStatus>(status);
-//   pvRowCopyStatusText[row] = QString();
+  pvRowCopyError[row] = mdtError();
+  auto idx = index(row, TableCopyStatusIndex);
+  emit dataChanged(idx, idx);
+}
+
+void MappingModel::setTableCopyError(int row, mdtError error)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < (int)pvRowCopyStatus.size());
+  Q_ASSERT(row < (int)pvRowCopyError.size());
+
+  pvRowCopyStatus[row] = CopyStatusError;
+  pvRowCopyError[row] = error;
   auto idx = index(row, TableCopyStatusIndex);
   emit dataChanged(idx, idx);
 }
 
 void MappingModel::clearCopyStatusAndProgress()
 {
-  beginResetModel();
-  endResetModel();
+  for(int row = 0; row < rowCount(); ++row){
+    pvRowCopyProgress[row] = 0;
+    pvRowCopyStatus[row] = CopyStatusUnknown;
+    pvRowCopyError[row].clear();
+    auto idx1 = index(row, TableCopyProgressIndex);
+    auto idx2 = index(row, TableCopyStatusIndex);
+    emit dataChanged(idx1, idx2);
+  }
 }
 
-int MappingModel::columnCount(const QModelIndex & parent) const
+int MappingModel::columnCount(const QModelIndex &/* parent*/) const
 {
   return 5;
 }
@@ -114,6 +132,7 @@ void MappingModel::resetCopyStatusAndProgress()
 {
   pvRowCopyProgress.assign(rowCount(), 0);
   pvRowCopyStatus.assign(rowCount(), CopyStatusUnknown);
+  pvRowCopyError.assign(rowCount(), mdtError());
 }
 
 QVariant MappingModel::sourceTableData(int row, int role) const
@@ -199,14 +218,14 @@ QVariant MappingModel::tableCopyStatusData(int row, int role) const
 {
   Q_ASSERT(row >= 0);
   Q_ASSERT(row < (int)pvRowCopyStatus.size());
-//   Q_ASSERT(row < (int)pvRowCopyStatusText.size());
+  Q_ASSERT(row < (int)pvRowCopyError.size());
 
   switch(role){
     case Qt::DisplayRole:
     case Qt::EditRole:
       return tableCopyStatusText(pvRowCopyStatus[row]);
-//     case Qt::ToolTipRole:
-//       return pvRowCopyStatusText[row];
+    case Qt::ToolTipRole:
+      return pvRowCopyError[row].text();
     case Qt::DecorationRole:
       return tableCopyStatusDecoration(pvRowCopyStatus[row]);
     default:

@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 64
+  revision 65
   modified_by 2 "philippe"
   // class settings
   
@@ -4536,7 +4536,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     classdiagram 2048514 "CsvFileImportMapping"
@@ -4886,7 +4885,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 2328194 "RowCopyStatusError"
+      attribute 2328194 "RowCopyError"
 	private type class_ref 182402 // mdtError
 	multiplicity "*"
 	stereotype "vector"

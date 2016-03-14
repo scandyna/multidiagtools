@@ -46,8 +46,8 @@
 #include "mdt/sql/copier/DatabaseMappingModel.h"
 
 #include "mdtSqlDatabaseCopierThread.h"
-#include "mdtSqlDatabaseCopierMapping.h"
-#include "mdtSqlDatabaseCopierMappingModel.h"
+// #include "mdtSqlDatabaseCopierMapping.h"
+// #include "mdtSqlDatabaseCopierMappingModel.h"
 #include "mdtSqlDatabaseCopierDialog.h"
 #include "mdt/sql/copier/CsvStringImportTableMapping.h"
 #include "mdt/sql/copier/CsvFileImportTableMapping.h"
@@ -4623,7 +4623,15 @@ void mdtSqlCopierTest::databaseMappingModelBaseTest()
   index = model.index(3, copyStatusColumn);
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index, Qt::DecorationRole), QVariant());
-
+  /*
+   * Set copy error
+   */
+  // Set error to row 1
+  model.setTableCopyError(1, mdtErrorNewQ("Error 1", mdtError::Error, this));
+  // Check status of row 1
+  index = model.index(1, copyStatusColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::DecorationRole), QVariant(QColor(Qt::red)));
 
   /*
    * Setup views
@@ -4828,119 +4836,119 @@ void mdtSqlCopierTest::databaseMappingModelTest()
 //   QCOMPARE(mapping.sourceTableName(1), QString("Client_tbl"));
 // }
 
-void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
-{
-  using mdt::sql::copier::DatabaseCopierTableMapping;
-
-  QTableView tableView;
-  QTreeView treeView;
-  mdtSqlDatabaseCopierMappingModel model;
-  const int sourceTableNameColumn = 0;
-  const int destinationTableNameColumn = 1;
-  QModelIndex index;
-  ///mdtSqlDatabaseCopierMapping dbm;
-  std::shared_ptr<DatabaseCopierTableMapping> tm;
-  ///DatabaseCopierTableMapping tm;
-  ///mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
-  mdtProgressBarItemDelegate *progressDelegate = new mdtProgressBarItemDelegate(&tableView);
-  mdtProgressValue<int> progress;
-
-  /*
-   * Setup views
-   */
-  // Setup table view
-  tableView.setModel(&model);
-  ///tableView.setItemDelegateForColumn(2, delegate);
-  tableView.setItemDelegateForColumn(3, progressDelegate);
-  tableView.resize(600, 150);
-  tableView.show();
-  // Setup tree view
-  treeView.setModel(&model);
-  treeView.show();
-
-  /*
-   * Check generating mapping by name
-   */
-  // Set databases and generate by name
-  QVERIFY(model.setSourceDatabase(pvDatabase));
-  QVERIFY(model.setDestinationDatabase(pvDatabase));
-  QVERIFY(model.generateTableMappingByName());
-  // Check row 0
-  index = model.index(0, sourceTableNameColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("Client2_tbl"));
-  index = model.index(0, destinationTableNameColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("Client2_tbl"));
-  // Check row 1
-  index = model.index(1, sourceTableNameColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("Client_tbl"));
-  index = model.index(1, destinationTableNameColumn);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("Client_tbl"));
-  /*
-   * Check that table mapping where generated for both database mappings
-   */
-  // Check row 0
-  tm = model.tableMapping(0);
-  QCOMPARE(tm->sourceTableName(), QString("Client2_tbl"));
-  QCOMPARE(tm->destinationTableName(), QString("Client2_tbl"));
-  QCOMPARE(tm->itemsCount(), 4);
-  QCOMPARE(tm->destinationFieldNameListAtItem(0).size(), 1);
-  QCOMPARE(tm->destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
-  // Check row 1
-  tm = model.tableMapping(1);
-  QCOMPARE(tm->sourceTableName(), QString("Client_tbl"));
-  QCOMPARE(tm->destinationTableName(), QString("Client_tbl"));
-  QCOMPARE(tm->itemsCount(), 4);
-  QCOMPARE(tm->destinationFieldNameListAtItem(0).size(), 1);
-  QCOMPARE(tm->destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
-
-  /** \todo
-   * Check updating model
-   */
-  tm = model.tableMapping(0);
-  
-
-  
-  /*
-   * Check updating table copy progress and status
-   */
-  QCOMPARE(model.rowCount(), 2);
-  // Progress of row 0
-  progress.setRange(0, 10);
-  progress.setValue(2);
-  model.setTableCopyProgress(0, progress.scaledValue());
-  index = model.index(0, 3);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant(20));
-  // Progress of row 1
-  progress.setRange(0, 1000);
-  progress.setValue(500);
-  model.setTableCopyProgress(1, progress.scaledValue());
-  index = model.index(1, 3);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant(50));
-  // Clear
-  model.clearCopyStatusAndProgress();
-  index = model.index(0, 3);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant(0));
-  index = model.index(1, 3);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant(0));
-
-  /*
-   * Play
-   */
-  /*
-  tableView.resizeColumnsToContents();
-  while(tableView.isVisible()){
-    QTest::qWait(500);
-  }
-  */
-}
+// void mdtSqlCopierTest::sqlDatabaseCopierMappingModelTest()
+// {
+//   using mdt::sql::copier::DatabaseCopierTableMapping;
+// 
+//   QTableView tableView;
+//   QTreeView treeView;
+//   mdtSqlDatabaseCopierMappingModel model;
+//   const int sourceTableNameColumn = 0;
+//   const int destinationTableNameColumn = 1;
+//   QModelIndex index;
+//   ///mdtSqlDatabaseCopierMapping dbm;
+//   std::shared_ptr<DatabaseCopierTableMapping> tm;
+//   ///DatabaseCopierTableMapping tm;
+//   ///mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
+//   mdtProgressBarItemDelegate *progressDelegate = new mdtProgressBarItemDelegate(&tableView);
+//   mdtProgressValue<int> progress;
+// 
+//   /*
+//    * Setup views
+//    */
+//   // Setup table view
+//   tableView.setModel(&model);
+//   ///tableView.setItemDelegateForColumn(2, delegate);
+//   tableView.setItemDelegateForColumn(3, progressDelegate);
+//   tableView.resize(600, 150);
+//   tableView.show();
+//   // Setup tree view
+//   treeView.setModel(&model);
+//   treeView.show();
+// 
+//   /*
+//    * Check generating mapping by name
+//    */
+//   // Set databases and generate by name
+//   QVERIFY(model.setSourceDatabase(pvDatabase));
+//   QVERIFY(model.setDestinationDatabase(pvDatabase));
+//   QVERIFY(model.generateTableMappingByName());
+//   // Check row 0
+//   index = model.index(0, sourceTableNameColumn);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index), QVariant("Client2_tbl"));
+//   index = model.index(0, destinationTableNameColumn);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index), QVariant("Client2_tbl"));
+//   // Check row 1
+//   index = model.index(1, sourceTableNameColumn);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index), QVariant("Client_tbl"));
+//   index = model.index(1, destinationTableNameColumn);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index), QVariant("Client_tbl"));
+//   /*
+//    * Check that table mapping where generated for both database mappings
+//    */
+//   // Check row 0
+//   tm = model.tableMapping(0);
+//   QCOMPARE(tm->sourceTableName(), QString("Client2_tbl"));
+//   QCOMPARE(tm->destinationTableName(), QString("Client2_tbl"));
+//   QCOMPARE(tm->itemsCount(), 4);
+//   QCOMPARE(tm->destinationFieldNameListAtItem(0).size(), 1);
+//   QCOMPARE(tm->destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
+//   // Check row 1
+//   tm = model.tableMapping(1);
+//   QCOMPARE(tm->sourceTableName(), QString("Client_tbl"));
+//   QCOMPARE(tm->destinationTableName(), QString("Client_tbl"));
+//   QCOMPARE(tm->itemsCount(), 4);
+//   QCOMPARE(tm->destinationFieldNameListAtItem(0).size(), 1);
+//   QCOMPARE(tm->destinationFieldNameListAtItem(0).at(0), QString("Id_PK"));
+// 
+//   /** \todo
+//    * Check updating model
+//    */
+//   tm = model.tableMapping(0);
+//   
+// 
+//   
+//   /*
+//    * Check updating table copy progress and status
+//    */
+//   QCOMPARE(model.rowCount(), 2);
+//   // Progress of row 0
+//   progress.setRange(0, 10);
+//   progress.setValue(2);
+//   model.setTableCopyProgress(0, progress.scaledValue());
+//   index = model.index(0, 3);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index), QVariant(20));
+//   // Progress of row 1
+//   progress.setRange(0, 1000);
+//   progress.setValue(500);
+//   model.setTableCopyProgress(1, progress.scaledValue());
+//   index = model.index(1, 3);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index), QVariant(50));
+//   // Clear
+//   model.clearCopyStatusAndProgress();
+//   index = model.index(0, 3);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index), QVariant(0));
+//   index = model.index(1, 3);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index), QVariant(0));
+// 
+//   /*
+//    * Play
+//    */
+//   /*
+//   tableView.resizeColumnsToContents();
+//   while(tableView.isVisible()){
+//     QTest::qWait(500);
+//   }
+//   */
+// }
 
 void mdtSqlCopierTest::sqlDatabaseCopierDialogTest()
 {

@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 117
+  revision 118
   modified_by 2 "philippe"
   // class settings
   
@@ -2207,6 +2207,11 @@ ${inlines}
     
     activitydiagramsettings
      end
+    classdiagram 2061698 "Overview"
+      classdiagramsettings hide_operations yes member_max_width 0 end
+      size A4-Landscape
+    end
+
     classdiagram 141442 "QAbstractItemModel"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -2603,6 +2608,41 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      classrelation 2706306 // <generalisation>
+	relation 2689794 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2706306 // <generalisation>
+	  b parent class_ref 146946 // QAbstractItemModel
+      end
+    end
+
+    classdiagram 2061826 "QStringListModel"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2410626 "QStringListModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2706434 // <generalisation>
+	relation 2689922 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2706434 // <generalisation>
+	  b parent class_ref 147074 // QAbstractListModel
+      end
     end
 
     classdiagram 141698 "QAbstractTableModel"

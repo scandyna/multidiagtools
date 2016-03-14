@@ -5,11 +5,17 @@ diagrams
     934 911 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2055170 // DatabaseMappingModel
+selected classdiagram_ref 2062082 // Overview
 open
   
 package_ref 315650 // error
-  classview_ref 1019138 // CopyMapping
+  class_ref 2397442 // MappingModel
   classview_ref 893954 // sqlDatabaseCopy
+  
+package_ref 328834 // mdt
+  classview_ref 1025794 // ProactorDesign
+  class_ref 2411138 // SomeCompletionHandler
+  class_ref 2411394 // SerialPortThread
+  classview_ref 860674 // sandbox
 end
 end

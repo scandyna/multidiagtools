@@ -1,19 +1,97 @@
 format 211
 
-classcanvas 128002 class_ref 2410626 // Mapping
+classcanvas 128002 class_ref 146946 // QAbstractItemModel
   classdiagramsettings member_max_width 0 end
-  xyz 254 51 2000
+  xyz 601 42 2000
 end
-classcanvas 128130 class_ref 2403970 // DatabaseMapping
+classcanvas 128130 class_ref 147074 // QAbstractListModel
   classdiagramsettings member_max_width 0 end
-  xyz 185 241 2000
+  xyz 231 170 2000
 end
-classcanvas 128386 class_ref 2397442 // MappingModel
+classcanvas 128258 class_ref 147202 // QAbstractTableModel
   classdiagramsettings member_max_width 0 end
-  xyz 588.5 62.5 2000
+  xyz 42 170 2006
 end
-relationcanvas 128258 relation_ref 2689794 // <generalisation>
-  from ref 128130 z 2001 to ref 128002
+classcanvas 128514 class_ref 147330 // QModelIndex
+  classdiagramsettings member_max_width 0 end
+  xyz 239.5 424.5 2000
+end
+classcanvas 128642 class_ref 719618 // QAbstractProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 596 170 2006
+end
+classcanvas 128898 class_ref 719874 // QSortFilterProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 402 298 2012
+end
+classcanvas 129154 class_ref 838786 // QStandardItemModel
+  classdiagramsettings member_max_width 0 end
+  xyz 783 170 2017
+end
+classcanvas 129410 class_ref 838914 // QStandardItem
+  classdiagramsettings member_max_width 0 end
+  xyz 416.5 424.5 2017
+end
+classcanvas 129538 class_ref 1187074 // QModelIndexList
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 424.5 2023
+end
+classcanvas 129666 class_ref 1752450 // QIdentityProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 600 298 2012
+end
+classcanvas 131202 class_ref 2410626 // QStringListModel
+  classdiagramsettings member_max_width 0 end
+  xyz 239 258 2000
+end
+relationcanvas 128386 relation_ref 141186 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 523
+  from ref 128258 z 2007 to point 117 128
+  line 129922 z 2007 to point 670 128
+  line 130050 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 901890 // <generalisation>
+  from ref 128642 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 902146 // <generalisation>
+  geometry VHV unfixed
+  from ref 128898 z 2013 to point 478 256
+  line 130178 z 2013 to point 670 256
+  line 130306 z 2013 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 1047426 // <generalisation>
+  geometry VHV unfixed
+  from ref 129154 z 2018 to point 854 128
+  line 130434 z 2018 to point 670 128
+  line 130562 z 2018 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 2076930 // <generalisation>
+  from ref 129666 z 2013 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130818 relation_ref 2689794 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 525
+  from ref 128130 z 2001 to point 301 128
+  line 130946 z 2001 to point 670 128
+  line 131074 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131330 relation_ref 2689922 // <generalisation>
+  decenter_begin 528
+  decenter_end 525
+  from ref 131202 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

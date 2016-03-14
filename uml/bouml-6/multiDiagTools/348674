@@ -1,0 +1,266 @@
+format 211
+"sandbox" // mdtserialport::sandbox
+  revision 1
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  package_ref 348802 // ProactorDesign
+
+  classview 1025666 "Overview"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2062082 "Overview"
+      classdiagramsettings draw_all_relations no hide_operations yes member_max_width 0 end
+      size A4-Landscape
+    end
+
+    class 2410882 "SerialPortFrame"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2411010 "FramePool"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2706946 // <directional composition>
+	relation 2690434 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2706946 // <directional composition>
+	  b parent class_ref 2410882 // SerialPortFrame
+      end
+    end
+
+    class 2411138 "SomeCompletionHandler"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2707202 // <generalisation>
+	relation 2690690 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2707202 // <generalisation>
+	  b parent class_ref 2411266 // AbstractCompletionHandler
+      end
+
+    end
+
+    class 2411266 "AbstractCompletionHandler"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2709378 // <dependency>
+	relation 2692866 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2709378 // <dependency>
+	  b parent class_ref 2410882 // SerialPortFrame
+      end
+    end
+
+    class 2411394 "SerialPortThread"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2707586 // <unidirectional association>
+	relation 2691074 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2707586 // <unidirectional association>
+	  b parent class_ref 2411266 // AbstractCompletionHandler
+      end
+
+      operation 3663106 "setCompletionHandler"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 2707714 // <directional composition>
+	relation 2691202 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2707714 // <directional composition>
+	  b parent class_ref 2411010 // FramePool
+      end
+
+      classrelation 2707842 // <directional composition>
+	relation 2691330 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2707842 // <directional composition>
+	  b parent class_ref 2092162 // QSerialPort
+      end
+
+      classrelation 2707970 // <generalisation>
+	relation 2691458 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2707970 // <generalisation>
+	  b parent class_ref 222722 // QThread
+      end
+
+      classrelation 2709762 // <association>
+	relation 2693250 ----
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2709762 // <association>
+	  b role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2709890 // <association>
+      end
+    end
+
+    class 2412418 "RawFrameCompletionHandler"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2709250 // <generalisation>
+	relation 2692738 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2709250 // <generalisation>
+	  b parent class_ref 2411266 // AbstractCompletionHandler
+      end
+    end
+
+    class 2412546 "mdtSerialPort"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2709506 // <generalisation>
+	relation 2692994 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2709506 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 2709890 // <association>
+	relation_ref 2693250 // <association>
+      end
+    end
+  end
+end

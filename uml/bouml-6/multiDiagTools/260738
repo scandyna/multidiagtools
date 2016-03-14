@@ -1,6 +1,6 @@
-format 210
+format 211
 "newPortApiSandbox" // mdtport::newPortApiSandbox
-  revision 50
+  revision 51
   modified_by 2 "philippe"
   // class settings
   
@@ -465,7 +465,7 @@ ${inlines}
 ${members}};
 ${inlines}
 "
-      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
 ${members}}
 "
       php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
@@ -1031,7 +1031,7 @@ ${inlines}
 ${members}};
 ${inlines}
 "
-      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
 ${members}}
 "
       php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
@@ -1212,7 +1212,7 @@ ${inlines}
 ${members}};
 ${inlines}
 "
-      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
 ${members}}
 "
       php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
@@ -1796,7 +1796,7 @@ ${inlines}
 ${members}};
 ${inlines}
 "
-      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
 ${members}}
 "
       php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
@@ -3309,6 +3309,35 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    classdiagram 2061954 "sandbox2"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2410754 "SerialPortThread"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2706562 // <directional composition>
+	relation 2690050 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2706562 // <directional composition>
+	  b parent class_ref 2092162 // QSerialPort
+      end
     end
   end
 

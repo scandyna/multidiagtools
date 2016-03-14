@@ -72,7 +72,12 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void setTableCopyStatus(int row, int status);
 
-    
+    /*! \brief Set table copy error
+     *
+     * \pre row must be in a valid range
+     */
+    void setTableCopyError(int row, mdtError error);
+
     /*! \brief Clear copy status and progress for all rows
      */
     void clearCopyStatusAndProgress();
@@ -166,6 +171,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     std::vector<int> pvRowCopyProgress;
     std::vector<CopyStatus> pvRowCopyStatus;
+    std::vector<mdtError> pvRowCopyError;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{
