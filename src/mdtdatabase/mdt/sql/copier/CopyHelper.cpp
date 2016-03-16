@@ -26,6 +26,22 @@
 
 namespace mdt{ namespace sql{ namespace copier{
 
+QString CopyHelper::getSourceTableCountSql(const TableMapping *const tm, const QSqlDatabase &sourceDb)
+{
+  Q_ASSERT(tm != nullptr);
+  Q_ASSERT(sourceDb.isOpen());
+
+  QString sql;
+  auto *driver = sourceDb.driver();
+  Q_ASSERT(driver != nullptr);
+
+  sql = QStringLiteral("SELECT COUNT(*)") \
+      % QStringLiteral(" FROM ") \
+      % driver->escapeIdentifier(tm->sourceTableName(), QSqlDriver::TableName);
+
+  return sql;
+}
+
 QString CopyHelper::getSourceTableSelectSql(const TableMapping *const tm, const QSqlDatabase & sourceDb)
 {
   Q_ASSERT(tm != nullptr);

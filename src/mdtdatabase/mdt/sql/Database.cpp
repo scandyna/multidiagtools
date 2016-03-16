@@ -21,6 +21,9 @@
 #include "Database.h"
 #include "mdtSqlDriverType.h"
 #include <QLatin1String>
+#include <QFileInfo>
+
+//#include <QDebug>
 
 namespace mdt{ namespace sql{
 
@@ -67,6 +70,28 @@ QStringList Database::getTables(const QSqlDatabase & db, TableTypes types)
   return tables;
 }
 
+bool Database::isSameDatabase(const QSqlDatabase & dbA, const QSqlDatabase & dbB)
+{
+  // If no driver was set, we return false
+  if( (!dbA.isValid()) || (!dbB.isValid()) ){
+    return false;
+  }
+  // If both drivers differs, databases are not the same
+  if(dbA.driverName() != dbB.driverName()){
+    return false;
+  }
+  // Call database engine specific implementation
+  switch(mdtSqlDriverType::typeFromName(dbA.driverName())){
+    case mdtSqlDriverType::MariaDB:
+    case mdtSqlDriverType::MySQL:
+    case mdtSqlDriverType::Unknown:
+      return false;
+    case mdtSqlDriverType::SQLite:
+      return isSameDatabaseSqlite(dbA, dbB);
+  }
+  return false;
+}
+
 QStringList Database::getTablesSqlite(const QSqlDatabase & db, bool userTables, bool systemTables)
 {
   QStringList tables;
@@ -91,6 +116,19 @@ QStringList Database::getTablesSqlite(const QSqlDatabase & db, bool userTables, 
   }
 
   return tables;
+}
+
+bool Database::isSameDatabaseSqlite(const QSqlDatabase & dbA, const QSqlDatabase & dbB)
+{
+  if( (dbA.databaseName().isEmpty()) || (dbB.databaseName().isEmpty()) ){
+    return false;
+  }
+  /*
+   * Current implementation is a bit naive,
+   * because it ignores the simlink problem.
+   * See QFileInfo documentation for some details
+   */
+  return (QFileInfo(dbA.databaseName()) == QFileInfo(dbB.databaseName()));
 }
 
 }} // namespace mdt{ namespace sql{

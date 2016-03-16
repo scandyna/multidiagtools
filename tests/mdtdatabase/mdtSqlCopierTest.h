@@ -97,6 +97,8 @@ class mdtSqlCopierTest : public mdtTest
   void databaseMappingModelBaseTest();
   void databaseMappingModelTest();
 
+  void databaseCopyThreadTest();
+
 //   void sqlDatabaseCopierMappingTest();
 //   void sqlDatabaseCopierMappingModelTest();
   void sqlDatabaseCopierDialogTest();

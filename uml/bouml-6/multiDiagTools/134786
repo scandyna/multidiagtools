@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 118
+  revision 120
   modified_by 2 "philippe"
   // class settings
   
@@ -2588,6 +2588,10 @@ ${inlines}
 	    classrelation_ref 911234 // <generalisation>
 	  b parent class_ref 138626 // QObject
       end
+
+      classrelation 2726274 // <association>
+	relation_ref 2709250 // <association>
+      end
     end
 
     classdiagram 141570 "QAbstractListModel"
@@ -2980,6 +2984,18 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 2726402 // <association>
+	relation 2709378 ----
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2726402 // <association>
+	  b role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2726530 // <association>
       end
     end
 
@@ -3823,6 +3839,7 @@ ${inlines}
 	    classrelation_ref 2474754 // <unidirectional association>
 	  b parent class_ref 1382914 // QItemSelectionModel
       end
+
     end
 
     classdiagram 1066242 "QHeaderView"
@@ -3974,6 +3991,15 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 2726914 // <unidirectional association>
+	relation 2709762 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2726914 // <unidirectional association>
+	  b parent class_ref 2427778 // ViewController
       end
     end
 

@@ -129,18 +129,18 @@ ${items}};
 ${package}
 ${imports}
 ${definition}"
-  java_default_class_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+  java_default_class_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
 ${members}}
 "
   java_default_external_class_decl "${name}"
-  java_default_interface_decl "${comment}${@}${visibility}interface ${name}${extends} {
+  java_default_interface_decl "${comment}${@}${visibility}${static}interface ${name}${extends} {
 ${members}}
 "
-  java5_default_enum_decl "${comment}${@}${visibility}${final}${abstract}enum ${name}${implements} {
+  java5_default_enum_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
 ${items};
 ${members}}
 "
-  java_default_enum_decl "${comment}${@}${visibility}final class ${name} {
+  java_default_enum_decl "${comment}${@}${visibility}${static}final class ${name} {
 ${members}
   private final int value;
 

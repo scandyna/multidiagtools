@@ -65,6 +65,7 @@ set (SOURCES_FILES
           mdt/sql/copier/TableMappingModel.cpp
           mdt/sql/copier/TableMappingDialog.cpp
           mdt/sql/copier/MappingModel.cpp
+          mdt/sql/copier/CopyThread.cpp
           
           mdtSqlCopierDataMapping.cpp
 
@@ -80,6 +81,7 @@ set (SOURCES_FILES
           mdt/sql/copier/DatabaseCopierTableMappingDialog.cpp
           mdt/sql/copier/DatabaseMapping.cpp
           mdt/sql/copier/DatabaseMappingModel.cpp
+          mdt/sql/copier/DatabaseCopyThread.cpp
           
           mdtSqlDatabaseCopierMapping.cpp
           mdtSqlDatabaseCopierMappingModel.cpp

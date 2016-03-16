@@ -56,11 +56,22 @@ namespace mdt{ namespace sql{
      */
     static QStringList getTables(const QSqlDatabase & db, TableTypes types);
 
+    /*! \brief Check if dbA and dbB are refering to the same database
+     *
+     * Note: if one, or both, database is not valid (has no driver set),
+     *       this function allways returns false.
+     */
+    static bool isSameDatabase(const QSqlDatabase & dbA, const QSqlDatabase & dbB);
+
    private:
 
     /*! \brief Get tables and/or system table in a SQLite database
      */
     static QStringList getTablesSqlite(const QSqlDatabase & db, bool userTables, bool systemTables);
+
+    /*! \brief Check if dbA and dbB are refering to the same database (SQLite implementation)
+     */
+    static bool isSameDatabaseSqlite(const QSqlDatabase & dbA, const QSqlDatabase & dbB);
   };
 
   Q_DECLARE_OPERATORS_FOR_FLAGS(Database::TableTypes)

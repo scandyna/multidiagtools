@@ -27,10 +27,4 @@ relationcanvas 128514 relation_ref 2683138 // <generalisation>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 128770 relation_ref 2676482 // <generalisation>
-  decenter_begin 491
-  from ref 128002 z 2007 to ref 128642
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 end

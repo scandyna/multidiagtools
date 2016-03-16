@@ -349,6 +349,6 @@ void mdtSqlDatabaseCopierDialog::reject()
 
 void mdtSqlDatabaseCopierDialog::displayError(const mdtError& error)
 {
-  mdtErrorDialog dialog(this);
+  mdtErrorDialog dialog(this);  /// \todo Pass error..
   dialog.exec();
 }

@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 65
+  revision 69
   modified_by 2 "philippe"
   // class settings
   
@@ -4129,132 +4129,6 @@ ${inlines}
     end
   end
 
-  classview 979842 "CopyHelper"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
-    classdiagram 2002306 "CopyHelper"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 2363010 "CopyHelper"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      operation 3578626 "getSourceSelectSql"
-	class_operation public return_type class_ref 161026 // QString
-	nparams 1
-	  param in name "tm" type class_ref 2174082 // TableMapping
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3578498 "getDestinationFieldNameList"
-	class_operation public return_type class_ref 160770 // QStringList
-	nparams 1
-	  param in name "tm" type class_ref 2174082 // TableMapping
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3578114 "getDestinationRecord"
-	stereotype "vector"
-	class_operation public return_type class_ref 161154 // QVariant
-	multiplicity "*"
-	nparams 2
-	  param in name "sourceRecord" explicit_type "T"
-	  param in name "tm" type class_ref 2174082 // TableMapping
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3578242 "getFieldMapItemRecord"
-	stereotype "vector"
-	class_operation public return_type class_ref 161154 // QVariant
-	multiplicity "*"
-	nparams 2
-	  param in name "sourceRecord" explicit_type "T"
-	  param in name "tmi" type class_ref 2256386 // TableMappingItem
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3578370 "getRelatedTableExpressionRecord"
-	class_operation public explicit_return_type "mdtExpected<vector<QVariant>>"
-	multiplicity "*"
-	nparams 3
-	  param in name "sourceRecord" explicit_type "T"
-	  param in name "exp" type class_ref 2330242 // RelatedTableInsertExpression
-	  param in name "db" type class_ref 405122 // QSqlDatabase
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-  end
-
   classview 1019138 "CopyMapping"
     
     classdiagramsettings member_max_width 0 end
@@ -4543,6 +4417,44 @@ ${inlines}
       size A4
     end
 
+    class 2419330 "CsvFileImportMapping"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2717826 // <directional composition>
+	relation 2701058 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2717826 // <directional composition>
+	  b parent class_ref 2200706 // CsvFileImportTableMapping
+      end
+
+      attribute 2343170 "TableMappingList"
+	private type class_ref 2200706 // CsvFileImportTableMapping
+	multiplicity "*"
+	stereotype "vector"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
     classdiagram 2048642 "MappingModel"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -4562,14 +4474,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2692994 // <generalisation>
-	relation 2676482 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 2692994 // <generalisation>
-	  b parent class_ref 146946 // QAbstractItemModel
-      end
-
       operation 3638146 "MappingModel"
 	public explicit_return_type ""
 	nparams 1
@@ -4587,6 +4491,7 @@ ${inlines}
       end
 
       operation 3638018 "setTableCopyProgress"
+	stereotype "slot"
 	public explicit_return_type "void"
 	nparams 2
 	  param in name "row" explicit_type "int"
@@ -4604,6 +4509,7 @@ ${inlines}
       end
 
       operation 3638274 "setTableCopyStatus"
+	stereotype "slot"
 	public explicit_return_type "void"
 	nparams 2
 	  param in name "row" explicit_type "int"
@@ -4621,6 +4527,7 @@ ${inlines}
       end
 
       operation 3638402 "setTableCopyError"
+	stereotype "slot"
 	public explicit_return_type "void"
 	nparams 2
 	  param in name "row" explicit_type "int"
@@ -4898,6 +4805,18 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
+
+      classrelation 2717186 // <association>
+	relation_ref 2700418 // <association>
+      end
+
+      classrelation 2717954 // <generalisation>
+	relation 2701186 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2717954 // <generalisation>
+	  b parent class_ref 147202 // QAbstractTableModel
+      end
     end
 
     classdiagram 2055170 "DatabaseMappingModel"
@@ -5125,6 +5044,908 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    classdiagram 2075522 "CsvFileImportMappingModel"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
+    class 2419458 "CsvFileImportMappingModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2718082 // <generalisation>
+	relation 2701314 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2718082 // <generalisation>
+	  b parent class_ref 2397442 // MappingModel
+      end
+
+      classrelation 2718210 // <directional composition>
+	relation 2701442 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2718210 // <directional composition>
+	  b parent class_ref 2419330 // CsvFileImportMapping
+      end
+
+      attribute 2343298 "Mapping"
+	private type class_ref 2419330 // CsvFileImportMapping
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3671682 "setDestinationDatabase"
+	public return_type class_ref 1900930 // mdtExpected
+	nparams 1
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3671810 "destinationDatabase"
+	public return_type class_ref 405122 // QSqlDatabase
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3671938 "sourceTableName"
+	cpp_virtual public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "row" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3672066 "destinationTableName"
+	cpp_virtual public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "row" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3672194 "rowCount"
+	cpp_virtual public explicit_return_type "int"
+	nparams 1
+	  param in name "parent" type class_ref 147330 // QModelIndex
+	    defaultvalue "QModelIndex()"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+  end
+
+  classview 979842 "CopyHelper"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2002306 "CopyHelper"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2363010 "CopyHelper"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 3578626 "getSourceSelectSql"
+	class_operation public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "tm" type class_ref 2174082 // TableMapping
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3578498 "getDestinationFieldNameList"
+	class_operation public return_type class_ref 160770 // QStringList
+	nparams 1
+	  param in name "tm" type class_ref 2174082 // TableMapping
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3578114 "getDestinationRecord"
+	stereotype "vector"
+	class_operation public return_type class_ref 161154 // QVariant
+	multiplicity "*"
+	nparams 2
+	  param in name "sourceRecord" explicit_type "T"
+	  param in name "tm" type class_ref 2174082 // TableMapping
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3578242 "getFieldMapItemRecord"
+	stereotype "vector"
+	class_operation public return_type class_ref 161154 // QVariant
+	multiplicity "*"
+	nparams 2
+	  param in name "sourceRecord" explicit_type "T"
+	  param in name "tmi" type class_ref 2256386 // TableMappingItem
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3578370 "getRelatedTableExpressionRecord"
+	class_operation public explicit_return_type "mdtExpected<vector<QVariant>>"
+	multiplicity "*"
+	nparams 3
+	  param in name "sourceRecord" explicit_type "T"
+	  param in name "exp" type class_ref 2330242 // RelatedTableInsertExpression
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+  end
+
+  classview 1038850 "CopyThread"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2075394 "CopyThread"
+      classdiagramsettings member_max_width 0 end
+      size B-Landscape
+    end
+
+    class 2419202 "CopyThread"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2716802 // <generalisation>
+	relation 2700162 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2716802 // <generalisation>
+	  b parent class_ref 222722 // QThread
+      end
+
+      attribute 2341890 "Abort"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2349954 "GlobalCopyProgress"
+	private type class_ref 2021634 // mdtProgressValue
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2342146 "TableCopyProgressList"
+	private type class_ref 2021634 // mdtProgressValue
+	multiplicity "*"
+	stereotype "vector"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 2717058 // <association>
+	relation 2700418 ----
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2717058 // <association>
+	  b role_name "" package
+	    classrelation_ref 2717186 // <association>
+      end
+
+      operation 3685634 "tableMappingCount"
+	abstract cpp_virtual public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 3671042 "abort"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3670018 "tableCopyProgressChanged"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "mappingModelRow" explicit_type "int"
+	  param in name "progress" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3670146 "tableCopyStatusChanged"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "mappingModelRow" explicit_type "int"
+	  param in name "status" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3670274 "tableCopyErrorOccured"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "mappingModelRow" explicit_type "int"
+	  param in name "error" type class_ref 182402 // mdtError
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3670402 "globalProgressRangeChanged"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "min" explicit_type "int"
+	  param in name "max" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3670530 "globalProgressValueChanged"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "progress" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3670658 "globalErrorOccured"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "error" type class_ref 182402 // mdtError
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3678722 "copyFinished"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "someState" explicit_type ""
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3669634 "resetTableCopyProgress"
+	protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3669762 "setTableSize"
+	protected explicit_return_type "void"
+	nparams 2
+	  param in name "mappingModelRow" explicit_type "int"
+	  param in name "size" explicit_type "int64_t"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3669890 "tableSize"
+	protected explicit_return_type "int64_t"
+	nparams 1
+	  param in name "mappingModelRow" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3671298 "createConnection"
+	protected return_type class_ref 405122 // QSqlDatabase
+	nparams 1
+	  param in name "dbInfo" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 2075266 "DatabaseCopyThread"
+      classdiagramsettings member_max_width 0 end
+      size C-Landscape
+    end
+
+    class 2419074 "DatabaseCopyThread"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 2342018 "Mapping"
+	private type class_ref 2403970 // DatabaseMapping
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 2716418 // <directional composition>
+	relation 2699778 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2716418 // <directional composition>
+	  b parent class_ref 2403970 // DatabaseMapping
+      end
+
+      classrelation 2716674 // <dependency>
+	relation 2700034 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2716674 // <dependency>
+	  b parent class_ref 2363010 // CopyHelper
+      end
+
+      classrelation 2716930 // <generalisation>
+	relation 2700290 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2716930 // <generalisation>
+	  b parent class_ref 2419202 // CopyThread
+      end
+
+      operation 3670914 "startCopy"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "mapping" type class_ref 2403970 // DatabaseMapping
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3671170 "run"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 2717314 // <dependency>
+	relation 2700546 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2717314 // <dependency>
+	  b parent class_ref 2370178 // Database
+      end
+
+      operation 3671554 "calculateTableSizes"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "sourceDb" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 2075778 "CsvFileImportThread"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2419714 "CsvFileImportThread"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2718466 // <generalisation>
+	relation 2701698 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2718466 // <generalisation>
+	  b parent class_ref 2419202 // CopyThread
+      end
+    end
+  end
+
+  classview 1032322 "CopyDialog"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2068738 "DatabaseCopyDialog"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
+    class 1934594 "DatabaseCopyDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2717442 // <directional composition>
+	relation 2700674 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2717442 // <directional composition>
+	  b parent class_ref 2404098 // DatabaseMappingModel
+      end
+
+      classrelation 2717570 // <directional composition>
+	relation 2700802 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2717570 // <directional composition>
+	  b parent class_ref 2419074 // DatabaseCopyThread
+      end
+
+      attribute 2342274 "Closable"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2342402 "State"
+	private explicit_type "State"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2342530 "MappingModel"
+	private type class_ref 2404098 // DatabaseMappingModel
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2342658 "Thread"
+	private type class_ref 2419074 // DatabaseCopyThread
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2342786 "OwningSourceConnectionName"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2342914 "SourceDatabaseSelectable"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2343042 "DestinationDatabaseSelectable"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 2717698 // <generalisation>
+	relation 2700930 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2717698 // <generalisation>
+	  b parent class_ref 370434 // QDialog
+      end
+
+      classrelation 2719362 // <generalisation>
+	relation 2702594 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2719362 // <generalisation>
+	  b parent class_ref 2421250 // DatabaseCopyDialog
+      end
+    end
+
+    classdiagram 2075650 "CsvFileImportDialog"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2419586 "CsvFileImportDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2718338 // <generalisation>
+	relation 2701570 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2718338 // <generalisation>
+	  b parent class_ref 370434 // QDialog
+      end
+
+      classrelation 2718850 // <directional composition>
+	relation 2702082 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2718850 // <directional composition>
+	  b parent class_ref 2419714 // CsvFileImportThread
+      end
+
+      classrelation 2718978 // <directional composition>
+	relation 2702210 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2718978 // <directional composition>
+	  b parent class_ref 2419458 // CsvFileImportMappingModel
       end
     end
   end

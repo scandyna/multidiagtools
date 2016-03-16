@@ -1,0 +1,61 @@
+format 211
+
+classcanvas 128002 class_ref 2419842 // Resource
+  classdiagramsettings member_max_width 0 end
+  xyzwh 244.9 42.2 2000 73 55
+end
+classcanvas 128130 class_ref 2419970 // HumainResource
+  classdiagramsettings member_max_width 0 end
+  xyz 41.05 171.3 2000
+end
+classcanvas 128258 class_ref 2420098 // InfrastructureResource
+  classdiagramsettings member_max_width 0 end
+  xyz 201.9 171.3 2000
+end
+classcanvas 128898 class_ref 2420226 // Planning
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 295.7 2000
+end
+classcanvas 129026 class_ref 2420354 // Task
+  classdiagramsettings member_max_width 0 end
+  xyz 189.5 295.7 2000
+end
+classcanvas 129154 class_ref 2420482 // TimeLine
+  classdiagramsettings member_max_width 0 end
+  xyz 299.5 420.7 2000
+end
+classcanvas 129282 class_ref 2420610 // Constraint
+  classdiagramsettings member_max_width 0 end
+  xyz 439.5 295.7 2000
+end
+classcanvas 129410 class_ref 2420738 // InsfrastructurePlanning
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 545.7 2000
+end
+classcanvas 129538 class_ref 2420866 // HumainResourcePlanning
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 420.7 2000
+end
+classcanvas 129666 class_ref 2420994 // Cost
+  classdiagramsettings member_max_width 0 end
+  xyz 314.5 295.7 2000
+end
+classcanvas 129794 class_ref 2421122 // Occupation
+  classdiagramsettings member_max_width 0 end
+  xyz 441.7 40.5 2000
+end
+relationcanvas 128386 relation_ref 2701826 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 528
+  from ref 128130 z 2001 to point 103 135
+  line 128642 z 2001 to point 278 135
+  line 128770 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 2701954 // <generalisation>
+  from ref 128258 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

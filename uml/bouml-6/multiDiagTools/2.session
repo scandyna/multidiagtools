@@ -1,21 +1,42 @@
-window_sizes 1280 964 340 934 911 0
+window_sizes 1280 964 346 928 911 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 2048642 // MappingModel
+  classdiagram_ref 2048642 // MappingModel
     934 911 100 4 0 0
+  classdiagram_ref 2068738 // DatabaseCopyDialog
+    934 911 100 18 0 0
+  classdiagram_ref 2048514 // CsvFileImportMapping
+    120 106 100 4 0 0
+  classdiagram_ref 2048386 // DatabaseMapping
+    120 106 100 4 0 0
+  classdiagram_ref 2075522 // CsvFileImportMappingModel
+    120 106 100 18 0 0
+  classdiagram_ref 2055170 // DatabaseMappingModel
+    120 106 100 7 0 0
+  classdiagram_ref 2075650 // CsvFileImportDialog
+    120 106 100 4 0 0
+  classdiagram_ref 2076034 // DatabaseCopyDialog
+    120 106 100 4 0 0
+  classdiagram_ref 2075394 // CopyThread
+    928 911 100 21 0 0
+  active  classdiagram_ref 2075266 // DatabaseCopyThread
+    928 911 100 22 0 81
 end
 show_stereotypes
-selected classdiagram_ref 2062082 // Overview
 open
   
-package_ref 315650 // error
-  class_ref 2397442 // MappingModel
+  package_ref 315650 // error
+  class_ref 2419330 // CsvFileImportMapping
+  class_ref 2404098 // DatabaseMappingModel
+  operation_ref 3671682 // setDestinationDatabase
+  operation_ref 3671810 // destinationDatabase
+  classview_ref 979842 // CopyHelper
+  attribute_ref 2349954 // GlobalCopyProgress
+  operation_ref 3685634 // tableMappingCount
+  class_ref 2419074 // DatabaseCopyThread
+  classview_ref 1032322 // CopyDialog
+  class_ref 2370178 // Database
   classview_ref 893954 // sqlDatabaseCopy
-  
-package_ref 328834 // mdt
-  classview_ref 1025794 // ProactorDesign
-  class_ref 2411138 // SomeCompletionHandler
-  class_ref 2411394 // SerialPortThread
-  classview_ref 860674 // sandbox
+  class_ref 2421250 // DatabaseCopyDialog
 end
 end

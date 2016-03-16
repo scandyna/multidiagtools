@@ -3693,6 +3693,69 @@ void mdtDatabaseTest::databaseGetTableTest()
   QCOMPARE(tableList, expectedTableList);
 }
 
+void mdtDatabaseTest::databaseIsSameSqliteTest()
+{
+  using mdt::sql::Database;
+
+  QSqlDatabase dbA, dbB;
+  QTemporaryFile fileA, fileB;
+
+  /*
+   * Setup file info
+   */
+  QVERIFY(fileA.open());
+  QFileInfo fiA(fileA);
+  fileA.close();
+  QVERIFY(fileB.open());
+  QFileInfo fiB(fileB);
+  fileB.close();
+  /*
+   * Check with closed databases
+   */
+  // Both databases invalid
+  QVERIFY(!dbA.isValid());
+  QVERIFY(!dbB.isValid());
+  QVERIFY(!Database::isSameDatabase(dbA, dbB));
+  // Check with only dbA valid
+  dbA = QSqlDatabase::addDatabase("QSQLITE", "cnnDbA");
+  QVERIFY(dbA.isValid());
+  QVERIFY(!Database::isSameDatabase(dbA, dbB));
+  // Check with both databases valid
+  dbB = QSqlDatabase::addDatabase("QSQLITE", "cnnDbB");
+  QVERIFY(dbB.isValid());
+  QVERIFY(!Database::isSameDatabase(dbA, dbB));
+  /*
+   * Check with configured databases
+   */
+  // One database configured
+  dbA.setDatabaseName(fiA.absoluteFilePath());
+  QVERIFY(!Database::isSameDatabase(dbA, dbB));
+  // Both databases configured on same file
+  dbB.setDatabaseName(fiA.absoluteFilePath());
+  QVERIFY(Database::isSameDatabase(dbA, dbB));
+  // Both databases open on different files
+  dbB.setDatabaseName(fiB.absoluteFilePath());
+  QVERIFY(!Database::isSameDatabase(dbA, dbB));
+  /*
+   * Check comparing absolute and relative path
+   */
+  dbA.setDatabaseName(QFileInfo(QDir::current(), fiA.fileName()).absoluteFilePath());
+  dbB.setDatabaseName(fiA.fileName());
+  QVERIFY(Database::isSameDatabase(dbA, dbB));
+  /**
+   * \todo
+   * Check with links...
+   */
+  
+  /*
+   * Remove created connections
+   */
+  dbA = QSqlDatabase();
+  dbB = QSqlDatabase();
+  QSqlDatabase::removeDatabase("cnnDbA");
+  QSqlDatabase::removeDatabase("cnnDbB");
+}
+
 void mdtDatabaseTest::databaseSqliteTest()
 {
   /*

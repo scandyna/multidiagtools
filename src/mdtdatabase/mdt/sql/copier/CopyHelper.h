@@ -59,6 +59,10 @@ namespace mdt{ namespace sql{ namespace copier{
   {
    public:
 
+    /*! \brief Get SQL to count number of records existing in source table
+     */
+    static QString getSourceTableCountSql(const TableMapping * const tm, const QSqlDatabase & sourceDb);
+
     /*! \brief Get SQL to select data in source table
      */
     static QString getSourceTableSelectSql(const TableMapping * const tm, const QSqlDatabase & sourceDb);

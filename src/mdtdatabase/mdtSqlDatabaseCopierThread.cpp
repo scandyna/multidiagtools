@@ -143,7 +143,7 @@ void mdtSqlDatabaseCopierThread::calculateTableSizes(const QSqlDatabase & source
 
   pvTableSizeList.clear();
   pvTableSizeList.assign(tableMappingList.size(), -1);
-  // Calculate table siz for each valid mapping
+  // Calculate table size for each valid mapping
   for(int i = 0; i < tableMappingList.size(); ++i){
     auto tm = tableMappingList.at(i);
     if(tm->mappingState() == DatabaseCopierTableMapping::MappingComplete){

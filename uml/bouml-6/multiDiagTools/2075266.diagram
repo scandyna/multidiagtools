@@ -1,0 +1,53 @@
+format 211
+
+classcanvas 128130 class_ref 2419074 // DatabaseCopyThread
+  classdiagramsettings member_max_width 0 end
+  xyz 537.7 549.5 2000
+end
+classcanvas 128258 class_ref 2403970 // DatabaseMapping
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 562.7 711.6 2000
+end
+classcanvas 128514 class_ref 222722 // QThread
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 683.7 41.45 2000
+end
+classcanvas 128770 class_ref 2363010 // CopyHelper
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 938.35 584.15 2000
+end
+classcanvas 129026 class_ref 2419202 // CopyThread
+  classdiagramsettings member_max_width 0 end
+  xyz 435.7 126.05 2006
+end
+classcanvas 129410 class_ref 2370178 // Database
+  classdiagramsettings member_max_width 0 end
+  xyz 41.8 568.5 2012
+end
+relationcanvas 128386 relation_ref 2699778 // <directional composition>
+  from ref 128130 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 2700034 // <dependency>
+  decenter_end 577
+  from ref 128130 z 2001 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 2700162 // <generalisation>
+  from ref 129026 z 2007 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 2700290 // <generalisation>
+  from ref 128130 z 2007 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 2700546 // <dependency>
+  from ref 128130 z 2013 to ref 129410
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

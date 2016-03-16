@@ -1,6 +1,6 @@
 format 211
 "sql" // mdtdatabase::mdt::sql
-  revision 8
+  revision 10
   modified_by 2 "philippe"
   // class settings
   
@@ -526,6 +526,23 @@ ${inlines}
 	
 	
       end
+
+      operation 3671426 "isSameDatabase"
+	class_operation public explicit_return_type "bool"
+	nparams 2
+	  param in name "dbA" type class_ref 405122 // QSqlDatabase
+	  param in name "dbB" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 
@@ -566,4 +583,6 @@ ${inlines}
       
     end
   end
+
+  package_ref 362114 // ControllerSandbox
 end
