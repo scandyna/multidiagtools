@@ -21,6 +21,8 @@
 #include "MappingModel.h"
 #include <QColor>
 
+//#include <QDebug>
+
 namespace mdt{ namespace sql{ namespace copier{
 
 MappingModel::MappingModel(QObject *parent)

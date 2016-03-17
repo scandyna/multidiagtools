@@ -37,7 +37,7 @@ end
 relationcanvas 128514 relation_ref 2700418 // <association>
   geometry HV unfixed
   decenter_begin 399
-  from ref 128002 z 2001 to point 1170 274
+  from ref 128002 z 2001 to point 1170 265
   line 130306 z 2001 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -59,6 +59,6 @@ end
 line 129538 -_-_ decenter_begin 519 decenter_end 49
   from ref 129410 z 2001 to ref 128002
 line 130050 -_-_ geometry VH unfixed decenter_end 509
-  from ref 129922 z 2001 to point 641 316
+  from ref 129922 z 2001 to point 641 305
   line 130178 z 2001 to ref 128002
 end

@@ -60,6 +60,17 @@ mdtExpected<bool> DatabaseMappingModel::generateTableMappingByName()
   return ret;
 }
 
+mdtExpected< bool > DatabaseMappingModel::resetMapping()
+{
+  mdtExpected<bool> ret;
+
+  beginResetModel();
+  ret = pvMapping.resetMapping();
+  endResetModel();
+
+  return ret;
+}
+
 int DatabaseMappingModel::rowCount(const QModelIndex & parent) const
 {
   // Check parent validity (case of use with a tree view)

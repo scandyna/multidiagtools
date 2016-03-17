@@ -22,6 +22,8 @@
 #include "mdtAlgorithms.h"
 #include "mdt/sql/error/Error.h"
 
+#include <QDebug>
+
 namespace mdt{ namespace sql{ namespace copier{
 
 CopyThread::CopyThread(QObject *parent)
@@ -42,24 +44,65 @@ void CopyThread::abort()
 //   
 // }
 
-void CopyThread::resetTableCopyProgress()
+void CopyThread::resetCopyProgress()
 {
+  pvTableSizeList.assign(tableMappingCount(), -1);
   pvTableProgressList.assign(tableMappingCount(), mdtProgressValue<int64_t>());
+  pvGlobalProgress.setValue(0);
+  emit globalProgressRangeChanged(0, 0);
 }
 
 void CopyThread::setTableSize(int index, int64_t size)
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < (int)pvTableSizeList.size());
+  Q_ASSERT(index < (int)pvTableProgressList.size());
+
   pvTableSizeList[index] = size;
+  if(size > 0){
+    pvTableProgressList[index].setRange(0, size);
+  }
 }
 
-void CopyThread::incrementCopyProgress(int index, int64_t n)
+int64_t CopyThread::calculateTotalCopySize()
+{
+  Q_ASSERT(pvTableSizeList.size() == pvTableProgressList.size());
+
+  int64_t totalSize = 0;
+
+  for(size_t i = 0; i < pvTableSizeList.size(); ++i){
+    auto size = pvTableSizeList[i];
+    if(size > 0){
+      totalSize += size;
+    }
+  }
+  if(totalSize > 0){
+    pvGlobalProgress.setRange(0, totalSize);
+    emit globalProgressRangeChanged(0, 100);
+  }
+
+  return totalSize;
+}
+
+void CopyThread::incrementTableCopyProgress(int index, int64_t n)
 {
   Q_ASSERT(index >= 0);
-  Q_ASSERT(index < (int)pvTableSizeList.size());
+  Q_ASSERT(index < (int)pvTableProgressList.size());
 
-  
+  // Increment table copy progress
+  auto & tableProgress = pvTableProgressList[index];
+  tableProgress.increment(n);
+  // Increment global progress and notify if timeout
+  pvGlobalProgress.increment(n);
+  if(pvGlobalProgress.isTimeToNotify()){
+    // Notify progress of each table
+    for(size_t i = 0; i < pvTableProgressList.size(); ++i){
+      auto & tcp = pvTableProgressList[i];
+      emit tableCopyProgressChanged(i, tcp.scaledValue());
+    }
+    // Notify global progress
+    emit globalProgressValueChanged(pvGlobalProgress.scaledValue());
+  }
 }
 
 QSqlDatabase CopyThread::createConnection(const QSqlDatabase & dbInfo)

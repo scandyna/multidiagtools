@@ -39,6 +39,7 @@ void DatabaseCopyThread::startCopy(const DatabaseMapping & mapping)
   Q_ASSERT(!isRunning());
 
   pvMapping = mapping;
+  resetCopyProgress();
   start();
 }
 
@@ -78,7 +79,46 @@ void DatabaseCopyThread::run()
 {
   using mdt::sql::Database;
 
-  
+  QString sourceConnectionName;
+  QString destinationConnectionName;
+  {
+    ///mdtProgressValue<int64_t> globalProgress;
+    ///int64_t totalSize;
+    auto sourceDatabase = createConnection(pvMapping.sourceDatabase());
+    sourceConnectionName = sourceDatabase.connectionName();
+    QSqlDatabase destinationDatabase;
+    if(Database::isSameDatabase(sourceDatabase, pvMapping.destinationDatabase())){
+      destinationDatabase = sourceDatabase;
+    }else{
+      destinationDatabase = createConnection(pvMapping.destinationDatabase());
+    }
+    destinationConnectionName = destinationDatabase.connectionName();
+
+    // Check that we are successfully connected to both databases
+    if(!sourceDatabase.isOpen()){
+      return;
+    }
+    if(!destinationDatabase.isOpen()){
+      return;
+    }
+    
+    sleep(1);
+    
+    setTableSize(0, 50);
+    setTableSize(1, 50);
+    qDebug() << "Total size: " << calculateTotalCopySize();
+    
+    for(int i = 0; i < 50; ++i){
+      msleep(50);
+      incrementTableCopyProgress(0);
+      msleep(100);
+      incrementTableCopyProgress(1);
+    }
+    
+    
+  }
+  QSqlDatabase::removeDatabase(sourceConnectionName);
+  QSqlDatabase::removeDatabase(destinationConnectionName);
 }
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

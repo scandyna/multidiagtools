@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>mdtSqlDatabaseCopierDialog</class>
- <widget class="QDialog" name="mdtSqlDatabaseCopierDialog">
+ <class>mdtSqlCopierDatabaseCopyDialog</class>
+ <widget class="QDialog" name="mdtSqlCopierDatabaseCopyDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -130,7 +130,9 @@
         <string>Copy</string>
        </property>
        <property name="icon">
-        <iconset theme="system-run"/>
+        <iconset theme="system-run">
+         <normaloff/>
+        </iconset>
        </property>
       </widget>
      </item>
@@ -180,7 +182,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>mdtSqlDatabaseCopierDialog</receiver>
+   <receiver>mdtSqlCopierDatabaseCopyDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -196,7 +198,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>mdtSqlDatabaseCopierDialog</receiver>
+   <receiver>mdtSqlCopierDatabaseCopyDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

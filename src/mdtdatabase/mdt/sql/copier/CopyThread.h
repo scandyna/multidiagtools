@@ -104,7 +104,7 @@ namespace mdt{ namespace sql{ namespace copier{
      *
      * This function must be called before starting copy
      */
-    void resetTableCopyProgress();
+    void resetCopyProgress();
 
     /*! \brief Set table size at given index
      */
@@ -119,9 +119,13 @@ namespace mdt{ namespace sql{ namespace copier{
       return pvTableSizeList[index];
     }
 
+    /*! \brief Calculate total copy size
+     */
+    int64_t calculateTotalCopySize();
+
     /*! \brief Increment copy progress by n records
      */
-    void incrementCopyProgress(int index, int64_t n = 1);
+    void incrementTableCopyProgress(int index, int64_t n = 1);
 
     /*! \brief Create database connection based on given dbInfo
      */
@@ -132,6 +136,7 @@ namespace mdt{ namespace sql{ namespace copier{
     std::atomic<bool> pvAbort;
     std::vector<int64_t> pvTableSizeList;
     std::vector<mdtProgressValue<int64_t> > pvTableProgressList;
+    mdtProgressValue<int64_t, mdtProgressValueTimer> pvGlobalProgress;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

@@ -1,6 +1,6 @@
 format 211
 "mdtport" // mdtport
-  revision 60
+  revision 61
   modified_by 2 "philippe"
   // class settings
   
@@ -27,6 +27,8 @@ format 211
    end
   
   package_ref 328834 // mdt
+
+  package_ref 368642 // sandbox
 
   package_ref 260738 // newPortApiSandbox
 

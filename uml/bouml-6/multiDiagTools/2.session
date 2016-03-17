@@ -11,8 +11,6 @@ diagrams
     120 106 100 4 0 0
   classdiagram_ref 2075522 // CsvFileImportMappingModel
     120 106 100 18 0 0
-  classdiagram_ref 2055170 // DatabaseMappingModel
-    120 106 100 7 0 0
   classdiagram_ref 2075650 // CsvFileImportDialog
     120 106 100 4 0 0
   classdiagram_ref 2076034 // DatabaseCopyDialog
@@ -23,9 +21,10 @@ diagrams
     928 911 100 22 0 81
 end
 show_stereotypes
+selected classdiagram_ref 2089090 // tcp
 open
   
-  package_ref 315650 // error
+package_ref 315650 // error
   class_ref 2419330 // CsvFileImportMapping
   class_ref 2404098 // DatabaseMappingModel
   operation_ref 3671682 // setDestinationDatabase
@@ -38,5 +37,6 @@ open
   class_ref 2370178 // Database
   classview_ref 893954 // sqlDatabaseCopy
   class_ref 2421250 // DatabaseCopyDialog
+  classview_ref 1052162 // tcp
 end
 end

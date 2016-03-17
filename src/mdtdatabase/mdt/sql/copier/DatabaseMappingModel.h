@@ -80,6 +80,10 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     mdtExpected<bool> generateTableMappingByName();
 
+    /*! \brief Reset mapping
+     */
+    mdtExpected<bool> resetMapping();
+
     /*! \brief Get row count
      */
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
@@ -132,6 +136,13 @@ namespace mdt{ namespace sql{ namespace copier{
      * \pre row must be in a valid range
      */
     void tableMappingUpdated(int row);
+
+    /*! \brief Get database mapping
+     */
+    const DatabaseMapping mapping() const
+    {
+      return pvMapping;
+    }
 
    private:
 

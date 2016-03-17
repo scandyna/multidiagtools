@@ -18,14 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtSqlDatabaseCopierDialog.h"
+#include "DatabaseCopyDialog.h"
 #include "mdtSqlDatabaseDialogSqlite.h"
-#include "mdtSqlDatabaseCopierMappingModel.h"
+// #include "DatabaseMappingModel.h"
+
+#include "DatabaseMappingModel.h"
+#include "DatabaseCopyThread.h"
+#include "DatabaseCopierTableMappingDialog.h"
 
 // #include "mdtSqlDatabaseCopierTableMappingDialog.h"
 
-#include "mdt/sql/copier/DatabaseCopierTableMappingDialog.h"
-#include "mdtSqlDatabaseCopierThread.h"
+// #include "mdt/sql/copier/DatabaseCopierTableMappingDialog.h"
+// #include "DatabaseCopyThread.h"
 #include "mdtProgressBarItemDelegate.h"
 #include "mdtAlgorithms.h"
 #include "mdtErrorDialog.h"
@@ -35,10 +39,12 @@
 #include <QTableView>
 #include <QCloseEvent>
 
-mdtSqlDatabaseCopierDialog::mdtSqlDatabaseCopierDialog(QWidget* parent)
+namespace mdt{ namespace sql{ namespace copier{
+
+DatabaseCopyDialog::DatabaseCopyDialog(QWidget* parent)
  : QDialog(parent),
-   pvMappingModel(new mdtSqlDatabaseCopierMappingModel),
-   pvThread(new mdtSqlDatabaseCopierThread),
+   pvMappingModel(new DatabaseMappingModel),
+   pvThread(new DatabaseCopyThread),
    pvSourceDatabaseSelectable(true),
    pvDestinationDatabaseSelectable(true)
 {
@@ -47,24 +53,24 @@ mdtSqlDatabaseCopierDialog::mdtSqlDatabaseCopierDialog(QWidget* parent)
   tvMapping->setModel(pvMappingModel);
   auto *progressBarDelegate = new mdtProgressBarItemDelegate(tvMapping);
   tvMapping->setItemDelegateForColumn(3, progressBarDelegate);
-  connect(tvMapping, &QTableView::doubleClicked, this, &mdtSqlDatabaseCopierDialog::editTableMapping);
-  connect(tbSelectSourceDatabase, &QToolButton::clicked, this, &mdtSqlDatabaseCopierDialog::selectSourceDatabase);
-  connect(tbSelectDestinationDatabase, &QToolButton::clicked, this, &mdtSqlDatabaseCopierDialog::selectDestinationDatabase);
-  connect(tbResetMapping, &QToolButton::clicked, this, &mdtSqlDatabaseCopierDialog::resetMapping);
-  connect(tbMapByName, &QToolButton::clicked, this, &mdtSqlDatabaseCopierDialog::mapByName);
-  connect(pbCopy, &QPushButton::clicked, this, &mdtSqlDatabaseCopierDialog::copyData);
-  connect(pbAbort, &QPushButton::clicked, pvThread, &mdtSqlDatabaseCopierThread::abort);
-  connect(pvThread, &mdtSqlDatabaseCopierThread::tableCopyProgressChanged, pvMappingModel, &mdtSqlDatabaseCopierMappingModel::setTableCopyProgress);
-  connect(pvThread, &mdtSqlDatabaseCopierThread::tableCopyStatusChanged, pvMappingModel, &mdtSqlDatabaseCopierMappingModel::setTableCopyStatus);
-  connect(pvThread, &mdtSqlDatabaseCopierThread::tableCopyErrorOccured, pvMappingModel, &mdtSqlDatabaseCopierMappingModel::setTableCopyError);
-  connect(pvThread, &mdtSqlDatabaseCopierThread::globalProgressRangeChanged, pbGlobalProgress, &QProgressBar::setRange );
-  connect(pvThread, &mdtSqlDatabaseCopierThread::globalProgressValueChanged, pbGlobalProgress, &QProgressBar::setValue);
-  connect(pvThread, &mdtSqlDatabaseCopierThread::globalErrorOccured, this, &mdtSqlDatabaseCopierDialog::onThreadGlobalErrorOccured);
-  connect(pvThread, &mdtSqlDatabaseCopierThread::finished, this, &mdtSqlDatabaseCopierDialog::onThreadFinished);
+  connect(tvMapping, &QTableView::doubleClicked, this, &DatabaseCopyDialog::editTableMapping);
+  connect(tbSelectSourceDatabase, &QToolButton::clicked, this, &DatabaseCopyDialog::selectSourceDatabase);
+  connect(tbSelectDestinationDatabase, &QToolButton::clicked, this, &DatabaseCopyDialog::selectDestinationDatabase);
+  connect(tbResetMapping, &QToolButton::clicked, this, &DatabaseCopyDialog::resetMapping);
+  connect(tbMapByName, &QToolButton::clicked, this, &DatabaseCopyDialog::mapByName);
+  connect(pbCopy, &QPushButton::clicked, this, &DatabaseCopyDialog::copyData);
+  connect(pbAbort, &QPushButton::clicked, pvThread, &DatabaseCopyThread::abort);
+  connect(pvThread, &DatabaseCopyThread::tableCopyProgressChanged, pvMappingModel, &DatabaseMappingModel::setTableCopyProgress);
+  connect(pvThread, &DatabaseCopyThread::tableCopyStatusChanged, pvMappingModel, &DatabaseMappingModel::setTableCopyStatus);
+  connect(pvThread, &DatabaseCopyThread::tableCopyErrorOccured, pvMappingModel, &DatabaseMappingModel::setTableCopyError);
+  connect(pvThread, &DatabaseCopyThread::globalProgressRangeChanged, pbGlobalProgress, &QProgressBar::setRange );
+  connect(pvThread, &DatabaseCopyThread::globalProgressValueChanged, pbGlobalProgress, &QProgressBar::setValue);
+  connect(pvThread, &DatabaseCopyThread::globalErrorOccured, this, &DatabaseCopyDialog::onThreadGlobalErrorOccured);
+  connect(pvThread, &DatabaseCopyThread::finished, this, &DatabaseCopyDialog::onThreadFinished);
   setStateDatabasesNotSet();
 }
 
-mdtSqlDatabaseCopierDialog::~mdtSqlDatabaseCopierDialog()
+DatabaseCopyDialog::~DatabaseCopyDialog()
 {
   delete pvThread;
   delete pvMappingModel;
@@ -76,7 +82,7 @@ mdtSqlDatabaseCopierDialog::~mdtSqlDatabaseCopierDialog()
 //   }
 }
 
-void mdtSqlDatabaseCopierDialog::initSourceDatabase(mdtSqlDriverType::Type driverType)
+void DatabaseCopyDialog::initSourceDatabase(mdtSqlDriverType::Type driverType)
 {
   Q_ASSERT(pvState != ProcessingCopy);
   Q_ASSERT(pvOwningSourceConnectionName.isEmpty());
@@ -88,7 +94,7 @@ void mdtSqlDatabaseCopierDialog::initSourceDatabase(mdtSqlDriverType::Type drive
   setSourceDatabasePv(db);
 }
 
-void mdtSqlDatabaseCopierDialog::setSourceDatabase(const QSqlDatabase & db)
+void DatabaseCopyDialog::setSourceDatabase(const QSqlDatabase & db)
 {
   Q_ASSERT(pvState != ProcessingCopy);
   Q_ASSERT(pvOwningSourceConnectionName.isEmpty());
@@ -96,7 +102,7 @@ void mdtSqlDatabaseCopierDialog::setSourceDatabase(const QSqlDatabase & db)
   setSourceDatabasePv(db);
 }
 
-void mdtSqlDatabaseCopierDialog::setSourceDatabaseSelectable(bool selectable)
+void DatabaseCopyDialog::setSourceDatabaseSelectable(bool selectable)
 {
   Q_ASSERT(pvState != ProcessingCopy);
 
@@ -104,20 +110,25 @@ void mdtSqlDatabaseCopierDialog::setSourceDatabaseSelectable(bool selectable)
   tbSelectSourceDatabase->setEnabled(selectable);
 }
 
-void mdtSqlDatabaseCopierDialog::setDestinationDatabase(const QSqlDatabase & db)
+void DatabaseCopyDialog::setDestinationDatabase(const QSqlDatabase & db)
 {
   Q_ASSERT(pvState != ProcessingCopy);
 
   wDestinationDatabaseInfo->displayInfo(db);
-  if(!pvMappingModel->setDestinationDatabase(db)){
-    displayError(pvMappingModel->lastError());
+  auto ret = pvMappingModel->setDestinationDatabase(db);
+  if(!ret){
+    displayError(ret.error());
     return;
   }
+//   if(!pvMappingModel->setDestinationDatabase(db)){
+//     displayError(pvMappingModel->lastError());
+//     return;
+//   }
   resizeTableViewToContents();
   setStateDatabasesSetOrNotSet();
 }
 
-void mdtSqlDatabaseCopierDialog::setDestinationDatabaseSelectable(bool selectable)
+void DatabaseCopyDialog::setDestinationDatabaseSelectable(bool selectable)
 {
   Q_ASSERT(pvState != ProcessingCopy);
 
@@ -125,7 +136,7 @@ void mdtSqlDatabaseCopierDialog::setDestinationDatabaseSelectable(bool selectabl
   tbSelectDestinationDatabase->setEnabled(selectable);
 }
 
-void mdtSqlDatabaseCopierDialog::selectSourceDatabase()
+void DatabaseCopyDialog::selectSourceDatabase()
 {
   Q_ASSERT(pvState != ProcessingCopy);
 
@@ -141,7 +152,7 @@ void mdtSqlDatabaseCopierDialog::selectSourceDatabase()
   setSourceDatabasePv(dialog.database().database());
 }
 
-void mdtSqlDatabaseCopierDialog::selectDestinationDatabase()
+void DatabaseCopyDialog::selectDestinationDatabase()
 {
   Q_ASSERT(pvState != ProcessingCopy);
 
@@ -157,29 +168,39 @@ void mdtSqlDatabaseCopierDialog::selectDestinationDatabase()
   setDestinationDatabase(dialog.database().database());
 }
 
-void mdtSqlDatabaseCopierDialog::resetMapping()
+void DatabaseCopyDialog::resetMapping()
 {
   Q_ASSERT(pvState != ProcessingCopy);
 
-  if(!pvMappingModel->resetTableMapping()){
-    displayError(pvMappingModel->lastError());
+  auto ret = pvMappingModel->resetMapping();
+  if(!ret){
+    displayError(ret.error());
     return;
   }
+//   if(!pvMappingModel->resetTableMapping()){
+//     displayError(pvMappingModel->lastError());
+//     return;
+//   }
   resizeTableViewToContents();
 }
 
-void mdtSqlDatabaseCopierDialog::mapByName()
+void DatabaseCopyDialog::mapByName()
 {
   Q_ASSERT(pvState != ProcessingCopy);
 
-  if(!pvMappingModel->generateTableMappingByName()){
-    displayError(pvMappingModel->lastError());
+  auto ret = pvMappingModel->generateTableMappingByName();
+  if(!ret){
+    displayError(ret.error());
     return;
   }
+//   if(!pvMappingModel->generateTableMappingByName()){
+//     displayError(pvMappingModel->lastError());
+//     return;
+//   }
   resizeTableViewToContents();
 }
 
-void mdtSqlDatabaseCopierDialog::editTableMapping(const QModelIndex& index)
+void DatabaseCopyDialog::editTableMapping(const QModelIndex& index)
 {
   Q_ASSERT(pvMappingModel->sourceDatabase().isOpen());
   Q_ASSERT(pvMappingModel->destinationDatabase().isOpen());
@@ -201,22 +222,23 @@ void mdtSqlDatabaseCopierDialog::editTableMapping(const QModelIndex& index)
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
-  pvMappingModel->setTableMapping(row, dialog.mapping());
+  pvMappingModel->tableMappingUpdated(row);
+//   pvMappingModel->setTableMapping(row, dialog.mapping());
 }
 
-void mdtSqlDatabaseCopierDialog::resizeTableViewToContents()
+void DatabaseCopyDialog::resizeTableViewToContents()
 {
   tvMapping->resizeColumnsToContents();
   tvMapping->resizeRowsToContents();
 }
 
-void mdtSqlDatabaseCopierDialog::copyData()
+void DatabaseCopyDialog::copyData()
 {
   Q_ASSERT(pvState != ProcessingCopy);
 
   setStateProcessingCopy();
   pvMappingModel->clearCopyStatusAndProgress();
-  pvThread->copyData(pvMappingModel->mapping());
+  pvThread->startCopy(pvMappingModel->mapping());
 }
 
 // void mdtSqlDatabaseCopierDialog::abortCopy()
@@ -229,7 +251,7 @@ void mdtSqlDatabaseCopierDialog::copyData()
 //   pbGlobalProgress->setValue(progress);
 // }
 
-void mdtSqlDatabaseCopierDialog::onThreadGlobalErrorOccured(mdtError error)
+void DatabaseCopyDialog::onThreadGlobalErrorOccured(mdtError error)
 {
   QMessageBox msgBox(this);
 
@@ -240,25 +262,30 @@ void mdtSqlDatabaseCopierDialog::onThreadGlobalErrorOccured(mdtError error)
   msgBox.exec();
 }
 
-void mdtSqlDatabaseCopierDialog::onThreadFinished()
+void DatabaseCopyDialog::onThreadFinished()
 {
   setStateDatabasesSetOrNotSet();
 }
 
-void mdtSqlDatabaseCopierDialog::setSourceDatabasePv(const QSqlDatabase & db)
+void DatabaseCopyDialog::setSourceDatabasePv(const QSqlDatabase & db)
 {
   Q_ASSERT(pvState != ProcessingCopy);
 
   wSourceDatabaseInfo->displayInfo(db);
-  if(!pvMappingModel->setSourceDatabase(db)){
-    displayError(pvMappingModel->lastError());
+  auto ret = pvMappingModel->setSourceDatabase(db);
+  if(!ret){
+    displayError(ret.error());
     return;
   }
+//   if(!pvMappingModel->setSourceDatabase(db)){
+//     displayError(pvMappingModel->lastError());
+//     return;
+//   }
   resizeTableViewToContents();
   setStateDatabasesSetOrNotSet();
 }
 
-void mdtSqlDatabaseCopierDialog::setStateDatabasesSetOrNotSet()
+void DatabaseCopyDialog::setStateDatabasesSetOrNotSet()
 {
   if( hasDatabaseNeededInformations(pvMappingModel->sourceDatabase()) && hasDatabaseNeededInformations(pvMappingModel->destinationDatabase()) ){
     setStateDatabasesSet();
@@ -267,7 +294,7 @@ void mdtSqlDatabaseCopierDialog::setStateDatabasesSetOrNotSet()
   }
 }
 
-void mdtSqlDatabaseCopierDialog::setStateDatabasesNotSet()
+void DatabaseCopyDialog::setStateDatabasesNotSet()
 {
   pvState = DatabasesNotSet;
   if(pvSourceDatabaseSelectable){
@@ -284,7 +311,7 @@ void mdtSqlDatabaseCopierDialog::setStateDatabasesNotSet()
   setClosable(true);
 }
 
-void mdtSqlDatabaseCopierDialog::setStateDatabasesSet()
+void DatabaseCopyDialog::setStateDatabasesSet()
 {
   pvState = DatabasesSet;
   if(pvSourceDatabaseSelectable){
@@ -301,7 +328,7 @@ void mdtSqlDatabaseCopierDialog::setStateDatabasesSet()
   setClosable(true);
 }
 
-bool mdtSqlDatabaseCopierDialog::hasDatabaseNeededInformations(const QSqlDatabase & db) const
+bool DatabaseCopyDialog::hasDatabaseNeededInformations(const QSqlDatabase & db) const
 {
   /// \todo Currently only SQLite is supported
   if(db.databaseName().isEmpty()){
@@ -310,7 +337,7 @@ bool mdtSqlDatabaseCopierDialog::hasDatabaseNeededInformations(const QSqlDatabas
   return true;
 }
 
-void mdtSqlDatabaseCopierDialog::setStateProcessingCopy()
+void DatabaseCopyDialog::setStateProcessingCopy()
 {
   pvState = ProcessingCopy;
   tbSelectSourceDatabase->setEnabled(false);
@@ -323,13 +350,13 @@ void mdtSqlDatabaseCopierDialog::setStateProcessingCopy()
   setClosable(false);
 }
 
-void mdtSqlDatabaseCopierDialog::setClosable(bool closable)
+void DatabaseCopyDialog::setClosable(bool closable)
 {
   buttonBox->setEnabled(closable);
   pvClosable = closable;
 }
 
-void mdtSqlDatabaseCopierDialog::closeEvent(QCloseEvent* event)
+void DatabaseCopyDialog::closeEvent(QCloseEvent* event)
 {
   Q_ASSERT(event != nullptr);
 
@@ -340,15 +367,17 @@ void mdtSqlDatabaseCopierDialog::closeEvent(QCloseEvent* event)
   }
 }
 
-void mdtSqlDatabaseCopierDialog::reject()
+void DatabaseCopyDialog::reject()
 {
   if(pvClosable){
     QDialog::reject();
   }
 }
 
-void mdtSqlDatabaseCopierDialog::displayError(const mdtError& error)
+void DatabaseCopyDialog::displayError(const mdtError& error)
 {
   mdtErrorDialog dialog(this);  /// \todo Pass error..
   dialog.exec();
 }
+
+}}} // namespace mdt{ namespace sql{ namespace copier{

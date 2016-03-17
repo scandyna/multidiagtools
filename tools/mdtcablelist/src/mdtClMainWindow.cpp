@@ -26,7 +26,7 @@
 
 #include "mdtSqlDatabaseDialogSqlite.h"
 #include "mdtSqlDatabaseSchemaDialog.h"
-#include "mdtSqlDatabaseCopierDialog.h"
+#include "mdt/sql/copier/DatabaseCopyDialog.h"
 #include "mdtClLinkVersion.h"
 #include "mdtTtDatabaseSchema.h"
 #include "mdtClConnectorEditor.h"
@@ -198,7 +198,7 @@ void mdtClMainWindow::createNewDatabase()
 
 void mdtClMainWindow::importDatabase()
 {
-  mdtSqlDatabaseCopierDialog dialog(this);
+  mdt::sql::copier::DatabaseCopyDialog dialog(this);
 
   // Check that we have currently a database open
   if(!pvDatabase.isOpen()){

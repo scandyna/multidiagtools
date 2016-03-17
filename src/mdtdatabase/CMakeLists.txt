@@ -82,11 +82,11 @@ set (SOURCES_FILES
           mdt/sql/copier/DatabaseMapping.cpp
           mdt/sql/copier/DatabaseMappingModel.cpp
           mdt/sql/copier/DatabaseCopyThread.cpp
+          mdt/sql/copier/DatabaseCopyDialog.cpp
           
-          mdtSqlDatabaseCopierMapping.cpp
-          mdtSqlDatabaseCopierMappingModel.cpp
-          mdtSqlDatabaseCopierDialog.cpp
-          mdtSqlDatabaseCopierThread.cpp
+#           mdtSqlDatabaseCopierMapping.cpp
+#           mdtSqlDatabaseCopierMappingModel.cpp
+#           mdtSqlDatabaseCopierThread.cpp
           # CSV import classes
           mdt/sql/copier/CsvImportTableMapping.cpp
           mdt/sql/copier/CsvStringImportTableMapping.cpp
