@@ -49,6 +49,10 @@
 
 #include <QDebug>
 
+/// For sandbox
+#include <QElapsedTimer>
+#include <type_traits>
+
 /*
  * Table model used for some tests
  */
@@ -156,6 +160,54 @@ private:
  QVector<QVector<QVariant>> pvDisplayRoleData;
  QVector<QVector<QVariant>> pvEditRoleData;
 };
+
+
+/*
+ * Sandbox
+ */
+
+struct NoTimer
+{
+  ///void start(){}
+};
+
+struct DefaultTimer
+{
+  void start()
+  {
+    timer.start();
+  }
+
+  QElapsedTimer timer;
+};
+
+template<typename T = NoTimer>
+class testClass
+{
+ public:
+
+  void start()
+  {
+    static_assert(std::is_same<T, DefaultTimer>::value , "needs a real timer");
+    pvTimer.start();
+  }
+
+ private:
+
+  T pvTimer;
+};
+
+void mdtWidgetsTest::sandbox()
+{
+  testClass<> withoutTimer;
+  testClass<DefaultTimer> withTimer;
+
+  qDebug() << "sizeof(withoutTimer): " << sizeof(withoutTimer);
+  qDebug() << "sizeof(withTimer): " << sizeof(withTimer);
+  
+  withTimer.start();
+  ///withoutTimer.start();
+}
 
 /*
  * Test implementation
@@ -913,7 +965,7 @@ void mdtWidgetsTest::formatProxyModelTest()
 
 void mdtWidgetsTest::progressValueTest()
 {
-  mdtProgressValue<qint64> progress;
+  mdtProgressValue<qint64, mdtProgressValueTimer> progress;
 
   /*
    * Initial state

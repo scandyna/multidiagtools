@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -31,6 +31,8 @@ class mdtWidgetsTest : public mdtTest
  Q_OBJECT
 
  private slots:
+
+  void sandbox();
 
   void mdtDoubleValidatorTest();
   void mdtDoubleEditTest();

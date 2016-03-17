@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,34 @@
 #define MDT_PROGRESS_VALUE_H
 
 #include <QElapsedTimer>
+#include <type_traits>
+
+struct mdtProgressValueNoTimer
+{
+  void start(){}
+};
+
+struct mdtProgressValueTimer
+{
+  mdtProgressValueTimer()
+   : notifyInterval(50)
+  {
+    timer.start();
+  }
+
+  void start()
+  {
+    timer.start();
+  }
+
+  bool isTimeToNotify() const
+  {
+    return timer.hasExpired(notifyInterval);
+  }
+
+  int notifyInterval;
+  QElapsedTimer timer;
+};
 
 /*! \brief Helper class for progress bar
  *
@@ -44,8 +72,11 @@
  *  In this situation, code becomes more complex if ranges must be stored for each row of the model.
  *  The simple solution is to setup the delegate with minium and maximum,
  *  and scale all values in the process.
+ *
+ * \tparam T Type of value to count
+ * \tparam TimerType mdtProgressValueNoTimer if no timer is requierd, else mdtProgressValueTimer
  */
-template<typename T>
+template<typename T, typename TimerType = mdtProgressValueNoTimer>
 class mdtProgressValue
 {
  public:
@@ -58,10 +89,10 @@ class mdtProgressValue
    */
   mdtProgressValue()
    : pvValue(0),
-     pvScaleFactor(1.0),
-     pvNotifyInterval(50)
+     pvScaleFactor(1.0)/*,
+     pvNotifyInterval(50)*/
   {
-    pvTimer.start();
+//     pvTimer.start();
   }
 
   /*! \brief Set scale factor
@@ -101,7 +132,14 @@ class mdtProgressValue
 
   /*! \brief Add steps to value
    */
-  mdtProgressValue<T> & operator+=(T steps)
+  void increment(T steps)
+  {
+    pvValue += steps;
+  }
+
+  /*! \brief Add steps to value
+   */
+  mdtProgressValue<T, TimerType> & operator+=(T steps)
   {
     pvValue += steps;
     return *this;
@@ -109,7 +147,7 @@ class mdtProgressValue
 
   /*! \brief Add 1 step to value
    */
-  mdtProgressValue<T> & operator++()
+  mdtProgressValue<T, TimerType> & operator++()
   {
     ++pvValue;
     return *this;
@@ -142,22 +180,27 @@ class mdtProgressValue
    */
   void setNotifyInterval(int interval)
   {
-    pvNotifyInterval = interval;
+    static_assert(std::is_same<TimerType, mdtProgressValueTimer>::value , "only works with a timer");
+    pvTimer.notifyInterval = interval;
+//     pvNotifyInterval = interval;
   }
 
   /*! \brief Check if time to notify a new value was reached
    */
   bool isTimeToNotify() const
   {
-    return pvTimer.hasExpired(pvNotifyInterval);
+    static_assert(std::is_same<TimerType, mdtProgressValueTimer>::value , "only works with a timer");
+    return pvTimer.isTimeToNotify();
+//     return pvTimer.hasExpired(pvNotifyInterval);
   }
 
  private:
 
   T pvValue;
   double pvScaleFactor;
-  int pvNotifyInterval;
-  QElapsedTimer pvTimer;
+  TimerType pvTimer;
+//   int pvNotifyInterval;
+//   QElapsedTimer pvTimer;
 };
 
 #endif // #ifndef MDT_PROGRESS_VALUE_H
