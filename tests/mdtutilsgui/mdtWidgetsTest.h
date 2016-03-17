@@ -32,8 +32,6 @@ class mdtWidgetsTest : public mdtTest
 
  private slots:
 
-  void sandbox();
-
   void mdtDoubleValidatorTest();
   void mdtDoubleEditTest();
 

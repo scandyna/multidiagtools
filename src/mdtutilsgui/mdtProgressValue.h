@@ -89,10 +89,8 @@ class mdtProgressValue
    */
   mdtProgressValue()
    : pvValue(0),
-     pvScaleFactor(1.0)/*,
-     pvNotifyInterval(50)*/
+     pvScaleFactor(1.0)
   {
-//     pvTimer.start();
   }
 
   /*! \brief Set scale factor
@@ -182,7 +180,6 @@ class mdtProgressValue
   {
     static_assert(std::is_same<TimerType, mdtProgressValueTimer>::value , "only works with a timer");
     pvTimer.notifyInterval = interval;
-//     pvNotifyInterval = interval;
   }
 
   /*! \brief Check if time to notify a new value was reached
@@ -191,7 +188,6 @@ class mdtProgressValue
   {
     static_assert(std::is_same<TimerType, mdtProgressValueTimer>::value , "only works with a timer");
     return pvTimer.isTimeToNotify();
-//     return pvTimer.hasExpired(pvNotifyInterval);
   }
 
  private:
@@ -199,8 +195,6 @@ class mdtProgressValue
   T pvValue;
   double pvScaleFactor;
   TimerType pvTimer;
-//   int pvNotifyInterval;
-//   QElapsedTimer pvTimer;
 };
 
 #endif // #ifndef MDT_PROGRESS_VALUE_H
