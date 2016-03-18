@@ -664,7 +664,7 @@ bool mdtClMainWindow::createVehicleTypeActions()
   sql = "SELECT Id_PK, Type, SubType, SeriesNumber FROM VehicleType_tbl";
   if(!query.exec(sql)){
     auto error = mdtErrorNewQ(tr("Unable to get vehicle type list."), mdtError::Error, this);
-    error.stackError(mdt::sql::error::fromQSqlError(query.lastError()));
+    error.stackError(ErrorFromQSqlQuery(query));
     error.commit();
     displayError(error);
     return false;

@@ -128,7 +128,7 @@ QSqlDatabase CopyThread::createConnection(const QSqlDatabase & dbInfo)
   db.setConnectOptions(dbInfo.connectOptions());
   if(!db.open()){
     auto error = mdtErrorNewQ(tr("Connection to database") + " '" + db.databaseName() + "' " + tr("failed."), mdtError::Error, this);
-    error.stackError(mdt::sql::error::fromQSqlError(db.lastError()));
+    error.stackError(ErrorFromQSqlDatabase(db));
     error.commit();
     emit globalErrorOccured(error);
   }

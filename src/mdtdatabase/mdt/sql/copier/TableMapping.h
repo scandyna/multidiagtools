@@ -320,7 +320,7 @@ namespace mdt{ namespace sql{ namespace copier{
     *
     * \note We cannot use internal databases, because this function can be called from non main thread (f.ex. mdtSqlDatabaseCopierThread)
     */
-    QString getSqlForSourceTableCount(const QSqlDatabase & db) const;
+//     QString getSqlForSourceTableCount(const QSqlDatabase & db) const;
 
     /*! \brief Get SQL statement to select source table data
     *
@@ -329,7 +329,7 @@ namespace mdt{ namespace sql{ namespace copier{
     *
     * \note We cannot use internal databases, because this function can be called from non main thread (f.ex. mdtSqlDatabaseCopierThread)
     */
-    QString getSqlForSourceTableSelect(const QSqlDatabase & db) const;
+//     QString getSqlForSourceTableSelect(const QSqlDatabase & db) const;
 
     /*! \brief Get SQL statement to insert data into destination table
     *
@@ -342,7 +342,7 @@ namespace mdt{ namespace sql{ namespace copier{
     *
     * \note We cannot use internal databases, because this function can be called from non main thread (f.ex. mdtSqlDatabaseCopierThread)
     */
-    QString getSqlForDestinationTableInsert(const QSqlDatabase & db) const;
+//     QString getSqlForDestinationTableInsert(const QSqlDatabase & db) const;
 
   protected:
 

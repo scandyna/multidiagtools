@@ -53,7 +53,7 @@ int64_t DatabaseCopyThread::calculateSourceTableSize(const DatabaseCopierTableMa
 
   if(!query.exec(sql)){
     auto error = mdtErrorNewQ(tr("Executing query to get source table count failed"), mdtError::Warning, this);
-    error.stackError(ErrorFromQsqlQuery(query));
+    error.stackError(ErrorFromQSqlQuery(query));
     error.commit();
     return -1;
   }
@@ -101,7 +101,7 @@ bool DatabaseCopyThread::copyTable(const DatabaseCopierTableMapping *const tm, i
   sql = CopyHelper::getSourceTableSelectSql(tm, sourceDatabase);
   if(!sourceQuery.exec(sql)){
     auto error = mdtErrorNewQ(tr("Executing query to get source table records failed"), mdtError::Error, this);
-    error.stackError(ErrorFromQsqlQuery(sourceQuery));
+    error.stackError(ErrorFromQSqlQuery(sourceQuery));
     error.commit();
     emit tableCopyErrorOccured(index, error);
     return false;
@@ -110,7 +110,7 @@ bool DatabaseCopyThread::copyTable(const DatabaseCopierTableMapping *const tm, i
   sql = CopyHelper::getDestinationInsertSql(tm, destinationDatabase);
   if(!destinationQuery.prepare(sql)){
     auto error = mdtErrorNewQ(tr("Preparing query for insertion in destination table failed"), mdtError::Error, this);
-    error.stackError(ErrorFromQsqlQuery(destinationQuery));
+    error.stackError(ErrorFromQSqlQuery(destinationQuery));
     error.commit();
     emit tableCopyErrorOccured(index, error);
     return false;
@@ -153,7 +153,7 @@ bool DatabaseCopyThread::copyTable(const DatabaseCopierTableMapping *const tm, i
     // Execute
     if(!destinationQuery.exec()){
       auto error = mdtErrorNewQ(tr("Executing query for insertion in destination table failed"), mdtError::Error, this);
-      error.stackError(ErrorFromQsqlQuery(destinationQuery));
+      error.stackError(ErrorFromQSqlQuery(destinationQuery));
       error.commit();
       emit tableCopyErrorOccured(index, error);
       return false;

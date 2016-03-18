@@ -67,7 +67,7 @@ set (SOURCES_FILES
           mdt/sql/copier/MappingModel.cpp
           mdt/sql/copier/CopyThread.cpp
           
-          mdtSqlCopierDataMapping.cpp
+#           mdtSqlCopierDataMapping.cpp
 
           mdt/sql/copier/ExpressionKeyFieldSelectionDialog.cpp
           mdt/sql/copier/ExpressionMatchItemModel.cpp

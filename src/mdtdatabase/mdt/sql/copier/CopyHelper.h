@@ -92,7 +92,7 @@ namespace mdt{ namespace sql{ namespace copier{
       // Prepare query
       if(!query.prepare(getUniqueInsertCriteriaSql(tm, matchItemList, destinationDb))){
         auto error = mdtErrorNew(tr("Preparation of query to check if record allready exists failed"), mdtError::Error, "CopyHelper");
-        error.stackError(ErrorFromQsqlQuery(query));
+        error.stackError(ErrorFromQSqlQuery(query));
         error.commit();
         return error;
       }
@@ -106,7 +106,7 @@ namespace mdt{ namespace sql{ namespace copier{
       // Exec query
       if(!query.exec()){
         auto error = mdtErrorNew(tr("Execution of query to check if record allready exists failed"), mdtError::Error, "CopyHelper");
-        error.stackError(ErrorFromQsqlQuery(query));
+        error.stackError(ErrorFromQSqlQuery(query));
         error.commit();
         return error;
       }
@@ -169,7 +169,7 @@ namespace mdt{ namespace sql{ namespace copier{
       }
       if(!query.prepare(sql.value())){
         /// \todo Generate a error with explanation. Add transalation. This part should be in .cpp
-        return ErrorFromQsqlQuery(query);
+        return ErrorFromQSqlQuery(query);
       }
       // Bind values for each match item
       for(const auto & matchItem : matchItemList){
@@ -181,7 +181,7 @@ namespace mdt{ namespace sql{ namespace copier{
       // Exec query and fetch key
       if(!query.exec()){
         auto error = mdtErrorNew(tr("Execution of query to get related key failed"), mdtError::Error, "CopyHelper");
-        error.stackError(ErrorFromQsqlQuery(query));
+        error.stackError(ErrorFromQSqlQuery(query));
         error.commit();
         return error;
       }

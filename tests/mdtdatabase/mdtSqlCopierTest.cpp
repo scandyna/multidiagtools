@@ -27,7 +27,7 @@
 #include "mdtSqlViewSchema.h"
 #include "mdtSqlRecord.h"
 #include "mdtSqlTransaction.h"
-#include "mdtSqlCopierDataMapping.h"
+///#include "mdtSqlCopierDataMapping.h"
 #include "mdt/sql/copier/CopyHelper.h"
 #include "mdt/sql/copier/TableMappingItem.h"
 #include "mdt/sql/copier/FieldMapping.h"
@@ -2835,84 +2835,84 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingStateTest()
   QVERIFY(tm.mappingState() == DatabaseCopierTableMapping::MappingError);
 }
 
-void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
-{
-  using mdt::sql::copier::DatabaseCopierTableMapping;
-
-  DatabaseCopierTableMapping mapping;
-  QSqlDatabase db = pvDatabase;
-  QString expectedSql;
-
-  QCOMPARE(db.driverName(), QString("QSQLITE"));
-  /*
-   * Setup databases and tables
-   */
-  mapping.setSourceDatabase(db);
-  QVERIFY(mapping.setSourceTable("Client_tbl"));
-  QVERIFY(mapping.setDestinationTable("Client2_tbl", db));
-  /*
-   * Add field mapping:
-   * - Client_tbl.Id_PK -> Client2_tbl.Id_PK
-   */
-  mapping.setSourceFieldAtItem(0, "Id_PK");
-  // Check SQL for count in source table
-  expectedSql = "SELECT COUNT(*) FROM \"Client_tbl\"";
-  QCOMPARE(mapping.getSqlForSourceTableCount(db), expectedSql);
-  // Check SQL select data in source table
-  expectedSql = "SELECT \"Id_PK\" FROM \"Client_tbl\"";
-  QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
-  // Check SQL to insert into destination table
-  expectedSql = "INSERT INTO \"Client2_tbl\" (\"Id_PK\") VALUES (?)";
-  QCOMPARE(mapping.getSqlForDestinationTableInsert(db), expectedSql);
-  /*
-   * Add field mapping:
-   * - Client_tbl.Name -> Client2_tbl.Name
-   */
-  mapping.setSourceFieldAtItem(1, "Name");
-  // Check SQL for count in source table
-  expectedSql = "SELECT COUNT(*) FROM \"Client_tbl\"";
-  QCOMPARE(mapping.getSqlForSourceTableCount(db), expectedSql);
-  // Check SQL select data in source table
-  expectedSql = "SELECT \"Id_PK\",\"Name\" FROM \"Client_tbl\"";
-  QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
-  // Check SQL to insert into destination table
-  expectedSql = "INSERT INTO \"Client2_tbl\" (\"Id_PK\",\"Name\") VALUES (?,?)";
-  QCOMPARE(mapping.getSqlForDestinationTableInsert(db), expectedSql);
-  /*
-   * Add field mapping:
-   * - Client_tbl.FieldB -> Client2_tbl.FieldA
-   */
-  mapping.setSourceFieldAtItem(2, "FieldB");
-  // Check SQL select data in source table
-  expectedSql = "SELECT \"Id_PK\",\"Name\",\"FieldB\" FROM \"Client_tbl\"";
-  QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
-  // Check SQL to insert into destination table
-  expectedSql = "INSERT INTO \"Client2_tbl\" (\"Id_PK\",\"Name\",\"FieldA\") VALUES (?,?,?)";
-  QCOMPARE(mapping.getSqlForDestinationTableInsert(db), expectedSql);
-  /*
-   * Add field mapping:
-   * - Client_tbl.FieldA -> Client2_tbl.FieldB
-   */
-  mapping.setSourceFieldAtItem(3, "FieldA");
-  // Check SQL select data in source table
-  expectedSql = "SELECT \"Id_PK\",\"Name\",\"FieldB\",\"FieldA\" FROM \"Client_tbl\"";
-  QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
-  // Check SQL to insert into destination table
-  expectedSql = "INSERT INTO \"Client2_tbl\" (\"Id_PK\",\"Name\",\"FieldA\",\"FieldB\") VALUES (?,?,?,?)";
-  QCOMPARE(mapping.getSqlForDestinationTableInsert(db), expectedSql);
-  /*
-   * Check with source fixed value for Client2_tbl.Name
-   */
-//   mapping.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
-  mapping.setSourceFixedValueAtItem(1, "Fixed name");
-  // Check SQL select data in source table
-  expectedSql = "SELECT \"Id_PK\",\"FieldB\",\"FieldA\" FROM \"Client_tbl\"";
-  QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
-  // Check SQL to insert into destination table
-  expectedSql = "INSERT INTO \"Client2_tbl\" (\"Id_PK\",\"Name\",\"FieldA\",\"FieldB\") VALUES (?,'Fixed name',?,?)";
-  QCOMPARE(mapping.getSqlForDestinationTableInsert(db), expectedSql);
-
-}
+// void mdtSqlCopierTest::sqlDatabaseCopierTableMappingSqliteTest()
+// {
+//   using mdt::sql::copier::DatabaseCopierTableMapping;
+// 
+//   DatabaseCopierTableMapping mapping;
+//   QSqlDatabase db = pvDatabase;
+//   QString expectedSql;
+// 
+//   QCOMPARE(db.driverName(), QString("QSQLITE"));
+//   /*
+//    * Setup databases and tables
+//    */
+//   mapping.setSourceDatabase(db);
+//   QVERIFY(mapping.setSourceTable("Client_tbl"));
+//   QVERIFY(mapping.setDestinationTable("Client2_tbl", db));
+//   /*
+//    * Add field mapping:
+//    * - Client_tbl.Id_PK -> Client2_tbl.Id_PK
+//    */
+//   mapping.setSourceFieldAtItem(0, "Id_PK");
+//   // Check SQL for count in source table
+//   expectedSql = "SELECT COUNT(*) FROM \"Client_tbl\"";
+//   QCOMPARE(mapping.getSqlForSourceTableCount(db), expectedSql);
+//   // Check SQL select data in source table
+//   expectedSql = "SELECT \"Id_PK\" FROM \"Client_tbl\"";
+//   QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
+//   // Check SQL to insert into destination table
+//   expectedSql = "INSERT INTO \"Client2_tbl\" (\"Id_PK\") VALUES (?)";
+//   QCOMPARE(mapping.getSqlForDestinationTableInsert(db), expectedSql);
+//   /*
+//    * Add field mapping:
+//    * - Client_tbl.Name -> Client2_tbl.Name
+//    */
+//   mapping.setSourceFieldAtItem(1, "Name");
+//   // Check SQL for count in source table
+//   expectedSql = "SELECT COUNT(*) FROM \"Client_tbl\"";
+//   QCOMPARE(mapping.getSqlForSourceTableCount(db), expectedSql);
+//   // Check SQL select data in source table
+//   expectedSql = "SELECT \"Id_PK\",\"Name\" FROM \"Client_tbl\"";
+//   QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
+//   // Check SQL to insert into destination table
+//   expectedSql = "INSERT INTO \"Client2_tbl\" (\"Id_PK\",\"Name\") VALUES (?,?)";
+//   QCOMPARE(mapping.getSqlForDestinationTableInsert(db), expectedSql);
+//   /*
+//    * Add field mapping:
+//    * - Client_tbl.FieldB -> Client2_tbl.FieldA
+//    */
+//   mapping.setSourceFieldAtItem(2, "FieldB");
+//   // Check SQL select data in source table
+//   expectedSql = "SELECT \"Id_PK\",\"Name\",\"FieldB\" FROM \"Client_tbl\"";
+//   QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
+//   // Check SQL to insert into destination table
+//   expectedSql = "INSERT INTO \"Client2_tbl\" (\"Id_PK\",\"Name\",\"FieldA\") VALUES (?,?,?)";
+//   QCOMPARE(mapping.getSqlForDestinationTableInsert(db), expectedSql);
+//   /*
+//    * Add field mapping:
+//    * - Client_tbl.FieldA -> Client2_tbl.FieldB
+//    */
+//   mapping.setSourceFieldAtItem(3, "FieldA");
+//   // Check SQL select data in source table
+//   expectedSql = "SELECT \"Id_PK\",\"Name\",\"FieldB\",\"FieldA\" FROM \"Client_tbl\"";
+//   QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
+//   // Check SQL to insert into destination table
+//   expectedSql = "INSERT INTO \"Client2_tbl\" (\"Id_PK\",\"Name\",\"FieldA\",\"FieldB\") VALUES (?,?,?,?)";
+//   QCOMPARE(mapping.getSqlForDestinationTableInsert(db), expectedSql);
+//   /*
+//    * Check with source fixed value for Client2_tbl.Name
+//    */
+// //   mapping.setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
+//   mapping.setSourceFixedValueAtItem(1, "Fixed name");
+//   // Check SQL select data in source table
+//   expectedSql = "SELECT \"Id_PK\",\"FieldB\",\"FieldA\" FROM \"Client_tbl\"";
+//   QCOMPARE(mapping.getSqlForSourceTableSelect(db), expectedSql);
+//   // Check SQL to insert into destination table
+//   expectedSql = "INSERT INTO \"Client2_tbl\" (\"Id_PK\",\"Name\",\"FieldA\",\"FieldB\") VALUES (?,'Fixed name',?,?)";
+//   QCOMPARE(mapping.getSqlForDestinationTableInsert(db), expectedSql);
+// 
+// }
 
 void mdtSqlCopierTest::sqlDatabaseCopierTableMappingModelTest()
 {
@@ -3239,107 +3239,107 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingDialogTest()
   dialog.exec();
 }
 
-void mdtSqlCopierTest::sqlCopierDataMappingTest()
-{
-  using mdt::sql::copier::DatabaseCopierTableMapping;
-
-  auto mapping = std::make_shared<DatabaseCopierTableMapping>();
-  mdtSqlCopierDataMapping dataMapping;
-  QSqlDatabase db = pvDatabase;
-  QSqlQuery sourceQuery(db);
-  QString sql;
-
-  /*
-   * Populate Client_tbl
-   */
-  clientTableTestDataSet dataSet(db);
-  QVERIFY(dataSet.populate());
-  /*
-   * Setup databases and tables
-   */
-  mapping->setSourceDatabase(db);
-  QVERIFY(mapping->setSourceTable("Client_tbl"));
-  QVERIFY(mapping->setDestinationTable("Client2_tbl", db));
-  /*
-   * Add field mapping:
-   * - Client_tbl.Id_PK -> Client2_tbl.Id_PK
-   */
-  mapping->setSourceFieldAtItem(0, "Id_PK");
-  // Get source data
-  sql = mapping->getSqlForSourceTableSelect(db);
-  QVERIFY(sourceQuery.exec(sql));
-  QVERIFY(sourceQuery.next());
-  QCOMPARE(sourceQuery.record().count(), 1);
-  // Get destination data
-  dataMapping.setSourceRecord(sourceQuery.record(), mapping);
-  QCOMPARE(dataMapping.size(), 1);
-  QCOMPARE(dataMapping.destinationRecord.at(0), QVariant(1));
-  /*
-   * Add field mapping:
-   * - Client_tbl.Name -> Client2_tbl.Name
-   */
-  mapping->setSourceFieldAtItem(1, "Name");
-  // Get source data
-  sql = mapping->getSqlForSourceTableSelect(db);
-  QVERIFY(sourceQuery.exec(sql));
-  QVERIFY(sourceQuery.next());
-  QCOMPARE(sourceQuery.record().count(), 2);
-  // Get destination data
-  dataMapping.setSourceRecord(sourceQuery.record(), mapping);
-  QCOMPARE(dataMapping.size(), 2);
-  QCOMPARE(dataMapping.destinationRecord.at(0), QVariant(1));
-  QCOMPARE(dataMapping.destinationRecord.at(1), QVariant("Name 1"));
-  /*
-   * Add field mapping:
-   * - Client_tbl.FieldB -> Client2_tbl.FieldA
-   */
-  mapping->setSourceFieldAtItem(2, "FieldB");
-  // Get source data
-  sql = mapping->getSqlForSourceTableSelect(db);
-  QVERIFY(sourceQuery.exec(sql));
-  QVERIFY(sourceQuery.next());
-  QCOMPARE(sourceQuery.record().count(), 3);
-  // Get destination data
-  dataMapping.setSourceRecord(sourceQuery.record(), mapping);
-  QCOMPARE(dataMapping.size(), 3);
-  QCOMPARE(dataMapping.destinationRecord.at(0), QVariant(1));
-  QCOMPARE(dataMapping.destinationRecord.at(1), QVariant("Name 1"));
-  QCOMPARE(dataMapping.destinationRecord.at(2), QVariant("FieldB 1"));
-  /*
-   * Add field mapping:
-   * - Client_tbl.FieldA -> Client2_tbl.FieldB
-   */
-  mapping->setSourceFieldAtItem(3, "FieldA");
-  // Get source data
-  sql = mapping->getSqlForSourceTableSelect(db);
-  QVERIFY(sourceQuery.exec(sql));
-  QVERIFY(sourceQuery.next());
-  QCOMPARE(sourceQuery.record().count(), 4);
-  // Get destination data
-  dataMapping.setSourceRecord(sourceQuery.record(), mapping);
-  QCOMPARE(dataMapping.size(), 4);
-  QCOMPARE(dataMapping.destinationRecord.at(0), QVariant(1));
-  QCOMPARE(dataMapping.destinationRecord.at(1), QVariant("Name 1"));
-  QCOMPARE(dataMapping.destinationRecord.at(2), QVariant("FieldB 1"));
-  QCOMPARE(dataMapping.destinationRecord.at(3), QVariant("FieldA 1"));
-  /*
-   * Check with source fixed value for Client2_tbl.Name
-   */
-//   mapping->setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
-  mapping->setSourceFixedValueAtItem(1, "Fixed name");
-  // Get source data
-  sql = mapping->getSqlForSourceTableSelect(db);
-  QVERIFY(sourceQuery.exec(sql));
-  QVERIFY(sourceQuery.next());
-  QCOMPARE(sourceQuery.record().count(), 3);
-  // Get destination data
-  dataMapping.setSourceRecord(sourceQuery.record(), mapping);
-  QCOMPARE(dataMapping.size(), 4);
-  QCOMPARE(dataMapping.destinationRecord.at(0), QVariant(1));
-  QCOMPARE(dataMapping.destinationRecord.at(1), QVariant("Fixe name"));
-  QCOMPARE(dataMapping.destinationRecord.at(2), QVariant("FieldB 1"));
-  QCOMPARE(dataMapping.destinationRecord.at(3), QVariant("FieldA 1"));
-}
+// void mdtSqlCopierTest::sqlCopierDataMappingTest()
+// {
+//   using mdt::sql::copier::DatabaseCopierTableMapping;
+// 
+//   auto mapping = std::make_shared<DatabaseCopierTableMapping>();
+//   mdtSqlCopierDataMapping dataMapping;
+//   QSqlDatabase db = pvDatabase;
+//   QSqlQuery sourceQuery(db);
+//   QString sql;
+// 
+//   /*
+//    * Populate Client_tbl
+//    */
+//   clientTableTestDataSet dataSet(db);
+//   QVERIFY(dataSet.populate());
+//   /*
+//    * Setup databases and tables
+//    */
+//   mapping->setSourceDatabase(db);
+//   QVERIFY(mapping->setSourceTable("Client_tbl"));
+//   QVERIFY(mapping->setDestinationTable("Client2_tbl", db));
+//   /*
+//    * Add field mapping:
+//    * - Client_tbl.Id_PK -> Client2_tbl.Id_PK
+//    */
+//   mapping->setSourceFieldAtItem(0, "Id_PK");
+//   // Get source data
+//   sql = mapping->getSqlForSourceTableSelect(db);
+//   QVERIFY(sourceQuery.exec(sql));
+//   QVERIFY(sourceQuery.next());
+//   QCOMPARE(sourceQuery.record().count(), 1);
+//   // Get destination data
+//   dataMapping.setSourceRecord(sourceQuery.record(), mapping);
+//   QCOMPARE(dataMapping.size(), 1);
+//   QCOMPARE(dataMapping.destinationRecord.at(0), QVariant(1));
+//   /*
+//    * Add field mapping:
+//    * - Client_tbl.Name -> Client2_tbl.Name
+//    */
+//   mapping->setSourceFieldAtItem(1, "Name");
+//   // Get source data
+//   sql = mapping->getSqlForSourceTableSelect(db);
+//   QVERIFY(sourceQuery.exec(sql));
+//   QVERIFY(sourceQuery.next());
+//   QCOMPARE(sourceQuery.record().count(), 2);
+//   // Get destination data
+//   dataMapping.setSourceRecord(sourceQuery.record(), mapping);
+//   QCOMPARE(dataMapping.size(), 2);
+//   QCOMPARE(dataMapping.destinationRecord.at(0), QVariant(1));
+//   QCOMPARE(dataMapping.destinationRecord.at(1), QVariant("Name 1"));
+//   /*
+//    * Add field mapping:
+//    * - Client_tbl.FieldB -> Client2_tbl.FieldA
+//    */
+//   mapping->setSourceFieldAtItem(2, "FieldB");
+//   // Get source data
+//   sql = mapping->getSqlForSourceTableSelect(db);
+//   QVERIFY(sourceQuery.exec(sql));
+//   QVERIFY(sourceQuery.next());
+//   QCOMPARE(sourceQuery.record().count(), 3);
+//   // Get destination data
+//   dataMapping.setSourceRecord(sourceQuery.record(), mapping);
+//   QCOMPARE(dataMapping.size(), 3);
+//   QCOMPARE(dataMapping.destinationRecord.at(0), QVariant(1));
+//   QCOMPARE(dataMapping.destinationRecord.at(1), QVariant("Name 1"));
+//   QCOMPARE(dataMapping.destinationRecord.at(2), QVariant("FieldB 1"));
+//   /*
+//    * Add field mapping:
+//    * - Client_tbl.FieldA -> Client2_tbl.FieldB
+//    */
+//   mapping->setSourceFieldAtItem(3, "FieldA");
+//   // Get source data
+//   sql = mapping->getSqlForSourceTableSelect(db);
+//   QVERIFY(sourceQuery.exec(sql));
+//   QVERIFY(sourceQuery.next());
+//   QCOMPARE(sourceQuery.record().count(), 4);
+//   // Get destination data
+//   dataMapping.setSourceRecord(sourceQuery.record(), mapping);
+//   QCOMPARE(dataMapping.size(), 4);
+//   QCOMPARE(dataMapping.destinationRecord.at(0), QVariant(1));
+//   QCOMPARE(dataMapping.destinationRecord.at(1), QVariant("Name 1"));
+//   QCOMPARE(dataMapping.destinationRecord.at(2), QVariant("FieldB 1"));
+//   QCOMPARE(dataMapping.destinationRecord.at(3), QVariant("FieldA 1"));
+//   /*
+//    * Check with source fixed value for Client2_tbl.Name
+//    */
+// //   mapping->setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
+//   mapping->setSourceFixedValueAtItem(1, "Fixed name");
+//   // Get source data
+//   sql = mapping->getSqlForSourceTableSelect(db);
+//   QVERIFY(sourceQuery.exec(sql));
+//   QVERIFY(sourceQuery.next());
+//   QCOMPARE(sourceQuery.record().count(), 3);
+//   // Get destination data
+//   dataMapping.setSourceRecord(sourceQuery.record(), mapping);
+//   QCOMPARE(dataMapping.size(), 4);
+//   QCOMPARE(dataMapping.destinationRecord.at(0), QVariant(1));
+//   QCOMPARE(dataMapping.destinationRecord.at(1), QVariant("Fixe name"));
+//   QCOMPARE(dataMapping.destinationRecord.at(2), QVariant("FieldB 1"));
+//   QCOMPARE(dataMapping.destinationRecord.at(3), QVariant("FieldA 1"));
+// }
 
 void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
 {

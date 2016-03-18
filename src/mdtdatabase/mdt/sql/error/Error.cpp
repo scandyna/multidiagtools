@@ -19,6 +19,8 @@
  **
  ****************************************************************************/
 #include "Error.h"
+#include <QSqlQuery>
+#include <QSqlDatabase>
 
 namespace mdt{ namespace sql{ namespace error{
 
@@ -32,13 +34,24 @@ mdtError fromQSqlError(const QSqlError & sqlError)
 //   return error;
 }
 
-mdtError fromQsqlQuery(const QSqlQuery & query, const QString & file, int line)
+mdtError fromQSqlQuery(const QSqlQuery & query, const QString & file, int line)
 {
   mdtError error;
   auto sqlError = query.lastError();
 
   error.setError<QSqlError::ErrorType>(sqlError.type(), sqlError.text(), mdtError::Error);
   error.setSource(file, line, "QSqlQuery", "");
+
+  return error;
+}
+
+mdtError fromQSqlDatabase(const QSqlDatabase & db, const QString & file, int line)
+{
+  mdtError error;
+  auto sqlError = db.lastError();
+
+  error.setError<QSqlError::ErrorType>(sqlError.type(), sqlError.text(), mdtError::Error);
+  error.setSource(file, line, "QSqlDatabase", "");
 
   return error;
 }

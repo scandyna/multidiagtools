@@ -260,99 +260,99 @@ void TableMapping::clearFieldMapping()
   pvMappingState = MappingNotSet;
 }
 
-QString TableMapping::getSqlForSourceTableCount(const QSqlDatabase & db) const
-{
-  QString sql;
-  QSqlDriver *driver = db.driver();
-  Q_ASSERT(driver != nullptr);
+// QString TableMapping::getSqlForSourceTableCount(const QSqlDatabase & db) const
+// {
+//   QString sql;
+//   QSqlDriver *driver = db.driver();
+//   Q_ASSERT(driver != nullptr);
+// 
+//   sql = "SELECT COUNT(*) FROM " + driver->escapeIdentifier(sourceTableName(), QSqlDriver::TableName);
+// 
+//   return sql;
+// }
 
-  sql = "SELECT COUNT(*) FROM " + driver->escapeIdentifier(sourceTableName(), QSqlDriver::TableName);
+// QString TableMapping::getSqlForSourceTableSelect(const QSqlDatabase & db) const
+// {
+// //   using mdt::sql::copier::SourceField;
+// 
+//   QString sql;
+//   QStringList fields;
+//   QSqlDriver *driver = db.driver();
+//   Q_ASSERT(driver != nullptr);
+//   int lastIndex;
+// 
+//   // Build list of mapped fields
+//   /**
+//   for(int i = 0; i < fieldCount(); ++i){
+//     const auto fm = fieldMappingAt(i);
+//     if( (!fm.sourceField.isNull()) && (fm.sourceField.type() == SourceField::SourceFieldIndexType) ){
+//       fields.append(sourceFieldNameAtItem(i));
+//     }
+//   }
+//   lastIndex = fields.size() - 1;
+//   */
+//   // If no mapping was set, simply return a empty statement
+//   if(lastIndex < 0){
+//     return sql;
+//   }
+//   // Build statement
+//   sql = "SELECT ";
+//   for(int i = 0; i < lastIndex; ++i){
+//     sql += driver->escapeIdentifier(fields.at(i), QSqlDriver::FieldName) + ",";
+//   }
+//   sql += driver->escapeIdentifier(fields.at(lastIndex), QSqlDriver::FieldName);
+//   sql += " FROM " + driver->escapeIdentifier(sourceTableName(), QSqlDriver::TableName);
+// 
+//   return sql;
+// }
 
-  return sql;
-}
-
-QString TableMapping::getSqlForSourceTableSelect(const QSqlDatabase & db) const
-{
-//   using mdt::sql::copier::SourceField;
-
-  QString sql;
-  QStringList fields;
-  QSqlDriver *driver = db.driver();
-  Q_ASSERT(driver != nullptr);
-  int lastIndex;
-
-  // Build list of mapped fields
-  /**
-  for(int i = 0; i < fieldCount(); ++i){
-    const auto fm = fieldMappingAt(i);
-    if( (!fm.sourceField.isNull()) && (fm.sourceField.type() == SourceField::SourceFieldIndexType) ){
-      fields.append(sourceFieldNameAtItem(i));
-    }
-  }
-  lastIndex = fields.size() - 1;
-  */
-  // If no mapping was set, simply return a empty statement
-  if(lastIndex < 0){
-    return sql;
-  }
-  // Build statement
-  sql = "SELECT ";
-  for(int i = 0; i < lastIndex; ++i){
-    sql += driver->escapeIdentifier(fields.at(i), QSqlDriver::FieldName) + ",";
-  }
-  sql += driver->escapeIdentifier(fields.at(lastIndex), QSqlDriver::FieldName);
-  sql += " FROM " + driver->escapeIdentifier(sourceTableName(), QSqlDriver::TableName);
-
-  return sql;
-}
-
-QString TableMapping::getSqlForDestinationTableInsert(const QSqlDatabase & db) const
-{
-//   using mdt::sql::copier::SourceField;
-
-  QString sql;
-  QVector<QString> fields;
-  QVector<QString> values;
-  QSqlDriver *driver = db.driver();
-  Q_ASSERT(driver != nullptr);
-  int lastIndex;
-
-  // Build list of fields and values
-  /**
-  for(int i = 0; i < fieldCount(); ++i){
-    const auto fm = fieldMappingAt(i);
-    if(!fm.isNull()){
-      ///fields.append(destinationFieldName(i));
-      if(fm.sourceField.type() == SourceField::SourceFieldIndexType){
-        /// \todo We could create a helper in SourceField class that returns the correct string
-        values.append("?");
-      }else{
-        values.append("'" + fm.sourceField.fixedValue().toString() + "'");
-      }
-    }
-  }
-  */
-  Q_ASSERT(fields.size() == values.size());
-
-  lastIndex = fields.size() - 1;
-  // If no mapping was set, simply return a empty statement
-  if(lastIndex < 0){
-    return sql;
-  }
-  // Build statement
-  sql = "INSERT INTO " + driver->escapeIdentifier(destinationTableName(), QSqlDriver::TableName) + " (";
-  for(int i = 0; i < lastIndex; ++i){
-    sql += driver->escapeIdentifier(fields.at(i), QSqlDriver::FieldName) + ",";
-  }
-  sql += driver->escapeIdentifier(fields.at(lastIndex), QSqlDriver::FieldName);
-  sql += ") VALUES (";
-  for(int i = 0; i < lastIndex; ++i){
-    sql += values.at(i) + ",";
-  }
-  sql += values.at(lastIndex) + ")";
-
-  return sql;
-}
+// QString TableMapping::getSqlForDestinationTableInsert(const QSqlDatabase & db) const
+// {
+// //   using mdt::sql::copier::SourceField;
+// 
+//   QString sql;
+//   QVector<QString> fields;
+//   QVector<QString> values;
+//   QSqlDriver *driver = db.driver();
+//   Q_ASSERT(driver != nullptr);
+//   int lastIndex;
+// 
+//   // Build list of fields and values
+//   /**
+//   for(int i = 0; i < fieldCount(); ++i){
+//     const auto fm = fieldMappingAt(i);
+//     if(!fm.isNull()){
+//       ///fields.append(destinationFieldName(i));
+//       if(fm.sourceField.type() == SourceField::SourceFieldIndexType){
+//         /// \todo We could create a helper in SourceField class that returns the correct string
+//         values.append("?");
+//       }else{
+//         values.append("'" + fm.sourceField.fixedValue().toString() + "'");
+//       }
+//     }
+//   }
+//   */
+//   Q_ASSERT(fields.size() == values.size());
+// 
+//   lastIndex = fields.size() - 1;
+//   // If no mapping was set, simply return a empty statement
+//   if(lastIndex < 0){
+//     return sql;
+//   }
+//   // Build statement
+//   sql = "INSERT INTO " + driver->escapeIdentifier(destinationTableName(), QSqlDriver::TableName) + " (";
+//   for(int i = 0; i < lastIndex; ++i){
+//     sql += driver->escapeIdentifier(fields.at(i), QSqlDriver::FieldName) + ",";
+//   }
+//   sql += driver->escapeIdentifier(fields.at(lastIndex), QSqlDriver::FieldName);
+//   sql += ") VALUES (";
+//   for(int i = 0; i < lastIndex; ++i){
+//     sql += values.at(i) + ",";
+//   }
+//   sql += values.at(lastIndex) + ")";
+// 
+//   return sql;
+// }
 
 void TableMapping::updateMappingItemState(TableMappingItem& item)
 {
