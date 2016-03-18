@@ -17,12 +17,15 @@ diagrams
     120 106 100 4 0 0
   classdiagram_ref 2075394 // CopyThread
     928 911 100 21 0 0
-  active  classdiagram_ref 2075266 // DatabaseCopyThread
+  classdiagram_ref 2075266 // DatabaseCopyThread
     928 911 100 22 0 81
+  active  classdiagram_ref 169474 // mdtError
+    928 911 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2089090 // tcp
+selected classdiagram_ref 169474 // mdtError
 open
+  classview_ref 161666 // mdtError
   
 package_ref 315650 // error
   class_ref 2419330 // CsvFileImportMapping
@@ -38,5 +41,6 @@ package_ref 315650 // error
   classview_ref 893954 // sqlDatabaseCopy
   class_ref 2421250 // DatabaseCopyDialog
   classview_ref 1052162 // tcp
+  classview_ref 846978 // QtCore
 end
 end

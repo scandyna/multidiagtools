@@ -4357,7 +4357,7 @@ void mdtSqlCopierTest::copyHelperTest()
   optBool = CopyHelper::checkExistsInDestinationTable(sourceRecord, &tm, db);
   QVERIFY(optBool);
   QVERIFY(optBool.value() == true);
-  // Build source record that does not matche
+  // Build source record that does not match
   sourceRecord.clear();
   sourceRecord << 100 << 1 << "Street 10" << "FieldAB 20" << "FieldAA 20" << "Name 1" << "FieldA 1" << "FieldB 1";
   // Check
@@ -4822,6 +4822,7 @@ void mdtSqlCopierTest::databaseCopyThreadTest()
    * Run copy
    */
   ///thread.copyData(mapping);
+  thread.startCopy(mapping);
   thread.wait();
   /*
    * Check that copy was done

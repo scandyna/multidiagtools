@@ -127,13 +127,18 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void incrementTableCopyProgress(int index, int64_t n = 1);
 
+    /*! \brief Notify that copy is done successfully for table at given index
+     */
+    void notifyTableCopyDone(int index);
+
     /*! \brief Create database connection based on given dbInfo
      */
     QSqlDatabase createConnection(const QSqlDatabase & dbInfo);
 
+    std::atomic<bool> pvAbort;
+
    private:
 
-    std::atomic<bool> pvAbort;
     std::vector<int64_t> pvTableSizeList;
     std::vector<mdtProgressValue<int64_t> > pvTableProgressList;
     mdtProgressValue<int64_t, mdtProgressValueTimer> pvGlobalProgress;

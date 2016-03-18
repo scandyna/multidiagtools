@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,11 +19,13 @@
  **
  ****************************************************************************/
 #include "mdtApplication.h"
+#include "mdtError.h"
 #include "mdt/error/Logger.h"
 #include "mdt/error/LoggerConsoleBackend.h"
 #include "mdt/error/LoggerFileBackend.h"
 #include <QFileInfo>
 #include <QTextCodec>
+#include <QMetaType>
 #include <memory>
 #include <iostream>
 
@@ -95,6 +97,8 @@ bool mdtApplication::init(bool allowMultipleInstances/*, int dialogErrorLevelsMa
   logFileName += ".log";
   qDebug() << "mdtApplication::init(): log file: " << logFileName;
   // Init error system
+//   qRegisterMetaType<mdtError>("mdtError");
+  qRegisterMetaType<mdtError>();
   auto consoleOut = std::make_shared<mdt::error::LoggerConsoleBackend>();
   mdt::error::Logger::addBackend(consoleOut);
   auto fileOut = std::make_shared<mdt::error::LoggerFileBackend>();

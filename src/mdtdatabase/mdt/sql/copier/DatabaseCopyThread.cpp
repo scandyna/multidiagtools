@@ -23,6 +23,7 @@
 #include "CopyHelper.h"
 #include "mdt/sql/Database.h"
 #include "mdt/sql/error/Error.h"
+#include "mdtSqlTransaction.h"
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -50,9 +51,9 @@ int64_t DatabaseCopyThread::calculateSourceTableSize(const DatabaseCopierTableMa
   QSqlQuery query(sourceDatabase);
   auto sql = CopyHelper::getSourceTableCountSql(tm, sourceDatabase);
 
-  if(!query.exec()){
+  if(!query.exec(sql)){
     auto error = mdtErrorNewQ(tr("Executing query to get source table count failed"), mdtError::Warning, this);
-    error.stackError(mdt::sql::error::fromQSqlError(query.lastError()));
+    error.stackError(ErrorFromQsqlQuery(query));
     error.commit();
     return -1;
   }
@@ -66,6 +67,9 @@ int64_t DatabaseCopyThread::calculateSourceTableSize(const DatabaseCopierTableMa
 void DatabaseCopyThread::calculateTableSizes(const QSqlDatabase & sourceDatabase)
 {
   for(int i = 0; i < pvMapping.tableMappingCount(); ++i){
+    if(pvAbort){
+      return;
+    }
     const auto tm = pvMapping.tableMapping(i);
     Q_ASSERT(tm);
     if(tm->mappingState() == TableMapping::MappingComplete){
@@ -73,17 +77,112 @@ void DatabaseCopyThread::calculateTableSizes(const QSqlDatabase & sourceDatabase
       setTableSize(i, size);
     }
   }
+  calculateTotalCopySize();
+}
+
+bool DatabaseCopyThread::copyTable(const DatabaseCopierTableMapping *const tm, int index,
+                                   const QSqlDatabase & sourceDatabase, const QSqlDatabase & destinationDatabase)
+{
+  Q_ASSERT(tm != nullptr);
+
+  QSqlQuery sourceQuery(sourceDatabase);
+  QSqlQuery destinationQuery(destinationDatabase);
+  mdtSqlTransaction transaction(destinationDatabase);
+  QString sql;
+
+  if(pvAbort){
+    return true;
+  }
+  // Setup queries
+  sourceQuery.setForwardOnly(true);
+  destinationQuery.setForwardOnly(true);
+
+  // Get values of all fields in source table
+  sql = CopyHelper::getSourceTableSelectSql(tm, sourceDatabase);
+  if(!sourceQuery.exec(sql)){
+    auto error = mdtErrorNewQ(tr("Executing query to get source table records failed"), mdtError::Error, this);
+    error.stackError(ErrorFromQsqlQuery(sourceQuery));
+    error.commit();
+    emit tableCopyErrorOccured(index, error);
+    return false;
+  }
+  // Prepare destination table INSERT
+  sql = CopyHelper::getDestinationInsertSql(tm, destinationDatabase);
+  if(!destinationQuery.prepare(sql)){
+    auto error = mdtErrorNewQ(tr("Preparing query for insertion in destination table failed"), mdtError::Error, this);
+    error.stackError(ErrorFromQsqlQuery(destinationQuery));
+    error.commit();
+    emit tableCopyErrorOccured(index, error);
+    return false;
+  }
+  // Beginn transaction
+  if(!transaction.begin()){
+    auto error = transaction.lastError();
+    MDT_ERROR_SET_SRC_Q(error, this);
+    error.commit();
+    emit tableCopyErrorOccured(index, error);
+    return false;
+  }
+  // Copy each record
+  while(sourceQuery.next()){
+    if(pvAbort){
+      return true;
+    }
+    // If requiered, check if record allready exists in destination table
+    if(!tm->uniqueInsertCriteria().isNull()){
+      auto ret = CopyHelper::checkExistsInDestinationTable(sourceQuery.record(), tm, destinationDatabase);
+      if(!ret){
+        emit tableCopyErrorOccured(index, ret.error());
+        return false;
+      }
+      if(ret.value()){
+        continue;
+      }
+    }
+    // Build destination record
+    auto destinationRecord = CopyHelper::getDestinationRecord(sourceQuery.record(), tm, destinationDatabase);
+    if(!destinationRecord){
+      emit tableCopyErrorOccured(index, destinationRecord.error());
+      return false;
+    }
+    // Bind values to destination query
+    for(const auto & data : destinationRecord.value()){
+      destinationQuery.addBindValue(data);
+    }
+    qDebug() << "Bound: " << destinationQuery.boundValues();
+    // Execute
+    if(!destinationQuery.exec()){
+      auto error = mdtErrorNewQ(tr("Executing query for insertion in destination table failed"), mdtError::Error, this);
+      error.stackError(ErrorFromQsqlQuery(destinationQuery));
+      error.commit();
+      emit tableCopyErrorOccured(index, error);
+      return false;
+    }
+    // Update copy progress
+    incrementTableCopyProgress(index);
+  }
+  // Commit transaction
+  if(!transaction.commit()){
+    auto error = transaction.lastError();
+    MDT_ERROR_SET_SRC_Q(error, this);
+    error.commit();
+    emit tableCopyErrorOccured(index, error);
+    return false;
+  }
+  // Notify end of table copy
+  notifyTableCopyDone(index);
+
+  return true;
 }
 
 void DatabaseCopyThread::run()
 {
   using mdt::sql::Database;
+  using mdt::sql::copier::TableMapping;
 
   QString sourceConnectionName;
   QString destinationConnectionName;
   {
-    ///mdtProgressValue<int64_t> globalProgress;
-    ///int64_t totalSize;
     auto sourceDatabase = createConnection(pvMapping.sourceDatabase());
     sourceConnectionName = sourceDatabase.connectionName();
     QSqlDatabase destinationDatabase;
@@ -101,21 +200,20 @@ void DatabaseCopyThread::run()
     if(!destinationDatabase.isOpen()){
       return;
     }
-    
-    sleep(1);
-    
-    setTableSize(0, 50);
-    setTableSize(1, 50);
-    qDebug() << "Total size: " << calculateTotalCopySize();
-    
-    for(int i = 0; i < 50; ++i){
-      msleep(50);
-      incrementTableCopyProgress(0);
-      msleep(100);
-      incrementTableCopyProgress(1);
+    pvAbort = false;
+    // Calculate copy size
+    calculateTableSizes(sourceDatabase);
+    // Copy each table that has a complete mapping
+    for(int i = 0; i < pvMapping.tableMappingCount(); ++i){
+      if(pvAbort){
+        break;
+      }
+      const auto tm = pvMapping.tableMapping(i);
+      Q_ASSERT(tm);
+      if(tm->mappingState() == TableMapping::MappingComplete){
+        copyTable(tm.get(), i, sourceDatabase, destinationDatabase);
+      }
     }
-    
-    
   }
   QSqlDatabase::removeDatabase(sourceConnectionName);
   QSqlDatabase::removeDatabase(destinationConnectionName);

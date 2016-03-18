@@ -86,6 +86,11 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void calculateTableSizes(const QSqlDatabase & sourceDatabase);
 
+    /*! \brief Copy source table to destination table regarding table mapping
+     */
+    bool copyTable(const DatabaseCopierTableMapping * const tm, int index,
+                   const QSqlDatabase & sourceDatabase, const QSqlDatabase & destinationDatabase);
+
     /*! \brief Thread function implementation
      */
     void run();

@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "CopyThread.h"
+#include "MappingModel.h"
 #include "mdtAlgorithms.h"
 #include "mdt/sql/error/Error.h"
 
@@ -103,6 +104,14 @@ void CopyThread::incrementTableCopyProgress(int index, int64_t n)
     // Notify global progress
     emit globalProgressValueChanged(pvGlobalProgress.scaledValue());
   }
+}
+
+void CopyThread::notifyTableCopyDone(int index)
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < tableMappingCount());
+
+  emit tableCopyStatusChanged(index, MappingModel::CopyStatusOk);
 }
 
 QSqlDatabase CopyThread::createConnection(const QSqlDatabase & dbInfo)

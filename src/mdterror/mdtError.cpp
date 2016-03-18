@@ -125,7 +125,6 @@ void mdtError::setSource(const QString & fileName, int fileLine, const QString &
     fn += QStringLiteral("::") % functionName % QStringLiteral("()");
   }
   pvShared->functionName = fn;
-//   pvShared->functionName =  className + QLatin1String("::") + functionName + QLatin1String("()");
 }
 
 void mdtError::setSource(const QString& fileName, int fileLine, const QObject*const obj, const QString& functionName)
