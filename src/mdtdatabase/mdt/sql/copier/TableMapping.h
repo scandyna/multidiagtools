@@ -316,41 +316,7 @@ namespace mdt{ namespace sql{ namespace copier{
     */
     void clearFieldMapping();
 
-    /*! \brief Get SQL statement to count rows in source table
-    *
-    * \note We cannot use internal databases, because this function can be called from non main thread (f.ex. mdtSqlDatabaseCopierThread)
-    */
-//     QString getSqlForSourceTableCount(const QSqlDatabase & db) const;
-
-    /*! \brief Get SQL statement to select source table data
-    *
-    * Will build a SQL SELECT statement that contains
-    *  fields regarding mapping.
-    *
-    * \note We cannot use internal databases, because this function can be called from non main thread (f.ex. mdtSqlDatabaseCopierThread)
-    */
-//     QString getSqlForSourceTableSelect(const QSqlDatabase & db) const;
-
-    /*! \brief Get SQL statement to insert data into destination table
-    *
-    * Will build a INSERT INTO statement that contains
-    *  fields regarding mapping.
-    *  This stamenet can be used with QSqlQuery's bind vaue with positional placeholder.
-    *
-    * Format is:
-    *  INSERT INTO SourceTable (field0, field1, ..., fieldN) VALUES(?, ?, ..., ?)
-    *
-    * \note We cannot use internal databases, because this function can be called from non main thread (f.ex. mdtSqlDatabaseCopierThread)
-    */
-//     QString getSqlForDestinationTableInsert(const QSqlDatabase & db) const;
-
   protected:
-
-    // Copy of this base class is not allowed
-    /**
-    TableMapping(const TableMapping &) = default;
-    TableMapping & operator=(const TableMapping &) = default;
-    */
 
     /*! \brief Get a list of available field names in source table
      */
