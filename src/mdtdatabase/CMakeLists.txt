@@ -27,6 +27,7 @@ set (SOURCES_FILES
           mdtSqlTableSelectionItem.cpp
           mdtSqlTableSelectionRow.cpp
           mdtSqlTableSelection.cpp
+          
           mdtDataTableManager.cpp
           mdtSqlDatabaseManager.cpp
           
@@ -66,9 +67,6 @@ set (SOURCES_FILES
           mdt/sql/copier/TableMappingDialog.cpp
           mdt/sql/copier/MappingModel.cpp
           mdt/sql/copier/CopyThread.cpp
-          
-#           mdtSqlCopierDataMapping.cpp
-
           mdt/sql/copier/ExpressionKeyFieldSelectionDialog.cpp
           mdt/sql/copier/ExpressionMatchItemModel.cpp
           mdt/sql/copier/RelatedTableInsertMatchItemModel.cpp
@@ -83,10 +81,6 @@ set (SOURCES_FILES
           mdt/sql/copier/DatabaseMappingModel.cpp
           mdt/sql/copier/DatabaseCopyThread.cpp
           mdt/sql/copier/DatabaseCopyDialog.cpp
-          
-#           mdtSqlDatabaseCopierMapping.cpp
-#           mdtSqlDatabaseCopierMappingModel.cpp
-#           mdtSqlDatabaseCopierThread.cpp
           # CSV import classes
           mdt/sql/copier/CsvImportTableMapping.cpp
           mdt/sql/copier/CsvStringImportTableMapping.cpp

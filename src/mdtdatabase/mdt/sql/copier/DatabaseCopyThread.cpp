@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "DatabaseCopyThread.h"
+#include "DatabaseMappingModel.h"
 #include "DatabaseCopierTableMapping.h"
 #include "CopyHelper.h"
 #include "mdt/sql/Database.h"
@@ -31,15 +32,33 @@
 namespace mdt{ namespace sql{ namespace copier{
 
 DatabaseCopyThread::DatabaseCopyThread(QObject *parent)
- : CopyThread(parent)
+ : CopyThread(parent),
+   pvModel(nullptr)
 {
 }
 
-void DatabaseCopyThread::startCopy(const DatabaseMapping & mapping)
+int DatabaseCopyThread::tableMappingCount() const
 {
-  Q_ASSERT(!isRunning());
+  if(pvModel == nullptr){
+    return 0;
+  }
+  return pvModel->rowCount();
+}
 
-  pvMapping = mapping;
+// void DatabaseCopyThread::startCopy(const DatabaseMapping & mapping)
+// {
+//   Q_ASSERT(!isRunning());
+// 
+// //   pvMapping = mapping;
+//   resetCopyProgress();
+//   start();
+// }
+
+void DatabaseCopyThread::startCopy(const DatabaseMappingModel *const model)
+{
+  Q_ASSERT(model != nullptr);
+
+  pvModel = model;
   resetCopyProgress();
   start();
 }
@@ -66,17 +85,28 @@ int64_t DatabaseCopyThread::calculateSourceTableSize(const DatabaseCopierTableMa
 
 void DatabaseCopyThread::calculateTableSizes(const QSqlDatabase & sourceDatabase)
 {
-  for(int i = 0; i < pvMapping.tableMappingCount(); ++i){
+  for(int i = 0; i < pvModel->rowCount(); ++i){
     if(pvAbort){
       return;
     }
-    const auto tm = pvMapping.tableMapping(i);
-    Q_ASSERT(tm);
-    if(tm->mappingState() == TableMapping::MappingComplete){
+    if(pvModel->isTableMappingSelected(i)){
+      const auto tm = pvModel->tableMapping(i);
+      Q_ASSERT(tm);
       auto size = calculateSourceTableSize(tm.get(), sourceDatabase);
       setTableSize(i, size);
     }
   }
+//   for(int i = 0; i < pvMapping.tableMappingCount(); ++i){
+//     if(pvAbort){
+//       return;
+//     }
+//     const auto tm = pvMapping.tableMapping(i);
+//     Q_ASSERT(tm);
+//     if(tm->mappingState() == TableMapping::MappingComplete){
+//       auto size = calculateSourceTableSize(tm.get(), sourceDatabase);
+//       setTableSize(i, size);
+//     }
+//   }
   calculateTotalCopySize();
 }
 
@@ -183,13 +213,13 @@ void DatabaseCopyThread::run()
   QString sourceConnectionName;
   QString destinationConnectionName;
   {
-    auto sourceDatabase = createConnection(pvMapping.sourceDatabase());
+    auto sourceDatabase = createConnection(pvModel->sourceDatabase());
     sourceConnectionName = sourceDatabase.connectionName();
     QSqlDatabase destinationDatabase;
-    if(Database::isSameDatabase(sourceDatabase, pvMapping.destinationDatabase())){
+    if(Database::isSameDatabase(sourceDatabase, pvModel->destinationDatabase())){
       destinationDatabase = sourceDatabase;
     }else{
-      destinationDatabase = createConnection(pvMapping.destinationDatabase());
+      destinationDatabase = createConnection(pvModel->destinationDatabase());
     }
     destinationConnectionName = destinationDatabase.connectionName();
 
@@ -203,17 +233,27 @@ void DatabaseCopyThread::run()
     pvAbort = false;
     // Calculate copy size
     calculateTableSizes(sourceDatabase);
-    // Copy each table that has a complete mapping
-    for(int i = 0; i < pvMapping.tableMappingCount(); ++i){
+    // Copy each table that is selected
+    for(int i = 0; i < pvModel->rowCount(); ++i){
       if(pvAbort){
         break;
       }
-      const auto tm = pvMapping.tableMapping(i);
-      Q_ASSERT(tm);
-      if(tm->mappingState() == TableMapping::MappingComplete){
+      if(pvModel->isTableMappingSelected(i)){
+        const auto tm = pvModel->tableMapping(i);
+        Q_ASSERT(tm);
         copyTable(tm.get(), i, sourceDatabase, destinationDatabase);
       }
     }
+//     for(int i = 0; i < pvMapping.tableMappingCount(); ++i){
+//       if(pvAbort){
+//         break;
+//       }
+//       const auto tm = pvMapping.tableMapping(i);
+//       Q_ASSERT(tm);
+//       if(tm->mappingState() == TableMapping::MappingComplete){
+//         copyTable(tm.get(), i, sourceDatabase, destinationDatabase);
+//       }
+//     }
   }
   QSqlDatabase::removeDatabase(sourceConnectionName);
   QSqlDatabase::removeDatabase(destinationConnectionName);

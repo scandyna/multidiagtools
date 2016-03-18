@@ -79,7 +79,7 @@ void MappingModel::clearCopyStatusAndProgress()
 
 int MappingModel::columnCount(const QModelIndex &/* parent*/) const
 {
-  return 5;
+  return 6;
 }
 
 QVariant MappingModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -91,6 +91,8 @@ QVariant MappingModel::headerData(int section, Qt::Orientation orientation, int 
     return QAbstractTableModel::headerData(section, orientation, role);
   }
   switch(static_cast<ColumnIndex>(section)){
+    case SelectIndex:
+      return tr("Copy");
     case SourceTableNameIndex:
       return tr("Source");
     case DestinationTableNameIndex:
@@ -115,6 +117,8 @@ QVariant MappingModel::data(const QModelIndex & index, int role) const
   Q_ASSERT( (row >= 0) && (row < rowCount()) );
   const auto column = static_cast<ColumnIndex>(index.column());
   switch(column){
+    case SelectIndex:
+      return tableSelectedData(row, role);
     case SourceTableNameIndex:
       return sourceTableData(row, role);
     case DestinationTableNameIndex:
@@ -130,11 +134,69 @@ QVariant MappingModel::data(const QModelIndex & index, int role) const
   return QVariant();
 }
 
+Qt::ItemFlags MappingModel::flags(const QModelIndex & index) const
+{
+  if( (index.isValid()) && (index.column() == SelectIndex) ){
+    return QAbstractTableModel::flags(index) | Qt::ItemIsUserCheckable;
+  }
+  return QAbstractTableModel::flags(index);
+}
+
+bool MappingModel::setData(const QModelIndex & index, const QVariant & value, int role)
+{
+  if(!index.isValid()){
+    return false;
+  }
+  if( (index.column() == SelectIndex) && (role == Qt::CheckStateRole) ){
+    Q_ASSERT(index.row() >= 0);
+    Q_ASSERT(index.row() < pvTableSelectedList.size());
+    pvTableSelectedList.setBit(index.row(), value.toBool());
+    emit dataChanged(index, index);
+    return true;
+  }
+  return false;
+}
+
+bool MappingModel::isTableMappingSelected(int row) const
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < pvTableSelectedList.size());
+
+  return pvTableSelectedList.testBit(row);
+}
+
+void MappingModel::setAllCompleteTableMappingSelected()
+{
+  for(int i = 0; i < rowCount(); ++i){
+    if(tableMappingState(i) == TableMapping::MappingComplete){
+      pvTableSelectedList.setBit(i, true);
+    }else{
+      pvTableSelectedList.setBit(i, false);
+    }
+  }
+}
+
 void MappingModel::resetCopyStatusAndProgress()
 {
   pvRowCopyProgress.assign(rowCount(), 0);
   pvRowCopyStatus.assign(rowCount(), CopyStatusUnknown);
   pvRowCopyError.assign(rowCount(), mdtError());
+  pvTableSelectedList.fill(false, rowCount());
+}
+
+QVariant MappingModel::tableSelectedData(int row, int role) const
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < pvTableSelectedList.size());
+
+  if(role == Qt::CheckStateRole){
+    if(pvTableSelectedList.testBit(row)){
+      return Qt::Checked;
+    }else{
+      return Qt::Unchecked;
+    }
+  }
+  return QVariant();
 }
 
 QVariant MappingModel::sourceTableData(int row, int role) const

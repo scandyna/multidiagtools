@@ -27,6 +27,7 @@
 #include <QModelIndex>
 #include <QVariant>
 #include <QString>
+#include <QBitArray>
 #include <vector>
 
 namespace mdt{ namespace sql{ namespace copier{
@@ -94,6 +95,14 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
 
+    /*! \brief Get flags
+     */
+    Qt::ItemFlags flags(const QModelIndex & index) const override;
+
+    /*! \brief Set data
+     */
+    bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole) override;
+
     /*! \brief Get source table name at given row
      *
      * \pre row must be in a valid range
@@ -112,17 +121,28 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     virtual TableMapping::MappingState tableMappingState(int row) const = 0;
 
+    /*! \brief Check if table at given row is selected for copy
+     */
+    bool isTableMappingSelected(int row) const;
+
+   public slots:
+
+    /*! \brief Select all table mapping with complete state for copy
+     */
+    void setAllCompleteTableMappingSelected();
+
    protected:
 
     /*! \brief Column index
      */
     enum ColumnIndex
     {
-      SourceTableNameIndex = 0,       /*!< Column index of source table name */
-      DestinationTableNameIndex = 1,  /*!< Column index of destination table name */
-      TableMappingStateIndex = 2,     /*!< Column index of table mapping state */
-      TableCopyProgressIndex = 3,     /*!< Column index of table copy progress */
-      TableCopyStatusIndex = 4        /*!< Column index of table copy status */
+      SelectIndex = 0,                /*!< Column index of selected table */
+      SourceTableNameIndex = 1,       /*!< Column index of source table name */
+      DestinationTableNameIndex = 2,  /*!< Column index of destination table name */
+      TableMappingStateIndex = 3,     /*!< Column index of table mapping state */
+      TableCopyProgressIndex = 4,     /*!< Column index of table copy progress */
+      TableCopyStatusIndex = 5        /*!< Column index of table copy status */
     };
 
    private slots:
@@ -132,6 +152,10 @@ namespace mdt{ namespace sql{ namespace copier{
     void resetCopyStatusAndProgress();
 
    private:
+
+    /*! \brief Get data about selected
+     */
+    QVariant tableSelectedData(int row, int role) const;
 
     /*! \brief Get data about source table column
      */
@@ -172,6 +196,7 @@ namespace mdt{ namespace sql{ namespace copier{
     std::vector<int> pvRowCopyProgress;
     std::vector<CopyStatus> pvRowCopyStatus;
     std::vector<mdtError> pvRowCopyError;
+    QBitArray pvTableSelectedList;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

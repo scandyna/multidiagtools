@@ -52,7 +52,7 @@ DatabaseCopyDialog::DatabaseCopyDialog(QWidget* parent)
 
   tvMapping->setModel(pvMappingModel);
   auto *progressBarDelegate = new mdtProgressBarItemDelegate(tvMapping);
-  tvMapping->setItemDelegateForColumn(3, progressBarDelegate);
+  tvMapping->setItemDelegateForColumn(4, progressBarDelegate);
   connect(tvMapping, &QTableView::doubleClicked, this, &DatabaseCopyDialog::editTableMapping);
   connect(tbSelectSourceDatabase, &QToolButton::clicked, this, &DatabaseCopyDialog::selectSourceDatabase);
   connect(tbSelectDestinationDatabase, &QToolButton::clicked, this, &DatabaseCopyDialog::selectDestinationDatabase);
@@ -177,10 +177,7 @@ void DatabaseCopyDialog::resetMapping()
     displayError(ret.error());
     return;
   }
-//   if(!pvMappingModel->resetTableMapping()){
-//     displayError(pvMappingModel->lastError());
-//     return;
-//   }
+  pvMappingModel->setAllCompleteTableMappingSelected();
   resizeTableViewToContents();
 }
 
@@ -193,10 +190,7 @@ void DatabaseCopyDialog::mapByName()
     displayError(ret.error());
     return;
   }
-//   if(!pvMappingModel->generateTableMappingByName()){
-//     displayError(pvMappingModel->lastError());
-//     return;
-//   }
+  pvMappingModel->setAllCompleteTableMappingSelected();
   resizeTableViewToContents();
 }
 
@@ -238,7 +232,7 @@ void DatabaseCopyDialog::copyData()
 
   setStateProcessingCopy();
   pvMappingModel->clearCopyStatusAndProgress();
-  pvThread->startCopy(pvMappingModel->mapping());
+  pvThread->startCopy(pvMappingModel);
 }
 
 // void mdtSqlDatabaseCopierDialog::abortCopy()

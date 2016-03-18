@@ -4208,8 +4208,9 @@ void mdtSqlCopierTest::databaseMappingModelBaseTest()
   QTableView tableView;
   QTreeView treeView;
   DatabaseMappingModel model;
-  const int copyProgressColumn = 3;
-  const int copyStatusColumn = 4;
+  const int selectedColumn = 0;
+  const int copyProgressColumn = 4;
+  const int copyStatusColumn = 5;
   QModelIndex index;
   auto db = pvDatabase;
 
@@ -4217,7 +4218,7 @@ void mdtSqlCopierTest::databaseMappingModelBaseTest()
   /*
    * Initial state
    */
-  QCOMPARE(model.columnCount(), 5);
+  QCOMPARE(model.columnCount(), 6);
   QCOMPARE(model.rowCount(), 0);
   /*
    * Generate mapping
@@ -4351,6 +4352,53 @@ void mdtSqlCopierTest::databaseMappingModelBaseTest()
   index = model.index(1, copyStatusColumn);
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index, Qt::DecorationRole), QVariant(QColor(Qt::red)));
+  /*
+   * Check table mapping selection
+   */
+  // Check if row 0 is selected
+  index = model.index(0, selectedColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::CheckStateRole), QVariant(Qt::Unchecked));
+  QVERIFY(!model.isTableMappingSelected(0));
+  // Check if row 1 is selected
+  index = model.index(1, selectedColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::CheckStateRole), QVariant(Qt::Unchecked));
+  QVERIFY(!model.isTableMappingSelected(1));
+  // Check if row 2 is selected
+  index = model.index(2, selectedColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::CheckStateRole), QVariant(Qt::Unchecked));
+  QVERIFY(!model.isTableMappingSelected(2));
+  // Check if row 3 is selected
+  index = model.index(3, selectedColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::CheckStateRole), QVariant(Qt::Unchecked));
+  QVERIFY(!model.isTableMappingSelected(3));
+  /*
+   * Check setting all complete table mapping selected for copy
+   */
+  model.setAllCompleteTableMappingSelected();
+  // Check if row 0 is selected
+  index = model.index(0, selectedColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::CheckStateRole), QVariant(Qt::Checked));
+  QVERIFY(model.isTableMappingSelected(0));
+  // Check if row 1 is selected
+  index = model.index(1, selectedColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::CheckStateRole), QVariant(Qt::Checked));
+  QVERIFY(model.isTableMappingSelected(1));
+  // Check if row 2 is selected
+  index = model.index(2, selectedColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::CheckStateRole), QVariant(Qt::Checked));
+  QVERIFY(model.isTableMappingSelected(2));
+  // Check if row 3 is selected
+  index = model.index(3, selectedColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::CheckStateRole), QVariant(Qt::Checked));
+  QVERIFY(model.isTableMappingSelected(3));
 
   /*
    * Setup views
@@ -4483,10 +4531,14 @@ void mdtSqlCopierTest::databaseCopyThreadTest()
 {
   using mdt::sql::copier::DatabaseCopierTableMapping;
   using mdt::sql::copier::DatabaseMapping;
+  using mdt::sql::copier::DatabaseMappingModel;
   using mdt::sql::copier::DatabaseCopyThread;
 
   DatabaseCopyThread thread;
-  DatabaseMapping mapping;
+  DatabaseMappingModel model;
+  
+//   DatabaseMapping mapping;
+  
   QSqlDatabase db = pvDatabase;
   clientTableTestDataSet dataset(db);
   QSqlQuery query(db);
@@ -4504,9 +4556,13 @@ void mdtSqlCopierTest::databaseCopyThreadTest()
   /*
    * Setup database mapping
    */
-  QVERIFY(mapping.setSourceDatabase(db));
-  QVERIFY(mapping.setDestinationDatabase(db));
-  QCOMPARE(mapping.tableMappingCount(), 4); 
+  QVERIFY(model.setSourceDatabase(db));
+  QVERIFY(model.setDestinationDatabase(db));
+  QCOMPARE(model.rowCount(), 4);
+  
+//   QVERIFY(mapping.setSourceDatabase(db));
+//   QVERIFY(mapping.setDestinationDatabase(db));
+//   QCOMPARE(mapping.tableMappingCount(), 4); 
   /*
    * Edit table mapping:
    *  Table Client_tbl -> Client2_tbl
@@ -4516,24 +4572,25 @@ void mdtSqlCopierTest::databaseCopyThreadTest()
    *   Client_tbl.FieldB -> Client2_tbl.FieldA
    *   Client_tbl.FieldA -> Client2_tbl.FieldB
    */
-  auto tm = mapping.tableMapping(2);
+  auto tm = model.tableMapping(2);
+//   auto tm = mapping.tableMapping(2);
   QCOMPARE(tm->destinationTableName(), QString("Client2_tbl"));
   QVERIFY(tm->sourceDatabase().isOpen());
   QVERIFY(tm->setSourceTable("Client_tbl"));
   tm->setSourceFieldAtItem(0, "Id_PK");
-//   tm->setSourceType(1, mdtSqlCopierFieldMapping::FixedValue);
   tm->setSourceFixedValueAtItem(1, "Fixed name");
   tm->setSourceFieldAtItem(2, "FieldB");
   tm->setSourceFieldAtItem(3, "FieldA");
   QVERIFY(tm->mappingState() == DatabaseCopierTableMapping::MappingComplete);
-  ///mapping.setTableMapping(0, tm);
-  QCOMPARE(mapping.tableMappingCount(), 4);
-//   QCOMPARE(mapping.tableMappingList().size(), 4);
+  model.tableMappingUpdated(2);
+  QCOMPARE(model.rowCount(), 4);
+  model.setAllCompleteTableMappingSelected();
+//   QCOMPARE(mapping.tableMappingCount(), 4);
   /*
    * Run copy
    */
-  ///thread.copyData(mapping);
-  thread.startCopy(mapping);
+  thread.startCopy(&model);
+//   thread.startCopy(mapping);
   thread.wait();
   /*
    * Check that copy was done

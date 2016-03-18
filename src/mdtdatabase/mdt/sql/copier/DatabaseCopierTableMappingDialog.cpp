@@ -116,7 +116,9 @@ void DatabaseCopierTableMappingDialog::populateSourceTableCombobox(const Databas
   using mdt::sql::Database;
 
   auto tables = Database::getTables(tm->sourceDatabase(), Database::Tables | Database::Views);
-  tables.removeAll(tm->destinationTableName());
+  if(Database::isSameDatabase(tm->sourceDatabase(), tm->destinationDatabase())){
+    tables.removeAll(tm->destinationTableName());
+  }
   tables.sort();
   cbSourceTable->clear();
   cbSourceTable->addItems(tables);
