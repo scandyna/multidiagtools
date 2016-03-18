@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -45,6 +45,10 @@ namespace mdt{ namespace error {
     /*! \brief Get error informations
      */
     QString getErrorString(const mdtError & error) const;
+
+    /*! \brief Get error stack string
+     */
+    QString getErrorStackString(const mdtError & error) const;
   };
 
 }}  // namespace mdt{ namespace error {

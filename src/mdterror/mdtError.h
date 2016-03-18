@@ -24,6 +24,7 @@
 #include <QExplicitlySharedDataPointer>
 #include <QString>
 #include <QSharedData>
+#include <QMetaType>
 #include <type_traits>  // std::is_same
 #include <typeindex>
 #include <typeinfo>
@@ -203,6 +204,11 @@ class QObject;
  * For example, in writeToFile(), if write() fails, we create a new mdtError, and return it.
  * Then, saveDocument() will fail, create its own mdtError object, and stack the one returned by writeToFile().
  * To stack a error, use stackError() , and use getErrorStack() to get stacked errors back.
+ *
+ * If you need to send mdtError object across threads with Qt signal/slot (queued),
+ *  mdtError must be registered with qRegisterMetaType().
+ *  This is allready done in mdtApplication::init().
+ *  If you don't use mdtApplication, don't forget to call qRegisterMetaType<mdtError>() in, f.ex., your main() function.
  */
 class mdtError
 {
@@ -259,10 +265,6 @@ class mdtError
    */
   // Copy construct is handled by QExplicitlySharedDataPointer
   mdtError(const mdtError &) = default;
-
-//   ~mdtError(){}
-
-  //mdtErrorV2(mdtErrorV2 &&) = default;
 
   /*! \brief Check if error is null
    *
@@ -495,7 +497,7 @@ class mdtError
 
   QExplicitlySharedDataPointer<mdtErrorPrivateBase> pvShared;
 };
-//Q_DECLARE_METATYPE(mdtError)
-//Q_DECLARE_OPAQUE_POINTER(mdtError)
+// Q_DECLARE_OPAQUE_POINTER(mdtError)
+Q_DECLARE_METATYPE(mdtError)
 
 #endif // #ifndef MDT_ERROR_H

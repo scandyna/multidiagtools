@@ -26,8 +26,20 @@ namespace mdt{ namespace sql{ namespace error{
   */
 mdtError fromQSqlError(const QSqlError & sqlError)
 {
+  return mdtErrorNewT(QSqlError::ErrorType, sqlError.type(), sqlError.text(), mdtError::Error, "QtSql");
+//   mdtError error;
+//   error.setError<QSqlError::ErrorType>(sqlError.type(), sqlError.text(), mdtError::Error);
+//   return error;
+}
+
+mdtError fromQsqlQuery(const QSqlQuery & query, const QString & file, int line)
+{
   mdtError error;
+  auto sqlError = query.lastError();
+
   error.setError<QSqlError::ErrorType>(sqlError.type(), sqlError.text(), mdtError::Error);
+  error.setSource(file, line, "QSqlQuery", "");
+
   return error;
 }
 

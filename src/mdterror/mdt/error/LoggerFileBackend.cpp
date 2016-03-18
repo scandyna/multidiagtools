@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,9 +21,11 @@
 #include "LoggerFileBackend.h"
 #include <QFile>
 #include <QLatin1String>
+#include <QStringBuilder>
 #include <QDebug>
 #include <QDebugStateSaver>
 #include <QDateTime>
+#include <QTextStream>
 
 namespace mdt{ namespace error {
 
@@ -87,22 +89,10 @@ void LoggerFileBackend::logError(const mdtError & error)
   }
   Q_ASSERT(file.isOpen());
   Q_ASSERT(file.isWritable());
-  // Use a scope for QDebug, so we are shure that it can flush before the file is closed
-  {
-    // Setup debugger
-    QDebug dbg(&file);
-    QDebugStateSaver stateSaver(dbg);
-    dbg.resetFormat();
-    dbg.noquote();
-    dbg.nospace();
-    /*
-    * We build the string and then write it
-    * (prevents splitting of informations of the same error)
-    * Note: because potentially all errors are logged,
-    *       we not have to write the error stack here.
-    */
-    dbg << getErrorString(error);
-  }
+  // Write error to file
+  QTextStream stream(&file);
+  stream << getErrorStackString(error) << getErrorString(error) << QStringLiteral("\n");
+  stream.flush();
   file.close();
 }
 
@@ -126,17 +116,30 @@ QString LoggerFileBackend::getErrorString(const mdtError & error) const
   QString lineBegin;
 
   // Prepare line beginning
-  lineBegin = QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss") + QLatin1String(" ") \
-            + errorLevelText(error.level()) + QLatin1String(": ");
+  lineBegin = QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss") + QStringLiteral(" ") \
+            % errorLevelText(error.level()) % QStringLiteral(": ");
   // Build message
-  str = lineBegin + error.functionName() + QLatin1String("\n") \
-      + lineBegin + QLatin1String("-> ") + tr("Text: ") + error.text() + QLatin1String("\n");
+  str = lineBegin % QStringLiteral("In ") % error.functionName() % QStringLiteral("\n") \
+      % lineBegin + QStringLiteral("-> ") % tr("Text: ") % error.text() % QStringLiteral("\n");
   informativeText = error.informativeText();
   if(!informativeText.isEmpty()){
-    str += lineBegin + QLatin1String("-> ") + error.informativeText() + QLatin1String("\n");
+    str += lineBegin % QStringLiteral("-> ") % error.informativeText() % QStringLiteral("\n");
   }
-  str += lineBegin + QLatin1String("-> ") + tr("File: ") + error.fileName() + QLatin1String("\n") \
-       + lineBegin + QLatin1String("-> ") + tr("Line: ") + QString::number(error.fileLine()) + QLatin1String("\n");
+  str += lineBegin % QStringLiteral("-> ") % tr("File: ") % error.fileName() % QStringLiteral("\n") \
+       % lineBegin % QStringLiteral("-> ") % tr("Line: ") % QString::number(error.fileLine()); /// % QStringLiteral("\n");
+
+  return str;
+}
+
+QString LoggerFileBackend::getErrorStackString(const mdtError & error) const
+{
+  QString str;
+  const auto errorStack = error.getErrorStack();
+
+  for(const auto & e : errorStack){
+    /// \todo check if allready commited
+    str += getErrorString(e) % QStringLiteral("\n");
+  }
 
   return str;
 }
@@ -145,13 +148,13 @@ QString LoggerFileBackend::errorLevelText(mdtError::Level level) const
 {
   switch(level){
     case mdtError::NoError:
-      return QLatin1String("[NoError]");
+      return QStringLiteral("[NoError]");
     case mdtError::Error:
-      return QLatin1String("[Error]");
+      return QStringLiteral("[Error]");
     case mdtError::Warning:
-      return QLatin1String("[Warning]");
+      return QStringLiteral("[Warning]");
     case mdtError::Info:
-      return QLatin1String("[Info]");
+      return QStringLiteral("[Info]");
   }
   return QString();
 }

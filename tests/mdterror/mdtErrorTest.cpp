@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -476,7 +476,11 @@ void mdtErrorTest::setSourceTest()
   MDT_ERROR_SET_SRC_Q(error2, this);
   QCOMPARE(error2.fileName(), QString(__FILE__));
   QCOMPARE(error2.functionName(), QString(this->metaObject()->className() + QLatin1String("::") + QLatin1String(__FUNCTION__) + QLatin1String("()")));
-
+  /*
+   * Check with incomplete function names
+   */
+  error1.setSource("file1.cpp", 20, "C1", "");
+  QCOMPARE(error1.functionName(), QString("C1"));
 }
 
 void mdtErrorTest::errorLoggerConsoleBackendTest()
@@ -484,6 +488,8 @@ void mdtErrorTest::errorLoggerConsoleBackendTest()
   mdt::error::LoggerConsoleBackend backend;
 
   mdtError error = mdtErrorNewTQ(int, 25, "error", mdtError::Error, this);
+  error.stackError(mdtErrorNewQ("system error 2", mdtError::Error, this));
+  error.stackError(mdtErrorNewQ("system error 1", mdtError::Error, this));
 
   error.setInformativeText("Some more info");
   backend.logError(error);

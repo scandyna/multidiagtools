@@ -23,12 +23,20 @@
 
 #include "mdtError.h"
 #include <QSqlError>
+#include <QSqlQuery>
+
+#define ErrorFromQsqlQuery(query) mdt::sql::error::fromQsqlQuery(query, __FILE__, __LINE__)
 
 namespace mdt{ namespace sql{ namespace error{
 
   /*! \brief Get a mdtError from given QSqlError
    */
+  [[deprecated]]
   mdtError fromQSqlError(const QSqlError & sqlError);
+
+  /*! \brief Get a mdtError from last error of given query
+   */
+  mdtError fromQsqlQuery(const QSqlQuery & query, const QString & file = "", int line = 0);
 
 }}} // namespace mdt{ namespace sql{ namespace error{
 

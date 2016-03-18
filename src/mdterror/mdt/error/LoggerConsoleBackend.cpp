@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,6 +23,7 @@
 #include <QDebug>
 #include <QDebugStateSaver>
 #include <QLatin1String>
+#include <QStringBuilder>
 
 namespace mdt{ namespace error {
 
@@ -30,7 +31,7 @@ LoggerConsoleBackend::~LoggerConsoleBackend()
 {
 }
 
-void LoggerConsoleBackend::logError(const mdtError& error)
+void LoggerConsoleBackend::logError(const mdtError & error)
 {
   QDebug dbg(QtDebugMsg);
   QDebugStateSaver stateSaver(dbg);
@@ -46,7 +47,7 @@ void LoggerConsoleBackend::logError(const mdtError& error)
    * Note: because potentially all errors are logged,
    *       we not have to print the error stack here.
    */
-  msg = tr("Error occured in ") + getErrorString(error);
+  msg = getErrorStackString(error) + getErrorString(error);
   dbg << msg;
 }
 
@@ -55,14 +56,27 @@ QString LoggerConsoleBackend::getErrorString(const mdtError & error) const
   QString str;
   QString informativeText;
 
-  str = error.functionName() + QLatin1String("\n") \
-      + QLatin1String("-> ") + tr("Text: ") + error.text() + QLatin1String("\n");
+  str = tr("Error occured in ") % error.functionName() % QStringLiteral("\n") \
+      % QStringLiteral("-> ") % tr("Text: ") % error.text() % QStringLiteral("\n");
   informativeText = error.informativeText();
   if(!informativeText.isEmpty()){
-    str += QLatin1String("-> ") + tr("Informative text: ") + error.informativeText() + QLatin1String("\n");
+    str += QStringLiteral("-> ") % tr("Informative text: ") % error.informativeText() % QStringLiteral("\n");
   }
-  str += QLatin1String("-> ") + tr("File: ") + error.fileName() + QLatin1String("\n") \
-       + QLatin1String("-> ") + tr("Line: ") + QString::number(error.fileLine());
+  str += QStringLiteral("-> ") % tr("File: ") % error.fileName() + QStringLiteral("\n") \
+       % QStringLiteral("-> ") % tr("Line: ") % QString::number(error.fileLine());
+
+  return str;
+}
+
+QString LoggerConsoleBackend::getErrorStackString(const mdtError & error) const
+{
+  QString str;
+  const auto errorStack = error.getErrorStack();
+
+  for(const auto & e : errorStack){
+    /// \todo check if allready commited
+    str += getErrorString(e) % QStringLiteral("\n");
+  }
 
   return str;
 }

@@ -21,6 +21,7 @@
 #include "mdtError.h"
 #include "mdt/error/Logger.h"
 #include <QLatin1String>
+#include <QStringBuilder>
 #include <QObject>
 #include <QMetaObject>
 #include <algorithm>
@@ -119,7 +120,12 @@ void mdtError::setSource(const QString & fileName, int fileLine, const QString &
   pvShared.detach();
   pvShared->fileName = fileName;
   pvShared->lineNumber = fileLine;
-  pvShared->functionName =  className + QLatin1String("::") + functionName + QLatin1String("()");
+  QString fn = className;
+  if(!functionName.isEmpty()){
+    fn += QStringLiteral("::") % functionName % QStringLiteral("()");
+  }
+  pvShared->functionName = fn;
+//   pvShared->functionName =  className + QLatin1String("::") + functionName + QLatin1String("()");
 }
 
 void mdtError::setSource(const QString& fileName, int fileLine, const QObject*const obj, const QString& functionName)
