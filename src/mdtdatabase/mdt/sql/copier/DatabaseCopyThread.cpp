@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "DatabaseCopyThread.h"
 #include "DatabaseMappingModel.h"
+#include "DatabaseMapping.h"
 #include "DatabaseCopierTableMapping.h"
 #include "CopyHelper.h"
 #include "mdt/sql/Database.h"
@@ -44,15 +45,6 @@ int DatabaseCopyThread::tableMappingCount() const
   }
   return pvModel->rowCount();
 }
-
-// void DatabaseCopyThread::startCopy(const DatabaseMapping & mapping)
-// {
-//   Q_ASSERT(!isRunning());
-// 
-// //   pvMapping = mapping;
-//   resetCopyProgress();
-//   start();
-// }
 
 void DatabaseCopyThread::startCopy(const DatabaseMappingModel *const model)
 {
@@ -96,17 +88,6 @@ void DatabaseCopyThread::calculateTableSizes(const QSqlDatabase & sourceDatabase
       setTableSize(i, size);
     }
   }
-//   for(int i = 0; i < pvMapping.tableMappingCount(); ++i){
-//     if(pvAbort){
-//       return;
-//     }
-//     const auto tm = pvMapping.tableMapping(i);
-//     Q_ASSERT(tm);
-//     if(tm->mappingState() == TableMapping::MappingComplete){
-//       auto size = calculateSourceTableSize(tm.get(), sourceDatabase);
-//       setTableSize(i, size);
-//     }
-//   }
   calculateTotalCopySize();
 }
 
@@ -179,7 +160,6 @@ bool DatabaseCopyThread::copyTable(const DatabaseCopierTableMapping *const tm, i
     for(const auto & data : destinationRecord.value()){
       destinationQuery.addBindValue(data);
     }
-    qDebug() << "Bound: " << destinationQuery.boundValues();
     // Execute
     if(!destinationQuery.exec()){
       auto error = mdtErrorNewQ(tr("Executing query for insertion in destination table failed"), mdtError::Error, this);
@@ -244,16 +224,6 @@ void DatabaseCopyThread::run()
         copyTable(tm.get(), i, sourceDatabase, destinationDatabase);
       }
     }
-//     for(int i = 0; i < pvMapping.tableMappingCount(); ++i){
-//       if(pvAbort){
-//         break;
-//       }
-//       const auto tm = pvMapping.tableMapping(i);
-//       Q_ASSERT(tm);
-//       if(tm->mappingState() == TableMapping::MappingComplete){
-//         copyTable(tm.get(), i, sourceDatabase, destinationDatabase);
-//       }
-//     }
   }
   QSqlDatabase::removeDatabase(sourceConnectionName);
   QSqlDatabase::removeDatabase(destinationConnectionName);

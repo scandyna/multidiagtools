@@ -27,9 +27,6 @@
 #include <QDialog>
 #include <QModelIndex>
 
-// class mdtSqlDatabaseCopierMappingModel;
-// class mdtSqlDatabaseCopierThread;
-
 namespace mdt{ namespace sql{ namespace copier{
 
   class DatabaseMappingModel;
@@ -110,14 +107,6 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void copyData();
 
-    /*! \brief Abort copy
-    */
-  //   void abortCopy();
-
-    /*! \brief Update global progress
-    */
-  //   void updateGlobalProgress(int progress);
-
     /*! \brief Reciver for a global error generated from worker thread
      */
     void onThreadGlobalErrorOccured(mdtError error);
@@ -186,8 +175,6 @@ namespace mdt{ namespace sql{ namespace copier{
 
     bool pvClosable;
     State pvState;
-//     mdtSqlDatabaseCopierMappingModel *pvMappingModel;
-//     mdtSqlDatabaseCopierThread *pvThread;
     DatabaseMappingModel *pvMappingModel;
     DatabaseCopyThread *pvThread;
     QString pvOwningSourceConnectionName;

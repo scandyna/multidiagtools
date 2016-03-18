@@ -23,11 +23,10 @@
 
 #include "CopyThread.h"
 
-#include "DatabaseMapping.h"
-
 namespace mdt{ namespace sql{ namespace copier{
 
   class DatabaseMappingModel;
+  class DatabaseCopierTableMapping;
 
   /*! \brief Worker thread for SQL database copy
    *
@@ -55,10 +54,6 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Get table mapping count
      */
     int tableMappingCount() const override;
-//     {
-// //       return pvMapping.tableMappingCount();
-//       return 
-//     }
 
     /*! \brief Copy tables of given database mapping
      *
@@ -78,7 +73,6 @@ namespace mdt{ namespace sql{ namespace copier{
      *
      * \pre Thread must be stopped before calling this function
      */
-//     void startCopy(const DatabaseMapping & mapping);
     void startCopy(const DatabaseMappingModel * const model);
 
    private:
@@ -101,8 +95,6 @@ namespace mdt{ namespace sql{ namespace copier{
     void run();
 
     const DatabaseMappingModel *pvModel;
-    
-//     DatabaseMapping pvMapping;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

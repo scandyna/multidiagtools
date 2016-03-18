@@ -77,9 +77,6 @@ DatabaseCopyDialog::~DatabaseCopyDialog()
   if(!pvOwningSourceConnectionName.isEmpty()){
     QSqlDatabase::removeDatabase(pvOwningSourceConnectionName);
   }
-//   if(!pvOwningDestinationConnectionName.isEmpty()){
-//     QSqlDatabase::removeDatabase(pvOwningDestinationConnectionName);
-//   }
 }
 
 void DatabaseCopyDialog::initSourceDatabase(mdtSqlDriverType::Type driverType)
@@ -120,10 +117,6 @@ void DatabaseCopyDialog::setDestinationDatabase(const QSqlDatabase & db)
     displayError(ret.error());
     return;
   }
-//   if(!pvMappingModel->setDestinationDatabase(db)){
-//     displayError(pvMappingModel->lastError());
-//     return;
-//   }
   resizeTableViewToContents();
   setStateDatabasesSetOrNotSet();
 }
@@ -217,7 +210,6 @@ void DatabaseCopyDialog::editTableMapping(const QModelIndex& index)
     return;
   }
   pvMappingModel->tableMappingUpdated(row);
-//   pvMappingModel->setTableMapping(row, dialog.mapping());
 }
 
 void DatabaseCopyDialog::resizeTableViewToContents()
@@ -235,25 +227,16 @@ void DatabaseCopyDialog::copyData()
   pvThread->startCopy(pvMappingModel);
 }
 
-// void mdtSqlDatabaseCopierDialog::abortCopy()
-// {
-// 
-// }
-
-// void mdtSqlDatabaseCopierDialog::updateGlobalProgress(int progress)
-// {
-//   pbGlobalProgress->setValue(progress);
-// }
-
 void DatabaseCopyDialog::onThreadGlobalErrorOccured(mdtError error)
 {
-  QMessageBox msgBox(this);
-
-  msgBox.setText(error.text());
-  msgBox.setInformativeText(error.informativeText());
-  msgBox.setDetailedText(error.systemText());
-  ///msgBox.setIcon(error.levelIcon());
-  msgBox.exec();
+  displayError(error);
+//   QMessageBox msgBox(this);
+// 
+//   msgBox.setText(error.text());
+//   msgBox.setInformativeText(error.informativeText());
+//   msgBox.setDetailedText(error.systemText());
+//   ///msgBox.setIcon(error.levelIcon());
+//   msgBox.exec();
 }
 
 void DatabaseCopyDialog::onThreadFinished()
@@ -271,10 +254,6 @@ void DatabaseCopyDialog::setSourceDatabasePv(const QSqlDatabase & db)
     displayError(ret.error());
     return;
   }
-//   if(!pvMappingModel->setSourceDatabase(db)){
-//     displayError(pvMappingModel->lastError());
-//     return;
-//   }
   resizeTableViewToContents();
   setStateDatabasesSetOrNotSet();
 }
@@ -370,7 +349,7 @@ void DatabaseCopyDialog::reject()
 
 void DatabaseCopyDialog::displayError(const mdtError& error)
 {
-  mdtErrorDialog dialog(this);  /// \todo Pass error..
+  mdtErrorDialog dialog(error, this);
   dialog.exec();
 }
 
