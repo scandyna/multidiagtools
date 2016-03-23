@@ -1,80 +1,72 @@
-format 76
+format 211
 
 classcanvas 128002 class_ref 818818 // mdtClUnit
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 43.8 30.1 2000
+  classdiagramsettings member_max_width 0 end
+  xyz 941.1 218.25 2000
 end
 classcanvas 128130 class_ref 174338 // QSqlQueryModel
-  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 876.7 301.1 2000
-end
-classcanvas 128386 class_ref 818946 // mdtClUnitConnectionData
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 26 427.6 2000
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 783.25 380.25 2000
 end
 classcanvas 128514 class_ref 819074 // mdtClUnitConnectionDialog
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 468.9 673.1 2000
+  classdiagramsettings member_max_width 0 end
+  xyz 221.9 120.5 2000
 end
 classcanvas 128642 class_ref 370434 // QDialog
-  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 615.9 562.3 2000
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 405.9 40.05 2000
 end
 classcanvas 129282 class_ref 405122 // QSqlDatabase
-  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 922.6 150 2000
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 1658.5 380.25 2000
 end
 classcanvas 129538 class_ref 819202 // Ui::mdtClUnitConnectionDialog
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 711.6 562 2000
+  classdiagramsettings member_max_width 0 end
+  xyz 690 172.35 2000
 end
 note 130178 "Dialog will use mdtClUnit to help managing ranges and related ArticleConnection data (if used)"
-  xyzwh 533.2 373.6 2006 274 92
+  xyzwh 1140.95 85.35 2006 274 92
 classcanvas 130434 class_ref 838786 // QStandardItemModel
-  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 916.8 967.6 2000
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 39.45 238.5 2000
 end
 relationcanvas 128258 relation_ref 1019906 // <directional composition>
+  decenter_begin 490
+  decenter_end 422
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 1020034 // <generalisation>
-  decenter_begin 388
   from ref 128514 z 2001 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 129026 relation_ref 1020290 // <dependency>
-  from ref 128002 z 2001 to ref 128386
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 129154 relation_ref 1020418 // <dependency>
-  from ref 128514 z 2001 to ref 128386
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 relationcanvas 129410 relation_ref 1020546 // <directional composition>
+  decenter_begin 490
+  decenter_end 422
   from ref 128002 z 2001 to ref 129282
-  role_a_pos 825 148 3000 no_role_b
-  multiplicity_a_pos 897 179 3000 no_multiplicity_b
+  role_a_pos 1576 372 3000 no_role_b
+  multiplicity_a_pos 1640 408 3000 no_multiplicity_b
 end
 relationcanvas 129794 relation_ref 1020930 // <generalisation>
+  decenter_begin 252
+  decenter_end 422
   from ref 128514 z 2001 to ref 129538
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 1027586 // <unidirectional association>
-  decenter_begin 199
-  from ref 128514 z 2001 to ref 128002
-  role_a_pos 472 354 3000 no_role_b
-  multiplicity_a_pos 436 354 3000 no_multiplicity_b
+  from ref 128514 z 2001 to point 437 626
+  line 130690 z 2001 to point 1281 626
+  line 130818 z 2001 to ref 128002
+  role_a_pos 1292 596 3000 no_role_b
+  multiplicity_a_pos 1265 596 3000 no_multiplicity_b
 end
 relationcanvas 130562 relation_ref 1047554 // <directional composition>
   from ref 128514 z 2001 to ref 130434
-  role_a_pos 849 952 3000 no_role_b
-  multiplicity_a_pos 947 983 3000 no_multiplicity_b
+  role_a_pos 195 234 3000 no_role_b
+  multiplicity_a_pos 195 270 3000 no_multiplicity_b
 end
 line 130306 -_-_
   from ref 130178 z 2007 to ref 130050

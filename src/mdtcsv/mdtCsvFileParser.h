@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -46,10 +46,14 @@ class mdtCsvFileParser
  public:
 
   /*! \brief Default constructor
+   */
+  mdtCsvFileParser();
+
+  /*! \brief Constructor
    *
    * \pre csvSettings must be valid
    */
-  mdtCsvFileParser(const mdtCsvParserSettings & csvSettings = mdtCsvParserSettings());
+  mdtCsvFileParser(const mdtCsvParserSettings & csvSettings);
 
   /*! \brief Copy disabled
    */
@@ -61,6 +65,13 @@ class mdtCsvFileParser
 
   // Destructor: required so that pvParser pointer has the definition for its destructor
   ~mdtCsvFileParser();
+
+  /*! \brief Set CSV settings
+   *
+   * \pre csvSettings must be valid
+   * \pre no file must be open
+   */
+  void setCsvSettings(const mdtCsvParserSettings & csvSettings);
 
   /*! \brief Open CSV file
    *
@@ -81,10 +92,18 @@ class mdtCsvFileParser
   bool atEnd() const;
 
   /*! \brief Read one line in CSV file
+   *
+   * \pre CSV settings must be set before calling this function
+   * \sa setCsvSettings()
+   * \sa mdtCsvFileParser(const mdtCsvParserSettings&)
    */
   mdtExpected<mdtCsvRecord> readLine();
 
   /*! \brief Read the entire CSV file
+   *
+   * \pre CSV settings must be set before calling this function
+   * \sa setCsvSettings()
+   * \sa mdtCsvFileParser(const mdtCsvParserSettings&)
    */
   mdtExpected<mdtCsvData> readAll();
 

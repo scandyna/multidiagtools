@@ -50,6 +50,8 @@
 #include "mdt/sql/copier/CsvStringImportTableMappingModel.h"
 #include "mdt/sql/copier/CsvFileImportTableMappingModel.h"
 #include "mdt/sql/copier/CsvFileImportTableMappingDialog.h"
+#include "mdt/sql/copier/CsvFileImportMapping.h"
+#include "mdt/sql/copier/CsvFileImportMappingModel.h"
 #include "mdtComboBoxItemDelegate.h"
 #include "mdtProgressBarItemDelegate.h"
 #include "mdtProgressValue.h"
@@ -4443,7 +4445,7 @@ void mdtSqlCopierTest::databaseMappingModelTest()
   /*
    * Initial state
    */
-  QCOMPARE(model.columnCount(), 5);
+  QCOMPARE(model.columnCount(), 6);
   QCOMPARE(model.rowCount(), 0);
   /*
    * Check generating mapping by name
@@ -4506,6 +4508,95 @@ void mdtSqlCopierTest::databaseMappingModelTest()
   index = model.index(0, tableMappingStateColumn);
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index, Qt::DecorationRole), QVariant());
+
+  /*
+   * Setup views
+   */
+  // Setup table view
+  tableView.setModel(&model);
+  tableView.resize(600, 150);
+  tableView.show();
+  // Setup tree view
+  treeView.setModel(&model);
+  treeView.show();
+
+  /*
+   * Play
+   */
+  tableView.resizeColumnsToContents();
+  while(tableView.isVisible()){
+    QTest::qWait(500);
+  }
+}
+
+void mdtSqlCopierTest::csvFileImportMappingTest()
+{
+  using mdt::sql::copier::CsvFileImportMapping;
+  using mdt::sql::copier::TableMapping;
+  using mdt::sql::copier::CsvFileImportTableMapping;
+
+  CsvFileImportMapping mapping;
+  std::shared_ptr<CsvFileImportTableMapping> tm;
+  auto db = pvDatabase;
+
+  QVERIFY(db.isOpen());
+  /*
+   * Initial state
+   */
+  QCOMPARE(mapping.tableMappingCount(), 0);
+  /*
+   * Set destination database
+   */
+  QVERIFY(mapping.setDestinationDatabase(db));
+  // Check attributes without any mapping set
+  QCOMPARE(mapping.tableMappingCount(), 4);
+  // Note: tables are sorted, and '_' is after '2' in ascii
+  QCOMPARE(mapping.destinationTableName(0), QString("Address2_tbl"));
+  QCOMPARE(mapping.destinationTableName(1), QString("Address_tbl"));
+  QCOMPARE(mapping.destinationTableName(2), QString("Client2_tbl"));
+  QCOMPARE(mapping.destinationTableName(3), QString("Client_tbl"));
+  // Check that database is set to each table mapping
+  QCOMPARE(mapping.tableMapping(0)->destinationDatabase().databaseName(), db.databaseName());
+  QCOMPARE(mapping.tableMapping(1)->destinationDatabase().databaseName(), db.databaseName());
+  QCOMPARE(mapping.tableMapping(2)->destinationDatabase().databaseName(), db.databaseName());
+  QCOMPARE(mapping.tableMapping(3)->destinationDatabase().databaseName(), db.databaseName());
+  // No source must be assigned now
+  QVERIFY(mapping.sourceTableName(0).isEmpty());
+  QVERIFY(mapping.sourceTableName(1).isEmpty());
+  QVERIFY(mapping.sourceTableName(2).isEmpty());
+  QVERIFY(mapping.sourceTableName(3).isEmpty());
+
+  /// \todo continue
+}
+
+void mdtSqlCopierTest::csvFileImportMappingModelTest()
+{
+  using mdt::sql::copier::TableMapping;
+  using mdt::sql::copier::CsvFileImportTableMapping;
+  using mdt::sql::copier::CsvFileImportMapping;
+  using mdt::sql::copier::CsvFileImportMappingModel;
+
+  QTableView tableView;
+  QTreeView treeView;
+  CsvFileImportMappingModel model;
+  const int sourceTableNameColumn = 0;
+  const int destinationTableNameColumn = 1;
+  const int tableMappingStateColumn = 2;
+  QModelIndex index;
+  std::shared_ptr<CsvFileImportTableMapping> tm;
+  auto db = pvDatabase;
+
+  QVERIFY(db.isOpen());
+  /*
+   * Initial state
+   */
+  QCOMPARE(model.columnCount(), 6);
+  QCOMPARE(model.rowCount(), 0);
+  /*
+   * Set destination database
+   */
+  QVERIFY(model.setDestinationDatabase(db));
+  QCOMPARE(model.rowCount(), 4);
 
   /*
    * Setup views

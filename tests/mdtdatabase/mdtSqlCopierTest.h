@@ -93,6 +93,9 @@ class mdtSqlCopierTest : public mdtTest
   void databaseMappingModelBaseTest();
   void databaseMappingModelTest();
 
+  void csvFileImportMappingTest();
+  void csvFileImportMappingModelTest();
+
   void databaseCopyThreadTest();
   void databaseCopyDialogTest();
 

@@ -1,20 +1,20 @@
-format 210
+format 211
 
 classcanvas 128002 class_ref 2050562 // mdtCsvData
   classdiagramsettings member_max_width 0 end
-  xyz 107 365 2000
+  xyz 39 341 2000
 end
 classcanvas 128130 class_ref 2036994 // mdtCsvRecord
   classdiagramsettings member_max_width 0 end
-  xyz 422 345 2006
+  xyz 168 303 2006
 end
 classcanvas 128386 class_ref 2085506 // mdtCsvRecordFormat
   classdiagramsettings member_max_width 0 end
-  xyz 196 44 2000
+  xyz 40.5 40.5 2000
 end
 relationcanvas 128258 relation_ref 2376578 // <directional composition>
   from ref 128002 z 2007 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 406 396 3000 no_multiplicity_b
+  multiplicity_a_pos 152 373 3000 no_multiplicity_b
 end
 end

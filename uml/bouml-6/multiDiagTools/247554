@@ -1,6 +1,6 @@
 format 211
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 82
+  revision 83
   modified_by 2 "philippe"
   // class settings
   
@@ -4232,7 +4232,7 @@ ${inlines}
 
     classdiagram 759682 "mdtClUnit"
       classdiagramsettings member_max_width 0 end
-      size A3
+      size C-Landscape
     end
 
     class 818818 "mdtClUnit"
@@ -5385,7 +5385,7 @@ ${inlines}
 
     classdiagram 772866 "mdtClLink"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 818690 "mdtClLink"

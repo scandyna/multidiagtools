@@ -24,6 +24,7 @@
 #include "mdtCsvFileParserIterator.h"
 #include "mdtCsvFileParserIteratorSharedData.h"
 #include "mdtCsvFileParser.h"
+#include "mdtCsvFileParserModel.h"
 #include "mdtCsvStringGenerator.h"
 #include "mdtCsvFileGenerator.h"
 #include "mdtCsvSettings.h"
@@ -46,6 +47,7 @@
 #include <QVector>
 #include <QtTest>
 #include <QTableView>
+#include <QTreeView>
 #include <QAbstractItemView>
 #include <QHeaderView>
 #include <QStandardItemModel>
@@ -714,7 +716,7 @@ void mdtCsvTest::stringParserReadLineTest()
   QFETCH(mdtCsvData, expectedData);
   QFETCH(bool, expectedOk);
   QFETCH(mdtCsvParserSettings, csvSettings);
-  mdtCsvStringParser parser(csvSettings);
+  mdtCsvStringParser parser;
   mdtExpected<mdtCsvRecord> record;
   mdtCsvData data;
 
@@ -723,6 +725,7 @@ void mdtCsvTest::stringParserReadLineTest()
    */
   QVERIFY(parser.atEnd());
   // Setup CSV source string and parser
+  parser.setCsvSettings(csvSettings);
   parser.setSource(sourceData);
   // Parse line by line
   while(!parser.atEnd()){
@@ -1182,6 +1185,7 @@ void mdtCsvTest::csvFileParserTest()
   /*
    * Initial state
    */
+  parser.setCsvSettings(mdtCsvParserSettings());
   QVERIFY(parser.atEnd());
   /*
    * Open/close test
@@ -1208,6 +1212,25 @@ void mdtCsvTest::csvFileParserTest()
   QCOMPARE(record.value().count(), 1);
   QCOMPARE(record.value().columnDataList.at(0), QVariant("1234"));
   QVERIFY(parser.atEnd());
+  parser.closeFile();
+  /*
+   * Update CSV settings test
+   */
+  parser.setCsvSettings(mdtCsvParserSettings());
+  QVERIFY(parser.openFile(file.fileName(), "UTF-8"));
+  // Read first line
+  QVERIFY(!parser.atEnd());
+  record = parser.readLine();
+  QVERIFY(record.hasValue());
+  QCOMPARE(record.value().count(), 1);
+  QCOMPARE(record.value().columnDataList.at(0), QVariant("ABCDE"));
+  // Read second line
+  QVERIFY(!parser.atEnd());
+  record = parser.readLine();
+  QVERIFY(record.hasValue());
+  QCOMPARE(record.value().count(), 1);
+  QCOMPARE(record.value().columnDataList.at(0), QVariant("1234"));
+  QVERIFY(parser.atEnd());
 }
 
 void mdtCsvTest::csvFileParserReadLineTest()
@@ -1216,7 +1239,7 @@ void mdtCsvTest::csvFileParserReadLineTest()
   QFETCH(mdtCsvData, expectedData);
   QFETCH(bool, expectedOk);
   QFETCH(mdtCsvParserSettings, csvSettings);
-  mdtCsvFileParser parser(csvSettings);
+  mdtCsvFileParser parser;
   mdtCsvRecord record;
   mdtCsvData data;
   QTemporaryFile file;
@@ -1237,6 +1260,7 @@ void mdtCsvTest::csvFileParserReadLineTest()
    */
   QVERIFY(parser.atEnd());
   // Setup CSV parser
+  parser.setCsvSettings(csvSettings);
   QVERIFY(parser.openFile(file.fileName(), "UTF-8"));
   // Parse line by line
   while(!parser.atEnd()){
@@ -1274,7 +1298,7 @@ void mdtCsvTest::csvFileParserReadAllTest()
   QFETCH(mdtCsvData, expectedData);
   QFETCH(bool, expectedOk);
   QFETCH(mdtCsvParserSettings, csvSettings);
-  mdtCsvFileParser parser(csvSettings);
+  mdtCsvFileParser parser;
   mdtCsvRecord record;
   mdtCsvData data;
   QTemporaryFile file;
@@ -1295,6 +1319,7 @@ void mdtCsvTest::csvFileParserReadAllTest()
    */
   QVERIFY(parser.atEnd());
   // Setup CSV parser
+  parser.setCsvSettings(csvSettings);
   QVERIFY(parser.openFile(file.fileName(), "UTF-8"));
   // Parse file
   auto exData = parser.readAll();
@@ -1322,6 +1347,72 @@ void mdtCsvTest::csvFileParserReadAllTest()
 void mdtCsvTest::csvFileParserReadAllTest_data()
 {
   buildCsvParserTestData();
+}
+
+void mdtCsvTest::fileParserModelTest()
+{
+  mdtCsvFileParserModel model;
+  QModelIndex index;
+  QTableView tableView;
+  QTreeView treeView;
+  mdtCsvParserSettings csvSettings;
+  QTemporaryFile csvFile;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 0);
+  /*
+   * Prepare CSV source file
+   */
+  QVERIFY(csvFile.open());
+  QVERIFY(csvFile.write("Id,Name,FieldA,FieldB\n") > 0);
+  QVERIFY(csvFile.write("1,\"Name 1\",A1,B1\n") > 0);
+  
+  QVERIFY(csvFile.write("1,\"Name 1\",A1,B1\n") > 0);
+  QVERIFY(csvFile.write("1,\"Name 1\",A1,B1\n") > 0);
+  QVERIFY(csvFile.write("1,\"Name 1\",A1,B1\n") > 0);
+  QVERIFY(csvFile.write("1,\"Name 1\",A1,B1\n") > 0);
+  QVERIFY(csvFile.write("1,\"Name 1\",A1,B1\n") > 0);
+  csvFile.close();
+  /*
+   * Open CSV file
+   */
+  QVERIFY(model.openFile(csvFile.fileName(), "UTF-8", csvSettings));
+  // Check header
+  QCOMPARE(model.columnCount(), 4);
+  QCOMPARE(model.headerData(0, Qt::Horizontal), QVariant("Id"));
+  QCOMPARE(model.headerData(1, Qt::Horizontal), QVariant("Name"));
+  QCOMPARE(model.headerData(2, Qt::Horizontal), QVariant("FieldA"));
+  QCOMPARE(model.headerData(3, Qt::Horizontal), QVariant("FieldB"));
+  // Check fetching data
+  QVERIFY(model.canFetchMore(QModelIndex()));
+  model.fetchMore(QModelIndex());
+  // Check data
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("1"));
+  ///QCOMPARE(model.rowCount(), 2);
+  
+  /*
+   * Setup views
+   */
+  // Setup table view
+  tableView.setModel(&model);
+  tableView.resize(600, 200);
+  tableView.show();
+  // Setup tree view
+  treeView.setModel(&model);
+  treeView.show();
+
+  /*
+   * Play
+   */
+  tableView.resizeColumnsToContents();
+  while(tableView.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 void mdtCsvTest::csvStringGeneratorFromRecordTest()
@@ -1965,6 +2056,8 @@ void mdtCsvTest::buildCsvParserTestData()
   /// \todo add casese from: http://stackoverflow.com/questions/7436481/how-to-make-my-split-work-only-on-one-real-line-and-be-capable-to-skip-quoted-pa/7462539#7462539
 
   /// \todo Add some from /home/philippe/programmation/c_cpp/libreoffiche/git/core/sc/qa/unit/data/contentCSV/
+  
+  /// \todo Check if A B,C\n should be valid (space between A and B, unquoted)
 }
 
 void mdtCsvTest::buildCsvGeneratorTestData()

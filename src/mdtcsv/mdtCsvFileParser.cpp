@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,14 +25,45 @@
 #include <QObject>
 #include <QDir>
 
+/*! \todo Flexibility/usage simplicity
+ *
+ * Currently, parser must be built with scvSettings given,
+ *  and is immutable.
+ *  This is a constraint.
+ * F.ex. mdtCsvFileParserModel must itself manage a dynamic object for
+ *  this case, and recreate the object each time user wants to open another file.
+ *  And, this create 2 pointer inderections for each function call.
+ * Given that mdtCsvFileParser has allready a pointer (to hide parser template),
+ *  it should be responsible to manage this !
+ *
+ * Other solution: currently, parser grammar (in mdtCsvParserTemplate)
+ *  is done in constructor, witch requires CSV settings.
+ *  But, it could be done in a ueparate function ?u
+ */
+
+mdtCsvFileParser::mdtCsvFileParser()
+ : pvParser(new mdtCsvParserTemplate<mdtCsvFileParserMultiPassIterator>())
+{
+}
+
 mdtCsvFileParser::mdtCsvFileParser(const mdtCsvParserSettings & csvSettings)
- : pvParser(new mdtCsvParserTemplate<mdtCsvFileParserMultiPassIterator>(csvSettings))
+ : mdtCsvFileParser()
+//  : pvParser(new mdtCsvParserTemplate<mdtCsvFileParserMultiPassIterator>())
 {
   Q_ASSERT(csvSettings.isValid());
+  pvParser->setupParser(csvSettings);
 }
 
 mdtCsvFileParser::~mdtCsvFileParser()
 {
+}
+
+void mdtCsvFileParser::setCsvSettings(const mdtCsvParserSettings & csvSettings)
+{
+  Q_ASSERT(csvSettings.isValid());
+  Q_ASSERT(!pvFile.isOpen());
+
+  pvParser->setupParser(csvSettings);
 }
 
 bool mdtCsvFileParser::openFile(const QFileInfo & fileInfo, const QByteArray & encoding)
@@ -74,6 +105,8 @@ bool mdtCsvFileParser::atEnd() const
 
 mdtExpected<mdtCsvRecord> mdtCsvFileParser::readLine()
 {
+  Q_ASSERT_X(pvParser->isValid(), "mdtCsvFileParser", "No CSV settings set");
+
   mdtExpected<mdtCsvRecord> record;
 
   // Create multi pass iterators
@@ -93,6 +126,8 @@ mdtExpected<mdtCsvRecord> mdtCsvFileParser::readLine()
 
 mdtExpected<mdtCsvData> mdtCsvFileParser::readAll()
 {
+  Q_ASSERT_X(pvParser->isValid(), "mdtCsvFileParser", "No CSV settings set");
+
   mdtCsvData data;
 
   while(!atEnd()){

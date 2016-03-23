@@ -1,151 +1,84 @@
-format 209
+format 211
 
 classcanvas 128130 class_ref 1067266 // mdtSqlRecord
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 479 139 2000
+  xyz 150.857 665 2000
 end
 classcanvas 128258 class_ref 404994 // QSqlRecord
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 485.8 15.6 2006
+  xyz 157.857 584.071 2006
 end
 classcanvas 128642 class_ref 182402 // mdtError
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 674.3 75.6 3005
+  xyz 296.607 665 3005
 end
 classcanvas 129026 class_ref 1106946 // mdtClConnectorData
   classdiagramsettings member_max_width 0 end
-  xyz 14.8 210 2000
+  xyz 35.1786 744.893 2000
 end
 classcanvas 129154 class_ref 1107074 // mdtClArticleConnectorData
   classdiagramsettings member_max_width 0 end
-  xyz 644 215 2000
+  xyz 459.429 645 2000
 end
 classcanvas 129282 class_ref 1107202 // mdtClUnitConnectorData
   classdiagramsettings member_max_width 0 end
-  xyz 318 528 2000
+  xyz 39 146 2000
 end
 classcanvas 133250 class_ref 1113730 // mdtClArticleConnectionData
   classdiagramsettings member_max_width 0 end
-  xyz 905 758.1 2000
+  xyz 907.429 579 2000
 end
 classcanvas 133378 class_ref 1113858 // mdtClUnitConnectionData
   classdiagramsettings member_max_width 0 end
-  xyz 530.8 956.5 2000
+  xyz 439 36 2000
 end
 classcanvas 133506 class_ref 1067266 // mdtSqlRecord
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1124.5 574.5 3011
+  xyz 279.607 584.071 3011
 end
 relationcanvas 128770 relation_ref 1316866 // <directional composition>
   from ref 128130 z 3006 to ref 128642
-  role_a_pos 592 78 3000 no_role_b
-  multiplicity_a_pos 653 112 3000 no_multiplicity_b
-end
-relationcanvas 129538 relation_ref 1363842 // <directional composition>
-  geometry HV
-  from ref 129282 z 2001 to point 842.2 628
-  line 132098 z 2001 to ref 129154
-  role_a_pos 857 438 3000 no_role_b
-  multiplicity_a_pos 823 438 3000 no_multiplicity_b
-end
-relationcanvas 129666 relation_ref 1363970 // <directional composition>
-  geometry VHr
-  from ref 129282 z 2001 to point 177.2 628
-  line 131970 z 2001 to ref 129026
-  role_a_pos 193 433 3000 no_role_b
-  multiplicity_a_pos 144 433 3000 no_multiplicity_b
+  role_a_pos 216 661 3000 no_role_b
+  multiplicity_a_pos 278 697 3000 no_multiplicity_b
 end
 relationcanvas 129794 relation_ref 1364098 // <generalisation>
-  geometry HV
-  decenter_begin 520
-  decenter_end 225
-  from ref 129026 z 2001 to point 500 322
-  line 130946 z 2001 to ref 128130
+  decenter_begin 510
+  from ref 129026 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129922 relation_ref 1364226 // <directional composition>
-  geometry VH
-  from ref 129026 z 2001 to point 174 158
-  line 130818 z 2001 stereotype "<<list>>" xyz 379 195 3000 to ref 128130
-  role_a_pos 355 136 3000 no_role_b
-  multiplicity_a_pos 458 170 3000 no_multiplicity_b
-end
-relationcanvas 131074 relation_ref 1364354 // <generalisation>
-  geometry VHr
-  decenter_begin 466
-  decenter_end 849
-  from ref 129154 z 2001 to point 564 315
-  line 131330 z 2001 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 131714 relation_ref 1364610 // <generalisation>
-  decenter_begin 466
-  decenter_end 482
-  from ref 129282 z 2001 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 132994 relation_ref 1364866 // <directional composition>
-  decenter_begin 849
-  decenter_end 864
-  from ref 129154 z 2001 to ref 129026
-  role_a_pos 360 372 3000 no_role_b
-  multiplicity_a_pos 358 406 3000 no_multiplicity_b
+  decenter_begin 397
+  decenter_end 145
+  from ref 129026 z 2001 stereotype "<<list>>" xyz 140.5 726 3000 to ref 128130
+  role_a_pos 174 719 3000 no_role_b
+  multiplicity_a_pos 149 719 3000 no_multiplicity_b
 end
 relationcanvas 133762 relation_ref 1316866 // <directional composition>
-  geometry HVr
-  decenter_begin 411
-  from ref 133506 z 3012 to point 1164 93
-  line 133890 z 3012 to ref 128642
-  role_a_pos 755 72 3000 no_role_b
-  multiplicity_a_pos 753 106 3000 no_multiplicity_b
-end
-relationcanvas 134146 relation_ref 1371394 // <directional composition>
-  geometry HV
-  from ref 133378 z 2001 to point 902.2 992.2
-  line 135042 z 2001 to ref 133250
-  role_a_pos 914 1001 3000 no_role_b
-  multiplicity_a_pos 887 1001 3000 no_multiplicity_b
-end
-relationcanvas 134274 relation_ref 1371522 // <generalisation>
-  geometry HV
-  decenter_begin 762
-  decenter_end 800
-  from ref 133378 z 3012 to point 1204 1014
-  line 134530 z 3012 to ref 133506
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 134402 relation_ref 1371650 // <generalisation>
-  geometry HV
-  decenter_end 247
-  from ref 133250 z 3012 to point 1147 755
-  line 134658 z 3012 to ref 133506
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
+  decenter_begin 466
+  decenter_end 449
+  from ref 133506 z 3012 to ref 128642
+  role_a_pos 336 638 3000 no_role_b
+  multiplicity_a_pos 309 638 3000 no_multiplicity_b
 end
 relationcanvas 134786 relation_ref 1371778 // <directional composition>
-  decenter_begin 777
-  from ref 129154 z 2001 stereotype "<<list>>" xyz 985 597 3000 to ref 133250
-  role_a_pos 1076 741 3000 no_role_b
-  multiplicity_a_pos 1044 741 3000 no_multiplicity_b
+  from ref 129154 z 2001 stereotype "<<list>>" xyz 861.5 814.5 3000 to ref 133250
+  role_a_pos 786 785 3000 no_role_b
+  multiplicity_a_pos 891 821 3000 no_multiplicity_b
 end
 relationcanvas 134914 relation_ref 1371906 // <directional composition>
-  decenter_end 176
-  from ref 129282 z 2001 stereotype "<<list>>" xyz 574 842 3000 to ref 133378
-  role_a_pos 601 933 3000 no_role_b
-  multiplicity_a_pos 569 933 3000 no_multiplicity_b
+  from ref 129282 z 2001 stereotype "<<list>>" xyz 412 170 3000 to ref 133378
+  role_a_pos 446 129 3000 no_role_b
+  multiplicity_a_pos 421 129 3000 no_multiplicity_b
 end
 relationcanvas 135170 relation_ref 1384962 // <directional composition>
   from ref 128130 z 2007 to ref 128258
-  role_a_pos 542 65 3000 no_role_b
-  multiplicity_a_pos 508 65 3000 no_multiplicity_b
+  role_a_pos 211 638 3000 no_role_b
+  multiplicity_a_pos 184 638 3000 no_multiplicity_b
 end
 relationcanvas 135298 relation_ref 1384962 // <directional composition>
   from ref 133506 z 3012 to ref 128258
-  role_a_pos 564 41 3000 no_role_b
-  multiplicity_a_pos 563 75 3000 no_multiplicity_b
+  role_a_pos 255 580 3000 no_role_b
+  multiplicity_a_pos 255 616 3000 no_multiplicity_b
 end
 end

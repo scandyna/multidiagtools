@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,18 +21,27 @@
 #include "mdtCsvStringParser.h"
 #include "mdtCsvParserTemplate.h"
 
-/*
- * mdtCsvStringParser implementation
- */
+mdtCsvStringParser::mdtCsvStringParser()
+ : pvImpl(new mdtCsvParserTemplate<mdtCsvStringParserIterator>())
+{
+}
 
 mdtCsvStringParser::mdtCsvStringParser(const mdtCsvParserSettings & csvSettings)
- : pvImpl(new mdtCsvParserTemplate<mdtCsvStringParserIterator>(csvSettings))
+ : mdtCsvStringParser()
 {
   Q_ASSERT(csvSettings.isValid());
+  pvImpl->setupParser(csvSettings);
 }
 
 mdtCsvStringParser::~mdtCsvStringParser()
 {
+}
+
+void mdtCsvStringParser::setCsvSettings(const mdtCsvParserSettings & csvSettings)
+{
+  Q_ASSERT(csvSettings.isValid());
+
+  pvImpl->setupParser(csvSettings);
 }
 
 void mdtCsvStringParser::setSource(const QString & source)
@@ -48,11 +57,15 @@ bool mdtCsvStringParser::atEnd() const
 
 mdtExpected<mdtCsvRecord> mdtCsvStringParser::readLine()
 {
+  Q_ASSERT_X(pvImpl->isValid(), "mdtCsvStringParser", "No CSV settings set");
+
   return pvImpl->readLine(pvCurrentPosition, pvEnd);
 }
 
 mdtExpected<mdtCsvData> mdtCsvStringParser::readAll()
 {
+  Q_ASSERT_X(pvImpl->isValid(), "mdtCsvStringParser", "No CSV settings set");
+
   mdtCsvData data;
 
   while(!atEnd()){
