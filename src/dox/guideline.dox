@@ -1,0 +1,45 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
+
+/*! \page guideline_page API guide line
+ *
+ * \section return_value Return value
+ *
+ * When a function fails, it should be possible to get the reason why it failed.
+ *  This is done by using the mdtError class.
+ *
+ * Functionnal classes should store a mdtError as member
+ *  and provide lastError() function.
+ *  Their member functions should follow these rules:
+ *   - If the function can fail, but returns no data,
+ *      it should return a bool and store the error in lastError.
+ *   - If the function can fail, and returns data,
+ *      it should return a mdtExpected.
+ *      For coherence reason, the error should also be stored in lastError.
+ *   - If the function can fail, and it is static,
+ *      it should return a mdtExpected.
+ *
+ * Value classes should not have functions that can fail,
+ *  because they do not, for example, read files.
+ *  If it occurs that function can fail, they should follow these rules:
+ *   - If the function can fail,
+ *      it should return a mdtExpected.
+ */
