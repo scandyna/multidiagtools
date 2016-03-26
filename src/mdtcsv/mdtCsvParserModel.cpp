@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtCsvParserModel.h"
 
-#include <QDebug>
+// #include <QDebug>
 
 mdtCsvParserModel::mdtCsvParserModel(QObject *parent)
  : QAbstractTableModel(parent)
@@ -71,7 +71,10 @@ QVariant mdtCsvParserModel::data(const QModelIndex & index, int role) const
   Q_ASSERT(row >= 0);
   Q_ASSERT(row < pvBuffer.recordCount());
   Q_ASSERT(column >= 0);
-  Q_ASSERT(column < pvBuffer.recordList.at(row).count());
+
+  if(column >= pvBuffer.recordList.at(row).count()){
+    return QVariant();
+  }
 
   return pvBuffer.recordList.at(row).columnDataList.at(column);
 }
@@ -83,11 +86,23 @@ void mdtCsvParserModel::setHeader(const mdtCsvRecord & header)
 
 void mdtCsvParserModel::addRecord(const mdtCsvRecord & record)
 {
-  qDebug() << "REC: " << record.columnDataList;
-
-  Q_ASSERT(record.count() == pvHeader.count());
-
+  if(record.count() > pvHeader.count()){
+    addColumn();
+  }
   beginInsertRows(QModelIndex(), pvBuffer.recordCount(), pvBuffer.recordCount());
   pvBuffer.addRecord(record);
   endInsertRows();
+}
+
+void mdtCsvParserModel::clearCache()
+{
+  pvHeader.clear();
+  pvBuffer.clear();
+}
+
+void mdtCsvParserModel::addColumn()
+{
+  beginInsertColumns(QModelIndex(), pvHeader.count(), pvHeader.count());
+  pvHeader.columnDataList.append("");
+  endInsertColumns();
 }

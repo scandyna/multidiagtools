@@ -6,68 +6,68 @@ classcanvas 128386 class_ref 2034946 // rule
 end
 classcanvas 128642 class_ref 2035330 // mdtCsvParserTemplate
   classdiagramsettings member_max_width 0 end
-  xyz 337 42 2000
+  xyz 337 41 2000
 end
 classcanvas 128770 class_ref 2035458 // QTextCodec
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 332.5 1103.5 2000
+  xyz 732.5 1031.5 2000
 end
 classcanvas 128898 class_ref 390530 // QFile
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 207.5 1103.5 2000
+  xyz 901.5 1031.5 2000
 end
 classcanvas 129026 class_ref 161026 // QString
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 997.5 40.5 2000
+  xyz 591.5 1031.5 2000
 end
 classcanvas 129154 class_ref 236162 // QByteArray
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 40.5 1103.5 2005
+  xyz 424.5 1031.5 2005
 end
 classcanvas 129666 class_ref 2036098 // multi_pass
   classdiagramsettings member_max_width 0 end
-  xyz 385.5 920.5 2005
+  xyz 385.5 848.5 2005
 end
 classcanvas 129794 class_ref 2036866 // istreambuf_iterator
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 920.5 2005
+  xyz 40.5 848.5 2005
 end
 classcanvas 129922 class_ref 2036738 // ifstream
   classdiagramsettings member_max_width 0 end
-  xyz 585 670 2010
+  xyz 553 590 2010
 end
 classcanvas 130050 class_ref 2036994 // mdtCsvRecord
   classdiagramsettings member_max_width 0 end
-  xyz 224 628 2000
+  xyz 196 552 2000
 end
 classcanvas 130178 class_ref 161154 // QVariant
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1024.5 632.5 2000
+  xyz 275.5 1031.5 2000
 end
 classcanvas 130690 class_ref 2036610 // basic_ifstream
   classdiagramsettings member_max_width 0 end
-  xyz 713 631 2016
+  xyz 681 551 2016
 end
 classcanvas 131330 class_ref 2043778 // mdtCsvStringParser
   classdiagramsettings member_max_width 0 end
-  xyz 42 115 2000
+  xyz 42 59 2000
 end
 classcanvas 131458 class_ref 2043906 // mdtCsvFileParser
   classdiagramsettings member_max_width 0 end
-  xyz 368 402 2000
+  xyz 368 287 2000
 end
 note 131842 "getting current row: format, including column formats and text codec ?"
-  xyzwh 628.5 920.5 2000 253 71
+  xyzwh 628.5 848.5 2000 253 71
 classcanvas 131970 class_ref 2050434 // mdtCsvParserSettings
   classdiagramsettings member_max_width 0 end
-  xyz 961.5 920.5 2000
+  xyz 40.5 1031.5 2000
 end
 classcanvas 132098 class_ref 2050562 // mdtCsvData
   classdiagramsettings member_max_width 0 end
-  xyz 99 666 2000
+  xyz 291 714 2000
 end
 note 132482 "See CSV-1203 to implement data checking"
-  xyzwh 36 785 2000 217 55
+  xyzwh 40 713 2000 217 55
 relationcanvas 130818 relation_ref 2363266 // <dependency>
   from ref 129922 z 2017 to ref 130690
   no_role_a no_role_b
@@ -87,8 +87,8 @@ end
 relationcanvas 132226 relation_ref 2376578 // <directional composition>
   from ref 132098 z 2001 to ref 130050
   no_role_a no_role_b
-  multiplicity_a_pos 208 698 3000 no_multiplicity_b
+  multiplicity_a_pos 321 682 3000 no_multiplicity_b
 end
-line 132610 -_-_
+line 132610 -_-_ decenter_begin 418
   from ref 132482 z 2001 to ref 132098
 end

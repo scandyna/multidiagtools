@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -169,6 +169,7 @@ class mdtCsvFileParserIteratorSharedData
    */
   bool atEnd() const
   {
+//     qDebug() << "IT atEnd() : " << (pvCurrentPos == pvEnd);
     return (pvCurrentPos == pvEnd);
   }
 
@@ -194,6 +195,7 @@ class mdtCsvFileParserIteratorSharedData
 
     // Check if we have cached data
     if(pvCurrentPos != pvEnd){
+      Q_ASSERT(pvCurrentPos < pvEnd);
       ++pvCurrentPos;
     }
     // Check if we have to read more data

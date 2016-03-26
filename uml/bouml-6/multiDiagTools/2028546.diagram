@@ -2,50 +2,58 @@ format 211
 
 classcanvas 128002 class_ref 2050434 // mdtCsvParserSettings
   classdiagramsettings member_max_width 0 end
-  xyz 43 690 2000
+  xyz 43 906.8 2000
 end
 classcanvas 128130 class_ref 2078978 // mdtCsvCommonSettings
   classdiagramsettings member_max_width 0 end
-  xyz 35 567 2006
+  xyz 35 783.2 2006
 end
 classcanvas 128386 class_ref 2376706 // mdtCsvParserSettingsWidget
   classdiagramsettings member_max_width 0 end
-  xyz 46 352 2000
+  xyz 42.8 416 2000
 end
 classcanvas 128514 class_ref 2376834 // mdtCsvFileParserSettingsDialog
   classdiagramsettings member_max_width 0 end
-  xyz 423 319 2000
+  xyz 572.6 377.2 2000
 end
 classcanvas 128642 class_ref 2376962 // mdtCsvSettingsWidget
   classdiagramsettings member_max_width 0 end
-  xyz 36 42 2000
+  xyz 96.8 35.4 2000
 end
 classcanvas 129026 class_ref 2167554 // mdtCsvFileSettingsWidget
-  classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 521 199 2005
+  classdiagramsettings member_max_width 0 end
+  xyz 1207.4 369.2 2005
 end
 note 129282 "Class to manage states of dialog.."
-  xyzwh 335 527 2000 349 69
+  xyzwh 658.6 634.4 2000 349 69
+classcanvas 129538 class_ref 2071938 // mdtCsvFileParserModel
+  classdiagramsettings member_max_width 0 end
+  xyz 493.6 63 2000
+end
 relationcanvas 128258 relation_ref 2403970 // <generalisation>
   from ref 128002 z 2007 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 2655362 // <generalisation>
+  decenter_begin 490
   from ref 128386 z 2001 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128898 relation_ref 2655490 // <directional composition>
-  decenter_begin 473
-  decenter_end 457
   from ref 128514 z 2001 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129154 relation_ref 2656002 // <directional composition>
-  decenter_begin 508
+  decenter_end 480
   from ref 128514 z 2006 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 2736130 // <directional composition>
+  from ref 128514 z 2001 to ref 129538
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

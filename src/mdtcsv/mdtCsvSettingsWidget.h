@@ -48,6 +48,20 @@ class mdtCsvSettingsWidget : public QWidget, Ui::mdtCsvSettingsWidget
    */
   mdtCsvSettingsWidget & operator=(const mdtCsvSettingsWidget &) = delete;
 
+ signals:
+
+  /*! \brief Emitted whenever field protection changed
+   */
+  void fieldProtectionChanged();
+
+  /*! \brief Emitted whenever field separator changed
+   */
+  void fieldSeparatorChanged();
+
+  /*! \brief Emitted whenever parse EXP state changed
+   */
+  void parseExpStateChanged();
+
  protected:
 
   /*! \brief Set cbParseExp visibility

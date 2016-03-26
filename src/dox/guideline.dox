@@ -42,4 +42,15 @@
  *  If it occurs that function can fail, they should follow these rules:
  *   - If the function can fail,
  *      it should return a mdtExpected.
+ *
+ * \section error_handlig Error handling
+ *
+ * \subsection error_handlig_dialog Dialogs
+ *
+ *  A dialog is a top level widget that is displayed to the user.
+ *   When a error occurs, the dialog should also display it to the user.
+ *
+ *  If a public function can fail (for example setting a file),
+ *   it should display the error to the user and return false,
+ *   so the caller knows that something failed and he adapt his flow.
  */

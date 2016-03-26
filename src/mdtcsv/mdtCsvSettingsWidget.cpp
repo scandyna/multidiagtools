@@ -31,21 +31,21 @@
 mdtCsvSettingsWidget::mdtCsvSettingsWidget(QWidget *parent)
  : QWidget(parent)
 {
-  QLineEdit *cbEdit;
-
   setupUi(this);
+  connect(cbParseExp, &QCheckBox::stateChanged, this, &mdtCsvSettingsWidget::parseExpStateChanged);
+  // Fill field protection combobox
+  cbFieldProtection->addItem("\"", '\"');
+  cbFieldProtection->addItem("\'", '\'');
+  connect(cbFieldProtection, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+          this, &mdtCsvSettingsWidget::fieldProtectionChanged);
   // Setup and fill field separator combobox
-//   cbEdit = cbEol->lineEdit();
-//   Q_ASSERT(cbEdit != nullptr);
-//   cbEdit->setMaxLength(1);
   cbFieldSeparator->addItem(",", ',');
   cbFieldSeparator->addItem(";", ';');
   cbFieldSeparator->addItem(":", ':');
   cbFieldSeparator->addItem("TAB", '\t');
   cbFieldSeparator->addItem("Space", ' ');
-  // Fill field protection combobox
-  cbFieldProtection->addItem("\"", '\"');
-  cbFieldProtection->addItem("\'", '\'');
+  connect(cbFieldSeparator, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+          this, &mdtCsvSettingsWidget::fieldSeparatorChanged);
   // Fill EOL combobox
   cbEol->addItem("LF (Unix, OS X)", "\n");
   cbEol->addItem("CR (Old Mac OS)", "\r");

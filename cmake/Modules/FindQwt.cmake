@@ -35,7 +35,7 @@ endif(WIN32)
 
 if(UNIX)
   find_library(QWT_LIBRARY
-	    NAMES qwt qwtmathml
+	    NAMES qwt qwt-qt5 qwtmathml qwtmathml-qt5
 	    DOC "Qwt libraries"
 	   )
 endif(UNIX)

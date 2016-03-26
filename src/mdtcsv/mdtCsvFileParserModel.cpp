@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "mdtCsvFileParserModel.h"
-#include "mdtCsvFileParser.h"
 
 #include <QDebug>
 
@@ -32,27 +31,46 @@ mdtCsvFileParserModel::~mdtCsvFileParserModel()
 {
 }
 
-mdtExpected<bool> mdtCsvFileParserModel::openFile(const QFileInfo & fileInfo, const QByteArray & fileEncoding, const mdtCsvParserSettings & settings)
+bool mdtCsvFileParserModel::setCsvSettings(const mdtCsvParserSettings & csvSettings)
 {
-  Q_ASSERT(settings.isValid());
+  Q_ASSERT(csvSettings.isValid());
 
+  pvCsvSettings = csvSettings;
+  // If no file was set, do nothing else
+  if(pvFileInfo.fileName().isEmpty()){
+    return true;
+  }
+  if(pvFileEncoding.isEmpty()){
+    return true;
+  }
+  // Update
+  bool ok;
   beginResetModel();
-  // Reset parser and open file
-  pvParser.reset(new mdtCsvFileParser(settings));
-  if(!pvParser->openFile(fileInfo, fileEncoding)){
-    endResetModel();
-    return pvParser->lastError();
-  }
-  // Parse header
-  auto record = pvParser->readLine();
-  if(!record){
-    endResetModel();
-    return record.error();
-  }
-  setHeader(record.value());
+  ok = openFile();
   endResetModel();
 
-  return true;
+  return ok;
+}
+
+bool mdtCsvFileParserModel::setFile(const QFileInfo & fileInfo, const QByteArray & fileEncoding)
+{
+  Q_ASSERT(!fileInfo.fileName().isEmpty());
+  Q_ASSERT(!fileEncoding.isEmpty());
+
+  pvFileInfo = fileInfo;
+  pvFileEncoding = fileEncoding;
+  // If we have no CSV settings, do nothing
+  if(!pvCsvSettings.isValid()){
+    pvLastError = mdtErrorNewQ(tr("Could not open file '") + pvFileInfo.fileName() + tr("' because of invalid CSV settings."), mdtError::Error, this);
+    return false;
+  }
+  // Update
+  bool ok;
+  beginResetModel();
+  ok = openFile();
+  endResetModel();
+
+  return ok;
 }
 
 bool mdtCsvFileParserModel::canFetchMore(const QModelIndex & parent) const
@@ -60,8 +78,8 @@ bool mdtCsvFileParserModel::canFetchMore(const QModelIndex & parent) const
   if(parent.isValid()){
     return false;
   }
-  qDebug() << "canFetchMore(): " << (pvParser && (!pvParser->atEnd()) );
-  return (pvParser && (!pvParser->atEnd()) );
+  qDebug() << "canFetchMore(): " << (!pvParser.atEnd());
+  return (!pvParser.atEnd());
 }
 
 void mdtCsvFileParserModel::fetchMore(const QModelIndex & parent)
@@ -70,15 +88,43 @@ void mdtCsvFileParserModel::fetchMore(const QModelIndex & parent)
     return;
   }
   qDebug() << "fetchMore() ...";
-  Q_ASSERT(pvParser);
-  if(pvParser->atEnd()){
+//   Q_ASSERT(pvParser);
+  if(pvParser.atEnd()){
     qDebug() << "-> at END...(?)";
     return;
   }
-  Q_ASSERT(!pvParser->atEnd());
-  auto record = pvParser->readLine();
+  Q_ASSERT(!pvParser.atEnd());
+  auto record = pvParser.readLine();
   if(record){
     qDebug() << "REC: " << record.value().columnDataList;
     addRecord(record.value());
   }
+}
+
+bool mdtCsvFileParserModel::openFile()
+{
+  Q_ASSERT(!pvFileInfo.fileName().isEmpty());
+  Q_ASSERT(!pvFileEncoding.isEmpty());
+  Q_ASSERT(pvCsvSettings.isValid());
+
+  // Close possibly open file
+  pvParser.closeFile();
+  clearCache();
+  // Open file
+  pvParser.setCsvSettings(pvCsvSettings);
+  if(!pvParser.openFile(pvFileInfo, pvFileEncoding)){
+    pvLastError = mdtErrorNewQ(tr("Could not open file '") + pvFileInfo.fileName() + tr("'"), mdtError::Error, this);
+    pvLastError.stackError(pvParser.lastError());
+    return false;
+  }
+  // Parse header
+  auto record = pvParser.readLine();
+  if(!record){
+    pvLastError = mdtErrorNewQ(tr("Could not parse header of file '") + pvFileInfo.fileName() + tr("'"), mdtError::Error, this);
+    pvLastError.stackError(record.error());
+    return false;
+  }
+  setHeader(record.value());
+
+  return true;
 }

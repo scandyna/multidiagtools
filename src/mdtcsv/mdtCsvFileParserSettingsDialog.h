@@ -23,12 +23,12 @@
 
 #include "mdtCsvSettings.h"
 #include "ui_mdtCsvFileParserSettingsDialog.h"
-#include "mdtCsvFileGeneratorFileSettingsWidget.h"
 #include <QDialog>
 #include <QString>
 #include <QByteArray>
 
 class QWidget;
+class mdtCsvFileParserModel;
 
 /*! \brief CSV file generator settings dialog
  */
@@ -70,6 +70,28 @@ class mdtCsvFileParserSettingsDialog : public QDialog, Ui::mdtCsvFileParserSetti
   /*! \brief Get CSV settings
    */
   mdtCsvParserSettings getCsvSettings() const;
+
+ private slots:
+
+  /*! \brief Actions when file settings changed
+   */
+  void onFileSettingsChanged(const QString & path, const QByteArray & encoding);
+
+  /*! \brief Actions when CSV settings changed
+   */
+  void onCsvSettingsChanged(const mdtCsvParserSettings & settings);
+
+ private:
+
+  /*! \brief Set controls enabled
+   */
+  void setControlsEnabled(bool enable);
+
+  /*! \brief Resize view to contents
+   */
+  void resizeViewToContents();
+
+  mdtCsvFileParserModel *pvDataPreviewModel;
 };
 
 #endif // #ifndef MDT_CSV_FILE_PARSER_SETTINGS_DIALOG_H

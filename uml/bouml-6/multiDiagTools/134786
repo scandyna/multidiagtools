@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 120
+  revision 121
   modified_by 2 "philippe"
   // class settings
   
@@ -3839,7 +3839,6 @@ ${inlines}
 	    classrelation_ref 2474754 // <unidirectional association>
 	  b parent class_ref 1382914 // QItemSelectionModel
       end
-
     end
 
     classdiagram 1066242 "QHeaderView"
@@ -6921,6 +6920,562 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 2427010 // <generalisation>
 	  b parent class_ref 322818 // QIODevice
+      end
+    end
+  end
+
+  classview 1071746 "multimedia"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2109826 "audioOverview"
+      classdiagramsettings member_max_width 0 end
+      size C-Landscape
+    end
+
+    classdiagram 2108674 "QAudioBuffer"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2447746 "QAudioBuffer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2108802 "QMediaObject"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2447874 "QMediaObject"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2759810 // <generalisation>
+	relation 2742658 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2759810 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+    end
+
+    classdiagram 2108930 "QAudioDecoder"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2448002 "QAudioDecoder"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2759938 // <generalisation>
+	relation 2742786 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2759938 // <generalisation>
+	  b parent class_ref 2447874 // QMediaObject
+      end
+    end
+
+    classdiagram 2109058 "QCamera"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2448130 "QCamera"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2760066 // <generalisation>
+	relation 2742914 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2760066 // <generalisation>
+	  b parent class_ref 2447874 // QMediaObject
+      end
+    end
+
+    classdiagram 2109186 "QMediaPlayer"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2448258 "QMediaPlayer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2760194 // <generalisation>
+	relation 2743042 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2760194 // <generalisation>
+	  b parent class_ref 2447874 // QMediaObject
+      end
+    end
+
+    classdiagram 2109314 "QRadioTuner"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2448386 "QRadioTuner"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2760322 // <generalisation>
+	relation 2743170 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2760322 // <generalisation>
+	  b parent class_ref 2447874 // QMediaObject
+      end
+    end
+
+    classdiagram 2109442 "QAudioOutput"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2448514 "QAudioOutput"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2760450 // <generalisation>
+	relation 2743298 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2760450 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+    end
+
+    classdiagram 2109570 "QAudioInput"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2448642 "QAudioInput"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2760578 // <generalisation>
+	relation 2743426 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2760578 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+    end
+
+    classdiagram 2109698 "QAudioDeviceInfo"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2448770 "QAudioDeviceInfo"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2109954 "QAudioFormat"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2448898 "QAudioFormat"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2110082 "QMediaControl"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2449026 "QMediaControl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2760706 // <generalisation>
+	relation 2743554 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2760706 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+    end
+
+    classdiagram 2110210 "QAudioDecoderControl"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2449154 "QAudioDecoderControl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2760834 // <generalisation>
+	relation 2743682 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2760834 // <generalisation>
+	  b parent class_ref 2449026 // QMediaControl
+      end
+    end
+
+    classdiagram 2110338 "QAudioEncoderSettings"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2449282 "QAudioEncoderSettings"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2110466 "QAudioEncoderSettingsControl"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2449410 "QAudioEncoderSettingsControl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2760962 // <generalisation>
+	relation 2743810 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2760962 // <generalisation>
+	  b parent class_ref 2449026 // QMediaControl
+      end
+    end
+
+    classdiagram 2110594 "QAudioInputSelectorControl"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2449538 "QAudioInputSelectorControl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2761090 // <generalisation>
+	relation 2743938 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2761090 // <generalisation>
+	  b parent class_ref 2449026 // QMediaControl
+      end
+    end
+
+    classdiagram 2110722 "QAudioOutputSelectorControl"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2449666 "QAudioOutputSelectorControl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2761218 // <generalisation>
+	relation 2744066 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2761218 // <generalisation>
+	  b parent class_ref 2449026 // QMediaControl
+      end
+    end
+
+    classdiagram 2110850 "QAudioProbe"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2449794 "QAudioProbe"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2761346 // <generalisation>
+	relation 2744194 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2761346 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+    end
+
+    classdiagram 2110978 "QMediaBindableInterface"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2449922 "QMediaBindableInterface"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2111106 "QMediaRecorder"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2450050 "QMediaRecorder"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2761986 // <generalisation>
+	relation 2744834 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2761986 // <generalisation>
+	  b parent class_ref 2449922 // QMediaBindableInterface
+      end
+
+      classrelation 2762114 // <generalisation>
+	relation 2744962 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2762114 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+    end
+
+    classdiagram 2111234 "QAudioRecorder"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2450178 "QAudioRecorder"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2762242 // <generalisation>
+	relation 2745090 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2762242 // <generalisation>
+	  b parent class_ref 2450050 // QMediaRecorder
       end
     end
   end

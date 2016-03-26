@@ -24,7 +24,6 @@
 #include "mdtError.h"
 #include "mdtCsvSettings.h"
 #include "ui_mdtCsvFileGeneratorSettingsDialog.h"
-#include "mdtCsvFileGeneratorFileSettingsWidget.h"
 #include <QDialog>
 #include <QString>
 #include <QByteArray>

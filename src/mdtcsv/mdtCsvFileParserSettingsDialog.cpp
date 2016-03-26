@@ -19,15 +19,25 @@
  **
  ****************************************************************************/
 #include "mdtCsvFileParserSettingsDialog.h"
+#include "mdtCsvFileParserModel.h"
+#include "mdtErrorDialog.h"
+#include <QTableView>
+
+#include <QDebug>
 
 mdtCsvFileParserSettingsDialog::mdtCsvFileParserSettingsDialog(QWidget *parent)
  : QDialog(parent)
 {
   setupUi(this);
   wFileSettings->setSelectFileMode(mdtCsvFileSettingsWidget::SelectOpen);
+  // Setup data preview
+  pvDataPreviewModel = new mdtCsvFileParserModel(tvDataPreview);
+  tvDataPreview->setModel(pvDataPreviewModel);
+  connect(wFileSettings, &mdtCsvFileSettingsWidget::fileSettingsChanged, this, &mdtCsvFileParserSettingsDialog::onFileSettingsChanged);
+  connect(wCsvSettings, &mdtCsvParserSettingsWidget::csvSettingsChanged, this, &mdtCsvFileParserSettingsDialog::onCsvSettingsChanged);
 }
 
-void mdtCsvFileParserSettingsDialog::setFileSettings(const QString &path, const QByteArray &encoding)
+void mdtCsvFileParserSettingsDialog::setFileSettings(const QString & path, const QByteArray & encoding)
 {
   wFileSettings->setFileSettings(path, encoding);
 }
@@ -50,4 +60,49 @@ void mdtCsvFileParserSettingsDialog::setCsvSettings(const mdtCsvParserSettings &
 mdtCsvParserSettings mdtCsvFileParserSettingsDialog::getCsvSettings() const
 {
   return wCsvSettings->getSettings();
+}
+
+void mdtCsvFileParserSettingsDialog::onFileSettingsChanged(const QString & path, const QByteArray & encoding)
+{
+  if(path.isEmpty()){
+    return;
+  }
+  if(encoding.isEmpty()){
+    return;
+  }
+  setControlsEnabled(false);
+  bool ok = pvDataPreviewModel->setFile(path, encoding);
+  setControlsEnabled(true);
+  if(!ok){
+    mdtErrorDialog dialog(pvDataPreviewModel->lastError(), this);
+    dialog.exec();
+  }
+  resizeViewToContents();
+}
+
+void mdtCsvFileParserSettingsDialog::onCsvSettingsChanged(const mdtCsvParserSettings & settings)
+{
+  if(!settings.isValid()){
+    return;
+  }
+  setControlsEnabled(false);
+  bool ok = pvDataPreviewModel->setCsvSettings(settings);
+  setControlsEnabled(true);
+  if(!ok){
+    mdtErrorDialog dialog(pvDataPreviewModel->lastError(), this);
+    dialog.exec();
+  }
+  resizeViewToContents();
+}
+
+void mdtCsvFileParserSettingsDialog::setControlsEnabled(bool enable)
+{
+  wFileSettings->setEnabled(enable);
+  wCsvSettings->setEnabled(enable);
+}
+
+void mdtCsvFileParserSettingsDialog::resizeViewToContents()
+{
+  tvDataPreview->resizeColumnsToContents();
+  tvDataPreview->resizeRowsToContents();
 }

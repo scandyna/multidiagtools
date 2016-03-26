@@ -22,14 +22,14 @@
 #define MDT_CSV_FILE_PARSER_MODEL_H
 
 #include "mdtCsvParserModel.h"
+#include "mdtCsvFileParser.h"
 #include "mdtCsvSettings.h"
 #include "mdtExpected.h"
 #include "mdtError.h"
 #include <QFileInfo>
 #include <QByteArray>
-#include <memory>
 
-class mdtCsvFileParser;
+#include <memory>
 
 /*! \brief Item model to display data while parsing a CSV file
  */
@@ -54,9 +54,23 @@ class mdtCsvFileParserModel : public mdtCsvParserModel
   mdtCsvFileParserModel(mdtCsvFileParserModel &&) = delete;
   mdtCsvFileParserModel & operator=(mdtCsvFileParserModel &&) = delete;
 
-  /*! \brief Open CSV file
+  /*! \brief Set CSV settings
+   *
+   * If a file is allready open,
+   *  it will be closed first.
+   *  If a file was allready set with setFile(),
+   *  it will be open with given CSV settings.
+   *
+   * \pre csvSettings must be valid
    */
-  mdtExpected<bool> openFile(const QFileInfo & fileInfo, const QByteArray & fileEncoding, const mdtCsvParserSettings & settings);
+  bool setCsvSettings(const mdtCsvParserSettings & csvSettings);
+
+  /*! \brief Set CSV file
+   *
+   * If CSV settings was allready set,
+   *  file will be open (or re-open if one was allready open)
+   */
+  bool setFile(const QFileInfo & fileInfo, const QByteArray & fileEncoding);
 
   /*! \brief Return true if more data is available in CSV file
    */
@@ -66,9 +80,24 @@ class mdtCsvFileParserModel : public mdtCsvParserModel
    */
   void fetchMore(const QModelIndex & parent) override;
 
+  /*! \brief Get last error
+   */
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
+
  private:
 
-  std::unique_ptr<mdtCsvFileParser> pvParser;
+  /*! \brief Open or re-open SCV file
+   */
+  bool openFile();
+
+  mdtCsvFileParser pvParser;
+  QFileInfo pvFileInfo;
+  QByteArray pvFileEncoding;
+  mdtCsvParserSettings pvCsvSettings;
+  mdtError pvLastError;
 };
 
 #endif // #ifndef MDT_CSV_FILE_PARSER_MODEL_H

@@ -72,7 +72,17 @@ class mdtCsvParserModel : public QAbstractTableModel
    */
   void addRecord(const mdtCsvRecord & record);
 
+  /*! \brief Clear cache
+   *
+   * Will clear header and data cache
+   */
+  void clearCache();
+
  private:
+
+  /*! \brief Add a column
+   */
+  void addColumn();
 
   mdtCsvRecord pvHeader;
   mdtCsvData pvBuffer;

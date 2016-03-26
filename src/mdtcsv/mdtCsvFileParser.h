@@ -73,6 +73,12 @@ class mdtCsvFileParser
    */
   void setCsvSettings(const mdtCsvParserSettings & csvSettings);
 
+  /*! \brief Check if parser is valid
+   *
+   * Parser is valid if it has CSV settings set.
+   */
+  bool isValid() const;
+
   /*! \brief Open CSV file
    *
    * \param fileInfo Path to CSV file that must be open
@@ -83,11 +89,17 @@ class mdtCsvFileParser
    */
   bool openFile(const QFileInfo & fileInfo, const QByteArray & encoding);
 
+  /*! \brief Check if a CSV file is open
+   */
+  bool isOpen() const;
+
   /*! \brief Close CSV file
    */
   void closeFile();
 
   /*! \brief Check about end of file
+   *
+   * If no file is open, this function returns allways true
    */
   bool atEnd() const;
 

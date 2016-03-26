@@ -58,7 +58,7 @@ if(WIN32)
     target_link_libraries(mdtutilsgui${MDTLIB_VERSION_SUFFIX} "qwtd")
   endif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
 else(WIN32)
-  target_link_libraries(mdtutilsgui${MDTLIB_VERSION_SUFFIX} "qwt")
+  target_link_libraries(mdtutilsgui${MDTLIB_VERSION_SUFFIX} ${QWT_LIBRARY})
 endif(WIN32)
 
 # Headers to install

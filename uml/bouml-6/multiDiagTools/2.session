@@ -1,19 +1,16 @@
-window_sizes 1280 964 346 928 911 0
+window_sizes 1280 964 319 955 911 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 1722626 // csvParserModel
-    742 728 100 21 180 171
-  active  classdiagram_ref 2028546 // parserSettings
-    928 911 100 18 0 0
+  active  classdiagram_ref 2117762 // overview
+    955 911 100 4 0 0
 end
 show_stereotypes
-selected 
-package_ref 302466 // sql
 open
   classview_ref 887298 // Common
+  classview_ref 1078274 // Data
   classview_ref 887170 // Parser
   
-package_ref 315650 // error
+  package_ref 315650 // error
   classview_ref 934018 // TableMapping
   class_ref 2441218 // CsvRecordFormat
   classview_ref 894210 // sqlCsvExport

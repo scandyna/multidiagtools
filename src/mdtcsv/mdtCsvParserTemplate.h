@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -146,83 +146,6 @@ class mdtCsvParserTemplate
   {
   }
 
-//   mdtCsvParserTemplate(const mdtCsvParserSettings & csvSettings)
-//   {
-//     setupParser(csvSettings);
-//     Q_ASSERT(csvSettings.isValid());
-// 
-//     namespace qi = boost::spirit::qi;
-//     namespace phoenix = boost::phoenix;
-//     // Parsers
-//     using qi::lit;
-//     using qi::eol;
-//     using boost::spirit::standard_wide::char_;
-//     using boost::spirit::standard_wide::space;
-// 
-//     const char fieldSep = csvSettings.fieldSeparator;
-//     const char fieldQuote = csvSettings.fieldProtection;
-//     const bool parseExp = csvSettings.parseExp;
-// 
-//     /*
-//      * Give our rules a name (used for error)
-//      */
-// //     pvRecordRule.name("pvRecordRule");
-// //     pvRecordPayload.name("pvRecordPayload");
-// //     pvFieldColumn.name("pvFieldColumn");
-// //     pvProtectedField.name("pvProtectedField");
-// //     pvUnprotectedField.name("pvUnprotectedField");
-// //     pvFieldPayload.name("pvFieldPayload");
-// //     pvRawFieldPayload.name("pvRawFieldPayload");
-// //     pvAnychar.name("pvAnychar");
-// //     pvChar.name("pvChar");
-// //     pvSafechar.name("pvSafechar");
-//     /*
-//      * Build the grammar
-//      * This grammar is based on CSV-1203.
-//      * Some rules are also altered, to try to match RFC 4180 and unicode
-//      */
-//     pvRecordRule = pvRecordPayload >> -eol; // RFC 4180 do not need a end of line in last line
-//     pvRecordPayload = pvFieldColumn % char_(fieldSep);
-//     pvFieldColumn = pvProtectedField | pvUnprotectedField;
-//     if(parseExp){
-//       pvProtectedField = lit(fieldQuote) >> -lit('~') >> pvFieldPayload >> lit(fieldQuote);
-//       pvUnprotectedField = -lit('~') >> pvRawFieldPayload;
-//     }else{
-//       pvProtectedField = lit(fieldQuote) >> pvFieldPayload >> lit(fieldQuote);
-//       pvUnprotectedField = -char_('~') >> pvRawFieldPayload; // pvUnprotectedField = pvRawFieldPayload causes runtime exception
-//     }
-//     pvFieldPayload = *pvAnychar;
-//     pvRawFieldPayload = *pvSafechar | (pvSafechar >> *char_ >> pvSafechar);
-//     // Character collections
-//     pvAnychar = pvChar | char_(fieldSep) | (char_(fieldQuote) >> lit(fieldQuote)) | space; // space matches space, CR, LF and other See std::isspace()
-//     pvChar = pvSafechar | char_(0x20);  // 0x20 == SPACE char
-//     std::string exclude = std::string(" \n\t\r") + fieldSep + fieldQuote;
-//     pvSafechar = ~char_(exclude);
-// 
-// //     qi::on_success(pvRecordRule, phoenix::bind(&mdtCsvParserTemplate::displaySuccess, this, qi::_1, qi::_2, qi::_3));
-// //     qi::on_error<qi::fail>(pvRecordRule, phoenix::bind(&mdtCsvParserTemplate::myErrorHandler, this, qi::_1, qi::_2, qi::_3, qi::_4));
-// 
-// 
-//     /*
-//      * Parser nodes debug.
-//      * Don't forget to also uncomment #define BOOST_SPIRIT_DEBUG
-//      * Note: to display what id parsed,
-//      *       a certain amount of data is read from source.
-//      *       With mdtCsvFileParser, this causes
-//      *       it to be at eof after the first call of readLine().
-//      */
-//     //BOOST_SPIRIT_DEBUG_NODE(pvRecordRule);
-//     //BOOST_SPIRIT_DEBUG_NODE(pvRecordPayload);
-//     //BOOST_SPIRIT_DEBUG_NODE(pvFieldColumn);
-//     //BOOST_SPIRIT_DEBUG_NODE(pvProtectedField);
-//     //BOOST_SPIRIT_DEBUG_NODE(pvUnprotectedField);
-//     //BOOST_SPIRIT_DEBUG_NODE(pvFieldPayload);
-//     //BOOST_SPIRIT_DEBUG_NODE(pvRawFieldPayload);
-//     //BOOST_SPIRIT_DEBUG_NODE(pvAnychar);
-//     //BOOST_SPIRIT_DEBUG_NODE(pvChar);
-//     //BOOST_SPIRIT_DEBUG_NODE(pvSafechar);
-//   }
-
   /*! \brief Destructor
    */
   ~mdtCsvParserTemplate()
@@ -306,7 +229,8 @@ class mdtCsvParserTemplate
     // Character collections
     pvAnychar = pvChar | char_(fieldSep) | (char_(fieldQuote) >> lit(fieldQuote)) | space; // space matches space, CR, LF and other See std::isspace()
     pvChar = pvSafechar | char_(0x20);  // 0x20 == SPACE char
-    std::string exclude = std::string(" \n\t\r") + fieldSep + fieldQuote;
+    ///std::string exclude = std::string(" \n\t\r") + fieldSep + fieldQuote;
+    std::string exclude = std::string("\n\t\r") + fieldSep + fieldQuote;
     pvSafechar = ~char_(exclude);
 
 //     qi::on_success(pvRecordRule, phoenix::bind(&mdtCsvParserTemplate::displaySuccess, this, qi::_1, qi::_2, qi::_3));

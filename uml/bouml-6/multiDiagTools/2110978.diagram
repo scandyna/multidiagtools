@@ -1,0 +1,7 @@
+format 211
+
+classcanvas 128002 class_ref 2449922 // QMediaBindableInterface
+  classdiagramsettings member_max_width 0 end
+  xyz 101 188 2000
+end
+end

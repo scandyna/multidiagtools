@@ -25,21 +25,7 @@
 #include <QObject>
 #include <QDir>
 
-/*! \todo Flexibility/usage simplicity
- *
- * Currently, parser must be built with scvSettings given,
- *  and is immutable.
- *  This is a constraint.
- * F.ex. mdtCsvFileParserModel must itself manage a dynamic object for
- *  this case, and recreate the object each time user wants to open another file.
- *  And, this create 2 pointer inderections for each function call.
- * Given that mdtCsvFileParser has allready a pointer (to hide parser template),
- *  it should be responsible to manage this !
- *
- * Other solution: currently, parser grammar (in mdtCsvParserTemplate)
- *  is done in constructor, witch requires CSV settings.
- *  But, it could be done in a ueparate function ?u
- */
+#include <QDebug>
 
 mdtCsvFileParser::mdtCsvFileParser()
  : pvParser(new mdtCsvParserTemplate<mdtCsvFileParserMultiPassIterator>())
@@ -56,6 +42,11 @@ mdtCsvFileParser::mdtCsvFileParser(const mdtCsvParserSettings & csvSettings)
 
 mdtCsvFileParser::~mdtCsvFileParser()
 {
+}
+
+bool mdtCsvFileParser::isValid() const
+{
+  return pvParser->isValid();
 }
 
 void mdtCsvFileParser::setCsvSettings(const mdtCsvParserSettings & csvSettings)
@@ -92,6 +83,11 @@ bool mdtCsvFileParser::openFile(const QFileInfo & fileInfo, const QByteArray & e
   return true;
 }
 
+bool mdtCsvFileParser::isOpen() const
+{
+  return pvFile.isOpen();
+}
+
 void mdtCsvFileParser::closeFile()
 {
   pvFileIterator.clear();
@@ -119,6 +115,7 @@ mdtExpected<mdtCsvRecord> mdtCsvFileParser::readLine()
     if(pvFileIterator.errorOccured()){
       record.error().stackError(pvFileIterator.lastError());
     }
+    qDebug() << "CSV file parser readLine() - error: " << record.error().text();
   }
 
   return record;

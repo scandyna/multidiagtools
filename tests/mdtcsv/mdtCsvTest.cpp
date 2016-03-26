@@ -185,24 +185,32 @@ void mdtCsvTest::fileParserSettingsDialogTest()
 {
   mdtCsvFileParserSettingsDialog dialog;
   mdtCsvParserSettings settings;
+  QTemporaryFile csvFile1;
 
+  /*
+   * Prepare CSV source file 1
+   */
+  QVERIFY(csvFile1.open());
+  QVERIFY(csvFile1.write("A,B,C,D\n") > 0);
+  QVERIFY(csvFile1.write("A1,B1,C1,D1\n") > 0);
+  csvFile1.close();
   /*
    * Set/get
    */
   // Set file settings
-  dialog.setFileSettings("/path/to/csvfile.csv", "UTF-16");
+  dialog.setFileSettings(csvFile1.fileName(), "UTF-8");
   // Set CSV settings
-  settings.fieldSeparator = ':';
-  settings.fieldProtection = '\'';
+  settings.fieldSeparator = ',';
+  settings.fieldProtection = '\"';
   settings.parseExp = true;
   dialog.setCsvSettings(settings);
   // Check file settings
-  QCOMPARE(dialog.filePath(), QString("/path/to/csvfile.csv"));
-  QCOMPARE(dialog.fileEncoding(), QByteArray("UTF-16"));
+  QCOMPARE(dialog.filePath(), csvFile1.fileName());
+  QCOMPARE(dialog.fileEncoding(), QByteArray("UTF-8"));
   // Check CSV setting
   settings = dialog.getCsvSettings();
-  QCOMPARE(settings.fieldSeparator, ':');
-  QCOMPARE(settings.fieldProtection, '\'');
+  QCOMPARE(settings.fieldSeparator, ',');
+  QCOMPARE(settings.fieldProtection, '\"');
   QVERIFY(settings.parseExp);
 
   /*
@@ -1185,16 +1193,23 @@ void mdtCsvTest::csvFileParserTest()
   /*
    * Initial state
    */
+  QVERIFY(!parser.isValid());
+  QVERIFY(!parser.isOpen());
   parser.setCsvSettings(mdtCsvParserSettings());
+  QVERIFY(parser.isValid());
   QVERIFY(parser.atEnd());
+  QVERIFY(!parser.isOpen());
   /*
    * Open/close test
    */
   QVERIFY(parser.openFile(file.fileName(), "UTF-8"));
+  QVERIFY(parser.isOpen());
   QVERIFY(!parser.atEnd());
   parser.closeFile();
+  QVERIFY(!parser.isOpen());
   QVERIFY(parser.atEnd());
   QVERIFY(parser.openFile(file.fileName(), "UTF-8"));
+  QVERIFY(parser.isOpen());
   QVERIFY(!parser.atEnd());
   /*
    * Read line by line
@@ -1356,7 +1371,7 @@ void mdtCsvTest::fileParserModelTest()
   QTableView tableView;
   QTreeView treeView;
   mdtCsvParserSettings csvSettings;
-  QTemporaryFile csvFile;
+  QTemporaryFile csvFile1, csvFile2;
 
   /*
    * Initial state
@@ -1364,37 +1379,112 @@ void mdtCsvTest::fileParserModelTest()
   QCOMPARE(model.rowCount(), 0);
   QCOMPARE(model.columnCount(), 0);
   /*
-   * Prepare CSV source file
+   * Prepare CSV source file 1
+   *
+   * Simple file
    */
-  QVERIFY(csvFile.open());
-  QVERIFY(csvFile.write("Id,Name,FieldA,FieldB\n") > 0);
-  QVERIFY(csvFile.write("1,\"Name 1\",A1,B1\n") > 0);
-  
-  QVERIFY(csvFile.write("1,\"Name 1\",A1,B1\n") > 0);
-  QVERIFY(csvFile.write("1,\"Name 1\",A1,B1\n") > 0);
-  QVERIFY(csvFile.write("1,\"Name 1\",A1,B1\n") > 0);
-  QVERIFY(csvFile.write("1,\"Name 1\",A1,B1\n") > 0);
-  QVERIFY(csvFile.write("1,\"Name 1\",A1,B1\n") > 0);
-  csvFile.close();
+  QVERIFY(csvFile1.open());
+  QVERIFY(csvFile1.write("A,B,C\n") > 0);
+  QVERIFY(csvFile1.write("A1,B1,C1\n") > 0);
+  QVERIFY(csvFile1.write("A2,B2,C2\n") > 0);
+  QVERIFY(csvFile1.write("A3,B3,C3\n") > 0);
+  csvFile1.close();
   /*
-   * Open CSV file
+   * Set CSV settings
    */
-  QVERIFY(model.openFile(csvFile.fileName(), "UTF-8", csvSettings));
+  QVERIFY(model.setCsvSettings(csvSettings));
+  // Because we never set a file, model must be empty
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 0);
+  /*
+   * Open CSV file 1
+   */
+  QVERIFY(model.setFile(csvFile1.fileName(), "UTF-8"));
   // Check header
-  QCOMPARE(model.columnCount(), 4);
-  QCOMPARE(model.headerData(0, Qt::Horizontal), QVariant("Id"));
-  QCOMPARE(model.headerData(1, Qt::Horizontal), QVariant("Name"));
-  QCOMPARE(model.headerData(2, Qt::Horizontal), QVariant("FieldA"));
-  QCOMPARE(model.headerData(3, Qt::Horizontal), QVariant("FieldB"));
-  // Check fetching data
+  QCOMPARE(model.columnCount(), 3);
+  QCOMPARE(model.headerData(0, Qt::Horizontal), QVariant("A"));
+  QCOMPARE(model.headerData(1, Qt::Horizontal), QVariant("B"));
+  QCOMPARE(model.headerData(2, Qt::Horizontal), QVariant("C"));
+  // Check data
+  QCOMPARE(model.rowCount(), 0);
+  /*
+   * Fetch data
+   */
+  // Fetch row 0
   QVERIFY(model.canFetchMore(QModelIndex()));
   model.fetchMore(QModelIndex());
-  // Check data
+  QCOMPARE(model.rowCount(), 1);
+  // Fetch row 1
+  QVERIFY(model.canFetchMore(QModelIndex()));
+  model.fetchMore(QModelIndex());
+  QCOMPARE(model.rowCount(), 2);
+  // Fetch row 3
+  QVERIFY(model.canFetchMore(QModelIndex()));
+  model.fetchMore(QModelIndex());
+  QCOMPARE(model.rowCount(), 3);
+  // End
+  QVERIFY(!model.canFetchMore(QModelIndex()));
+  /*
+   * Check data
+   */
+  // Check row 0
   index = model.index(0, 0);
   QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("1"));
-  ///QCOMPARE(model.rowCount(), 2);
-  
+  QCOMPARE(model.data(index), QVariant("A1"));
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("B1"));
+  index = model.index(0, 2);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("C1"));
+
+  /*
+   * Prepare CSV source file 2
+   *
+   * File with variable columns count
+   */
+  QVERIFY(csvFile2.open());
+  QVERIFY(csvFile2.write("A,B,C\n") > 0);
+  QVERIFY(csvFile2.write("A1,B1,C1\n") > 0);
+  QVERIFY(csvFile2.write("A2,B2\n") > 0);
+  QVERIFY(csvFile2.write("A2,B2,C2\n") > 0);
+  QVERIFY(csvFile2.write("A2,B2,C2,D2\n") > 0);
+  csvFile2.close();
+  /*
+   * Open CSV file 2
+   */
+  QVERIFY(model.setFile(csvFile2.fileName(), "UTF-8"));
+  // Check header
+  QCOMPARE(model.columnCount(), 3);
+  QCOMPARE(model.headerData(0, Qt::Horizontal), QVariant("A"));
+  QCOMPARE(model.headerData(1, Qt::Horizontal), QVariant("B"));
+  QCOMPARE(model.headerData(2, Qt::Horizontal), QVariant("C"));
+  // Check data
+  QCOMPARE(model.rowCount(), 0);
+  /*
+   * Fetch data
+   */
+  // Fetch row 0
+  QVERIFY(model.canFetchMore(QModelIndex()));
+  model.fetchMore(QModelIndex());
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 3);
+  // Fetch row 1
+  QVERIFY(model.canFetchMore(QModelIndex()));
+  model.fetchMore(QModelIndex());
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(model.columnCount(), 3);
+  // Fetch row 2
+  QVERIFY(model.canFetchMore(QModelIndex()));
+  model.fetchMore(QModelIndex());
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(model.columnCount(), 3);
+  // Fetch row 3
+  QVERIFY(model.canFetchMore(QModelIndex()));
+  model.fetchMore(QModelIndex());
+  QCOMPARE(model.rowCount(), 4);
+  QCOMPARE(model.columnCount(), 4);
+
   /*
    * Setup views
    */
@@ -1413,6 +1503,8 @@ void mdtCsvTest::fileParserModelTest()
   while(tableView.isVisible()){
     QTest::qWait(500);
   }
+  
+  QFAIL("Test not complete now");
 }
 
 void mdtCsvTest::csvStringGeneratorFromRecordTest()
@@ -1868,6 +1960,44 @@ void mdtCsvTest::buildCsvParserTestData()
   expectedData.addRecord(expectedRecord);
   QTest::newRow("A,B,C,D\\r\\n1,2,3,4\\r\\n") << sourceData << expectedData << Ok << csvSettings;
   /*
+   * Non quoted with spaces
+   */
+  // 1 line of single char
+  /// \todo check if error should be reported
+  sourceData = "A ";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "A ";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow("A ") << sourceData << expectedData << Ok << csvSettings;
+  // 1 line of many chars
+  /// \todo check if error should be reported
+  sourceData = "AB ";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "AB ";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow("AB ") << sourceData << expectedData << Ok << csvSettings;
+  // 1 line of many chars
+  /// \todo check if error should be reported
+  sourceData = "A B";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "A B";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow("A B") << sourceData << expectedData << Ok << csvSettings;
+  // 2 lines of single char
+  /// \todo check if error should be reported
+  sourceData = "A \nB";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "A ";
+  expectedData.addRecord(expectedRecord);
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "B";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow("A \\nB") << sourceData << expectedData << Ok << csvSettings;
+  /*
    * Quoted CSV tests:
    *  - Test with EOL: \n and \r\n
    */
@@ -1966,6 +2096,40 @@ void mdtCsvTest::buildCsvParserTestData()
   expectedRecord.columnDataList << "A\"B";
   expectedData.addRecord(expectedRecord);
   QTest::newRow("\"A\"\"B\"\\n") << sourceData << expectedData << Nok << csvSettings;
+  /*
+   * Non quoted with spaces
+   */
+  // 1 line of single char
+  sourceData = "\"A \"";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "A ";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow("\"A \"") << sourceData << expectedData << Ok << csvSettings;
+  // 1 line of many chars
+  sourceData = "\"AB \"";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "AB ";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow("\"AB \"") << sourceData << expectedData << Ok << csvSettings;
+  // 1 line of many chars
+  sourceData = "\"A B\"";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "A B";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow("\"A B\"") << sourceData << expectedData << Ok << csvSettings;
+  // 2 lines of single char
+  sourceData = "\"A \"\n\"B\"";
+  expectedData.clear();
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "A ";
+  expectedData.addRecord(expectedRecord);
+  expectedRecord.clear();
+  expectedRecord.columnDataList << "B";
+  expectedData.addRecord(expectedRecord);
+  QTest::newRow("\"A \"\\n\"B\"") << sourceData << expectedData << Ok << csvSettings;
   /*
    * Excel protection marker CSV tests
    */

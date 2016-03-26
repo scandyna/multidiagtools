@@ -55,6 +55,18 @@ class mdtCsvParserSettingsWidget : public mdtCsvSettingsWidget
   /*! \brief Get settings
    */
   mdtCsvParserSettings getSettings() const;
+
+ signals:
+
+  /*! \brief Emitted whenever CSV settinsg changed
+   */
+  void csvSettingsChanged(const mdtCsvParserSettings & settings);
+
+ private slots:
+  
+  /*! \brief Called each time the user choose a field separator, protections, ...
+   */
+  void onSettingsSelectionChanged();
 };
 
 #endif // #ifndef MDT_CSV_PARSER_SETTINGS_WIDGET_H

@@ -1,0 +1,7 @@
+format 211
+
+classcanvas 128002 class_ref 2449282 // QAudioEncoderSettings
+  classdiagramsettings member_max_width 0 end
+  xyz 107 171 2000
+end
+end

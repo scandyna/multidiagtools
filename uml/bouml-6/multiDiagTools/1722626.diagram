@@ -2,45 +2,44 @@ format 211
 
 classcanvas 128002 class_ref 2043906 // mdtCsvFileParser
   classdiagramsettings member_max_width 0 end
-  xyz 1073.25 632.25 2000
+  xyz 176.45 714.3 2000
 end
 classcanvas 128130 class_ref 2043778 // mdtCsvStringParser
   classdiagramsettings member_max_width 0 end
-  xyz 196.75 897.5 2000
+  xyz 1314.75 897.3 2000
 end
 classcanvas 128258 class_ref 2071810 // mdtCsvParserModel
   classdiagramsettings member_max_width 0 end
-  xyz 483.5 293 2000
+  xyz 724.3 295.7 2000
 end
 classcanvas 128386 class_ref 147202 // QAbstractTableModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 625.75 209.75 2005
+  xyz 859.45 209.65 2005
 end
 classcanvas 128642 class_ref 2071938 // mdtCsvFileParserModel
   classdiagramsettings member_max_width 0 end
-  xyz 357.5 646.25 2000
+  xyz 598.3 670.3 2000
 end
 classcanvas 128770 class_ref 2072066 // mdtCsvStringParserModel
   classdiagramsettings member_max_width 0 end
-  xyz 230.5 807.75 2000
+  xyz 48.8 957.35 2000
 end
 classcanvas 129922 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 664.5 40.75 2010
+  xyz 905.3 40.55 2010
 end
 classcanvas 130050 class_ref 146946 // QAbstractItemModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 625.5 125.25 2016
+  xyz 866.3 125.55 2016
 end
-note 130434 "Handles cache (n  records)"
-  xyzwh 41.25 592.25 2000 239 47
 classcanvas 130690 class_ref 2085506 // mdtCsvRecordFormat
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 810.25 195.25 2022
+  xyz 371.8 416.65 2022
 end
 note 131330 "Could support drop ?"
-  xyzwh 451.25 806 2000 199 55
+  xyzwh 41.75 1040.3 2000 199 55
 relationcanvas 128514 relation_ref 2396930 // <generalisation>
+  decenter_end 523
   from ref 128258 z 2006 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -52,20 +51,19 @@ relationcanvas 128898 relation_ref 2397058 // <generalisation>
 end
 relationcanvas 129026 relation_ref 2397186 // <generalisation>
   geometry VHV unfixed
-  from ref 128770 z 2001 to point 317 606
-  line 129410 z 2001 to point 694 606
+  from ref 128770 z 2001 to point 135.3 631.1
+  line 129410 z 2001 to point 935.3 631.1
   line 129538 z 2001 to ref 128258
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129666 relation_ref 2397314 // <unidirectional association>
-  decenter_begin 471
-  decenter_end 476
   from ref 128642 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129794 relation_ref 2397442 // <unidirectional association>
+  decenter_begin 577
   from ref 128770 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -76,20 +74,17 @@ relationcanvas 130178 relation_ref 902018 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130306 relation_ref 141186 // <generalisation>
+  decenter_begin 523
   from ref 128386 z 2017 to ref 130050
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130818 relation_ref 2729602 // <directional composition>
-  decenter_begin 971
-  decenter_end 281
+  decenter_end 442
   from ref 128258 z 2023 to ref 130690
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-line 130562 -_-_ geometry VH unfixed decenter_begin 514 decenter_end 949
-  from ref 130434 z 2001 to point 161 551
-  line 131202 z 2001 to ref 128258
-line 131458 -_-_ decenter_end 577
+line 131458 -_-_
   from ref 131330 z 2001 to ref 128770
 end

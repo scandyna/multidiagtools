@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "mdtCsvParserSettingsWidget.h"
 
+#include <QDebug>
+
 mdtCsvParserSettingsWidget::mdtCsvParserSettingsWidget(QWidget *parent)
  : mdtCsvSettingsWidget(parent)
 {
@@ -27,9 +29,13 @@ mdtCsvParserSettingsWidget::mdtCsvParserSettingsWidget(QWidget *parent)
   setAllwaysProtectTextFieldsVisible(false);
   // Update regarding default settings
   setSettings(mdtCsvParserSettings());
+
+  connect(this, &mdtCsvParserSettingsWidget::fieldProtectionChanged, this, &mdtCsvParserSettingsWidget::onSettingsSelectionChanged);
+  connect(this, &mdtCsvParserSettingsWidget::fieldSeparatorChanged, this, &mdtCsvParserSettingsWidget::onSettingsSelectionChanged);
+  connect(this, &mdtCsvParserSettingsWidget::parseExpStateChanged, this, &mdtCsvParserSettingsWidget::onSettingsSelectionChanged);
 }
 
-void mdtCsvParserSettingsWidget::setSettings(const mdtCsvParserSettings &settings)
+void mdtCsvParserSettingsWidget::setSettings(const mdtCsvParserSettings & settings)
 {
   selectFieldSeparator(settings.fieldSeparator);
   selectFieldProtection(settings.fieldProtection);
@@ -45,4 +51,16 @@ mdtCsvParserSettings mdtCsvParserSettingsWidget::getSettings() const
   settings.parseExp = parseExp();
 
   return settings;
+}
+
+void mdtCsvParserSettingsWidget::onSettingsSelectionChanged()
+{
+  qDebug() << "onSettingsSelectionChanged() ...";
+
+  auto settings = getSettings();
+
+  if(settings.isValid()){
+    qDebug() << "----> CSV settings valid, signal..";
+    emit csvSettingsChanged(settings);
+  }
 }

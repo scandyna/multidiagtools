@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -26,6 +26,8 @@
 #include <QList>
 #include <QStringList>
 #include <QTextCodec>
+#include <QComboBox>
+#include <QToolButton>
 
 mdtCsvFileSettingsWidget::mdtCsvFileSettingsWidget(QWidget* parent)
  : QWidget(parent),
@@ -48,7 +50,10 @@ mdtCsvFileSettingsWidget::mdtCsvFileSettingsWidget(QWidget* parent)
   }
   codecList.sort();
   cbFileEncoding->addItems(codecList);
-  cbFileEncoding->setCurrentText("UTF-8");
+  selectUtf8Encoding();
+  connect(cbFileEncoding, &QComboBox::currentTextChanged, this, &mdtCsvFileSettingsWidget::onFileEncodingChanged);
+  connect(tbSelectUtf8Encoding, &QToolButton::clicked, this, &mdtCsvFileSettingsWidget::selectUtf8Encoding);
+  connect(tbSelectSystemEncoding, &QToolButton::clicked, this, &mdtCsvFileSettingsWidget::selectSystemEncoding);
 }
 
 void mdtCsvFileSettingsWidget::setFileSettings(const QString & path, const QByteArray & encoding)
@@ -56,6 +61,7 @@ void mdtCsvFileSettingsWidget::setFileSettings(const QString & path, const QByte
   leFilePath->setText(path);
   const QString enc = QString::fromLatin1(encoding);
   cbFileEncoding->setCurrentText(enc);
+  emit fileSettingsChanged(path, encoding);
 }
 
 QString mdtCsvFileSettingsWidget::filePath() const
@@ -73,10 +79,26 @@ void mdtCsvFileSettingsWidget::setSelectFileMode(mdtCsvFileSettingsWidget::Selec
   pvSelectFileMode = mode;
 }
 
+void mdtCsvFileSettingsWidget::selectUtf8Encoding()
+{
+  cbFileEncoding->setCurrentText("UTF-8");
+}
+
+void mdtCsvFileSettingsWidget::selectSystemEncoding()
+{
+  auto * codec = QTextCodec::codecForLocale();
+
+  if(codec == nullptr){
+    return;
+  }
+  cbFileEncoding->setCurrentText(QString::fromLatin1(codec->name()));
+}
+
 void mdtCsvFileSettingsWidget::selectFile()
 {
   QFileDialog dialog(this);
   QFileInfo fileInfo;
+  QStringList filters;
 
   // Setup and show dialog
   switch(pvSelectFileMode){
@@ -92,7 +114,9 @@ void mdtCsvFileSettingsWidget::selectFile()
   if(!pvDefaultDirectory.isEmpty()){
     dialog.setDirectory(pvDefaultDirectory);
   }
-  dialog.setNameFilter(tr("CSV file (*.csv)"));
+  filters << tr("CSV file (*.csv)") << tr("Any file (*)");
+  dialog.setNameFilters(filters);
+//   dialog.setNameFilter(tr("CSV file (*.csv), Any file (*)"));
   dialog.setDefaultSuffix("csv");
   dialog.setOption(QFileDialog::DontConfirmOverwrite, false);
   if(dialog.exec() != QDialog::Accepted){
@@ -102,4 +126,16 @@ void mdtCsvFileSettingsWidget::selectFile()
   fileInfo.setFile(dialog.selectedFiles().at(0));
   // Store file path
   leFilePath->setText(fileInfo.absoluteFilePath());
+  emit fileSettingsChanged(fileInfo.absoluteFilePath(), cbFileEncoding->currentText().toLatin1());
+}
+
+void mdtCsvFileSettingsWidget::onFileEncodingChanged(const QString & text)
+{
+//   if(text.isEmpty()){
+//     return;
+//   }
+//   if(leFilePath->text().isEmpty()){
+//     return;
+//   }
+  emit fileSettingsChanged(leFilePath->text(), text.toLatin1());
 }

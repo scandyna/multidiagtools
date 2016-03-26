@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -69,11 +69,31 @@ class mdtCsvFileSettingsWidget : public QWidget, Ui::mdtCsvFileSettingsWidget
    */
   void setSelectFileMode(SelectFileMode mode);
 
+ signals:
+
+  /*! \brief Emitted whenever file path and encoding changed
+   */
+  void fileSettingsChanged(const QString & path, const QByteArray & encoding);
+
+ private slots:
+
+  /*! \brief Select UTF-8 encoding
+   */
+  void selectUtf8Encoding();
+
+  /*! \brief Select system encoding
+   */
+  void selectSystemEncoding();
+
  private:
 
   /*! \brief Select target file
    */
   void selectFile();
+
+  /*! \brief Will emit fileSettingsChanged() when encoding changed
+   */
+  void onFileEncodingChanged(const QString & text);
 
   SelectFileMode pvSelectFileMode;
   QString pvDefaultDirectory;
