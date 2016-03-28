@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 121
+  revision 122
   modified_by 2 "philippe"
   // class settings
   
@@ -6490,6 +6490,34 @@ ${inlines}
       mysql_decl ""
       
     end
+
+    classdiagram 2124418 "QScrollArea"
+      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+      size A4
+    end
+
+    class 2457090 "QScrollArea"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2769538 // <generalisation>
+	relation 2752386 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2769538 // <generalisation>
+	  b parent class_ref 895874 // QAbstractScrollArea
+      end
+    end
   end
 
   classview 846978 "QtCore"
@@ -6876,6 +6904,223 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    classdiagram 2124546 "QMetaType"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2457218 "QMetaType"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2124802 "QSignalMapper"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2457474 "QSignalMapper"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2769794 // <generalisation>
+	relation 2752642 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2769794 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      operation 3744514 "QSignalMapper"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3745282 "setMapping"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "sender" type class_ref 138626 // QObject
+	  param in name "id" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3745410 "setMapping"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "sender" type class_ref 138626 // QObject
+	  param in name "text" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3745538 "setMapping"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "sender" type class_ref 138626 // QObject
+	  param in name "widget" type class_ref 316162 // QWidget
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3745666 "setMapping"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "sender" type class_ref 138626 // QObject
+	  param in name "object" type class_ref 138626 // QObject
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3744642 "map"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3744770 "mapped"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "i" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3744898 "mapped"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "text" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3745026 "mapped"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "widget" type class_ref 316162 // QWidget
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3745154 "mapped"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "object" type class_ref 138626 // QObject
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 
@@ -7448,7 +7693,6 @@ ${inlines}
 	    classrelation_ref 2762114 // <generalisation>
 	  b parent class_ref 138626 // QObject
       end
-
     end
 
     classdiagram 2111234 "QAudioRecorder"

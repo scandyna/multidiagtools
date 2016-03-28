@@ -1,10 +1,10 @@
 format 211
 
-classcanvas 128002 class_ref 2036994 // mdtCsvRecord
+classcanvas 128002 class_ref 2036994 // Record
   classdiagramsettings member_max_width 0 end
   xyz 168 260 2000
 end
-classcanvas 128130 class_ref 2085506 // mdtCsvRecordFormat
+classcanvas 128130 class_ref 2085506 // RecordFormat
   classdiagramsettings member_max_width 0 end
   xyz 117 39 2006
 end

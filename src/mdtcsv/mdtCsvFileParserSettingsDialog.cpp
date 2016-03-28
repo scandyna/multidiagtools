@@ -19,9 +19,11 @@
  **
  ****************************************************************************/
 #include "mdtCsvFileParserSettingsDialog.h"
+#include "mdt/csv/RecordFormatSetupWidget.h"
 #include "mdtCsvFileParserModel.h"
 #include "mdtErrorDialog.h"
 #include <QTableView>
+#include <QScrollArea>
 
 #include <QDebug>
 
@@ -30,6 +32,10 @@ mdtCsvFileParserSettingsDialog::mdtCsvFileParserSettingsDialog(QWidget *parent)
 {
   setupUi(this);
   wFileSettings->setSelectFileMode(mdtCsvFileSettingsWidget::SelectOpen);
+  // Setup record format widget
+  pvRecordFormatWidget = new mdt::csv::RecordFormatSetupWidget;
+  saRecordFormat->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  saRecordFormat->setWidget(pvRecordFormatWidget);
   // Setup data preview
   pvDataPreviewModel = new mdtCsvFileParserModel(tvDataPreview);
   tvDataPreview->setModel(pvDataPreviewModel);
@@ -76,7 +82,9 @@ void mdtCsvFileParserSettingsDialog::onFileSettingsChanged(const QString & path,
   if(!ok){
     mdtErrorDialog dialog(pvDataPreviewModel->lastError(), this);
     dialog.exec();
+    return;
   }
+  pvRecordFormatWidget->setHeader(pvDataPreviewModel->header());
   resizeViewToContents();
 }
 
@@ -91,7 +99,9 @@ void mdtCsvFileParserSettingsDialog::onCsvSettingsChanged(const mdtCsvParserSett
   if(!ok){
     mdtErrorDialog dialog(pvDataPreviewModel->lastError(), this);
     dialog.exec();
+    return;
   }
+  pvRecordFormatWidget->setHeader(pvDataPreviewModel->header());
   resizeViewToContents();
 }
 
@@ -99,6 +109,7 @@ void mdtCsvFileParserSettingsDialog::setControlsEnabled(bool enable)
 {
   wFileSettings->setEnabled(enable);
   wCsvSettings->setEnabled(enable);
+  pvRecordFormatWidget->setEnabled(enable);
 }
 
 void mdtCsvFileParserSettingsDialog::resizeViewToContents()

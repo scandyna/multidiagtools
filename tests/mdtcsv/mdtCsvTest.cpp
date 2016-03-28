@@ -31,6 +31,9 @@
 #include "mdtCsvData.h"
 #include "mdtCsvStringInfo.h"
 #include "mdtCsvFileInfo.h"
+#include "mdt/csv/FieldType.h"
+#include "mdt/csv/RecordFormatSetupWidgetItem.h"
+#include "mdt/csv/RecordFormatSetupWidget.h"
 #include "mdtCsvRecordFormat.h"
 #include "mdtCsvParserSettingsWidget.h"
 #include "mdtCsvGeneratorSettingsWidget.h"
@@ -54,6 +57,7 @@
 #include <QStandardItem>
 #include <QAbstractItemModel>
 #include <QModelIndex>
+#include <QSignalSpy>
 #include <string>
 #include <vector>
 
@@ -379,6 +383,36 @@ void mdtCsvTest::dataTest()
   QCOMPARE(data.recordCount(), 0);
 }
 
+void mdtCsvTest::fieldTypeTest()
+{
+  using mdt::csv::FieldType;
+
+  /*
+   * Type names
+   */
+  QCOMPARE(FieldType::nameFromType(QMetaType::Bool), QString("Boolean"));
+  QCOMPARE(FieldType::nameFromType(QMetaType::Double), QString("Double"));
+  /*
+   * Get list of avaliable feild types
+   */
+  auto ftList = FieldType::getAvailableFieldTypeList();
+  QCOMPARE((int)ftList.size(), 10);
+  QVERIFY(ftList.at(0).type() == QMetaType::Bool);
+  QCOMPARE(ftList.at(0).name(), QString("Boolean"));
+
+  /*
+   * Object construction
+   */
+  FieldType ft;
+  // Default constrcuted
+  QVERIFY(ft.type() == QMetaType::UnknownType);
+  QVERIFY(ft.name().isEmpty());
+  // Construct
+  ft = FieldType(QMetaType::Double);
+  QVERIFY(ft.type() == QMetaType::Double);
+  QCOMPARE(ft.name(), QString("Double"));
+}
+
 void mdtCsvTest::recordFormatTest()
 {
   mdtCsvRecord record;
@@ -488,6 +522,64 @@ void mdtCsvTest::recordFormatTest()
   QCOMPARE(record.columnDataList.at(3), QVariant("2"));
   QCOMPARE(record.columnDataList.at(4), QVariant("3"));
 
+}
+
+void mdtCsvTest::recordFormatSetupWidgetItemTest()
+{
+  using mdt::csv::RecordFormatSetupWidgetItem;
+
+  RecordFormatSetupWidgetItem item;
+  QSignalSpy spy(&item, &RecordFormatSetupWidgetItem::fieldTypeChanged);
+
+  item.setFieldName("Name");
+  item.setFieldType(QMetaType::QString);
+  QVERIFY(item.fieldType() == QMetaType::QString);
+  
+  qDebug() << "Signals: " << spy.count();
+
+  /*
+   * Play
+   */
+  item.show();
+  while(item.isVisible()){
+    QTest::qWait(500);
+  }
+}
+
+void mdtCsvTest::recordFormatSetupWidgetTest()
+{
+  using mdt::csv::RecordFormatSetupWidget;
+
+  RecordFormatSetupWidget widget;
+  mdtCsvRecord header;
+
+  /*
+   * Set header
+   */
+  // Set 3 columns header
+  header.clear();
+  header.columnDataList << "A" << "B" << "C";
+  widget.setHeader(header);
+  // Set 2 columns header
+  header.clear();
+  header.columnDataList << "A" << "B";
+  widget.setHeader(header);
+  // Set 3 columns header
+  header.clear();
+  header.columnDataList << "A" << "B" << "C";
+  widget.setHeader(header);
+  // Set 3 columns header
+  header.clear();
+  header.columnDataList << "A" << "B" << "C";
+  widget.setHeader(header);
+
+  /*
+   * Play
+   */
+  widget.show();
+  while(widget.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 void mdtCsvTest::csvStringInfoTest()

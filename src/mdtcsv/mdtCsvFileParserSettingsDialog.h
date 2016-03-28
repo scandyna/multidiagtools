@@ -29,10 +29,12 @@
 
 class QWidget;
 class mdtCsvFileParserModel;
+namespace mdt{ namespace csv{
+  class RecordFormatSetupWidget;
+}}
 
 /*! \brief CSV file generator settings dialog
  */
-
 class mdtCsvFileParserSettingsDialog : public QDialog, Ui::mdtCsvFileParserSettingsDialog
 {
  Q_OBJECT
@@ -91,6 +93,7 @@ class mdtCsvFileParserSettingsDialog : public QDialog, Ui::mdtCsvFileParserSetti
    */
   void resizeViewToContents();
 
+  mdt::csv::RecordFormatSetupWidget *pvRecordFormatWidget;
   mdtCsvFileParserModel *pvDataPreviewModel;
 };
 

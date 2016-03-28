@@ -38,7 +38,12 @@ class mdtCsvTest : public mdtTest
   void fileGeneratorSettingsDialogTest();
   void recordTest();
   void dataTest();
+
+  void fieldTypeTest();
   void recordFormatTest();
+  void recordFormatSetupWidgetItemTest();
+  void recordFormatSetupWidgetTest();
+
   void csvStringInfoTest();
   void csvFileInfoTest();
 

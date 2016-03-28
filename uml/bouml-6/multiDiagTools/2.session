@@ -1,13 +1,21 @@
 window_sizes 1280 964 319 955 911 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 2117762 // overview
-    955 911 100 4 0 0
+  active  classdiagram_ref 2124290 // RecordFormat
+    955 911 90 21 24 0
+  classdiagram_ref 2124674 // FieldType
+    120 106 100 4 0 0
 end
 show_stereotypes
+selected operation_ref 3744386 // fieldTypeChanged
 open
-  classview_ref 887298 // Common
   classview_ref 1078274 // Data
+  operation_ref 3752450 // formatValue
+  attribute_ref 2391170 // DefaultFieldType
+  attribute_ref 2384386 // Items
+  operation_ref 3752578 // setDefaultFieldType
+  class_ref 2456962 // RecordFormatSetupWidgetItem
+  classview_ref 887298 // Common
   classview_ref 887170 // Parser
   
   package_ref 315650 // error

@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 74
+  revision 75
   modified_by 2 "philippe"
   // class settings
   
@@ -6176,11 +6176,11 @@ ${inlines}
 	  a public
 	    cpp default "#include in source"
 	    classrelation_ref 2740226 // <dependency>
-	  b parent class_ref 2085506 // mdtCsvRecordFormat
+	  b parent class_ref 2085506 // RecordFormat
       end
 
       operation 3706498 "fromQSqlRecord"
-	class_operation public return_type class_ref 2085506 // mdtCsvRecordFormat
+	class_operation public return_type class_ref 2085506 // RecordFormat
 	nparams 1
 	  param in name "sqlRecord" type class_ref 404994 // QSqlRecord
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};

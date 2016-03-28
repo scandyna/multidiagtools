@@ -6,6 +6,9 @@ project (multidiagtools)
 
 # List of source files
 set (SOURCES_FILES 
+          mdt/csv/FieldType.cpp
+          mdt/csv/RecordFormatSetupWidgetItem.cpp
+          mdt/csv/RecordFormatSetupWidget.cpp
           mdtCsvStringParser.cpp
           mdtCsvFileParser.cpp
           mdtCsvStringGenerator.cpp

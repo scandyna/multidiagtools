@@ -62,6 +62,13 @@ class mdtCsvParserModel : public QAbstractTableModel
    */
   QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
 
+  /*! \brief Get header record
+   */
+  mdtCsvRecord header() const
+  {
+    return pvHeader;
+  }
+
  protected:
 
   /*! \brief Set header

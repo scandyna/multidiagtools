@@ -1,6 +1,6 @@
 format 211
 "mdtcsv" // mdtcsv
-  revision 25
+  revision 28
   modified_by 2 "philippe"
   // class settings
   
@@ -26,6 +26,8 @@ format 211
   activitydiagramsettings
    end
   
+  package_ref 381954 // mdt
+
   classview 887298 "Common"
     
     classdiagramsettings member_max_width 0 end
@@ -506,7 +508,7 @@ ${inlines}
       mysql_decl ""
       
       attribute 2198146 "Header"
-	private type class_ref 2036994 // mdtCsvRecord
+	private type class_ref 2036994 // Record
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -518,7 +520,7 @@ ${inlines}
       end
 
       attribute 2191490 "RecordFormat"
-	private type class_ref 2085506 // mdtCsvRecordFormat
+	private type class_ref 2085506 // RecordFormat
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -556,7 +558,7 @@ ${inlines}
       operation 3706754 "setFormat"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "format" type class_ref 2085506 // mdtCsvRecordFormat
+	  param in name "format" type class_ref 2085506 // RecordFormat
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -570,7 +572,7 @@ ${inlines}
       end
 
       operation 3706882 "format"
-	public return_type class_ref 2085506 // mdtCsvRecordFormat
+	public return_type class_ref 2085506 // RecordFormat
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -814,257 +816,6 @@ ${inlines}
     end
   end
 
-  classview 1078274 "Data"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
-    classdiagram 2117762 "overview"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 2036994 "mdtCsvRecord"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 2111618 "columnDataList"
-	public type class_ref 161154 // QVariant
-	multiplicity "*"
-	stereotype "vector"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2118402 "ErrorOccured"
-	private explicit_type "bool"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 3229570 "mdtCsvRecord"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "record" type class_ref 2105474 // mdtDataRecord
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3229698 "toDataRecord"
-	public return_type class_ref 2105474 // mdtDataRecord
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
-    class 2085506 "mdtCsvRecordFormat"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 2145026 "FieldFormats"
-	private explicit_type "QMetaType::Type"
-	multiplicity "*"
-	stereotype "vector"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 3215746 "mdtCsvRecordFormat"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "n" explicit_type "int"
-	cpp_decl "  ${comment}${inline}${name}${(}${t0} ${p0}${v0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3216002 "setFieldCount"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "n" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3215874 "fieldCount"
-	public explicit_return_type "int"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3216130 "setFormat"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "fieldIndex" explicit_type "int"
-	  param in name "fmt" explicit_type "QMetaType::Type"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3216258 "format"
-	public explicit_return_type "QMetaType::Type"
-	nparams 1
-	  param in name "fieldIndex" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 3216386 "formatRecord"
-	public explicit_return_type "bool"
-	nparams 1
-	  param in name "record" type class_ref 2036994 // mdtCsvRecord
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 2739970 // <dependency>
-	relation 2722818 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 2739970 // <dependency>
-	  b parent class_ref 2036994 // mdtCsvRecord
-      end
-    end
-
-    class 2050562 "mdtCsvData"
-      visibility protected 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 2392962 // <directional composition>
-	relation 2376578 *-->
-	  a role_name "" multiplicity "*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 2392962 // <directional composition>
-	  b parent class_ref 2036994 // mdtCsvRecord
-      end
-    end
-  end
-
   classview 887170 "Parser"
     
     classdiagramsettings member_max_width 0 end
@@ -1135,7 +886,7 @@ ${inlines}
       end
 
       operation 3164674 "readLine"
-	cpp_inline public return_type class_ref 2036994 // mdtCsvRecord
+	cpp_inline public return_type class_ref 2036994 // Record
 	nparams 2
 	  param in name "first" explicit_type "SourceIterator"
 	  param in name "last" explicit_type "SourceIterator"
@@ -1297,7 +1048,7 @@ ${inlines}
       end
 
       operation 3202434 "readLine"
-	public return_type class_ref 2036994 // mdtCsvRecord
+	public return_type class_ref 2036994 // Record
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1403,7 +1154,7 @@ ${inlines}
       end
 
       operation 3202050 "readLine"
-	public return_type class_ref 2036994 // mdtCsvRecord
+	public return_type class_ref 2036994 // Record
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1577,7 +1328,7 @@ ${inlines}
 
     classdiagram 1722626 "csvParserModel"
       classdiagramsettings member_max_width 0 end
-      size B-Landscape
+      size C-Landscape
     end
 
     class 2071810 "mdtCsvParserModel"
@@ -1603,7 +1354,7 @@ ${inlines}
       end
 
       attribute 2363650 "Header"
-	private type class_ref 2036994 // mdtCsvRecord
+	private type class_ref 2036994 // Record
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1627,7 +1378,7 @@ ${inlines}
       end
 
       attribute 2363394 "RecordFormat"
-	private type class_ref 2085506 // mdtCsvRecordFormat
+	private type class_ref 2085506 // RecordFormat
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1636,15 +1387,6 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
-      end
-
-      classrelation 2746754 // <directional composition>
-	relation 2729602 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 2746754 // <directional composition>
-	  b parent class_ref 2085506 // mdtCsvRecordFormat
       end
 
       operation 3707010 "rowCount"
@@ -1715,7 +1457,7 @@ ${inlines}
       operation 3708290 "setHeader"
 	protected explicit_return_type "void"
 	nparams 1
-	  param in name "header" type class_ref 2036994 // mdtCsvRecord
+	  param in name "header" type class_ref 2036994 // Record
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1731,7 +1473,7 @@ ${inlines}
       operation 3707906 "addRecord"
 	protected explicit_return_type "void"
 	nparams 1
-	  param in name "record" type class_ref 2036994 // mdtCsvRecord
+	  param in name "record" type class_ref 2036994 // Record
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -1791,6 +1533,15 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 2776322 // <directional composition>
+	relation 2759170 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2776322 // <directional composition>
+	  b parent class_ref 2456706 // RecordFormatter
       end
     end
 
@@ -2387,7 +2138,7 @@ ${inlines}
       operation 3209218 "writeLine"
 	public return_type class_ref 161026 // QString
 	nparams 1
-	  param in name "record" type class_ref 2036994 // mdtCsvRecord
+	  param in name "record" type class_ref 2036994 // Record
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -2674,7 +2425,7 @@ ${inlines}
       end
 
       operation 3293954 "getCurrentRecord"
-	public return_type class_ref 2036994 // mdtCsvRecord
+	public return_type class_ref 2036994 // Record
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
