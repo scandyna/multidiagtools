@@ -5,6 +5,7 @@ TRANSLATIONS += /home/philippe/programmation/multiDiagTools/src/mdtcsv/../../tra
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdt/csv/FieldType.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdt/csv/RecordFormatSetupWidgetItem.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdt/csv/RecordFormatSetupWidget.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdt/csv/RecordFormatter.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvStringParser.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvFileParser.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvStringGenerator.cpp

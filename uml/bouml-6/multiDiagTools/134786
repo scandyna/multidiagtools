@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 122
+  revision 124
   modified_by 2 "philippe"
   // class settings
   
@@ -7721,6 +7721,370 @@ ${inlines}
 	    classrelation_ref 2762242 // <generalisation>
 	  b parent class_ref 2450050 // QMediaRecorder
       end
+    end
+  end
+
+  classview 1091330 "bluetooth"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2137986 "overview"
+      classdiagramsettings hide_operations yes member_max_width 0 end
+      size C-Landscape
+    end
+
+    class 2464002 "QBluetoothAddress"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2464130 "QBluetoothDeviceDiscoveryAgent"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2789378 // <generalisation>
+	relation 2772226 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2789378 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 2790274 // <dependency>
+	relation 2773122 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2790274 // <dependency>
+	  b parent class_ref 2464258 // QBluetoothDeviceInfo
+      end
+    end
+
+    class 2464258 "QBluetoothDeviceInfo"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2464386 "QBluetoothHostInfo"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2791554 // <dependency>
+	relation 2774402 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2791554 // <dependency>
+	  b parent class_ref 2464002 // QBluetoothAddress
+      end
+    end
+
+    class 2464514 "QBluetoothLocalDevice"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2789506 // <generalisation>
+	relation 2772354 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2789506 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 2791682 // <dependency>
+	relation 2774530 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2791682 // <dependency>
+	  b parent class_ref 2464002 // QBluetoothAddress
+      end
+    end
+
+    class 2464642 "QBluetoothServer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2789634 // <generalisation>
+	relation 2772482 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2789634 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 2791298 // <dependency>
+	relation 2774146 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2791298 // <dependency>
+	  b parent class_ref 2464898 // QBluetoothServiceInfo
+      end
+
+      classrelation 2791426 // <dependency>
+	relation 2774274 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2791426 // <dependency>
+	  b parent class_ref 2464002 // QBluetoothAddress
+      end
+    end
+
+    class 2464770 "QBluetoothServiceDiscoveryAgent"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2789762 // <generalisation>
+	relation 2772610 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2789762 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 2790402 // <dependency>
+	relation 2773250 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2790402 // <dependency>
+	  b parent class_ref 2464258 // QBluetoothDeviceInfo
+      end
+
+      classrelation 2790530 // <dependency>
+	relation 2773378 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2790530 // <dependency>
+	  b parent class_ref 2464002 // QBluetoothAddress
+      end
+    end
+
+    class 2464898 "QBluetoothServiceInfo"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2465026 "QBluetoothSocket"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2789890 // <generalisation>
+	relation 2772738 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2789890 // <generalisation>
+	  b parent class_ref 322818 // QIODevice
+      end
+
+      classrelation 2790658 // <dependency>
+	relation 2773506 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2790658 // <dependency>
+	  b parent class_ref 2464898 // QBluetoothServiceInfo
+      end
+
+      classrelation 2790786 // <dependency>
+	relation 2773634 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2790786 // <dependency>
+	  b parent class_ref 2464002 // QBluetoothAddress
+      end
+    end
+
+    class 2465154 "QBluetoothTransferManager"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2790018 // <generalisation>
+	relation 2772866 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2790018 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+    end
+
+    class 2465282 "QBluetoothTransferReply"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2790146 // <generalisation>
+	relation 2772994 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2790146 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 2791042 // <unidirectional association>
+	relation 2773890 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2791042 // <unidirectional association>
+	  b parent class_ref 2465154 // QBluetoothTransferManager
+      end
+
+      classrelation 2791170 // <unidirectional association>
+	relation 2774018 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2791170 // <unidirectional association>
+	  b parent class_ref 2465410 // QBluetoothTransferRequest
+      end
+    end
+
+    class 2465410 "QBluetoothTransferRequest"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2790914 // <dependency>
+	relation 2773762 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2790914 // <dependency>
+	  b parent class_ref 2464002 // QBluetoothAddress
+      end
+    end
+
+    classdiagram 2144770 "lowEnergy"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
   end
 end

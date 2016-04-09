@@ -25,7 +25,6 @@
 #include "mdtCsvFileParser.h"
 #include "mdtCsvSettings.h"
 #include "mdtExpected.h"
-#include "mdtError.h"
 #include <QFileInfo>
 #include <QByteArray>
 
@@ -80,12 +79,15 @@ class mdtCsvFileParserModel : public mdtCsvParserModel
    */
   void fetchMore(const QModelIndex & parent) override;
 
-  /*! \brief Get last error
+ signals:
+
+  /*! \brief Emitted when fetching started
    */
-  mdtError lastError() const
-  {
-    return pvLastError;
-  }
+  void fetchingStarted();
+
+  /*! \brief Emitted when fetching done
+   */
+  void fetchingDone();
 
  private:
 
@@ -97,7 +99,6 @@ class mdtCsvFileParserModel : public mdtCsvParserModel
   QFileInfo pvFileInfo;
   QByteArray pvFileEncoding;
   mdtCsvParserSettings pvCsvSettings;
-  mdtError pvLastError;
 };
 
 #endif // #ifndef MDT_CSV_FILE_PARSER_MODEL_H

@@ -22,6 +22,7 @@
 #define MDT_CSV_PARSER_MODEL_H
 
 #include "mdtCsvData.h"
+#include "mdtError.h"
 #include <QAbstractTableModel>
 #include <QModelIndex>
 #include <QVariant>
@@ -69,6 +70,17 @@ class mdtCsvParserModel : public QAbstractTableModel
     return pvHeader;
   }
 
+  /*! \brief Reformat column data for column index with type
+   */
+  bool reformatColumnData(int index, QMetaType::Type type);
+
+  /*! \brief Get last error
+   */
+  mdtError lastError() const
+  {
+    return pvLastError;
+  }
+
  protected:
 
   /*! \brief Set header
@@ -84,6 +96,10 @@ class mdtCsvParserModel : public QAbstractTableModel
    * Will clear header and data cache
    */
   void clearCache();
+
+  /*! \brief Last error
+   */
+  mdtError pvLastError;
 
  private:
 

@@ -1,0 +1,11 @@
+format 211
+
+classcanvas 128002 class_ref 2376834 // mdtCsvFileParserSettingsDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 40 37 2000
+end
+classcanvas 128386 class_ref 852482 // QStateMachine
+  classdiagramsettings member_max_width 0 end
+  xyz 722 266 2012
+end
+end

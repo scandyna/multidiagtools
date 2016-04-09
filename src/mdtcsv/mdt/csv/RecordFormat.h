@@ -18,48 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CSV_RECORD_FORMAT_SETUP_WIDGET_ITEM_H
-#define MDT_CSV_RECORD_FORMAT_SETUP_WIDGET_ITEM_H
+#ifndef MDT_CSV_RECORD_FORMAT_H
+#define MDT_CSV_RECORD_FORMAT_H
 
-#include <QWidget>
-#include <QString>
+#include <QVariant>
 #include <QMetaType>
-
-class QLabel;
-class QComboBox;
+#include <QVector>
 
 namespace mdt{ namespace csv{
 
-  class RecordFormatSetupWidgetItem : public QWidget
+  /*! \brief Record format
+   */
+  class RecordFormat
   {
-   Q_OBJECT
-
-   public:
-
-    RecordFormatSetupWidgetItem(QWidget *parent = nullptr);
-
-    void setFieldName(const QString & name);
-
-    void setFieldType(QMetaType::Type type);
-
-    QMetaType::Type fieldType() const;
-
-   signals:
-
-    // Emitted when field type changed
-    void fieldTypeChanged();
-
-   private slots:
-
-    // Called when cbFieldType index changed
-    void onFieldTypeChanged();
-
-   private:
-
-    QLabel *lbFieldName;
-    QComboBox *cbFieldType;
   };
 
 }} // namespace mdt{ namespace csv{
 
-#endif // #ifndef MDT_CSV_RECORD_FORMAT_SETUP_WIDGET_ITEM_H
+#endif // #ifndef MDT_CSV_RECORD_FORMAT_H
+

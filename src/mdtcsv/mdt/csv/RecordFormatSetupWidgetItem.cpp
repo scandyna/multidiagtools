@@ -68,7 +68,7 @@ QMetaType::Type RecordFormatSetupWidgetItem::fieldType() const
 
 void RecordFormatSetupWidgetItem::onFieldTypeChanged()
 {
-  qDebug() << "Field " << lbFieldName->text() << ": type changed, signal..";
+//   qDebug() << "Field " << lbFieldName->text() << ": type changed, signal..";
   emit fieldTypeChanged();
 }
 

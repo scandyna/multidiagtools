@@ -1,6 +1,6 @@
-format 210
+format 211
 "mdtutilsgui" // mdtutilsgui
-  revision 88
+  revision 89
   modified_by 2 "philippe"
   // class settings
   
@@ -3045,7 +3045,7 @@ ${inlines}
       operation 1668354 "createTable"
 	public explicit_return_type "bool"
 	nparams 2
-	  param in name "table" type class_ref 910210 // mdtSqlSchemaTable
+	  param in name "table" type class_ref 910210 // mdtSqlTableSchema
 	  param in name "createMode" explicit_type "createMode_t"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3084,126 +3084,6 @@ ${inlines}
     end
   end
 
-  deploymentview 285058 "mdtIoWidgets"
-    //deployment diagram settings
-    deploymentdiagramsettings
-     end
-    artifact 275842 "mdtAbstractIoWidget"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 518658 // mdtAbstractIoWidget
-      end
-    end
-
-    artifact 275970 "mdtDigitalInWidget"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 518786 // mdtDigitalInWidget
-      end
-    end
-
-    artifact 276098 "mdtDigitalOutWidget"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 518914 // mdtDigitalOutWidget
-      end
-    end
-
-    artifact 276226 "mdtAnalogInWidget"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 519042 // mdtAnalogInWidget
-      end
-    end
-
-    artifact 276354 "mdtAnalogOutWidget"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 519170 // mdtAnalogOutWidget
-      end
-    end
-  end
-
   classview 346370 "mdtIoWidgets"
     
     classdiagramsettings member_max_width 0 end
@@ -3220,10 +3100,9 @@ ${namespace_end}"
     
     activitydiagramsettings
      end
-    associated_deployment_view deploymentview_ref 285058 // mdtIoWidgets
     classdiagram 508546 "mdtIoWidgets"
-      classdiagramsettings member_max_width 0 end
-      size A3
+      classdiagramsettings hide_operations yes member_max_width 0 end
+      size C-Landscape
     end
 
     class 518658 "mdtAbstractIoWidget"
@@ -6392,7 +6271,7 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 910210 // mdtSqlSchemaTable
+	class_ref 910210 // mdtSqlTableSchema
       end
     end
 

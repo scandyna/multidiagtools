@@ -2,27 +2,27 @@ format 211
 
 classcanvas 128002 class_ref 2085506 // RecordFormat
   classdiagramsettings member_max_width 0 end
-  xyz 39.1 600.05 2000
+  xyz 481.2 532.5 2000
 end
 classcanvas 128130 class_ref 2456706 // RecordFormatter
   classdiagramsettings member_max_width 0 end
-  xyz 65.1 417.3 2000
+  xyz 61.15 521.5 2000
 end
 classcanvas 128258 class_ref 2456834 // RecordFormatSetupWidget
   classdiagramsettings member_max_width 0 end
-  xyz 727.2 617.9 2000
+  xyz 483.25 287.9 2000
 end
 classcanvas 128642 class_ref 316162 // QWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 871.9 164.85 2000
+  xyz 650.2 164.65 2000
 end
 classcanvas 128770 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 872.9 79.35 2006
+  xyz 651.2 79.65 2006
 end
 classcanvas 129538 class_ref 2456962 // RecordFormatSetupWidgetItem
   classdiagramsettings member_max_width 0 end
-  xyz 457.15 288.65 2000
+  xyz 78.85 288.15 2000
 end
 relationcanvas 128514 relation_ref 2751746 // <unidirectional association>
   from ref 128130 z 2001 to ref 128002
@@ -35,30 +35,32 @@ relationcanvas 128898 relation_ref 2457474 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129410 relation_ref 2752002 // <generalisation>
+  decenter_begin 508
   from ref 128258 z 2001 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129666 relation_ref 2752130 // <directional composition>
   decenter_end 481
-  from ref 128258 z 2001 to point 1119.1 690.2
-  line 131586 z 2001 to point 1119.1 40.2
-  line 131714 z 2001 to point 417.9 40.2
-  line 131842 z 2001 to point 417.9 378
+  from ref 128258 z 2001 to point 918 391
+  line 131586 z 2001 to point 918 40
+  line 131714 z 2001 to point 40 40
+  line 131842 z 2001 to point 40 378
   line 131970 z 2001 to ref 129538
   no_role_a no_role_b
-  multiplicity_a_pos 440 388 3000 no_multiplicity_b
+  multiplicity_a_pos 62 387 3000 no_multiplicity_b
 end
 relationcanvas 129794 relation_ref 2752258 // <generalisation>
   geometry VHV unfixed
-  from ref 129538 z 2001 to point 641 248
-  line 132098 z 2001 to point 901 248
+  decenter_begin 490
+  from ref 129538 z 2001 to point 258 248
+  line 132098 z 2001 to point 680 248
   line 132226 z 2001 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131202 relation_ref 2752514 // <dependency>
-  decenter_end 481
+  decenter_begin 508
   from ref 128258 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

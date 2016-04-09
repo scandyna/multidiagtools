@@ -22,6 +22,7 @@
 #include "RecordFormatSetupWidgetItem.h"
 #include <QHBoxLayout>
 #include <QSignalMapper>
+#include <QSignalBlocker>
 
 #include <QDebug>
 
@@ -46,16 +47,25 @@ void RecordFormatSetupWidget::setDefaultFieldType(QMetaType::Type type)
 
 void RecordFormatSetupWidget::setHeader(const mdtCsvRecord & header)
 {
+  const QSignalBlocker signalBlocker(pvSignalMapper);
+
   setItemsCount(header.count());
   for(int i = 0; i < header.count(); ++i){
     setFieldNameAt(i, header.columnDataList.at(i).toString());
     setFieldTypeAt(i, pvDefaultFieldType);
+    emit fieldTypeChanged( i, static_cast<int>(pvDefaultFieldType) );
   }
 }
 
 void RecordFormatSetupWidget::onFieldTypeChanged(int index)
 {
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < (int)pvItems.size());
+  Q_ASSERT(pvItems[index] != nullptr);
+
   qDebug() << "Field type changed for index " << index;
+
+  emit fieldTypeChanged( index, static_cast<int>(pvItems[index]->fieldType()) );
 }
 
 void RecordFormatSetupWidget::setItemsCount(int n)
@@ -111,7 +121,7 @@ void RecordFormatSetupWidget::setFieldNameAt(int index, const QString &name)
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < (int)pvItems.size());
 
-  qDebug() << "setFieldNameAt(" << index << ", " << name << ")";
+//   qDebug() << "setFieldNameAt(" << index << ", " << name << ")";
   auto *item = pvItems[index];
   Q_ASSERT(item != nullptr);
   item->setFieldName(name);

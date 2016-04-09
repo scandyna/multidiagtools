@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CSV_RECORD_FORMAT_H
-#define MDT_CSV_RECORD_FORMAT_H
+#ifndef MDT_CSV_RECORD_FORMAT_OLD_H
+#define MDT_CSV_RECORD_FORMAT_OLD_H
 
 #include "mdtError.h"
 #include "mdtCsvData.h"
@@ -129,4 +129,4 @@ class mdtCsvRecordFormat
   mdtError pvLastError;
 };
 
-#endif // #ifndef MDT_CSV_RECORD_FORMAT_H
+#endif // #ifndef MDT_CSV_RECORD_FORMAT_OLD_H

@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtCsvParserModel.h"
 
-// #include <QDebug>
+#include <QDebug>
 
 mdtCsvParserModel::mdtCsvParserModel(QObject *parent)
  : QAbstractTableModel(parent)
@@ -77,6 +77,16 @@ QVariant mdtCsvParserModel::data(const QModelIndex & index, int role) const
   }
 
   return pvBuffer.recordList.at(row).columnDataList.at(column);
+}
+
+bool mdtCsvParserModel::reformatColumnData(int index, QMetaType::Type type)
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < columnCount());
+
+  qDebug() << "Model: reformat column " << index << " , type: " << type << " ...";
+
+  return true;
 }
 
 void mdtCsvParserModel::setHeader(const mdtCsvRecord & header)

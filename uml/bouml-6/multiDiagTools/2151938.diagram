@@ -1,0 +1,71 @@
+format 211
+
+classcanvas 128002 class_ref 2471938 // StateMachine
+  classdiagramsettings member_max_width 0 end
+  xyz 189.75 145 2000
+end
+classcanvas 128130 class_ref 2376834 // mdtCsvFileParserSettingsDialog
+  classdiagramsettings member_max_width 0 end
+  xyz 827.75 447.25 2006
+end
+classcanvas 128386 class_ref 2478466 // ErrorState
+  classdiagramsettings member_max_width 0 end
+  xyz 515.5 742 2000
+end
+classcanvas 128514 class_ref 2478594 // IdleState
+  classdiagramsettings member_max_width 0 end
+  xyz 672.5 742 2000
+end
+classcanvas 128642 class_ref 852482 // QStateMachine
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 41 205 2006
+end
+classcanvas 128898 class_ref 851970 // QState
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 68 122.5 2012
+end
+classcanvas 129154 class_ref 852098 // QAbstractState
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 41 40 2018
+end
+classcanvas 129410 class_ref 2456834 // RecordFormatSetupWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 742 2000
+end
+classcanvas 129538 class_ref 2071938 // mdtCsvFileParserModel
+  classdiagramsettings member_max_width 0 end
+  xyz 748.75 46 2012
+end
+relationcanvas 128258 relation_ref 2781058 // <composition>
+  geometry HV unfixed
+  from ref 128130 z 2007 to point 447 552
+  line 130050 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 2781186 // <directional composition>
+  from ref 128002 z 2007 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 1054338 // <generalisation>
+  from ref 128642 z 2013 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 1054082 // <generalisation>
+  from ref 128898 z 2019 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 2787714 // <dependency>
+  from ref 128002 z 2013 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 2787842 // <directional composition>
+  from ref 128130 z 2013 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

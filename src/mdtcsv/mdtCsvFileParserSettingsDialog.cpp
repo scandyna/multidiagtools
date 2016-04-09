@@ -24,6 +24,7 @@
 #include "mdtErrorDialog.h"
 #include <QTableView>
 #include <QScrollArea>
+// #include <QState>
 
 #include <QDebug>
 
@@ -36,11 +37,13 @@ mdtCsvFileParserSettingsDialog::mdtCsvFileParserSettingsDialog(QWidget *parent)
   pvRecordFormatWidget = new mdt::csv::RecordFormatSetupWidget;
   saRecordFormat->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   saRecordFormat->setWidget(pvRecordFormatWidget);
+  connect(pvRecordFormatWidget, &mdt::csv::RecordFormatSetupWidget::fieldTypeChanged, this, &mdtCsvFileParserSettingsDialog::onFieldTypeChanged);
   // Setup data preview
   pvDataPreviewModel = new mdtCsvFileParserModel(tvDataPreview);
   tvDataPreview->setModel(pvDataPreviewModel);
   connect(wFileSettings, &mdtCsvFileSettingsWidget::fileSettingsChanged, this, &mdtCsvFileParserSettingsDialog::onFileSettingsChanged);
   connect(wCsvSettings, &mdtCsvParserSettingsWidget::csvSettingsChanged, this, &mdtCsvFileParserSettingsDialog::onCsvSettingsChanged);
+//   setupStateMachine();
 }
 
 void mdtCsvFileParserSettingsDialog::setFileSettings(const QString & path, const QByteArray & encoding)
@@ -105,6 +108,28 @@ void mdtCsvFileParserSettingsDialog::onCsvSettingsChanged(const mdtCsvParserSett
   resizeViewToContents();
 }
 
+void mdtCsvFileParserSettingsDialog::onFieldTypeChanged(int fieldIndex, int type)
+{
+  if( !pvDataPreviewModel->reformatColumnData(fieldIndex, static_cast<QMetaType::Type>(type) ) ){
+    mdtErrorDialog dialog(pvDataPreviewModel->lastError(), this);
+    dialog.exec();
+    return;
+  }
+  resizeViewToContents();
+}
+
+// void mdtCsvFileParserSettingsDialog::onStateIdleEntered()
+// {
+//   qDebug() << "SM: Idle state entered";
+//   setControlsEnabled(true);
+// }
+
+// void mdtCsvFileParserSettingsDialog::onStateParsingFileEntered()
+// {
+//   qDebug() << "SM: ParsingFile state entered";
+//   setControlsEnabled(false);
+// }
+
 void mdtCsvFileParserSettingsDialog::setControlsEnabled(bool enable)
 {
   wFileSettings->setEnabled(enable);
@@ -117,3 +142,20 @@ void mdtCsvFileParserSettingsDialog::resizeViewToContents()
   tvDataPreview->resizeColumnsToContents();
   tvDataPreview->resizeRowsToContents();
 }
+
+// void mdtCsvFileParserSettingsDialog::setupStateMachine()
+// {
+//   auto *IdleState = new QState;
+//   auto *ParsingFileState = new QState;
+//   
+//   connect(IdleState, &QState::entered, this, &mdtCsvFileParserSettingsDialog::onStateIdleEntered);
+//   connect(ParsingFileState, &QState::entered, this, &mdtCsvFileParserSettingsDialog::onStateParsingFileEntered);
+//   
+//   IdleState->addTransition(pvDataPreviewModel, SIGNAL(fetchingStarted()), ParsingFileState);
+//   ParsingFileState->addTransition(pvDataPreviewModel, SIGNAL(fetchingDone()), IdleState);
+//   
+//   pvStateMachine.addState(IdleState);
+//   pvStateMachine.addState(ParsingFileState);
+//   pvStateMachine.setInitialState(IdleState);
+//   pvStateMachine.start();
+// }

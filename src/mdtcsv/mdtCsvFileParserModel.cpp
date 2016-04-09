@@ -93,12 +93,14 @@ void mdtCsvFileParserModel::fetchMore(const QModelIndex & parent)
     qDebug() << "-> at END...(?)";
     return;
   }
+  emit fetchingStarted();
   Q_ASSERT(!pvParser.atEnd());
   auto record = pvParser.readLine();
   if(record){
-    qDebug() << "REC: " << record.value().columnDataList;
+//     qDebug() << "REC: " << record.value().columnDataList;
     addRecord(record.value());
   }
+  emit fetchingDone();
   /// \todo Error handling..
 }
 
@@ -108,6 +110,8 @@ bool mdtCsvFileParserModel::openFile()
   Q_ASSERT(!pvFileEncoding.isEmpty());
   Q_ASSERT(pvCsvSettings.isValid());
 
+  emit fetchingStarted();
+  
   // Close possibly open file
   pvParser.closeFile();
   clearCache();
@@ -127,5 +131,7 @@ bool mdtCsvFileParserModel::openFile()
   }
   setHeader(record.value());
 
+  emit fetchingDone();
+  
   return true;
 }

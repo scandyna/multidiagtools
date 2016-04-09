@@ -47,6 +47,8 @@ namespace mdt{ namespace csv{
     RecordFormatSetupWidget(QWidget *parent = nullptr);
 
     /*! \brief Set default field type
+     *
+     * By default, the default type is QMetaType::QString
      */
     void setDefaultFieldType(QMetaType::Type type);
 
@@ -54,8 +56,20 @@ namespace mdt{ namespace csv{
      *
      * Create field type selection widgets
      *  and set its type to the one set with setDefaultFieldType()
+     *
+     * Will also emit fieldTypeChanged() signal for each
+     *  field in header.
      */
     void setHeader(const mdtCsvRecord & header);
+
+   signals:
+
+    /*! \brief Emitted when a field type changed
+     *
+     * \param index Field index
+     * \param type Field type. Is of type QMetaType::Type
+     */
+    void fieldTypeChanged(int index, int type);
 
    private slots:
 
