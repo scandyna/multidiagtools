@@ -43,15 +43,20 @@ int mdtCsvParserModel::columnCount(const QModelIndex & /*parent*/) const
 
 QVariant mdtCsvParserModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-  if(orientation != Qt::Horizontal){
+  if(role != Qt::DisplayRole){
     return QAbstractTableModel::headerData(section, orientation, role);
   }
-  if(role != Qt::DisplayRole){
+  if(orientation != Qt::Horizontal){
     return QAbstractTableModel::headerData(section, orientation, role);
   }
   if(pvHeader.columnDataList.isEmpty()){
     return QVariant();
   }
+  
+  if(section < 0){
+    return QVariant();
+  }
+  
   Q_ASSERT(section >= 0);
   Q_ASSERT(section < pvHeader.count());
 

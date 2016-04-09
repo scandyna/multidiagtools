@@ -18,40 +18,36 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_WIDGETS_TEST_H
-#define MDT_WIDGETS_TEST_H
+#include "ParserFormatSetupProxyModel.h"
 
-#include "mdtTest.h"
-#include <QAbstractItemView>
+#include <QDebug>
 
-class QModelIndex;
+namespace mdt{ namespace csv{
 
-class mdtWidgetsTest : public mdtTest
+ParserFormatSetupProxyModel::ParserFormatSetupProxyModel(QObject *parent)
+ : QAbstractProxyModel(parent)
 {
- Q_OBJECT
+}
 
- private slots:
 
-  void mdtDoubleValidatorTest();
-  void mdtDoubleEditTest();
+// int ParserFormatSetupModel::rowCount(const QModelIndex & parent) const
+// {
+//   Q_ASSERT(sourceModel() != nullptr);
+//   qDebug() << "Proxy::rowCount() ..";
+//   return sourceModel()->rowCount(parent);
+// }
+// 
+// 
+// QVariant ParserFormatSetupModel::headerData(int section, Qt::Orientation orientation, int role) const
+// {
+//   Q_ASSERT(sourceModel() != nullptr);
+//   return sourceModel()->headerData(section, orientation, role);
+// }
+// 
+// QVariant ParserFormatSetupModel::data(const QModelIndex & index, int role) const
+// {
+//   Q_ASSERT(sourceModel() != nullptr);
+//   return sourceModel()->data(index, role);
+// }
 
-  void mdtQActionEnableStateGuardTest();
-
-  void formatProxyModelBackgroundTest();
-  void formatProxyModelSettingsTest();
-  void formatProxyModelSettingsBenchmark();
-  void formatProxyModelTest();
-
-  void shiftProxyModelTest();
-
-  void progressValueTest();
-  void comboBoxItemDelegateTest();
-
- private:
-
-  // Helper function to begin and end editing in a QAbstractItemView
-  void beginEditing(QAbstractItemView & view, const QModelIndex & index);
-  void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex);
-};
-
-#endif // #ifndef MDT_WIDGETS_TEST_H
+}} // namespace mdt{ namespace csv{

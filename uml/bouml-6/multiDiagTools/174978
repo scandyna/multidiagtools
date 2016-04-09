@@ -1,6 +1,6 @@
 format 211
 "mdtutilsgui" // mdtutilsgui
-  revision 89
+  revision 91
   modified_by 2 "philippe"
   // class settings
   
@@ -26,6 +26,8 @@ format 211
   activitydiagramsettings
    end
   
+  package_ref 388610 // mdt
+
   classview 840066 "Progress"
     
     classdiagramsettings member_max_width 0 end

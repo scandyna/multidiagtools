@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -26,6 +26,7 @@
 #include "mdtQActionEnableStateGuard.h"
 #include "mdtFormatProxyModel.h"
 #include "mdtFormatProxyModelSettings.h"
+#include "mdt/ShiftProxyModel.h"
 #include "mdtComboBoxItemDelegate.h"
 #include "mdtProgressValue.h"
 #include <QString>
@@ -910,6 +911,182 @@ void mdtWidgetsTest::formatProxyModelTest()
 //   while(tw.isVisible()){
 //     QTest::qWait(500);
 //   }
+}
+
+void mdtWidgetsTest::shiftProxyModelTest()
+{
+  QStandardItemModel model(4, 3);
+  mdt::ShiftProxyModel proxyModel;
+  QModelIndex index;
+  QTableView tableView;
+  QTreeView treeView;
+
+  /*
+   * Populate model
+   */
+  for(int row = 0; row < model.rowCount(); ++row){
+    auto *itemA = new QStandardItem(QString("A%0").arg(row));
+    model.setItem(row, 0, itemA);
+    auto *itemB = new QStandardItem(QString("B%0").arg(row));
+    model.setItem(row, 1, itemB);
+    auto *itemC = new QStandardItem(QString("C%0").arg(row));
+    model.setItem(row, 2, itemC);
+  }
+  /*
+   * Initial state
+   */
+  QCOMPARE(proxyModel.columnCount(), 0);
+  QCOMPARE(proxyModel.rowCount(), 0);
+  /*
+   * Set model
+   */
+  proxyModel.setSourceModel(&model);
+  QCOMPARE(proxyModel.columnCount(), 3);
+  QCOMPARE(proxyModel.rowCount(), 4);
+  // Check row 0
+  index = proxyModel.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("A0"));
+  index = proxyModel.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("B0"));
+  index = proxyModel.index(0, 2);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("C0"));
+  // Check row 1
+  index = proxyModel.index(1, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("A1"));
+  index = proxyModel.index(1, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("B1"));
+  index = proxyModel.index(1, 2);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("C1"));
+  // Check row 2
+  index = proxyModel.index(2, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("A2"));
+  index = proxyModel.index(2, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("B2"));
+  index = proxyModel.index(2, 2);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("C2"));
+  /*
+   * Change data in model
+   */
+  // Change A0 -> A00
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QVERIFY(model.setData(index, "A00"));
+  // Check
+  index = proxyModel.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("A00"));
+  /*
+   * Change data in proxy model
+   */
+  // Change A00 -> A0
+  index = proxyModel.index(0, 0);
+  QVERIFY(index.isValid());
+  QVERIFY(proxyModel.setData(index, "A0"));
+  // Check in model
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("A0"));
+  // Check in proxy model
+  index = proxyModel.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("A0"));
+  /*
+   * Remove a row in source model
+   */
+  QCOMPARE(proxyModel.rowCount(), 4);
+  QVERIFY(model.removeRow(3));
+  QCOMPARE(proxyModel.rowCount(), 3);
+  /*
+   * Add a row in source model
+   */
+  QVERIFY(model.insertRow(3));
+  QCOMPARE(proxyModel.rowCount(), 4);
+  /*
+   * Remove a column in source
+   */
+  QCOMPARE(proxyModel.columnCount(), 3);
+  QVERIFY(model.removeColumn(2));
+  QCOMPARE(proxyModel.columnCount(), 2);
+  /*
+   * Add a column in source
+   */
+  QVERIFY(model.insertColumn(2));
+  QCOMPARE(proxyModel.columnCount(), 3);
+  /*
+   * Shift row by 2
+   */
+  QCOMPARE(proxyModel.rowCount(), 4);
+  proxyModel.setRowOffset(2);
+  QCOMPARE(proxyModel.rowCount(), 6);
+  // Check row 0
+  qDebug() << "TEST: request index for row 0, col 0";
+  index = proxyModel.index(0, 0);
+  ///QVERIFY(index.isValid());
+  qDebug() << "TEST: request data";
+  qDebug() << "TEST: data: " << proxyModel.data(index);
+  QVERIFY(proxyModel.data(index).isNull());
+  // Check row 1
+  qDebug() << "TEST: request index for row 1, col 0";
+  index = proxyModel.index(1, 0);
+  ///QVERIFY(index.isValid());
+  qDebug() << "TEST: request data";
+  QVERIFY(proxyModel.data(index).isNull());
+  // Check row 2
+  index = proxyModel.index(2, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("A0"));
+
+  /*
+   * Shift column by 1
+   */
+
+  /*
+   * Setup views
+   */
+  // Setup table view
+  tableView.setModel(&proxyModel);
+  tableView.resize(600, 200);
+  tableView.show();
+  // Setup tree view
+  treeView.setModel(&proxyModel);
+  treeView.show();
+
+
+  /*
+   * Play
+   */
+  tableView.resizeColumnsToContents();
+  while(tableView.isVisible()){
+    QTest::qWait(500);
+  }
+
+  /*
+   * Remove a row in proxy model
+   */
+  ///QCOMPARE(proxyModel.rowCount(), 2);
+  QVERIFY(proxyModel.removeRow(2));
+  QCOMPARE(proxyModel.rowCount(), 2);
+  /*
+   * Add a row in proxy model
+   */
+  
+  /*
+   * Remove a column in proxy model
+   */
+  
+  /*
+   * Add a column in proxy model
+   */
+
 }
 
 void mdtWidgetsTest::progressValueTest()

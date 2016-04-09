@@ -9,6 +9,7 @@ set (SOURCES_FILES
           mdt/csv/FieldType.cpp
           mdt/csv/RecordFormatSetupWidgetItem.cpp
           mdt/csv/RecordFormatSetupWidget.cpp
+          mdt/csv/ParserFormatSetupProxyModel.cpp
           mdt/csv/RecordFormatter.cpp
           mdtCsvStringParser.cpp
           mdtCsvFileParser.cpp

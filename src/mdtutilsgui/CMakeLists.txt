@@ -34,9 +34,11 @@ set (SOURCES_FILES
           mdtItemsSelectorDialogItem.cpp
           mdtMvColumnSelectionDialog.cpp
           mdtMvSortingSetupDialog.cpp
+          # Item model
           mdtSortFilterProxyModel.cpp
           mdtFormatProxyModel.cpp
           mdtFormatProxyModelSettings.cpp
+          mdt/ShiftProxyModel.cpp
           mdtComboBoxItemDelegate.cpp
           mdtProgressBarItemDelegate.cpp
           # Essais

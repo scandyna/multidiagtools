@@ -1,42 +1,14 @@
 window_sizes 1280 964 344 930 911 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 2151554 // Dialog
-    120 106 100 18 0 0
-  classdiagram_ref 2145026 // FileParserSettingsDialog
-    120 106 90 8 0 0
-  classdiagram_ref 2151810 // StateMachine
-    120 106 100 4 0 0
-  classdiagram_ref 2028546 // parserSettings
-    120 106 100 22 0 0
-  classdiagram_ref 2144898 // overview
-    120 106 100 18 0 0
-  classdiagram_ref 2124290 // RecordFormat
-    120 106 100 21 0 0
-  active  classdiagram_ref 1722626 // csvParserModel
-    930 911 90 22 240 0
+  active  classdiagram_ref 2171394 // ShiftProxyModel
+    930 911 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 3216002 // setFieldCount
+selected attribute_ref 2404482 // RowOffset
 open
-  class_ref 2085506 // RecordFormat
-  classview_ref 1104514 // FileParserSettingsDialog
-  classview_ref 887298 // Common
-  operation_ref 3787010 // reformatColumnData
-  operation_ref 3721474 // lastError
-  operation_ref 3780482 // reformatColumn
-  operation_ref 3773570 // fetchingStarted
-  operation_ref 3773698 // fetchingDone
-  operation_ref 3773826 // formattingStarted
-  operation_ref 3773954 // formattingDone
-  classview_ref 1097986 // FileParserSettings
-  
-  package_ref 309122 // mdt
-  classview_ref 742146 // Wait
-  
-  package_ref 315650 // error
-  classview_ref 934018 // TableMapping
-  class_ref 2441218 // CsvRecordFormat
-  classview_ref 894210 // sqlCsvExport
+  attribute_ref 2404354 // ColumnOffset
+  attribute_ref 2404482 // RowOffset
+  classview_ref 813954 // ModelView
 end
 end

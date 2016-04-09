@@ -35,6 +35,7 @@
 #include "mdt/csv/RecordFormatSetupWidgetItem.h"
 #include "mdt/csv/RecordFormatSetupWidget.h"
 
+#include "mdt/csv/ParserFormatSetupProxyModel.h"
 #include "mdtCsvRecordFormat.h"
 #include "mdt/csv/RecordFormatter.h"
 
@@ -200,6 +201,7 @@ void mdtCsvTest::fileParserSettingsDialogTest()
   QVERIFY(csvFile1.open());
   QVERIFY(csvFile1.write("A,B,C,D\n") > 0);
   QVERIFY(csvFile1.write("A1,B1,C1,D1\n") > 0);
+  QVERIFY(csvFile1.write("A2,B2,C2,D2\n") > 0);
   csvFile1.close();
   /*
    * Set/get
@@ -1688,6 +1690,70 @@ void mdtCsvTest::fileParserModelTest()
   }
   
   QFAIL("Test not complete now");
+}
+
+void mdtCsvTest::parserFormatSetupModelTest()
+{
+  QFAIL("Test not complete now");
+  
+//   mdtCsvFileParserModel model;
+//   mdt::csv::ParserFormatSetupProxyModel proxyModel;
+//   QModelIndex index;
+//   QTableView tableView;
+//   QTreeView treeView;
+//   mdtCsvParserSettings csvSettings;
+//   QTemporaryFile csvFile1, csvFile2;
+// 
+//   /*
+//    * Setup model
+//    */
+//   proxyModel.setSourceModel(&model);
+//   /*
+//    * Initial state
+//    */
+//   QCOMPARE(proxyModel.rowCount(), 0);
+//   QCOMPARE(proxyModel.columnCount(), 0);
+//   /*
+//    * Prepare CSV source file 1
+//    *
+//    * Simple file
+//    */
+//   QVERIFY(csvFile1.open());
+//   QVERIFY(csvFile1.write("A,B,C\n") > 0);
+//   QVERIFY(csvFile1.write("A1,B1,C1\n") > 0);
+//   QVERIFY(csvFile1.write("A2,B2,C2\n") > 0);
+//   QVERIFY(csvFile1.write("A3,B3,C3\n") > 0);
+//   csvFile1.close();
+//   /*
+//    * Set CSV settings
+//    */
+//   QVERIFY(model.setCsvSettings(csvSettings));
+//   // Because we never set a file, model must be empty
+//   QCOMPARE(proxyModel.rowCount(), 0);
+//   QCOMPARE(proxyModel.columnCount(), 0);
+//   /*
+//    * Open CSV file 1
+//    */
+//   QVERIFY(model.setFile(csvFile1.fileName(), "UTF-8"));
+//   // Check header
+// 
+//   /*
+//    * Setup views
+//    */
+//   // Setup table view
+//   tableView.setModel(&proxyModel);
+//   tableView.resize(600, 200);
+//   tableView.show();
+//   // Setup tree view
+//   treeView.setModel(&proxyModel);
+//   treeView.show();
+//   /*
+//    * Play
+//    */
+//   tableView.resizeColumnsToContents();
+//   while(tableView.isVisible()){
+//     QTest::qWait(500);
+//   }
 }
 
 void mdtCsvTest::csvStringGeneratorFromRecordTest()

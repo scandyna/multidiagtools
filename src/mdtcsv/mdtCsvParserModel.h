@@ -49,19 +49,19 @@ class mdtCsvParserModel : public QAbstractTableModel
 
   /*! \brief Get row count
    */
-  int rowCount(const QModelIndex & parent = QModelIndex()) const;
+  int rowCount(const QModelIndex & parent = QModelIndex()) const override;
 
   /*! \brief Get column count
    */
-  int columnCount(const QModelIndex & parent = QModelIndex()) const;
+  int columnCount(const QModelIndex & parent = QModelIndex()) const override;
 
   /*! \brief Get header data
    */
-  QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+  QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
   /*! \brief Get data
    */
-  QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
+  QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
 
   /*! \brief Get header record
    */
