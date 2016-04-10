@@ -34,6 +34,8 @@ ShiftProxyModel::ShiftProxyModel(QObject *parent)
 
 void ShiftProxyModel::setRowOffset(int offset)
 {
+  Q_ASSERT(offset >= 0);
+
   pvRowOffset = offset;
 }
 
@@ -61,7 +63,7 @@ QModelIndex ShiftProxyModel::parent(const QModelIndex & /*child*/) const
 
 int ShiftProxyModel::rowCount(const QModelIndex & parent) const
 {
-  if(sourceModel() == nullptr){
+  if( parent.isValid() || (sourceModel() == nullptr) ){
     return 0;
   }
   return sourceModel()->rowCount(parent) + pvRowOffset;
@@ -69,7 +71,7 @@ int ShiftProxyModel::rowCount(const QModelIndex & parent) const
 
 int ShiftProxyModel::columnCount(const QModelIndex & parent) const
 {
-  if(sourceModel() == nullptr){
+  if( parent.isValid() || (sourceModel() == nullptr) ){
     return 0;
   }
   return sourceModel()->columnCount(parent);
@@ -85,7 +87,8 @@ QModelIndex ShiftProxyModel::mapFromSource(const QModelIndex & sourceIndex) cons
   qDebug() << "PM::mapFromSource - sourceIndex: " << sourceIndex;
   qDebug() << "PM::mapFromSource - return: " << createIndex(sourceIndex.row() + pvRowOffset, sourceIndex.column() + pvColumnOffset, sourceIndex.internalPointer());
 
-  return createIndex(sourceIndex.row() + pvRowOffset, sourceIndex.column() + pvColumnOffset, sourceIndex.internalPointer());
+  ///return createIndex(sourceIndex.row() + pvRowOffset, sourceIndex.column() + pvColumnOffset, sourceIndex.internalPointer());
+  return createIndex(sourceIndex.row(), sourceIndex.column(), sourceIndex.internalPointer());
 }
 
 QModelIndex ShiftProxyModel::mapToSource(const QModelIndex & proxyIndex) const
@@ -98,7 +101,7 @@ QModelIndex ShiftProxyModel::mapToSource(const QModelIndex & proxyIndex) const
   qDebug() << "PM::mapToSource - proxyIndex: " << proxyIndex;
   qDebug() << "PM::mapToSource - return: " << sourceModel()->index(proxyIndex.row() - pvRowOffset, proxyIndex.column() - pvColumnOffset);
   
-  return sourceModel()->index(proxyIndex.row() - pvRowOffset, proxyIndex.column() - pvColumnOffset);
+  return sourceModel()->index(proxyIndex.row(), proxyIndex.column());
 }
 
 } // namespace mdt{

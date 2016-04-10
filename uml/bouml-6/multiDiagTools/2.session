@@ -1,14 +1,22 @@
-window_sizes 1280 964 344 930 911 0
+window_sizes 1280 964 193 1081 911 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 2171394 // ShiftProxyModel
+  classdiagram_ref 2171394 // ShiftProxyModel
     930 911 100 4 0 0
+  active  classdiagram_ref 2062082 // Overview
+    1081 911 100 7 24 0
 end
 show_stereotypes
-selected attribute_ref 2404482 // RowOffset
+selected classdiagram_ref 2062082 // Overview
 open
   attribute_ref 2404354 // ColumnOffset
   attribute_ref 2404482 // RowOffset
+  operation_ref 3807746 // setColumnOffset
+  operation_ref 3807618 // setRowOffset
   classview_ref 813954 // ModelView
+  
+  package_ref 302594 // copier
+  classview_ref 1025666 // Overview
+  classview_ref 1097858 // SerialPort
 end
 end

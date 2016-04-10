@@ -1692,68 +1692,127 @@ void mdtCsvTest::fileParserModelTest()
   QFAIL("Test not complete now");
 }
 
-void mdtCsvTest::parserFormatSetupModelTest()
+void mdtCsvTest::parserFormatSetupProxyModelTest()
 {
-  QFAIL("Test not complete now");
-  
-//   mdtCsvFileParserModel model;
-//   mdt::csv::ParserFormatSetupProxyModel proxyModel;
-//   QModelIndex index;
-//   QTableView tableView;
-//   QTreeView treeView;
-//   mdtCsvParserSettings csvSettings;
-//   QTemporaryFile csvFile1, csvFile2;
-// 
-//   /*
-//    * Setup model
-//    */
-//   proxyModel.setSourceModel(&model);
-//   /*
-//    * Initial state
-//    */
-//   QCOMPARE(proxyModel.rowCount(), 0);
-//   QCOMPARE(proxyModel.columnCount(), 0);
-//   /*
-//    * Prepare CSV source file 1
-//    *
-//    * Simple file
-//    */
-//   QVERIFY(csvFile1.open());
-//   QVERIFY(csvFile1.write("A,B,C\n") > 0);
-//   QVERIFY(csvFile1.write("A1,B1,C1\n") > 0);
-//   QVERIFY(csvFile1.write("A2,B2,C2\n") > 0);
-//   QVERIFY(csvFile1.write("A3,B3,C3\n") > 0);
-//   csvFile1.close();
-//   /*
-//    * Set CSV settings
-//    */
-//   QVERIFY(model.setCsvSettings(csvSettings));
-//   // Because we never set a file, model must be empty
-//   QCOMPARE(proxyModel.rowCount(), 0);
-//   QCOMPARE(proxyModel.columnCount(), 0);
-//   /*
-//    * Open CSV file 1
-//    */
-//   QVERIFY(model.setFile(csvFile1.fileName(), "UTF-8"));
-//   // Check header
-// 
-//   /*
-//    * Setup views
-//    */
-//   // Setup table view
-//   tableView.setModel(&proxyModel);
-//   tableView.resize(600, 200);
-//   tableView.show();
-//   // Setup tree view
-//   treeView.setModel(&proxyModel);
-//   treeView.show();
-//   /*
-//    * Play
-//    */
-//   tableView.resizeColumnsToContents();
-//   while(tableView.isVisible()){
-//     QTest::qWait(500);
-//   }
+  mdtCsvFileParserModel model;
+  mdt::csv::ParserFormatSetupProxyModel proxyModel;
+  QModelIndex index;
+  QTableView tableView;
+  QTreeView treeView;
+  mdtCsvParserSettings csvSettings;
+  QTemporaryFile csvFile1, csvFile2;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(proxyModel.rowCount(), 1);
+  QCOMPARE(proxyModel.columnCount(), 0);
+  /// \todo Check header
+  /*
+   * Setup model
+   */
+  proxyModel.setSourceModel(&model);
+  QCOMPARE(proxyModel.rowCount(), 1);
+  QCOMPARE(proxyModel.columnCount(), 0);
+  /// \todo Check header
+  /*
+   * Prepare CSV source file 1
+   *
+   * Simple file
+   */
+  QVERIFY(csvFile1.open());
+  QVERIFY(csvFile1.write("A,B,C\n") > 0);
+  QVERIFY(csvFile1.write("A1,B1,C1\n") > 0);
+  QVERIFY(csvFile1.write("A2,B2,C2\n") > 0);
+  QVERIFY(csvFile1.write("A3,B3,C3\n") > 0);
+  csvFile1.close();
+  /*
+   * Set CSV settings
+   */
+  QVERIFY(model.setCsvSettings(csvSettings));
+  // Because we never set a file, model has only row 0 (format selection)
+  QCOMPARE(proxyModel.rowCount(), 1);
+  QCOMPARE(proxyModel.columnCount(), 0);
+  /*
+   * Open CSV file 1
+   */
+  QVERIFY(model.setFile(csvFile1.fileName(), "UTF-8"));
+  // Check header
+  QCOMPARE(proxyModel.columnCount(), 3);
+  QCOMPARE(proxyModel.headerData(0, Qt::Horizontal), QVariant("A"));
+  QCOMPARE(proxyModel.headerData(1, Qt::Horizontal), QVariant("B"));
+  QCOMPARE(proxyModel.headerData(2, Qt::Horizontal), QVariant("C"));
+  // Check data
+  QCOMPARE(proxyModel.rowCount(), 1);
+  /*
+   * Fetch data
+   */
+  model.fetchMore(QModelIndex());
+  model.fetchMore(QModelIndex());
+  model.fetchMore(QModelIndex());
+  /*
+   * Check data
+   */
+  QCOMPARE(proxyModel.rowCount(), 4);
+  // Check row 0 (formats)
+  index = proxyModel.index(0, 0);
+  QVERIFY(index.isValid());
+  QVERIFY(proxyModel.data(index).isNull());
+  index = proxyModel.index(0, 1);
+  QVERIFY(index.isValid());
+  QVERIFY(proxyModel.data(index).isNull());
+  index = proxyModel.index(0, 2);
+  QVERIFY(index.isValid());
+  QVERIFY(proxyModel.data(index).isNull());
+  // Check row 1
+  index = proxyModel.index(1, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("A1"));
+  index = proxyModel.index(1, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("B1"));
+  index = proxyModel.index(1, 2);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("C1"));
+  // Check row 2
+  index = proxyModel.index(2, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("A2"));
+  index = proxyModel.index(2, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("B2"));
+  index = proxyModel.index(2, 2);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("C2"));
+  // Check row 3
+  index = proxyModel.index(3, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("A3"));
+  index = proxyModel.index(3, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("B3"));
+  index = proxyModel.index(3, 2);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant("C3"));
+
+
+  /*
+   * Setup views
+   */
+  // Setup table view
+  tableView.setModel(&proxyModel);
+  tableView.resize(600, 200);
+  tableView.show();
+  // Setup tree view
+  treeView.setModel(&proxyModel);
+  treeView.show();
+  /*
+   * Play
+   */
+  tableView.resizeColumnsToContents();
+  while(tableView.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 void mdtCsvTest::csvStringGeneratorFromRecordTest()

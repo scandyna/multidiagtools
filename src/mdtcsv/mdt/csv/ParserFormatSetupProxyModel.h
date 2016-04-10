@@ -39,30 +39,47 @@ namespace mdt{ namespace csv{
 
     /*! \brief Returns the index of the item in the model specified by the given row, column and parent index.
      */
-//     QModelIndex index(int row, int column, const QModelIndex & parent = QModelIndex()) const override;
-// 
-//     /*! \brief Returns the parent of the model item with the given index. If the item has no parent, an invalid QModelIndex is returned.
-//      */
-//     QModelIndex parent(const QModelIndex & index) const override;
-// 
-//     /*! \brief Get row count
-//      */
-//     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
-// 
-//     /*! \brief Get column count
-//      */
-//     int columnCount(const QModelIndex & parent = QModelIndex()) const override;
-// 
-//     /*! \brief Get header data
-//      */
-//     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
-// 
-//     /*! \brief Get data
-//      */
-//     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
-// 
-//     QModelIndex mapFromSource(const QModelIndex & sourceIndex) const override;
-//     QModelIndex mapToSource(const QModelIndex & proxyIndex) const override;
+    QModelIndex index(int row, int column, const QModelIndex & parent = QModelIndex()) const override;
+
+    /*! \brief Returns the parent of the model item with the given index. If the item has no parent, an invalid QModelIndex is returned.
+     */
+    QModelIndex parent(const QModelIndex & index) const override;
+
+    /*! \brief Get row count
+     */
+    int rowCount(const QModelIndex & parent = QModelIndex()) const override;
+
+    /*! \brief Get column count
+     */
+    int columnCount(const QModelIndex & parent = QModelIndex()) const override;
+
+    /*! \brief Get header data
+     */
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+
+    /*! \brief Get data
+     */
+    QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
+
+    /*! \brief Get item flags
+     */
+    Qt::ItemFlags flags(const QModelIndex & index) const override;
+
+    /*! \brief Map source index to proxy index
+     */
+    QModelIndex mapFromSource(const QModelIndex & sourceIndex) const override;
+
+    /*! \brief Map proxy index to source model index
+     */
+    QModelIndex mapToSource(const QModelIndex & proxyIndex) const override;
+
+    /*! \brief Map source selection to proxy selection
+     */
+    QItemSelection mapSelectionFromSource(const QItemSelection & sourceSelection) const override;
+
+    /*! \brief Map proxy selection to source selection
+     */
+    QItemSelection mapSelectionToSource(const QItemSelection & proxySelection) const override;
   };
 
 }} // namespace mdt{ namespace csv{

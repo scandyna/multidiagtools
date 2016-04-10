@@ -26,6 +26,8 @@
 namespace mdt{
 
   /*! \brief Shifts data
+   *
+   * \todo document typical usage
    */
   class ShiftProxyModel : public QAbstractProxyModel
   {
@@ -58,6 +60,10 @@ namespace mdt{
     /*! \brief Get column count
      */
     int columnCount(const QModelIndex & parent = QModelIndex()) const override;
+
+    /*! \brief Get data
+     */
+//     QVariant data(const QModelIndex & proxyIndex, int role = Qt::DisplayRole) const;
 
     /*! \brief Map from source
      */
