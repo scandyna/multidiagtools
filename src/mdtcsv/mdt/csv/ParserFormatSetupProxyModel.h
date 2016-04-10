@@ -75,11 +75,11 @@ namespace mdt{ namespace csv{
 
     /*! \brief Map source selection to proxy selection
      */
-    QItemSelection mapSelectionFromSource(const QItemSelection & sourceSelection) const override;
+//     QItemSelection mapSelectionFromSource(const QItemSelection & sourceSelection) const override;
 
     /*! \brief Map proxy selection to source selection
      */
-    QItemSelection mapSelectionToSource(const QItemSelection & proxySelection) const override;
+//     QItemSelection mapSelectionToSource(const QItemSelection & proxySelection) const override;
   };
 
 }} // namespace mdt{ namespace csv{

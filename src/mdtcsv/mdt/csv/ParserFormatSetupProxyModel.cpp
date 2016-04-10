@@ -35,18 +35,6 @@ QModelIndex ParserFormatSetupProxyModel::index(int row, int column, const QModel
   if( parent.isValid() || (sourceModel() == nullptr) ){
     return QModelIndex();
   }
-//   if(row == 0){
-//     return createIndex(row, column);
-//   }
-//   const auto sourceIndex = sourceModel()->index(row, column);
-
-
-
-  ///return mapFromSource(sourceIndex);
-  ///return createIndex(row, column, sourceIndex.internalPointer());
-  qDebug() << "PM::index - row: " << row << ", col: " << column;
-  qDebug() << "PM::index: return " << createIndex(row, column);
-  
   return createIndex(row, column);
 }
 
@@ -65,7 +53,6 @@ int ParserFormatSetupProxyModel::rowCount(const QModelIndex & parent) const
   if(sourceModel() == nullptr){
     return 1;
   }
-  qDebug() << "PM rowCount - model: " << sourceModel() << " - rows: " << sourceModel()->rowCount();
   return sourceModel()->rowCount(parent) + 1;
 }
 
@@ -136,16 +123,16 @@ QModelIndex ParserFormatSetupProxyModel::mapToSource(const QModelIndex & proxyIn
   return sourceModel()->index(proxyIndex.row(), proxyIndex.column());
 }
 
-QItemSelection ParserFormatSetupProxyModel::mapSelectionFromSource(const QItemSelection & sourceSelection) const
-{
-  qDebug() << "PM::mapSelectionFromSource ...";
-  return QAbstractProxyModel::mapSelectionFromSource(sourceSelection);
-}
+// QItemSelection ParserFormatSetupProxyModel::mapSelectionFromSource(const QItemSelection & sourceSelection) const
+// {
+//   qDebug() << "PM::mapSelectionFromSource ...";
+//   return QAbstractProxyModel::mapSelectionFromSource(sourceSelection);
+// }
 
-QItemSelection ParserFormatSetupProxyModel::mapSelectionToSource(const QItemSelection &proxySelection) const
-{
-  qDebug() << "PM::mapSelectionToSource ...";
-  return QAbstractProxyModel::mapSelectionToSource(proxySelection);
-}
+// QItemSelection ParserFormatSetupProxyModel::mapSelectionToSource(const QItemSelection &proxySelection) const
+// {
+//   qDebug() << "PM::mapSelectionToSource ...";
+//   return QAbstractProxyModel::mapSelectionToSource(proxySelection);
+// }
 
 }} // namespace mdt{ namespace csv{

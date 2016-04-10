@@ -38,7 +38,6 @@ set (SOURCES_FILES
           mdtSortFilterProxyModel.cpp
           mdtFormatProxyModel.cpp
           mdtFormatProxyModelSettings.cpp
-          mdt/ShiftProxyModel.cpp
           mdtComboBoxItemDelegate.cpp
           mdtProgressBarItemDelegate.cpp
           # Essais
