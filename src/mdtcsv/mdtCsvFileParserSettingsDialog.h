@@ -26,13 +26,9 @@
 #include <QDialog>
 #include <QString>
 #include <QByteArray>
-// #include <QStateMachine>
 
 class QWidget;
 class mdtCsvFileParserModel;
-namespace mdt{ namespace csv{
-  class RecordFormatSetupWidget;
-}}
 
 /*! \brief CSV file generator settings dialog
  */
@@ -84,13 +80,6 @@ class mdtCsvFileParserSettingsDialog : public QDialog, Ui::mdtCsvFileParserSetti
    */
   void onCsvSettingsChanged(const mdtCsvParserSettings & settings);
 
-  /*! \brief Actions when format settings changed
-   */
-//   void onFieldTypeChanged(int fieldIndex, int type);
-
-//   void onStateIdleEntered();
-//   void onStateParsingFileEntered();
-
  private:
 
   /*! \brief Set controls enabled
@@ -105,9 +94,7 @@ class mdtCsvFileParserSettingsDialog : public QDialog, Ui::mdtCsvFileParserSetti
    */
   void setupStateMachine();
 
-//   mdt::csv::RecordFormatSetupWidget *pvRecordFormatWidget;
   mdtCsvFileParserModel *pvDataPreviewModel;
-//   QStateMachine pvStateMachine;
 };
 
 #endif // #ifndef MDT_CSV_FILE_PARSER_SETTINGS_DIALOG_H

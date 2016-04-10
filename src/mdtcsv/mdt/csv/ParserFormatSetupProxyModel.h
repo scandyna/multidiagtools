@@ -82,32 +82,16 @@ namespace mdt{ namespace csv{
      */
     QModelIndex mapToSource(const QModelIndex & proxyIndex) const override;
 
-    /*! \brief Map source selection to proxy selection
-     */
-//     QItemSelection mapSelectionFromSource(const QItemSelection & sourceSelection) const override;
-
-    /*! \brief Map proxy selection to source selection
-     */
-//     QItemSelection mapSelectionToSource(const QItemSelection & proxySelection) const override;
-
    private slots:
 
     void onSourceModelAboutToBeReset();
-
-    /*! \brief Called after source model reset
-     */
     void onSourceModelReset();
-
     void onSourceColumnsAboutToBeInserted(const QModelIndex & parent, int first, int last);
     void onSourceColumnsAboutToBeRemoved(const QModelIndex & parent, int first, int last);
     void onSourceColumnsInserted(const QModelIndex & parent, int first, int last);
     void onSourceColumnsRemoved(const QModelIndex & parent, int first, int last);
     void onSourceDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles = QVector<int> ());
     void onSourceHeaderDataChanged(Qt::Orientation orientation, int first, int last);
-//     void onSourceLayoutAboutToBeChanged(const QList<QPersistentModelIndex> & parents = QList<QPersistentModelIndex> (),
-//                                         QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
-//     void onSourceLayoutChanged(const QList<QPersistentModelIndex> & parents = QList<QPersistentModelIndex> (),
-//                                QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
     void onSourceRowsAboutToBeInserted(const QModelIndex & parent, int start, int end);
     void onSourceRowsAboutToBeRemoved(const QModelIndex & parent, int start, int end);
     void onSourceRowsInserted(const QModelIndex & parent, int start, int end);
