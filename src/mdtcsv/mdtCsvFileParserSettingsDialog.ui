@@ -85,41 +85,9 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="gbRecordFormat">
-     <property name="title">
-      <string>Formats</string>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <item>
-       <widget class="QScrollArea" name="saRecordFormat">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="widgetResizable">
-         <bool>true</bool>
-        </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>756</width>
-           <height>79</height>
-          </rect>
-         </property>
-        </widget>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
     <widget class="QGroupBox" name="gbDataPreview">
      <property name="title">
-      <string>Data preview</string>
+      <string>Data format and preview</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>

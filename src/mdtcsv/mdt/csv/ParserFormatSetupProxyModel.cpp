@@ -19,7 +19,10 @@
  **
  ****************************************************************************/
 #include "ParserFormatSetupProxyModel.h"
+#include "FieldType.h"
 #include <QItemSelection>
+#include <QBrush>
+#include <QColor>
 
 #include <QDebug>
 
@@ -28,6 +31,51 @@ namespace mdt{ namespace csv{
 ParserFormatSetupProxyModel::ParserFormatSetupProxyModel(QObject *parent)
  : QAbstractProxyModel(parent)
 {
+}
+
+void ParserFormatSetupProxyModel::setSourceModel(QAbstractItemModel *newSourceModel)
+{
+  Q_ASSERT(newSourceModel != nullptr);
+
+  beginResetModel();
+
+  if(sourceModel() != nullptr){
+    disconnect(sourceModel(), &QAbstractItemModel::modelAboutToBeReset, this, &ParserFormatSetupProxyModel::onSourceModelAboutToBeReset);
+    disconnect(sourceModel(), &QAbstractItemModel::modelReset, this, &ParserFormatSetupProxyModel::onSourceModelReset);
+    disconnect(sourceModel(), &QAbstractItemModel::columnsAboutToBeInserted, this, &ParserFormatSetupProxyModel::onSourceColumnsAboutToBeInserted);
+    disconnect(sourceModel(), &QAbstractItemModel::columnsAboutToBeRemoved, this, &ParserFormatSetupProxyModel::onSourceColumnsAboutToBeRemoved);
+    disconnect(sourceModel(), &QAbstractItemModel::columnsInserted, this, &ParserFormatSetupProxyModel::onSourceColumnsInserted);
+    disconnect(sourceModel(), &QAbstractItemModel::columnsRemoved, this, &ParserFormatSetupProxyModel::onSourceColumnsRemoved);
+    disconnect(sourceModel(), &QAbstractItemModel::dataChanged, this, &ParserFormatSetupProxyModel::onSourceDataChanged);
+    disconnect(sourceModel(), &QAbstractItemModel::headerDataChanged, this, &ParserFormatSetupProxyModel::onSourceHeaderDataChanged);
+//     disconnect(sourceModel(), &QAbstractItemModel::layoutAboutToBeChanged, this, &ParserFormatSetupProxyModel::onSourceLayoutAboutToBeChanged);
+//     disconnect(sourceModel(), &QAbstractItemModel::layoutChanged, this, &ParserFormatSetupProxyModel::onSourceLayoutChanged);
+    disconnect(sourceModel(), &QAbstractItemModel::rowsAboutToBeInserted, this, &ParserFormatSetupProxyModel::onSourceRowsAboutToBeInserted);
+    disconnect(sourceModel(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &ParserFormatSetupProxyModel::onSourceRowsAboutToBeRemoved);
+    disconnect(sourceModel(), &QAbstractItemModel::rowsInserted, this, &ParserFormatSetupProxyModel::onSourceRowsInserted);
+    disconnect(sourceModel(), &QAbstractItemModel::rowsRemoved, this, &ParserFormatSetupProxyModel::onSourceRowsRemoved);
+  }
+
+  QAbstractProxyModel::setSourceModel(newSourceModel);
+
+  if(sourceModel() != nullptr){
+    connect(sourceModel(), &QAbstractItemModel::modelAboutToBeReset, this, &ParserFormatSetupProxyModel::onSourceModelAboutToBeReset);
+    connect(sourceModel(), &QAbstractItemModel::modelReset, this, &ParserFormatSetupProxyModel::onSourceModelReset);
+    connect(sourceModel(), &QAbstractItemModel::columnsAboutToBeInserted, this, &ParserFormatSetupProxyModel::onSourceColumnsAboutToBeInserted);
+    connect(sourceModel(), &QAbstractItemModel::columnsAboutToBeRemoved, this, &ParserFormatSetupProxyModel::onSourceColumnsAboutToBeRemoved);
+    connect(sourceModel(), &QAbstractItemModel::columnsInserted, this, &ParserFormatSetupProxyModel::onSourceColumnsInserted);
+    connect(sourceModel(), &QAbstractItemModel::columnsRemoved, this, &ParserFormatSetupProxyModel::onSourceColumnsRemoved);
+    connect(sourceModel(), &QAbstractItemModel::dataChanged, this, &ParserFormatSetupProxyModel::onSourceDataChanged);
+    connect(sourceModel(), &QAbstractItemModel::headerDataChanged, this, &ParserFormatSetupProxyModel::onSourceHeaderDataChanged);
+//     connect(sourceModel(), &QAbstractItemModel::layoutAboutToBeChanged, this, &ParserFormatSetupProxyModel::onSourceLayoutAboutToBeChanged);
+//     connect(sourceModel(), &QAbstractItemModel::layoutChanged, this, &ParserFormatSetupProxyModel::onSourceLayoutChanged);
+    connect(sourceModel(), &QAbstractItemModel::rowsAboutToBeInserted, this, &ParserFormatSetupProxyModel::onSourceRowsAboutToBeInserted);
+    connect(sourceModel(), &QAbstractItemModel::rowsAboutToBeRemoved, this, &ParserFormatSetupProxyModel::onSourceRowsAboutToBeRemoved);
+    connect(sourceModel(), &QAbstractItemModel::rowsInserted, this, &ParserFormatSetupProxyModel::onSourceRowsInserted);
+    connect(sourceModel(), &QAbstractItemModel::rowsRemoved, this, &ParserFormatSetupProxyModel::onSourceRowsRemoved);
+  }
+
+  endResetModel();
 }
 
 QModelIndex ParserFormatSetupProxyModel::index(int row, int column, const QModelIndex & parent) const
@@ -53,6 +101,7 @@ int ParserFormatSetupProxyModel::rowCount(const QModelIndex & parent) const
   if(sourceModel() == nullptr){
     return 1;
   }
+  qDebug() << "PM::rowCount: " << sourceModel()->rowCount(parent) + 1;
   return sourceModel()->rowCount(parent) + 1;
 }
 
@@ -61,6 +110,7 @@ int ParserFormatSetupProxyModel::columnCount(const QModelIndex & parent) const
   if( parent.isValid() || (sourceModel() == nullptr) ){
     return 0;
   }
+  qDebug() << "PM::columnCount: " << sourceModel()->columnCount(parent);
   return sourceModel()->columnCount(parent);
 }
 
@@ -80,6 +130,12 @@ QVariant ParserFormatSetupProxyModel::headerData(int section, Qt::Orientation or
 
 QVariant ParserFormatSetupProxyModel::data(const QModelIndex & proxyIndex, int role) const
 {
+  if(!proxyIndex.isValid()){
+    return QVariant();
+  }
+  if(proxyIndex.row() == 0){
+    return fieldFormatData(proxyIndex.column(), role);
+  }
   if(sourceModel() == nullptr){
     return QVariant();
   }
@@ -87,13 +143,43 @@ QVariant ParserFormatSetupProxyModel::data(const QModelIndex & proxyIndex, int r
   if(!idx.isValid()){
     return QVariant();
   }
+  if(role == Qt::DisplayRole){
+    auto value = sourceModel()->data(mapToSource(idx), role);
+    if(!pvRecordFormatter.formatValue(idx.column(), value)){
+      /// \todo Error handling
+    }
+    return value;
+  }
   return sourceModel()->data(mapToSource(idx), role);
+}
+
+bool ParserFormatSetupProxyModel::setData(const QModelIndex & proxyIndex, const QVariant & value, int role)
+{
+  if(!proxyIndex.isValid()){
+    return false;
+  }
+  if(proxyIndex.row() == 0){
+    if(role != Qt::EditRole){
+      return false;
+    }
+    setFieldType(proxyIndex.column(), static_cast<QMetaType::Type>(value.toInt()));
+    return true;
+  }
+  if(sourceModel() == nullptr){
+    return false;
+  }
+  const auto idx = index(proxyIndex.row() - 1, proxyIndex.column());
+  if(!idx.isValid()){
+    return false;
+  }
+
+  return sourceModel()->setData(idx, value, role);
 }
 
 Qt::ItemFlags ParserFormatSetupProxyModel::flags(const QModelIndex & proxyIndex) const
 {
   if(proxyIndex.row() == 0){
-    return (Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+    return (Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
   }
   if(sourceModel() == nullptr){
     return Qt::NoItemFlags;
@@ -134,5 +220,123 @@ QModelIndex ParserFormatSetupProxyModel::mapToSource(const QModelIndex & proxyIn
 //   qDebug() << "PM::mapSelectionToSource ...";
 //   return QAbstractProxyModel::mapSelectionToSource(proxySelection);
 // }
+
+void ParserFormatSetupProxyModel::onSourceModelAboutToBeReset()
+{
+  qDebug() << "onSourceModelAboutToBeReset...";
+  beginResetModel();
+}
+
+void ParserFormatSetupProxyModel::onSourceModelReset()
+{
+  qDebug() << "Source model reset , new column count: " << columnCount();
+  pvRecordFormatter.setFieldCount(columnCount(), QMetaType::QString);
+  endResetModel();
+}
+
+void ParserFormatSetupProxyModel::onSourceColumnsAboutToBeInserted(const QModelIndex & parent, int first, int last)
+{
+  Q_ASSERT( (!parent.isValid()) || (parent.model() == sourceModel()) );
+  qDebug() << "onSourceColumnsAboutToBeInserted...";
+  beginInsertColumns(mapFromSource(parent), first, last);
+}
+
+void ParserFormatSetupProxyModel::onSourceColumnsAboutToBeRemoved(const QModelIndex & parent, int first, int last)
+{
+  Q_ASSERT( (!parent.isValid()) || (parent.model() == sourceModel()) );
+  qDebug() << "onSourceColumnsAboutToBeRemoved...";
+  beginRemoveColumns(mapFromSource(parent), first, last);
+}
+
+void ParserFormatSetupProxyModel::onSourceColumnsInserted(const QModelIndex & /*parent*/, int /*first*/, int /*last*/)
+{
+  qDebug() << "onSourceColumnsInserted...";
+  endInsertColumns();
+}
+
+void ParserFormatSetupProxyModel::onSourceColumnsRemoved(const QModelIndex & /*parent*/, int /*first*/, int /*last*/)
+{
+  qDebug() << "onSourceColumnsRemoved...";
+  endRemoveColumns();
+}
+
+void ParserFormatSetupProxyModel::onSourceDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles)
+{
+  Q_ASSERT( (!topLeft.isValid()) || (topLeft.model() == sourceModel()) );
+  Q_ASSERT( (!bottomRight.isValid()) || (bottomRight.model() == sourceModel()) );
+  qDebug() << "onSourceDataChanged...";
+  dataChanged(mapFromSource(topLeft), mapFromSource(bottomRight), roles);
+}
+
+void ParserFormatSetupProxyModel::onSourceHeaderDataChanged(Qt::Orientation orientation, int first, int last)
+{
+  headerDataChanged(orientation, first, last);
+}
+
+// void ParserFormatSetupProxyModel::onSourceLayoutAboutToBeChanged(const QList< QPersistentModelIndex > &parents, QAbstractItemModel::LayoutChangeHint hint)
+// {
+//   qDebug() << "onSourceLayoutAboutToBeChanged...";
+//   /// \todo implement !
+// }
+
+// void ParserFormatSetupProxyModel::onSourceLayoutChanged(const QList< QPersistentModelIndex > &parents, QAbstractItemModel::LayoutChangeHint hint)
+// {
+//   qDebug() << "onSourceLayoutChanged...";
+//   /// \todo implement !
+// }
+
+void ParserFormatSetupProxyModel::onSourceRowsAboutToBeInserted(const QModelIndex & parent, int start, int end)
+{
+  Q_ASSERT( (!parent.isValid()) || (parent.model() == sourceModel()) );
+  qDebug() << "onSourceRowsAboutToBeInserted...";
+  beginInsertRows(mapFromSource(parent), start, end);
+}
+
+void ParserFormatSetupProxyModel::onSourceRowsAboutToBeRemoved(const QModelIndex & parent, int start, int end)
+{
+  Q_ASSERT( (!parent.isValid()) || (parent.model() == sourceModel()) );
+  qDebug() << "onSourceRrowsAboutToBeRemoved...";
+  beginRemoveRows(mapFromSource(parent), start, end);
+}
+
+void ParserFormatSetupProxyModel::onSourceRowsInserted(const QModelIndex & /*parent*/, int /*start*/, int /*end*/)
+{
+  qDebug() << "onSourceRowsInserted...";
+  endInsertRows();
+}
+
+void ParserFormatSetupProxyModel::onSourceRowsRemoved(const QModelIndex & /*parent*/, int /*start*/, int /*end*/)
+{
+  qDebug() << "onSourceRowsRemoved...";
+  endRemoveRows();
+}
+
+QVariant ParserFormatSetupProxyModel::fieldFormatData(int column, int role) const
+{
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < pvRecordFormatter.fieldCount());
+
+  switch(role){
+    case Qt::DisplayRole:
+      return FieldType::nameFromType(pvRecordFormatter.fieldType(column));
+    case Qt::BackgroundRole:
+      return QBrush(Qt::lightGray);
+    default:
+      return QVariant();
+  }
+}
+
+void ParserFormatSetupProxyModel::setFieldType(int column, QMetaType::Type type)
+{
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < pvRecordFormatter.fieldCount());
+
+  pvRecordFormatter.setFieldType(column, type);
+  const int n = rowCount();
+  for(int row = 0; row < n; ++row){
+    auto idx = index(row, column);
+    emit dataChanged(idx, idx);
+  }
+}
 
 }} // namespace mdt{ namespace csv{

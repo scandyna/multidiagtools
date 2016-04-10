@@ -1,6 +1,6 @@
 format 211
 "csv" // mdtcsv::mdt::csv
-  revision 9
+  revision 10
   modified_by 2 "philippe"
   // class settings
   
@@ -498,6 +498,23 @@ ${inlines}
 	MysqlColumn
       end
 
+      operation 3815682 "setFieldCount"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "n" explicit_type "int"
+	  param in name "type" explicit_type "QMetaType::Type"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 3772802 "setFieldType"
 	public explicit_return_type "void"
 	nparams 2
@@ -565,7 +582,7 @@ ${inlines}
       operation 3752450 "formatValue"
 	public explicit_return_type "bool"
 	nparams 2
-	  param in name "record" type class_ref 2036994 // Record
+	  param in name "value" type class_ref 161154 // QVariant
 	  param in name "fieldIndex" explicit_type "int"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
@@ -888,10 +905,10 @@ ${inlines}
 
     classdiagram 2164866 "ParserFormatSetupProxyModel"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
-    class 2471938 "ParserFormatSetupModel"
+    class 2471938 "ParserFormatSetupProxyModel"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -905,6 +922,79 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      classrelation 2838146 // <generalisation>
+	relation 2820866 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2838146 // <generalisation>
+	  b parent class_ref 719618 // QAbstractProxyModel
+      end
+
+      operation 3815426 "setSourceModel"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "sourceModel" type class_ref 146946 // QAbstractItemModel
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3814274 "index"
+	public return_type class_ref 147330 // QModelIndex
+	nparams 3
+	  param in name "row" explicit_type "int"
+	  param in name "column" explicit_type "int"
+	  param in name "parent" type class_ref 147330 // QModelIndex
+	    defaultvalue "QModelIndex()"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3814402 "parent"
+	public return_type class_ref 147330 // QModelIndex
+	nparams 1
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3814914 "columnCount"
+	public explicit_return_type "int"
+	nparams 1
+	  param in name "parent" type class_ref 147330 // QModelIndex
+	    defaultvalue "QModelIndex()"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 3800322 "rowCount"
 	cpp_virtual public explicit_return_type "int"
 	nparams 1
@@ -946,6 +1036,117 @@ ${inlines}
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3814530 "flags"
+	public explicit_return_type "int"
+	nparams 1
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3814658 "mapFromSource"
+	cpp_virtual public return_type class_ref 147330 // QModelIndex
+	nparams 1
+	  param in name "sourceIndex" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3814786 "mapToSource"
+	cpp_virtual public return_type class_ref 147330 // QModelIndex
+	nparams 1
+	  param in name "proxyIndex" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3815042 "onSourceModelReset"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 2838530 // <directional composition>
+	relation 2821250 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2838530 // <directional composition>
+	  b parent class_ref 2456706 // RecordFormatter
+      end
+    end
+
+    class 2491522 "ParserFormatSetupDelegate"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2838274 // <generalisation>
+	relation 2820994 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2838274 // <generalisation>
+	  b parent class_ref 1914754 // mdtComboBoxItemDelegate
+      end
+
+      operation 3815554 "ParserFormatSetupDelegate"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
   ${body}}
 "
 	

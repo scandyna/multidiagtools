@@ -36,6 +36,7 @@
 #include "mdt/csv/RecordFormatSetupWidget.h"
 
 #include "mdt/csv/ParserFormatSetupProxyModel.h"
+#include "mdt/csv/ParserFormatSetupDelegate.h"
 #include "mdtCsvRecordFormat.h"
 #include "mdt/csv/RecordFormatter.h"
 
@@ -46,6 +47,7 @@
 #include "mdtCsvFileGeneratorSettingsDialog.h"
 #include "mdtCsvTableViewDataMapper.h"
 #include "mdtCsvTableViewExportDialog.h"
+#include "mdtComboBoxItemDelegate.h"
 #include "mdtApplication.h"
 #include <QTemporaryFile>
 #include <QFile>
@@ -533,16 +535,71 @@ void mdtCsvTest::recordFormatTest()
 {
   mdt::csv::RecordFormat format;
 
+  /*
+   * Initial state
+   */
+  QCOMPARE(format.fieldCount(), 0);
   
+  /*
+   * Set field count
+   */
+  format.setFieldCount(3, QMetaType::QString);
+  QCOMPARE(format.fieldCount(), 3);
+  QVERIFY(format.fieldType(0) == QMetaType::QString);
+  QVERIFY(format.fieldType(1) == QMetaType::QString);
+  QVERIFY(format.fieldType(2) == QMetaType::QString);
+  /*
+   * Set field type
+   */
+  format.setFieldType(1, QMetaType::Double);
+  QCOMPARE(format.fieldCount(), 3);
+  QVERIFY(format.fieldType(0) == QMetaType::QString);
+  QVERIFY(format.fieldType(1) == QMetaType::Double);
+  QVERIFY(format.fieldType(2) == QMetaType::QString);
+
 }
 
 void mdtCsvTest::recordFormatterTest()
 {
   mdt::csv::RecordFormatter formatter;
   mdt::csv::RecordFormat format;
+  QVariant value;
   mdtCsvRecord record;
 
-  
+  /*
+   * Initial state
+   */
+  QCOMPARE(formatter.fieldCount(), 0);
+  /*
+   * Set field count
+   */
+  formatter.setFieldCount(3, QMetaType::QString);
+  QCOMPARE(formatter.fieldCount(), 3);
+  QVERIFY(formatter.fieldType(0) == QMetaType::QString);
+  QVERIFY(formatter.fieldType(1) == QMetaType::QString);
+  QVERIFY(formatter.fieldType(2) == QMetaType::QString);
+  /*
+   * Set field type
+   */
+  formatter.setFieldType(2, QMetaType::Bool);
+  QVERIFY(formatter.fieldType(0) == QMetaType::QString);
+  QVERIFY(formatter.fieldType(1) == QMetaType::QString);
+  QVERIFY(formatter.fieldType(2) == QMetaType::Bool);
+  /*
+   * Format values
+   */
+  value = "A";
+  // Field 0 - String
+  QVERIFY(formatter.formatValue(0, value));
+  QCOMPARE(value, QVariant("A"));
+  // Field 1 - String
+  QVERIFY(formatter.formatValue(1, value));
+  QCOMPARE(value, QVariant("A"));
+  // Field 2 - Bool
+  ///QVERIFY(!formatter.formatValue(2, value));
+  qDebug() << "Value: " << value;
+  QCOMPARE(value, QVariant("A"));
+
 }
 
 void mdtCsvTest::recordFormatSetupWidgetItemTest()
@@ -1699,9 +1756,21 @@ void mdtCsvTest::parserFormatSetupProxyModelTest()
   QModelIndex index;
   QTableView tableView;
   QTreeView treeView;
+  auto *formatDelegate = new mdt::csv::ParserFormatSetupDelegate(&tableView);
   mdtCsvParserSettings csvSettings;
   QTemporaryFile csvFile1, csvFile2;
 
+  /*
+   * Setup views
+   */
+  // Setup table view
+  tableView.setModel(&proxyModel);
+  tableView.setItemDelegateForRow(0, formatDelegate);
+  tableView.resize(600, 200);
+  tableView.show();
+  // Setup tree view
+  treeView.setModel(&proxyModel);
+  treeView.show();
   /*
    * Initial state
    */
@@ -1747,9 +1816,20 @@ void mdtCsvTest::parserFormatSetupProxyModelTest()
   /*
    * Fetch data
    */
-  model.fetchMore(QModelIndex());
-  model.fetchMore(QModelIndex());
-  model.fetchMore(QModelIndex());
+  // Fetch row 0
+  QVERIFY(proxyModel.canFetchMore(QModelIndex()));
+  proxyModel.fetchMore(QModelIndex());
+  QCOMPARE(proxyModel.rowCount(), 2);
+  // Fetch row 1
+  QVERIFY(proxyModel.canFetchMore(QModelIndex()));
+  proxyModel.fetchMore(QModelIndex());
+  QCOMPARE(proxyModel.rowCount(), 3);
+  // Fetch row 3
+  QVERIFY(proxyModel.canFetchMore(QModelIndex()));
+  proxyModel.fetchMore(QModelIndex());
+  QCOMPARE(proxyModel.rowCount(), 4);
+  // End
+  QVERIFY(!proxyModel.canFetchMore(QModelIndex()));
   /*
    * Check data
    */
@@ -1757,13 +1837,13 @@ void mdtCsvTest::parserFormatSetupProxyModelTest()
   // Check row 0 (formats)
   index = proxyModel.index(0, 0);
   QVERIFY(index.isValid());
-  QVERIFY(proxyModel.data(index).isNull());
+  QCOMPARE(proxyModel.data(index), QVariant("String"));
   index = proxyModel.index(0, 1);
   QVERIFY(index.isValid());
-  QVERIFY(proxyModel.data(index).isNull());
+  QCOMPARE(proxyModel.data(index), QVariant("String"));
   index = proxyModel.index(0, 2);
   QVERIFY(index.isValid());
-  QVERIFY(proxyModel.data(index).isNull());
+  QCOMPARE(proxyModel.data(index), QVariant("String"));
   // Check row 1
   index = proxyModel.index(1, 0);
   QVERIFY(index.isValid());
@@ -1796,16 +1876,6 @@ void mdtCsvTest::parserFormatSetupProxyModelTest()
   QCOMPARE(proxyModel.data(index), QVariant("C3"));
 
 
-  /*
-   * Setup views
-   */
-  // Setup table view
-  tableView.setModel(&proxyModel);
-  tableView.resize(600, 200);
-  tableView.show();
-  // Setup tree view
-  treeView.setModel(&proxyModel);
-  treeView.show();
   /*
    * Play
    */

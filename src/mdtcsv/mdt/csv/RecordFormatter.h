@@ -23,6 +23,7 @@
 
 #include "RecordFormat.h"
 #include "mdtError.h"
+#include <QVariant>
 
 namespace mdt{ namespace csv{
 
@@ -32,9 +33,48 @@ namespace mdt{ namespace csv{
   {
    public:
 
-    /*! \brief Set field type
+    /*! \brief Set field count
+     *
+     * Will also assign given type to each field.
      */
-    
+    void setFieldCount(int fieldCount, QMetaType::Type type);
+
+    /*! \brief Get field count
+     */
+    int fieldCount() const
+    {
+      return pvFormat.fieldCount();
+    }
+
+    /*! \brief Set field type
+     *
+     * \pre fieldIndex must be in valid range
+     */
+    void setFieldType(int fieldIndex, QMetaType::Type type);
+
+    /*! \brief Get field type
+     *
+     * \pre fieldIndex must be in valid range
+     */
+    QMetaType::Type fieldType(int fieldIndex) const
+    {
+      Q_ASSERT(fieldIndex >= 0);
+      Q_ASSERT(fieldIndex < pvFormat.fieldCount());
+      return pvFormat.fieldType(fieldIndex);
+    }
+
+    /*! \brief Get record format
+     */
+    RecordFormat format() const
+    {
+      return pvFormat;
+    }
+
+    /*! \brief Format value with type defined at fieldIndex
+     *
+     * \pre fieldIndex must be in valid range
+     */
+    bool formatValue(int fieldIndex, QVariant & value) const;
 
     /*! \brief Get last error
      */
@@ -45,8 +85,16 @@ namespace mdt{ namespace csv{
 
    private:
 
+    /*! \brief Convert value to given type
+     */
+    bool convert(QVariant & value, QMetaType::Type type) const;
+
+    /*! \brief Translate (calls QObject::tr() )
+     */
+    QString tr(const char *sourceText) const;
+
     RecordFormat pvFormat;
-    mdtError pvLastError;
+    mutable mdtError pvLastError;
   };
 
 }} // namespace mdt{ namespace csv{

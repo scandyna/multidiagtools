@@ -19,7 +19,11 @@
  **
  ****************************************************************************/
 #include "mdtCsvFileParserSettingsDialog.h"
+
 #include "mdt/csv/RecordFormatSetupWidget.h"
+
+#include "mdt/csv/ParserFormatSetupProxyModel.h"
+#include "mdt/csv/ParserFormatSetupDelegate.h"
 #include "mdtCsvFileParserModel.h"
 #include "mdtErrorDialog.h"
 #include <QTableView>
@@ -34,13 +38,18 @@ mdtCsvFileParserSettingsDialog::mdtCsvFileParserSettingsDialog(QWidget *parent)
   setupUi(this);
   wFileSettings->setSelectFileMode(mdtCsvFileSettingsWidget::SelectOpen);
   // Setup record format widget
-  pvRecordFormatWidget = new mdt::csv::RecordFormatSetupWidget;
-  saRecordFormat->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-  saRecordFormat->setWidget(pvRecordFormatWidget);
-  connect(pvRecordFormatWidget, &mdt::csv::RecordFormatSetupWidget::fieldTypeChanged, this, &mdtCsvFileParserSettingsDialog::onFieldTypeChanged);
+//   pvRecordFormatWidget = new mdt::csv::RecordFormatSetupWidget;
+//   saRecordFormat->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//   saRecordFormat->setWidget(pvRecordFormatWidget);
+//   connect(pvRecordFormatWidget, &mdt::csv::RecordFormatSetupWidget::fieldTypeChanged, this, &mdtCsvFileParserSettingsDialog::onFieldTypeChanged);
   // Setup data preview
   pvDataPreviewModel = new mdtCsvFileParserModel(tvDataPreview);
-  tvDataPreview->setModel(pvDataPreviewModel);
+  auto *proxyModel = new mdt::csv::ParserFormatSetupProxyModel(tvDataPreview);
+  proxyModel->setSourceModel(pvDataPreviewModel);
+  tvDataPreview->setModel(proxyModel);
+  ///tvDataPreview->setModel(pvDataPreviewModel);
+  auto *delegate = new mdt::csv::ParserFormatSetupDelegate(tvDataPreview);
+  tvDataPreview->setItemDelegateForRow(0, delegate);
   connect(wFileSettings, &mdtCsvFileSettingsWidget::fileSettingsChanged, this, &mdtCsvFileParserSettingsDialog::onFileSettingsChanged);
   connect(wCsvSettings, &mdtCsvParserSettingsWidget::csvSettingsChanged, this, &mdtCsvFileParserSettingsDialog::onCsvSettingsChanged);
 //   setupStateMachine();
@@ -87,7 +96,7 @@ void mdtCsvFileParserSettingsDialog::onFileSettingsChanged(const QString & path,
     dialog.exec();
     return;
   }
-  pvRecordFormatWidget->setHeader(pvDataPreviewModel->header());
+//   pvRecordFormatWidget->setHeader(pvDataPreviewModel->header());
   resizeViewToContents();
 }
 
@@ -104,19 +113,19 @@ void mdtCsvFileParserSettingsDialog::onCsvSettingsChanged(const mdtCsvParserSett
     dialog.exec();
     return;
   }
-  pvRecordFormatWidget->setHeader(pvDataPreviewModel->header());
+//   pvRecordFormatWidget->setHeader(pvDataPreviewModel->header());
   resizeViewToContents();
 }
 
-void mdtCsvFileParserSettingsDialog::onFieldTypeChanged(int fieldIndex, int type)
-{
-  if( !pvDataPreviewModel->reformatColumnData(fieldIndex, static_cast<QMetaType::Type>(type) ) ){
-    mdtErrorDialog dialog(pvDataPreviewModel->lastError(), this);
-    dialog.exec();
-    return;
-  }
-  resizeViewToContents();
-}
+// void mdtCsvFileParserSettingsDialog::onFieldTypeChanged(int fieldIndex, int type)
+// {
+//   if( !pvDataPreviewModel->reformatColumnData(fieldIndex, static_cast<QMetaType::Type>(type) ) ){
+//     mdtErrorDialog dialog(pvDataPreviewModel->lastError(), this);
+//     dialog.exec();
+//     return;
+//   }
+//   resizeViewToContents();
+// }
 
 // void mdtCsvFileParserSettingsDialog::onStateIdleEntered()
 // {
@@ -134,7 +143,7 @@ void mdtCsvFileParserSettingsDialog::setControlsEnabled(bool enable)
 {
   wFileSettings->setEnabled(enable);
   wCsvSettings->setEnabled(enable);
-  pvRecordFormatWidget->setEnabled(enable);
+//   pvRecordFormatWidget->setEnabled(enable);
 }
 
 void mdtCsvFileParserSettingsDialog::resizeViewToContents()

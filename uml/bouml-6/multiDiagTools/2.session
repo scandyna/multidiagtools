@@ -1,22 +1,22 @@
-window_sizes 1280 964 193 1081 911 0
+window_sizes 1280 964 368 906 911 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 2171394 // ShiftProxyModel
-    930 911 100 4 0 0
-  active  classdiagram_ref 2062082 // Overview
-    1081 911 100 7 24 0
+  classdiagram_ref 2164866 // ParserFormatSetupProxyModel
+    724 728 100 18 0 0
+  active  classdiagram_ref 2124290 // RecordFormat
+    906 911 100 21 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2062082 // Overview
+selected operation_ref 3752450 // formatValue
 open
-  attribute_ref 2404354 // ColumnOffset
-  attribute_ref 2404482 // RowOffset
-  operation_ref 3807746 // setColumnOffset
-  operation_ref 3807618 // setRowOffset
-  classview_ref 813954 // ModelView
+  operation_ref 3815682 // setFieldCount
+  operation_ref 3815426 // setSourceModel
+  operation_ref 3814914 // columnCount
+  operation_ref 3800322 // rowCount
+  operation_ref 3800450 // data
+  class_ref 2491522 // ParserFormatSetupDelegate
   
   package_ref 302594 // copier
-  classview_ref 1025666 // Overview
-  classview_ref 1097858 // SerialPort
+  class_ref 719618 // QAbstractProxyModel
 end
 end

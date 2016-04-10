@@ -21,6 +21,7 @@
 #ifndef MDT_CSV_PARSER_FORMAT_SETUP_PROXY_MODEL_H
 #define MDT_CSV_PARSER_FORMAT_SETUP_PROXY_MODEL_H
 
+#include "RecordFormatter.h"
 #include <QAbstractProxyModel>
 
 namespace mdt{ namespace csv{
@@ -36,6 +37,10 @@ namespace mdt{ namespace csv{
     /*! \brief Constructor
      */
     ParserFormatSetupProxyModel(QObject *parent = nullptr);
+
+    /*! \brief Set source model
+     */
+    void setSourceModel(QAbstractItemModel *sourceModel) override;
 
     /*! \brief Returns the index of the item in the model specified by the given row, column and parent index.
      */
@@ -61,6 +66,10 @@ namespace mdt{ namespace csv{
      */
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
 
+    /*! \brief Set data
+     */
+    bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole) override;
+
     /*! \brief Get item flags
      */
     Qt::ItemFlags flags(const QModelIndex & index) const override;
@@ -80,6 +89,41 @@ namespace mdt{ namespace csv{
     /*! \brief Map proxy selection to source selection
      */
 //     QItemSelection mapSelectionToSource(const QItemSelection & proxySelection) const override;
+
+   private slots:
+
+    void onSourceModelAboutToBeReset();
+
+    /*! \brief Called after source model reset
+     */
+    void onSourceModelReset();
+
+    void onSourceColumnsAboutToBeInserted(const QModelIndex & parent, int first, int last);
+    void onSourceColumnsAboutToBeRemoved(const QModelIndex & parent, int first, int last);
+    void onSourceColumnsInserted(const QModelIndex & parent, int first, int last);
+    void onSourceColumnsRemoved(const QModelIndex & parent, int first, int last);
+    void onSourceDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles = QVector<int> ());
+    void onSourceHeaderDataChanged(Qt::Orientation orientation, int first, int last);
+//     void onSourceLayoutAboutToBeChanged(const QList<QPersistentModelIndex> & parents = QList<QPersistentModelIndex> (),
+//                                         QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
+//     void onSourceLayoutChanged(const QList<QPersistentModelIndex> & parents = QList<QPersistentModelIndex> (),
+//                                QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
+    void onSourceRowsAboutToBeInserted(const QModelIndex & parent, int start, int end);
+    void onSourceRowsAboutToBeRemoved(const QModelIndex & parent, int start, int end);
+    void onSourceRowsInserted(const QModelIndex & parent, int start, int end);
+    void onSourceRowsRemoved(const QModelIndex & parent, int start, int end);
+
+   private:
+
+    /*! \brief Get format data
+     */
+    QVariant fieldFormatData(int column, int role) const;
+
+    /*! \brief Set field format
+     */
+    void setFieldType(int column, QMetaType::Type type);
+
+    RecordFormatter pvRecordFormatter;
   };
 
 }} // namespace mdt{ namespace csv{

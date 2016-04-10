@@ -86,7 +86,7 @@ class mdtCsvFileParserSettingsDialog : public QDialog, Ui::mdtCsvFileParserSetti
 
   /*! \brief Actions when format settings changed
    */
-  void onFieldTypeChanged(int fieldIndex, int type);
+//   void onFieldTypeChanged(int fieldIndex, int type);
 
 //   void onStateIdleEntered();
 //   void onStateParsingFileEntered();
@@ -105,7 +105,7 @@ class mdtCsvFileParserSettingsDialog : public QDialog, Ui::mdtCsvFileParserSetti
    */
   void setupStateMachine();
 
-  mdt::csv::RecordFormatSetupWidget *pvRecordFormatWidget;
+//   mdt::csv::RecordFormatSetupWidget *pvRecordFormatWidget;
   mdtCsvFileParserModel *pvDataPreviewModel;
 //   QStateMachine pvStateMachine;
 };

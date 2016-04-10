@@ -27,10 +27,57 @@
 
 namespace mdt{ namespace csv{
 
-  /*! \brief Record format
+  /*! \brief CSV record format
+   *
+   * This value class contains CSV record format.
    */
   class RecordFormat
   {
+   public:
+
+    /*! \brief Set field count
+     *
+     * Will also assign given type to each field.
+     */
+    void setFieldCount(int fieldCount, QMetaType::Type type)
+    {
+      pvFieldTypes.clear();
+      pvFieldTypes.fill(type, fieldCount);
+    }
+
+    /*! \brief Get field count
+     */
+    int fieldCount() const
+    {
+      return pvFieldTypes.size();
+    }
+
+    /*! \brief Set field type
+     *
+     * \pre fieldIndex must be in valid range
+     */
+    void setFieldType(int fieldIndex, QMetaType::Type type)
+    {
+      Q_ASSERT(fieldIndex >= 0);
+      Q_ASSERT(fieldIndex < pvFieldTypes.size());
+      pvFieldTypes[fieldIndex] = type;
+    }
+
+    /*! \brief Get field type
+     *
+     * \pre fieldIndex must be in valid range
+     */
+    QMetaType::Type fieldType(int fieldIndex) const
+    {
+      Q_ASSERT(fieldIndex >= 0);
+      Q_ASSERT(fieldIndex < pvFieldTypes.size());
+      return pvFieldTypes.at(fieldIndex);
+    }
+
+
+   private:
+
+    QVector<QMetaType::Type> pvFieldTypes;
   };
 
 }} // namespace mdt{ namespace csv{
