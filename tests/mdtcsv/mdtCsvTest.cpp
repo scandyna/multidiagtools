@@ -32,8 +32,8 @@
 #include "mdtCsvStringInfo.h"
 #include "mdtCsvFileInfo.h"
 #include "mdt/csv/FieldType.h"
-#include "mdt/csv/RecordFormatSetupWidgetItem.h"
-#include "mdt/csv/RecordFormatSetupWidget.h"
+// #include "mdt/csv/RecordFormatSetupWidgetItem.h"
+// #include "mdt/csv/RecordFormatSetupWidget.h"
 
 #include "mdt/csv/ParserFormatSetupProxyModel.h"
 #include "mdt/csv/ParserFormatSetupDelegate.h"
@@ -602,135 +602,135 @@ void mdtCsvTest::recordFormatterTest()
 
 }
 
-void mdtCsvTest::recordFormatSetupWidgetItemTest()
-{
-  using mdt::csv::RecordFormatSetupWidgetItem;
+// void mdtCsvTest::recordFormatSetupWidgetItemTest()
+// {
+//   using mdt::csv::RecordFormatSetupWidgetItem;
+// 
+//   RecordFormatSetupWidgetItem item;
+//   QSignalSpy spy(&item, &RecordFormatSetupWidgetItem::fieldTypeChanged);
+// 
+//   item.setFieldName("Name");
+//   item.setFieldType(QMetaType::QString);
+//   QCOMPARE(spy.count(), 1);
+//   QVERIFY(item.fieldType() == QMetaType::QString);
+//   
+//   qDebug() << "Signals: " << spy.count();
+// 
+//   /*
+//    * Play
+//    */
+//   item.show();
+//   while(item.isVisible()){
+//     QTest::qWait(500);
+//   }
+// }
 
-  RecordFormatSetupWidgetItem item;
-  QSignalSpy spy(&item, &RecordFormatSetupWidgetItem::fieldTypeChanged);
-
-  item.setFieldName("Name");
-  item.setFieldType(QMetaType::QString);
-  QCOMPARE(spy.count(), 1);
-  QVERIFY(item.fieldType() == QMetaType::QString);
-  
-  qDebug() << "Signals: " << spy.count();
-
-  /*
-   * Play
-   */
-  item.show();
-  while(item.isVisible()){
-    QTest::qWait(500);
-  }
-}
-
-void mdtCsvTest::recordFormatSetupWidgetTest()
-{
-  using mdt::csv::RecordFormatSetupWidget;
-
-  RecordFormatSetupWidget widget;
-  mdtCsvRecord header;
-  QSignalSpy spy(&widget, &RecordFormatSetupWidget::fieldTypeChanged);
-  QList<QVariant> signalArguments;
-
-  QVERIFY(spy.isValid());
-  /*
-   * Set 3 columns header
-   */
-  header.clear();
-  header.columnDataList << "A" << "B" << "C";
-  widget.setHeader(header);
-  QCOMPARE(spy.count(), 3);
-  // Check current type for column A
-  signalArguments = spy.takeFirst();
-  QCOMPARE(signalArguments.size(), 2);
-  QCOMPARE(signalArguments.at(0).toInt(), 0); // Field index
-  QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
-  // Check current type for column B
-  signalArguments = spy.takeFirst();
-  QCOMPARE(signalArguments.size(), 2);
-  QCOMPARE(signalArguments.at(0).toInt(), 1); // Field index
-  QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
-  // Check current type for column C
-  signalArguments = spy.takeFirst();
-  QCOMPARE(signalArguments.size(), 2);
-  QCOMPARE(signalArguments.at(0).toInt(), 2); // Field index
-  QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
-  QCOMPARE(spy.count(), 0);
-  /*
-   * Set 2 columns header
-   */
-  header.clear();
-  header.columnDataList << "A" << "B";
-  widget.setHeader(header);
-  QCOMPARE(spy.count(), 2);
-  // Check current type for column A
-  signalArguments = spy.takeFirst();
-  QCOMPARE(signalArguments.size(), 2);
-  QCOMPARE(signalArguments.at(0).toInt(), 0); // Field index
-  QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
-  // Check current type for column B
-  signalArguments = spy.takeFirst();
-  QCOMPARE(signalArguments.size(), 2);
-  QCOMPARE(signalArguments.at(0).toInt(), 1); // Field index
-  QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
-  QCOMPARE(spy.count(), 0);
-  /*
-   * Set 3 columns header
-   */
-  header.clear();
-  header.columnDataList << "A" << "B" << "C";
-  widget.setHeader(header);
-  QCOMPARE(spy.count(), 3);
-  // Check current type for column A
-  signalArguments = spy.takeFirst();
-  QCOMPARE(signalArguments.size(), 2);
-  QCOMPARE(signalArguments.at(0).toInt(), 0); // Field index
-  QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
-  // Check current type for column B
-  signalArguments = spy.takeFirst();
-  QCOMPARE(signalArguments.size(), 2);
-  QCOMPARE(signalArguments.at(0).toInt(), 1); // Field index
-  QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
-  // Check current type for column C
-  signalArguments = spy.takeFirst();
-  QCOMPARE(signalArguments.size(), 2);
-  QCOMPARE(signalArguments.at(0).toInt(), 2); // Field index
-  QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
-  QCOMPARE(spy.count(), 0);
-  /*
-   * Set 3 columns header
-   */
-  header.clear();
-  header.columnDataList << "A" << "B" << "C";
-  widget.setHeader(header);
-  QCOMPARE(spy.count(), 3);
-  // Check current type for column A
-  signalArguments = spy.takeFirst();
-  QCOMPARE(signalArguments.size(), 2);
-  QCOMPARE(signalArguments.at(0).toInt(), 0); // Field index
-  QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
-  // Check current type for column B
-  signalArguments = spy.takeFirst();
-  QCOMPARE(signalArguments.size(), 2);
-  QCOMPARE(signalArguments.at(0).toInt(), 1); // Field index
-  QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
-  // Check current type for column C
-  signalArguments = spy.takeFirst();
-  QCOMPARE(signalArguments.size(), 2);
-  QCOMPARE(signalArguments.at(0).toInt(), 2); // Field index
-  QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
-  QCOMPARE(spy.count(), 0);
-
-  /*
-   * Play
-   */
-  widget.show();
-  while(widget.isVisible()){
-    QTest::qWait(500);
-  }
-}
+// void mdtCsvTest::recordFormatSetupWidgetTest()
+// {
+//   using mdt::csv::RecordFormatSetupWidget;
+// 
+//   RecordFormatSetupWidget widget;
+//   mdtCsvRecord header;
+//   QSignalSpy spy(&widget, &RecordFormatSetupWidget::fieldTypeChanged);
+//   QList<QVariant> signalArguments;
+// 
+//   QVERIFY(spy.isValid());
+//   /*
+//    * Set 3 columns header
+//    */
+//   header.clear();
+//   header.columnDataList << "A" << "B" << "C";
+//   widget.setHeader(header);
+//   QCOMPARE(spy.count(), 3);
+//   // Check current type for column A
+//   signalArguments = spy.takeFirst();
+//   QCOMPARE(signalArguments.size(), 2);
+//   QCOMPARE(signalArguments.at(0).toInt(), 0); // Field index
+//   QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
+//   // Check current type for column B
+//   signalArguments = spy.takeFirst();
+//   QCOMPARE(signalArguments.size(), 2);
+//   QCOMPARE(signalArguments.at(0).toInt(), 1); // Field index
+//   QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
+//   // Check current type for column C
+//   signalArguments = spy.takeFirst();
+//   QCOMPARE(signalArguments.size(), 2);
+//   QCOMPARE(signalArguments.at(0).toInt(), 2); // Field index
+//   QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
+//   QCOMPARE(spy.count(), 0);
+//   /*
+//    * Set 2 columns header
+//    */
+//   header.clear();
+//   header.columnDataList << "A" << "B";
+//   widget.setHeader(header);
+//   QCOMPARE(spy.count(), 2);
+//   // Check current type for column A
+//   signalArguments = spy.takeFirst();
+//   QCOMPARE(signalArguments.size(), 2);
+//   QCOMPARE(signalArguments.at(0).toInt(), 0); // Field index
+//   QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
+//   // Check current type for column B
+//   signalArguments = spy.takeFirst();
+//   QCOMPARE(signalArguments.size(), 2);
+//   QCOMPARE(signalArguments.at(0).toInt(), 1); // Field index
+//   QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
+//   QCOMPARE(spy.count(), 0);
+//   /*
+//    * Set 3 columns header
+//    */
+//   header.clear();
+//   header.columnDataList << "A" << "B" << "C";
+//   widget.setHeader(header);
+//   QCOMPARE(spy.count(), 3);
+//   // Check current type for column A
+//   signalArguments = spy.takeFirst();
+//   QCOMPARE(signalArguments.size(), 2);
+//   QCOMPARE(signalArguments.at(0).toInt(), 0); // Field index
+//   QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
+//   // Check current type for column B
+//   signalArguments = spy.takeFirst();
+//   QCOMPARE(signalArguments.size(), 2);
+//   QCOMPARE(signalArguments.at(0).toInt(), 1); // Field index
+//   QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
+//   // Check current type for column C
+//   signalArguments = spy.takeFirst();
+//   QCOMPARE(signalArguments.size(), 2);
+//   QCOMPARE(signalArguments.at(0).toInt(), 2); // Field index
+//   QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
+//   QCOMPARE(spy.count(), 0);
+//   /*
+//    * Set 3 columns header
+//    */
+//   header.clear();
+//   header.columnDataList << "A" << "B" << "C";
+//   widget.setHeader(header);
+//   QCOMPARE(spy.count(), 3);
+//   // Check current type for column A
+//   signalArguments = spy.takeFirst();
+//   QCOMPARE(signalArguments.size(), 2);
+//   QCOMPARE(signalArguments.at(0).toInt(), 0); // Field index
+//   QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
+//   // Check current type for column B
+//   signalArguments = spy.takeFirst();
+//   QCOMPARE(signalArguments.size(), 2);
+//   QCOMPARE(signalArguments.at(0).toInt(), 1); // Field index
+//   QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
+//   // Check current type for column C
+//   signalArguments = spy.takeFirst();
+//   QCOMPARE(signalArguments.size(), 2);
+//   QCOMPARE(signalArguments.at(0).toInt(), 2); // Field index
+//   QCOMPARE(signalArguments.at(1).toInt(), static_cast<int>(QMetaType::QString)); // Field type
+//   QCOMPARE(spy.count(), 0);
+// 
+//   /*
+//    * Play
+//    */
+//   widget.show();
+//   while(widget.isVisible()){
+//     QTest::qWait(500);
+//   }
+// }
 
 void mdtCsvTest::csvStringInfoTest()
 {

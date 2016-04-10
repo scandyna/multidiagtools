@@ -43,8 +43,8 @@ class mdtCsvTest : public mdtTest
   void recordFormatTestOld();
   void recordFormatTest();
   void recordFormatterTest();
-  void recordFormatSetupWidgetItemTest();
-  void recordFormatSetupWidgetTest();
+//   void recordFormatSetupWidgetItemTest();
+//   void recordFormatSetupWidgetTest();
 
   void csvStringInfoTest();
   void csvFileInfoTest();

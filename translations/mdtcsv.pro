@@ -3,8 +3,6 @@
 TRANSLATIONS = /home/philippe/programmation/multiDiagTools/src/mdtcsv/../../translations/mdtutils_fr.ts
 TRANSLATIONS += /home/philippe/programmation/multiDiagTools/src/mdtcsv/../../translations/mdtutils_de.ts
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdt/csv/FieldType.cpp
-SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdt/csv/RecordFormatSetupWidgetItem.cpp
-SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdt/csv/RecordFormatSetupWidget.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdt/csv/ParserFormatSetupProxyModel.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdt/csv/ParserFormatSetupDelegate.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdt/csv/RecordFormatter.cpp
