@@ -23,6 +23,7 @@
 
 #include "mdtSqlDriverType.h"
 #include <QVariant>
+#include <QMetaType>
 #include <QString>
 #include <QList>
 #include <QMap>
@@ -35,7 +36,7 @@
  *  for schema generation and edition.
  *  This part is currently very limited (partial support of Sqlite and MySql/MariaDB).
  *
- * mdtSqlFieldType provides a mapping between QVariant::Type and datbase engine's type and its name.
+ * mdtSqlFieldType provides a mapping between QMetaType::Type and datbase engine's type and its name.
  */
 class mdtSqlFieldType
 {
@@ -180,13 +181,13 @@ class mdtSqlFieldType
     return QList<mdtSqlFieldType>();
   }
 
-  /*! \brief Get field type from QVariant::Type and driver type
+  /*! \brief Get SQL field type from QMetaType::Type for driver type
    */
-  static Type fromQVariantType(QVariant::Type qvt, mdtSqlDriverType::Type driverType)
+  static Type fromQMetaType(QMetaType::Type qmt, mdtSqlDriverType::Type driverType)
   {
     switch(driverType){
       case mdtSqlDriverType::SQLite:
-        return fromQVariantType(qvt, mappingTableSqlite());
+        return fromQMetaType(qmt, mappingTableSqlite());
       case mdtSqlDriverType::MariaDB:
       case mdtSqlDriverType::MySQL:
       case mdtSqlDriverType::Unknown:
@@ -195,16 +196,47 @@ class mdtSqlFieldType
     return UnknownType;
   }
 
-  /*! \brief Get field type from QVariant::Type and mapping table
+  /*! \brief Get SQL field type from QMetaType::Type for mapping table
    */
-  static Type fromQVariantType(QVariant::Type qvt, const QMap<QVariant::Type, mdtSqlFieldType::Type> & mt)
+  static Type fromQMetaType(QMetaType::Type qmt, const QMap<QMetaType::Type, mdtSqlFieldType::Type> & mappingTable)
   {
-    return mt.value(qvt, UnknownType);
+    return mappingTable.value(qmt, UnknownType);
+  }
+
+  /*! \brief Get field type from QVariant::Type and driver type
+   *
+   * Note that QVariant::Type is deprecated in Qt library
+   */
+  static Type fromQVariantType(QVariant::Type qvt, mdtSqlDriverType::Type driverType)
+  {
+    return fromQMetaType(static_cast<QMetaType::Type>(qvt), driverType);
+  }
+
+  /*! \brief Get field type from QVariant::Type and mapping table
+   *
+   * Note that QVariant::Type is deprecated in Qt library
+   */
+  static Type fromQVariantType(QVariant::Type qvt, const QMap<QMetaType::Type, mdtSqlFieldType::Type> & mappingTable)
+  {
+    return fromQMetaType(static_cast<QMetaType::Type>(qvt), mappingTable);
+  }
+
+  /*! \brief Get QMetaType::Type from SQL field type
+   */
+  static QMetaType::Type toQMetaType(mdtSqlFieldType::Type sqlType);
+
+  /*! \brief Get QVariant::Type from SQL field type
+   *
+   * Note that QVariant::Type is deprecated in Qt library
+   */
+  static QVariant::Type toQVariantType(Type sqlType)
+  {
+    return static_cast<QVariant::Type>(toQMetaType(sqlType));
   }
 
   /*! \brief Get field type mapping table for given driver type
    */
-  static QMap<QVariant::Type, mdtSqlFieldType::Type> mappingTable(mdtSqlDriverType::Type driverType)
+  static QMap<QMetaType::Type, mdtSqlFieldType::Type> mappingTable(mdtSqlDriverType::Type driverType)
   {
     switch(driverType){
       case mdtSqlDriverType::SQLite:
@@ -214,18 +246,14 @@ class mdtSqlFieldType
       case mdtSqlDriverType::Unknown:
         break;
     }
-    return QMap<QVariant::Type, mdtSqlFieldType::Type>();
+    return QMap<QMetaType::Type, mdtSqlFieldType::Type>();
   }
-
-  /*! \brief Get QVariant::Type from type
-   */
-  static QVariant::Type toQVariantType(Type type);
 
  private:
 
   /*! \brief Get field type mapping table for SQLite
    */
-  static QMap<QVariant::Type, mdtSqlFieldType::Type> mappingTableSqlite();
+  static QMap<QMetaType::Type, mdtSqlFieldType::Type> mappingTableSqlite();
 
   /*! \brief Get field type name for given type (Common implementation)
    */

@@ -229,6 +229,19 @@ void mdtDatabaseTest::sqlFieldTypeTest()
   /*
    * Check field type mapping - SQLite
    */
+  // QMetaType -> mdtSqlFieldType
+  QVERIFY(mdtSqlFieldType::fromQMetaType(QMetaType::UnknownType, mdtSqlDriverType::SQLite) == mdtSqlFieldType::UnknownType);
+  QVERIFY(mdtSqlFieldType::fromQMetaType(QMetaType::Int, mdtSqlDriverType::SQLite) == mdtSqlFieldType::Integer);
+  QVERIFY(mdtSqlFieldType::fromQMetaType(QMetaType::Bool, mdtSqlDriverType::SQLite) == mdtSqlFieldType::Boolean);
+  QVERIFY(mdtSqlFieldType::fromQMetaType(QMetaType::QPolygon, mdtSqlDriverType::SQLite) == mdtSqlFieldType::UnknownType);
+  // mdtSqlFieldType -> QMetaType
+  QVERIFY(mdtSqlFieldType::toQMetaType(mdtSqlFieldType::UnknownType) == QMetaType::UnknownType);
+  QVERIFY(mdtSqlFieldType::toQMetaType(mdtSqlFieldType::Boolean) == QMetaType::Bool);
+  QVERIFY(mdtSqlFieldType::toQMetaType(mdtSqlFieldType::Integer) == QMetaType::Int);
+  QVERIFY(mdtSqlFieldType::toQMetaType(mdtSqlFieldType::Varchar) == QMetaType::QString);
+  QVERIFY(mdtSqlFieldType::toQMetaType(mdtSqlFieldType::Date) == QMetaType::QDate);
+  QVERIFY(mdtSqlFieldType::toQMetaType(mdtSqlFieldType::Time) == QMetaType::QTime);
+  QVERIFY(mdtSqlFieldType::toQMetaType(mdtSqlFieldType::DateTime) == QMetaType::QDateTime);
   // QVariant -> mdtSqlFieldType
   QVERIFY(mdtSqlFieldType::fromQVariantType(QVariant::Invalid, mdtSqlDriverType::SQLite) == mdtSqlFieldType::UnknownType);
   QVERIFY(mdtSqlFieldType::fromQVariantType(QVariant::Int, mdtSqlDriverType::SQLite) == mdtSqlFieldType::Integer);

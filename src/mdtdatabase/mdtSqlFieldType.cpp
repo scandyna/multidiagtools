@@ -25,42 +25,41 @@
 
 //#include <QDebug>
 
-QVariant::Type mdtSqlFieldType::toQVariantType(mdtSqlFieldType::Type type)
+QMetaType::Type mdtSqlFieldType::toQMetaType(mdtSqlFieldType::Type sqlType)
 {
-  switch(type){
+  switch(sqlType){
     case mdtSqlFieldType::UnknownType:
-      return QVariant::Invalid;
+      return QMetaType::UnknownType;
     case mdtSqlFieldType::Boolean:
-      return QVariant::Bool;
+      return QMetaType::Bool;
     case mdtSqlFieldType::Integer:
-      return QVariant::Int;
+      return QMetaType::Int;
     case mdtSqlFieldType::Float:
-      return QVariant::Double;
+      return QMetaType::Float;
     case mdtSqlFieldType::Double:
-      return QVariant::Double;
+      return QMetaType::Double;
     case mdtSqlFieldType::Varchar:
-      return QVariant::String;
+      return QMetaType::QString;
     case mdtSqlFieldType::Date:
-      return QVariant::Date;
+      return QMetaType::QDate;
     case mdtSqlFieldType::Time:
-      return QVariant::Time;
+      return QMetaType::QTime;
     case mdtSqlFieldType::DateTime:
-      return QVariant::DateTime;
+      return QMetaType::QDateTime;
   }
-  return QVariant::Invalid;
+  return QMetaType::UnknownType;
 }
 
-
-QMap< QVariant::Type, mdtSqlFieldType::Type > mdtSqlFieldType::mappingTableSqlite()
+QMap<QMetaType::Type, mdtSqlFieldType::Type> mdtSqlFieldType::mappingTableSqlite()
 {
   return {
-    std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Invalid, mdtSqlFieldType::UnknownType},
-    std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Bool, mdtSqlFieldType::Boolean},
-    std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Date, mdtSqlFieldType::Date},
-    std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Double, mdtSqlFieldType::Double},
-    std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Int, mdtSqlFieldType::Integer},
-    std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::String, mdtSqlFieldType::Varchar},
-    std::pair<QVariant::Type, mdtSqlFieldType::Type>{QVariant::Time, mdtSqlFieldType::Time}
+    std::pair<QMetaType::Type, mdtSqlFieldType::Type>{QMetaType::UnknownType, mdtSqlFieldType::UnknownType},
+    std::pair<QMetaType::Type, mdtSqlFieldType::Type>{QMetaType::Bool, mdtSqlFieldType::Boolean},
+    std::pair<QMetaType::Type, mdtSqlFieldType::Type>{QMetaType::QDate, mdtSqlFieldType::Date},
+    std::pair<QMetaType::Type, mdtSqlFieldType::Type>{QMetaType::Double, mdtSqlFieldType::Double},
+    std::pair<QMetaType::Type, mdtSqlFieldType::Type>{QMetaType::Int, mdtSqlFieldType::Integer},
+    std::pair<QMetaType::Type, mdtSqlFieldType::Type>{QMetaType::QString, mdtSqlFieldType::Varchar},
+    std::pair<QMetaType::Type, mdtSqlFieldType::Type>{QMetaType::QTime, mdtSqlFieldType::Time}
   };
 
 }

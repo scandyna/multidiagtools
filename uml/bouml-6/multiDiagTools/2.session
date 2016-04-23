@@ -15,11 +15,13 @@ diagrams
     120 106 90 18 0 0
   classdiagram_ref 2095618 // overview
     120 106 80 7 0 0
-  active  classdiagram_ref 2198018 // sandbox
+  classdiagram_ref 2198018 // sandbox
     890 911 100 21 0 0
+  active  classdiagram_ref 1523714 // SqlFieldType
+    890 911 100 18 0 0
 end
 show_stereotypes
-selected operation_ref 3856898 // canCopy
+selected operation_ref 3089026 // mappingTableSqlite
 open
   classview_ref 1078274 // Data
   class_ref 2457346 // FieldType
@@ -32,7 +34,7 @@ open
   classview_ref 1032322 // CopyDialog
   classview_ref 1058690 // CsvFormat
   class_ref 2523394 // FieldTypeMapCheck
-  classview_ref 794370 // SqlSchema
+  class_ref 2523010 // Type
   class_ref 2457218 // QMetaType
 end
 end

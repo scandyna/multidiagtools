@@ -1,6 +1,6 @@
 format 211
 "mdtdatabase" // mdtdatabase
-  revision 122
+  revision 123
   modified_by 2 "philippe"
   // class settings
   
@@ -4740,6 +4740,40 @@ ${inlines}
 	
       end
 
+      operation 3863426 "fromQMetaType"
+	class_operation public explicit_return_type "Type"
+	nparams 2
+	  param in name "qmt" explicit_type "QMetaType::Type"
+	  param in name "driverType" explicit_type "mdtSqlDriverType::Type"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3863554 "fromQMetaType"
+	class_operation public explicit_return_type "Type"
+	nparams 2
+	  param in name "qmt" explicit_type "QMetaType::Type"
+	  param in name "mappingTable" explicit_type "QMap"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 3088770 "fromQVariantType"
 	class_operation public explicit_return_type "Type"
 	nparams 2
@@ -4825,7 +4859,7 @@ ${inlines}
       end
 
       operation 3088898 "mappingTable"
-	class_operation public explicit_return_type "QMap<QVariant::Type,mdtSqlFieldType::Type>"
+	class_operation public explicit_return_type "QMap<QMetaType::Type,mdtSqlFieldType::Type>"
 	nparams 1
 	  param in name "driverType" type class_ref 1814786 // mdtSqlDriverType
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
@@ -4841,7 +4875,7 @@ ${inlines}
       end
 
       operation 3089026 "mappingTableSqlite"
-	class_operation private explicit_return_type "QMap<QVariant::Type,mdtSqlFieldType::Type>"
+	class_operation private explicit_return_type "QMap<QMetaType::Type,mdtSqlFieldType::Type>"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
