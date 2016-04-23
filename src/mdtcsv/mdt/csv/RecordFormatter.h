@@ -36,6 +36,8 @@ namespace mdt{ namespace csv{
     /*! \brief Set field count
      *
      * Will also assign given type to each field.
+     *
+     * \todo Should be called resetFormat() ?
      */
     void setFieldCount(int fieldCount, QMetaType::Type type);
 
