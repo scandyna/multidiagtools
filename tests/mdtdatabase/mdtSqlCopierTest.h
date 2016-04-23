@@ -41,6 +41,8 @@ class mdtSqlCopierTest : public mdtTest
   void initTestCase();
   void cleanupTestCase();
 
+  void fieldTypeMapCheckTest();
+
   void sqlFieldSetupDataTest();
 
   void fieldMappingTest();

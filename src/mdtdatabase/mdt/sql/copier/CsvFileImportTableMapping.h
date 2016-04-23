@@ -22,7 +22,9 @@
 #define MDT_SQL_COPIER_CSV_FILE_IMPORT_TABLE_MAPPING_H
 
 #include "CsvImportTableMapping.h"
+
 #include "mdtCsvFileInfo.h"
+
 #include <QFileInfo>
 #include <QByteArray>
 
@@ -38,9 +40,26 @@ namespace mdt{ namespace sql{ namespace copier{
      *
      * Will also reset field mapping.
      *
+     * \pre sourceCsvSettings must be valid
      * \sa resetFieldMapping()
      */
+    bool setSourceFile(const QFileInfo & file, const QByteArray & fileEncoding);
+
+    /*! \brief Set source CSV file
+     *
+     * Will also reset field mapping.
+     *
+     * \sa resetFieldMapping()
+     */
+    [[deprecated]]
     bool setSourceCsvFile(const QFileInfo & file, const QByteArray & fileEncoding, const mdtCsvParserSettings & settings);
+
+    /*! \brief Get source table name
+     */
+    QString sourceTableName() const override
+    {
+      return pvSourceFile.fileName();
+    }
 
     /*! \brief Get source file info
      */
@@ -65,6 +84,17 @@ namespace mdt{ namespace sql{ namespace copier{
 
   private:
 
+    /*! \brief Check if source CSV is set
+     */
+    bool sourceCsvIsSet() const override
+    {
+      return !pvSourceFile.fileName().isEmpty();
+    }
+
+    /*! \brief Parse CSV header
+     */
+    bool parseSourceHeader() override;
+
     /*! \brief Reference CSV source info
      */
     mdtCsvSourceInfo & sourceTable()
@@ -79,6 +109,9 @@ namespace mdt{ namespace sql{ namespace copier{
       return pvSourceTable;
     }
 
+    QFileInfo pvSourceFile;
+    QByteArray pvSourceFileEncoding;
+    
     mdtCsvFileInfo pvSourceTable;
   };
 

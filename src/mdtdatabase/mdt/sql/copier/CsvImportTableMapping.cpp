@@ -20,12 +20,24 @@
  ****************************************************************************/
 #include "CsvImportTableMapping.h"
 #include "mdtSqlCsvData.h"
+#include "mdt/csv/FieldType.h"
 
 //#include <QDebug>
 
 namespace mdt{ namespace sql{ namespace copier{
 
 ///using mdt::sql::copier::TableMapping;
+
+bool CsvImportTableMapping::setSourceCsvSettings(const mdtCsvParserSettings & settings)
+{
+  Q_ASSERT(settings.isValid());
+
+  pvSourceCsvSettings = settings;
+  if(sourceCsvIsSet()){
+    return parseSourceHeader();
+  }
+  return true;
+}
 
 bool CsvImportTableMapping::setDestinationTable(const QString & tableName, const QSqlDatabase & db)
 {
@@ -71,9 +83,27 @@ bool CsvImportTableMapping::setDestinationTable(const QString & tableName, const
 //   updateCsvSourceFormat(fm);
 // }
 
+QStringList CsvImportTableMapping::fetchSourceTableFieldNameList() const
+{
+  QStringList fieldNames;
+
+  for(const auto & var : pvSourceHeader.columnDataList){
+    fieldNames.append(var.toString());
+  }
+
+  return fieldNames;
+}
+
 QString CsvImportTableMapping::fetchDestinationTableFieldTypeNameAt(int fieldIndex) const
 {
   return pvDestinationTable.fieldTypeName(fieldIndex, mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName()));
+}
+
+QString CsvImportTableMapping::fetchSourceTableFieldTypeNameAt(int fieldIndex) const
+{
+  Q_ASSERT(fieldIndex >= 0);
+  Q_ASSERT(fieldIndex < pvSourceFormat.fieldCount());
+  return mdt::csv::FieldType::nameFromType(pvSourceFormat.fieldType(fieldIndex));
 }
 
 TableMapping::FieldKeyType CsvImportTableMapping::fetchDestinationTableFieldKeyType(int fieldIndex) const

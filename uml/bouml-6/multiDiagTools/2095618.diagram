@@ -2,33 +2,34 @@ format 211
 
 classcanvas 128002 class_ref 2085506 // RecordFormat
   classdiagramsettings member_max_width 0 show_context_mode uml end
-  xyz 98 699 2000
+  xyz 254.6 600.6 2000
 end
 classcanvas 128130 class_ref 2036994 // Record
   classdiagramsettings hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 544 751 2000
+  xyz 697.6 655.6 2000
 end
 classcanvas 128386 class_ref 2441218 // CsvRecordFormat
   classdiagramsettings show_members_context uml member_max_width 0 show_context_mode uml end
-  xyz 42 602 2000
+  xyz 198.6 826.6 2000
 end
 classcanvas 128514 class_ref 1814658 // mdtSqlFieldType
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 601 610 2005
+  xyz 41 833.8 2005
 end
 classcanvas 128898 class_ref 2187394 // mdtCsvFileInfo
   classdiagramsettings member_max_width 0 end
-  xyz 41 377 2000
+  xyz 41.8 377.8 2000
 end
 classcanvas 129026 class_ref 2180738 // mdtCsvSourceInfo
   classdiagramsettings member_max_width 0 end
-  xyz 189 40 2006
+  xyz 189.8 40.8 2006
 end
 classcanvas 129282 class_ref 2457346 // FieldType
   classdiagramsettings member_max_width 0 show_context_mode uml end
-  xyz 492.5 169.5 2000
+  xyz 695.9 40 2000
 end
 relationcanvas 128258 relation_ref 2722818 // <dependency>
+  decenter_begin 518
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -39,7 +40,6 @@ relationcanvas 128642 relation_ref 2722946 // <dependency>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 2723074 // <dependency>
-  decenter_begin 505
   from ref 128386 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

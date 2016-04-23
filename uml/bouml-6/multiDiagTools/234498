@@ -1,6 +1,6 @@
 format 211
 "mdtdatabase" // mdtdatabase
-  revision 120
+  revision 122
   modified_by 2 "philippe"
   // class settings
   
@@ -4578,7 +4578,7 @@ ${inlines}
 
     classdiagram 1523714 "SqlFieldType"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 1814658 "mdtSqlFieldType"
@@ -4596,7 +4596,19 @@ ${inlines}
       mysql_decl ""
       
       attribute 1898242 "Type"
-	private explicit_type "QVariant::Type"
+	private type class_ref 2523010 // Type
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2424450 "Length"
+	private explicit_type "int"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -4840,6 +4852,30 @@ ${inlines}
 	
 	
 	
+	
+      end
+
+      class 2523010 "Type"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+	php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+	python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+	idl_decl "${comment}enum ${name} {
+${items}};
+"
+	explicit_switch_type ""
+	mysql_decl ""
 	
       end
     end

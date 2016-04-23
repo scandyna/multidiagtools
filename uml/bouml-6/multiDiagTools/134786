@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 126
+  revision 128
   modified_by 2 "philippe"
   // class settings
   
@@ -6980,6 +6980,41 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      class 2522882 "Type"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+	php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+	python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+	idl_decl "${comment}enum ${name} {
+${items}};
+"
+	explicit_switch_type ""
+	mysql_decl ""
+	
+      end
+
+      attribute 2424322 "Type"
+	private type class_ref 2522882 // Type
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
     end
 
     classdiagram 2124802 "QSignalMapper"

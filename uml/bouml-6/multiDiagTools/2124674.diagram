@@ -1,7 +1,7 @@
 format 211
 
 classcanvas 128002 class_ref 2457346 // FieldType
-  classdiagramsettings member_max_width 0 end
+  classdiagramsettings show_members_context uml member_max_width 0 end
   xyz 41.5 40.5 2000
 end
 end

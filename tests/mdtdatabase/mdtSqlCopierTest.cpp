@@ -27,6 +27,7 @@
 #include "mdtSqlViewSchema.h"
 #include "mdtSqlRecord.h"
 #include "mdtSqlTransaction.h"
+#include "mdt/sql/copier/FieldTypeMapCheck.h"
 #include "mdt/sql/copier/CopyHelper.h"
 #include "mdt/sql/copier/TableMappingItem.h"
 #include "mdt/sql/copier/FieldMapping.h"
@@ -45,6 +46,7 @@
 #include "mdt/sql/copier/DatabaseMappingModel.h"
 #include "mdt/sql/copier/DatabaseCopyThread.h"
 #include "mdt/sql/copier/DatabaseCopyDialog.h"
+#include "mdt/csv/FieldType.h"
 #include "mdt/sql/copier/CsvStringImportTableMapping.h"
 #include "mdt/sql/copier/CsvFileImportTableMapping.h"
 #include "mdt/sql/copier/CsvStringImportTableMappingModel.h"
@@ -401,6 +403,19 @@ void mdtSqlCopierTest::cleanupTestCase()
  * Tests implemtations
  */
 
+void mdtSqlCopierTest::fieldTypeMapCheckTest()
+{
+  using mdt::sql::copier::FieldTypeMapCheck;
+
+  mdtSqlFieldType sqlFieldType;
+
+  /*
+   * Booleans
+   */
+  sqlFieldType.clear();
+  sqlFieldType.setType(mdtSqlFieldType::Boolean);
+  QVERIFY(FieldTypeMapCheck::canCopy(QMetaType::Bool, sqlFieldType));
+}
 
 void mdtSqlCopierTest::sqlFieldSetupDataTest()
 {
@@ -3078,6 +3093,11 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
   QCOMPARE(mapping.itemsCount(), 0);
   QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingNotSet);
   /*
+   * Set CSV settings without a source file set
+   */
+  QVERIFY(csvSettings.isValid());
+  QVERIFY(mapping.setSourceCsvSettings(csvSettings));
+  /*
    * Set source CSV and destination table
    */
   QVERIFY(mapping.setSourceCsvString(csvString, csvSettings));
@@ -3432,9 +3452,14 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTableFetchTest()
   QCOMPARE(mapping.itemsCount(), 0);
   QVERIFY(mapping.mappingState() == TableMapping::MappingNotSet);
   /*
+   * Set CSV settings without a source file set
+   */
+  QVERIFY(csvSettings.isValid());
+  QVERIFY(mapping.setSourceCsvSettings(csvSettings));
+  /*
    * Set source CSV and destination table
    */
-  QVERIFY(mapping.setSourceCsvFile(csvFile, "UTF-8", csvSettings));
+  QVERIFY(mapping.setSourceFile(csvFile, "UTF-8"));
   QVERIFY(mapping.setDestinationTable("Client_tbl", pvDatabase));
   QVERIFY(mapping.mappingState() == TableMapping::MappingNotSet);
   /*
@@ -3447,6 +3472,10 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTableFetchTest()
   QCOMPARE(mapping.sourceTableFieldNameAt(1), QString("Name"));
   QCOMPARE(mapping.sourceTableFieldNameAt(2), QString("FieldA"));
   QCOMPARE(mapping.sourceTableFieldNameAt(3), QString("FieldB"));
+  QCOMPARE(mapping.sourceTableFieldIndexOf("Id"), 0);
+  QCOMPARE(mapping.sourceTableFieldIndexOf("Name"), 1);
+  QCOMPARE(mapping.sourceTableFieldIndexOf("FieldA"), 2);
+  QCOMPARE(mapping.sourceTableFieldIndexOf("FieldB"), 3);
   // Check for destination table
   QCOMPARE(mapping.destinationTableName(), QString("Client_tbl"));
   QCOMPARE(mapping.destinationTableFieldCount(), 4);
@@ -3467,7 +3496,7 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTableFetchTest()
   /*
    * Update source table and check
    */
-  QVERIFY(mapping.setSourceCsvFile(csvFile2, "UTF-8", csvSettings));
+  QVERIFY(mapping.setSourceFile(csvFile2, "UTF-8"));
   // Check for source table
   QCOMPARE(mapping.sourceTableName(), QFileInfo(csvFile2).fileName());
   QCOMPARE(mapping.sourceTableFieldCount(), 3);
@@ -3516,7 +3545,7 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
   /*
    * Set source CSV and destination table
    */
-  QVERIFY(mapping.setSourceCsvFile(csvFile, "UTF-8", csvSettings));
+  QVERIFY(mapping.setSourceFile(csvFile, "UTF-8"));
   QVERIFY(mapping.setDestinationTable("Client_tbl", pvDatabase));
   QVERIFY(mapping.mappingState() == TableMapping::MappingNotSet);
   /*
@@ -3610,7 +3639,7 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
   QVERIFY(mapping.destinationFieldKeyTypeListAtItem(1).at(0) == TableMapping::NotAKey);
   // Check also source and destination type names
   QCOMPARE(mapping.sourceFieldTypeNameListAtItem(0).size(), 1);
-  QCOMPARE(mapping.sourceFieldTypeNameListAtItem(0).at(0), QString("String"));  /// \todo Update once format defined
+  QCOMPARE(mapping.sourceFieldTypeNameListAtItem(0).at(0), mdt::csv::FieldType::nameFromType(QMetaType::QString));
   QCOMPARE(mapping.destinationFieldTypeNameListAtItem(0).size(), 1);
   QCOMPARE(mapping.destinationFieldTypeNameListAtItem(0).at(0), QString("INTEGER"));
   // Check mapping state
@@ -3721,7 +3750,7 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
   /*
    * Update source CSV file
    */
-  QVERIFY(mapping.setSourceCsvFile(csvFile2, "UTF-8", csvSettings));
+  QVERIFY(mapping.setSourceFile(csvFile2, "UTF-8"));
   /*
    * Check fetching tables specific informations
    */

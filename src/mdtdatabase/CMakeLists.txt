@@ -43,6 +43,7 @@ set (SOURCES_FILES
 
           # CSV data conversion
           mdtSqlCsvData.cpp
+          
           # Database schema
           mdtSqlDatabaseSchema.cpp
           mdtSqlDatabaseSchemaModel.cpp
@@ -61,6 +62,7 @@ set (SOURCES_FILES
           mdtSqlFieldSetupWidget.cpp
           mdtSqlFieldSetupDialog.cpp
           # Copier common classes
+          mdt/sql/copier/FieldTypeMapCheck.cpp
           mdt/sql/copier/TableMapping.cpp
           mdt/sql/copier/TableMappingItem.cpp
           mdt/sql/copier/TableMappingModel.cpp

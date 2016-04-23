@@ -18,23 +18,25 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "CsvStringImportTableMapping.h"
+#ifndef MDT_SQL_COPIER_FIELD_TYPE_MAP_CHECK
+#define MDT_SQL_COPIER_FIELD_TYPE_MAP_CHECK
+
+#include "mdtSqlFieldType.h"
+#include <QMetaType>
 
 namespace mdt{ namespace sql{ namespace copier{
 
-bool CsvStringImportTableMapping::setSourceCsvString(const QString & csv, const mdtCsvParserSettings & settings)
-{
-  auto ret = pvSourceTable.setSource(csv, settings);
-  if(!ret){
-    pvLastError = ret.error();
-    return false;
-  }
-  return true;
-}
+  /*! \brief Utility class to check field type compatibility
+   */
+  class FieldTypeMapCheck
+  {
+   public:
 
-bool CsvStringImportTableMapping::parseSourceHeader()
-{
-  return false;
-}
+    /*! \brief Check if data of source type can be copied to database field of destination field
+     */
+    static bool canCopy(QMetaType::Type sourceType, const mdtSqlFieldType & detinationType);
+  };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{
+
+#endif // #ifndef MDT_SQL_COPIER_FIELD_TYPE_MAP_CHECK

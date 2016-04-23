@@ -40,7 +40,25 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     bool setSourceCsvString(const QString & csv, const mdtCsvParserSettings & settings);
 
+    /*! \brief Get source table name
+     */
+    QString sourceTableName() const override
+    {
+      return "???";
+    }
+
   private:
+
+    /*! \brief Check if source CSV is set
+     */
+    bool sourceCsvIsSet() const override
+    {
+      return false;
+    }
+
+    /*! \brief Parse CSV header
+     */
+    bool parseSourceHeader() override;
 
     /*! \brief Reference CSV source info
      */

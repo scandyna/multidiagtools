@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 80
+  revision 82
   modified_by 2 "philippe"
   // class settings
   
@@ -2596,18 +2596,6 @@ ${inlines}
 	  b parent class_ref 2174082 // TableMapping
       end
 
-      attribute 2191234 "DestinationTable"
-	private type class_ref 910210 // mdtSqlTableSchema
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
       attribute 2411266 "SourceCsvSettings"
 	private type class_ref 2050434 // mdtCsvParserSettings
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -2634,6 +2622,30 @@ ${inlines}
 
       attribute 2404482 "SourceFormat"
 	private type class_ref 2085506 // RecordFormat
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2191234 "DestinationTable"
+	private type class_ref 910210 // mdtSqlTableSchema
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2417794 "DestinationDatabase"
+	private type class_ref 405122 // QSqlDatabase
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -2737,7 +2749,22 @@ ${inlines}
 	
       end
 
-      operation 3836034 "parseCsvHeader"
+      operation 3849986 "sourceCsvIsSet"
+	protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3836034 "parseSourceHeader"
 	abstract cpp_virtual protected explicit_return_type "bool"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -6296,6 +6323,93 @@ ${inlines}
 	
 	
 	
+      end
+    end
+  end
+
+  classview 1118082 "FieldTypeMapCheck"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2198018 "sandbox"
+      classdiagramsettings hide_operations yes member_max_width 0 end
+      size B-Landscape
+    end
+
+    class 2523394 "FieldTypeMapCheck"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2869890 // <dependency>
+	relation 2852610 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2869890 // <dependency>
+	  b parent class_ref 1814658 // mdtSqlFieldType
+      end
+
+      operation 3856770 "canCopy"
+	class_operation public explicit_return_type ""
+	nparams 2
+	  param in name "sourceType" type class_ref 1814658 // mdtSqlFieldType
+	  param in name "destinationType" type class_ref 1814658 // mdtSqlFieldType
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3856898 "canCopy"
+	class_operation public explicit_return_type ""
+	nparams 2
+	  param in name "sourceType" explicit_type "QMetaType::Type"
+	  param in name "destinationType" type class_ref 1814658 // mdtSqlFieldType
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 2870146 // <dependency>
+	relation 2852866 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2870146 // <dependency>
+	  b parent class_ref 2457218 // QMetaType
       end
     end
   end

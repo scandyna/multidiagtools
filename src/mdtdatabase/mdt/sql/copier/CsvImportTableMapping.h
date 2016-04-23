@@ -22,7 +22,12 @@
 #define MDT_SQL_COPIER_CSV_IMPORT_TABLE_MAPPING_H
 
 #include "TableMapping.h"
+
 #include "mdtCsvSourceInfo.h"
+
+#include "mdtCsvSettings.h"
+#include "mdtCsvData.h"
+#include "mdt/csv/RecordFormat.h"
 #include "mdtSqlTableSchema.h"
 #include "mdtSqlDriverType.h"
 #include <QSqlDatabase>
@@ -39,6 +44,31 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Constructor
      */
     CsvImportTableMapping() = default;
+
+    // Copy disabled
+    CsvImportTableMapping(const CsvImportTableMapping &) = delete;
+    CsvImportTableMapping & operator=(const CsvImportTableMapping &) = delete;
+    // Move disabled
+    CsvImportTableMapping(CsvImportTableMapping &&) = delete;
+    CsvImportTableMapping & operator=(CsvImportTableMapping &&) = delete;
+
+    /*! \brief Set source CSV settings
+     *
+     * If a CSV source was allready set,
+     *  its header will be parsed again.
+     *  In this case, field mapping will also be reset.
+     *
+     * \pre settings must be valid
+     * \sa resetFieldMapping()
+     */
+    bool setSourceCsvSettings(const mdtCsvParserSettings & settings);
+
+    /*! \brief Get source CSV settings
+     */
+    mdtCsvParserSettings sourceCsvSettings() const
+    {
+      return pvSourceCsvSettings;
+    }
 
     /*! \brief Set destination table
      *
@@ -57,10 +87,10 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Get source table name
      */
-    QString sourceTableName() const
-    {
-      return sourceTable().sourceName();
-    }
+//     QString sourceTableName() const
+//     {
+//       return sourceTable().sourceName();
+//     }
 
     /*! \brief Get destination table name
      */
@@ -73,7 +103,7 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     int sourceTableFieldCount() const override
     {
-      return sourceTable().fieldCount();
+      return pvSourceHeader.count();
     }
 
     /*! \brief Get field count in destination table
@@ -93,9 +123,26 @@ namespace mdt{ namespace sql{ namespace copier{
 
   protected:
 
-    // Permit only concrete classes to be copied
-//     mdtSqlCsvImportTableMapping(const mdtSqlCsvImportTableMapping &) = default;
-//     mdtSqlCsvImportTableMapping & operator=(const mdtSqlCsvImportTableMapping &) = default;
+    /*! \brief Check if source CSV is set
+     */
+    virtual bool sourceCsvIsSet() const = 0;
+
+    /*! \brief Parse source CSV header
+     *
+     * \pre sourceCsvSettings must be valid
+     */
+    virtual bool parseSourceHeader() = 0;
+
+    /*! \brief Set source header
+     *
+     * This will also reset source CSV format
+     *  (all fields are also of type String)
+     */
+    void setSourceHeader(const mdtCsvRecord & header)
+    {
+      pvSourceHeader = header;
+      pvSourceFormat.setFieldCount(header.count(), QMetaType::QString);
+    }
 
     /*! \brief Reference CSV source info
      */
@@ -109,10 +156,10 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Get a list of available field names in source table
      */
-    QStringList fetchSourceTableFieldNameList() const override
-    {
-      return sourceTable().getFieldNameList();
-    }
+    QStringList fetchSourceTableFieldNameList() const override;
+//     {
+//       return sourceTable().getFieldNameList();
+//     }
 
     /*! \brief Get a list of available field names in destination table
      */
@@ -125,22 +172,24 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     int fetchSourceTableFieldIndexOf(const QString & fieldName) const override
     {
-      return sourceTable().fieldIndex(fieldName);
+      return pvSourceHeader.columnDataList.indexOf(fieldName);
     }
 
     /*! \brief Get field name for given fieldIndex in source table
      */
     QString fetchSourceTableFieldNameAt(int fieldIndex) const override
     {
-      return sourceTable().fieldName(fieldIndex);
+      Q_ASSERT(fieldIndex >= 0);
+      Q_ASSERT(fieldIndex < pvSourceHeader.count());
+      return pvSourceHeader.columnDataList.at(fieldIndex).toString();
     }
 
     /*! \brief Get field type name for given fieldIndex in source table
      */
-    QString fetchSourceTableFieldTypeNameAt(int fieldIndex) const override
-    {
-      return sourceTable().fieldTypeName(fieldIndex);
-    }
+    QString fetchSourceTableFieldTypeNameAt(int fieldIndex) const override;
+//     {
+//       return sourceTable().fieldTypeName(fieldIndex);
+//     }
 
     /*! \brief Get field index of given field name in destination table
      */
@@ -166,7 +215,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Check if source field is compatible with destination field
     */
-    bool areFieldsCompatible(int sourceFieldIndex, int destinationFieldIndex) const;
+    bool areFieldsCompatible(int sourceFieldIndex, int destinationFieldIndex) const override;
 
     /*! \brief Update CSV source format regarding destination table
     *
@@ -175,6 +224,9 @@ namespace mdt{ namespace sql{ namespace copier{
     */
   //   void updateCsvSourceFormat(mdtSqlCopierFieldMapping & fm);
 
+    mdtCsvParserSettings pvSourceCsvSettings;
+    mdtCsvRecord pvSourceHeader;
+    mdt::csv::RecordFormat pvSourceFormat;
     mdtSqlTableSchema pvDestinationTable;
     QSqlDatabase pvDestinationDatabase;
   };

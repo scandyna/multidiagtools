@@ -1,6 +1,6 @@
 format 211
 "csv" // mdtcsv::mdt::csv
-  revision 12
+  revision 13
   modified_by 2 "philippe"
   // class settings
   
@@ -180,7 +180,7 @@ ${inlines}
       mysql_decl ""
       
       attribute 2384642 "Type"
-	private explicit_type "QMetaType::Type"
+	private type class_ref 2522882 // Type
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -312,6 +312,7 @@ ${inlines}
 	
 	
       end
+
     end
 
     classdiagram 2124290 "RecordFormat"

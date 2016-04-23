@@ -1,15 +1,13 @@
-format 209
+format 211
 
 classcanvas 128002 class_ref 1814658 // mdtSqlFieldType
-  classdiagramsettings member_max_width 0 end
-  xyz 52 38 2000
+  classdiagramsettings show_members_context uml member_max_width 0 end
+  xyz 161 40 2000
 end
-classcanvas 128130 class_ref 1914370 // mdtSqlFieldTypeSelectionDelegate
+classcanvas 128386 class_ref 2523010 // Type
   classdiagramsettings member_max_width 0 end
-  xyz 302 715 2000
+  xyz 42 198 2010
 end
-classcanvas 128258 class_ref 605570 // QStyledItemDelegate
-  classdiagramsettings member_max_width 0 end
-  xyz 110 477 2005
-end
+line 128514 ---+
+  from ref 128386 z 2011 to ref 128002
 end
