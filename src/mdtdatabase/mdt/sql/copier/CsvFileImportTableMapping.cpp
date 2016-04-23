@@ -21,6 +21,8 @@
 #include "CsvFileImportTableMapping.h"
 #include "mdtCsvFileParser.h"
 
+//#include <QDebug>
+
 namespace mdt{ namespace sql{ namespace copier{
 
 bool CsvFileImportTableMapping::setSourceFile(const QFileInfo & file, const QByteArray & fileEncoding)
@@ -33,26 +35,13 @@ bool CsvFileImportTableMapping::setSourceFile(const QFileInfo & file, const QByt
   return parseSourceHeader();
 }
 
-bool CsvFileImportTableMapping::setSourceCsvFile(const QFileInfo & file, const QByteArray & fileEncoding, const mdtCsvParserSettings & settings)
-{
-  auto ret = pvSourceTable.setFile(file, fileEncoding, settings);
-
-  clearFieldMapping();
-  if(!ret){
-    pvLastError = ret.error();
-    return false;
-  }
-  resetFieldMapping();
-
-  return true;
-}
-
 bool CsvFileImportTableMapping::parseSourceHeader()
 {
   Q_ASSERT(sourceCsvSettings().isValid());
 
   mdtCsvFileParser parser(sourceCsvSettings());
 
+  clearFieldMapping();
   if(!parser.openFile(pvSourceFile, pvSourceFileEncoding)){
     pvLastError = parser.lastError();
     return false;
@@ -62,9 +51,9 @@ bool CsvFileImportTableMapping::parseSourceHeader()
     pvLastError = record.error();
     return false;
   }
-//   setSourceName(fileInfo.fileName());
   setSourceHeader(record.value());
-//   setFormat(mdtCsvRecordFormat(fieldCount(), QMetaType::QString));
+///   setFormat(mdtCsvRecordFormat(fieldCount(), QMetaType::QString));
+  resetFieldMapping();
 
   return true;
 }

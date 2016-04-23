@@ -22,9 +22,6 @@
 #define MDT_SQL_COPIER_CSV_IMPORT_TABLE_MAPPING_H
 
 #include "TableMapping.h"
-
-#include "mdtCsvSourceInfo.h"
-
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
 #include "mdt/csv/RecordFormat.h"
@@ -85,13 +82,6 @@ namespace mdt{ namespace sql{ namespace copier{
       return pvDestinationDatabase;
     }
 
-    /*! \brief Get source table name
-     */
-//     QString sourceTableName() const
-//     {
-//       return sourceTable().sourceName();
-//     }
-
     /*! \brief Get destination table name
      */
     QString destinationTableName() const
@@ -144,22 +134,11 @@ namespace mdt{ namespace sql{ namespace copier{
       pvSourceFormat.setFieldCount(header.count(), QMetaType::QString);
     }
 
-    /*! \brief Reference CSV source info
-     */
-    virtual mdtCsvSourceInfo & sourceTable() = 0;
-
-    /*! \brief Reference CSV source info (read only)
-     */
-    virtual const mdtCsvSourceInfo & sourceTable() const = 0;
-
   private:
 
     /*! \brief Get a list of available field names in source table
      */
     QStringList fetchSourceTableFieldNameList() const override;
-//     {
-//       return sourceTable().getFieldNameList();
-//     }
 
     /*! \brief Get a list of available field names in destination table
      */
@@ -187,9 +166,6 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Get field type name for given fieldIndex in source table
      */
     QString fetchSourceTableFieldTypeNameAt(int fieldIndex) const override;
-//     {
-//       return sourceTable().fieldTypeName(fieldIndex);
-//     }
 
     /*! \brief Get field index of given field name in destination table
      */

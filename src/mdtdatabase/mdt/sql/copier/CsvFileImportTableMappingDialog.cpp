@@ -21,7 +21,6 @@
 #include "CsvFileImportTableMappingDialog.h"
 #include "CsvFileImportTableMappingModel.h"
 #include "mdtCsvFileParserSettingsDialog.h"
-#include "mdtCsvFileInfo.h"
 #include "mdtErrorDialog.h"
 #include <QLabel>
 #include <QToolButton>

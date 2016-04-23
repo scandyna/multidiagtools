@@ -22,9 +22,6 @@
 #define MDT_SQL_COPIER_CSV_FILE_IMPORT_TABLE_MAPPING_H
 
 #include "CsvImportTableMapping.h"
-
-#include "mdtCsvFileInfo.h"
-
 #include <QFileInfo>
 #include <QByteArray>
 
@@ -52,7 +49,10 @@ namespace mdt{ namespace sql{ namespace copier{
      * \sa resetFieldMapping()
      */
     [[deprecated]]
-    bool setSourceCsvFile(const QFileInfo & file, const QByteArray & fileEncoding, const mdtCsvParserSettings & settings);
+    bool setSourceCsvFile(const QFileInfo & file, const QByteArray & fileEncoding, const mdtCsvParserSettings & settings)
+    {
+      return false;
+    }
 
     /*! \brief Get source table name
      */
@@ -65,21 +65,14 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     QFileInfo sourceFileInfo() const
     {
-      return pvSourceTable.fileInfo();
+      return pvSourceFile;
     }
 
     /*! \brief Get source file encoding
      */
     QByteArray sourceFileEncoding() const
     {
-      return pvSourceTable.fileEncoding();
-    }
-
-    /*! \brief Get source CSV settings
-     */
-    mdtCsvParserSettings sourceCsvSettings() const
-    {
-      return pvSourceTable.csvSettings();
+      return pvSourceFileEncoding;
     }
 
   private:
@@ -95,24 +88,8 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     bool parseSourceHeader() override;
 
-    /*! \brief Reference CSV source info
-     */
-    mdtCsvSourceInfo & sourceTable()
-    {
-      return pvSourceTable;
-    }
-
-    /*! \brief Reference CSV source info (read only)
-     */
-    const mdtCsvSourceInfo & sourceTable() const
-    {
-      return pvSourceTable;
-    }
-
     QFileInfo pvSourceFile;
     QByteArray pvSourceFileEncoding;
-    
-    mdtCsvFileInfo pvSourceTable;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

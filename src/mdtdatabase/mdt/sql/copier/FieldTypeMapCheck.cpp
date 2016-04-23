@@ -24,7 +24,14 @@ namespace mdt{ namespace sql{ namespace copier{
 
 bool FieldTypeMapCheck::canCopy(QMetaType::Type sourceType, const mdtSqlFieldType & detinationType)
 {
+  auto destinationQmType = mdtSqlFieldType::toQMetaType(detinationType.type());
 
+  // If one type is unknowns, we cannot copy
+  if( (sourceType == QMetaType::UnknownType) || (destinationQmType == QMetaType::UnknownType) ){
+    return false;
+  }
+  /// \todo implement the rest..
+  return (sourceType == destinationQmType);
 }
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

@@ -47,7 +47,6 @@ class mdtCsvTest : public mdtTest
 //   void recordFormatSetupWidgetTest();
 
   void csvStringInfoTest();
-  void csvFileInfoTest();
 
   void csvStringParserIteratorTest();
   void csvStringParserIteratorBenchmark();

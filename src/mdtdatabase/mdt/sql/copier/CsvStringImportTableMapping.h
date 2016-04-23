@@ -62,17 +62,17 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Reference CSV source info
      */
-    mdtCsvSourceInfo & sourceTable()
-    {
-      return pvSourceTable;
-    }
+//     mdtCsvSourceInfo & sourceTable()
+//     {
+//       return pvSourceTable;
+//     }
 
     /*! \brief Reference CSV source info (read only)
      */
-    const mdtCsvSourceInfo & sourceTable() const
-    {
-      return pvSourceTable;
-    }
+//     const mdtCsvSourceInfo & sourceTable() const
+//     {
+//       return pvSourceTable;
+//     }
 
     mdtCsvStringInfo pvSourceTable;
   };

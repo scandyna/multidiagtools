@@ -20,13 +20,12 @@
  ****************************************************************************/
 #include "CsvImportTableMapping.h"
 #include "mdtSqlCsvData.h"
+#include "FieldTypeMapCheck.h"
 #include "mdt/csv/FieldType.h"
 
 //#include <QDebug>
 
 namespace mdt{ namespace sql{ namespace copier{
-
-///using mdt::sql::copier::TableMapping;
 
 bool CsvImportTableMapping::setSourceCsvSettings(const mdtCsvParserSettings & settings)
 {
@@ -74,15 +73,6 @@ bool CsvImportTableMapping::setDestinationTable(const QString & tableName, const
 //   updateTableMappingState();
 // }
 
-// void mdtSqlCsvImportTableMapping::setSourceFieldIndex(mdtSqlCopierFieldMapping & fm, const QString & sourceFieldName)
-// {
-//   Q_ASSERT(!sourceFieldName.isEmpty());
-// 
-//   const int index = sourceTable().fieldIndex(sourceFieldName);
-//   fm.sourceField.setFieldIndex(index);
-//   updateCsvSourceFormat(fm);
-// }
-
 QStringList CsvImportTableMapping::fetchSourceTableFieldNameList() const
 {
   QStringList fieldNames;
@@ -116,17 +106,15 @@ TableMapping::FieldKeyType CsvImportTableMapping::fetchDestinationTableFieldKeyT
 
 bool CsvImportTableMapping::areFieldsCompatible(int sourceFieldIndex, int destinationFieldIndex) const
 {
-  Q_ASSERT(sourceFieldIndex < sourceTable().fieldCount());
+  Q_ASSERT(sourceFieldIndex >= 0);
+  Q_ASSERT(sourceFieldIndex < pvSourceFormat.fieldCount());
+  Q_ASSERT(destinationFieldIndex >= 0);
   Q_ASSERT(destinationFieldIndex < pvDestinationTable.fieldCount());
 
-  // Do checks regarding field types
-  auto sourceFieldType = sourceTable().fieldType(sourceFieldIndex);
-  auto destinationFieldType = pvDestinationTable.field(destinationFieldIndex).type();
-  if(sourceFieldType == mdtSqlCsvData::csvFieldTypeFromMdtSqlFieldType(destinationFieldType)){
-    return true;
-  }
+  auto sourceFieldType = pvSourceFormat.fieldType(sourceFieldIndex);
+  auto destinationFieldType = pvDestinationTable.field(destinationFieldIndex).getFieldType(mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName()));
 
-  return false;
+  return FieldTypeMapCheck::canCopy(sourceFieldType, destinationFieldType);
 }
 
 /// Keep until new version was written

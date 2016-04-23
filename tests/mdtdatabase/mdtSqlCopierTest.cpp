@@ -410,6 +410,18 @@ void mdtSqlCopierTest::fieldTypeMapCheckTest()
   mdtSqlFieldType sqlFieldType;
 
   /*
+   * Case of unknown type
+   */
+  // SQL field type is unknown
+  sqlFieldType.clear();
+  sqlFieldType.setType(mdtSqlFieldType::UnknownType);
+  QVERIFY(!FieldTypeMapCheck::canCopy(QMetaType::UnknownType, sqlFieldType));
+  QVERIFY(!FieldTypeMapCheck::canCopy(QMetaType::Int, sqlFieldType));
+  // SQL field type is valid
+  sqlFieldType.clear();
+  sqlFieldType.setType(mdtSqlFieldType::Integer);
+  QVERIFY(!FieldTypeMapCheck::canCopy(QMetaType::UnknownType, sqlFieldType));
+  /*
    * Booleans
    */
   sqlFieldType.clear();
@@ -3463,6 +3475,11 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTableFetchTest()
   QVERIFY(mapping.setDestinationTable("Client_tbl", pvDatabase));
   QVERIFY(mapping.mappingState() == TableMapping::MappingNotSet);
   /*
+   * Check file specific informations
+   */
+  QCOMPARE(mapping.sourceFileInfo().absoluteFilePath(), QFileInfo(csvFile).absoluteFilePath());
+  QCOMPARE(mapping.sourceFileEncoding(), QByteArray("UTF-8"));
+  /*
    * Check fetching tables specific informations
    */
   // Check for source table
@@ -3483,6 +3500,18 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTableFetchTest()
   QCOMPARE(mapping.destinationTableFieldNameAt(1), QString("Name"));
   QCOMPARE(mapping.destinationTableFieldNameAt(2), QString("FieldA"));
   QCOMPARE(mapping.destinationTableFieldNameAt(3), QString("FieldB"));
+  /*
+   * Change CSV settings
+   */
+  csvSettings.fieldSeparator = ':';
+  QVERIFY(csvSettings.isValid());
+  QVERIFY(mapping.setSourceCsvSettings(csvSettings));
+  QCOMPARE(mapping.sourceCsvSettings().fieldSeparator, ':');
+  QCOMPARE(mapping.sourceTableFieldCount(), 1);
+  QVERIFY(mapping.mappingState() == TableMapping::MappingNotSet);
+  // Set original separator
+  csvSettings.fieldSeparator = ',';
+  QVERIFY(mapping.setSourceCsvSettings(csvSettings));
   /*
    * Prepare a other CSV source file
    *  with different field count

@@ -12,7 +12,6 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvStringGe
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvFileGenerator.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvSourceInfo.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvStringInfo.cpp
-SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvFileInfo.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvRecordFormat.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvSettingsWidget.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtcsv/mdtCsvParserSettingsWidget.cpp
