@@ -1,6 +1,6 @@
 format 211
 "mdtcsv" // mdtcsv
-  revision 35
+  revision 38
   modified_by 2 "philippe"
   // class settings
   
@@ -2205,100 +2205,6 @@ ${inlines}
 "
 	    classrelation_ref 2805122 // <directional composition>
 	  b parent class_ref 2071938 // mdtCsvFileParserModel
-      end
-
-    end
-
-    state 283394 "FileParserSettingsDialogStateMachine"
-      stereotype "machine"
-      statediagram 2151682 "Main"
-	statediagramsettings
-	 end
-	size A4
-      end
-
-      state 283522 "Idle"
-	transition 336770 "formatWidget.fieldTypeChanged"
-	  on state_ref 283906 // ReformattingData
-	  external 
-	end
-
-	transition 343298 "model.fetchingStarted"
-	  on state_ref 283778 // ParsingFile
-	  external 
-	end
-
-	transition 349826 "wFileSettings.fileSettingsChanged"
-	  on state_ref 290434 // UpdatingFileSettings
-	  external 
-	end
-
-	transition 350338 "wCsvSettings.csvSettingsChanged"
-	  on state_ref 290562 // UpdatingCsvSettings
-	  external 
-	end
-      end
-
-      state 283650 "Error"
-	transition 335746 "model.parsingDone"
-	  on state_ref 283522 // Idle
-	  external 
-	end
-
-	transition 335874 "model.parsingDone"
-	  on state_ref 283522 // Idle
-	  external 
-	end
-      end
-
-      state 283778 "ParsingFile"
-	transition 334722 "model.fetchingDone"
-	  on state_ref 283522 // Idle
-	  external 
-	end
-
-	transition 335106 "model.errorOccured"
-	  on state_ref 283650 // Error
-	  external 
-	end
-      end
-
-      state 283906 "ReformattingData"
-	transition 334978 "model.reformattingDone"
-	  on state_ref 283522 // Idle
-	  external 
-	end
-
-	transition 335234 "model.errorOccured"
-	  on state_ref 283650 // Error
-	  external 
-	end
-      end
-
-      pseudostate 220802 initial 
-	transition 336002 "<transition>"
-	  on state_ref 283522 // Idle
-	  external 
-	end
-      end
-
-      state 290434 "UpdatingFileSettings"
-	transition 350210 "settingsDone"
-	  on state_ref 283522 // Idle
-	  external 
-	end
-      end
-
-      state 290562 "UpdatingCsvSettings"
-      end
-
-      state 290690 "Processing"
-	stereotype "submachine"
-	statediagram 2158338 "Global"
-	  statediagramsettings
-	   end
-	  size A4
-	end
       end
     end
   end

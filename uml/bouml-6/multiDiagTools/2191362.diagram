@@ -1,0 +1,81 @@
+format 211
+
+classcanvas 128002 class_ref 2514690 // Container
+  classdiagramsettings member_max_width 0 end
+  xyz 11 171 2000
+end
+classcanvas 128130 class_ref 2514818 // ContainerItem
+  classdiagramsettings member_max_width 0 end
+  xyz 373 172 2000
+end
+classcanvas 128386 class_ref 2514946 // SomeDeviceA
+  classdiagramsettings member_max_width 0 end
+  xyz 178 525 2000
+end
+classcanvas 128642 class_ref 2515074 // SomeDeviceClass
+  classdiagramsettings member_max_width 0 end
+  xyz 545 369 2000
+end
+classcanvas 128770 class_ref 2515202 // SomeDeviceB
+  classdiagramsettings member_max_width 0 end
+  xyz 434 525 2000
+end
+classcanvas 129026 class_ref 2515330 // SomeDeviceC
+  classdiagramsettings member_max_width 0 end
+  xyz 670 524 2000
+end
+note 131842 "getting device:
+Dynamic cast.
+If nullptre, generate debug message in Debug build.
+Use also assert."
+  xyzwh 53 18 2000 375 107
+relationcanvas 128258 relation_ref 2844290 // <directional composition>
+  decenter_begin 546
+  decenter_end 533
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 357 214 3000 no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 2844418 // <generalisation>
+  geometry VHV unfixed
+  from ref 128386 z 2001 to point 230 286
+  line 131074 z 2001 to point 425 286
+  line 131202 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 2844546 // <generalisation>
+  geometry VHV unfixed
+  from ref 128770 z 2001 to point 486 435
+  line 129538 z 2001 to point 605 435
+  line 129666 z 2001 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 2844674 // <generalisation>
+  geometry VHV unfixed
+  from ref 129026 z 2001 to point 722 437
+  line 129794 z 2001 to point 606 437
+  line 129922 z 2001 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 2844802 // <generalisation>
+  geometry VHV unfixed
+  from ref 128770 z 2001 to point 486 287
+  line 131330 z 2001 to point 425 287
+  line 131458 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 2844930 // <generalisation>
+  geometry VHV unfixed
+  from ref 129026 z 2001 to point 722 285
+  line 131586 z 2001 to point 425 285
+  line 131714 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 131970 -_-_
+  from ref 131842 z 2001 to ref 128002
+end

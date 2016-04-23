@@ -1,0 +1,65 @@
+format 211
+
+classcanvas 128002 class_ref 2515458 // Operation
+  classdiagramsettings member_max_width 0 end
+  xyz 115.1 130.1 2000
+end
+classcanvas 128130 class_ref 2515586 // Module
+  classdiagramsettings member_max_width 0 end
+  xyz 229.3 130.1 2000
+end
+classcanvas 128258 class_ref 2515714 // MrModule
+  classdiagramsettings member_max_width 0 end
+  xyz 112.15 259.9 2000
+end
+classcanvas 128386 class_ref 2515842 // TModule
+  classdiagramsettings member_max_width 0 end
+  xyz 228.25 259.9 2000
+end
+classcanvas 128514 class_ref 2515970 // S1
+  classdiagramsettings member_max_width 0 end
+  xyz 41.6 41.6 2000
+end
+classcanvas 129538 class_ref 2516098 // Task
+  classdiagramsettings member_max_width 0 end
+  xyz 130.1 41.6 2000
+end
+classcanvas 130178 class_ref 2516226 // Place
+  classdiagramsettings member_max_width 0 end
+  xyz 374.2 40.5 2000
+end
+classcanvas 130306 class_ref 2516354 // Context
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 386 2000
+end
+relationcanvas 128770 relation_ref 2845186 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 533
+  from ref 128258 z 2001 to point 149 217
+  line 129026 z 2001 to point 256 217
+  line 129154 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 2845314 // <generalisation>
+  decenter_begin 447
+  from ref 128386 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 2845442 // <directional composition>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 199 162 3000 no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 2845698 // <directional composition>
+  from ref 128514 z 2001 to ref 129538
+  no_role_a no_role_b
+  multiplicity_a_pos 114 73 3000 no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 2845826 // <directional composition>
+  from ref 128002 z 2001 to ref 129538
+  no_role_a no_role_b
+  multiplicity_a_pos 137 95 3000 no_multiplicity_b
+end
+end

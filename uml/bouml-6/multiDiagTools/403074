@@ -1,6 +1,6 @@
 format 211
-"cl" // mdttools::mdttesttool::mdtcablelist::mdt::cl
-  revision 2
+"errorgui" // mdt::errorgui
+  revision 1
   modified_by 2 "philippe"
   // class settings
   

@@ -1,22 +1,37 @@
-window_sizes 1280 964 368 906 911 0
+window_sizes 1280 964 303 971 911 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 2164866 // ParserFormatSetupProxyModel
-    724 728 100 18 0 0
-  active  classdiagram_ref 2124290 // RecordFormat
-    906 911 100 21 0 0
+  classdiagram_ref 2075522 // CsvFileImportMappingModel
+    120 106 90 7 0 0
+  classdiagram_ref 2075650 // CsvFileImportDialog
+    120 106 100 4 0 0
+  classdiagram_ref 1829122 // TableMappingModel
+    971 911 80 22 0 26
+  classdiagram_ref 1943042 // TMoverview
+    120 106 100 18 0 0
+  active  classdiagram_ref 2184450 // CsvImportTableMapping
+    971 911 100 6 48 0
+  classdiagram_ref 1815938 // csvSourceInfo
+    120 106 90 18 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2124290 // RecordFormat
+selected class_ref 2174082 // TableMapping
 open
-  operation_ref 3815682 // setFieldCount
-  operation_ref 3815426 // setSourceModel
-  operation_ref 3814914 // columnCount
-  operation_ref 3800322 // rowCount
-  operation_ref 3800450 // data
-  class_ref 2491522 // ParserFormatSetupDelegate
-  
-  package_ref 302594 // copier
-  class_ref 719618 // QAbstractProxyModel
+  classview_ref 1078274 // Data
+  classview_ref 1084802 // Format
+  classview_ref 1104514 // FileParserSettingsDialog
+  classview_ref 887298 // Common
+  classview_ref 887170 // Parser
+  classview_ref 1097986 // FileParserSettings
+  attribute_ref 2411266 // SourceCsvSettings
+  attribute_ref 2404354 // SourceHeader
+  attribute_ref 2404482 // SourceFormat
+  operation_ref 3835906 // setSourceCsvSettings
+  operation_ref 3836162 // sourceCsvSettings
+  operation_ref 3331586 // csvSourceInfo
+  attribute_ref 2411138 // SourceFileEncoding
+  class_ref 2397442 // MappingModel
+  classdiagram_ref 2055170 // DatabaseMappingModel
+  classview_ref 1032322 // CopyDialog
 end
 end

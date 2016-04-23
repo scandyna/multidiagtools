@@ -1,0 +1,394 @@
+format 211
+"Interactor" // principes::Interactor
+  revision 1
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 1111042 "Interactor"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2190978 "overview"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2511874 "Interactor"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2858370 // <unidirectional association>
+	relation 2841090 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2858370 // <unidirectional association>
+	  b parent class_ref 2512002 // BoundaryOUT
+      end
+
+      classrelation 2858498 // <generalisation>
+	relation 2841218 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2858498 // <generalisation>
+	  b parent class_ref 2512130 // BoundaryIN
+      end
+
+      classrelation 2858626 // <unidirectional association>
+	relation 2841346 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2858626 // <unidirectional association>
+	  b parent class_ref 2512258 // EntityA
+      end
+
+      classrelation 2858754 // <unidirectional association>
+	relation 2841474 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2858754 // <unidirectional association>
+	  b parent class_ref 2512642 // EntityN
+      end
+
+      classrelation 2860674 // <unidirectional association>
+	relation 2843394 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2860674 // <unidirectional association>
+	  b parent class_ref 2512514 // ResponseModel
+      end
+
+      classrelation 2860802 // <unidirectional association>
+	relation 2843522 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2860802 // <unidirectional association>
+	  b parent class_ref 2512386 // RequestModel
+      end
+
+      classrelation 2860930 // <unidirectional association>
+	relation 2843650 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2860930 // <unidirectional association>
+	  b parent class_ref 2514306 // EntityGateway
+      end
+    end
+
+    class 2512002 "BoundaryOUT"
+      abstract visibility package stereotype "interface"
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl "${comment}${@}${visibility}${static}interface ${name}${extends} {
+${members}}
+"
+      php_decl "${comment}interface ${name} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl "${comment}${abstract}${local}interface ${name}${inherit} {
+${members}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2512130 "BoundaryIN"
+      abstract visibility package stereotype "interface"
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl "${comment}${@}${visibility}${static}interface ${name}${extends} {
+${members}}
+"
+      php_decl "${comment}interface ${name} {
+${members}}
+"
+      python_2_2 python_decl "class ${name}${inherit}:
+${docstring}${members}
+"
+      idl_decl "${comment}${abstract}${local}interface ${name}${inherit} {
+${members}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2512258 "EntityA"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2512386 "RequestModel"
+      visibility package stereotype "struct"
+      cpp_decl "${comment}${template}struct ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl "${comment}struct ${name} {
+${members}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2512514 "ResponseModel"
+      visibility package stereotype "struct"
+      cpp_decl "${comment}${template}struct ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl "${comment}struct ${name} {
+${members}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2512642 "EntityN"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2514050 "Controller"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2860162 // <unidirectional association>
+	relation 2842882 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2860162 // <unidirectional association>
+	  b parent class_ref 2512386 // RequestModel
+      end
+
+      classrelation 2860290 // <unidirectional association>
+	relation 2843010 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2860290 // <unidirectional association>
+	  b parent class_ref 2512130 // BoundaryIN
+      end
+    end
+
+    class 2514178 "Presenter"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2860418 // <generalisation>
+	relation 2843138 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2860418 // <generalisation>
+	  b parent class_ref 2512002 // BoundaryOUT
+      end
+
+      classrelation 2860546 // <unidirectional association>
+	relation 2843266 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2860546 // <unidirectional association>
+	  b parent class_ref 2512514 // ResponseModel
+      end
+    end
+
+    class 2514306 "EntityGateway"
+      abstract visibility package stereotype "interface"
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl "${comment}${@}${visibility}${static}interface ${name}${extends} {
+${members}}
+"
+      php_decl "${comment}interface ${name} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl "${comment}${abstract}${local}interface ${name}${inherit} {
+${members}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2514434 "EntityGatewayImplementation"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2861058 // <generalisation>
+	relation 2843778 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2861058 // <generalisation>
+	  b parent class_ref 2514306 // EntityGateway
+      end
+
+      classrelation 2861186 // <unidirectional association>
+	relation 2843906 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2861186 // <unidirectional association>
+	  b parent class_ref 2514562 // DatabaseAPI
+      end
+
+      classrelation 2861314 // <unidirectional association>
+	relation 2844034 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2861314 // <unidirectional association>
+	  b parent class_ref 2512642 // EntityN
+      end
+
+      classrelation 2861442 // <unidirectional association>
+	relation 2844162 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2861442 // <unidirectional association>
+	  b parent class_ref 2512258 // EntityA
+      end
+    end
+
+    class 2514562 "DatabaseAPI"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+  end
+end

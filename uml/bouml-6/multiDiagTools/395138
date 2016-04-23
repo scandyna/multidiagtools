@@ -1,6 +1,6 @@
 format 211
-"cl" // mdttools::mdttesttool::mdtcablelist::mdt::cl
-  revision 2
+"mdt" // mdttools::mdt
+  revision 1
   modified_by 2 "philippe"
   // class settings
   
@@ -26,4 +26,5 @@ format 211
   activitydiagramsettings
    end
   
+  package_ref 395266 // cl
 end

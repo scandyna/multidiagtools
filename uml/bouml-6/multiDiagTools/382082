@@ -1,6 +1,6 @@
 format 211
 "csv" // mdtcsv::mdt::csv
-  revision 11
+  revision 12
   modified_by 2 "philippe"
   // class settings
   
@@ -863,6 +863,75 @@ ${inlines}
 	
 	
       end
+    end
+
+    classdiagram 2171394 "FormatOptions"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2498050 "RecordFormatSettings"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2845186 // <directional composition>
+	relation 2827906 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2845186 // <directional composition>
+	  b parent class_ref 2498306 // RecordFormatDate
+      end
+    end
+
+    class 2498178 "RecordFormatSettingsWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2845058 // <unidirectional association>
+	relation 2827778 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2845058 // <unidirectional association>
+	  b parent class_ref 2498050 // RecordFormatSettings
+      end
+    end
+
+    class 2498306 "RecordFormatDate"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 

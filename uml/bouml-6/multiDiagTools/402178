@@ -1,6 +1,6 @@
 format 211
-"cl" // mdttools::mdttesttool::mdtcablelist::mdt::cl
-  revision 2
+"db" // mdt::db
+  revision 1
   modified_by 2 "philippe"
   // class settings
   

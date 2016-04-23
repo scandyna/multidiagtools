@@ -2,49 +2,47 @@ format 211
 
 classcanvas 128002 class_ref 2174082 // TableMapping
   classdiagramsettings member_max_width 0 end
-  xyz 591 40 2000
+  xyz 323 40 2000
 end
 classcanvas 128130 class_ref 1914114 // DatabaseCopierTableMapping
   classdiagramsettings member_max_width 0 end
-  xyz 607 223 2006
+  xyz 39 225 2006
 end
-classcanvas 128386 class_ref 2180610 // mdtSqlCsvImportTableMapping
+classcanvas 128386 class_ref 2180610 // CsvImportTableMapping
   classdiagramsettings member_max_width 0 end
-  xyz 311 226 2006
+  xyz 335 226 2006
 end
-classcanvas 128642 class_ref 2200578 // mdtSqlCsvStringImportTableMapping
+classcanvas 128642 class_ref 2200578 // CsvStringImportTableMapping
   classdiagramsettings member_max_width 0 end
-  xyz 35 370 2012
+  xyz 113 434 2012
 end
-classcanvas 128898 class_ref 2200706 // mdtSqlCsvFileImportTableMapping
+classcanvas 128898 class_ref 2200706 // CsvFileImportTableMapping
   classdiagramsettings member_max_width 0 end
-  xyz 319 370 2018
+  xyz 364 434 2018
 end
 relationcanvas 128258 relation_ref 2471426 // <generalisation>
-  decenter_end 512
-  from ref 128130 z 2007 to ref 128002
+  geometry VHV unfixed
+  from ref 128130 z 2007 to point 166 184
+  line 129666 z 2007 to point 462 184
+  line 129794 z 2007 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128514 relation_ref 2471682 // <generalisation>
-  geometry VHV unfixed
-  decenter_end 512
-  from ref 128386 z 2007 to point 438 184
-  line 129154 z 2007 to point 733 184
-  line 129282 z 2007 to ref 128002
+  from ref 128386 z 2007 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 2491394 // <generalisation>
   geometry VHV unfixed
-  from ref 128642 z 2013 to point 158 328
-  line 129410 z 2013 to point 438 328
+  decenter_begin 479
+  from ref 128642 z 2013 to point 213 392
+  line 129410 z 2013 to point 472 392
   line 129538 z 2013 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129026 relation_ref 2491522 // <generalisation>
-  decenter_begin 514
   from ref 128898 z 2019 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

@@ -1,6 +1,6 @@
 format 211
 "multiDiagTools"
-  revision 26
+  revision 28
   modified_by 2 "philippe"
   cpp_root_dir "cpp_gen/"
 
@@ -42,6 +42,10 @@ format 211
   
   ncouples 1
   key "html dir" value "/tmp/"
+  package_ref 409858 // principes
+
+  package_ref 401794 // mdt
+
   package_ref 282114 // mdterror
 
   package_ref 281986 // mdtcsv
@@ -54,7 +58,7 @@ format 211
 
   package_ref 168322 // mdtport
 
-  package_ref 288642 // mdtserialport
+  package_ref 288642 // serialport
 
   package_ref 148226 // mdtserialportLEGACY
 

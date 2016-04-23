@@ -14,6 +14,8 @@ classcanvas 128386 class_ref 2050562 // mdtCsvData
 end
 note 128642 "Think about real class with iterators for access ?"
   xyzwh 40.5 456.5 2000 389 57
+note 128770 "Records should store QString ?"
+  xyzwh 36 405 2000 401 43
 relationcanvas 128258 relation_ref 2722818 // <dependency>
   decenter_begin 488
   from ref 128130 z 2007 to ref 128002

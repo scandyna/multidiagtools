@@ -1,16 +1,37 @@
 format 211
 
-classcanvas 128002 class_ref 2478466 // ShiftProxyModel
+note 128002 "Typical: date source string formats.
+Note: should be coustimizable for each field.
+Or, standard formats proposed in list (like LibreOffice) + one custom format.
+
+Better: convertion should be tryed:
+ - ISO
+ - Local
+ - Custom
+
+Also better:
+ - A list of formats to try. Presented to the user in setup in the try order. This could also include many custom formats."
+  xyzwh 87 139 2000 569 275
+classcanvas 128130 class_ref 2498050 // RecordFormatSettings
   classdiagramsettings member_max_width 0 end
-  xyz 40 127 2000
+  xyz 126 573 2000
 end
-classcanvas 128130 class_ref 719618 // QAbstractProxyModel
-  classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 244 42 2005
+classcanvas 128258 class_ref 2498178 // RecordFormatSettingsWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 168 436 2000
 end
-relationcanvas 128258 relation_ref 2807810 // <generalisation>
-  from ref 128002 z 2006 to ref 128130
+classcanvas 128514 class_ref 2498306 // RecordFormatDate
+  classdiagramsettings member_max_width 0 end
+  xyz 374 572 2000
+end
+relationcanvas 128386 relation_ref 2827778 // <unidirectional association>
+  from ref 128258 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 2827906 // <directional composition>
+  from ref 128130 z 2001 to ref 128514
+  no_role_a no_role_b
+  multiplicity_a_pos 358 604 3000 no_multiplicity_b
 end
 end

@@ -1,0 +1,45 @@
+format 211
+
+classcanvas 128002 class_ref 2180610 // CsvImportTableMapping
+  classdiagramsettings show_members_context uml member_max_width 0 end
+  xyz 376 186 2000
+end
+classcanvas 128130 class_ref 2200578 // CsvStringImportTableMapping
+  classdiagramsettings member_max_width 0 end
+  xyz 480 522 2006
+end
+classcanvas 128386 class_ref 2200706 // CsvFileImportTableMapping
+  classdiagramsettings member_max_width 0 end
+  xyz 38 519 2006
+end
+classcanvas 128898 class_ref 2174082 // TableMapping
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 463 40 2016
+end
+classcanvas 129154 class_ref 2085506 // RecordFormat
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 696.5 2022
+end
+relationcanvas 128258 relation_ref 2491394 // <generalisation>
+  decenter_end 490
+  from ref 128130 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 2491522 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 490
+  from ref 128386 z 2007 to point 238 480
+  line 129282 z 2007 to point 597 480
+  line 129410 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 2471682 // <generalisation>
+  decenter_begin 490
+  decenter_end 484
+  from ref 128002 z 2017 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

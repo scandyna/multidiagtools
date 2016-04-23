@@ -1,6 +1,6 @@
 format 211
-"cl" // mdttools::mdttesttool::mdtcablelist::mdt::cl
-  revision 2
+"principes" // principes
+  revision 1
   modified_by 2 "philippe"
   // class settings
   
@@ -26,4 +26,7 @@ format 211
   activitydiagramsettings
    end
   
+  package_ref 409986 // XXX
+
+  package_ref 410114 // ModelViewPresenter
 end

@@ -1,6 +1,6 @@
 format 211
-"cl" // mdttools::mdttesttool::mdtcablelist::mdt::cl
-  revision 2
+"mdt" // mdt
+  revision 1
   modified_by 2 "philippe"
   // class settings
   
@@ -26,4 +26,23 @@ format 211
   activitydiagramsettings
    end
   
+  package_ref 401922 // error
+
+  package_ref 403074 // errorgui
+
+  package_ref 402050 // csv
+
+  package_ref 402178 // db
+
+  package_ref 402306 // serialport
+
+  package_ref 402434 // usb
+
+  package_ref 402562 // modbus
+
+  package_ref 402946 // device
+
+  package_ref 403202 // tools
+
+  package_ref 403330 // wait
 end
