@@ -40,10 +40,6 @@ set (SOURCES_FILES
           mdt/sql/FieldSelectionDialog.cpp
           mdtSqlTransaction.cpp
           mdtSqlForeignKeySetting.cpp
-
-          # CSV data conversion
-          mdtSqlCsvData.cpp
-          
           # Database schema
           mdtSqlDatabaseSchema.cpp
           mdtSqlDatabaseSchemaModel.cpp

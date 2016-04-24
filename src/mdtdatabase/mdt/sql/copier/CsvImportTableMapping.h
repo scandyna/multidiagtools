@@ -116,14 +116,6 @@ namespace mdt{ namespace sql{ namespace copier{
       return pvDestinationTable.fieldCount();
     }
 
-    /*! \brief Generate field mapping by name
-     *
-     * Will first reset field mapping.
-     *  Then, for each field in destination table,
-     *  source field is defined by destination field name.
-     */
-  //   void generateFieldMappingByName();
-
   protected:
 
     /*! \brief Check if source CSV is set

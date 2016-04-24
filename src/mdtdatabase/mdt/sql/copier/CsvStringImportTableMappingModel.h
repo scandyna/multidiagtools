@@ -50,7 +50,7 @@ namespace mdt{ namespace sql{ namespace copier{
      *
      * Will also reset field mapping.
      */
-    bool setSourceCsvString(const QString & csv, const mdtCsvParserSettings & settings);
+    bool setSourceString(const QString & csv);
 
     /*! \brief Set destination table
      *

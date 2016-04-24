@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "CsvImportTableMapping.h"
-#include "mdtSqlCsvData.h"
 #include "FieldTypeMapCheck.h"
 #include "mdt/csv/FieldType.h"
 
@@ -56,28 +55,6 @@ bool CsvImportTableMapping::setDestinationTable(const QString & tableName, const
 
   return true;
 }
-
-// void mdtSqlCsvImportTableMapping::generateFieldMappingByName()
-// {
-//   auto destinationDriverType = mdtSqlDriverType::typeFromName(pvDestinationDatabase.driverName());
-// 
-//   resetFieldMapping();
-//   if(destinationDriverType == mdtSqlDriverType::Unknown){
-//     return;
-//   }
-//   for(auto & fm : fieldMappingList()){
-//     // Get source field
-//     Q_ASSERT(fm.destinationFieldIndex >= 0);
-//     Q_ASSERT(fm.destinationFieldIndex < pvDestinationTable.fieldCount());
-//     mdtSqlField destinationField = pvDestinationTable.field(fm.destinationFieldIndex);
-//     // Get source field index that matches destination field name
-//     fm.sourceField.setFieldIndex(sourceTable().fieldIndex(destinationField.name()));
-//     updateCsvSourceFormat(fm);
-//     updateFieldMappingState(fm);
-//   }
-//   // Update table mapping state
-//   updateTableMappingState();
-// }
 
 QStringList CsvImportTableMapping::fetchSourceTableFieldNameList() const
 {

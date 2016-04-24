@@ -3112,7 +3112,7 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
   /*
    * Set source CSV and destination table
    */
-  QVERIFY(mapping.setSourceCsvString(csvString, csvSettings));
+  QVERIFY(mapping.setSourceString(csvString));
   QVERIFY(mapping.setDestinationTable("Client_tbl", pvDatabase));
   QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingNotSet);
   /*
@@ -3124,7 +3124,7 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
    * Check fetching tables specific informations
    */
   // Check for source table
-  QCOMPARE(mapping.sourceTableName(), QString("CSV String")); /// \todo Define what name it should be
+  QCOMPARE(mapping.sourceTableName(), QString("???")); /// \todo Define what name it should be
   QCOMPARE(mapping.sourceTableFieldCount(), 4);
   // Check getting source table field name
   QCOMPARE(mapping.sourceTableFieldNameAt(0), QString("Id"));
@@ -3182,19 +3182,14 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
   QVERIFY(mapping.itemMappingState(2) == TableMappingItemState::MappingNotSet);
   QVERIFY(mapping.itemMappingState(3) == TableMappingItemState::MappingNotSet);
   // Check field key types
-  QCOMPARE(mapping.sourceFieldKeyTypeListAtItem(0).size(), 1);
-  QVERIFY(mapping.sourceFieldKeyTypeListAtItem(0).at(0) == TableMapping::NotAKey);
-//   QVERIFY(mapping.sourceFieldKeyTypeAtItem(0) == TableMapping::NotAKey);
+  QCOMPARE(mapping.sourceFieldKeyTypeListAtItem(0).size(), 0);
   QCOMPARE(mapping.destinationFieldKeyTypeListAtItem(0).size(), 1);
   QVERIFY(mapping.destinationFieldKeyTypeListAtItem(0).at(0) == TableMapping::PrimaryKey);
-  QCOMPARE(mapping.sourceFieldKeyTypeListAtItem(1).size(), 1);
-  QVERIFY(mapping.sourceFieldKeyTypeListAtItem(1).at(0) == TableMapping::PrimaryKey);
-//   QVERIFY(mapping.sourceFieldKeyTypeAtItem(1) == TableMapping::NotAKey);
+  QCOMPARE(mapping.sourceFieldKeyTypeListAtItem(1).size(), 0);
   QCOMPARE(mapping.destinationFieldKeyTypeListAtItem(1).size(), 1);
   QVERIFY(mapping.destinationFieldKeyTypeListAtItem(1).at(0) == TableMapping::NotAKey);
   // Check also source and destination type names
   QCOMPARE(mapping.sourceFieldTypeNameListAtItem(0).size(), 0);
-//   QVERIFY(mapping.sourceFieldTypeNameAtItem(0).isNull());
   QCOMPARE(mapping.destinationFieldTypeNameListAtItem(0).size(), 1);
   QCOMPARE(mapping.destinationFieldTypeNameListAtItem(0).at(0), QString("INTEGER"));
   // Check getting source field names
@@ -3230,12 +3225,12 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
   QCOMPARE(mapping.destinationFieldNameListAtItem(3).at(0), QString("FieldB"));
   // Check also source and destination type names
   QCOMPARE(mapping.sourceFieldTypeNameListAtItem(0).size(), 1);
-  QCOMPARE(mapping.sourceFieldTypeNameListAtItem(0).at(0), QString("Integer"));
+  QCOMPARE(mapping.sourceFieldTypeNameListAtItem(0).at(0), mdt::csv::FieldType::nameFromType(QMetaType::QString));
 //   QCOMPARE(mapping.sourceFieldTypeNameAtItem(0), QString("Integer"));
   QCOMPARE(mapping.destinationFieldTypeNameListAtItem(0).size(), 1);
   QCOMPARE(mapping.destinationFieldTypeNameListAtItem(0).at(0), QString("INTEGER"));
   // Check mapping state
-  QVERIFY(mapping.itemMappingState(0) == TableMappingItemState::MappingComplete);
+  QVERIFY(mapping.itemMappingState(0) == TableMappingItemState::MappingError);
   QVERIFY(mapping.itemMappingState(1) == TableMappingItemState::MappingNotSet);
   QVERIFY(mapping.itemMappingState(2) == TableMappingItemState::MappingNotSet);
   QVERIFY(mapping.itemMappingState(3) == TableMappingItemState::MappingNotSet);
@@ -3425,7 +3420,7 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingModelTest()
    * Check by generating by name
    */
   // Set tables and generate field mapping
-  QVERIFY(model.setSourceCsvString(csvString, csvSettings));
+  QVERIFY(model.setSourceString(csvString));
   delegate->clear();
   delegate->addItem("");
   delegate->addItems(model.mapping()->getSourceTableFieldNameList());

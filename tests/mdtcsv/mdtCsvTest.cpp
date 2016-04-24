@@ -29,14 +29,11 @@
 #include "mdtCsvFileGenerator.h"
 #include "mdtCsvSettings.h"
 #include "mdtCsvData.h"
-
-#include "mdtCsvStringInfo.h"
-
 #include "mdt/csv/FieldType.h"
 #include "mdt/csv/ParserFormatSetupProxyModel.h"
 #include "mdt/csv/ParserFormatSetupDelegate.h"
 
-#include "mdtCsvRecordFormat.h"
+// #include "mdtCsvRecordFormat.h"
 #include "mdt/csv/RecordFormatter.h"
 
 #include "mdtCsvParserSettingsWidget.h"
@@ -419,117 +416,6 @@ void mdtCsvTest::fieldTypeTest()
   QCOMPARE(ft.name(), QString("Double"));
 }
 
-void mdtCsvTest::recordFormatTestOld()
-{
-  mdtCsvRecord record;
-
-  /*
-   * Constrcutors
-   */
-  // Default constrcuted
-  mdtCsvRecordFormat fmt;
-  QCOMPARE(fmt.fieldCount(), 0);
-  // Construct with fields and default type
-  mdtCsvRecordFormat fmt2(3);
-  QCOMPARE(fmt2.fieldCount(), 3);
-  QVERIFY(fmt2.fieldType(0) == QMetaType::UnknownType);
-  QVERIFY(fmt2.fieldType(1) == QMetaType::UnknownType);
-  QVERIFY(fmt2.fieldType(2) == QMetaType::UnknownType);
-  // Construct with fields and specified type
-  mdtCsvRecordFormat fmt3(2, QMetaType::QString);
-  QCOMPARE(fmt3.fieldCount(), 2);
-  QVERIFY(fmt3.fieldType(0) == QMetaType::QString);
-  QVERIFY(fmt3.fieldType(1) == QMetaType::QString);
-  /*
-   * Set fields count
-   */
-  fmt.setFieldCount(5);
-  QVERIFY(fmt.fieldType(0) == QMetaType::UnknownType);
-  QVERIFY(fmt.fieldType(1) == QMetaType::UnknownType);
-  QVERIFY(fmt.fieldType(2) == QMetaType::UnknownType);
-  QVERIFY(fmt.fieldType(3) == QMetaType::UnknownType);
-  QVERIFY(fmt.fieldType(4) == QMetaType::UnknownType);
-  QVERIFY(!fmt.hasType(0));
-  QVERIFY(!fmt.hasType(1));
-  QVERIFY(!fmt.hasType(2));
-  QVERIFY(!fmt.hasType(3));
-  QVERIFY(!fmt.hasType(4));
-  /*
-   * Set
-   */
-  fmt.setFieldType(0, QMetaType::QString);
-  QVERIFY(fmt.fieldType(0) == QMetaType::QString);
-  QVERIFY(fmt.hasType(0));
-  fmt.setFieldType(1, QMetaType::Double);
-  QVERIFY(fmt.fieldType(1) == QMetaType::Double);
-  QVERIFY(fmt.hasType(1));
-  fmt.setFieldType(2, QMetaType::QDateTime);
-  QVERIFY(fmt.fieldType(2) == QMetaType::QDateTime);
-  QVERIFY(fmt.hasType(2));
-  fmt.setFieldType(3, QMetaType::Int);
-  QVERIFY(fmt.fieldType(3) == QMetaType::Int);
-  QVERIFY(fmt.hasType(3));
-  fmt.setFieldType(4, QMetaType::QString);
-  QVERIFY(fmt.fieldType(4) == QMetaType::QString);
-  QVERIFY(fmt.hasType(4));
-  /*
-   * Clear
-   */
-  fmt.clearFormats();
-  QCOMPARE(fmt.fieldCount(), 5);
-  QVERIFY(fmt.fieldType(0) == QMetaType::UnknownType);
-  QVERIFY(fmt.fieldType(1) == QMetaType::UnknownType);
-  QVERIFY(fmt.fieldType(2) == QMetaType::UnknownType);
-  QVERIFY(fmt.fieldType(3) == QMetaType::UnknownType);
-  QVERIFY(fmt.fieldType(4) == QMetaType::UnknownType);
-  QVERIFY(!fmt.hasType(0));
-  QVERIFY(!fmt.hasType(1));
-  QVERIFY(!fmt.hasType(2));
-  QVERIFY(!fmt.hasType(3));
-  QVERIFY(!fmt.hasType(4));
-  /*
-   * Check formatting record
-   */
-  // Setup format
-  fmt.clearFormats();
-  fmt.setFieldType(2, QMetaType::Int);
-  // Setup record
-  record.clear();
-  record.columnDataList << "A" << "B" << "1" << "2" << "3";
-  // Format
-  QVERIFY(fmt.formatRecord(record));
-  // Check formats
-  QVERIFY(record.columnDataList.at(0).type() == QVariant::String);
-  QVERIFY(record.columnDataList.at(1).type() == QVariant::String);
-  QVERIFY(record.columnDataList.at(2).type() == QVariant::Int);
-  QVERIFY(record.columnDataList.at(3).type() == QVariant::String);
-  QVERIFY(record.columnDataList.at(4).type() == QVariant::String);
-  // Check values
-  QCOMPARE(record.columnDataList.at(0), QVariant("A"));
-  QCOMPARE(record.columnDataList.at(1), QVariant("B"));
-  QCOMPARE(record.columnDataList.at(2), QVariant(1));
-  QCOMPARE(record.columnDataList.at(3), QVariant("2"));
-  QCOMPARE(record.columnDataList.at(4), QVariant("3"));
-  // Setup record - At index 2, type is int, must be null
-  record.clear();
-  record.columnDataList << "A" << "" << "" << "2" << "3";
-  // Format
-  QVERIFY(fmt.formatRecord(record));
-  // Check formats
-  QVERIFY(record.columnDataList.at(0).type() == QVariant::String);
-  QVERIFY(record.columnDataList.at(1).type() == QVariant::String);
-  QVERIFY(record.columnDataList.at(2).type() == QVariant::Int);
-  QVERIFY(record.columnDataList.at(3).type() == QVariant::String);
-  QVERIFY(record.columnDataList.at(4).type() == QVariant::String);
-  // Check values
-  QCOMPARE(record.columnDataList.at(0), QVariant("A"));
-  QCOMPARE(record.columnDataList.at(1), QVariant(""));
-  QVERIFY(record.columnDataList.at(2).isNull());
-  QCOMPARE(record.columnDataList.at(3), QVariant("2"));
-  QCOMPARE(record.columnDataList.at(4), QVariant("3"));
-
-}
-
 void mdtCsvTest::recordFormatTest()
 {
   mdt::csv::RecordFormat format;
@@ -730,60 +616,6 @@ void mdtCsvTest::recordFormatterTest()
 //     QTest::qWait(500);
 //   }
 // }
-
-void mdtCsvTest::csvStringInfoTest()
-{
-  mdtCsvStringInfo csvStringInfo;
-  mdtCsvParserSettings csvSettings;
-///  mdtCsvRecordFormat csvFormat;
-  QString csvString;
-  QStringList fieldNames;
-
-  /*
-   * Prepare CSV source string
-   */
-  csvString  = "ID,Name,Remark\n";
-  csvString += "1,Name 1,Remark 1\n";
-  /*
-   * Initial state
-   */
-  QCOMPARE(csvStringInfo.fieldCount(), 0);
-  /*
-   * Set source and check
-   */
-  QVERIFY(csvStringInfo.setSource(csvString, csvSettings));
-  /// \todo Define what sort of source name should be set
-  ///QCOMPARE(csvStringInfo.sourceName(), "????");
-  QCOMPARE(csvStringInfo.fieldCount(), 3);
-  // Check field names
-  QCOMPARE(csvStringInfo.fieldName(0), QString("ID"));
-  QCOMPARE(csvStringInfo.fieldName(1), QString("Name"));
-  QCOMPARE(csvStringInfo.fieldName(2), QString("Remark"));
-  // Check field index
-  QCOMPARE(csvStringInfo.fieldIndex("ID"), 0);
-  QCOMPARE(csvStringInfo.fieldIndex("Name"), 1);
-  QCOMPARE(csvStringInfo.fieldIndex("Remark"), 2);
-  QCOMPARE(csvStringInfo.fieldIndex("NotExisting"), -1);
-  // Check field type - By default, all are String
-  QVERIFY(csvStringInfo.fieldType(0) == QMetaType::QString);
-  QVERIFY(csvStringInfo.fieldType(1) == QMetaType::QString);
-  QVERIFY(csvStringInfo.fieldType(2) == QMetaType::QString);
-  // Check field type names - By default, all are String
-  QCOMPARE(csvStringInfo.fieldTypeName(0), QString("String"));
-  QCOMPARE(csvStringInfo.fieldTypeName(1), QString("String"));
-  QCOMPARE(csvStringInfo.fieldTypeName(2), QString("String"));
-  // Check updating a field type
-  csvStringInfo.setFieldType(1, QMetaType::Int);
-  QVERIFY(csvStringInfo.fieldType(0) == QMetaType::QString);
-  QVERIFY(csvStringInfo.fieldType(1) == QMetaType::Int);
-  QVERIFY(csvStringInfo.fieldType(2) == QMetaType::QString);
-  // Check getting field names
-  fieldNames = csvStringInfo.getFieldNameList();
-  QCOMPARE(fieldNames.size(), 3);
-  QCOMPARE(fieldNames.at(0), QString("ID"));
-  QCOMPARE(fieldNames.at(1), QString("Name"));
-  QCOMPARE(fieldNames.at(2), QString("Remark"));
-}
 
 void mdtCsvTest::csvStringParserIteratorTest()
 {

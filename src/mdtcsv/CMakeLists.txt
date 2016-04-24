@@ -14,11 +14,6 @@ set (SOURCES_FILES
           mdtCsvFileParser.cpp
           mdtCsvStringGenerator.cpp
           mdtCsvFileGenerator.cpp
-
-          mdtCsvSourceInfo.cpp
-          mdtCsvStringInfo.cpp
-
-          mdtCsvRecordFormat.cpp
           mdtCsvSettingsWidget.cpp
           mdtCsvParserSettingsWidget.cpp
           mdtCsvFileParserModel.cpp

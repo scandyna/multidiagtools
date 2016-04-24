@@ -52,7 +52,6 @@ bool CsvFileImportTableMapping::parseSourceHeader()
     return false;
   }
   setSourceHeader(record.value());
-///   setFormat(mdtCsvRecordFormat(fieldCount(), QMetaType::QString));
   resetFieldMapping();
 
   return true;

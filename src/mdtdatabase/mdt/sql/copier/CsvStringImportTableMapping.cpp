@@ -19,22 +19,36 @@
  **
  ****************************************************************************/
 #include "CsvStringImportTableMapping.h"
+#include "mdtCsvStringParser.h"
 
 namespace mdt{ namespace sql{ namespace copier{
 
-bool CsvStringImportTableMapping::setSourceCsvString(const QString & csv, const mdtCsvParserSettings & settings)
+bool CsvStringImportTableMapping::setSourceString(const QString & csv)
 {
-  auto ret = pvSourceTable.setSource(csv, settings);
-  if(!ret){
-    pvLastError = ret.error();
-    return false;
-  }
-  return true;
+  Q_ASSERT(sourceCsvSettings().isValid());
+
+  pvSourceString = csv;
+
+  return parseSourceHeader();
 }
 
 bool CsvStringImportTableMapping::parseSourceHeader()
 {
-  return false;
+  Q_ASSERT(sourceCsvSettings().isValid());
+
+  mdtCsvStringParser parser(sourceCsvSettings());
+
+  clearFieldMapping();
+  parser.setSource(pvSourceString);
+  auto record = parser.readLine();
+  if(!record){
+    pvLastError = record.error();
+    return false;
+  }
+  setSourceHeader(record.value());
+  resetFieldMapping();
+
+  return true;
 }
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

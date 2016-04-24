@@ -28,12 +28,12 @@ CsvStringImportTableMappingModel::CsvStringImportTableMappingModel(QObject* pare
 {
 }
 
-bool CsvStringImportTableMappingModel::setSourceCsvString(const QString & csv, const mdtCsvParserSettings & settings)
+bool CsvStringImportTableMappingModel::setSourceString(const QString & csv)
 {
   bool ok;
 
   beginResetModel();
-  ok = pvMapping->setSourceCsvString(csv, settings);
+  ok = pvMapping->setSourceString(csv);
   endResetModel();
   if(!ok){
     pvLastError = pvMapping->lastError();

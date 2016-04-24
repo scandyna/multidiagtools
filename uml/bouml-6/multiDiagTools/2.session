@@ -10,14 +10,13 @@ diagrams
   classdiagram_ref 1943042 // TMoverview
     120 106 100 18 0 0
   active  classdiagram_ref 2184450 // CsvImportTableMapping
-    890 911 100 6 108 0
+    890 911 100 6 144 0
   classdiagram_ref 2164866 // ParserFormatSetupProxyModel
     120 106 100 18 0 0
   classdiagram_ref 2151554 // Dialog
     890 911 100 21 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2184450 // CsvImportTableMapping
 open
   classview_ref 1078274 // Data
   classview_ref 1084802 // Format
@@ -25,7 +24,7 @@ open
   classview_ref 887298 // Common
   classview_ref 887170 // Parser
   classview_ref 1097986 // FileParserSettings
-  classview_ref 934018 // TableMapping
+  class_ref 2200578 // CsvStringImportTableMapping
   classdiagram_ref 2055170 // DatabaseMappingModel
   classview_ref 1032322 // CopyDialog
   classview_ref 1058690 // CsvFormat

@@ -22,7 +22,6 @@
 #define MDT_SQL_COPIER_CSV_STRING_IMPORT_TABLE_MAPPING_H
 
 #include "CsvImportTableMapping.h"
-#include "mdtCsvStringInfo.h"
 
 namespace mdt{ namespace sql{ namespace copier{
 
@@ -38,7 +37,7 @@ namespace mdt{ namespace sql{ namespace copier{
      *
      * \sa resetFieldMapping()
      */
-    bool setSourceCsvString(const QString & csv, const mdtCsvParserSettings & settings);
+    bool setSourceString(const QString & csv);
 
     /*! \brief Get source table name
      */
@@ -60,21 +59,7 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     bool parseSourceHeader() override;
 
-    /*! \brief Reference CSV source info
-     */
-//     mdtCsvSourceInfo & sourceTable()
-//     {
-//       return pvSourceTable;
-//     }
-
-    /*! \brief Reference CSV source info (read only)
-     */
-//     const mdtCsvSourceInfo & sourceTable() const
-//     {
-//       return pvSourceTable;
-//     }
-
-    mdtCsvStringInfo pvSourceTable;
+    QString pvSourceString;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

@@ -40,13 +40,10 @@ class mdtCsvTest : public mdtTest
   void dataTest();
 
   void fieldTypeTest();
-  void recordFormatTestOld();
   void recordFormatTest();
   void recordFormatterTest();
 //   void recordFormatSetupWidgetItemTest();
 //   void recordFormatSetupWidgetTest();
-
-  void csvStringInfoTest();
 
   void csvStringParserIteratorTest();
   void csvStringParserIteratorBenchmark();
