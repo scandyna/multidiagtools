@@ -42,18 +42,6 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     bool setSourceFile(const QFileInfo & file, const QByteArray & fileEncoding);
 
-    /*! \brief Set source CSV file
-     *
-     * Will also reset field mapping.
-     *
-     * \sa resetFieldMapping()
-     */
-    [[deprecated]]
-    bool setSourceCsvFile(const QFileInfo & file, const QByteArray & fileEncoding, const mdtCsvParserSettings & settings)
-    {
-      return false;
-    }
-
     /*! \brief Get source table name
      */
     QString sourceTableName() const override

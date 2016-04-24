@@ -1682,6 +1682,7 @@ void mdtCsvTest::parserFormatSetupProxyModelTest()
 {
   mdtCsvFileParserModel model;
   mdt::csv::ParserFormatSetupProxyModel proxyModel;
+  mdt::csv::RecordFormat format;
   QModelIndex index;
   QTableView tableView;
   QTreeView treeView;
@@ -1803,7 +1804,31 @@ void mdtCsvTest::parserFormatSetupProxyModelTest()
   index = proxyModel.index(3, 2);
   QVERIFY(index.isValid());
   QCOMPARE(proxyModel.data(index), QVariant("C3"));
-
+  /*
+   * Check record format
+   */
+  format = proxyModel.recordFormat();
+  QCOMPARE(format.fieldCount(), 3);
+  QVERIFY(format.fieldType(0) == QMetaType::QString);
+  QVERIFY(format.fieldType(1) == QMetaType::QString);
+  QVERIFY(format.fieldType(2) == QMetaType::QString);
+  /*
+   * Update format
+   */
+  format.setFieldType(0, QMetaType::Int);
+  proxyModel.setRecordFormat(format);
+  // Check column 0
+  index = proxyModel.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant(mdt::csv::FieldType::nameFromType(QMetaType::Int)));
+  // Check column 1
+  index = proxyModel.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant(mdt::csv::FieldType::nameFromType(QMetaType::QString)));
+  // Check column 2
+  index = proxyModel.index(0, 2);
+  QVERIFY(index.isValid());
+  QCOMPARE(proxyModel.data(index), QVariant(mdt::csv::FieldType::nameFromType(QMetaType::QString)));
 
   /*
    * Play

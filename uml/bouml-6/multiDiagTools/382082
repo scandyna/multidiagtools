@@ -1,6 +1,6 @@
 format 211
 "csv" // mdtcsv::mdt::csv
-  revision 13
+  revision 15
   modified_by 2 "philippe"
   // class settings
   
@@ -312,7 +312,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     classdiagram 2124290 "RecordFormat"
@@ -611,6 +610,15 @@ ${inlines}
 	
 	
       end
+
+      classrelation 2876674 // <directional composition>
+	relation 2859394 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2876674 // <directional composition>
+	  b parent class_ref 2498050 // RecordFormatSettings
+      end
     end
 
     classdiagram 2164866 "ParserFormatSetupProxyModel"
@@ -825,6 +833,18 @@ ${inlines}
 	    classrelation_ref 2838530 // <directional composition>
 	  b parent class_ref 2456706 // RecordFormatter
       end
+
+      attribute 2430978 "RecordFormatter"
+	private type class_ref 2456706 // RecordFormatter
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
     end
 
     class 2491522 "ParserFormatSetupDelegate"
@@ -954,7 +974,7 @@ ${inlines}
      end
     classdiagram 2151554 "Dialog"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size B-Landscape
     end
 
     classdiagram 2151810 "StateMachine"

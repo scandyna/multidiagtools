@@ -28,12 +28,12 @@ CsvFileImportTableMappingModel::CsvFileImportTableMappingModel(QObject* parent)
 {
 }
 
-bool CsvFileImportTableMappingModel::setSourceCsvFile(const QFileInfo & csvFile, const QByteArray & csvFileEncoding, const mdtCsvParserSettings & settings)
+bool CsvFileImportTableMappingModel::setSourceCsvSettings(const mdtCsvParserSettings & settings)
 {
   bool ok;
 
   beginResetModel();
-  ok = pvMapping->setSourceCsvFile(csvFile, csvFileEncoding, settings);
+  ok = pvMapping->setSourceCsvSettings(settings);
   endResetModel();
   if(!ok){
     pvLastError = pvMapping->lastError();
@@ -41,6 +41,37 @@ bool CsvFileImportTableMappingModel::setSourceCsvFile(const QFileInfo & csvFile,
   }
 
   return true;
+}
+
+bool CsvFileImportTableMappingModel::setSourceFile(const QFileInfo & file, const QByteArray & fileEncoding)
+{
+  bool ok;
+
+  beginResetModel();
+  ok = pvMapping->setSourceFile(file, fileEncoding);
+  endResetModel();
+  if(!ok){
+    pvLastError = pvMapping->lastError();
+    return false;
+  }
+
+  return true;
+}
+
+void CsvFileImportTableMappingModel::setSourceRecordFormat(const csv::RecordFormat & format)
+{
+  Q_ASSERT(format.fieldCount() == pvMapping->sourceTableFieldCount());
+
+  pvMapping->setSourceRecordFormat(format);
+  for(int row = 0; row < rowCount(); ++row){
+    auto idx = index(row, SourceFieldTypeIndex);
+    emit dataChanged(idx, idx);
+  }
+}
+
+csv::RecordFormat CsvFileImportTableMappingModel::sourceRecordFormat() const
+{
+  return pvMapping->sourceRecordFormat();
 }
 
 bool CsvFileImportTableMappingModel::setDestinationTable(const QString & tableName, const QSqlDatabase & db)

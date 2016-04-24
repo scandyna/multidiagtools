@@ -74,6 +74,27 @@ void ParserFormatSetupProxyModel::setSourceModel(QAbstractItemModel *newSourceMo
   endResetModel();
 }
 
+void ParserFormatSetupProxyModel::setRecordFormat(const RecordFormat & format)
+{
+  Q_ASSERT(format.fieldCount() == columnCount());
+
+  pvRecordFormatter.setFormat(format);
+
+  const int lastRow = rowCount() - 1;
+  const int lastCol = columnCount() - 1;
+  if( (lastRow < 0) || (lastCol) ){
+    return;
+  }
+  const auto firstIndex = index(0, 0);
+  const auto lastIndex = index(lastRow, lastCol);
+  emit dataChanged(firstIndex, lastIndex);
+}
+
+RecordFormat ParserFormatSetupProxyModel::recordFormat() const
+{
+  return pvRecordFormatter.format();
+}
+
 QModelIndex ParserFormatSetupProxyModel::index(int row, int column, const QModelIndex & parent) const
 {
   if( parent.isValid() || (sourceModel() == nullptr) ){

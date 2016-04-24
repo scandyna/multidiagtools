@@ -67,6 +67,19 @@ namespace mdt{ namespace sql{ namespace copier{
       return pvSourceCsvSettings;
     }
 
+    /*! \brief Set source record format
+     *
+     * \pre format's fieldCount must be the same as sourceTableFieldCount
+     */
+    void setSourceRecordFormat(const mdt::csv::RecordFormat & format);
+
+    /*! \brief Get source record format
+     */
+    mdt::csv::RecordFormat sourceRecordFormat() const
+    {
+      return pvSourceFormat;
+    }
+
     /*! \brief Set destination table
      *
      * Will also reset field mapping.

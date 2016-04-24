@@ -22,6 +22,7 @@
 #define MDT_CSV_PARSER_FORMAT_SETUP_PROXY_MODEL_H
 
 #include "RecordFormatter.h"
+#include "RecordFormat.h"
 #include <QAbstractProxyModel>
 
 namespace mdt{ namespace csv{
@@ -41,6 +42,16 @@ namespace mdt{ namespace csv{
     /*! \brief Set source model
      */
     void setSourceModel(QAbstractItemModel *sourceModel) override;
+
+    /*! \brief Set record format
+     *
+     * \pre format's column count must be the same as columnCount()
+     */
+    void setRecordFormat(const RecordFormat & format);
+
+    /*! \brief Get record format
+     */
+    RecordFormat recordFormat() const;
 
     /*! \brief Returns the index of the item in the model specified by the given row, column and parent index.
      */

@@ -30,7 +30,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
 CsvFileImportTableMappingDialog::CsvFileImportTableMappingDialog(QWidget *parent)
  : TableMappingDialog(parent),
-   pvMappingModel(new CsvFileImportTableMappingModel)
+   pvMappingModel(new CsvFileImportTableMappingModel(this))
 {
   setModel(pvMappingModel);
   // Setup source table widgets
@@ -70,16 +70,27 @@ void CsvFileImportTableMappingDialog::setupSourceFile()
   // Setup and show dialog
   dialog.setFileSettings(tm->sourceFileInfo().absoluteFilePath(), tm->sourceFileEncoding());
   dialog.setCsvSettings(tm->sourceCsvSettings());
+  dialog.setRecordFormat(pvMappingModel->sourceRecordFormat());
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
-  // Update source
-  if(!pvMappingModel->setSourceCsvFile(dialog.filePath(), dialog.fileEncoding(), dialog.getCsvSettings())){
+  // Update source CSV settings
+  if(!pvMappingModel->setSourceCsvSettings(dialog.getCsvSettings())){
     auto error = pvMappingModel->lastError();
     mdtErrorDialog errorDialog(error);
     errorDialog.exec();
     return;
   }
+  // Update source CSV file
+  if(!pvMappingModel->setSourceFile(dialog.filePath(), dialog.fileEncoding())){
+    auto error = pvMappingModel->lastError();
+    mdtErrorDialog errorDialog(error);
+    errorDialog.exec();
+    return;
+  }
+  // Update source CSV record format
+  pvMappingModel->setSourceRecordFormat(dialog.recordFormat());
+  // Update dialog
   displaySourceTable();
   updateSourceTableFieldSelectionDelegate();
 }

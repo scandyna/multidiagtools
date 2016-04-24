@@ -35,9 +35,9 @@ mdtCsvFileParserSettingsDialog::mdtCsvFileParserSettingsDialog(QWidget *parent)
   wFileSettings->setSelectFileMode(mdtCsvFileSettingsWidget::SelectOpen);
   // Setup data preview
   pvDataPreviewModel = new mdtCsvFileParserModel(tvDataPreview);
-  auto *proxyModel = new mdt::csv::ParserFormatSetupProxyModel(tvDataPreview);
-  proxyModel->setSourceModel(pvDataPreviewModel);
-  tvDataPreview->setModel(proxyModel);
+  pvDataFormatProxyModel = new mdt::csv::ParserFormatSetupProxyModel(tvDataPreview);
+  pvDataFormatProxyModel->setSourceModel(pvDataPreviewModel);
+  tvDataPreview->setModel(pvDataFormatProxyModel);
   auto *delegate = new mdt::csv::ParserFormatSetupDelegate(tvDataPreview);
   tvDataPreview->setItemDelegateForRow(0, delegate);
   connect(wFileSettings, &mdtCsvFileSettingsWidget::fileSettingsChanged, this, &mdtCsvFileParserSettingsDialog::onFileSettingsChanged);
@@ -67,6 +67,18 @@ void mdtCsvFileParserSettingsDialog::setCsvSettings(const mdtCsvParserSettings &
 mdtCsvParserSettings mdtCsvFileParserSettingsDialog::getCsvSettings() const
 {
   return wCsvSettings->getSettings();
+}
+
+void mdtCsvFileParserSettingsDialog::setRecordFormat(const mdt::csv::RecordFormat & format)
+{
+  Q_ASSERT(format.fieldCount() == pvDataFormatProxyModel->columnCount());
+
+  pvDataFormatProxyModel->setRecordFormat(format);
+}
+
+mdt::csv::RecordFormat mdtCsvFileParserSettingsDialog::recordFormat()
+{
+  return pvDataFormatProxyModel->recordFormat();
 }
 
 void mdtCsvFileParserSettingsDialog::onFileSettingsChanged(const QString & path, const QByteArray & encoding)

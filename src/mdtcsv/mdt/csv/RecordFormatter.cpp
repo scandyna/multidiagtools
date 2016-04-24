@@ -36,6 +36,11 @@ void RecordFormatter::setFieldType(int fieldIndex, QMetaType::Type type)
   pvFormat.setFieldType(fieldIndex, type);
 }
 
+void RecordFormatter::setFormat(const RecordFormat & format)
+{
+  pvFormat = format;
+}
+
 bool RecordFormatter::formatValue(int fieldIndex, QVariant & value) const
 {
   Q_ASSERT(fieldIndex >= 0);

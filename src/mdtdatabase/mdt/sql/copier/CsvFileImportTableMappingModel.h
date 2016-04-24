@@ -23,6 +23,7 @@
 
 #include "TableMappingModel.h"
 #include "CsvFileImportTableMapping.h"
+#include "mdt/csv/RecordFormat.h"
 #include "mdtError.h"
 #include <QModelIndex>
 #include <QSqlField>
@@ -46,11 +47,31 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     CsvFileImportTableMappingModel(QObject *parent = nullptr);
 
+    /*! \brief Set source CSV settings
+     *
+     * Will also reset field mapping.
+     *
+     * \pre settings must be valid
+     */
+    bool setSourceCsvSettings(const mdtCsvParserSettings & settings);
+
     /*! \brief Set source CSV file
      *
      * Will also reset field mapping.
+     *
+     * \pre sourceCsvSettings must be valid
      */
-    bool setSourceCsvFile(const QFileInfo & csvFile, const QByteArray & csvFileEncoding, const mdtCsvParserSettings & settings);
+    bool setSourceFile(const QFileInfo & file, const QByteArray & fileEncoding);
+
+    /*! \brief Set source CSV record format
+     *
+     * \pre format's field count must be the same as source CSV field count
+     */
+    void setSourceRecordFormat(const mdt::csv::RecordFormat & format);
+
+    /*! \brief Get source CSV record format
+     */
+    mdt::csv::RecordFormat sourceRecordFormat() const;
 
     /*! \brief Set destination table
      *

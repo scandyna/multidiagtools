@@ -9,20 +9,18 @@ diagrams
     971 911 80 22 0 26
   classdiagram_ref 1943042 // TMoverview
     120 106 100 18 0 0
-  classdiagram_ref 2184450 // CsvImportTableMapping
-    971 911 100 6 0 0
-  classdiagram_ref 1815938 // csvSourceInfo
-    120 106 90 18 0 0
-  classdiagram_ref 2095618 // overview
-    120 106 80 7 0 0
-  active  classdiagram_ref 2198018 // sandbox
+  active  classdiagram_ref 2184450 // CsvImportTableMapping
+    890 911 100 6 108 0
+  classdiagram_ref 2164866 // ParserFormatSetupProxyModel
+    120 106 100 18 0 0
+  classdiagram_ref 2151554 // Dialog
     890 911 100 21 0 0
 end
 show_stereotypes
-selected operation_ref 3089026 // mappingTableSqlite
+selected classdiagram_ref 2184450 // CsvImportTableMapping
 open
   classview_ref 1078274 // Data
-  class_ref 2457346 // FieldType
+  classview_ref 1084802 // Format
   classview_ref 1104514 // FileParserSettingsDialog
   classview_ref 887298 // Common
   classview_ref 887170 // Parser
@@ -32,7 +30,7 @@ open
   classview_ref 1032322 // CopyDialog
   classview_ref 1058690 // CsvFormat
   class_ref 2523394 // FieldTypeMapCheck
-  class_ref 2523010 // Type
+  classview_ref 549378 // mdtClConnector
   class_ref 2457218 // QMetaType
 end
 end

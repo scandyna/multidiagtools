@@ -23,12 +23,16 @@
 
 #include "mdtCsvSettings.h"
 #include "ui_mdtCsvFileParserSettingsDialog.h"
+#include "mdt/csv/RecordFormat.h"
 #include <QDialog>
 #include <QString>
 #include <QByteArray>
 
 class QWidget;
 class mdtCsvFileParserModel;
+namespace mdt{ namespace csv{
+  class ParserFormatSetupProxyModel;
+}}
 
 /*! \brief CSV file generator settings dialog
  */
@@ -70,6 +74,16 @@ class mdtCsvFileParserSettingsDialog : public QDialog, Ui::mdtCsvFileParserSetti
    */
   mdtCsvParserSettings getCsvSettings() const;
 
+  /*! \brief Set record format
+   *
+   * \pre format's column count must be the same as CSV column count
+   */
+  void setRecordFormat(const mdt::csv::RecordFormat & format);
+
+  /*! \brief Get CSV record format
+   */
+  mdt::csv::RecordFormat recordFormat();
+
  private slots:
 
   /*! \brief Actions when file settings changed
@@ -90,11 +104,8 @@ class mdtCsvFileParserSettingsDialog : public QDialog, Ui::mdtCsvFileParserSetti
    */
   void resizeViewToContents();
 
-  /*! \brief Setup state machine
-   */
-  void setupStateMachine();
-
   mdtCsvFileParserModel *pvDataPreviewModel;
+  mdt::csv::ParserFormatSetupProxyModel *pvDataFormatProxyModel;
 };
 
 #endif // #ifndef MDT_CSV_FILE_PARSER_SETTINGS_DIALOG_H

@@ -38,6 +38,12 @@ bool CsvImportTableMapping::setSourceCsvSettings(const mdtCsvParserSettings & se
   return true;
 }
 
+void CsvImportTableMapping::setSourceRecordFormat(const csv::RecordFormat & format)
+{
+  Q_ASSERT(format.fieldCount() == pvSourceHeader.count());
+  pvSourceFormat = format;
+}
+
 bool CsvImportTableMapping::setDestinationTable(const QString & tableName, const QSqlDatabase & db)
 {
   clearFieldMapping();

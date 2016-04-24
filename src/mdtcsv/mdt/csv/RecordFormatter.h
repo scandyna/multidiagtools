@@ -65,6 +65,10 @@ namespace mdt{ namespace csv{
       return pvFormat.fieldType(fieldIndex);
     }
 
+    /*! \brief Set record format
+     */
+    void setFormat(const RecordFormat & format);
+
     /*! \brief Get record format
      */
     RecordFormat format() const
