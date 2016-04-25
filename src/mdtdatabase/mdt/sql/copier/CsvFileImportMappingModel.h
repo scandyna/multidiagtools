@@ -22,7 +22,9 @@
 #define MDT_SQL_COPIER_CSV_FILE_IMPORT_MAPPING_MODEL_H
 
 #include "MappingModel.h"
+
 #include "mdtExpected.h"
+
 #include "CsvFileImportMapping.h"
 #include "CsvFileImportTableMapping.h"
 
@@ -52,7 +54,7 @@ namespace mdt{ namespace sql{ namespace copier{
      *
      * Will also reset mapping.
      */
-    mdtExpected<bool> setDestinationDatabase(const QSqlDatabase & db);
+    bool setDestinationDatabase(const QSqlDatabase & db);
 
     /*! \brief Get destination database
      */
@@ -63,7 +65,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Reset mapping
      */
-    mdtExpected<bool> resetMapping();
+    bool resetMapping();
 
     /*! \brief Get row count
      */
@@ -117,6 +119,13 @@ namespace mdt{ namespace sql{ namespace copier{
      * \pre row must be in a valid range
      */
     void tableMappingUpdated(int row);
+
+    /*! \brief Get last error
+     */
+    mdtError lastError() const
+    {
+      return pvMapping.lastError();
+    }
 
    private:
 

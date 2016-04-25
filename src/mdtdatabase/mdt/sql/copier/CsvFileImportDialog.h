@@ -18,51 +18,57 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "CsvStringImportTableMappingModel.h"
+#ifndef MDT_SQL_COPIER_CSV_FILE_IMPORT_DIALOG_H
+#define MDT_SQL_COPIER_CSV_FILE_IMPORT_DIALOG_H
+
+#include "ui_CsvFileImportDialog.h"
+#include "mdtError.h"
+#include <QDialog>
+#include <QSqlDatabase>
 
 namespace mdt{ namespace sql{ namespace copier{
 
-CsvStringImportTableMappingModel::CsvStringImportTableMappingModel(QObject* parent)
- : mdt::sql::copier::TableMappingModel(parent),
-   pvMapping(std::make_shared<CsvStringImportTableMapping>())
-{
-}
+  class CsvFileImportMappingModel;
 
-bool CsvStringImportTableMappingModel::setSourceString(const QString & csv)
-{
-  bool ok;
+  /*! \brief CSV file import dialog
+   */
+  class CsvFileImportDialog : public QDialog, Ui::mdtSqlCopierCsvFileImportDialog
+  {
+   Q_OBJECT
 
-  beginResetModel();
-  ok = pvMapping->setSourceString(csv);
-  endResetModel();
-  if(!ok){
-    pvLastError = pvMapping->lastError();
-    return false;
-  }
+   public:
 
-  return true;
-}
+    /*! \brief Constructor
+     */
+    CsvFileImportDialog (QWidget *parent = nullptr);
 
-void CsvStringImportTableMappingModel::setDestinationDatabase(const QSqlDatabase & db)
-{
-  beginResetModel();
-  pvMapping->setDestinationDatabase(db);
-  endResetModel();
-}
+    /*! \brief Set destination database
+     */
+    void setDestinationDatabase(const QSqlDatabase & db);
 
-bool CsvStringImportTableMappingModel::setDestinationTable(const QString & tableName)
-{
-  bool ok;
+  private slots:
 
-  beginResetModel();
-  ok = pvMapping->setDestinationTable(tableName);
-  endResetModel();
-  if(!ok){
-    pvLastError = pvMapping->lastError();
-    return false;
-  }
+    /*! \brief Select destination database
+     */
+    void selectDestinationDatabase();
 
-  return true;
-}
+    /*! \brief Add a copy item
+     */
+    void addCopyItem();
+
+   private:
+
+    /*! \brief Resize table view
+     */
+    void resizeTableViewToContents();
+
+    /*! \brief Display error
+     */
+    void displayError(const mdtError & error);
+
+    CsvFileImportMappingModel *pvMappingModel;
+  };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{
+
+#endif // #ifndef MDT_SQL_COPIER_CSV_FILE_IMPORT_DIALOG_H

@@ -1,5 +1,5 @@
 format 211
-"mdt" // audio::mdt
+"cablelist" // mdt::cablelist
   revision 1
   modified_by 2 "philippe"
   // class settings
@@ -26,5 +26,4 @@ format 211
   activitydiagramsettings
    end
   
-  package_ref 375426 // audio
 end

@@ -23,7 +23,9 @@
 
 #include "CsvFileImportTableMapping.h"
 #include "mdtError.h"
+
 #include "mdtExpected.h"
+
 #include <QSqlDatabase>
 #include <QVector>
 #include <QStringList>
@@ -50,7 +52,7 @@ namespace mdt{ namespace sql{ namespace copier{
      *
      * \sa resetMapping()
      */
-    mdtExpected<bool> setDestinationDatabase(const QSqlDatabase & db);
+    bool setDestinationDatabase(const QSqlDatabase & db);
 
     /*! \brief Get destination database
      */
@@ -65,7 +67,7 @@ namespace mdt{ namespace sql{ namespace copier{
      *  then, generate it for each available table in destination database.
      *  After that, no valid mapping is set to source database.
      */
-    mdtExpected<bool> resetMapping();
+    bool resetMapping();
 
     /*! \brief Get source table name for given mapping index
      *
@@ -100,10 +102,18 @@ namespace mdt{ namespace sql{ namespace copier{
       return pvTableMappingList.at(index);
     }
 
+    /*! \brief Get last error
+     */
+    mdtError lastError() const
+    {
+      return pvLastError;
+    }
+
    private:
 
     QSqlDatabase pvDestinationDatabase;
     QVector<std::shared_ptr<CsvFileImportTableMapping>> pvTableMappingList;
+    mdtError pvLastError;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

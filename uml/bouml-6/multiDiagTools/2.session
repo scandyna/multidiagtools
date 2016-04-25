@@ -3,33 +3,38 @@ cleanlooks_style
 diagrams
   classdiagram_ref 2075522 // CsvFileImportMappingModel
     120 106 90 7 0 0
-  classdiagram_ref 2075650 // CsvFileImportDialog
-    120 106 100 4 0 0
+  active  classdiagram_ref 2075650 // CsvFileImportDialog
+    890 911 100 4 0 0
   classdiagram_ref 1829122 // TableMappingModel
     971 911 80 22 0 26
   classdiagram_ref 1943042 // TMoverview
     120 106 100 18 0 0
-  active  classdiagram_ref 2184450 // CsvImportTableMapping
+  classdiagram_ref 2184450 // CsvImportTableMapping
     890 911 100 6 144 0
   classdiagram_ref 2164866 // ParserFormatSetupProxyModel
     120 106 100 18 0 0
   classdiagram_ref 2151554 // Dialog
     890 911 100 21 0 0
+  classdiagram_ref 2068738 // DatabaseCopyDialog
+    890 911 100 18 0 0
+  classdiagram_ref 2075266 // DatabaseCopyThread
+    120 106 90 22 0 65
+  classdiagram_ref 2075778 // CsvFileImportThread
+    120 106 100 4 0 0
+  classdiagram_ref 2075394 // CopyThread
+    120 106 100 21 0 0
 end
 show_stereotypes
+selected classdiagram_ref 2075650 // CsvFileImportDialog
 open
+  
+package_ref 403202 // tools
   classview_ref 1078274 // Data
   classview_ref 1084802 // Format
   classview_ref 1104514 // FileParserSettingsDialog
   classview_ref 887298 // Common
   classview_ref 887170 // Parser
   classview_ref 1097986 // FileParserSettings
-  class_ref 2200578 // CsvStringImportTableMapping
-  classdiagram_ref 2055170 // DatabaseMappingModel
   classview_ref 1032322 // CopyDialog
-  classview_ref 1058690 // CsvFormat
-  class_ref 2523394 // FieldTypeMapCheck
-  classview_ref 549378 // mdtClConnector
-  class_ref 2457218 // QMetaType
 end
 end

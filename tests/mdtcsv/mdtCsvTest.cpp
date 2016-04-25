@@ -32,10 +32,7 @@
 #include "mdt/csv/FieldType.h"
 #include "mdt/csv/ParserFormatSetupProxyModel.h"
 #include "mdt/csv/ParserFormatSetupDelegate.h"
-
-// #include "mdtCsvRecordFormat.h"
 #include "mdt/csv/RecordFormatter.h"
-
 #include "mdtCsvParserSettingsWidget.h"
 #include "mdtCsvGeneratorSettingsWidget.h"
 #include "mdtCsvFileSettingsWidget.h"

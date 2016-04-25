@@ -1,6 +1,6 @@
 format 211
 "copier" // mdtdatabase::mdt::sql::copier
-  revision 85
+  revision 87
   modified_by 2 "philippe"
   // class settings
   
@@ -6085,6 +6085,21 @@ ${inlines}
 	    classrelation_ref 2718466 // <generalisation>
 	  b parent class_ref 2419202 // CopyThread
       end
+
+      operation 3876866 "tableMappingCount"
+	cpp_virtual public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 
@@ -6285,75 +6300,6 @@ ${inlines}
 "
 	    classrelation_ref 2718978 // <directional composition>
 	  b parent class_ref 2419458 // CsvFileImportMappingModel
-      end
-    end
-  end
-
-  classview 1058690 "CsvFormat"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
-    classdiagram 2095618 "overview"
-      classdiagramsettings member_max_width 0 end
-      size B
-    end
-
-    class 2441218 "CsvRecordFormat"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 2740098 // <dependency>
-	relation 2722946 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 2740098 // <dependency>
-	  b parent class_ref 1814658 // mdtSqlFieldType
-      end
-
-      classrelation 2740226 // <dependency>
-	relation 2723074 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 2740226 // <dependency>
-	  b parent class_ref 2085506 // RecordFormat
-      end
-
-      operation 3706498 "fromQSqlRecord"
-	class_operation public return_type class_ref 2085506 // RecordFormat
-	nparams 1
-	  param in name "sqlRecord" type class_ref 404994 // QSqlRecord
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
       end
     end
   end

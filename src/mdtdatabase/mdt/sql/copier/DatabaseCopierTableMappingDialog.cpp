@@ -22,6 +22,7 @@
 #include "DatabaseCopierTableMappingModel.h"
 #include "mdt/sql/Database.h"
 #include <QComboBox>
+#include <QLabel>
 #include <QVBoxLayout>
 
 //#include <QDebug>
@@ -31,7 +32,8 @@ namespace mdt{ namespace sql{ namespace copier{
 DatabaseCopierTableMappingDialog::DatabaseCopierTableMappingDialog(QWidget *parent)
  : TableMappingDialog(parent),
    pvMappingModel(new DatabaseCopierTableMappingModel(this)),
-   cbSourceTable(new QComboBox)
+   cbSourceTable(new QComboBox),
+   lbDestinationTable(new QLabel)
 {
   setModel(pvMappingModel);
   // Setup source tables combobox
@@ -40,6 +42,10 @@ DatabaseCopierTableMappingDialog::DatabaseCopierTableMappingDialog(QWidget *pare
   setSourceTableLayout(l);
   connect(cbSourceTable, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
           this, &DatabaseCopierTableMappingDialog::setSourceTable);
+  // Setup destination table label
+  l = new QVBoxLayout;
+  l->addWidget(lbDestinationTable);
+  setDestinationTableLayout(l);
 }
 
 void DatabaseCopierTableMappingDialog::setSourceDatabase(const QSqlDatabase & db)
@@ -71,6 +77,8 @@ void DatabaseCopierTableMappingDialog::setMapping(const std::shared_ptr<Database
   if(newCbIndex == previousCbIndex){
     setSourceTable(newCbIndex);
   }
+  // Update also destination table
+  lbDestinationTable->setText(m->destinationTableName());
   // Update mapping
   pvMappingModel->setMapping(m);
   updateMapping();

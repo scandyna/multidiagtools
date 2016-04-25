@@ -155,4 +155,14 @@ relationcanvas 134018 relation_ref 2844162 // <unidirectional association>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
+relationcanvas 134530 relation_ref 2866306 // <unidirectional association>
+  from ref 128258 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 134658 relation_ref 2866434 // <unidirectional association>
+  from ref 128130 z 2001 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
 end

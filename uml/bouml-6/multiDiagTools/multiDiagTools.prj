@@ -1,6 +1,6 @@
 format 211
 "multiDiagTools"
-  revision 28
+  revision 29
   modified_by 2 "philippe"
   cpp_root_dir "cpp_gen/"
 
@@ -78,5 +78,4 @@ format 211
 
   package_ref 275458 // std
 
-  package_ref 375170 // audio
 end

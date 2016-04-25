@@ -23,7 +23,7 @@
 
 namespace mdt{ namespace sql{ namespace copier{
 
-mdtExpected< bool > CsvFileImportMapping::setDestinationDatabase(const QSqlDatabase & db)
+bool CsvFileImportMapping::setDestinationDatabase(const QSqlDatabase & db)
 {
   pvTableMappingList.clear();
   pvDestinationDatabase = db;
@@ -31,7 +31,7 @@ mdtExpected< bool > CsvFileImportMapping::setDestinationDatabase(const QSqlDatab
   return resetMapping();
 }
 
-mdtExpected< bool > CsvFileImportMapping::resetMapping()
+bool CsvFileImportMapping::resetMapping()
 {
   using mdt::sql::Database;
 
@@ -42,9 +42,11 @@ mdtExpected< bool > CsvFileImportMapping::resetMapping()
   destinationTableNameList.sort();
   for(const auto & destinationTableName : destinationTableNameList){
     auto tm = std::make_shared<CsvFileImportTableMapping>();
-    if(!tm->setDestinationTable(destinationTableName, pvDestinationDatabase)){
+    tm->setDestinationDatabase(pvDestinationDatabase);
+    if(!tm->setDestinationTable(destinationTableName)){
       pvTableMappingList.clear();
-      return tm->lastError();
+      pvLastError = tm->lastError();
+      return false;
     }
     pvTableMappingList.append(tm);
   }

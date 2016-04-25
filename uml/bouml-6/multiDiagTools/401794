@@ -1,6 +1,6 @@
 format 211
 "mdt" // mdt
-  revision 1
+  revision 2
   modified_by 2 "philippe"
   // class settings
   
@@ -45,4 +45,10 @@ format 211
   package_ref 403202 // tools
 
   package_ref 403330 // wait
+
+  package_ref 416770 // cablelist
+
+  package_ref 416898 // testtool
+
+  package_ref 417026 // audio
 end

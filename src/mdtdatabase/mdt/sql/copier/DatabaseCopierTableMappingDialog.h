@@ -26,6 +26,7 @@
 #include <QSqlDatabase>
 
 class QComboBox;
+class QLabel;
 
 namespace mdt{ namespace sql{ namespace copier{
 
@@ -83,6 +84,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     DatabaseCopierTableMappingModel *pvMappingModel;
     QComboBox *cbSourceTable;
+    QLabel *lbDestinationTable;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

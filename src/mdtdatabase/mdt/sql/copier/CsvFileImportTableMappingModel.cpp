@@ -74,12 +74,19 @@ csv::RecordFormat CsvFileImportTableMappingModel::sourceRecordFormat() const
   return pvMapping->sourceRecordFormat();
 }
 
-bool CsvFileImportTableMappingModel::setDestinationTable(const QString & tableName, const QSqlDatabase & db)
+void CsvFileImportTableMappingModel::setDestinationDatabase(const QSqlDatabase & db)
+{
+  beginResetModel();
+  pvMapping->setDestinationDatabase(db);
+  endResetModel();
+}
+
+bool CsvFileImportTableMappingModel::setDestinationTable(const QString &tableName)
 {
   bool ok;
 
   beginResetModel();
-  ok = pvMapping->setDestinationTable(tableName, db);
+  ok = pvMapping->setDestinationTable(tableName);
   endResetModel();
   if(!ok){
     pvLastError = pvMapping->lastError();

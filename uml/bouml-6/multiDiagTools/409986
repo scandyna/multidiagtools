@@ -1,6 +1,6 @@
 format 211
 "Interactor" // principes::Interactor
-  revision 1
+  revision 2
   modified_by 2 "philippe"
   // class settings
   
@@ -144,6 +144,14 @@ ${members}};
       explicit_switch_type ""
       mysql_decl ""
       
+      classrelation 2883714 // <unidirectional association>
+	relation 2866434 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2883714 // <unidirectional association>
+	  b parent class_ref 2512514 // ResponseModel
+      end
     end
 
     class 2512130 "BoundaryIN"
@@ -168,6 +176,14 @@ ${members}};
       explicit_switch_type ""
       mysql_decl ""
       
+      classrelation 2883586 // <unidirectional association>
+	relation 2866306 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 2883586 // <unidirectional association>
+	  b parent class_ref 2512386 // RequestModel
+      end
     end
 
     class 2512258 "EntityA"

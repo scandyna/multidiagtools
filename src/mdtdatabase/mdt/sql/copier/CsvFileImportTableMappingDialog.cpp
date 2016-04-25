@@ -22,7 +22,9 @@
 #include "CsvFileImportTableMappingModel.h"
 #include "mdtCsvFileParserSettingsDialog.h"
 #include "mdtErrorDialog.h"
+#include "mdt/sql/Database.h"
 #include <QLabel>
+#include <QComboBox>
 #include <QToolButton>
 #include <QHBoxLayout>
 
@@ -42,6 +44,21 @@ CsvFileImportTableMappingDialog::CsvFileImportTableMappingDialog(QWidget *parent
   l->addWidget(lbSourceTable);
   setSourceTableLayout(l);
   connect(tb, &QToolButton::clicked, this, &CsvFileImportTableMappingDialog::setupSourceFile);
+  // Setup destination table widgets
+  l = new QHBoxLayout;
+  cbDestinationTable = new QComboBox;
+  l->addWidget(cbDestinationTable);
+  setDestinationTableLayout(l);
+  connect(cbDestinationTable, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+          this, &CsvFileImportTableMappingDialog::setDestinationTable);
+}
+
+void CsvFileImportTableMappingDialog::setDestinationDatabase(const QSqlDatabase & db)
+{
+  Q_ASSERT(db.isOpen());
+
+  pvMappingModel->setDestinationDatabase(db);
+  populateDestinationTableCombobox(db);
 }
 
 void CsvFileImportTableMappingDialog::setMapping(const std::shared_ptr<CsvFileImportTableMapping> & m)
@@ -54,6 +71,7 @@ void CsvFileImportTableMappingDialog::setMapping(const std::shared_ptr<CsvFileIm
   pvMappingModel->setMapping(m);
   updateMapping();
   displaySourceTable();
+  populateDestinationTableCombobox(m->destinationDatabase());
 }
 
 std::shared_ptr<CsvFileImportTableMapping> CsvFileImportTableMappingDialog::mapping() const
@@ -95,9 +113,41 @@ void CsvFileImportTableMappingDialog::setupSourceFile()
   updateSourceTableFieldSelectionDelegate();
 }
 
+void CsvFileImportTableMappingDialog::setDestinationTable(int cbIndex)
+{
+  if(cbIndex < 0){
+    return;
+  }
+  if(!pvMappingModel->mapping()->destinationDatabase().isOpen()){
+    return;
+  }
+  QString tableName = cbDestinationTable->itemText(cbIndex);
+  if(!pvMappingModel->setDestinationTable(tableName)){
+    displayError(pvMappingModel->lastError());
+    return;
+  }
+  updateSourceTableFieldSelectionDelegate();
+}
+
 void CsvFileImportTableMappingDialog::displaySourceTable()
 {
   lbSourceTable->setText(pvMappingModel->sourceTableName());
+}
+
+void CsvFileImportTableMappingDialog::populateDestinationTableCombobox(const QSqlDatabase & db)
+{
+  using mdt::sql::Database;
+
+  auto tables = Database::getTables(db, Database::Tables);
+  tables.sort();
+  cbDestinationTable->clear();
+  cbDestinationTable->addItems(tables);
+}
+
+void CsvFileImportTableMappingDialog::displayError(const mdtError &error)
+{
+  mdtErrorDialog dialog(error, this);
+  dialog.exec();
 }
 
 const std::shared_ptr<const TableMapping> CsvFileImportTableMappingDialog::mappingBase() const

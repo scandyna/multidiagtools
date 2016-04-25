@@ -27,6 +27,7 @@
 
 class QLabel;
 class QToolButton;
+class QComboBox;
 
 namespace mdt{ namespace sql{ namespace copier{
 
@@ -44,6 +45,10 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     CsvFileImportTableMappingDialog(QWidget *parent = nullptr);
 
+    /*! \brief Set destination database
+     */
+    void setDestinationDatabase(const QSqlDatabase & db);
+
     /*! \brief Set table mapping
      */
     void setMapping(const std::shared_ptr<CsvFileImportTableMapping> & m);
@@ -58,11 +63,25 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void setupSourceFile();
 
+    /*! \brief Set destination table
+     *
+     * Called when cbDestinationTable's index changed.
+     */
+    void setDestinationTable(int cbIndex);
+
    private:
 
     /*! \brief Display source table
      */
     void displaySourceTable();
+
+    /*! \brief (Re-) populate destination table combobox
+     */
+    void populateDestinationTableCombobox(const QSqlDatabase & db);
+
+    /*! \brief Display error
+     */
+    void displayError(const mdtError & error);
 
     /*! \brief Reference internal table mapping (read only version)
      */
@@ -78,6 +97,7 @@ namespace mdt{ namespace sql{ namespace copier{
 
     CsvFileImportTableMappingModel *pvMappingModel;
     QLabel *lbSourceTable;
+    QComboBox *cbDestinationTable;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

@@ -88,6 +88,7 @@ set (SOURCES_FILES
           mdt/sql/copier/CsvFileImportTableMappingDialog.cpp
           mdt/sql/copier/CsvFileImportMapping.cpp
           mdt/sql/copier/CsvFileImportMappingModel.cpp
+          mdt/sql/copier/CsvFileImportDialog.cpp
     )
 
 # Platform specific files

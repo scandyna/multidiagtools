@@ -27,9 +27,9 @@ CsvFileImportMappingModel::CsvFileImportMappingModel(QObject *parent)
 {
 }
 
-mdtExpected<bool> CsvFileImportMappingModel::setDestinationDatabase(const QSqlDatabase & db)
+bool CsvFileImportMappingModel::setDestinationDatabase(const QSqlDatabase & db)
 {
-  mdtExpected<bool> ret;
+  bool ret;
 
   beginResetModel();
   ret = pvMapping.setDestinationDatabase(db);
@@ -38,9 +38,9 @@ mdtExpected<bool> CsvFileImportMappingModel::setDestinationDatabase(const QSqlDa
   return ret;
 }
 
-mdtExpected<bool> CsvFileImportMappingModel::resetMapping()
+bool CsvFileImportMappingModel::resetMapping()
 {
-  mdtExpected<bool> ret;
+  bool ret;
 
   beginResetModel();
   ret = pvMapping.resetMapping();

@@ -43,14 +43,19 @@ void CsvImportTableMapping::setSourceRecordFormat(const csv::RecordFormat & form
   pvSourceFormat = format;
 }
 
-bool CsvImportTableMapping::setDestinationTable(const QString & tableName, const QSqlDatabase & db)
+void CsvImportTableMapping::setDestinationDatabase(const QSqlDatabase & db)
 {
   clearFieldMapping();
-  if(!pvDestinationTable.setupFromTable(tableName, db)){
+  pvDestinationDatabase = db;
+}
+
+bool CsvImportTableMapping::setDestinationTable(const QString & tableName)
+{
+  clearFieldMapping();
+  if(!pvDestinationTable.setupFromTable(tableName, pvDestinationDatabase)){
     pvLastError = pvDestinationTable.lastError();
     return false;
   }
-  pvDestinationDatabase = db;
   resetFieldMapping();
 
   return true;

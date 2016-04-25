@@ -59,15 +59,23 @@ void TableMappingDialog::setSourceTableLayout(QLayout *l)
   gbSourceTable->setLayout(l);
 }
 
+void TableMappingDialog::setDestinationTableLayout(QLayout *l)
+{
+  Q_ASSERT(l != nullptr);
+  Q_ASSERT(gbDestinationTable->layout() == nullptr);
+
+  gbDestinationTable->setLayout(l);
+}
+
 void TableMappingDialog::setModel(TableMappingModel *model)
 {
   Q_ASSERT(model != nullptr);
   Q_ASSERT(tvMapping->model() == nullptr);
 
   tvMapping->setModel(model);
-  auto *sourceTypeDelegate = new mdtComboBoxItemDelegate(this);
-  model->setupItemTypeDelegate(sourceTypeDelegate);
-  tvMapping->setItemDelegateForColumn(0, sourceTypeDelegate);
+//   auto *sourceTypeDelegate = new mdtComboBoxItemDelegate(this);
+//   model->setupItemTypeDelegate(sourceTypeDelegate);
+//   tvMapping->setItemDelegateForColumn(0, sourceTypeDelegate);
   tvMapping->setItemDelegateForColumn(2, pvSourceFieldSelectionDelegate);
   Q_ASSERT(tvMapping->selectionModel() != nullptr);
   connect(tvMapping->selectionModel(), &QItemSelectionModel::selectionChanged, this, &TableMappingDialog::setSelectedRowFromSelection);
@@ -80,9 +88,6 @@ void TableMappingDialog::updateMapping()
 {
   Q_ASSERT(mappingBase());
 
-  const auto * const tm = mappingBase().get();
-
-  lbDestinationTable->setText(tm->destinationTableName());
   updateSourceTableFieldSelectionDelegate();
   resizeTableViewToContents();
 }

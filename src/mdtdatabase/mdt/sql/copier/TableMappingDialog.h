@@ -53,9 +53,13 @@ namespace mdt{ namespace sql{ namespace copier{
 
   protected:
 
-    /*! \brief Set layout that contains source selection widgets
+    /*! \brief Set layout that contains source selection or display widgets
      */
     void setSourceTableLayout(QLayout *l);
+
+    /*! \brief Set layout that contains destination selection or display widgets
+     */
+    void setDestinationTableLayout(QLayout *l);
 
     /*! \brief Set table mapping model
      *

@@ -52,11 +52,17 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     bool setSourceString(const QString & csv);
 
+    /*! \brief Set destination database
+     *
+     * Will also clear mapping
+     */
+    void setDestinationDatabase(const QSqlDatabase & db);
+
     /*! \brief Set destination table
      *
      * Will also reset field mapping.
      */
-    bool setDestinationTable(const QString & tableName, const QSqlDatabase & db);
+    bool setDestinationTable(const QString & tableName);
 
     /*! \brief Get table mapping
      */

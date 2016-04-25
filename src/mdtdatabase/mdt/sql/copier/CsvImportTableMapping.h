@@ -80,13 +80,11 @@ namespace mdt{ namespace sql{ namespace copier{
       return pvSourceFormat;
     }
 
-    /*! \brief Set destination table
+    /*! \brief Set destination database
      *
-     * Will also reset field mapping.
-     *
-     * \sa resetFieldMapping()
+     * Will also clear mapping
      */
-    bool setDestinationTable(const QString & tableName, const QSqlDatabase & db);
+    void setDestinationDatabase(const QSqlDatabase & db);
 
     /*! \brief Get destination database
      */
@@ -94,6 +92,14 @@ namespace mdt{ namespace sql{ namespace copier{
     {
       return pvDestinationDatabase;
     }
+
+    /*! \brief Set destination table
+     *
+     * Will also reset field mapping.
+     *
+     * \sa resetFieldMapping()
+     */
+    bool setDestinationTable(const QString & tableName);
 
     /*! \brief Get destination table name
      */

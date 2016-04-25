@@ -54,6 +54,7 @@
 #include "mdt/sql/copier/CsvFileImportTableMappingDialog.h"
 #include "mdt/sql/copier/CsvFileImportMapping.h"
 #include "mdt/sql/copier/CsvFileImportMappingModel.h"
+#include "mdt/sql/copier/CsvFileImportDialog.h"
 #include "mdtComboBoxItemDelegate.h"
 #include "mdtProgressBarItemDelegate.h"
 #include "mdtProgressValue.h"
@@ -3081,7 +3082,7 @@ void mdtSqlCopierTest::sqlDatabaseCopierTableMappingDialogTest()
   dialog.exec();
 }
 
-void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
+void mdtSqlCopierTest::csvStringImportTableMappingTest()
 {
   using mdt::sql::copier::TableMapping;
   using mdt::sql::copier::CsvStringImportTableMapping;
@@ -3093,7 +3094,9 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
   QString csvString;
   mdtCsvParserSettings csvSettings;
   QStringList fieldNames;
+  auto db = pvDatabase;
 
+  QVERIFY(db.isOpen());
   /*
    * Prepare CSV source string
    */
@@ -3113,7 +3116,8 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
    * Set source CSV and destination table
    */
   QVERIFY(mapping.setSourceString(csvString));
-  QVERIFY(mapping.setDestinationTable("Client_tbl", pvDatabase));
+  mapping.setDestinationDatabase(db);
+  QVERIFY(mapping.setDestinationTable("Client_tbl"));
   QVERIFY(mapping.mappingState() == DatabaseCopierTableMapping::MappingNotSet);
   /*
    * Check fetching database objects
@@ -3385,7 +3389,7 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingTest()
 
 }
 
-void mdtSqlCopierTest::sqlCsvStringImportTableMappingModelTest()
+void mdtSqlCopierTest::csvStringImportTableMappingModelTest()
 {
   using mdt::sql::copier::CsvStringImportTableMappingModel;
 //   using mdt::sql::copier::CsvStringImportTableMapping;
@@ -3399,7 +3403,9 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingModelTest()
   mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
   QString csvString;
   mdtCsvParserSettings csvSettings;
+  auto db = pvDatabase;
 
+  QVERIFY(db.isOpen());
   /*
    * Prepare CSV source string
    */
@@ -3424,7 +3430,8 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingModelTest()
   delegate->clear();
   delegate->addItem("");
   delegate->addItems(model.mapping()->getSourceTableFieldNameList());
-  QVERIFY(model.setDestinationTable("Client_tbl", pvDatabase));
+  model.setDestinationDatabase(db);
+  QVERIFY(model.setDestinationTable("Client_tbl"));
   model.generateFieldMappingByName();
 
   /*
@@ -3436,7 +3443,7 @@ void mdtSqlCopierTest::sqlCsvStringImportTableMappingModelTest()
   }
 }
 
-void mdtSqlCopierTest::sqlCsvFileImportTableMappingTableFetchTest()
+void mdtSqlCopierTest::csvFileImportTableMappingTableFetchTest()
 {
   using mdt::sql::copier::TableMapping;
   using mdt::sql::copier::CsvFileImportTableMapping;
@@ -3444,7 +3451,9 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTableFetchTest()
   CsvFileImportTableMapping mapping;
   mdtCsvParserSettings csvSettings;
   QStringList fieldNames;
+  auto db = pvDatabase;
 
+  QVERIFY(db.isOpen());
   /*
    * Prepare CSV source file
    */
@@ -3467,7 +3476,8 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTableFetchTest()
    * Set source CSV and destination table
    */
   QVERIFY(mapping.setSourceFile(csvFile, "UTF-8"));
-  QVERIFY(mapping.setDestinationTable("Client_tbl", pvDatabase));
+  mapping.setDestinationDatabase(db);
+  QVERIFY(mapping.setDestinationTable("Client_tbl"));
   QVERIFY(mapping.mappingState() == TableMapping::MappingNotSet);
   /*
    * Check file specific informations
@@ -3537,7 +3547,7 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTableFetchTest()
 
 }
 
-void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
+void mdtSqlCopierTest::csvFileImportTableMappingTest()
 {
   using mdt::sql::copier::TableMapping;
   using mdt::sql::copier::CsvFileImportTableMapping;
@@ -3547,12 +3557,14 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
   mdtCsvParserSettings csvSettings;
   mdt::csv::RecordFormat format;
   QStringList fieldNames;
+  auto db = pvDatabase;
 
   /** \todo Define how CSV field types are set
    *        F.ex. a CSV settings, with default to all fields are strings ?
    *                Also, auto-detetction ?
    *        Once done, update also this test
    */
+  QVERIFY(db.isOpen());
   /*
    * Prepare CSV source file
    */
@@ -3570,7 +3582,8 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
    * Set source CSV and destination table
    */
   QVERIFY(mapping.setSourceFile(csvFile, "UTF-8"));
-  QVERIFY(mapping.setDestinationTable("Client_tbl", pvDatabase));
+  mapping.setDestinationDatabase(db);
+  QVERIFY(mapping.setDestinationTable("Client_tbl"));
   QVERIFY(mapping.mappingState() == TableMapping::MappingNotSet);
   /*
    * Update source record format
@@ -3826,7 +3839,7 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingTest()
   QVERIFY(mapping.mappingState() == TableMapping::MappingNotSet);
 }
 
-void mdtSqlCopierTest::sqlCsvFileImportTableMappingModelTest()
+void mdtSqlCopierTest::csvFileImportTableMappingModelTest()
 {
   using mdt::sql::copier::CsvFileImportTableMappingModel;
 
@@ -3839,7 +3852,9 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingModelTest()
   mdtComboBoxItemDelegate *delegate = new mdtComboBoxItemDelegate(&tableView);
   mdtCsvParserSettings csvSettings;
   QTemporaryFile csvFile;
+  auto db = pvDatabase;
 
+  QVERIFY(db.isOpen());
   /*
    * Prepare CSV source file
    */
@@ -3867,7 +3882,8 @@ void mdtSqlCopierTest::sqlCsvFileImportTableMappingModelTest()
   delegate->clear();
   delegate->addItem("");
   delegate->addItems(model.mapping()->getSourceTableFieldNameList());
-  QVERIFY(model.setDestinationTable("Client_tbl", pvDatabase));
+  model.setDestinationDatabase(db);
+  QVERIFY(model.setDestinationTable("Client_tbl"));
   model.generateFieldMappingByName();
 
   /*
@@ -3888,7 +3904,9 @@ void mdtSqlCopierTest::csvFileImportTableMappingDialogTest()
   auto mapping = std::make_shared<CsvFileImportTableMapping>();
   mdtCsvParserSettings csvSettings;
   QTemporaryFile csvFile;
+  auto db = pvDatabase;
 
+  QVERIFY(db.isOpen());
   /*
    * Prepare CSV source file
    */
@@ -3900,7 +3918,8 @@ void mdtSqlCopierTest::csvFileImportTableMappingDialogTest()
    * Set source CSV and destination table
    */
   QVERIFY(mapping->setSourceFile(csvFile, "UTF-8"));
-  QVERIFY(mapping->setDestinationTable("Client_tbl", pvDatabase));
+  mapping->setDestinationDatabase(db);
+  QVERIFY(mapping->setDestinationTable("Client_tbl"));
   QVERIFY(mapping->mappingState() == TableMapping::MappingNotSet);
   /*
    * Setup dialog
@@ -4774,6 +4793,30 @@ void mdtSqlCopierTest::databaseCopyDialogTest()
   QVERIFY(dataset.populate());
   /*
    * Setup and show dialog
+   */
+  dialog.exec();
+}
+
+void mdtSqlCopierTest::csvFileImportThreadTest()
+{
+  using mdt::sql::copier::CsvFileImportTableMapping;
+  using mdt::sql::copier::CsvFileImportMapping;
+  using mdt::sql::copier::CsvFileImportMappingModel;
+
+  QSqlDatabase db = pvDatabase;
+  QSqlQuery query(db);
+  QVERIFY(db.isValid());
+
+}
+
+void mdtSqlCopierTest::csvFileImportDialogTest()
+{
+  using mdt::sql::copier::CsvFileImportDialog;
+
+  CsvFileImportDialog dialog;
+  
+  /*
+   * Play
    */
   dialog.exec();
 }
