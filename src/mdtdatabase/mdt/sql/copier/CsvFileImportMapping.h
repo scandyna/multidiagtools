@@ -39,6 +39,14 @@ namespace mdt{ namespace sql{ namespace copier{
   {
    public:
 
+    CsvFileImportMapping() = default;
+    // Copy disabled
+    CsvFileImportMapping(const CsvFileImportMapping &) = delete;
+    CsvFileImportMapping & operator=(const CsvFileImportMapping &) = delete;
+    // Move disabled
+    CsvFileImportMapping(CsvFileImportMapping &&) = delete;
+    CsvFileImportMapping & operator=(CsvFileImportMapping &&) = delete;
+
     /*! \brief Get count of table mapping
      */
     int tableMappingCount() const
@@ -48,11 +56,9 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Set destination database
      *
-     * Will also reset mapping.
-     *
-     * \sa resetMapping()
+     * Will also clear mapping.
      */
-    bool setDestinationDatabase(const QSqlDatabase & db);
+    void setDestinationDatabase(const QSqlDatabase & db);
 
     /*! \brief Get destination database
      */
@@ -60,6 +66,30 @@ namespace mdt{ namespace sql{ namespace copier{
     {
       return pvDestinationDatabase;
     }
+
+    /*! \brief Append a table mapping
+     *
+     * \pre tm's destination database must be the same as destinationDatabase
+     * \pre tm's destination table must exist in destination database
+     */
+    void appendTableMapping(const std::shared_ptr<CsvFileImportTableMapping> & tm);
+
+    /*! \brief Get table mapping at given index
+     *
+     * \pre index must be in a valid range
+     */
+    const std::shared_ptr<CsvFileImportTableMapping> tableMapping(int index) const
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < pvTableMappingList.size());
+      return pvTableMappingList.at(index);
+    }
+
+    /*! \brief Remove table mapping at given index
+     *
+     * \pre index must be in a valid range
+     */
+    void removeTableMapping(int index);
 
     /*! \brief Reset mapping
      *
@@ -89,17 +119,6 @@ namespace mdt{ namespace sql{ namespace copier{
       Q_ASSERT(index >= 0);
       Q_ASSERT(index < pvTableMappingList.size());
       return pvTableMappingList.at(index)->destinationTableName();
-    }
-
-    /*! \brief Get table mapping at given index
-     *
-     * \pre index must be in a valid range
-     */
-    const std::shared_ptr<CsvFileImportTableMapping> tableMapping(int index) const
-    {
-      Q_ASSERT(index >= 0);
-      Q_ASSERT(index < pvTableMappingList.size());
-      return pvTableMappingList.at(index);
     }
 
     /*! \brief Get last error

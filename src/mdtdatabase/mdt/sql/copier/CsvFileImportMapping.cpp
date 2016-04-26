@@ -21,14 +21,31 @@
 #include "CsvFileImportMapping.h"
 #include "mdt/sql/Database.h"
 
+//#include <QDebug>
+
 namespace mdt{ namespace sql{ namespace copier{
 
-bool CsvFileImportMapping::setDestinationDatabase(const QSqlDatabase & db)
+void CsvFileImportMapping::setDestinationDatabase(const QSqlDatabase & db)
 {
   pvTableMappingList.clear();
   pvDestinationDatabase = db;
+}
 
-  return resetMapping();
+void CsvFileImportMapping::appendTableMapping(const std::shared_ptr<CsvFileImportTableMapping> & tm)
+{
+  Q_ASSERT(tm);
+  Q_ASSERT(mdt::sql::Database::isSameDatabase(tm->destinationDatabase(), pvDestinationDatabase));
+  Q_ASSERT(mdt::sql::Database::getTables(pvDestinationDatabase, mdt::sql::Database::Tables).contains(tm->destinationTableName()));
+
+  pvTableMappingList.append(tm);
+}
+
+void CsvFileImportMapping::removeTableMapping(int index)
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < pvTableMappingList.size());
+
+  pvTableMappingList.remove(index);
 }
 
 bool CsvFileImportMapping::resetMapping()

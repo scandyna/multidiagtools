@@ -356,6 +356,10 @@ void mdtCsvTest::recordTest()
   record.columnDataList.append("A");
   QCOMPARE(record.count(), 1);
   /*
+   * Get
+   */
+  QCOMPARE(record.value(0), QVariant("A"));
+  /*
    * Clear
    */
   record.clear();

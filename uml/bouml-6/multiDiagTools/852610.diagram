@@ -2,58 +2,57 @@ format 211
 
 classcanvas 128002 class_ref 888194 // mdtClLinkData
   classdiagramsettings member_max_width 0 end
-  xyz 42 279 2000
+  xyz 366 671 2000
 end
 classcanvas 130818 class_ref 1672962 // mdtClLinkPkData
   classdiagramsettings member_max_width 0 end
-  xyz 448 42 2000
+  xyz 744 534 2000
 end
 classcanvas 130946 class_ref 1673090 // mdtClLinkKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 423 250 2000
+  xyz 375 202 2000
 end
 classcanvas 131970 class_ref 1653122 // mdtClLinkTypeKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 461 721 2010
+  xyz 737 145 2010
 end
 classcanvas 132098 class_ref 1653250 // mdtClLinkDirectionKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 784 593 2010
+  xyz 40 345 2010
 end
 classcanvas 132866 class_ref 1659778 // mdtClArticleLinkPkData
   classdiagramsettings member_max_width 0 end
-  xyz 784 204 2010
+  xyz 440 40 2010
 end
 classcanvas 133378 class_ref 1679746 // mdtClLinkVersionPkData
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 944.5 2000
+  xyz 40.5 1112.5 2000
 end
 relationcanvas 131074 relation_ref 2015490 // <unidirectional association>
+  decenter_begin 965
   from ref 130946 z 2001 to ref 130818
-  role_a_pos 581 216 3000 no_role_b
+  role_a_pos 712 589 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131714 relation_ref 2056450 // <unidirectional association>
-  decenter_begin 509
   from ref 128002 z 2001 to ref 130946
-  role_a_pos 356 437 3000 no_role_b
+  role_a_pos 485 610 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132610 relation_ref 2056578 // <unidirectional association>
+  decenter_begin 32
   from ref 130946 z 2011 to ref 131970
-  role_a_pos 509 698 3000 no_role_b
+  role_a_pos 655 189 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132738 relation_ref 2056706 // <unidirectional association>
-  decenter_begin 967
   from ref 130946 z 2011 to ref 132098
-  role_a_pos 678 637 3000 no_role_b
+  role_a_pos 346 390 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132994 relation_ref 2056834 // <unidirectional association>
-  decenter_begin 34
   from ref 130946 z 2011 to ref 132866
-  role_a_pos 691 237 3000 no_role_b
+  role_a_pos 551 136 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 end

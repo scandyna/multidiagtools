@@ -27,15 +27,31 @@ CsvFileImportMappingModel::CsvFileImportMappingModel(QObject *parent)
 {
 }
 
-bool CsvFileImportMappingModel::setDestinationDatabase(const QSqlDatabase & db)
+void CsvFileImportMappingModel::setDestinationDatabase(const QSqlDatabase & db)
 {
-  bool ret;
-
   beginResetModel();
-  ret = pvMapping.setDestinationDatabase(db);
+  pvMapping.setDestinationDatabase(db);
   endResetModel();
+}
 
-  return ret;
+void CsvFileImportMappingModel::appendTableMapping(const std::shared_ptr<CsvFileImportTableMapping> & tm)
+{
+  Q_ASSERT(tm);
+
+  const int start = pvMapping.tableMappingCount();
+  beginInsertRows(QModelIndex(), start, start);
+  pvMapping.appendTableMapping(tm);
+  endInsertRows();
+}
+
+void CsvFileImportMappingModel::removeTableMapping(int index)
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < pvMapping.tableMappingCount());
+
+  beginRemoveRows(QModelIndex(), index, index);
+  pvMapping.removeTableMapping(index);
+  endRemoveRows();
 }
 
 bool CsvFileImportMappingModel::resetMapping()

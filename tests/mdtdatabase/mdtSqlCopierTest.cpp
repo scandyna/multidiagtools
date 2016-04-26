@@ -55,6 +55,7 @@
 #include "mdt/sql/copier/CsvFileImportMapping.h"
 #include "mdt/sql/copier/CsvFileImportMappingModel.h"
 #include "mdt/sql/copier/CsvFileImportDialog.h"
+#include "mdt/sql/copier/CsvFileImportThread.h"
 #include "mdtComboBoxItemDelegate.h"
 #include "mdtProgressBarItemDelegate.h"
 #include "mdtProgressValue.h"
@@ -3904,6 +3905,7 @@ void mdtSqlCopierTest::csvFileImportTableMappingDialogTest()
   auto mapping = std::make_shared<CsvFileImportTableMapping>();
   mdtCsvParserSettings csvSettings;
   QTemporaryFile csvFile;
+  mdt::csv::RecordFormat format;
   auto db = pvDatabase;
 
   QVERIFY(db.isOpen());
@@ -3925,6 +3927,29 @@ void mdtSqlCopierTest::csvFileImportTableMappingDialogTest()
    * Setup dialog
    */
   dialog.setMapping(mapping);
+  mapping = dialog.mapping();
+  QVERIFY(mapping.get() != nullptr);
+  QCOMPARE(mapping->sourceFileInfo(), QFileInfo(csvFile));
+  QCOMPARE(mapping->destinationTableName(), QString("Client_tbl"));
+  QVERIFY(mapping->mappingState() == TableMapping::MappingNotSet);
+  /*
+   * Setup table mapping and set it to dialog
+   */
+  QCOMPARE(mapping->itemsCount(), 4);
+  // Set format
+  format = mapping->sourceRecordFormat();
+  format.setFieldType(0, QMetaType::Int);
+  mapping->setSourceRecordFormat(format);
+  // Setup table mapping
+  mapping->setSourceFieldAtItem(0, "Id");
+  mapping->setSourceFieldAtItem(1, "Name");
+  mapping->setSourceFieldAtItem(2, "FieldA");
+  mapping->setSourceFieldAtItem(3, "FieldB");
+  QVERIFY(mapping->mappingState() == TableMapping::MappingComplete);
+  // Set table mapping to dialog
+  dialog.setMapping(mapping);
+  // Check
+  QVERIFY(mapping->mappingState() == TableMapping::MappingComplete);
   /*
    * Play
    */
@@ -4622,24 +4647,56 @@ void mdtSqlCopierTest::csvFileImportMappingTest()
   /*
    * Set destination database
    */
-  QVERIFY(mapping.setDestinationDatabase(db));
+  mapping.setDestinationDatabase(db);
   // Check attributes without any mapping set
-  QCOMPARE(mapping.tableMappingCount(), 4);
-  // Note: tables are sorted, and '_' is after '2' in ascii
+  QCOMPARE(mapping.tableMappingCount(), 0);
+  /*
+   * Append a item
+   */
+  tm = std::make_shared<CsvFileImportTableMapping>();
+  tm->setDestinationDatabase(db);
+  tm->setDestinationTable("Address2_tbl");
+  mapping.appendTableMapping(tm);
+  // Check
+  QCOMPARE(mapping.tableMappingCount(), 1);
   QCOMPARE(mapping.destinationTableName(0), QString("Address2_tbl"));
-  QCOMPARE(mapping.destinationTableName(1), QString("Address_tbl"));
-  QCOMPARE(mapping.destinationTableName(2), QString("Client2_tbl"));
-  QCOMPARE(mapping.destinationTableName(3), QString("Client_tbl"));
-  // Check that database is set to each table mapping
   QCOMPARE(mapping.tableMapping(0)->destinationDatabase().databaseName(), db.databaseName());
-  QCOMPARE(mapping.tableMapping(1)->destinationDatabase().databaseName(), db.databaseName());
-  QCOMPARE(mapping.tableMapping(2)->destinationDatabase().databaseName(), db.databaseName());
-  QCOMPARE(mapping.tableMapping(3)->destinationDatabase().databaseName(), db.databaseName());
-  // No source must be assigned now
   QVERIFY(mapping.sourceTableName(0).isEmpty());
+  /*
+   * Append a item
+   */
+  tm = std::make_shared<CsvFileImportTableMapping>();
+  tm->setDestinationDatabase(db);
+  tm->setDestinationTable("Client2_tbl");
+  mapping.appendTableMapping(tm);
+  // Check
+  QCOMPARE(mapping.tableMappingCount(), 2);
+  QCOMPARE(mapping.destinationTableName(1), QString("Client2_tbl"));
+  QCOMPARE(mapping.tableMapping(1)->destinationDatabase().databaseName(), db.databaseName());
   QVERIFY(mapping.sourceTableName(1).isEmpty());
-  QVERIFY(mapping.sourceTableName(2).isEmpty());
-  QVERIFY(mapping.sourceTableName(3).isEmpty());
+  /*
+   * Remove a item
+   */
+  mapping.removeTableMapping(1);
+  // Check
+  QCOMPARE(mapping.tableMappingCount(), 1);
+  QCOMPARE(mapping.destinationTableName(0), QString("Address2_tbl"));
+  
+//   // Note: tables are sorted, and '_' is after '2' in ascii
+//   QCOMPARE(mapping.destinationTableName(0), QString("Address2_tbl"));
+//   QCOMPARE(mapping.destinationTableName(1), QString("Address_tbl"));
+//   QCOMPARE(mapping.destinationTableName(2), QString("Client2_tbl"));
+//   QCOMPARE(mapping.destinationTableName(3), QString("Client_tbl"));
+//   // Check that database is set to each table mapping
+//   QCOMPARE(mapping.tableMapping(0)->destinationDatabase().databaseName(), db.databaseName());
+//   QCOMPARE(mapping.tableMapping(1)->destinationDatabase().databaseName(), db.databaseName());
+//   QCOMPARE(mapping.tableMapping(2)->destinationDatabase().databaseName(), db.databaseName());
+//   QCOMPARE(mapping.tableMapping(3)->destinationDatabase().databaseName(), db.databaseName());
+//   // No source must be assigned now
+//   QVERIFY(mapping.sourceTableName(0).isEmpty());
+//   QVERIFY(mapping.sourceTableName(1).isEmpty());
+//   QVERIFY(mapping.sourceTableName(2).isEmpty());
+//   QVERIFY(mapping.sourceTableName(3).isEmpty());
 
   /// \todo continue
 }
@@ -4654,9 +4711,9 @@ void mdtSqlCopierTest::csvFileImportMappingModelTest()
   QTableView tableView;
   QTreeView treeView;
   CsvFileImportMappingModel model;
-  const int sourceTableNameColumn = 0;
-  const int destinationTableNameColumn = 1;
-  const int tableMappingStateColumn = 2;
+  const int sourceTableNameColumn = 1;
+  const int destinationTableNameColumn = 2;
+  const int tableMappingStateColumn = 3;
   QModelIndex index;
   std::shared_ptr<CsvFileImportTableMapping> tm;
   auto db = pvDatabase;
@@ -4668,12 +4725,6 @@ void mdtSqlCopierTest::csvFileImportMappingModelTest()
   QCOMPARE(model.columnCount(), 6);
   QCOMPARE(model.rowCount(), 0);
   /*
-   * Set destination database
-   */
-  QVERIFY(model.setDestinationDatabase(db));
-  QCOMPARE(model.rowCount(), 4);
-
-  /*
    * Setup views
    */
   // Setup table view
@@ -4683,6 +4734,42 @@ void mdtSqlCopierTest::csvFileImportMappingModelTest()
   // Setup tree view
   treeView.setModel(&model);
   treeView.show();
+  /*
+   * Set destination database
+   */
+  model.setDestinationDatabase(db);
+  QCOMPARE(model.rowCount(), 0);
+  /*
+   * Add a table mapping
+   */
+  tm = std::make_shared<CsvFileImportTableMapping>();
+  tm->setDestinationDatabase(db);
+  tm->setDestinationTable("Address2_tbl");
+  model.appendTableMapping(tm);
+  QCOMPARE(model.rowCount(), 1);
+  // Check destination table name
+  index = model.index(0, destinationTableNameColumn);
+  QCOMPARE(model.data(index), QVariant("Address2_tbl"));
+  /*
+   * Add a table mapping
+   */
+  tm = std::make_shared<CsvFileImportTableMapping>();
+  tm->setDestinationDatabase(db);
+  tm->setDestinationTable("Client2_tbl");
+  model.appendTableMapping(tm);
+  QCOMPARE(model.rowCount(), 2);
+  // Check destination table name
+  index = model.index(1, destinationTableNameColumn);
+  QCOMPARE(model.data(index), QVariant("Client2_tbl"));
+
+  /*
+   * Remove a table mapping
+   */
+  model.removeTableMapping(1);
+  QCOMPARE(model.rowCount(), 1);
+  // Check destination table name
+  index = model.index(0, destinationTableNameColumn);
+  QCOMPARE(model.data(index), QVariant("Address2_tbl"));
 
   /*
    * Play
@@ -4800,13 +4887,178 @@ void mdtSqlCopierTest::databaseCopyDialogTest()
 void mdtSqlCopierTest::csvFileImportThreadTest()
 {
   using mdt::sql::copier::CsvFileImportTableMapping;
+  using mdt::sql::copier::TableMapping;
   using mdt::sql::copier::CsvFileImportMapping;
   using mdt::sql::copier::CsvFileImportMappingModel;
+  using mdt::sql::copier::CsvFileImportThread;
+  using mdt::sql::copier::ExpressionMatchItem;
+  using mdt::sql::copier::UniqueInsertCriteria;
 
+  std::shared_ptr<CsvFileImportTableMapping> tm;
+  mdt::csv::RecordFormat format;
+  CsvFileImportMappingModel importMappingModel;
+  CsvFileImportThread thread;
+  QTemporaryFile csvFile;
+  std::vector<ExpressionMatchItem> matchItems;
+  UniqueInsertCriteria uic;
+  mdt::sql::copier::RelatedTableInsertExpression rtExp;
+  mdt::sql::copier::TableMappingItem rtExpItem;
+  QModelIndex index;
   QSqlDatabase db = pvDatabase;
   QSqlQuery query(db);
-  QVERIFY(db.isValid());
 
+  QVERIFY(db.isValid());
+  /*
+   * Prepare CSV source file
+   */
+  QVERIFY(csvFile.open());
+  QVERIFY(csvFile.write("ClientId,ClientName,Street\n") > 0);
+  QVERIFY(csvFile.write("1,Client 1,Street 11\n") > 0);
+  QVERIFY(csvFile.write("2,Client 2,Street 21\n") > 0);
+  QVERIFY(csvFile.write("2,Client 2,Street 22\n") > 0);
+  csvFile.close();
+  /*
+   * Check that we have no data in Client2_tbl and in Address2_tbl
+   */
+  QVERIFY(query.exec("SELECT * FROM Client2_tbl"));
+  QVERIFY(!query.next());
+  QVERIFY(query.exec("SELECT * FROM Address2_tbl"));
+  QVERIFY(!query.next());
+  /*
+   * Setup import mapping
+   *
+   * We proceed in 2 steps:
+   *  - Import client part -> Client2_tbl
+   *  - Import address part -> Address2_tbl
+   */
+  importMappingModel.setDestinationDatabase(db);
+  /*
+   * Setup table mapping for client part:
+   * --------------------------------------
+   * |  Source field  | Destination field |
+   * |   (in CSV)     | (in Client2_tbl)  |
+   * |------------------------------------|
+   * | 0 (ClientId)   | 0 (Id_PK)         |
+   * |------------------------------------|
+   * | 1 (ClientName) | 1 (Name)          |
+   * |------------------------------------|
+   * |        --      | 2 (FieldA)        |
+   * |------------------------------------|
+   * |        --      | 3 (FieldB)        |
+   * |------------------------------------|
+   */
+  // Create a table mapping and set its source and destination
+  tm = std::make_shared<CsvFileImportTableMapping>();
+  QVERIFY(tm->setSourceFile(csvFile, "UTF8"));
+  tm->setDestinationDatabase(db);
+  QVERIFY(tm->setDestinationTable("Client2_tbl"));
+  // Update source format for ClientId
+  format = tm->sourceRecordFormat();
+  QCOMPARE(format.fieldCount(), 3);
+  format.setFieldType(0, QMetaType::Int);
+  tm->setSourceRecordFormat(format);
+  // Setup field mapping
+  QCOMPARE(tm->itemsCount(), 4);
+  tm->setSourceFieldAtItem(0, "ClientId");
+  tm->setSourceFieldAtItem(1, "ClientName");
+  /*
+   * We also have to insert clients in unique way:
+   *  UIC: Client2_tbl.Id_PK = CSV.ClientId
+   */
+  matchItems.clear();
+  matchItems.emplace_back(0, 0);
+  uic.setMatchItems(matchItems);
+  tm->setUniqueInsertCriteria(uic);
+  /// \todo Here it should be possible to declare tm complete
+  QVERIFY(tm->mappingState() == TableMapping::MappingPartial);
+  // Add table mapping to import model
+  importMappingModel.appendTableMapping(tm);
+  /*
+   * Setup table mapping for address part:
+   * --------------------------------------
+   * |  Source field  | Destination field |
+   * |   (in CSV)     | (in Address2_tbl) |
+   * |------------------------------------|
+   * |        --      | 0 (Id_PK)         |
+   * |------------------------------------|
+   * | rtExp          | 1 (Client_Id_FK)  |
+   * |------------------------------------|
+   * | 2 (Street)     | 2 (Street)        |
+   * |------------------------------------|
+   * |        --      | 3 (FieldAA)       |
+   * |------------------------------------|
+   * |        --      | 4 (FieldAB)       |
+   * |------------------------------------|
+   */
+  // Create a table mapping and set its source and destination
+  tm = std::make_shared<CsvFileImportTableMapping>();
+  QVERIFY(tm->setSourceFile(csvFile, "UTF8"));
+  tm->setDestinationDatabase(db);
+  QVERIFY(tm->setDestinationTable("Address2_tbl"));
+  // Setup field mapping
+  QCOMPARE(tm->itemsCount(), 5);
+  tm->setSourceFieldAtItem(2, "Street");
+  /*
+   * Setup related table expression to find Client_Id_FK:
+   *  - Fetch Id_PK in Client2_tbl
+   *  - Match: Client2_tbl.Name = CSV.ClientName
+   */
+  rtExp.clear();
+  rtExp.addDestinationFieldIndex(1);
+  rtExp.setDestinationRelatedTableName("Client2_tbl");
+  rtExp.addDestinationRelatedFieldIndex(0);
+  matchItems.clear();
+  matchItems.emplace_back(1, 1);
+  rtExp.setMatchItems(matchItems);
+  QVERIFY(!rtExp.isNull());
+  rtExpItem.setRelatedTableInsertExpression(rtExp);
+  QVERIFY(!rtExpItem.isNull());
+  tm->insertItem(rtExpItem);
+  QCOMPARE(tm->itemsCount(), 5);
+  /// \todo Here it should be possible to declare tm complete
+  QVERIFY(tm->mappingState() == TableMapping::MappingPartial);
+  // Add table mapping to import model
+  importMappingModel.appendTableMapping(tm);
+  QCOMPARE(importMappingModel.rowCount(), 2);
+  /*
+   * Select all table mapping
+   */
+  index = importMappingModel.index(0, 0);
+  importMappingModel.setData(index, true, Qt::CheckStateRole);
+  index = importMappingModel.index(1, 0);
+  importMappingModel.setData(index, true, Qt::CheckStateRole);
+  QVERIFY(importMappingModel.isTableMappingSelected(0));
+  QVERIFY(importMappingModel.isTableMappingSelected(1));
+  /*
+   * Run copy
+   */
+  thread.startCopy(&importMappingModel);
+  thread.wait();
+  /*
+   * Check Client2_tbl
+   */
+  QVERIFY(query.exec("SELECT * FROM Client2_tbl"));
+  QVERIFY(query.next());
+  QCOMPARE(query.record().value(0), QVariant(1));
+  QCOMPARE(query.record().value(1), QVariant("Client 1"));
+  QVERIFY(query.next());
+  QCOMPARE(query.record().value(0), QVariant(2));
+  QCOMPARE(query.record().value(1), QVariant("Client 2"));
+  QVERIFY(!query.next());
+  /*
+   * Check Address2_tbl
+   */
+  QVERIFY(query.exec("SELECT * FROM Address2_tbl"));
+  QVERIFY(query.next());
+  QCOMPARE(query.record().value(1), QVariant(1));
+  QCOMPARE(query.record().value(2), QVariant("Street 11"));
+  QVERIFY(query.next());
+  QCOMPARE(query.record().value(1), QVariant(2));
+  QCOMPARE(query.record().value(2), QVariant("Street 21"));
+  QVERIFY(query.next());
+  QCOMPARE(query.record().value(1), QVariant(2));
+  QCOMPARE(query.record().value(2), QVariant("Street 22"));
+  QVERIFY(!query.next());
 }
 
 void mdtSqlCopierTest::csvFileImportDialogTest()

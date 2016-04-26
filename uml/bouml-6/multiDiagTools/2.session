@@ -1,31 +1,11 @@
-window_sizes 1280 964 384 890 911 0
+window_sizes 1280 964 353 921 911 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 2075522 // CsvFileImportMappingModel
-    120 106 90 7 0 0
-  active  classdiagram_ref 2075650 // CsvFileImportDialog
-    890 911 100 4 0 0
-  classdiagram_ref 1829122 // TableMappingModel
-    971 911 80 22 0 26
-  classdiagram_ref 1943042 // TMoverview
-    120 106 100 18 0 0
-  classdiagram_ref 2184450 // CsvImportTableMapping
-    890 911 100 6 144 0
-  classdiagram_ref 2164866 // ParserFormatSetupProxyModel
-    120 106 100 18 0 0
-  classdiagram_ref 2151554 // Dialog
-    890 911 100 21 0 0
-  classdiagram_ref 2068738 // DatabaseCopyDialog
-    890 911 100 18 0 0
-  classdiagram_ref 2075266 // DatabaseCopyThread
-    120 106 90 22 0 65
-  classdiagram_ref 2075778 // CsvFileImportThread
-    120 106 100 4 0 0
-  classdiagram_ref 2075394 // CopyThread
-    120 106 100 21 0 0
+  active  classdiagram_ref 2075778 // CsvFileImportThread
+    921 911 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2075650 // CsvFileImportDialog
+selected classdiagram_ref 2075778 // CsvFileImportThread
 open
   
 package_ref 403202 // tools
@@ -35,6 +15,14 @@ package_ref 403202 // tools
   classview_ref 887298 // Common
   classview_ref 887170 // Parser
   classview_ref 1097986 // FileParserSettings
+  classview_ref 1038850 // CopyThread
   classview_ref 1032322 // CopyDialog
+  class_ref 2537602 // EdgeData
+  class_ref 2536834 // PathGraph
+  class_ref 2536962 // Path
+  classview_ref 920322 // PathGraphPrivate
+  classview_ref 920706 // linkPathView
+  
+package_ref 260866 // Boost
 end
 end

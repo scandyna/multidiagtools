@@ -27,6 +27,60 @@
 namespace mdt{ namespace sql{ namespace copier{
 
   /*! \brief Unique insert criteria for SQL copier
+   *
+   * For example, say we have to import a CSV file
+   *  containing clients with their addresses:
+   * <table>
+   *  <tr>
+   *   <th>ClientName</th>
+   *   <th>Address</th>
+   *  </tr>
+   *  <tr>
+   *   <td>Client 1</td>
+   *   <td>Street 11</td>
+   *  </tr>
+   *  <tr>
+   *   <td>Client 2</td>
+   *   <td>Street 21</td>
+   *  </tr>
+   *  <tr>
+   *   <td>Client 2</td>
+   *   <td>Street 22</td>
+   *  </tr>
+   * </table>
+   *
+   * Notice that Client 2 is listed 2 times (once for each address).
+   * The goal is to import clients to Client_tbl (a database table)
+   *  in a unique way:
+   * <table>
+   *  <tr>
+   *   <th>Id_PK</th>
+   *   <th>Name</th>
+   *  </tr>
+   *  <tr>
+   *   <td>1</td>
+   *   <td>Client 1</td>
+   *  </tr>
+   *  <tr>
+   *   <td>2</td>
+   *   <td>Client 2</td>
+   *  </tr>
+   * </table>
+   *
+   * During copy process, it must be checked that client (in source)
+   *  not allready exists in destination (Client_tbl).
+   *
+   * Unique insert criteria will also be: Client_tbl.Name = CSV.ClientName
+   *
+   * \code
+   * UniqueInsertCriteria uic;
+   * std::vector<ExpressionMatchItem> matchItems;
+   *
+   * // First argument is source value field index (here 0, which is ClientName in CSV)
+   * // Second argument is destination field index (here 1, which is Name in Client_tbl)
+   * matchItems.emplace_back(0, 1);
+   * uic.setMatchItems(matchItems);
+   * \endcode
    */
   class UniqueInsertCriteria
   {

@@ -52,9 +52,9 @@ namespace mdt{ namespace sql{ namespace copier{
 
     /*! \brief Set destination database
      *
-     * Will also reset mapping.
+     * Will also clear mapping.
      */
-    bool setDestinationDatabase(const QSqlDatabase & db);
+    void setDestinationDatabase(const QSqlDatabase & db);
 
     /*! \brief Get destination database
      */
@@ -62,6 +62,19 @@ namespace mdt{ namespace sql{ namespace copier{
     {
       return pvMapping.destinationDatabase();
     }
+
+    /*! \brief Append a table mapping
+     *
+     * \pre tm's destination database must be the same as destinationDatabase
+     * \pre tm's destination table must exist in destination database
+     */
+    void appendTableMapping(const std::shared_ptr<CsvFileImportTableMapping> & tm);
+
+    /*! \brief Remove table mapping at given index
+     *
+     * \pre index must be in a valid range
+     */
+    void removeTableMapping(int index);
 
     /*! \brief Reset mapping
      */

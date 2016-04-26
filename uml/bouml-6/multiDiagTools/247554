@@ -1,6 +1,6 @@
 format 211
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 84
+  revision 85
   modified_by 2 "philippe"
   // class settings
   
@@ -2603,6 +2603,11 @@ ${inlines}
       end
     end
 
+    classdiagram 2211458 "UnitConnectionData"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
     class 1739010 "mdtClUnitConnectionPkData"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -2969,6 +2974,15 @@ ${inlines}
 	    classrelation_ref 2024962 // unitId_ (<unidirectional association>)
 	  b parent class_ref 1666306 // Unit
       end
+
+      classrelation 2891138 // <directional composition>
+	relation 2873858 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2891138 // <directional composition>
+	  b parent class_ref 1739010 // mdtClUnitConnectionPkData
+      end
     end
 
     class 1113858 "mdtClUnitConnectionData"
@@ -3258,11 +3272,20 @@ ${inlines}
 	
 	
       end
+
+      classrelation 2891266 // <directional composition>
+	relation 2873986 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2891266 // <directional composition>
+	  b parent class_ref 1639682 // mdtClUnitConnectionKeyData
+      end
     end
 
     classdiagram 1437442 "KeyDataOverview"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size C
     end
 
     class 1666306 "Unit"
@@ -5425,7 +5448,7 @@ ${inlines}
 
     classdiagram 852610 "mdtClLinkData"
       classdiagramsettings draw_all_relations no member_max_width 0 end
-      size A3-Landscape
+      size A3
     end
 
     class 1672962 "mdtClLinkPkData"

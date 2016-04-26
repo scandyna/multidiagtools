@@ -21,14 +21,16 @@
 #include "MappingModel.h"
 #include <QColor>
 
-//#include <QDebug>
+#include <QDebug>
 
 namespace mdt{ namespace sql{ namespace copier{
 
 MappingModel::MappingModel(QObject *parent)
  : QAbstractTableModel(parent)
 {
-  connect(this, &QAbstractTableModel::modelReset, this, &MappingModel::resetCopyStatusAndProgress);
+  connect(this, &QAbstractTableModel::modelReset, this, &MappingModel::onModelReset);
+  connect(this, &QAbstractTableModel::rowsAboutToBeInserted, this, &MappingModel::onRowsAboutToBeInserted);
+  connect(this, &QAbstractTableModel::rowsRemoved, this, &MappingModel::onRowsRemoved);
 }
 
 void MappingModel::setTableCopyProgress(int row, int progress)
@@ -176,12 +178,59 @@ void MappingModel::setAllCompleteTableMappingSelected()
   }
 }
 
-void MappingModel::resetCopyStatusAndProgress()
+void MappingModel::onModelReset()
 {
   pvRowCopyProgress.assign(rowCount(), 0);
   pvRowCopyStatus.assign(rowCount(), CopyStatusUnknown);
   pvRowCopyError.assign(rowCount(), mdtError());
   pvTableSelectedList.fill(false, rowCount());
+}
+
+void MappingModel::onRowsAboutToBeInserted(const QModelIndex & /*parent*/, int first, int last)
+{
+  Q_ASSERT(first >= 0);
+  Q_ASSERT(first <= (int)pvRowCopyProgress.size());
+  Q_ASSERT(last >= first);
+
+  qDebug() << "onRowsAboutToBeInserted: first: " << first << ", last: " << last;
+  qDebug() << " -> n before: " << pvRowCopyProgress.size();
+
+  const int n = last - first + 1;
+  Q_ASSERT(n > 0);
+  auto rcpIt = pvRowCopyProgress.begin() + first;
+  pvRowCopyProgress.insert(rcpIt, n, 0);
+  auto rcsIt = pvRowCopyStatus.begin() + first;
+  pvRowCopyStatus.insert(rcsIt, n, CopyStatusUnknown);
+  auto rceIt = pvRowCopyError.begin() + first;
+  pvRowCopyError.insert(rceIt, n, mdtError());
+  /// \todo if we insert another place than at end, we must shift the existing bits
+  pvTableSelectedList.resize(pvRowCopyProgress.size());
+
+  qDebug() << " -> n after: " << pvRowCopyProgress.size();
+}
+
+void MappingModel::onRowsRemoved(const QModelIndex & /*parent*/, int first, int last)
+{
+  Q_ASSERT(first >= 0);
+  Q_ASSERT(last < (int)pvRowCopyProgress.size());
+  Q_ASSERT(last >= first);
+
+  qDebug() << "onRowsRemoved: first: " << first << ", last: " << last;
+  qDebug() << " -> n before: " << pvRowCopyProgress.size();
+
+  auto rcpFirst = pvRowCopyProgress.cbegin() + first;
+  auto rcpLast = pvRowCopyProgress.cbegin() + last + 1;
+  pvRowCopyProgress.erase(rcpFirst, rcpLast);
+  auto rcsFirst = pvRowCopyStatus.cbegin() + first;
+  auto rcsLast = pvRowCopyStatus.cbegin() + last + 1;
+  pvRowCopyStatus.erase(rcsFirst, rcsLast);
+  auto rceFirst = pvRowCopyError.cbegin() + first;
+  auto rceLast = pvRowCopyError.cbegin() + last + 1;
+  pvRowCopyError.erase(rceFirst, rceLast);
+  /// \todo if we insert another place than at end, we must shift the existing bits
+  pvTableSelectedList.resize(pvRowCopyProgress.size());
+
+  qDebug() << " -> n after: " << pvRowCopyProgress.size();
 }
 
 QVariant MappingModel::tableSelectedData(int row, int role) const

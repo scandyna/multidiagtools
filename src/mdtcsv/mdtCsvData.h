@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -52,6 +52,16 @@ struct mdtCsvRecordTemplate
    * \note It was choosen to use a QVector because it offers copy on write
    */
   QVector<T> columnDataList;
+
+  /*! \brief Get value of given field index
+   *
+   * If index is out of range,
+   *  a default constructed value is returned
+   */
+  T value(int index) const
+  {
+    return columnDataList.value(index);
+  }
 
   /*! \brief Get count of columns in the record
    */

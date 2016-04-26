@@ -25,10 +25,15 @@
 #include "mdtError.h"
 #include <QDialog>
 #include <QSqlDatabase>
+#include <vector>
+
+class QItemSelection;
+class QModelIndex;
 
 namespace mdt{ namespace sql{ namespace copier{
 
   class CsvFileImportMappingModel;
+  class CsvFileImportThread;
 
   /*! \brief CSV file import dialog
    */
@@ -41,6 +46,13 @@ namespace mdt{ namespace sql{ namespace copier{
     /*! \brief Constructor
      */
     CsvFileImportDialog (QWidget *parent = nullptr);
+
+    // Copy disabled
+    CsvFileImportDialog(const CsvFileImportDialog &) = delete;
+    CsvFileImportDialog &operator=(const CsvFileImportDialog &) = delete;
+    // Move disabled
+    CsvFileImportDialog(CsvFileImportDialog &&) = delete;
+    CsvFileImportDialog & operator=(CsvFileImportDialog &&) = delete;
 
     /*! \brief Set destination database
      */
@@ -56,7 +68,73 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void addCopyItem();
 
+    /*! \brief Edit selected copy item
+     */
+    void editCopyItem();
+
+    /*! \brief Remove selected copy item
+     */
+    void removeCopyItem();
+
+    /*! \brief Called when selection changes in mapping
+     */
+    void onMappingSelectionChanged(const QItemSelection & selected, const QItemSelection & deselected);
+
+    /*! \brief Import files
+     */
+    void importFiles();
+
    private:
+
+    /*! \brief State
+     */
+    enum State
+    {
+      DatabaseNotSet,   /*!< Destination database contains not the needed informations for the copy.
+                            It's also not possible to process. */
+      DatabaseSet,      /*!< Destination database have needed informations and it's possible to process.  */
+      ProcessingCopy    /*!< The only possible action is abort. */
+    };
+
+    /*! \brief Update selected rows list
+     */
+    void updateSelectedRowsList(const QItemSelection & s);
+
+    /*! \brief Update add copy item button state
+     */
+    void updateAddCopyItemState();
+
+    /*! \brief Update remove copy item button state
+     */
+    void updateEditCopyItemState();
+
+    /*! \brief Update remove copy item button state
+     */
+    void updateRemoveCopyItemState();
+
+    /*! \brief Set database state set or not set
+     *
+     * Will check if destination database contains needed informations
+     *  and set state to DatabaseSet if ok,
+     *  DatabaseNotSet if not.
+     */
+    void setStateDatabaseSetOrNotSet();
+
+    /*! \brief Set database not set state
+     */
+    void setStateDatabaseNotSet();
+
+    /*! \brief Set database set state
+     */
+    void setStateDatabaseSet();
+
+    /*! \brief Set ProcessingCopy state
+     */
+    void setStateProcessingCopy();
+
+    /*! \brief Check if db contains all needed informations
+     */
+    bool hasDatabaseNeededInformations(const QSqlDatabase & db) const;
 
     /*! \brief Resize table view
      */
@@ -66,7 +144,10 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void displayError(const mdtError & error);
 
+    State pvState;
     CsvFileImportMappingModel *pvMappingModel;
+    CsvFileImportThread *pvThread;
+    std::vector<int> pvSelectedRows;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

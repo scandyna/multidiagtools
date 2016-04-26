@@ -147,9 +147,17 @@ namespace mdt{ namespace sql{ namespace copier{
 
    private slots:
 
-    /*! \brief Reset copy progress and status after model reset
+    /*! \brief Stuff to ajust after model reset
      */
-    void resetCopyStatusAndProgress();
+    void onModelReset();
+
+    /*! \brief Stuff to do while inserting rows
+     */
+    void onRowsAboutToBeInserted(const QModelIndex & parent, int first, int last);
+
+    /*! \brief Stuff after rows are removed
+     */
+    void onRowsRemoved(const QModelIndex & parent, int first, int last);
 
    private:
 

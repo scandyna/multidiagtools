@@ -18,27 +18,32 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "DatabaseCopyThread.h"
-#include "DatabaseMappingModel.h"
-#include "DatabaseMapping.h"
-#include "DatabaseCopierTableMapping.h"
+#include "CsvFileImportThread.h"
+#include "CsvFileImportMappingModel.h"
+#include "CsvFileImportTableMapping.h"
 #include "CopyHelper.h"
-#include "mdt/sql/Database.h"
+#include "mdtCsvFileParser.h"
+#include "mdtCsvData.h"
+#include "mdt/csv/RecordFormatter.h"
 #include "mdt/sql/error/Error.h"
 #include "mdtSqlTransaction.h"
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlRecord>
+#include <QSqlDatabase>
+#include <memory>
+
+#include <QDebug>
 
 namespace mdt{ namespace sql{ namespace copier{
 
-DatabaseCopyThread::DatabaseCopyThread(QObject *parent)
+CsvFileImportThread::CsvFileImportThread(QObject *parent)
  : CopyThread(parent),
    pvModel(nullptr)
 {
 }
 
-int DatabaseCopyThread::tableMappingCount() const
+int CsvFileImportThread::tableMappingCount() const
 {
   if(pvModel == nullptr){
     return 0;
@@ -46,7 +51,7 @@ int DatabaseCopyThread::tableMappingCount() const
   return pvModel->rowCount();
 }
 
-void DatabaseCopyThread::startCopy(const DatabaseMappingModel *const model)
+void CsvFileImportThread::startCopy(const CsvFileImportMappingModel *const model)
 {
   Q_ASSERT(model != nullptr);
 
@@ -55,50 +60,16 @@ void DatabaseCopyThread::startCopy(const DatabaseMappingModel *const model)
   start();
 }
 
-int64_t DatabaseCopyThread::calculateSourceTableSize(const DatabaseCopierTableMapping * const tm, const QSqlDatabase & sourceDatabase) const
+bool CsvFileImportThread::importFile(const CsvFileImportTableMapping *const tm, int index, const QSqlDatabase & destinationDatabase)
 {
   Q_ASSERT(tm != nullptr);
-
-  QSqlQuery query(sourceDatabase);
-  auto sql = CopyHelper::getSourceTableCountSql(tm, sourceDatabase);
-
-  if(!query.exec(sql)){
-    auto error = mdtErrorNewQ(tr("Executing query to get source table count failed"), mdtError::Warning, this);
-    error.stackError(ErrorFromQSqlQuery(query));
-    error.commit();
-    return -1;
-  }
-  if(!query.next()){
-    return -1;
-  }
-
-  return query.value(0).toLongLong();
-}
-
-void DatabaseCopyThread::calculateTableSizes(const QSqlDatabase & sourceDatabase)
-{
+  Q_ASSERT(tm->sourceCsvSettings().isValid());
   Q_ASSERT(pvModel != nullptr);
 
-  for(int i = 0; i < pvModel->rowCount(); ++i){
-    if(pvAbort){
-      return;
-    }
-    if(pvModel->isTableMappingSelected(i)){
-      const auto tm = pvModel->tableMapping(i);
-      Q_ASSERT(tm);
-      auto size = calculateSourceTableSize(tm.get(), sourceDatabase);
-      setTableSize(i, size);
-    }
-  }
-  calculateTotalCopySize();
-}
+  qDebug() << "Importing " << tm->sourceTableName() << " to " << tm->destinationTableName();
 
-bool DatabaseCopyThread::copyTable(const DatabaseCopierTableMapping *const tm, int index,
-                                   const QSqlDatabase & sourceDatabase, const QSqlDatabase & destinationDatabase)
-{
-  Q_ASSERT(tm != nullptr);
-
-  QSqlQuery sourceQuery(sourceDatabase);
+  mdtCsvFileParser csvParser;
+  mdt::csv::RecordFormatter formatter;
   QSqlQuery destinationQuery(destinationDatabase);
   mdtSqlTransaction transaction(destinationDatabase);
   QString sql;
@@ -106,15 +77,25 @@ bool DatabaseCopyThread::copyTable(const DatabaseCopierTableMapping *const tm, i
   if(pvAbort){
     return true;
   }
-  // Setup queries
-  sourceQuery.setForwardOnly(true);
+  // Open CSV file
+  csvParser.setCsvSettings(tm->sourceCsvSettings());
+  if(!csvParser.openFile(tm->sourceFileInfo(), tm->sourceFileEncoding())){
+    auto error = mdtErrorNewQ(tr("Open CSV file failed"), mdtError::Error, this);
+    error.stackError(csvParser.lastError());
+    error.commit();
+    emit tableCopyErrorOccured(index, error);
+    return false;
+  }
+  // Setup CSV formatter
+  formatter.setFormat(tm->sourceRecordFormat());
+  // Setup query
   destinationQuery.setForwardOnly(true);
 
-  // Get values of all fields in source table
-  sql = CopyHelper::getSourceTableSelectSql(tm, sourceDatabase);
-  if(!sourceQuery.exec(sql)){
-    auto error = mdtErrorNewQ(tr("Executing query to get source table records failed"), mdtError::Error, this);
-    error.stackError(ErrorFromQSqlQuery(sourceQuery));
+  // Read CSV header
+  auto csvHeader = csvParser.readLine();
+  if(!csvHeader){
+    auto error = mdtErrorNewQ(tr("Reading header in CSV file failed"), mdtError::Error, this);
+    error.stackError(csvParser.lastError());
     error.commit();
     emit tableCopyErrorOccured(index, error);
     return false;
@@ -137,13 +118,30 @@ bool DatabaseCopyThread::copyTable(const DatabaseCopierTableMapping *const tm, i
     return false;
   }
   // Copy each record
-  while(sourceQuery.next()){
+  while(!csvParser.atEnd()){
     if(pvAbort){
       return true;
     }
+    // Read a line in CSV file
+    auto csvRecordExp = csvParser.readLine();
+    if(!csvRecordExp){
+      auto error = mdtErrorNewQ(tr("Reading a line in CSV file failed"), mdtError::Error, this);
+      error.stackError(csvParser.lastError());
+      error.commit();
+      emit tableCopyErrorOccured(index, error);
+      return false;
+    }
+    auto csvRecord = csvRecordExp.value();
+    // Format CSV line
+    /// \todo implement formatter.formatRecord() !
+    for(int i = 0; i < csvRecord.count(); ++i){
+      if(!formatter.formatValue(i, csvRecord.columnDataList[i])){
+        qDebug() << "Formatting errror: " << formatter.lastError().text();
+      }
+    }
     // If requiered, check if record allready exists in destination table
     if(!tm->uniqueInsertCriteria().isNull()){
-      auto ret = CopyHelper::checkExistsInDestinationTable(sourceQuery.record(), tm, destinationDatabase);
+      auto ret = CopyHelper::checkExistsInDestinationTable(csvRecord, tm, destinationDatabase);
       if(!ret){
         emit tableCopyErrorOccured(index, ret.error());
         return false;
@@ -153,11 +151,15 @@ bool DatabaseCopyThread::copyTable(const DatabaseCopierTableMapping *const tm, i
       }
     }
     // Build destination record
-    auto destinationRecord = CopyHelper::getDestinationRecord(sourceQuery.record(), tm, destinationDatabase);
+    auto destinationRecord = CopyHelper::getDestinationRecord(csvRecord, tm, destinationDatabase);
     if(!destinationRecord){
       emit tableCopyErrorOccured(index, destinationRecord.error());
       return false;
     }
+    
+    qDebug() << "Source record: " << csvRecord.columnDataList;
+    qDebug() << "Destination record: " << destinationRecord.value();
+    
     // Bind values to destination query
     for(const auto & data : destinationRecord.value()){
       destinationQuery.addBindValue(data);
@@ -171,7 +173,7 @@ bool DatabaseCopyThread::copyTable(const DatabaseCopierTableMapping *const tm, i
       return false;
     }
     // Update copy progress
-    incrementTableCopyProgress(index);
+///    incrementTableCopyProgress(index);
   }
   // Commit transaction
   if(!transaction.commit()){
@@ -187,36 +189,21 @@ bool DatabaseCopyThread::copyTable(const DatabaseCopierTableMapping *const tm, i
   return true;
 }
 
-void DatabaseCopyThread::run()
+void CsvFileImportThread::run()
 {
   Q_ASSERT(pvModel != nullptr);
 
-  using mdt::sql::Database;
-  using mdt::sql::copier::TableMapping;
-
-  QString sourceConnectionName;
   QString destinationConnectionName;
   {
-    auto sourceDatabase = createConnection(pvModel->sourceDatabase());
-    sourceConnectionName = sourceDatabase.connectionName();
-    QSqlDatabase destinationDatabase;
-    if(Database::isSameDatabase(sourceDatabase, pvModel->destinationDatabase())){
-      destinationDatabase = sourceDatabase;
-    }else{
-      destinationDatabase = createConnection(pvModel->destinationDatabase());
-    }
-    destinationConnectionName = destinationDatabase.connectionName();
+    auto destinationDatabase = createConnection(pvModel->destinationDatabase());
 
-    // Check that we are successfully connected to both databases
-    if(!sourceDatabase.isOpen()){
-      return;
-    }
+    // Check that we are successfully connected to database
     if(!destinationDatabase.isOpen()){
       return;
     }
     pvAbort = false;
     // Calculate copy size
-    calculateTableSizes(sourceDatabase);
+    ///calculateTableSizes(sourceDatabase);
     // Copy each table that is selected
     for(int i = 0; i < pvModel->rowCount(); ++i){
       if(pvAbort){
@@ -225,11 +212,11 @@ void DatabaseCopyThread::run()
       if(pvModel->isTableMappingSelected(i)){
         const auto tm = pvModel->tableMapping(i);
         Q_ASSERT(tm);
-        copyTable(tm.get(), i, sourceDatabase, destinationDatabase);
+        importFile(tm.get(), i, destinationDatabase);
       }
     }
+
   }
-  QSqlDatabase::removeDatabase(sourceConnectionName);
   QSqlDatabase::removeDatabase(destinationConnectionName);
 }
 

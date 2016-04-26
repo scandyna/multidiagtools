@@ -64,7 +64,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="tbRemoveItem">
+         <widget class="QToolButton" name="tbRemoveCopyItem">
           <property name="text">
            <string>Remove</string>
           </property>
@@ -76,7 +76,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="tbEditItem">
+         <widget class="QToolButton" name="tbEditCopyItem">
           <property name="text">
            <string>...</string>
           </property>

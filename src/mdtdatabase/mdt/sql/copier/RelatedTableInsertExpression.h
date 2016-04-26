@@ -30,6 +30,134 @@
 namespace mdt{ namespace sql{ namespace copier{
 
   /*! \brief Fetch value in related table in SQL copier
+   *
+   * For example, say we have to import a CSV file
+   *  containing clients with their addresses:
+   * <table>
+   *  <tr>
+   *   <th>ClientName</th>
+   *   <th>Address</th>
+   *  </tr>
+   *  <tr>
+   *   <td>Client 1</td>
+   *   <td>Street 11</td>
+   *  </tr>
+   *  <tr>
+   *   <td>Client 2</td>
+   *   <td>Street 21</td>
+   *  </tr>
+   * </table>
+   *
+   * In a database we have a table named Client_tbl:
+   * <table>
+   *  <tr>
+   *   <th>Id_PK</th>
+   *   <th>Name</th>
+   *  </tr>
+   *  <tr>
+   *   <td>1</td>
+   *   <td>Some client A</td>
+   *  </tr>
+   *  <tr>
+   *   <td>2</td>
+   *   <td>Some client B</td>
+   *  </tr>
+   * </table>
+   *
+   * We also have Address_tbl:
+   * <table>
+   *  <tr>
+   *   <th>Id_PK</th>
+   *   <th>Client_Id_FK</th>
+   *   <th>Street</th>
+   *  </tr>
+   *  <tr>
+   *   <td>9</td>
+   *   <td>1</td>
+   *   <td>A street of some client A</td>
+   *  </tr>
+   *  <tr>
+   *   <td>10</td>
+   *   <td>2</td>
+   *   <td>A street of some client B</td>
+   *  </tr>
+   * </table>
+   *
+   * First, we import client part into Client_tbl:
+   * <table>
+   *  <tr>
+   *   <th>Id_PK</th>
+   *   <th>Name</th>
+   *  </tr>
+   *  <tr>
+   *   <td>1</td>
+   *   <td>Some client A</td>
+   *  </tr>
+   *  <tr>
+   *   <td>2</td>
+   *   <td>Some client B</td>
+   *  </tr>
+   *  <tr>
+   *   <td>3</td>
+   *   <td>Client 1</td>
+   *  </tr>
+   *  <tr>
+   *   <td>4</td>
+   *   <td>Client 2</td>
+   *  </tr>
+   * </table>
+   *
+   * Then, we import address part into Address_tbl.
+   *  During this process, each address must be related
+   *  to the correct client.
+   *  After import, Address_tbl looks like:
+   * <table>
+   *  <tr>
+   *   <th>Id_PK</th>
+   *   <th>Client_Id_FK</th>
+   *   <th>Street</th>
+   *  </tr>
+   *  <tr>
+   *   <td>9</td>
+   *   <td>1</td>
+   *   <td>A street of some client A</td>
+   *  </tr>
+   *  <tr>
+   *   <td>10</td>
+   *   <td>2</td>
+   *   <td>A street of some client B</td>
+   *  </tr>
+   *  <tr>
+   *   <td>11</td>
+   *   <td>3</td>
+   *   <td>Street 11</td>
+   *  </tr>
+   *  <tr>
+   *   <td>12</td>
+   *   <td>4</td>
+   *   <td>Street 21</td>
+   *  </tr>
+   * </table>
+   *
+   * To match the correct client while importing addresses into Address_tbl,
+   *  RelatedTableInsertExpression becomes useful.
+   *
+   * \code
+   * RelatedTableInsertExpression rtExp;
+   * std::vector<ExpressionMatchItem> matchItems;
+   *
+   * // Set field index of field to populate (here 1, Client_Id_FK)
+   * rtExp.addDestinationFieldIndex(1);
+   * // Set the related table in which the key must be fetched
+   * rtExp.setDestinationRelatedTableName("Client_tbl");
+   * // Set the field index of the key to fetch (here 0, Id_PK in Client_tbl)
+   * rtExp.addDestinationRelatedFieldIndex(0);
+   * // We must match: Client_tbl.Name = CSV.ClientName
+   * // First argument is source value field index (here 0, which is ClientName in CSV)
+   * // Second argument is destination field index (here 1, which is Name in Client_tbl)
+   * matchItems.emplace_back(0, 1);
+   * rtExp.setMatchItems(matchItems);
+   * \endcode
    */
   class RelatedTableInsertExpression : public AbstractTableMappingItem
   {

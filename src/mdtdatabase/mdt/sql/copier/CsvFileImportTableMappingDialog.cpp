@@ -25,6 +25,7 @@
 #include "mdt/sql/Database.h"
 #include <QLabel>
 #include <QComboBox>
+#include <QSignalBlocker>
 #include <QToolButton>
 #include <QHBoxLayout>
 
@@ -67,11 +68,14 @@ void CsvFileImportTableMappingDialog::setMapping(const std::shared_ptr<CsvFileIm
 //   Q_ASSERT(m->sourceDatabase().isOpen());
   Q_ASSERT(m->destinationDatabase().isOpen());
 
+  // Prevent clearing mapping
+  QSignalBlocker cbSignalBlocker(cbDestinationTable);
   // Update mapping
   pvMappingModel->setMapping(m);
   updateMapping();
   displaySourceTable();
   populateDestinationTableCombobox(m->destinationDatabase());
+  cbDestinationTable->setCurrentText(m->destinationTableName());
 }
 
 std::shared_ptr<CsvFileImportTableMapping> CsvFileImportTableMappingDialog::mapping() const
