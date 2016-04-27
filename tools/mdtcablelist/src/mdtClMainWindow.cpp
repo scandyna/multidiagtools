@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -27,6 +27,7 @@
 #include "mdtSqlDatabaseDialogSqlite.h"
 #include "mdtSqlDatabaseSchemaDialog.h"
 #include "mdt/sql/copier/DatabaseCopyDialog.h"
+#include "mdt/sql/copier/CsvFileImportDialog.h"
 #include "mdtClLinkVersion.h"
 #include "mdtTtDatabaseSchema.h"
 #include "mdtClConnectorEditor.h"
@@ -198,8 +199,6 @@ void mdtClMainWindow::createNewDatabase()
 
 void mdtClMainWindow::importDatabase()
 {
-  mdt::sql::copier::DatabaseCopyDialog dialog(this);
-
   // Check that we have currently a database open
   if(!pvDatabase.isOpen()){
     displayWarning(tr("Cannot import a database."), tr("Please open a database and try again."));
@@ -210,9 +209,24 @@ void mdtClMainWindow::importDatabase()
 //     return;
 //   }
   // Setup and show copy dialog
+  mdt::sql::copier::DatabaseCopyDialog dialog(this);
   dialog.initSourceDatabase(mdtSqlDriverType::SQLite);
   dialog.setDestinationDatabase(pvDatabase);
   dialog.setDestinationDatabaseSelectable(false);
+  dialog.exec();
+}
+
+void mdtClMainWindow::importCsvFile()
+{
+  // Check that we have currently a database open
+  if(!pvDatabase.isOpen()){
+    displayWarning(tr("Cannot import a database."), tr("Please open a database and try again."));
+    return;
+  }
+  // Setup and show import dialog
+  mdt::sql::copier::CsvFileImportDialog dialog(this);
+  dialog.setDestinationDatabaseSelectable(false);
+  dialog.setDestinationDatabase(pvDatabase);
   dialog.exec();
 }
 
@@ -1199,8 +1213,9 @@ void mdtClMainWindow::connectActions()
   connect(actCloseDatabase, SIGNAL(triggered()), this, SLOT(closeDatabase()));
   // Create new database
   connect(actCreateNewDatabase, SIGNAL(triggered()), this, SLOT(createNewDatabase()));
-  // Import database
+  // Import tools
   connect(actImportDatabase, SIGNAL(triggered()), this, SLOT(importDatabase()));
+  connect(actImportCsvFile, &QAction::triggered, this, &mdtClMainWindow::importCsvFile);
 
   // Vehicle type edition
   connect(actViewVehicleType, SIGNAL(triggered()), this, SLOT(viewVehicleType()));

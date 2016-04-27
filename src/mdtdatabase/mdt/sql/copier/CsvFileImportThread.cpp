@@ -133,11 +133,12 @@ bool CsvFileImportThread::importFile(const CsvFileImportTableMapping *const tm, 
     }
     auto csvRecord = csvRecordExp.value();
     // Format CSV line
-    /// \todo implement formatter.formatRecord() !
-    for(int i = 0; i < csvRecord.count(); ++i){
-      if(!formatter.formatValue(i, csvRecord.columnDataList[i])){
-        qDebug() << "Formatting errror: " << formatter.lastError().text();
-      }
+    if(!formatter.formatRecord(csvRecord)){
+      auto error = mdtErrorNewQ(tr("Formatting a record from CSV file failed"), mdtError::Error, this);
+      error.stackError(formatter.lastError());
+      error.commit();
+      emit tableCopyErrorOccured(index, error);
+      return false;
     }
     // If requiered, check if record allready exists in destination table
     if(!tm->uniqueInsertCriteria().isNull()){
@@ -150,16 +151,16 @@ bool CsvFileImportThread::importFile(const CsvFileImportTableMapping *const tm, 
         continue;
       }
     }
+    
+    ///qDebug() << "Source record: " << csvRecord.columnDataList;
+    
     // Build destination record
     auto destinationRecord = CopyHelper::getDestinationRecord(csvRecord, tm, destinationDatabase);
     if(!destinationRecord){
       emit tableCopyErrorOccured(index, destinationRecord.error());
-      return false;
+      ///return false;
+      continue;
     }
-    
-    qDebug() << "Source record: " << csvRecord.columnDataList;
-    qDebug() << "Destination record: " << destinationRecord.value();
-    
     // Bind values to destination query
     for(const auto & data : destinationRecord.value()){
       destinationQuery.addBindValue(data);
@@ -172,6 +173,10 @@ bool CsvFileImportThread::importFile(const CsvFileImportTableMapping *const tm, 
       emit tableCopyErrorOccured(index, error);
       return false;
     }
+    
+    qDebug() << "Inserted, SQL: " << destinationQuery.executedQuery();
+    qDebug() << " -> bound values: " << destinationQuery.boundValues();
+    
     // Update copy progress
 ///    incrementTableCopyProgress(index);
   }
@@ -183,6 +188,9 @@ bool CsvFileImportThread::importFile(const CsvFileImportTableMapping *const tm, 
     emit tableCopyErrorOccured(index, error);
     return false;
   }
+  
+  qDebug() << "Commit";
+  
   // Notify end of table copy
   notifyTableCopyDone(index);
 
@@ -201,6 +209,7 @@ void CsvFileImportThread::run()
     if(!destinationDatabase.isOpen()){
       return;
     }
+    destinationConnectionName = destinationDatabase.connectionName();
     pvAbort = false;
     // Calculate copy size
     ///calculateTableSizes(sourceDatabase);

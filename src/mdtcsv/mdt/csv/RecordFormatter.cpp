@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "RecordFormatter.h"
 #include <QObject>
+#include <algorithm>
 
 namespace mdt{ namespace csv{
 
@@ -39,6 +40,19 @@ void RecordFormatter::setFieldType(int fieldIndex, QMetaType::Type type)
 void RecordFormatter::setFormat(const RecordFormat & format)
 {
   pvFormat = format;
+}
+
+bool RecordFormatter::formatRecord(mdtCsvRecord & record) const
+{
+  const int n = std::min(pvFormat.fieldCount(), record.count());
+
+  for(int i = 0; i < n; ++i){
+    if(!convert(record.columnDataList[i], pvFormat.fieldType(i))){
+      return false;
+    }
+  }
+
+  return true;
 }
 
 bool RecordFormatter::formatValue(int fieldIndex, QVariant & value) const

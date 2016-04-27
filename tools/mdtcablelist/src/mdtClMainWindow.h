@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -87,6 +87,10 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
   /*! \brief Import a database
    */
   void importDatabase();
+
+  /*! \brief Import CSV file
+   */
+  void importCsvFile();
 
   /*! \brief View vehicle types
    */

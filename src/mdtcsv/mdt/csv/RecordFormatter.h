@@ -22,6 +22,7 @@
 #define MDT_CSV_RECORD_FORMATTER_H
 
 #include "RecordFormat.h"
+#include "mdtCsvData.h"
 #include "mdtError.h"
 #include <QVariant>
 
@@ -75,6 +76,13 @@ namespace mdt{ namespace csv{
     {
       return pvFormat;
     }
+
+    /*! \brief Format record
+     *
+     * Passing a record that has different field count
+     *  than format is supported.
+     */
+    bool formatRecord(mdtCsvRecord & record) const;
 
     /*! \brief Format value with type defined at fieldIndex
      *

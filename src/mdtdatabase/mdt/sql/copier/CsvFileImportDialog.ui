@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>747</width>
-    <height>448</height>
+    <width>992</width>
+    <height>573</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -48,21 +48,6 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QToolButton" name="tbResetMapping">
-          <property name="toolTip">
-           <string>Reset mapping</string>
-          </property>
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="icon">
-           <iconset theme="edit-clear">
-            <normaloff/>
-           </iconset>
-          </property>
-         </widget>
-        </item>
         <item>
          <widget class="QToolButton" name="tbRemoveCopyItem">
           <property name="text">

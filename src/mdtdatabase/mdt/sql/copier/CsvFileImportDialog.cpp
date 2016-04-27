@@ -24,9 +24,11 @@
 #include "CsvFileImportThread.h"
 #include "mdtErrorDialog.h"
 #include "mdtSqlDatabaseDialogSqlite.h"
+#include "mdtProgressBarItemDelegate.h"
 #include <QItemSelectionModel>
 #include <QItemSelection>
 #include <QModelIndex>
+#include <QCloseEvent>
 #include <algorithm>
 
 #include <QDebug>
@@ -36,11 +38,14 @@ namespace mdt{ namespace sql{ namespace copier{
 CsvFileImportDialog::CsvFileImportDialog(QWidget *parent)
  : QDialog(parent),
    pvMappingModel(new CsvFileImportMappingModel(this)),
-   pvThread(new CsvFileImportThread(this))
+   pvThread(new CsvFileImportThread(this)),
+   pvDestinationDatabaseSelectable(true)
 {
   setupUi(this);
 
   tvMapping->setModel(pvMappingModel);
+  auto *progressBarDelegate = new mdtProgressBarItemDelegate(tvMapping);
+  tvMapping->setItemDelegateForColumn(4, progressBarDelegate);
   Q_ASSERT(tvMapping->selectionModel() != nullptr);
   connect(tvMapping->selectionModel(), &QItemSelectionModel::selectionChanged, this, &CsvFileImportDialog::onMappingSelectionChanged);
   connect(tbSelectDestinationDatabase, &QToolButton::clicked, this, &CsvFileImportDialog::selectDestinationDatabase);
@@ -54,8 +59,8 @@ CsvFileImportDialog::CsvFileImportDialog(QWidget *parent)
   connect(pvThread, &CsvFileImportThread::tableCopyErrorOccured, pvMappingModel, &CsvFileImportMappingModel::setTableCopyError);
   connect(pvThread, &CsvFileImportThread::globalProgressRangeChanged, pbGlobalProgress, &QProgressBar::setRange );
   connect(pvThread, &CsvFileImportThread::globalProgressValueChanged, pbGlobalProgress, &QProgressBar::setValue);
-//   connect(pvThread, &CsvFileImportThread::globalErrorOccured, this, &CsvFileImportDialog::onThreadGlobalErrorOccured);
-//   connect(pvThread, &CsvFileImportThread::finished, this, &CsvFileImportDialog::onThreadFinished);
+  connect(pvThread, &CsvFileImportThread::globalErrorOccured, this, &CsvFileImportDialog::onThreadGlobalErrorOccured);
+  connect(pvThread, &CsvFileImportThread::finished, this, &CsvFileImportDialog::onThreadFinished);
 
   setStateDatabaseNotSet();
 }
@@ -68,6 +73,12 @@ void CsvFileImportDialog::setDestinationDatabase(const QSqlDatabase & db)
   pvMappingModel->setDestinationDatabase(db);
   resizeTableViewToContents();
   setStateDatabaseSetOrNotSet();
+}
+
+void CsvFileImportDialog::setDestinationDatabaseSelectable(bool selectable)
+{
+  pvDestinationDatabaseSelectable = selectable;
+  updateSelectDestinationDatabaseState();
 }
 
 void CsvFileImportDialog::selectDestinationDatabase()
@@ -98,6 +109,7 @@ void CsvFileImportDialog::addCopyItem()
   }
   Q_ASSERT(dialog.mapping());
   pvMappingModel->appendTableMapping(dialog.mapping());
+  setStateImportPossible();
 }
 
 void CsvFileImportDialog::editCopyItem()
@@ -117,6 +129,11 @@ void CsvFileImportDialog::editCopyItem()
   }
   Q_ASSERT(dialog.mapping());
   pvMappingModel->tableMappingUpdated(row);
+  if(pvMappingModel->rowCount() > 0){
+    setStateImportPossible();
+  }else{
+    setStateDatabaseSetOrNotSet();
+  }
 }
 
 void CsvFileImportDialog::removeCopyItem()
@@ -139,12 +156,24 @@ void CsvFileImportDialog::onMappingSelectionChanged(const QItemSelection & selec
 
 void CsvFileImportDialog::importFiles()
 {
-  Q_ASSERT(pvState != ProcessingCopy);
+  Q_ASSERT(pvState == ImportPossible);
 
-  setStateProcessingCopy();
+  setStateProcessingImport();
   pvMappingModel->clearCopyStatusAndProgress();
   pvThread->startCopy(pvMappingModel);
 }
+
+void CsvFileImportDialog::onThreadGlobalErrorOccured(mdtError error)
+{
+  displayError(error);
+}
+
+void CsvFileImportDialog::onThreadFinished()
+{
+  qDebug() << "Thread finished..";
+  setStateImportPossible();
+}
+
 
 void CsvFileImportDialog::updateSelectedRowsList(const QItemSelection & s)
 {
@@ -167,14 +196,23 @@ void CsvFileImportDialog::updateSelectedRowsList(const QItemSelection & s)
   }
 }
 
+void CsvFileImportDialog::updateSelectDestinationDatabaseState()
+{
+  if(pvState == ProcessingImport){
+    tbSelectDestinationDatabase->setEnabled(false);
+    return;
+  }
+  tbSelectDestinationDatabase->setEnabled(pvDestinationDatabaseSelectable);
+}
+
 void CsvFileImportDialog::updateAddCopyItemState()
 {
-  tbAddCopyItem->setEnabled(pvState == DatabaseSet);
+  tbAddCopyItem->setEnabled(pvState != ProcessingImport);
 }
 
 void CsvFileImportDialog::updateEditCopyItemState()
 {
-  if(pvState != DatabaseSet){
+  if(pvState == ProcessingImport){
     tbEditCopyItem->setEnabled(false);
     return;
   }
@@ -183,7 +221,7 @@ void CsvFileImportDialog::updateEditCopyItemState()
 
 void CsvFileImportDialog::updateRemoveCopyItemState()
 {
-  if(pvState != DatabaseSet){
+  if(pvState == ProcessingImport){
     tbRemoveCopyItem->setEnabled(false);
     return;
   }
@@ -202,32 +240,73 @@ void CsvFileImportDialog::setStateDatabaseSetOrNotSet()
 void CsvFileImportDialog::setStateDatabaseNotSet()
 {
   pvState = DatabaseNotSet;
+  updateSelectDestinationDatabaseState();
   updateAddCopyItemState();
   updateEditCopyItemState();
   updateRemoveCopyItemState();
+  pbAbort->setEnabled(false);
+  pbImport->setEnabled(false);
+  setClosable(true);
 }
 
 void CsvFileImportDialog::setStateDatabaseSet()
 {
   pvState = DatabaseSet;
+  updateSelectDestinationDatabaseState();
   updateAddCopyItemState();
   updateEditCopyItemState();
   updateRemoveCopyItemState();
+  pbAbort->setEnabled(false);
+  pbImport->setEnabled(false);
+  setClosable(true);
 }
 
-void CsvFileImportDialog::setStateProcessingCopy()
+void CsvFileImportDialog::setStateImportPossible()
 {
-  pvState = ProcessingCopy;
-  
-//   tbSelectDestinationDatabase->setEnabled(false);
-//   tbResetMapping->setEnabled(false);
-//   tbMapByName->setEnabled(false);
-//   tvMapping->setEnabled(true);
-//   pbCopy->setEnabled(false);
-  pbAbort->setEnabled(true);
+  pvState = ImportPossible;
+  updateSelectDestinationDatabaseState();
   updateAddCopyItemState();
   updateEditCopyItemState();
   updateRemoveCopyItemState();
+  pbAbort->setEnabled(false);
+  pbImport->setEnabled(true);
+  setClosable(true);
+}
+
+void CsvFileImportDialog::setStateProcessingImport()
+{
+  pvState = ProcessingImport;
+  updateSelectDestinationDatabaseState();
+  updateAddCopyItemState();
+  updateEditCopyItemState();
+  updateRemoveCopyItemState();
+  pbAbort->setEnabled(true);
+  pbImport->setEnabled(false);
+  setClosable(false);
+}
+
+void CsvFileImportDialog::setClosable(bool closable)
+{
+  buttonBox->setEnabled(closable);
+  pvClosable = closable;
+}
+
+void CsvFileImportDialog::closeEvent(QCloseEvent *event)
+{
+  Q_ASSERT(event != nullptr);
+
+  if(pvClosable){
+    event->accept();
+  }else{
+    event->ignore();
+  }
+}
+
+void CsvFileImportDialog::reject()
+{
+  if(pvClosable){
+    QDialog::reject();
+  }
 }
 
 bool CsvFileImportDialog::hasDatabaseNeededInformations(const QSqlDatabase & db) const

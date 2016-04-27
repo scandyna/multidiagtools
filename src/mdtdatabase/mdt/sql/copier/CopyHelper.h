@@ -164,19 +164,30 @@ namespace mdt{ namespace sql{ namespace copier{
       // Get SQL and prepare query
       const auto sql = getSqlForRelatedTableInsertExpressionKey(exp, destinationDb);
       if(!sql){
-        /// \todo Generate a error with explanation. Add transalation. This part should be in .cpp
         return sql.error();
       }
       if(!query.prepare(sql.value())){
-        /// \todo Generate a error with explanation. Add transalation. This part should be in .cpp
-        return ErrorFromQSqlQuery(query);
+        auto error = mdtErrorNew(tr("Prepare of query to get related key failed"), mdtError::Error, "CopyHelper");
+        error.stackError(ErrorFromQSqlQuery(query));
+        error.commit();
+        return error;
       }
       // Bind values for each match item
       for(const auto & matchItem : matchItemList){
         const int fi = matchItem.sourceValueFieldIndex;
         Q_ASSERT(fi >= 0);
         Q_ASSERT(fi < sourceRecord.count());
-        query.addBindValue(sourceRecord.value(fi));
+        // Check that source value is not null/empty
+        const QVariant value = sourceRecord.value(fi);
+        
+        qDebug() << "RT match value: " << value;
+        
+        if(value.toString().isEmpty()){
+          auto error = mdtErrorNew(tr("Try to get related table key with a empty criteria value."), mdtError::Error, "CopyHelper");
+          error.commit();
+          return error;
+        }
+        query.addBindValue(value);
       }
       // Exec query and fetch key
       if(!query.exec()){
@@ -187,7 +198,7 @@ namespace mdt{ namespace sql{ namespace copier{
       }
       if(!query.next()){
         QString text = tr("No matching key found in related table.") \
-                     + tr(" SQL for request ist:\n") \
+                     + tr(" SQL for request is:\n") \
                      + query.executedQuery();
         auto error = mdtErrorNew(text, mdtError::Error, "CopyHelper");
         error.commit();

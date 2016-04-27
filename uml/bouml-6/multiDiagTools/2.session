@@ -1,11 +1,11 @@
 window_sizes 1280 964 353 921 911 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 2075778 // CsvFileImportThread
-    921 911 100 4 0 0
+  active  classdiagram_ref 2124290 // RecordFormat
+    921 911 100 21 48 0
 end
 show_stereotypes
-selected classdiagram_ref 2075778 // CsvFileImportThread
+selected classdiagram_ref 2124290 // RecordFormat
 open
   
 package_ref 403202 // tools
@@ -17,11 +17,6 @@ package_ref 403202 // tools
   classview_ref 1097986 // FileParserSettings
   classview_ref 1038850 // CopyThread
   classview_ref 1032322 // CopyDialog
-  class_ref 2537602 // EdgeData
-  class_ref 2536834 // PathGraph
-  class_ref 2536962 // Path
-  classview_ref 920322 // PathGraphPrivate
-  classview_ref 920706 // linkPathView
   
 package_ref 260866 // Boost
 end

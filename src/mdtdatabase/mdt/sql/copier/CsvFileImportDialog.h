@@ -58,6 +58,10 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void setDestinationDatabase(const QSqlDatabase & db);
 
+    /*! \brief Set destination database selectable or not by the user
+     */
+    void setDestinationDatabaseSelectable(bool selectable);
+
   private slots:
 
     /*! \brief Select destination database
@@ -84,6 +88,14 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void importFiles();
 
+    /*! \brief Reciver for a global error generated from worker thread
+     */
+    void onThreadGlobalErrorOccured(mdtError error);
+
+    /*! \brief
+     */
+    void onThreadFinished();
+
    private:
 
     /*! \brief State
@@ -92,13 +104,18 @@ namespace mdt{ namespace sql{ namespace copier{
     {
       DatabaseNotSet,   /*!< Destination database contains not the needed informations for the copy.
                             It's also not possible to process. */
-      DatabaseSet,      /*!< Destination database have needed informations and it's possible to process.  */
-      ProcessingCopy    /*!< The only possible action is abort. */
+      DatabaseSet,      /*!< Destination database have needed informations and it's add items.  */
+      ImportPossible,   /*!< All that is needed to process import is available */
+      ProcessingImport    /*!< The only possible action is abort. */
     };
 
     /*! \brief Update selected rows list
      */
     void updateSelectedRowsList(const QItemSelection & s);
+
+    /*! \brief Update select destination database button state
+     */
+    void updateSelectDestinationDatabaseState();
 
     /*! \brief Update add copy item button state
      */
@@ -128,9 +145,27 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void setStateDatabaseSet();
 
-    /*! \brief Set ProcessingCopy state
+    /*! \brief Set ImportPossible state
      */
-    void setStateProcessingCopy();
+    void setStateImportPossible();
+
+    /*! \brief Set ProcessingImport state
+     */
+    void setStateProcessingImport();
+
+    /*! \brief Set closable
+     *
+     * If closable is false, user cannot close this dialog.
+     */
+    void setClosable(bool closable);
+
+    /*! \brief Close event
+     */
+    void closeEvent(QCloseEvent *event);
+
+    /*! \brief Reject (event)
+     */
+    void reject();
 
     /*! \brief Check if db contains all needed informations
      */
@@ -144,10 +179,12 @@ namespace mdt{ namespace sql{ namespace copier{
      */
     void displayError(const mdtError & error);
 
+    bool pvClosable;
     State pvState;
     CsvFileImportMappingModel *pvMappingModel;
     CsvFileImportThread *pvThread;
     std::vector<int> pvSelectedRows;
+    bool pvDestinationDatabaseSelectable;
   };
 
 }}} // namespace mdt{ namespace sql{ namespace copier{

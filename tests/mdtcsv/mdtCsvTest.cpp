@@ -485,7 +485,34 @@ void mdtCsvTest::recordFormatterTest()
   ///QVERIFY(!formatter.formatValue(2, value));
   qDebug() << "Value: " << value;
   QCOMPARE(value, QVariant("A"));
-
+  /*
+   * Format record
+   */
+  // Setup format
+  formatter.setFieldCount(3, QMetaType::QString);
+  formatter.setFieldType(0, QMetaType::Int);
+  QCOMPARE(formatter.fieldCount(), 3);
+  // Correct record
+  record.clear();
+  record.columnDataList << "1" << "A" << "B";
+  QVERIFY(formatter.formatRecord(record));
+  QCOMPARE(record.value(0), QVariant(1));
+  QCOMPARE(record.value(1), QVariant("A"));
+  QCOMPARE(record.value(2), QVariant("B"));
+  // Smaller record
+  record.clear();
+  record.columnDataList << "2" << "A";
+  QVERIFY(formatter.formatRecord(record));
+  QCOMPARE(record.value(0), QVariant(2));
+  QCOMPARE(record.value(1), QVariant("A"));
+  // Record has more fields than format
+  record.clear();
+  record.columnDataList << "3" << "A" << "B" << "C";
+  QVERIFY(formatter.formatRecord(record));
+  QCOMPARE(record.value(0), QVariant(3));
+  QCOMPARE(record.value(1), QVariant("A"));
+  QCOMPARE(record.value(2), QVariant("B"));
+  QCOMPARE(record.value(3), QVariant("C"));
 }
 
 // void mdtCsvTest::recordFormatSetupWidgetItemTest()

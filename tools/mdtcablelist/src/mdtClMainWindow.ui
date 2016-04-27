@@ -48,10 +48,10 @@
        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#0000ff;&quot;&gt;Cable list tool&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Provide a way to create and edit cable list....&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Oxygen-Sans Sans-Book'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:12pt; font-weight:600; color:#0000ff;&quot;&gt;Cable list tool&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:9pt;&quot;&gt;Provide a way to create and edit cable list....&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </item>
@@ -63,7 +63,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>763</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -74,6 +74,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actCloseDatabase"/>
     <addaction name="actCreateNewDatabase"/>
     <addaction name="actImportDatabase"/>
+    <addaction name="actImportCsvFile"/>
     <addaction name="separator"/>
     <addaction name="ActQuit"/>
    </widget>
@@ -88,11 +89,11 @@ p, li { white-space: pre-wrap; }
    </widget>
    <widget class="QMenu" name="menuTest">
     <property name="title">
-     <string>Test</string>
+     <string>&amp;Test</string>
     </property>
     <widget class="QMenu" name="menuTest_connection_cable">
      <property name="title">
-      <string>Test connection cable</string>
+      <string>Test c&amp;onnection cable</string>
      </property>
      <addaction name="actViewTestConnectionCable"/>
      <addaction name="actEditTestConnectionCable"/>
@@ -221,17 +222,17 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actEditVehicleType">
    <property name="text">
-    <string>Edit (all)</string>
+    <string>E&amp;dit (all)</string>
    </property>
   </action>
   <action name="actEditUnit">
    <property name="text">
-    <string>Edit (all)</string>
+    <string>E&amp;dit (all)</string>
    </property>
   </action>
   <action name="actEditConnector">
    <property name="text">
-    <string>Edit (all)</string>
+    <string>E&amp;dit (all)</string>
    </property>
   </action>
   <action name="actCreateTestConnectionCable">
@@ -276,7 +277,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actViewVehicleType">
    <property name="text">
-    <string>View</string>
+    <string>&amp;View</string>
    </property>
   </action>
   <action name="actionEdit_all">
@@ -286,7 +287,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actEditSelectedVehicleType">
    <property name="text">
-    <string>Edit selected</string>
+    <string>&amp;Edit selected</string>
    </property>
   </action>
   <action name="actViewArticle">
@@ -301,7 +302,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actEditArticle">
    <property name="text">
-    <string>Edit (all)</string>
+    <string>E&amp;dit (all)</string>
    </property>
   </action>
   <action name="actViewUnit">
@@ -321,7 +322,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actEditSelectedConnector">
    <property name="text">
-    <string>Edit selected</string>
+    <string>&amp;Edit selected</string>
    </property>
   </action>
   <action name="actViewLinkBeam">
@@ -331,7 +332,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actEditSelectedLinkBeam">
    <property name="text">
-    <string>Edit selected</string>
+    <string>&amp;Edit selected</string>
    </property>
   </action>
   <action name="actViewLinkList">
@@ -356,42 +357,47 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actEditTestNode">
    <property name="text">
-    <string>Edit test node</string>
+    <string>&amp;Edit test node</string>
    </property>
   </action>
   <action name="actCalibrateW750_2BusNode">
    <property name="text">
-    <string>Calibrate W750 2BUS Node</string>
+    <string>Calibrate &amp;W750 2BUS Node</string>
    </property>
   </action>
   <action name="actViewWires">
    <property name="text">
-    <string>View wires</string>
+    <string>View &amp;wires</string>
    </property>
   </action>
   <action name="actEditWire">
    <property name="text">
-    <string>Edit wires</string>
+    <string>&amp;Edit wires</string>
    </property>
   </action>
   <action name="actEditTestSystem">
    <property name="text">
-    <string>Test system edition</string>
+    <string>Test &amp;system edition</string>
    </property>
   </action>
   <action name="actEditTestSystemComponent">
    <property name="text">
-    <string>Test system component</string>
+    <string>Test s&amp;ystem component</string>
    </property>
   </action>
   <action name="actEditTestSystemUnit">
    <property name="text">
-    <string>Test system unit</string>
+    <string>Test system &amp;unit</string>
    </property>
   </action>
   <action name="actCreateLinkVersion">
    <property name="text">
-    <string>Create version</string>
+    <string>&amp;Create version</string>
+   </property>
+  </action>
+  <action name="actImportCsvFile">
+   <property name="text">
+    <string>Import CSV file</string>
    </property>
   </action>
  </widget>
