@@ -1,6 +1,6 @@
 format 211
 "mdttesttool" // mdttools::mdttesttool
-  revision 79
+  revision 80
   modified_by 2 "philippe"
   // class settings
   
@@ -516,14 +516,6 @@ ${inlines}
 	
       end
 
-      classrelation 1144322 // pvDatabaseManager (<directional composition>)
-	relation 1132930 *-->
-	  a role_name "pvDatabaseManager" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 1144322 // pvDatabaseManager (<directional composition>)
-	  b parent class_ref 917122 // mdtSqlDatabaseManager
-      end
     end
   end
 

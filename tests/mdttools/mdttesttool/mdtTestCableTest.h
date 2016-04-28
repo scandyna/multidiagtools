@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,8 +22,8 @@
 #define MDT_TEST_CABLE_TEST_H
 
 #include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
 #include "mdtTtTestNodeRouteData.h"
+#include <QSqlDatabase>
 #include <QString>
 #include <QVariant>
 
@@ -44,7 +44,7 @@ class mdtTestCableTest : public mdtTest
   // Create test database schema - Will FAIL on problem
   void createDatabaseSchema();
 
-  mdtSqlDatabaseManager pvDatabaseManager;
+  QSqlDatabase pvDatabase;
 };
 
 #endif // #ifndef MDT_TEST_CABLE_TEST_H

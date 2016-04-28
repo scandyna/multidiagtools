@@ -20,9 +20,6 @@
  ****************************************************************************/
 #include "mdtDatabaseTest.h"
 #include "mdtApplication.h"
-
-#include "mdtSqlDatabaseManager.h"
-
 #include "mdtSqlConnectionNameWidget.h"
 #include "mdtSqlDatabaseBasicInfoWidget.h"
 #include "mdt/sql/Database.h"
@@ -3905,65 +3902,6 @@ void mdtDatabaseTest::databaseDialogSqliteTest()
   QSqlDatabase::removeDatabase("cnn1");
   QSqlDatabase::removeDatabase("cnn2");
   QSqlDatabase::removeDatabase("cnn3");
-}
-
-void mdtDatabaseTest::databaseManagerTest()
-{
-  mdtSqlDatabaseManager m;
-  mdtSqlTableSchema st;
-  mdtSqlField field;
-
-  QTemporaryFile dbFile;
-  QFileInfo dbFileInfo;
-
-  /*
-   * Check Sqlite database creation
-   */
-  QVERIFY(dbFile.open());
-  dbFileInfo.setFile(dbFile);
-  dbFile.close();
-  // database was never open, creation must work (file will be overwritten)
-  QVERIFY(m.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::OverwriteExisting, "databaseManagerTest"));
-  QVERIFY(m.database().isOpen());
-  // database exists and is allready open, must work
-  QVERIFY(m.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::KeepExisting, "databaseManagerTest"));
-  QVERIFY(m.database().isOpen());
-  // database exists and is allready open, must fail
-  QVERIFY(!m.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::FailIfExists, "databaseManagerTest"));
-  // Check that manager not closes the database
-  QVERIFY(m.database().isOpen());
-  m.database().close();
-  QVERIFY(!m.database().isOpen());
-  // database is closed, but allready exists, must fail
-  QVERIFY(!m.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::FailIfExists, "databaseManagerTest"));
-  QVERIFY(!m.database().isOpen());
-  // database is closed but exists. We want to overwite -> must work
-  QVERIFY(m.createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::OverwriteExisting, "databaseManagerTest"));
-  QVERIFY(m.database().isOpen());
-  // Check table creation
-  st.setTableName("Client_tbl", "UTF8");
-  field.clear();
-  field.setName("Id_PK");
-  field.setType(mdtSqlFieldType::Integer);
-  field.setAutoValue(true);
-  st.addField(field, true);
-  field.clear();
-  field.setName("Name");
-  field.setType(mdtSqlFieldType::Varchar);
-  field.setLength(50);
-  st.addField(field, false);
-  // First creation
-  QVERIFY(m.createTable(st, mdtSqlDatabaseManager::FailIfExists));
-  QVERIFY(m.database().tables().contains("Client_tbl"));
-  // Check overwite
-  QVERIFY(m.createTable(st, mdtSqlDatabaseManager::OverwriteExisting));
-  QVERIFY(m.database().tables().contains("Client_tbl"));
-  
-  // Cleanup
-  m.database().close();
-  QFile::remove(dbFileInfo.filePath());
-  // Check that we didn't close the default database
-  QVERIFY(pvDatabase.isOpen());
 }
 
 void mdtDatabaseTest::sqlRecordTest()

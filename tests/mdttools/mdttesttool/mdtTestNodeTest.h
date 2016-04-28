@@ -22,10 +22,10 @@
 #define MDT_TEST_NODE_TEST_H
 
 #include "mdtTest.h"
-#include "mdtSqlDatabaseManager.h"
 #include "mdtTtTestNodeRouteData.h"
 #include <QString>
 #include <QVariant>
+#include <QSqlDatabase>
 
 class mdtTestNodeTest : public mdtTest
 {
@@ -60,7 +60,7 @@ class mdtTestNodeTest : public mdtTest
   // Create test database schema - Will FAIL on problem
   void createDatabaseSchema();
 
-  mdtSqlDatabaseManager pvDatabaseManager;
+  QSqlDatabase pvDatabase;
 };
 
 #endif // #ifndef MDT_TEST_NODE_TEST_H

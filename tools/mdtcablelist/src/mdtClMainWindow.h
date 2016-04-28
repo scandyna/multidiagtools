@@ -34,7 +34,6 @@
 
 class mdtSqlForm;
 class mdtSqlTableWidget;
-class mdtSqlDatabaseManager;
 class mdtClWireEditor;
 class mdtClConnectorEditor;
 class mdtClArticleEditor;
@@ -377,7 +376,6 @@ class mdtClMainWindow : public QMainWindow, Ui::mdtClMainWindow
 
   // Database members
   QSqlDatabase pvDatabase;
-  mdtSqlDatabaseManager *pvDatabaseManager; /// \deprecated
   QDir pvWorkDirectory;
   // View and editor container
   QList<mdtSqlTableWidget*> pvOpenViews;

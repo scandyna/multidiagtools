@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #include "mdtCableListTestScenario.h"
 #include "mdtApplication.h"
 #include "mdtTtDatabaseSchema.h"
+#include "mdtSqlDatabaseSchemaThread.h"
 #include "mdtSqlRecord.h"
 #include "mdtTtBase.h"
 #include "mdtTtTest.h"
@@ -88,11 +89,26 @@
 
 void mdtTestToolTest::initTestCase()
 {
+  QTemporaryFile dbFile;
+
+  /*
+   * Create a file for database
+   */
+  QVERIFY(dbFile.open());
+  dbFile.close();
+  /*
+   * Open database
+   */
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  pvDatabase.setDatabaseName(QFileInfo(dbFile).absoluteFilePath());
+  QVERIFY(pvDatabase.open());
+  /*
+   * Create schema
+   */
   createDatabaseSchema();
-  QVERIFY(pvDatabaseManager.database().isOpen());
-  
+  QVERIFY(pvDatabase.isOpen());
   /**
-  mdtCableListTestScenario scenario(pvDatabaseManager.database());
+  mdtCableListTestScenario scenario(pvDatabase);
   scenario.createSenario();
   scenario.removeScenario();
   */
@@ -100,11 +116,13 @@ void mdtTestToolTest::initTestCase()
 
 void mdtTestToolTest::cleanupTestCase()
 {
+  pvDatabase.close();
+  QFile::remove(QFileInfo(pvDatabase.databaseName()).absoluteFilePath());
 }
 
 void mdtTestToolTest::mdtTtBaseTest()
 {
-  mdtTtBase b(0, pvDatabaseManager.database());
+  mdtTtBase b(0, pvDatabase);
   mdtSqlRecord record;
   QSqlRecord data;
   QList<QSqlRecord> dataList;
@@ -383,7 +401,7 @@ void mdtTestToolTest::mdtTtBaseTest()
   record.setValue("Type", "Vehicle type 14");
   QVERIFY(b.addRecord(record, "VehicleType_tbl"));
   // Setup model
-  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabaseManager.database());
+  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabase);
   QCOMPARE(model.rowCount(), 6);
   // Remove with selection of 1 row
   indexList.clear();
@@ -391,7 +409,7 @@ void mdtTestToolTest::mdtTtBaseTest()
   indexList.append(index);
   s.setIndexList(indexList, fieldList, &model);
   QVERIFY(b.removeData("VehicleType_tbl", s, true));
-  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabaseManager.database());
+  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabase);
   QCOMPARE(model.rowCount(), 5);
   // Remove with selection of 2 rows
   indexList.clear();
@@ -401,7 +419,7 @@ void mdtTestToolTest::mdtTtBaseTest()
   indexList.append(index);
   s.setIndexList(indexList, fieldList, &model);
   QVERIFY(b.removeData("VehicleType_tbl", s, true));
-  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabaseManager.database());
+  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabase);
   QCOMPARE(model.rowCount(), 3);
   // Remove with selection of 3 rows
   indexList.clear();
@@ -413,7 +431,7 @@ void mdtTestToolTest::mdtTtBaseTest()
   indexList.append(index);
   s.setIndexList(indexList, fieldList, &model);
   QVERIFY(b.removeData("VehicleType_tbl", s, true));
-  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabaseManager.database());
+  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabase);
   QCOMPARE(model.rowCount(), 0);
   /*
    * Check data removing from a mdtSqlTableSelection - 2 fields
@@ -441,7 +459,7 @@ void mdtTestToolTest::mdtTtBaseTest()
   record.setValue("Type", "Vehicle type 15");
   QVERIFY(b.addRecord(record, "VehicleType_tbl"));
   // Setup model
-  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabaseManager.database());
+  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabase);
   QCOMPARE(model.rowCount(), 6);
   // Remove with selection of 1 row
   indexList.clear();
@@ -451,7 +469,7 @@ void mdtTestToolTest::mdtTtBaseTest()
   indexList.append(index);
   s.setIndexList(indexList, fieldList, &model);
   QVERIFY(b.removeData("VehicleType_tbl", s, true));
-  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabaseManager.database());
+  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabase);
   QCOMPARE(model.rowCount(), 5);
   // Remove with selection of 2 rows
   indexList.clear();
@@ -465,7 +483,7 @@ void mdtTestToolTest::mdtTtBaseTest()
   indexList.append(index);
   s.setIndexList(indexList, fieldList, &model);
   QVERIFY(b.removeData("VehicleType_tbl", s, true));
-  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabaseManager.database());
+  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabase);
   QCOMPARE(model.rowCount(), 3);
   // Remove with selection of 3 rows
   indexList.clear();
@@ -483,7 +501,7 @@ void mdtTestToolTest::mdtTtBaseTest()
   indexList.append(index);
   s.setIndexList(indexList, fieldList, &model);
   QVERIFY(b.removeData("VehicleType_tbl", s, true));
-  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabaseManager.database());
+  model.setQuery("SELECT Id_PK, Type FROM VehicleType_tbl", pvDatabase);
   QCOMPARE(model.rowCount(), 0);
 
 }
@@ -493,7 +511,7 @@ void mdtTestToolTest::mdtTtTestLinkDataTest()
   mdtTtTestLinkData data;
 
   // Setup
-  QVERIFY(data.setup(pvDatabaseManager.database()));
+  QVERIFY(data.setup(pvDatabase));
   QVERIFY(data.contains("Id_PK"));
   // Set/get
   data.setValue("Id_PK", 1);
@@ -507,18 +525,18 @@ void mdtTestToolTest::mdtTtTestNodeUnitDataTest()
   mdtClUnitConnectionData connectionData;
 
   // Setup
-  ///QVERIFY(data.setup(pvDatabaseManager.database(), true));
-  QVERIFY(data.setup(pvDatabaseManager.database()));
+  ///QVERIFY(data.setup(pvDatabase, true));
+  QVERIFY(data.setup(pvDatabase));
   QVERIFY(data.contains("Unit_Id_FK_PK"));
   // Check setUnitData()
-  QVERIFY(unitData.addAllFields("Unit_tbl", pvDatabaseManager.database()));
+  QVERIFY(unitData.addAllFields("Unit_tbl", pvDatabase));
   unitData.setValue("Id_PK", 5);
   data.setUnitData(unitData);
   QCOMPARE(data.value("Unit_Id_FK_PK"), QVariant(5));
   QCOMPARE(data.unitData().value("Id_PK"), QVariant(5));
   // Check setTestConnectionData()
   /**
-  QVERIFY(connectionData.setup(pvDatabaseManager.database(), false));
+  QVERIFY(connectionData.setup(pvDatabase, false));
   connectionData.setValue("Id_PK", 3);
   data.setTestConnectionData(connectionData);
   QCOMPARE(data.value("TestConnection_Id_FK"), QVariant(3));
@@ -534,13 +552,13 @@ void mdtTestToolTest::mdtTtTestNodeUnitDataTest()
 
 void mdtTestToolTest::mdtTtTestNodeUnitTest()
 {
-  mdtTtTestNodeATestData data(pvDatabaseManager.database());
-  mdtTtTestNodeUnit tnu(this, pvDatabaseManager.database());
+  mdtTtTestNodeATestData data(pvDatabase);
+  mdtTtTestNodeUnit tnu(this, pvDatabase);
 
   // Create test node A data
   QVERIFY(data.populate());
 
-  QSqlQuery q(pvDatabaseManager.database());
+  QSqlQuery q(pvDatabase);
   QVERIFY(q.exec("SELECT * FROM TestNode_view"));
   while(q.next()){
     qDebug() << q.record();
@@ -559,7 +577,7 @@ void mdtTestToolTest::mdtTtTestNodeUnitTest()
 // void mdtTestToolTest::mdtTtTestNodeManagerTest()
 // {
 //   ///QFAIL("No implemented");
-//   std::shared_ptr<mdtTtTestNodeManager> m(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
+//   std::shared_ptr<mdtTtTestNodeManager> m(new mdtTtTestNodeManager(0, pvDatabase));
 //   mdtDeviceContainerWidget w;
 // //   std::shared_ptr<mdtDeviceU3606A> devU3606A;
 // //   std::shared_ptr<mdtDeviceScpi> devScpi;
@@ -616,7 +634,7 @@ void mdtTestToolTest::mdtTtTestModelItemRouteDataTest()
   mdtSqlRecord record;
 
   // Init
-  QVERIFY(setupData.setup(pvDatabaseManager.database()));
+  QVERIFY(setupData.setup(pvDatabase));
   // Simple set/get
   routeData.setId(1);
   routeData.setTestModelItemId(2);
@@ -651,7 +669,7 @@ void mdtTestToolTest::mdtTtTestModelItemRouteDataTest()
    * Setup data from TestModelItemRoute_tbl
    */
   // Setup record
-  QVERIFY(record.addAllFields("TestModelItemRoute_tbl", pvDatabaseManager.database()));
+  QVERIFY(record.addAllFields("TestModelItemRoute_tbl", pvDatabase));
   record.setValue("Id_PK", 10);
   record.setValue("TestModelItem_Id_FK", 11);
   record.setValue("TestLink_Id_FK", 12);
@@ -669,7 +687,7 @@ void mdtTestToolTest::mdtTtTestModelItemRouteDataTest()
    * Setup data from TestModelItemRoute_view
    */
   // Setup record
-  QVERIFY(record.addAllFields("TestModelItemRoute_view", pvDatabaseManager.database()));
+  QVERIFY(record.addAllFields("TestModelItemRoute_view", pvDatabase));
   record.setValue("Id_PK", 20);
   record.setValue("TestModelItem_Id_FK", 21);
   record.setValue("TestLink_Id_FK", 22);
@@ -696,7 +714,7 @@ void mdtTestToolTest::mdtTtTestModelItemRouteDataTest()
   routeData.setTestModelItemId(100);
   QCOMPARE(routeData.testModelItemId() ,QVariant(100));
   // Setup record
-  QVERIFY(record.addAllFields("TestNodeUnitSetup_view", pvDatabaseManager.database()));
+  QVERIFY(record.addAllFields("TestNodeUnitSetup_view", pvDatabase));
   // Setup for K1, witch is a bus coupling relay
   record.setValue("TestNodeUnit_Id_FK", 1);
   record.setValue("StepNumber", 0);
@@ -835,7 +853,7 @@ void mdtTestToolTest::testItemNodeNodeSetupDataTest()
   QCOMPARE(tnSetupData.nodeIdentification(), QString());
   QCOMPARE(tnSetupData.unitSetupList().size(), 0);
   // Setup test node unit setup data - Will get fields from TestNodeUnitSetup_tbl
-  QVERIFY(tnuSetupData.setup(pvDatabaseManager.database()));
+  QVERIFY(tnuSetupData.setup(pvDatabase));
   QCOMPARE(tnuSetupData.ioType(), mdtTtTestNodeUnitSetupData::Unknown);
   QCOMPARE(tnuSetupData.ioPosition(), 0);
   QCOMPARE(tnuSetupData.schemaPosition(), QString());
@@ -871,7 +889,7 @@ void mdtTestToolTest::testItemNodeNodeSetupDataTest()
    * Setup test node unit setup data from TestItemNodeUnitSetup_view
    */
   /// \todo Obselete ?
-  QVERIFY(record.addAllFields("TestItemNodeUnitSetup_view", pvDatabaseManager.database()));
+  QVERIFY(record.addAllFields("TestItemNodeUnitSetup_view", pvDatabase));
   rec = record;
   tnuSetupData = rec;
   tnuSetupData.setValue("TestNode_Id_FK", 5);
@@ -907,7 +925,7 @@ void mdtTestToolTest::testItemNodeNodeSetupDataTest()
   /*
    * Setup test node unit setup data from TestNodeUnitSetup_view
    */
-  QVERIFY(tnuSetupData.addAllFields("TestNodeUnitSetup_view", pvDatabaseManager.database()));
+  QVERIFY(tnuSetupData.addAllFields("TestNodeUnitSetup_view", pvDatabase));
   QVERIFY(tnuSetupData.contains("TestModelItem_Id_FK"));
   QVERIFY(tnuSetupData.contains("TestNodeUnit_Id_FK"));
   QVERIFY(tnuSetupData.contains("TestModelItemRoute_Id_FK"));
@@ -1116,7 +1134,7 @@ void mdtTestToolTest::mdtTtTestModelItemDataTest()
   mdtTtTestModelItemData data;
   mdtTtTestModelItemRouteData routeData;
 
-  QVERIFY(data.setup(pvDatabaseManager.database()));
+  QVERIFY(data.setup(pvDatabase));
   QVERIFY(data.contains("Id_PK"));
   // Simple set/get
   data.setValue("Id_PK", 1);
@@ -1142,7 +1160,7 @@ void mdtTestToolTest::mdtTtTestModelItemDataTest()
 
 void mdtTestToolTest::testStepTest()
 {
-  std::shared_ptr<mdtTtTestNodeManager> tnm(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
+  std::shared_ptr<mdtTtTestNodeManager> tnm(new mdtTtTestNodeManager(0, pvDatabase));
   mdtTtValueLimits limits;
 
   /*
@@ -1276,7 +1294,7 @@ void mdtTestToolTest::testStepContainerTest()
 {
   mdtTtTestStepContainer tsc;
   std::shared_ptr<mdtTtTestStep> ts;
-  std::shared_ptr<mdtTtTestNodeManager> tnm(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
+  std::shared_ptr<mdtTtTestNodeManager> tnm(new mdtTtTestNodeManager(0, pvDatabase));
 
   /*
    * Setup test step container widget
@@ -1396,7 +1414,7 @@ void mdtTestToolTest::testStepContainerBenchmark()
 {
   mdtTtTestStepContainer tsc;
   std::shared_ptr<mdtTtTestStep> ts;
-  std::shared_ptr<mdtTtTestNodeManager> tnm(new mdtTtTestNodeManager(0, pvDatabaseManager.database()));
+  std::shared_ptr<mdtTtTestNodeManager> tnm(new mdtTtTestNodeManager(0, pvDatabase));
   mdtTtTestStep::State_t globalState;
 
   tsc.addStep(tnm);
@@ -1470,19 +1488,10 @@ void mdtTestToolTest::mdtTtTestTest()
 
 void mdtTestToolTest::createDatabaseSchema()
 {
-  QTemporaryFile dbFile;
-  QFileInfo dbFileInfo;
-
-  /*
-   * Check Sqlite database creation
-   */
-  QVERIFY(dbFile.open());
-  dbFile.close();
-  dbFileInfo.setFile(dbFile.fileName() + ".db");
-  mdtTtDatabaseSchema schema(&pvDatabaseManager);
-  QVERIFY(schema.createSchemaSqlite(dbFileInfo));
-  QVERIFY(pvDatabaseManager.database().isOpen());
-  QVERIFY(schema.checkSchema());
+  mdtTtDatabaseSchema schema;
+  mdtSqlDatabaseSchemaThread thread;
+  QVERIFY(thread.createSchemaBlocking(schema.databaseSchema(), pvDatabase));
+  QVERIFY(pvDatabase.isOpen());
 }
 
 /*

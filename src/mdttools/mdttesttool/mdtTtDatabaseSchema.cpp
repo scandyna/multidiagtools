@@ -18,7 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtSqlDatabaseManager.h"
+
+// #include "mdtSqlDatabaseManager.h"
 
 #include "mdtSqlForeignKeySetting.h"
 
@@ -121,79 +122,79 @@ bool mdtTtDatabaseSchema::checkSchema(const QSqlDatabase & db)
   return true;  /// \todo Provisoire !!
 }
 
-bool mdtTtDatabaseSchema::checkSchema()
-{
-  Q_ASSERT(pvDatabaseManager->database().isOpen());
+// bool mdtTtDatabaseSchema::checkSchema()
+// {
+//   Q_ASSERT(pvDatabaseManager->database().isOpen());
+// 
+//   QStringList dbTables;
+//   int i;
+// 
+//   // We call setup methods to build the list of expected tables
+//   pvTables.clear();
+//   setupTables();
+//   // Get database available tables and check
+//   dbTables = pvDatabaseManager->database().tables();
+//   for(i = 0; i < pvTables.size(); ++i){
+//     if(!dbTables.contains(pvTables.at(i).tableName())){
+//       pvLastError.setError("Table '" + pvTables.at(i).tableName() + "' is missing in database '" + pvDatabaseManager->database().databaseName() + "'.", mdtError::Error);
+//       MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
+//       pvLastError.commit();
+//       return false;
+//     }
+//   }
+//   /// \todo Sould'nt we clear tables ??
+// 
+//   return true;
+// }
 
-  QStringList dbTables;
-  int i;
+// bool mdtTtDatabaseSchema::createSchemaSqlite(const QDir & startDirectory)
+// {
+//   if(!pvDatabaseManager->createDatabaseSqlite(startDirectory)){
+//     return false;
+//   }
+//   return createSchemaSqlite();
+// }
 
-  // We call setup methods to build the list of expected tables
-  pvTables.clear();
-  setupTables();
-  // Get database available tables and check
-  dbTables = pvDatabaseManager->database().tables();
-  for(i = 0; i < pvTables.size(); ++i){
-    if(!dbTables.contains(pvTables.at(i).tableName())){
-      pvLastError.setError("Table '" + pvTables.at(i).tableName() + "' is missing in database '" + pvDatabaseManager->database().databaseName() + "'.", mdtError::Error);
-      MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
-      pvLastError.commit();
-      return false;
-    }
-  }
-  /// \todo Sould'nt we clear tables ??
+// bool mdtTtDatabaseSchema::createSchemaSqlite(const QFileInfo & dbFileInfo) 
+// {
+//   if(!pvDatabaseManager->createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::OverwriteExisting)){
+//     return false;
+//   }
+//   return createSchemaSqlite();
+// }
 
-  return true;
-}
-
-bool mdtTtDatabaseSchema::createSchemaSqlite(const QDir & startDirectory)
-{
-  if(!pvDatabaseManager->createDatabaseSqlite(startDirectory)){
-    return false;
-  }
-  return createSchemaSqlite();
-}
-
-bool mdtTtDatabaseSchema::createSchemaSqlite(const QFileInfo & dbFileInfo) 
-{
-  if(!pvDatabaseManager->createDatabaseSqlite(dbFileInfo, mdtSqlDatabaseManager::OverwriteExisting)){
-    return false;
-  }
-  return createSchemaSqlite();
-}
-
-bool mdtTtDatabaseSchema::createSchemaSqlite()
-{
-  Q_ASSERT(pvDatabaseManager->database().isOpen());
-
-  pvTables.clear();
-  if(!setupTables()){
-    return false;
-  }
-  if(!createTablesSqlite()){
-    return false;
-  }
-  if(!createTriggers()){
-    return false;
-  }
-
-  qDebug() << "Table count: " << pvDatabaseManager->database().tables(QSql::Tables).size();
-  qDebug() << "Tables: " << pvDatabaseManager->database().tables(QSql::Tables);
-
-  if(!createViews()){
-    return false;
-  }
-
-  qDebug() << "View count: " << pvDatabaseManager->database().tables(QSql::Views).size();
-  qDebug() << "Views: " << pvDatabaseManager->database().tables(QSql::Views);
-
-  if(!checkSchema()){
-    return false;
-  }
-
-  return false;
-//   return populateTables();
-}
+// bool mdtTtDatabaseSchema::createSchemaSqlite()
+// {
+//   Q_ASSERT(pvDatabaseManager->database().isOpen());
+// 
+//   pvTables.clear();
+//   if(!setupTables()){
+//     return false;
+//   }
+//   if(!createTablesSqlite()){
+//     return false;
+//   }
+//   if(!createTriggers()){
+//     return false;
+//   }
+// 
+//   qDebug() << "Table count: " << pvDatabaseManager->database().tables(QSql::Tables).size();
+//   qDebug() << "Tables: " << pvDatabaseManager->database().tables(QSql::Tables);
+// 
+//   if(!createViews()){
+//     return false;
+//   }
+// 
+//   qDebug() << "View count: " << pvDatabaseManager->database().tables(QSql::Views).size();
+//   qDebug() << "Views: " << pvDatabaseManager->database().tables(QSql::Views);
+// 
+//   if(!checkSchema()){
+//     return false;
+//   }
+// 
+//   return false;
+// //   return populateTables();
+// }
 
 mdtError mdtTtDatabaseSchema::lastError() const
 {
@@ -265,20 +266,20 @@ bool mdtTtDatabaseSchema::setupTables()
   return true;
 }
 
-bool mdtTtDatabaseSchema::createTablesSqlite() 
-{
-  int i;
-  QSqlQuery query(pvDatabaseManager->database());
-
-  for(i = 0; i < pvTables.size(); ++i){
-    if(!pvDatabaseManager->createTable(pvTables[i], mdtSqlDatabaseManager::OverwriteExisting)){
-      pvTables.clear();
-      return false;
-    }
-  }
-
-  return true;
-}
+// bool mdtTtDatabaseSchema::createTablesSqlite() 
+// {
+//   int i;
+//   QSqlQuery query(pvDatabaseManager->database());
+// 
+//   for(i = 0; i < pvTables.size(); ++i){
+//     if(!pvDatabaseManager->createTable(pvTables[i], mdtSqlDatabaseManager::OverwriteExisting)){
+//       pvTables.clear();
+//       return false;
+//     }
+//   }
+// 
+//   return true;
+// }
 
 bool mdtTtDatabaseSchema::createTriggers()
 {
@@ -3371,7 +3372,7 @@ bool mdtTtDatabaseSchema::setupTestItemTable()
 
 bool mdtTtDatabaseSchema::createTrigger(const QString & triggerName, const QString & sql)
 {
-  QSqlQuery query(pvDatabaseManager->database());
+  QSqlQuery query; ///(pvDatabaseManager->database());
   QSqlError sqlError;
   QString dropSql;
 
@@ -3401,7 +3402,7 @@ bool mdtTtDatabaseSchema::createTrigger(const QString & triggerName, const QStri
 
 bool mdtTtDatabaseSchema::createView(const QString & viewName, const QString & sql) 
 {
-  QSqlQuery query(pvDatabaseManager->database());
+  QSqlQuery query/**(pvDatabaseManager->database())*/;
   QSqlError sqlError;
   QString dropSql;
 

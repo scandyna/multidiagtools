@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #include "mdtTtDut01TestData.h"
 #include "mdtApplication.h"
 #include "mdtTtDatabaseSchema.h"
+#include "mdtSqlDatabaseSchemaThread.h"
 #include "mdtSqlRecord.h"
 #include "mdtTtBase.h"
 #include "mdtTtTestLinkData.h"
@@ -48,17 +49,35 @@
 
 void mdtTestCableTest::initTestCase()
 {
+  QTemporaryFile dbFile;
+
+  /*
+   * Create a file for database
+   */
+  QVERIFY(dbFile.open());
+  dbFile.close();
+  /*
+   * Open database
+   */
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  pvDatabase.setDatabaseName(QFileInfo(dbFile).absoluteFilePath());
+  QVERIFY(pvDatabase.open());
+  /*
+   * Create schema
+   */
   createDatabaseSchema();
-  QVERIFY(pvDatabaseManager.database().isOpen());
+  QVERIFY(pvDatabase.isOpen());
 }
 
 void mdtTestCableTest::cleanupTestCase()
 {
+  pvDatabase.close();
+  QFile::remove(QFileInfo(pvDatabase.databaseName()).absoluteFilePath());
 }
 
 void mdtTestCableTest::sandbox()
 {
-  mdtTtDut01TestData dut01Data(pvDatabaseManager.database());
+  mdtTtDut01TestData dut01Data(pvDatabase);
 
   QVERIFY(dut01Data.populate());
 }
@@ -66,19 +85,10 @@ void mdtTestCableTest::sandbox()
 
 void mdtTestCableTest::createDatabaseSchema()
 {
-  QTemporaryFile dbFile;
-  QFileInfo dbFileInfo;
-
-  /*
-   * Check Sqlite database creation
-   */
-  QVERIFY(dbFile.open());
-  dbFile.close();
-  dbFileInfo.setFile(dbFile.fileName() + ".db");
-  mdtTtDatabaseSchema schema(&pvDatabaseManager);
-  QVERIFY(schema.createSchemaSqlite(dbFileInfo));
-  QVERIFY(pvDatabaseManager.database().isOpen());
-  QVERIFY(schema.checkSchema());
+  mdtTtDatabaseSchema schema;
+  mdtSqlDatabaseSchemaThread thread;
+  QVERIFY(thread.createSchemaBlocking(schema.databaseSchema(), pvDatabase));
+  QVERIFY(pvDatabase.isOpen());
 }
 
 /*

@@ -79,26 +79,26 @@ class mdtTtDatabaseSchema
    *
    * \pre A database must allready be open .
    */
-  bool checkSchema();
+//   bool checkSchema();
 
   /*! \brief Create schema using Sqlite
    *
    * Ask the user to enter a path and create schema .
    * The startDirectory is used as directory to go when displaying the file dialog .
    */
-  bool createSchemaSqlite(const QDir & startDirectory);
+//   bool createSchemaSqlite(const QDir & startDirectory);
 
   /*! \brief Create schema using Sqlite
    *
    * Will overwrite database if exists .
    */
-  bool createSchemaSqlite(const QFileInfo & dbFileInfo);
+//   bool createSchemaSqlite(const QFileInfo & dbFileInfo);
 
   /*! \brief Create schema using Sqlite
    *
    * \pre A database must allready be open .
    */
-  bool createSchemaSqlite();
+//   bool createSchemaSqlite();
 
   /*! \brief Get last error
    */
@@ -112,7 +112,7 @@ class mdtTtDatabaseSchema
 
   /*! \brief
    */
-  bool createTablesSqlite();
+//   bool createTablesSqlite();
 
   /*! \brief Create triggers
    */

@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtTestNodeTest.h"
+#include "mdtSqlDatabaseSchemaThread.h"
 #include "mdtTtTestNode.h"
 #include "mdtTtTestNodeUnit.h"
 ///#include "mdtTestToolTest.h"
@@ -72,18 +73,39 @@
 
 void mdtTestNodeTest::initTestCase()
 {
+  QTemporaryFile dbFile;
+
+  /*
+   * Create a file for database
+   */
+  QVERIFY(dbFile.open());
+  dbFile.close();
+  /*
+   * Open database
+   */
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  pvDatabase.setDatabaseName(QFileInfo(dbFile).absoluteFilePath());
+  QVERIFY(pvDatabase.open());
+  /*
+   * Create schema
+   */
   createDatabaseSchema();
-  QVERIFY(pvDatabaseManager.database().isOpen());
+  QVERIFY(pvDatabase.isOpen());
+/*
+  createDatabaseSchema();
+  QVERIFY(pvDatabase.isOpen());*/
 }
 
 void mdtTestNodeTest::cleanupTestCase()
 {
+  pvDatabase.close();
+  QFile::remove(QFileInfo(pvDatabase.databaseName()).absoluteFilePath());
 }
 
 void mdtTestNodeTest::testNodeUnitTest()
 {
-  mdtTtTestNodeUnit tnu(pvDatabaseManager.database());
-  mdtTtTestNodeATestData tnd(pvDatabaseManager.database());
+  mdtTtTestNodeUnit tnu(pvDatabase);
+  mdtTtTestNodeATestData tnd(pvDatabase);
   QVariant id;
   bool ok;
 
@@ -110,8 +132,8 @@ void mdtTestNodeTest::testNodeUnitTest()
 
 void mdtTestNodeTest::getRouteRelayIdTest()
 {
-  mdtTtTestNode tn(pvDatabaseManager.database());
-  mdtTtTestNodeATestData tnAd(pvDatabaseManager.database());
+  mdtTtTestNode tn(pvDatabase);
+  mdtTtTestNodeATestData tnAd(pvDatabase);
   QVariant id;
   QVariant testNodeId;
   bool ok;
@@ -147,8 +169,8 @@ void mdtTestNodeTest::getRouteRelayIdTest()
 
 void mdtTestNodeTest::getRouteRelaysTest()
 {
-  mdtTtTestNode tn(pvDatabaseManager.database());
-  mdtTtTestNodeATestData tnAd(pvDatabaseManager.database());
+  mdtTtTestNode tn(pvDatabase);
+  mdtTtTestNodeATestData tnAd(pvDatabase);
   QStringList schemaPosList;
   std::vector<mdtTtTestNodeRouteRelay> relays;
   QVariant testNodeId;
@@ -254,14 +276,14 @@ void mdtTestNodeTest::testNodeRouteDataTest()
 
 void mdtTestNodeTest::routeBuildTest()
 {
-  mdtTtTestNode tn(pvDatabaseManager.database());
-  mdtTtTestNodeUnit tnu(pvDatabaseManager.database());
-  mdtTtTestNodeATestData tnAd(pvDatabaseManager.database());
-  mdtTtTestNodeRoute tnr(pvDatabaseManager.database());
+  mdtTtTestNode tn(pvDatabase);
+  mdtTtTestNodeUnit tnu(pvDatabase);
+  mdtTtTestNodeATestData tnAd(pvDatabase);
+  mdtTtTestNodeRoute tnr(pvDatabase);
   mdtTtTestNodeRouteData route;
   QVariant testNodeId;
   QVariant connectionAId, connectionBId;
-  mdtClPathGraph graph(pvDatabaseManager.database());
+  mdtClPathGraph graph(pvDatabase);
   bool ok;
 
   // Create test node and load graph's link list
@@ -330,9 +352,9 @@ void mdtTestNodeTest::routeBuildTest()
 
 void mdtTestNodeTest::routeAddRemoveTest()
 {
-  mdtTtTestNode tn(pvDatabaseManager.database());
-  mdtTtTestNodeRoute tnr(pvDatabaseManager.database());
-  mdtTtTestNodeATestData tnAd(pvDatabaseManager.database());
+  mdtTtTestNode tn(pvDatabase);
+  mdtTtTestNodeRoute tnr(pvDatabase);
+  mdtTtTestNodeATestData tnAd(pvDatabase);
   mdtTtTestNodeRouteData createdRoute, route;
   QVariant testNodeId;
   QList<mdtTtTestNodeRouteData> routeDataList;
@@ -421,10 +443,10 @@ void mdtTestNodeTest::routeAddRemoveTest()
 
 void mdtTestNodeTest::shortDetectionTest()
 {
-  mdtTtTestNode tn(pvDatabaseManager.database());
-  mdtTtTestNodeRoute tnr(0, pvDatabaseManager.database());
-  mdtTtTestNodeATestData tnAd(pvDatabaseManager.database());
-  mdtClPathGraph graph(pvDatabaseManager.database());
+  mdtTtTestNode tn(pvDatabase);
+  mdtTtTestNodeRoute tnr(0, pvDatabase);
+  mdtTtTestNodeATestData tnAd(pvDatabase);
+  mdtClPathGraph graph(pvDatabase);
   mdtTtTestNodeRouteData route;
   QVariant connectionAId, connectionBId;
   bool ok;
@@ -458,8 +480,8 @@ void mdtTestNodeTest::shortDetectionTest()
 
 void mdtTestNodeTest::testNodeManagerTest()
 {
-  mdtTtTestNodeATestData tnAd(pvDatabaseManager.database());
-  mdtTtTestNodeManager tnm(pvDatabaseManager.database());
+  mdtTtTestNodeATestData tnAd(pvDatabase);
+  mdtTtTestNodeManager tnm(pvDatabase);
   mdtDigitalIo *dout;
 
   // Create test node A in database
@@ -579,7 +601,7 @@ void mdtTestNodeTest::testNodeManagerTest()
 
 QVariant mdtTestNodeTest::getConnectionId(const QString & testNodeAlias, const QString & schemaPosition, const QString & contact, bool & ok)
 {
-  mdtTtTestNodeUnit tnu(pvDatabaseManager.database());
+  mdtTtTestNodeUnit tnu(pvDatabase);
 
   return tnu.getConnectionId(testNodeAlias, schemaPosition, contact, ok);
 }
@@ -587,10 +609,10 @@ QVariant mdtTestNodeTest::getConnectionId(const QString & testNodeAlias, const Q
 mdtTtTestNodeRouteData mdtTestNodeTest::builRoute(const QString & testNodeAlias, const QString & schemaPositionA, const QString & contactA, const QString & schemaPositionB, const QString & contactB, bool & ok)
 {
   mdtTtTestNodeRouteData routeData;
-  mdtTtTestNode tn(pvDatabaseManager.database());
-  mdtTtTestNodeUnit tnu(pvDatabaseManager.database());
-  mdtClPathGraph graph(pvDatabaseManager.database());
-  mdtTtTestNodeRoute tnr(pvDatabaseManager.database());
+  mdtTtTestNode tn(pvDatabase);
+  mdtTtTestNodeUnit tnu(pvDatabase);
+  mdtClPathGraph graph(pvDatabase);
+  mdtTtTestNodeRoute tnr(pvDatabase);
   QVariant testNodeId;
   QVariant connectionAId, connectionBId;
 
@@ -630,9 +652,9 @@ mdtTtTestNodeRouteData mdtTestNodeTest::builRoute(const QString & testNodeAlias,
 mdtTtTestNodeRouteData mdtTestNodeTest::getRoute(const QString & testNodeAlias, const QString & schemaPositionA, const QString & contactA, const QString & schemaPositionB, const QString & contactB, bool & ok)
 {
   mdtTtTestNodeRouteData routeData;
-  mdtTtTestNode tn(pvDatabaseManager.database());
-  mdtTtTestNodeUnit tnu(pvDatabaseManager.database());
-  mdtTtTestNodeRoute tnr(pvDatabaseManager.database());
+  mdtTtTestNode tn(pvDatabase);
+  mdtTtTestNodeUnit tnu(pvDatabase);
+  mdtTtTestNodeRoute tnr(pvDatabase);
   QVariant testNodeId;
   QVariant connectionAId, connectionBId;
 
@@ -662,19 +684,24 @@ mdtTtTestNodeRouteData mdtTestNodeTest::getRoute(const QString & testNodeAlias, 
 
 void mdtTestNodeTest::createDatabaseSchema()
 {
-  QTemporaryFile dbFile;
-  QFileInfo dbFileInfo;
+  mdtTtDatabaseSchema schema;
+  mdtSqlDatabaseSchemaThread thread;
+  QVERIFY(thread.createSchemaBlocking(schema.databaseSchema(), pvDatabase));
+  QVERIFY(pvDatabase.isOpen());
 
-  /*
-   * Check Sqlite database creation
-   */
-  QVERIFY(dbFile.open());
-  dbFile.close();
-  dbFileInfo.setFile(dbFile.fileName() + ".db");
-  mdtTtDatabaseSchema schema(&pvDatabaseManager);
-  QVERIFY(schema.createSchemaSqlite(dbFileInfo));
-  QVERIFY(pvDatabaseManager.database().isOpen());
-  QVERIFY(schema.checkSchema());
+//   QTemporaryFile dbFile;
+//   QFileInfo dbFileInfo;
+// 
+//   /*
+//    * Check Sqlite database creation
+//    */
+//   QVERIFY(dbFile.open());
+//   dbFile.close();
+//   dbFileInfo.setFile(dbFile.fileName() + ".db");
+//   mdtTtDatabaseSchema schema(&pvDatabaseManager);
+//   QVERIFY(schema.createSchemaSqlite(dbFileInfo));
+//   QVERIFY(pvDatabase.isOpen());
+//   QVERIFY(schema.checkSchema());
 }
 
 /*

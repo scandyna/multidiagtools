@@ -91,8 +91,6 @@ class mdtDatabaseTest : public mdtTest
   void databaseSqliteTest();
   void databaseDialogSqliteTest();
 
-  void databaseManagerTest();
-
   void sqlTransactionTest();
 
   /// \todo Add mdtSqlForm test

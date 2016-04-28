@@ -21,9 +21,6 @@
 #include "mdtClMainWindow.h"
 #include "mdtSqlWindow.h"
 #include "mdtSqlForm.h"
-
-#include "mdtSqlDatabaseManager.h"
-
 #include "mdtSqlDatabaseDialogSqlite.h"
 #include "mdtSqlDatabaseSchemaDialog.h"
 #include "mdt/sql/copier/DatabaseCopyDialog.h"
@@ -68,8 +65,8 @@ mdtClMainWindow::mdtClMainWindow()
 {
   setupUi(this);
   // Database manager
-  pvDatabaseManager = new mdtSqlDatabaseManager(this);
-  pvDatabaseManager->setForDialogParentWidget(this);
+//   pvDatabaseManager = new mdtSqlDatabaseManager(this);
+//   pvDatabaseManager->setForDialogParentWidget(this);
   /// \todo provisoire
   initWorkDirectory();
   ///openDatabaseSqlite();
@@ -498,7 +495,7 @@ void mdtClMainWindow::editSelectedTestConnectionCable()
 void mdtClMainWindow::calibrateW750TestNode()
 {
   if(pvW750CalibrationWindow == 0){
-    pvW750CalibrationWindow = new mdtTtBasicTestNodeCalibrationWindow(pvDatabaseManager->database(), this);
+    pvW750CalibrationWindow = new mdtTtBasicTestNodeCalibrationWindow(pvDatabase, this);
     if(!pvW750CalibrationWindow->init()){
       delete pvW750CalibrationWindow;
       pvW750CalibrationWindow = 0;
@@ -576,7 +573,7 @@ void mdtClMainWindow::runBasicTester()
 void mdtClMainWindow::runCableChecker()
 {
   if(pvCableChecker == 0){
-    pvCableChecker = new mdtTtCableChecker(0, pvDatabaseManager->database());
+    pvCableChecker = new mdtTtCableChecker(0, pvDatabase);
     if(!pvCableChecker->setupTables()){
       QMessageBox msgBox(this);
       msgBox.setText(tr("Cannot setup test item editor."));
@@ -668,7 +665,7 @@ bool mdtClMainWindow::createVehicleTypeTableView()
 
 bool mdtClMainWindow::createVehicleTypeActions()
 {
-  QSqlQuery query(pvDatabaseManager->database());
+  QSqlQuery query(pvDatabase);
   QString sql;
   QAction *action;
   QString txt;
@@ -834,7 +831,7 @@ mdtClWireEditor* mdtClMainWindow::createWireEditor()
   mdtClWireEditor *editor;
   mdtSqlWindow *window;
 
-  editor = new mdtClWireEditor(0, pvDatabaseManager->database());
+  editor = new mdtClWireEditor(0, pvDatabase);
   window = setupEditor(editor);
   if(window == 0){
     return 0;
@@ -928,7 +925,7 @@ mdtClLinkBeamEditor *mdtClMainWindow::createLinkBeamEditor()
   mdtClLinkBeamEditor *editor;
   mdtSqlWindow *window;
 
-  editor = new mdtClLinkBeamEditor(0, pvDatabaseManager->database());
+  editor = new mdtClLinkBeamEditor(0, pvDatabase);
   window = setupEditor(editor);
   if(window == 0){
     return 0;
@@ -1003,7 +1000,7 @@ mdtTtTestModelEditor *mdtClMainWindow::createTestModelEditor()
   mdtTtTestModelEditor *editor;
   mdtSqlWindow *window;
 
-  editor = new mdtTtTestModelEditor(0, pvDatabaseManager->database());
+  editor = new mdtTtTestModelEditor(0, pvDatabase);
   window = setupEditor(editor);
   if(window == 0){
     return 0;
@@ -1020,7 +1017,7 @@ void mdtClMainWindow::createBasicTester()
   Q_ASSERT(pvBasicTesterWindow == 0);
 
   ///pvBasicTester = new mdtTtBasicTester(pvDatabaseManager->database());
-  pvBasicTesterWindow = new mdtTtBasicTesterWindow(pvDatabaseManager->database(), this);
+  pvBasicTesterWindow = new mdtTtBasicTesterWindow(pvDatabase, this);
   if(!pvBasicTesterWindow->init()){
     displayError(pvBasicTesterWindow->lastError());
   }
