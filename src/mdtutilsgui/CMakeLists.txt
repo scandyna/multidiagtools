@@ -21,14 +21,6 @@ set (SOURCES_FILES
           mdtDigitalOutWidget.cpp
           # Database
           mdtDataTableItemDelegate.cpp
-          #mdtDataTableManager.cpp
-          mdtDataTableModel.cpp
-          mdtFieldMap.cpp
-          mdtFieldMapField.cpp
-          mdtFieldMapItem.cpp
-          mdtFieldMapDialog.cpp
-          mdtFieldMapItemDialog.cpp
-          mdtFieldListEditionDialog.cpp
           mdtSqlQueryWidget.cpp
           mdtItemsSelectorDialog.cpp
           mdtItemsSelectorDialogItem.cpp

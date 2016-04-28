@@ -1,4 +1,4 @@
-window_sizes 1280 969 305 969 916 0
+window_sizes 1280 964 305 969 911 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2218370 // Thread
@@ -6,7 +6,7 @@ diagrams
   classdiagram_ref 2224898 // FramePool
     969 911 100 4 0 0
   active  classdiagram_ref 2231426 // SetupDialog
-    969 916 100 4 0 0
+    969 911 100 4 0 0
 end
 show_stereotypes
 open
