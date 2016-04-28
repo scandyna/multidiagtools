@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -99,23 +99,6 @@ class mdtTtDatabaseSchema
    * \pre A database must allready be open .
    */
   bool createSchemaSqlite();
-
-  /*! \brief Import a database
-   *
-   * Will ask the user to choose a source database and import it to currently open database .
-   * The startDirectory is used as directory to go when displaying the file dialog .
-   *
-   * \pre A database (witch is destination database) must allready be open .
-   */
-  bool importDatabase(const QDir & startDirectory);
-
-  /*! \brief Import a database
-   *
-   * Will import database given by sourceDbFileInfo into current open database .
-   *
-   * \pre A database (witch is destination database) must allready be open .
-   */
-  bool importDatabase(const QFileInfo sourceDbFileInfo);
 
   /*! \brief Get last error
    */

@@ -20,14 +20,6 @@ target_link_libraries(mdtdatabasewidgettest "mdtdatabase${MDTLIB_VERSION_SUFFIX}
 target_link_libraries(mdtdatabasewidgettest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatabasewidgettest "mdttest")
 
-# * mdtDataTableTest executable *
-add_executable(mdtdatatabletest "mdtDataTableTest.cpp")
-target_link_libraries(mdtdatatabletest "mdtutils${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtdatatabletest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtdatatabletest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
-#target_link_libraries(mdtdatabasetest "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtdatatabletest "mdttest")
-
 # * mdtSqlCopierTest executable *
 add_executable(mdtsqlcopiertest "mdtSqlCopierTest.cpp")
 target_link_libraries(mdtsqlcopiertest "mdtutils${MDTLIB_VERSION_SUFFIX}")

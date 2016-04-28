@@ -28,7 +28,6 @@ set (SOURCES_FILES
           mdtSqlTableSelectionRow.cpp
           mdtSqlTableSelection.cpp
           
-          mdtDataTableManager.cpp
           mdtSqlDatabaseManager.cpp
           
           mdtSqlConnectionNameWidget.cpp

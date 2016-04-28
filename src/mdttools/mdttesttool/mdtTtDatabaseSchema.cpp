@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtSqlDatabaseManager.h"
-#include "mdtDataTableManager.h"
+
 #include "mdtSqlForeignKeySetting.h"
 
 #include "mdtTtDatabaseSchema.h"
@@ -193,114 +193,6 @@ bool mdtTtDatabaseSchema::createSchemaSqlite()
 
   return false;
 //   return populateTables();
-}
-
-bool mdtTtDatabaseSchema::importDatabase(const QDir & startDirectory)
-{
-  Q_ASSERT(pvDatabaseManager->database().isOpen());
-
-  QFileInfo dbFileInfo;
-
-  // Let the user choose source database
-  dbFileInfo = pvDatabaseManager->chooseDatabaseSqlite(startDirectory);
-  if(dbFileInfo.fileName().isEmpty()){
-    return false;
-  }
-
-  return importDatabase(dbFileInfo);
-}
-
-bool mdtTtDatabaseSchema::importDatabase(const QFileInfo sourceDbFileInfo)
-{
-  Q_ASSERT(pvDatabaseManager->database().isOpen());
-
-  mdtSqlForeignKeySetting fkSetting(pvDatabaseManager->database(), mdtSqlForeignKeySetting::Temporary);
-  mdtSqlDatabaseManager sourceDbManager;
-  mdtDataTableManager tableManager;
-  QStringList sourceTables, destinationTables, ignoredTables;
-  int i;
-
-  // Open source database
-  if(!sourceDbManager.openDatabaseSqlite(sourceDbFileInfo, "import_db_connection")){
-    pvLastError = sourceDbManager.lastError();
-    return false;
-  }
-  // Check that it's not the current database
-  if(sourceDbManager.database().databaseName() == pvDatabaseManager->database().databaseName()){
-    pvLastError.setError("Selected source database is the same as current (destination) database.", mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
-    pvLastError.commit();
-    return false;
-  }
-  // Get the list of source tables and check if we have all in current database
-  sourceTables = sourceDbManager.database().tables(QSql::Tables);
-  destinationTables = pvDatabaseManager->database().tables(QSql::Tables);
-  for(i = 0; i < sourceTables.size(); ++i){
-    if(!destinationTables.contains(sourceTables.at(i))){
-      pvLastError.setError("Table '" + sourceTables.at(i) + "' does not exists in current database - Will be ignored", mdtError::Warning);
-      MDT_ERROR_SET_SRC(pvLastError, "mdtTtDatabaseSchema");
-      pvLastError.commit();
-      ignoredTables.append(sourceTables.at(i));
-    }
-  }
-  // Remove ignored tables
-  for(i = 0; i < ignoredTables.size(); ++i){
-    sourceTables.removeAll(ignoredTables.at(i));
-  }
-  // We also remove the sqlite_sequence table
-  sourceTables.removeAll("sqlite_sequence");
-  // We also ignore some type tables
-  sourceTables.removeAll("Modification_tbl");
-  sourceTables.removeAll("ConnectionType_tbl");
-  sourceTables.removeAll("LinkDirection_tbl");
-  sourceTables.removeAll("LinkType_tbl");
-  
-  sourceTables.removeAll("TestSystemComponentType_tbl");
-  sourceTables.removeAll("TestSystemUnitType_tbl");
-  
-  sourceTables.removeAll("TestNodeUnitType_tbl");
-  
-  /// \todo Provisoire !!
-  ///sourceTables.removeAll("TestNodeUnitConnection_tbl");
-  ///sourceTables.removeAll("TestNodeUnitSetup_tbl");
-  sourceTables.removeAll("LinkModification_tbl");
-  
-  // Copy tables
-  tableManager.enableProgressDialog(true);
-  if(!fkSetting.disable()){
-//   if(!pvDatabaseManager->setForeignKeysEnabled(false)){
-    pvLastError = pvDatabaseManager->lastError();
-    return false;
-  }
-  for(i = 0; i < sourceTables.size(); ++i){
-    tableManager.clearFieldMap();
-    /// \todo Provisoire !!
-    /**
-    if(sourceTables.at(i) == "TestNode_tbl"){
-      tableManager.addFieldMapping("NodeIdentification", "Alias", "", QVariant::String);
-      tableManager.addFieldMapping("DeviceIdentification", "Alias", "", QVariant::String);
-    }
-    */
-    /**
-    if(sourceTables.at(i) == "Link_tbl"){
-      tableManager.addFieldMapping("Value", "Resistance", "", QVariant::String);
-    }
-    if(sourceTables.at(i) == "ArticleLink_tbl"){
-      tableManager.addFieldMapping("Value", "Resistance", "", QVariant::String);
-    }
-    */
-    if(!tableManager.copyTable(sourceTables.at(i), sourceTables.at(i), mdtSqlDatabaseManager::KeepExisting, sourceDbManager.database(), pvDatabaseManager->database())){
-      pvLastError = tableManager.lastError();
-      return false;
-    }
-  }
-  if(!fkSetting.enable()){
-//   if(!pvDatabaseManager->setForeignKeysEnabled(true)){
-    pvLastError = pvDatabaseManager->lastError();
-    return false;
-  }
-
-  return true;
 }
 
 mdtError mdtTtDatabaseSchema::lastError() const
