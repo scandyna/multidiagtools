@@ -1,6 +1,6 @@
 format 211
-"errorgui" // mdt::errorgui
-  revision 1
+"ErrorGui" // mdt::ErrorGui
+  revision 2
   modified_by 2 "philippe"
   // class settings
   

@@ -7,7 +7,7 @@ project (multidiagtools)
 
 # Liste des fichiers sources
 set (SOURCES_FILES 
-          mdtPortTerm.cpp
+#           mdtPortTerm.cpp
           mdtModbusIoTool.cpp
     )
 
@@ -17,7 +17,7 @@ target_link_libraries(mdttools${MDTLIB_VERSION_SUFFIX} Qt5::Widgets)
 target_link_libraries(mdttools${MDTLIB_VERSION_SUFFIX} "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdttools${MDTLIB_VERSION_SUFFIX} "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdttools${MDTLIB_VERSION_SUFFIX} "mdtport${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdttools${MDTLIB_VERSION_SUFFIX} "mdtserialport${MDTLIB_VERSION_SUFFIX}")
+# target_link_libraries(mdttools${MDTLIB_VERSION_SUFFIX} "mdtserialport${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdttools${MDTLIB_VERSION_SUFFIX} "mdtdevice${MDTLIB_VERSION_SUFFIX}")
 
 # Translations - We generate a .pro file, that simplify the usage of lupdate

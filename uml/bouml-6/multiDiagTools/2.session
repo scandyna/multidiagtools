@@ -1,23 +1,22 @@
-window_sizes 1280 964 353 921 911 0
+window_sizes 1272 956 305 961 903 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 2124290 // RecordFormat
-    921 911 100 21 48 0
+  classdiagram_ref 2218370 // Thread
+    775 728 100 4 0 0
+  classdiagram_ref 2224898 // FramePool
+    969 911 100 4 0 0
+  active  classdiagram_ref 2231426 // SetupDialog
+    961 903 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2124290 // RecordFormat
 open
+  classview_ref 1144578 // SetupDialog
   
-package_ref 403202 // tools
-  classview_ref 1078274 // Data
-  classview_ref 1084802 // Format
-  classview_ref 1104514 // FileParserSettingsDialog
-  classview_ref 887298 // Common
-  classview_ref 887170 // Parser
-  classview_ref 1097986 // FileParserSettings
-  classview_ref 1038850 // CopyThread
-  classview_ref 1032322 // CopyDialog
+  package_ref 402434 // Usb
   
-package_ref 260866 // Boost
+  package_ref 402690 // Tcp
+  classview_ref 1137922 // DSO1000
+  
+  package_ref 403202 // tools
 end
 end

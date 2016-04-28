@@ -1,6 +1,6 @@
 format 211
-"tcp" // mdt::modbus::tcp
-  revision 1
+"Tcp" // mdt::Modbus::Tcp
+  revision 2
   modified_by 2 "philippe"
   // class settings
   

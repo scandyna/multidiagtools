@@ -1,6 +1,6 @@
 format 211
 "mdt" // mdt
-  revision 2
+  revision 3
   modified_by 2 "philippe"
   // class settings
   
@@ -26,29 +26,31 @@ format 211
   activitydiagramsettings
    end
   
-  package_ref 401922 // error
+  package_ref 401922 // Error
 
-  package_ref 403074 // errorgui
+  package_ref 403074 // ErrorGui
 
-  package_ref 402050 // csv
+  package_ref 402050 // Csv
 
-  package_ref 402178 // db
+  package_ref 402178 // Db
 
-  package_ref 402306 // serialport
+  package_ref 402306 // SerialPort
 
-  package_ref 402434 // usb
+  package_ref 402434 // Usb
 
-  package_ref 402562 // modbus
+  package_ref 402562 // Modbus
 
-  package_ref 402946 // device
+  package_ref 402946 // Device
+
+  package_ref 403330 // Wait
+
+  package_ref 416770 // CableList
+
+  package_ref 416898 // TestTool
+
+  package_ref 417026 // Audio
+
+  package_ref 430082 // Dsp
 
   package_ref 403202 // tools
-
-  package_ref 403330 // wait
-
-  package_ref 416770 // cablelist
-
-  package_ref 416898 // testtool
-
-  package_ref 417026 // audio
 end

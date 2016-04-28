@@ -1,6 +1,6 @@
 format 211
-"sandbox" // mdtserialport::sandbox
-  revision 4
+"tests" // mdt::Modbus::tests
+  revision 1
   modified_by 2 "philippe"
   // class settings
   
@@ -26,5 +26,4 @@ format 211
   activitydiagramsettings
    end
   
-  package_ref 348802 // ProactorDesign
 end

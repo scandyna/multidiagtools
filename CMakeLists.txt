@@ -97,6 +97,8 @@ find_package(Qt5Widgets REQUIRED) # Widgets finds its own dependencies (QtGui an
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Sql REQUIRED)
 find_package(Qt5Test REQUIRED)
+find_package(Qt5SerialPort REQUIRED)
+find_package(Qt5LinguistTools REQUIRED)
 
 # Get Qwt
 find_package(Qwt REQUIRED)
@@ -121,7 +123,9 @@ include_directories("${PROJECT_SOURCE_DIR}/src/mdtdevice")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdterror")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdterrorgui")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtport")
-include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport")
+
+# include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport")
+
 include_directories("${PROJECT_SOURCE_DIR}/src/mdttools")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdttools/mdttesttool")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdttools/mdttesttool/mdtcablelist")
@@ -136,7 +140,9 @@ include_directories("${CMAKE_BINARY_DIR}/src/mdtdevice")
 include_directories("${CMAKE_BINARY_DIR}/src/mdterror")
 include_directories("${CMAKE_BINARY_DIR}/src/mdterrorgui")
 include_directories("${CMAKE_BINARY_DIR}/src/mdtport")
-include_directories("${CMAKE_BINARY_DIR}/src/mdtserialport")
+
+# include_directories("${CMAKE_BINARY_DIR}/src/mdtserialport")
+
 include_directories("${CMAKE_BINARY_DIR}/src/mdttools")
 include_directories("${CMAKE_BINARY_DIR}/src/mdttools/mdttesttool")
 include_directories("${CMAKE_BINARY_DIR}/src/mdttools/mdttesttool/mdtcablelist")
@@ -145,11 +151,18 @@ include_directories("${CMAKE_BINARY_DIR}/src/mdtutilsgui")
 include_directories("${CMAKE_BINARY_DIR}/src/qt-solutions/qtsingleapplication")
 include_directories("${CMAKE_BINARY_DIR}/tests/mdtutilsgui")
 
+
 # NOTE: Support Windows pas terminé
 if(UNIX)
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtport/linux")
-include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport/linux")
+
+# include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport/linux")
+
 endif(UNIX)
+
+# Enable testing
+# Must be placed before any add_subdirectory() command, else tests that are defined in sub-directories will be ignored
+enable_testing()
 
 #################################################################################################################################################
 # *** Librairies section ***
@@ -185,6 +198,9 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")
 # * mdtdatabase *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtdatabase")
 
+# SerialPort
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/SerialPort")
+
 # NOTE: Support Windows pas terminé
 if(UNIX)
 # * mdtdevice *
@@ -194,7 +210,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtdevice")
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtport")
 
 # * mdtserialport *
-add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtserialport")
+# add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 
 # * mdttools *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdttools")
@@ -214,7 +230,7 @@ endif(UNIX)
 add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
 
 # ** Unit tests execution **
-enable_testing()
+# enable_testing()
 
 # * mdtutils *
 
@@ -270,7 +286,9 @@ add_test (mdtDatabaseTestOld ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtda
 
 # * mdtdatabase *
 add_test (mdtClConnectorTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtclconnectortest)
+
 add_test (mdtDatabaseTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtdatabasetest)
+
 add_test (mdtDatabaseWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtdatabasewidgettest)
 add_test (mdtSqlCopierTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtsqlcopiertest)
 add_test (mdtSqlApplicationWidgetsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtsqlapplicationwidgetstest)
@@ -284,41 +302,37 @@ add_test (mdtIoWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtiowid
 add_test (mdtDeviceAddressTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtdeviceaddresstest)
 
 # NOTE: Support Windows pas terminé
-if(UNIX)
-  # mdtPortLockTest
-  add_test (mdtPortLockTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtportlocktest)
-  # mdtPortTest
-  add_test (mdtPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtporttest)
-  # mdtPortInfoTest
-  add_test (mdtPortInfoTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtportinfotest)
-  # mdtUsbPortTest
-  add_test (mdtUsbPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtusbporttest)
-  # mdtUsbTmcPortTest
-  add_test (mdtUsbTmcPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtusbtmcporttest)
-  # mdtTcpSocketTest
-  add_test (mdtTcpSocketTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdttcpsockettest)
-  # mdtPortManagerTest
-  add_test (mdtPortManagerTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtportmanagertest)
-  # mdtSerialPortTests
-  add_test (mdtSerialPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtserialport/mdtserialporttest)
-  add_test (mdtSerialPortManagerTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtserialport/mdtserialportmanagertest)
-  add_test (mdtSerialPortConfigTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtserialport/mdtserialportconfigtest)
-
-  add_test (mdtDeviceTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdevice/mdtdevicetest)
-
-  # mdtTtValueLimitsTest
-  add_test (mdtTtValueLimitsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttvaluelimitstest)
-  # mdtTtTestSystemComponentTest
-  add_test (mdtTtTestSystemComponentTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttestsystemcomponenttest)
-  # mdtTestNodeTest
-  add_test (mdtTestNodeTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttestnodetest)
-  # mdtTestCableTest
-  add_test (mdtTestToolTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttestcabletest)
-  # mdtTestToolTest
-  add_test (mdtTestToolTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttesttooltest)
-
-
-endif(UNIX)
+# if(UNIX)
+#   # mdtPortLockTest
+#   add_test (mdtPortLockTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtportlocktest)
+#   # mdtPortTest
+#   add_test (mdtPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtporttest)
+#   # mdtPortInfoTest
+#   add_test (mdtPortInfoTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtportinfotest)
+#   # mdtUsbPortTest
+#   add_test (mdtUsbPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtusbporttest)
+#   # mdtUsbTmcPortTest
+#   add_test (mdtUsbTmcPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtusbtmcporttest)
+#   # mdtTcpSocketTest
+#   add_test (mdtTcpSocketTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdttcpsockettest)
+#   # mdtPortManagerTest
+#   add_test (mdtPortManagerTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtportmanagertest)
+# 
+#   add_test (mdtDeviceTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdevice/mdtdevicetest)
+# 
+#   # mdtTtValueLimitsTest
+#   add_test (mdtTtValueLimitsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttvaluelimitstest)
+#   # mdtTtTestSystemComponentTest
+#   add_test (mdtTtTestSystemComponentTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttestsystemcomponenttest)
+#   # mdtTestNodeTest
+#   add_test (mdtTestNodeTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttestnodetest)
+#   # mdtTestCableTest
+#   add_test (mdtTestToolTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttestcabletest)
+#   # mdtTestToolTest
+#   add_test (mdtTestToolTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdttools/mdttesttool/mdttesttooltest)
+# 
+# 
+# endif(UNIX)
 
 # * Tools - mdt cable list *
 

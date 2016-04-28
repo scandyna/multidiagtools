@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 128
+  revision 129
   modified_by 2 "philippe"
   // class settings
   
@@ -7255,6 +7255,391 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 2427010 // <generalisation>
 	  b parent class_ref 322818 // QIODevice
+      end
+    end
+  end
+
+  classview 1138050 "serialbus"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2218114 "overview"
+      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+      size B
+    end
+
+    class 2544642 "QCanBus"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2897794 // <generalisation>
+	relation 2880514 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2897794 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+    end
+
+    class 2544770 "QCanBusDevice"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2897922 // <generalisation>
+	relation 2880642 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2897922 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+    end
+
+    class 2544898 "QCanBusFactory"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2545026 "QCanBusFrame"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2545154 "QModbusClient"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2898178 // <generalisation>
+	relation 2880898 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2898178 // <generalisation>
+	  b parent class_ref 2545282 // QModbusDevice
+      end
+    end
+
+    class 2545282 "QModbusDevice"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2898050 // <generalisation>
+	relation 2880770 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2898050 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+    end
+
+    class 2545410 "QModbusDataUnit"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2545538 "QModbusPdu"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2545666 "QModbusRequest"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2898306 // <generalisation>
+	relation 2881026 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2898306 // <generalisation>
+	  b parent class_ref 2545538 // QModbusPdu
+      end
+    end
+
+    class 2545794 "QModbusResponse"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2898434 // <generalisation>
+	relation 2881154 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2898434 // <generalisation>
+	  b parent class_ref 2545538 // QModbusPdu
+      end
+    end
+
+    class 2545922 "QModbusExceptionResponse"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2898562 // <generalisation>
+	relation 2881282 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2898562 // <generalisation>
+	  b parent class_ref 2545794 // QModbusResponse
+      end
+    end
+
+    class 2546050 "QModbusReply"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2898690 // <generalisation>
+	relation 2881410 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2898690 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+    end
+
+    class 2546178 "QModbusRtuSerialMaster"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2898818 // <generalisation>
+	relation 2881538 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2898818 // <generalisation>
+	  b parent class_ref 2545154 // QModbusClient
+      end
+    end
+
+    class 2546306 "QModbusServer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2898946 // <generalisation>
+	relation 2881666 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2898946 // <generalisation>
+	  b parent class_ref 2545282 // QModbusDevice
+      end
+    end
+
+    class 2546434 "QModbusRtuSerialSlave"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2899074 // <generalisation>
+	relation 2881794 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2899074 // <generalisation>
+	  b parent class_ref 2546306 // QModbusServer
+      end
+    end
+
+    class 2546562 "QModbusTcpServer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2899202 // <generalisation>
+	relation 2881922 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2899202 // <generalisation>
+	  b parent class_ref 2546306 // QModbusServer
+      end
+    end
+
+    class 2546690 "QModbusTcpClient"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2899330 // <generalisation>
+	relation 2882050 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2899330 // <generalisation>
+	  b parent class_ref 2545154 // QModbusClient
       end
     end
   end

@@ -1,6 +1,6 @@
 format 211
 "multiDiagTools"
-  revision 29
+  revision 31
   modified_by 2 "philippe"
   cpp_root_dir "cpp_gen/"
 
@@ -58,8 +58,6 @@ format 211
 
   package_ref 168322 // mdtport
 
-  package_ref 288642 // serialport
-
   package_ref 148226 // mdtserialportLEGACY
 
   package_ref 161538 // mdtdevice
@@ -77,5 +75,4 @@ format 211
   package_ref 260866 // Boost
 
   package_ref 275458 // std
-
 end

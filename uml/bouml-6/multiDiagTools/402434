@@ -1,6 +1,6 @@
 format 211
-"usb" // mdt::usb
-  revision 1
+"Usb" // mdt::Usb
+  revision 2
   modified_by 2 "philippe"
   // class settings
   
@@ -26,5 +26,5 @@ format 211
   activitydiagramsettings
    end
   
-  package_ref 402818 // tmc
+  package_ref 402818 // Tmc
 end

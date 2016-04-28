@@ -1,6 +1,6 @@
 format 211
-"testtool" // mdt::testtool
-  revision 1
+"TestTool" // mdt::TestTool
+  revision 2
   modified_by 2 "philippe"
   // class settings
   

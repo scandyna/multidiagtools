@@ -1,6 +1,6 @@
 format 211
-"Db" // mdt::Db
-  revision 2
+"tests" // mdt::Device::tests
+  revision 1
   modified_by 2 "philippe"
   // class settings
   

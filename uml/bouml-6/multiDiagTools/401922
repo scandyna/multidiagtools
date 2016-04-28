@@ -1,6 +1,6 @@
 format 211
-"error" // mdt::error
-  revision 1
+"Error" // mdt::Error
+  revision 2
   modified_by 2 "philippe"
   // class settings
   

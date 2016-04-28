@@ -2,96 +2,88 @@ format 211
 
 classcanvas 128002 class_ref 2410882 // Frame
   classdiagramsettings member_max_width 0 end
-  xyz 323 399.5 2000
+  xyz 645 121.5 2000
 end
 classcanvas 128130 class_ref 2411010 // FramePool
   classdiagramsettings member_max_width 0 end
-  xyz 643.5 418.5 2000
+  xyz 240 470.5 2000
 end
 classcanvas 128258 class_ref 2411138 // SomeCompletionHandler
   classdiagramsettings member_max_width 0 end
-  xyz 72 229.5 2000
+  xyz 465 535.5 2000
 end
 classcanvas 128386 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 791 40.5 2005
+  xyz 393 200.5 2005
 end
 classcanvas 128642 class_ref 2411266 // AbstractCompletionHandler
   classdiagramsettings member_max_width 0 end
-  xyz 324 229.5 2005
+  xyz 646 410.5 2005
 end
-classcanvas 129538 class_ref 2411394 // SerialPortThread
+classcanvas 129538 class_ref 2411394 // Thread
   classdiagramsettings member_max_width 0 end
-  xyz 624.5 252 2000
+  xyz 397 410.5 2000
 end
 note 130562 "1) No Abstract base for frame, OK (real, performant value class)
 2) No template (impossible with QObject, especially MOC)
 3) Completion handler can be custom. No copy problem (handler has not to be copiabel..)"
-  xyzwh 40.5 561.5 2000 765 77
+  xyzwh 40.5 745.5 2000 765 77
 classcanvas 130690 class_ref 2092162 // QSerialPort
   classdiagramsettings member_max_width 0 end
-  xyz 459.25 315 2000
+  xyz 383 620.5 2000
 end
 classcanvas 130946 class_ref 222722 // QThread
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 650.5 166.5 2011
+  xyz 392 325.5 2011
 end
 classcanvas 131330 class_ref 2412418 // RawFrameCompletionHandler
   classdiagramsettings member_max_width 0 end
-  xyz 40.25 315 2000
+  xyz 846.5 535.5 2000
 end
 classcanvas 132482 class_ref 2412546 // SerialPort
   classdiagramsettings member_max_width 0 end
-  xyz 783.75 252 2000
+  xyz 240.5 385.5 2000
 end
 note 134530 "Check about states  in frame, needed by completion handler.."
-  xyzwh 40.5 841.5 2000 461 39
+  xyzwh 510 41 2000 461 39
 classcanvas 134914 class_ref 1545218 // mdtAbstractWait
   classdiagramsettings member_max_width 0 end
-  xyz 764 337.5 2000
+  xyz 81 385.5 2000
 end
 note 135810 "Should CompletionHandler inherit QObject to be able to emit its own data ?"
-  xyzwh 40.5 718.5 2000 529 43
+  xyzwh 40.5 902.5 2000 529 43
 classcanvas 136578 class_ref 2484994 // TimeoutCompleter
   classdiagramsettings member_max_width 0 end
-  xyz 112.25 146.25 2000
+  xyz 675 535.5 2000
 end
 relationcanvas 128898 relation_ref 2690434 // <directional composition>
-  from ref 128130 z 2001 to ref 128002
+  decenter_begin 555
+  from ref 128130 z 2001 to point 40 495
+  line 140162 z 2001 to point 40 160
+  line 140290 z 2001 to ref 128002
   no_role_a no_role_b
-  multiplicity_a_pos 523 450 3000 no_multiplicity_b
+  multiplicity_a_pos 629 172 3000 no_multiplicity_b
 end
 relationcanvas 129154 relation_ref 2690690 // <generalisation>
-  from ref 128258 z 2006 to ref 128642
+  geometry VHV unfixed
+  from ref 128258 z 2006 to point 548 495
+  line 139778 z 2006 to point 738 495
+  line 139906 z 2006 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129794 relation_ref 2691074 // <unidirectional association>
-  decenter_begin 200
-  decenter_end 711
   from ref 129538 z 2006 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 130434 relation_ref 2691202 // <directional composition>
-  from ref 129538 z 2001 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 relationcanvas 130818 relation_ref 2691330 // <directional composition>
-  decenter_begin 688
-  decenter_end 400
-  from ref 129538 z 2001 to point 585 283
-  line 137346 z 2001 to point 585 333
-  line 137474 z 2001 to ref 130690
+  from ref 129538 z 2001 to ref 130690
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131074 relation_ref 1508354 // <generalisation>
-  geometry VHV unfixed
-  from ref 130946 z 2012 to point 681 126
-  line 137090 z 2012 to point 821 126
-  line 137218 z 2012 to ref 128386
+  from ref 130946 z 2012 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
@@ -101,8 +93,9 @@ relationcanvas 131202 relation_ref 2691458 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131458 relation_ref 2692738 // <generalisation>
-  from ref 131330 z 2006 to point 283 337
-  line 137602 z 2006 to point 283 252
+  geometry VHV unfixed
+  from ref 131330 z 2006 to point 945 495
+  line 137602 z 2006 to point 738 495
   line 137730 z 2006 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -113,27 +106,48 @@ relationcanvas 131842 relation_ref 2692866 // <dependency>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132610 relation_ref 2692994 // <generalisation>
+  geometry VHV unfixed
   decenter_begin 533
-  from ref 132482 z 2006 to ref 128386
+  from ref 132482 z 2006 to point 277 285
+  line 140674 z 2006 to point 423 285
+  line 140802 z 2006 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 133634 relation_ref 2693250 // <association>
+  decenter_begin 200
+  decenter_end 666
   from ref 129538 z 2001 to ref 132482
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 135042 relation_ref 2765698 // <unidirectional association>
-  decenter_begin 533
+  decenter_begin 555
+  decenter_end 555
   from ref 132482 z 2001 to ref 134914
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 136706 relation_ref 2814338 // <generalisation>
-  from ref 136578 z 2006 to point 283 166
-  line 136834 z 2006 to point 283 252
-  line 136962 z 2006 to ref 128642
+  from ref 136578 z 2006 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
+relationcanvas 139394 relation_ref 2889090 // <directional composition>
+  decenter_begin 777
+  decenter_end 333
+  from ref 129538 z 2001 to point 360 445
+  line 140418 z 2001 to point 360 485
+  line 140546 z 2001 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 330 494 3000 no_multiplicity_b
+end
+relationcanvas 140034 relation_ref 2895618 // <unidirectional association>
+  decenter_begin 533
+  from ref 132482 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 139266 -_-_
+  from ref 134530 z 2001 to ref 128002
 end

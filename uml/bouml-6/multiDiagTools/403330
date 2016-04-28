@@ -1,6 +1,6 @@
 format 211
-"wait" // mdt::wait
-  revision 1
+"Wait" // mdt::Wait
+  revision 2
   modified_by 2 "philippe"
   // class settings
   

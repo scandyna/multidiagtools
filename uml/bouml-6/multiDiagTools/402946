@@ -1,6 +1,6 @@
 format 211
-"device" // mdt::device
-  revision 2
+"Device" // mdt::Device
+  revision 3
   modified_by 2 "philippe"
   // class settings
   
@@ -260,4 +260,44 @@ ${inlines}
       end
     end
   end
+
+  classview 1137922 "DSO1000"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2217986 "sandbox"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2544514 "DSO1000"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+  end
+
+  package_ref 430210 // tests
 end

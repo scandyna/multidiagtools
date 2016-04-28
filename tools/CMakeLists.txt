@@ -10,9 +10,9 @@ include_directories("${PROJECT_SOURCE_DIR}/../src")
 add_subdirectory("${PROJECT_SOURCE_DIR}/uicnumber")
 
 # * mdtterm *
-if(UNIX)
-  add_subdirectory("${PROJECT_SOURCE_DIR}/mdtterm")
-endif(UNIX)
+# if(UNIX)
+#   add_subdirectory("${PROJECT_SOURCE_DIR}/mdtterm")
+# endif(UNIX)
 
 # * MODBUS I/O Tool *
 add_subdirectory("${PROJECT_SOURCE_DIR}/mdtmodbusiotool")

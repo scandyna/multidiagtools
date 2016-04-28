@@ -1,6 +1,6 @@
 format 211
-"tmc" // mdt::usb::tmc
-  revision 1
+"Tmc" // mdt::Usb::Tmc
+  revision 2
   modified_by 2 "philippe"
   // class settings
   
