@@ -1,47 +1,44 @@
-format 210
+format 211
 
 classcanvas 128002 class_ref 1954178 // mdtSqlDatabaseSchema
   classdiagramsettings member_max_width 0 end
-  xyz 24 375 2000
+  xyz 219 224 2000
 end
-classcanvas 128130 class_ref 910210 // mdtSqlSchemaTable
+classcanvas 128130 class_ref 910210 // mdtSqlTableSchema
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 456 172 2000
+  xyz 41 346 2000
 end
 classcanvas 128770 class_ref 1954562 // mdtSqlViewSchema
   classdiagramsettings member_max_width 0 end
-  xyz 447 447 2000
+  xyz 117 41 2000
 end
 classcanvas 128898 class_ref 1954690 // mdtSqlTriggerSchema
   classdiagramsettings member_max_width 0 end
-  xyz 480 614 2000
+  xyz 617 279 2000
 end
 classcanvas 129282 class_ref 1954818 // mdtSqlTablePopulationSchema
   classdiagramsettings member_max_width 0 end
-  xyz 514 313 2000
+  xyz 295 545 2000
 end
 relationcanvas 128258 relation_ref 2274562 // <directional composition>
-  decenter_begin 975
-  decenter_end 62
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 445 222 3000 no_multiplicity_b
+  multiplicity_a_pos 193 376 3000 no_multiplicity_b
 end
 relationcanvas 129026 relation_ref 2274818 // <directional composition>
-  decenter_begin 526
   from ref 128002 z 2001 to ref 128770
   no_role_a no_role_b
-  multiplicity_a_pos 431 513 3000 no_multiplicity_b
+  multiplicity_a_pos 380 193 3000 no_multiplicity_b
 end
 relationcanvas 129154 relation_ref 2274946 // <directional composition>
+  decenter_end 520
   from ref 128002 z 2001 to ref 128898
   no_role_a no_role_b
-  multiplicity_a_pos 464 663 3000 no_multiplicity_b
+  multiplicity_a_pos 601 377 3000 no_multiplicity_b
 end
 relationcanvas 129410 relation_ref 2275074 // <directional composition>
-  decenter_begin 240
   from ref 128002 z 2001 to ref 129282
   no_role_a no_role_b
-  multiplicity_a_pos 498 405 3000 no_multiplicity_b
+  multiplicity_a_pos 385 518 3000 no_multiplicity_b
 end
 end

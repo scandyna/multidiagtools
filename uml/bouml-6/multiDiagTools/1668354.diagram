@@ -1,56 +1,76 @@
-format 209
+format 211
 
 classcanvas 128002 class_ref 1987714 // mdtSqlIndexBase
   classdiagramsettings member_max_width 0 end
-  xyz 552.8 19.6 2000
+  xyz 451 39 2000
 end
 classcanvas 128386 class_ref 1987842 // mdtSqlPrimaryKey
   classdiagramsettings member_max_width 0 end
-  xyz 902 168.4 2000
+  xyz 455 370 2000
 end
 classcanvas 128642 class_ref 1987970 // mdtSqlIndex
   classdiagramsettings member_max_width 0 end
-  xyz 550.4 165.6 2000
+  xyz 41 199 2000
 end
 classcanvas 128898 class_ref 1988098 // mdtSqlForeignKey
   classdiagramsettings member_max_width 0 end
-  xyz 23.1 52 2000
+  xyz 207 513 2000
 end
-classcanvas 129794 class_ref 910210 // mdtSqlSchemaTable
+classcanvas 129794 class_ref 910210 // mdtSqlTableSchema
   classdiagramsettings member_max_width 0 end
-  xyz 10 622 2000
+  xyz 209 322 2000
 end
 classcanvas 129922 class_ref 1954178 // mdtSqlDatabaseSchema
   classdiagramsettings member_max_width 0 end
-  xyz 217.4 384.4 2006
+  xyz 233 218 2006
 end
+note 131586 "Hmm... Inheritance for value classes is...."
+  xyzwh 81 55 2000 335 51
 relationcanvas 128514 relation_ref 2308226 // <generalisation>
-  geometry VHV unfixed
-  from ref 128386 z 2001 to point 1027.2 144.8
-  line 129410 z 2001 to point 705.6 144.8
-  line 129538 z 2001 to ref 128002
+  from ref 128386 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 2308354 // <generalisation>
-  from ref 128642 z 2001 to ref 128002
+  geometry VHV unfixed
+  decenter_begin 470
+  from ref 128642 z 2001 to point 109 160
+  line 130946 z 2001 to point 518 160
+  line 131074 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 2274562 // <directional composition>
+  decenter_begin 473
   from ref 129922 z 2007 to ref 129794
   no_role_a no_role_b
-  multiplicity_a_pos 410 619 3000 no_multiplicity_b
+  multiplicity_a_pos 296 295 3000 no_multiplicity_b
 end
 relationcanvas 130434 relation_ref 2315138 // <directional composition>
   from ref 129922 z 2007 to ref 128642
   no_role_a no_role_b
-  multiplicity_a_pos 631 271 3000 no_multiplicity_b
+  multiplicity_a_pos 201 250 3000 no_multiplicity_b
 end
 relationcanvas 130562 relation_ref 2315266 // <directional composition>
-  decenter_begin 868
+  decenter_begin 469
   from ref 129794 z 2001 to ref 128386
   no_role_a no_role_b
-  multiplicity_a_pos 995 231 3000 no_multiplicity_b
+  multiplicity_a_pos 437 401 3000 no_multiplicity_b
 end
+relationcanvas 130690 relation_ref 2322050 // <directional composition>
+  from ref 129794 z 2001 to ref 128898
+  no_role_a no_role_b
+  multiplicity_a_pos 297 486 3000 no_multiplicity_b
+end
+relationcanvas 130818 relation_ref 2322178 // <directional composition>
+  geometry HV unfixed
+  decenter_begin 469
+  decenter_end 470
+  from ref 129794 z 2001 to point 109 389
+  line 131202 z 2001 to ref 128642
+  no_role_a no_role_b
+  multiplicity_a_pos 96 291 3000 no_multiplicity_b
+end
+line 131714 -_-_
+  from ref 131586 z 2001 to ref 128002
 end

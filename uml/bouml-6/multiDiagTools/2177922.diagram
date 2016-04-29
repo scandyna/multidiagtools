@@ -1,6 +1,6 @@
 format 211
 
-classcanvas 128002 class_ref 2504834 // LinkPathView
+classcanvas 128002 class_ref 2504834 // View
   classdiagramsettings member_max_width 0 end
   xyz 368 296.5 2000
 end
@@ -35,6 +35,14 @@ end
 classcanvas 129794 class_ref 2248578 // Terminal
   classdiagramsettings member_max_width 0 end
   xyz 220.75 422.5 2012
+end
+classcanvas 130818 class_ref 2504962 // LinkPathUnit
+  classdiagramsettings member_max_width 0 end
+  xyz 211 545 2000
+end
+classcanvas 130946 class_ref 2505090 // LinkPathCoordinate
+  classdiagramsettings member_max_width 0 end
+  xyz 183 618 2000
 end
 relationcanvas 128642 relation_ref 2834434 // <generalisation>
   from ref 128514 z 2001 to ref 128258

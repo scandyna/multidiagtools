@@ -2,55 +2,52 @@ format 211
 
 note 128002 "Notion/classe path (sub-graph???)
 -> NON, le graph existe, redoandant !"
-  xyzwh 39.5 130.5 2000 315 69
+  xyzwh 40.5 423.5 2000 315 69
 note 128130 "Graph Ok, BGL fait le job.
 Problème: comment dessiner un graphe !"
-  xyzwh 40.5 40.5 2000 409 71
-classcanvas 128258 class_ref 2536834 // PathGraph
+  xyzwh 40.5 272.5 2000 409 71
+classcanvas 128258 class_ref 2536834 // Graph
   classdiagramsettings member_max_width 0 end
-  xyz 202.5 256.5 2000
-end
-classcanvas 128386 class_ref 2536962 // Path
-  classdiagramsettings member_max_width 0 end
-  xyz 381.5 140.5 2000
-end
-classcanvas 128514 class_ref 2537090 // LinkedConnections
-  classdiagramsettings member_max_width 0 end
-  xyz 40 494 2000
+  xyz 39 582 2000
 end
 classcanvas 128642 class_ref 2537218 // LinkedConnectors
   classdiagramsettings member_max_width 0 end
-  xyz 40 350 2000
+  xyz 40 50 2000
 end
 classcanvas 128770 class_ref 1739010 // mdtClUnitConnectionPkData
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 215 486 2000
+  xyz 435.5 423.5 2000
 end
 classcanvas 129026 class_ref 1699714 // mdtClUnitConnectorPkData
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 207 342 2000
+  xyz 207 42 2000
 end
 classcanvas 129282 class_ref 1679746 // mdtClLinkVersionPkData
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 476 484 2000
+  xyz 472.5 40.5 2000
 end
-classcanvas 130178 class_ref 2537346 // PathGraphImpl
+classcanvas 129410 class_ref 2537474 // GraphImpl
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 129 572 2005
+end
+classcanvas 129922 class_ref 2537218 // LinkedConnectors
   classdiagramsettings member_max_width 0 end
-  xyz 468 252 2000
-end
-relationcanvas 128898 relation_ref 2872962 // <directional composition>
-  from ref 128514 z 2001 to ref 128770
-  no_role_a no_role_b
-  multiplicity_a_pos 199 526 3000 no_multiplicity_b
+  xyz 232 146 2011
 end
 relationcanvas 129154 relation_ref 2873090 // <directional composition>
   from ref 128642 z 2001 to ref 129026
   no_role_a no_role_b
-  multiplicity_a_pos 191 382 3000 no_multiplicity_b
+  multiplicity_a_pos 191 82 3000 no_multiplicity_b
 end
-relationcanvas 130306 relation_ref 2873218 // <directional composition>
-  from ref 128258 z 2001 to ref 130178
+relationcanvas 129538 relation_ref 2922114 // <directional composition>
+  from ref 128258 z 2006 to ref 129410
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 2873090 // <directional composition>
+  decenter_end 475
+  from ref 129922 z 2012 to ref 129026
+  no_role_a no_role_b
+  multiplicity_a_pos 280 112 3000 no_multiplicity_b
 end
 end

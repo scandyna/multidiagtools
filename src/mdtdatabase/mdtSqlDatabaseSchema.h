@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -177,7 +177,11 @@ class mdtSqlDatabaseSchema
     return pvTriggerList.at(index).name();
   }
 
-  /*! \brief Create given database schema
+  /*! \brief Add a schema to this one
+   */
+  void addSchema(const mdtSqlDatabaseSchema & s);
+
+  /*! \brief Create schema in database
    *
    * Given database object is directly used for database creation.
    *  It will be open by this function if it is not allready.

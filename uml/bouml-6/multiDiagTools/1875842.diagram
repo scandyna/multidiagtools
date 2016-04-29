@@ -1,31 +1,44 @@
-format 210
+format 211
 
 classcanvas 128002 class_ref 895234 // QGraphicsItem
   classdiagramsettings member_max_width 0 end
-  xyz 37.5 40.75 2000
+  xyz 41 40 2000
 end
 classcanvas 128130 class_ref 2247938 // Link
   classdiagramsettings member_max_width 0 end
-  xyz 184.5 395.5 2000
+  xyz 40.5 728.5 2000
 end
 classcanvas 128514 class_ref 1672962 // mdtClLinkPkData
   classdiagramsettings member_max_width 0 end
-  xyz 476 660 2000
+  xyz 368 486 2000
 end
 classcanvas 128642 class_ref 2248706 // InternalLink
   classdiagramsettings member_max_width 0 end
-  xyz 218 542 2000
+  xyz 648.5 728.5 2000
 end
 note 128770 "Utile ??"
-  xyzwh 473 457 2000 291 91
+  xyzwh 39 523 2000 291 91
 note 129026 "Comme pour connection, on voit une class commune (text, ...)"
-  xyzwh 425 275 2000 237 77
+  xyzwh 331.5 728.5 2000 237 77
 classcanvas 129154 class_ref 895490 // QGraphicsLineItem
   classdiagramsettings member_max_width 0 end
-  xyz 221 298 2006
+  xyz 269 274 2006
+end
+classcanvas 129410 class_ref 2560258 // PathViewLink
+  classdiagramsettings member_max_width 0 end
+  xyz 287 362 2000
+end
+classcanvas 129666 class_ref 2248706 // InternalLink
+  classdiagramsettings member_max_width 0 end
+  xyz 138 434 2000
 end
 relationcanvas 129282 relation_ref 1096578 // <generalisation>
   from ref 129154 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 2915586 // <generalisation>
+  from ref 129410 z 2007 to ref 129154
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

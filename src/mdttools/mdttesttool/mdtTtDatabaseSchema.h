@@ -33,7 +33,7 @@
 #include <QDir>
 #include <QSqlDatabase>
 
-class mdtSqlDatabaseManager;
+// class mdtSqlDatabaseManager;
 
 /*! \brief Build database schema
  */
@@ -44,11 +44,6 @@ class mdtTtDatabaseSchema
   /*! \brief Constructor
    */
   mdtTtDatabaseSchema();
-
-  /*! \brief Constructor
-   */
-  [[deprecated]]
-  mdtTtDatabaseSchema(mdtSqlDatabaseManager *dbManager);
 
   /*! \brief Destructor
    */
@@ -569,7 +564,6 @@ class mdtTtDatabaseSchema
 
   mdtSqlDatabaseSchema pvSchema;
   
-  mdtSqlDatabaseManager *pvDatabaseManager;
   QList<mdtSqlTableSchema> pvTables;
   mdtError pvLastError;
 };

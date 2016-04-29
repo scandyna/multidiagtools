@@ -6,7 +6,7 @@ project(multidiagtools)
 
 # List of source files
 set(SOURCES_FILES 
-    src/mdt/SerialPort/SetupDialog.cpp
+    src/Mdt/SerialPort/SetupDialog.cpp
 )
 
 # Headers directories
@@ -28,7 +28,7 @@ set(TS_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/translations/mdtserialport_de.ts
 )
 qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src ${TS_FILES} OPTIONS -I ${CMAKE_CURRENT_SOURCE_DIR}/src)
-add_custom_target(translations DEPENDS ${QM_FILES} ${TS_FILES})
+add_custom_target(mdtSerialPortTs DEPENDS ${QM_FILES} ${TS_FILES})
 
 # Headers to install
 file(GLOB INSTALL_HEADERS *.h)

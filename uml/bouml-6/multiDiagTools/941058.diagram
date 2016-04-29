@@ -1,198 +1,204 @@
-format 209
+format 211
 
 classcanvas 128002 class_ref 1006210 // TestModelItem_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 558.3 972.4 2000
+  xyz 2910.43 779.857 2000
 end
 classcanvas 128130 class_ref 992770 // TestNodeUnit_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 442.3 261.1 2000
+  xyz 1609.07 872.679 2000
 end
 classcanvas 128258 class_ref 1006338 // TestSetup_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 958.3 1296.2 2000
+  xyz 872.5 1692.29 2000
 end
 classcanvas 128386 class_ref 1006466 // TestInstrument_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 923.5 1352.6 2000
+  xyz 661.5 1692.29 2000
 end
 classcanvas 128514 class_ref 1006594 // TestDevice_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 969.3 1248.5 2000
+  xyz 476.5 1692.29 2000
 end
 classcanvas 128642 class_ref 1006722 // TestNodeUnitSetup_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 52.3 706.9 2000
+  xyz 1799 1081.61 2000
 end
 classcanvas 129026 class_ref 992642 // TestNode_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 42 259.9 2006
+  xyz 2088.11 902.464 2006
 end
 classcanvas 129282 class_ref 1013506 // LogicalTestCable_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 503.1 870 2000
+  xyz 1516.43 1203 2000
 end
 classcanvas 129410 class_ref 1013634 // TestLink_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 836.6 778.9 2006
+  xyz 3129.46 230.071 2006
 end
 classcanvas 129922 class_ref 764802 // Unit_tbl
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 772 30.1 2010
+  xyz 1018.29 1316.57 2010
 end
 classcanvas 130562 class_ref 765314 // UnitConnection_tbl
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 992.7 40 2016
+  xyz 2390.14 79.0714 2016
 end
 note 131458 "Based on"
-  xyzwh 663.7 207.3 2000 106 46
+  xyzwh 743.964 1196.64 2000 106 46
 note 131970 "Based on"
-  xyzwh 204.8 216.9 2022 86 41
+  xyzwh 2168.25 1046.96 2022 86 41
 classcanvas 132226 class_ref 1020162 // TestItem_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 548.3 1320.7 2000
+  xyz 2897.43 460.893 2000
 end
 classcanvas 132354 class_ref 1020290 // Test_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 167 1282.5 2000
+  xyz 2646.86 528.5 2000
 end
 classcanvas 132610 class_ref 1020418 // TestModel_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 158.4 1083.8 2000
+  xyz 2675.46 902.464 2000
 end
 classcanvas 134786 class_ref 1249154 // TestNodeUnitConnection_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 798.7 190.5 2000
+  xyz 2325.61 275.679 2000
 end
 classcanvas 135554 class_ref 944770 // VehicleType_tbl
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 332.5 223.1 2017
+  xyz 2293.46 1046.57 2017
 end
 note 135938 "Based on"
-  xyzwh 850.7 95 2022 86 41
+  xyzwh 2563.61 82.6786 2022 86 41
 classcanvas 136578 class_ref 992898 // TestNodeUnitType_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 547.4 448.2 2028
+  xyz 1568 139.571 2028
 end
 classcanvas 137346 class_ref 1255682 // LogicalTestCable_TestNodeUnit_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 414.9 702.5 2000
+  xyz 1480.82 1082.21 2000
 end
 classcanvas 137474 class_ref 1255810 // LogicalTestCable_DutUnit_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 712.9 695.1 2005
+  xyz 1197.96 1225.25 2005
 end
 classcanvas 138242 class_ref 1262466 // TestModelItem_TestLink_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 911.1 998.8 2000
+  xyz 3161.86 911.857 2000
 end
 classcanvas 138754 class_ref 1268994 // TestModel_TestNode_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 4.6 954.1 2000
+  xyz 2400.21 911.857 2000
 end
 note 140290 "Pour mise à zéro et calibrations: stocker instruments de référence utilisés (Marque/modèle sous forme texte et ID, SN)"
-  xyzwh 78 1441 2006 356 149
+  xyzwh 40 1692.29 2006 356 149
 classcanvas 140418 class_ref 1395970 // TestCable_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 492.2 583.1 2016
+  xyz 1480.43 1344.93 2016
 end
 note 140802 "Based on"
-  xyzwh 773.9 111.5 2000 106 46
+  xyzwh 997.893 1508.43 2000 106 46
 classcanvas 141954 class_ref 805250 // Link_tbl
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1109 479.2 2022
+  xyz 3499.71 390.857 2022
 end
 classcanvas 142210 class_ref 1571970 // TestNodeRoute_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 40.2 365.2 2006
+  xyz 2068.5 670.429 2006
 end
 classcanvas 143490 class_ref 1598466 // TestNodeRouteUnit_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 54.4 581.7 2033
+  xyz 1760.64 725.429 2033
 end
 classcanvas 144386 class_ref 1611522 // TestSystem_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 48.4 11.6 2000
+  xyz 127.107 1191.5 2000
 end
 classcanvas 144514 class_ref 1618050 // TestSystemComponentType_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 43.2 110.7 2028
+  xyz 397.464 1463.86 2028
 end
 classcanvas 144642 class_ref 1618178 // TestSystemComponent_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 534.4 8.3 2017
+  xyz 393.857 1279.04 2017
 end
 classcanvas 145026 class_ref 1618306 // TestSystem_TestSystemComponent_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 207 19.3 2034
+  xyz 40.5 1310.43 2034
 end
 classcanvas 145410 class_ref 1624834 // TestSystemUnit_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 480 167.1 2016
+  xyz 651.357 1279.04 2016
 end
 classcanvas 145922 class_ref 1624962 // TestSystemUnitType_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 281.3 139 2021
+  xyz 703.357 1464.71 2021
 end
 relationcanvas 128770 relation_ref 1246978 // <unidirectional association>
-  geometry VH
-  decenter_begin 909
-  decenter_end 182
-  from ref 128642 z 2001 to point 289 1030
+  geometry HV unfixed
+  from ref 128642 z 2001 to point 3014 1164
   line 139778 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128898 relation_ref 1247106 // <unidirectional association>
-  geometry HV
-  decenter_end 146
-  from ref 128642 z 2001 to point 472 784
-  line 133634 z 2001 to ref 128130
+  decenter_begin 95
+  decenter_end 955
+  from ref 128642 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129154 relation_ref 1233410 // <unidirectional association>
+  decenter_begin 473
   from ref 128130 z 2007 to ref 129026
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129666 relation_ref 1254402 // <unidirectional association>
-  decenter_begin 943
-  decenter_end 779
-  from ref 129410 z 2007 to ref 129282
+  decenter_begin 632
+  decenter_end 828
+  from ref 129410 z 2007 to point 3601 352
+  line 146562 z 2007 to point 3601 1290
+  line 146690 z 2007 to ref 129282
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 1020674 // <unidirectional association>
   decenter_begin 206
   decenter_end 793
-  from ref 129922 z 2011 to point 738 28
-  line 130178 z 2011 to point 738 57
+  from ref 129922 z 2011 to point 984.286 1314.47
+  line 130178 z 2011 to point 984.286 1343.47
   line 130306 z 2011 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130434 relation_ref 1233282 // <unidirectional association>
-  decenter_begin 579
-  from ref 128130 z 2011 to ref 129922
+  decenter_begin 923
+  decenter_end 200
+  from ref 128130 z 2011 to point 1120 1030
+  line 147074 z 2011 to point 1120 1324
+  line 147202 z 2011 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130690 relation_ref 950530 // <unidirectional association>
-  decenter_end 228
-  from ref 130562 z 2017 to ref 129922
+  geometry HV unfixed
+  decenter_end 650
+  from ref 130562 z 2017 to point 1056 99
+  line 146306 z 2017 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130818 relation_ref 1020802 // <unidirectional association>
   decenter_end 400
-  from ref 130562 z 2017 to point 958 28
-  line 130946 z 2017 to point 958 48
+  from ref 130562 z 2017 to point 2355.44 67.0714
+  line 130946 z 2017 to point 2355.44 87.0714
   line 131074 z 2017 to ref 130562
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132482 relation_ref 1261058 // <unidirectional association>
+  decenter_begin 508
   from ref 132226 z 2001 to ref 132354
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -213,151 +219,129 @@ relationcanvas 132994 relation_ref 1288578 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 135682 relation_ref 1233154 // <unidirectional association>
+  decenter_begin 952
   from ref 129026 z 2018 to ref 135554
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 136322 relation_ref 1543682 // <unidirectional association>
-  decenter_begin 674
-  decenter_end 61
+  decenter_begin 450
   from ref 134786 z 2017 to ref 130562
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 136706 relation_ref 1233538 // <unidirectional association>
-  geometry VHr
-  decenter_begin 926
-  decenter_end 842
-  from ref 128130 z 2029 to point 699 409
-  line 141314 z 2029 to ref 136578
+  decenter_begin 226
+  from ref 128130 z 2029 to ref 136578
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 136834 relation_ref 1254274 // DutConnection_Id_FK
-  decenter_begin 747
-  decenter_end 932
-  from ref 129410 z 2017 label "DutConnection_Id_FK" italic max_width 255 xyz 1034 415 2017 to ref 130562
+  from ref 129410 z 2017 to point 3293 40
+  line 146818 z 2017 label "DutConnection_Id_FK" italic max_width 255 xyz 2723 206.5 2017 to point 2458 40
+  line 146946 z 2017 to ref 130562
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 136962 relation_ref 1550210 // <unidirectional association>
-  from ref 134786 z 2001 to ref 128130
+  geometry HV unfixed
+  decenter_end 368
+  from ref 134786 z 2001 to point 1689 324
+  line 147330 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 137218 relation_ref 1550466 // TestConnection_Id_FK
-  decenter_begin 490
-  decenter_end 860
-  from ref 129410 z 2007 label "TestConnection_Id_FK" italic max_width 255 xyz 953 513 2007 to ref 134786
+  from ref 129410 z 2007 label "TestConnection_Id_FK" italic max_width 255 xyz 2802 322 2007 to ref 134786
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 137602 relation_ref 1550594 // <unidirectional association>
-  decenter_end 360
   from ref 137346 z 2001 to ref 129282
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 137730 relation_ref 1550722 // <unidirectional association>
-  geometry HVr
-  decenter_begin 211
-  from ref 137474 z 2006 to point 768 915
-  line 141570 z 2006 to ref 129282
+  decenter_begin 361
+  from ref 137474 z 2006 to ref 129282
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 137858 relation_ref 1550850 // <unidirectional association>
-  decenter_begin 77
-  decenter_end 491
+  decenter_end 53
   from ref 137346 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 137986 relation_ref 1550978 // <unidirectional association>
-  geometry HVr
-  decenter_begin 252
-  decenter_end 548
-  from ref 137474 z 2011 to point 779 51
-  line 138114 z 2011 to ref 129922
+  decenter_begin 867
+  from ref 137474 z 2011 to point 1159 1297
+  line 138114 z 2011 to point 1159 1339
+  line 146434 z 2011 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 138370 relation_ref 1557634 // <unidirectional association>
-  geometry HVr
-  from ref 138242 z 2001 to point 1039 1134
-  line 140034 z 2001 to ref 128002
+  from ref 138242 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 138498 relation_ref 1557762 // <unidirectional association>
-  geometry HV
-  from ref 138242 z 2007 to point 996 995
-  line 138626 z 2007 to ref 129410
+  from ref 138242 z 2007 to ref 129410
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 138882 relation_ref 1564418 // <unidirectional association>
-  decenter_begin 83
-  decenter_end 52
   from ref 138754 z 2007 to ref 129026
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 139010 relation_ref 1564546 // <unidirectional association>
-  decenter_begin 659
-  decenter_end 196
   from ref 138754 z 2001 to ref 132610
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 140674 relation_ref 1748098 // <unidirectional association>
-  geometry HVr
-  decenter_begin 944
-  decenter_end 774
-  from ref 140418 z 2017 to point 757 61
-  line 141058 z 2017 to ref 129922
+  decenter_begin 93
+  decenter_end 857
+  from ref 140418 z 2017 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 141442 relation_ref 1748226 // <unidirectional association>
-  decenter_begin 959
-  decenter_end 796
   from ref 129282 z 2017 to ref 140418
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 141826 relation_ref 1748354 // <unidirectional association>
-  from ref 140418 z 2017 to ref 132610
+  geometry HV unfixed
+  from ref 140418 z 2017 to point 2752 1416
+  line 147458 z 2017 to ref 132610
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 142082 relation_ref 1754882 // <unidirectional association>
-  decenter_begin 905
+  decenter_begin 948
   from ref 129410 z 2023 to ref 141954
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 142338 relation_ref 1945602 // <unidirectional association>
-  decenter_begin 367
   from ref 142210 z 2007 to ref 129026
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 142850 relation_ref 1945730 // <unidirectional association>
-  geometry HV
-  decenter_begin 110
-  decenter_end 78
-  from ref 142210 z 2007 to point 818 383
-  line 142978 z 2007 to ref 134786
+  decenter_begin 864
+  decenter_end 34
+  from ref 142210 z 2007 to ref 134786
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 143106 relation_ref 1945858 // <unidirectional association>
-  geometry HV
-  decenter_begin 247
-  decenter_end 152
-  from ref 142210 z 2007 to point 840 408
-  line 143234 z 2007 to ref 134786
+  decenter_begin 967
+  decenter_end 143
+  from ref 142210 z 2007 to ref 134786
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
@@ -367,9 +351,8 @@ relationcanvas 143618 relation_ref 1959170 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 143874 relation_ref 1959298 // <unidirectional association>
-  geometry HV
-  decenter_end 38
-  from ref 143490 z 2034 to point 448 615
+  geometry HV unfixed
+  from ref 143490 z 2034 to point 1719 765
   line 144258 z 2034 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -390,6 +373,7 @@ relationcanvas 145282 relation_ref 1972738 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 145666 relation_ref 1979266 // <unidirectional association>
+  decenter_end 777
   from ref 145410 z 2017 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

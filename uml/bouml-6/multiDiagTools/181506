@@ -1,6 +1,6 @@
 format 211
 "mdttools" // mdttools
-  revision 16
+  revision 17
   modified_by 2 "philippe"
   // class settings
   
@@ -26,8 +26,6 @@ format 211
   activitydiagramsettings
    end
   
-  package_ref 395138 // mdt
-
   package_ref 355330 // resource
 
   package_ref 227586 // mdttesttool

@@ -2991,10 +2991,14 @@ void mdtDatabaseTest::sqlDatabaseSchemaTest()
 {
   QString expectedSql;
   mdtSqlDatabaseSchema s;
+  mdtSqlDatabaseSchema s2;
   mdtSqlTableSchema table;
   mdtSqlField field;
   mdtSqlForeignKey fk;
+  mdtSqlViewSchema::Schema view;
+  mdtSqlViewSchema::Table viewTable;
   mdtSqlTriggerSchema trigger;
+  mdtSqlTablePopulationSchema tps;
 
   QCOMPARE(pvDatabase.driverName(), QString("QSQLITE"));
   /*
@@ -3067,7 +3071,70 @@ void mdtDatabaseTest::sqlDatabaseSchemaTest()
   s.addTrigger(trigger);
   QCOMPARE(s.triggerCount(), 1);
   QCOMPARE(s.triggerName(0), QString("TestTrigger"));
-
+  /*
+   * Check adding second schema
+   */
+  QCOMPARE(s2.tableCount(), 0);
+  QCOMPARE(s2.viewCount(), 0);
+  /*
+   * Create Client2_tbl
+   */
+  table.clear();
+  table.setTableName("Client2_tbl");
+  // Id_PK
+  field.clear();
+  field.setAutoValue(true);
+  field.setName("Id_PK");
+  field.setType(mdtSqlFieldType::Integer);
+  table.addField(field, true);
+  // Add table to database schema and check
+  s2.addTable(table);
+  QCOMPARE(s2.tableCount(), 1);
+  /*
+   * Create client2_view
+   */
+  view.clear();
+  viewTable.clear();
+  viewTable.setTableName("Client2_tbl");
+  view.setName("Client2_view");
+  view.setTable(viewTable);
+  s2.addView(view);
+  QCOMPARE(s2.viewCount(), 1);
+  /*
+   * Trigger 2
+   */
+  // Setup trigger
+  trigger.clear();
+  trigger.setName("TestTrigger2");
+  trigger.setEvent(mdtSqlTriggerSchema::AfterInsert);
+  trigger.setTableName("Client2_tbl");
+  trigger.setScript(" UPDATE Client2_tbl SET Name = 'Some name';");
+  // Add trigger to database schema
+  s2.addTrigger(trigger);
+  QCOMPARE(s2.triggerCount(), 1);
+  /*
+   * Add a table population schema
+   */
+  tps.clear();
+  tps.setName("Client2_tbl population");
+  tps.addFieldName("Id_PK");
+  s2.addTablePopulation(tps);
+  QCOMPARE(s2.tablePopulationCount(), 1);
+  /*
+   * Add s2 -> s and check
+   */
+  s.addSchema(s2);
+  QCOMPARE(s.tableCount(), 3);
+  QCOMPARE(s.tableName(0), QString("Client_tbl"));
+  QCOMPARE(s.tableName(1), QString("Address_tbl"));
+  QCOMPARE(s.tableName(2), QString("Client2_tbl"));
+  QCOMPARE(s.viewCount(), 1);
+  QCOMPARE(s.viewName(0), QString("Client2_view"));
+  QCOMPARE(s.triggerCount(), 2);
+  QCOMPARE(s.triggerName(0), QString("TestTrigger"));
+  QCOMPARE(s.triggerName(1), QString("TestTrigger2"));
+  QCOMPARE(s.tablePopulationCount(), 1);
+  QCOMPARE(s.tablePopulationName(0), QString("Client2_tbl population"));
 }
 
 void mdtDatabaseTest::sqlDatabaseSchemaGetJoinClauseTest()

@@ -1,6 +1,6 @@
 format 211
-"CableList" // mdt::CableList
-  revision 2
+"CableList" // Mdt::CableList
+  revision 5
   modified_by 2 "philippe"
   // class settings
   
@@ -26,4 +26,53 @@ format 211
   activitydiagramsettings
    end
   
+  package_ref 436866 // DatabaseLogical
+
+  classview 1184642 "DatabaseSchema"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2257794 "DatabaseSchema"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2559746 "DatabaseSchema"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2932482 // <directional composition>
+	relation 2915202 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2932482 // <directional composition>
+	  b parent class_ref 1954178 // mdtSqlDatabaseSchema
+      end
+    end
+  end
+
+  package_ref 456834 // Path
 end

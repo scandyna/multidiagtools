@@ -201,6 +201,9 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtdatabase")
 # SerialPort
 add_subdirectory("${PROJECT_SOURCE_DIR}/libs/SerialPort")
 
+# CableList
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/CableList")
+
 # NOTE: Support Windows pas terminé
 if(UNIX)
 # * mdtdevice *
@@ -208,9 +211,6 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtdevice")
 
 # * mdtport *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtport")
-
-# * mdtserialport *
-# add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 
 # * mdttools *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdttools")

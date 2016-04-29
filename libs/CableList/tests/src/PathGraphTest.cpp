@@ -18,27 +18,27 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SERIAL_PORT_SETUP_DIALOG_H
-#define MDT_SERIAL_PORT_SETUP_DIALOG_H
+#include "PathGraphTest.h"
+#include "mdtApplication.h"
+// #include "Mdt/SerialPort/SetupDialog.h"
 
-#include <QDialog>
-#include "ui_SetupDialog.h"
+void PathGraphTest::sandbox()
+{
+  qDebug() << "Running ...";
+}
 
-namespace mdt{ namespace SerialPort{
+/*
+ * Main
+ */
 
-  /*! \brief Dialog to setup a serial port
-   */
-  class SetupDialog : public QDialog, private Ui::SetupDialog
-  {
-   Q_OBJECT
+int main(int argc, char **argv)
+{
+  mdtApplication app(argc, argv);
+  PathGraphTest test;
 
-   public:
+  if(!app.init()){
+    return 1;
+  }
 
-    /*! \brief Constructor
-     */
-    SetupDialog(QWidget *parent = nullptr);
-  };
-
-}} // namespace mdt{ namespace SerialPort{
-
-#endif // #ifndef MDT_SERIAL_PORT_SETUP_DIALOG_H
+  return QTest::qExec(&test, argc, argv);
+}

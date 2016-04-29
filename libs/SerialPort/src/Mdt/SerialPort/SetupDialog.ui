@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>mdt::SerialPort::SetupDialog</class>
- <widget class="QDialog" name="mdt::SerialPort::SetupDialog">
+ <class>Mdt::SerialPort::SetupDialog</class>
+ <widget class="QDialog" name="Mdt::SerialPort::SetupDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -35,7 +35,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>mdt::SerialPort::SetupDialog</receiver>
+   <receiver>Mdt::SerialPort::SetupDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -51,7 +51,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>mdt::SerialPort::SetupDialog</receiver>
+   <receiver>Mdt::SerialPort::SetupDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

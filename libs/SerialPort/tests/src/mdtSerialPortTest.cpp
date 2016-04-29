@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtSerialPortTest.h"
 #include "mdtApplication.h"
-#include "mdt/SerialPort/SetupDialog.h"
+#include "Mdt/SerialPort/SetupDialog.h"
 
 void mdtSerialPortTest::sandbox()
 {

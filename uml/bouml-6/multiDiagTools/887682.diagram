@@ -1,25 +1,43 @@
-format 76
+format 211
 
-classcanvas 128002 class_ref 917122 // mdtSqlDatabaseManager
-  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 51 201 2000
-end
-classcanvas 128130 class_ref 910210 // mdtSqlSchemaTable
-  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 494 214 2000
+classcanvas 128130 class_ref 910210 // mdtSqlTableSchema
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 489 42 2000
 end
 classcanvas 128258 class_ref 923778 // mdtTtDatabaseSchema
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 209 335 2000
+  classdiagramsettings member_max_width 0 end
+  xyz 42 190 2000
 end
-relationcanvas 128386 relation_ref 1132802 // <directional composition>
-  from ref 128258 z 2001 stereotype "<<list>>" xyz 514 294 3000 to ref 128130
-  role_a_pos 571 262 3000 no_role_b
-  multiplicity_a_pos 544 262 3000 no_multiplicity_b
+classcanvas 128642 class_ref 1954178 // mdtSqlDatabaseSchema
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 473 130 3005
 end
-relationcanvas 128514 relation_ref 1132930 // <directional composition>
-  from ref 128258 z 2001 to ref 128002
-  role_a_pos 176 249 3000 no_role_b
-  multiplicity_a_pos 148 249 3000 no_multiplicity_b
+classcanvas 129026 class_ref 2559746 // DatabaseSchema
+  classdiagramsettings hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 448 506 3011
+end
+relationcanvas 128770 relation_ref 2274562 // <directional composition>
+  decenter_begin 520
+  from ref 128642 z 3006 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 544 96 3000 no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 2908674 // <directional composition>
+  geometry VH unfixed
+  from ref 128258 z 3006 to point 222 150
+  line 129410 z 3006 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 2915202 // <directional composition>
+  decenter_end 520
+  from ref 129026 z 3012 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 2915330 // <directional composition>
+  from ref 128258 z 3012 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end

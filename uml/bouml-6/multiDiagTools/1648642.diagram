@@ -1,29 +1,30 @@
-format 209
+format 211
 
 classcanvas 128002 class_ref 1954306 // mdtSqlDatabaseSchemaDialog
   classdiagramsettings member_max_width 0 end
-  xyz 23 222 2000
+  xyz 289 232 2000
 end
 classcanvas 128130 class_ref 370434 // QDialog
   classdiagramsettings member_max_width 0 end
-  xyz 152 14 2005
+  xyz 417 42 2005
 end
 classcanvas 128386 class_ref 1954946 // mdtSqlDatabaseSchemaModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 572 364 2000
+  xyz 41 258 2000
 end
 classcanvas 128642 class_ref 1961474 // mdtSqlDatabaseSchemaThread
   classdiagramsettings member_max_width 0 end
-  xyz 19 543 2000
+  xyz 277 375 2000
 end
 note 128898 "When database was selected, it should be checked witch table allready exists and display it to the user (and let him choose what to do, etc..)"
-  xyzwh 38 380 2000 289 117
+  xyzwh 976 226 2000 289 117
 relationcanvas 128258 relation_ref 2288130 // <generalisation>
   from ref 128002 z 2006 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128514 relation_ref 2288258 // <directional composition>
+  decenter_begin 457
   from ref 128002 z 2001 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -33,6 +34,6 @@ relationcanvas 128770 relation_ref 2295042 // <directional composition>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-line 129026 -_-_
+line 129026 -_-_ decenter_begin 461 decenter_end 457
   from ref 128898 z 2001 to ref 128002
 end

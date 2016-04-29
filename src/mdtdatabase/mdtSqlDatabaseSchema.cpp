@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -131,6 +131,14 @@ void mdtSqlDatabaseSchema::addTablePopulation(const mdtSqlTablePopulationSchema&
 void mdtSqlDatabaseSchema::addTrigger(const mdtSqlTriggerSchema & trigger)
 {
   pvTriggerList.append(trigger);
+}
+
+void mdtSqlDatabaseSchema::addSchema(const mdtSqlDatabaseSchema & s)
+{
+  pvTableList << s.pvTableList;
+  pvViewList << s.pvViewList;
+  pvTriggerList << s.pvTriggerList;
+  pvTablePopulationSchemaList << s.pvTablePopulationSchemaList;
 }
 
 bool mdtSqlDatabaseSchema::createSchema(const QSqlDatabase& db)

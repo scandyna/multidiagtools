@@ -1,6 +1,6 @@
 format 211
-"CableList" // mdttools::mdt::CableList
-  revision 3
+"Path" // Mdt::CableList::Path
+  revision 2
   modified_by 2 "philippe"
   // class settings
   
@@ -26,9 +26,7 @@ format 211
   activitydiagramsettings
    end
   
-  package_ref 423554 // PathGraphPrivate
-
-  classview 920450 "PathGraph"
+  classview 1191810 "Path"
     
     classdiagramsettings member_max_width 0 end
     
@@ -44,33 +42,9 @@ format 211
     
     activitydiagramsettings
      end
-    classdiagram 2015362 "sandbox"
+    classdiagram 2264834 "overview"
       classdiagramsettings member_max_width 0 end
       size A4
-    end
-
-    class 2536834 "PathGraph"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 2890498 // <directional composition>
-	relation 2873218 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 2890498 // <directional composition>
-	  b parent class_ref 2537346 // PathGraphImpl
-      end
     end
 
     class 2536962 "Path"
@@ -89,6 +63,129 @@ ${inlines}
       
     end
 
+    classdiagram 2264962 "LinkedConnections"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2537090 "LinkedConnections"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2890242 // <directional composition>
+	relation 2872962 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2890242 // <directional composition>
+	  b parent class_ref 1739010 // mdtClUnitConnectionPkData
+      end
+    end
+
+    classdiagram 2265090 "LinkedConnectors"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2537218 "LinkedConnectors"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2890370 // <directional composition>
+	relation 2873090 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2890370 // <directional composition>
+	  b parent class_ref 1699714 // mdtClUnitConnectorPkData
+      end
+    end
+  end
+
+  classview 920450 "Graph"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2015362 "sandbox"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
+    class 2536834 "Graph"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2939394 // <directional composition>
+	relation 2922114 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2939394 // <directional composition>
+	  b parent class_ref 2537474 // GraphImpl
+      end
+    end
+  end
+
+  package_ref 423554 // GraphPrivate
+
+  classview 1185282 "OLD"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
     classdiagram 914690 "mdtClPathGraph"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -259,57 +356,9 @@ ${inlines}
 	
       end
     end
-
-    class 2537090 "LinkedConnections"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 2890242 // <directional composition>
-	relation 2872962 *-->
-	  a role_name "" multiplicity "*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 2890242 // <directional composition>
-	  b parent class_ref 1739010 // mdtClUnitConnectionPkData
-      end
-    end
-
-    class 2537218 "LinkedConnectors"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 2890370 // <directional composition>
-	relation 2873090 *-->
-	  a role_name "" multiplicity "*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 2890370 // <directional composition>
-	  b parent class_ref 1699714 // mdtClUnitConnectorPkData
-      end
-    end
   end
 
-  classview 920322 "PathGraphPrivate"
+  classview 1185154 "Scene"
     
     classdiagramsettings member_max_width 0 end
     
@@ -325,44 +374,11 @@ ${inlines}
     
     activitydiagramsettings
      end
-    classdiagram 1875586 "overview"
-      classdiagramsettings member_max_width 0 end
+    classdiagram 2258306 "overview"
+      classdiagramsettings hide_operations yes member_max_width 0 end
       size A4
     end
 
-    class 2247682 "Visitor"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-  end
-
-  classview 920706 "linkPathView"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
     classdiagram 1875842 "Link"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -604,13 +620,30 @@ ${inlines}
 	  b parent class_ref 2248066 // Connection
       end
     end
+  end
 
+  classview 920706 "View"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
     classdiagram 2177922 "View"
       classdiagramsettings member_max_width 0 end
       size A4
     end
 
-    class 2504834 "LinkPathView"
+    class 2504834 "View"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -716,6 +749,29 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 2851714 // <generalisation>
 	  b parent class_ref 2505090 // LinkPathCoordinate
+      end
+    end
+
+    class 2560258 "PathViewLink"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2932866 // <generalisation>
+	relation 2915586 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2932866 // <generalisation>
+	  b parent class_ref 895490 // QGraphicsLineItem
       end
     end
   end

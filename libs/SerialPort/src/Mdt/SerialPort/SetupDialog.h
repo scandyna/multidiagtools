@@ -18,18 +18,27 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "SetupDialog.h"
+#ifndef MDT_SERIAL_PORT_SETUP_DIALOG_H
+#define MDT_SERIAL_PORT_SETUP_DIALOG_H
 
-#include <QDebug>
+#include <QDialog>
+#include "ui_SetupDialog.h"
 
-namespace mdt{ namespace SerialPort{
+namespace Mdt{ namespace SerialPort{
 
-SetupDialog::SetupDialog(QWidget *parent)
- : QDialog(parent)
-{
-  setupUi(this);
-  
-  qDebug() << tr("TR test");
-}
+  /*! \brief Dialog to setup a serial port
+   */
+  class SetupDialog : public QDialog, private Ui::SetupDialog
+  {
+   Q_OBJECT
+
+   public:
+
+    /*! \brief Constructor
+     */
+    SetupDialog(QWidget *parent = nullptr);
+  };
 
 }} // namespace mdt{ namespace SerialPort{
+
+#endif // #ifndef MDT_SERIAL_PORT_SETUP_DIALOG_H

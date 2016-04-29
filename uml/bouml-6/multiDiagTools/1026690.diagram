@@ -1,105 +1,118 @@
-format 206
+format 211
 
 classcanvas 128002 class_ref 952962 // mdtTtBase
   classdiagramsettings member_max_width 0 end
-  xyz 74 79 2000
+  xyz 169.4 297.1 2000
 end
 classcanvas 128258 class_ref 952450 // mdtClConnectorEditor
   classdiagramsettings member_max_width 0 end
-  xyz 509 321 2006
+  xyz 39 170 2006
 end
 classcanvas 128770 class_ref 798722 // mdtClArticle
   classdiagramsettings member_max_width 0 end
-  xyz 57 355 2006
+  xyz 41.2 420.3 2006
 end
 classcanvas 129026 class_ref 812034 // mdtClArticleLinkDialog
   classdiagramsettings member_max_width 0 end
-  xyz 174 322 2000
+  xyz 512.5 761.9 2000
 end
 classcanvas 129154 class_ref 966018 // mdtClArticleConnectionDialog
   classdiagramsettings member_max_width 0 end
-  xyz 218 400 2000
+  xyz 488.5 545.9 2000
 end
 classcanvas 129282 class_ref 792194 // mdtClUnitVehicleType
   classdiagramsettings member_max_width 0 end
-  xyz 564 410 2000
+  xyz 279.5 761.9 2000
 end
 classcanvas 129410 class_ref 818818 // mdtClUnit
   classdiagramsettings member_max_width 0 end
-  xyz 80 445 2000
+  xyz 658 42 2000
 end
 classcanvas 129538 class_ref 1040386 // mdtSqlForm
   classdiagramsettings member_max_width 0 end
-  xyz 183 81 2000
+  xyz 243 42 2000
 end
 classcanvas 129922 class_ref 819074 // mdtClUnitConnectionDialog
   classdiagramsettings member_max_width 0 end
-  xyz 261 480 2012
+  xyz 425 42 2012
 end
 classcanvas 130306 class_ref 979458 // mdtClUnitEditor
   classdiagramsettings member_max_width 0 end
-  xyz 387 165 2011
+  xyz 231 170 2011
 end
 classcanvas 130562 class_ref 818690 // mdtClLink
   classdiagramsettings member_max_width 0 end
-  xyz 30 510 2000
+  xyz 171.4 420.3 2000
 end
 classcanvas 130690 class_ref 888194 // mdtClLinkData
   classdiagramsettings member_max_width 0 end
-  xyz 162 660 2000
+  xyz 542.9 298 2000
 end
 classcanvas 130818 class_ref 903554 // mdtClPathGraphicsConnection
   classdiagramsettings member_max_width 0 end
-  xyz 331 661 2011
+  xyz 199 547.4 2011
 end
 classcanvas 130946 class_ref 903682 // mdtClPathGraphicsLink
   classdiagramsettings member_max_width 0 end
-  xyz 661 662 3005
+  xyz 218 635.4 3005
 end
 classcanvas 131202 class_ref 923778 // mdtTtDatabaseSchema
   classdiagramsettings member_max_width 0 end
-  xyz 581 86 2000
+  xyz 40.5 761.9 2000
 end
 classcanvas 131330 class_ref 894850 // mdtClPathGraph
   classdiagramsettings member_max_width 0 end
-  xyz 588 752 2017
+  xyz 41 547.4 2017
 end
 classcanvas 131586 class_ref 894722 // mdtClPathGraphEdgeData
   classdiagramsettings member_max_width 0 end
-  xyz 199 745 2023
+  xyz 326.9 298 2023
 end
 relationcanvas 128898 relation_ref 1185666 // <generalisation>
-  from ref 128770 z 2007 to ref 128002
+  geometry VHV unfixed
+  from ref 128770 z 2007 to point 84 381
+  line 132354 z 2007 to point 207 381
+  line 132482 z 2007 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130178 relation_ref 1027586 // <unidirectional association>
   from ref 129922 z 2013 to ref 129410
-  role_a_pos 174 449 3000 no_role_b
-  multiplicity_a_pos 174 479 3000 no_multiplicity_b
+  role_a_pos 609 38 3000 no_role_b
+  multiplicity_a_pos 640 74 3000 no_multiplicity_b
 end
 relationcanvas 131074 relation_ref 1105410 // <association>
+  decenter_begin 521
   from ref 130946 z 3006 to ref 130818
-  no_role_a role_b_pos 584 659 3000
-  multiplicity_a_pos 575 689 3000 multiplicity_b_pos 643 689 3000
+  no_role_a role_b_pos 313 608 3000
+  multiplicity_a_pos 286 601 3000 multiplicity_b_pos 288 608 3000
 end
 relationcanvas 131458 relation_ref 1112194 // <unidirectional association>
-  from ref 131330 z 2018 stereotype "<<hash>>" xyz 516 726 2018 to ref 130818
-  role_a_pos 507 683 3000 no_role_b
-  multiplicity_a_pos 507 713 3000 no_multiplicity_b
+  from ref 131330 z 2018 stereotype "<<hash>>" xyz 151.5 567 2018 to ref 130818
+  role_a_pos 61 543 3000 no_role_b
+  multiplicity_a_pos 183 579 3000 no_multiplicity_b
 end
 relationcanvas 131714 relation_ref 1095554 // <unidirectional association>
   from ref 131586 z 2024 to ref 130690
   no_role_a no_role_b
-  multiplicity_a_pos 214 708 3000 no_multiplicity_b
+  multiplicity_a_pos 509 330 3000 no_multiplicity_b
 end
 relationcanvas 131970 relation_ref 1350018 // <generalisation>
-  from ref 128258 z 2007 to ref 129538
+  geometry VHV unfixed
+  decenter_begin 522
+  from ref 128258 z 2007 to point 117 128
+  line 132610 z 2007 to point 286 128
+  line 132738 z 2007 to ref 129538
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132098 relation_ref 1515010 // <generalisation>
   from ref 130306 z 2012 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132226 relation_ref 1992962 // <generalisation>
+  from ref 130562 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

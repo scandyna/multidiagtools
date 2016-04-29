@@ -1,26 +1,30 @@
-window_sizes 1280 964 305 969 911 0
+window_sizes 1272 956 305 961 903 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 2218370 // Thread
-    775 728 100 4 0 0
-  classdiagram_ref 2224898 // FramePool
+  classdiagram_ref 1875586 // overview
+    120 106 100 4 0 0
+  classdiagram_ref 2211330 // sandbox
     969 911 100 4 0 0
-  active  classdiagram_ref 2231426 // SetupDialog
-    969 911 100 4 0 0
+  classdiagram_ref 2264834 // overview
+    120 106 100 4 0 0
+  classdiagram_ref 2015362 // sandbox
+    120 106 100 18 0 0
+  classdiagram_ref 2258306 // overview
+    120 106 100 4 0 0
+  classdiagram_ref 1875842 // Link
+    120 106 100 4 0 0
+  classdiagram_ref 2177922 // View
+    969 911 100 4 24 0
+  active  classdiagram_ref 2257794 // DatabaseSchema
+    961 903 100 4 0 0
 end
 show_stereotypes
+selected classdiagram_ref 2257794 // DatabaseSchema
 open
-  classview_ref 1144578 // SetupDialog
+  class_ref 2383490 // Query
+  classview_ref 1184642 // DatabaseSchema
   
-  package_ref 402434 // Usb
-  
-  package_ref 402690 // Tcp
-  classview_ref 1137922 // DSO1000
-  
-  package_ref 403202 // tools
-  classview_ref 286978 // mdtDatabase
-  classview_ref 418434 // mdtDataTable
-  
-  package_ref 234498 // mdtdatabase
+package_ref 430082 // Dsp
+  classview_ref 947074 // FieldSelection
 end
 end

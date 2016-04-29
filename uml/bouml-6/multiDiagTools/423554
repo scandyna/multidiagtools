@@ -1,6 +1,6 @@
 format 211
-"PathGraphPrivate" // mdttools::mdt::CableList::PathGraphPrivate
-  revision 1
+"GraphPrivate" // Mdt::CableList::Path::GraphPrivate
+  revision 3
   modified_by 2 "philippe"
   // class settings
   
@@ -26,6 +26,44 @@ format 211
   activitydiagramsettings
    end
   
+  classview 920322 "GraphPrivate"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 1875586 "overview"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2247682 "Visitor"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+  end
+
   classview 1131394 "sandbox"
     
     classdiagramsettings member_max_width 0 end
@@ -47,23 +85,7 @@ format 211
       size A4
     end
 
-    class 2537346 "PathGraphImpl"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
-    class 2537474 "Graph"
+    class 2537474 "GraphImpl"
       visibility package 
       nformals 6
       formal name "OutEdgeList" type "class" explicit_default_value ""

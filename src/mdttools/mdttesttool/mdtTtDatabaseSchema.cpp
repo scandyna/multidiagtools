@@ -41,13 +41,6 @@ mdtTtDatabaseSchema::mdtTtDatabaseSchema()
 {
 }
 
-mdtTtDatabaseSchema::mdtTtDatabaseSchema(mdtSqlDatabaseManager *dbManager) 
-{
-  Q_ASSERT(dbManager != 0);
-
-  pvDatabaseManager = dbManager;
-}
-
 mdtTtDatabaseSchema::~mdtTtDatabaseSchema() 
 {
 }

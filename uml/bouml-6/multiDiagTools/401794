@@ -1,6 +1,6 @@
 format 211
-"mdt" // mdt
-  revision 3
+"Mdt" // Mdt
+  revision 4
   modified_by 2 "philippe"
   // class settings
   
@@ -32,7 +32,7 @@ format 211
 
   package_ref 402050 // Csv
 
-  package_ref 402178 // Db
+  package_ref 402178 // Sql
 
   package_ref 402306 // SerialPort
 
