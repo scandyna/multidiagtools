@@ -197,6 +197,91 @@ void PathGraphTest::graphImplEdgesBenchmark()
   QCOMPARE(graph.edgeCount(), i);
 }
 
+void PathGraphTest::graphImplLinkedConnectionsTest()
+{
+  using Mdt::CableList::Path::GraphPrivate::Connection;
+  using Mdt::CableList::Path::GraphPrivate::Link;
+
+  Mdt::CableList::Path::GraphPrivate::GraphImpl graph;
+  std::vector<Connection> connections;
+
+  /*
+   * Check with this graph:
+   * (1)->(2)->(3)
+   */
+  // Build the graph
+  Link link12(Connection(1), Connection(2), 0, false);
+  graph.addEdge(link12);
+  Link link23(Connection(2), Connection(3), 0, false);
+  graph.addEdge(link23);
+  QCOMPARE(graph.vertexCount(), 3);
+  QCOMPARE(graph.edgeCount(), 2);
+  // Get linked connections from 1 and check
+  connections = graph.getLinkedConnections(Connection(1));
+  QCOMPARE((int)connections.size(), 3);
+  QCOMPARE((int)connections[0].id, 1);
+  QCOMPARE((int)connections[1].id, 2);
+  QCOMPARE((int)connections[2].id, 3);
+  // Get linked connections from 3 and check
+  connections = graph.getLinkedConnections(Connection(3));
+  QCOMPARE((int)connections.size(), 1);
+  QCOMPARE((int)connections[0].id, 3);
+  /*
+   * Check with this graph (same as previous, but undirected):
+   * (1)-(2)-(3)
+   */
+  // Add complements to graph
+  Link link21(Connection(2), Connection(1), 0, false);
+  graph.addEdge(link21);
+  Link link32(Connection(3), Connection(2), 0, false);
+  graph.addEdge(link32);
+  QCOMPARE(graph.vertexCount(), 3);
+  QCOMPARE(graph.edgeCount(), 4);
+  // Get linked connections from 1 and check
+  connections = graph.getLinkedConnections(Connection(1));
+  QCOMPARE((int)connections.size(), 3);
+  QCOMPARE((int)connections[0].id, 1);
+  QCOMPARE((int)connections[1].id, 2);
+  QCOMPARE((int)connections[2].id, 3);
+  // Get linked connections from 3 and check
+  connections = graph.getLinkedConnections(Connection(3));
+  QCOMPARE((int)connections.size(), 3);
+  QCOMPARE((int)connections[0].id, 3);
+  QCOMPARE((int)connections[1].id, 2);
+  QCOMPARE((int)connections[2].id, 1);
+  /*
+   * Check with this graph:
+   * (1)->(2)->(3)  (4)->(5)
+   */
+  // Build graph
+  graph.clear();
+  graph.addEdge(link12);
+  graph.addEdge(link23);
+  Link link45(Connection(4), Connection(5), 0, false);
+  graph.addEdge(link45);
+  QCOMPARE(graph.vertexCount(), 5);
+  QCOMPARE(graph.edgeCount(), 3);
+  // Get linked connections from 1 and check
+  connections = graph.getLinkedConnections(Connection(1));
+  QCOMPARE((int)connections.size(), 3);
+  QCOMPARE((int)connections[0].id, 1);
+  QCOMPARE((int)connections[1].id, 2);
+  QCOMPARE((int)connections[2].id, 3);
+  // Get linked connections from 4 and check
+  connections = graph.getLinkedConnections(Connection(4));
+  QCOMPARE((int)connections.size(), 2);
+  QCOMPARE((int)connections[0].id, 4);
+  QCOMPARE((int)connections[1].id, 5);
+
+
+
+}
+
+void PathGraphTest::graphImplLinkedConnectionsBenchmark()
+{
+
+}
+
 /*
  * Main
  */

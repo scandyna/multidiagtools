@@ -1,6 +1,6 @@
 format 211
 "Sql" // Mdt::Sql
-  revision 6
+  revision 7
   modified_by 2 "philippe"
   // class settings
   
@@ -248,6 +248,42 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      attribute 2479490 "Database"
+	private type class_ref 405122 // QSqlDatabase
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3897986 "getRecord"
+	stereotype "mdtExpected"
+	public return_type class_ref 404994 // QSqlRecord
+	nparams 1
+	  param in name "sql" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 2962946 // <dependency>
+	relation 2945666 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2962946 // <dependency>
+	  b parent class_ref 910594 // QSqlQuery
+      end
     end
   end
 end

@@ -38,6 +38,9 @@ class PathGraphTest : public QObject
 
   void graphImplEdgesTest();
   void graphImplEdgesBenchmark();
+
+  void graphImplLinkedConnectionsTest();
+  void graphImplLinkedConnectionsBenchmark();
 };
 
 #endif // #ifndef MDT_CABLE_LIST_PATH_GRAPH_TEST_H

@@ -23,12 +23,14 @@
 
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/adjacency_list.hpp>
-
-#include <boost/graph/properties.hpp>
-
 #include <boost/property_map/property_map.hpp>
+#include <boost/graph/breadth_first_search.hpp>
 #include <cstdint>
 #include <algorithm>
+#include <vector>
+///#include <memory>
+
+#include <QDebug>
 
 namespace Mdt{ namespace CableList{ namespace Path{ namespace GraphPrivate{
 
@@ -106,6 +108,27 @@ namespace Mdt{ namespace CableList{ namespace Path{ namespace GraphPrivate{
    private:
 
     bool null;
+  };
+
+  /*
+   * Visitor to collect connections during BFS
+   */
+  struct LinkedVerticesBfsVisitor : boost::default_bfs_visitor
+  {
+    explicit LinkedVerticesBfsVisitor(std::vector<Connection> *c)
+     : connections(c)
+    {
+      Q_ASSERT(connections != nullptr);
+    }
+
+    void discover_vertex(const vertex_t & v, const graph_t & g) const
+    {
+      Q_ASSERT(connections != nullptr);
+      connections->push_back(g[v]);
+      qDebug() << "Vertex discovered: " << v;
+    }
+
+    std::vector<Connection> *connections;
   };
 
   /*
@@ -213,6 +236,23 @@ namespace Mdt{ namespace CableList{ namespace Path{ namespace GraphPrivate{
     }
 
     /*
+     * Get list of connections linked to start
+     * Note: start will also be included as first element in result
+     * Precondition: start must exist in graph
+     */
+    std::vector<Connection> getLinkedConnections(Connection start)
+    {
+      std::vector<Connection> connections;
+      LinkedVerticesBfsVisitor visitor(&connections);
+      Vertex s = getVertex(start);
+      Q_ASSERT(!s.isNull());
+
+      breadth_first_search(graph, s.v, boost::visitor(visitor));
+
+      return connections;
+    }
+
+    /*
      * Clear the graph
      */
     void clear()
@@ -220,14 +260,6 @@ namespace Mdt{ namespace CableList{ namespace Path{ namespace GraphPrivate{
       graph.clear();
     }
 
-    /*
-     * Get connection for given vertex
-     */
-//     Connection getConnection(Vertex vertex) const
-//     {
-//       ///return graph[vertex.v];
-//       ///return boost::get<Vertex>(graph);
-//     }
   };
 
 }}}} // namespace Mdt{ namespace CableList{ namespace Path{ namespace GraphPrivate{

@@ -1,0 +1,20 @@
+format 211
+
+classcanvas 128002 class_ref 2247682 // LinkedConnectionsBfsVisitor
+  classdiagramsettings member_max_width 0 end
+  xyz 39 42 2000
+end
+classcanvas 128130 class_ref 2567042 // Connection
+  classdiagramsettings member_max_width 0 end
+  xyz 384 42 2000
+end
+note 128386 "WW: if visitor must be copiable, share the vector"
+  xyzwh 140 173 2000 335 67
+relationcanvas 128642 relation_ref 2945538 // <directional composition>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 368 82 3000 no_multiplicity_b
+end
+line 128514 -_-_
+  from ref 128002 z 2001 to ref 128386
+end

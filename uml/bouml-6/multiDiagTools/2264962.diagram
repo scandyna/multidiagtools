@@ -1,8 +1,8 @@
 format 211
 
-classcanvas 128002 class_ref 2536962 // Path
+classcanvas 128002 class_ref 2536962 // ShortestPath
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 320.5 2000
+  xyz 977 140 2000
 end
 classcanvas 128130 class_ref 2537090 // LinkedConnections
   classdiagramsettings member_max_width 0 end
@@ -35,6 +35,17 @@ relationcanvas 129026 relation_ref 2928770 // <directional composition>
   line 129154 z 2013 to ref 128770
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 2928898 // <directional composition>
+  from ref 128002 z 2013 to point 1128 72
+  line 129538 z 2013 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 2929026 // <directional composition>
+  from ref 128002 z 2007 to ref 128258
+  no_role_a no_role_b
+  multiplicity_a_pos 859 202 3000 no_multiplicity_b
 end
 line 128642 -_-_
   from ref 128514 z 2001 to ref 128130

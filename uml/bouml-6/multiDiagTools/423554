@@ -1,6 +1,6 @@
 format 211
 "GraphPrivate" // Mdt::CableList::Path::GraphPrivate
-  revision 7
+  revision 8
   modified_by 2 "philippe"
   // class settings
   
@@ -44,7 +44,7 @@ format 211
      end
     classdiagram 1875586 "overview"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 2537474 "graph_t"
@@ -96,22 +96,6 @@ format 211
       
     end
 
-    class 2247682 "BfsVisitor"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
     class 2566914 "GraphImpl"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -136,6 +120,15 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      classrelation 2956034 // <directional composition>
+	relation 2938754 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2956034 // <directional composition>
+	  b parent class_ref 2537474 // graph_t
       end
 
       operation 3891458 "addVertex"
@@ -186,13 +179,22 @@ ${inlines}
 	
       end
 
-      classrelation 2956034 // <directional composition>
-	relation 2938754 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+      operation 3898114 "getLinkedConnections"
+	stereotype "vector"
+	public return_type class_ref 2567042 // Connection
+	multiplicity "*"
+	nparams 1
+	  param in name "start" type class_ref 2567042 // Connection
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
-	    classrelation_ref 2956034 // <directional composition>
-	  b parent class_ref 2537474 // graph_t
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -293,11 +295,10 @@ ${inlines}
 	    classrelation_ref 2890754 // <directional composition>
 	  b parent class_ref 1672962 // mdtClLinkPkData
       end
-
     end
   end
 
-  classview 1131394 "sandbox"
+  classview 1218178 "Visitors"
     
     classdiagramsettings member_max_width 0 end
     
@@ -313,9 +314,48 @@ ${inlines}
     
     activitydiagramsettings
      end
-    classdiagram 2211330 "sandbox"
+    classdiagram 2291714 "Overview"
       classdiagramsettings member_max_width 0 end
       size A4
+    end
+
+    class 2247682 "LinkedConnectionsBfsVisitor"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2962818 // <directional composition>
+	relation 2945538 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2962818 // <directional composition>
+	  b parent class_ref 2567042 // Connection
+      end
+
+      attribute 2479362 "connections"
+	public type class_ref 2567042 // Connection
+	multiplicity "*"
+	stereotype "vector"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
     end
   end
 end

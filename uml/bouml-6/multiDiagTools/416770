@@ -1,6 +1,6 @@
 format 211
 "CableList" // Mdt::CableList
-  revision 6
+  revision 7
   modified_by 2 "philippe"
   // class settings
   
@@ -26,6 +26,8 @@ format 211
   activitydiagramsettings
    end
   
+  package_ref 469890 // sandbox
+
   package_ref 436866 // DatabaseLogical
 
   classview 1184642 "DatabaseSchema"
