@@ -1,30 +1,27 @@
-window_sizes 1272 956 305 961 903 0
+window_sizes 1272 956 414 852 903 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 1875586 // overview
-    120 106 100 4 0 0
-  classdiagram_ref 2211330 // sandbox
-    969 911 100 4 0 0
-  classdiagram_ref 2264834 // overview
-    120 106 100 4 0 0
-  classdiagram_ref 2015362 // sandbox
-    120 106 100 18 0 0
-  classdiagram_ref 2258306 // overview
-    120 106 100 4 0 0
-  classdiagram_ref 1875842 // Link
-    120 106 100 4 0 0
-  classdiagram_ref 2177922 // View
-    969 911 100 4 24 0
-  active  classdiagram_ref 2257794 // DatabaseSchema
-    961 903 100 4 0 0
+  classdiagram_ref 2015362 // Graph
+    767 728 100 21 0 0
+  active  classdiagram_ref 1875586 // overview
+    852 903 90 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2257794 // DatabaseSchema
+selected operation_ref 3891330 // addEdge
 open
   class_ref 2383490 // Query
-  classview_ref 1184642 // DatabaseSchema
+  classview_ref 1198338 // Overview
+  class_ref 2536962 // ShortestPath
+  attribute_ref 2458370 // FromConnection
+  class_ref 2537858 // Edge
+  class_ref 2537730 // Vertex
+  class_ref 2566914 // GraphImpl
+  attribute_ref 2472706 // end
+  attribute_ref 2472834 // weigth
+  classrelation_ref 2890754 // <directional composition>
+  classview_ref 1131394 // sandbox
+  classview_ref 1205122 // UnitConnection
   
-package_ref 430082 // Dsp
-  classview_ref 947074 // FieldSelection
+  package_ref 430082 // Dsp
 end
 end

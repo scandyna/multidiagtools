@@ -1,0 +1,467 @@
+format 211
+"Graphics" // Mdt::CableList::Path::Graphics
+  revision 3
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 1198466 "Items"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 1875970 "Connection"
+      classdiagramsettings member_max_width 0 end
+      size B-Landscape
+    end
+
+    class 2248066 "Connection"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2953986 // <generalisation>
+	relation 2936706 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2953986 // <generalisation>
+	  b parent class_ref 895362 // QGraphicsItemGroup
+      end
+
+      attribute 2465794 "Text"
+	private type class_ref 2567554 // QGraphicsSimpleTextItem
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 2248194 "Pin"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2542594 // <generalisation>
+	relation 2526082 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2542594 // <generalisation>
+	  b parent class_ref 2248066 // Connection
+      end
+    end
+
+    class 2248322 "Socket"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2954114 // <generalisation>
+	relation 2936834 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2954114 // <generalisation>
+	  b parent class_ref 895362 // QGraphicsItemGroup
+      end
+
+      classrelation 2954242 // <generalisation>
+	relation 2936962 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2954242 // <generalisation>
+	  b parent class_ref 2248066 // Connection
+      end
+    end
+
+    class 2248578 "Terminal"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2542466 // <generalisation>
+	relation 2525954 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2542466 // <generalisation>
+	  b parent class_ref 2248066 // Connection
+      end
+
+      attribute 2465922 "Circle"
+	private type class_ref 896258 // QGraphicsEllipseItem
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    classdiagram 1875842 "Link"
+      classdiagramsettings member_max_width 0 end
+      size B
+    end
+
+    class 2247938 "AbstractLink"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 2251906 "StartConnection"
+	private type class_ref 2248066 // Connection
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2252034 "EndConnection"
+	private type class_ref 2248066 // Connection
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3388546 "adjust"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 2954498 // <generalisation>
+	relation 2937218 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2954498 // <generalisation>
+	  b parent class_ref 895362 // QGraphicsItemGroup
+      end
+
+      attribute 2466050 "Text"
+	private type class_ref 2567554 // QGraphicsSimpleTextItem
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 2248706 "InternalLink"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2955266 // <generalisation>
+	relation 2937986 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2955266 // <generalisation>
+	  b parent class_ref 2574210 // Link
+      end
+    end
+
+    class 2248834 "ConnectedSocketPin"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2954626 // <generalisation>
+	relation 2937346 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2954626 // <generalisation>
+	  b parent class_ref 2247938 // AbstractLink
+      end
+    end
+
+    class 2574082 "CableLink"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2955138 // <generalisation>
+	relation 2937858 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2955138 // <generalisation>
+	  b parent class_ref 2574210 // Link
+      end
+    end
+
+    class 2574210 "Link"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2955010 // <generalisation>
+	relation 2937730 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2955010 // <generalisation>
+	  b parent class_ref 2247938 // AbstractLink
+      end
+
+      attribute 2466178 "Line"
+	private type class_ref 895490 // QGraphicsLineItem
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+  end
+
+  classview 1198594 "Layout"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 1876098 "Layout"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2505090 "Coordinate"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 2251778 "xyzCoordinate"
+	private explicit_type ""
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3388418 "toLogicalPourRenduCoordinate"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 2505218 "AbsoluteCoordinate"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2851842 // <generalisation>
+	relation 2834562 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2851842 // <generalisation>
+	  b parent class_ref 2505090 // Coordinate
+      end
+    end
+
+    class 2505346 "GeneratedCoordiante"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2851714 // <generalisation>
+	relation 2834434 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2851714 // <generalisation>
+	  b parent class_ref 2505090 // Coordinate
+      end
+    end
+  end
+end

@@ -18,26 +18,19 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CABLE_LIST_PATH_GRAPH_TEST_H
-#define MDT_CABLE_LIST_PATH_GRAPH_TEST_H
+#include "Graph.h"
+#include "GraphPrivate/Graph.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace CableList{ namespace Path{
 
-class PathGraphTest : public QObject
+Graph::Graph(const QSqlDatabase & db)
+ : pvGraph(new GraphPrivate::GraphImpl),
+   pvDatabase(db)
 {
- Q_OBJECT
+}
 
- private slots:
+Graph::~Graph()
+{
+}
 
-  void privateConnectionTest();
-  void privateLinkTest();
-
-  void graphImplVerticesTest();
-  void graphImplVerticesBenchmark();
-
-  void graphImplEdgesTest();
-  void graphImplEdgesBenchmark();
-};
-
-#endif // #ifndef MDT_CABLE_LIST_PATH_GRAPH_TEST_H
+}}} // namespace Mdt{ namespace CableList{ namespace Path{

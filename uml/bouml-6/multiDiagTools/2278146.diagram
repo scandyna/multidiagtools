@@ -1,0 +1,20 @@
+format 211
+
+classcanvas 128002 class_ref 2566786 // UnitConnectionPkList
+  classdiagramsettings member_max_width 0 end
+  xyz 334 42 2000
+end
+classcanvas 128130 class_ref 1739010 // mdtClUnitConnectionPkData
+  classdiagramsettings member_max_width 0 end
+  xyz 423 143 2000
+end
+note 128386 "Create iterators etc.."
+  xyzwh 42 50 2000 253 53
+relationcanvas 128258 relation_ref 2928642 // <directional composition>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 505 116 3000 no_multiplicity_b
+end
+line 128514 -_-_ decenter_begin 415
+  from ref 128386 z 2001 to ref 128002
+end

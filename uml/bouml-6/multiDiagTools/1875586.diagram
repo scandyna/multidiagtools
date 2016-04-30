@@ -1,13 +1,77 @@
-format 210
+format 211
 
-classcanvas 128002 class_ref 2247554 // EdgeData
+classcanvas 128130 class_ref 2247682 // BfsVisitor
   classdiagramsettings member_max_width 0 end
-  xyz 132 332 2000
-end
-classcanvas 128130 class_ref 2247682 // Visitor
-  classdiagramsettings member_max_width 0 end
-  xyz 247 309 2000
+  xyz 437.7 456.9 2000
 end
 note 128258 "Voir: notion d'itérateurs"
-  xyzwh 225 79 2000 389 49
+  xyzwh 40.7 608.1 2000 389 49
+classcanvas 128386 class_ref 2537474 // graph_t
+  classdiagramsettings member_max_width 0 end
+  xyz 385.4 70.2 2005
+end
+classcanvas 128514 class_ref 2537858 // Edge
+  classdiagramsettings member_max_width 0 end
+  xyz 313.8 202.8 2011
+end
+classcanvas 128770 class_ref 2537730 // Vertex
+  classdiagramsettings member_max_width 0 end
+  xyz 585.4 202.8 3005
+end
+classcanvas 129026 class_ref 2537602 // Link
+  classdiagramsettings member_max_width 0 end
+  xyz 514.4 37 2000
+end
+classcanvas 129154 class_ref 2566914 // GraphImpl
+  classdiagramsettings member_max_width 0 end
+  xyz 42.8 43.9 2000
+end
+classcanvas 129410 class_ref 2567042 // Connection
+  classdiagramsettings member_max_width 0 end
+  xyz 448.6 314.2 2000
+end
+classcanvas 129922 class_ref 2574338 // adjacency_list
+  classdiagramsettings member_max_width 0 end
+  xyz 441.6 208 3011
+end
+note 131586 "Note: getting a graph with  only links that are linked together ??"
+  xyzwh 40.9 455.8 2000 317 72
+relationcanvas 130050 relation_ref 2938114 // <directional composition>
+  decenter_end 550
+  from ref 129922 z 3012 to ref 128770
+  no_role_a no_role_b
+  multiplicity_a_pos 569 249 3000 no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 2938242 // <directional composition>
+  decenter_end 550
+  from ref 129922 z 3012 to ref 128514
+  no_role_a no_role_b
+  multiplicity_a_pos 409 249 3000 no_multiplicity_b
+end
+relationcanvas 130434 relation_ref 2938370 // <dependency>
+  decenter_begin 816
+  decenter_end 145
+  from ref 128386 z 3012 to ref 129922
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130818 relation_ref 2938754 // <directional composition>
+  from ref 129154 z 2006 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130946 relation_ref 2938882 // <directional composition>
+  decenter_begin 456
+  decenter_end 449
+  from ref 129922 z 3012 to ref 129410
+  no_role_a no_role_b
+  multiplicity_a_pos 472 287 3000 no_multiplicity_b
+end
+relationcanvas 131074 relation_ref 2939010 // <directional composition>
+  decenter_begin 844
+  decenter_end 93
+  from ref 129922 z 3012 to ref 129026
+  no_role_a no_role_b
+  multiplicity_a_pos 512 173 3000 no_multiplicity_b
+end
 end

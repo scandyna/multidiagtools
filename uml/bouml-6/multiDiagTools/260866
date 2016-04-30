@@ -1,6 +1,6 @@
-format 210
+format 211
 "Boost" // Boost
-  revision 2
+  revision 3
   modified_by 2 "philippe"
   // class settings
   
@@ -31,4 +31,98 @@ format 210
   package_ref 274050 // spirit
 
   package_ref 274946 // phoenix
+
+  classview 1211650 "graph"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2285186 "graph"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2574338 "adjacency_list"
+      visibility package 
+      nformals 6
+      formal name "OutEdgeList" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "VertexList" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "VertexProperties" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "EdgeProperties" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "GraphProperties" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "EdgeList" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl "class ${name}${inherit}:
+${docstring}${members}
+"
+      idl_decl "${comment}${abstract}${custom}valuetype ${name}${inherit} {
+${members}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2955394 // <directional composition>
+	relation 2938114 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2955394 // <directional composition>
+	  b parent class_ref 2537730 // Vertex
+      end
+
+      classrelation 2955522 // <directional composition>
+	relation 2938242 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2955522 // <directional composition>
+	  b parent class_ref 2537858 // Edge
+      end
+
+      classrelation 2956162 // <directional composition>
+	relation 2938882 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2956162 // <directional composition>
+	  b parent class_ref 2567042 // Connection
+      end
+
+      classrelation 2956290 // <directional composition>
+	relation 2939010 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2956290 // <directional composition>
+	  b parent class_ref 2537602 // Link
+      end
+    end
+  end
 end

@@ -1,6 +1,6 @@
 format 211
 "GraphPrivate" // Mdt::CableList::Path::GraphPrivate
-  revision 3
+  revision 7
   modified_by 2 "philippe"
   // class settings
   
@@ -47,7 +47,56 @@ format 211
       size A4
     end
 
-    class 2247682 "Visitor"
+    class 2537474 "graph_t"
+      visibility package stereotype "typedef" base_type class_ref 2574338 // adjacency_list
+      cpp_decl "${comment}typedef ${type} ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl "${comment}typedef ${type} ${name};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2955650 // <dependency>
+	relation 2938370 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 2955650 // <dependency>
+	  b parent class_ref 2574338 // adjacency_list
+      end
+    end
+
+    class 2537858 "Edge"
+      visibility package stereotype "typedef" explicit_base_type "boost::graph_traits<Graph>::vertex_descriptor"
+      cpp_decl "${comment}typedef ${type} ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl "${comment}typedef ${type} ${name};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2537730 "Vertex"
+      visibility package stereotype "typedef" explicit_base_type ""
+      cpp_decl "${comment}typedef ${type} ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl "${comment}typedef ${type} ${name};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2247682 "BfsVisitor"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -61,6 +110,190 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    class 2566914 "GraphImpl"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 2459010 "graph"
+	public type class_ref 2537474 // graph_t
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3891458 "addVertex"
+	public return_type class_ref 2537730 // Vertex
+	nparams 1
+	  param in name "connection" type class_ref 2567042 // Connection
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3891202 "getVertex"
+	public return_type class_ref 2537730 // Vertex
+	nparams 1
+	  param in name "connection" type class_ref 2567042 // Connection
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3891330 "addEdge"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "link" type class_ref 2537602 // Link
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 2956034 // <directional composition>
+	relation 2938754 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2956034 // <directional composition>
+	  b parent class_ref 2537474 // graph_t
+      end
+    end
+
+    class 2567042 "Connection"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 2459138 "id"
+	private explicit_type "int64_t"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 2537602 "Link"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 2444034 "start"
+	public type class_ref 2567042 // Connection
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2472706 "end"
+	public type class_ref 2567042 // Connection
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2472834 "weigth"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2444290 "isComplement"
+	public explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 2890754 // <directional composition>
+	relation 2873474 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2890754 // <directional composition>
+	  b parent class_ref 1672962 // mdtClLinkPkData
+      end
+
     end
   end
 
@@ -83,144 +316,6 @@ ${inlines}
     classdiagram 2211330 "sandbox"
       classdiagramsettings member_max_width 0 end
       size A4
-    end
-
-    class 2537474 "GraphImpl"
-      visibility package 
-      nformals 6
-      formal name "OutEdgeList" type "class" explicit_default_value ""
-        explicit_extends ""
-      formal name "VertexList" type "class" explicit_default_value ""
-        explicit_extends ""
-      formal name "VertexProperties" type "class" explicit_default_value ""
-        explicit_extends ""
-      formal name "EdgeProperties" type "class" explicit_default_value ""
-        explicit_extends ""
-      formal name "GraphProperties" type "class" explicit_default_value ""
-        explicit_extends ""
-      formal name "EdgeList" type "class" explicit_default_value ""
-        explicit_extends ""
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 2890882 // <directional composition>
-	relation 2873602 *-->
-	  a role_name "" multiplicity "*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 2890882 // <directional composition>
-	  b parent class_ref 2537730 // Vertex
-      end
-
-      classrelation 2891010 // <directional composition>
-	relation 2873730 *-->
-	  a role_name "" multiplicity "*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 2891010 // <directional composition>
-	  b parent class_ref 2537858 // Edge
-      end
-    end
-
-    class 2537602 "EdgeData"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 2444034 "Link"
-	public type class_ref 1672962 // mdtClLinkPkData
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      classrelation 2890754 // <directional composition>
-	relation 2873474 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 2890754 // <directional composition>
-	  b parent class_ref 1672962 // mdtClLinkPkData
-      end
-
-      attribute 2444290 "isComplement"
-	public explicit_type "bool"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-
-    class 2537730 "Vertex"
-      visibility package stereotype "typedef" explicit_base_type ""
-      cpp_decl "${comment}typedef ${type} ${name};
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl "${comment}typedef ${type} ${name};
-"
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
-    class 2537858 "Edge"
-      visibility package stereotype "typedef" explicit_base_type "boost::graph_traits<Graph>::vertex_descriptor"
-      cpp_decl "${comment}typedef ${type} ${name};
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl "${comment}typedef ${type} ${name};
-"
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
-    class 2537986 "GraphVisitor"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
     end
   end
 end

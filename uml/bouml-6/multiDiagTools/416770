@@ -1,6 +1,6 @@
 format 211
 "CableList" // Mdt::CableList
-  revision 5
+  revision 6
   modified_by 2 "philippe"
   // class settings
   
@@ -75,4 +75,64 @@ ${inlines}
   end
 
   package_ref 456834 // Path
+
+  classview 1205122 "UnitConnection"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2278146 "UnitConnectionList"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2566786 "UnitConnectionPkList"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2945922 // <directional composition>
+	relation 2928642 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 2945922 // <directional composition>
+	  b parent class_ref 1739010 // mdtClUnitConnectionPkData
+      end
+
+      attribute 2458498 "Connections"
+	private type class_ref 1739010 // mdtClUnitConnectionPkData
+	multiplicity "*"
+	stereotype "vector"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+  end
 end

@@ -1,7 +1,32 @@
 format 211
 
-classcanvas 128002 class_ref 2536962 // Path
+classcanvas 128002 class_ref 2536962 // ShortestPath
   classdiagramsettings member_max_width 0 end
-  xyz 158 302 2000
+  xyz 73 36 2000
+end
+classcanvas 128130 class_ref 2566786 // UnitConnectionPkList
+  classdiagramsettings member_max_width 0 end
+  xyz 38 178 2000
+end
+classcanvas 128386 class_ref 1739010 // mdtClUnitConnectionPkData
+  classdiagramsettings member_max_width 0 end
+  xyz 447 159 2006
+end
+relationcanvas 128258 relation_ref 2928898 // <directional composition>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 2928642 // <directional composition>
+  from ref 128130 z 2007 to ref 128386
+  no_role_a no_role_b
+  multiplicity_a_pos 431 218 3000 no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 2929026 // <directional composition>
+  geometry HV unfixed
+  from ref 128002 z 2007 to point 542 86
+  line 128770 z 2007 to ref 128386
+  no_role_a no_role_b
+  multiplicity_a_pos 527 132 3000 no_multiplicity_b
 end
 end
