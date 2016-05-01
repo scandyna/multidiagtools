@@ -18,33 +18,34 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "PathGraphTest.h"
-#include "mdtApplication.h"
-#include "Mdt/CableList/Path/Graph.h"
-#include <vector>
+#ifndef MDT_CABLE_LIST_UNIT_CONNECTION_TEST_H
+#define MDT_CABLE_LIST_UNIT_CONNECTION_TEST_H
 
-// static void escape(void *p)
-// {
-//   asm volatile("" : : "g"(p) : "memory");
-// }
-// static void clobber()
-// {
-//   asm volatile("" : : : "memory");
-// }
+#include <QObject>
+#include <QtTest/QtTest>
+#include <QTemporaryFile>
+#include <QSqlDatabase>
 
-
-/*
- * Main
- */
-
-int main(int argc, char **argv)
+class UnitConnectionTest : public QObject
 {
-  mdtApplication app(argc, argv);
-  PathGraphTest test;
+ Q_OBJECT
 
-  if(!app.init()){
-    return 1;
-  }
+ private slots:
 
-  return QTest::qExec(&test, argc, argv);
-}
+  void initTestCase();
+  void cleanupTestCase();
+
+  void pkTest();
+  void pkListTest();
+  void pkListBenchmark();
+
+ private:
+
+  // Create test database schema - Will FAIL on problem
+  void createDatabaseSchema();
+
+  QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
+  QSqlDatabase pvDatabase;
+};
+
+#endif // #ifndef MDT_CABLE_LIST_UNIT_CONNECTION_TEST_H
