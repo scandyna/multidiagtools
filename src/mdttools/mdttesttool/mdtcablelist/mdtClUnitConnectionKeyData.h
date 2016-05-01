@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,64 +24,63 @@
 #include "mdtClUnitConnectorKeyData.h"
 #include "mdtClArticleConnectionKeyData.h"
 #include "mdtClConnectionTypeData.h"
+
+#include "Mdt/CableList/UnitConnectionPk.h" /// \todo update once migrated
+
 #include <QVariant>
+
+using Mdt::CableList::UnitConnectionPk; /// \todo Remove once migrated
 
 /*! \brief Data container for unit connection primary key
  *
  * Refers to UnitConnection_tbl
+ *
+ * /// \todo Remove once migrated
  */
-struct mdtClUnitConnectionPkData
-{
-  /*! \brief Id (Id_PK)
-   */
-  QVariant id;
-
-  /*! \brief Check if PK is null
-   *
-   * PK is null if id is null
-   */
-  bool isNull() const
-  {
-    return id.isNull();
-  }
-
-  /*! \brief Clear PK
-   */
-  void clear()
-  {
-    id.clear();
-  }
-};
+// struct mdtClUnitConnectionPkData
+// {
+//   /*! \brief Id (Id_PK)
+//    */
+//   QVariant id;
+// 
+//   /*! \brief Check if PK is null
+//    *
+//    * PK is null if id is null
+//    */
+//   bool isNull() const
+//   {
+//     return id.isNull();
+//   }
+// 
+//   /*! \brief Clear PK
+//    */
+//   void clear()
+//   {
+//     id.clear();
+//   }
+// };
 
 /*! \brief Data container for unit connection key data
  *
  * Refers to UnitConnection_tbl
  */
-struct mdtClUnitConnectionKeyData
+class mdtClUnitConnectionKeyData
 {
-  /*! \brief Unit connection PK (Id_PK)
-   */
-  mdtClUnitConnectionPkData pk;
-
- private:
-
-  /*! \brief Unit ID (Unit_Id_FK)
-   */
-  QVariant pvUnitId;
-
-  /*! \brief Unit connector ID (UnitConnector_Id_FK)
-   */
-  mdtClUnitConnectorKeyData pvUnitConnectorFk;
-
-  /*! \brief Article connection FK (ArticleConnection_Id_FK)
-   */
-  mdtClArticleConnectionKeyData pvArticleConnectionFk;
-
-  /*! \brief Connection type (ConnectionType_Code_FK)
-   */
-  mdtClConnectionTypeKeyData pvConnectionTypeFk;
-
  public:
+
+  /*! \brief Set primary key (PK)
+   */
+  void setPk(UnitConnectionPk pk)
+  {
+    pvPk = pk;
+  }
+
+  /*! \brief Get primary key (PK)
+   */
+  UnitConnectionPk pk() const
+  {
+    return pvPk;
+  }
 
   /*! \brief Set unit ID (Unit_Id_FK)
    *
@@ -223,14 +222,14 @@ struct mdtClUnitConnectionKeyData
    */
   bool isNull() const
   {
-    return (pk.isNull() || pvUnitId.isNull() || pvConnectionTypeFk.isNull());
+    return (pvPk.isNull() || pvUnitId.isNull() || pvConnectionTypeFk.isNull());
   }
 
   /*! \brief Clear
    */
   void clear()
   {
-    pk.clear();
+    pvPk.clear();
     pvUnitId.clear();
     pvUnitConnectorFk.clear();
     pvArticleConnectionFk.clear();
@@ -260,6 +259,26 @@ struct mdtClUnitConnectionKeyData
      */
     return (!pvArticleConnectionFk.articleId().isNull());
   }
+
+ private:
+
+  UnitConnectionPk pvPk;
+
+  /*! \brief Unit ID (Unit_Id_FK)
+   */
+  QVariant pvUnitId;
+
+  /*! \brief Unit connector ID (UnitConnector_Id_FK)
+   */
+  mdtClUnitConnectorKeyData pvUnitConnectorFk;
+
+  /*! \brief Article connection FK (ArticleConnection_Id_FK)
+   */
+  mdtClArticleConnectionKeyData pvArticleConnectionFk;
+
+  /*! \brief Connection type (ConnectionType_Code_FK)
+   */
+  mdtClConnectionTypeKeyData pvConnectionTypeFk;
 };
 
 #endif // #ifndef MDT_CL_UNIT_CONNECTION_KEY_DATA_H

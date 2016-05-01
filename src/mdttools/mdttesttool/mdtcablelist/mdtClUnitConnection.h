@@ -60,7 +60,8 @@ class mdtClUnitConnection : public mdtClArticleConnection
    *             Most of time, default value is ok.
    * \return PK (Id_PK) of added unit connection, or a null PK on error
    */
-  mdtClUnitConnectionPkData addUnitConnection(const mdtClUnitConnectionData & data, bool handleTransaction, bool clearLinksToCreate = true);
+  UnitConnectionPk addUnitConnection( const mdtClUnitConnectionData & data, bool handleTransaction, bool clearLinksToCreate = true );
+//   mdtClUnitConnectionPkData addUnitConnection(const mdtClUnitConnectionData & data, bool handleTransaction, bool clearLinksToCreate = true);
 
   /*! \brief Add a list of unit connections to database
    *
@@ -86,7 +87,8 @@ class mdtClUnitConnection : public mdtClArticleConnection
    *       A null data is returned if given key does not exist, or a error occured.
    *       Use ok parameter to diffrenciate both cases.
    */
-  mdtClUnitConnectionData getUnitConnectionData(const mdtClUnitConnectionPkData & pk, bool & ok);
+  mdtClUnitConnectionData getUnitConnectionData(UnitConnectionPk pk, bool & ok);
+//   mdtClUnitConnectionData getUnitConnectionData(const mdtClUnitConnectionPkData & pk, bool & ok);
 
   /*! \brief Get unit connection data from database
    *
@@ -112,11 +114,13 @@ class mdtClUnitConnection : public mdtClArticleConnection
    * \param pk PK of unit connection to edit
    * \param data Data to set
    */
-  bool updateUnitConnection(const mdtClUnitConnectionPkData & pk, const mdtClUnitConnectionData & data);
+  bool updateUnitConnection(UnitConnectionPk pk, const mdtClUnitConnectionData & data);
+//   bool updateUnitConnection(const mdtClUnitConnectionPkData & pk, const mdtClUnitConnectionData & data);
 
   /*! \brief Remove a unit connection
    */
-  bool removeUnitConnection(const mdtClUnitConnectionPkData & pk);
+  bool removeUnitConnection(UnitConnectionPk pk);
+//   bool removeUnitConnection(const mdtClUnitConnectionPkData & pk);
 
   /*! \brief Remove each unit connection that is contained in selection
    *
@@ -157,7 +161,8 @@ class mdtClUnitConnection : public mdtClArticleConnection
    *       A null data is returned if given key does not exist, or a error occured.
    *       Use ok parameter to diffrenciate both cases.
    */
-  mdtClUnitConnectorData getUnitConnectorData(mdtClUnitConnectionPkData pk, bool & ok);
+  mdtClUnitConnectorData getUnitConnectorData(UnitConnectionPk pk, bool & ok);
+//   mdtClUnitConnectorData getUnitConnectorData(mdtClUnitConnectionPkData pk, bool & ok);
 
   /*! \brief Get unit connector data from database
    *
@@ -224,7 +229,8 @@ class mdtClUnitConnection : public mdtClArticleConnection
    * \param unitId ID of unit to witch unit connection was added
    * \return true of no error occured (if no key was added, this is not a error), false else
    */
-  bool addLinkToCreateKeys(const mdtClUnitConnectionPkData & ucnxPk, const QVariant & unitId);
+  bool addLinkToCreateKeys(UnitConnectionPk ucnxPk, const QVariant & unitId);
+//   bool addLinkToCreateKeys(const mdtClUnitConnectionPkData & ucnxPk, const QVariant & unitId);
 
   /*! \brief Get base SQL statement to get unit connections
    */

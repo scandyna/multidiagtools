@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -262,7 +262,7 @@ void mdtClUnitLinkDialog::setLinkModification(mdtClModification_t m)
 void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
 {
   mdtClUnitConnection ucnx(pvDatabase);
-  mdtClUnitConnectionPkData ucnxPk;
+  UnitConnectionPk ucnxPk;
   mdtClUnitConnectionData ucnxData;
   mdtClLinkVersionData linkVersionData;
   bool ok;
@@ -276,7 +276,7 @@ void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
   updateWire(data.keyData().wireId());
   leIdentification->setText(data.identification.toString());
   // Update start unit
-  ucnxPk.id = data.pk().connectionStartId;
+  ucnxPk.setId( data.pk().connectionStartId.toLongLong() );
   ucnxData = ucnx.getUnitConnectionData(ucnxPk, ok);
   if(ok){
     pvStartUnitId = ucnxData.keyData().unitId();
@@ -285,7 +285,7 @@ void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
   }
   updateStartUnit();
   // Update end unit
-  ucnxPk.id = data.pk().connectionEndId;
+  ucnxPk.setId( data.pk().connectionEndId.toLongLong() );
   ucnxData = ucnx.getUnitConnectionData(ucnxPk, ok);
   if(ok){
     pvEndUnitId = ucnxData.keyData().unitId();
@@ -522,7 +522,6 @@ void mdtClUnitLinkDialog::selectStartConnection()
 {
   mdtClUnitConnectionSelectionDialog selectionDialog(this);
   mdtClUnitConnectionSelectionDialog::LinkUsage_t linkUsage;
-  mdtClUnitConnectionPkData ucnxPk;
 
   // Setup and show dialog
   if(cbShowOnlyUnusedStartConnections->isChecked()){
@@ -538,9 +537,9 @@ void mdtClUnitLinkDialog::selectStartConnection()
     return;
   }
   // Get connection data and update
-  ucnxPk = selectionDialog.selectedUnitConnectionPk();
+  auto ucnxPk = selectionDialog.selectedUnitConnectionPk();
   auto pk = pvLinkData.pk();
-  pk.connectionStartId = ucnxPk.id;
+  pk.connectionStartId = ucnxPk.id();
   pvLinkData.setPk(pk);
   updateStartConnection();
   // Update vehicle type assignations
@@ -551,7 +550,6 @@ void mdtClUnitLinkDialog::selectEndConnection()
 {
   mdtClUnitConnectionSelectionDialog selectionDialog(this);
   mdtClUnitConnectionSelectionDialog::LinkUsage_t linkUsage;
-  mdtClUnitConnectionPkData ucnxPk;
 
   // Setup and show dialog
   if(cbShowOnlyUnusedEndConnections->isChecked()){
@@ -567,9 +565,9 @@ void mdtClUnitLinkDialog::selectEndConnection()
     return;
   }
   // Get connection data and update
-  ucnxPk = selectionDialog.selectedUnitConnectionPk();
+  auto ucnxPk = selectionDialog.selectedUnitConnectionPk();
   auto pk = pvLinkData.pk();
-  pk.connectionEndId = ucnxPk.id;
+  pk.connectionEndId = ucnxPk.id();
   pvLinkData.setPk(pk);
   updateEndConnection();
   // Update vehicle type assignations
@@ -702,13 +700,13 @@ void mdtClUnitLinkDialog::updateEndUnit()
 void mdtClUnitLinkDialog::updateStartConnection()
 {
   mdtClUnitConnection ucnx(pvDatabase);
-  mdtClUnitConnectionPkData connectionPk;
+  UnitConnectionPk connectionPk;
   mdtClUnitConnectionData connectionData;
   mdtClUnitConnectorData connectorData;
   bool ok;
 
   // Set connection name
-  connectionPk.id = pvLinkData.pk().connectionStartId;
+  connectionPk.setId( pvLinkData.pk().connectionStartId.toLongLong() );
   if(connectionPk.isNull()){
     lbStartContactName->setText("");
     lbStartConnectorName->setText("");
@@ -732,13 +730,13 @@ void mdtClUnitLinkDialog::updateStartConnection()
 void mdtClUnitLinkDialog::updateEndConnection()
 {
   mdtClUnitConnection ucnx(pvDatabase);
-  mdtClUnitConnectionPkData connectionPk;
+  UnitConnectionPk connectionPk;
   mdtClUnitConnectionData connectionData;
   mdtClUnitConnectorData connectorData;
   bool ok;
 
   // Set connection name
-  connectionPk.id = pvLinkData.pk().connectionEndId;
+  connectionPk.setId( pvLinkData.pk().connectionEndId.toLongLong() );
   if(connectionPk.isNull()){
     lbEndContactName->setText("");
     lbEndConnectorName->setText("");

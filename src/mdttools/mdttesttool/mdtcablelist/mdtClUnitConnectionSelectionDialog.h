@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,12 +25,15 @@
 #include "mdtSqlSelectionDialog.h"
 #include "mdtClUnitConnectionKeyData.h"
 #include "mdtClUnitConnectionData.h"
+#include "Mdt/CableList/UnitConnectionPkList.h"
 #include "mdtClUnitConnectorKeyData.h"
 #include "mdtClConnectableCriteria.h"
 #include <QSqlDatabase>
 #include <QVariant>
 #include <QLocale>
 #include <QList>
+
+using Mdt::CableList::UnitConnectionPkList; /// \todo Remove once migrated
 
 /*! \brief Dialog for unit connection selection (in UnitConnection_tbl)
  */
@@ -62,19 +65,20 @@ class mdtClUnitConnectionSelectionDialog : public mdtSqlSelectionDialog
 
   /*! \brief Select unit connections that are part of given unit and that are connectable to given connection regarding given criteria
    */
-  bool select(QSqlDatabase db, const QVariant & unitId, const mdtClUnitConnectionPkData & connectableToPk, const mdtClConnectableCriteria & criteria, bool allowMultiSelection);
+  bool select(QSqlDatabase db, const QVariant & unitId, UnitConnectionPk connectableToPk, const mdtClConnectableCriteria & criteria, bool allowMultiSelection);
 
   /*! \brief Get selected unit connection PK
    *
    * If user rejected the dialog, a null PK is returned.
    */
-  mdtClUnitConnectionPkData selectedUnitConnectionPk() const;
+  UnitConnectionPk selectedUnitConnectionPk() const;
 
   /*! \brief Get a list of selected connection PK
    *
    * If user rejected the dialog, a empty list is returned.
    */
-  QList<mdtClUnitConnectionPkData> selectedUnitConnectionPkList() const;
+  UnitConnectionPkList selectedUnitConnectionPkList() const;
+//   QList<mdtClUnitConnectionPkData> selectedUnitConnectionPkList() const;
 
   /*! \brief Get selected unit connection key
    *

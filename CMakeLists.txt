@@ -124,7 +124,8 @@ include_directories("${PROJECT_SOURCE_DIR}/src/mdterror")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdterrorgui")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtport")
 
-# include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport")
+# Should be removed once cable list has migrated to libs/CableList
+include_directories("${PROJECT_SOURCE_DIR}/libs/CableList/src")
 
 include_directories("${PROJECT_SOURCE_DIR}/src/mdttools")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdttools/mdttesttool")

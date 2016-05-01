@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -84,7 +84,7 @@ bool mdtClAutoConnection::canConnectConnections(const mdtClUnitConnectionData & 
   return true;
 }
 
-bool mdtClAutoConnection::canConnectConnections(const mdtClUnitConnectionPkData & pkA, const mdtClUnitConnectionPkData & pkB, const mdtClConnectableCriteria & criteria, bool & ok)
+bool mdtClAutoConnection::canConnectConnections(UnitConnectionPk pkA, UnitConnectionPk pkB, const mdtClConnectableCriteria & criteria, bool & ok)
 {
   mdtClUnitConnection ucnx(database());
   mdtClUnitConnectionData a, b;
@@ -125,16 +125,24 @@ bool mdtClAutoConnection::canConnectConnections(const mdtClUnitConnectionPkData 
   return canConnectConnections(a, b, criteria);
 }
 
-QList<mdtClUnitConnectionPkData> mdtClAutoConnection::getConnectableConnectionPkList(const mdtClUnitConnectionPkData & toPk,
-                                                                                   const mdtClConnectableCriteria & criteria, bool & ok)
+// QList<mdtClUnitConnectionPkData> mdtClAutoConnection::getConnectableConnectionPkList(const mdtClUnitConnectionPkData & toPk,
+//                                                                                    const mdtClConnectableCriteria & criteria, bool & ok)
+// {
+//   return getConnectableConnectionPkList(toPk, QVariant(), criteria, ok);
+// }
+
+UnitConnectionPkList mdtClAutoConnection::getConnectableConnectionPkList(UnitConnectionPk toPk, const mdtClConnectableCriteria & criteria, bool & ok)
 {
   return getConnectableConnectionPkList(toPk, QVariant(), criteria, ok);
 }
 
-QList<mdtClUnitConnectionPkData> mdtClAutoConnection::getConnectableConnectionPkList(const mdtClUnitConnectionPkData & toPk, const QVariant & unitId,
-                                                                                   const mdtClConnectableCriteria & criteria, bool & ok)
+// QList<mdtClUnitConnectionPkData> mdtClAutoConnection::getConnectableConnectionPkList(const mdtClUnitConnectionPkData & toPk, const QVariant & unitId,
+//                                                                                    const mdtClConnectableCriteria & criteria, bool & ok)
+UnitConnectionPkList mdtClAutoConnection::getConnectableConnectionPkList(UnitConnectionPk toPk, const QVariant & unitId,
+                                                                         const mdtClConnectableCriteria & criteria, bool & ok)
 {
-  QList<mdtClUnitConnectionPkData> pkList;
+//   QList<mdtClUnitConnectionPkData> pkList;
+  UnitConnectionPkList pkList;
   QString sql;
   QList<QVariant> idList;
 
@@ -153,9 +161,8 @@ QList<mdtClUnitConnectionPkData> mdtClAutoConnection::getConnectableConnectionPk
    * For each unit connection , that is not the given connection, check if it is connectable to given connection
    */
   for(const auto & id : idList){
-    if(id != toPk.id){
-      mdtClUnitConnectionPkData pk;
-      pk.id = id;
+    if(id != QVariant(toPk.id())){
+      UnitConnectionPk pk(id.toLongLong());
       if(canConnectConnections(pk, toPk, criteria, ok)){
         pkList.append(pk);
       }else{
@@ -457,8 +464,8 @@ bool mdtClAutoConnection::checkOrBuildConnectionLinkListByName(const QList<mdtCl
         // If requested, add to connection link list
         if(connectionLinkDataList != nullptr){
           mdtClLinkPkData pk;
-          pk.connectionStartId = c.keyData().pk.id;
-          pk.connectionEndId = d.keyData().pk.id;
+          pk.connectionStartId = c.keyData().pk().id();
+          pk.connectionEndId = d.keyData().pk().id();
           pk.versionFk = *versionPk;
           pk.modificationFk = *modificationPk;
           mdtClLinkData data;

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -1507,6 +1507,8 @@ void mdtClLinkTest::linkAndVehicleTypeAddGetRemoveTest()
 
 void mdtClLinkTest::linkFromArticleLinkAddTest()
 {
+  using Mdt::CableList::UnitConnectionPk;
+
   mdtClLink lnk(pvDatabase);
   mdtClLinkPkData linkPk;
   mdtClLinkData linkData;
@@ -1516,7 +1518,7 @@ void mdtClLinkTest::linkFromArticleLinkAddTest()
   mdtClArticleLinkData aLinkData;
   QList<mdtClArticleLinkData> aLinkDataList;
   mdtClArticleConnectionKeyData acnxFk;
-  mdtClUnitConnectionPkData ucnxPk;
+  UnitConnectionPk ucnxPk;
   mdtClUnitConnectionKeyData ucnxKey;
   mdtClUnitConnectionData ucnxData;
   mdtClUnitConnection ucnx(pvDatabase);
@@ -1539,9 +1541,9 @@ void mdtClLinkTest::linkFromArticleLinkAddTest()
   alucnxKey.articleLinkPk.connectionStartId = 1;
   alucnxKey.articleLinkPk.connectionEndId = 2;
   QVERIFY(alucnxKey.isNull());
-  alucnxKey.unitConnectionStartPk.id = 3;
+  alucnxKey.unitConnectionStartPk.setId(3);
   QVERIFY(alucnxKey.isNull());
-  alucnxKey.unitConnectionEndPk.id = 4;
+  alucnxKey.unitConnectionEndPk.setId(4);
   QVERIFY(!alucnxKey.isNull());
   // Clear
   alucnxKey.clear();
@@ -1572,7 +1574,7 @@ void mdtClLinkTest::linkFromArticleLinkAddTest()
   acnxFk.id = 10;
   acnxFk.setArticleId(1);
   acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
-  ucnxKey.pk.id = 110;
+  ucnxKey.setPk(UnitConnectionPk(110));
   ucnxKey.setUnitId(1);
   ucnxKey.setArticleConnectionFk(acnxFk);
   ucnxData.setKeyData(ucnxKey);
@@ -1592,7 +1594,7 @@ void mdtClLinkTest::linkFromArticleLinkAddTest()
   acnxFk.id = 11;
   acnxFk.setArticleId(1);
   acnxFk.setConnectionType(mdtClConnectionType_t::Pin);
-  ucnxKey.pk.id = 111;
+  ucnxKey.setPk(UnitConnectionPk(111));
   ucnxKey.setUnitId(1);
   ucnxKey.setArticleConnectionFk(acnxFk);
   ucnxData.setKeyData(ucnxKey);
@@ -1603,8 +1605,8 @@ void mdtClLinkTest::linkFromArticleLinkAddTest()
   QCOMPARE(ucnx.linkToCreateKeyList().size(), 1);
   QCOMPARE(ucnx.linkToCreateKeyList().at(0).articleLinkPk.connectionStartId, QVariant(10));
   QCOMPARE(ucnx.linkToCreateKeyList().at(0).articleLinkPk.connectionEndId, QVariant(11));
-  QCOMPARE(ucnx.linkToCreateKeyList().at(0).unitConnectionStartPk.id, QVariant(110));
-  QCOMPARE(ucnx.linkToCreateKeyList().at(0).unitConnectionEndPk.id, QVariant(111));
+  QCOMPARE(ucnx.linkToCreateKeyList().at(0).unitConnectionStartPk.id(), 110);
+  QCOMPARE(ucnx.linkToCreateKeyList().at(0).unitConnectionEndPk.id(), 111);
   // Create the link
   versionPk.versionPk = 100;
   modificationPk.setModification(mdtClModification_t::Exists);
@@ -1673,9 +1675,9 @@ void mdtClLinkTest::linkFromArticleLinkAddTest()
   /*
    * Remove created unit connections
    */
-  ucnxPk.id = 110;
+  ucnxPk.setId(110);
   QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 111;
+  ucnxPk.setId(111);
   QVERIFY(ucnx.removeUnitConnection(ucnxPk));
   /*
    * Remove created article links

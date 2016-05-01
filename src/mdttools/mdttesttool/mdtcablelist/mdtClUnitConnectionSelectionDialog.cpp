@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -62,16 +62,16 @@ bool mdtClUnitConnectionSelectionDialog::select(QSqlDatabase db, const QVariant 
 }
 
 bool mdtClUnitConnectionSelectionDialog::select(QSqlDatabase db, const QVariant & unitId, 
-                                                const mdtClUnitConnectionPkData & connectableToPk, const mdtClConnectableCriteria &criteria,
+                                                UnitConnectionPk connectableToPk, const mdtClConnectableCriteria &criteria,
                                                 bool allowMultiSelection)
 {
   mdtClAutoConnection ac(db);
-  QList<mdtClUnitConnectionPkData> pkList;
+//   QList<mdtClUnitConnectionPkData> pkList;
   QString sql;
   bool ok;
 
   // Get connectable connections
-  pkList = ac.getConnectableConnectionPkList(connectableToPk, unitId, criteria, ok);
+  auto pkList = ac.getConnectableConnectionPkList(connectableToPk, unitId, criteria, ok);
   if(!ok){
     pvLastError = ac.lastError();
     return false;
@@ -95,16 +95,18 @@ bool mdtClUnitConnectionSelectionDialog::select(QSqlDatabase db, const QVariant 
   const int lastIndex = pkList.size() - 1;
   sql += "Id_PK IN(";
   for(int i = 0; i < lastIndex; ++i){
-    sql += pkList.at(i).id.toString() + ",";
+//     sql += pkList.at(i).id.toString() + ",";
+    sql += QString::number( pkList.at(i).id() ) + ",";
   }
-  sql += pkList.at(lastIndex).id.toString() + ")";
+//   sql += pkList.at(lastIndex).id.toString() + ")";
+  sql += QString::number( pkList.at(lastIndex).id() ) + ")";
 
   return setQuery(sql, db, allowMultiSelection);
 }
 
-mdtClUnitConnectionPkData mdtClUnitConnectionSelectionDialog::selectedUnitConnectionPk() const
+UnitConnectionPk mdtClUnitConnectionSelectionDialog::selectedUnitConnectionPk() const
 {
-  mdtClUnitConnectionPkData pk;
+  UnitConnectionPk pk;
 
   if(result() != Accepted){
     return pk;
@@ -114,22 +116,21 @@ mdtClUnitConnectionPkData mdtClUnitConnectionSelectionDialog::selectedUnitConnec
     return pk;
   }
   Q_ASSERT(s.rowCount() == 1);
-  pk.id = s.data(0, "Id_PK");
+  pk.setId(s.data(0, "Id_PK"));
 
   return pk;
 }
 
-QList<mdtClUnitConnectionPkData> mdtClUnitConnectionSelectionDialog::selectedUnitConnectionPkList() const
+UnitConnectionPkList mdtClUnitConnectionSelectionDialog::selectedUnitConnectionPkList() const
 {
-  QList<mdtClUnitConnectionPkData> pkList;
+  UnitConnectionPkList pkList;
 
   if(result() != Accepted){
     return pkList;
   }
   auto s = selection("Id_PK");
   for(int row = 0; row < s.rowCount(); ++row){
-    mdtClUnitConnectionPkData pk;
-    pk.id = s.data(row, "Id_PK");
+    UnitConnectionPk pk(s.data(row, "Id_PK"));
     pkList.append(pk);
   }
 
@@ -308,7 +309,7 @@ mdtClUnitConnectionKeyData mdtClUnitConnectionSelectionDialog::buildKeyData(cons
   }
   articleConnectionFk.setConnectionTypeCode(s.data(row, "ACNX_ConnectionType_Code_FK"));
   // Setup unit connection key
-  key.pk.id = s.data(row, "Id_PK");
+  key.setPk(UnitConnectionPk( s.data(row, "Id_PK").toLongLong() ));
   key.setUnitId(s.data(row, "Unit_Id_FK"));
   if(!unitConnectorFk.isNull()){
     key.setUnitConnectorFk(unitConnectorFk);

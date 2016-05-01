@@ -22,7 +22,11 @@
 #define MDT_CL_ARTICLE_LINK_UNIT_CONNECTION_KEY_DATA_H
 
 #include "mdtClArticleLinkKeyData.h"
-#include "mdtClUnitConnectionKeyData.h"
+// #include "mdtClUnitConnectionKeyData.h"
+#include "Mdt/CableList/UnitConnectionPk.h" /// \todo update once migrated
+
+using Mdt::CableList::UnitConnectionPk; /// \todo Remove once migrated
+
 
 /*! \brief Container for article link and unit connection PKs
  *
@@ -39,11 +43,11 @@ struct mdtClArticleLinkUnitConnectionKeyData
 
   /*! \brief Unit connection start PK
    */
-  mdtClUnitConnectionPkData unitConnectionStartPk;
+  UnitConnectionPk unitConnectionStartPk;
 
   /*! \brief Unit connection end PK
    */
-  mdtClUnitConnectionPkData unitConnectionEndPk;
+  UnitConnectionPk unitConnectionEndPk;
 
   /*! \brief Check if PK is null
    *

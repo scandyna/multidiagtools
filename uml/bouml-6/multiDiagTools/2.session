@@ -15,9 +15,10 @@ diagrams
     860 911 100 4 0 0
 end
 show_stereotypes
-selected class_ref 2580866 // UnitConnectionPk
+selected operation_ref 3911810 // setId
 open
   class_ref 2383490 // Query
+  class_ref 2580866 // UnitConnectionPk
   class_ref 2566786 // UnitConnectionPkList
   
   package_ref 430082 // Dsp

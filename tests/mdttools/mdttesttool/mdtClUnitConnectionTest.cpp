@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -35,6 +35,7 @@
 #include "mdtClUnitConnectorKeyData.h"
 #include "mdtClUnitConnectorData.h"
 #include "mdtClUnitConnectionKeyData.h"
+#include "Mdt/CableList/UnitConnectionPkList.h"
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectionSelectionDialog.h"
 #include "mdtCableListTestScenario.h"
@@ -256,7 +257,9 @@ void mdtClUnitConnectionTest::unitConnectorDataTest()
 
 void mdtClUnitConnectionTest::unitConnectionDataTest()
 {
-  mdtClUnitConnectionPkData pk;
+  using Mdt::CableList::UnitConnectionPk;
+
+  UnitConnectionPk pk;
   mdtClUnitConnectionKeyData key;
   mdtClUnitConnectionData data;
   mdtClArticleConnectionKeyData articleConnectionFk;
@@ -267,14 +270,14 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
    * PK data test
    */
   // Initial state
-  QVERIFY(pk.isNull());
-  // Set
-  pk.id = 1;
-  QVERIFY(!pk.isNull());
-  // Clear
-  pk.clear();
-  QVERIFY(pk.id.isNull());
-  QVERIFY(pk.isNull());
+//   QVERIFY(pk.isNull());
+//   // Set
+//   pk.id = 1;
+//   QVERIFY(!pk.isNull());
+//   // Clear
+//   pk.clear();
+//   QVERIFY(pk.id.isNull());
+//   QVERIFY(pk.isNull());
   /*
    * Key data test
    */
@@ -283,19 +286,20 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   QVERIFY(!key.isPartOfUnitConnector());
   QVERIFY(!key.isBasedOnArticleConnection());
   // Set key for a unit free unit connection
-  key.pk.id = 1;
+  key.setPk(UnitConnectionPk(1));
   QVERIFY(key.isNull());
   key.setUnitId(2);
   QVERIFY(key.isNull());
   key.setConnectionType(mdtClConnectionType_t::Terminal);
   QVERIFY(!key.isNull());
+  QCOMPARE(key.pk().id(), 1);
   QCOMPARE(key.unitId(), QVariant(2));
   QVERIFY(key.connectionTypeFk().type() == mdtClConnectionType_t::Terminal);
   QVERIFY(!key.isPartOfUnitConnector());
   QVERIFY(!key.isBasedOnArticleConnection());
   // Clear
   key.clear();
-  QVERIFY(key.pk.isNull());
+  QVERIFY(key.pk().isNull());
   QVERIFY(key.unitId().isNull());
   QVERIFY(key.unitConnectorFk().isNull());
   QVERIFY(key.articleConnectionFk().isNull());
@@ -305,7 +309,7 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   QVERIFY(!key.isBasedOnArticleConnection());
   // Set key for a unit connection that is part of a free unit connector
   unitConnectorFk.clear();
-  key.pk.id = 4;
+  key.setPk(UnitConnectionPk(4));
   key.setUnitId(5);
   key.setConnectionType(mdtClConnectionType_t::Pin);
   unitConnectorFk.setUnitId(5);
@@ -331,7 +335,7 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   QVERIFY(!key.isBasedOnArticleConnection());
   // Clear
   key.clear();
-  QVERIFY(key.pk.isNull());
+  QVERIFY(key.pk().isNull());
   QVERIFY(key.unitId().isNull());
   QVERIFY(key.unitConnectorFk().isNull());
   QVERIFY(key.articleConnectionFk().isNull());
@@ -341,7 +345,7 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   QVERIFY(!key.isBasedOnArticleConnection());
   // Set key for a unit connection based on a free article connection
   articleConnectionFk.clear();
-  key.pk.id = 6;
+  key.setPk(UnitConnectionPk(6));
   key.setUnitId(7);
   articleConnectionFk.setArticleId(8);
   articleConnectionFk.setConnectionType(mdtClConnectionType_t::Socket);
@@ -367,7 +371,7 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   QVERIFY(key.isBasedOnArticleConnection());
   // Clear
   key.clear();
-  QVERIFY(key.pk.isNull());
+  QVERIFY(key.pk().isNull());
   QVERIFY(key.unitId().isNull());
   QVERIFY(key.unitConnectorFk().isNull());
   QVERIFY(key.articleConnectionFk().isNull());
@@ -392,7 +396,7 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   unitConnectorFk.setUnitId(2);
   unitConnectorFk.setArticleConnectorFk(articleConnectorFk);
   // Setup unit connection
-  key.pk.id = 3;
+  key.setPk(UnitConnectionPk(3));
   key.setUnitId(2);
   key.setUnitConnectorFk(unitConnectorFk);
   key.setArticleConnectionFk(articleConnectionFk);
@@ -403,7 +407,7 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   QVERIFY(key.isBasedOnArticleConnection());
   // Clear
   key.clear();
-  QVERIFY(key.pk.isNull());
+  QVERIFY(key.pk().isNull());
   QVERIFY(key.unitId().isNull());
   QVERIFY(key.unitConnectorFk().isNull());
   QVERIFY(key.articleConnectionFk().isNull());
@@ -420,7 +424,7 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   QVERIFY(!data.isBasedOnArticleConnection());
   // Set data for a free unit connection
   key.clear();
-  key.pk.id = 5;
+  key.setPk(UnitConnectionPk(5));
   key.setUnitId(6);
   key.setConnectionType(mdtClConnectionType_t::Terminal);
   data.setKeyData(key);
@@ -437,7 +441,7 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   // Set data for a unit connection part of unit connector
   unitConnectorFk.clear();
   key.clear();
-  key.pk.id = 1;
+  key.setPk(UnitConnectionPk(1));
   key.setUnitId(2);
   unitConnectorFk.setUnitId(2);
   key.setUnitConnectorFk(unitConnectorFk);
@@ -467,7 +471,7 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   // Set data for a unit connection based on a article connection
   articleConnectionFk.clear();
   key.clear();
-  key.pk.id = 5;
+  key.setPk(UnitConnectionPk(5));
   key.setUnitId(6);
   articleConnectionFk.setArticleId(7);
   articleConnectionFk.setConnectionType(mdtClConnectionType_t::Socket);
@@ -496,7 +500,7 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
   QVERIFY(!data.isBasedOnArticleConnection());
   // Data members set/clear
   key.clear();
-  key.pk.id = 1;
+  key.setPk(UnitConnectionPk(1));
   key.setUnitId(2);
   key.setConnectionType(mdtClConnectionType_t::Terminal);
   data.setKeyData(key);
@@ -528,6 +532,8 @@ void mdtClUnitConnectionTest::unitConnectionDataTest()
 
 void mdtClUnitConnectionTest::unitConnectorWithConnectionsDataTest()
 {
+  using Mdt::CableList::UnitConnectionPk;
+
   mdtClUnitConnectorKeyData unitConnectorKey;
   mdtClUnitConnectorData unitConnectorData;
   mdtClUnitConnectionKeyData unitConnectionKey;
@@ -635,6 +641,8 @@ void mdtClUnitConnectionTest::unitConnectorWithConnectionsDataTest()
 
 void mdtClUnitConnectionTest::unitConnectorDataFromConnectorContactsTest()
 {
+  using Mdt::CableList::UnitConnectionPk;
+
   mdtClUnitConnection ucnx(pvDatabase);
   mdtClUnitConnectorKeyData key;
   mdtClUnitConnectorData data;
@@ -721,9 +729,11 @@ void mdtClUnitConnectionTest::unitConnectorDataFromArticleConnectionListTest()
 
 void mdtClUnitConnectionTest::unitConnectionAddGetRemoveTest()
 {
+  using Mdt::CableList::UnitConnectionPk;
+
   mdtClUnitConnection ucnx(pvDatabase);
   mdtCableListTestScenario scenario(pvDatabase);
-  mdtClUnitConnectionPkData pk1, pk2;
+  UnitConnectionPk pk1, pk2;
   mdtClUnitConnectionKeyData key1, key2;
   mdtClUnitConnectionData data;
   mdtClArticleConnectionKeyData articleConnectionFk;
@@ -811,6 +821,7 @@ void mdtClUnitConnectionTest::unitConnectionAddGetRemoveTest()
   // Setup unit connection FK
   key2.setUnitId(2000);
   key2.setArticleConnectionFk(articleConnectionFk);
+  QVERIFY(key2.pk().isNull());
   // Setup unit connection data
   data.clear();
   data.setKeyData(key2);
@@ -862,6 +873,8 @@ void mdtClUnitConnectionTest::unitConnectionWithArticleLinkAddGetRemoveTest()
 
 void mdtClUnitConnectionTest::unitConnectorAddGetRemoveTest()
 {
+  using Mdt::CableList::UnitConnectionPk;
+
   mdtClUnitConnection ucnx(pvDatabase);
   mdtClUnitConnectorPkData pk1, pk2, pk3;
   mdtClUnitConnectorKeyData key1, key2, key3;
@@ -1102,7 +1115,7 @@ void mdtClUnitConnectionTest::unitConnectorWithConnectionsAddGetRemoveTest()
   QCOMPARE(data.connectionDataList().at(1).functionIT, QVariant("FIT2"));
   // Get back connector data from unit connection B
   unitConnectionKey = data.connectionDataList().at(1).keyData();
-  data = ucnx.getUnitConnectorData(unitConnectionKey.pk, ok);
+  data = ucnx.getUnitConnectorData(unitConnectionKey.pk(), ok);
   QVERIFY(ok);
   QVERIFY(!data.isNull());
   QCOMPARE(data.keyData().unitId(), QVariant(1000));

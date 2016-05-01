@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -782,14 +782,14 @@ void mdtClUnitEditor::editConnection()
   mdtSqlTableWidget *widget;
   mdtClUnitConnectionDialog dialog(this, database(), mdtClUnitConnectionDialog::Edit);
   mdtClUnitConnection ucnx(database());
-  mdtClUnitConnectionPkData pk;
+  UnitConnectionPk pk;
   mdtClUnitConnectionData data;
   bool ok;
 
   widget = sqlTableWidget("UnitConnection_view");
   Q_ASSERT(widget != 0);
   // Get current unit connection data
-  pk.id = widget->currentData("Id_PK");
+  pk.setId( widget->currentData("Id_PK").toLongLong() );
   if(pk.isNull()){
     return;
   }
@@ -805,7 +805,7 @@ void mdtClUnitEditor::editConnection()
     return;
   }
   // Update in database
-  if(!ucnx.updateUnitConnection(data.keyData().pk, dialog.data())){
+  if(!ucnx.updateUnitConnection(data.keyData().pk(), dialog.data())){
     pvLastError = ucnx.lastError();
     displayLastError();
     return;

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,6 +23,7 @@
 #include "mdtClAutoConnection.h"
 #include "mdtClConnectableCriteria.h"
 #include "mdtClUnitConnectionKeyData.h"
+#include "Mdt/CableList/UnitConnectionPkList.h"
 #include "mdtClUnitConnectorKeyData.h"
 #include "mdtClUnitConnection.h"
 #include "mdtClLinkVersionKeyData.h"
@@ -319,16 +320,19 @@ void mdtClAutoConnectionTest::checkOrBuildConnectionLinkListByNameTest()
 
 void mdtClAutoConnectionTest::getConnectableConnectionsTest()
 {
+  using Mdt::CableList::UnitConnectionPk;
+  using Mdt::CableList::UnitConnectionPkList;
+
   mdtClAutoConnection ac(pvDatabase);
   mdtClUnitConnection ucnx(pvDatabase);
   mdtCableListTestScenario scenario(pvDatabase);
   mdtClConnectableCriteria criteria;
   QStringList cnxNames;
   QList<mdtClUnitConnectionData> ucnxList;
-  mdtClUnitConnectionPkData pkA, pkB, pkC;
+  UnitConnectionPk pkA, pkB, pkC;
   mdtClUnitConnectionKeyData key;
   mdtClUnitConnectionData ucnxData;
-  QList<mdtClUnitConnectionPkData> pkList;
+  UnitConnectionPkList pkList;
   bool ok;
 
   /*
@@ -566,13 +570,15 @@ void mdtClAutoConnectionTest::connectByContactNameTest()
 
 QList<mdtClUnitConnectionData> mdtClAutoConnectionTest::buildUnitConnectionList(const QList<QVariant> & idList, const QStringList & contactNames, mdtClConnectionType_t t)
 {
+  using Mdt::CableList::UnitConnectionPk;
+
   Q_ASSERT(idList.size() == contactNames.size());
 
   QList<mdtClUnitConnectionData> ucnxList;
 
   for(int i = 0; i < idList.size(); ++i){
     mdtClUnitConnectionKeyData key;
-    key.pk.id = idList.at(i);
+    key.setPk(UnitConnectionPk( idList.at(i).toLongLong() ));
     mdtClUnitConnectionData data;
     data.setKeyData(key);
     data.setConnectionType(t);

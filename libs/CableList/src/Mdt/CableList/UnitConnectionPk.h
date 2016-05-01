@@ -21,6 +21,7 @@
 #ifndef MDT_CABLE_LIST_UNIT_CONNECTION_PK_H
 #define MDT_CABLE_LIST_UNIT_CONNECTION_PK_H
 
+#include <QVariant>
 #include <cstdint>
 
 namespace Mdt{ namespace CableList{
@@ -38,10 +39,19 @@ namespace Mdt{ namespace CableList{
     constexpr UnitConnectionPk() noexcept
      : pvIsNull(true), pvId(0) {}
 
-    /*! \brief Contruct a null PK
+    /*! \brief Contruct PK
      */
     explicit constexpr UnitConnectionPk(int64_t id) noexcept
      : pvIsNull(false), pvId(id) {}
+
+    /*! \brief Contruct PK from a variant
+     */
+    explicit UnitConnectionPk(const QVariant & id)
+     : pvIsNull(id.isNull())
+    {
+      Q_ASSERT(id.isNull() || id.canConvert<qlonglong>());
+      pvId = id.toLongLong();
+    }
 
     /*! \brief Set id (Id_PK)
      */
@@ -51,9 +61,19 @@ namespace Mdt{ namespace CableList{
       pvId = id;
     }
 
+    /*! \brief Set id (Id_PK)
+     */
+    void setId(const QVariant & id)
+    {
+      Q_ASSERT(id.isNull() || id.canConvert<qlonglong>());
+      pvIsNull = id.isNull();
+      pvId = id.toLongLong();
+    }
+
     /*! \brief Get id (Id_PK)
      */
-    constexpr int64_t id() const noexcept
+    // Note: we use qlonglong, else QVariant() construction is not defined
+    constexpr qlonglong id() const noexcept
     {
       return pvId;
     }

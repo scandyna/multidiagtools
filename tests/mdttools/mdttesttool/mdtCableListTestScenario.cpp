@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -681,9 +681,11 @@ void mdtCableListTestScenario::removeTestVehicleTypeUnitAssignations()
 
 void mdtCableListTestScenario::createTestUnitConnections()
 {
+  using Mdt::CableList::UnitConnectionPk;
+
   mdtClUnitConnection ucnx(pvDatabase);
   mdtClLink lnk(pvDatabase);
-  mdtClUnitConnectionPkData pk;
+  UnitConnectionPk pk;
   mdtClUnitConnectionKeyData key;
   mdtClUnitConnectionData data;
   mdtClArticleConnectionKeyData acnxFk;
@@ -695,8 +697,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   // Add and chek unit connection 10000
   key.clear();
   data.clear();
-  pk.id = 10000;
-  key.pk = pk;
+  key.setPk(UnitConnectionPk(10000));
   key.setUnitId(1000);
   data.setKeyData(key);
   data.setConnectionType(mdtClConnectionType_t::Terminal);
@@ -706,15 +707,14 @@ void mdtCableListTestScenario::createTestUnitConnections()
   data = ucnx.getUnitConnectionData(pk, ok);
   QVERIFY(ok);
   QVERIFY(!data.isNull());
-  QCOMPARE(data.keyData().pk.id, QVariant(10000));
+  QCOMPARE(data.keyData().pk().id(), 10000);
   QCOMPARE(data.keyData().unitId(), QVariant(1000));
   QCOMPARE(data.name, QVariant("Unit contact 10000"));
 
   // Add and chek unit connection 10001
   key.clear();
   data.clear();
-  pk.id = 10001;
-  key.pk = pk;
+  key.setPk(UnitConnectionPk(10001));
   key.setUnitId(1000);
   data.setKeyData(key);
   data.setConnectionType(mdtClConnectionType_t::Terminal);
@@ -724,7 +724,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   data = ucnx.getUnitConnectionData(pk, ok);
   QVERIFY(ok);
   QVERIFY(!data.isNull());
-  QCOMPARE(data.keyData().pk.id, QVariant(10001));
+  QCOMPARE(data.keyData().pk().id(), 10001);
   QCOMPARE(data.keyData().unitId(), QVariant(1000));
   QCOMPARE(data.name, QVariant("Unit contact 10001"));
 
@@ -738,8 +738,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   acnxFk.id = 20;
   acnxFk.setArticleId(2);
   acnxFk.setConnectionType(mdtClConnectionType_t::Terminal);
-  pk.id = 20000;
-  key.pk = pk;
+  key.setPk(UnitConnectionPk(20000));
   key.setUnitId(2000);
   key.setArticleConnectionFk(acnxFk);
   data.setKeyData(key);
@@ -749,7 +748,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   data = ucnx.getUnitConnectionData(pk, ok);
   QVERIFY(ok);
   QVERIFY(!data.isNull());
-  QCOMPARE(data.keyData().pk.id, QVariant(20000));
+  QCOMPARE(data.keyData().pk().id(), 20000);
   QCOMPARE(data.keyData().unitId(), QVariant(2000));
   QVERIFY(data.isBasedOnArticleConnection());
   QCOMPARE(data.keyData().articleConnectionFk().articleId(), QVariant(2));
@@ -772,8 +771,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   acnxFk.id = 21;
   acnxFk.setArticleId(2);
   acnxFk.setConnectionType(mdtClConnectionType_t::Terminal);
-  pk.id = 20001;
-  key.pk = pk;
+  key.setPk(UnitConnectionPk(20001));
   key.setUnitId(2000);
   key.setArticleConnectionFk(acnxFk);
   data.setKeyData(key);
@@ -783,7 +781,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   data = ucnx.getUnitConnectionData(pk, ok);
   QVERIFY(ok);
   QVERIFY(!data.isNull());
-  QCOMPARE(data.keyData().pk.id, QVariant(20001));
+  QCOMPARE(data.keyData().pk().id(), 20001);
   QCOMPARE(data.keyData().unitId(), QVariant(2000));
   QVERIFY(data.isBasedOnArticleConnection());
   QCOMPARE(data.name, QVariant("Unit contact 20001"));
@@ -809,8 +807,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   acnxFk.id = 20;
   acnxFk.setArticleId(2);
   acnxFk.setConnectionType(mdtClConnectionType_t::Terminal);
-  pk.id = 20002;
-  key.pk = pk;
+  key.setPk(UnitConnectionPk(20002));
   key.setUnitId(2001);
   key.setArticleConnectionFk(acnxFk);
   data.setKeyData(key);
@@ -820,7 +817,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   data = ucnx.getUnitConnectionData(pk, ok);
   QVERIFY(ok);
   QVERIFY(!data.isNull());
-  QCOMPARE(data.keyData().pk.id, QVariant(20002));
+  QCOMPARE(data.keyData().pk().id(), 20002);
   QCOMPARE(data.keyData().unitId(), QVariant(2001));
   QVERIFY(data.isBasedOnArticleConnection());
   QCOMPARE(data.name, QVariant("Unit contact 20002"));
@@ -842,8 +839,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   acnxFk.id = 21;
   acnxFk.setArticleId(2);
   acnxFk.setConnectionType(mdtClConnectionType_t::Terminal);
-  pk.id = 20003;
-  key.pk = pk;
+  key.setPk(UnitConnectionPk(20003));
   key.setUnitId(2001);
   key.setArticleConnectionFk(acnxFk);
   data.setKeyData(key);
@@ -853,7 +849,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   data = ucnx.getUnitConnectionData(pk, ok);
   QVERIFY(ok);
   QVERIFY(!data.isNull());
-  QCOMPARE(data.keyData().pk.id, QVariant(20003));
+  QCOMPARE(data.keyData().pk().id(), 20003);
   QCOMPARE(data.keyData().unitId(), QVariant(2001));
   QVERIFY(data.isBasedOnArticleConnection());
   QCOMPARE(data.name, QVariant("Unit contact 20003"));
@@ -879,8 +875,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   acnxFk.id = 22;
   acnxFk.setArticleId(2);
   acnxFk.setConnectionType(mdtClConnectionType_t::Terminal);
-  pk.id = 20004;
-  key.pk = pk;
+  key.setPk(UnitConnectionPk(20004));
   key.setUnitId(2001);
   key.setArticleConnectionFk(acnxFk);
   data.setKeyData(key);
@@ -890,7 +885,7 @@ void mdtCableListTestScenario::createTestUnitConnections()
   data = ucnx.getUnitConnectionData(pk, ok);
   QVERIFY(ok);
   QVERIFY(!data.isNull());
-  QCOMPARE(data.keyData().pk.id, QVariant(20004));
+  QCOMPARE(data.keyData().pk().id(), 20004);
   QCOMPARE(data.keyData().unitId(), QVariant(2001));
   QVERIFY(data.isBasedOnArticleConnection());
   QCOMPARE(data.name, QVariant("Unit contact 20004"));
@@ -910,9 +905,10 @@ void mdtCableListTestScenario::createTestUnitConnections()
 
 void mdtCableListTestScenario::removeTestUnitConnections()
 {
+  using Mdt::CableList::UnitConnectionPk;
+
   mdtClUnitConnection ucnx(pvDatabase);
   mdtClLink lnk(pvDatabase);
-  mdtClUnitConnectionPkData ucnxPk;
   mdtClLinkPkData linkPk;
 
   // Remove created links
@@ -932,20 +928,13 @@ void mdtCableListTestScenario::removeTestUnitConnections()
   QList<QSqlRecord> reclist = ucnx.getDataList<QSqlRecord>("SELECT * FROM Link_tbl", ok);
 
   // Remove created unit connections
-  ucnxPk.id = 10000;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 10001;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 20000;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 20001;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 20002;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 20003;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
-  ucnxPk.id = 20004;
-  QVERIFY(ucnx.removeUnitConnection(ucnxPk));
+  QVERIFY(ucnx.removeUnitConnection(UnitConnectionPk(10000)));
+  QVERIFY(ucnx.removeUnitConnection(UnitConnectionPk(10001)));
+  QVERIFY(ucnx.removeUnitConnection(UnitConnectionPk(20000)));
+  QVERIFY(ucnx.removeUnitConnection(UnitConnectionPk(20001)));
+  QVERIFY(ucnx.removeUnitConnection(UnitConnectionPk(20002)));
+  QVERIFY(ucnx.removeUnitConnection(UnitConnectionPk(20003)));
+  QVERIFY(ucnx.removeUnitConnection(UnitConnectionPk(20004)));
 }
 
 void mdtCableListTestScenario::createTestUnitConnectors()
@@ -977,7 +966,7 @@ void mdtCableListTestScenario::createTestUnitConnectors()
   // Setup unit connection data and add to unit connector
   unitConnectionsData.clear();
   unitConnectionKey.clear();
-  unitConnectionKey.pk.id = 10005;
+  unitConnectionKey.setPk(UnitConnectionPk(10005));
   unitConnectionKey.setUnitId(1000);
   unitConnectionKey.setUnitConnectorFk(key);
   unitConnectionKey.setConnectionType(mdtClConnectionType_t::Terminal);
@@ -1069,7 +1058,7 @@ void mdtCableListTestScenario::createTestUnitConnectors()
   // Setup unit connection data and add to unit connector
   unitConnectionsData.clear();
   unitConnectionKey.clear();
-  unitConnectionKey.pk.id = 30005;
+  unitConnectionKey.setPk(UnitConnectionPk(30005));
   unitConnectionKey.setUnitId(1000);
   unitConnectionKey.setUnitConnectorFk(key);
   unitConnectionKey.setConnectionType(mdtClConnectionType_t::Pin);
@@ -1079,7 +1068,7 @@ void mdtCableListTestScenario::createTestUnitConnectors()
   // Setup unit connection data and add to unit connector
   unitConnectionsData.clear();
   unitConnectionKey.clear();
-  unitConnectionKey.pk.id = 30006;
+  unitConnectionKey.setPk(UnitConnectionPk(30006));
   unitConnectionKey.setUnitId(1000);
   unitConnectionKey.setUnitConnectorFk(key);
   unitConnectionKey.setConnectionType(mdtClConnectionType_t::Socket);
@@ -1122,7 +1111,7 @@ void mdtCableListTestScenario::createTestUnitConnectors()
   // Setup unit connection data and add to unit connector
   unitConnectionsData.clear();
   unitConnectionKey.clear();
-  unitConnectionKey.pk.id = 40005;
+  unitConnectionKey.setPk(UnitConnectionPk(40005));
   unitConnectionKey.setUnitId(1000);
   unitConnectionKey.setUnitConnectorFk(key);
   unitConnectionKey.setConnectionType(mdtClConnectionType_t::Pin);
@@ -1132,7 +1121,7 @@ void mdtCableListTestScenario::createTestUnitConnectors()
   // Setup unit connection data and add to unit connector
   unitConnectionsData.clear();
   unitConnectionKey.clear();
-  unitConnectionKey.pk.id = 40006;
+  unitConnectionKey.setPk(UnitConnectionPk(40006));
   unitConnectionKey.setUnitId(1000);
   unitConnectionKey.setUnitConnectorFk(key);
   unitConnectionKey.setConnectionType(mdtClConnectionType_t::Socket);
@@ -1174,7 +1163,7 @@ void mdtCableListTestScenario::createTestUnitConnectors()
   // Setup unit connection data and add to unit connector
   unitConnectionsData.clear();
   unitConnectionKey.clear();
-  unitConnectionKey.pk.id = 50005;
+  unitConnectionKey.setPk(UnitConnectionPk(50005));
   unitConnectionKey.setUnitId(2000);
   unitConnectionKey.setUnitConnectorFk(key);
   unitConnectionKey.setConnectionType(mdtClConnectionType_t::Socket);
@@ -1184,7 +1173,7 @@ void mdtCableListTestScenario::createTestUnitConnectors()
   // Setup unit connection data and add to unit connector
   unitConnectionsData.clear();
   unitConnectionKey.clear();
-  unitConnectionKey.pk.id = 50006;
+  unitConnectionKey.setPk(UnitConnectionPk(50006));
   unitConnectionKey.setUnitId(2000);
   unitConnectionKey.setUnitConnectorFk(key);
   unitConnectionKey.setConnectionType(mdtClConnectionType_t::Socket);

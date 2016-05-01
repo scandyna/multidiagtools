@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -27,6 +27,7 @@
 #include "mdtClModificationKeyData.h"
 #include "mdtClVehicleTypeLinkKeyData.h"
 #include "mdtClConnectorData.h"
+#include "Mdt/CableList/UnitConnectionPkList.h"
 #include "mdtClUnitConnectionData.h"
 #include "mdtClUnitConnectorData.h"
 #include "mdtClConnectableCriteria.h"
@@ -34,6 +35,8 @@
 #include <QList>
 #include <QVariant>
 #include <QString>
+
+using Mdt::CableList::UnitConnectionPkList; /// \todo remove once migrated
 
 /*! \brief Generate links to make a connection
  */
@@ -55,14 +58,16 @@ class mdtClAutoConnection : public mdtTtBase
 
   /*! \brief Check if unit connection a can be connected with unit connection b
    */
-  bool canConnectConnections(const mdtClUnitConnectionPkData & pkA, const mdtClUnitConnectionPkData & pkB, const mdtClConnectableCriteria & criteria, bool & ok);
+  bool canConnectConnections(UnitConnectionPk pkA, UnitConnectionPk pkB, const mdtClConnectableCriteria & criteria, bool & ok);
 
   /*! \brief Get a list of unit connections that can be connected to given one
    *
    * \todo Also fink about versions + vehicle types assignations !!
    */
-  QList<mdtClUnitConnectionPkData> getConnectableConnectionPkList(const mdtClUnitConnectionPkData & toPk, 
-                                                                const mdtClConnectableCriteria & criteria, bool & ok);
+  UnitConnectionPkList getConnectableConnectionPkList(UnitConnectionPk toPk,
+                                                      const mdtClConnectableCriteria & criteria, bool & ok);
+//   QList<mdtClUnitConnectionPkData> getConnectableConnectionPkList(const mdtClUnitConnectionPkData & toPk, 
+//                                                                 const mdtClConnectableCriteria & criteria, bool & ok);
 
   /*! \brief Get a list of unit connections that can be connected to given one
    *
@@ -70,8 +75,10 @@ class mdtClAutoConnection : public mdtTtBase
    *
    * \todo Also fink about versions + vehicle types assignations !!
    */
-  QList<mdtClUnitConnectionPkData> getConnectableConnectionPkList(const mdtClUnitConnectionPkData & toPk, const QVariant & unitId, 
-                                                                const mdtClConnectableCriteria & criteria, bool & ok);
+  UnitConnectionPkList getConnectableConnectionPkList(UnitConnectionPk toPk, const QVariant & unitId,
+                                                      const mdtClConnectableCriteria & criteria, bool & ok);
+//   QList<mdtClUnitConnectionPkData> getConnectableConnectionPkList(const mdtClUnitConnectionPkData & toPk, const QVariant & unitId, 
+//                                                                 const mdtClConnectableCriteria & criteria, bool & ok);
 
   /*! \brief Check if connector a can be connected with connector b
    */

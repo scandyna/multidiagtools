@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -123,8 +123,8 @@ bool mdtClLink::addLinkList(const QList<mdtClArticleLinkUnitConnectionKeyData> &
     }
     // Build link PK
     mdtClLinkPkData pk;
-    pk.connectionStartId = key.unitConnectionStartPk.id;
-    pk.connectionEndId = key.unitConnectionEndPk.id;
+    pk.connectionStartId = key.unitConnectionStartPk.id();
+    pk.connectionEndId = key.unitConnectionEndPk.id();
     pk.versionFk = versionPk;
     pk.modificationFk = modificationPk;
     // Build link data
