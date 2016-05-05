@@ -23,7 +23,7 @@
 
 #include "UnitConnectionPk.h"
 #include "LinkVersionPk.h"
-#include "mdtClModificationKeyData.h"
+#include "ModificationPk.h"
 
 namespace Mdt{ namespace CableList{
 
@@ -35,58 +35,67 @@ namespace Mdt{ namespace CableList{
   {
    public:
 
+    // Declare default constructor noexcept
+    constexpr LinkPk() noexcept = default;
+    // Declare copy noexcept
+    constexpr LinkPk(const LinkPk &) noexcept = default;
+    LinkPk & operator=(const LinkPk &) noexcept = default;
+    // Declare move noexcept
+    constexpr LinkPk(LinkPk &&) noexcept = default;
+    LinkPk & operator=(LinkPk &&) noexcept = default;
+
     /*! \brief Set start connection
      */
-    void setConnectionStart(UnitConnectionPk fk) noexcept
+    constexpr void setConnectionStart(UnitConnectionPk fk) noexcept
     {
       pvConnectionStart = fk;
     }
 
     /*! \brief Get start connection
      */
-    UnitConnectionPk connectionStart() const noexcept
+    constexpr UnitConnectionPk connectionStart() const noexcept
     {
       return pvConnectionStart;
     }
 
     /*! \brief Set end connection
      */
-    void setConnectionEnd(UnitConnectionPk fk) noexcept
+    constexpr void setConnectionEnd(UnitConnectionPk fk) noexcept
     {
       pvConnectionEnd = fk;
     }
 
     /*! \brief Get end connection
      */
-    UnitConnectionPk connectionEnd() const noexcept
+    constexpr UnitConnectionPk connectionEnd() const noexcept
     {
       return pvConnectionEnd;
     }
 
     /*! \brief Set link version
      */
-    void setVersion(const LinkVersionPk & fk) noexcept
+    constexpr void setVersion(const LinkVersionPk & fk) noexcept
     {
       pvVersion = fk;
     }
 
     /*! \brief Get link version
      */
-    LinkVersionPk version() const noexcept
+    constexpr LinkVersionPk version() const noexcept
     {
       return pvVersion;
     }
 
     /*! \brief Set modification
      */
-    void setModification(const mdtClModificationPkData & fk)
+    constexpr void setModification(const ModificationPk & fk)
     {
       pvModification = fk;
     }
 
     /*! \brief Get modification
      */
-    mdtClModificationPkData modification() const
+    constexpr ModificationPk modification() const
     {
       return pvModification;
     }
@@ -95,9 +104,46 @@ namespace Mdt{ namespace CableList{
      *
      * Primary key is null if one of the connection  or version or modification is null
      */
-    bool isNull() const noexcept
+    constexpr bool isNull() const noexcept
     {
       return (pvConnectionStart.isNull() || pvConnectionEnd.isNull() || pvVersion.isNull() || pvModification.isNull() );
+    }
+
+    /*! \brief Check if lhs == rhs
+     *
+     * lhs and rhs are equal if their version are equal
+     *  If lhs or rhs (or both) is null,
+     *  they are never equal.
+     */
+    friend
+    constexpr bool operator==(LinkPk lhs, LinkPk rhs) noexcept
+    {
+      if( lhs.isNull() || rhs.isNull() ){
+        return false;
+      }
+      return (  (lhs.pvConnectionStart == rhs.pvConnectionStart) && (lhs.pvConnectionEnd == rhs.pvConnectionEnd)
+             && (lhs.pvVersion == rhs.pvVersion) && (lhs.pvModification == rhs.pvModification) );
+    }
+
+    /*! \brief Check if lhs == rhs
+     *
+     * \sa operator==()
+     */
+    friend
+    constexpr bool operator!=(LinkPk lhs, LinkPk rhs) noexcept
+    {
+      return !(lhs == rhs);
+    }
+
+
+    /*! \brief Clear PK
+     */
+    constexpr void clear() noexcept
+    {
+      pvConnectionStart.clear();
+      pvConnectionEnd.clear();
+      pvVersion.clear();
+      pvModification.clear();
     }
 
    private:
@@ -105,7 +151,7 @@ namespace Mdt{ namespace CableList{
     UnitConnectionPk pvConnectionStart;
     UnitConnectionPk pvConnectionEnd;
     LinkVersionPk pvVersion;
-    mdtClModificationPkData pvModification;
+    ModificationPk pvModification;
   };
 
 }} // namespace Mdt{ namespace CableList{

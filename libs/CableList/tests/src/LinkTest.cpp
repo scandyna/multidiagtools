@@ -86,6 +86,24 @@ void LinkTest::versionPkTest()
   QVERIFY(!pk.isNull());
   pk.clear();
   QVERIFY(pk.isNull());
+  /*
+   * Comparisons
+   */
+  // lsh and rhs are null
+  QVERIFY(!(LinkVersionPk() == LinkVersionPk()));
+  QVERIFY(LinkVersionPk() != LinkVersionPk());
+  // lhs is null
+  QVERIFY(!(LinkVersionPk() == LinkVersionPk(1)));
+  QVERIFY(LinkVersionPk() != LinkVersionPk(1));
+  // rhs is null
+  QVERIFY(!(LinkVersionPk(1) == LinkVersionPk()));
+  QVERIFY(LinkVersionPk(1) != LinkVersionPk());
+  // lhs == rhs
+  QVERIFY(LinkVersionPk(1) == LinkVersionPk(1));
+  QVERIFY(!(LinkVersionPk(1) != LinkVersionPk(1)));
+  // lhs != rhs
+  QVERIFY(!(LinkVersionPk(1) == LinkVersionPk(2)));
+  QVERIFY(LinkVersionPk(1) != LinkVersionPk(2));
 }
 
 void LinkTest::linkPkTest()
@@ -93,6 +111,8 @@ void LinkTest::linkPkTest()
   using Mdt::CableList::LinkPk;
   using Mdt::CableList::UnitConnectionPk;
   using Mdt::CableList::LinkVersionPk;
+  using Mdt::CableList::ModificationType;
+  using Mdt::CableList::ModificationPk;
 
   LinkPk pk;
 
@@ -112,15 +132,49 @@ void LinkTest::linkPkTest()
   pk.setVersion(LinkVersionPk(100));
   QVERIFY(pk.isNull());
   QCOMPARE(pk.version().version(), 100);
-///  pk.setModification(mdtClModification_t::New);
-  /*
-   * Equality comparison
-   */
-  
+  pk.setModification(ModificationPk(ModificationType::New));
+  QVERIFY(pk.modification().type() == ModificationType::New);
+  QVERIFY(!pk.isNull());
   /*
    * Clear
    */
-  
+  QVERIFY(!pk.isNull());
+  pk.clear();
+  QVERIFY(pk.connectionStart().isNull());
+  QVERIFY(pk.connectionEnd().isNull());
+  QVERIFY(pk.version().isNull());
+  QVERIFY(pk.modification().isNull());
+  /*
+   * Equality comparison
+   */
+  LinkPk lhs, rhs;
+  // lsh and rhs are null
+  QVERIFY(!(lhs == rhs));
+  QVERIFY(lhs != rhs);
+  // lhs is null
+  lhs.clear();
+  rhs.setConnectionStart(UnitConnectionPk(1));
+  rhs.setConnectionEnd(UnitConnectionPk(2));
+  rhs.setVersion(LinkVersionPk(100));
+  rhs.setModification(ModificationPk(ModificationType::New));
+  QVERIFY(!(lhs == rhs));
+  QVERIFY(lhs != rhs);
+  // rhs is null
+  lhs.setConnectionStart(UnitConnectionPk(1));
+  lhs.setConnectionEnd(UnitConnectionPk(2));
+  lhs.setVersion(LinkVersionPk(100));
+  lhs.setModification(ModificationPk(ModificationType::New));
+  rhs.clear();
+  QVERIFY(!(lhs == rhs));
+  QVERIFY(lhs != rhs);
+  // lhs == rhs
+  rhs = lhs;
+  QVERIFY(lhs == rhs);
+  QVERIFY(!(lhs != rhs));
+  // lhs != rhs
+  rhs.setConnectionEnd(UnitConnectionPk(20));
+  QVERIFY(!(lhs == rhs));
+  QVERIFY(lhs != rhs);
 }
 
 void LinkTest::linkPkListTest()

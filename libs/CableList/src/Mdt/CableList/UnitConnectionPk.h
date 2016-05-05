@@ -74,6 +74,31 @@ namespace Mdt{ namespace CableList{
       return pvIsNull;
     }
 
+    /*! \brief Check if lhs == rhs
+     *
+     * lhs and rhs are equal if their id are equal
+     *  If lhs or rhs (or both) is null,
+     *  they are never equal.
+     */
+    friend
+    constexpr bool operator==(UnitConnectionPk lhs, UnitConnectionPk rhs) noexcept
+    {
+      if( lhs.isNull() || rhs.isNull() ){
+        return false;
+      }
+      return (lhs.pvId == rhs.pvId);
+    }
+
+    /*! \brief Check if lhs == rhs
+     *
+     * \sa operator==()
+     */
+    friend
+    constexpr bool operator!=(UnitConnectionPk lhs, UnitConnectionPk rhs) noexcept
+    {
+      return !(lhs == rhs);
+    }
+
     /*! \brief Clear PK
      */
     constexpr void clear() noexcept

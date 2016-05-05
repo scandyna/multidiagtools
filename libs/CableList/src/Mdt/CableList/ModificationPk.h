@@ -94,6 +94,31 @@ namespace Mdt{ namespace CableList{
       return (pvType == ModificationType::Undefined);
     }
 
+    /*! \brief Check if lhs == rhs
+     *
+     * lhs and rhs are equal if their type are equal
+     *  If lhs or rhs (or both) is null,
+     *  they are never equal.
+     */
+    friend
+    constexpr bool operator==(ModificationPk lhs, ModificationPk rhs) noexcept
+    {
+      if( lhs.isNull() || rhs.isNull() ){
+        return false;
+      }
+      return (lhs.pvType == rhs.pvType);
+    }
+
+    /*! \brief Check if lhs == rhs
+     *
+     * \sa operator==()
+     */
+    friend
+    constexpr bool operator!=(ModificationPk lhs, ModificationPk rhs) noexcept
+    {
+      return !(lhs == rhs);
+    }
+
     /*! \brief Clear PK
      */
     constexpr void clear() noexcept

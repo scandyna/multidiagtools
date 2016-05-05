@@ -83,6 +83,24 @@ void UnitConnectionTest::pkTest()
   QVERIFY(!pk.isNull());
   pk.clear();
   QVERIFY(pk.isNull());
+  /*
+   * Comparisons
+   */
+  // lsh and rhs are null
+  QVERIFY(!(UnitConnectionPk() == UnitConnectionPk()));
+  QVERIFY(UnitConnectionPk() != UnitConnectionPk());
+  // lhs is null
+  QVERIFY(!(UnitConnectionPk() == UnitConnectionPk(1)));
+  QVERIFY(UnitConnectionPk() != UnitConnectionPk(1));
+  // rhs is null
+  QVERIFY(!(UnitConnectionPk(1) == UnitConnectionPk()));
+  QVERIFY(UnitConnectionPk(1) != UnitConnectionPk());
+  // lhs == rhs
+  QVERIFY(UnitConnectionPk(1) == UnitConnectionPk(1));
+  QVERIFY(!(UnitConnectionPk(1) != UnitConnectionPk(1)));
+  // lhs != rhs
+  QVERIFY(!(UnitConnectionPk(1) == UnitConnectionPk(2)));
+  QVERIFY(UnitConnectionPk(1) != UnitConnectionPk(2));
 }
 
 void UnitConnectionTest::pkListTest()

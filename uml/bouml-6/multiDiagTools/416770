@@ -1,6 +1,6 @@
 format 211
 "CableList" // Mdt::CableList
-  revision 14
+  revision 15
   modified_by 2 "philippe"
   // class settings
   
@@ -256,6 +256,40 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3947522 "operator=="
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "lhs" type class_ref 2594178 // ModificationPk
+	  param in name "rhs" type class_ref 2594178 // ModificationPk
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3947650 "operator!="
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "lhs" type class_ref 2594178 // ModificationPk
+	  param in name "rhs" type class_ref 2594178 // ModificationPk
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -696,7 +730,7 @@ ${inlines}
       end
 
       attribute 2493058 "Modification"
-	private type class_ref 1693186 // mdtClModificationPkData
+	private type class_ref 2594178 // ModificationPk
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -803,7 +837,7 @@ ${inlines}
       operation 3925890 "setModification"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "fk" type class_ref 1693186 // mdtClModificationPkData
+	  param in name "fk" type class_ref 2594178 // ModificationPk
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -817,7 +851,7 @@ ${inlines}
       end
 
       operation 3926018 "modification"
-	public return_type class_ref 1693186 // mdtClModificationPkData
+	public return_type class_ref 2594178 // ModificationPk
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -898,6 +932,15 @@ ${inlines}
 "
 	    classrelation_ref 2989058 // <directional composition>
 	  b parent class_ref 2593922 // LinkVersionPk
+      end
+
+      classrelation 2995714 // <directional composition>
+	relation 2978434 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2995714 // <directional composition>
+	  b parent class_ref 2594178 // ModificationPk
       end
     end
   end

@@ -15,9 +15,10 @@ diagrams
     860 907 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 3940994 // fromQVariant
+selected operation_ref 3947650 // operator!=
 open
   class_ref 2594178 // ModificationPk
+  class_ref 2587394 // LinkPk
   
   package_ref 430082 // Dsp
   classview_ref 1211650 // graph

@@ -96,6 +96,24 @@ void ModificationTest::pkTest()
   pk = ModificationPk::fromQVariant("NEW");
   QVERIFY(!pk.isNull());
   QVERIFY(pk.type() == ModificationType::New);
+  /*
+   * Comparisons
+   */
+  // lsh and rhs are null
+  QVERIFY(!(ModificationPk() == ModificationPk()));
+  QVERIFY(ModificationPk() != ModificationPk());
+  // lhs is null
+  QVERIFY(!(ModificationPk() == ModificationPk(ModificationType::New)));
+  QVERIFY(ModificationPk() != ModificationPk(ModificationType::New));
+  // rhs is null
+  QVERIFY(!(ModificationPk(ModificationType::New) == ModificationPk()));
+  QVERIFY(ModificationPk(ModificationType::New) != ModificationPk());
+  // lhs == rhs
+  QVERIFY(ModificationPk(ModificationType::New) == ModificationPk(ModificationType::New));
+  QVERIFY(!(ModificationPk(ModificationType::New) != ModificationPk(ModificationType::New)));
+  // lhs != rhs
+  QVERIFY(!(ModificationPk(ModificationType::New) == ModificationPk(ModificationType::Rem)));
+  QVERIFY(ModificationPk(ModificationType::New) != ModificationPk(ModificationType::Rem));
 }
 
 void ModificationTest::typeCodeTest()

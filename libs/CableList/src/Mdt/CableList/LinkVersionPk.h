@@ -72,6 +72,31 @@ namespace Mdt{ namespace CableList{
       return pvIsNull;
     }
 
+    /*! \brief Check if lhs == rhs
+     *
+     * lhs and rhs are equal if their version are equal
+     *  If lhs or rhs (or both) is null,
+     *  they are never equal.
+     */
+    friend
+    constexpr bool operator==(LinkVersionPk lhs, LinkVersionPk rhs) noexcept
+    {
+      if( lhs.isNull() || rhs.isNull() ){
+        return false;
+      }
+      return (lhs.pvVersion == rhs.pvVersion);
+    }
+
+    /*! \brief Check if lhs == rhs
+     *
+     * \sa operator==()
+     */
+    friend
+    constexpr bool operator!=(LinkVersionPk lhs, LinkVersionPk rhs) noexcept
+    {
+      return !(lhs == rhs);
+    }
+
     /*! \brief Clear PK
      */
     constexpr void clear() noexcept
