@@ -1,6 +1,6 @@
 format 211
 "CableList" // Mdt::CableList
-  revision 13
+  revision 14
   modified_by 2 "philippe"
   // class settings
   
@@ -76,7 +76,196 @@ ${inlines}
     end
   end
 
-  package_ref 456834 // Path
+  classview 1231362 "Modification"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2311554 "Modification"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2594050 "ModificationType"
+      visibility package stereotype "enum"
+      cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+      php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+      python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+      idl_decl "${comment}enum ${name} {
+${items}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 2594178 "ModificationPk"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2989186 // <directional composition>
+	relation 2971906 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2989186 // <directional composition>
+	  b parent class_ref 2594050 // ModificationType
+      end
+
+      attribute 2499842 "Type"
+	private type class_ref 2594050 // ModificationType
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3940226 "ModificationPk"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3940354 "ModificationPk"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "type" type class_ref 2594050 // ModificationType
+	cpp_decl "  ${comment}${inline}${name}${(}${t0} ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3940482 "setType"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "type" type class_ref 2594050 // ModificationType
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3940610 "type"
+	public return_type class_ref 2594050 // ModificationType
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3940738 "code"
+	public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3940866 "fromCode"
+	class_operation public return_type class_ref 2594178 // ModificationPk
+	nparams 1
+	  param in name "code" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3940994 "fromQVariant"
+	class_operation public return_type class_ref 2594178 // ModificationPk
+	nparams 1
+	  param in name "code" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+  end
 
   classview 1205122 "UnitConnection"
     
@@ -290,6 +479,158 @@ ${inlines}
     
     activitydiagramsettings
      end
+    classdiagram 2311426 "LinkVersion"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2593922 "LinkVersionPk"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 2499586 "IsNull"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2499714 "Version"
+	private explicit_type "long"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 3939330 "LinkVersionPk"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3939458 "LinkVersionPk"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "id" explicit_type "long"
+	cpp_decl "  ${comment}${inline}${name}${(}${t0} ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3939586 "setVersion"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "v" explicit_type "long"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3939714 "version"
+	public explicit_return_type "long"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3939842 "isNull"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3939970 "clear"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 3940098 "fromQVariant"
+	class_operation public return_type class_ref 2593922 // LinkVersionPk
+	nparams 1
+	  param in name "id" type class_ref 161154 // QVariant
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
     classdiagram 2304898 "LinkData"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -318,7 +659,7 @@ ${inlines}
 	  b parent class_ref 2580866 // UnitConnectionPk
       end
 
-      attribute 2492674 "ConnectionStartFk"
+      attribute 2492674 "ConnectionStart"
 	private type class_ref 2580866 // UnitConnectionPk
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -330,7 +671,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 2492802 "ConnectionEndFk"
+      attribute 2492802 "ConnectionEnd"
 	private type class_ref 2580866 // UnitConnectionPk
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -342,8 +683,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 2492930 "VersionFk"
-	private type class_ref 1679746 // mdtClLinkVersionPkData
+      attribute 2492930 "Version"
+	private type class_ref 2593922 // LinkVersionPk
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -354,7 +695,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 2493058 "ModificationFk"
+      attribute 2493058 "Modification"
 	private type class_ref 1693186 // mdtClModificationPkData
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -366,7 +707,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      operation 3925122 "setConnectionStartFk"
+      operation 3925122 "setConnectionStart"
 	public explicit_return_type "void"
 	nparams 1
 	  param in name "fk" type class_ref 2580866 // UnitConnectionPk
@@ -382,7 +723,7 @@ ${inlines}
 	
       end
 
-      operation 3925378 "connectionStartFk"
+      operation 3925378 "connectionStart"
 	public return_type class_ref 2580866 // UnitConnectionPk
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -397,7 +738,7 @@ ${inlines}
 	
       end
 
-      operation 3925250 "setConnectionEndFk"
+      operation 3925250 "setConnectionEnd"
 	public explicit_return_type "void"
 	nparams 1
 	  param in name "fk" type class_ref 2580866 // UnitConnectionPk
@@ -413,7 +754,7 @@ ${inlines}
 	
       end
 
-      operation 3925506 "connectionEndFk"
+      operation 3925506 "connectionEnd"
 	public return_type class_ref 2580866 // UnitConnectionPk
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -428,7 +769,7 @@ ${inlines}
 	
       end
 
-      operation 3925634 "setVersionFk"
+      operation 3925634 "setVersion"
 	public explicit_return_type "void"
 	nparams 1
 	  param in name "fk" type class_ref 1679746 // mdtClLinkVersionPkData
@@ -444,7 +785,7 @@ ${inlines}
 	
       end
 
-      operation 3925762 "versionFk"
+      operation 3925762 "version"
 	public return_type class_ref 1679746 // mdtClLinkVersionPkData
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -459,7 +800,7 @@ ${inlines}
 	
       end
 
-      operation 3925890 "setModificationFk"
+      operation 3925890 "setModification"
 	public explicit_return_type "void"
 	nparams 1
 	  param in name "fk" type class_ref 1693186 // mdtClModificationPkData
@@ -475,7 +816,7 @@ ${inlines}
 	
       end
 
-      operation 3926018 "modificationFk"
+      operation 3926018 "modification"
 	public return_type class_ref 1693186 // mdtClModificationPkData
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -549,6 +890,17 @@ ${inlines}
 	
 	
       end
+
+      classrelation 2989058 // <directional composition>
+	relation 2971778 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 2989058 // <directional composition>
+	  b parent class_ref 2593922 // LinkVersionPk
+      end
     end
   end
+
+  package_ref 456834 // Path
 end

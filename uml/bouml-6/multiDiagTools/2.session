@@ -9,24 +9,17 @@ diagrams
     120 106 100 4 0 0
   classdiagram_ref 2264962 // LinkedConnections
     120 106 100 21 0 294
-  active  classdiagram_ref 2304898 // LinkData
+  classdiagram_ref 2304898 // LinkData
+    860 907 100 4 0 0
+  active  classdiagram_ref 2311554 // Modification
     860 907 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 3924866 // operator==
+selected operation_ref 3940994 // fromQVariant
 open
-  class_ref 2580866 // UnitConnectionPk
-  operation_ref 3925122 // setConnectionStartFk
-  operation_ref 3925378 // connectionStartFk
-  operation_ref 3925250 // setConnectionEndFk
-  operation_ref 3925506 // connectionEndFk
-  operation_ref 3925634 // setVersionFk
-  operation_ref 3925762 // versionFk
-  operation_ref 3925890 // setModificationFk
-  operation_ref 3926018 // modificationFk
-  operation_ref 3924994 // operator!=
+  class_ref 2594178 // ModificationPk
   
-package_ref 430082 // Dsp
+  package_ref 430082 // Dsp
   classview_ref 1211650 // graph
 end
 end

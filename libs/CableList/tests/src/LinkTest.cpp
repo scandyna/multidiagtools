@@ -18,13 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "UnitConnectionTest.h"
+#include "LinkTest.h"
 #include "mdtApplication.h"
 #include "Mdt/CableList/DatabaseSchema.h"
-#include "Mdt/CableList/UnitConnectionPk.h"
-#include "Mdt/CableList/UnitConnectionPkList.h"
+#include "Mdt/CableList/LinkVersionPk.h"
+#include "Mdt/CableList/LinkPk.h"
+// #include "Mdt/CableList/UnitConnectionPk.h"
+// #include "Mdt/CableList/UnitConnectionPkList.h"
 
-void UnitConnectionTest::initTestCase()
+void LinkTest::initTestCase()
 {
   /*
    * Init and open database
@@ -41,7 +43,7 @@ void UnitConnectionTest::initTestCase()
   createDatabaseSchema();
 }
 
-void UnitConnectionTest::cleanupTestCase()
+void LinkTest::cleanupTestCase()
 {
   pvDatabase.close();
 }
@@ -50,96 +52,92 @@ void UnitConnectionTest::cleanupTestCase()
  * Tests
  */
 
-void UnitConnectionTest::pkTest()
+void LinkTest::versionPkTest()
 {
-  using Mdt::CableList::UnitConnectionPk;
+  using Mdt::CableList::LinkVersionPk;
 
   /*
    * Constructions
    */
-  UnitConnectionPk pk;
+  LinkVersionPk pk;
   QVERIFY(pk.isNull());
-  UnitConnectionPk pk2(1);
-  QVERIFY(!pk2.isNull());
-  QCOMPARE(pk2.id(), 1);
+  LinkVersionPk pk1(1);
+  QVERIFY(!pk1.isNull());
+  QCOMPARE(pk1.version(), 1);
   /*
    * Set
    */
   QVERIFY(pk.isNull());
-  pk.setId(10);
+  pk.setVersion(25);
   QVERIFY(!pk.isNull());
-  QCOMPARE(pk.id(), 10);
+  QCOMPARE(pk.version(), 25);
   /*
    * Get from QVariant
    */
-  pk = UnitConnectionPk::fromQVariant(QVariant());
-  QVERIFY(pk.isNull());
-  pk = UnitConnectionPk::fromQVariant(12);
+  pk = LinkVersionPk::fromQVariant(52);
   QVERIFY(!pk.isNull());
-  QCOMPARE(pk.id(), 12);
+  QCOMPARE(pk.version(), 52);
+  pk = LinkVersionPk::fromQVariant(QVariant());
+  QVERIFY(pk.isNull());
   /*
    * Clear
    */
+  pk.setVersion(22);
   QVERIFY(!pk.isNull());
   pk.clear();
   QVERIFY(pk.isNull());
 }
 
-void UnitConnectionTest::pkListTest()
+void LinkTest::linkPkTest()
 {
+  using Mdt::CableList::LinkPk;
   using Mdt::CableList::UnitConnectionPk;
-  using Mdt::CableList::UnitConnectionPkList;
+  using Mdt::CableList::LinkVersionPk;
 
-  UnitConnectionPkList pkList;
+  LinkPk pk;
 
   /*
    * Initial state
    */
-  QCOMPARE(pkList.size(), 0);
-  QVERIFY(pkList.isEmpty());
+  QVERIFY(pk.isNull());
   /*
-   * Add
+   * Set
    */
-  pkList.append(UnitConnectionPk(1));
-  QCOMPARE(pkList.size(), 1);
-  QVERIFY(!pkList.isEmpty());
-  QCOMPARE((int)pkList.at(0).id(), 1);
-  for(const auto pk : pkList){
-    QCOMPARE((int)pk.id(), 1);
-  }
+  pk.setConnectionStart(UnitConnectionPk(1));
+  QVERIFY(pk.isNull());
+  QCOMPARE(pk.connectionStart().id(), 1);
+  pk.setConnectionEnd(UnitConnectionPk(2));
+  QVERIFY(pk.isNull());
+  QCOMPARE(pk.connectionEnd().id(), 2);
+  pk.setVersion(LinkVersionPk(100));
+  QVERIFY(pk.isNull());
+  QCOMPARE(pk.version().version(), 100);
+///  pk.setModification(mdtClModification_t::New);
+  /*
+   * Equality comparison
+   */
+  
   /*
    * Clear
    */
-  pkList.clear();
-  QCOMPARE(pkList.size(), 0);
-  QVERIFY(pkList.isEmpty());
+  
 }
 
-void UnitConnectionTest::pkListBenchmark()
+void LinkTest::linkPkListTest()
 {
-  using Mdt::CableList::UnitConnectionPk;
-  using Mdt::CableList::UnitConnectionPkList;
+  
+}
 
-  const int N = 1000;
-
-  QBENCHMARK{
-    UnitConnectionPkList pkList;
-    for(int i = 0; i < N; ++i){
-      pkList.append(UnitConnectionPk(i));
-      QCOMPARE(pkList.size(), i+1);
-      QCOMPARE((int)pkList.at(i).id(), i);
-    }
-    auto pkListCopy = pkList;
-    QCOMPARE(pkListCopy.size(), N);
-    QCOMPARE((int)pkListCopy.at(N-1).id(), N-1);
-  }
+void LinkTest::linkPkListBenchmark()
+{
+  
 }
 
 /*
  * Helper functions
  */
 
-void UnitConnectionTest::createDatabaseSchema()
+void LinkTest::createDatabaseSchema()
 {
   Mdt::CableList::DatabaseSchema schema;
 
@@ -155,7 +153,7 @@ void UnitConnectionTest::createDatabaseSchema()
 int main(int argc, char **argv)
 {
   mdtApplication app(argc, argv);
-  UnitConnectionTest test;
+  LinkTest test;
 
   if(!app.init()){
     return 1;

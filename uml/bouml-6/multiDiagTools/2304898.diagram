@@ -2,19 +2,30 @@ format 211
 
 classcanvas 128002 class_ref 2587394 // LinkPk
   classdiagramsettings member_max_width 0 end
-  xyz 40 37 2000
+  xyz 40 160 2000
 end
 classcanvas 128130 class_ref 1672962 // mdtClLinkPkData
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 520.5 2005
+  xyz 40.5 624.5 2005
 end
 classcanvas 128258 class_ref 2580866 // UnitConnectionPk
-  classdiagramsettings member_max_width 0 end
-  xyz 441 136 2000
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 425 311 2000
+end
+classcanvas 128514 class_ref 2593922 // LinkVersionPk
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 159 39 2000
 end
 relationcanvas 128386 relation_ref 2965250 // <directional composition>
   from ref 128002 z 2001 to ref 128258
   no_role_a no_role_b
-  multiplicity_a_pos 423 243 3000 no_multiplicity_b
+  multiplicity_a_pos 407 362 3000 no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 2971778 // <directional composition>
+  decenter_begin 510
+  decenter_end 532
+  from ref 128002 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end
