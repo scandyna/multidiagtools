@@ -78,7 +78,6 @@ class mdtClUnitConnectionSelectionDialog : public mdtSqlSelectionDialog
    * If user rejected the dialog, a empty list is returned.
    */
   UnitConnectionPkList selectedUnitConnectionPkList() const;
-//   QList<mdtClUnitConnectionPkData> selectedUnitConnectionPkList() const;
 
   /*! \brief Get selected unit connection key
    *

@@ -31,35 +31,6 @@
 
 using Mdt::CableList::UnitConnectionPk; /// \todo Remove once migrated
 
-/*! \brief Data container for unit connection primary key
- *
- * Refers to UnitConnection_tbl
- *
- * /// \todo Remove once migrated
- */
-// struct mdtClUnitConnectionPkData
-// {
-//   /*! \brief Id (Id_PK)
-//    */
-//   QVariant id;
-// 
-//   /*! \brief Check if PK is null
-//    *
-//    * PK is null if id is null
-//    */
-//   bool isNull() const
-//   {
-//     return id.isNull();
-//   }
-// 
-//   /*! \brief Clear PK
-//    */
-//   void clear()
-//   {
-//     id.clear();
-//   }
-// };
-
 /*! \brief Data container for unit connection key data
  *
  * Refers to UnitConnection_tbl

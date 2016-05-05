@@ -1,6 +1,6 @@
 format 211
 "Path" // Mdt::CableList::Path
-  revision 8
+  revision 10
   modified_by 2 "philippe"
   // class settings
   
@@ -92,17 +92,8 @@ ${inlines}
 	  b parent class_ref 2566786 // UnitConnectionPkList
       end
 
-      classrelation 2946306 // <directional composition>
-	relation 2929026 *-->
-	  a role_name "" multiplicity "2" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${multiplicity}${value};
-"
-	    classrelation_ref 2946306 // <directional composition>
-	  b parent class_ref 1739010 // mdtClUnitConnectionPkData
-      end
-
       attribute 2458626 "StartConnection"
-	private type class_ref 1739010 // mdtClUnitConnectionPkData
+	private explicit_type "mdtClUnitConnectionPkData"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -114,7 +105,7 @@ ${inlines}
       end
 
       attribute 2458754 "EndConnection"
-	private type class_ref 1739010 // mdtClUnitConnectionPkData
+	private explicit_type "mdtClUnitConnectionPkData"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -157,17 +148,8 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 2890242 // <directional composition>
-	relation 2872962 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 2890242 // <directional composition>
-	  b parent class_ref 1739010 // mdtClUnitConnectionPkData
-      end
-
       attribute 2458370 "FromConnection"
-	private type class_ref 1739010 // mdtClUnitConnectionPkData
+	private explicit_type "mdtClUnitConnectionPkData"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -382,7 +364,7 @@ ${inlines}
       operation 3890562 "connectionExists"
 	public explicit_return_type "bool"
 	nparams 1
-	  param in name "connection" type class_ref 1739010 // mdtClUnitConnectionPkData
+	  param in name "connection" type class_ref 2580866 // UnitConnectionPk
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -398,7 +380,7 @@ ${inlines}
       operation 3890690 "getLinkedConnections"
 	public return_type class_ref 2537090 // LinkedConnections
 	nparams 1
-	  param in name "fromConnection" type class_ref 1739010 // mdtClUnitConnectionPkData
+	  param in name "fromConnection" type class_ref 2580866 // UnitConnectionPk
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -414,7 +396,7 @@ ${inlines}
       operation 3890818 "getLinkedConnections"
 	public return_type class_ref 2537090 // LinkedConnections
 	nparams 2
-	  param in name "fromConnection" type class_ref 1739010 // mdtClUnitConnectionPkData
+	  param in name "fromConnection" type class_ref 2580866 // UnitConnectionPk
 	  param in name "connectionsToIgnore" type class_ref 2566786 // UnitConnectionPkList
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
@@ -431,8 +413,8 @@ ${inlines}
       operation 3890946 "getShortestPath"
 	public return_type class_ref 2536962 // ShortestPath
 	nparams 2
-	  param in name "fromConnection" type class_ref 1739010 // mdtClUnitConnectionPkData
-	  param in name "toConnection" type class_ref 1739010 // mdtClUnitConnectionPkData
+	  param in name "fromConnection" type class_ref 2580866 // UnitConnectionPk
+	  param in name "toConnection" type class_ref 2580866 // UnitConnectionPk
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
@@ -448,8 +430,8 @@ ${inlines}
       operation 3891074 "connectionsAreLinked"
 	public explicit_return_type "bool"
 	nparams 2
-	  param in name "A" type class_ref 1739010 // mdtClUnitConnectionPkData
-	  param in name "B" type class_ref 1739010 // mdtClUnitConnectionPkData
+	  param in name "A" type class_ref 2580866 // UnitConnectionPk
+	  param in name "B" type class_ref 2580866 // UnitConnectionPk
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}

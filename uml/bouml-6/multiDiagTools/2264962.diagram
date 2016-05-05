@@ -8,20 +8,11 @@ classcanvas 128130 class_ref 2537090 // LinkedConnections
   classdiagramsettings member_max_width 0 end
   xyz 311 151 2000
 end
-classcanvas 128258 class_ref 1739010 // mdtClUnitConnectionPkData
-  classdiagramsettings member_max_width 0 end
-  xyz 655 143 2006
-end
 note 128514 "Create iterators, etc.."
   xyzwh 41 172 2000 231 41
 classcanvas 128770 class_ref 2566786 // UnitConnectionPkList
   classdiagramsettings member_max_width 0 end
   xyz 562 42 2012
-end
-relationcanvas 128386 relation_ref 2872962 // <directional composition>
-  from ref 128130 z 2007 to ref 128258
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129026 relation_ref 2928770 // <directional composition>
   geometry VH unfixed
@@ -35,11 +26,6 @@ relationcanvas 129282 relation_ref 2928898 // <directional composition>
   line 129538 z 2013 to ref 128770
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 129410 relation_ref 2929026 // <directional composition>
-  from ref 128002 z 2007 to ref 128258
-  no_role_a no_role_b
-  multiplicity_a_pos 859 202 3000 no_multiplicity_b
 end
 line 128642 -_-_
   from ref 128514 z 2001 to ref 128130

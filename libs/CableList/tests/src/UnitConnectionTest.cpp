@@ -62,12 +62,6 @@ void UnitConnectionTest::pkTest()
   UnitConnectionPk pk2(1);
   QVERIFY(!pk2.isNull());
   QCOMPARE((int)pk2.id(), 1);
-  /// \todo pk3 is non class type ?
-//   UnitConnectionPk pk3(QVariant());
-//   QVERIFY(pk3.isNull());
-  UnitConnectionPk pk4(QVariant(4));
-  QVERIFY(!pk4.isNull());
-  QCOMPARE(pk4.id(), 4);
   /*
    * Set
    */
@@ -75,11 +69,14 @@ void UnitConnectionTest::pkTest()
   pk.setId(10);
   QVERIFY(!pk.isNull());
   QCOMPARE((int)pk.id(), 10);
-  pk.setId(QVariant());
+  /*
+   * Get from QVariant
+   */
+  pk = UnitConnectionPk::fromQVariant(QVariant());
   QVERIFY(pk.isNull());
-  pk.setId(QVariant(5));
+  pk = UnitConnectionPk::fromQVariant(12);
   QVERIFY(!pk.isNull());
-  QCOMPARE(pk.id(), 5);
+  QCOMPARE(pk.id(), 12);
   /*
    * Clear
    */

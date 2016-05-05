@@ -5,7 +5,7 @@ note 128002 "Notion/classe path (sub-graph???)
   xyzwh 529.5 632.5 2000 315 69
 note 128130 "Graph Ok, BGL fait le job.
 Problème: comment dessiner un graphe !"
-  xyzwh 40.5 632.5 2000 409 71
+  xyzwh 51.5 671.5 2000 409 71
 classcanvas 128258 class_ref 2536834 // Graph
   classdiagramsettings member_max_width 0 end
   xyz 40 39 2000
@@ -13,10 +13,6 @@ end
 classcanvas 128642 class_ref 2537218 // LinkedConnectors
   classdiagramsettings member_max_width 0 end
   xyz 928 394 2000
-end
-classcanvas 128770 class_ref 1739010 // mdtClUnitConnectionPkData
-  classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 40.5 783.5 2000
 end
 classcanvas 129026 class_ref 1699714 // mdtClUnitConnectorPkData
   classdiagramsettings hide_operations yes member_max_width 0 end
@@ -32,7 +28,7 @@ classcanvas 129410 class_ref 2537474 // graph_t
 end
 classcanvas 129922 class_ref 2537218 // LinkedConnectors
   classdiagramsettings member_max_width 0 end
-  xyz 736 490 2011
+  xyz 676 476 2011
 end
 classcanvas 130178 class_ref 1672962 // mdtClLinkPkData
   classdiagramsettings hide_operations yes member_max_width 0 end
@@ -41,6 +37,10 @@ end
 classcanvas 130306 class_ref 1673090 // mdtClLinkKeyData
   classdiagramsettings hide_operations yes member_max_width 0 end
   xyz 39 387 3005
+end
+classcanvas 130562 class_ref 2580866 // UnitConnectionPk
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 202 573 2000
 end
 relationcanvas 129154 relation_ref 2873090 // <directional composition>
   from ref 128642 z 2001 to ref 129026
@@ -55,7 +55,7 @@ end
 relationcanvas 130050 relation_ref 2873090 // <directional composition>
   from ref 129922 z 2012 to ref 129026
   no_role_a no_role_b
-  multiplicity_a_pos 883 522 3000 no_multiplicity_b
+  multiplicity_a_pos 883 516 3000 no_multiplicity_b
 end
 relationcanvas 130434 relation_ref 2015490 // <unidirectional association>
   from ref 130306 z 3006 to ref 130178

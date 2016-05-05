@@ -44,14 +44,12 @@ namespace Mdt{ namespace CableList{
     explicit constexpr UnitConnectionPk(int64_t id) noexcept
      : pvIsNull(false), pvId(id) {}
 
-    /*! \brief Contruct PK from a variant
-     */
-    explicit UnitConnectionPk(const QVariant & id)
-     : pvIsNull(id.isNull())
-    {
-      Q_ASSERT(id.isNull() || id.canConvert<qlonglong>());
-      pvId = id.toLongLong();
-    }
+    // Declare copy noexcept
+    constexpr UnitConnectionPk(const UnitConnectionPk &) noexcept = default;
+    UnitConnectionPk & operator=(const UnitConnectionPk &) noexcept = default;
+    // Declare move noexcept
+    constexpr UnitConnectionPk(UnitConnectionPk &&) noexcept = default;
+    UnitConnectionPk & operator=(UnitConnectionPk &&) noexcept = default;
 
     /*! \brief Set id (Id_PK)
      */
@@ -59,15 +57,6 @@ namespace Mdt{ namespace CableList{
     {
       pvIsNull = false;
       pvId = id;
-    }
-
-    /*! \brief Set id (Id_PK)
-     */
-    void setId(const QVariant & id)
-    {
-      Q_ASSERT(id.isNull() || id.canConvert<qlonglong>());
-      pvIsNull = id.isNull();
-      pvId = id.toLongLong();
     }
 
     /*! \brief Get id (Id_PK)
@@ -91,6 +80,25 @@ namespace Mdt{ namespace CableList{
     {
       pvIsNull = true;
       pvId = 0;
+    }
+
+    /*! \brief Get a unit connection PK from a QVariant id
+     *
+     * If id is null, a null PK is returned
+     *
+     * \pre If ID has a value (is not null), it must be convertible to qlonglong
+     */
+    static UnitConnectionPk fromQVariant(const QVariant & id)
+    {
+      UnitConnectionPk pk;
+
+      if(id.isNull()){
+        return pk;
+      }
+      Q_ASSERT(id.canConvert<qlonglong>());
+      pk.setId(id.toLongLong());
+
+      return pk;
     }
 
    private:

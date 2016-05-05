@@ -1,6 +1,6 @@
 format 211
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 88
+  revision 89
   modified_by 2 "philippe"
   // class settings
   
@@ -2608,63 +2608,6 @@ ${inlines}
       size A4-Landscape
     end
 
-    class 1739010 "mdtClUnitConnectionPkData"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 1824898 "id"
-	public type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 2727938 "isNull"
-	public explicit_return_type "bool"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2728066 "clear"
-	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
     class 1639682 "mdtClUnitConnectionKeyData"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -2680,7 +2623,7 @@ ${inlines}
       mysql_decl ""
       
       attribute 1747074 "pk"
-	public type class_ref 1739010 // mdtClUnitConnectionPkData
+	public type class_ref 2580866 // UnitConnectionPk
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -2975,13 +2918,13 @@ ${inlines}
 	  b parent class_ref 1666306 // Unit
       end
 
-      classrelation 2891138 // <directional composition>
-	relation 2873858 *-->
+      classrelation 2976002 // <directional composition>
+	relation 2958722 *-->
 	  a role_name "" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
-	    classrelation_ref 2891138 // <directional composition>
-	  b parent class_ref 1739010 // mdtClUnitConnectionPkData
+	    classrelation_ref 2976002 // <directional composition>
+	  b parent class_ref 2580866 // UnitConnectionPk
       end
     end
 
@@ -8153,7 +8096,7 @@ ${inlines}
       end
 
       attribute 1860738 "unitConnectionStartPk"
-	public type class_ref 1739010 // mdtClUnitConnectionPkData
+	public explicit_type "mdtClUnitConnectionPkData"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -8165,7 +8108,7 @@ ${inlines}
       end
 
       attribute 1860866 "unitConnectionEndPk"
-	public type class_ref 1739010 // mdtClUnitConnectionPkData
+	public explicit_type "mdtClUnitConnectionPkData"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -9114,8 +9057,8 @@ ${inlines}
       operation 2743170 "canConnectConnections"
 	public explicit_return_type "bool"
 	nparams 4
-	  param in name "pkA" type class_ref 1739010 // mdtClUnitConnectionPkData
-	  param in name "pkB" type class_ref 1739010 // mdtClUnitConnectionPkData
+	  param in name "pkA" explicit_type "mdtClUnitConnectionPkData"
+	  param in name "pkB" explicit_type "mdtClUnitConnectionPkData"
 	  param in name "criteria" type class_ref 1745538 // mdtClConnectableCriteria
 	  param out name "ok" explicit_type "bool"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, ${t3} & ${p3}${v3}${)}${const}${volatile}${throw}${abstract};

@@ -1,27 +1,32 @@
-window_sizes 1280 964 414 860 911 0
+window_sizes 1280 960 414 860 907 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2015362 // Graph
-    767 728 100 21 0 0
+    860 911 100 21 12 0
   classdiagram_ref 1875586 // overview
     860 911 90 18 0 0
   classdiagram_ref 2291714 // Overview
     120 106 100 4 0 0
   classdiagram_ref 2264962 // LinkedConnections
     120 106 100 21 0 294
-  classdiagram_ref 2298370 // UnitConnection
-    120 106 100 4 0 0
-  active  classdiagram_ref 2278146 // UnitConnectionList
-    860 911 100 4 0 0
+  active  classdiagram_ref 2304898 // LinkData
+    860 907 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 3911810 // setId
+selected operation_ref 3924866 // operator==
 open
-  class_ref 2383490 // Query
   class_ref 2580866 // UnitConnectionPk
-  class_ref 2566786 // UnitConnectionPkList
+  operation_ref 3925122 // setConnectionStartFk
+  operation_ref 3925378 // connectionStartFk
+  operation_ref 3925250 // setConnectionEndFk
+  operation_ref 3925506 // connectionEndFk
+  operation_ref 3925634 // setVersionFk
+  operation_ref 3925762 // versionFk
+  operation_ref 3925890 // setModificationFk
+  operation_ref 3926018 // modificationFk
+  operation_ref 3924994 // operator!=
   
-  package_ref 430082 // Dsp
+package_ref 430082 // Dsp
   classview_ref 1211650 // graph
 end
 end

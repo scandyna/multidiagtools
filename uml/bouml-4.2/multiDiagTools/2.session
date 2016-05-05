@@ -1,16 +1,13 @@
-window_sizes 1024 718 257 761 640 0
+window_sizes 1280 960 257 1017 907 0
+cleanlooks_style
 diagrams
   active  classdiagram_ref 739586 // CableListAllTables
-    761 640 100 17 0 0
+    1017 907 100 17 0 0
 end
 show_stereotypes
-selected classdiagram_ref 739586 // CableListAllTables
+selected 
+package_ref 181506 // mdttools
 open
   classview_ref 602498 // Data
-  classview_ref 483970 // CableList
-  classview_ref 549762 // mdtTtBase
-  classview_ref 576258 // TestTool
-  
-package_ref 247554 // mdtcablelist
 end
 end

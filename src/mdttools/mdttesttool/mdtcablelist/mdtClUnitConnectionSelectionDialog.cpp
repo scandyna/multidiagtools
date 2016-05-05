@@ -77,8 +77,7 @@ bool mdtClUnitConnectionSelectionDialog::select(QSqlDatabase db, const QVariant 
     return false;
   }
   if(pkList.isEmpty()){
-    pvLastError.setError(tr("Could not find any unit connection that can be connected to requested one."), mdtError::Warning);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClUnitConnectionSelectionDialog");
+    pvLastError = mdtErrorNewQ(tr("Could not find any unit connection that can be connected to requested one."), mdtError::Warning, this);
     pvLastError.commit();
     return false;
   }
@@ -116,7 +115,7 @@ UnitConnectionPk mdtClUnitConnectionSelectionDialog::selectedUnitConnectionPk() 
     return pk;
   }
   Q_ASSERT(s.rowCount() == 1);
-  pk.setId(s.data(0, "Id_PK"));
+  pk = UnitConnectionPk::fromQVariant( s.data(0, "Id_PK") );
 
   return pk;
 }
@@ -130,7 +129,7 @@ UnitConnectionPkList mdtClUnitConnectionSelectionDialog::selectedUnitConnectionP
   }
   auto s = selection("Id_PK");
   for(int row = 0; row < s.rowCount(); ++row){
-    UnitConnectionPk pk(s.data(row, "Id_PK"));
+    auto pk = UnitConnectionPk::fromQVariant( s.data(row, "Id_PK") );
     pkList.append(pk);
   }
 

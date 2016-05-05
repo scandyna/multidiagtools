@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -66,7 +66,7 @@ UnitConnectionPk mdtClUnitConnection::addUnitConnection(const mdtClUnitConnectio
   if(!addRecord(record, "UnitConnection_tbl", query)){
     return pk;
   }
-  pk.setId( query.lastInsertId() );
+  pk = UnitConnectionPk::fromQVariant( query.lastInsertId() );
   // If connection is based on a article connection, store keys for links that are possibly to create
   if(data.isBasedOnArticleConnection()){
     if(!addLinkToCreateKeys(pk, data.keyData().unitId())){
@@ -450,8 +450,8 @@ bool mdtClUnitConnection::addLinkToCreateKeys(UnitConnectionPk ucnxPk, const QVa
     mdtClArticleLinkUnitConnectionKeyData key;
     key.articleLinkPk.connectionStartId = record.value("ArticleConnectionStart_Id_FK");
     key.articleLinkPk.connectionEndId = record.value("ArticleConnectionEnd_Id_FK");
-    key.unitConnectionStartPk.setId( record.value("UnitConnectionStart_Id") );
-    key.unitConnectionEndPk.setId( record.value("UnitConnectionEnd_Id") );
+    key.unitConnectionStartPk = UnitConnectionPk::fromQVariant( record.value("UnitConnectionStart_Id") );
+    key.unitConnectionEndPk = UnitConnectionPk::fromQVariant( record.value("UnitConnectionEnd_Id") );
     Q_ASSERT(!key.isNull());
     pvLinksToCreate.append(key);
   }
@@ -554,7 +554,7 @@ void mdtClUnitConnection::fillData(mdtClUnitConnectionData & data, const QSqlRec
   }
   articleConnectionFk.setConnectionTypeCode(record.value("ACNX_ConnectionType_Code_FK"));
   // Setup unit connection key
-  key.setPk(UnitConnectionPk( record.value("Id_PK").toLongLong() ));
+  key.setPk( UnitConnectionPk::fromQVariant(record.value("Id_PK")) );
   key.setUnitId(record.value("Unit_Id_FK"));
   if(!unitConnectorFk.isNull()){
     key.setUnitConnectorFk(unitConnectorFk);

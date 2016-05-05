@@ -61,7 +61,6 @@ class mdtClUnitConnection : public mdtClArticleConnection
    * \return PK (Id_PK) of added unit connection, or a null PK on error
    */
   UnitConnectionPk addUnitConnection( const mdtClUnitConnectionData & data, bool handleTransaction, bool clearLinksToCreate = true );
-//   mdtClUnitConnectionPkData addUnitConnection(const mdtClUnitConnectionData & data, bool handleTransaction, bool clearLinksToCreate = true);
 
   /*! \brief Add a list of unit connections to database
    *
@@ -88,7 +87,6 @@ class mdtClUnitConnection : public mdtClArticleConnection
    *       Use ok parameter to diffrenciate both cases.
    */
   mdtClUnitConnectionData getUnitConnectionData(UnitConnectionPk pk, bool & ok);
-//   mdtClUnitConnectionData getUnitConnectionData(const mdtClUnitConnectionPkData & pk, bool & ok);
 
   /*! \brief Get unit connection data from database
    *
@@ -115,12 +113,10 @@ class mdtClUnitConnection : public mdtClArticleConnection
    * \param data Data to set
    */
   bool updateUnitConnection(UnitConnectionPk pk, const mdtClUnitConnectionData & data);
-//   bool updateUnitConnection(const mdtClUnitConnectionPkData & pk, const mdtClUnitConnectionData & data);
 
   /*! \brief Remove a unit connection
    */
   bool removeUnitConnection(UnitConnectionPk pk);
-//   bool removeUnitConnection(const mdtClUnitConnectionPkData & pk);
 
   /*! \brief Remove each unit connection that is contained in selection
    *
@@ -162,7 +158,6 @@ class mdtClUnitConnection : public mdtClArticleConnection
    *       Use ok parameter to diffrenciate both cases.
    */
   mdtClUnitConnectorData getUnitConnectorData(UnitConnectionPk pk, bool & ok);
-//   mdtClUnitConnectorData getUnitConnectorData(mdtClUnitConnectionPkData pk, bool & ok);
 
   /*! \brief Get unit connector data from database
    *
@@ -230,7 +225,6 @@ class mdtClUnitConnection : public mdtClArticleConnection
    * \return true of no error occured (if no key was added, this is not a error), false else
    */
   bool addLinkToCreateKeys(UnitConnectionPk ucnxPk, const QVariant & unitId);
-//   bool addLinkToCreateKeys(const mdtClUnitConnectionPkData & ucnxPk, const QVariant & unitId);
 
   /*! \brief Get base SQL statement to get unit connections
    */
