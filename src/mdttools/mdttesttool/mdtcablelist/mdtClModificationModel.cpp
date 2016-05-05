@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtClModificationModel.h"
+#include "mdt/sql/error/Error.h"
 #include <QSqlError>
 #include <QModelIndex>
 #include <QComboBox>
@@ -55,16 +56,12 @@ mdtClModificationModel::mdtClModificationModel(QSqlDatabase db, const QLocale &l
 {
 }
 
-int mdtClModificationModel::row(mdtClModification_t m)
+int mdtClModificationModel::row(ModificationType m)
 {
-  mdtClModificationPkData pk;
-
-  pk.setModification(m);
-
-  return row(pk);
+  return row(ModificationPk(m));
 }
 
-int mdtClModificationModel::row(const mdtClModificationPkData & key)
+int mdtClModificationModel::row(ModificationPk key)
 {
   int row;
 
@@ -73,7 +70,7 @@ int mdtClModificationModel::row(const mdtClModificationPkData & key)
   }
   for(row = 0; row < rowCount(); ++row){
     QModelIndex idx = index(row, 0);
-    if(data(idx) == key.code){
+    if(data(idx) == key.code()){
       return row;
     }
   }
@@ -83,9 +80,9 @@ int mdtClModificationModel::row(const mdtClModificationPkData & key)
   return -1;
 }
 
-mdtClModificationPkData mdtClModificationModel::modificationPk(int row)
+ModificationPk mdtClModificationModel::modificationPk(int row)
 {
-  mdtClModificationPkData pk;
+  ModificationPk pk;
 
   if(row < 0){
     return pk;
@@ -94,18 +91,17 @@ mdtClModificationPkData mdtClModificationModel::modificationPk(int row)
     return pk;
   }
   QModelIndex idx = index(row, 0);
-  pk.code = data(idx).toString().trimmed();
+  pk = Mdt::CableList::ModificationPk::fromCode( data(idx).toString().trimmed() );
   if(pk.isNull()){
     QString msg = QString(tr("Could not find modification for row '%1'.")).arg(row);
-    pvLastError.setError(msg, mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClModificationModel");
+    pvLastError = mdtErrorNewQ(msg, mdtError::Error, this);
     pvLastError.commit();
   }
 
   return pk;
 }
 
-mdtClModificationPkData mdtClModificationModel::currentModificationPk(QComboBox *cb)
+ModificationPk mdtClModificationModel::currentModificationPk(QComboBox *cb)
 {
   Q_ASSERT(cb != nullptr);
 
@@ -117,9 +113,9 @@ bool mdtClModificationModel::isInError()
   QSqlError sqlError = QSqlQueryModel::lastError();
 
   if(sqlError.isValid()){
-    pvLastError.setError(tr("A error occured on table 'Modification_tbl'."), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClModificationModel");
+    QString msg = QString(tr("A error occured on table 'Modification_tbl'."));
+    pvLastError = mdtErrorNewQ(msg, mdtError::Error, this);
+    pvLastError.stackError(mdt::sql::error::fromQSqlError(sqlError));
     pvLastError.commit();
     return true;
   }

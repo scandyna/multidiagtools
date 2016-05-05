@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -40,7 +40,7 @@ class mdtClModificationTest : public mdtTest
   void initTestCase();
   void cleanupTestCase();
 
-  void modificationDataTest();
+//   void modificationDataTest();
   void modificationModelTest();
 
  private:

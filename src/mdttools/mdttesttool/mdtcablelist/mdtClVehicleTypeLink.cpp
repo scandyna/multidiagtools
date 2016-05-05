@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,6 +20,10 @@
  ****************************************************************************/
 #include "mdtClVehicleTypeLink.h"
 #include "mdtSqlRecord.h"
+#include "mdt/sql/error/Error.h"
+
+#include "Mdt/CableList/UnitConnectionPk.h" /// \todo update once migrated
+
 #include "mdtSqlTransaction.h"
 #include <QSqlQuery>
 #include <QSqlError>
@@ -27,6 +31,8 @@
 #include <algorithm>
 
 //#include <QDebug>
+
+using Mdt::CableList::UnitConnectionPk; /// \todo Remove once migrated
 
 mdtClVehicleTypeLink::mdtClVehicleTypeLink(QObject *parent, QSqlDatabase db)
  : mdtTtBase(parent, db)
@@ -55,7 +61,7 @@ bool mdtClVehicleTypeLink::addVehicleTypeLink(const mdtClVehicleTypeLinkKeyData 
   return true;
 }
 
-bool mdtClVehicleTypeLink::addVehicleTypeLinks(const mdtClLinkPkData & linkPk, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction)
+bool mdtClVehicleTypeLink::addVehicleTypeLinks(const LinkPk & linkPk, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction)
 {
   Q_ASSERT(!linkPk.isNull());
 
@@ -85,7 +91,7 @@ bool mdtClVehicleTypeLink::addVehicleTypeLinks(const mdtClLinkPkData & linkPk, c
   return true;
 }
 
-QList<mdtClVehicleTypeLinkKeyData> mdtClVehicleTypeLink::getVehicleTypeLinkKeyDataList(const mdtClLinkPkData & pk, bool & ok)
+QList<mdtClVehicleTypeLinkKeyData> mdtClVehicleTypeLink::getVehicleTypeLinkKeyDataList(const LinkPk & pk, bool & ok)
 {
   Q_ASSERT(!pk.isNull());
 
@@ -94,10 +100,10 @@ QList<mdtClVehicleTypeLinkKeyData> mdtClVehicleTypeLink::getVehicleTypeLinkKeyDa
   QString sql;
 
   sql = "SELECT * FROM VehicleType_Link_tbl " \
-        " WHERE UnitConnectionStart_Id_FK = " + pk.connectionStartId.toString() + \
-        " AND UnitConnectionEnd_Id_FK = " + pk.connectionEndId.toString() + \
-        " AND Link_Version_FK = " + QString::number(pk.versionFk.versionPk.value()) + \
-        " AND Link_Modification_Code_FK = '" + pk.modificationFk.code + "'";
+        " WHERE UnitConnectionStart_Id_FK = " + QString::number(pk.connectionStart().id()) + \
+        " AND UnitConnectionEnd_Id_FK = " + QString::number(pk.connectionEnd().id()) + \
+        " AND Link_Version_FK = " + QString::number(pk.version().version()) + \
+        " AND Link_Modification_Code_FK = '" + pk.modification().code() + "'";
   recordList = getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     return keyList;
@@ -111,7 +117,7 @@ QList<mdtClVehicleTypeLinkKeyData> mdtClVehicleTypeLink::getVehicleTypeLinkKeyDa
   return keyList;
 }
 
-QList<mdtClVehicleTypeStartEndKeyData> mdtClVehicleTypeLink::getVehicleTypeStartEndKeyDataList(const mdtClLinkPkData & pk, bool &ok)
+QList<mdtClVehicleTypeStartEndKeyData> mdtClVehicleTypeLink::getVehicleTypeStartEndKeyDataList(const LinkPk & pk, bool &ok)
 {
   Q_ASSERT(!pk.isNull());
 
@@ -120,10 +126,10 @@ QList<mdtClVehicleTypeStartEndKeyData> mdtClVehicleTypeLink::getVehicleTypeStart
   QString sql;
 
   sql = "SELECT VehicleTypeStart_Id_FK,VehicleTypeEnd_Id_FK FROM VehicleType_Link_tbl " \
-        " WHERE UnitConnectionStart_Id_FK = " + pk.connectionStartId.toString() + \
-        " AND UnitConnectionEnd_Id_FK = " + pk.connectionEndId.toString() + \
-        " AND Link_Version_FK = " + QString::number(pk.versionFk.versionPk.value()) + \
-        " AND Link_Modification_Code_FK = '" + pk.modificationFk.code + "'";
+        " WHERE UnitConnectionStart_Id_FK = " + QString::number(pk.connectionStart().id()) + \
+        " AND UnitConnectionEnd_Id_FK = " + QString::number(pk.connectionEnd().id()) + \
+        " AND Link_Version_FK = " + QString::number(pk.version().version()) + \
+        " AND Link_Modification_Code_FK = '" + pk.modification().code() + "'";
   recordList = getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     return keyList;
@@ -146,15 +152,13 @@ bool mdtClVehicleTypeLink::removeVehicleTypeLink(const mdtClVehicleTypeLinkKeyDa
 
   sql = "DELETE FROM VehicleType_Link_tbl WHERE VehicleTypeStart_Id_FK = " + key.vehicleTypeStartId().toString() \
       + " AND VehicleTypeEnd_Id_FK = " + key.vehicleTypeEndId().toString() \
-      + " AND UnitConnectionStart_Id_FK = " + key.linkFk().connectionStartId.toString() \
-      + " AND UnitConnectionEnd_Id_FK = " + key.linkFk().connectionEndId.toString() \
-      + " AND Link_Version_FK = " + QString::number(key.linkFk().versionFk.versionPk.value()) \
-      + " AND Link_Modification_Code_FK = '" + key.linkFk().modificationFk.code + "'";
+      + " AND UnitConnectionStart_Id_FK = " + QString::number(key.linkFk().connectionStart().id()) \
+      + " AND UnitConnectionEnd_Id_FK = " + QString::number(key.linkFk().connectionEnd().id()) \
+      + " AND Link_Version_FK = " + QString::number(key.linkFk().version().version()) \
+      + " AND Link_Modification_Code_FK = '" + key.linkFk().modification().code() + "'";
   if(!query.exec(sql)){
-    QSqlError sqlError = query.lastError();
-    pvLastError.setError(tr("Removing vehicle type - link assignation failed. SQL: ") + sql, mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClVehicleTypeLink");
+    pvLastError = mdtErrorNewQ(tr("Removing vehicle type - link assignation failed. SQL: ") + sql, mdtError::Error, this);
+    pvLastError.stackError(ErrorFromQSqlQuery(query));
     pvLastError.commit();
     return false;
   }
@@ -162,7 +166,7 @@ bool mdtClVehicleTypeLink::removeVehicleTypeLink(const mdtClVehicleTypeLinkKeyDa
   return true;
 }
 
-bool mdtClVehicleTypeLink::removeVehicleTypeLinks(const mdtClLinkPkData & linkPk, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction)
+bool mdtClVehicleTypeLink::removeVehicleTypeLinks(const LinkPk & linkPk, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction)
 {
   Q_ASSERT(!linkPk.isNull());
 
@@ -192,22 +196,20 @@ bool mdtClVehicleTypeLink::removeVehicleTypeLinks(const mdtClLinkPkData & linkPk
   return true;
 }
 
-bool mdtClVehicleTypeLink::removeVehicleTypeLinks(const mdtClLinkPkData & linkPk)
+bool mdtClVehicleTypeLink::removeVehicleTypeLinks(const LinkPk & linkPk)
 {
   Q_ASSERT(!linkPk.isNull());
 
   QSqlQuery query(database());
   QString sql;
 
-  sql = "DELETE FROM VehicleType_Link_tbl WHERE UnitConnectionStart_Id_FK = " + linkPk.connectionStartId.toString() \
-      + " AND UnitConnectionEnd_Id_FK = " + linkPk.connectionEndId.toString() \
-      + " AND Link_Version_FK = " + QString::number(linkPk.versionFk.versionPk.value()) \
-      + " AND Link_Modification_Code_FK = '" + linkPk.modificationFk.code + "'";
+  sql = "DELETE FROM VehicleType_Link_tbl WHERE UnitConnectionStart_Id_FK = " + QString::number(linkPk.connectionStart().id()) \
+      + " AND UnitConnectionEnd_Id_FK = " + QString::number(linkPk.connectionEnd().id()) \
+      + " AND Link_Version_FK = " + QString::number(linkPk.version().version()) \
+      + " AND Link_Modification_Code_FK = '" + linkPk.modification().code() + "'";
   if(!query.exec(sql)){
-    QSqlError sqlError = query.lastError();
-    pvLastError.setError(tr("Removing vehicle type - link assignation failed. SQL: ") + sql, mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClVehicleTypeLink");
+    pvLastError = mdtErrorNewQ(tr("Removing vehicle type - link assignation failed. SQL: ") + sql, mdtError::Error, this);
+    pvLastError.stackError(ErrorFromQSqlQuery(query));
     pvLastError.commit();
     return false;
   }
@@ -233,10 +235,8 @@ bool mdtClVehicleTypeLink::removeVehicleTypeLinks(const QVariant & unitId)
         "   FROM Link_tbl L JOIN UnitConnection_tbl UCNX ON UCNX.Id_PK = L.UnitConnectionEnd_Id_FK"\
         "   WHERE UCNX.Unit_Id_FK = " + unitId.toString() + ")";
   if(!query.exec(sql)){
-    QSqlError sqlError = query.lastError();
-    pvLastError.setError(tr("Removing vehicle type - link assignation by unit failed. SQL: ") + sql, mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClVehicleTypeLink");
+    pvLastError = mdtErrorNewQ(tr("Removing vehicle type - link assignation by unit failed. SQL: ") + sql, mdtError::Error, this);
+    pvLastError.stackError(ErrorFromQSqlQuery(query));
     pvLastError.commit();
     return false;
   }
@@ -244,7 +244,7 @@ bool mdtClVehicleTypeLink::removeVehicleTypeLinks(const QVariant & unitId)
   return true;
 }
 
-bool mdtClVehicleTypeLink::updateVehicleTypeLink(const mdtClLinkPkData & linkPk, QList<mdtClVehicleTypeStartEndKeyData> expectedVehicleTypeKeyList, bool handleTransaction)
+bool mdtClVehicleTypeLink::updateVehicleTypeLink(const LinkPk & linkPk, QList<mdtClVehicleTypeStartEndKeyData> expectedVehicleTypeKeyList, bool handleTransaction)
 {
   Q_ASSERT(!linkPk.isNull());
 
@@ -313,10 +313,10 @@ void mdtClVehicleTypeLink::fillRecord(mdtSqlRecord & record, const mdtClVehicleT
 
   record.setValue("VehicleTypeStart_Id_FK", key.vehicleTypeStartId());
   record.setValue("VehicleTypeEnd_Id_FK", key.vehicleTypeEndId());
-  record.setValue("UnitConnectionStart_Id_FK", key.linkFk().connectionStartId);
-  record.setValue("UnitConnectionEnd_Id_FK", key.linkFk().connectionEndId);
-  record.setValue("Link_Version_FK", key.linkFk().versionFk.versionPk.value());
-  record.setValue("Link_Modification_Code_FK", key.linkFk().modificationFk.code);
+  record.setValue("UnitConnectionStart_Id_FK", key.linkFk().connectionStart().id());
+  record.setValue("UnitConnectionEnd_Id_FK", key.linkFk().connectionEnd().id());
+  record.setValue("Link_Version_FK", key.linkFk().version().version());
+  record.setValue("Link_Modification_Code_FK", key.linkFk().modification().code());
 }
 
 void mdtClVehicleTypeLink::fillData(mdtClVehicleTypeLinkKeyData & key, const QSqlRecord & record)
@@ -328,14 +328,18 @@ void mdtClVehicleTypeLink::fillData(mdtClVehicleTypeLinkKeyData & key, const QSq
   Q_ASSERT(record.contains("Link_Version_FK"));
   Q_ASSERT(record.contains("Link_Modification_Code_FK"));
 
-  mdtClLinkPkData linkFk;
+  LinkPk linkFk;
 
   key.setVehicleTypeStartId(record.value("VehicleTypeStart_Id_FK"));
   key.setVehicleTypeEndId(record.value("VehicleTypeEnd_Id_FK"));
-  linkFk.connectionStartId = record.value("UnitConnectionStart_Id_FK");
-  linkFk.connectionEndId = record.value("UnitConnectionEnd_Id_FK");
-  linkFk.versionFk.versionPk.setValue(record.value("Link_Version_FK").toInt());
-  linkFk.modificationFk.code = record.value("Link_Modification_Code_FK").toString();
+  linkFk.setConnectionStart( UnitConnectionPk::fromQVariant( record.value("UnitConnectionStart_Id_FK") ) );
+  linkFk.setConnectionEnd( UnitConnectionPk::fromQVariant( record.value("UnitConnectionEnd_Id_FK") ) );
+  linkFk.setVersion( LinkVersionPk::fromQVariant( record.value("Link_Version_FK") ) );
+  linkFk.setModification( ModificationPk::fromQVariant( record.value("Link_Modification_Code_FK").toString() ) );
+//   linkFk.connectionStartId = record.value("UnitConnectionStart_Id_FK");
+//   linkFk.connectionEndId = record.value("UnitConnectionEnd_Id_FK");
+//   linkFk.versionFk.versionPk.setValue(record.value("Link_Version_FK").toInt());
+//   linkFk.modificationFk.code = record.value("Link_Modification_Code_FK").toString();
   key.setLinkFk(linkFk);
 }
 

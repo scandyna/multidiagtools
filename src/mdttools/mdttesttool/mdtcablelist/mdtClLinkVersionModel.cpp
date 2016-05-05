@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -39,13 +39,13 @@ mdtClLinkVersionModel::mdtClLinkVersionModel(QSqlDatabase db)
 {
 }
 
-int mdtClLinkVersionModel::row(const mdtClLinkVersionPkData & key)
+int mdtClLinkVersionModel::row(const LinkVersionPk & key)
 {
   int row;
 
   for(row = 0; row < rowCount(); ++row){
     QModelIndex idx = index(row, 0);
-    if(data(idx) == key.versionPk.value()){
+    if(data(idx) == key.version()){
       return row;
     }
   }
@@ -55,9 +55,9 @@ int mdtClLinkVersionModel::row(const mdtClLinkVersionPkData & key)
   return -1;
 }
 
-mdtClLinkVersionPkData mdtClLinkVersionModel::versionPk(int row)
+LinkVersionPk mdtClLinkVersionModel::versionPk(int row)
 {
-  mdtClLinkVersionPkData pk;
+  LinkVersionPk pk;
   QVariant var;
 
   if(row < 0){
@@ -74,13 +74,13 @@ mdtClLinkVersionPkData mdtClLinkVersionModel::versionPk(int row)
     MDT_ERROR_SET_SRC(pvLastError, "mdtClLinkVersionModel");
     pvLastError.commit();
   }else{
-    pk.versionPk.setValue(var.toInt());
+    pk = LinkVersionPk::fromQVariant(var);
   }
 
   return pk;
 }
 
-mdtClLinkVersionPkData mdtClLinkVersionModel::currentVersionPk(QComboBox *cb)
+LinkVersionPk mdtClLinkVersionModel::currentVersionPk(QComboBox *cb)
 {
   Q_ASSERT(cb != nullptr);
 

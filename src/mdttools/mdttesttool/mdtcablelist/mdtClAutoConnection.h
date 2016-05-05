@@ -23,8 +23,6 @@
 
 #include "mdtTtBase.h"
 #include "mdtClLinkData.h"
-#include "mdtClLinkVersionKeyData.h"
-#include "mdtClModificationKeyData.h"
 #include "mdtClVehicleTypeLinkKeyData.h"
 #include "mdtClConnectorData.h"
 #include "Mdt/CableList/UnitConnectionPkList.h"
@@ -117,7 +115,7 @@ class mdtClAutoConnection : public mdtTtBase
    *  - linkDirection : will be set to Bidirectionnal
    */
   bool connectByContactName(const mdtClUnitConnectorData & a, const mdtClUnitConnectorData & b,
-                            const mdtClLinkVersionPkData & versionPk, const mdtClModificationPkData & modificationPk,
+                            const LinkVersionPk & versionPk, const ModificationPk & modificationPk,
                             const QList<mdtClVehicleTypeStartEndKeyData> & vtList,
                             const mdtClConnectableCriteria & criteria, bool handleTransaction);
 
@@ -144,7 +142,7 @@ class mdtClAutoConnection : public mdtTtBase
    */
   bool checkOrBuildConnectionLinkListByName(const QList<mdtClUnitConnectionData> & a, const QList<mdtClUnitConnectionData> & b, 
                                             const mdtClConnectableCriteria & criteria, QList<mdtClLinkData> *connectionLinkDataList = nullptr,
-                                            const mdtClLinkVersionPkData *versionPk = nullptr, const mdtClModificationPkData *modificationPk = nullptr);
+                                            const LinkVersionPk *versionPk = nullptr, const ModificationPk *modificationPk = nullptr);
 
   Q_DISABLE_COPY(mdtClAutoConnection)
 };

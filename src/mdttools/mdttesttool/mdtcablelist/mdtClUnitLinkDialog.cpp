@@ -111,7 +111,7 @@ void mdtClUnitLinkDialog::setStartUnit(const QVariant &unitId)
   pvStartUnitId = unitId;
   updateStartUnit();
   auto pk = pvLinkData.pk();
-  pk.connectionStartId.clear();
+  pk.clearConnectionStart();
   pvLinkData.setPk(pk);
   updateStartConnection();
   updateVehicleTypeAssignations(true);
@@ -142,7 +142,7 @@ void mdtClUnitLinkDialog::setEndUnit(const QVariant &unitId)
   pvEndUnitId = unitId;
   updateEndUnit();
   auto pk = pvLinkData.pk();
-  pk.connectionEndId.clear();
+  pk.clearConnectionEnd();
   pvLinkData.setPk(pk);
   updateEndConnection();
   updateVehicleTypeAssignations(true);
@@ -229,7 +229,7 @@ void mdtClUnitLinkDialog::setLinkVersion(const mdtClLinkVersionData &v)
   cbLinkVersion->setCurrentIndex(row);
 }
 
-void mdtClUnitLinkDialog::setLinkModification(const mdtClModificationPkData &m)
+void mdtClUnitLinkDialog::setLinkModification(ModificationPk m)
 {
   int row;
 
@@ -237,12 +237,9 @@ void mdtClUnitLinkDialog::setLinkModification(const mdtClModificationPkData &m)
   cbModification->setCurrentIndex(row);
 }
 
-void mdtClUnitLinkDialog::setLinkModification(mdtClModification_t m)
+void mdtClUnitLinkDialog::setLinkModification(ModificationType m)
 {
-  mdtClModificationPkData pk;
-
-  pk.setModification(m);
-  setLinkModification(pk);
+  setLinkModification(ModificationPk(m));
 }
 
 // mdtClLinkModificationKeyData mdtClUnitLinkDialog::linkModificationKeyData() const
@@ -262,7 +259,6 @@ void mdtClUnitLinkDialog::setLinkModification(mdtClModification_t m)
 void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
 {
   mdtClUnitConnection ucnx(pvDatabase);
-  UnitConnectionPk ucnxPk;
   mdtClUnitConnectionData ucnxData;
   mdtClLinkVersionData linkVersionData;
   bool ok;
@@ -276,8 +272,7 @@ void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
   updateWire(data.keyData().wireId());
   leIdentification->setText(data.identification.toString());
   // Update start unit
-  ucnxPk.setId( data.pk().connectionStartId.toLongLong() );
-  ucnxData = ucnx.getUnitConnectionData(ucnxPk, ok);
+  ucnxData = ucnx.getUnitConnectionData(data.pk().connectionStart(), ok);
   if(ok){
     pvStartUnitId = ucnxData.keyData().unitId();
   }else{
@@ -285,8 +280,7 @@ void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
   }
   updateStartUnit();
   // Update end unit
-  ucnxPk.setId( data.pk().connectionEndId.toLongLong() );
-  ucnxData = ucnx.getUnitConnectionData(ucnxPk, ok);
+  ucnxData = ucnx.getUnitConnectionData(data.pk().connectionEnd(), ok);
   if(ok){
     pvEndUnitId = ucnxData.keyData().unitId();
   }else{
@@ -299,9 +293,9 @@ void mdtClUnitLinkDialog::setLinkData(mdtClLinkData &data)
   // Update vehicle type assignements
   updateVehicleTypeAssignations(true);
   // Update versionning
-  linkVersionData.setPk(pvLinkData.pk().versionFk);
+  linkVersionData.setPk(pvLinkData.pk().version());
   setLinkVersion(linkVersionData);
-  setLinkModification(pvLinkData.pk().modificationFk);
+  setLinkModification(pvLinkData.pk().modification());
 }
 
 mdtClLinkData mdtClUnitLinkDialog::linkData()
@@ -539,7 +533,7 @@ void mdtClUnitLinkDialog::selectStartConnection()
   // Get connection data and update
   auto ucnxPk = selectionDialog.selectedUnitConnectionPk();
   auto pk = pvLinkData.pk();
-  pk.connectionStartId = ucnxPk.id();
+  pk.setConnectionStart(ucnxPk);
   pvLinkData.setPk(pk);
   updateStartConnection();
   // Update vehicle type assignations
@@ -567,7 +561,7 @@ void mdtClUnitLinkDialog::selectEndConnection()
   // Get connection data and update
   auto ucnxPk = selectionDialog.selectedUnitConnectionPk();
   auto pk = pvLinkData.pk();
-  pk.connectionEndId = ucnxPk.id();
+  pk.setConnectionEnd(ucnxPk);
   pvLinkData.setPk(pk);
   updateEndConnection();
   // Update vehicle type assignations
@@ -577,9 +571,11 @@ void mdtClUnitLinkDialog::selectEndConnection()
 void mdtClUnitLinkDialog::accept()
 {
   // Some data are dynamically stored during edition, but some are to handle here
-  mdtClLinkPkData pk = pvLinkData.pk();
-  pk.versionFk = pvLinkVersionModel->currentVersionPk(cbLinkVersion);
-  pk.modificationFk = pvModificationModel->currentModificationPk(cbModification);
+  LinkPk pk = pvLinkData.pk();
+  pk.setVersion( pvLinkVersionModel->currentVersionPk(cbLinkVersion) );
+  pk.setModification( pvModificationModel->currentModificationPk(cbModification) );
+//   pk.versionFk = pvLinkVersionModel->currentVersionPk(cbLinkVersion);
+//   pk.modificationFk = pvModificationModel->currentModificationPk(cbModification);
   pvLinkData.setPk(pk);
   pvLinkData.identification = leIdentification->text();
   pvLinkData.resistance = deResistance->valueDouble();
@@ -706,7 +702,7 @@ void mdtClUnitLinkDialog::updateStartConnection()
   bool ok;
 
   // Set connection name
-  connectionPk.setId( pvLinkData.pk().connectionStartId.toLongLong() );
+  connectionPk = pvLinkData.pk().connectionStart();
   if(connectionPk.isNull()){
     lbStartContactName->setText("");
     lbStartConnectorName->setText("");
@@ -736,7 +732,7 @@ void mdtClUnitLinkDialog::updateEndConnection()
   bool ok;
 
   // Set connection name
-  connectionPk.setId( pvLinkData.pk().connectionEndId.toLongLong() );
+  connectionPk = pvLinkData.pk().connectionEnd();
   if(connectionPk.isNull()){
     lbEndContactName->setText("");
     lbEndConnectorName->setText("");

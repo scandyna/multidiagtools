@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,8 +21,12 @@
 #ifndef MDT_CL_LINK_VERSION_DATA_H
 #define MDT_CL_LINK_VERSION_DATA_H
 
-#include "mdtClLinkVersionKeyData.h"
+// #include "mdtClLinkVersionKeyData.h"
+#include "Mdt/CableList/LinkVersionPk.h"  /// \todo update once migrated
+
 #include <QVariant>
+
+using Mdt::CableList::LinkVersionPk;  /// \todo Remove once migrated
 
 /*! \brief Link version data
  *
@@ -40,7 +44,7 @@ struct mdtClLinkVersionData
 
   /*! \brief Primary key data
    */
-  mdtClLinkVersionPkData pvPk;
+  LinkVersionPk pvPk;
 
   /*! \brief Version
    */
@@ -55,20 +59,20 @@ struct mdtClLinkVersionData
   {
   }
 
-  /*! \brief Set primary key data
+  /*! \brief Set primary key
    *
    * \pre key mus not be null
    */
-  void setPk(const mdtClLinkVersionPkData & key)
+  void setPk(LinkVersionPk key)
   {
     Q_ASSERT(!key.isNull());
     pvPk = key;
-    pvVersion = static_cast<double>(key.versionPk.value()) / 1000.0;
+    pvVersion = static_cast<double>(key.version()) / 1000.0;
   }
 
-  /*! \brief Get primary key data
+  /*! \brief Get primary key
    */
-  mdtClLinkVersionPkData pk() const
+  LinkVersionPk pk() const
   {
     return pvPk;
   }
@@ -80,7 +84,7 @@ struct mdtClLinkVersionData
   void setVersionPk(int v)
   {
     Q_ASSERT(v > 0);
-    pvPk.versionPk.setValue(v);
+    pvPk.setVersion(v);
     pvVersion = static_cast<double>(v) / 1000.0;
   }
 
@@ -105,10 +109,10 @@ struct mdtClLinkVersionData
 
   /*! \brief Get version (Version_PK)
    */
-  inline int versionPk() const
-  {
-    return pvPk.versionPk.value();
-  }
+//   inline int versionPk() const
+//   {
+//     return pvPk.versionPk.value();
+//   }
 
   /*! \brief Set version (Version)
    *
@@ -117,7 +121,7 @@ struct mdtClLinkVersionData
   void setVersion(double v)
   {
     Q_ASSERT(v > 0.0);
-    pvPk.versionPk.setValue(v * 1000);
+    pvPk.setVersion(v * 1000);
     pvVersion = v;
   }
 

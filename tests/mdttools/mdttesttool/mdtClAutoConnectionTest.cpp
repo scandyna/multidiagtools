@@ -26,8 +26,6 @@
 #include "Mdt/CableList/UnitConnectionPkList.h"
 #include "mdtClUnitConnectorKeyData.h"
 #include "mdtClUnitConnection.h"
-#include "mdtClLinkVersionKeyData.h"
-#include "mdtClModificationKeyData.h"
 #include "mdtApplication.h"
 #include "mdtTtDatabaseSchema.h"
 #include "mdtSqlRecord.h"
@@ -144,13 +142,17 @@ void mdtClAutoConnectionTest::canConnectConnectionsTest()
 
 void mdtClAutoConnectionTest::checkOrBuildConnectionLinkListByNameTest()
 {
+  using Mdt::CableList::LinkVersionPk;
+  using Mdt::CableList::ModificationPk;
+  using Mdt::CableList::ModificationType;
+
   mdtClAutoConnection ac(pvDatabase);
   mdtClConnectableCriteria criteria;
   QStringList cnxNames;
   QList<QVariant> idList;
   QList<mdtClUnitConnectionData> ucnxAlist, ucnxBlist;
-  mdtClLinkVersionPkData versionPk;
-  mdtClModificationPkData modificationPk;
+  LinkVersionPk versionPk;
+  ModificationPk modificationPk;
   QList<mdtClLinkData> linkDataList;
 
   /*
@@ -175,8 +177,10 @@ void mdtClAutoConnectionTest::checkOrBuildConnectionLinkListByNameTest()
   // Check - no link list to build
   QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria));
   // Check - Buil link list
-  versionPk.versionPk = 500;
-  modificationPk.setModification(mdtClModification_t::New);
+  versionPk.setVersion(500);
+  modificationPk.setType(ModificationType::New);
+//   versionPk.versionPk = 500;
+//   modificationPk.setModification(mdtClModification_t::New);
   QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria, &linkDataList, &versionPk, &modificationPk));
   QCOMPARE(linkDataList.size(), 5);
   QVERIFY(!linkDataList.at(0).pk().isNull());

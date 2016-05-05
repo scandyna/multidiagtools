@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -94,10 +94,8 @@ void mdtClVehicleTypeEditor::editLink()
   mdtClUnitLinkDialog dialog(this, database());
   QVariant unitId;
   QVariant var;
-  mdtClLinkPkData pk;
+  LinkPk pk;
   mdtClLinkData linkData;
-  mdtClLinkVersionData linkVersionData;
-  mdtClModificationPkData modificationPk;
   ///mdtClLinkModificationKeyData oldModificationKey;
   mdtClLink lnk(database());
   bool ok;
@@ -110,26 +108,16 @@ void mdtClVehicleTypeEditor::editLink()
     return;
   }
   // Get connection PK
-  pk.connectionStartId = linkWidget->currentData("UnitConnectionStart_Id_FK");
-  pk.connectionEndId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
+  pk.setConnectionStart( UnitConnectionPk::fromQVariant( linkWidget->currentData("UnitConnectionStart_Id_FK") ) );
+  pk.setConnectionEnd( UnitConnectionPk::fromQVariant( linkWidget->currentData("UnitConnectionEnd_Id_FK") ) );
+  pk.setVersion( LinkVersionPk::fromQVariant( linkWidget->currentData("Version_FK") ) );
+  pk.setModification( ModificationPk::fromQVariant( linkWidget->currentData("Modification_Code_FK") ) );
   if(pk.isNull()){
     QMessageBox msgBox;
     msgBox.setText(tr("Please select a link."));
     msgBox.setIcon(QMessageBox::Information);
     msgBox.exec();
     return;
-  }
-  ///oldModificationKey.setLinkFk(pk);
-  // Get link version and modification
-  var = linkWidget->currentData("Version_FK");
-  if(!var.isNull()){
-    linkVersionData.setVersionPk(var);
-    ///oldModificationKey.setLinkVersionFk(linkVersionData.pk());
-  }
-  var = linkWidget->currentData("Modification_Code_FK");
-  if(!var.isNull()){
-    modificationPk.code = var.toString();
-    ///oldModificationKey.setModificationFk(modificationPk);
   }
   // Get current link data
   linkData = lnk.getLinkData(pk, ok);
@@ -141,12 +129,6 @@ void mdtClVehicleTypeEditor::editLink()
   // Setup and show dialog
   ///dialog.setWorkingOnVehicleTypeIdList(pvWorkingOnVehicleTypeIdList);
   dialog.setLinkData(linkData);
-  if(!linkVersionData.isNull()){
-    dialog.setLinkVersion(linkVersionData);
-  }
-  if(!modificationPk.isNull()){
-    dialog.setLinkModification(modificationPk);
-  }
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
@@ -159,6 +141,46 @@ void mdtClVehicleTypeEditor::editLink()
   // Update links view
   select("UnitLink_view");
 
+//   ///oldModificationKey.setLinkFk(pk);
+//   // Get link version and modification
+//   var = linkWidget->currentData("Version_FK");
+//   if(!var.isNull()){
+//     linkVersionData.setVersionPk(var);
+//     ///oldModificationKey.setLinkVersionFk(linkVersionData.pk());
+//   }
+//   var = linkWidget->currentData("Modification_Code_FK");
+//   if(!var.isNull()){
+//     modificationPk.code = var.toString();
+//     ///oldModificationKey.setModificationFk(modificationPk);
+//   }
+//   // Get current link data
+//   linkData = lnk.getLinkData(pk, ok);
+//   if(!ok){
+//     pvLastError = lnk.lastError();
+//     displayLastError();
+//     return;
+//   }
+//   // Setup and show dialog
+//   ///dialog.setWorkingOnVehicleTypeIdList(pvWorkingOnVehicleTypeIdList);
+//   dialog.setLinkData(linkData);
+//   if(!linkVersionData.isNull()){
+//     dialog.setLinkVersion(linkVersionData);
+//   }
+//   if(!modificationPk.isNull()){
+//     dialog.setLinkModification(modificationPk);
+//   }
+//   if(dialog.exec() != QDialog::Accepted){
+//     return;
+//   }
+//   // Update link
+//   if(!lnk.updateLink(pk, dialog.linkData(), dialog.selectedVehicleTypeList(), true)){
+//     pvLastError = lnk.lastError();
+//     displayLastError();
+//     return;
+//   }
+//   // Update links view
+//   select("UnitLink_view");
+// 
 //   mdtSqlTableWidget *linkWidget;
 //   mdtClUnitLinkDialog dialog(0, database());
 //   QVariant vehicleTypeId, startConnectionId, endConnectionId;

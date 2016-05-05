@@ -22,7 +22,6 @@
 #include "mdtClUnit.h"
 #include "mdtClLink.h"
 #include "mdtClLinkVersion.h"
-#include "mdtClModificationKeyData.h"
 #include "ui_mdtClUnitEditor.h"
 #include "mdtSqlTableWidget.h"
 #include "mdtAbstractSqlTableController.h"
@@ -972,7 +971,7 @@ void mdtClUnitEditor::addLink()
   dialog.setWorkingOnVehicleTypeIdList(pvWorkingOnVehicleTypeIdList);
   dialog.setStartUnit(unitId);
   dialog.setLinkVersion(mdtClLinkVersion::currentVersion());
-  dialog.setLinkModification(mdtClModification_t::New);
+  dialog.setLinkModification(ModificationType::New);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }
@@ -990,18 +989,11 @@ void mdtClUnitEditor::addLinkModification()
 {
   mdtClUnitLinkDialog dialog(this, database());
   mdtClLink lnk(database());
-  mdtSqlTableWidget *linkWidget;
-  mdtClLinkPkData pk;
+  LinkPk pk;
   mdtClLinkData linkData;
   bool ok;
 
-  linkWidget = sqlTableWidget("UnitLink_view");
-  Q_ASSERT(linkWidget != nullptr);
-  // Get link PK
-  pk.connectionStartId = linkWidget->currentData("UnitConnectionStart_Id_FK");
-  pk.connectionEndId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
-  pk.versionFk.versionPk = linkWidget->currentData("Version_FK").toInt();
-  pk.modificationFk.code = linkWidget->currentData("Modification_Code_FK").toString();
+  pk = currentLinkPk();
   if(pk.isNull()){
     QMessageBox msgBox;
     msgBox.setText(tr("Please select a link."));
@@ -1034,26 +1026,20 @@ void mdtClUnitEditor::addLinkModification()
 
 void mdtClUnitEditor::editLink()
 {
-  mdtSqlTableWidget *linkWidget;
   mdtClUnitLinkDialog dialog(this, database());
   QVariant unitId;
-  mdtClLinkPkData pk;
+  LinkPk pk;
   mdtClLinkData linkData;
   mdtClLink lnk(database());
   bool ok;
 
-  linkWidget = sqlTableWidget("UnitLink_view");
-  Q_ASSERT(linkWidget != 0);
   // Get unit ID
   unitId = currentUnitId();
   if(unitId.isNull()){
     return;
   }
   // Get link PK
-  pk.connectionStartId = linkWidget->currentData("UnitConnectionStart_Id_FK");
-  pk.connectionEndId = linkWidget->currentData("UnitConnectionEnd_Id_FK");
-  pk.versionFk.versionPk = linkWidget->currentData("Version_FK").toInt();
-  pk.modificationFk.code = linkWidget->currentData("Modification_Code_FK").toString();
+  pk = currentLinkPk();
   if(pk.isNull()){
     QMessageBox msgBox;
     msgBox.setText(tr("Please select a link."));
@@ -1233,6 +1219,22 @@ void mdtClUnitEditor::connectConnectors()
 QVariant mdtClUnitEditor::currentUnitId()
 {
   return currentData("Unit_tbl", "Id_PK");
+}
+
+LinkPk mdtClUnitEditor::currentLinkPk()
+{
+  LinkPk pk;
+  mdtSqlTableWidget *linkWidget;
+
+  linkWidget = sqlTableWidget("UnitLink_view");
+  Q_ASSERT(linkWidget != nullptr);
+  // Get link PK
+  pk.setConnectionStart( UnitConnectionPk::fromQVariant( linkWidget->currentData("UnitConnectionStart_Id_FK") ) );
+  pk.setConnectionEnd( UnitConnectionPk::fromQVariant( linkWidget->currentData("UnitConnectionEnd_Id_FK") ) );
+  pk.setVersion( LinkVersionPk::fromQVariant( linkWidget->currentData("Version_FK") ) );
+  pk.setModification( ModificationPk::fromQVariant( linkWidget->currentData("Modification_Code_FK") ) );
+
+  return pk;
 }
 
 QVariant mdtClUnitEditor::selectVehicleType(const QString & message, const QString & sql)

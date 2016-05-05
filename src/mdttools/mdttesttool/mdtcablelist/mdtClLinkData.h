@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -55,7 +55,7 @@ struct mdtClLinkData
 
   /*! \brief Set PK (UnitConnectionStart_Id_FK and UnitConnectionEnd_Id_FK)
    */
-  void setPk(const mdtClLinkPkData & pk)
+  void setPk(const LinkPk & pk)
   {
     pvKeyData.setPk(pk);
   }
@@ -111,7 +111,7 @@ struct mdtClLinkData
 
   /*! \brief Get PK data
    */
-  mdtClLinkPkData pk() const
+  LinkPk pk() const
   {
     return pvKeyData.pk();
   }

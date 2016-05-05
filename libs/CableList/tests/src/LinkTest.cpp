@@ -145,6 +145,26 @@ void LinkTest::linkPkTest()
   QVERIFY(pk.version().isNull());
   QVERIFY(pk.modification().isNull());
   /*
+   * Clear start/end connection
+   */
+  pk.setConnectionStart(UnitConnectionPk(1));
+  pk.setConnectionEnd(UnitConnectionPk(2));
+  pk.setVersion(LinkVersionPk(100));
+  pk.setModification(ModificationPk(ModificationType::New));
+  QVERIFY(!pk.isNull());
+  // Clear start connection
+  pk.clearConnectionStart();
+  QVERIFY(pk.connectionStart().isNull());
+  QVERIFY(!pk.connectionEnd().isNull());
+  QVERIFY(pk.isNull());
+  pk.setConnectionStart(UnitConnectionPk(1));
+  QVERIFY(!pk.isNull());
+  // Clear end connection
+  pk.clearConnectionEnd();
+  QVERIFY(!pk.connectionStart().isNull());
+  QVERIFY(pk.connectionEnd().isNull());
+  QVERIFY(pk.isNull());
+  /*
    * Equality comparison
    */
   LinkPk lhs, rhs;

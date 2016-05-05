@@ -44,6 +44,13 @@ namespace Mdt{ namespace CableList{
     constexpr LinkPk(LinkPk &&) noexcept = default;
     LinkPk & operator=(LinkPk &&) noexcept = default;
 
+    /*! \brief Clear start connection
+     */
+    constexpr void clearConnectionStart() noexcept
+    {
+      pvConnectionStart.clear();
+    }
+
     /*! \brief Set start connection
      */
     constexpr void setConnectionStart(UnitConnectionPk fk) noexcept
@@ -56,6 +63,13 @@ namespace Mdt{ namespace CableList{
     constexpr UnitConnectionPk connectionStart() const noexcept
     {
       return pvConnectionStart;
+    }
+
+    /*! \brief Clear end connection
+     */
+    constexpr void clearConnectionEnd() noexcept
+    {
+      pvConnectionStart.clear();
     }
 
     /*! \brief Set end connection

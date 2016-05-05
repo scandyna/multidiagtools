@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -76,7 +76,7 @@ class mdtClLink : public mdtTtBase
    *             set this argument false.
    */
   bool addLinkList(const QList<mdtClArticleLinkUnitConnectionKeyData> & keyList,
-                   const mdtClLinkVersionPkData & versionPk, const mdtClModificationPkData & modificationPk,
+                   const LinkVersionPk & versionPk, const ModificationPk & modificationPk,
                    bool handleTransaction);
 
   /*! \brief Add list of links based on given article links
@@ -90,12 +90,12 @@ class mdtClLink : public mdtTtBase
    *             set this argument false.
    */
   bool addLinkList(const QList<mdtClArticleLinkUnitConnectionKeyData> & keyList,
-                   const mdtClLinkVersionPkData & versionPk, const mdtClModificationPkData & modificationPk,
+                   const LinkVersionPk & versionPk, const ModificationPk & modificationPk,
                    const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList,  bool handleTransaction);
 
   /*! \brief Check if a link exists
    */
-  bool linkExists(const mdtClLinkPkData & pk, bool & ok);
+  bool linkExists(const LinkPk & pk, bool & ok);
 
   /*! \brief Get link data
    *
@@ -105,7 +105,7 @@ class mdtClLink : public mdtTtBase
    *          Use ok parameter to diffrenciate both cases.
    * \pre pk must not be null.
    */
-  mdtClLinkData getLinkData(const mdtClLinkPkData & pk, bool & ok);
+  mdtClLinkData getLinkData(const LinkPk & pk, bool & ok);
 
   /*! \brief Update a link
    *
@@ -114,7 +114,7 @@ class mdtClLink : public mdtTtBase
    * \pre linkPk must not be null
    * \pre linkData must not be null
    */
-  bool updateLink(const mdtClLinkPkData & linkPk, const mdtClLinkData & linkData);
+  bool updateLink(const LinkPk & linkPk, const mdtClLinkData & linkData);
 
   /*! \brief Update a link and its vehicle type assignations
    *
@@ -127,7 +127,7 @@ class mdtClLink : public mdtTtBase
    * \pre linkPk must not be null
    * \pre linkData must not be null
    */
-  bool updateLink(const mdtClLinkPkData & linkPk, const mdtClLinkData & linkData,
+  bool updateLink(const LinkPk & linkPk, const mdtClLinkData & linkData,
                   const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
 
   /*! \brief Remove a link
@@ -139,7 +139,7 @@ class mdtClLink : public mdtTtBase
    *             By calling this function with a allready open transaction,
    *             set this argument false.
    */
-  bool removeLink(const mdtClLinkPkData & pk, bool handleTransaction);
+  bool removeLink(const LinkPk & pk, bool handleTransaction);
 
   /*! \brief Remove each unit link that is contained in selection
    *

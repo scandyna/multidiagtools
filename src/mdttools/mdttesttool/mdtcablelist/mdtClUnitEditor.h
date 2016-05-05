@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -29,6 +29,10 @@
 #include <QLocale>
 #include "mdtSqlForm.h"
 #include "mdtClUnitConnectionData.h"
+
+#include "Mdt/CableList/LinkPk.h"         /// \todo update once migrated
+
+using Mdt::CableList::LinkPk;         /// \todo Remove once migrated
 
 class QWidget;
 
@@ -161,6 +165,10 @@ class mdtClUnitEditor : public mdtSqlForm
   /*! \brief Get current Unit ID
    */
   QVariant currentUnitId();
+
+  /*! \brief Get current link PK
+   */
+  LinkPk currentLinkPk();
 
   /*! \brief Select a vehicle type
    *

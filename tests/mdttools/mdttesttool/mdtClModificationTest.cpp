@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,7 +23,6 @@
 #include "mdtTtDatabaseSchema.h"
 #include "mdtSqlRecord.h"
 #include "mdtCableListTestScenario.h"
-#include "mdtClModificationKeyData.h"
 #include "mdtClModificationModel.h"
 #include <QTemporaryFile>
 #include <QSqlQuery>
@@ -50,76 +49,79 @@ void mdtClModificationTest::cleanupTestCase()
 {
 }
 
-void mdtClModificationTest::modificationDataTest()
-{
-  mdtClModificationPkData pk;
-
-  /*
-   * Primary key data test
-   */
-  // Initial state
-  QVERIFY(pk.isNull());
-  QVERIFY(pk.modification() == mdtClModification_t::Undefined);
-  // Set
-  pk.code = "NEW";
-  QVERIFY(!pk.isNull());
-  QVERIFY(pk.modification() == mdtClModification_t::New);
-  // Clear
-  pk.clear();
-  QVERIFY(pk.code.isEmpty());
-  QVERIFY(pk.isNull());
-  QVERIFY(pk.modification() == mdtClModification_t::Undefined);
-  /*
-   * Check setting modification
-   */
-  // New
-  pk.setModification(mdtClModification_t::New);
-  QCOMPARE(pk.code, QString("NEW"));
-  QVERIFY(pk.modification() == mdtClModification_t::New);
-  // Rem
-  pk.setModification(mdtClModification_t::Rem);
-  QCOMPARE(pk.code, QString("REM"));
-  QVERIFY(pk.modification() == mdtClModification_t::Rem);
-  // ModNew
-  pk.setModification(mdtClModification_t::ModNew);
-  QCOMPARE(pk.code, QString("MODNEW"));
-  QVERIFY(pk.modification() == mdtClModification_t::ModNew);
-  // ModRem
-  pk.setModification(mdtClModification_t::ModRem);
-  QCOMPARE(pk.code, QString("MODREM"));
-  QVERIFY(pk.modification() == mdtClModification_t::ModRem);
-  // Exists
-  pk.setModification(mdtClModification_t::Exists);
-  QCOMPARE(pk.code, QString("EXISTS"));
-  QVERIFY(pk.modification() == mdtClModification_t::Exists);
-  // Undefined
-  pk.setModification(mdtClModification_t::Undefined);
-  QCOMPARE(pk.code, QString(""));
-  QVERIFY(pk.isNull());
-  QVERIFY(pk.modification() == mdtClModification_t::Undefined);
-}
+// void mdtClModificationTest::modificationDataTest()
+// {
+//   mdtClModificationPkData pk;
+// 
+//   /*
+//    * Primary key data test
+//    */
+//   // Initial state
+//   QVERIFY(pk.isNull());
+//   QVERIFY(pk.modification() == mdtClModification_t::Undefined);
+//   // Set
+//   pk.code = "NEW";
+//   QVERIFY(!pk.isNull());
+//   QVERIFY(pk.modification() == mdtClModification_t::New);
+//   // Clear
+//   pk.clear();
+//   QVERIFY(pk.code.isEmpty());
+//   QVERIFY(pk.isNull());
+//   QVERIFY(pk.modification() == mdtClModification_t::Undefined);
+//   /*
+//    * Check setting modification
+//    */
+//   // New
+//   pk.setModification(mdtClModification_t::New);
+//   QCOMPARE(pk.code, QString("NEW"));
+//   QVERIFY(pk.modification() == mdtClModification_t::New);
+//   // Rem
+//   pk.setModification(mdtClModification_t::Rem);
+//   QCOMPARE(pk.code, QString("REM"));
+//   QVERIFY(pk.modification() == mdtClModification_t::Rem);
+//   // ModNew
+//   pk.setModification(mdtClModification_t::ModNew);
+//   QCOMPARE(pk.code, QString("MODNEW"));
+//   QVERIFY(pk.modification() == mdtClModification_t::ModNew);
+//   // ModRem
+//   pk.setModification(mdtClModification_t::ModRem);
+//   QCOMPARE(pk.code, QString("MODREM"));
+//   QVERIFY(pk.modification() == mdtClModification_t::ModRem);
+//   // Exists
+//   pk.setModification(mdtClModification_t::Exists);
+//   QCOMPARE(pk.code, QString("EXISTS"));
+//   QVERIFY(pk.modification() == mdtClModification_t::Exists);
+//   // Undefined
+//   pk.setModification(mdtClModification_t::Undefined);
+//   QCOMPARE(pk.code, QString(""));
+//   QVERIFY(pk.isNull());
+//   QVERIFY(pk.modification() == mdtClModification_t::Undefined);
+// }
 
 void mdtClModificationTest::modificationModelTest()
 {
+  using Mdt::CableList::ModificationPk;
+  using Mdt::CableList::ModificationType;
+
   QLocale locale(QLocale::English);
   mdtClModificationModel m(pvDatabase, locale);
 
   // Initial state
   QCOMPARE(m.rowCount(), 5);
   // Check row of modification
-  QCOMPARE(m.row(mdtClModification_t::Exists), 0);
-  QCOMPARE(m.row(mdtClModification_t::ModNew), 1);
-  QCOMPARE(m.row(mdtClModification_t::ModRem), 2);
-  QCOMPARE(m.row(mdtClModification_t::New), 3);
-  QCOMPARE(m.row(mdtClModification_t::Rem), 4);
+  QCOMPARE(m.row(ModificationType::Exists), 0);
+  QCOMPARE(m.row(ModificationType::ModNew), 1);
+  QCOMPARE(m.row(ModificationType::ModRem), 2);
+  QCOMPARE(m.row(ModificationType::New), 3);
+  QCOMPARE(m.row(ModificationType::Rem), 4);
   // Check modification of row
-  QVERIFY(m.modificationPk(0).modification() == mdtClModification_t::Exists);
-  QVERIFY(m.modificationPk(1).modification() == mdtClModification_t::ModNew);
-  QVERIFY(m.modificationPk(2).modification() == mdtClModification_t::ModRem);
-  QVERIFY(m.modificationPk(3).modification() == mdtClModification_t::New);
-  QVERIFY(m.modificationPk(4).modification() == mdtClModification_t::Rem);
-  QVERIFY(m.modificationPk(-1).modification() == mdtClModification_t::Undefined);
-  QVERIFY(m.modificationPk(50).modification() == mdtClModification_t::Undefined);
+  QVERIFY(m.modificationPk(0).type() == ModificationType::Exists);
+  QVERIFY(m.modificationPk(1).type() == ModificationType::ModNew);
+  QVERIFY(m.modificationPk(2).type() == ModificationType::ModRem);
+  QVERIFY(m.modificationPk(3).type() == ModificationType::New);
+  QVERIFY(m.modificationPk(4).type() == ModificationType::Rem);
+  QVERIFY(m.modificationPk(-1).type() == ModificationType::Undefined);
+  QVERIFY(m.modificationPk(50).type() == ModificationType::Undefined);
 }
 
 

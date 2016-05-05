@@ -95,13 +95,13 @@ bool mdtClLink::addLink(const mdtClLinkData & linkData, const QList<mdtClVehicle
 }
 
 bool mdtClLink::addLinkList(const QList<mdtClArticleLinkUnitConnectionKeyData> & keyList,
-                            const mdtClLinkVersionPkData & versionPk, const mdtClModificationPkData & modificationPk, bool handleTransaction)
+                            const LinkVersionPk & versionPk, const ModificationPk & modificationPk, bool handleTransaction)
 {
   return addLinkList(keyList, versionPk, modificationPk, QList<mdtClVehicleTypeStartEndKeyData>(), handleTransaction);
 }
 
 bool mdtClLink::addLinkList(const QList<mdtClArticleLinkUnitConnectionKeyData> & keyList,
-                            const mdtClLinkVersionPkData & versionPk, const mdtClModificationPkData & modificationPk,
+                            const LinkVersionPk & versionPk, const ModificationPk & modificationPk,
                             const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction)
 {
   mdtSqlTransaction transaction(database());
@@ -122,11 +122,11 @@ bool mdtClLink::addLinkList(const QList<mdtClArticleLinkUnitConnectionKeyData> &
       return false;
     }
     // Build link PK
-    mdtClLinkPkData pk;
-    pk.connectionStartId = key.unitConnectionStartPk.id();
-    pk.connectionEndId = key.unitConnectionEndPk.id();
-    pk.versionFk = versionPk;
-    pk.modificationFk = modificationPk;
+    LinkPk pk;
+    pk.setConnectionStart(key.unitConnectionStartPk);
+    pk.setConnectionEnd(key.unitConnectionEndPk);
+    pk.setVersion(versionPk);
+    pk.setModification(modificationPk);
     // Build link data
     mdtClLinkData linkData;
     linkData.setPk(pk);
@@ -158,7 +158,7 @@ bool mdtClLink::addLinkList(const QList<mdtClArticleLinkUnitConnectionKeyData> &
   return true;
 }
 
-bool mdtClLink::linkExists(const mdtClLinkPkData & pk, bool & ok)
+bool mdtClLink::linkExists(const LinkPk & pk, bool & ok)
 {
   Q_ASSERT(!pk.isNull());
 
@@ -166,8 +166,8 @@ bool mdtClLink::linkExists(const mdtClLinkPkData & pk, bool & ok)
   QString sql;
 
   sql = "SELECT COUNT(*) FROM Link_tbl"\
-        " WHERE UnitConnectionStart_Id_FK = " + pk.connectionStartId.toString() + \
-        " AND UnitConnectionEnd_Id_FK = " + pk.connectionEndId.toString();
+        " WHERE UnitConnectionStart_Id_FK = " + QString::number(pk.connectionStart().id()) + \
+        " AND UnitConnectionEnd_Id_FK = " + QString::number(pk.connectionEnd().id());
   dataList = getDataList<QVariant>(sql, ok);
   if(!ok){
     return false;
@@ -177,7 +177,7 @@ bool mdtClLink::linkExists(const mdtClLinkPkData & pk, bool & ok)
   return (dataList.at(0).toInt() > 0);
 }
 
-mdtClLinkData mdtClLink::getLinkData(const mdtClLinkPkData & pk, bool & ok)
+mdtClLinkData mdtClLink::getLinkData(const LinkPk & pk, bool & ok)
 {
   Q_ASSERT(!pk.isNull());
 
@@ -187,10 +187,10 @@ mdtClLinkData mdtClLink::getLinkData(const mdtClLinkPkData & pk, bool & ok)
 
   // Get link data part
   sql = "SELECT * FROM Link_tbl";
-  sql += " WHERE UnitConnectionStart_Id_FK = " + pk.connectionStartId.toString();
-  sql += " AND UnitConnectionEnd_Id_FK = " + pk.connectionEndId.toString();
-  sql += " AND Version_FK = " + QString::number(pk.versionFk.versionPk.value());
-  sql += " AND Modification_Code_FK = '" + pk.modificationFk.code + "'";
+  sql += " WHERE UnitConnectionStart_Id_FK = " + QString::number(pk.connectionStart().id());
+  sql += " AND UnitConnectionEnd_Id_FK = " + QString::number(pk.connectionEnd().id());
+  sql += " AND Version_FK = " + QString::number(pk.version().version());
+  sql += " AND Modification_Code_FK = '" + pk.modification().code() + "'";
   dataList = getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     return linkData;
@@ -204,7 +204,7 @@ mdtClLinkData mdtClLink::getLinkData(const mdtClLinkPkData & pk, bool & ok)
   return linkData;
 }
 
-bool mdtClLink::updateLink(const mdtClLinkPkData & linkPk, const mdtClLinkData & linkData)
+bool mdtClLink::updateLink(const LinkPk & linkPk, const mdtClLinkData & linkData)
 {
   Q_ASSERT(!linkPk.isNull());
   Q_ASSERT(!linkData.isNull());
@@ -224,15 +224,15 @@ bool mdtClLink::updateLink(const mdtClLinkPkData & linkPk, const mdtClLinkData &
         " AND Version_FK = :PK_Version_FK"\
         " AND Modification_Code_FK = :PK_Modification_Code_FK";
   query.prepare(sql);
-  query.bindValue(":PK_UnitConnectionStart_Id_FK", linkPk.connectionStartId);
-  query.bindValue(":PK_UnitConnectionEnd_Id_FK", linkPk.connectionEndId);
-  query.bindValue(":PK_Version_FK", linkPk.versionFk.versionPk.value());
-  query.bindValue(":PK_Modification_Code_FK", linkPk.modificationFk.code);
+  query.bindValue(":PK_UnitConnectionStart_Id_FK", linkPk.connectionStart().id());
+  query.bindValue(":PK_UnitConnectionEnd_Id_FK", linkPk.connectionEnd().id());
+  query.bindValue(":PK_Version_FK", linkPk.version().version());
+  query.bindValue(":PK_Modification_Code_FK", linkPk.modification().code());
   auto pk = linkData.pk();
-  query.bindValue(":UnitConnectionStart_Id_FK", pk.connectionStartId);
-  query.bindValue(":UnitConnectionEnd_Id_FK", pk.connectionEndId);
-  query.bindValue(":Version_FK", pk.versionFk.versionPk.value());
-  query.bindValue(":Modification_Code_FK", pk.modificationFk.code);
+  query.bindValue(":UnitConnectionStart_Id_FK", pk.connectionStart().id());
+  query.bindValue(":UnitConnectionEnd_Id_FK", pk.connectionEnd().id());
+  query.bindValue(":Version_FK", pk.version().version());
+  query.bindValue(":Modification_Code_FK", pk.modification().code());
   auto key = linkData.keyData();
   query.bindValue(":LinkType_Code_FK", key.linkTypeFk().code);
   query.bindValue(":LinkDirection_Code_FK", key.linkDirectionFk().code);
@@ -260,7 +260,7 @@ bool mdtClLink::updateLink(const mdtClLinkPkData & linkPk, const mdtClLinkData &
   return true;
 }
 
-bool mdtClLink::updateLink(const mdtClLinkPkData & linkPk, const mdtClLinkData & linkData, 
+bool mdtClLink::updateLink(const LinkPk & linkPk, const mdtClLinkData & linkData, 
                            const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction)
 {
   Q_ASSERT(!linkPk.isNull());
@@ -268,13 +268,13 @@ bool mdtClLink::updateLink(const mdtClLinkPkData & linkPk, const mdtClLinkData &
 
   mdtClVehicleTypeLink vtl(database());
   mdtSqlTransaction transaction(database());
-  bool pkChanged = false;
+  bool pkChanged = (linkData.pk() != linkPk);
 
-  // Check if link PK has changed
-  if( (linkData.pk().connectionStartId != linkPk.connectionStartId) || (linkData.pk().connectionEndId != linkPk.connectionEndId) || \
-      (linkData.pk().versionFk.versionPk != linkPk.versionFk.versionPk) || (linkData.pk().modificationFk.code != linkPk.modificationFk.code) ){
-    pkChanged = true;
-  }
+//   // Check if link PK has changed
+//   if( (linkData.pk().connectionStartId != linkPk.connectionStartId) || (linkData.pk().connectionEndId != linkPk.connectionEndId) || \
+//       (linkData.pk().versionFk.versionPk != linkPk.versionFk.versionPk) || (linkData.pk().modificationFk.code != linkPk.modificationFk.code) ){
+//     pkChanged = true;
+//   }
   // Begin transaction
   if(handleTransaction){
     if(!transaction.begin()){
@@ -312,7 +312,7 @@ bool mdtClLink::updateLink(const mdtClLinkPkData & linkPk, const mdtClLinkData &
   return true;
 }
 
-bool mdtClLink::removeLink(const mdtClLinkPkData & pk, bool handleTransaction)
+bool mdtClLink::removeLink(const LinkPk & pk, bool handleTransaction)
 {
   Q_ASSERT(!pk.isNull());
 
@@ -339,10 +339,10 @@ bool mdtClLink::removeLink(const mdtClLinkPkData & pk, bool handleTransaction)
         " AND Version_FK = :Version_FK"\
         " AND Modification_Code_FK = :Modification_Code_FK";
   query.prepare(sql);
-  query.bindValue(":UnitConnectionStart_Id_FK", pk.connectionStartId);
-  query.bindValue(":UnitConnectionEnd_Id_FK", pk.connectionEndId);
-  query.bindValue(":Version_FK", pk.versionFk.versionPk.value());
-  query.bindValue(":Modification_Code_FK", pk.modificationFk.code);
+  query.bindValue(":UnitConnectionStart_Id_FK", pk.connectionStart().id());
+  query.bindValue(":UnitConnectionEnd_Id_FK", pk.connectionEnd().id());
+  query.bindValue(":Version_FK", pk.version().version());
+  query.bindValue(":Modification_Code_FK", pk.modification().code());
   if(!query.exec()){
     QSqlError sqlError = query.lastError();
     pvLastError.setError(tr("Cannot remove data from 'Link_tbl'. SQL: ") + query.lastQuery(), mdtError::Error);
@@ -372,11 +372,15 @@ bool mdtClLink::removeLinks(const mdtSqlTableSelection & s)
     return false;
   }
   for(i = 0; i < s.rowCount(); ++i){
-    mdtClLinkPkData pk;
-    pk.connectionStartId = s.data(i, "UnitConnectionStart_Id_FK");
-    pk.connectionEndId = s.data(i, "UnitConnectionEnd_Id_FK");
-    pk.versionFk.versionPk = s.data(i, "Version_FK").toInt();
-    pk.modificationFk.code = s.data(i, "Modification_Code_FK").toString();
+    LinkPk pk;
+    pk.setConnectionStart( UnitConnectionPk::fromQVariant( s.data(i, "UnitConnectionStart_Id_FK") ) );
+    pk.setConnectionEnd( UnitConnectionPk::fromQVariant( s.data(i, "UnitConnectionEnd_Id_FK") ) );
+    pk.setVersion( LinkVersionPk::fromQVariant( s.data(i, "Version_FK").toInt() ) );
+    pk.setModification( ModificationPk::fromQVariant( s.data(i, "Modification_Code_FK") ) );
+//     pk.connectionStartId = s.data(i, "UnitConnectionStart_Id_FK");
+//     pk.connectionEndId = s.data(i, "UnitConnectionEnd_Id_FK");
+//     pk.versionFk.versionPk = s.data(i, "Version_FK").toInt();
+//     pk.modificationFk.code = s.data(i, "Modification_Code_FK").toString();
     if(!removeLink(pk, false)){
       return false;
     }
@@ -406,13 +410,13 @@ void mdtClLink::fillRecord(mdtSqlRecord & record, const mdtClLinkData & data)
   Q_ASSERT(record.contains("Length"));
   Q_ASSERT(record.contains("Remarks"));
 
-  mdtClLinkPkData pk = data.pk();
+  LinkPk pk = data.pk();
   mdtClArticleLinkPkData articleLinkFk = data.keyData().articleLinkFk();
 
-  record.setValue("UnitConnectionStart_Id_FK", pk.connectionStartId);
-  record.setValue("UnitConnectionEnd_Id_FK", pk.connectionEndId);
-  record.setValue("Version_FK", pk.versionFk.versionPk.value());
-  record.setValue("Modification_Code_FK", pk.modificationFk.code);
+  record.setValue("UnitConnectionStart_Id_FK", pk.connectionStart().id());
+  record.setValue("UnitConnectionEnd_Id_FK", pk.connectionEnd().id());
+  record.setValue("Version_FK", pk.version().version());
+  record.setValue("Modification_Code_FK", pk.modification().code());
   record.setValue("LinkType_Code_FK", data.keyData().linkTypeFk().code);
   record.setValue("LinkDirection_Code_FK", data.keyData().linkDirectionFk().code);
   record.setValue("ArticleConnectionStart_Id_FK", articleLinkFk.connectionStartId);
@@ -440,13 +444,17 @@ void mdtClLink::fillData(mdtClLinkData & data, const QSqlRecord & record)
   Q_ASSERT(record.contains("Length"));
   Q_ASSERT(record.contains("Remarks"));
 
-  mdtClLinkPkData pk;
+  LinkPk pk;
   mdtClArticleLinkPkData articleLinkFk;
 
-  pk.connectionStartId = record.value("UnitConnectionStart_Id_FK");
-  pk.connectionEndId = record.value("UnitConnectionEnd_Id_FK");
-  pk.versionFk.versionPk.setValue(record.value("Version_FK").toInt());
-  pk.modificationFk.code = record.value("Modification_Code_FK").toString();
+  pk.setConnectionStart( UnitConnectionPk::fromQVariant( record.value("UnitConnectionStart_Id_FK") ) );
+  pk.setConnectionEnd( UnitConnectionPk::fromQVariant( record.value("UnitConnectionEnd_Id_FK") ) );
+  pk.setVersion( LinkVersionPk::fromQVariant( record.value("Version_FK") ) );
+  pk.setModification( ModificationPk::fromQVariant( record.value("Modification_Code_FK") ) );
+//   pk.connectionStartId = record.value("UnitConnectionStart_Id_FK");
+//   pk.connectionEndId = record.value("UnitConnectionEnd_Id_FK");
+//   pk.versionFk.versionPk.setValue(record.value("Version_FK").toInt());
+//   pk.modificationFk.code = record.value("Modification_Code_FK").toString();
   articleLinkFk.connectionStartId = record.value("ArticleConnectionStart_Id_FK");
   articleLinkFk.connectionEndId = record.value("ArticleConnectionEnd_Id_FK");
   data.setPk(pk);

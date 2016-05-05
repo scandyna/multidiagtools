@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -27,7 +27,6 @@
 #include "mdtClLinkDirectionData.h"
 #include "mdtClLinkVersionData.h"
 #include "mdtClVehicleTypeLinkKeyData.h"
-///#include "mdtClLinkModificationKeyData.h"
 #include "mdtClLinkData.h"
 #include "mdtError.h"
 #include <QDialog>
@@ -163,11 +162,11 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
 
   /*! \brief Set link modification
    */
-  void setLinkModification(const mdtClModificationPkData & m);
+  void setLinkModification(ModificationPk m);
 
   /*! \brief Set link modification
    */
-  void setLinkModification(mdtClModification_t m);
+  void setLinkModification(ModificationType m);
 
   /*! \brief Get selected link modification
    *

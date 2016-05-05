@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,6 +20,13 @@
  ****************************************************************************/
 #include "mdtClArticleLink.h"
 #include "mdtSqlTransaction.h"
+
+// #include "Mdt/CableList/LinkVersionPk.h"  /// \todo update once migrated
+// #include "Mdt/CableList/ModificationPk.h" /// \todo update once migrated
+// 
+// using Mdt::CableList::LinkVersionPk;  /// \todo Remove once migrated
+// using Mdt::CableList::ModificationPk; /// \todo Remove once migrated
+// using Mdt::CableList::ModificationType; /// \todo Remove once migrated
 
 //#include <QDebug>
 

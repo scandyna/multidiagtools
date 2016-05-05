@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,7 +22,6 @@
 #define MDT_CL_VEHICLE_TYPE_LINK_ASSIGNATION_WIDGET_H
 
 #include "mdtError.h"
-#include "mdtClLinkKeyData.h"
 #include "mdtClVehicleTypeLinkKeyData.h"
 #include <QWidget>
 #include <QSqlDatabase>
@@ -52,7 +51,7 @@ class mdtClVehicleTypeLinkAssignationWidget : public QWidget
    *
    * \pre linkPk must not be null
    */
-  bool selectVehicleTypeAssignedToLink(const mdtClLinkPkData & linkPk);
+  bool selectVehicleTypeAssignedToLink(const LinkPk & linkPk);
 
   /*! \brief Select all vehicle types
    */

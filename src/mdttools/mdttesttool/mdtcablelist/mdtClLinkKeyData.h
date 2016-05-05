@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,51 +24,60 @@
 #include "mdtClLinkTypeData.h"
 #include "mdtClLinkDirectionData.h"
 #include "mdtClArticleLinkKeyData.h"
-#include "mdtClLinkVersionKeyData.h"
-#include "mdtClModificationKeyData.h"
+// #include "mdtClLinkVersionKeyData.h"
+// #include "mdtClModificationKeyData.h"
 #include <QVariant>
+
+#include "Mdt/CableList/LinkPk.h"         /// \todo update once migrated
+#include "Mdt/CableList/LinkVersionPk.h"  /// \todo update once migrated
+#include "Mdt/CableList/ModificationPk.h" /// \todo update once migrated
+
+using Mdt::CableList::LinkPk;         /// \todo Remove once migrated
+using Mdt::CableList::LinkVersionPk;  /// \todo Remove once migrated
+using Mdt::CableList::ModificationPk; /// \todo Remove once migrated
+using Mdt::CableList::ModificationType; /// \todo Remove once migrated
 
 /*! \brief Link primary key data
  *
  * Refers to Link_tbl
  */
-struct mdtClLinkPkData
-{
-  /*! \brief Start connection ID (UnitConnectionStart_Id_FK)
-   */
-  QVariant connectionStartId;
-
-  /*! \brief End connection ID (UnitConnectionEnd_Id_FK)
-   */
-  QVariant connectionEndId;
-
-  /*! \brief Link version FK (Version_FK)
-   */
-  mdtClLinkVersionPkData versionFk;
-
-  /*! \brief Link modification FK (Modification_Code_FK)
-   */
-  mdtClModificationPkData modificationFk;
-
-  /*! \brief Check if primary key is null
-   *
-   * Primary key is null if one of the connection ID or versionFk or modificationFk is null
-   */
-  bool isNull() const
-  {
-    return (connectionStartId.isNull() || connectionEndId.isNull() || versionFk.isNull() || modificationFk.isNull());
-  }
-
-  /*! \brief Clear primary key
-   */
-  void clear()
-  {
-    connectionStartId.clear();
-    connectionEndId.clear();
-    versionFk.clear();
-    modificationFk.clear();
-  }
-};
+// struct mdtClLinkPkData
+// {
+//   /*! \brief Start connection ID (UnitConnectionStart_Id_FK)
+//    */
+//   QVariant connectionStartId;
+// 
+//   /*! \brief End connection ID (UnitConnectionEnd_Id_FK)
+//    */
+//   QVariant connectionEndId;
+// 
+//   /*! \brief Link version FK (Version_FK)
+//    */
+//   mdtClLinkVersionPkData versionFk;
+// 
+//   /*! \brief Link modification FK (Modification_Code_FK)
+//    */
+//   mdtClModificationPkData modificationFk;
+// 
+//   /*! \brief Check if primary key is null
+//    *
+//    * Primary key is null if one of the connection ID or versionFk or modificationFk is null
+//    */
+//   bool isNull() const
+//   {
+//     return (connectionStartId.isNull() || connectionEndId.isNull() || versionFk.isNull() || modificationFk.isNull());
+//   }
+// 
+//   /*! \brief Clear primary key
+//    */
+//   void clear()
+//   {
+//     connectionStartId.clear();
+//     connectionEndId.clear();
+//     versionFk.clear();
+//     modificationFk.clear();
+//   }
+// };
 
 /*! \brief Link key data
  *
@@ -78,7 +87,7 @@ struct mdtClLinkKeyData
 {
  private:
 
-  mdtClLinkPkData pvPk;
+  LinkPk pvPk;
   mdtClLinkTypeKeyData pvLinkTypeFk;
   mdtClLinkDirectionKeyData pvLinkDirectionFk;
   mdtClArticleLinkPkData pvArticleLinkFk;
@@ -89,14 +98,14 @@ struct mdtClLinkKeyData
 
   /*! \brief Set PK (UnitConnectionStart_Id_FK and UnitConnectionEnd_Id_FK)
    */
-  void setPk(const mdtClLinkPkData & pk)
+  void setPk(const LinkPk & pk)
   {
     pvPk = pk;
   }
 
   /*! \brief Get PK (UnitConnectionStart_Id_FK and UnitConnectionEnd_Id_FK)
    */
-  mdtClLinkPkData pk() const
+  LinkPk pk() const
   {
     return pvPk;
   }

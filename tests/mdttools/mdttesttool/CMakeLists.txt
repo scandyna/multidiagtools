@@ -41,14 +41,14 @@ target_link_libraries(mdtclunitconnectiontest "mdtdatabase${MDTLIB_VERSION_SUFFI
 #target_link_libraries(mdtclunitconnectiontest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtclunitconnectiontest "mdttesttool${MDTLIB_VERSION_SUFFIX}")
 
-# * mdtClLinkTest executable *
-add_executable(mdtcllinktest mdtClLinkTest.cpp mdtCableListTestScenario.cpp mdtClVehicleTypeLinkTestData.cpp)
-target_link_libraries(mdtcllinktest Qt5::Widgets)
-target_link_libraries(mdtcllinktest "mdttest")
-target_link_libraries(mdtcllinktest "mdtutils${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtcllinktest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
-#target_link_libraries(mdtcllinktest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtcllinktest "mdttesttool${MDTLIB_VERSION_SUFFIX}")
+# * mdtClLinkTest executable * NOTE: disabled. Will be rewritten when migrating to libs
+# add_executable(mdtcllinktest mdtClLinkTest.cpp mdtCableListTestScenario.cpp mdtClVehicleTypeLinkTestData.cpp)
+# target_link_libraries(mdtcllinktest Qt5::Widgets)
+# target_link_libraries(mdtcllinktest "mdttest")
+# target_link_libraries(mdtcllinktest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+# target_link_libraries(mdtcllinktest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+# #target_link_libraries(mdtcllinktest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+# target_link_libraries(mdtcllinktest "mdttesttool${MDTLIB_VERSION_SUFFIX}")
 
 # * mdtClArticleLinkTest executable *
 add_executable(mdtclarticlelinktest mdtClArticleLinkTest.cpp mdtCableListTestScenario.cpp)

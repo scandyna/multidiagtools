@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,7 +23,10 @@
 
 #include "mdtTtBase.h"
 #include "mdtClLinkVersionData.h"
+#include "Mdt/CableList/LinkVersionPk.h"  /// \todo update once migrated
 #include <QSqlDatabase>
+
+using Mdt::CableList::LinkVersionPk;  /// \todo Remove once migrated
 
 class QObject;
 class QWidget;
@@ -81,7 +84,7 @@ class mdtClLinkVersion : public mdtTtBase
    *       A null data is returned if given key does not exist, or a error occured.
    *       Use ok parameter to diffrenciate both cases.
    */
-  mdtClLinkVersionData getVersionData(const mdtClLinkVersionPkData & key, bool & ok);
+  mdtClLinkVersionData getVersionData(LinkVersionPk key, bool & ok);
 
   /*! \brief Get last link version data
    *
@@ -93,7 +96,7 @@ class mdtClLinkVersion : public mdtTtBase
 
   /*! \brief Remove a version from LinkVersion_tbl
    */
-  bool removeVersion(const mdtClLinkVersionPkData & key);
+  bool removeVersion(LinkVersionPk key);
 
  public slots:
 

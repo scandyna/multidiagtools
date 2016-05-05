@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -83,19 +83,19 @@ bool mdtClLinkVersion::addVersion(const mdtClLinkVersionData &data)
     pvLastError = record.lastError();
     return false;
   }
-  record.setValue("Version_PK", data.versionPk());
+  record.setValue("Version_PK", data.pk().version());
   record.setValue("Version", data.version());
 
   return addRecord(record, "LinkVersion_tbl");
 }
 
-mdtClLinkVersionData mdtClLinkVersion::getVersionData(const mdtClLinkVersionPkData & key, bool & ok)
+mdtClLinkVersionData mdtClLinkVersion::getVersionData(LinkVersionPk key, bool & ok)
 {
   mdtClLinkVersionData data;
   QList<QSqlRecord> dataList;
   QString sql;
 
-  sql = "SELECT * FROM LinkVersion_tbl WHERE Version_PK = " + QString::number(key.versionPk.value());
+  sql = "SELECT * FROM LinkVersion_tbl WHERE Version_PK = " + QString::number(key.version());
   dataList = getDataList<QSqlRecord>(sql, ok);
   if(!ok){
     return data;
@@ -129,14 +129,17 @@ mdtClLinkVersionData mdtClLinkVersion::getLastVersionData(bool & ok)
   return data;
 }
 
-bool mdtClLinkVersion::removeVersion(const mdtClLinkVersionPkData & key)
+bool mdtClLinkVersion::removeVersion(LinkVersionPk key)
 {
-  if(!removeData("LinkVersion_tbl", "Version_PK", key.versionPk.value())){
+  if(!removeData("LinkVersion_tbl", "Version_PK", key.version())){
     return false;
   }
-  if(key.versionPk.value() == pvCurrentVersionData.versionPk()){
+  if(key == pvCurrentVersionData.pk()){
     pvCurrentVersionData.clear();
   }
+//   if(key.versionPk.value() == pvCurrentVersionData.versionPk()){
+//     pvCurrentVersionData.clear();
+//   }
 
   return true;
 }

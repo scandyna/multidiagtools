@@ -587,21 +587,25 @@ void mdtCableListTest::linkTest()
   mdtClVehicleTypeLink vtl(pvDatabase);
   mdtCableListTestScenario scenario(pvDatabase);
   mdtClLinkData linkData;
-  mdtClLinkPkData linkPk;
+  LinkPk linkPk;
   mdtClVehicleTypeStartEndKeyData vt;
   QList<mdtClVehicleTypeStartEndKeyData> vtList;
-  mdtClLinkVersionPkData linkVersionFk;
-  mdtClModificationPkData modificationFk;
+//   mdtClLinkVersionPkData linkVersionFk;
+//   mdtClModificationPkData modificationFk;
   ///mdtClLinkModificationKeyData linkModificationFk;
   bool ok;
 
   // Create base structure
   scenario.createSenario();
   // Get link data for a non existing link
-  linkPk.connectionStartId = 135;
-  linkPk.connectionEndId = 45678;
-  linkPk.versionFk.versionPk = 500;
-  linkPk.modificationFk.setModification(mdtClModification_t::New);
+  linkPk.setConnectionStart(UnitConnectionPk(135));
+  linkPk.setConnectionEnd(UnitConnectionPk(45678));
+  linkPk.setVersion(LinkVersionPk(500));
+  linkPk.setModification(ModificationPk(ModificationType::New));
+//   linkPk.connectionStartId = 135;
+//   linkPk.connectionEndId = 45678;
+//   linkPk.versionFk.versionPk = 500;
+//   linkPk.modificationFk.setModification(mdtClModification_t::New);
   linkData = lnk.getLinkData(linkPk, ok);
   QVERIFY(ok);
   QVERIFY(linkData.isNull());
@@ -612,10 +616,14 @@ void mdtCableListTest::linkTest()
    *   -> Identification : Edited link
    */
   // Get link data
-  linkPk.connectionStartId = 10000;
-  linkPk.connectionEndId = 10001;
-  linkPk.versionFk.versionPk = 500;
-  linkPk.modificationFk.setModification(mdtClModification_t::New);
+  linkPk.setConnectionStart(UnitConnectionPk(10000));
+  linkPk.setConnectionEnd(UnitConnectionPk(10001));
+  linkPk.setVersion(LinkVersionPk(500));
+  linkPk.setModification(ModificationPk(ModificationType::New));
+//   linkPk.connectionStartId = 10000;
+//   linkPk.connectionEndId = 10001;
+//   linkPk.versionFk.versionPk = 500;
+//   linkPk.modificationFk.setModification(mdtClModification_t::New);
   linkData = lnk.getLinkData(linkPk, ok);
   QVERIFY(ok);
   QVERIFY(!linkData.isNull());
@@ -649,10 +657,14 @@ void mdtCableListTest::linkTest()
    *   -> UnitConnectionStart_Id_FK : 10000 , UnitConnectionEnd_Id_FK : 20000 , Identification : Edited link 10000-20000
    */
   // Get link data
-  linkPk.connectionStartId = 10000;
-  linkPk.connectionEndId = 10001;
-  linkPk.versionFk.versionPk = 500;
-  linkPk.modificationFk.setModification(mdtClModification_t::New);
+  linkPk.setConnectionStart(UnitConnectionPk(10000));
+  linkPk.setConnectionEnd(UnitConnectionPk(10001));
+  linkPk.setVersion(LinkVersionPk(500));
+  linkPk.setModification(ModificationPk(ModificationType::New));
+//   linkPk.connectionStartId = 10000;
+//   linkPk.connectionEndId = 10001;
+//   linkPk.versionFk.versionPk = 500;
+//   linkPk.modificationFk.setModification(mdtClModification_t::New);
   linkData = lnk.getLinkData(linkPk, ok);
   QVERIFY(ok);
   QVERIFY(!linkData.isNull());
@@ -668,21 +680,31 @@ void mdtCableListTest::linkTest()
   vt.setVehicleTypeEndId(1);
   vtList << vt;
   // Update link
-  linkPk.connectionStartId = 10000;
-  linkPk.connectionEndId = 20000;
-  linkPk.versionFk.versionPk = 500;
-  linkPk.modificationFk.setModification(mdtClModification_t::New);
+  linkPk.setConnectionStart(UnitConnectionPk(10000));
+  linkPk.setConnectionEnd(UnitConnectionPk(20000));
+  linkPk.setVersion(LinkVersionPk(500));
+  linkPk.setModification(ModificationPk(ModificationType::New));
+//   linkPk.connectionStartId = 10000;
+//   linkPk.connectionEndId = 20000;
+//   linkPk.versionFk.versionPk = 500;
+//   linkPk.modificationFk.setModification(mdtClModification_t::New);
   linkData.setPk(linkPk);
   linkData.identification = "Edited link 10000-20000";
   ///linkModificationFk.setLinkFk(linkPk);
-  linkPk.connectionStartId = 10000;
-  linkPk.connectionEndId = 10001;
+  linkPk.setConnectionStart(UnitConnectionPk(10000));
+  linkPk.setConnectionEnd(UnitConnectionPk(10001));
+//   linkPk.connectionStartId = 10000;
+//   linkPk.connectionEndId = 10001;
   QVERIFY(lnk.updateLink(linkPk, linkData, vtList, true));
   // Get back and check - Link_tbl part
-  linkPk.connectionStartId = 10000;
-  linkPk.connectionEndId = 20000;
-  linkPk.versionFk.versionPk = 500;
-  linkPk.modificationFk.setModification(mdtClModification_t::New);
+  linkPk.setConnectionStart(UnitConnectionPk(10000));
+  linkPk.setConnectionEnd(UnitConnectionPk(20000));
+  linkPk.setVersion(LinkVersionPk(500));
+  linkPk.setModification(ModificationPk(ModificationType::New));
+//   linkPk.connectionStartId = 10000;
+//   linkPk.connectionEndId = 20000;
+//   linkPk.versionFk.versionPk = 500;
+//   linkPk.modificationFk.setModification(mdtClModification_t::New);
   linkData = lnk.getLinkData(linkPk, ok);
   QVERIFY(ok);
   QVERIFY(!linkData.isNull());
@@ -694,8 +716,10 @@ void mdtCableListTest::linkTest()
   QCOMPARE(vtList.at(0).vehicleTypeStartId(), QVariant(1));
   QCOMPARE(vtList.at(0).vehicleTypeEndId(), QVariant(1));
   // Remove link
-  linkPk.connectionStartId = 10000;
-  linkPk.connectionEndId = 20000;
+  linkPk.setConnectionStart(UnitConnectionPk(10000));
+  linkPk.setConnectionEnd(UnitConnectionPk(20000));
+//   linkPk.connectionStartId = 10000;
+//   linkPk.connectionEndId = 20000;
   QVERIFY(lnk.removeLink(linkPk, true));
   /*
    * Remove unit - vehicle type assignation and check that vehicle type links are removed
@@ -715,48 +739,66 @@ void mdtCableListTest::linkTest()
   scenario.removeScenario();
   scenario.createSenario();
   // Check that we have expected assignations
-  linkPk.connectionStartId = 10000;
-  linkPk.connectionEndId = 10001;
-  linkPk.versionFk.versionPk = 500;
-  linkPk.modificationFk.setModification(mdtClModification_t::New);
+  linkPk.setConnectionStart(UnitConnectionPk(10000));
+  linkPk.setConnectionEnd(UnitConnectionPk(10001));
+  linkPk.setVersion(LinkVersionPk(500));
+  linkPk.setModification(ModificationPk(ModificationType::New));
+//   linkPk.connectionStartId = 10000;
+//   linkPk.connectionEndId = 10001;
+//   linkPk.versionFk.versionPk = 500;
+//   linkPk.modificationFk.setModification(mdtClModification_t::New);
   vtList = vtl.getVehicleTypeStartEndKeyDataList(linkPk, ok);
   QVERIFY(ok);
   QCOMPARE(vtList.size(), 1);
-  linkPk.connectionStartId = 10001;
-  linkPk.connectionEndId = 20000;
+  linkPk.setConnectionStart(UnitConnectionPk(10000));
+  linkPk.setConnectionEnd(UnitConnectionPk(20000));
+//   linkPk.connectionStartId = 10001;
+//   linkPk.connectionEndId = 20000;
   vtList = vtl.getVehicleTypeStartEndKeyDataList(linkPk, ok);
   QVERIFY(ok);
   QCOMPARE(vtList.size(), 1);
-  linkPk.connectionStartId = 30005;
-  linkPk.connectionEndId = 40005;
+  linkPk.setConnectionStart(UnitConnectionPk(30005));
+  linkPk.setConnectionEnd(UnitConnectionPk(40005));
+//   linkPk.connectionStartId = 30005;
+//   linkPk.connectionEndId = 40005;
   vtList = vtl.getVehicleTypeStartEndKeyDataList(linkPk, ok);
   QVERIFY(ok);
   QCOMPARE(vtList.size(), 1);
-  linkPk.connectionStartId = 40005;
-  linkPk.connectionEndId = 50005;
+  linkPk.setConnectionStart(UnitConnectionPk(40005));
+  linkPk.setConnectionEnd(UnitConnectionPk(50005));
+//   linkPk.connectionStartId = 40005;
+//   linkPk.connectionEndId = 50005;
   vtList = vtl.getVehicleTypeStartEndKeyDataList(linkPk, ok);
   QVERIFY(ok);
   QCOMPARE(vtList.size(), 1);
   // Remove unit - vehicle type assignation
   QVERIFY(uvt.removeUnitVehicleAssignment(1000, 1));
   // Check that vehicle type - link assignations where removed
-  linkPk.connectionStartId = 10000;
-  linkPk.connectionEndId = 10001;
+  linkPk.setConnectionStart(UnitConnectionPk(10000));
+  linkPk.setConnectionEnd(UnitConnectionPk(10001));
+//   linkPk.connectionStartId = 10000;
+//   linkPk.connectionEndId = 10001;
   vtList = vtl.getVehicleTypeStartEndKeyDataList(linkPk, ok);
   QVERIFY(ok);
   QCOMPARE(vtList.size(), 0);
-  linkPk.connectionStartId = 10001;
-  linkPk.connectionEndId = 20000;
+  linkPk.setConnectionStart(UnitConnectionPk(10001));
+  linkPk.setConnectionEnd(UnitConnectionPk(20000));
+//   linkPk.connectionStartId = 10001;
+//   linkPk.connectionEndId = 20000;
   vtList = vtl.getVehicleTypeStartEndKeyDataList(linkPk, ok);
   QVERIFY(ok);
   QCOMPARE(vtList.size(), 0);
-  linkPk.connectionStartId = 30005;
-  linkPk.connectionEndId = 40005;
+  linkPk.setConnectionStart(UnitConnectionPk(30005));
+  linkPk.setConnectionEnd(UnitConnectionPk(40005));
+//   linkPk.connectionStartId = 30005;
+//   linkPk.connectionEndId = 40005;
   vtList = vtl.getVehicleTypeStartEndKeyDataList(linkPk, ok);
   QVERIFY(ok);
   QCOMPARE(vtList.size(), 0);
-  linkPk.connectionStartId = 40005;
-  linkPk.connectionEndId = 50005;
+  linkPk.setConnectionStart(UnitConnectionPk(40005));
+  linkPk.setConnectionEnd(UnitConnectionPk(50005));
+//   linkPk.connectionStartId = 40005;
+//   linkPk.connectionEndId = 50005;
   vtList = vtl.getVehicleTypeStartEndKeyDataList(linkPk, ok);
   QVERIFY(ok);
   QCOMPARE(vtList.size(), 0);
@@ -974,151 +1016,151 @@ void mdtCableListTest::linkTest()
 
 }
 
-void mdtCableListTest::linkUpdateFromArticleLinkTest()
-{
-  mdtClLink lnk(pvDatabase);
-  mdtClLinkPkData linkPk;
-  mdtClArticleLink alnk(pvDatabase);
-  mdtClArticleLinkPkData aLnkPk;
-  
-  mdtClArticle art(0, pvDatabase);
-  mdtCableListTestScenario scenario(pvDatabase);
-  QList<QSqlRecord> dataList;
-  QSqlRecord data;
-  ///mdtClUnit unit(0, pvDatabase);
-  ///mdtClUnitVehicleType uvt(0, pvDatabase);
-  ///QList<QVariant> vtStartIdList, vtEndIdList;
-  mdtClLinkData linkData;
-  ///mdtClUnitConnectionData connectionData;
-  ///QList<mdtClVehicleTypeLinkData> vtLinkDataList;
-  QString sql;
-  bool ok;
-
-//   QVERIFY(linkData.setup(pvDatabase));
-
-  // Create base structure
-  scenario.createSenario();
-
-  /*
-   * Check that we have initial expected link data
-   *
-   * Scenario will create several links.
-   * createTestUnitConnections() creates:
-   *  - 20001-20000 , CABLELINK
-   *  - 20003-20002 , CABLELINK
-   *  - 20003-20004 , INTERNLINK
-   * createTestLinks() creates:
-   *  - 10000-10001 , CABLELINK
-   *  - 10001-20000 , CABLELINK
-   *  - 30005-40005 , CABLELINK
-   *  - 40005-50005 , CABLELINK
-   */
-  linkPk.connectionStartId = 20001;
-  linkPk.connectionEndId = 20000;
-  QVERIFY(lnk.linkExists(linkPk, ok));
-  QVERIFY(ok);
-  linkPk.connectionStartId = 20003;
-  linkPk.connectionEndId = 20002;
-  QVERIFY(lnk.linkExists(linkPk, ok));
-  QVERIFY(ok);
-  linkPk.connectionStartId = 20003;
-  linkPk.connectionEndId = 20004;
-  QVERIFY(lnk.linkExists(linkPk, ok));
-  QVERIFY(ok);
-  linkPk.connectionStartId = 10000;
-  linkPk.connectionEndId = 10001;
-  QVERIFY(lnk.linkExists(linkPk, ok));
-  QVERIFY(ok);
-  linkPk.connectionStartId = 10001;
-  linkPk.connectionEndId = 20000;
-  QVERIFY(lnk.linkExists(linkPk, ok));
-  QVERIFY(ok);
-  linkPk.connectionStartId = 30005;
-  linkPk.connectionEndId = 40005;
-  QVERIFY(lnk.linkExists(linkPk, ok));
-  QVERIFY(ok);
-  linkPk.connectionStartId = 40005;
-  linkPk.connectionEndId = 50005;
-  QVERIFY(lnk.linkExists(linkPk, ok));
-  QVERIFY(ok);
-  
-//   QVERIFY(lnk.linkExists(20001, 20000, ok));
+// void mdtCableListTest::linkUpdateFromArticleLinkTest()
+// {
+//   mdtClLink lnk(pvDatabase);
+//   mdtClLinkPkData linkPk;
+//   mdtClArticleLink alnk(pvDatabase);
+//   mdtClArticleLinkPkData aLnkPk;
+//   
+//   mdtClArticle art(0, pvDatabase);
+//   mdtCableListTestScenario scenario(pvDatabase);
+//   QList<QSqlRecord> dataList;
+//   QSqlRecord data;
+//   ///mdtClUnit unit(0, pvDatabase);
+//   ///mdtClUnitVehicleType uvt(0, pvDatabase);
+//   ///QList<QVariant> vtStartIdList, vtEndIdList;
+//   mdtClLinkData linkData;
+//   ///mdtClUnitConnectionData connectionData;
+//   ///QList<mdtClVehicleTypeLinkData> vtLinkDataList;
+//   QString sql;
+//   bool ok;
+// 
+// //   QVERIFY(linkData.setup(pvDatabase));
+// 
+//   // Create base structure
+//   scenario.createSenario();
+// 
+//   /*
+//    * Check that we have initial expected link data
+//    *
+//    * Scenario will create several links.
+//    * createTestUnitConnections() creates:
+//    *  - 20001-20000 , CABLELINK
+//    *  - 20003-20002 , CABLELINK
+//    *  - 20003-20004 , INTERNLINK
+//    * createTestLinks() creates:
+//    *  - 10000-10001 , CABLELINK
+//    *  - 10001-20000 , CABLELINK
+//    *  - 30005-40005 , CABLELINK
+//    *  - 40005-50005 , CABLELINK
+//    */
+//   linkPk.connectionStartId = 20001;
+//   linkPk.connectionEndId = 20000;
+//   QVERIFY(lnk.linkExists(linkPk, ok));
 //   QVERIFY(ok);
-//   QVERIFY(lnk.linkExists(20003, 20002, ok));
+//   linkPk.connectionStartId = 20003;
+//   linkPk.connectionEndId = 20002;
+//   QVERIFY(lnk.linkExists(linkPk, ok));
 //   QVERIFY(ok);
-//   QVERIFY(lnk.linkExists(20003, 20004, ok));
+//   linkPk.connectionStartId = 20003;
+//   linkPk.connectionEndId = 20004;
+//   QVERIFY(lnk.linkExists(linkPk, ok));
 //   QVERIFY(ok);
-//   QVERIFY(lnk.linkExists(10000, 10001, ok));
+//   linkPk.connectionStartId = 10000;
+//   linkPk.connectionEndId = 10001;
+//   QVERIFY(lnk.linkExists(linkPk, ok));
 //   QVERIFY(ok);
-//   QVERIFY(lnk.linkExists(10001, 20000, ok));
+//   linkPk.connectionStartId = 10001;
+//   linkPk.connectionEndId = 20000;
+//   QVERIFY(lnk.linkExists(linkPk, ok));
 //   QVERIFY(ok);
-//   QVERIFY(lnk.linkExists(30005, 40005, ok));
+//   linkPk.connectionStartId = 30005;
+//   linkPk.connectionEndId = 40005;
+//   QVERIFY(lnk.linkExists(linkPk, ok));
 //   QVERIFY(ok);
-//   QVERIFY(lnk.linkExists(40005, 50005, ok));
+//   linkPk.connectionStartId = 40005;
+//   linkPk.connectionEndId = 50005;
+//   QVERIFY(lnk.linkExists(linkPk, ok));
 //   QVERIFY(ok);
-  /*
-   * We are interested about links created by createTestUnitConnections()
-   * because they are based on article links.
-   * Check there initial data:
-   *  - Unit connection 20000 is based on article connection 20 , witch is part of article 2
-   *  - Unit connection 20001 is based on article connection 21 , witch is part of article 2
-   *  - Unit connection 20002 is based on article connection 20 , witch is part of article 2
-   *  - Unit connection 20003 is based on article connection 21 , witch is part of article 2
-   *  - Unit connection 20004 is based on article connection 22 , witch is part of article 2
-   */
-  linkPk.connectionStartId = 20001;
-  linkPk.connectionEndId = 20000;
-  linkData = lnk.getLinkData(linkPk, ok);
-  QVERIFY(ok);
-  QVERIFY(linkData.keyData().linkTypeFk().type() == mdtClLinkType_t::CableLink);
-  linkPk.connectionStartId = 20003;
-  linkPk.connectionEndId = 20002;
-  linkData = lnk.getLinkData(linkPk, ok);
-  QVERIFY(ok);
-  QVERIFY(linkData.keyData().linkTypeFk().type() == mdtClLinkType_t::CableLink);
-  linkPk.connectionStartId = 20003;
-  linkPk.connectionEndId = 20004;
-  linkData = lnk.getLinkData(linkPk, ok);
-  QVERIFY(ok);
-  QVERIFY(linkData.keyData().linkTypeFk().type() == mdtClLinkType_t::InternalLink);
-//   linkData = lnk.getLinkData(20001, 20000, false, false, ok);
+//   
+// //   QVERIFY(lnk.linkExists(20001, 20000, ok));
+// //   QVERIFY(ok);
+// //   QVERIFY(lnk.linkExists(20003, 20002, ok));
+// //   QVERIFY(ok);
+// //   QVERIFY(lnk.linkExists(20003, 20004, ok));
+// //   QVERIFY(ok);
+// //   QVERIFY(lnk.linkExists(10000, 10001, ok));
+// //   QVERIFY(ok);
+// //   QVERIFY(lnk.linkExists(10001, 20000, ok));
+// //   QVERIFY(ok);
+// //   QVERIFY(lnk.linkExists(30005, 40005, ok));
+// //   QVERIFY(ok);
+// //   QVERIFY(lnk.linkExists(40005, 50005, ok));
+// //   QVERIFY(ok);
+//   /*
+//    * We are interested about links created by createTestUnitConnections()
+//    * because they are based on article links.
+//    * Check there initial data:
+//    *  - Unit connection 20000 is based on article connection 20 , witch is part of article 2
+//    *  - Unit connection 20001 is based on article connection 21 , witch is part of article 2
+//    *  - Unit connection 20002 is based on article connection 20 , witch is part of article 2
+//    *  - Unit connection 20003 is based on article connection 21 , witch is part of article 2
+//    *  - Unit connection 20004 is based on article connection 22 , witch is part of article 2
+//    */
+//   linkPk.connectionStartId = 20001;
+//   linkPk.connectionEndId = 20000;
+//   linkData = lnk.getLinkData(linkPk, ok);
 //   QVERIFY(ok);
-//   QCOMPARE(linkData.value("LinkType_Code_FK"), QVariant("CABLELINK"));
-//   linkData = lnk.getLinkData(20003, 20002, false, false, ok);
+//   QVERIFY(linkData.keyData().linkTypeFk().type() == mdtClLinkType_t::CableLink);
+//   linkPk.connectionStartId = 20003;
+//   linkPk.connectionEndId = 20002;
+//   linkData = lnk.getLinkData(linkPk, ok);
 //   QVERIFY(ok);
-//   QCOMPARE(linkData.value("LinkType_Code_FK"), QVariant("CABLELINK"));
-//   linkData = lnk.getLinkData(20003, 20004, false, false, ok);
+//   QVERIFY(linkData.keyData().linkTypeFk().type() == mdtClLinkType_t::CableLink);
+//   linkPk.connectionStartId = 20003;
+//   linkPk.connectionEndId = 20004;
+//   linkData = lnk.getLinkData(linkPk, ok);
 //   QVERIFY(ok);
-//   QCOMPARE(linkData.value("LinkType_Code_FK"), QVariant("INTERNLINK"));
-  /*
-   * Edit article link 21-20 and check that links 20001-20000 , update raleted links and check
-   */
-  // Check number of related links
-  aLnkPk.connectionStartId = 21;
-  aLnkPk.connectionEndId = 20;
-  QCOMPARE(alnk.relatedLinksCount(aLnkPk), 2);
-  QVERIFY(alnk.hasRelatedLinks(aLnkPk, ok));
-  QVERIFY(ok);
-  // Edit article link
-  sql = "SELECT * FROM ArticleLink_tbl WHERE ArticleConnectionStart_Id_FK = 21 AND ArticleConnectionEnd_Id_FK = 20";
-  dataList = art.getDataList<QSqlRecord>(sql, ok);
-  QVERIFY(ok);
-  QCOMPARE(dataList.size(), 1);
-  data = dataList.at(0);
-  data.setValue("LinkType_Code_FK", "INTERNLINK");
-  ///QVERIFY(art.editLink(21, 20, data));
-  // Update related links in Link_tbl
-  ///QVERIFY(art.updateRelatedLinks(21, 20, "LinkType_Code_FK"));
-  // Check that LinkType_Code_FK was updated
-  linkPk.connectionStartId = 20001;
-  linkPk.connectionEndId = 20000;
-  linkData = lnk.getLinkData(linkPk, ok);
-  QVERIFY(ok);
-  QVERIFY(linkData.keyData().linkTypeFk().type() == mdtClLinkType_t::InternalLink);
-//   linkData = lnk.getLinkData(20001, 20000, false, false, ok);
+//   QVERIFY(linkData.keyData().linkTypeFk().type() == mdtClLinkType_t::InternalLink);
+// //   linkData = lnk.getLinkData(20001, 20000, false, false, ok);
+// //   QVERIFY(ok);
+// //   QCOMPARE(linkData.value("LinkType_Code_FK"), QVariant("CABLELINK"));
+// //   linkData = lnk.getLinkData(20003, 20002, false, false, ok);
+// //   QVERIFY(ok);
+// //   QCOMPARE(linkData.value("LinkType_Code_FK"), QVariant("CABLELINK"));
+// //   linkData = lnk.getLinkData(20003, 20004, false, false, ok);
+// //   QVERIFY(ok);
+// //   QCOMPARE(linkData.value("LinkType_Code_FK"), QVariant("INTERNLINK"));
+//   /*
+//    * Edit article link 21-20 and check that links 20001-20000 , update raleted links and check
+//    */
+//   // Check number of related links
+//   aLnkPk.connectionStartId = 21;
+//   aLnkPk.connectionEndId = 20;
+//   QCOMPARE(alnk.relatedLinksCount(aLnkPk), 2);
+//   QVERIFY(alnk.hasRelatedLinks(aLnkPk, ok));
 //   QVERIFY(ok);
-//   QCOMPARE(linkData.value("LinkType_Code_FK"), QVariant("INTERNLINK"));
-}
+//   // Edit article link
+//   sql = "SELECT * FROM ArticleLink_tbl WHERE ArticleConnectionStart_Id_FK = 21 AND ArticleConnectionEnd_Id_FK = 20";
+//   dataList = art.getDataList<QSqlRecord>(sql, ok);
+//   QVERIFY(ok);
+//   QCOMPARE(dataList.size(), 1);
+//   data = dataList.at(0);
+//   data.setValue("LinkType_Code_FK", "INTERNLINK");
+//   ///QVERIFY(art.editLink(21, 20, data));
+//   // Update related links in Link_tbl
+//   ///QVERIFY(art.updateRelatedLinks(21, 20, "LinkType_Code_FK"));
+//   // Check that LinkType_Code_FK was updated
+//   linkPk.connectionStartId = 20001;
+//   linkPk.connectionEndId = 20000;
+//   linkData = lnk.getLinkData(linkPk, ok);
+//   QVERIFY(ok);
+//   QVERIFY(linkData.keyData().linkTypeFk().type() == mdtClLinkType_t::InternalLink);
+// //   linkData = lnk.getLinkData(20001, 20000, false, false, ok);
+// //   QVERIFY(ok);
+// //   QCOMPARE(linkData.value("LinkType_Code_FK"), QVariant("INTERNLINK"));
+// }
 
 // void mdtCableListTest::linkConnectableConnectorTest()
 // {

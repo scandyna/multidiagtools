@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -27,8 +27,6 @@
 #include "mdtClArticleLinkData.h"
 #include "mdtClArticleLinkKeyData.h"
 #include "mdtClUnitConnectionKeyData.h"
-#include "mdtClLinkVersionKeyData.h"
-#include "mdtClModificationKeyData.h"
 #include "mdtSqlRecord.h"
 #include <QSqlRecord>
 #include <QList>

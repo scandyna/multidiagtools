@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -59,7 +59,7 @@ class mdtClLinkVersionModel : public QSqlQueryModel
    *
    * \return Row of searched key or -1 if not found.
    */
-  int row(const mdtClLinkVersionPkData & key);
+  int row(const LinkVersionPk & key);
 
   /*! \brief Get version PK for given row
    *
@@ -67,13 +67,13 @@ class mdtClLinkVersionModel : public QSqlQueryModel
    * If row >= 0, and a error occured, a null PK is returned and lastError() contains error.
    * If all works fine, requested PK is returned.
    */
-  mdtClLinkVersionPkData versionPk(int row);
+  LinkVersionPk versionPk(int row);
 
   /*! \brief Get version PK of given combo box current index
    *
    * \sa versionPk()
    */
-  mdtClLinkVersionPkData currentVersionPk(QComboBox *cb);
+  LinkVersionPk currentVersionPk(QComboBox *cb);
 
   /*! \brief Get last error
    */

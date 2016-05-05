@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -89,12 +89,12 @@ void mdtClLinkAttributeDialog::setLinkVersion(const mdtClLinkVersionData &v)
   cbLinkVersion->setCurrentIndex(row);
 }
 
-mdtClLinkVersionPkData mdtClLinkAttributeDialog::linkVersionPkData() const
+LinkVersionPk mdtClLinkAttributeDialog::linkVersionPkData() const
 {
   return pvLinkVersionModel->currentVersionPk(cbLinkVersion);
 }
 
-void mdtClLinkAttributeDialog::setModification(const mdtClModificationPkData &m)
+void mdtClLinkAttributeDialog::setModification(ModificationPk m)
 {
   int row;
 
@@ -102,15 +102,12 @@ void mdtClLinkAttributeDialog::setModification(const mdtClModificationPkData &m)
   cbModification->setCurrentIndex(row);
 }
 
-void mdtClLinkAttributeDialog::setModification(mdtClModification_t m)
+void mdtClLinkAttributeDialog::setModification(ModificationType m)
 {
-  mdtClModificationPkData pk;
-
-  pk.setModification(m);
-  setModification(pk);
+  setModification(ModificationPk(m));
 }
 
-mdtClModificationPkData mdtClLinkAttributeDialog::modificationKeyData() const
+ModificationPk mdtClLinkAttributeDialog::modificationKeyData() const
 {
   return pvModificationModel->currentModificationPk(cbModification);
 }

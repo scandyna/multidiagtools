@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -75,7 +75,7 @@ bool mdtClVehicleTypeLinkAssignationWidget::buildVehicleTypeList(const QVariant 
   return true;
 }
 
-bool mdtClVehicleTypeLinkAssignationWidget::selectVehicleTypeAssignedToLink(const mdtClLinkPkData & linkPk)
+bool mdtClVehicleTypeLinkAssignationWidget::selectVehicleTypeAssignedToLink(const LinkPk & linkPk)
 {
   Q_ASSERT(!linkPk.isNull());
 

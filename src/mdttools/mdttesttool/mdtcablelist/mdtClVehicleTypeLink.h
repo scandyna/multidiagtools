@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -57,7 +57,7 @@ class mdtClVehicleTypeLink : public mdtTtBase
    *             By calling this function with a allready open transaction,
    *             set this argument false.
    */
-  bool addVehicleTypeLinks(const mdtClLinkPkData & linkPk, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
+  bool addVehicleTypeLinks(const LinkPk & linkPk, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
 
   /*! \brief Get vehicle type link key data list for given link PK
    *
@@ -66,7 +66,7 @@ class mdtClVehicleTypeLink : public mdtTtBase
    *          A empty list is returned if no vehicle type is assigned to given link, or a error occured.
    *          Use ok parameter to diffrenciate both cases.
    */
-  QList<mdtClVehicleTypeLinkKeyData> getVehicleTypeLinkKeyDataList(const mdtClLinkPkData & pk, bool & ok);
+  QList<mdtClVehicleTypeLinkKeyData> getVehicleTypeLinkKeyDataList(const LinkPk & pk, bool & ok);
 
   /*! \brief Get vehicle type start, end, key data list for given link PK
    *
@@ -75,7 +75,7 @@ class mdtClVehicleTypeLink : public mdtTtBase
    *          A empty list is returned if no vehicle type is assigned to given link, or a error occured.
    *          Use ok parameter to diffrenciate both cases.
    */
-  QList<mdtClVehicleTypeStartEndKeyData> getVehicleTypeStartEndKeyDataList(const mdtClLinkPkData & pk, bool & ok);
+  QList<mdtClVehicleTypeStartEndKeyData> getVehicleTypeStartEndKeyDataList(const LinkPk & pk, bool & ok);
 
   /*! \brief Remove a vehicle type - link assignation
    */
@@ -89,11 +89,11 @@ class mdtClVehicleTypeLink : public mdtTtBase
    *             By calling this function with a allready open transaction,
    *             set this argument false.
    */
-  bool removeVehicleTypeLinks(const mdtClLinkPkData & linkPk, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
+  bool removeVehicleTypeLinks(const LinkPk & linkPk, const QList<mdtClVehicleTypeStartEndKeyData> & vehicleTypeList, bool handleTransaction);
 
   /*! \brief Remove all vehicle types that are assigned to given link
    */
-  bool removeVehicleTypeLinks(const mdtClLinkPkData & linkPk);
+  bool removeVehicleTypeLinks(const LinkPk & linkPk);
 
   /*! \brief Remove all vehicle types that are assigned to given unit
    */
@@ -107,7 +107,7 @@ class mdtClVehicleTypeLink : public mdtTtBase
    *             By calling this function with a allready open transaction,
    *             set this argument false.
    */
-  bool updateVehicleTypeLink(const mdtClLinkPkData & linkPk, QList<mdtClVehicleTypeStartEndKeyData> expectedVehicleTypeKeyList, bool handleTransaction);
+  bool updateVehicleTypeLink(const LinkPk & linkPk, QList<mdtClVehicleTypeStartEndKeyData> expectedVehicleTypeKeyList, bool handleTransaction);
 
   /*! \todo Fonction pour mettre à jours l'assignation vt-link
    *

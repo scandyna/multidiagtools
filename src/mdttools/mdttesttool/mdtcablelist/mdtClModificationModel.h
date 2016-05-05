@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,11 +22,16 @@
 #define MDT_CL_MODIFICATION_MODEL_H
 
 #include "mdtError.h"
-#include "mdtClModificationKeyData.h"
+
+#include "Mdt/CableList/ModificationPk.h" /// \todo update once migrated
+
 #include <QSqlQueryModel>
 #include <QSqlDatabase>
 #include <QLocale>
 #include <QString>
+
+using Mdt::CableList::ModificationPk; /// \todo Remove once migrated
+using Mdt::CableList::ModificationType; /// \todo Remove once migrated
 
 class QComboBox;
 
@@ -61,13 +66,13 @@ class mdtClModificationModel : public QSqlQueryModel
    *
    * \return Row of searched modification or -1 if not found.
    */
-  int row(mdtClModification_t m);
+  int row(ModificationType m);
 
   /*! \brief Get row that contains given modification
    *
    * \return Row of searched modification or -1 if not found.
    */
-  int row(const mdtClModificationPkData & key);
+  int row(ModificationPk key);
 
   /*! \brief Get modification PK for given row
    *
@@ -75,13 +80,13 @@ class mdtClModificationModel : public QSqlQueryModel
    * If row >= 0, and a error occured, a null PK is returned and lastError() contains error.
    * If all works fine, requested PK is returned.
    */
-  mdtClModificationPkData modificationPk(int row);
+  ModificationPk modificationPk(int row);
 
   /*! \brief Get modification PK of given combo box current index
    *
    * \sa modificationPk()
    */
-  mdtClModificationPkData currentModificationPk(QComboBox *cb);
+  ModificationPk currentModificationPk(QComboBox *cb);
 
   /*! \brief Get last error
    */

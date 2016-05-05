@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -110,7 +110,7 @@ struct mdtClVehicleTypeLinkKeyData
  private:
 
   mdtClVehicleTypeStartEndKeyData pvVehicleTypeStartEndFk;
-  mdtClLinkPkData pvLinkFk;
+  LinkPk pvLinkFk;
 
  public:
 
@@ -160,7 +160,7 @@ struct mdtClVehicleTypeLinkKeyData
    *
    * \pre fk must not be null
    */
-  void setLinkFk(const mdtClLinkPkData & fk)
+  void setLinkFk(const LinkPk & fk)
   {
     Q_ASSERT(!fk.isNull());
     pvLinkFk = fk;
@@ -168,7 +168,7 @@ struct mdtClVehicleTypeLinkKeyData
 
   /*! \brief Get link FK (UnitConnectionStart_Id_FK and UnitConnectionEnd_Id_FK)
    */
-  mdtClLinkPkData linkFk() const
+  LinkPk linkFk() const
   {
     return pvLinkFk;
   }
