@@ -13,12 +13,14 @@ diagrams
     120 106 100 4 0 0
   classdiagram_ref 2318210 // LinkType
     902 907 100 4 0 0
-  active  classdiagram_ref 2318338 // LinkTypeModel
+  classdiagram_ref 2318338 // LinkTypeModel
+    902 907 100 4 0 0
+  active  classdiagram_ref 2338306 // ModificationModel
     902 907 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2318338 // LinkTypeModel
 open
+  class_ref 2621058 // ModificationModel
   classview_ref 1238274 // LinkBeam
   classview_ref 1238402 // Cable
   class_ref 2600962 // LinkType

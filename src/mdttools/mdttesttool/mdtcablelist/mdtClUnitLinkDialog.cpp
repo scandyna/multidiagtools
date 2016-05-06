@@ -25,7 +25,7 @@
 #include "mdtClUnitConnection.h"
 #include "mdtClUnitConnectorData.h"
 #include "mdtClUnitConnectionSelectionDialog.h"
-#include "mdtClModificationModel.h"
+#include "Mdt/CableList/ModificationModel.h"  /// \todo Update once migrated
 #include "mdtClLinkVersionModel.h"
 #include "Mdt/CableList/LinkTypeModel.h"  /// \todo update once migrated
 #include "mdtClLinkDirectionModel.h"
@@ -47,6 +47,7 @@
 #include <QDebug>
 
 using Mdt::CableList::LinkTypeModel;   /// \todo Remove once migrated
+using Mdt::CableList::ModificationModel;   /// \todo Remove once migrated
 
 mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
  : QDialog(parent)
@@ -55,7 +56,7 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
   setupUi(this);
   setWindowTitle(tr("Unit link edition"));
   // Setup Modification combobox
-  pvModificationModel = new mdtClModificationModel(this, db);
+  pvModificationModel = new ModificationModel(this, db);
   cbModification->setModel(pvModificationModel);
   cbModification->setModelColumn(1);
   // Setup link version combobox

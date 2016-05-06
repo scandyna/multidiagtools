@@ -2477,8 +2477,8 @@ void DatabaseSchema::setupModificationTablePopulation()
   tp.currentRowData() << "REM" << 3 << "Remove" << "Entfernen" << "Supprimer" << "Rimuovere";
   tp.commitCurrentRowData();
   // MOD
-  tp.currentRowData() << "MOD" << 3 << "Modifiy" << "Ändern" << "Modifier" << "Modificare";
-  tp.commitCurrentRowData();
+//   tp.currentRowData() << "MOD" << 3 << "Modifiy" << "Ändern" << "Modifier" << "Modificare";
+//   tp.commitCurrentRowData();
   // MODNEW
   tp.currentRowData() << "MODNEW" << 2 << "Modifiy (+)" << "Ändern (+)" << "Modifier (+)" << "Modificare (+)";
   tp.commitCurrentRowData();

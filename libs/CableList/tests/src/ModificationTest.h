@@ -39,6 +39,8 @@ class ModificationTest : public QObject
 
   void typeCodeTest();
 
+  void modelTest();
+
  private:
 
   // Create test database schema - Will FAIL on problem

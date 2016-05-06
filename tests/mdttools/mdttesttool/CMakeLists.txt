@@ -5,15 +5,6 @@
 # Project
 project (multidiagtools)
 
-# * mdtClModificationTest executable *
-add_executable(mdtclmodificationtest mdtClModificationTest.cpp)
-target_link_libraries(mdtclmodificationtest Qt5::Widgets)
-target_link_libraries(mdtclmodificationtest "mdttest")
-target_link_libraries(mdtclmodificationtest "mdtutils${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtclmodificationtest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
-#target_link_libraries(mdtclmodificationtest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtclmodificationtest "mdttesttool${MDTLIB_VERSION_SUFFIX}")
-
 # * mdtClConnectorTest executable *
 add_executable(mdtclconnectortest mdtClConnectorTest.cpp)
 target_link_libraries(mdtclconnectortest Qt5::Widgets)

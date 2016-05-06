@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtClLinkAttributeDialog.h"
-#include "mdtClModificationModel.h"
+#include "Mdt/CableList/ModificationModel.h"  /// \todo Update once migrated
 #include "mdtClLinkVersionModel.h"
 #include "mdtClVehicleTypeLinkAssignationWidget.h"
 #include "mdtClLink.h"
@@ -31,13 +31,15 @@
 
 //#include <QDebug>
 
+using Mdt::CableList::ModificationModel;   /// \todo Remove once migrated
+
 mdtClLinkAttributeDialog::mdtClLinkAttributeDialog(QWidget *parent, QSqlDatabase db, bool enableVehicleTypeAssignations)
  : QDialog(parent)
 {
   pvDatabase = db;
   setupUi(this);
   // Setup Modification combobox
-  pvModificationModel = new mdtClModificationModel(this, db);
+  pvModificationModel = new ModificationModel(this, db);
   cbModification->setModel(pvModificationModel);
   cbModification->setModelColumn(1);
   // Setup link version combobox

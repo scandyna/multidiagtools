@@ -67,7 +67,6 @@ set (TT_SOURCES_FILES
 # Source files for mdtCableList
 set (CL_SOURCES_FILES 
           mdtcablelist/mdtClApplicationWidgets.cpp
-          mdtcablelist/mdtClModificationModel.cpp
           mdtcablelist/mdtClVehicleTypeEditor.cpp
           mdtcablelist/mdtClConnectionTypeData.cpp
           mdtcablelist/mdtClConnectionTypeModel.cpp
@@ -101,10 +100,6 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClUnitConnectionSelectionDialog.cpp
           mdtcablelist/mdtClUnitEditor.cpp
           mdtcablelist/mdtClWireEditor.cpp
-          
-#            mdtcablelist/mdtClLinkTypeData.cpp
-#           mdtcablelist/mdtClLinkTypeModel.cpp
-          
           mdtcablelist/mdtClLinkDirectionData.cpp
           mdtcablelist/mdtClLinkDirectionModel.cpp
           mdtcablelist/mdtClLinkData.cpp

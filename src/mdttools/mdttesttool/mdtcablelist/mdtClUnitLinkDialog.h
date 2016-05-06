@@ -36,14 +36,14 @@
 class QWidget;
 class QSqlQueryModel;
 class QComboBox;
-class mdtClModificationModel;
 class mdtClLinkVersionModel;
-class mdtClLinkTypeModel;
+// class mdtClLinkTypeModel;
 class mdtClLinkDirectionModel;
 class mdtClVehicleTypeLinkAssignationWidget;
 
 /// \todo Update once migrated
 namespace Mdt{ namespace CableList{
+  class ModificationModel;
   class LinkTypeModel;
 }}
 
@@ -273,7 +273,7 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   QList<mdtClUnitConnectorPkData> pvEndConnectorLimitIdList;    // If not empty, end connection selection will be limited to these connectors
   mdtClLinkData pvLinkData;
   QList<QVariant> pvWorkingOnVehicleTypeIdList;
-  mdtClModificationModel *pvModificationModel;
+  Mdt::CableList::ModificationModel *pvModificationModel; /// \todo update once migrated
   mdtClLinkVersionModel *pvLinkVersionModel;
   Mdt::CableList::LinkTypeModel *pvLinkTypeModel; /// \todo update once migrated
   mdtClLinkDirectionModel *pvLinkDirectionModel;

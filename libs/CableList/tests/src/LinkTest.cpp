@@ -186,7 +186,6 @@ void LinkTest::typeModelTest()
   using Mdt::CableList::LinkTypePk;
   using Mdt::CableList::LinkType;
 
-  LinkTypePk pk;
   LinkTypeModel m(pvDatabase);
 
   m.setLocale(QLocale::English);

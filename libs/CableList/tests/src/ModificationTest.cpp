@@ -22,6 +22,7 @@
 #include "mdtApplication.h"
 #include "Mdt/CableList/DatabaseSchema.h"
 #include "Mdt/CableList/ModificationPk.h"
+#include "Mdt/CableList/ModificationModel.h"
 
 void ModificationTest::initTestCase()
 {
@@ -142,6 +143,48 @@ void ModificationTest::typeCodeTest()
   QVERIFY(ModificationPk::fromCode("EXISTS").type() == ModificationType::Exists);
 }
 
+void ModificationTest::modelTest()
+{
+  using Mdt::CableList::ModificationModel;
+  using Mdt::CableList::ModificationType;
+  using Mdt::CableList::ModificationPk;
+
+  ModificationModel m(pvDatabase);
+
+  m.setLocale(QLocale::English);
+  /*
+   * Initial state
+   */
+  QCOMPARE(m.rowCount(), 5);
+  /*
+   * Get row for modification type
+   */
+  QCOMPARE(m.row(ModificationType::Undefined), -1);
+  QCOMPARE(m.row(ModificationType::Exists), 0);
+  QCOMPARE(m.row(ModificationType::ModNew), 1);
+  QCOMPARE(m.row(ModificationType::ModRem), 2);
+  QCOMPARE(m.row(ModificationType::New), 3);
+  QCOMPARE(m.row(ModificationType::Rem), 4);
+  /*
+   * Get row for modification PK
+   */
+  QCOMPARE(m.row(ModificationPk(ModificationType::Undefined)), -1);
+  QCOMPARE(m.row(ModificationPk(ModificationType::Exists)), 0);
+  QCOMPARE(m.row(ModificationPk(ModificationType::ModNew)), 1);
+  QCOMPARE(m.row(ModificationPk(ModificationType::ModRem)), 2);
+  QCOMPARE(m.row(ModificationPk(ModificationType::New)), 3);
+  QCOMPARE(m.row(ModificationPk(ModificationType::Rem)), 4);
+  /*
+   * Get PK at row
+   */
+  QVERIFY(m.modificationPk(-1).type() == ModificationType::Undefined);
+  QVERIFY(m.modificationPk(0).type() == ModificationType::Exists);
+  QVERIFY(m.modificationPk(1).type() == ModificationType::ModNew);
+  QVERIFY(m.modificationPk(2).type() == ModificationType::ModRem);
+  QVERIFY(m.modificationPk(3).type() == ModificationType::New);
+  QVERIFY(m.modificationPk(4).type() == ModificationType::Rem);
+  QVERIFY(m.modificationPk(50).type() == ModificationType::Undefined);
+}
 
 /*
  * Helper functions

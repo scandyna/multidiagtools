@@ -18,59 +18,59 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtClModificationModel.h"
+#include "ModificationModel.h"
 #include "mdt/sql/error/Error.h"
 #include <QSqlError>
+#include <QSqlQuery>
 #include <QModelIndex>
 #include <QComboBox>
 
-//#include <QDebug>
+namespace Mdt{ namespace CableList{
 
-mdtClModificationModel::mdtClModificationModel(QObject *parent, QSqlDatabase db, const QLocale &locale)
- : QSqlQueryModel(parent)
+ModificationModel::ModificationModel(QObject *parent, const QSqlDatabase & db)
+ : QSqlQueryModel(parent),
+   pvDatabase(db)
 {
-  QString sql;
-  QString fieldName;
+  setLocale(QLocale::system());
+}
 
-  // Select name field regarding language
+ModificationModel::ModificationModel(const QSqlDatabase & db)
+ : ModificationModel(nullptr, db)
+{
+}
+
+void ModificationModel::setLocale(const QLocale & locale)
+{
   switch(locale.language()){
     case QLocale::French:
-      fieldName = "NameFR";
+      pvNameFieldName = "NameFR";
       break;
     case QLocale::German:
-      fieldName = "NameDE";
+      pvNameFieldName = "NameDE";
       break;
     case QLocale::Italian:
-      fieldName = "NameIT";
+      pvNameFieldName = "NameIT";
       break;
     default:
-      fieldName = "NameEN";
+      pvNameFieldName = "NameEN";
   }
-  // Get text
-  sql = "SELECT Code_PK, " + fieldName + " FROM Modification_tbl ORDER BY " + fieldName + " ASC";
-  setQuery(sql, db);
+  updateQuery();
 }
 
-mdtClModificationModel::mdtClModificationModel(QSqlDatabase db, const QLocale &locale)
- : mdtClModificationModel(nullptr, db, locale)
-{
-}
-
-int mdtClModificationModel::row(ModificationType m)
+int ModificationModel::row(ModificationType m)
 {
   return row(ModificationPk(m));
 }
 
-int mdtClModificationModel::row(ModificationPk key)
+int ModificationModel::row(ModificationPk pk)
 {
-  int row;
-
   if(isInError()){
     return -1;
   }
-  for(row = 0; row < rowCount(); ++row){
+  const int n = rowCount();
+  for(int row = 0; row < n; ++row){
     QModelIndex idx = index(row, 0);
-    if(data(idx) == key.code()){
+    if(data(idx) == pk.code()){
       return row;
     }
   }
@@ -80,7 +80,7 @@ int mdtClModificationModel::row(ModificationPk key)
   return -1;
 }
 
-ModificationPk mdtClModificationModel::modificationPk(int row)
+ModificationPk ModificationModel::modificationPk(int row)
 {
   ModificationPk pk;
 
@@ -91,7 +91,7 @@ ModificationPk mdtClModificationModel::modificationPk(int row)
     return pk;
   }
   QModelIndex idx = index(row, 0);
-  pk = Mdt::CableList::ModificationPk::fromCode( data(idx).toString().trimmed() );
+  pk = ModificationPk::fromQVariant( data(idx) );
   if(pk.isNull()){
     QString msg = QString(tr("Could not find modification for row '%1'.")).arg(row);
     pvLastError = mdtErrorNewQ(msg, mdtError::Error, this);
@@ -101,24 +101,35 @@ ModificationPk mdtClModificationModel::modificationPk(int row)
   return pk;
 }
 
-ModificationPk mdtClModificationModel::currentModificationPk(QComboBox *cb)
+ModificationPk ModificationModel::currentModificationPk(QComboBox *cb)
 {
   Q_ASSERT(cb != nullptr);
 
   return modificationPk(cb->currentIndex());
 }
 
-bool mdtClModificationModel::isInError()
+void ModificationModel::updateQuery()
+{
+  Q_ASSERT(!pvNameFieldName.isEmpty());
+
+  QString sql;
+
+  sql = "SELECT Code_PK, " + pvNameFieldName + " FROM Modification_tbl ORDER BY " + pvNameFieldName + " ASC";
+  setQuery(sql, pvDatabase);
+}
+
+bool ModificationModel::isInError()
 {
   QSqlError sqlError = QSqlQueryModel::lastError();
 
   if(sqlError.isValid()){
-    QString msg = QString(tr("A error occured on table 'Modification_tbl'."));
-    pvLastError = mdtErrorNewQ(msg, mdtError::Error, this);
-    pvLastError.stackError(mdt::sql::error::fromQSqlError(sqlError));
+    pvLastError = mdtErrorNewQ(tr("A error occured on table 'Modification_tbl'."), mdtError::Error, this);
+    pvLastError.stackError(ErrorFromQSqlQuery(query()));
     pvLastError.commit();
     return true;
   }
 
   return false;
 }
+
+}} // namespace Mdt{ namespace CableList{

@@ -35,6 +35,11 @@ class mdtClModificationModel;
 class mdtClLinkVersionModel;
 class mdtClVehicleTypeLinkAssignationWidget;
 
+/// \todo Update once migrated
+namespace Mdt{ namespace CableList{
+  class ModificationModel;
+}}
+
 /*! \brief Let user select versionning and vehicle assignations
  */
 class mdtClLinkAttributeDialog : public QDialog, Ui::mdtClLinkAttributeDialog
@@ -95,7 +100,7 @@ class mdtClLinkAttributeDialog : public QDialog, Ui::mdtClLinkAttributeDialog
   Q_DISABLE_COPY(mdtClLinkAttributeDialog)
 
   QSqlDatabase pvDatabase;
-  mdtClModificationModel *pvModificationModel;
+  Mdt::CableList::ModificationModel *pvModificationModel; /// \todo update once migrated
   mdtClLinkVersionModel *pvLinkVersionModel;
   mdtClVehicleTypeLinkAssignationWidget *pvVehicleTypeAssignationWidget;
   mdtError pvLastError;

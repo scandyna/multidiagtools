@@ -18,11 +18,11 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CABLE_LIST_LINK_TYPE_MODEL_H
-#define MDT_CABLE_LIST_LINK_TYPE_MODEL_H
+#ifndef MDT_CABLE_LIST_MODIFICATION_MODEL_H
+#define MDT_CABLE_LIST_MODIFICATION_MODEL_H
 
 #include "mdtError.h"
-#include "LinkTypePk.h"
+#include "ModificationPk.h"
 #include <QSqlQueryModel>
 #include <QSqlDatabase>
 #include <QLocale>
@@ -32,37 +32,37 @@ class QComboBox;
 
 namespace Mdt{ namespace CableList{
 
-  /*! \brief Model that acts on LinkType_tbl
+  /*! \brief Model that acts on Modification_tbl
    *
    * This model is typically used with QComboBox
-   *  for link type selection.
+   *  for modification selection.
    *
-   * This model will select Code_PK and a name field that depends on locale
+   * This model will select Code_PK and a name field that depends on given locale
    *  (see constructors for details).
    *
    * Usage:
    * \code
-   *   using Mdt::CableList::LinkTypeModel;
+   *   using Mdt::CableList::ModificationModel;
    *   QComboBox *cb = new QComboBox;
-   *   cb->setModel(new LinkTypeModel(this, db));
+   *   cb->setModel(new ModificationModel(this, db));
    *   cb->setModelColumn(1);  // Will display name field
    * \endcode
    */
-  class LinkTypeModel : public QSqlQueryModel
+  class ModificationModel : public QSqlQueryModel
   {
    public:
 
     /*! \brief Constructor
      */
-    LinkTypeModel(QObject *parent, const QSqlDatabase & db);
+    ModificationModel(QObject *parent, const QSqlDatabase & db);
 
     /*! \brief Constructor
      */
-    LinkTypeModel(const QSqlDatabase & db);
+    ModificationModel(const QSqlDatabase & db);
 
     // Copy disabled
-    LinkTypeModel(const LinkTypeModel &) = delete;
-    LinkTypeModel & operator=(const LinkTypeModel &) = delete;
+    ModificationModel(const ModificationModel &) = delete;
+    ModificationModel & operator=(const ModificationModel &) = delete;
 
     /*! \brief Set locale
      *
@@ -71,39 +71,31 @@ namespace Mdt{ namespace CableList{
      */
     void setLocale(const QLocale & locale);
 
-    /*! \brief Get row that contains given link type
+    /*! \brief Get row that contains given modification
      *
-     * \return Row of searched link type or -1 if not found.
+     * \return Row of searched modification or -1 if not found.
      */
-    int row(LinkType type);
+    int row(ModificationType m);
 
-    /*! \brief Get row that contains given PK
+    /*! \brief Get row that contains given modification
      *
-     * \return Row of searched key or -1 if not found.
+     * \return Row of searched modification or -1 if not found.
      */
-    int row(LinkTypePk pk);
+    int row(ModificationPk pk);
 
-    /*! \brief Get link type primary key for given row
+    /*! \brief Get modification PK for given row
      *
      * If row is < 0, a null PK is returned (lastError() is not updated).
      * If row >= 0, and a error occured, a null PK is returned and lastError() contains error.
      * If all works fine, requested PK is returned.
      */
-    LinkTypePk primaryKey(int row);
+    ModificationPk modificationPk(int row);
 
-    /*! \brief Get link primary key of given combobox's current index
+    /*! \brief Get modification PK of given combo box current index
      *
-     * \sa primaryKey()
+     * \sa modificationPk()
      */
-    LinkTypePk currentPrimaryKey(const QComboBox * const cb);
-
-    /*! \brief Get unit for given row
-     *
-     * If row is < 0, a empty string is returned (lastError() is not updated).
-     * If row >= 0, and a error occured, a string containing <error> is returned and lastError() contains error.
-     * If all works fine, requested unit is returned.
-     */
-    QString unit(int row);
+    ModificationPk currentModificationPk(QComboBox *cb);
 
     /*! \brief Get last error
      */
@@ -129,5 +121,4 @@ namespace Mdt{ namespace CableList{
 
 }} // namespace Mdt{ namespace CableList{
 
-#endif // #ifndef MDT_CABLE_LIST_LINK_TYPE_MODEL_H
-
+#endif // #ifndef MDT_CABLE_LIST_MODIFICATION_MODEL_H

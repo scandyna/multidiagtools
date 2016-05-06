@@ -56,7 +56,6 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtValueLimits.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtTtValueLimitsWidget.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClApplicationWidgets.cpp
-SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClModificationModel.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClVehicleTypeEditor.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClConnectionTypeData.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdttools/mdttesttool/mdtcablelist/mdtClConnectionTypeModel.cpp
