@@ -1,0 +1,11 @@
+format 211
+
+classcanvas 128002 class_ref 2614530 // ArticleConnectionPk
+  classdiagramsettings member_max_width 0 end
+  xyz 197 356 2000
+end
+classcanvas 128130 class_ref 2580866 // UnitConnectionPk
+  classdiagramsettings member_max_width 0 end
+  xyz 487 368 2000
+end
+end

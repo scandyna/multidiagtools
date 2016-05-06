@@ -25,6 +25,7 @@
 #include "mdtSqlTransaction.h"
 #include "mdtClUnitConnection.h"
 #include "mdtError.h"
+#include "mdt/sql/error/Error.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRecord>
@@ -234,7 +235,7 @@ bool mdtClLink::updateLink(const LinkPk & linkPk, const mdtClLinkData & linkData
   query.bindValue(":Version_FK", pk.version().version());
   query.bindValue(":Modification_Code_FK", pk.modification().code());
   auto key = linkData.keyData();
-  query.bindValue(":LinkType_Code_FK", key.linkTypeFk().code);
+  query.bindValue(":LinkType_Code_FK", key.linkTypeFk().code());
   query.bindValue(":LinkDirection_Code_FK", key.linkDirectionFk().code);
   query.bindValue(":ArticleConnectionStart_Id_FK", key.articleLinkFk().connectionStartId);
   query.bindValue(":ArticleConnectionEnd_Id_FK", key.articleLinkFk().connectionEndId);
@@ -249,10 +250,8 @@ bool mdtClLink::updateLink(const LinkPk & linkPk, const mdtClLinkData & linkData
   }
   query.bindValue(":Remarks", linkData.remarks);
   if(!query.exec()){
-    QSqlError sqlError = query.lastError();
-    pvLastError.setError(tr("Cannot update data in 'Link_tbl'. SQL: ") + query.lastQuery(), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
+    pvLastError = mdtErrorNewQ(tr("Cannot update data in 'Link_tbl'. SQL: ") + query.lastQuery(), mdtError::Error, this);
+    pvLastError.stackError(ErrorFromQSqlQuery(query));
     pvLastError.commit();
     return false;
   }
@@ -344,10 +343,8 @@ bool mdtClLink::removeLink(const LinkPk & pk, bool handleTransaction)
   query.bindValue(":Version_FK", pk.version().version());
   query.bindValue(":Modification_Code_FK", pk.modification().code());
   if(!query.exec()){
-    QSqlError sqlError = query.lastError();
-    pvLastError.setError(tr("Cannot remove data from 'Link_tbl'. SQL: ") + query.lastQuery(), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClLink");
+    pvLastError = mdtErrorNewQ(tr("Cannot remove data from 'Link_tbl'. SQL: ") + query.lastQuery(), mdtError::Error, this);
+    pvLastError.stackError(ErrorFromQSqlQuery(query));
     pvLastError.commit();
     return false;
   }
@@ -417,7 +414,7 @@ void mdtClLink::fillRecord(mdtSqlRecord & record, const mdtClLinkData & data)
   record.setValue("UnitConnectionEnd_Id_FK", pk.connectionEnd().id());
   record.setValue("Version_FK", pk.version().version());
   record.setValue("Modification_Code_FK", pk.modification().code());
-  record.setValue("LinkType_Code_FK", data.keyData().linkTypeFk().code);
+  record.setValue("LinkType_Code_FK", data.keyData().linkTypeFk().code());
   record.setValue("LinkDirection_Code_FK", data.keyData().linkDirectionFk().code);
   record.setValue("ArticleConnectionStart_Id_FK", articleLinkFk.connectionStartId);
   record.setValue("ArticleConnectionEnd_Id_FK", articleLinkFk.connectionEndId);

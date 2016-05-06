@@ -22,12 +22,14 @@
 #define MDT_CL_LINK_DIRECTION_MODEL_H
 
 #include "mdtError.h"
+#include "Mdt/CableList/LinkType.h"  /// \todo update once migrated
 #include "mdtClLinkDirectionData.h"
-#include "mdtClLinkTypeData.h"
 #include <QSqlQueryModel>
 #include <QSqlDatabase>
 #include <QLocale>
 #include <QString>
+
+using Mdt::CableList::LinkType;   /// \todo Update once migrated
 
 class QComboBox;
 
@@ -95,7 +97,7 @@ class mdtClLinkDirectionModel : public QSqlQueryModel
    *  F.ex. a cable link can only be bidirectional, but a diode
    *  is unidirectional (start to end or end to start)
    */
-  void setLinkType(mdtClLinkType_t lt);
+  void setLinkType(LinkType lt);
 
   /*! \brief Get last error
    */

@@ -1,6 +1,6 @@
 format 211
 "Path" // Mdt::CableList::Path
-  revision 10
+  revision 14
   modified_by 2 "philippe"
   // class settings
   
@@ -149,7 +149,7 @@ ${inlines}
       mysql_decl ""
       
       attribute 2458370 "FromConnection"
-	private explicit_type "mdtClUnitConnectionPkData"
+	private type class_ref 2580866 // UnitConnectionPk
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -179,6 +179,43 @@ ${inlines}
 "
 	    classrelation_ref 2946050 // <directional composition>
 	  b parent class_ref 2566786 // UnitConnectionPkList
+      end
+    end
+
+    classdiagram 2318082 "LinkedConnectionModel"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2600706 "LinkedConnectionModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3002242 // <generalisation>
+	relation 2984962 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3002242 // <generalisation>
+	  b parent class_ref 174338 // QSqlQueryModel
+      end
+
+      classrelation 3002370 // <directional composition>
+	relation 2985090 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3002370 // <directional composition>
+	  b parent class_ref 2537090 // LinkedConnections
       end
     end
 
@@ -315,7 +352,7 @@ ${inlines}
       operation 3890178 "addLink"
 	public explicit_return_type "void"
 	nparams 2
-	  param in name "link" type class_ref 1673090 // mdtClLinkKeyData
+	  param in name "link" type class_ref 2607618 // LinkKey
 	  param in name "weight" explicit_type "int"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
@@ -332,7 +369,7 @@ ${inlines}
       operation 3890306 "addGhostLink"
 	public explicit_return_type "void"
 	nparams 2
-	  param in name "link" type class_ref 1673090 // mdtClLinkKeyData
+	  param in name "link" type class_ref 2607618 // LinkKey
 	  param in name "weight" explicit_type "int"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "

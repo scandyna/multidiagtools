@@ -33,6 +33,7 @@
 #include <QString>
 #include <QTemporaryFile>
 #include <QFile>
+#include <QFileInfo>
 #include <QVector>
 #include <memory>
 #include <vector>
@@ -388,7 +389,7 @@ void mdtErrorTest::errorStackTest()
 void mdtErrorTest::setSourceTest()
 {
   // Constants for check
-  const QString fileName = __FILE__;
+  const QString fileName = QFileInfo(__FILE__).fileName();
   const QString functionName = metaObject()->className() + QLatin1String("::") + QLatin1String(__FUNCTION__) + QLatin1String("()");
   /*
    * Check creating error with helper macros
@@ -469,12 +470,12 @@ void mdtErrorTest::setSourceTest()
   // Check MDT_ERROR_SET_SRC
   QVERIFY(!error1.isNull());
   MDT_ERROR_SET_SRC(error1, this->metaObject()->className());
-  QCOMPARE(error1.fileName(), QString(__FILE__));
+  QCOMPARE(error1.fileName(), fileName);
   QCOMPARE(error1.functionName(), QString(this->metaObject()->className() + QLatin1String("::") + QLatin1String(__FUNCTION__) + QLatin1String("()")));
   // Check MDT_ERROR_SET_SRC_Q
   QVERIFY(!error2.isNull());
   MDT_ERROR_SET_SRC_Q(error2, this);
-  QCOMPARE(error2.fileName(), QString(__FILE__));
+  QCOMPARE(error2.fileName(), fileName);
   QCOMPARE(error2.functionName(), QString(this->metaObject()->className() + QLatin1String("::") + QLatin1String(__FUNCTION__) + QLatin1String("()")));
   /*
    * Check with incomplete function names

@@ -1,11 +1,11 @@
-format 209
+format 211
 
 classcanvas 128002 class_ref 1653122 // mdtClLinkTypeKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 162 163 2000
+  xyz 40.5 40.5 2000
 end
 classcanvas 128130 class_ref 1653250 // mdtClLinkDirectionKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 444 163 2000
+  xyz 40.5 263.5 2000
 end
 end

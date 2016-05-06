@@ -27,7 +27,7 @@
 #include "mdtClUnitConnectionSelectionDialog.h"
 #include "mdtClModificationModel.h"
 #include "mdtClLinkVersionModel.h"
-#include "mdtClLinkTypeModel.h"
+#include "Mdt/CableList/LinkTypeModel.h"  /// \todo update once migrated
 #include "mdtClLinkDirectionModel.h"
 #include "mdtClVehicleTypeLinkAssignationWidget.h"
 #include "mdtClLink.h"
@@ -46,6 +46,8 @@
 
 #include <QDebug>
 
+using Mdt::CableList::LinkTypeModel;   /// \todo Remove once migrated
+
 mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
  : QDialog(parent)
 {
@@ -61,7 +63,7 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
   cbLinkVersion->setModel(pvLinkVersionModel);
   cbLinkVersion->setModelColumn(1);
   // Setup link type
-  pvLinkTypeModel = new mdtClLinkTypeModel(this, db);
+  pvLinkTypeModel = new LinkTypeModel(this, db);
   cbLinkType->setModel(pvLinkTypeModel);
   cbLinkType->setModelColumn(1);
   cbLinkType->setCurrentIndex(-1);
@@ -195,7 +197,7 @@ QList<mdtClVehicleTypeStartEndKeyData> mdtClUnitLinkDialog::selectedVehicleTypeL
   return pvVehicleTypeAssignationWidget->getSelectedVehicleTypeList();
 }
 
-void mdtClUnitLinkDialog::setLinkType(mdtClLinkType_t t)
+void mdtClUnitLinkDialog::setLinkType(LinkType t)
 {
   int row;
 
@@ -203,9 +205,9 @@ void mdtClUnitLinkDialog::setLinkType(mdtClLinkType_t t)
   cbLinkType->setCurrentIndex(row);
 }
 
-mdtClLinkTypeKeyData mdtClUnitLinkDialog::linkTypeKeyData() const
+LinkTypePk mdtClUnitLinkDialog::linkTypePk() const
 {
-  return pvLinkTypeModel->currentKeyData(cbLinkType);
+  return pvLinkTypeModel->currentPrimaryKey(cbLinkType);
 }
 
 void mdtClUnitLinkDialog::setLinkDirection(mdtClLinkDirection_t d)
@@ -309,15 +311,15 @@ void mdtClUnitLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
     return;
   }
   // We must update available directions regarding link type
-  auto key = pvLinkTypeModel->keyData(row);
-  pvLinkDirectionModel->setLinkType(key.type());
+  auto pk = pvLinkTypeModel->primaryKey(row);
+  pvLinkDirectionModel->setLinkType(pk.type());
   if(pvLinkDirectionModel->rowCount() > 1){
     cbLinkDirection->setEnabled(true);
   }else{
     cbLinkDirection->setEnabled(false);
   }
   // Update link data
-  pvLinkData.setLinkType(key.type());
+  pvLinkData.setLinkType(pk.type());
 }
 
 void mdtClUnitLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)

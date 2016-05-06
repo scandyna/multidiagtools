@@ -1,6 +1,6 @@
 format 211
 "mdtcablelist" // mdttools::mdttesttool::mdtcablelist
-  revision 89
+  revision 91
   modified_by 2 "philippe"
   // class settings
   
@@ -5394,99 +5394,6 @@ ${inlines}
       size A3
     end
 
-    class 1672962 "mdtClLinkPkData"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 1755394 "connectionStartId"
-	public type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 1755522 "connectionEndId"
-	public type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 2640642 "isNull"
-	public explicit_return_type "bool"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2640770 "clear"
-	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      attribute 1853698 "versionFk"
-	public type class_ref 1679746 // mdtClLinkVersionPkData
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 1853826 "modificationFk"
-	public type class_ref 1693186 // mdtClModificationPkData
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-
     class 1673090 "mdtClLinkKeyData"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -5502,7 +5409,7 @@ ${inlines}
       mysql_decl ""
       
       attribute 1755650 "pvPk"
-	private type class_ref 1672962 // mdtClLinkPkData
+	private type class_ref 2587394 // LinkPk
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -5573,19 +5480,10 @@ ${inlines}
 	MysqlColumn
       end
 
-      classrelation 2031618 // _pk (<unidirectional association>)
-	relation 2015490 --->
-	  a role_name "_pk" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 2031618 // _pk (<unidirectional association>)
-	  b parent class_ref 1672962 // mdtClLinkPkData
-      end
-
       operation 2647298 "setPk"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "pk" type class_ref 1672962 // mdtClLinkPkData
+	  param in name "pk" explicit_type "mdtClLinkPkData"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -5599,7 +5497,7 @@ ${inlines}
       end
 
       operation 2647426 "pk"
-	public return_type class_ref 1672962 // mdtClLinkPkData
+	public explicit_return_type "mdtClLinkPkData"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -5795,6 +5693,15 @@ ${inlines}
 	
 	
       end
+
+      classrelation 3002498 // <directional composition>
+	relation 2985218 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3002498 // <directional composition>
+	  b parent class_ref 2587394 // LinkPk
+      end
     end
 
     class 888194 "mdtClLinkData"
@@ -5835,7 +5742,7 @@ ${inlines}
       operation 2720130 "setPk"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "pk" type class_ref 1672962 // mdtClLinkPkData
+	  param in name "pk" explicit_type "mdtClLinkPkData"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -6139,7 +6046,7 @@ ${inlines}
 	public explicit_return_type "bool"
 	nparams 2
 	  param in name "unitId" type class_ref 161154 // QVariant
-	  param in name "linkFk" type class_ref 1672962 // mdtClLinkPkData
+	  param in name "linkFk" explicit_type "mdtClLinkPkData"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
@@ -6171,7 +6078,7 @@ ${inlines}
       operation 2698370 "selectVehicleTypesAssignedToLink"
 	private explicit_return_type "bool"
 	nparams 1
-	  param in name "linkPk" type class_ref 1672962 // mdtClLinkPkData
+	  param in name "linkPk" explicit_type "mdtClLinkPkData"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -6430,7 +6337,7 @@ ${inlines}
       end
 
       attribute 1756546 "pvLinkFk"
-	private type class_ref 1672962 // mdtClLinkPkData
+	private explicit_type "mdtClLinkPkData"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -6537,7 +6444,7 @@ ${inlines}
       operation 2678146 "setLinkFk"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "fk" type class_ref 1672962 // mdtClLinkPkData
+	  param in name "fk" explicit_type "mdtClLinkPkData"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -6551,7 +6458,7 @@ ${inlines}
       end
 
       operation 2678274 "linkFk"
-	public return_type class_ref 1672962 // mdtClLinkPkData
+	public explicit_return_type "mdtClLinkPkData"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -6602,15 +6509,6 @@ ${inlines}
 "
 	    classrelation_ref 2072322 // _vehicleTypeStartEndFk (<unidirectional association>)
 	  b parent class_ref 1725954 // mdtClVehicleTypeStartEndKeyData
-      end
-
-      classrelation 2072450 // _linkFk (<unidirectional association>)
-	relation 2056322 --->
-	  a role_name "_linkFk" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 2072450 // _linkFk (<unidirectional association>)
-	  b parent class_ref 1672962 // mdtClLinkPkData
       end
     end
 
@@ -7072,7 +6970,7 @@ ${inlines}
 
     classdiagram 1424386 "ArticleLink"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size A4
     end
 
     class 1659778 "mdtClArticleLinkPkData"
@@ -7641,255 +7539,6 @@ ${inlines}
       size C
     end
 
-    classdiagram 1457282 "LinkVersionData"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 1679746 "mdtClLinkVersionPkData"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 1777794 "versionPk"
-	public explicit_type "mdtValueInt"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 2654978 "isNull"
-	public explicit_return_type "bool"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2655106 "clear"
-	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
-    class 1679874 "mdtClLinkVersionData"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 1778050 "pvPk"
-	private type class_ref 1679746 // mdtClLinkVersionPkData
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 1777922 "pvVersion"
-	private explicit_type "double"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 2655362 "setPk"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "key" type class_ref 1679746 // mdtClLinkVersionPkData
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2655490 "pk"
-	public return_type class_ref 1679746 // mdtClLinkVersionPkData
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2654722 "setVersionPk"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "v" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2654850 "setVersionPk"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "v" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 2045442 // _pk (<unidirectional association>)
-	relation 2029314 --->
-	  a role_name "_pk" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 2045442 // _pk (<unidirectional association>)
-	  b parent class_ref 1679746 // mdtClLinkVersionPkData
-      end
-
-      operation 2655234 "versionPk"
-	public explicit_return_type "int"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2655618 "setVersion"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "v" explicit_type "double"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2655746 "version"
-	public explicit_return_type "double"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2655874 "isNull"
-	public explicit_return_type "bool"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2656002 "clear"
-	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
     classdiagram 1483522 "LinkModification"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -7910,7 +7559,7 @@ ${inlines}
       mysql_decl ""
       
       attribute 1811202 "pvLinkFk"
-	private type class_ref 1672962 // mdtClLinkPkData
+	private explicit_type "mdtClLinkPkData"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -7922,7 +7571,7 @@ ${inlines}
       end
 
       attribute 1811330 "pvLinkVersionFk"
-	private type class_ref 1679746 // mdtClLinkVersionPkData
+	private explicit_type "mdtClLinkVersionPkData"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -7934,7 +7583,7 @@ ${inlines}
       end
 
       attribute 1811458 "pvModificationFk"
-	private type class_ref 1693186 // mdtClModificationPkData
+	private explicit_type "mdtClModificationPkData"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -7948,7 +7597,7 @@ ${inlines}
       operation 2712706 "setLinkFk"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "fk" type class_ref 1672962 // mdtClLinkPkData
+	  param in name "fk" explicit_type "mdtClLinkPkData"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -7962,7 +7611,7 @@ ${inlines}
       end
 
       operation 2712834 "linkFk"
-	public return_type class_ref 1672962 // mdtClLinkPkData
+	public explicit_return_type "mdtClLinkPkData"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -7979,7 +7628,7 @@ ${inlines}
       operation 2712962 "setLinkVersionFk"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "fk" type class_ref 1679746 // mdtClLinkVersionPkData
+	  param in name "fk" explicit_type "mdtClLinkVersionPkData"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -7993,7 +7642,7 @@ ${inlines}
       end
 
       operation 2713090 "linkVersionFk"
-	public return_type class_ref 1679746 // mdtClLinkVersionPkData
+	public explicit_return_type "mdtClLinkVersionPkData"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -8010,7 +7659,7 @@ ${inlines}
       operation 2713218 "setModificationFk"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "fk" type class_ref 1693186 // mdtClModificationPkData
+	  param in name "fk" explicit_type "mdtClModificationPkData"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -8024,7 +7673,7 @@ ${inlines}
       end
 
       operation 2713346 "modificationFk"
-	public return_type class_ref 1693186 // mdtClModificationPkData
+	public explicit_return_type "mdtClModificationPkData"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -8738,116 +8387,6 @@ ${inlines}
 
       operation 2010626 "removeDirectLinkTable"
 	private explicit_return_type "bool"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-  end
-
-  classview 761730 "Modification"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
-    classdiagram 1457154 "ModificationData"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 1693186 "mdtClModificationPkData"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 1778178 "code"
-	public type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 2656386 "setModification"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "m" explicit_type "mdtClModification_t"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2656514 "modification"
-	public explicit_return_type "mdtClModification_t"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2656130 "isNull"
-	public explicit_return_type "bool"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2656258 "clear"
-	public explicit_return_type "void"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "

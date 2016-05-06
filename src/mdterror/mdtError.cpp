@@ -23,6 +23,7 @@
 #include <QLatin1String>
 #include <QStringBuilder>
 #include <QObject>
+#include <QFileInfo>
 #include <QMetaObject>
 #include <algorithm>
 #include <iterator>
@@ -118,7 +119,7 @@ void mdtError::setSource(const QString & fileName, int fileLine, const QString &
   Q_ASSERT(pvShared);
 
   pvShared.detach();
-  pvShared->fileName = fileName;
+  pvShared->fileName =  QFileInfo(fileName).fileName();
   pvShared->lineNumber = fileLine;
   QString fn = className;
   if(!functionName.isEmpty()){

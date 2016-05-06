@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,8 +22,11 @@
 #define MDT_CL_ARTICLE_LINK_KEY_DATA_H
 
 #include "mdtClArticleConnectionData.h"
-#include "mdtClLinkTypeData.h"
+#include "Mdt/CableList/LinkTypePk.h"  /// \todo update once migrated
 #include "mdtClLinkDirectionData.h"
+
+using Mdt::CableList::LinkType;   /// \todo Update once migrated
+using Mdt::CableList::LinkTypePk; /// \todo Update once migrated
 
 /*! \brief Article link primary key data
  *
@@ -71,7 +74,7 @@ struct mdtClArticleLinkKeyData
 
   /*! \brief Link type (LinkType_Code_FK)
    */
-  mdtClLinkTypeKeyData pvLinkTypeFk;
+  LinkTypePk pvLinkTypeFk;
 
   /*! \brief Link direction (LinkDirection_Code_FK)
    */
@@ -81,7 +84,7 @@ struct mdtClArticleLinkKeyData
 
   /*! \brief Set link type
    */
-  void setLinkType(mdtClLinkType_t t)
+  void setLinkType(LinkType t)
   {
     pvLinkTypeFk.setType(t);
   }
@@ -90,12 +93,12 @@ struct mdtClArticleLinkKeyData
    */
   void setLinkTypeCode(const QVariant & c)
   {
-    pvLinkTypeFk.code = c;
+    pvLinkTypeFk = LinkTypePk::fromQVariant(c);
   }
 
   /*! \brief Get link type FK (LinkType_Code_FK)
    */
-  inline mdtClLinkTypeKeyData linkTypeFk() const
+  inline LinkTypePk linkTypeFk() const
   {
     return pvLinkTypeFk;
   }

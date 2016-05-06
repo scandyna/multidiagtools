@@ -18,40 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CABLE_LIST_LINK_TEST_H
-#define MDT_CABLE_LIST_LINK_TEST_H
+#ifndef MDT_CABLE_LIST_LINK_TYPE_H
+#define MDT_CABLE_LIST_LINK_TYPE_H
 
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QTemporaryFile>
-#include <QSqlDatabase>
+namespace Mdt{ namespace CableList{
 
-class LinkTest : public QObject
-{
- Q_OBJECT
+  /*! \brief Link type
+   */
+  enum class LinkType
+  {
+    Undefined,    /*!< Undefined type (is the case for null data) */
+    CableLink,    /*!< Cable link */
+    InternalLink, /*!< Device internal link */
+    Connection,   /*!< A link of 2 connections */
+    TestLink      /*!< Test link */
+  };
 
- private slots:
+}} // namespace Mdt{ namespace CableList{
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void versionPkTest();
-
-  void typePkTest();
-  void typeCodeTest();
-  void typeModelTest();
-
-  void linkPkTest();
-  void linkPkListTest();
-  void linkPkListBenchmark();
-
- private:
-
-  // Create test database schema - Will FAIL on problem
-  void createDatabaseSchema();
-
-  QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
-  QSqlDatabase pvDatabase;
-};
-
-#endif // #ifndef MDT_CABLE_LIST_LINK_TEST_H
+#endif // #ifndef MDT_CABLE_LIST_LINK_TYPE_H

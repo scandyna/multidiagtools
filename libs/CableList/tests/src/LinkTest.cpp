@@ -22,9 +22,9 @@
 #include "mdtApplication.h"
 #include "Mdt/CableList/DatabaseSchema.h"
 #include "Mdt/CableList/LinkVersionPk.h"
+#include "Mdt/CableList/LinkTypePk.h"
+#include "Mdt/CableList/LinkTypeModel.h"
 #include "Mdt/CableList/LinkPk.h"
-// #include "Mdt/CableList/UnitConnectionPk.h"
-// #include "Mdt/CableList/UnitConnectionPkList.h"
 
 void LinkTest::initTestCase()
 {
@@ -104,6 +104,128 @@ void LinkTest::versionPkTest()
   // lhs != rhs
   QVERIFY(!(LinkVersionPk(1) == LinkVersionPk(2)));
   QVERIFY(LinkVersionPk(1) != LinkVersionPk(2));
+}
+
+void LinkTest::typePkTest()
+{
+  using Mdt::CableList::LinkTypePk;
+  using Mdt::CableList::LinkType;
+
+  /*
+   * Constructions
+   */
+  // Default constructed
+  LinkTypePk pk;
+  QVERIFY(pk.isNull());
+  QVERIFY(pk.type() == LinkType::Undefined);
+  QVERIFY(pk.code().isEmpty());
+  // Construct with a type
+  LinkTypePk pk2(LinkType::CableLink);
+  QVERIFY(!pk2.isNull());
+  QVERIFY(pk2.type() == LinkType::CableLink);
+  QCOMPARE(pk2.code(), QString("CABLELINK"));
+  /*
+   * Set
+   */
+  QVERIFY(pk.isNull());
+  pk.setType(LinkType::CableLink);
+  QVERIFY(!pk.isNull());
+  QVERIFY(pk.type() == LinkType::CableLink);
+  QCOMPARE(pk.code(), QString("CABLELINK"));
+  /*
+   * Clear
+   */
+  QVERIFY(!pk.isNull());
+  pk.clear();
+  QVERIFY(pk.isNull());
+  QVERIFY(pk.type() == LinkType::Undefined);
+  QVERIFY(pk.code().isEmpty());
+  /*
+   * Get from code
+   */
+  pk = LinkTypePk::fromCode("CABLELINK");
+  QVERIFY(!pk.isNull());
+  QVERIFY(pk.type() == LinkType::CableLink);
+  QCOMPARE(pk.code(), QString("CABLELINK"));
+  /*
+   * Get from QVariant
+   */
+  pk = LinkTypePk::fromQVariant(QVariant());
+  QVERIFY(pk.isNull());
+  pk = LinkTypePk::fromQVariant("CABLELINK");
+  QVERIFY(!pk.isNull());
+  QVERIFY(pk.type() == LinkType::CableLink);
+}
+
+void LinkTest::typeCodeTest()
+{
+  using Mdt::CableList::LinkTypePk;
+  using Mdt::CableList::LinkType;
+
+  /*
+   * Link type -> code
+   */
+  QVERIFY(LinkTypePk(LinkType::Undefined).code().isEmpty());
+  QCOMPARE(LinkTypePk(LinkType::CableLink).code(), QString("CABLELINK"));
+  QCOMPARE(LinkTypePk(LinkType::Connection).code(), QString("CONNECTION"));
+  QCOMPARE(LinkTypePk(LinkType::InternalLink).code(), QString("INTERNLINK"));
+  QCOMPARE(LinkTypePk(LinkType::TestLink).code(), QString("TESTLINK"));
+  /*
+   * Code -> link type
+   */
+  QVERIFY(LinkTypePk::fromCode("").type() == LinkType::Undefined);
+  QVERIFY(LinkTypePk::fromCode("CABLELINK").type() == LinkType::CableLink);
+  QVERIFY(LinkTypePk::fromCode("CONNECTION").type() == LinkType::Connection);
+  QVERIFY(LinkTypePk::fromCode("INTERNLINK").type() == LinkType::InternalLink);
+  QVERIFY(LinkTypePk::fromCode("TESTLINK").type() == LinkType::TestLink);
+}
+
+void LinkTest::typeModelTest()
+{
+  using Mdt::CableList::LinkTypeModel;
+  using Mdt::CableList::LinkTypePk;
+  using Mdt::CableList::LinkType;
+
+  LinkTypePk pk;
+  LinkTypeModel m(pvDatabase);
+
+  m.setLocale(QLocale::English);
+  /*
+   * Initial state
+   */
+  QCOMPARE(m.rowCount(), 4);
+  /*
+   * Get row for link type
+   */
+  QCOMPARE(m.row(LinkType::Undefined), -1);
+  QCOMPARE(m.row(LinkType::CableLink), 0);
+  QCOMPARE(m.row(LinkType::Connection), 1);
+  QCOMPARE(m.row(LinkType::InternalLink), 2);
+  QCOMPARE(m.row(LinkType::TestLink), 3);
+  /*
+   * Get row for link type PK
+   */
+  QCOMPARE(m.row(LinkTypePk(LinkType::Undefined)), -1);
+  QCOMPARE(m.row(LinkTypePk(LinkType::CableLink)), 0);
+  QCOMPARE(m.row(LinkTypePk(LinkType::Connection)), 1);
+  QCOMPARE(m.row(LinkTypePk(LinkType::InternalLink)), 2);
+  QCOMPARE(m.row(LinkTypePk(LinkType::TestLink)), 3);
+  /*
+   * Get PK at row
+   */
+  QVERIFY(m.primaryKey(-1).type() == LinkType::Undefined);
+  QVERIFY(m.primaryKey(0).type() == LinkType::CableLink);
+  QVERIFY(m.primaryKey(1).type() == LinkType::Connection);
+  QVERIFY(m.primaryKey(2).type() == LinkType::InternalLink);
+  QVERIFY(m.primaryKey(3).type() == LinkType::TestLink);
+  /*
+   * Get unit
+   */
+  QVERIFY(m.unit(-1).isEmpty());
+  QCOMPARE(m.unit(0), QString("Ohm"));
+  QCOMPARE(m.unit(1), QString("Ohm"));
+  QCOMPARE(m.unit(2), QString("Ohm"));
+  QCOMPARE(m.unit(3), QString("Ohm"));
 }
 
 void LinkTest::linkPkTest()

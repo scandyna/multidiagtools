@@ -184,19 +184,19 @@ void mdtClAutoConnectionTest::checkOrBuildConnectionLinkListByNameTest()
   QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria, &linkDataList, &versionPk, &modificationPk));
   QCOMPARE(linkDataList.size(), 5);
   QVERIFY(!linkDataList.at(0).pk().isNull());
-  QVERIFY(linkDataList.at(0).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
+  QVERIFY(linkDataList.at(0).keyData().linkTypeFk().type() == LinkType::Connection);
   QVERIFY(linkDataList.at(0).keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   QVERIFY(!linkDataList.at(1).pk().isNull());
-  QVERIFY(linkDataList.at(1).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
+  QVERIFY(linkDataList.at(1).keyData().linkTypeFk().type() == LinkType::Connection);
   QVERIFY(linkDataList.at(1).keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   QVERIFY(!linkDataList.at(2).pk().isNull());
-  QVERIFY(linkDataList.at(2).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
+  QVERIFY(linkDataList.at(2).keyData().linkTypeFk().type() == LinkType::Connection);
   QVERIFY(linkDataList.at(2).keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   QVERIFY(!linkDataList.at(3).pk().isNull());
-  QVERIFY(linkDataList.at(3).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
+  QVERIFY(linkDataList.at(3).keyData().linkTypeFk().type() == LinkType::Connection);
   QVERIFY(linkDataList.at(3).keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   QVERIFY(!linkDataList.at(4).pk().isNull());
-  QVERIFY(linkDataList.at(4).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
+  QVERIFY(linkDataList.at(4).keyData().linkTypeFk().type() == LinkType::Connection);
   QVERIFY(linkDataList.at(4).keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   /*
    * Setup 2 sets of unit connections:
@@ -222,13 +222,13 @@ void mdtClAutoConnectionTest::checkOrBuildConnectionLinkListByNameTest()
   QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria, &linkDataList, &versionPk, &modificationPk));
   QCOMPARE(linkDataList.size(), 3);
   QVERIFY(!linkDataList.at(0).pk().isNull());
-  QVERIFY(linkDataList.at(0).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
+  QVERIFY(linkDataList.at(0).keyData().linkTypeFk().type() == LinkType::Connection);
   QVERIFY(linkDataList.at(0).keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   QVERIFY(!linkDataList.at(1).pk().isNull());
-  QVERIFY(linkDataList.at(1).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
+  QVERIFY(linkDataList.at(1).keyData().linkTypeFk().type() == LinkType::Connection);
   QVERIFY(linkDataList.at(1).keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   QVERIFY(!linkDataList.at(2).pk().isNull());
-  QVERIFY(linkDataList.at(2).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
+  QVERIFY(linkDataList.at(2).keyData().linkTypeFk().type() == LinkType::Connection);
   QVERIFY(linkDataList.at(2).keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   /*
    * Setup 2 sets of unit connections:
@@ -254,13 +254,13 @@ void mdtClAutoConnectionTest::checkOrBuildConnectionLinkListByNameTest()
   QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria, &linkDataList, &versionPk, &modificationPk));
   QCOMPARE(linkDataList.size(), 3);
   QVERIFY(!linkDataList.at(0).pk().isNull());
-  QVERIFY(linkDataList.at(0).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
+  QVERIFY(linkDataList.at(0).keyData().linkTypeFk().type() == LinkType::Connection);
   QVERIFY(linkDataList.at(0).keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   QVERIFY(!linkDataList.at(1).pk().isNull());
-  QVERIFY(linkDataList.at(1).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
+  QVERIFY(linkDataList.at(1).keyData().linkTypeFk().type() == LinkType::Connection);
   QVERIFY(linkDataList.at(1).keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   QVERIFY(!linkDataList.at(2).pk().isNull());
-  QVERIFY(linkDataList.at(2).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
+  QVERIFY(linkDataList.at(2).keyData().linkTypeFk().type() == LinkType::Connection);
   QVERIFY(linkDataList.at(2).keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   /*
    * Setup 2 sets of unit connections:
@@ -286,13 +286,13 @@ void mdtClAutoConnectionTest::checkOrBuildConnectionLinkListByNameTest()
   QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria, &linkDataList, &versionPk, &modificationPk));
   QCOMPARE(linkDataList.size(), 3);
   QVERIFY(!linkDataList.at(0).pk().isNull());
-  QVERIFY(linkDataList.at(0).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
+  QVERIFY(linkDataList.at(0).keyData().linkTypeFk().type() == LinkType::Connection);
   QVERIFY(linkDataList.at(0).keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   QVERIFY(!linkDataList.at(1).pk().isNull());
-  QVERIFY(linkDataList.at(1).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
+  QVERIFY(linkDataList.at(1).keyData().linkTypeFk().type() == LinkType::Connection);
   QVERIFY(linkDataList.at(1).keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   QVERIFY(!linkDataList.at(2).pk().isNull());
-  QVERIFY(linkDataList.at(2).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
+  QVERIFY(linkDataList.at(2).keyData().linkTypeFk().type() == LinkType::Connection);
   QVERIFY(linkDataList.at(2).keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   /*
    * Setup 2 sets of unit connections:
@@ -318,7 +318,7 @@ void mdtClAutoConnectionTest::checkOrBuildConnectionLinkListByNameTest()
   QVERIFY(ac.checkOrBuildConnectionLinkListByName(ucnxAlist, ucnxBlist, criteria, &linkDataList, &versionPk, &modificationPk));
   QCOMPARE(linkDataList.size(), 1);
   QVERIFY(!linkDataList.at(0).pk().isNull());
-  QVERIFY(linkDataList.at(0).keyData().linkTypeFk().type() == mdtClLinkType_t::Connection);
+  QVERIFY(linkDataList.at(0).keyData().linkTypeFk().type() == LinkType::Connection);
   QVERIFY(linkDataList.at(0).keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
 }
 

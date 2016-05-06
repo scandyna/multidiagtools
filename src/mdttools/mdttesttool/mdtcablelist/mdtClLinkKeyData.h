@@ -21,7 +21,6 @@
 #ifndef MDT_CL_LINK_KEY_DATA_H
 #define MDT_CL_LINK_KEY_DATA_H
 
-#include "mdtClLinkTypeData.h"
 #include "mdtClLinkDirectionData.h"
 #include "mdtClArticleLinkKeyData.h"
 // #include "mdtClLinkVersionKeyData.h"
@@ -32,52 +31,12 @@
 #include "Mdt/CableList/LinkVersionPk.h"  /// \todo update once migrated
 #include "Mdt/CableList/ModificationPk.h" /// \todo update once migrated
 
+using Mdt::CableList::LinkType;       /// \todo Remove once migrated
+using Mdt::CableList::LinkTypePk;     /// \todo Remove once migrated
 using Mdt::CableList::LinkPk;         /// \todo Remove once migrated
 using Mdt::CableList::LinkVersionPk;  /// \todo Remove once migrated
 using Mdt::CableList::ModificationPk; /// \todo Remove once migrated
 using Mdt::CableList::ModificationType; /// \todo Remove once migrated
-
-/*! \brief Link primary key data
- *
- * Refers to Link_tbl
- */
-// struct mdtClLinkPkData
-// {
-//   /*! \brief Start connection ID (UnitConnectionStart_Id_FK)
-//    */
-//   QVariant connectionStartId;
-// 
-//   /*! \brief End connection ID (UnitConnectionEnd_Id_FK)
-//    */
-//   QVariant connectionEndId;
-// 
-//   /*! \brief Link version FK (Version_FK)
-//    */
-//   mdtClLinkVersionPkData versionFk;
-// 
-//   /*! \brief Link modification FK (Modification_Code_FK)
-//    */
-//   mdtClModificationPkData modificationFk;
-// 
-//   /*! \brief Check if primary key is null
-//    *
-//    * Primary key is null if one of the connection ID or versionFk or modificationFk is null
-//    */
-//   bool isNull() const
-//   {
-//     return (connectionStartId.isNull() || connectionEndId.isNull() || versionFk.isNull() || modificationFk.isNull());
-//   }
-// 
-//   /*! \brief Clear primary key
-//    */
-//   void clear()
-//   {
-//     connectionStartId.clear();
-//     connectionEndId.clear();
-//     versionFk.clear();
-//     modificationFk.clear();
-//   }
-// };
 
 /*! \brief Link key data
  *
@@ -88,7 +47,7 @@ struct mdtClLinkKeyData
  private:
 
   LinkPk pvPk;
-  mdtClLinkTypeKeyData pvLinkTypeFk;
+  LinkTypePk pvLinkTypeFk;
   mdtClLinkDirectionKeyData pvLinkDirectionFk;
   mdtClArticleLinkPkData pvArticleLinkFk;
   QVariant pvWireId;
@@ -112,7 +71,7 @@ struct mdtClLinkKeyData
 
   /*! \brief Set link type (LinkType_Code_FK)
    */
-  void setLinkType(mdtClLinkType_t t)
+  void setLinkType(LinkType t)
   {
     pvLinkTypeFk.setType(t);
   }
@@ -121,12 +80,12 @@ struct mdtClLinkKeyData
    */
   void setLinkTypeCode(const QVariant & c)
   {
-    pvLinkTypeFk.code = c;
+    pvLinkTypeFk = LinkTypePk::fromQVariant(c);
   }
 
   /*! \brief Get link type FK (LinkType_Code_FK)
    */
-  mdtClLinkTypeKeyData linkTypeFk() const
+  LinkTypePk linkTypeFk() const
   {
     return pvLinkTypeFk;
   }

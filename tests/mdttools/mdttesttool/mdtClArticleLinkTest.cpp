@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -61,7 +61,7 @@ void mdtClArticleLinkTest::articleLinkDataTest()
   mdtClArticleLinkKeyData key;
   mdtClArticleLinkData data;
   mdtClArticleConnectionKeyData acKey;
-  mdtClLinkTypeKeyData ltKey;
+//   mdtClLinkTypeKeyData ltKey;
   mdtClLinkDirectionKeyData ldKey;
 
   /*
@@ -89,7 +89,7 @@ void mdtClArticleLinkTest::articleLinkDataTest()
   key.pk.connectionEndId = 2;
   QVERIFY(!key.pk.isNull());
   QVERIFY(key.isNull());
-  key.setLinkType(mdtClLinkType_t::CableLink);
+  key.setLinkType(LinkType::CableLink);
   QVERIFY(key.isNull());
   key.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
   QVERIFY(!key.isNull());
@@ -104,7 +104,7 @@ void mdtClArticleLinkTest::articleLinkDataTest()
 //   key.connectionEndFk.connectionTypeFk.setType(mdtClConnectionType_t::Socket);
 //   QVERIFY(!key.connectionEndFk.isNull());
 //   QVERIFY(key.isNull());
-//   key.linkTypeFk.setType(mdtClLinkType_t::CableLink);
+//   key.linkTypeFk.setType(LinkType::CableLink);
 //   QVERIFY(key.isNull());
 //   key.linkDirectionFk.setDirection(mdtClLinkDirection_t::Bidirectional);
 //   QVERIFY(!key.isNull());
@@ -126,7 +126,7 @@ void mdtClArticleLinkTest::articleLinkDataTest()
   pk.connectionStartId = 5;
   pk.connectionEndId = 6;
   key.pk = pk;
-  key.setLinkType(mdtClLinkType_t::CableLink);
+  key.setLinkType(LinkType::CableLink);
   key.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
   QVERIFY(!key.isNull());
 //   key.clear();
@@ -138,7 +138,7 @@ void mdtClArticleLinkTest::articleLinkDataTest()
 //   key.connectionEndFk.articleId = 20;
 //   key.connectionEndFk.connectionTypeFk.setType(mdtClConnectionType_t::Socket);
 //   QVERIFY(!key.connectionEndFk.isNull());
-//   key.linkTypeFk.setType(mdtClLinkType_t::CableLink);
+//   key.linkTypeFk.setType(LinkType::CableLink);
 //   key.linkDirectionFk.setDirection(mdtClLinkDirection_t::Bidirectional);
 //   QVERIFY(!key.isNull());
   data.setKeyData(key);
@@ -153,15 +153,15 @@ void mdtClArticleLinkTest::articleLinkDataTest()
   data.setConnectionStartFk(acKey);
   acKey.id = 11;
   data.setConnectionEndFk(acKey);
-  data.setLinkType(mdtClLinkType_t::CableLink);
+  data.setLinkType(LinkType::CableLink);
   QCOMPARE(data.keyData().pk.connectionStartId, QVariant(10));
   QCOMPARE(data.keyData().pk.connectionEndId, QVariant(11));
-  QVERIFY(data.linkType() == mdtClLinkType_t::CableLink);
+  QVERIFY(data.linkType() == LinkType::CableLink);
   QVERIFY(data.linkDirection() == mdtClLinkDirection_t::Bidirectional);
   // Update link type and direction
-  data.setLinkType(mdtClLinkType_t::Connection);
+  data.setLinkType(LinkType::Connection);
   data.setLinkDirection(mdtClLinkDirection_t::StartToEnd);
-  QVERIFY(data.linkType() == mdtClLinkType_t::Connection);
+  QVERIFY(data.linkType() == LinkType::Connection);
   QVERIFY(data.linkDirection() == mdtClLinkDirection_t::StartToEnd);
   // Clear
   data.clear();
@@ -191,7 +191,7 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
   pk.connectionStartId = 21;
   pk.connectionEndId = 22;
   data.setPkData(pk);
-  data.setLinkType(mdtClLinkType_t::CableLink);
+  data.setLinkType(LinkType::CableLink);
   data.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
   data.indetification = "Link 21-22";
   data.sinceVersion = 1.0;
@@ -205,7 +205,7 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
   QVERIFY(!data.isNull());
   QCOMPARE(data.keyData().pk.connectionStartId, QVariant(21));
   QCOMPARE(data.keyData().pk.connectionEndId, QVariant(22));
-  QVERIFY(data.linkType() == mdtClLinkType_t::CableLink);
+  QVERIFY(data.linkType() == LinkType::CableLink);
   QVERIFY(data.linkDirection() == mdtClLinkDirection_t::Bidirectional);
   QCOMPARE(data.indetification, QVariant("Link 21-22"));
   ///QCOMPARE(data.sinceVersion, QVariant(1.0));
@@ -215,7 +215,7 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
   QVERIFY(!alnk.hasRelatedLinks(pk, ok));
   QVERIFY(ok);
   // Update article link
-  data.setLinkType(mdtClLinkType_t::InternalLink);
+  data.setLinkType(LinkType::InternalLink);
   data.setLinkDirection(mdtClLinkDirection_t::StartToEnd);
   data.indetification = "Link 21-22 edited";
   data.sinceVersion = 1.1;
@@ -229,7 +229,7 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
   QVERIFY(!data.isNull());
   QCOMPARE(data.keyData().pk.connectionStartId, QVariant(21));
   QCOMPARE(data.keyData().pk.connectionEndId, QVariant(22));
-  QVERIFY(data.linkType() == mdtClLinkType_t::InternalLink);
+  QVERIFY(data.linkType() == LinkType::InternalLink);
   QVERIFY(data.linkDirection() == mdtClLinkDirection_t::StartToEnd);
   QCOMPARE(data.indetification, QVariant("Link 21-22 edited"));
   ///QCOMPARE(data.sinceVersion, QVariant(1.1));
@@ -277,28 +277,28 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
 //   aLinkPk.connectionStartId = 10;
 //   aLinkPk.connectionEndId = 11;
 //   aLinkData.setPkData(aLinkPk);
-//   aLinkData.setLinkType(mdtClLinkType_t::CableLink);
+//   aLinkData.setLinkType(LinkType::CableLink);
 //   aLinkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
 //   QVERIFY(alnk.addLink(aLinkData));
 //   aLinkData.clear();
 //   aLinkPk.connectionStartId = 12;
 //   aLinkPk.connectionEndId = 13;
 //   aLinkData.setPkData(aLinkPk);
-//   aLinkData.setLinkType(mdtClLinkType_t::CableLink);
+//   aLinkData.setLinkType(LinkType::CableLink);
 //   aLinkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
 //   QVERIFY(alnk.addLink(aLinkData));
 //   aLinkData.clear();
 //   aLinkPk.connectionStartId = 14;
 //   aLinkPk.connectionEndId = 15;
 //   aLinkData.setPkData(aLinkPk);
-//   aLinkData.setLinkType(mdtClLinkType_t::InternalLink);
+//   aLinkData.setLinkType(LinkType::InternalLink);
 //   aLinkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
 //   QVERIFY(alnk.addLink(aLinkData));
 //   aLinkData.clear();
 //   aLinkPk.connectionStartId = 16;
 //   aLinkPk.connectionEndId = 17;
 //   aLinkData.setPkData(aLinkPk);
-//   aLinkData.setLinkType(mdtClLinkType_t::InternalLink);
+//   aLinkData.setLinkType(LinkType::InternalLink);
 //   aLinkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
 //   QVERIFY(alnk.addLink(aLinkData));
 //   /*

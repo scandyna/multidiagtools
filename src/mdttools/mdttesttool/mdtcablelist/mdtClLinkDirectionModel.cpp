@@ -134,21 +134,21 @@ QString mdtClLinkDirectionModel::pictureAscii(int row)
   return pa;
 }
 
-void mdtClLinkDirectionModel::setLinkType(mdtClLinkType_t lt)
+void mdtClLinkDirectionModel::setLinkType(LinkType lt)
 {
   QString sql = pvBaseSql;
 
   switch(lt){
-    case mdtClLinkType_t::CableLink:
-    case mdtClLinkType_t::Connection:
-    case mdtClLinkType_t::InternalLink:
-    case mdtClLinkType_t::TestLink:
+    case LinkType::CableLink:
+    case LinkType::Connection:
+    case LinkType::InternalLink:
+    case LinkType::TestLink:
       sql += " WHERE Code_PK = 'BID'";
       break;
 //     case mdtClLinkType_t::Diode:
 //       sql += " WHERE Code_PK = 'STE' OR Code_PK = 'ETS'";
 //       break;
-    case mdtClLinkType_t::Undefined:
+    case LinkType::Undefined:
       sql += " WHERE Code_PK = ''";
       break;
   }

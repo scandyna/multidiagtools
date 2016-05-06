@@ -62,7 +62,7 @@ struct mdtClLinkData
 
   /*! \brief Set link type (LinkType_Code_FK)
    */
-  void setLinkType(mdtClLinkType_t t)
+  void setLinkType(LinkType t)
   {
     pvKeyData.setLinkType(t);
   }

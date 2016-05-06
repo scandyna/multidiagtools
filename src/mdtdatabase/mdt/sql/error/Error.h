@@ -24,7 +24,12 @@
 #include "mdtError.h"
 #include <QSqlError>
 
+/*! \brief Get a mdtError from last error of given query
+ */
 #define ErrorFromQSqlQuery(query) mdt::sql::error::fromQSqlQuery(query, __FILE__, __LINE__)
+
+/*! \brief Get a mdtError from last error of given database
+ */
 #define ErrorFromQSqlDatabase(db) mdt::sql::error::fromQSqlDatabase(db, __FILE__, __LINE__)
 
 class QSqlQuery;
@@ -38,10 +43,14 @@ namespace mdt{ namespace sql{ namespace error{
   mdtError fromQSqlError(const QSqlError & sqlError);
 
   /*! \brief Get a mdtError from last error of given query
+   *
+   * \sa ErrorFromQSqlQuery()
    */
   mdtError fromQSqlQuery(const QSqlQuery & query, const QString & file, int line);
 
   /*! \brief Get a mdtError from last error of given database
+   *
+   * \sa ErrorFromQSqlDatabase()
    */
   mdtError fromQSqlDatabase(const QSqlDatabase & db, const QString & file, int line);
 

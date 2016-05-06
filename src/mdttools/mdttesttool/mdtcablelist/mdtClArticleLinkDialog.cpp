@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtClArticleLinkDialog.h"
 #include "mdtClArticleConnectionSelectionDialog.h"
-#include "mdtClLinkTypeModel.h"
+#include "Mdt/CableList/LinkTypeModel.h"  /// \todo update once migrated
 #include "mdtClLinkDirectionModel.h"
 #include <QSqlQueryModel>
 #include <QSqlRecord>
@@ -35,6 +35,8 @@
 
 #include <QDebug>
 
+using Mdt::CableList::LinkTypeModel;   /// \todo Remove once migrated
+
 mdtClArticleLinkDialog::mdtClArticleLinkDialog(QWidget *parent, QSqlDatabase db, QVariant articleId)
  : QDialog(parent)
 {
@@ -46,7 +48,7 @@ mdtClArticleLinkDialog::mdtClArticleLinkDialog(QWidget *parent, QSqlDatabase db,
   connect(pbStartConnection, SIGNAL(clicked()), this, SLOT(selectStartConnection()));
   connect(pbEndConnection, SIGNAL(clicked()), this, SLOT(selectEndConnection()));
   // Setup link type
-  pvLinkTypeModel = new mdtClLinkTypeModel(this, db);
+  pvLinkTypeModel = new LinkTypeModel(this, db);
   cbLinkType->setModel(pvLinkTypeModel);
   cbLinkType->setModelColumn(1);
   cbLinkType->setCurrentIndex(-1);
@@ -78,11 +80,11 @@ void mdtClArticleLinkDialog::setConnectionEditionLocked(bool lock)
   pbEndConnection->setEnabled(!lock);
 }
 
-void mdtClArticleLinkDialog::setLinkType(mdtClLinkType_t t)
+void mdtClArticleLinkDialog::setLinkType(LinkType type)
 {
   int row;
 
-  row = pvLinkTypeModel->row(t);
+  row = pvLinkTypeModel->row(type);
   cbLinkType->setCurrentIndex(row);
 }
 
@@ -137,8 +139,8 @@ void mdtClArticleLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
     return;
   }
   // We must update available directions regarding link type
-  auto key = pvLinkTypeModel->keyData(row);
-  pvLinkDirectionModel->setLinkType(key.type());
+  auto pk = pvLinkTypeModel->primaryKey(row);
+  pvLinkDirectionModel->setLinkType(pk.type());
   if(pvLinkDirectionModel->rowCount() > 1){
     cbLinkDirection->setEnabled(true);
   }else{
@@ -147,7 +149,7 @@ void mdtClArticleLinkDialog::onCbLinkTypeCurrentIndexChanged(int row)
   // Update displayed unit (V, Ohm, ...)
   lbUnit->setText("[" + pvLinkTypeModel->unit(row) + "]");
   // Update link data
-  pvLinkData.setLinkType(key.type());
+  pvLinkData.setLinkType(pk.type());
 }
 
 void mdtClArticleLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)

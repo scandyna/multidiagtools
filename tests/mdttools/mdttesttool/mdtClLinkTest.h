@@ -40,8 +40,8 @@ class mdtClLinkTest : public mdtTest
   void initTestCase();
   void cleanupTestCase();
 
-  void linkTypeDataTest();
-  void linkTypeModelTest();
+//   void linkTypeDataTest();
+//   void linkTypeModelTest();
 
   void linkDirectionDataTest();
   void linkDirectionModelTest();

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,11 +23,17 @@
 
 #include "ui_mdtClArticleLinkDialog.h"
 #include "mdtClArticleLinkData.h"
-#include "mdtClLinkTypeData.h"
+
 #include "mdtClLinkDirectionData.h"
+
 #include <QDialog>
 #include <QVariant>
 #include <QSqlDatabase>
+
+/// \todo Update once migrated
+namespace Mdt{ namespace CableList{
+  class LinkTypeModel;
+}}
 
 class mdtClLinkTypeModel;
 class mdtClLinkDirectionModel;
@@ -56,7 +62,7 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
 
   /*! \brief Set link type
    */
-  void setLinkType(mdtClLinkType_t t);
+  void setLinkType(LinkType type);
 
   /*! \brief Set link direction
    */
@@ -136,7 +142,7 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
   mdtClArticleLinkData pvLinkData;
   QSqlDatabase pvDatabase;
   QVariant pvArticleId;
-  mdtClLinkTypeModel *pvLinkTypeModel;
+  Mdt::CableList::LinkTypeModel *pvLinkTypeModel; /// \todo update once migrated
   mdtClLinkDirectionModel *pvLinkDirectionModel;
   QSqlQueryModel *pvArticleConnectionModel;
 };

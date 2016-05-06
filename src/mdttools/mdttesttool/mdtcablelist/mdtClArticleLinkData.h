@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -77,14 +77,14 @@ struct mdtClArticleLinkData
 
   /*! \brief Set link type
    */
-  void setLinkType(mdtClLinkType_t t)
+  void setLinkType(LinkType t)
   {
     pvKeyData.setLinkType(t);
   }
 
   /*! \brief Get link type
    */
-  mdtClLinkType_t linkType() const
+  LinkType linkType() const
   {
     return pvKeyData.linkTypeFk().type();
   }

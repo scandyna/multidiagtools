@@ -500,7 +500,7 @@ void mdtCableListTestScenario::createTestArticleLinks()
   pk.connectionStartId = 10;
   pk.connectionEndId = 20;
   data.setPkData(pk);
-  data.setLinkType(mdtClLinkType_t::CableLink);
+  data.setLinkType(LinkType::CableLink);
   data.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
   QVERIFY(alnk.addLink(data));
   // Add cable link 21 <--> 20
@@ -509,7 +509,7 @@ void mdtCableListTestScenario::createTestArticleLinks()
   pk.connectionStartId = 21;
   pk.connectionEndId = 20;
   data.setPkData(pk);
-  data.setLinkType(mdtClLinkType_t::CableLink);
+  data.setLinkType(LinkType::CableLink);
   data.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
   QVERIFY(alnk.addLink(data));
   // Add internal link 21 <--> 22
@@ -518,7 +518,7 @@ void mdtCableListTestScenario::createTestArticleLinks()
   pk.connectionStartId = 21;
   pk.connectionEndId = 22;
   data.setPkData(pk);
-  data.setLinkType(mdtClLinkType_t::InternalLink);
+  data.setLinkType(LinkType::InternalLink);
   data.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
   QVERIFY(alnk.addLink(data));
   /*
@@ -1357,7 +1357,7 @@ void mdtCableListTestScenario::createTestLinks()
 //   linkModificationFk.setModificationFk(modificationFk);
   // Setup link data
   linkData.setPk(linkPk);
-  linkData.setLinkType(mdtClLinkType_t::CableLink);
+  linkData.setLinkType(LinkType::CableLink);
   linkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
   linkData.identification = "Link 10000<->10001";
   // Add link
@@ -1373,7 +1373,7 @@ void mdtCableListTestScenario::createTestLinks()
   QVERIFY(!linkData.isNull());
   QCOMPARE(linkData.pk().connectionStart().id(), 10000);
   QCOMPARE(linkData.pk().connectionEnd().id(), 10001);
-  QVERIFY(linkData.keyData().linkTypeFk().type() == mdtClLinkType_t::CableLink);
+  QVERIFY(linkData.keyData().linkTypeFk().type() == LinkType::CableLink);
   QVERIFY(linkData.keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   QVERIFY(linkData.keyData().articleLinkFk().isNull());
   QVERIFY(linkData.keyData().wireId().isNull());
@@ -1412,7 +1412,7 @@ void mdtCableListTestScenario::createTestLinks()
 //   linkModificationFk.setModificationFk(modificationFk);
   // Setup link data
   linkData.setPk(linkPk);
-  linkData.setLinkType(mdtClLinkType_t::CableLink);
+  linkData.setLinkType(LinkType::CableLink);
   linkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
   linkData.identification = "Link 10001<->20000";
   // Add link
@@ -1428,7 +1428,7 @@ void mdtCableListTestScenario::createTestLinks()
   QVERIFY(!linkData.isNull());
   QCOMPARE(linkData.pk().connectionStart().id(), 10001);
   QCOMPARE(linkData.pk().connectionEnd().id(), 20000);
-  QVERIFY(linkData.keyData().linkTypeFk().type() == mdtClLinkType_t::CableLink);
+  QVERIFY(linkData.keyData().linkTypeFk().type() == LinkType::CableLink);
   QVERIFY(linkData.keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   QVERIFY(linkData.keyData().articleLinkFk().isNull());
   QVERIFY(linkData.keyData().wireId().isNull());
@@ -1467,7 +1467,7 @@ void mdtCableListTestScenario::createTestLinks()
 //   linkModificationFk.setModificationFk(modificationFk);
   // Setup link data
   linkData.setPk(linkPk);
-  linkData.setLinkType(mdtClLinkType_t::CableLink);
+  linkData.setLinkType(LinkType::CableLink);
   linkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
   linkData.identification = "Link 30005<->40005";
   // Add link
@@ -1483,7 +1483,7 @@ void mdtCableListTestScenario::createTestLinks()
   QVERIFY(!linkData.isNull());
   QCOMPARE(linkData.pk().connectionStart().id(), 30005);
   QCOMPARE(linkData.pk().connectionEnd().id(), 40005);
-  QVERIFY(linkData.keyData().linkTypeFk().type() == mdtClLinkType_t::CableLink);
+  QVERIFY(linkData.keyData().linkTypeFk().type() == LinkType::CableLink);
   QVERIFY(linkData.keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   QVERIFY(linkData.keyData().articleLinkFk().isNull());
   QVERIFY(linkData.keyData().wireId().isNull());
@@ -1523,7 +1523,7 @@ void mdtCableListTestScenario::createTestLinks()
 //   linkModificationFk.setModificationFk(modificationFk);
   // Setup link data
   linkData.setPk(linkPk);
-  linkData.setLinkType(mdtClLinkType_t::CableLink);
+  linkData.setLinkType(LinkType::CableLink);
   linkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
   linkData.identification = "Link 40005<->50005";
   // Add link
@@ -1539,7 +1539,7 @@ void mdtCableListTestScenario::createTestLinks()
   QVERIFY(!linkData.isNull());
   QCOMPARE(linkData.pk().connectionStart().id(), 40005);
   QCOMPARE(linkData.pk().connectionEnd().id(), 50005);
-  QVERIFY(linkData.keyData().linkTypeFk().type() == mdtClLinkType_t::CableLink);
+  QVERIFY(linkData.keyData().linkTypeFk().type() == LinkType::CableLink);
   QVERIFY(linkData.keyData().linkDirectionFk().direction() == mdtClLinkDirection_t::Bidirectional);
   QVERIFY(linkData.keyData().articleLinkFk().isNull());
   QVERIFY(linkData.keyData().wireId().isNull());

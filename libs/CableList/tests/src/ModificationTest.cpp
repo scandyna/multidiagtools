@@ -70,6 +70,7 @@ void ModificationTest::pkTest()
   /*
    * Set
    */
+  QVERIFY(pk.isNull());
   pk.setType(ModificationType::New);
   QVERIFY(!pk.isNull());
   QVERIFY(pk.type() == ModificationType::New);

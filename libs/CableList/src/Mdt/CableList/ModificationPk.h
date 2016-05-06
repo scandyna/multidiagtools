@@ -23,6 +23,7 @@
 
 #include "ModificationType.h"
 #include <QString>
+#include <QLatin1String>
 #include <QVariant>
 
 namespace Mdt{ namespace CableList{
@@ -130,17 +131,17 @@ namespace Mdt{ namespace CableList{
      */
     static ModificationPk fromCode(const QString & code)
     {
-      QString c = code;
+      const QString c = code;
 
-      if(c == "NEW"){
+      if(c == QLatin1String("NEW")){
         return ModificationPk(ModificationType::New);
-      }else if(c == "REM"){
+      }else if(c == QLatin1String("REM")){
         return ModificationPk(ModificationType::Rem);
-      }else if(c == "MODNEW"){
+      }else if(c == QLatin1String("MODNEW")){
         return ModificationPk(ModificationType::ModNew);
-      }else if(c == "MODREM"){
+      }else if(c == QLatin1String("MODREM")){
         return ModificationPk(ModificationType::ModRem);
-      }else if(c == "EXISTS"){
+      }else if(c == QLatin1String("EXISTS")){
         return ModificationPk(ModificationType::Exists);
       }else{
         return ModificationPk(ModificationType::Undefined);

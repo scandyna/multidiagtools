@@ -1,26 +1,34 @@
-window_sizes 1280 960 414 860 907 0
+window_sizes 1280 960 372 902 907 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 2015362 // Graph
-    860 911 100 21 12 0
-  classdiagram_ref 1875586 // overview
-    860 911 90 18 0 0
-  classdiagram_ref 2291714 // Overview
-    120 106 100 4 0 0
   classdiagram_ref 2264962 // LinkedConnections
-    120 106 100 21 0 294
-  classdiagram_ref 2304898 // LinkData
-    860 907 100 4 0 0
-  active  classdiagram_ref 2311554 // Modification
-    860 907 100 4 0 0
+    120 106 100 21 0 0
+  classdiagram_ref 2318082 // LinkedConnectionModel
+    120 106 100 4 0 0
+  classdiagram_ref 2015362 // Graph
+    860 907 100 21 0 0
+  classdiagram_ref 2324866 // LinkKey
+    860 907 100 18 0 135
+  classdiagram_ref 2331394 // LinkDirection
+    120 106 100 4 0 0
+  classdiagram_ref 2318210 // LinkType
+    902 907 100 4 0 0
+  active  classdiagram_ref 2318338 // LinkTypeModel
+    902 907 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 3947650 // operator!=
+selected classdiagram_ref 2318338 // LinkTypeModel
 open
-  class_ref 2594178 // ModificationPk
-  class_ref 2587394 // LinkPk
+  classview_ref 1238274 // LinkBeam
+  classview_ref 1238402 // Cable
+  class_ref 2600962 // LinkType
+  operation_ref 3963010 // setLocale
+  class_ref 2614146 // LinkDirectionType
+  classrelation_ref 3009538 // <directional composition>
+  classview_ref 920450 // Graph
   
   package_ref 430082 // Dsp
+  classview_ref 503554 // Link
   classview_ref 1211650 // graph
 end
 end

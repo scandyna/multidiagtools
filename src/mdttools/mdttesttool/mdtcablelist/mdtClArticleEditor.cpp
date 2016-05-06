@@ -486,7 +486,7 @@ void mdtClArticleEditor::addLink()
     return;
   }
   // Setup and show dialog
-  dialog.setLinkType(mdtClLinkType_t::CableLink);
+  dialog.setLinkType(LinkType::CableLink);
   if(dialog.exec() != QDialog::Accepted){
     return;
   }

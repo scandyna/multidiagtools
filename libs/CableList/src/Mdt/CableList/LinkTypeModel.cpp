@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,62 +18,59 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtClLinkTypeModel.h"
+#include "LinkTypeModel.h"
+#include "mdt/sql/error/Error.h"
 #include <QSqlError>
 #include <QModelIndex>
 #include <QComboBox>
+#include <QSqlQuery>
 
-//#include <QDebug>
+namespace Mdt{ namespace CableList{
 
-mdtClLinkTypeModel::mdtClLinkTypeModel(QObject *parent, QSqlDatabase db, const QLocale &locale)
- : QSqlQueryModel(parent)
+LinkTypeModel::LinkTypeModel(QObject *parent, const QSqlDatabase & db)
+ : QSqlQueryModel(parent),
+   pvDatabase(db)
 {
-  QString sql;
-  QString fieldName;
+  setLocale(QLocale::system());
+}
 
-  // Select name field regarding language
+LinkTypeModel::LinkTypeModel(const QSqlDatabase & db)
+ : LinkTypeModel(nullptr, db)
+{
+}
+
+void LinkTypeModel::setLocale(const QLocale & locale)
+{
   switch(locale.language()){
     case QLocale::French:
-      fieldName = "NameFR";
+      pvNameFieldName = "NameFR";
       break;
     case QLocale::German:
-      fieldName = "NameDE";
+      pvNameFieldName = "NameDE";
       break;
     case QLocale::Italian:
-      fieldName = "NameIT";
+      pvNameFieldName = "NameIT";
       break;
     default:
-      fieldName = "NameEN";
+      pvNameFieldName = "NameEN";
   }
-  // Get text
-  sql = "SELECT Code_PK, " + fieldName + ", ValueUnit FROM LinkType_tbl ORDER BY " + fieldName + " ASC";
-  setQuery(sql, db);
+  updateQuery();
 }
 
-mdtClLinkTypeModel::mdtClLinkTypeModel(QSqlDatabase db, const QLocale &locale)
- : mdtClLinkTypeModel(nullptr, db, locale)
+int LinkTypeModel::row(LinkType type)
 {
+  return row(LinkTypePk(type));
 }
 
-int mdtClLinkTypeModel::row(mdtClLinkType_t t)
+int LinkTypeModel::row(LinkTypePk pk)
 {
-  mdtClLinkTypeKeyData key;
-
-  key.setType(t);
-
-  return row(key);
-}
-
-int mdtClLinkTypeModel::row(const mdtClLinkTypeKeyData & key)
-{
-  int row;
-
   if(isInError()){
     return -1;
   }
-  for(row = 0; row < rowCount(); ++row){
+  const int n = rowCount();
+  for(int row = 0; row < n; ++row){
     QModelIndex idx = index(row, 0);
-    if(data(idx) == key.code){
+    if(data(idx) == pk.code()){
       return row;
     }
   }
@@ -83,36 +80,35 @@ int mdtClLinkTypeModel::row(const mdtClLinkTypeKeyData & key)
   return -1;
 }
 
-mdtClLinkTypeKeyData mdtClLinkTypeModel::keyData(int row)
+LinkTypePk LinkTypeModel::primaryKey(int row)
 {
-  mdtClLinkTypeKeyData key;
+  LinkTypePk pk;
 
   if(row < 0){
-    return key;
+    return pk;
   }
   if(isInError()){
-    return key;
+    return pk;
   }
   QModelIndex idx = index(row, 0);
-  key.code = data(idx);
-  if(key.isNull()){
+  pk = LinkTypePk::fromQVariant( data(idx) );
+  if(pk.isNull()){
     QString msg = QString(tr("Could not find link type for row '%1'.")).arg(row);
-    pvLastError.setError(msg, mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClLinkTypeModel");
+    pvLastError = mdtErrorNewQ(msg, mdtError::Error, this);
     pvLastError.commit();
   }
 
-  return key;
+  return pk;
 }
 
-mdtClLinkTypeKeyData mdtClLinkTypeModel::currentKeyData(QComboBox *cb)
+LinkTypePk LinkTypeModel::currentPrimaryKey(const QComboBox * const cb)
 {
   Q_ASSERT(cb != nullptr);
 
-  return keyData(cb->currentIndex());
+  return primaryKey(cb->currentIndex());
 }
 
-QString mdtClLinkTypeModel::unit(int row)
+QString LinkTypeModel::unit(int row)
 {
   QString str;
 
@@ -126,27 +122,37 @@ QString mdtClLinkTypeModel::unit(int row)
   QModelIndex idx = index(row, 2);
   str = data(idx).toString();
   if(str.isEmpty()){
-    QString msg = QString(tr("Could not find unit type for row '%1'.")).arg(row);
-    pvLastError.setError(msg, mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClLinkTypeModel");
+    QString msg = QString(tr("Could not find unit for row '%1'.")).arg(row);
+    pvLastError = mdtErrorNewQ(msg, mdtError::Error, this);
     pvLastError.commit();
   }
 
   return str;
 }
 
+void LinkTypeModel::updateQuery()
+{
+  Q_ASSERT(!pvNameFieldName.isEmpty());
 
-bool mdtClLinkTypeModel::isInError()
+  QString sql;
+
+  sql = "SELECT Code_PK, " + pvNameFieldName + ", ValueUnit FROM LinkType_tbl ORDER BY " + pvNameFieldName + " ASC";
+  setQuery(sql, pvDatabase);
+}
+
+bool LinkTypeModel::isInError()
 {
   QSqlError sqlError = QSqlQueryModel::lastError();
 
   if(sqlError.isValid()){
-    pvLastError.setError(tr("A error occured on table 'LinkType_tbl'."), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClLinkTypeModel");
+    pvLastError = mdtErrorNewQ(tr("A error occured on table 'LinkType_tbl'."), mdtError::Error, this);
+    pvLastError.stackError(ErrorFromQSqlQuery(query()));
     pvLastError.commit();
     return true;
   }
 
   return false;
 }
+
+}} // namespace Mdt{ namespace CableList{
+

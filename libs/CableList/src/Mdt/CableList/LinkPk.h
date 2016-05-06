@@ -69,7 +69,7 @@ namespace Mdt{ namespace CableList{
      */
     constexpr void clearConnectionEnd() noexcept
     {
-      pvConnectionStart.clear();
+      pvConnectionEnd.clear();
     }
 
     /*! \brief Set end connection

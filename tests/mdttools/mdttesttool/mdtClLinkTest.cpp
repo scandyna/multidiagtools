@@ -71,110 +71,110 @@ void mdtClLinkTest::cleanupTestCase()
 {
 }
 
-void mdtClLinkTest::linkTypeDataTest()
-{
-  mdtClLinkTypeKeyData key;
+// void mdtClLinkTest::linkTypeDataTest()
+// {
+//   mdtClLinkTypeKeyData key;
+// 
+//   // Initial state
+//   QVERIFY(key.isNull());
+//   QVERIFY(key.type() == mdtClLinkType_t::Undefined);
+//   // Set CABLELINK code
+//   key.code = "CABLELINK";
+//   QVERIFY(!key.isNull());
+//   QVERIFY(key.type() == mdtClLinkType_t::CableLink);
+//   // Clear
+//   key.clear();
+//   QVERIFY(key.code.isNull());
+//   QVERIFY(key.isNull());
+//   QVERIFY(key.type() == mdtClLinkType_t::Undefined);
+//   // Set INTERNLINK code
+//   key.code = "INTERNLINK";
+//   QVERIFY(!key.isNull());
+//   QVERIFY(key.type() == mdtClLinkType_t::InternalLink);
+//   // Set CONNECTION code
+//   key.code = "CONNECTION";
+//   QVERIFY(!key.isNull());
+//   QVERIFY(key.type() == mdtClLinkType_t::Connection);
+//   // Set TESTLINK code
+//   key.code = "TESTLINK";
+//   QVERIFY(!key.isNull());
+//   QVERIFY(key.type() == mdtClLinkType_t::TestLink);
+//   // Clear
+//   key.clear();
+//   QVERIFY(key.code.isNull());
+//   QVERIFY(key.isNull());
+//   QVERIFY(key.type() == mdtClLinkType_t::Undefined);
+//   // Set CableLink type
+//   key.setType(mdtClLinkType_t::CableLink);
+//   QVERIFY(!key.isNull());
+//   QCOMPARE(key.code, QVariant("CABLELINK"));
+//   // Set InternalLink type
+//   key.setType(mdtClLinkType_t::InternalLink);
+//   QVERIFY(!key.isNull());
+//   QCOMPARE(key.code, QVariant("INTERNLINK"));
+//   // Set Connection type
+//   key.setType(mdtClLinkType_t::Connection);
+//   QVERIFY(!key.isNull());
+//   QCOMPARE(key.code, QVariant("CONNECTION"));
+//   // Set Undefined type
+//   key.setType(mdtClLinkType_t::Undefined);
+//   QVERIFY(key.code.isNull());
+//   QVERIFY(key.isNull());
+//   // Set TestLink type
+//   key.setType(mdtClLinkType_t::TestLink);
+//   QVERIFY(!key.isNull());
+//   QCOMPARE(key.code, QVariant("TESTLINK"));
+//   // Clear
+//   key.clear();
+//   QVERIFY(key.code.isNull());
+//   QVERIFY(key.isNull());
+//   QVERIFY(key.type() == mdtClLinkType_t::Undefined);
+// }
 
-  // Initial state
-  QVERIFY(key.isNull());
-  QVERIFY(key.type() == mdtClLinkType_t::Undefined);
-  // Set CABLELINK code
-  key.code = "CABLELINK";
-  QVERIFY(!key.isNull());
-  QVERIFY(key.type() == mdtClLinkType_t::CableLink);
-  // Clear
-  key.clear();
-  QVERIFY(key.code.isNull());
-  QVERIFY(key.isNull());
-  QVERIFY(key.type() == mdtClLinkType_t::Undefined);
-  // Set INTERNLINK code
-  key.code = "INTERNLINK";
-  QVERIFY(!key.isNull());
-  QVERIFY(key.type() == mdtClLinkType_t::InternalLink);
-  // Set CONNECTION code
-  key.code = "CONNECTION";
-  QVERIFY(!key.isNull());
-  QVERIFY(key.type() == mdtClLinkType_t::Connection);
-  // Set TESTLINK code
-  key.code = "TESTLINK";
-  QVERIFY(!key.isNull());
-  QVERIFY(key.type() == mdtClLinkType_t::TestLink);
-  // Clear
-  key.clear();
-  QVERIFY(key.code.isNull());
-  QVERIFY(key.isNull());
-  QVERIFY(key.type() == mdtClLinkType_t::Undefined);
-  // Set CableLink type
-  key.setType(mdtClLinkType_t::CableLink);
-  QVERIFY(!key.isNull());
-  QCOMPARE(key.code, QVariant("CABLELINK"));
-  // Set InternalLink type
-  key.setType(mdtClLinkType_t::InternalLink);
-  QVERIFY(!key.isNull());
-  QCOMPARE(key.code, QVariant("INTERNLINK"));
-  // Set Connection type
-  key.setType(mdtClLinkType_t::Connection);
-  QVERIFY(!key.isNull());
-  QCOMPARE(key.code, QVariant("CONNECTION"));
-  // Set Undefined type
-  key.setType(mdtClLinkType_t::Undefined);
-  QVERIFY(key.code.isNull());
-  QVERIFY(key.isNull());
-  // Set TestLink type
-  key.setType(mdtClLinkType_t::TestLink);
-  QVERIFY(!key.isNull());
-  QCOMPARE(key.code, QVariant("TESTLINK"));
-  // Clear
-  key.clear();
-  QVERIFY(key.code.isNull());
-  QVERIFY(key.isNull());
-  QVERIFY(key.type() == mdtClLinkType_t::Undefined);
-}
-
-void mdtClLinkTest::linkTypeModelTest()
-{
-  QLocale locale(QLocale::English);
-  mdtClLinkTypeModel m(pvDatabase, locale);
-  mdtClLinkTypeKeyData key;
-
-  // Initial state
-  QCOMPARE(m.rowCount(), 4);
-  // Check row of key
-  key.code = "CABLELINK";
-  QVERIFY(m.row(key) >= 0);
-  QCOMPARE(m.row(mdtClLinkType_t::CableLink), m.row(key));
-  key.code = "INTERNLINK";
-  QVERIFY(m.row(key) >= 0);
-  QCOMPARE(m.row(mdtClLinkType_t::InternalLink), m.row(key));
-  key.code = "CONNECTION";
-  QVERIFY(m.row(key) >= 0);
-  QCOMPARE(m.row(mdtClLinkType_t::Connection), m.row(key));
-  key.code = "TESTLINK";
-  QVERIFY(m.row(key) >= 0);
-  QCOMPARE(m.row(mdtClLinkType_t::TestLink), m.row(key));
-  key.code = "FAKE";
-  QVERIFY(m.row(key) < 0);
-  // Check getting key data of row
-  QVERIFY(m.keyData(-1).isNull());
-  QVERIFY(m.unit(-1).isEmpty());
-  QVERIFY(!m.keyData(0).isNull());
-  QVERIFY(!m.keyData(1).isNull());
-  QVERIFY(!m.keyData(2).isNull());
-  QVERIFY(!m.keyData(3).isNull());
-  QVERIFY(m.keyData(50).isNull());
-  key.code = "CABLELINK";
-  QCOMPARE(m.keyData(m.row(key)).code, QVariant("CABLELINK"));
-  QCOMPARE(m.unit(m.row(key)), QString("Ohm"));
-  key.code = "INTERNLINK";
-  QCOMPARE(m.keyData(m.row(key)).code, QVariant("INTERNLINK"));
-  QCOMPARE(m.unit(m.row(key)), QString("Ohm"));
-  key.code = "CONNECTION";
-  QCOMPARE(m.keyData(m.row(key)).code, QVariant("CONNECTION"));
-  QCOMPARE(m.unit(m.row(key)), QString("Ohm"));
-  key.code = "TESTLINK";
-  QCOMPARE(m.keyData(m.row(key)).code, QVariant("TESTLINK"));
-  QCOMPARE(m.unit(m.row(key)), QString("Ohm"));
-}
+// void mdtClLinkTest::linkTypeModelTest()
+// {
+//   QLocale locale(QLocale::English);
+//   mdtClLinkTypeModel m(pvDatabase, locale);
+//   mdtClLinkTypeKeyData key;
+// 
+//   // Initial state
+//   QCOMPARE(m.rowCount(), 4);
+//   // Check row of key
+//   key.code = "CABLELINK";
+//   QVERIFY(m.row(key) >= 0);
+//   QCOMPARE(m.row(mdtClLinkType_t::CableLink), m.row(key));
+//   key.code = "INTERNLINK";
+//   QVERIFY(m.row(key) >= 0);
+//   QCOMPARE(m.row(mdtClLinkType_t::InternalLink), m.row(key));
+//   key.code = "CONNECTION";
+//   QVERIFY(m.row(key) >= 0);
+//   QCOMPARE(m.row(mdtClLinkType_t::Connection), m.row(key));
+//   key.code = "TESTLINK";
+//   QVERIFY(m.row(key) >= 0);
+//   QCOMPARE(m.row(mdtClLinkType_t::TestLink), m.row(key));
+//   key.code = "FAKE";
+//   QVERIFY(m.row(key) < 0);
+//   // Check getting key data of row
+//   QVERIFY(m.keyData(-1).isNull());
+//   QVERIFY(m.unit(-1).isEmpty());
+//   QVERIFY(!m.keyData(0).isNull());
+//   QVERIFY(!m.keyData(1).isNull());
+//   QVERIFY(!m.keyData(2).isNull());
+//   QVERIFY(!m.keyData(3).isNull());
+//   QVERIFY(m.keyData(50).isNull());
+//   key.code = "CABLELINK";
+//   QCOMPARE(m.keyData(m.row(key)).code, QVariant("CABLELINK"));
+//   QCOMPARE(m.unit(m.row(key)), QString("Ohm"));
+//   key.code = "INTERNLINK";
+//   QCOMPARE(m.keyData(m.row(key)).code, QVariant("INTERNLINK"));
+//   QCOMPARE(m.unit(m.row(key)), QString("Ohm"));
+//   key.code = "CONNECTION";
+//   QCOMPARE(m.keyData(m.row(key)).code, QVariant("CONNECTION"));
+//   QCOMPARE(m.unit(m.row(key)), QString("Ohm"));
+//   key.code = "TESTLINK";
+//   QCOMPARE(m.keyData(m.row(key)).code, QVariant("TESTLINK"));
+//   QCOMPARE(m.unit(m.row(key)), QString("Ohm"));
+// }
 
 void mdtClLinkTest::linkDirectionDataTest()
 {

@@ -2,31 +2,30 @@ format 211
 
 classcanvas 128002 class_ref 2536962 // ShortestPath
   classdiagramsettings member_max_width 0 end
-  xyz 977 140 2000
+  xyz 41 36 2000
 end
 classcanvas 128130 class_ref 2537090 // LinkedConnections
   classdiagramsettings member_max_width 0 end
-  xyz 311 151 2000
+  xyz 401 159 2000
 end
 note 128514 "Create iterators, etc.."
-  xyzwh 41 172 2000 231 41
+  xyzwh 129 176 2000 231 41
 classcanvas 128770 class_ref 2566786 // UnitConnectionPkList
   classdiagramsettings member_max_width 0 end
-  xyz 562 42 2012
+  xyz 385 58 2012
 end
 relationcanvas 129026 relation_ref 2928770 // <directional composition>
-  geometry VH unfixed
-  from ref 128130 z 2013 to point 462 70
-  line 129154 z 2013 to ref 128770
+  decenter_begin 483
+  decenter_end 485
+  from ref 128130 z 2013 to ref 128770
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129282 relation_ref 2928898 // <directional composition>
-  from ref 128002 z 2013 to point 1128 72
-  line 129538 z 2013 to ref 128770
+  from ref 128002 z 2013 to ref 128770
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-line 128642 -_-_
+line 128642 -_-_ decenter_begin 585
   from ref 128514 z 2001 to ref 128130
 end

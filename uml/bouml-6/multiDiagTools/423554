@@ -1,6 +1,6 @@
 format 211
 "GraphPrivate" // Mdt::CableList::Path::GraphPrivate
-  revision 8
+  revision 10
   modified_by 2 "philippe"
   // class settings
   
@@ -286,15 +286,6 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
-
-      classrelation 2890754 // <directional composition>
-	relation 2873474 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 2890754 // <directional composition>
-	  b parent class_ref 1672962 // mdtClLinkPkData
-      end
     end
   end
 
@@ -355,7 +346,6 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
-
     end
   end
 end

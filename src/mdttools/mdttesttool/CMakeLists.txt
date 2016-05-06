@@ -101,8 +101,10 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClUnitConnectionSelectionDialog.cpp
           mdtcablelist/mdtClUnitEditor.cpp
           mdtcablelist/mdtClWireEditor.cpp
-          mdtcablelist/mdtClLinkTypeData.cpp
-          mdtcablelist/mdtClLinkTypeModel.cpp
+          
+#            mdtcablelist/mdtClLinkTypeData.cpp
+#           mdtcablelist/mdtClLinkTypeModel.cpp
+          
           mdtcablelist/mdtClLinkDirectionData.cpp
           mdtcablelist/mdtClLinkDirectionModel.cpp
           mdtcablelist/mdtClLinkData.cpp
@@ -134,6 +136,8 @@ add_library (mdttesttool${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
 target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtdevice${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdttools${MDTLIB_VERSION_SUFFIX}")
+# NOTE: used during mibration to libs
+target_link_libraries(mdttesttool${MDTLIB_VERSION_SUFFIX} "mdtcablelist${MDTLIB_VERSION_SUFFIX}")
 
 # Translations - We generate a .pro file, that simplify the usage of lupdate
 file(WRITE "${PROJECT_SOURCE_DIR}/../../../translations/mdttesttool.pro" "# Translations project file for lupdate/lrelease\n")

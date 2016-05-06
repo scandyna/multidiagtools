@@ -1,23 +1,11 @@
-format 209
+format 211
 
 classcanvas 128002 class_ref 1732482 // mdtClLinkModificationKeyData
   classdiagramsettings member_max_width 0 end
-  xyz 434 578 2000
-end
-classcanvas 128130 class_ref 1672962 // mdtClLinkPkData
-  classdiagramsettings member_max_width 0 end
-  xyz 48 52 2000
-end
-classcanvas 128386 class_ref 1679746 // mdtClLinkVersionPkData
-  classdiagramsettings member_max_width 0 end
-  xyz 31 329 2000
-end
-classcanvas 128642 class_ref 1693186 // mdtClModificationPkData
-  classdiagramsettings member_max_width 0 end
-  xyz 39 575 2000
+  xyz 40.5 40.5 2000
 end
 classcanvas 128770 class_ref 1766146 // mdtClArticleLinkUnitConnectionPkData
   classdiagramsettings member_max_width 0 end
-  xyz 370 53 2000
+  xyz 40.5 395.5 2000
 end
 end
