@@ -23,7 +23,6 @@
 
 #include "ui_mdtClUnitLinkDialog.h"
 #include "mdtClUnitConnectionData.h"
-#include "mdtClLinkDirectionData.h"
 #include "mdtClLinkVersionData.h"
 #include "mdtClVehicleTypeLinkKeyData.h"
 #include "mdtClLinkData.h"
@@ -45,6 +44,7 @@ class mdtClVehicleTypeLinkAssignationWidget;
 namespace Mdt{ namespace CableList{
   class ModificationModel;
   class LinkTypeModel;
+  class LinkDirectionModel;
 }}
 
 /*! \brief Dialog that let the user edit a unit link
@@ -154,11 +154,11 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
 
   /*! \brief Set link direction
    */
-  void setLinkDirection(mdtClLinkDirection_t d);
+  void setLinkDirection(LinkDirectionType d);
 
   /*! \brief Get selected link direction
    */
-  mdtClLinkDirectionKeyData linkDirectionKeyData() const;
+  LinkDirectionPk linkDirectionKeyData() const;
 
   /*! \brief Set link version
    */
@@ -276,7 +276,7 @@ class mdtClUnitLinkDialog : public QDialog, Ui::mdtClUnitLinkDialog
   Mdt::CableList::ModificationModel *pvModificationModel; /// \todo update once migrated
   mdtClLinkVersionModel *pvLinkVersionModel;
   Mdt::CableList::LinkTypeModel *pvLinkTypeModel; /// \todo update once migrated
-  mdtClLinkDirectionModel *pvLinkDirectionModel;
+  Mdt::CableList::LinkDirectionModel *pvLinkDirectionModel; /// \todo update once migrated
   mdtClVehicleTypeLinkAssignationWidget *pvVehicleTypeAssignationWidget;
 };
 

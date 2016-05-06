@@ -22,11 +22,13 @@
 #define MDT_CL_ARTICLE_LINK_KEY_DATA_H
 
 #include "mdtClArticleConnectionData.h"
-#include "Mdt/CableList/LinkTypePk.h"  /// \todo update once migrated
-#include "mdtClLinkDirectionData.h"
+#include "Mdt/CableList/LinkTypePk.h"       /// \todo update once migrated
+#include "Mdt/CableList/LinkDirectionPk.h"  /// \todo update once migrated
 
-using Mdt::CableList::LinkType;   /// \todo Update once migrated
-using Mdt::CableList::LinkTypePk; /// \todo Update once migrated
+using Mdt::CableList::LinkType;           /// \todo Update once migrated
+using Mdt::CableList::LinkTypePk;         /// \todo Update once migrated
+using Mdt::CableList::LinkDirectionType;  /// \todo Remove once migrated
+using Mdt::CableList::LinkDirectionPk;    /// \todo Remove once migrated
 
 /*! \brief Article link primary key data
  *
@@ -78,7 +80,7 @@ struct mdtClArticleLinkKeyData
 
   /*! \brief Link direction (LinkDirection_Code_FK)
    */
-  mdtClLinkDirectionKeyData pvLinkDirectionFk;
+  LinkDirectionPk pvLinkDirectionFk;
 
  public:
 
@@ -105,7 +107,7 @@ struct mdtClArticleLinkKeyData
 
   /*! \brief Set link direction
    */
-  void setLinkDirection(mdtClLinkDirection_t d)
+  void setLinkDirection(LinkDirectionType d)
   {
     pvLinkDirectionFk.setDirection(d);
   }
@@ -114,12 +116,12 @@ struct mdtClArticleLinkKeyData
    */
   void setLinkDirectionCode(const QVariant & c)
   {
-    pvLinkDirectionFk.code = c;
+    pvLinkDirectionFk = LinkDirectionPk::fromQVariant(c);
   }
 
   /*! \brief Get link direction FK (LinkDirection_Code_FK)
    */
-  inline mdtClLinkDirectionKeyData linkDirectionFk() const
+  inline LinkDirectionPk linkDirectionFk() const
   {
     return pvLinkDirectionFk;
   }

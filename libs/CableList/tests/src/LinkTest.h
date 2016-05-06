@@ -41,6 +41,10 @@ class LinkTest : public QObject
   void typeCodeTest();
   void typeModelTest();
 
+  void directionPkTest();
+  void directionCodeTest();
+  void directionModelTest();
+
   void linkPkTest();
   void linkPkListTest();
   void linkPkListBenchmark();

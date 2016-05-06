@@ -76,7 +76,7 @@ struct mdtClLinkData
 
   /*! \brief Set link direction (LinkDirection_Code_FK)
    */
-  void setLinkDirection(mdtClLinkDirection_t d)
+  void setLinkDirection(LinkDirectionType d)
   {
     pvKeyData.setLinkDirection(d);
   }

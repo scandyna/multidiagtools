@@ -43,8 +43,8 @@ class mdtClLinkTest : public mdtTest
 //   void linkTypeDataTest();
 //   void linkTypeModelTest();
 
-  void linkDirectionDataTest();
-  void linkDirectionModelTest();
+//   void linkDirectionDataTest();
+//   void linkDirectionModelTest();
 
   void linkVersionDataTest();
   void linkVersionAddGetRemoveTest();

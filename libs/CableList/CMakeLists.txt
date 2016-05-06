@@ -9,6 +9,7 @@ set(SOURCES_FILES
     src/Mdt/CableList/DatabaseSchema.cpp
     src/Mdt/CableList/ModificationModel.cpp
     src/Mdt/CableList/LinkTypeModel.cpp
+    src/Mdt/CableList/LinkDirectionModel.cpp
     src/Mdt/CableList/Path/Graph.cpp
 )
 

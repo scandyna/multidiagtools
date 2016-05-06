@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,61 +18,59 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtClLinkDirectionModel.h"
+#include "LinkDirectionModel.h"
+#include "mdt/sql/error/Error.h"
 #include <QSqlError>
+#include <QSqlQuery>
 #include <QModelIndex>
 #include <QComboBox>
 
-//#include <QDebug>
+namespace Mdt{ namespace CableList{
 
-mdtClLinkDirectionModel::mdtClLinkDirectionModel(QObject *parent, QSqlDatabase db, const QLocale &locale)
- : QSqlQueryModel(parent)
+LinkDirectionModel::LinkDirectionModel(QObject *parent, const QSqlDatabase & db)
+ : QSqlQueryModel(parent),
+   pvDatabase(db)
 {
-  QString fieldName;
+  setLocale(QLocale::system());
+}
 
-  // Select name field regarding language
+LinkDirectionModel::LinkDirectionModel(const QSqlDatabase & db)
+ : LinkDirectionModel(nullptr, db)
+{
+}
+
+void LinkDirectionModel::setLocale(const QLocale &locale)
+{
   switch(locale.language()){
     case QLocale::French:
-      fieldName = "NameFR";
+      pvNameFieldName = "NameFR";
       break;
     case QLocale::German:
-      fieldName = "NameDE";
+      pvNameFieldName = "NameDE";
       break;
     case QLocale::Italian:
-      fieldName = "NameIT";
+      pvNameFieldName = "NameIT";
       break;
     default:
-      fieldName = "NameEN";
+      pvNameFieldName = "NameEN";
   }
-  // Get text
-  pvBaseSql = "SELECT Code_PK, " + fieldName + ", PictureAscii FROM LinkDirection_tbl";
-  setQuery(pvBaseSql, db);
+  updateQuery();
 }
 
-mdtClLinkDirectionModel::mdtClLinkDirectionModel(QSqlDatabase db, const QLocale &locale)
- : mdtClLinkDirectionModel(nullptr, db, locale)
+int LinkDirectionModel::row(LinkDirectionType d)
 {
+  return row(LinkDirectionPk(d));
 }
 
-int mdtClLinkDirectionModel::row(mdtClLinkDirection_t d)
+int LinkDirectionModel::row(LinkDirectionPk pk)
 {
-  mdtClLinkDirectionKeyData key;
-
-  key.setDirection(d);
-
-  return row(key);
-}
-
-int mdtClLinkDirectionModel::row(const mdtClLinkDirectionKeyData &key)
-{
-  int row;
-
   if(isInError()){
     return -1;
   }
-  for(row = 0; row < rowCount(); ++row){
+  const int n = rowCount();
+  for(int row = 0; row < n; ++row){
     QModelIndex idx = index(row, 0);
-    if(data(idx) == key.code){
+    if(data(idx) == pk.code()){
       return row;
     }
   }
@@ -82,36 +80,35 @@ int mdtClLinkDirectionModel::row(const mdtClLinkDirectionKeyData &key)
   return -1;
 }
 
-mdtClLinkDirectionKeyData mdtClLinkDirectionModel::keyData(int row)
+LinkDirectionPk LinkDirectionModel::directionPk(int row)
 {
-  mdtClLinkDirectionKeyData key;
+  LinkDirectionPk pk;
 
   if(row < 0){
-    return key;
+    return pk;
   }
   if(isInError()){
-    return key;
+    return pk;
   }
   QModelIndex idx = index(row, 0);
-  key.code = data(idx);
-  if(key.isNull()){
+  pk = LinkDirectionPk::fromQVariant( data(idx) );
+  if(pk.isNull()){
     QString msg = QString(tr("Could not find link direction for row '%1'.")).arg(row);
-    pvLastError.setError(msg, mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClLinkDirectionModel");
+    pvLastError = mdtErrorNewQ(msg, mdtError::Error, this);
     pvLastError.commit();
   }
 
-  return key;
+  return pk;
 }
 
-mdtClLinkDirectionKeyData mdtClLinkDirectionModel::currentKeyData(QComboBox *cb)
+LinkDirectionPk LinkDirectionModel::currentDirectionPk(QComboBox *cb)
 {
   Q_ASSERT(cb != nullptr);
 
-  return keyData(cb->currentIndex());
+  return directionPk(cb->currentIndex());
 }
 
-QString mdtClLinkDirectionModel::pictureAscii(int row)
+QString LinkDirectionModel::pictureAscii(int row)
 {
   QString pa;
 
@@ -126,15 +123,14 @@ QString mdtClLinkDirectionModel::pictureAscii(int row)
   pa = data(idx).toString();
   if(pa.isEmpty()){
     QString msg = QString(tr("Could not find link direction for row '%1'.")).arg(row);
-    pvLastError.setError(msg, mdtError::Error);
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClLinkDirectionModel");
+    pvLastError = mdtErrorNewQ(msg, mdtError::Error, this);
     pvLastError.commit();
   }
 
   return pa;
 }
 
-void mdtClLinkDirectionModel::setLinkType(LinkType lt)
+void LinkDirectionModel::setLinkType(LinkType lt)
 {
   QString sql = pvBaseSql;
 
@@ -149,24 +145,31 @@ void mdtClLinkDirectionModel::setLinkType(LinkType lt)
 //       sql += " WHERE Code_PK = 'STE' OR Code_PK = 'ETS'";
 //       break;
     case LinkType::Undefined:
-      sql += " WHERE Code_PK = ''";
       break;
   }
   setQuery(sql);
 }
 
+void LinkDirectionModel::updateQuery()
+{
+  Q_ASSERT(!pvNameFieldName.isEmpty());
 
-bool mdtClLinkDirectionModel::isInError()
+  pvBaseSql = "SELECT Code_PK, " + pvNameFieldName + ", PictureAscii FROM LinkDirection_tbl";
+  setQuery(pvBaseSql, pvDatabase);
+}
+
+bool LinkDirectionModel::isInError()
 {
   QSqlError sqlError = QSqlQueryModel::lastError();
 
   if(sqlError.isValid()){
-    pvLastError.setError(tr("A error occured on table 'LinkDirection_tbl'."), mdtError::Error);
-    pvLastError.setSystemError(sqlError.number(), sqlError.text());
-    MDT_ERROR_SET_SRC(pvLastError, "mdtClLinkDirectionModel");
+    pvLastError = mdtErrorNewQ(tr("A error occured on table 'LinkDirection_tbl'."), mdtError::Error, this);
+    pvLastError.stackError(ErrorFromQSqlQuery(query()));
     pvLastError.commit();
     return true;
   }
 
   return false;
 }
+
+}} // namespace Mdt{ namespace CableList{

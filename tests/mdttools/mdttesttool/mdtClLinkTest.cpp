@@ -176,111 +176,111 @@ void mdtClLinkTest::cleanupTestCase()
 //   QCOMPARE(m.unit(m.row(key)), QString("Ohm"));
 // }
 
-void mdtClLinkTest::linkDirectionDataTest()
-{
-  mdtClLinkDirectionKeyData key;
+// void mdtClLinkTest::linkDirectionDataTest()
+// {
+//   mdtClLinkDirectionKeyData key;
+// 
+//   // Initial state
+//   QVERIFY(key.isNull());
+//   QVERIFY(key.direction() == mdtClLinkDirection_t::Undefined);
+//   // Set BID code
+//   key.code = "BID";
+//   QVERIFY(!key.isNull());
+//   QVERIFY(key.direction() == mdtClLinkDirection_t::Bidirectional);
+//   // Clear
+//   key.clear();
+//   QVERIFY(key.code.isNull());
+//   QVERIFY(key.isNull());
+//   QVERIFY(key.direction() == mdtClLinkDirection_t::Undefined);
+//   // Set STE code
+//   key.code = "STE";
+//   QVERIFY(!key.isNull());
+//   QVERIFY(key.direction() == mdtClLinkDirection_t::StartToEnd);
+//   // Set ETS code
+//   key.code = "ETS";
+//   QVERIFY(!key.isNull());
+//   QVERIFY(key.direction() == mdtClLinkDirection_t::EndToStart);
+//   // Clear
+//   key.clear();
+//   QVERIFY(key.code.isNull());
+//   QVERIFY(key.isNull());
+//   QVERIFY(key.direction() == mdtClLinkDirection_t::Undefined);
+//   // Set Bidirectional direction
+//   key.setDirection(mdtClLinkDirection_t::Bidirectional);
+//   QVERIFY(!key.isNull());
+//   QCOMPARE(key.code, QVariant("BID"));
+//   // Set Undefined direction
+//   key.setDirection(mdtClLinkDirection_t::Undefined);
+//   QVERIFY(key.code.isNull());
+//   QVERIFY(key.isNull());
+//   // Set StartToEnd direction
+//   key.setDirection(mdtClLinkDirection_t::StartToEnd);
+//   QVERIFY(!key.isNull());
+//   QCOMPARE(key.code, QVariant("STE"));
+//   // Set EndToStart direction
+//   key.setDirection(mdtClLinkDirection_t::EndToStart);
+//   QVERIFY(!key.isNull());
+//   QCOMPARE(key.code, QVariant("ETS"));
+//   // Clear
+//   key.clear();
+//   QVERIFY(key.code.isNull());
+//   QVERIFY(key.isNull());
+//   QVERIFY(key.direction() == mdtClLinkDirection_t::Undefined);
+// }
 
-  // Initial state
-  QVERIFY(key.isNull());
-  QVERIFY(key.direction() == mdtClLinkDirection_t::Undefined);
-  // Set BID code
-  key.code = "BID";
-  QVERIFY(!key.isNull());
-  QVERIFY(key.direction() == mdtClLinkDirection_t::Bidirectional);
-  // Clear
-  key.clear();
-  QVERIFY(key.code.isNull());
-  QVERIFY(key.isNull());
-  QVERIFY(key.direction() == mdtClLinkDirection_t::Undefined);
-  // Set STE code
-  key.code = "STE";
-  QVERIFY(!key.isNull());
-  QVERIFY(key.direction() == mdtClLinkDirection_t::StartToEnd);
-  // Set ETS code
-  key.code = "ETS";
-  QVERIFY(!key.isNull());
-  QVERIFY(key.direction() == mdtClLinkDirection_t::EndToStart);
-  // Clear
-  key.clear();
-  QVERIFY(key.code.isNull());
-  QVERIFY(key.isNull());
-  QVERIFY(key.direction() == mdtClLinkDirection_t::Undefined);
-  // Set Bidirectional direction
-  key.setDirection(mdtClLinkDirection_t::Bidirectional);
-  QVERIFY(!key.isNull());
-  QCOMPARE(key.code, QVariant("BID"));
-  // Set Undefined direction
-  key.setDirection(mdtClLinkDirection_t::Undefined);
-  QVERIFY(key.code.isNull());
-  QVERIFY(key.isNull());
-  // Set StartToEnd direction
-  key.setDirection(mdtClLinkDirection_t::StartToEnd);
-  QVERIFY(!key.isNull());
-  QCOMPARE(key.code, QVariant("STE"));
-  // Set EndToStart direction
-  key.setDirection(mdtClLinkDirection_t::EndToStart);
-  QVERIFY(!key.isNull());
-  QCOMPARE(key.code, QVariant("ETS"));
-  // Clear
-  key.clear();
-  QVERIFY(key.code.isNull());
-  QVERIFY(key.isNull());
-  QVERIFY(key.direction() == mdtClLinkDirection_t::Undefined);
-}
-
-void mdtClLinkTest::linkDirectionModelTest()
-{
-  QLocale locale(QLocale::English);
-  mdtClLinkDirectionModel m(pvDatabase, locale);
-  mdtClLinkDirectionKeyData key;
-  mdtClLinkTypeKeyData typeKey;
-
-  // Initial state
-  QCOMPARE(m.rowCount(), 3);
-  // Check row of key
-  key.code = "BID";
-  QVERIFY(m.row(key) >= 0);
-  QCOMPARE(m.row(mdtClLinkDirection_t::Bidirectional), m.row(key));
-  key.code = "STE";
-  QVERIFY(m.row(key) >= 0);
-  QCOMPARE(m.row(mdtClLinkDirection_t::StartToEnd), m.row(key));
-  key.code = "ETS";
-  QVERIFY(m.row(key) >= 0);
-  QCOMPARE(m.row(mdtClLinkDirection_t::EndToStart), m.row(key));
-  key.code = "FAKE";
-  QVERIFY(m.row(key) < 0);
-  // Check getting key data of row
-  QVERIFY(m.keyData(-1).isNull());
-  QVERIFY(!m.keyData(0).isNull());
-  QVERIFY(!m.keyData(1).isNull());
-  QVERIFY(!m.keyData(2).isNull());
-  QVERIFY(m.keyData(50).isNull());
-  key.code = "BID";
-  QCOMPARE(m.keyData(m.row(key)).code, QVariant("BID"));
-  QCOMPARE(m.pictureAscii(m.row(key)), QString("<-->"));
-  key.code = "STE";
-  QCOMPARE(m.keyData(m.row(key)).code, QVariant("STE"));
-  QCOMPARE(m.pictureAscii(m.row(key)), QString("-->"));
-  key.code = "ETS";
-  QCOMPARE(m.keyData(m.row(key)).code, QVariant("ETS"));
-  QCOMPARE(m.pictureAscii(m.row(key)), QString("<--"));
-  // Check setting link type
-  m.setLinkType(mdtClLinkType_t::CableLink);
-  QCOMPARE(m.rowCount(), 1);
-  QVERIFY(m.keyData(0).direction() == mdtClLinkDirection_t::Bidirectional);
-  m.setLinkType(mdtClLinkType_t::Connection);
-  QCOMPARE(m.rowCount(), 1);
-  QVERIFY(m.keyData(0).direction() == mdtClLinkDirection_t::Bidirectional);
-  m.setLinkType(mdtClLinkType_t::InternalLink);
-  QCOMPARE(m.rowCount(), 1);
-  QVERIFY(m.keyData(0).direction() == mdtClLinkDirection_t::Bidirectional);
-  m.setLinkType(mdtClLinkType_t::TestLink);
-  QCOMPARE(m.rowCount(), 1);
-  QVERIFY(m.keyData(0).direction() == mdtClLinkDirection_t::Bidirectional);
-  m.setLinkType(mdtClLinkType_t::Undefined);
-  QCOMPARE(m.rowCount(), 0);
-  QVERIFY(m.keyData(0).isNull());
-}
+// void mdtClLinkTest::linkDirectionModelTest()
+// {
+//   QLocale locale(QLocale::English);
+//   mdtClLinkDirectionModel m(pvDatabase, locale);
+//   mdtClLinkDirectionKeyData key;
+//   mdtClLinkTypeKeyData typeKey;
+// 
+//   // Initial state
+//   QCOMPARE(m.rowCount(), 3);
+//   // Check row of key
+//   key.code = "BID";
+//   QVERIFY(m.row(key) >= 0);
+//   QCOMPARE(m.row(mdtClLinkDirection_t::Bidirectional), m.row(key));
+//   key.code = "STE";
+//   QVERIFY(m.row(key) >= 0);
+//   QCOMPARE(m.row(mdtClLinkDirection_t::StartToEnd), m.row(key));
+//   key.code = "ETS";
+//   QVERIFY(m.row(key) >= 0);
+//   QCOMPARE(m.row(mdtClLinkDirection_t::EndToStart), m.row(key));
+//   key.code = "FAKE";
+//   QVERIFY(m.row(key) < 0);
+//   // Check getting key data of row
+//   QVERIFY(m.keyData(-1).isNull());
+//   QVERIFY(!m.keyData(0).isNull());
+//   QVERIFY(!m.keyData(1).isNull());
+//   QVERIFY(!m.keyData(2).isNull());
+//   QVERIFY(m.keyData(50).isNull());
+//   key.code = "BID";
+//   QCOMPARE(m.keyData(m.row(key)).code, QVariant("BID"));
+//   QCOMPARE(m.pictureAscii(m.row(key)), QString("<-->"));
+//   key.code = "STE";
+//   QCOMPARE(m.keyData(m.row(key)).code, QVariant("STE"));
+//   QCOMPARE(m.pictureAscii(m.row(key)), QString("-->"));
+//   key.code = "ETS";
+//   QCOMPARE(m.keyData(m.row(key)).code, QVariant("ETS"));
+//   QCOMPARE(m.pictureAscii(m.row(key)), QString("<--"));
+//   // Check setting link type
+//   m.setLinkType(mdtClLinkType_t::CableLink);
+//   QCOMPARE(m.rowCount(), 1);
+//   QVERIFY(m.keyData(0).direction() == mdtClLinkDirection_t::Bidirectional);
+//   m.setLinkType(mdtClLinkType_t::Connection);
+//   QCOMPARE(m.rowCount(), 1);
+//   QVERIFY(m.keyData(0).direction() == mdtClLinkDirection_t::Bidirectional);
+//   m.setLinkType(mdtClLinkType_t::InternalLink);
+//   QCOMPARE(m.rowCount(), 1);
+//   QVERIFY(m.keyData(0).direction() == mdtClLinkDirection_t::Bidirectional);
+//   m.setLinkType(mdtClLinkType_t::TestLink);
+//   QCOMPARE(m.rowCount(), 1);
+//   QVERIFY(m.keyData(0).direction() == mdtClLinkDirection_t::Bidirectional);
+//   m.setLinkType(mdtClLinkType_t::Undefined);
+//   QCOMPARE(m.rowCount(), 0);
+//   QVERIFY(m.keyData(0).isNull());
+// }
 
 void mdtClLinkTest::linkVersionDataTest()
 {

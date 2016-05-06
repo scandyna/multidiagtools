@@ -23,9 +23,6 @@
 
 #include "ui_mdtClArticleLinkDialog.h"
 #include "mdtClArticleLinkData.h"
-
-#include "mdtClLinkDirectionData.h"
-
 #include <QDialog>
 #include <QVariant>
 #include <QSqlDatabase>
@@ -33,6 +30,7 @@
 /// \todo Update once migrated
 namespace Mdt{ namespace CableList{
   class LinkTypeModel;
+  class LinkDirectionModel;
 }}
 
 class mdtClLinkTypeModel;
@@ -66,7 +64,7 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
 
   /*! \brief Set link direction
    */
-  void setLinkDirection(mdtClLinkDirection_t d);
+  void setLinkDirection(LinkDirectionType d);
 
   /*! \brief Display value
    */
@@ -142,8 +140,8 @@ class mdtClArticleLinkDialog : public QDialog, public Ui::mdtClArticleLinkDialog
   mdtClArticleLinkData pvLinkData;
   QSqlDatabase pvDatabase;
   QVariant pvArticleId;
-  Mdt::CableList::LinkTypeModel *pvLinkTypeModel; /// \todo update once migrated
-  mdtClLinkDirectionModel *pvLinkDirectionModel;
+  Mdt::CableList::LinkTypeModel *pvLinkTypeModel;           /// \todo update once migrated
+  Mdt::CableList::LinkDirectionModel*pvLinkDirectionModel;  /// \todo update once migrated
   QSqlQueryModel *pvArticleConnectionModel;
 };
 

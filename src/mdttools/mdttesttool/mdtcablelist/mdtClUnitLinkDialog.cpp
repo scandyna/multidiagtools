@@ -28,7 +28,7 @@
 #include "Mdt/CableList/ModificationModel.h"  /// \todo Update once migrated
 #include "mdtClLinkVersionModel.h"
 #include "Mdt/CableList/LinkTypeModel.h"  /// \todo update once migrated
-#include "mdtClLinkDirectionModel.h"
+#include "Mdt/CableList/LinkDirectionModel.h"  /// \todo update once migrated
 #include "mdtClVehicleTypeLinkAssignationWidget.h"
 #include "mdtClLink.h"
 #include "mdtError.h"
@@ -48,6 +48,7 @@
 
 using Mdt::CableList::LinkTypeModel;   /// \todo Remove once migrated
 using Mdt::CableList::ModificationModel;   /// \todo Remove once migrated
+using Mdt::CableList::LinkDirectionModel; /// \todo Remove once migrated
 
 mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
  : QDialog(parent)
@@ -70,7 +71,7 @@ mdtClUnitLinkDialog::mdtClUnitLinkDialog(QWidget *parent, QSqlDatabase db)
   cbLinkType->setCurrentIndex(-1);
   connect(cbLinkType, SIGNAL(currentIndexChanged(int)), this, SLOT(onCbLinkTypeCurrentIndexChanged(int)));
   // Setup link direction
-  pvLinkDirectionModel = new mdtClLinkDirectionModel(this, db);
+  pvLinkDirectionModel = new LinkDirectionModel(this, db);
   cbLinkDirection->setModel(pvLinkDirectionModel);
   cbLinkDirection->setModelColumn(1);
   connect(cbLinkDirection, SIGNAL(currentIndexChanged(int)), this, SLOT(onCbLinkDirectionCurrentIndexChanged(int)));
@@ -211,7 +212,7 @@ LinkTypePk mdtClUnitLinkDialog::linkTypePk() const
   return pvLinkTypeModel->currentPrimaryKey(cbLinkType);
 }
 
-void mdtClUnitLinkDialog::setLinkDirection(mdtClLinkDirection_t d)
+void mdtClUnitLinkDialog::setLinkDirection(LinkDirectionType d)
 {
   int row;
 
@@ -219,9 +220,9 @@ void mdtClUnitLinkDialog::setLinkDirection(mdtClLinkDirection_t d)
   cbLinkDirection->setCurrentIndex(row);
 }
 
-mdtClLinkDirectionKeyData mdtClUnitLinkDialog::linkDirectionKeyData() const
+LinkDirectionPk mdtClUnitLinkDialog::linkDirectionKeyData() const
 {
-  return pvLinkDirectionModel->currentKeyData(cbLinkDirection);
+  return pvLinkDirectionModel->currentDirectionPk(cbLinkDirection);
 }
 
 void mdtClUnitLinkDialog::setLinkVersion(const mdtClLinkVersionData &v)
@@ -329,11 +330,11 @@ void mdtClUnitLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)
     lbLinkDirectionAsciiPicture->setText("");
     return;
   }
-  auto key = pvLinkDirectionModel->keyData(row);
+  auto pk = pvLinkDirectionModel->directionPk(row);
   // Update the ASCII picture
   lbLinkDirectionAsciiPicture->setText(pvLinkDirectionModel->pictureAscii(row));
   // Update link data
-  pvLinkData.setLinkDirection(key.direction());
+  pvLinkData.setLinkDirection(pk.direction());
 }
 
 void mdtClUnitLinkDialog::selectWire()

@@ -91,14 +91,14 @@ struct mdtClArticleLinkData
 
   /*! \brief Set link direction
    */
-  void setLinkDirection(mdtClLinkDirection_t d)
+  void setLinkDirection(LinkDirectionType d)
   {
     pvKeyData.setLinkDirection(d);
   }
 
   /*! \brief Get link direction
    */
-  mdtClLinkDirection_t linkDirection() const
+  LinkDirectionType linkDirection() const
   {
     return pvKeyData.linkDirectionFk().direction();
   }

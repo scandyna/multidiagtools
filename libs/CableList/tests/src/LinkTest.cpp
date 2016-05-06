@@ -21,9 +21,12 @@
 #include "LinkTest.h"
 #include "mdtApplication.h"
 #include "Mdt/CableList/DatabaseSchema.h"
+#include "Mdt/CableList/LinkDirectionPk.h"
+#include "Mdt/CableList/LinkDirectionModel.h"
 #include "Mdt/CableList/LinkVersionPk.h"
 #include "Mdt/CableList/LinkTypePk.h"
 #include "Mdt/CableList/LinkTypeModel.h"
+
 #include "Mdt/CableList/LinkPk.h"
 
 void LinkTest::initTestCase()
@@ -188,10 +191,14 @@ void LinkTest::typeModelTest()
 
   LinkTypeModel m(pvDatabase);
 
-  m.setLocale(QLocale::English);
   /*
    * Initial state
    */
+  QCOMPARE(m.rowCount(), 4);
+  /*
+   * Change locale (for sort order)
+   */
+  m.setLocale(QLocale::English);
   QCOMPARE(m.rowCount(), 4);
   /*
    * Get row for link type
@@ -225,6 +232,153 @@ void LinkTest::typeModelTest()
   QCOMPARE(m.unit(1), QString("Ohm"));
   QCOMPARE(m.unit(2), QString("Ohm"));
   QCOMPARE(m.unit(3), QString("Ohm"));
+}
+
+void LinkTest::directionPkTest()
+{
+  using Mdt::CableList::LinkDirectionPk;
+  using Mdt::CableList::LinkDirectionType;
+
+  /*
+   * Construction
+   */
+  // Default constructed
+  LinkDirectionPk pk;
+  QVERIFY(pk.isNull());
+  QVERIFY(pk.direction() == LinkDirectionType::Undefined);
+  QVERIFY(pk.code().isEmpty());
+  // Construct with a direction
+  LinkDirectionPk pk2(LinkDirectionType::Bidirectional);
+  QVERIFY(!pk2.isNull());
+  QVERIFY(pk2.direction() == LinkDirectionType::Bidirectional);
+  QCOMPARE(pk2.code(), QString("BID"));
+  /*
+   * Set
+   */
+  QVERIFY(pk.isNull());
+  pk.setDirection(LinkDirectionType::Bidirectional);
+  QVERIFY(!pk.isNull());
+  QVERIFY(pk.direction() == LinkDirectionType::Bidirectional);
+  QCOMPARE(pk.code(), QString("BID"));
+  /*
+   * Clear
+   */
+  QVERIFY(!pk.isNull());
+  pk.clear();
+  QVERIFY(pk.isNull());
+  QVERIFY(pk.direction() == LinkDirectionType::Undefined);
+  QVERIFY(pk.code().isEmpty());
+  /*
+   * Get from code
+   */
+  QVERIFY(pk.isNull());
+  pk = LinkDirectionPk::fromCode("BID");
+  QVERIFY(!pk.isNull());
+  QVERIFY(pk.direction() == LinkDirectionType::Bidirectional);
+  /*
+   * Get from QVariant
+   */
+  QVERIFY(!pk.isNull());
+  pk = LinkDirectionPk::fromQVariant(QVariant());
+  QVERIFY(pk.isNull());
+  pk = LinkDirectionPk::fromQVariant("BID");
+  QVERIFY(!pk.isNull());
+  QVERIFY(pk.direction() == LinkDirectionType::Bidirectional);
+}
+
+void LinkTest::directionCodeTest()
+{
+  using Mdt::CableList::LinkDirectionPk;
+  using Mdt::CableList::LinkDirectionType;
+
+  /*
+   * Link direction -> code
+   */
+  QVERIFY(LinkDirectionPk(LinkDirectionType::Undefined).code().isEmpty());
+  QCOMPARE(LinkDirectionPk(LinkDirectionType::Bidirectional).code(), QString("BID"));
+  QCOMPARE(LinkDirectionPk(LinkDirectionType::StartToEnd).code(), QString("STE"));
+  QCOMPARE(LinkDirectionPk(LinkDirectionType::EndToStart).code(), QString("ETS"));
+  /*
+   * Code -> link direction
+   */
+  QVERIFY(LinkDirectionPk::fromCode("").direction() == LinkDirectionType::Undefined);
+  QVERIFY(LinkDirectionPk::fromCode("BID").direction() == LinkDirectionType::Bidirectional);
+  QVERIFY(LinkDirectionPk::fromCode("STE").direction() == LinkDirectionType::StartToEnd);
+  QVERIFY(LinkDirectionPk::fromCode("ETS").direction() == LinkDirectionType::EndToStart);
+}
+
+void LinkTest::directionModelTest()
+{
+  using Mdt::CableList::LinkDirectionModel;
+  using Mdt::CableList::LinkDirectionPk;
+  using Mdt::CableList::LinkDirectionType;
+  using Mdt::CableList::LinkType;
+
+  LinkDirectionModel m(pvDatabase);
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(m.rowCount(), 3);
+  /*
+   * Change locale
+   *
+   * Note: this model does not sort.
+   *       The order is: BID, STE, ETS
+   */
+  m.setLocale(QLocale::English);
+  QCOMPARE(m.rowCount(), 3);
+  /*
+   * Get row for direction
+   */
+  QCOMPARE(m.row(LinkDirectionType::Undefined), -1);
+  QCOMPARE(m.row(LinkDirectionType::Bidirectional), 0);
+  QCOMPARE(m.row(LinkDirectionType::StartToEnd), 1);
+  QCOMPARE(m.row(LinkDirectionType::EndToStart), 2);
+  /*
+   * Get row for direction PK
+   */
+  QCOMPARE(m.row(LinkDirectionPk(LinkDirectionType::Undefined)), -1);
+  QCOMPARE(m.row(LinkDirectionPk(LinkDirectionType::Bidirectional)), 0);
+  QCOMPARE(m.row(LinkDirectionPk(LinkDirectionType::StartToEnd)), 1);
+  QCOMPARE(m.row(LinkDirectionPk(LinkDirectionType::EndToStart)), 2);
+  /*
+   * Get direction PK for row
+   */
+  QVERIFY(m.directionPk(-1).direction() == LinkDirectionType::Undefined);
+  QVERIFY(m.directionPk(0).direction() == LinkDirectionType::Bidirectional);
+  QVERIFY(m.directionPk(1).direction() == LinkDirectionType::StartToEnd);
+  QVERIFY(m.directionPk(2).direction() == LinkDirectionType::EndToStart);
+  QVERIFY(m.directionPk(30).direction() == LinkDirectionType::Undefined);
+  /*
+   * Get ASCII picture
+   */
+  QVERIFY(m.pictureAscii(-1).isEmpty());
+  QCOMPARE(m.pictureAscii(0), QString("<-->"));
+  QCOMPARE(m.pictureAscii(1), QString("-->"));
+  QCOMPARE(m.pictureAscii(2), QString("<--"));
+  /*
+   * Filter available directions for given link type
+   */
+  // Set cable link: can only be bidirectional
+  m.setLinkType(LinkType::CableLink);
+  QCOMPARE(m.rowCount(), 1);
+  QVERIFY(m.directionPk(0).direction() == LinkDirectionType::Bidirectional);
+  // Set internal link: can only be bidirectional
+  m.setLinkType(LinkType::InternalLink);
+  QCOMPARE(m.rowCount(), 1);
+  QVERIFY(m.directionPk(0).direction() == LinkDirectionType::Bidirectional);
+  // Set connection: can only be bidirectional
+  m.setLinkType(LinkType::Connection);
+  QCOMPARE(m.rowCount(), 1);
+  QVERIFY(m.directionPk(0).direction() == LinkDirectionType::Bidirectional);
+  // Set test link: can only be bidirectional
+  m.setLinkType(LinkType::TestLink);
+  QCOMPARE(m.rowCount(), 1);
+  QVERIFY(m.directionPk(0).direction() == LinkDirectionType::Bidirectional);
+  // Reset filter
+  m.setLinkType(LinkType::Undefined);
+  QCOMPARE(m.rowCount(), 3);
 }
 
 void LinkTest::linkPkTest()

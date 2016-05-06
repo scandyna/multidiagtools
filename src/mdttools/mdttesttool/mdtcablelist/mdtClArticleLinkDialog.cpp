@@ -21,7 +21,7 @@
 #include "mdtClArticleLinkDialog.h"
 #include "mdtClArticleConnectionSelectionDialog.h"
 #include "Mdt/CableList/LinkTypeModel.h"  /// \todo update once migrated
-#include "mdtClLinkDirectionModel.h"
+#include "Mdt/CableList/LinkDirectionModel.h"  /// \todo update once migrated
 #include <QSqlQueryModel>
 #include <QSqlRecord>
 #include <QSqlField>
@@ -35,7 +35,8 @@
 
 #include <QDebug>
 
-using Mdt::CableList::LinkTypeModel;   /// \todo Remove once migrated
+using Mdt::CableList::LinkTypeModel;      /// \todo Remove once migrated
+using Mdt::CableList::LinkDirectionModel; /// \todo Remove once migrated
 
 mdtClArticleLinkDialog::mdtClArticleLinkDialog(QWidget *parent, QSqlDatabase db, QVariant articleId)
  : QDialog(parent)
@@ -54,7 +55,7 @@ mdtClArticleLinkDialog::mdtClArticleLinkDialog(QWidget *parent, QSqlDatabase db,
   cbLinkType->setCurrentIndex(-1);
   connect(cbLinkType, SIGNAL(currentIndexChanged(int)), this, SLOT(onCbLinkTypeCurrentIndexChanged(int)));
   // Setup link direction
-  pvLinkDirectionModel = new mdtClLinkDirectionModel(this, db);
+  pvLinkDirectionModel = new LinkDirectionModel(this, db);
   cbLinkDirection->setModel(pvLinkDirectionModel);
   cbLinkDirection->setModelColumn(1);
   cbLinkDirection->setCurrentIndex(-1);
@@ -88,7 +89,7 @@ void mdtClArticleLinkDialog::setLinkType(LinkType type)
   cbLinkType->setCurrentIndex(row);
 }
 
-void mdtClArticleLinkDialog::setLinkDirection(mdtClLinkDirection_t d)
+void mdtClArticleLinkDialog::setLinkDirection(LinkDirectionType d)
 {
   int row;
 
@@ -158,7 +159,7 @@ void mdtClArticleLinkDialog::onCbLinkDirectionCurrentIndexChanged(int row)
     lbLinkDirectionAsciiPicture->setText("");
     return;
   }
-  auto key = pvLinkDirectionModel->keyData(row);
+  auto key = pvLinkDirectionModel->directionPk(row);
   // Update the ASCII picture
   lbLinkDirectionAsciiPicture->setText(pvLinkDirectionModel->pictureAscii(row));
   // Update link data

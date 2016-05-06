@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2015 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,37 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtClLinkDirectionData.h"
+#ifndef MDT_CABLE_LIST_LINK_DIRECTION_TYPE_H
+#define MDT_CABLE_LIST_LINK_DIRECTION_TYPE_H
 
-mdtClLinkDirection_t mdtClLinkDirectionKeyData::direction() const
-{
-  QString _code = code.toString();
+namespace Mdt{ namespace CableList{
 
-  if(_code == "BID"){
-    return mdtClLinkDirection_t::Bidirectional;
-  }else if(_code == "STE"){
-    return mdtClLinkDirection_t::StartToEnd;
-  }else if(_code == "ETS"){
-    return mdtClLinkDirection_t::EndToStart;
-  }else{
-    return mdtClLinkDirection_t::Undefined;
-  }
-}
+  /*! \brief Link direction type
+   */
+  enum class LinkDirectionType
+  {
+    Undefined,      /*!< Undefined direction (is the case for null data) */
+    Bidirectional,  /*!< Bidirectional direction (is the case for null data) */
+    StartToEnd,     /*!< Start -> end direction */
+    EndToStart      /*!< End -> start direction */
+  };
 
-void mdtClLinkDirectionKeyData::setDirection(mdtClLinkDirection_t d)
-{
-  switch(d){
-    case mdtClLinkDirection_t::Bidirectional:
-      code = "BID";
-      break;
-    case mdtClLinkDirection_t::StartToEnd:
-      code = "STE";
-      break;
-    case mdtClLinkDirection_t::EndToStart:
-      code = "ETS";
-      break;
-    case mdtClLinkDirection_t::Undefined:
-      code.clear();
-      break;
-  }
-}
+
+}} // namespace Mdt{ namespace CableList{
+
+#endif // #ifndef MDT_CABLE_LIST_LINK_DIRECTION_TYPE_H

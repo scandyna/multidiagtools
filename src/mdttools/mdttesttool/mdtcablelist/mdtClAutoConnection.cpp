@@ -478,7 +478,7 @@ bool mdtClAutoConnection::checkOrBuildConnectionLinkListByName(const QList<mdtCl
           mdtClLinkData data;
           data.setPk(pk);
           data.setLinkType(LinkType::Connection);
-          data.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+          data.setLinkDirection(LinkDirectionType::Bidirectional);
           connectionLinkDataList->append(data);
         }
         // DONE for current c connection

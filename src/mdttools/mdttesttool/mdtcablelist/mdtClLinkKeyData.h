@@ -21,22 +21,24 @@
 #ifndef MDT_CL_LINK_KEY_DATA_H
 #define MDT_CL_LINK_KEY_DATA_H
 
-#include "mdtClLinkDirectionData.h"
 #include "mdtClArticleLinkKeyData.h"
 // #include "mdtClLinkVersionKeyData.h"
 // #include "mdtClModificationKeyData.h"
 #include <QVariant>
 
+#include "Mdt/CableList/LinkDirectionPk.h" /// \todo update once migrated
 #include "Mdt/CableList/LinkPk.h"         /// \todo update once migrated
 #include "Mdt/CableList/LinkVersionPk.h"  /// \todo update once migrated
 #include "Mdt/CableList/ModificationPk.h" /// \todo update once migrated
 
-using Mdt::CableList::LinkType;       /// \todo Remove once migrated
-using Mdt::CableList::LinkTypePk;     /// \todo Remove once migrated
-using Mdt::CableList::LinkPk;         /// \todo Remove once migrated
-using Mdt::CableList::LinkVersionPk;  /// \todo Remove once migrated
-using Mdt::CableList::ModificationPk; /// \todo Remove once migrated
-using Mdt::CableList::ModificationType; /// \todo Remove once migrated
+using Mdt::CableList::LinkDirectionType;  /// \todo Remove once migrated
+using Mdt::CableList::LinkDirectionPk;    /// \todo Remove once migrated
+using Mdt::CableList::LinkType;           /// \todo Remove once migrated
+using Mdt::CableList::LinkTypePk;         /// \todo Remove once migrated
+using Mdt::CableList::LinkPk;             /// \todo Remove once migrated
+using Mdt::CableList::LinkVersionPk;      /// \todo Remove once migrated
+using Mdt::CableList::ModificationPk;     /// \todo Remove once migrated
+using Mdt::CableList::ModificationType;   /// \todo Remove once migrated
 
 /*! \brief Link key data
  *
@@ -48,7 +50,7 @@ struct mdtClLinkKeyData
 
   LinkPk pvPk;
   LinkTypePk pvLinkTypeFk;
-  mdtClLinkDirectionKeyData pvLinkDirectionFk;
+  LinkDirectionPk pvLinkDirectionFk;
   mdtClArticleLinkPkData pvArticleLinkFk;
   QVariant pvWireId;
   QVariant pvLinkBeamId;
@@ -92,7 +94,7 @@ struct mdtClLinkKeyData
 
   /*! \brief Set link direction (LinkDirection_Code_FK)
    */
-  void setLinkDirection(mdtClLinkDirection_t d)
+  void setLinkDirection(LinkDirectionType d)
   {
     pvLinkDirectionFk.setDirection(d);
   }
@@ -101,12 +103,12 @@ struct mdtClLinkKeyData
    */
   void setLinkDirectionCode(const QVariant & c)
   {
-    pvLinkDirectionFk.code = c;
+    pvLinkDirectionFk = LinkDirectionPk::fromQVariant(c);
   }
 
   /*! \brief Get link direction FK (LinkDirection_Code_FK)
    */
-  mdtClLinkDirectionKeyData linkDirectionFk() const
+  LinkDirectionPk linkDirectionFk() const
   {
     return pvLinkDirectionFk;
   }

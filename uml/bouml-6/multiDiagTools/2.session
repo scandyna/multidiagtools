@@ -9,24 +9,20 @@ diagrams
     860 907 100 21 0 0
   classdiagram_ref 2324866 // LinkKey
     860 907 100 18 0 135
-  classdiagram_ref 2331394 // LinkDirection
-    120 106 100 4 0 0
-  classdiagram_ref 2318210 // LinkType
-    902 907 100 4 0 0
-  classdiagram_ref 2318338 // LinkTypeModel
-    902 907 100 4 0 0
-  active  classdiagram_ref 2338306 // ModificationModel
+  active  classdiagram_ref 2344834 // LinkDirectionModel
     902 907 100 4 0 0
 end
 show_stereotypes
+selected 
+  package_ref 436866 // DatabaseLogical
 open
-  class_ref 2621058 // ModificationModel
   classview_ref 1238274 // LinkBeam
   classview_ref 1238402 // Cable
   class_ref 2600962 // LinkType
-  operation_ref 3963010 // setLocale
   class_ref 2614146 // LinkDirectionType
-  classrelation_ref 3009538 // <directional composition>
+  operation_ref 3979394 // code
+  operation_ref 3979138 // fromCode
+  operation_ref 3979266 // fromQVariant
   classview_ref 920450 // Graph
   
   package_ref 430082 // Dsp

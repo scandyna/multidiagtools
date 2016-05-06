@@ -62,7 +62,7 @@ void mdtClArticleLinkTest::articleLinkDataTest()
   mdtClArticleLinkData data;
   mdtClArticleConnectionKeyData acKey;
 //   mdtClLinkTypeKeyData ltKey;
-  mdtClLinkDirectionKeyData ldKey;
+//   mdtClLinkDirectionKeyData ldKey;
 
   /*
    * Primary key data test
@@ -91,7 +91,7 @@ void mdtClArticleLinkTest::articleLinkDataTest()
   QVERIFY(key.isNull());
   key.setLinkType(LinkType::CableLink);
   QVERIFY(key.isNull());
-  key.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+  key.setLinkDirection(LinkDirectionType::Bidirectional);
   QVERIFY(!key.isNull());
 //   // Set some data
 //   key.connectionStartFk.id = 1;
@@ -106,7 +106,7 @@ void mdtClArticleLinkTest::articleLinkDataTest()
 //   QVERIFY(key.isNull());
 //   key.linkTypeFk.setType(LinkType::CableLink);
 //   QVERIFY(key.isNull());
-//   key.linkDirectionFk.setDirection(mdtClLinkDirection_t::Bidirectional);
+//   key.linkDirectionFk.setDirection(LinkDirectionType::Bidirectional);
 //   QVERIFY(!key.isNull());
 //   // Clear
   key.clear();
@@ -127,7 +127,7 @@ void mdtClArticleLinkTest::articleLinkDataTest()
   pk.connectionEndId = 6;
   key.pk = pk;
   key.setLinkType(LinkType::CableLink);
-  key.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+  key.setLinkDirection(LinkDirectionType::Bidirectional);
   QVERIFY(!key.isNull());
 //   key.clear();
 //   key.connectionStartFk.id = 5;
@@ -139,7 +139,7 @@ void mdtClArticleLinkTest::articleLinkDataTest()
 //   key.connectionEndFk.connectionTypeFk.setType(mdtClConnectionType_t::Socket);
 //   QVERIFY(!key.connectionEndFk.isNull());
 //   key.linkTypeFk.setType(LinkType::CableLink);
-//   key.linkDirectionFk.setDirection(mdtClLinkDirection_t::Bidirectional);
+//   key.linkDirectionFk.setDirection(LinkDirectionType::Bidirectional);
 //   QVERIFY(!key.isNull());
   data.setKeyData(key);
   data.indetification = "Link 5-6";
@@ -157,12 +157,12 @@ void mdtClArticleLinkTest::articleLinkDataTest()
   QCOMPARE(data.keyData().pk.connectionStartId, QVariant(10));
   QCOMPARE(data.keyData().pk.connectionEndId, QVariant(11));
   QVERIFY(data.linkType() == LinkType::CableLink);
-  QVERIFY(data.linkDirection() == mdtClLinkDirection_t::Bidirectional);
+  QVERIFY(data.linkDirection() == LinkDirectionType::Bidirectional);
   // Update link type and direction
   data.setLinkType(LinkType::Connection);
-  data.setLinkDirection(mdtClLinkDirection_t::StartToEnd);
+  data.setLinkDirection(LinkDirectionType::StartToEnd);
   QVERIFY(data.linkType() == LinkType::Connection);
-  QVERIFY(data.linkDirection() == mdtClLinkDirection_t::StartToEnd);
+  QVERIFY(data.linkDirection() == LinkDirectionType::StartToEnd);
   // Clear
   data.clear();
   QVERIFY(data.keyData().isNull());
@@ -192,7 +192,7 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
   pk.connectionEndId = 22;
   data.setPkData(pk);
   data.setLinkType(LinkType::CableLink);
-  data.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+  data.setLinkDirection(LinkDirectionType::Bidirectional);
   data.indetification = "Link 21-22";
   data.sinceVersion = 1.0;
   data.modification = "new";
@@ -206,7 +206,7 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
   QCOMPARE(data.keyData().pk.connectionStartId, QVariant(21));
   QCOMPARE(data.keyData().pk.connectionEndId, QVariant(22));
   QVERIFY(data.linkType() == LinkType::CableLink);
-  QVERIFY(data.linkDirection() == mdtClLinkDirection_t::Bidirectional);
+  QVERIFY(data.linkDirection() == LinkDirectionType::Bidirectional);
   QCOMPARE(data.indetification, QVariant("Link 21-22"));
   ///QCOMPARE(data.sinceVersion, QVariant(1.0));
   ///QCOMPARE(data.modification, QVariant("new"));
@@ -216,7 +216,7 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
   QVERIFY(ok);
   // Update article link
   data.setLinkType(LinkType::InternalLink);
-  data.setLinkDirection(mdtClLinkDirection_t::StartToEnd);
+  data.setLinkDirection(LinkDirectionType::StartToEnd);
   data.indetification = "Link 21-22 edited";
   data.sinceVersion = 1.1;
   data.modification = "update";
@@ -230,7 +230,7 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
   QCOMPARE(data.keyData().pk.connectionStartId, QVariant(21));
   QCOMPARE(data.keyData().pk.connectionEndId, QVariant(22));
   QVERIFY(data.linkType() == LinkType::InternalLink);
-  QVERIFY(data.linkDirection() == mdtClLinkDirection_t::StartToEnd);
+  QVERIFY(data.linkDirection() == LinkDirectionType::StartToEnd);
   QCOMPARE(data.indetification, QVariant("Link 21-22 edited"));
   ///QCOMPARE(data.sinceVersion, QVariant(1.1));
   ///QCOMPARE(data.modification, QVariant("update"));
@@ -278,28 +278,28 @@ void mdtClArticleLinkTest::articleLinkAddGetRemoveTest()
 //   aLinkPk.connectionEndId = 11;
 //   aLinkData.setPkData(aLinkPk);
 //   aLinkData.setLinkType(LinkType::CableLink);
-//   aLinkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+//   aLinkData.setLinkDirection(LinkDirectionType::Bidirectional);
 //   QVERIFY(alnk.addLink(aLinkData));
 //   aLinkData.clear();
 //   aLinkPk.connectionStartId = 12;
 //   aLinkPk.connectionEndId = 13;
 //   aLinkData.setPkData(aLinkPk);
 //   aLinkData.setLinkType(LinkType::CableLink);
-//   aLinkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+//   aLinkData.setLinkDirection(LinkDirectionType::Bidirectional);
 //   QVERIFY(alnk.addLink(aLinkData));
 //   aLinkData.clear();
 //   aLinkPk.connectionStartId = 14;
 //   aLinkPk.connectionEndId = 15;
 //   aLinkData.setPkData(aLinkPk);
 //   aLinkData.setLinkType(LinkType::InternalLink);
-//   aLinkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+//   aLinkData.setLinkDirection(LinkDirectionType::Bidirectional);
 //   QVERIFY(alnk.addLink(aLinkData));
 //   aLinkData.clear();
 //   aLinkPk.connectionStartId = 16;
 //   aLinkPk.connectionEndId = 17;
 //   aLinkData.setPkData(aLinkPk);
 //   aLinkData.setLinkType(LinkType::InternalLink);
-//   aLinkData.setLinkDirection(mdtClLinkDirection_t::Bidirectional);
+//   aLinkData.setLinkDirection(LinkDirectionType::Bidirectional);
 //   QVERIFY(alnk.addLink(aLinkData));
 //   /*
 //    * Create unit connections:

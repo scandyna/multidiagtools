@@ -236,7 +236,7 @@ bool mdtClLink::updateLink(const LinkPk & linkPk, const mdtClLinkData & linkData
   query.bindValue(":Modification_Code_FK", pk.modification().code());
   auto key = linkData.keyData();
   query.bindValue(":LinkType_Code_FK", key.linkTypeFk().code());
-  query.bindValue(":LinkDirection_Code_FK", key.linkDirectionFk().code);
+  query.bindValue(":LinkDirection_Code_FK", key.linkDirectionFk().code());
   query.bindValue(":ArticleConnectionStart_Id_FK", key.articleLinkFk().connectionStartId);
   query.bindValue(":ArticleConnectionEnd_Id_FK", key.articleLinkFk().connectionEndId);
   query.bindValue(":Wire_Id_FK", key.wireId());
@@ -415,7 +415,7 @@ void mdtClLink::fillRecord(mdtSqlRecord & record, const mdtClLinkData & data)
   record.setValue("Version_FK", pk.version().version());
   record.setValue("Modification_Code_FK", pk.modification().code());
   record.setValue("LinkType_Code_FK", data.keyData().linkTypeFk().code());
-  record.setValue("LinkDirection_Code_FK", data.keyData().linkDirectionFk().code);
+  record.setValue("LinkDirection_Code_FK", data.keyData().linkDirectionFk().code());
   record.setValue("ArticleConnectionStart_Id_FK", articleLinkFk.connectionStartId);
   record.setValue("ArticleConnectionEnd_Id_FK", articleLinkFk.connectionEndId);
   record.setValue("Wire_Id_FK", data.keyData().wireId());

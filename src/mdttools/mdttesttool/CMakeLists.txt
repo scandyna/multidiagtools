@@ -100,8 +100,6 @@ set (CL_SOURCES_FILES
           mdtcablelist/mdtClUnitConnectionSelectionDialog.cpp
           mdtcablelist/mdtClUnitEditor.cpp
           mdtcablelist/mdtClWireEditor.cpp
-          mdtcablelist/mdtClLinkDirectionData.cpp
-          mdtcablelist/mdtClLinkDirectionModel.cpp
           mdtcablelist/mdtClLinkData.cpp
           mdtcablelist/mdtClVehicleTypeLinkData.cpp
           mdtcablelist/mdtClVehicleTypeLinkAssignationWidget.cpp
