@@ -186,6 +186,9 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/qt-solutions")
 # * mdtutils *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutils")
 
+# Numeric library
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Numeric")
+
 # * mdtcsv *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtcsv")
 
@@ -198,6 +201,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")
 
 # * mdtdatabase *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtdatabase")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Sql")
 
 # SerialPort
 add_subdirectory("${PROJECT_SOURCE_DIR}/libs/SerialPort")

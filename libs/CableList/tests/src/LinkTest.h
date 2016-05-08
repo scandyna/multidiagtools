@@ -49,6 +49,8 @@ class LinkTest : public QObject
   void linkPkListTest();
   void linkPkListBenchmark();
 
+  void linkKeyTest();
+
  private:
 
   // Create test database schema - Will FAIL on problem

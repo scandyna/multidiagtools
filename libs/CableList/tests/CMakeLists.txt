@@ -21,6 +21,18 @@ target_link_libraries(mdtcablelistarticletest "mdtcablelist${MDTLIB_VERSION_SUFF
 target_link_libraries(mdtcablelistarticletest Qt5::Test)
 add_test(MdtCableListArticleTest ${CMAKE_CURRENT_BINARY_DIR}/mdtcablelistarticletest)
 
+# Target MdtCableListArticleConnectionTest
+add_executable(mdtcablelistarticleconnectiontest src/ArticleConnectionTest.cpp)
+target_link_libraries(mdtcablelistarticleconnectiontest "mdtcablelist${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcablelistarticleconnectiontest Qt5::Test)
+add_test(MdtCableListArticleConnectionTest ${CMAKE_CURRENT_BINARY_DIR}/mdtcablelistarticleconnectiontest)
+
+# Target MdtCableListArticleLinkTest
+add_executable(mdtcablelistarticlelinktest src/ArticleLinkTest.cpp)
+target_link_libraries(mdtcablelistarticlelinktest "mdtcablelist${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcablelistarticlelinktest Qt5::Test)
+add_test(MdtCableListArticleLinkTest ${CMAKE_CURRENT_BINARY_DIR}/mdtcablelistarticlelinktest)
+
 
 #================= Unit ====================
 
@@ -29,6 +41,24 @@ add_executable(mdtcablelistunitconnectiontest src/UnitConnectionTest.cpp)
 target_link_libraries(mdtcablelistunitconnectiontest "mdtcablelist${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtcablelistunitconnectiontest Qt5::Test)
 add_test(MdtCableListUnitConnectionTest ${CMAKE_CURRENT_BINARY_DIR}/mdtcablelistunitconnectiontest)
+
+
+#================= Wire ====================
+
+# Target MdtCableListWireTest
+add_executable(mdtcablelistwiretest src/WireTest.cpp)
+target_link_libraries(mdtcablelistwiretest "mdtcablelist${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcablelistwiretest Qt5::Test)
+add_test(MdtCableListWireTest ${CMAKE_CURRENT_BINARY_DIR}/mdtcablelistwiretest)
+
+
+#================= LinkBeam ====================
+
+# Target MdtCableListLinkBeamTest
+add_executable(mdtcablelistlinkbeamtest src/LinkBeamTest.cpp)
+target_link_libraries(mdtcablelistlinkbeamtest "mdtcablelist${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcablelistlinkbeamtest Qt5::Test)
+add_test(MdtCableListLinkBeamTest ${CMAKE_CURRENT_BINARY_DIR}/mdtcablelistlinkbeamtest)
 
 
 #================= Link ====================

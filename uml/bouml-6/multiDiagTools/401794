@@ -1,6 +1,6 @@
 format 211
 "Mdt" // Mdt
-  revision 4
+  revision 5
   modified_by 2 "philippe"
   // class settings
   
@@ -29,6 +29,8 @@ format 211
   package_ref 401922 // Error
 
   package_ref 403074 // ErrorGui
+
+  package_ref 483202 // Numeric
 
   package_ref 402050 // Csv
 

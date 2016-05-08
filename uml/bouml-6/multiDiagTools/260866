@@ -1,6 +1,6 @@
 format 211
-"Boost" // Boost
-  revision 3
+"boost" // boost
+  revision 4
   modified_by 2 "philippe"
   // class settings
   
@@ -125,4 +125,6 @@ ${members}};
       end
     end
   end
+
+  package_ref 483330 // units
 end

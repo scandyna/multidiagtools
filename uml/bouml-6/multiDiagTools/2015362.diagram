@@ -12,11 +12,11 @@ classcanvas 128258 class_ref 2536834 // Graph
 end
 classcanvas 128642 class_ref 2537218 // LinkedConnectors
   classdiagramsettings member_max_width 0 end
-  xyz 560 138 2000
+  xyz 720 42 2000
 end
 classcanvas 129026 class_ref 1699714 // mdtClUnitConnectorPkData
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 727 130 2000
+  xyz 691 130 2000
 end
 classcanvas 129410 class_ref 2537474 // graph_t
   classdiagramsettings member_max_width 0 show_context_mode uml end
@@ -24,24 +24,24 @@ classcanvas 129410 class_ref 2537474 // graph_t
 end
 classcanvas 129922 class_ref 2537218 // LinkedConnectors
   classdiagramsettings member_max_width 0 end
-  xyz 752 42 2011
+  xyz 528 138 2011
 end
 classcanvas 130562 class_ref 2580866 // UnitConnectionPk
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 353 63 2000
+  xyz 321 271 2000
 end
 classcanvas 130690 class_ref 2587394 // LinkPk
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 72 41 3005
+  xyz 40 249 3005
 end
 classcanvas 131202 class_ref 2607618 // LinkKey
   classdiagramsettings member_max_width 0 end
-  xyz 444 356 2000
+  xyz 73 39 2000
 end
 relationcanvas 129154 relation_ref 2873090 // <directional composition>
   from ref 128642 z 2001 to ref 129026
   no_role_a no_role_b
-  multiplicity_a_pos 711 170 3000 no_multiplicity_b
+  multiplicity_a_pos 769 103 3000 no_multiplicity_b
 end
 relationcanvas 129538 relation_ref 2922114 // <directional composition>
   from ref 128258 z 2006 to ref 129410
@@ -49,17 +49,17 @@ relationcanvas 129538 relation_ref 2922114 // <directional composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 2873090 // <directional composition>
-  decenter_end 475
   from ref 129922 z 2012 to ref 129026
   no_role_a no_role_b
-  multiplicity_a_pos 800 103 3000 no_multiplicity_b
+  multiplicity_a_pos 675 168 3000 no_multiplicity_b
 end
 relationcanvas 130818 relation_ref 2965250 // <directional composition>
   from ref 130690 z 3006 to ref 130562
   no_role_a no_role_b
-  multiplicity_a_pos 335 114 3000 no_multiplicity_b
+  multiplicity_a_pos 303 322 3000 no_multiplicity_b
 end
 relationcanvas 131330 relation_ref 2992258 // <directional composition>
+  decenter_begin 475
   from ref 131202 z 3006 to ref 130690
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

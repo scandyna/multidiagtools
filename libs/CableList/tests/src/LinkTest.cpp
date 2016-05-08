@@ -28,6 +28,7 @@
 #include "Mdt/CableList/LinkTypeModel.h"
 
 #include "Mdt/CableList/LinkPk.h"
+#include "Mdt/CableList/LinkKey.h"
 
 void LinkTest::initTestCase()
 {
@@ -474,12 +475,90 @@ void LinkTest::linkPkTest()
 
 void LinkTest::linkPkListTest()
 {
-  
+
 }
 
 void LinkTest::linkPkListBenchmark()
 {
   
+}
+
+void LinkTest::linkKeyTest()
+{
+  using Mdt::CableList::LinkKey;
+  using Mdt::CableList::LinkPk;
+  using Mdt::CableList::LinkType;
+  using Mdt::CableList::LinkTypePk;
+  using Mdt::CableList::LinkDirectionType;
+  using Mdt::CableList::LinkDirectionPk;
+  using Mdt::CableList::UnitConnectionPk;
+  using Mdt::CableList::LinkVersionPk;
+  using Mdt::CableList::ModificationType;
+  using Mdt::CableList::ModificationPk;
+  using Mdt::CableList::ArticleConnectionPk;
+  using Mdt::CableList::ArticleLinkPk;
+  using Mdt::CableList::WirePk;
+  using Mdt::CableList::LinkBeamPk;
+
+  LinkPk pk;
+  LinkKey key;
+  ArticleLinkPk articleLinkPk;
+
+  qDebug() << "sizeof(key): " << sizeof(key);
+  
+  /*
+   * Initial state
+   */
+  QVERIFY(key.isNull());
+  /*
+   * Set
+   */
+  // Set link PK
+  pk.setConnectionStart(UnitConnectionPk(1));
+  pk.setConnectionEnd(UnitConnectionPk(2));
+  pk.setVersion(LinkVersionPk(100));
+  pk.setModification(ModificationPk(ModificationType::New));
+  QVERIFY(!pk.isNull());
+  key.setPk(pk);
+  QVERIFY(key.pk() == pk);
+  QVERIFY(key.isNull());
+  // Set link type
+  key.setLinkType(LinkTypePk(LinkType::CableLink));
+  QVERIFY(key.linkType().type() == LinkType::CableLink);
+  QVERIFY(key.isNull());
+  // Set link direction
+  key.setLinkDirection(LinkDirectionPk(LinkDirectionType::Bidirectional));
+  QVERIFY(key.linkDirection().direction() == LinkDirectionType::Bidirectional);
+  // Now, all mandatory FK are set
+  QVERIFY(!key.isNull());
+  // Set article link
+  articleLinkPk.setConnectionStart(ArticleConnectionPk(10));
+  articleLinkPk.setConnectionEnd(ArticleConnectionPk(20));
+  QVERIFY(!articleLinkPk.isNull());
+  key.setArticleLink(articleLinkPk);
+  QCOMPARE(key.articleLink().connectionStart().id(), 10);
+  QCOMPARE(key.articleLink().connectionEnd().id(), 20);
+  QVERIFY(!key.isNull());
+  // Set wire
+  key.setWire(WirePk(111));
+  QCOMPARE(key.wire().id(), 111);
+  QVERIFY(!key.isNull());
+  // Set link beam
+  key.setLinkBeam(LinkBeamPk(555));
+  QCOMPARE(key.linkBeam().id(), 555);
+  QVERIFY(!key.isNull());
+  /*
+   * Clear
+   */
+  QVERIFY(!key.isNull());
+  key.clear();
+  QVERIFY(key.pk().isNull());
+  QVERIFY(key.linkType().isNull());
+  QVERIFY(key.linkDirection().isNull());
+  QVERIFY(key.articleLink().isNull());
+  QVERIFY(key.wire().isNull());
+  QVERIFY(key.linkBeam().isNull());
+  QVERIFY(key.isNull());
 }
 
 /*

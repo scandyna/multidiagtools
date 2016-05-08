@@ -1,32 +1,31 @@
-window_sizes 1280 960 372 902 907 0
+window_sizes 1280 960 304 970 907 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 2264962 // LinkedConnections
-    120 106 100 21 0 0
-  classdiagram_ref 2318082 // LinkedConnectionModel
+  classdiagram_ref 2358018 // LinkData
+    776 725 100 18 0 0
+  classdiagram_ref 2366338 // Resistance
     120 106 100 4 0 0
-  classdiagram_ref 2015362 // Graph
-    860 907 100 21 0 0
-  classdiagram_ref 2324866 // LinkKey
-    860 907 100 18 0 135
-  active  classdiagram_ref 2344834 // LinkDirectionModel
-    902 907 100 4 0 0
+  classdiagram_ref 2366594 // UnitString
+    120 106 100 4 0 0
+  classdiagram_ref 2366722 // ResistanceUnit
+    120 106 100 4 0 0
+  active  classdiagram_ref 2366082 // Double
+    970 907 100 4 0 0
 end
 show_stereotypes
-selected 
-  package_ref 436866 // DatabaseLogical
+selected classview_ref 1253634 // Symbol
 open
-  classview_ref 1238274 // LinkBeam
+  attribute_ref 2549122 // IsNull
+  attribute_ref 2548994 // Value
+  class_ref 2650242 // ResistanceUnit
+  class_ref 2649986 // Length
   classview_ref 1238402 // Cable
   class_ref 2600962 // LinkType
   class_ref 2614146 // LinkDirectionType
-  operation_ref 3979394 // code
-  operation_ref 3979138 // fromCode
-  operation_ref 3979266 // fromQVariant
-  classview_ref 920450 // Graph
+  class_ref 2640898 // LinkData
   
   package_ref 430082 // Dsp
-  classview_ref 503554 // Link
-  classview_ref 1211650 // graph
+  classview_ref 1253506 // base_unit
+  classview_ref 1253378 // impedance
 end
 end

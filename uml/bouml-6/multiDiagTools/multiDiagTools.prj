@@ -1,6 +1,6 @@
 format 211
 "multiDiagTools"
-  revision 31
+  revision 32
   modified_by 2 "philippe"
   cpp_root_dir "cpp_gen/"
 
@@ -44,7 +44,7 @@ format 211
   key "html dir" value "/tmp/"
   package_ref 409858 // principes
 
-  package_ref 401794 // mdt
+  package_ref 401794 // Mdt
 
   package_ref 282114 // mdterror
 
@@ -75,4 +75,6 @@ format 211
   package_ref 260866 // Boost
 
   package_ref 275458 // std
+
+  package_ref 476418 // ODB
 end
