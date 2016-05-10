@@ -26,7 +26,7 @@
 
 namespace Mdt{ namespace Numeric{
 
-  /*! \brief Contains wraps floating (double) value with some helper functions
+  /*! \brief Wraps floating (double) value with some helper functions
    */
   class Double
   {
@@ -119,8 +119,11 @@ namespace Mdt{ namespace Numeric{
       pvValue = std::numeric_limits<double>::quiet_NaN();
     }
 
-    /*! \brief Comparaison operator
+    /*! \brief Equality comparison operator
      *
+     * The comparison is a approximation.
+     *  x and y are considered equal if \f$ |x-y| < \epsilon \f$
+     * 
      * Notes:
      *  - if one (or both) value is null, they are not considered equal (Same rule as IEEE 754 NaN)
      */
@@ -133,8 +136,10 @@ namespace Mdt{ namespace Numeric{
       return (::fabs(x.toDouble() - y.toDouble()) < std::numeric_limits<double>::epsilon());
     }
 
-    /*! \brief Comparaison operator
-    */
+    /*! \brief Inequality comparison operator
+     *
+     * \sa operator==()
+     */
     friend
     constexpr bool operator!=(const Double & x, const Double & y) noexcept
     {
@@ -197,7 +202,7 @@ namespace Mdt{ namespace Numeric{
       return x.toDouble() + y.toDouble();
     }
 
-    /*! \brief Subtraction operator
+    /*! \brief Substraction operator
      *
      * Note:
      *  - If one (or both) value is null, a null value will be returned (Same rule as IEEE 754 NaN)
@@ -250,5 +255,11 @@ namespace Mdt{ namespace Numeric{
   };
 
 }} // namespace Mdt{ namespace Numeric{
+
+class QDebug;
+
+/*! \brief Stream operator for QDebug
+ */
+QDebug operator<<(QDebug dbg, const Mdt::Numeric::Double &);
 
 #endif // #ifndef MDT_NUMERIC_DOUBLE_H

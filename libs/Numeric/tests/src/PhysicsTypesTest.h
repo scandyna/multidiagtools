@@ -18,13 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_NUMERIC_DOUBLE_TEST_H
-#define MDT_NUMERIC_DOUBLE_TEST_H
+#ifndef MDT_NUMERIC_PHYSICS_TYPES_TEST_H
+#define MDT_NUMERIC_PHYSICS_TYPES_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
 
-class DoubleTest : public QObject
+class PhysicsTypesTest : public QObject
 {
  Q_OBJECT
 
@@ -33,9 +33,11 @@ class DoubleTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void simpleTest();
-  void comparisonTest();
-  void mathOperatorsTest();
+//   void sandbox();
+
+  void resistanceSimpleTest();
+  void resistanceComparisonTest();
+  void resistanceMathOperatorsTest();
 };
 
-#endif // #ifndef MDT_NUMERIC_DOUBLE_TEST_H
+#endif // #ifndef MDT_NUMERIC_PHYSICS_TYPES_TEST_H

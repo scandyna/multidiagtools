@@ -40,6 +40,7 @@ void DoubleTest::simpleTest()
 {
   using Mdt::Numeric::Double;
 
+  qDebug() << "sizeof(Double): " << sizeof(Double);
   /*
    * Construction
    */
@@ -93,6 +94,10 @@ void DoubleTest::simpleTest()
   QVERIFY(!x.isInfinity());
   QVERIFY(!x.isMinusInfinity());
   QVERIFY(!x.isPlusInfinity());
+  /*
+   * Debug stream
+   */
+  qDebug() << "x: " << x;
 }
 
 void DoubleTest::comparisonTest()

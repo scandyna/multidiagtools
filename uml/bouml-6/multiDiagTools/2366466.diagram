@@ -2,14 +2,23 @@ format 211
 
 classcanvas 128002 class_ref 2649986 // Length
   classdiagramsettings member_max_width 0 end
-  xyz 40 50 2000
+  xyz 225 320 2000
 end
 classcanvas 128130 class_ref 2649602 // Double
   classdiagramsettings member_max_width 0 end
-  xyz 193 39 2000
+  xyz 42 122 2000
 end
-relationcanvas 128258 relation_ref 3033090 // <directional composition>
-  from ref 128002 z 2001 to ref 128130
+classcanvas 128386 class_ref 2663426 // PhysicsType
+  classdiagramsettings member_max_width 0 end
+  xyz 225 35 2006
+end
+relationcanvas 128514 relation_ref 3040130 // <directional composition>
+  from ref 128386 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 3040258 // <generalisation>
+  from ref 128002 z 2007 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

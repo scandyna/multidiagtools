@@ -1,31 +1,45 @@
-window_sizes 1280 960 304 970 907 0
+window_sizes 1280 960 352 922 907 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358018 // LinkData
     776 725 100 18 0 0
-  classdiagram_ref 2366338 // Resistance
-    120 106 100 4 0 0
-  classdiagram_ref 2366594 // UnitString
-    120 106 100 4 0 0
+  classdiagram_ref 2366082 // Double
+    970 907 100 4 0 0
   classdiagram_ref 2366722 // ResistanceUnit
     120 106 100 4 0 0
-  active  classdiagram_ref 2366082 // Double
-    970 907 100 4 0 0
+  active  classdiagram_ref 2366338 // Resistance
+    922 907 100 4 0 0
+  classdiagram_ref 2380034 // quantity
+    120 106 100 4 0 0
+  classdiagram_ref 2386562 // CRTP
+    120 106 100 4 0 0
+  classdiagram_ref 2379906 // PhysicsType
+    922 907 100 4 0 0
 end
 show_stereotypes
-selected classview_ref 1253634 // Symbol
+selected classrelation_ref 3057410 // <directional composition>
 open
-  attribute_ref 2549122 // IsNull
+  
+  package_ref 409858 // principes
   attribute_ref 2548994 // Value
+  attribute_ref 2549762 // Value
+  operation_ref 4034306 // PhysicsType
+  operation_ref 4034434 // PhysicsType
+  operation_ref 4018306 // value
+  operation_ref 4034178 // operator==
+  operation_ref 4034818 // operator!=
+  classrelation_ref 3057410 // <directional composition>
+  operation_ref 4034690 // operator<<
+  operation_ref 4034050 // fromQVariant
   class_ref 2650242 // ResistanceUnit
   class_ref 2649986 // Length
-  classview_ref 1238402 // Cable
-  class_ref 2600962 // LinkType
-  class_ref 2614146 // LinkDirectionType
-  class_ref 2640898 // LinkData
+  operation_ref 4018690 // infinityName
+  operation_ref 4018818 // infinitySymbolName
+  operation_ref 4018946 // infinitySymbol
   
   package_ref 430082 // Dsp
   classview_ref 1253506 // base_unit
   classview_ref 1253378 // impedance
+  class_ref 2663554 // quantity
 end
 end

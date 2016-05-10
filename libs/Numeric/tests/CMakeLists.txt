@@ -7,11 +7,16 @@ enable_testing()
 
 #================= Tests ====================
 
-# Target MdtNumericDoubleTest
+# MdtNumericDoubleTest
 add_executable(mdtnumericdoubletest src/DoubleTest.cpp)
-# target_link_libraries(mdtnumericdoubletest "mdtnumeric${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtnumericdoubletest "mdtnumeric${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtnumericdoubletest Qt5::Test)
 target_link_libraries(mdtnumericdoubletest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 add_test(MdtNumericDoubleTest ${CMAKE_CURRENT_BINARY_DIR}/mdtnumericdoubletest)
 
-
+# MdtNumericPhysicsTypesTest
+add_executable(mdtnumericphysicstypestest src/PhysicsTypesTest.cpp)
+target_link_libraries(mdtnumericphysicstypestest "mdtnumeric${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtnumericphysicstypestest Qt5::Test)
+target_link_libraries(mdtnumericphysicstypestest "mdtutils${MDTLIB_VERSION_SUFFIX}")
+add_test(MdtNumericPhysicsTypesTest ${CMAKE_CURRENT_BINARY_DIR}/mdtnumericphysicstypestest)

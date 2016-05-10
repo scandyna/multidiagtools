@@ -1,6 +1,6 @@
 format 211
 "principes" // principes
-  revision 1
+  revision 2
   modified_by 2 "philippe"
   // class settings
   
@@ -26,7 +26,9 @@ format 211
   activitydiagramsettings
    end
   
-  package_ref 409986 // XXX
+  package_ref 409986 // Interactor
 
   package_ref 410114 // ModelViewPresenter
+
+  package_ref 489986 // StaticPolymorphism
 end

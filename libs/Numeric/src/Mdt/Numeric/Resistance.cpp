@@ -18,24 +18,17 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_NUMERIC_DOUBLE_TEST_H
-#define MDT_NUMERIC_DOUBLE_TEST_H
+#include "Resistance.h"
+#include <QDebug>
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace Numeric{
 
-class DoubleTest : public QObject
+}} // namespace Mdt{ namespace Numeric{
+
+QDebug operator<<(QDebug dbg, const Mdt::Numeric::Resistance & r)
 {
- Q_OBJECT
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void simpleTest();
-  void comparisonTest();
-  void mathOperatorsTest();
-};
-
-#endif // #ifndef MDT_NUMERIC_DOUBLE_TEST_H
+  if(r.isNull()){
+    return dbg.nospace() << "Resistance(Null)";
+  }
+  return dbg.nospace() << r.value().toDouble() << " ohm";
+}

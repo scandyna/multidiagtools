@@ -18,24 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_NUMERIC_DOUBLE_TEST_H
-#define MDT_NUMERIC_DOUBLE_TEST_H
+#include "Double.h"
+#include <QDebug>
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace Numeric{
 
-class DoubleTest : public QObject
+}} // namespace Mdt{ namespace Numeric{
+
+QDebug operator<<(QDebug dbg, const Mdt::Numeric::Double & x)
 {
- Q_OBJECT
+  if(x.isNull()){
+    return dbg.nospace() << "Double(Null)";
+  }
+  if(x.isMinusInfinity()){
+    return dbg.nospace() << "Double(-inf)";
+  }
+  if(x.isPlusInfinity()){
+    return dbg.nospace() << "Double(+inf)";
+  }
+  return dbg.nospace() << "Double(" << x.toDouble() << ")";
+}
 
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void simpleTest();
-  void comparisonTest();
-  void mathOperatorsTest();
-};
-
-#endif // #ifndef MDT_NUMERIC_DOUBLE_TEST_H
