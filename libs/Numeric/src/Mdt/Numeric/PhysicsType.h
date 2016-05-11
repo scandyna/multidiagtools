@@ -43,7 +43,7 @@ namespace Mdt{ namespace Numeric{
 
     /*! \brief Construct a value
      */
-    constexpr PhysicsType(Double value) noexcept
+    explicit constexpr PhysicsType(Double value) noexcept
      : pvValue(value) {}
 
     /*! \brief Get value
@@ -115,7 +115,7 @@ namespace Mdt{ namespace Numeric{
     friend
     constexpr Derived operator+(const Derived & x, const Derived & y) noexcept
     {
-      return x.value() + y.value();
+      return Derived( x.value() + y.value() );
     }
 
     /*! \brief Substraction operator
@@ -123,14 +123,14 @@ namespace Mdt{ namespace Numeric{
     friend
     constexpr Derived operator-(const Derived & x, const Derived & y) noexcept
     {
-      return x.value() - y.value();
+      return Derived( x.value() - y.value() );
     }
 
     /*! \brief Negation operator
      */
     constexpr Derived operator-() const
     {
-      return -pvValue;
+      return Derived( -pvValue );
     }
 
     /*! \brief Multiplication operator
@@ -138,7 +138,7 @@ namespace Mdt{ namespace Numeric{
     friend
     constexpr Derived operator*(const Derived & x, const Derived & y) noexcept
     {
-      return x.value() * y.value();
+      return Derived( x.value() * y.value() );
     }
 
     /*! \brief Division operator
@@ -146,7 +146,7 @@ namespace Mdt{ namespace Numeric{
     friend
     constexpr Derived operator/(const Derived & x, const Derived & y) noexcept
     {
-      return x.value() / y.value();
+      return Derived( x.value() / y.value() );
     }
 
     /*! \brief Clear value

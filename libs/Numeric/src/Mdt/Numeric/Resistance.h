@@ -39,12 +39,12 @@ namespace Mdt{ namespace Numeric{
 
     /*! \brief Construct a resistance
      */
-    constexpr Resistance(Double r) noexcept
+    explicit constexpr Resistance(Double r) noexcept
      : PhysicsType(r) {}
 
     /*! \brief Construct a resistance
      */
-    constexpr Resistance(double r) noexcept
+    explicit constexpr Resistance(double r) noexcept
      : PhysicsType(Double(r)) {}
 
     /*! \brief Get resistance from a QVariant
@@ -61,7 +61,7 @@ namespace Mdt{ namespace Numeric{
         return R;
       }
       Q_ASSERT(r.canConvert<double>());
-      R = r.toDouble();
+      R = Resistance(r.toDouble());
 
       return R;
     }

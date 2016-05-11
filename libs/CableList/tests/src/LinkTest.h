@@ -21,6 +21,7 @@
 #ifndef MDT_CABLE_LIST_LINK_TEST_H
 #define MDT_CABLE_LIST_LINK_TEST_H
 
+#include "Mdt/CableList/LinkKey.h"
 #include <QObject>
 #include <QtTest/QtTest>
 #include <QTemporaryFile>
@@ -50,6 +51,8 @@ class LinkTest : public QObject
   void linkPkListBenchmark();
 
   void linkKeyTest();
+
+  void linkDataTest();
 
  private:
 

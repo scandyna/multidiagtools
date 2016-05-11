@@ -170,7 +170,7 @@ void PhysicsTypesTest::resistanceSimpleTest()
   Resistance r;
   QVERIFY(r.isNull());
   // Contruct with a value
-  Resistance r2 = 1.5;
+  Resistance r2 = Resistance(1.5);
   QVERIFY(!r2.isNull());
   QCOMPARE(r2.value().toDouble(), 1.5);
   /*
@@ -178,11 +178,11 @@ void PhysicsTypesTest::resistanceSimpleTest()
    */
   // Set from double
   QVERIFY(r.isNull());
-  r = 2.0;
+  r = Resistance(2.0);
   QVERIFY(!r.isNull());
   QCOMPARE(r.value().toDouble(), 2.0);
   // Affectation of other Resistance
-  r2 = 1.5;
+  r2 = Resistance(1.5);
   r = r2;
   QCOMPARE(r.value().toDouble(), 1.5);
   /*
@@ -203,7 +203,7 @@ void PhysicsTypesTest::resistanceSimpleTest()
    * QDebug stream operator
    */
   qDebug() << "r: " << r;
-  r = 2.5e3;
+  r = Resistance(2.5e3);
   qDebug() << "r: " << r;
 }
 
@@ -213,16 +213,16 @@ void PhysicsTypesTest::resistanceComparisonTest()
 
   Resistance r1, r2;
 
-  r1 = 1.0;
-  r2 = 1.0;
+  r1 = Resistance(1.0);
+  r2 = Resistance(1.0);
   QVERIFY(r1 == r2);
   QVERIFY(!(r1 != r2));
   QVERIFY(!(r1 < r2));
   QVERIFY(r1 <= r2);
   QVERIFY(!(r1 > r2));
   QVERIFY(r1 >= r2);
-  r1 = 1.0;
-  r2 = 2.0;
+  r1 = Resistance(1.0);
+  r2 = Resistance(2.0);
   QVERIFY(!(r1 == r2));
   QVERIFY(r1 != r2);
   QVERIFY(r1 < r2);
@@ -240,39 +240,39 @@ void PhysicsTypesTest::resistanceMathOperatorsTest()
   /*
    * Additions
    */
-  r1 = 1.0;
-  r2 = 2.0;
+  r1 = Resistance(1.0);
+  r2 = Resistance(2.0);
   r3 = r1 + r2;
   QCOMPARE(r3.value().toDouble(), 3.0);
-  r3 = r1 + 5.0;
+  r3 = r1 + Resistance(5.0);
   QCOMPARE(r3.value().toDouble(), 6.0);
   /*
    * Subtraction
    */
-  r1 = 10.0;
-  r2 = 2.0;
+  r1 = Resistance(10.0);
+  r2 = Resistance(2.0);
   r3 = r1 - r2;
   QCOMPARE(r3.value().toDouble(), 8.0);
-  r3 = r1 - 3.0;
+  r3 = r1 - Resistance(3.0);
   QCOMPARE(r3.value().toDouble(), 7.0);
   /*
    * Negation
    */
-  r1 = 1.0;
+  r1 = Resistance(1.0);
   r3 = -r1;
   QCOMPARE(r3.value().toDouble(), -1.0);
   /*
    * Multiplication
    */
-  r1 = 10.0;
-  r2 = 2.0;
+  r1 = Resistance(10.0);
+  r2 = Resistance(2.0);
   r3 = r1 * r2;
   QCOMPARE(r3.value().toDouble(), 20.0);
   /*
    * Division
    */
-  r1 = 10.0;
-  r2 = 2.0;
+  r1 = Resistance(10.0);
+  r2 = Resistance(2.0);
   r3 = r1 / r2;
   QCOMPARE(r3.value().toDouble(), 5.0);
 }

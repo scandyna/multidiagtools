@@ -29,6 +29,8 @@
 
 #include "Mdt/CableList/LinkPk.h"
 #include "Mdt/CableList/LinkKey.h"
+#include "Mdt/CableList/LinkData.h"
+#include "Mdt/Numeric/Resistance.h"
 
 void LinkTest::initTestCase()
 {
@@ -559,6 +561,70 @@ void LinkTest::linkKeyTest()
   QVERIFY(key.wire().isNull());
   QVERIFY(key.linkBeam().isNull());
   QVERIFY(key.isNull());
+}
+
+void LinkTest::linkDataTest()
+{
+  using Mdt::CableList::LinkData;
+  using Mdt::CableList::LinkKey;
+  using Mdt::CableList::LinkPk;
+  using Mdt::CableList::LinkType;
+  using Mdt::CableList::LinkTypePk;
+  using Mdt::CableList::LinkDirectionType;
+  using Mdt::CableList::LinkDirectionPk;
+  using Mdt::CableList::UnitConnectionPk;
+  using Mdt::CableList::LinkVersionPk;
+  using Mdt::CableList::ModificationType;
+  using Mdt::CableList::ModificationPk;
+  using Mdt::CableList::ArticleConnectionPk;
+  using Mdt::CableList::ArticleLinkPk;
+  using Mdt::CableList::WirePk;
+  using Mdt::CableList::LinkBeamPk;
+  using Mdt::Numeric::Resistance;
+
+  LinkPk pk;
+  LinkKey key;
+  ArticleLinkPk articleLinkPk;
+  LinkData data;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(data.isNull());
+  /*
+   * Set key
+   */
+  // Set link PK part
+  pk.setConnectionStart(UnitConnectionPk(1));
+  pk.setConnectionEnd(UnitConnectionPk(2));
+  pk.setVersion(LinkVersionPk(100));
+  pk.setModification(ModificationPk(ModificationType::New));
+  QVERIFY(!pk.isNull());
+  key.setPk(pk);
+  // Set other mandatory parts
+  key.setLinkType(LinkTypePk(LinkType::CableLink));
+  key.setLinkDirection(LinkDirectionPk(LinkDirectionType::Bidirectional));
+  QVERIFY(!key.isNull());
+  data.setKey(key);
+  QCOMPARE(data.key().pk().connectionStart().id(), 1);
+  QVERIFY(!data.isNull());
+  /*
+   * Set other attributes
+   */
+  data.setIdentification("1234");
+  QCOMPARE(data.identification(), QVariant("1234"));
+  data.setResistance(Resistance(1.5));
+  QCOMPARE(data.resistance().value().toDouble(), 1.5);
+  /// \todo Add also length
+  
+  /*
+   * Clear
+   */
+  data.clear();
+  QVERIFY(data.key().isNull());
+  QVERIFY(data.identification().isNull());
+  QVERIFY(data.resistance().isNull());
+  /// \todo Add also length
 }
 
 /*
