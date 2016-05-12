@@ -1,6 +1,6 @@
 format 211
 "Numeric" // Mdt::Numeric
-  revision 5
+  revision 6
   modified_by 2 "philippe"
   // class settings
   
@@ -272,7 +272,7 @@ ${inlines}
       end
 
       operation 4034178 "operator=="
-	cpp_inline public explicit_return_type "Derived"
+	cpp_inline public explicit_return_type "bool"
 	nparams 2
 	  param in name "lhs" explicit_type "Derived"
 	  param in name "rhs" explicit_type "Derived"
@@ -289,7 +289,7 @@ ${inlines}
       end
 
       operation 4034818 "operator!="
-	cpp_inline public explicit_return_type "Derived"
+	cpp_inline public explicit_return_type "bool"
 	nparams 2
 	  param in name "lhs" explicit_type "Derived"
 	  param in name "rhs" explicit_type "Derived"

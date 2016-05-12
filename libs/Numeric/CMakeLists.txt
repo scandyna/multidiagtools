@@ -8,6 +8,7 @@ project(multidiagtools)
 set(SOURCES_FILES
    src/Mdt/Numeric/Double.cpp
    src/Mdt/Numeric/Resistance.cpp
+   src/Mdt/Numeric/Length.cpp
 )
 
 # Headers directories

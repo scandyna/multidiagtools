@@ -23,10 +23,11 @@
 
 #include "Mdt/Numeric/Double.h"
 #include "Mdt/Numeric/Resistance.h"
+#include "Mdt/Numeric/Length.h"
 
-#include <boost/units/systems/si/resistance.hpp>
-#include <boost/units/systems/si/io.hpp>
-#include <iostream>
+// #include <boost/units/systems/si/resistance.hpp>
+// #include <boost/units/systems/si/io.hpp>
+// #include <iostream>
 
 #include <QDebug>
 
@@ -275,6 +276,48 @@ void PhysicsTypesTest::resistanceMathOperatorsTest()
   r2 = Resistance(2.0);
   r3 = r1 / r2;
   QCOMPARE(r3.value().toDouble(), 5.0);
+}
+
+void PhysicsTypesTest::lengthSimpleTest()
+{
+  using Mdt::Numeric::Length;
+
+  /*
+   * Constructions
+   */
+  // Default constructed
+  Length l;
+  QVERIFY(l.isNull());
+  // Construct with value
+  Length l2(25.0);
+  QVERIFY(!l2.isNull());
+  QCOMPARE(l2.value().toDouble(), 25.0);
+  /*
+   * Set
+   */
+  QVERIFY(l.isNull());
+  l = Length(15.0);
+  QVERIFY(!l.isNull());
+  QCOMPARE(l.value().toDouble(), 15.0);
+  /*
+   * Clear
+   */
+  l.clear();
+  QVERIFY(l.isNull());
+  /*
+   * From QVariant
+   */
+  l = Length::fromQVariant(2.0);
+  QVERIFY(!l.isNull());
+  QCOMPARE(l.value().toDouble(), 2.0);
+  l = Length::fromQVariant(QVariant());
+  QVERIFY(l.isNull());
+  /*
+   * Streams
+   */
+  qDebug() << "l: " << l;
+  l = Length(10.0);
+  qDebug() << "l: " << l;
 }
 
 /*

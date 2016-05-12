@@ -1,17 +1,24 @@
 window_sizes 1280 960 352 922 907 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 2358018 // LinkData
+  classdiagram_ref 2358018 // LinkData
     922 907 100 18 0 0
+  active  classdiagram_ref 2366466 // Length
+    922 907 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 4041858 // clear
+selected attribute_ref 2557058 // Text
 open
   
 package_ref 409858 // principes
+  classview_ref 1253122 // Length
   class_ref 2640898 // LinkData
   
 package_ref 430082 // Dsp
+  class_ref 2676866 // Operation
+  class_ref 2677122 // OperationPk
+  class_ref 2677250 // CheckListPk
+  class_ref 2677378 // OperationKey
   classview_ref 1253506 // base_unit
   classview_ref 1253378 // impedance
   class_ref 2663554 // quantity

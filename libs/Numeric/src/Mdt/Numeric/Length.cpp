@@ -18,28 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_NUMERIC_PHYSICS_TYPES_TEST_H
-#define MDT_NUMERIC_PHYSICS_TYPES_TEST_H
+#include "Length.h"
+#include <QDebug>
 
-#include <QObject>
-#include <QtTest/QtTest>
-
-class PhysicsTypesTest : public QObject
+QDebug operator<<(QDebug dbg, const Mdt::Numeric::Length & l)
 {
- Q_OBJECT
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-//   void sandbox();
-
-  void resistanceSimpleTest();
-  void resistanceComparisonTest();
-  void resistanceMathOperatorsTest();
-
-  void lengthSimpleTest();
-};
-
-#endif // #ifndef MDT_NUMERIC_PHYSICS_TYPES_TEST_H
+  if(l.isNull()){
+    return dbg.nospace() << "Length(Null)";
+  }
+  return dbg.nospace() << l.value().toDouble() << " m";
+}
