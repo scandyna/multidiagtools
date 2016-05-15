@@ -29,6 +29,11 @@
 #include <memory>
 #include <iostream>
 
+#include <QStyleHints>  /// \note Just for debug
+#include <QPalette>     /// \note Just for debug
+#include <QFont>        /// \note Just for debug
+#include <QStyle>        /// \note Just for debug
+
 #include <QDebug>
 
 mdtApplication *mdtApplication::pvInstance = 0;
@@ -37,6 +42,13 @@ mdtApplication::mdtApplication(int &argc, char **argv, bool GUIenabled)
  : QtSingleApplication(argc, argv, GUIenabled)
 {
   pvInstance = this;
+  
+  qDebug() << "APP is desktop settings aware: " << desktopSettingsAware();
+  qDebug() << "APP font: " << font().toString();
+//   qDebug() << "APP palette: " << palette();
+  qDebug() << "APP plateform: " << platformName();
+  qDebug() << "APP style sheet: " << styleSheet();
+  qDebug() << "APP style: " << style()->objectName();
 }
 
 mdtApplication::~mdtApplication()

@@ -15,6 +15,10 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Output library
+
+set(LIBRARY_NAME "mdtsql")
+message("LIBRARY_NAME: ${LIBRARY_NAME}")
+
 add_library(mdtsql${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
 target_link_libraries(mdtsql${MDTLIB_VERSION_SUFFIX} "mdterror${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtsql${MDTLIB_VERSION_SUFFIX} "mdterrorgui${MDTLIB_VERSION_SUFFIX}")

@@ -181,6 +181,7 @@ else(WIN32)
 endif(WIN32)
 
 # * QtSolutions *
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/QtSolutions")
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/qt-solutions")
 
 # * mdtutils *
@@ -202,6 +203,9 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")
 # * mdtdatabase *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtdatabase")
 add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Sql")
+
+# ** Item/View **
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/ItemEditor")
 
 # SerialPort
 add_subdirectory("${PROJECT_SOURCE_DIR}/libs/SerialPort")
