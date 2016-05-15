@@ -48,12 +48,13 @@ set(MDTLIB_VERSION_MICRO 3)
 set(MDTLIB_VERSION_SUFFIX "-${MDTLIB_VERSION_MAJOR}.${MDTLIB_VERSION_MINOR}")
 
 # Config file
-configure_file (
+configure_file(
 #  "${PROJECT_SOURCE_DIR}/config.h.in"
 #  "${PROJECT_SOURCE_DIR}/src/config.h"
   "${CMAKE_SOURCE_DIR}/config.h.in"
-  "${CMAKE_BINARY_DIR}/src/config.h"
+  "${CMAKE_BINARY_DIR}/config.h"
 )
+include_directories("${CMAKE_BINARY_DIR}")
 
 # Common flags for compiler
 set(CMAKE_CXX_FLAGS "-std=c++14 ${CMAKE_CXX_FLAGS}")
@@ -183,6 +184,9 @@ endif(WIN32)
 # * QtSolutions *
 add_subdirectory("${PROJECT_SOURCE_DIR}/libs/QtSolutions")
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/qt-solutions")
+
+# * Application *
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Application")
 
 # * mdtutils *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutils")

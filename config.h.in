@@ -1,13 +1,21 @@
-// Options de configuration, selon: http://www.cmake.org/cmake/help/cmake_tutorial.html
+/*
+ * This file contains some constants.
+ * During processing, 
+ * CMake will replace values between '@' by values defined as variable in CMakeLists.txt.
+ * Finaly, the config.h file is generated in compilation directory.
+ * See also: https://cmake.org/cmake-tutorial/
+ */
 
 /*
-  Le fichier config.h.in contient des constantes
-  dont les valeurs, entre '@' , seront remplacé par cmake
-  Le fichier de sortie, config.h, sera généré par cmake
-  Voir le fichier CMakeLists.txt pour les valeurs des définitions
-*/
+ * Library version
+ */
+#define MDT_VERSION_MAJOR @MDTLIB_VERSION_MAJOR@
+#define MDT_VERSION_MINOR @MDTLIB_VERSION_MINOR@
+#define MDT_VERSION_MICRO @MDTLIB_VERSION_MICRO@
+#define MDT_VERSION_STR "@MDTLIB_VERSION_MAJOR@.@MDTLIB_VERSION_MINOR@.@MDTLIB_VERSION_MICRO@"
 
-/* Version */
-#define MDTLIB_VERSION_MAJOR @MDTLIB_VERSION_MAJOR@
-#define MDTLIB_VERSION_MINOR @MDTLIB_VERSION_MINOR@
-#define MDTLIB_VERSION_MICRO @MDTLIB_VERSION_MICRO@
+/*
+ * Path to source tree
+ * (Currently, this is used by Mdt::Application to find data directory without requiering to put it in system)
+ */
+#define MDT_SOURCE_DIRECTORY_PATH "@CMAKE_SOURCE_DIR@"

@@ -164,7 +164,8 @@ const QDir mdtApplication::cacheDir()
 
 QString mdtApplication::mdtLibVersion()
 {
-  return QString(QString::number(MDTLIB_VERSION_MAJOR) + "." + QString::number(MDTLIB_VERSION_MINOR) + "." + QString::number(MDTLIB_VERSION_MICRO));
+  return MDT_VERSION_STR;
+//   return QString(QString::number(MDTLIB_VERSION_MAJOR) + "." + QString::number(MDTLIB_VERSION_MINOR) + "." + QString::number(MDTLIB_VERSION_MICRO));
 }
 
 void mdtApplication::addTranslationsDirectory(const QString &directory)

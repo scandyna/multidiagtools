@@ -1,21 +1,21 @@
 # Project file for Multi Diag Tools
-# * Part: CableList *
 
 # Project
 project(multidiagtools)
 
 # List of source files
 set(SOURCES_FILES 
-    src/Mdt/Sql/Query.cpp
+    src/Mdt/Application.cpp
 )
 
 # Headers directories
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../QtSolutions/include")
 # Because some headers are generated during building (config.h, Qt's UIC), we also build path
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Output library name
-set(LIBRARY_NAME "Sql")
+set(LIBRARY_NAME "Application")
 
 # Output library technical names
 string(TOLOWER ${LIBRARY_NAME} LIBRARY_NAME_LC)
@@ -24,7 +24,7 @@ set(LIBRARY_BIN_NAME "mdt${LIBRARY_NAME_LC}")
 add_library(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterror${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdtqtsingleapplication${MDTLIB_VERSION_SUFFIX}")
 
 # Translation files
 set(TS_FILES

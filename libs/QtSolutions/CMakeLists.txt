@@ -4,6 +4,5 @@
 # Project
 project (multidiagtools)
 
-
 # qtsingleapplication directory
 add_subdirectory("qtsingleapplication")

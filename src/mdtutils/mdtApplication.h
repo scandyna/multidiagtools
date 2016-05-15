@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_APPLICATION_H
-#define MDT_APPLICATION_H
+#ifndef MDT_APPLICATION_OLD_H
+#define MDT_APPLICATION_OLD_H
 
 #include <QtSingleApplication>
 #include <QString>
@@ -188,4 +188,4 @@ class mdtApplication : public QtSingleApplication
   QString pvCurrentTranslationKey;                // Current loaded translation keay, like en, de, ...
 };
 
-#endif  // #ifndef MDT_APPLICATION_H
+#endif  // #ifndef MDT_APPLICATION_OLD_H

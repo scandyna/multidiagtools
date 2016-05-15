@@ -7,13 +7,21 @@ diagrams
     120 112 100 4 0 0
   classdiagram_ref 2406658 // Controller
     980 903 100 4 0 0
-  active  classdiagram_ref 2413698 // NavigationActions
+  classdiagram_ref 2413698 // NavigationActions
+    980 905 100 4 0 0
+  active  classdiagram_ref 2427394 // Application
     980 905 100 4 0 0
 end
 show_stereotypes
+selected operation_ref 4078082 // searchSystemDataDirectory
 open
+  attribute_ref 2584066 // LogDirectory
+  class_ref 2733186 // MultipleInstancePermission
+  operation_ref 4078210 // debugEnvironment
+  operation_ref 4078082 // searchSystemDataDirectory
   
   package_ref 430082 // Dsp
+  classview_ref 300162 // QtSolutions
   classview_ref 1253506 // base_unit
   classview_ref 1253378 // impedance
   class_ref 2663554 // quantity

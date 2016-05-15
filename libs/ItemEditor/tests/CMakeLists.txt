@@ -4,9 +4,6 @@
 project(multidiagtools)
 enable_testing()
 
-message("Test: LIBRARY_NAME: ${LIBRARY_NAME}")
-message("Test: LIBRARY_BIN_NAME: ${LIBRARY_BIN_NAME}")
-
 #================= Item/View test library ====================
 
 # set(SOURCES_FILES 
