@@ -1,50 +1,50 @@
-format 207
+format 211
 
 statecanvas 128002 state_ref 149762 // EditingNewRow
   
-  xyzwh 9.2 184.8 2000 133 43
+  xyzwh 8.7 184.2 2000 132 45
 end
 statecanvas 128130 state_ref 149890 // Editing
   
-  xyzwh 910.6 184 2000 89 43
+  xyzwh 909.2 184.4 2000 89 45
 end
 statecanvas 128258 state_ref 150018 // Visualizing
   
-  xyzwh 536.2 184.2 2000 111 43
+  xyzwh 537.1 185.6 2000 110 45
 end
 pseudostatecanvas 128514 pseudostate_ref 154754 // initial
-   xyz 581 65.8 2000
+   xyz 581 65.4 2000
 end
 pseudostatecanvas 128642 pseudostate_ref 154882 // final
-   xyz 750 218 2000
+   xyz 750.8 218 2000
 end
 statecanvas 129794 state_ref 150274 // Submitting
   
-  xyzwh 670.4 328 2000 99 43
+  xyzwh 670.5 328 2000 99 45
 end
 statecanvas 129922 state_ref 150402 // Reverting
   
-  xyzwh 667 53.4 2000 91 43
+  xyzwh 666.8 54.9 2000 90 45
 end
 statecanvas 131202 state_ref 150530 // Removing
   
-  xyzwh 546.6 573.4 2000 93 43
+  xyzwh 547.4 574.9 2000 92 45
 end
 statecanvas 131970 state_ref 157058 // SubmittingNewRow
   
-  xyzwh 240 329 2000 163 43
+  xyzwh 240.9 329.9 2000 162 45
 end
 statecanvas 132738 state_ref 157186 // RevertingNewRow
   
-  xyzwh 210 56 2000 155 43
+  xyzwh 211.3 56.2 2000 154 45
 end
 statecanvas 134018 state_ref 163714 // Inserting
   
-  xyzwh 286 185 2000 85 43
+  xyzwh 287.2 185.3 2000 84 45
 end
 statecanvas 134530 state_ref 205314 // Selecting
   
-  xyzwh 312 489 2000 79 43
+  xyzwh 311.9 489.9 2000 79 45
 end
 transitioncanvas 128770 transition_ref 160130 // <transition>
   
@@ -61,26 +61,26 @@ end
 transitioncanvas 130050 transition_ref 160642 // <transition>
   geometry HVr
   
-  from ref 128130 z 2001 label "submitTriggered" xyz 899 276 2001 to point 951 346
+  from ref 128130 z 2001 label "submitTriggered" xyz 899 277.5 2001 to point 950 347
   line 130562 z 2001 to ref 129794
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 130178 transition_ref 160770 // <transition>
   geometry HVr
   
-  from ref 128130 z 2001 label "revertTriggered" xyz 903 119 2001 to point 951 71
+  from ref 128130 z 2001 label "revertTriggered" xyz 903 119.5 2001 to point 950 71
   line 130818 z 2001 to ref 129922
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 130306 transition_ref 160898 // <transition>
   
-  from ref 129794 z 2001 label "errorOccured" xyz 789 266 2001 to ref 128130
+  from ref 129794 z 2001 label "errorOccured" xyz 789 267 2001 to ref 128130
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 130690 transition_ref 161026 // <transition>
   decenter_begin 90
   
-  from ref 129794 z 2001 label "operationSucceed" xyz 592.5 277 2001 to ref 128258
+  from ref 129794 z 2001 label "operationSucceed" xyz 593 277 2001 to ref 128258
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 130946 transition_ref 161154 // <transition>
@@ -96,7 +96,7 @@ end
 transitioncanvas 132098 transition_ref 167938 // <transition>
   geometry VH
   
-  from ref 128002 z 2001 label "submitTriggered" xyz 20 276 2001 to point 73 347
+  from ref 128002 z 2001 label "submitTriggered" xyz 20 277.5 2001 to point 72 348
   line 132482 z 2001 to ref 131970
   write_horizontally default show_definition default drawing_language default
 end
@@ -113,7 +113,7 @@ end
 transitioncanvas 132866 transition_ref 168322 // <transition>
   geometry VH
   
-  from ref 128002 z 2001 label "revertTriggered" xyz 23 120 2001 to point 73 74
+  from ref 128002 z 2001 label "revertTriggered" xyz 23 120.5 2001 to point 72 75
   line 133122 z 2001 to ref 132738
   write_horizontally default show_definition default drawing_language default
 end
@@ -160,7 +160,7 @@ transitioncanvas 134402 transition_ref 175746 // <transition>
   decenter_begin 741
   decenter_end 768
   
-  from ref 134018 z 2001 label "errorOccured" xyz 406 213 2001 to ref 128258
+  from ref 134018 z 2001 label "errorOccured" xyz 407 213 2001 to ref 128258
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 135170 transition_ref 217858 // <transition>
@@ -181,7 +181,7 @@ transitioncanvas 135426 transition_ref 224514 // <transition>
   decenter_begin 918
   decenter_end 676
   
-  from ref 128258 z 2001 label "submitTriggered" xyz 681 295 3000 to ref 129794
+  from ref 128258 z 2001 label "submitTriggered" xyz 681 295 2001 to ref 129794
   write_horizontally default show_definition default drawing_language default
 end
 end

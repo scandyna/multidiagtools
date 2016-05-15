@@ -23,6 +23,7 @@
 
 #include "LinkKey.h"
 #include "Mdt/Numeric/Resistance.h"
+#include "Mdt/Numeric/Length.h"
 #include <QVariant>
 
 namespace Mdt{ namespace CableList{
@@ -49,6 +50,20 @@ namespace Mdt{ namespace CableList{
       return pvKey;
     }
 
+    /*! \brief Set identification
+     */
+    void setIdentification(const QVariant & identification)
+    {
+      pvIdentification = identification;
+    }
+
+    /*! \brief Get identification
+     */
+    QVariant identification() const
+    {
+      return pvIdentification;
+    }
+
     /*! \brief Set resistance
      */
     void setResistance(Mdt::Numeric::Resistance r)
@@ -63,18 +78,18 @@ namespace Mdt{ namespace CableList{
       return pvResistance;
     }
 
-    /*! \brief Set identification
+    /*! \brief Set length
      */
-    void setIdentification(const QVariant & identification)
+    void setLength(Mdt::Numeric::Length l)
     {
-      pvIdentification = identification;
+      pvLength = l;
     }
 
-    /*! \brief Get identification
+    /*! \brief Get length
      */
-    QVariant identification() const
+    Mdt::Numeric::Length length() const
     {
-      return pvIdentification;
+      return pvLength;
     }
 
     /*! \brief Check if link data is null
@@ -95,6 +110,7 @@ namespace Mdt{ namespace CableList{
       pvKey.clear();
       pvIdentification.clear();
       pvResistance.clear();
+      pvLength.clear();
     }
 
    private:
@@ -102,6 +118,7 @@ namespace Mdt{ namespace CableList{
     LinkKey pvKey;
     QVariant pvIdentification;
     Mdt::Numeric::Resistance pvResistance;
+    Mdt::Numeric::Length pvLength;
   };
 
 }} // namespace Mdt{ namespace CableList{

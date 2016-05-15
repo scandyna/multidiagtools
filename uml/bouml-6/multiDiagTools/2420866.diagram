@@ -1,0 +1,46 @@
+format 211
+
+classcanvas 128002 class_ref 693250 // QAction
+  classdiagramsettings member_max_width 0 end
+  xyz 346 340 2000
+end
+classcanvas 128130 class_ref 138626 // QObject
+  classdiagramsettings member_max_width 0 end
+  xyz 407 42 2006
+end
+classcanvas 128386 class_ref 2713474 // EditionActions
+  classdiagramsettings member_max_width 0 end
+  xyz 41 186 2000
+end
+classcanvas 128770 class_ref 2684930 // ControllerState
+  classdiagramsettings member_max_width 0 end
+  xyz 122 658 2000
+end
+relationcanvas 128258 relation_ref 853890 // <generalisation>
+  decenter_end 479
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 3078402 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 513
+  decenter_end 479
+  from ref 128386 z 2007 to point 173 144
+  line 129026 z 2007 to point 509 144
+  line 129154 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 3078530 // <directional composition>
+  from ref 128386 z 2001 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 328 410 3000 no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 3078658 // <dependency>
+  decenter_begin 513
+  from ref 128386 z 2001 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

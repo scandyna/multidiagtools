@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 131
+  revision 134
   modified_by 2 "philippe"
   // class settings
   
@@ -2191,6 +2191,28 @@ ${inlines}
     end
   end
 
+  classview 1280002 "MV-Overview"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2399746 "overview"
+      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+      size A4
+    end
+  end
+
   classview 141698 "MV-Model"
     
     classdiagramsettings member_max_width 0 end
@@ -2999,307 +3021,6 @@ ${inlines}
       end
     end
 
-    classdiagram 601090 "QStyledItemDelegate"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 1914498 "QAbstractItemDelegate"
-      abstract visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 2250754 // <generalisation>
-	relation 2234498 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 2250754 // <generalisation>
-	  b parent class_ref 138626 // QObject
-      end
-
-      operation 2997378 "QAbstractItemDelegate"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "parent" type class_ref 138626 // QObject
-	    defaultvalue "0"
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2997506 "~QAbstractItemDelegate"
-	abstract cpp_virtual public explicit_return_type ""
-	nparams 0
-	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
-"
-	
-	
-	
-	
-      end
-
-      operation 2997890 "createEditor"
-	abstract cpp_virtual public return_type class_ref 316162 // QWidget
-	nparams 3
-	  param in name "parent" type class_ref 316162 // QWidget
-	  param in name "option" type class_ref 1914626 // QStyleOptionViewItem
-	  param in name "index" type class_ref 147330 // QModelIndex
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 2999554 "destroyEditor"
-	abstract cpp_virtual public explicit_return_type "void"
-	nparams 2
-	  param in name "editor" type class_ref 316162 // QWidget
-	  param in name "index" type class_ref 147330 // QModelIndex
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 2997634 "paint"
-	abstract cpp_virtual public explicit_return_type "void"
-	nparams 3
-	  param in name "painter" type class_ref 903170 // QPainter
-	  param in name "option" explicit_type "QStyleOptionViewItem"
-	  param in name "index" type class_ref 147330 // QModelIndex
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 2998018 "setEditorData"
-	abstract cpp_virtual public explicit_return_type "void"
-	nparams 2
-	  param in name "editor" type class_ref 316162 // QWidget
-	  param in name "index" type class_ref 147330 // QModelIndex
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 2998146 "setModelData"
-	abstract cpp_virtual public explicit_return_type "void"
-	nparams 3
-	  param in name "editor" type class_ref 316162 // QWidget
-	  param in name "model" type class_ref 146946 // QAbstractItemModel
-	  param in name "index" type class_ref 147330 // QModelIndex
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 2997762 "sizeHint"
-	abstract cpp_virtual public return_type class_ref 363010 // QSize
-	nparams 2
-	  param in name "option" type class_ref 1914626 // QStyleOptionViewItem
-	  param in name "index" type class_ref 147330 // QModelIndex
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 2998274 "updateEditorGeometry"
-	abstract cpp_virtual public explicit_return_type "void"
-	nparams 3
-	  param in name "editor" type class_ref 316162 // QWidget
-	  param in name "option" type class_ref 1914626 // QStyleOptionViewItem
-	  param in name "index" type class_ref 147330 // QModelIndex
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-    end
-
-    class 605570 "QStyledItemDelegate"
-      abstract visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit} {
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      operation 1170178 "QStyledItemDelegate"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "parent" type class_ref 138626 // QObject
-	    defaultvalue "0"
-	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1170306 "~QStyledItemDelegate"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1170434 "paint"
-	abstract cpp_virtual public explicit_return_type "void"
-	nparams 3
-	  param in name "painter" explicit_type "QPainter"
-	  param in name "option" explicit_type "QStyleOptionViewItem"
-	  param in name "index" type class_ref 147330 // QModelIndex
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 1170562 "sizeHint"
-	abstract cpp_virtual public return_type class_ref 363010 // QSize
-	nparams 2
-	  param in name "option" explicit_type "QStyleOptionViewItem"
-	  param in name "index" type class_ref 147330 // QModelIndex
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      classrelation 2250882 // <generalisation>
-	relation 2234626 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 2250882 // <generalisation>
-	  b parent class_ref 1914498 // QAbstractItemDelegate
-      end
-
-      operation 2998402 "createEditor"
-	cpp_virtual public return_type class_ref 316162 // QWidget
-	nparams 3
-	  param in name "parent" type class_ref 316162 // QWidget
-	  param in name "option" type class_ref 1914626 // QStyleOptionViewItem
-	  param in name "index" type class_ref 147330 // QModelIndex
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2998530 "setEditorData"
-	cpp_virtual public explicit_return_type "void"
-	nparams 2
-	  param in name "editor" type class_ref 316162 // QWidget
-	  param in name "index" type class_ref 147330 // QModelIndex
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2998658 "setModelData"
-	cpp_virtual public explicit_return_type "void"
-	nparams 3
-	  param in name "editor" type class_ref 316162 // QWidget
-	  param in name "model" type class_ref 146946 // QAbstractItemModel
-	  param in name "index" type class_ref 147330 // QModelIndex
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 2998786 "updateEditorGeometry"
-	cpp_virtual public explicit_return_type "void"
-	nparams 3
-	  param in name "editor" type class_ref 316162 // QWidget
-	  param in name "option" type class_ref 1914626 // QStyleOptionViewItem
-	  param in name "index" type class_ref 147330 // QModelIndex
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
     class 1914626 "QStyleOptionViewItem"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -3871,6 +3592,23 @@ ${inlines}
 	
       end
 
+      operation 4048386 "doubleClicked"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 3286018 "selectedIndexes"
 	protected return_type class_ref 1187074 // QModelIndexList
 	nparams 0
@@ -3893,6 +3631,15 @@ ${inlines}
 "
 	    classrelation_ref 2474754 // <unidirectional association>
 	  b parent class_ref 1382914 // QItemSelectionModel
+      end
+
+      classrelation 3072130 // <unidirectional association>
+	relation 3054338 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3072130 // <unidirectional association>
+	  b parent class_ref 1914498 // QAbstractItemDelegate
       end
     end
 
@@ -4055,6 +3802,15 @@ ${inlines}
 	    classrelation_ref 2726914 // <unidirectional association>
 	  b parent class_ref 2427778 // ViewController
       end
+
+      classrelation 3074178 // <unidirectional association>
+	relation 3056258 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3074178 // <unidirectional association>
+	  b parent class_ref 2686466 // ControllerInputEvent
+      end
     end
 
     classdiagram 1795714 "QTableView"
@@ -4145,6 +3901,364 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+  end
+
+  classview 1280130 "MV-Delegate"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2399874 "overview"
+      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+      size A4
+    end
+
+    classdiagram 601090 "QStyledItemDelegate"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 1914498 "QAbstractItemDelegate"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 2250754 // <generalisation>
+	relation 2234498 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2250754 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      operation 2997378 "QAbstractItemDelegate"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2997506 "~QAbstractItemDelegate"
+	abstract cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
+
+      operation 2997890 "createEditor"
+	abstract cpp_virtual public return_type class_ref 316162 // QWidget
+	nparams 3
+	  param in name "parent" type class_ref 316162 // QWidget
+	  param in name "option" type class_ref 1914626 // QStyleOptionViewItem
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2999554 "destroyEditor"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param in name "editor" type class_ref 316162 // QWidget
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2997634 "paint"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 3
+	  param in name "painter" type class_ref 903170 // QPainter
+	  param in name "option" explicit_type "QStyleOptionViewItem"
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2998018 "setEditorData"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param in name "editor" type class_ref 316162 // QWidget
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2998146 "setModelData"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 3
+	  param in name "editor" type class_ref 316162 // QWidget
+	  param in name "model" type class_ref 146946 // QAbstractItemModel
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2997762 "sizeHint"
+	abstract cpp_virtual public return_type class_ref 363010 // QSize
+	nparams 2
+	  param in name "option" type class_ref 1914626 // QStyleOptionViewItem
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 2998274 "updateEditorGeometry"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 3
+	  param in name "editor" type class_ref 316162 // QWidget
+	  param in name "option" type class_ref 1914626 // QStyleOptionViewItem
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 4048514 "closeEditor"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "editor" type class_ref 316162 // QWidget
+	  param in name "hint" explicit_type "EndEditHint"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4048642 "commitData"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "editor" type class_ref 316162 // QWidget
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 605570 "QStyledItemDelegate"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 1170178 "QStyledItemDelegate"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1170306 "~QStyledItemDelegate"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1170434 "paint"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 3
+	  param in name "painter" explicit_type "QPainter"
+	  param in name "option" explicit_type "QStyleOptionViewItem"
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1170562 "sizeHint"
+	abstract cpp_virtual public return_type class_ref 363010 // QSize
+	nparams 2
+	  param in name "option" explicit_type "QStyleOptionViewItem"
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      classrelation 2250882 // <generalisation>
+	relation 2234626 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 2250882 // <generalisation>
+	  b parent class_ref 1914498 // QAbstractItemDelegate
+      end
+
+      operation 2998402 "createEditor"
+	cpp_virtual public return_type class_ref 316162 // QWidget
+	nparams 3
+	  param in name "parent" type class_ref 316162 // QWidget
+	  param in name "option" type class_ref 1914626 // QStyleOptionViewItem
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2998530 "setEditorData"
+	cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param in name "editor" type class_ref 316162 // QWidget
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2998658 "setModelData"
+	cpp_virtual public explicit_return_type "void"
+	nparams 3
+	  param in name "editor" type class_ref 316162 // QWidget
+	  param in name "model" type class_ref 146946 // QAbstractItemModel
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 2998786 "updateEditorGeometry"
+	cpp_virtual public explicit_return_type "void"
+	nparams 3
+	  param in name "editor" type class_ref 316162 // QWidget
+	  param in name "option" type class_ref 1914626 // QStyleOptionViewItem
+	  param in name "index" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${throw}${staticnl}
 {
   ${body}}
 "
@@ -5868,6 +5982,36 @@ ${inlines}
 	
 	
       end
+
+      attribute 2563586 "enabled"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 4061826 "triggered"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "checked" explicit_type "bool"
+	    defaultvalue "false"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 860162 "QAbstractScrollArea"
@@ -6123,6 +6267,38 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    class 2706562 "QActionGroup"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3088770 // <generalisation>
+	relation 3070594 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3088770 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      classrelation 3088898 // <unidirectional association>
+	relation 3070722 --->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 3088898 // <unidirectional association>
+	  b parent class_ref 693250 // QAction
+      end
     end
   end
 
@@ -6683,6 +6859,112 @@ ${inlines}
 "
 	    classrelation_ref 2541442 // <unidirectional association>
 	  b multiplicity "*" parent class_ref 895618 // QGraphicsScene
+      end
+    end
+
+    classdiagram 2413954 "QToolBar"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2706690 "QToolBar"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3089154 // <generalisation>
+	relation 3070978 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3089154 // <generalisation>
+	  b parent class_ref 316162 // QWidget
+      end
+    end
+
+    classdiagram 2414082 "Menu"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2706818 "QMenu"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3089282 // <generalisation>
+	relation 3071106 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3089282 // <generalisation>
+	  b parent class_ref 316162 // QWidget
+      end
+
+      classrelation 3089410 // <unidirectional association>
+	relation 3071234 --->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 3089410 // <unidirectional association>
+	  b parent class_ref 2706818 // QMenu
+      end
+
+      classrelation 3089538 // <unidirectional association>
+	relation 3071362 --->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 3089538 // <unidirectional association>
+	  b parent class_ref 693250 // QAction
+      end
+    end
+
+    class 2706946 "QMenuBar"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3089666 // <generalisation>
+	relation 3071490 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3089666 // <generalisation>
+	  b parent class_ref 316162 // QWidget
+      end
+
+      classrelation 3089794 // <unidirectional association>
+	relation 3071618 --->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 3089794 // <unidirectional association>
+	  b parent class_ref 2706818 // QMenu
       end
     end
   end

@@ -1,6 +1,6 @@
 format 211
 "mdtdatabase" // mdtdatabase
-  revision 125
+  revision 126
   modified_by 2 "philippe"
   // class settings
   
@@ -798,7 +798,7 @@ ${inlines}
      end
     classdiagram 1237506 "MVC"
       classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-      size A4-Landscape
+      size B-Landscape
     end
 
     classdiagram 640258 "mdtSqlRelation"
@@ -1607,7 +1607,7 @@ ${members}};
 
     classdiagram 1237634 "mdtAbstractSqlTableController"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size C
     end
 
     class 1376002 "mdtAbstractSqlTableController"

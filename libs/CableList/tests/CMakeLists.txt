@@ -69,6 +69,12 @@ target_link_libraries(mdtcablelistlinktest "mdtcablelist${MDTLIB_VERSION_SUFFIX}
 target_link_libraries(mdtcablelistlinktest Qt5::Test)
 add_test(MdtCableListLinkTest ${CMAKE_CURRENT_BINARY_DIR}/mdtcablelistlinktest)
 
+# Target MdtCableListLinkStorageTest
+add_executable(mdtcablelistlinkstoragetest src/LinkStorageTest.cpp)
+target_link_libraries(mdtcablelistlinkstoragetest "mdtcablelist${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcablelistlinkstoragetest Qt5::Test)
+add_test(MdtCableListLinkStorageTest ${CMAKE_CURRENT_BINARY_DIR}/mdtcablelistlinkstoragetest)
+
 
 #================= Path Graph ====================
 

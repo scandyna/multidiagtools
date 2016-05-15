@@ -581,6 +581,7 @@ void LinkTest::linkDataTest()
   using Mdt::CableList::WirePk;
   using Mdt::CableList::LinkBeamPk;
   using Mdt::Numeric::Resistance;
+  using Mdt::Numeric::Length;
 
   LinkPk pk;
   LinkKey key;
@@ -615,8 +616,8 @@ void LinkTest::linkDataTest()
   QCOMPARE(data.identification(), QVariant("1234"));
   data.setResistance(Resistance(1.5));
   QCOMPARE(data.resistance().value().toDouble(), 1.5);
-  /// \todo Add also length
-  
+  data.setLength(Length(10.0));
+  QCOMPARE(data.length().value().toDouble(), 10.0);
   /*
    * Clear
    */
@@ -624,7 +625,7 @@ void LinkTest::linkDataTest()
   QVERIFY(data.key().isNull());
   QVERIFY(data.identification().isNull());
   QVERIFY(data.resistance().isNull());
-  /// \todo Add also length
+  QVERIFY(data.length().isNull());
 }
 
 /*

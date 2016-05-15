@@ -1,6 +1,6 @@
 format 211
-"Interactor" // principes::Interactor
-  revision 2
+"MVP" // principes::MVP
+  revision 3
   modified_by 2 "philippe"
   // class settings
   
@@ -26,7 +26,7 @@ format 211
   activitydiagramsettings
    end
   
-  classview 1111042 "Interactor"
+  classview 1111042 "MVP"
     
     classdiagramsettings member_max_width 0 end
     

@@ -1,6 +1,6 @@
 format 211
 "CableList" // Mdt::CableList
-  revision 32
+  revision 34
   modified_by 2 "philippe"
   // class settings
   
@@ -3628,6 +3628,16 @@ ${inlines}
 	    classrelation_ref 3049986 // <dependency>
 	  b parent class_ref 2383490 // Query
       end
+    end
+
+    classdiagram 2406530 "LinkSelectionModel"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    classdiagram 2406402 "LinkEditionModel"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
   end
 

@@ -18,15 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_CABLE_LIST_LINK_TEST_H
-#define MDT_CABLE_LIST_LINK_TEST_H
+#ifndef MDT_CABLE_LIST_LINK_STORAGE_TEST_H
+#define MDT_CABLE_LIST_LINK_STORAGE_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
 #include <QTemporaryFile>
 #include <QSqlDatabase>
 
-class LinkTest : public QObject
+class LinkStorageTest : public QObject
 {
  Q_OBJECT
 
@@ -34,22 +34,6 @@ class LinkTest : public QObject
 
   void initTestCase();
   void cleanupTestCase();
-
-  void versionPkTest();
-
-  void typePkTest();
-  void typeCodeTest();
-  void typeModelTest();
-
-  void directionPkTest();
-  void directionCodeTest();
-  void directionModelTest();
-
-  void linkPkTest();
-  void linkPkListTest();
-  void linkPkListBenchmark();
-  void linkKeyTest();
-  void linkDataTest();
 
  private:
 
@@ -60,4 +44,4 @@ class LinkTest : public QObject
   QSqlDatabase pvDatabase;
 };
 
-#endif // #ifndef MDT_CABLE_LIST_LINK_TEST_H
+#endif // #ifndef MDT_CABLE_LIST_LINK_STORAGE_TEST_H
