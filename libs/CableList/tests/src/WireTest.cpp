@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "WireTest.h"
-#include "mdtApplication.h"
+#include "Mdt/Application.h"
 #include "Mdt/CableList/DatabaseSchema.h"
 #include "Mdt/CableList/WirePk.h"
 
@@ -106,7 +106,7 @@ void WireTest::createDatabaseSchema()
 
 int main(int argc, char **argv)
 {
-  mdtApplication app(argc, argv);
+  Mdt::Application app(argc, argv);
   WireTest test;
 
   if(!app.init()){

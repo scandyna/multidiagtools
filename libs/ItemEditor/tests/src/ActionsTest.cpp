@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "ActionsTest.h"
-#include "mdtApplication.h"
+#include "Mdt/Application.h"
 
 void ActionsTest::initTestCase()
 {
@@ -41,7 +41,7 @@ void ActionsTest::cleanupTestCase()
 
 int main(int argc, char **argv)
 {
-  mdtApplication app(argc, argv);
+  Mdt::Application app(argc, argv);
   ActionsTest test;
 
   if(!app.init()){

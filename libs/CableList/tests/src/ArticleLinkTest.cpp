@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "ArticleLinkTest.h"
-#include "mdtApplication.h"
+#include "Mdt/Application.h"
 #include "Mdt/CableList/DatabaseSchema.h"
 #include "Mdt/CableList/ArticleLinkPk.h"
 
@@ -114,7 +114,7 @@ void ArticleLinkTest::createDatabaseSchema()
 
 int main(int argc, char **argv)
 {
-  mdtApplication app(argc, argv);
+  Mdt::Application app(argc, argv);
   ArticleLinkTest test;
 
   if(!app.init()){

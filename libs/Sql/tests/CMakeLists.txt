@@ -12,6 +12,7 @@ set(SOURCES_FILES
 
 add_library(mdtsqltest SHARED ${SOURCES_FILES})
 target_link_libraries(mdtsqltest "mdtsql${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtsqltest "mdtapplication${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtsqltest Qt5::Test)
 
 #================= Tests ====================

@@ -19,8 +19,7 @@
  **
  ****************************************************************************/
 #include "PhysicsTypesTest.h"
-#include "mdtApplication.h"
-
+#include "Mdt/Application.h"
 #include "Mdt/Numeric/Double.h"
 #include "Mdt/Numeric/Resistance.h"
 #include "Mdt/Numeric/Length.h"
@@ -326,7 +325,7 @@ void PhysicsTypesTest::lengthSimpleTest()
 
 int main(int argc, char **argv)
 {
-  mdtApplication app(argc, argv);
+  Mdt::Application app(argc, argv);
   PhysicsTypesTest test;
 
   if(!app.init()){

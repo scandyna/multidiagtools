@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "ArticleConnectionTest.h"
-#include "mdtApplication.h"
+#include "Mdt/Application.h"
 #include "Mdt/CableList/DatabaseSchema.h"
 #include "Mdt/CableList/ArticleConnectionPk.h"
 
@@ -105,12 +105,13 @@ void ArticleConnectionTest::createDatabaseSchema()
 
 int main(int argc, char **argv)
 {
-  mdtApplication app(argc, argv);
+  Mdt::Application app(argc, argv);
   ArticleConnectionTest test;
 
   if(!app.init()){
     return 1;
   }
+  app.debugEnvironnement();
 
   return QTest::qExec(&test, argc, argv);
 }

@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "ModificationTest.h"
-#include "mdtApplication.h"
+#include "Mdt/Application.h"
 #include "Mdt/CableList/DatabaseSchema.h"
 #include "Mdt/CableList/ModificationPk.h"
 #include "Mdt/CableList/ModificationModel.h"
@@ -205,7 +205,7 @@ void ModificationTest::createDatabaseSchema()
 
 int main(int argc, char **argv)
 {
-  mdtApplication app(argc, argv);
+  Mdt::Application app(argc, argv);
   ModificationTest test;
 
   if(!app.init()){

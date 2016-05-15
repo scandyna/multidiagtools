@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtSerialPortTest.h"
-#include "mdtApplication.h"
+#include "Mdt/Application.h"
 #include "Mdt/SerialPort/SetupDialog.h"
 
 void mdtSerialPortTest::sandbox()
@@ -33,7 +33,7 @@ void mdtSerialPortTest::sandbox()
 
 int main(int argc, char **argv)
 {
-  mdtApplication app(argc, argv);
+  Mdt::Application app(argc, argv);
   mdtSerialPortTest test;
 
   if(!app.init()){

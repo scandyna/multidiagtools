@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "ArticleTest.h"
-#include "mdtApplication.h"
+#include "Mdt/Application.h"
 #include "Mdt/CableList/DatabaseSchema.h"
 
 void ArticleTest::initTestCase()
@@ -72,7 +72,7 @@ void ArticleTest::createDatabaseSchema()
 
 int main(int argc, char **argv)
 {
-  mdtApplication app(argc, argv);
+  Mdt::Application app(argc, argv);
   ArticleTest test;
 
   if(!app.init()){

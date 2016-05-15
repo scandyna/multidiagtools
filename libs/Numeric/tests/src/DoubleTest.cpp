@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "DoubleTest.h"
-#include "mdtApplication.h"
+#include "Mdt/Application.h"
 #include "Mdt/Numeric/Double.h"
 
 #include <QDebug>
@@ -360,7 +360,7 @@ void DoubleTest::mathOperatorsTest()
 
 int main(int argc, char **argv)
 {
-  mdtApplication app(argc, argv);
+  Mdt::Application app(argc, argv);
   DoubleTest test;
 
   if(!app.init()){

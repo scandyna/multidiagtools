@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "UnitConnectionTest.h"
-#include "mdtApplication.h"
+#include "Mdt/Application.h"
 #include "Mdt/CableList/DatabaseSchema.h"
 #include "Mdt/CableList/UnitConnectionPk.h"
 #include "Mdt/CableList/UnitConnectionPkList.h"
@@ -172,7 +172,7 @@ void UnitConnectionTest::createDatabaseSchema()
 
 int main(int argc, char **argv)
 {
-  mdtApplication app(argc, argv);
+  Mdt::Application app(argc, argv);
   UnitConnectionTest test;
 
   if(!app.init()){

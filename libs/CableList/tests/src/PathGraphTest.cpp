@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "PathGraphTest.h"
-#include "mdtApplication.h"
+#include "Mdt/Application.h"
 #include "Mdt/CableList/Path/Graph.h"
 #include <vector>
 
@@ -39,7 +39,7 @@
 
 int main(int argc, char **argv)
 {
-  mdtApplication app(argc, argv);
+  Mdt::Application app(argc, argv);
   PathGraphTest test;
 
   if(!app.init()){

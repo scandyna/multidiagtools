@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "LinkStorageTest.h"
-#include "mdtApplication.h"
+#include "Mdt/Application.h"
 #include "Mdt/CableList/DatabaseSchema.h"
 #include "Mdt/CableList/LinkStorage.h"
 #include "Mdt/CableList/LinkDirectionPk.h"
@@ -75,7 +75,7 @@ void LinkStorageTest::createDatabaseSchema()
 
 int main(int argc, char **argv)
 {
-  mdtApplication app(argc, argv);
+  Mdt::Application app(argc, argv);
   LinkStorageTest test;
 
   if(!app.init()){

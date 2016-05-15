@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "QueryTest.h"
 #include "TestDatabaseSchema.h"
-#include "mdtApplication.h"
+#include "Mdt/Application.h"
 #include "Mdt/Sql/Query.h"
 
 #include <QDebug>
@@ -59,7 +59,7 @@ void QueryTest::cleanupTestCase()
 
 int main(int argc, char **argv)
 {
-  mdtApplication app(argc, argv);
+  Mdt::Application app(argc, argv);
   QueryTest test;
 
   if(!app.init()){

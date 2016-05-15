@@ -115,6 +115,10 @@ if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
 endif(Boost_FOUND)
 
+# Headers that are used in all unit tests from libs
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/libs/QtSolutions/include")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/libs/Application/src")
+
 # Headers directories
 #include_directories("${CMAKE_CURRENT_BINARY_DIR}/src")
 include_directories("${PROJECT_SOURCE_DIR}/src")

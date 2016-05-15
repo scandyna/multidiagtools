@@ -19,8 +19,7 @@
  **
  ****************************************************************************/
 #include "PathGraphPrivateTest.h"
-#include "mdtApplication.h"
-
+#include "Mdt/Application.h"
 #include "Mdt/CableList/Path/GraphPrivate/Graph.h"
 #include <vector>
 
@@ -297,7 +296,7 @@ void PathGraphPrivateTest::graphImplLinkedConnectionsBenchmark()
 
 int main(int argc, char **argv)
 {
-  mdtApplication app(argc, argv);
+  Mdt::Application app(argc, argv);
   PathGraphPrivateTest test;
 
   if(!app.init()){
