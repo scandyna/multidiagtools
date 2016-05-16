@@ -7,23 +7,28 @@ diagrams
     120 112 100 4 0 0
   classdiagram_ref 2406658 // Controller
     980 903 100 4 0 0
+  classdiagram_ref 2399618 // sandbox
+    120 98 100 21 0 0
+  classdiagram_ref 2434178 // ClientTableModel
+    980 905 100 7 0 0
+  classdiagram_ref 2440706 // ServerTable
+    980 905 100 7 0 0
+  classdiagram_ref 2414210 // overview
+    120 98 100 4 0 0
   classdiagram_ref 2413698 // NavigationActions
-    980 905 100 4 0 0
-  active  classdiagram_ref 2427394 // Application
-    980 905 100 4 0 0
+    120 98 100 4 0 0
+  classdiagram_ref 2420866 // EditionActions
+    120 98 100 4 0 0
+  active  classdiagram_ref 2447490 // RowChangeEventMapper
+    980 905 100 18 0 0
 end
 show_stereotypes
-selected operation_ref 4078082 // searchSystemDataDirectory
+selected classdiagram_ref 2447490 // RowChangeEventMapper
 open
-  attribute_ref 2584066 // LogDirectory
-  class_ref 2733186 // MultipleInstancePermission
-  operation_ref 4078210 // debugEnvironment
-  operation_ref 4078082 // searchSystemDataDirectory
+  attribute_ref 2591106 // Model
+  operation_ref 4100994 // setCurrentRow
+  classview_ref 1286786 // Actions
   
   package_ref 430082 // Dsp
-  classview_ref 300162 // QtSolutions
-  classview_ref 1253506 // base_unit
-  classview_ref 1253378 // impedance
-  class_ref 2663554 // quantity
 end
 end

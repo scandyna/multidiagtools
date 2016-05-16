@@ -72,31 +72,19 @@ namespace Mdt{
 
     /*! \brief Do initializations
      *
-     * If multipleInstancePermission is set to SingleInstanceOnly,
-     *  and a other instance is running,
-     *  this method returns false.
-     *
-     * The system data directory is serached in several predefined paths.
-     *  If it was not found, this method returns false.
-     *
-     * A log directory is created if required.
-     *  If this part fails, a warning is printed to the console, but this method returns true.
-     *
-     * The error system is also initiated.
-     *  If this fails, this method returns false.
-     *
-     * A cache directory is created if required.
-     *  If this fails, this method returns false.
-     *
      * Several things are done here:
-     *  - Check if another instance is running (if allowMultipleInstances Instance is false)
-     *  - Search the system data directory
-     *  - Init the home directories structure
-     *  - Init the error system
-     *  - Load translation files and set language according system settings.
-     * \param allowMultipleInstances If true, multiple instance of application is allowed (but NOT multiple instance of mdtApplication in program !)
-    * \sa mdtErrorOut::setDialogLevelsMask()
-    * \sa mdtErrorOut
+     *  - If multipleInstancePermission is set to SingleInstanceOnly,
+     *     and a other program instance is running, this method returns false.
+     *  - The system data directory is serached in several predefined paths.
+     *     If it was not found, this method returns false.
+     *  - A log directory is created if required.
+     *     If this part fails, a warning is printed to the console, but this method returns true.
+     *  - The error system is also initilized.
+     *     If this fails, this method returns false.
+     *  - A cache directory is created if required.
+     *     If this fails, this method returns false.
+     *
+     * \todo Implement loading translations..
     */
     bool init(MultipleInstancePermission multipleInstancePermission = SingleInstanceOnly);
 

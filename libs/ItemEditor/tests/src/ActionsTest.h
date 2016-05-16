@@ -33,6 +33,9 @@ class ActionsTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
+  void sandbox();
+
+  void rowChangeEventMapperTest();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_ACTIONS_TEST_H

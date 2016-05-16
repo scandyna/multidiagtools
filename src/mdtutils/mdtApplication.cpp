@@ -285,6 +285,14 @@ bool mdtApplication::searchSystemDataDir()
     }
   }
 #endif  // #ifdef Q_OS_UNIX
+  if(pvSystemDataDir.cd(QStringLiteral(MDT_SOURCE_DIRECTORY_PATH) + QStringLiteral("/data"))){
+    if(isSystemDataDir(pvSystemDataDir)){
+      // Ok, found.
+      ///pvSystemDataDirPath = dir.absolutePath();
+      return true;
+    }
+  }
+
 
   // Data directory not found :-(
   std::cerr << "mdtApplication::searchSystemDataDir(): cannot find system data directory" << std::endl;

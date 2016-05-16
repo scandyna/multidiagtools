@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 134
+  revision 136
   modified_by 2 "philippe"
   // class settings
   
@@ -2713,6 +2713,10 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 141186 // <generalisation>
 	  b parent class_ref 146946 // QAbstractItemModel
+      end
+
+      classrelation 3118082 // <association>
+	relation_ref 3099650 // <association>
       end
     end
 
@@ -8954,6 +8958,79 @@ ${inlines}
     classdiagram 2144770 "lowEnergy"
       classdiagramsettings member_max_width 0 end
       size A4
+    end
+  end
+
+  classview 1300226 "QtWebSockets"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2433922 "QWebSocket"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2739714 "QWebSocket"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3109890 // <generalisation>
+	relation 3091714 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3109890 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+    end
+
+    classdiagram 2434050 "QWebSocketServer"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2739842 "QWebSocketServer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3110018 // <generalisation>
+	relation 3091842 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3110018 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
     end
   end
 end

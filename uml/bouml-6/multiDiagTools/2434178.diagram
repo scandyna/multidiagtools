@@ -1,0 +1,71 @@
+format 211
+
+classcanvas 128002 class_ref 2739714 // QWebSocket
+  classdiagramsettings member_max_width 0 end
+  xyz 591 165.25 2000
+end
+classcanvas 128130 class_ref 138626 // QObject
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 450 41.75 2006
+end
+classcanvas 128386 class_ref 2739842 // QWebSocketServer
+  classdiagramsettings member_max_width 0 end
+  xyz 417.25 165.25 2012
+end
+classcanvas 128642 class_ref 146946 // QAbstractItemModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 235.5 165.25 2012
+end
+classcanvas 129410 class_ref 2739970 // ClientTableModel
+  classdiagramsettings member_max_width 0 end
+  xyz 40.25 331.75 2000
+end
+classcanvas 129538 class_ref 147202 // QAbstractTableModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 228.25 249.75 2018
+end
+classcanvas 129922 class_ref 2740098 // Protocol
+  classdiagramsettings member_max_width 0 end
+  xyz 605 444.75 2000
+end
+relationcanvas 128258 relation_ref 3091714 // <generalisation>
+  geometry VHV unfixed
+  from ref 128002 z 2007 to point 636 125
+  line 128898 z 2007 to point 480 125
+  line 129026 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 3091842 // <generalisation>
+  decenter_begin 474
+  from ref 128386 z 2013 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 902018 // <generalisation>
+  geometry VHV unfixed
+  from ref 128642 z 2013 to point 304 125
+  line 130178 z 2013 to point 480 125
+  line 130306 z 2013 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 141186 // <generalisation>
+  decenter_begin 523
+  from ref 129538 z 2019 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 3091970 // <generalisation>
+  decenter_begin 505
+  decenter_end 523
+  from ref 129410 z 2019 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 3092098 // <unidirectional association>
+  from ref 129410 z 2001 to ref 129922
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

@@ -5,7 +5,7 @@ project(multidiagtools)
 
 # List of source files
 set(SOURCES_FILES 
-#     src/Mdt/Sql/XXX.cpp
+    src/Mdt/ItemEditor/RowChangeEventMapper.cpp
 )
 
 # Headers directories

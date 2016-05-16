@@ -1,6 +1,6 @@
 format 211
 "Mdt" // Mdt
-  revision 10
+  revision 11
   modified_by 2 "philippe"
   // class settings
   
@@ -233,6 +233,8 @@ ${items}};
   package_ref 403074 // ErrorGui
 
   package_ref 503042 // ItemEditor
+
+  package_ref 509570 // WebSocket
 
   package_ref 483202 // Numeric
 
