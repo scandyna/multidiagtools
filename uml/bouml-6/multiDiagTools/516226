@@ -1,6 +1,6 @@
 format 211
-"ErrorGui" // mdt::ErrorGui
-  revision 2
+"SqlItemModel" // Mdt::SqlItemModel
+  revision 1
   modified_by 2 "philippe"
   // class settings
   

@@ -202,6 +202,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Numeric")
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtcsv")
 
 # * mdterror and mdterrorgui *
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Error")
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdterror")
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdterrorgui")
 

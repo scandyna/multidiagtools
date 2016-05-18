@@ -4,7 +4,7 @@ classcanvas 128002 class_ref 552450 // QMainWindow
   classdiagramsettings member_max_width 0 end
   xyz 38.5 41.5 2000
 end
-classcanvas 128130 class_ref 2706306 // Window
+classcanvas 128130 class_ref 2706306 // StandardWindow
   classdiagramsettings member_max_width 0 end
   xyz 229.5 140.85 2000
 end

@@ -31,8 +31,8 @@ set (SOURCES_FILES
 add_library (mdtcsv${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
 target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} Qt5::Widgets)
 #target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} Qt5::Sql)
-target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} "mdterror${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} "mdterrorOld${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} "mdterrorguiOld${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtcsv${MDTLIB_VERSION_SUFFIX} "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 
 # Translations - We generate a .pro file, that simplify the usage of lupdate

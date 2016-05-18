@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 9
+  revision 11
   modified_by 2 "philippe"
   // class settings
   
@@ -302,30 +302,6 @@ ${inlines}
       size A4
     end
 
-    class 2693250 "Relation"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3081602 // <unidirectional association>
-	relation 3063554 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3081602 // <unidirectional association>
-	  b parent class_ref 2686466 // ControllerInputEvent
-      end
-    end
-
     classdiagram 2406786 "InputEvents"
       classdiagramsettings member_max_width 0 end
       size A4-Landscape
@@ -598,6 +574,15 @@ ${inlines}
 	
 	
       end
+
+      classrelation 3131522 // <unidirectional association>
+	relation 3113218 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3131522 // <unidirectional association>
+	  b parent class_ref 2706434 // NavigationActions
+      end
     end
   end
 
@@ -690,14 +675,9 @@ ${items}};
     
     activitydiagramsettings
      end
-    classdiagram 2447362 "AbstractActions"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
     classdiagram 2413698 "NavigationActions"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 2706434 "NavigationActions"
@@ -737,6 +717,18 @@ ${inlines}
 
       attribute 2590850 "CurrentRow"
 	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2597634 "State"
+	private type class_ref 2684930 // ControllerState
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -819,11 +811,12 @@ ${inlines}
 	
       end
 
-      classrelation 3090050 // <dependency>
-	relation 3071874 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3090050 // <dependency>
+      classrelation 3090050 // <directional composition>
+	relation 3071874 *-->
+	  a role_name "" public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3090050 // <directional composition>
 	  b parent class_ref 2684930 // ControllerState
       end
 
@@ -1334,12 +1327,12 @@ ${inlines}
       size A4
     end
 
-    classdiagram 2413442 "Window"
+    classdiagram 2413442 "StandardWindow"
       classdiagramsettings member_max_width 0 end
       size A4
     end
 
-    class 2706306 "Window"
+    class 2706306 "StandardWindow"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -1359,6 +1352,109 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 3088642 // <generalisation>
 	  b parent class_ref 552450 // QMainWindow
+      end
+
+      classrelation 3131650 // <directional composition>
+	relation 3113346 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3131650 // <directional composition>
+	  b parent class_ref 2706434 // NavigationActions
+      end
+
+      classrelation 3131778 // <directional composition>
+	relation 3113474 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3131778 // <directional composition>
+	  b parent class_ref 2713474 // EditionActions
+      end
+    end
+  end
+
+  classview 1327362 "SqlSandbox"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2468610 "Relation"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2693250 "Relation"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3081602 // <unidirectional association>
+	relation 3063554 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3081602 // <unidirectional association>
+	  b parent class_ref 2686466 // ControllerInputEvent
+      end
+
+      operation 4131970 "fromForeignKey"
+	class_operation public return_type class_ref 2693250 // Relation
+	nparams 1
+	  param in name "fk" type class_ref 2775682 // ForeignKey
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 2782850 "ControllerRelation"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3153666 // <generalisation>
+	relation 3135362 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3153666 // <generalisation>
+	  b parent class_ref 138626 // QObject
       end
     end
   end

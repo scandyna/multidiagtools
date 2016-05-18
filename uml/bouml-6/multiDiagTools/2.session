@@ -1,4 +1,4 @@
-window_sizes 1280 957 294 980 905 0
+window_sizes 1280 957 339 935 902 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -8,27 +8,46 @@ diagrams
   classdiagram_ref 2406658 // Controller
     980 903 100 4 0 0
   classdiagram_ref 2399618 // sandbox
-    120 98 100 21 0 0
+    120 110 100 21 0 0
   classdiagram_ref 2434178 // ClientTableModel
     980 905 100 7 0 0
   classdiagram_ref 2440706 // ServerTable
     980 905 100 7 0 0
   classdiagram_ref 2414210 // overview
-    120 98 100 4 0 0
+    120 110 100 4 0 0
   classdiagram_ref 2413698 // NavigationActions
-    120 98 100 4 0 0
+    120 110 100 18 0 0
   classdiagram_ref 2420866 // EditionActions
-    120 98 100 4 0 0
-  active  classdiagram_ref 2447490 // RowChangeEventMapper
+    120 110 100 4 0 0
+  classdiagram_ref 2447490 // RowChangeEventMapper
     980 905 100 18 0 0
+  classdiagram_ref 2413314 // overview
+    120 110 100 4 0 0
+  classdiagram_ref 2413442 // StandardWindow
+    120 110 100 4 0 0
+  classdiagram_ref 2454146 // TableModel
+    935 902 100 4 0 0
+  classdiagram_ref 2468610 // Relation
+    120 110 100 4 0 0
+  classdiagram_ref 2468482 // overview
+    120 110 100 4 0 0
+  classdiagram_ref 2461442 // PrimaryKey
+    120 110 100 4 0 0
+  classdiagram_ref 2461186 // Field
+    120 110 100 4 0 0
+  active  classdiagram_ref 2475138 // Collation
+    935 902 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2447490 // RowChangeEventMapper
+selected 
+  package_ref 401922 // ErrorLogger
 open
-  attribute_ref 2591106 // Model
-  operation_ref 4100994 // setCurrentRow
-  classview_ref 1286786 // Actions
+  classview_ref 1293698 // CoreApplication
+  classview_ref 1334018 // Logger
+  
+  package_ref 516226 // SqlItemModel
   
   package_ref 430082 // Dsp
+  classview_ref 880386 // Logger
 end
 end

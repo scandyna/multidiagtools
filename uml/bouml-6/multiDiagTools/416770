@@ -1,6 +1,6 @@
 format 211
 "CableList" // Mdt::CableList
-  revision 34
+  revision 37
   modified_by 2 "philippe"
   // class settings
   
@@ -29,6 +29,8 @@ format 211
   package_ref 469890 // sandbox
 
   package_ref 436866 // DatabaseLogical
+
+  package_ref 522882 // Schema
 
   classview 1184642 "DatabaseSchema"
     
@@ -124,7 +126,7 @@ ${inlines}
       end
 
       attribute 2548738 "LastError"
-	private type class_ref 182402 // mdtError
+	private type class_ref 182402 // Error
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -152,7 +154,7 @@ ${inlines}
       end
 
       operation 4009474 "lastError"
-	public return_type class_ref 182402 // mdtError
+	public return_type class_ref 182402 // Error
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -169,7 +171,7 @@ ${inlines}
       operation 4009602 "setLastError"
 	protected explicit_return_type "void"
 	nparams 1
-	  param in name "error" type class_ref 182402 // mdtError
+	  param in name "error" type class_ref 182402 // Error
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -596,7 +598,7 @@ ${inlines}
       end
 
       attribute 2520706 "LastError"
-	private type class_ref 182402 // mdtError
+	private type class_ref 182402 // Error
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -608,7 +610,7 @@ ${inlines}
       end
 
       operation 3970562 "lastError"
-	public return_type class_ref 182402 // mdtError
+	public return_type class_ref 182402 // Error
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2100,7 +2102,7 @@ ${inlines}
       end
 
       attribute 2514178 "LastError"
-	private type class_ref 182402 // mdtError
+	private type class_ref 182402 // Error
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -2112,7 +2114,7 @@ ${inlines}
       end
 
       operation 3962882 "lastError"
-	public return_type class_ref 182402 // mdtError
+	public return_type class_ref 182402 // Error
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2460,7 +2462,7 @@ ${inlines}
       end
 
       attribute 2527234 "LastError"
-	private type class_ref 182402 // mdtError
+	private type class_ref 182402 // Error
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -2472,7 +2474,7 @@ ${inlines}
       end
 
       operation 3977986 "lastError"
-	public return_type class_ref 182402 // mdtError
+	public return_type class_ref 182402 // Error
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "

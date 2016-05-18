@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ERROR_DIALOG_H
-#define MDT_ERROR_DIALOG_H
+#ifndef MDT_ERROR_DIALOG_OLD_H
+#define MDT_ERROR_DIALOG_OLD_H
 
 #include "mdtError.h"
 #include <QMessageBox>
@@ -49,4 +49,4 @@ class mdtErrorDialog : public QMessageBox
   void setIconFromLevel(mdtError::Level level);
 };
 
-#endif // #ifndef MDT_ERROR_DIALOG_H
+#endif // #ifndef MDT_ERROR_DIALOG_OLD_H

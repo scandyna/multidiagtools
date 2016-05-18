@@ -34,7 +34,7 @@ end
 relationcanvas 128770 relation_ref 2308354 // <generalisation>
   geometry VHV unfixed
   decenter_begin 470
-  from ref 128642 z 2001 to point 109 160
+  from ref 128642 z 2001 to point 110 160
   line 130946 z 2001 to point 518 160
   line 131074 z 2001 to ref 128002
   no_role_a no_role_b
@@ -44,32 +44,32 @@ relationcanvas 130050 relation_ref 2274562 // <directional composition>
   decenter_begin 473
   from ref 129922 z 2007 to ref 129794
   no_role_a no_role_b
-  multiplicity_a_pos 296 295 3000 no_multiplicity_b
+  multiplicity_a_pos 296 299 3000 no_multiplicity_b
 end
 relationcanvas 130434 relation_ref 2315138 // <directional composition>
   from ref 129922 z 2007 to ref 128642
   no_role_a no_role_b
-  multiplicity_a_pos 201 250 3000 no_multiplicity_b
+  multiplicity_a_pos 203 246 3000 no_multiplicity_b
 end
 relationcanvas 130562 relation_ref 2315266 // <directional composition>
   decenter_begin 469
   from ref 129794 z 2001 to ref 128386
   no_role_a no_role_b
-  multiplicity_a_pos 437 401 3000 no_multiplicity_b
+  multiplicity_a_pos 437 397 3000 no_multiplicity_b
 end
 relationcanvas 130690 relation_ref 2322050 // <directional composition>
   from ref 129794 z 2001 to ref 128898
   no_role_a no_role_b
-  multiplicity_a_pos 297 486 3000 no_multiplicity_b
+  multiplicity_a_pos 297 490 3000 no_multiplicity_b
 end
 relationcanvas 130818 relation_ref 2322178 // <directional composition>
   geometry HV unfixed
   decenter_begin 469
   decenter_end 470
-  from ref 129794 z 2001 to point 109 389
+  from ref 129794 z 2001 to point 110 387
   line 131202 z 2001 to ref 128642
   no_role_a no_role_b
-  multiplicity_a_pos 96 291 3000 no_multiplicity_b
+  multiplicity_a_pos 97 285 3000 no_multiplicity_b
 end
 line 131714 -_-_
   from ref 131586 z 2001 to ref 128002

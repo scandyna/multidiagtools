@@ -1,6 +1,6 @@
 format 211
-"Error" // mdt::Error
-  revision 2
+"ErrorLogger" // Mdt::ErrorLogger
+  revision 3
   modified_by 2 "philippe"
   // class settings
   
@@ -26,4 +26,36 @@ format 211
   activitydiagramsettings
    end
   
+  classview 1334018 "Logger"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    class 2139522 "mdtErrorLoggerGuard"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+  end
 end

@@ -1,0 +1,38 @@
+format 211
+
+classcanvas 128002 class_ref 2775810 // Table
+  classdiagramsettings member_max_width 0 end
+  xyz 57 562 2000
+end
+classcanvas 128130 class_ref 910210 // mdtSqlTableSchema
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 40.5 2000
+end
+classcanvas 128258 class_ref 2775554 // PrimaryKey
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 37 638 2000
+end
+classcanvas 128514 class_ref 2775042 // Field
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 58 486 2005
+end
+classcanvas 128770 class_ref 2775682 // ForeignKey
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 146 562 2000
+end
+relationcanvas 128386 relation_ref 3128194 // <directional composition>
+  from ref 128002 z 2001 to ref 128258
+  no_role_a no_role_b
+  multiplicity_a_pos 63 615 3000 no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 3128322 // <directional composition>
+  from ref 128002 z 2006 to ref 128514
+  no_role_a no_role_b
+  multiplicity_a_pos 65 536 3000 no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 3128450 // <directional composition>
+  from ref 128002 z 2001 to ref 128770
+  no_role_a no_role_b
+  multiplicity_a_pos 130 591 3000 no_multiplicity_b
+end
+end

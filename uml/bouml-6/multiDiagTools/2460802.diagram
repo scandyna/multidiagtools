@@ -1,0 +1,46 @@
+format 211
+
+classcanvas 128002 class_ref 2774018 // _member_t
+  classdiagramsettings member_max_width 0 end
+  xyz 42.2 379 2000
+end
+classcanvas 128130 class_ref 2774146 // my_struct
+  classdiagramsettings member_max_width 0 end
+  xyz 48.2 496.1 2000
+end
+classcanvas 128386 class_ref 2774274 // Feature
+  classdiagramsettings member_max_width 0 end
+  xyz 315.25 41 2000
+end
+classcanvas 128514 class_ref 2774402 // _alias_t
+  classdiagramsettings member_max_width 0 end
+  xyz 285.25 123.75 2006
+end
+classcanvas 128770 class_ref 2774530 // _member_t
+  classdiagramsettings member_max_width 0 end
+  xyz 442.25 106.75 2012
+end
+note 129026 "A column specification"
+  xyzwh 40.5 38 2000 209 49
+classcanvas 129282 class_ref 2774658 // table_t
+  classdiagramsettings member_max_width 0 end
+  xyz 475 237.25 2000
+end
+relationcanvas 128258 relation_ref 3127298 // <generalisation>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 128642 ---+
+  from ref 128514 z 2007 to ref 128386
+line 128898 ---+
+  from ref 128770 z 2013 to ref 128514
+relationcanvas 129410 relation_ref 3127426 // <generalisation>
+  decenter_end 521
+  from ref 129282 z 2013 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 129154 -_-_
+  from ref 128386 z 2001 to ref 129026
+end

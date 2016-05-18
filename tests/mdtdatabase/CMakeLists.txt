@@ -8,7 +8,7 @@ project (multidiagtools)
 # * mdtDatabaseTest executable *
 add_executable(mdtdatabasetest "mdtDatabaseTest.cpp")
 target_link_libraries(mdtdatabasetest "mdtutils${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtdatabasetest "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtdatabasetest "mdterrorguiOld${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatabasetest "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 #target_link_libraries(mdtdatabasetest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtdatabasetest "mdttest")

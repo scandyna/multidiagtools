@@ -43,7 +43,7 @@ set (SOURCES_FILES
 add_library (mdtutilsgui${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
 target_link_libraries(mdtutilsgui${MDTLIB_VERSION_SUFFIX} Qt5::Widgets Qt5::Sql)
 target_link_libraries(mdtutilsgui${MDTLIB_VERSION_SUFFIX} "mdtutils${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtutilsgui${MDTLIB_VERSION_SUFFIX} "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtutilsgui${MDTLIB_VERSION_SUFFIX} "mdterrorguiOld${MDTLIB_VERSION_SUFFIX}")
 if(WIN32)
   if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
     target_link_libraries(mdtutilsgui${MDTLIB_VERSION_SUFFIX} "qwt")

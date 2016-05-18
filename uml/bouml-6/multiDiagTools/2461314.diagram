@@ -1,0 +1,20 @@
+format 211
+
+classcanvas 128002 class_ref 1814786 // mdtSqlDriverType
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 40.5 2000
+end
+classcanvas 128130 class_ref 2775298 // DriverType
+  classdiagramsettings member_max_width 0 end
+  xyz 383 448 2000
+end
+classcanvas 128258 class_ref 2775426 // Driver
+  classdiagramsettings member_max_width 0 end
+  xyz 39 361 2000
+end
+relationcanvas 128386 relation_ref 3127682 // <directional composition>
+  from ref 128258 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

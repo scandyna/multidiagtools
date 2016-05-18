@@ -18,8 +18,8 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 add_library (mdtserialport${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
 target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} Qt5::Widgets)
 target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} Qt5::SerialPort)
-target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} "mdterror${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} "mdterrorOld${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} "mdterrorguiOld${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} "mdtutils${MDTLIB_VERSION_SUFFIX}")
 
 # Translation files

@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ERROR_H
-#define MDT_ERROR_H
+#ifndef MDT_ERROR_OLD_H
+#define MDT_ERROR_OLD_H
 
 #include <QExplicitlySharedDataPointer>
 #include <QString>
@@ -500,4 +500,4 @@ class mdtError
 // Q_DECLARE_OPAQUE_POINTER(mdtError)
 Q_DECLARE_METATYPE(mdtError)
 
-#endif // #ifndef MDT_ERROR_H
+#endif // #ifndef MDT_ERROR_OLD_H

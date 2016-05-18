@@ -1,0 +1,45 @@
+format 211
+
+classcanvas 128002 class_ref 2774914 // FieldType
+  classdiagramsettings member_max_width 0 end
+  xyz 985.9 72 2000
+end
+classcanvas 128130 class_ref 1814658 // mdtSqlFieldType
+  classdiagramsettings member_max_width 0 end
+  xyz 41.8 40 2000
+end
+classcanvas 128258 class_ref 2775170 // FieldTypeObject
+  classdiagramsettings member_max_width 0 end
+  xyz 809.5 37 2000
+end
+classcanvas 128514 class_ref 1814786 // mdtSqlDriverType
+  classdiagramsettings member_max_width 0 end
+  xyz 751.8 550.8 2000
+end
+classcanvas 128642 class_ref 2775298 // DriverType
+  classdiagramsettings member_max_width 0 end
+  xyz 384 1002 2005
+end
+classcanvas 128770 class_ref 2775426 // Driver
+  classdiagramsettings member_max_width 0 end
+  xyz 37.8 915 2011
+end
+classcanvas 129026 class_ref 2775042 // Field
+  classdiagramsettings member_max_width 0 end
+  xyz 546.1 914 2005
+end
+classcanvas 129282 class_ref 1974530 // mdtSqlField
+  classdiagramsettings member_max_width 0 end
+  xyz 39.9 552.1 2017
+end
+relationcanvas 128386 relation_ref 3127554 // <directional composition>
+  from ref 128258 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 3127682 // <directional composition>
+  from ref 128770 z 2012 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

@@ -45,6 +45,13 @@ namespace Mdt{ namespace ItemEditor{
      */
     RowChangeEventMapper(QObject *parent = nullptr);
 
+    // Copy disabled
+    RowChangeEventMapper(const RowChangeEventMapper &) = delete;
+    RowChangeEventMapper & operator=(const RowChangeEventMapper &) = delete;
+    // Move disabled
+    RowChangeEventMapper(RowChangeEventMapper &&) = delete;
+    RowChangeEventMapper & operator=(RowChangeEventMapper &&) = delete;
+
     /*! \brief Set selection model
      *
      * Will do required signal/slot connections
