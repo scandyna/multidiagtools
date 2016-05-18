@@ -40,14 +40,13 @@ diagrams
 end
 show_stereotypes
 selected 
-  package_ref 401922 // ErrorLogger
+package_ref 401922 // ErrorLogger
 open
   classview_ref 1293698 // CoreApplication
-  classview_ref 1334018 // Logger
   
-  package_ref 516226 // SqlItemModel
+package_ref 516226 // SqlItemModel
   
-  package_ref 430082 // Dsp
+package_ref 430082 // Dsp
   classview_ref 880386 // Logger
 end
 end

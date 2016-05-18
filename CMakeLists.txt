@@ -115,9 +115,11 @@ if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
 endif(Boost_FOUND)
 
-# Headers that are used in all unit tests from libs
+# Headers that are used allmost everywhere
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/libs/QtSolutions/include")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/libs/Application/src")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/libs/Error/src")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/libs/ErrorGui/src")
 
 # Headers directories
 #include_directories("${CMAKE_CURRENT_BINARY_DIR}/src")
@@ -203,6 +205,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtcsv")
 
 # * mdterror and mdterrorgui *
 add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Error")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/ErrorGui")
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdterror")
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdterrorgui")
 
