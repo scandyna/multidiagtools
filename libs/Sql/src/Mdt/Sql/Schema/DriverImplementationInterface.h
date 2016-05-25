@@ -24,6 +24,7 @@
 #include "DriverType.h"
 #include "FieldType.h"
 #include "FieldTypeInfoList.h"
+#include "Collation.h"
 #include "Mdt/Error.h"
 #include <QSqlDatabase>
 #include <QSqlDriver>
@@ -70,6 +71,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Get QMetaType::Type from SQL field type
      */
     virtual QMetaType::Type fieldTypeToQMetaType(FieldType ft) const;
+
+    /*! \brief Get collation definition
+     */
+    virtual QString getCollationDefinition(const Collation & collation) const = 0;
 
     /*! \brief Get last error
      */

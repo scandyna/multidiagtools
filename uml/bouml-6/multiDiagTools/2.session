@@ -23,31 +23,28 @@ diagrams
     120 110 90 21 36 0
   classdiagram_ref 2488578 // Overview
     120 110 100 4 0 0
-  active  classdiagram_ref 2495106 // FieldTypeInfo
-    957 902 100 4 0 0
   classdiagram_ref 2386562 // CRTP
     120 110 100 4 0 0
   classdiagram_ref 2461442 // PrimaryKey
     120 110 100 4 0 0
-  classdiagram_ref 2461314 // Driver
+  active  classdiagram_ref 2461314 // Driver
     957 902 100 8 0 0
   classdiagram_ref 2461698 // Table
     120 110 100 18 0 0
   classdiagram_ref 2461186 // Field
     120 110 100 18 0 0
-  classdiagram_ref 2481666 // DriverImplementation
-    120 110 100 21 0 0
-  classdiagram_ref 2461058 // FieldType
-    120 110 100 7 12 0
+  classdiagram_ref 2475138 // Collation
+    120 110 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2495106 // FieldTypeInfo
+selected operation_ref 4210434 // getCollationDefinition
 open
   classview_ref 1293698 // CoreApplication
   
   package_ref 516226 // SqlItemModel
   classview_ref 1327234 // Overview
-  classview_ref 1320578 // Driver
+  operation_ref 4210434 // getCollationDefinition
+  classview_ref 1333890 // Collation
   class_ref 2811010 // FieldTypeInfoModel
   
   package_ref 430082 // Dsp

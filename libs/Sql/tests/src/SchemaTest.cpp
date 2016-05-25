@@ -24,6 +24,7 @@
 #include "Mdt/Sql/Schema/FieldTypeInfoList.h"
 #include "Mdt/Sql/Schema/FieldTypeInfoModel.h"
 #include "Mdt/Sql/Schema/Driver.h"
+#include "Mdt/Sql/Schema/Field.h"
 #include <QSqlDatabase>
 #include <QComboBox>
 
@@ -117,6 +118,42 @@ void SchemaTest::fieldTypeInfoModelTest()
 //   while(cb.isVisible()){
 //     QTest::qWait(500);
 //   }
+}
+
+void SchemaTest::collationTest()
+{
+  using Mdt::Sql::Schema::Collation;
+
+  Collation collation;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(collation.isCaseSensitive());
+  QVERIFY(collation.country() == QLocale::AnyCountry);
+  QVERIFY(collation.language() == QLocale::AnyLanguage);
+  QVERIFY(collation.isNull());
+  /*
+   * Simple set/get
+   */
+  collation.setCaseSensitive(false);
+  collation.setCountry(QLocale::Switzerland);
+  collation.setLanguage(QLocale::French);
+  collation.setCharset("utf8");
+  QVERIFY(!collation.isCaseSensitive());
+  QVERIFY(collation.country() == QLocale::Switzerland);
+  QVERIFY(collation.language() == QLocale::French);
+  QCOMPARE(collation.charset(), QString("utf8"));
+  QVERIFY(!collation.isNull());
+  /*
+   * Clear
+   */
+  collation.clear();
+  QVERIFY(collation.isCaseSensitive());
+  QVERIFY(collation.country() == QLocale::AnyCountry);
+  QVERIFY(collation.language() == QLocale::AnyLanguage);
+  QVERIFY(collation.charset().isEmpty());
+  QVERIFY(collation.isNull());
 }
 
 

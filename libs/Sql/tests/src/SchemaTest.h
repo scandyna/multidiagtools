@@ -36,6 +36,8 @@ class SchemaTest : public QObject
   void fieldTypeInfoTest();
   void fieldTypeInfoListTest();
   void fieldTypeInfoModelTest();
+
+  void collationTest();
 };
 
 #endif // #ifndef MDT_SQL_SCHEMA_TEST_H

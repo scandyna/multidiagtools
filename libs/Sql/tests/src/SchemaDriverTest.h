@@ -39,6 +39,8 @@ class SchemaDriverTest : public QObject
 
   void fieldTypeInfoListSqliteTest();
   void fieldTypeMapSqliteTest();
+
+  void collationDefinitionSqliteTest();
 };
 
 #endif // #ifndef MDT_SQL_SCHEMA_TEST_H

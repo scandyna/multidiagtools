@@ -28,5 +28,22 @@ DriverSQLite::DriverSQLite(const QSqlDatabase& db)
   Q_ASSERT(qsqlDriver()->dbmsType() == QSqlDriver::SQLite);
 }
 
+QString DriverSQLite::getCollationDefinition(const Collation & collation) const
+{
+  if(collation.isNull()){
+    return QString();
+  }
+  /*
+   * SQLite has no locale support,
+   * only case sensitivity for our case.
+   * Note: in current version, we ignore RTRIM functionnality
+   */
+  if(collation.isCaseSensitive()){
+    return QStringLiteral("COLLATE BINARY");
+  }else{
+    return QStringLiteral("COLLATE NOCASE");
+  }
+}
+
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

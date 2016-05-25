@@ -21,6 +21,7 @@
 #include "SchemaDriverTest.h"
 #include "Mdt/Application.h"
 #include "Mdt/Sql/Schema/Driver.h"
+#include "Mdt/Sql/Schema/DriverSQLite.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
 
@@ -159,6 +160,46 @@ void SchemaDriverTest::fieldTypeMapSqliteTest()
   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Date) == QMetaType::QDate);
   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Time) == QMetaType::QTime);
   QVERIFY(driver.fieldTypeToQMetaType(FieldType::DateTime) == QMetaType::QDateTime);
+}
+
+void SchemaDriverTest::collationDefinitionSqliteTest()
+{
+  using Mdt::Sql::Schema::Collation;
+
+  QSqlDatabase db = QSqlDatabase::database("SQLITE_1", false);
+  if(!db.isValid()){
+    QSKIP("SQLite driver not available");
+  }
+  Mdt::Sql::Schema::DriverSQLite driver(db);
+  Collation collation;
+
+  /*
+   * Null collation
+   */
+  QVERIFY(driver.getCollationDefinition(collation).isEmpty());
+  /*
+   * Case sensitive collation
+   */
+  // Setup collation
+  collation.setCaseSensitive(true);
+  collation.setCountry(QLocale::Switzerland); // Must simply be ignored
+  collation.setLanguage(QLocale::French);     // Must simply be ignored
+  collation.setCharset("utf8");               // Must simply be ignored
+  // Check
+  QCOMPARE(driver.getCollationDefinition(collation), QString("COLLATE BINARY"));
+  // Setup collation
+  collation.clear();
+  collation.setCaseSensitive(true);
+  // Check
+  QCOMPARE(driver.getCollationDefinition(collation), QString("COLLATE BINARY"));
+  /*
+   * Case insensitive collation
+   */
+  // Setup collation
+  collation.clear();
+  collation.setCaseSensitive(false);
+  // Check
+  QCOMPARE(driver.getCollationDefinition(collation), QString("COLLATE NOCASE"));
 }
 
 /*

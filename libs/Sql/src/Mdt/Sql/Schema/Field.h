@@ -18,39 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_DRIVER_SQLITE_H
-#define MDT_SQL_SCHEMA_DRIVER_SQLITE_H
+#ifndef MDT_SQL_SCHEMA_FIELD_H
+#define MDT_SQL_SCHEMA_FIELD_H
 
-#include "DriverImplementationInterface.h"
+#include "FieldType.h"
+#include "Collation.h"
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-  /*! \brief SQLite schema driver
+  /*! \brief
    */
-  class DriverSQLite : public DriverImplementationInterface
+  class Field final
   {
-   public:
-
-    /*! \brief Constructor
-     */
-    DriverSQLite(const QSqlDatabase & db);
-
-    /*! \brief Get driver type
-     */
-    DriverType type() const override
-    {
-      return DriverType::SQLite;
-    }
-
-    /*! \brief Get collation definition
-     */
-    QString getCollationDefinition(const Collation & collation) const override;
-
-   private:
-
-    
   };
 
-}}} // namespace Mdt{ namespace Sql{ namespace Schema{
+}}} //namespace Mdt{ namespace Sql{ namespace Schema{
 
-#endif // #ifndef MDT_SQL_SCHEMA_DRIVER_SQLITE_H
+#endif // #ifnef MDT_SQL_SCHEMA_FIELD_H

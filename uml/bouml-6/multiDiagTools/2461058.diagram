@@ -10,11 +10,11 @@ classcanvas 128258 class_ref 2775170 // FieldTypeInfo
 end
 classcanvas 128642 class_ref 2775298 // DriverType
   classdiagramsettings member_max_width 0 end
-  xyz 463 575 2005
+  xyz 495 599 2005
 end
 classcanvas 128770 class_ref 2775426 // Driver
   classdiagramsettings member_max_width 0 end
-  xyz 40 467 2011
+  xyz 41 470 2011
 end
 classcanvas 129026 class_ref 2775042 // Field
   classdiagramsettings member_max_width 0 end
