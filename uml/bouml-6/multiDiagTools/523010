@@ -1,6 +1,6 @@
 format 211
 "Table" // Mdt::CableList::Schema::Table
-  revision 2
+  revision 3
   modified_by 2 "philippe"
   // class settings
   
@@ -44,7 +44,7 @@ format 211
      end
     classdiagram 2460930 "sandbox"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size B
     end
 
     class 2774786 "Article"
@@ -63,7 +63,7 @@ ${inlines}
       
       classrelation 3146114 // <directional composition>
 	relation 3127810 *-->
-	  a role_name "" private
+	  a role_name "" multiplicity "1" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 3146114 // <directional composition>
@@ -72,8 +72,8 @@ ${inlines}
 
       classrelation 3146242 // <directional composition>
 	relation 3127938 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
 	    classrelation_ref 3146242 // <directional composition>
 	  b parent class_ref 2775042 // Field
@@ -116,6 +116,15 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 3166850 // <directional composition>
+	relation 3148546 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3166850 // <directional composition>
+	  b parent class_ref 2775682 // ForeignKey
       end
     end
   end

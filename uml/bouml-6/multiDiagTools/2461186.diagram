@@ -2,10 +2,22 @@ format 211
 
 classcanvas 128002 class_ref 2775042 // Field
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 403.5 2000
+  xyz 266 39 2000
 end
-classcanvas 128130 class_ref 1974530 // mdtSqlField
+classcanvas 128386 class_ref 2774914 // FieldType
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 40.5 2000
+  xyz 778 359 2000
+end
+note 129794 "The static methods to get DBMS specific fields seems to be obselete. 
+At runtime, if we have to list available fields, we have a driver loaded.
+If we want a mapping between QMetaType::Type and FieldType, we are do copy, or something else, and, again, we have a driver loaded."
+  xyzwh 46 459 2000 835 89
+relationcanvas 129410 relation_ref 3170434 // <directional composition>
+  geometry HV unfixed
+  decenter_begin 512
+  from ref 128002 z 2001 to point 814 138
+  line 129666 z 2001 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end

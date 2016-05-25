@@ -1,0 +1,68 @@
+format 211
+
+classcanvas 128002 class_ref 2796034 // DriverInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 656.4 210.2 2000
+end
+classcanvas 128130 class_ref 2775298 // DriverType
+  classdiagramsettings member_max_width 0 end
+  xyz 511.8 255.2 2000
+end
+classcanvas 128514 class_ref 2817922 // DriverInfoModel
+  classdiagramsettings member_max_width 0 end
+  xyz 42.4 118.4 2000
+end
+classcanvas 128642 class_ref 147202 // QAbstractTableModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 185 39 2005
+end
+classcanvas 129154 class_ref 2818050 // DriverInfoList
+  classdiagramsettings member_max_width 0 end
+  xyz 945 199.2 2000
+end
+classcanvas 129538 class_ref 2818178 // ColumnIndex
+  classdiagramsettings member_max_width 0 end
+  xyz 208.4 311.6 2006
+end
+classcanvas 129794 class_ref 2775426 // Driver
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 527.8 175.4 2006
+end
+note 130306 "Seems obselete"
+  xyzwh 617 121.6 2000 287 47
+relationcanvas 128258 relation_ref 3155074 // <directional composition>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 3177090 // <generalisation>
+  decenter_end 470
+  from ref 128514 z 2006 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 3177346 // <directional composition>
+  from ref 129154 z 2001 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 866 296 3000 no_multiplicity_b
+end
+line 129666 ---+
+  from ref 129538 z 2007 to ref 128514
+relationcanvas 129922 relation_ref 3127682 // <directional composition>
+  from ref 129794 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 3197442 // <directional composition>
+  decenter_begin 522
+  decenter_end 581
+  from ref 128514 z 2007 to ref 129794
+  no_role_a no_role_b
+  multiplicity_a_pos 511 207 3000 no_multiplicity_b
+end
+line 130434 -_-_ geometry HV unfixed decenter_end 480
+  from ref 130306 z 2001 to point 1053 141
+  line 130818 z 2001 to ref 129154
+line 130562 -_-_ decenter_end 517
+  from ref 130306 z 2001 to ref 128002
+end

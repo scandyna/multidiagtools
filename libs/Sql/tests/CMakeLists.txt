@@ -22,4 +22,12 @@ add_executable(mdtsqlquerytest src/QueryTest.cpp)
 target_link_libraries(mdtsqlquerytest "mdtsqltest")
 add_test(MdtSqlQueryTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlquerytest)
 
+# Target MdtSqlSchemaTest
+add_executable(mdtsqlschematest src/SchemaTest.cpp)
+target_link_libraries(mdtsqlschematest "mdtsqltest")
+add_test(MdtSqlSchemaTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlschematest)
 
+# Target MdtSqlSchemaDriverTest
+add_executable(mdtsqlschemadrivertest src/SchemaDriverTest.cpp)
+target_link_libraries(mdtsqlschemadrivertest "mdtsqltest")
+add_test(MdtSqlSchemaDriverTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlschemadrivertest)

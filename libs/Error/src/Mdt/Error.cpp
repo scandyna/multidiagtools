@@ -168,10 +168,6 @@ QString Error::functionName() const
   return pvShared->functionName;
 }
 
-void Error::setSystemError(int, const QString&)
-{
-}
-
 } // namespace Mdt{
 
 /*

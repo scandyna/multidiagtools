@@ -7,6 +7,10 @@ project(multidiagtools)
 # List of source files
 set(SOURCES_FILES 
     src/Mdt/Sql/Query.cpp
+    src/Mdt/Sql/Schema/Driver.cpp
+    src/Mdt/Sql/Schema/DriverImplementationInterface.cpp
+    src/Mdt/Sql/Schema/DriverSQLite.cpp
+    src/Mdt/Sql/Schema/FieldTypeInfoModel.cpp
 )
 
 # Headers directories
@@ -22,8 +26,11 @@ string(TOLOWER ${LIBRARY_NAME} LIBRARY_NAME_LC)
 set(LIBRARY_BIN_NAME "mdt${LIBRARY_NAME_LC}")
 # Add output library
 add_library(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
-target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterrorOld${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterrorguiOld${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterror${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} Qt5::Sql)
+
+## TODO remove once possible
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 
 # Translation files

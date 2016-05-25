@@ -1,0 +1,13 @@
+format 211
+
+classcanvas 128002 class_ref 2796546 // QSqlDriver
+  classdiagramsettings member_max_width 0 end
+  xyz 159 51 2000
+end
+classcanvas 128130 class_ref 2796674 // DbmsType
+  classdiagramsettings member_max_width 0 end
+  xyz 40 39 2006
+end
+line 128258 ---+
+  from ref 128130 z 2007 to ref 128002
+end

@@ -23,8 +23,8 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Output library
 add_library(mdtcablelist${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
-target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} "mdterrorOld${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} "mdterrorguiOld${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} "mdterror${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtcablelist${MDTLIB_VERSION_SUFFIX} "mdtnumeric${MDTLIB_VERSION_SUFFIX}")
 

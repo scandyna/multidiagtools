@@ -20,10 +20,10 @@
  ****************************************************************************/
 #include "Application.h"
 #include "config.h"
-#include "mdtError.h"
-#include "mdt/error/Logger.h"
-#include "mdt/error/LoggerConsoleBackend.h"
-#include "mdt/error/LoggerFileBackend.h"
+#include "Mdt/Error.h"
+#include "Mdt/ErrorLogger/Logger.h"
+#include "Mdt/ErrorLogger/ConsoleBackend.h"
+#include "Mdt/ErrorLogger/FileBackend.h"
 #include <QStringList>
 #include <QDebug>
 #include <QDebugStateSaver>
@@ -195,9 +195,9 @@ bool Application::initErrorSystem()
 {
   QString logFileName;
 
-  qRegisterMetaType<mdtError>();
-  auto consoleOut = std::make_shared<mdt::error::LoggerConsoleBackend>();
-  mdt::error::Logger::addBackend(consoleOut);
+  qRegisterMetaType<Mdt::Error>();
+  auto consoleOut = std::make_shared<Mdt::ErrorLogger::ConsoleBackend>();
+  Mdt::ErrorLogger::Logger::addBackend(consoleOut);
   // Add a log file backend if possible
   if(!pvLogDirectory.isEmpty()){
     logFileName = applicationName();
@@ -213,9 +213,9 @@ bool Application::initErrorSystem()
     // Define path
     pvLogFile = QFileInfo(pvLogDirectory, logFileName).absoluteFilePath();
     // Add backend
-    auto fileOut = std::make_shared<mdt::error::LoggerFileBackend>();
+    auto fileOut = std::make_shared<Mdt::ErrorLogger::FileBackend>();
     if(fileOut->setLogFilePath(pvLogFile)){
-      mdt::error::Logger::addBackend(fileOut);
+      Mdt::ErrorLogger::Logger::addBackend(fileOut);
     }else{
       qWarning() << "Mdt::Application: log file '" << pvLogFile << "' could not be open, no log will come to it";
     }

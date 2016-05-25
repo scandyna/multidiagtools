@@ -2,15 +2,30 @@ format 211
 
 classcanvas 128002 class_ref 2775554 // PrimaryKey
   classdiagramsettings member_max_width 0 end
-  xyz 39 39 2000
+  xyz 39 151 2000
 end
 classcanvas 128130 class_ref 2775042 // Field
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 402 107 2000
+  xyz 401 148 2000
 end
+classcanvas 128386 class_ref 2824706 // AutoIncrementPrimaryKey
+  classdiagramsettings member_max_width 0 end
+  xyz 106 40 2000
+end
+note 128642 "Something is ambigious:
+ - A primary key is generally added and references fields (like a index).
+ - It can be convenient to directly create fields and its primary key in schema definition.
+ -> Create a helper class like AutoIncrementPrimaryKey ??"
+  xyzwh 40.5 408.5 2000 683 97
 relationcanvas 128258 relation_ref 3141890 // <directional composition>
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 386 187 3000 no_multiplicity_b
+  multiplicity_a_pos 385 248 3000 no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 3203970 // <dependency>
+  decenter_begin 477
+  from ref 128386 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end

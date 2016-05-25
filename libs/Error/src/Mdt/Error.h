@@ -466,25 +466,6 @@ namespace Mdt{
     */
     int fileLine() const;
 
-    /*! \brief Set system error
-    *
-    * \deprecated Use stackError()
-    */
-    [[deprecated]]
-    void setSystemError(int number, const QString & text);
-
-    [[deprecated]]
-    QString systemText() const
-    {
-      return "deprecated!";
-    }
-
-    [[deprecated]]
-    int systemNumber() const
-    {
-      return 0;
-    }
-
   private:
 
     /*! \brief Init shared part

@@ -1,6 +1,6 @@
 format 211
 "Mdt" // Mdt
-  revision 13
+  revision 14
   modified_by 2 "philippe"
   // class settings
   
@@ -26,6 +26,8 @@ format 211
   activitydiagramsettings
    end
   
+  package_ref 529538 // sandbox
+
   classview 1293698 "CoreApplication"
     
     classdiagramsettings member_max_width 0 end
@@ -851,7 +853,7 @@ ${members}};
     end
   end
 
-  package_ref 401922 // Error
+  package_ref 401922 // ErrorLogger
 
   classview 854018 "ErrorDialog"
     

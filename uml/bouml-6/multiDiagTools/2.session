@@ -1,4 +1,4 @@
-window_sizes 1280 957 339 935 902 0
+window_sizes 1280 957 317 957 902 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -19,34 +19,37 @@ diagrams
     120 110 100 18 0 0
   classdiagram_ref 2420866 // EditionActions
     120 110 100 4 0 0
-  classdiagram_ref 2447490 // RowChangeEventMapper
-    980 905 100 18 0 0
-  classdiagram_ref 2413314 // overview
-    120 110 100 4 0 0
-  classdiagram_ref 2413442 // StandardWindow
-    120 110 100 4 0 0
-  classdiagram_ref 2454146 // TableModel
-    935 902 100 4 0 0
-  classdiagram_ref 2468610 // Relation
-    120 110 100 4 0 0
   classdiagram_ref 2468482 // overview
+    120 110 90 21 36 0
+  classdiagram_ref 2488578 // Overview
+    120 110 100 4 0 0
+  active  classdiagram_ref 2495106 // FieldTypeInfo
+    957 902 100 4 0 0
+  classdiagram_ref 2386562 // CRTP
     120 110 100 4 0 0
   classdiagram_ref 2461442 // PrimaryKey
     120 110 100 4 0 0
+  classdiagram_ref 2461314 // Driver
+    957 902 100 8 0 0
+  classdiagram_ref 2461698 // Table
+    120 110 100 18 0 0
   classdiagram_ref 2461186 // Field
-    120 110 100 4 0 0
-  active  classdiagram_ref 2475138 // Collation
-    935 902 100 4 0 0
+    120 110 100 18 0 0
+  classdiagram_ref 2481666 // DriverImplementation
+    120 110 100 21 0 0
+  classdiagram_ref 2461058 // FieldType
+    120 110 100 7 12 0
 end
 show_stereotypes
-selected 
-package_ref 401922 // ErrorLogger
+selected classdiagram_ref 2495106 // FieldTypeInfo
 open
   classview_ref 1293698 // CoreApplication
   
-package_ref 516226 // SqlItemModel
+  package_ref 516226 // SqlItemModel
+  classview_ref 1327234 // Overview
+  classview_ref 1320578 // Driver
+  class_ref 2811010 // FieldTypeInfoModel
   
-package_ref 430082 // Dsp
-  classview_ref 880386 // Logger
+  package_ref 430082 // Dsp
 end
 end

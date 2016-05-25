@@ -1,6 +1,6 @@
 format 211
-"principes" // principes
-  revision 3
+"Decorator" // principes::Decorator
+  revision 1
   modified_by 2 "philippe"
   // class settings
   
@@ -26,13 +26,4 @@ format 211
   activitydiagramsettings
    end
   
-  package_ref 409986 // MVP
-
-  package_ref 410114 // ModelViewPresenter
-
-  package_ref 489986 // StaticPolymorphism
-
-  package_ref 529666 // CommandPattern
-
-  package_ref 529794 // Decorator
 end

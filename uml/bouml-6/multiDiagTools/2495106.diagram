@@ -1,0 +1,55 @@
+format 211
+
+classcanvas 128002 class_ref 2775170 // FieldTypeInfo
+  classdiagramsettings member_max_width 0 end
+  xyz 161 319 2000
+end
+classcanvas 128130 class_ref 2774914 // FieldType
+  classdiagramsettings member_max_width 0 end
+  xyz 42 343 2006
+end
+classcanvas 128386 class_ref 2811010 // FieldTypeInfoModel
+  classdiagramsettings member_max_width 0 end
+  xyz 322 122 2000
+end
+classcanvas 130562 class_ref 2775426 // Driver
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 511 319 2000
+end
+classcanvas 130946 class_ref 147074 // QAbstractListModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 471 39 2000
+end
+classcanvas 131202 class_ref 2831362 // FieldTypeInfoList
+  classdiagramsettings member_max_width 0 end
+  xyz 159 183 2000
+end
+relationcanvas 128258 relation_ref 3127554 // <directional composition>
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130690 relation_ref 3190658 // <dependency>
+  from ref 128386 z 2001 to ref 130562
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131074 relation_ref 3197314 // <generalisation>
+  decenter_end 467
+  from ref 128386 z 2001 to ref 130946
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131330 relation_ref 3210754 // <directional composition>
+  decenter_begin 528
+  from ref 131202 z 2001 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 208 296 3000 no_multiplicity_b
+end
+relationcanvas 131458 relation_ref 3210882 // <directional composition>
+  decenter_end 395
+  from ref 128386 z 2001 to ref 131202
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

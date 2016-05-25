@@ -22,6 +22,7 @@
 #define MDT_CABLE_LIST_DATABASE_SCHEMA_H
 
 #include "mdtSqlDatabaseSchema.h"
+/// #include "Mdt/Error.h"
 #include "mdtError.h"
 #include <QList>
 #include <QString>
@@ -295,6 +296,7 @@ class DatabaseSchema
   static QString tr(const char *sourceText);
 
   mdtSqlDatabaseSchema pvSchema;
+  ///Mdt::Error pvLastError;
   mdtError pvLastError;
 };
 

@@ -2,28 +2,34 @@ format 211
 
 classcanvas 128002 class_ref 2775682 // ForeignKey
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 40.5 2000
+  xyz 77 143 2000
 end
 classcanvas 128130 class_ref 2775554 // PrimaryKey
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 465.5 2000
+  xyz 40.5 384.5 2000
 end
 classcanvas 128258 class_ref 2782466 // Index
   classdiagramsettings member_max_width 0 end
-  xyz 323.5 40.5 2000
+  xyz 329.5 384.5 2000
 end
 classcanvas 128386 class_ref 2782594 // RelationKeyItem
   classdiagramsettings member_max_width 0 end
-  xyz 351 306 2000
+  xyz 351 37 2000
 end
 classcanvas 128514 class_ref 2782722 // RelationKey
   classdiagramsettings member_max_width 0 end
-  xyz 41 316 2006
+  xyz 41 47 2006
+end
+classcanvas 128898 class_ref 2824706 // AutoIncrementPrimaryKey
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 523.5 2000
 end
 relationcanvas 128642 relation_ref 3135106 // <directional composition>
+  decenter_begin 559
+  decenter_end 544
   from ref 128514 z 2007 to ref 128386
   no_role_a no_role_b
-  multiplicity_a_pos 335 353 3000 no_multiplicity_b
+  multiplicity_a_pos 335 87 3000 no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 3135234 // <directional composition>
   from ref 128002 z 2007 to ref 128514
