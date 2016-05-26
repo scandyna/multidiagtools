@@ -2,11 +2,11 @@ format 211
 
 classcanvas 128130 class_ref 2775298 // DriverType
   classdiagramsettings member_max_width 0 end
-  xyz 207 447 2000
+  xyz 206 495 2000
 end
 classcanvas 128258 class_ref 2775426 // Driver
   classdiagramsettings member_max_width 0 end
-  xyz 41 82 2000
+  xyz 39 106 2000
 end
 classcanvas 128514 class_ref 2795906 // DriverImplementationInterface
   classdiagramsettings member_max_width 0 end

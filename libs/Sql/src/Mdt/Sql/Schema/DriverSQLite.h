@@ -46,6 +46,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     QString getCollationDefinition(const Collation & collation) const override;
 
+    /*! \brief Get field definition
+     */
+    QString getFieldDefinition(const Field & field) const override;
+
    private:
 
     

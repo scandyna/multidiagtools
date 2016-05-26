@@ -37,10 +37,12 @@ class SchemaDriverTest : public QObject
   void sqliteInstanceTest();
   void mysqlInstanceTest();
 
+  void fieldTypeNameSqliteTest();
   void fieldTypeInfoListSqliteTest();
   void fieldTypeMapSqliteTest();
 
   void collationDefinitionSqliteTest();
+  void fieldDefinitionSqliteTest();
 };
 
 #endif // #ifndef MDT_SQL_SCHEMA_TEST_H

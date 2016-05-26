@@ -156,6 +156,75 @@ void SchemaTest::collationTest()
   QVERIFY(collation.isNull());
 }
 
+void SchemaTest::fieldTest()
+{
+  using Mdt::Sql::Schema::Collation;
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::Field;
+
+  Field field;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(field.type() == FieldType::UnknownType);
+  QVERIFY(!field.isRequired());
+  QCOMPARE(field.length(), -1);
+  QVERIFY(field.isNull());
+  /*
+   * Simple set/get check
+   */
+  // Setup a required integer field
+  field.setType(FieldType::Integer);
+  QVERIFY(field.isNull());
+  field.setName("Id_PK");
+  QVERIFY(!field.isNull());
+  field.setRequired(true);
+  // Check
+  QVERIFY(field.type() == FieldType::Integer);
+  QCOMPARE(field.name(), QString("Id_PK"));
+  QVERIFY(field.isRequired());
+  /*
+   * Clear
+   */
+  field.clear();
+  QVERIFY(field.type() == FieldType::UnknownType);
+  QVERIFY(field.name().isEmpty());
+  QVERIFY(!field.isRequired());
+  QVERIFY(field.defaultValue().isNull());
+  QCOMPARE(field.length(), -1);
+  QVERIFY(field.collation().isNull());
+  QVERIFY(field.isNull());
+  /*
+   * Simple set/get check
+   */
+  // Setup a text field
+  field.setName("Name");
+  QVERIFY(field.isNull());
+  field.setType(FieldType::Varchar);
+  QVERIFY(!field.isNull());
+  field.setLength(50);
+  field.setDefaultValue("Empty");
+  field.setCaseSensitive(false);
+  // Check
+  QVERIFY(field.type() == FieldType::Varchar);
+  QCOMPARE(field.name(), QString("Name"));
+  QVERIFY(!field.isRequired());
+  QCOMPARE(field.length(), 50);
+  QCOMPARE(field.defaultValue(), QVariant("Empty"));
+  QVERIFY(!field.collation().isCaseSensitive());
+  /*
+   * Clear
+   */
+  field.clear();
+  QVERIFY(field.type() == FieldType::UnknownType);
+  QVERIFY(field.name().isEmpty());
+  QVERIFY(!field.isRequired());
+  QVERIFY(field.defaultValue().isNull());
+  QCOMPARE(field.length(), -1);
+  QVERIFY(field.collation().isNull());
+  QVERIFY(field.isNull());
+}
 
 /*
  * Main

@@ -24,6 +24,7 @@
 #include "DriverType.h"
 #include "FieldType.h"
 #include "FieldTypeInfoList.h"
+#include "Field.h"
 #include "Collation.h"
 #include "Mdt/Error.h"
 #include <QSqlDatabase>
@@ -50,7 +51,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *
      * \post Allways returns a non null pointer
      */
-    QSqlDriver *qsqlDriver()
+    QSqlDriver *qsqlDriver() const
     {
       Q_ASSERT(pvDatabase.driver() != nullptr);
       return pvDatabase.driver();
@@ -59,6 +60,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Get driver type
      */
     virtual DriverType type() const = 0;
+
+    /*! \brief Get field type name
+     */
+    virtual QString fieldTypeName(FieldType ft) const;
 
     /*! \brief Get a list of avaliable field type
      */
@@ -76,6 +81,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     virtual QString getCollationDefinition(const Collation & collation) const = 0;
 
+    /*! \brief Get field definition
+     */
+    virtual QString getFieldDefinition(const Field & field) const = 0;
+
     /*! \brief Get last error
      */
     Mdt::Error lastError() const
@@ -84,6 +93,18 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     }
 
    protected:
+
+    /*! \brief Escape field name
+     *
+     * Returns the fieldName escaped according to the database rules.
+     */
+    QString escapeFieldName(const QString & fieldName) const;
+
+    /*! \brief Escape table name
+     *
+     * Returns the tableName escaped according to the database rules.
+     */
+    QString escapeTableName(const QString & tableName) const;
 
     /*! \brief Set last error
      */

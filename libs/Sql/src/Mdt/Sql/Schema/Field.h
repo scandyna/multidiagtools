@@ -23,13 +23,156 @@
 
 #include "FieldType.h"
 #include "Collation.h"
+#include <QString>
+#include <QVariant>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-  /*! \brief
+  /*! \brief SQL schema field
    */
   class Field final
   {
+   public:
+
+    /*! \brief Create a null field
+     */
+    Field()
+    : pvType(FieldType::UnknownType),
+      pvIsRequired(false),
+      pvLength(-1)
+    {
+    }
+
+    /*! \brief Set field type
+     */
+    void setType(FieldType t)
+    {
+      pvType = t;
+    }
+
+    /*! \brief Get field type
+     */
+    FieldType type() const
+    {
+      return pvType;
+    }
+
+    /*! \brief Set field name
+     */
+    void setName(const QString & name)
+    {
+      pvName = name;
+    }
+
+    /*! \brief Get field name
+     */
+    QString name() const
+    {
+      return pvName;
+    }
+
+    /*! \brief Set field required
+     */
+    void setRequired(bool r)
+    {
+      pvIsRequired = r;
+    }
+
+    /*! \brief Check if field is required
+     */
+    bool isRequired() const
+    {
+      return pvIsRequired;
+    }
+
+    /*! \brief Set default value
+     */
+    void setDefaultValue(const QVariant & v)
+    {
+      pvDefaultValue = v;
+    }
+
+    /*! \brief Get default value
+     */
+    QVariant defaultValue() const
+    {
+      return pvDefaultValue;
+    }
+
+    /*! \brief Set length
+     *
+     * \sa length()
+     */
+    void setLength(int length)
+    {
+      pvLength = length;
+    }
+
+    /*! \brief Get length
+     *
+     * A value < 0 means that length is not set.
+     */
+    int length() const
+    {
+      return pvLength;
+    }
+
+    /*! \brief Set collation
+     */
+    void setCollation(const Collation & collation)
+    {
+      pvCollation = collation;
+    }
+
+    /*! \brief Set case sensitivity
+     *
+     * Case sensitivity will update collation
+     */
+    void setCaseSensitive(bool cs)
+    {
+      pvCollation.setCaseSensitive(cs);
+    }
+
+    /*! \brief Get collation
+     */
+    Collation collation() const
+    {
+      return pvCollation;
+    }
+
+    /*! \brief Check if field is null
+     *
+     * Field is null at least if one of the mandatory attribute is not set.
+     *  Mandatory attributes are:
+     *  - type \sa setType() , type()
+     *  - name \sa setName() , name()
+     */
+    bool isNull() const
+    {
+      return ( (pvType == FieldType::UnknownType) || pvName.isEmpty());
+    }
+
+    /*! \brief Clear
+     */
+    void clear()
+    {
+      pvType = FieldType::UnknownType;
+      pvName.clear();
+      pvIsRequired = false;
+      pvDefaultValue.clear();
+      pvLength = -1;
+      pvCollation.clear();
+    }
+
+
+   private:
+
+    FieldType pvType;
+    bool pvIsRequired;
+    int pvLength;
+    QString pvName;
+    QVariant pvDefaultValue;
+    Collation pvCollation;
   };
 
 }}} //namespace Mdt{ namespace Sql{ namespace Schema{

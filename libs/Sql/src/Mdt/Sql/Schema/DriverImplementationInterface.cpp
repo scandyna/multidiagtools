@@ -23,18 +23,43 @@
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
+QString DriverImplementationInterface::fieldTypeName(FieldType ft) const
+{
+  switch(ft){
+    case FieldType::Boolean:
+      return QStringLiteral("BOOLEAN");
+    case FieldType::Integer:
+      return QStringLiteral("INTEGER");
+    case FieldType::Float:
+      return QStringLiteral("FLOAT");
+    case FieldType::Double:
+      return QStringLiteral("DOUBLE");
+    case FieldType::Varchar:
+      return QStringLiteral("VARCHAR");
+    case FieldType::Date:
+      return QStringLiteral("DATE");
+    case FieldType::Time:
+      return QStringLiteral("TIME");
+    case FieldType::DateTime:
+      return QStringLiteral("DATETIME");
+    case FieldType::UnknownType:
+      break;
+  }
+  return QString();
+}
+
 FieldTypeInfoList DriverImplementationInterface::getAvailableFieldTypeInfoList() const
 {
   FieldTypeInfoList list;
 
-  list.append(FieldTypeInfo(FieldType::Boolean, QStringLiteral("BOOLEAN")));
-  list.append(FieldTypeInfo(FieldType::Integer, QStringLiteral("INTEGER")));
-  list.append(FieldTypeInfo(FieldType::Float, QStringLiteral("FLOAT")));
-  list.append(FieldTypeInfo(FieldType::Double, QStringLiteral("DOUBLE")));
-  list.append(FieldTypeInfo(FieldType::Varchar, QStringLiteral("VARCHAR")));
-  list.append(FieldTypeInfo(FieldType::Date, QStringLiteral("DATE")));
-  list.append(FieldTypeInfo(FieldType::Time, QStringLiteral("TIME")));
-  list.append(FieldTypeInfo(FieldType::DateTime, QStringLiteral("DATETIME")));
+  list.append(FieldTypeInfo(FieldType::Boolean, fieldTypeName(FieldType::Boolean)));
+  list.append(FieldTypeInfo(FieldType::Integer, fieldTypeName(FieldType::Integer)));
+  list.append(FieldTypeInfo(FieldType::Float, fieldTypeName(FieldType::Float)));
+  list.append(FieldTypeInfo(FieldType::Double, fieldTypeName(FieldType::Double)));
+  list.append(FieldTypeInfo(FieldType::Varchar, fieldTypeName(FieldType::Varchar)));
+  list.append(FieldTypeInfo(FieldType::Date, fieldTypeName(FieldType::Date)));
+  list.append(FieldTypeInfo(FieldType::Time, fieldTypeName(FieldType::Time)));
+  list.append(FieldTypeInfo(FieldType::DateTime, fieldTypeName(FieldType::DateTime)));
 
   return list;
 }
@@ -87,6 +112,16 @@ QMetaType::Type DriverImplementationInterface::fieldTypeToQMetaType(FieldType ft
       return QMetaType::UnknownType;
   }
   return QMetaType::UnknownType;
+}
+
+QString DriverImplementationInterface::escapeFieldName(const QString & fieldName) const
+{
+  return qsqlDriver()->escapeIdentifier(fieldName, QSqlDriver::FieldName);
+}
+
+QString DriverImplementationInterface::escapeTableName(const QString & tableName) const
+{
+  return qsqlDriver()->escapeIdentifier(tableName, QSqlDriver::TableName);
 }
 
 QString DriverImplementationInterface::tr(const char* sourceText)

@@ -20,7 +20,7 @@ note 128642 "Something is ambigious:
 relationcanvas 128258 relation_ref 3141890 // <directional composition>
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 385 248 3000 no_multiplicity_b
+  multiplicity_a_pos 385 238 3000 no_multiplicity_b
 end
 relationcanvas 128514 relation_ref 3203970 // <dependency>
   decenter_begin 477

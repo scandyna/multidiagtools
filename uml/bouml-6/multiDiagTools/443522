@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 23
+  revision 25
   modified_by 2 "philippe"
   // class settings
   
@@ -814,6 +814,30 @@ ${inlines}
 	
       end
 
+      operation 4216962 "fieldTypeName"
+	abstract cpp_virtual public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "ft" type class_ref 2774914 // FieldType
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 4217090 "fieldTypeFromName"
+	abstract cpp_virtual public return_type class_ref 2774914 // FieldType
+	nparams 1
+	  param in name "name" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
       operation 4203906 "getAvailableFieldTypeInfoList"
 	abstract cpp_virtual public return_type class_ref 2831362 // FieldTypeInfoList
 	nparams 0
@@ -944,7 +968,7 @@ ${inlines}
 	
       end
 
-      operation 4146434 "escapeFieldNameIdentifier"
+      operation 4146434 "escapeFieldName"
 	protected return_type class_ref 161026 // QString
 	nparams 1
 	  param in name "name" explicit_type ""
@@ -960,7 +984,7 @@ ${inlines}
 	
       end
 
-      operation 4146562 "escapeTableNameIdentifier"
+      operation 4146562 "escapeTableName"
 	protected return_type class_ref 161026 // QString
 	nparams 1
 	  param in name "name" explicit_type ""
@@ -1498,18 +1522,6 @@ ${inlines}
 
       attribute 2626690 "Type"
 	private type class_ref 2774914 // FieldType
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2626818 "IsAutoValue"
-	private explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -3157,6 +3169,30 @@ ${inlines}
 "
 	    classrelation_ref 3166722 // <directional composition>
 	  b parent class_ref 2782466 // Index
+      end
+
+      attribute 2674690 "IsTemporary"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2674562 "Name"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 

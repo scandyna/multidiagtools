@@ -95,6 +95,27 @@ void SchemaDriverTest::mysqlInstanceTest()
 
 }
 
+void SchemaDriverTest::fieldTypeNameSqliteTest()
+{
+  using Mdt::Sql::Schema::FieldType;
+
+  QSqlDatabase db = QSqlDatabase::database("SQLITE_1", false);
+  if(!db.isValid()){
+    QSKIP("SQLite driver not available");
+  }
+  Mdt::Sql::Schema::DriverSQLite driver(db);
+
+  QVERIFY(driver.fieldTypeName(FieldType::UnknownType).isEmpty());
+  QCOMPARE(driver.fieldTypeName(FieldType::Boolean), QString("BOOLEAN"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Integer), QString("INTEGER"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Float), QString("FLOAT"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Double), QString("DOUBLE"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Varchar), QString("VARCHAR"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Date), QString("DATE"));
+  QCOMPARE(driver.fieldTypeName(FieldType::Time), QString("TIME"));
+  QCOMPARE(driver.fieldTypeName(FieldType::DateTime), QString("DATETIME"));
+}
+
 void SchemaDriverTest::fieldTypeInfoListSqliteTest()
 {
   using Mdt::Sql::Schema::Driver;
@@ -200,6 +221,95 @@ void SchemaDriverTest::collationDefinitionSqliteTest()
   collation.setCaseSensitive(false);
   // Check
   QCOMPARE(driver.getCollationDefinition(collation), QString("COLLATE NOCASE"));
+}
+
+void SchemaDriverTest::fieldDefinitionSqliteTest()
+{
+  using Mdt::Sql::Schema::Collation;
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::Field;
+
+  QSqlDatabase db = QSqlDatabase::database("SQLITE_1", false);
+  if(!db.isValid()){
+    QSKIP("SQLite driver not available");
+  }
+  Mdt::Sql::Schema::DriverSQLite driver(db);
+  QString expectedSql;
+  Field field;
+
+  /*
+   * Simple INTEGER field
+   */
+  field.clear();
+  field.setName("Number");
+  field.setType(FieldType::Integer);
+  // Check
+  expectedSql = "\"Number\" INTEGER DEFAULT NULL";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * INTEGER field with NOT NULL constraint
+   */
+  field.clear();
+  field.setName("Number");
+  field.setType(FieldType::Integer);
+  field.setRequired(true);
+  // Check
+  expectedSql = "\"Number\" INTEGER NOT NULL DEFAULT NULL";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * INTEGER field with a default value
+   */
+  field.clear();
+  field.setName("Number");
+  field.setType(FieldType::Integer);
+  field.setDefaultValue(5);
+  // Check
+  expectedSql = "\"Number\" INTEGER DEFAULT 5";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * Simple VARCHAR field
+   */
+  field.clear();
+  field.setName("Name");
+  field.setType(FieldType::Varchar);
+  field.setLength(50);
+  // Check
+  expectedSql = "\"Name\" VARCHAR(50) DEFAULT NULL";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * VARCHAR field with collation set
+   */
+  field.clear();
+  field.setName("Name");
+  field.setType(FieldType::Varchar);
+  field.setLength(100);
+  field.setCaseSensitive(false);
+  // Check
+  expectedSql = "\"Name\" VARCHAR(100) DEFAULT NULL COLLATE NOCASE";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * VARCHAR field with NOT NULL constraint
+   */
+  field.clear();
+  field.setName("Name");
+  field.setType(FieldType::Varchar);
+  field.setLength(25);
+  field.setRequired(true);
+  // Check
+  expectedSql = "\"Name\" VARCHAR(25) NOT NULL DEFAULT NULL";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * VARCHAR field with NOT NULL constraint and a collation set
+   */
+  field.clear();
+  field.setName("Name");
+  field.setType(FieldType::Varchar);
+  field.setLength(50);
+  field.setRequired(true);
+  field.setCaseSensitive(false);
+  // Check
+  expectedSql = "\"Name\" VARCHAR(50) NOT NULL DEFAULT NULL COLLATE NOCASE";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
 }
 
 /*

@@ -17,35 +17,21 @@ diagrams
     120 110 100 4 0 0
   classdiagram_ref 2413698 // NavigationActions
     120 110 100 18 0 0
-  classdiagram_ref 2420866 // EditionActions
-    120 110 100 4 0 0
-  classdiagram_ref 2468482 // overview
-    120 110 90 21 36 0
-  classdiagram_ref 2488578 // Overview
-    120 110 100 4 0 0
-  classdiagram_ref 2386562 // CRTP
-    120 110 100 4 0 0
-  classdiagram_ref 2461442 // PrimaryKey
-    120 110 100 4 0 0
   active  classdiagram_ref 2461314 // Driver
-    957 902 100 8 0 0
-  classdiagram_ref 2461698 // Table
-    120 110 100 18 0 0
-  classdiagram_ref 2461186 // Field
-    120 110 100 18 0 0
-  classdiagram_ref 2475138 // Collation
-    120 110 100 4 0 0
+    957 902 100 8 12 0
+  classdiagram_ref 2468482 // overview
+    957 902 90 21 0 9
 end
 show_stereotypes
-selected operation_ref 4210434 // getCollationDefinition
+selected operation_ref 4217090 // fieldTypeFromName
 open
   classview_ref 1293698 // CoreApplication
   
   package_ref 516226 // SqlItemModel
   classview_ref 1327234 // Overview
-  operation_ref 4210434 // getCollationDefinition
-  classview_ref 1333890 // Collation
-  class_ref 2811010 // FieldTypeInfoModel
+  operation_ref 4217090 // fieldTypeFromName
+  classview_ref 1164418 // Field
+  attribute_ref 2674690 // IsTemporary
   
   package_ref 430082 // Dsp
 end

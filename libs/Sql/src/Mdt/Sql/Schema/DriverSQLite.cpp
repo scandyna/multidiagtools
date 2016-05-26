@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "DriverSQLite.h"
+#include <QStringBuilder>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
@@ -45,5 +46,32 @@ QString DriverSQLite::getCollationDefinition(const Collation & collation) const
   }
 }
 
+QString DriverSQLite::getFieldDefinition(const Field & field) const
+{
+  QString sql;
+
+  // Field name and type
+  sql = escapeFieldName(field.name()) % QStringLiteral(" ") % fieldTypeName(field.type());
+  // Length
+  if(field.length() > 0){
+    sql += QStringLiteral("(") % QString::number(field.length()) % QStringLiteral(")");
+  }
+  // Null constraint
+  if(field.isRequired()){
+    sql += QStringLiteral(" NOT NULL");
+  }
+  // Default value
+  if(field.defaultValue().isNull()){
+    sql += QStringLiteral(" DEFAULT NULL");
+  }else{
+    sql += QStringLiteral(" DEFAULT ") + field.defaultValue().toString();
+  }
+  // Collation
+  if(!field.collation().isNull()){
+    sql += QStringLiteral(" ") % getCollationDefinition(field.collation());
+  }
+
+  return sql;
+}
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{
