@@ -18,35 +18,35 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_TEST_H
-#define MDT_SQL_SCHEMA_TEST_H
+#include "FieldTypeName.h"
+#include <QLatin1String>
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace Sql{ namespace Schema{
 
-class SchemaTest : public QObject
+FieldType FieldTypeName::typeFromName(const QString & name)
 {
- Q_OBJECT
+  if(name.isEmpty()){
+    return FieldType::UnknownType;
+  }else if(name == QLatin1String("BOOLEAN")){
+    return FieldType::Boolean;
+  }else if(name == QLatin1String("INTEGER")){
+    return FieldType::Integer;
+  }else if(name == QLatin1String("FLOAT")){
+    return FieldType::Float;
+  }else if(name == QLatin1String("DOUBLE")){
+    return FieldType::Double;
+  }else if(name == QLatin1String("VARCHAR")){
+    return FieldType::Varchar;
+  }else if(name == QLatin1String("DATE")){
+    return FieldType::Date;
+  }else if(name == QLatin1String("TIME")){
+    return FieldType::Time;
+  }else if(name == QLatin1String("DATETIME")){
+    return FieldType::DateTime;
+  }else{
+    return FieldType::UnknownType;
+  }
+}
 
- private slots:
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void fieldTypeNameTest();
-
-  void fieldTypeInfoTest();
-  void fieldTypeInfoListTest();
-  void fieldTypeInfoModelTest();
-
-  void collationTest();
-
-  void fieldTest();
-
-  void autoIncrementPrimaryKeyTest();
-  void singleFieldPrimaryKeyTest();
-  void primaryKeyTest();
-  void primaryKeyContainerTest();
-};
-
-#endif // #ifndef MDT_SQL_SCHEMA_TEST_H
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{

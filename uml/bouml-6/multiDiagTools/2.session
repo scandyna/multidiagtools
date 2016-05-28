@@ -1,4 +1,4 @@
-window_sizes 1272 949 317 949 894 0
+window_sizes 1280 957 317 957 902 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -25,29 +25,30 @@ diagrams
     949 894 100 18 0 0
   classdiagram_ref 2508162 // Overview
     120 110 100 18 0 0
-  classdiagram_ref 2514690 // UserDefinedTable
-    957 902 100 4 0 0
   classdiagram_ref 1635586 // SchemaOld
     120 110 100 18 0 0
   classdiagram_ref 2461698 // Table
     120 110 100 18 0 0
-  active  classdiagram_ref 2481666 // DriverImplementation
-    949 894 100 21 0 0
+  classdiagram_ref 2481666 // DriverImplementation
+    949 894 100 21 84 0
+  classdiagram_ref 2461186 // Field
+    120 110 100 18 0 0
+  classdiagram_ref 2461058 // FieldType
+    120 110 100 7 0 0
+  active  classdiagram_ref 2541058 // FieldTypeName
+    957 902 100 18 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2481666 // DriverImplementation
+selected classdiagram_ref 2461314 // Driver
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   
   package_ref 516226 // SqlItemModel
-  operation_ref 4258434 // getPrimaryKeyDefinition
-  operation_ref 4258690 // getPrimaryKeyDefinition
-  classview_ref 1164418 // Field
-  class_ref 2775554 // PrimaryKey
-  class_ref 2852610 // SingleFieldPrimaryKey
-  operation_ref 4244354 // type
+  classview_ref 1320578 // Driver
+  operation_ref 4265858 // setFieldTypeList
+  class_ref 2811010 // FieldTypeInfoModel
   classview_ref 1320706 // Table
   class_ref 2845442 // Schema
   

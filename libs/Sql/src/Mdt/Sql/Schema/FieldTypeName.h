@@ -18,35 +18,48 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_TEST_H
-#define MDT_SQL_SCHEMA_TEST_H
+#ifndef MDT_SQL_SCHEMA_FIELD_TYPE_NAME_H
+#define MDT_SQL_SCHEMA_FIELD_TYPE_NAME_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "FieldType.h"
+#include <QString>
 
-class SchemaTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace Sql{ namespace Schema{
 
- private slots:
+  /*! \brief Mapping between a FieldType and its name
+   */
+  class FieldTypeName
+  {
+   public:
 
-  void initTestCase();
-  void cleanupTestCase();
+    /*! \brief Get field type name from type
+     */
+    static QString nameFromType(FieldType ft)
+    {
+      return pvNames[static_cast<int>(ft)];
+    }
 
-  void fieldTypeNameTest();
+    /*! \brief Get field type from name
+     */
+    static FieldType typeFromName(const QString & name);
 
-  void fieldTypeInfoTest();
-  void fieldTypeInfoListTest();
-  void fieldTypeInfoModelTest();
+   private:
 
-  void collationTest();
+    static const char *pvNames[];
+  };
 
-  void fieldTest();
+  const char *FieldTypeName::pvNames[] = {
+    "",
+    "BOOLEAN",
+    "INTEGER",
+    "FLOAT",
+    "DOUBLE",
+    "VARCHAR",
+    "DATE",
+    "TIME",
+    "DATETIME"
+  };
 
-  void autoIncrementPrimaryKeyTest();
-  void singleFieldPrimaryKeyTest();
-  void primaryKeyTest();
-  void primaryKeyContainerTest();
-};
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{
 
-#endif // #ifndef MDT_SQL_SCHEMA_TEST_H
+#endif // #ifndef MDT_SQL_SCHEMA_FIELD_TYPE_NAME_H

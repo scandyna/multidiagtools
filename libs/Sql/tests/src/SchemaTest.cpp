@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "SchemaTest.h"
 #include "Mdt/Application.h"
+#include "Mdt/Sql/Schema/FieldTypeName.h"
 #include "Mdt/Sql/Schema/FieldTypeInfo.h"
 #include "Mdt/Sql/Schema/FieldTypeInfoList.h"
 #include "Mdt/Sql/Schema/FieldTypeInfoModel.h"
@@ -45,6 +46,38 @@ void SchemaTest::cleanupTestCase()
 /*
  * Tests
  */
+
+void SchemaTest::fieldTypeNameTest()
+{
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::FieldTypeName;
+
+  /*
+   * Field type -> name
+   */
+  QVERIFY(FieldTypeName::nameFromType(FieldType::UnknownType).isEmpty());
+  QCOMPARE(FieldTypeName::nameFromType(FieldType::Boolean), QString("BOOLEAN"));
+  QCOMPARE(FieldTypeName::nameFromType(FieldType::Integer), QString("INTEGER"));
+  QCOMPARE(FieldTypeName::nameFromType(FieldType::Float), QString("FLOAT"));
+  QCOMPARE(FieldTypeName::nameFromType(FieldType::Double), QString("DOUBLE"));
+  QCOMPARE(FieldTypeName::nameFromType(FieldType::Varchar), QString("VARCHAR"));
+  QCOMPARE(FieldTypeName::nameFromType(FieldType::Date), QString("DATE"));
+  QCOMPARE(FieldTypeName::nameFromType(FieldType::Time), QString("TIME"));
+  QCOMPARE(FieldTypeName::nameFromType(FieldType::DateTime), QString("DATETIME"));
+  /*
+   * Name -> field type
+   */
+  QVERIFY(FieldTypeName::typeFromName("") == FieldType::UnknownType);
+  QVERIFY(FieldTypeName::typeFromName("BOOLEAN") == FieldType::Boolean);
+  QVERIFY(FieldTypeName::typeFromName("INTEGER") == FieldType::Integer);
+  QVERIFY(FieldTypeName::typeFromName("FLOAT") == FieldType::Float);
+  QVERIFY(FieldTypeName::typeFromName("DOUBLE") == FieldType::Double);
+  QVERIFY(FieldTypeName::typeFromName("VARCHAR") == FieldType::Varchar);
+  QVERIFY(FieldTypeName::typeFromName("DATE") == FieldType::Date);
+  QVERIFY(FieldTypeName::typeFromName("TIME") == FieldType::Time);
+  QVERIFY(FieldTypeName::typeFromName("DATETIME") == FieldType::DateTime);
+  QVERIFY(FieldTypeName::typeFromName("abcd") == FieldType::UnknownType);
+}
 
 void SchemaTest::fieldTypeInfoTest()
 {
@@ -118,10 +151,10 @@ void SchemaTest::fieldTypeInfoModelTest()
   /*
    * Play
    */
-//   cb.show();
-//   while(cb.isVisible()){
-//     QTest::qWait(500);
-//   }
+  cb.show();
+  while(cb.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 void SchemaTest::collationTest()

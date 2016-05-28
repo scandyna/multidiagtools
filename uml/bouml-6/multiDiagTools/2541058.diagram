@@ -1,0 +1,54 @@
+format 211
+
+classcanvas 128002 class_ref 2866306 // FieldTypeName
+  classdiagramsettings member_max_width 0 end
+  xyz 66 297 2000
+end
+classcanvas 128130 class_ref 2866562 // FieldTypeNameModel
+  classdiagramsettings member_max_width 0 end
+  xyz 35 120 2006
+end
+classcanvas 128386 class_ref 2866434 // FieldTypeList
+  classdiagramsettings member_max_width 0 end
+  xyz 431 159 2012
+end
+classcanvas 128642 class_ref 2774914 // FieldType
+  classdiagramsettings member_max_width 0 end
+  xyz 530 303 3005
+end
+classcanvas 129026 class_ref 147074 // QAbstractListModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 147 39 2012
+end
+note 129282 "Note: the row in model is the FieldType (see FieldTypeName)"
+  xyzwh 45.5 534.5 2000 419 41
+note 129666 "FieldTypeName: create a static array of const char* , for wcich the index is the FieldType (enum  value)."
+  xyzwh 40.5 456.5 2000 727 51
+relationcanvas 128258 relation_ref 3232898 // <dependency>
+  from ref 128130 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 3232770 // <directional composition>
+  decenter_end 559
+  from ref 128130 z 2013 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 3232386 // <dependency>
+  from ref 128002 z 3006 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 3232514 // <directional composition>
+  decenter_begin 513
+  from ref 128386 z 3006 to ref 128642
+  no_role_a no_role_b
+  multiplicity_a_pos 552 280 3000 no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 3232642 // <generalisation>
+  from ref 128130 z 2013 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end
