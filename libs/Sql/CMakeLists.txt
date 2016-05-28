@@ -10,6 +10,7 @@ set(SOURCES_FILES
     src/Mdt/Sql/Schema/Driver.cpp
     src/Mdt/Sql/Schema/DriverImplementationInterface.cpp
     src/Mdt/Sql/Schema/DriverSQLite.cpp
+    src/Mdt/Sql/Schema/DriverMySql.cpp
     src/Mdt/Sql/Schema/FieldTypeInfoModel.cpp
 )
 

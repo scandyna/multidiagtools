@@ -31,3 +31,13 @@ add_test(MdtSqlSchemaTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlschematest)
 add_executable(mdtsqlschemadrivertest src/SchemaDriverTest.cpp)
 target_link_libraries(mdtsqlschemadrivertest "mdtsqltest")
 add_test(MdtSqlSchemaDriverTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlschemadrivertest)
+
+# Target MdtSqlSchemaDriverSqliteTest
+add_executable(mdtsqlschemadriversqlitetest src/SchemaDriverSqliteTest.cpp)
+target_link_libraries(mdtsqlschemadriversqlitetest "mdtsqltest")
+add_test(MdtSqlSchemaDriverSqliteTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlschemadriversqlitetest)
+
+# Target MdtSqlSchemaDriverMySqlTest
+add_executable(mdtsqlschemadrivermysqltest src/SchemaDriverMySqlTest.cpp)
+target_link_libraries(mdtsqlschemadrivermysqltest "mdtsqltest")
+add_test(MdtSqlSchemaDriverMySqlTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlschemadrivermysqltest)

@@ -18,27 +18,35 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_DRIVER_TEST_H
-#define MDT_SQL_SCHEMA_DRIVER_TEST_H
+#include "DriverMySql.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace Sql{ namespace Schema{
 
-class SchemaDriverTest : public QObject
+DriverMySql::DriverMySql(const QSqlDatabase& db)
+ : DriverImplementationInterface(db)
 {
- Q_OBJECT
+  Q_ASSERT(qsqlDriver()->dbmsType() == QSqlDriver::MySqlServer);
+}
 
- private slots:
+QString DriverMySql::getCollationDefinition(const Collation & collation) const
+{
 
-  void initTestCase();
-  void cleanupTestCase();
+}
 
-  void driverTypeMapTest();
+QString DriverMySql::getFieldDefinition(const Field & field) const
+{
 
-  void fieldTypeNameSqliteTest();
-  void fieldTypeInfoListSqliteTest();
-  void fieldTypeMapSqliteTest();
+}
 
-};
+QString DriverMySql::getPrimaryKeyFieldDefinition(const AutoIncrementPrimaryKey & pk) const
+{
 
-#endif // #ifndef MDT_SQL_SCHEMA_DRIVER_TEST_H
+}
+
+QString DriverMySql::getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey & pk) const
+{
+
+}
+
+
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{

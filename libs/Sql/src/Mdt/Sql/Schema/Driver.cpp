@@ -21,6 +21,7 @@
 #include "Driver.h"
 #include "DriverImplementationInterface.h"
 #include "DriverSQLite.h"
+#include "DriverMySql.h"
 #include <QObject>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -34,7 +35,10 @@ Driver::Driver(const QSqlDatabase & db)
   switch(type){
     case DriverType::SQLite:
       pvImpl = std::make_unique<DriverSQLite>(db);
+      break;
     case DriverType::MySQL:
+      pvImpl = std::make_unique<DriverMySql>(db);
+      break;
     case DriverType::MariaDB:
     case DriverType::Unknown:
       break;

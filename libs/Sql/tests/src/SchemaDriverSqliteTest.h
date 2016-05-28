@@ -18,13 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_DRIVER_TEST_H
-#define MDT_SQL_SCHEMA_DRIVER_TEST_H
+#ifndef MDT_SQL_SCHEMA_DRIVER_SQLITE_TEST_H
+#define MDT_SQL_SCHEMA_DRIVER_SQLITE_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
+#include <QTemporaryFile>
+#include <QSqlDatabase>
 
-class SchemaDriverTest : public QObject
+class SchemaDriverSqliteTest : public QObject
 {
  Q_OBJECT
 
@@ -33,12 +35,18 @@ class SchemaDriverTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void driverTypeMapTest();
+  void driverInstanceTest();
 
-  void fieldTypeNameSqliteTest();
-  void fieldTypeInfoListSqliteTest();
-  void fieldTypeMapSqliteTest();
+  void collationDefinitionTest();
+  void fieldDefinitionTest();
+  void autoIncrementPrimaryKeyDefinitionTest();
+  void singleFieldPrimaryKeyDefinitionTest();
+  void primaryKeyDefinitionTest();
 
+ private:
+
+  QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
+  QSqlDatabase pvDatabase;
 };
 
-#endif // #ifndef MDT_SQL_SCHEMA_DRIVER_TEST_H
+#endif // #ifndef MDT_SQL_SCHEMA_DRIVER_SQLITE_TEST_H

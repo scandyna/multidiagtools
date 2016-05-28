@@ -2,43 +2,44 @@ format 211
 
 classcanvas 128002 class_ref 2795906 // DriverImplementationInterface
   classdiagramsettings member_max_width 0 end
-  xyz 41 40 2000
+  xyz 73 42 2000
 end
 classcanvas 128130 class_ref 2796162 // DriverSQLite
   classdiagramsettings member_max_width 0 end
-  xyz 337 527 2000
+  xyz 169 615 2000
 end
 classcanvas 128386 class_ref 2796290 // DriverMySql
   classdiagramsettings member_max_width 0 end
-  xyz 71 527 2000
+  xyz 39 615 2000
 end
 classcanvas 128898 class_ref 2796418 // DriverMariaDB
   classdiagramsettings member_max_width 0 end
-  xyz 196 527 2000
+  xyz 448 615 2000
 end
 note 130946 "Schould inherit from QObject and emit signals ???
 Or, is this  thread's job ?
 Or ???"
-  xyzwh 40.5 664.5 2000 555 57
+  xyzwh 40.5 752.5 2000 555 57
 relationcanvas 128258 relation_ref 3155330 // <generalisation>
-  geometry VHV unfixed
-  from ref 128130 z 2001 to point 454 488
-  line 131074 z 2001 to point 246 488
-  line 131202 z 2001 to ref 128002
+  from ref 128130 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128514 relation_ref 3155458 // <generalisation>
   geometry VHV unfixed
-  decenter_begin 450
-  from ref 128386 z 2001 to point 109 488
-  line 131586 z 2001 to point 246 488
+  decenter_begin 538
+  from ref 128386 z 2001 to point 85 576
+  line 131586 z 2001 to point 286 576
   line 131714 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129026 relation_ref 3155586 // <generalisation>
-  from ref 128898 z 2001 to ref 128002
+  geometry VHV unfixed
+  decenter_begin 457
+  from ref 128898 z 2001 to point 493 576
+  line 131842 z 2001 to point 286 576
+  line 131970 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

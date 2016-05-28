@@ -1,4 +1,4 @@
-window_sizes 1280 957 317 957 902 0
+window_sizes 1272 949 317 949 894 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -19,7 +19,7 @@ diagrams
     120 110 100 18 0 0
   classdiagram_ref 2468482 // overview
     957 902 90 21 0 9
-  active  classdiagram_ref 2461442 // PrimaryKey
+  classdiagram_ref 2461442 // PrimaryKey
     957 902 100 4 36 0
   classdiagram_ref 1715714 // sandbox
     949 894 100 18 0 0
@@ -31,9 +31,11 @@ diagrams
     120 110 100 18 0 0
   classdiagram_ref 2461698 // Table
     120 110 100 18 0 0
+  active  classdiagram_ref 2481666 // DriverImplementation
+    949 894 100 21 0 0
 end
 show_stereotypes
-selected operation_ref 4258690 // getPrimaryKeyDefinition
+selected classdiagram_ref 2481666 // DriverImplementation
 open
   
   package_ref 409858 // principes
