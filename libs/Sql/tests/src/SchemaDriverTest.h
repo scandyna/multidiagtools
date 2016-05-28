@@ -43,6 +43,9 @@ class SchemaDriverTest : public QObject
 
   void collationDefinitionSqliteTest();
   void fieldDefinitionSqliteTest();
+  void autoIncrementPrimaryKeyDefinitionSqliteTest();
+  void singleFieldPrimaryKeyDefinitionSqliteTest();
+  void primaryKeyDefinitionSqliteTest();
 };
 
 #endif // #ifndef MDT_SQL_SCHEMA_TEST_H

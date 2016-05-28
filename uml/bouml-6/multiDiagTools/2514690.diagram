@@ -1,0 +1,59 @@
+format 211
+
+classcanvas 128002 class_ref 2775810 // Table
+  classdiagramsettings member_max_width 0 end
+  xyz 467 121 2000
+end
+note 128642 "CRTP"
+  xyzwh 435 254 2000 91 41
+note 129538 "NOTE: a user defined schema will contain user specific tables (not a vector of tables..)
+
+Driver can have a template method.
+
+BUT: how to pass a schema to a worker that will create it in database ???
+AND: what about item models to give informations to the user ??"
+  xyzwh 40.5 464.5 2000 549 149
+classcanvas 130562 class_ref 2838530 // TableTemplate
+  classdiagramsettings member_max_width 0 end
+  xyz 306 114 2000
+end
+classcanvas 131202 class_ref 2838914 // TableList
+  classdiagramsettings member_max_width 0 end
+  xyz 501 39 2005
+end
+classcanvas 131458 class_ref 2845698 // UserDefinedTableA
+  classdiagramsettings member_max_width 0 end
+  xyz 297 343 2000
+end
+classcanvas 131586 class_ref 2845826 // UserDefinedTableB
+  classdiagramsettings member_max_width 0 end
+  xyz 121 287 2000
+end
+relationcanvas 131714 relation_ref 3225346 // <directional composition>
+  from ref 130562 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131842 relation_ref 3225474 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 525
+  from ref 131586 z 2001 to point 189 248
+  line 132098 z 2001 to point 366 248
+  line 132226 z 2001 to ref 130562
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131970 relation_ref 3225602 // <generalisation>
+  decenter_begin 525
+  from ref 131458 z 2001 to ref 130562
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132482 relation_ref 3225730 // <directional composition>
+  from ref 131202 z 2006 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 521 98 3000 no_multiplicity_b
+end
+line 132354 -_-_
+  from ref 131970 z 2002 to ref 128642
+end

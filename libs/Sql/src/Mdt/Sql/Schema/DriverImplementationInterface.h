@@ -26,6 +26,9 @@
 #include "FieldTypeInfoList.h"
 #include "Field.h"
 #include "Collation.h"
+#include "AutoIncrementPrimaryKey.h"
+#include "SingleFieldPrimaryKey.h"
+#include "PrimaryKey.h"
 #include "Mdt/Error.h"
 #include <QSqlDatabase>
 #include <QSqlDriver>
@@ -84,6 +87,18 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Get field definition
      */
     virtual QString getFieldDefinition(const Field & field) const = 0;
+
+    /*! \brief Get field definition of a auto increment primary key
+     */
+    virtual QString getPrimaryKeyFieldDefinition(const AutoIncrementPrimaryKey & pk) const = 0;
+
+    /*! \brief Get field definition of a single field primary key
+     */
+    virtual QString getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey & pk) const = 0;
+
+    /*! \brief Get primary key definition
+     */
+    virtual QString getPrimaryKeyDefinition(const PrimaryKey & pk) const;
 
     /*! \brief Get last error
      */

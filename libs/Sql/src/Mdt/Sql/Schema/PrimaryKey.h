@@ -18,51 +18,60 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_DRIVER_SQLITE_H
-#define MDT_SQL_SCHEMA_DRIVER_SQLITE_H
+#ifndef MDT_SQL_SCHEMA_PRIMARY_KEY_H
+#define MDT_SQL_SCHEMA_PRIMARY_KEY_H
 
-#include "DriverImplementationInterface.h"
+#include "Field.h"
+#include <QStringList>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-  /*! \brief SQLite schema driver
+  /*! \brief Primary key
    */
-  class DriverSQLite : public DriverImplementationInterface
+  class PrimaryKey
   {
    public:
 
-    /*! \brief Constructor
+    /*! \brief Add a field to this primary key
      */
-    DriverSQLite(const QSqlDatabase & db);
-
-    /*! \brief Get driver type
-     */
-    DriverType type() const override
+    void addField(const Field & field)
     {
-      return DriverType::SQLite;
+      pvFieldNameList.append(field.name());
     }
 
-    /*! \brief Get collation definition
+    /*! \brief Get field count
      */
-    QString getCollationDefinition(const Collation & collation) const override;
+    int fieldCount() const
+    {
+      return pvFieldNameList.count();
+    }
 
-    /*! \brief Get field definition
+    /*! \brief Get field name list
      */
-    QString getFieldDefinition(const Field & field) const override;
+    QStringList fieldNameList() const
+    {
+      return pvFieldNameList;
+    }
 
-    /*! \brief Get field definition of a auto increment primary key
+    /*! \brief Check if primary key is null
      */
-    QString getPrimaryKeyFieldDefinition(const AutoIncrementPrimaryKey & pk) const override;
+    bool isNull() const
+    {
+      return pvFieldNameList.isEmpty();
+    }
 
-    /*! \brief Get field definition of a single field primary key
+    /*! \brief Clear
      */
-    QString getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey & pk) const override;
+    void clear()
+    {
+      pvFieldNameList.clear();
+    }
 
    private:
 
-    
+    QStringList pvFieldNameList;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{
 
-#endif // #ifndef MDT_SQL_SCHEMA_DRIVER_SQLITE_H
+#endif // #ifndef MDT_SQL_SCHEMA_PRIMARY_KEY_H

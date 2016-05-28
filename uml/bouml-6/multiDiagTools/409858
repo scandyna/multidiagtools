@@ -1,6 +1,6 @@
 format 211
 "principes" // principes
-  revision 3
+  revision 4
   modified_by 2 "philippe"
   // class settings
   
@@ -35,4 +35,6 @@ format 211
   package_ref 529666 // CommandPattern
 
   package_ref 529794 // Decorator
+
+  package_ref 536322 // TypeErasure
 end

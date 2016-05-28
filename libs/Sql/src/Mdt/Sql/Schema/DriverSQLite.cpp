@@ -74,4 +74,34 @@ QString DriverSQLite::getFieldDefinition(const Field & field) const
   return sql;
 }
 
+QString DriverSQLite::getPrimaryKeyFieldDefinition(const AutoIncrementPrimaryKey & pk) const
+{
+  QString sql;
+
+  sql = escapeFieldName(pk.fieldName()) \
+      % QStringLiteral(" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT");
+
+  return sql;
+}
+
+QString DriverSQLite::getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey& pk) const
+{
+  QString sql;
+
+  // Field name and type
+  sql = escapeFieldName(pk.fieldName()) % QStringLiteral(" ") % fieldTypeName(pk.fieldType());
+  // Length
+  if(pk.fieldLength() > 0){
+    sql += QStringLiteral("(") % QString::number(pk.fieldLength()) % QStringLiteral(")");
+  }
+  // Primary key constraint
+  sql += QStringLiteral(" NOT NULL PRIMARY KEY");
+  // Collation
+  if(!pk.collation().isNull()){
+    sql += QStringLiteral(" ") % getCollationDefinition(pk.collation());
+  }
+
+  return sql;
+}
+
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

@@ -18,51 +18,52 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_DRIVER_SQLITE_H
-#define MDT_SQL_SCHEMA_DRIVER_SQLITE_H
+#ifndef MDT_SQL_SCHEMA_AUTO_INCREMENT_PRIMARY_KEY_H
+#define MDT_SQL_SCHEMA_AUTO_INCREMENT_PRIMARY_KEY_H
 
-#include "DriverImplementationInterface.h"
+#include <QString>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-  /*! \brief SQLite schema driver
+  /*! \brief Auto increment primary key
    */
-  class DriverSQLite : public DriverImplementationInterface
+  class AutoIncrementPrimaryKey
   {
    public:
 
-    /*! \brief Constructor
+    /*! \brief Set field name
      */
-    DriverSQLite(const QSqlDatabase & db);
-
-    /*! \brief Get driver type
-     */
-    DriverType type() const override
+    void setFieldName(const QString & name)
     {
-      return DriverType::SQLite;
+      pvFieldName = name;
     }
 
-    /*! \brief Get collation definition
+    /*! \brief Get field name
      */
-    QString getCollationDefinition(const Collation & collation) const override;
+    QString fieldName() const
+    {
+      return pvFieldName;
+    }
 
-    /*! \brief Get field definition
+    /*! \brief Check if primary key is null
      */
-    QString getFieldDefinition(const Field & field) const override;
+    bool isNull() const
+    {
+      return pvFieldName.isNull();
+    }
 
-    /*! \brief Get field definition of a auto increment primary key
+    /*! \brief Clear
      */
-    QString getPrimaryKeyFieldDefinition(const AutoIncrementPrimaryKey & pk) const override;
-
-    /*! \brief Get field definition of a single field primary key
-     */
-    QString getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey & pk) const override;
+    void clear()
+    {
+      pvFieldName.clear();
+    }
 
    private:
 
-    
+    QString pvFieldName;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{
 
-#endif // #ifndef MDT_SQL_SCHEMA_DRIVER_SQLITE_H
+#endif // #ifndef MDT_SQL_SCHEMA_AUTO_INCREMENT_PRIMARY_KEY_H

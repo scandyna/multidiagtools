@@ -18,51 +18,35 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_DRIVER_SQLITE_H
-#define MDT_SQL_SCHEMA_DRIVER_SQLITE_H
+#ifndef MDT_SQL_SCHEMA_PRIMARY_KEY_CONTAINER_H
+#define MDT_SQL_SCHEMA_PRIMARY_KEY_CONTAINER_H
 
-#include "DriverImplementationInterface.h"
+#include "AutoIncrementPrimaryKey.h"
+#include "SingleFieldPrimaryKey.h"
+#include "PrimaryKey.h"
+#include <boost/variant.hpp>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-  /*! \brief SQLite schema driver
+  /*! \brief Conatin one type of primary key
+   *
+   * To help defining SQL schema in most possible easy way,
+   *  several primary key types exsits.
+   *
+   * To store this varaints of primary key in a unified way,
+   *  for exaple in a Table, this container class helps.
    */
-  class DriverSQLite : public DriverImplementationInterface
+  class PrimaryKeyContainer
   {
    public:
 
-    /*! \brief Constructor
-     */
-    DriverSQLite(const QSqlDatabase & db);
-
-    /*! \brief Get driver type
-     */
-    DriverType type() const override
-    {
-      return DriverType::SQLite;
-    }
-
-    /*! \brief Get collation definition
-     */
-    QString getCollationDefinition(const Collation & collation) const override;
-
-    /*! \brief Get field definition
-     */
-    QString getFieldDefinition(const Field & field) const override;
-
-    /*! \brief Get field definition of a auto increment primary key
-     */
-    QString getPrimaryKeyFieldDefinition(const AutoIncrementPrimaryKey & pk) const override;
-
-    /*! \brief Get field definition of a single field primary key
-     */
-    QString getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey & pk) const override;
+    
 
    private:
 
-    
+    boost::variant<PrimaryKey, AutoIncrementPrimaryKey, SingleFieldPrimaryKey> pvPrimaryKey;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{
 
-#endif // #ifndef MDT_SQL_SCHEMA_DRIVER_SQLITE_H
+#endif // #ifndef MDT_SQL_SCHEMA_PRIMARY_KEY_CONTAINER_H

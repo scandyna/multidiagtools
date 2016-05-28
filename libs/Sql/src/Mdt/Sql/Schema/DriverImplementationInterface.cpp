@@ -19,6 +19,8 @@
  **
  ****************************************************************************/
 #include "DriverImplementationInterface.h"
+#include <QStringList>
+#include <QStringBuilder>
 #include <QObject>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -112,6 +114,20 @@ QMetaType::Type DriverImplementationInterface::fieldTypeToQMetaType(FieldType ft
       return QMetaType::UnknownType;
   }
   return QMetaType::UnknownType;
+}
+
+QString DriverImplementationInterface::getPrimaryKeyDefinition(const PrimaryKey & pk) const
+{
+  QString sql;
+  const auto rawFieldNameList = pk.fieldNameList();
+  QStringList escapedFieldNameList;
+
+  for(const auto & fieldName : rawFieldNameList){
+    escapedFieldNameList.append( escapeFieldName(fieldName) );
+  }
+  sql = QStringLiteral("PRIMARY KEY (") % escapedFieldNameList.join(',') % QStringLiteral(")");
+
+  return sql;
 }
 
 QString DriverImplementationInterface::escapeFieldName(const QString & fieldName) const

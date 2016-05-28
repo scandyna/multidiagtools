@@ -40,6 +40,11 @@ class SchemaTest : public QObject
   void collationTest();
 
   void fieldTest();
+
+  void autoIncrementPrimaryKeyTest();
+  void singleFieldPrimaryKeyTest();
+  void primaryKeyTest();
+  void primaryKeyContainerTest();
 };
 
 #endif // #ifndef MDT_SQL_SCHEMA_TEST_H

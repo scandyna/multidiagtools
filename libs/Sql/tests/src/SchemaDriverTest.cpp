@@ -312,6 +312,109 @@ void SchemaDriverTest::fieldDefinitionSqliteTest()
   QCOMPARE(driver.getFieldDefinition(field), expectedSql);
 }
 
+void SchemaDriverTest::autoIncrementPrimaryKeyDefinitionSqliteTest()
+{
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+
+  QSqlDatabase db = QSqlDatabase::database("SQLITE_1", false);
+  if(!db.isValid()){
+    QSKIP("SQLite driver not available");
+  }
+  Mdt::Sql::Schema::DriverSQLite driver(db);
+  QString expectedSql;
+  AutoIncrementPrimaryKey pk;
+
+  pk.setFieldName("Id_PK");
+  /*
+   * Note: SQL statement must contain NOT NULL (see SQLite documentation about NULL and PK)
+   */
+  expectedSql = "\"Id_PK\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT";
+  QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
+}
+
+void SchemaDriverTest::singleFieldPrimaryKeyDefinitionSqliteTest()
+{
+  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
+  using Mdt::Sql::Schema::FieldType;
+
+  QSqlDatabase db = QSqlDatabase::database("SQLITE_1", false);
+  if(!db.isValid()){
+    QSKIP("SQLite driver not available");
+  }
+  Mdt::Sql::Schema::DriverSQLite driver(db);
+  QString expectedSql;
+  SingleFieldPrimaryKey pk;
+
+  /*
+   * Integer primary key
+   * Note: SQL statement must contain NOT NULL (see SQLite documentation about NULL and PK)
+   */
+  // Setup primary key
+  pk.clear();
+  pk.setFieldType(FieldType::Integer);
+  pk.setFieldName("Id_PK");
+  // Check
+  expectedSql = "\"Id_PK\" INTEGER NOT NULL PRIMARY KEY";
+  QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
+  /*
+   * Text primary key
+   * Note: SQL statement must contain NOT NULL (see SQLite documentation about NULL and PK)
+   */
+  // Setup primary key
+  pk.clear();
+  pk.setFieldType(FieldType::Varchar);
+  pk.setFieldLength(20);
+  pk.setFieldName("Code_PK");
+  // Check
+  expectedSql = "\"Code_PK\" VARCHAR(20) NOT NULL PRIMARY KEY";
+  QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
+  /*
+   * Text primary key
+   * We specifiy a collation
+   * Note: SQL statement must contain NOT NULL (see SQLite documentation about NULL and PK)
+   */
+  // Setup primary key
+  pk.clear();
+  pk.setFieldType(FieldType::Varchar);
+  pk.setFieldLength(20);
+  pk.setFieldName("Code_PK");
+  pk.setCaseSensitive(true);
+  // Check
+  expectedSql = "\"Code_PK\" VARCHAR(20) NOT NULL PRIMARY KEY COLLATE BINARY";
+  QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
+}
+
+void SchemaDriverTest::primaryKeyDefinitionSqliteTest()
+{
+  using Mdt::Sql::Schema::PrimaryKey;
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::Field;
+
+  QSqlDatabase db = QSqlDatabase::database("SQLITE_1", false);
+  if(!db.isValid()){
+    QSKIP("SQLite driver not available");
+  }
+  Mdt::Sql::Schema::DriverSQLite driver(db);
+  QString expectedSql;
+  PrimaryKey pk;
+  Field Id_A_PK, Id_B_PK;
+
+  /*
+   * Setup fields
+   */
+  Id_A_PK.setName("Id_A_PK");
+  Id_B_PK.setName("Id_A_PK");
+  /*
+   * Simple 1 field PK
+   */
+  // Setup primary key
+  pk.clear();
+  pk.addField(Id_A_PK);
+  // Check
+  expectedSql = "PRIMARY KEY (\"Id_A_PK\")";
+  QCOMPARE(driver.getPrimaryKeyDefinition(pk), expectedSql);
+}
+
 /*
  * Main
  */

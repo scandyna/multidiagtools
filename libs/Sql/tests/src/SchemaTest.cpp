@@ -25,6 +25,10 @@
 #include "Mdt/Sql/Schema/FieldTypeInfoModel.h"
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/Schema/Field.h"
+#include "Mdt/Sql/Schema/AutoIncrementPrimaryKey.h"
+#include "Mdt/Sql/Schema/SingleFieldPrimaryKey.h"
+#include "Mdt/Sql/Schema/PrimaryKey.h"
+#include "Mdt/Sql/Schema/PrimaryKeyContainer.h"
 #include <QSqlDatabase>
 #include <QComboBox>
 
@@ -224,6 +228,129 @@ void SchemaTest::fieldTest()
   QCOMPARE(field.length(), -1);
   QVERIFY(field.collation().isNull());
   QVERIFY(field.isNull());
+}
+
+void SchemaTest::autoIncrementPrimaryKeyTest()
+{
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+
+  AutoIncrementPrimaryKey pk;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(pk.isNull());
+  /*
+   * Set/get
+   */
+  pk.setFieldName("Id_PK");
+  QCOMPARE(pk.fieldName(), QString("Id_PK"));
+  QVERIFY(!pk.isNull());
+  /*
+   * Clear
+   */
+  pk.clear();
+  QVERIFY(pk.fieldName().isEmpty());
+  QVERIFY(pk.isNull());
+}
+
+void SchemaTest::singleFieldPrimaryKeyTest()
+{
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
+
+  SingleFieldPrimaryKey pk;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(pk.fieldType() == FieldType::UnknownType);
+  QCOMPARE(pk.fieldLength(), -1);
+  QVERIFY(pk.collation().isCaseSensitive());
+  QVERIFY(pk.isNull());
+  /*
+   * Set/get on Integer primary key
+   */
+  // Setup primary key
+  pk.setFieldType(FieldType::Integer);
+  QVERIFY(pk.isNull());
+  pk.setFieldName("Id_PK");
+  QVERIFY(!pk.isNull());
+  // Check
+  QVERIFY(pk.fieldType() == FieldType::Integer);
+  QCOMPARE(pk.fieldName(), QString("Id_PK"));
+  /*
+   * Clear
+   */
+  pk.clear();
+  QVERIFY(pk.fieldType() == FieldType::UnknownType);
+  QVERIFY(pk.fieldName().isEmpty());
+  QCOMPARE(pk.fieldLength(), -1);
+  QVERIFY(pk.collation().isCaseSensitive());
+  QVERIFY(pk.isNull());
+  /*
+   * Set/get on a text primary key
+   */
+  // Setup primary key
+  pk.setFieldType(FieldType::Varchar);
+  pk.setFieldName("Code_PK");
+  pk.setFieldLength(50);
+  // Check
+  QVERIFY(!pk.isNull());
+  QVERIFY(pk.fieldType() == FieldType::Varchar);
+  QCOMPARE(pk.fieldName(), QString("Code_PK"));
+  QCOMPARE(pk.fieldLength(), 50);
+  QVERIFY(pk.collation().isCaseSensitive());
+  /*
+   * Clear
+   */
+  pk.clear();
+  QVERIFY(pk.fieldType() == FieldType::UnknownType);
+  QVERIFY(pk.fieldName().isEmpty());
+  QCOMPARE(pk.fieldLength(), -1);
+  QVERIFY(pk.collation().isCaseSensitive());
+  QVERIFY(pk.isNull());
+}
+
+void SchemaTest::primaryKeyTest()
+{
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::PrimaryKey;
+
+  PrimaryKey pk;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(pk.fieldCount(), 0);
+  QVERIFY(pk.isNull());
+  /*
+   * Set/get
+   */
+  Field Id_PK;
+  Id_PK.setName("Id_PK");
+  pk.addField(Id_PK);
+  QCOMPARE(pk.fieldCount(), 1);
+  QVERIFY(!pk.isNull());
+  QCOMPARE(pk.fieldNameList().at(0), QString("Id_PK"));
+  /*
+   * Clear
+   */
+  pk.clear();
+  QCOMPARE(pk.fieldCount(), 0);
+  QVERIFY(pk.isNull());
+}
+
+void SchemaTest::primaryKeyContainerTest()
+{
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
+  using Mdt::Sql::Schema::PrimaryKey;
+  using Mdt::Sql::Schema::PrimaryKeyContainer;
+
+  /// sandbox
+  PrimaryKeyContainer pkc;
 }
 
 /*

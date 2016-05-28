@@ -1,0 +1,16 @@
+format 211
+
+classcanvas 128002 class_ref 2838914 // TableList
+  classdiagramsettings member_max_width 0 end
+  xyz 41 59 2000
+end
+classcanvas 128130 class_ref 2775810 // Table
+  classdiagramsettings member_max_width 0 end
+  xyz 151 41 2006
+end
+relationcanvas 128258 relation_ref 3225730 // <directional composition>
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 135 88 3000 no_multiplicity_b
+end
+end
