@@ -37,6 +37,8 @@ class SchemaDriverSqliteTest : public QObject
 
   void driverInstanceTest();
 
+  void availableFieldTypeTest();
+
   void collationDefinitionTest();
   void fieldDefinitionTest();
   void autoIncrementPrimaryKeyDefinitionTest();

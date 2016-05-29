@@ -4,7 +4,7 @@ classcanvas 128002 class_ref 2866306 // FieldTypeName
   classdiagramsettings member_max_width 0 end
   xyz 66 297 2000
 end
-classcanvas 128130 class_ref 2866562 // FieldTypeNameModel
+classcanvas 128130 class_ref 2866562 // FieldTypeListModel
   classdiagramsettings member_max_width 0 end
   xyz 35 120 2006
 end

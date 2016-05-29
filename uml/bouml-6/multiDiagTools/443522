@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 33
+  revision 34
   modified_by 2 "philippe"
   // class settings
   
@@ -1477,7 +1477,7 @@ ${inlines}
       end
     end
 
-    class 2866562 "FieldTypeNameModel"
+    class 2866562 "FieldTypeListModel"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -1528,7 +1528,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      operation 4265474 "FieldTypeNameModel"
+      operation 4265474 "FieldTypeListModel"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "parent" type class_ref 138626 // QObject
@@ -2505,7 +2505,6 @@ ${inlines}
 	
       end
     end
-
   end
 
   classview 1347202 "PrimaryKey"

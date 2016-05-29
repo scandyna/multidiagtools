@@ -18,36 +18,43 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_FIELD_TYPE_NAME_H
-#define MDT_SQL_SCHEMA_FIELD_TYPE_NAME_H
-
-#include "FieldType.h"
-#include <QString>
+#include "FieldTypeListModel.h"
+#include "FieldTypeName.h"
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-  /*! \brief Mapping between a FieldType and its name
-   */
-  class FieldTypeName
-  {
-   public:
+FieldTypeListModel::FieldTypeListModel(QObject* parent)
+ : QAbstractListModel(parent)
+{
+}
 
-    /*! \brief Get field type name from type
-     */
-    static QString nameFromType(FieldType ft)
-    {
-      return pvNames[static_cast<int>(ft)];
-    }
+void FieldTypeListModel::setFieldTypeList(const FieldTypeList& ftl)
+{
+  beginResetModel();
+  pvFieldTypeList = ftl;
+  endResetModel();
+}
 
-    /*! \brief Get field type from name
-     */
-    static FieldType typeFromName(const QString & name);
+QVariant FieldTypeListModel::data(const QModelIndex & index, int role) const
+{
+  if(role != Qt::DisplayRole){
+    return QVariant();
+  }
+  if(!index.isValid()){
+    return QVariant();
+  }
+  Q_ASSERT(index.row() >= 0);
+  Q_ASSERT(index.row() < pvFieldTypeList.size());
 
-   private:
+  return FieldTypeName::nameFromType( pvFieldTypeList.at(index.row()) );
+}
 
-    static const char *pvNames[];
-  };
+FieldType FieldTypeListModel::fieldType(int row)
+{
+  if( (row < 0) || (row >= pvFieldTypeList.size()) ){
+    return FieldType::UnknownType;
+  }
+  return pvFieldTypeList.at(row);
+}
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{
-
-#endif // #ifndef MDT_SQL_SCHEMA_FIELD_TYPE_NAME_H

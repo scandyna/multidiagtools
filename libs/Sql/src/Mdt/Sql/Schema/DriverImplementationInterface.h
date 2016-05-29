@@ -23,7 +23,7 @@
 
 #include "DriverType.h"
 #include "FieldType.h"
-#include "FieldTypeInfoList.h"
+#include "FieldTypeList.h"
 #include "Field.h"
 #include "Collation.h"
 #include "AutoIncrementPrimaryKey.h"
@@ -69,8 +69,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     virtual QString fieldTypeName(FieldType ft) const;
 
     /*! \brief Get a list of avaliable field type
+     *
+     * Default implementation returns all type defined in FieldType
      */
-    virtual FieldTypeInfoList getAvailableFieldTypeInfoList() const;
+    virtual FieldTypeList getAvailableFieldTypeList() const;
 
     /*! \brief Get SQL field type from QMetaType::Type
      */

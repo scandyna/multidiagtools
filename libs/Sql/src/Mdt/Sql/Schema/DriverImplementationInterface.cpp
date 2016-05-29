@@ -50,18 +50,18 @@ QString DriverImplementationInterface::fieldTypeName(FieldType ft) const
   return QString();
 }
 
-FieldTypeInfoList DriverImplementationInterface::getAvailableFieldTypeInfoList() const
+FieldTypeList DriverImplementationInterface::getAvailableFieldTypeList() const
 {
-  FieldTypeInfoList list;
+  FieldTypeList list;
 
-  list.append(FieldTypeInfo(FieldType::Boolean, fieldTypeName(FieldType::Boolean)));
-  list.append(FieldTypeInfo(FieldType::Integer, fieldTypeName(FieldType::Integer)));
-  list.append(FieldTypeInfo(FieldType::Float, fieldTypeName(FieldType::Float)));
-  list.append(FieldTypeInfo(FieldType::Double, fieldTypeName(FieldType::Double)));
-  list.append(FieldTypeInfo(FieldType::Varchar, fieldTypeName(FieldType::Varchar)));
-  list.append(FieldTypeInfo(FieldType::Date, fieldTypeName(FieldType::Date)));
-  list.append(FieldTypeInfo(FieldType::Time, fieldTypeName(FieldType::Time)));
-  list.append(FieldTypeInfo(FieldType::DateTime, fieldTypeName(FieldType::DateTime)));
+  list.append(FieldType::Boolean);
+  list.append(FieldType::Integer);
+  list.append(FieldType::Float);
+  list.append(FieldType::Double);
+  list.append(FieldType::Varchar);
+  list.append(FieldType::Date);
+  list.append(FieldType::Time);
+  list.append(FieldType::DateTime);
 
   return list;
 }

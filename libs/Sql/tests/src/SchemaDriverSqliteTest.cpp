@@ -59,6 +59,24 @@ void SchemaDriverSqliteTest::driverInstanceTest()
   QVERIFY(driver.type() == DriverType::SQLite);
 }
 
+void SchemaDriverSqliteTest::availableFieldTypeTest()
+{
+  using Mdt::Sql::Schema::FieldType;
+
+  Mdt::Sql::Schema::Driver driver(pvDatabase);
+  auto list = driver.getAvailableFieldTypeList();
+
+  QCOMPARE(list.size(), 8);
+  QVERIFY(list.at(0) == FieldType::Boolean);
+  QVERIFY(list.at(1) == FieldType::Integer);
+  QVERIFY(list.at(2) == FieldType::Float);
+  QVERIFY(list.at(3) == FieldType::Double);
+  QVERIFY(list.at(4) == FieldType::Varchar);
+  QVERIFY(list.at(5) == FieldType::Date);
+  QVERIFY(list.at(6) == FieldType::Time);
+  QVERIFY(list.at(7) == FieldType::DateTime);
+}
+
 void SchemaDriverSqliteTest::collationDefinitionTest()
 {
   using Mdt::Sql::Schema::Collation;

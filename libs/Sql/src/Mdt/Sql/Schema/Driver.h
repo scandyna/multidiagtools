@@ -23,7 +23,10 @@
 
 #include "DriverType.h"
 #include "FieldType.h"
+#include "FieldTypeList.h"
+
 #include "FieldTypeInfoList.h"
+
 #include "Mdt/Error.h"
 #include <QSqlDriver>
 #include <QString>
@@ -79,6 +82,12 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     {
       return (type() != DriverType::Unknown);
     }
+
+    /*! \brief Get a list of avaliable field type
+     *
+     * \pre Driver must be valid
+     */
+    FieldTypeList getAvailableFieldTypeList() const;
 
     /*! \brief Get a list of avaliable field type
      *

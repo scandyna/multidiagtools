@@ -48,5 +48,16 @@ FieldType FieldTypeName::typeFromName(const QString & name)
   }
 }
 
+const char *FieldTypeName::pvNames[] = {
+  "",
+  "BOOLEAN",
+  "INTEGER",
+  "FLOAT",
+  "DOUBLE",
+  "VARCHAR",
+  "DATE",
+  "TIME",
+  "DATETIME"
+};
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

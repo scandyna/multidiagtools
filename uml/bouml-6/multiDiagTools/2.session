@@ -39,7 +39,8 @@ diagrams
     957 902 100 18 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2461314 // Driver
+selected 
+  package_ref 523010 // Table
 open
   
   package_ref 409858 // principes
@@ -52,7 +53,10 @@ open
   classview_ref 1320706 // Table
   class_ref 2845442 // Schema
   
+  package_ref 542978 // Connector
+  
+  package_ref 542850 // Entity
+  
   package_ref 430082 // Dsp
-  classview_ref 820482 // expected
 end
 end

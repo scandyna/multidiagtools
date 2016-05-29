@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "SchemaTest.h"
 #include "Mdt/Application.h"
+#include "Mdt/Sql/Schema/FieldTypeList.h"
+#include "Mdt/Sql/Schema/FieldTypeListModel.h"
 #include "Mdt/Sql/Schema/FieldTypeName.h"
 #include "Mdt/Sql/Schema/FieldTypeInfo.h"
 #include "Mdt/Sql/Schema/FieldTypeInfoList.h"
@@ -46,6 +48,32 @@ void SchemaTest::cleanupTestCase()
 /*
  * Tests
  */
+
+void SchemaTest::fieldTypeListTest()
+{
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::FieldTypeList;
+
+  /*
+   * Initial state
+   */
+  FieldTypeList list;
+  QCOMPARE(list.size(), 0);
+  /*
+   * Add one element
+   */
+  list.append(FieldType::Boolean);
+  QCOMPARE(list.size(), 1);
+  QVERIFY(list.at(0) == FieldType::Boolean);
+  for(auto ft : list){
+    QVERIFY(ft == FieldType::Boolean);
+  }
+  /*
+   * Clear
+   */
+  list.clear();
+  QCOMPARE(list.size(), 0);
+}
 
 void SchemaTest::fieldTypeNameTest()
 {
@@ -77,6 +105,65 @@ void SchemaTest::fieldTypeNameTest()
   QVERIFY(FieldTypeName::typeFromName("TIME") == FieldType::Time);
   QVERIFY(FieldTypeName::typeFromName("DATETIME") == FieldType::DateTime);
   QVERIFY(FieldTypeName::typeFromName("abcd") == FieldType::UnknownType);
+}
+
+void SchemaTest::fiedTypeListModelTest()
+{
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::FieldTypeList;
+  using Mdt::Sql::Schema::FieldTypeListModel;
+
+  FieldTypeListModel model;
+  QModelIndex index;
+  FieldTypeList list;
+  QComboBox cb;
+
+  /*
+   * Setup combobox
+   */
+  cb.setModel(&model);
+  /*
+   * Initial state
+   */
+  QCOMPARE(model.rowCount(), 0);
+  /*
+   * Populate model
+   */
+  list.clear();
+  list.append(FieldType::Boolean);
+  list.append(FieldType::Integer);
+  list.append(FieldType::Varchar);
+  model.setFieldTypeList(list);
+  /*
+   * Check
+   */
+  QCOMPARE(model.rowCount(), 3);
+  // Row 0
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("BOOLEAN"));
+  QVERIFY(model.fieldType(0) == FieldType::Boolean);
+  // Row 1
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("INTEGER"));
+  QVERIFY(model.fieldType(1) == FieldType::Integer);
+  // Row 2
+  index = model.index(2, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("VARCHAR"));
+  QVERIFY(model.fieldType(2) == FieldType::Varchar);
+  // Get field type from invalid row
+  QVERIFY(model.fieldType(-1) == FieldType::UnknownType);
+  QVERIFY(model.fieldType(3) == FieldType::UnknownType);
+  QVERIFY(model.fieldType(5) == FieldType::UnknownType);
+  /*
+   * Play
+   */
+  cb.show();
+  while(cb.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 void SchemaTest::fieldTypeInfoTest()
