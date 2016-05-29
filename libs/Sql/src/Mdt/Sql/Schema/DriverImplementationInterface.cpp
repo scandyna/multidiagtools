@@ -25,31 +25,6 @@
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-QString DriverImplementationInterface::fieldTypeName(FieldType ft) const
-{
-  switch(ft){
-    case FieldType::Boolean:
-      return QStringLiteral("BOOLEAN");
-    case FieldType::Integer:
-      return QStringLiteral("INTEGER");
-    case FieldType::Float:
-      return QStringLiteral("FLOAT");
-    case FieldType::Double:
-      return QStringLiteral("DOUBLE");
-    case FieldType::Varchar:
-      return QStringLiteral("VARCHAR");
-    case FieldType::Date:
-      return QStringLiteral("DATE");
-    case FieldType::Time:
-      return QStringLiteral("TIME");
-    case FieldType::DateTime:
-      return QStringLiteral("DATETIME");
-    case FieldType::UnknownType:
-      break;
-  }
-  return QString();
-}
-
 FieldTypeList DriverImplementationInterface::getAvailableFieldTypeList() const
 {
   FieldTypeList list;

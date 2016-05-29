@@ -23,9 +23,6 @@
 #include "Mdt/Sql/Schema/FieldTypeList.h"
 #include "Mdt/Sql/Schema/FieldTypeListModel.h"
 #include "Mdt/Sql/Schema/FieldTypeName.h"
-#include "Mdt/Sql/Schema/FieldTypeInfo.h"
-#include "Mdt/Sql/Schema/FieldTypeInfoList.h"
-#include "Mdt/Sql/Schema/FieldTypeInfoModel.h"
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/Schema/Field.h"
 #include "Mdt/Sql/Schema/AutoIncrementPrimaryKey.h"
@@ -157,84 +154,6 @@ void SchemaTest::fiedTypeListModelTest()
   QVERIFY(model.fieldType(-1) == FieldType::UnknownType);
   QVERIFY(model.fieldType(3) == FieldType::UnknownType);
   QVERIFY(model.fieldType(5) == FieldType::UnknownType);
-  /*
-   * Play
-   */
-  cb.show();
-  while(cb.isVisible()){
-    QTest::qWait(500);
-  }
-}
-
-void SchemaTest::fieldTypeInfoTest()
-{
-  using Mdt::Sql::Schema::FieldTypeInfo;
-  using Mdt::Sql::Schema::FieldType;
-
-  FieldTypeInfo fti(FieldType::Boolean, "BOOLEAN");
-  QVERIFY(fti.type() == FieldType::Boolean);
-  QCOMPARE(fti.name(), QString("BOOLEAN"));
-}
-
-void SchemaTest::fieldTypeInfoListTest()
-{
-  using Mdt::Sql::Schema::FieldTypeInfo;
-  using Mdt::Sql::Schema::FieldTypeInfoList;
-  using Mdt::Sql::Schema::FieldType;
-
-  /*
-   * Initial state
-   */
-  FieldTypeInfoList ftil;
-  QCOMPARE(ftil.size(), 0);
-  /*
-   * Add one element
-   */
-  ftil.append(FieldTypeInfo(FieldType::Boolean, "BOOLEAN"));
-  QCOMPARE(ftil.size(), 1);
-  QVERIFY(ftil.at(0).type() == FieldType::Boolean);
-  QCOMPARE(ftil.at(0).name(), QString("BOOLEAN"));
-  for(const auto & fti : ftil){
-    QVERIFY(fti.type() == FieldType::Boolean);
-    QCOMPARE(fti.name(), QString("BOOLEAN"));
-  }
-  
-}
-
-void SchemaTest::fieldTypeInfoModelTest()
-{
-  using Mdt::Sql::Schema::FieldTypeInfo;
-  using Mdt::Sql::Schema::FieldTypeInfoModel;
-  using Mdt::Sql::Schema::FieldType;
-
-  FieldTypeInfoModel model;
-  QModelIndex index;
-  QComboBox cb;
-  QSqlDatabase db = QSqlDatabase::database("SQLITE_1", false);
-  if(!db.isValid()){
-    QSKIP("SQLite driver not available");
-  }
-  /*
-   * Create a SQLite driver
-   */
-  QVERIFY(db.isValid());
-  Mdt::Sql::Schema::Driver driver(db);
-  QVERIFY(driver.isValid());
-  /*
-   * Initial state
-   */
-  QCOMPARE(model.rowCount(), 0);
-  /*
-   * Populate
-   */
-  model.setDriver(driver);
-  QVERIFY(model.rowCount() > 0);
-  index = model.index(0, 0);
-  QCOMPARE(model.data(index), QVariant("BOOLEAN"));
-  /*
-   * Setup combobox
-   */
-  cb.setModel(&model);
   /*
    * Play
    */

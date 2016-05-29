@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "DriverSQLite.h"
+#include "FieldTypeName.h"
 #include <QStringBuilder>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -51,7 +52,7 @@ QString DriverSQLite::getFieldDefinition(const Field & field) const
   QString sql;
 
   // Field name and type
-  sql = escapeFieldName(field.name()) % QStringLiteral(" ") % fieldTypeName(field.type());
+  sql = escapeFieldName(field.name()) % QStringLiteral(" ") % FieldTypeName::nameFromType( field.type() );
   // Length
   if(field.length() > 0){
     sql += QStringLiteral("(") % QString::number(field.length()) % QStringLiteral(")");
@@ -89,7 +90,7 @@ QString DriverSQLite::getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey& 
   QString sql;
 
   // Field name and type
-  sql = escapeFieldName(pk.fieldName()) % QStringLiteral(" ") % fieldTypeName(pk.fieldType());
+  sql = escapeFieldName(pk.fieldName()) % QStringLiteral(" ") % FieldTypeName::nameFromType( pk.fieldType() );
   // Length
   if(pk.fieldLength() > 0){
     sql += QStringLiteral("(") % QString::number(pk.fieldLength()) % QStringLiteral(")");

@@ -37,10 +37,6 @@ class SchemaTest : public QObject
   void fieldTypeNameTest();
   void fiedTypeListModelTest();
 
-  void fieldTypeInfoTest();
-  void fieldTypeInfoListTest();
-  void fieldTypeInfoModelTest();
-
   void collationTest();
 
   void fieldTest();

@@ -55,53 +55,6 @@ void SchemaDriverTest::driverTypeMapTest()
   QVERIFY(Driver::typeFromDbmsType(QSqlDriver::SQLite) == DriverType::SQLite);
 }
 
-void SchemaDriverTest::fieldTypeNameSqliteTest()
-{
-  using Mdt::Sql::Schema::FieldType;
-
-  QSqlDatabase db = QSqlDatabase::database("SQLITE_1", false);
-  if(!db.isValid()){
-    QSKIP("SQLite driver not available");
-  }
-  Mdt::Sql::Schema::DriverSQLite driver(db);
-
-  QVERIFY(driver.fieldTypeName(FieldType::UnknownType).isEmpty());
-  QCOMPARE(driver.fieldTypeName(FieldType::Boolean), QString("BOOLEAN"));
-  QCOMPARE(driver.fieldTypeName(FieldType::Integer), QString("INTEGER"));
-  QCOMPARE(driver.fieldTypeName(FieldType::Float), QString("FLOAT"));
-  QCOMPARE(driver.fieldTypeName(FieldType::Double), QString("DOUBLE"));
-  QCOMPARE(driver.fieldTypeName(FieldType::Varchar), QString("VARCHAR"));
-  QCOMPARE(driver.fieldTypeName(FieldType::Date), QString("DATE"));
-  QCOMPARE(driver.fieldTypeName(FieldType::Time), QString("TIME"));
-  QCOMPARE(driver.fieldTypeName(FieldType::DateTime), QString("DATETIME"));
-}
-
-void SchemaDriverTest::fieldTypeInfoListSqliteTest()
-{
-  using Mdt::Sql::Schema::Driver;
-  using Mdt::Sql::Schema::FieldType;
-
-  QSqlDatabase db = QSqlDatabase::database("SQLITE_1", false);
-  if(!db.isValid()){
-    QSKIP("SQLite driver not available");
-  }
-  /*
-   * Create a SQLite driver
-   */
-  QVERIFY(db.isValid());
-  Driver driver(db);
-  QVERIFY(driver.isValid());
-  /*
-   * Check avaliable field types
-   */
-  auto list = driver.getAvailableFieldTypeInfoList();
-  QCOMPARE(list.size(), 8);
-  QVERIFY(list.at(0).type() == FieldType::Boolean);
-  QCOMPARE(list.at(0).name(), QString("BOOLEAN"));
-
-  QFAIL("Test not completely implemented yet");
-}
-
 void SchemaDriverTest::fieldTypeMapSqliteTest()
 {
   using Mdt::Sql::Schema::Driver;

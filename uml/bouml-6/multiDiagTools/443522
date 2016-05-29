@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 34
+  revision 35
   modified_by 2 "philippe"
   // class settings
   
@@ -297,7 +297,7 @@ ${inlines}
       end
 
       operation 4190082 "getAvailableFieldTypeInfoList"
-	public return_type class_ref 2831362 // FieldTypeInfoList
+	public explicit_return_type "FieldTypeInfoList"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -925,18 +925,6 @@ ${inlines}
 	
       end
 
-      operation 4216962 "fieldTypeName"
-	abstract cpp_virtual public return_type class_ref 161026 // QString
-	nparams 1
-	  param in name "ft" type class_ref 2774914 // FieldType
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
       operation 4217090 "fieldTypeFromName"
 	abstract cpp_virtual public return_type class_ref 2774914 // FieldType
 	nparams 1
@@ -950,7 +938,7 @@ ${inlines}
       end
 
       operation 4203906 "getAvailableFieldTypeInfoList"
-	abstract cpp_virtual public return_type class_ref 2831362 // FieldTypeInfoList
+	abstract cpp_virtual public explicit_return_type "FieldTypeInfoList"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1590,247 +1578,6 @@ ${inlines}
 	
 	
 	
-      end
-    end
-
-    classdiagram 2495106 "FieldTypeInfo"
-      classdiagramsettings member_max_width 0 end
-      size A4-Landscape
-    end
-
-    class 2775170 "FieldTypeInfo"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3145858 // <directional composition>
-	relation 3127554 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3145858 // <directional composition>
-	  b parent class_ref 2774914 // FieldType
-      end
-
-      attribute 2611330 "Type"
-	private type class_ref 2774914 // FieldType
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2611586 "Name"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 4122242 "FieldTypeInfo"
-	cpp_inline public explicit_return_type ""
-	nparams 0
-	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4122370 "isNull"
-	cpp_inline public explicit_return_type "bool"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
-    class 2831362 "FieldTypeInfoList"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3229058 // <directional composition>
-	relation 3210754 *-->
-	  a role_name "" multiplicity "*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 3229058 // <directional composition>
-	  b parent class_ref 2775170 // FieldTypeInfo
-      end
-    end
-
-    class 2811010 "FieldTypeInfoModel"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3208962 // <dependency>
-	relation 3190658 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3208962 // <dependency>
-	  b parent class_ref 2775426 // Driver
-      end
-
-      attribute 2661506 "InfoList"
-	private type class_ref 2831362 // FieldTypeInfoList
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 4182914 "FieldTypeInfoModel"
-	public explicit_return_type ""
-	nparams 2
-	  param in name "driver" type class_ref 2775426 // Driver
-	  param in name "parent" type class_ref 138626 // QObject
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4183042 "fieldType"
-	public return_type class_ref 2774914 // FieldType
-	nparams 1
-	  param in name "row" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4183298 "rowCount"
-	cpp_virtual public explicit_return_type "int"
-	nparams 1
-	  param in name "parent" type class_ref 147330 // QModelIndex
-	    defaultvalue "QModelIndex()"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4183426 "headerData"
-	public return_type class_ref 161154 // QVariant
-	nparams 3
-	  param in name "section" explicit_type "int"
-	  param in name "orientation" explicit_type "int"
-	  param in name "role" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4183554 "data"
-	public return_type class_ref 161154 // QVariant
-	nparams 2
-	  param in name "index" type class_ref 147330 // QModelIndex
-	  param in name "role" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 3215618 // <generalisation>
-	relation 3197314 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3215618 // <generalisation>
-	  b parent class_ref 147074 // QAbstractListModel
-      end
-
-      classrelation 3229186 // <directional composition>
-	relation 3210882 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3229186 // <directional composition>
-	  b parent class_ref 2831362 // FieldTypeInfoList
       end
     end
 

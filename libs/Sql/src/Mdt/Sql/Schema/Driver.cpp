@@ -69,12 +69,6 @@ FieldTypeList Driver::getAvailableFieldTypeList() const
   return pvImpl->getAvailableFieldTypeList();
 }
 
-FieldTypeInfoList Driver::getAvailableFieldTypeInfoList() const
-{
-  Q_ASSERT(isValid());
-  ///return pvImpl->getAvailableFieldTypeInfoList();
-}
-
 FieldType Driver::fieldTypeFromQMetaType(QMetaType::Type qmt) const
 {
   Q_ASSERT(isValid());

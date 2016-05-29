@@ -64,10 +64,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     virtual DriverType type() const = 0;
 
-    /*! \brief Get field type name
-     */
-    virtual QString fieldTypeName(FieldType ft) const;
-
     /*! \brief Get a list of avaliable field type
      *
      * Default implementation returns all type defined in FieldType

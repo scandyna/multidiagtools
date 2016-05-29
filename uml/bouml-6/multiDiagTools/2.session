@@ -29,27 +29,17 @@ diagrams
     120 110 100 18 0 0
   classdiagram_ref 2461698 // Table
     120 110 100 18 0 0
-  classdiagram_ref 2481666 // DriverImplementation
-    949 894 100 21 84 0
-  classdiagram_ref 2461186 // Field
-    120 110 100 18 0 0
-  classdiagram_ref 2461058 // FieldType
-    120 110 100 7 0 0
-  active  classdiagram_ref 2541058 // FieldTypeName
-    957 902 100 18 0 0
+  active  classdiagram_ref 2481666 // DriverImplementation
+    957 902 100 21 24 0
 end
 show_stereotypes
-selected 
-  package_ref 523010 // Table
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   
   package_ref 516226 // SqlItemModel
-  classview_ref 1320578 // Driver
-  operation_ref 4265858 // setFieldTypeList
-  class_ref 2811010 // FieldTypeInfoModel
+  classview_ref 1164418 // Field
   classview_ref 1320706 // Table
   class_ref 2845442 // Schema
   
