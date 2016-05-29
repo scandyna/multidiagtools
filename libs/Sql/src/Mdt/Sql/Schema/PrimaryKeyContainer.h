@@ -34,13 +34,46 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *  several primary key types exsits.
    *
    * To store this varaints of primary key in a unified way,
-   *  for exaple in a Table, this container class helps.
+   *  for example in a Table, this container class helps.
    */
   class PrimaryKeyContainer
   {
    public:
 
-    
+    /*! \brief Set primary key
+     */
+    void setPrimaryKey(const AutoIncrementPrimaryKey & pk)
+    {
+      pvPrimaryKey = pk;
+    }
+
+    /*! \brief Set primary key
+     */
+    void setPrimaryKey(const SingleFieldPrimaryKey & pk)
+    {
+      pvPrimaryKey = pk;
+    }
+
+    /*! \brief Set primary key
+     */
+    void setPrimaryKey(const PrimaryKey & pk)
+    {
+      pvPrimaryKey = pk;
+    }
+
+    /*! \brief Get field name
+     *
+     * If primary key is of type
+     *  AutoIncrementPrimaryKey or SingleFieldPrimaryKey,
+     *  its field name is returned,
+     *  else a empty string is returned.
+     */
+    QString fieldName() const;
+
+    PrimaryKey getPk() const
+    {
+      return boost::get<PrimaryKey>(pvPrimaryKey);
+    }
 
    private:
 

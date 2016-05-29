@@ -13,6 +13,8 @@ set(SOURCES_FILES
     src/Mdt/Sql/Schema/DriverMySql.cpp
     src/Mdt/Sql/Schema/FieldTypeName.cpp
     src/Mdt/Sql/Schema/FieldTypeListModel.cpp
+    src/Mdt/Sql/Schema/PrimaryKeyContainer.cpp
+    src/Mdt/Sql/Schema/TableModel.cpp
 )
 
 # Headers directories

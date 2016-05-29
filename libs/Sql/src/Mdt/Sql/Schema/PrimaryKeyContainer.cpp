@@ -18,38 +18,35 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_TEST_H
-#define MDT_SQL_SCHEMA_TEST_H
+#include "PrimaryKeyContainer.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace Sql{ namespace Schema{
 
-class SchemaTest : public QObject
+class FieldNameVisitor : public boost::static_visitor<>
 {
- Q_OBJECT
+ public:
 
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void fieldTypeListTest();
-  void fieldTypeNameTest();
-  void fiedTypeListModelTest();
-
-  void collationTest();
-
-  void fieldTest();
-  void fieldListTest();
-
-  void autoIncrementPrimaryKeyTest();
-  void singleFieldPrimaryKeyTest();
-  void primaryKeyTest();
-  void primaryKeyContainerTest();
-
-  void tablePrimaryKeyTest();
-  void tableTest();
-  void tableModelTest();
+  void operator()(const AutoIncrementPrimaryKey & pk)
+  {
+    fieldName = pk.fieldName();
+  }
+  void operator()(const SingleFieldPrimaryKey & pk)
+  {
+    fieldName = pk.fieldName();
+  }
+  void operator()(const PrimaryKey &)
+  {
+  }
+  QString fieldName;
 };
 
-#endif // #ifndef MDT_SQL_SCHEMA_TEST_H
+QString PrimaryKeyContainer::fieldName() const
+{
+  FieldNameVisitor visitor;
+
+  boost::apply_visitor(visitor, pvPrimaryKey);
+
+  return visitor.fieldName;
+}
+
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{

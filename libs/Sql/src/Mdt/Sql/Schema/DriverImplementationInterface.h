@@ -71,10 +71,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     virtual FieldTypeList getAvailableFieldTypeList() const;
 
     /*! \brief Get SQL field type from QMetaType::Type
+     *
+     * Can be overloaded if default implementation does not match
      */
     virtual FieldType fieldTypeFromQMetaType(QMetaType::Type qmt) const;
 
     /*! \brief Get QMetaType::Type from SQL field type
+     *
+     * Can be overloaded if default implementation does not match
      */
     virtual QMetaType::Type fieldTypeToQMetaType(FieldType ft) const;
 

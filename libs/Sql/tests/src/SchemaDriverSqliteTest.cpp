@@ -64,6 +64,7 @@ void SchemaDriverSqliteTest::availableFieldTypeTest()
   using Mdt::Sql::Schema::FieldType;
 
   Mdt::Sql::Schema::Driver driver(pvDatabase);
+  QVERIFY(driver.isValid());
   auto list = driver.getAvailableFieldTypeList();
 
   QCOMPARE(list.size(), 8);
@@ -75,6 +76,39 @@ void SchemaDriverSqliteTest::availableFieldTypeTest()
   QVERIFY(list.at(5) == FieldType::Date);
   QVERIFY(list.at(6) == FieldType::Time);
   QVERIFY(list.at(7) == FieldType::DateTime);
+}
+
+void SchemaDriverSqliteTest::fieldTypeMapTest()
+{
+  using Mdt::Sql::Schema::FieldType;
+
+  Mdt::Sql::Schema::Driver driver(pvDatabase);
+  QVERIFY(driver.isValid());
+
+  /*
+   * Check FieldType <-> QMetaType mapping
+   */
+  // QMetaType -> FieldType
+  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::UnknownType) == FieldType::UnknownType);
+  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QPolygon) == FieldType::UnknownType);
+  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Int) == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Bool) == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Double) == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Float) == FieldType::Float);
+  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QDate) == FieldType::Date);
+  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QTime) == FieldType::Time);
+  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QDateTime) == FieldType::DateTime);
+  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QString) == FieldType::Varchar);
+  // FieldType -> QMetaType
+  QVERIFY(driver.fieldTypeToQMetaType(FieldType::UnknownType) == QMetaType::UnknownType);
+  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Boolean) == QMetaType::Bool);
+  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Integer) == QMetaType::Int);
+  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Float) == QMetaType::Float);
+  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Double) == QMetaType::Double);
+  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Varchar) == QMetaType::QString);
+  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Date) == QMetaType::QDate);
+  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Time) == QMetaType::QTime);
+  QVERIFY(driver.fieldTypeToQMetaType(FieldType::DateTime) == QMetaType::QDateTime);
 }
 
 void SchemaDriverSqliteTest::collationDefinitionTest()

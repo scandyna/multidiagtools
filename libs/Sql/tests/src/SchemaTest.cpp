@@ -25,12 +25,17 @@
 #include "Mdt/Sql/Schema/FieldTypeName.h"
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/Schema/Field.h"
+#include "Mdt/Sql/Schema/FieldList.h"
 #include "Mdt/Sql/Schema/AutoIncrementPrimaryKey.h"
 #include "Mdt/Sql/Schema/SingleFieldPrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKeyContainer.h"
+#include "Mdt/Sql/Schema/Table.h"
+#include "Mdt/Sql/Schema/TableModel.h"
 #include <QSqlDatabase>
 #include <QComboBox>
+#include <QTableView>
+#include <QTreeView>
 
 void SchemaTest::initTestCase()
 {
@@ -269,6 +274,48 @@ void SchemaTest::fieldTest()
   QVERIFY(field.isNull());
 }
 
+void SchemaTest::fieldListTest()
+{
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::FieldList;
+
+  Field field;
+  FieldList list;
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(list.size(), 0);
+  /*
+   * Add one element
+   */
+  field.setName("Afield");
+  list.append(field);
+  QCOMPARE(list.size(), 1);
+  QCOMPARE(list.at(0).name(), QString("Afield"));
+  for(const auto & f : list){
+    QCOMPARE(f.name(), QString("Afield"));
+  }
+  /*
+   * Check index and contains methods.
+   * Note: we use case insensitive search
+   */
+  QCOMPARE(list.fieldIndex("Afield"), 0);
+  QCOMPARE(list.fieldIndex("AFIeld"), 0);
+  QCOMPARE(list.fieldIndex(""), -1);
+  QCOMPARE(list.fieldIndex("AAA"), -1);
+  QVERIFY(list.contains("Afield"));
+  QVERIFY(list.contains("AFIeld"));
+  QVERIFY(!list.contains(""));
+  QVERIFY(!list.contains("AAA"));
+  /*
+   * Clear
+   */
+  list.clear();
+  QCOMPARE(list.size(), 0);
+}
+
 void SchemaTest::autoIncrementPrimaryKeyTest()
 {
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
@@ -383,13 +430,310 @@ void SchemaTest::primaryKeyTest()
 
 void SchemaTest::primaryKeyContainerTest()
 {
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::FieldType;
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
   using Mdt::Sql::Schema::SingleFieldPrimaryKey;
   using Mdt::Sql::Schema::PrimaryKey;
   using Mdt::Sql::Schema::PrimaryKeyContainer;
 
-  /// sandbox
-  PrimaryKeyContainer pkc;
+  /*
+   * Setup fields
+   */
+  // Id_A
+  Field Id_A;
+  Id_A.setName("Id_A");
+  Id_A.setType(FieldType::Integer);
+  // Id_B
+  Field Id_B;
+  Id_B.setName("Id_B");
+  Id_B.setType(FieldType::Integer);
+  // Name
+  Field Name;
+  Name.setName("Name");
+  Name.setType(FieldType::Varchar);
+  Name.setLength(100);
+  /*
+   * Setup primary keys
+   */
+  // Id_PK
+  AutoIncrementPrimaryKey Id_PK;
+  Id_PK.setFieldName("Id_PK");
+  // Code_PK
+  SingleFieldPrimaryKey Code_PK;
+  Code_PK.setFieldName("Code_PK");
+  Code_PK.setFieldType(FieldType::Varchar);
+  Code_PK.setFieldLength(50);
+  // Primary key of Id_A and Id_B
+  PrimaryKey Id_A_Id_B_PK;
+  Id_A_Id_B_PK.addField(Id_A);
+  Id_A_Id_B_PK.addField(Id_B);
+
+  /*
+   * Initial state
+   */
+  PrimaryKeyContainer container;
+  QVERIFY(container.fieldName().isEmpty());
+  /*
+   * AutoIncrementPrimaryKey
+   */
+  container.setPrimaryKey(Id_PK);
+  QCOMPARE(container.fieldName(), QString("Id_PK"));
+  /*
+   * SingleFieldPrimaryKey
+   */
+  container.setPrimaryKey(Code_PK);
+  QCOMPARE(container.fieldName(), QString("Code_PK"));
+  /*
+   * PrimaryKey
+   */
+  container.setPrimaryKey(Id_A_Id_B_PK);
+  QVERIFY(container.fieldName().isEmpty());
+  
+}
+
+void SchemaTest::tablePrimaryKeyTest()
+{
+  using Mdt::Sql::Schema::Table;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
+  using Mdt::Sql::Schema::PrimaryKey;
+
+
+  /*
+   * Setup fields
+   */
+  // Id_A
+  Field Id_A;
+  Id_A.setName("Id_A");
+  Id_A.setType(FieldType::Integer);
+  // Id_B
+  Field Id_B;
+  Id_B.setName("Id_B");
+  Id_B.setType(FieldType::Integer);
+  // Name
+  Field Name;
+  Name.setName("Name");
+  Name.setType(FieldType::Varchar);
+  Name.setLength(100);
+  /*
+   * Setup primary keys
+   */
+  // Id_PK
+  AutoIncrementPrimaryKey Id_PK;
+  Id_PK.setFieldName("Id_PK");
+  // Code_PK
+  SingleFieldPrimaryKey Code_PK;
+  Code_PK.setFieldName("Code_PK");
+  Code_PK.setFieldType(FieldType::Varchar);
+  Code_PK.setFieldLength(50);
+  // Primary key of Id_A and Id_B
+  PrimaryKey Id_A_Id_B_PK;
+  Id_A_Id_B_PK.addField(Id_A);
+  Id_A_Id_B_PK.addField(Id_B);
+  /*
+   * Init table
+   */
+  Table table;
+  QCOMPARE(table.fieldCount(), 0);
+  /*
+   * Add auto increment PK at first
+   */
+  // Add Id_PK
+  table.setPrimaryKey(Id_PK);
+  QCOMPARE(table.fieldCount(), 1);
+  // Add Name
+  table.addField(Name);
+  QCOMPARE(table.fieldCount(), 2);
+  // Check - Note: PK with field definition allways appear as first field in table
+  QCOMPARE(table.fieldCount(), 2);
+  QCOMPARE(table.fieldName(0), QString("Id_PK"));
+  QCOMPARE(table.fieldName(1), QString("Name"));
+  QCOMPARE(table.fieldIndex("Id_PK"), 0);
+  QCOMPARE(table.fieldIndex("ID_PK"), 0);
+  QCOMPARE(table.fieldIndex("Name"), 1);
+  QCOMPARE(table.fieldIndex("NONE"), -1);
+  QCOMPARE(table.fieldIndex(""), -1);
+  QVERIFY(table.contains("Id_PK"));
+  QVERIFY(table.contains("ID_PK"));
+  QVERIFY(table.contains("Name"));
+  QVERIFY(!table.contains(""));
+  /*
+   * Add auto increment PK after a other field
+   */
+  table.clear();
+  QCOMPARE(table.fieldCount(), 0);
+  // Add Name
+  table.addField(Name);
+  QCOMPARE(table.fieldCount(), 1);
+  // Add Id_PK
+  table.setPrimaryKey(Id_PK);
+  QCOMPARE(table.fieldCount(), 2);
+  // Check - Note: PK with field definition allways appear as first field in table
+  QCOMPARE(table.fieldCount(), 2);
+  QCOMPARE(table.fieldName(0), QString("Id_PK"));
+  QCOMPARE(table.fieldName(1), QString("Name"));
+  QCOMPARE(table.fieldIndex("Id_PK"), 0);
+  QCOMPARE(table.fieldIndex("ID_PK"), 0);
+  QCOMPARE(table.fieldIndex("Name"), 1);
+  QCOMPARE(table.fieldIndex("NONE"), -1);
+  QCOMPARE(table.fieldIndex(""), -1);
+  QVERIFY(table.contains("Id_PK"));
+  QVERIFY(table.contains("ID_PK"));
+  QVERIFY(table.contains("Name"));
+  QVERIFY(!table.contains(""));
+  /*
+   * Add single field PK at first
+   */
+  table.clear();
+  QCOMPARE(table.fieldCount(), 0);
+  // Add Code_PK
+  table.setPrimaryKey(Code_PK);
+  QCOMPARE(table.fieldCount(), 1);
+  // Add Name
+  table.addField(Name);
+  QCOMPARE(table.fieldCount(), 2);
+  // Check - Note: PK with field definition allways appear as first field in table
+  QCOMPARE(table.fieldCount(), 2);
+  QCOMPARE(table.fieldName(0), QString("Code_PK"));
+  QCOMPARE(table.fieldName(1), QString("Name"));
+  QCOMPARE(table.fieldIndex("Code_PK"), 0);
+  QCOMPARE(table.fieldIndex("Code_pk"), 0);
+  QCOMPARE(table.fieldIndex("Name"), 1);
+  QCOMPARE(table.fieldIndex("NONE"), -1);
+  QCOMPARE(table.fieldIndex(""), -1);
+  QVERIFY(table.contains("Code_PK"));
+  QVERIFY(table.contains("Code_pk"));
+  QVERIFY(table.contains("Name"));
+  QVERIFY(!table.contains(""));
+  /*
+   * Add single field PK after a other field
+   */
+  table.clear();
+  QCOMPARE(table.fieldCount(), 0);
+  // Add Name
+  table.addField(Name);
+  QCOMPARE(table.fieldCount(), 1);
+  // Add Code_PK
+  table.setPrimaryKey(Code_PK);
+  QCOMPARE(table.fieldCount(), 2);
+  // Check - Note: PK with field definition allways appear as first field in table
+  QCOMPARE(table.fieldCount(), 2);
+  QCOMPARE(table.fieldName(0), QString("Code_PK"));
+  QCOMPARE(table.fieldName(1), QString("Name"));
+  QCOMPARE(table.fieldIndex("Code_PK"), 0);
+  QCOMPARE(table.fieldIndex("Code_pk"), 0);
+  QCOMPARE(table.fieldIndex("Name"), 1);
+  QCOMPARE(table.fieldIndex("NONE"), -1);
+  QCOMPARE(table.fieldIndex(""), -1);
+  QVERIFY(table.contains("Code_PK"));
+  QVERIFY(table.contains("Code_pk"));
+  QVERIFY(table.contains("Name"));
+  QVERIFY(!table.contains(""));
+  /*
+   * Add primary key (must be added when fields are added)
+   */
+  table.clear();
+  QCOMPARE(table.fieldCount(), 0);
+  // Add Id_A
+  table.addField(Id_A);
+  QCOMPARE(table.fieldCount(), 1);
+  // Add Id_B
+  table.addField(Id_B);
+  QCOMPARE(table.fieldCount(), 2);
+  // Add Name
+  table.addField(Name);
+  QCOMPARE(table.fieldCount(), 3);
+  // Add primary key
+  table.setPrimaryKey(Id_A_Id_B_PK);
+  // Check
+  QCOMPARE(table.fieldCount(), 3);
+  QCOMPARE(table.fieldName(0), QString("Id_A"));
+  QCOMPARE(table.fieldName(1), QString("Id_B"));
+  QCOMPARE(table.fieldName(2), QString("Name"));
+  QCOMPARE(table.fieldIndex("Id_A"), 0);
+  QCOMPARE(table.fieldIndex("ID_A"), 0);
+  QCOMPARE(table.fieldIndex("Id_B"), 1);
+  QCOMPARE(table.fieldIndex("Name"), 2);
+  QVERIFY(table.contains("Id_A"));
+  QVERIFY(table.contains("Id_B"));
+  QVERIFY(table.contains("Name"));
+  QVERIFY(!table.contains(""));
+}
+
+void SchemaTest::tableTest()
+{
+  using Mdt::Sql::Schema::Table;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
+  using Mdt::Sql::Schema::PrimaryKey;
+
+  /*
+   * Initial state
+   */
+  Table table;
+  QVERIFY(!table.isTemporary());
+  QCOMPARE(table.fieldCount(), 0);
+  QVERIFY(table.isNull());
+  /*
+   * Setup a simple table
+   */
+  table.setTableName("Client_tbl");
+  QVERIFY(!table.isNull());
+  /*
+   * Clear
+   */
+  table.clear();
+  QVERIFY(!table.isTemporary());
+  QVERIFY(table.tableName().isEmpty());
+  QCOMPARE(table.fieldCount(), 0);
+  QVERIFY(table.isNull());
+}
+
+void SchemaTest::tableModelTest()
+{
+  using Mdt::Sql::Schema::Table;
+  using Mdt::Sql::Schema::TableModel;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
+  using Mdt::Sql::Schema::PrimaryKey;
+
+  /*
+   * Initial state
+   */
+  TableModel model;
+  QCOMPARE(model.rowCount(), 0);
+  /*
+   * Setup views
+   */
+  QTableView tableView;
+  tableView.setModel(&model);
+  tableView.resize(400, 200);
+  QTreeView treeView;
+  treeView.setModel(&model);
+  treeView.resize(400, 200);
+  QComboBox comboBox;
+  comboBox.setModel(&model);
+  comboBox.setModelColumn(TableModel::FieldNameColumn);
+  /*
+   * Setup a table
+   */
+  
+  /*
+   * Play
+   */
+  tableView.show();
+  treeView.show();
+  comboBox.show();
+  while(tableView.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 /*

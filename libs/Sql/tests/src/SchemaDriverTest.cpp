@@ -29,13 +29,13 @@
 void SchemaDriverTest::initTestCase()
 {
   QSqlDatabase::addDatabase("QSQLITE", "SQLITE_1");
-  QSqlDatabase::addDatabase("QMYSQL", "MYSQL_1");
+//   QSqlDatabase::addDatabase("QMYSQL", "MYSQL_1");
 }
 
 void SchemaDriverTest::cleanupTestCase()
 {
   QSqlDatabase::removeDatabase("SQLITE_1");
-  QSqlDatabase::removeDatabase("MYSQL_1");
+//   QSqlDatabase::removeDatabase("MYSQL_1");
 }
 
 /*
@@ -53,47 +53,6 @@ void SchemaDriverTest::driverTypeMapTest()
   QVERIFY(Driver::typeFromDbmsType(QSqlDriver::UnknownDbms) == DriverType::Unknown);
   QVERIFY(Driver::typeFromDbmsType(QSqlDriver::MySqlServer) == DriverType::MySQL);
   QVERIFY(Driver::typeFromDbmsType(QSqlDriver::SQLite) == DriverType::SQLite);
-}
-
-void SchemaDriverTest::fieldTypeMapSqliteTest()
-{
-  using Mdt::Sql::Schema::Driver;
-  using Mdt::Sql::Schema::FieldType;
-
-  QSqlDatabase db = QSqlDatabase::database("SQLITE_1", false);
-  if(!db.isValid()){
-    QSKIP("SQLite driver not available");
-  }
-  /*
-   * Create a SQLite driver
-   */
-  QVERIFY(db.isValid());
-  Driver driver(db);
-  QVERIFY(driver.isValid());
-  /*
-   * Check FieldType <-> QMetaType mapping
-   */
-  // QMetaType -> FieldType
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::UnknownType) == FieldType::UnknownType);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QPolygon) == FieldType::UnknownType);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Int) == FieldType::Integer);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Bool) == FieldType::Boolean);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Double) == FieldType::Double);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::Float) == FieldType::Float);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QDate) == FieldType::Date);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QTime) == FieldType::Time);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QDateTime) == FieldType::DateTime);
-  QVERIFY(driver.fieldTypeFromQMetaType(QMetaType::QString) == FieldType::Varchar);
-  // FieldType -> QMetaType
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::UnknownType) == QMetaType::UnknownType);
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Boolean) == QMetaType::Bool);
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Integer) == QMetaType::Int);
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Float) == QMetaType::Float);
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Double) == QMetaType::Double);
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Varchar) == QMetaType::QString);
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Date) == QMetaType::QDate);
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::Time) == QMetaType::QTime);
-  QVERIFY(driver.fieldTypeToQMetaType(FieldType::DateTime) == QMetaType::QDateTime);
 }
 
 /*

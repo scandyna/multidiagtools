@@ -34,8 +34,7 @@ class SchemaDriverTest : public QObject
   void cleanupTestCase();
 
   void driverTypeMapTest();
-
-  void fieldTypeMapSqliteTest();
+;
 
 };
 

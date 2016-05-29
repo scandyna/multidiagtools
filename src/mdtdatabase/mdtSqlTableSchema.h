@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_TABLE_H
-#define MDT_SQL_SCHEMA_TABLE_H
+#ifndef MDT_SQL_TABLE_SCHEMA_H
+#define MDT_SQL_TABLE_SCHEMA_H
 
 #include "mdtError.h"
 #include "mdtSqlDriverType.h"
@@ -441,4 +441,4 @@ class mdtSqlTableSchema
   mutable mdtError pvLastError;
 };
 
-#endif // #ifndef MDT_SQL_SCHEMA_TABLE_H
+#endif // #ifndef MDT_SQL_TABLE_SCHEMA_H
