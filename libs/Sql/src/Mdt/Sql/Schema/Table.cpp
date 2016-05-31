@@ -60,19 +60,46 @@ QString Table::fieldName(int index) const
   Q_ASSERT(index < fieldCount());
 
   /*
-    * If primary key has a field definition
-    * (a AutoIncrementPrimaryKey or a SingleFieldPrimaryKey),
-    * we allways represent it as first field in table.
-    */
-  if(pvPrimaryKeyFieldIndex == 0){
-    if(index == 0){
-      return pvPrimaryKey.fieldName();
-    }else{
-      return pvFieldList.at(index - 1).name();
-    }
-  }else{
-    return pvFieldList.at(index).name();
+   * If primary key has a field definition
+   * (a AutoIncrementPrimaryKey or a SingleFieldPrimaryKey),
+   * we allways represent it as first field in table.
+   */
+  if(index == pvPrimaryKeyFieldIndex){
+    return pvPrimaryKey.fieldName();
   }
+  return refFieldConst(index).name();
+
+//   if(pvPrimaryKeyFieldIndex == 0){
+//     if(index == 0){
+//       return pvPrimaryKey.fieldName();
+//     }else{
+//       return pvFieldList.at(index - 1).name();
+//     }
+//   }else{
+//     return pvFieldList.at(index).name();
+//   }
+}
+
+FieldType Table::fieldType(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < fieldCount());
+
+  if(index == pvPrimaryKeyFieldIndex){
+    return pvPrimaryKey.fieldType();
+  }
+  return refFieldConst(index).type();
+}
+
+int Table::fieldLength(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < fieldCount());
+
+  if(index == pvPrimaryKeyFieldIndex){
+    return pvPrimaryKey.fieldLength();
+  }
+  return refFieldConst(index).length();
 }
 
 bool Table::isFieldPartOfPrimaryKey(int index) const
@@ -81,12 +108,12 @@ bool Table::isFieldPartOfPrimaryKey(int index) const
   Q_ASSERT(index < fieldCount());
 
   /*
-    * If primary key has a field definition
-    * (a AutoIncrementPrimaryKey or a SingleFieldPrimaryKey),
-    * we allways represent it as first field in table.
-    * Else, (for multi column PrimaryKey),
-    * we check if index exists in pvPrimaryKeyFieldIndexList.
-    */
+   * If primary key has a field definition
+   * (a AutoIncrementPrimaryKey or a SingleFieldPrimaryKey),
+   * we allways represent it as first field in table.
+   * Else, (for multi column PrimaryKey),
+   * we check if index exists in pvPrimaryKeyFieldIndexList.
+   */
   if(index == pvPrimaryKeyFieldIndex){
     return true;
   }
@@ -96,12 +123,32 @@ bool Table::isFieldPartOfPrimaryKey(int index) const
   return (std::find(pvPrimaryKeyFieldIndexList.cbegin(), pvPrimaryKeyFieldIndexList.cend(), index) != pvPrimaryKeyFieldIndexList.cend());
 }
 
+bool Table::isNull() const
+{
+  return ( pvTableName.isEmpty() || (fieldCount() < 1) );
+}
+
 void Table::clear()
 {
   pvPrimaryKeyFieldIndex = -1;
   pvIsTemporary = false;
   pvTableName.clear();
   pvFieldList.clear();
+}
+
+const Field & Table::refFieldConst(int index) const
+{
+  /*
+   * If primary key has a field definition
+   * (a AutoIncrementPrimaryKey or a SingleFieldPrimaryKey),
+   * we allways represent it as first field in table.
+   */
+  if(pvPrimaryKeyFieldIndex == 0){
+    Q_ASSERT(index > 0);
+    return pvFieldList.at(index - 1);
+  }else{
+    return pvFieldList.at(index);
+  }
 }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

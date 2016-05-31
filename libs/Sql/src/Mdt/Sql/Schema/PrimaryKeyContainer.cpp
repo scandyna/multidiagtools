@@ -40,6 +40,48 @@ class FieldNameVisitor : public boost::static_visitor<>
   QString fieldName;
 };
 
+class FieldTypeVisitor : public boost::static_visitor<>
+{
+ public:
+
+  void operator()(const AutoIncrementPrimaryKey & pk)
+  {
+    fieldType = pk.fieldType();
+  }
+  void operator()(const SingleFieldPrimaryKey & pk)
+  {
+    fieldType = pk.fieldType();
+  }
+  void operator()(const PrimaryKey &)
+  {
+    fieldType = FieldType::UnknownType;
+  }
+  FieldType fieldType;
+};
+
+class FieldLengthVisitor : public boost::static_visitor<>
+{
+ public:
+
+  void operator()(const AutoIncrementPrimaryKey &)
+  {
+    fieldLength = -1;
+  }
+  void operator()(const SingleFieldPrimaryKey & pk)
+  {
+    fieldLength = pk.fieldLength();
+  }
+  void operator()(const PrimaryKey &)
+  {
+    fieldLength = -1;
+  }
+  int fieldLength;
+};
+
+/*
+ * PrimaryKeyContainer implementation
+ */
+
 QString PrimaryKeyContainer::fieldName() const
 {
   FieldNameVisitor visitor;
@@ -47,6 +89,24 @@ QString PrimaryKeyContainer::fieldName() const
   boost::apply_visitor(visitor, pvPrimaryKey);
 
   return visitor.fieldName;
+}
+
+FieldType PrimaryKeyContainer::fieldType() const
+{
+  FieldTypeVisitor visitor;
+
+  boost::apply_visitor(visitor, pvPrimaryKey);
+
+  return visitor.fieldType;
+}
+
+int PrimaryKeyContainer::fieldLength() const
+{
+  FieldLengthVisitor visitor;
+
+  boost::apply_visitor(visitor, pvPrimaryKey);
+
+  return visitor.fieldLength;
 }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

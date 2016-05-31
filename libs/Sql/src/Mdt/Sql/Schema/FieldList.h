@@ -50,6 +50,13 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return pvFieldList.size();
     }
 
+    /*! \brief Check if field list is empty
+     */
+    bool isEmpty() const
+    {
+      return pvFieldList.isEmpty();
+    }
+
     /*! \brief Get field at given index
      *
      * \pre index must be valid

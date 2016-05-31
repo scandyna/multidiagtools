@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_SCHEMA_AUTO_INCREMENT_PRIMARY_KEY_H
 #define MDT_SQL_SCHEMA_AUTO_INCREMENT_PRIMARY_KEY_H
 
+#include "FieldType.h"
 #include <QString>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -43,6 +44,13 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     QString fieldName() const
     {
       return pvFieldName;
+    }
+
+    /*! \brief Get field type
+     */
+    FieldType fieldType() const
+    {
+      return FieldType::Integer;
     }
 
     /*! \brief Check if primary key is null

@@ -287,12 +287,14 @@ void SchemaTest::fieldListTest()
    * Initial state
    */
   QCOMPARE(list.size(), 0);
+  QVERIFY(list.isEmpty());
   /*
    * Add one element
    */
   field.setName("Afield");
   list.append(field);
   QCOMPARE(list.size(), 1);
+  QVERIFY(!list.isEmpty());
   QCOMPARE(list.at(0).name(), QString("Afield"));
   for(const auto & f : list){
     QCOMPARE(f.name(), QString("Afield"));
@@ -314,11 +316,13 @@ void SchemaTest::fieldListTest()
    */
   list.clear();
   QCOMPARE(list.size(), 0);
+  QVERIFY(list.isEmpty());
 }
 
 void SchemaTest::autoIncrementPrimaryKeyTest()
 {
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::FieldType;
 
   AutoIncrementPrimaryKey pk;
 
@@ -331,6 +335,7 @@ void SchemaTest::autoIncrementPrimaryKeyTest()
    */
   pk.setFieldName("Id_PK");
   QCOMPARE(pk.fieldName(), QString("Id_PK"));
+  QVERIFY(pk.fieldType() == FieldType::Integer);
   QVERIFY(!pk.isNull());
   /*
    * Clear
@@ -474,22 +479,29 @@ void SchemaTest::primaryKeyContainerTest()
    */
   PrimaryKeyContainer container;
   QVERIFY(container.fieldName().isEmpty());
+  QVERIFY(container.fieldType() == FieldType::UnknownType);
+  QCOMPARE(container.fieldLength(), -1);
   /*
    * AutoIncrementPrimaryKey
    */
   container.setPrimaryKey(Id_PK);
   QCOMPARE(container.fieldName(), QString("Id_PK"));
+  QVERIFY(container.fieldType() == FieldType::Integer);
+  QCOMPARE(container.fieldLength(), -1);
   /*
    * SingleFieldPrimaryKey
    */
   container.setPrimaryKey(Code_PK);
   QCOMPARE(container.fieldName(), QString("Code_PK"));
+  QVERIFY(container.fieldType() == FieldType::Varchar);
+  QCOMPARE(container.fieldLength(), 50);
   /*
    * PrimaryKey
    */
   container.setPrimaryKey(Id_A_Id_B_PK);
   QVERIFY(container.fieldName().isEmpty());
-  
+  QVERIFY(container.fieldType() == FieldType::UnknownType);
+  QCOMPARE(container.fieldLength(), -1);
 }
 
 void SchemaTest::tablePrimaryKeyTest()
@@ -552,6 +564,10 @@ void SchemaTest::tablePrimaryKeyTest()
   QCOMPARE(table.fieldName(1), QString("Name"));
   QVERIFY(table.isFieldPartOfPrimaryKey(0));
   QVERIFY(!table.isFieldPartOfPrimaryKey(1));
+  QVERIFY(table.fieldType(0) == FieldType::Integer);
+  QVERIFY(table.fieldType(1) == FieldType::Varchar);
+  QCOMPARE(table.fieldLength(0), -1);
+  QCOMPARE(table.fieldLength(1), 100);
   QCOMPARE(table.fieldIndex("Id_PK"), 0);
   QCOMPARE(table.fieldIndex("ID_PK"), 0);
   QCOMPARE(table.fieldIndex("Name"), 1);
@@ -578,6 +594,10 @@ void SchemaTest::tablePrimaryKeyTest()
   QCOMPARE(table.fieldName(1), QString("Name"));
   QVERIFY(table.isFieldPartOfPrimaryKey(0));
   QVERIFY(!table.isFieldPartOfPrimaryKey(1));
+  QVERIFY(table.fieldType(0) == FieldType::Integer);
+  QVERIFY(table.fieldType(1) == FieldType::Varchar);
+  QCOMPARE(table.fieldLength(0), -1);
+  QCOMPARE(table.fieldLength(1), 100);
   QCOMPARE(table.fieldIndex("Id_PK"), 0);
   QCOMPARE(table.fieldIndex("ID_PK"), 0);
   QCOMPARE(table.fieldIndex("Name"), 1);
@@ -604,6 +624,10 @@ void SchemaTest::tablePrimaryKeyTest()
   QCOMPARE(table.fieldName(1), QString("Name"));
   QVERIFY(table.isFieldPartOfPrimaryKey(0));
   QVERIFY(!table.isFieldPartOfPrimaryKey(1));
+  QVERIFY(table.fieldType(0) == FieldType::Varchar);
+  QVERIFY(table.fieldType(1) == FieldType::Varchar);
+  QCOMPARE(table.fieldLength(0), 50);
+  QCOMPARE(table.fieldLength(1), 100);
   QCOMPARE(table.fieldIndex("Code_PK"), 0);
   QCOMPARE(table.fieldIndex("Code_pk"), 0);
   QCOMPARE(table.fieldIndex("Name"), 1);
@@ -630,6 +654,10 @@ void SchemaTest::tablePrimaryKeyTest()
   QCOMPARE(table.fieldName(1), QString("Name"));
   QVERIFY(table.isFieldPartOfPrimaryKey(0));
   QVERIFY(!table.isFieldPartOfPrimaryKey(1));
+  QVERIFY(table.fieldType(0) == FieldType::Varchar);
+  QVERIFY(table.fieldType(1) == FieldType::Varchar);
+  QCOMPARE(table.fieldLength(0), 50);
+  QCOMPARE(table.fieldLength(1), 100);
   QCOMPARE(table.fieldIndex("Code_PK"), 0);
   QCOMPARE(table.fieldIndex("Code_pk"), 0);
   QCOMPARE(table.fieldIndex("Name"), 1);
@@ -663,6 +691,12 @@ void SchemaTest::tablePrimaryKeyTest()
   QVERIFY(table.isFieldPartOfPrimaryKey(0));
   QVERIFY(table.isFieldPartOfPrimaryKey(1));
   QVERIFY(!table.isFieldPartOfPrimaryKey(2));
+  QVERIFY(table.fieldType(0) == FieldType::Integer);
+  QVERIFY(table.fieldType(1) == FieldType::Integer);
+  QVERIFY(table.fieldType(2) == FieldType::Varchar);
+  QCOMPARE(table.fieldLength(0), -1);
+  QCOMPARE(table.fieldLength(1), -1);
+  QCOMPARE(table.fieldLength(2), 100);
   QCOMPARE(table.fieldIndex("Id_A"), 0);
   QCOMPARE(table.fieldIndex("ID_A"), 0);
   QCOMPARE(table.fieldIndex("Id_B"), 1);
@@ -704,6 +738,10 @@ void SchemaTest::tablePrimaryKeyAicBenchmark()
     QCOMPARE(table.fieldName(1), QString("Name"));
     QVERIFY(table.isFieldPartOfPrimaryKey(0));
     QVERIFY(!table.isFieldPartOfPrimaryKey(1));
+    QVERIFY(table.fieldType(0) == FieldType::Integer);
+    QVERIFY(table.fieldType(1) == FieldType::Varchar);
+    QCOMPARE(table.fieldLength(0), -1);
+    QCOMPARE(table.fieldLength(1), 100);
     QCOMPARE(table.fieldIndex("Id_PK"), 0);
     QCOMPARE(table.fieldIndex("Name"), 1);
   }
@@ -753,6 +791,12 @@ void SchemaTest::tablePrimaryKeyMcBenchmark()
     QVERIFY(table.isFieldPartOfPrimaryKey(0));
     QVERIFY(table.isFieldPartOfPrimaryKey(1));
     QVERIFY(!table.isFieldPartOfPrimaryKey(2));
+    QVERIFY(table.fieldType(0) == FieldType::Integer);
+    QVERIFY(table.fieldType(1) == FieldType::Integer);
+    QVERIFY(table.fieldType(2) == FieldType::Varchar);
+    QCOMPARE(table.fieldLength(0), -1);
+    QCOMPARE(table.fieldLength(1), -1);
+    QCOMPARE(table.fieldLength(2), 100);
     QCOMPARE(table.fieldIndex("Id_A"), 0);
     QCOMPARE(table.fieldIndex("Id_B"), 1);
     QCOMPARE(table.fieldIndex("Name"), 2);
@@ -769,6 +813,18 @@ void SchemaTest::tableTest()
   using Mdt::Sql::Schema::PrimaryKey;
 
   /*
+   * Setup fields
+   */
+  // Id_PK
+  AutoIncrementPrimaryKey Id_PK;
+  Id_PK.setFieldName("Id_PK");
+  // Name
+  Field Name;
+  Name.setName("Name");
+  Name.setType(FieldType::Varchar);
+  Name.setLength(100);
+
+  /*
    * Initial state
    */
   Table table;
@@ -779,7 +835,29 @@ void SchemaTest::tableTest()
    * Setup a simple table
    */
   table.setTableName("Client_tbl");
+  QVERIFY(table.isNull());
+  table.setPrimaryKey(Id_PK);
   QVERIFY(!table.isNull());
+  table.addField(Name);
+  // Check
+  QCOMPARE(table.fieldCount(), 2);
+  QCOMPARE(table.fieldName(0), QString("Id_PK"));
+  QCOMPARE(table.fieldName(1), QString("Name"));
+  QVERIFY(table.isFieldPartOfPrimaryKey(0));
+  QVERIFY(!table.isFieldPartOfPrimaryKey(1));
+  QVERIFY(table.fieldType(0) == FieldType::Integer);
+  QVERIFY(table.fieldType(1) == FieldType::Varchar);
+  QCOMPARE(table.fieldLength(0), -1);
+  QCOMPARE(table.fieldLength(1), 100);
+  QCOMPARE(table.fieldIndex("Id_PK"), 0);
+  QCOMPARE(table.fieldIndex("ID_PK"), 0);
+  QCOMPARE(table.fieldIndex("Name"), 1);
+  QCOMPARE(table.fieldIndex("NONE"), -1);
+  QCOMPARE(table.fieldIndex(""), -1);
+  QVERIFY(table.contains("Id_PK"));
+  QVERIFY(table.contains("ID_PK"));
+  QVERIFY(table.contains("Name"));
+  QVERIFY(!table.contains(""));
   /*
    * Clear
    */
@@ -800,6 +878,7 @@ void SchemaTest::tableModelTest()
   using Mdt::Sql::Schema::SingleFieldPrimaryKey;
   using Mdt::Sql::Schema::PrimaryKey;
 
+  QModelIndex index;
   /*
    * Initial state
    */
@@ -839,6 +918,21 @@ void SchemaTest::tableModelTest()
    * Set to model and check
    */
   model.setTable(Client_tbl);
+  // Id_PK
+  index = model.index(0, TableModel::FieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Id_PK"));
+  index = model.index(0, TableModel::FieldTypeColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("INTEGER"));
+  // Name
+  index = model.index(1, TableModel::FieldNameColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("Name"));
+  index = model.index(1, TableModel::FieldTypeColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("VARCHAR(100)"));
+
   /// \todo Check
   /*
    * Play

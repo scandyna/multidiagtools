@@ -108,6 +108,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Set primary key
      *
+     * Note that pk's field will allways appear as first field in table
+     *
      * \pre A field with pk's field name must not allready been set
      */
     void setPrimaryKey(const AutoIncrementPrimaryKey & pk)
@@ -118,6 +120,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     }
 
     /*! \brief Set primary key
+     *
+     * Note that pk's field will allways appear as first field in table
      *
      * \pre A field with pk's field name must not allready been set
      */
@@ -177,6 +181,20 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     QString fieldName(int index) const;
 
+    /*! \brief Get field type at index
+     *
+     * \pre index must be in valid range
+     */
+    FieldType fieldType(int index) const;
+
+    /*! \brief Get field length at index
+     *
+     * A value < 0 means that length was not set.
+     *
+     * \pre index must be in valid range
+     */
+    int fieldLength(int index) const;
+
     /*! \brief Check if field at index is part of primary key
      *
      * \pre index must be in valid range
@@ -188,17 +206,19 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      * Table is null if one of the mandatory attribute is not set.
      *  Mandatory attributes are:
      *  - tableName
+     *  - table must contain at least 1 field
      */
-    bool isNull() const
-    {
-      return pvTableName.isEmpty();
-    }
+    bool isNull() const;
 
     /*! \brief Clear
      */
     void clear();
 
    private:
+
+    /*! \brief Access field at index
+     */
+    const Field & refFieldConst(int index) const;
 
     int pvPrimaryKeyFieldIndex; // Used if pvPrimaryKey is AutoIncrementPrimaryKey or SingleFieldPrimaryKey
     bool pvIsTemporary;

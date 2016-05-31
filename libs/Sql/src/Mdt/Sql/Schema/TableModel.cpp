@@ -19,6 +19,8 @@
  **
  ****************************************************************************/
 #include "TableModel.h"
+#include "FieldTypeName.h"
+#include <QStringBuilder>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
@@ -68,8 +70,35 @@ QVariant TableModel::headerData(int section, Qt::Orientation orientation, int ro
 
 QVariant TableModel::data(const QModelIndex & index, int role) const
 {
-
+  if(!index.isValid()){
+    return QVariant();
+  }
+  if( (role != Qt::DisplayRole) && (role != Qt::EditRole) ){
+    return QVariant();
+  }
+  int row = index.row();
+  Q_ASSERT( (row >= 0) && (row < pvTable.fieldCount()) );
+  switch(index.column()){
+    case FieldNameColumn:
+      return pvTable.fieldName(row);
+    case FieldTypeColumn:
+      return fieldTypeName(row);
+  }
+  return QVariant();
 }
 
+QString TableModel::fieldTypeName(int row) const
+{
+  QString name;
+  int length = pvTable.fieldLength(row);
+
+  if(length >= 0){
+    name = FieldTypeName::nameFromType(pvTable.fieldType(row)) % QStringLiteral("(") %  QString::number(length) % QStringLiteral(")");
+  }else{
+    name = FieldTypeName::nameFromType(pvTable.fieldType(row));
+  }
+
+  return name;
+}
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

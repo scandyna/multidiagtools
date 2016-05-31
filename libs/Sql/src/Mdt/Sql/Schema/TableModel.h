@@ -86,6 +86,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
    private:
 
+    /*! \brief Get field type name
+     */
+    QString fieldTypeName(int row) const;
+
     Table pvTable;
   };
 

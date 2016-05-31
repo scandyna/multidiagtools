@@ -24,6 +24,7 @@
 #include "AutoIncrementPrimaryKey.h"
 #include "SingleFieldPrimaryKey.h"
 #include "PrimaryKey.h"
+#include "FieldType.h"
 #include <boost/variant.hpp>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -69,6 +70,22 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *  else a empty string is returned.
      */
     QString fieldName() const;
+
+    /*! \brief Get field type
+     *
+     *  AutoIncrementPrimaryKey or SingleFieldPrimaryKey,
+     *  its field type is returned,
+     *  else UnknownType is returned.
+     */
+    FieldType fieldType() const;
+
+    /*! \brief Get field length
+     *
+     *  AutoIncrementPrimaryKey or SingleFieldPrimaryKey,
+     *  its field length is returned,
+     *  else UnknownType is returned.
+     */
+    int fieldLength() const;
 
    private:
 
