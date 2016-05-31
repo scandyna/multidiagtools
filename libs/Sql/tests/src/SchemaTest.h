@@ -48,6 +48,8 @@ class SchemaTest : public QObject
   void primaryKeyContainerTest();
 
   void tablePrimaryKeyTest();
+  void tablePrimaryKeyAicBenchmark();
+  void tablePrimaryKeyMcBenchmark();
   void tableTest();
   void tableModelTest();
 };

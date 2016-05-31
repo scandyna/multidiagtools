@@ -25,9 +25,9 @@
 #include "FieldList.h"
 #include "PrimaryKeyContainer.h"
 #include <QString>
-// #include <algorithm>
+#include <vector>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
@@ -132,16 +132,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *
      * \pre Each field name in pk must exist in this table
      */
-    void setPrimaryKey(const PrimaryKey & pk)
-    {
-      pvPrimaryKeyFieldIndex = -1;
-#ifndef QT_NO_DEBUG
-      for(const auto & fieldName : pk.fieldNameList()){
-        Q_ASSERT(contains(fieldName));
-      }
-#endif // #ifndef QT_NO_DEBUG
-      pvPrimaryKey.setPrimaryKey(pk);
-    }
+    void setPrimaryKey(const PrimaryKey & pk);
 
     /*! \brief Add a field
      *
@@ -168,22 +159,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      * Note that field names are compared in a case insensitive way.
      *  For exapmple, Id_PK is the same field as ID_PK
      */
-    int fieldIndex(const QString & fieldName) const
-    {
-      if(pvPrimaryKeyFieldIndex == 0){
-        if(pvPrimaryKey.fieldName().toUpper() == fieldName.toUpper()){
-          return 0;
-        }else{
-          int index = pvFieldList.fieldIndex(fieldName);
-          if(index < 0){
-            return index;
-          }
-          return index + 1;
-        }
-      }else{
-        return pvFieldList.fieldIndex(fieldName);
-      }
-    }
+    int fieldIndex(const QString & fieldName) const;
 
     /*! \brief Check if a field with fieldName exists in this table
      *
@@ -199,28 +175,13 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *
      * \pre index must be in valid range
      */
-    QString fieldName(int index) const
-    {
-      qDebug() << "REQ index: " << index << " , list size: " << pvFieldList.size() << " , pk index: " << pvPrimaryKeyFieldIndex;
+    QString fieldName(int index) const;
 
-      Q_ASSERT(index >= 0);
-      Q_ASSERT(index < fieldCount());
-
-      /*
-       * If primary key has a field definition
-       * (a AutoIncrementPrimaryKey or a SingleFieldPrimaryKey),
-       * we allways represent it as first field in table.
-       */
-      if(pvPrimaryKeyFieldIndex == 0){
-        if(index == 0){
-          return pvPrimaryKey.fieldName();
-        }else{
-          return pvFieldList.at(index - 1).name();
-        }
-      }else{
-        return pvFieldList.at(index).name();
-      }
-    }
+    /*! \brief Check if field at index is part of primary key
+     *
+     * \pre index must be in valid range
+     */
+    bool isFieldPartOfPrimaryKey(int index) const;
 
     /*! \brief Check if table is null
      *
@@ -235,13 +196,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Clear
      */
-    void clear()
-    {
-      pvPrimaryKeyFieldIndex = -1;
-      pvIsTemporary = false;
-      pvTableName.clear();
-      pvFieldList.clear();
-    }
+    void clear();
 
    private:
 
@@ -250,6 +205,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     QString pvTableName;
     PrimaryKeyContainer pvPrimaryKey;
     FieldList pvFieldList;
+    std::vector<int> pvPrimaryKeyFieldIndexList;  // Used by isFieldPartOfPrimaryKey() for PrimaryKey (multi-column)
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

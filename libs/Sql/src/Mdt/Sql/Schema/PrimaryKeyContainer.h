@@ -70,11 +70,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     QString fieldName() const;
 
-    PrimaryKey getPk() const
-    {
-      return boost::get<PrimaryKey>(pvPrimaryKey);
-    }
-
    private:
 
     boost::variant<PrimaryKey, AutoIncrementPrimaryKey, SingleFieldPrimaryKey> pvPrimaryKey;

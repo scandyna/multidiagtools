@@ -44,8 +44,8 @@ Driver::Driver(const QSqlDatabase & db)
       break;
   }
   if(!pvImpl){
-    QString msg = tr("Database engine with Qt driver name '") + db.driverName() + tr("' is not supported. ") \
-                  + tr("Database connection name: '") + db.connectionName() + tr("'.");
+    const QString msg = tr("Database engine with Qt driver name '%1' is not supported. Database connection name: '%2'.") \
+                        .arg(db.driverName(), db.connectionName());
     pvLastError = mdtErrorNew(msg, Mdt::Error::Critical, "Mdt::Sql::Schema::Driver");
     pvLastError.commit();
   }

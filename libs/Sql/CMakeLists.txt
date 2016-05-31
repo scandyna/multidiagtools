@@ -14,6 +14,7 @@ set(SOURCES_FILES
     src/Mdt/Sql/Schema/FieldTypeName.cpp
     src/Mdt/Sql/Schema/FieldTypeListModel.cpp
     src/Mdt/Sql/Schema/PrimaryKeyContainer.cpp
+    src/Mdt/Sql/Schema/Table.cpp
     src/Mdt/Sql/Schema/TableModel.cpp
 )
 

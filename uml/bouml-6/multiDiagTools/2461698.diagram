@@ -18,7 +18,7 @@ classcanvas 128770 class_ref 2775682 // ForeignKey
 end
 classcanvas 129410 class_ref 2852738 // PrimaryKeyContainer
   classdiagramsettings member_max_width 0 end
-  xyz 303 556 2000
+  xyz 40.5 384.5 2000
 end
 relationcanvas 128386 relation_ref 3128194 // <directional composition>
   decenter_begin 525
