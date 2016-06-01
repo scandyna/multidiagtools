@@ -7,42 +7,29 @@ diagrams
     120 112 100 4 0 0
   classdiagram_ref 2406658 // Controller
     980 903 100 4 0 0
-  classdiagram_ref 2399618 // sandbox
-    120 110 100 21 0 0
   classdiagram_ref 2434178 // ClientTableModel
     980 905 100 7 0 0
   classdiagram_ref 2440706 // ServerTable
     980 905 100 7 0 0
-  classdiagram_ref 2414210 // overview
-    120 110 100 4 0 0
-  classdiagram_ref 2413698 // NavigationActions
-    120 110 100 18 0 0
   classdiagram_ref 2468482 // overview
     957 902 90 21 0 9
-  classdiagram_ref 1715714 // sandbox
-    949 894 100 18 0 0
   classdiagram_ref 2508162 // Overview
     120 110 100 18 0 0
   classdiagram_ref 1635586 // SchemaOld
     120 110 100 18 0 0
   active  classdiagram_ref 2461698 // Table
     957 902 100 18 0 0
-  classdiagram_ref 2521218 // Schema
-    957 902 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2461698 // Table
+selected 
+package_ref 503042 // ItemEditor
 open
   
 package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   
 package_ref 516226 // SqlItemModel
-  classview_ref 1164418 // Field
-  classview_ref 1347202 // PrimaryKey
-  classview_ref 1320706 // Table
-  class_ref 2845442 // Schema
-  class_ref 2845570 // UserDefinedSchema
+  classview_ref 1373314 // ForeignKey
   
 package_ref 430082 // Dsp
 end

@@ -123,6 +123,26 @@ bool Table::isFieldPartOfPrimaryKey(int index) const
   return (std::find(pvPrimaryKeyFieldIndexList.cbegin(), pvPrimaryKeyFieldIndexList.cend(), index) != pvPrimaryKeyFieldIndexList.cend());
 }
 
+bool Table::isFieldAutoIncrement(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < fieldCount());
+
+  /*
+   * The only case for which
+   *  is a AutoIncrementPrimaryKey
+   */
+  if(index == pvPrimaryKeyFieldIndex){
+    return (pvPrimaryKey.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  }
+  return false;
+}
+
+bool Table::isFieldRequired(int index) const
+{
+  return false;
+}
+
 bool Table::isNull() const
 {
   return ( pvTableName.isEmpty() || (fieldCount() < 1) );

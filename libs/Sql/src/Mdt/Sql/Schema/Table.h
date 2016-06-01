@@ -201,6 +201,18 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     bool isFieldPartOfPrimaryKey(int index) const;
 
+    /*! \brief Check if field at index is auto increment
+     *
+     * \pre index must be in valid range
+     */
+    bool isFieldAutoIncrement(int index) const;
+
+    /*! \brief Check if field at index is required
+     *
+     * \pre index must be in valid range
+     */
+    bool isFieldRequired(int index) const;
+
     /*! \brief Check if table is null
      *
      * Table is null if one of the mandatory attribute is not set.

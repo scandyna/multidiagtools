@@ -49,8 +49,11 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     enum ColumnIndex
     {
-      FieldNameColumn = 0, /*!< Column index of field name */
-      FieldTypeColumn      /*!< Column index of field type name and its length, if applicable */
+      FieldNameColumn = 0,  /*!< Column index of field name */
+      FieldTypeColumn,      /*!< Column index of field type name and its length, if applicable */
+      PkFlagColumn,         /*!< Column index of primary key flag */
+      AiFlagColumn,         /*!< Column index of auto increment flag */
+      NotNullFlagColumn     /*!< Column index of not null flag */
     };
 
     /*! \brief Constructor
@@ -89,6 +92,18 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Get field type name
      */
     QString fieldTypeName(int row) const;
+
+    /*! \brief Get PK flag
+     */
+    QVariant pkFlag(int row) const;
+
+    /*! \brief Get auto increment flag
+     */
+    QVariant autoIncrementFlag(int row) const;
+
+    /*! \brief Get header tool tip text
+     */
+    QString headerToolTipText(int column) const;
 
     Table pvTable;
   };

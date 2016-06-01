@@ -41,11 +41,32 @@ namespace Mdt{ namespace Sql{ namespace Schema{
   {
    public:
 
+    /*! \brief Default container
+     */
+    PrimaryKeyContainer()
+     : pvType(PrimaryKeyType) {}
+
+    /*! \brief Primary key type
+     *
+     * If a method exist to get infromation
+     *  from stored primary key,
+     *  its recommended to use it.
+     *  If getting the stored primary key object itself,
+     *  this type is usefull to know which type of object is stored.
+     */
+    enum Type
+    {
+      AutoIncrementPrimaryKeyType,  /*!< This container stores a AutoIncrementPrimaryKey */
+      SingleFieldPrimaryKeyType,    /*!< This container stores a SingleFieldPrimaryKey */
+      PrimaryKeyType                /*!< This container stores a PrimaryKey */
+    };
+
     /*! \brief Set primary key
      */
     void setPrimaryKey(const AutoIncrementPrimaryKey & pk)
     {
       pvPrimaryKey = pk;
+      pvType = AutoIncrementPrimaryKeyType;
     }
 
     /*! \brief Set primary key
@@ -53,6 +74,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     void setPrimaryKey(const SingleFieldPrimaryKey & pk)
     {
       pvPrimaryKey = pk;
+      pvType = SingleFieldPrimaryKeyType;
     }
 
     /*! \brief Set primary key
@@ -60,6 +82,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     void setPrimaryKey(const PrimaryKey & pk)
     {
       pvPrimaryKey = pk;
+      pvType = PrimaryKeyType;
     }
 
     /*! \brief Get field name
@@ -87,9 +110,17 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     int fieldLength() const;
 
+    /*! \brief Get stored primary key type
+     */
+    Type primaryKeyType() const
+    {
+      return pvType;
+    }
+
    private:
 
     boost::variant<PrimaryKey, AutoIncrementPrimaryKey, SingleFieldPrimaryKey> pvPrimaryKey;
+    Type pvType;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

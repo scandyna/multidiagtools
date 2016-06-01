@@ -47,13 +47,16 @@ int TableModel::rowCount(const QModelIndex & parent) const
 
 int TableModel::columnCount(const QModelIndex & /*parent*/) const
 {
-  return 2;
+  return 5;
 }
 
 QVariant TableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
   if(orientation != Qt::Horizontal){
     return QAbstractTableModel::headerData(section, orientation, role);
+  }
+  if(role == Qt::ToolTipRole){
+    return headerToolTipText(section);
   }
   if(role != Qt::DisplayRole){
     return QAbstractTableModel::headerData(section, orientation, role);
@@ -63,6 +66,12 @@ QVariant TableModel::headerData(int section, Qt::Orientation orientation, int ro
       return tr("Field name");
     case FieldTypeColumn:
       return tr("Field type");
+    case PkFlagColumn:
+      return tr("PK");
+    case AiFlagColumn:
+      return tr("AI");
+    case NotNullFlagColumn:
+      return tr("NN");
   }
 
   return section;
@@ -83,6 +92,10 @@ QVariant TableModel::data(const QModelIndex & index, int role) const
       return pvTable.fieldName(row);
     case FieldTypeColumn:
       return fieldTypeName(row);
+    case PkFlagColumn:
+      return pkFlag(row);
+    case AiFlagColumn:
+      return autoIncrementFlag(row);
   }
   return QVariant();
 }
@@ -99,6 +112,38 @@ QString TableModel::fieldTypeName(int row) const
   }
 
   return name;
+}
+
+QVariant TableModel::pkFlag(int row) const
+{
+  if(pvTable.isFieldPartOfPrimaryKey(row)){
+    return QStringLiteral("X");
+  }
+  return QString();
+}
+
+QVariant TableModel::autoIncrementFlag(int row) const
+{
+  if(pvTable.isFieldAutoIncrement(row)){
+    return QStringLiteral("X");
+  }
+  return QString();
+}
+
+QString TableModel::headerToolTipText(int column) const
+{
+  switch(column){
+    case PkFlagColumn:
+      return tr("Primary key");
+    case AiFlagColumn:
+      return tr("Auto increment");
+    case NotNullFlagColumn:
+      return tr("Not null (field is required)");
+    case FieldNameColumn:
+    case FieldTypeColumn:
+      break;
+  }
+  return QString();
 }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{
