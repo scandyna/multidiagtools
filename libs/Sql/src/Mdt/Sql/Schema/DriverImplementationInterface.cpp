@@ -105,6 +105,23 @@ QString DriverImplementationInterface::getPrimaryKeyDefinition(const PrimaryKey 
   return sql;
 }
 
+QString DriverImplementationInterface::getSqlToCreateIndex(const Index & index) const
+{
+  QString sql;
+
+
+  return sql;
+}
+
+QString DriverImplementationInterface::getSqlToDropIndex(const Index & index) const
+{
+  QString sql;
+  ///const QStringList fieldNameList = index.
+
+
+  return sql;
+}
+
 QString DriverImplementationInterface::escapeFieldName(const QString & fieldName) const
 {
   return qsqlDriver()->escapeIdentifier(fieldName, QSqlDriver::FieldName);

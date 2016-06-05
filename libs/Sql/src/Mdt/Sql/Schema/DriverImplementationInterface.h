@@ -29,6 +29,7 @@
 #include "AutoIncrementPrimaryKey.h"
 #include "SingleFieldPrimaryKey.h"
 #include "PrimaryKey.h"
+#include "Index.h"
 #include "Mdt/Error.h"
 #include <QSqlDatabase>
 #include <QSqlDriver>
@@ -101,6 +102,20 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Get primary key definition
      */
     virtual QString getPrimaryKeyDefinition(const PrimaryKey & pk) const;
+
+    /*! \brief Get SQL statement to create a index
+     *
+     * NOTE
+     * \todo Define if/when database name should be included. Can be defined internally ??
+     */
+    virtual QString getSqlToCreateIndex(const Index & index) const;
+
+    /*! \brief Get SQL statement to drop a index
+     *
+     ** NOTE
+     * \todo Define if/when database name should be included. Can be defined internally ??
+     */
+    virtual QString getSqlToDropIndex(const Index & index) const;
 
     /*! \brief Get last error
      */

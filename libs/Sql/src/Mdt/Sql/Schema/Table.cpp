@@ -140,7 +140,13 @@ bool Table::isFieldAutoIncrement(int index) const
 
 bool Table::isFieldRequired(int index) const
 {
-  return false;
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < fieldCount());
+
+  if(index == pvPrimaryKeyFieldIndex){
+    return true;
+  }
+  return refFieldConst(index).isRequired();
 }
 
 bool Table::isNull() const

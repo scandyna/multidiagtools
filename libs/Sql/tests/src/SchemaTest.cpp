@@ -30,6 +30,7 @@
 #include "Mdt/Sql/Schema/SingleFieldPrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKeyContainer.h"
+#include "Mdt/Sql/Schema/Index.h"
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Schema/TableModel.h"
 #include <QSqlDatabase>
@@ -508,6 +509,50 @@ void SchemaTest::primaryKeyContainerTest()
   QCOMPARE(container.fieldLength(), -1);
 }
 
+void SchemaTest::indexTest()
+{
+  using Mdt::Sql::Schema::Index;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::FieldType;
+
+  /*
+   * Setup a field
+   */
+  Field Id_A;
+  Id_A.setName("Id_A");
+  /*
+   * Initial state
+   */
+  Index index;
+  QVERIFY(!index.isUnique());
+  QVERIFY(index.isNull());
+  /*
+   * Simple set/get
+   */
+  index.setTableName("Client_tbl");
+  QVERIFY(index.isNull());
+  index.addField(Id_A);
+  QVERIFY(index.isNull());
+  index.generateName();
+  QVERIFY(!index.isNull());
+  index.setUnique(true);
+  // Check
+  QCOMPARE(index.name(), QString("Client_tbl_Id_A_index"));
+  QCOMPARE(index.tableName(), QString("Client_tbl"));
+  QCOMPARE(index.fieldCount(), 1);
+  QCOMPARE(index.fieldName(0), QString("Id_A"));
+  QVERIFY(index.isUnique());
+  /*
+   * Clear
+   */
+  index.clear();
+  QVERIFY(index.name().isEmpty());
+  QVERIFY(index.tableName().isEmpty());
+  QCOMPARE(index.fieldCount(), 0);
+  QVERIFY(!index.isUnique());
+  QVERIFY(index.isNull());
+}
+
 void SchemaTest::tablePrimaryKeyTest()
 {
   using Mdt::Sql::Schema::Table;
@@ -941,6 +986,7 @@ void SchemaTest::tableModelTest()
   Name.setName("Name");
   Name.setType(FieldType::Varchar);
   Name.setLength(100);
+  Name.setRequired(true);
   /*
    * Setup a table
    */
@@ -966,6 +1012,9 @@ void SchemaTest::tableModelTest()
   index = model.index(0, TableModel::AiFlagColumn);
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index), QVariant("X"));
+  index = model.index(0, TableModel::NotNullFlagColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("X"));
   // Name
   index = model.index(1, TableModel::FieldNameColumn);
   QVERIFY(index.isValid());
@@ -979,12 +1028,17 @@ void SchemaTest::tableModelTest()
   index = model.index(1, TableModel::AiFlagColumn);
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index), QVariant(""));
+  index = model.index(1, TableModel::NotNullFlagColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("X"));
+  // Remarks
 
   /// \todo Check
   /*
    * Play
    */
   tableView.show();
+  tableView.resizeColumnsToContents();
   treeView.show();
   comboBox.show();
   while(tableView.isVisible()){

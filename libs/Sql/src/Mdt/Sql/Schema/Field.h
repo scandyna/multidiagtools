@@ -29,6 +29,10 @@
 namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief SQL schema field
+   *
+   * NOTE
+   * \todo Add unique constraint
+   * NOTE
    */
   class Field final
   {

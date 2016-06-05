@@ -101,6 +101,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     QVariant autoIncrementFlag(int row) const;
 
+    /*! \brief Get not null flag
+     */
+    QVariant notNullFlag(int row) const;
+
     /*! \brief Get header tool tip text
      */
     QString headerToolTipText(int column) const;

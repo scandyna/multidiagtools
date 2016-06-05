@@ -333,6 +333,23 @@ void SchemaDriverSqliteTest::primaryKeyDefinitionTest()
   QCOMPARE(driver.getPrimaryKeyDefinition(pk), expectedSql);
 }
 
+void SchemaDriverSqliteTest::indexDefinitionTest()
+{
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::Index;
+
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  QString expectedSql;
+  Field Id_A_PK, Id_B_PK;
+  Index index;
+
+  /*
+   * Non unique index with 1 field
+   */
+  
+  
+}
+
 /*
  * Main
  */

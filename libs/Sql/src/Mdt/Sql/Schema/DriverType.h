@@ -27,10 +27,11 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    */
   enum class DriverType
   {
-    Unknown,  /*!< Database engine is not defined, or not supported by multiDiagTools library */
-    SQLite,   /*!< SQLite database engine */
-    MariaDB,  /*!< MariaDB database engine */
-    MySQL     /*!< MySQL database engine */
+    Unknown,    /*!< Database engine is not defined, or not supported by multiDiagTools library */
+    SQLite,     /*!< SQLite database engine */
+    MariaDB,    /*!< MariaDB database engine */
+    MySQL,      /*!< MySQL database engine */
+    PostgreSQL  /*!< PostgreSQL database engine */
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

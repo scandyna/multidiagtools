@@ -13,23 +13,30 @@ diagrams
     980 905 100 7 0 0
   classdiagram_ref 2468482 // overview
     957 902 90 21 0 9
-  classdiagram_ref 2508162 // Overview
+  classdiagram_ref 2468354 // overview
+    120 110 100 4 0 0
+  classdiagram_ref 1668354 // overviewOld
     120 110 100 18 0 0
-  classdiagram_ref 1635586 // SchemaOld
-    120 110 100 18 0 0
-  active  classdiagram_ref 2461698 // Table
+  classdiagram_ref 2468226 // Index
+    957 902 100 4 0 0
+  classdiagram_ref 2461186 // Field
     957 902 100 18 0 0
+  active  classdiagram_ref 2481666 // DriverImplementation
+    957 902 100 21 0 0
 end
 show_stereotypes
-selected 
-package_ref 503042 // ItemEditor
+selected classdiagram_ref 2481666 // DriverImplementation
 open
   
 package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   
 package_ref 516226 // SqlItemModel
-  classview_ref 1373314 // ForeignKey
+  classview_ref 1320578 // Driver
+  classview_ref 1164418 // Field
+  classview_ref 1171074 // Index
+  classview_ref 1238018 // ArticleConnection
+  classview_ref 1205122 // UnitConnection
   
 package_ref 430082 // Dsp
 end

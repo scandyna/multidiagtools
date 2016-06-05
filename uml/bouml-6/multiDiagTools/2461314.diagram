@@ -2,37 +2,35 @@ format 211
 
 classcanvas 128130 class_ref 2775298 // DriverType
   classdiagramsettings member_max_width 0 end
-  xyz 206 495 2000
+  xyz 207 39 2000
 end
 classcanvas 128258 class_ref 2775426 // Driver
   classdiagramsettings member_max_width 0 end
-  xyz 39 106 2000
+  xyz 41 142 2000
 end
 classcanvas 128514 class_ref 2795906 // DriverImplementationInterface
   classdiagramsettings member_max_width 0 end
-  xyz 497 40 2000
+  xyz 495 58 2000
 end
 note 128770 "Driver instances should be managed like QSQlDatabase manages his drivers
 -->> No, seems to complicated. Implement such thing if rally needed !"
-  xyzwh 40.5 1035.5 2000 541 53
+  xyzwh 40.5 1075.5 2000 541 53
 note 128898 "Check also which static methods are  really needed."
-  xyzwh 40.5 759.5 2000 515 59
+  xyzwh 40.5 799.5 2000 515 59
 note 129026 "Create dict (QMap)) that maps a connectionName to a driver instance.
 Because of threads, it should be safe to create one driver object per connection (not check about unique per type)
 -->> No, seems to complicated. Implement such thing if rally needed !"
-  xyzwh 40.5 592.5 2000 711 87
+  xyzwh 40.5 632.5 2000 711 87
 note 129154 "Schould inherit from QObject and emit signals ???
 Or, is this  thread's job ?
 Or ???"
-  xyzwh 40.5 898.5 2000 555 57
+  xyzwh 40.5 938.5 2000 555 57
 relationcanvas 128386 relation_ref 3127682 // <directional composition>
   from ref 128258 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128642 relation_ref 3155202 // <directional composition>
-  decenter_begin 510
-  decenter_end 508
   from ref 128258 z 2001 to ref 128514
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

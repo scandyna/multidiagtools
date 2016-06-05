@@ -96,6 +96,8 @@ QVariant TableModel::data(const QModelIndex & index, int role) const
       return pkFlag(row);
     case AiFlagColumn:
       return autoIncrementFlag(row);
+    case NotNullFlagColumn:
+      return notNullFlag(row);
   }
   return QVariant();
 }
@@ -125,6 +127,14 @@ QVariant TableModel::pkFlag(int row) const
 QVariant TableModel::autoIncrementFlag(int row) const
 {
   if(pvTable.isFieldAutoIncrement(row)){
+    return QStringLiteral("X");
+  }
+  return QString();
+}
+
+QVariant TableModel::notNullFlag(int row) const
+{
+  if(pvTable.isFieldRequired(row)){
     return QStringLiteral("X");
   }
   return QString();

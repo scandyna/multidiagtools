@@ -193,6 +193,11 @@ void SchemaDriverMySqlTest::primaryKeyDefinitionTest()
 
 }
 
+void SchemaDriverMySqlTest::indexDefinitionTest()
+{
+
+}
+
 /*
  * Main
  */
