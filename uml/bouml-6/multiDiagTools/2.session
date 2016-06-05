@@ -26,10 +26,10 @@ show_stereotypes
 selected classview_ref 1379842 // Relation
 open
   
-  package_ref 409858 // principes
+package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   
-  package_ref 516226 // SqlItemModel
+package_ref 516226 // SqlItemModel
   classview_ref 1320578 // Driver
   classview_ref 1164418 // Field
   classview_ref 1379842 // Relation
@@ -37,6 +37,6 @@ open
   classview_ref 1238018 // ArticleConnection
   classview_ref 1205122 // UnitConnection
   
-  package_ref 430082 // Dsp
+package_ref 430082 // Dsp
 end
 end

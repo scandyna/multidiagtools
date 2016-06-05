@@ -54,7 +54,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       PkFlagColumn,         /*!< Column index of primary key flag */
       AiFlagColumn,         /*!< Column index of auto increment flag */
       NotNullFlagColumn,    /*!< Column index of not null flag */
-      UniqueFlagColumn      /*!< Column index of unique flag */
+      UniqueFlagColumn,     /*!< Column index of unique flag */
+      DefaultValueColumn    /*!< Column index of default value */
     };
 
     /*! \brief Constructor
@@ -109,6 +110,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Get unique flag
      */
     QVariant uniqueFlag(int row) const;
+
+    /*! \brief Get default vlaue
+     */
+    QVariant defaultValue(int row) const;
 
     /*! \brief Get header tool tip text
      */

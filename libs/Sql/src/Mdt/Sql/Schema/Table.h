@@ -219,6 +219,12 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     bool isFieldUnique(int index) const;
 
+    /*! \brief Get default value for field at index
+     *
+     * \pre index must be in valid range
+     */
+    QVariant fieldDefaultValue(int index) const;
+
     /*! \brief Check if table is null
      *
      * Table is null if one of the mandatory attribute is not set.

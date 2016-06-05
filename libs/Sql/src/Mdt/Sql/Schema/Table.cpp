@@ -160,6 +160,17 @@ bool Table::isFieldUnique(int index) const
   return refFieldConst(index).isUnique();
 }
 
+QVariant Table::fieldDefaultValue(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < fieldCount());
+
+  if(index == pvPrimaryKeyFieldIndex){
+    return QVariant();
+  }
+  return refFieldConst(index).defaultValue();
+}
+
 bool Table::isNull() const
 {
   return ( pvTableName.isEmpty() || (fieldCount() < 1) );

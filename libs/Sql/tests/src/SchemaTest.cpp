@@ -909,6 +909,7 @@ void SchemaTest::tableTest()
   Remarks.setName("Remarks");
   Remarks.setType(FieldType::Varchar);
   Remarks.setLength(150);
+  Remarks.setDefaultValue("Default remark");
 
   /*
    * Initial state
@@ -946,6 +947,9 @@ void SchemaTest::tableTest()
   QVERIFY(table.isFieldUnique(0));
   QVERIFY(table.isFieldUnique(1));
   QVERIFY(!table.isFieldUnique(2));
+  QVERIFY(table.fieldDefaultValue(0).isNull());
+  QVERIFY(table.fieldDefaultValue(1).isNull());
+  QCOMPARE(table.fieldDefaultValue(2), QVariant("Default remark"));
   QCOMPARE(table.fieldIndex("Id_PK"), 0);
   QCOMPARE(table.fieldIndex("ID_PK"), 0);
   QCOMPARE(table.fieldIndex("Name"), 1);
@@ -1015,7 +1019,7 @@ void SchemaTest::tableModelTest()
   /*
    * Set to model and check
    */
-  QCOMPARE(model.columnCount(), 6);
+  QCOMPARE(model.columnCount(), 7);
   model.setTable(Client_tbl);
   // Id_PK
   index = model.index(0, TableModel::FieldNameColumn);
@@ -1036,6 +1040,9 @@ void SchemaTest::tableModelTest()
   index = model.index(0, TableModel::UniqueFlagColumn);
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index), QVariant("X"));
+  index = model.index(0, TableModel::DefaultValueColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("NULL"));
   // Name
   index = model.index(1, TableModel::FieldNameColumn);
   QVERIFY(index.isValid());
@@ -1063,7 +1070,14 @@ void SchemaTest::tableModelTest()
    */
   tableView.show();
   tableView.resizeColumnsToContents();
+  tableView.resizeRowsToContents();
   treeView.show();
+  treeView.resizeColumnToContents(0);
+  treeView.resizeColumnToContents(1);
+  treeView.resizeColumnToContents(2);
+  treeView.resizeColumnToContents(3);
+  treeView.resizeColumnToContents(4);
+  treeView.resizeColumnToContents(5);
   comboBox.show();
   while(tableView.isVisible()){
     QTest::qWait(500);

@@ -47,7 +47,7 @@ int TableModel::rowCount(const QModelIndex & parent) const
 
 int TableModel::columnCount(const QModelIndex & /*parent*/) const
 {
-  return 6;
+  return 7;
 }
 
 QVariant TableModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -74,6 +74,8 @@ QVariant TableModel::headerData(int section, Qt::Orientation orientation, int ro
       return tr("NN");
     case UniqueFlagColumn:
       return tr("U");
+    case DefaultValueColumn:
+      return tr("Default value");
   }
 
   return section;
@@ -102,6 +104,8 @@ QVariant TableModel::data(const QModelIndex & index, int role) const
       return notNullFlag(row);
     case UniqueFlagColumn:
       return uniqueFlag(row);
+    case DefaultValueColumn:
+      return defaultValue(row);
   }
   return QVariant();
 }
@@ -150,6 +154,14 @@ QVariant TableModel::uniqueFlag(int row) const
     return QStringLiteral("X");
   }
   return QString();
+}
+
+QVariant TableModel::defaultValue(int row) const
+{
+  if(pvTable.fieldDefaultValue(row).isNull()){
+    return QStringLiteral("NULL");
+  }
+  return pvTable.fieldDefaultValue(row);
 }
 
 QString TableModel::headerToolTipText(int column) const
