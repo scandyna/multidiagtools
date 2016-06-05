@@ -29,10 +29,6 @@
 namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief SQL schema field
-   *
-   * NOTE
-   * \todo Add unique constraint
-   * NOTE
    */
   class Field final
   {
@@ -43,6 +39,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     Field()
     : pvType(FieldType::UnknownType),
       pvIsRequired(false),
+      pvIsUnique(false),
       pvLength(-1)
     {
     }
@@ -87,6 +84,20 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     bool isRequired() const
     {
       return pvIsRequired;
+    }
+
+    /*! \brief Set field unique
+     */
+    void setUnique(bool u)
+    {
+      pvIsUnique = u;
+    }
+
+    /*! \brief Check if field is unique
+     */
+    bool isUnique() const
+    {
+      return pvIsUnique;
     }
 
     /*! \brief Set default value
@@ -163,6 +174,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       pvType = FieldType::UnknownType;
       pvName.clear();
       pvIsRequired = false;
+      pvIsUnique = false;
       pvDefaultValue.clear();
       pvLength = -1;
       pvCollation.clear();
@@ -173,6 +185,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     FieldType pvType;
     bool pvIsRequired;
+    bool pvIsUnique;
     int pvLength;
     QString pvName;
     QVariant pvDefaultValue;

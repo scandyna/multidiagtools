@@ -47,7 +47,7 @@ int TableModel::rowCount(const QModelIndex & parent) const
 
 int TableModel::columnCount(const QModelIndex & /*parent*/) const
 {
-  return 5;
+  return 6;
 }
 
 QVariant TableModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -72,6 +72,8 @@ QVariant TableModel::headerData(int section, Qt::Orientation orientation, int ro
       return tr("AI");
     case NotNullFlagColumn:
       return tr("NN");
+    case UniqueFlagColumn:
+      return tr("U");
   }
 
   return section;
@@ -98,6 +100,8 @@ QVariant TableModel::data(const QModelIndex & index, int role) const
       return autoIncrementFlag(row);
     case NotNullFlagColumn:
       return notNullFlag(row);
+    case UniqueFlagColumn:
+      return uniqueFlag(row);
   }
   return QVariant();
 }
@@ -140,6 +144,14 @@ QVariant TableModel::notNullFlag(int row) const
   return QString();
 }
 
+QVariant TableModel::uniqueFlag(int row) const
+{
+  if(pvTable.isFieldUnique(row)){
+    return QStringLiteral("X");
+  }
+  return QString();
+}
+
 QString TableModel::headerToolTipText(int column) const
 {
   switch(column){
@@ -149,6 +161,8 @@ QString TableModel::headerToolTipText(int column) const
       return tr("Auto increment");
     case NotNullFlagColumn:
       return tr("Not null (field is required)");
+    case UniqueFlagColumn:
+      return tr("Unique constraint");
     case FieldNameColumn:
     case FieldTypeColumn:
       break;

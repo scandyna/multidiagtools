@@ -149,6 +149,17 @@ bool Table::isFieldRequired(int index) const
   return refFieldConst(index).isRequired();
 }
 
+bool Table::isFieldUnique(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < fieldCount());
+
+  if(index == pvPrimaryKeyFieldIndex){
+    return true;
+  }
+  return refFieldConst(index).isUnique();
+}
+
 bool Table::isNull() const
 {
   return ( pvTableName.isEmpty() || (fieldCount() < 1) );

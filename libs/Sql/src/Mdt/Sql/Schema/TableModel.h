@@ -53,7 +53,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       FieldTypeColumn,      /*!< Column index of field type name and its length, if applicable */
       PkFlagColumn,         /*!< Column index of primary key flag */
       AiFlagColumn,         /*!< Column index of auto increment flag */
-      NotNullFlagColumn     /*!< Column index of not null flag */
+      NotNullFlagColumn,    /*!< Column index of not null flag */
+      UniqueFlagColumn      /*!< Column index of unique flag */
     };
 
     /*! \brief Constructor
@@ -104,6 +105,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Get not null flag
      */
     QVariant notNullFlag(int row) const;
+
+    /*! \brief Get unique flag
+     */
+    QVariant uniqueFlag(int row) const;
 
     /*! \brief Get header tool tip text
      */

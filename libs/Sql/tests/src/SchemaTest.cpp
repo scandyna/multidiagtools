@@ -218,21 +218,24 @@ void SchemaTest::fieldTest()
    */
   QVERIFY(field.type() == FieldType::UnknownType);
   QVERIFY(!field.isRequired());
+  QVERIFY(!field.isUnique());
   QCOMPARE(field.length(), -1);
   QVERIFY(field.isNull());
   /*
    * Simple set/get check
    */
-  // Setup a required integer field
+  // Setup a required and unique integer field
   field.setType(FieldType::Integer);
   QVERIFY(field.isNull());
   field.setName("Id_PK");
   QVERIFY(!field.isNull());
   field.setRequired(true);
+  field.setUnique(true);
   // Check
   QVERIFY(field.type() == FieldType::Integer);
   QCOMPARE(field.name(), QString("Id_PK"));
   QVERIFY(field.isRequired());
+  QVERIFY(field.isUnique());
   /*
    * Clear
    */
@@ -240,6 +243,7 @@ void SchemaTest::fieldTest()
   QVERIFY(field.type() == FieldType::UnknownType);
   QVERIFY(field.name().isEmpty());
   QVERIFY(!field.isRequired());
+  QVERIFY(!field.isUnique());
   QVERIFY(field.defaultValue().isNull());
   QCOMPARE(field.length(), -1);
   QVERIFY(field.collation().isNull());
@@ -269,6 +273,7 @@ void SchemaTest::fieldTest()
   QVERIFY(field.type() == FieldType::UnknownType);
   QVERIFY(field.name().isEmpty());
   QVERIFY(!field.isRequired());
+  QVERIFY(!field.isUnique());
   QVERIFY(field.defaultValue().isNull());
   QCOMPARE(field.length(), -1);
   QVERIFY(field.collation().isNull());
@@ -898,6 +903,7 @@ void SchemaTest::tableTest()
   Name.setType(FieldType::Varchar);
   Name.setLength(100);
   Name.setRequired(true);
+  Name.setUnique(true);
   // Remarks
   Field Remarks;
   Remarks.setName("Remarks");
@@ -937,6 +943,9 @@ void SchemaTest::tableTest()
   QVERIFY(table.isFieldRequired(0));
   QVERIFY(table.isFieldRequired(1));
   QVERIFY(!table.isFieldRequired(2));
+  QVERIFY(table.isFieldUnique(0));
+  QVERIFY(table.isFieldUnique(1));
+  QVERIFY(!table.isFieldUnique(2));
   QCOMPARE(table.fieldIndex("Id_PK"), 0);
   QCOMPARE(table.fieldIndex("ID_PK"), 0);
   QCOMPARE(table.fieldIndex("Name"), 1);
@@ -1006,7 +1015,7 @@ void SchemaTest::tableModelTest()
   /*
    * Set to model and check
    */
-  QCOMPARE(model.columnCount(), 5);
+  QCOMPARE(model.columnCount(), 6);
   model.setTable(Client_tbl);
   // Id_PK
   index = model.index(0, TableModel::FieldNameColumn);
@@ -1022,6 +1031,9 @@ void SchemaTest::tableModelTest()
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index), QVariant("X"));
   index = model.index(0, TableModel::NotNullFlagColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("X"));
+  index = model.index(0, TableModel::UniqueFlagColumn);
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index), QVariant("X"));
   // Name
@@ -1040,6 +1052,9 @@ void SchemaTest::tableModelTest()
   index = model.index(1, TableModel::NotNullFlagColumn);
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index), QVariant("X"));
+  index = model.index(1, TableModel::UniqueFlagColumn);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant(""));
   // Remarks
 
   /// \todo Check

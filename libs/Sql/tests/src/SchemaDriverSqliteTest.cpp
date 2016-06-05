@@ -167,6 +167,16 @@ void SchemaDriverSqliteTest::fieldDefinitionTest()
   expectedSql = "\"Number\" INTEGER DEFAULT NULL";
   QCOMPARE(driver.getFieldDefinition(field), expectedSql);
   /*
+   * INTEGER field with UNIQUE constraint
+   */
+  field.clear();
+  field.setName("Number");
+  field.setType(FieldType::Integer);
+  field.setUnique(true);
+  // Check
+  expectedSql = "\"Number\" INTEGER UNIQUE DEFAULT NULL";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
    * INTEGER field with NOT NULL constraint
    */
   field.clear();
@@ -175,6 +185,17 @@ void SchemaDriverSqliteTest::fieldDefinitionTest()
   field.setRequired(true);
   // Check
   expectedSql = "\"Number\" INTEGER NOT NULL DEFAULT NULL";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * INTEGER field with UNIQUE and NOT NULL constraints
+   */
+  field.clear();
+  field.setName("Number");
+  field.setType(FieldType::Integer);
+  field.setRequired(true);
+  field.setUnique(true);
+  // Check
+  expectedSql = "\"Number\" INTEGER UNIQUE NOT NULL DEFAULT NULL";
   QCOMPARE(driver.getFieldDefinition(field), expectedSql);
   /*
    * INTEGER field with a default value

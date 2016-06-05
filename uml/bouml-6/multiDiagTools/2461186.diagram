@@ -2,29 +2,29 @@ format 211
 
 classcanvas 128002 class_ref 2775042 // Field
   classdiagramsettings member_max_width 0 end
-  xyz 41 41 2000
+  xyz 41 138 2000
 end
 classcanvas 128386 class_ref 2774914 // FieldType
   classdiagramsettings member_max_width 0 end
-  xyz 338 111 2000
+  xyz 338 215 2000
 end
 note 129794 "The static methods to get DBMS specific fields seems to be obselete. 
 At runtime, if we have to list available fields, we have a driver loaded.
 If we want a mapping between QMetaType::Type and FieldType, we are do copy, or something else, and, again, we have a driver loaded."
-  xyzwh 40.5 416.5 2000 835 89
+  xyzwh 40.5 440.5 2000 835 89
 classcanvas 129922 class_ref 2873090 // FieldList
   classdiagramsettings member_max_width 0 end
-  xyz 54 279 2005
+  xyz 58 39 2005
 end
 relationcanvas 129410 relation_ref 3170434 // <directional composition>
-  decenter_begin 517
   from ref 128002 z 2001 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130434 relation_ref 3239554 // <directional composition>
+  decenter_begin 480
   from ref 129922 z 2006 to ref 128002
   no_role_a no_role_b
-  multiplicity_a_pos 153 247 3000 no_multiplicity_b
+  multiplicity_a_pos 152 115 3000 no_multiplicity_b
 end
 end

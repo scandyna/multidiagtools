@@ -57,6 +57,10 @@ QString DriverSQLite::getFieldDefinition(const Field & field) const
   if(field.length() > 0){
     sql += QStringLiteral("(") % QString::number(field.length()) % QStringLiteral(")");
   }
+  // Unique constraint
+  if(field.isUnique()){
+    sql += QStringLiteral(" UNIQUE");
+  }
   // Null constraint
   if(field.isRequired()){
     sql += QStringLiteral(" NOT NULL");

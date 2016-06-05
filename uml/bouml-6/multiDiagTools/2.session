@@ -17,13 +17,13 @@ diagrams
     120 110 100 4 0 0
   classdiagram_ref 1668354 // overviewOld
     120 110 100 18 0 0
-  classdiagram_ref 2461186 // Field
+  active  classdiagram_ref 2461186 // Field
     957 902 100 18 0 0
-  active  classdiagram_ref 2481666 // DriverImplementation
+  classdiagram_ref 2481666 // DriverImplementation
     957 902 100 21 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2468226 // Index
+selected classview_ref 1379842 // Relation
 open
   
   package_ref 409858 // principes
@@ -32,7 +32,7 @@ open
   package_ref 516226 // SqlItemModel
   classview_ref 1320578 // Driver
   classview_ref 1164418 // Field
-  classview_ref 1171074 // Index
+  classview_ref 1379842 // Relation
   classview_ref 1164546 // Schema
   classview_ref 1238018 // ArticleConnection
   classview_ref 1205122 // UnitConnection
