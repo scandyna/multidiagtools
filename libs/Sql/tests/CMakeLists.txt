@@ -41,3 +41,8 @@ add_test(MdtSqlSchemaDriverSqliteTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlschemadr
 add_executable(mdtsqlschemadrivermysqltest src/SchemaDriverMySqlTest.cpp)
 target_link_libraries(mdtsqlschemadrivermysqltest "mdtsqltest")
 add_test(MdtSqlSchemaDriverMySqlTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlschemadrivermysqltest)
+
+# Target MdtSqlSchemaDriverPostgreSqlTest
+add_executable(mdtsqlschemadriverpostgresqltest src/SchemaDriverPostgreSqlTest.cpp)
+target_link_libraries(mdtsqlschemadriverpostgresqltest "mdtsqltest")
+add_test(MdtSqlSchemaDriverPostgreSqlTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlschemadriverpostgresqltest)

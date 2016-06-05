@@ -337,17 +337,64 @@ void SchemaDriverSqliteTest::indexDefinitionTest()
 {
   using Mdt::Sql::Schema::Field;
   using Mdt::Sql::Schema::Index;
+  using Mdt::Sql::Schema::Table;
 
   Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
   QString expectedSql;
-  Field Id_A_PK, Id_B_PK;
+  Field Id_A, Id_B;
   Index index;
 
   /*
+   * Setup fields
+   */
+  Id_A.setName("Id_A");
+  Id_B.setName("Id_B");
+  /*
+   * Setup a table
+   */
+  Table Client_tbl;
+  Client_tbl.setTableName("Client_tbl");
+  /*
    * Non unique index with 1 field
    */
-  
-  
+  // Setup index
+  index.clear();
+  index.setTable(Client_tbl);
+  index.addField(Id_A);
+  index.generateName();
+  // Check
+  expectedSql = "CREATE INDEX \"Client_tbl_Id_A_index\" ON \"Client_tbl\" (\"Id_A\")";
+  QCOMPARE(driver.getSqlToCreateIndex(index), expectedSql);
+  expectedSql = "DROP INDEX IF EXISTS \"Client_tbl_Id_A_index\"";
+  QCOMPARE(driver.getSqlToDropIndex(index), expectedSql);
+  /*
+   * Non unique index with 2 fields
+   */
+  // Setup index
+  index.clear();
+  index.setTable(Client_tbl);
+  index.addField(Id_A);
+  index.addField(Id_B);
+  index.generateName();
+  // Check
+  expectedSql = "CREATE INDEX \"Client_tbl_Id_A_Id_B_index\" ON \"Client_tbl\" (\"Id_A\",\"Id_B\")";
+  QCOMPARE(driver.getSqlToCreateIndex(index), expectedSql);
+  expectedSql = "DROP INDEX IF EXISTS \"Client_tbl_Id_A_Id_B_index\"";
+  QCOMPARE(driver.getSqlToDropIndex(index), expectedSql);
+  /*
+   * Unique index with 1 field
+   */
+  // Setup index
+  index.clear();
+  index.setUnique(true);
+  index.setTable(Client_tbl);
+  index.addField(Id_A);
+  index.generateName();
+  // Check
+  expectedSql = "CREATE UNIQUE INDEX \"Client_tbl_Id_A_index\" ON \"Client_tbl\" (\"Id_A\")";
+  QCOMPARE(driver.getSqlToCreateIndex(index), expectedSql);
+  expectedSql = "DROP INDEX IF EXISTS \"Client_tbl_Id_A_index\"";
+  QCOMPARE(driver.getSqlToDropIndex(index), expectedSql);
 }
 
 /*

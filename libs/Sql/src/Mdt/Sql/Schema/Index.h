@@ -22,6 +22,7 @@
 #define MDT_SQL_SCHEMA_INDEX_H
 
 #include "Field.h"
+#include "Table.h"
 #include <QString>
 #include <QStringList>
 
@@ -74,12 +75,19 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return pvName;
     }
 
-    /*! \brief Set table name
+    /*! \brief Set table
      */
-    void setTableName(const QString & name)
+    void setTable(const Table & table)
     {
-      pvTableName = name;
+      pvTableName = table.tableName();
     }
+
+//     /*! \brief Set table name
+//      */
+//     void setTableName(const QString & name)
+//     {
+//       pvTableName = name;
+//     }
 
     /*! \brief Get table name
      */
@@ -111,6 +119,13 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       Q_ASSERT(index >= 0);
       Q_ASSERT(index < pvFieldNameList.size());
       return pvFieldNameList.at(index);
+    }
+
+    /*! \brief Get list of field names
+     */
+    QStringList fieldNameList() const
+    {
+      return pvFieldNameList;
     }
 
     /*! \brief Set unique constraint

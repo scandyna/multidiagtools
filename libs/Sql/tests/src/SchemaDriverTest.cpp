@@ -53,6 +53,7 @@ void SchemaDriverTest::driverTypeMapTest()
   QVERIFY(Driver::typeFromDbmsType(QSqlDriver::UnknownDbms) == DriverType::Unknown);
   QVERIFY(Driver::typeFromDbmsType(QSqlDriver::MySqlServer) == DriverType::MySQL);
   QVERIFY(Driver::typeFromDbmsType(QSqlDriver::SQLite) == DriverType::SQLite);
+  QVERIFY(Driver::typeFromDbmsType(QSqlDriver::PostgreSQL) == DriverType::PostgreSQL);
 }
 
 /*

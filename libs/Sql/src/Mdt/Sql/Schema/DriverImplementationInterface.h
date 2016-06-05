@@ -104,16 +104,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     virtual QString getPrimaryKeyDefinition(const PrimaryKey & pk) const;
 
     /*! \brief Get SQL statement to create a index
-     *
-     * NOTE
-     * \todo Define if/when database name should be included. Can be defined internally ??
      */
     virtual QString getSqlToCreateIndex(const Index & index) const;
 
     /*! \brief Get SQL statement to drop a index
-     *
-     ** NOTE
-     * \todo Define if/when database name should be included. Can be defined internally ??
      */
     virtual QString getSqlToDropIndex(const Index & index) const;
 

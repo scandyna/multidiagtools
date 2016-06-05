@@ -108,7 +108,24 @@ QString DriverImplementationInterface::getPrimaryKeyDefinition(const PrimaryKey 
 QString DriverImplementationInterface::getSqlToCreateIndex(const Index & index) const
 {
   QString sql;
+  QStringList fieldNameList = index.fieldNameList();
 
+  // Escape field names
+  for(auto & fieldName : fieldNameList){
+    fieldName = escapeFieldName(fieldName);
+  }
+  // Create SQL statement
+  if(index.isUnique()){
+    sql = QStringLiteral("CREATE UNIQUE INDEX ");
+  }else{
+    sql = QStringLiteral("CREATE INDEX ");
+  }
+  sql += escapeTableName(index.name()) \
+       % QStringLiteral(" ON ") \
+       % escapeTableName(index.tableName()) \
+       % QStringLiteral(" (") \
+       % fieldNameList.join(',') \
+       % QStringLiteral(")");
 
   return sql;
 }
@@ -116,8 +133,9 @@ QString DriverImplementationInterface::getSqlToCreateIndex(const Index & index) 
 QString DriverImplementationInterface::getSqlToDropIndex(const Index & index) const
 {
   QString sql;
-  ///const QStringList fieldNameList = index.
 
+  sql = QStringLiteral("DROP INDEX IF EXISTS ") \
+      % escapeTableName(index.name());
 
   return sql;
 }

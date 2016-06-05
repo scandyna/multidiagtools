@@ -114,8 +114,9 @@ namespace Mdt{ namespace Sql{ namespace Schema{
           return DriverType::MySQL;
         case QSqlDriver::SQLite:
           return DriverType::SQLite;
-        case QSqlDriver::MSSqlServer:
         case QSqlDriver::PostgreSQL:
+          return DriverType::PostgreSQL;
+        case QSqlDriver::MSSqlServer:
         case QSqlDriver::Oracle:
         case QSqlDriver::Sybase:
         case QSqlDriver::Interbase:

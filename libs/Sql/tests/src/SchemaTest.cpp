@@ -514,12 +514,19 @@ void SchemaTest::indexTest()
   using Mdt::Sql::Schema::Index;
   using Mdt::Sql::Schema::Field;
   using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::Table;
 
   /*
    * Setup a field
    */
   Field Id_A;
   Id_A.setName("Id_A");
+  /*
+   * Setup a table
+   */
+  Table Client_tbl;
+  Client_tbl.setTableName("Client_tbl");
+  Client_tbl.addField(Id_A);
   /*
    * Initial state
    */
@@ -529,7 +536,7 @@ void SchemaTest::indexTest()
   /*
    * Simple set/get
    */
-  index.setTableName("Client_tbl");
+  index.setTable(Client_tbl);
   QVERIFY(index.isNull());
   index.addField(Id_A);
   QVERIFY(index.isNull());
@@ -541,6 +548,8 @@ void SchemaTest::indexTest()
   QCOMPARE(index.tableName(), QString("Client_tbl"));
   QCOMPARE(index.fieldCount(), 1);
   QCOMPARE(index.fieldName(0), QString("Id_A"));
+  QCOMPARE(index.fieldNameList().size(), 1);
+  QCOMPARE(index.fieldNameList().at(0), QString("Id_A"));
   QVERIFY(index.isUnique());
   /*
    * Clear

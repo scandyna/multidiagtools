@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 44
+  revision 45
   modified_by 2 "philippe"
   // class settings
   
@@ -1232,6 +1232,29 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 3173890 // <generalisation>
+	  b parent class_ref 2795906 // DriverImplementationInterface
+      end
+    end
+
+    class 2879618 "DriverPostgreSQL"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3270914 // <generalisation>
+	relation 3252610 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3270914 // <generalisation>
 	  b parent class_ref 2795906 // DriverImplementationInterface
       end
     end
