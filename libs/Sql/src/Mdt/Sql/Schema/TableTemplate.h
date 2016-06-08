@@ -119,6 +119,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *    using Mdt::Sql::Schema::Field;
    *    using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
    *    using Mdt::Sql::Schema::ForeignKey;
+   *    using Mdt::Sql::Schema::ParentTableFieldName;
+   *    using Mdt::Sql::Schema::ChildTableFieldName;
    *
    *    Client_tbl client_tbl;
    *
@@ -142,7 +144,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *    Fk_Client_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
    *    Fk_Client_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
    *    Fk_Client_Id_FK.setCreateChildIndex(true);
-   *    Fk_Client_Id_FK.addKeyFields(ParentTableField(client_tbl.Id_PK()), ChildTableField(Client_Id_FK));
+   *    Fk_Client_Id_FK.addKeyFields(ParentTableFieldName(client_tbl.Id_PK()), ChildTableFieldName(Client_Id_FK));
    *    // Setup table
    *    setTableName("Address_tbl");
    *    setPrimaryKey(Id_PK);
@@ -162,6 +164,13 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     Table toTable() const
     {
       return pvTable;
+    }
+
+    /*! \brief Get table name
+     */
+    QString tableName() const
+    {
+      return pvTable.tableName();
     }
 
    protected:

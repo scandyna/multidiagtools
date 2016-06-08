@@ -22,6 +22,8 @@
 #define MDT_SQL_SCHEMA_FOREIGN_KEY_H
 
 #include "Table.h"
+#include "ParentTableFieldName.h"
+#include "ChildTableFieldName.h"
 #include <QString>
 #include <vector>
 
@@ -56,6 +58,11 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     QString pvChildTableFieldName;
   };
 
+  template<typename T>
+  class TableTemplate;
+
+  class Table;
+
   /*! \brief Foreign key information for SQL database schema creation
    */
   class ForeignKey
@@ -80,6 +87,24 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       pvOnDeleteAction(NoAction),
       pvOnUpdateAction(NoAction)
     {
+    }
+
+    /*! \brief Set parent table
+     *
+     * \tparam T Must be of type Table or derived from TableTemplate
+     */
+//     template<typename T>
+//     void setParentTable(const T & table)
+//     {
+//       pvParentTableName = table.tableName();
+//     }
+
+    void setParentTable(const Table & table);
+
+    template<typename T>
+    void setParentTable(const TableTemplate<T> & table)
+    {
+      pvParentTableName = table.tableName();
     }
 
     /*! \brief Get parent table name
@@ -150,6 +175,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     QString pvChildTableName;
     std::vector<ForeignKeyItem> pvItems;
   };
+
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{
 

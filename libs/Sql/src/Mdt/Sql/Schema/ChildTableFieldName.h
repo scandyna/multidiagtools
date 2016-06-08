@@ -18,48 +18,39 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_TEST_H
-#define MDT_SQL_SCHEMA_TEST_H
+#ifndef MDT_SQL_SCHEMA_CHILD_TABLE_FIELD_NAME_H
+#define MDT_SQL_SCHEMA_CHILD_TABLE_FIELD_NAME_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "AutoIncrementPrimaryKey.h"
+#include "SingleFieldPrimaryKey.h"
+#include "Field.h"
+#include <QString>
 
-class SchemaTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace Sql{ namespace Schema{
 
- private slots:
+  /*! \brief Wrapper for compile time checking
+   */
+  class ChildTableFieldName
+  {
+   public:
 
-  void initTestCase();
-  void cleanupTestCase();
+    /*! \brief Constructor
+     */
+    explicit ChildTableFieldName(const Field & field)
+     : pvFieldName(field.name()) {}
 
-  void fieldTypeListTest();
-  void fieldTypeNameTest();
-  void fiedTypeListModelTest();
+    /*! \brief Get field name
+     */
+    QString fieldName() const
+    {
+      return pvFieldName;
+    }
 
-  void collationTest();
+   private:
 
-  void fieldTest();
-  void fieldListTest();
+    QString pvFieldName;
+  };
 
-  void autoIncrementPrimaryKeyTest();
-  void singleFieldPrimaryKeyTest();
-  void primaryKeyTest();
-  void primaryKeyContainerTest();
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{
 
-  void indexTest();
-
-  void parentTableFieldNameTest();
-  void childTableFieldNameTest();
-
-  void foreignKeyTest();
-
-  void tablePrimaryKeyTest();
-  void tablePrimaryKeyAicBenchmark();
-  void tablePrimaryKeyMcBenchmark();
-  void tableTest();
-  void tableModelTest();
-
-};
-
-#endif // #ifndef MDT_SQL_SCHEMA_TEST_H
+#endif // #ifndef MDT_SQL_SCHEMA_CHILD_TABLE_FIELD_NAME_H

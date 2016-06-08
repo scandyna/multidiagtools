@@ -578,10 +578,86 @@ void SchemaTest::indexTest()
   QVERIFY(index.isNull());
 }
 
+void SchemaTest::parentTableFieldNameTest()
+{
+  using Mdt::Sql::Schema::ParentTableFieldName;
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::FieldType;
+
+  /*
+   * Setup fields
+   */
+  // Id_PK
+  AutoIncrementPrimaryKey Id_PK;
+  Id_PK.setFieldName("Id_PK");
+  // Code_PK
+  SingleFieldPrimaryKey Code_PK;
+  Code_PK.setFieldName("Code_PK");
+  // Name
+  Field Name;
+  Name.setName("Name");
+  /*
+   * Test
+   */
+  ParentTableFieldName aic(Id_PK);
+  QCOMPARE(aic.fieldName(), QString("Id_PK"));
+  ParentTableFieldName sfpk(Code_PK);
+  QCOMPARE(sfpk.fieldName(), QString("Code_PK"));
+  ParentTableFieldName f(Name);
+  QCOMPARE(f.fieldName(), QString("Name"));
+}
+
+void SchemaTest::childTableFieldNameTest()
+{
+  using Mdt::Sql::Schema::ChildTableFieldName;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::FieldType;
+
+  /*
+   * Setup fields
+   */
+  // Name
+  Field Name;
+  Name.setName("Name");
+  /*
+   * Tests
+   */
+  ChildTableFieldName f(Name);
+  QCOMPARE(f.fieldName(), QString("Name"));
+}
+
 void SchemaTest::foreignKeyTest()
 {
   using Mdt::Sql::Schema::ForeignKey;
+  using Mdt::Sql::Schema::Table;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
 
+  /*
+   * Setup fields
+   */
+  // Id_PK
+  AutoIncrementPrimaryKey Id_PK;
+  Id_PK.setFieldName("Id_PK");
+  // Client_Id_FK
+  Field Client_Id_FK;
+  Client_Id_FK.setName("Client_Id_FK");
+  /*
+   * Setup Client_tbl
+   */
+  /// \todo Create a other table than Client_tbl
+  Table Client_tbl;
+  Client_tbl.setTableName("Client_tbl");
+  Client_tbl.setPrimaryKey(Id_PK);
+  /*
+   * Init Address_tbl
+   */
+  Table Address_tbl;
+  Address_tbl.setTableName("Address_tbl");
+  Address_tbl.setPrimaryKey(Id_PK);
   /*
    * Initial state
    */
@@ -593,7 +669,11 @@ void SchemaTest::foreignKeyTest()
   /*
    * Set/get
    */
-  
+  fk.setParentTable(Client_tbl);
+  QCOMPARE(fk.parentTableName(), QString("Client_tbl"));
+  QVERIFY(fk.isNull());
+  fk.setParentTable(Schema::Client_tbl());
+  QCOMPARE(fk.parentTableName(), QString("Client_tbl"));
   /*
    * Clear
    */

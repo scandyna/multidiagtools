@@ -24,6 +24,7 @@
 #include "Field.h"
 #include "FieldList.h"
 #include "PrimaryKeyContainer.h"
+#include "ForeignKey.h"
 #include <QString>
 #include <vector>
 

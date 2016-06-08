@@ -18,48 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_TEST_H
-#define MDT_SQL_SCHEMA_TEST_H
+#include "ForeignKey.h"
+#include "Table.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace Sql{ namespace Schema{
 
-class SchemaTest : public QObject
+void ForeignKey::setParentTable(const Table & table)
 {
- Q_OBJECT
+  pvParentTableName = table.tableName();
+}
 
- private slots:
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void fieldTypeListTest();
-  void fieldTypeNameTest();
-  void fiedTypeListModelTest();
-
-  void collationTest();
-
-  void fieldTest();
-  void fieldListTest();
-
-  void autoIncrementPrimaryKeyTest();
-  void singleFieldPrimaryKeyTest();
-  void primaryKeyTest();
-  void primaryKeyContainerTest();
-
-  void indexTest();
-
-  void parentTableFieldNameTest();
-  void childTableFieldNameTest();
-
-  void foreignKeyTest();
-
-  void tablePrimaryKeyTest();
-  void tablePrimaryKeyAicBenchmark();
-  void tablePrimaryKeyMcBenchmark();
-  void tableTest();
-  void tableModelTest();
-
-};
-
-#endif // #ifndef MDT_SQL_SCHEMA_TEST_H
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{
