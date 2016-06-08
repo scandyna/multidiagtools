@@ -171,6 +171,15 @@ QVariant Table::fieldDefaultValue(int index) const
   return refFieldConst(index).defaultValue();
 }
 
+Field Table::field(int index) const
+{
+  Q_ASSERT(index >= 0);
+  Q_ASSERT(index < fieldCount());
+  Q_ASSERT(index != pvPrimaryKeyFieldIndex);
+
+  return refFieldConst(index);
+}
+
 bool Table::isNull() const
 {
   return ( pvTableName.isEmpty() || (fieldCount() < 1) );
@@ -179,6 +188,8 @@ bool Table::isNull() const
 void Table::clear()
 {
   pvPrimaryKeyFieldIndex = -1;
+  pvPrimaryKeyFieldIndexList.clear();
+  pvPrimaryKey.clear();
   pvIsTemporary = false;
   pvTableName.clear();
   pvFieldList.clear();

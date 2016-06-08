@@ -31,6 +31,7 @@
 #include "Mdt/Sql/Schema/PrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKeyContainer.h"
 #include "Mdt/Sql/Schema/Index.h"
+#include "Mdt/Sql/Schema/ForeignKey.h"
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Schema/TableModel.h"
 #include "Schema/Client_tbl.h"
@@ -497,6 +498,7 @@ void SchemaTest::primaryKeyContainerTest()
   QCOMPARE(container.fieldName(), QString("Id_PK"));
   QVERIFY(container.fieldType() == FieldType::Integer);
   QCOMPARE(container.fieldLength(), -1);
+  QCOMPARE(container.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
   /*
    * SingleFieldPrimaryKey
    */
@@ -505,6 +507,7 @@ void SchemaTest::primaryKeyContainerTest()
   QCOMPARE(container.fieldName(), QString("Code_PK"));
   QVERIFY(container.fieldType() == FieldType::Varchar);
   QCOMPARE(container.fieldLength(), 50);
+  QCOMPARE(container.singleFieldPrimaryKey().fieldName(), QString("Code_PK"));
   /*
    * PrimaryKey
    */
@@ -513,6 +516,13 @@ void SchemaTest::primaryKeyContainerTest()
   QVERIFY(container.fieldName().isEmpty());
   QVERIFY(container.fieldType() == FieldType::UnknownType);
   QCOMPARE(container.fieldLength(), -1);
+  QCOMPARE(container.primaryKey().fieldCount(), 2);
+  /*
+   * Clear
+   */
+  container.clear();
+  QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QCOMPARE(container.primaryKey().fieldCount(), 0);
 }
 
 void SchemaTest::indexTest()
@@ -568,6 +578,27 @@ void SchemaTest::indexTest()
   QVERIFY(index.isNull());
 }
 
+void SchemaTest::foreignKeyTest()
+{
+  using Mdt::Sql::Schema::ForeignKey;
+
+  /*
+   * Initial state
+   */
+  ForeignKey fk;
+  QVERIFY(fk.onDeleteAction() == ForeignKey::NoAction);
+  QVERIFY(fk.onUpdateAction() == ForeignKey::NoAction);
+  QVERIFY(!fk.createChildIndex());
+  QVERIFY(fk.isNull());
+  /*
+   * Set/get
+   */
+  
+  /*
+   * Clear
+   */
+}
+
 void SchemaTest::tablePrimaryKeyTest()
 {
   using Mdt::Sql::Schema::Table;
@@ -576,6 +607,7 @@ void SchemaTest::tablePrimaryKeyTest()
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
   using Mdt::Sql::Schema::SingleFieldPrimaryKey;
   using Mdt::Sql::Schema::PrimaryKey;
+  using Mdt::Sql::Schema::PrimaryKeyContainer;
 
   /*
    * Setup fields
@@ -643,6 +675,8 @@ void SchemaTest::tablePrimaryKeyTest()
   QVERIFY(table.contains("ID_PK"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
+  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  QCOMPARE(table.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
   /*
    * Add auto increment PK after a other field
    */
@@ -675,6 +709,8 @@ void SchemaTest::tablePrimaryKeyTest()
   QVERIFY(table.contains("ID_PK"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
+  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  QCOMPARE(table.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
   /*
    * Add single field PK at first
    */
@@ -707,6 +743,8 @@ void SchemaTest::tablePrimaryKeyTest()
   QVERIFY(table.contains("Code_pk"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
+  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::SingleFieldPrimaryKeyType);
+  QCOMPARE(table.singleFieldPrimaryKey().fieldName(), QString("Code_PK"));
   /*
    * Add single field PK after a other field
    */
@@ -739,6 +777,8 @@ void SchemaTest::tablePrimaryKeyTest()
   QVERIFY(table.contains("Code_pk"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
+  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::SingleFieldPrimaryKeyType);
+  QCOMPARE(table.singleFieldPrimaryKey().fieldName(), QString("Code_PK"));
   /*
    * Add primary key (must be added when fields are added)
    */
@@ -780,6 +820,8 @@ void SchemaTest::tablePrimaryKeyTest()
   QVERIFY(table.contains("Id_B"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
+  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QCOMPARE(table.primaryKey().fieldCount(), 2);
 }
 
 void SchemaTest::tablePrimaryKeyAicBenchmark()
@@ -891,6 +933,7 @@ void SchemaTest::tableTest()
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
   using Mdt::Sql::Schema::SingleFieldPrimaryKey;
   using Mdt::Sql::Schema::PrimaryKey;
+  using Mdt::Sql::Schema::PrimaryKeyContainer;
 
   /*
    * Setup fields
@@ -960,6 +1003,8 @@ void SchemaTest::tableTest()
   QVERIFY(table.contains("ID_PK"));
   QVERIFY(table.contains("Name"));
   QVERIFY(!table.contains(""));
+  QCOMPARE(table.field(1).name(), QString("Name"));
+  QCOMPARE(table.field(2).name(), QString("Remarks"));
   /*
    * Clear
    */
@@ -967,6 +1012,8 @@ void SchemaTest::tableTest()
   QVERIFY(!table.isTemporary());
   QVERIFY(table.tableName().isEmpty());
   QCOMPARE(table.fieldCount(), 0);
+  QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QCOMPARE(table.primaryKey().fieldCount(), 0);
   QVERIFY(table.isNull());
 }
 

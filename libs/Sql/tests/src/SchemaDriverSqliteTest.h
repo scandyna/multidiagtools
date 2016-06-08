@@ -46,6 +46,8 @@ class SchemaDriverSqliteTest : public QObject
   void singleFieldPrimaryKeyDefinitionTest();
   void primaryKeyDefinitionTest();
   void indexDefinitionTest();
+  void foreignKeyDefinitionTest();
+  void tableDefinitionTest();
 
  private:
 

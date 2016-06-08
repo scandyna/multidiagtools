@@ -49,6 +49,8 @@ class SchemaTest : public QObject
 
   void indexTest();
 
+  void foreignKeyTest();
+
   void tablePrimaryKeyTest();
   void tablePrimaryKeyAicBenchmark();
   void tablePrimaryKeyMcBenchmark();

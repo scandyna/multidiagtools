@@ -140,6 +140,78 @@ QString DriverImplementationInterface::getSqlToDropIndex(const Index & index) co
   return sql;
 }
 
+QString DriverImplementationInterface::getSqlToCreateTable(const Table & table) const
+{
+  Q_ASSERT(!table.isNull());
+  Q_ASSERT(table.fieldCount() > 0);
+
+  QString sql;
+  int firstFieldIndex = 0;
+  const int lastFieldIndex = table.fieldCount() - 1;
+
+  // Temporary table flag
+  if(table.isTemporary()){
+    sql = QStringLiteral("CREATE TEMPORARY TABLE ");
+  }else{
+    sql = QStringLiteral("CREATE TABLE ");
+  }
+  // Table name
+  sql += escapeTableName(table.tableName()) % QStringLiteral(" (\n");
+  /*
+   * If primary key is a AutoIncrementPrimaryKey or a SingleFieldPrimaryKey
+   * we add them as field (else it will be a table constraint)
+   */
+  switch(table.primaryKeyType()){
+    case PrimaryKeyContainer::AutoIncrementPrimaryKeyType:
+      sql += QStringLiteral("  ") % getPrimaryKeyFieldDefinition(table.autoIncrementPrimaryKey());
+      firstFieldIndex = 1;
+      break;
+    case PrimaryKeyContainer::SingleFieldPrimaryKeyType:
+      sql += QStringLiteral("  ") % getPrimaryKeyFieldDefinition(table.singleFieldPrimaryKey());
+      firstFieldIndex = 1;
+      break;
+    case PrimaryKeyContainer::PrimaryKeyType:
+      firstFieldIndex = 0;
+      break;
+  }
+  if(firstFieldIndex == 1){
+    if(firstFieldIndex <= lastFieldIndex){
+      sql += QStringLiteral(",\n");
+    }
+  }
+  // Add fields (other than AutoIncrementPrimaryKey or SingleFieldPrimaryKey)
+  Q_ASSERT(lastFieldIndex >= 0);
+  for(int i = firstFieldIndex; i < lastFieldIndex; ++i){
+    sql += QStringLiteral("  ") % getFieldDefinition(table.field(i)) % QStringLiteral(",\n");
+  }
+  if(firstFieldIndex < table.fieldCount()){
+    sql += QStringLiteral("  ") % getFieldDefinition(table.field(lastFieldIndex));
+  }
+  // Add primary key constraint if needed
+  if(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType){
+    const auto pk = table.primaryKey();
+    if(pk.fieldCount() > 0){
+      sql += QStringLiteral(",\n  ") % getPrimaryKeyDefinition(pk);
+    }
+  }
+  // Add foreign key constraints
+  
+  // Add engine
+
+  sql += QStringLiteral("\n);\n");
+
+  return sql;
+}
+
+QString DriverImplementationInterface::getSqlToDropTable(const Table& table) const
+{
+  QString sql;
+
+  sql = QStringLiteral("DROP TABLE IF EXISTS ") % escapeTableName(table.tableName()) % QStringLiteral(";\n");
+
+  return sql;
+}
+
 QString DriverImplementationInterface::escapeFieldName(const QString & fieldName) const
 {
   return qsqlDriver()->escapeIdentifier(fieldName, QSqlDriver::FieldName);

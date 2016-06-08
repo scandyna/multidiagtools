@@ -109,4 +109,28 @@ int PrimaryKeyContainer::fieldLength() const
   return visitor.fieldLength;
 }
 
+AutoIncrementPrimaryKey PrimaryKeyContainer::autoIncrementPrimaryKey() const
+{
+  Q_ASSERT(pvType == AutoIncrementPrimaryKeyType);
+  return boost::get<AutoIncrementPrimaryKey>(pvPrimaryKey);
+}
+
+SingleFieldPrimaryKey PrimaryKeyContainer::singleFieldPrimaryKey() const
+{
+  Q_ASSERT(pvType == SingleFieldPrimaryKeyType);
+  return boost::get<SingleFieldPrimaryKey>(pvPrimaryKey);
+}
+
+PrimaryKey PrimaryKeyContainer::primaryKey() const
+{
+  Q_ASSERT(pvType == PrimaryKeyType);
+  return boost::get<PrimaryKey>(pvPrimaryKey);
+}
+
+void PrimaryKeyContainer::clear()
+{
+  pvPrimaryKey = PrimaryKey();
+  pvType = PrimaryKeyType;
+}
+
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

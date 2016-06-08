@@ -418,6 +418,205 @@ void SchemaDriverSqliteTest::indexDefinitionTest()
   QCOMPARE(driver.getSqlToDropIndex(index), expectedSql);
 }
 
+void SchemaDriverSqliteTest::foreignKeyDefinitionTest()
+{
+  using Mdt::Sql::Schema::Field;
+
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  QString expectedSql;
+
+}
+
+void SchemaDriverSqliteTest::tableDefinitionTest()
+{
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
+  using Mdt::Sql::Schema::PrimaryKey;
+  using Mdt::Sql::Schema::Table;
+
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  QString expectedSql;
+  Table table;
+
+  /*
+   * Setup fields and primary keys
+   */
+  // Id_PK
+  AutoIncrementPrimaryKey Id_PK;
+  Id_PK.setFieldName("Id_PK");
+  // Code_PK
+  SingleFieldPrimaryKey Code_PK;
+  Code_PK.setFieldName("Code_PK");
+  Code_PK.setFieldType(FieldType::Varchar);
+  Code_PK.setFieldLength(20);
+  // Id_A
+  Field Id_A;
+  Id_A.setName("Id_A");
+  Id_A.setType(FieldType::Integer);
+  Id_A.setRequired(true);
+  // Id_B
+  Field Id_B;
+  Id_B.setName("Id_B");
+  Id_B.setType(FieldType::Integer);
+  Id_B.setRequired(true);
+  // Id_AB_PK primary key
+  PrimaryKey Id_AB_PK;
+  Id_AB_PK.addField(Id_A);
+  Id_AB_PK.addField(Id_B);
+  // Name
+  Field Name;
+  Name.setName("Name");
+  Name.setType(FieldType::Varchar);
+  Name.setLength(50);
+  // Remarks
+  Field Remarks;
+  Remarks.setName("Remarks");
+  Remarks.setType(FieldType::Varchar);
+  Remarks.setLength(100);
+
+//   Table Client_tbl;
+//   Client_tbl.setTableName("Client_tbl");
+//   Client_tbl.setPrimaryKey(Id_PK);
+//   Client_tbl.addField(Name);
+
+  /*
+   * Check SQL to create table:
+   *  - Auto increment primary key
+   *  - 0 other field
+   */
+  // Setup table
+  table.clear();
+  table.setTableName("Client_tbl");
+  table.setPrimaryKey(Id_PK);
+  // Check
+  expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
+  expectedSql += "  \"Id_PK\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT\n";
+  expectedSql += ");\n";
+  QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
+  /*
+   * Check SQL to create table:
+   *  - Auto increment primary key
+   *  - 1 other field
+   */
+  // Setup table
+  table.clear();
+  table.setTableName("Client_tbl");
+  table.setPrimaryKey(Id_PK);
+  table.addField(Name);
+  // Check
+  expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
+  expectedSql += "  \"Id_PK\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
+  expectedSql += "  \"Name\" VARCHAR(50) DEFAULT NULL\n";
+  expectedSql += ");\n";
+  QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
+  /*
+   * Check SQL to create table:
+   *  - Auto increment primary key
+   *  - 2 other fields
+   */
+  // Setup table
+  table.clear();
+  table.setTableName("Client_tbl");
+  table.setPrimaryKey(Id_PK);
+  table.addField(Name);
+  table.addField(Remarks);
+  // Check
+  expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
+  expectedSql += "  \"Id_PK\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
+  expectedSql += "  \"Name\" VARCHAR(50) DEFAULT NULL,\n";
+  expectedSql += "  \"Remarks\" VARCHAR(100) DEFAULT NULL\n";
+  expectedSql += ");\n";
+  QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
+  /*
+   * Check SQL to create table:
+   *  - Single field primary key
+   *  - 0 other field
+   */
+  // Setup table
+  table.clear();
+  table.setTableName("Client_tbl");
+  table.setPrimaryKey(Code_PK);
+  // Check
+  expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
+  expectedSql += "  \"Code_PK\" VARCHAR(20) NOT NULL PRIMARY KEY\n";
+  expectedSql += ");\n";
+  QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
+  /*
+   * Check SQL to create table:
+   *  - Single field primary key
+   *  - 1 other field
+   */
+  // Setup table
+  table.clear();
+  table.setTableName("Client_tbl");
+  table.setPrimaryKey(Code_PK);
+  table.addField(Name);
+  // Check
+  expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
+  expectedSql += "  \"Code_PK\" VARCHAR(20) NOT NULL PRIMARY KEY,\n";
+  expectedSql += "  \"Name\" VARCHAR(50) DEFAULT NULL\n";
+  expectedSql += ");\n";
+  QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
+  /*
+   * Check SQL to create table:
+   *  - Only 1 field (No primary key)
+   */
+  // Setup table
+  table.clear();
+  table.setTableName("Client_tbl");
+  table.addField(Name);
+  // Check
+  expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
+  expectedSql += "  \"Name\" VARCHAR(50) DEFAULT NULL\n";
+  expectedSql += ");\n";
+  QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
+  /*
+   * Check SQL to create table:
+   *  - Composed primary key
+   *  - 0 other field
+   */
+  // Setup table
+  table.clear();
+  table.setTableName("Client_tbl");
+  table.addField(Id_A);
+  table.addField(Id_B);
+  table.setPrimaryKey(Id_AB_PK);
+  // Check
+  expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
+  expectedSql += "  \"Id_A\" INTEGER NOT NULL DEFAULT NULL,\n";
+  expectedSql += "  \"Id_B\" INTEGER NOT NULL DEFAULT NULL,\n";
+  expectedSql += "  PRIMARY KEY (\"Id_A\",\"Id_B\")\n";
+  expectedSql += ");\n";
+  QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
+  /*
+   * Check SQL to create table:
+   *  - Composed primary key
+   *  - 1 other field
+   */
+  // Setup table
+  table.clear();
+  table.setTableName("Client_tbl");
+  table.addField(Id_A);
+  table.addField(Id_B);
+  table.addField(Name);
+  table.setPrimaryKey(Id_AB_PK);
+  // Check
+  expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
+  expectedSql += "  \"Id_A\" INTEGER NOT NULL DEFAULT NULL,\n";
+  expectedSql += "  \"Id_B\" INTEGER NOT NULL DEFAULT NULL,\n";
+  expectedSql += "  \"Name\" VARCHAR(50) DEFAULT NULL,\n";
+  expectedSql += "  PRIMARY KEY (\"Id_A\",\"Id_B\")\n";
+  expectedSql += ");\n";
+  QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
+  /*
+   * Check SQL to drop table
+   */
+  expectedSql = "DROP TABLE IF EXISTS \"Client_tbl\";\n";
+  QCOMPARE(driver.getSqlToDropTable(table), expectedSql);
+}
+
 /*
  * Main
  */

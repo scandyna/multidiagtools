@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 49
+  revision 50
   modified_by 2 "philippe"
   // class settings
   
@@ -3086,176 +3086,7 @@ ${inlines}
       size A4
     end
 
-    class 2886146 "Relation"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3277570 // <dependency>
-	relation 3259266 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3277570 // <dependency>
-	  b parent class_ref 2775810 // Table
-      end
-
-      classrelation 3277954 // <directional composition>
-	relation 3259650 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3277954 // <directional composition>
-	  b parent class_ref 2887170 // RelationItem
-      end
-
-      attribute 2751746 "ParentTableName"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2751874 "ChildTableName"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2751618 "ItemList"
-	private type class_ref 2887170 // RelationItem
-	multiplicity "*"
-	stereotype "vector"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 4299522 "setParentTable"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "table" type class_ref 2775810 // Table
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4299650 "setChildTable"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "table" type class_ref 2775810 // Table
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4300162 "setKey"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "childTableField" type class_ref 2775042 // Field
-	  param in name "parentTablePk" type class_ref 2824706 // AutoIncrementPrimaryKey
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4300290 "setKey"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "childTableField" type class_ref 2775042 // Field
-	  param in name "parentTablePk" type class_ref 2852610 // SingleFieldPrimaryKey
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4300418 "addKey"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "childTableField" type class_ref 2775042 // Field
-	  param in name "parentTableField" type class_ref 2775042 // Field
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 3278338 // <dependency>
-	relation 3260034 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3278338 // <dependency>
-	  b parent class_ref 2852610 // SingleFieldPrimaryKey
-      end
-
-      classrelation 3278466 // <dependency>
-	relation 3260162 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3278466 // <dependency>
-	  b parent class_ref 2824706 // AutoIncrementPrimaryKey
-      end
-    end
-
-    class 2887170 "RelationItem"
+    class 2887170 "ForeignKeyItem"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -3277,18 +3108,6 @@ ${inlines}
 	  b parent class_ref 2775042 // Field
       end
 
-      attribute 2752130 "ChildTableFieldName"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
       attribute 2752002 "ParentTableFieldName"
 	private type class_ref 161026 // QString
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -3301,11 +3120,23 @@ ${inlines}
 	MysqlColumn
       end
 
-      operation 4300546 "RelationItem"
+      attribute 2752130 "ChildTableFieldName"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 4300546 "ForeignKeyItem"
 	public explicit_return_type ""
 	nparams 2
-	  param in name "childTableFieldName" type class_ref 161026 // QString
 	  param in name "parentTableFieldName" type class_ref 161026 // QString
+	  param in name "childTableFieldName" type class_ref 161026 // QString
 	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
@@ -3385,6 +3216,66 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      class 2887042 "Action"
+	visibility public stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+	php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+	python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+	idl_decl "${comment}enum ${name} {
+${items}};
+"
+	explicit_switch_type ""
+	mysql_decl ""
+	
+      end
+
+      attribute 2751234 "CreateChildTableIndex"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2751362 "OnDeleteAction"
+	private type class_ref 2887042 // Action
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2751490 "OnUpdateAction"
+	private type class_ref 2887042 // Action
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       attribute 2612354 "ParentTableName"
 	private type class_ref 161026 // QString
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -3519,150 +3410,13 @@ ${inlines}
 	
       end
 
-      classrelation 3277826 // <directional composition>
-	relation 3259522 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3277826 // <directional composition>
-	  b parent class_ref 2886914 // ForeignKeySettings
-      end
-
-      operation 4299394 "fromRelation"
-	class_operation public return_type class_ref 2775682 // ForeignKey
-	nparams 2
-	  param in name "relation" type class_ref 2886146 // Relation
-	  param in name "settings" type class_ref 2886914 // ForeignKeySettings
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 3278594 // <directional composition>
-	relation 3260290 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3278594 // <directional composition>
-	  b parent class_ref 2886146 // Relation
-      end
-    end
-
-    class 2782594 "RelationKeyItem"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 2619650 "ParentFieldName"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2619778 "ChildFieldName"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-
-    class 2782722 "RelationKey"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3153410 // <directional composition>
-	relation 3135106 *-->
+      classrelation 3285122 // <directional composition>
+	relation 3266818 *-->
 	  a role_name "" multiplicity "*" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
-	    classrelation_ref 3153410 // <directional composition>
-	  b parent class_ref 2782594 // RelationKeyItem
-      end
-
-      attribute 2619906 "KeyList"
-	private type class_ref 2782594 // RelationKeyItem
-	multiplicity "*"
-	stereotype "vector"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 4131714 "setKeyFields"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "parentTablePk" type class_ref 2775554 // PrimaryKey
-	  param in name "childTableField" type class_ref 2775042 // Field
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4131842 "addKeyFields"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "parentTableField" type class_ref 2775042 // Field
-	  param in name "childTableField" type class_ref 2775042 // Field
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
+	    classrelation_ref 3285122 // <directional composition>
+	  b parent class_ref 2887170 // ForeignKeyItem
       end
     end
 
@@ -4046,80 +3800,6 @@ ${items}};
       end
     end
 
-    class 2886914 "ForeignKeySettings"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 2751234 "CreateChildTableIndex"
-	private explicit_type "bool"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      class 2887042 "Action"
-	visibility public stereotype "enum"
-	cpp_decl "${comment}enum ${name} {
-${items}
-};
-"
-	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
-${items};
-${members}}
-"
-	php_decl "${comment}${visibility}final class ${name} {
-${items}}
-"
-	python_2_2 python_decl "class ${name}:
-${docstring}${members}
-"
-	idl_decl "${comment}enum ${name} {
-${items}};
-"
-	explicit_switch_type ""
-	mysql_decl ""
-	
-      end
-
-      attribute 2751362 "OnDeleteAction"
-	private type class_ref 2887042 // Action
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2751490 "OnUpdateAction"
-	private type class_ref 2887042 // Action
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
   end
 
   classview 1320706 "Table"

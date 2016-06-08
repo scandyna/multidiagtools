@@ -44,6 +44,12 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *   public:
    *
    *    Client_tbl();
+   *
+   *    // We expose Id_PK which will be used when defining Address_tbl
+   *    AutoIncrementPrimaryKey Id_PK() const
+   *    {
+   *      return autoIncrementPrimaryKey();
+   *    }
    *  };
    *
    * } // namespace Schema{
@@ -75,6 +81,72 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *    setTableName("Client_tbl");
    *    setPrimaryKey(Id_PK);
    *    addField(Name);
+   *  }
+   *
+   * } // namespace Schema{
+   * \endcode
+   *
+   * We could also define Address_tbl.
+   *  Address_tbl.h would look like this:
+   * \code
+   * #ifndef SCHEMA_ADDRESS_TBL_H
+   * #define SCHEMA_ADDRESS_TBL_H
+   *
+   * #include "Mdt/Sql/Schema/TableTemplate.h"
+   *
+   * namespace Schema{
+   *
+   *  class Address_tbl : public Mdt::Sql::Schema::TableTemplate<Address_tbl>
+   *  {
+   *   public:
+   *
+   *    Address_tbl();
+   *  };
+   *
+   * } // namespace Schema{
+   *
+   * #endif // #ifndef SCHEMA_ADDRESS_TBL_H
+   * \endcode
+   *  Address_tbl.cpp would look like this:
+   * \code
+   * #include "Address_tbl.h"
+   *
+   * namespace Schema{
+   *
+   *  Address_tbl::Address_tbl()
+   *  {
+   *    using Mdt::Sql::Schema::FieldType;
+   *    using Mdt::Sql::Schema::Field;
+   *    using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+   *    using Mdt::Sql::Schema::ForeignKey;
+   *
+   *    Client_tbl client_tbl;
+   *
+   *    // Id_PK
+   *    AutoIncrementPrimaryKey Id_PK;
+   *    Id_PK.setFieldName("Id_PK");
+   *    // Client_Id_FK
+   *    Field Client_Id_FK;
+   *    Client_Id_FK.setName("Client_Id_FK");
+   *    Client_Id_FK.setType(FieldType::Integer);
+   *    Client_Id_FK.setRequired(true);
+   *    // Street
+   *    Field Street;
+   *    Street.setName("Street");
+   *    Street.setType(FieldType::Varchar);
+   *    Street.setLength(150);
+   *    // Setup Fk_Client_Id_FK
+   *    ForeignKey Fk_Client_Id_FK;
+   *    Fk_Client_Id_FK.setParentTable(client_tbl);
+   *    Fk_Client_Id_FK.setChildTable(*this);
+   *    Fk_Client_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
+   *    Fk_Client_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
+   *    Fk_Client_Id_FK.setCreateChildIndex(true);
+   *    Fk_Client_Id_FK.addKeyFields(ParentTableField(client_tbl.Id_PK()), ChildTableField(Client_Id_FK));
+   *    // Setup table
+   *    setTableName("Address_tbl");
+   *    setPrimaryKey(Id_PK);
+   *    addField(Street);
    *  }
    *
    * } // namespace Schema{
@@ -134,6 +206,33 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     void addField(const Field & field)
     {
       pvTable.addField(field);
+    }
+
+    /*! \brief Get primary key
+     *
+     * \pre Stored primary key must be of type AutoIncrementPrimaryKey
+     */
+    AutoIncrementPrimaryKey autoIncrementPrimaryKey() const
+    {
+      return pvTable.autoIncrementPrimaryKey();
+    }
+
+    /*! \brief Get primary key
+     *
+     * \pre Stored primary key must be of type SingleFieldPrimaryKey
+     */
+    SingleFieldPrimaryKey singleFieldPrimaryKey() const
+    {
+      return pvTable.singleFieldPrimaryKey();
+    }
+
+    /*! \brief Get primary key
+     *
+     * \pre Stored primary key must be of type PrimaryKey
+     */
+    PrimaryKey primaryKey() const
+    {
+      return pvTable.primaryKey();
     }
 
    private:

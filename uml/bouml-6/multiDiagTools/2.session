@@ -23,7 +23,7 @@ diagrams
     995 902 90 21 0 0
 end
 show_stereotypes
-selected class_ref 2838530 // TableTemplate
+selected operation_ref 4300546 // ForeignKeyItem
 open
   
   package_ref 409858 // principes
@@ -31,10 +31,11 @@ open
   
   package_ref 516226 // SqlItemModel
   classview_ref 1320578 // Driver
-  attribute_ref 2751746 // ParentTableName
-  attribute_ref 2751874 // ChildTableName
+  attribute_ref 2752002 // ParentTableFieldName
   attribute_ref 2752130 // ChildTableFieldName
-  classview_ref 1373314 // ForeignKey
+  class_ref 2887042 // Action
+  attribute_ref 2751234 // CreateChildTableIndex
+  attribute_ref 2751490 // OnUpdateAction
   classview_ref 1320706 // Table
   classview_ref 1164546 // Schema
   

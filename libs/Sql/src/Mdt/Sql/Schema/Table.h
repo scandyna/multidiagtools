@@ -138,6 +138,40 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void setPrimaryKey(const PrimaryKey & pk);
 
+    /*! \brief Get type of stored primary key
+     */
+    PrimaryKeyContainer::Type primaryKeyType() const
+    {
+      return pvPrimaryKey.primaryKeyType();
+    }
+
+    /*! \brief Get primary key
+     *
+     * \pre Stored primary key must be of type AutoIncrementPrimaryKey
+     */
+    AutoIncrementPrimaryKey autoIncrementPrimaryKey() const
+    {
+      return pvPrimaryKey.autoIncrementPrimaryKey();
+    }
+
+    /*! \brief Get primary key
+     *
+     * \pre Stored primary key must be of type SingleFieldPrimaryKey
+     */
+    SingleFieldPrimaryKey singleFieldPrimaryKey() const
+    {
+      return pvPrimaryKey.singleFieldPrimaryKey();
+    }
+
+    /*! \brief Get primary key
+     *
+     * \pre Stored primary key must be of type PrimaryKey
+     */
+    PrimaryKey primaryKey() const
+    {
+      return pvPrimaryKey.primaryKey();
+    }
+
     /*! \brief Add a field
      *
      * \pre A field with field's name must not allready been set
@@ -224,6 +258,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      * \pre index must be in valid range
      */
     QVariant fieldDefaultValue(int index) const;
+
+    /*! \brief Get field at index
+     *
+     * \pre index must be in valid range
+     * \pre if primary key is of type AutoIncrementPrimaryKey or SingleFieldPrimaryKey,
+     *       index must also be > 0
+     */
+    Field field(int index) const;
 
     /*! \brief Check if table is null
      *

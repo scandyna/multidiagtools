@@ -117,6 +117,28 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return pvType;
     }
 
+    /*! \brief Get primary key
+     *
+     * \pre Stored primary key must be of type AutoIncrementPrimaryKey
+     */
+    AutoIncrementPrimaryKey autoIncrementPrimaryKey() const;
+
+    /*! \brief Get primary key
+     *
+     * \pre Stored primary key must be of type SingleFieldPrimaryKey
+     */
+    SingleFieldPrimaryKey singleFieldPrimaryKey() const;
+
+    /*! \brief Get primary key
+     *
+     * \pre Stored primary key must be of type PrimaryKey
+     */
+    PrimaryKey primaryKey() const;
+
+    /*! \brief Clear
+     */
+    void clear();
+
    private:
 
     boost::variant<PrimaryKey, AutoIncrementPrimaryKey, SingleFieldPrimaryKey> pvPrimaryKey;

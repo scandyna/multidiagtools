@@ -30,6 +30,7 @@
 #include "SingleFieldPrimaryKey.h"
 #include "PrimaryKey.h"
 #include "Index.h"
+#include "Table.h"
 #include "Mdt/Error.h"
 #include <QSqlDatabase>
 #include <QSqlDriver>
@@ -110,6 +111,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Get SQL statement to drop a index
      */
     virtual QString getSqlToDropIndex(const Index & index) const;
+
+    /*! \brief Get SQL statement to create a table
+     */
+    virtual QString getSqlToCreateTable(const Table & table) const;
+
+    /*! \brief Get SQL statement to drop a table
+     */
+    virtual QString getSqlToDropTable(const Table & table) const;
 
     /*! \brief Get last error
      */
