@@ -1,6 +1,6 @@
 format 211
 "mdtdatabase" // mdtdatabase
-  revision 126
+  revision 127
   modified_by 2 "philippe"
   // class settings
   
@@ -281,7 +281,7 @@ ${inlines}
       end
 
       operation 1799682 "lastError"
-	public return_type class_ref 182402 // mdtError
+	public return_type class_ref 182402 // Error
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -403,7 +403,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 1294850 // pvLastError (<directional composition>)
-	  b parent class_ref 182402 // mdtError
+	  b parent class_ref 182402 // Error
       end
     end
 
@@ -825,6 +825,44 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 805890 // <generalisation>
 	  b parent class_ref 138626 // QObject
+      end
+
+      attribute 2750082 "Relations"
+	private type class_ref 652546 // mdtSqlRelationItem
+	multiplicity "*"
+	stereotype "vector"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2750210 "ParentModel"
+	private type class_ref 174210 // QSqlTableModel
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2750338 "ChildModel"
+	private type class_ref 174210 // QSqlTableModel
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
 
       operation 1222402 "mdtSqlRelation"
@@ -1353,6 +1391,42 @@ ${inlines}
 	
 	
       end
+
+      attribute 2749698 "ValueForNoDataFilter"
+	private type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2749826 "CopyParentToChildOnInsertion"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2749954 "RelationOperatorWithPreviousItem"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
     end
 
     classdiagram 1244674 "mdtSqlRelationInfo"
@@ -1402,19 +1476,32 @@ ${inlines}
 	set_oper operation_ref 2241282 // setChildTableName
       end
 
-      classrelation 1736834 // pvItems (<directional composition>)
+      classrelation 1736834 // <directional composition>
 	relation 1721346 *-->
-	  stereotype "list"
-	  a role_name "pvItems" multiplicity "*" private
+	  a role_name "" multiplicity "*" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
-	    classrelation_ref 1736834 // pvItems (<directional composition>)
+	    classrelation_ref 1736834 // <directional composition>
 	  b parent class_ref 1389442 // mdtSqlRelationInfoItem
       end
 
       attribute 1403010 "CopyParentToChildOnInsertion"
 	private explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2750594 "Items"
+	private type class_ref 1389442 // mdtSqlRelationInfoItem
+	multiplicity "*"
+	stereotype "vector"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
 	java_decl ""
 	php_decl ""
@@ -1550,6 +1637,18 @@ ${inlines}
 	
 	
       end
+
+      attribute 2750722 "RelationType"
+	private explicit_type "RelationType"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
     end
 
     class 1389442 "mdtSqlRelationInfoItem"
@@ -1582,6 +1681,18 @@ ${members}};
 
       attribute 1389698 "childFieldName"
 	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2750466 "copyParentToChildOnInsertion"
+	private explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1954,11 +2065,11 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 1716738 // pvLastError (<directional composition>)
-	  b parent class_ref 182402 // mdtError
+	  b parent class_ref 182402 // Error
       end
 
       operation 2218114 "lastError"
-	public return_type class_ref 182402 // mdtError
+	public return_type class_ref 182402 // Error
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3090,7 +3201,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 1329794 // pvLastError (<directional composition>)
-	  b parent class_ref 182402 // mdtError
+	  b parent class_ref 182402 // Error
       end
 
       operation 3229826 "toDataRecord"
@@ -3109,7 +3220,7 @@ ${inlines}
       end
 
       operation 1845122 "lastError"
-	public return_type class_ref 182402 // mdtError
+	public return_type class_ref 182402 // Error
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3705,6 +3816,41 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      attribute 2748674 "State"
+	private explicit_type "State"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2748802 "Database"
+	private type class_ref 405122 // QSqlDatabase
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2748930 "LastError"
+	private explicit_type "mdtError"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
     end
 
     state 276226 "mdtSqlForeignKeySettingSM"
@@ -3767,6 +3913,81 @@ ${inlines}
       end
 
       state 276866 "Keep"
+      end
+    end
+
+    class 2886274 "mdtSqlTableSchemaForeignKeyInfo"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 2749058 "referingTableName"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2749186 "fields"
+	private type class_ref 404994 // QSqlRecord
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2749314 "referingFields"
+	private type class_ref 404994 // QSqlRecord
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2749442 "actionOnDelete"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2749570 "actionOnUpdate"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
   end
@@ -3985,7 +4206,7 @@ ${inlines}
       end
 
       operation 2826754 "lastError"
-	public return_type class_ref 182402 // mdtError
+	public return_type class_ref 182402 // Error
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -4486,7 +4707,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 2190338 // <unidirectional association>
-	  b parent class_ref 182402 // mdtError
+	  b parent class_ref 182402 // Error
       end
 
       operation 2897282 "mdtSqlDatabaseSqlite"
@@ -4597,7 +4818,7 @@ ${inlines}
       end
 
       operation 2883842 "lastError"
-	public return_type class_ref 182402 // mdtError
+	public return_type class_ref 182402 // Error
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "

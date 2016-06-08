@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 12
+  revision 14
   modified_by 2 "philippe"
   // class settings
   
@@ -304,7 +304,7 @@ ${inlines}
 
     classdiagram 2406786 "InputEvents"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size B-Landscape
     end
 
     class 2699778 "ControllerDelegate"
@@ -1392,7 +1392,7 @@ ${inlines}
      end
     classdiagram 2468610 "Relation"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size B-Landscape
     end
 
     class 2693250 "Relation"
@@ -1455,6 +1455,30 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 3153666 // <generalisation>
 	  b parent class_ref 138626 // QObject
+      end
+
+      operation 4299266 "fromRelation"
+	class_operation public return_type class_ref 2782850 // ControllerRelation
+	nparams 1
+	  param in name "relation" type class_ref 2886146 // Relation
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3278210 // <dependency>
+	relation 3259906 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3278210 // <dependency>
+	  b parent class_ref 2886146 // Relation
       end
     end
   end

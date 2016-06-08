@@ -1,6 +1,6 @@
 format 211
 "CableList" // Mdt::CableList
-  revision 37
+  revision 38
   modified_by 2 "philippe"
   // class settings
   

@@ -39,6 +39,10 @@ classcanvas 132866 class_ref 2739842 // QWebSocketServer
   classdiagramsettings member_max_width 0 end
   xyz 173.5 589.25 2006
 end
+note 133378 "What could be a abstraction of a filter ?
+Imagine custom models (application specific).
+Should we provide a interface ?"
+  xyzwh 197 672 2000 579 91
 relationcanvas 128770 relation_ref 3063298 // <unidirectional association>
   from ref 128002 z 2011 to point 296 384
   line 131074 z 2011 to point 544 384
@@ -83,4 +87,6 @@ relationcanvas 132994 relation_ref 3091842 // <generalisation>
 end
 line 131586 -_-_
   from ref 131458 z 2001 to ref 128642
+line 133506 -_-_
+  from ref 128642 z 2001 to ref 133378
 end

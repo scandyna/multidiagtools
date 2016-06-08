@@ -6,7 +6,9 @@ enable_testing()
 
 #================= SQL test library ====================
 
-set(SOURCES_FILES 
+set(SOURCES_FILES
+    src/Schema/Client_tbl.cpp
+    src/Schema/Address_tbl.cpp
     src/TestDatabaseSchema.cpp
 )
 

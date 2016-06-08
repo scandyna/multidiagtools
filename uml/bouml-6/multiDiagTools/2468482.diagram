@@ -6,15 +6,15 @@ classcanvas 128002 class_ref 2775042 // Field
 end
 classcanvas 128130 class_ref 2782466 // Index
   classdiagramsettings member_max_width 0 end
-  xyz 85.4 199.8 2000
+  xyz 85.9 200 2000
 end
 classcanvas 128258 class_ref 2775554 // PrimaryKey
   classdiagramsettings member_max_width 0 end
-  xyz 408.9 40.9 2000
+  xyz 408.9 40.4 2000
 end
 classcanvas 128386 class_ref 2775682 // ForeignKey
   classdiagramsettings member_max_width 0 end
-  xyz 624.9 136.1 2000
+  xyz 625 141.9 2000
 end
 classcanvas 128514 class_ref 2782594 // RelationKeyItem
   classdiagramsettings member_max_width 0 end
@@ -22,15 +22,15 @@ classcanvas 128514 class_ref 2782594 // RelationKeyItem
 end
 classcanvas 128642 class_ref 2782722 // RelationKey
   classdiagramsettings member_max_width 0 end
-  xyz 585 334.9 2006
+  xyz 585 334.1 2006
 end
 classcanvas 128898 class_ref 2775810 // Table
   classdiagramsettings member_max_width 0 end
-  xyz 450.4 181 2006
+  xyz 454 180.1 2006
 end
 classcanvas 129794 class_ref 2789378 // Collation
   classdiagramsettings member_max_width 0 end
-  xyz 165.2 258.4 2000
+  xyz 164.5 258.9 2000
 end
 classcanvas 130562 class_ref 2775426 // Driver
   classdiagramsettings member_max_width 0 end
@@ -42,7 +42,7 @@ classcanvas 130690 class_ref 2775298 // DriverType
 end
 classcanvas 131458 class_ref 2774914 // FieldType
   classdiagramsettings member_max_width 0 end
-  xyz 394.2 487 2006
+  xyz 393.5 487 2006
 end
 classcanvas 132098 class_ref 2817922 // DriverInfoModel
   classdiagramsettings member_max_width 0 end
@@ -61,22 +61,11 @@ relationcanvas 128770 relation_ref 3135106 // <directional composition>
 end
 relationcanvas 129154 relation_ref 3128322 // <directional composition>
   decenter_begin 467
-  from ref 128898 z 2007 to point 512.6 640.8
-  line 132866 z 2007 to point 272.6 640.8
+  from ref 128898 z 2007 to point 512.8 640.4
+  line 132866 z 2007 to point 272.8 640.4
   line 132994 z 2007 to ref 128002
   no_role_a no_role_b
-  multiplicity_a_pos 257 641 3000 no_multiplicity_b
-end
-relationcanvas 129282 relation_ref 3128450 // <directional composition>
-  from ref 128898 z 2007 to ref 128386
-  no_role_a no_role_b
-  multiplicity_a_pos 607 225 3000 no_multiplicity_b
-end
-relationcanvas 129410 relation_ref 3135234 // <directional composition>
-  decenter_begin 477
-  from ref 128386 z 2007 to ref 128642
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
+  multiplicity_a_pos 256 641 3000 no_multiplicity_b
 end
 relationcanvas 130178 relation_ref 3148418 // <directional composition>
   decenter_end 395

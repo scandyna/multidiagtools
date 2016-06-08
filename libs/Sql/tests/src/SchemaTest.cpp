@@ -33,6 +33,7 @@
 #include "Mdt/Sql/Schema/Index.h"
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Schema/TableModel.h"
+#include "Schema/Client_tbl.h"
 #include <QSqlDatabase>
 #include <QComboBox>
 #include <QTableView>
@@ -1064,7 +1065,11 @@ void SchemaTest::tableModelTest()
   QCOMPARE(model.data(index), QVariant(""));
   // Remarks
 
-  /// \todo Check
+  /*
+   * Check with Client_tbl defined in Schema
+   */
+  model.setTable(Schema::Client_tbl().toTable());
+  QCOMPARE(model.rowCount(), 4);
   /*
    * Play
    */

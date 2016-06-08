@@ -30,9 +30,4 @@ relationcanvas 128642 relation_ref 3135106 // <directional composition>
   no_role_a no_role_b
   multiplicity_a_pos 400 127 3000 no_multiplicity_b
 end
-relationcanvas 128770 relation_ref 3135234 // <directional composition>
-  from ref 128002 z 2007 to ref 128514
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 end
