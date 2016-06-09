@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "Address_tbl.h"
+#include "Client_tbl.h"
 
 namespace Schema{
 
@@ -27,12 +28,18 @@ Address_tbl::Address_tbl()
   using Mdt::Sql::Schema::FieldType;
   using Mdt::Sql::Schema::Field;
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::ForeignKey;
+
+  Client_tbl client_tbl;
 
   // Id_PK
   AutoIncrementPrimaryKey Id_PK;
   Id_PK.setFieldName("Id_PK");
-  /// \todo Client_Id_FK
-  
+  // Client_Id_FK
+  Field Client_Id_FK;
+  Client_Id_FK.setName("Client_Id_FK");
+  Client_Id_FK.setType(FieldType::Integer);
+  Client_Id_FK.setRequired(true);
   // Street
   Field Street;
   Street.setName("Street");
@@ -48,7 +55,10 @@ Address_tbl::Address_tbl()
   FieldAB.setName("FieldAB");
   FieldAB.setType(FieldType::Varchar);
   FieldAB.setLength(50);
-  /// \todo fk_Client_Id_FK
+  // Fk_Client_Id_FK
+  ForeignKey Fk_Client_Id_FK;
+  Fk_Client_Id_FK.setParentTable(client_tbl);
+  ///Fk_Client_Id_FK.setOnD
   
   // Setup table
   setTableName("Address_tbl");

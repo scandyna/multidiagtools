@@ -46,7 +46,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *    Client_tbl();
    *
    *    // We expose Id_PK which will be used when defining Address_tbl
-   *    AutoIncrementPrimaryKey Id_PK() const
+   *    Mdt::Sql::Schema::AutoIncrementPrimaryKey Id_PK() const
    *    {
    *      return autoIncrementPrimaryKey();
    *    }
@@ -110,6 +110,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *  Address_tbl.cpp would look like this:
    * \code
    * #include "Address_tbl.h"
+   * #include "Client_tbl.h"
    *
    * namespace Schema{
    *
@@ -140,7 +141,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *    // Setup Fk_Client_Id_FK
    *    ForeignKey Fk_Client_Id_FK;
    *    Fk_Client_Id_FK.setParentTable(client_tbl);
-   *    Fk_Client_Id_FK.setChildTable(*this);
    *    Fk_Client_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
    *    Fk_Client_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
    *    Fk_Client_Id_FK.setCreateChildIndex(true);
@@ -242,6 +242,17 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     PrimaryKey primaryKey() const
     {
       return pvTable.primaryKey();
+    }
+
+    /*! \brief Get field at index
+     *
+     * \pre index must be in valid range
+     * \pre if primary key is of type AutoIncrementPrimaryKey or SingleFieldPrimaryKey,
+     *       index must also be > 0
+     */
+    Field field(int index) const
+    {
+      return pvTable.field(index);
     }
 
    private:

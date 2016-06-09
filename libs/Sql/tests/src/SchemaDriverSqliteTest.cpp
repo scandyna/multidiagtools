@@ -421,10 +421,101 @@ void SchemaDriverSqliteTest::indexDefinitionTest()
 void SchemaDriverSqliteTest::foreignKeyDefinitionTest()
 {
   using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::PrimaryKey;
+  using Mdt::Sql::Schema::Table;
+  using Mdt::Sql::Schema::ForeignKey;
+  using Mdt::Sql::Schema::ParentTableFieldName;
+  using Mdt::Sql::Schema::ChildTableFieldName;
 
   Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
   QString expectedSql;
+  ForeignKey fk;
 
+  /*
+   * Setup fields
+   */
+  // Id_PK
+  AutoIncrementPrimaryKey Id_PK;
+  Id_PK.setFieldName("Id_PK");
+  // Id_A_PK
+  Field Id_A_PK;
+  Id_A_PK.setName("Id_A_PK");
+  Id_A_PK.setType(FieldType::Integer);
+  Id_A_PK.setRequired(true);
+  // Id_B_PK
+  Field Id_B_PK;
+  Id_B_PK.setName("Id_B_PK");
+  Id_B_PK.setType(FieldType::Integer);
+  Id_B_PK.setRequired(true);
+  // Client_Id_FK
+  Field Client_Id_FK;
+  Client_Id_FK.setName("Client_Id_FK");
+  Client_Id_FK.setType(FieldType::Integer);
+  Client_Id_FK.setRequired(true);
+  // Id_A_FK
+  Field Id_A_FK;
+  Id_A_FK.setName("Id_A_FK");
+  Id_A_FK.setType(FieldType::Integer);
+  Id_A_FK.setRequired(true);
+  // Id_B_PK
+  Field Id_B_FK;
+  Id_B_FK.setName("Id_B_FK");
+  Id_B_FK.setType(FieldType::Integer);
+  Id_B_FK.setRequired(true);
+  /*
+   * Setup Tables
+   */
+  // Client_tbl
+  Table Client_tbl;
+  Client_tbl.setTableName("Client_tbl");
+  // Address_tbl
+  Table Address_tbl;
+  Address_tbl.setTableName("Address_tbl");
+  /*
+   * Simple 1 field FK
+   */
+  // Setup FK
+  fk.clear();
+  fk.setParentTable(Client_tbl);
+  fk.addKeyFields(ParentTableFieldName(Id_PK), ChildTableFieldName(Client_Id_FK));
+  // Check
+  expectedSql  = "  FOREIGN KEY (\"Client_Id_FK\")\n";
+  expectedSql += "   REFERENCES \"Client_tbl\" (\"Id_PK\")\n";
+  expectedSql += "   ON DELETE NO ACTION\n";
+  expectedSql += "   ON UPDATE NO ACTION";
+  QCOMPARE(driver.getForeignKeyDefinition(fk), expectedSql);
+  // Set on delete and update actions
+  fk.setOnDeleteAction(ForeignKey::Restrict);
+  fk.setOnUpdateAction(ForeignKey::Cascade);
+  expectedSql  = "  FOREIGN KEY (\"Client_Id_FK\")\n";
+  expectedSql += "   REFERENCES \"Client_tbl\" (\"Id_PK\")\n";
+  expectedSql += "   ON DELETE RESTRICT\n";
+  expectedSql += "   ON UPDATE CASCADE";
+  QCOMPARE(driver.getForeignKeyDefinition(fk), expectedSql);
+  /*
+   * Simple 2 fields FK
+   */
+  // Setup FK
+  fk.clear();
+  fk.setParentTable(Client_tbl);
+  fk.addKeyFields(ParentTableFieldName(Id_A_PK), ChildTableFieldName(Id_A_FK));
+  fk.addKeyFields(ParentTableFieldName(Id_B_PK), ChildTableFieldName(Id_B_FK));
+  // Check
+  expectedSql  = "  FOREIGN KEY (\"Id_A_FK\",\"Id_B_FK\")\n";
+  expectedSql += "   REFERENCES \"Client_tbl\" (\"Id_A_PK\",\"Id_B_PK\")\n";
+  expectedSql += "   ON DELETE NO ACTION\n";
+  expectedSql += "   ON UPDATE NO ACTION";
+  QCOMPARE(driver.getForeignKeyDefinition(fk), expectedSql);
+  // Set on delete and update actions
+  fk.setOnDeleteAction(ForeignKey::Restrict);
+  fk.setOnUpdateAction(ForeignKey::Cascade);
+  expectedSql  = "  FOREIGN KEY (\"Id_A_FK\",\"Id_B_FK\")\n";
+  expectedSql += "   REFERENCES \"Client_tbl\" (\"Id_A_PK\",\"Id_B_PK\")\n";
+  expectedSql += "   ON DELETE RESTRICT\n";
+  expectedSql += "   ON UPDATE CASCADE";
+  QCOMPARE(driver.getForeignKeyDefinition(fk), expectedSql);
 }
 
 void SchemaDriverSqliteTest::tableDefinitionTest()

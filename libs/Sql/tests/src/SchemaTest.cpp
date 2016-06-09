@@ -35,6 +35,7 @@
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Schema/TableModel.h"
 #include "Schema/Client_tbl.h"
+#include "Schema/Address_tbl.h"
 #include <QSqlDatabase>
 #include <QComboBox>
 #include <QTableView>
@@ -628,6 +629,34 @@ void SchemaTest::childTableFieldNameTest()
   QCOMPARE(f.fieldName(), QString("Name"));
 }
 
+void SchemaTest::foreignKeyActionTest()
+{
+  using Mdt::Sql::Schema::ForeignKey;
+
+  /*
+   * Action -> string
+   */
+  QCOMPARE(ForeignKey::actionString(ForeignKey::NoAction), QString("NO ACTION"));
+  QCOMPARE(ForeignKey::actionString(ForeignKey::Restrict), QString("RESTRICT"));
+  QCOMPARE(ForeignKey::actionString(ForeignKey::SetNull), QString("SET NULL"));
+  QCOMPARE(ForeignKey::actionString(ForeignKey::SetDefault), QString("SET DEFAULT"));
+  QCOMPARE(ForeignKey::actionString(ForeignKey::Cascade), QString("CASCADE"));
+  /*
+   * String -> Action
+   */
+  QVERIFY(ForeignKey::actionFromString("") == ForeignKey::NoAction);
+  QVERIFY(ForeignKey::actionFromString("NO ACTION") == ForeignKey::NoAction);
+  QVERIFY(ForeignKey::actionFromString("no action") == ForeignKey::NoAction);
+  QVERIFY(ForeignKey::actionFromString("RESTRICT") == ForeignKey::Restrict);
+  QVERIFY(ForeignKey::actionFromString("restrict") == ForeignKey::Restrict);
+  QVERIFY(ForeignKey::actionFromString("SET NULL") == ForeignKey::SetNull);
+  QVERIFY(ForeignKey::actionFromString("set null") == ForeignKey::SetNull);
+  QVERIFY(ForeignKey::actionFromString("SET DEFAULT") == ForeignKey::SetDefault);
+  QVERIFY(ForeignKey::actionFromString("set default") == ForeignKey::SetDefault);
+  QVERIFY(ForeignKey::actionFromString("CASCADE") == ForeignKey::Cascade);
+  QVERIFY(ForeignKey::actionFromString("cascade") == ForeignKey::Cascade);
+}
+
 void SchemaTest::foreignKeyTest()
 {
   using Mdt::Sql::Schema::ForeignKey;
@@ -635,29 +664,39 @@ void SchemaTest::foreignKeyTest()
   using Mdt::Sql::Schema::Field;
   using Mdt::Sql::Schema::FieldType;
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::ParentTableFieldName;
+  using Mdt::Sql::Schema::ChildTableFieldName;
 
+  Schema::Client_tbl client_tbl;
+  Schema::Address_tbl address_tbl;
   /*
    * Setup fields
    */
   // Id_PK
   AutoIncrementPrimaryKey Id_PK;
   Id_PK.setFieldName("Id_PK");
+  // Connector_Id_FK
+  Field Connector_Id_FK;
+  Connector_Id_FK.setName("Connector_Id_FK");
+  Connector_Id_FK.setType(FieldType::Integer);
+  Connector_Id_FK.setRequired(true);
   // Client_Id_FK
   Field Client_Id_FK;
   Client_Id_FK.setName("Client_Id_FK");
+  Client_Id_FK.setType(FieldType::Integer);
+  Client_Id_FK.setRequired(true);
   /*
-   * Setup Client_tbl
+   * Setup Connector_tbl
    */
-  /// \todo Create a other table than Client_tbl
-  Table Client_tbl;
-  Client_tbl.setTableName("Client_tbl");
-  Client_tbl.setPrimaryKey(Id_PK);
+  Table Connector_tbl;
+  Connector_tbl.setTableName("Connector_tbl");
+  Connector_tbl.setPrimaryKey(Id_PK);
   /*
-   * Init Address_tbl
+   * Init Contact_tbl
    */
-  Table Address_tbl;
-  Address_tbl.setTableName("Address_tbl");
-  Address_tbl.setPrimaryKey(Id_PK);
+  Table Contact_tbl;
+  Contact_tbl.setTableName("Contact_tbl");
+  Contact_tbl.setPrimaryKey(Id_PK);
   /*
    * Initial state
    */
@@ -669,14 +708,63 @@ void SchemaTest::foreignKeyTest()
   /*
    * Set/get
    */
-  fk.setParentTable(Client_tbl);
-  QCOMPARE(fk.parentTableName(), QString("Client_tbl"));
+  // Set
+  fk.setParentTable(Connector_tbl);
   QVERIFY(fk.isNull());
-  fk.setParentTable(Schema::Client_tbl());
-  QCOMPARE(fk.parentTableName(), QString("Client_tbl"));
+  fk.setChildTable(Contact_tbl);
+  QVERIFY(fk.isNull());
+  fk.addKeyFields(ParentTableFieldName(Id_PK), ChildTableFieldName(Connector_Id_FK));
+  QVERIFY(!fk.isNull());
+  fk.setOnDeleteAction(ForeignKey::Restrict);
+  fk.setOnUpdateAction(ForeignKey::Cascade);
+  fk.setCreateChildIndex(true);
+  // Check
+  QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
+  QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
+  QCOMPARE(fk.parentTableFieldNameList().size(), 1);
+  QCOMPARE(fk.parentTableFieldNameList().at(0), QString("Id_PK"));
+  QCOMPARE(fk.childTableFieldNameList().size(), 1);
+  QCOMPARE(fk.childTableFieldNameList().at(0), QString("Connector_Id_FK"));
+  QVERIFY(fk.onDeleteAction() == ForeignKey::Restrict);
+  QVERIFY(fk.onUpdateAction() == ForeignKey::Cascade);
+  QVERIFY(fk.createChildIndex());
   /*
    * Clear
    */
+  fk.clear();
+  QVERIFY(fk.parentTableName().isEmpty());
+  QVERIFY(fk.childTableName().isEmpty());
+  QCOMPARE(fk.parentTableFieldNameList().size(), 0);
+  QCOMPARE(fk.childTableFieldNameList().size(), 0);
+  QVERIFY(fk.onDeleteAction() == ForeignKey::NoAction);
+  QVERIFY(fk.onUpdateAction() == ForeignKey::NoAction);
+  QVERIFY(!fk.createChildIndex());
+  QVERIFY(fk.isNull());
+  /*
+   * Setup fk for Address_tbl
+   */
+  fk.setParentTable(client_tbl);
+  fk.setChildTable(address_tbl);
+  fk.addKeyFields(ParentTableFieldName(client_tbl.Id_PK()), ChildTableFieldName(Client_Id_FK));
+  // Check
+  QCOMPARE(fk.parentTableName(), QString("Client_tbl"));
+  QCOMPARE(fk.childTableName(), QString("Address_tbl"));
+  QCOMPARE(fk.parentTableFieldNameList().size(), 1);
+  QCOMPARE(fk.parentTableFieldNameList().at(0), QString("Id_PK"));
+  QCOMPARE(fk.childTableFieldNameList().size(), 1);
+  QCOMPARE(fk.childTableFieldNameList().at(0), QString("Client_Id_FK"));
+  /*
+   * Clear
+   */
+  fk.clear();
+  QVERIFY(fk.parentTableName().isEmpty());
+  QVERIFY(fk.childTableName().isEmpty());
+  QCOMPARE(fk.parentTableFieldNameList().size(), 0);
+  QCOMPARE(fk.childTableFieldNameList().size(), 0);
+  QVERIFY(fk.onDeleteAction() == ForeignKey::NoAction);
+  QVERIFY(fk.onUpdateAction() == ForeignKey::NoAction);
+  QVERIFY(!fk.createChildIndex());
+  QVERIFY(fk.isNull());
 }
 
 void SchemaTest::tablePrimaryKeyTest()

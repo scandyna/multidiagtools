@@ -29,6 +29,7 @@
 #include "AutoIncrementPrimaryKey.h"
 #include "SingleFieldPrimaryKey.h"
 #include "PrimaryKey.h"
+#include "ForeignKey.h"
 #include "Index.h"
 #include "Table.h"
 #include "Mdt/Error.h"
@@ -103,6 +104,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Get primary key definition
      */
     virtual QString getPrimaryKeyDefinition(const PrimaryKey & pk) const;
+
+    /*! \brief Get foreign key definition
+     */
+    virtual QString getForeignKeyDefinition(const ForeignKey & fk) const;
 
     /*! \brief Get SQL statement to create a index
      */

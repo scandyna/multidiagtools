@@ -25,14 +25,16 @@
 
 namespace Schema{
 
-//   using Mdt::Sql::Schema::TableTemplate;
-//   using Mdt::Sql::Schema::FieldType;
-
   class Client_tbl : public Mdt::Sql::Schema::TableTemplate<Client_tbl>
   {
    public:
 
     Client_tbl();
+
+    Mdt::Sql::Schema::AutoIncrementPrimaryKey Id_PK() const
+    {
+      return autoIncrementPrimaryKey();
+    }
   };
 
 } // namespace Schema{

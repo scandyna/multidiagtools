@@ -105,6 +105,35 @@ QString DriverImplementationInterface::getPrimaryKeyDefinition(const PrimaryKey 
   return sql;
 }
 
+QString DriverImplementationInterface::getForeignKeyDefinition(const ForeignKey & fk) const
+{
+  using Mdt::Sql::Schema::ForeignKey;
+
+  QString sql;
+  QStringList parentTableFieldNameList = fk.parentTableFieldNameList();
+  QStringList childTableFieldNameList = fk.childTableFieldNameList();
+
+  // Escape field name lists
+  for(auto & fieldName : parentTableFieldNameList){
+    fieldName = escapeFieldName(fieldName);
+  }
+  for(auto & fieldName : childTableFieldNameList){
+    fieldName = escapeFieldName(fieldName);
+  }
+  // Build SQL
+  sql = QStringLiteral("  FOREIGN KEY (") \
+      % childTableFieldNameList.join(',') \
+      % QStringLiteral(")\n   REFERENCES ") \
+      % escapeTableName(fk.parentTableName()) \
+      % QStringLiteral(" (") \
+      % parentTableFieldNameList.join(',') \
+      % QStringLiteral(")\n") \
+      % QStringLiteral("   ON DELETE ") % ForeignKey::actionString(fk.onDeleteAction()) % QStringLiteral("\n") \
+      % QStringLiteral("   ON UPDATE ") % ForeignKey::actionString(fk.onUpdateAction());
+
+  return sql;
+}
+
 QString DriverImplementationInterface::getSqlToCreateIndex(const Index & index) const
 {
   QString sql;
