@@ -21,6 +21,7 @@
 #include "DriverSQLite.h"
 #include "FieldTypeName.h"
 #include <QStringBuilder>
+#include <QSqlRecord>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
@@ -69,7 +70,7 @@ QString DriverSQLite::getFieldDefinition(const Field & field) const
   if(field.defaultValue().isNull()){
     sql += QStringLiteral(" DEFAULT NULL");
   }else{
-    sql += QStringLiteral(" DEFAULT ") + field.defaultValue().toString();
+    sql += QStringLiteral(" DEFAULT ") + escapeFieldDefaultValue(field);
   }
   // Collation
   if(!field.collation().isNull()){

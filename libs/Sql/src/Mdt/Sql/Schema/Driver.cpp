@@ -79,10 +79,22 @@ FieldType Driver::fieldTypeFromQMetaType(QMetaType::Type qmt) const
   return pvImpl->fieldTypeFromQMetaType(qmt);
 }
 
+FieldType Driver::fieldTypeFromQVariantType(QVariant::Type qvt) const
+{
+  Q_ASSERT(isValid());
+  return pvImpl->fieldTypeFromQVariantType(qvt);
+}
+
 QMetaType::Type Driver::fieldTypeToQMetaType(FieldType ft) const
 {
   Q_ASSERT(isValid());
   return pvImpl->fieldTypeToQMetaType(ft);
+}
+
+QVariant::Type Driver::fieldTypeToQVariantType(FieldType ft) const
+{
+  Q_ASSERT(isValid());
+  return pvImpl->fieldTypeToQVariantType(ft);
 }
 
 bool Driver::createTable(const Table & table)

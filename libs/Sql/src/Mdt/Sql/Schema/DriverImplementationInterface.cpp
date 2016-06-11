@@ -24,6 +24,8 @@
 #include <QStringBuilder>
 #include <QObject>
 #include <QSqlQuery>
+#include <QSqlRecord>
+#include <QSqlField>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
@@ -91,6 +93,27 @@ QMetaType::Type DriverImplementationInterface::fieldTypeToQMetaType(FieldType ft
       return QMetaType::UnknownType;
   }
   return QMetaType::UnknownType;
+}
+
+Mdt::Expected<FieldList> DriverImplementationInterface::getTableFieldListFromDatabase(const QString& tableName) const
+{
+  Mdt::Expected<FieldList> ret;
+  FieldList fieldList;
+
+  auto record = database().record(tableName);
+  for(int i = 0; i < record.count(); ++i){
+    Field field;
+    QSqlField qtField = record.field(i);
+    field.setName( qtField.name() );
+    field.setType( fieldTypeFromQVariantType(qtField.type()) );
+    field.setRequired( (qtField.requiredStatus() == QSqlField::Required) );
+    field.setLength( qtField.length() );
+    field.setDefaultValue( qtField.defaultValue() );
+    fieldList.append(field);
+  }
+  ret = fieldList;
+
+  return ret;
 }
 
 QString DriverImplementationInterface::getPrimaryKeyDefinition(const PrimaryKey & pk) const
@@ -308,6 +331,14 @@ QString DriverImplementationInterface::escapeFieldName(const QString & fieldName
 QString DriverImplementationInterface::escapeTableName(const QString & tableName) const
 {
   return qsqlDriver()->escapeIdentifier(tableName, QSqlDriver::TableName);
+}
+
+QString DriverImplementationInterface::escapeFieldDefaultValue(const Field & field) const
+{
+  if(field.type() == FieldType::Varchar){
+    return escapeFieldName(field.defaultValue().toString());
+  }
+  return field.defaultValue().toString();
 }
 
 QString DriverImplementationInterface::tr(const char* sourceText)

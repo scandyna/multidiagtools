@@ -25,6 +25,7 @@
 #include "FieldType.h"
 #include "FieldTypeList.h"
 #include "Field.h"
+#include "FieldList.h"
 #include "Collation.h"
 #include "AutoIncrementPrimaryKey.h"
 #include "SingleFieldPrimaryKey.h"
@@ -33,9 +34,11 @@
 #include "Index.h"
 #include "Table.h"
 #include "Mdt/Error.h"
+#include "Mdt/Expected.h"
 #include <QSqlDatabase>
 #include <QSqlDriver>
 #include <QMetaType>
+#include <QVariant>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
@@ -79,11 +82,29 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     virtual FieldType fieldTypeFromQMetaType(QMetaType::Type qmt) const;
 
+    /*! \brief Get SQL field type from QMetaType::Type
+     *
+     * \sa fieldTypeFromQMetaType() and Qt's QVariant documentation (QVariant::Type is obselete)
+     */
+    FieldType fieldTypeFromQVariantType(QVariant::Type qvt) const
+    {
+      return fieldTypeFromQMetaType(static_cast<QMetaType::Type>(qvt));
+    }
+
     /*! \brief Get QMetaType::Type from SQL field type
      *
      * Can be overloaded if default implementation does not match
      */
     virtual QMetaType::Type fieldTypeToQMetaType(FieldType ft) const;
+
+    /*! \brief Get QVariant::Type from SQL field type
+     *
+     * \sa fieldTypeToQMetaType() and Qt's QVariant documentation (QVariant::Type is obselete)
+     */
+    QVariant::Type fieldTypeToQVariantType(FieldType ft) const
+    {
+      return static_cast<QVariant::Type>(fieldTypeToQMetaType(ft));
+    }
 
     /*! \brief Get collation definition
      */
@@ -92,6 +113,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Get field definition
      */
     virtual QString getFieldDefinition(const Field & field) const = 0;
+
+    /*! \brief Get FieldList for table from database
+     *
+     * \note Try to get information about a non existing table is also a error.
+     * \note It seems that some DBMS accept table without any field,
+     *        this is why returning a empty list on error can be confusing.
+     */
+    virtual Mdt::Expected<FieldList> getTableFieldListFromDatabase(const QString & tableName) const;
 
     /*! \brief Get field definition of a auto increment primary key
      */
@@ -154,11 +183,22 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     QString escapeTableName(const QString & tableName) const;
 
+    /*! \brief Escape default value
+     */
+    QString escapeFieldDefaultValue(const Field & field) const;
+
     /*! \brief Set last error
      */
-    void setLastError(const Mdt::Error & error)
+    void setLastError(const Mdt::Error & error) const
     {
       pvLastError = error;
+    }
+
+    /*! \brief Access database object
+     */
+    const QSqlDatabase & database() const
+    {
+      return pvDatabase;
     }
 
     /*! \brief Call QObject::tr()
@@ -168,7 +208,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    private:
 
     QSqlDatabase pvDatabase;
-    Mdt::Error pvLastError;
+    mutable Mdt::Error pvLastError;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

@@ -27,26 +27,6 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 
-
-#include "Mdt/Sql/Error.h"
-
-void SchemaDriverSqliteTest::sandbox()
-{
-  QSqlQuery query(pvDatabase);
-  
-  if(!query.exec("SELECT * FROM A_tbl")){
-    auto error = mdtErrorNewQ("Could not get data from A_tbl", Mdt::Error::Critical, this);
-    error.stackError(mdtErrorFromQSqlQueryQ(query, this));
-    error.commit();
-  }
-  
-  QSqlDatabase db = QSqlDatabase::addDatabase("HH");
-  auto error = mdtErrorNewQ("DB get ?", Mdt::Error::Critical, this);
-  error.stackError(mdtErrorFromQSqlDatabaseQ(db, this));
-  error.commit();
-}
-
-
 void SchemaDriverSqliteTest::initTestCase()
 {
   // Get database instance
@@ -135,6 +115,14 @@ void SchemaDriverSqliteTest::fieldTypeMapTest()
   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Date) == QMetaType::QDate);
   QVERIFY(driver.fieldTypeToQMetaType(FieldType::Time) == QMetaType::QTime);
   QVERIFY(driver.fieldTypeToQMetaType(FieldType::DateTime) == QMetaType::QDateTime);
+  // QVariant::Type -> FieldType
+  QVERIFY(driver.fieldTypeFromQVariantType(QVariant::Int) == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromQVariantType(QVariant::Bool) == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromQVariantType(QVariant::String) == FieldType::Varchar);
+  // FieldType -> QVariant::Type
+  QVERIFY(driver.fieldTypeToQVariantType(FieldType::Integer) == QVariant::Int);
+  QVERIFY(driver.fieldTypeToQVariantType(FieldType::Boolean) == QVariant::Bool);
+  QVERIFY(driver.fieldTypeToQVariantType(FieldType::Varchar) == QVariant::String);
 }
 
 void SchemaDriverSqliteTest::collationDefinitionTest()
@@ -242,6 +230,17 @@ void SchemaDriverSqliteTest::fieldDefinitionTest()
   field.setLength(50);
   // Check
   expectedSql = "\"Name\" VARCHAR(50) DEFAULT NULL";
+  QCOMPARE(driver.getFieldDefinition(field), expectedSql);
+  /*
+   * VARCHAR field with a default value
+   */
+  field.clear();
+  field.setName("Name");
+  field.setType(FieldType::Varchar);
+  field.setLength(150);
+  field.setDefaultValue("Default name");
+  // Check
+  expectedSql = "\"Name\" VARCHAR(150) DEFAULT \"Default name\"";
   QCOMPARE(driver.getFieldDefinition(field), expectedSql);
   /*
    * VARCHAR field with collation set
@@ -866,6 +865,62 @@ void SchemaDriverSqliteTest::createTableTest()
   /// \todo table = driver.?? and check
   
   qDebug() << "Tables: " << pvDatabase.tables(QSql::AllTables);
+}
+
+void SchemaDriverSqliteTest::reverseFieldListTest()
+{
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::FieldList;
+  using Mdt::Sql::Schema::Table;
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Field field;
+  FieldList fieldList;
+
+  /*
+   * Setup fields
+   */
+  // Id_PK
+  AutoIncrementPrimaryKey Id_PK;
+  Id_PK.setFieldName("Id_PK");
+  // Name
+  Field Name;
+  Name.setName("Name");
+  Name.setType(FieldType::Varchar);
+  Name.setLength(150);
+  Name.setDefaultValue("Default name");
+  Name.setRequired(true);
+  Name.setUnique(true);
+  /*
+   * Setup table
+   */
+  Table Connector_tbl;
+  Connector_tbl.setTableName("Connector_tbl");
+  Connector_tbl.setPrimaryKey(Id_PK);
+  Connector_tbl.addField(Name);
+  /*
+   * Create Client_tbl
+   */
+  QVERIFY(driver.createTable(Connector_tbl));
+  /*
+   * Check
+   */
+  auto ret = driver.getTableFieldListFromDatabase("Connector_tbl");
+  QVERIFY(ret);
+  fieldList = ret.value();
+  QCOMPARE(fieldList.size(), 2);
+  // Id_PK
+  field = fieldList.at(0);
+  QCOMPARE(field.name(), QString("Id_PK"));
+  QVERIFY(field.type() == FieldType::Integer);
+  QCOMPARE(field.length(), -1);
+  QVERIFY(field.defaultValue().isNull());
+  QVERIFY(field.isRequired());
+  /// \todo define: QVERIFY(field.isUnique());
+  // Name
+  
 }
 
 /*

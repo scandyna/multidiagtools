@@ -24,6 +24,7 @@ set(SOURCES_FILES
 
 # Headers directories
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../Expected/src")
 # Because some headers are generated during building (config.h, Qt's UIC), we also build path
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 

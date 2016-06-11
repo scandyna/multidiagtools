@@ -28,6 +28,7 @@
 #include <QSqlDriver>
 #include <QString>
 #include <QMetaType>
+#include <QVariant>
 #include <memory>
 
 class QSqlDatabase;
@@ -93,11 +94,24 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     FieldType fieldTypeFromQMetaType(QMetaType::Type qmt) const;
 
+    /*! \brief Get SQL field type from QMetaType::Type
+     *
+     * \sa fieldTypeFromQMetaType() and Qt's QVariant documentation (QVariant::Type is obselete)
+     * \pre Driver must be valid
+     */
+    FieldType fieldTypeFromQVariantType(QVariant::Type qvt) const;
+
     /*! \brief Get QMetaType::Type from SQL field type
      *
      * \pre Driver must be valid
      */
     QMetaType::Type fieldTypeToQMetaType(FieldType ft) const;
+
+    /*! \brief Get QVariant::Type from SQL field type
+     *
+     * \sa fieldTypeToQMetaType() and Qt's QVariant documentation (QVariant::Type is obselete)
+     */
+    QVariant::Type fieldTypeToQVariantType(FieldType ft) const;
 
     /*! \brief Create table in database
      *

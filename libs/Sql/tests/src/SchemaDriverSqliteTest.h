@@ -32,9 +32,6 @@ class SchemaDriverSqliteTest : public QObject
 
  private slots:
 
-   void sandbox();
-   
-   
   void initTestCase();
   void cleanupTestCase();
 
@@ -53,6 +50,8 @@ class SchemaDriverSqliteTest : public QObject
   void tableDefinitionTest();
 
   void createTableTest();
+
+  void reverseFieldListTest();
 
  private:
 
