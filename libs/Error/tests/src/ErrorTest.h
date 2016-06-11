@@ -40,6 +40,18 @@ class ErrorTest : public QObject
   void errorLoggerTest_data();
   void errorLoggerConcurrentAccessTest();
   void errorLoggerConcurrentAccessTest_data();
+
+  /*
+   * Bug discovered at 20160611
+   *
+   * This code can produce a core dump:
+   * void foo()
+   * {
+   *   auto error = mdtErrorNew("test", Mdt::Error::Critical, "MyClass");
+   *   error.commit();
+   * }
+   */
+  void coreDumpAfterCommitBugTest();
 };
 
 #endif // #ifndef MDT_ERROR_TEST_H

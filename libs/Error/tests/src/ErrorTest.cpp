@@ -680,6 +680,17 @@ void ErrorTest::errorLoggerConcurrentAccessTest_data()
   }
 }
 
+void ErrorTest::coreDumpAfterCommitBugTest()
+{
+  /*
+   * Bug was in Mdt::Application,
+   * which create a Logger, but never called Logger::cleanup().
+   * Now fixed.
+   */
+  auto error = mdtErrorNew("test", Mdt::Error::Critical, "MyClass");
+  error.commit();
+}
+
 
 /*
  * Main
