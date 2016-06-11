@@ -18,37 +18,37 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_FOREIGN_KEY_LIST_H
-#define MDT_SQL_SCHEMA_FOREIGN_KEY_LIST_H
+#ifndef MDT_SQL_SCHEMA_INDEX_LIST_H
+#define MDT_SQL_SCHEMA_INDEX_LIST_H
 
-#include "ForeignKey.h"
+#include "Index.h"
 #include <QVector>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-  /*! \brief List of ForeignKey
+  /*! \brief A list of Index
    */
-  class ForeignKeyList
+  class IndexList
   {
    public:
 
     /*! \brief STL-style const iterator
      */
-    typedef QVector<ForeignKey>::const_iterator const_iterator;
+    typedef QVector<Index>::const_iterator const_iterator;
 
-    /*! \brief Append a foreign key
+    /*! \brief Append a index
      */
-    void append(const ForeignKey & fk)
+    void append(const Index & index)
     {
-      pvForeignKeyList.append(fk);
+      pvIndexList.append(index);
     }
 
-    /*! \brief Update child table name for each foreign key in this list
+    /*! \brief Update table name for each index in this list
      */
-    void updateChildTableName(const QString & tableName)
+    void updateTableName(const QString & tableName)
     {
-      for(auto & fk : pvForeignKeyList){
-        fk.setChildTableName(tableName);
+      for(auto & index : pvIndexList){
+        index.setTableName(tableName);
       }
     }
 
@@ -56,47 +56,47 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     int size() const
     {
-      return pvForeignKeyList.size();
+      return pvIndexList.size();
     }
 
-    /*! \brief Get foreign key at index
+    /*! \brief Get index at index i
      *
-     * \pre index must be valid
+     * \pre i must be in valid range
      */
-    const ForeignKey & at(int index) const
+    const Index & at(int i) const
     {
-      Q_ASSERT(index >= 0);
-      Q_ASSERT(index < size());
+      Q_ASSERT(i >= 0);
+      Q_ASSERT(i < size());
 
-      return pvForeignKeyList.at(index);
+      return pvIndexList.at(i);
     }
 
     /*! \brief Get begin const iterator
      */
     const_iterator begin() const
     {
-      return pvForeignKeyList.cbegin();
+      return pvIndexList.cbegin();
     }
 
     /*! \brief Get end const iterator
      */
     const_iterator end() const
     {
-      return pvForeignKeyList.cend();
+      return pvIndexList.cend();
     }
 
     /*! \brief Clear
      */
     void clear()
     {
-      pvForeignKeyList.clear();
+      pvIndexList.clear();
     }
 
    private:
 
-    QVector<ForeignKey> pvForeignKeyList;
+    QVector<Index> pvIndexList;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{
 
-#endif // #ifndef MDT_SQL_SCHEMA_FOREIGN_KEY_LIST_H
+#endif // #ifndef MDT_SQL_SCHEMA_INDEX_LIST_H

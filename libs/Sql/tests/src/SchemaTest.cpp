@@ -31,6 +31,7 @@
 #include "Mdt/Sql/Schema/PrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKeyContainer.h"
 #include "Mdt/Sql/Schema/Index.h"
+#include "Mdt/Sql/Schema/IndexList.h"
 #include "Mdt/Sql/Schema/ForeignKey.h"
 #include "Mdt/Sql/Schema/ForeignKeyList.h"
 #include "Mdt/Sql/Schema/Table.h"
@@ -578,6 +579,60 @@ void SchemaTest::indexTest()
   QCOMPARE(index.fieldCount(), 0);
   QVERIFY(!index.isUnique());
   QVERIFY(index.isNull());
+  /*
+   * Check setting table name from user defined table
+   */
+  index.setTable(Schema::Address_tbl());
+  QCOMPARE(index.tableName(), QString("Address_tbl"));
+  /*
+   * Clear
+   */
+  index.clear();
+  QVERIFY(index.name().isEmpty());
+  QVERIFY(index.tableName().isEmpty());
+  QCOMPARE(index.fieldCount(), 0);
+  QVERIFY(!index.isUnique());
+  QVERIFY(index.isNull());
+}
+
+void SchemaTest::indexListTest()
+{
+  using Mdt::Sql::Schema::Index;
+  using Mdt::Sql::Schema::IndexList;
+
+  /*
+   * Setup index
+   */
+  Index index;
+  index.setTableName("A_tbl");
+  index.setUnique(true);
+  /*
+   * Initial state
+   */
+  IndexList list;
+  QCOMPARE(list.size(), 0);
+  /*
+   * Add 1 element
+   */
+  list.append(index);
+  QCOMPARE(list.size(), 1);
+  QCOMPARE(list.at(0).tableName(), QString("A_tbl"));
+  QVERIFY(list.at(0).isUnique());
+  for(const auto & idx : list){
+    QCOMPARE(idx.tableName(), QString("A_tbl"));
+  }
+  /*
+   * Check updating table name
+   */
+  list.updateTableName("B_tbl");
+  QCOMPARE(list.size(), 1);
+  QCOMPARE(list.at(0).tableName(), QString("B_tbl"));
+  QVERIFY(list.at(0).isUnique());
+  /*
+   * Clear
+   */
+  list.clear();
+  QCOMPARE(list.size(), 0);
 }
 
 void SchemaTest::parentTableFieldNameTest()
@@ -827,10 +882,18 @@ void SchemaTest::foreignKeyListTest()
   list.append(fk_Connector_Id_FK);
   QCOMPARE(list.size(), 1);
   QCOMPARE(list.at(0).parentTableName(), QString("Connector_tbl"));
+  QCOMPARE(list.at(0).childTableName(), QString("Contact_tbl"));
   for(const auto & fk : list){
     QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
     QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
   }
+  /*
+   * Check updating child table name
+   */
+  list.updateChildTableName("NewChildTable_tbl");
+  QCOMPARE(list.size(), 1);
+  QCOMPARE(list.at(0).parentTableName(), QString("Connector_tbl"));
+  QCOMPARE(list.at(0).childTableName(), QString("NewChildTable_tbl"));
   /*
    * Clear
    */
@@ -1176,6 +1239,7 @@ void SchemaTest::tableTest()
   using Mdt::Sql::Schema::ParentTableFieldName;
   using Mdt::Sql::Schema::ChildTableFieldName;
   using Mdt::Sql::Schema::ForeignKey;
+  using Mdt::Sql::Schema::Index;
 
   /*
    * Setup fields
@@ -1205,10 +1269,18 @@ void SchemaTest::tableTest()
   Table Connector_tbl;
   Connector_tbl.setTableName("Connector_tbl");
   Connector_tbl.setPrimaryKey(Id_PK);
+  /*
+   * Setup foreign keys
+   */
   // fk_Connector_Id_FK
   ForeignKey fk_Connector_Id_FK;
   fk_Connector_Id_FK.setParentTable(Connector_tbl);
   fk_Connector_Id_FK.addKeyFields(ParentTableFieldName(Id_PK), ChildTableFieldName(Connector_Id_FK));
+  /*
+   * Setup index
+   */
+  Index index;
+  index.addField(Name);
 
   /*
    * Initial state
@@ -1228,6 +1300,7 @@ void SchemaTest::tableTest()
   table.addField(Remarks);
   table.addField(Connector_Id_FK);
   table.addForeignKey(fk_Connector_Id_FK);
+  table.addIndex(index);
   // Check
   QCOMPARE(table.fieldCount(), 4);
   QCOMPARE(table.fieldName(0), QString("Id_PK"));
@@ -1266,6 +1339,16 @@ void SchemaTest::tableTest()
   QCOMPARE(table.foreignKeyList().size(), 1);
   QCOMPARE(table.foreignKeyList().at(0).parentTableName(), QString("Connector_tbl"));
   QCOMPARE(table.foreignKeyList().at(0).childTableName(), QString("Client_tbl"));
+  QCOMPARE(table.indexList().size(), 1);
+  QCOMPARE(table.indexList().at(0).tableName(), QString("Client_tbl"));
+  /*
+   * Check that updating table name is reflected to foreign keys and indexes
+   */
+  table.setTableName("NewTableName_tbl");
+  QCOMPARE(table.foreignKeyList().size(), 1);
+  QCOMPARE(table.foreignKeyList().at(0).childTableName(), QString("NewTableName_tbl"));
+  QCOMPARE(table.indexList().size(), 1);
+  QCOMPARE(table.indexList().at(0).tableName(), QString("NewTableName_tbl"));
   /*
    * Clear
    */
@@ -1276,6 +1359,7 @@ void SchemaTest::tableTest()
   QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
   QCOMPARE(table.primaryKey().fieldCount(), 0);
   QCOMPARE(table.foreignKeyList().size(), 0);
+  QCOMPARE(table.indexList().size(), 0);
   QVERIFY(table.isNull());
 }
 

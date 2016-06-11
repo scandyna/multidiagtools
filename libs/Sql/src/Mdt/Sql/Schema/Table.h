@@ -26,6 +26,7 @@
 #include "PrimaryKeyContainer.h"
 #include "ForeignKey.h"
 #include "ForeignKeyList.h"
+#include "IndexList.h"
 #include <QString>
 #include <vector>
 
@@ -117,10 +118,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Set table name
      */
-    void setTableName(const QString & name)
-    {
-      pvTableName = name;
-    }
+    void setTableName(const QString & name);
 
     /*! \brief Get table name
      */
@@ -208,6 +206,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Add a foreign key
      *
      * \note Child table name defined in fk is ignored. This table name is also considered as child table.
+     * \note If fk requests to create a index (i.e. Foreign::createChildIndex() is true),
+     *        no index is added at all in this table.
+     *        When creating table in database using a Driver instance,
+     *        Driver will take care to create these indexes.
      * \pre Each field of child table in fk must exist in this table
      */
     void addForeignKey(ForeignKey fk);
@@ -217,6 +219,24 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     ForeignKeyList foreignKeyList() const
     {
       return pvForeignKeyList;
+    }
+
+    /*! \brief Add a index
+     *
+     * \note index's name is keeped untouched.
+     * \note index's table name is ignored, and replaced with this table name.
+     * \pre Each field of index must exist in this table.
+     */
+    void addIndex(Index index);
+
+    /*! \brief Get list of indexes
+     *
+     * \note Will only return indexes added with addIndex().
+     *        \sa addForeignKey()
+     */
+    IndexList indexList() const
+    {
+      return pvIndexList;
     }
 
     /*! \brief Get field count
@@ -287,6 +307,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Check if field at index is unique
      *
      * \pre index must be in valid range
+     *
+     * \todo What is we add a unique Index ?
      */
     bool isFieldUnique(int index) const;
 
@@ -330,6 +352,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     FieldList pvFieldList;
     std::vector<int> pvPrimaryKeyFieldIndexList;  // Used by isFieldPartOfPrimaryKey() for PrimaryKey (multi-column)
     ForeignKeyList pvForeignKeyList;
+    IndexList pvIndexList;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

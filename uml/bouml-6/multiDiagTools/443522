@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 55
+  revision 56
   modified_by 2 "philippe"
   // class settings
   
@@ -3060,6 +3060,44 @@ ${inlines}
 	
       end
     end
+
+    class 2907138 "IndexList"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3314434 // <directional composition>
+	relation 3296130 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 3314434 // <directional composition>
+	  b parent class_ref 2782466 // Index
+      end
+
+      attribute 2772098 "IndexList"
+	private type class_ref 2782466 // Index
+	multiplicity "*"
+	stereotype "vector"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
   end
 
   classview 1373314 "ForeignKey"
@@ -3999,15 +4037,6 @@ ${inlines}
 	  b parent class_ref 2775042 // Field
       end
 
-      classrelation 3166722 // <directional composition>
-	relation 3148418 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3166722 // <directional composition>
-	  b parent class_ref 2782466 // Index
-      end
-
       attribute 2674690 "IsTemporary"
 	private explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -4149,6 +4178,15 @@ ${inlines}
 "
 	    classrelation_ref 3307906 // <directional composition>
 	  b parent class_ref 2900610 // ForeignKeyList
+      end
+
+      classrelation 3314562 // <directional composition>
+	relation 3296258 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3314562 // <directional composition>
+	  b parent class_ref 2907138 // IndexList
       end
     end
 

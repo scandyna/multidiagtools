@@ -864,6 +864,8 @@ void SchemaDriverSqliteTest::createTableTest()
    */
   QVERIFY(driver.createTable(address_tbl.toTable()));
   /// \todo table = driver.?? and check
+  
+  qDebug() << "Tables: " << pvDatabase.tables(QSql::AllTables);
 }
 
 /*

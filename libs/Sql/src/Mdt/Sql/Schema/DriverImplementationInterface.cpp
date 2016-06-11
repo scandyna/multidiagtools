@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "DriverImplementationInterface.h"
+#include "Mdt/Sql/Error.h"
 #include <QStringList>
 #include <QStringBuilder>
 #include <QObject>
@@ -245,15 +246,53 @@ QString DriverImplementationInterface::getSqlToDropTable(const Table& table) con
   return sql;
 }
 
-bool DriverImplementationInterface::createTable(const Table& table)
+bool DriverImplementationInterface::createTable(const Table & table)
 {
+  QSqlQuery query(pvDatabase);
+  const QString tableName = table.tableName();
+  const auto indexList = table.indexList();
+  const auto fkList = table.foreignKeyList();
+  QString sql;
+
   // Create table
-  
+  sql = getSqlToCreateTable(table);
+  if(!query.exec(sql)){
+    QString msg = tr("Creating table '%1' failed.").arg(tableName);
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverImplementationInterface");
+    error.stackError(mdtErrorFromQSqlQuery(query, "DriverImplementationInterface"));
+    error.commit();
+    setLastError(error);
+    return false;
+  }
   // Create indexes
-  
+  for(const auto & index : indexList){
+    sql = getSqlToCreateIndex(index);
+    if(!query.exec(sql)){
+      QString msg = tr("Creating index '%1' for table '%2' failed.").arg(index.name()).arg(tableName);
+      auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverImplementationInterface");
+      error.stackError(mdtErrorFromQSqlQuery(query, "DriverImplementationInterface"));
+      error.commit();
+      setLastError(error);
+      return false;
+    }
+  }
   // Create indexes for FK
-  
-  return false;
+  for(const auto & fk : fkList){
+    if(fk.createChildIndex()){
+      auto index = fk.getChildTableIndex();
+      sql = getSqlToCreateIndex(index);
+      if(!query.exec(sql)){
+        QString msg = tr("Creating index '%1' for table '%2' failed.").arg(index.name()).arg(tableName);
+        auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverImplementationInterface");
+        error.stackError(mdtErrorFromQSqlQuery(query, "DriverImplementationInterface"));
+        error.commit();
+        setLastError(error);
+        return false;
+      }
+    }
+  }
+
+  return true;
 }
 
 bool DriverImplementationInterface::dropTable(const Table& table)

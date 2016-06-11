@@ -121,6 +121,13 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       pvChildTableName = table.tableName();
     }
 
+    /*! \brief Set child table name
+     */
+    void setChildTableName(const QString & name)
+    {
+      pvChildTableName = name;
+    }
+
     /*! \brief Get child table name
      */
     QString childTableName() const

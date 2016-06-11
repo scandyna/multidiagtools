@@ -23,6 +23,13 @@
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
+void Table::setTableName(const QString & name)
+{
+  pvTableName = name;
+  pvForeignKeyList.updateChildTableName(name);
+  pvIndexList.updateTableName(name);
+}
+
 void Table::setPrimaryKey(const PrimaryKey& pk)
 {
   pvPrimaryKeyFieldIndex = -1;
@@ -48,6 +55,18 @@ void Table::addForeignKey(ForeignKey fk)
 
   fk.setChildTable(*this);
   pvForeignKeyList.append(fk);
+}
+
+void Table::addIndex(Index index)
+{
+#ifndef QT_NO_DEBUG
+  for(const auto & fieldName : index.fieldNameList()){
+    Q_ASSERT(contains(fieldName));
+  }
+#endif // #ifndef QT_NO_DEBUG
+
+  index.setTableName(pvTableName);
+  pvIndexList.append(index);
 }
 
 int Table::fieldIndex(const QString& fieldName) const
@@ -81,16 +100,6 @@ QString Table::fieldName(int index) const
     return pvPrimaryKey.fieldName();
   }
   return refFieldConst(index).name();
-
-//   if(pvPrimaryKeyFieldIndex == 0){
-//     if(index == 0){
-//       return pvPrimaryKey.fieldName();
-//     }else{
-//       return pvFieldList.at(index - 1).name();
-//     }
-//   }else{
-//     return pvFieldList.at(index).name();
-//   }
 }
 
 FieldType Table::fieldType(int index) const
@@ -207,6 +216,7 @@ void Table::clear()
   pvTableName.clear();
   pvFieldList.clear();
   pvForeignKeyList.clear();
+  pvIndexList.clear();
 }
 
 const Field & Table::refFieldConst(int index) const

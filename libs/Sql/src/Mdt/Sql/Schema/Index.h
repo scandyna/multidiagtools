@@ -29,6 +29,9 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
   class Table;
 
+  template<typename T>
+  class TableTemplate;
+
   /*! \brief SQL schema index
    */
   class Index
@@ -68,6 +71,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Set table
      */
     void setTable(const Table & table);
+
+    /*! \brief Set table
+     */
+    template<typename T>
+    void setTable(const TableTemplate<T> & table)
+    {
+      pvTableName = table.tableName();
+    }
 
     /*! \brief Set table name
      *

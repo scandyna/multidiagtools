@@ -48,6 +48,7 @@ class SchemaTest : public QObject
   void primaryKeyContainerTest();
 
   void indexTest();
+  void indexListTest();
 
   void parentTableFieldNameTest();
   void childTableFieldNameTest();
