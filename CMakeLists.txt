@@ -194,6 +194,9 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/qt-solutions")
 # * Application *
 add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Application")
 
+# * Expected *
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Expected")
+
 # * mdtutils *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutils")
 

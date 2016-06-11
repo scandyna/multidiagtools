@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_EXPECTED_H
-#define MDT_EXPECTED_H
+#ifndef MDT_EXPECTED_OLD_H
+#define MDT_EXPECTED_OLD_H
 
 #include "mdtError.h"
 #include <utility>
@@ -293,4 +293,4 @@ class mdtExpected
   };
 };
 
-#endif // #ifndef MDT_EXPECTED_H
+#endif // #ifndef MDT_EXPECTED_OLD_H

@@ -18,13 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_APPLICATION_TEST_H
-#define MDT_APPLICATION_TEST_H
+#ifndef MDT_EXPECTED_TEST_H
+#define MDT_EXPECTED_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
 
-class ApplicationTest : public QObject
+class ExpectedTest : public QObject
 {
   Q_OBJECT
 
@@ -33,7 +33,8 @@ class ApplicationTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void sandbox();
+  void expectedTest();
+  void expectedBenchmark();
 };
 
-#endif // #ifndef MDT_APPLICATION_TEST_H
+#endif // #ifndef MDT_EXPECTED_TEST_H
