@@ -18,46 +18,35 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_DRIVER_SQLITE_TEST_H
-#define MDT_SQL_SCHEMA_DRIVER_SQLITE_TEST_H
+#include "Index.h"
+#include "Table.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QTemporaryFile>
-#include <QSqlDatabase>
+namespace Mdt{ namespace Sql{ namespace Schema{
 
-class SchemaDriverSqliteTest : public QObject
+void Index::generateName()
 {
- Q_OBJECT
+  Q_ASSERT(!pvTableName.isEmpty());
+  Q_ASSERT(!pvFieldNameList.isEmpty());
 
- private slots:
+  QString name = pvTableName + QStringLiteral("_");
+  for(const auto & fieldName : pvFieldNameList){
+    name += fieldName + QStringLiteral("_");
+  }
+  name += "index";
+  setName(name);
+}
 
-   void sandbox();
-   
-   
-  void initTestCase();
-  void cleanupTestCase();
+void Index::setTable(const Table& table)
+{
+  pvTableName = table.tableName();
+}
 
-  void driverInstanceTest();
+void Index::clear()
+{
+  pvIsUnique = false;
+  pvName.clear();
+  pvTableName.clear();
+  pvFieldNameList.clear();
+}
 
-  void availableFieldTypeTest();
-  void fieldTypeMapTest();
-
-  void collationDefinitionTest();
-  void fieldDefinitionTest();
-  void autoIncrementPrimaryKeyDefinitionTest();
-  void singleFieldPrimaryKeyDefinitionTest();
-  void primaryKeyDefinitionTest();
-  void indexDefinitionTest();
-  void foreignKeyDefinitionTest();
-  void tableDefinitionTest();
-
-  void createTableTest();
-
- private:
-
-  QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
-  QSqlDatabase pvDatabase;
-};
-
-#endif // #ifndef MDT_SQL_SCHEMA_DRIVER_SQLITE_TEST_H
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{

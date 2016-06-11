@@ -149,6 +149,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *    setTableName("Address_tbl");
    *    setPrimaryKey(Id_PK);
    *    addField(Street);
+   *    addField(Client_Id_FK);
+   *    addForeignKey(Fk_Client_Id_FK);
    *  }
    *
    * } // namespace Schema{
@@ -215,6 +217,16 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     void addField(const Field & field)
     {
       pvTable.addField(field);
+    }
+
+    /*! \brief Add a foreign key
+     *
+     * \note Child table name defined in fk is ignored. This table name is also considered as child table.
+     * \pre Each field of child table in fk must exist in this table
+     */
+    void addForeignKey(const ForeignKey & fk)
+    {
+      pvTable.addForeignKey(fk);
     }
 
     /*! \brief Get primary key

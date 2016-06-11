@@ -29,6 +29,8 @@ Address_tbl::Address_tbl()
   using Mdt::Sql::Schema::Field;
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
   using Mdt::Sql::Schema::ForeignKey;
+  using Mdt::Sql::Schema::ParentTableFieldName;
+  using Mdt::Sql::Schema::ChildTableFieldName;
 
   Client_tbl client_tbl;
 
@@ -58,16 +60,18 @@ Address_tbl::Address_tbl()
   // Fk_Client_Id_FK
   ForeignKey Fk_Client_Id_FK;
   Fk_Client_Id_FK.setParentTable(client_tbl);
-  ///Fk_Client_Id_FK.setOnD
-  
+  Fk_Client_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
+  Fk_Client_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
+  Fk_Client_Id_FK.setCreateChildIndex(true);
+  Fk_Client_Id_FK.addKeyFields(ParentTableFieldName(client_tbl.Id_PK()), ChildTableFieldName(Client_Id_FK));
   // Setup table
   setTableName("Address_tbl");
   setPrimaryKey(Id_PK);
-  
+  addField(Client_Id_FK);
   addField(Street);
   addField(FieldAA);
   addField(FieldAB);
-
+  addForeignKey(Fk_Client_Id_FK);
 }
 
 

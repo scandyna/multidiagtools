@@ -37,6 +37,19 @@ void Table::setPrimaryKey(const PrimaryKey& pk)
   }
 }
 
+void Table::addForeignKey(ForeignKey fk)
+{
+  Q_ASSERT(!fk.parentTableName().isEmpty());
+#ifndef QT_NO_DEBUG
+  for(const auto & fieldName : fk.childTableFieldNameList()){
+    Q_ASSERT(contains(fieldName));
+  }
+#endif // #ifndef QT_NO_DEBUG
+
+  fk.setChildTable(*this);
+  pvForeignKeyList.append(fk);
+}
+
 int Table::fieldIndex(const QString& fieldName) const
 {
   if(pvPrimaryKeyFieldIndex == 0){
@@ -193,6 +206,7 @@ void Table::clear()
   pvIsTemporary = false;
   pvTableName.clear();
   pvFieldList.clear();
+  pvForeignKeyList.clear();
 }
 
 const Field & Table::refFieldConst(int index) const

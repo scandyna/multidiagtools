@@ -22,11 +22,12 @@
 #define MDT_SQL_SCHEMA_INDEX_H
 
 #include "Field.h"
-#include "Table.h"
 #include <QString>
 #include <QStringList>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
+
+  class Table;
 
   /*! \brief SQL schema index
    */
@@ -55,18 +56,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *
      * \pre tableName must be set, and at least 1 field must exist
      */
-    void generateName()
-    {
-      Q_ASSERT(!pvTableName.isEmpty());
-      Q_ASSERT(!pvFieldNameList.isEmpty());
-
-      QString name = pvTableName + QStringLiteral("_");
-      for(const auto & fieldName : pvFieldNameList){
-        name += fieldName + QStringLiteral("_");
-      }
-      name += "index";
-      setName(name);
-    }
+    void generateName();
 
     /*! \brief Get index name
      */
@@ -77,17 +67,16 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Set table
      */
-    void setTable(const Table & table)
-    {
-      pvTableName = table.tableName();
-    }
+    void setTable(const Table & table);
 
-//     /*! \brief Set table name
-//      */
-//     void setTableName(const QString & name)
-//     {
-//       pvTableName = name;
-//     }
+    /*! \brief Set table name
+     *
+     * \sa setTable()
+     */
+    void setTableName(const QString & name)
+    {
+      pvTableName = name;
+    }
 
     /*! \brief Get table name
      */
@@ -101,6 +90,15 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     void addField(const Field & field)
     {
       pvFieldNameList.append(field.name());
+    }
+
+    /*! \brief Add a field to this index
+     *
+     * \sa addField()
+     */
+    void addFieldName(const QString & fieldName)
+    {
+      pvFieldNameList.append(fieldName);
     }
 
     /*! \brief Get field count
@@ -154,13 +152,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Clear
      */
-    void clear()
-    {
-      pvIsUnique = false;
-      pvName.clear();
-      pvTableName.clear();
-      pvFieldNameList.clear();
-    }
+    void clear();
 
    private:
 

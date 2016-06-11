@@ -23,6 +23,7 @@
 
 #include "ParentTableFieldName.h"
 #include "ChildTableFieldName.h"
+#include "Index.h"
 #include <QString>
 #include <QStringList>
 // #include <vector>
@@ -140,6 +141,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     {
       return pvCreateChildIndex;
     }
+
+    /*! \brief Get a index for child table
+     */
+    Index getChildTableIndex() const;
 
     /*! \brief Add a couple of relation fields
      *

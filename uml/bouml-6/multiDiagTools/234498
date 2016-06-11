@@ -1,6 +1,6 @@
 format 211
 "mdtdatabase" // mdtdatabase
-  revision 127
+  revision 128
   modified_by 2 "philippe"
   // class settings
   
@@ -4043,15 +4043,6 @@ ${inlines}
 	  b parent class_ref 1867522 // Ui::mdtSqlTableSetupWidget
       end
 
-      classrelation 2203778 // <directional composition>
-	relation 2187522 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 2203778 // <directional composition>
-	  b parent class_ref 1808130 // mdtSqlTableSchemaModel
-      end
-
       operation 2905090 "mdtSqlTableSetupWidget"
 	public explicit_return_type ""
 	nparams 2
@@ -4160,7 +4151,7 @@ ${inlines}
       operation 2848898 "setTable"
 	public explicit_return_type "bool"
 	nparams 2
-	  param in name "tableSchema" type class_ref 910210 // mdtSqlTableSchema
+	  param in name "tableSchema" explicit_type "mdtSqlTableSchema"
 	  param in name "db" type class_ref 405122 // QSqlDatabase
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
@@ -4220,14 +4211,6 @@ ${inlines}
 	
       end
 
-      classrelation 2210434 // <unidirectional association>
-	relation 2194178 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 2210434 // <unidirectional association>
-	  b parent class_ref 1808130 // mdtSqlTableSchemaModel
-      end
     end
 
     class 1801602 "mdtSqlFieldSetupData"

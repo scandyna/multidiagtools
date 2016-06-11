@@ -125,6 +125,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     virtual QString getSqlToDropTable(const Table & table) const;
 
+    /*! \brief Create table in database
+     */
+    bool createTable(const Table & table);
+
+    /*! \brief Drop table
+     */
+    bool dropTable(const Table & table);
+
     /*! \brief Get last error
      */
     Mdt::Error lastError() const

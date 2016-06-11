@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_ERROR_H
-#define MDT_SQL_ERROR_H
+#ifndef MDT_SQL_ERROR_OLD_H
+#define MDT_SQL_ERROR_OLD_H
 
 #include "mdtError.h"
 #include <QSqlError>
@@ -56,4 +56,4 @@ namespace mdt{ namespace sql{ namespace error{
 
 }}} // namespace mdt{ namespace sql{ namespace error{
 
-#endif // #ifndef MDT_SQL_ERROR_H
+#endif // #ifndef MDT_SQL_ERROR_OLD_H

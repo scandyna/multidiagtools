@@ -34,6 +34,19 @@ void ForeignKey::setChildTable(const Table & table)
   pvChildTableName = table.tableName();
 }
 
+Index ForeignKey::getChildTableIndex() const
+{
+  Index index;
+
+  index.setTableName(pvChildTableName);
+  for(const auto & fieldName : pvChildTableFieldNameList){
+    index.addFieldName(fieldName);
+  }
+  index.generateName();
+
+  return index;
+}
+
 void ForeignKey::addKeyFields(const ParentTableFieldName & parentTableFieldName, const ChildTableFieldName & childTableFieldName)
 {
   Q_ASSERT(!parentTableFieldName.fieldName().isEmpty());

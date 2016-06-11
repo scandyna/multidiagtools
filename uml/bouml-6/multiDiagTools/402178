@@ -1,6 +1,6 @@
 format 211
 "Sql" // Mdt::Sql
-  revision 12
+  revision 13
   modified_by 2 "philippe"
   // class settings
   
@@ -76,7 +76,7 @@ ${inlines}
       end
 
       attribute 2541570 "LastError"
-	private type class_ref 182402 // mdtError
+	private type class_ref 182402 // Error
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -181,7 +181,7 @@ ${inlines}
       end
 
       operation 3998338 "lastError"
-	public return_type class_ref 182402 // mdtError
+	public return_type class_ref 182402 // Error
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -303,7 +303,7 @@ ${inlines}
       mysql_decl ""
       
       operation 4002050 "fromQSqlQuery"
-	class_operation public return_type class_ref 182402 // mdtError
+	class_operation public return_type class_ref 182402 // Error
 	nparams 3
 	  param in name "query" type class_ref 910594 // QSqlQuery
 	  param in name "file" type class_ref 161026 // QString
@@ -321,7 +321,7 @@ ${inlines}
       end
 
       operation 4002178 "fromQSqlDatabase"
-	class_operation public return_type class_ref 182402 // mdtError
+	class_operation public return_type class_ref 182402 // Error
 	nparams 3
 	  param in name "db" type class_ref 405122 // QSqlDatabase
 	  param in name "file" type class_ref 161026 // QString

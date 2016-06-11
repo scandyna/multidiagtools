@@ -25,6 +25,7 @@
 #include "FieldList.h"
 #include "PrimaryKeyContainer.h"
 #include "ForeignKey.h"
+#include "ForeignKeyList.h"
 #include <QString>
 #include <vector>
 
@@ -42,28 +43,49 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief SQL schema table
    *
-   * Typical usage for a simple table:
+   * Typical usage to define a table:
    * \code
    * using Mdt::Sql::Schema::Table;
    * using Mdt::Sql::Schema::Field;
    * using Mdt::Sql::Schema::FieldType;
    * using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+   * using Mdt::Sql::Schema::ForeignKey;
+   * using Mdt::Sql::Schema::ParentTableFieldName;
+   * using Mdt::Sql::Schema::ChildTableFieldName;
    *
+   * // Somewhere defined table
+   * Table Client_tbl = getFromSomeWhere();
    * // Setup table basics
    * Table table;
-   * table.setName("Client_tbl");
+   * table.setName("Address_tbl");
    * // Setup Id_PK field
    * AutoIncrementPrimaryKey Id_PK;
    * Id_PK.setFieldName("Id_PK");
-   * // Setup name field
-   * Field Name:
-   * Name.setName("Name");
-   * Name.setType(FieldType::Varchar);
-   * Name.setLength(100);
+   * // Setup Client_Id_FK field
+   * Field Client_Id_FK;
+   * Client_Id_FK.setName("Client_Id_FK");
+   * Client_Id_FK.setType(FieldType::Integer);
+   * Client_Id_FK.setRequired(true);
+   * // Setup street field
+   * Field Street:
+   * Street.setName("Street");
+   * Street.setType(FieldType::Varchar);
+   * Street.setLength(100);
    * // Add fileds to the table
    * table.setPrimaryKey(Id_PK);
-   * table.addField(Name);
+   * table.addField(Client_Id_FK);
+   * table.addField(Street);
+   * // Setup fk_Client_Id_FK foreign key
+   * ForeignKey fk_Client_Id_FK;
+   * fk_Client_Id_FK.setParentTable(Client_tbl);
+   * fk_Client_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
+   * fk_Client_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
+   * fk_Client_Id_FK.setCreateChildIndex(true);
+   * fk_Client_Id_FK.addKeyFields(ParentTableFieldName(client_tbl.autoIncrementPrimaryKey()), ChildTableFieldName(Client_Id_FK));
+   * table.addForeignKey(fk_Client_Id_FK);
    * \endcode
+   *
+   * \sa TableTemplate
    */
   class Table
   {
@@ -183,6 +205,20 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       pvFieldList.append(field);
     }
 
+    /*! \brief Add a foreign key
+     *
+     * \note Child table name defined in fk is ignored. This table name is also considered as child table.
+     * \pre Each field of child table in fk must exist in this table
+     */
+    void addForeignKey(ForeignKey fk);
+
+    /*! \brief Get list of foreign keys
+     */
+    ForeignKeyList foreignKeyList() const
+    {
+      return pvForeignKeyList;
+    }
+
     /*! \brief Get field count
      */
     int fieldCount() const
@@ -293,6 +329,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     PrimaryKeyContainer pvPrimaryKey;
     FieldList pvFieldList;
     std::vector<int> pvPrimaryKeyFieldIndexList;  // Used by isFieldPartOfPrimaryKey() for PrimaryKey (multi-column)
+    ForeignKeyList pvForeignKeyList;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

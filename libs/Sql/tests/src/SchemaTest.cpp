@@ -32,6 +32,7 @@
 #include "Mdt/Sql/Schema/PrimaryKeyContainer.h"
 #include "Mdt/Sql/Schema/Index.h"
 #include "Mdt/Sql/Schema/ForeignKey.h"
+#include "Mdt/Sql/Schema/ForeignKeyList.h"
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Schema/TableModel.h"
 #include "Schema/Client_tbl.h"
@@ -666,7 +667,9 @@ void SchemaTest::foreignKeyTest()
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
   using Mdt::Sql::Schema::ParentTableFieldName;
   using Mdt::Sql::Schema::ChildTableFieldName;
+  using Mdt::Sql::Schema::Index;
 
+  Index index;
   Schema::Client_tbl client_tbl;
   Schema::Address_tbl address_tbl;
   /*
@@ -686,7 +689,7 @@ void SchemaTest::foreignKeyTest()
   Client_Id_FK.setType(FieldType::Integer);
   Client_Id_FK.setRequired(true);
   /*
-   * Setup Connector_tbl
+   * Init Connector_tbl
    */
   Table Connector_tbl;
   Connector_tbl.setTableName("Connector_tbl");
@@ -728,6 +731,12 @@ void SchemaTest::foreignKeyTest()
   QVERIFY(fk.onDeleteAction() == ForeignKey::Restrict);
   QVERIFY(fk.onUpdateAction() == ForeignKey::Cascade);
   QVERIFY(fk.createChildIndex());
+  // Check index for child table
+  index = fk.getChildTableIndex();
+  QCOMPARE(index.tableName(), QString("Contact_tbl"));
+  QCOMPARE(index.fieldCount(), 1);
+  QCOMPARE(index.fieldName(0), QString("Connector_Id_FK"));
+  QCOMPARE(index.name(), QString("Contact_tbl_Connector_Id_FK_index"));
   /*
    * Clear
    */
@@ -765,6 +774,68 @@ void SchemaTest::foreignKeyTest()
   QVERIFY(fk.onUpdateAction() == ForeignKey::NoAction);
   QVERIFY(!fk.createChildIndex());
   QVERIFY(fk.isNull());
+}
+
+void SchemaTest::foreignKeyListTest()
+{
+  using Mdt::Sql::Schema::ForeignKey;
+  using Mdt::Sql::Schema::ForeignKeyList;
+  using Mdt::Sql::Schema::Table;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::ParentTableFieldName;
+  using Mdt::Sql::Schema::ChildTableFieldName;
+
+  /*
+   * Setup fields
+   */
+  // Id_PK
+  AutoIncrementPrimaryKey Id_PK;
+  Id_PK.setFieldName("Id_PK");
+  // Connector_Id_FK
+  Field Connector_Id_FK;
+  Connector_Id_FK.setName("Connector_Id_FK");
+  Connector_Id_FK.setType(FieldType::Integer);
+  Connector_Id_FK.setRequired(true);
+  /*
+   * Setup Connector_tbl
+   */
+  Table Connector_tbl;
+  Connector_tbl.setTableName("Connector_tbl");
+  Connector_tbl.setPrimaryKey(Id_PK);
+  /*
+   * Init Contact_tbl
+   */
+  Table Contact_tbl;
+  Contact_tbl.setTableName("Contact_tbl");
+  Contact_tbl.setPrimaryKey(Id_PK);
+  /*
+   * Setup fk_Connector_Id_FK
+   */
+  ForeignKey fk_Connector_Id_FK;
+  fk_Connector_Id_FK.setParentTable(Connector_tbl);
+  fk_Connector_Id_FK.setChildTable(Contact_tbl);
+  /*
+   * Initial state
+   */
+  ForeignKeyList list;
+  QCOMPARE(list.size(), 0);
+  /*
+   * Add 1 element
+   */
+  list.append(fk_Connector_Id_FK);
+  QCOMPARE(list.size(), 1);
+  QCOMPARE(list.at(0).parentTableName(), QString("Connector_tbl"));
+  for(const auto & fk : list){
+    QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
+    QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
+  }
+  /*
+   * Clear
+   */
+  list.clear();
+  QCOMPARE(list.size(), 0);
 }
 
 void SchemaTest::tablePrimaryKeyTest()
@@ -1102,6 +1173,9 @@ void SchemaTest::tableTest()
   using Mdt::Sql::Schema::SingleFieldPrimaryKey;
   using Mdt::Sql::Schema::PrimaryKey;
   using Mdt::Sql::Schema::PrimaryKeyContainer;
+  using Mdt::Sql::Schema::ParentTableFieldName;
+  using Mdt::Sql::Schema::ChildTableFieldName;
+  using Mdt::Sql::Schema::ForeignKey;
 
   /*
    * Setup fields
@@ -1122,6 +1196,19 @@ void SchemaTest::tableTest()
   Remarks.setType(FieldType::Varchar);
   Remarks.setLength(150);
   Remarks.setDefaultValue("Default remark");
+  // Connector_Id_FK
+  Field Connector_Id_FK;
+  Connector_Id_FK.setName("Connector_Id_FK");
+  Connector_Id_FK.setType(FieldType::Integer);
+  Connector_Id_FK.setRequired(true);
+  // Init Connector_tbl
+  Table Connector_tbl;
+  Connector_tbl.setTableName("Connector_tbl");
+  Connector_tbl.setPrimaryKey(Id_PK);
+  // fk_Connector_Id_FK
+  ForeignKey fk_Connector_Id_FK;
+  fk_Connector_Id_FK.setParentTable(Connector_tbl);
+  fk_Connector_Id_FK.addKeyFields(ParentTableFieldName(Id_PK), ChildTableFieldName(Connector_Id_FK));
 
   /*
    * Initial state
@@ -1139,11 +1226,14 @@ void SchemaTest::tableTest()
   QVERIFY(!table.isNull());
   table.addField(Name);
   table.addField(Remarks);
+  table.addField(Connector_Id_FK);
+  table.addForeignKey(fk_Connector_Id_FK);
   // Check
-  QCOMPARE(table.fieldCount(), 3);
+  QCOMPARE(table.fieldCount(), 4);
   QCOMPARE(table.fieldName(0), QString("Id_PK"));
   QCOMPARE(table.fieldName(1), QString("Name"));
   QCOMPARE(table.fieldName(2), QString("Remarks"));
+  QCOMPARE(table.fieldName(3), QString("Connector_Id_FK"));
   QVERIFY(table.isFieldPartOfPrimaryKey(0));
   QVERIFY(!table.isFieldPartOfPrimaryKey(1));
   QVERIFY(!table.isFieldPartOfPrimaryKey(2));
@@ -1173,6 +1263,9 @@ void SchemaTest::tableTest()
   QVERIFY(!table.contains(""));
   QCOMPARE(table.field(1).name(), QString("Name"));
   QCOMPARE(table.field(2).name(), QString("Remarks"));
+  QCOMPARE(table.foreignKeyList().size(), 1);
+  QCOMPARE(table.foreignKeyList().at(0).parentTableName(), QString("Connector_tbl"));
+  QCOMPARE(table.foreignKeyList().at(0).childTableName(), QString("Client_tbl"));
   /*
    * Clear
    */
@@ -1182,6 +1275,7 @@ void SchemaTest::tableTest()
   QCOMPARE(table.fieldCount(), 0);
   QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
   QCOMPARE(table.primaryKey().fieldCount(), 0);
+  QCOMPARE(table.foreignKeyList().size(), 0);
   QVERIFY(table.isNull());
 }
 

@@ -1,6 +1,6 @@
 format 211
 "sql" // mdtdatabase::mdt::sql
-  revision 11
+  revision 12
   modified_by 2 "philippe"
   // class settings
   
@@ -367,15 +367,6 @@ ${inlines}
 "
 	    classrelation_ref 2644994 // <directional composition>
 	  b parent class_ref 2349954 // FieldSelectionProxyModel
-      end
-
-      classrelation 2645250 // <directional composition>
-	relation 2628738 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 2645250 // <directional composition>
-	  b parent class_ref 1808130 // mdtSqlTableSchemaModel
       end
 
       operation 3557250 "FieldSelectionDialog"

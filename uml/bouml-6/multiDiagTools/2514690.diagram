@@ -73,15 +73,6 @@ relationcanvas 133890 relation_ref 3273986 // <dependency>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 134402 relation_ref 3274114 // <directional composition>
-  decenter_begin 520
-  decenter_end 209
-  from ref 128002 z 2008 to point 800 236
-  line 134530 z 2008 to point 800 250
-  line 134658 z 2008 to ref 133122
-  no_role_a no_role_b
-  multiplicity_a_pos 846 257 3000 no_multiplicity_b
-end
 line 132354 -_-_
   from ref 131970 z 2002 to ref 128642
 line 132738 -_-_

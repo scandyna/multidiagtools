@@ -16,10 +16,6 @@ classcanvas 128898 class_ref 1988098 // mdtSqlForeignKey
   classdiagramsettings member_max_width 0 end
   xyz 207 513 2000
 end
-classcanvas 129794 class_ref 910210 // mdtSqlTableSchema
-  classdiagramsettings member_max_width 0 end
-  xyz 209 322 2000
-end
 classcanvas 129922 class_ref 1954178 // mdtSqlDatabaseSchema
   classdiagramsettings member_max_width 0 end
   xyz 233 218 2006
@@ -40,36 +36,10 @@ relationcanvas 128770 relation_ref 2308354 // <generalisation>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 130050 relation_ref 2274562 // <directional composition>
-  decenter_begin 473
-  from ref 129922 z 2007 to ref 129794
-  no_role_a no_role_b
-  multiplicity_a_pos 296 299 3000 no_multiplicity_b
-end
 relationcanvas 130434 relation_ref 2315138 // <directional composition>
   from ref 129922 z 2007 to ref 128642
   no_role_a no_role_b
   multiplicity_a_pos 203 246 3000 no_multiplicity_b
-end
-relationcanvas 130562 relation_ref 2315266 // <directional composition>
-  decenter_begin 469
-  from ref 129794 z 2001 to ref 128386
-  no_role_a no_role_b
-  multiplicity_a_pos 437 397 3000 no_multiplicity_b
-end
-relationcanvas 130690 relation_ref 2322050 // <directional composition>
-  from ref 129794 z 2001 to ref 128898
-  no_role_a no_role_b
-  multiplicity_a_pos 297 490 3000 no_multiplicity_b
-end
-relationcanvas 130818 relation_ref 2322178 // <directional composition>
-  geometry HV unfixed
-  decenter_begin 469
-  decenter_end 470
-  from ref 129794 z 2001 to point 110 387
-  line 131202 z 2001 to ref 128642
-  no_role_a no_role_b
-  multiplicity_a_pos 97 285 3000 no_multiplicity_b
 end
 line 131714 -_-_
   from ref 131586 z 2001 to ref 128002

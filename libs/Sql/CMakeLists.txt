@@ -6,6 +6,7 @@ project(multidiagtools)
 
 # List of source files
 set(SOURCES_FILES 
+    src/Mdt/Sql/Error.cpp
     src/Mdt/Sql/Query.cpp
     src/Mdt/Sql/Schema/Driver.cpp
     src/Mdt/Sql/Schema/DriverImplementationInterface.cpp
@@ -16,6 +17,7 @@ set(SOURCES_FILES
     src/Mdt/Sql/Schema/FieldTypeListModel.cpp
     src/Mdt/Sql/Schema/PrimaryKeyContainer.cpp
     src/Mdt/Sql/Schema/ForeignKey.cpp
+    src/Mdt/Sql/Schema/Index.cpp
     src/Mdt/Sql/Schema/Table.cpp
     src/Mdt/Sql/Schema/TableModel.cpp
 )

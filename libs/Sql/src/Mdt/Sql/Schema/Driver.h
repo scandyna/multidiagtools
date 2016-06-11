@@ -35,6 +35,7 @@ class QSqlDatabase;
 namespace Mdt{ namespace Sql{ namespace Schema{
 
   class DriverImplementationInterface;
+  class Table;
 
   /*! \brief SQL Schema driver
    *
@@ -97,6 +98,18 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      * \pre Driver must be valid
      */
     QMetaType::Type fieldTypeToQMetaType(FieldType ft) const;
+
+    /*! \brief Create table in database
+     *
+     * \pre Driver must be valid
+     */
+    bool createTable(const Table & table);
+
+    /*! \brief Drop table
+     *
+     * \pre Driver must be valid
+     */
+    bool dropTable(const Table & table);
 
     /*! \brief Get last error
      */

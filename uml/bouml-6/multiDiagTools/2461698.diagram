@@ -2,36 +2,51 @@ format 211
 
 classcanvas 128002 class_ref 2775810 // Table
   classdiagramsettings member_max_width 0 end
-  xyz 71 281 2000
+  xyz 433 226 2000
 end
 classcanvas 128514 class_ref 2775042 // Field
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 57 440 2005
+  xyz 481 490 2005
 end
 classcanvas 128770 class_ref 2775682 // ForeignKey
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 41 39 2000
+  xyz 465 41 2000
 end
 classcanvas 129410 class_ref 2852738 // PrimaryKeyContainer
   classdiagramsettings member_max_width 0 end
-  xyz 248 242 2000
+  xyz 40 258 2000
+end
+classcanvas 129922 class_ref 2900610 // ForeignKeyList
+  classdiagramsettings member_max_width 0 end
+  xyz 736 307 2006
 end
 relationcanvas 128642 relation_ref 3128322 // <directional composition>
-  decenter_begin 525
+  decenter_begin 513
   decenter_end 520
   from ref 128002 z 2006 to ref 128514
   no_role_a no_role_b
-  multiplicity_a_pos 128 417 3000 no_multiplicity_b
-end
-relationcanvas 128898 relation_ref 3128450 // <directional composition>
-  decenter_begin 525
-  decenter_end 517
-  from ref 128002 z 2001 to ref 128770
-  no_role_a no_role_b
-  multiplicity_a_pos 128 209 3000 no_multiplicity_b
+  multiplicity_a_pos 552 467 3000 no_multiplicity_b
 end
 relationcanvas 129538 relation_ref 3246082 // <directional composition>
   from ref 128002 z 2001 to ref 129410
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 3273986 // <dependency>
+  decenter_begin 517
+  decenter_end 513
+  from ref 128770 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 3283074 // <directional composition>
+  from ref 129922 z 2007 to point 848 112
+  line 130306 z 2007 to ref 128770
+  no_role_a no_role_b
+  multiplicity_a_pos 673 120 3000 no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 3289602 // <directional composition>
+  from ref 128002 z 2007 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

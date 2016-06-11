@@ -85,6 +85,18 @@ QMetaType::Type Driver::fieldTypeToQMetaType(FieldType ft) const
   return pvImpl->fieldTypeToQMetaType(ft);
 }
 
+bool Driver::createTable(const Table & table)
+{
+  Q_ASSERT(isValid());
+  return pvImpl->createTable(table);
+}
+
+bool Driver::dropTable(const Table & table)
+{
+  Q_ASSERT(isValid());
+  return pvImpl->dropTable(table);
+}
+
 QString Driver::tr(const char* sourceText)
 {
   return QObject::tr(sourceText);

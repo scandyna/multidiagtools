@@ -22,8 +22,30 @@
 #include "Mdt/Application.h"
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/Schema/DriverSQLite.h"
+#include "Schema/Client_tbl.h"
+#include "Schema/Address_tbl.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
+
+
+#include "Mdt/Sql/Error.h"
+
+void SchemaDriverSqliteTest::sandbox()
+{
+  QSqlQuery query(pvDatabase);
+  
+  if(!query.exec("SELECT * FROM A_tbl")){
+    auto error = mdtErrorNewQ("Could not get data from A_tbl", Mdt::Error::Critical, this);
+    error.stackError(mdtErrorFromQSqlQueryQ(query, this));
+    error.commit();
+  }
+  
+  QSqlDatabase db = QSqlDatabase::addDatabase("HH");
+  auto error = mdtErrorNewQ("DB get ?", Mdt::Error::Critical, this);
+  error.stackError(mdtErrorFromQSqlDatabaseQ(db, this));
+  error.commit();
+}
+
 
 void SchemaDriverSqliteTest::initTestCase()
 {
@@ -33,11 +55,15 @@ void SchemaDriverSqliteTest::initTestCase()
     QSKIP("QSQLITE driver is not available - Skip all tests");  // Will also skip all tests
   }
   // Create a database
-  /// \todo to be done when needed..
+  QVERIFY(pvTempFile.open());
+  pvTempFile.close();
+  pvDatabase.setDatabaseName(pvTempFile.fileName());
+  QVERIFY(pvDatabase.open());
 }
 
 void SchemaDriverSqliteTest::cleanupTestCase()
 {
+  pvDatabase.close();
 }
 
 /*
@@ -526,13 +552,16 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   using Mdt::Sql::Schema::SingleFieldPrimaryKey;
   using Mdt::Sql::Schema::PrimaryKey;
   using Mdt::Sql::Schema::Table;
+  using Mdt::Sql::Schema::ParentTableFieldName;
+  using Mdt::Sql::Schema::ChildTableFieldName;
+  using Mdt::Sql::Schema::ForeignKey;
 
   Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
   QString expectedSql;
   Table table;
 
   /*
-   * Setup fields and primary keys
+   * Setup fields, primary keys, foreeign keys
    */
   // Id_PK
   AutoIncrementPrimaryKey Id_PK;
@@ -566,11 +595,36 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   Remarks.setName("Remarks");
   Remarks.setType(FieldType::Varchar);
   Remarks.setLength(100);
-
-//   Table Client_tbl;
-//   Client_tbl.setTableName("Client_tbl");
-//   Client_tbl.setPrimaryKey(Id_PK);
-//   Client_tbl.addField(Name);
+  // Connector_Id_FK
+  Field Connector_Id_FK;
+  Connector_Id_FK.setName("Connector_Id_FK");
+  Connector_Id_FK.setType(FieldType::Integer);
+  Connector_Id_FK.setRequired(true);
+  // Init Connector_tbl
+  Table Connector_tbl;
+  Connector_tbl.setTableName("Connector_tbl");
+  Connector_tbl.setPrimaryKey(Id_PK);
+  // fk_Connector_Id_FK
+  ForeignKey fk_Connector_Id_FK;
+  fk_Connector_Id_FK.setParentTable(Connector_tbl);
+  fk_Connector_Id_FK.addKeyFields(ParentTableFieldName(Id_PK), ChildTableFieldName(Connector_Id_FK));
+  fk_Connector_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
+  fk_Connector_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
+  // Init Type_tbl
+  Table Type_tbl;
+  Type_tbl.setTableName("Type_tbl");
+  Type_tbl.setPrimaryKey(Id_PK);
+  // Type_Id_FK
+  Field Type_Id_FK;
+  Type_Id_FK.setName("Type_Id_FK");
+  Type_Id_FK.setType(FieldType::Integer);
+  Type_Id_FK.setRequired(true);
+  // fk_Type_Id_FK
+  ForeignKey fk_Type_Id_FK;
+  fk_Type_Id_FK.setParentTable(Type_tbl);
+  fk_Type_Id_FK.addKeyFields(ParentTableFieldName(Id_PK), ChildTableFieldName(Type_Id_FK));
+  fk_Type_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
+  fk_Type_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
 
   /*
    * Check SQL to create table:
@@ -702,10 +756,114 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   expectedSql += ");\n";
   QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
   /*
+   * Check SQL to create table:
+   *  - Auto increment primary key
+   *  - 1 other field
+   *  - 1 foreign key
+   */
+  // Setup table
+  table.clear();
+  table.setTableName("Contact_tbl");
+  table.setPrimaryKey(Id_PK);
+  table.addField(Connector_Id_FK);
+  table.addForeignKey(fk_Connector_Id_FK);
+  // Check
+  expectedSql  = "CREATE TABLE \"Contact_tbl\" (\n";
+  expectedSql += "  \"Id_PK\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
+  expectedSql += "  \"Connector_Id_FK\" INTEGER NOT NULL DEFAULT NULL,\n";
+  expectedSql += "  FOREIGN KEY (\"Connector_Id_FK\")\n";
+  expectedSql += "   REFERENCES \"Connector_tbl\" (\"Id_PK\")\n";
+  expectedSql += "   ON DELETE RESTRICT\n";
+  expectedSql += "   ON UPDATE CASCADE\n";
+  expectedSql += ");\n";
+  QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
+  /*
+   * Check SQL to create table:
+   *  - Composed primary key
+   *  - 1 other field
+   *  - 1 foreign key
+   */
+  // Setup table
+  table.clear();
+  table.setTableName("Contact_tbl");
+  table.addField(Id_A);
+  table.addField(Id_B);
+  table.addField(Connector_Id_FK);
+  table.setPrimaryKey(Id_AB_PK);
+  table.addForeignKey(fk_Connector_Id_FK);
+  // Check
+  expectedSql  = "CREATE TABLE \"Contact_tbl\" (\n";
+  expectedSql += "  \"Id_A\" INTEGER NOT NULL DEFAULT NULL,\n";
+  expectedSql += "  \"Id_B\" INTEGER NOT NULL DEFAULT NULL,\n";
+  expectedSql += "  \"Connector_Id_FK\" INTEGER NOT NULL DEFAULT NULL,\n";
+  expectedSql += "  PRIMARY KEY (\"Id_A\",\"Id_B\"),\n";
+  expectedSql += "  FOREIGN KEY (\"Connector_Id_FK\")\n";
+  expectedSql += "   REFERENCES \"Connector_tbl\" (\"Id_PK\")\n";
+  expectedSql += "   ON DELETE RESTRICT\n";
+  expectedSql += "   ON UPDATE CASCADE\n";
+  expectedSql += ");\n";
+  QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
+  /*
+   * Check SQL to create table:
+   *  - Auto increment primary key
+   *  - 2 other field
+   *  - 2 foreign key
+   */
+  // Setup table
+  table.clear();
+  table.setTableName("Contact_tbl");
+  table.setPrimaryKey(Id_PK);
+  table.addField(Connector_Id_FK);
+  table.addField(Type_Id_FK);
+  table.addForeignKey(fk_Connector_Id_FK);
+  table.addForeignKey(fk_Type_Id_FK);
+  // Check
+  expectedSql  = "CREATE TABLE \"Contact_tbl\" (\n";
+  expectedSql += "  \"Id_PK\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n";
+  expectedSql += "  \"Connector_Id_FK\" INTEGER NOT NULL DEFAULT NULL,\n";
+  expectedSql += "  \"Type_Id_FK\" INTEGER NOT NULL DEFAULT NULL,\n";
+  expectedSql += "  FOREIGN KEY (\"Connector_Id_FK\")\n";
+  expectedSql += "   REFERENCES \"Connector_tbl\" (\"Id_PK\")\n";
+  expectedSql += "   ON DELETE RESTRICT\n";
+  expectedSql += "   ON UPDATE CASCADE,\n";
+  expectedSql += "  FOREIGN KEY (\"Type_Id_FK\")\n";
+  expectedSql += "   REFERENCES \"Type_tbl\" (\"Id_PK\")\n";
+  expectedSql += "   ON DELETE RESTRICT\n";
+  expectedSql += "   ON UPDATE CASCADE\n";
+  expectedSql += ");\n";
+  QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
+
+  /*
    * Check SQL to drop table
    */
+  table.clear();
+  table.setTableName("Client_tbl");
   expectedSql = "DROP TABLE IF EXISTS \"Client_tbl\";\n";
   QCOMPARE(driver.getSqlToDropTable(table), expectedSql);
+}
+
+void SchemaDriverSqliteTest::createTableTest()
+{
+  using Mdt::Sql::Schema::Table;
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::ForeignKey;
+
+  Mdt::Sql::Schema::Driver driver(pvDatabase);
+  QVERIFY(driver.isValid());
+  Schema::Client_tbl client_tbl;
+  Schema::Address_tbl address_tbl;
+  Table table;
+
+  /*
+   * Create Client_tbl
+   */
+  QVERIFY(driver.createTable(client_tbl.toTable()));
+  /// \todo table = driver.?? and check
+  /*
+   * Create Address_tbl
+   */
+  QVERIFY(driver.createTable(address_tbl.toTable()));
+  /// \todo table = driver.?? and check
 }
 
 /*

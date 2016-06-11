@@ -22,6 +22,7 @@
 #include <QStringList>
 #include <QStringBuilder>
 #include <QObject>
+#include <QSqlQuery>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
@@ -177,6 +178,7 @@ QString DriverImplementationInterface::getSqlToCreateTable(const Table & table) 
   QString sql;
   int firstFieldIndex = 0;
   const int lastFieldIndex = table.fieldCount() - 1;
+  const auto fkList = table.foreignKeyList();
 
   // Temporary table flag
   if(table.isTemporary()){
@@ -224,7 +226,9 @@ QString DriverImplementationInterface::getSqlToCreateTable(const Table & table) 
     }
   }
   // Add foreign key constraints
-  
+  for(const auto & fk : fkList){
+    sql += QStringLiteral(",\n") % getForeignKeyDefinition(fk);
+  }
   // Add engine
 
   sql += QStringLiteral("\n);\n");
@@ -239,6 +243,22 @@ QString DriverImplementationInterface::getSqlToDropTable(const Table& table) con
   sql = QStringLiteral("DROP TABLE IF EXISTS ") % escapeTableName(table.tableName()) % QStringLiteral(";\n");
 
   return sql;
+}
+
+bool DriverImplementationInterface::createTable(const Table& table)
+{
+  // Create table
+  
+  // Create indexes
+  
+  // Create indexes for FK
+  
+  return false;
+}
+
+bool DriverImplementationInterface::dropTable(const Table& table)
+{
+  return false;
 }
 
 QString DriverImplementationInterface::escapeFieldName(const QString & fieldName) const

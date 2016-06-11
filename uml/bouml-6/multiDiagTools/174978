@@ -1,6 +1,6 @@
 format 211
 "mdtutilsgui" // mdtutilsgui
-  revision 93
+  revision 94
   modified_by 2 "philippe"
   // class settings
   
@@ -3413,7 +3413,6 @@ ${inlines}
 	
       end
     end
-
   end
 
   deploymentview 356866 "mdtDataTable"
@@ -4052,7 +4051,6 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 910210 // mdtSqlTableSchema
       end
     end
 
@@ -4668,13 +4666,13 @@ ${inlines}
 	  a public
 	    cpp default "#include in source"
 	    classrelation_ref 1730306 // <dependency>
-	  b parent class_ref 182402 // mdtError
+	  b parent class_ref 182402 // Error
       end
 
       operation 2233602 "setError"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "error" type class_ref 182402 // mdtError
+	  param in name "error" type class_ref 182402 // Error
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
