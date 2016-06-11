@@ -63,6 +63,10 @@ namespace Mdt{
      */
     Application(int & argc, char **argv);
 
+    /*! \brief Destructor
+     */
+    ~Application();
+
     // Copy disabled
     Application(const Application &) = delete;
     Application & operator=(const Application &) = delete;

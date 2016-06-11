@@ -44,6 +44,11 @@ Application::Application(int & argc, char** argv)
   pvMultipleInstancePermission = SingleInstanceOnly;
 }
 
+Application::~Application()
+{
+  Mdt::ErrorLogger::Logger::cleanup();
+}
+
 bool Application::init(Application::MultipleInstancePermission multipleInstancePermission)
 {
   pvMultipleInstancePermission = multipleInstancePermission;
