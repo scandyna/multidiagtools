@@ -1,6 +1,6 @@
 format 211
 "Path" // Mdt::CableList::Path
-  revision 16
+  revision 17
   modified_by 2 "philippe"
   // class settings
   
@@ -266,7 +266,7 @@ ${inlines}
     activitydiagramsettings
      end
     classdiagram 2015362 "Graph"
-      classdiagramsettings member_max_width 0 end
+      classdiagramsettings hide_operations yes member_max_width 0 end
       size B-Landscape
     end
 
@@ -306,7 +306,7 @@ ${inlines}
       end
 
       attribute 2458114 "LastError"
-	private type class_ref 182402 // mdtError
+	private type class_ref 182402 // Error
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""

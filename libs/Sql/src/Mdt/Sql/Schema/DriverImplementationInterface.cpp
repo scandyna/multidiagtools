@@ -22,6 +22,7 @@
 #include "Mdt/Sql/Error.h"
 #include <QStringList>
 #include <QStringBuilder>
+#include <QLatin1String>
 #include <QObject>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -95,7 +96,59 @@ QMetaType::Type DriverImplementationInterface::fieldTypeToQMetaType(FieldType ft
   return QMetaType::UnknownType;
 }
 
-Mdt::Expected<FieldList> DriverImplementationInterface::getTableFieldListFromDatabase(const QString& tableName) const
+FieldType DriverImplementationInterface::fieldTypeFromString(const QString & fieldTypeString) const
+{
+  Q_ASSERT(!fieldTypeString.isEmpty());
+
+  const QStringList parts = fieldTypeString.split('(', QString::SkipEmptyParts);
+  Q_ASSERT(!parts.isEmpty());
+  const QString tn = parts.at(0).trimmed().toUpper();
+
+  if(tn == QLatin1String("BOOL") || tn == QLatin1String("BOOLEAN")){
+    return FieldType::Boolean;
+  }else if(tn == QLatin1String("INT") || tn == QLatin1String("INTEGER")){
+    return FieldType::Integer;
+  }else if(tn == QLatin1String("FLOAT")){
+    return FieldType::Float;
+  }else if(tn == QLatin1String("DOUBLE")){
+    return FieldType::Double;
+  }else if(tn == QLatin1String("VARCHAR")){
+    return FieldType::Varchar;
+  }else if(tn == QLatin1String("DATE")){
+    return FieldType::Date;
+  }else if(tn == QLatin1String("TIME")){
+    return FieldType::Time;
+  }else if(tn == QLatin1String("DATETIME")){
+    return FieldType::DateTime;
+  }
+  return FieldType::UnknownType;
+}
+
+int DriverImplementationInterface::fieldLengthFromString(const QString & fieldTypeString) const
+{
+  Q_ASSERT(!fieldTypeString.isEmpty());
+
+  const QStringList parts = fieldTypeString.split('(', QString::SkipEmptyParts);
+  Q_ASSERT(!parts.isEmpty());
+
+  if(parts.size() < 2){
+    return -1;
+  }
+  const QString sizeStr = parts.at(1).trimmed().remove(')');
+  bool ok;
+  int length = sizeStr.toInt(&ok);
+  if(!ok){
+    QString msg = tr("Parsing length in '%1' failed.").arg(fieldTypeString);
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverImplementationInterface");
+    error.commit();
+    setLastError(error);
+    return -2;
+  }
+
+  return length;
+}
+
+Mdt::Expected<FieldList> DriverImplementationInterface::getTableFieldListFromDatabase(const QString & tableName) const
 {
   Mdt::Expected<FieldList> ret;
   FieldList fieldList;

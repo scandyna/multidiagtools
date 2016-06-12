@@ -2,27 +2,27 @@ format 211
 
 classcanvas 128002 class_ref 2775682 // ForeignKey
   classdiagramsettings member_max_width 0 end
-  xyz 159.2 134.2 2000
+  xyz 159 134 2000
 end
 classcanvas 128898 class_ref 2775554 // PrimaryKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 40.9 672.9 2005
+  xyz 40.3 672.3 2005
 end
 classcanvas 129410 class_ref 2887042 // Action
   classdiagramsettings member_max_width 0 end
-  xyz 42 263.8 2006
+  xyz 42 264.5 2006
 end
 classcanvas 131970 class_ref 2893698 // ParentTableFieldName
   classdiagramsettings member_max_width 0 end
-  xyz 513.8 228.8 2000
+  xyz 514.5 229.5 2000
 end
 classcanvas 132226 class_ref 2893826 // ChildTableFieldName
   classdiagramsettings member_max_width 0 end
-  xyz 199 497.2 2000
+  xyz 199 496.5 2000
 end
 classcanvas 132482 class_ref 2900610 // ForeignKeyList
   classdiagramsettings member_max_width 0 end
-  xyz 200.2 39.6 2000
+  xyz 200 39 2000
 end
 line 131714 ---+
   from ref 129410 z 2007 to ref 128002

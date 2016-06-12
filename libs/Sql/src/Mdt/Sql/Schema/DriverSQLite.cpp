@@ -20,8 +20,12 @@
  ****************************************************************************/
 #include "DriverSQLite.h"
 #include "FieldTypeName.h"
+#include "Mdt/Sql/Error.h"
 #include <QStringBuilder>
+#include <QSqlField>
 #include <QSqlRecord>
+#include <QSqlQuery>
+#include <QSqlError>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
@@ -80,6 +84,55 @@ QString DriverSQLite::getFieldDefinition(const Field & field) const
   return sql;
 }
 
+Expected< FieldList > DriverSQLite::getTableFieldListFromDatabase(const QString& tableName) const
+{
+  using Mdt::Sql::Schema::Field;
+
+  Mdt::Expected<FieldList> ret;/// = DriverImplementationInterface::getTableFieldListFromDatabase(tableName);
+  FieldList fieldList;
+
+//   if(!ret){
+//     return ret;
+//   }
+//   fieldList = ret.value();
+  /// ....
+  QSqlQuery query(database());
+  const QString sql = QStringLiteral("PRAGMA table_info(") % escapeTableName(tableName) % QStringLiteral(")");
+  if(!query.exec(sql)){
+    QString msg = tr("Fetching informations of table '%1' failed.").arg(tableName);
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverSQLite");
+    error.stackError(mdtErrorFromQSqlQuery(query, "DriverSQLite"));
+    error.commit();
+    setLastError(error);
+    return ret;
+  }
+  while(query.next()){
+    Field field;
+    // Fetch field name
+    field.setName(query.value("name").toString());
+    // Fetch field type and length
+    const QString fieldTypeString = query.value("type").toString();
+    if(!fieldTypeString.isEmpty()){
+      field.setType( fieldTypeFromString(fieldTypeString) );
+      int length = fieldLengthFromString(fieldTypeString);
+      if(length < -1){
+        ret = lastError();
+        return ret;
+      }
+      field.setLength(length);
+    }
+    // Fetch not null
+    field.setRequired( query.value("notnull") == QVariant(1) );
+    // Default value
+    field.setDefaultValue( query.value("dflt_value") );
+    // Add to list
+    fieldList.append(field);
+  }
+  ret = fieldList;
+
+  return ret;
+}
+
 QString DriverSQLite::getPrimaryKeyFieldDefinition(const AutoIncrementPrimaryKey & pk) const
 {
   QString sql;
@@ -108,6 +161,24 @@ QString DriverSQLite::getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey& 
   }
 
   return sql;
+}
+
+QVariant DriverSQLite::fieldDefaultValue(const QVariant & v) const
+{
+  QVariant dv;
+
+  if(v.isNull()){
+    return dv;
+  }
+  QString ds = v.toString().trimmed();
+  if(ds.length() > 2){
+    if(ds.endsWith('"')){
+      ds.remove(ds.length()-1, 1);
+    }
+    if(ds.startsWith('"')){
+      ds.remove(0, 1);
+    }
+  }
 }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

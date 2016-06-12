@@ -21,7 +21,7 @@
 #ifndef MDT_SQL_QUERY_H
 #define MDT_SQL_QUERY_H
 
-#include "mdtError.h"
+#include "Mdt/Error.h"
 #include <QSqlDatabase>
 #include <QString>
 
@@ -50,7 +50,7 @@ namespace Mdt{ namespace Sql{
    private:
 
     QSqlDatabase pvDatabase;
-    mdtError pvLastError;
+    Mdt::Error pvLastError;
   };
 
 }} // namespace Mdt{ namespace Sql{

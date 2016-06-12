@@ -1,6 +1,6 @@
 format 211
 "Table" // Mdt::CableList::Schema::Table
-  revision 4
+  revision 5
   modified_by 2 "philippe"
   // class settings
   

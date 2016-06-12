@@ -50,6 +50,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     QString getFieldDefinition(const Field & field) const override;
 
+    /*! \brief Get FieldList for table from database
+     */
+    virtual Mdt::Expected<FieldList> getTableFieldListFromDatabase(const QString & tableName) const override;
+
     /*! \brief Get field definition of a auto increment primary key
      */
     QString getPrimaryKeyFieldDefinition(const AutoIncrementPrimaryKey & pk) const override;
@@ -60,7 +64,9 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
    private:
 
-    
+    /*! \brief Get default value
+     */
+    QVariant fieldDefaultValue(const QVariant & v) const;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

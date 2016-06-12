@@ -1,6 +1,6 @@
 format 211
 "DatabaseLogical" // Mdt::TestTool::DatabaseLogical
-  revision 2
+  revision 3
   modified_by 2 "philippe"
   // class settings
   
@@ -44,7 +44,7 @@ format 211
      end
     classdiagram 927874 "TestNode"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size B-Landscape
     end
 
     class 992642 "TestNode_tbl"

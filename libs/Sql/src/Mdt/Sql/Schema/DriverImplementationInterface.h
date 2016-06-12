@@ -106,6 +106,29 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return static_cast<QVariant::Type>(fieldTypeToQMetaType(ft));
     }
 
+    /*! \brief Get field type from string
+     *
+     * Extracts the field tape name and retruns corresponding field type.
+     *  For example, if fieldTypeString is VARCHAR(50),
+     *  FieldType::Varchar is retruned.
+     *
+     * \pre fieldTypeString must not be empty
+     */
+    virtual FieldType fieldTypeFromString(const QString & fieldTypeString) const;
+
+    /*! \brief Get field length from string
+     *
+     * Extracts the field length from fieldTypeString.
+     *  For example, if fieldTypeString is VARCHAR(50),
+     *  50 is returned.
+     *  If fieldTypeString contains no length information,
+     *  -1 is returned.
+     *  If a error occured, a value < -1 is returned.
+     *
+     * \pre fieldTypeString must not be empty
+     */
+    virtual int fieldLengthFromString(const QString & fieldTypeString) const;
+
     /*! \brief Get collation definition
      */
     virtual QString getCollationDefinition(const Collation & collation) const = 0;
@@ -119,6 +142,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      * \note Try to get information about a non existing table is also a error.
      * \note It seems that some DBMS accept table without any field,
      *        this is why returning a empty list on error can be confusing.
+     *
+     * This default implementation uses Qt to fetch informations in database.
      */
     virtual Mdt::Expected<FieldList> getTableFieldListFromDatabase(const QString & tableName) const;
 
@@ -203,7 +228,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Call QObject::tr()
      */
-    QString tr(const char *sourceText);
+    static QString tr(const char *sourceText);
 
    private:
 

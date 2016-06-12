@@ -2,51 +2,50 @@ format 211
 
 classcanvas 128002 class_ref 2775810 // Table
   classdiagramsettings member_max_width 0 end
-  xyz 499.056 121.111 2000
+  xyz 285 122 2000
 end
 note 128642 "CRTP"
-  xyzwh 1048.5 356.833 2000 91 41
+  xyzwh 659 549 2000 91 41
 note 129538 "NOTE: a user defined schema will contain user specific tables (not a vector of tables..)
 
 Driver can have a template method.
 
 BUT: how to pass a schema to a worker that will create it in database ???
 AND: what about item models to give informations to the user ??"
-  xyzwh 40.5 760.722 2000 549 149
+  xyzwh 40.5 928.5 2000 549 149
 classcanvas 130562 class_ref 2838530 // TableTemplate
   classdiagramsettings member_max_width 0 end
-  xyz 800.778 323.222 2000
+  xyz 312 385 2000
 end
 classcanvas 131202 class_ref 2838914 // TableList
   classdiagramsettings member_max_width 0 end
-  xyz 595.056 40.5 2005
+  xyz 585 207 2005
 end
 classcanvas 131458 class_ref 2845698 // Client_tbl
   classdiagramsettings member_max_width 0 end
-  xyz 785.778 582.444 2000
+  xyz 297 626 2000
 end
 classcanvas 131586 class_ref 2845826 // UserDefinedTableB
   classdiagramsettings member_max_width 0 end
-  xyz 613.222 513.5 2000
+  xyz 121 599 2000
 end
 note 132610 "User defined table could build  all fields and add them.
 It could also expose some fields, by retruning the field at a known index (this avoids dupplicate fields)"
-  xyzwh 39.5556 593.444 2000 709 79
+  xyzwh 62 769 2000 709 79
 classcanvas 133122 class_ref 2775682 // ForeignKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 862.778 241.167 2007
+  xyz 374 39 2007
 end
 relationcanvas 131714 relation_ref 3225346 // <directional composition>
-  geometry HV unfixed
-  from ref 130562 z 2001 to point 628 387
-  line 134274 z 2001 to ref 128002
+  from ref 130562 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131842 relation_ref 3225474 // <generalisation>
   geometry VHV unfixed
-  from ref 131586 z 2001 to point 678 475
-  line 133506 z 2001 to point 902 475
+  decenter_begin 525
+  from ref 131586 z 2001 to point 189 560
+  line 133506 z 2001 to point 414 560
   line 133634 z 2001 to ref 130562
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -57,18 +56,21 @@ relationcanvas 131970 relation_ref 3225602 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132482 relation_ref 3225730 // <directional composition>
+  decenter_begin 581
   from ref 131202 z 2006 to ref 128002
   no_role_a no_role_b
-  multiplicity_a_pos 615 98 3000 no_multiplicity_b
+  multiplicity_a_pos 557 239 3000 no_multiplicity_b
 end
 relationcanvas 133250 relation_ref 3273602 // <dependency>
-  from ref 133122 z 2008 to ref 130562
+  decenter_begin 581
+  decenter_end 466
+  from ref 133122 z 2008 to point 696 64
+  line 134402 z 2008 to point 696 448
+  line 134530 z 2008 to ref 130562
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 133890 relation_ref 3273986 // <dependency>
-  decenter_begin 767
-  decenter_end 692
   from ref 133122 z 2008 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

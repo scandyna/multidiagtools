@@ -125,6 +125,53 @@ void SchemaDriverSqliteTest::fieldTypeMapTest()
   QVERIFY(driver.fieldTypeToQVariantType(FieldType::Varchar) == QVariant::String);
 }
 
+void SchemaDriverSqliteTest::fieldTypeFromStringTest()
+{
+  using Mdt::Sql::Schema::FieldType;
+
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+
+  QVERIFY(driver.fieldTypeFromString("BOOLEAN") == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromString("boolean") == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromString("BOOL") == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromString("bool") == FieldType::Boolean);
+  QVERIFY(driver.fieldTypeFromString("INTEGER") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("integer") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("Integer") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("INT") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("int") == FieldType::Integer);
+  QVERIFY(driver.fieldTypeFromString("FLOAT") == FieldType::Float);
+  QVERIFY(driver.fieldTypeFromString("float") == FieldType::Float);
+  QVERIFY(driver.fieldTypeFromString("DOUBLE") == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromString("double") == FieldType::Double);
+  QVERIFY(driver.fieldTypeFromString("VARCHAR") == FieldType::Varchar);
+  QVERIFY(driver.fieldTypeFromString("varchar") == FieldType::Varchar);
+  QVERIFY(driver.fieldTypeFromString("VARCHAR(50)") == FieldType::Varchar);
+  QVERIFY(driver.fieldTypeFromString("VARCHAR (50)") == FieldType::Varchar);
+  QVERIFY(driver.fieldTypeFromString("DATE") == FieldType::Date);
+  QVERIFY(driver.fieldTypeFromString("date") == FieldType::Date);
+  QVERIFY(driver.fieldTypeFromString("TIME") == FieldType::Time);
+  QVERIFY(driver.fieldTypeFromString("time") == FieldType::Time);
+  QVERIFY(driver.fieldTypeFromString("DATETIME") == FieldType::DateTime);
+  QVERIFY(driver.fieldTypeFromString("datetime") == FieldType::DateTime);
+  QVERIFY(driver.fieldTypeFromString("Unkown") == FieldType::UnknownType);
+}
+
+void SchemaDriverSqliteTest::fieldLengthFromStringTest()
+{
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+
+  QCOMPARE(driver.fieldLengthFromString("INTEGER"), -1);
+  QCOMPARE(driver.fieldLengthFromString("VARCHAR"), -1);
+  QCOMPARE(driver.fieldLengthFromString("VARCHAR(50)"), 50);
+  QCOMPARE(driver.fieldLengthFromString("VARCHAR (50)"), 50);
+  QCOMPARE(driver.fieldLengthFromString("varcher(50)"), 50);
+  QCOMPARE(driver.fieldLengthFromString("VARCHAR( 50 )"), 50);
+  QCOMPARE(driver.fieldLengthFromString("VARCHAR ( 50 )"), 50);
+  // Currently not supported..
+  QCOMPARE(driver.fieldLengthFromString("DOUBLE(2,3)"), -2);
+}
+
 void SchemaDriverSqliteTest::collationDefinitionTest()
 {
   using Mdt::Sql::Schema::Collation;
@@ -919,7 +966,16 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   QVERIFY(field.defaultValue().isNull());
   QVERIFY(field.isRequired());
   /// \todo define: QVERIFY(field.isUnique());
+  /// \todo Collation is missing
   // Name
+  field = fieldList.at(1);
+  QCOMPARE(field.name(), QString("Name"));
+  QVERIFY(field.type() == FieldType::Varchar);
+  QCOMPARE(field.length(), 150);
+  QCOMPARE(field.defaultValue(), QVariant("Default name"));
+  QVERIFY(field.isRequired());
+  QVERIFY(field.isUnique());
+  /// \todo Collation is missing
   
 }
 
