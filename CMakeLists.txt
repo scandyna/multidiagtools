@@ -194,6 +194,9 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/qt-solutions")
 # * Application *
 add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Application")
 
+# * Algorithm *
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Algorithm")
+
 # * Expected *
 add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Expected")
 
