@@ -12,19 +12,10 @@ classcanvas 128514 class_ref 2795906 // DriverImplementationInterface
   classdiagramsettings member_max_width 0 end
   xyz 495 58 2000
 end
-note 128770 "Driver instances should be managed like QSQlDatabase manages his drivers
--->> No, seems to complicated. Implement such thing if rally needed !"
-  xyzwh 40.5 1075.5 2000 541 53
-note 128898 "Check also which static methods are  really needed."
-  xyzwh 40.5 799.5 2000 515 59
-note 129026 "Create dict (QMap)) that maps a connectionName to a driver instance.
-Because of threads, it should be safe to create one driver object per connection (not check about unique per type)
--->> No, seems to complicated. Implement such thing if rally needed !"
-  xyzwh 40.5 632.5 2000 711 87
-note 129154 "Schould inherit from QObject and emit signals ???
-Or, is this  thread's job ?
-Or ???"
-  xyzwh 40.5 938.5 2000 555 57
+note 129282 "Find a sort of init  and endfunction, which should do  some tasks like:
+ - Disable /re-enableFK support
+ - ..."
+  xyzwh 113 574 2000 539 95
 relationcanvas 128386 relation_ref 3127682 // <directional composition>
   from ref 128258 z 2001 to ref 128130
   no_role_a no_role_b

@@ -1,4 +1,4 @@
-format 209
+format 211
 
 classcanvas 128002 class_ref 764674 // Article_tbl
   classdiagramsettings member_max_width 0 end
@@ -101,6 +101,9 @@ classcanvas 141186 class_ref 1686658 // Modification_tbl
   classdiagramsettings member_max_width 0 end
   xyz 530.8 1375.6 2000
 end
+note 144002 "Add a image (or photo) entity.
+For Article, we could also define the main image (and optionally list other related images.)"
+  xyzwh 26 30 2000 453 77
 relationcanvas 128258 relation_ref 949890 // <unidirectional association>
   decenter_begin 184
   decenter_end 124
@@ -119,7 +122,7 @@ relationcanvas 128770 relation_ref 950530 // <unidirectional association>
   geometry HVr
   decenter_begin 613
   decenter_end 875
-  from ref 128642 z 2001 to point 970 263
+  from ref 128642 z 2001 to point 972 263
   line 142722 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -203,7 +206,7 @@ relationcanvas 133122 relation_ref 1168514 // <unidirectional association>
   geometry VH
   decenter_begin 164
   decenter_end 561
-  from ref 132866 z 2001 to point 264 1100
+  from ref 132866 z 2001 to point 265 1100
   line 142978 z 2001 to ref 129154
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -252,7 +255,7 @@ end
 relationcanvas 134914 relation_ref 1176066 // <unidirectional association>
   geometry HVr
   decenter_end 886
-  from ref 133762 z 2001 to point 1527 1260
+  from ref 133762 z 2001 to point 1528 1260
   line 140546 z 2001 to ref 129538
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -260,7 +263,7 @@ end
 relationcanvas 135042 relation_ref 1176194 // <unidirectional association>
   geometry HVr
   decenter_begin 613
-  from ref 133762 z 2001 to point 1563 1304
+  from ref 133762 z 2001 to point 1564 1304
   line 140418 z 2001 to ref 129794
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -268,7 +271,7 @@ end
 relationcanvas 135170 relation_ref 1182722 // <unidirectional association>
   geometry HVr
   decenter_end 720
-  from ref 131074 z 2007 to point 1745 298
+  from ref 131074 z 2007 to point 1746 298
   line 142338 z 2007 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -290,7 +293,7 @@ relationcanvas 135810 relation_ref 1183490 // <unidirectional association>
   geometry VHr
   decenter_begin 271
   decenter_end 851
-  from ref 131074 z 2007 to point 1237 406
+  from ref 131074 z 2007 to point 1241 406
   line 142594 z 2007 to ref 135426
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

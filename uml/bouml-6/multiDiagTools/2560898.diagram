@@ -1,0 +1,17 @@
+format 211
+
+classcanvas 128002 class_ref 2913666 // IndexMap
+  classdiagramsettings member_max_width 0 end
+  xyz 264 292 2000
+end
+classcanvas 128130 class_ref 2782466 // Index
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 40.5 2000
+end
+classcanvas 128258 class_ref 2913794 // Origin
+  classdiagramsettings member_max_width 0 end
+  xyz 39 252 2006
+end
+line 128386 ---+
+  from ref 128258 z 2007 to ref 128002
+end

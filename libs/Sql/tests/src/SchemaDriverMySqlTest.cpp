@@ -24,20 +24,44 @@
 #include "Mdt/Sql/Schema/DriverMySql.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlError>
+
+#include <QDebug>
 
 void SchemaDriverMySqlTest::initTestCase()
 {
+  /*
+   * Some tests needs a connection
+   * to the server, and all access to a database
+   */
+  const QString host = "localhost";
+  const QString user = "TestUser";
+  const QString pwd = "TestPassword";
+  const QString dbName = "testdb";
+
   // Get database instance
   pvDatabase = QSqlDatabase::addDatabase("QMYSQL");
   if(!pvDatabase.isValid()){
     QSKIP("QMYSQL driver is not available - Skip all tests");  // Will also skip all tests
   }
-  // Create a database
-  /// \todo to be done when needed..
+  // Connect to test database
+  pvDatabase.setHostName(host);
+  pvDatabase.setUserName(user);
+  pvDatabase.setPassword(pwd);
+  pvDatabase.setDatabaseName(dbName);
+  if(!pvDatabase.open()){
+    qWarning() << "Could not open database. Make shure that test database is created with correct login as defined in initTestCase()";
+    qWarning() << "Reported error: " << pvDatabase.lastError().text();
+  }
+  /*
+   * Because some tests can be executed without a open connection to the server,
+   * we not fail here if database could not be open.
+   */
 }
 
 void SchemaDriverMySqlTest::cleanupTestCase()
 {
+  /// \todo DROP all tables, etc...
 }
 
 /*
@@ -196,6 +220,17 @@ void SchemaDriverMySqlTest::primaryKeyDefinitionTest()
 void SchemaDriverMySqlTest::indexDefinitionTest()
 {
 
+}
+
+void SchemaDriverMySqlTest::createTableTest()
+{
+  if(!pvDatabase.isOpen()){
+    QSKIP("Not connected to server");
+  }
+  Mdt::Sql::Schema::Driver driver(pvDatabase);
+  QVERIFY(driver.isValid());
+
+  
 }
 
 /*

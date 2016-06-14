@@ -48,5 +48,17 @@ QString DriverMySql::getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey & 
 
 }
 
+Expected< IndexList > DriverMySql::getTableIndexListFromDatabase(const QString& tableName) const
+{
+  /*
+   * To get indexes, see INFORMATION_SCHEMA.STATISTICS
+   *
+   * To see which column in table has a constraint,
+   * see INFORMATION_SCHEMA.KEY_COLUMN_USAGE.
+   *
+   * By building a query, we can also filter indexes that where created by CREATE INDEX,
+   *  and not automatically created by a (typically UNIQUE) column constraint.
+   */
+}
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

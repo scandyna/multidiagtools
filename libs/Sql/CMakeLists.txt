@@ -18,6 +18,7 @@ set(SOURCES_FILES
     src/Mdt/Sql/Schema/PrimaryKeyContainer.cpp
     src/Mdt/Sql/Schema/ForeignKey.cpp
     src/Mdt/Sql/Schema/Index.cpp
+    src/Mdt/Sql/Schema/IndexListModel.cpp
     src/Mdt/Sql/Schema/Table.cpp
     src/Mdt/Sql/Schema/TableModel.cpp
 )
@@ -25,6 +26,7 @@ set(SOURCES_FILES
 # Headers directories
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../Expected/src")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../Algorithm/src")
 # Because some headers are generated during building (config.h, Qt's UIC), we also build path
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
@@ -38,6 +40,7 @@ set(LIBRARY_BIN_NAME "mdt${LIBRARY_NAME_LC}")
 add_library(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterror${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdtalgorithm${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} Qt5::Sql)
 
 ## TODO remove once possible

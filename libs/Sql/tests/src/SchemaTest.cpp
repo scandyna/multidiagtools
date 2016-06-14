@@ -32,6 +32,7 @@
 #include "Mdt/Sql/Schema/PrimaryKeyContainer.h"
 #include "Mdt/Sql/Schema/Index.h"
 #include "Mdt/Sql/Schema/IndexList.h"
+#include "Mdt/Sql/Schema/IndexListModel.h"
 #include "Mdt/Sql/Schema/ForeignKey.h"
 #include "Mdt/Sql/Schema/ForeignKeyList.h"
 #include "Mdt/Sql/Schema/Table.h"
@@ -633,6 +634,96 @@ void SchemaTest::indexListTest()
    */
   list.clear();
   QCOMPARE(list.size(), 0);
+}
+
+void SchemaTest::indexListModelTest()
+{
+  using Mdt::Sql::Schema::Index;
+  using Mdt::Sql::Schema::IndexList;
+  using Mdt::Sql::Schema::IndexListModel;
+
+  Index index;
+  IndexList indexList;
+  IndexListModel model;
+  QModelIndex modelIndex;
+  /*
+   * Setup views
+   */
+  QTableView tableView;
+  tableView.setModel(&model);
+  tableView.resize(400, 200);
+  QTreeView treeView;
+  treeView.setModel(&model);
+  treeView.resize(400, 200);
+  QComboBox comboBox;
+  comboBox.setModel(&model);
+  comboBox.setModelColumn(IndexListModel::IndexNameColumn);
+  /*
+   * Setup indexes
+   */
+  // Index on Name field
+  index.clear();
+  index.setTableName("Connector_tbl");
+  index.setName("Name_idx");
+  index.addFieldName("Name");
+  index.setUnique(true);
+  indexList.append(index);
+  // Index on A and B fields
+  index.clear();
+  index.setTableName("Connector_tbl");
+  index.setName("AB_idx");
+  index.addFieldName("A");
+  index.addFieldName("B");
+  indexList.append(index);
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(model.columnCount(), 4);
+  QCOMPARE(model.rowCount(), 0);
+  /*
+   * Set index list
+   */
+  model.setIndexList(indexList);
+  QCOMPARE(model.rowCount(), 2);
+  // Check row 0
+  modelIndex = model.index(0, IndexListModel::IndexNameColumn);
+  QVERIFY(modelIndex.isValid());
+  QCOMPARE(model.data(modelIndex), QVariant("Name_idx"));
+  modelIndex = model.index(0, IndexListModel::TableNameColumn);
+  QVERIFY(modelIndex.isValid());
+  QCOMPARE(model.data(modelIndex), QVariant("Connector_tbl"));
+  modelIndex = model.index(0, IndexListModel::FieldNameListColumn);
+  QVERIFY(modelIndex.isValid());
+  QCOMPARE(model.data(modelIndex), QVariant("Name"));
+  modelIndex = model.index(0, IndexListModel::IsUniqueColumn);
+  QVERIFY(modelIndex.isValid());
+  QCOMPARE(model.data(modelIndex), QVariant(true));
+  // Check row 1
+  modelIndex = model.index(1, IndexListModel::IndexNameColumn);
+  QVERIFY(modelIndex.isValid());
+  QCOMPARE(model.data(modelIndex), QVariant("AB_idx"));
+  modelIndex = model.index(1, IndexListModel::TableNameColumn);
+  QVERIFY(modelIndex.isValid());
+  QCOMPARE(model.data(modelIndex), QVariant("Connector_tbl"));
+  modelIndex = model.index(1, IndexListModel::FieldNameListColumn);
+  QVERIFY(modelIndex.isValid());
+  QCOMPARE(model.data(modelIndex), QVariant("A, B"));
+  modelIndex = model.index(1, IndexListModel::IsUniqueColumn);
+  QVERIFY(modelIndex.isValid());
+  QCOMPARE(model.data(modelIndex), QVariant(false));
+
+  /*
+   * Play
+   */
+  tableView.show();
+  tableView.resizeColumnsToContents();
+  tableView.resizeRowsToContents();
+  treeView.show();
+  comboBox.show();
+  while(tableView.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 void SchemaTest::parentTableFieldNameTest()

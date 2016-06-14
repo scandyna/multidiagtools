@@ -32,6 +32,15 @@ classcanvas 129410 class_ref 2852866 // Type
   classdiagramsettings member_max_width 0 end
   xyz 178 239 2006
 end
+note 129666 "See:
+ - UUID
+ - SERIAL
+ - BIGSERIAL
+ - TEXT
+ - TIMESTAMP
+ - TIMESTAMPTZ
+ - NUMERIC"
+  xyzwh 455 161 2000 323 205
 line 129538 ---+
   from ref 129410 z 2007 to ref 129026
 line 129282 -_-_

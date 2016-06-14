@@ -26,6 +26,7 @@
 #include "Schema/Address_tbl.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlRecord>
 
 void SchemaDriverSqliteTest::initTestCase()
 {
@@ -948,9 +949,17 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   Connector_tbl.setPrimaryKey(Id_PK);
   Connector_tbl.addField(Name);
   /*
-   * Create Client_tbl
+   * Create table in database
    */
   QVERIFY(driver.createTable(Connector_tbl));
+  
+  
+  QSqlQuery q(pvDatabase);
+  q.exec("PRAGMA index_list(Connector_tbl);");
+  while(q.next()){
+    qDebug() << q.record();
+  }
+  
   /*
    * Check
    */
@@ -977,6 +986,95 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   QVERIFY(field.isUnique());
   /// \todo Collation is missing
   
+  QFAIL("Not finished");
+}
+
+void SchemaDriverSqliteTest::reverseIndexListTest()
+{
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::FieldList;
+  using Mdt::Sql::Schema::Table;
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::Index;
+  using Mdt::Sql::Schema::IndexList;
+
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Field field;
+  FieldList fieldList;
+  IndexList indexList;
+
+  /*
+   * Setup fields
+   */
+  // Id_PK
+  AutoIncrementPrimaryKey Id_PK;
+  Id_PK.setFieldName("Id_PK");
+  // Name - Will generate a index for the unique constraint (on most databases)
+  Field Name;
+  Name.setName("Name");
+  Name.setType(FieldType::Varchar);
+  Name.setLength(150);
+  Name.setRequired(true);
+  Name.setUnique(true);
+  // A
+  Field A;
+  A.setName("A");
+  A.setType(FieldType::Varchar);
+  A.setLength(50);
+  A.setRequired(true);
+  // B
+  Field B;
+  B.setName("B");
+  B.setType(FieldType::Varchar);
+  B.setLength(50);
+  B.setRequired(true);
+  /*
+   * Setup table
+   */
+  Table Connector_tbl;
+  Connector_tbl.setTableName("Connector_tbl");
+  Connector_tbl.setPrimaryKey(Id_PK);
+  Connector_tbl.addField(Name);
+  Connector_tbl.addField(A);
+  Connector_tbl.addField(B);
+  /*
+   * Setup indexes
+   */
+  Index A_B_idx;
+  A_B_idx.setName("A_B_idx");
+  A_B_idx.setTable(Connector_tbl);
+  A_B_idx.addField(A);
+  A_B_idx.addField(B);
+  Connector_tbl.addIndex(A_B_idx);
+
+//   QVERIFY(driver.dropTable(Connector_tbl));
+  /*
+   * Create table in database
+   */
+  QVERIFY(driver.createTable(Connector_tbl));
+  /*
+   * Get index list and check
+   */
+  auto ret = driver.getTableIndexListFromDatabase(Connector_tbl.tableName());
+  QVERIFY(ret);
+  indexList = ret.value();
+  // Check
+  QCOMPARE(indexList.size(), 1);
+  QCOMPARE(indexList.at(0).name(), A_B_idx.name());
+  QCOMPARE(indexList.at(0).tableName(), A_B_idx.tableName());
+  QVERIFY(!indexList.at(0).isUnique());
+  QCOMPARE(indexList.at(0).fieldCount(), 2);
+  QCOMPARE(indexList.at(0).fieldName(0), A.name());
+  QCOMPARE(indexList.at(0).fieldName(1), B.name());
+  /*
+   * Cleanup
+   */
+  QVERIFY(driver.dropTable(Connector_tbl));
+  auto ret = driver.getTableIndexListFromDatabase(Connector_tbl.tableName());
+  QVERIFY(ret);
+  indexList = ret.value();
+  QCOMPARE(indexList.size(), 0);
 }
 
 /*

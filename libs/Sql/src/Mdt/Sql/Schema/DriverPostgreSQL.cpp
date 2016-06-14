@@ -50,5 +50,10 @@ QString DriverPostgreSQL::getPrimaryKeyFieldDefinition(const SingleFieldPrimaryK
 
 }
 
+Expected< IndexList > DriverPostgreSQL::getTableIndexListFromDatabase(const QString& tableName) const
+{
+
+}
+
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

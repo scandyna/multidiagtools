@@ -24,18 +24,39 @@
 #include "Mdt/Sql/Schema/DriverPostgreSQL.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlError>
 
 #include <QDebug>
 
 void SchemaDriverPostgreSqlTest::initTestCase()
 {
+  /*
+   * Some tests needs a connection
+   * to the server, and all access to a database
+   */
+  const QString host = "localhost";
+  const QString user = "TestUser";
+  const QString pwd = "TestPassword";
+  const QString dbName = "testdb";
+
   // Get database instance
   pvDatabase = QSqlDatabase::addDatabase("QPSQL");
   if(!pvDatabase.isValid()){
     QSKIP("QPSQL driver is not available - Skip all tests");  // Will also skip all tests
   }
-  // Create a database
-  /// \todo to be done when needed..
+  // Connect to test database
+  pvDatabase.setHostName(host);
+  pvDatabase.setUserName(user);
+  pvDatabase.setPassword(pwd);
+  pvDatabase.setDatabaseName(dbName);
+  if(!pvDatabase.open()){
+    qWarning() << "Could not open database. Make shure that test database is created with correct login as defined in initTestCase()";
+    qWarning() << "Reported error: " << pvDatabase.lastError().text();
+  }
+  /*
+   * Because some tests can be executed without a open connection to the server,
+   * we not fail here if database could not be open.
+   */
 }
 
 void SchemaDriverPostgreSqlTest::cleanupTestCase()
@@ -210,6 +231,44 @@ void SchemaDriverPostgreSqlTest::indexDefinitionTest()
 {
 
 }
+
+void SchemaDriverPostgreSqlTest::createTableTest()
+{
+  if(!pvDatabase.isOpen()){
+    QSKIP("Not connected to server");
+  }
+  Mdt::Sql::Schema::Driver driver(pvDatabase);
+  QVERIFY(driver.isValid());
+
+  QVERIFY(dropTable("Client_tbl"));
+
+  QSqlQuery q(pvDatabase);
+  if(!q.exec("CREATE TABLE Client_tbl (Id_PK INTEGER NOT NULL PRIMARY Key)")){
+    qDebug() << q.lastError().text();
+  }
+  if(!q.exec("SELECT * FROM Client_tbl;")){
+    qDebug() << q.lastError().text();
+  }
+
+  QVERIFY(dropTable("Client_tbl"));
+}
+
+/*
+ * Helper functions
+ */
+
+bool SchemaDriverPostgreSqlTest::dropTable(const QString& tableName)
+{
+  QSqlQuery query(pvDatabase);
+
+  if(!query.exec("DROP TABLE IF EXISTS " + tableName + "")){
+    qWarning() << query.lastError().text();
+    return false;
+  }
+
+  return true;
+}
+
 
 /*
  * Main

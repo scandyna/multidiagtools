@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 57
+  revision 60
   modified_by 2 "philippe"
   // class settings
   
@@ -2867,6 +2867,157 @@ ${inlines}
       end
     end
 
+    class 2907138 "IndexList"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3314434 // <directional composition>
+	relation 3296130 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 3314434 // <directional composition>
+	  b parent class_ref 2782466 // Index
+      end
+
+      attribute 2772098 "IndexList"
+	private type class_ref 2782466 // Index
+	multiplicity "*"
+	stereotype "vector"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    classdiagram 2567426 "IndexListModel"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2920322 "IndexListModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3321090 // <directional composition>
+	relation 3302786 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3321090 // <directional composition>
+	  b parent class_ref 2907138 // IndexList
+      end
+
+      classrelation 3321218 // <generalisation>
+	relation 3302914 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3321218 // <generalisation>
+	  b parent class_ref 147202 // QAbstractTableModel
+      end
+    end
+
+    classdiagram 2560898 "IndexMap"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2913666 "IndexMap"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      class 2913794 "Origin"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+	php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+	python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+	idl_decl "${comment}enum ${name} {
+${items}};
+"
+	explicit_switch_type ""
+	mysql_decl ""
+	
+	attribute 2778626 "UserDefined"
+	  public explicit_type ""
+	  cpp_decl ""
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+
+	attribute 2778754 "ColumnUniqueConstraint"
+	  public explicit_type ""
+	  cpp_decl ""
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+
+	attribute 2778882 "PrimaryKey"
+	  public explicit_type ""
+	  cpp_decl ""
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+      end
+    end
+
     classdiagram 1668354 "overviewOld"
       classdiagramsettings hide_operations yes member_max_width 0 end
       size A4-Landscape
@@ -3058,44 +3209,6 @@ ${inlines}
 	
 	
 	
-      end
-    end
-
-    class 2907138 "IndexList"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3314434 // <directional composition>
-	relation 3296130 *-->
-	  a role_name "" multiplicity "*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 3314434 // <directional composition>
-	  b parent class_ref 2782466 // Index
-      end
-
-      attribute 2772098 "IndexList"
-	private type class_ref 2782466 // Index
-	multiplicity "*"
-	stereotype "vector"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
       end
     end
   end

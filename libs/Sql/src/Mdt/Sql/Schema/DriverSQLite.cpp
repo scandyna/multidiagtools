@@ -21,6 +21,7 @@
 #include "DriverSQLite.h"
 #include "FieldTypeName.h"
 #include "Mdt/Sql/Error.h"
+#include "Mdt/Algorithm.h"
 #include <QStringBuilder>
 #include <QSqlField>
 #include <QSqlRecord>
@@ -91,11 +92,6 @@ Expected< FieldList > DriverSQLite::getTableFieldListFromDatabase(const QString&
   Mdt::Expected<FieldList> ret;/// = DriverImplementationInterface::getTableFieldListFromDatabase(tableName);
   FieldList fieldList;
 
-//   if(!ret){
-//     return ret;
-//   }
-//   fieldList = ret.value();
-  /// ....
   QSqlQuery query(database());
   const QString sql = QStringLiteral("PRAGMA table_info(") % escapeTableName(tableName) % QStringLiteral(")");
   if(!query.exec(sql)){
@@ -124,7 +120,7 @@ Expected< FieldList > DriverSQLite::getTableFieldListFromDatabase(const QString&
     // Fetch not null
     field.setRequired( query.value("notnull") == QVariant(1) );
     // Default value
-    field.setDefaultValue( query.value("dflt_value") );
+    field.setDefaultValue( fieldDefaultValue(query.value("dflt_value")) );
     // Add to list
     fieldList.append(field);
   }
@@ -163,6 +159,60 @@ QString DriverSQLite::getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey& 
   return sql;
 }
 
+Mdt::Expected<IndexList> DriverSQLite::getTableIndexListFromDatabase(const QString& tableName) const
+{
+  using Mdt::Sql::Schema::Index;
+
+  Mdt::Expected<IndexList> ret;
+  IndexList indexList;
+  QSqlQuery query(database());
+
+  const QString sql = QStringLiteral("PRAGMA index_list(") % escapeTableName(tableName) % QStringLiteral(")");
+  if(!query.exec(sql)){
+    QString msg = tr("Fetching list of indexes for table '%1' failed.").arg(tableName);
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverSQLite");
+    error.stackError(mdtErrorFromQSqlQuery(query, "DriverSQLite"));
+    error.commit();
+    setLastError(error);
+    return ret;
+  }
+  while(query.next()){
+    if(query.value("origin") == QVariant("c")){
+      Index index;
+      index.setTableName(tableName);
+      index.setName( query.value("name").toString() );
+      if(!addColumnsToIndex(index)){
+        ret = lastError();
+        return ret;
+      }
+      indexList.append(index);
+    }
+  }
+  ret = indexList;
+
+  return ret;
+}
+
+bool DriverSQLite::addColumnsToIndex(Index & index) const
+{
+  QSqlQuery query(database());
+
+  const QString sql = QStringLiteral("PRAGMA index_info(") % escapeTableName(index.name()) % QStringLiteral(")");
+  if(!query.exec(sql)){
+    QString msg = tr("Fetching information for index '%1' failed.").arg(index.name());
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverSQLite");
+    error.stackError(mdtErrorFromQSqlQuery(query, "DriverSQLite"));
+    error.commit();
+    setLastError(error);
+    return false;
+  }
+  while(query.next()){
+    index.addFieldName(query.value("name").toString());
+  }
+
+  return true;
+}
+
 QVariant DriverSQLite::fieldDefaultValue(const QVariant & v) const
 {
   QVariant dv;
@@ -171,14 +221,13 @@ QVariant DriverSQLite::fieldDefaultValue(const QVariant & v) const
     return dv;
   }
   QString ds = v.toString().trimmed();
-  if(ds.length() > 2){
-    if(ds.endsWith('"')){
-      ds.remove(ds.length()-1, 1);
-    }
-    if(ds.startsWith('"')){
-      ds.remove(0, 1);
-    }
+  // Check about NULL flag
+  if(ds == QLatin1String("NULL")){
+    return dv;
   }
+  dv = Mdt::Algorithm::removeFirstLastCharIf(ds, '"');
+
+  return dv;
 }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

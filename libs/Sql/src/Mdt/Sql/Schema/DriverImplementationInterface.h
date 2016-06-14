@@ -32,6 +32,7 @@
 #include "PrimaryKey.h"
 #include "ForeignKey.h"
 #include "Index.h"
+#include "IndexList.h"
 #include "Table.h"
 #include "Mdt/Error.h"
 #include "Mdt/Expected.h"
@@ -170,6 +171,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Get SQL statement to drop a index
      */
     virtual QString getSqlToDropIndex(const Index & index) const;
+
+    /*! \brief Get a list of idexes for table from database
+     *
+     * Returns only indexes that where explicitly created.
+     *  Indexes automaticaly generated from a column constraint
+     *  are not included here.
+     */
+    virtual Mdt::Expected<IndexList> getTableIndexListFromDatabase(const QString & tableName) const = 0;
 
     /*! \brief Get SQL statement to create a table
      */

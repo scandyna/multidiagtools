@@ -47,6 +47,8 @@ class SchemaDriverMySqlTest : public QObject
   void primaryKeyDefinitionTest();
   void indexDefinitionTest();
 
+  void createTableTest();
+
  private:
 
   QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically

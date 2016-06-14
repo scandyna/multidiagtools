@@ -49,7 +49,11 @@ class SchemaDriverPostgreSqlTest : public QObject
   void primaryKeyDefinitionTest();
   void indexDefinitionTest();
 
+  void createTableTest();
+
  private:
+
+  bool dropTable(const QString & tableName);
 
   QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
   QSqlDatabase pvDatabase;

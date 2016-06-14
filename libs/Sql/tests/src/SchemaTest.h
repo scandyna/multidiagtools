@@ -49,6 +49,7 @@ class SchemaTest : public QObject
 
   void indexTest();
   void indexListTest();
+  void indexListModelTest();
 
   void parentTableFieldNameTest();
   void childTableFieldNameTest();
