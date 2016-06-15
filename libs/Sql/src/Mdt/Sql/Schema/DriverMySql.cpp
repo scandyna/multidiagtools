@@ -48,6 +48,11 @@ QString DriverMySql::getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey & 
 
 }
 
+Expected<PrimaryKeyContainer> DriverMySql::getTablePrimaryKeyFromDatabase(const QString& tableName) const
+{
+
+}
+
 Expected< IndexList > DriverMySql::getTableIndexListFromDatabase(const QString& tableName) const
 {
   /*

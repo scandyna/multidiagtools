@@ -38,6 +38,9 @@ namespace Mdt{ namespace Sql{ namespace Schema{
   class DriverImplementationInterface;
   class Table;
 
+  template<typename T>
+  class TableTemplate;
+
   /*! \brief SQL Schema driver
    *
    * Driver 
@@ -119,11 +122,39 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     bool createTable(const Table & table);
 
+    /*! \brief Create table in database
+     *
+     * \pre Driver must be valid
+     */
+    template<typename T>
+    bool createTable(const TableTemplate<T> & table)
+    {
+      return createTable(table.toTable());
+    }
+
     /*! \brief Drop table
      *
      * \pre Driver must be valid
      */
     bool dropTable(const Table & table);
+
+    /*! \brief Drop table
+     *
+     * \pre Driver must be valid
+     */
+    /*
+     * This could be somewhat optimized
+     * if the whole definition of table is required.
+     * For example, implement a private function
+     * (if needed, adapt TableTemplate)
+     * that takes only what is needed.
+     * Note: does TableTemplate::toTable() make a copy ?
+     */
+    template<typename T>
+    bool dropTable(const TableTemplate<T> & table)
+    {
+      return dropTable(table.toTable());
+    }
 
     /*! \brief Get last error
      */

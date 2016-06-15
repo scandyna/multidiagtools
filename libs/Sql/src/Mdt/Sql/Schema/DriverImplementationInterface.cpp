@@ -373,7 +373,24 @@ bool DriverImplementationInterface::createTable(const Table & table)
 
 bool DriverImplementationInterface::dropTable(const Table& table)
 {
-  return false;
+  /*
+   * Note: we assume that DBMS will automatically drop indexes related to table.
+   *       SQLite tells it explicitly in the documentation.
+   */
+  QSqlQuery query(pvDatabase);
+  QString sql;
+
+  sql = getSqlToDropTable(table);
+  if(!query.exec(sql)){
+    QString msg = tr("Removing table '%1' failed.").arg(table.tableName());
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverImplementationInterface");
+    error.stackError(mdtErrorFromQSqlQuery(query, "DriverImplementationInterface"));
+    error.commit();
+    setLastError(error);
+    return false;
+  }
+
+  return true;
 }
 
 QString DriverImplementationInterface::escapeFieldName(const QString & fieldName) const

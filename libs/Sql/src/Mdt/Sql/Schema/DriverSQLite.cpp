@@ -27,6 +27,9 @@
 #include <QSqlRecord>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <vector>
+
+#include <QDebug>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
@@ -157,6 +160,66 @@ QString DriverSQLite::getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey& 
   }
 
   return sql;
+}
+
+Mdt::Expected<PrimaryKeyContainer> DriverSQLite::getTablePrimaryKeyFromDatabase(const QString & tableName) const
+{
+  Mdt::Expected<PrimaryKeyContainer> ret;
+  PrimaryKeyContainer pk;
+  QSqlQuery query(database());
+  std::vector<QSqlRecord> pkFieldList;
+
+  const QString sql = QStringLiteral("PRAGMA table_info(") % escapeTableName(tableName) % QStringLiteral(")");
+  if(!query.exec(sql)){
+    QString msg = tr("Fetching primary key for table '%1' failed.").arg(tableName);
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverSQLite");
+    error.stackError(mdtErrorFromQSqlQuery(query, "DriverSQLite"));
+    error.commit();
+    setLastError(error);
+    return ret;
+  }
+  // Collect fields that are part of primary key
+  while(query.next()){
+    if(query.value("pk").toInt() > 0){
+      pkFieldList.push_back(query.record());
+    }
+  }
+  // Deduce and build primary key
+  if(pkFieldList.size() == 1){
+    const QString fieldTypeName = pkFieldList[0].value("type").toString().trimmed().toUpper();
+    const QString fieldName = pkFieldList[0].value("name").toString();
+    /*
+     * If field is of type INTEGER (not INT !),
+     * we habe a INTEGER PRIMARY KEY which is a auto increment primary key
+     * Note: type can be INTEGRE or INTEGER AUTO INCREMENT, which is the same.
+     */
+    if(fieldTypeName.startsWith(QLatin1String("INTEGER"))){
+      AutoIncrementPrimaryKey k;
+      k.setFieldName(fieldName);
+      pk.setPrimaryKey(k);
+    }else{
+      SingleFieldPrimaryKey k;
+      k.setFieldName(fieldName);
+      k.setFieldType( fieldTypeFromString(fieldTypeName) );
+      int length = fieldLengthFromString(fieldTypeName);
+      if(length < -1){
+        ret = lastError();
+        return ret;
+      }
+      k.setFieldLength(length);
+      pk.setPrimaryKey(k);
+    }
+  }else{
+    // We have a multi column primary key
+    PrimaryKey k;
+    for(unsigned int i = 0; i < pkFieldList.size(); ++i){
+      k.addFieldName( pkFieldList[i].value("name").toString() );
+    }
+    pk.setPrimaryKey(k);
+  }
+  ret = pk;
+
+  return ret;
 }
 
 Mdt::Expected<IndexList> DriverSQLite::getTableIndexListFromDatabase(const QString& tableName) const

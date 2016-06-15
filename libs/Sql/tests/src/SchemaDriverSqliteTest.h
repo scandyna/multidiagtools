@@ -51,10 +51,11 @@ class SchemaDriverSqliteTest : public QObject
   void foreignKeyDefinitionTest();
   void tableDefinitionTest();
 
-  void createTableTest();
+  void simpleCreateAndDropTableTest();
 
   void reverseIndexListTest();
   void reverseFieldListTest();
+  void reversePrimaryKeyTest();
 
  private:
 

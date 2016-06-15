@@ -39,6 +39,13 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       pvFieldNameList.append(field.name());
     }
 
+    /*! \brief Add a field to this primary key
+     */
+    void addFieldName(const QString & name)
+    {
+      pvFieldNameList.append(name);
+    }
+
     /*! \brief Get field count
      */
     int fieldCount() const

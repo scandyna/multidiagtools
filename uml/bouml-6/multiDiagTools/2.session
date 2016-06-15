@@ -1,4 +1,4 @@
-window_sizes 1272 949 346 920 894 0
+window_sizes 1280 957 346 928 902 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -9,8 +9,6 @@ diagrams
     980 905 100 7 0 0
   classdiagram_ref 2468482 // overview
     957 902 90 21 0 9
-  classdiagram_ref 2468354 // overview
-    928 902 100 4 0 0
   classdiagram_ref 1668354 // overviewOld
     120 110 100 18 0 0
   classdiagram_ref 2461186 // Field
@@ -19,19 +17,17 @@ diagrams
     957 902 100 21 0 0
   classdiagram_ref 2461570 // ForeignKey
     928 902 90 21 0 0
-  classdiagram_ref 2461698 // Table
-    928 902 100 18 0 61
-  classdiagram_ref 2461314 // Driver
+  active  classdiagram_ref 2461314 // Driver
     928 902 100 8 0 0
   classdiagram_ref 2461442 // PrimaryKey
     120 110 100 4 0 0
   classdiagram_ref 2560898 // IndexMap
     928 902 100 4 0 0
-  active  classdiagram_ref 2567426 // IndexListModel
+  classdiagram_ref 2567426 // IndexListModel
     920 894 100 4 0 0
 end
 show_stereotypes
-selected class_ref 2907138 // IndexList
+selected classdiagram_ref 2461698 // Table
 open
   
 package_ref 409858 // principes
@@ -40,9 +36,11 @@ package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
   
 package_ref 516226 // SqlItemModel
+  classview_ref 1320578 // Driver
   classview_ref 1347202 // PrimaryKey
   class_ref 2920322 // IndexListModel
   classdiagram_ref 2560898 // IndexMap
+  classview_ref 1320706 // Table
   
 package_ref 430082 // Dsp
 end

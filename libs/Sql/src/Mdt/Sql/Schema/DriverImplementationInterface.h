@@ -30,10 +30,12 @@
 #include "AutoIncrementPrimaryKey.h"
 #include "SingleFieldPrimaryKey.h"
 #include "PrimaryKey.h"
+#include "PrimaryKeyContainer.h"
 #include "ForeignKey.h"
 #include "Index.h"
 #include "IndexList.h"
 #include "Table.h"
+#include "TableTemplate.h"
 #include "Mdt/Error.h"
 #include "Mdt/Expected.h"
 #include <QSqlDatabase>
@@ -159,6 +161,25 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Get primary key definition
      */
     virtual QString getPrimaryKeyDefinition(const PrimaryKey & pk) const;
+
+    /*! \brief Get primary key for table from database
+     *
+     * Returned primary key type depends on how it was defined:
+     *  - For a auto increment primary key, type will be AutoIncrementPrimaryKeyType
+     *  - For other primary key that only refers to 1 column, type will be SingleFieldPrimaryKeyType
+     *  - For other cases, type will be PrimaryKeyType
+     *
+     * \note If 1 column was declared as table primary key constraint,
+     *        it will here be returned as SingleFieldPrimaryKey,
+     *        which reflects more a column constraint.
+     *       If more than 1 column where declared as primary key column constraint,
+     *        it will here be returned as PrimaryKey,
+     *        which reflects more a table constraint.
+     *       This can look like a limitation, but reflects how schema are defined
+     *        using Mdt::Sql::Schema classes.
+     *        Reflecting the exact schema from a database is not supported at all.
+     */
+    virtual Mdt::Expected<PrimaryKeyContainer> getTablePrimaryKeyFromDatabase(const QString & tableName) const = 0;
 
     /*! \brief Get foreign key definition
      */

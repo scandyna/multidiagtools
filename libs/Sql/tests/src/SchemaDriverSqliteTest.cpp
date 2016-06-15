@@ -889,7 +889,7 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   QCOMPARE(driver.getSqlToDropTable(table), expectedSql);
 }
 
-void SchemaDriverSqliteTest::createTableTest()
+void SchemaDriverSqliteTest::simpleCreateAndDropTableTest()
 {
   using Mdt::Sql::Schema::Table;
   using Mdt::Sql::Schema::FieldType;
@@ -898,21 +898,22 @@ void SchemaDriverSqliteTest::createTableTest()
   Mdt::Sql::Schema::Driver driver(pvDatabase);
   QVERIFY(driver.isValid());
   Schema::Client_tbl client_tbl;
-  Schema::Address_tbl address_tbl;
-  Table table;
 
   /*
-   * Create Client_tbl
+   * Here we simply check that we can create and drop a table.
+   * More checks are done in next tests
    */
+  // Check versions that takes a Table type
+  QVERIFY(!pvDatabase.tables().contains(client_tbl.tableName()));
   QVERIFY(driver.createTable(client_tbl.toTable()));
-  /// \todo table = driver.?? and check
-  /*
-   * Create Address_tbl
-   */
-  QVERIFY(driver.createTable(address_tbl.toTable()));
-  /// \todo table = driver.?? and check
-  
-  qDebug() << "Tables: " << pvDatabase.tables(QSql::AllTables);
+  QVERIFY(pvDatabase.tables().contains(client_tbl.tableName()));
+  QVERIFY(driver.dropTable(client_tbl.toTable()));
+  QVERIFY(!pvDatabase.tables().contains(client_tbl.tableName()));
+  // Check versions that takes a TableTemplate type
+  QVERIFY(driver.createTable(client_tbl));
+  QVERIFY(pvDatabase.tables().contains(client_tbl.tableName()));
+  QVERIFY(driver.dropTable(client_tbl));
+  QVERIFY(!pvDatabase.tables().contains(client_tbl.tableName()));
 }
 
 void SchemaDriverSqliteTest::reverseFieldListTest()
@@ -1071,10 +1072,128 @@ void SchemaDriverSqliteTest::reverseIndexListTest()
    * Cleanup
    */
   QVERIFY(driver.dropTable(Connector_tbl));
-  auto ret = driver.getTableIndexListFromDatabase(Connector_tbl.tableName());
+  ret = driver.getTableIndexListFromDatabase(Connector_tbl.tableName());
   QVERIFY(ret);
   indexList = ret.value();
   QCOMPARE(indexList.size(), 0);
+}
+
+void SchemaDriverSqliteTest::reversePrimaryKeyTest()
+{
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::Table;
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
+  using Mdt::Sql::Schema::PrimaryKey;
+  using Mdt::Sql::Schema::PrimaryKeyContainer;
+
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Table table;
+  Mdt::Expected<PrimaryKeyContainer> ret;
+  PrimaryKeyContainer pk;
+
+  /*
+   * Setup primary keys with field definitions
+   */
+  // Id_PK
+  AutoIncrementPrimaryKey Id_PK;
+  Id_PK.setFieldName("Id_PK");
+  // Code_PK
+  SingleFieldPrimaryKey Code_PK;
+  Code_PK.setFieldName("Code_PK");
+  Code_PK.setFieldType(FieldType::Varchar); // Must not be Integer, else it will become a auto increment PK in SQLite
+  Code_PK.setFieldLength(50);
+  /*
+   * Setup fields
+   */
+  // Id_A
+  Field Id_A;
+  Id_A.setName("Id_A");
+  Id_A.setType(FieldType::Integer);
+  Id_A.setRequired(true);
+  // Id_B
+  Field Id_B;
+  Id_B.setName("Id_B");
+  Id_B.setType(FieldType::Integer);
+  Id_B.setRequired(true);
+  // Name
+  Field Name;
+  Name.setName("Name");
+  Name.setType(FieldType::Varchar);
+  Name.setLength(50);
+  Name.setUnique(true);
+  /*
+   * Setup primary keys that only refers to existing fields
+   */
+  // Id_AB_PK
+  PrimaryKey Id_AB_PK;
+  Id_AB_PK.addField(Id_A);
+  Id_AB_PK.addField(Id_B);
+
+  /*
+   * Check with a auto increment primary key
+   */
+  // Setup and create table
+  table.clear();
+  table.setTableName("Connector_tbl");
+  table.setPrimaryKey(Id_PK);
+  table.addField(Name);
+  QVERIFY(driver.createTable(table));
+  // Get primary key from database
+  ret = driver.getTablePrimaryKeyFromDatabase(table.tableName());
+  QVERIFY(ret);
+  pk = ret.value();
+  // Check
+  QVERIFY(pk.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  QCOMPARE(pk.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
+  // Drop table
+  QVERIFY(driver.dropTable(table));
+  /*
+   * Check with a single field primary key
+   *  -> Primary key defined as COLUMN constraint
+   */
+  // Setup and create table
+  table.clear();
+  table.setTableName("Connector_tbl");
+  table.setPrimaryKey(Code_PK);
+  table.addField(Name);
+  QVERIFY(driver.createTable(table));
+  // Get primary key from database
+  ret = driver.getTablePrimaryKeyFromDatabase(table.tableName());
+  QVERIFY(ret);
+  pk = ret.value();
+  // Check
+  QVERIFY(pk.primaryKeyType() == PrimaryKeyContainer::SingleFieldPrimaryKeyType);
+  QCOMPARE(pk.singleFieldPrimaryKey().fieldName(), QString("Code_PK"));
+  QVERIFY(pk.singleFieldPrimaryKey().fieldType() == FieldType::Varchar);
+  QCOMPARE(pk.singleFieldPrimaryKey().fieldLength(), 50);
+  /// \todo Collation once defined
+  // Drop table
+  QVERIFY(driver.dropTable(table));
+  /*
+   * Check with a multiple fields primary key
+   *  -> Primary key defined as TABLE constraint
+   */
+  // Setup and create table
+  table.clear();
+  table.setTableName("Connector_tbl");
+  table.addField(Id_A);
+  table.addField(Id_B);
+  table.addField(Name);
+  table.setPrimaryKey(Id_AB_PK);
+  QVERIFY(driver.createTable(table));
+  // Get primary key from database
+  ret = driver.getTablePrimaryKeyFromDatabase(table.tableName());
+  QVERIFY(ret);
+  pk = ret.value();
+  // Check
+  QVERIFY(pk.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QCOMPARE(pk.primaryKey().fieldCount(), 2);
+  QCOMPARE(pk.primaryKey().fieldNameList().at(0), QString("Id_A"));
+  QCOMPARE(pk.primaryKey().fieldNameList().at(1), QString("Id_B"));
+  // Drop table
+  QVERIFY(driver.dropTable(table));
 }
 
 /*

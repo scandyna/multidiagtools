@@ -62,6 +62,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     QString getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey & pk) const override;
 
+    /*! \brief Get primary key for table from database
+     */
+    virtual Mdt::Expected<PrimaryKeyContainer> getTablePrimaryKeyFromDatabase(const QString & tableName) const override;
+
     /*! \brief Get a list of idexes for table from database
      */
     Mdt::Expected<IndexList> getTableIndexListFromDatabase(const QString & tableName) const override;
