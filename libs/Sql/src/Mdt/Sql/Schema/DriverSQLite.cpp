@@ -27,6 +27,7 @@
 #include <QSqlRecord>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QMap>
 #include <vector>
 
 #include <QDebug>
@@ -218,6 +219,47 @@ Mdt::Expected<PrimaryKeyContainer> DriverSQLite::getTablePrimaryKeyFromDatabase(
     pk.setPrimaryKey(k);
   }
   ret = pk;
+
+  return ret;
+}
+
+Mdt::Expected<ForeignKeyList> DriverSQLite::getTableForeignKeyListFromDatabase(const QString & tableName) const
+{
+  Mdt::Expected<ForeignKeyList> ret;
+  QMap<int, ForeignKey> fkMap;
+  QSqlQuery query(database());
+
+  const QString sql = QStringLiteral("PRAGMA foreign_key_list(") % escapeTableName(tableName) % QStringLiteral(")");
+  if(!query.exec(sql)){
+    QString msg = tr("Fetching foreign keys for table '%1' failed.").arg(tableName);
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverSQLite");
+    error.stackError(mdtErrorFromQSqlQuery(query, "DriverSQLite"));
+    error.commit();
+    setLastError(error);
+    return ret;
+  }
+  while(query.next()){
+    int fkId = query.value("id").toInt();
+    ParentTableFieldName parentField( query.value("to").toString() );
+    ChildTableFieldName childField( query.value("from").toString() );
+    // Check if a FK must be created or just updated
+    if(fkMap.contains(fkId)){
+      fkMap[fkId].addKeyFields(parentField, childField);
+    }else{
+      ForeignKey fk;
+      fk.setParentTableName( query.value("table").toString() );
+      fk.setChildTableName( tableName );
+      fk.setOnDeleteAction( ForeignKey::actionFromString( query.value("on_delete").toString() ) );
+      fk.setOnUpdateAction( ForeignKey::actionFromString( query.value("on_update").toString() ) );
+      fk.addKeyFields(parentField, childField);
+      fkMap.insert(fkId, fk);
+    }
+  }
+  ForeignKeyList fkList;
+  for(const auto & fk : fkMap){
+    fkList.append(fk);
+  }
+  ret = fkList;
 
   return ret;
 }

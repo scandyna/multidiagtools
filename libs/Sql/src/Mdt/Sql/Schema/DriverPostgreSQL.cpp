@@ -50,12 +50,17 @@ QString DriverPostgreSQL::getPrimaryKeyFieldDefinition(const SingleFieldPrimaryK
 
 }
 
-Expected<PrimaryKeyContainer> DriverPostgreSQL::getTablePrimaryKeyFromDatabase(const QString& tableName) const
+Mdt::Expected<PrimaryKeyContainer> DriverPostgreSQL::getTablePrimaryKeyFromDatabase(const QString& tableName) const
 {
 
 }
 
-Expected< IndexList > DriverPostgreSQL::getTableIndexListFromDatabase(const QString& tableName) const
+Mdt::Expected<ForeignKeyList> DriverPostgreSQL::getTableForeignKeyListFromDatabase(const QString& tableName) const
+{
+
+}
+
+Mdt::Expected<IndexList> DriverPostgreSQL::getTableIndexListFromDatabase(const QString& tableName) const
 {
 
 }

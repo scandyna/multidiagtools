@@ -66,6 +66,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     virtual Mdt::Expected<PrimaryKeyContainer> getTablePrimaryKeyFromDatabase(const QString & tableName) const override;
 
+    /*! \brief Get list of foreign keys for table from database
+     */
+    Mdt::Expected<ForeignKeyList> getTableForeignKeyListFromDatabase(const QString & tableName) const override;
+
     /*! \brief Get a list of idexes for table from database
      */
     Mdt::Expected<IndexList> getTableIndexListFromDatabase(const QString & tableName) const override;

@@ -1139,6 +1139,7 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   table.setTableName("Connector_tbl");
   table.setPrimaryKey(Id_PK);
   table.addField(Name);
+  QVERIFY(driver.dropTable(table));
   QVERIFY(driver.createTable(table));
   // Get primary key from database
   ret = driver.getTablePrimaryKeyFromDatabase(table.tableName());
@@ -1192,6 +1193,223 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   QCOMPARE(pk.primaryKey().fieldCount(), 2);
   QCOMPARE(pk.primaryKey().fieldNameList().at(0), QString("Id_A"));
   QCOMPARE(pk.primaryKey().fieldNameList().at(1), QString("Id_B"));
+  // Drop table
+  QVERIFY(driver.dropTable(table));
+}
+
+void SchemaDriverSqliteTest::reverseForeignKeyTest()
+{
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::Table;
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
+  using Mdt::Sql::Schema::PrimaryKey;
+  using Mdt::Sql::Schema::ParentTableFieldName;
+  using Mdt::Sql::Schema::ChildTableFieldName;
+  using Mdt::Sql::Schema::ForeignKey;
+  using Mdt::Sql::Schema::ForeignKeyList;
+
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Table table;
+  ForeignKey fk;
+  Mdt::Expected<ForeignKeyList> ret;
+  ForeignKeyList fkList;
+
+  /*
+   * Setup fields
+   */
+  // Id_A
+  Field Id_A;
+  Id_A.setName("Id_A");
+  Id_A.setType(FieldType::Integer);
+  Id_A.setRequired(true);
+  // Id_B
+  Field Id_B;
+  Id_B.setName("Id_B");
+  Id_B.setType(FieldType::Integer);
+  Id_B.setRequired(true);
+  // Id_A_FK
+  Field Id_A_FK;
+  Id_A_FK.setName("Id_A_FK");
+  Id_A_FK.setType(FieldType::Integer);
+  Id_A_FK.setRequired(true);
+  // Id_B_FK
+  Field Id_B_FK;
+  Id_B_FK.setName("Id_B_FK");
+  Id_B_FK.setType(FieldType::Integer);
+  Id_B_FK.setRequired(true);
+  // Name
+  Field Name;
+  Name.setName("Name");
+  Name.setType(FieldType::Varchar);
+  Name.setLength(50);
+  Name.setUnique(true);
+  // Code_FK
+  Field Code_FK;
+  Code_FK.setName("Code_FK");
+  Code_FK.setType(FieldType::Varchar);
+  Code_FK.setLength(50);
+  Code_FK.setRequired(true);
+  /*
+   * Setup primary keys
+   */
+  // Id_PK
+  AutoIncrementPrimaryKey Id_PK;
+  Id_PK.setFieldName("Id_PK");
+  // Code_PK
+  SingleFieldPrimaryKey Code_PK;
+  Code_PK.setFieldName("Code_PK");
+  Code_PK.setFieldType(FieldType::Varchar);
+  Code_PK.setFieldLength(50);
+  // Id_AB_PK
+  PrimaryKey Id_AB_PK;
+  Id_AB_PK.addField(Id_A);
+  Id_AB_PK.addField(Id_B);
+  /*
+   * Setup tables that will be reused
+   */
+  // Type_tbl
+  Table Type_tbl;
+  Type_tbl.setTableName("Type_tbl");
+  Type_tbl.setPrimaryKey(Code_PK);
+  Type_tbl.addField(Name);
+  // Connector_tbl
+  Table Connector_tbl;
+  Connector_tbl.setTableName("Connector_tbl");
+  Connector_tbl.addField(Id_A);
+  Connector_tbl.addField(Id_B);
+  Connector_tbl.addField(Name);
+  Connector_tbl.setPrimaryKey(Id_AB_PK);
+  /*
+   * Cleanup and create tables that will be reused
+   */
+  QVERIFY(driver.dropTable(Type_tbl));
+  QVERIFY(driver.dropTable(Connector_tbl));
+  QVERIFY(driver.createTable(Type_tbl));
+  QVERIFY(driver.createTable(Connector_tbl));
+
+  /*
+   * Table with 1 single column foreign key
+   */
+  // Setup and create table
+  table.clear();
+  table.setTableName("Contact_tbl");
+  table.setPrimaryKey(Id_PK);
+  table.addField(Code_FK);
+  fk.clear();
+  fk.setParentTable(Type_tbl);
+  fk.setChildTable(table);
+  fk.setOnDeleteAction(ForeignKey::Restrict);
+  fk.setOnUpdateAction(ForeignKey::Cascade);
+  fk.addKeyFields(ParentTableFieldName(Code_PK), ChildTableFieldName(Code_FK));
+  table.addForeignKey(fk);
+  QVERIFY(driver.dropTable(table));
+  QVERIFY(driver.createTable(table));
+  // Check
+  ret = driver.getTableForeignKeyListFromDatabase(table.tableName());
+  QVERIFY(ret);
+  fkList = ret.value();
+  QCOMPARE(fkList.size(), 1);
+  fk = fkList.at(0);
+  QCOMPARE(fk.parentTableName(), QString("Type_tbl"));
+  QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
+  QVERIFY(fk.onDeleteAction() == ForeignKey::Restrict);
+  QVERIFY(fk.onUpdateAction() == ForeignKey::Cascade);
+  QCOMPARE(fk.parentTableFieldNameList().size(), 1);
+  QCOMPARE(fk.parentTableFieldNameList().at(0), QString("Code_PK"));
+  QCOMPARE(fk.childTableFieldNameList().size(), 1);
+  QCOMPARE(fk.childTableFieldNameList().at(0), QString("Code_FK"));
+  // Drop table
+  QVERIFY(driver.dropTable(table));
+  /*
+   * Table with 1 multi column foreign key
+   */
+  // Setup and create table
+  table.clear();
+  table.setTableName("Contact_tbl");
+  table.setPrimaryKey(Id_PK);
+  table.addField(Id_A_FK);
+  table.addField(Id_B_FK);
+  fk.clear();
+  fk.setParentTable(Connector_tbl);
+  fk.setChildTable(table);
+  fk.setOnDeleteAction(ForeignKey::Restrict);
+  fk.setOnUpdateAction(ForeignKey::Cascade);
+  fk.addKeyFields(ParentTableFieldName(Id_A), ChildTableFieldName(Id_A_FK));
+  fk.addKeyFields(ParentTableFieldName(Id_B), ChildTableFieldName(Id_B_FK));
+  table.addForeignKey(fk);
+  QVERIFY(driver.createTable(table));
+  // Check
+  ret = driver.getTableForeignKeyListFromDatabase(table.tableName());
+  QVERIFY(ret);
+  fkList = ret.value();
+  QCOMPARE(fkList.size(), 1);
+  fk = fkList.at(0);
+  QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
+  QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
+  QVERIFY(fk.onDeleteAction() == ForeignKey::Restrict);
+  QVERIFY(fk.onUpdateAction() == ForeignKey::Cascade);
+  QCOMPARE(fk.parentTableFieldNameList().size(), 2);
+  QCOMPARE(fk.parentTableFieldNameList().at(0), QString("Id_A"));
+  QCOMPARE(fk.parentTableFieldNameList().at(1), QString("Id_B"));
+  QCOMPARE(fk.childTableFieldNameList().size(), 2);
+  QCOMPARE(fk.childTableFieldNameList().at(0), QString("Id_A_FK"));
+  QCOMPARE(fk.childTableFieldNameList().at(1), QString("Id_B_FK"));
+  // Drop table
+  QVERIFY(driver.dropTable(table));
+  /*
+   * Table with 1 single column and 1 multi column foreign keys
+   */
+  // Setup and create table
+  table.clear();
+  table.setTableName("Contact_tbl");
+  table.setPrimaryKey(Id_PK);
+  table.addField(Code_FK);
+  table.addField(Id_A_FK);
+  table.addField(Id_B_FK);
+  fk.clear();
+  fk.setParentTable(Type_tbl);
+  fk.setChildTable(table);
+  fk.setOnDeleteAction(ForeignKey::Restrict);
+  fk.setOnUpdateAction(ForeignKey::Cascade);
+  fk.addKeyFields(ParentTableFieldName(Code_PK), ChildTableFieldName(Code_FK));
+  table.addForeignKey(fk);
+  fk.clear();
+  fk.setParentTable(Connector_tbl);
+  fk.setChildTable(table);
+  fk.setOnDeleteAction(ForeignKey::Restrict);
+  fk.setOnUpdateAction(ForeignKey::Cascade);
+  fk.addKeyFields(ParentTableFieldName(Id_A), ChildTableFieldName(Id_A_FK));
+  fk.addKeyFields(ParentTableFieldName(Id_B), ChildTableFieldName(Id_B_FK));
+  table.addForeignKey(fk);
+  QVERIFY(driver.createTable(table));
+  // Check
+  ret = driver.getTableForeignKeyListFromDatabase(table.tableName());
+  QVERIFY(ret);
+  fkList = ret.value();
+  QCOMPARE(fkList.size(), 2);
+  // It seems that SQLite returns FK list in revert order of declaration
+  fk = fkList.at(1);
+  QCOMPARE(fk.parentTableName(), QString("Type_tbl"));
+  QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
+  QVERIFY(fk.onDeleteAction() == ForeignKey::Restrict);
+  QVERIFY(fk.onUpdateAction() == ForeignKey::Cascade);
+  QCOMPARE(fk.parentTableFieldNameList().size(), 1);
+  QCOMPARE(fk.parentTableFieldNameList().at(0), QString("Code_PK"));
+  QCOMPARE(fk.childTableFieldNameList().size(), 1);
+  QCOMPARE(fk.childTableFieldNameList().at(0), QString("Code_FK"));
+  fk = fkList.at(0);
+  QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
+  QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
+  QVERIFY(fk.onDeleteAction() == ForeignKey::Restrict);
+  QVERIFY(fk.onUpdateAction() == ForeignKey::Cascade);
+  QCOMPARE(fk.parentTableFieldNameList().size(), 2);
+  QCOMPARE(fk.parentTableFieldNameList().at(0), QString("Id_A"));
+  QCOMPARE(fk.parentTableFieldNameList().at(1), QString("Id_B"));
+  QCOMPARE(fk.childTableFieldNameList().size(), 2);
+  QCOMPARE(fk.childTableFieldNameList().at(0), QString("Id_A_FK"));
+  QCOMPARE(fk.childTableFieldNameList().at(1), QString("Id_B_FK"));
   // Drop table
   QVERIFY(driver.dropTable(table));
 }

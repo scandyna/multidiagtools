@@ -49,6 +49,11 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     explicit ParentTableFieldName(const Field & field)
      : pvFieldName(field.name()) {}
 
+    /*! \brief Constructor
+     */
+    explicit ParentTableFieldName(const QString & name)
+     : pvFieldName(name) {}
+
     /*! \brief Get field name
      */
     QString fieldName() const

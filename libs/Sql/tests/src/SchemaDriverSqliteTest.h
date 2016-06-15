@@ -56,6 +56,7 @@ class SchemaDriverSqliteTest : public QObject
   void reverseIndexListTest();
   void reverseFieldListTest();
   void reversePrimaryKeyTest();
+  void reverseForeignKeyTest();
 
  private:
 

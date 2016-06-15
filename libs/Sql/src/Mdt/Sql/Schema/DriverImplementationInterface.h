@@ -185,6 +185,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     virtual QString getForeignKeyDefinition(const ForeignKey & fk) const;
 
+    /*! \brief Get list of foreign keys for table from database
+     */
+    virtual Mdt::Expected<ForeignKeyList> getTableForeignKeyListFromDatabase(const QString & tableName) const = 0;
+
     /*! \brief Get SQL statement to create a index
      */
     virtual QString getSqlToCreateIndex(const Index & index) const;
