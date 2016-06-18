@@ -43,6 +43,10 @@ note 133378 "What could be a abstraction of a filter ?
 Imagine custom models (application specific).
 Should we provide a interface ?"
   xyzwh 197 672 2000 579 91
+classcanvas 133634 class_ref 2782850 // TableControllerRelation
+  classdiagramsettings member_max_width 0 end
+  xyz 20 88 2022
+end
 relationcanvas 128770 relation_ref 3063298 // <unidirectional association>
   from ref 128002 z 2011 to point 296 384
   line 131074 z 2011 to point 544 384
@@ -84,6 +88,16 @@ relationcanvas 132994 relation_ref 3091842 // <generalisation>
   from ref 132866 z 2007 to ref 129538
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133762 relation_ref 3135362 // <generalisation>
+  from ref 133634 z 2023 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133890 relation_ref 3309826 // <association>
+  from ref 128002 z 2023 to ref 133634
+  no_role_a no_role_b
+  multiplicity_a_pos 256 174 3000 multiplicity_b_pos 276 268 3000
 end
 line 131586 -_-_
   from ref 131458 z 2001 to ref 128642

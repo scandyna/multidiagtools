@@ -22,6 +22,8 @@
 #define MDT_SQL_SCHEMA_INDEX_LIST_H
 
 #include "Index.h"
+#include "FieldName.h"
+#include "TableName.h"
 #include <QVector>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -69,6 +71,27 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       Q_ASSERT(i < size());
 
       return pvIndexList.at(i);
+    }
+
+    /*! \brief Find index for tableName and fieldName
+     *
+     * If no index matches criteria,
+     *  an null Index is returned
+     */
+    Index findIndex(const TableName & tableName, const FieldName & fieldName) const
+    {
+      Index idx;
+
+      for(const auto & _idx : pvIndexList){
+        if( QString::compare(_idx.tableName(), tableName.toString(), Qt::CaseInsensitive) == 0 ){
+          if(_idx.containsFieldName(fieldName.toString())){
+            idx = _idx;
+            break;
+          }
+        }
+      }
+
+      return idx;
     }
 
     /*! \brief Get begin const iterator

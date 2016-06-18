@@ -130,6 +130,15 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return pvFieldNameList.at(index);
     }
 
+    /*! \brief Check if this index contains a field name fieldName
+     *
+     * \note The search is not case sensitive.
+     */
+    bool containsFieldName(const QString & fieldName) const
+    {
+      return pvFieldNameList.contains(fieldName, Qt::CaseInsensitive);
+    }
+
     /*! \brief Get list of field names
      */
     QStringList fieldNameList() const

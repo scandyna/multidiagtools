@@ -923,6 +923,7 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   using Mdt::Sql::Schema::FieldList;
   using Mdt::Sql::Schema::Table;
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::PrimaryKeyContainer;
 
   Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
   Field field;
@@ -942,6 +943,11 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   Name.setDefaultValue("Default name");
   Name.setRequired(true);
   Name.setUnique(true);
+  // Remarks
+  Field Remarks;
+  Remarks.setName("Remarks");
+  Remarks.setType(FieldType::Varchar);
+  Remarks.setLength(200);
   /*
    * Setup table
    */
@@ -949,25 +955,24 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   Connector_tbl.setTableName("Connector_tbl");
   Connector_tbl.setPrimaryKey(Id_PK);
   Connector_tbl.addField(Name);
+  Connector_tbl.addField(Remarks);
   /*
    * Create table in database
    */
   QVERIFY(driver.createTable(Connector_tbl));
-  
-  
-  QSqlQuery q(pvDatabase);
-  q.exec("PRAGMA index_list(Connector_tbl);");
-  while(q.next()){
-    qDebug() << q.record();
-  }
-  
   /*
    * Check
+   *
+   * Note: for primary key, the unique flag is not checked here.
+   *       The unique flag is important for other fields in Table,
+   *       but implicit for primary keys, and returning true or false
+   *       is a problem that must be solved in Table, not in reversing
+   *       from database.
    */
   auto ret = driver.getTableFieldListFromDatabase("Connector_tbl");
   QVERIFY(ret);
   fieldList = ret.value();
-  QCOMPARE(fieldList.size(), 2);
+  QCOMPARE(fieldList.size(), 3);
   // Id_PK
   field = fieldList.at(0);
   QCOMPARE(field.name(), QString("Id_PK"));
@@ -975,7 +980,8 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   QCOMPARE(field.length(), -1);
   QVERIFY(field.defaultValue().isNull());
   QVERIFY(field.isRequired());
-  /// \todo define: QVERIFY(field.isUnique());
+  QVERIFY(Connector_tbl.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  QCOMPARE(Connector_tbl.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
   /// \todo Collation is missing
   // Name
   field = fieldList.at(1);
@@ -985,6 +991,15 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   QCOMPARE(field.defaultValue(), QVariant("Default name"));
   QVERIFY(field.isRequired());
   QVERIFY(field.isUnique());
+  /// \todo Collation is missing
+  // Remarks
+  field = fieldList.at(2);
+  QCOMPARE(field.name(), QString("Remarks"));
+  QVERIFY(field.type() == FieldType::Varchar);
+  QCOMPARE(field.length(), 200);
+  QVERIFY(field.defaultValue().isNull());
+  QVERIFY(!field.isRequired());
+  QVERIFY(!field.isUnique());
   /// \todo Collation is missing
   
   QFAIL("Not finished");

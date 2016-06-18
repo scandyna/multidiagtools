@@ -39,6 +39,9 @@ class SchemaTest : public QObject
 
   void collationTest();
 
+  void fieldNameTest();
+  void tableNameTest();
+
   void fieldTest();
   void fieldListTest();
 

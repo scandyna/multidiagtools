@@ -91,12 +91,23 @@ QString DriverSQLite::getFieldDefinition(const Field & field) const
 
 Expected< FieldList > DriverSQLite::getTableFieldListFromDatabase(const QString& tableName) const
 {
-  using Mdt::Sql::Schema::Field;
-
-  Mdt::Expected<FieldList> ret;/// = DriverImplementationInterface::getTableFieldListFromDatabase(tableName);
+  Mdt::Expected<FieldList> ret;
   FieldList fieldList;
-
+  IndexList uniqueIndexList;
   QSqlQuery query(database());
+
+  // Get indexes that where created by a unique constraint
+  auto expUniqueIndexList = getTableIndexListFromDatabase(tableName, QStringLiteral("u"));
+  if(!expUniqueIndexList){
+    QString msg = tr("Fetching unique constraint informations of table '%1' failed.").arg(tableName);
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverSQLite");
+    error.stackError(lastError());
+    error.commit();
+    setLastError(error);
+    return ret;
+  }
+  uniqueIndexList = expUniqueIndexList.value();
+  // Get field informations
   const QString sql = QStringLiteral("PRAGMA table_info(") % escapeTableName(tableName) % QStringLiteral(")");
   if(!query.exec(sql)){
     QString msg = tr("Fetching informations of table '%1' failed.").arg(tableName);
@@ -125,6 +136,10 @@ Expected< FieldList > DriverSQLite::getTableFieldListFromDatabase(const QString&
     field.setRequired( query.value("notnull") == QVariant(1) );
     // Default value
     field.setDefaultValue( fieldDefaultValue(query.value("dflt_value")) );
+    // Check about unique
+    if( !uniqueIndexList.findIndex(TableName(tableName), FieldName(field.name())).isNull() ){
+      field.setUnique(true);
+    }
     // Add to list
     fieldList.append(field);
   }
@@ -264,7 +279,41 @@ Mdt::Expected<ForeignKeyList> DriverSQLite::getTableForeignKeyListFromDatabase(c
   return ret;
 }
 
-Mdt::Expected<IndexList> DriverSQLite::getTableIndexListFromDatabase(const QString& tableName) const
+// Mdt::Expected<IndexList> DriverSQLite::getTableIndexListFromDatabase(const QString& tableName) const
+// {
+//   using Mdt::Sql::Schema::Index;
+// 
+//   Mdt::Expected<IndexList> ret;
+//   IndexList indexList;
+//   QSqlQuery query(database());
+// 
+//   const QString sql = QStringLiteral("PRAGMA index_list(") % escapeTableName(tableName) % QStringLiteral(")");
+//   if(!query.exec(sql)){
+//     QString msg = tr("Fetching list of indexes for table '%1' failed.").arg(tableName);
+//     auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverSQLite");
+//     error.stackError(mdtErrorFromQSqlQuery(query, "DriverSQLite"));
+//     error.commit();
+//     setLastError(error);
+//     return ret;
+//   }
+//   while(query.next()){
+//     if(query.value("origin").toString() == QLatin1String("c")){
+//       Index index;
+//       index.setTableName(tableName);
+//       index.setName( query.value("name").toString() );
+//       if(!addColumnsToIndex(index)){
+//         ret = lastError();
+//         return ret;
+//       }
+//       indexList.append(index);
+//     }
+//   }
+//   ret = indexList;
+// 
+//   return ret;
+// }
+
+Mdt::Expected<IndexList> DriverSQLite::getTableIndexListFromDatabase(const QString & tableName, const QString & origin) const
 {
   using Mdt::Sql::Schema::Index;
 
@@ -282,7 +331,7 @@ Mdt::Expected<IndexList> DriverSQLite::getTableIndexListFromDatabase(const QStri
     return ret;
   }
   while(query.next()){
-    if(query.value("origin") == QVariant("c")){
+    if(query.value("origin").toString() == origin){
       Index index;
       index.setTableName(tableName);
       index.setName( query.value("name").toString() );

@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 15
+  revision 16
   modified_by 2 "philippe"
   // class settings
   
@@ -117,6 +117,24 @@ ${inlines}
 
       classrelation 3082114 // <association>
 	relation_ref 3063682 // <association>
+      end
+
+      classrelation 3328130 // <association>
+	relation 3309826 ----
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 3328130 // <association>
+	  b role_name "" multiplicity "*" package
+	    classrelation_ref 3328258 // <association>
+      end
+
+      classrelation 3329154 // <dependency>
+	relation 3310722 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3329154 // <dependency>
+	  b parent class_ref 147202 // QAbstractTableModel
       end
     end
 
@@ -634,6 +652,268 @@ ${items}};
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+  end
+
+  classview 1392898 "ControllerRelation"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2573954 "sandbox"
+      classdiagramsettings member_max_width 0 end
+      size C-Landscape
+    end
+
+    class 2782850 "TableControllerRelation"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3153666 // <generalisation>
+	relation 3135362 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3153666 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      operation 4335618 "setParentCurrentRow"
+	stereotype "slot"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "row" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3327746 // <directional composition>
+	relation 3309442 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3327746 // <directional composition>
+	  b parent class_ref 2926850 // TableControllerChildFilter
+      end
+
+      classrelation 3328258 // <association>
+	relation_ref 3309826 // <association>
+      end
+
+      operation 4335746 "onParentCurrentRowChanged"
+	abstract cpp_virtual protected explicit_return_type ""
+	nparams 1
+	  param in name "parentRecord" type class_ref 2927234 // ControllerFilterParentRecord
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3328642 // <dependency>
+	relation 3310210 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3328642 // <dependency>
+	  b parent class_ref 2927234 // ControllerFilterParentRecord
+      end
+    end
+
+    class 2926850 "TableControllerChildFilter"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3328386 // <dependency>
+	relation 3309954 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3328386 // <dependency>
+	  b parent class_ref 2927234 // ControllerFilterParentRecord
+      end
+
+      operation 4335874 "applyFilter"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "record" type class_ref 2927234 // ControllerFilterParentRecord
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 2926978 "SqlTableControllerRelation"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3327874 // <generalisation>
+	relation 3309570 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3327874 // <generalisation>
+	  b parent class_ref 2782850 // TableControllerRelation
+      end
+    end
+
+    class 2927106 "SqlTableControllerChildFilter"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3328002 // <generalisation>
+	relation 3309698 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3328002 // <generalisation>
+	  b parent class_ref 2926850 // TableControllerChildFilter
+      end
+
+      classrelation 3328514 // <unidirectional association>
+	relation 3310082 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3328514 // <unidirectional association>
+	  b parent class_ref 174210 // QSqlTableModel
+      end
+
+      operation 4336002 "applyFilter"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "record" type class_ref 2927234 // ControllerFilterParentRecord
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 2927234 "ControllerFilterParentRecord"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 2785410 "columnIndexList"
+	private explicit_type ""
+	multiplicity "*"
+	stereotype "vector"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 2927362 "SqlTableController"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3328770 // <generalisation>
+	relation 3310338 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3328770 // <generalisation>
+	  b parent class_ref 2684802 // TableController
+      end
+
+      classrelation 3328898 // <directional composition>
+	relation 3310466 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3328898 // <directional composition>
+	  b parent class_ref 174210 // QSqlTableModel
+      end
     end
   end
 
@@ -1433,46 +1713,6 @@ ${inlines}
 	
 	
       end
-    end
-
-    class 2782850 "ControllerRelation"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3153666 // <generalisation>
-	relation 3135362 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3153666 // <generalisation>
-	  b parent class_ref 138626 // QObject
-      end
-
-      operation 4299266 "fromRelation"
-	class_operation public return_type class_ref 2782850 // ControllerRelation
-	nparams 1
-	  param in name "relation" explicit_type "Relation"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
     end
   end
 end

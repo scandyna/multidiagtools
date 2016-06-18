@@ -211,6 +211,22 @@ void SchemaTest::collationTest()
   QVERIFY(collation.isNull());
 }
 
+void SchemaTest::fieldNameTest()
+{
+  using Mdt::Sql::Schema::FieldName;
+
+  FieldName fieldA("A");
+  QCOMPARE(fieldA.toString(), QString("A"));
+}
+
+void SchemaTest::tableNameTest()
+{
+  using Mdt::Sql::Schema::TableName;
+
+  TableName tableA("A");
+  QCOMPARE(tableA.toString(), QString("A"));
+}
+
 void SchemaTest::fieldTest()
 {
   using Mdt::Sql::Schema::Collation;
@@ -570,6 +586,9 @@ void SchemaTest::indexTest()
   QCOMPARE(index.fieldName(0), QString("Id_A"));
   QCOMPARE(index.fieldNameList().size(), 1);
   QCOMPARE(index.fieldNameList().at(0), QString("Id_A"));
+  QVERIFY(index.containsFieldName("Id_A"));
+  QVERIFY(index.containsFieldName("id_a"));
+  QVERIFY(!index.containsFieldName("Id_B"));
   QVERIFY(index.isUnique());
   /*
    * Clear
@@ -600,6 +619,8 @@ void SchemaTest::indexListTest()
 {
   using Mdt::Sql::Schema::Index;
   using Mdt::Sql::Schema::IndexList;
+  using Mdt::Sql::Schema::FieldName;
+  using Mdt::Sql::Schema::TableName;
 
   /*
    * Setup index
@@ -607,6 +628,9 @@ void SchemaTest::indexListTest()
   Index index;
   index.setTableName("A_tbl");
   index.setUnique(true);
+  index.addFieldName("Name");
+  index.generateName();
+  QVERIFY(!index.isNull());
   /*
    * Initial state
    */
@@ -629,6 +653,17 @@ void SchemaTest::indexListTest()
   QCOMPARE(list.size(), 1);
   QCOMPARE(list.at(0).tableName(), QString("B_tbl"));
   QVERIFY(list.at(0).isUnique());
+  /*
+   * Check find index
+   */
+  QVERIFY(list.findIndex(TableName("None_tbl"), FieldName("None")).isNull());
+  QVERIFY(list.findIndex(TableName("B_tbl"), FieldName("None")).isNull());
+  QVERIFY(list.findIndex(TableName("None_tbl"), FieldName("Name")).isNull());
+  QVERIFY(!list.findIndex(TableName("B_tbl"), FieldName("Name")).isNull());
+  QVERIFY(!list.findIndex(TableName("b_tbl"), FieldName("name")).isNull());
+  QCOMPARE(list.findIndex(TableName("B_tbl"), FieldName("Name")).tableName(), QString("B_tbl"));
+  QCOMPARE(list.findIndex(TableName("B_tbl"), FieldName("Name")).fieldCount(), 1);
+  QCOMPARE(list.findIndex(TableName("B_tbl"), FieldName("Name")).fieldNameList().at(0), QString("Name"));
   /*
    * Clear
    */

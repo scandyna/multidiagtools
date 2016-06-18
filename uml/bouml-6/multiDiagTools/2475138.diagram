@@ -8,4 +8,18 @@ classcanvas 128130 class_ref 1981186 // mdtSqlCollation
   classdiagramsettings member_max_width 0 end
   xyz 40.5 40.5 2005
 end
+note 128258 "Collation is not the container !!
+We have:
+ - character set: symbols encoding
+ - collation: set of rules for comparing, etc..."
+  xyzwh 273 334 2000 423 127
+classcanvas 128386 class_ref 2933890 // Charset
+  classdiagramsettings member_max_width 0 end
+  xyz 41 520 2000
+end
+note 128514 "See:
+  - Default charset for a database (or a schema)
+ - Default charset for a table ?
+ -  Make shure that nothing is specified in SQL definition if not specified.."
+  xyzwh 197 514 2000 595 119
 end

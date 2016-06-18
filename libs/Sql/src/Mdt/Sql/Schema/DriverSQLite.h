@@ -72,9 +72,16 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Get a list of idexes for table from database
      */
-    Mdt::Expected<IndexList> getTableIndexListFromDatabase(const QString & tableName) const override;
+    Mdt::Expected<IndexList> getTableIndexListFromDatabase(const QString & tableName) const override
+    {
+      return getTableIndexListFromDatabase(tableName, QStringLiteral("c"));
+    }
 
    private:
+
+    /*! \brief Get a list of idexes for table from database for origin
+     */
+    Mdt::Expected<IndexList> getTableIndexListFromDatabase(const QString & tableName, const QString & origin) const;
 
     /*! \brief Add columns to index
      */

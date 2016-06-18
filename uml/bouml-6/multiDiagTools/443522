@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 60
+  revision 65
   modified_by 2 "philippe"
   // class settings
   
@@ -1262,6 +1262,44 @@ ${inlines}
     end
   end
 
+  classview 1399426 "Charset"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2587138 "Charset"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2933890 "Charset"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+  end
+
   classview 1333890 "Collation"
     
     classdiagramsettings member_max_width 0 end
@@ -1375,6 +1413,11 @@ ${inlines}
     
     activitydiagramsettings
      end
+    classdiagram 2580482 "FieldName"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
     classdiagram 2461058 "FieldType"
       classdiagramsettings member_max_width 0 end
       size B
@@ -2338,6 +2381,22 @@ ${inlines}
 	
 	
       end
+    end
+
+    class 2940418 "FieldName"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 
@@ -4122,9 +4181,14 @@ ${inlines}
     
     activitydiagramsettings
      end
+    classdiagram 2580610 "TableName"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
     classdiagram 2461698 "Table"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size B-Landscape
     end
 
     class 2775810 "Table"
@@ -4554,6 +4618,22 @@ ${inlines}
 	    classrelation_ref 3243778 // <generalisation>
 	  b parent class_ref 2838530 // TableTemplate
       end
+    end
+
+    class 2940546 "TableName"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 
