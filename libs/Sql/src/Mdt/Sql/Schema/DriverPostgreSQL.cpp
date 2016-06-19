@@ -20,7 +20,13 @@
  ****************************************************************************/
 #include "DriverPostgreSQL.h"
 #include "FieldTypeName.h"
+#include "Mdt/Sql/Error.h"
 #include <QStringBuilder>
+#include <QSqlField>
+#include <QSqlRecord>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QLocale>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
@@ -30,9 +36,48 @@ DriverPostgreSQL::DriverPostgreSQL(const QSqlDatabase& db)
   Q_ASSERT(qsqlDriver()->dbmsType() == QSqlDriver::PostgreSQL);
 }
 
+Charset DriverPostgreSQL::getDatabaseDefaultCharset() const
+{
+  Charset cs;
+  QSqlQuery query(database());
+
+  const QString sql = QStringLiteral("SELECT character_set_name FROM information_schema.character_sets WHERE default_collate_catalog = '") \
+                    % database().databaseName() % QStringLiteral("'");
+  if(!query.exec(sql)){
+    QString msg = tr("Fetching database default character set failed.");
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverPostgreSQL");
+    error.stackError(mdtErrorFromQSqlQuery(query, "DriverPostgreSQL"));
+    error.commit();
+    setLastError(error);
+    return cs;
+  }
+  if(!query.next()){
+    QString msg = tr("Fetching database default character set failed.");
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverPostgreSQL");
+    error.commit();
+    setLastError(error);
+    return cs;
+  }
+  cs.setCharsetName( query.value(0).toString() );
+
+  return cs;
+}
+
 QString DriverPostgreSQL::getCollationDefinition(const Collation& collation) const
 {
+  QString sql;
 
+  /*
+   * PostgreSQL does not support specifying case sensitivity in COLLATE option.
+   * The only possible way to make a field case insensitive is to use a CITEXT field type.
+   */
+  if(collation.locale().isNull()){
+    return sql;
+  }
+  QLocale locale(collation.locale().language(), collation.locale().country());
+  sql = QStringLiteral("COLLATE \"") % locale.name() % QStringLiteral("\"");
+
+  return sql;
 }
 
 QString DriverPostgreSQL::getFieldDefinition(const Field& field) const

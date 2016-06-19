@@ -37,6 +37,8 @@ class SchemaTest : public QObject
   void fieldTypeNameTest();
   void fiedTypeListModelTest();
 
+  void charsetTest();
+  void localeTest();
   void collationTest();
 
   void fieldNameTest();

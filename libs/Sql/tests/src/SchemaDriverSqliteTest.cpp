@@ -27,6 +27,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlRecord>
+#include <QSqlError>
 
 void SchemaDriverSqliteTest::initTestCase()
 {
@@ -40,6 +41,9 @@ void SchemaDriverSqliteTest::initTestCase()
   pvTempFile.close();
   pvDatabase.setDatabaseName(pvTempFile.fileName());
   QVERIFY(pvDatabase.open());
+  QSqlQuery query(pvDatabase);
+  // Specify encoding (is important for some tests)
+  QVERIFY(query.exec("PRAGMA encoding = \"UTF-8\""));
 }
 
 void SchemaDriverSqliteTest::cleanupTestCase()
@@ -173,6 +177,20 @@ void SchemaDriverSqliteTest::fieldLengthFromStringTest()
   QCOMPARE(driver.fieldLengthFromString("DOUBLE(2,3)"), -2);
 }
 
+void SchemaDriverSqliteTest::databaseDefaultCharsetTest()
+{
+  using Mdt::Sql::Schema::Charset;
+
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Charset cs;
+
+  /*
+   * Encoding was specified in initTestCase()
+   */
+  cs = driver.getDatabaseDefaultCharset();
+  QCOMPARE(cs.charsetName(), QString("UTF-8"));
+}
+
 void SchemaDriverSqliteTest::collationDefinitionTest()
 {
   using Mdt::Sql::Schema::Collation;
@@ -191,7 +209,7 @@ void SchemaDriverSqliteTest::collationDefinitionTest()
   collation.setCaseSensitive(true);
   collation.setCountry(QLocale::Switzerland); // Must simply be ignored
   collation.setLanguage(QLocale::French);     // Must simply be ignored
-  collation.setCharset("utf8");               // Must simply be ignored
+//   collation.setCharset("utf8");               // Must simply be ignored
   // Check
   QCOMPARE(driver.getCollationDefinition(collation), QString("COLLATE BINARY"));
   // Setup collation
@@ -924,6 +942,7 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   using Mdt::Sql::Schema::Table;
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
   using Mdt::Sql::Schema::PrimaryKeyContainer;
+  using Mdt::Sql::Schema::CaseSensitivity;
 
   Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
   Field field;
@@ -943,6 +962,7 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   Name.setDefaultValue("Default name");
   Name.setRequired(true);
   Name.setUnique(true);
+  Name.setCaseSensitive(false);
   // Remarks
   Field Remarks;
   Remarks.setName("Remarks");
@@ -968,6 +988,11 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
    *       but implicit for primary keys, and returning true or false
    *       is a problem that must be solved in Table, not in reversing
    *       from database.
+   *
+   * Note: it seems that SQLite provides no way to get collation back
+   *       from database schema, except for fields that are indexed.
+   *       For now, we also not check collation reversing for fields
+   *       that are not indexed.
    */
   auto ret = driver.getTableFieldListFromDatabase("Connector_tbl");
   QVERIFY(ret);
@@ -980,9 +1005,9 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   QCOMPARE(field.length(), -1);
   QVERIFY(field.defaultValue().isNull());
   QVERIFY(field.isRequired());
+  QVERIFY(field.collation().isNull());
   QVERIFY(Connector_tbl.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
   QCOMPARE(Connector_tbl.autoIncrementPrimaryKey().fieldName(), QString("Id_PK"));
-  /// \todo Collation is missing
   // Name
   field = fieldList.at(1);
   QCOMPARE(field.name(), QString("Name"));
@@ -991,7 +1016,7 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   QCOMPARE(field.defaultValue(), QVariant("Default name"));
   QVERIFY(field.isRequired());
   QVERIFY(field.isUnique());
-  /// \todo Collation is missing
+  QVERIFY(field.collation().caseSensitivity() == CaseSensitivity::CaseInsensitive);
   // Remarks
   field = fieldList.at(2);
   QCOMPARE(field.name(), QString("Remarks"));
@@ -1000,9 +1025,7 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   QVERIFY(field.defaultValue().isNull());
   QVERIFY(!field.isRequired());
   QVERIFY(!field.isUnique());
-  /// \todo Collation is missing
-  
-  QFAIL("Not finished");
+  QVERIFY(field.collation().isNull());
 }
 
 void SchemaDriverSqliteTest::reverseIndexListTest()

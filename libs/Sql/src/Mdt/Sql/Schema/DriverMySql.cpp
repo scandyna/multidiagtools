@@ -19,6 +19,14 @@
  **
  ****************************************************************************/
 #include "DriverMySql.h"
+#include "Mdt/Sql/Error.h"
+#include <QSqlRecord>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QStringBuilder>
+#include <QLocale>
+
+// #include <QDebug>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
@@ -28,9 +36,71 @@ DriverMySql::DriverMySql(const QSqlDatabase& db)
   Q_ASSERT(qsqlDriver()->dbmsType() == QSqlDriver::MySqlServer);
 }
 
+Charset DriverMySql::getDatabaseDefaultCharset() const
+{
+  Charset cs;
+  QSqlQuery query(database());
+
+  const QString sql = QStringLiteral("SELECT DEFAULT_CHARACTER_SET_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '") \
+                    % database().databaseName() % QStringLiteral("'");
+  if(!query.exec(sql)){
+    QString msg = tr("Fetching database default character set failed.");
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverMySql");
+    error.stackError(mdtErrorFromQSqlQuery(query, "DriverMySql"));
+    error.commit();
+    setLastError(error);
+    return cs;
+  }
+  if(!query.next()){
+    QString msg = tr("Fetching database default character set failed.");
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverMySql");
+    error.commit();
+    setLastError(error);
+    return cs;
+  }
+  cs.setCharsetName( query.value(0).toString() );
+
+  return cs;
+}
+
 QString DriverMySql::getCollationDefinition(const Collation & collation) const
 {
+  QString sql;
 
+  if(collation.isNull()){
+    return sql;
+  }
+  /*
+   * We have to build charset_language_cs string,
+   * so get charset name
+   */
+  const QString charsetName = getDatabaseDefaultCharset().charsetName();
+  if(charsetName.isEmpty()){
+    return sql;
+  }
+  /*
+   * Get language name
+   */
+  QString languageName;
+  if(collation.locale().isNull()){
+    languageName = QStringLiteral("general");
+  }else{
+    languageName = QLocale::languageToString(collation.locale().language()).toLower();
+  }
+  /*
+   * Build SQL
+   */
+  switch(collation.caseSensitivity()){
+    case CaseSensitivity::NotDefined:
+    case CaseSensitivity::CaseInsensitive:
+      sql = QStringLiteral("COLLATE ") % charsetName % QStringLiteral("_") % languageName % QStringLiteral("_ci");
+      break;
+    case CaseSensitivity::CaseSensitive:
+      sql = QStringLiteral("COLLATE ") % charsetName % QStringLiteral("_bin");
+      break;
+  }
+
+  return sql;
 }
 
 QString DriverMySql::getFieldDefinition(const Field & field) const

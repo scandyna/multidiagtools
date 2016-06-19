@@ -142,6 +142,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Set case sensitivity
      *
      * Case sensitivity will update collation
+     * \sa Collation
      */
     void setCaseSensitive(bool cs)
     {

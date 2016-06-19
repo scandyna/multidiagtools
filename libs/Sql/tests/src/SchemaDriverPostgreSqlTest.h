@@ -42,6 +42,7 @@ class SchemaDriverPostgreSqlTest : public QObject
   void availableFieldTypeTest();
   void fieldTypeMapTest();
 
+  void databaseDefaultCharsetTest();
   void collationDefinitionTest();
   void fieldDefinitionTest();
   void autoIncrementPrimaryKeyDefinitionTest();

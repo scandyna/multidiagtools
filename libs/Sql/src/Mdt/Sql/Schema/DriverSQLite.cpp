@@ -40,21 +40,48 @@ DriverSQLite::DriverSQLite(const QSqlDatabase& db)
   Q_ASSERT(qsqlDriver()->dbmsType() == QSqlDriver::SQLite);
 }
 
+Charset DriverSQLite::getDatabaseDefaultCharset() const
+{
+  Charset cs;
+  QSqlQuery query(database());
+
+  const QString sql = QStringLiteral("PRAGMA encoding");
+  if(!query.exec(sql)){
+    QString msg = tr("Fetching database default character set failed.");
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverSQLite");
+    error.stackError(mdtErrorFromQSqlQuery(query, "DriverSQLite"));
+    error.commit();
+    setLastError(error);
+    return cs;
+  }
+  if(!query.next()){
+    QString msg = tr("Fetching database default character set failed.");
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverSQLite");
+    error.commit();
+    setLastError(error);
+    return cs;
+  }
+  cs.setCharsetName( query.value(0).toString() );
+
+  return cs;
+}
+
 QString DriverSQLite::getCollationDefinition(const Collation & collation) const
 {
-  if(collation.isNull()){
-    return QString();
-  }
   /*
-   * SQLite has no locale support,
+   * SQLite has no locale support for collation,
    * only case sensitivity for our case.
    * Note: in current version, we ignore RTRIM functionnality
    */
-  if(collation.isCaseSensitive()){
-    return QStringLiteral("COLLATE BINARY");
-  }else{
-    return QStringLiteral("COLLATE NOCASE");
+  switch(collation.caseSensitivity()){
+    case CaseSensitivity::CaseSensitive:
+      return QStringLiteral("COLLATE BINARY");
+    case CaseSensitivity::CaseInsensitive:
+      return QStringLiteral("COLLATE NOCASE");
+    case CaseSensitivity::NotDefined:
+      break;
   }
+  return QString();
 }
 
 QString DriverSQLite::getFieldDefinition(const Field & field) const
@@ -136,9 +163,31 @@ Expected< FieldList > DriverSQLite::getTableFieldListFromDatabase(const QString&
     field.setRequired( query.value("notnull") == QVariant(1) );
     // Default value
     field.setDefaultValue( fieldDefaultValue(query.value("dflt_value")) );
-    // Check about unique
-    if( !uniqueIndexList.findIndex(TableName(tableName), FieldName(field.name())).isNull() ){
+    /*
+     * To get unique flag and case sensitivity we get a index
+     * Note: it seems that collation can only be queried for indexes
+     *       in SQLite, not for a field directly..
+     */
+    Index index = uniqueIndexList.findIndex(TableName(tableName), FieldName(field.name()));
+    if(!index.isNull()){
+      // Unique flag
       field.setUnique(true);
+      // Case sensitivity
+      auto expCs = getIndexFieldCaseSensitivityFromDatabase(index, field.name());
+      if(!expCs){
+        return ret;
+      }
+      CaseSensitivity cs = expCs.value();
+      switch(cs){
+        case CaseSensitivity::CaseSensitive:
+          field.setCaseSensitive(true);
+          break;
+        case CaseSensitivity::CaseInsensitive:
+          field.setCaseSensitive(false);
+          break;
+        case CaseSensitivity::NotDefined:
+          break;
+      }
     }
     // Add to list
     fieldList.append(field);
@@ -365,6 +414,38 @@ bool DriverSQLite::addColumnsToIndex(Index & index) const
   }
 
   return true;
+}
+
+Expected<CaseSensitivity> DriverSQLite::getIndexFieldCaseSensitivityFromDatabase(const Index & index, const QString& fieldName) const
+{
+  Expected<CaseSensitivity> ret;
+  QSqlQuery query(database());
+
+  const QString sql = QStringLiteral("PRAGMA index_xinfo(") % escapeTableName(index.name()) % QStringLiteral(")");
+  if(!query.exec(sql)){
+    QString msg = tr("Fetching case sensitivity for field '%1' in index '%2' failed.").arg(fieldName).arg(index.name());
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverSQLite");
+    error.stackError(mdtErrorFromQSqlQuery(query, "DriverSQLite"));
+    error.commit();
+    setLastError(error);
+    return ret;
+  }
+  while(query.next()){
+    if( (query.value("cid").toInt() > -1) && (query.value("name").toString() == fieldName) ){
+      const QString caseName = query.value("coll").toString();
+      if(caseName == QLatin1String("NOCASE")){
+        ret = CaseSensitivity::CaseInsensitive;
+      }else if(caseName == QLatin1String("BINARY")){
+        ret = CaseSensitivity::CaseSensitive;
+      }else if(caseName == QLatin1String("RTRIM")){
+        ret = CaseSensitivity::CaseSensitive;
+      }else{
+        ret = CaseSensitivity::NotDefined;
+      }
+    }
+  }
+
+  return ret;
 }
 
 QVariant DriverSQLite::fieldDefaultValue(const QVariant & v) const

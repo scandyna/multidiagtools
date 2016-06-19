@@ -2,24 +2,43 @@ format 211
 
 classcanvas 128002 class_ref 2789378 // Collation
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 341.5 2000
-end
-classcanvas 128130 class_ref 1981186 // mdtSqlCollation
-  classdiagramsettings member_max_width 0 end
-  xyz 40.5 40.5 2005
+  xyz 41 183 2000
 end
 note 128258 "Collation is not the container !!
 We have:
  - character set: symbols encoding
  - collation: set of rules for comparing, etc..."
-  xyzwh 273 334 2000 423 127
+  xyzwh 38.5 486.5 2000 423 127
 classcanvas 128386 class_ref 2933890 // Charset
   classdiagramsettings member_max_width 0 end
-  xyz 41 520 2000
+  xyz 319 208 2000
 end
 note 128514 "See:
-  - Default charset for a database (or a schema)
  - Default charset for a table ?
  -  Make shure that nothing is specified in SQL definition if not specified.."
-  xyzwh 197 514 2000 595 119
+  xyzwh 35.5 640.5 2000 595 119
+classcanvas 128642 class_ref 2947074 // CaseSensitivity
+  classdiagramsettings member_max_width 0 end
+  xyz 105 399 2005
+end
+classcanvas 128770 class_ref 2947202 // Locale
+  classdiagramsettings member_max_width 0 end
+  xyz 53 42 2000
+end
+relationcanvas 128898 relation_ref 3317250 // <directional composition>
+  decenter_end 467
+  from ref 128002 z 2001 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 3317378 // <directional composition>
+  from ref 128002 z 2001 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 3317506 // <directional composition>
+  from ref 128002 z 2006 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
 end

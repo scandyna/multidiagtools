@@ -2,6 +2,30 @@ format 211
 
 classcanvas 128002 class_ref 2642946 // Transaction
   classdiagramsettings member_max_width 0 end
-  xyz 48 81 2000
+  xyz 40.5 504.5 2000
 end
+note 128130 "If possible,  detect if a transaction was allready started, and don't start it again.
+Must be robust:
+ - Detect if transaction was started allready for every DBMS
+ - Only the last dying Transaction object must commit
+ - What about rollback ?
+ - Thread safety (because of probaly needed shared states)..
+ --> Note: if QSqlDatabase gives no thread safety, should Transaction give ?
+ ----> Check: it's possible that QSqldatabse is thread safe, but practical usage depends on underlaying DBMS..
+
+ -> Case of nested calls,  how to communicqte that a operatiosj failed  ?"
+  xyzwh 35 209 2000 643 215
+classcanvas 128258 class_ref 2947586 // UniqueTransaction
+  classdiagramsettings member_max_width 0 end
+  xyz 594 83 2000
+end
+note 128386 "maybe crate a unique transaction ??
+
+NO: a transaction con aonly begin once !
+ Document Transaction class and make it reliable !!"
+  xyzwh 159 39 2005 395 131
+line 128514 -_-_
+  from ref 128386 z 2006 to ref 128258
+line 128642 -_-_ decenter_begin 508 decenter_end 505
+  from ref 128386 z 2006 to ref 128130
 end

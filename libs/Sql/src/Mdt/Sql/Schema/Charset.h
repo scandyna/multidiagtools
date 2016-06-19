@@ -18,42 +18,52 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_DRIVER_MYSQL_TEST_H
-#define MDT_SQL_SCHEMA_DRIVER_MYSQL_TEST_H
+#ifndef MDT_SQL_SCHEMA_CHARSET_H
+#define MDT_SQL_SCHEMA_CHARSET_H
 
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QTemporaryFile>
-#include <QSqlDatabase>
+#include <QString>
 
-class SchemaDriverMySqlTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace Sql{ namespace Schema{
 
- private slots:
+  /*! \brief SQL schema character set
+   */
+  class Charset
+  {
+   public:
 
-  void initTestCase();
-  void cleanupTestCase();
+    /*! \brief Set character set name
+     */
+    void setCharsetName(const QString & name)
+    {
+      pvCharsetName = name;
+    }
 
-  void driverInstanceTest();
+    /*! \brief Get character set name
+     */
+    QString charsetName() const
+    {
+      return pvCharsetName;
+    }
 
-  void availableFieldTypeTest();
-  void fieldTypeMapTest();
+    /*! \brief Check if character set is null
+     */
+    bool isNull() const
+    {
+      return pvCharsetName.isEmpty();
+    }
 
-  void databaseDefaultCharsetTest();
-  void collationDefinitionTest();
-  void fieldDefinitionTest();
-  void autoIncrementPrimaryKeyDefinitionTest();
-  void singleFieldPrimaryKeyDefinitionTest();
-  void primaryKeyDefinitionTest();
-  void indexDefinitionTest();
+    /*! \brief Clear
+     */
+    void clear()
+    {
+      pvCharsetName.clear();
+    }
 
-  void createTableTest();
+   private:
 
- private:
+    QString pvCharsetName;
+  };
 
-  QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
-  QSqlDatabase pvDatabase;
-};
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{
 
-#endif // #ifndef MDT_SQL_SCHEMA_DRIVER_MYSQL_TEST_H
+#endif // #ifndef MDT_SQL_SCHEMA_CHARSET_H

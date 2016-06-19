@@ -18,42 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_DRIVER_MYSQL_TEST_H
-#define MDT_SQL_SCHEMA_DRIVER_MYSQL_TEST_H
+#ifndef MDT_SQL_SCHEMA_CASE_SENSITIVITY_H
+#define MDT_SQL_SCHEMA_CASE_SENSITIVITY_H
 
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QTemporaryFile>
-#include <QSqlDatabase>
+namespace Mdt{ namespace Sql{ namespace Schema{
 
-class SchemaDriverMySqlTest : public QObject
-{
- Q_OBJECT
+  /*! \brief SQL Schema case sensitivity flag
+   */
+  enum class CaseSensitivity
+  {
+    NotDefined,        /*!< Case sensitivity is not defined (use defaults). */
+    CaseInsensitive,  /*!< Not case sensitive.
+                           For some DBMS, like PostgrSQL, this is only possible for Text field type,
+                           which is in reallity replaced by a CITEXT field type during SQL generation by Driver. */
+    CaseSensitive     /*!< Case sensitive. */
+  };
 
- private slots:
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void driverInstanceTest();
-
-  void availableFieldTypeTest();
-  void fieldTypeMapTest();
-
-  void databaseDefaultCharsetTest();
-  void collationDefinitionTest();
-  void fieldDefinitionTest();
-  void autoIncrementPrimaryKeyDefinitionTest();
-  void singleFieldPrimaryKeyDefinitionTest();
-  void primaryKeyDefinitionTest();
-  void indexDefinitionTest();
-
-  void createTableTest();
-
- private:
-
-  QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
-  QSqlDatabase pvDatabase;
-};
-
-#endif // #ifndef MDT_SQL_SCHEMA_DRIVER_MYSQL_TEST_H
+#endif // #ifndef MDT_SQL_SCHEMA_CASE_SENSITIVITY_H

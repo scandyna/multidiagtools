@@ -42,6 +42,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return DriverType::MySQL;
     }
 
+    /*! \brief Get default charset for current database/schema
+     */
+    Charset getDatabaseDefaultCharset() const override;
+
     /*! \brief Get collation definition
      */
     QString getCollationDefinition(const Collation & collation) const override;

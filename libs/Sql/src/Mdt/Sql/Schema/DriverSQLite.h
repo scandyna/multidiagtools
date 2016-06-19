@@ -42,6 +42,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return DriverType::SQLite;
     }
 
+    /*! \brief Get default charset for current database/schema
+     */
+    Charset getDatabaseDefaultCharset() const override;
+
     /*! \brief Get collation definition
      */
     QString getCollationDefinition(const Collation & collation) const override;
@@ -86,6 +90,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Add columns to index
      */
     bool addColumnsToIndex(Index & index) const;
+
+    /*! \brief Get case sensitivity for index from database for fieldName
+     */
+    Mdt::Expected<CaseSensitivity> getIndexFieldCaseSensitivityFromDatabase(const Index & index, const QString & fieldName) const;
 
     /*! \brief Get default value
      */

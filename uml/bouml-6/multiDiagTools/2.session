@@ -1,4 +1,4 @@
-window_sizes 1280 957 417 857 902 0
+window_sizes 1272 949 417 849 894 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -19,15 +19,14 @@ diagrams
     928 902 90 21 0 0
   classdiagram_ref 2461314 // Driver
     928 902 100 8 0 0
-  active  classdiagram_ref 2475138 // Collation
-    857 902 100 4 0 0
-  classdiagram_ref 2359298 // Transaction
-    120 110 100 4 0 0
   classdiagram_ref 2547842 // ForeignKeyEnabler
     857 902 100 18 0 0
+  classdiagram_ref 2587138 // Charset
+    120 110 100 4 0 0
+  active  classdiagram_ref 2475138 // Collation
+    849 894 100 4 24 0
 end
 show_stereotypes
-selected class_ref 2789378 // Collation
 open
   
   package_ref 409858 // principes
@@ -37,10 +36,13 @@ open
   
   package_ref 516226 // SqlItemModel
   classview_ref 1327234 // Overview
-  class_ref 2933890 // Charset
-  classview_ref 1333890 // Collation
-  classview_ref 1320706 // Table
-  classview_ref 1245954 // Transaction
+  classview_ref 1399426 // Charset
+  attribute_ref 2628098 // Charset
+  class_ref 2947074 // CaseSensitivity
+  attribute_ref 2627842 // Country
+  attribute_ref 2627970 // Language
+  attribute_ref 2627714 // WasEdited
+  attribute_ref 2792322 // ActiveTrasactions
   
   package_ref 430082 // Dsp
 end

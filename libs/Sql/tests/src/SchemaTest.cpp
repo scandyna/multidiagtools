@@ -24,6 +24,7 @@
 #include "Mdt/Sql/Schema/FieldTypeListModel.h"
 #include "Mdt/Sql/Schema/FieldTypeName.h"
 #include "Mdt/Sql/Schema/Driver.h"
+#include "Mdt/Sql/Schema/Charset.h"
 #include "Mdt/Sql/Schema/Field.h"
 #include "Mdt/Sql/Schema/FieldList.h"
 #include "Mdt/Sql/Schema/AutoIncrementPrimaryKey.h"
@@ -175,18 +176,71 @@ void SchemaTest::fiedTypeListModelTest()
 //   }
 }
 
+void SchemaTest::charsetTest()
+{
+  using Mdt::Sql::Schema::Charset;
+
+  /*
+   * Initial state
+   */
+  Charset cs;
+  QVERIFY(cs.isNull());
+  /*
+   * Set/get
+   */
+  cs.setCharsetName("utf8");
+  QVERIFY(!cs.isNull());
+  QCOMPARE(cs.charsetName(), QString("utf8"));
+  /*
+   * Clear
+   */
+  cs.clear();
+  QVERIFY(cs.charsetName().isEmpty());
+  QVERIFY(cs.isNull());
+}
+
+void SchemaTest::localeTest()
+{
+  using Mdt::Sql::Schema::Locale;
+
+  Locale locale;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(locale.country() == QLocale::AnyCountry);
+  QVERIFY(locale.language() == QLocale::AnyLanguage);
+  QVERIFY(locale.isNull());
+  /*
+   * Set/get
+   */
+  locale.setCountry(QLocale::Switzerland);
+  QVERIFY(!locale.isNull());
+  locale.setLanguage(QLocale::French);
+  QVERIFY(locale.country() == QLocale::Switzerland);
+  QVERIFY(locale.language() == QLocale::French);
+  QVERIFY(!locale.isNull());
+  /*
+   * Clear
+   */
+  locale.clear();
+  QVERIFY(locale.country() == QLocale::AnyCountry);
+  QVERIFY(locale.language() == QLocale::AnyLanguage);
+  QVERIFY(locale.isNull());
+}
+
 void SchemaTest::collationTest()
 {
   using Mdt::Sql::Schema::Collation;
+  using Mdt::Sql::Schema::CaseSensitivity;
 
   Collation collation;
 
   /*
    * Initial state
    */
-  QVERIFY(collation.isCaseSensitive());
-  QVERIFY(collation.country() == QLocale::AnyCountry);
-  QVERIFY(collation.language() == QLocale::AnyLanguage);
+  QVERIFY(collation.caseSensitivity() == CaseSensitivity::NotDefined);
+  QVERIFY(collation.locale().isNull());
   QVERIFY(collation.isNull());
   /*
    * Simple set/get
@@ -194,20 +248,32 @@ void SchemaTest::collationTest()
   collation.setCaseSensitive(false);
   collation.setCountry(QLocale::Switzerland);
   collation.setLanguage(QLocale::French);
-  collation.setCharset("utf8");
+//   collation.setCharset("utf8");
+  QVERIFY(collation.caseSensitivity() == CaseSensitivity::CaseInsensitive);
   QVERIFY(!collation.isCaseSensitive());
-  QVERIFY(collation.country() == QLocale::Switzerland);
-  QVERIFY(collation.language() == QLocale::French);
-  QCOMPARE(collation.charset(), QString("utf8"));
+  QVERIFY(collation.locale().country() == QLocale::Switzerland);
+  QVERIFY(collation.locale().language() == QLocale::French);
+//   QCOMPARE(collation.charset(), QString("utf8"));
   QVERIFY(!collation.isNull());
   /*
    * Clear
    */
   collation.clear();
-  QVERIFY(collation.isCaseSensitive());
-  QVERIFY(collation.country() == QLocale::AnyCountry);
-  QVERIFY(collation.language() == QLocale::AnyLanguage);
-  QVERIFY(collation.charset().isEmpty());
+  QVERIFY(collation.caseSensitivity() == CaseSensitivity::NotDefined);
+  QVERIFY(collation.locale().isNull());
+//   QVERIFY(collation.charset().isEmpty());
+  QVERIFY(collation.isNull());
+  /*
+   * Check null flag
+   */
+  collation.setCaseSensitive(true);
+  QVERIFY(!collation.isNull());
+  collation.clear();
+  QVERIFY(collation.isNull());
+  collation.setCountry(QLocale::Switzerland);
+  collation.setLanguage(QLocale::French);
+  QVERIFY(!collation.isNull());
+  collation.clear();
   QVERIFY(collation.isNull());
 }
 

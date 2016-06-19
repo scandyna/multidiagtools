@@ -33,6 +33,9 @@ void SchemaDriverPostgreSqlTest::initTestCase()
   /*
    * Some tests needs a connection
    * to the server, and all access to a database
+   *
+   * The encoding of the database must be UTF8 (important for some tests).
+   * Make also shure that the CITEXT extension is loaded and enabled for the test database.
    */
   const QString host = "localhost";
   const QString user = "TestUser";
@@ -144,6 +147,20 @@ void SchemaDriverPostgreSqlTest::fieldTypeMapTest()
   QVERIFY(driver.fieldTypeToQMetaType(FieldType::DateTime) == QMetaType::QDateTime);
 }
 
+void SchemaDriverPostgreSqlTest::databaseDefaultCharsetTest()
+{
+  using Mdt::Sql::Schema::Charset;
+
+  Mdt::Sql::Schema::DriverPostgreSQL driver(pvDatabase);
+  Charset cs;
+
+  /*
+   * Encoding was specified in initTestCase()
+   */
+  cs = driver.getDatabaseDefaultCharset();
+  QCOMPARE(cs.charsetName(), QString("UTF8"));
+}
+
 void SchemaDriverPostgreSqlTest::collationDefinitionTest()
 {
   using Mdt::Sql::Schema::Collation;
@@ -155,8 +172,30 @@ void SchemaDriverPostgreSqlTest::collationDefinitionTest()
    * Null collation
    */
   QVERIFY(driver.getCollationDefinition(collation).isEmpty());
-
-  QFAIL("No implemented yet");
+  /*
+   * Collation with only case sensitivity set
+   * Will simply be ignored, because PostgreSQL does not support it
+   * as COLLATE option.
+   */
+  collation.clear();
+  collation.setCaseSensitive(false);
+  QVERIFY(driver.getCollationDefinition(collation).isEmpty());
+  /*
+   * Collation with locale defined
+   */
+  collation.clear();
+  collation.setLanguage(QLocale::French);
+  collation.setCountry(QLocale::Switzerland);
+  QCOMPARE(driver.getCollationDefinition(collation), QString("COLLATE \"fr_CH\""));
+  /*
+   * Collation with case sensitivity and locale defined
+   * (Case sensitivity is simply ignored here)
+   */
+  collation.clear();
+  collation.setCaseSensitive(false);
+  collation.setLanguage(QLocale::French);
+  collation.setCountry(QLocale::Switzerland);
+  QCOMPARE(driver.getCollationDefinition(collation), QString("COLLATE \"fr_CH\""));
 }
 
 void SchemaDriverPostgreSqlTest::fieldDefinitionTest()

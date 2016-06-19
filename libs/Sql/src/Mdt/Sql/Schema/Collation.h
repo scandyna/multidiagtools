@@ -21,12 +21,34 @@
 #ifndef MDT_SQL_SCHEMA_COLLATION_H
 #define MDT_SQL_SCHEMA_COLLATION_H
 
-#include <QLocale>
+#include "CaseSensitivity.h"
+#include "Locale.h"
 #include <QString>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-  /*! \brief Store information about a SQL collation
+  /*! \brief Store information about a collation
+   *
+   * A collation is a set of rules to compare strings.
+   *
+   * For some DBMS, it is possible to define a collation
+   *  with localisation (country, language).
+   *  Some other support only case sensitivity collation option.
+   *
+   * For common DBMS, it is possible to specify collation
+   *  for a database, a table or a field.
+   *
+   * \note You should only specify a locale (country and language)
+   *        for special cases, and check that the DBMS can handle
+   *        this locale with database default charset and locale.
+   *        If no locale is specified in this collation,
+   *        the driver will not generate locale COLLATE option
+   *        for the table creation SQL, and let the DBMS choose the most appropriate
+   *        collation.
+   *
+   * \todo Define better or remove language and country.
+   * \todo If keep country/language, it must be possible to 
+   *       know which part was edited (case sensitivity and/or country/loanguage)
    */
   class Collation final
   {
@@ -35,72 +57,86 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Default constructor
      */
     Collation()
-    : pvIsCaseSensitive(true),
-      pvWasEdited(false),
-      pvCountry(QLocale::AnyCountry),
-      pvLanguage(QLocale::AnyLanguage)
+     : pvCaseSensitivity(CaseSensitivity::NotDefined)
     {
     }
 
     /*! \brief Set case sensitivity
+     *
+     * \note For some DBMS, like PostgreSQL, case insensitivity implies to use a CITEXT field type.
      */
     void setCaseSensitive(bool cs)
     {
-      pvIsCaseSensitive = cs;
-      pvWasEdited = true;
+      if(cs){
+        pvCaseSensitivity = CaseSensitivity::CaseSensitive;
+      }else{
+        pvCaseSensitivity = CaseSensitivity::CaseInsensitive;
+      }
+    }
+
+    /*! \brief Get case sensitivity
+     */
+    CaseSensitivity caseSensitivity() const
+    {
+      return pvCaseSensitivity;
     }
 
     /*! \brief Check case sensitivity
      */
     bool isCaseSensitive() const
     {
-      return pvIsCaseSensitive;
+      return (pvCaseSensitivity == CaseSensitivity::CaseSensitive);
     }
 
     /*! \brief Set country
      */
     void setCountry(QLocale::Country country)
     {
-      pvCountry = country;
-      pvWasEdited = true;
+      pvLocale.setCountry(country);
     }
 
     /*! \brief Get country
      */
-    QLocale::Country country() const
-    {
-      return pvCountry;
-    }
+//     QLocale::Country country() const
+//     {
+//       return pvCountry;
+//     }
 
     /*! \brief Set language
      */
     void setLanguage(QLocale::Language language)
     {
-      pvLanguage = language;
-      pvWasEdited = true;
+      pvLocale.setLanguage(language);
     }
 
     /*! \brief Get language
      */
-    QLocale::Language language() const
+//     QLocale::Language language() const
+//     {
+//       return pvLanguage;
+//     }
+
+    /*! \brief Get locale
+     */
+    Locale locale() const
     {
-      return pvLanguage;
+      return pvLocale;
     }
 
     /*! \brief Set charset
      */
-    void setCharset(const QString & charset)
-    {
-      pvCharset = charset;
-      pvWasEdited = true;
-    }
+//     void setCharset(const QString & charset)
+//     {
+//       pvCharset = charset;
+//       pvWasEdited = true;
+//     }
 
     /*! \brief Get charset
      */
-    QString charset() const
-    {
-      return pvCharset;
-    }
+//     QString charset() const
+//     {
+//       return pvCharset;
+//     }
 
     /*! \brief Check if null
      *
@@ -110,27 +146,27 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     bool isNull() const
     {
-      return !pvWasEdited;
+      return ( (pvCaseSensitivity == CaseSensitivity::NotDefined) && pvLocale.isNull() );
     }
 
     /*! \brief Clear
      */
     void clear()
     {
-      pvIsCaseSensitive = true;
-      pvCountry = QLocale::AnyCountry;
-      pvLanguage = QLocale::AnyLanguage;
-      pvCharset.clear();
-      pvWasEdited = false;
+      pvCaseSensitivity = CaseSensitivity::NotDefined;
+      pvLocale.clear();
     }
 
    private:
 
-    uint pvIsCaseSensitive : 1;
-    uint pvWasEdited : 1;
-    QLocale::Country pvCountry;
-    QLocale::Language pvLanguage;
-    QString pvCharset;
+    CaseSensitivity pvCaseSensitivity;
+    Locale pvLocale;
+    
+//     uint pvIsCaseSensitive : 1;
+//     uint pvWasEdited : 1;
+//     QLocale::Country pvCountry;
+//     QLocale::Language pvLanguage;
+//     QString pvCharset;
   };
 
 }}} //namespace Mdt{ namespace Sql{ namespace Schema{

@@ -57,6 +57,9 @@ void SchemaDriverMySqlTest::initTestCase()
    * Because some tests can be executed without a open connection to the server,
    * we not fail here if database could not be open.
    */
+  QSqlQuery query(pvDatabase);
+  // Define database default charset (is important for some tests)
+  QVERIFY(query.exec("ALTER DATABASE `testdb` CHARACTER SET 'utf8'"));
 }
 
 void SchemaDriverMySqlTest::cleanupTestCase()
@@ -134,6 +137,20 @@ void SchemaDriverMySqlTest::fieldTypeMapTest()
   QVERIFY(driver.fieldTypeToQMetaType(FieldType::DateTime) == QMetaType::QDateTime);
 }
 
+void SchemaDriverMySqlTest::databaseDefaultCharsetTest()
+{
+  using Mdt::Sql::Schema::Charset;
+
+  Mdt::Sql::Schema::DriverMySql driver(pvDatabase);
+  Charset cs;
+
+  /*
+   * Encoding was specified in initTestCase()
+   */
+  cs = driver.getDatabaseDefaultCharset();
+  QCOMPARE(cs.charsetName(), QString("utf8"));
+}
+
 void SchemaDriverMySqlTest::collationDefinitionTest()
 {
   using Mdt::Sql::Schema::Collation;
@@ -142,11 +159,38 @@ void SchemaDriverMySqlTest::collationDefinitionTest()
   Collation collation;
 
   /*
+   * Check that we have utf8 as default charset
+   */
+  QCOMPARE(driver.getDatabaseDefaultCharset().charsetName(), QString("utf8"));
+  /*
    * Null collation
    */
   QVERIFY(driver.getCollationDefinition(collation).isEmpty());
-
-  QFAIL("No implemented yet");
+  /*
+   * Collation with only case sensitivity set
+   */
+  collation.clear();
+  collation.setCaseSensitive(true);
+  QCOMPARE(driver.getCollationDefinition(collation), QString("COLLATE utf8_bin"));
+  collation.clear();
+  collation.setCaseSensitive(false);
+  QCOMPARE(driver.getCollationDefinition(collation), QString("COLLATE utf8_general_ci"));
+  /*
+   * Collation with only locale (language and country) set
+   * Note: specifying a locale hase only sense for case insensitivity
+   */
+  collation.clear();
+  collation.setLanguage(QLocale::Swedish);
+  collation.setCountry(QLocale::Sweden);
+  QCOMPARE(driver.getCollationDefinition(collation), QString("COLLATE utf8_swedish_ci"));
+  /*
+   * Collation with case sensitivity and locale set
+   */
+  collation.clear();
+  collation.setCaseSensitive(false);
+  collation.setLanguage(QLocale::Swedish);
+  collation.setCountry(QLocale::Sweden);
+  QCOMPARE(driver.getCollationDefinition(collation), QString("COLLATE utf8_swedish_ci"));
 }
 
 void SchemaDriverMySqlTest::fieldDefinitionTest()

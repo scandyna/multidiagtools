@@ -26,6 +26,7 @@
 #include "FieldTypeList.h"
 #include "Field.h"
 #include "FieldList.h"
+#include "Charset.h"
 #include "Collation.h"
 #include "AutoIncrementPrimaryKey.h"
 #include "SingleFieldPrimaryKey.h"
@@ -132,7 +133,16 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     virtual int fieldLengthFromString(const QString & fieldTypeString) const;
 
+    /*! \brief Get default charset for current database/schema
+     *
+     * \note The database/schema is the one specified at connection time.
+     */
+    virtual Charset getDatabaseDefaultCharset() const = 0;
+
     /*! \brief Get collation definition
+     *
+     * If collation is defined, a string with COLLATE ... is returned,
+     *  else a empty string.
      */
     virtual QString getCollationDefinition(const Collation & collation) const = 0;
 
