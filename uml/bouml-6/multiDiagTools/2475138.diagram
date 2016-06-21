@@ -16,7 +16,7 @@ end
 note 128514 "See:
  - Default charset for a table ?
  -  Make shure that nothing is specified in SQL definition if not specified.."
-  xyzwh 35.5 640.5 2000 595 119
+  xyzwh 35.5 638.5 2000 505 79
 classcanvas 128642 class_ref 2947074 // CaseSensitivity
   classdiagramsettings member_max_width 0 end
   xyz 105 399 2005

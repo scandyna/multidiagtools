@@ -18,30 +18,25 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef SCHEMA_CLIENT_TBL_H
-#define SCHEMA_CLIENT_TBL_H
+#ifndef MDT_SQL_SCHEMA_VIEW_TEST_H
+#define MDT_SQL_SCHEMA_VIEW_TEST_H
 
-#include "Mdt/Sql/Schema/TableTemplate.h"
+#include <QObject>
+#include <QtTest/QtTest>
 
-namespace Schema{
+class SchemaViewTest : public QObject
+{
+ Q_OBJECT
 
-  class Client_tbl : public Mdt::Sql::Schema::TableTemplate<Client_tbl>
-  {
-   public:
+ private slots:
 
-    Client_tbl();
+  void initTestCase();
+  void cleanupTestCase();
 
-    Mdt::Sql::Schema::AutoIncrementPrimaryKey Id_PK() const
-    {
-      return autoIncrementPrimaryKey();
-    }
+  void selectFieldTest();
+  void selectFieldListTest();
+  void viewTableTest();
+  void viewTest();
+};
 
-    Mdt::Sql::Schema::Field Name() const
-    {
-      return field(1);
-    }
-  };
-
-} // namespace Schema{
-
-#endif // #ifndef SCHEMA_CLIENT_TBL_H
+#endif // #ifndef MDT_SQL_SCHEMA_VIEW_TEST_H

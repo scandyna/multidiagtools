@@ -393,6 +393,67 @@ bool DriverImplementationInterface::dropTable(const Table& table)
   return true;
 }
 
+QString DriverImplementationInterface::getSelectFieldDefinition(const SelectField & selectField) const
+{
+  QString sql;
+
+  if(selectField.fieldName() == QLatin1String("*")){
+    sql = QStringLiteral("*");
+  }else{
+    sql = escapeFieldName(selectField.fieldName());
+  }
+  if(!selectField.alias().isEmpty()){
+    sql += QStringLiteral(" AS ") % escapeFieldName(selectField.alias());
+  }
+
+  return sql;
+}
+
+QString DriverImplementationInterface::getSelectFieldListDefinition(const SelectFieldList& selectFieldList) const
+{
+  QString sql;
+  QStringList strList;
+
+  for(int i = 0; i < selectFieldList.size(); ++i){
+    QString str;
+    if(selectFieldList.tableNameAt(i).isEmpty()){
+      str = QStringLiteral(" ");
+    }else{
+      str = QStringLiteral(" ") % escapeTableName(selectFieldList.tableNameAt(i)) % QStringLiteral(".");
+    }
+    str += getSelectFieldDefinition(selectFieldList.selectFieldAt(i));
+    strList.append(str);
+  }
+  sql = strList.join(",\n");
+
+  return sql;
+}
+
+QString DriverImplementationInterface::getSqlToCreateView(const View& view) const
+{
+  QString sql;
+
+  // Build header
+  sql = QStringLiteral("CREATE VIEW ") % escapeTableName(view.name()) % QStringLiteral(" AS\n") \
+  // Add SELECT statement
+      % selectKeyWord(view.selectOperator()) % QStringLiteral("\n") \
+      % getSelectFieldListDefinition(view.selectFieldList()) \
+  // Add FROM statement
+      % QStringLiteral("\nFROM ") % escapeTableName(view.tableName());
+  /// \todo Add JOIN statement
+
+  return sql;
+}
+
+QString DriverImplementationInterface::getSqlToDropView(const View& view) const
+{
+  QString sql;
+
+  sql = QStringLiteral("DROP VIEW IF EXISTS ") % escapeTableName(view.name()) % QStringLiteral(";");
+
+  return sql;
+}
+
 QString DriverImplementationInterface::escapeFieldName(const QString & fieldName) const
 {
   return qsqlDriver()->escapeIdentifier(fieldName, QSqlDriver::FieldName);
@@ -409,6 +470,17 @@ QString DriverImplementationInterface::escapeFieldDefaultValue(const Field & fie
     return escapeFieldName(field.defaultValue().toString());
   }
   return field.defaultValue().toString();
+}
+
+QString DriverImplementationInterface::selectKeyWord(View::SelectOperator op) const
+{
+  switch(op){
+    case View::Select:
+      return QStringLiteral("SELECT");
+    case View::SelectDistinct:
+      return QStringLiteral("SELECT");
+  }
+  return QString();
 }
 
 QString DriverImplementationInterface::tr(const char* sourceText)

@@ -1,4 +1,4 @@
-window_sizes 1272 949 417 849 894 0
+window_sizes 1280 957 366 908 902 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -7,26 +7,21 @@ diagrams
     120 112 100 4 0 0
   classdiagram_ref 2434178 // ClientTableModel
     980 905 100 7 0 0
-  classdiagram_ref 2468482 // overview
-    957 902 90 21 0 9
-  classdiagram_ref 1668354 // overviewOld
-    120 110 100 18 0 0
-  classdiagram_ref 2461186 // Field
-    957 902 100 18 0 0
-  classdiagram_ref 2481666 // DriverImplementation
-    957 902 100 21 0 0
-  classdiagram_ref 2461570 // ForeignKey
-    928 902 90 21 0 0
-  classdiagram_ref 2461314 // Driver
-    928 902 100 8 0 0
-  classdiagram_ref 2547842 // ForeignKeyEnabler
-    857 902 100 18 0 0
-  classdiagram_ref 2587138 // Charset
+  classdiagram_ref 2244610 // overview
+    908 902 80 21 0 20
+  classdiagram_ref 2554370 // JoinClause
+    120 110 100 21 0 0
+  classdiagram_ref 2593666 // SelectField
+    908 944 100 18 0 0
+  classdiagram_ref 2251138 // Join
     120 110 100 4 0 0
-  active  classdiagram_ref 2475138 // Collation
-    849 894 100 4 24 0
+  classdiagram_ref 2594050 // SelectOperator
+    120 110 100 4 0 0
+  active  classdiagram_ref 2593922 // View
+    908 902 100 4 0 0
 end
 show_stereotypes
+selected attribute_ref 2812546 // Table
 open
   
   package_ref 409858 // principes
@@ -35,14 +30,9 @@ open
   classview_ref 1293698 // CoreApplication
   
   package_ref 516226 // SqlItemModel
-  classview_ref 1327234 // Overview
-  classview_ref 1399426 // Charset
-  attribute_ref 2628098 // Charset
-  class_ref 2947074 // CaseSensitivity
-  attribute_ref 2627842 // Country
-  attribute_ref 2627970 // Language
-  attribute_ref 2627714 // WasEdited
-  attribute_ref 2792322 // ActiveTrasactions
+  classview_ref 1157762 // All
+  operation_ref 3116674 // addSelectField
+  operation_ref 4358402 // addSelectAllFields
   
   package_ref 430082 // Dsp
 end

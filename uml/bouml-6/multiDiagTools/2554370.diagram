@@ -32,6 +32,8 @@ classcanvas 131074 class_ref 2900482 // TableToJoinFieldName
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 433 199 2000
 end
+note 133250 "JoinClause should be directly in Sql namepsace ?"
+  xyzwh 102 540 2000 593 61
 relationcanvas 128258 relation_ref 2329346 // <directional composition>
   decenter_begin 525
   decenter_end 534
@@ -97,4 +99,6 @@ relationcanvas 132354 relation_ref 3282946 // <dependency>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
+line 133378 -_-_ decenter_begin 391 decenter_end 67
+  from ref 133250 z 2001 to ref 128002
 end

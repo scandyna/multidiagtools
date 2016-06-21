@@ -21,6 +21,8 @@ set(SOURCES_FILES
     src/Mdt/Sql/Schema/IndexListModel.cpp
     src/Mdt/Sql/Schema/Table.cpp
     src/Mdt/Sql/Schema/TableModel.cpp
+    src/Mdt/Sql/Schema/ViewTable.cpp
+    src/Mdt/Sql/Schema/View.cpp
 )
 
 # Headers directories

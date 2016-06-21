@@ -1452,6 +1452,119 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   QVERIFY(driver.dropTable(table));
 }
 
+void SchemaDriverSqliteTest::selectFieldDefinitionTest()
+{
+  using Mdt::Sql::Schema::SelectField;
+  using Mdt::Sql::Schema::FieldName;
+
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+
+  QCOMPARE(driver.getSelectFieldDefinition( SelectField("Id_PK") ), QString("\"Id_PK\""));
+  QCOMPARE(driver.getSelectFieldDefinition( SelectField("Id_PK", "Client_Id") ), QString("\"Id_PK\" AS \"Client_Id\""));
+  QCOMPARE(driver.getSelectFieldDefinition( SelectField("*") ), QString("*"));
+
+//   QCOMPARE(driver.getSelectFieldDefinition( SelectField(FieldName("Id_PK")) ), QString("\"Id_PK\""));
+//   QCOMPARE(driver.getSelectFieldDefinition( SelectField(FieldName("Id_PK"), "Client_Id") ), QString("\"Id_PK\" AS \"Client_Id\""));
+//   QCOMPARE(driver.getSelectFieldDefinition( SelectField(FieldName("*")) ), QString("*"));
+}
+
+void SchemaDriverSqliteTest::selectFieldListDefinitionTest()
+{
+  using Mdt::Sql::Schema::SelectField;
+  using Mdt::Sql::Schema::SelectFieldList;
+  using Mdt::Sql::Schema::FieldName;
+
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  SelectFieldList list;
+  QString expectedSql;
+
+  /*
+   * Select field list with only field defined
+   */
+  // Single field list
+  list.clear();
+  list.append("", SelectField("Id_PK") );
+  expectedSql = " \"Id_PK\"";
+  QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
+  // 2 fields list
+  list.clear();
+  list.append("", SelectField("Id_PK") );
+  list.append("", SelectField("Name") );
+  expectedSql  = " \"Id_PK\",\n";
+  expectedSql += " \"Name\"";
+  QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
+  // 2 field with field alias defined
+  list.clear();
+  list.append("", SelectField("Id_PK") );
+  list.append("", SelectField("Name", "ClientName") );
+  expectedSql  = " \"Id_PK\",\n";
+  expectedSql += " \"Name\" AS \"ClientName\"";
+  QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
+  /*
+   * Select field list with table name defined
+   */
+  // Single field list
+  list.clear();
+  list.append("CLI", SelectField("Id_PK") );
+  expectedSql = " \"CLI\".\"Id_PK\"";
+  QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
+  // 2 fields list
+  list.clear();
+  list.append("CLI", SelectField("Id_PK") );
+  list.append("CNN", SelectField("Name") );
+  expectedSql  = " \"CLI\".\"Id_PK\",\n";
+  expectedSql += " \"CNN\".\"Name\"";
+  QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
+  // 2 field with field alias defined
+  list.clear();
+  list.append("CLI", SelectField("Id_PK") );
+  list.append("CNN", SelectField("Name", "ClientName") );
+  expectedSql  = " \"CLI\".\"Id_PK\",\n";
+  expectedSql += " \"CNN\".\"Name\" AS \"ClientName\"";
+  QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
+}
+
+void SchemaDriverSqliteTest::viewDefinitionTest()
+{
+  using Mdt::Sql::Schema::View;
+  using Mdt::Sql::Schema::ViewTable;
+  using Mdt::Sql::Schema::TableName;
+  using Mdt::Sql::Schema::FieldName;
+
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  QString expectedSql;
+  Schema::Client_tbl client;
+  ViewTable CientTv(client);
+  ViewTable CLI(client, "CLI");
+  View view;
+
+  /*
+   * Simple (single table) view - No alias
+   */
+  view.clear();
+  view.setName("Client_view");
+  view.setSelectOperator(View::SelectDistinct);
+  view.setTable(CientTv);
+  view.addSelectField(CientTv, client.Id_PK());
+  view.addSelectField(CientTv, client.Name());
+  // Check SQL to drop view
+  expectedSql = "DROP VIEW IF EXISTS \"Client_view\";";
+  QCOMPARE(driver.getSqlToDropView(view), expectedSql);
+  // Check SQL to create view
+  expectedSql  = "CREATE VIEW \"Client_view\" AS\n";
+  expectedSql += "SELECT\n";
+  expectedSql += " \"Client_tbl\".\"Id_PK\",\n";
+  expectedSql += " \"Client_tbl\".\"Name\"\n";
+  expectedSql += "FROM \"Client_tbl\"";
+  QCOMPARE(driver.getSqlToCreateView(view), expectedSql);
+
+}
+
+void SchemaDriverSqliteTest::simpleCreateAndDropViewTest()
+{
+
+}
+
 /*
  * Main
  */

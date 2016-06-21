@@ -59,6 +59,12 @@ class SchemaDriverSqliteTest : public QObject
   void reversePrimaryKeyTest();
   void reverseForeignKeyTest();
 
+  void selectFieldDefinitionTest();
+  void selectFieldListDefinitionTest();
+  void viewDefinitionTest();
+
+  void simpleCreateAndDropViewTest();
+
  private:
 
   QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically

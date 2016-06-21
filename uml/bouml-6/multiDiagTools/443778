@@ -1,6 +1,6 @@
 format 211
 "View" // Mdt::Sql::Schema::View
-  revision 5
+  revision 9
   modified_by 2 "philippe"
   // class settings
   
@@ -45,218 +45,6 @@ format 211
     classdiagram 2244610 "overview"
       classdiagramsettings hide_operations yes member_max_width 0 end
       size B-Landscape
-    end
-
-    class 1994754 "View"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 2043138 "Name"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 3116674 "addSelectField"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "table" type class_ref 1994626 // Table
-	  param in name "field" type class_ref 1994882 // SelectField
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 2345346 // <directional composition>
-	relation 2329090 *-->
-	  a role_name "" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 2345346 // <directional composition>
-	  b parent class_ref 1994626 // Table
-      end
-
-      classrelation 2345730 // <directional composition>
-	relation 2329474 *-->
-	  a role_name "" multiplicity "*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 2345730 // <directional composition>
-	  b parent class_ref 1994882 // SelectField
-      end
-
-      operation 3123586 "addSelectExpression"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "expression" type class_ref 161026 // QString
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
-    class 1994626 "Table"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 2042882 "name"
-	public type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2043010 "alias"
-	public type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      classrelation 3299074 // <dependency>
-	relation 3280770 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3299074 // <dependency>
-	  b parent class_ref 2775810 // Table
-      end
-    end
-
-    class 1994882 "SelectField"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 2043266 "name"
-	public type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2043394 "alias"
-	public type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2044162 "table"
-	public type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2050690 "expression"
-	public type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      classrelation 3299202 // <dependency>
-	relation 3280898 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3299202 // <dependency>
-	  b parent class_ref 2775042 // Field
-      end
-
-      classrelation 3299330 // <dependency>
-	relation 3281026 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3299330 // <dependency>
-	  b parent class_ref 2852610 // SingleFieldPrimaryKey
-      end
-
-      classrelation 3299458 // <dependency>
-	relation 3281154 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3299458 // <dependency>
-	  b parent class_ref 2824706 // AutoIncrementPrimaryKey
-      end
     end
 
     classdiagram 2251138 "Join"
@@ -595,13 +383,13 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${multiplicity}${value};
 "
 	    classrelation_ref 2345474 // <directional composition>
-	  b parent class_ref 1994626 // Table
+	  b parent class_ref 1994626 // ViewTable
       end
 
       operation 3116802 "setMainTable"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "table" type class_ref 1994626 // Table
+	  param in name "table" type class_ref 1994626 // ViewTable
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -617,7 +405,7 @@ ${inlines}
       operation 3116930 "setTableToJoin"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "table" type class_ref 1994626 // Table
+	  param in name "table" type class_ref 1994626 // ViewTable
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -758,7 +546,6 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
-
     end
 
     class 2900354 "MainTableFieldName"

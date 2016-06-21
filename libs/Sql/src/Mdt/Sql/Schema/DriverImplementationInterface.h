@@ -37,6 +37,9 @@
 #include "IndexList.h"
 #include "Table.h"
 #include "TableTemplate.h"
+#include "SelectField.h"
+#include "SelectFieldList.h"
+#include "View.h"
 #include "Mdt/Error.h"
 #include "Mdt/Expected.h"
 #include <QSqlDatabase>
@@ -231,6 +234,30 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     bool dropTable(const Table & table);
 
+    /*! \brief Get SelectField definition
+     *
+     * Can be overloaded if default implementation does not work for a specific DBMS
+     */
+    virtual QString getSelectFieldDefinition(const SelectField & selectField) const;
+
+    /*! \brief Get SelectFieldList definition
+     *
+     * Can be overloaded if default implementation does not work for a specific DBMS
+     */
+    virtual QString getSelectFieldListDefinition(const SelectFieldList & selectFieldList) const;
+
+    /*! \brief Get SQL statement to create a view
+     *
+     * Can be overloaded if default implementation does not work for a specific DBMS
+     */
+    virtual QString getSqlToCreateView(const View & view) const;
+
+    /*! \brief Get SQL statement to drop a view
+     *
+     * Can be overloaded if default implementation does not work for a specific DBMS
+     */
+    virtual QString getSqlToDropView(const View & view) const;
+
     /*! \brief Get last error
      */
     Mdt::Error lastError() const
@@ -255,6 +282,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Escape default value
      */
     QString escapeFieldDefaultValue(const Field & field) const;
+
+    /*! \brief Get select key word
+     */
+    QString selectKeyWord(View::SelectOperator op) const;
 
     /*! \brief Set last error
      */

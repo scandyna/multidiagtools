@@ -18,30 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef SCHEMA_CLIENT_TBL_H
-#define SCHEMA_CLIENT_TBL_H
+#include "ViewTable.h"
+#include "TableTemplate.h"
+#include "Table.h"
+#include "TableName.h"
 
-#include "Mdt/Sql/Schema/TableTemplate.h"
+namespace Mdt{ namespace Sql{ namespace Schema{
 
-namespace Schema{
+ViewTable::ViewTable(const Table & table, const QString & alias)
+ : pvTableName(table.tableName()),
+   pvAlias(alias)
+{
+}
 
-  class Client_tbl : public Mdt::Sql::Schema::TableTemplate<Client_tbl>
-  {
-   public:
+ViewTable::ViewTable(const TableName & name, const QString & alias)
+ : pvTableName(name.toString()),
+   pvAlias(alias)
+{
+}
 
-    Client_tbl();
-
-    Mdt::Sql::Schema::AutoIncrementPrimaryKey Id_PK() const
-    {
-      return autoIncrementPrimaryKey();
-    }
-
-    Mdt::Sql::Schema::Field Name() const
-    {
-      return field(1);
-    }
-  };
-
-} // namespace Schema{
-
-#endif // #ifndef SCHEMA_CLIENT_TBL_H
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{

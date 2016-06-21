@@ -2,25 +2,24 @@ format 211
 
 classcanvas 128002 class_ref 1995138 // JoinClause
   classdiagramsettings member_max_width 0 end
-  xyz 42 40 2000
+  xyz 42 180 2000
 end
 classcanvas 128130 class_ref 1995266 // JoinKey
   classdiagramsettings member_max_width 0 end
-  xyz 93 200 2006
+  xyz 138 42 2006
 end
-classcanvas 128386 class_ref 1994626 // Table
+classcanvas 128386 class_ref 1994626 // ViewTable
   classdiagramsettings member_max_width 0 end
-  xyz 370 63 3005
+  xyz 498 209 3005
 end
 relationcanvas 128258 relation_ref 2329346 // <directional composition>
   from ref 128002 z 2007 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 169 173 3000 no_multiplicity_b
+  multiplicity_a_pos 233 150 3000 no_multiplicity_b
 end
 relationcanvas 128514 relation_ref 2329218 // <directional composition>
-  decenter_begin 528
   from ref 128002 z 3006 to ref 128386
   no_role_a no_role_b
-  multiplicity_a_pos 352 113 3000 no_multiplicity_b
+  multiplicity_a_pos 480 291 3000 no_multiplicity_b
 end
 end

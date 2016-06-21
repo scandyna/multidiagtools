@@ -1,0 +1,44 @@
+format 211
+
+classcanvas 128002 class_ref 1994626 // ViewTable
+  classdiagramsettings member_max_width 0 end
+  xyz 159 37 2000
+end
+classcanvas 128130 class_ref 2775810 // Table
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 521 287 2006
+end
+classcanvas 128386 class_ref 2940546 // TableName
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 39 115 2000
+end
+classcanvas 128642 class_ref 2838530 // TableTemplate
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 280 273 2012
+end
+relationcanvas 128258 relation_ref 3280770 // <dependency>
+  geometry HV unfixed
+  from ref 128002 z 2007 to point 542 134
+  line 129026 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 3324034 // <dependency>
+  from ref 128002 z 2001 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 3225346 // <directional composition>
+  decenter_end 395
+  from ref 128642 z 2013 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 3324162 // <dependency>
+  decenter_begin 510
+  decenter_end 533
+  from ref 128002 z 2013 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end
