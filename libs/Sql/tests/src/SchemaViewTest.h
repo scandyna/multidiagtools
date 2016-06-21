@@ -35,6 +35,13 @@ class SchemaViewTest : public QObject
 
   void selectFieldTest();
   void selectFieldListTest();
+
+  void mainTableFieldTest();
+  void tableToJoinFieldTest();
+  void joinKeyTest();
+  void joinKeyListTest();
+  void joinClauseTest();
+
   void viewTableTest();
   void viewTest();
 };

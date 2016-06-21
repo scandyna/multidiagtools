@@ -9,19 +9,11 @@ diagrams
     980 905 100 7 0 0
   classdiagram_ref 2244610 // overview
     908 902 80 21 0 20
-  classdiagram_ref 2554370 // JoinClause
-    120 110 100 21 0 0
-  classdiagram_ref 2593666 // SelectField
-    908 944 100 18 0 0
-  classdiagram_ref 2251138 // Join
-    120 110 100 4 0 0
-  classdiagram_ref 2594050 // SelectOperator
-    120 110 100 4 0 0
-  active  classdiagram_ref 2593922 // View
-    908 902 100 4 0 0
+  active  classdiagram_ref 2554370 // JoinClause
+    908 902 90 21 0 186
 end
 show_stereotypes
-selected attribute_ref 2812546 // Table
+selected class_ref 1995138 // JoinClause
 open
   
   package_ref 409858 // principes
@@ -31,8 +23,9 @@ open
   
   package_ref 516226 // SqlItemModel
   classview_ref 1157762 // All
-  operation_ref 3116674 // addSelectField
-  operation_ref 4358402 // addSelectAllFields
+  classview_ref 1373314 // ForeignKey
+  classdiagram_ref 2593666 // SelectField
+  classdiagram_ref 2593922 // View
   
   package_ref 430082 // Dsp
 end

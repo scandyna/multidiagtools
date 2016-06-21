@@ -1524,6 +1524,68 @@ void SchemaDriverSqliteTest::selectFieldListDefinitionTest()
   QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
 }
 
+void SchemaDriverSqliteTest::joinClauseDefinitionTest()
+{
+  using Mdt::Sql::Schema::MainTableField;
+  using Mdt::Sql::Schema::TableToJoinField;
+  using Mdt::Sql::Schema::JoinClause;
+  using Mdt::Sql::Schema::JoinOperator;
+  using Mdt::Sql::Schema::ViewTable;
+  using Mdt::Sql::Schema::TableName;
+
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  QString expectedSql;
+  JoinClause join;
+
+  /*
+   * Join 2 tables - No alias - 1 pair of fields
+   */
+  join.clear();
+  join.setMainTable(ViewTable(TableName("Client_tbl")));
+  join.setTableToJoin(ViewTable(TableName("Address_tbl")));
+  join.addKey(MainTableField("Id_PK"), TableToJoinField("Client_Id_FK"));
+  // Check
+  expectedSql  = " JOIN \"Address_tbl\"\n";
+  expectedSql += "  ON \"Client_tbl\".\"Id_PK\" = \"Address_tbl\".\"Client_Id_FK\"";
+  QCOMPARE(driver.getJoinClauseDefinition(join), expectedSql);
+  /*
+   * Join 2 tables - LEFT JOIN
+   */
+  join.clear();
+  join.setJoinOperator(JoinOperator::LeftJoin);
+  join.setMainTable(ViewTable(TableName("Client_tbl")));
+  join.setTableToJoin(ViewTable(TableName("Address_tbl")));
+  join.addKey(MainTableField("Id_PK"), TableToJoinField("Client_Id_FK"));
+  // Check
+  expectedSql  = " LEFT JOIN \"Address_tbl\"\n";
+  expectedSql += "  ON \"Client_tbl\".\"Id_PK\" = \"Address_tbl\".\"Client_Id_FK\"";
+  QCOMPARE(driver.getJoinClauseDefinition(join), expectedSql);
+  /*
+   * Join 2 tables - Table alias
+   */
+  join.clear();
+  join.setMainTable(ViewTable(TableName("Client_tbl"), "CLI"));
+  join.setTableToJoin(ViewTable(TableName("Address_tbl"), "ADR"));
+  join.addKey(MainTableField("Id_PK"), TableToJoinField("Client_Id_FK"));
+  // Check
+  expectedSql  = " JOIN \"Address_tbl\" \"ADR\"\n";
+  expectedSql += "  ON \"CLI\".\"Id_PK\" = \"ADR\".\"Client_Id_FK\"";
+  QCOMPARE(driver.getJoinClauseDefinition(join), expectedSql);
+  /*
+   * Join 2 tables - 2 pair of fields
+   */
+  join.clear();
+  join.setMainTable(ViewTable(TableName("Main_tbl"), "M"));
+  join.setTableToJoin(ViewTable(TableName("Other_tbl"), "O"));
+  join.addKey(MainTableField("Id_A_PK"), TableToJoinField("Id_A_FK"));
+  join.addKey(MainTableField("Id_B_PK"), TableToJoinField("Id_B_FK"));
+  // Check
+  expectedSql  = " JOIN \"Other_tbl\" \"O\"\n";
+  expectedSql += "  ON \"M\".\"Id_A_PK\" = \"O\".\"Id_A_FK\"\n";
+  expectedSql += "  AND \"M\".\"Id_B_PK\" = \"O\".\"Id_B_FK\"";
+  QCOMPARE(driver.getJoinClauseDefinition(join), expectedSql);
+}
+
 void SchemaDriverSqliteTest::viewDefinitionTest()
 {
   using Mdt::Sql::Schema::View;

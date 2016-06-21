@@ -39,6 +39,8 @@
 #include "TableTemplate.h"
 #include "SelectField.h"
 #include "SelectFieldList.h"
+#include "JoinOperator.h"
+#include "JoinClause.h"
 #include "View.h"
 #include "Mdt/Error.h"
 #include "Mdt/Expected.h"
@@ -246,6 +248,12 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     virtual QString getSelectFieldListDefinition(const SelectFieldList & selectFieldList) const;
 
+    /*! \brief Get JoinClause definition
+     *
+     * Can be overloaded if default implementation does not work for a specific DBMS
+     */
+    virtual QString getJoinClauseDefinition(const JoinClause & join) const;
+
     /*! \brief Get SQL statement to create a view
      *
      * Can be overloaded if default implementation does not work for a specific DBMS
@@ -286,6 +294,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Get select key word
      */
     QString selectKeyWord(View::SelectOperator op) const;
+
+    /*! \brief Get JOIN operator key word
+     */
+    QString joinOperatorKeyWord(JoinOperator::Operator op) const;
 
     /*! \brief Set last error
      */

@@ -2,15 +2,15 @@ format 211
 
 classcanvas 128002 class_ref 1995138 // JoinClause
   classdiagramsettings member_max_width 0 end
-  xyz 190.511 355.4 2000
+  xyz 191.111 356 2000
 end
 classcanvas 128130 class_ref 1995266 // JoinKey
   classdiagramsettings member_max_width 0 end
-  xyz 41.7667 130.944 2006
+  xyz 42.1667 130.944 2006
 end
 classcanvas 128386 class_ref 1994882 // SelectField
   classdiagramsettings member_max_width 0 end
-  xyz 695.611 120.944 2000
+  xyz 695.811 120.944 2000
 end
 classcanvas 128514 class_ref 1994626 // ViewTable
   classdiagramsettings member_max_width 0 end
@@ -38,7 +38,7 @@ classcanvas 129538 class_ref 2775554 // PrimaryKey
 end
 classcanvas 129666 class_ref 2775682 // ForeignKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 171.511 269.833 2000
+  xyz 172.111 269.833 2000
 end
 classcanvas 129794 class_ref 2775810 // Table
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
@@ -58,18 +58,10 @@ note 131842 "See also the WHERE operator (should also be in Sql namepsace)"
 note 131970 "View should not be a special namespace,
 The only View specific class seems to be ViewTable  which should be in Sql::Schema"
   xyzwh 88.2 778.4 2000 829 73
-relationcanvas 128258 relation_ref 2329346 // <directional composition>
-  geometry HV unfixed
-  decenter_end 513
-  from ref 128002 z 2007 to point 152 379
-  line 131330 z 2007 to ref 128130
-  no_role_a no_role_b
-  multiplicity_a_pos 139 238 3000 no_multiplicity_b
-end
 relationcanvas 128642 relation_ref 2329218 // <directional composition>
   from ref 128002 z 2007 to ref 128514
   no_role_a no_role_b
-  multiplicity_a_pos 499 393 3000 no_multiplicity_b
+  multiplicity_a_pos 499 394 3000 no_multiplicity_b
 end
 relationcanvas 128898 relation_ref 2329090 // <directional composition>
   from ref 128770 z 2013 to ref 128514
@@ -87,11 +79,6 @@ relationcanvas 130178 relation_ref 3273986 // <dependency>
   decenter_begin 790
   decenter_end 790
   from ref 129666 z 2007 to ref 129794
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 130434 relation_ref 3280642 // <dependency>
-  from ref 128002 z 2001 to ref 129666
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

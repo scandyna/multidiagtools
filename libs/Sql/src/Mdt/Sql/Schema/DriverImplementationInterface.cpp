@@ -429,6 +429,17 @@ QString DriverImplementationInterface::getSelectFieldListDefinition(const Select
   return sql;
 }
 
+QString DriverImplementationInterface::getJoinClauseDefinition(const JoinClause& join) const
+{
+  QString sql;
+  const auto mainTable = join.mainTable();
+  const auto tableToJoin = join.tableToJoin();
+
+  sql = QStringLiteral(" ") % joinOperatorKeyWord(join.joinOperator());/// % escapeTableName(join.)
+
+  return sql;
+}
+
 QString DriverImplementationInterface::getSqlToCreateView(const View& view) const
 {
   QString sql;
@@ -479,6 +490,17 @@ QString DriverImplementationInterface::selectKeyWord(View::SelectOperator op) co
       return QStringLiteral("SELECT");
     case View::SelectDistinct:
       return QStringLiteral("SELECT");
+  }
+  return QString();
+}
+
+QString DriverImplementationInterface::joinOperatorKeyWord(JoinOperator::Operator op) const
+{
+  switch(op){
+    case JoinOperator::Join:
+      return QStringLiteral("JOIN");
+    case JoinOperator::LeftJoin:
+      return QStringLiteral("LEFT JOIN");
   }
   return QString();
 }

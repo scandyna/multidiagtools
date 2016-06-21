@@ -61,6 +61,7 @@ class SchemaDriverSqliteTest : public QObject
 
   void selectFieldDefinitionTest();
   void selectFieldListDefinitionTest();
+  void joinClauseDefinitionTest();
   void viewDefinitionTest();
 
   void simpleCreateAndDropViewTest();
