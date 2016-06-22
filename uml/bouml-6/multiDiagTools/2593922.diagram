@@ -2,31 +2,41 @@ format 211
 
 classcanvas 128002 class_ref 1994754 // View
   classdiagramsettings member_max_width 0 end
-  xyz 41 38 2000
+  xyz 209 154 2000
 end
 classcanvas 128130 class_ref 2960642 // SelectFieldList
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 96 231 2000
+  xyz 264 367 2000
 end
 classcanvas 128258 class_ref 2960770 // SelectFieldListItem
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 659 225 2006
+  xyz 591 353 2006
 end
 classcanvas 128514 class_ref 1994882 // SelectField
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 670 82 3005
+  xyz 602 474 3005
 end
 classcanvas 129026 class_ref 1994626 // ViewTable
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 480 81 3005
+  xyz 336 37 3005
+end
+classcanvas 129410 class_ref 1995138 // JoinClause
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 36 47 3011
+end
+classcanvas 129666 class_ref 2974466 // JoinClauseList
+  classdiagramsettings member_max_width 0 end
+  xyz 67 215 2000
 end
 relationcanvas 128386 relation_ref 3324546 // <directional composition>
-  decenter_begin 559
+  decenter_begin 423
   from ref 128130 z 2007 to ref 128258
   no_role_a no_role_b
-  multiplicity_a_pos 643 271 3000 no_multiplicity_b
+  multiplicity_a_pos 575 399 3000 no_multiplicity_b
 end
 relationcanvas 128642 relation_ref 3324418 // <directional composition>
+  decenter_begin 520
+  decenter_end 523
   from ref 128258 z 3006 to ref 128514
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -37,9 +47,25 @@ relationcanvas 128898 relation_ref 3331202 // <directional composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129282 relation_ref 2329090 // <directional composition>
-  decenter_begin 522
+  decenter_end 470
   from ref 128002 z 3006 to ref 129026
   no_role_a no_role_b
-  multiplicity_a_pos 462 127 3000 no_multiplicity_b
+  multiplicity_a_pos 390 123 3000 no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 2329218 // <directional composition>
+  decenter_end 544
+  from ref 129410 z 3012 to ref 129026
+  no_role_a no_role_b
+  multiplicity_a_pos 318 87 3000 no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 3344642 // <directional composition>
+  from ref 129666 z 3012 to ref 129410
+  no_role_a no_role_b
+  multiplicity_a_pos 105 113 3000 no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 3344770 // <directional composition>
+  from ref 128002 z 2001 to ref 129666
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end

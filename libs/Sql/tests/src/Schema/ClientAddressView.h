@@ -18,35 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef SCHEMA_ADDRESS_TBL_H
-#define SCHEMA_ADDRESS_TBL_H
+#ifndef SCHEMA_CLIENT_ADDRESS_VIEW_H
+#define SCHEMA_CLIENT_ADDRESS_VIEW_H
 
-#include "Mdt/Sql/Schema/TableTemplate.h"
+#include "Mdt/Sql/Schema/ViewTemplate.h"
 
 namespace Schema{
 
-  class Address_tbl : public Mdt::Sql::Schema::TableTemplate<Address_tbl>
+  class ClientAdrressView : public Mdt::Sql::Schema::ViewTemplate<ClientAdrressView>
   {
    public:
 
-    Address_tbl();
-
-    Mdt::Sql::Schema::AutoIncrementPrimaryKey Id_PK() const
-    {
-      return autoIncrementPrimaryKey();
-    }
-
-    Mdt::Sql::Schema::Field Client_Id_FK() const
-    {
-      return field(1);
-    }
-
-    Mdt::Sql::Schema::Field Street() const
-    {
-      return field(2);
-    }
+    ClientAdrressView();
   };
 
 } // namespace Schema{
 
-#endif // #ifndef SCHEMA_ADDRESS_TBL_H
+#endif // #ifndef

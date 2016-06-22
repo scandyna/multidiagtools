@@ -57,6 +57,11 @@ void Table::addForeignKey(ForeignKey fk)
   pvForeignKeyList.append(fk);
 }
 
+ForeignKey Table::foreignKeyReferencing(const QString& tableName) const
+{
+  return pvForeignKeyList.foreignKeyReferencing(tableName);
+}
+
 void Table::addIndex(Index index)
 {
 #ifndef QT_NO_DEBUG

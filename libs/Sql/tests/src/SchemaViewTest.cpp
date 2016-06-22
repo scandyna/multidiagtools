@@ -24,7 +24,9 @@
 #include "Mdt/Sql/Schema/SelectFieldList.h"
 #include "Mdt/Sql/Schema/TableTemplate.h"
 #include "Mdt/Sql/Schema/JoinClause.h"
+#include "Mdt/Sql/Schema/JoinHelper.h"
 #include "Mdt/Sql/Schema/View.h"
+#include "Mdt/Sql/Schema/ForeignKey.h"
 #include "Schema/Client_tbl.h"
 #include <QSqlDatabase>
 #include <QComboBox>
@@ -224,6 +226,10 @@ void SchemaViewTest::joinKeyListTest()
   QVERIFY(!list.isEmpty());
   QCOMPARE(list.at(0).mainTableFieldName(), QString("A"));
   QCOMPARE(list.at(0).tableToJoinFieldName(), QString("B"));
+  for(const auto & key : list){
+    QCOMPARE(key.mainTableFieldName(), QString("A"));
+    QCOMPARE(key.tableToJoinFieldName(), QString("B"));
+  }
   /*
    * Clear
    */
@@ -250,7 +256,6 @@ void SchemaViewTest::joinClauseTest()
    */
   JoinClause join;
   QVERIFY(join.joinOperator() == JoinOperator::Join);
-
   /*
    * Set - common way
    */
@@ -275,11 +280,185 @@ void SchemaViewTest::joinClauseTest()
   QVERIFY(join.mainTable().isNull());
   QVERIFY(join.tableToJoin().isNull());
   QVERIFY(join.keyList().isEmpty());
-  
-//   join.addKey(MainTableField("A"), JoinOperator::Equal, TableToJoinField("B"));
-//   join.addKey(JoinOperator::Or, MainTableField("A"), JoinOperator::LessThan, TableToJoinField("B"));
-//   join.addKey(MainTableField("A"), TableToJoinField("B"));
+  /*
+   * Check add key overloads
+   */
+  // Full explicit version
+  join.addKey(JoinOperator::On, MainTableField("A"), JoinOperator::LessThan, TableToJoinField("B"));
+  QCOMPARE(join.keyList().size(), 1);
+  QVERIFY(join.keyList().at(0).constraintOperator() == JoinOperator::On);
+  QVERIFY(join.keyList().at(0).fieldComparisonOperator() == JoinOperator::MtfLessThanTdjf);
+  join.clear();
+  // 3 args version
+  join.addKey(MainTableField("A"), JoinOperator::LessThan, TableToJoinField("B"));
+  join.addKey(MainTableField("C"), JoinOperator::GreaterThan, TableToJoinField("D"));
+  QCOMPARE(join.keyList().size(), 2);
+  QVERIFY(join.keyList().at(0).constraintOperator() == JoinOperator::On);
+  QVERIFY(join.keyList().at(0).fieldComparisonOperator() == JoinOperator::MtfLessThanTdjf);
+  QVERIFY(join.keyList().at(1).constraintOperator() == JoinOperator::And);
+  QVERIFY(join.keyList().at(1).fieldComparisonOperator() == JoinOperator::MtfGreaterThanTdjf);
+  join.clear();
+  // Simplest version
+  join.addKey(MainTableField("A"), TableToJoinField("B"));
+  join.addKey(MainTableField("C"), TableToJoinField("D"));
+  QCOMPARE(join.keyList().size(), 2);
+  QVERIFY(join.keyList().at(0).constraintOperator() == JoinOperator::On);
+  QVERIFY(join.keyList().at(0).fieldComparisonOperator() == JoinOperator::MtfEqualTdjf);
+  QVERIFY(join.keyList().at(1).constraintOperator() == JoinOperator::And);
+  QVERIFY(join.keyList().at(1).fieldComparisonOperator() == JoinOperator::MtfEqualTdjf);
+  join.clear();
+}
 
+void SchemaViewTest::joinClauseListTest()
+{
+  using Mdt::Sql::Schema::MainTableField;
+  using Mdt::Sql::Schema::TableToJoinField;
+  using Mdt::Sql::Schema::JoinClause;
+  using Mdt::Sql::Schema::JoinClauseList;
+  using Mdt::Sql::Schema::JoinOperator;
+  using Mdt::Sql::Schema::ViewTable;
+  using Mdt::Sql::Schema::TableName;
+
+  Schema::Client_tbl client;
+  ViewTable CLI(client, "CLI");
+  ViewTable ADR(TableName("Address_tbl"), "ADR");
+  JoinClause join;
+
+  /*
+   * Initial state
+   */
+  JoinClauseList list;
+  QVERIFY(list.isEmpty());
+  /*
+   * Add 1 element
+   */
+  join.setMainTable(CLI);
+  join.setTableToJoin(ADR);
+  list.append(join);
+  QCOMPARE(list.size(), 1);
+  QVERIFY(!list.isEmpty());
+  QCOMPARE(list.at(0).mainTable().alias(), QString("CLI"));
+  for(const auto & _join : list){
+    QCOMPARE(_join.mainTable().alias(), QString("CLI"));
+  }
+  /*
+   * Clear
+   */
+  list.clear();
+  QVERIFY(list.isEmpty());
+}
+
+void SchemaViewTest::joinHelperJoinFromFkTest()
+{
+  using Mdt::Sql::Schema::JoinHelper;
+  using Mdt::Sql::Schema::JoinClause;
+  using Mdt::Sql::Schema::JoinOperator;
+  using Mdt::Sql::Schema::ForeignKey;
+  using Mdt::Sql::Schema::Table;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::ParentTableFieldName;
+  using Mdt::Sql::Schema::ChildTableFieldName;
+
+  ForeignKey fk;
+  JoinClause join;
+  /*
+   * Setup fields
+   */
+  // Id_PK
+  AutoIncrementPrimaryKey Id_PK;
+  Id_PK.setFieldName("Id_PK");
+  // Connector_Id_FK
+  Field Connector_Id_FK;
+  Connector_Id_FK.setName("Connector_Id_FK");
+  Connector_Id_FK.setType(FieldType::Integer);
+  Connector_Id_FK.setRequired(true);
+  /*
+   * Init Connector_tbl
+   */
+  Table Connector_tbl;
+  Connector_tbl.setTableName("Connector_tbl");
+  Connector_tbl.setPrimaryKey(Id_PK);
+  /*
+   * Init Contact_tbl
+   */
+  Table Contact_tbl;
+  Contact_tbl.setTableName("Contact_tbl");
+  Contact_tbl.setPrimaryKey(Id_PK);
+  Contact_tbl.addField(Connector_Id_FK);
+  fk.clear();
+  fk.setParentTable(Connector_tbl);
+  fk.addKeyFields(ParentTableFieldName(Id_PK), ChildTableFieldName(Connector_Id_FK));
+  Contact_tbl.addForeignKey(fk);
+
+  /*
+   * Get from FK with 1 pair of fields
+   */
+  fk.clear();
+  fk.setParentTable(Connector_tbl);
+  fk.setChildTable(Contact_tbl);
+  fk.addKeyFields(ParentTableFieldName(Id_PK), ChildTableFieldName(Connector_Id_FK));
+  /*
+   * Check with Connector_tbl as main table
+   * Form: FROM Connector_tbl CNR
+   *        JOIN Contact_tbl CNX
+   *         ON CNR.Id_PK = CNX.Connector_Id_FK
+   */
+  join = JoinHelper::joinClauseFromForeignKey(fk, JoinHelper::ParentIsMain, "CNR", "CNX");
+  QCOMPARE(join.mainTable().tableName(), QString("Connector_tbl"));
+  QCOMPARE(join.mainTable().alias(), QString("CNR"));
+  QCOMPARE(join.tableToJoin().tableName(), QString("Contact_tbl"));
+  QCOMPARE(join.tableToJoin().alias(), QString("CNX"));
+  QCOMPARE(join.keyList().size(), 1);
+  QVERIFY(join.keyList().at(0).constraintOperator() == JoinOperator::On);
+  QCOMPARE(join.keyList().at(0).mainTableFieldName(), QString("Id_PK"));
+  QVERIFY(join.keyList().at(0).fieldComparisonOperator() == JoinOperator::MtfEqualTdjf);
+  QCOMPARE(join.keyList().at(0).tableToJoinFieldName(), QString("Connector_Id_FK"));
+  /*
+   * Check with Contact_tbl as main table
+   * Form: FROM Contact_tbl
+   *        JOIN Connector_tbl
+   *         ON Contact_tbl.Connector_Id_FK = Connector_tbl.Id_PK
+   */
+  join = JoinHelper::joinClauseFromForeignKey(fk, JoinHelper::ChildIsMain);
+  QCOMPARE(join.mainTable().tableName(), QString("Contact_tbl"));
+  QCOMPARE(join.tableToJoin().tableName(), QString("Connector_tbl"));
+  QCOMPARE(join.keyList().size(), 1);
+  QVERIFY(join.keyList().at(0).constraintOperator() == JoinOperator::On);
+  QCOMPARE(join.keyList().at(0).mainTableFieldName(), QString("Connector_Id_FK"));
+  QVERIFY(join.keyList().at(0).fieldComparisonOperator() == JoinOperator::MtfEqualTdjf);
+  QCOMPARE(join.keyList().at(0).tableToJoinFieldName(), QString("Id_PK"));
+  /*
+   * Check with Connector_tbl as main table
+   * Form: FROM Connector_tbl CNR
+   *        JOIN Contact_tbl CNX
+   *         ON CNR.Id_PK = CNX.Connector_Id_FK
+   */
+  join = JoinHelper::joinClauseFromTables(Connector_tbl, Contact_tbl, "CNR", "CNX");
+  QCOMPARE(join.mainTable().tableName(), QString("Connector_tbl"));
+  QCOMPARE(join.mainTable().alias(), QString("CNR"));
+  QCOMPARE(join.tableToJoin().tableName(), QString("Contact_tbl"));
+  QCOMPARE(join.tableToJoin().alias(), QString("CNX"));
+  QCOMPARE(join.keyList().size(), 1);
+  QVERIFY(join.keyList().at(0).constraintOperator() == JoinOperator::On);
+  QCOMPARE(join.keyList().at(0).mainTableFieldName(), QString("Id_PK"));
+  QVERIFY(join.keyList().at(0).fieldComparisonOperator() == JoinOperator::MtfEqualTdjf);
+  QCOMPARE(join.keyList().at(0).tableToJoinFieldName(), QString("Connector_Id_FK"));
+  /*
+   * Check with Contact_tbl as main table
+   * Form: FROM Contact_tbl
+   *        JOIN Connector_tbl
+   *         ON Contact_tbl.Connector_Id_FK = Connector_tbl.Id_PK
+   */
+  join = JoinHelper::joinClauseFromTables(Contact_tbl, Connector_tbl);
+  QCOMPARE(join.mainTable().tableName(), QString("Contact_tbl"));
+  QCOMPARE(join.tableToJoin().tableName(), QString("Connector_tbl"));
+  QCOMPARE(join.keyList().size(), 1);
+  QVERIFY(join.keyList().at(0).constraintOperator() == JoinOperator::On);
+  QCOMPARE(join.keyList().at(0).mainTableFieldName(), QString("Connector_Id_FK"));
+  QVERIFY(join.keyList().at(0).fieldComparisonOperator() == JoinOperator::MtfEqualTdjf);
+  QCOMPARE(join.keyList().at(0).tableToJoinFieldName(), QString("Id_PK"));
 }
 
 void SchemaViewTest::viewTableTest()
@@ -357,19 +536,54 @@ void SchemaViewTest::viewTest()
   using Mdt::Sql::Schema::SelectField;
   using Mdt::Sql::Schema::TableName;
   using Mdt::Sql::Schema::FieldName;
+  using Mdt::Sql::Schema::JoinClause;
+  using Mdt::Sql::Schema::JoinOperator;
+  using Mdt::Sql::Schema::MainTableField;
+  using Mdt::Sql::Schema::TableToJoinField;
 
   Schema::Client_tbl client;
+  ViewTable ClientTv(client);
   ViewTable CLI(client, "CLI");
+  ViewTable ADR(TableName("Address_tbl"), "ADR");
   View view;
 
   /*
    * Initial state
    */
   QVERIFY(view.selectOperator() == View::Select);
-  
   QVERIFY(view.isNull());
   /*
-   * Simple (single table) view
+   * Simple (single table) view - No alias for table name
+   */
+  view.clear();
+  view.setName("Simple_view");
+  view.setSelectOperator(View::SelectDistinct);
+  view.setTable(ClientTv);
+  view.addSelectField(ClientTv, client.Id_PK());
+  view.addSelectField(ClientTv, client.Name(), "ClientName");
+  // Check
+  QVERIFY(!view.isNull());
+  QCOMPARE(view.name(), QString("Simple_view"));
+  QVERIFY(view.selectOperator() == View::SelectDistinct);
+  QCOMPARE(view.tableName(), QString("Client_tbl"));
+  QVERIFY(view.tableNameAlias().isEmpty());
+  QCOMPARE(view.selectFieldList().size(), 2);
+  QCOMPARE(view.selectFieldList().tableNameAt(0), QString("Client_tbl"));
+  QCOMPARE(view.selectFieldList().selectFieldAt(0).fieldName(), QString("Id_PK"));
+  QCOMPARE(view.selectFieldList().tableNameAt(1), QString("Client_tbl"));
+  QCOMPARE(view.selectFieldList().selectFieldAt(1).fieldName(), QString("Name"));
+  /*
+   * Clear
+   */
+  view.clear();
+  QVERIFY(view.name().isEmpty());
+  QVERIFY(view.selectOperator() == View::Select);
+  QVERIFY(view.tableName().isEmpty());
+  QVERIFY(view.selectFieldList().isEmpty());
+  QVERIFY(view.joinClauseList().isEmpty());
+  QVERIFY(view.isNull());
+  /*
+   * Simple (single table) view - With table name alias
    */
   view.clear();
   view.setName("Simple_view");
@@ -382,8 +596,12 @@ void SchemaViewTest::viewTest()
   QCOMPARE(view.name(), QString("Simple_view"));
   QVERIFY(view.selectOperator() == View::SelectDistinct);
   QCOMPARE(view.tableName(), QString("Client_tbl"));
+  QCOMPARE(view.tableNameAlias(), QString("CLI"));
   QCOMPARE(view.selectFieldList().size(), 2);
-  
+  QCOMPARE(view.selectFieldList().tableNameAt(0), QString("CLI"));
+  QCOMPARE(view.selectFieldList().selectFieldAt(0).fieldName(), QString("Id_PK"));
+  QCOMPARE(view.selectFieldList().tableNameAt(1), QString("CLI"));
+  QCOMPARE(view.selectFieldList().selectFieldAt(1).fieldName(), QString("Name"));
   /*
    * Clear
    */
@@ -392,7 +610,46 @@ void SchemaViewTest::viewTest()
   QVERIFY(view.selectOperator() == View::Select);
   QVERIFY(view.tableName().isEmpty());
   QVERIFY(view.selectFieldList().isEmpty());
-  
+  QVERIFY(view.joinClauseList().isEmpty());
+  QVERIFY(view.isNull());
+  /*
+   * View with a join
+   */
+  view.clear();
+  view.setName("CLI_ADR_view");
+  view.setTable(CLI);
+  view.addSelectField(CLI, client.Id_PK());
+  view.addSelectField(CLI, client.Name(), "ClientName");
+  view.addSelectAllFields(ADR);
+  JoinClause join;
+  join.setMainTable(CLI);
+  join.setTableToJoin(ADR);
+  join.addKey(MainTableField(client.Id_PK()), TableToJoinField("Client_Id_FK"));
+  view.addJoinClause(join);
+  // Check
+  QVERIFY(!view.isNull());
+  QCOMPARE(view.name(), QString("CLI_ADR_view"));
+  QVERIFY(view.selectOperator() == View::Select);
+  QCOMPARE(view.tableName(), QString("Client_tbl"));
+  QCOMPARE(view.selectFieldList().size(), 3);
+  QCOMPARE(view.selectFieldList().tableNameAt(0), QString("CLI"));
+  QCOMPARE(view.selectFieldList().selectFieldAt(0).fieldName(), QString("Id_PK"));
+  QCOMPARE(view.selectFieldList().tableNameAt(1), QString("CLI"));
+  QCOMPARE(view.selectFieldList().selectFieldAt(1).fieldName(), QString("Name"));
+  QCOMPARE(view.selectFieldList().tableNameAt(2), QString("ADR"));
+  QCOMPARE(view.selectFieldList().selectFieldAt(2).fieldName(), QString("*"));
+  QCOMPARE(view.joinClauseList().size(), 1);
+  QCOMPARE(view.joinClauseList().at(0).mainTable().alias(), QString("CLI"));
+  QCOMPARE(view.joinClauseList().at(0).tableToJoin().alias(), QString("ADR"));
+  /*
+   * Clear
+   */
+  view.clear();
+  QVERIFY(view.name().isEmpty());
+  QVERIFY(view.selectOperator() == View::Select);
+  QVERIFY(view.tableName().isEmpty());
+  QVERIFY(view.selectFieldList().isEmpty());
+  QVERIFY(view.joinClauseList().isEmpty());
   QVERIFY(view.isNull());
 }
 

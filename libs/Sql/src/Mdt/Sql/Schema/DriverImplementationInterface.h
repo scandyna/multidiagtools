@@ -266,6 +266,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     virtual QString getSqlToDropView(const View & view) const;
 
+    /*! \brief Create a view in database
+     */
+    bool createView(const View & view);
+
+    /*! \brief Drop view
+     */
+    bool dropView(const View & view);
+
     /*! \brief Get last error
      */
     Mdt::Error lastError() const
@@ -298,6 +306,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Get JOIN operator key word
      */
     QString joinOperatorKeyWord(JoinOperator::Operator op) const;
+
+    /*! \brief Get JOIN constraint operator key word
+     */
+    QString joinConstraintOperatorKeyWord(JoinOperator::ConstraintOperator op) const;
+
+    /*! \brief Get JOIN field comparison operator
+     */
+    QString joinFieldComparisonOperatorKeyWord(JoinOperator::AbsoluteFieldComparisonOperator op) const;
 
     /*! \brief Set last error
      */

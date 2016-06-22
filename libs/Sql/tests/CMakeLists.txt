@@ -9,6 +9,7 @@ enable_testing()
 set(SOURCES_FILES
     src/Schema/Client_tbl.cpp
     src/Schema/Address_tbl.cpp
+    src/Schema/ClientAddressView.cpp
     src/TestDatabaseSchema.cpp
 )
 

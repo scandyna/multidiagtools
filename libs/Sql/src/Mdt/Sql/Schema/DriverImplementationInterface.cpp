@@ -434,8 +434,20 @@ QString DriverImplementationInterface::getJoinClauseDefinition(const JoinClause&
   QString sql;
   const auto mainTable = join.mainTable();
   const auto tableToJoin = join.tableToJoin();
+  const auto keyList = join.keyList();
 
-  sql = QStringLiteral(" ") % joinOperatorKeyWord(join.joinOperator());/// % escapeTableName(join.)
+  sql = QStringLiteral(" ") % joinOperatorKeyWord(join.joinOperator()) %QStringLiteral(" ") % escapeTableName(tableToJoin.tableName());
+  if(!tableToJoin.alias().isEmpty()){
+    sql += QStringLiteral(" ") % escapeTableName(tableToJoin.alias());
+  }
+  for(const auto & key : keyList){
+    sql += QStringLiteral("\n  ") % joinConstraintOperatorKeyWord(key.constraintOperator()) \
+         % QStringLiteral(" ") % escapeTableName(mainTable.aliasOrTableName()) \
+         % QStringLiteral(".") % escapeFieldName(key.mainTableFieldName()) \
+         % QStringLiteral(" ") % joinFieldComparisonOperatorKeyWord(key.fieldComparisonOperator()) \
+         % QStringLiteral(" ") % escapeTableName(tableToJoin.aliasOrTableName()) \
+         % QStringLiteral(".") % escapeFieldName(key.tableToJoinFieldName());
+  }
 
   return sql;
 }
@@ -443,6 +455,7 @@ QString DriverImplementationInterface::getJoinClauseDefinition(const JoinClause&
 QString DriverImplementationInterface::getSqlToCreateView(const View& view) const
 {
   QString sql;
+  const auto joinClauseList = view.joinClauseList();
 
   // Build header
   sql = QStringLiteral("CREATE VIEW ") % escapeTableName(view.name()) % QStringLiteral(" AS\n") \
@@ -451,7 +464,14 @@ QString DriverImplementationInterface::getSqlToCreateView(const View& view) cons
       % getSelectFieldListDefinition(view.selectFieldList()) \
   // Add FROM statement
       % QStringLiteral("\nFROM ") % escapeTableName(view.tableName());
-  /// \todo Add JOIN statement
+  if(!view.tableNameAlias().isEmpty()){
+    sql += QStringLiteral(" ") % escapeTableName(view.tableNameAlias());
+  }
+  // \todo Add JOIN statement
+  for(const auto & join : joinClauseList){
+    sql += QStringLiteral("\n") % getJoinClauseDefinition(join);
+  }
+  sql += QStringLiteral(";");
 
   return sql;
 }
@@ -463,6 +483,42 @@ QString DriverImplementationInterface::getSqlToDropView(const View& view) const
   sql = QStringLiteral("DROP VIEW IF EXISTS ") % escapeTableName(view.name()) % QStringLiteral(";");
 
   return sql;
+}
+
+bool DriverImplementationInterface::createView(const View & view)
+{
+  QSqlQuery query(pvDatabase);
+  QString sql;
+
+  sql = getSqlToCreateView(view);
+  if(!query.exec(sql)){
+    QString msg = tr("Creating view '%1' failed.").arg(view.name());
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverImplementationInterface");
+    error.stackError(mdtErrorFromQSqlQuery(query, "DriverImplementationInterface"));
+    error.commit();
+    setLastError(error);
+    return false;
+  }
+
+  return true;
+}
+
+bool DriverImplementationInterface::dropView(const View & view)
+{
+  QSqlQuery query(pvDatabase);
+  QString sql;
+
+  sql = getSqlToDropView(view);
+  if(!query.exec(sql)){
+    QString msg = tr("Removing view '%1' failed.").arg(view.name());
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverImplementationInterface");
+    error.stackError(mdtErrorFromQSqlQuery(query, "DriverImplementationInterface"));
+    error.commit();
+    setLastError(error);
+    return false;
+  }
+
+  return true;
 }
 
 QString DriverImplementationInterface::escapeFieldName(const QString & fieldName) const
@@ -501,6 +557,32 @@ QString DriverImplementationInterface::joinOperatorKeyWord(JoinOperator::Operato
       return QStringLiteral("JOIN");
     case JoinOperator::LeftJoin:
       return QStringLiteral("LEFT JOIN");
+  }
+  return QString();
+}
+
+QString DriverImplementationInterface::joinConstraintOperatorKeyWord(JoinOperator::ConstraintOperator op) const
+{
+  switch(op){
+    case JoinOperator::On:
+      return QStringLiteral("ON");
+    case JoinOperator::And:
+      return QStringLiteral("AND");
+    case JoinOperator::Or:
+      return QStringLiteral("OR");
+  }
+  return QString();
+}
+
+QString DriverImplementationInterface::joinFieldComparisonOperatorKeyWord(JoinOperator::AbsoluteFieldComparisonOperator op) const
+{
+  switch(op){
+    case JoinOperator::MtfLessThanTdjf:
+      return QStringLiteral("<");
+    case JoinOperator::MtfEqualTdjf:
+      return QStringLiteral("=");
+    case JoinOperator::MtfGreaterThanTdjf:
+      return QStringLiteral(">");
   }
   return QString();
 }

@@ -41,6 +41,8 @@ class SchemaViewTest : public QObject
   void joinKeyTest();
   void joinKeyListTest();
   void joinClauseTest();
+  void joinClauseListTest();
+  void joinHelperJoinFromFkTest();
 
   void viewTableTest();
   void viewTest();

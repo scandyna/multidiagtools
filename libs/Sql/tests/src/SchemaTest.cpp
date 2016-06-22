@@ -1034,6 +1034,7 @@ void SchemaTest::foreignKeyListTest()
   using Mdt::Sql::Schema::ParentTableFieldName;
   using Mdt::Sql::Schema::ChildTableFieldName;
 
+  ForeignKey fk;
   /*
    * Setup fields
    */
@@ -1063,6 +1064,8 @@ void SchemaTest::foreignKeyListTest()
   ForeignKey fk_Connector_Id_FK;
   fk_Connector_Id_FK.setParentTable(Connector_tbl);
   fk_Connector_Id_FK.setChildTable(Contact_tbl);
+  fk_Connector_Id_FK.addKeyFields(ParentTableFieldName(Id_PK), ChildTableFieldName(Connector_Id_FK));
+  QVERIFY(!fk_Connector_Id_FK.isNull());
   /*
    * Initial state
    */
@@ -1079,6 +1082,12 @@ void SchemaTest::foreignKeyListTest()
     QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
     QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
   }
+  fk = list.foreignKeyReferencing("Contact_tbl");
+  QVERIFY(fk.isNull());
+  fk = list.foreignKeyReferencing("Connector_tbl");
+  QVERIFY(!fk.isNull());
+  QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
+  QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
   /*
    * Check updating child table name
    */
@@ -1433,6 +1442,7 @@ void SchemaTest::tableTest()
   using Mdt::Sql::Schema::ForeignKey;
   using Mdt::Sql::Schema::Index;
 
+  ForeignKey fk;
   /*
    * Setup fields
    */
@@ -1533,6 +1543,10 @@ void SchemaTest::tableTest()
   QCOMPARE(table.foreignKeyList().at(0).childTableName(), QString("Client_tbl"));
   QCOMPARE(table.indexList().size(), 1);
   QCOMPARE(table.indexList().at(0).tableName(), QString("Client_tbl"));
+  fk = table.foreignKeyReferencing("Connector_tbl");
+  QVERIFY(!fk.isNull());
+  QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
+  QCOMPARE(fk.childTableName(), QString("Client_tbl"));
   /*
    * Check that updating table name is reflected to foreign keys and indexes
    */

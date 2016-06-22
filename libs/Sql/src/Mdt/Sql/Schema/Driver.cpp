@@ -109,6 +109,18 @@ bool Driver::dropTable(const Table & table)
   return pvImpl->dropTable(table);
 }
 
+bool Driver::createView(const View & view)
+{
+  Q_ASSERT(isValid());
+  return pvImpl->createView(view);
+}
+
+bool Driver::dropView(const View & view)
+{
+  Q_ASSERT(isValid());
+  return pvImpl->dropView(view);
+}
+
 QString Driver::tr(const char* sourceText)
 {
   return QObject::tr(sourceText);

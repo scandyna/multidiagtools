@@ -68,12 +68,18 @@ void View::addSelectAllFields(const ViewTable& table)
   pvSelectFieldList.append(table.aliasOrTableName(), SelectField("*") );
 }
 
+void View::addJoinClause(const JoinClause & join)
+{
+  pvJoinClauseList.append(join);
+}
+
 void View::clear()
 {
   pvSelectOperator = Select;
   pvName.clear();
   pvTable.clear();
   pvSelectFieldList.clear();
+  pvJoinClauseList.clear();
 }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

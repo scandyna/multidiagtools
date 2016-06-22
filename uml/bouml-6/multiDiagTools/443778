@@ -1,6 +1,6 @@
 format 211
 "View" // Mdt::Sql::Schema::View
-  revision 11
+  revision 12
   modified_by 2 "philippe"
   // class settings
   

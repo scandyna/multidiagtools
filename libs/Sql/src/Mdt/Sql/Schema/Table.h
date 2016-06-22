@@ -214,6 +214,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void addForeignKey(ForeignKey fk);
 
+    /*! \brief Get foreign key that references table designed by tableName
+     */
+    ForeignKey foreignKeyReferencing(const QString & tableName) const;
+
     /*! \brief Get list of foreign keys
      */
     ForeignKeyList foreignKeyList() const

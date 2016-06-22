@@ -32,6 +32,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
   {
    public:
 
+    /*! \brief STL-style const iterator
+     */
+    typedef QVector<JoinKey>::const_iterator const_iterator;
+
     /*! \brief Add a key
      */
     void append(const JoinKey & key)
@@ -63,6 +67,20 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     bool isEmpty() const
     {
       return pvKeyList.empty();
+    }
+
+    /*! \brief Get begin const iterator
+     */
+    const_iterator begin() const
+    {
+      return pvKeyList.cbegin();
+    }
+
+    /*! \brief Get end const iterator
+     */
+    const_iterator end() const
+    {
+      return pvKeyList.cend();
     }
 
     /*! \brief Clear

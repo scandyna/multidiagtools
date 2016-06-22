@@ -27,6 +27,8 @@
 #include "FieldName.h"
 #include "AutoIncrementPrimaryKey.h"
 #include "SingleFieldPrimaryKey.h"
+#include "JoinClauseList.h"
+#include "JoinClause.h"
 #include <QString>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -45,6 +47,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *  using Mdt::Sql::Schema::ViewTable;
    *  using Mdt::Sql::Schema::TableName;
    *  using Mdt::Sql::Schema::FieldName;
+   *  using Mdt::Sql::Schema::JoinClause;
+   *  using Mdt::Sql::Schema::JoinOperator;
+   *  using Mdt::Sql::Schema::MainTableField;
+   *  using Mdt::Sql::Schema::TableToJoinField;
    *
    *  // Create instances of defined entities
    *  Client client;
@@ -62,15 +68,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *  view.addSelectField(CLI, client.Name());
    *  view.addSelectField(ADR, FieldName("Id_PK"), "Address_Id");
    *  view.addSelectField(ADR, FieldName("Street"));
-   *  join.clear();
-   *  join.setMainTable(client);
-   *  join.setTableToJoin(address);
-   *  key.clear();
-   *  key.setMainTableField("Id_PK");
-   *  key.setTableToJoinField("Client_Id_FK");
-   *  join.addKey(key);
+   *  join.setMainTable(CLI);
+   *  join.setTableToJoin(ADR);
+   *  join.addKey( MainTableField(client.Id_PK()), TableToJoinField("Client_Id_FK") );
    *  view.addJoinClause(join);
-   * 
    * \endcode
    */
   class View
@@ -151,11 +152,31 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return pvTable.tableName();
     }
 
+    /*! \brief Get table name alias
+     *
+     * Returns the table alias of table set by setTable()
+     */
+    QString tableNameAlias() const
+    {
+      return pvTable.alias();
+    }
+
     /*! \brief Get select field list
      */
     SelectFieldList selectFieldList() const
     {
       return pvSelectFieldList;
+    }
+
+    /*! \brief Add a JOIN clause
+     */
+    void addJoinClause(const JoinClause & join);
+
+    /*! \brief Get list of JOIN clauses
+     */
+    JoinClauseList joinClauseList() const
+    {
+      return pvJoinClauseList;
     }
 
     /*! \brief Check if this View is null
@@ -180,6 +201,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     QString pvName;
     ViewTable pvTable;
     SelectFieldList pvSelectFieldList;
+    JoinClauseList pvJoinClauseList;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

@@ -18,99 +18,83 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_FOREIGN_KEY_LIST_H
-#define MDT_SQL_SCHEMA_FOREIGN_KEY_LIST_H
+#ifndef MDT_SQL_SCHEMA_JOIN_CLAUSE_LIST_H
+#define MDT_SQL_SCHEMA_JOIN_CLAUSE_LIST_H
 
-#include "ForeignKey.h"
+#include "JoinClause.h"
 #include <QVector>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-  /*! \brief List of ForeignKey
+  /*! \brief Hold a list of JoinClause
    */
-  class ForeignKeyList
+  class JoinClauseList
   {
    public:
 
     /*! \brief STL-style const iterator
      */
-    typedef QVector<ForeignKey>::const_iterator const_iterator;
+    typedef QVector<JoinClause>::const_iterator const_iterator;
 
-    /*! \brief Append a foreign key
+    /*! \brief Append a join clause
      */
-    void append(const ForeignKey & fk)
+    void append(const JoinClause & join)
     {
-      pvForeignKeyList.append(fk);
-    }
-
-    /*! \brief Update child table name for each foreign key in this list
-     */
-    void updateChildTableName(const QString & tableName)
-    {
-      for(auto & fk : pvForeignKeyList){
-        fk.setChildTableName(tableName);
-      }
+      pvJoinClauseList.append(join);
     }
 
     /*! \brief Get count of elements
      */
     int size() const
     {
-      return pvForeignKeyList.size();
+      return pvJoinClauseList.size();
     }
 
-    /*! \brief Get foreign key at index
+    /*! \brief Check if list is empty
+     */
+    bool isEmpty() const
+    {
+      return pvJoinClauseList.isEmpty();
+    }
+
+    /*! \brief Get join clause at given index
      *
      * \pre index must be valid
      */
-    const ForeignKey & at(int index) const
+    const JoinClause & at(int index) const
     {
       Q_ASSERT(index >= 0);
       Q_ASSERT(index < size());
 
-      return pvForeignKeyList.at(index);
-    }
-
-    /*! \brief Get foreign key that references table designed by tableName
-     */
-    ForeignKey foreignKeyReferencing(const QString & tableName) const
-    {
-      ForeignKey fk;
-      for(const auto & _fk : pvForeignKeyList){
-        if( QString::compare(_fk.parentTableName(), tableName, Qt::CaseInsensitive) == 0){
-          fk = _fk;
-          break;
-        }
-      }
-      return fk;
+      return pvJoinClauseList.at(index);
     }
 
     /*! \brief Get begin const iterator
      */
     const_iterator begin() const
     {
-      return pvForeignKeyList.cbegin();
+      return pvJoinClauseList.cbegin();
     }
 
     /*! \brief Get end const iterator
      */
     const_iterator end() const
     {
-      return pvForeignKeyList.cend();
+      return pvJoinClauseList.cend();
     }
 
     /*! \brief Clear
      */
     void clear()
     {
-      pvForeignKeyList.clear();
+      pvJoinClauseList.clear();
     }
 
    private:
 
-    QVector<ForeignKey> pvForeignKeyList;
+    QVector<JoinClause> pvJoinClauseList;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{
 
-#endif // #ifndef MDT_SQL_SCHEMA_FOREIGN_KEY_LIST_H
+#endif // #ifndef MDT_SQL_SCHEMA_JOIN_CLAUSE_LIST_H

@@ -1,4 +1,4 @@
-window_sizes 1280 957 366 908 902 0
+window_sizes 1280 957 402 872 902 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -9,11 +9,19 @@ diagrams
     980 905 100 7 0 0
   classdiagram_ref 2244610 // overview
     908 902 80 21 0 20
-  active  classdiagram_ref 2554370 // JoinClause
+  classdiagram_ref 2554370 // JoinClause
     908 902 90 21 0 186
+  classdiagram_ref 2593922 // View
+    120 110 100 4 0 0
+  classdiagram_ref 2514690 // UserDefinedTable
+    120 110 100 21 0 0
+  classdiagram_ref 2600578 // ViewTemplate
+    120 110 100 4 0 0
+  active  classdiagram_ref 2600706 // JoinHelper
+    872 902 90 21 0 65
 end
 show_stereotypes
-selected class_ref 1995138 // JoinClause
+selected operation_ref 4371842 // getJoinClause
 open
   
   package_ref 409858 // principes
@@ -24,8 +32,11 @@ open
   package_ref 516226 // SqlItemModel
   classview_ref 1157762 // All
   classview_ref 1373314 // ForeignKey
+  classview_ref 1320706 // Table
   classdiagram_ref 2593666 // SelectField
-  classdiagram_ref 2593922 // View
+  class_ref 2974722 // MainTableRule
+  class_ref 2974594 // ViewTemplate
+  operation_ref 4371842 // getJoinClause
   
   package_ref 430082 // Dsp
 end

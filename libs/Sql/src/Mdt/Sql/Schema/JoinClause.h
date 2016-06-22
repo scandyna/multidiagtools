@@ -112,9 +112,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *  "<constraintOperator> <mainTableField> <fieldOperator> <tableToJoinField>".
      *  For example: "ON Id_PK = Client_Id_FK".
      */
-    void addKey(JoinOperator::ConstraintOperator constraintOperator, const MainTableField & mainTableField, JoinOperator::RelativeFieldComparisonOperator fieldOperator, const TableToJoinField & tableToJoinField)
-    {
-    }
+    void addKey(JoinOperator::ConstraintOperator constraintOperator, const MainTableField & mainTableField, JoinOperator::RelativeFieldComparisonOperator fieldOperator, const TableToJoinField & tableToJoinField);
 
     /*! \brief Add a couple of fields, between main table and table to join, that must be compared with fieldOperator
      *
@@ -126,9 +124,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *  "AND <mainTableField> <fieldOperator> <tableToJoinField>".
      *  For example: "AND Id_PK = Client_Id_FK".
      */
-    void addKey(const MainTableField & mainTableField, JoinOperator::RelativeFieldComparisonOperator fieldOperator, const TableToJoinField & tableToJoinField)
-    {
-    }
+    void addKey(const MainTableField & mainTableField, JoinOperator::RelativeFieldComparisonOperator fieldOperator, const TableToJoinField & tableToJoinField);
 
     /*! \brief Add a couple of fields, between main table and table to join
      *
@@ -140,9 +136,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *  "AND <mainTableField> = <tableToJoinField>".
      *  For example: "AND Id_PK = Client_Id_FK".
      */
-    void addKey(const MainTableField & mainTableField, const TableToJoinField & tableToJoinField)
-    {
-    }
+    void addKey(const MainTableField & mainTableField, const TableToJoinField & tableToJoinField);
 
     /*! \brief Get join key list
      */
@@ -153,9 +147,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Clear
      */
-    void clear()
-    {
-    }
+    void clear();
 
    private:
 

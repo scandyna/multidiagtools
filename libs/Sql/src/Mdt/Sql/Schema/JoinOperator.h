@@ -23,6 +23,8 @@
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
+  /*! \brief Operators used in JoinClause
+   */
   class JoinOperator
   {
    public:

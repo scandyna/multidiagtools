@@ -22,6 +22,8 @@ set(SOURCES_FILES
     src/Mdt/Sql/Schema/Table.cpp
     src/Mdt/Sql/Schema/TableModel.cpp
     src/Mdt/Sql/Schema/ViewTable.cpp
+    src/Mdt/Sql/Schema/JoinClause.cpp
+    src/Mdt/Sql/Schema/JoinHelper.cpp
     src/Mdt/Sql/Schema/View.cpp
 )
 

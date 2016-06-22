@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 73
+  revision 74
   modified_by 2 "philippe"
   // class settings
   
@@ -5725,7 +5725,12 @@ ${inlines}
       end
     end
 
-    class 2967298 "JoinClauseHelper"
+    classdiagram 2600706 "JoinHelper"
+      classdiagramsettings member_max_width 0 end
+      size B-Landscape
+    end
+
+    class 2967298 "JoinHelper"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -5739,6 +5744,30 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      class 2974722 "MainTableRule"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+	php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+	python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+	idl_decl "${comment}enum ${name} {
+${items}};
+"
+	explicit_switch_type ""
+	mysql_decl ""
+	
+      end
+
       classrelation 3356162 // <dependency>
 	relation 3337730 -_->
 	  a public
@@ -5757,11 +5786,12 @@ ${inlines}
 
       operation 4364930 "joinClauseFromForeignKey"
 	class_operation public return_type class_ref 1995138 // JoinClause
-	nparams 1
+	nparams 2
 	  param in name "fk" type class_ref 2775682 // ForeignKey
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+	  param in name "rule" type class_ref 2974722 // MainTableRule
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -5892,6 +5922,98 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      classrelation 3363202 // <directional composition>
+	relation 3344770 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3363202 // <directional composition>
+	  b parent class_ref 2974466 // JoinClauseList
+      end
+    end
+
+    class 2974466 "JoinClauseList"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3363074 // <directional composition>
+	relation 3344642 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 3363074 // <directional composition>
+	  b parent class_ref 1995138 // JoinClause
+      end
+    end
+
+    classdiagram 2600578 "ViewTemplate"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2974594 "ViewTemplate"
+      visibility package 
+      nformals 1
+      formal name "Derived" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3363330 // <directional composition>
+	relation 3344898 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3363330 // <directional composition>
+	  b parent class_ref 1994754 // View
+      end
+
+      attribute 2825858 "View"
+	private type class_ref 1994754 // View
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 4371586 "toView"
+	cpp_inline public return_type class_ref 1994754 // View
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end
@@ -6109,7 +6231,7 @@ ${inlines}
      end
     classdiagram 2521218 "Schema"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size B
     end
 
     class 2845442 "Schema"
@@ -6145,6 +6267,40 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      operation 4371842 "getJoinClause"
+	public return_type class_ref 1995138 // JoinClause
+	nparams 2
+	  param in name "mainTable" type class_ref 1994626 // ViewTable
+	  param in name "tableToJoin" type class_ref 1994626 // ViewTable
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4371714 "getJoinClause"
+	public return_type class_ref 1995138 // JoinClause
+	nparams 2
+	  param in name "view" type class_ref 1994754 // View
+	  param in name "tableToJoin" type class_ref 1994626 // ViewTable
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
