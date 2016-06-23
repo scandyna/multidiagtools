@@ -38,6 +38,8 @@
 #include "Mdt/Sql/Schema/ForeignKeyList.h"
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Schema/TableModel.h"
+#include "Mdt/Sql/Schema/TableList.h"
+#include "Mdt/Sql/Schema/Schema.h"
 #include "Schema/Client_tbl.h"
 #include "Schema/Address_tbl.h"
 #include <QSqlDatabase>
@@ -1686,6 +1688,38 @@ void SchemaTest::tableModelTest()
   while(tableView.isVisible()){
     QTest::qWait(500);
   }
+}
+
+void SchemaTest::tableListTest()
+{
+  using Mdt::Sql::Schema::Table;
+  using Mdt::Sql::Schema::TableList;
+
+  Schema::Client_tbl client;
+  TableList list;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(list.isEmpty());
+  /*
+   * Add 1 element
+   */
+  list.append(client);
+  QCOMPARE(list.size(), 1);
+  QVERIFY(!list.isEmpty());
+  QCOMPARE(list.at(0).tableName(), client.tableName());
+  /*
+   * Clear
+   */
+  list.clear();
+  QCOMPARE(list.size(), 0);
+  QVERIFY(list.isEmpty());
+}
+
+void SchemaTest::schemaTest()
+{
+
 }
 
 /*

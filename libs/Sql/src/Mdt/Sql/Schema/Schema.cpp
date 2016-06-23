@@ -18,35 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_VIEW_TEST_H
-#define MDT_SQL_SCHEMA_VIEW_TEST_H
+#include "Schema.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
-
-class SchemaViewTest : public QObject
-{
- Q_OBJECT
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void selectFieldTest();
-  void selectFieldListTest();
-
-  void mainTableFieldTest();
-  void tableToJoinFieldTest();
-  void joinKeyTest();
-  void joinKeyListTest();
-  void joinClauseTest();
-  void joinClauseListTest();
-  void joinHelperJoinFromFkTest();
-
-  void viewTableTest();
-  void viewTest();
-  void viewListTest();
-};
-
-#endif // #ifndef MDT_SQL_SCHEMA_VIEW_TEST_H
+namespace Mdt{ namespace Sql{ namespace Schema{
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{

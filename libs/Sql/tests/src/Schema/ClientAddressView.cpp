@@ -50,7 +50,7 @@ ClientAdrressView::ClientAdrressView()
   addSelectAllFields(CLI);
   addSelectField(ADR, address.Id_PK(), "Address_Id");
   addSelectField(ADR, address.Street());
-  addJoinClause(JoinHelper::joinClauseFromTables(client, address, "CLI", "ADR"));
+  addJoinClause(JoinHelper::joinClauseFromTables(client, CLI, address, ADR, JoinOperator::Join));
   /*
    * Or, join clause can also be expressed manually
    */

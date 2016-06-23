@@ -21,10 +21,21 @@
 
 /*! \page guideline_page API guide line
  *
+ * \section getters Propoerty access
+ *
+ * When a member function returns a property that is directly known,
+ *  the function name should be directly similar to the propoerty name.
+ *  Example: SomeObject::isNull() .
+ *
+ *  If a member function needs some processing before returning the requested value,
+ *  it should be prefixed get.
+ *  For example, we suppose that getting available tables in a database needs to query the database,
+ *  the function should be named like SomeObject::getAvailableTables(T db).
+ *
  * \section return_value Return value
  *
  * When a function fails, it should be possible to get the reason why it failed.
- *  This is done by using the mdtError class.
+ *  This is done by using the Mdt::Error class.
  *
  * Functionnal classes should store a mdtError as member
  *  and provide lastError() function.

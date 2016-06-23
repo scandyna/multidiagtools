@@ -1,4 +1,4 @@
-window_sizes 1280 957 402 872 902 0
+window_sizes 1280 957 368 906 902 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -7,21 +7,31 @@ diagrams
     120 112 100 4 0 0
   classdiagram_ref 2434178 // ClientTableModel
     980 905 100 7 0 0
-  classdiagram_ref 2244610 // overview
-    908 902 80 21 0 20
-  classdiagram_ref 2554370 // JoinClause
-    908 902 90 21 0 186
-  classdiagram_ref 2593922 // View
+  classdiagram_ref 2521218 // Schema
+    906 902 90 22 0 273
+  classdiagram_ref 2607234 // SchemaTemplate
+    906 902 100 4 0 0
+  classdiagram_ref 2468610 // Relation
+    120 110 100 21 0 594
+  classdiagram_ref 2399618 // sandbox
+    120 110 90 21 0 25
+  classdiagram_ref 2613762 // SomeTableWidget
     120 110 100 4 0 0
-  classdiagram_ref 2514690 // UserDefinedTable
+  classdiagram_ref 2406658 // Controller
+    120 110 80 22 0 92
+  classdiagram_ref 2573954 // sandbox
+    120 110 80 22 0 23
+  classdiagram_ref 2447490 // RowChangeEventMapper
+    120 110 100 18 0 0
+  classdiagram_ref 2251266 // TablePopulation
+    120 110 100 4 0 0
+  classdiagram_ref 2600706 // JoinHelper
     120 110 100 21 0 0
-  classdiagram_ref 2600578 // ViewTemplate
-    120 110 100 4 0 0
-  active  classdiagram_ref 2600706 // JoinHelper
-    872 902 90 21 0 65
+  active  classdiagram_ref 2593922 // View
+    906 902 100 18 0 30
 end
 show_stereotypes
-selected operation_ref 4371842 // getJoinClause
+selected operation_ref 4386946 // joinClauseFromTables
 open
   
   package_ref 409858 // principes
@@ -30,13 +40,15 @@ open
   classview_ref 1293698 // CoreApplication
   
   package_ref 516226 // SqlItemModel
-  classview_ref 1157762 // All
-  classview_ref 1373314 // ForeignKey
-  classview_ref 1320706 // Table
-  classdiagram_ref 2593666 // SelectField
-  class_ref 2974722 // MainTableRule
-  class_ref 2974594 // ViewTemplate
-  operation_ref 4371842 // getJoinClause
+  class_ref 2987906 // SomeTableWidget
+  classview_ref 1307010 // EventMapper
+  classview_ref 1287042 // Controller
+  classview_ref 1392898 // ControllerRelation
+  classview_ref 1327362 // SqlSandbox
+  classview_ref 1164418 // Field
+  class_ref 2967298 // JoinHelper
+  classview_ref 1177986 // Population
+  classview_ref 1164546 // Schema
   
   package_ref 430082 // Dsp
 end

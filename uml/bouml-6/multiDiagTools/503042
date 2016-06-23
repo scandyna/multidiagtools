@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 17
+  revision 19
   modified_by 2 "philippe"
   // class settings
   
@@ -317,7 +317,7 @@ ${inlines}
 
     classdiagram 2406658 "Controller"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size C-Landscape
     end
 
     classdiagram 2406786 "InputEvents"
@@ -386,6 +386,61 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    classdiagram 2613762 "SomeTableWidget"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2987906 "SomeTableWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 4385154 "addAction"
+	public return_type class_ref 693250 // QAction
+	nparams 2
+	  param in name "text" type class_ref 161026 // QString
+	  param in name "slot" type class_ref 2988034 // QMetaMethod
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4385282 "addAction"
+	public return_type class_ref 693250 // QAction
+	nparams 3
+	  param in name "icon" type class_ref 2988162 // QIcon
+	  param in name "text" type class_ref 161026 // QString
+	  param in name "slot" type class_ref 2988034 // QMetaMethod
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 
@@ -1721,6 +1776,40 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4384898 "fromTables"
+	class_operation public return_type class_ref 2693250 // Relation
+	nparams 2
+	  param in name "parentTable" type class_ref 2775810 // Table
+	  param in name "childTable" type class_ref 2775810 // Table
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4385026 "fromTableAndView"
+	class_operation public return_type class_ref 2693250 // Relation
+	nparams 2
+	  param in name "parentTable" type class_ref 2775810 // Table
+	  param in name "childView" type class_ref 1994754 // View
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "

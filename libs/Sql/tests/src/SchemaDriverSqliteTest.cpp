@@ -1673,7 +1673,7 @@ void SchemaDriverSqliteTest::viewDefinitionTest()
   view.addSelectField(CLI, client.Id_PK());
   view.addSelectField(CLI, client.Name());
   view.addSelectAllFields(ADR);
-  view.addJoinClause(JoinHelper::joinClauseFromTables(client, address, "CLI", "ADR"));
+  view.addJoinClause(JoinHelper::joinClauseFromTables(client, CLI, address, ADR));
   // Check SQL to create view
   expectedSql  = "CREATE VIEW \"Client_view\" AS\n";
   expectedSql += "SELECT\n";
@@ -1693,7 +1693,7 @@ void SchemaDriverSqliteTest::viewDefinitionTest()
   view.addSelectField(CLI, client.Id_PK());
   view.addSelectField(CLI, client.Name());
   view.addSelectAllFields(ADR);
-  view.addJoinClause(JoinHelper::joinClauseFromTables(address, client, "ADR", "CLI"));
+  view.addJoinClause(JoinHelper::joinClauseFromTables(address, ADR, client, CLI));
   // Check SQL to create view
   expectedSql  = "CREATE VIEW \"Address_view\" AS\n";
   expectedSql += "SELECT\n";

@@ -68,7 +68,9 @@ class SchemaTest : public QObject
   void tablePrimaryKeyMcBenchmark();
   void tableTest();
   void tableModelTest();
+  void tableListTest();
 
+  void schemaTest();
 };
 
 #endif // #ifndef MDT_SQL_SCHEMA_TEST_H

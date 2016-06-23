@@ -25,6 +25,7 @@ set(SOURCES_FILES
     src/Mdt/Sql/Schema/JoinClause.cpp
     src/Mdt/Sql/Schema/JoinHelper.cpp
     src/Mdt/Sql/Schema/View.cpp
+    src/Mdt/Sql/Schema/Schema.cpp
 )
 
 # Headers directories

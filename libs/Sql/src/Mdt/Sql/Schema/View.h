@@ -161,6 +161,15 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return pvTable.alias();
     }
 
+    /*! \brief Get table
+     *
+     * Returns the table set by setTable()
+     */
+    ViewTable table() const
+    {
+      return pvTable;
+    }
+
     /*! \brief Get select field list
      */
     SelectFieldList selectFieldList() const
