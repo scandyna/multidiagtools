@@ -21,10 +21,19 @@
 #ifndef MDT_SQL_SCHEMA_SCHEMA_H
 #define MDT_SQL_SCHEMA_SCHEMA_H
 
+#include "Table.h"
 #include "TableList.h"
+#include "View.h"
 #include "ViewList.h"
+#include <QString>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
+
+  template<typename T>
+  class TableTemplate;
+
+  template<typename T>
+  class ViewTemplate;
 
   /*! \brief Container for database schema
    */
@@ -32,7 +41,83 @@ namespace Mdt{ namespace Sql{ namespace Schema{
   {
    public:
 
-    
+    /*! \brief Add a table
+     */
+    void addTable(const Table & table);
+
+    /*! \brief Add a table
+     */
+    template<typename T>
+    void addTable(const TableTemplate<T> & table)
+    {
+      addTable(table.toTable());
+    }
+
+    /*! \brief Get tables count
+     */
+    int tableCount() const
+    {
+      return pvTableList.size();
+    }
+
+    /*! \brief Get table name for given index
+     *
+     * \pre index must be in a valid range
+     */
+    QString tableName(int index) const
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < pvTableList.size());
+      return pvTableList.at(index).tableName();
+    }
+
+    /*! \brief Get all tables
+     */
+    TableList tableList() const
+    {
+      return pvTableList;
+    }
+
+    /*! \brief Add a view
+     */
+    void addView(const View & view);
+
+    /*! \brief Add a view
+     */
+    template<typename T>
+    void addView(const ViewTemplate<T> & view)
+    {
+      addView(view.toView());
+    }
+
+    /*! \brief Get view schema count
+     */
+    int viewCount() const
+    {
+      return pvViewList.size();
+    }
+
+    /*! \brief Get view name for given index
+     *
+     * \pre index must be in a valid range
+     */
+    QString viewName(int index) const
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < pvViewList.size());
+      return pvViewList.at(index).name();
+    }
+
+    /*! \brief Get all views
+     */
+    ViewList viewList() const
+    {
+      return pvViewList;
+    }
+
+    /*! \brief Clear schema
+     */
+    void clear();
 
    private:
 

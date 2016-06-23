@@ -41,32 +41,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
   {
    public:
 
-
-    /*! \brief Get a join clause from foreign key
-     */
-//     static JoinClause joinClauseFromForeignKey(const ForeignKey & fk, MainTableRule rule,
-//                                                const QString & mainTableAlias = QString(), const QString & tableToJoinAlias = QString());
-
-    /*! \brief Get a join clause from foreign key
-     *
-     * 
-     * \pre fk must have its parent table and child table defined
-     * \pre fk must have at least 1 pair of key fields
-     * \sa joinClauseFromTables(const Table &, const ViewTable &, const Table &, const ViewTable &, JoinOperator::Operator) .
-     */
-//     static JoinClause joinClauseFromForeignKey(const ForeignKey & fk, MainTableRule rule,
-//                                                const ViewTable & mainViewTable, const ViewTable & viewTableToJoin,
-//                                                JoinOperator::Operator joinOperator = JoinOperator::Join);
-
-    /*! \brief Get a join clause from tables
-     *
-     * Will first check if tableToJoin has a foreign key that refers to mainTable.
-     *  If not found, it will be check if mainTable has a foreign key that refers to tableToJoin.
-     *  If a foreign key was found, a join is built based on it and returned.
-     */
-//     static JoinClause joinClauseFromTables(const Table & mainTable, const Table & tableToJoin,
-//                                            const QString & mainTableAlias = QString(), const QString & tableToJoinAlias = QString());
-
     /*! \brief Get a join clause from tables
      *
      * Will first check if tableToJoin has a foreign key that refers to mainTable.
@@ -118,18 +92,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     {
       return joinClauseFromTables(mainTable.toTable(), view, tableToJoin.toTable(), viewTableToJoin, joinOperator);
     }
-
-    /*! \brief Get a join clause from tables
-     *
-     * \sa joinClauseFromTables(const Table &, const Table &, const QString &, const QString &)
-     */
-//     template<typename T, typename U>
-//     static JoinClause joinClauseFromTables(const TableTemplate<T> & mainTable, const TableTemplate<U> & tableToJoin,
-//                                            const QString & mainTableAlias = QString(), const QString & tableToJoinAlias = QString())
-//     {
-//       return joinClauseFromTables(mainTable.toTable(), tableToJoin.toTable(), mainTableAlias, tableToJoinAlias);
-//     }
-
 
    private:
 

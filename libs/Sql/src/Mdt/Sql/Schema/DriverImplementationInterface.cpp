@@ -521,6 +521,63 @@ bool DriverImplementationInterface::dropView(const View & view)
   return true;
 }
 
+bool DriverImplementationInterface::createSchema(const Schema & schema)
+{
+  const auto tableList = schema.tableList();
+  const auto viewList = schema.viewList();
+
+  /// \todo use transactions !
+
+  // Create tables
+  for(const auto & table : tableList){
+    if(!createTable(table)){
+      return false;
+    }
+  }
+  // Create views
+  for(const auto & view : viewList){
+    if(!createView(view)){
+      return false;
+    }
+  }
+  // Create triggers
+  
+  // Populate tables
+  
+
+  return true;
+}
+
+bool DriverImplementationInterface::dropSchema(const Schema & schema)
+{
+  /*
+   * Note: currently, we get back tables, views, etc.. from schema.
+   * In the future, we could implement functions that can drop things by name..
+   */
+  const auto tableList = schema.tableList();
+  const auto viewList = schema.viewList();
+
+  /// \todo use transactions !
+
+  // Drop views
+  for(const auto & view : viewList){
+    if(!dropView(view)){
+      return false;
+    }
+  }
+  // Drop triggers ??
+  
+  // Drop tables
+  /// \todo see if some DBMS do not automatically drop data.
+  for(const auto & table : tableList){
+    if(!dropTable(table)){
+      return false;
+    }
+  }
+
+  return true;
+}
+
 QString DriverImplementationInterface::escapeFieldName(const QString & fieldName) const
 {
   return qsqlDriver()->escapeIdentifier(fieldName, QSqlDriver::FieldName);

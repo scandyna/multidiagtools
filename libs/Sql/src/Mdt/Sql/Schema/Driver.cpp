@@ -121,6 +121,18 @@ bool Driver::dropView(const View & view)
   return pvImpl->dropView(view);
 }
 
+bool Driver::createSchema(const Schema& schema)
+{
+  Q_ASSERT(isValid());
+  return pvImpl->createSchema(schema);
+}
+
+bool Driver::dropSchema(const Schema& schema)
+{
+  Q_ASSERT(isValid());
+  return pvImpl->dropSchema(schema);
+}
+
 QString Driver::tr(const char* sourceText)
 {
   return QObject::tr(sourceText);

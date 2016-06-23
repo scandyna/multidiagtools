@@ -10,42 +10,42 @@ classcanvas 128642 class_ref 2693250 // Relation
 end
 classcanvas 129026 class_ref 2686466 // ControllerInputEvent
   classdiagramsettings member_max_width 0 end
-  xyz 1224.56 40 2016
+  xyz 1224.36 40.8 2016
 end
 classcanvas 129538 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 232.556 241.167 2000
+  xyz 232.756 241.767 2000
 end
 classcanvas 129666 class_ref 2684930 // ControllerState
   classdiagramsettings member_max_width 0 end
-  xyz 881.333 274.056 2016
+  xyz 881.333 274.656 2016
 end
 classcanvas 130050 class_ref 2684674 // ControllerStateMachine
   classdiagramsettings member_max_width 0 end
-  xyz 858.222 480.556 2016
+  xyz 858.622 480.356 2016
 end
 note 131458 "Only available in SQL ?
 Or, ab common base that handles GUI states ??"
-  xyzwh 1183.56 254.333 2000 227 117
+  xyzwh 1183.36 254.933 2000 227 117
 classcanvas 131714 class_ref 2699778 // ControllerDelegate
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 603.056 2000
+  xyz 40.1 603.656 2000
 end
 classcanvas 132610 class_ref 2739714 // QWebSocket
   classdiagramsettings member_max_width 0 end
-  xyz 217.556 360.111 2006
+  xyz 217.756 360.911 2006
 end
 classcanvas 132866 class_ref 2739842 // QWebSocketServer
   classdiagramsettings member_max_width 0 end
-  xyz 41.7778 360.111 2006
+  xyz 41.9778 360.911 2006
 end
 note 133378 "What could be a abstraction of a filter ?
 Imagine custom models (application specific).
 Should we provide a interface ?"
-  xyzwh 1564.67 124.5 2000 579 91
+  xyzwh 1564.07 124.7 2000 579 91
 classcanvas 133634 class_ref 2782850 // TableControllerRelation
   classdiagramsettings member_max_width 0 end
-  xyz 351.611 361.722 2022
+  xyz 351.411 361.722 2022
 end
 relationcanvas 128770 relation_ref 3063298 // <unidirectional association>
   decenter_begin 209

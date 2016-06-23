@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 77
+  revision 78
   modified_by 2 "philippe"
   // class settings
   
@@ -5834,68 +5834,6 @@ ${items}};
 	  b parent class_ref 1995138 // JoinClause
       end
 
-      classrelation 3356290 // <dependency>
-	relation 3337858 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3356290 // <dependency>
-	  b parent class_ref 2775682 // ForeignKey
-      end
-
-      operation 4364930 "joinClauseFromForeignKey"
-	class_operation public return_type class_ref 1995138 // JoinClause
-	nparams 2
-	  param in name "fk" type class_ref 2775682 // ForeignKey
-	  param in name "rule" type class_ref 2974722 // MainTableRule
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4386690 "joinClauseFromTables"
-	class_operation public return_type class_ref 1995138 // JoinClause
-	nparams 4
-	  param in name "mainTable" type class_ref 2775810 // Table
-	  param in name "tableToJoin" type class_ref 2775810 // Table
-	  param in name "mainTableAlias" type class_ref 161026 // QString
-	  param in name "tableToJoinAlias" type class_ref 161026 // QString
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}, const ${t3} & ${p3}${v3}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}, const ${t3} & ${p3}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4386818 "joinClauseFromTables"
-	class_operation public return_type class_ref 1995138 // JoinClause
-	nparams 3
-	  param in name "mainTable" type class_ref 1994626 // ViewTable
-	  param in name "tableToJoin" type class_ref 1994626 // ViewTable
-	  param in name "schema" type class_ref 2845442 // Schema
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       classrelation 3376898 // <dependency>
 	relation 3358466 -_->
 	  a public
@@ -6672,62 +6610,6 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
-      end
-    end
-
-    class 2845570 "UserDefinedSchema"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3243266 // <dependency>
-	relation 3224962 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3243266 // <dependency>
-	  b parent class_ref 2845442 // Schema
-      end
-
-      classrelation 3243394 // <directional composition>
-	relation 3225090 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3243394 // <directional composition>
-	  b parent class_ref 2845698 // Client_tbl
-      end
-
-      classrelation 3243522 // <directional composition>
-	relation 3225218 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3243522 // <directional composition>
-	  b parent class_ref 2845826 // UserDefinedTableB
-      end
-
-      operation 4278914 "toSchema"
-	public return_type class_ref 2845442 // Schema
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
       end
     end
 

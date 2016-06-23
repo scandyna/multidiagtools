@@ -8,8 +8,8 @@ diagrams
   classdiagram_ref 2434178 // ClientTableModel
     980 905 100 7 0 0
   classdiagram_ref 2521218 // Schema
-    906 902 90 22 0 273
-  classdiagram_ref 2607234 // SchemaTemplate
+    906 902 90 22 0 0
+  active  classdiagram_ref 2607234 // SchemaTemplate
     906 902 100 4 0 0
   classdiagram_ref 2468610 // Relation
     120 110 100 21 0 594
@@ -23,15 +23,9 @@ diagrams
     120 110 80 22 0 23
   classdiagram_ref 2447490 // RowChangeEventMapper
     120 110 100 18 0 0
-  classdiagram_ref 2251266 // TablePopulation
-    120 110 100 4 0 0
-  classdiagram_ref 2600706 // JoinHelper
-    120 110 100 21 0 0
-  active  classdiagram_ref 2593922 // View
-    906 902 100 18 0 30
 end
 show_stereotypes
-selected operation_ref 4386946 // joinClauseFromTables
+selected classdiagram_ref 2607234 // SchemaTemplate
 open
   
   package_ref 409858 // principes
@@ -46,7 +40,6 @@ open
   classview_ref 1392898 // ControllerRelation
   classview_ref 1327362 // SqlSandbox
   classview_ref 1164418 // Field
-  class_ref 2967298 // JoinHelper
   classview_ref 1177986 // Population
   classview_ref 1164546 // Schema
   

@@ -18,24 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "Schema.h"
+#include "TestSchema.h"
+#include "Client_tbl.h"
+#include "Address_tbl.h"
+#include "ClientAddressView.h"
 
-namespace Mdt{ namespace Sql{ namespace Schema{
+namespace Schema{
 
-void Schema::addTable(const Table & table)
+TestSchema::TestSchema()
 {
-  pvTableList.append(table);
+  addTable(Client_tbl());
+  addTable(Address_tbl());
+  addView(ClientAdrressView());
 }
 
-void Schema::addView(const View & view)
-{
-  pvViewList.append(view);
-}
-
-void Schema::clear()
-{
-  pvTableList.clear();
-  pvViewList.clear();
-}
-
-}}} // namespace Mdt{ namespace Sql{ namespace Schema{
+} // namespace Schema{

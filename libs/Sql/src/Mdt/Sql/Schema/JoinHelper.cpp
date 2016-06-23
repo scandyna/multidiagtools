@@ -35,67 +35,6 @@
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-// JoinClause JoinHelper::joinClauseFromForeignKey(const ForeignKey & fk, JoinHelper::MainTableRule rule,
-//                                                 const QString & mainTableAlias , const QString & tableToJoinAlias)
-// {
-//   Q_ASSERT(!fk.parentTableName().isEmpty());
-//   Q_ASSERT(!fk.childTableName().isEmpty());
-// 
-//   JoinClause join;
-//   ViewTable mainTable;
-//   ViewTable tableToJoin;
-// 
-//   if(rule == ParentIsMain){
-//     mainTable.setTableName(fk.parentTableName());
-//     tableToJoin.setTableName(fk.childTableName());
-//   }else{
-//     mainTable.setTableName(fk.childTableName());
-//     tableToJoin.setTableName(fk.parentTableName());
-//   }
-//   mainTable.setAlias(mainTableAlias);
-//   tableToJoin.setAlias(tableToJoinAlias);
-//   join.setMainTable(mainTable);
-//   join.setTableToJoin(tableToJoin);
-//   addKeysToJoinClause(join, fk, rule);
-// 
-//   return join;
-// }
-
-// JoinClause JoinHelper::joinClauseFromForeignKey(const ForeignKey& fk, JoinHelper::MainTableRule rule,
-//                                                 const ViewTable& mainViewTable, const ViewTable& viewTableToJoin,
-//                                                 JoinOperator::Operator joinOperator)
-// {
-// 
-// }
-
-// JoinClause JoinHelper::joinClauseFromTables(const Table & mainTable, const Table & tableToJoin,
-//                                             const QString & mainTableAlias, const QString & tableToJoinAlias)
-// {
-//   JoinClause join;
-//   ForeignKey fk;
-// 
-//   /*
-//    * Note: it can be confusing why the requested mainTable will allways remain the main table of the join clause
-//    *       in following code.
-//    * The reason is: depending on which table we get the foreign key from,
-//    *                its parent and child table can be crossed (case of FK mainTable -> tableToJoin)
-//    */
-//   fk = tableToJoin.foreignKeyReferencing(mainTable.tableName());
-//   if(fk.isNull()){
-//     fk = mainTable.foreignKeyReferencing(tableToJoin.tableName());
-//     if(fk.isNull()){
-//       return join;
-//     }
-//     join = joinClauseFromForeignKey(fk, ChildIsMain, mainTableAlias, tableToJoinAlias);
-//   }else{
-//     join = joinClauseFromForeignKey(fk, ParentIsMain, mainTableAlias, tableToJoinAlias);
-//   }
-//   Q_ASSERT(QString::compare(join.mainTable().tableName(), mainTable.tableName(), Qt::CaseInsensitive) == 0);
-//   Q_ASSERT(QString::compare(join.tableToJoin().tableName(), tableToJoin.tableName(), Qt::CaseInsensitive) == 0);
-// 
-//   return join;
-// }
-
 JoinClause JoinHelper::joinClauseFromTables(const Table& mainTable, const ViewTable& mainViewTable,
                                             const Table& tableToJoin, const ViewTable& viewTableToJoin,
                                             JoinOperator::Operator joinOperator)

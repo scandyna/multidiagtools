@@ -26,6 +26,7 @@
 #include "Schema/Client_tbl.h"
 #include "Schema/Address_tbl.h"
 #include "Schema/ClientAddressView.h"
+#include "Schema/TestSchema.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -1731,6 +1732,35 @@ void SchemaDriverSqliteTest::simpleCreateAndDropViewTest()
   // Cleanup
   QVERIFY(driver.dropTable(client));
   QVERIFY(driver.dropTable(address));
+}
+
+void SchemaDriverSqliteTest::simpleCreateAndDropSchemaTest()
+{
+  Mdt::Sql::Schema::Driver driver(pvDatabase);
+  QVERIFY(driver.isValid());
+  Schema::TestSchema schema;
+
+  // Check with version that takes a Schema
+  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("Address_tbl"));
+  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
+  QVERIFY(driver.createSchema(schema.toSchema()));
+  QVERIFY(pvDatabase.tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(pvDatabase.tables(QSql::AllTables).contains("Address_tbl"));
+  QVERIFY(pvDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
+  QVERIFY(driver.dropSchema(schema.toSchema()));
+  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("Address_tbl"));
+  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
+  // Check with version that takes a SchemaTemplate
+  QVERIFY(driver.createSchema(schema));
+  QVERIFY(pvDatabase.tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(pvDatabase.tables(QSql::AllTables).contains("Address_tbl"));
+  QVERIFY(pvDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
+  QVERIFY(driver.dropSchema(schema));
+  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("Address_tbl"));
+  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
 }
 
 /*

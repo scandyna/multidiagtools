@@ -66,6 +66,8 @@ class SchemaDriverSqliteTest : public QObject
 
   void simpleCreateAndDropViewTest();
 
+  void simpleCreateAndDropSchemaTest();
+
  private:
 
   QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically

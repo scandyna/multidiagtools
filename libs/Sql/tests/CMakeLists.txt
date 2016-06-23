@@ -10,6 +10,7 @@ set(SOURCES_FILES
     src/Schema/Client_tbl.cpp
     src/Schema/Address_tbl.cpp
     src/Schema/ClientAddressView.cpp
+    src/Schema/TestSchema.cpp
     src/TestDatabaseSchema.cpp
 )
 

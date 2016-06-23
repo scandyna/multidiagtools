@@ -2,44 +2,44 @@ format 211
 
 classcanvas 128002 class_ref 2967298 // JoinHelper
   classdiagramsettings member_max_width 0 end
-  xyz 41 145 2000
+  xyz 185 361 2000
 end
 classcanvas 128130 class_ref 2974722 // MainTableRule
   classdiagramsettings member_max_width 0 end
-  xyz 415 39 2006
+  xyz 39 367 2006
 end
 classcanvas 128386 class_ref 2775682 // ForeignKey
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 929 92 2006
+  xyz 505 480 2006
 end
 classcanvas 128642 class_ref 1995138 // JoinClause
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 384 287 2006
+  xyz 553 200 2006
 end
 classcanvas 128898 class_ref 2967938 // JoinKeyList
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 1232 295 2012
+  xyz 424 239 2012
 end
 classcanvas 129154 class_ref 1995266 // JoinKey
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 1074 376 2018
+  xyz 266 40 2018
 end
-line 128258 ---+ decenter_begin 457
+line 128258 ---+
   from ref 128130 z 2007 to ref 128002
 relationcanvas 128514 relation_ref 3337858 // <dependency>
+  decenter_end 513
   from ref 128002 z 2007 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 3337730 // <dependency>
-  decenter_end 473
   from ref 128002 z 2007 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129026 relation_ref 3337986 // <directional composition>
-  decenter_begin 423
-  decenter_end 395
+  decenter_begin 528
+  decenter_end 581
   from ref 128642 z 2013 to ref 128898
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -48,6 +48,6 @@ relationcanvas 129282 relation_ref 3338114 // <directional composition>
   decenter_begin 449
   from ref 128898 z 2019 to ref 129154
   no_role_a no_role_b
-  multiplicity_a_pos 1256 353 3000 no_multiplicity_b
+  multiplicity_a_pos 448 168 3000 no_multiplicity_b
 end
 end

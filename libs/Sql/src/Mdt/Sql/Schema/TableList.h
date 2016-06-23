@@ -35,6 +35,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
   {
    public:
 
+    /*! \brief STL-style const iterator
+     */
+    typedef QVector<Table>::const_iterator const_iterator;
+
     /*! \brief Append a table
      */
     void append(const Table & t)
@@ -74,6 +78,20 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       Q_ASSERT(index < size());
 
       return pvTableList.at(index);
+    }
+
+    /*! \brief Get begin const iterator
+     */
+    const_iterator begin() const
+    {
+      return pvTableList.cbegin();
+    }
+
+    /*! \brief Get end const iterator
+     */
+    const_iterator end() const
+    {
+      return pvTableList.cend();
     }
 
     /*! \brief Clear

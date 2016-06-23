@@ -42,6 +42,7 @@
 #include "Mdt/Sql/Schema/Schema.h"
 #include "Schema/Client_tbl.h"
 #include "Schema/Address_tbl.h"
+#include "Schema/ClientAddressView.h"
 #include <QSqlDatabase>
 #include <QComboBox>
 #include <QTableView>
@@ -1709,6 +1710,9 @@ void SchemaTest::tableListTest()
   QCOMPARE(list.size(), 1);
   QVERIFY(!list.isEmpty());
   QCOMPARE(list.at(0).tableName(), client.tableName());
+  for(const auto & table : list){
+    QCOMPARE(table.tableName(), client.tableName());
+  }
   /*
    * Clear
    */
@@ -1719,7 +1723,44 @@ void SchemaTest::tableListTest()
 
 void SchemaTest::schemaTest()
 {
+  Mdt::Sql::Schema::Schema schema;
+  Schema::Client_tbl client;
+  Schema::Address_tbl address;
+  Schema::ClientAdrressView clientAddressView;
 
+  /*
+   * Initial state
+   */
+  QCOMPARE(schema.tableCount(), 0);
+  QCOMPARE(schema.viewCount(), 0);
+  /*
+   * Add tables
+   */
+  schema.addTable(client);
+  schema.addTable(address);
+  QCOMPARE(schema.tableCount(), 2);
+  QCOMPARE(schema.tableName(0), client.tableName());
+  QCOMPARE(schema.tableName(1), address.tableName());
+  /*
+   * Add views
+   */
+  schema.addView(clientAddressView);
+  QCOMPARE(schema.viewCount(), 1);
+  QCOMPARE(schema.viewName(0), clientAddressView.name());
+  /*
+   * Add populations
+   */
+  
+  /*
+   * Add triggers
+   */
+  
+  /*
+   * Clear
+   */
+  schema.clear();
+  QCOMPARE(schema.tableCount(), 0);
+  QCOMPARE(schema.viewCount(), 0);
 }
 
 /*

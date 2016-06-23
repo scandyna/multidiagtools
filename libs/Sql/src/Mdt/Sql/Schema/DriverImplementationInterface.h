@@ -42,6 +42,7 @@
 #include "JoinOperator.h"
 #include "JoinClause.h"
 #include "View.h"
+#include "Schema.h"
 #include "Mdt/Error.h"
 #include "Mdt/Expected.h"
 #include <QSqlDatabase>
@@ -273,6 +274,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Drop view
      */
     bool dropView(const View & view);
+
+    /*! \brief Create schema
+     */
+    bool createSchema(const Schema & schema);
+
+    /*! \brief Drop schema
+     */
+    bool dropSchema(const Schema & schema);
 
     /*! \brief Get last error
      */

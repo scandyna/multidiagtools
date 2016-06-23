@@ -18,24 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "Schema.h"
+#ifndef MDT_SQL_TEST_SCHEMA_TEST_SCHEMA_H
+#define MDT_SQL_TEST_SCHEMA_TEST_SCHEMA_H
 
-namespace Mdt{ namespace Sql{ namespace Schema{
+#include "Mdt/Sql/Schema/SchemaTemplate.h"
 
-void Schema::addTable(const Table & table)
-{
-  pvTableList.append(table);
-}
+namespace Schema{
 
-void Schema::addView(const View & view)
-{
-  pvViewList.append(view);
-}
+  class TestSchema : public Mdt::Sql::Schema::SchemaTemplate<TestSchema>
+  {
+   public:
 
-void Schema::clear()
-{
-  pvTableList.clear();
-  pvViewList.clear();
-}
+    TestSchema();
+  };
 
-}}} // namespace Mdt{ namespace Sql{ namespace Schema{
+} // namespace Schema{
+
+#endif // #ifndef
