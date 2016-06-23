@@ -1734,6 +1734,81 @@ void SchemaDriverSqliteTest::simpleCreateAndDropViewTest()
   QVERIFY(driver.dropTable(address));
 }
 
+void SchemaDriverSqliteTest::triggerDefinitionTest()
+{
+  using Mdt::Sql::Schema::Trigger;
+
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  QString expectedSql;
+  Trigger trigger;
+
+  /*
+   * Simple trigger
+   */
+  // Setup trigger
+  trigger.setTemporary(true);
+  trigger.setName("TestTrigger");
+  trigger.setEvent(Trigger::AfterInsert);
+  trigger.setTable(Schema::Client_tbl());
+  trigger.setScript(" UPDATE Client_tbl SET Name = 'Some name';");
+  // Check SQL for DROP
+  expectedSql = "DROP TRIGGER IF EXISTS \"TestTrigger\";";
+  QCOMPARE(driver.getSqlToDropTrigger(trigger), expectedSql);
+  // Check SQL for CREATE
+  expectedSql = "CREATE TEMPORARY TRIGGER \"TestTrigger\" AFTER INSERT ON \"Client_tbl\"\n" \
+                "FOR EACH ROW\n" \
+                "BEGIN\n" \
+                " UPDATE Client_tbl SET Name = 'Some name';\n" \
+                "END;";
+  QCOMPARE(driver.getSqlToCreateTrigger(trigger), expectedSql);
+}
+
+void SchemaDriverSqliteTest::simpleTriggerCreateDropTest()
+{
+  using Mdt::Sql::Schema::Trigger;
+
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Trigger trigger;
+  Schema::Client_tbl client;
+  QSqlQuery query(pvDatabase);
+
+  /*
+   * Setup trigger
+   */
+  trigger.setName("TestTrigger");
+  trigger.setEvent(Trigger::AfterInsert);
+  trigger.setTable(client);
+  trigger.setScript(" UPDATE Client_tbl SET FieldA = 'Some A';");
+  /*
+   * Create table en trigger
+   */
+  QVERIFY(driver.createTable(client.toTable()));
+  QVERIFY(driver.createTrigger(trigger));
+  /*
+   * Insert some data
+   */
+  QVERIFY(query.exec("INSERT INTO Client_tbl (Name) VALUES ('Name 1')"));
+  QVERIFY(query.exec("SELECT Name, FieldA FROM Client_tbl"));
+  QVERIFY(query.next());
+  QCOMPARE(query.value(0), QVariant("Name 1"));
+  QCOMPARE(query.value(1), QVariant("Some A"));
+  QVERIFY(query.exec("DELETE FROM Client_tbl"));
+  /*
+   * Drop trigger and check
+   */
+  QVERIFY(driver.dropTrigger(trigger));
+  QVERIFY(query.exec("INSERT INTO Client_tbl (Name) VALUES ('Name 1')"));
+  QVERIFY(query.exec("SELECT Name, FieldA FROM Client_tbl"));
+  QVERIFY(query.next());
+  QCOMPARE(query.value(0), QVariant("Name 1"));
+  QVERIFY(query.value(1).isNull());
+  /*
+   * Cleanup
+   */
+  query.clear();
+  QVERIFY(driver.dropTable(client.toTable()));
+}
+
 void SchemaDriverSqliteTest::simpleCreateAndDropSchemaTest()
 {
   Mdt::Sql::Schema::Driver driver(pvDatabase);

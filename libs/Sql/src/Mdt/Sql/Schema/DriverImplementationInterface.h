@@ -42,6 +42,8 @@
 #include "JoinOperator.h"
 #include "JoinClause.h"
 #include "View.h"
+#include "TablePopulation.h"
+#include "Trigger.h"
 #include "Schema.h"
 #include "Mdt/Error.h"
 #include "Mdt/Expected.h"
@@ -275,6 +277,26 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     bool dropView(const View & view);
 
+    /*! \brief Get SQL statement to create a trigger
+     *
+     * Can be overloaded if default implementation does not work for a specific DBMS
+     */
+    virtual QString getSqlToCreateTrigger(const Trigger & trigger) const;
+
+    /*! \brief Get SQL statement to drop a trigger
+     *
+     * Can be overloaded if default implementation does not work for a specific DBMS
+     */
+    virtual QString getSqlToDropTrigger(const Trigger & trigger) const;
+
+    /*! \brief Create trigger
+     */
+    bool createTrigger(const Trigger & trigger);
+
+    /*! \brief Drop trigger
+     */
+    bool dropTrigger(const Trigger & trigger);
+
     /*! \brief Create schema
      */
     bool createSchema(const Schema & schema);
@@ -323,6 +345,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Get JOIN field comparison operator
      */
     QString joinFieldComparisonOperatorKeyWord(JoinOperator::AbsoluteFieldComparisonOperator op) const;
+
+    /*! \brief Get trigger event key word
+     */
+    QString triggerEventKeyWord(Trigger::Event event) const;
 
     /*! \brief Set last error
      */

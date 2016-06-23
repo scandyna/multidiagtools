@@ -9,7 +9,7 @@ diagrams
     980 905 100 7 0 0
   classdiagram_ref 2521218 // Schema
     906 902 90 22 0 0
-  active  classdiagram_ref 2607234 // SchemaTemplate
+  classdiagram_ref 2607234 // SchemaTemplate
     906 902 100 4 0 0
   classdiagram_ref 2468610 // Relation
     120 110 100 21 0 594
@@ -23,9 +23,11 @@ diagrams
     120 110 80 22 0 23
   classdiagram_ref 2447490 // RowChangeEventMapper
     120 110 100 18 0 0
+  active  classdiagram_ref 1687938 // SqlTrigger
+    906 902 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2607234 // SchemaTemplate
+selected classdiagram_ref 1687938 // SqlTrigger
 open
   
   package_ref 409858 // principes
@@ -40,6 +42,7 @@ open
   classview_ref 1392898 // ControllerRelation
   classview_ref 1327362 // SqlSandbox
   classview_ref 1164418 // Field
+  classview_ref 1177858 // Trigger
   classview_ref 1177986 // Population
   classview_ref 1164546 // Schema
   

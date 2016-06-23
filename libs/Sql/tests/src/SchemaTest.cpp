@@ -39,6 +39,7 @@
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Schema/TableModel.h"
 #include "Mdt/Sql/Schema/TableList.h"
+#include "Mdt/Sql/Schema/TablePopulation.h"
 #include "Mdt/Sql/Schema/Schema.h"
 #include "Schema/Client_tbl.h"
 #include "Schema/Address_tbl.h"
@@ -1721,18 +1722,170 @@ void SchemaTest::tableListTest()
   QVERIFY(list.isEmpty());
 }
 
+void SchemaTest::tablePopulationTest()
+{
+  using Mdt::Sql::Schema::TablePopulation;
+
+  Schema::Client_tbl client;
+
+  /*
+   * Initial state
+   */
+  TablePopulation tp;
+  /*
+   * Set attributes
+   */
+  tp.setName("Client_tbl population");
+  tp.setTable(client);
+  tp.addField(client.Id_PK());
+  tp.addField(client.Name());
+  // Check
+  QCOMPARE(tp.name(), QString("Client_tbl population"));
+  QCOMPARE(tp.tableName(), client.tableName());
+  QCOMPARE(tp.fieldcount(), 2);
+  QCOMPARE(tp.fieldNameList().at(0), QString("Id_PK"));
+  /*
+   * Add data
+   */
+  QCOMPARE(tp.rowCount(), 0);
+  tp << 1 << "Name 1";
+  tp.commitCurrentRow();
+  tp << 2 << "Name 2";
+  tp.commitCurrentRow();
+  tp << 3 << "Name 3";
+  tp.commitCurrentRow();
+  QCOMPARE(tp.rowCount(), 3);
+  QCOMPARE(tp.data(0, 0), QVariant(1));
+  QCOMPARE(tp.data(0, 1), QVariant("Name 1"));
+  QCOMPARE(tp.data(1, 0), QVariant(2));
+  QCOMPARE(tp.data(1, 1), QVariant("Name 2"));
+  QCOMPARE(tp.data(2, 0), QVariant(3));
+  QCOMPARE(tp.data(2, 1), QVariant("Name 3"));
+  /*
+   * Clear
+   */
+  tp.clear();
+  QVERIFY(tp.name().isEmpty());
+  QVERIFY(tp.tableName().isEmpty());
+  QCOMPARE(tp.fieldcount(), 0);
+  QCOMPARE(tp.rowCount(), 0);
+}
+
+void SchemaTest::tablePopulationListTest()
+{
+  using Mdt::Sql::Schema::TablePopulation;
+  using Mdt::Sql::Schema::TablePopulationList;
+
+  Schema::Client_tbl client;
+
+  /*
+   * Initial state
+   */
+  TablePopulationList list;
+  QVERIFY(list.isEmpty());
+  /*
+   * Add 1 element
+   */
+  TablePopulation tp;
+  tp.setName("Test");
+  list.append(tp);
+  QCOMPARE(list.size(), 1);
+  QVERIFY(!list.isEmpty());
+  QCOMPARE(list.at(0).name(), QString("Test"));
+  for(const auto & t : list){
+    QCOMPARE(t.name(), QString("Test"));
+  }
+  /*
+   * Clear
+   */
+  list.clear();
+  QVERIFY(list.isEmpty());
+}
+
+void SchemaTest::triggerTest()
+{
+  using Mdt::Sql::Schema::Trigger;
+
+  Schema::Client_tbl client;
+
+  /*
+   * Initial state
+   */
+  Trigger t;
+  QVERIFY(!t.isTemporary());
+  QVERIFY(t.event() == Trigger::Unknown);
+  /*
+   * Set
+   */
+  t.setName("TRG");
+  t.setEvent(Trigger::AfterInsert);
+  t.setTemporary(true);
+  t.setTable(client);
+  t.setScript("UPDATE Client_tbl SET Name = 'Some name';");
+  // Check
+  QCOMPARE(t.name(), QString("TRG"));
+  QVERIFY(t.event() == Trigger::AfterInsert);
+  QVERIFY(t.isTemporary());
+  QCOMPARE(t.tableName(), client.tableName());
+  QCOMPARE(t.script(), QString("UPDATE Client_tbl SET Name = 'Some name';"));
+  /*
+   * Clear
+   */
+  t.clear();
+  QVERIFY(t.name().isEmpty());
+  QVERIFY(t.event() == Trigger::Unknown);
+  QVERIFY(!t.isTemporary());
+  QVERIFY(t.tableName().isEmpty());
+  QVERIFY(t.script().isEmpty());
+}
+
+void SchemaTest::triggerListTest()
+{
+  using Mdt::Sql::Schema::Trigger;
+  using Mdt::Sql::Schema::TriggerList;
+
+  /*
+   * Initial state
+   */
+  TriggerList list;
+  QVERIFY(list.isEmpty());
+  /*
+   * Add 1 element
+   */
+  Trigger t;
+  t.setName("TRG");
+  list.append(t);
+  QCOMPARE(list.size(), 1);
+  QVERIFY(!list.isEmpty());
+  QCOMPARE(list.at(0).name(), QString("TRG"));
+  for(const auto & trg : list){
+    QCOMPARE(trg.name(), QString("TRG"));
+  }
+  /*
+   * Clear
+   */
+  list.clear();
+  QVERIFY(list.isEmpty());
+}
+
 void SchemaTest::schemaTest()
 {
+  using Mdt::Sql::Schema::TablePopulation;
+  using Mdt::Sql::Schema::Trigger;
+
   Mdt::Sql::Schema::Schema schema;
   Schema::Client_tbl client;
   Schema::Address_tbl address;
   Schema::ClientAdrressView clientAddressView;
+  TablePopulation tp;
+  Trigger trigger;
 
   /*
    * Initial state
    */
   QCOMPARE(schema.tableCount(), 0);
   QCOMPARE(schema.viewCount(), 0);
+  QCOMPARE(schema.tablePopulationCount(), 0);
   /*
    * Add tables
    */
@@ -1750,17 +1903,27 @@ void SchemaTest::schemaTest()
   /*
    * Add populations
    */
-  
+  tp.clear();
+  tp.setName("TP1");
+  schema.addTablePopulation(tp);
+  QCOMPARE(schema.tablePopulationCount(), 1);
+  QCOMPARE(schema.tablePopulationName(0), QString("TP1"));
   /*
    * Add triggers
    */
-  
+  trigger.clear();
+  trigger.setName("TRG1");
+  schema.addTrigger(trigger);
+  QCOMPARE(schema.triggerCount(), 1);
+  QCOMPARE(schema.triggerName(0), QString("TRG1"));
   /*
    * Clear
    */
   schema.clear();
   QCOMPARE(schema.tableCount(), 0);
   QCOMPARE(schema.viewCount(), 0);
+  QCOMPARE(schema.tablePopulationCount(), 0);
+  QCOMPARE(schema.triggerCount(), 0);
 }
 
 /*

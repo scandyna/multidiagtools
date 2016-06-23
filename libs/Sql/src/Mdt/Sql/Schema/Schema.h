@@ -25,6 +25,10 @@
 #include "TableList.h"
 #include "View.h"
 #include "ViewList.h"
+#include "TablePopulation.h"
+#include "TablePopulationList.h"
+#include "Trigger.h"
+#include "TriggerList.h"
 #include <QString>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -115,6 +119,57 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return pvViewList;
     }
 
+    /*! \brief Add a table population
+     */
+    void addTablePopulation(const TablePopulation & tp);
+
+    /*! \brief Get count of table population
+     */
+    int tablePopulationCount() const
+    {
+      return pvTablePopulationList.size();
+    }
+
+    /*! \brief Get table population name
+     *
+     * \pre index must be in a valid range
+     */
+    QString tablePopulationName(int index) const
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < pvTablePopulationList.size());
+      return pvTablePopulationList.at(index).name();
+    }
+
+    /*! \brief Get all table populations
+     */
+    TablePopulationList tablePopulationList() const
+    {
+      return pvTablePopulationList;
+    }
+
+    /*! \brief Add a trigger
+     */
+    void addTrigger(const Trigger & trigger);
+
+    /*! \brief Get trigger count
+     */
+    int triggerCount() const
+    {
+      return pvTriggerList.size();
+    }
+
+    /*! \brief Get trigger name
+     *
+     * \pre index must be in a valid range
+     */
+    QString triggerName(int index) const
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < pvTriggerList.size());
+      return pvTriggerList.at(index).name();
+    }
+
     /*! \brief Clear schema
      */
     void clear();
@@ -123,6 +178,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     TableList pvTableList;
     ViewList pvViewList;
+    TablePopulationList pvTablePopulationList;
+    TriggerList pvTriggerList;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

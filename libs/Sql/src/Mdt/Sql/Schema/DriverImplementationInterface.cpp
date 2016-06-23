@@ -521,6 +521,69 @@ bool DriverImplementationInterface::dropView(const View & view)
   return true;
 }
 
+QString DriverImplementationInterface::getSqlToCreateTrigger(const Trigger& trigger) const
+{
+  QString sql;
+
+  if(trigger.isTemporary()){
+    sql = QStringLiteral("CREATE TEMPORARY TRIGGER ");
+  }else{
+    sql = QStringLiteral("CREATE TRIGGER ");
+  }
+  sql += escapeTableName(trigger.name()) % QStringLiteral(" ") \
+       % triggerEventKeyWord(trigger.event()) % QStringLiteral(" ON ") % escapeTableName(trigger.tableName()) \
+       % QStringLiteral("\nFOR EACH ROW\nBEGIN\n") \
+       % trigger.script() \
+       % QStringLiteral("\nEND;");
+
+  return sql;
+}
+
+bool DriverImplementationInterface::createTrigger(const Trigger& trigger)
+{
+  QSqlQuery query(pvDatabase);
+  QString sql;
+
+  sql = getSqlToCreateTrigger(trigger);
+  if(!query.exec(sql)){
+    QString msg = tr("Creating trigger '%1' failed.").arg(trigger.name());
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverImplementationInterface");
+    error.stackError(mdtErrorFromQSqlQuery(query, "DriverImplementationInterface"));
+    error.commit();
+    setLastError(error);
+    return false;
+  }
+
+  return true;
+}
+
+bool DriverImplementationInterface::dropTrigger(const Trigger& trigger)
+{
+  QSqlQuery query(pvDatabase);
+  QString sql;
+
+  sql = getSqlToDropTrigger(trigger);
+  if(!query.exec(sql)){
+    QString msg = tr("Removing trigger '%1' failed.").arg(trigger.name());
+    auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverImplementationInterface");
+    error.stackError(mdtErrorFromQSqlQuery(query, "DriverImplementationInterface"));
+    error.commit();
+    setLastError(error);
+    return false;
+  }
+
+  return true;
+}
+
+QString DriverImplementationInterface::getSqlToDropTrigger(const Trigger& trigger) const
+{
+  QString sql;
+
+  sql = QStringLiteral("DROP TRIGGER IF EXISTS ") % escapeTableName(trigger.name()) % QStringLiteral(";");
+
+  return sql;
+}
+
 bool DriverImplementationInterface::createSchema(const Schema & schema)
 {
   const auto tableList = schema.tableList();
@@ -640,6 +703,17 @@ QString DriverImplementationInterface::joinFieldComparisonOperatorKeyWord(JoinOp
       return QStringLiteral("=");
     case JoinOperator::MtfGreaterThanTdjf:
       return QStringLiteral(">");
+  }
+  return QString();
+}
+
+QString DriverImplementationInterface::triggerEventKeyWord(Trigger::Event event) const
+{
+  switch(event){
+    case Trigger::Unknown:
+      return QStringLiteral("");
+    case Trigger::AfterInsert:
+      return QStringLiteral("AFTER INSERT");
   }
   return QString();
 }

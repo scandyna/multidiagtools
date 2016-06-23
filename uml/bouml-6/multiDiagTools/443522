@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 78
+  revision 79
   modified_by 2 "philippe"
   // class settings
   
@@ -6136,7 +6136,7 @@ ${inlines}
       size A4
     end
 
-    class 1954690 "mdtSqlTriggerSchema"
+    class 1954690 "Trigger"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -6808,7 +6808,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
 	    classrelation_ref 2291202 // <directional composition>
-	  b parent class_ref 1954690 // mdtSqlTriggerSchema
+	  b parent class_ref 1954690 // Trigger
       end
 
       classrelation 2291330 // <directional composition>

@@ -32,10 +32,22 @@ void Schema::addView(const View & view)
   pvViewList.append(view);
 }
 
+void Schema::addTablePopulation(const TablePopulation& tp)
+{
+  pvTablePopulationList.append(tp);
+}
+
+void Schema::addTrigger(const Trigger& trigger)
+{
+  pvTriggerList.append(trigger);
+}
+
 void Schema::clear()
 {
   pvTableList.clear();
   pvViewList.clear();
+  pvTablePopulationList.clear();
+  pvTriggerList.clear();
 }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

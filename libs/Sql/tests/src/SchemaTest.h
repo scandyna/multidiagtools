@@ -70,6 +70,12 @@ class SchemaTest : public QObject
   void tableModelTest();
   void tableListTest();
 
+  void tablePopulationTest();
+  void tablePopulationListTest();
+
+  void triggerTest();
+  void triggerListTest();
+
   void schemaTest();
 };
 
