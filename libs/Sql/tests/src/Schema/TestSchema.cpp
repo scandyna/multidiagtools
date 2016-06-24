@@ -27,13 +27,11 @@ namespace Schema{
 
 TestSchema::TestSchema()
 {
-  using Mdt::Sql::Schema::TablePopulation;
-
-  TablePopulation tp;
-
   addTable(Client_tbl());
   addTable(Address_tbl());
   addView(ClientAdrressView());
+  addTable(Client2_tbl());
+  addTable(Address2_tbl());
 }
 
 } // namespace Schema{

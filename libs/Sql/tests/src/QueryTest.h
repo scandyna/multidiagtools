@@ -35,6 +35,8 @@ class QueryTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
+  void insertQueryTest();
+
  private:
 
   // Create test database schema - Will FAIL on problem

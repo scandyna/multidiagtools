@@ -297,6 +297,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     bool dropTrigger(const Trigger & trigger);
 
+    /*! \brief Populate a table
+     */
+    bool populateTable(const TablePopulation & tp);
+
     /*! \brief Create schema
      */
     bool createSchema(const Schema & schema);

@@ -47,6 +47,28 @@ namespace Schema{
     }
   };
 
+  class Address2_tbl : public Mdt::Sql::Schema::TableTemplate<Address_tbl>
+  {
+   public:
+
+    Address2_tbl();
+
+    Mdt::Sql::Schema::AutoIncrementPrimaryKey Id_PK() const
+    {
+      return autoIncrementPrimaryKey();
+    }
+
+    Mdt::Sql::Schema::Field Client_Id_FK() const
+    {
+      return field(1);
+    }
+
+    Mdt::Sql::Schema::Field Street() const
+    {
+      return field(2);
+    }
+  };
+
 } // namespace Schema{
 
 #endif // #ifndef SCHEMA_ADDRESS_TBL_H

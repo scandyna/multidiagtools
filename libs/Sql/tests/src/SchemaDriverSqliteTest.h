@@ -69,6 +69,8 @@ class SchemaDriverSqliteTest : public QObject
   void triggerDefinitionTest();
   void simpleTriggerCreateDropTest();
 
+  void tablePopulationTest();
+
   void simpleCreateAndDropSchemaTest();
 
  private:

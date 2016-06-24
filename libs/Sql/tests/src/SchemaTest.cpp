@@ -283,7 +283,7 @@ void SchemaTest::collationTest()
 
 void SchemaTest::fieldNameTest()
 {
-  using Mdt::Sql::Schema::FieldName;
+  using Mdt::Sql::FieldName;
 
   FieldName fieldA("A");
   QCOMPARE(fieldA.toString(), QString("A"));
@@ -689,7 +689,7 @@ void SchemaTest::indexListTest()
 {
   using Mdt::Sql::Schema::Index;
   using Mdt::Sql::Schema::IndexList;
-  using Mdt::Sql::Schema::FieldName;
+  using Mdt::Sql::FieldName;
   using Mdt::Sql::Schema::TableName;
 
   /*
@@ -1743,6 +1743,7 @@ void SchemaTest::tablePopulationTest()
   QCOMPARE(tp.name(), QString("Client_tbl population"));
   QCOMPARE(tp.tableName(), client.tableName());
   QCOMPARE(tp.fieldcount(), 2);
+  QCOMPARE(tp.fieldName(0), QString("Id_PK"));
   QCOMPARE(tp.fieldNameList().at(0), QString("Id_PK"));
   /*
    * Add data

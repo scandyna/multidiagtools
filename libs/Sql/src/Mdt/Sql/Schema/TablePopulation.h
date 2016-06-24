@@ -141,6 +141,17 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return pvFieldNameList.size();
     }
 
+    /*! \brief Get field name at fieldIndex
+     *
+     * \pre fieldIndex must be in valid range
+     */
+    QString fieldName(int fieldIndex) const
+    {
+      Q_ASSERT(fieldIndex >= 0);
+      Q_ASSERT(fieldIndex < pvFieldNameList.size());
+      return pvFieldNameList.at(fieldIndex);
+    }
+
     /*! \brief Get list of field names
      */
     QStringList fieldNameList() const

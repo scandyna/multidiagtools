@@ -2,61 +2,53 @@ format 211
 
 classcanvas 128002 class_ref 1995138 // JoinClause
   classdiagramsettings member_max_width 0 end
-  xyz 674.6 223 2000
+  xyz 194 343 2000
 end
 classcanvas 128130 class_ref 1995266 // JoinKey
   classdiagramsettings member_max_width 0 end
-  xyz 330.8 40.8 2006
+  xyz 522 232 2006
 end
 classcanvas 128642 class_ref 2775042 // Field
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 474.6 367.8 2000
+  xyz 138 151 2000
 end
 classcanvas 129794 class_ref 2824706 // AutoIncrementPrimaryKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 538.8 447.8 2000
+  xyz 434 151 2000
 end
 classcanvas 129922 class_ref 2852610 // SingleFieldPrimaryKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 746.4 367.8 2000
+  xyz 258 75 2000
 end
 classcanvas 130946 class_ref 2900354 // MainTableField
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 578.2 367.8 2000
+  xyz 106 75 2000
 end
 classcanvas 131074 class_ref 2900482 // TableToJoinField
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 759 447.8 2000
+  xyz 271 151 2000
 end
 note 133250 "JoinClause should be directly in Sql namepsace ?"
-  xyzwh 40.6 218.8 2000 593 61
-classcanvas 133506 class_ref 2775682 // ForeignKey
-  classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 1053.4 344.6 3005
-end
-classcanvas 134146 class_ref 2967298 // JoinHelper
-  classdiagramsettings member_max_width 0 end
-  xyz 995.1 248.5 2000
-end
+  xyzwh 40 562 2000 593 61
 classcanvas 134786 class_ref 2967810 // JoinOperator
   classdiagramsettings member_max_width 0 end
-  xyz 312 723.4 2000
+  xyz 216 715 2000
 end
 classcanvas 134914 class_ref 2967682 // ConstraintOperator
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 293 607 2006
+  xyz 41 703 2006
 end
 classcanvas 135170 class_ref 2967554 // RelativeFieldComparisonOperator
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 42.6 711.4 2006
+  xyz 150 807 2006
 end
 classcanvas 135426 class_ref 2967426 // AbsoluteFieldComparisonOperator
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 243 815.8 2006
+  xyz 351 703 2006
 end
 classcanvas 135682 class_ref 2967938 // JoinKeyList
   classdiagramsettings member_max_width 0 end
-  xyz 768.2 87.8 2000
+  xyz 672 407 2000
 end
 relationcanvas 131202 relation_ref 3282050 // <dependency>
   decenter_begin 581
@@ -66,16 +58,13 @@ relationcanvas 131202 relation_ref 3282050 // <dependency>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131330 relation_ref 3282178 // <dependency>
-  decenter_begin 528
-  from ref 131074 z 2001 to point 823.5 527.3
-  line 132482 z 2001 to point 495.9 527.3
-  line 132610 z 2001 to ref 128642
+  decenter_begin 581
+  decenter_end 581
+  from ref 131074 z 2001 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131458 relation_ref 3282306 // <dependency>
-  decenter_begin 581
-  decenter_end 581
   from ref 130946 z 2001 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -87,42 +76,28 @@ relationcanvas 131586 relation_ref 3282434 // <dependency>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131714 relation_ref 3282562 // <dependency>
-  decenter_begin 581
-  decenter_end 581
   from ref 130946 z 2001 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131842 relation_ref 3282690 // <dependency>
   decenter_end 519
-  from ref 130946 z 2001 to ref 129794
+  from ref 130946 z 2001 to point 160 40
+  line 136194 z 2001 to point 528 40
+  line 136322 z 2001 to ref 129794
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132226 relation_ref 3282818 // <dependency>
-  geometry HV unfixed
-  decenter_begin 843
-  from ref 128002 z 2001 to point 630 317
-  line 136066 z 2001 to ref 130946
+  from ref 128002 z 2001 to point 64 432
+  line 136066 z 2001 to point 64 96
+  line 136450 z 2001 to ref 130946
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132354 relation_ref 3282946 // <dependency>
-  geometry VH unfixed
-  decenter_begin 947
-  decenter_end 581
-  from ref 128002 z 2001 to point 941 469
-  line 133890 z 2001 to ref 131074
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 134274 relation_ref 3337730 // <dependency>
-  from ref 134146 z 2001 to ref 128002
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 134402 relation_ref 3337858 // <dependency>
-  from ref 134146 z 3006 to ref 133506
+  decenter_end 528
+  from ref 128002 z 2001 to ref 131074
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
@@ -133,18 +108,17 @@ line 135298 ---+
 line 135554 ---+
   from ref 135426 z 2007 to ref 134786
 relationcanvas 135810 relation_ref 3337986 // <directional composition>
-  decenter_end 539
+  decenter_end 581
   from ref 128002 z 2001 to ref 135682
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 135938 relation_ref 3338114 // <directional composition>
-  decenter_begin 395
-  decenter_end 467
+  decenter_begin 539
   from ref 135682 z 2007 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 736 111 3000 no_multiplicity_b
+  multiplicity_a_pos 704 376 3000 no_multiplicity_b
 end
-line 133378 -_-_ decenter_end 217
+line 133378 -_-_
   from ref 133250 z 2001 to ref 128002
 end

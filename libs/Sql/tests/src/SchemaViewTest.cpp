@@ -51,7 +51,7 @@ void SchemaViewTest::selectFieldTest()
 {
   using Mdt::Sql::Schema::SelectField;
   using Mdt::Sql::Schema::Field;
-  using Mdt::Sql::Schema::FieldName;
+  using Mdt::Sql::FieldName;
 
   SelectField SF1("Name");
   QCOMPARE(SF1.fieldName(), QString("Name"));
@@ -89,7 +89,7 @@ void SchemaViewTest::selectFieldTest()
 void SchemaViewTest::selectFieldListTest()
 {
   using Mdt::Sql::Schema::SelectField;
-  using Mdt::Sql::Schema::FieldName;
+  using Mdt::Sql::FieldName;
 
   /*
    * Initial state
@@ -530,11 +530,11 @@ void SchemaViewTest::viewTableTest()
 
 void SchemaViewTest::viewTest()
 {
+  using Mdt::Sql::FieldName;
   using Mdt::Sql::Schema::View;
   using Mdt::Sql::Schema::ViewTable;
   using Mdt::Sql::Schema::SelectField;
   using Mdt::Sql::Schema::TableName;
-  using Mdt::Sql::Schema::FieldName;
   using Mdt::Sql::Schema::JoinClause;
   using Mdt::Sql::Schema::JoinOperator;
   using Mdt::Sql::Schema::MainTableField;

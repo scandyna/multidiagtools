@@ -24,7 +24,7 @@
 #include "ViewTable.h"
 #include "SelectFieldList.h"
 #include "Field.h"
-#include "FieldName.h"
+#include "Mdt/Sql/FieldName.h"
 #include "AutoIncrementPrimaryKey.h"
 #include "SingleFieldPrimaryKey.h"
 #include "JoinClauseList.h"

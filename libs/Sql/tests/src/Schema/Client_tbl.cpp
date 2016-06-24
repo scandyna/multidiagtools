@@ -54,4 +54,36 @@ Client_tbl::Client_tbl()
   addField(FieldB);
 }
 
+Client2_tbl::Client2_tbl()
+{
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+
+  // Id_PK
+  AutoIncrementPrimaryKey Id_PK;
+  Id_PK.setFieldName("Id_PK");
+  // Name
+  Field Name;
+  Name.setName("Name");
+  Name.setType(FieldType::Varchar);
+  Name.setLength(100);
+  // FieldA
+  Field FieldA;
+  FieldA.setName("FieldA");
+  FieldA.setType(FieldType::Varchar);
+  FieldA.setLength(50);
+  // FieldA
+  Field FieldB;
+  FieldB.setName("FieldB");
+  FieldB.setType(FieldType::Varchar);
+  FieldB.setLength(50);
+  // Setup table
+  setTableName("Client2_tbl");
+  setPrimaryKey(Id_PK);
+  addField(Name);
+  addField(FieldA);
+  addField(FieldB);
+}
+
 } // namespace Schema{

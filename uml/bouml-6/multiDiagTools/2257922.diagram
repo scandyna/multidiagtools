@@ -16,6 +16,8 @@ classcanvas 128514 class_ref 1067266 // mdtSqlRecord
   classdiagramsettings member_max_width 0 end
   xyz 727 131 2006
 end
+note 128770 "Seems as wrong as mdtTtBase.."
+  xyzwh 301 796 2000 299 51
 relationcanvas 128258 relation_ref 2945666 // <dependency>
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
@@ -26,4 +28,6 @@ relationcanvas 128642 relation_ref 1343362 // <dependency>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
+line 128898 -_-_
+  from ref 128770 z 2001 to ref 128002
 end

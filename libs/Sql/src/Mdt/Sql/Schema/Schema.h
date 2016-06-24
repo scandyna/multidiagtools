@@ -170,6 +170,13 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return pvTriggerList.at(index).name();
     }
 
+    /*! \brief Get all triggers
+     */
+    TriggerList triggerList() const
+    {
+      return pvTriggerList;
+    }
+
     /*! \brief Clear schema
      */
     void clear();

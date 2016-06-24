@@ -74,5 +74,55 @@ Address_tbl::Address_tbl()
   addForeignKey(Fk_Client_Id_FK);
 }
 
+Address2_tbl::Address2_tbl()
+{
+  using Mdt::Sql::Schema::FieldType;
+  using Mdt::Sql::Schema::Field;
+  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+  using Mdt::Sql::Schema::ForeignKey;
+  using Mdt::Sql::Schema::ParentTableFieldName;
+  using Mdt::Sql::Schema::ChildTableFieldName;
+
+  Client2_tbl client2_tbl;
+
+  // Id_PK
+  AutoIncrementPrimaryKey Id_PK;
+  Id_PK.setFieldName("Id_PK");
+  // Client_Id_FK
+  Field Client_Id_FK;
+  Client_Id_FK.setName("Client_Id_FK");
+  Client_Id_FK.setType(FieldType::Integer);
+  Client_Id_FK.setRequired(true);
+  // Street
+  Field Street;
+  Street.setName("Street");
+  Street.setType(FieldType::Varchar);
+  Street.setLength(150);
+  // FieldAA
+  Field FieldAA;
+  FieldAA.setName("FieldAA");
+  FieldAA.setType(FieldType::Varchar);
+  FieldAA.setLength(50);
+  // FieldAB
+  Field FieldAB;
+  FieldAB.setName("FieldAB");
+  FieldAB.setType(FieldType::Varchar);
+  FieldAB.setLength(50);
+  // Fk_Client_Id_FK
+  ForeignKey Fk_Client_Id_FK;
+  Fk_Client_Id_FK.setParentTable(client2_tbl);
+  Fk_Client_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
+  Fk_Client_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
+  Fk_Client_Id_FK.setCreateChildIndex(true);
+  Fk_Client_Id_FK.addKeyFields(ParentTableFieldName(client2_tbl.Id_PK()), ChildTableFieldName(Client_Id_FK));
+  // Setup table
+  setTableName("Address2_tbl");
+  setPrimaryKey(Id_PK);
+  addField(Client_Id_FK);
+  addField(Street);
+  addField(FieldAA);
+  addField(FieldAB);
+  addForeignKey(Fk_Client_Id_FK);
+}
 
 } // namespace Schema{

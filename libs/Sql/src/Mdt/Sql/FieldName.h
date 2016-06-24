@@ -18,12 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_FIELD_NAME_H
-#define MDT_SQL_SCHEMA_FIELD_NAME_H
+#ifndef MDT_SQL_FIELD_NAME_H
+#define MDT_SQL_FIELD_NAME_H
 
 #include <QString>
 
-namespace Mdt{ namespace Sql{ namespace Schema{
+namespace Mdt{ namespace Sql{
 
   /*! \brief Wrapper for compile time checking
    */
@@ -48,6 +48,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     QString pvFieldName;
   };
 
-}}} // namespace Mdt{ namespace Sql{ namespace Schema{
+}} // namespace Mdt{ namespace Sql{
 
-#endif // MDT_SQL_SCHEMA_FIELD_NAME_H
+#endif // MDT_SQL_FIELD_NAME_H

@@ -2,28 +2,32 @@ format 211
 
 classcanvas 128130 class_ref 1994882 // SelectField
   classdiagramsettings member_max_width 0 end
-  xyz 472 36 2000
+  xyz 456 135 2000
 end
 classcanvas 128258 class_ref 2775042 // Field
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 610 207 2006
+  xyz 818 171 2006
 end
 classcanvas 128514 class_ref 2940418 // FieldName
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 833 83 2000
+  xyz 577 55 2000
 end
 classcanvas 128770 class_ref 2960642 // SelectFieldList
   classdiagramsettings member_max_width 0 end
-  xyz 162 208 2000
+  xyz 42 40 2000
 end
 classcanvas 128898 class_ref 2960770 // SelectFieldListItem
   classdiagramsettings member_max_width 0 end
-  xyz 263 65 2000
+  xyz 143 153 2000
 end
 classcanvas 129282 class_ref 1994626 // ViewTable
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 42 223 2000
+  xyz 585.5 328.5 2000
 end
+note 129410 "See if this go into Mdt::Sql 
+
+In this case, all Schema dependent include should be in a cpp file"
+  xyzwh 40.5 328.5 2000 465 85
 relationcanvas 128386 relation_ref 3280898 // <dependency>
   from ref 128130 z 2007 to ref 128258
   no_role_a no_role_b
@@ -44,6 +48,6 @@ relationcanvas 129154 relation_ref 3324546 // <directional composition>
   decenter_end 520
   from ref 128770 z 2001 to ref 128898
   no_role_a no_role_b
-  multiplicity_a_pos 336 151 3000 no_multiplicity_b
+  multiplicity_a_pos 216 130 3000 no_multiplicity_b
 end
 end

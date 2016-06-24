@@ -42,6 +42,23 @@ namespace Schema{
     }
   };
 
+  class Client2_tbl : public Mdt::Sql::Schema::TableTemplate<Client_tbl>
+  {
+   public:
+
+    Client2_tbl();
+
+    Mdt::Sql::Schema::AutoIncrementPrimaryKey Id_PK() const
+    {
+      return autoIncrementPrimaryKey();
+    }
+
+    Mdt::Sql::Schema::Field Name() const
+    {
+      return field(1);
+    }
+  };
+
 } // namespace Schema{
 
 #endif // #ifndef SCHEMA_CLIENT_TBL_H

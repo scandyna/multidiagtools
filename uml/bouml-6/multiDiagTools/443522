@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 79
+  revision 81
   modified_by 2 "philippe"
   // class settings
   
@@ -1622,11 +1622,6 @@ ${inlines}
     
     activitydiagramsettings
      end
-    classdiagram 2580482 "FieldName"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
     classdiagram 2461058 "FieldType"
       classdiagramsettings member_max_width 0 end
       size B
@@ -2590,22 +2585,6 @@ ${inlines}
 	
 	
       end
-    end
-
-    class 2940418 "FieldName"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
     end
   end
 
@@ -4996,18 +4975,6 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 2050690 "expression"
-	public type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
       classrelation 3299202 // <dependency>
 	relation 3280898 -_->
 	  a public
@@ -5803,7 +5770,7 @@ ${inlines}
       mysql_decl ""
       
       class 2974722 "MainTableRule"
-	visibility package stereotype "enum"
+	visibility private stereotype "enum"
 	cpp_decl "${comment}enum ${name} {
 ${items}
 };
@@ -5880,6 +5847,14 @@ ${items}};
 	
 	
 	
+      end
+
+      classrelation 3390978 // <dependency>
+	relation 3372546 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3390978 // <dependency>
+	  b parent class_ref 2775682 // ForeignKey
       end
     end
 

@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "DriverImplementationInterface.h"
 #include "Mdt/Sql/Error.h"
+#include "../InsertQuery.h"
 #include <QStringList>
 #include <QStringBuilder>
 #include <QLatin1String>
@@ -584,10 +585,31 @@ QString DriverImplementationInterface::getSqlToDropTrigger(const Trigger& trigge
   return sql;
 }
 
+bool DriverImplementationInterface::populateTable(const TablePopulation & tp)
+{
+  InsertQuery query(database());
+  const int rowCount = tp.rowCount();
+  const int columnCount = tp.fieldcount();
+
+  for(int row = 0; row < rowCount; ++row){
+    query.setTableName(tp.tableName());
+    for(int col = 0; col < columnCount; ++col){
+      query.addValue(FieldName(tp.fieldName(col)), tp.data(row, col));
+    }
+    if(!query.exec()){
+      setLastError(query.lastError());
+    }
+    query.clear();
+  }
+
+  return true;
+}
+
 bool DriverImplementationInterface::createSchema(const Schema & schema)
 {
   const auto tableList = schema.tableList();
   const auto viewList = schema.viewList();
+  const auto triggerList = schema.triggerList();
 
   /// \todo use transactions !
 
@@ -604,7 +626,11 @@ bool DriverImplementationInterface::createSchema(const Schema & schema)
     }
   }
   // Create triggers
-  
+  for(const auto & trigger : triggerList){
+    if(!createTrigger(trigger)){
+      return false;
+    }
+  }
   // Populate tables
   
 

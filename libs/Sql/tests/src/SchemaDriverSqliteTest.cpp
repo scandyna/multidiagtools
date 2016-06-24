@@ -1457,8 +1457,8 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
 
 void SchemaDriverSqliteTest::selectFieldDefinitionTest()
 {
+  using Mdt::Sql::FieldName;
   using Mdt::Sql::Schema::SelectField;
-  using Mdt::Sql::Schema::FieldName;
 
   Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
 
@@ -1473,9 +1473,9 @@ void SchemaDriverSqliteTest::selectFieldDefinitionTest()
 
 void SchemaDriverSqliteTest::selectFieldListDefinitionTest()
 {
+  using Mdt::Sql::FieldName;
   using Mdt::Sql::Schema::SelectField;
   using Mdt::Sql::Schema::SelectFieldList;
-  using Mdt::Sql::Schema::FieldName;
 
   Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
   SelectFieldList list;
@@ -1602,10 +1602,10 @@ void SchemaDriverSqliteTest::joinClauseDefinitionTest()
 
 void SchemaDriverSqliteTest::viewDefinitionTest()
 {
+  using Mdt::Sql::FieldName;
   using Mdt::Sql::Schema::View;
   using Mdt::Sql::Schema::ViewTable;
   using Mdt::Sql::Schema::TableName;
-  using Mdt::Sql::Schema::FieldName;
   using Mdt::Sql::Schema::MainTableField;
   using Mdt::Sql::Schema::TableToJoinField;
   using Mdt::Sql::Schema::JoinClause;
@@ -1802,6 +1802,50 @@ void SchemaDriverSqliteTest::simpleTriggerCreateDropTest()
   QVERIFY(query.next());
   QCOMPARE(query.value(0), QVariant("Name 1"));
   QVERIFY(query.value(1).isNull());
+  /*
+   * Cleanup
+   */
+  query.clear();
+  QVERIFY(driver.dropTable(client.toTable()));
+}
+
+void SchemaDriverSqliteTest::tablePopulationTest()
+{
+  using Mdt::Sql::Schema::TablePopulation;
+
+  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Schema::Client_tbl client;
+  QSqlQuery query(pvDatabase);
+  TablePopulation tp;
+
+  /*
+   * Setup table population
+   */
+  tp.setTable(client);
+  tp.addField(client.Id_PK());
+  tp.addField(client.Name());
+  tp << 1 << "Name 1";
+  tp.commitCurrentRow();
+  tp << 2 << "Name 2";
+  tp.commitCurrentRow();
+  /*
+   * Create Client_tbl
+   */
+  QVERIFY(driver.dropTable(client.toTable()));
+  QVERIFY(driver.createTable(client.toTable()));
+  /*
+   * Check
+   */
+  QVERIFY(query.exec("SELECT Id_PK, Name FROM Client_tbl"));
+  QVERIFY(!query.next());
+  QVERIFY(driver.populateTable(tp));
+  QVERIFY(query.exec("SELECT Id_PK, Name FROM Client_tbl"));
+  QVERIFY(query.next());
+  QCOMPARE(query.value(0), QVariant(1));
+  QCOMPARE(query.value(1), QVariant("Name 1"));
+  QVERIFY(query.next());
+  QCOMPARE(query.value(0), QVariant(2));
+  QCOMPARE(query.value(1), QVariant("Name 2"));
   /*
    * Cleanup
    */

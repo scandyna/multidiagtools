@@ -1,6 +1,6 @@
 format 211
 "CableList" // Mdt::CableList
-  revision 41
+  revision 42
   modified_by 2 "philippe"
   // class settings
   
@@ -791,6 +791,34 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    classdiagram 2627330 "ArticleConnectionModel"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3001602 "ArticleConnectionModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3390850 // <dependency>
+	relation 3372418 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3390850 // <dependency>
+	  b parent class_ref 2634370 // ArticleConnectionPk
       end
     end
   end

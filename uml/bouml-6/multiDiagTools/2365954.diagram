@@ -4,4 +4,9 @@ classcanvas 128002 class_ref 2641154 // Storage
   classdiagramsettings member_max_width 0 end
   xyz 40.5 40.5 2000
 end
+note 128130 "Should we use Qt models ?
+
+Hmm... for some situation, but the storage  should exist (for dialogs, etc..).
+What if we want to display a result of a query in a table view ? Create several models ??"
+  xyzwh 61 210 2000 643 129
 end

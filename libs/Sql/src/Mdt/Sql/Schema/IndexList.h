@@ -22,7 +22,7 @@
 #define MDT_SQL_SCHEMA_INDEX_LIST_H
 
 #include "Index.h"
-#include "FieldName.h"
+#include "Mdt/Sql/FieldName.h"
 #include "TableName.h"
 #include <QVector>
 
