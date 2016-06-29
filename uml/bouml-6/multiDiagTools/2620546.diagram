@@ -20,12 +20,6 @@ classcanvas 129282 class_ref 910594 // QSqlQuery
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 527 39 2006
 end
-note 130818 "Note: hide all Sql::Schema  includes in cpp file.
-
-This seems better than first idea, that was to create 2 clases (InsertQuery and TypedInsertQuery, that inherited from InsertQuery..)
-
-Note2: add a protected function that returns the prepare statement, then, in unit tests, inherit anb expose this function."
-  xyzwh 42 431 2000 261 243
 relationcanvas 129538 relation_ref 3365506 // <directional composition>
   from ref 128002 z 2007 to ref 129282
   no_role_a no_role_b
@@ -49,6 +43,4 @@ relationcanvas 131330 relation_ref 3365890 // <dependency>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-line 130946 -_-_ decenter_end 960
-  from ref 130818 z 2001 to ref 128002
 end

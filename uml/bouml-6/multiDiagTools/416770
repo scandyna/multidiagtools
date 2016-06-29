@@ -1,6 +1,6 @@
 format 211
 "CableList" // Mdt::CableList
-  revision 42
+  revision 43
   modified_by 2 "philippe"
   // class settings
   
@@ -820,6 +820,11 @@ ${inlines}
 	    classrelation_ref 3390850 // <dependency>
 	  b parent class_ref 2634370 // ArticleConnectionPk
       end
+    end
+
+    classdiagram 2634370 "ArticleConnection"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
   end
 

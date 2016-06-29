@@ -2,11 +2,11 @@ format 211
 
 classcanvas 128002 class_ref 2782850 // TableControllerRelation
   classdiagramsettings member_max_width 0 end
-  xyz 39.85 582.15 2000
+  xyz 39.85 581.95 2000
 end
 classcanvas 128130 class_ref 2926850 // TableControllerChildFilter
   classdiagramsettings member_max_width 0 end
-  xyz 589.6 400.4 2000
+  xyz 589.1 401 2000
 end
 classcanvas 128258 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
@@ -14,46 +14,46 @@ classcanvas 128258 class_ref 138626 // QObject
 end
 classcanvas 128642 class_ref 2926978 // SqlTableControllerRelation
   classdiagramsettings member_max_width 0 end
-  xyz 192.85 700.45 2000
+  xyz 192.85 699.85 2000
 end
 classcanvas 128898 class_ref 2927106 // SqlTableControllerChildFilter
   classdiagramsettings member_max_width 0 end
-  xyz 996.7 400.4 2000
+  xyz 995.6 401 2000
 end
 classcanvas 129154 class_ref 2684802 // TableController
   classdiagramsettings member_max_width 0 end
-  xyz 1580.95 246.15 2000
+  xyz 1579.35 245.55 2000
 end
 classcanvas 129794 class_ref 147202 // QAbstractTableModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1386.9 246.15 2000
+  xyz 1385.7 245.55 2000
 end
 classcanvas 129922 class_ref 174210 // QSqlTableModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1403.9 408.4 2000
+  xyz 1402.7 409 2000
 end
 note 130434 "signal/slot"
-  xyzwh 1732.1 242.15 2000 144 51
+  xyzwh 1732.4 242.85 2000 144 51
 classcanvas 131202 class_ref 2927234 // ControllerFilterParentRecord
   classdiagramsettings member_max_width 0 end
-  xyz 322.3 400.4 2000
+  xyz 323.9 401 2000
 end
 classcanvas 131970 class_ref 2927362 // SqlTableController
   classdiagramsettings member_max_width 0 end
-  xyz 1573.9 408.4 2000
+  xyz 1574 409 2000
 end
 classcanvas 134018 class_ref 174338 // QSqlQueryModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1404.85 328.75 2006
+  xyz 1404.85 328.25 2006
 end
 classcanvas 135682 class_ref 146946 // QAbstractItemModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1390.9 163.55 2000
+  xyz 1389.7 163.55 2000
 end
 relationcanvas 128386 relation_ref 3135362 // <generalisation>
   geometry VHV unfixed
-  from ref 128002 z 2007 to point 282 123.5
-  line 136450 z 2007 to point 1462 123.5
+  from ref 128002 z 2007 to point 281 124.2
+  line 136450 z 2007 to point 1461 124.2
   line 136578 z 2007 to ref 128258
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -62,8 +62,8 @@ relationcanvas 128514 relation_ref 3309442 // <directional composition>
   geometry VHV unfixed
   decenter_begin 879
   decenter_end 46
-  from ref 128002 z 2001 to point 468 500.4
-  line 136834 z 2001 to point 603 500.4
+  from ref 128002 z 2001 to point 468 501.2
+  line 136834 z 2001 to point 603 501.2
   line 136962 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -81,13 +81,13 @@ end
 relationcanvas 130050 relation_ref 3309826 // <association>
   decenter_begin 900
   decenter_end 963
-  from ref 129154 z 2001 to point 1680.4 335.9
-  line 137090 z 2001 to point 1745.9 335.9
-  line 137218 z 2001 to point 1745.9 542.8
-  line 137346 z 2001 to point 512.8 542.8
+  from ref 129154 z 2001 to point 1680.2 335.7
+  line 137090 z 2001 to point 1745.7 335.7
+  line 137218 z 2001 to point 1745.7 542.4
+  line 137346 z 2001 to point 512.4 542.4
   line 137474 z 2001 to ref 128002
   no_role_a no_role_b
-  multiplicity_a_pos 496 559 3000 multiplicity_b_pos 1664 296 3000
+  multiplicity_a_pos 490 558 3000 multiplicity_b_pos 1659 294 3000
 end
 relationcanvas 131330 relation_ref 3309954 // <dependency>
   from ref 128130 z 2001 to ref 131202
@@ -137,7 +137,7 @@ end
 relationcanvas 135938 relation_ref 3056002 // <unidirectional association>
   geometry VH unfixed
   decenter_begin 531
-  from ref 129154 z 2001 to point 1636 177
+  from ref 129154 z 2001 to point 1635 172
   line 136706 z 2001 to ref 135682
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

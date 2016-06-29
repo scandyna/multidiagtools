@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 21
+  revision 24
   modified_by 2 "philippe"
   // class settings
   
@@ -26,6 +26,10 @@ format 211
   activitydiagramsettings
    end
   
+  package_ref 562562 // MVDoverview
+
+  package_ref 569090 // tests
+
   classview 1279874 "sandbox"
     
     classdiagramsettings member_max_width 0 end
@@ -45,6 +49,16 @@ format 211
     classdiagram 2399618 "sandbox"
       classdiagramsettings hide_operations yes member_max_width 0 end
       size B-Landscape
+    end
+
+    classdiagram 2634242 "sandbox2"
+      classdiagramsettings hide_operations yes member_max_width 0 end
+      size B-Landscape
+    end
+
+    classdiagram 2634114 "Goals"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
 
     class 2684802 "TableController"
@@ -135,6 +149,15 @@ ${inlines}
 	    cpp default "#include in source"
 	    classrelation_ref 3329154 // <dependency>
 	  b parent class_ref 147202 // QAbstractTableModel
+      end
+
+      classrelation 3398274 // <unidirectional association>
+	relation 3379842 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3398274 // <unidirectional association>
+	  b parent class_ref 2686466 // ControllerInputEvent
       end
     end
 
@@ -444,6 +467,184 @@ ${inlines}
     end
   end
 
+  classview 1306882 "Delegate"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2447234 "overview"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2947458 "LineEditDelegate"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2640898 "AbstractItemDelegate"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3015042 "ItemDelegateProxy"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3405058 // <generalisation>
+	relation 3386626 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3405058 // <generalisation>
+	  b parent class_ref 1914498 // QAbstractItemDelegate
+      end
+
+      classrelation 3405186 // <unidirectional association>
+	relation 3386754 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3405186 // <unidirectional association>
+	  b parent class_ref 1914498 // QAbstractItemDelegate
+      end
+
+      attribute 2859778 "Delegate"
+	private type class_ref 1914498 // QAbstractItemDelegate
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 3015170 "EventCatchItemDelegate"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3405314 // <generalisation>
+	relation 3386882 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3405314 // <generalisation>
+	  b parent class_ref 3015042 // ItemDelegateProxy
+      end
+    end
+
+    class 3015298 "SomeUserItemDelegate"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3405442 // <generalisation>
+	relation 3387010 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3405442 // <generalisation>
+	  b parent class_ref 605570 // QStyledItemDelegate
+      end
+    end
+  end
+
+  classview 1432450 "Selection"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2647426 "sandbox"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3021826 "SelectionModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3411970 // <generalisation>
+	relation 3393538 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3411970 // <generalisation>
+	  b parent class_ref 1382914 // QItemSelectionModel
+      end
+    end
+  end
+
   classview 1307010 "EventMapper"
     
     classdiagramsettings member_max_width 0 end
@@ -462,7 +663,7 @@ ${inlines}
      end
     classdiagram 2447490 "RowChangeEventMapper"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size B-Landscape
     end
 
     class 2753410 "RowChangeEventMapper"
@@ -655,6 +856,15 @@ ${inlines}
 "
 	    classrelation_ref 3131522 // <unidirectional association>
 	  b parent class_ref 2706434 // NavigationActions
+      end
+
+      classrelation 3398530 // <unidirectional association>
+	relation 3380098 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3398530 // <unidirectional association>
+	  b parent class_ref 2686466 // ControllerInputEvent
       end
     end
   end
@@ -969,44 +1179,6 @@ ${inlines}
 	    classrelation_ref 3328898 // <directional composition>
 	  b parent class_ref 174210 // QSqlTableModel
       end
-    end
-  end
-
-  classview 1306882 "Delegate"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
-    classdiagram 2447234 "overview"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 2947458 "LineEditDelegate"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
     end
   end
 
@@ -1655,6 +1827,24 @@ ${inlines}
 	
       end
     end
+  end
+
+  classview 1432322 "StandardFormWidget"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
   end
 
   classview 1286658 "Window"

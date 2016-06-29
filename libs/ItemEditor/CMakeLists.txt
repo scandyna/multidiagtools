@@ -4,8 +4,9 @@
 project(multidiagtools)
 
 # List of source files
-set(SOURCES_FILES 
+set(SOURCES_FILES
     src/Mdt/ItemEditor/RowChangeEventMapper.cpp
+    src/Mdt/ItemEditor/ItemDelegateProxy.cpp
     src/Mdt/ItemEditor/StandardWindow.cpp
 )
 

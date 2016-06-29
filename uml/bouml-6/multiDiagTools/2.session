@@ -1,4 +1,4 @@
-window_sizes 1280 957 368 906 902 0
+window_sizes 1280 957 324 950 902 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -9,39 +9,31 @@ diagrams
     906 902 90 22 0 0
   classdiagram_ref 2607234 // SchemaTemplate
     906 902 100 4 0 0
-  classdiagram_ref 2399618 // sandbox
-    120 110 90 21 0 25
-  classdiagram_ref 2613762 // SomeTableWidget
+  classdiagram_ref 2633986 // SimplifiedOverview
     120 110 100 4 0 0
-  classdiagram_ref 2406658 // Controller
-    120 110 80 22 0 92
+  classdiagram_ref 2634114 // Goals
+    120 110 100 4 0 0
+  classdiagram_ref 2634242 // sandbox2
+    120 110 90 21 0 20
   classdiagram_ref 2447490 // RowChangeEventMapper
-    120 110 100 18 0 0
-  classdiagram_ref 2257922 // Query
-    120 110 100 21 36 0
-  active  classdiagram_ref 2620546 // InsertQuery
-    906 902 100 21 0 14
-  classdiagram_ref 2554370 // JoinClause
-    120 110 100 21 36 0
-  classdiagram_ref 2600706 // JoinHelper
-    120 110 100 21 0 0
-  classdiagram_ref 2593922 // View
-    120 110 100 18 0 0
-  classdiagram_ref 2593666 // SelectField
-    120 110 100 18 0 22
+    950 902 90 21 0 74
+  classdiagram_ref 2447234 // overview
+    120 110 100 4 0 0
+  classdiagram_ref 2640898 // AbstractItemDelegate
+    950 902 100 4 0 0
+  active  classdiagram_ref 2653954 // TestTableModel
+    950 902 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 4408834 // setRecord
 open
   
   package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
   
   package_ref 516226 // SqlItemModel
-  
-  package_ref 556034 // Copier
-  classview_ref 1412738 // SelectXXYY
-  class_ref 2994690 // InsertQuery
+  attribute_ref 2866562 // SeparateEditRoleData
+  classview_ref 1306882 // Delegate
+  classview_ref 1432322 // StandardFormWidget
   
   package_ref 430082 // Dsp
 end

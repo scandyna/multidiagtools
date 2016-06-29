@@ -1,0 +1,27 @@
+format 211
+
+note 128002 "If many controllers are impiied (typically part/child relations), current row must only be changed if main controller, and its childs, are in correct state (nothing pending).
+
+See QItemSelectionModel on case of using \"standrad\" views, like QTableWidget.
+
+For QDataWidgetMapper, possibly nothing special is reuquired.."
+  xyzwh 39 27 2000 637 147
+note 128130 "Intercept edition begin/end.
+
+See item delegates.
+
+Those event must also be cached from child controllers.
+And, those event maust also be propagated to other child controllers (tree structure..)"
+  xyzwh 39 187 2000 721 151
+note 128258 "Understand submit:
+ - QSqlTableModel handle a chache, and (think) submitAll() will commit cache to DB.
+- What mean QDataWidgetMapper submit() ?"
+  xyzwh 35 381 2000 729 93
+note 128514 "1) Prevent loosing data that are editing
+2) keep GUI coherent."
+  xyzwh 40 497 2000 717 77
+note 128642 "For QDataWidgetMapper:
+ - See Q_PROPERTY()
+ - See also delegate"
+  xyzwh 40 595 2000 497 73
+end

@@ -1,0 +1,155 @@
+format 211
+"MVDoverview" // Mdt::ItemEditor::MVDoverview
+  revision 1
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 1425794 "SimplifiedOverview"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2633986 "SimplifiedOverview"
+      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+      size A4
+    end
+
+    class 3008130 "_View"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3397506 // Input (<unidirectional association>)
+	relation 3379074 --->
+	  a role_name "Input" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3397506 // Input (<unidirectional association>)
+	  b parent class_ref 3008258 // _Selections
+      end
+
+      classrelation 3397634 // Input_ (<unidirectional association>)
+	relation 3379202 --->
+	  a role_name "Input_" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3397634 // Input_ (<unidirectional association>)
+	  b parent class_ref 3008386 // _Delegate
+      end
+    end
+
+    class 3008258 "_Selections"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3397762 // State (<unidirectional association>)
+	relation 3379330 --->
+	  a role_name "State" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3397762 // State (<unidirectional association>)
+	  b parent class_ref 3008386 // _Delegate
+      end
+    end
+
+    class 3008386 "_Delegate"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3397890 // Changes (<unidirectional association>)
+	relation 3379458 --->
+	  a role_name "Changes" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3397890 // Changes (<unidirectional association>)
+	  b parent class_ref 3008514 // _Model
+      end
+    end
+
+    class 3008514 "_Model"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3398018 // Update (<unidirectional association>)
+	relation 3379586 --->
+	  a role_name "Update" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3398018 // Update (<unidirectional association>)
+	  b parent class_ref 3008130 // _View
+      end
+    end
+  end
+end
