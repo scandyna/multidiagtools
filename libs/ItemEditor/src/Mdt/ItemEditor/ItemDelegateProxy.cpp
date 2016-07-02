@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "ItemDelegateProxy.h"
 
+#include <QDebug>
+
 namespace Mdt{ namespace ItemEditor{
 
 ItemDelegateProxy::ItemDelegateProxy(QObject* parent)
@@ -35,6 +37,8 @@ void ItemDelegateProxy::setItemDelegate(QAbstractItemDelegate* delegate)
 {
   Q_ASSERT(delegate != nullptr);
   pvDelegate = delegate;
+  
+  qDebug() << "DP: delegate set: " << pvDelegate;
 }
 
 QAbstractItemDelegate* ItemDelegateProxy::itemDelegate() const

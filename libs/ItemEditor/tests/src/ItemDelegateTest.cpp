@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "ItemDelegateTest.h"
 #include "Mdt/Application.h"
+#include "TestTableModel.h"
 #include "Mdt/ItemEditor/ItemDelegateProxy.h"
 #include <QSignalSpy>
 // #include <QItemSelectionModel>
@@ -174,6 +175,35 @@ void ItemDelegateTest::itemDelegateProxyTest()
    *   on delegates, and could rewrite a better test
    *   that acts directly on a delegate later.
    */
+}
+
+void ItemDelegateTest::itemDelegateProxyTableViewTest()
+{
+  using Mdt::ItemEditor::ItemDelegateProxy;
+
+  TestTableModel model;
+  QTableView view;
+  ItemDelegateProxy proxy;
+
+  /*
+   * Populate model
+   */
+  model.populate(3, 2);
+  /*
+   * Setup view
+   */
+  view.setModel(&model);
+  proxy.setItemDelegate(view.itemDelegate());
+  view.setItemDelegate(&proxy);
+  view.resize(300, 200);
+  view.show();
+
+  /*
+   * Play
+   */
+  while(view.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 /*

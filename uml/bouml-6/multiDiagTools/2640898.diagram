@@ -24,6 +24,8 @@ classcanvas 130178 class_ref 605570 // QStyledItemDelegate
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 360 199 2011
 end
+note 131202 "See: proxy should inherit QStyledItemDelegate (and  also contain a QStyledItemDelegate)"
+  xyzwh 109 407 2000 663 67
 relationcanvas 128258 relation_ref 3386626 // <generalisation>
   geometry VHV unfixed
   decenter_begin 515

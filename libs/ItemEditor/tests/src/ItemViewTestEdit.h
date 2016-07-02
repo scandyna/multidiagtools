@@ -18,25 +18,34 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ITEM_DELEGATE_TEST_H
-#define MDT_ITEM_EDITOR_ITEM_DELEGATE_TEST_H
+#ifndef MDT_ITEM_EDITOR_ITEM_VIEW_TEST_EDIT_H
+#define MDT_ITEM_EDITOR_ITEM_VIEW_TEST_EDIT_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "ItemViewTestEditTriggers.h"
+#include <QString>
 
-class ItemDelegateTest : public QObject
+class QAbstractItemView;
+class QModelIndex;
+class QTestEventList;
+
+/*
+ * Helper to edit item views
+ */
+class ItemViewTestEdit
 {
-  Q_OBJECT
+ public:
 
- private slots:
 
-  void initTestCase();
-  void cleanupTestCase();
+  static void beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger trigger);
 
-  void sandbox();
+  static void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger);
 
-  void itemDelegateProxyTest();
-  void itemDelegateProxyTableViewTest();
+  static void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
+
+ private:
+
+  static void clickOnOtherItem(QAbstractItemView & view, const QModelIndex & editingIndex);
+  static void clickEnterKey(QAbstractItemView & view, const QModelIndex & editingIndex);
 };
 
-#endif // #ifndef MDT_ITEM_EDITOR_ITEM_DELEGATE_TEST_H
+#endif // #ifndef MDT_ITEM_EDITOR_ITEM_VIEW_TEST_EDIT_H

@@ -133,6 +133,25 @@ void ItemModelTest::testTableModelTest()
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("2B"));
   QCOMPARE(model.data(index, Qt::EditRole), QVariant("2B"));
+  /*
+   * Set data
+   */
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  // Set DisplayRole data
+  QVERIFY(model.setData(index, "D 1A", Qt::DisplayRole));
+  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("D 1A"));
+  QCOMPARE(model.data(index, Qt::EditRole), QVariant("D 1A"));
+  // Set EditRole data
+  QVERIFY(model.setData(index, "E 1A", Qt::EditRole));
+  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("E 1A"));
+  QCOMPARE(model.data(index, Qt::EditRole), QVariant("E 1A"));
+  /*
+   * Clear
+   */
+  model.clear();
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 0);
 }
 
 void ItemModelTest::testTableModelSeparateEditTest()
@@ -178,6 +197,19 @@ void ItemModelTest::testTableModelSeparateEditTest()
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("2B"));
   QVERIFY(model.data(index, Qt::EditRole).isNull());
+  /*
+   * Set data
+   */
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  // Set DisplayRole data
+  QVERIFY(model.setData(index, "D 1A", Qt::DisplayRole));
+  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("D 1A"));
+  QVERIFY(model.data(index, Qt::EditRole).isNull());
+  // Set EditRole data
+  QVERIFY(model.setData(index, "E 1A", Qt::EditRole));
+  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("D 1A"));
+  QCOMPARE(model.data(index, Qt::EditRole), QVariant("E 1A"));
   /*
    * Clear
    */

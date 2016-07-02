@@ -8,6 +8,7 @@ enable_testing()
 
 set(SOURCES_FILES
   src/TestTableModel.cpp
+  src/ItemViewTestEdit.cpp
 )
 
 add_library(mdtitemeditortest SHARED ${SOURCES_FILES})
@@ -36,3 +37,8 @@ add_test(MdtItemEditorItemModelTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditorite
 add_executable(mdtitemeditoritemdelegatetest src/ItemDelegateTest.cpp)
 target_link_libraries(mdtitemeditoritemdelegatetest mdtitemeditortest)
 add_test(MdtItemEditorItemDelegateTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditoritemdelegatetest)
+
+# Target MdtItemEditorItemViewTest
+add_executable(mdtitemeditoritemviewtest src/ItemViewTest.cpp)
+target_link_libraries(mdtitemeditoritemviewtest mdtitemeditortest)
+add_test(MdtItemEditorItemViewTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditoritemviewtest)

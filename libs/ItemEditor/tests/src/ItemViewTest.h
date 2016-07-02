@@ -18,13 +18,17 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ITEM_DELEGATE_TEST_H
-#define MDT_ITEM_EDITOR_ITEM_DELEGATE_TEST_H
+#ifndef MDT_ITEM_EDITOR_ITEM_VIEW_TEST_H
+#define MDT_ITEM_EDITOR_ITEM_VIEW_TEST_H
 
+#include "ItemViewTestEditTriggers.h"
 #include <QObject>
 #include <QtTest/QtTest>
 
-class ItemDelegateTest : public QObject
+class QAbstractItemView;
+class QModelIndex;
+
+class ItemViewTest : public QObject
 {
   Q_OBJECT
 
@@ -33,10 +37,15 @@ class ItemDelegateTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void sandbox();
+  void tableViewEditBeginEndTest();
+  void tableViewEditBeginEndTest_data();
 
-  void itemDelegateProxyTest();
-  void itemDelegateProxyTableViewTest();
+ private:
+
+  // Helper function to begin and end editing in a QAbstractItemView
+  void beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger trigger);
+  void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger);
+  void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
 };
 
-#endif // #ifndef MDT_ITEM_EDITOR_ITEM_DELEGATE_TEST_H
+#endif // #ifndef MDT_ITEM_EDITOR_ITEM_VIEW_TEST_H

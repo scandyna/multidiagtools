@@ -18,25 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ITEM_DELEGATE_TEST_H
-#define MDT_ITEM_EDITOR_ITEM_DELEGATE_TEST_H
+#ifndef MDT_ITEM_EDITOR_ITEM_VIEW_TEST_EDIT_TRIGGERS_H
+#define MDT_ITEM_EDITOR_ITEM_VIEW_TEST_EDIT_TRIGGERS_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include <QMetaType>
 
-class ItemDelegateTest : public QObject
+enum class BeginEditTrigger
 {
-  Q_OBJECT
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void sandbox();
-
-  void itemDelegateProxyTest();
-  void itemDelegateProxyTableViewTest();
+  DoubleClick,
+  F2KeyClick
 };
+Q_DECLARE_METATYPE(BeginEditTrigger)
 
-#endif // #ifndef MDT_ITEM_EDITOR_ITEM_DELEGATE_TEST_H
+enum class EndEditTrigger
+{
+  IndexChange,
+  EnterKeyClick
+};
+Q_DECLARE_METATYPE(EndEditTrigger)
+
+#endif // #ifndef MDT_ITEM_EDITOR_ITEM_VIEW_TEST_EDIT_TRIGGERS_H
