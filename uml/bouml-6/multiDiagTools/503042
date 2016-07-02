@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 27
+  revision 28
   modified_by 2 "philippe"
   // class settings
   
@@ -658,7 +658,7 @@ ${inlines}
       size A4
     end
 
-    class 3021826 "SelectionModel"
+    class 3021826 "ItemSelectionModel"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -672,12 +672,74 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      attribute 2880386 "CurrentRowChangeAllowed"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       classrelation 3411970 // <generalisation>
 	relation 3393538 ---|>
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 3411970 // <generalisation>
 	  b parent class_ref 1382914 // QItemSelectionModel
+      end
+
+      operation 4442114 "isCurrentRowChangeAllowed"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4441986 "setCurrentRowChangeAllowed"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "allow" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4441858 "setCurrentIndex"
+	stereotype "slot"
+	cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param in name "index" type class_ref 147330 // QModelIndex
+	  param in name "command" explicit_type "SelectionFlags"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end

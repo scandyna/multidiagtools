@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 149
+  revision 150
   modified_by 2 "philippe"
   // class settings
   
@@ -3761,7 +3761,7 @@ ${inlines}
     end
 
     class 1382914 "QItemSelectionModel"
-      visibility package 
+      abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -3816,6 +3816,20 @@ ${inlines}
 "
 	    classrelation_ref 3398402 // <unidirectional association>
 	  b parent class_ref 2753410 // RowChangeEventMapper
+      end
+
+      operation 4441730 "setCurrentIndex"
+	stereotype "slot"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 2
+	  param in name "index" type class_ref 147330 // QModelIndex
+	  param in name "command" explicit_type "SelectionFlags"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
       end
     end
 

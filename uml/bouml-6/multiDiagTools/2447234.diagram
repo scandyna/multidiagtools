@@ -2,6 +2,6 @@ format 211
 
 classcanvas 128002 class_ref 2947458 // LineEditDelegate
   classdiagramsettings member_max_width 0 end
-  xyz 215 397 2000
+  xyz 40.5 40.5 2000
 end
 end

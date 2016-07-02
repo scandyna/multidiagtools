@@ -22,12 +22,14 @@
 #include "ItemViewTestEdit.h"
 #include "Mdt/Application.h"
 #include "TestTableModel.h"
+#include "Mdt/ItemEditor/ItemSelectionModel.h"
 #include <QSignalSpy>
 // #include <QItemSelectionModel>
 // #include <QStringListModel>
 #include <QTableView>
 #include <QTreeView>
 #include <QListView>
+#include <QItemSelection>
 #include <QComboBox>
 #include <QStyledItemDelegate>
 #include <QLineEdit>
@@ -122,6 +124,107 @@ void ItemViewTest::tableViewEditBeginEndTest_data()
 /*
  * Tests
  */
+
+void ItemViewTest::tableViewSetCurrentIndexTest()
+{
+  using Mdt::ItemEditor::ItemSelectionModel;
+
+  QTableView view;
+  TestTableModel model;
+  QModelIndex index;
+
+  /*
+   * Initial state
+   */
+  ItemSelectionModel selectionModel(&model);
+  QVERIFY(selectionModel.isCurrentRowChangeAllowed());
+  /*
+   * Setup model and view
+   */
+  model.populate(3, 2);
+  view.setModel(&model);
+  view.setSelectionModel(&selectionModel);
+  view.show();
+  /*
+   * Check using setCurrentIndex()
+   */
+  index = model.index(1, 0);
+  view.setCurrentIndex(index);
+  QCOMPARE(view.currentIndex().row(), 1);
+  QCOMPARE(view.currentIndex().column(), 0);
+  // Inhibit row change
+  selectionModel.setCurrentRowChangeAllowed(false);
+  QVERIFY(!selectionModel.isCurrentRowChangeAllowed());
+  index = model.index(0, 0);
+  view.setCurrentIndex(index);
+  QCOMPARE(view.currentIndex().row(), 1);
+  QCOMPARE(view.currentIndex().column(), 0);
+  // Changing column must still work
+  index = model.index(1, 1);
+  view.setCurrentIndex(index);
+  QCOMPARE(view.currentIndex().row(), 1);
+  QCOMPARE(view.currentIndex().column(), 1);
+  /*
+   * Check using select(QModelIndex) before setCurrentIndex()
+   */
+  // Allow row change and go back to row 0
+  selectionModel.setCurrentRowChangeAllowed(true);
+  index = model.index(0, 0);
+  selectionModel.select(index, QItemSelectionModel::ClearAndSelect);
+  QVERIFY(selectionModel.isSelected(index));
+  view.setCurrentIndex(index);
+  QCOMPARE(view.currentIndex().row(), 0);
+  QCOMPARE(view.currentIndex().column(), 0);
+  // Inhibit row change
+  selectionModel.setCurrentRowChangeAllowed(false);
+  index = model.index(1, 0);
+  selectionModel.select(index, QItemSelectionModel::ClearAndSelect);
+  QVERIFY(!selectionModel.isSelected(index));
+  view.setCurrentIndex(index);
+  QCOMPARE(view.currentIndex().row(), 0);
+  QCOMPARE(view.currentIndex().column(), 0);
+  // Changing column must still work
+  index = model.index(0, 1);
+  selectionModel.select(index, QItemSelectionModel::ClearAndSelect);
+  QVERIFY(selectionModel.isSelected(index));
+  view.setCurrentIndex(index);
+  QCOMPARE(view.currentIndex().row(), 0);
+  QCOMPARE(view.currentIndex().column(), 1);
+  /*
+   * Check using select(QItemSelection) before setCurrentIndex()
+   */
+  // Allow row change and go back to row 0
+  selectionModel.setCurrentRowChangeAllowed(true);
+  index = model.index(0, 0);
+  selectionModel.select(QItemSelection(index, index), QItemSelectionModel::ClearAndSelect);
+  QVERIFY(selectionModel.isSelected(index));
+  view.setCurrentIndex(index);
+  QCOMPARE(view.currentIndex().row(), 0);
+  QCOMPARE(view.currentIndex().column(), 0);
+  // Inhibit row change
+  selectionModel.setCurrentRowChangeAllowed(false);
+  index = model.index(1, 0);
+  selectionModel.select(QItemSelection(index, index), QItemSelectionModel::ClearAndSelect);
+  QVERIFY(!selectionModel.isSelected(index));
+  view.setCurrentIndex(index);
+  QCOMPARE(view.currentIndex().row(), 0);
+  QCOMPARE(view.currentIndex().column(), 0);
+  // Changing column must still work
+  index = model.index(0, 1);
+  selectionModel.select(QItemSelection(index, index), QItemSelectionModel::ClearAndSelect);
+  QVERIFY(selectionModel.isSelected(index));
+  view.setCurrentIndex(index);
+  QCOMPARE(view.currentIndex().row(), 0);
+  QCOMPARE(view.currentIndex().column(), 1);
+
+  /*
+   * Play
+   */
+  view.resize(300, 200);
+  while(view.isVisible()){
+    QTest::qWait(500);
+  }
+}
 
 
 /*

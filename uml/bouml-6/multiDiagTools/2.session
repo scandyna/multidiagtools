@@ -15,17 +15,11 @@ diagrams
     120 110 100 4 0 0
   classdiagram_ref 2634242 // sandbox2
     120 110 90 21 0 20
-  classdiagram_ref 2447490 // RowChangeEventMapper
-    950 902 90 21 0 74
-  classdiagram_ref 2447234 // overview
-    120 110 100 4 0 0
-  classdiagram_ref 2640898 // ItemDelegateProxy
-    950 902 100 4 0 0
-  active  classdiagram_ref 2680450 // EventCatchItemDelegate
+  active  classdiagram_ref 2647426 // sandbox
     950 902 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 4435202 // dataEditionDone
+selected attribute_ref 2880386 // CurrentRowChangeAllowed
 open
   
   package_ref 549506 // Algorithm
@@ -36,6 +30,8 @@ open
   classview_ref 1438978 // Models
   class_ref 3041410 // ItemViewTestEdit
   class_ref 3015170 // EventCatchItemDelegate
+  operation_ref 4441986 // setCurrentRowChangeAllowed
+  operation_ref 4441858 // setCurrentIndex
   classview_ref 1287042 // Controller
   classview_ref 1432322 // StandardFormWidget
   

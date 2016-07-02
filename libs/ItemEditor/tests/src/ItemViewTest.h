@@ -40,6 +40,8 @@ class ItemViewTest : public QObject
   void tableViewEditBeginEndTest();
   void tableViewEditBeginEndTest_data();
 
+  void tableViewSetCurrentIndexTest();
+
  private:
 
   // Helper function to begin and end editing in a QAbstractItemView
