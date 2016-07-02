@@ -19,9 +19,11 @@
  **
  ****************************************************************************/
 #include "ItemDelegateTest.h"
+#include "ItemViewTestEdit.h"
 #include "Mdt/Application.h"
 #include "TestTableModel.h"
 #include "Mdt/ItemEditor/ItemDelegateProxy.h"
+#include "Mdt/ItemEditor/EventCatchItemDelegate.h"
 #include <QSignalSpy>
 // #include <QItemSelectionModel>
 // #include <QStringListModel>
@@ -204,6 +206,126 @@ void ItemDelegateTest::itemDelegateProxyTableViewTest()
   while(view.isVisible()){
     QTest::qWait(500);
   }
+}
+
+void ItemDelegateTest::itemDelegateProxyTableViewEditTest()
+{
+  using Mdt::ItemEditor::ItemDelegateProxy;
+
+  QTableView view;
+  ItemDelegateProxy proxy;
+  TestTableModel model;
+  QModelIndex index;
+  QFETCH(BeginEditTrigger, beginEditTrigger);
+  QFETCH(EndEditTrigger, endEditTrigger);
+
+  /*
+   * Setup model and view
+   */
+  model.populate(2, 1);
+  view.setModel(&model);
+  proxy.setItemDelegate(view.itemDelegate());
+  view.setItemDelegate(&proxy);
+  view.show();
+  /*
+   * Check
+   */
+  // Check at row 0 and column 0
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QVERIFY(model.data(index) != QVariant("TEST"));
+  edit(view, index, "TEST", beginEditTrigger, endEditTrigger);
+  QCOMPARE(model.data(index), QVariant("TEST"));
+
+  /*
+   * Play
+   */
+//   view.resize(300, 200);
+//   while(view.isVisible()){
+//     QTest::qWait(500);
+//   }
+}
+
+void ItemDelegateTest::itemDelegateProxyTableViewEditTest_data()
+{
+  QTest::addColumn<BeginEditTrigger>("beginEditTrigger");
+  QTest::addColumn<EndEditTrigger>("endEditTrigger");
+
+  QTest::newRow("S:DClick/E:Click") << BeginEditTrigger::DoubleClick << EndEditTrigger::IndexChange;
+  QTest::newRow("S:DClick/E:<Enter>") << BeginEditTrigger::DoubleClick << EndEditTrigger::EnterKeyClick;
+  QTest::newRow("S:F2/E:Click") << BeginEditTrigger::F2KeyClick << EndEditTrigger::IndexChange;
+  QTest::newRow("S:F2/E:<Enter>") << BeginEditTrigger::F2KeyClick << EndEditTrigger::EnterKeyClick;
+}
+
+void ItemDelegateTest::eventCatchItemDelegateTableViewEditTest()
+{
+  using Mdt::ItemEditor::EventCatchItemDelegate;
+
+  QTableView view;
+  EventCatchItemDelegate delegate;
+  TestTableModel model;
+  QModelIndex index;
+  QSignalSpy editionStartedSpy(&delegate, &EventCatchItemDelegate::dataEditionStarted);
+  QSignalSpy editionDoneSpy(&delegate, &EventCatchItemDelegate::dataEditionDone);
+
+  /*
+   * Setup model and view
+   */
+  model.populate(2, 1);
+  view.setModel(&model);
+  delegate.setItemDelegate(view.itemDelegate());
+  view.setItemDelegate(&delegate);
+  view.show();
+  /*
+   * Check
+   */
+  QCOMPARE(editionStartedSpy.count(), 0);
+  QCOMPARE(editionDoneSpy.count(), 0);
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  // Start editing
+  beginEditing(view, index, BeginEditTrigger::DoubleClick);
+  QCOMPARE(editionStartedSpy.count(), 1);
+  QCOMPARE(editionDoneSpy.count(), 0);
+  // End editing
+  endEditing(view, index, EndEditTrigger::IndexChange);
+  QCOMPARE(editionStartedSpy.count(), 1);
+  QCOMPARE(editionDoneSpy.count(), 1);
+  // Reset spys
+  editionStartedSpy.clear();
+  editionDoneSpy.clear();
+  // Edit
+  edit(view, index, "TEST", BeginEditTrigger::DoubleClick, EndEditTrigger::IndexChange);
+  QCOMPARE(editionStartedSpy.count(), 1);
+  QCOMPARE(editionDoneSpy.count(), 1);
+
+  /*
+   * Play
+   */
+//   view.resize(300, 200);
+//   while(view.isVisible()){
+//     QTest::qWait(500);
+//   }
+}
+
+/*
+ * Helper functions
+ */
+
+void ItemDelegateTest::beginEditing(QAbstractItemView& view, const QModelIndex& index, BeginEditTrigger trigger)
+{
+  ItemViewTestEdit::beginEditing(view, index, trigger);
+}
+
+void ItemDelegateTest::endEditing(QAbstractItemView& view, const QModelIndex& editingIndex, EndEditTrigger trigger)
+{
+  ItemViewTestEdit::endEditing(view, editingIndex, trigger);
+}
+
+void ItemDelegateTest::edit(QAbstractItemView& view, const QModelIndex& index, const QString& str,
+                            BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger)
+{
+  ItemViewTestEdit::edit(view, index, str, beginEditTrigger, endEditTrigger);
 }
 
 /*

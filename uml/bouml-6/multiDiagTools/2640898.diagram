@@ -2,58 +2,36 @@ format 211
 
 classcanvas 128002 class_ref 3015042 // ItemDelegateProxy
   classdiagramsettings member_max_width 0 end
-  xyz 81 199 2000
+  xyz 275 231 2000
 end
 classcanvas 128130 class_ref 1914498 // QAbstractItemDelegate
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 353 79 2005
+  xyz 305 39 2005
 end
 classcanvas 128514 class_ref 3015170 // EventCatchItemDelegate
-  classdiagramsettings member_max_width 0 end
-  xyz 112 295 2000
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 300 327 2000
 end
 classcanvas 128770 class_ref 2160258 // QAbstractItemView
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 177 79 2011
+  xyz 129 39 2011
 end
 classcanvas 130050 class_ref 3015298 // SomeUserItemDelegate
   classdiagramsettings member_max_width 0 end
-  xyz 352 279 2000
+  xyz 40 231 2000
 end
 classcanvas 130178 class_ref 605570 // QStyledItemDelegate
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 360 199 2011
-end
-note 131202 "See: proxy should inherit QStyledItemDelegate (and  also contain a QStyledItemDelegate)"
-  xyzwh 109 407 2000 663 67
-relationcanvas 128258 relation_ref 3386626 // <generalisation>
-  geometry VHV unfixed
-  decenter_begin 515
-  from ref 128002 z 2006 to point 197 160
-  line 130562 z 2006 to point 430 160
-  line 130690 z 2006 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 128386 relation_ref 3386754 // <unidirectional association>
-  decenter_begin 559
-  from ref 128002 z 2006 to point 40 232
-  line 130818 z 2006 to point 40 40
-  line 130946 z 2006 to point 432 40
-  line 131074 z 2006 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
+  xyz 312 115 2011
 end
 relationcanvas 128642 relation_ref 3386882 // <generalisation>
-  decenter_begin 520
-  decenter_end 515
   from ref 128514 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128898 relation_ref 3054338 // <unidirectional association>
-  decenter_begin 581
-  decenter_end 581
+  decenter_begin 395
+  decenter_end 395
   from ref 128770 z 2012 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -64,7 +42,23 @@ relationcanvas 130306 relation_ref 2234626 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130434 relation_ref 3387010 // <generalisation>
-  from ref 130050 z 2012 to ref 130178
+  from ref 130050 z 2012 to point 120 192
+  line 131458 z 2012 to point 384 192
+  line 131586 z 2012 to ref 130178
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131330 relation_ref 3420162 // <generalisation>
+  from ref 128002 z 2012 to ref 130178
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131714 relation_ref 3420290 // <unidirectional association>
+  from ref 128002 z 2012 to point 240 264
+  line 131842 z 2012 to point 240 408
+  line 131970 z 2012 to point 528 408
+  line 132098 z 2012 to point 528 136
+  line 132226 z 2012 to ref 130178
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

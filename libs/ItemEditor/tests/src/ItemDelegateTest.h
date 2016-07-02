@@ -21,8 +21,12 @@
 #ifndef MDT_ITEM_EDITOR_ITEM_DELEGATE_TEST_H
 #define MDT_ITEM_EDITOR_ITEM_DELEGATE_TEST_H
 
+#include "ItemViewTestEditTriggers.h"
 #include <QObject>
 #include <QtTest/QtTest>
+
+class QAbstractItemView;
+class QModelIndex;
 
 class ItemDelegateTest : public QObject
 {
@@ -37,6 +41,17 @@ class ItemDelegateTest : public QObject
 
   void itemDelegateProxyTest();
   void itemDelegateProxyTableViewTest();
+  void itemDelegateProxyTableViewEditTest();
+  void itemDelegateProxyTableViewEditTest_data();
+
+  void eventCatchItemDelegateTableViewEditTest();
+
+ private:
+
+  // Helper function for editing in a QAbstractItemView
+  void beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger trigger);
+  void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger);
+  void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_ITEM_DELEGATE_TEST_H

@@ -20,12 +20,12 @@
  ****************************************************************************/
 #include "ItemDelegateProxy.h"
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
 ItemDelegateProxy::ItemDelegateProxy(QObject* parent)
- : QAbstractItemDelegate(parent)
+ : QStyledItemDelegate(parent)
 {
 }
 
@@ -36,12 +36,12 @@ ItemDelegateProxy::~ItemDelegateProxy()
 void ItemDelegateProxy::setItemDelegate(QAbstractItemDelegate* delegate)
 {
   Q_ASSERT(delegate != nullptr);
-  pvDelegate = delegate;
-  
-  qDebug() << "DP: delegate set: " << pvDelegate;
+  auto *styledDelegate = dynamic_cast<QStyledItemDelegate*>(delegate);
+  Q_ASSERT(styledDelegate != nullptr);
+  pvDelegate = styledDelegate;
 }
 
-QAbstractItemDelegate* ItemDelegateProxy::itemDelegate() const
+QStyledItemDelegate* ItemDelegateProxy::itemDelegate() const
 {
   return pvDelegate.data();
 }
@@ -49,7 +49,7 @@ QAbstractItemDelegate* ItemDelegateProxy::itemDelegate() const
 QWidget* ItemDelegateProxy::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
   if(pvDelegate.isNull()){
-    return QAbstractItemDelegate::createEditor(parent, option, index);
+    return QStyledItemDelegate::createEditor(parent, option, index);
   }
   return pvDelegate->createEditor(parent, option, index);
 }
@@ -57,7 +57,7 @@ QWidget* ItemDelegateProxy::createEditor(QWidget* parent, const QStyleOptionView
 void ItemDelegateProxy::destroyEditor(QWidget* editor, const QModelIndex& index) const
 {
   if(pvDelegate.isNull()){
-    QAbstractItemDelegate::destroyEditor(editor, index);
+    QStyledItemDelegate::destroyEditor(editor, index);
   }else{
     pvDelegate->destroyEditor(editor, index);
   }
@@ -66,22 +66,26 @@ void ItemDelegateProxy::destroyEditor(QWidget* editor, const QModelIndex& index)
 bool ItemDelegateProxy::editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index)
 {
   if(pvDelegate.isNull()){
-    return QAbstractItemDelegate::editorEvent(event, model, option, index);
+    return QStyledItemDelegate::editorEvent(event, model, option, index);
   }
-  return pvDelegate->editorEvent(event, model, option, index);
+  // QStyledItemDelegate::editorEvent() is protected, we must do some cast here
+  return reinterpret_cast<QAbstractItemDelegate*>(pvDelegate.data())->editorEvent(event, model, option, index);
+//   return pvDelegate->editorEvent(event, model, option, index);
 }
 
 bool ItemDelegateProxy::helpEvent(QHelpEvent* event, QAbstractItemView* view, const QStyleOptionViewItem& option, const QModelIndex& index)
 {
   if(pvDelegate.isNull()){
-    return QAbstractItemDelegate::helpEvent(event, view, option, index);
+    return QStyledItemDelegate::helpEvent(event, view, option, index);
   }
   return pvDelegate->helpEvent(event, view, option, index);
 }
 
 void ItemDelegateProxy::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-  if(!pvDelegate.isNull()){
+  if(pvDelegate.isNull()){
+    QStyledItemDelegate::paint(painter, option, index);
+  }else{
     pvDelegate->paint(painter, option, index);
   }
 }
@@ -89,7 +93,7 @@ void ItemDelegateProxy::paint(QPainter* painter, const QStyleOptionViewItem& opt
 void ItemDelegateProxy::setEditorData(QWidget* editor, const QModelIndex& index) const
 {
   if(pvDelegate.isNull()){
-    QAbstractItemDelegate::setEditorData(editor, index);
+    QStyledItemDelegate::setEditorData(editor, index);
   }else{
     pvDelegate->setEditorData(editor, index);
   }
@@ -98,7 +102,7 @@ void ItemDelegateProxy::setEditorData(QWidget* editor, const QModelIndex& index)
 void ItemDelegateProxy::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
 {
   if(pvDelegate.isNull()){
-    QAbstractItemDelegate::setModelData(editor, model, index);
+    QStyledItemDelegate::setModelData(editor, model, index);
   }else{
     pvDelegate->setModelData(editor, model, index);
   }
@@ -107,7 +111,7 @@ void ItemDelegateProxy::setModelData(QWidget* editor, QAbstractItemModel* model,
 QSize ItemDelegateProxy::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
   if(pvDelegate.isNull()){
-    return QSize();
+    return QStyledItemDelegate::sizeHint(option, index);
   }
   return pvDelegate->sizeHint(option, index);
 }
@@ -115,9 +119,34 @@ QSize ItemDelegateProxy::sizeHint(const QStyleOptionViewItem& option, const QMod
 void ItemDelegateProxy::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
   if(pvDelegate.isNull()){
-    QAbstractItemDelegate::updateEditorGeometry(editor, option, index);
+    QStyledItemDelegate::updateEditorGeometry(editor, option, index);
   }else{
     pvDelegate->updateEditorGeometry(editor, option, index);
+  }
+}
+
+QString ItemDelegateProxy::displayText(const QVariant& value, const QLocale& locale) const
+{
+  if(pvDelegate.isNull()){
+    return QStyledItemDelegate::displayText(value, locale);
+  }
+  return pvDelegate->displayText(value, locale);
+}
+
+QItemEditorFactory* ItemDelegateProxy::itemEditorFactory() const
+{
+  if(pvDelegate.isNull()){
+    return QStyledItemDelegate::itemEditorFactory();
+  }
+  return pvDelegate->itemEditorFactory();
+}
+
+void ItemDelegateProxy::setItemEditorFactory(QItemEditorFactory* factory)
+{
+  if(pvDelegate.isNull()){
+    QStyledItemDelegate::setItemEditorFactory(factory);
+  }else{
+    pvDelegate->setItemEditorFactory(factory);
   }
 }
 

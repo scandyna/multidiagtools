@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 26
+  revision 27
   modified_by 2 "philippe"
   // class settings
   
@@ -504,7 +504,7 @@ ${inlines}
       
     end
 
-    classdiagram 2640898 "AbstractItemDelegate"
+    classdiagram 2640898 "ItemDelegateProxy"
       classdiagramsettings member_max_width 0 end
       size A4
     end
@@ -523,25 +523,8 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3405058 // <generalisation>
-	relation 3386626 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3405058 // <generalisation>
-	  b parent class_ref 1914498 // QAbstractItemDelegate
-      end
-
-      classrelation 3405186 // <unidirectional association>
-	relation 3386754 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3405186 // <unidirectional association>
-	  b parent class_ref 1914498 // QAbstractItemDelegate
-      end
-
       attribute 2859778 "Delegate"
-	private type class_ref 1914498 // QAbstractItemDelegate
+	private type class_ref 605570 // QStyledItemDelegate
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -551,6 +534,28 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
+
+      classrelation 3438594 // <generalisation>
+	relation 3420162 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3438594 // <generalisation>
+	  b parent class_ref 605570 // QStyledItemDelegate
+      end
+
+      classrelation 3438722 // <unidirectional association>
+	relation 3420290 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3438722 // <unidirectional association>
+	  b parent class_ref 605570 // QStyledItemDelegate
+      end
+    end
+
+    classdiagram 2680450 "EventCatchItemDelegate"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
 
     class 3015170 "EventCatchItemDelegate"
@@ -573,6 +578,38 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 3405314 // <generalisation>
 	  b parent class_ref 3015042 // ItemDelegateProxy
+      end
+
+      operation 4435074 "dataEditionStarted"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4435202 "dataEditionDone"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 

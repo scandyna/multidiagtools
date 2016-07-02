@@ -21,7 +21,7 @@
 #ifndef MDT_ITEM_EDITOR_ITEM_DELEGATE_PROXY_H
 #define MDT_ITEM_EDITOR_ITEM_DELEGATE_PROXY_H
 
-#include <QAbstractItemDelegate>
+#include <QStyledItemDelegate>
 #include <QPointer>
 
 namespace Mdt{ namespace ItemEditor{
@@ -37,7 +37,13 @@ namespace Mdt{ namespace ItemEditor{
    *  inherit from this class.
    *
    * By using a delegate proxy, it is possible to use
-   *  delegates based on QAbstractItemDelegate .
+   *  delegates based on QStyledItemDelegate .
+   *
+   * \note ItemDelegateProxy works with QStyledItemDelegate
+   *        (and subclass of QStyledItemDelegate).
+   *        First try used QAbstractItemDelegate, but this way
+   *        some event where not properly handled
+   *        (f.ex. ending editing a item by pressing Enter key did not work).
    *
    * Typical usage:
    * \code
@@ -49,7 +55,7 @@ namespace Mdt{ namespace ItemEditor{
    * view.setItemDelegate(delegateProxy);
    * \endcode
    */
-  class ItemDelegateProxy : public QAbstractItemDelegate
+  class ItemDelegateProxy : public QStyledItemDelegate
   {
    public:
 
@@ -73,12 +79,17 @@ namespace Mdt{ namespace ItemEditor{
      * Previously set delegate is replaced with delegate,
      *  but not deleted.
      *  ItemDelegateProxy does not take ownership of delegate.
+     *
+     * \pre delegate must be a instance of QStyledItemDelegate
+     *       or a subclass of QStyledItemDelegate.
+     * \note delegate is a pointer to QAbstractItemDelegate for convenience
+     *        ( f.ex. to directly use expression like: proxy.setItemDelegate(view.itemDelegate()) ).
      */
     void setItemDelegate(QAbstractItemDelegate * delegate);
 
     /*! \brief Get item delegate
      */
-    QAbstractItemDelegate * itemDelegate() const;
+    QStyledItemDelegate * itemDelegate() const;
 
     /*! \brief Create editor
      */
@@ -116,9 +127,21 @@ namespace Mdt{ namespace ItemEditor{
      */
     void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem & option, const QModelIndex & index) const override;
 
+    /*! \brief Display text regarding locale
+     */
+    QString displayText(const QVariant & value, const QLocale & locale) const override;
+
+    /*! \brief Get item editor factory
+     */
+    QItemEditorFactory *itemEditorFactory() const;
+
+    /*! \brief Set item editor factory
+     */
+    void setItemEditorFactory(QItemEditorFactory *factory);
+
    private:
 
-    QPointer<QAbstractItemDelegate> pvDelegate;
+    QPointer<QStyledItemDelegate> pvDelegate;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
