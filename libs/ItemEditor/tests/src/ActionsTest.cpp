@@ -20,17 +20,25 @@
  ****************************************************************************/
 #include "ActionsTest.h"
 #include "Mdt/Application.h"
+#include "Mdt/ItemEditor/RowState.h"
 #include "Mdt/ItemEditor/RowChangeEventMapper.h"
+#include "Mdt/ItemEditor/NavigationActions.h"
 #include <QSignalSpy>
 #include <QItemSelectionModel>
 #include <QStringListModel>
 #include <QTableView>
+#include <QPointer>
+#include <QAction>
 
 /// For sandbox
 #include <QStyledItemDelegate>
 #include <QEvent>
 #include <QStyleOptionViewItem>
 #include <QModelIndex>
+
+/// For menuSandbox
+#include <QMenu>
+
 
 #include <QDebug>
 
@@ -108,6 +116,104 @@ void ActionsTest::sandbox()
   while(tableView.isVisible()){
     QTest::qWait(500);
   }
+}
+
+void ActionsTest::menuSandbox()
+{
+  QMenu *menu;
+  QPointer<QAction> actA;
+  QPointer<QAction> act1;
+
+  menu = new QMenu;
+  menu->setObjectName("menu");
+  actA = menu->addAction("Action A");
+  actA->setObjectName("actA");
+  
+  act1 = new QAction("Action 1", menu);
+  act1->setObjectName("act1");
+  menu->addAction(act1);
+  
+  menu->dumpObjectInfo();
+  menu->dumpObjectTree();
+  
+  qDebug() << "   actA: " << actA << " , parent: " << actA->parent();
+  qDebug() << "   act1: " << act1 << " , parent: " << act1->parent();
+
+  qDebug() << "delete menu...";
+  delete menu;
+  
+  qDebug() << "-> actA: " << actA;
+  qDebug() << "-> act1: " << act1;
+  
+//   QTest::qWait(1000000);
+  
+}
+
+void ActionsTest::rowStateTest()
+{
+  using Mdt::ItemEditor::RowState;
+
+  /*
+   * Initial state
+   */
+  RowState rs;
+  QCOMPARE(rs.rowCount(), 0);
+  QCOMPARE(rs.currentRow(), -1);
+  QVERIFY(rs.isValid());
+  QVERIFY(rs.isNull());
+  /*
+   * Set
+   */
+  // N: 1 , Current: -1
+  rs.setRowCount(1);
+  QCOMPARE(rs.rowCount(), 1);
+  QCOMPARE(rs.currentRow(), -1);
+  QVERIFY(!rs.isValid());
+  QVERIFY(rs.isNull());
+  // N: 1 , Current: 0
+  rs.setCurrentRow(0);
+  QCOMPARE(rs.rowCount(), 1);
+  QCOMPARE(rs.currentRow(), 0);
+  QVERIFY(rs.isValid());
+  QVERIFY(!rs.isNull());
+  // N: 1 , Current: 1
+  rs.setRowCount(1);
+  rs.setCurrentRow(1);
+  QVERIFY(!rs.isValid());
+  QVERIFY(rs.isNull());
+  // N: 2 , Current: -1
+  rs.setRowCount(2);
+  rs.setCurrentRow(-1);
+  QVERIFY(!rs.isValid());
+  QVERIFY(rs.isNull());
+  // N: 2 , Current: 0
+  rs.setRowCount(2);
+  rs.setCurrentRow(0);
+  QVERIFY(rs.isValid());
+  QVERIFY(!rs.isNull());
+  // N: 2 , Current: 1
+  rs.setRowCount(2);
+  rs.setCurrentRow(1);
+  QVERIFY(rs.isValid());
+  QVERIFY(!rs.isNull());
+  // N: 2 , Current: 2
+  rs.setRowCount(2);
+  rs.setCurrentRow(2);
+  QVERIFY(!rs.isValid());
+  QVERIFY(rs.isNull());
+  // N: 2 , Current: 3
+  rs.setRowCount(2);
+  rs.setCurrentRow(3);
+  QVERIFY(!rs.isValid());
+  QVERIFY(rs.isNull());
+  /*
+   * Clear
+   */
+  rs.clear();
+  QCOMPARE(rs.rowCount(), 0);
+  QCOMPARE(rs.currentRow(), -1);
+  QVERIFY(rs.isValid());
+  QVERIFY(rs.isNull());
 }
 
 void ActionsTest::rowChangeEventMapperTest()
@@ -257,6 +363,93 @@ void ActionsTest::rowChangeEventMapperTest()
   }
   
   QFAIL("Test not completely implemented yet");
+}
+
+void ActionsTest::navigationActionsTest()
+{
+  using Mdt::ItemEditor::NavigationActions;
+  using Mdt::ItemEditor::RowState;
+
+  NavigationActions *actions = new NavigationActions(nullptr);
+  QPointer<QAction> toFirst = actions->toFirst();
+  QPointer<QAction> toPrevious = actions->toPrevious();
+  QPointer<QAction> toNext = actions->toNext();
+  QPointer<QAction> toLast = actions->toLast();
+  RowState rs;
+  /*
+   * Initial state
+   */
+  QVERIFY(!toFirst->isEnabled());
+  QVERIFY(!toPrevious->isEnabled());
+  QVERIFY(!toNext->isEnabled());
+  QVERIFY(!toLast->isEnabled());
+  /*
+   * Check row changes
+   */
+  // N: 0 , current row: -1
+  rs.setRowCount(0);
+  rs.setCurrentRow(-1);
+  actions->setRowState(rs);
+  QVERIFY(!toFirst->isEnabled());
+  QVERIFY(!toPrevious->isEnabled());
+  QVERIFY(!toNext->isEnabled());
+  QVERIFY(!toLast->isEnabled());
+  // N: 1 , current row: 0
+  rs.setRowCount(1);
+  rs.setCurrentRow(0);
+  actions->setRowState(rs);
+  QVERIFY(!toFirst->isEnabled());
+  QVERIFY(!toPrevious->isEnabled());
+  QVERIFY(!toNext->isEnabled());
+  QVERIFY(!toLast->isEnabled());
+  // N: 2 , current row: 0
+  rs.setRowCount(2);
+  rs.setCurrentRow(0);
+  actions->setRowState(rs);
+  QVERIFY(!toFirst->isEnabled());
+  QVERIFY(!toPrevious->isEnabled());
+  QVERIFY(toNext->isEnabled());
+  QVERIFY(toLast->isEnabled());
+  // N: 2 , current row: 1
+  rs.setRowCount(2);
+  rs.setCurrentRow(1);
+  actions->setRowState(rs);
+  QVERIFY(toFirst->isEnabled());
+  QVERIFY(toPrevious->isEnabled());
+  QVERIFY(!toNext->isEnabled());
+  QVERIFY(!toLast->isEnabled());
+  // N: 3 , current row: 0
+  rs.setRowCount(3);
+  rs.setCurrentRow(0);
+  actions->setRowState(rs);
+  QVERIFY(!toFirst->isEnabled());
+  QVERIFY(!toPrevious->isEnabled());
+  QVERIFY(toNext->isEnabled());
+  QVERIFY(toLast->isEnabled());
+  // N: 3 , current row: 1
+  rs.setRowCount(3);
+  rs.setCurrentRow(1);
+  actions->setRowState(rs);
+  QVERIFY(toFirst->isEnabled());
+  QVERIFY(toPrevious->isEnabled());
+  QVERIFY(toNext->isEnabled());
+  QVERIFY(toLast->isEnabled());
+  // N: 3 , current row: 2
+  rs.setRowCount(3);
+  rs.setCurrentRow(2);
+  actions->setRowState(rs);
+  QVERIFY(toFirst->isEnabled());
+  QVERIFY(toPrevious->isEnabled());
+  QVERIFY(!toNext->isEnabled());
+  QVERIFY(!toLast->isEnabled());
+  /*
+   * Clear
+   */
+  delete actions;
+  QVERIFY(toFirst.isNull());
+  QVERIFY(toPrevious.isNull());
+  QVERIFY(toNext.isNull());
+  QVERIFY(toLast.isNull());
 }
 
 /*

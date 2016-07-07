@@ -1,5 +1,26 @@
 format 211
 
 note 128002 "AddProxyModel()"
-  xyzwh 63 471 2000 391 69
+  xyzwh 40.5 40.5 2000 391 69
+classcanvas 128130 class_ref 2753410 // RowChangeEventMapper
+  classdiagramsettings member_max_width 0 end
+  xyz 257.5 189.5 2000
+end
+classcanvas 128258 class_ref 3021826 // ItemSelectionModel
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 189.5 2000
+end
+classcanvas 128386 class_ref 2706434 // NavigationActions
+  classdiagramsettings member_max_width 0 end
+  xyz 626 366 2006
+end
+classcanvas 128642 class_ref 2684802 // TableController
+  classdiagramsettings member_max_width 0 end
+  xyz 167 409 2000
+end
+relationcanvas 128514 relation_ref 3113218 // <unidirectional association>
+  from ref 128130 z 2007 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
 end

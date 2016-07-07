@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 150
+  revision 153
   modified_by 2 "philippe"
   // class settings
   
@@ -3025,6 +3025,14 @@ ${inlines}
 "
 	    classrelation_ref 2726530 // <association>
       end
+
+      classrelation 3453314 // <generalisation>
+	relation 3434882 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3453314 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
     end
 
     class 1914626 "QStyleOptionViewItem"
@@ -3809,15 +3817,6 @@ ${inlines}
 	  b parent class_ref 2427778 // ViewController
       end
 
-      classrelation 3398402 // <unidirectional association>
-	relation 3379970 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3398402 // <unidirectional association>
-	  b parent class_ref 2753410 // RowChangeEventMapper
-      end
-
       operation 4441730 "setCurrentIndex"
 	stereotype "slot"
 	abstract cpp_virtual public explicit_return_type "void"
@@ -3830,6 +3829,15 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 3445634 // <unidirectional association>
+	relation 3427202 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3445634 // <unidirectional association>
+	  b parent class_ref 2753410 // RowChangeEventMapper
       end
     end
 
@@ -6463,7 +6471,7 @@ ${inlines}
 
     classdiagram 1875202 "GraphicsViewOverview"
       classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-      size B
+      size C-Landscape
     end
 
     classdiagram 859522 "QGraphicsItem"

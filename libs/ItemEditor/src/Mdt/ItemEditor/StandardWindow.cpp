@@ -19,13 +19,32 @@
  **
  ****************************************************************************/
 #include "StandardWindow.h"
+#include <QMenu>
+#include <QMenuBar>
+#include <QToolBar>
 
 namespace Mdt{ namespace ItemEditor{
 
 StandardWindow::StandardWindow(QWidget* parent)
- : QMainWindow(parent)
+ : QMainWindow(parent),
+   pvNavigationActions(new NavigationActions(this))
 {
   setupUi(this);
+  setupNavigationElements();
+}
+
+void StandardWindow::setupNavigationElements()
+{
+  tlbMain->addAction(pvNavigationActions->toFirst());
+  tlbMain->addAction(pvNavigationActions->toPrevious());
+  tlbMain->addAction(pvNavigationActions->toNext());
+  tlbMain->addAction(pvNavigationActions->toLast());
+
+  auto *navigationMenu = menuBar()->addMenu(tr("&Navigation"));
+  navigationMenu->addAction(pvNavigationActions->toFirst());
+  navigationMenu->addAction(pvNavigationActions->toPrevious());
+  navigationMenu->addAction(pvNavigationActions->toNext());
+  navigationMenu->addAction(pvNavigationActions->toLast());
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

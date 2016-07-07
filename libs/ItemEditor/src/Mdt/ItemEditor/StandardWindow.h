@@ -22,6 +22,7 @@
 #define MDT_ITEM_EDITOR_STANDARD_WINDOW_H
 
 #include "ui_StandardWindow.h"
+#include "NavigationActions.h"
 #include <QMainWindow>
 
 namespace Mdt{ namespace ItemEditor{
@@ -42,7 +43,11 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    
+    /*! \brief Setup navigation elements
+     */
+    void setupNavigationElements();
+
+    NavigationActions *pvNavigationActions;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

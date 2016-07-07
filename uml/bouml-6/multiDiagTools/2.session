@@ -1,4 +1,4 @@
-window_sizes 1280 957 324 950 902 0
+window_sizes 1280 961 285 989 906 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -15,28 +15,37 @@ diagrams
     120 110 100 4 0 0
   classdiagram_ref 2634242 // sandbox2
     120 110 90 21 0 20
-  active  classdiagram_ref 2647426 // sandbox
+  classdiagram_ref 2647426 // sandbox
     950 902 100 4 0 0
+  active  classdiagram_ref 2413442 // StandardWindow
+    989 906 80 21 0 48
+  classdiagram_ref 2687106 // InsertAction
+    120 110 100 4 0 0
+  classdiagram_ref 2413698 // NavigationActions
+    950 902 100 18 0 0
+  classdiagram_ref 2414082 // Menu
+    120 110 100 4 0 0
+  classdiagram_ref 2687362 // NavigationMenu
+    120 110 100 4 0 0
+  classdiagram_ref 2414210 // overview
+    120 110 100 4 0 0
 end
 show_stereotypes
-selected attribute_ref 2880386 // CurrentRowChangeAllowed
+selected classdiagram_ref 2413442 // StandardWindow
 open
   
   package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
-  classview_ref 1313666 // sandbox
   
   package_ref 516226 // SqlItemModel
-  classview_ref 1438978 // Models
-  class_ref 3041410 // ItemViewTestEdit
-  class_ref 3015170 // EventCatchItemDelegate
-  operation_ref 4441986 // setCurrentRowChangeAllowed
-  operation_ref 4441858 // setCurrentIndex
-  classview_ref 1287042 // Controller
+  classview_ref 1306882 // Delegate
+  classview_ref 1307010 // EventMapper
+  class_ref 2684930 // ControllerState
+  classview_ref 1286786 // Actions
+  classview_ref 1452418 // BarsAndMenus
   classview_ref 1432322 // StandardFormWidget
+  classview_ref 1286658 // Window
   
   package_ref 430082 // Dsp
-  class_ref 3041922 // KeyboardModifier
-  class_ref 3041538 // QTest
 end
 end

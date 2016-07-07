@@ -37,6 +37,13 @@ namespace Mdt{ namespace ItemEditor{
      */
     explicit EventCatchItemDelegate(QObject* parent = nullptr);
 
+    // Copy disabled
+    EventCatchItemDelegate(const EventCatchItemDelegate &) = delete;
+    EventCatchItemDelegate & operator=(const EventCatchItemDelegate &) = delete;
+    // Move disabled
+    EventCatchItemDelegate(EventCatchItemDelegate &&) = delete;
+    EventCatchItemDelegate & operator=(EventCatchItemDelegate &&) = delete;
+
     /*! \brief Re-implementation to emit dataEditionStarted()
      */
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem & option, const QModelIndex & index) const override;

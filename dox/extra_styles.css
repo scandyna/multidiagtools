@@ -18,30 +18,31 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ACTIONS_TEST_H
-#define MDT_ITEM_EDITOR_ACTIONS_TEST_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+table.srcdoc_td_center {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+.srcdoc_td_center th {
+  border: 1px solid black;
+  padding: 5px;
+}
+.srcdoc_td_center td {
+  border: 1px solid black;
+  text-align: center;
+  padding: 5px;
+}
 
-class ActionsTest : public QObject
-{
-  Q_OBJECT
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void sandbox();
-  
-  void menuSandbox();
-
-  void rowStateTest();
-
-  void rowChangeEventMapperTest();
-
-  void navigationActionsTest();
-};
-
-#endif // #ifndef MDT_ITEM_EDITOR_ACTIONS_TEST_H
+table.srcdoc_td_left {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+.srcdoc_td_left th {
+  border: 1px solid black;
+  padding: 5px;
+}
+.srcdoc_td_left td {
+  border: 1px solid black;
+  text-align: left;
+  padding: 5px;
+}

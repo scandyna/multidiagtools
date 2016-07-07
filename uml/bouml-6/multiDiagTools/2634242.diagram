@@ -2,84 +2,84 @@ format 211
 
 classcanvas 128130 class_ref 2684802 // TableController
   classdiagramsettings member_max_width 0 end
-  xyzwh 250.7 143.8 2000 122 43
+  xyzwh 251.9 142.3 2000 120 43
 end
 classcanvas 128770 class_ref 2684930 // ControllerState
   classdiagramsettings member_max_width 0 end
-  xyz 410.8 127 2000
+  xyz 409 127.2 2000
 end
 classcanvas 128898 class_ref 2685058 // NavigationBar
   classdiagramsettings member_max_width 0 end
-  xyz 40.2 715.7 2000
+  xyz 40.5 716.9 2000
 end
 classcanvas 129026 class_ref 2685186 // EditionBar
   classdiagramsettings member_max_width 0 end
-  xyz 223.9 715.7 2000
+  xyz 223.5 716.9 2000
 end
 classcanvas 129154 class_ref 2685314 // ViewBar
   classdiagramsettings member_max_width 0 end
-  xyz 382.3 715.7 2000
+  xyz 381.1 716.9 2000
 end
 classcanvas 129666 class_ref 693250 // QAction
   classdiagramsettings member_max_width 0 end
-  xyz 401.2 35.8 2005
+  xyz 401 35 2005
 end
 classcanvas 132482 class_ref 2686210 // EditorActions
   classdiagramsettings member_max_width 0 end
-  xyz 263.4 43.8 2000
+  xyz 263 43 2000
 end
 classcanvas 134018 class_ref 146946 // QAbstractItemModel
   classdiagramsettings member_max_width 0 end
-  xyz 145.2 311.4 2017
+  xyz 146.1 311.8 2017
 end
 classcanvas 134274 class_ref 2160258 // QAbstractItemView
   classdiagramsettings member_max_width 0 end
-  xyz 345.4 471.4 2023
+  xyz 345 471 2023
 end
 classcanvas 134530 class_ref 1382914 // QItemSelectionModel
   classdiagramsettings member_max_width 0 end
-  xyz 339 391 2029
+  xyz 338.9 390.9 2029
 end
 classcanvas 134914 class_ref 1914498 // QAbstractItemDelegate
   classdiagramsettings member_max_width 0 end
-  xyz 529 471 2035
+  xyz 529.4 470.2 2035
 end
 classcanvas 137090 class_ref 2686466 // ControllerInputEvent
   classdiagramsettings member_max_width 0 end
-  xyz 536.6 311.4 2000
+  xyz 536 311 2000
 end
 classcanvas 139138 class_ref 2686594 // ControllerField
   classdiagramsettings member_max_width 0 end
-  xyz 79.4 143.8 2000
+  xyz 79 143 2000
 end
 classcanvas 139394 class_ref 2686722 // ControllerFieldPermissions
   classdiagramsettings member_max_width 0 end
-  xyz 39.4 63.8 2000
+  xyz 39 63 2000
 end
 classcanvas 140290 class_ref 2720002 // Filter
   classdiagramsettings member_max_width 0 end
-  xyz 603 592.6 2000
+  xyz 602.1 592.5 2000
 end
 classcanvas 140418 class_ref 2720130 // FilterBuilder
   classdiagramsettings member_max_width 0 end
-  xyz 40 592.6 2000
+  xyz 39.1 592.5 2000
 end
 classcanvas 140546 class_ref 2739714 // QWebSocket
   classdiagramsettings member_max_width 0 end
-  xyz 428 592.6 2017
+  xyz 427.1 592.5 2017
 end
 classcanvas 140802 class_ref 2739842 // QWebSocketServer
   classdiagramsettings member_max_width 0 end
-  xyz 211.8 592.6 2017
+  xyz 211.5 592.5 2017
 end
 classcanvas 142978 class_ref 2753410 // RowChangeEventMapper
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 326.4 311.4 2023
+  xyz 325.8 310.8 2023
 end
 relationcanvas 132610 relation_ref 3055234 // <unidirectional association>
   from ref 132482 z 2006 to ref 129666
   no_role_a no_role_b
-  multiplicity_a_pos 383 72 3000 no_multiplicity_b
+  multiplicity_a_pos 382 73 3000 no_multiplicity_b
 end
 relationcanvas 133250 relation_ref 3055618 // <unidirectional association>
   from ref 128130 z 2001 to ref 132482
@@ -89,7 +89,7 @@ end
 relationcanvas 134402 relation_ref 2458242 // <unidirectional association>
   geometry HV unfixed
   decenter_begin 581
-  from ref 134274 z 2024 to point 213 493
+  from ref 134274 z 2024 to point 214 493
   line 146434 z 2024 to ref 134018
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -124,7 +124,7 @@ relationcanvas 139266 relation_ref 3056642 // <unidirectional association>
   decenter_end 395
   from ref 128130 z 2001 to ref 139138
   no_role_a no_role_b
-  multiplicity_a_pos 195 167 3000 no_multiplicity_b
+  multiplicity_a_pos 196 168 3000 no_multiplicity_b
 end
 relationcanvas 139522 relation_ref 3056770 // <unidirectional association>
   decenter_begin 532
@@ -137,16 +137,9 @@ relationcanvas 140162 relation_ref 3063938 // <unidirectional association>
   geometry VHV unfixed
   decenter_begin 110
   decenter_end 565
-  from ref 137090 z 2001 to point 549 272.6
-  line 145538 z 2001 to point 316 272.6
+  from ref 137090 z 2001 to point 549 271.7
+  line 145538 z 2001 to point 316 271.7
   line 145666 z 2001 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 143234 relation_ref 3106562 // <unidirectional association>
-  decenter_begin 581
-  decenter_end 581
-  from ref 142978 z 2024 to ref 134018
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
@@ -159,16 +152,9 @@ relationcanvas 145794 relation_ref 3379842 // <unidirectional association>
   geometry VHV unfixed
   decenter_begin 893
   decenter_end 386
-  from ref 128130 z 2001 to point 356 232.6
-  line 145922 z 2001 to point 589 232.6
+  from ref 128130 z 2001 to point 356 232.5
+  line 145922 z 2001 to point 589 232.5
   line 146050 z 2001 to ref 137090
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 146178 relation_ref 3379970 // <unidirectional association>
-  decenter_begin 469
-  decenter_end 473
-  from ref 134530 z 2030 to ref 142978
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
@@ -176,6 +162,16 @@ relationcanvas 146306 relation_ref 3380098 // <unidirectional association>
   decenter_begin 581
   decenter_end 581
   from ref 142978 z 2024 to ref 137090
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 146562 relation_ref 3106562 // <unidirectional association>
+  from ref 142978 z 2024 to ref 134018
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 146690 relation_ref 3427202 // <unidirectional association>
+  from ref 134530 z 2030 to ref 142978
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

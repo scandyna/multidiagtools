@@ -2,19 +2,59 @@ format 211
 
 classcanvas 128002 class_ref 2706306 // StandardWindow
   classdiagramsettings member_max_width 0 end
-  xyz 204 119 2000
+  xyz 827.3 371.717 2000
 end
 classcanvas 128130 class_ref 552450 // QMainWindow
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 212 39 2006
+  xyz 837.621 208.163 2006
 end
 classcanvas 128386 class_ref 2706434 // NavigationActions
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 40 119 2000
+  xyz 656.625 373.117 2000
 end
 classcanvas 128514 class_ref 2713474 // EditionActions
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 359 119 2000
+  xyz 1122.9 249.096 2000
+end
+classcanvas 128898 class_ref 3061890 // InsertAction
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 988.908 371.717 2000
+end
+classcanvas 129026 class_ref 3062018 // RemoveAction
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 981.908 208.163 2005
+end
+classcanvas 129666 class_ref 2684802 // TableController
+  classdiagramsettings member_max_width 0 end
+  xyz 312.008 208.163 2000
+end
+note 129794 "Inspiration:
+ - Qt model/view (does a view take ownership of a model ?)
+ - Qt graphics API (same question)"
+  xyzwh 121.4 534.458 2000 571 103
+classcanvas 129922 class_ref 3068674 // StandardFormWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 221.204 414.271 2000
+end
+classcanvas 130050 class_ref 316162 // QWidget
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 856.621 82.7208 2012
+end
+classcanvas 131970 class_ref 3068802 // AbstractEditorWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 465.225 208.163 2000
+end
+classcanvas 133122 class_ref 3068930 // StandardTableWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 465.225 334.604 2000
+end
+classcanvas 136450 class_ref 404610 // QDataWidgetMapper
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 39.5833 414.271 2006
+end
+classcanvas 136706 class_ref 638338 // QTableView
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 333.092 334.604 2012
 end
 relationcanvas 128258 relation_ref 3070466 // <generalisation>
   from ref 128002 z 2007 to ref 128130
@@ -22,14 +62,93 @@ relationcanvas 128258 relation_ref 3070466 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128642 relation_ref 3113346 // <directional composition>
-  decenter_end 395
   from ref 128002 z 2001 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 3113474 // <directional composition>
-  decenter_end 395
-  from ref 128002 z 2001 to ref 128514
+  geometry VHV unfixed
+  decenter_begin 925
+  decenter_end 149
+  from ref 128002 z 2001 to point 936 332.6
+  line 137346 z 2001 to point 1135 332.6
+  line 137474 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 3428098 // <directional composition>
+  from ref 128002 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 3428226 // <directional composition>
+  geometry VHV unfixed
+  decenter_begin 743
+  decenter_end 114
+  from ref 128002 z 2006 to point 914 292.6
+  line 137602 z 2006 to point 990 292.6
+  line 137730 z 2006 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 971394 // <generalisation>
+  from ref 128130 z 2013 to ref 130050
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132098 relation_ref 3441794 // <generalisation>
+  geometry VHV unfixed
+  from ref 131970 z 2013 to point 537.6 165.8
+  line 136066 z 2013 to point 887.6 165.8
+  line 136194 z 2013 to ref 130050
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132994 relation_ref 3441922 // <generalisation>
+  geometry VHV unfixed
+  from ref 129922 z 2001 to point 292.6 292.6
+  line 135810 z 2001 to point 537.6 292.6
+  line 135938 z 2001 to ref 131970
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133250 relation_ref 3442050 // <generalisation>
+  from ref 133122 z 2001 to ref 131970
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133634 relation_ref 3442178 // <unidirectional association>
+  geometry HV unfixed
+  decenter_begin 558
+  from ref 129922 z 2001 to point 528 435
+  line 136962 z 2001 to ref 133122
+  no_role_a no_role_b
+  multiplicity_a_pos 524 384 3000 no_multiplicity_b
+end
+relationcanvas 134530 relation_ref 3442434 // <directional composition>
+  decenter_end 228
+  from ref 128002 z 2001 to point 886.2 453
+  line 134658 z 2001 to point 1269.4 453
+  line 134786 z 2001 to point 1269.4 40.8
+  line 136322 z 2001 to point 499.4 40.8
+  line 137218 z 2001 to ref 131970
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 136578 relation_ref 3442562 // <directional composition>
+  decenter_begin 558
+  decenter_end 558
+  from ref 129922 z 2007 to ref 136450
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 136834 relation_ref 3442690 // <directional composition>
+  from ref 133122 z 2013 to ref 136706
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 137090 relation_ref 3442818 // <directional composition>
+  from ref 131970 z 2001 to ref 129666
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

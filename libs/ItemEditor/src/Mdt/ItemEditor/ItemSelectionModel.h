@@ -41,6 +41,13 @@ namespace Mdt{ namespace ItemEditor{
      */
     ItemSelectionModel(QAbstractItemModel* model, QObject *parent);
 
+    // Copy disabled
+    ItemSelectionModel(const ItemSelectionModel &) = delete;
+    ItemSelectionModel & operator=(const ItemSelectionModel &) = delete;
+    // Move disabled
+    ItemSelectionModel(ItemSelectionModel &&) = delete;
+    ItemSelectionModel & operator=(ItemSelectionModel &&) = delete;
+
     /*! \brief Check if it os allowed to change current row
      */
     bool isCurrentRowChangeAllowed() const

@@ -143,7 +143,7 @@ class QObject;
 
 /*! \brief Helper macro to build a Error with source file informations
  *
- * This version accepts a QObject instance, witch avoids typing class name explicitly.
+ * This version accepts a QObject instance, which avoids typing class name explicitly.
  *  If you create a error for a object that is not a subclass of QObject,
  *  use mdtErrorNew()
  *
@@ -156,7 +156,7 @@ class QObject;
 
 /*! \brief Helper macro to build a user defined Error with source file informations
  *
- * This version accepts a QObject instance, witch avoids typing class name explicitly.
+ * This version accepts a QObject instance, which avoids typing class name explicitly.
  *  If you create a error for a object that is not a subclass of QObject,
  *  use mdtErrorNewT()
  *
@@ -175,7 +175,7 @@ class QObject;
 
 /*! \brief Helper macro to set source file informations to a existing error
  *
- * This version accepts a QObject instance, witch avoids typing class name explicitly.
+ * This version accepts a QObject instance, which avoids typing class name explicitly.
  *  If you create a error for a object that is not a subclass of QObject, use MDT_ERROR_SET_SRC() .
  */
 #define MDT_ERROR_SET_SRC_Q(e, obj) e.setSource(__FILE__, __LINE__, obj, __FUNCTION__)
@@ -193,12 +193,12 @@ namespace Mdt{
    *  Imagine a case of a application that provides document editing functionnality,
    *  and the user wants to save a document.
    *  The application will probably call a helper function from its own library,
-   *  witch also calls a other system function from a onther part of the library,
-   *  witch finally calls a (maybe system dependant) low level function.
+   *  which also calls a other system function from a onther part of the library,
+   *  which finally calls a (maybe system dependant) low level function.
    *  The low level function fails (for some reason).
    *  How could the application provide the most usefull error message to the user ?
    *  Lets illustrate a possible call stack:
-   *  <table border="1" cellpadding="5">
+   *  <table class="srcdoc_td_left">
    *   <tr><th>Function</th><th>Error</th><th>Error message</th></tr>
    *   <tr><td>write()</td><td>EDQUOT (int)</td><td>Disk quota exhausted</td></tr>
    *   <tr><td>writeToFile()</td><td>DiskQuotaExhausted (enum)</td><td>Could not write to file 'document.txt' because disk quota exhausted</td></tr>
@@ -213,8 +213,8 @@ namespace Mdt{
    *
    * If you need to send Error object across threads with Qt signal/slot (queued),
    *  Error must be registered with qRegisterMetaType().
-   *  This is allready done in mdtApplication::init().
-   *  If you don't use mdtApplication, don't forget to call qRegisterMetaType<Error>() in, f.ex., your main() function.
+   *  This is allready done in Mdt::Application::init().
+   *  If you don't use Mdt::Application, don't forget to call qRegisterMetaType<Mdt::Error>() in, f.ex., your main() function.
    */
   class Error
   {
@@ -340,7 +340,7 @@ namespace Mdt{
       * This seems somwhat ugly, but provides helpfull informations
       * (and is only compiled in debug)
       * Note: we use Q_ASSERT_X() because qFatal() requires to include QDebug,
-      *       witch we really not want here.
+      *       which we really not want here.
       */
       QString msg;
       if(std::type_index(typeid(T)) != pvShared->userErrorType){
