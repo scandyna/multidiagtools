@@ -18,26 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
-#define MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
+#include "TestWindowEditor.h"
+#include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
-
-class StandardWidgetsTest : public QObject
+TestWindowEditor::TestWindowEditor(QWidget* parent)
+ : StandardWindow(parent)
 {
-  Q_OBJECT
+  using Mdt::ItemEditor::StandardEditorLayoutWidget;
 
- private slots:
+  auto *layoutWidget = new StandardEditorLayoutWidget;
+  setCentralWidget(layoutWidget);
+}
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void standardEditorLayoutWidgetTest();
-
-  void standardWindowTest();
-
-  void testWidowEditorTest();
-};
-
-#endif // #ifndef MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H

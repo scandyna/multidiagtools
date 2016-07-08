@@ -1,6 +1,6 @@
 format 211
 "tests" // Mdt::ItemEditor::tests
-  revision 9
+  revision 10
   modified_by 2 "philippe"
   // class settings
   
@@ -199,6 +199,75 @@ ${inlines}
 	
 	
       end
+    end
+  end
+
+  classview 1472258 "Editor"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2707842 "TestEditor"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3090050 "TestWindowEditor"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3477378 // <generalisation>
+	relation 3458946 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3477378 // <generalisation>
+	  b parent class_ref 2706306 // StandardWindow
+      end
+
+      classrelation 3477506 // <dependency>
+	relation 3459074 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3477506 // <dependency>
+	  b parent class_ref 3088642 // StandardEditorLayoutWidget
+      end
+    end
+
+    class 3090178 "TestMainEditor"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 end

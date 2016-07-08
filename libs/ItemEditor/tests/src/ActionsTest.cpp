@@ -219,13 +219,17 @@ void ActionsTest::rowStateTest()
 void ActionsTest::rowChangeEventMapperTest()
 {
   using Mdt::ItemEditor::RowChangeEventMapper;
+  using Mdt::ItemEditor::RowState;
 
   RowChangeEventMapper mapper;
   QSignalSpy rowCountSpy(&mapper, &RowChangeEventMapper::rowCountChanged);
   QSignalSpy currentRowSpy(&mapper, &RowChangeEventMapper::currentRowChanged);
+  QSignalSpy rowStateSpy(&mapper, &RowChangeEventMapper::rowStateChanged);
+  
   QList<QVariant> spyItem;
   QStringListModel model;
   QModelIndex index;
+  RowState rs;
 
   /*
    * Initial state
@@ -234,6 +238,9 @@ void ActionsTest::rowChangeEventMapperTest()
   QCOMPARE(rowCountSpy.count(), 0);
   QVERIFY(currentRowSpy.isValid());
   QCOMPARE(currentRowSpy.count(), 0);
+  
+  QVERIFY(rowStateSpy.isValid());
+  QCOMPARE(rowStateSpy.count(), 0);
   /*
    * Set model
    */
@@ -244,6 +251,14 @@ void ActionsTest::rowChangeEventMapperTest()
   QCOMPARE(spyItem.at(0).toInt(), 0);
   // Current is not updated here (the selection model will signal it to mapper)
   QCOMPARE(currentRowSpy.count(), 0);
+  
+  // Check that row count was signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QVERIFY(rs.isValid());
+  QCOMPARE(rs.rowCount(), 0);
+  QCOMPARE(rs.currentRow(), -1);
   /*
    * Add a item to model
    *  - Use setStringList() helper method
@@ -255,6 +270,14 @@ void ActionsTest::rowChangeEventMapperTest()
   QCOMPARE(spyItem.at(0).toInt(), 1);
   // Current is not updated here (the selection model will signal it to mapper)
   QCOMPARE(currentRowSpy.count(), 0);
+  
+  // Check that row count was signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QVERIFY(rs.isValid());
+  QCOMPARE(rs.rowCount(), 1);
+  QCOMPARE(rs.currentRow(), -1);
   /*
    * Add a item to model
    *  - Use insertRow()

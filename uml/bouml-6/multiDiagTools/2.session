@@ -1,4 +1,4 @@
-window_sizes 1280 961 285 989 906 0
+window_sizes 1280 961 331 943 906 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -13,14 +13,10 @@ diagrams
     120 110 100 4 0 0
   classdiagram_ref 2634114 // Goals
     120 110 100 4 0 0
-  classdiagram_ref 2634242 // sandbox2
-    120 110 90 21 0 20
   classdiagram_ref 2647426 // sandbox
     950 902 100 4 0 0
-  active  classdiagram_ref 2413442 // StandardWindow
-    989 906 80 21 0 48
-  classdiagram_ref 2687106 // InsertAction
-    120 110 100 4 0 0
+  classdiagram_ref 2413442 // StandardWindow
+    989 906 80 21 0 0
   classdiagram_ref 2413698 // NavigationActions
     950 902 100 18 0 0
   classdiagram_ref 2414082 // Menu
@@ -29,22 +25,48 @@ diagrams
     120 110 100 4 0 0
   classdiagram_ref 2414210 // overview
     120 110 100 4 0 0
+  classdiagram_ref 2700546 // overview
+    1020 906 85 21 0 0
+  classdiagram_ref 2707074 // TableController
+    120 110 100 18 0 172
+  classdiagram_ref 2406786 // InputEvents
+    120 110 80 21 0 0
+  classdiagram_ref 2707202 // InputEventMapper
+    120 110 100 18 0 0
+  classdiagram_ref 2700418 // EditorWidget
+    120 110 80 8 0 330
+  classdiagram_ref 2707842 // TestEditor
+    120 110 100 4 0 0
+  active  classdiagram_ref 2707970 // ControllersSideSide
+    943 906 80 8 24 3
 end
 show_stereotypes
-selected classdiagram_ref 2413442 // StandardWindow
+selected class_ref 3088898 // InputEventMapper
 open
   
   package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
   
   package_ref 516226 // SqlItemModel
-  classview_ref 1306882 // Delegate
+  classview_ref 1472258 // Editor
   classview_ref 1307010 // EventMapper
-  class_ref 2684930 // ControllerState
-  classview_ref 1286786 // Actions
-  classview_ref 1452418 // BarsAndMenus
+  attribute_ref 2907138 // FormatProxyModel
+  attribute_ref 2907266 // SortProxyModel
+  operation_ref 4479106 // addRelation
+  operation_ref 4476930 // submit
+  operation_ref 4477058 // revert
+  operation_ref 4477186 // insert
+  operation_ref 4477314 // remove
+  operation_ref 4469122 // setLastError
+  attribute_ref 2907394 // RowState
+  operation_ref 4469378 // setModel
+  attribute_ref 2907010 // Model
   classview_ref 1432322 // StandardFormWidget
-  classview_ref 1286658 // Window
+  attribute_ref 2906754 // ChildsTabWidget
+  operation_ref 4476802 // connectNavigationElements
+  classview_ref 1327362 // SqlSandbox
+  classview_ref 1472002 // UsageExamples
+  classview_ref 1472130 // ArticleEditor
   
   package_ref 430082 // Dsp
 end

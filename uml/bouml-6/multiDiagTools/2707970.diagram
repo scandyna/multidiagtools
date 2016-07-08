@@ -1,0 +1,92 @@
+format 211
+
+classcanvas 128002 class_ref 2684802 // TableController
+  classdiagramsettings member_max_width 0 end
+  xyz 234.4 465.4 2000
+end
+classcanvas 128130 class_ref 2927362 // SqlTableController
+  classdiagramsettings member_max_width 0 end
+  xyz 591.4 541.4 2006
+end
+classcanvas 128386 class_ref 147202 // QAbstractTableModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 41.2 495.2 2006
+end
+classcanvas 128642 class_ref 174338 // QSqlQueryModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 56.2 575.2 2012
+end
+classcanvas 128898 class_ref 174210 // QSqlTableModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 58.2 651.4 2018
+end
+classcanvas 129410 class_ref 719874 // QSortFilterProxyModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 523.2 880.2 2000
+end
+classcanvas 129538 class_ref 2782850 // TableControllerRelation
+  classdiagramsettings member_max_width 0 end
+  xyz 1071.2 177.2 2006
+end
+classcanvas 130178 class_ref 3090434 // AbstractController
+  classdiagramsettings member_max_width 0 end
+  xyz 593.4 39.4 2000
+end
+note 131330 "field name is not only convenient for SQL, but can be for CSV, etc...
+
+Should be imagined something that takes some header as list of fields ?
+Should be a interface for this (Qt item model's header is displayed, so field names will not match..)
+
+-> Also: a other concept than strings could be better ?"
+  xyzwh 40.2 880 2000 403 231
+classcanvas 131458 class_ref 3088898 // InputEventMapper
+  classdiagramsettings member_max_width 0 end
+  xyz 58 65 2018
+end
+relationcanvas 128514 relation_ref 3310722 // <directional composition>
+  decenter_end 395
+  from ref 128002 z 2007 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 175106 // <generalisation>
+  decenter_begin 528
+  decenter_end 523
+  from ref 128642 z 2013 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 174978 // <generalisation>
+  decenter_end 528
+  from ref 128898 z 2019 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 3310466 // <directional composition>
+  from ref 128130 z 2019 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130306 relation_ref 3459458 // <generalisation>
+  decenter_begin 489
+  decenter_end 489
+  from ref 128130 z 2007 to ref 130178
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130434 relation_ref 3459586 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 489
+  from ref 128002 z 2001 to point 386 424.2
+  line 130562 z 2001 to point 805 424.2
+  line 130690 z 2001 to ref 130178
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131202 relation_ref 3459714 // <association>
+  decenter_begin 510
+  from ref 130178 z 2007 to ref 129538
+  no_role_a no_role_b
+  multiplicity_a_pos 1055 223 3000 multiplicity_b_pos 1041 223 3000
+end
+end

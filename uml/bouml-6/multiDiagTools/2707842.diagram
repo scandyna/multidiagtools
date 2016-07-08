@@ -1,0 +1,56 @@
+format 211
+
+classcanvas 128002 class_ref 3090050 // TestWindowEditor
+  classdiagramsettings member_max_width 0 end
+  xyz 36.3 320.5 2000
+end
+classcanvas 128130 class_ref 2706306 // StandardWindow
+  classdiagramsettings member_max_width 0 end
+  xyz 40.3 240.1 2000
+end
+classcanvas 128386 class_ref 552450 // QMainWindow
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 48.3 159.7 2006
+end
+classcanvas 128642 class_ref 316162 // QWidget
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 268.3 39.1 2012
+end
+classcanvas 128898 class_ref 3088642 // StandardEditorLayoutWidget
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 199.95 320.5 2018
+end
+classcanvas 129538 class_ref 3090178 // TestMainEditor
+  classdiagramsettings member_max_width 0 end
+  xyz 331 571 2000
+end
+relationcanvas 128258 relation_ref 3458946 // <generalisation>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 3070466 // <generalisation>
+  from ref 128130 z 2007 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 971394 // <generalisation>
+  geometry VHV unfixed
+  from ref 128386 z 2013 to point 98 120
+  line 129282 z 2013 to point 299 120
+  line 129410 z 2013 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 3458178 // <generalisation>
+  decenter_begin 517
+  from ref 128898 z 2019 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 3459074 // <dependency>
+  from ref 128002 z 2019 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

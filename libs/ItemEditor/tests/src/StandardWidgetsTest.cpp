@@ -19,12 +19,17 @@
  **
  ****************************************************************************/
 #include "StandardWidgetsTest.h"
+#include "TestWindowEditor.h"
 #include "Mdt/Application.h"
+#include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
 #include "Mdt/ItemEditor/StandardWindow.h"
 #include <QSignalSpy>
 #include <QItemSelectionModel>
 #include <QStringListModel>
 #include <QTableView>
+#include <QPointer>
+#include <QLineEdit>
+#include <QLabel>
 
 #include <QDebug>
 
@@ -40,6 +45,54 @@ void StandardWidgetsTest::cleanupTestCase()
  * Tests
  */
 
+void StandardWidgetsTest::standardEditorLayoutWidgetTest()
+{
+  using Mdt::ItemEditor::StandardEditorLayoutWidget;
+
+  auto *lw = new StandardEditorLayoutWidget;
+  QPointer<QLineEdit> widget1 = new QLineEdit;
+  QPointer<QLabel> widget2 = new QLabel("Widget 2");
+  QPointer<QLabel> widget3 = new QLabel("Widget 3");
+  QPointer<QLabel> widget4 = new QLabel("Widget 4");
+
+  /*
+   * Initial state
+   */
+  // Tab widget must not exit now
+  QVERIFY(lw->findChild<QTabWidget*>() == nullptr);
+  /*
+   * Set main widget first time
+   */
+  lw->setMainWidget(widget1);
+  /*
+   * Set main widget second time
+   */
+  lw->setMainWidget(widget2);
+  QVERIFY(widget1.isNull());
+  // Tab widget must not exit now
+  QVERIFY(lw->findChild<QTabWidget*>() == nullptr);
+  /*
+   * Add child widgets
+   */
+  lw->addChildWidget(widget3, "W3");
+  QVERIFY(lw->findChild<QTabWidget*>() != nullptr);
+  lw->addChildWidget(widget4, "W4");
+  /*
+   * Play
+   */
+//   lw->show();
+//   while(lw->isVisible()){
+//     QTest::qWait(500);
+//   }
+  /*
+   * Delete
+   */
+  delete lw;
+  QVERIFY(widget2.isNull());
+  QVERIFY(widget3.isNull());
+  QVERIFY(widget4.isNull());
+}
+
 void StandardWidgetsTest::standardWindowTest()
 {
   Mdt::ItemEditor::StandardWindow window;
@@ -50,6 +103,19 @@ void StandardWidgetsTest::standardWindowTest()
    * Play
    */
   while(window.isVisible()){
+    QTest::qWait(500);
+  }
+}
+
+void StandardWidgetsTest::testWidowEditorTest()
+{
+  TestWindowEditor editor;
+
+  /*
+   * Play
+   */
+  editor.show();
+  while(editor.isVisible()){
     QTest::qWait(500);
   }
 }

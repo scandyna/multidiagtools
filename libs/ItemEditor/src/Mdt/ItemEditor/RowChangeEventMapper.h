@@ -21,6 +21,7 @@
 #ifndef MDT_ITEM_EDITOR_ROW_CHANGE_EVENT_MAPPER_H
 #define MDT_ITEM_EDITOR_ROW_CHANGE_EVENT_MAPPER_H
 
+#include "RowState.h"
 #include <QObject>
 #include <QPointer>
 #include <QModelIndex>
@@ -88,6 +89,10 @@ namespace Mdt{ namespace ItemEditor{
     void onRowsRemoved(const QModelIndex & parent, int first, int last);
 
    signals:
+
+    /*! \brief Emitted whenever row count or current row changes
+     */
+    void rowStateChanged(RowState rs);
 
     /*! \brief Emited whenever row count changes
      */

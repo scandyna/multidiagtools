@@ -11,6 +11,7 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/ItemSelectionModel.cpp
     src/Mdt/ItemEditor/RowChangeEventMapper.cpp
     src/Mdt/ItemEditor/NavigationActions.cpp
+    src/Mdt/ItemEditor/StandardEditorLayoutWidget.cpp
     src/Mdt/ItemEditor/StandardWindow.cpp
 )
 
