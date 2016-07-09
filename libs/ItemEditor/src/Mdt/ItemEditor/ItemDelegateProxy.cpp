@@ -70,7 +70,6 @@ bool ItemDelegateProxy::editorEvent(QEvent* event, QAbstractItemModel* model, co
   }
   // QStyledItemDelegate::editorEvent() is protected, we must do some cast here
   return reinterpret_cast<QAbstractItemDelegate*>(pvDelegate.data())->editorEvent(event, model, option, index);
-//   return pvDelegate->editorEvent(event, model, option, index);
 }
 
 bool ItemDelegateProxy::helpEvent(QHelpEvent* event, QAbstractItemView* view, const QStyleOptionViewItem& option, const QModelIndex& index)

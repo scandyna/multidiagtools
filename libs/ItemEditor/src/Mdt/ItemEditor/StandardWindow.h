@@ -21,17 +21,16 @@
 #ifndef MDT_ITEM_EDITOR_STANDARD_WINDOW_H
 #define MDT_ITEM_EDITOR_STANDARD_WINDOW_H
 
+#include "AbstractWindow.h"
 #include "ui_StandardWindow.h"
-#include "NavigationActions.h"
-#include <QMainWindow>
 
 namespace Mdt{ namespace ItemEditor{
 
-  /*! \brief StandardWindow cam be used as editor for basic cases
+  /*! \brief StandardWindow can be used as editor for basic cases
    *
-   * Based on QMainWindow, it displays a menu, toolbar and a status bar.
+   * Based on AbstractWindow (which is based on QMainWindow), it displays a menu, toolbar and a status bar.
    */
-  class StandardWindow : public QMainWindow, Ui::StandardWindow
+  class StandardWindow : public AbstractWindow, Ui::StandardWindow
   {
    Q_OBJECT
 
@@ -46,8 +45,6 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Setup navigation elements
      */
     void setupNavigationElements();
-
-    NavigationActions *pvNavigationActions;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -22,6 +22,7 @@
 #define MDT_ITEM_EDITOR_EVENT_CATCH_ITEM_DELEGATE_H
 
 #include "ItemDelegateProxy.h"
+#include "ControllerState.h"
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -44,13 +45,27 @@ namespace Mdt{ namespace ItemEditor{
     EventCatchItemDelegate(EventCatchItemDelegate &&) = delete;
     EventCatchItemDelegate & operator=(EventCatchItemDelegate &&) = delete;
 
-    /*! \brief Re-implementation to emit dataEditionStarted()
+    /*! \brief Re-implementation from ItemDelegateProxy
+     *
+     * If edition is allowed, dataEditionStarted() is emitted
+     *  and ItemDelegateProxy::createEditor() is called.
+     *  Otherwise, a nullptr is returned.
+     *
+     * \todo Define if this has sense, and for which state(s) exactly.
+     *       If a main/parent widget is editing, a better solution
+     *       is to disable its childs, this alos gives a feedback to the user.
      */
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem & option, const QModelIndex & index) const override;
 
     /*! \brief Re-implementation to emit dataEditionDone()
      */
     void destroyEditor(QWidget *editor, const QModelIndex & index) const override;
+
+//    public slots:
+// 
+//     /*! \brief Set controller state
+//      */
+//     void setControllerState(ControllerState state);
 
    signals:
 

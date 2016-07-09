@@ -18,24 +18,25 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
-#define MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
+#include "AbstractWindow.h"
+#include <QMenu>
+#include <QMenuBar>
+#include <QToolBar>
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace ItemEditor{
 
-class StandardWidgetsTest : public QObject
+AbstractWindow::AbstractWindow(QWidget* parent)
+ : QMainWindow(parent),
+   pvNavigationActions(nullptr)
 {
-  Q_OBJECT
+}
 
- private slots:
+NavigationActions* AbstractWindow::navigationActions()
+{
+  if(pvNavigationActions == nullptr){
+    pvNavigationActions = new NavigationActions(this);
+  }
+  return pvNavigationActions;
+}
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void standardEditorLayoutWidgetTest();
-
-  void standardWindowTest();
-};
-
-#endif // #ifndef MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
+}} // namespace Mdt{ namespace ItemEditor{

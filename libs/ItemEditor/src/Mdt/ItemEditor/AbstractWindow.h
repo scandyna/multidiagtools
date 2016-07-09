@@ -18,33 +18,44 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "EventCatchItemDelegate.h"
+#ifndef MDT_ITEM_EDITOR_ABSTRACT_WINDOW_H
+#define MDT_ITEM_EDITOR_ABSTRACT_WINDOW_H
 
-// #include <QDebug>
+#include "NavigationActions.h"
+#include <QMainWindow>
 
 namespace Mdt{ namespace ItemEditor{
 
-EventCatchItemDelegate::EventCatchItemDelegate(QObject* parent)
- : ItemDelegateProxy(parent)
-{
-}
+  /*! \brief AbstractWindow is the base class recommanded to create Window based editors
+   *
+   * Based on QMainWindow, it displays a menu, toolbar and a status bar.
+   *
+   * A example how to subclass AbstractWindow can be found in StandardWindow.h and StandardWindow.cpp .
+   */
+  class AbstractWindow : public QMainWindow
+  {
+   Q_OBJECT
 
-QWidget* EventCatchItemDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
-{
-  auto *editor = ItemDelegateProxy::createEditor(parent, option, index);
-  emit dataEditionStarted();
-  return editor;
-}
+   public:
 
-void EventCatchItemDelegate::destroyEditor(QWidget* editor, const QModelIndex& index) const
-{
-  ItemDelegateProxy::destroyEditor(editor, index);
-  emit dataEditionDone();
-}
+    /*! \brief Construct a empty window
+     */
+    AbstractWindow(QWidget *parent = nullptr);
 
-// void EventCatchItemDelegate::setControllerState(ControllerState state)
-// {
-// 
-// }
+   protected:
+
+    /*! \brief Get NavigationActions
+     *
+     * The first time this method is called,
+     *  the NavigationActions is created.
+     */
+    NavigationActions *navigationActions();
+
+   private:
+
+    NavigationActions *pvNavigationActions;
+  };
 
 }} // namespace Mdt{ namespace ItemEditor{
+
+#endif // #ifndef MDT_ITEM_EDITOR_ABSTRACT_WINDOW_H

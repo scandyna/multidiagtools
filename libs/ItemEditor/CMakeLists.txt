@@ -13,6 +13,8 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/NavigationActions.cpp
     src/Mdt/ItemEditor/StandardEditorLayoutWidget.cpp
     src/Mdt/ItemEditor/StandardWindow.cpp
+    src/Mdt/ItemEditor/AbstractWindow.cpp
+    src/Mdt/ItemEditor/ControllerStatePermission.cpp
 )
 
 # Headers directories

@@ -18,24 +18,19 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
-#define MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
+#ifndef MDT_ITEM_EDITOR_CONTROLLER_STATE_H
+#define MDT_ITEM_EDITOR_CONTROLLER_STATE_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace ItemEditor{
 
-class StandardWidgetsTest : public QObject
-{
-  Q_OBJECT
+  /*! \brief State of item editor controller
+   */
+  enum class ControllerState
+  {
+    Visualizing,  /*!< Visualizing state */
+    Editing       /*!< Editing state */
+  };
 
- private slots:
+}} // namespace Mdt{ namespace ItemEditor{
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void standardEditorLayoutWidgetTest();
-
-  void standardWindowTest();
-};
-
-#endif // #ifndef MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
+#endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_STATE_H

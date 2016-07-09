@@ -9,16 +9,8 @@ diagrams
     906 902 90 22 0 0
   classdiagram_ref 2607234 // SchemaTemplate
     906 902 100 4 0 0
-  classdiagram_ref 2633986 // SimplifiedOverview
-    120 110 100 4 0 0
   classdiagram_ref 2634114 // Goals
     120 110 100 4 0 0
-  classdiagram_ref 2647426 // sandbox
-    950 902 100 4 0 0
-  classdiagram_ref 2413442 // StandardWindow
-    989 906 80 21 0 0
-  classdiagram_ref 2413698 // NavigationActions
-    950 902 100 18 0 0
   classdiagram_ref 2414082 // Menu
     120 110 100 4 0 0
   classdiagram_ref 2687362 // NavigationMenu
@@ -27,21 +19,23 @@ diagrams
     120 110 100 4 0 0
   classdiagram_ref 2700546 // overview
     1020 906 85 21 0 0
-  classdiagram_ref 2707074 // TableController
-    120 110 100 18 0 172
   classdiagram_ref 2406786 // InputEvents
     120 110 80 21 0 0
   classdiagram_ref 2707202 // InputEventMapper
     120 110 100 18 0 0
   classdiagram_ref 2700418 // EditorWidget
-    120 110 80 8 0 330
-  classdiagram_ref 2707842 // TestEditor
+    120 110 80 22 36 60
+  active  classdiagram_ref 2707842 // TestEditor
+    943 906 100 18 0 0
+  classdiagram_ref 2714498 // WindowWidgetController
     120 110 100 4 0 0
-  active  classdiagram_ref 2707970 // ControllersSideSide
-    943 906 80 8 24 3
+  classdiagram_ref 2714754 // TableViewSandbox
+    943 906 90 7 0 0
+  classdiagram_ref 2714882 // DataWidgetMapperSandbox
+    120 110 80 7 0 0
 end
 show_stereotypes
-selected class_ref 3088898 // InputEventMapper
+selected operation_ref 4493698 // closeEvent
 open
   
   package_ref 549506 // Algorithm
@@ -49,23 +43,12 @@ open
   
   package_ref 516226 // SqlItemModel
   classview_ref 1472258 // Editor
-  classview_ref 1307010 // EventMapper
-  attribute_ref 2907138 // FormatProxyModel
-  attribute_ref 2907266 // SortProxyModel
-  operation_ref 4479106 // addRelation
-  operation_ref 4476930 // submit
-  operation_ref 4477058 // revert
-  operation_ref 4477186 // insert
-  operation_ref 4477314 // remove
-  operation_ref 4469122 // setLastError
-  attribute_ref 2907394 // RowState
-  operation_ref 4469378 // setModel
-  attribute_ref 2907010 // Model
+  classdiagram_ref 2700546 // overview
+  operation_ref 4493442 // setControllerState
+  classview_ref 1287042 // Controller
   classview_ref 1432322 // StandardFormWidget
-  attribute_ref 2906754 // ChildsTabWidget
-  operation_ref 4476802 // connectNavigationElements
-  classview_ref 1327362 // SqlSandbox
-  classview_ref 1472002 // UsageExamples
+  classview_ref 1465474 // EditorWidget
+  class_ref 3096962 // AbstractWindow
   classview_ref 1472130 // ArticleEditor
   
   package_ref 430082 // Dsp

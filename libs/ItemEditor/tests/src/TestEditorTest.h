@@ -18,13 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
-#define MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
+#ifndef MDT_ITEM_EDITOR_TEST_EDITOR_TEST_H
+#define MDT_ITEM_EDITOR_TEST_EDITOR_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
 
-class StandardWidgetsTest : public QObject
+class TestEditorTest : public QObject
 {
   Q_OBJECT
 
@@ -33,9 +33,7 @@ class StandardWidgetsTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void standardEditorLayoutWidgetTest();
-
-  void standardWindowTest();
+  void widowEditorTest();
 };
 
-#endif // #ifndef MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
+#endif // #ifndef MDT_ITEM_EDITOR_TEST_EDITOR_TEST_H

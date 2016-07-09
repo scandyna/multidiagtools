@@ -18,24 +18,19 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
-#define MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
+#include "ControllerStatePermission.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace ItemEditor{
 
-class StandardWidgetsTest : public QObject
+bool ControllerStatePermission::canChangeCurrentRow(ControllerState state)
 {
-  Q_OBJECT
+  switch(state){
+    case ControllerState::Visualizing:
+      return true;
+    case ControllerState::Editing:
+      break;
+  }
+  return false;
+}
 
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void standardEditorLayoutWidgetTest();
-
-  void standardWindowTest();
-};
-
-#endif // #ifndef MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
+}} // namespace Mdt{ namespace ItemEditor{

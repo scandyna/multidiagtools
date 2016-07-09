@@ -2,94 +2,95 @@ format 211
 
 classcanvas 128002 class_ref 2684802 // TableController
   classdiagramsettings member_max_width 0 end
-  xyz 535.25 162.25 2000
+  xyz 366.25 522.75 2000
 end
 classcanvas 128130 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 391.5 41.75 2000
+  xyz 495.5 340.75 2000
 end
 classcanvas 128386 class_ref 2706434 // NavigationActions
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 41 165.25 2006
+  xyz 723.5 464.25 2006
 end
 classcanvas 128642 class_ref 2713474 // EditionActions
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 208 165.25 2011
+  xyz 39 464.25 2011
 end
 classcanvas 129410 class_ref 2927362 // SqlTableController
   classdiagramsettings member_max_width 0 end
-  xyz 606.25 384.25 2006
+  xyz 352 39 2006
 end
 classcanvas 129666 class_ref 147202 // QAbstractTableModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 888 230.25 2012
+  xyz 813.25 548.75 2012
 end
 classcanvas 129922 class_ref 174338 // QSqlQueryModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 903 314.75 2018
+  xyz 828.25 340.75 2018
 end
 classcanvas 130178 class_ref 174210 // QSqlTableModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 905 399.25 2024
+  xyz 833.5 152.25 2024
 end
 classcanvas 130690 class_ref 404610 // QDataWidgetMapper
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 352.5 165.25 2030
+  xyz 183.5 464.25 2030
 end
 classcanvas 131202 class_ref 638338 // QTableView
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 297 371 2000
+  xyz 40.5 699 2000
 end
 relationcanvas 128258 relation_ref 3457282 // <generalisation>
-  geometry VHV unfixed
-  decenter_begin 488
-  from ref 128002 z 2001 to point 687 125
-  line 129154 z 2001 to point 421 125
-  line 129282 z 2001 to ref 128130
+  decenter_begin 510
+  from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128514 relation_ref 3071746 // <generalisation>
   geometry VHV unfixed
-  from ref 128386 z 2007 to point 103 125
-  line 128898 z 2007 to point 421 125
+  from ref 128386 z 2007 to point 785 424
+  line 128898 z 2007 to point 525 424
   line 129026 z 2007 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 3078402 // <generalisation>
   geometry VHV unfixed
-  from ref 128642 z 2012 to point 259 125
-  line 130946 z 2012 to point 421 125
+  from ref 128642 z 2012 to point 90 424
+  line 130946 z 2012 to point 525 424
   line 131074 z 2012 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129794 relation_ref 3310722 // <directional composition>
-  decenter_begin 519
   from ref 128002 z 2013 to ref 129666
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 175106 // <generalisation>
+  decenter_begin 528
+  decenter_end 523
   from ref 129922 z 2019 to ref 129666
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130306 relation_ref 174978 // <generalisation>
+  decenter_end 528
   from ref 130178 z 2025 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130434 relation_ref 3310466 // <directional composition>
-  decenter_begin 452
   decenter_end 418
   from ref 129410 z 2025 to ref 130178
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130818 relation_ref 3434882 // <generalisation>
-  from ref 130690 z 2031 to ref 128130
+  geometry VHV unfixed
+  from ref 130690 z 2031 to point 252 424
+  line 131330 z 2031 to point 525 424
+  line 131458 z 2031 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 154
+  revision 156
   modified_by 2 "philippe"
   // class settings
   
@@ -3033,6 +3033,15 @@ ${inlines}
 	    classrelation_ref 3453314 // <generalisation>
 	  b parent class_ref 138626 // QObject
       end
+
+      classrelation 3486082 // <directional composition>
+	relation 3467394 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3486082 // <directional composition>
+	  b parent class_ref 1914498 // QAbstractItemDelegate
+      end
     end
 
     class 1914626 "QStyleOptionViewItem"
@@ -3831,14 +3840,6 @@ ${inlines}
 	
       end
 
-      classrelation 3445634 // <unidirectional association>
-	relation 3427202 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3445634 // <unidirectional association>
-	  b parent class_ref 2753410 // RowChangeEventMapper
-      end
     end
 
     classdiagram 1795714 "QTableView"
@@ -3936,6 +3937,15 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 3485954 // <unidirectional association>
+	relation 3467266 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3485954 // <unidirectional association>
+	  b parent class_ref 605570 // QStyledItemDelegate
       end
     end
   end
@@ -5293,7 +5303,7 @@ ${inlines}
     end
 
     class 316162 "QWidget"
-      visibility package 
+      abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
 ${inlines}
@@ -5337,6 +5347,18 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 2473986 // <generalisation>
 	  b parent class_ref 2160386 // QPaintDevice
+      end
+
+      operation 4493570 "closeEvent"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 1
+	  param in name "event" type class_ref 3104386 // QCloseEvent
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
       end
     end
 
@@ -6401,6 +6423,34 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    classdiagram 2721410 "QCloseEvent"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3104386 "QCloseEvent"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3494274 // <generalisation>
+	relation 3475458 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3494274 // <generalisation>
+	  b parent class_ref 2247298 // QEvent
+      end
     end
   end
 

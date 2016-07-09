@@ -43,3 +43,13 @@ add_test(MdtItemEditorItemDelegateTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditor
 add_executable(mdtitemeditoritemviewtest src/ItemViewTest.cpp)
 target_link_libraries(mdtitemeditoritemviewtest mdtitemeditortest)
 add_test(MdtItemEditorItemViewTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditoritemviewtest)
+
+# Target MdtItemEditorControllerTest
+add_executable(mdtitemeditorcontrollertest src/ControllerTest.cpp)
+target_link_libraries(mdtitemeditorcontrollertest mdtitemeditortest)
+add_test(MdtItemEditorControllerTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditorcontrollertest)
+
+# Target MdtItemEditorTestEditorTest
+add_executable(mdtitemeditortesteditortest src/TestEditorTest.cpp)
+target_link_libraries(mdtitemeditortesteditortest mdtitemeditortest)
+add_test(MdtItemEditorTestEditorTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditortesteditortest)

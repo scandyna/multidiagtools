@@ -2,31 +2,31 @@ format 211
 
 classcanvas 128002 class_ref 2845442 // Schema
   classdiagramsettings member_max_width 0 end
-  xyz 145 34.6 2000
+  xyz 145 34.2 2000
 end
 classcanvas 128898 class_ref 2775810 // Table
   classdiagramsettings member_max_width 0 end
-  xyz 471.6 210 2000
+  xyz 471.2 210 2000
 end
 classcanvas 129026 class_ref 2838530 // TableTemplate
   classdiagramsettings member_max_width 0 end
-  xyz 807.1 255.6 2006
+  xyz 807.9 255.2 2006
 end
 classcanvas 129794 class_ref 2838914 // TableList
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 362.7 301.6 2006
+  xyz 363.2 301.2 2006
 end
 classcanvas 130178 class_ref 2852482 // TableStorageEngineMap
   classdiagramsettings member_max_width 0 end
-  xyz 41 694.8 2000
+  xyz 41 694.6 2000
 end
 classcanvas 130818 class_ref 2775682 // ForeignKey
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 778.3 430.6 2006
+  xyz 778.5 430.2 2006
 end
 classcanvas 132610 class_ref 2981250 // ViewList
   classdiagramsettings member_max_width 0 end
-  xyz 38.6 81.6 2000
+  xyz 38.4 81.2 2000
 end
 relationcanvas 129154 relation_ref 3225346 // <directional composition>
   decenter_begin 466

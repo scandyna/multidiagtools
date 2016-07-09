@@ -128,6 +128,7 @@ void ItemViewTest::tableViewEditBeginEndTest_data()
 void ItemViewTest::tableViewSetCurrentIndexTest()
 {
   using Mdt::ItemEditor::ItemSelectionModel;
+  using Mdt::ItemEditor::ControllerState;
 
   QTableView view;
   TestTableModel model;
@@ -153,7 +154,7 @@ void ItemViewTest::tableViewSetCurrentIndexTest()
   QCOMPARE(view.currentIndex().row(), 1);
   QCOMPARE(view.currentIndex().column(), 0);
   // Inhibit row change
-  selectionModel.setCurrentRowChangeAllowed(false);
+  selectionModel.setControllerState(ControllerState::Editing);
   QVERIFY(!selectionModel.isCurrentRowChangeAllowed());
   index = model.index(0, 0);
   view.setCurrentIndex(index);
@@ -168,7 +169,7 @@ void ItemViewTest::tableViewSetCurrentIndexTest()
    * Check using select(QModelIndex) before setCurrentIndex()
    */
   // Allow row change and go back to row 0
-  selectionModel.setCurrentRowChangeAllowed(true);
+  selectionModel.setControllerState(ControllerState::Visualizing);
   index = model.index(0, 0);
   selectionModel.select(index, QItemSelectionModel::ClearAndSelect);
   QVERIFY(selectionModel.isSelected(index));
@@ -176,7 +177,7 @@ void ItemViewTest::tableViewSetCurrentIndexTest()
   QCOMPARE(view.currentIndex().row(), 0);
   QCOMPARE(view.currentIndex().column(), 0);
   // Inhibit row change
-  selectionModel.setCurrentRowChangeAllowed(false);
+  selectionModel.setControllerState(ControllerState::Editing);
   index = model.index(1, 0);
   selectionModel.select(index, QItemSelectionModel::ClearAndSelect);
   QVERIFY(!selectionModel.isSelected(index));
@@ -194,7 +195,7 @@ void ItemViewTest::tableViewSetCurrentIndexTest()
    * Check using select(QItemSelection) before setCurrentIndex()
    */
   // Allow row change and go back to row 0
-  selectionModel.setCurrentRowChangeAllowed(true);
+  selectionModel.setControllerState(ControllerState::Visualizing);
   index = model.index(0, 0);
   selectionModel.select(QItemSelection(index, index), QItemSelectionModel::ClearAndSelect);
   QVERIFY(selectionModel.isSelected(index));
@@ -202,7 +203,7 @@ void ItemViewTest::tableViewSetCurrentIndexTest()
   QCOMPARE(view.currentIndex().row(), 0);
   QCOMPARE(view.currentIndex().column(), 0);
   // Inhibit row change
-  selectionModel.setCurrentRowChangeAllowed(false);
+  selectionModel.setControllerState(ControllerState::Editing);
   index = model.index(1, 0);
   selectionModel.select(QItemSelection(index, index), QItemSelectionModel::ClearAndSelect);
   QVERIFY(!selectionModel.isSelected(index));
@@ -220,10 +221,10 @@ void ItemViewTest::tableViewSetCurrentIndexTest()
   /*
    * Play
    */
-  view.resize(300, 200);
-  while(view.isVisible()){
-    QTest::qWait(500);
-  }
+//   view.resize(300, 200);
+//   while(view.isVisible()){
+//     QTest::qWait(500);
+//   }
 }
 
 

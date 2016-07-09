@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "ItemSelectionModel.h"
+#include "ControllerStatePermission.h"
 
 // #include <QDebug>
 
@@ -34,9 +35,9 @@ ItemSelectionModel::ItemSelectionModel(QAbstractItemModel* model, QObject* paren
 {
 }
 
-void ItemSelectionModel::setCurrentRowChangeAllowed(bool allow)
+void ItemSelectionModel::setControllerState(ControllerState state)
 {
-  pvCurrentRowChangeAllowed = allow;
+  pvCurrentRowChangeAllowed = ControllerStatePermission::canChangeCurrentRow(state);
 }
 
 void ItemSelectionModel::select(const QModelIndex& index, QItemSelectionModel::SelectionFlags command)

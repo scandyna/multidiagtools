@@ -1,0 +1,38 @@
+format 211
+
+classcanvas 128002 class_ref 2706306 // StandardWindow
+  classdiagramsettings member_max_width 0 end
+  xyz 41 302 2000
+end
+classcanvas 128130 class_ref 3090434 // AbstractController
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 632.5 2005
+end
+classcanvas 128258 class_ref 3068802 // AbstractEditorWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 559.5 632.5 2010
+end
+classcanvas 128386 class_ref 2706434 // NavigationActions
+  classdiagramsettings member_max_width 0 end
+  xyz 487 148 2010
+end
+classcanvas 128642 class_ref 2713474 // EditionActions
+  classdiagramsettings member_max_width 0 end
+  xyz 87 42 2016
+end
+relationcanvas 128898 relation_ref 3466882 // <directional composition>
+  from ref 128002 z 2017 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 3467010 // <dependency>
+  from ref 128002 z 2006 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 3467138 // <dependency>
+  from ref 128258 z 2011 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

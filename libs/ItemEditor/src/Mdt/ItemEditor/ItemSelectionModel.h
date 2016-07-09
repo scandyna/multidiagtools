@@ -21,6 +21,7 @@
 #ifndef MDT_ITEM_EDITOR_ITEM_SELECTION_MODEL_H
 #define MDT_ITEM_EDITOR_ITEM_SELECTION_MODEL_H
 
+#include "ControllerState.h"
 #include <QItemSelectionModel>
 
 namespace Mdt{ namespace ItemEditor{
@@ -57,9 +58,9 @@ namespace Mdt{ namespace ItemEditor{
 
    public slots:
 
-    /*! \brief Set current row change allowed (or not allowed)
+    /*! \brief Set controller state
      */
-    void setCurrentRowChangeAllowed(bool allow);
+    void setControllerState(ControllerState state);
 
     /*! \brief Re-implemented to prevent row change if not allowed
      */

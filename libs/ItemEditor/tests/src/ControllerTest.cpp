@@ -18,24 +18,46 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
-#define MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
+#include "ControllerTest.h"
+#include "Mdt/Application.h"
+#include "Mdt/ItemEditor/ControllerStatePermission.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
-
-class StandardWidgetsTest : public QObject
+void ControllerTest::initTestCase()
 {
-  Q_OBJECT
+}
 
- private slots:
+void ControllerTest::cleanupTestCase()
+{
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+/*
+ * Tests
+ */
 
-  void standardEditorLayoutWidgetTest();
+void ControllerTest::statePermissionTest()
+{
+  using Mdt::ItemEditor::ControllerState;
+  using Mdt::ItemEditor::ControllerStatePermission;
 
-  void standardWindowTest();
-};
+  // Current row change
+  QVERIFY(ControllerStatePermission::canChangeCurrentRow(ControllerState::Visualizing));
+  QVERIFY(!ControllerStatePermission::canChangeCurrentRow(ControllerState::Editing));
+}
 
-#endif // #ifndef MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H
+
+/*
+ * Main
+ */
+
+int main(int argc, char **argv)
+{
+  Mdt::Application app(argc, argv);
+  ControllerTest test;
+
+  if(!app.init()){
+    return 1;
+  }
+//   app.debugEnvironnement();
+
+  return QTest::qExec(&test, argc, argv);
+}
