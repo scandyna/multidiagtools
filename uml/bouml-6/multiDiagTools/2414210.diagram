@@ -66,4 +66,9 @@ relationcanvas 130178 relation_ref 2458370 // <unidirectional association>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
+relationcanvas 130434 relation_ref 3499266 // <unidirectional association>
+  from ref 128130 z 2025 to ref 129794
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
 end

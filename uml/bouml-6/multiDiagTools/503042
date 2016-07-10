@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 38
+  revision 39
   modified_by 2 "philippe"
   // class settings
   
@@ -751,6 +751,11 @@ ${inlines}
     
     activitydiagramsettings
      end
+    classdiagram 2734722 "Overview"
+      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+      size A4
+    end
+
     classdiagram 2447490 "RowChangeEventMapper"
       classdiagramsettings member_max_width 0 end
       size B-Landscape
@@ -963,6 +968,15 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 3518082 // <unidirectional association>
+	relation 3499266 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3518082 // <unidirectional association>
+	  b parent class_ref 1382914 // QItemSelectionModel
       end
     end
 
@@ -1708,6 +1722,22 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4522498 "setCurrentRow"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "row" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "

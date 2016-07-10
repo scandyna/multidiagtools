@@ -2,31 +2,31 @@ format 211
 
 classcanvas 128002 class_ref 2845442 // Schema
   classdiagramsettings member_max_width 0 end
-  xyz 145 35 2000
+  xyz 145 34.5 2000
 end
 classcanvas 128898 class_ref 2775810 // Table
   classdiagramsettings member_max_width 0 end
-  xyz 471 210 2000
+  xyz 470.7 210 2000
 end
 classcanvas 129026 class_ref 2838530 // TableTemplate
   classdiagramsettings member_max_width 0 end
-  xyz 807.3 255 2006
+  xyz 807.1 254.7 2006
 end
 classcanvas 129794 class_ref 2838914 // TableList
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 364.3 301 2006
+  xyz 364.5 300.7 2006
 end
 classcanvas 130178 class_ref 2852482 // TableStorageEngineMap
   classdiagramsettings member_max_width 0 end
-  xyz 41 695 2000
+  xyz 41 694.7 2000
 end
 classcanvas 130818 class_ref 2775682 // ForeignKey
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 779 430 2006
+  xyz 779 429.7 2006
 end
 classcanvas 132610 class_ref 2981250 // ViewList
   classdiagramsettings member_max_width 0 end
-  xyz 37.9 82 2000
+  xyz 37.9 81.5 2000
 end
 relationcanvas 129154 relation_ref 3225346 // <directional composition>
   decenter_begin 466
@@ -38,7 +38,7 @@ relationcanvas 129922 relation_ref 3225730 // <directional composition>
   decenter_begin 395
   from ref 129794 z 2007 to ref 128898
   no_role_a no_role_b
-  multiplicity_a_pos 455 326 3000 no_multiplicity_b
+  multiplicity_a_pos 453 325 3000 no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 3225858 // <directional composition>
   decenter_end 549
@@ -56,7 +56,7 @@ relationcanvas 131970 relation_ref 3273986 // <dependency>
   geometry HV unfixed
   decenter_begin 475
   decenter_end 513
-  from ref 130818 z 2007 to point 603 515
+  from ref 130818 z 2007 to point 602 514
   line 135426 z 2007 to ref 128898
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

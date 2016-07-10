@@ -41,11 +41,13 @@ diagrams
     943 906 100 22 24 690
   classdiagram_ref 2707842 // TestEditor
     120 110 100 4 0 0
-  active  classdiagram_ref 2707074 // TableController
+  classdiagram_ref 2707074 // TableController
     943 906 100 8 0 516
+  active  classdiagram_ref 2734722 // Overview
+    943 906 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 4515970 // model
+selected class_ref 2753410 // RowChangeEventMapper
 open
   
   package_ref 549506 // Algorithm
@@ -55,12 +57,6 @@ open
   class_ref 3090050 // TestWindowEditor
   classview_ref 1279874 // overviews
   classview_ref 1307010 // EventMapper
-  attribute_ref 2922242 // CurrentRow
-  attribute_ref 2907138 // FormatProxyModel
-  attribute_ref 2907266 // SortProxyModel
-  operation_ref 4515970 // model
-  operation_ref 4515714 // rowCount
-  operation_ref 4515842 // currentRow
   class_ref 2684802 // TableController
   classview_ref 1432322 // StandardFormWidget
   operation_ref 4508546 // controller

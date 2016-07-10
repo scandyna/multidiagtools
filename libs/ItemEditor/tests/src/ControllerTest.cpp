@@ -100,12 +100,16 @@ void ControllerTest::currentRowChangeTableViewTest()
   using Mdt::ItemEditor::TableController;
   using Mdt::ItemEditor::ItemSelectionModel;
   using Mdt::ItemEditor::RowChangeEventMapper;
+  using Mdt::ItemEditor::RowState;
 
   TableController controller;
   TestTableModel model;
   ItemSelectionModel selectionModel(&model);
   QTableView tableView;
   RowChangeEventMapper rowChangeEventMapper;
+  QSignalSpy rowStateSpy(&controller, &TableController::rowStateChanged);
+  QList<QVariant> spyItem;
+  RowState rs;
 
   /*
    * Setup
@@ -119,15 +123,27 @@ void ControllerTest::currentRowChangeTableViewTest()
   /*
    * Initial state
    */
-  QCOMPARE(controller.rowCount(), 0);
-  QCOMPARE(controller.currentRow(), -1);
-  
+  QCOMPARE(controller.rowCount(), model.rowCount());
+  QCOMPARE(controller.currentRow(), selectionModel.currentIndex().row());
+  // Check that row count was signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), model.rowCount());
+  QCOMPARE(rs.currentRow(), selectionModel.currentIndex().row());
   /*
    * Populate model
    */
   model.populate(5, 3);
-  QCOMPARE(controller.rowCount(), 5);
-  QCOMPARE(controller.currentRow(), 0);
+  QCOMPARE(controller.rowCount(), model.rowCount());
+  QCOMPARE(controller.currentRow(), selectionModel.currentIndex().row());
+  /*
+   * Change current row from controller
+   */
+
+  /*
+   * Check navigation slots
+   */
   
   /*
    * Change model
@@ -141,7 +157,6 @@ void ControllerTest::currentRowChangeTableViewTest()
    * Remove
    */
    
-  
 
   /*
    * Play

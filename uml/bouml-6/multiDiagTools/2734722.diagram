@@ -1,0 +1,77 @@
+format 211
+
+classcanvas 128002 class_ref 2753410 // RowChangeEventMapper
+  classdiagramsettings member_max_width 0 end
+  xyz 82 115 2000
+end
+classcanvas 128130 class_ref 2160258 // QAbstractItemView
+  classdiagramsettings member_max_width 0 end
+  xyz 297 191 2000
+end
+classcanvas 128258 class_ref 3021826 // ItemSelectionModel
+  classdiagramsettings member_max_width 0 end
+  xyz 104 271 2000
+end
+classcanvas 128386 class_ref 1382914 // QItemSelectionModel
+  classdiagramsettings member_max_width 0 end
+  xyz 95 191 2006
+end
+classcanvas 128770 class_ref 3090434 // AbstractController
+  classdiagramsettings member_max_width 0 end
+  xyz 479 115 2000
+end
+classcanvas 128898 class_ref 2753410 // RowChangeEventMapper
+  classdiagramsettings member_max_width 0 end
+  xyz 282 39 2000
+end
+classcanvas 129026 class_ref 146946 // QAbstractItemModel
+  classdiagramsettings member_max_width 0 end
+  xyz 297 115 2006
+end
+relationcanvas 128514 relation_ref 2458370 // <unidirectional association>
+  decenter_begin 581
+  decenter_end 581
+  from ref 128130 z 2007 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 3393538 // <generalisation>
+  decenter_begin 467
+  from ref 128258 z 2007 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 3106562 // <unidirectional association>
+  from ref 128002 z 2007 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 3106562 // <unidirectional association>
+  from ref 128898 z 2007 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 2458242 // <unidirectional association>
+  decenter_begin 525
+  from ref 128130 z 2007 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 3481986 // <unidirectional association>
+  from ref 128770 z 2007 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 3499266 // <unidirectional association>
+  from ref 128002 z 2007 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 129922 -_-_ decenter_begin 395
+  from ref 128898 z 2001 to point 544 56
+  line 130050 z 2001 to ref 128770
+line 130178 -_-_ decenter_begin 581 decenter_end 395
+  from ref 128386 z 2007 to point 40 216
+  line 130306 z 2007 to point 40 56
+  line 130434 z 2007 to ref 128898
+end
