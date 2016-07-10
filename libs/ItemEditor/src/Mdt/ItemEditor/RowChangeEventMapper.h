@@ -92,7 +92,12 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Emitted whenever row count or current row changes
      */
-    void rowStateChanged(RowState rs);
+    void rowStateChanged(Mdt::ItemEditor::RowState rs);
+    /*
+     * Above, we the namespace of RowState,
+     * else Qt will complain it can't handle rs
+     * (although signal is properly emitted)
+     */
 
     /*! \brief Emited whenever row count changes
      */

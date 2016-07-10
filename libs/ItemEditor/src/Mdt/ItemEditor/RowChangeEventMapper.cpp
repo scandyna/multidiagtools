@@ -34,17 +34,20 @@ RowChangeEventMapper::RowChangeEventMapper(QObject* parent)
 void RowChangeEventMapper::setSelectionModel(QItemSelectionModel* model)
 {
   Q_ASSERT(model != nullptr);
+  Q_ASSERT(!pvModel.isNull());
 
   if(!pvSelectionModel.isNull()){
     disconnect(pvSelectionModel, &QItemSelectionModel::currentChanged, this, &RowChangeEventMapper::setCurrentIndex);
+    disconnect(pvSelectionModel, &QItemSelectionModel::modelChanged, this, &RowChangeEventMapper::setModel);
   }
   pvSelectionModel = model;
   connect(pvSelectionModel, &QItemSelectionModel::currentChanged, this, &RowChangeEventMapper::setCurrentIndex);
+  connect(pvSelectionModel, &QItemSelectionModel::modelChanged, this, &RowChangeEventMapper::setModel);
   pvRowState.setCurrentRow(pvSelectionModel->currentIndex().row());
   if(pvSelectionModel->model() != pvModel){
     setModel(pvSelectionModel->model());
   }else{
-    pvRowState.setRowCount(0);
+    pvRowState.setRowCount(pvModel->rowCount());
     emit rowStateChanged(pvRowState);
   }
 
@@ -65,7 +68,14 @@ void RowChangeEventMapper::setModel(QAbstractItemModel* model)
   connect(pvModel, &QAbstractItemModel::rowsInserted, this, &RowChangeEventMapper::onRowsInserted);
   connect(pvModel, &QAbstractItemModel::rowsRemoved, this, &RowChangeEventMapper::onRowsRemoved);
 
+  /*
+   * We have to allways signal new row count here,
+   *  so we not use setCurrentIndex().
+   */
   pvRowState.setRowCount(model->rowCount());
+  if(!pvSelectionModel.isNull()){
+    pvRowState.setCurrentRow(pvSelectionModel->currentIndex().row());
+  }
   emit rowStateChanged(pvRowState);
   
   emit rowCountChanged(model->rowCount());
@@ -76,8 +86,8 @@ void RowChangeEventMapper::setCurrentIndex(const QModelIndex & current, const QM
   qDebug() << "Current index changed " << current;
 
   if(current.row() != previous.row()){
-    qDebug() << "-> emit , n: " << pvRowState.rowCount() << " , row: " << pvRowState.currentRow() << " ...";
     pvRowState.setCurrentRow(current.row());
+    qDebug() << "-> emit , n: " << pvRowState.rowCount() << " , row: " << pvRowState.currentRow() << " ...";
     emit rowStateChanged(pvRowState);
     
     emit currentRowChanged(current.row());
@@ -89,11 +99,14 @@ void RowChangeEventMapper::onModelReset()
   Q_ASSERT(!pvModel.isNull());
 
   qDebug() << "Model reset ..";
-  
-  pvRowState.clear();
+
+  /*
+   * We have to allways signal new row count here,
+   *  so we not use setCurrentIndex().
+   */
   pvRowState.setRowCount(pvModel->rowCount());
-  if(pvRowState.rowCount() > 0){
-    pvRowState.setCurrentRow(0);  /// \todo How handle this ?
+  if(!pvSelectionModel.isNull()){
+    pvRowState.setCurrentRow(pvSelectionModel->currentIndex().row());
   }
   emit rowStateChanged(pvRowState);
   
@@ -110,6 +123,24 @@ void RowChangeEventMapper::onRowsInserted(const QModelIndex & parent, int /*firs
   Q_ASSERT(!pvModel.isNull());
 
   qDebug() << "Model rows inserted ..";
+  /*
+   * We have to allways signal new row count here,
+   *  so we not use setCurrentIndex().
+   */
+  pvRowState.setRowCount(pvModel->rowCount());
+  if(!pvSelectionModel.isNull()){
+    pvRowState.setCurrentRow(pvSelectionModel->currentIndex().row());
+  }
+  emit rowStateChanged(pvRowState);
+
+//   pvRowState.setRowCount(pvModel->rowCount(parent));
+//   if(pvSelectionModel.isNull()){
+//     emit rowStateChanged(pvRowState);
+//   }else{
+//     setCurrentIndex(pvSelectionModel->currentIndex(), QModelIndex());
+//   }
+  
+  
   emit rowCountChanged(pvModel->rowCount(parent));
   // QItemSelectionModel does not signal current changed after insert
   /// \todo see comment in unit test
@@ -123,6 +154,24 @@ void RowChangeEventMapper::onRowsRemoved(const QModelIndex & parent, int /*first
   Q_ASSERT(!pvModel.isNull());
 
   qDebug() << "Model rows removed ..";
+  
+  /*
+   * We have to allways signal new row count here,
+   *  so we not use setCurrentIndex().
+   */
+  pvRowState.setRowCount(pvModel->rowCount());
+  if(!pvSelectionModel.isNull()){
+    pvRowState.setCurrentRow(pvSelectionModel->currentIndex().row());
+  }
+  emit rowStateChanged(pvRowState);
+
+//   pvRowState.setRowCount(pvModel->rowCount(parent));
+//   if(pvSelectionModel.isNull()){
+//     emit rowStateChanged(pvRowState);
+//   }else{
+//     setCurrentIndex(pvSelectionModel->currentIndex(), QModelIndex());
+//   }
+
   emit rowCountChanged(pvModel->rowCount(parent));
   // QItemSelectionModel does not signal current changed after remove
   /// \todo see comment in unit test

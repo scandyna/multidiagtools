@@ -47,6 +47,16 @@ namespace Mdt{ namespace ItemEditor{
     AbstractController(AbstractController &&) = delete;
     AbstractController & operator=(AbstractController &&) = delete;
 
+    /*! \brief Set model
+     *
+     * \note Because model can be shared with several objects (f.ex. other views),
+     *        the controller does not take ownership of it (it will not delete it).
+     * \note If subclass overloads this method,
+     *        it must call this base setModel().
+     * \pre model must be a valid pointer
+     */
+    virtual void setModel(QAbstractItemModel *model);
+
     /*! \brief Get model
      *
      * Returns the model set with setModel(),
@@ -56,6 +66,33 @@ namespace Mdt{ namespace ItemEditor{
     QAbstractItemModel *model() const
     {
       return pvModel;
+    }
+
+    /*! \brief Get row count
+     *
+     * If not model was set, 0 is returned.
+     *
+     * \note If this controller acts on a model
+     *        that handles cache, this method
+     *        will report row count in cache.
+     *       See QAbstractItemModel documentation,
+     *        at least canFetchMore() and fetchMore() ,
+     *        for more details about cache.
+     *
+     * \todo Add remark on fetchAll() when..
+     */
+    int rowCount() const;
+
+    /*! \brief Get current row
+     *
+     * If model was not set,
+     *  or is empty, or for some other reasons
+     *  (for example, a view has currently no current index),
+     *  -1 is returned.
+     */
+    int currentRow() const
+    {
+      return pvCurrentRow;
     }
 
    public slots:
@@ -76,6 +113,10 @@ namespace Mdt{ namespace ItemEditor{
      */
     void toLast();
 
+    /*! \brief Set row state
+     */
+    void setRowState(RowState rs);
+
    signals:
 
     /*! \brief Emitted each time row count or current row changed
@@ -88,19 +129,9 @@ namespace Mdt{ namespace ItemEditor{
 
    protected:
 
-  public:
-    /*! \brief Set model
-     *
-     * \note Because model can be shared with several objects (f.ex. other views),
-     *        the controller does not take ownership of it (it will not delete it).
-     * \note If subclass overloads this method,
-     *        it must call this base setModel().
-     * \pre model must be a valid pointer
-     */
-    /**virtual*/ void setModel(QAbstractItemModel *model);
-
    private:
 
+    int pvCurrentRow;
     QPointer<QAbstractItemModel> pvModel;
   };
 

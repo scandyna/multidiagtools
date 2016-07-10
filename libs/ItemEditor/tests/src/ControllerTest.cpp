@@ -19,8 +19,16 @@
  **
  ****************************************************************************/
 #include "ControllerTest.h"
+#include "TestTableModel.h"
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/ControllerStatePermission.h"
+#include "Mdt/ItemEditor/TableController.h"
+#include "Mdt/ItemEditor/ItemSelectionModel.h"
+#include "Mdt/ItemEditor/RowChangeEventMapper.h"
+#include <QSignalSpy>
+#include <QStringListModel>
+#include <QTableView>
+#include <QObject>
 
 void ControllerTest::initTestCase()
 {
@@ -44,6 +52,104 @@ void ControllerTest::statePermissionTest()
   QVERIFY(!ControllerStatePermission::canChangeCurrentRow(ControllerState::Editing));
 }
 
+void ControllerTest::setModelTest()
+{
+  using Mdt::ItemEditor::TableController;
+
+  TestTableModel tableModel;
+  QStringListModel listModel;
+
+  /*
+   * Initial state
+   */
+  TableController controller;
+  QVERIFY(controller.model() == nullptr);
+  /*
+   * Set model
+   */
+  controller.setModel(&tableModel);
+  QVERIFY(controller.model() == &tableModel);
+  
+  /*
+   * Change model
+   */
+  controller.setModel(&listModel);
+  QVERIFY(controller.model() == &listModel);
+  
+}
+
+void ControllerTest::currentRowChangeTest()
+{
+  using Mdt::ItemEditor::TableController;
+
+  TestTableModel model;
+  TableController controller;
+
+  /*
+   * Check on empty model
+   */
+  
+  /*
+   * Populate and check
+   */
+  
+}
+
+void ControllerTest::currentRowChangeTableViewTest()
+{
+  using Mdt::ItemEditor::TableController;
+  using Mdt::ItemEditor::ItemSelectionModel;
+  using Mdt::ItemEditor::RowChangeEventMapper;
+
+  TableController controller;
+  TestTableModel model;
+  ItemSelectionModel selectionModel(&model);
+  QTableView tableView;
+  RowChangeEventMapper rowChangeEventMapper;
+
+  /*
+   * Setup
+   */
+  controller.setModel(&model);
+  tableView.setModel(&model);
+  tableView.setSelectionModel(&selectionModel);
+  connect(&rowChangeEventMapper, &RowChangeEventMapper::rowStateChanged, &controller, &TableController::setRowState);
+  tableView.show();
+
+  /*
+   * Initial state
+   */
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  
+  /*
+   * Populate model
+   */
+  model.populate(5, 3);
+  QCOMPARE(controller.rowCount(), 5);
+  QCOMPARE(controller.currentRow(), 0);
+  
+  /*
+   * Change model
+   */
+  
+  /*
+   * Insert
+   */
+  
+  /*
+   * Remove
+   */
+   
+  
+
+  /*
+   * Play
+   */
+  while(tableView.isVisible()){
+    QTest::qWait(500);
+  }
+}
 
 /*
  * Main

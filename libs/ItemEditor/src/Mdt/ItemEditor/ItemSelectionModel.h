@@ -36,7 +36,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Constructor
      */
-    ItemSelectionModel(QAbstractItemModel* model = nullptr);
+    ItemSelectionModel(QAbstractItemModel* model);
 
     /*! \brief Constructor
      */

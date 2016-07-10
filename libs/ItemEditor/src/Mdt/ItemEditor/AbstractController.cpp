@@ -26,8 +26,25 @@
 namespace Mdt{ namespace ItemEditor{
 
 AbstractController::AbstractController(QObject* parent)
- : QObject(parent)
+ : QObject(parent),
+   pvCurrentRow(-1)
 {
+}
+
+void AbstractController::setModel(QAbstractItemModel* model)
+{
+  Q_ASSERT(model != nullptr);
+
+  pvModel = model;
+  emit modelChanged(model);
+}
+
+int AbstractController::rowCount() const
+{
+  if(pvModel.isNull()){
+    return 0;
+  }
+  return pvModel->rowCount();
 }
 
 void AbstractController::toFirst()
@@ -50,12 +67,10 @@ void AbstractController::toLast()
 
 }
 
-void AbstractController::setModel(QAbstractItemModel* model)
+void AbstractController::setRowState(RowState rs)
 {
-  Q_ASSERT(model != nullptr);
 
-  pvModel = model;
-  emit modelChanged(model);
 }
+
 
 }} // namespace Mdt{ namespace ItemEditor{
