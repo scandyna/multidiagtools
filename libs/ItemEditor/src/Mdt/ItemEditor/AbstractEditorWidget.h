@@ -18,55 +18,53 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ABSTRACT_WINDOW_H
-#define MDT_ITEM_EDITOR_ABSTRACT_WINDOW_H
+#ifndef MDT_ITEM_EDITOR_ABSTRACT_EDITOR_WIDGET_H
+#define MDT_ITEM_EDITOR_ABSTRACT_EDITOR_WIDGET_H
 
-#include "NavigationActions.h"
-#include <QMainWindow>
+#include "AbstractController.h"
+#include <QWidget>
 
 namespace Mdt{ namespace ItemEditor{
 
-  class AbstractEditorWidget;
-
-  /*! \brief AbstractWindow is the base class recommanded to create Window based editors
+  /*! \brief Base class to create a editor widget
    *
-   * Based on QMainWindow, it displays a menu, toolbar and a status bar.
-   *
-   * A example how to subclass AbstractWindow can be found in StandardWindow.h and StandardWindow.cpp .
+   * AbstractEditorWidget does not own any controller,
+   *  but references the one a subclass handles.
+   *  This permit to create specific controllers and editors,
+   *  but also requires some more work when subclassing AbstractEditorWidget.
    */
-  class AbstractWindow : public QMainWindow
+  class AbstractEditorWidget : public QWidget
   {
    Q_OBJECT
 
    public:
 
-    /*! \brief Construct a empty window
+    /*! \brief Constructor
      */
-    AbstractWindow(QWidget *parent = nullptr);
+    explicit AbstractEditorWidget(QWidget* parent = nullptr);
 
-    /*! \brief Set main editor widget
-     *
-     * This helper method will do needed signals/slots connections
-     *  between the editor widget and actions.
-     *
-     * \note widget will not be placed anywhere, use setCentralWidget() fir this.
+    /*! \brief Get controller
      */
-    void setMainEditorWidget(AbstractEditorWidget *widget);
+    AbstractController *controller() const
+    {
+      Q_ASSERT(pvController != nullptr);
+      return pvController;
+    }
 
    protected:
 
-    /*! \brief Get NavigationActions
+    /*! \brief Set controller
      *
-     * The first time this method is called,
-     *  the NavigationActions is created.
+     * Subclass that owns its controller
+     *  must tell it by calling this method.
      */
-    NavigationActions *navigationActions();
+    virtual void setController(AbstractController *controller);
 
    private:
 
-    NavigationActions *pvNavigationActions;
+    AbstractController *pvController;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
 
-#endif // #ifndef MDT_ITEM_EDITOR_ABSTRACT_WINDOW_H
+#endif // #ifndef MDT_ITEM_EDITOR_ABSTRACT_EDITOR_WIDGET_H

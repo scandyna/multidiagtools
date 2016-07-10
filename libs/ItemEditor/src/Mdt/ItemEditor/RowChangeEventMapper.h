@@ -104,6 +104,7 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
+    RowState pvRowState;
     QPointer<QAbstractItemModel> pvModel;
     QPointer<QItemSelectionModel> pvSelectionModel;
   };

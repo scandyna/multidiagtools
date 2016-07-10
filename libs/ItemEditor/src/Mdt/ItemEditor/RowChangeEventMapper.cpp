@@ -40,8 +40,12 @@ void RowChangeEventMapper::setSelectionModel(QItemSelectionModel* model)
   }
   pvSelectionModel = model;
   connect(pvSelectionModel, &QItemSelectionModel::currentChanged, this, &RowChangeEventMapper::setCurrentIndex);
+  pvRowState.setCurrentRow(pvSelectionModel->currentIndex().row());
   if(pvSelectionModel->model() != pvModel){
     setModel(pvSelectionModel->model());
+  }else{
+    pvRowState.setRowCount(0);
+    emit rowStateChanged(pvRowState);
   }
 
   emit currentRowChanged(pvSelectionModel->currentIndex().row());
@@ -61,6 +65,9 @@ void RowChangeEventMapper::setModel(QAbstractItemModel* model)
   connect(pvModel, &QAbstractItemModel::rowsInserted, this, &RowChangeEventMapper::onRowsInserted);
   connect(pvModel, &QAbstractItemModel::rowsRemoved, this, &RowChangeEventMapper::onRowsRemoved);
 
+  pvRowState.setRowCount(model->rowCount());
+  emit rowStateChanged(pvRowState);
+  
   emit rowCountChanged(model->rowCount());
 }
 
@@ -69,6 +76,10 @@ void RowChangeEventMapper::setCurrentIndex(const QModelIndex & current, const QM
   qDebug() << "Current index changed " << current;
 
   if(current.row() != previous.row()){
+    qDebug() << "-> emit , n: " << pvRowState.rowCount() << " , row: " << pvRowState.currentRow() << " ...";
+    pvRowState.setCurrentRow(current.row());
+    emit rowStateChanged(pvRowState);
+    
     emit currentRowChanged(current.row());
   }
 }
@@ -78,6 +89,14 @@ void RowChangeEventMapper::onModelReset()
   Q_ASSERT(!pvModel.isNull());
 
   qDebug() << "Model reset ..";
+  
+  pvRowState.clear();
+  pvRowState.setRowCount(pvModel->rowCount());
+  if(pvRowState.rowCount() > 0){
+    pvRowState.setCurrentRow(0);  /// \todo How handle this ?
+  }
+  emit rowStateChanged(pvRowState);
+  
   emit rowCountChanged(pvModel->rowCount());
   // QItemSelectionModel does not signal current changed after model reset
   /// \todo see comment in unit test

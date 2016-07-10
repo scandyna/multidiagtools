@@ -19,6 +19,8 @@
  **
  ****************************************************************************/
 #include "AbstractWindow.h"
+#include "AbstractEditorWidget.h"
+#include "AbstractController.h"
 #include <QMenu>
 #include <QMenuBar>
 #include <QToolBar>
@@ -29,6 +31,29 @@ AbstractWindow::AbstractWindow(QWidget* parent)
  : QMainWindow(parent),
    pvNavigationActions(nullptr)
 {
+}
+
+void AbstractWindow::setMainEditorWidget(AbstractEditorWidget* widget)
+{
+  Q_ASSERT(widget != nullptr);
+
+  auto *controller = widget->controller();
+  Q_ASSERT(controller != nullptr);
+
+  // Connect navigation actions
+  if(pvNavigationActions != nullptr){
+    disconnect(pvNavigationActions, &NavigationActions::toFirstTriggered, controller, &AbstractController::toFirst);
+    disconnect(pvNavigationActions, &NavigationActions::toPreviousTriggered, controller, &AbstractController::toPrevious);
+    disconnect(pvNavigationActions, &NavigationActions::toNextTriggered, controller, &AbstractController::toNext);
+    disconnect(pvNavigationActions, &NavigationActions::toLastTriggered, controller, &AbstractController::toLast);
+    disconnect(controller, &AbstractController::rowStateChanged, pvNavigationActions, &NavigationActions::setRowState);
+    
+    connect(pvNavigationActions, &NavigationActions::toFirstTriggered, controller, &AbstractController::toFirst);
+    connect(pvNavigationActions, &NavigationActions::toPreviousTriggered, controller, &AbstractController::toPrevious);
+    connect(pvNavigationActions, &NavigationActions::toNextTriggered, controller, &AbstractController::toNext);
+    connect(pvNavigationActions, &NavigationActions::toLastTriggered, controller, &AbstractController::toLast);
+    connect(controller, &AbstractController::rowStateChanged, pvNavigationActions, &NavigationActions::setRowState);
+  }
 }
 
 NavigationActions* AbstractWindow::navigationActions()

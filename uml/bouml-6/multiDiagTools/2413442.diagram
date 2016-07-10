@@ -73,8 +73,8 @@ relationcanvas 130178 relation_ref 971394 // <generalisation>
 end
 relationcanvas 132098 relation_ref 3441794 // <generalisation>
   geometry VHV unfixed
-  from ref 131970 z 2013 to point 198 121.8
-  line 139394 z 2013 to point 559 121.8
+  from ref 131970 z 2013 to point 248 121
+  line 139394 z 2013 to point 559 121
   line 139522 z 2013 to ref 130050
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -100,7 +100,7 @@ relationcanvas 140290 relation_ref 3466370 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 140546 relation_ref 3466498 // <directional composition>
-  from ref 139906 z 2013 to point 315.2 348
+  from ref 139906 z 2013 to point 315 348
   line 141186 z 2013 to ref 128898
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -108,7 +108,7 @@ end
 relationcanvas 140674 relation_ref 3466626 // <directional composition>
   geometry HV unfixed
   decenter_begin 884
-  from ref 139906 z 2013 to point 812 344
+  from ref 139906 z 2013 to point 812 364
   line 141058 z 2013 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -118,8 +118,8 @@ relationcanvas 140802 relation_ref 3466754 // <directional composition>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 140930 relation_ref 3466882 // <directional composition>
-  from ref 128002 z 2001 to ref 128514
+relationcanvas 141314 relation_ref 3482114 // <directional composition>
+  from ref 139906 z 2013 to ref 128514
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

@@ -18,65 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "TestEditorTest.h"
-#include "TestWindowEditor.h"
-#include "TestTableModel.h"
-#include "Mdt/Application.h"
-#include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
-#include "Mdt/ItemEditor/StandardWindow.h"
-#include <QSignalSpy>
-#include <QItemSelectionModel>
-#include <QStringListModel>
-#include <QTableView>
-#include <QPointer>
-#include <QLineEdit>
-#include <QLabel>
+#include "AbstractEditorWidget.h"
 
-#include <QDebug>
+namespace Mdt{ namespace ItemEditor{
 
-void TestEditorTest::initTestCase()
+AbstractEditorWidget::AbstractEditorWidget(QWidget* parent)
+ : QWidget(parent),
+   pvController(nullptr)
 {
 }
 
-void TestEditorTest::cleanupTestCase()
+void AbstractEditorWidget::setController(AbstractController* controller)
 {
+  Q_ASSERT(controller != nullptr);
+
+  pvController = controller;
 }
 
-/*
- * Tests
- */
+}} // namespace Mdt{ namespace ItemEditor{
 
-
-void TestEditorTest::widowEditorTest()
-{
-  TestWindowEditor editor;
-  TestTableModel model;
-
-  editor.setModel(&model);
-  model.populate(3, 2);
-
-  /*
-   * Play
-   */
-  editor.show();
-  while(editor.isVisible()){
-    QTest::qWait(500);
-  }
-}
-
-/*
- * Main
- */
-
-int main(int argc, char **argv)
-{
-  Mdt::Application app(argc, argv);
-  TestEditorTest test;
-
-  if(!app.init()){
-    return 1;
-  }
-//   app.debugEnvironnement();
-
-  return QTest::qExec(&test, argc, argv);
-}

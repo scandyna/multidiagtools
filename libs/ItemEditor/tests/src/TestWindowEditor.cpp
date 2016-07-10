@@ -20,13 +20,27 @@
  ****************************************************************************/
 #include "TestWindowEditor.h"
 #include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
+#include "TestTableEditionWidget.h"
+
+#include <QDebug>
 
 TestWindowEditor::TestWindowEditor(QWidget* parent)
  : StandardWindow(parent)
 {
   using Mdt::ItemEditor::StandardEditorLayoutWidget;
+//   using Mdt::ItemEditor::TableViewWidget;
 
   auto *layoutWidget = new StandardEditorLayoutWidget;
+  pvTableEditionWidget = new TestTableEditionWidget;
+
+  layoutWidget->setMainWidget(pvTableEditionWidget);
   setCentralWidget(layoutWidget);
+  setMainEditorWidget(pvTableEditionWidget);
 }
 
+void TestWindowEditor::setModel(QAbstractTableModel* model)
+{
+  Q_ASSERT(model != nullptr);
+
+  pvTableEditionWidget->setModel(model);
+}

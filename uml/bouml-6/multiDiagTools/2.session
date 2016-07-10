@@ -15,39 +15,54 @@ diagrams
     120 110 100 4 0 0
   classdiagram_ref 2687362 // NavigationMenu
     120 110 100 4 0 0
-  classdiagram_ref 2414210 // overview
-    120 110 100 4 0 0
   classdiagram_ref 2700546 // overview
-    1020 906 85 21 0 0
+    1020 906 85 21 0 25
   classdiagram_ref 2406786 // InputEvents
     120 110 80 21 0 0
   classdiagram_ref 2707202 // InputEventMapper
     120 110 100 18 0 0
-  classdiagram_ref 2700418 // EditorWidget
-    120 110 80 22 36 60
-  active  classdiagram_ref 2707842 // TestEditor
-    943 906 100 18 0 0
-  classdiagram_ref 2714498 // WindowWidgetController
-    120 110 100 4 0 0
   classdiagram_ref 2714754 // TableViewSandbox
-    943 906 90 7 0 0
-  classdiagram_ref 2714882 // DataWidgetMapperSandbox
     120 110 80 7 0 0
+  classdiagram_ref 2413314 // overview
+    120 110 100 4 0 0
+  classdiagram_ref 2714626 // AbstractWindow
+    120 110 100 4 0 0
+  classdiagram_ref 2413442 // StandardWindow
+    120 110 100 8 0 0
+  classdiagram_ref 2727938 // EditorWidgetAndControllerOverview
+    943 906 90 8 72 0
+  classdiagram_ref 2728066 // sandbox
+    120 110 80 21 0 133
+  classdiagram_ref 2414210 // overview
+    120 110 100 4 0 0
+  classdiagram_ref 2414338 // State
+    120 110 100 4 0 0
+  active  classdiagram_ref 2700418 // EditorWidget
+    943 906 100 22 24 690
+  classdiagram_ref 2707842 // TestEditor
+    120 110 100 4 0 0
+  classdiagram_ref 2707074 // TableController
+    120 110 100 8 336 209
 end
 show_stereotypes
-selected operation_ref 4493698 // closeEvent
+selected operation_ref 4508418 // setController
 open
   
   package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
   
   package_ref 516226 // SqlItemModel
-  classview_ref 1472258 // Editor
-  classdiagram_ref 2700546 // overview
-  operation_ref 4493442 // setControllerState
+  class_ref 3090050 // TestWindowEditor
+  classview_ref 1279874 // overviews
+  classview_ref 1307010 // EventMapper
   classview_ref 1287042 // Controller
   classview_ref 1432322 // StandardFormWidget
-  classview_ref 1465474 // EditorWidget
+  operation_ref 4508546 // controller
+  attribute_ref 2915586 // View
+  operation_ref 4470914 // resizeViewToContents
+  operation_ref 4471042 // refresh
+  operation_ref 4471170 // exportToCsvFile
+  class_ref 3104130 // TableViewWidget
   class_ref 3096962 // AbstractWindow
   classview_ref 1472130 // ArticleEditor
   

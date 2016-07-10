@@ -9,6 +9,7 @@ enable_testing()
 set(SOURCES_FILES
   src/TestTableModel.cpp
   src/ItemViewTestEdit.cpp
+  src/TestTableEditionWidget.cpp
   src/TestWindowEditor.cpp
 )
 

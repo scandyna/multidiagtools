@@ -12,14 +12,17 @@ classcanvas 128386 class_ref 2684802 // TableController
   classdiagramsettings member_max_width 0 end
   xyz 506 135 2000
 end
-relationcanvas 128258 relation_ref 3070466 // <generalisation>
-  from ref 128130 z 2001 to ref 128002
+classcanvas 128642 class_ref 3096962 // AbstractWindow
+  classdiagramsettings member_max_width 0 end
+  xyz 227 572 2006
+end
+relationcanvas 128770 relation_ref 3466242 // <generalisation>
+  from ref 128642 z 2007 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 128514 relation_ref 3459202 // <dependency>
-  decenter_begin 534
-  from ref 128130 z 2001 to ref 128386
+relationcanvas 128898 relation_ref 3466370 // <generalisation>
+  from ref 128130 z 2007 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

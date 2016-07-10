@@ -18,65 +18,44 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "TestEditorTest.h"
-#include "TestWindowEditor.h"
-#include "TestTableModel.h"
-#include "Mdt/Application.h"
-#include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
-#include "Mdt/ItemEditor/StandardWindow.h"
-#include <QSignalSpy>
-#include <QItemSelectionModel>
-#include <QStringListModel>
-#include <QTableView>
-#include <QPointer>
-#include <QLineEdit>
-#include <QLabel>
+#include "AbstractController.h"
+#include <QAbstractItemModel>
 
-#include <QDebug>
+// #include <QDebug>
 
-void TestEditorTest::initTestCase()
+namespace Mdt{ namespace ItemEditor{
+
+AbstractController::AbstractController(QObject* parent)
+ : QObject(parent)
 {
 }
 
-void TestEditorTest::cleanupTestCase()
+void AbstractController::toFirst()
 {
+
 }
 
-/*
- * Tests
- */
-
-
-void TestEditorTest::widowEditorTest()
+void AbstractController::toPrevious()
 {
-  TestWindowEditor editor;
-  TestTableModel model;
 
-  editor.setModel(&model);
-  model.populate(3, 2);
-
-  /*
-   * Play
-   */
-  editor.show();
-  while(editor.isVisible()){
-    QTest::qWait(500);
-  }
 }
 
-/*
- * Main
- */
-
-int main(int argc, char **argv)
+void AbstractController::toNext()
 {
-  Mdt::Application app(argc, argv);
-  TestEditorTest test;
 
-  if(!app.init()){
-    return 1;
-  }
-//   app.debugEnvironnement();
-
-  return QTest::qExec(&test, argc, argv);
 }
+
+void AbstractController::toLast()
+{
+
+}
+
+void AbstractController::setModel(QAbstractItemModel* model)
+{
+  Q_ASSERT(model != nullptr);
+
+  pvModel = model;
+  emit modelChanged(model);
+}
+
+}} // namespace Mdt{ namespace ItemEditor{

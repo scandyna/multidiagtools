@@ -21,6 +21,8 @@
 #include "NavigationActions.h"
 #include <QIcon>
 
+#include <QDebug>
+
 namespace Mdt{ namespace ItemEditor{
 
 NavigationActions::NavigationActions(QObject* parent)
@@ -45,6 +47,7 @@ void NavigationActions::setRowState(RowState rs)
 {
   Q_ASSERT(rs.isValid());
 
+  qDebug() << "NavigationActions::setRowState() ...";
   pvRowState = rs;
   updateEnableStates();
 }
@@ -55,6 +58,8 @@ void NavigationActions::updateEnableStates()
 
   int n = pvRowState.rowCount();
   int row = pvRowState.currentRow();
+  
+  qDebug() << "NavigationActions::updateEnableStates() , n: " << n << " , row: " << row;
 
   pvToFirst->setEnabled( row > 0 );
   pvToPrevious->setEnabled( row > 0 );

@@ -23,6 +23,9 @@
 
 #include "Mdt/ItemEditor/StandardWindow.h"
 
+class TestTableEditionWidget;
+class QAbstractTableModel;
+
 class TestWindowEditor : public Mdt::ItemEditor::StandardWindow
 {
  Q_OBJECT
@@ -31,9 +34,11 @@ class TestWindowEditor : public Mdt::ItemEditor::StandardWindow
 
   TestWindowEditor(QWidget* parent = nullptr);
 
+  void setModel(QAbstractTableModel *model);
+
  private:
 
-  
+  TestTableEditionWidget *pvTableEditionWidget;
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_TEST_WINDOW_EDITOR_H
