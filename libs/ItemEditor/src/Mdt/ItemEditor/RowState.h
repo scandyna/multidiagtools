@@ -35,7 +35,7 @@ namespace Mdt{ namespace ItemEditor{
    *  <tr><th>Row count</th><th>Current row</th><th>Is valid</th><th>Is null</th><th>Remarks</th></tr>
    *  <tr><td>0</td><td>-1</td><td>Yes</td><td>Yes</td><td></td></tr>
    *  <tr><td>1</td><td>-1</td><td>No</td><td>(Yes)</td><td>Happens, f.ex., if a QItemSelectionModel has no current index</td></tr>
-   *  <tr><td>1</td><td>0</td><td>Yes</td><td>No</td><td></td></tr>
+   *  <tr><td>1</td><td>0</td><td>Yes</td><td>No</td><td>Current row is out of bound</td></tr>
    *  <tr><td>1</td><td>1</td><td>No</td><td>(Yes)</td><td></td></tr>
    *  <tr><td>2</td><td>-1</td><td>No</td><td>(Yes)</td><td></td></tr>
    *  <tr><td>2</td><td>0</td><td>Yes</td><td>No</td><td></td></tr>

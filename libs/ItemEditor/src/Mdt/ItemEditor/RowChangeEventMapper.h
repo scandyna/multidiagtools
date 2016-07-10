@@ -99,14 +99,6 @@ namespace Mdt{ namespace ItemEditor{
      * (although signal is properly emitted)
      */
 
-    /*! \brief Emited whenever row count changes
-     */
-    void rowCountChanged(int rowCount);
-
-    /*! \brief Emited whenever current row changes
-     */
-    void currentRowChanged(int row);
-
    private:
 
     RowState pvRowState;

@@ -22,7 +22,7 @@
 #include <QAbstractItemModel>
 #include <QItemSelectionModel>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -50,8 +50,6 @@ void RowChangeEventMapper::setSelectionModel(QItemSelectionModel* model)
     pvRowState.setRowCount(pvModel->rowCount());
     emit rowStateChanged(pvRowState);
   }
-
-  emit currentRowChanged(pvSelectionModel->currentIndex().row());
 }
 
 void RowChangeEventMapper::setModel(QAbstractItemModel* model)
@@ -77,20 +75,13 @@ void RowChangeEventMapper::setModel(QAbstractItemModel* model)
     pvRowState.setCurrentRow(pvSelectionModel->currentIndex().row());
   }
   emit rowStateChanged(pvRowState);
-  
-  emit rowCountChanged(model->rowCount());
 }
 
 void RowChangeEventMapper::setCurrentIndex(const QModelIndex & current, const QModelIndex & previous)
 {
-  qDebug() << "Current index changed " << current;
-
   if(current.row() != previous.row()){
     pvRowState.setCurrentRow(current.row());
-    qDebug() << "-> emit , n: " << pvRowState.rowCount() << " , row: " << pvRowState.currentRow() << " ...";
     emit rowStateChanged(pvRowState);
-    
-    emit currentRowChanged(current.row());
   }
 }
 
@@ -98,8 +89,6 @@ void RowChangeEventMapper::onModelReset()
 {
   Q_ASSERT(!pvModel.isNull());
 
-  qDebug() << "Model reset ..";
-
   /*
    * We have to allways signal new row count here,
    *  so we not use setCurrentIndex().
@@ -109,75 +98,36 @@ void RowChangeEventMapper::onModelReset()
     pvRowState.setCurrentRow(pvSelectionModel->currentIndex().row());
   }
   emit rowStateChanged(pvRowState);
-  
-  emit rowCountChanged(pvModel->rowCount());
-  // QItemSelectionModel does not signal current changed after model reset
-  /// \todo see comment in unit test
-//   if(!pvSelectionModel.isNull()){
-//     setCurrentIndex(pvSelectionModel->currentIndex(), QModelIndex());
-//   }
 }
 
 void RowChangeEventMapper::onRowsInserted(const QModelIndex & parent, int /*first*/, int /*last*/)
 {
   Q_ASSERT(!pvModel.isNull());
 
-  qDebug() << "Model rows inserted ..";
   /*
    * We have to allways signal new row count here,
    *  so we not use setCurrentIndex().
    */
-  pvRowState.setRowCount(pvModel->rowCount());
+  pvRowState.setRowCount(pvModel->rowCount(parent));
   if(!pvSelectionModel.isNull()){
     pvRowState.setCurrentRow(pvSelectionModel->currentIndex().row());
   }
   emit rowStateChanged(pvRowState);
-
-//   pvRowState.setRowCount(pvModel->rowCount(parent));
-//   if(pvSelectionModel.isNull()){
-//     emit rowStateChanged(pvRowState);
-//   }else{
-//     setCurrentIndex(pvSelectionModel->currentIndex(), QModelIndex());
-//   }
-  
-  
-  emit rowCountChanged(pvModel->rowCount(parent));
-  // QItemSelectionModel does not signal current changed after insert
-  /// \todo see comment in unit test
-//   if(!pvSelectionModel.isNull()){
-//     setCurrentIndex(pvSelectionModel->currentIndex(), QModelIndex());
-//   }
 }
 
 void RowChangeEventMapper::onRowsRemoved(const QModelIndex & parent, int /*first*/, int /*last*/)
 {
   Q_ASSERT(!pvModel.isNull());
 
-  qDebug() << "Model rows removed ..";
-  
   /*
    * We have to allways signal new row count here,
    *  so we not use setCurrentIndex().
    */
-  pvRowState.setRowCount(pvModel->rowCount());
+  pvRowState.setRowCount(pvModel->rowCount(parent));
   if(!pvSelectionModel.isNull()){
     pvRowState.setCurrentRow(pvSelectionModel->currentIndex().row());
   }
   emit rowStateChanged(pvRowState);
-
-//   pvRowState.setRowCount(pvModel->rowCount(parent));
-//   if(pvSelectionModel.isNull()){
-//     emit rowStateChanged(pvRowState);
-//   }else{
-//     setCurrentIndex(pvSelectionModel->currentIndex(), QModelIndex());
-//   }
-
-  emit rowCountChanged(pvModel->rowCount(parent));
-  // QItemSelectionModel does not signal current changed after remove
-  /// \todo see comment in unit test
-//   if(!pvSelectionModel.isNull()){
-//     setCurrentIndex(pvSelectionModel->currentIndex(), QModelIndex());
-//   }
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

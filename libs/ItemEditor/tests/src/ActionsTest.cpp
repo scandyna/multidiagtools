@@ -225,10 +225,7 @@ void ActionsTest::rowChangeEventMapperTest()
   using Mdt::ItemEditor::RowState;
 
   RowChangeEventMapper mapper;
-  QSignalSpy rowCountSpy(&mapper, &RowChangeEventMapper::rowCountChanged);
-  QSignalSpy currentRowSpy(&mapper, &RowChangeEventMapper::currentRowChanged);
   QSignalSpy rowStateSpy(&mapper, &RowChangeEventMapper::rowStateChanged);
-  
   QList<QVariant> spyItem;
   QStringListModel model;
   QModelIndex index;
@@ -237,24 +234,12 @@ void ActionsTest::rowChangeEventMapperTest()
   /*
    * Initial state
    */
-  QVERIFY(rowCountSpy.isValid());
-  QCOMPARE(rowCountSpy.count(), 0);
-  QVERIFY(currentRowSpy.isValid());
-  QCOMPARE(currentRowSpy.count(), 0);
-  
   QVERIFY(rowStateSpy.isValid());
   QCOMPARE(rowStateSpy.count(), 0);
   /*
    * Set model
    */
   mapper.setModel(&model);
-  // Check that row count was signaled
-  QCOMPARE(rowCountSpy.count(), 1);
-  spyItem = rowCountSpy.takeFirst();
-  QCOMPARE(spyItem.at(0).toInt(), 0);
-  // Current is not updated here (the selection model will signal it to mapper)
-  QCOMPARE(currentRowSpy.count(), 0);
-  
   // Check that row count was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
@@ -263,17 +248,9 @@ void ActionsTest::rowChangeEventMapperTest()
   QCOMPARE(rs.rowCount(), 0);
   QCOMPARE(rs.currentRow(), -1);
   /*
-   * Add a item to model (will produce a model reset)
-   *  - Use setStringList() helper method
+   * Populate model (will produce a model reset)
    */
   model.setStringList({"A"});
-  // Check that row count was signaled
-  QCOMPARE(rowCountSpy.count(), 1);
-  spyItem = rowCountSpy.takeFirst();
-  QCOMPARE(spyItem.at(0).toInt(), 1);
-  // Current is not updated here (the selection model will signal it to mapper)
-  QCOMPARE(currentRowSpy.count(), 0);
-  
   // Check that row count was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
@@ -287,13 +264,6 @@ void ActionsTest::rowChangeEventMapperTest()
    */
   QVERIFY(model.insertRow(0));
   // Check that row count was signaled
-  QCOMPARE(rowCountSpy.count(), 1);
-  spyItem = rowCountSpy.takeFirst();
-  QCOMPARE(spyItem.at(0).toInt(), 2);
-  // Current is not updated here (the selection model will signal it to mapper)
-  QCOMPARE(currentRowSpy.count(), 0);
-  
-  // Check that row count was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
@@ -304,13 +274,6 @@ void ActionsTest::rowChangeEventMapperTest()
    * Remove a item from model
    */
   QVERIFY(model.removeRow(0));
-  // Check that row count was signaled
-  QCOMPARE(rowCountSpy.count(), 1);
-  spyItem = rowCountSpy.takeFirst();
-  QCOMPARE(spyItem.at(0).toInt(), 1);
-  // Current is not updated here (the selection model will signal it to mapper)
-  QCOMPARE(currentRowSpy.count(), 0);
-
   // Check that row count was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
@@ -323,16 +286,6 @@ void ActionsTest::rowChangeEventMapperTest()
    */
   QItemSelectionModel selectionModel(&model);
   mapper.setSelectionModel(&selectionModel);
-  // Selection model's model is the same as before, so, now row count must be signaled
-  QCOMPARE(rowCountSpy.count(), 0);
-  // Check that current row was signaled
-  QCOMPARE(currentRowSpy.count(), 1);
-  spyItem = currentRowSpy.takeFirst();
-  QCOMPARE(spyItem.at(0).toInt(), -1);
-  
-  
-  
-  
   // Check that current row was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
@@ -340,19 +293,11 @@ void ActionsTest::rowChangeEventMapperTest()
 //   QVERIFY(rs.isValid());
   QCOMPARE(rs.rowCount(), 1);
   QCOMPARE(rs.currentRow(), -1);
-
   /*
    * Change current row
    */
   index = model.index(0, 0);
   selectionModel.setCurrentIndex(index, QItemSelectionModel::Current);
-  // No row count has changed
-  QCOMPARE(rowCountSpy.count(), 0);
-  // Check that current row was signaled
-  QCOMPARE(currentRowSpy.count(), 1);
-  spyItem = currentRowSpy.takeFirst();
-  QCOMPARE(spyItem.at(0).toInt(), 0);
-  
   // Check that current row was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
@@ -360,7 +305,6 @@ void ActionsTest::rowChangeEventMapperTest()
 //   QVERIFY(rs.isValid());
   QCOMPARE(rs.rowCount(), 1);
   QCOMPARE(rs.currentRow(), 0);
-
   /*
    * Add a item to model
    *  - Use insertRow()
@@ -369,10 +313,7 @@ void ActionsTest::rowChangeEventMapperTest()
    * we insert before row 0 ,
    * current row will become 1.
    */
-  qDebug() << "BEFORE insert: selectionModel current index: " << selectionModel.currentIndex();
   QVERIFY(model.insertRow(0));
-  qDebug() << "AFTER insert: selectionModel current index: " << selectionModel.currentIndex();
-  
   // Check that row count and current row were signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
@@ -380,22 +321,6 @@ void ActionsTest::rowChangeEventMapperTest()
 //   QVERIFY(rs.isValid());
   QCOMPARE(rs.rowCount(), 2);
   QCOMPARE(rs.currentRow(), 1);
-
-  // Check that row count was signaled
-  QCOMPARE(rowCountSpy.count(), 1);
-  spyItem = rowCountSpy.takeFirst();
-  QCOMPARE(spyItem.at(0).toInt(), 2);
-  // Check that current row was signaled
-  /**
-   * \todo Must define what is good when inserting/removing rows.
-   *       F.ex. when inserting before row 0, the new current row becomes 1,
-   *       but dit not change. Then, to edit the inserted row we have to go to
-   *       row 0, which will also be signaled.
-   */
-//   QCOMPARE(currentRowSpy.count(), 1);
-//   spyItem = currentRowSpy.takeFirst();
-//   QCOMPARE(spyItem.at(0).toInt(), 1);
-
   /*
    * Remove a item from model
    *  - use removeRow()
@@ -404,10 +329,7 @@ void ActionsTest::rowChangeEventMapperTest()
    * we remove row 0 ,
    * current row will become 0.
    */
-  qDebug() << "BEFORE remove: selectionModel current index: " << selectionModel.currentIndex();
   QVERIFY(model.removeRow(0));
-  qDebug() << "AFTER remove: selectionModel current index: " << selectionModel.currentIndex();
-  
   // Check that row count and current row were signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
@@ -415,26 +337,12 @@ void ActionsTest::rowChangeEventMapperTest()
 //   QVERIFY(rs.isValid());
   QCOMPARE(rs.rowCount(), 1);
   QCOMPARE(rs.currentRow(), 0);
-
-  // Check that row count was signaled
-  QCOMPARE(rowCountSpy.count(), 1);
-  spyItem = rowCountSpy.takeFirst();
-  QCOMPARE(spyItem.at(0).toInt(), 1);
-  // Check that current row was signaled
-  /// \todo define what to do here
-//   QCOMPARE(currentRowSpy.count(), 1);
-//   spyItem = currentRowSpy.takeFirst();
-//   QCOMPARE(spyItem.at(0).toInt(), 0);
-
   /*
-   * Set items to model
-   *  - Will produce a model reset
+   * Populate model (will produce a model reset)
    *
    * After a model reset, selection model looses current index
    */
-  qDebug() << "BEFORE reset: selectionModel current index: " << selectionModel.currentIndex();
   model.setStringList({"A", "B", "C", "D"});
-  qDebug() << "AFTER reset: selectionModel current index: " << selectionModel.currentIndex();
   // Check that row count and current row were signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
@@ -442,17 +350,6 @@ void ActionsTest::rowChangeEventMapperTest()
 //   QVERIFY(rs.isValid());
   QCOMPARE(rs.rowCount(), 4);
   QCOMPARE(rs.currentRow(), -1);
-  
-  // Check that row count was signaled
-  QCOMPARE(rowCountSpy.count(), 1);
-  spyItem = rowCountSpy.takeFirst();
-  QCOMPARE(spyItem.at(0).toInt(), 4);
-  // Check that current row was signaled
-  /// \todo define what to do here
-//   QCOMPARE(currentRowSpy.count(), 1);
-//   spyItem = currentRowSpy.takeFirst();
-//   QCOMPARE(spyItem.at(0).toInt(), 0);
-
   /*
    * Change current to a valid row before setModel() test
    */
@@ -465,15 +362,12 @@ void ActionsTest::rowChangeEventMapperTest()
 //   QVERIFY(rs.isValid());
   QCOMPARE(rs.rowCount(), 4);
   QCOMPARE(rs.currentRow(), 0);
-
   /*
    * Change model of selection model
    *  - Set a empty model
    */
   TestTableModel model2;
-  qDebug() << "BEFORE set model: selectionModel current index: " << selectionModel.currentIndex();
   selectionModel.setModel(&model2);
-  qDebug() << "AFTER set model: selectionModel current index: " << selectionModel.currentIndex();
   // Check that row count and current row were signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
@@ -485,9 +379,7 @@ void ActionsTest::rowChangeEventMapperTest()
    * Change model of selection model
    *  - Set a model with data
    */
-  qDebug() << "BEFORE set model: selectionModel current index: " << selectionModel.currentIndex();
   selectionModel.setModel(&model);
-  qDebug() << "AFTER set model: selectionModel current index: " << selectionModel.currentIndex();
   // Check that row count and current row were signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
@@ -495,9 +387,39 @@ void ActionsTest::rowChangeEventMapperTest()
 //   QVERIFY(rs.isValid());
   QCOMPARE(rs.rowCount(), 4);
   QCOMPARE(rs.currentRow(), -1);
-
-  /// \todo implement
-
+  /*
+   * Change again to model2 for next test
+   */
+  model2.populate(3, 2);
+  selectionModel.setModel(&model2);
+  // Check that row count and current row were signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+//   QVERIFY(rs.isValid());
+  QCOMPARE(rs.rowCount(), 3);
+  QCOMPARE(rs.currentRow(), -1);
+  /*
+   * Change current row
+   */
+  index = model2.index(0, 0);
+  QVERIFY(index.isValid());
+  selectionModel.setCurrentIndex(index, QItemSelectionModel::Current);
+  // Check that current row was signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+//   QVERIFY(rs.isValid());
+  QCOMPARE(rs.rowCount(), 3);
+  QCOMPARE(rs.currentRow(), 0);
+  /*
+   * Change current column
+   */
+  index = model2.index(0, 1);
+  QVERIFY(index.isValid());
+  selectionModel.setCurrentIndex(index, QItemSelectionModel::Current);
+  // Check that current row was not signaled
+  QCOMPARE(rowStateSpy.count(), 0);
   /*
    * Play
    */
@@ -509,8 +431,6 @@ void ActionsTest::rowChangeEventMapperTest()
   while(tv.isVisible()){
     QTest::qWait(500);
   }
-  
-  QFAIL("Test not completely implemented yet");
 }
 
 void ActionsTest::navigationActionsTest()
@@ -590,6 +510,25 @@ void ActionsTest::navigationActionsTest()
   QVERIFY(toPrevious->isEnabled());
   QVERIFY(!toNext->isEnabled());
   QVERIFY(!toLast->isEnabled());
+  /*
+   * Check with some invalid row states
+   */
+  // N: 1 , current row: -1
+  rs.setRowCount(1);
+  rs.setCurrentRow(-1);
+  actions->setRowState(rs);
+  QVERIFY(toFirst->isEnabled());
+  QVERIFY(!toPrevious->isEnabled());
+  QVERIFY(toNext->isEnabled());
+  QVERIFY(toLast->isEnabled());
+  // N: 2 , current row: -1
+  rs.setRowCount(2);
+  rs.setCurrentRow(-1);
+  actions->setRowState(rs);
+  QVERIFY(toFirst->isEnabled());
+  QVERIFY(!toPrevious->isEnabled());
+  QVERIFY(toNext->isEnabled());
+  QVERIFY(toLast->isEnabled());
   /*
    * Clear
    */

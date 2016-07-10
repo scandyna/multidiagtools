@@ -83,8 +83,6 @@ namespace Mdt{ namespace ItemEditor{
    public slots:
 
     /*! \brief Set row state
-     *
-     * \pre rs must be valid
      */
     void setRowState(RowState rs);
 

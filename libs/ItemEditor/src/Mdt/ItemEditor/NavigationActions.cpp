@@ -45,8 +45,6 @@ NavigationActions::NavigationActions(QObject* parent)
 
 void NavigationActions::setRowState(RowState rs)
 {
-  Q_ASSERT(rs.isValid());
-
   qDebug() << "NavigationActions::setRowState() ...";
   pvRowState = rs;
   updateEnableStates();
@@ -54,17 +52,23 @@ void NavigationActions::setRowState(RowState rs)
 
 void NavigationActions::updateEnableStates()
 {
-  Q_ASSERT(pvRowState.isValid());
-
   int n = pvRowState.rowCount();
   int row = pvRowState.currentRow();
   
   qDebug() << "NavigationActions::updateEnableStates() , n: " << n << " , row: " << row;
 
-  pvToFirst->setEnabled( row > 0 );
-  pvToPrevious->setEnabled( row > 0 );
-  pvToNext->setEnabled( row < (n-1) );
-  pvToLast->setEnabled( row < (n-1) );
+  if(pvRowState.isValid()){
+    pvToFirst->setEnabled( row > 0 );
+    pvToPrevious->setEnabled( row > 0 );
+    pvToNext->setEnabled( row < (n-1) );
+    pvToLast->setEnabled( row < (n-1) );
+  }else if(row < n){
+    Q_ASSERT(row == -1);
+    pvToFirst->setEnabled(true);
+    pvToPrevious->setEnabled(false);
+    pvToNext->setEnabled(true);
+    pvToLast->setEnabled(true);
+  }
 }
 
 }} // namespace Mdt{ namespace ItemEditor{
