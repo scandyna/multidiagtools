@@ -19,16 +19,21 @@
  **
  ****************************************************************************/
 #include "AbstractController.h"
+#include "ItemSelectionModel.h"
+#include "RowChangeEventMapper.h"
 #include <QAbstractItemModel>
+#include <QItemSelectionModel>
 
-// #include <QDebug>
+#include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
 AbstractController::AbstractController(QObject* parent)
  : QObject(parent),
-   pvCurrentRow(-1)
+   pvCurrentRow(-1),
+   pvRowChangeEventMapper(new RowChangeEventMapper(this))
 {
+  connect(pvRowChangeEventMapper, &RowChangeEventMapper::rowStateChanged, this, &AbstractController::setRowState);
 }
 
 void AbstractController::setModel(QAbstractItemModel* model)
@@ -36,7 +41,15 @@ void AbstractController::setModel(QAbstractItemModel* model)
   Q_ASSERT(model != nullptr);
 
   pvModel = model;
+  pvRowChangeEventMapper->setModel(model);
   emit modelChanged(model);
+}
+
+void AbstractController::setSelectionModel(QItemSelectionModel* model)
+{
+  Q_ASSERT(model != nullptr);
+
+  pvRowChangeEventMapper->setSelectionModel(model);
 }
 
 int AbstractController::rowCount() const
@@ -45,6 +58,26 @@ int AbstractController::rowCount() const
     return 0;
   }
   return pvModel->rowCount();
+}
+
+bool AbstractController::setCurrentRow(int row)
+{
+  Q_ASSERT(row >= -1);
+
+  /**
+   * \todo If row >= rowCount()
+   *       we must try to fetch more data
+   *       until we found row, or no more data is available,
+   *       and consider this value as current row.
+   */
+  pvCurrentRow = row;
+  /// \todo Hmm...
+  RowState rs;
+  rs.setRowCount(rowCount());
+  rs.setCurrentRow(pvCurrentRow);
+  setRowState(rs);
+
+  return true;
 }
 
 void AbstractController::toFirst()
@@ -69,7 +102,8 @@ void AbstractController::toLast()
 
 void AbstractController::setRowState(RowState rs)
 {
-
+  qDebug() << "AbstractController::setRowState() ...";
+  emit rowStateChanged(rs);
 }
 
 

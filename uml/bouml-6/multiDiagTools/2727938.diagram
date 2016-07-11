@@ -18,17 +18,17 @@ end
 classcanvas 140802 class_ref 2739842 // QWebSocketServer
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 761.95 165.05 2017
+  xyz 761.45 165.05 2017
 end
 classcanvas 146818 class_ref 3068802 // AbstractEditorWidget
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
-  xyz 437.15 309.05 2006
+  xyz 437.65 309.05 2006
 end
 classcanvas 151426 class_ref 3015170 // EventCatchItemDelegate
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
-  xyz 962.3 1076.6 2000
+  xyz 962.3 1076.1 2000
 end
 note 155138 "Try: separate SQL part !
 F.ex. setTable()
@@ -38,7 +38,7 @@ Here, only focus on Qt table model"
 classcanvas 157058 class_ref 3104258 // SqlTableViewWidget
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
-  xyz 326.1 575.65 2000
+  xyz 326.6 575.65 2000
 end
 classcanvas 157186 class_ref 3104130 // TableViewWidget
   classdiagramsettings member_max_width 0 end
@@ -53,7 +53,7 @@ end
 classcanvas 160002 class_ref 2927362 // SqlTableController
   classdiagramsettings member_max_width 0 end
   color lightorange
-  xyz 215.5 470.55 2000
+  xyz 215.5 470.05 2000
 end
 classcanvas 161282 class_ref 147202 // QAbstractTableModel
   classdiagramsettings member_max_width 0 end
@@ -63,12 +63,12 @@ end
 classcanvas 161666 class_ref 174338 // QSqlQueryModel
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 590.9 828.45 2029
+  xyz 590.9 828.95 2029
 end
 classcanvas 161922 class_ref 174210 // QSqlTableModel
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 592.9 912.15 2035
+  xyz 592.9 912.65 2035
 end
 classcanvas 163586 class_ref 138626 // QObject
   classdiagramsettings member_max_width 0 end
@@ -87,9 +87,9 @@ So not mix again thoses things !  (remember SRP)
 Here, QSqlTableModel has cache, and we must call submitAll(), that is not defined in QAbstractItemModel, so a dedicated controller has sense.
 
 But, has TableController sense here ?? (possibly yes, possibly no)"
-  xyzwh 40.2 1076 2000 387 209
+  xyzwh 40.7 1076 2000 387 209
 note 168962 "Notion of preset of fields to display."
-  xyzwh 40.6 1365.5 3019 299 41
+  xyzwh 40.1 1365 3019 299 41
 classcanvas 169090 class_ref 3118082 // AbstractTableViewWidget
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
@@ -105,18 +105,18 @@ end
 relationcanvas 158722 relation_ref 3481986 // <unidirectional association>
   decenter_begin 720
   decenter_end 581
-  from ref 158338 z 3012 to point 40.6 339.8
-  line 170882 z 3012 to point 40.6 996.4
-  line 171010 z 3012 to point 762.2 996.4
-  line 171138 z 3012 to point 762.2 248
+  from ref 158338 z 3012 to point 40.4 339.7
+  line 170882 z 3012 to point 40.4 996.6
+  line 171010 z 3012 to point 762.8 996.6
+  line 171138 z 3012 to point 762.8 248
   line 171266 z 3012 to ref 134018
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 158850 relation_ref 3459586 // <generalisation>
   geometry VHV unfixed
-  from ref 128130 z 3012 to point 174 430.6
-  line 171906 z 3012 to point 278 430.6
+  from ref 128130 z 3012 to point 175 430.4
+  line 171906 z 3012 to point 278 430.4
   line 172034 z 3012 to ref 158338
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -130,7 +130,7 @@ relationcanvas 159106 relation_ref 3467138 // <dependency>
 end
 relationcanvas 160258 relation_ref 3475074 // <directional composition>
   geometry HV unfixed
-  from ref 157058 z 2001 to point 278 593
+  from ref 157058 z 2001 to point 278 593.5
   line 170626 z 2001 to ref 160002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -146,7 +146,7 @@ relationcanvas 161410 relation_ref 141186 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 161538 relation_ref 3310722 // <unidirectional association>
-  from ref 128130 z 2024 to point 176.4 761.4
+  from ref 128130 z 2024 to point 176.6 761.1
   line 167554 z 2024 to ref 161282
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -163,26 +163,26 @@ relationcanvas 162050 relation_ref 174978 // <generalisation>
 end
 relationcanvas 162178 relation_ref 3310466 // <unidirectional association>
   decenter_begin 581
-  from ref 160002 z 2036 to point 385.6 495.6
-  line 171394 z 2036 to point 385.6 392.2
-  line 171522 z 2036 to point 79.8 392.2
-  line 172162 z 2036 to point 79.8 931.4
+  from ref 160002 z 2036 to point 385.9 495.9
+  line 171394 z 2036 to point 385.9 392.8
+  line 171522 z 2036 to point 79.7 392.8
+  line 172162 z 2036 to point 79.7 931.1
   line 172290 z 2036 to ref 161922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 163714 relation_ref 3091842 // <generalisation>
   geometry VHV unfixed
-  from ref 140802 z 2024 to point 827 125.6
-  line 164354 z 2024 to point 648 125.6
+  from ref 140802 z 2024 to point 827.3 125.9
+  line 164354 z 2024 to point 648 125.9
   line 164482 z 2024 to ref 163586
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 163842 relation_ref 3091714 // <generalisation>
   geometry VHV unfixed
-  from ref 140546 z 2024 to point 983 125.6
-  line 165890 z 2024 to point 648 125.6
+  from ref 140546 z 2024 to point 983.5 125.9
+  line 165890 z 2024 to point 648 125.9
   line 166018 z 2024 to ref 163586
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -194,8 +194,8 @@ relationcanvas 163970 relation_ref 902018 // <generalisation>
 end
 relationcanvas 165634 relation_ref 2457474 // <generalisation>
   geometry VHV unfixed
-  from ref 165506 z 2030 to point 506 125.6
-  line 170370 z 2030 to point 648 125.6
+  from ref 165506 z 2030 to point 506.6 125.9
+  line 170370 z 2030 to point 648 125.9
   line 170498 z 2030 to ref 163586
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -208,8 +208,8 @@ relationcanvas 165762 relation_ref 3441794 // <generalisation>
 end
 relationcanvas 166402 relation_ref 3482242 // <generalisation>
   geometry VHV unfixed
-  from ref 158338 z 3012 to point 278 126.4
-  line 167298 z 3012 to point 648 126.4
+  from ref 158338 z 3012 to point 278 126.6
+  line 167298 z 3012 to point 648 126.6
   line 167426 z 3012 to ref 163586
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -224,8 +224,8 @@ end
 relationcanvas 169346 relation_ref 3492610 // <generalisation>
   geometry VHV unfixed
   decenter_end 480
-  from ref 157058 z 2019 to point 395 534.8
-  line 171650 z 2019 to point 504 534.8
+  from ref 157058 z 2019 to point 394 534.2
+  line 171650 z 2019 to point 504 534.2
   line 171778 z 2019 to ref 169090
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

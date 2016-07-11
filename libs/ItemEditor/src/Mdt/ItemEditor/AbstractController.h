@@ -26,7 +26,11 @@
 #include <QPointer>
 #include <QAbstractItemModel>
 
+class QItemSelectionModel;
+
 namespace Mdt{ namespace ItemEditor{
+
+  class RowChangeEventMapper;
 
   /*! \brief Common base for controllers
    */
@@ -68,6 +72,17 @@ namespace Mdt{ namespace ItemEditor{
       return pvModel;
     }
 
+    /*! \brief Set selection model
+     *
+     * If a editor uses a view that handle
+     *  selection with a QItemSelectionModel
+     *  (like QTableView), replace its selection model
+     *  with a ItemSelectionModel, and pass it to this controller
+     *  with setSelectionModel().
+     *  This way, the controller can block row change when needed.
+     */
+    void setSelectionModel(QItemSelectionModel *model);
+
     /*! \brief Get row count
      *
      * If not model was set, 0 is returned.
@@ -82,6 +97,12 @@ namespace Mdt{ namespace ItemEditor{
      * \todo Add remark on fetchAll() when..
      */
     int rowCount() const;
+
+    /*! \brief Set current row
+     *
+     * \pre row must be >= -1
+     */
+    bool setCurrentRow(int row);
 
     /*! \brief Get current row
      *
@@ -113,15 +134,15 @@ namespace Mdt{ namespace ItemEditor{
      */
     void toLast();
 
-    /*! \brief Set row state
-     */
-    void setRowState(RowState rs);
-
    signals:
 
     /*! \brief Emitted each time row count or current row changed
+     *
+     * This is used for components that need row count
+     *  and current row to update their state.
+     *  A example of such object is NavigationActions .
      */
-    void rowStateChanged(RowState rs);
+    void rowStateChanged(Mdt::ItemEditor::RowState rs);
 
     /*! \brief Emitted each time a model was set
      */
@@ -129,10 +150,24 @@ namespace Mdt{ namespace ItemEditor{
 
    protected:
 
+   private slots:
+
+    /*! \brief Set row state
+     *
+     * This slot is only called by RowChangeEventMapper,
+     *  to tell is a model was change or populated,
+     *  if a selection model was changed,
+     *  or current row changed by selection model.
+     *
+     * It will also call setCurrentRow().
+     */
+    void setRowState(Mdt::ItemEditor::RowState rs);
+
    private:
 
     int pvCurrentRow;
     QPointer<QAbstractItemModel> pvModel;
+    RowChangeEventMapper *pvRowChangeEventMapper;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

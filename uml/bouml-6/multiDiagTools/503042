@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 39
+  revision 41
   modified_by 2 "philippe"
   // class settings
   
@@ -62,7 +62,7 @@ format 211
       size C
     end
 
-    classdiagram 2700546 "overview"
+    classdiagram 2700546 "ControllerWidgetOverview"
       classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
       class_color gray 
       size B-Landscape
@@ -756,230 +756,6 @@ ${inlines}
       size A4
     end
 
-    classdiagram 2447490 "RowChangeEventMapper"
-      classdiagramsettings member_max_width 0 end
-      size B-Landscape
-    end
-
-    class 2753410 "RowChangeEventMapper"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3124738 // <generalisation>
-	relation 3106434 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3124738 // <generalisation>
-	  b parent class_ref 138626 // QObject
-      end
-
-      attribute 2591106 "Model"
-	private type class_ref 146946 // QAbstractItemModel
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 4100738 "setCurrentRow"
-	stereotype "slot"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "current" type class_ref 147330 // QModelIndex
-	  param in name "previous" type class_ref 147330 // QModelIndex
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4100994 "setCurrentRow"
-	stereotype "slot"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "row" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4100866 "setModel"
-	stereotype "slot"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "model" type class_ref 146946 // QAbstractItemModel
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 3124866 // <unidirectional association>
-	relation 3106562 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3124866 // <unidirectional association>
-	  b parent class_ref 146946 // QAbstractItemModel
-      end
-
-      operation 4101122 "onModelReset"
-	stereotype "slot"
-	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4101250 "onRowsInserted"
-	stereotype "slot"
-	public explicit_return_type "void"
-	nparams 3
-	  param in name "parent" type class_ref 147330 // QModelIndex
-	  param in name "first" explicit_type "int"
-	  param in name "last" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4101378 "onRowsRemoved"
-	stereotype "slot"
-	public explicit_return_type "void"
-	nparams 3
-	  param in name "parent" type class_ref 147330 // QModelIndex
-	  param in name "first" explicit_type "int"
-	  param in name "last" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4101506 "rowCountChanged"
-	stereotype "signal"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "rowCount" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4101634 "currentRowChanged"
-	stereotype "signal"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "row" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 3398530 // <unidirectional association>
-	relation 3380098 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3398530 // <unidirectional association>
-	  b parent class_ref 2686466 // ControllerInputEvent
-      end
-
-      operation 4462082 "rowStateChanged"
-	stereotype "signal"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "rs" type class_ref 3075458 // RowState
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 3518082 // <unidirectional association>
-	relation 3499266 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3518082 // <unidirectional association>
-	  b parent class_ref 1382914 // QItemSelectionModel
-      end
-    end
-
     classdiagram 2707202 "InputEventMapper"
       classdiagramsettings member_max_width 0 end
       size A4-Landscape
@@ -1175,6 +951,322 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+  end
+
+  classview 1485314 "RowChangeEvent"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2747906 "RowChangeEventSource"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3124738 "RowChangeEventSource"
+      visibility package stereotype "enum"
+      cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+      php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+      python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+      idl_decl "${comment}enum ${name} {
+${items}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2447490 "RowChangeEventMapper"
+      classdiagramsettings member_max_width 0 end
+      size B-Landscape
+    end
+
+    class 2753410 "RowChangeEventMapper"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3124738 // <generalisation>
+	relation 3106434 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3124738 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      attribute 2591106 "Model"
+	private type class_ref 146946 // QAbstractItemModel
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 4100738 "setCurrentRow"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "current" type class_ref 147330 // QModelIndex
+	  param in name "previous" type class_ref 147330 // QModelIndex
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4100994 "setCurrentRow"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "row" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4100866 "setModel"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "model" type class_ref 146946 // QAbstractItemModel
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3124866 // <unidirectional association>
+	relation 3106562 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3124866 // <unidirectional association>
+	  b parent class_ref 146946 // QAbstractItemModel
+      end
+
+      operation 4101122 "onModelReset"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4101250 "onRowsInserted"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 3
+	  param in name "parent" type class_ref 147330 // QModelIndex
+	  param in name "first" explicit_type "int"
+	  param in name "last" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4101378 "onRowsRemoved"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 3
+	  param in name "parent" type class_ref 147330 // QModelIndex
+	  param in name "first" explicit_type "int"
+	  param in name "last" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3398530 // <unidirectional association>
+	relation 3380098 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3398530 // <unidirectional association>
+	  b parent class_ref 2686466 // ControllerInputEvent
+      end
+
+      operation 4462082 "rowStateChanged"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "rs" type class_ref 3075458 // RowState
+	  param in name "source" type class_ref 3124738 // RowChangeEventSource
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3518082 // <unidirectional association>
+	relation 3499266 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3518082 // <unidirectional association>
+	  b parent class_ref 1382914 // QItemSelectionModel
+      end
+    end
+
+    classdiagram 2747778 "RowChangeEventDispatcher"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3124610 "RowChangeEventDispatcher"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3524738 // <generalisation>
+	relation 3505922 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3524738 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      operation 4535682 "setCurrentRow"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "row" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4535810 "setRowState"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "rs" type class_ref 3075458 // RowState
+	  param in name "source" type class_ref 3124738 // RowChangeEventSource
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4535938 "rowStateChanged"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "rs" type class_ref 3075458 // RowState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -1716,6 +1808,22 @@ ${inlines}
 	
       end
 
+      operation 4535554 "setSelectionModel"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "model" type class_ref 3021826 // ItemSelectionModel
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 4515714 "rowCount"
 	public explicit_return_type "int"
 	nparams 0
@@ -2096,6 +2204,32 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 3501058 // <generalisation>
 	  b parent class_ref 138626 // QObject
+      end
+
+      operation 4529026 "setRowState"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "rs" type class_ref 3075458 // RowState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3524610 // <directional composition>
+	relation 3505794 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3524610 // <directional composition>
+	  b parent class_ref 2753410 // RowChangeEventMapper
       end
     end
 
@@ -2483,6 +2617,11 @@ ${inlines}
 	
 	
       end
+    end
+
+    sequencediagram 2741250 "ItemViewCurrentRowChange"
+      sequencediagramsettings end
+      size A4
     end
   end
 
@@ -3824,14 +3963,6 @@ ${inlines}
 	
       end
 
-      classrelation 3511554 // <directional composition>
-	relation 3492738 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3511554 // <directional composition>
-	  b parent class_ref 2753410 // RowChangeEventMapper
-      end
     end
 
     class 3104130 "TableViewWidget"
@@ -5013,14 +5144,6 @@ ${inlines}
 "
 	    classrelation_ref 3485442 // <directional composition>
 	  b parent class_ref 3062018 // RemoveAction
-      end
-
-      classrelation 3485698 // <dependency>
-	relation 3467010 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3485698 // <dependency>
-	  b parent class_ref 3090434 // AbstractController
       end
     end
   end

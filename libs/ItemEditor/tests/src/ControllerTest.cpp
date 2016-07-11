@@ -99,14 +99,13 @@ void ControllerTest::currentRowChangeTableViewTest()
 {
   using Mdt::ItemEditor::TableController;
   using Mdt::ItemEditor::ItemSelectionModel;
-  using Mdt::ItemEditor::RowChangeEventMapper;
   using Mdt::ItemEditor::RowState;
 
   TableController controller;
   TestTableModel model;
+  QModelIndex index;
   ItemSelectionModel selectionModel(&model);
   QTableView tableView;
-  RowChangeEventMapper rowChangeEventMapper;
   QSignalSpy rowStateSpy(&controller, &TableController::rowStateChanged);
   QList<QVariant> spyItem;
   RowState rs;
@@ -114,15 +113,21 @@ void ControllerTest::currentRowChangeTableViewTest()
   /*
    * Setup
    */
-  controller.setModel(&model);
   tableView.setModel(&model);
   tableView.setSelectionModel(&selectionModel);
-  connect(&rowChangeEventMapper, &RowChangeEventMapper::rowStateChanged, &controller, &TableController::setRowState);
   tableView.show();
 
   /*
    * Initial state
    */
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  QCOMPARE(rowStateSpy.count(), 0);
+  /*
+   * Set model
+   */
+  /// \todo Because model is empty, it is possibly better to not signal row state changed at this point
+  controller.setModel(&model);
   QCOMPARE(controller.rowCount(), model.rowCount());
   QCOMPARE(controller.currentRow(), selectionModel.currentIndex().row());
   // Check that row count was signaled
@@ -137,10 +142,40 @@ void ControllerTest::currentRowChangeTableViewTest()
   model.populate(5, 3);
   QCOMPARE(controller.rowCount(), model.rowCount());
   QCOMPARE(controller.currentRow(), selectionModel.currentIndex().row());
+  // Check that row count was signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), model.rowCount());
+  QCOMPARE(rs.currentRow(), selectionModel.currentIndex().row());
+  /*
+   * Change current row from selection model
+   */
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  selectionModel.setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+  QCOMPARE(selectionModel.currentIndex().row(), 1);
+  QCOMPARE(controller.currentRow(), 1);
+  // Check that row count was signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), model.rowCount());
+  QCOMPARE(rs.currentRow(), selectionModel.currentIndex().row());
   /*
    * Change current row from controller
    */
+  QVERIFY(controller.setCurrentRow(2));
+  QCOMPARE(controller.currentRow(), 2);
+  QCOMPARE(selectionModel.currentIndex().row(), 2);
+  // Check that row count was signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), model.rowCount());
+  QCOMPARE(rs.currentRow(), selectionModel.currentIndex().row());
 
+  
   /*
    * Check navigation slots
    */

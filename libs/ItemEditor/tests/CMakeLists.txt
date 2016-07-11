@@ -20,6 +20,16 @@ target_link_libraries(mdtitemeditortest Qt5::Test)
 
 #================= Tests ====================
 
+# Target MdtItemEditorItemModelTest
+add_executable(mdtitemeditoritemmodeltest src/ItemModelTest.cpp)
+target_link_libraries(mdtitemeditoritemmodeltest mdtitemeditortest)
+add_test(MdtItemEditorItemModelTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditoritemmodeltest)
+
+# Target MdtItemEditorRowChangeTest
+add_executable(mdtitemeditorrowchangetest src/RowChangeTest.cpp)
+target_link_libraries(mdtitemeditorrowchangetest mdtitemeditortest)
+add_test(MdtItemEditorRowChangeTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditorrowchangetest)
+
 # Target MdtItemEditorActionsTest
 add_executable(mdtitemeditoractionstest src/ActionsTest.cpp)
 target_link_libraries(mdtitemeditoractionstest mdtitemeditortest)
@@ -29,11 +39,6 @@ add_test(MdtItemEditorActionsTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditoractio
 add_executable(mdtitemeditorstandardwidgetstest src/StandardWidgetsTest.cpp)
 target_link_libraries(mdtitemeditorstandardwidgetstest mdtitemeditortest)
 add_test(MdtItemEditorStandardWidgetsTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditorstandardwidgetstest)
-
-# Target MdtItemEditorItemModelTest
-add_executable(mdtitemeditoritemmodeltest src/ItemModelTest.cpp)
-target_link_libraries(mdtitemeditoritemmodeltest mdtitemeditortest)
-add_test(MdtItemEditorItemModelTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditoritemmodeltest)
 
 # Target MdtItemEditorItemDelegateTest
 add_executable(mdtitemeditoritemdelegatetest src/ItemDelegateTest.cpp)

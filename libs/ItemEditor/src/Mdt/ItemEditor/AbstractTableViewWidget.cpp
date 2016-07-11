@@ -21,7 +21,7 @@
 #include "AbstractTableViewWidget.h"
 #include "EventCatchItemDelegate.h"
 #include "ItemSelectionModel.h"
-#include "RowChangeEventMapper.h"
+// #include "RowChangeEventMapper.h"
 #include <QTableView>
 #include <QVBoxLayout>
 
@@ -29,8 +29,8 @@ namespace Mdt{ namespace ItemEditor{
 
 AbstractTableViewWidget::AbstractTableViewWidget(QWidget* parent)
  : AbstractEditorWidget(parent),
-   pvView(new QTableView),
-   pvRowChangeEventMapper(new RowChangeEventMapper(this))
+   pvView(new QTableView)/*,
+   pvRowChangeEventMapper(new RowChangeEventMapper(this))*/
 {
   // Layout widgets
   auto *l = new QVBoxLayout;
@@ -54,8 +54,9 @@ void AbstractTableViewWidget::setController(AbstractController* controller)
   Q_ASSERT(controller != nullptr);
 
   AbstractEditorWidget::setController(controller);
+  controller->setSelectionModel(pvView->selectionModel());
   /// \todo Must go to setCurrentRow of controller ! (and controller must handle + avoid invinit calls..)
-  connect(pvRowChangeEventMapper, &RowChangeEventMapper::rowStateChanged, controller, &AbstractController::rowStateChanged);
+//   connect(pvRowChangeEventMapper, &RowChangeEventMapper::rowStateChanged, controller, &AbstractController::rowStateChanged);
 }
 
 void AbstractTableViewWidget::updateModel(QAbstractItemModel *model)
@@ -76,9 +77,13 @@ void AbstractTableViewWidget::updateModel(QAbstractItemModel *model)
     /// \todo Should we delete this selection model in destructor ??
     pvView->setSelectionModel(new ItemSelectionModel(model));
     /// \todo signal/slots connections
+    // Selection model must also be updated in controller
+    if(controller() != nullptr){
+      controller()->setSelectionModel(pvView->selectionModel());
+    }
     // Update row change event mapper
-    pvRowChangeEventMapper->setModel(model);
-    pvRowChangeEventMapper->setSelectionModel(pvView->selectionModel());
+//     pvRowChangeEventMapper->setModel(model);
+//     pvRowChangeEventMapper->setSelectionModel(pvView->selectionModel());
   }
 }
 

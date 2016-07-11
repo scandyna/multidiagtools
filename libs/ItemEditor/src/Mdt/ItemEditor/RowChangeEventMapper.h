@@ -22,6 +22,7 @@
 #define MDT_ITEM_EDITOR_ROW_CHANGE_EVENT_MAPPER_H
 
 #include "RowState.h"
+#include "RowChangeEventSource.h"
 #include <QObject>
 #include <QPointer>
 #include <QModelIndex>
@@ -92,10 +93,10 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Emitted whenever row count or current row changes
      */
-    void rowStateChanged(Mdt::ItemEditor::RowState rs);
+    void rowStateChanged(Mdt::ItemEditor::RowState rs, Mdt::ItemEditor::RowChangeEventSource source);
     /*
-     * Above, we the namespace of RowState,
-     * else Qt will complain it can't handle rs
+     * Above, we must specify the namespace,
+     * else Qt will complain it can't handle rs and source
      * (although signal is properly emitted)
      */
 

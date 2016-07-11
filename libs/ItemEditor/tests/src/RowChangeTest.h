@@ -18,13 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ACTIONS_TEST_H
-#define MDT_ITEM_EDITOR_ACTIONS_TEST_H
+#ifndef MDT_ITEM_EDITOR_ROW_CHANGE_TEST_H
+#define MDT_ITEM_EDITOR_ROW_CHANGE_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
 
-class ActionsTest : public QObject
+class RowChangeTest : public QObject
 {
   Q_OBJECT
 
@@ -33,7 +33,9 @@ class ActionsTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void navigationActionsTest();
+  void rowStateTest();
+  void rowChangeEventMapperTest();
+  void eventDispatcherTest();
 };
 
-#endif // #ifndef MDT_ITEM_EDITOR_ACTIONS_TEST_H
+#endif // #ifndef MDT_ITEM_EDITOR_ROW_CHANGE_TEST_H

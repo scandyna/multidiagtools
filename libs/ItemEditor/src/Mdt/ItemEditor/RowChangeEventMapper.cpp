@@ -48,7 +48,7 @@ void RowChangeEventMapper::setSelectionModel(QItemSelectionModel* model)
     setModel(pvSelectionModel->model());
   }else{
     pvRowState.setRowCount(pvModel->rowCount());
-    emit rowStateChanged(pvRowState);
+    emit rowStateChanged(pvRowState, RowChangeEventSource::ModelReset);
   }
 }
 
@@ -74,14 +74,14 @@ void RowChangeEventMapper::setModel(QAbstractItemModel* model)
   if(!pvSelectionModel.isNull()){
     pvRowState.setCurrentRow(pvSelectionModel->currentIndex().row());
   }
-  emit rowStateChanged(pvRowState);
+  emit rowStateChanged(pvRowState, RowChangeEventSource::ModelReset);
 }
 
 void RowChangeEventMapper::setCurrentIndex(const QModelIndex & current, const QModelIndex & previous)
 {
   if(current.row() != previous.row()){
     pvRowState.setCurrentRow(current.row());
-    emit rowStateChanged(pvRowState);
+    emit rowStateChanged(pvRowState, RowChangeEventSource::ItemSelection);
   }
 }
 
@@ -97,7 +97,7 @@ void RowChangeEventMapper::onModelReset()
   if(!pvSelectionModel.isNull()){
     pvRowState.setCurrentRow(pvSelectionModel->currentIndex().row());
   }
-  emit rowStateChanged(pvRowState);
+  emit rowStateChanged(pvRowState, RowChangeEventSource::ModelReset);
 }
 
 void RowChangeEventMapper::onRowsInserted(const QModelIndex & parent, int /*first*/, int /*last*/)
@@ -112,7 +112,8 @@ void RowChangeEventMapper::onRowsInserted(const QModelIndex & parent, int /*firs
   if(!pvSelectionModel.isNull()){
     pvRowState.setCurrentRow(pvSelectionModel->currentIndex().row());
   }
-  emit rowStateChanged(pvRowState);
+  /// \todo Check if specific source should be added
+  emit rowStateChanged(pvRowState, RowChangeEventSource::ItemSelection);
 }
 
 void RowChangeEventMapper::onRowsRemoved(const QModelIndex & parent, int /*first*/, int /*last*/)
@@ -127,7 +128,8 @@ void RowChangeEventMapper::onRowsRemoved(const QModelIndex & parent, int /*first
   if(!pvSelectionModel.isNull()){
     pvRowState.setCurrentRow(pvSelectionModel->currentIndex().row());
   }
-  emit rowStateChanged(pvRowState);
+  /// \todo Check if specific source should be added
+  emit rowStateChanged(pvRowState, RowChangeEventSource::ItemSelection);
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

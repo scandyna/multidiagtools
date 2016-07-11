@@ -18,51 +18,26 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ABSTRACT_TABLE_VIEW_WIDGET_H
-#define MDT_ITEM_EDITOR_ABSTRACT_TABLE_VIEW_WIDGET_H
+#ifndef MDT_ITEM_EDITOR_ROW_CHANGE_EVENT_SOURCE_H
+#define MDT_ITEM_EDITOR_ROW_CHANGE_EVENT_SOURCE_H
 
-#include "AbstractEditorWidget.h"
-
-class QTableView;
-class QAbstractItemModel;
+#include <QMetaType>
 
 namespace Mdt{ namespace ItemEditor{
 
-//   class RowChangeEventMapper;
-
-  /*! \brief Common base for QTableView based editor
+  /*! \brief Enumeration of various sources that can cause a row state change
+   *
+   * \sa RowChangeEventDispatcher
    */
-  class AbstractTableViewWidget : public AbstractEditorWidget
+  enum class RowChangeEventSource
   {
-   Q_OBJECT
-
-   public:
-
-    /*! \brief Constructor
-     */
-    explicit AbstractTableViewWidget(QWidget* parent = nullptr);
-
-   protected:
-
-    /*! \brief Set controller
-     *
-     * Subclass that owns its controller
-     *  must tell it by calling this method.
-     */
-    void setController(AbstractController *controller) override;
-
-   protected slots:
-
-    /*! \brief Update model (mainly in view)
-     */
-    void updateModel(QAbstractItemModel *model);
-
-   private:
-
-    QTableView *pvView;
-//     RowChangeEventMapper *pvRowChangeEventMapper;
+    ModelReset,     /*!< A new model was set, or existing model was repopulated. */
+    Controller,     /*!< Source of request come from controller (f.ex. AbstractController::setCurrentRow(int) was called). */
+    ItemSelection   /*!< User selected a item in a view (f.e.x in a QTableView). */
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
 
-#endif // #ifndef MDT_ITEM_EDITOR_ABSTRACT_TABLE_VIEW_WIDGET_H
+Q_DECLARE_METATYPE(Mdt::ItemEditor::RowChangeEventSource)
+
+#endif // #ifndef MDT_ITEM_EDITOR_ROW_CHANGE_EVENT_SOURCE_H
