@@ -44,6 +44,7 @@ void RowChangeEventMapper::setSelectionModel(QItemSelectionModel* model)
   connect(pvSelectionModel, &QItemSelectionModel::currentChanged, this, &RowChangeEventMapper::setCurrentIndex);
   connect(pvSelectionModel, &QItemSelectionModel::modelChanged, this, &RowChangeEventMapper::setModel);
   pvRowState.setCurrentRow(pvSelectionModel->currentIndex().row());
+  emit selectionModelChanged(model);
   if(pvSelectionModel->model() != pvModel){
     setModel(pvSelectionModel->model());
   }else{

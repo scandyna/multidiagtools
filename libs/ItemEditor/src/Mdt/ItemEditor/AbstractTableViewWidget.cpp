@@ -21,9 +21,10 @@
 #include "AbstractTableViewWidget.h"
 #include "EventCatchItemDelegate.h"
 #include "ItemSelectionModel.h"
-// #include "RowChangeEventMapper.h"
 #include <QTableView>
 #include <QVBoxLayout>
+
+#include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -54,7 +55,11 @@ void AbstractTableViewWidget::setController(AbstractController* controller)
   Q_ASSERT(controller != nullptr);
 
   AbstractEditorWidget::setController(controller);
-  controller->setSelectionModel(pvView->selectionModel());
+  qDebug() << "AbstractTableViewWidget::setController() - setting selection model for view " << pvView << " , selection model: " << pvView->selectionModel();
+  // If no model was set to view, it will not have any selection model
+  if(pvView->selectionModel() != nullptr){
+    controller->setSelectionModel(pvView->selectionModel());
+  }
   /// \todo Must go to setCurrentRow of controller ! (and controller must handle + avoid invinit calls..)
 //   connect(pvRowChangeEventMapper, &RowChangeEventMapper::rowStateChanged, controller, &AbstractController::rowStateChanged);
 }
@@ -79,6 +84,7 @@ void AbstractTableViewWidget::updateModel(QAbstractItemModel *model)
     /// \todo signal/slots connections
     // Selection model must also be updated in controller
     if(controller() != nullptr){
+      qDebug() << "AbstractTableViewWidget::updateModel() - setting selection model for view " << pvView;
       controller()->setSelectionModel(pvView->selectionModel());
     }
     // Update row change event mapper

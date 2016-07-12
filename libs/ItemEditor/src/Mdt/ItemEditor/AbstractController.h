@@ -31,6 +31,8 @@ class QItemSelectionModel;
 namespace Mdt{ namespace ItemEditor{
 
   class RowChangeEventMapper;
+  class RowChangeEventDispatcher;
+  class ItemSelectionModel;
 
   /*! \brief Common base for controllers
    */
@@ -80,6 +82,8 @@ namespace Mdt{ namespace ItemEditor{
      *  with a ItemSelectionModel, and pass it to this controller
      *  with setSelectionModel().
      *  This way, the controller can block row change when needed.
+     *
+     * \pre model must be of type ItemSelectionModel
      */
     void setSelectionModel(QItemSelectionModel *model);
 
@@ -98,12 +102,6 @@ namespace Mdt{ namespace ItemEditor{
      */
     int rowCount() const;
 
-    /*! \brief Set current row
-     *
-     * \pre row must be >= -1
-     */
-    bool setCurrentRow(int row);
-
     /*! \brief Get current row
      *
      * If model was not set,
@@ -117,6 +115,12 @@ namespace Mdt{ namespace ItemEditor{
     }
 
    public slots:
+
+    /*! \brief Set current row
+     *
+     * \pre row must be >= -1
+     */
+    bool setCurrentRow(int row);
 
     /*! \brief Go to first row
      */
@@ -161,13 +165,15 @@ namespace Mdt{ namespace ItemEditor{
      *
      * It will also call setCurrentRow().
      */
-    void setRowState(Mdt::ItemEditor::RowState rs);
+//     void setRowState(Mdt::ItemEditor::RowState rs);
 
    private:
 
     int pvCurrentRow;
     QPointer<QAbstractItemModel> pvModel;
     RowChangeEventMapper *pvRowChangeEventMapper;
+    RowChangeEventDispatcher *pvRowChangeEventDispatcher;
+    QPointer<ItemSelectionModel> pvSelectionModel;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

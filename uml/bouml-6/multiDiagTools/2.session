@@ -40,16 +40,18 @@ diagrams
   classdiagram_ref 2734722 // Overview
     943 906 100 4 0 0
   classdiagram_ref 2700418 // EditorWidget
-    120 110 80 22 0 452
-  active  classdiagram_ref 2747778 // RowChangeEventDispatcher
+    943 906 80 22 0 126
+  classdiagram_ref 2747778 // RowChangeEventDispatcher
     943 906 100 4 0 0
   classdiagram_ref 2747906 // RowChangeEventSource
     120 110 100 4 0 0
-  classdiagram_ref 2447490 // RowChangeEventMapper
-    120 110 100 21 0 4
+  sequencediagram_ref 2754434 // EventChainExamples
+    120 110 100 4 0 0
+  active  classdiagram_ref 2707074 // TableController
+    943 906 80 8 0 221
 end
 show_stereotypes
-selected operation_ref 4535810 // setRowState
+selected class_ref 3090434 // AbstractController
 open
   
   package_ref 549506 // Algorithm
@@ -58,11 +60,13 @@ open
   package_ref 516226 // SqlItemModel
   classview_ref 1307010 // EventMapper
   class_ref 3124738 // RowChangeEventSource
-  class_ref 3124610 // RowChangeEventDispatcher
   classview_ref 1287042 // Controller
+  classview_ref 1286786 // Actions
   classview_ref 1432322 // StandardFormWidget
+  classview_ref 1465474 // EditorWidget
   classview_ref 1472130 // ArticleEditor
   
   package_ref 430082 // Dsp
+  classview_ref 886914 // MV-View
 end
 end

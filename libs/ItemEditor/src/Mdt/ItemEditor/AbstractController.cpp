@@ -21,6 +21,7 @@
 #include "AbstractController.h"
 #include "ItemSelectionModel.h"
 #include "RowChangeEventMapper.h"
+#include "RowChangeEventDispatcher.h"
 #include <QAbstractItemModel>
 #include <QItemSelectionModel>
 
@@ -31,9 +32,14 @@ namespace Mdt{ namespace ItemEditor{
 AbstractController::AbstractController(QObject* parent)
  : QObject(parent),
    pvCurrentRow(-1),
-   pvRowChangeEventMapper(new RowChangeEventMapper(this))
+   pvRowChangeEventMapper(new RowChangeEventMapper(this)),
+   pvRowChangeEventDispatcher(new RowChangeEventDispatcher(this))
 {
-  connect(pvRowChangeEventMapper, &RowChangeEventMapper::rowStateChanged, this, &AbstractController::setRowState);
+  connect(pvRowChangeEventMapper, &RowChangeEventMapper::selectionModelChanged, pvRowChangeEventDispatcher, &RowChangeEventDispatcher::setSelectionModel);
+  connect(pvRowChangeEventMapper, &RowChangeEventMapper::rowStateChanged, pvRowChangeEventDispatcher, &RowChangeEventDispatcher::setRowState);
+  connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::modelReset, this, &AbstractController::toFirst);
+  connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateChanged, this, &AbstractController::rowStateChanged);
+  connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::currentRowChanged, this, &AbstractController::setCurrentRow);
 }
 
 void AbstractController::setModel(QAbstractItemModel* model)
@@ -49,7 +55,13 @@ void AbstractController::setSelectionModel(QItemSelectionModel* model)
 {
   Q_ASSERT(model != nullptr);
 
+//   if(!pvSelectionModel.isNull()){
+//     disconnect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::currentIndexChanged, pvSelectionModel, &ItemSelectionModel::setCurrentIndex);
+//   }
+  pvSelectionModel = qobject_cast<ItemSelectionModel*>(model);
+  Q_ASSERT(!pvSelectionModel.isNull());
   pvRowChangeEventMapper->setSelectionModel(model);
+//   connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::currentIndexChanged, pvSelectionModel, &ItemSelectionModel::setCurrentIndex);
 }
 
 int AbstractController::rowCount() const
@@ -71,40 +83,42 @@ bool AbstractController::setCurrentRow(int row)
    *       and consider this value as current row.
    */
   pvCurrentRow = row;
-  /// \todo Hmm...
-  RowState rs;
-  rs.setRowCount(rowCount());
-  rs.setCurrentRow(pvCurrentRow);
-  setRowState(rs);
+  pvRowChangeEventDispatcher->setCurrentRow(row);
 
   return true;
 }
 
 void AbstractController::toFirst()
 {
-
+  if(rowCount() > 0){
+    setCurrentRow(0);
+  }else{
+    setCurrentRow(-1);
+  }
 }
 
 void AbstractController::toPrevious()
 {
-
+  /// \todo checks..
+  setCurrentRow(pvCurrentRow-1);
 }
 
 void AbstractController::toNext()
 {
-
+  /// \todo checks..
+  setCurrentRow(pvCurrentRow+1);
 }
 
 void AbstractController::toLast()
 {
-
+  setCurrentRow(rowCount()-1);
 }
 
-void AbstractController::setRowState(RowState rs)
-{
-  qDebug() << "AbstractController::setRowState() ...";
-  emit rowStateChanged(rs);
-}
+// void AbstractController::setRowState(RowState rs)
+// {
+//   qDebug() << "AbstractController::setRowState() ...";
+//   emit rowStateChanged(rs);
+// }
 
 
 }} // namespace Mdt{ namespace ItemEditor{

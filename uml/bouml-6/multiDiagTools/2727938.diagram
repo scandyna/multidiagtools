@@ -3,42 +3,42 @@ format 211
 classcanvas 128130 class_ref 2684802 // TableController
   classdiagramsettings member_max_width 0 end
   color lightorange
-  xyzwh 118.8 659.25 2000 120 43
+  xyzwh 119.4 659.25 2000 120 43
 end
 classcanvas 134018 class_ref 146946 // QAbstractItemModel
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 579.9 223.95 2017
+  xyz 579.9 223.75 2017
 end
 classcanvas 140546 class_ref 2739714 // QWebSocket
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 939.65 165.05 2017
+  xyz 939.85 165.25 2017
 end
 classcanvas 140802 class_ref 2739842 // QWebSocketServer
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 761.45 165.05 2017
+  xyz 761.75 165.25 2017
 end
 classcanvas 146818 class_ref 3068802 // AbstractEditorWidget
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
-  xyz 437.65 309.05 2006
+  xyz 437.35 309.05 2006
 end
 classcanvas 151426 class_ref 3015170 // EventCatchItemDelegate
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
-  xyz 962.3 1076.1 2000
+  xyz 962.5 1076 2000
 end
 note 155138 "Try: separate SQL part !
 F.ex. setTable()
 
 Here, only focus on Qt table model"
-  xyzwh 507.1 1076.2 2000 375 105
+  xyzwh 507.9 1076.8 2000 375 105
 classcanvas 157058 class_ref 3104258 // SqlTableViewWidget
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
-  xyz 326.6 575.65 2000
+  xyz 326.5 575.85 2000
 end
 classcanvas 157186 class_ref 3104130 // TableViewWidget
   classdiagramsettings member_max_width 0 end
@@ -53,32 +53,32 @@ end
 classcanvas 160002 class_ref 2927362 // SqlTableController
   classdiagramsettings member_max_width 0 end
   color lightorange
-  xyz 215.5 470.05 2000
+  xyz 215.5 470.75 2000
 end
 classcanvas 161282 class_ref 147202 // QAbstractTableModel
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 575.9 743.95 2023
+  xyz 575.9 743.75 2023
 end
 classcanvas 161666 class_ref 174338 // QSqlQueryModel
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 590.9 828.95 2029
+  xyz 590.9 828.25 2029
 end
 classcanvas 161922 class_ref 174210 // QSqlTableModel
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 592.9 912.65 2035
+  xyz 592.9 912.75 2035
 end
 classcanvas 163586 class_ref 138626 // QObject
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 618.9 41.35 2023
+  xyz 618.9 41.75 2023
 end
 classcanvas 165506 class_ref 316162 // QWidget
   classdiagramsettings member_max_width 0 end
   color green
-  xyz 475.4 165.05 2029
+  xyz 476 165.25 2029
 end
 note 168066 "Note: things like fieldIndex() should have nothing to do with Controllers !
 Controllers just interact between GUI and Model.
@@ -87,9 +87,9 @@ So not mix again thoses things !  (remember SRP)
 Here, QSqlTableModel has cache, and we must call submitAll(), that is not defined in QAbstractItemModel, so a dedicated controller has sense.
 
 But, has TableController sense here ?? (possibly yes, possibly no)"
-  xyzwh 40.7 1076 2000 387 209
+  xyzwh 40.8 1076 2000 387 209
 note 168962 "Notion of preset of fields to display."
-  xyzwh 40.1 1365 3019 299 41
+  xyzwh 40.4 1365.5 3019 299 41
 classcanvas 169090 class_ref 3118082 // AbstractTableViewWidget
   classdiagramsettings member_max_width 0 end
   color lightmediumblue

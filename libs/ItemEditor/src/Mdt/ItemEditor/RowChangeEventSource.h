@@ -32,7 +32,6 @@ namespace Mdt{ namespace ItemEditor{
   enum class RowChangeEventSource
   {
     ModelReset,     /*!< A new model was set, or existing model was repopulated. */
-    Controller,     /*!< Source of request come from controller (f.ex. AbstractController::setCurrentRow(int) was called). */
     ItemSelection   /*!< User selected a item in a view (f.e.x in a QTableView). */
   };
 

@@ -48,6 +48,8 @@ namespace Mdt{ namespace ItemEditor{
    *  <tr><td>ItemSelectionModel</td><td>currentChanged()</td><td>RowChangeEventMapper</td><td>setCurrentIndex()</td><td></td></tr>
    *  <tr><td>NavigationActions</td><td>toFirstTriggered()</td><td>AbstractController</td><td>toFirst()</td><td></td></tr>
    *  <tr><td>RowChangeEventMapper</td><td>rowStateChanged()</td><td>RowChangeEventDispatcher</td><td>setRowState()</td><td></td></tr>
+   *  <tr><td>RowChangeEventDispatcher</td><td>currentIndexChanged()</td><td>ItemSelectionModel</td><td>setCurrentIndex()</td><td></td></tr>
+   *  <tr><td>RowChangeEventDispatcher</td><td>currentRowChanged()</td><td>AbstractController</td><td>setCurrentRow()</td><td></td></tr>
    *  <tr><td>RowChangeEventDispatcher</td><td>rowStateChanged()</td><td>AbstractController</td><td>rowStateChanged()</td><td>Direct call of AbstractController::rowStateChanged() signal</td></tr>
    *  <tr><td>AbstractController</td><td>rowStateChanged()</td><td>NavigationActions</td><td>setRowState()</td><td>Used to update NavigationActions state</td></tr>
    * </table>
@@ -100,20 +102,26 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Set current row
      *
-     * \pre row must be >= -1
+     * This method is only called from AbstractController.
      */
-    bool setCurrentRow(int row, Mdt::ItemEditor::RowChangeEventSource source);
+    void setCurrentRow(int row);
 
    public slots:
+
+    /*! \brief Set model
+     *
+     * This slot is only called by RowChangeEventMapper
+     *  to update internal model,
+     *  which is only used to create QModelIndex.
+     */
+    void setSelectionModel(QItemSelectionModel *model);
 
     /*! \brief Set row state
      *
      * This slot is only called by RowChangeEventMapper,
-     *  to tell is a model was change or populated,
-     *  if a selection model was changed,
+     *  to tell that a model was change or populated,
+     *  a selection model was changed,
      *  or current row changed by selection model.
-     *
-     * It will also call setCurrentRow().
      */
     void setRowState(Mdt::ItemEditor::RowState rs, Mdt::ItemEditor::RowChangeEventSource source);
 
@@ -131,10 +139,6 @@ namespace Mdt{ namespace ItemEditor{
      */
     void currentRowChanged(int row, Mdt::ItemEditor::RowChangeEventSource source);
 
-    /*! \brief Emitted when a new index must be sent to the item selection model
-     */
-    void currentIndexChanged(const QModelIndex & index, QItemSelectionModel::SelectionFlags);
-
     /*! \brief Emitted when model was set, or repopulated
      */
     void modelReset();
@@ -142,6 +146,7 @@ namespace Mdt{ namespace ItemEditor{
    private:
 
     RowState pvPreviousRowState;
+    QPointer<QItemSelectionModel> pvSelectionModel;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

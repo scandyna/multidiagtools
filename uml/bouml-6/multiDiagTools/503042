@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 41
+  revision 43
   modified_by 2 "philippe"
   // class settings
   
@@ -1276,6 +1276,11 @@ ${inlines}
 	
       end
     end
+
+    sequencediagram 2754434 "EventChainExamples"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
   end
 
   classview 1478786 "ModelAdapter"
@@ -2231,6 +2236,15 @@ ${inlines}
 	    classrelation_ref 3524610 // <directional composition>
 	  b parent class_ref 2753410 // RowChangeEventMapper
       end
+
+      classrelation 3531266 // <directional composition>
+	relation 3512450 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3531266 // <directional composition>
+	  b parent class_ref 3124610 // RowChangeEventDispatcher
+      end
     end
 
     class 2684802 "TableController"
@@ -2619,10 +2633,6 @@ ${inlines}
       end
     end
 
-    sequencediagram 2741250 "ItemViewCurrentRowChange"
-      sequencediagramsettings end
-      size A4
-    end
   end
 
   classview 1392898 "ControllerRelation"
@@ -3962,7 +3972,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     class 3104130 "TableViewWidget"

@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "RowChangeEventDispatcher.h"
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -29,34 +29,44 @@ RowChangeEventDispatcher::RowChangeEventDispatcher(QObject* parent)
 {
 }
 
-bool RowChangeEventDispatcher::setCurrentRow(int row, RowChangeEventSource source)
+void RowChangeEventDispatcher::setCurrentRow(int row)
 {
-  qDebug() << "RowChangeEventDispatcher::setCurrentRow() , row: " << row << " ...";
-  
+  bool currentRowHasChanged = (row != pvPreviousRowState.currentRow());
+  pvPreviousRowState.setCurrentRow(row);
   auto rs = pvPreviousRowState;
-  rs.setCurrentRow(row);
-  setRowState(rs, source);
-  
-  emit currentRowChanged(row, source);
-  /**
-   * \todo If row >= rowCount()
-   *       we must try to fetch more data
-   *       until we found row, or no more data is available,
-   *       and consider this value as current row.
+  /*
+   * If current row changed, we must tell it to item selection model,
+   * which will later call setRowState().
+   * Else, we must just signal new row state.
    */
+  if(currentRowHasChanged){
+    if( (!pvSelectionModel.isNull()) && (pvSelectionModel->model() != nullptr) ){
+      auto column = pvSelectionModel->currentIndex().column();
+      if( (row >= 0) && (column < 0) ){
+        column = 0;
+      }
+      auto index = pvSelectionModel->model()->index(row, column);
+      pvSelectionModel->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+    }
+  }else{
+    emit rowStateChanged(rs);
+  }
+}
 
+void RowChangeEventDispatcher::setSelectionModel(QItemSelectionModel* model)
+{
+  Q_ASSERT(model != nullptr);
+
+  pvSelectionModel = model;
 }
 
 void RowChangeEventDispatcher::setRowState(RowState rs, RowChangeEventSource source)
 {
-  qDebug() << "RowChangeEventDispatcher::setRowState() , n: " << rs.rowCount() << ", row: " << rs.currentRow() << " ...";
-
   switch(source){
     case RowChangeEventSource::ModelReset:
       pvPreviousRowState = rs;
       emit modelReset();
       return;
-    case RowChangeEventSource::Controller:
     case RowChangeEventSource::ItemSelection:
       break;
   }

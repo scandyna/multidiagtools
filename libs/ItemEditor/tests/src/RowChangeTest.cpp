@@ -378,8 +378,8 @@ void RowChangeTest::eventDispatcherTest()
   /*
    * Setup
    */
+  connect(&mapper, &RowChangeEventMapper::selectionModelChanged, &dispatcher, &RowChangeEventDispatcher::setSelectionModel);
   connect(&mapper, &RowChangeEventMapper::rowStateChanged, &dispatcher, &RowChangeEventDispatcher::setRowState);
-  connect(&dispatcher, &RowChangeEventDispatcher::currentIndexChanged, &selectionModel, &QItemSelectionModel::setCurrentIndex);
   QSignalSpy navigationActionsSpy(&dispatcher, &RowChangeEventDispatcher::rowStateChanged);
   QSignalSpy controllerToFirstSpy(&dispatcher, &RowChangeEventDispatcher::modelReset);
   QSignalSpy controllerSetCurrentRowSpy(&dispatcher, &RowChangeEventDispatcher::currentRowChanged);
@@ -398,8 +398,9 @@ void RowChangeTest::eventDispatcherTest()
   mapper.setModel(&model);
   // Check that controller received model reset
   QCOMPARE(controllerToFirstSpy.count(), 1);
+  controllerToFirstSpy.clear();
   // As controller, we call setCurrentRow()
-  dispatcher.setCurrentRow(-1, RowChangeEventSource::Controller);
+  dispatcher.setCurrentRow(-1);
   // Check that navigation actions received row sate change
   QCOMPARE(navigationActionsSpy.count(), 1);
   spyItem = navigationActionsSpy.takeFirst();
@@ -412,8 +413,9 @@ void RowChangeTest::eventDispatcherTest()
   mapper.setSelectionModel(&selectionModel);
   // Check that controller received model reset
   QCOMPARE(controllerToFirstSpy.count(), 1);
+  controllerToFirstSpy.clear();
   // As controller, we call setCurrentRow()
-  dispatcher.setCurrentRow(-1, RowChangeEventSource::Controller);
+  dispatcher.setCurrentRow(-1);
   // Check that selection model is up to date
   QCOMPARE(selectionModel.currentIndex().row(), -1);
   // Check that navigation actions received row sate change
@@ -428,8 +430,9 @@ void RowChangeTest::eventDispatcherTest()
   model.setStringList({"A","B","C"});
   // Check that controller received model reset
   QCOMPARE(controllerToFirstSpy.count(), 1);
+  controllerToFirstSpy.clear();
   // As controller, we call setCurrentRow()
-  dispatcher.setCurrentRow(0, RowChangeEventSource::Controller);
+  dispatcher.setCurrentRow(0);
   // Check that selection model is up to date
   QCOMPARE(selectionModel.currentIndex().row(), 0);
   // Check that navigation actions received row sate change
@@ -446,18 +449,36 @@ void RowChangeTest::eventDispatcherTest()
   selectionModel.setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
   // Check that controller received current row change
   QCOMPARE(controllerSetCurrentRowSpy.count(), 1);
-  spyItem = navigationActionsSpy.takeFirst();
+  spyItem = controllerSetCurrentRowSpy.takeFirst();
   QCOMPARE(spyItem.at(0).toInt(), 1);
   source = spyItem.at(1).value<RowChangeEventSource>();
   QVERIFY(source == RowChangeEventSource::ItemSelection);
   // As controller, we call setCurrentRow()
-  dispatcher.setCurrentRow(0, source);
+  dispatcher.setCurrentRow(1);
+  // Check that selection model is up to date
+  QCOMPARE(selectionModel.currentIndex().row(), 1);
   // Check that navigation actions received row sate change
   QCOMPARE(navigationActionsSpy.count(), 1);
   spyItem = navigationActionsSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
   QCOMPARE(rs.rowCount(), model.rowCount());
-  QCOMPARE(rs.currentRow(), 0);
+  QCOMPARE(rs.currentRow(), 1);
+  /*
+   * Change current row from controller
+   * (like a toNext)
+   */
+  dispatcher.setCurrentRow(2);
+  // Check that selection model was updated
+  QCOMPARE(selectionModel.currentIndex().row(), 2);
+  // Check that controller did not receive current row change back
+  QCOMPARE(controllerSetCurrentRowSpy.count(), 0);
+  // Check that navigation actions received row sate change
+  QCOMPARE(navigationActionsSpy.count(), 1);
+  spyItem = navigationActionsSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), model.rowCount());
+  QCOMPARE(rs.currentRow(), 2);
+
   
 //   QVERIFY(rowStateSpy.isValid());
 //   QCOMPARE(rowStateSpy.count(), 0);

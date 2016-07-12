@@ -1,0 +1,233 @@
+format 211
+
+classinstance 128002 class_ref 1382914 // QItemSelectionModel
+  name ""   xyz 22 25 2005 life_line_z 2000
+classinstance 128130 class_ref 2753410 // RowChangeEventMapper
+  name ""   xyz 185 26 2000 life_line_z 2000
+classinstance 128258 class_ref 3124610 // RowChangeEventDispatcher
+  name ""   xyz 370 26 2000 life_line_z 2000
+classinstance 128386 class_ref 3090434 // AbstractController
+  name ""   xyz 565 25 2000 life_line_z 2000
+classinstance 128514 class_ref 2706434 // NavigationActions
+  name ""   xyz 697 25 2000 life_line_z 2000
+durationcanvas 128642 classinstance_ref 128002 // :QItemSelectionModel
+  xyzwh 88 98 2010 11 117
+end
+durationcanvas 128770 classinstance_ref 128130 // :RowChangeEventMapper
+  xyzwh 263 98 2010 11 108
+end
+durationcanvas 129026 classinstance_ref 128258 // :RowChangeEventDispatcher
+  xyzwh 458 106 2010 11 91
+  overlappingdurationcanvas 129538
+    xyzwh 464 145 2020 11 47
+  end
+end
+durationcanvas 129282 classinstance_ref 128386 // :AbstractController
+  xyzwh 620 114 2010 11 42
+end
+durationcanvas 129794 classinstance_ref 128386 // :AbstractController
+  xyzwh 620 167 2010 11 30
+end
+durationcanvas 130050 classinstance_ref 128514 // :NavigationActions
+  xyzwh 752 157 2010 11 40
+end
+durationcanvas 130306 classinstance_ref 128514 // :NavigationActions
+  xyzwh 752 288 2010 11 111
+  overlappingdurationcanvas 133122
+    xyzwh 758 366 2020 11 25
+  end
+end
+durationcanvas 130434 classinstance_ref 128386 // :AbstractController
+  xyzwh 620 288 2010 11 64
+  overlappingdurationcanvas 134914
+    xyzwh 626 321 2020 11 25
+  end
+end
+durationcanvas 130690 classinstance_ref 128258 // :RowChangeEventDispatcher
+  xyzwh 458 308 2010 11 50
+  overlappingdurationcanvas 135170
+    xyzwh 464 327 2020 11 25
+  end
+end
+durationcanvas 130946 classinstance_ref 128002 // :QItemSelectionModel
+  xyzwh 88 319 2010 11 42
+end
+durationcanvas 131202 classinstance_ref 128130 // :RowChangeEventMapper
+  xyzwh 263 347 2010 11 34
+end
+durationcanvas 131458 classinstance_ref 128258 // :RowChangeEventDispatcher
+  xyzwh 458 365 2010 11 25
+end
+durationcanvas 131970 classinstance_ref 128386 // :AbstractController
+  xyzwh 620 356 2010 11 31
+end
+durationcanvas 132482 classinstance_ref 128130 // :RowChangeEventMapper
+  xyzwh 263 498 2010 11 37
+end
+durationcanvas 132610 classinstance_ref 128258 // :RowChangeEventDispatcher
+  xyzwh 458 499 2010 11 143
+  overlappingdurationcanvas 133378
+    xyzwh 464 531 2020 11 104
+    overlappingdurationcanvas 134146
+      xyzwh 470 605 2030 11 25
+    end
+    overlappingdurationcanvas 135938
+      xyzwh 470 543 2030 11 25
+    end
+  end
+end
+durationcanvas 132866 classinstance_ref 128386 // :AbstractController
+  xyzwh 620 505 2010 11 57
+  overlappingdurationcanvas 135426
+    xyzwh 626 531 2020 11 25
+  end
+end
+durationcanvas 133634 classinstance_ref 128002 // :QItemSelectionModel
+  xyzwh 88 559 2010 11 51
+end
+durationcanvas 133890 classinstance_ref 128130 // :RowChangeEventMapper
+  xyzwh 263 596 2010 11 25
+end
+durationcanvas 134402 classinstance_ref 128386 // :AbstractController
+  xyzwh 620 610 2010 11 32
+end
+durationcanvas 134658 classinstance_ref 128514 // :NavigationActions
+  xyzwh 752 627 2010 11 25
+end
+msg 128898 synchronous
+  from durationcanvas_ref 128642
+  to durationcanvas_ref 128770
+  yz 99 2015 msg operation_ref 4100738 // "setCurrentRow(in current : QModelIndex, in previous : QModelIndex) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 132 82
+msg 129154 synchronous
+  from durationcanvas_ref 128770
+  to durationcanvas_ref 129026
+  yz 107 2015 msg operation_ref 4535810 // "setRowState(in rs : RowState, in source : RowChangeEventSource) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 324 90
+msg 129410 synchronous
+  from durationcanvas_ref 129026
+  to durationcanvas_ref 129282
+  yz 115 2015 msg operation_ref 4522498 // "setCurrentRow(in row : int) : bool"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 495 98
+msg 129666 synchronous
+  from durationcanvas_ref 129282
+  to durationcanvas_ref 129538
+  yz 145 2025 msg operation_ref 4535682 // "setCurrentRow(in row : int) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 498 128
+msg 129922 synchronous
+  from durationcanvas_ref 129538
+  to durationcanvas_ref 129794
+  yz 181 2025 msg operation_ref 4509186 // "rowStateChanged(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 489 164
+msg 130178 synchronous
+  from durationcanvas_ref 129794
+  to durationcanvas_ref 130050
+  yz 186 2015 msg operation_ref 4100610 // "setRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 649 169
+msg 130562 synchronous
+  from durationcanvas_ref 130306
+  to durationcanvas_ref 130434
+  yz 288 2015 msg operation_ref 4508930 // "toNext() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 667 271
+msg 131074 synchronous
+  from durationcanvas_ref 130690
+  to durationcanvas_ref 130946
+  yz 319 2015 msg operation_ref 4441730 // "setCurrentIndex(in index : QModelIndex, in command : SelectionFlags) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 226 302
+msg 131330 synchronous
+  from durationcanvas_ref 130946
+  to durationcanvas_ref 131202
+  yz 350 2020 msg operation_ref 4100738 // "setCurrentRow(in current : QModelIndex, in previous : QModelIndex) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 132 333
+msg 131586 synchronous
+  from durationcanvas_ref 131202
+  to durationcanvas_ref 131458
+  yz 370 2015 msg operation_ref 4535810 // "setRowState(in rs : RowState, in source : RowChangeEventSource) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 324 353
+msg 132098 synchronous
+  from durationcanvas_ref 131458
+  to durationcanvas_ref 131970
+  yz 368 2015 msg operation_ref 4509186 // "rowStateChanged(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 486 351
+msg 132738 synchronous
+  from durationcanvas_ref 132482
+  to durationcanvas_ref 132610
+  yz 499 2015 msg operation_ref 4535810 // "setRowState(in rs : RowState, in source : RowChangeEventSource) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 324 482
+msg 132994 synchronous
+  from durationcanvas_ref 132610
+  to durationcanvas_ref 132866
+  yz 506 2015 msg operation_ref 4508674 // "toFirst() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 521 489
+msg 133250 synchronous
+  from durationcanvas_ref 131970
+  to durationcanvas_ref 133122
+  yz 366 2025 msg operation_ref 4100610 // "setRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 652 349
+msg 133762 synchronous
+  from durationcanvas_ref 133378
+  to durationcanvas_ref 133634
+  yz 559 2030 msg operation_ref 4441730 // "setCurrentIndex(in index : QModelIndex, in command : SelectionFlags) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 229 542
+msg 134018 synchronous
+  from durationcanvas_ref 133634
+  to durationcanvas_ref 133890
+  yz 596 2015 msg operation_ref 4100738 // "setCurrentRow(in current : QModelIndex, in previous : QModelIndex) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 132 579
+msg 134274 synchronous
+  from durationcanvas_ref 133890
+  to durationcanvas_ref 134146
+  yz 605 2035 msg operation_ref 4535810 // "setRowState(in rs : RowState, in source : RowChangeEventSource) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 330 588
+msg 134530 synchronous
+  from durationcanvas_ref 134146
+  to durationcanvas_ref 134402
+  yz 610 2035 msg operation_ref 4509186 // "rowStateChanged(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 492 593
+msg 134786 synchronous
+  from durationcanvas_ref 134402
+  to durationcanvas_ref 134658
+  yz 627 2015 msg operation_ref 4100610 // "setRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 649 610
+reflexivemsg 135042 synchronous
+  to durationcanvas_ref 134914
+  yz 321 3005 msg operation_ref 4522498 // "setCurrentRow(in row : int) : bool"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 597 304
+msg 135298 synchronous
+  from durationcanvas_ref 134914
+  to durationcanvas_ref 135170
+  yz 327 3010 msg operation_ref 4535682 // "setCurrentRow(in row : int) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 501 310
+reflexivemsg 135554 synchronous
+  to durationcanvas_ref 135426
+  yz 531 2025 msg operation_ref 4522498 // "setCurrentRow(in row : int) : bool"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 597 514
+msg 136066 synchronous
+  from durationcanvas_ref 135426
+  to durationcanvas_ref 135938
+  yz 543 2035 msg operation_ref 4535682 // "setCurrentRow(in row : int) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 504 526
+end

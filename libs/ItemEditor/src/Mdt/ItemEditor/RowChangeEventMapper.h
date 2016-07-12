@@ -91,6 +91,12 @@ namespace Mdt{ namespace ItemEditor{
 
    signals:
 
+    /*! \brief Emitted whenever new selection model was set
+     *
+     * This is used by RowChangeEventDispatcher
+     */
+    void selectionModelChanged(QItemSelectionModel *model);
+
     /*! \brief Emitted whenever row count or current row changes
      */
     void rowStateChanged(Mdt::ItemEditor::RowState rs, Mdt::ItemEditor::RowChangeEventSource source);
