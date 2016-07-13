@@ -18,32 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "TestWindowEditor.h"
-#include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
-#include "TestTableEditionWidget.h"
-#include "TestFormEditionWidget.h"
+#include "ItemEditorPlugins.h"
 
-#include <QDebug>
-
-TestWindowEditor::TestWindowEditor(QWidget* parent)
- : StandardWindow(parent)
+MdtItemEditorPlugins::MdtItemEditorPlugins(QObject* parent)
+ : QObject(parent)
 {
-  using Mdt::ItemEditor::StandardEditorLayoutWidget;
-//   using Mdt::ItemEditor::TableViewWidget;
-
-  auto *layoutWidget = new StandardEditorLayoutWidget;
-  pvFormEditionWidget = new TestFormEditionWidget;
-  pvTableEditionWidget = new TestTableEditionWidget;
-
-  layoutWidget->setMainWidget(pvFormEditionWidget);
-  layoutWidget->addChildWidget(pvTableEditionWidget, tr("Table"));
-  setCentralWidget(layoutWidget);
-  setMainEditorWidget(pvFormEditionWidget);
+  pvWidgets.append(new WidgetMapperWidgetPlugin(this));
 }
 
-void TestWindowEditor::setModel(QAbstractTableModel* model)
+QList<QDesignerCustomWidgetInterface*> MdtItemEditorPlugins::customWidgets() const
 {
-  Q_ASSERT(model != nullptr);
-
-  pvTableEditionWidget->setModel(model);
+  return pvWidgets;
 }

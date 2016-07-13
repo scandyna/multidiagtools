@@ -1,6 +1,6 @@
 format 211
 "tests" // Mdt::ItemEditor::tests
-  revision 14
+  revision 15
   modified_by 2 "philippe"
   // class settings
   
@@ -220,7 +220,7 @@ ${inlines}
      end
     classdiagram 2707842 "TestEditor"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size B-Landscape
     end
 
     class 3090050 "TestWindowEditor"
@@ -284,6 +284,21 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      classrelation 3538562 // <generalisation>
+	relation 3519746 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3538562 // <generalisation>
+	  b parent class_ref 3131394 // WidgetMapperWidget
+      end
+
+      classrelation 3538690 // <generalisation>
+	relation 3519874 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3538690 // <generalisation>
+	  b parent class_ref 3131650 // Ui::TestFormEditionWidget
+      end
     end
 
     class 3103618 "TestTableEditionWidget"
@@ -307,6 +322,22 @@ ${inlines}
 	    classrelation_ref 3494146 // <generalisation>
 	  b parent class_ref 3104130 // TableViewWidget
       end
+    end
+
+    class 3131650 "Ui::TestFormEditionWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 end

@@ -2,50 +2,50 @@ format 211
 
 classcanvas 128002 class_ref 146946 // QAbstractItemModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 209.5 320.45 2000
+  xyz 209.5 320.05 2000
 end
 classcanvas 128130 class_ref 147202 // QAbstractTableModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 201.45 477.25 2006
+  xyz 201.05 477.05 2006
 end
 classcanvas 128386 class_ref 174338 // QSqlQueryModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 216.45 599.95 2012
+  xyz 216.05 599.95 2012
 end
 classcanvas 128642 class_ref 174210 // QSqlTableModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 222.5 685.25 2018
+  xyz 222.5 685.85 2018
 end
 classcanvas 128898 class_ref 3110914 // ModelAdapter
   classdiagramsettings member_max_width 0 end
-  xyz 1000 165.5 2000
+  xyz 1000.8 165.5 2000
 end
 classcanvas 129026 class_ref 3111042 // ModelAdapterImplementationInterface
   classdiagramsettings member_max_width 0 end
-  xyz 809 306.5 2000
+  xyz 809.8 306.5 2000
 end
 classcanvas 129154 class_ref 3111170 // SomeCustomModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 40.25 599.95 2000
+  xyz 40.05 599.95 2000
 end
 classcanvas 129666 class_ref 3111298 // TableModelAdapter
   classdiagramsettings member_max_width 0 end
-  xyz 394.8 462.5 2000
+  xyz 395.4 462.1 2000
 end
 classcanvas 129922 class_ref 3111426 // SqlTableModelAdapter
   classdiagramsettings member_max_width 0 end
-  xyz 394.8 670.5 2000
+  xyz 395.4 670.9 2000
 end
 classcanvas 130434 class_ref 3111554 // SomeCustomModelAdapter
   classdiagramsettings member_max_width 0 end
-  xyz 866.75 613.75 2000
+  xyz 866.15 613.15 2000
 end
 note 130946 "Only needed if the underlaying model exposes some methods that are used (exposed in ModelAdapter), that ..
 Heu...."
-  xyzwh 740.85 461.4 2000 86 354
+  xyzwh 741.25 461 2000 86 354
 classcanvas 133506 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 931 42.55 2006
+  xyz 931.8 42.35 2006
 end
 note 137858 "Bof...
 
@@ -74,16 +74,16 @@ relationcanvas 129282 relation_ref 3482370 // <generalisation>
   geometry VHV unfixed
   decenter_begin 525
   decenter_end 523
-  from ref 129154 z 2007 to point 109 558.8
-  line 129410 z 2007 to point 277 558.8
+  from ref 129154 z 2007 to point 109 558
+  line 129410 z 2007 to point 277 558
   line 129538 z 2007 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 133634 relation_ref 902018 // <generalisation>
   geometry VHV unfixed
-  from ref 128002 z 2007 to point 278 125.6
-  line 136322 z 2007 to point 961 124.6
+  from ref 128002 z 2007 to point 278 124.8
+  line 136322 z 2007 to point 961 123.8
   line 136450 z 2007 to ref 133506
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -115,16 +115,16 @@ relationcanvas 135042 relation_ref 3485186 // <unidirectional association>
 end
 relationcanvas 135170 relation_ref 3485314 // <generalisation>
   geometry VHV unfixed
-  from ref 129666 z 2001 to point 544 423.8
-  line 135298 z 2001 to point 961 423.8
+  from ref 129666 z 2001 to point 546 423
+  line 135298 z 2001 to point 961 423
   line 135426 z 2001 to ref 129026
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 135810 relation_ref 3485442 // <generalisation>
   geometry VHV unfixed
-  from ref 128898 z 2007 to point 1156 124.6
-  line 136066 z 2007 to point 961 124.6
+  from ref 128898 z 2007 to point 1156 123.8
+  line 136066 z 2007 to point 961 123.8
   line 136194 z 2007 to ref 133506
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

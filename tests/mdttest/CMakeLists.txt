@@ -10,14 +10,17 @@ set (SOURCES_FILES
           mdtTest.cpp
     )
 
+# Because some headers are generated during building (config.h, Qt's UIC), we also build path
+include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Binary lib
 add_library (mdttest ${SOURCES_FILES})
+target_link_libraries(mdttest ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(mdttest Qt5::Widgets Qt5::Test)
 
 # Minimal application
 add_executable(minimalapp "minimalApp.cpp")
-# target_link_libraries(minimalapp ${QT_LIBRARIES})
+target_link_libraries(minimalapp ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(minimalapp Qt5::Widgets)
 
 # Virtual method bench

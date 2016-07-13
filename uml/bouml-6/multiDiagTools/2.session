@@ -40,30 +40,29 @@ diagrams
   classdiagram_ref 2734722 // Overview
     943 906 100 4 0 0
   classdiagram_ref 2700418 // EditorWidget
-    943 906 80 22 0 126
-  classdiagram_ref 2747778 // RowChangeEventDispatcher
-    943 906 100 4 0 0
-  classdiagram_ref 2747906 // RowChangeEventSource
-    120 110 100 4 0 0
-  sequencediagram_ref 2754434 // EventChainExamples
-    120 110 100 4 0 0
+    943 906 80 9 0 0
+  classdiagram_ref 2714498 // WindowWidgetController
+    120 110 100 8 144 0
+  classdiagram_ref 2707842 // TestEditor
+    943 906 100 21 0 0
   active  classdiagram_ref 2707074 // TableController
-    943 906 80 8 0 221
+    943 906 85 8 228 64
 end
 show_stereotypes
-selected class_ref 3090434 // AbstractController
+selected classdiagram_ref 2707074 // TableController
 open
   
   package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
   
   package_ref 516226 // SqlItemModel
-  classview_ref 1307010 // EventMapper
-  class_ref 3124738 // RowChangeEventSource
+  classview_ref 1472258 // Editor
   classview_ref 1287042 // Controller
-  classview_ref 1286786 // Actions
   classview_ref 1432322 // StandardFormWidget
-  classview_ref 1465474 // EditorWidget
+  operation_ref 4542466 // setController
+  class_ref 3131266 // AbstractWidgetMapperWidget
+  class_ref 3131394 // WidgetMapperWidget
+  classview_ref 1286658 // Window
   classview_ref 1472130 // ArticleEditor
   
   package_ref 430082 // Dsp

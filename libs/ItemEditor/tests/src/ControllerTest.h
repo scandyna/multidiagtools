@@ -37,7 +37,6 @@ class ControllerTest : public QObject
 
   void setModelTest();
   void currentRowChangeTest();
-  void currentRowChangeTableViewTest();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_TEST_H

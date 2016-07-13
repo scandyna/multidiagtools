@@ -18,54 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ABSTRACT_TABLE_VIEW_WIDGET_H
-#define MDT_ITEM_EDITOR_ABSTRACT_TABLE_VIEW_WIDGET_H
-
-#include "AbstractEditorWidget.h"
-
-class QTableView;
-class QAbstractItemModel;
+#include "AbstractWidgetMapperWidget.h"
+#include <QDataWidgetMapper>
 
 namespace Mdt{ namespace ItemEditor{
 
-  /*! \brief Common base for QTableView based editor
-   */
-  class AbstractTableViewWidget : public AbstractEditorWidget
-  {
-   Q_OBJECT
+AbstractWidgetMapperWidget::AbstractWidgetMapperWidget(QWidget* parent)
+ : AbstractEditorWidget(parent),
+   pvMapper(new QDataWidgetMapper(this))
+{
+}
 
-   public:
+void AbstractWidgetMapperWidget::updateModel(QAbstractItemModel* model)
+{
+  Q_ASSERT(model != nullptr);
 
-    /*! \brief Constructor
-     */
-    explicit AbstractTableViewWidget(QWidget* parent = nullptr);
-
-   protected:
-
-    /*! \brief Set controller
-     *
-     * Subclass that owns its controller
-     *  must tell it by calling this method.
-     */
-    void setController(AbstractController *controller) override;
-
-   protected slots:
-
-    /*! \brief Update model
-     *
-     * This slot is called from controller.
-     *
-     * Subclass that owns a controller
-     *  should connect AbstractController::modelChanged()
-     *  to this slot.
-     */
-    void updateModel(QAbstractItemModel *model);
-
-   private:
-
-    QTableView *pvView;
-  };
+  pvMapper->setModel(model);
+}
 
 }} // namespace Mdt{ namespace ItemEditor{
 
-#endif // #ifndef MDT_ITEM_EDITOR_ABSTRACT_TABLE_VIEW_WIDGET_H

@@ -16,6 +16,7 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Output library
 add_library (mdtserialport${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
+target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} Qt5::Widgets)
 target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} Qt5::SerialPort)
 target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} "mdterrorOld${MDTLIB_VERSION_SUFFIX}")

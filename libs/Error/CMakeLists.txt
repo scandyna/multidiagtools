@@ -25,6 +25,7 @@ string(TOLOWER ${LIBRARY_NAME} LIBRARY_NAME_LC)
 set(LIBRARY_BIN_NAME "mdt${LIBRARY_NAME_LC}")
 # Add output library
 add_library(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
+target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} Qt5::Core)
 
 # Translation files

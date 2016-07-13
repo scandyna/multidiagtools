@@ -18,32 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "TestWindowEditor.h"
-#include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
-#include "TestTableEditionWidget.h"
-#include "TestFormEditionWidget.h"
+#ifndef MDT_ITEM_EDITOR_TEST_FORM_EDITION_WIDGET_H
+#define MDT_ITEM_EDITOR_TEST_FORM_EDITION_WIDGET_H
 
-#include <QDebug>
+#include "Mdt/ItemEditor/WidgetMapperWidget.h"
+#include "ui_TestFormEditionWidget.h"
 
-TestWindowEditor::TestWindowEditor(QWidget* parent)
- : StandardWindow(parent)
+class TestFormEditionWidget : public Mdt::ItemEditor::WidgetMapperWidget, Ui::TestFormEditionWidget
 {
-  using Mdt::ItemEditor::StandardEditorLayoutWidget;
-//   using Mdt::ItemEditor::TableViewWidget;
+ Q_OBJECT
 
-  auto *layoutWidget = new StandardEditorLayoutWidget;
-  pvFormEditionWidget = new TestFormEditionWidget;
-  pvTableEditionWidget = new TestTableEditionWidget;
+ public:
 
-  layoutWidget->setMainWidget(pvFormEditionWidget);
-  layoutWidget->addChildWidget(pvTableEditionWidget, tr("Table"));
-  setCentralWidget(layoutWidget);
-  setMainEditorWidget(pvFormEditionWidget);
-}
+  explicit TestFormEditionWidget(QWidget* parent = nullptr);
 
-void TestWindowEditor::setModel(QAbstractTableModel* model)
-{
-  Q_ASSERT(model != nullptr);
+};
 
-  pvTableEditionWidget->setModel(model);
-}
+#endif // #ifndef MDT_ITEM_EDITOR_TEST_FORM_EDITION_WIDGET_H

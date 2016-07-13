@@ -24,30 +24,25 @@
 #include <QTableView>
 #include <QVBoxLayout>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
 AbstractTableViewWidget::AbstractTableViewWidget(QWidget* parent)
  : AbstractEditorWidget(parent),
-   pvView(new QTableView)/*,
-   pvRowChangeEventMapper(new RowChangeEventMapper(this))*/
+   pvView(new QTableView)
 {
   // Layout widgets
   auto *l = new QVBoxLayout;
   l->addWidget(pvView);
   setLayout(l);
-  // Replace delegate withour our proxy delegate
+  // Replace delegate with our proxy delegate
   auto *delegate = pvView->itemDelegate();
   auto *proxyDelegate = new EventCatchItemDelegate(pvView);
   if(delegate != nullptr){
     proxyDelegate->setItemDelegate(delegate);
   }
   pvView->setItemDelegate(proxyDelegate);
-  // Some signals/slots
-
-  /// \todo other signal/slot connections
-
 }
 
 void AbstractTableViewWidget::setController(AbstractController* controller)
@@ -55,13 +50,10 @@ void AbstractTableViewWidget::setController(AbstractController* controller)
   Q_ASSERT(controller != nullptr);
 
   AbstractEditorWidget::setController(controller);
-  qDebug() << "AbstractTableViewWidget::setController() - setting selection model for view " << pvView << " , selection model: " << pvView->selectionModel();
   // If no model was set to view, it will not have any selection model
   if(pvView->selectionModel() != nullptr){
     controller->setSelectionModel(pvView->selectionModel());
   }
-  /// \todo Must go to setCurrentRow of controller ! (and controller must handle + avoid invinit calls..)
-//   connect(pvRowChangeEventMapper, &RowChangeEventMapper::rowStateChanged, controller, &AbstractController::rowStateChanged);
 }
 
 void AbstractTableViewWidget::updateModel(QAbstractItemModel *model)
@@ -79,17 +71,11 @@ void AbstractTableViewWidget::updateModel(QAbstractItemModel *model)
       delete oldSelectionModel;
     }
     // Replace selection model
-    /// \todo Should we delete this selection model in destructor ??
     pvView->setSelectionModel(new ItemSelectionModel(model));
-    /// \todo signal/slots connections
     // Selection model must also be updated in controller
     if(controller() != nullptr){
-      qDebug() << "AbstractTableViewWidget::updateModel() - setting selection model for view " << pvView;
       controller()->setSelectionModel(pvView->selectionModel());
     }
-    // Update row change event mapper
-//     pvRowChangeEventMapper->setModel(model);
-//     pvRowChangeEventMapper->setSelectionModel(pvView->selectionModel());
   }
 }
 

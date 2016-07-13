@@ -10,6 +10,7 @@ set(SOURCES_FILES
   src/TestTableModel.cpp
   src/ItemViewTestEdit.cpp
   src/TestTableEditionWidget.cpp
+  src/TestFormEditionWidget.cpp
   src/TestWindowEditor.cpp
 )
 

@@ -13,28 +13,21 @@
 # * root project file *
 
 # CMake minimal requiered version
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 3.2.0)
 
 # Project
 project(multidiagtools)
 
-# Utilisation des assertions , positionner à 0 pour désactiver (obselète avec Q_ASSERT() ?)
-#set(USE_ASSERT 1)
-
-#Debug or Release
-set(CMAKE_BUILD_TYPE Debug)
-#set(CMAKE_BUILD_TYPE Release)
-
-if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
-  message("Building Release")
-else(${CMAKE_BUILD_TYPE} STREQUAL "Release")
-  message("Building Debug")
-endif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+# If nothing is specified, we build Debug
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "Debug")
+endif()
+message("-- Build type: ${CMAKE_BUILD_TYPE}")
 
 # Project version
 set(MDTLIB_VERSION_MAJOR 0)
 set(MDTLIB_VERSION_MINOR 3)
-set(MDTLIB_VERSION_MICRO 3)
+set(MDTLIB_VERSION_MICRO 4)
 
 # Library version suffix:
 #  Since version 0.2.8, naming convension has changed.
@@ -49,36 +42,43 @@ set(MDTLIB_VERSION_SUFFIX "-${MDTLIB_VERSION_MAJOR}.${MDTLIB_VERSION_MINOR}")
 
 # Config file
 configure_file(
-#  "${PROJECT_SOURCE_DIR}/config.h.in"
-#  "${PROJECT_SOURCE_DIR}/src/config.h"
   "${CMAKE_SOURCE_DIR}/config.h.in"
   "${CMAKE_BINARY_DIR}/config.h"
 )
 include_directories("${CMAKE_BINARY_DIR}")
 
-# Common flags for compiler
-set(CMAKE_CXX_FLAGS "-std=c++14 ${CMAKE_CXX_FLAGS}")
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -Werror -Wall -Wextra -Wpedantic -lm")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -Wall -Wextra -lm -pthread")
+# C++ standard
+set(CMAKE_CXX_STANDARD 14)
+
+# Compiler wrnings options
+add_compile_options(-Wall -Wextra)
+# add_compile_options(-Werror -Wpedantic)
+
+# Sanitizer
+# NOTE: must be the first option, else undefined references will occur.
+#       when using add_compile_options(), it is not at first,
+#       so we use CMAKE_CXX_FLAGS (yes, a workaround)
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
- set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
-#   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=leak")
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=memory")
-#   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=thread")
-endif(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-message("Compiler flags: ${CMAKE_CXX_FLAGS}")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
+endif()
+
+# Optimisation options:
+# By default, CMake will set optimisation for Release, but not for debug
+if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+  add_compile_options(-O2)
+endif()
 
 # On UNIX, we allways add debug symbols (will be stripped and put into separate  .dbg files)
 if(UNIX)
   if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
-  endif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+    add_compile_options(-g)
+  endif()
 endif(UNIX)
 
 # On Windows, we separate debug and release dlls
-if(WIN32)
-  set(CMAKE_DEBUG_POSTFIX d)
-endif(WIN32)
+# if(WIN32)
+#   set(CMAKE_DEBUG_POSTFIX d)
+# endif(WIN32)
 
 # We want GUI executables on Windows (not console)
 if(WIN32)
@@ -90,6 +90,9 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 # As moc files are generated in the binary dir, tell CMake to always look for includes there
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+# Thread support
+find_package(Threads REQUIRED)
 
 # Enable Qt5 support
 set(CMAKE_AUTOMOC ON)

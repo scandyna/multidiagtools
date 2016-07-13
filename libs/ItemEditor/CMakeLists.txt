@@ -11,15 +11,17 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/RowChangeEventMapper.cpp
     src/Mdt/ItemEditor/RowChangeEventDispatcher.cpp
     src/Mdt/ItemEditor/NavigationActions.cpp
+    src/Mdt/ItemEditor/ControllerStatePermission.cpp
     src/Mdt/ItemEditor/AbstractController.cpp
     src/Mdt/ItemEditor/TableController.cpp
     src/Mdt/ItemEditor/StandardEditorLayoutWidget.cpp
     src/Mdt/ItemEditor/AbstractEditorWidget.cpp
     src/Mdt/ItemEditor/AbstractTableViewWidget.cpp
     src/Mdt/ItemEditor/TableViewWidget.cpp
+    src/Mdt/ItemEditor/AbstractWidgetMapperWidget.cpp
+    src/Mdt/ItemEditor/WidgetMapperWidget.cpp
     src/Mdt/ItemEditor/StandardWindow.cpp
     src/Mdt/ItemEditor/AbstractWindow.cpp
-    src/Mdt/ItemEditor/ControllerStatePermission.cpp
 )
 
 # Headers directories
@@ -35,9 +37,12 @@ string(TOLOWER ${LIBRARY_NAME} LIBRARY_NAME_LC)
 set(LIBRARY_BIN_NAME "mdt${LIBRARY_NAME_LC}")
 # Add output library
 add_library(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
-target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterrorOld${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterrorguiOld${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdtdatabase${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterror${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} Qt5::Widgets)
+
+# Qt Designer plugins
+add_subdirectory("qttools")
 
 # Translation files
 set(TS_FILES

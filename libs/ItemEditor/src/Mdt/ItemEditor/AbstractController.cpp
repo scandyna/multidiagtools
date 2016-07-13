@@ -55,13 +55,9 @@ void AbstractController::setSelectionModel(QItemSelectionModel* model)
 {
   Q_ASSERT(model != nullptr);
 
-//   if(!pvSelectionModel.isNull()){
-//     disconnect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::currentIndexChanged, pvSelectionModel, &ItemSelectionModel::setCurrentIndex);
-//   }
   pvSelectionModel = qobject_cast<ItemSelectionModel*>(model);
   Q_ASSERT(!pvSelectionModel.isNull());
   pvRowChangeEventMapper->setSelectionModel(model);
-//   connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::currentIndexChanged, pvSelectionModel, &ItemSelectionModel::setCurrentIndex);
 }
 
 int AbstractController::rowCount() const

@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 43
+  revision 45
   modified_by 2 "philippe"
   // class settings
   
@@ -2632,7 +2632,6 @@ ${inlines}
 	
       end
     end
-
   end
 
   classview 1392898 "ControllerRelation"
@@ -3734,7 +3733,7 @@ ${inlines}
      end
     classdiagram 2700418 "EditorWidget"
       classdiagramsettings member_max_width 0 end
-      size C-Landscape
+      size D
     end
 
     class 3068802 "AbstractEditorWidget"
@@ -3947,6 +3946,22 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4542466 "setController"
+	cpp_virtual protected explicit_return_type "void"
+	nparams 1
+	  param in name "controller" type class_ref 3090434 // AbstractController
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -4411,13 +4426,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3475330 // <generalisation>
-	relation 3456898 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3475330 // <generalisation>
-	  b parent class_ref 3068802 // AbstractEditorWidget
-      end
     end
 
     class 3089410 "StandardSqlEditorLayoutWidget"
@@ -4926,6 +4934,138 @@ ${inlines}
 	  b parent class_ref 3118082 // AbstractTableViewWidget
       end
     end
+
+    class 3131266 "AbstractWidgetMapperWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3537922 // <generalisation>
+	relation 3519106 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3537922 // <generalisation>
+	  b parent class_ref 3068802 // AbstractEditorWidget
+      end
+
+      attribute 2928770 "WidgetMapper"
+	private type class_ref 404610 // QDataWidgetMapper
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 4542850 "updateModel"
+	stereotype "slot"
+	protected explicit_return_type "void"
+	nparams 1
+	  param in name "model" type class_ref 146946 // QAbstractItemModel
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3131394 "WidgetMapperWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3537794 // <generalisation>
+	relation 3518978 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3537794 // <generalisation>
+	  b parent class_ref 3131266 // AbstractWidgetMapperWidget
+      end
+
+      classrelation 3538178 // <directional composition>
+	relation 3519362 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3538178 // <directional composition>
+	  b parent class_ref 2684802 // TableController
+      end
+
+      operation 4542594 "setModel"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "model" type class_ref 147202 // QAbstractTableModel
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3131522 "SqlWidgetMapperWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3538306 // <directional composition>
+	relation 3519490 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3538306 // <directional composition>
+	  b parent class_ref 2927362 // SqlTableController
+      end
+
+      classrelation 3538434 // <generalisation>
+	relation 3519618 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3538434 // <generalisation>
+	  b parent class_ref 3131266 // AbstractWidgetMapperWidget
+      end
+    end
   end
 
   classview 1286658 "Window"
@@ -4945,13 +5085,13 @@ ${inlines}
     activitydiagramsettings
      end
     classdiagram 2413314 "overview"
-      classdiagramsettings member_max_width 0 end
+      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
       size A4
     end
 
     classdiagram 2714498 "WindowWidgetController"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size C
     end
 
     classdiagram 2714626 "AbstractWindow"

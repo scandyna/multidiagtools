@@ -49,8 +49,6 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setModel(QAbstractTableModel *model);
 
-//    private slots:
-
    private:
 
     TableController *pvController;

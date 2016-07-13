@@ -18,32 +18,17 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "TestWindowEditor.h"
-#include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
-#include "TestTableEditionWidget.h"
-#include "TestFormEditionWidget.h"
+#include "WidgetMapperWidget.h"
+#include "TableController.h"
 
-#include <QDebug>
+namespace Mdt{ namespace ItemEditor{
 
-TestWindowEditor::TestWindowEditor(QWidget* parent)
- : StandardWindow(parent)
+WidgetMapperWidget::WidgetMapperWidget(QWidget* parent)
+ : AbstractWidgetMapperWidget(parent),
+   pvController(new TableController(this))
 {
-  using Mdt::ItemEditor::StandardEditorLayoutWidget;
-//   using Mdt::ItemEditor::TableViewWidget;
-
-  auto *layoutWidget = new StandardEditorLayoutWidget;
-  pvFormEditionWidget = new TestFormEditionWidget;
-  pvTableEditionWidget = new TestTableEditionWidget;
-
-  layoutWidget->setMainWidget(pvFormEditionWidget);
-  layoutWidget->addChildWidget(pvTableEditionWidget, tr("Table"));
-  setCentralWidget(layoutWidget);
-  setMainEditorWidget(pvFormEditionWidget);
+  setController(pvController);
+  connect(pvController, &TableController::modelChanged, this, &WidgetMapperWidget::updateModel);
 }
 
-void TestWindowEditor::setModel(QAbstractTableModel* model)
-{
-  Q_ASSERT(model != nullptr);
-
-  pvTableEditionWidget->setModel(model);
-}
+}} // namespace Mdt{ namespace ItemEditor{

@@ -55,47 +55,46 @@ void ControllerTest::statePermissionTest()
 void ControllerTest::setModelTest()
 {
   using Mdt::ItemEditor::TableController;
+  using Mdt::ItemEditor::RowState;
 
   TestTableModel tableModel;
   QStringListModel listModel;
+  TableController controller;
+  QSignalSpy rowStateSpy(&controller, &TableController::rowStateChanged);
+  QList<QVariant> spyItem;
+  RowState rs;
 
+  QVERIFY(rowStateSpy.isValid());
   /*
    * Initial state
    */
-  TableController controller;
   QVERIFY(controller.model() == nullptr);
+  QCOMPARE(rowStateSpy.count(), 0);
   /*
    * Set model
    */
   controller.setModel(&tableModel);
   QVERIFY(controller.model() == &tableModel);
-  
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 0);
+  QCOMPARE(rs.currentRow(), -1);
   /*
    * Change model
    */
   controller.setModel(&listModel);
   QVERIFY(controller.model() == &listModel);
-  
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 0);
+  QCOMPARE(rs.currentRow(), -1);
 }
 
 void ControllerTest::currentRowChangeTest()
-{
-  using Mdt::ItemEditor::TableController;
-
-  TestTableModel model;
-  TableController controller;
-
-  /*
-   * Check on empty model
-   */
-  
-  /*
-   * Populate and check
-   */
-  
-}
-
-void ControllerTest::currentRowChangeTableViewTest()
 {
   using Mdt::ItemEditor::TableController;
   using Mdt::ItemEditor::ItemSelectionModel;
@@ -105,17 +104,9 @@ void ControllerTest::currentRowChangeTableViewTest()
   TestTableModel model;
   QModelIndex index;
   ItemSelectionModel selectionModel(&model);
-  QTableView tableView;
   QSignalSpy rowStateSpy(&controller, &TableController::rowStateChanged);
   QList<QVariant> spyItem;
   RowState rs;
-
-  /*
-   * Setup
-   */
-  tableView.setModel(&model);
-  tableView.setSelectionModel(&selectionModel);
-  tableView.show();
 
   /*
    * Initial state
@@ -124,25 +115,26 @@ void ControllerTest::currentRowChangeTableViewTest()
   QCOMPARE(controller.currentRow(), -1);
   QCOMPARE(rowStateSpy.count(), 0);
   /*
-   * Set model
+   * Set model and selection model
    */
-  /// \todo Because model is empty, it is possibly better to not signal row state changed at this point
   controller.setModel(&model);
+  controller.setSelectionModel(&selectionModel);
   QCOMPARE(controller.rowCount(), model.rowCount());
   QCOMPARE(controller.currentRow(), selectionModel.currentIndex().row());
-  // Check that row count was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 2);
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
   QCOMPARE(rs.rowCount(), model.rowCount());
   QCOMPARE(rs.currentRow(), selectionModel.currentIndex().row());
+  rowStateSpy.clear();
   /*
    * Populate model
    */
   model.populate(5, 3);
   QCOMPARE(controller.rowCount(), model.rowCount());
   QCOMPARE(controller.currentRow(), selectionModel.currentIndex().row());
-  // Check that row count was signaled
+  // Check that row state signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
@@ -156,7 +148,7 @@ void ControllerTest::currentRowChangeTableViewTest()
   selectionModel.setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
   QCOMPARE(selectionModel.currentIndex().row(), 1);
   QCOMPARE(controller.currentRow(), 1);
-  // Check that row count was signaled
+  // Check that row state signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
@@ -168,37 +160,93 @@ void ControllerTest::currentRowChangeTableViewTest()
   QVERIFY(controller.setCurrentRow(2));
   QCOMPARE(controller.currentRow(), 2);
   QCOMPARE(selectionModel.currentIndex().row(), 2);
-  // Check that row count was signaled
+  // Check that row state signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
   QCOMPARE(rs.rowCount(), model.rowCount());
   QCOMPARE(rs.currentRow(), selectionModel.currentIndex().row());
-
-  
   /*
-   * Check navigation slots
+   * Check toFirst slot
    */
-  
+  controller.toFirst();
+  QCOMPARE(controller.currentRow(), 0);
+  QCOMPARE(selectionModel.currentIndex().row(), 0);
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), model.rowCount());
+  QCOMPARE(rs.currentRow(), selectionModel.currentIndex().row());
+  /*
+   * Check toNext slot
+   */
+  controller.toNext();
+  QCOMPARE(controller.currentRow(), 1);
+  QCOMPARE(selectionModel.currentIndex().row(), 1);
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), model.rowCount());
+  QCOMPARE(rs.currentRow(), selectionModel.currentIndex().row());
+  /*
+   * Check toLast slot
+   */
+  controller.toLast();
+  QCOMPARE(controller.currentRow(), 4);
+  QCOMPARE(selectionModel.currentIndex().row(), 4);
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), model.rowCount());
+  QCOMPARE(rs.currentRow(), selectionModel.currentIndex().row());
+  /*
+   * Check toPrevious slot
+   */
+  controller.toPrevious();
+  QCOMPARE(controller.currentRow(), 3);
+  QCOMPARE(selectionModel.currentIndex().row(), 3);
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), model.rowCount());
+  QCOMPARE(rs.currentRow(), selectionModel.currentIndex().row());
   /*
    * Change model
    */
-  
+  QStringListModel listModel;
+  listModel.setStringList({"A","B","C"});
+  controller.setModel(&listModel);
+  QCOMPARE(controller.rowCount(), listModel.rowCount());
+  QCOMPARE(controller.currentRow(), selectionModel.currentIndex().row());
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), listModel.rowCount());
+  QCOMPARE(rs.currentRow(), selectionModel.currentIndex().row());
   /*
    * Insert
+   * NOTE: is a other test to implement
    */
-  
+
   /*
    * Remove
+   * NOTE: is a other test to implement
    */
-   
 
   /*
    * Play
    */
-  while(tableView.isVisible()){
-    QTest::qWait(500);
-  }
+//   QTableView tableView;
+//   tableView.setModel(controller.model());
+//   tableView.show();
+//   while(tableView.isVisible()){
+//     QTest::qWait(500);
+//   }
 }
 
 /*

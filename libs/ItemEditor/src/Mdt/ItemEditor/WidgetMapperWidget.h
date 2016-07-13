@@ -18,19 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ABSTRACT_TABLE_VIEW_WIDGET_H
-#define MDT_ITEM_EDITOR_ABSTRACT_TABLE_VIEW_WIDGET_H
+#ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_WIDGET_H
+#define MDT_ITEM_EDITOR_WIDGET_MAPPER_WIDGET_H
 
-#include "AbstractEditorWidget.h"
-
-class QTableView;
-class QAbstractItemModel;
+#include "AbstractWidgetMapperWidget.h"
 
 namespace Mdt{ namespace ItemEditor{
 
-  /*! \brief Common base for QTableView based editor
+  class TableController;
+
+  /*! \brief Base class to create editor widget that uses a QDataWidgetMapper
+   *
+   * WidgetMapperWidget owns a TableController.
    */
-  class AbstractTableViewWidget : public AbstractEditorWidget
+  class WidgetMapperWidget : public AbstractWidgetMapperWidget
   {
    Q_OBJECT
 
@@ -38,34 +39,13 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Constructor
      */
-    explicit AbstractTableViewWidget(QWidget* parent = nullptr);
-
-   protected:
-
-    /*! \brief Set controller
-     *
-     * Subclass that owns its controller
-     *  must tell it by calling this method.
-     */
-    void setController(AbstractController *controller) override;
-
-   protected slots:
-
-    /*! \brief Update model
-     *
-     * This slot is called from controller.
-     *
-     * Subclass that owns a controller
-     *  should connect AbstractController::modelChanged()
-     *  to this slot.
-     */
-    void updateModel(QAbstractItemModel *model);
+    explicit WidgetMapperWidget(QWidget* parent = nullptr);
 
    private:
 
-    QTableView *pvView;
+    TableController *pvController;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
 
-#endif // #ifndef MDT_ITEM_EDITOR_ABSTRACT_TABLE_VIEW_WIDGET_H
+#endif // #ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_WIDGET_H

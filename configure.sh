@@ -1,80 +1,90 @@
 #!/bin/bash
 
-# Script créé pour la partie C++ du projet
-# Plateforme utilisée: Linux Ubuntu
+# Simple script that inits build tree
 
-# Fichier de cache CMake
-CMAKE_CACHE_FILE="CMakeCache.txt"
-# Répertoire de cache CMake
-CMAKE_CACHE_DIR="CMakeFiles"
 
-# Remove $1 if is a file
-remove_file()
+
+#
+# Helper functions
+#
+
+# Create directory passed as first argument if not exists
+create_directory()
 {
-    if [ -f "$1" ]
-    then
-      echo "deleting $1 ..."
-      rm "$1"
-    fi
-}
-
-# Remove $1 if is a dir
-remove_dir()
-{
-    if [ -d "$1" ]
-    then
-      echo "deleting $1 ..."
-      rm -r "$1"
-    fi
-}
-
-# Cache du projet
-if [ -f "$CMAKE_CACHE_FILE" ] || [ -d "$CMAKE_CACHE_DIR" ]
-then
-  # On demande à l'utilisateur
-  echo -n "Delete CMake cache ? [y/n] , (def: n): "
-  read ANS
-  if [ "$ANS" == "y" ]
+  # Check if a file with requested name allready exists
+  if [ -f "$1" ]
   then
-    # Fichiers de cache
-    remove_file "$CMAKE_CACHE_FILE"
-    remove_file "src/mdtdevice/$CMAKE_CACHE_FILE"
-    remove_file "src/mdtport/$CMAKE_CACHE_FILE"
-    remove_file "src/mdtserialport/$CMAKE_CACHE_FILE"
-    remove_file "src/mdttools/$CMAKE_CACHE_FILE"
-    remove_file "src/mdtutils/$CMAKE_CACHE_FILE"
-    remove_file "src/mdtutilsgui/$CMAKE_CACHE_FILE"
-    remove_file "src/qt-solutions/$CMAKE_CACHE_FILE"
-    remove_file "src/qt-solutions/qtsingleapplication/$CMAKE_CACHE_FILE"
-    remove_file "tools/uicnumber/$CMAKE_CACHE_FILE"
-    remove_file "tools/mdtmodbusiotool/$CMAKE_CACHE_FILE"
-    # Dossier de cache
-    remove_dir "$CMAKE_CACHE_DIR"
-    remove_dir "src/mdtdevice/$CMAKE_CACHE_DIR"
-    remove_dir "src/mdtport/$CMAKE_CACHE_DIR"
-    remove_dir "src/mdtserialport/$CMAKE_CACHE_DIR"
-    remove_dir "src/mdttools/$CMAKE_CACHE_DIR"
-    remove_dir "src/mdtutils/$CMAKE_CACHE_DIR"
-    remove_dir "src/mdtutilsgui/$CMAKE_CACHE_DIR"
-    remove_dir "src/qt-solutions/$CMAKE_CACHE_DIR"
-    remove_dir "src/qt-solutions/qtsingleapplication/$CMAKE_CACHE_DIR"
-    remove_dir "tests/mdtdevice/$CMAKE_CACHE_DIR"
-    remove_dir "tests/mdtserialport/$CMAKE_CACHE_DIR"
-    remove_dir "tests/mdttest/$CMAKE_CACHE_DIR"
-    remove_dir "tests/mdtutils/$CMAKE_CACHE_DIR"
-    remove_dir "tests/mdtutilsgui/$CMAKE_CACHE_DIR"
-    remove_dir "tools/uicnumber/$CMAKE_CACHE_DIR"
-    remove_dir "tools/mdtmodbusiotool/$CMAKE_CACHE_DIR"
+    echo "cannot create directory $1. A file with this name allready exists. Aborting"
+    exit 1
   fi
-fi
+  # Create directory if not exists
+  if [ ! -d "$1" ]
+  then
+    echo "creating directory $1"
+    mkdir "$1"
+  fi
+  # On error, we abort here
+  if [ $? != "0" ]
+  then
+    exit $?
+  fi
+}
 
-# CMake
-cmake . -Wdev
+# Check if directory is clean
+# Arguments:
+#  $1 : relative path to directory
+check_directory_clean()
+{
+  if [ $(ls "$1" | wc -c) != "0" ]
+  then
+    echo "directory $1 is not empty."
+    return 1  # 1 = false in bash
+  fi
 
-if [ $? != "0" ]
+  return 0 # 0 = true
+}
+
+# Init directory
+# Arguments:
+#  $1 : relative path to directory
+#  $2 : build type (Release, Debug, whatever CMake supports)
+init_directory()
+{
+  initial_path="$PWD"
+
+  if [ ! -d "$1" ]
+  then
+    echo "directory $1 not exists"
+    exit 1
+  fi
+  cd "$1"
+  # We not want to delete things,
+  # so if a project allready exists, we abort
+  if ! check_directory_clean "$1"
+  then
+    cd "$initial_path"
+    echo "aborting $2 build"
+    return
+  fi
+  # Init..
+  cmake ../../ -DCMAKE_BUILD_TYPE="$2"
+  cd "$initial_path"
+}
+
+#
+# Main
+#
+build_path=$(realpath "build")
+
+create_directory "$build_path"
+# We not want to delete things,
+# so if a project allready exists, we abort
+if ! check_directory_clean "$build_path"
 then
-  echo "Error during cmake ."
+  echo "if build is a build directory, please clean it an try again"
   exit 1
 fi
-
-echo "** cmake . done , you schould be able to compile with make"
+create_directory "$build_path/debug"
+create_directory "$build_path/release"
+init_directory "$build_path/debug" "Debug"
+init_directory "$build_path/release" "Release"

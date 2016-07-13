@@ -18,32 +18,29 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "TestWindowEditor.h"
-#include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
-#include "TestTableEditionWidget.h"
-#include "TestFormEditionWidget.h"
+#ifndef MDT_ITEM_EDITOR_QT_DESIGNER_PLUGINS_WIDGET_MAPPER_WIDGET_H
+#define MDT_ITEM_EDITOR_QT_DESIGNER_PLUGINS_WIDGET_MAPPER_WIDGET_H
 
-#include <QDebug>
+#include <QObject>
+#include <QtUiPlugin/QDesignerCustomWidgetInterface>
 
-TestWindowEditor::TestWindowEditor(QWidget* parent)
- : StandardWindow(parent)
+class WidgetMapperWidgetPlugin : public QObject, public QDesignerCustomWidgetInterface
 {
-  using Mdt::ItemEditor::StandardEditorLayoutWidget;
-//   using Mdt::ItemEditor::TableViewWidget;
+  Q_OBJECT
+  Q_INTERFACES(QDesignerCustomWidgetInterface)
 
-  auto *layoutWidget = new StandardEditorLayoutWidget;
-  pvFormEditionWidget = new TestFormEditionWidget;
-  pvTableEditionWidget = new TestTableEditionWidget;
+ public:
 
-  layoutWidget->setMainWidget(pvFormEditionWidget);
-  layoutWidget->addChildWidget(pvTableEditionWidget, tr("Table"));
-  setCentralWidget(layoutWidget);
-  setMainEditorWidget(pvFormEditionWidget);
-}
+  explicit WidgetMapperWidgetPlugin(QObject *parent = nullptr);
+  bool isContainer() const;
+  QIcon icon() const;
+  QString domXml() const;
+  QString group() const;
+  QString includeFile() const;
+  QString name() const;
+  QString toolTip() const;
+  QString whatsThis() const;
+  QWidget *createWidget(QWidget *parent);
+};
 
-void TestWindowEditor::setModel(QAbstractTableModel* model)
-{
-  Q_ASSERT(model != nullptr);
-
-  pvTableEditionWidget->setModel(model);
-}
+#endif // #ifndef MDT_ITEM_EDITOR_QT_DESIGNER_PLUGINS_WIDGET_MAPPER_WIDGET_H
