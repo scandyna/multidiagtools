@@ -1,81 +1,81 @@
 format 211
 
-classcanvas 128130 class_ref 2684802 // TableController
+classcanvas 128130 class_ref 2684802 // AbstractTableViewController
   classdiagramsettings member_max_width 0 end
   color lightorange
-  xyzwh 40.5 624.25 2000 120 43
+  xyzwh 37.25 627 2000 195 43
 end
 classcanvas 134018 class_ref 146946 // QAbstractItemModel
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 336.65 124 2017
+  xyz 336.2 124.25 2017
 end
 classcanvas 134274 class_ref 2160258 // QAbstractItemView
   classdiagramsettings member_max_width 0 end
   color green
-  xyz 346.2 199 2023
+  xyz 346.65 199 2023
 end
 classcanvas 134530 class_ref 1382914 // QItemSelectionModel
   classdiagramsettings member_max_width 0 end
   color green
-  xyz 535.05 199 2029
+  xyz 535.25 199 2029
 end
 classcanvas 134914 class_ref 1914498 // QAbstractItemDelegate
   classdiagramsettings member_max_width 0 end
   color green
-  xyz 328.65 279 2035
+  xyz 328.2 279 2035
 end
 classcanvas 140290 class_ref 2720002 // Filter
   classdiagramsettings member_max_width 0 end
-  xyz 257.6 1017.2 2000
+  xyz 257.95 1017.9 2000
 end
 classcanvas 140418 class_ref 2720130 // FilterBuilder
   classdiagramsettings member_max_width 0 end
   color lightorange
-  xyz 839.1 744 2000
+  xyz 839.7 744.25 2000
 end
 classcanvas 140546 class_ref 2739714 // QWebSocket
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 817.6 39.85 2017
+  xyz 817.2 39.85 2017
 end
 classcanvas 140802 class_ref 2739842 // QWebSocketServer
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 40.7 1017.2 2017
+  xyz 40.9 1017.9 2017
 end
 classcanvas 142978 class_ref 2753410 // RowChangeEventMapper
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   color lightorange
-  xyz 521.55 125.4 2023
+  xyz 521.1 125.3 2023
 end
 classcanvas 146818 class_ref 3068802 // AbstractEditorWidget
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
-  xyz 531.25 359 2006
+  xyz 531.5 359 2006
 end
 classcanvas 149762 class_ref 2706434 // NavigationActions
   classdiagramsettings member_max_width 0 end
   color lightorange
-  xyz 41 744 2022
+  xyz 41.25 744.25 2022
 end
 classcanvas 150274 class_ref 2713474 // EditionActions
   classdiagramsettings member_max_width 0 end
   color lightorange
-  xyz 200.2 819 2018
+  xyz 200.65 819 2018
 end
 classcanvas 151426 class_ref 3015170 // EventCatchItemDelegate
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
-  xyz 382.9 1017.2 2000
+  xyz 382.8 1017.9 2000
 end
 note 155138 "Try: separate SQL part !
 F.ex. setTable()
 
 Here, only focus on Qt table model"
-  xyzwh 385.6 744.3 2000 375 105
+  xyzwh 385.4 744.7 2000 375 105
 note 155266 "Should be QAbstractTableModell"
-  xyzwh 276.4 42.7 2000 265 44
+  xyzwh 276.6 43.3 2000 265 44
 classcanvas 156034 class_ref 3096962 // AbstractWindow
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
@@ -84,7 +84,7 @@ end
 classcanvas 156290 class_ref 2706306 // StandardWindow
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
-  xyz 40 894.85 2034
+  xyz 40 894.6 2034
 end
 classcanvas 157058 class_ref 3104258 // SqlTableViewWidget
   classdiagramsettings member_max_width 0 end
@@ -94,22 +94,22 @@ end
 classcanvas 157186 class_ref 3104130 // TableViewWidget
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
-  xyz 544 624 2012
+  xyz 544.25 624.25 2012
 end
 classcanvas 158338 class_ref 3090434 // AbstractController
   classdiagramsettings member_max_width 0 end
   color lightorange
-  xyz 201.7 359 3011
+  xyz 202 359 3011
 end
-classcanvas 160002 class_ref 2927362 // SqlTableController
+classcanvas 160002 class_ref 2927362 // SqlTableViewController
   classdiagramsettings member_max_width 0 end
   color lightorange
-  xyz 199.6 559 2000
+  xyz 200.5 559 2000
 end
 classcanvas 161410 class_ref 3118082 // AbstractTableViewWidget
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
-  xyz 520.4 439 2029
+  xyz 520.6 439 2029
 end
 relationcanvas 134402 relation_ref 2458242 // <unidirectional association>
   decenter_begin 466
@@ -160,7 +160,7 @@ relationcanvas 157442 relation_ref 3475202 // <directional composition>
 end
 relationcanvas 158722 relation_ref 3481986 // <unidirectional association>
   geometry VH unfixed
-  from ref 158338 z 3012 to point 264.2 142.8
+  from ref 158338 z 3012 to point 264 143
   line 162562 z 3012 to ref 134018
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -168,8 +168,8 @@ end
 relationcanvas 158850 relation_ref 3459586 // <generalisation>
   geometry VHV unfixed
   decenter_begin 466
-  from ref 128130 z 3012 to point 93 519.55
-  line 162690 z 3012 to point 264 519.55
+  from ref 128130 z 3012 to point 125 518
+  line 162690 z 3012 to point 263 518
   line 162818 z 3012 to ref 158338
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -188,11 +188,6 @@ relationcanvas 160258 relation_ref 3475074 // <directional composition>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 160386 relation_ref 3459458 // <generalisation>
-  from ref 160002 z 3012 to ref 158338
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 relationcanvas 160898 relation_ref 3499266 // <unidirectional association>
   from ref 142978 z 2030 to ref 134530
   no_role_a no_role_b
@@ -207,7 +202,7 @@ end
 relationcanvas 161794 relation_ref 3492610 // <generalisation>
   geometry VHV unfixed
   from ref 157058 z 2030 to point 438 518
-  line 162050 z 2030 to point 605 518
+  line 162050 z 2030 to point 605.7 518
   line 162178 z 2030 to ref 161410
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -220,6 +215,11 @@ relationcanvas 161922 relation_ref 3492482 // <generalisation>
 end
 relationcanvas 162946 relation_ref 3505794 // <directional composition>
   from ref 158338 z 3012 to ref 142978
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 163074 relation_ref 3526658 // <generalisation>
+  from ref 160002 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

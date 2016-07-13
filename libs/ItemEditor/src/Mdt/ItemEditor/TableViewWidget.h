@@ -27,7 +27,7 @@ class QAbstractTableModel;
 
 namespace Mdt{ namespace ItemEditor{
 
-  class TableController;
+  class TableViewController;
 
   /*! \brief QTableView based editor
    */
@@ -51,7 +51,7 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    TableController *pvController;
+    TableViewController *pvController;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

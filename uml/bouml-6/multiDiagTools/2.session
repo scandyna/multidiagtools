@@ -46,10 +46,10 @@ diagrams
   classdiagram_ref 2707842 // TestEditor
     943 906 100 21 0 0
   active  classdiagram_ref 2707074 // TableController
-    943 906 85 8 228 64
+    943 906 85 8 156 184
 end
 show_stereotypes
-selected classdiagram_ref 2707074 // TableController
+selected operation_ref 4535554 // registerSelectionModel
 open
   
   package_ref 549506 // Algorithm
@@ -57,7 +57,9 @@ open
   
   package_ref 516226 // SqlItemModel
   classview_ref 1472258 // Editor
-  classview_ref 1287042 // Controller
+  class_ref 3090434 // AbstractController
+  class_ref 2684802 // AbstractTableViewController
+  attribute_ref 2908162 // Model
   classview_ref 1432322 // StandardFormWidget
   operation_ref 4542466 // setController
   class_ref 3131266 // AbstractWidgetMapperWidget

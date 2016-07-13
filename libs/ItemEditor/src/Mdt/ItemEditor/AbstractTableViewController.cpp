@@ -18,47 +18,61 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AbstractTableViewWidget.h"
+#include "AbstractTableViewController.h"
 #include "EventCatchItemDelegate.h"
 #include "ItemSelectionModel.h"
-#include <QTableView>
-#include <QVBoxLayout>
+#include <QAbstractItemModel>
+#include <QAbstractItemView>
 
 // #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
-AbstractTableViewWidget::AbstractTableViewWidget(QWidget* parent)
- : AbstractEditorWidget(parent),
-   pvView(new QTableView)
+AbstractTableViewController::AbstractTableViewController(QObject* parent)
+ : AbstractController(parent)
 {
-  // Layout widgets
-  auto *l = new QVBoxLayout;
-  l->addWidget(pvView);
-  setLayout(l);
+  connect(this, &AbstractTableViewController::modelChanged, this, &AbstractTableViewController::setModelToView);
+}
+
+void AbstractTableViewController::setView(QAbstractItemView* view)
+{
+  Q_ASSERT(view != nullptr);
+
+  pvView = view;
+  setModelToView(model());
   // Replace delegate with our proxy delegate
   auto *delegate = pvView->itemDelegate();
-  auto *proxyDelegate = new EventCatchItemDelegate(pvView);
+  auto *proxyDelegate = new EventCatchItemDelegate(view);
   if(delegate != nullptr){
     proxyDelegate->setItemDelegate(delegate);
   }
   pvView->setItemDelegate(proxyDelegate);
 }
 
-void AbstractTableViewWidget::setController(AbstractController* controller)
+QAbstractItemView* AbstractTableViewController::view() const
 {
-  Q_ASSERT(controller != nullptr);
-
-  AbstractEditorWidget::setController(controller);
-  // If no model was set to view, it will not have any selection model
-  if(pvView->selectionModel() != nullptr){
-    ///controller->setSelectionModel(pvView->selectionModel());
-  }
+  return pvView;
 }
 
-void AbstractTableViewWidget::updateModel(QAbstractItemModel *model)
+void AbstractTableViewController::setModel(QAbstractItemModel* model)
 {
-  if(model != nullptr){
+  Q_ASSERT(model != nullptr);
+
+  /*
+   * Order of signal/slot connections matters here.
+   * We must be sure that model is set to the view
+   * before it is registered (set to RowChangeEventMapper).
+   * Note doing so will produces a problem when model resets:
+   *  - Controller receives the event and updates current row to 0 (if model contains data)
+   *  - Controller updates current index of view
+   *  - View will reset (and current will also be lost!)
+   */
+  referenceItemModel(model);
+}
+
+void AbstractTableViewController::setModelToView(QAbstractItemModel* model)
+{
+  if( (model != nullptr) && (!pvView.isNull())){
     /*
      * As described in documentation of QAbstractItemView,
      * the selection model will be replaced.
@@ -72,10 +86,8 @@ void AbstractTableViewWidget::updateModel(QAbstractItemModel *model)
     }
     // Replace selection model
     pvView->setSelectionModel(new ItemSelectionModel(model));
-    // Selection model must also be updated in controller
-    if(controller() != nullptr){
-      ///controller()->setSelectionModel(pvView->selectionModel());
-    }
+    registerItemModel();
+    registerSelectionModel(pvView->selectionModel());
   }
 }
 

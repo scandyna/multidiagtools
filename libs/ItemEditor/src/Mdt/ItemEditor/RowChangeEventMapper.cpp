@@ -53,6 +53,16 @@ void RowChangeEventMapper::setSelectionModel(QItemSelectionModel* model)
   }
 }
 
+QItemSelectionModel* RowChangeEventMapper::selectionModel() const
+{
+  return pvSelectionModel;
+}
+
+QAbstractItemModel* RowChangeEventMapper::model() const
+{
+  return pvModel;
+}
+
 void RowChangeEventMapper::setModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);

@@ -61,6 +61,18 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setSelectionModel(QItemSelectionModel *model);
 
+    /*! \brief Get selection model
+     *
+     * Will return a nullptr if no selection model was set
+     */
+    QItemSelectionModel *selectionModel() const;
+
+    /*! \brief Get item model
+     *
+     * Will return a nullptr if no model was set
+     */
+    QAbstractItemModel *model() const;
+
    public slots:
 
     /*! \brief Set model

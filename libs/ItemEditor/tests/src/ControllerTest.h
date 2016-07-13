@@ -35,6 +35,9 @@ class ControllerTest : public QObject
 
   void statePermissionTest();
 
+  void tableViewControllerSetModelTest();
+  void tableViewControllerCurrentRowChangeTest();
+
   void setModelTest();
   void currentRowChangeTest();
 };

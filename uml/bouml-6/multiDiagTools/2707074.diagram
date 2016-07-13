@@ -1,137 +1,174 @@
 format 211
 
-classcanvas 128002 class_ref 2684802 // TableController
+classcanvas 128002 class_ref 2684802 // AbstractTableViewController
   classdiagramsettings member_max_width 0 end
-  xyz 522 840.4 2000
+  xyz 800.55 923.6 2000
 end
 classcanvas 128386 class_ref 2706434 // NavigationActions
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 209.7 1248.1 2006
+  xyz 1337.95 40.05 2006
 end
 classcanvas 128642 class_ref 2713474 // EditionActions
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 418.9 1248.1 2011
+  xyz 40.65 1548.05 2011
 end
-classcanvas 129410 class_ref 2927362 // SqlTableController
+classcanvas 129410 class_ref 2927362 // SqlTableViewController
   classdiagramsettings member_max_width 0 end
-  xyz 39 905.4 2006
+  xyz 358.1 1205.25 2006
 end
 classcanvas 129666 class_ref 147202 // QAbstractTableModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1153.2 855.4 2012
+  xyz 392.7 79.2 2012
 end
 classcanvas 129922 class_ref 174338 // QSqlQueryModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1168.2 935.4 2018
+  xyz 233.85 79.2 2018
 end
 classcanvas 130178 class_ref 174210 // QSqlTableModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1170.2 1015.4 2024
+  xyz 78.55 79.2 2024
 end
 classcanvas 130690 class_ref 404610 // QDataWidgetMapper
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1337.2 399 2030
+  xyz 581.35 160.45 2030
 end
 classcanvas 131202 class_ref 638338 // QTableView
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 40.1 1248.1 2000
+  xyz 227.55 1548.05 2000
 end
 classcanvas 131586 class_ref 3090434 // AbstractController
   classdiagramsettings member_max_width 0 end
-  xyz 461 79 2037
+  xyz 780.7 160.3 2037
 end
 classcanvas 132482 class_ref 146946 // QAbstractItemModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 1153.6 399 2047
+  xyz 581.35 79.2 2047
 end
 classcanvas 135810 class_ref 2753410 // RowChangeEventMapper
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 938.6 399 2053
+  xyz 912.8 79.2 2053
 end
 classcanvas 137346 class_ref 3124610 // RowChangeEventDispatcher
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 231.2 399 2057
+  xyz 547.35 479.1 2057
 end
-relationcanvas 129794 relation_ref 3310722 // <unidirectional association>
-  decenter_begin 438
-  decenter_end 395
-  from ref 128002 z 2013 to ref 129666
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
+classcanvas 137602 class_ref 3138178 // TableViewController
+  classdiagramsettings member_max_width 0 end
+  xyz 840.8 1205.4 2000
+end
+classcanvas 138498 class_ref 3138306 // AbstractWidgetMapperTableController
+  classdiagramsettings member_max_width 0 end
+  xyz 505.55 922.65 2042
+end
+classcanvas 138754 class_ref 3138434 // WidgetMapperTableController
+  classdiagramsettings member_max_width 0 end
+  xyz 534.8 1003.9 2014
+end
+classcanvas 139010 class_ref 3138562 // SqlWidgetMapperTableController
+  classdiagramsettings member_max_width 0 end
+  xyz 522.55 1085.7 2048
 end
 relationcanvas 130050 relation_ref 175106 // <generalisation>
-  decenter_begin 462
-  decenter_end 470
   from ref 129922 z 2019 to ref 129666
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130306 relation_ref 174978 // <generalisation>
-  decenter_begin 461
-  decenter_end 462
   from ref 130178 z 2025 to ref 129922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130434 relation_ref 3310466 // <unidirectional association>
-  decenter_begin 482
-  decenter_end 395
-  from ref 129410 z 2025 to ref 130178
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 131714 relation_ref 3459458 // <generalisation>
-  geometry VHV unfixed
-  decenter_begin 507
-  from ref 129410 z 2038 to point 261 800.2
-  line 136834 z 2038 to point 678 800.2
-  line 136962 z 2038 to ref 131586
+  from ref 129410 z 2025 to point 40.4 1334.2
+  line 142466 z 2025 to point 40.4 100.4
+  line 142594 z 2025 to ref 130178
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131842 relation_ref 3459586 // <generalisation>
+  decenter_begin 505
   from ref 128002 z 2038 to ref 131586
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132738 relation_ref 141186 // <generalisation>
-  decenter_begin 470
   from ref 129666 z 2048 to ref 132482
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132866 relation_ref 491010 // <association>
-  decenter_begin 581
-  decenter_end 581
   from ref 130690 z 2048 to ref 132482
   no_role_a no_role_b
-  multiplicity_a_pos 1305 431 3000 no_multiplicity_b
+  multiplicity_a_pos 620 129 3000 no_multiplicity_b
 end
 relationcanvas 134530 relation_ref 3481986 // <unidirectional association>
-  from ref 131586 z 2048 to point 680.2 40.2
-  line 137090 z 2048 to point 1224.6 40.2
-  line 137218 z 2048 to ref 132482
+  from ref 131586 z 2048 to point 1257.8 500.4
+  line 137090 z 2048 to point 1257.8 40.4
+  line 142722 z 2048 to point 651.6 40.4
+  line 142850 z 2048 to ref 132482
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 135938 relation_ref 3106562 // <unidirectional association>
-  decenter_begin 581
-  decenter_end 581
   from ref 135810 z 2054 to ref 132482
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 136066 relation_ref 3505794 // <directional composition>
-  decenter_begin 505
-  decenter_end 581
   from ref 131586 z 2054 to ref 135810
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 137474 relation_ref 3512450 // <directional composition>
-  decenter_begin 505
-  decenter_end 581
   from ref 131586 z 2058 to ref 137346
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 137730 relation_ref 3526402 // <generalisation>
+  decenter_end 505
+  from ref 137602 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 138114 relation_ref 3526658 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 505
+  from ref 129410 z 2007 to point 552 1167.8
+  line 143106 z 2007 to point 995 1167.8
+  line 143234 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 138626 relation_ref 3526786 // <generalisation>
+  geometry VHV unfixed
+  from ref 138498 z 2043 to point 631 883.1
+  line 140802 z 2043 to point 996 883.1
+  line 140930 z 2043 to ref 131586
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 138882 relation_ref 3526914 // <generalisation>
+  from ref 138754 z 2043 to ref 138498
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 139138 relation_ref 3527042 // <generalisation>
+  from ref 139010 z 2049 to ref 138754
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 139522 relation_ref 3527170 // <unidirectional association>
+  geometry HV unfixed
+  from ref 138754 z 2015 to point 465.85 1022.2
+  line 141314 z 2015 to ref 129666
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 139650 relation_ref 3527298 // <unidirectional association>
+  geometry HV unfixed
+  decenter_end 521
+  from ref 139010 z 2049 to point 136 1104
+  line 142978 z 2049 to ref 130178
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

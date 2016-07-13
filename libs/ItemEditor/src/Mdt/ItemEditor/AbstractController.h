@@ -32,7 +32,7 @@ namespace Mdt{ namespace ItemEditor{
 
   class RowChangeEventMapper;
   class RowChangeEventDispatcher;
-  class ItemSelectionModel;
+  
 
   /*! \brief Common base for controllers
    */
@@ -57,8 +57,6 @@ namespace Mdt{ namespace ItemEditor{
      *
      * \note Because model can be shared with several objects (f.ex. other views),
      *        the controller does not take ownership of it (it will not delete it).
-     * \note If subclass overloads this method,
-     *        it must call this base setModel().
      * \pre model must be a valid pointer
      */
     virtual void setModel(QAbstractItemModel *model);
@@ -73,19 +71,6 @@ namespace Mdt{ namespace ItemEditor{
     {
       return pvModel;
     }
-
-    /*! \brief Set selection model
-     *
-     * If a editor uses a view that handle
-     *  selection with a QItemSelectionModel
-     *  (like QTableView), replace its selection model
-     *  with a ItemSelectionModel, and pass it to this controller
-     *  with setSelectionModel().
-     *  This way, the controller can block row change when needed.
-     *
-     * \pre model must be of type ItemSelectionModel
-     */
-    void setSelectionModel(QItemSelectionModel *model);
 
     /*! \brief Get row count
      *
@@ -154,6 +139,33 @@ namespace Mdt{ namespace ItemEditor{
 
    protected:
 
+    /*! \brief Reference model
+     *
+     * Will only hold a reference to model and emit modelChanged().
+     *
+     * \sa registerItemModel()
+     */
+    void referenceItemModel(QAbstractItemModel *model);
+
+    /*! \brief Register item model
+     *
+     * The model set with referenceModel() will be added to internal event handling.
+     *
+     * \sa referenceItemModel()
+     */
+    void registerItemModel();
+
+    /*! \brief Register selection model
+     *
+     * Will set model to the internal event handling.
+     *
+     * If a editor uses a view that handle selection with a QItemSelectionModel (like QTableView),
+     *  replace its selection model with a ItemSelectionModel,
+     *  and register it with this method.
+     *  This way, the controller can block row change when needed.
+     */
+    void registerSelectionModel(QItemSelectionModel *model);
+
    private slots:
 
     /*! \brief Set row state
@@ -173,7 +185,7 @@ namespace Mdt{ namespace ItemEditor{
     QPointer<QAbstractItemModel> pvModel;
     RowChangeEventMapper *pvRowChangeEventMapper;
     RowChangeEventDispatcher *pvRowChangeEventDispatcher;
-    QPointer<ItemSelectionModel> pvSelectionModel;
+//     QPointer<ItemSelectionModel> pvSelectionModel;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

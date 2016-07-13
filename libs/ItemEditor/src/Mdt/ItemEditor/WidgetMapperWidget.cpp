@@ -19,16 +19,16 @@
  **
  ****************************************************************************/
 #include "WidgetMapperWidget.h"
-#include "TableController.h"
+#include "TableViewController.h"
 
 namespace Mdt{ namespace ItemEditor{
 
 WidgetMapperWidget::WidgetMapperWidget(QWidget* parent)
  : AbstractWidgetMapperWidget(parent),
-   pvController(new TableController(this))
+   pvController(new TableViewController(this))
 {
   setController(pvController);
-  connect(pvController, &TableController::modelChanged, this, &WidgetMapperWidget::updateModel);
+  connect(pvController, &TableViewController::modelChanged, this, &WidgetMapperWidget::updateModel);
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

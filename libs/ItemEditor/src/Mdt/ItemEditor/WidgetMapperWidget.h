@@ -25,11 +25,11 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-  class TableController;
+  class TableViewController;
 
   /*! \brief Base class to create editor widget that uses a QDataWidgetMapper
    *
-   * WidgetMapperWidget owns a TableController.
+   * WidgetMapperWidget owns a TableViewController.
    */
   class WidgetMapperWidget : public AbstractWidgetMapperWidget
   {
@@ -43,7 +43,7 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    TableController *pvController;
+    TableViewController *pvController;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

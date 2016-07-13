@@ -18,19 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_TABLE_CONTROLLER_H
-#define MDT_ITEM_EDITOR_TABLE_CONTROLLER_H
+#ifndef MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_H
+#define MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_H
 
-#include "AbstractController.h"
+#include "AbstractTableViewController.h"
 #include <QPointer>
 
 class QAbstractTableModel;
+class QAbstractItemView;
 
 namespace Mdt{ namespace ItemEditor{
 
-  /*! \brief Controller for QAbstractTableModel
+  /*! \brief TableViewController acts on a QAbstractTableModel and a QAbstractItemView
    */
-  class TableController : public AbstractController
+  class TableViewController : public AbstractTableViewController
   {
    Q_OBJECT
 
@@ -38,14 +39,14 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Constructor
      */
-    explicit TableController(QObject* parent = nullptr);
+    explicit TableViewController(QObject* parent = nullptr);
 
     // Copy disabled
-    TableController(const TableController &) = delete;
-    TableController & operator=(const TableController &) = delete;
+    TableViewController(const TableViewController &) = delete;
+    TableViewController & operator=(const TableViewController &) = delete;
     // Move disabled
-    TableController(TableController &&) = delete;
-    TableController & operator=(TableController &&) = delete;
+    TableViewController(TableViewController &&) = delete;
+    TableViewController & operator=(TableViewController &&) = delete;
 
     /*! \brief Set model
      *
@@ -62,4 +63,4 @@ namespace Mdt{ namespace ItemEditor{
 
 }} // namespace Mdt{ namespace ItemEditor{
 
-#endif // #ifndef MDT_ITEM_EDITOR_TABLE_CONTROLLER_H
+#endif // #ifndef MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_H

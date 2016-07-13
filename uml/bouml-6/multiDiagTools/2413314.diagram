@@ -8,7 +8,7 @@ classcanvas 128130 class_ref 2706306 // StandardWindow
   classdiagramsettings member_max_width 0 end
   xyz 36 199 2000
 end
-classcanvas 128386 class_ref 2684802 // TableController
+classcanvas 128386 class_ref 2684802 // AbstractTableViewController
   classdiagramsettings member_max_width 0 end
   xyz 232.5 40.5 2000
 end

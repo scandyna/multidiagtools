@@ -25,7 +25,7 @@
 #include <QAbstractItemModel>
 #include <QItemSelectionModel>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -46,18 +46,8 @@ void AbstractController::setModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);
 
-  pvModel = model;
-  pvRowChangeEventMapper->setModel(model);
-  emit modelChanged(model);
-}
-
-void AbstractController::setSelectionModel(QItemSelectionModel* model)
-{
-  Q_ASSERT(model != nullptr);
-
-  pvSelectionModel = qobject_cast<ItemSelectionModel*>(model);
-  Q_ASSERT(!pvSelectionModel.isNull());
-  pvRowChangeEventMapper->setSelectionModel(model);
+  referenceItemModel(model);
+  registerItemModel();
 }
 
 int AbstractController::rowCount() const
@@ -108,6 +98,38 @@ void AbstractController::toNext()
 void AbstractController::toLast()
 {
   setCurrentRow(rowCount()-1);
+}
+
+void AbstractController::referenceItemModel(QAbstractItemModel* model)
+{
+  Q_ASSERT(model != nullptr);
+
+  if(model == pvModel){
+    return;
+  }
+  pvModel = model;
+  emit modelChanged(pvModel);
+}
+
+void AbstractController::registerItemModel()
+{
+  Q_ASSERT(!pvModel.isNull());
+
+  if(pvModel == pvRowChangeEventMapper->model()){
+    return;
+  }
+  pvRowChangeEventMapper->setModel(pvModel);
+}
+
+void AbstractController::registerSelectionModel(QItemSelectionModel* model)
+{
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(pvRowChangeEventMapper->model() != nullptr);
+
+  if(model == pvRowChangeEventMapper->selectionModel()){
+    return;
+  }
+  pvRowChangeEventMapper->setSelectionModel(model);
 }
 
 // void AbstractController::setRowState(RowState rs)

@@ -18,23 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "TableController.h"
+#include "TableViewController.h"
 #include <QAbstractTableModel>
 
 // #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
-TableController::TableController(QObject* parent)
- : AbstractController(parent)
+TableViewController::TableViewController(QObject* parent)
+ : AbstractTableViewController(parent)
 {
 }
 
-// void TableController::setModel(QAbstractTableModel* model)
+// void TableViewController::setModel(QAbstractTableModel* model)
 // {
 //   Q_ASSERT(model != nullptr);
 // 
-//   AbstractController::setModel(model);
+//   AbstractTableViewController::setModel(model);
 // }
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "TableViewWidget.h"
-#include "TableController.h"
+#include "TableViewController.h"
 
 // #include <QDebug>
 
@@ -27,10 +27,10 @@ namespace Mdt{ namespace ItemEditor{
 
 TableViewWidget::TableViewWidget(QWidget* parent)
  : AbstractTableViewWidget(parent),
-   pvController(new TableController(this))
+   pvController(new TableViewController(this))
 {
   setController(pvController);
-  connect(pvController, &TableController::modelChanged, this, &TableViewWidget::updateModel);
+  connect(pvController, &TableViewController::modelChanged, this, &TableViewWidget::updateModel);
 }
 
 void TableViewWidget::setModel(QAbstractTableModel* model)

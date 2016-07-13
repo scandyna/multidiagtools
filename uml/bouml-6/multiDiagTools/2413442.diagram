@@ -24,7 +24,7 @@ classcanvas 129026 class_ref 3062018 // RemoveAction
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 731.3 508.9 2005
 end
-classcanvas 129666 class_ref 2684802 // TableController
+classcanvas 129666 class_ref 2684802 // AbstractTableViewController
   classdiagramsettings member_max_width 0 end
   xyz 40.05 482.1 2000
 end
