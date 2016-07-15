@@ -13,15 +13,19 @@ diagrams
     120 110 100 4 0 0
   classdiagram_ref 2707842 // TestEditor
     120 110 80 21 0 25
-  active  classdiagram_ref 2700418 // EditorWidget
+  classdiagram_ref 2700418 // EditorWidget
     943 906 80 9 0 0
   classdiagram_ref 2761090 // WidgetMapperController
     120 110 100 8 456 0
   classdiagram_ref 2761218 // ControllerOverview
     120 110 100 23 0 332
+  active  sequencediagram_ref 2767874 // ItemViewExamples
+    943 906 100 4 60 0
+  classdiagram_ref 2767746 // EventDispatcher
+    120 110 100 23 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2714626 // AbstractWindow
+selected sequencediagram_ref 2774530 // ItemViewExamplesOld
 open
   
   package_ref 549506 // Algorithm
@@ -30,7 +34,8 @@ open
   package_ref 516226 // SqlItemModel
   class_ref 3090178 // TestFormEditionWidget
   classview_ref 1458946 // RowState
-  classview_ref 1485314 // RowChangeEvent
+  class_ref 3021826 // ItemSelectionModel
+  class_ref 3145090 // RowChangeEventDispatcher
   class_ref 3138562 // SqlWidgetMapperTableController
   classview_ref 1432322 // StandardFormWidget
   classview_ref 1465474 // EditorWidget

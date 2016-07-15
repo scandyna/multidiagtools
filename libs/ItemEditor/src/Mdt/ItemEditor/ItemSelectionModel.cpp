@@ -21,7 +21,7 @@
 #include "ItemSelectionModel.h"
 #include "ControllerStatePermission.h"
 
-// #include <QDebug>
+#include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -35,32 +35,48 @@ ItemSelectionModel::ItemSelectionModel(QAbstractItemModel* model, QObject* paren
 {
 }
 
+void ItemSelectionModel::setCurrentIndexFromCtl(const QModelIndex& index, QItemSelectionModel::SelectionFlags command)
+{
+  qDebug() << "setCurrentIndexFromCtl() - index " << index;
+  QItemSelectionModel::setCurrentIndex(index, command);
+}
+
 void ItemSelectionModel::setControllerState(ControllerState state)
 {
-  pvCurrentRowChangeAllowed = ControllerStatePermission::canChangeCurrentRow(state);
+  ///pvCurrentRowChangeAllowed = ControllerStatePermission::canChangeCurrentRow(state);
+  pvCurrentRowChangeAllowed = false;
 }
 
 void ItemSelectionModel::select(const QModelIndex& index, QItemSelectionModel::SelectionFlags command)
 {
+  qDebug() << "select() - " << index << " ...";
+  return;
   if(canAcceptIndex(index)){
+    qDebug() << " --> Go";
     QItemSelectionModel::select(index, command);
   }
 }
 
 void ItemSelectionModel::select(const QItemSelection& selection, QItemSelectionModel::SelectionFlags command)
 {
+  qDebug() << "select() - " << selection << " ...";
+  return;
   const auto indexList = selection.indexes();
   for(const auto & index : indexList){
     if(!canAcceptIndex(index)){
       return;
     }
   }
+  qDebug() << " --> Go";
   QItemSelectionModel::select(selection, command);
 }
 
 void ItemSelectionModel::setCurrentIndex(const QModelIndex& index, QItemSelectionModel::SelectionFlags command)
 {
+  qDebug() << "setCurrentIndex() - " << index << " ...";
+  return;
   if(canAcceptIndex(index)){
+    qDebug() << " --> Go";
     QItemSelectionModel::setCurrentIndex(index, command);
     pvPreviousCurrentRow = index.row();
   }

@@ -20,7 +20,9 @@
  ****************************************************************************/
 #include "RowChangeEventDispatcher.h"
 
-// #include <QDebug>
+#include "ItemSelectionModel.h"
+
+#include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -89,13 +91,15 @@ void RowChangeEventDispatcher::setModel(QAbstractItemModel* model)
 
   if(!pvModel.isNull()){
     disconnect(pvModel, &QAbstractItemModel::modelReset, this, &RowChangeEventDispatcher::onModelReset);
-//     disconnect(pvModel, &QAbstractItemModel::rowsInserted, this, &RowChangeEventDispatcher::onRowsInserted);
-//     disconnect(pvModel, &QAbstractItemModel::rowsRemoved, this, &RowChangeEventDispatcher::onRowsRemoved);
+    disconnect(pvModel, &QAbstractItemModel::rowsInserted, this, &RowChangeEventDispatcher::onRowsInserted);
+    disconnect(pvModel, &QAbstractItemModel::rowsAboutToBeRemoved, this, &RowChangeEventDispatcher::onRowsAboutToBeRemoved);
+    disconnect(pvModel, &QAbstractItemModel::rowsRemoved, this, &RowChangeEventDispatcher::onRowsRemoved);
   }
   pvModel = model;
   connect(pvModel, &QAbstractItemModel::modelReset, this, &RowChangeEventDispatcher::onModelReset);
-//   connect(pvModel, &QAbstractItemModel::rowsInserted, this, &RowChangeEventDispatcher::onRowsInserted);
-//   connect(pvModel, &QAbstractItemModel::rowsRemoved, this, &RowChangeEventDispatcher::onRowsRemoved);
+  connect(pvModel, &QAbstractItemModel::rowsInserted, this, &RowChangeEventDispatcher::onRowsInserted);
+  connect(pvModel, &QAbstractItemModel::rowsAboutToBeRemoved, this, &RowChangeEventDispatcher::onRowsAboutToBeRemoved);
+  connect(pvModel, &QAbstractItemModel::rowsRemoved, this, &RowChangeEventDispatcher::onRowsRemoved);
   onModelReset();
 }
 
@@ -117,16 +121,51 @@ void RowChangeEventDispatcher::onModelReset()
     setSelectionModelCurrentIndex(pvRowState.currentRow());
   }
   /*
-   * We must allways signal when a model was reset
+   * We must allways signal when a model was reset.
    * Because we updated pvRowState directly,
    * updateCurrentRow() will not signal any change, so we simply emit.
    */
   emit rowStateUpdated(pvRowState);
 }
 
+void RowChangeEventDispatcher::onRowsInserted(const QModelIndex& /*parent*/, int /*first*/, int last)
+{
+  Q_ASSERT(!pvModel.isNull());
+
+  pvRowState.setRowCount(pvModel->rowCount());
+  pvRowState.setCurrentRow(last);
+  if(!pvSelectionModel.isNull()){
+    setSelectionModelCurrentIndex(pvRowState.currentRow());
+  }
+  emit rowStateUpdated(pvRowState);
+}
+
+void RowChangeEventDispatcher::onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last)
+{
+  Q_ASSERT(!pvModel.isNull());
+
+  qDebug() << "About remove: n: " << pvModel->rowCount() << " , current: " << pvRowState.currentRow() << ",  first: " << first << " , last: " << last;
+}
+
+void RowChangeEventDispatcher::onRowsRemoved(const QModelIndex& /*parent*/, int first, int last)
+{
+  Q_ASSERT(!pvModel.isNull());
+
+  qDebug() << "onRowsRemoved() - n: " << pvModel->rowCount() << " , current: " << pvRowState.currentRow() << ",  first: " << first << " , last: " << last;
+  pvRowState.setRowCount(pvModel->rowCount());
+  if(pvRowState.currentRow() >= pvRowState.rowCount()){
+    pvRowState.setCurrentRow(pvRowState.rowCount()-1);
+  }
+  if(!pvSelectionModel.isNull()){
+    ///setSelectionModelCurrentIndex(pvRowState.currentRow());
+  }
+  emit rowStateUpdated(pvRowState);
+}
+
 void RowChangeEventDispatcher::updateCurrentIndex(const QModelIndex& current, const QModelIndex& /*previous*/)
 {
-  updateCurrentRow(current.row());
+  qDebug() << "RX from selection: " << current;
+  ///updateCurrentRow(current.row());
 }
 
 void RowChangeEventDispatcher::updateCurrentRow(int row)
@@ -152,7 +191,12 @@ void RowChangeEventDispatcher::setSelectionModelCurrentIndex(int row)
       column = 0;
     }
     auto index = pvSelectionModel->model()->index(row, column);
-    pvSelectionModel->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+    ///pvSelectionModel->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+    /// \todo toying
+    auto *s = dynamic_cast<ItemSelectionModel*>(pvSelectionModel.data());
+    if(s != nullptr){
+      s->setCurrentIndexFromCtl(index, QItemSelectionModel::ClearAndSelect);
+    }
   }
 }
 

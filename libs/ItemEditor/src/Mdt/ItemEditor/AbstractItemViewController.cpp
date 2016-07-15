@@ -61,8 +61,8 @@ void AbstractItemViewController::setModel(QAbstractItemModel* model)
   /*
    * Order of signal/slot connections matters here.
    * We must be sure that model is set to the view
-   * before it is registered (set to RowChangeEventMapper).
-   * Note doing so will produces a problem when model resets:
+   * before it is registered (set to RowChangeEventDispatcher).
+   * Not doing so will produces a problem when model resets:
    *  - Controller receives the event and updates current row to 0 (if model contains data)
    *  - Controller updates current index of view
    *  - View will reset (and current will also be lost!)
@@ -85,9 +85,14 @@ void AbstractItemViewController::setModelToView(QAbstractItemModel* model)
       delete oldSelectionModel;
     }
     // Replace selection model
-    pvView->setSelectionModel(new ItemSelectionModel(model));
+    auto *selectionModel = new ItemSelectionModel(model);
+    selectionModel->setControllerState(ControllerState::Editing); /// Just to test !
+    pvView->setSelectionModel(selectionModel);
     registerItemModel();
-    registerSelectionModel(pvView->selectionModel());
+    registerSelectionModel(selectionModel);
+//     pvView->setSelectionModel(new ItemSelectionModel(model));
+//     registerItemModel();
+//     registerSelectionModel(pvView->selectionModel());
   }
 }
 

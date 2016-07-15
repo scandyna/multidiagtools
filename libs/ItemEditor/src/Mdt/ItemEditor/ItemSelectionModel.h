@@ -56,6 +56,8 @@ namespace Mdt{ namespace ItemEditor{
       return pvCurrentRowChangeAllowed;
     }
 
+    void setCurrentIndexFromCtl(const QModelIndex & index, QItemSelectionModel::SelectionFlags command);
+
    public slots:
 
     /*! \brief Set controller state

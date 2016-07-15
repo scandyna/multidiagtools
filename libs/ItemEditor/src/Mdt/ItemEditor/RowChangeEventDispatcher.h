@@ -128,12 +128,6 @@ namespace Mdt{ namespace ItemEditor{
      */
     void rowStateUpdated(Mdt::ItemEditor::RowState rs);
 
-    /*! \brief Emitted when current row has changed
-     *
-     * This signal updates selection model, if it was set.
-     */
-//     void currentIndexChanged(const QModelIndex & index, QItemSelectionModel::SelectionFlags command);
-
    public slots:
 
     /*! \brief Set model
@@ -146,40 +140,21 @@ namespace Mdt{ namespace ItemEditor{
      */
     void onModelReset();
 
+    /*! \brief Called from item model when rows have been inserted
+     */
+    void onRowsInserted(const QModelIndex & parent, int first, int last);
+
+    /*! \brief Called from item model just before rows are removed
+     */
+    void onRowsAboutToBeRemoved(const QModelIndex & parent, int first, int last);
+
+    /*! \brief Called from item model when rows have been removed
+     */
+    void onRowsRemoved(const QModelIndex & parent, int first, int last);
+
     /*! \brief Called from selection model
      */
     void updateCurrentIndex(const QModelIndex & current, const QModelIndex & previous);
-
-    /*! \brief Set row state
-     *
-     * This slot is only called by RowChangeEventMapper,
-     *  to tell that a model was changed or populated,
-     *  a selection model was changed,
-     *  or current row changed by selection model.
-     */
-//     void setRowState(Mdt::ItemEditor::RowState rs, Mdt::ItemEditor::RowChangeEventSource source);
-
-   signals:
-
-    /*! \brief Emitted each time row count or current row changed
-     *
-     * This is used for components that need row count
-     *  and current row to update their state.
-     *  A example of such object is NavigationActions .
-     */
-//     void rowStateChanged(Mdt::ItemEditor::RowState rs);
-
-    /*! \brief Emitted when current row changed
-     */
-//     void currentRowChanged(int row);
-
-    /*! \brief Emitted when current row changed
-     */
-//     void currentRowChangedForController(int row/**, Mdt::ItemEditor::RowChangeEventSource source*/);
-
-    /*! \brief Emitted when model was set, or repopulated
-     */
-//     void modelReset();
 
    private:
 
