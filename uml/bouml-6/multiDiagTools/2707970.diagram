@@ -1,10 +1,10 @@
 format 211
 
-classcanvas 128002 class_ref 2684802 // TableController
+classcanvas 128002 class_ref 2684802 // AbstractItemViewController
   classdiagramsettings member_max_width 0 end
   xyz 715.4 769.8 2000
 end
-classcanvas 128130 class_ref 2927362 // SqlTableController
+classcanvas 128130 class_ref 2927362 // SqlTableViewController
   classdiagramsettings member_max_width 0 end
   xyz 39 529 2006
 end
@@ -43,11 +43,6 @@ classcanvas 131458 class_ref 3088898 // InputEventMapper
   classdiagramsettings member_max_width 0 end
   xyz 40.5 944.9 2018
 end
-relationcanvas 128514 relation_ref 3310722 // <directional composition>
-  from ref 128002 z 2007 to ref 128386
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 relationcanvas 128770 relation_ref 175106 // <generalisation>
   decenter_begin 528
   from ref 128642 z 2013 to ref 128386
@@ -61,19 +56,10 @@ relationcanvas 129026 relation_ref 174978 // <generalisation>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 129154 relation_ref 3310466 // <directional composition>
+relationcanvas 129154 relation_ref 3310466 // <unidirectional association>
   decenter_begin 482
   decenter_end 395
   from ref 128130 z 2019 to ref 128898
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 130306 relation_ref 3459458 // <generalisation>
-  geometry VHV unfixed
-  decenter_begin 507
-  from ref 128130 z 2007 to point 261 488
-  line 131586 z 2007 to point 870 488
-  line 131714 z 2007 to ref 130178
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
@@ -86,6 +72,11 @@ relationcanvas 131202 relation_ref 3459714 // <association>
   decenter_begin 488
   from ref 130178 z 2007 to ref 129538
   no_role_a no_role_b
-  multiplicity_a_pos 630 249 3000 multiplicity_b_pos 635 249 3000
+  multiplicity_a_pos 466 291 3000 multiplicity_b_pos 638 386 3000
+end
+relationcanvas 131842 relation_ref 3526658 // <generalisation>
+  from ref 128130 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end

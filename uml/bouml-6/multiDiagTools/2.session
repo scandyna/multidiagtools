@@ -11,59 +11,36 @@ diagrams
     906 902 100 4 0 0
   classdiagram_ref 2634114 // Goals
     120 110 100 4 0 0
-  classdiagram_ref 2414082 // Menu
+  active  classdiagram_ref 2767746 // EventDispatcher
+    943 906 100 23 0 0
+  sequencediagram_ref 2767874 // ItemViewExamples
     120 110 100 4 0 0
-  classdiagram_ref 2687362 // NavigationMenu
+  sequencediagram_ref 2768002 // WidgetMapperExamples
     120 110 100 4 0 0
-  classdiagram_ref 2700546 // ControllerWidgetOverview
-    943 906 85 21 0 0
-  classdiagram_ref 2406786 // InputEvents
-    120 110 80 21 0 0
-  classdiagram_ref 2707202 // InputEventMapper
-    120 110 100 18 0 0
-  classdiagram_ref 2714754 // TableViewSandbox
-    120 110 80 7 0 0
-  classdiagram_ref 2413314 // overview
+  sequencediagram_ref 2754434 // EventChainExamplesOld
     120 110 100 4 0 0
-  classdiagram_ref 2714626 // AbstractWindow
+  classdiagram_ref 2747778 // RowChangeEventDispatcherOld
     120 110 100 4 0 0
-  classdiagram_ref 2413442 // StandardWindow
-    120 110 100 8 0 0
-  classdiagram_ref 2727938 // EditorWidgetAndControllerOverview
-    943 906 90 8 72 0
-  classdiagram_ref 2728066 // sandbox
-    120 110 80 21 0 133
-  classdiagram_ref 2414210 // overview
-    120 110 100 4 0 0
-  classdiagram_ref 2414338 // State
-    120 110 100 4 0 0
-  classdiagram_ref 2734722 // Overview
-    943 906 100 4 0 0
-  classdiagram_ref 2700418 // EditorWidget
-    943 906 80 9 0 0
-  classdiagram_ref 2714498 // WindowWidgetController
-    120 110 100 8 144 0
-  classdiagram_ref 2707842 // TestEditor
-    943 906 100 21 0 0
-  active  classdiagram_ref 2707074 // TableController
-    943 906 85 8 156 184
 end
 show_stereotypes
-selected operation_ref 4535554 // registerSelectionModel
+selected classdiagram_ref 2767746 // EventDispatcher
 open
   
   package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
   
   package_ref 516226 // SqlItemModel
-  classview_ref 1472258 // Editor
+  class_ref 3090178 // TestFormEditionWidget
+  classview_ref 1458946 // RowState
+  classdiagram_ref 2747778 // RowChangeEventDispatcherOld
+  sequencediagram_ref 2754434 // EventChainExamplesOld
   class_ref 3090434 // AbstractController
-  class_ref 2684802 // AbstractTableViewController
-  attribute_ref 2908162 // Model
+  operation_ref 4569858 // AbstractWidgetMapperController
+  operation_ref 4569730 // addMapping
+  classrelation_ref 3559554 // <unidirectional association>
+  class_ref 3138562 // SqlWidgetMapperTableController
+  classview_ref 1286786 // Actions
   classview_ref 1432322 // StandardFormWidget
-  operation_ref 4542466 // setController
-  class_ref 3131266 // AbstractWidgetMapperWidget
-  class_ref 3131394 // WidgetMapperWidget
   classview_ref 1286658 // Window
   classview_ref 1472130 // ArticleEditor
   

@@ -14,7 +14,7 @@ classcanvas 128386 class_ref 2706434 // NavigationActions
   classdiagramsettings member_max_width 0 end
   xyz 511.5 326.9 2006
 end
-classcanvas 128642 class_ref 2684802 // AbstractTableViewController
+classcanvas 128642 class_ref 2684802 // AbstractItemViewController
   classdiagramsettings member_max_width 0 end
   xyz 595.6 122.2 2000
 end

@@ -33,10 +33,14 @@ TestWindowEditor::TestWindowEditor(QWidget* parent)
 
   auto *layoutWidget = new StandardEditorLayoutWidget;
   pvFormEditionWidget = new TestFormEditionWidget;
-  pvTableEditionWidget = new TestTableEditionWidget;
+//   pvTableEditionWidget = new TestTableEditionWidget;
 
+//   layoutWidget->setMainWidget(pvTableEditionWidget);
+//   layoutWidget->addChildWidget(pvFormEditionWidget, tr("Table"));
+//   setCentralWidget(layoutWidget);
+//   setMainEditorWidget(pvTableEditionWidget);
   layoutWidget->setMainWidget(pvFormEditionWidget);
-  layoutWidget->addChildWidget(pvTableEditionWidget, tr("Table"));
+//   layoutWidget->addChildWidget(pvTableEditionWidget, tr("Table"));
   setCentralWidget(layoutWidget);
   setMainEditorWidget(pvFormEditionWidget);
 }
@@ -45,5 +49,6 @@ void TestWindowEditor::setModel(QAbstractTableModel* model)
 {
   Q_ASSERT(model != nullptr);
 
-  pvTableEditionWidget->setModel(model);
+  pvFormEditionWidget->setModel(model);
+//   pvTableEditionWidget->setModel(model);
 }

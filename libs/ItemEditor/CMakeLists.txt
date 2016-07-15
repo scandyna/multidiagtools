@@ -13,8 +13,10 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/NavigationActions.cpp
     src/Mdt/ItemEditor/ControllerStatePermission.cpp
     src/Mdt/ItemEditor/AbstractController.cpp
-    src/Mdt/ItemEditor/AbstractTableViewController.cpp
+    src/Mdt/ItemEditor/AbstractItemViewController.cpp
     src/Mdt/ItemEditor/TableViewController.cpp
+    src/Mdt/ItemEditor/AbstractWidgetMapperController.cpp
+    src/Mdt/ItemEditor/WidgetMapperController.cpp
     src/Mdt/ItemEditor/StandardEditorLayoutWidget.cpp
     src/Mdt/ItemEditor/AbstractEditorWidget.cpp
     src/Mdt/ItemEditor/AbstractTableViewWidget.cpp

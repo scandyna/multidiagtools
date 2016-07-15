@@ -25,7 +25,7 @@
 #include <QAbstractItemModel>
 #include <QItemSelectionModel>
 
-// #include <QDebug>
+#include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -39,7 +39,8 @@ AbstractController::AbstractController(QObject* parent)
   connect(pvRowChangeEventMapper, &RowChangeEventMapper::rowStateChanged, pvRowChangeEventDispatcher, &RowChangeEventDispatcher::setRowState);
   connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::modelReset, this, &AbstractController::toFirst);
   connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateChanged, this, &AbstractController::rowStateChanged);
-  connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::currentRowChanged, this, &AbstractController::setCurrentRow);
+  connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::currentRowChanged, this, &AbstractController::currentRowChanged);
+  connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::currentRowChangedForController, this, &AbstractController::setCurrentRow);
 }
 
 void AbstractController::setModel(QAbstractItemModel* model)
@@ -68,6 +69,7 @@ bool AbstractController::setCurrentRow(int row)
    *       until we found row, or no more data is available,
    *       and consider this value as current row.
    */
+  qDebug() << "Controller: set current row " << row;
   pvCurrentRow = row;
   pvRowChangeEventDispatcher->setCurrentRow(row);
 

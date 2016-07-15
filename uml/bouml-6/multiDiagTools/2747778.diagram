@@ -1,6 +1,6 @@
 format 211
 
-classcanvas 128002 class_ref 3124610 // RowChangeEventDispatcher
+classcanvas 128002 class_ref 3124610 // RowChangeEventDispatcherOld
   classdiagramsettings member_max_width 0 end
   xyz 39 126.5 2000
 end

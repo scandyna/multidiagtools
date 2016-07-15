@@ -19,8 +19,9 @@
  **
  ****************************************************************************/
 #include "AbstractTableViewWidget.h"
-#include "EventCatchItemDelegate.h"
-#include "ItemSelectionModel.h"
+#include "TableViewController.h"
+// #include "EventCatchItemDelegate.h"
+// #include "ItemSelectionModel.h"
 #include <QTableView>
 #include <QVBoxLayout>
 
@@ -36,47 +37,16 @@ AbstractTableViewWidget::AbstractTableViewWidget(QWidget* parent)
   auto *l = new QVBoxLayout;
   l->addWidget(pvView);
   setLayout(l);
-  // Replace delegate with our proxy delegate
-  auto *delegate = pvView->itemDelegate();
-  auto *proxyDelegate = new EventCatchItemDelegate(pvView);
-  if(delegate != nullptr){
-    proxyDelegate->setItemDelegate(delegate);
-  }
-  pvView->setItemDelegate(proxyDelegate);
 }
 
 void AbstractTableViewWidget::setController(AbstractController* controller)
 {
   Q_ASSERT(controller != nullptr);
 
+  auto tableViewController = dynamic_cast<TableViewController*>(controller);
+  Q_ASSERT(tableViewController != nullptr);
+  tableViewController->setView(pvView);
   AbstractEditorWidget::setController(controller);
-  // If no model was set to view, it will not have any selection model
-  if(pvView->selectionModel() != nullptr){
-    ///controller->setSelectionModel(pvView->selectionModel());
-  }
-}
-
-void AbstractTableViewWidget::updateModel(QAbstractItemModel *model)
-{
-  if(model != nullptr){
-    /*
-     * As described in documentation of QAbstractItemView,
-     * the selection model will be replaced.
-     * QAbstractItemView does not delete the old selection model.
-     * While we are owning our view, we can safely delete it here.
-     */
-    auto *oldSelectionModel = pvView->selectionModel();
-    pvView->setModel(model);
-    if(oldSelectionModel != nullptr){
-      delete oldSelectionModel;
-    }
-    // Replace selection model
-    pvView->setSelectionModel(new ItemSelectionModel(model));
-    // Selection model must also be updated in controller
-    if(controller() != nullptr){
-      ///controller()->setSelectionModel(pvView->selectionModel());
-    }
-  }
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

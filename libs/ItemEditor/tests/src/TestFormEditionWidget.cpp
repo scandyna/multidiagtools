@@ -19,9 +19,25 @@
  **
  ****************************************************************************/
 #include "TestFormEditionWidget.h"
+#include <QAbstractItemModel>
+
+#include <QDebug>
+
+using namespace Mdt::ItemEditor;
 
 TestFormEditionWidget::TestFormEditionWidget(QWidget* parent)
- : WidgetMapperWidget(parent)
+ : AbstractEditorWidget(parent)
 {
+  pvController = new WidgetMapperController(this);
+  setController(pvController);
   setupUi(this);
+}
+
+void TestFormEditionWidget::setModel(QAbstractItemModel* model)
+{
+  Q_ASSERT(model != nullptr);
+
+  pvController->setModel(model);
+  pvController->addMapping(leName, 0);
+  pvController->addMapping(leRemarks, 1);
 }

@@ -18,16 +18,38 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "TableViewController.h"
-#include <QAbstractTableModel>
-
-// #include <QDebug>
+#include "AbstractWidgetMapperController.h"
+#include <QDataWidgetMapper>
 
 namespace Mdt{ namespace ItemEditor{
 
-TableViewController::TableViewController(QObject* parent)
- : AbstractItemViewController(parent)
+AbstractWidgetMapperController::AbstractWidgetMapperController(QDataWidgetMapper *mapper, QObject* parent)
+ : AbstractController(parent),
+   pvWidgetMapper(mapper)
 {
+  Q_ASSERT(pvWidgetMapper != nullptr);
+  pvWidgetMapper->setParent(this);
+  connect(this, &AbstractWidgetMapperController::currentRowChanged, pvWidgetMapper, &QDataWidgetMapper::setCurrentIndex);
 }
+
+void AbstractWidgetMapperController::setModel(QAbstractItemModel* model)
+{
+  Q_ASSERT(model != nullptr);
+
+  referenceItemModel(model);
+  pvWidgetMapper->setModel(model);
+  registerItemModel();
+}
+
+void AbstractWidgetMapperController::addMapping(QWidget* widget, int section)
+{
+  pvWidgetMapper->addMapping(widget, section);
+}
+
+void AbstractWidgetMapperController::addMapping(QWidget* widget, int section, const QByteArray& propertyName)
+{
+  pvWidgetMapper->addMapping(widget, section, propertyName);
+}
+
 
 }} // namespace Mdt{ namespace ItemEditor{

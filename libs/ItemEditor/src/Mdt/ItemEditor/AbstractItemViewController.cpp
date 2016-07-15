@@ -18,7 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AbstractTableViewController.h"
+#include "AbstractItemViewController.h"
 #include "EventCatchItemDelegate.h"
 #include "ItemSelectionModel.h"
 #include <QAbstractItemModel>
@@ -28,13 +28,13 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-AbstractTableViewController::AbstractTableViewController(QObject* parent)
+AbstractItemViewController::AbstractItemViewController(QObject* parent)
  : AbstractController(parent)
 {
-  connect(this, &AbstractTableViewController::modelChanged, this, &AbstractTableViewController::setModelToView);
+  connect(this, &AbstractItemViewController::modelChanged, this, &AbstractItemViewController::setModelToView);
 }
 
-void AbstractTableViewController::setView(QAbstractItemView* view)
+void AbstractItemViewController::setView(QAbstractItemView* view)
 {
   Q_ASSERT(view != nullptr);
 
@@ -49,12 +49,12 @@ void AbstractTableViewController::setView(QAbstractItemView* view)
   pvView->setItemDelegate(proxyDelegate);
 }
 
-QAbstractItemView* AbstractTableViewController::view() const
+QAbstractItemView* AbstractItemViewController::view() const
 {
   return pvView;
 }
 
-void AbstractTableViewController::setModel(QAbstractItemModel* model)
+void AbstractItemViewController::setModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);
 
@@ -70,7 +70,7 @@ void AbstractTableViewController::setModel(QAbstractItemModel* model)
   referenceItemModel(model);
 }
 
-void AbstractTableViewController::setModelToView(QAbstractItemModel* model)
+void AbstractItemViewController::setModelToView(QAbstractItemModel* model)
 {
   if( (model != nullptr) && (!pvView.isNull())){
     /*

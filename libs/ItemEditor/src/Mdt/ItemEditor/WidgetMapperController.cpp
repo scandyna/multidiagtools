@@ -18,15 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "TableViewController.h"
-#include <QAbstractTableModel>
+#include "WidgetMapperController.h"
+#include <QDataWidgetMapper>
 
 // #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
-TableViewController::TableViewController(QObject* parent)
- : AbstractItemViewController(parent)
+WidgetMapperController::WidgetMapperController(QObject* parent)
+ : AbstractWidgetMapperController(new QDataWidgetMapper, parent)
 {
 }
 

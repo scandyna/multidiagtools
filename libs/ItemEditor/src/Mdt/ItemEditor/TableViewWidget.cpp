@@ -30,10 +30,9 @@ TableViewWidget::TableViewWidget(QWidget* parent)
    pvController(new TableViewController(this))
 {
   setController(pvController);
-  connect(pvController, &TableViewController::modelChanged, this, &TableViewWidget::updateModel);
 }
 
-void TableViewWidget::setModel(QAbstractTableModel* model)
+void TableViewWidget::setModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);
 

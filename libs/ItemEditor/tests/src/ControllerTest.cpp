@@ -23,6 +23,7 @@
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/ControllerStatePermission.h"
 #include "Mdt/ItemEditor/TableViewController.h"
+#include "Mdt/ItemEditor/WidgetMapperController.h"
 #include "Mdt/ItemEditor/ItemSelectionModel.h"
 #include "Mdt/ItemEditor/RowChangeEventMapper.h"
 #include <QSignalSpy>
@@ -77,35 +78,32 @@ void ControllerTest::tableViewControllerSetModelTest()
    */
   controller.setModel(&tableModel);
   QVERIFY(controller.model() == &tableModel);
-  // Check that row state signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), 0);
-  QCOMPARE(rs.currentRow(), -1);
-  /*
-   * Change model
-   */
-  controller.setModel(&listModel);
-  QVERIFY(controller.model() == &listModel);
-  // Check that row state signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), 0);
-  QCOMPARE(rs.currentRow(), -1);
+  // Check that row state was not signaled (no view is attached)
+  QCOMPARE(rowStateSpy.count(), 0);
   /*
    * Affect view to controller
    */
   controller.setView(&tableView);
   QCOMPARE(controller.view(), &tableView);
   // Check that row state signaled
-  QCOMPARE(rowStateSpy.count(), 1);
+  QCOMPARE(rowStateSpy.count(), 2);
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
   QCOMPARE(rs.rowCount(), 0);
   QCOMPARE(rs.currentRow(), -1);
-
+  rowStateSpy.clear();
+  /*
+   * Change model
+   */
+  controller.setModel(&listModel);
+  QVERIFY(controller.model() == &listModel);
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 2);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 0);
+  QCOMPARE(rs.currentRow(), -1);
+  rowStateSpy.clear();
   /*
    * Play
    */
@@ -303,6 +301,50 @@ void ControllerTest::tableViewControllerCurrentRowChangeTest()
 //   while(viewB.isVisible()){
 //     QTest::qWait(500);
 //   }
+}
+
+void ControllerTest::widgetMapperControllerSetModelTest()
+{
+  using Mdt::ItemEditor::WidgetMapperController;
+  using Mdt::ItemEditor::RowState;
+
+  TestTableModel tableModel;
+  QStringListModel listModel;
+  WidgetMapperController controller;
+  QSignalSpy rowStateSpy(&controller, &WidgetMapperController::rowStateChanged);
+  QList<QVariant> spyItem;
+  RowState rs;
+
+  QVERIFY(rowStateSpy.isValid());
+  /*
+   * Initial state
+   */
+  QVERIFY(controller.model() == nullptr);
+  QVERIFY(controller.widgetMapper() == nullptr);
+  QCOMPARE(rowStateSpy.count(), 0);
+  /*
+   * Set model
+   */
+  controller.setModel(&tableModel);
+  QVERIFY(controller.model() == &tableModel);
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 0);
+  QCOMPARE(rs.currentRow(), -1);
+  /*
+   * Change model
+   */
+  controller.setModel(&listModel);
+  QVERIFY(controller.model() == &listModel);
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 0);
+  QCOMPARE(rs.currentRow(), -1);
+
 }
 
 void ControllerTest::setModelTest()

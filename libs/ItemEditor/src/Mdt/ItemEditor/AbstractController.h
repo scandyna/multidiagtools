@@ -133,6 +133,12 @@ namespace Mdt{ namespace ItemEditor{
      */
     void rowStateChanged(Mdt::ItemEditor::RowState rs);
 
+    /*! \brief Emitted whenever current row changed
+     *
+     * This signal is typically used for widget mappers
+     */
+    void currentRowChanged(int row);
+
     /*! \brief Emitted each time a model was set
      */
     void modelChanged(QAbstractItemModel *model);

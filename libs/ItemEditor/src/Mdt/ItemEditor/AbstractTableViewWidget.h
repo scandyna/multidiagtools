@@ -46,20 +46,10 @@ namespace Mdt{ namespace ItemEditor{
      *
      * Subclass that owns its controller
      *  must tell it by calling this method.
+     *
+     * \pre controller must be a TableViewController
      */
     void setController(AbstractController *controller) override;
-
-   protected slots:
-
-    /*! \brief Update model
-     *
-     * This slot is called from controller.
-     *
-     * Subclass that owns a controller
-     *  should connect AbstractController::modelChanged()
-     *  to this slot.
-     */
-    void updateModel(QAbstractItemModel *model);
 
    private:
 

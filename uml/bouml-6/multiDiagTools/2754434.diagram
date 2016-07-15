@@ -4,7 +4,7 @@ classinstance 128002 class_ref 1382914 // QItemSelectionModel
   name ""   xyz 22 25 2005 life_line_z 2000
 classinstance 128130 class_ref 2753410 // RowChangeEventMapper
   name ""   xyz 185 26 2000 life_line_z 2000
-classinstance 128258 class_ref 3124610 // RowChangeEventDispatcher
+classinstance 128258 class_ref 3124610 // RowChangeEventDispatcherOld
   name ""   xyz 370 26 2000 life_line_z 2000
 classinstance 128386 class_ref 3090434 // AbstractController
   name ""   xyz 565 25 2000 life_line_z 2000
@@ -16,10 +16,10 @@ end
 durationcanvas 128770 classinstance_ref 128130 // :RowChangeEventMapper
   xyzwh 263 98 2010 11 108
 end
-durationcanvas 129026 classinstance_ref 128258 // :RowChangeEventDispatcher
-  xyzwh 458 106 2010 11 91
+durationcanvas 129026 classinstance_ref 128258 // :RowChangeEventDispatcherOld
+  xyzwh 468 106 2010 11 91
   overlappingdurationcanvas 129538
-    xyzwh 464 145 2020 11 47
+    xyzwh 474 145 2020 11 47
   end
 end
 durationcanvas 129282 classinstance_ref 128386 // :AbstractController
@@ -43,10 +43,10 @@ durationcanvas 130434 classinstance_ref 128386 // :AbstractController
     xyzwh 626 321 2020 11 25
   end
 end
-durationcanvas 130690 classinstance_ref 128258 // :RowChangeEventDispatcher
-  xyzwh 458 308 2010 11 50
+durationcanvas 130690 classinstance_ref 128258 // :RowChangeEventDispatcherOld
+  xyzwh 468 308 2010 11 50
   overlappingdurationcanvas 135170
-    xyzwh 464 327 2020 11 25
+    xyzwh 474 327 2020 11 25
   end
 end
 durationcanvas 130946 classinstance_ref 128002 // :QItemSelectionModel
@@ -55,8 +55,8 @@ end
 durationcanvas 131202 classinstance_ref 128130 // :RowChangeEventMapper
   xyzwh 263 347 2010 11 34
 end
-durationcanvas 131458 classinstance_ref 128258 // :RowChangeEventDispatcher
-  xyzwh 458 365 2010 11 25
+durationcanvas 131458 classinstance_ref 128258 // :RowChangeEventDispatcherOld
+  xyzwh 468 365 2010 11 25
 end
 durationcanvas 131970 classinstance_ref 128386 // :AbstractController
   xyzwh 620 356 2010 11 31
@@ -64,15 +64,15 @@ end
 durationcanvas 132482 classinstance_ref 128130 // :RowChangeEventMapper
   xyzwh 263 498 2010 11 37
 end
-durationcanvas 132610 classinstance_ref 128258 // :RowChangeEventDispatcher
-  xyzwh 458 499 2010 11 143
+durationcanvas 132610 classinstance_ref 128258 // :RowChangeEventDispatcherOld
+  xyzwh 468 499 2010 11 143
   overlappingdurationcanvas 133378
-    xyzwh 464 531 2020 11 104
+    xyzwh 474 531 2020 11 104
     overlappingdurationcanvas 134146
-      xyzwh 470 605 2030 11 25
+      xyzwh 480 605 2030 11 25
     end
     overlappingdurationcanvas 135938
-      xyzwh 470 543 2030 11 25
+      xyzwh 480 543 2030 11 25
     end
   end
 end

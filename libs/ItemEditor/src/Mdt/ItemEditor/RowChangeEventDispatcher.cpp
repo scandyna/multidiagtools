@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "RowChangeEventDispatcher.h"
 
-// #include <QDebug>
+#include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -31,6 +31,8 @@ RowChangeEventDispatcher::RowChangeEventDispatcher(QObject* parent)
 
 void RowChangeEventDispatcher::setCurrentRow(int row)
 {
+  qDebug() << "Dispatcher: setCurrentRow() - row: " << row;
+
   bool currentRowHasChanged = (row != pvPreviousRowState.currentRow());
   pvPreviousRowState.setCurrentRow(row);
   auto rs = pvPreviousRowState;
@@ -48,7 +50,11 @@ void RowChangeEventDispatcher::setCurrentRow(int row)
       auto index = pvSelectionModel->model()->index(row, column);
       pvSelectionModel->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
     }
+    emit currentRowChanged(row);
+    emit rowStateChanged(rs);
   }else{
+    qDebug() << "Dispatcher: emit currentRowChanged() - row " << row;
+    emit currentRowChanged(row);
     emit rowStateChanged(rs);
   }
 }
@@ -62,6 +68,8 @@ void RowChangeEventDispatcher::setSelectionModel(QItemSelectionModel* model)
 
 void RowChangeEventDispatcher::setRowState(RowState rs, RowChangeEventSource source)
 {
+  qDebug() << "Dispatecher: setRowState() - row: " << rs.currentRow() << " , source: " << (int)source;
+  
   switch(source){
     case RowChangeEventSource::ModelReset:
       pvPreviousRowState = rs;
@@ -80,8 +88,10 @@ void RowChangeEventDispatcher::setRowState(RowState rs, RowChangeEventSource sou
    * Controller will later call us back with the current row it has set.
    */
   if(currentRowHasChanged){
-    emit currentRowChanged(rs.currentRow(), source);
+    emit currentRowChangedForController(rs.currentRow()/**, source*/);
   }else{
+    qDebug() << "Dispatcher: emit currentRowChanged() - row " << rs.currentRow();
+    emit currentRowChanged(rs.currentRow());
     emit rowStateChanged(rs);
   }
 }

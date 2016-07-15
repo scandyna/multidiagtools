@@ -18,20 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_TABLE_VIEW_WIDGET_H
-#define MDT_ITEM_EDITOR_TABLE_VIEW_WIDGET_H
+#ifndef MDT_ITEM_EDITOR_ABSTRACT_WIDGET_MAPPER_CONTROLLER_H
+#define MDT_ITEM_EDITOR_ABSTRACT_WIDGET_MAPPER_CONTROLLER_H
 
-#include "AbstractTableViewWidget.h"
+#include "AbstractController.h"
+#include <QByteArray>
 
-class QAbstractItemModel;
+class QDataWidgetMapper;
+class QWidget;
 
 namespace Mdt{ namespace ItemEditor{
 
-  class TableViewController;
-
-  /*! \brief QTableView based editor
+  /*! \brief Common base class to implement controllers for QDataWidgetMapper
    */
-  class TableViewWidget : public AbstractTableViewWidget
+  class AbstractWidgetMapperController : public AbstractController
   {
    Q_OBJECT
 
@@ -39,21 +39,40 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Constructor
      */
-    explicit TableViewWidget(QWidget* parent = nullptr);
+    explicit AbstractWidgetMapperController(QDataWidgetMapper *mapper, QObject* parent = nullptr);
+
+    /*! \brief Get widget mapper
+     */
+    QDataWidgetMapper *widgetMapper() const
+    {
+      return pvWidgetMapper;
+    }
 
     /*! \brief Set model
      *
      * \note Because model can be shared with several objects (f.ex. other views),
-     *        the editor does not take ownership of it (it will not delete it).
+     *        the controller does not take ownership of it (it will not delete it).
      * \pre model must be a valid pointer
      */
-    void setModel(QAbstractItemModel *model);
+    void setModel(QAbstractItemModel *model) override;
+
+    /*! \brief Adds a mapping between a widget and a section from the model
+     *
+     * For more informations, see QDataWidgetMapper documentation.
+     */
+    void addMapping(QWidget *widget, int section);
+
+    /*! \brief Adds a mapping between a widget and a section from the model
+     *
+     * For more informations, see QDataWidgetMapper documentation.
+     */
+    void addMapping(QWidget *widget, int section, const QByteArray & propertyName);
 
    private:
 
-    TableViewController *pvController;
+    QDataWidgetMapper *pvWidgetMapper;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
 
-#endif // #ifndef MDT_ITEM_EDITOR_TABLE_VIEW_WIDGET_H
+#endif // #ifndef MDT_ITEM_EDITOR_ABSTRACT_WIDGET_MAPPER_CONTROLLER_H

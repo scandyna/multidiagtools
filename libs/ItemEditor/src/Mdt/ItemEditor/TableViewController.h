@@ -21,17 +21,13 @@
 #ifndef MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_H
 #define MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_H
 
-#include "AbstractTableViewController.h"
-#include <QPointer>
-
-class QAbstractTableModel;
-class QAbstractItemView;
+#include "AbstractItemViewController.h"
 
 namespace Mdt{ namespace ItemEditor{
 
   /*! \brief TableViewController acts on a QAbstractTableModel and a QAbstractItemView
    */
-  class TableViewController : public AbstractTableViewController
+  class TableViewController : public AbstractItemViewController
   {
    Q_OBJECT
 
@@ -47,18 +43,6 @@ namespace Mdt{ namespace ItemEditor{
     // Move disabled
     TableViewController(TableViewController &&) = delete;
     TableViewController & operator=(TableViewController &&) = delete;
-
-    /*! \brief Set model
-     *
-     * \note Because model can be shared with several objects (f.ex. other views),
-     *        the controller does not take ownership of it (it will not delete it).
-     * \pre model must be a valid pointer
-     */
-//     void setModel(QAbstractTableModel *model) override;
-
-   private:
-
-//     QPointer<QAbstractTableModel> pvModel;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

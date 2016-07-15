@@ -49,7 +49,7 @@ namespace Mdt{ namespace ItemEditor{
    *  <tr><td>NavigationActions</td><td>toFirstTriggered()</td><td>AbstractController</td><td>toFirst()</td><td></td></tr>
    *  <tr><td>RowChangeEventMapper</td><td>rowStateChanged()</td><td>RowChangeEventDispatcher</td><td>setRowState()</td><td></td></tr>
    *  <tr><td>RowChangeEventDispatcher</td><td>currentIndexChanged()</td><td>ItemSelectionModel</td><td>setCurrentIndex()</td><td></td></tr>
-   *  <tr><td>RowChangeEventDispatcher</td><td>currentRowChanged()</td><td>AbstractController</td><td>setCurrentRow()</td><td></td></tr>
+   *  <tr><td>RowChangeEventDispatcher</td><td>currentRowChangedForController()</td><td>AbstractController</td><td>setCurrentRow()</td><td></td></tr>
    *  <tr><td>RowChangeEventDispatcher</td><td>rowStateChanged()</td><td>AbstractController</td><td>rowStateChanged()</td><td>Direct call of AbstractController::rowStateChanged() signal</td></tr>
    *  <tr><td>AbstractController</td><td>rowStateChanged()</td><td>NavigationActions</td><td>setRowState()</td><td>Used to update NavigationActions state</td></tr>
    * </table>
@@ -58,7 +58,7 @@ namespace Mdt{ namespace ItemEditor{
    * Example of events chain when user selects a new row in a QTableView:
    *  - ItemSelectionModel::currentChanged() -> RowChangeEventMapper::setCurrentIndex()
    *  - RowChangeEventMapper::rowStateChanged() -> RowChangeEventDispatcher::setRowState()
-   *  - RowChangeEventDispatcher::currentRowChanged() -> AbstractController::setCurrentRow()
+   *  - RowChangeEventDispatcher::currentRowChangedForController() -> AbstractController::setCurrentRow()
    *  - AbstractController calls RowChangeEventDispatcher::setCurrentRow()
    *  - RowChangeEventDispatcher::rowStateChanged() -> AbstractController::rowStateChanged()
    *  - AbstractController::rowStateChanged() -> NavigationActions::setRowState()
@@ -119,7 +119,7 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Set row state
      *
      * This slot is only called by RowChangeEventMapper,
-     *  to tell that a model was change or populated,
+     *  to tell that a model was changed or populated,
      *  a selection model was changed,
      *  or current row changed by selection model.
      */
@@ -137,7 +137,11 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Emitted when current row changed
      */
-    void currentRowChanged(int row, Mdt::ItemEditor::RowChangeEventSource source);
+    void currentRowChanged(int row);
+
+    /*! \brief Emitted when current row changed
+     */
+    void currentRowChangedForController(int row/**, Mdt::ItemEditor::RowChangeEventSource source*/);
 
     /*! \brief Emitted when model was set, or repopulated
      */

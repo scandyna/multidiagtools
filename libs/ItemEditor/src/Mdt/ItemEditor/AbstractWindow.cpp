@@ -25,6 +25,8 @@
 #include <QMenuBar>
 #include <QToolBar>
 
+// #include <QDebug>
+
 namespace Mdt{ namespace ItemEditor{
 
 AbstractWindow::AbstractWindow(QWidget* parent)

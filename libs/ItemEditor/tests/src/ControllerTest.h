@@ -38,6 +38,8 @@ class ControllerTest : public QObject
   void tableViewControllerSetModelTest();
   void tableViewControllerCurrentRowChangeTest();
 
+  void widgetMapperControllerSetModelTest();
+
   void setModelTest();
   void currentRowChangeTest();
 };

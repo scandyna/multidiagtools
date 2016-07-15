@@ -1,6 +1,6 @@
 format 211
 "tests" // Mdt::ItemEditor::tests
-  revision 17
+  revision 19
   modified_by 2 "philippe"
   // class settings
   
@@ -284,20 +284,54 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3538562 // <generalisation>
-	relation 3519746 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3538562 // <generalisation>
-	  b parent class_ref 3131394 // WidgetMapperWidget
-      end
-
       classrelation 3538690 // <generalisation>
 	relation 3519874 ---|>
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 3538690 // <generalisation>
 	  b parent class_ref 3131650 // Ui::TestFormEditionWidget
+      end
+
+      classrelation 3552770 // <directional composition>
+	relation 3533954 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3552770 // <directional composition>
+	  b parent class_ref 3138434 // WidgetMapperController
+      end
+
+      classrelation 3552898 // <generalisation>
+	relation 3534082 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3552898 // <generalisation>
+	  b parent class_ref 3068802 // AbstractEditorWidget
+      end
+
+      operation 4569474 "setModel"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "model" type class_ref 146946 // QAbstractItemModel
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3559426 // <directional composition>
+	relation 3540610 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3559426 // <directional composition>
+	  b parent class_ref 404610 // QDataWidgetMapper
       end
     end
 

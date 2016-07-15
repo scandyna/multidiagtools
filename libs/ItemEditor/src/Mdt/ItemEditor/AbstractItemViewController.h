@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ABSTRACT_TABLE_VIEW_CONTROLLER_H
-#define MDT_ITEM_EDITOR_ABSTRACT_TABLE_VIEW_CONTROLLER_H
+#ifndef MDT_ITEM_EDITOR_ABSTRACT_ITEM_VIEW_CONTROLLER_H
+#define MDT_ITEM_EDITOR_ABSTRACT_ITEM_VIEW_CONTROLLER_H
 
 #include "AbstractController.h"
 #include <QPointer>
@@ -33,7 +33,7 @@ namespace Mdt{ namespace ItemEditor{
 
   /*! \brief Common base class for controllers that act on a QAbstractItemModel and a QAbstractItemView
    */
-  class AbstractTableViewController : public AbstractController
+  class AbstractItemViewController : public AbstractController
   {
    Q_OBJECT
 
@@ -41,14 +41,14 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Constructor
      */
-    explicit AbstractTableViewController(QObject* parent = nullptr);
+    explicit AbstractItemViewController(QObject* parent = nullptr);
 
     // Copy disabled
-    AbstractTableViewController(const AbstractTableViewController &) = delete;
-    AbstractTableViewController & operator=(const AbstractTableViewController &) = delete;
+    AbstractItemViewController(const AbstractItemViewController &) = delete;
+    AbstractItemViewController & operator=(const AbstractItemViewController &) = delete;
     // Move disabled
-    AbstractTableViewController(AbstractTableViewController &&) = delete;
-    AbstractTableViewController & operator=(AbstractTableViewController &&) = delete;
+    AbstractItemViewController(AbstractItemViewController &&) = delete;
+    AbstractItemViewController & operator=(AbstractItemViewController &&) = delete;
 
     /*! \brief Attach view to this controller
      *
@@ -85,9 +85,8 @@ namespace Mdt{ namespace ItemEditor{
    private:
 
     QPointer<QAbstractItemView> pvView;
-//     QPointer<QAbstractTableModel> pvModel;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
 
-#endif // #ifndef MDT_ITEM_EDITOR_ABSTRACT_TABLE_VIEW_CONTROLLER_H
+#endif // #ifndef MDT_ITEM_EDITOR_ABSTRACT_ITEM_VIEW_CONTROLLER_H

@@ -22,9 +22,14 @@
 #define MDT_ITEM_EDITOR_TEST_FORM_EDITION_WIDGET_H
 
 #include "Mdt/ItemEditor/WidgetMapperWidget.h"
+
+#include "Mdt/ItemEditor/AbstractEditorWidget.h"
+#include "Mdt/ItemEditor/WidgetMapperController.h"
 #include "ui_TestFormEditionWidget.h"
 
-class TestFormEditionWidget : public Mdt::ItemEditor::WidgetMapperWidget, Ui::TestFormEditionWidget
+class QAbstractItemModel;
+
+class TestFormEditionWidget : public Mdt::ItemEditor::AbstractEditorWidget, Ui::TestFormEditionWidget
 {
  Q_OBJECT
 
@@ -32,6 +37,11 @@ class TestFormEditionWidget : public Mdt::ItemEditor::WidgetMapperWidget, Ui::Te
 
   explicit TestFormEditionWidget(QWidget* parent = nullptr);
 
+  void setModel(QAbstractItemModel *model);
+
+ private:
+
+  Mdt::ItemEditor::WidgetMapperController *pvController;
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_TEST_FORM_EDITION_WIDGET_H

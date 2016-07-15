@@ -1,0 +1,293 @@
+format 211
+
+classinstance 128002 class_ref 3145090 // ControllerRowChangeEventDispatcher
+  name ""   xyz 397.828 55.4531 2000 life_line_z 2000
+classinstance 128130 class_ref 3145218 // SelectionModelRowChangeEventDispatcher
+  name ""   xyz 38.03 54.357 2000 life_line_z 2000
+classinstance 128258 class_ref 3145346 // ModelRowChangeEventDispatcher
+  name ""   xyz 258.3 127.057 2000 life_line_z 2000
+classinstance 128514 class_ref 1382914 // QItemSelectionModel
+  name ""   xyz 3.79738 19.7 2005 life_line_z 2000
+classinstance 128770 class_ref 146946 // QAbstractItemModel
+  name ""   xyz 212.883 88.3495 2005 life_line_z 2000
+classinstance 128898 class_ref 2706434 // NavigationActions
+  name ""   xyz 713.156 14.2 2010 life_line_z 2000
+classinstance 136706 class_ref 3090434 // AbstractController
+  name ""   xyz 560.9 15.1 2000 life_line_z 2000
+durationcanvas 137730 classinstance_ref 128514 // :QItemSelectionModel
+  xyzwh 69 208.9 2010 11 66
+end
+durationcanvas 137858 classinstance_ref 128130 // :SelectionModelRowChangeEventDispatcher
+  xyzwh 171 209.2 2010 11 60
+end
+durationcanvas 138626 classinstance_ref 128002 // :ControllerRowChangeEventDispatcher
+  xyzwh 513 218.1 2010 11 44
+end
+durationcanvas 140034 classinstance_ref 136706 // :AbstractController
+  xyzwh 615 314.6 2010 11 100
+end
+durationcanvas 140162 classinstance_ref 128002 // :ControllerRowChangeEventDispatcher
+  xyzwh 513 315.8 2010 11 94
+end
+durationcanvas 140418 classinstance_ref 128130 // :SelectionModelRowChangeEventDispatcher
+  xyzwh 171 327.7 2010 11 72
+end
+durationcanvas 140674 classinstance_ref 128514 // :QItemSelectionModel
+  xyzwh 69 329.5 2010 11 73
+end
+durationcanvas 142850 classinstance_ref 136706 // :AbstractController
+  xyzwh 615 471.7 2010 11 85
+end
+durationcanvas 142978 classinstance_ref 128002 // :ControllerRowChangeEventDispatcher
+  xyzwh 513 471.3 2010 11 74
+end
+durationcanvas 143234 classinstance_ref 128258 // :ModelRowChangeEventDispatcher
+  xyzwh 364 482.4 2010 11 49
+end
+durationcanvas 144642 classinstance_ref 128514 // :QItemSelectionModel
+  xyzwh 69 629.9 2010 11 104
+end
+durationcanvas 144770 classinstance_ref 128130 // :SelectionModelRowChangeEventDispatcher
+  xyzwh 171 629 2010 11 103
+end
+durationcanvas 146178 classinstance_ref 136706 // :AbstractController
+  xyzwh 615 782 2010 11 77
+end
+durationcanvas 146306 classinstance_ref 128002 // :ControllerRowChangeEventDispatcher
+  xyzwh 513 778.8 2010 11 88
+end
+durationcanvas 146562 classinstance_ref 128130 // :SelectionModelRowChangeEventDispatcher
+  xyzwh 171 778 2010 11 45
+end
+durationcanvas 147458 classinstance_ref 128770 // :QAbstractItemModel
+  xyzwh 275 912.8 2010 11 40
+end
+durationcanvas 147586 classinstance_ref 128258 // :ModelRowChangeEventDispatcher
+  xyzwh 364 913.7 2010 11 40
+end
+durationcanvas 147842 classinstance_ref 128002 // :ControllerRowChangeEventDispatcher
+  xyzwh 513 919.4 2010 11 35
+end
+durationcanvas 148610 classinstance_ref 136706 // :AbstractController
+  xyzwh 615 223.4 2010 11 27
+end
+durationcanvas 148866 classinstance_ref 128898 // :NavigationActions
+  xyzwh 768 224.9 2010 11 35
+end
+durationcanvas 149250 classinstance_ref 128898 // :NavigationActions
+  xyzwh 768 397.1 2010 11 25
+end
+durationcanvas 149634 classinstance_ref 128898 // :NavigationActions
+  xyzwh 768 537.1 2010 11 25
+end
+durationcanvas 150530 classinstance_ref 128898 // :NavigationActions
+  xyzwh 768 831.7 2010 11 25
+end
+durationcanvas 150786 classinstance_ref 136706 // :AbstractController
+  xyzwh 615 931.7 2010 11 25
+end
+durationcanvas 151042 classinstance_ref 128898 // :NavigationActions
+  xyzwh 768 935 2010 11 32
+end
+durationcanvas 151298 classinstance_ref 128002 // :ControllerRowChangeEventDispatcher
+  xyzwh 513 635.7 2010 11 37
+end
+durationcanvas 151554 classinstance_ref 128258 // :ModelRowChangeEventDispatcher
+  xyzwh 364 655.9 2010 11 72
+end
+durationcanvas 151810 classinstance_ref 128002 // :ControllerRowChangeEventDispatcher
+  xyzwh 513 686.1 2010 11 48
+end
+durationcanvas 152066 classinstance_ref 136706 // :AbstractController
+  xyzwh 615 694.5 2010 11 42
+end
+durationcanvas 152322 classinstance_ref 128898 // :NavigationActions
+  xyzwh 768 703 2010 11 35
+end
+msg 137986 synchronous
+  from durationcanvas_ref 137730
+  to durationcanvas_ref 137858
+  yz 209 2015 msg operation_ref 4576386 // "onCurrentIndexChanged(in current : QModelIndex, in previous : QModelIndex) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 53 192
+msg 138754 synchronous
+  from durationcanvas_ref 137858
+  to durationcanvas_ref 138626
+  yz 218 3035 msg operation_ref 4577026 // "setCurrentRow(in row : int) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 276 201
+msg 140290 synchronous
+  from durationcanvas_ref 140034
+  to durationcanvas_ref 140162
+  yz 316 3040 msg operation_ref 4577026 // "setCurrentRow(in row : int) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 521 299
+msg 140546 synchronous
+  from durationcanvas_ref 140162
+  to durationcanvas_ref 140418
+  yz 329 3035 msg operation_ref 4577666 // "setCurrentRow(in row : int) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 264 312
+msg 140802 synchronous
+  from durationcanvas_ref 140418
+  to durationcanvas_ref 140674
+  yz 331 3025 msg operation_ref 4441730 // "setCurrentIndex(in index : QModelIndex, in command : SelectionFlags) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 77 314
+msg 140930 synchronous
+  from durationcanvas_ref 140674
+  to durationcanvas_ref 140418
+  yz 376 3020 msg operation_ref 4576386 // "onCurrentIndexChanged(in current : QModelIndex, in previous : QModelIndex) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 52 359
+msg 141058 synchronous
+  from durationcanvas_ref 140418
+  to durationcanvas_ref 140162
+  yz 379 3030 msg operation_ref 4577026 // "setCurrentRow(in row : int) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 275 362
+msg 143106 synchronous
+  from durationcanvas_ref 142850
+  to durationcanvas_ref 142978
+  yz 471 3030 msg operation_ref 4577154 // "setModel(in model : QAbstractItemModel) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 528 454
+msg 143362 synchronous
+  from durationcanvas_ref 142978
+  to durationcanvas_ref 143234
+  yz 482 3025 msg operation_ref 4577410 // "setModel(in model : QAbstractItemModel) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 401 465
+msg 143490 synchronous
+  from durationcanvas_ref 143234
+  to durationcanvas_ref 142978
+  yz 520 3030 msg operation_ref 4577794 // "setRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 383 503
+msg 144898 synchronous
+  from durationcanvas_ref 144642
+  to durationcanvas_ref 144770
+  yz 631 3020 msg operation_ref 4577922 // "onModelChanged(in model : QAbstractItemModel) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 72 614
+msg 146434 synchronous
+  from durationcanvas_ref 146178
+  to durationcanvas_ref 146306
+  yz 785 3025 msg operation_ref 4578050 // "setSelectionModel(in model : QItemSelectionModel) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 519 767
+msg 146690 synchronous
+  from durationcanvas_ref 146306
+  to durationcanvas_ref 146562
+  yz 781 3030 msg operation_ref 4578178 // "setSelectionModel(in model : QItemSelectionModel) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 258 764
+msg 146818 synchronous
+  from durationcanvas_ref 146562
+  to durationcanvas_ref 146306
+  yz 812 3025 msg operation_ref 4577026 // "setCurrentRow(in row : int) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 268 795
+msg 147714 synchronous
+  from durationcanvas_ref 147458
+  to durationcanvas_ref 147586
+  yz 914 2015 msg operation_ref 4576514 // "onModelReset() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 277 898
+msg 147970 synchronous
+  from durationcanvas_ref 147586
+  to durationcanvas_ref 147842
+  yz 920 3035 msg operation_ref 4577794 // "setRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 382 903
+msg 148738 synchronous
+  from durationcanvas_ref 138626
+  to durationcanvas_ref 148610
+  yz 223 3040 msg operation_ref 4529026 // "updateRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 507 205
+msg 148994 synchronous
+  from durationcanvas_ref 148610
+  to durationcanvas_ref 148866
+  yz 228 2015 msg operation_ref 4100610 // "setRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 656 211
+msg 149122 synchronous
+  from durationcanvas_ref 140162
+  to durationcanvas_ref 140034
+  yz 383 3030 msg operation_ref 4529026 // "updateRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 508 367
+msg 149378 synchronous
+  from durationcanvas_ref 140034
+  to durationcanvas_ref 149250
+  yz 397 3035 msg operation_ref 4100610 // "setRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 655 380
+msg 149506 synchronous
+  from durationcanvas_ref 142978
+  to durationcanvas_ref 142850
+  yz 525 3030 msg operation_ref 4529026 // "updateRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 518 510
+msg 149762 synchronous
+  from durationcanvas_ref 142850
+  to durationcanvas_ref 149634
+  yz 537 3035 msg operation_ref 4100610 // "setRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 655 520
+msg 150402 synchronous
+  from durationcanvas_ref 146306
+  to durationcanvas_ref 146178
+  yz 822 3030 msg operation_ref 4529026 // "updateRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 526 807
+msg 150658 synchronous
+  from durationcanvas_ref 146178
+  to durationcanvas_ref 150530
+  yz 831 3035 msg operation_ref 4100610 // "setRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 645 814
+msg 150914 synchronous
+  from durationcanvas_ref 147842
+  to durationcanvas_ref 150786
+  yz 931 3040 msg operation_ref 4529026 // "updateRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 517 917
+msg 151170 synchronous
+  from durationcanvas_ref 150786
+  to durationcanvas_ref 151042
+  yz 935 3020 msg operation_ref 4100610 // "setRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 645 918
+msg 151426 synchronous
+  from durationcanvas_ref 144770
+  to durationcanvas_ref 151298
+  yz 636 3055 msg operation_ref 4577154 // "setModel(in model : QAbstractItemModel) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 327 619
+msg 151682 synchronous
+  from durationcanvas_ref 151298
+  to durationcanvas_ref 151554
+  yz 661 3050 msg operation_ref 4577410 // "setModel(in model : QAbstractItemModel) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 434 644
+msg 151938 synchronous
+  from durationcanvas_ref 151554
+  to durationcanvas_ref 151810
+  yz 688 3055 msg operation_ref 4577794 // "setRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 423 671
+msg 152194 synchronous
+  from durationcanvas_ref 151810
+  to durationcanvas_ref 152066
+  yz 704 3060 msg operation_ref 4529026 // "updateRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 513 687
+msg 152450 synchronous
+  from durationcanvas_ref 152066
+  to durationcanvas_ref 152322
+  yz 704 3005 msg operation_ref 4100610 // "setRowState(in rs : RowState) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 655 687
+end
