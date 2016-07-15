@@ -1,0 +1,56 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
+
+/*! \page libs_itemeditor Item editor library
+ *
+ * \section itemeditor_concept Concept
+ *
+ * \section itemeditor_controller Controller
+ *
+ *  Mdt::ItemEditor::TableViewController can be used with a model based on QAbstractTableModel
+ *   and a view based on QAbstractItemView (like QTableView).
+ *
+ *  Mdt::ItemEditor::WidgetMapperController owns a QDataWidgetMapper.
+ *   It can be used to create custom widgets.
+ *
+ * \section itemeditor_window Window
+ *
+ *  Mdt::ItemEditor::StandardWindow is a general purpose window that can be used
+ *   for common cases.
+ *
+ *  To create custom window, it is better to subclass Mdt::ItemEditor::AbstractWindow.
+ *
+ * \section itemeditor_editor_widget Editor widget
+ *
+ *  Mdt::ItemEditor::TableViewWidget is directly usable, QTableView based editor.
+ *
+ *  For custom editor, subclassing Mdt::ItemEditor::AbstractEditor offers some advantages:
+ *   - Mdt::ItemEditor::StandardWindow can automatically connect all signals and slots
+ *      between its actions and the controller hold by the editor.
+ *
+ * \section itemeditor_tableview_editor Editor based on QTableView
+ *
+ *
+ *
+ *
+ *
+ * \section itemeditor_widgetmapper_editor Editor using widget mapper
+ */

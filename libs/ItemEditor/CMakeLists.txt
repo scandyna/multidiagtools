@@ -20,8 +20,6 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/AbstractEditorWidget.cpp
     src/Mdt/ItemEditor/AbstractTableViewWidget.cpp
     src/Mdt/ItemEditor/TableViewWidget.cpp
-    src/Mdt/ItemEditor/AbstractWidgetMapperWidget.cpp
-    src/Mdt/ItemEditor/WidgetMapperWidget.cpp
     src/Mdt/ItemEditor/StandardWindow.cpp
     src/Mdt/ItemEditor/AbstractWindow.cpp
 )

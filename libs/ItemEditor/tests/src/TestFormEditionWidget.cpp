@@ -28,9 +28,9 @@ using namespace Mdt::ItemEditor;
 TestFormEditionWidget::TestFormEditionWidget(QWidget* parent)
  : AbstractEditorWidget(parent)
 {
+  setupUi(this);
   pvController = new WidgetMapperController(this);
   setController(pvController);
-  setupUi(this);
 }
 
 void TestFormEditionWidget::setModel(QAbstractItemModel* model)

@@ -1,6 +1,6 @@
 format 211
 "tests" // Mdt::ItemEditor::tests
-  revision 19
+  revision 20
   modified_by 2 "philippe"
   // class settings
   
@@ -325,14 +325,6 @@ ${inlines}
 	
       end
 
-      classrelation 3559426 // <directional composition>
-	relation 3540610 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3559426 // <directional composition>
-	  b parent class_ref 404610 // QDataWidgetMapper
-      end
     end
 
     class 3103618 "TestTableEditionWidget"

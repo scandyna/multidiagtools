@@ -2,42 +2,42 @@ format 211
 
 classcanvas 128002 class_ref 147202 // QAbstractTableModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 37 935 2024
+  xyz 405.75 1059.6 2024
 end
 classcanvas 128130 class_ref 174338 // QSqlQueryModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 52 1015 2030
+  xyz 246.6 1059.6 2030
 end
 classcanvas 128258 class_ref 174210 // QSqlTableModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 54 1095 2036
+  xyz 93.8 1059.6 2036
 end
 classcanvas 128386 class_ref 146946 // QAbstractItemModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 41 831 2018
+  xyz 594.65 1059.6 2018
 end
 classcanvas 128898 class_ref 3090434 // AbstractController
   classdiagramsettings member_max_width 0 end
-  xyz 457 39 2042
+  xyz 165 41.1 2042
 end
 classcanvas 129154 class_ref 3138306 // AbstractWidgetMapperController
   classdiagramsettings member_max_width 0 end
-  xyz 408 759 2048
+  xyz 114.15 742.45 2048
 end
 classcanvas 129410 class_ref 3138562 // SqlWidgetMapperTableController
   classdiagramsettings member_max_width 0 end
-  xyz 569 1095 2054
+  xyz 40.8 977.9 2054
 end
 note 129794 "Possibly we should ne expose the mapper, but the methos it provies.
 Goal: user should not use mapper's slots (toNext, toFirst, ...)"
-  xyzwh 40.5 1216.5 2000 613 93
+  xyzwh 40.5 1182.6 2000 613 93
 classcanvas 129922 class_ref 3138434 // WidgetMapperController
   classdiagramsettings member_max_width 0 end
-  xyz 473 1015 2054
+  xyz 303.15 977.9 2054
 end
 classcanvas 130434 class_ref 404610 // QDataWidgetMapper
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 225 831 2061
+  xyz 594.65 977.9 2061
 end
 relationcanvas 128514 relation_ref 141186 // <generalisation>
   from ref 128002 z 2025 to ref 128386
@@ -54,59 +54,38 @@ relationcanvas 128770 relation_ref 175106 // <generalisation>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 129026 relation_ref 3481986 // <unidirectional association>
-  geometry HV unfixed
-  decenter_begin 505
-  from ref 128898 z 2043 to point 110 381
-  line 131586 z 2043 to ref 128386
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 relationcanvas 129282 relation_ref 3526786 // <generalisation>
-  decenter_end 507
   from ref 129154 z 2049 to ref 128898
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129538 relation_ref 3527298 // <unidirectional association>
-  decenter_begin 395
-  decenter_end 395
   from ref 129410 z 2055 to ref 128258
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129666 relation_ref 3533826 // <generalisation>
-  from ref 129410 z 2055 to ref 129154
+  geometry VHV unfixed
+  from ref 129410 z 2055 to point 149 939
+  line 131714 z 2055 to point 384 939
+  line 131842 z 2055 to ref 129154
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 3526914 // <generalisation>
-  geometry VHV unfixed
-  decenter_begin 473
-  from ref 129922 z 2055 to point 549 976
-  line 130818 z 2055 to point 678 976
-  line 130946 z 2055 to ref 129154
+  from ref 129922 z 2055 to ref 129154
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130562 relation_ref 491010 // <association>
-  decenter_begin 395
-  decenter_end 395
+  decenter_begin 517
+  decenter_end 517
   from ref 130434 z 2062 to ref 128386
   no_role_a no_role_b
-  multiplicity_a_pos 193 855 3000 no_multiplicity_b
+  multiplicity_a_pos 635 1036 3000 no_multiplicity_b
 end
-relationcanvas 130690 relation_ref 3540738 // <unidirectional association>
-  decenter_end 395
-  from ref 129154 z 2062 to ref 130434
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 131330 relation_ref 3540866 // <directional composition>
-  geometry HV unfixed
-  decenter_begin 395
-  from ref 129922 z 2062 to point 294 1029
-  line 131458 z 2062 to ref 130434
+relationcanvas 131970 relation_ref 3568258 // <directional composition>
+  from ref 129922 z 2062 to ref 130434
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

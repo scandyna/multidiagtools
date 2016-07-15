@@ -21,8 +21,6 @@
 #ifndef MDT_ITEM_EDITOR_TEST_FORM_EDITION_WIDGET_H
 #define MDT_ITEM_EDITOR_TEST_FORM_EDITION_WIDGET_H
 
-#include "Mdt/ItemEditor/WidgetMapperWidget.h"
-
 #include "Mdt/ItemEditor/AbstractEditorWidget.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"
 #include "ui_TestFormEditionWidget.h"

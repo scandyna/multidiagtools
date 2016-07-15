@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "WidgetMapperWidgetPlugin.h"
-#include "Mdt/ItemEditor/WidgetMapperWidget.h"
 #include <QIcon>
 #include <QString>
 
@@ -83,5 +82,6 @@ QString WidgetMapperWidgetPlugin::whatsThis() const
 
 QWidget* WidgetMapperWidgetPlugin::createWidget(QWidget* parent)
 {
-  return new Mdt::ItemEditor::WidgetMapperWidget(parent);
+//   return new Mdt::ItemEditor::WidgetMapperWidget(parent);
+  return nullptr;
 }
