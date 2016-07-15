@@ -8,7 +8,6 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/ItemDelegateProxy.cpp
     src/Mdt/ItemEditor/EventCatchItemDelegate.cpp
     src/Mdt/ItemEditor/ItemSelectionModel.cpp
-    src/Mdt/ItemEditor/RowChangeEventMapper.cpp
     src/Mdt/ItemEditor/RowChangeEventDispatcher.cpp
     src/Mdt/ItemEditor/NavigationActions.cpp
     src/Mdt/ItemEditor/ControllerStatePermission.cpp

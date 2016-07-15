@@ -39,7 +39,7 @@ class TestWindowEditor : public Mdt::ItemEditor::StandardWindow
 
  private:
 
-//   TestTableEditionWidget *pvTableEditionWidget;
+  TestTableEditionWidget *pvTableEditionWidget;
   TestFormEditionWidget *pvFormEditionWidget;
 };
 

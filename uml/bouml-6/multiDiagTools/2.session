@@ -15,15 +15,8 @@ diagrams
     943 906 100 23 0 0
   sequencediagram_ref 2767874 // ItemViewExamples
     120 110 100 4 0 0
-  sequencediagram_ref 2768002 // WidgetMapperExamples
-    120 110 100 4 0 0
-  sequencediagram_ref 2754434 // EventChainExamplesOld
-    120 110 100 4 0 0
-  classdiagram_ref 2747778 // RowChangeEventDispatcherOld
-    120 110 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2767746 // EventDispatcher
 open
   
   package_ref 549506 // Algorithm
@@ -32,8 +25,7 @@ open
   package_ref 516226 // SqlItemModel
   class_ref 3090178 // TestFormEditionWidget
   classview_ref 1458946 // RowState
-  classdiagram_ref 2747778 // RowChangeEventDispatcherOld
-  sequencediagram_ref 2754434 // EventChainExamplesOld
+  classview_ref 1485314 // RowChangeEvent
   class_ref 3090434 // AbstractController
   operation_ref 4569858 // AbstractWidgetMapperController
   operation_ref 4569730 // addMapping

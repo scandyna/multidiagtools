@@ -20,27 +20,20 @@
  ****************************************************************************/
 #include "AbstractController.h"
 #include "ItemSelectionModel.h"
-#include "RowChangeEventMapper.h"
 #include "RowChangeEventDispatcher.h"
 #include <QAbstractItemModel>
 #include <QItemSelectionModel>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
 AbstractController::AbstractController(QObject* parent)
  : QObject(parent),
-   pvCurrentRow(-1),
-   pvRowChangeEventMapper(new RowChangeEventMapper(this)),
-   pvRowChangeEventDispatcher(new RowChangeEventDispatcher(this))
+   pvModel(nullptr)
 {
-  connect(pvRowChangeEventMapper, &RowChangeEventMapper::selectionModelChanged, pvRowChangeEventDispatcher, &RowChangeEventDispatcher::setSelectionModel);
-  connect(pvRowChangeEventMapper, &RowChangeEventMapper::rowStateChanged, pvRowChangeEventDispatcher, &RowChangeEventDispatcher::setRowState);
-  connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::modelReset, this, &AbstractController::toFirst);
-  connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateChanged, this, &AbstractController::rowStateChanged);
-  connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::currentRowChanged, this, &AbstractController::currentRowChanged);
-  connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::currentRowChangedForController, this, &AbstractController::setCurrentRow);
+  pvRowChangeEventDispatcher = new RowChangeEventDispatcher(this);
+  connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateUpdated, this, &AbstractController::updateRowState);
 }
 
 void AbstractController::setModel(QAbstractItemModel* model)
@@ -53,10 +46,12 @@ void AbstractController::setModel(QAbstractItemModel* model)
 
 int AbstractController::rowCount() const
 {
-  if(pvModel.isNull()){
-    return 0;
-  }
-  return pvModel->rowCount();
+  return pvRowChangeEventDispatcher->rowCount();
+}
+
+int AbstractController::currentRow() const
+{
+  return pvRowChangeEventDispatcher->currentRow();
 }
 
 bool AbstractController::setCurrentRow(int row)
@@ -69,8 +64,6 @@ bool AbstractController::setCurrentRow(int row)
    *       until we found row, or no more data is available,
    *       and consider this value as current row.
    */
-  qDebug() << "Controller: set current row " << row;
-  pvCurrentRow = row;
   pvRowChangeEventDispatcher->setCurrentRow(row);
 
   return true;
@@ -88,13 +81,13 @@ void AbstractController::toFirst()
 void AbstractController::toPrevious()
 {
   /// \todo checks..
-  setCurrentRow(pvCurrentRow-1);
+  setCurrentRow(currentRow()-1);
 }
 
 void AbstractController::toNext()
 {
   /// \todo checks..
-  setCurrentRow(pvCurrentRow+1);
+  setCurrentRow(currentRow()+1);
 }
 
 void AbstractController::toLast()
@@ -115,30 +108,30 @@ void AbstractController::referenceItemModel(QAbstractItemModel* model)
 
 void AbstractController::registerItemModel()
 {
-  Q_ASSERT(!pvModel.isNull());
+  Q_ASSERT(pvModel != nullptr);
 
-  if(pvModel == pvRowChangeEventMapper->model()){
+  if(pvModel == pvRowChangeEventDispatcher->model()){
     return;
   }
-  pvRowChangeEventMapper->setModel(pvModel);
+  pvRowChangeEventDispatcher->setModel(pvModel);
 }
 
-void AbstractController::registerSelectionModel(QItemSelectionModel* model)
+void AbstractController::registerSelectionModel(QItemSelectionModel* selectionModel)
 {
-  Q_ASSERT(model != nullptr);
-  Q_ASSERT(pvRowChangeEventMapper->model() != nullptr);
+  Q_ASSERT(selectionModel != nullptr);
+  Q_ASSERT(pvRowChangeEventDispatcher->model() != nullptr);
+  Q_ASSERT(selectionModel->model() == pvRowChangeEventDispatcher->model());
 
-  if(model == pvRowChangeEventMapper->selectionModel()){
+  if(selectionModel == pvRowChangeEventDispatcher->selectionModel()){
     return;
   }
-  pvRowChangeEventMapper->setSelectionModel(model);
+  pvRowChangeEventDispatcher->setSelectionModel(selectionModel);
 }
 
-// void AbstractController::setRowState(RowState rs)
-// {
-//   qDebug() << "AbstractController::setRowState() ...";
-//   emit rowStateChanged(rs);
-// }
-
+void AbstractController::updateRowState(RowState rs)
+{
+  emit currentRowChanged(rs.currentRow());
+  emit rowStateChanged(rs);
+}
 
 }} // namespace Mdt{ namespace ItemEditor{

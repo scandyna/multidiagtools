@@ -30,9 +30,7 @@ class QItemSelectionModel;
 
 namespace Mdt{ namespace ItemEditor{
 
-  class RowChangeEventMapper;
   class RowChangeEventDispatcher;
-  
 
   /*! \brief Common base for controllers
    */
@@ -94,10 +92,7 @@ namespace Mdt{ namespace ItemEditor{
      *  (for example, a view has currently no current index),
      *  -1 is returned.
      */
-    int currentRow() const
-    {
-      return pvCurrentRow;
-    }
+    int currentRow() const;
 
    public slots:
 
@@ -163,35 +158,33 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Register selection model
      *
-     * Will set model to the internal event handling.
+     * Will set selectionModel to the internal event handling.
      *
      * If a editor uses a view that handle selection with a QItemSelectionModel (like QTableView),
-     *  replace its selection model with a ItemSelectionModel,
+     *  replace its selection selectionModel with a ItemSelectionModel,
      *  and register it with this method.
      *  This way, the controller can block row change when needed.
      */
-    void registerSelectionModel(QItemSelectionModel *model);
+    void registerSelectionModel(QItemSelectionModel *selectionModel);
 
    private slots:
 
-    /*! \brief Set row state
+    /*! \brief Update row state
      *
-     * This slot is only called by RowChangeEventMapper,
-     *  to tell is a model was change or populated,
-     *  if a selection model was changed,
+     * This slot is only called by RowChangeEventDispatcher,
+     *  to tell that a model was changed or populated,
+     *  a selection model was changed,
      *  or current row changed by selection model.
      *
-     * It will also call setCurrentRow().
+     * It will also emit rowStateChanged() and currentRowChanged().
      */
-//     void setRowState(Mdt::ItemEditor::RowState rs);
+    void updateRowState(Mdt::ItemEditor::RowState rs);
 
    private:
 
-    int pvCurrentRow;
-    QPointer<QAbstractItemModel> pvModel;
-    RowChangeEventMapper *pvRowChangeEventMapper;
+//     QPointer<QAbstractItemModel> pvModel;
     RowChangeEventDispatcher *pvRowChangeEventDispatcher;
-//     QPointer<ItemSelectionModel> pvSelectionModel;
+    QAbstractItemModel *pvModel;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

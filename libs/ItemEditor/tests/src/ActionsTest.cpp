@@ -22,7 +22,6 @@
 #include "TestTableModel.h"
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/RowState.h"
-#include "Mdt/ItemEditor/RowChangeEventMapper.h"
 #include "Mdt/ItemEditor/NavigationActions.h"
 #include <QSignalSpy>
 #include <QItemSelectionModel>

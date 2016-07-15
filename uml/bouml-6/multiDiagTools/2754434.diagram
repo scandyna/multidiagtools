@@ -2,20 +2,12 @@ format 211
 
 classinstance 128002 class_ref 1382914 // QItemSelectionModel
   name ""   xyz 22 25 2005 life_line_z 2000
-classinstance 128130 class_ref 2753410 // RowChangeEventMapper
-  name ""   xyz 185 26 2000 life_line_z 2000
 classinstance 128258 class_ref 3124610 // RowChangeEventDispatcherOld
   name ""   xyz 370 26 2000 life_line_z 2000
 classinstance 128386 class_ref 3090434 // AbstractController
   name ""   xyz 565 25 2000 life_line_z 2000
 classinstance 128514 class_ref 2706434 // NavigationActions
   name ""   xyz 697 25 2000 life_line_z 2000
-durationcanvas 128642 classinstance_ref 128002 // :QItemSelectionModel
-  xyzwh 88 98 2010 11 117
-end
-durationcanvas 128770 classinstance_ref 128130 // :RowChangeEventMapper
-  xyzwh 263 98 2010 11 108
-end
 durationcanvas 129026 classinstance_ref 128258 // :RowChangeEventDispatcherOld
   xyzwh 468 106 2010 11 91
   overlappingdurationcanvas 129538
@@ -52,17 +44,11 @@ end
 durationcanvas 130946 classinstance_ref 128002 // :QItemSelectionModel
   xyzwh 88 319 2010 11 42
 end
-durationcanvas 131202 classinstance_ref 128130 // :RowChangeEventMapper
-  xyzwh 263 347 2010 11 34
-end
 durationcanvas 131458 classinstance_ref 128258 // :RowChangeEventDispatcherOld
   xyzwh 468 365 2010 11 25
 end
 durationcanvas 131970 classinstance_ref 128386 // :AbstractController
   xyzwh 620 356 2010 11 31
-end
-durationcanvas 132482 classinstance_ref 128130 // :RowChangeEventMapper
-  xyzwh 263 498 2010 11 37
 end
 durationcanvas 132610 classinstance_ref 128258 // :RowChangeEventDispatcherOld
   xyzwh 468 499 2010 11 143
@@ -85,27 +71,12 @@ end
 durationcanvas 133634 classinstance_ref 128002 // :QItemSelectionModel
   xyzwh 88 559 2010 11 51
 end
-durationcanvas 133890 classinstance_ref 128130 // :RowChangeEventMapper
-  xyzwh 263 596 2010 11 25
-end
 durationcanvas 134402 classinstance_ref 128386 // :AbstractController
   xyzwh 620 610 2010 11 32
 end
 durationcanvas 134658 classinstance_ref 128514 // :NavigationActions
   xyzwh 752 627 2010 11 25
 end
-msg 128898 synchronous
-  from durationcanvas_ref 128642
-  to durationcanvas_ref 128770
-  yz 99 2015 msg operation_ref 4100738 // "setCurrentRow(in current : QModelIndex, in previous : QModelIndex) : void"
-  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 132 82
-msg 129154 synchronous
-  from durationcanvas_ref 128770
-  to durationcanvas_ref 129026
-  yz 107 2015 msg operation_ref 4535810 // "setRowState(in rs : RowState, in source : RowChangeEventSource) : void"
-  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 324 90
 msg 129410 synchronous
   from durationcanvas_ref 129026
   to durationcanvas_ref 129282
@@ -142,30 +113,12 @@ msg 131074 synchronous
   yz 319 2015 msg operation_ref 4441730 // "setCurrentIndex(in index : QModelIndex, in command : SelectionFlags) : void"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
   label_xy 226 302
-msg 131330 synchronous
-  from durationcanvas_ref 130946
-  to durationcanvas_ref 131202
-  yz 350 2020 msg operation_ref 4100738 // "setCurrentRow(in current : QModelIndex, in previous : QModelIndex) : void"
-  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 132 333
-msg 131586 synchronous
-  from durationcanvas_ref 131202
-  to durationcanvas_ref 131458
-  yz 370 2015 msg operation_ref 4535810 // "setRowState(in rs : RowState, in source : RowChangeEventSource) : void"
-  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 324 353
 msg 132098 synchronous
   from durationcanvas_ref 131458
   to durationcanvas_ref 131970
   yz 368 2015 msg operation_ref 4509186 // "rowStateChanged(in rs : RowState) : void"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
   label_xy 486 351
-msg 132738 synchronous
-  from durationcanvas_ref 132482
-  to durationcanvas_ref 132610
-  yz 499 2015 msg operation_ref 4535810 // "setRowState(in rs : RowState, in source : RowChangeEventSource) : void"
-  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 324 482
 msg 132994 synchronous
   from durationcanvas_ref 132610
   to durationcanvas_ref 132866
@@ -184,18 +137,6 @@ msg 133762 synchronous
   yz 559 2030 msg operation_ref 4441730 // "setCurrentIndex(in index : QModelIndex, in command : SelectionFlags) : void"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
   label_xy 229 542
-msg 134018 synchronous
-  from durationcanvas_ref 133634
-  to durationcanvas_ref 133890
-  yz 596 2015 msg operation_ref 4100738 // "setCurrentRow(in current : QModelIndex, in previous : QModelIndex) : void"
-  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 132 579
-msg 134274 synchronous
-  from durationcanvas_ref 133890
-  to durationcanvas_ref 134146
-  yz 605 2035 msg operation_ref 4535810 // "setRowState(in rs : RowState, in source : RowChangeEventSource) : void"
-  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 330 588
 msg 134530 synchronous
   from durationcanvas_ref 134146
   to durationcanvas_ref 134402

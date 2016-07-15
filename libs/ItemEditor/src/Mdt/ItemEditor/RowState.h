@@ -120,6 +120,25 @@ namespace Mdt{ namespace ItemEditor{
       pvCurrentRow = -1;
     }
 
+    /*! \brief Equality operator
+     *
+     * \note a and b are equal if their row count and current row are equal.
+     *       Their validity (or null state) are not taken in acount.
+     */
+    friend
+    constexpr bool operator==(const RowState & a, const RowState & b)
+    {
+      return ( (a.pvRowCount == b.pvRowCount) && (a.pvCurrentRow == b.pvCurrentRow) );
+    }
+
+    /*! \brief Inequality operator
+     */
+    friend
+    constexpr bool operator!=(const RowState & a, const RowState & b)
+    {
+      return !(a == b);
+    }
+
    private:
 
     int pvRowCount;

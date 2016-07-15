@@ -34,8 +34,10 @@ class RowChangeTest : public QObject
   void cleanupTestCase();
 
   void rowStateTest();
-  void rowChangeEventMapperTest();
+  void rowStateComparisonTest();
+
   void eventDispatcherTest();
+  void eventDispatcherWithSelectionModelTest();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_ROW_CHANGE_TEST_H

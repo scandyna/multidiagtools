@@ -34,32 +34,20 @@ end
 durationcanvas 136578 classinstance_ref 128898 // :NavigationActions
   xyzwh 558 182 2010 11 25
 end
-durationcanvas 137218 classinstance_ref 128002 // :RowChangeEventDispatcher
-  xyzwh 287 442 2010 11 80
-end
-durationcanvas 137474 classinstance_ref 133122 // :AbstractController
-  xyzwh 444 452 2010 11 71
-end
-durationcanvas 137730 classinstance_ref 130946 // :QDataWidgetMapper
-  xyzwh 763 458 2010 11 25
-end
-durationcanvas 137986 classinstance_ref 128898 // :NavigationActions
-  xyzwh 558 487 2010 11 38
-end
 durationcanvas 138498 classinstance_ref 128770 // :QAbstractItemModel
-  xyzwh 85 559 2010 11 40
+  xyzwh 85 474 2010 11 40
 end
 durationcanvas 138626 classinstance_ref 128002 // :RowChangeEventDispatcher
-  xyzwh 287 559 2010 11 25
+  xyzwh 287 474 2010 11 25
 end
 durationcanvas 138882 classinstance_ref 133122 // :AbstractController
-  xyzwh 444 570 2010 11 90
+  xyzwh 444 485 2010 11 90
 end
 durationcanvas 139138 classinstance_ref 130946 // :QDataWidgetMapper
-  xyzwh 763 580 2010 11 25
+  xyzwh 763 495 2010 11 25
 end
 durationcanvas 139394 classinstance_ref 128898 // :NavigationActions
-  xyzwh 558 636 2010 11 25
+  xyzwh 558 551 2010 11 25
 end
 msg 133890 synchronous
   from durationcanvas_ref 133634
@@ -109,46 +97,28 @@ msg 136706 synchronous
   yz 186 3010 msg operation_ref 4100610 // "setRowState(in rs : RowState) : void"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
   label_xy 464 169
-msg 137602 synchronous
-  from durationcanvas_ref 137218
-  to durationcanvas_ref 137474
-  yz 457 3010 msg operation_ref 4529026 // "updateRowState(in rs : RowState) : void"
-  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 313 440
-msg 137858 synchronous
-  from durationcanvas_ref 137474
-  to durationcanvas_ref 137730
-  yz 460 3010 msg operation_ref 1269378 // "setCurrentIndex(in index : int) : void"
-  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 557 443
-msg 138114 synchronous
-  from durationcanvas_ref 137474
-  to durationcanvas_ref 137986
-  yz 497 2020 msg operation_ref 4100610 // "setRowState(in rs : RowState) : void"
-  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 464 480
 msg 138754 synchronous
   from durationcanvas_ref 138498
   to durationcanvas_ref 138626
-  yz 559 2015 msg operation_ref 4576514 // "onModelReset() : void"
+  yz 474 2015 msg operation_ref 4576514 // "onModelReset() : void"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 144 542
+  label_xy 146 457
 msg 139010 synchronous
   from durationcanvas_ref 138626
   to durationcanvas_ref 138882
-  yz 570 2020 msg operation_ref 4529026 // "updateRowState(in rs : RowState) : void"
+  yz 485 2020 msg operation_ref 4529026 // "updateRowState(in rs : RowState) : void"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 317 553
+  label_xy 319 468
 msg 139266 synchronous
   from durationcanvas_ref 138882
   to durationcanvas_ref 139138
-  yz 581 2015 msg operation_ref 1269378 // "setCurrentIndex(in index : int) : void"
+  yz 496 2015 msg operation_ref 1269378 // "setCurrentIndex(in index : int) : void"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 557 564
+  label_xy 559 479
 msg 139522 synchronous
   from durationcanvas_ref 138882
   to durationcanvas_ref 139394
-  yz 639 2015 msg operation_ref 4100610 // "setRowState(in rs : RowState) : void"
+  yz 554 2015 msg operation_ref 4100610 // "setRowState(in rs : RowState) : void"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 464 622
+  label_xy 466 537
 end

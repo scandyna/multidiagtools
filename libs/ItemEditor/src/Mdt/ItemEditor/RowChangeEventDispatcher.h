@@ -22,7 +22,6 @@
 #define MDT_ITEM_EDITOR_ROW_CHANGE_EVENT_DISPATCHER_H
 
 #include "RowState.h"
-#include "RowChangeEventSource.h"
 #include <QObject>
 #include <QPointer>
 #include <QModelIndex>
@@ -44,43 +43,31 @@ namespace Mdt{ namespace ItemEditor{
    * This table shows some signals/slots connections that exits:
    * <table class="srcdoc_td_center">
    *  <tr><th>Sender</th><th>Signal</th><th>Receiver</th><th>Slot (or signal)</th><th>Remarks</th></tr>
-   *  <tr><td>QAbstractItemModel</td><td>modelReset()</td><td>RowChangeEventMapper</td><td>onModelReset()</td><td></td></tr>
-   *  <tr><td>ItemSelectionModel</td><td>currentChanged()</td><td>RowChangeEventMapper</td><td>setCurrentIndex()</td><td></td></tr>
+   *  <tr><td>QAbstractItemModel</td><td>modelReset()</td><td>RowChangeEventDispatcher</td><td>onModelReset()</td><td></td></tr>
+   *  <tr><td>ItemSelectionModel</td><td>currentChanged()</td><td>RowChangeEventDispatcher</td><td>updateCurrentIndex()</td><td></td></tr>
    *  <tr><td>NavigationActions</td><td>toFirstTriggered()</td><td>AbstractController</td><td>toFirst()</td><td></td></tr>
-   *  <tr><td>RowChangeEventMapper</td><td>rowStateChanged()</td><td>RowChangeEventDispatcher</td><td>setRowState()</td><td></td></tr>
    *  <tr><td>RowChangeEventDispatcher</td><td>currentIndexChanged()</td><td>ItemSelectionModel</td><td>setCurrentIndex()</td><td></td></tr>
-   *  <tr><td>RowChangeEventDispatcher</td><td>currentRowChangedForController()</td><td>AbstractController</td><td>setCurrentRow()</td><td></td></tr>
-   *  <tr><td>RowChangeEventDispatcher</td><td>rowStateChanged()</td><td>AbstractController</td><td>rowStateChanged()</td><td>Direct call of AbstractController::rowStateChanged() signal</td></tr>
+   *  <tr><td>RowChangeEventDispatcher</td><td>rowStateUpdated()</td><td>AbstractController</td><td>updateRowState()</td><td></td></tr>
    *  <tr><td>AbstractController</td><td>rowStateChanged()</td><td>NavigationActions</td><td>setRowState()</td><td>Used to update NavigationActions state</td></tr>
    * </table>
    *
    *
    * Example of events chain when user selects a new row in a QTableView:
-   *  - ItemSelectionModel::currentChanged() -> RowChangeEventMapper::setCurrentIndex()
-   *  - RowChangeEventMapper::rowStateChanged() -> RowChangeEventDispatcher::setRowState()
-   *  - RowChangeEventDispatcher::currentRowChangedForController() -> AbstractController::setCurrentRow()
-   *  - AbstractController calls RowChangeEventDispatcher::setCurrentRow()
-   *  - RowChangeEventDispatcher::rowStateChanged() -> AbstractController::rowStateChanged()
+   *  - ItemSelectionModel::currentChanged() -> RowChangeEventDispatcher::updateCurrentIndex()
+   *  - RowChangeEventDispatcher::rowStateUpdated() -> AbstractController::updateRowState()
    *  - AbstractController::rowStateChanged() -> NavigationActions::setRowState()
    *
    * Example of events when user clicks toNext button:
    *  - NavigationActions::toNextTriggered() -> AbstractController::toNext()
    *  - AbstractController (after calculated row and checks) calls RowChangeEventDispatcher::setCurrentRow()
    *  - RowChangeEventDispatcher::currentIndexChanged() -> ItemSelectionModel::setCurrentIndex()
-   *  - ItemSelectionModel::currentChanged() -> RowChangeEventMapper::setCurrentIndex()
-   *  - RowChangeEventMapper::rowStateChanged() -> RowChangeEventDispatcher::setRowState()
-   *  - RowChangeEventDispatcher::rowStateChanged() -> AbstractController::rowStateChanged()
+   *  - ItemSelectionModel::currentChanged() -> RowChangeEventDispatcher::updateCurrentIndex()
+   *  - RowChangeEventDispatcher::rowStateUpdated() -> AbstractController::updateRowState()
    *  - AbstractController::rowStateChanged() -> NavigationActions::setRowState()
    *
    * Example of events chain when model was set to controller, or model was repopulated:
-   *  - AbstractController calls RowChangeEventMapper::setModel()
-   *  - RowChangeEventMapper::rowStateChanged() -> RowChangeEventDispatcher::setRowState()
-   *  - RowChangeEventDispatcher::modelReset() -> AbstractController::toFirst()
-   *  - AbstractController (after checks) calls RowChangeEventDispatcher::setCurrentRow()
-   *  - RowChangeEventDispatcher::currentIndexChanged() -> ItemSelectionModel::setCurrentIndex()
-   *  - ItemSelectionModel::currentChanged() -> RowChangeEventMapper::setCurrentIndex()
-   *  - RowChangeEventMapper::rowStateChanged() -> RowChangeEventDispatcher::setRowState()
-   *  - RowChangeEventDispatcher::rowStateChanged() -> AbstractController::rowStateChanged()
+   *  - AbstractController calls RowChangeEventDispatcher::setModel()
+   *  - RowChangeEventDispatcher::rowStateUpdated() -> AbstractController::updateRowState()
    *  - AbstractController::rowStateChanged() -> NavigationActions::setRowState()
    */
   class RowChangeEventDispatcher : public QObject
@@ -100,21 +87,68 @@ namespace Mdt{ namespace ItemEditor{
     RowChangeEventDispatcher(RowChangeEventDispatcher &&) = delete;
     RowChangeEventDispatcher & operator=(RowChangeEventDispatcher &&) = delete;
 
+    /*! \brief Set selection model
+     */
+    void setSelectionModel(QItemSelectionModel *model);
+
+    /*! \brief Get selection model
+     */
+    QItemSelectionModel *selectionModel() const;
+
+    /*! \brief Get model
+     */
+    QAbstractItemModel *model() const;
+
     /*! \brief Set current row
      *
-     * This method is only called from AbstractController.
+     * This method is called from AbstractController.
+     *  If a selection model was set,
+     *  it will also change its current index.
+     *
+     * \pre row must be >= -1
+     * \pre row must be < rowCount()
      */
     void setCurrentRow(int row);
+
+    /*! \brief Get row count
+     */
+    int rowCount() const;
+
+    /*! \brief Get current row
+     */
+    int currentRow() const;
+
+   signals:
+
+    /*! \brief Emitted when row state was updated
+     *
+     * This signal tells the controller that row count
+     *  or current row was updated by a event like
+     *  current changed, model was set or repopulated.
+     */
+    void rowStateUpdated(Mdt::ItemEditor::RowState rs);
+
+    /*! \brief Emitted when current row has changed
+     *
+     * This signal updates selection model, if it was set.
+     */
+//     void currentIndexChanged(const QModelIndex & index, QItemSelectionModel::SelectionFlags command);
 
    public slots:
 
     /*! \brief Set model
-     *
-     * This slot is only called by RowChangeEventMapper
-     *  to update internal model,
-     *  which is only used to create QModelIndex.
      */
-    void setSelectionModel(QItemSelectionModel *model);
+    void setModel(QAbstractItemModel *model);
+
+   private slots:
+
+    /*! \brief Called from item model when it was repopulated
+     */
+    void onModelReset();
+
+    /*! \brief Called from selection model
+     */
+    void updateCurrentIndex(const QModelIndex & current, const QModelIndex & previous);
 
     /*! \brief Set row state
      *
@@ -123,7 +157,7 @@ namespace Mdt{ namespace ItemEditor{
      *  a selection model was changed,
      *  or current row changed by selection model.
      */
-    void setRowState(Mdt::ItemEditor::RowState rs, Mdt::ItemEditor::RowChangeEventSource source);
+//     void setRowState(Mdt::ItemEditor::RowState rs, Mdt::ItemEditor::RowChangeEventSource source);
 
    signals:
 
@@ -133,23 +167,33 @@ namespace Mdt{ namespace ItemEditor{
      *  and current row to update their state.
      *  A example of such object is NavigationActions .
      */
-    void rowStateChanged(Mdt::ItemEditor::RowState rs);
+//     void rowStateChanged(Mdt::ItemEditor::RowState rs);
 
     /*! \brief Emitted when current row changed
      */
-    void currentRowChanged(int row);
+//     void currentRowChanged(int row);
 
     /*! \brief Emitted when current row changed
      */
-    void currentRowChangedForController(int row/**, Mdt::ItemEditor::RowChangeEventSource source*/);
+//     void currentRowChangedForController(int row/**, Mdt::ItemEditor::RowChangeEventSource source*/);
 
     /*! \brief Emitted when model was set, or repopulated
      */
-    void modelReset();
+//     void modelReset();
 
    private:
 
-    RowState pvPreviousRowState;
+    /*! \brief Update current row
+     */
+    void updateCurrentRow(int row);
+
+    /*! \brief Set current index of selection model
+     */
+    void setSelectionModelCurrentIndex(int row);
+
+//     RowState pvPreviousRowState;
+    RowState pvRowState;
+    QPointer<QAbstractItemModel> pvModel;
     QPointer<QItemSelectionModel> pvSelectionModel;
   };
 
