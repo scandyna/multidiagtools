@@ -86,13 +86,9 @@ void AbstractItemViewController::setModelToView(QAbstractItemModel* model)
     }
     // Replace selection model
     auto *selectionModel = new ItemSelectionModel(model);
-    selectionModel->setControllerState(ControllerState::Editing); /// Just to test !
     pvView->setSelectionModel(selectionModel);
     registerItemModel();
     registerSelectionModel(selectionModel);
-//     pvView->setSelectionModel(new ItemSelectionModel(model));
-//     registerItemModel();
-//     registerSelectionModel(pvView->selectionModel());
   }
 }
 

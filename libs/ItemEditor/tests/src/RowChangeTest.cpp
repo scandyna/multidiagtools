@@ -258,143 +258,144 @@ void RowChangeTest::eventDispatcherTest()
 //   }
 }
 
-void RowChangeTest::eventDispatcherWithSelectionModelTest()
-{
-  using Mdt::ItemEditor::RowState;
-  using Mdt::ItemEditor::RowChangeEventDispatcher;
-
-  RowChangeEventDispatcher dispatcher;
-  QList<QVariant> spyItem;
-  QStringListModel model;
-  QItemSelectionModel selectionModel(&model);
-  QModelIndex index;
-  RowState rs;
-  QSignalSpy rowStateSpy(&dispatcher, &RowChangeEventDispatcher::rowStateUpdated);
-
-  QVERIFY(rowStateSpy.isValid());
-  /*
-   * Initial state
-   */
-  QCOMPARE(dispatcher.rowCount(), 0);
-  QCOMPARE(dispatcher.currentRow(), -1);
-  QCOMPARE(rowStateSpy.count(), 0);
-  /*
-   * Checks without model set
-   */
-  dispatcher.setCurrentRow(-1);
-  QCOMPARE(dispatcher.rowCount(), 0);
-  QCOMPARE(dispatcher.currentRow(), -1);
-  QCOMPARE(rowStateSpy.count(), 0);
-  /*
-   * Set model
-   * Note: setting a model must allways been signaled
-   */
-  dispatcher.setModel(&model);
-  QCOMPARE(dispatcher.rowCount(), 0);
-  QCOMPARE(dispatcher.currentRow(), -1);
-  // Check that row state was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), model.rowCount());
-  QCOMPARE(rs.currentRow(), -1);
-  /*
-   * Set selection model
-   * Note: row state does not change here
-   */
-  dispatcher.setSelectionModel(&selectionModel);
-  QCOMPARE(dispatcher.rowCount(), 0);
-  QCOMPARE(dispatcher.currentRow(), -1);
-  // Check that selection model is up to date
-  QCOMPARE(selectionModel.currentIndex().row(), -1);
-  // Check that row state was not signaled again
-  QCOMPARE(rowStateSpy.count(), 0);
-  /*
-   * Populate model
-   */
-  model.setStringList({"A","B","C"});
-  QCOMPARE(dispatcher.rowCount(), 3);
-  QCOMPARE(dispatcher.currentRow(), 0);
-  // Check that selection model is up to date
-  QCOMPARE(selectionModel.currentIndex().row(), 0);
-  // Check that row state was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), model.rowCount());
-  QCOMPARE(rs.currentRow(), 0);
-  /*
-   * Set selection model
-   * Note: row state does not change here
-   */
-  dispatcher.setSelectionModel(&selectionModel);
-  QCOMPARE(dispatcher.rowCount(), 3);
-  QCOMPARE(dispatcher.currentRow(), 0);
-  // Check that selection model is up to date
-  QCOMPARE(selectionModel.currentIndex().row(), 0);
-  // Check that row state was not signaled again
-  QCOMPARE(rowStateSpy.count(), 0);
-  /*
-   * Set current row from selection model
-   */
-  index = model.index(1, 0);
-  QVERIFY(index.isValid());
-  selectionModel.setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
-  QCOMPARE(dispatcher.rowCount(), 3);
-  QCOMPARE(dispatcher.currentRow(), 1);
-  // Check that selection model is up to date
-  QCOMPARE(selectionModel.currentIndex().row(), 1);
-  // Check that row state was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), model.rowCount());
-  QCOMPARE(rs.currentRow(), 1);
-  /*
-   * Set current row from dispatcher
-   */
-  dispatcher.setCurrentRow(2);
-  QCOMPARE(dispatcher.rowCount(), 3);
-  QCOMPARE(dispatcher.currentRow(), 2);
-  // Check that selection model is up to date
-  QCOMPARE(selectionModel.currentIndex().row(), 2);
-  // Check that row state was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), model.rowCount());
-  QCOMPARE(rs.currentRow(), 2);
-  /*
-   * Set a empty model
-   */
-  QStringListModel model2;
-  dispatcher.setModel(&model2);
-  QCOMPARE(dispatcher.rowCount(), 0);
-  QCOMPARE(dispatcher.currentRow(), -1);
-  // Check that selection model is up to date
-  QCOMPARE(selectionModel.currentIndex().row(), -1);
-  // Check that row state was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), model2.rowCount());
-  QCOMPARE(rs.currentRow(), -1);
-  /*
-   * Set previous model again
-   */
-  QVERIFY(model.rowCount() > 0);
-  dispatcher.setModel(&model);
-  QCOMPARE(dispatcher.rowCount(), model.rowCount());
-  QCOMPARE(dispatcher.currentRow(), 0);
-  // Check that selection model is up to date
-  QCOMPARE(selectionModel.currentIndex().row(), 0);
-  // Check that row state was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), model.rowCount());
-  QCOMPARE(rs.currentRow(), 0);
-}
+// void RowChangeTest::eventDispatcherWithSelectionModelTest()
+// {
+//   using Mdt::ItemEditor::RowState;
+//   using Mdt::ItemEditor::RowChangeEventDispatcher;
+//   using Mdt::ItemEditor::ItemSelectionModel;
+// 
+//   RowChangeEventDispatcher dispatcher;
+//   QList<QVariant> spyItem;
+//   QStringListModel model;
+//   ItemSelectionModel selectionModel(&model);
+//   QModelIndex index;
+//   RowState rs;
+//   QSignalSpy rowStateSpy(&dispatcher, &RowChangeEventDispatcher::rowStateUpdated);
+// 
+//   QVERIFY(rowStateSpy.isValid());
+//   /*
+//    * Initial state
+//    */
+//   QCOMPARE(dispatcher.rowCount(), 0);
+//   QCOMPARE(dispatcher.currentRow(), -1);
+//   QCOMPARE(rowStateSpy.count(), 0);
+//   /*
+//    * Checks without model set
+//    */
+//   dispatcher.setCurrentRow(-1);
+//   QCOMPARE(dispatcher.rowCount(), 0);
+//   QCOMPARE(dispatcher.currentRow(), -1);
+//   QCOMPARE(rowStateSpy.count(), 0);
+//   /*
+//    * Set model
+//    * Note: setting a model must allways been signaled
+//    */
+//   dispatcher.setModel(&model);
+//   QCOMPARE(dispatcher.rowCount(), 0);
+//   QCOMPARE(dispatcher.currentRow(), -1);
+//   // Check that row state was signaled
+//   QCOMPARE(rowStateSpy.count(), 1);
+//   spyItem = rowStateSpy.takeFirst();
+//   rs = spyItem.at(0).value<RowState>();
+//   QCOMPARE(rs.rowCount(), model.rowCount());
+//   QCOMPARE(rs.currentRow(), -1);
+//   /*
+//    * Set selection model
+//    * Note: row state does not change here
+//    */
+//   dispatcher.setSelectionModel(&selectionModel);
+//   QCOMPARE(dispatcher.rowCount(), 0);
+//   QCOMPARE(dispatcher.currentRow(), -1);
+//   // Check that selection model is up to date
+//   QCOMPARE(selectionModel.currentIndex().row(), -1);
+//   // Check that row state was not signaled again
+//   QCOMPARE(rowStateSpy.count(), 0);
+//   /*
+//    * Populate model
+//    */
+//   model.setStringList({"A","B","C"});
+//   QCOMPARE(dispatcher.rowCount(), 3);
+//   QCOMPARE(dispatcher.currentRow(), 0);
+//   // Check that selection model is up to date
+//   QCOMPARE(selectionModel.currentIndex().row(), 0);
+//   // Check that row state was signaled
+//   QCOMPARE(rowStateSpy.count(), 1);
+//   spyItem = rowStateSpy.takeFirst();
+//   rs = spyItem.at(0).value<RowState>();
+//   QCOMPARE(rs.rowCount(), model.rowCount());
+//   QCOMPARE(rs.currentRow(), 0);
+//   /*
+//    * Set selection model
+//    * Note: row state does not change here
+//    */
+//   dispatcher.setSelectionModel(&selectionModel);
+//   QCOMPARE(dispatcher.rowCount(), 3);
+//   QCOMPARE(dispatcher.currentRow(), 0);
+//   // Check that selection model is up to date
+//   QCOMPARE(selectionModel.currentIndex().row(), 0);
+//   // Check that row state was not signaled again
+//   QCOMPARE(rowStateSpy.count(), 0);
+//   /*
+//    * Set current row from selection model
+//    */
+//   index = model.index(1, 0);
+//   QVERIFY(index.isValid());
+//   selectionModel.setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+//   QCOMPARE(dispatcher.rowCount(), 3);
+//   QCOMPARE(dispatcher.currentRow(), 1);
+//   // Check that selection model is up to date
+//   QCOMPARE(selectionModel.currentIndex().row(), 1);
+//   // Check that row state was signaled
+//   QCOMPARE(rowStateSpy.count(), 1);
+//   spyItem = rowStateSpy.takeFirst();
+//   rs = spyItem.at(0).value<RowState>();
+//   QCOMPARE(rs.rowCount(), model.rowCount());
+//   QCOMPARE(rs.currentRow(), 1);
+//   /*
+//    * Set current row from dispatcher
+//    */
+//   dispatcher.setCurrentRow(2);
+//   QCOMPARE(dispatcher.rowCount(), 3);
+//   QCOMPARE(dispatcher.currentRow(), 2);
+//   // Check that selection model is up to date
+//   QCOMPARE(selectionModel.currentIndex().row(), 2);
+//   // Check that row state was signaled
+//   QCOMPARE(rowStateSpy.count(), 1);
+//   spyItem = rowStateSpy.takeFirst();
+//   rs = spyItem.at(0).value<RowState>();
+//   QCOMPARE(rs.rowCount(), model.rowCount());
+//   QCOMPARE(rs.currentRow(), 2);
+//   /*
+//    * Set a empty model
+//    */
+//   QStringListModel model2;
+//   dispatcher.setModel(&model2);
+//   QCOMPARE(dispatcher.rowCount(), 0);
+//   QCOMPARE(dispatcher.currentRow(), -1);
+//   // Check that selection model is up to date
+//   QCOMPARE(selectionModel.currentIndex().row(), -1);
+//   // Check that row state was signaled
+//   QCOMPARE(rowStateSpy.count(), 1);
+//   spyItem = rowStateSpy.takeFirst();
+//   rs = spyItem.at(0).value<RowState>();
+//   QCOMPARE(rs.rowCount(), model2.rowCount());
+//   QCOMPARE(rs.currentRow(), -1);
+//   /*
+//    * Set previous model again
+//    */
+//   QVERIFY(model.rowCount() > 0);
+//   dispatcher.setModel(&model);
+//   QCOMPARE(dispatcher.rowCount(), model.rowCount());
+//   QCOMPARE(dispatcher.currentRow(), 0);
+//   // Check that selection model is up to date
+//   QCOMPARE(selectionModel.currentIndex().row(), 0);
+//   // Check that row state was signaled
+//   QCOMPARE(rowStateSpy.count(), 1);
+//   spyItem = rowStateSpy.takeFirst();
+//   rs = spyItem.at(0).value<RowState>();
+//   QCOMPARE(rs.rowCount(), model.rowCount());
+//   QCOMPARE(rs.currentRow(), 0);
+// }
 
 void RowChangeTest::eventDispatcherInsertTest()
 {
@@ -457,73 +458,73 @@ void RowChangeTest::eventDispatcherInsertTest()
   QCOMPARE(rs.currentRow(), 2);
 }
 
-void RowChangeTest::eventDispatcherWithSelectionModelInsertTest()
-{
-  using Mdt::ItemEditor::RowState;
-  using Mdt::ItemEditor::RowChangeEventDispatcher;
-
-  RowChangeEventDispatcher dispatcher;
-  QList<QVariant> spyItem;
-  QStringListModel model;
-  QItemSelectionModel selectionModel(&model);
-  QModelIndex index;
-  RowState rs;
-  QSignalSpy rowStateSpy(&dispatcher, &RowChangeEventDispatcher::rowStateUpdated);
-
-  QVERIFY(rowStateSpy.isValid());
-  /*
-   * Setup
-   */
-  dispatcher.setModel(&model);
-  dispatcher.setSelectionModel(&selectionModel);
-  rowStateSpy.clear();
-  /*
-   * Insert on a empty model
-   */
-  QCOMPARE(dispatcher.currentRow(), -1);
-  QVERIFY(model.insertRow(0));
-  QCOMPARE(dispatcher.rowCount(), 1);
-  QCOMPARE(dispatcher.currentRow(), 0);
-  // Check that selection model is up to date
-  QCOMPARE(selectionModel.currentIndex().row(), 0);
-  // Check that row state was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), model.rowCount());
-  QCOMPARE(rs.currentRow(), 0);
-  /*
-   * Insert before current row
-   */
-  QCOMPARE(dispatcher.currentRow(), 0);
-  QVERIFY(model.insertRow(0));
-  QCOMPARE(dispatcher.rowCount(), 2);
-  QCOMPARE(dispatcher.currentRow(), 0);
-  // Check that selection model is up to date
-  QCOMPARE(selectionModel.currentIndex().row(), 0);
-  // Check that row state was signaled (row count changed)
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), model.rowCount());
-  QCOMPARE(rs.currentRow(), 0);
-  /*
-   * Insert at end
-   */
-  QCOMPARE(dispatcher.currentRow(), 0);
-  QCOMPARE(dispatcher.rowCount(), 2);
-  QVERIFY(model.insertRow(2));
-  QCOMPARE(dispatcher.rowCount(), 3);
-  QCOMPARE(dispatcher.currentRow(), 2);
-  // Check that selection model is up to date
-  QCOMPARE(selectionModel.currentIndex().row(), 2);
-  // Check that row state was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), model.rowCount());
-  QCOMPARE(rs.currentRow(), 2);
-}
+// void RowChangeTest::eventDispatcherWithSelectionModelInsertTest()
+// {
+//   using Mdt::ItemEditor::RowState;
+//   using Mdt::ItemEditor::RowChangeEventDispatcher;
+// 
+//   RowChangeEventDispatcher dispatcher;
+//   QList<QVariant> spyItem;
+//   QStringListModel model;
+//   QItemSelectionModel selectionModel(&model);
+//   QModelIndex index;
+//   RowState rs;
+//   QSignalSpy rowStateSpy(&dispatcher, &RowChangeEventDispatcher::rowStateUpdated);
+// 
+//   QVERIFY(rowStateSpy.isValid());
+//   /*
+//    * Setup
+//    */
+//   dispatcher.setModel(&model);
+//   dispatcher.setSelectionModel(&selectionModel);
+//   rowStateSpy.clear();
+//   /*
+//    * Insert on a empty model
+//    */
+//   QCOMPARE(dispatcher.currentRow(), -1);
+//   QVERIFY(model.insertRow(0));
+//   QCOMPARE(dispatcher.rowCount(), 1);
+//   QCOMPARE(dispatcher.currentRow(), 0);
+//   // Check that selection model is up to date
+//   QCOMPARE(selectionModel.currentIndex().row(), 0);
+//   // Check that row state was signaled
+//   QCOMPARE(rowStateSpy.count(), 1);
+//   spyItem = rowStateSpy.takeFirst();
+//   rs = spyItem.at(0).value<RowState>();
+//   QCOMPARE(rs.rowCount(), model.rowCount());
+//   QCOMPARE(rs.currentRow(), 0);
+//   /*
+//    * Insert before current row
+//    */
+//   QCOMPARE(dispatcher.currentRow(), 0);
+//   QVERIFY(model.insertRow(0));
+//   QCOMPARE(dispatcher.rowCount(), 2);
+//   QCOMPARE(dispatcher.currentRow(), 0);
+//   // Check that selection model is up to date
+//   QCOMPARE(selectionModel.currentIndex().row(), 0);
+//   // Check that row state was signaled (row count changed)
+//   QCOMPARE(rowStateSpy.count(), 1);
+//   spyItem = rowStateSpy.takeFirst();
+//   rs = spyItem.at(0).value<RowState>();
+//   QCOMPARE(rs.rowCount(), model.rowCount());
+//   QCOMPARE(rs.currentRow(), 0);
+//   /*
+//    * Insert at end
+//    */
+//   QCOMPARE(dispatcher.currentRow(), 0);
+//   QCOMPARE(dispatcher.rowCount(), 2);
+//   QVERIFY(model.insertRow(2));
+//   QCOMPARE(dispatcher.rowCount(), 3);
+//   QCOMPARE(dispatcher.currentRow(), 2);
+//   // Check that selection model is up to date
+//   QCOMPARE(selectionModel.currentIndex().row(), 2);
+//   // Check that row state was signaled
+//   QCOMPARE(rowStateSpy.count(), 1);
+//   spyItem = rowStateSpy.takeFirst();
+//   rs = spyItem.at(0).value<RowState>();
+//   QCOMPARE(rs.rowCount(), model.rowCount());
+//   QCOMPARE(rs.currentRow(), 2);
+// }
 
 void RowChangeTest::eventDispatcherRemoveTest()
 {
@@ -595,85 +596,85 @@ void RowChangeTest::eventDispatcherRemoveTest()
   QCOMPARE(rs.currentRow(), -1);
 }
 
-void RowChangeTest::eventDispatcherWithSelectionModelRemoveTest()
-{
-  using Mdt::ItemEditor::RowState;
-  using Mdt::ItemEditor::RowChangeEventDispatcher;
-  using Mdt::ItemEditor::ItemSelectionModel;
-
-  RowChangeEventDispatcher dispatcher;
-  QList<QVariant> spyItem;
-  QStringListModel model;
-  ItemSelectionModel selectionModel(&model);
-  QModelIndex index;
-  RowState rs;
-  QSignalSpy rowStateSpy(&dispatcher, &RowChangeEventDispatcher::rowStateUpdated);
-
-  QVERIFY(rowStateSpy.isValid());
-  /*
-   * Setup
-   */
-  model.setStringList({"A","B","C","D"});
-  dispatcher.setModel(&model);
-  dispatcher.setSelectionModel(&selectionModel);
-  rowStateSpy.clear();
-  /*
-   * Remove at beginning - current row is also at beginning
-   */
-  QCOMPARE(dispatcher.rowCount(), 4);
-  QCOMPARE(dispatcher.currentRow(), 0);
-  QCOMPARE(selectionModel.currentIndex().row(), 0);
-  qDebug() << "TEST: remove(0)";
-  QVERIFY(model.removeRow(0));
-  QCOMPARE(dispatcher.rowCount(), 3);
-  QCOMPARE(dispatcher.currentRow(), 0);
-  // Check that selection model is up to date
-  QCOMPARE(selectionModel.currentIndex().row(), 0);
-  // Check that row state was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), model.rowCount());
-  QCOMPARE(rs.currentRow(), 0);
-  /*
-   * Remove at end - current row is also at end
-   */
-  // Move to end
-  dispatcher.setCurrentRow(2);
-  rowStateSpy.clear();
-  // Remove
-  QCOMPARE(dispatcher.rowCount(), 3);
-  QCOMPARE(dispatcher.currentRow(), 2);
-  QVERIFY(model.removeRow(2));
-  QCOMPARE(dispatcher.rowCount(), 2);
-  QCOMPARE(dispatcher.currentRow(), 1);
-  // Check that selection model is up to date
-  QCOMPARE(selectionModel.currentIndex().row(), 2);
-  // Check that row state was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), model.rowCount());
-  QCOMPARE(rs.currentRow(), 1);
-  /*
-   * Remove at with a 1 element model
-   */
-  model.setStringList({"A"});
-  rowStateSpy.clear();
-  QCOMPARE(dispatcher.rowCount(), 1);
-  QCOMPARE(dispatcher.currentRow(), 0);
-  QVERIFY(model.removeRow(0));
-  QCOMPARE(dispatcher.rowCount(), 0);
-  QCOMPARE(dispatcher.currentRow(), -1);
-  // Check that selection model is up to date
-  QCOMPARE(selectionModel.currentIndex().row(), -1);
-  // Check that row state was signaled
-  QCOMPARE(rowStateSpy.count(), 1);
-  spyItem = rowStateSpy.takeFirst();
-  rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), model.rowCount());
-  QCOMPARE(rs.currentRow(), -1);
-}
+// void RowChangeTest::eventDispatcherWithSelectionModelRemoveTest()
+// {
+//   using Mdt::ItemEditor::RowState;
+//   using Mdt::ItemEditor::RowChangeEventDispatcher;
+//   using Mdt::ItemEditor::ItemSelectionModel;
+// 
+//   RowChangeEventDispatcher dispatcher;
+//   QList<QVariant> spyItem;
+//   QStringListModel model;
+//   ItemSelectionModel selectionModel(&model);
+//   QModelIndex index;
+//   RowState rs;
+//   QSignalSpy rowStateSpy(&dispatcher, &RowChangeEventDispatcher::rowStateUpdated);
+// 
+//   QVERIFY(rowStateSpy.isValid());
+//   /*
+//    * Setup
+//    */
+//   model.setStringList({"A","B","C","D"});
+//   dispatcher.setModel(&model);
+//   dispatcher.setSelectionModel(&selectionModel);
+//   rowStateSpy.clear();
+//   /*
+//    * Remove at beginning - current row is also at beginning
+//    */
+//   QCOMPARE(dispatcher.rowCount(), 4);
+//   QCOMPARE(dispatcher.currentRow(), 0);
+//   QCOMPARE(selectionModel.currentIndex().row(), 0);
+//   qDebug() << "TEST: remove(0)";
+//   QVERIFY(model.removeRow(0));
+//   QCOMPARE(dispatcher.rowCount(), 3);
+//   QCOMPARE(dispatcher.currentRow(), 0);
+//   // Check that selection model is up to date
+//   QCOMPARE(selectionModel.currentIndex().row(), 0);
+//   // Check that row state was signaled
+//   QCOMPARE(rowStateSpy.count(), 1);
+//   spyItem = rowStateSpy.takeFirst();
+//   rs = spyItem.at(0).value<RowState>();
+//   QCOMPARE(rs.rowCount(), model.rowCount());
+//   QCOMPARE(rs.currentRow(), 0);
+//   /*
+//    * Remove at end - current row is also at end
+//    */
+//   // Move to end
+//   dispatcher.setCurrentRow(2);
+//   rowStateSpy.clear();
+//   // Remove
+//   QCOMPARE(dispatcher.rowCount(), 3);
+//   QCOMPARE(dispatcher.currentRow(), 2);
+//   QVERIFY(model.removeRow(2));
+//   QCOMPARE(dispatcher.rowCount(), 2);
+//   QCOMPARE(dispatcher.currentRow(), 1);
+//   // Check that selection model is up to date
+//   QCOMPARE(selectionModel.currentIndex().row(), 2);
+//   // Check that row state was signaled
+//   QCOMPARE(rowStateSpy.count(), 1);
+//   spyItem = rowStateSpy.takeFirst();
+//   rs = spyItem.at(0).value<RowState>();
+//   QCOMPARE(rs.rowCount(), model.rowCount());
+//   QCOMPARE(rs.currentRow(), 1);
+//   /*
+//    * Remove at with a 1 element model
+//    */
+//   model.setStringList({"A"});
+//   rowStateSpy.clear();
+//   QCOMPARE(dispatcher.rowCount(), 1);
+//   QCOMPARE(dispatcher.currentRow(), 0);
+//   QVERIFY(model.removeRow(0));
+//   QCOMPARE(dispatcher.rowCount(), 0);
+//   QCOMPARE(dispatcher.currentRow(), -1);
+//   // Check that selection model is up to date
+//   QCOMPARE(selectionModel.currentIndex().row(), -1);
+//   // Check that row state was signaled
+//   QCOMPARE(rowStateSpy.count(), 1);
+//   spyItem = rowStateSpy.takeFirst();
+//   rs = spyItem.at(0).value<RowState>();
+//   QCOMPARE(rs.rowCount(), model.rowCount());
+//   QCOMPARE(rs.currentRow(), -1);
+// }
 
 // void RowChangeTest::eventDispatcherTest()
 // {

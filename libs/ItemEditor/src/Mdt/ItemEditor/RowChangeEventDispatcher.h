@@ -25,7 +25,6 @@
 #include <QObject>
 #include <QPointer>
 #include <QModelIndex>
-#include <QItemSelectionModel>
 
 class QAbstractItemModel;
 
@@ -44,30 +43,32 @@ namespace Mdt{ namespace ItemEditor{
    * <table class="srcdoc_td_center">
    *  <tr><th>Sender</th><th>Signal</th><th>Receiver</th><th>Slot (or signal)</th><th>Remarks</th></tr>
    *  <tr><td>QAbstractItemModel</td><td>modelReset()</td><td>RowChangeEventDispatcher</td><td>onModelReset()</td><td></td></tr>
-   *  <tr><td>ItemSelectionModel</td><td>currentChanged()</td><td>RowChangeEventDispatcher</td><td>updateCurrentIndex()</td><td></td></tr>
+   *  <tr><td>ItemSelectionModel</td><td>currentRowChangeRequested()</td><td>AbstractController</td><td>setCurrentRow()</td><td></td></tr>
    *  <tr><td>NavigationActions</td><td>toFirstTriggered()</td><td>AbstractController</td><td>toFirst()</td><td></td></tr>
-   *  <tr><td>RowChangeEventDispatcher</td><td>currentIndexChanged()</td><td>ItemSelectionModel</td><td>setCurrentIndex()</td><td></td></tr>
    *  <tr><td>RowChangeEventDispatcher</td><td>rowStateUpdated()</td><td>AbstractController</td><td>updateRowState()</td><td></td></tr>
    *  <tr><td>AbstractController</td><td>rowStateChanged()</td><td>NavigationActions</td><td>setRowState()</td><td>Used to update NavigationActions state</td></tr>
+   *  <tr><td>AbstractController</td><td>currentRowChanged()</td><td>ItemSelectionModel</td><td>updateCurrentRow()</td><td></td></tr>
    * </table>
    *
    *
    * Example of events chain when user selects a new row in a QTableView:
-   *  - ItemSelectionModel::currentChanged() -> RowChangeEventDispatcher::updateCurrentIndex()
+   *  - ItemSelectionModel::currentRowChangeRequested() -> AbstractController::setCurrentRow()
+   *  - AbstractController (after calculated row and checks) calls RowChangeEventDispatcher::setCurrentRow()
    *  - RowChangeEventDispatcher::rowStateUpdated() -> AbstractController::updateRowState()
+   *  - AbstractController::currentRowChanged() -> ItemSelectionModel::updateCurrentRow()
    *  - AbstractController::rowStateChanged() -> NavigationActions::setRowState()
    *
    * Example of events when user clicks toNext button:
    *  - NavigationActions::toNextTriggered() -> AbstractController::toNext()
    *  - AbstractController (after calculated row and checks) calls RowChangeEventDispatcher::setCurrentRow()
-   *  - RowChangeEventDispatcher::currentIndexChanged() -> ItemSelectionModel::setCurrentIndex()
-   *  - ItemSelectionModel::currentChanged() -> RowChangeEventDispatcher::updateCurrentIndex()
    *  - RowChangeEventDispatcher::rowStateUpdated() -> AbstractController::updateRowState()
+   *  - AbstractController::currentRowChanged() -> ItemSelectionModel::updateCurrentRow()
    *  - AbstractController::rowStateChanged() -> NavigationActions::setRowState()
    *
    * Example of events chain when model was set to controller, or model was repopulated:
    *  - AbstractController calls RowChangeEventDispatcher::setModel()
    *  - RowChangeEventDispatcher::rowStateUpdated() -> AbstractController::updateRowState()
+   *  - AbstractController::currentRowChanged() -> ItemSelectionModel::updateCurrentRow()
    *  - AbstractController::rowStateChanged() -> NavigationActions::setRowState()
    */
   class RowChangeEventDispatcher : public QObject
@@ -86,14 +87,6 @@ namespace Mdt{ namespace ItemEditor{
     // Move disabled
     RowChangeEventDispatcher(RowChangeEventDispatcher &&) = delete;
     RowChangeEventDispatcher & operator=(RowChangeEventDispatcher &&) = delete;
-
-    /*! \brief Set selection model
-     */
-    void setSelectionModel(QItemSelectionModel *model);
-
-    /*! \brief Get selection model
-     */
-    QItemSelectionModel *selectionModel() const;
 
     /*! \brief Get model
      */
@@ -144,17 +137,9 @@ namespace Mdt{ namespace ItemEditor{
      */
     void onRowsInserted(const QModelIndex & parent, int first, int last);
 
-    /*! \brief Called from item model just before rows are removed
-     */
-    void onRowsAboutToBeRemoved(const QModelIndex & parent, int first, int last);
-
     /*! \brief Called from item model when rows have been removed
      */
     void onRowsRemoved(const QModelIndex & parent, int first, int last);
-
-    /*! \brief Called from selection model
-     */
-    void updateCurrentIndex(const QModelIndex & current, const QModelIndex & previous);
 
    private:
 
@@ -162,14 +147,8 @@ namespace Mdt{ namespace ItemEditor{
      */
     void updateCurrentRow(int row);
 
-    /*! \brief Set current index of selection model
-     */
-    void setSelectionModelCurrentIndex(int row);
-
-//     RowState pvPreviousRowState;
     RowState pvRowState;
     QPointer<QAbstractItemModel> pvModel;
-    QPointer<QItemSelectionModel> pvSelectionModel;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -39,6 +39,7 @@ class ControllerTest : public QObject
   void tableViewControllerCurrentRowChangeTest();
 
   void widgetMapperControllerSetModelTest();
+  void widgetMapperControllerCurrentRowChangedTest();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_TEST_H

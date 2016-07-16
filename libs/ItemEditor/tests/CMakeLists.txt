@@ -26,6 +26,11 @@ add_executable(mdtitemeditoritemmodeltest src/ItemModelTest.cpp)
 target_link_libraries(mdtitemeditoritemmodeltest mdtitemeditortest)
 add_test(MdtItemEditorItemModelTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditoritemmodeltest)
 
+# Target MdtItemEditorItemSelectionModelTest
+add_executable(mdtitemeditoritemselectionmodeltest src/ItemSelectionModelTest.cpp)
+target_link_libraries(mdtitemeditoritemselectionmodeltest mdtitemeditortest)
+add_test(MdtItemEditorItemSelectionModelTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditoritemselectionmodeltest)
+
 # Target MdtItemEditorRowChangeTest
 add_executable(mdtitemeditorrowchangetest src/RowChangeTest.cpp)
 target_link_libraries(mdtitemeditorrowchangetest mdtitemeditortest)

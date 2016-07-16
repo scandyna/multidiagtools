@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_ITEM_VIEW_TEST_H
-#define MDT_ITEM_EDITOR_ITEM_VIEW_TEST_H
+#ifndef MDT_ITEM_EDITOR_ITEM_SELECTION_MODEL_TEST_H
+#define MDT_ITEM_EDITOR_ITEM_SELECTION_MODEL_TEST_H
 
 #include "ItemViewTestEditTriggers.h"
 #include <QObject>
@@ -28,7 +28,7 @@
 class QAbstractItemView;
 class QModelIndex;
 
-class ItemViewTest : public QObject
+class ItemSelectionModelTest : public QObject
 {
   Q_OBJECT
 
@@ -37,8 +37,10 @@ class ItemViewTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void tableViewEditBeginEndTest();
-  void tableViewEditBeginEndTest_data();
+  void setCurrentIndexTest();
+//   void selectIndexTest();
+//   void selectSelectionTest();
+  void tableViewSetCurrentIndexTest();
 
  private:
 
@@ -48,4 +50,4 @@ class ItemViewTest : public QObject
   void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
 };
 
-#endif // #ifndef MDT_ITEM_EDITOR_ITEM_VIEW_TEST_H
+#endif // #ifndef MDT_ITEM_EDITOR_ITEM_SELECTION_MODEL_TEST_H

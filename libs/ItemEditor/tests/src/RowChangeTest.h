@@ -37,11 +37,11 @@ class RowChangeTest : public QObject
   void rowStateComparisonTest();
 
   void eventDispatcherTest();
-  void eventDispatcherWithSelectionModelTest();
+//   void eventDispatcherWithSelectionModelTest();
   void eventDispatcherInsertTest();
-  void eventDispatcherWithSelectionModelInsertTest();
+//   void eventDispatcherWithSelectionModelInsertTest();
   void eventDispatcherRemoveTest();
-  void eventDispatcherWithSelectionModelRemoveTest();
+//   void eventDispatcherWithSelectionModelRemoveTest();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_ROW_CHANGE_TEST_H

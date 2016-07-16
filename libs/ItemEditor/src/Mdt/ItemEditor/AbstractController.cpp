@@ -22,7 +22,6 @@
 #include "ItemSelectionModel.h"
 #include "RowChangeEventDispatcher.h"
 #include <QAbstractItemModel>
-#include <QItemSelectionModel>
 
 // #include <QDebug>
 
@@ -108,7 +107,7 @@ void AbstractController::referenceItemModel(QAbstractItemModel* model)
 
 void AbstractController::registerItemModel()
 {
-  Q_ASSERT(pvModel != nullptr);
+  Q_ASSERT(!pvModel.isNull());
 
   if(pvModel == pvRowChangeEventDispatcher->model()){
     return;
@@ -116,16 +115,23 @@ void AbstractController::registerItemModel()
   pvRowChangeEventDispatcher->setModel(pvModel);
 }
 
-void AbstractController::registerSelectionModel(QItemSelectionModel* selectionModel)
+void AbstractController::registerSelectionModel(ItemSelectionModel* selectionModel)
 {
   Q_ASSERT(selectionModel != nullptr);
   Q_ASSERT(pvRowChangeEventDispatcher->model() != nullptr);
   Q_ASSERT(selectionModel->model() == pvRowChangeEventDispatcher->model());
 
-  if(selectionModel == pvRowChangeEventDispatcher->selectionModel()){
+  if(selectionModel == pvSelectionModel){
     return;
   }
-  pvRowChangeEventDispatcher->setSelectionModel(selectionModel);
+  if(!pvSelectionModel.isNull()){
+    disconnect(selectionModel, &ItemSelectionModel::currentRowChangeRequested, this, &AbstractController::setCurrentRow);
+    disconnect(this, &AbstractController::currentRowChanged, selectionModel, &ItemSelectionModel::updateCurrentRow);
+  }
+  pvSelectionModel = selectionModel;
+  connect(selectionModel, &ItemSelectionModel::currentRowChangeRequested, this, &AbstractController::setCurrentRow);
+  connect(this, &AbstractController::currentRowChanged, selectionModel, &ItemSelectionModel::updateCurrentRow);
+  pvSelectionModel->updateCurrentRow(pvRowChangeEventDispatcher->currentRow());
 }
 
 void AbstractController::updateRowState(RowState rs)

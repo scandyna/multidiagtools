@@ -21,12 +21,14 @@
 #ifndef MDT_ITEM_EDITOR_ITEM_SELECTION_MODEL_H
 #define MDT_ITEM_EDITOR_ITEM_SELECTION_MODEL_H
 
-#include "ControllerState.h"
 #include <QItemSelectionModel>
 
 namespace Mdt{ namespace ItemEditor{
 
-  /*! \brief Provides some specific stuff for some editors
+  /*! \brief ItemSelectionModel is used by some controllers to handle row changes
+   *
+   * \sa RowChangeEventDispatcher
+   * \sa AbstractController
    */
   class ItemSelectionModel : public QItemSelectionModel
   {
@@ -49,39 +51,46 @@ namespace Mdt{ namespace ItemEditor{
     ItemSelectionModel(ItemSelectionModel &&) = delete;
     ItemSelectionModel & operator=(ItemSelectionModel &&) = delete;
 
-    /*! \brief Check if it os allowed to change current row
-     */
-    bool isCurrentRowChangeAllowed() const
-    {
-      return pvCurrentRowChangeAllowed;
-    }
+   signals:
 
-    void setCurrentIndexFromCtl(const QModelIndex & index, QItemSelectionModel::SelectionFlags command);
+    /*! \brief Emitted when changing current row is requested
+     */
+    void currentRowChangeRequested(int row);
 
    public slots:
 
-    /*! \brief Set controller state
+    /*! \brief Update current row
+     *
+     * Calls QAbstractItemModel setCurrentIndex() implementation,
+     *  which will cause currentChanged() to be emitted, but not currentRowChangeRequested().
      */
-    void setControllerState(ControllerState state);
+    void updateCurrentRow(int row);
 
-    /*! \brief Re-implemented to prevent row change if not allowed
+    /*! \brief Re-implemented to intercept row change
+     *
+     * \sa setCurrentIndex()
      */
     void select(const QModelIndex & index, QItemSelectionModel::SelectionFlags command) override;
 
-    /*! \brief Re-implemented to prevent row change if not allowed
+    /*! \brief Re-implemented to intercept row change
+     *
+     * \sa setCurrentIndex()
      */
     void select(const QItemSelection & selection, QItemSelectionModel::SelectionFlags command) override;
 
-    /*! \brief Re-implemented to prevent row change if not allowed
+    /*! \brief Re-implemented to intercept row change
+     *
+     * If index produces a column change, QItemSelectionModel implementation is called,
+     *  else currentRowChangeRequested() is emited.
      */
     void setCurrentIndex(const QModelIndex & index, QItemSelectionModel::SelectionFlags command) override;
 
    private:
 
-    bool canAcceptIndex(const QModelIndex & index) const;
+    bool canChangeIndex(const QModelIndex & index) const;
 
-    bool pvCurrentRowChangeAllowed = true;
     int pvPreviousCurrentRow = -1;
+    int pvRequestedColumn = -1;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

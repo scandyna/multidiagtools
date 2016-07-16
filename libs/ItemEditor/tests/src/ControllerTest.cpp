@@ -138,30 +138,30 @@ void ControllerTest::tableViewControllerCurrentRowChangeTest()
   controller.setModel(&modelA);
   controller.setView(&viewA);
   QVERIFY(viewA.selectionModel() != nullptr);
-  QCOMPARE(controller.rowCount(), modelA.rowCount());
-  QCOMPARE(controller.currentRow(), viewA.currentIndex().row());
-  // Check that row state signaled
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-//   spyItem = rowStateSpy.takeFirst();
-//   rs = spyItem.at(0).value<RowState>();
-//   QCOMPARE(rs.rowCount(), modelA.rowCount());
-//   QCOMPARE(rs.currentRow(), -1);  // Was handled while selection model was not set
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), modelA.rowCount());
-  QCOMPARE(rs.currentRow(), viewA.currentIndex().row());
+  QCOMPARE(rs.rowCount(), 0);
+  QCOMPARE(rs.currentRow(), -1);
+  // Check that view was updated
+  QCOMPARE(viewA.currentIndex().row(), -1);
   /*
    * Populate model
    */
   modelA.populate(5, 3);
-  QCOMPARE(controller.rowCount(), modelA.rowCount());
-  QCOMPARE(controller.currentRow(), viewA.currentIndex().row());
-  // Check that row state signaled
+  QCOMPARE(controller.rowCount(), 5);
+  QCOMPARE(controller.currentRow(), 0);
+  // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), modelA.rowCount());
-  QCOMPARE(rs.currentRow(), viewA.currentIndex().row());
+  QCOMPARE(rs.rowCount(), 5);
+  QCOMPARE(rs.currentRow(), 0);
+  // Check that view was updated
+  QCOMPARE(viewA.currentIndex().row(), 0);
   /*
    * Set model and view
    *  1) view
@@ -170,115 +170,132 @@ void ControllerTest::tableViewControllerCurrentRowChangeTest()
   controller.setView(&viewB);
   controller.setModel(&modelB);
   QVERIFY(viewB.selectionModel() != nullptr);
-  QCOMPARE(controller.rowCount(), modelB.rowCount());
-  QCOMPARE(controller.currentRow(), viewB.currentIndex().row());
-  // Check that row state signaled
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
-  // Check that event was sent correctly
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), modelB.rowCount());
-  QCOMPARE(rs.currentRow(), viewB.currentIndex().row());
+  QCOMPARE(rs.rowCount(), 0);
+  QCOMPARE(rs.currentRow(), -1);
+  // Check that view was updated
+  QCOMPARE(viewB.currentIndex().row(), -1);
   /*
    * Populate model
    */
   modelB.populate(5, 3);
-  QCOMPARE(controller.rowCount(), modelB.rowCount());
-  QCOMPARE(controller.currentRow(), viewB.currentIndex().row());
-  // Check that row state signaled
+  QCOMPARE(controller.rowCount(), 5);
+  QCOMPARE(controller.currentRow(), 0);
+  // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), modelB.rowCount());
-  QCOMPARE(rs.currentRow(), viewB.currentIndex().row());
+  QCOMPARE(rs.rowCount(), 5);
+  QCOMPARE(rs.currentRow(), 0);
+  // Check that view was updated
+  QCOMPARE(viewB.currentIndex().row(), 0);
   /*
-   * Change current row from selection modelB
+   * Change current row from view
    */
   index = modelB.index(1, 0);
   QVERIFY(index.isValid());
   viewB.setCurrentIndex(index);
-  QCOMPARE(viewB.currentIndex().row(), 1);
+  QCOMPARE(controller.rowCount(), 5);
   QCOMPARE(controller.currentRow(), 1);
-  // Check that row state signaled
+  // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), modelB.rowCount());
-  QCOMPARE(rs.currentRow(), viewB.currentIndex().row());
+  QCOMPARE(rs.rowCount(), 5);
+  QCOMPARE(rs.currentRow(), 1);
+  // Check that view was updated
+  QCOMPARE(viewB.currentIndex().row(), 1);
   /*
    * Change current row from controller
    */
   QVERIFY(controller.setCurrentRow(2));
+  QCOMPARE(controller.rowCount(), 5);
   QCOMPARE(controller.currentRow(), 2);
-  QCOMPARE(viewB.currentIndex().row(), 2);
-  // Check that row state signaled
+  // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), modelB.rowCount());
-  QCOMPARE(rs.currentRow(), viewB.currentIndex().row());
+  QCOMPARE(rs.rowCount(), 5);
+  QCOMPARE(rs.currentRow(), 2);
+  // Check that view was updated
+  QCOMPARE(viewB.currentIndex().row(), 2);
   /*
    * Check toFirst slot
    */
   controller.toFirst();
+  QCOMPARE(controller.rowCount(), 5);
   QCOMPARE(controller.currentRow(), 0);
-  QCOMPARE(viewB.currentIndex().row(), 0);
-  // Check that row state signaled
+  // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), modelB.rowCount());
-  QCOMPARE(rs.currentRow(), viewB.currentIndex().row());
+  QCOMPARE(rs.rowCount(), 5);
+  QCOMPARE(rs.currentRow(), 0);
+  // Check that view was updated
+  QCOMPARE(viewB.currentIndex().row(), 0);
   /*
    * Check toNext slot
    */
   controller.toNext();
+  QCOMPARE(controller.rowCount(), 5);
   QCOMPARE(controller.currentRow(), 1);
-  QCOMPARE(viewB.currentIndex().row(), 1);
-  // Check that row state signaled
+  // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), modelB.rowCount());
-  QCOMPARE(rs.currentRow(), viewB.currentIndex().row());
+  QCOMPARE(rs.rowCount(), 5);
+  QCOMPARE(rs.currentRow(), 1);
+  // Check that view was updated
+  QCOMPARE(viewB.currentIndex().row(), 1);
   /*
    * Check toLast slot
    */
   controller.toLast();
+  QCOMPARE(controller.rowCount(), 5);
   QCOMPARE(controller.currentRow(), 4);
-  QCOMPARE(viewB.currentIndex().row(), 4);
-  // Check that row state signaled
+  // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), modelB.rowCount());
-  QCOMPARE(rs.currentRow(), viewB.currentIndex().row());
+  QCOMPARE(rs.rowCount(), 5);
+  QCOMPARE(rs.currentRow(), 4);
+  // Check that view was updated
+  QCOMPARE(viewB.currentIndex().row(), 4);
   /*
    * Check toPrevious slot
    */
   controller.toPrevious();
+  QCOMPARE(controller.rowCount(), 5);
   QCOMPARE(controller.currentRow(), 3);
-  QCOMPARE(viewB.currentIndex().row(), 3);
-  // Check that row state signaled
+  // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), modelB.rowCount());
-  QCOMPARE(rs.currentRow(), viewB.currentIndex().row());
+  QCOMPARE(rs.rowCount(), 5);
+  QCOMPARE(rs.currentRow(), 3);
+  // Check that view was updated
+  QCOMPARE(viewB.currentIndex().row(), 3);
   /*
    * Change model
    */
   QStringListModel listModel;
   listModel.setStringList({"A","B","C"});
   controller.setModel(&listModel);
-  QCOMPARE(controller.rowCount(), listModel.rowCount());
-  QCOMPARE(controller.currentRow(), viewB.currentIndex().row());
-  // Check that row state signaled
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();
-  QCOMPARE(rs.rowCount(), listModel.rowCount());
-  QCOMPARE(rs.currentRow(), viewB.currentIndex().row());
+  QCOMPARE(rs.rowCount(), 3);
+  QCOMPARE(rs.currentRow(), 0);
+  // Check that view was updated
+  QCOMPARE(viewB.currentIndex().row(), 0);
   /*
    * Insert
    * NOTE: is a other test to implement
@@ -339,6 +356,11 @@ void ControllerTest::widgetMapperControllerSetModelTest()
   rs = spyItem.at(0).value<RowState>();
   QCOMPARE(rs.rowCount(), 0);
   QCOMPARE(rs.currentRow(), -1);
+
+}
+
+void ControllerTest::widgetMapperControllerCurrentRowChangedTest()
+{
 
 }
 

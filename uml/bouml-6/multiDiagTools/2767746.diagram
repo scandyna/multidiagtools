@@ -24,6 +24,10 @@ classcanvas 130434 class_ref 404610 // QDataWidgetMapper
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 641 295 2012
 end
+classcanvas 132354 class_ref 3021826 // ItemSelectionModel
+  classdiagramsettings member_max_width 0 end
+  xyz 219 615 2006
+end
 relationcanvas 128642 relation_ref 3547394 // <directional composition>
   from ref 128002 z 2001 to ref 128514
   no_role_a no_role_b
@@ -41,6 +45,11 @@ relationcanvas 131586 relation_ref 3561602 // <unidirectional association>
 end
 relationcanvas 132226 relation_ref 3561730 // <unidirectional association>
   from ref 128514 z 2001 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132482 relation_ref 3393538 // <generalisation>
+  from ref 132354 z 2007 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

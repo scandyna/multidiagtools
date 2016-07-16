@@ -38,7 +38,7 @@ TestWindowEditor::TestWindowEditor(QWidget* parent)
   layoutWidget->setMainWidget(pvFormEditionWidget);
   layoutWidget->addChildWidget(pvTableEditionWidget, tr("Table"));
   setCentralWidget(layoutWidget);
-  setMainEditorWidget(pvFormEditionWidget);
+  setMainEditorWidget(pvTableEditionWidget);
 }
 
 void TestWindowEditor::setModel(QAbstractTableModel* model)

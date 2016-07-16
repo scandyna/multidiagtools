@@ -26,11 +26,10 @@
 #include <QPointer>
 #include <QAbstractItemModel>
 
-class QItemSelectionModel;
-
 namespace Mdt{ namespace ItemEditor{
 
   class RowChangeEventDispatcher;
+  class ItemSelectionModel;
 
   /*! \brief Common base for controllers
    */
@@ -161,11 +160,11 @@ namespace Mdt{ namespace ItemEditor{
      * Will set selectionModel to the internal event handling.
      *
      * If a editor uses a view that handle selection with a QItemSelectionModel (like QTableView),
-     *  replace its selection selectionModel with a ItemSelectionModel,
+     *  replace its selection model with a ItemSelectionModel,
      *  and register it with this method.
      *  This way, the controller can block row change when needed.
      */
-    void registerSelectionModel(QItemSelectionModel *selectionModel);
+    void registerSelectionModel(ItemSelectionModel *selectionModel);
 
    private slots:
 
@@ -182,9 +181,9 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-//     QPointer<QAbstractItemModel> pvModel;
     RowChangeEventDispatcher *pvRowChangeEventDispatcher;
-    QAbstractItemModel *pvModel;
+    QPointer<QAbstractItemModel> pvModel;
+    QPointer<ItemSelectionModel>  pvSelectionModel;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
