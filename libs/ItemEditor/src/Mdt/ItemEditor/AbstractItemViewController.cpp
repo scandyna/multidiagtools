@@ -47,6 +47,7 @@ void AbstractItemViewController::setView(QAbstractItemView* view)
     proxyDelegate->setItemDelegate(delegate);
   }
   pvView->setItemDelegate(proxyDelegate);
+  registerItemDelegate(proxyDelegate);
 }
 
 QAbstractItemView* AbstractItemViewController::view() const

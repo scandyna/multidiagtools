@@ -22,6 +22,7 @@
 #define MDT_ITEM_EDITOR_NAVIGATION_ACTIONS_H
 
 #include "RowState.h"
+#include "ControllerState.h"
 #include <QAction>
 
 namespace Mdt{ namespace ItemEditor{
@@ -84,7 +85,11 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Set row state
      */
-    void setRowState(RowState rs);
+    void setRowState(Mdt::ItemEditor::RowState rs);
+
+    /*! \brief Set controller state
+     */
+    void setControllerState(Mdt::ItemEditor::ControllerState state);
 
    signals:
 
@@ -110,7 +115,12 @@ namespace Mdt{ namespace ItemEditor{
      */
     void updateEnableStates();
 
+    /*! \brief Disable all actions
+     */
+    void disableAllActions();
+
     RowState pvRowState;
+    ControllerState pvControllerState = ControllerState::Visualizing;
     QAction *pvToFirst;
     QAction *pvToPrevious;
     QAction *pvToNext;

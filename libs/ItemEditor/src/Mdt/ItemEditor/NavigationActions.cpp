@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "NavigationActions.h"
+#include "ControllerStatePermission.h"
 #include <QIcon>
 
 // #include <QDebug>
@@ -49,11 +50,21 @@ void NavigationActions::setRowState(RowState rs)
   updateEnableStates();
 }
 
+void NavigationActions::setControllerState(ControllerState state)
+{
+  pvControllerState = state;
+  updateEnableStates();
+}
+
 void NavigationActions::updateEnableStates()
 {
   int n = pvRowState.rowCount();
   int row = pvRowState.currentRow();
 
+  if(!ControllerStatePermission::canChangeCurrentRow(pvControllerState)){
+    disableAllActions();
+    return;
+  }
   if(pvRowState.isValid()){
     pvToFirst->setEnabled( row > 0 );
     pvToPrevious->setEnabled( row > 0 );
@@ -66,6 +77,14 @@ void NavigationActions::updateEnableStates()
     pvToNext->setEnabled(true);
     pvToLast->setEnabled(true);
   }
+}
+
+void NavigationActions::disableAllActions()
+{
+  pvToFirst->setEnabled(false);
+  pvToPrevious->setEnabled(false);
+  pvToNext->setEnabled(false);
+  pvToLast->setEnabled(false);
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -20,7 +20,9 @@
  ****************************************************************************/
 #include "AbstractController.h"
 #include "ItemSelectionModel.h"
+#include "EventCatchItemDelegate.h"
 #include "RowChangeEventDispatcher.h"
+#include "ControllerStatePermission.h"
 #include <QAbstractItemModel>
 
 // #include <QDebug>
@@ -57,6 +59,12 @@ bool AbstractController::setCurrentRow(int row)
 {
   Q_ASSERT(row >= -1);
 
+  if(row == currentRow()){
+    return true;
+  }
+  if(!ControllerStatePermission::canChangeCurrentRow(pvControllerState)){
+    return false;
+  }
   /**
    * \todo If row >= rowCount()
    *       we must try to fetch more data
@@ -134,10 +142,43 @@ void AbstractController::registerSelectionModel(ItemSelectionModel* selectionMod
   pvSelectionModel->updateCurrentRow(pvRowChangeEventDispatcher->currentRow());
 }
 
+void AbstractController::registerItemDelegate(EventCatchItemDelegate* delegate)
+{
+  Q_ASSERT(delegate != nullptr);
+
+  if(!pvDelegate.isNull()){
+    disconnect(pvDelegate, &EventCatchItemDelegate::dataEditionStarted, this, &AbstractController::onDataEditionStarted);
+    disconnect(pvDelegate, &EventCatchItemDelegate::dataEditionDone, this, &AbstractController::onDataEditionDone);
+  }
+  pvDelegate = delegate;
+  connect(pvDelegate, &EventCatchItemDelegate::dataEditionStarted, this, &AbstractController::onDataEditionStarted);
+  connect(pvDelegate, &EventCatchItemDelegate::dataEditionDone, this, &AbstractController::onDataEditionDone);
+}
+
 void AbstractController::updateRowState(RowState rs)
 {
   emit currentRowChanged(rs.currentRow());
   emit rowStateChanged(rs);
+}
+
+void AbstractController::onDataEditionStarted()
+{
+  setControllerState(ControllerState::Editing);
+}
+
+void AbstractController::onDataEditionDone()
+{
+  setControllerState(ControllerState::Visualizing);
+}
+
+void AbstractController::setControllerState(ControllerState state)
+{
+  if(state != pvControllerState){
+    pvControllerState = state;
+    emit controllerStateChanged(state);
+  }else{
+    pvControllerState = state;
+  }
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

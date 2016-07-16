@@ -22,6 +22,7 @@
 #define MDT_ITEM_EDITOR_ABSTRACT_CONTROLLER_H
 
 #include "RowState.h"
+#include "ControllerState.h"
 #include <QObject>
 #include <QPointer>
 #include <QAbstractItemModel>
@@ -30,6 +31,7 @@ namespace Mdt{ namespace ItemEditor{
 
   class RowChangeEventDispatcher;
   class ItemSelectionModel;
+  class EventCatchItemDelegate;
 
   /*! \brief Common base for controllers
    */
@@ -49,6 +51,13 @@ namespace Mdt{ namespace ItemEditor{
     // Move disabled
     AbstractController(AbstractController &&) = delete;
     AbstractController & operator=(AbstractController &&) = delete;
+
+    /*! \brief Get controller state
+     */
+    ControllerState controllerState() const
+    {
+      return pvControllerState;
+    }
 
     /*! \brief Set model
      *
@@ -127,6 +136,10 @@ namespace Mdt{ namespace ItemEditor{
      */
     void rowStateChanged(Mdt::ItemEditor::RowState rs);
 
+    /*! \brief Emitted whenever controller state changed
+     */
+    void controllerStateChanged(Mdt::ItemEditor::ControllerState newState);
+
     /*! \brief Emitted whenever current row changed
      *
      * This signal is typically used for widget mappers
@@ -166,6 +179,13 @@ namespace Mdt{ namespace ItemEditor{
      */
     void registerSelectionModel(ItemSelectionModel *selectionModel);
 
+    /*! \brief Register item delegate
+     *
+     * Once delegate is registered, this controller is able to detect when user beginns editing,
+     *  and can update components in a coherent manner.
+     */
+    void registerItemDelegate(EventCatchItemDelegate *delegate);
+
    private slots:
 
     /*! \brief Update row state
@@ -179,11 +199,25 @@ namespace Mdt{ namespace ItemEditor{
      */
     void updateRowState(Mdt::ItemEditor::RowState rs);
 
+    /*! \brief Actions to perform once editing started
+     */
+    void onDataEditionStarted();
+
+    /*! \brief Actions to perform once editing ended
+     */
+    void onDataEditionDone();
+
    private:
 
+    /*! \brief Set controller state
+     */
+    void setControllerState(ControllerState state);
+
+    ControllerState pvControllerState = ControllerState::Visualizing;
     RowChangeEventDispatcher *pvRowChangeEventDispatcher;
     QPointer<QAbstractItemModel> pvModel;
     QPointer<ItemSelectionModel>  pvSelectionModel;
+    QPointer<EventCatchItemDelegate> pvDelegate;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

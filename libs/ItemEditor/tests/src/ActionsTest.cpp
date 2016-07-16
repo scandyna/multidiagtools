@@ -23,6 +23,7 @@
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/RowState.h"
 #include "Mdt/ItemEditor/NavigationActions.h"
+#include "Mdt/ItemEditor/ControllerState.h"
 #include <QSignalSpy>
 #include <QItemSelectionModel>
 #include <QStringListModel>
@@ -48,6 +49,7 @@ void ActionsTest::navigationActionsTest()
 {
   using Mdt::ItemEditor::NavigationActions;
   using Mdt::ItemEditor::RowState;
+  using Mdt::ItemEditor::ControllerState;
 
   NavigationActions *actions = new NavigationActions(nullptr);
   QPointer<QAction> toFirst = actions->toFirst();
@@ -138,6 +140,38 @@ void ActionsTest::navigationActionsTest()
   actions->setRowState(rs);
   QVERIFY(toFirst->isEnabled());
   QVERIFY(!toPrevious->isEnabled());
+  QVERIFY(toNext->isEnabled());
+  QVERIFY(toLast->isEnabled());
+  /*
+   * Check in editing state
+   */
+  actions->setControllerState(ControllerState::Editing);
+  QVERIFY(!toFirst->isEnabled());
+  QVERIFY(!toPrevious->isEnabled());
+  QVERIFY(!toNext->isEnabled());
+  QVERIFY(!toLast->isEnabled());
+  // Set a valid row state
+  rs.setRowCount(4);
+  rs.setCurrentRow(0);
+  actions->setRowState(rs);
+  QVERIFY(!toFirst->isEnabled());
+  QVERIFY(!toPrevious->isEnabled());
+  QVERIFY(!toNext->isEnabled());
+  QVERIFY(!toLast->isEnabled());
+  /*
+   * Go to visualizing state
+   */
+  actions->setControllerState(ControllerState::Visualizing);
+  QVERIFY(!toFirst->isEnabled());
+  QVERIFY(!toPrevious->isEnabled());
+  QVERIFY(toNext->isEnabled());
+  QVERIFY(toLast->isEnabled());
+  // Set a valid row state
+  rs.setRowCount(4);
+  rs.setCurrentRow(1);
+  actions->setRowState(rs);
+  QVERIFY(toFirst->isEnabled());
+  QVERIFY(toPrevious->isEnabled());
   QVERIFY(toNext->isEnabled());
   QVERIFY(toLast->isEnabled());
   /*

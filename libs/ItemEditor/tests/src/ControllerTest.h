@@ -21,8 +21,11 @@
 #ifndef MDT_ITEM_EDITOR_CONTROLLER_TEST_H
 #define MDT_ITEM_EDITOR_CONTROLLER_TEST_H
 
+#include "ItemViewTestEditTriggers.h"
 #include <QObject>
 #include <QtTest/QtTest>
+
+class QAbstractItemView;
 
 class ControllerTest : public QObject
 {
@@ -35,14 +38,23 @@ class ControllerTest : public QObject
 
   void statePermissionTest();
 
+  void tableViewControllerBasicStateTest();
   void tableViewControllerSetModelTest();
   void tableViewControllerCurrentRowChangeTest();
+  void tableViewControllerEditTest();
 
   void mappedWidgetListTest();
   void mappedWidgetListSetModelTest();
 
   void widgetMapperControllerSetModelTest();
   void widgetMapperControllerCurrentRowChangedTest();
+
+ private:
+
+  // Helper function for editing in a QAbstractItemView
+  void beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger trigger);
+  void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger);
+  void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_TEST_H

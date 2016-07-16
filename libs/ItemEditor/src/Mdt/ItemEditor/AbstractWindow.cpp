@@ -49,12 +49,13 @@ void AbstractWindow::setMainEditorWidget(AbstractEditorWidget* widget)
     disconnect(pvNavigationActions, &NavigationActions::toNextTriggered, controller, &AbstractController::toNext);
     disconnect(pvNavigationActions, &NavigationActions::toLastTriggered, controller, &AbstractController::toLast);
     disconnect(controller, &AbstractController::rowStateChanged, pvNavigationActions, &NavigationActions::setRowState);
-    
+    disconnect(controller, &AbstractController::controllerStateChanged, pvNavigationActions, &NavigationActions::setControllerState);
     connect(pvNavigationActions, &NavigationActions::toFirstTriggered, controller, &AbstractController::toFirst);
     connect(pvNavigationActions, &NavigationActions::toPreviousTriggered, controller, &AbstractController::toPrevious);
     connect(pvNavigationActions, &NavigationActions::toNextTriggered, controller, &AbstractController::toNext);
     connect(pvNavigationActions, &NavigationActions::toLastTriggered, controller, &AbstractController::toLast);
     connect(controller, &AbstractController::rowStateChanged, pvNavigationActions, &NavigationActions::setRowState);
+    connect(controller, &AbstractController::controllerStateChanged, pvNavigationActions, &NavigationActions::setControllerState);
   }
 }
 

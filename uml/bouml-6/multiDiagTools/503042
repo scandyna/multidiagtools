@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 60
+  revision 62
   modified_by 2 "philippe"
   // class settings
   
@@ -1535,6 +1535,18 @@ ${inlines}
 	    classrelation_ref 3478402 // <association>
       end
 
+      attribute 2961410 "State"
+	private type class_ref 2684930 // ControllerState
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       attribute 2907138 "FormatProxyModel"
 	private explicit_type ""
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -1569,6 +1581,21 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      operation 4606082 "controllerState"
+	public return_type class_ref 2684930 // ControllerState
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
       operation 4479234 "setModel"
@@ -1865,56 +1892,7 @@ ${inlines}
 	
       end
 
-      operation 4529026 "updateRowState"
-	stereotype "slot"
-	private explicit_return_type "void"
-	nparams 1
-	  param in name "rs" type class_ref 3075458 // RowState
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4493186 "onDataEditionStarted"
-	stereotype "slot"
-	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4493314 "onDataEditionDone"
-	stereotype "slot"
-	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4493058 "stateChanged"
+      operation 4493058 "controllerStateChanged"
 	stereotype "signal"
 	public explicit_return_type "void"
 	nparams 1
@@ -1997,6 +1975,71 @@ ${inlines}
 	
       end
 
+      operation 4606210 "registerItemDelegate"
+	protected explicit_return_type "void"
+	nparams 1
+	  param in name "delegate" type class_ref 3015170 // EventCatchItemDelegate
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4529026 "updateRowState"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "rs" type class_ref 3075458 // RowState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4493186 "onDataEditionStarted"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4493314 "onDataEditionDone"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       classrelation 3501058 // <generalisation>
 	relation 3482242 ---|>
 	  a public
@@ -2012,6 +2055,31 @@ ${inlines}
 "
 	    classrelation_ref 3566210 // <directional composition>
 	  b parent class_ref 3145090 // RowChangeEventDispatcher
+      end
+
+      classrelation 3601026 // <unidirectional association>
+	relation 3581826 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3601026 // <unidirectional association>
+	  b parent class_ref 3015170 // EventCatchItemDelegate
+      end
+
+      operation 4606338 "setControllerState"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -2175,6 +2243,7 @@ ${inlines}
 	
 	
       end
+
     end
 
     class 3138178 "TableViewController"

@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "ControllerTest.h"
 #include "TestTableModel.h"
+#include "ItemViewTestEdit.h"
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/ControllerStatePermission.h"
 #include "Mdt/ItemEditor/MappedWidgetList.h"
@@ -52,6 +53,18 @@ void ControllerTest::statePermissionTest()
   // Current row change
   QVERIFY(ControllerStatePermission::canChangeCurrentRow(ControllerState::Visualizing));
   QVERIFY(!ControllerStatePermission::canChangeCurrentRow(ControllerState::Editing));
+}
+
+void ControllerTest::tableViewControllerBasicStateTest()
+{
+  using Mdt::ItemEditor::TableViewController;
+  using Mdt::ItemEditor::ControllerState;
+
+  /*
+   * Initial state
+   */
+  TableViewController controller;
+  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
 }
 
 void ControllerTest::tableViewControllerSetModelTest()
@@ -317,6 +330,65 @@ void ControllerTest::tableViewControllerCurrentRowChangeTest()
 //   }
 }
 
+void ControllerTest::tableViewControllerEditTest()
+{
+  using Mdt::ItemEditor::TableViewController;
+  using Mdt::ItemEditor::RowState;
+  using Mdt::ItemEditor::ControllerState;
+
+  TestTableModel model;
+  QModelIndex index;
+  QTableView view;
+  TableViewController controller;
+  QSignalSpy stateSpy(&controller, &TableViewController::controllerStateChanged);
+  QList<QVariant> spyItem;
+
+  QVERIFY(stateSpy.isValid());
+  /*
+   * Setup
+   */
+  controller.setModel(&model);
+  controller.setView(&view);
+  model.populate(3, 2);
+  view.show();
+  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Check that we can change current row
+   */
+  QVERIFY(controller.setCurrentRow(1));
+  QCOMPARE(controller.currentRow(), 1);
+  /*
+   * Begin editing
+   */
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  beginEditing(view, index, BeginEditTrigger::DoubleClick);
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  // Check that new state was signaled
+  QCOMPARE(stateSpy.count(), 1);
+  spyItem = stateSpy.takeFirst();
+  QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Editing);
+  // Check that we cannot change current row
+  QVERIFY(!controller.setCurrentRow(0));
+  QCOMPARE(controller.currentRow(), 1);
+  /*
+   * End edition
+   */
+  endEditing(view, index, EndEditTrigger::EnterKeyClick);
+  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.currentRow(), 1);
+  QVERIFY(controller.setCurrentRow(0));
+  QCOMPARE(controller.currentRow(), 0);
+
+  /*
+   * Play
+   */
+  while(view.isVisible()){
+    QTest::qWait(500);
+  }
+}
+
 void ControllerTest::mappedWidgetListTest()
 {
   using Mdt::ItemEditor::MappedWidgetList;
@@ -526,7 +598,27 @@ void ControllerTest::widgetMapperControllerSetModelTest()
 
 void ControllerTest::widgetMapperControllerCurrentRowChangedTest()
 {
+  QFAIL("Not implemented yet");
+}
 
+/*
+ * Helper functions
+ */
+
+void ControllerTest::beginEditing(QAbstractItemView& view, const QModelIndex& index, BeginEditTrigger trigger)
+{
+  ItemViewTestEdit::beginEditing(view, index, trigger);
+}
+
+void ControllerTest::endEditing(QAbstractItemView& view, const QModelIndex& editingIndex, EndEditTrigger trigger)
+{
+  ItemViewTestEdit::endEditing(view, editingIndex, trigger);
+}
+
+void ControllerTest::edit(QAbstractItemView& view, const QModelIndex& index, const QString& str,
+                            BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger)
+{
+  ItemViewTestEdit::edit(view, index, str, beginEditTrigger, endEditTrigger);
 }
 
 /*

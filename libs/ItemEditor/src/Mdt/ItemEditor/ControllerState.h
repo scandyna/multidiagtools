@@ -21,6 +21,8 @@
 #ifndef MDT_ITEM_EDITOR_CONTROLLER_STATE_H
 #define MDT_ITEM_EDITOR_CONTROLLER_STATE_H
 
+#include <QMetaType>
+
 namespace Mdt{ namespace ItemEditor{
 
   /*! \brief State of item editor controller
@@ -32,5 +34,7 @@ namespace Mdt{ namespace ItemEditor{
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
+
+Q_DECLARE_METATYPE(Mdt::ItemEditor::ControllerState)
 
 #endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_STATE_H

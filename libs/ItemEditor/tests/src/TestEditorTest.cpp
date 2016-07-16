@@ -53,7 +53,7 @@ void TestEditorTest::widowEditorTest()
   TestTableModel model;
 
   editor.setModel(&model);
-  model.populate(3, 2);
+  model.populate(3, 1);
 
   /*
    * Play

@@ -20,14 +20,16 @@ diagrams
   classdiagram_ref 2414338 // State
     120 110 100 4 0 0
   classdiagram_ref 2707074 // AbstractController
-    120 110 100 23 0 0
+    943 906 100 23 0 0
   classdiagram_ref 2787586 // MappedWidgetList
     120 110 100 4 0 0
-  active  classdiagram_ref 2761090 // WidgetMapperController
-    943 906 100 8 84 0
+  classdiagram_ref 2761090 // WidgetMapperController
+    943 906 100 8 96 253
+  active  classdiagram_ref 2760962 // ItemViewController
+    943 906 100 7 348 0
 end
 show_stereotypes
-selected classdiagram_ref 2761090 // WidgetMapperController
+selected operation_ref 4606338 // setControllerState
 open
   
   package_ref 549506 // Algorithm
@@ -36,7 +38,15 @@ open
   package_ref 516226 // SqlItemModel
   classview_ref 1438978 // Models
   classview_ref 1472258 // Editor
-  operation_ref 4599554 // addWidget
+  classview_ref 1306882 // Delegate
+  classview_ref 1485314 // RowChangeEvent
+  attribute_ref 2961410 // State
+  operation_ref 4469122 // setLastError
+  operation_ref 4606210 // registerItemDelegate
+  operation_ref 4529026 // updateRowState
+  operation_ref 4493186 // onDataEditionStarted
+  operation_ref 4493314 // onDataEditionDone
+  classrelation_ref 3566210 // <directional composition>
   class_ref 3138562 // SqlWidgetMapperTableController
   classview_ref 1432322 // StandardFormWidget
   classview_ref 1472130 // ArticleEditor
