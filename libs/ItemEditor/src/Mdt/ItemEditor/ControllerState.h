@@ -33,6 +33,8 @@ namespace Mdt{ namespace ItemEditor{
     Editing       /*!< Editing state */
   };
 
+  /// \todo Add ModelNotSet (or NoModelSet) state ?
+
 }} // namespace Mdt{ namespace ItemEditor{
 
 Q_DECLARE_METATYPE(Mdt::ItemEditor::ControllerState)

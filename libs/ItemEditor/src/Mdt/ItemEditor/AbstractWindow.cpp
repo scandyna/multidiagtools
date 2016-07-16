@@ -31,7 +31,8 @@ namespace Mdt{ namespace ItemEditor{
 
 AbstractWindow::AbstractWindow(QWidget* parent)
  : QMainWindow(parent),
-   pvNavigationActions(nullptr)
+   pvNavigationActions(nullptr),
+   pvInsertAction(nullptr)
 {
 }
 
@@ -57,6 +58,14 @@ void AbstractWindow::setMainEditorWidget(AbstractEditorWidget* widget)
     connect(controller, &AbstractController::rowStateChanged, pvNavigationActions, &NavigationActions::setRowState);
     connect(controller, &AbstractController::controllerStateChanged, pvNavigationActions, &NavigationActions::setControllerState);
   }
+  // Connect insert actions
+  if(pvInsertAction != nullptr){
+//     disconnect(pvInsertAction, &InsertAction::insertTriggered, controller, &AbstractController::insert);
+    disconnect(controller, &AbstractController::controllerStateChanged, pvInsertAction, &InsertAction::setControllerState);
+
+//     connect(pvInsertAction, &InsertAction::insertTriggered, controller, &AbstractController::insert);
+    connect(controller, &AbstractController::controllerStateChanged, pvInsertAction, &InsertAction::setControllerState);
+  }
 }
 
 NavigationActions* AbstractWindow::navigationActions()
@@ -65,6 +74,14 @@ NavigationActions* AbstractWindow::navigationActions()
     pvNavigationActions = new NavigationActions(this);
   }
   return pvNavigationActions;
+}
+
+InsertAction* AbstractWindow::insertAction()
+{
+  if(pvInsertAction == nullptr){
+    pvInsertAction = new InsertAction(this);
+  }
+  return pvInsertAction;
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

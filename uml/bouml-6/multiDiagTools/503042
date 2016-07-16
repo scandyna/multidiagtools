@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 62
+  revision 63
   modified_by 2 "philippe"
   // class settings
   
@@ -2243,7 +2243,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     class 3138178 "TableViewController"
@@ -3452,6 +3451,7 @@ ${inlines}
       end
 
       operation 4448770 "setControllerState"
+	stereotype "slot"
 	public explicit_return_type "void"
 	nparams 1
 	  param in name "state" type class_ref 2684930 // ControllerState
@@ -3469,36 +3469,6 @@ ${inlines}
 
       operation 4070018 "action"
 	public return_type class_ref 693250 // QAction
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4070274 "enable"
-	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4070402 "disable"
-	public explicit_return_type "void"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "

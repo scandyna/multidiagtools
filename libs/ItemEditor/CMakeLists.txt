@@ -10,6 +10,7 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/ItemSelectionModel.cpp
     src/Mdt/ItemEditor/RowChangeEventDispatcher.cpp
     src/Mdt/ItemEditor/NavigationActions.cpp
+    src/Mdt/ItemEditor/InsertAction.cpp
     src/Mdt/ItemEditor/ControllerStatePermission.cpp
     src/Mdt/ItemEditor/AbstractController.cpp
     src/Mdt/ItemEditor/AbstractItemViewController.cpp

@@ -23,6 +23,7 @@
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/RowState.h"
 #include "Mdt/ItemEditor/NavigationActions.h"
+#include "Mdt/ItemEditor/InsertAction.h"
 #include "Mdt/ItemEditor/ControllerState.h"
 #include <QSignalSpy>
 #include <QItemSelectionModel>
@@ -182,6 +183,32 @@ void ActionsTest::navigationActionsTest()
   QVERIFY(toPrevious.isNull());
   QVERIFY(toNext.isNull());
   QVERIFY(toLast.isNull());
+}
+
+void ActionsTest::insertActionTest()
+{
+  using Mdt::ItemEditor::InsertAction;
+  using Mdt::ItemEditor::ControllerState;
+
+  auto *action = new InsertAction(nullptr);
+  QPointer<QAction> insertAction = action->insertAction();
+  /*
+   * Initial state
+   */
+  /// \todo Define a initial state (also in controller) and enable
+//   QVERIFY(!insertAction->isEnabled());
+  /*
+   * Change controller state
+   */
+  action->setControllerState(ControllerState::Visualizing);
+  QVERIFY(insertAction->isEnabled());
+  action->setControllerState(ControllerState::Editing);
+  QVERIFY(!insertAction->isEnabled());
+  /*
+   * Clear
+   */
+  delete action;
+  QVERIFY(insertAction.isNull());
 }
 
 /*

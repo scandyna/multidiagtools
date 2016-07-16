@@ -18,41 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "StandardWindow.h"
-#include "NavigationActions.h"
 #include "InsertAction.h"
-#include <QMenu>
-#include <QMenuBar>
-#include <QToolBar>
+#include "ControllerStatePermission.h"
+#include <QIcon>
 
 namespace Mdt{ namespace ItemEditor{
 
-StandardWindow::StandardWindow(QWidget* parent)
- : AbstractWindow(parent)
+InsertAction::InsertAction(QObject* parent)
+ : QObject(parent)
 {
-  setupUi(this);
-  setupNavigationElements();
+  pvAction = new QAction(QIcon::fromTheme("document-new"), tr("Insert"), this);
+  pvAction->setObjectName("Insert");
+  connect(pvAction, &QAction::triggered, this, &InsertAction::insertTriggered);
 }
 
-void StandardWindow::setupNavigationElements()
+void InsertAction::setControllerState(ControllerState state)
 {
-  auto *actions = navigationActions();
-
-  tlbMain->addAction(actions->toFirst());
-  tlbMain->addAction(actions->toPrevious());
-  tlbMain->addAction(actions->toNext());
-  tlbMain->addAction(actions->toLast());
-  tlbMain->addAction(insertAction()->insertAction());
-
-  auto *navigationMenu = menuBar()->addMenu(tr("&Navigation"));
-  navigationMenu->addAction(actions->toFirst());
-  navigationMenu->addAction(actions->toPrevious());
-  navigationMenu->addAction(actions->toNext());
-  navigationMenu->addAction(actions->toLast());
-
-  auto *editMenu = menuBar()->addMenu(tr("&Edit"));
-  editMenu->addAction(insertAction()->insertAction());
-  
+  pvAction->setEnabled( ControllerStatePermission::canInsert(state) );
 }
+
 
 }} // namespace Mdt{ namespace ItemEditor{

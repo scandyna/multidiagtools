@@ -33,4 +33,15 @@ bool ControllerStatePermission::canChangeCurrentRow(ControllerState state)
   return false;
 }
 
+bool ControllerStatePermission::canInsert(ControllerState state)
+{
+  switch(state){
+    case ControllerState::Visualizing:
+      return true;
+    case ControllerState::Editing:
+      break;
+  }
+  return false;
+}
+
 }} // namespace Mdt{ namespace ItemEditor{

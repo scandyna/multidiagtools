@@ -37,6 +37,10 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Check if it is allowed to change current row for state
      */
     static bool canChangeCurrentRow(ControllerState state);
+
+    /*! \brief Check if it is allowed to insert for state
+     */
+    static bool canInsert(ControllerState state);
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

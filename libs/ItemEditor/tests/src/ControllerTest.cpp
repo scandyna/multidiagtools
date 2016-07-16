@@ -53,6 +53,9 @@ void ControllerTest::statePermissionTest()
   // Current row change
   QVERIFY(ControllerStatePermission::canChangeCurrentRow(ControllerState::Visualizing));
   QVERIFY(!ControllerStatePermission::canChangeCurrentRow(ControllerState::Editing));
+  // Insert
+  QVERIFY(ControllerStatePermission::canInsert(ControllerState::Visualizing));
+  QVERIFY(!ControllerStatePermission::canInsert(ControllerState::Editing));
 }
 
 void ControllerTest::tableViewControllerBasicStateTest()
@@ -384,9 +387,9 @@ void ControllerTest::tableViewControllerEditTest()
   /*
    * Play
    */
-  while(view.isVisible()){
-    QTest::qWait(500);
-  }
+//   while(view.isVisible()){
+//     QTest::qWait(500);
+//   }
 }
 
 void ControllerTest::mappedWidgetListTest()
