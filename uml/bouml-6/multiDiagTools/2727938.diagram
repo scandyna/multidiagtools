@@ -3,82 +3,82 @@ format 211
 classcanvas 128130 class_ref 2684802 // AbstractItemViewController
   classdiagramsettings member_max_width 0 end
   color lightorange
-  xyzwh 429.85 418.85 2000 191 43
+  xyzwh 253.75 626.75 2000 191 43
 end
 classcanvas 134018 class_ref 146946 // QAbstractItemModel
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 632.7 165.65 2017
+  xyz 716.5 165.25 2017
 end
 classcanvas 140546 class_ref 2739714 // QWebSocket
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 41.95 165.65 2017
+  xyz 217.25 165.25 2017
 end
 classcanvas 140802 class_ref 2739842 // QWebSocketServer
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 176.35 165.65 2017
+  xyz 40.25 165.25 2017
 end
 classcanvas 146818 class_ref 3068802 // AbstractEditorWidget
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
-  xyz 814.45 418.85 2006
+  xyz 573.75 418.75 2006
 end
 classcanvas 151426 class_ref 3015170 // EventCatchItemDelegate
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
-  xyz 962.9 868.1 2000
+  xyz 939.5 40.5 2000
 end
 note 155138 "Try: separate SQL part !
 F.ex. setTable()
 
 Here, only focus on Qt table model"
-  xyzwh 507.1 868 2000 375 105
+  xyzwh 507.5 920 2000 375 105
 classcanvas 157058 class_ref 3104258 // SqlTableViewWidget
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
-  xyz 703.1 620.15 2000
+  xyz 573.5 711.25 2000
 end
 classcanvas 157186 class_ref 3104130 // TableViewWidget
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
-  xyz 827.45 704.25 2012
+  xyz 482.75 626.75 2012
 end
 classcanvas 158338 class_ref 3090434 // AbstractController
   classdiagramsettings member_max_width 0 end
   color lightorange
-  xyz 462.8 165.65 3011
+  xyz 287 418.75 3011
 end
 classcanvas 160002 class_ref 2927362 // SqlTableViewController
   classdiagramsettings member_max_width 0 end
   color lightorange
-  xyz 444.85 500.9 2000
+  xyz 268.75 711.25 2000
 end
 classcanvas 161282 class_ref 147202 // QAbstractTableModel
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 628.7 249.75 2023
+  xyz 712.5 249.75 2023
 end
 classcanvas 161666 class_ref 174338 // QSqlQueryModel
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 643.7 334.75 2029
+  xyz 727.5 334.25 2029
 end
 classcanvas 161922 class_ref 174210 // QSqlTableModel
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 645.7 500.9 2035
+  xyz 729.5 795.75 2035
 end
 classcanvas 163586 class_ref 138626 // QObject
   classdiagramsettings member_max_width 0 end
   color lightmagenta
-  xyz 495.8 41.55 2023
+  xyz 320 41.75 2023
 end
 classcanvas 165506 class_ref 316162 // QWidget
   classdiagramsettings member_max_width 0 end
   color green
-  xyz 852.5 165.65 2029
+  xyz 611.5 165.25 2029
 end
 note 168066 "Note: things like fieldIndex() should have nothing to do with Controllers !
 Controllers just interact between GUI and Model.
@@ -87,26 +87,16 @@ So not mix again thoses things !  (remember SRP)
 Here, QSqlTableModel has cache, and we must call submitAll(), that is not defined in QAbstractItemModel, so a dedicated controller has sense.
 
 But, has TableController sense here ?? (possibly yes, possibly no)"
-  xyzwh 40.2 868.8 2000 387 209
+  xyzwh 40.5 920 2000 387 209
 note 168962 "Notion of preset of fields to display."
-  xyzwh 40.6 1157.3 3019 299 41
+  xyzwh 40.5 1209 3019 299 41
 classcanvas 169090 class_ref 3118082 // AbstractTableViewWidget
   classdiagramsettings member_max_width 0 end
   color lightmediumblue
-  xyz 800.45 500.9 2018
+  xyz 559.75 503.25 2018
 end
 relationcanvas 157442 relation_ref 3475202 // <directional composition>
-  decenter_begin 581
-  from ref 157186 z 2013 to point 391.7 729.9
-  line 172546 z 2013 to point 391.7 437.1
-  line 172674 z 2013 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 158722 relation_ref 3481986 // <unidirectional association>
-  decenter_begin 418
-  decenter_end 418
-  from ref 158338 z 3012 to ref 134018
+  from ref 157186 z 2013 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
@@ -117,21 +107,14 @@ relationcanvas 158850 relation_ref 3459586 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 159106 relation_ref 3467138 // <dependency>
-  decenter_end 720
-  from ref 146818 z 3012 to point 1015.3 437.1
-  line 173058 z 3012 to point 1015.3 788
-  line 173186 z 3012 to point 352.6 788
-  line 173314 z 3012 to point 352.6 196.2
-  line 173442 z 3012 to ref 158338
+  from ref 146818 z 3012 to ref 158338
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 160258 relation_ref 3475074 // <directional composition>
-  geometry HV unfixed
-  decenter_begin 581
-  decenter_end 521
-  from ref 157058 z 2001 to point 525 642
-  line 170626 z 2001 to ref 160002
+  decenter_begin 418
+  decenter_end 418
+  from ref 157058 z 2001 to ref 160002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
@@ -151,46 +134,48 @@ relationcanvas 162050 relation_ref 174978 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 162178 relation_ref 3310466 // <unidirectional association>
-  from ref 160002 z 2036 to ref 161922
+  geometry VH unfixed
+  decenter_begin 521
+  from ref 160002 z 2036 to point 349 814
+  line 173826 z 2036 to ref 161922
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 163714 relation_ref 3091842 // <generalisation>
   geometry VHV unfixed
-  decenter_begin 525
-  from ref 140802 z 2024 to point 245 125.6
-  line 164354 z 2024 to point 525 125.6
+  decenter_begin 474
+  from ref 140802 z 2024 to point 102 125
+  line 164354 z 2024 to point 350 125
   line 164482 z 2024 to ref 163586
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 163842 relation_ref 3091714 // <generalisation>
   geometry VHV unfixed
-  decenter_begin 536
-  from ref 140546 z 2024 to point 89 125.6
-  line 165890 z 2024 to point 525 125.6
+  decenter_begin 463
+  from ref 140546 z 2024 to point 258 125
+  line 165890 z 2024 to point 350 125
   line 166018 z 2024 to ref 163586
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 163970 relation_ref 902018 // <generalisation>
   geometry VHV unfixed
-  from ref 134018 z 2024 to point 701.7 125.3
-  line 172802 z 2024 to point 525.3 125.3
+  from ref 134018 z 2024 to point 785 125
+  line 172802 z 2024 to point 350 125
   line 172930 z 2024 to ref 163586
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 165634 relation_ref 2457474 // <generalisation>
   geometry VHV unfixed
-  from ref 165506 z 2030 to point 883.5 125.6
-  line 170370 z 2030 to point 525.3 125.6
+  from ref 165506 z 2030 to point 642 125
+  line 170370 z 2030 to point 350 125
   line 170498 z 2030 to ref 163586
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 165762 relation_ref 3441794 // <generalisation>
-  decenter_begin 476
   from ref 146818 z 2030 to ref 165506
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -201,25 +186,21 @@ relationcanvas 166402 relation_ref 3482242 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 169218 relation_ref 3492354 // <generalisation>
-  decenter_begin 480
-  decenter_end 476
   from ref 169090 z 2019 to ref 146818
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 169346 relation_ref 3492610 // <generalisation>
-  geometry VHV unfixed
-  decenter_end 480
-  from ref 157058 z 2019 to point 771 579.3
-  line 171650 z 2019 to point 882 579.3
-  line 171778 z 2019 to ref 169090
+  from ref 157058 z 2019 to ref 169090
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 169474 relation_ref 3492482 // <generalisation>
-  decenter_begin 471
-  decenter_end 480
-  from ref 157186 z 2019 to ref 169090
+  geometry VHV unfixed
+  decenter_begin 528
+  from ref 157186 z 2019 to point 544 586
+  line 173570 z 2019 to point 645 586
+  line 173698 z 2019 to ref 169090
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

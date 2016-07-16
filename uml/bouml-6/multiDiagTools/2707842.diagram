@@ -2,11 +2,11 @@ format 211
 
 classcanvas 128002 class_ref 3090050 // TestWindowEditor
   classdiagramsettings member_max_width 0 end
-  xyz 859.75 402.75 2000
+  xyz 859.15 402.55 2000
 end
 classcanvas 128130 class_ref 2706306 // StandardWindow
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 985 320.3 2000
+  xyz 985 320.1 2000
 end
 classcanvas 128386 class_ref 552450 // QMainWindow
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
@@ -14,51 +14,51 @@ classcanvas 128386 class_ref 552450 // QMainWindow
 end
 classcanvas 128642 class_ref 316162 // QWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 683.5 39.1 2012
+  xyz 683.3 39.1 2012
 end
 classcanvas 128898 class_ref 3088642 // StandardEditorLayoutWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 622.05 407 2018
+  xyz 622.05 407.4 2018
 end
 classcanvas 129538 class_ref 3090178 // TestFormEditionWidget
   classdiagramsettings member_max_width 0 end
-  xyz 428.3 490.25 2000
+  xyz 428.9 490.45 2000
 end
 classcanvas 129666 class_ref 3096962 // AbstractWindow
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 990.75 240.9 2012
+  xyz 990.15 240.7 2012
 end
 classcanvas 130050 class_ref 3103618 // TestTableEditionWidget
   classdiagramsettings member_max_width 0 end
-  xyz 45.7 742 2000
+  xyz 45.3 742.4 2000
 end
 classcanvas 131330 class_ref 3068802 // AbstractEditorWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 508.3 159.7 2018
+  xyz 508.9 159.7 2018
 end
 classcanvas 131842 class_ref 3104130 // TableViewWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 66.7 662.6 2024
+  xyz 66.3 662 2024
 end
 classcanvas 132738 class_ref 3118082 // AbstractTableViewWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 39.7 340.4 2030
+  xyz 39.3 340.2 2030
 end
 classcanvas 134018 class_ref 3131650 // Ui::TestFormEditionWidget
   classdiagramsettings member_max_width 0 end
-  xyz 778.8 501 2000
+  xyz 778.8 501.6 2000
 end
 classcanvas 135042 class_ref 3138434 // WidgetMapperController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 194.45 501 2018
+  xyz 194.05 501.6 2018
 end
 classcanvas 136194 class_ref 404610 // QDataWidgetMapper
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 206.45 581.4 2000
+  xyz 206.05 581 2000
 end
 classcanvas 136450 class_ref 3138306 // AbstractWidgetMapperController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 167.45 421.6 2024
+  xyz 168.45 422.6 2024
 end
 relationcanvas 128258 relation_ref 3458946 // <generalisation>
   decenter_begin 490
@@ -68,8 +68,8 @@ relationcanvas 128258 relation_ref 3458946 // <generalisation>
 end
 relationcanvas 128770 relation_ref 971394 // <generalisation>
   geometry VHV unfixed
-  from ref 128386 z 2013 to point 1043 120.4
-  line 135938 z 2013 to point 714.8 120.4
+  from ref 128386 z 2013 to point 1043 120.6
+  line 135938 z 2013 to point 714.8 120.6
   line 136066 z 2013 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -99,8 +99,8 @@ relationcanvas 129922 relation_ref 3466370 // <generalisation>
 end
 relationcanvas 131458 relation_ref 3441794 // <generalisation>
   geometry VHV unfixed
-  from ref 131330 z 2019 to point 580.6 120.4
-  line 133122 z 2019 to point 714.8 120.4
+  from ref 131330 z 2019 to point 580.6 120.6
+  line 133122 z 2019 to point 714.8 120.6
   line 133250 z 2019 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -112,8 +112,8 @@ relationcanvas 132098 relation_ref 3475330 // <generalisation>
 end
 relationcanvas 132866 relation_ref 3492354 // <generalisation>
   geometry VHV unfixed
-  from ref 132738 z 2031 to point 125.6 301.1
-  line 135682 z 2031 to point 580.6 301.1
+  from ref 132738 z 2031 to point 125.6 301.4
+  line 135682 z 2031 to point 580.6 301.4
   line 135810 z 2031 to ref 131330
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

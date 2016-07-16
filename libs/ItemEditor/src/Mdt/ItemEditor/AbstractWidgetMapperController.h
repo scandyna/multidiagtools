@@ -29,6 +29,8 @@ class QWidget;
 
 namespace Mdt{ namespace ItemEditor{
 
+  class MappedWidgetList;
+
   /*! \brief Common base class to implement controllers for QDataWidgetMapper
    */
   class AbstractWidgetMapperController : public AbstractController
@@ -71,6 +73,7 @@ namespace Mdt{ namespace ItemEditor{
    private:
 
     QDataWidgetMapper *pvWidgetMapper;
+    MappedWidgetList *pvMappedWidgetList;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

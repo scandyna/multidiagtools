@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "AbstractWidgetMapperController.h"
+#include "MappedWidgetList.h"
 #include <QDataWidgetMapper>
 
 namespace Mdt{ namespace ItemEditor{
@@ -30,6 +31,8 @@ AbstractWidgetMapperController::AbstractWidgetMapperController(QDataWidgetMapper
   Q_ASSERT(pvWidgetMapper != nullptr);
   pvWidgetMapper->setParent(this);
   connect(this, &AbstractWidgetMapperController::currentRowChanged, pvWidgetMapper, &QDataWidgetMapper::setCurrentIndex);
+  pvMappedWidgetList = new MappedWidgetList(this);
+  connect(this, &AbstractWidgetMapperController::rowStateChanged, pvMappedWidgetList, &MappedWidgetList::setRowState);
 }
 
 void AbstractWidgetMapperController::setModel(QAbstractItemModel* model)
@@ -39,15 +42,18 @@ void AbstractWidgetMapperController::setModel(QAbstractItemModel* model)
   referenceItemModel(model);
   pvWidgetMapper->setModel(model);
   registerItemModel();
+  pvMappedWidgetList->setModel(model);
 }
 
 void AbstractWidgetMapperController::addMapping(QWidget* widget, int section)
 {
+  pvMappedWidgetList->addWidget(widget, section);
   pvWidgetMapper->addMapping(widget, section);
 }
 
 void AbstractWidgetMapperController::addMapping(QWidget* widget, int section, const QByteArray& propertyName)
 {
+  pvMappedWidgetList->addWidget(widget, section);
   pvWidgetMapper->addMapping(widget, section, propertyName);
 }
 

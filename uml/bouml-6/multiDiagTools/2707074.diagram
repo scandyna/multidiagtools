@@ -2,53 +2,18 @@ format 211
 
 classcanvas 128386 class_ref 2706434 // NavigationActions
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 859.05 40.35 2006
+  xyz 40.5 781.5 2006
 end
 classcanvas 128642 class_ref 2713474 // EditionActions
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 672.75 40.35 2011
+  xyz 249.5 781.5 2011
 end
 classcanvas 131586 class_ref 3090434 // AbstractController
   classdiagramsettings member_max_width 0 end
-  xyz 41 119 2037
+  xyz 40.5 40.5 2037
 end
 classcanvas 132482 class_ref 146946 // QAbstractItemModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 449 839 2047
-end
-classcanvas 135810 class_ref 2753410 // RowChangeEventMapper
-  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 178.4 839 2053
-end
-classcanvas 137346 class_ref 3124610 // RowChangeEventDispatcher
-  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 167.4 39 2057
-end
-relationcanvas 134530 relation_ref 3481986 // <unidirectional association>
-  geometry HV unfixed
-  decenter_begin 505
-  from ref 131586 z 2048 to point 518 461
-  line 145410 z 2048 to ref 132482
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 135938 relation_ref 3106562 // <unidirectional association>
-  decenter_begin 395
-  decenter_end 395
-  from ref 135810 z 2054 to ref 132482
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 136066 relation_ref 3505794 // <directional composition>
-  decenter_begin 507
-  from ref 131586 z 2054 to ref 135810
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 137474 relation_ref 3512450 // <directional composition>
-  decenter_begin 507
-  from ref 131586 z 2058 to ref 137346
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
+  xyz 559.5 40.5 2047
 end
 end

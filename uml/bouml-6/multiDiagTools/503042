@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 59
+  revision 60
   modified_by 2 "philippe"
   // class settings
   
@@ -1184,15 +1184,6 @@ ${inlines}
 	
       end
 
-      classrelation 3580930 // <unidirectional association>
-	relation 3561730 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3580930 // <unidirectional association>
-	  b parent class_ref 1382914 // QItemSelectionModel
-      end
-
       operation 4592514 "requestCurrentRow"
 	public explicit_return_type ""
 	nparams 1
@@ -1223,6 +1214,140 @@ ${inlines}
     sequencediagram 2768002 "WidgetMapperExamples"
       sequencediagramsettings end
       size A4
+    end
+  end
+
+  classview 1491842 "MappedWidgetList"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2787586 "MappedWidgetList"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3158146 "MappedWidgetList"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3593986 // <unidirectional association>
+	relation 3574786 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3593986 // <unidirectional association>
+	  b parent class_ref 316162 // QWidget
+      end
+
+      operation 4599170 "MappedWidgetList"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 2954882 "WidgetList"
+	private type class_ref 316162 // QWidget
+	multiplicity "*"
+	stereotype "vector"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 4599554 "addWidget"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "widget" type class_ref 316162 // QWidget
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4599298 "setRowState"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "rs" type class_ref 3075458 // RowState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4599426 "setControllerState"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3594242 // <generalisation>
+	relation 3575042 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3594242 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
     end
   end
 
@@ -1488,44 +1613,12 @@ ${inlines}
 	
       end
 
-      operation 4522498 "setCurrentRow"
-	public explicit_return_type "bool"
-	nparams 1
-	  param in name "row" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 4515842 "currentRow"
 	public explicit_return_type "int"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4529026 "updateRowState"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "rs" type class_ref 3075458 // RowState
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -1618,6 +1711,23 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4522498 "setCurrentRow"
+	stereotype "slot"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "row" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -1746,6 +1856,23 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4529026 "updateRowState"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "rs" type class_ref 3075458 // RowState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -2390,6 +2517,15 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 3594114 // <directional composition>
+	relation 3574914 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3594114 // <directional composition>
+	  b parent class_ref 3158146 // MappedWidgetList
       end
     end
 
