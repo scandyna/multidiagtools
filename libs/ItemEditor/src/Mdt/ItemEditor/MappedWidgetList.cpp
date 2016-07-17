@@ -47,6 +47,11 @@ void MappedWidgetList::setModel(QAbstractItemModel* model)
   updateAllWidgetsEnableState();
 }
 
+void MappedWidgetList::clear()
+{
+  pvWidgetList.clear();
+}
+
 void MappedWidgetList::setRowState(RowState rs)
 {
   pvRowState = rs;

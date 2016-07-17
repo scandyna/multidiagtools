@@ -44,4 +44,26 @@ bool ControllerStatePermission::canInsert(ControllerState state)
   return false;
 }
 
+bool ControllerStatePermission::canSubmit(ControllerState state)
+{
+  switch(state){
+    case ControllerState::Visualizing:
+      return false;
+    case ControllerState::Editing:
+      return true;
+  }
+  return false;
+}
+
+bool ControllerStatePermission::canRevert(ControllerState state)
+{
+  switch(state){
+    case ControllerState::Visualizing:
+      return false;
+    case ControllerState::Editing:
+      return true;
+  }
+  return false;
+}
+
 }} // namespace Mdt{ namespace ItemEditor{

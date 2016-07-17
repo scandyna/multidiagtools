@@ -36,7 +36,7 @@ ItemDelegateProxy::~ItemDelegateProxy()
 void ItemDelegateProxy::setItemDelegate(QAbstractItemDelegate* delegate)
 {
   Q_ASSERT(delegate != nullptr);
-  auto *styledDelegate = dynamic_cast<QStyledItemDelegate*>(delegate);
+  auto *styledDelegate = qobject_cast<QStyledItemDelegate*>(delegate);
   Q_ASSERT(styledDelegate != nullptr);
   pvDelegate = styledDelegate;
 }

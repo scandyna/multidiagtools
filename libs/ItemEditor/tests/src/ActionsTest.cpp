@@ -23,6 +23,7 @@
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/RowState.h"
 #include "Mdt/ItemEditor/NavigationActions.h"
+#include "Mdt/ItemEditor/EditionActions.h"
 #include "Mdt/ItemEditor/InsertAction.h"
 #include "Mdt/ItemEditor/ControllerState.h"
 #include <QSignalSpy>
@@ -183,6 +184,75 @@ void ActionsTest::navigationActionsTest()
   QVERIFY(toPrevious.isNull());
   QVERIFY(toNext.isNull());
   QVERIFY(toLast.isNull());
+}
+
+void ActionsTest::editionActionsTest()
+{
+  using Mdt::ItemEditor::EditionActions;
+  using Mdt::ItemEditor::RowState;
+  using Mdt::ItemEditor::ControllerState;
+
+  EditionActions *actions = new EditionActions(nullptr);
+  QPointer<QAction> submitAction = actions->submitAction();
+  QPointer<QAction> revertAction = actions->revertAction();
+  RowState rs;
+  /*
+   * Initial state
+   */
+  QVERIFY(!submitAction->isEnabled());
+  QVERIFY(!revertAction->isEnabled());
+  /*
+   * Check controller state
+   */
+  // Set a valid row state
+  rs.setRowCount(2);
+  rs.setCurrentRow(0);
+  actions->setRowState(rs);
+  // Visualizing state
+  actions->setControllerState(ControllerState::Visualizing);
+  QVERIFY(!submitAction->isEnabled());
+  QVERIFY(!revertAction->isEnabled());
+  // Editing state
+  actions->setControllerState(ControllerState::Editing);
+  QVERIFY(submitAction->isEnabled());
+  QVERIFY(revertAction->isEnabled());
+  /*
+   * Check setting row sate in Editing state
+   */
+  actions->setControllerState(ControllerState::Editing);
+  // Set valid row state
+  rs.setRowCount(2);
+  rs.setCurrentRow(0);
+  actions->setRowState(rs);
+  QVERIFY(submitAction->isEnabled());
+  QVERIFY(revertAction->isEnabled());
+  // Null row state
+  rs.setRowCount(0);
+  rs.setCurrentRow(-1);
+  actions->setRowState(rs);
+  QVERIFY(!submitAction->isEnabled());
+  QVERIFY(!revertAction->isEnabled());
+  /*
+   * Check setting row sate in Visualizing state
+   */
+  actions->setControllerState(ControllerState::Visualizing);
+  // Set valid row state
+  rs.setRowCount(2);
+  rs.setCurrentRow(0);
+  actions->setRowState(rs);
+  QVERIFY(!submitAction->isEnabled());
+  QVERIFY(!revertAction->isEnabled());
+  // Null row state
+  rs.setRowCount(0);
+  rs.setCurrentRow(-1);
+  QVERIFY(!submitAction->isEnabled());
+  QVERIFY(!revertAction->isEnabled());
+  /*
+   * Clear
+   */
+  delete actions;
+  QVERIFY(submitAction.isNull());
+  QVERIFY(revertAction.isNull());
 }
 
 void ActionsTest::insertActionTest()

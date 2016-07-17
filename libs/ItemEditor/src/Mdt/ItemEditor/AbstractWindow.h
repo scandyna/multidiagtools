@@ -22,6 +22,7 @@
 #define MDT_ITEM_EDITOR_ABSTRACT_WINDOW_H
 
 #include "NavigationActions.h"
+#include "EditionActions.h"
 #include "InsertAction.h"
 #include <QMainWindow>
 
@@ -63,6 +64,13 @@ namespace Mdt{ namespace ItemEditor{
      */
     NavigationActions *navigationActions();
 
+    /*! \brief Get EditionActions
+     *
+     * The first time this method is called,
+     *  the EditionActions is created.
+     */
+    EditionActions *editionActions();
+
     /*! \brief Get InsertAction
      *
      * The first time this method is called,
@@ -74,6 +82,7 @@ namespace Mdt{ namespace ItemEditor{
 
     NavigationActions *pvNavigationActions;
     InsertAction *pvInsertAction;
+    EditionActions *pvEditionActions;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

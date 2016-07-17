@@ -31,7 +31,14 @@
 #include <QStringListModel>
 #include <QTableView>
 #include <QLineEdit>
+#include <QSpinBox>
+#include <QComboBox>
 #include <QObject>
+#include <QMetaObject>
+#include <QMetaProperty>
+#include <QMetaMethod>
+
+#include "MySpy.h"
 
 void ControllerTest::initTestCase()
 {
@@ -56,6 +63,13 @@ void ControllerTest::statePermissionTest()
   // Insert
   QVERIFY(ControllerStatePermission::canInsert(ControllerState::Visualizing));
   QVERIFY(!ControllerStatePermission::canInsert(ControllerState::Editing));
+  // Submit
+  QVERIFY(!ControllerStatePermission::canSubmit(ControllerState::Visualizing));
+  QVERIFY(ControllerStatePermission::canSubmit(ControllerState::Editing));
+  // Revert
+  QVERIFY(!ControllerStatePermission::canRevert(ControllerState::Visualizing));
+  QVERIFY(ControllerStatePermission::canRevert(ControllerState::Editing));
+
 }
 
 void ControllerTest::tableViewControllerBasicStateTest()
@@ -333,10 +347,57 @@ void ControllerTest::tableViewControllerCurrentRowChangeTest()
 //   }
 }
 
+void ControllerTest::tableViewCurrentRowChangeBenchmark()
+{
+  TestTableModel model;
+  QModelIndex index;
+  QTableView view;
+
+  view.setModel(&model);
+  model.populate(5, 3);
+  view.show();
+
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  view.setCurrentIndex(index);
+  QCOMPARE(view.currentIndex().row(), 0);
+
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  QBENCHMARK{
+    view.setCurrentIndex(index);
+    QCOMPARE(view.currentIndex().row(), 1);
+  }
+}
+
+void ControllerTest::tableViewControllerCurrentRowChangeBenchmark()
+{
+  using Mdt::ItemEditor::TableViewController;
+
+  TestTableModel model;
+  QModelIndex index;
+  QTableView view;
+  TableViewController controller;
+
+  controller.setModel(&model);
+  controller.setView(&view);
+  model.populate(5, 3);
+  view.show();
+
+  QCOMPARE(controller.currentRow(), 0);
+  QCOMPARE(view.currentIndex().row(), 0);
+
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  QBENCHMARK{
+    view.setCurrentIndex(index);
+    QCOMPARE(controller.currentRow(), 1);
+  }
+}
+
 void ControllerTest::tableViewControllerEditTest()
 {
   using Mdt::ItemEditor::TableViewController;
-  using Mdt::ItemEditor::RowState;
   using Mdt::ItemEditor::ControllerState;
 
   TestTableModel model;
@@ -380,7 +441,12 @@ void ControllerTest::tableViewControllerEditTest()
    */
   endEditing(view, index, EndEditTrigger::EnterKeyClick);
   QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  // Check that new state was signaled
+  QCOMPARE(stateSpy.count(), 1);
+  spyItem = stateSpy.takeFirst();
+  QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Visualizing);
   QCOMPARE(controller.currentRow(), 1);
+  // Check that we can change current row
   QVERIFY(controller.setCurrentRow(0));
   QCOMPARE(controller.currentRow(), 0);
 
@@ -452,10 +518,17 @@ void ControllerTest::mappedWidgetListSetModelTest()
   QLineEdit editA, editB;
 
   /*
+   * Initial state
+   */
+  QCOMPARE(mwl.size(), 0);
+  QVERIFY(mwl.isEmpty());
+  /*
    * map widgets
    */
   mwl.addWidget(&editA, 0);
   mwl.addWidget(&editB, 1);
+  QCOMPARE(mwl.size(), 2);
+  QVERIFY(!mwl.isEmpty());
   QVERIFY(!editA.isEnabled());
   QVERIFY(!editB.isEnabled());
   /*
@@ -491,6 +564,12 @@ void ControllerTest::mappedWidgetListSetModelTest()
   mwl.setModel(&model2);
   QVERIFY(editA.isEnabled());
   QVERIFY(!editB.isEnabled());
+  /*
+   * Clear
+   */
+  mwl.clear();
+  QCOMPARE(mwl.size(), 0);
+  QVERIFY(mwl.isEmpty());
 }
 
 void ControllerTest::widgetMapperControllerSetModelTest()
@@ -502,6 +581,7 @@ void ControllerTest::widgetMapperControllerSetModelTest()
   QStringListModel listModel;
   QLineEdit editA, editB;
   WidgetMapperController controller;
+  QModelIndex index;
   QSignalSpy rowStateSpy(&controller, &WidgetMapperController::rowStateChanged);
   QList<QVariant> spyItem;
   RowState rs;
@@ -534,6 +614,8 @@ void ControllerTest::widgetMapperControllerSetModelTest()
   controller.addMapping(&editB, 1);
   QVERIFY(!editA.isEnabled());
   QVERIFY(!editB.isEnabled());
+  QVERIFY(editA.text().isEmpty());
+  QVERIFY(editB.text().isEmpty());
   /*
    * Populate model with 1 column
    */
@@ -546,9 +628,14 @@ void ControllerTest::widgetMapperControllerSetModelTest()
   rs = spyItem.at(0).value<RowState>();
   QCOMPARE(rs.rowCount(), 3);
   QCOMPARE(rs.currentRow(), 0);
-  // Check that mapped widgets has been updated
+  // Check mapped widgets enable state
   QVERIFY(editA.isEnabled());
   QVERIFY(!editB.isEnabled());
+  // Check mapped widgets data
+  index = tableModel.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(editA.text(), tableModel.data(index).toString());
+  QVERIFY(editB.text().isEmpty());
   /*
    * Populate model with 2 columns
    */
@@ -561,13 +648,21 @@ void ControllerTest::widgetMapperControllerSetModelTest()
   rs = spyItem.at(0).value<RowState>();
   QCOMPARE(rs.rowCount(), 3);
   QCOMPARE(rs.currentRow(), 0);
-  // Check that mapped widgets has been updated
+  // Check mapped widgets enable state
   QVERIFY(editA.isEnabled());
   QVERIFY(editB.isEnabled());
+  // Check mapped widgets data
+  index = tableModel.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(editA.text(), tableModel.data(index).toString());
+  index = tableModel.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(editB.text(), tableModel.data(index).toString());
   /*
    * Change to a empty model model
    */
   QCOMPARE(listModel.rowCount(), 0);
+  controller.clearMapping();
   controller.setModel(&listModel);
   QVERIFY(controller.model() == &listModel);
   QCOMPARE(controller.rowCount(), 0);
@@ -578,13 +673,20 @@ void ControllerTest::widgetMapperControllerSetModelTest()
   rs = spyItem.at(0).value<RowState>();
   QCOMPARE(rs.rowCount(), 0);
   QCOMPARE(rs.currentRow(), -1);
-  // Check that mapped widgets has been updated
+  // Map widgets
+  controller.addMapping(&editA, 0);
+  controller.addMapping(&editB, 1);
+  // Check mapped widgets enable state
   QVERIFY(!editA.isEnabled());
   QVERIFY(!editB.isEnabled());
+  // Check mapped widgets data
+  QVERIFY(editA.text().isEmpty());
+  QVERIFY(editB.text().isEmpty());
   /*
    * Populate previous model and set it to controller
    */
   tableModel.populate(3, 2);
+  controller.clearMapping();
   controller.setModel(&tableModel);
   QCOMPARE(controller.rowCount(), 3);
   QCOMPARE(controller.currentRow(), 0);
@@ -594,14 +696,312 @@ void ControllerTest::widgetMapperControllerSetModelTest()
   rs = spyItem.at(0).value<RowState>();
   QCOMPARE(rs.rowCount(), 3);
   QCOMPARE(rs.currentRow(), 0);
-  // Check that mapped widgets has been updated
+  // Map widgets
+  controller.addMapping(&editA, 0);
+  controller.addMapping(&editB, 1);
+  // Check mapped widgets enable state
   QVERIFY(editA.isEnabled());
   QVERIFY(editB.isEnabled());
+  // Check mapped widgets data
+  index = tableModel.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(editA.text(), tableModel.data(index).toString());
+  index = tableModel.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(editB.text(), tableModel.data(index).toString());
+  /*
+   * Clear model
+   */
+  tableModel.clear();
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 0);
+  QCOMPARE(rs.currentRow(), -1);
+  // Check mapped widgets enable state
+  QVERIFY(!editA.isEnabled());
+  QVERIFY(!editB.isEnabled());
+  // Check mapped widgets data
+  QVERIFY(editA.text().isEmpty());
+  QVERIFY(editB.text().isEmpty());
 }
 
 void ControllerTest::widgetMapperControllerCurrentRowChangedTest()
 {
-  QFAIL("Not implemented yet");
+  using Mdt::ItemEditor::WidgetMapperController;
+  using Mdt::ItemEditor::RowState;
+
+  TestTableModel model;
+  QLineEdit editA, editB;
+  WidgetMapperController controller;
+  QModelIndex index;
+  QSignalSpy rowStateSpy(&controller, &WidgetMapperController::rowStateChanged);
+  QList<QVariant> spyItem;
+  RowState rs;
+
+  QVERIFY(rowStateSpy.isValid());
+  /*
+   * Setup
+   */
+  model.populate(5, 2);
+  controller.setModel(&model);
+  controller.addMapping(&editA, 0);
+  controller.addMapping(&editB, 1);
+  rowStateSpy.clear();
+  /*
+   * Initial state
+   */
+  QCOMPARE(controller.rowCount(), 5);
+  QCOMPARE(controller.currentRow(), 0);
+  QCOMPARE(rowStateSpy.count(), 0);
+  // Check mapped widgets enable state
+  QVERIFY(editA.isEnabled());
+  QVERIFY(editB.isEnabled());
+  // Check mapped widgets data
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(editA.text(), model.data(index).toString());
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(editB.text(), model.data(index).toString());
+  /*
+   * Set current row
+   */
+  QVERIFY(controller.setCurrentRow(2));
+  QCOMPARE(controller.rowCount(), 5);
+  QCOMPARE(controller.currentRow(), 2);
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 5);
+  QCOMPARE(rs.currentRow(), 2);
+  // Check mapped widgets enable state
+  QVERIFY(editA.isEnabled());
+  QVERIFY(editB.isEnabled());
+  // Check mapped widgets data
+  index = model.index(2, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(editA.text(), model.data(index).toString());
+  index = model.index(2, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(editB.text(), model.data(index).toString());
+  /*
+   * Go to first
+   */
+  controller.toFirst();
+  QCOMPARE(controller.rowCount(), 5);
+  QCOMPARE(controller.currentRow(), 0);
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 5);
+  QCOMPARE(rs.currentRow(), 0);
+  // Check mapped widgets enable state
+  QVERIFY(editA.isEnabled());
+  QVERIFY(editB.isEnabled());
+  // Check mapped widgets data
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(editA.text(), model.data(index).toString());
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(editB.text(), model.data(index).toString());
+  /*
+   * Go to next
+   */
+  controller.toNext();
+  QCOMPARE(controller.rowCount(), 5);
+  QCOMPARE(controller.currentRow(), 1);
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 5);
+  QCOMPARE(rs.currentRow(), 1);
+  // Check mapped widgets enable state
+  QVERIFY(editA.isEnabled());
+  QVERIFY(editB.isEnabled());
+  // Check mapped widgets data
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(editA.text(), model.data(index).toString());
+  index = model.index(1, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(editB.text(), model.data(index).toString());
+  /*
+   * Go to last
+   */
+  controller.toLast();
+  QCOMPARE(controller.rowCount(), 5);
+  QCOMPARE(controller.currentRow(), 4);
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 5);
+  QCOMPARE(rs.currentRow(), 4);
+  // Check mapped widgets enable state
+  QVERIFY(editA.isEnabled());
+  QVERIFY(editB.isEnabled());
+  // Check mapped widgets data
+  index = model.index(4, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(editA.text(), model.data(index).toString());
+  index = model.index(4, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(editB.text(), model.data(index).toString());
+  /*
+   * Go to previous
+   */
+  controller.toPrevious();
+  QCOMPARE(controller.rowCount(), 5);
+  QCOMPARE(controller.currentRow(), 3);
+  // Check that row state signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 5);
+  QCOMPARE(rs.currentRow(), 3);
+  // Check mapped widgets enable state
+  QVERIFY(editA.isEnabled());
+  QVERIFY(editB.isEnabled());
+  // Check mapped widgets data
+  index = model.index(3, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(editA.text(), model.data(index).toString());
+  index = model.index(3, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(editB.text(), model.data(index).toString());
+}
+
+void ControllerTest::widgetMapperControllerEditTest()
+{
+  using Mdt::ItemEditor::WidgetMapperController;
+  using Mdt::ItemEditor::ControllerState;
+
+  
+  
+  QFETCH(QWidget*, editor0);
+
+  TestTableModel model;
+  QLineEdit editA, editB;
+  WidgetMapperController controller;
+  QModelIndex index;
+  QSignalSpy stateSpy(&controller, &WidgetMapperController::controllerStateChanged);
+  QList<QVariant> spyItem;
+
+  qDebug() << "editor0: " << editor0->metaObject()->userProperty().name();
+  
+  MySpy s;
+  
+  QMetaMethod mySig = editor0->metaObject()->userProperty().notifySignal();
+  
+  auto sigArgTypeName = mySig.parameterTypes().at(0);
+  qDebug() << "sigArgTypeName: " << sigArgTypeName;
+  
+  auto *SMeta = s.metaObject();
+  auto name = SMeta->normalizedSignature("display(const " + sigArgTypeName + "&)");
+  int idx = SMeta->indexOfSlot(name);
+  QMetaMethod mySlot = SMeta->method(idx);
+  
+  qDebug() << "name: " << name << " idx " << idx;
+//   QMetaMethod mySlot = s.metaObject()->method( s.metaObject()->indexOfSlot("display(const QVariant&)") );
+  
+  qDebug() << mySig.name() << " , " << mySlot.name();
+  
+  connect(editor0, mySig, &s, mySlot);
+
+  qDebug() << "TEST: begin edit triggers test";
+  qDebug() << " -> enter key";
+  QTest::keyClick(editor0, Qt::Key_Enter);
+  qDebug() << " -> back";
+  QTest::keyClick(editor0, Qt::Key_Back);
+  qDebug() << " -> F2";
+  QTest::keyClick(editor0, Qt::Key_F2);
+  qDebug() << " -> A";
+  QTest::keyClick(editor0, Qt::Key_A);
+  qDebug() << "TEST: end";
+  
+  editor0->show();
+  while(editor0->isVisible()){
+    QTest::qWait(500);
+  }
+  
+  delete editor0;
+  
+  
+  
+  QVERIFY(stateSpy.isValid());
+  /*
+   * Setup
+   */
+  model.populate(5, 2);
+  controller.setModel(&model);
+  controller.addMapping(&editA, 0);
+  controller.addMapping(&editB, 1);
+  /*
+   * Initial state
+   */
+  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Check that we can change current row
+   */
+  QVERIFY(controller.setCurrentRow(1));
+  QCOMPARE(controller.currentRow(), 1);
+  /*
+   * Begin editing
+   */
+  QVERIFY(editA.text() != QString("A"));
+  QTest::keyClicks(&editA, "A");
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  // Check that new state was signaled
+  QCOMPARE(stateSpy.count(), 1);
+  spyItem = stateSpy.takeFirst();
+  QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Editing);
+  // Check that we cannot change current row
+  QVERIFY(!controller.setCurrentRow(0));
+  QCOMPARE(controller.currentRow(), 1);
+  /*
+   * End edition
+   */
+  QTest::keyClick(&editA, Qt::Key_Enter);
+  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  // Check that new state was signaled
+  QCOMPARE(stateSpy.count(), 1);
+  spyItem = stateSpy.takeFirst();
+  QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Visualizing);
+  QCOMPARE(controller.currentRow(), 1);
+  // Check that model was updated
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("A"));
+  // Check that widget data was updated
+  QCOMPARE(editA.text(), QString("A"));
+  // Check that we can change current row
+  QVERIFY(controller.setCurrentRow(0));
+  QCOMPARE(controller.currentRow(), 0);
+}
+
+void ControllerTest::widgetMapperControllerEditTest_data()
+{
+//   Q_DECLARE_METATYPE(QWidget*)
+
+  QTest::addColumn<QWidget*>("editor0");
+
+  QTest::newRow("QLineEdit") << (static_cast<QWidget*>(new QLineEdit));
+  QTest::newRow("QSpinBox") << (static_cast<QWidget*>(new QSpinBox));
+
+  auto *cb = new QComboBox;
+  ///cb->setEditable(true);
+  cb->addItem("A");
+  cb->addItem("B");
+  QTest::newRow("QComboBox") << (static_cast<QWidget*>(cb));
 }
 
 /*

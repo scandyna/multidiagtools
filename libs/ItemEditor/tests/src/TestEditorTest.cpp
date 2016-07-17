@@ -21,6 +21,8 @@
 #include "TestEditorTest.h"
 #include "TestWindowEditor.h"
 #include "TestTableModel.h"
+#include "TestFormEditionWidget.h"
+#include "TestTableEditionWidget.h"
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
 #include "Mdt/ItemEditor/StandardWindow.h"
@@ -49,17 +51,29 @@ void TestEditorTest::cleanupTestCase()
 
 void TestEditorTest::widowEditorTest()
 {
-  TestWindowEditor editor;
+  using Mdt::ItemEditor::StandardWindow;
+
+//   TestWindowEditor editor;
+  StandardWindow formEditorWindow;
+  TestFormEditionWidget formEditor;
+  StandardWindow tableEditorWindow;
+  TestTableEditionWidget tableEditor;
   TestTableModel model;
 
-  editor.setModel(&model);
+  formEditor.setModel(&model);
+  formEditorWindow.setCentralWidget(&formEditor);
+  formEditorWindow.setMainEditorWidget(&formEditor);
+  formEditorWindow.show();
+  tableEditor.setModel(&model);
+  tableEditorWindow.setCentralWidget(&tableEditor);
+  tableEditorWindow.setMainEditorWidget(&tableEditor);
+  tableEditorWindow.show();
   model.populate(3, 1);
 
   /*
    * Play
    */
-  editor.show();
-  while(editor.isVisible()){
+  while(formEditorWindow.isVisible()){
     QTest::qWait(500);
   }
 }

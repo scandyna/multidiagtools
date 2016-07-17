@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 63
+  revision 65
   modified_by 2 "philippe"
   // class settings
   
@@ -65,7 +65,7 @@ format 211
     classdiagram 2700546 "ControllerWidgetOverview"
       classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
       class_color gray 
-      size B-Landscape
+      size C-Landscape
     end
 
     classdiagram 2399618 "sandbox"
@@ -1348,6 +1348,28 @@ ${inlines}
 	    classrelation_ref 3594242 // <generalisation>
 	  b parent class_ref 138626 // QObject
       end
+    end
+  end
+
+  classview 1498370 "EditEvent"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2800642 "sandbox"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
   end
 
@@ -2678,7 +2700,12 @@ ${inlines}
     
     activitydiagramsettings
      end
-    classdiagram 2573954 "sandbox"
+    classdiagram 2573954 "Overview"
+      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+      size C-Landscape
+    end
+
+    classdiagram 2794114 "sandbox"
       classdiagramsettings member_max_width 0 end
       size C-Landscape
     end
@@ -2734,21 +2761,13 @@ ${inlines}
       operation 4335746 "onParentCurrentRowChanged"
 	abstract cpp_virtual protected explicit_return_type ""
 	nparams 1
-	  param in name "parentRecord" type class_ref 2927234 // ControllerFilterParentRecord
+	  param in name "parentRecord" type class_ref 2927234 // ControllerFilterParentKey
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	
 	
 	
-      end
-
-      classrelation 3328642 // <dependency>
-	relation 3310210 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3328642 // <dependency>
-	  b parent class_ref 2927234 // ControllerFilterParentRecord
       end
 
       classrelation 3478402 // <association>
@@ -2770,24 +2789,34 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3328386 // <dependency>
-	relation 3309954 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3328386 // <dependency>
-	  b parent class_ref 2927234 // ControllerFilterParentRecord
-      end
-
       operation 4335874 "applyFilter"
 	abstract cpp_virtual public explicit_return_type "void"
 	nparams 1
-	  param in name "record" type class_ref 2927234 // ControllerFilterParentRecord
+	  param in name "record" type class_ref 2927234 // ControllerFilterParentKey
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	
 	
 	
+      end
+
+      classrelation 3607810 // <directional composition>
+	relation 3588610 *-->
+	  a role_name "" public
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3607810 // <directional composition>
+	  b parent class_ref 3164674 // ControllerRelationFilterKey
+      end
+
+      classrelation 3607938 // <unidirectional association>
+	relation 3588738 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3607938 // <unidirectional association>
+	  b parent class_ref 146946 // QAbstractItemModel
       end
     end
 
@@ -2841,7 +2870,7 @@ ${inlines}
       operation 4336002 "applyFilter"
 	cpp_virtual public explicit_return_type "void"
 	nparams 1
-	  param in name "record" type class_ref 2927234 // ControllerFilterParentRecord
+	  param in name "record" type class_ref 2927234 // ControllerFilterParentKey
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -2855,7 +2884,7 @@ ${inlines}
       end
     end
 
-    class 2927234 "ControllerFilterParentRecord"
+    class 2927234 "ControllerFilterParentKey"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -2881,6 +2910,100 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+    end
+
+    class 3164674 "ControllerRelationFilterKey"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3607554 // <directional composition>
+	relation 3588354 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 3607554 // <directional composition>
+	  b parent class_ref 3164802 // ControllerRelationFilterKeyItem
+      end
+
+      attribute 2967938 "Items"
+	private type class_ref 3164802 // ControllerRelationFilterKeyItem
+	multiplicity "*"
+	stereotype "vector"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 3164802 "ControllerRelationFilterKeyItem"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 2968066 "parentColumn"
+	public explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 2968194 "childColumn"
+	public explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 4612866 "ControllerRelationFilterKeyItem"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "parentColumn" explicit_type "int"
+	  param in name "childColumn" explicit_type "int"
+	cpp_decl "  ${comment}${inline}${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end
@@ -3849,14 +3972,6 @@ ${inlines}
 	
 	
 	
-      end
-
-      classrelation 3485826 // <dependency>
-	relation 3467138 -_->
-	  a private
-	    cpp default "#include in source"
-	    classrelation_ref 3485826 // <dependency>
-	  b parent class_ref 3090434 // AbstractController
       end
 
       attribute 2915714 "Controller"

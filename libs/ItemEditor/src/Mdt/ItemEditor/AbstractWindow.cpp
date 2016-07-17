@@ -32,7 +32,8 @@ namespace Mdt{ namespace ItemEditor{
 AbstractWindow::AbstractWindow(QWidget* parent)
  : QMainWindow(parent),
    pvNavigationActions(nullptr),
-   pvInsertAction(nullptr)
+   pvInsertAction(nullptr),
+   pvEditionActions(nullptr)
 {
 }
 
@@ -58,6 +59,17 @@ void AbstractWindow::setMainEditorWidget(AbstractEditorWidget* widget)
     connect(controller, &AbstractController::rowStateChanged, pvNavigationActions, &NavigationActions::setRowState);
     connect(controller, &AbstractController::controllerStateChanged, pvNavigationActions, &NavigationActions::setControllerState);
   }
+  // Connect edition actions
+  if(pvEditionActions != nullptr){
+//     disconnect(pvEditionActions, &EditionActions::submitTriggered, controller, &AbstractController::subit);
+//     disconnect(pvEditionActions, &EditionActions::revertTriggered, controller, &AbstractController::revert);
+    disconnect(controller, &AbstractController::rowStateChanged, pvEditionActions, &EditionActions::setRowState);
+    disconnect(controller, &AbstractController::controllerStateChanged, pvEditionActions, &EditionActions::setControllerState);
+//     connect(pvEditionActions, &EditionActions::submitTriggered, controller, &AbstractController::subit);
+//     connect(pvEditionActions, &EditionActions::revertTriggered, controller, &AbstractController::revert);
+    connect(controller, &AbstractController::rowStateChanged, pvEditionActions, &EditionActions::setRowState);
+    connect(controller, &AbstractController::controllerStateChanged, pvEditionActions, &EditionActions::setControllerState);
+  }
   // Connect insert actions
   if(pvInsertAction != nullptr){
 //     disconnect(pvInsertAction, &InsertAction::insertTriggered, controller, &AbstractController::insert);
@@ -74,6 +86,14 @@ NavigationActions* AbstractWindow::navigationActions()
     pvNavigationActions = new NavigationActions(this);
   }
   return pvNavigationActions;
+}
+
+EditionActions* AbstractWindow::editionActions()
+{
+  if(pvEditionActions == nullptr){
+    pvEditionActions = new EditionActions(this);
+  }
+  return pvEditionActions;
 }
 
 InsertAction* AbstractWindow::insertAction()

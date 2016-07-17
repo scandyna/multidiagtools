@@ -302,10 +302,10 @@ void ItemDelegateTest::eventCatchItemDelegateTableViewEditTest()
   /*
    * Play
    */
-//   view.resize(300, 200);
-//   while(view.isVisible()){
-//     QTest::qWait(500);
-//   }
+  view.resize(300, 200);
+  while(view.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 /*

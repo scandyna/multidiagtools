@@ -1,6 +1,6 @@
 format 211
 "Mdt" // Mdt
-  revision 18
+  revision 19
   modified_by 2 "philippe"
   // class settings
   
@@ -765,6 +765,8 @@ ${members}};
   package_ref 516226 // SqlItemModel
 
   package_ref 503042 // ItemEditor
+
+  package_ref 582274 // SqlItemEditor
 
   package_ref 509570 // WebSocket
 

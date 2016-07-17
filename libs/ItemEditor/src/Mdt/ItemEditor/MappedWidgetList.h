@@ -62,9 +62,39 @@ namespace Mdt{ namespace ItemEditor{
      */
     void addWidget(QWidget *widget, int column);
 
+    /*! \brief Get widget at index i
+     *
+     * Index i depends on the order the widgets where mapped,
+     *  not on column.
+     */
+    QWidget *at(int i) const
+    {
+      Q_ASSERT(i >= 0);
+      Q_ASSERT(i < size());
+      return pvWidgetList[i].widget;
+    }
+
     /*! \brief Set model
      */
     void setModel(QAbstractItemModel *model);
+
+    /*! \brief Get count of mapped widgets
+     */
+    int size() const
+    {
+      return pvWidgetList.size();
+    }
+
+    /*! \brief Check if some widget is mapped
+     */
+    bool isEmpty() const
+    {
+      return pvWidgetList.empty();
+    }
+
+    /*! \brief Remove all mapped widgets
+     */
+    void clear();
 
    public slots:
 

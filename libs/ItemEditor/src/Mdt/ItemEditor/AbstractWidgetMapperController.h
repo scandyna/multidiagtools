@@ -54,23 +54,60 @@ namespace Mdt{ namespace ItemEditor{
      *
      * \note Because model can be shared with several objects (f.ex. other views),
      *        the controller does not take ownership of it (it will not delete it).
+     * \pre No widget must be mapped when setting a model. If widget has been mapped, call clearMapping() first.
+     *       Which widget must be mapped with which column is only known from application developper,
+     *       this is the reason why no automatic remapping is done when changing the model.
      * \pre model must be a valid pointer
      */
     void setModel(QAbstractItemModel *model) override;
 
-    /*! \brief Adds a mapping between a widget and a section from the model
+    /*! \brief Adds a mapping between a widget and a column from the model
      *
      * For more informations, see QDataWidgetMapper documentation.
+     *
+     * \pre model must be set before mapping any widget
+     * \pre widget pointer must be valid
+     * \sa setModel()
      */
-    void addMapping(QWidget *widget, int section);
+    void addMapping(QWidget *widget, int column);
 
-    /*! \brief Adds a mapping between a widget and a section from the model
+    /*! \brief Adds a mapping between a widget and a column from the model
      *
      * For more informations, see QDataWidgetMapper documentation.
+     *
+     * \pre model must be set before mapping any widget
+     * \pre widget pointer must be valid
+     * \sa setModel()
      */
-    void addMapping(QWidget *widget, int section, const QByteArray & propertyName);
+    void addMapping(QWidget *widget, int column, const QByteArray & propertyName);
+
+    /*! \brief Clear mapping
+     *
+     * After that call, all widgets that were mapped will no longer
+     *  been handled by this controller.
+     *
+     * \note Mapped widgets are not owned by this controller,
+     *        so thei will not be deleted.
+     */
+    void clearMapping();
+
+   private slots:
+
+    /*! \brief Update mapped widgets data on invalid index
+     *
+     * If QDataWidgetMapper::setCurrentIndex() receives a out of bount index,
+     *  it does nothing.
+     *  Here we also clear data of mapped widgets.
+     */
+    void clearWidgetsDataOnInvalidRowState(RowState rs);
 
    private:
+
+    /*! \brief Update widget data
+     *
+     * Used for some cases not handled by internal widget mapper
+     */
+    void updateWidgetData(QWidget * const widget, int column);
 
     QDataWidgetMapper *pvWidgetMapper;
     MappedWidgetList *pvMappedWidgetList;

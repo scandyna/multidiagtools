@@ -34,6 +34,7 @@ class ActionsTest : public QObject
   void cleanupTestCase();
 
   void navigationActionsTest();
+  void editionActionsTest();
   void insertActionTest();
 };
 

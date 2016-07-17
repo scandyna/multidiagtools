@@ -1,55 +1,33 @@
-window_sizes 1280 961 331 943 906 0
+window_sizes 1280 961 291 983 906 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
     922 903 100 4 0 0
-  classdiagram_ref 2406402 // LinkEditionModel
-    120 112 100 4 0 0
-  classdiagram_ref 2521218 // Schema
-    906 902 90 22 0 0
-  classdiagram_ref 2607234 // SchemaTemplate
-    906 902 100 4 0 0
-  classdiagram_ref 2634114 // Goals
-    120 110 100 4 0 0
-  classdiagram_ref 2707842 // TestEditor
-    120 110 80 21 0 25
-  classdiagram_ref 2700418 // EditorWidget
-    943 906 80 9 0 0
-  classdiagram_ref 2761218 // ControllerOverview
-    120 110 90 23 0 224
-  classdiagram_ref 2414338 // State
-    120 110 100 4 0 0
   classdiagram_ref 2707074 // AbstractController
-    943 906 100 23 0 0
-  classdiagram_ref 2787586 // MappedWidgetList
+    120 110 100 23 0 0
+  classdiagram_ref 2707842 // TestEditor
+    120 110 100 21 0 226
+  classdiagram_ref 2800642 // sandbox
     120 110 100 4 0 0
-  classdiagram_ref 2761090 // WidgetMapperController
-    943 906 100 8 96 253
-  classdiagram_ref 2760962 // ItemViewController
-    943 906 100 7 348 0
-  active  classdiagram_ref 2687106 // InsertAction
-    943 906 100 4 0 0
-  classdiagram_ref 2413698 // NavigationActions
-    120 110 100 18 0 0
-  classdiagram_ref 2420866 // EditionActions
-    120 110 100 18 0 0
+  active  classdiagram_ref 2420866 // EditionActions
+    983 906 100 18 0 0
 end
 show_stereotypes
-selected operation_ref 4448770 // setControllerState
+selected classdiagram_ref 2420866 // EditionActions
 open
   
   package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
   
   package_ref 516226 // SqlItemModel
-  classview_ref 1438978 // Models
   classview_ref 1472258 // Editor
   classview_ref 1306882 // Delegate
-  classview_ref 1485314 // RowChangeEvent
+  classview_ref 1498370 // EditEvent
   class_ref 3138562 // SqlWidgetMapperTableController
-  class_ref 3061890 // InsertAction
+  classview_ref 1286786 // Actions
   classview_ref 1432322 // StandardFormWidget
-  classview_ref 1472130 // ArticleEditor
+  
+  package_ref 582274 // SqlItemEditor
   
   package_ref 430082 // Dsp
   classview_ref 886914 // MV-View

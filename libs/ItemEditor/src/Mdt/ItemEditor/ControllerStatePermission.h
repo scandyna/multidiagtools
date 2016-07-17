@@ -41,6 +41,15 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Check if it is allowed to insert for state
      */
     static bool canInsert(ControllerState state);
+
+    /*! \brief Check if it is possible to submit for state
+     */
+    static bool canSubmit(ControllerState state);
+
+    /*! \brief Check if it is possible to revert for state
+     */
+    static bool canRevert(ControllerState state);
+
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

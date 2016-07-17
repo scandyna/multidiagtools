@@ -12,6 +12,8 @@ set(SOURCES_FILES
   src/TestTableEditionWidget.cpp
   src/TestFormEditionWidget.cpp
   src/TestWindowEditor.cpp
+  
+  src/MySpy.cpp
 )
 
 add_library(mdtitemeditortest SHARED ${SOURCES_FILES})

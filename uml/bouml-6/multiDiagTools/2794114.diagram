@@ -1,0 +1,71 @@
+format 211
+
+classcanvas 128002 class_ref 2782850 // TableControllerRelation
+  classdiagramsettings member_max_width 0 end
+  xyz 864.7 36.75 2000
+end
+classcanvas 128130 class_ref 2926850 // TableControllerChildFilter
+  classdiagramsettings member_max_width 0 end
+  xyz 482.45 46.75 2000
+end
+classcanvas 128642 class_ref 2926978 // SqlTableControllerRelation
+  classdiagramsettings member_max_width 0 end
+  xyz 1030.1 419.5 2000
+end
+classcanvas 128898 class_ref 2927106 // SqlTableControllerChildFilter
+  classdiagramsettings member_max_width 0 end
+  xyz 482.45 144.65 2000
+end
+note 130434 "signal/slot"
+  xyzwh 805.6 419.7 2000 144 51
+classcanvas 131202 class_ref 2927234 // ControllerFilterParentKey
+  classdiagramsettings member_max_width 0 end
+  xyz 499.1 419.9 2000
+end
+note 137730 "Notion of key:
+ - For models not based on DB, a collection of ields
+ - For SQL models, the DB PK (OR, maybe other fields ??)"
+  xyzwh 40.7 419.2 2000 379 92
+classcanvas 137858 class_ref 3164674 // ControllerRelationFilterKey
+  classdiagramsettings member_max_width 0 end
+  xyz 101.2 46.75 2000
+end
+classcanvas 137986 class_ref 3164802 // ControllerRelationFilterKeyItem
+  classdiagramsettings member_max_width 0 end
+  xyz 42.2 243.25 2000
+end
+classcanvas 138626 class_ref 138626 // QObject
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 1067.7 152.65 2006
+end
+relationcanvas 128514 relation_ref 3309442 // <directional composition>
+  decenter_begin 544
+  decenter_end 559
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 3309698 // <generalisation>
+  decenter_begin 510
+  decenter_end 510
+  from ref 128898 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 138114 relation_ref 3588354 // <directional composition>
+  from ref 137858 z 2001 to ref 137986
+  no_role_a no_role_b
+  multiplicity_a_pos 259 220 3000 no_multiplicity_b
+end
+relationcanvas 138754 relation_ref 3135362 // <generalisation>
+  from ref 128002 z 2007 to ref 138626
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 139266 relation_ref 3588610 // <directional composition>
+  decenter_begin 559
+  from ref 128130 z 2001 to ref 137858
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

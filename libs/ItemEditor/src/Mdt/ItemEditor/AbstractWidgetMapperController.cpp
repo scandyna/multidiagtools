@@ -20,7 +20,16 @@
  ****************************************************************************/
 #include "AbstractWidgetMapperController.h"
 #include "MappedWidgetList.h"
+#include "EventCatchItemDelegate.h"
 #include <QDataWidgetMapper>
+#include <QModelIndex>
+#include <QAbstractItemDelegate>
+#include <QAbstractItemModel>
+#include <QStyledItemDelegate>
+#include <QVariant>
+#include <QByteArray>
+
+// #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -30,32 +39,84 @@ AbstractWidgetMapperController::AbstractWidgetMapperController(QDataWidgetMapper
 {
   Q_ASSERT(pvWidgetMapper != nullptr);
   pvWidgetMapper->setParent(this);
+  /*
+   * Replace delegate with our proxy delegate
+   * QDataWidgetMapper uses QItemDelegate,
+   * we replace it with a QStyledItemDelegate.
+   */
+  /**
+  auto *delegate = pvWidgetMapper->itemDelegate();
+  auto *proxyDelegate = new EventCatchItemDelegate(pvWidgetMapper);
+  delegate = new QStyledItemDelegate(pvWidgetMapper);
+  proxyDelegate->setItemDelegate(delegate);
+  pvWidgetMapper->setItemDelegate(proxyDelegate);
+  registerItemDelegate(proxyDelegate);
+  */
+
   connect(this, &AbstractWidgetMapperController::currentRowChanged, pvWidgetMapper, &QDataWidgetMapper::setCurrentIndex);
   pvMappedWidgetList = new MappedWidgetList(this);
   connect(this, &AbstractWidgetMapperController::rowStateChanged, pvMappedWidgetList, &MappedWidgetList::setRowState);
+  connect(this, &AbstractWidgetMapperController::rowStateChanged, this, &AbstractWidgetMapperController::clearWidgetsDataOnInvalidRowState);
 }
 
-void AbstractWidgetMapperController::setModel(QAbstractItemModel* model)
+void AbstractWidgetMapperController::setModel(QAbstractItemModel* _model)
 {
-  Q_ASSERT(model != nullptr);
+  Q_ASSERT(_model != nullptr);
+  Q_ASSERT_X(pvMappedWidgetList->isEmpty(), "AbstractWidgetMapperController::setModel()", "setting model while widgets are allready mapped is not allowed");
 
-  referenceItemModel(model);
-  pvWidgetMapper->setModel(model);
+  referenceItemModel(_model);
+  pvWidgetMapper->setModel(_model);
   registerItemModel();
-  pvMappedWidgetList->setModel(model);
+  pvMappedWidgetList->setModel(_model);
+  Q_ASSERT(model() == pvWidgetMapper->model());
 }
 
-void AbstractWidgetMapperController::addMapping(QWidget* widget, int section)
+void AbstractWidgetMapperController::addMapping(QWidget* widget, int column)
 {
-  pvMappedWidgetList->addWidget(widget, section);
-  pvWidgetMapper->addMapping(widget, section);
+  Q_ASSERT(widget != nullptr);
+  Q_ASSERT_X(model() != nullptr, "AbstractWidgetMapperController::addMapping()", "model must be set before mapping widgets");
+
+  pvMappedWidgetList->addWidget(widget, column);
+  pvWidgetMapper->addMapping(widget, column);
+  updateWidgetData(widget, column);
 }
 
-void AbstractWidgetMapperController::addMapping(QWidget* widget, int section, const QByteArray& propertyName)
+void AbstractWidgetMapperController::addMapping(QWidget* widget, int column, const QByteArray& propertyName)
 {
-  pvMappedWidgetList->addWidget(widget, section);
-  pvWidgetMapper->addMapping(widget, section, propertyName);
+  Q_ASSERT(widget != nullptr);
+  Q_ASSERT_X(model() != nullptr, "AbstractWidgetMapperController::addMapping()", "model must be set before mapping widgets");
+
+  pvMappedWidgetList->addWidget(widget, column);
+  pvWidgetMapper->addMapping(widget, column, propertyName);
+  updateWidgetData(widget, column);
 }
 
+void AbstractWidgetMapperController::clearMapping()
+{
+  pvWidgetMapper->clearMapping();
+  pvMappedWidgetList->clear();
+}
+
+void AbstractWidgetMapperController::clearWidgetsDataOnInvalidRowState(RowState rs)
+{
+  if(!rs.isNull()){
+    return;
+  }
+  for(int i = 0; i < pvMappedWidgetList->size(); ++i){
+    updateWidgetData(pvMappedWidgetList->at(i), -1);
+  }
+}
+
+void AbstractWidgetMapperController::updateWidgetData(QWidget*const widget, int column)
+{
+  Q_ASSERT(widget != nullptr);
+
+  auto *delegate = pvWidgetMapper->itemDelegate();
+  Q_ASSERT(delegate != nullptr);
+  auto *model = pvWidgetMapper->model();
+  Q_ASSERT(model != nullptr);
+  auto index = model->index(currentRow(), column);
+  delegate->setEditorData(widget, index);
+}
 
 }} // namespace Mdt{ namespace ItemEditor{
