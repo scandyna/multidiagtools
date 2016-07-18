@@ -24,6 +24,7 @@
 #include "NavigationActions.h"
 #include "EditionActions.h"
 #include "InsertAction.h"
+#include "RemoveAction.h"
 #include <QMainWindow>
 
 namespace Mdt{ namespace ItemEditor{
@@ -78,11 +79,19 @@ namespace Mdt{ namespace ItemEditor{
      */
     InsertAction *insertAction();
 
+    /*! \brief Get RemoveAction
+     *
+     * The first time this method is called,
+     *  the RemoveAction is created.
+     */
+    RemoveAction *removeAction();
+
    private:
 
     NavigationActions *pvNavigationActions;
     InsertAction *pvInsertAction;
     EditionActions *pvEditionActions;
+    RemoveAction *pvRemoveAction;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

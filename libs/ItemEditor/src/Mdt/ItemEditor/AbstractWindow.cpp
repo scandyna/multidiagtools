@@ -33,7 +33,8 @@ AbstractWindow::AbstractWindow(QWidget* parent)
  : QMainWindow(parent),
    pvNavigationActions(nullptr),
    pvInsertAction(nullptr),
-   pvEditionActions(nullptr)
+   pvEditionActions(nullptr),
+   pvRemoveAction(nullptr)
 {
 }
 
@@ -70,13 +71,22 @@ void AbstractWindow::setMainEditorWidget(AbstractEditorWidget* widget)
     connect(controller, &AbstractController::rowStateChanged, pvEditionActions, &EditionActions::setRowState);
     connect(controller, &AbstractController::controllerStateChanged, pvEditionActions, &EditionActions::setControllerState);
   }
-  // Connect insert actions
+  // Connect insert action
   if(pvInsertAction != nullptr){
 //     disconnect(pvInsertAction, &InsertAction::insertTriggered, controller, &AbstractController::insert);
     disconnect(controller, &AbstractController::controllerStateChanged, pvInsertAction, &InsertAction::setControllerState);
 
 //     connect(pvInsertAction, &InsertAction::insertTriggered, controller, &AbstractController::insert);
     connect(controller, &AbstractController::controllerStateChanged, pvInsertAction, &InsertAction::setControllerState);
+  }
+  // Connect remove actions
+  if(pvRemoveAction != nullptr){
+//     disconnect(pvRemoveAction, &RemoveAction::removeTriggered, controller, &AbstractController::remove);
+    disconnect(controller, &AbstractController::rowStateChanged, pvRemoveAction, &RemoveAction::setRowState);
+    disconnect(controller, &AbstractController::controllerStateChanged, pvRemoveAction, &RemoveAction::setControllerState);
+//     connect(pvRemoveAction, &RemoveAction::removeTriggered, controller, &AbstractController::remove);
+    connect(controller, &AbstractController::rowStateChanged, pvRemoveAction, &RemoveAction::setRowState);
+    connect(controller, &AbstractController::controllerStateChanged, pvRemoveAction, &RemoveAction::setControllerState);
   }
 }
 
@@ -102,6 +112,14 @@ InsertAction* AbstractWindow::insertAction()
     pvInsertAction = new InsertAction(this);
   }
   return pvInsertAction;
+}
+
+RemoveAction* AbstractWindow::removeAction()
+{
+  if(pvRemoveAction == nullptr){
+    pvRemoveAction = new RemoveAction(this);
+  }
+  return pvRemoveAction;
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

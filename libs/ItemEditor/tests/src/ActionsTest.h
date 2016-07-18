@@ -36,6 +36,7 @@ class ActionsTest : public QObject
   void navigationActionsTest();
   void editionActionsTest();
   void insertActionTest();
+  void removeActionTest();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_ACTIONS_TEST_H

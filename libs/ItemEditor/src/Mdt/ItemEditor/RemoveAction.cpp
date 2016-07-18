@@ -18,63 +18,45 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
+#include "RemoveAction.h"
 #include "ControllerStatePermission.h"
 
 namespace Mdt{ namespace ItemEditor{
 
-bool ControllerStatePermission::canChangeCurrentRow(ControllerState state)
+RemoveAction::RemoveAction(QObject* parent)
+ : QObject(parent)
 {
-  switch(state){
-    case ControllerState::Visualizing:
-      return true;
-    case ControllerState::Editing:
-      break;
-  }
-  return false;
+  pvRemoveAction = new QAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this);
+  pvRemoveAction->setObjectName("RemoveAction");
+  connect(pvRemoveAction, &QAction::triggered, this, &RemoveAction::removeTriggered);
+  updateEnableStates();
 }
 
-bool ControllerStatePermission::canInsert(ControllerState state)
+void RemoveAction::setRowState(RowState rs)
 {
-  switch(state){
-    case ControllerState::Visualizing:
-      return true;
-    case ControllerState::Editing:
-      break;
-  }
-  return false;
+  pvRowState = rs;
+  updateEnableStates();
 }
 
-bool ControllerStatePermission::canSubmit(ControllerState state)
+void RemoveAction::setControllerState(ControllerState state)
 {
-  switch(state){
-    case ControllerState::Visualizing:
-      return false;
-    case ControllerState::Editing:
-      return true;
-  }
-  return false;
+  pvControllerState = state;
+  updateEnableStates();
 }
 
-bool ControllerStatePermission::canRevert(ControllerState state)
+void RemoveAction::updateEnableStates()
 {
-  switch(state){
-    case ControllerState::Visualizing:
-      return false;
-    case ControllerState::Editing:
-      return true;
+  if(pvRowState.isNull()){
+    disableAllActions();
+    return;
   }
-  return false;
+  pvRemoveAction->setEnabled( ControllerStatePermission::canRemove(pvControllerState) );
 }
 
-bool ControllerStatePermission::canRemove(ControllerState state)
+void RemoveAction::disableAllActions()
 {
-  switch(state){
-    case ControllerState::Visualizing:
-      return true;
-    case ControllerState::Editing:
-      break;
-  }
-  return false;
+  pvRemoveAction->setEnabled(false);
 }
+
 
 }} // namespace Mdt{ namespace ItemEditor{

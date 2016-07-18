@@ -45,6 +45,7 @@ void StandardWindow::setupNavigationElements()
   tlbMain->addAction(editionActions()->submitAction());
   tlbMain->addAction(editionActions()->revertAction());
   tlbMain->addAction(insertAction()->insertAction());
+  tlbMain->addAction(removeAction()->removeAction());
 
   auto *navigationMenu = menuBar()->addMenu(tr("&Navigation"));
   navigationMenu->addAction(actions->toFirst());
@@ -56,6 +57,7 @@ void StandardWindow::setupNavigationElements()
   editMenu->addAction(editionActions()->submitAction());
   editMenu->addAction(editionActions()->revertAction());
   editMenu->addAction(insertAction()->insertAction());
+  editMenu->addAction(removeAction()->removeAction());
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -50,6 +50,9 @@ namespace Mdt{ namespace ItemEditor{
      */
     static bool canRevert(ControllerState state);
 
+    /*! \brief Check if it is possible to remove for state
+     */
+    static bool canRemove(ControllerState state);
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

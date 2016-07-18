@@ -7,13 +7,11 @@ diagrams
     120 110 100 23 0 0
   classdiagram_ref 2707842 // TestEditor
     120 110 100 21 0 226
-  classdiagram_ref 2800642 // sandbox
-    120 110 100 4 0 0
-  active  classdiagram_ref 2420866 // EditionActions
-    983 906 100 18 0 0
+  active  classdiagram_ref 2800642 // sandbox
+    983 906 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2420866 // EditionActions
+selected operation_ref 4619522 // canRemove
 open
   
   package_ref 549506 // Algorithm
@@ -24,6 +22,7 @@ open
   classview_ref 1306882 // Delegate
   classview_ref 1498370 // EditEvent
   class_ref 3138562 // SqlWidgetMapperTableController
+  class_ref 3171330 // ControllerPermission
   classview_ref 1286786 // Actions
   classview_ref 1432322 // StandardFormWidget
   

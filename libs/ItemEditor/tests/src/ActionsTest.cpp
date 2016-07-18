@@ -25,6 +25,7 @@
 #include "Mdt/ItemEditor/NavigationActions.h"
 #include "Mdt/ItemEditor/EditionActions.h"
 #include "Mdt/ItemEditor/InsertAction.h"
+#include "Mdt/ItemEditor/RemoveAction.h"
 #include "Mdt/ItemEditor/ControllerState.h"
 #include <QSignalSpy>
 #include <QItemSelectionModel>
@@ -245,6 +246,7 @@ void ActionsTest::editionActionsTest()
   // Null row state
   rs.setRowCount(0);
   rs.setCurrentRow(-1);
+  actions->setRowState(rs);
   QVERIFY(!submitAction->isEnabled());
   QVERIFY(!revertAction->isEnabled());
   /*
@@ -279,6 +281,67 @@ void ActionsTest::insertActionTest()
    */
   delete action;
   QVERIFY(insertAction.isNull());
+}
+
+void ActionsTest::removeActionTest()
+{
+  using Mdt::ItemEditor::RemoveAction;
+  using Mdt::ItemEditor::RowState;
+  using Mdt::ItemEditor::ControllerState;
+
+  RowState rs;
+  auto *action = new RemoveAction(nullptr);
+  QPointer<QAction> removeAction = action->removeAction();
+  /*
+   * Initial state
+   */
+  QVERIFY(!removeAction->isEnabled());
+  /*
+   * Check controller state
+   */
+  // Set a valid row state
+  rs.setRowCount(2);
+  rs.setCurrentRow(0);
+  action->setRowState(rs);
+  // Visualizing state
+  action->setControllerState(ControllerState::Visualizing);
+  QVERIFY(removeAction->isEnabled());
+  // Editing state
+  action->setControllerState(ControllerState::Editing);
+  QVERIFY(!removeAction->isEnabled());
+  /*
+   * Check setting row sate in Editing state
+   */
+  action->setControllerState(ControllerState::Editing);
+  // Set valid row state
+  rs.setRowCount(2);
+  rs.setCurrentRow(0);
+  action->setRowState(rs);
+  QVERIFY(!removeAction->isEnabled());
+  // Null row state
+  rs.setRowCount(0);
+  rs.setCurrentRow(-1);
+  action->setRowState(rs);
+  QVERIFY(!removeAction->isEnabled());
+  /*
+   * Check setting row sate in Visualizing state
+   */
+  action->setControllerState(ControllerState::Visualizing);
+  // Set valid row state
+  rs.setRowCount(2);
+  rs.setCurrentRow(0);
+  action->setRowState(rs);
+  QVERIFY(removeAction->isEnabled());
+  // Null row state
+  rs.setRowCount(0);
+  rs.setCurrentRow(-1);
+  action->setRowState(rs);
+  QVERIFY(!removeAction->isEnabled());
+  /*
+   * Clear
+   */
+  delete action;
+  QVERIFY(removeAction.isNull());
 }
 
 /*

@@ -69,7 +69,9 @@ void ControllerTest::statePermissionTest()
   // Revert
   QVERIFY(!ControllerStatePermission::canRevert(ControllerState::Visualizing));
   QVERIFY(ControllerStatePermission::canRevert(ControllerState::Editing));
-
+  // Remove
+  QVERIFY(ControllerStatePermission::canRemove(ControllerState::Visualizing));
+  QVERIFY(!ControllerStatePermission::canRemove(ControllerState::Editing));
 }
 
 void ControllerTest::tableViewControllerBasicStateTest()
