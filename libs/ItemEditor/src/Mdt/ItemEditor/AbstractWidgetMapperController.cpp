@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "AbstractWidgetMapperController.h"
 #include "MappedWidgetList.h"
-#include "EventCatchItemDelegate.h"
+#include "EditionStartEventCatchDelegate.h"
 #include <QDataWidgetMapper>
 #include <QModelIndex>
 #include <QAbstractItemDelegate>
@@ -28,8 +28,11 @@
 #include <QStyledItemDelegate>
 #include <QVariant>
 #include <QByteArray>
+#include <QMetaObject>
+#include <QMetaMethod>
+#include <QMetaProperty>
 
-// #include <QDebug>
+#include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -39,19 +42,20 @@ AbstractWidgetMapperController::AbstractWidgetMapperController(QDataWidgetMapper
 {
   Q_ASSERT(pvWidgetMapper != nullptr);
   pvWidgetMapper->setParent(this);
+  pvWidgetMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
   /*
-   * Replace delegate with our proxy delegate
+   * Replace delegate with our proxy delegate.
    * QDataWidgetMapper uses QItemDelegate,
    * we replace it with a QStyledItemDelegate.
    */
   /**
   auto *delegate = pvWidgetMapper->itemDelegate();
-  auto *proxyDelegate = new EventCatchItemDelegate(pvWidgetMapper);
+  auto *proxyDelegate = new EditionStartEventCatchDelegate(pvWidgetMapper);
   delegate = new QStyledItemDelegate(pvWidgetMapper);
   proxyDelegate->setItemDelegate(delegate);
   pvWidgetMapper->setItemDelegate(proxyDelegate);
-  registerItemDelegate(proxyDelegate);
   */
+  ///connect(proxyDelegate, &EditionStartEventCatchDelegate::dataEditionStarted, this, &AbstractWidgetMapperController::onDataEditionStarted);
 
   connect(this, &AbstractWidgetMapperController::currentRowChanged, pvWidgetMapper, &QDataWidgetMapper::setCurrentIndex);
   pvMappedWidgetList = new MappedWidgetList(this);
@@ -79,6 +83,7 @@ void AbstractWidgetMapperController::addMapping(QWidget* widget, int column)
   pvMappedWidgetList->addWidget(widget, column);
   pvWidgetMapper->addMapping(widget, column);
   updateWidgetData(widget, column);
+  connectUserPropertyNotifySignal(widget, ConnectAction::Connect);
 }
 
 void AbstractWidgetMapperController::addMapping(QWidget* widget, int column, const QByteArray& propertyName)
@@ -89,11 +94,13 @@ void AbstractWidgetMapperController::addMapping(QWidget* widget, int column, con
   pvMappedWidgetList->addWidget(widget, column);
   pvWidgetMapper->addMapping(widget, column, propertyName);
   updateWidgetData(widget, column);
+//   connectUserPropertyNotifySignal(widget, ConnectAction::Connect);
 }
 
 void AbstractWidgetMapperController::clearMapping()
 {
   pvWidgetMapper->clearMapping();
+  disconnectMappedWidgetsUserPropertyNotifySignal();
   pvMappedWidgetList->clear();
 }
 
@@ -104,6 +111,39 @@ void AbstractWidgetMapperController::clearWidgetsDataOnInvalidRowState(RowState 
   }
   for(int i = 0; i < pvMappedWidgetList->size(); ++i){
     updateWidgetData(pvMappedWidgetList->at(i), -1);
+  }
+}
+
+void AbstractWidgetMapperController::editorNotify()
+{
+  qDebug() << "Editor notify";
+}
+
+void AbstractWidgetMapperController::connectUserPropertyNotifySignal(QWidget*const widget, ConnectAction ca)
+{
+  Q_ASSERT(metaObject() != nullptr);
+  Q_ASSERT(widget != nullptr);
+  Q_ASSERT(widget->metaObject() != nullptr);
+
+  // Find widget's user property notify signal
+  QMetaMethod notifySignal = widget->metaObject()->userProperty().notifySignal();
+  // Get QMetaMethod of AbstractController::onDataEditionStarted()
+  ///int slotIndex = metaObject()->indexOfSlot("onDataEditionStarted()");
+  int slotIndex = metaObject()->indexOfSlot("editorNotify()");
+  Q_ASSERT(slotIndex >= 0);
+  QMetaMethod controllerSlot = metaObject()->method(slotIndex);
+  // (dis)connect
+  if(ca == ConnectAction::Connect){
+    connect(widget, notifySignal, this, controllerSlot);
+  }else{
+    disconnect(widget, notifySignal, this, controllerSlot);
+  }
+}
+
+void AbstractWidgetMapperController::disconnectMappedWidgetsUserPropertyNotifySignal()
+{
+  for(int i = 0; i < pvMappedWidgetList->size(); ++i){
+    connectUserPropertyNotifySignal(pvMappedWidgetList->at(i), ConnectAction::Disctonnect);
   }
 }
 

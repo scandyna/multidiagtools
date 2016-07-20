@@ -101,7 +101,23 @@ namespace Mdt{ namespace ItemEditor{
      */
     void clearWidgetsDataOnInvalidRowState(RowState rs);
 
+    void editorNotify();
+    
    private:
+
+    enum class ConnectAction
+    {
+      Connect,
+      Disctonnect
+    };
+
+    /*! \brief Connect widget's user property notify signal to this onDataEditionStarted() slot
+     */
+    void connectUserPropertyNotifySignal(QWidget * const widget, ConnectAction ca);
+
+    /*! \brief Disconnect user property notify signal for all mapped widgets
+     */
+    void disconnectMappedWidgetsUserPropertyNotifySignal();
 
     /*! \brief Update widget data
      *

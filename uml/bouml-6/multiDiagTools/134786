@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 167
+  revision 169
   modified_by 2 "philippe"
   // class settings
   
@@ -75,6 +75,30 @@ ${inlines}
 	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3627778 // <directional composition>
+	relation 3608578 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3627778 // <directional composition>
+	  b parent class_ref 3184642 // QMetaObject
+      end
+
+      operation 4633346 "metaObject"
+	public return_type class_ref 3184642 // QMetaObject
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
   ${body}}
 "
 	
@@ -7118,6 +7142,51 @@ ${inlines}
 	  b parent class_ref 2706818 // QMenu
       end
     end
+
+    classdiagram 2813954 "QPlainTextEdit"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3177986 "QPlainTextEdit"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3621122 // <generalisation>
+	relation 3601922 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3621122 // <generalisation>
+	  b parent class_ref 316162 // QWidget
+      end
+
+      operation 4626562 "setPlainText"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "text" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
   end
 
   classview 846978 "QtCore"
@@ -7758,27 +7827,6 @@ ${inlines}
       end
     end
 
-    classdiagram 2613890 "QMetaMethod"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 2988034 "QMetaMethod"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
     classdiagram 2667394 "QFlag"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -7805,6 +7853,131 @@ ${inlines}
       nformals 1
       formal name "Enum" type "class" explicit_default_value ""
         explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2820610 "QMetaObject"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3184642 "QMetaObject"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3627906 // <directional composition>
+	relation 3608706 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3627906 // <directional composition>
+	  b parent class_ref 3184770 // QMetaProperty
+      end
+
+      operation 4633474 "property"
+	public return_type class_ref 3184770 // QMetaProperty
+	nparams 1
+	  param in name "index" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4633602 "userProperty"
+	public return_type class_ref 3184770 // QMetaProperty
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 2820738 "QMetaProperty"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3184770 "QMetaProperty"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3628034 // <directional composition>
+	relation 3608834 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3628034 // <directional composition>
+	  b parent class_ref 2988034 // QMetaMethod
+      end
+
+      operation 4633730 "notifySignal"
+	public return_type class_ref 2988034 // QMetaMethod
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 2613890 "QMetaMethod"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2988034 "QMetaMethod"
+      visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};

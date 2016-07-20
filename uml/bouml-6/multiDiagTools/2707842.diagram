@@ -68,8 +68,8 @@ relationcanvas 128258 relation_ref 3458946 // <generalisation>
 end
 relationcanvas 128770 relation_ref 971394 // <generalisation>
   geometry VHV unfixed
-  from ref 128386 z 2013 to point 1043 120.6
-  line 135938 z 2013 to point 714.8 120.6
+  from ref 128386 z 2013 to point 1043 120
+  line 135938 z 2013 to point 714 120
   line 136066 z 2013 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -99,8 +99,8 @@ relationcanvas 129922 relation_ref 3466370 // <generalisation>
 end
 relationcanvas 131458 relation_ref 3441794 // <generalisation>
   geometry VHV unfixed
-  from ref 131330 z 2019 to point 580.6 120.6
-  line 133122 z 2019 to point 714.8 120.6
+  from ref 131330 z 2019 to point 580 120
+  line 133122 z 2019 to point 714 120
   line 133250 z 2019 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -112,8 +112,8 @@ relationcanvas 132098 relation_ref 3475330 // <generalisation>
 end
 relationcanvas 132866 relation_ref 3492354 // <generalisation>
   geometry VHV unfixed
-  from ref 132738 z 2031 to point 125.6 301.4
-  line 135682 z 2031 to point 580.6 301.4
+  from ref 132738 z 2031 to point 125 301
+  line 135682 z 2031 to point 580 301
   line 135810 z 2031 to ref 131330
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

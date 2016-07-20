@@ -900,9 +900,9 @@ void ControllerTest::widgetMapperControllerEditTest()
   qDebug() << "editor0: " << editor0->metaObject()->userProperty().name();
   
   MySpy s;
-  
+  // Find editor's user property notify signal
   QMetaMethod mySig = editor0->metaObject()->userProperty().notifySignal();
-  
+  // Find argument signature
   auto sigArgTypeName = mySig.parameterTypes().at(0);
   qDebug() << "sigArgTypeName: " << sigArgTypeName;
   

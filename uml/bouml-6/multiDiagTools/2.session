@@ -7,11 +7,15 @@ diagrams
     120 110 100 23 0 0
   classdiagram_ref 2707842 // TestEditor
     120 110 100 21 0 226
-  active  classdiagram_ref 2800642 // sandbox
+  classdiagram_ref 2800642 // sandbox
+    983 906 100 4 0 0
+  classdiagram_ref 2813698 // Proxy
+    983 906 100 7 0 0
+  active  classdiagram_ref 2827266 // DataWidgetMapper
     983 906 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 4619522 // canRemove
+selected operation_ref 4641410 // removeMapping
 open
   
   package_ref 549506 // Algorithm
@@ -20,15 +24,18 @@ open
   package_ref 516226 // SqlItemModel
   classview_ref 1472258 // Editor
   classview_ref 1306882 // Delegate
-  classview_ref 1498370 // EditEvent
-  class_ref 3138562 // SqlWidgetMapperTableController
-  class_ref 3171330 // ControllerPermission
-  classview_ref 1286786 // Actions
+  operation_ref 4641282 // model
+  operation_ref 4641538 // setItemDelegate
+  operation_ref 4640898 // itemDelegate
+  operation_ref 4641026 // mappedColumn
+  operation_ref 4641154 // mappedWidgetAt
+  operation_ref 4641410 // removeMapping
   classview_ref 1432322 // StandardFormWidget
   
   package_ref 582274 // SqlItemEditor
   
   package_ref 430082 // Dsp
-  classview_ref 886914 // MV-View
+  classdiagram_ref 2613890 // QMetaMethod
+  class_ref 2988034 // QMetaMethod
 end
 end

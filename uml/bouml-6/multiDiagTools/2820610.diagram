@@ -1,0 +1,37 @@
+format 211
+
+classcanvas 128002 class_ref 3184642 // QMetaObject
+  classdiagramsettings member_max_width 0 end
+  xyz 296 137 2000
+end
+classcanvas 128130 class_ref 138626 // QObject
+  classdiagramsettings member_max_width 0 end
+  xyz 39 137 2000
+end
+classcanvas 128386 class_ref 3184770 // QMetaProperty
+  classdiagramsettings member_max_width 0 end
+  xyz 320 39 2000
+end
+classcanvas 128642 class_ref 2988034 // QMetaMethod
+  classdiagramsettings member_max_width 0 end
+  xyz 182 47 2000
+end
+relationcanvas 128258 relation_ref 3608578 // <directional composition>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 3608706 // <directional composition>
+  decenter_end 517
+  from ref 128002 z 2001 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 3608834 // <directional composition>
+  decenter_begin 559
+  decenter_end 581
+  from ref 128386 z 2001 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

@@ -25,7 +25,7 @@
 #include "ControllerStatePermission.h"
 #include <QAbstractItemModel>
 
-// #include <QDebug>
+#include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -163,6 +163,7 @@ void AbstractController::updateRowState(RowState rs)
 
 void AbstractController::onDataEditionStarted()
 {
+  qDebug() << "AbstractController::onDataEditionStarted() ..";
   setControllerState(ControllerState::Editing);
 }
 
