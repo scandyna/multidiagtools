@@ -18,32 +18,44 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_TEST_H
-#define MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_TEST_H
+#ifndef MDT_ITEM_EDITOR_MAPPED_WIDGET_H
+#define MDT_ITEM_EDITOR_MAPPED_WIDGET_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include <QPointer>
+#include <QWidget>
 
-class DataWidgetMapperTest : public QObject
-{
-  Q_OBJECT
+namespace Mdt{ namespace ItemEditor{
 
- private slots:
+  class MappedWidget
+  {
+   public:
 
-  void initTestCase();
-  void cleanupTestCase();
+    /*
+     * Contructor
+     */
+    MappedWidget(QWidget *widget, int column)
+     : pvWidget(widget), pvColumn(column)
+    {
+      Q_ASSERT(pvWidget != nullptr);
+      Q_ASSERT(column >= 0);
+    }
 
-  void mappedWidgetTest();
-  void mappedWidgetListTest();
+    QWidget *widget() const
+    {
+      return pvWidget;
+    }
 
-  void setModelTest();
-  void setCurrentRowTest();
-  void editStartDoneSignalTest();
-  void editStartDoneSignalTest_data();
-  void submitDataTest();
-  void submitDataTest_data();
-  void revertDataTest();
-  void revertDataTest_data();
-};
+    int column() const
+    {
+      return pvColumn;
+    }
 
-#endif // #ifndef MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_TEST_H
+   private:
+
+    QPointer<QWidget> pvWidget;
+    int pvColumn;
+  };
+
+}} // namespace Mdt{ namespace ItemEditor{
+
+#endif // #ifndef MDT_ITEM_EDITOR_MAPPED_WIDGET_H

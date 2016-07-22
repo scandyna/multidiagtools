@@ -45,8 +45,8 @@ class ControllerTest : public QObject
   void tableViewControllerCurrentRowChangeBenchmark();
   void tableViewControllerEditTest();
 
-  void mappedWidgetListTest();
-  void mappedWidgetListSetModelTest();
+//   void mappedWidgetListTest();
+//   void mappedWidgetListSetModelTest();
 
   void widgetMapperControllerSetModelTest();
   void widgetMapperControllerCurrentRowChangedTest();

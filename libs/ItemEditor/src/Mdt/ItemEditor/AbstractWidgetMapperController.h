@@ -29,7 +29,7 @@ class QWidget;
 
 namespace Mdt{ namespace ItemEditor{
 
-  class MappedWidgetList;
+//   class MappedWidgetList;
 
   /*! \brief Common base class to implement controllers for QDataWidgetMapper
    */

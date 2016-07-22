@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 70
+  revision 71
   modified_by 2 "philippe"
   // class settings
   
@@ -1498,6 +1498,18 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 3634818 // <generalisation>
 	  b parent class_ref 138626 // QObject
+      end
+
+      attribute 2988290 "CurrentRow"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
 
       attribute 2981378 "Model"

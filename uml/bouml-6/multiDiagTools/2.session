@@ -15,7 +15,7 @@ diagrams
     983 906 100 18 0 0
 end
 show_stereotypes
-selected operation_ref 4599554 // addWidget
+selected attribute_ref 2988290 // CurrentRow
 open
   
   package_ref 549506 // Algorithm
@@ -25,6 +25,7 @@ open
   classview_ref 1472258 // Editor
   classview_ref 1306882 // Delegate
   classview_ref 1491842 // MappedWidgetList
+  attribute_ref 2988290 // CurrentRow
   operation_ref 4649090 // widget
   class_ref 3158146 // MappedWidgetList
   classview_ref 1432322 // StandardFormWidget

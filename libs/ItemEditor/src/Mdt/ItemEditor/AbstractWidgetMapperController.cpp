@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "AbstractWidgetMapperController.h"
-#include "MappedWidgetList.h"
+// #include "MappedWidgetList.h"
 #include <QDataWidgetMapper>
 #include <QModelIndex>
 #include <QAbstractItemDelegate>

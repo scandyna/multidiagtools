@@ -21,7 +21,9 @@
 #ifndef MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_H
 #define MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_H
 
+#include "MappedWidgetList.h"
 #include <QObject>
+#include <QPointer>
 
 class QWidget;
 class QAbstractItemModel;
@@ -110,6 +112,7 @@ namespace Mdt{ namespace ItemEditor{
      */
     int currentRow() const
     {
+      return pvCurrentRow;
     }
 
    public slots:
@@ -145,7 +148,10 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    
+    int pvCurrentRow;
+    QPointer<QAbstractItemModel> pvModel;
+    QPointer<QAbstractItemDelegate> pvDelegate;
+    MappedWidgetList pvMappedWidgetList;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

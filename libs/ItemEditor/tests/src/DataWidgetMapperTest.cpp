@@ -21,6 +21,7 @@
 #include "DataWidgetMapperTest.h"
 #include "TestTableModel.h"
 #include "Mdt/Application.h"
+#include "Mdt/ItemEditor/MappedWidgetList.h"
 #include "Mdt/ItemEditor/DataWidgetMapper.h"
 #include <QSignalSpy>
 #include <QLineEdit>
@@ -37,6 +38,57 @@ void DataWidgetMapperTest::cleanupTestCase()
 /*
  * Tests
  */
+
+void DataWidgetMapperTest::mappedWidgetTest()
+{
+  using Mdt::ItemEditor::MappedWidget;
+
+  auto *w = new QWidget;
+
+  w->setObjectName("TestWidget");
+
+  auto *mw = new MappedWidget(w, 1);
+  QVERIFY(mw->widget() == w);
+  QCOMPARE(mw->column(), 1);
+
+  // MappedWidget must not own the widget
+  delete mw;
+  QCOMPARE(w->objectName(), QString("TestWidget"));
+}
+
+void DataWidgetMapperTest::mappedWidgetListTest()
+{
+  using Mdt::ItemEditor::MappedWidget;
+  using Mdt::ItemEditor::MappedWidgetList;
+
+  auto *widget1 = new QWidget;
+
+  /*
+   * Initial state
+   */
+  MappedWidgetList list;
+  QCOMPARE(list.size(), 0);
+  QVERIFY(list.isEmpty());
+  /*
+   * Add 1 element
+   */
+  list.addWidget(widget1, 1);
+  QCOMPARE(list.size(), 1);
+  QVERIFY(!list.isEmpty());
+  for(const auto & mw : list){
+    QVERIFY(mw.widget() == widget1);
+  }
+  /*
+   * Clear
+   */
+  list.clear();
+  QCOMPARE(list.size(), 0);
+  QVERIFY(list.isEmpty());
+  /*
+   * Free
+   */
+  delete widget1;
+}
 
 void DataWidgetMapperTest::setModelTest()
 {

@@ -22,6 +22,7 @@
 
 #include <QAbstractItemModel>
 #include <QStyledItemDelegate>
+#include <QStyledItemDelegate>
 #include <QWidget>
 
 #include <QDebug>
@@ -29,28 +30,47 @@
 namespace Mdt{ namespace ItemEditor{
 
 DataWidgetMapper::DataWidgetMapper(QObject* parent)
- : QObject(parent)
+ : QObject(parent),
+   pvCurrentRow(-1)
 {
+  setItemDelegate(new QStyledItemDelegate(this));
 }
 
 void DataWidgetMapper::setModel(QAbstractItemModel* model)
 {
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT_X(pvMappedWidgetList.isEmpty(), "DataWidgetMapper::setModel()", "setting model while widgets are allready mapped is not allowed");
 
+  if(model == pvModel){
+    return;
+  }
+  if(!pvModel.isNull()){
+    // disconnect()
+  }
+  pvModel = model;
+  // connect()
 }
 
 QAbstractItemModel* DataWidgetMapper::model() const
 {
-
+  return pvModel;
 }
 
 void DataWidgetMapper::setItemDelegate(QAbstractItemDelegate* delegate)
 {
+  Q_ASSERT(delegate != nullptr);
+  
+  if(!pvDelegate.isNull()){
+    // disconnect() ...
+  }
+  pvDelegate = delegate;
+  // connect()
 
 }
 
 QAbstractItemDelegate* DataWidgetMapper::itemDelegate() const
 {
-
+  return pvDelegate;
 }
 
 void DataWidgetMapper::addMapping(QWidget* widget, int column)

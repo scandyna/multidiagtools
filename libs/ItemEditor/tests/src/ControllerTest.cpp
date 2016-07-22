@@ -23,7 +23,7 @@
 #include "ItemViewTestEdit.h"
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/ControllerStatePermission.h"
-#include "Mdt/ItemEditor/MappedWidgetList.h"
+// #include "Mdt/ItemEditor/MappedWidgetList.h"
 #include "Mdt/ItemEditor/TableViewController.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"
 #include "Mdt/ItemEditor/ItemSelectionModel.h"
@@ -458,119 +458,119 @@ void ControllerTest::tableViewControllerEditTest()
 //   }
 }
 
-void ControllerTest::mappedWidgetListTest()
-{
-  using Mdt::ItemEditor::MappedWidgetList;
-  using Mdt::ItemEditor::RowState;
+// void ControllerTest::mappedWidgetListTest()
+// {
+//   using Mdt::ItemEditor::MappedWidgetList;
+//   using Mdt::ItemEditor::RowState;
+// 
+//   RowState rs;
+//   MappedWidgetList mwl;
+//   QLineEdit editA, editB;
+//   TestTableModel model;
+// 
+//   /*
+//    * Setup
+//    */
+//   model.populate(3, 2);
+//   mwl.setModel(&model);
+//   mwl.addWidget(&editA, 0);
+//   /*
+//    * Initial state
+//    */
+//   QVERIFY(!editA.isEnabled());
+//   /*
+//    * Set row state that allows edition
+//    */
+//   rs.setRowCount(2);
+//   rs.setCurrentRow(0);
+//   mwl.setRowState(rs);
+//   QVERIFY(editA.isEnabled());
+//   /*
+//    * Set row state that not allows edition
+//    */
+//   rs.setRowCount(0);
+//   rs.setCurrentRow(-1);
+//   mwl.setRowState(rs);
+//   QVERIFY(!editA.isEnabled());
+//   /*
+//    * Add a widget
+//    */
+//   mwl.addWidget(&editB, 1);
+//   QVERIFY(!editA.isEnabled());
+//   QVERIFY(!editB.isEnabled());
+//   /*
+//    * Set row state that allows edition
+//    */
+//   rs.setRowCount(2);
+//   rs.setCurrentRow(0);
+//   mwl.setRowState(rs);
+//   QVERIFY(editA.isEnabled());
+//   QVERIFY(editB.isEnabled());
+// }
 
-  RowState rs;
-  MappedWidgetList mwl;
-  QLineEdit editA, editB;
-  TestTableModel model;
-
-  /*
-   * Setup
-   */
-  model.populate(3, 2);
-  mwl.setModel(&model);
-  mwl.addWidget(&editA, 0);
-  /*
-   * Initial state
-   */
-  QVERIFY(!editA.isEnabled());
-  /*
-   * Set row state that allows edition
-   */
-  rs.setRowCount(2);
-  rs.setCurrentRow(0);
-  mwl.setRowState(rs);
-  QVERIFY(editA.isEnabled());
-  /*
-   * Set row state that not allows edition
-   */
-  rs.setRowCount(0);
-  rs.setCurrentRow(-1);
-  mwl.setRowState(rs);
-  QVERIFY(!editA.isEnabled());
-  /*
-   * Add a widget
-   */
-  mwl.addWidget(&editB, 1);
-  QVERIFY(!editA.isEnabled());
-  QVERIFY(!editB.isEnabled());
-  /*
-   * Set row state that allows edition
-   */
-  rs.setRowCount(2);
-  rs.setCurrentRow(0);
-  mwl.setRowState(rs);
-  QVERIFY(editA.isEnabled());
-  QVERIFY(editB.isEnabled());
-}
-
-void ControllerTest::mappedWidgetListSetModelTest()
-{
-  using Mdt::ItemEditor::MappedWidgetList;
-  using Mdt::ItemEditor::RowState;
-
-  RowState rs;
-  MappedWidgetList mwl;
-  QLineEdit editA, editB;
-
-  /*
-   * Initial state
-   */
-  QCOMPARE(mwl.size(), 0);
-  QVERIFY(mwl.isEmpty());
-  /*
-   * map widgets
-   */
-  mwl.addWidget(&editA, 0);
-  mwl.addWidget(&editB, 1);
-  QCOMPARE(mwl.size(), 2);
-  QVERIFY(!mwl.isEmpty());
-  QVERIFY(!editA.isEnabled());
-  QVERIFY(!editB.isEnabled());
-  /*
-   * Set a empty model
-   */
-  TestTableModel model1;
-  mwl.setModel(&model1);
-  QVERIFY(!editA.isEnabled());
-  QVERIFY(!editB.isEnabled());
-  /*
-   * Populate model with 1 column
-   */
-  model1.populate(3, 1);
-  rs.setRowCount(3);
-  rs.setCurrentRow(0);
-  mwl.setRowState(rs);
-  QVERIFY(editA.isEnabled());
-  QVERIFY(!editB.isEnabled());
-  /*
-   * Populate model with 2 columns
-   */
-  model1.populate(3, 2);
-  rs.setRowCount(3);
-  rs.setCurrentRow(0);
-  mwl.setRowState(rs);
-  QVERIFY(editA.isEnabled());
-  QVERIFY(editB.isEnabled());
-  /*
-   * Set a other model that is allready populated
-   */
-  TestTableModel model2;
-  model2.populate(5, 1);
-  mwl.setModel(&model2);
-  QVERIFY(editA.isEnabled());
-  QVERIFY(!editB.isEnabled());
-  /*
-   * Clear
-   */
-  mwl.clear();
-  QCOMPARE(mwl.size(), 0);
-  QVERIFY(mwl.isEmpty());
-}
+// void ControllerTest::mappedWidgetListSetModelTest()
+// {
+//   using Mdt::ItemEditor::MappedWidgetList;
+//   using Mdt::ItemEditor::RowState;
+// 
+//   RowState rs;
+//   MappedWidgetList mwl;
+//   QLineEdit editA, editB;
+// 
+//   /*
+//    * Initial state
+//    */
+//   QCOMPARE(mwl.size(), 0);
+//   QVERIFY(mwl.isEmpty());
+//   /*
+//    * map widgets
+//    */
+//   mwl.addWidget(&editA, 0);
+//   mwl.addWidget(&editB, 1);
+//   QCOMPARE(mwl.size(), 2);
+//   QVERIFY(!mwl.isEmpty());
+//   QVERIFY(!editA.isEnabled());
+//   QVERIFY(!editB.isEnabled());
+//   /*
+//    * Set a empty model
+//    */
+//   TestTableModel model1;
+//   mwl.setModel(&model1);
+//   QVERIFY(!editA.isEnabled());
+//   QVERIFY(!editB.isEnabled());
+//   /*
+//    * Populate model with 1 column
+//    */
+//   model1.populate(3, 1);
+//   rs.setRowCount(3);
+//   rs.setCurrentRow(0);
+//   mwl.setRowState(rs);
+//   QVERIFY(editA.isEnabled());
+//   QVERIFY(!editB.isEnabled());
+//   /*
+//    * Populate model with 2 columns
+//    */
+//   model1.populate(3, 2);
+//   rs.setRowCount(3);
+//   rs.setCurrentRow(0);
+//   mwl.setRowState(rs);
+//   QVERIFY(editA.isEnabled());
+//   QVERIFY(editB.isEnabled());
+//   /*
+//    * Set a other model that is allready populated
+//    */
+//   TestTableModel model2;
+//   model2.populate(5, 1);
+//   mwl.setModel(&model2);
+//   QVERIFY(editA.isEnabled());
+//   QVERIFY(!editB.isEnabled());
+//   /*
+//    * Clear
+//    */
+//   mwl.clear();
+//   QCOMPARE(mwl.size(), 0);
+//   QVERIFY(mwl.isEmpty());
+// }
 
 void ControllerTest::widgetMapperControllerSetModelTest()
 {
