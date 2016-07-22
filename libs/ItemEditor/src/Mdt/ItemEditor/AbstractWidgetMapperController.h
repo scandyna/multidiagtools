@@ -126,7 +126,7 @@ namespace Mdt{ namespace ItemEditor{
     void updateWidgetData(QWidget * const widget, int column);
 
     QDataWidgetMapper *pvWidgetMapper;
-    MappedWidgetList *pvMappedWidgetList;
+//     MappedWidgetList *pvMappedWidgetList;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

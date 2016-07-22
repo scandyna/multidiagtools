@@ -7,7 +7,6 @@ project(multidiagtools)
 set(SOURCES_FILES
     src/Mdt/ItemEditor/ItemDelegateProxy.cpp
     src/Mdt/ItemEditor/EventCatchItemDelegate.cpp
-    src/Mdt/ItemEditor/EditionStartEventCatchDelegate.cpp
     src/Mdt/ItemEditor/ItemSelectionModel.cpp
     src/Mdt/ItemEditor/RowChangeEventDispatcher.cpp
     src/Mdt/ItemEditor/NavigationActions.cpp
@@ -19,6 +18,7 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/AbstractItemViewController.cpp
     src/Mdt/ItemEditor/TableViewController.cpp
     src/Mdt/ItemEditor/MappedWidgetList.cpp
+    src/Mdt/ItemEditor/DataWidgetMapper.cpp
     src/Mdt/ItemEditor/AbstractWidgetMapperController.cpp
     src/Mdt/ItemEditor/WidgetMapperController.cpp
     src/Mdt/ItemEditor/StandardEditorLayoutWidget.cpp

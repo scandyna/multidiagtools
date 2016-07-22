@@ -12,8 +12,6 @@ set(SOURCES_FILES
   src/TestTableEditionWidget.cpp
   src/TestFormEditionWidget.cpp
   src/TestWindowEditor.cpp
-  
-  src/MySpy.cpp
 )
 
 add_library(mdtitemeditortest SHARED ${SOURCES_FILES})
@@ -57,6 +55,11 @@ add_test(MdtItemEditorItemDelegateTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditor
 add_executable(mdtitemeditoritemviewtest src/ItemViewTest.cpp)
 target_link_libraries(mdtitemeditoritemviewtest mdtitemeditortest)
 add_test(MdtItemEditorItemViewTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditoritemviewtest)
+
+# Target MdtItemEditorDataWidgetMapperTest
+add_executable(mdtitemeditordatawidgetmappertest src/DataWidgetMapperTest.cpp)
+target_link_libraries(mdtitemeditordatawidgetmappertest mdtitemeditortest)
+add_test(MdtItemEditorDataWidgetMapperTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditordatawidgetmappertest)
 
 # Target MdtItemEditorControllerTest
 add_executable(mdtitemeditorcontrollertest src/ControllerTest.cpp)

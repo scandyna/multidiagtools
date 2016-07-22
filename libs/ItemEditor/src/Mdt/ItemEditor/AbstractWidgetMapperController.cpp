@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "AbstractWidgetMapperController.h"
 #include "MappedWidgetList.h"
-#include "EditionStartEventCatchDelegate.h"
 #include <QDataWidgetMapper>
 #include <QModelIndex>
 #include <QAbstractItemDelegate>
@@ -58,20 +57,20 @@ AbstractWidgetMapperController::AbstractWidgetMapperController(QDataWidgetMapper
   ///connect(proxyDelegate, &EditionStartEventCatchDelegate::dataEditionStarted, this, &AbstractWidgetMapperController::onDataEditionStarted);
 
   connect(this, &AbstractWidgetMapperController::currentRowChanged, pvWidgetMapper, &QDataWidgetMapper::setCurrentIndex);
-  pvMappedWidgetList = new MappedWidgetList(this);
-  connect(this, &AbstractWidgetMapperController::rowStateChanged, pvMappedWidgetList, &MappedWidgetList::setRowState);
+//   pvMappedWidgetList = new MappedWidgetList(this);
+//   connect(this, &AbstractWidgetMapperController::rowStateChanged, pvMappedWidgetList, &MappedWidgetList::setRowState);
   connect(this, &AbstractWidgetMapperController::rowStateChanged, this, &AbstractWidgetMapperController::clearWidgetsDataOnInvalidRowState);
 }
 
 void AbstractWidgetMapperController::setModel(QAbstractItemModel* _model)
 {
   Q_ASSERT(_model != nullptr);
-  Q_ASSERT_X(pvMappedWidgetList->isEmpty(), "AbstractWidgetMapperController::setModel()", "setting model while widgets are allready mapped is not allowed");
+//   Q_ASSERT_X(pvMappedWidgetList->isEmpty(), "AbstractWidgetMapperController::setModel()", "setting model while widgets are allready mapped is not allowed");
 
   referenceItemModel(_model);
   pvWidgetMapper->setModel(_model);
   registerItemModel();
-  pvMappedWidgetList->setModel(_model);
+//   pvMappedWidgetList->setModel(_model);
   Q_ASSERT(model() == pvWidgetMapper->model());
 }
 
@@ -80,7 +79,7 @@ void AbstractWidgetMapperController::addMapping(QWidget* widget, int column)
   Q_ASSERT(widget != nullptr);
   Q_ASSERT_X(model() != nullptr, "AbstractWidgetMapperController::addMapping()", "model must be set before mapping widgets");
 
-  pvMappedWidgetList->addWidget(widget, column);
+//   pvMappedWidgetList->addWidget(widget, column);
   pvWidgetMapper->addMapping(widget, column);
   updateWidgetData(widget, column);
   connectUserPropertyNotifySignal(widget, ConnectAction::Connect);
@@ -91,7 +90,7 @@ void AbstractWidgetMapperController::addMapping(QWidget* widget, int column, con
   Q_ASSERT(widget != nullptr);
   Q_ASSERT_X(model() != nullptr, "AbstractWidgetMapperController::addMapping()", "model must be set before mapping widgets");
 
-  pvMappedWidgetList->addWidget(widget, column);
+//   pvMappedWidgetList->addWidget(widget, column);
   pvWidgetMapper->addMapping(widget, column, propertyName);
   updateWidgetData(widget, column);
 //   connectUserPropertyNotifySignal(widget, ConnectAction::Connect);
@@ -101,7 +100,7 @@ void AbstractWidgetMapperController::clearMapping()
 {
   pvWidgetMapper->clearMapping();
   disconnectMappedWidgetsUserPropertyNotifySignal();
-  pvMappedWidgetList->clear();
+//   pvMappedWidgetList->clear();
 }
 
 void AbstractWidgetMapperController::clearWidgetsDataOnInvalidRowState(RowState rs)
@@ -109,9 +108,9 @@ void AbstractWidgetMapperController::clearWidgetsDataOnInvalidRowState(RowState 
   if(!rs.isNull()){
     return;
   }
-  for(int i = 0; i < pvMappedWidgetList->size(); ++i){
-    updateWidgetData(pvMappedWidgetList->at(i), -1);
-  }
+//   for(int i = 0; i < pvMappedWidgetList->size(); ++i){
+//     updateWidgetData(pvMappedWidgetList->at(i), -1);
+//   }
 }
 
 void AbstractWidgetMapperController::editorNotify()
@@ -142,9 +141,9 @@ void AbstractWidgetMapperController::connectUserPropertyNotifySignal(QWidget*con
 
 void AbstractWidgetMapperController::disconnectMappedWidgetsUserPropertyNotifySignal()
 {
-  for(int i = 0; i < pvMappedWidgetList->size(); ++i){
-    connectUserPropertyNotifySignal(pvMappedWidgetList->at(i), ConnectAction::Disctonnect);
-  }
+//   for(int i = 0; i < pvMappedWidgetList->size(); ++i){
+//     connectUserPropertyNotifySignal(pvMappedWidgetList->at(i), ConnectAction::Disctonnect);
+//   }
 }
 
 void AbstractWidgetMapperController::updateWidgetData(QWidget*const widget, int column)

@@ -38,8 +38,6 @@
 #include <QMetaProperty>
 #include <QMetaMethod>
 
-#include "MySpy.h"
-
 void ControllerTest::initTestCase()
 {
 }
@@ -897,45 +895,45 @@ void ControllerTest::widgetMapperControllerEditTest()
   QSignalSpy stateSpy(&controller, &WidgetMapperController::controllerStateChanged);
   QList<QVariant> spyItem;
 
-  qDebug() << "editor0: " << editor0->metaObject()->userProperty().name();
-  
-  MySpy s;
-  // Find editor's user property notify signal
-  QMetaMethod mySig = editor0->metaObject()->userProperty().notifySignal();
-  // Find argument signature
-  auto sigArgTypeName = mySig.parameterTypes().at(0);
-  qDebug() << "sigArgTypeName: " << sigArgTypeName;
-  
-  auto *SMeta = s.metaObject();
-  auto name = SMeta->normalizedSignature("display(const " + sigArgTypeName + "&)");
-  int idx = SMeta->indexOfSlot(name);
-  QMetaMethod mySlot = SMeta->method(idx);
-  
-  qDebug() << "name: " << name << " idx " << idx;
-//   QMetaMethod mySlot = s.metaObject()->method( s.metaObject()->indexOfSlot("display(const QVariant&)") );
-  
-  qDebug() << mySig.name() << " , " << mySlot.name();
-  
-  connect(editor0, mySig, &s, mySlot);
-
-  qDebug() << "TEST: begin edit triggers test";
-  qDebug() << " -> enter key";
-  QTest::keyClick(editor0, Qt::Key_Enter);
-  qDebug() << " -> back";
-  QTest::keyClick(editor0, Qt::Key_Back);
-  qDebug() << " -> F2";
-  QTest::keyClick(editor0, Qt::Key_F2);
-  qDebug() << " -> A";
-  QTest::keyClick(editor0, Qt::Key_A);
-  qDebug() << "TEST: end";
-  
-  editor0->show();
-  while(editor0->isVisible()){
-    QTest::qWait(500);
-  }
-  
-  delete editor0;
-  
+//   qDebug() << "editor0: " << editor0->metaObject()->userProperty().name();
+//   
+//   MySpy s;
+//   // Find editor's user property notify signal
+//   QMetaMethod mySig = editor0->metaObject()->userProperty().notifySignal();
+//   // Find argument signature
+//   auto sigArgTypeName = mySig.parameterTypes().at(0);
+//   qDebug() << "sigArgTypeName: " << sigArgTypeName;
+//   
+//   auto *SMeta = s.metaObject();
+//   auto name = SMeta->normalizedSignature("display(const " + sigArgTypeName + "&)");
+//   int idx = SMeta->indexOfSlot(name);
+//   QMetaMethod mySlot = SMeta->method(idx);
+//   
+//   qDebug() << "name: " << name << " idx " << idx;
+// //   QMetaMethod mySlot = s.metaObject()->method( s.metaObject()->indexOfSlot("display(const QVariant&)") );
+//   
+//   qDebug() << mySig.name() << " , " << mySlot.name();
+//   
+//   connect(editor0, mySig, &s, mySlot);
+// 
+//   qDebug() << "TEST: begin edit triggers test";
+//   qDebug() << " -> enter key";
+//   QTest::keyClick(editor0, Qt::Key_Enter);
+//   qDebug() << " -> back";
+//   QTest::keyClick(editor0, Qt::Key_Back);
+//   qDebug() << " -> F2";
+//   QTest::keyClick(editor0, Qt::Key_F2);
+//   qDebug() << " -> A";
+//   QTest::keyClick(editor0, Qt::Key_A);
+//   qDebug() << "TEST: end";
+//   
+//   editor0->show();
+//   while(editor0->isVisible()){
+//     QTest::qWait(500);
+//   }
+//   
+//   delete editor0;
+//   
   
   
   QVERIFY(stateSpy.isValid());
