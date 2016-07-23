@@ -22,6 +22,7 @@
 #define MDT_ITEM_EDITOR_MAPPED_WIDGET_LIST_H
 
 #include "MappedWidget.h"
+#include <QPointer>
 #include <vector>
 
 namespace Mdt{ namespace ItemEditor{
@@ -41,12 +42,7 @@ namespace Mdt{ namespace ItemEditor{
      * \note widget will not be owned by MappedWidgetList
      *        (it will not be deleted)
      */
-    void addWidget(QWidget *widget, int column)
-    {
-      Q_ASSERT(widget != nullptr);
-      Q_ASSERT(column >= 0);
-      pvWidgetList.emplace_back(widget, column);
-    }
+    void addWidget(QWidget *widget, int column);
 
     /*! \brief Get count of mapped widgets
      */
@@ -78,10 +74,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Remove all mapped widgets
      */
-    void clear()
-    {
-      pvWidgetList.clear();
-    }
+    void clear();
 
    private:
 

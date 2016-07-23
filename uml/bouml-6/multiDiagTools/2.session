@@ -15,7 +15,7 @@ diagrams
     983 906 100 18 0 0
 end
 show_stereotypes
-selected attribute_ref 2988290 // CurrentRow
+selected sequencediagram_ref 2768002 // WidgetMapperExamples
 open
   
   package_ref 549506 // Algorithm
@@ -24,10 +24,12 @@ open
   package_ref 516226 // SqlItemModel
   classview_ref 1472258 // Editor
   classview_ref 1306882 // Delegate
+  classview_ref 1485314 // RowChangeEvent
   classview_ref 1491842 // MappedWidgetList
   attribute_ref 2988290 // CurrentRow
   operation_ref 4649090 // widget
   class_ref 3158146 // MappedWidgetList
+  classview_ref 1287042 // Controller
   classview_ref 1432322 // StandardFormWidget
   
   package_ref 582274 // SqlItemEditor

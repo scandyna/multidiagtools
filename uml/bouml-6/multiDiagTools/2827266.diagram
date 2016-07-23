@@ -2,35 +2,35 @@ format 211
 
 classcanvas 128002 class_ref 3191554 // DataWidgetMapper
   classdiagramsettings member_max_width 0 end
-  xyz 417.75 125.25 2000
+  xyz 40.75 124 2000
 end
 classcanvas 128130 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 573.5 41.75 2000
+  xyz 203 41.75 2000
 end
 classcanvas 128642 class_ref 3158146 // MappedWidgetList
   classdiagramsettings member_max_width 0 end
-  xyz 39 293.25 2006
+  xyz 461.5 303 2006
 end
 classcanvas 128898 class_ref 3198082 // MappedWidget
   classdiagramsettings member_max_width 0 end
-  xyz 44 118.25 2000
+  xyz 463.25 410.75 2000
 end
 relationcanvas 128258 relation_ref 3615618 // <generalisation>
+  decenter_begin 509
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 129026 relation_ref 3622146 // <directional composition>
-  from ref 128642 z 2007 to ref 128898
-  no_role_a no_role_b
-  multiplicity_a_pos 194 262 3000 no_multiplicity_b
-end
 relationcanvas 129154 relation_ref 3622274 // <directional composition>
-  decenter_begin 491
-  decenter_end 452
   from ref 128002 z 2007 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 3622146 // <directional composition>
+  decenter_end 510
+  from ref 128642 z 2007 to ref 128898
+  no_role_a no_role_b
+  multiplicity_a_pos 616 387 3000 no_multiplicity_b
 end
 end

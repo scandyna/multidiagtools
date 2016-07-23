@@ -18,31 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_TEST_H
-#define MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_TEST_H
+#include "MappedWidgetList.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace ItemEditor{
 
-class DataWidgetMapperTest : public QObject
+void MappedWidgetList::addWidget(QWidget* widget, int column)
 {
-  Q_OBJECT
+  Q_ASSERT(widget != nullptr);
+  Q_ASSERT(column >= 0);
+  pvWidgetList.emplace_back(widget, column);
+}
 
- private slots:
+void MappedWidgetList::clear()
+{
+  pvWidgetList.clear();
+}
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void mappedWidgetTest();
-  void mappedWidgetListTest();
-
-  void setModelTest();
-  void setCurrentRowTest();
-  void editStartDoneSignalTest();
-  void editStartDoneSignalTest_data();
-  void setDataFromModelQLineEditTest();
-  void submitDataQLineEditTest();
-  void revertDataQLineEditTest();
-};
-
-#endif // #ifndef MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_TEST_H
+}} // namespace Mdt{ namespace ItemEditor{

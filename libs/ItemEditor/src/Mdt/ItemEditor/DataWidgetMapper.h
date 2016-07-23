@@ -22,12 +22,13 @@
 #define MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_H
 
 #include "MappedWidgetList.h"
+#include <QAbstractItemDelegate>
 #include <QObject>
 #include <QPointer>
 
 class QWidget;
 class QAbstractItemModel;
-class QAbstractItemDelegate;
+class QModelIndex;
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -56,6 +57,8 @@ namespace Mdt{ namespace ItemEditor{
     explicit DataWidgetMapper(QObject* parent = nullptr);
 
     /*! \brief Set model
+     *
+     * After model was set, current row will be set to -1.
      *
      * \note Because model can be shared with several objects (f.ex. other views),
      *        the mapper does not take ownership of it (it will not delete it).
@@ -92,6 +95,7 @@ namespace Mdt{ namespace ItemEditor{
      *
      * For more informations, see QDataWidgetMapper documentation.
      *
+     * \note widget will not display model data until setCurrentRow() was called
      * \pre model must be set before mapping any widget
      * \pre widget pointer must be valid
      * \sa setModel()
@@ -122,6 +126,8 @@ namespace Mdt{ namespace ItemEditor{
     void setCurrentRow(int row);
 
     /*! \brief Submit data from mapped widgets to the model
+     *
+     * \pre Model must be set before calling this method
      */
     bool submit();
 
@@ -146,9 +152,47 @@ namespace Mdt{ namespace ItemEditor{
      */
     void dataEditionDone();
 
+   private slots:
+
+    /*! \brief Called from any mapped widget that start editing
+     */
+    void onDataEditionStarted();
+
+    /*! \brief Called from model when data changed
+     */
+    void onModelDataChaged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles);
+
    private:
 
+    enum class ConnectAction
+    {
+      Connect,
+      Disctonnect
+    };
+
+    /*! \brief Connect widget's user property notify signal to this onDataEditionStarted() slot
+     */
+    void connectUserPropertyNotifySignal(QWidget * const widget, ConnectAction ca);
+
+    /*! \brief Update editor
+     */
+    void updateMappedWidget(QWidget * const widget, int column);
+
+    /*! \brief Update all mapped widgets
+     */
+    void updateAllMappedWidgets();
+
+    /*! \brief Commit widget's data to model
+     */
+    bool commitData(QWidget * const widget, int column);
+
+    /*! \brief Commit data of all mapped widgets to model
+     */
+    bool commitAllMappedWidgetsData();
+    
     int pvCurrentRow;
+    bool pvUpdatingMappedWidget;
+    bool pvEditionStartNotified;
     QPointer<QAbstractItemModel> pvModel;
     QPointer<QAbstractItemDelegate> pvDelegate;
     MappedWidgetList pvMappedWidgetList;

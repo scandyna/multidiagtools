@@ -62,6 +62,7 @@ void DataWidgetMapperTest::mappedWidgetListTest()
   using Mdt::ItemEditor::MappedWidgetList;
 
   auto *widget1 = new QWidget;
+  auto *widget2 = new QWidget;
 
   /*
    * Initial state
@@ -79,6 +80,24 @@ void DataWidgetMapperTest::mappedWidgetListTest()
     QVERIFY(mw.widget() == widget1);
   }
   /*
+   * Add second widget
+   */
+  list.addWidget(widget2, 2);
+  QCOMPARE(list.size(), 2);
+  /*
+   * Set enable state
+   */
+//   QVERIFY(widget1->isEnabled());
+//   QVERIFY(widget2->isEnabled());
+//   // Disable widgets
+//   list.setAllWidgetsEnabled(false);
+//   QVERIFY(!widget1->isEnabled());
+//   QVERIFY(!widget2->isEnabled());
+//   // Enable widgets
+//   list.setAllWidgetsEnabled(true);
+//   QVERIFY(widget1->isEnabled());
+//   QVERIFY(widget2->isEnabled());
+  /*
    * Clear
    */
   list.clear();
@@ -88,6 +107,7 @@ void DataWidgetMapperTest::mappedWidgetListTest()
    * Free
    */
   delete widget1;
+  delete widget2;
 }
 
 void DataWidgetMapperTest::setModelTest()
@@ -131,8 +151,20 @@ void DataWidgetMapperTest::setModelTest()
   QVERIFY(edit1.text().isEmpty());
   /*
    * Populate model with 1 column
+   *
+   * Note: changing current row when model changes its row count
+   *       is done by the controller.
    */
   model.populate(3, 1);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  QVERIFY(!edit0.isEnabled());
+  QVERIFY(!edit1.isEnabled());
+  QVERIFY(edit0.text().isEmpty());
+  QVERIFY(edit1.text().isEmpty());
+  // Now, change to first row
+  mapper.setCurrentRow(0);
   QCOMPARE(mapper.currentRow(), 0);
   // Check that current row changed was signaled
   QCOMPARE(rowChangedSpy.count(), 1);
@@ -148,14 +180,21 @@ void DataWidgetMapperTest::setModelTest()
   QVERIFY(edit1.text().isEmpty());
   /*
    * Populate model with 2 columns
+   *
+   * Note: widget mapper does not listen to model reset etc..
+   *       The controller do this, and it will set mapper's current row.
    */
   model.populate(3, 2);
   QCOMPARE(mapper.currentRow(), 0);
+  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  // Go to first row again
+  mapper.setCurrentRow(0);
   // Check that current row changed was not signaled
   QCOMPARE(rowChangedSpy.count(), 0);
   // Check that no edition started was signaled
   QCOMPARE(editStartedSpy.count(), 0);
-  // Check editors state
+  // Check thhat editors state was updated
   QVERIFY(edit0.isEnabled());
   QVERIFY(edit1.isEnabled());
   index = model.index(0, 0);
@@ -173,18 +212,36 @@ void DataWidgetMapperTest::setModelTest()
   QVERIFY(edit0.text().isEmpty());
   QVERIFY(edit1.text().isEmpty());
   /*
-   * Set allready populated model
+   * Set allready populated model and map widgets once we are at first row
+   *
+   * Widget mapper must go to row -1 after model was set.
+   * The controller will tell it which row to go later.
    */
+  /// \todo Check if this is good..
   TestTableModel model2;
   model2.populate(4, 2);
   mapper.setModel(&model2);
-  mapper.addMapping(&edit0, 0);
-  mapper.addMapping(&edit1, 1);
-  QCOMPARE(mapper.currentRow(), 0);
-  // Check that current row changed was not signaled
-  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(mapper.currentRow(), -1);
+  // Check that current row changed was signaled
+  QCOMPARE(rowChangedSpy.count(), 1);
+  QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), -1);
   // Check that no edition started was signaled
   QCOMPARE(editStartedSpy.count(), 0);
+  // Go to first row
+  mapper.setCurrentRow(0);
+  QCOMPARE(mapper.currentRow(), 0);
+  // Check that current row changed was signaled
+  QCOMPARE(rowChangedSpy.count(), 1);
+  QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), 0);
+  // Check that no edition started was signaled
+  QCOMPARE(editStartedSpy.count(), 0);
+  // Map widgets
+  mapper.addMapping(&edit0, 0);
+  mapper.addMapping(&edit1, 1);
+  QVERIFY(!edit0.isEnabled());
+  QVERIFY(!edit1.isEnabled());
+  QVERIFY(edit0.text().isEmpty());
+  QVERIFY(edit1.text().isEmpty());
   // Check editors state
   QVERIFY(edit0.isEnabled());
   QVERIFY(edit1.isEnabled());
@@ -225,7 +282,7 @@ void DataWidgetMapperTest::setCurrentRowTest()
   QCOMPARE(mapper.currentRow(), 1);
   // Check that current row changed was signaled
   QCOMPARE(rowChangedSpy.count(), 1);
-  QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), 0);
+  QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), 1);
   // Check that no edition started was signaled
   QCOMPARE(editStartedSpy.count(), 0);
   // Check editors state
@@ -261,8 +318,16 @@ void DataWidgetMapperTest::editStartDoneSignalTest()
   mapper.setModel(&model);
   mapper.addMapping(editor0, 0);
   mapper.addMapping(editor1, 1);
+  mapper.setCurrentRow(0);
   editStartedSpy.clear();
   editDoneSpy.clear();
+
+//   editor0->show();
+//   editor1->show();
+//   while(editor0->isVisible()){
+//     QTest::qWait(500);
+//   }
+
   /*
    * Start edit with key on editor 0
    */
@@ -348,72 +413,135 @@ void DataWidgetMapperTest::editStartDoneSignalTest_data()
 
 }
 
-void DataWidgetMapperTest::submitDataTest()
+void DataWidgetMapperTest::setDataFromModelQLineEditTest()
 {
   using Mdt::ItemEditor::DataWidgetMapper;
 
   DataWidgetMapper mapper;
   TestTableModel model;
   QModelIndex index;
-  QFETCH(QWidget*, editor0);
-  QFETCH(QWidget*, editor1);
+  QLineEdit editor0;
+  QLineEdit editor1;
 
   /*
    * Setup
    */
   model.populate(3, 2);
   mapper.setModel(&model);
-  mapper.addMapping(editor0, 0);
-  mapper.addMapping(editor1, 1);
-
-  QFAIL("Not implemented");
+  mapper.addMapping(&editor0, 0);
+  mapper.addMapping(&editor1, 1);
+  mapper.setCurrentRow(0);
+  /*
+   * Update model data for mapper's current row
+   */
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QVERIFY(model.setData(index, "ABCD"));
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  QVERIFY(model.setData(index, "1234"));
+  /*
+   * Check that editors are updated
+   */
+  QCOMPARE(editor0.text(), QString("ABCD"));
+  QCOMPARE(editor1.text(), QString("1234"));
+  /*
+   * Update model data for a other row
+   */
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  QVERIFY(model.setData(index, "EFGH"));
+  index = model.index(1, 1);
+  QVERIFY(index.isValid());
+  QVERIFY(model.setData(index, "5678"));
+  /*
+   * Check that editors still display the data of row 0
+   */
+  QCOMPARE(editor0.text(), QString("ABCD"));
+  QCOMPARE(editor1.text(), QString("1234"));
 }
 
-void DataWidgetMapperTest::submitDataTest_data()
-{
-  QTest::addColumn<QWidget*>("editor0");
-  QTest::addColumn<QWidget*>("editor1");
-
-  QWidget *widget0, *widget1;
-
-  widget0 = new QLineEdit;
-  widget1 = new QLineEdit;
-  QTest::newRow("QLineEdit") << widget0 << widget1;
-
-}
-
-void DataWidgetMapperTest::revertDataTest()
+void DataWidgetMapperTest::submitDataQLineEditTest()
 {
   using Mdt::ItemEditor::DataWidgetMapper;
 
   DataWidgetMapper mapper;
   TestTableModel model;
   QModelIndex index;
-  QFETCH(QWidget*, editor0);
-  QFETCH(QWidget*, editor1);
+  QLineEdit editor0;
+  QLineEdit editor1;
 
   /*
    * Setup
    */
   model.populate(3, 2);
   mapper.setModel(&model);
-  mapper.addMapping(editor0, 0);
-  mapper.addMapping(editor1, 1);
-
-  QFAIL("Not implemented");
+  mapper.addMapping(&editor0, 0);
+  mapper.addMapping(&editor1, 1);
+  mapper.setCurrentRow(0);
+  /*
+   * Edit
+   */
+  editor0.setText("ABCD");
+  editor1.setText("1234");
+  /*
+   * Submit and check
+   */
+  QVERIFY(mapper.submit());
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(index.data().toString(), QString("ABCD"));
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(index.data().toString(), QString("1234"));
 }
 
-void DataWidgetMapperTest::revertDataTest_data()
+void DataWidgetMapperTest::revertDataQLineEditTest()
 {
-  QTest::addColumn<QWidget*>("editor0");
-  QTest::addColumn<QWidget*>("editor1");
+  using Mdt::ItemEditor::DataWidgetMapper;
 
-  QWidget *widget0, *widget1;
+  DataWidgetMapper mapper;
+  TestTableModel model;
+  QModelIndex index;
+  QLineEdit editor0;
+  QLineEdit editor1;
+  QString originalText0;
+  QString originalText1;
 
-  widget0 = new QLineEdit;
-  widget1 = new QLineEdit;
-  QTest::newRow("QLineEdit") << widget0 << widget1;
-
+  /*
+   * Setup
+   */
+  model.populate(3, 2);
+  mapper.setModel(&model);
+  mapper.addMapping(&editor0, 0);
+  mapper.addMapping(&editor1, 1);
+  mapper.setCurrentRow(0);
+  // get original texts
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  originalText0 = index.data().toString();
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  originalText1 = index.data().toString();
+  /*
+   * Edit
+   */
+  editor0.setText("ABCD");
+  editor1.setText("1234");
+  /*
+   * Revert and check
+   */
+  mapper.revert();
+  // Check mapped widgets
+  QCOMPARE(editor0.text(), originalText0);
+  QCOMPARE(editor1.text(), originalText1);
+  // Check model
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(index.data().toString(), originalText0);
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(index.data().toString(), originalText1);
 }
 
 /*
