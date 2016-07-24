@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "DataWidgetMapper.h"
-
 #include <QAbstractItemModel>
 #include <QStyledItemDelegate>
 #include <QWidget>
@@ -50,10 +49,10 @@ void DataWidgetMapper::setModel(QAbstractItemModel* model)
     return;
   }
   if(!pvModel.isNull()){
-    disconnect(pvModel, &QAbstractItemModel::dataChanged, this, &DataWidgetMapper::onModelDataChaged);
+    disconnect(pvModel, &QAbstractItemModel::dataChanged, this, &DataWidgetMapper::onModelDataChanged);
   }
   pvModel = model;
-  connect(pvModel, &QAbstractItemModel::dataChanged, this, &DataWidgetMapper::onModelDataChaged);
+  connect(pvModel, &QAbstractItemModel::dataChanged, this, &DataWidgetMapper::onModelDataChanged);
   pvCurrentRow = -1;
   updateAllMappedWidgets();
 }
@@ -152,7 +151,7 @@ void DataWidgetMapper::onDataEditionStarted()
   emit dataEditionStarted();
 }
 
-void DataWidgetMapper::onModelDataChaged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> &)
+void DataWidgetMapper::onModelDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> &)
 {
   if(topLeft.parent().isValid()){
     return;
@@ -220,10 +219,9 @@ bool DataWidgetMapper::commitData(QWidget*const widget, int column)
     return true;
   }
   auto index = pvModel->index(pvCurrentRow, column);
-  if(!index.isValid()){
-    return false;
+  if(index.isValid()){
+    pvDelegate->setModelData(widget, pvModel, index);
   }
-  pvDelegate->setModelData(widget, pvModel, index);
 
   return true;
 }

@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 72
+  revision 73
   modified_by 2 "philippe"
   // class settings
   
@@ -2436,7 +2436,7 @@ ${inlines}
 
       operation 4476930 "submit"
 	stereotype "slot"
-	public explicit_return_type "void"
+	public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3193,13 +3193,13 @@ ${inlines}
 	
       end
 
-      classrelation 3594114 // <directional composition>
-	relation 3574914 *-->
+      classrelation 3648002 // <unidirectional association>
+	relation 3628802 --->
 	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	    classrelation_ref 3594114 // <directional composition>
-	  b parent class_ref 3158146 // MappedWidgetList
+	    classrelation_ref 3648002 // <unidirectional association>
+	  b parent class_ref 3191554 // DataWidgetMapper
       end
     end
 
@@ -3225,14 +3225,6 @@ ${inlines}
 	  b parent class_ref 3138306 // AbstractWidgetMapperController
       end
 
-      classrelation 3587458 // <directional composition>
-	relation 3568258 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3587458 // <directional composition>
-	  b parent class_ref 404610 // QDataWidgetMapper
-      end
     end
 
     class 3138562 "SqlWidgetMapperTableController"

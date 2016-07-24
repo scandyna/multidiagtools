@@ -29,7 +29,8 @@
 namespace Mdt{ namespace ItemEditor{
 
 AbstractItemViewController::AbstractItemViewController(QObject* parent)
- : AbstractController(parent)
+ : AbstractController(parent),
+   pvDelegate(new EventCatchItemDelegate(this))
 {
   connect(this, &AbstractItemViewController::modelChanged, this, &AbstractItemViewController::setModelToView);
 }
@@ -42,12 +43,12 @@ void AbstractItemViewController::setView(QAbstractItemView* view)
   setModelToView(model());
   // Replace delegate with our proxy delegate
   auto *delegate = pvView->itemDelegate();
-  auto *proxyDelegate = new EventCatchItemDelegate(view);
+//   auto *proxyDelegate = new EventCatchItemDelegate(view);
   if(delegate != nullptr){
-    proxyDelegate->setItemDelegate(delegate);
+    pvDelegate->setItemDelegate(delegate);
   }
-  pvView->setItemDelegate(proxyDelegate);
-  registerItemDelegate(proxyDelegate);
+  pvView->setItemDelegate(pvDelegate);
+  registerItemDelegate(pvDelegate);
 }
 
 QAbstractItemView* AbstractItemViewController::view() const
@@ -69,6 +70,17 @@ void AbstractItemViewController::setModel(QAbstractItemModel* model)
    *  - View will reset (and current will also be lost!)
    */
   referenceItemModel(model);
+}
+
+bool AbstractItemViewController::submitDataToModel()
+{
+  pvDelegate->commitCurrentEditorData();
+  return true;
+}
+
+void AbstractItemViewController::revertDataFromModel()
+{
+  pvDelegate->closeCurrentEditor();
 }
 
 void AbstractItemViewController::setModelToView(QAbstractItemModel* model)

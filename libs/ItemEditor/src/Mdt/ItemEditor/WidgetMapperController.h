@@ -23,11 +23,9 @@
 
 #include "AbstractWidgetMapperController.h"
 
-// class QDataWidgetMapper;
-
 namespace Mdt{ namespace ItemEditor{
 
-  /*! \brief Controller for QDataWidgetMapper
+  /*! \brief Controller for DataWidgetMapper
    */
   class WidgetMapperController : public AbstractWidgetMapperController
   {

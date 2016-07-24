@@ -145,9 +145,4 @@ relationcanvas 136578 relation_ref 3526914 // <generalisation>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 137602 relation_ref 3568258 // <directional composition>
-  from ref 135042 z 2019 to ref 136194
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 end

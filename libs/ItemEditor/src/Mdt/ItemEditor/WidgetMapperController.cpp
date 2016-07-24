@@ -19,14 +19,14 @@
  **
  ****************************************************************************/
 #include "WidgetMapperController.h"
-#include <QDataWidgetMapper>
+#include "DataWidgetMapper.h"
 
 // #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
 WidgetMapperController::WidgetMapperController(QObject* parent)
- : AbstractWidgetMapperController(new QDataWidgetMapper, parent)
+ : AbstractWidgetMapperController(new DataWidgetMapper, parent)
 {
 }
 

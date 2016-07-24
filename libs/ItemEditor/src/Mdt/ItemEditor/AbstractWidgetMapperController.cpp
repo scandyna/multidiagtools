@@ -19,32 +19,26 @@
  **
  ****************************************************************************/
 #include "AbstractWidgetMapperController.h"
-// #include "MappedWidgetList.h"
-#include <QDataWidgetMapper>
+#include "DataWidgetMapper.h"
 #include <QModelIndex>
 #include <QAbstractItemDelegate>
 #include <QAbstractItemModel>
 #include <QStyledItemDelegate>
 #include <QVariant>
-#include <QByteArray>
-#include <QMetaObject>
-#include <QMetaMethod>
-#include <QMetaProperty>
 
 #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
-AbstractWidgetMapperController::AbstractWidgetMapperController(QDataWidgetMapper *mapper, QObject* parent)
+AbstractWidgetMapperController::AbstractWidgetMapperController(DataWidgetMapper *mapper, QObject* parent)
  : AbstractController(parent),
    pvWidgetMapper(mapper)
 {
   Q_ASSERT(pvWidgetMapper != nullptr);
   pvWidgetMapper->setParent(this);
-  pvWidgetMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
   /*
    * Replace delegate with our proxy delegate.
-   * QDataWidgetMapper uses QItemDelegate,
+   * DataWidgetMapper uses QItemDelegate,
    * we replace it with a QStyledItemDelegate.
    */
   /**
@@ -56,10 +50,9 @@ AbstractWidgetMapperController::AbstractWidgetMapperController(QDataWidgetMapper
   */
   ///connect(proxyDelegate, &EditionStartEventCatchDelegate::dataEditionStarted, this, &AbstractWidgetMapperController::onDataEditionStarted);
 
-  connect(this, &AbstractWidgetMapperController::currentRowChanged, pvWidgetMapper, &QDataWidgetMapper::setCurrentIndex);
-//   pvMappedWidgetList = new MappedWidgetList(this);
-//   connect(this, &AbstractWidgetMapperController::rowStateChanged, pvMappedWidgetList, &MappedWidgetList::setRowState);
-  connect(this, &AbstractWidgetMapperController::rowStateChanged, this, &AbstractWidgetMapperController::clearWidgetsDataOnInvalidRowState);
+  connect(this, &AbstractWidgetMapperController::currentRowChanged, pvWidgetMapper, &DataWidgetMapper::setCurrentRow);
+  connect(pvWidgetMapper, &DataWidgetMapper::dataEditionStarted, this, &AbstractWidgetMapperController::onDataEditionStarted);
+  connect(pvWidgetMapper, &DataWidgetMapper::dataEditionDone, this, &AbstractWidgetMapperController::onDataEditionDone);
 }
 
 void AbstractWidgetMapperController::setModel(QAbstractItemModel* _model)
@@ -70,7 +63,6 @@ void AbstractWidgetMapperController::setModel(QAbstractItemModel* _model)
   referenceItemModel(_model);
   pvWidgetMapper->setModel(_model);
   registerItemModel();
-//   pvMappedWidgetList->setModel(_model);
   Q_ASSERT(model() == pvWidgetMapper->model());
 }
 
@@ -79,83 +71,22 @@ void AbstractWidgetMapperController::addMapping(QWidget* widget, int column)
   Q_ASSERT(widget != nullptr);
   Q_ASSERT_X(model() != nullptr, "AbstractWidgetMapperController::addMapping()", "model must be set before mapping widgets");
 
-//   pvMappedWidgetList->addWidget(widget, column);
   pvWidgetMapper->addMapping(widget, column);
-  updateWidgetData(widget, column);
-  connectUserPropertyNotifySignal(widget, ConnectAction::Connect);
-}
-
-void AbstractWidgetMapperController::addMapping(QWidget* widget, int column, const QByteArray& propertyName)
-{
-  Q_ASSERT(widget != nullptr);
-  Q_ASSERT_X(model() != nullptr, "AbstractWidgetMapperController::addMapping()", "model must be set before mapping widgets");
-
-//   pvMappedWidgetList->addWidget(widget, column);
-  pvWidgetMapper->addMapping(widget, column, propertyName);
-  updateWidgetData(widget, column);
-//   connectUserPropertyNotifySignal(widget, ConnectAction::Connect);
 }
 
 void AbstractWidgetMapperController::clearMapping()
 {
   pvWidgetMapper->clearMapping();
-  disconnectMappedWidgetsUserPropertyNotifySignal();
-//   pvMappedWidgetList->clear();
 }
 
-void AbstractWidgetMapperController::clearWidgetsDataOnInvalidRowState(RowState rs)
+bool AbstractWidgetMapperController::submitDataToModel()
 {
-  if(!rs.isNull()){
-    return;
-  }
-//   for(int i = 0; i < pvMappedWidgetList->size(); ++i){
-//     updateWidgetData(pvMappedWidgetList->at(i), -1);
-//   }
+  return pvWidgetMapper->submit();
 }
 
-void AbstractWidgetMapperController::editorNotify()
+void AbstractWidgetMapperController::revertDataFromModel()
 {
-  qDebug() << "Editor notify";
-}
-
-void AbstractWidgetMapperController::connectUserPropertyNotifySignal(QWidget*const widget, ConnectAction ca)
-{
-  Q_ASSERT(metaObject() != nullptr);
-  Q_ASSERT(widget != nullptr);
-  Q_ASSERT(widget->metaObject() != nullptr);
-
-  // Find widget's user property notify signal
-  QMetaMethod notifySignal = widget->metaObject()->userProperty().notifySignal();
-  // Get QMetaMethod of AbstractController::onDataEditionStarted()
-  ///int slotIndex = metaObject()->indexOfSlot("onDataEditionStarted()");
-  int slotIndex = metaObject()->indexOfSlot("editorNotify()");
-  Q_ASSERT(slotIndex >= 0);
-  QMetaMethod controllerSlot = metaObject()->method(slotIndex);
-  // (dis)connect
-  if(ca == ConnectAction::Connect){
-    connect(widget, notifySignal, this, controllerSlot);
-  }else{
-    disconnect(widget, notifySignal, this, controllerSlot);
-  }
-}
-
-void AbstractWidgetMapperController::disconnectMappedWidgetsUserPropertyNotifySignal()
-{
-//   for(int i = 0; i < pvMappedWidgetList->size(); ++i){
-//     connectUserPropertyNotifySignal(pvMappedWidgetList->at(i), ConnectAction::Disctonnect);
-//   }
-}
-
-void AbstractWidgetMapperController::updateWidgetData(QWidget*const widget, int column)
-{
-  Q_ASSERT(widget != nullptr);
-
-  auto *delegate = pvWidgetMapper->itemDelegate();
-  Q_ASSERT(delegate != nullptr);
-  auto *model = pvWidgetMapper->model();
-  Q_ASSERT(model != nullptr);
-  auto index = model->index(currentRow(), column);
-  delegate->setEditorData(widget, index);
+  pvWidgetMapper->revert();
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

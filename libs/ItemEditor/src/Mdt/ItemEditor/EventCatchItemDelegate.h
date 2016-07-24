@@ -24,6 +24,8 @@
 #include "ItemDelegateProxy.h"
 #include "ControllerState.h"
 
+#include <QPointer>
+
 namespace Mdt{ namespace ItemEditor{
 
   /*! \brief Catches event from a item delegate
@@ -61,6 +63,14 @@ namespace Mdt{ namespace ItemEditor{
      */
     void destroyEditor(QWidget *editor, const QModelIndex & index) const override;
 
+    /*! \brief Commit current editor data to model
+     */
+    void commitCurrentEditorData();
+
+    /*! \brief Close current editor
+     */
+    void closeCurrentEditor();
+
 //    public slots:
 // 
 //     /*! \brief Set controller state
@@ -76,6 +86,10 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Emitted once data edtion was done
      */
     void dataEditionDone() const;
+    
+  private:
+    
+    mutable QPointer<QWidget> pvCurrentEditor;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

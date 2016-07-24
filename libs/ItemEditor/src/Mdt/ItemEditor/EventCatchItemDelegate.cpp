@@ -31,15 +31,31 @@ EventCatchItemDelegate::EventCatchItemDelegate(QObject* parent)
 
 QWidget* EventCatchItemDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-  auto *editor = ItemDelegateProxy::createEditor(parent, option, index);
+  pvCurrentEditor = ItemDelegateProxy::createEditor(parent, option, index);
   emit dataEditionStarted();
-  return editor;
+  return pvCurrentEditor;
 }
 
 void EventCatchItemDelegate::destroyEditor(QWidget* editor, const QModelIndex& index) const
 {
+  pvCurrentEditor.clear();
   ItemDelegateProxy::destroyEditor(editor, index);
   emit dataEditionDone();
+}
+
+void EventCatchItemDelegate::commitCurrentEditorData()
+{
+  if(!pvCurrentEditor.isNull()){
+    commitData(pvCurrentEditor);
+    closeEditor(pvCurrentEditor, EventCatchItemDelegate::NoHint);
+  }
+}
+
+void EventCatchItemDelegate::closeCurrentEditor()
+{
+  if(!pvCurrentEditor.isNull()){
+    closeEditor(pvCurrentEditor, EventCatchItemDelegate::NoHint);
+  }
 }
 
 // void EventCatchItemDelegate::setControllerState(ControllerState state)

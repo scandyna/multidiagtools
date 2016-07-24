@@ -437,7 +437,13 @@ void ControllerTest::tableViewControllerEditTest()
   QVERIFY(!controller.setCurrentRow(0));
   QCOMPARE(controller.currentRow(), 1);
   /*
-   * End edition
+   * Edit some text
+   */
+  editText(view, index, "ABCD");
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  QCOMPARE(stateSpy.count(), 0);
+  /*
+   * End edition (by user)
    */
   endEditing(view, index, EndEditTrigger::EnterKeyClick);
   QVERIFY(controller.controllerState() == ControllerState::Visualizing);
@@ -449,6 +455,78 @@ void ControllerTest::tableViewControllerEditTest()
   // Check that we can change current row
   QVERIFY(controller.setCurrentRow(0));
   QCOMPARE(controller.currentRow(), 0);
+  // Check that model was updated
+  QCOMPARE(model.data(index).toString(), QString("ABCD"));
+  /*
+   * Begin editing
+   */
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  beginEditing(view, index, BeginEditTrigger::DoubleClick);
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  // Check that new state was signaled
+  QCOMPARE(stateSpy.count(), 1);
+  spyItem = stateSpy.takeFirst();
+  QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Editing);
+  // Check that we cannot change current row
+  QVERIFY(!controller.setCurrentRow(0));
+  QCOMPARE(controller.currentRow(), 1);
+  /*
+   * Edit some text
+   */
+  editText(view, index, "1234");
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  QCOMPARE(stateSpy.count(), 0);
+  /*
+   * Call submit from controller
+   */
+  QVERIFY(controller.submit());
+  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  // Check that new state was signaled
+  QCOMPARE(stateSpy.count(), 1);
+  spyItem = stateSpy.takeFirst();
+  QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Visualizing);
+  QCOMPARE(controller.currentRow(), 1);
+  // Check that we can change current row
+  QVERIFY(controller.setCurrentRow(0));
+  QCOMPARE(controller.currentRow(), 0);
+  // Check that model was updated
+  QCOMPARE(model.data(index).toString(), QString("1234"));
+  /*
+   * Begin editing
+   */
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  beginEditing(view, index, BeginEditTrigger::DoubleClick);
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  // Check that new state was signaled
+  QCOMPARE(stateSpy.count(), 1);
+  spyItem = stateSpy.takeFirst();
+  QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Editing);
+  // Check that we cannot change current row
+  QVERIFY(!controller.setCurrentRow(0));
+  QCOMPARE(controller.currentRow(), 1);
+  /*
+   * Edit some text
+   */
+  editText(view, index, "EFGH");
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  QCOMPARE(stateSpy.count(), 0);
+  /*
+   * Call revert from controller
+   */
+  controller.revert();
+  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  // Check that new state was signaled
+  QCOMPARE(stateSpy.count(), 1);
+  spyItem = stateSpy.takeFirst();
+  QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Visualizing);
+  QCOMPARE(controller.currentRow(), 1);
+  // Check that we can change current row
+  QVERIFY(controller.setCurrentRow(0));
+  QCOMPARE(controller.currentRow(), 0);
+  // Check that model was not updated
+  QCOMPARE(model.data(index).toString(), QString("1234"));
 
   /*
    * Play
@@ -894,53 +972,19 @@ void ControllerTest::widgetMapperControllerEditTest()
   QModelIndex index;
   QSignalSpy stateSpy(&controller, &WidgetMapperController::controllerStateChanged);
   QList<QVariant> spyItem;
+  QString originalText;
 
-//   qDebug() << "editor0: " << editor0->metaObject()->userProperty().name();
-//   
-//   MySpy s;
-//   // Find editor's user property notify signal
-//   QMetaMethod mySig = editor0->metaObject()->userProperty().notifySignal();
-//   // Find argument signature
-//   auto sigArgTypeName = mySig.parameterTypes().at(0);
-//   qDebug() << "sigArgTypeName: " << sigArgTypeName;
-//   
-//   auto *SMeta = s.metaObject();
-//   auto name = SMeta->normalizedSignature("display(const " + sigArgTypeName + "&)");
-//   int idx = SMeta->indexOfSlot(name);
-//   QMetaMethod mySlot = SMeta->method(idx);
-//   
-//   qDebug() << "name: " << name << " idx " << idx;
-// //   QMetaMethod mySlot = s.metaObject()->method( s.metaObject()->indexOfSlot("display(const QVariant&)") );
-//   
-//   qDebug() << mySig.name() << " , " << mySlot.name();
-//   
-//   connect(editor0, mySig, &s, mySlot);
-// 
-//   qDebug() << "TEST: begin edit triggers test";
-//   qDebug() << " -> enter key";
-//   QTest::keyClick(editor0, Qt::Key_Enter);
-//   qDebug() << " -> back";
-//   QTest::keyClick(editor0, Qt::Key_Back);
-//   qDebug() << " -> F2";
-//   QTest::keyClick(editor0, Qt::Key_F2);
-//   qDebug() << " -> A";
-//   QTest::keyClick(editor0, Qt::Key_A);
-//   qDebug() << "TEST: end";
-//   
-//   editor0->show();
-//   while(editor0->isVisible()){
-//     QTest::qWait(500);
-//   }
-//   
-//   delete editor0;
-//   
-  
-  
   QVERIFY(stateSpy.isValid());
   /*
    * Setup
    */
   model.populate(5, 2);
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setData(index, QVariant());
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  model.setData(index, QVariant());
   controller.setModel(&model);
   controller.addMapping(&editA, 0);
   controller.addMapping(&editB, 1);
@@ -968,9 +1012,9 @@ void ControllerTest::widgetMapperControllerEditTest()
   QVERIFY(!controller.setCurrentRow(0));
   QCOMPARE(controller.currentRow(), 1);
   /*
-   * End edition
+   * End edition by submit
    */
-  QTest::keyClick(&editA, Qt::Key_Enter);
+  QVERIFY(controller.submit());
   QVERIFY(controller.controllerState() == ControllerState::Visualizing);
   // Check that new state was signaled
   QCOMPARE(stateSpy.count(), 1);
@@ -983,6 +1027,39 @@ void ControllerTest::widgetMapperControllerEditTest()
   QCOMPARE(model.data(index), QVariant("A"));
   // Check that widget data was updated
   QCOMPARE(editA.text(), QString("A"));
+  // Check that we can change current row
+  QVERIFY(controller.setCurrentRow(0));
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Begin editing
+   */
+  originalText = editA.text();
+  QVERIFY(originalText != QString("B"));
+  QTest::keyClicks(&editA, "B");
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  // Check that new state was signaled
+  QCOMPARE(stateSpy.count(), 1);
+  spyItem = stateSpy.takeFirst();
+  QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Editing);
+  // Check that we cannot change current row
+  QVERIFY(!controller.setCurrentRow(1));
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * End edition by revert
+   */
+  controller.revert();
+  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  // Check that new state was signaled
+  QCOMPARE(stateSpy.count(), 1);
+  spyItem = stateSpy.takeFirst();
+  QVERIFY(spyItem.at(0).value<ControllerState>() == ControllerState::Visualizing);
+  QCOMPARE(controller.currentRow(), 0);
+  // Check that model was not updated
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index).toString(), originalText);
+  // Check that widget data was updated
+  QCOMPARE(editA.text(), originalText);
   // Check that we can change current row
   QVERIFY(controller.setCurrentRow(0));
   QCOMPARE(controller.currentRow(), 0);
@@ -1011,6 +1088,11 @@ void ControllerTest::widgetMapperControllerEditTest_data()
 void ControllerTest::beginEditing(QAbstractItemView& view, const QModelIndex& index, BeginEditTrigger trigger)
 {
   ItemViewTestEdit::beginEditing(view, index, trigger);
+}
+
+void ControllerTest::editText(QAbstractItemView& view, const QModelIndex& editingIndex, const QString& str)
+{
+  ItemViewTestEdit::editText(view, editingIndex, str);
 }
 
 void ControllerTest::endEditing(QAbstractItemView& view, const QModelIndex& editingIndex, EndEditTrigger trigger)

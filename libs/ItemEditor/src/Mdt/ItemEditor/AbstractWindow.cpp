@@ -62,12 +62,12 @@ void AbstractWindow::setMainEditorWidget(AbstractEditorWidget* widget)
   }
   // Connect edition actions
   if(pvEditionActions != nullptr){
-//     disconnect(pvEditionActions, &EditionActions::submitTriggered, controller, &AbstractController::subit);
-//     disconnect(pvEditionActions, &EditionActions::revertTriggered, controller, &AbstractController::revert);
+    disconnect(pvEditionActions, &EditionActions::submitTriggered, controller, &AbstractController::submit);
+    disconnect(pvEditionActions, &EditionActions::revertTriggered, controller, &AbstractController::revert);
     disconnect(controller, &AbstractController::rowStateChanged, pvEditionActions, &EditionActions::setRowState);
     disconnect(controller, &AbstractController::controllerStateChanged, pvEditionActions, &EditionActions::setControllerState);
-//     connect(pvEditionActions, &EditionActions::submitTriggered, controller, &AbstractController::subit);
-//     connect(pvEditionActions, &EditionActions::revertTriggered, controller, &AbstractController::revert);
+    connect(pvEditionActions, &EditionActions::submitTriggered, controller, &AbstractController::submit);
+    connect(pvEditionActions, &EditionActions::revertTriggered, controller, &AbstractController::revert);
     connect(controller, &AbstractController::rowStateChanged, pvEditionActions, &EditionActions::setRowState);
     connect(controller, &AbstractController::controllerStateChanged, pvEditionActions, &EditionActions::setControllerState);
   }

@@ -102,6 +102,16 @@ void AbstractController::toLast()
   setCurrentRow(rowCount()-1);
 }
 
+bool AbstractController::submit()
+{
+  return submitDataToModel();
+}
+
+void AbstractController::revert()
+{
+  revertDataFromModel();
+}
+
 void AbstractController::referenceItemModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);
@@ -155,12 +165,6 @@ void AbstractController::registerItemDelegate(EventCatchItemDelegate* delegate)
   connect(pvDelegate, &EventCatchItemDelegate::dataEditionDone, this, &AbstractController::onDataEditionDone);
 }
 
-void AbstractController::updateRowState(RowState rs)
-{
-  emit currentRowChanged(rs.currentRow());
-  emit rowStateChanged(rs);
-}
-
 void AbstractController::onDataEditionStarted()
 {
   qDebug() << "AbstractController::onDataEditionStarted() ..";
@@ -169,7 +173,14 @@ void AbstractController::onDataEditionStarted()
 
 void AbstractController::onDataEditionDone()
 {
+  qDebug() << "AbstractController::onDataEditionDone() ..";
   setControllerState(ControllerState::Visualizing);
+}
+
+void AbstractController::updateRowState(RowState rs)
+{
+  emit currentRowChanged(rs.currentRow());
+  emit rowStateChanged(rs);
 }
 
 void AbstractController::setControllerState(ControllerState state)

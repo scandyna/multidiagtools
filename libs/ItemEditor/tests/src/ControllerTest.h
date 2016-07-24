@@ -57,6 +57,7 @@ class ControllerTest : public QObject
 
   // Helper function for editing in a QAbstractItemView
   void beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger trigger);
+  void editText(QAbstractItemView & view, const QModelIndex & editingIndex, const QString & str);
   void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger);
   void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
 };

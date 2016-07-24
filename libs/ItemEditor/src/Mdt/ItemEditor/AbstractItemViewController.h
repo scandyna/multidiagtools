@@ -30,6 +30,7 @@ class QAbstractItemView;
 namespace Mdt{ namespace ItemEditor{
 
   class ItemSelectionModel;
+  class EventCatchItemDelegate;
 
   /*! \brief Common base class for controllers that act on a QAbstractItemModel and a QAbstractItemView
    */
@@ -76,6 +77,16 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setModel(QAbstractItemModel *model) override;
 
+   protected:
+
+    /*! \brief Submit data to model
+     */
+    bool submitDataToModel() override;
+
+    /*! \brief Revert data from model
+     */
+    void revertDataFromModel() override;
+
    private slots:
 
     /*! \brief Set model to view
@@ -85,6 +96,7 @@ namespace Mdt{ namespace ItemEditor{
    private:
 
     QPointer<QAbstractItemView> pvView;
+    EventCatchItemDelegate *pvDelegate;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

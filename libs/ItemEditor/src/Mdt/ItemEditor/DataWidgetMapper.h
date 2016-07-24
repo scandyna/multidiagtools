@@ -160,7 +160,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Called from model when data changed
      */
-    void onModelDataChaged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles);
+    void onModelDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles);
 
    private:
 

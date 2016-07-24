@@ -53,6 +53,18 @@ void ItemViewTestEdit::beginEditing(QAbstractItemView & view, const QModelIndex 
   QApplication::processEvents();
 }
 
+void ItemViewTestEdit::editText(QAbstractItemView& view, const QModelIndex& editingIndex, const QString& str)
+{
+  /*
+   * We cannot send key clicks directly to view port of the view,
+   * because a editor was created.
+   * Get this editor and send events to it
+   */
+  auto *widget = view.indexWidget(editingIndex);
+  Q_ASSERT(widget != nullptr);
+  QTest::keyClicks(widget, str);
+}
+
 void ItemViewTestEdit::endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger)
 {
   switch(trigger){
@@ -69,15 +81,7 @@ void ItemViewTestEdit::edit(QAbstractItemView & view, const QModelIndex & index,
                             BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger)
 {
   beginEditing(view, index, beginEditTrigger);
-  /*
-   * We cannot send key clicks directly to view port of the view,
-   * because a editor was created.
-   * Get this editor and send events to it
-   */
-  auto *widget = view.indexWidget(index);
-  Q_ASSERT(widget != nullptr);
-  QTest::keyClicks(widget, str);
-
+  editText(view, index, str);
   endEditing(view, index, endEditTrigger);
 }
 

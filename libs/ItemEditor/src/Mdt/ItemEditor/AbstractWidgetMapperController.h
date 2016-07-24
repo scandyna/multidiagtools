@@ -24,14 +24,13 @@
 #include "AbstractController.h"
 #include <QByteArray>
 
-class QDataWidgetMapper;
 class QWidget;
 
 namespace Mdt{ namespace ItemEditor{
 
-//   class MappedWidgetList;
+  class DataWidgetMapper;
 
-  /*! \brief Common base class to implement controllers for QDataWidgetMapper
+  /*! \brief Common base class to implement controllers for DataWidgetMapper
    */
   class AbstractWidgetMapperController : public AbstractController
   {
@@ -41,11 +40,11 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Constructor
      */
-    explicit AbstractWidgetMapperController(QDataWidgetMapper *mapper, QObject* parent = nullptr);
+    explicit AbstractWidgetMapperController(DataWidgetMapper *mapper, QObject* parent = nullptr);
 
     /*! \brief Get widget mapper
      */
-    QDataWidgetMapper *widgetMapper() const
+    DataWidgetMapper *widgetMapper() const
     {
       return pvWidgetMapper;
     }
@@ -63,7 +62,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Adds a mapping between a widget and a column from the model
      *
-     * For more informations, see QDataWidgetMapper documentation.
+     * For more informations, see DataWidgetMapper documentation.
      *
      * \pre model must be set before mapping any widget
      * \pre widget pointer must be valid
@@ -73,13 +72,13 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Adds a mapping between a widget and a column from the model
      *
-     * For more informations, see QDataWidgetMapper documentation.
+     * For more informations, see DataWidgetMapper documentation.
      *
      * \pre model must be set before mapping any widget
      * \pre widget pointer must be valid
      * \sa setModel()
      */
-    void addMapping(QWidget *widget, int column, const QByteArray & propertyName);
+//     void addMapping(QWidget *widget, int column, const QByteArray & propertyName);
 
     /*! \brief Clear mapping
      *
@@ -91,42 +90,21 @@ namespace Mdt{ namespace ItemEditor{
      */
     void clearMapping();
 
-   private slots:
+   protected:
 
-    /*! \brief Update mapped widgets data on invalid index
+    /*! \brief Submit data to model
      *
-     * If QDataWidgetMapper::setCurrentIndex() receives a out of bount index,
-     *  it does nothing.
-     *  Here we also clear data of mapped widgets.
+     * Tell widget mapper to submit data to model.
      */
-    void clearWidgetsDataOnInvalidRowState(RowState rs);
+    bool submitDataToModel() override;
 
-    void editorNotify();
-    
+    /*! \brief Revert data from model
+     */
+    void revertDataFromModel() override;
+
    private:
 
-    enum class ConnectAction
-    {
-      Connect,
-      Disctonnect
-    };
-
-    /*! \brief Connect widget's user property notify signal to this onDataEditionStarted() slot
-     */
-    void connectUserPropertyNotifySignal(QWidget * const widget, ConnectAction ca);
-
-    /*! \brief Disconnect user property notify signal for all mapped widgets
-     */
-    void disconnectMappedWidgetsUserPropertyNotifySignal();
-
-    /*! \brief Update widget data
-     *
-     * Used for some cases not handled by internal widget mapper
-     */
-    void updateWidgetData(QWidget * const widget, int column);
-
-    QDataWidgetMapper *pvWidgetMapper;
-//     MappedWidgetList *pvMappedWidgetList;
+    DataWidgetMapper *pvWidgetMapper;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

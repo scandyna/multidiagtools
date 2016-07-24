@@ -126,6 +126,14 @@ namespace Mdt{ namespace ItemEditor{
      */
     void toLast();
 
+    /*! \brief Submit data to model
+     */
+    bool submit();
+
+    /*! \brief Revert data from model
+     */
+    void revert();
+
    signals:
 
     /*! \brief Emitted each time row count or current row changed
@@ -151,6 +159,17 @@ namespace Mdt{ namespace ItemEditor{
     void modelChanged(QAbstractItemModel *model);
 
    protected:
+
+    /*! \brief Submit data to model
+     *
+     * Subclass should request the view it handles
+     *  to submit data to the model.
+     */
+    virtual bool submitDataToModel() = 0;
+
+    /*! \brief Revert data from model
+     */
+    virtual void revertDataFromModel() = 0;
 
     /*! \brief Reference model
      *
@@ -186,6 +205,16 @@ namespace Mdt{ namespace ItemEditor{
      */
     void registerItemDelegate(EventCatchItemDelegate *delegate);
 
+   protected slots:
+
+    /*! \brief Actions to perform once editing started
+     */
+    void onDataEditionStarted();
+
+    /*! \brief Actions to perform once editing ended
+     */
+    void onDataEditionDone();
+
    private slots:
 
     /*! \brief Update row state
@@ -198,14 +227,6 @@ namespace Mdt{ namespace ItemEditor{
      * It will also emit rowStateChanged() and currentRowChanged().
      */
     void updateRowState(Mdt::ItemEditor::RowState rs);
-
-    /*! \brief Actions to perform once editing started
-     */
-    void onDataEditionStarted();
-
-    /*! \brief Actions to perform once editing ended
-     */
-    void onDataEditionDone();
 
    private:
 

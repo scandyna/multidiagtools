@@ -472,7 +472,7 @@ void DataWidgetMapperTest::submitDataQLineEditTest()
   QLineEdit editor1;
 
   /*
-   * Setup
+   * Setup with a 2 column model
    */
   model.populate(3, 2);
   mapper.setModel(&model);
@@ -494,6 +494,23 @@ void DataWidgetMapperTest::submitDataQLineEditTest()
   index = model.index(0, 1);
   QVERIFY(index.isValid());
   QCOMPARE(index.data().toString(), QString("1234"));
+  /*
+   * Populate model with 1 column
+   */
+  model.populate(3, 1);
+  mapper.setCurrentRow(0);
+  QVERIFY(!editor1.isEnabled());
+  /*
+   * Edit
+   */
+  editor0.setText("EFGH");
+  /*
+   * Submit and check
+   */
+  QVERIFY(mapper.submit());
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(index.data().toString(), QString("EFGH"));
 }
 
 void DataWidgetMapperTest::revertDataQLineEditTest()

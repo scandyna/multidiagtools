@@ -38,6 +38,8 @@ class ItemViewTestEdit
 
   static void beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger trigger);
 
+  static void editText(QAbstractItemView & view, const QModelIndex & editingIndex, const QString & str);
+
   static void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger);
 
   static void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
