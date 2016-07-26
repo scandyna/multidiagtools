@@ -31,6 +31,7 @@ TestFormEditionWidget::TestFormEditionWidget(QWidget* parent)
   setupUi(this);
   pvController = new WidgetMapperController(this);
   setController(pvController);
+  pvController->setInsertLocation(WidgetMapperController::InsertAtEnd);
 }
 
 void TestFormEditionWidget::setModel(QAbstractItemModel* model)

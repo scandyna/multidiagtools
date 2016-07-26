@@ -536,119 +536,129 @@ void ControllerTest::tableViewControllerEditTest()
 //   }
 }
 
-// void ControllerTest::mappedWidgetListTest()
-// {
-//   using Mdt::ItemEditor::MappedWidgetList;
-//   using Mdt::ItemEditor::RowState;
-// 
-//   RowState rs;
-//   MappedWidgetList mwl;
-//   QLineEdit editA, editB;
-//   TestTableModel model;
-// 
-//   /*
-//    * Setup
-//    */
-//   model.populate(3, 2);
-//   mwl.setModel(&model);
-//   mwl.addWidget(&editA, 0);
-//   /*
-//    * Initial state
-//    */
-//   QVERIFY(!editA.isEnabled());
-//   /*
-//    * Set row state that allows edition
-//    */
-//   rs.setRowCount(2);
-//   rs.setCurrentRow(0);
-//   mwl.setRowState(rs);
-//   QVERIFY(editA.isEnabled());
-//   /*
-//    * Set row state that not allows edition
-//    */
-//   rs.setRowCount(0);
-//   rs.setCurrentRow(-1);
-//   mwl.setRowState(rs);
-//   QVERIFY(!editA.isEnabled());
-//   /*
-//    * Add a widget
-//    */
-//   mwl.addWidget(&editB, 1);
-//   QVERIFY(!editA.isEnabled());
-//   QVERIFY(!editB.isEnabled());
-//   /*
-//    * Set row state that allows edition
-//    */
-//   rs.setRowCount(2);
-//   rs.setCurrentRow(0);
-//   mwl.setRowState(rs);
-//   QVERIFY(editA.isEnabled());
-//   QVERIFY(editB.isEnabled());
-// }
+void ControllerTest::tableViewControllerInsertTest()
+{
+  using Mdt::ItemEditor::TableViewController;
+  using Mdt::ItemEditor::ControllerState;
 
-// void ControllerTest::mappedWidgetListSetModelTest()
-// {
-//   using Mdt::ItemEditor::MappedWidgetList;
-//   using Mdt::ItemEditor::RowState;
-// 
-//   RowState rs;
-//   MappedWidgetList mwl;
-//   QLineEdit editA, editB;
-// 
-//   /*
-//    * Initial state
-//    */
-//   QCOMPARE(mwl.size(), 0);
-//   QVERIFY(mwl.isEmpty());
-//   /*
-//    * map widgets
-//    */
-//   mwl.addWidget(&editA, 0);
-//   mwl.addWidget(&editB, 1);
-//   QCOMPARE(mwl.size(), 2);
-//   QVERIFY(!mwl.isEmpty());
-//   QVERIFY(!editA.isEnabled());
-//   QVERIFY(!editB.isEnabled());
-//   /*
-//    * Set a empty model
-//    */
-//   TestTableModel model1;
-//   mwl.setModel(&model1);
-//   QVERIFY(!editA.isEnabled());
-//   QVERIFY(!editB.isEnabled());
-//   /*
-//    * Populate model with 1 column
-//    */
-//   model1.populate(3, 1);
-//   rs.setRowCount(3);
-//   rs.setCurrentRow(0);
-//   mwl.setRowState(rs);
-//   QVERIFY(editA.isEnabled());
-//   QVERIFY(!editB.isEnabled());
-//   /*
-//    * Populate model with 2 columns
-//    */
-//   model1.populate(3, 2);
-//   rs.setRowCount(3);
-//   rs.setCurrentRow(0);
-//   mwl.setRowState(rs);
-//   QVERIFY(editA.isEnabled());
-//   QVERIFY(editB.isEnabled());
-//   /*
-//    * Set a other model that is allready populated
-//    */
-//   TestTableModel model2;
-//   model2.populate(5, 1);
-//   mwl.setModel(&model2);
-//   QVERIFY(editA.isEnabled());
-//   QVERIFY(!editB.isEnabled());
-//   /*
-//    * Clear
-//    */
-//   mwl.clear();
-//   QCOMPARE(mwl.size(), 0);
-//   QVERIFY(mwl.isEmpty());
-// }
+  QStringListModel model;
+  QModelIndex index;
+  QTableView view;
+  TableViewController controller;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(controller.insertLocation() == TableViewController::InsertAtBeginning);
+  /*
+   * Setup
+   */
+  controller.setModel(&model);
+  controller.setView(&view);
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  /*
+   * Insert at beginning
+   */
+  QVERIFY(controller.insert());
+  QCOMPARE(controller.rowCount(), 1);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Insert at beginning
+   */
+  QVERIFY(controller.insert());
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Insert at end
+   */
+  controller.setInsertLocation(TableViewController::InsertAtEnd);
+  QVERIFY(controller.insertLocation() == TableViewController::InsertAtEnd);
+  QVERIFY(controller.insert());
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 2);
+
+  /*
+   * Play
+   */
+//   view.show();
+//   while(view.isVisible()){
+//     QTest::qWait(500);
+//   }
+}
+
+void ControllerTest::tableViewControllerInsertFromModelTest()
+{
+  using Mdt::ItemEditor::TableViewController;
+  using Mdt::ItemEditor::ControllerState;
+
+  QStringListModel model;
+  QModelIndex index;
+  QTableView view;
+  TableViewController controller;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(controller.insertLocation() == TableViewController::InsertAtBeginning);
+  /*
+   * Setup
+   */
+  controller.setModel(&model);
+  controller.setView(&view);
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  /*
+   * Insert at beginning
+   */
+  QVERIFY(controller.insert());
+  QVERIFY(controller.insert());
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Begin editing
+   */
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  beginEditing(view, index, BeginEditTrigger::DoubleClick);
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  editText(view, index, "ABCD");
+  /*
+   * Insert at end of model
+   */
+  QVERIFY(model.insertRow(2));
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * End
+   */
+  endEditing(view, index, EndEditTrigger::EnterKeyClick);
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::DisplayRole).toString(), QString("ABCD"));
+}
+
+void ControllerTest::tableViewControllerRemoveTest()
+{
+  using Mdt::ItemEditor::TableViewController;
+  using Mdt::ItemEditor::ControllerState;
+
+  QStringListModel model;
+  QModelIndex index;
+  QTableView view;
+  TableViewController controller;
+
+  /*
+   * Setup
+   */
+  controller.setModel(&model);
+  controller.setView(&view);
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+
+  QFAIL("Not implemented");
+}
 
 void ControllerTest::widgetMapperControllerSetModelTest()
 {
@@ -1079,6 +1089,117 @@ void ControllerTest::widgetMapperControllerEditTest_data()
   cb->addItem("A");
   cb->addItem("B");
   QTest::newRow("QComboBox") << (static_cast<QWidget*>(cb));
+}
+
+void ControllerTest::widgetMapperControllerInsertTest()
+{
+  using Mdt::ItemEditor::WidgetMapperController;
+
+  QStringListModel model;
+  QLineEdit editor0;
+  WidgetMapperController controller;
+  QModelIndex index;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(controller.insertLocation() == WidgetMapperController::InsertAtBeginning);
+  /*
+   * Setup
+   */
+  controller.setModel(&model);
+  controller.addMapping(&editor0, 0);
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  /*
+   * Insert at beginning
+   */
+  QVERIFY(controller.insert());
+  QCOMPARE(controller.rowCount(), 1);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Insert at beginning
+   */
+  QVERIFY(controller.insert());
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Insert at end
+   */
+  controller.setInsertLocation(WidgetMapperController::InsertAtEnd);
+  QVERIFY(controller.insertLocation() == WidgetMapperController::InsertAtEnd);
+  QVERIFY(controller.insert());
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 2);
+}
+
+void ControllerTest::widgetMapperControllerInsertFromModelTest()
+{
+  using Mdt::ItemEditor::WidgetMapperController;
+  using Mdt::ItemEditor::ControllerState;
+
+  QStringListModel model;
+  QLineEdit editor0;
+  WidgetMapperController controller;
+  QModelIndex index;
+
+  /*
+   * Initial state
+   */
+  QVERIFY(controller.insertLocation() == WidgetMapperController::InsertAtBeginning);
+  /*
+   * Setup
+   */
+  controller.setModel(&model);
+  controller.addMapping(&editor0, 0);
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  /*
+   * Insert at beginning
+   */
+  QVERIFY(controller.insert());
+  QVERIFY(controller.insert());
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Begin editing
+   */
+  editor0.setText("ABCD");
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  /*
+   * Insert at end in model
+   */
+  QVERIFY(model.insertRow(2));
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * End
+   */
+  QVERIFY(controller.submit());
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::DisplayRole).toString(), QString("ABCD"));
+}
+
+void ControllerTest::widgetMapperControllerRemoveTest()
+{
+  using Mdt::ItemEditor::WidgetMapperController;
+
+  QStringListModel model;
+  QLineEdit editor0;
+  WidgetMapperController controller;
+  QModelIndex index;
+
+  /*
+   * Setup
+   */
+  controller.setModel(&model);
+  controller.addMapping(&editor0, 0);
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+
+  QFAIL("Not implemeneted");
 }
 
 /*

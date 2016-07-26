@@ -1,6 +1,6 @@
 format 211
 "tests" // Mdt::ItemEditor::tests
-  revision 24
+  revision 26
   modified_by 2 "philippe"
   // class settings
   

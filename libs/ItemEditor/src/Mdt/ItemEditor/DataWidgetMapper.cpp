@@ -53,8 +53,9 @@ void DataWidgetMapper::setModel(QAbstractItemModel* model)
   }
   pvModel = model;
   connect(pvModel, &QAbstractItemModel::dataChanged, this, &DataWidgetMapper::onModelDataChanged);
-  pvCurrentRow = -1;
-  updateAllMappedWidgets();
+  setCurrentRow(-1);
+//   pvCurrentRow = -1;
+//   updateAllMappedWidgets();
 }
 
 QAbstractItemModel* DataWidgetMapper::model() const

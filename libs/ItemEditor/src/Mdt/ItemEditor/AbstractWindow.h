@@ -26,10 +26,12 @@
 #include "InsertAction.h"
 #include "RemoveAction.h"
 #include <QMainWindow>
+#include <QPointer>
 
 namespace Mdt{ namespace ItemEditor{
 
   class AbstractEditorWidget;
+  class AbstractController;
 
   /*! \brief AbstractWindow is the base class recommanded to create Window based editors
    *
@@ -92,6 +94,7 @@ namespace Mdt{ namespace ItemEditor{
     InsertAction *pvInsertAction;
     EditionActions *pvEditionActions;
     RemoveAction *pvRemoveAction;
+    QPointer<AbstractController> pvController;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

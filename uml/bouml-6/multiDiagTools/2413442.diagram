@@ -2,69 +2,65 @@ format 211
 
 classcanvas 128002 class_ref 2706306 // StandardWindow
   classdiagramsettings member_max_width 0 end
-  xyz 438.8 491.1 2000
+  xyz 342.8 563.8 2000
 end
 classcanvas 128130 class_ref 552450 // QMainWindow
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 509.6 159.7 2006
+  xyz 416.8 159.7 2006
 end
 classcanvas 128386 class_ref 2706434 // NavigationActions
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 751.05 400.1 2000
+  xyz 602.45 682.3 2000
 end
 classcanvas 128514 class_ref 2713474 // EditionActions
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 510.8 608.4 2000
+  xyz 717.3 374.1 2000
 end
 classcanvas 128898 class_ref 3061890 // InsertAction
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 269.5 400.1 2000
+  xyz 718.6 494.7 2000
 end
 classcanvas 129026 class_ref 3062018 // RemoveAction
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 731.3 508.9 2005
+  xyz 611.1 293.7 2005
 end
 classcanvas 129666 class_ref 2684802 // AbstractItemViewController
   classdiagramsettings member_max_width 0 end
-  xyz 40.05 482.1 2000
+  xyz 608.5 803.9 2000
 end
 note 129794 "Inspiration:
  - Qt model/view (does a view take ownership of a model ?)
  - Qt graphics API (same question)
 
 Note: a controller acts with views and model, and can also not be shared."
-  xyzwh 607.3 732.8 2000 574 124
+  xyzwh 40 1347.4 2000 574 124
 classcanvas 129922 class_ref 3068674 // StandardSqlFormWidget
   classdiagramsettings member_max_width 0 end
-  xyz 40.6 1332.9 2000
+  xyz 694 1342.4 2000
 end
 classcanvas 130050 class_ref 316162 // QWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 528.6 39.1 2012
+  xyz 435.8 39.1 2012
 end
 classcanvas 131970 class_ref 3068802 // AbstractEditorWidget
   classdiagramsettings member_max_width 0 end
-  xyz 87.8 163.15 2000
+  xyz 41.5 162.05 2000
 end
 classcanvas 133122 class_ref 3068930 // StandardSqlTableWidget
   classdiagramsettings member_max_width 0 end
-  xyz 39 728.1 2000
+  xyz 39 799.4 2000
 end
 classcanvas 136450 class_ref 404610 // QDataWidgetMapper
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 249 1332.3 2006
+  xyz 903 1342.4 2006
 end
 classcanvas 136706 class_ref 638338 // QTableView
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 440.8 974.1 2012
-end
-classcanvas 137858 class_ref 2753410 // RowChangeEventMapper
-  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 958 39.9 2006
+  xyz 440 1014.4 2012
 end
 classcanvas 139906 class_ref 3096962 // AbstractWindow
   classdiagramsettings member_max_width 0 end
-  xyz 354 240.9 2012
+  xyz 257.8 381.05 2012
 end
 relationcanvas 130178 relation_ref 971394 // <generalisation>
   from ref 128130 z 2013 to ref 130050
@@ -73,8 +69,8 @@ relationcanvas 130178 relation_ref 971394 // <generalisation>
 end
 relationcanvas 132098 relation_ref 3441794 // <generalisation>
   geometry VHV unfixed
-  from ref 131970 z 2013 to point 248 121
-  line 139394 z 2013 to point 559 121
+  from ref 131970 z 2013 to point 205 120
+  line 139394 z 2013 to point 466 120
   line 139522 z 2013 to ref 130050
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -100,26 +96,29 @@ relationcanvas 140290 relation_ref 3466370 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 140546 relation_ref 3466498 // <directional composition>
-  from ref 139906 z 2013 to point 315 348
+  geometry HV unfixed
+  decenter_begin 517
+  from ref 139906 z 2013 to point 761 452
   line 141186 z 2013 to ref 128898
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 140674 relation_ref 3466626 // <directional composition>
-  geometry HV unfixed
-  decenter_begin 884
-  from ref 139906 z 2013 to point 812 364
-  line 141058 z 2013 to ref 128386
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 140802 relation_ref 3466754 // <directional composition>
-  from ref 128002 z 2006 to ref 129026
+  decenter_begin 959
+  decenter_end 472
+  from ref 139906 z 2013 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 141314 relation_ref 3482114 // <directional composition>
+  decenter_begin 97
   from ref 139906 z 2013 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 141442 relation_ref 3635330 // <directional composition>
+  decenter_begin 959
+  from ref 139906 z 2013 to ref 129026
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 73
+  revision 75
   modified_by 2 "philippe"
   // class settings
   
@@ -1475,7 +1475,7 @@ ${inlines}
      end
     classdiagram 2827266 "DataWidgetMapper"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size B
     end
 
     class 3191554 "DataWidgetMapper"
@@ -1615,6 +1615,23 @@ ${inlines}
       end
 
       operation 4640514 "addMapping"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "widget" type class_ref 316162 // QWidget
+	  param in name "column" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4655746 "addHeaderMapping"
 	public explicit_return_type "void"
 	nparams 2
 	  param in name "widget" type class_ref 316162 // QWidget
@@ -1793,8 +1810,8 @@ ${inlines}
 
       classrelation 3641474 // <directional composition>
 	relation 3622274 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+	  a role_name "" multiplicity "2" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${multiplicity}${value};
 "
 	    classrelation_ref 3641474 // <directional composition>
 	  b parent class_ref 3158146 // MappedWidgetList
@@ -1839,14 +1856,27 @@ ${inlines}
 	MysqlColumn
       end
 
+      attribute 2995074 "pvHasReadOnlyProperty"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       operation 4648834 "MappedWidget"
 	public explicit_return_type ""
-	nparams 2
+	nparams 3
 	  param in name "widget" type class_ref 316162 // QWidget
 	  param in name "column" explicit_type "int"
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${volatile}${throw};
+	  param in name "hasRoProperty" explicit_type "bool"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${volatile}${throw};
 "
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${volatile}${throw} 
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${volatile}${throw} 
 {
   ${body}}
 "
@@ -1873,6 +1903,21 @@ ${inlines}
 
       operation 4648962 "column"
 	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4655874 "hasReadOnlyProperty"
+	public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2468,7 +2513,7 @@ ${inlines}
 
       operation 4477186 "insert"
 	stereotype "slot"
-	public explicit_return_type "void"
+	public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2484,7 +2529,7 @@ ${inlines}
 
       operation 4477314 "remove"
 	stereotype "slot"
-	public explicit_return_type "void"
+	public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2686,6 +2731,51 @@ ${inlines}
 	
 	
 	
+      end
+
+      class 3204610 "InsertLocation"
+	visibility package stereotype "enum"
+	cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+	php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+	python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+	idl_decl "${comment}enum ${name} {
+${items}};
+"
+	explicit_switch_type ""
+	mysql_decl ""
+	
+	attribute 2994818 "InsertAtBeginning"
+	  public type class_ref 3204610 // InsertLocation
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
+
+	attribute 2994946 "InsertAtEnd"
+	  public type class_ref 3204610 // InsertLocation
+	  cpp_decl "  ${name}${value},${comment}"
+	  java_decl ""
+	  php_decl ""
+	  python_decl ""
+	  idl_decl ""
+	  mysql_decl ""
+	  MysqlColumn
+	end
       end
     end
 
@@ -3091,7 +3181,7 @@ ${inlines}
       mysql_decl ""
       
       attribute 2941826 "WidgetMapper"
-	private type class_ref 404610 // QDataWidgetMapper
+	private type class_ref 3191554 // DataWidgetMapper
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -3108,6 +3198,15 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 3545602 // <generalisation>
 	  b parent class_ref 3090434 // AbstractController
+      end
+
+      classrelation 3648002 // <unidirectional association>
+	relation 3628802 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3648002 // <unidirectional association>
+	  b parent class_ref 3191554 // DataWidgetMapper
       end
 
       operation 4569858 "AbstractWidgetMapperController"
@@ -3147,7 +3246,7 @@ ${inlines}
 	public explicit_return_type "void"
 	nparams 2
 	  param in name "widget" type class_ref 316162 // QWidget
-	  param in name "section" explicit_type "int"
+	  param in name "column" explicit_type "int"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
@@ -3160,15 +3259,14 @@ ${inlines}
 	
       end
 
-      operation 4569730 "addMapping"
+      operation 4655618 "addHeaderMapping"
 	public explicit_return_type "void"
-	nparams 3
+	nparams 2
 	  param in name "widget" type class_ref 316162 // QWidget
-	  param in name "section" explicit_type "int"
-	  param in name "propertyName" type class_ref 236162 // QByteArray
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+	  param in name "column" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -3176,30 +3274,6 @@ ${inlines}
 	
 	
 	
-      end
-
-      operation 4562946 "widgetMapper"
-	protected return_type class_ref 404610 // QDataWidgetMapper
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 3648002 // <unidirectional association>
-	relation 3628802 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3648002 // <unidirectional association>
-	  b parent class_ref 3191554 // DataWidgetMapper
       end
     end
 
@@ -3217,6 +3291,21 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      operation 4562946 "widgetMapper"
+	protected return_type class_ref 3191554 // DataWidgetMapper
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       classrelation 3545730 // <generalisation>
 	relation 3526914 ---|>
 	  a public
@@ -3224,7 +3313,6 @@ ${inlines}
 	    classrelation_ref 3545730 // <generalisation>
 	  b parent class_ref 3138306 // AbstractWidgetMapperController
       end
-
     end
 
     class 3138562 "SqlWidgetMapperTableController"
@@ -5850,6 +5938,15 @@ ${inlines}
 	    classrelation_ref 3500930 // <directional composition>
 	  b parent class_ref 2713474 // EditionActions
       end
+
+      classrelation 3654530 // <directional composition>
+	relation 3635330 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3654530 // <directional composition>
+	  b parent class_ref 3062018 // RemoveAction
+      end
     end
 
     classdiagram 2413442 "StandardWindow"
@@ -5910,14 +6007,6 @@ ${inlines}
 	  b parent class_ref 3096962 // AbstractWindow
       end
 
-      classrelation 3485442 // <directional composition>
-	relation 3466754 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3485442 // <directional composition>
-	  b parent class_ref 3062018 // RemoveAction
-      end
     end
   end
 

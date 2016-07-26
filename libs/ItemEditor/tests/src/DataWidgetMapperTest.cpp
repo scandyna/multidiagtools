@@ -217,7 +217,6 @@ void DataWidgetMapperTest::setModelTest()
    * Widget mapper must go to row -1 after model was set.
    * The controller will tell it which row to go later.
    */
-  /// \todo Check if this is good..
   TestTableModel model2;
   model2.populate(4, 2);
   mapper.setModel(&model2);
@@ -238,10 +237,6 @@ void DataWidgetMapperTest::setModelTest()
   // Map widgets
   mapper.addMapping(&edit0, 0);
   mapper.addMapping(&edit1, 1);
-  QVERIFY(!edit0.isEnabled());
-  QVERIFY(!edit1.isEnabled());
-  QVERIFY(edit0.text().isEmpty());
-  QVERIFY(edit1.text().isEmpty());
   // Check editors state
   QVERIFY(edit0.isEnabled());
   QVERIFY(edit1.isEnabled());

@@ -44,15 +44,19 @@ void AbstractWindow::setMainEditorWidget(AbstractEditorWidget* widget)
 
   auto *controller = widget->controller();
   Q_ASSERT(controller != nullptr);
+  auto *oldController = pvController.data();
+  pvController = controller;
 
   // Connect navigation actions
   if(pvNavigationActions != nullptr){
-    disconnect(pvNavigationActions, &NavigationActions::toFirstTriggered, controller, &AbstractController::toFirst);
-    disconnect(pvNavigationActions, &NavigationActions::toPreviousTriggered, controller, &AbstractController::toPrevious);
-    disconnect(pvNavigationActions, &NavigationActions::toNextTriggered, controller, &AbstractController::toNext);
-    disconnect(pvNavigationActions, &NavigationActions::toLastTriggered, controller, &AbstractController::toLast);
-    disconnect(controller, &AbstractController::rowStateChanged, pvNavigationActions, &NavigationActions::setRowState);
-    disconnect(controller, &AbstractController::controllerStateChanged, pvNavigationActions, &NavigationActions::setControllerState);
+    if(oldController != nullptr){
+      disconnect(pvNavigationActions, &NavigationActions::toFirstTriggered, oldController, &AbstractController::toFirst);
+      disconnect(pvNavigationActions, &NavigationActions::toPreviousTriggered, oldController, &AbstractController::toPrevious);
+      disconnect(pvNavigationActions, &NavigationActions::toNextTriggered, oldController, &AbstractController::toNext);
+      disconnect(pvNavigationActions, &NavigationActions::toLastTriggered, oldController, &AbstractController::toLast);
+      disconnect(oldController, &AbstractController::rowStateChanged, pvNavigationActions, &NavigationActions::setRowState);
+      disconnect(oldController, &AbstractController::controllerStateChanged, pvNavigationActions, &NavigationActions::setControllerState);
+    }
     connect(pvNavigationActions, &NavigationActions::toFirstTriggered, controller, &AbstractController::toFirst);
     connect(pvNavigationActions, &NavigationActions::toPreviousTriggered, controller, &AbstractController::toPrevious);
     connect(pvNavigationActions, &NavigationActions::toNextTriggered, controller, &AbstractController::toNext);
@@ -62,10 +66,12 @@ void AbstractWindow::setMainEditorWidget(AbstractEditorWidget* widget)
   }
   // Connect edition actions
   if(pvEditionActions != nullptr){
-    disconnect(pvEditionActions, &EditionActions::submitTriggered, controller, &AbstractController::submit);
-    disconnect(pvEditionActions, &EditionActions::revertTriggered, controller, &AbstractController::revert);
-    disconnect(controller, &AbstractController::rowStateChanged, pvEditionActions, &EditionActions::setRowState);
-    disconnect(controller, &AbstractController::controllerStateChanged, pvEditionActions, &EditionActions::setControllerState);
+    if(oldController != nullptr){
+      disconnect(pvEditionActions, &EditionActions::submitTriggered, oldController, &AbstractController::submit);
+      disconnect(pvEditionActions, &EditionActions::revertTriggered, oldController, &AbstractController::revert);
+      disconnect(oldController, &AbstractController::rowStateChanged, pvEditionActions, &EditionActions::setRowState);
+      disconnect(oldController, &AbstractController::controllerStateChanged, pvEditionActions, &EditionActions::setControllerState);
+    }
     connect(pvEditionActions, &EditionActions::submitTriggered, controller, &AbstractController::submit);
     connect(pvEditionActions, &EditionActions::revertTriggered, controller, &AbstractController::revert);
     connect(controller, &AbstractController::rowStateChanged, pvEditionActions, &EditionActions::setRowState);
@@ -73,18 +79,21 @@ void AbstractWindow::setMainEditorWidget(AbstractEditorWidget* widget)
   }
   // Connect insert action
   if(pvInsertAction != nullptr){
-//     disconnect(pvInsertAction, &InsertAction::insertTriggered, controller, &AbstractController::insert);
-    disconnect(controller, &AbstractController::controllerStateChanged, pvInsertAction, &InsertAction::setControllerState);
-
-//     connect(pvInsertAction, &InsertAction::insertTriggered, controller, &AbstractController::insert);
+    if(oldController != nullptr){
+      disconnect(pvInsertAction, &InsertAction::insertTriggered, oldController, &AbstractController::insert);
+      disconnect(oldController, &AbstractController::controllerStateChanged, pvInsertAction, &InsertAction::setControllerState);
+    }
+    connect(pvInsertAction, &InsertAction::insertTriggered, controller, &AbstractController::insert);
     connect(controller, &AbstractController::controllerStateChanged, pvInsertAction, &InsertAction::setControllerState);
   }
   // Connect remove actions
   if(pvRemoveAction != nullptr){
-//     disconnect(pvRemoveAction, &RemoveAction::removeTriggered, controller, &AbstractController::remove);
-    disconnect(controller, &AbstractController::rowStateChanged, pvRemoveAction, &RemoveAction::setRowState);
-    disconnect(controller, &AbstractController::controllerStateChanged, pvRemoveAction, &RemoveAction::setControllerState);
-//     connect(pvRemoveAction, &RemoveAction::removeTriggered, controller, &AbstractController::remove);
+    if(oldController != nullptr){
+      disconnect(pvRemoveAction, &RemoveAction::removeTriggered, oldController, &AbstractController::remove);
+      disconnect(oldController, &AbstractController::rowStateChanged, pvRemoveAction, &RemoveAction::setRowState);
+      disconnect(oldController, &AbstractController::controllerStateChanged, pvRemoveAction, &RemoveAction::setControllerState);
+    }
+    connect(pvRemoveAction, &RemoveAction::removeTriggered, controller, &AbstractController::remove);
     connect(controller, &AbstractController::rowStateChanged, pvRemoveAction, &RemoveAction::setRowState);
     connect(controller, &AbstractController::controllerStateChanged, pvRemoveAction, &RemoveAction::setControllerState);
   }

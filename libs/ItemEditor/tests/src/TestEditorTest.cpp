@@ -58,7 +58,8 @@ void TestEditorTest::widowEditorTest()
   TestFormEditionWidget formEditor;
   StandardWindow tableEditorWindow;
   TestTableEditionWidget tableEditor;
-  TestTableModel model;
+//   TestTableModel model;
+  QStringListModel model;
 
   formEditor.setModel(&model);
   formEditorWindow.setCentralWidget(&formEditor);
@@ -68,7 +69,7 @@ void TestEditorTest::widowEditorTest()
   tableEditorWindow.setCentralWidget(&tableEditor);
   tableEditorWindow.setMainEditorWidget(&tableEditor);
   tableEditorWindow.show();
-  model.populate(3, 1);
+//   model.populate(3, 1);
 
   /*
    * Play

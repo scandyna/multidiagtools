@@ -41,6 +41,15 @@ namespace Mdt{ namespace ItemEditor{
 
    public:
 
+    /*! \brief Insert location
+     */
+    enum InsertLocation
+    {
+      InsertAtBeginning,  /*!< New row will be inserted at the beginning, and will become row 0. This is the default. */
+      InsertAtEnd         /*!< New row will be inserted at end.
+                                Note that the controller must fetch all data before the insertion, which may be slow. */
+    };
+
     /*! \brief Constructor
      */
     explicit AbstractController(QObject* parent = nullptr);
@@ -57,6 +66,17 @@ namespace Mdt{ namespace ItemEditor{
     ControllerState controllerState() const
     {
       return pvControllerState;
+    }
+
+    /*! \brief Set insert location
+     */
+    void setInsertLocation(InsertLocation il);
+
+    /*! \brief Get insert location
+     */
+    InsertLocation insertLocation() const
+    {
+      return pvInsertLocation;
     }
 
     /*! \brief Set model
@@ -133,6 +153,16 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Revert data from model
      */
     void revert();
+
+    /*! \brief Insert a row
+     *
+     * This slot is affected by InsertLocation
+     */
+    bool insert();
+
+    /*! \brief Remove current row
+     */
+    bool remove();
 
    signals:
 
@@ -239,6 +269,7 @@ namespace Mdt{ namespace ItemEditor{
     QPointer<QAbstractItemModel> pvModel;
     QPointer<ItemSelectionModel>  pvSelectionModel;
     QPointer<EventCatchItemDelegate> pvDelegate;
+    InsertLocation pvInsertLocation;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -31,10 +31,16 @@ namespace Mdt{ namespace ItemEditor{
 
 AbstractController::AbstractController(QObject* parent)
  : QObject(parent),
-   pvModel(nullptr)
+   pvModel(nullptr),
+   pvInsertLocation(InsertAtBeginning)
 {
   pvRowChangeEventDispatcher = new RowChangeEventDispatcher(this);
   connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateUpdated, this, &AbstractController::updateRowState);
+}
+
+void AbstractController::setInsertLocation(AbstractController::InsertLocation il)
+{
+  pvInsertLocation = il;
 }
 
 void AbstractController::setModel(QAbstractItemModel* model)
@@ -104,12 +110,53 @@ void AbstractController::toLast()
 
 bool AbstractController::submit()
 {
+  if(!ControllerStatePermission::canSubmit(pvControllerState)){
+    return false;
+  }
   return submitDataToModel();
 }
 
 void AbstractController::revert()
 {
+  if(!ControllerStatePermission::canRevert(pvControllerState)){
+    return;
+  }
   revertDataFromModel();
+}
+
+bool AbstractController::insert()
+{
+  Q_ASSERT(!pvModel.isNull());
+
+  qDebug() << "Insert...";
+  if(!ControllerStatePermission::canInsert(pvControllerState)){
+    qDebug() << "Not allowed to insert..";
+    return false;
+  }
+  switch(pvInsertLocation){
+    case InsertAtBeginning:
+      return pvModel->insertRow(0);
+    case InsertAtEnd:
+      /// \todo Fetch all
+      return pvModel->insertRow( rowCount() );
+  }
+
+  return false;
+}
+
+bool AbstractController::remove()
+{
+  Q_ASSERT(!pvModel.isNull());
+
+  if(!ControllerStatePermission::canRemove(pvControllerState)){
+    return false;
+  }
+  int row = currentRow();
+  if(row < 0){
+    return false;
+  }
+
+  return pvModel->removeRow(row);
 }
 
 void AbstractController::referenceItemModel(QAbstractItemModel* model)

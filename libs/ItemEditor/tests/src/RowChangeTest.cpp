@@ -456,6 +456,12 @@ void RowChangeTest::eventDispatcherInsertTest()
   rs = spyItem.at(0).value<RowState>();
   QCOMPARE(rs.rowCount(), model.rowCount());
   QCOMPARE(rs.currentRow(), 2);
+  /**
+   * \todo Insert from model in Editing state
+   *   Row count change, ok
+   *   Current row must not changed.
+   */
+  
 }
 
 // void RowChangeTest::eventDispatcherWithSelectionModelInsertTest()

@@ -97,6 +97,7 @@ void RowChangeEventDispatcher::onRowsInserted(const QModelIndex& /*parent*/, int
 {
   Q_ASSERT(!pvModel.isNull());
 
+  /// \todo Must check if current row can change before emit !
   pvRowState.setRowCount(pvModel->rowCount());
   pvRowState.setCurrentRow(last);
   emit rowStateUpdated(pvRowState);

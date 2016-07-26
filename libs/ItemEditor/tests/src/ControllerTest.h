@@ -44,14 +44,17 @@ class ControllerTest : public QObject
   void tableViewCurrentRowChangeBenchmark();
   void tableViewControllerCurrentRowChangeBenchmark();
   void tableViewControllerEditTest();
-
-//   void mappedWidgetListTest();
-//   void mappedWidgetListSetModelTest();
+  void tableViewControllerInsertTest();
+  void tableViewControllerInsertFromModelTest();
+  void tableViewControllerRemoveTest();
 
   void widgetMapperControllerSetModelTest();
   void widgetMapperControllerCurrentRowChangedTest();
   void widgetMapperControllerEditTest();
   void widgetMapperControllerEditTest_data();
+  void widgetMapperControllerInsertTest();
+  void widgetMapperControllerInsertFromModelTest();
+  void widgetMapperControllerRemoveTest();
 
  private:
 
