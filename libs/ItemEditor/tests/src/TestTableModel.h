@@ -89,13 +89,42 @@ class TestTableModelItemData
     return pvDisplayRoleData;
   }
 
+  /*
+   * Set item enabled/disabled
+   * Default is enabled
+   */
+  void setEnabled(bool enable)
+  {
+    pvIsEnabled = enable;
+  }
+
+  bool isEnabled() const
+  {
+    return pvIsEnabled;
+  }
+
+  /*
+   * Set item editable/read only
+   * Default id editable
+   */
+  void setEditable(bool editable)
+  {
+    pvIsEditable = editable;
+  }
+
+  bool isEditable() const
+  {
+    return pvIsEditable;
+  }
+
  private:
 
   bool pvEditRoleDataSeparate;
+  bool pvIsEditable = true;
+  bool pvIsEnabled = true;
   QVariant pvDisplayRoleData;
   QVariant pvEditRoleData;
 };
-
 
 /*
  * Table model used for some tests
@@ -115,6 +144,10 @@ class TestTableModel : public QAbstractTableModel
    * data for Qt::EditRole will be distinct from data for Qt::DisplayRole.
    */
   QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
+
+  void setItemEnabled(const QModelIndex & index, bool enable);
+
+  void setItemEditable(const QModelIndex & index, bool editable);
 
   Qt::ItemFlags flags(const QModelIndex & index) const override;
 

@@ -35,8 +35,10 @@ class ItemModelTest : public QObject
 
   void testTableModelCommonItemDataTest();
   void testTableModelSeparateEditItemDataTest();
+  void testTableModelItemFlagsTest();
   void testTableModelTest();
   void testTableModelSeparateEditTest();
+  void testTableModelFlagTest();
   void testTableModelViewTest();
 };
 

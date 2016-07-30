@@ -36,6 +36,44 @@
 
 #include <QDebug>
 
+/*
+ * Class used for flags tests
+ */
+class FlagsTestTableModel : public QAbstractTableModel
+{
+ public:
+
+  explicit FlagsTestTableModel(QObject* parent = nullptr)
+   : QAbstractTableModel(parent) {}
+
+  int rowCount(const QModelIndex &) const override
+  {
+    return 1;
+  }
+
+  int columnCount(const QModelIndex&) const override
+  {
+    return 1;
+  }
+
+  QVariant data(const QModelIndex &, int) const override
+  {
+    return QVariant();
+  }
+};
+
+/*
+ * Helper functions
+ */
+
+Qt::ItemFlags getTableModelStandardFlags()
+{
+  FlagsTestTableModel model;
+  QModelIndex index = model.index(0, 0);
+  Q_ASSERT(index.isValid());
+  return model.flags(index);
+}
+
 void ItemModelTest::initTestCase()
 {
 }
@@ -88,6 +126,26 @@ void ItemModelTest::testTableModelSeparateEditItemDataTest()
   data.setEditRoleData("EA");
   QCOMPARE(data.displayRoleData(), QVariant("DA"));
   QCOMPARE(data.editRoleData(), QVariant("EA"));
+}
+
+void ItemModelTest::testTableModelItemFlagsTest()
+{
+  /*
+   * Initial state
+   */
+  TestTableModelItemData item(TestTableModelRoleStorage::SeparateDisplayAndEditRoleData);
+  QVERIFY(item.isEnabled());
+  QVERIFY(item.isEditable());
+  /*
+   * Change enabled flag
+   */
+  item.setEnabled(false);
+  QVERIFY(!item.isEnabled());
+  /*
+   * Change editable flag
+   */
+  item.setEditable(false);
+  QVERIFY(!item.isEditable());
 }
 
 void ItemModelTest::testTableModelTest()
@@ -218,9 +276,101 @@ void ItemModelTest::testTableModelSeparateEditTest()
   QCOMPARE(model.columnCount(), 0);
 }
 
+void ItemModelTest::testTableModelFlagTest()
+{
+  QModelIndex index;
+  TestTableModel model;
+  const Qt::ItemFlags standardFlags = Qt::ItemFlags(getTableModelStandardFlags() | Qt::ItemIsEditable);
+  Qt::ItemFlags flags;
+
+  model.populate(2, 2);
+  /*
+   * Check without having specified any flag
+   */
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.flags(index), standardFlags);
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.flags(index), standardFlags);
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.flags(index), standardFlags);
+  index = model.index(1, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.flags(index), standardFlags);
+  /*
+   * Set a item disabled
+   */
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setItemEnabled(index, false);
+  flags = standardFlags & Qt::ItemFlags(~Qt::ItemIsEnabled);
+  QCOMPARE(model.flags(index), flags);
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.flags(index), standardFlags);
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.flags(index), standardFlags);
+  index = model.index(1, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.flags(index), standardFlags);
+  /*
+   * Re-enable item
+   */
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setItemEnabled(index, true);
+  QCOMPARE(model.flags(index), standardFlags);
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.flags(index), standardFlags);
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.flags(index), standardFlags);
+  index = model.index(1, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.flags(index), standardFlags);
+  /*
+   * Set a item not editable
+   */
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, false);
+  flags = Qt::ItemFlags(getTableModelStandardFlags());
+  QCOMPARE(model.flags(index), flags);
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.flags(index), standardFlags);
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.flags(index), standardFlags);
+  index = model.index(1, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.flags(index), standardFlags);
+  /*
+   * Set item editable again
+   */
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, true);
+  QCOMPARE(model.flags(index), standardFlags);
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.flags(index), standardFlags);
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.flags(index), standardFlags);
+  index = model.index(1, 1);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.flags(index), standardFlags);
+}
+
 void ItemModelTest::testTableModelViewTest()
 {
   TestTableModel model;
+  QModelIndex index;
   QTableView tableView;
   QTreeView treeView;
   QListView listView;
@@ -244,13 +394,22 @@ void ItemModelTest::testTableModelViewTest()
    * Populate model
    */
   model.populate(3, 2);
+  /*
+   * Set some flags
+   */
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setItemEnabled(index, false);
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, false);
 
   /*
    * Play
    */
-//   while(tableView.isVisible()){
-//     QTest::qWait(500);
-//   }
+  while(tableView.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 /*

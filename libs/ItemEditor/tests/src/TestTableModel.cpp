@@ -21,6 +21,8 @@
 #include "TestTableModel.h"
 #include <QChar>
 
+// #include <QDebug>
+
 TestTableModel::TestTableModel(TestTableModelRoleStorage s, QObject* parent)
  : QAbstractTableModel(parent),
    pvStorage(s),
@@ -60,9 +62,44 @@ QVariant TestTableModel::data(const QModelIndex& index, int role) const
   return QVariant();
 }
 
+void TestTableModel::setItemEnabled(const QModelIndex& index, bool enable)
+{
+  Q_ASSERT(index.row() >= 0);
+  Q_ASSERT(index.row() < (int)pvData.size());
+  Q_ASSERT(index.column() >= 0);
+  Q_ASSERT(index.column() < pvColumnCount);
+
+  pvData[index.row()][index.column()].setEnabled(enable);
+}
+
+void TestTableModel::setItemEditable(const QModelIndex& index, bool editable)
+{
+  Q_ASSERT(index.row() >= 0);
+  Q_ASSERT(index.row() < (int)pvData.size());
+  Q_ASSERT(index.column() >= 0);
+  Q_ASSERT(index.column() < pvColumnCount);
+
+  pvData[index.row()][index.column()].setEditable(editable);
+}
+
 Qt::ItemFlags TestTableModel::flags(const QModelIndex& index) const
 {
-  return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
+  Q_ASSERT(index.row() >= 0);
+  Q_ASSERT(index.row() < (int)pvData.size());
+  Q_ASSERT(index.column() >= 0);
+  Q_ASSERT(index.column() < pvColumnCount);
+
+  Qt::ItemFlags f = QAbstractTableModel::flags(index);
+  const TestTableModelItemData item = pvData[index.row()][index.column()];
+
+  if(!item.isEnabled()){
+    f &= Qt::ItemFlags(~Qt::ItemIsEnabled);
+  }
+  if(item.isEditable()){
+    f |= Qt::ItemIsEditable;
+  }
+
+  return f;
 }
 
 bool TestTableModel::setData(const QModelIndex& index, const QVariant& value, int role)

@@ -28,7 +28,7 @@
  *  Mdt::ItemEditor::TableViewController can be used with a model based on QAbstractTableModel
  *   and a view based on QAbstractItemView (like QTableView).
  *
- *  Mdt::ItemEditor::WidgetMapperController owns a QDataWidgetMapper.
+ *  Mdt::ItemEditor::WidgetMapperController owns a Mdt::ItemEditor::DataWidgetMapper.
  *   It can be used to create custom widgets.
  *
  * \section itemeditor_window Window
@@ -42,8 +42,8 @@
  *
  *  Mdt::ItemEditor::TableViewWidget is directly usable, QTableView based editor.
  *
- *  For custom editor, subclassing Mdt::ItemEditor::AbstractEditor offers some advantages:
- *   - Mdt::ItemEditor::StandardWindow can automatically connect all signals and slots
+ *  For custom editor, subclassing Mdt::ItemEditor::AbstractEditorWidget offers some advantages:
+ *   - Mdt::ItemEditor::AbstractWindow can automatically connect all signals and slots
  *      between its actions and the controller hold by the editor.
  *
  * \section itemeditor_tableview_editor Editor based on QTableView
