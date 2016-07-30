@@ -33,8 +33,8 @@ namespace Mdt{ namespace ItemEditor{
     /*
      * Contructor
      */
-    MappedWidget(QWidget *widget, int column)
-     : pvWidget(widget), pvColumn(column)
+    MappedWidget(QWidget *widget, int column, bool hasReadOnlyProperty)
+     : pvWidget(widget), pvColumn(column), pvHasReadOnlyProperty(hasReadOnlyProperty)
     {
       Q_ASSERT(pvWidget != nullptr);
       Q_ASSERT(column >= 0);
@@ -50,10 +50,16 @@ namespace Mdt{ namespace ItemEditor{
       return pvColumn;
     }
 
+    bool hasReadOnlyProperty() const
+    {
+      return pvHasReadOnlyProperty;
+    }
+
    private:
 
     QPointer<QWidget> pvWidget;
     int pvColumn;
+    bool pvHasReadOnlyProperty;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

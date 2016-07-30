@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 75
+  revision 76
   modified_by 2 "philippe"
   // class settings
   
@@ -1971,12 +1971,13 @@ ${inlines}
 
       operation 4599554 "addWidget"
 	public explicit_return_type "void"
-	nparams 2
+	nparams 3
 	  param in name "widget" type class_ref 316162 // QWidget
 	  param in name "column" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+	  param in name "hasRoP" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -6006,7 +6007,6 @@ ${inlines}
 	    classrelation_ref 3485058 // <generalisation>
 	  b parent class_ref 3096962 // AbstractWindow
       end
-
     end
   end
 

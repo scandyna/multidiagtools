@@ -40,6 +40,10 @@ class DataWidgetMapperTest : public QObject
   void setCurrentRowTest();
   void editStartDoneSignalTest();
   void editStartDoneSignalTest_data();
+  void modelItemEditableFlagWidgetsWithRoTest();
+  void modelItemEditableFlagWidgetsWithRoTest_data();
+  void modelItemEditableFlagWidgetsWithoutRoTest();
+  void modelItemEditableFlagWidgetsWithoutRoTest_data();
   void setDataFromModelQLineEditTest();
   void submitDataQLineEditTest();
   void revertDataQLineEditTest();

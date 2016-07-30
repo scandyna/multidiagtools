@@ -407,9 +407,9 @@ void ItemModelTest::testTableModelViewTest()
   /*
    * Play
    */
-  while(tableView.isVisible()){
-    QTest::qWait(500);
-  }
+//   while(tableView.isVisible()){
+//     QTest::qWait(500);
+//   }
 }
 
 /*

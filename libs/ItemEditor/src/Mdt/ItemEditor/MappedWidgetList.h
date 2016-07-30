@@ -42,7 +42,7 @@ namespace Mdt{ namespace ItemEditor{
      * \note widget will not be owned by MappedWidgetList
      *        (it will not be deleted)
      */
-    void addWidget(QWidget *widget, int column);
+    void addWidget(QWidget *widget, int column, bool hasReadOnlyProperty);
 
     /*! \brief Get count of mapped widgets
      */

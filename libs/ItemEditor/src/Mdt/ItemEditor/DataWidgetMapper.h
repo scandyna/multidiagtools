@@ -93,7 +93,12 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Adds a mapping between a widget and a column from the model
      *
-     * For more informations, see QDataWidgetMapper documentation.
+     * Once widget is mapped, data will be excanged between model and widget
+     *  using this mapper's delegate.
+     *  If this mapper refers to a invalid index, widget will be disabled.
+     *
+     * If widget has a readOnly property, it will be used if model's Qt::ItemIsEditable
+     *  flag is not present for current index, else widget will be disabled in this case.
      *
      * \note widget will not display model data until setCurrentRow() was called
      * \pre model must be set before mapping any widget
@@ -176,7 +181,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Update editor
      */
-    void updateMappedWidget(QWidget * const widget, int column);
+    void updateMappedWidget(QWidget * const widget, int column, bool hasReadOnlyProperty);
 
     /*! \brief Update all mapped widgets
      */
