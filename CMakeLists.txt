@@ -65,7 +65,7 @@ endif()
 # Optimisation options:
 # By default, CMake will set optimisation for Release, but not for debug
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-  add_compile_options(-O2)
+  add_compile_options(-O3)
 endif()
 
 # On UNIX, we allways add debug symbols (will be stripped and put into separate  .dbg files)
@@ -208,6 +208,9 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutils")
 
 # Numeric library
 add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Numeric")
+
+# Filter expression
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/FilterExpression")
 
 # * mdtcsv *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtcsv")

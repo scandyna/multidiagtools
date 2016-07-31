@@ -1,0 +1,11 @@
+format 211
+
+classcanvas 128002 class_ref 3211138 // RegExpFilter
+  classdiagramsettings member_max_width 0 end
+  xyz 89 259 2000
+end
+classcanvas 128130 class_ref 3211266 // SqlFilter
+  classdiagramsettings member_max_width 0 end
+  xyz 299 261 2000
+end
+end

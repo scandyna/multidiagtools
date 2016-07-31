@@ -17,12 +17,7 @@ classcanvas 128898 class_ref 3198082 // MappedWidget
   xyz 39.25 42 2000
 end
 note 129410 "Add possibility to map model header data to widgets (typically labels..)"
-  xyzwh 40.5 790 2000 319 75
-note 129538 "Consider model flags."
-  xyzwh 40.5 945 2000 271 55
-note 129666 "Read only:
- - If widget has readOnly property, use it, else  use enable/disable"
-  xyzwh 439.5 790 2000 449 59
+  xyzwh 24.5 569 2000 319 75
 relationcanvas 128258 relation_ref 3615618 // <generalisation>
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b

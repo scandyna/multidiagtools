@@ -1,0 +1,55 @@
+format 211
+
+classcanvas 128002 class_ref 3211394 // FilterKey
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 446.071 2000
+end
+classcanvas 128130 class_ref 3211522 // FilterRecord
+  classdiagramsettings member_max_width 0 end
+  xyz 317.5 446.071 2000
+end
+classcanvas 128258 class_ref 3211650 // FilterExpression
+  classdiagramsettings member_max_width 0 end
+  xyz 458.071 240.143 2000
+end
+note 128386 "Tree..."
+  xyzwh 225.107 178.25 2000 113 47
+note 128642 "Should go to a specific module."
+  xyzwh 123.393 92.25 2000 255 47
+note 128898 "For various support, do in each specific module ?
+ - SQL
+ - Column indexes"
+  xyzwh 655.25 218.143 2000 383 87
+classcanvas 129154 class_ref 3211778 // SqlFilterExpression
+  classdiagramsettings member_max_width 0 end
+  xyz 446.536 40.5 2000
+end
+classcanvas 129282 class_ref 3211906 // CppFilterExpression
+  classdiagramsettings member_max_width 0 end
+  xyz 443.536 323.071 2000
+end
+note 129666 "Could be reused for a WHERE expression.."
+  xyzwh 39.9643 264.179 2000 299 41
+relationcanvas 129410 relation_ref 3641858 // <dependency>
+  from ref 129282 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 3641986 // <dependency>
+  from ref 129154 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 128514 -_-_ decenter_end 659
+  from ref 128258 z 2001 to point 378 261
+  line 129922 z 2001 to point 378 209
+  line 130050 z 2001 to ref 128386
+line 128770 -_-_ decenter_begin 659 decenter_end 209
+  from ref 128642 z 2001 to point 418 123
+  line 130178 z 2001 to point 418 246
+  line 130306 z 2001 to ref 128258
+line 129026 -_-_
+  from ref 128258 z 2001 to ref 128898
+line 129794 -_-_ decenter_begin 390 decenter_end 76
+  from ref 129666 z 2001 to ref 128258
+end
