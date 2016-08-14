@@ -9,25 +9,29 @@ diagrams
     120 110 100 8 0 0
   classdiagram_ref 2760962 // ItemViewController
     983 906 100 7 0 142
-  active  classdiagram_ref 2833922 // sandbox
+  classdiagram_ref 2833922 // sandbox
     993 906 100 18 0 0
+  active  classdiagram_ref 2841090 // Example
+    993 906 100 18 0 0
+  classdiagram_ref 2847746 // sandboxColumnConstant
+    993 906 100 4 0 0
 end
 show_stereotypes
-selected class_ref 3211394 // FilterKey
+selected classdiagram_ref 2841090 // Example
 open
   
-  package_ref 549506 // Algorithm
+package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
-  classview_ref 1511426 // FilterExpression
+  class_ref 3225986 // CalculatorContext
+  class_ref 3226498 // Calculator
+  classview_ref 1511426 // Sandbox
   
-  package_ref 516226 // SqlItemModel
+package_ref 516226 // SqlItemModel
   
-  package_ref 582274 // SqlItemEditor
-  classview_ref 1406210 // View
+package_ref 582274 // SqlItemEditor
   
-  package_ref 430082 // Dsp
-  classdiagram_ref 2613890 // QMetaMethod
-  class_ref 2988034 // QMetaMethod
-  classview_ref 1091330 // bluetooth
+package_ref 430082 // Dsp
+  classview_ref 1518082 // context
+  classview_ref 1517954 // proto
 end
 end

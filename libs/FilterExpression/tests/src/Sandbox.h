@@ -30,10 +30,21 @@ class Sandbox : public QObject
 
  private slots:
 
+  void helloWorld();
+  void helloCalculator();
+  void calculatorSandbox();
+
+  void staticCounter();
+  void staticCounter2();
+  void staticCounter3();
+  void staticCounter4();
+
+  void columnConstant();
+
+  void someOtherToying();
+
   void initTestCase();
   void cleanupTestCase();
-
-  void sandbox();
 };
 
 #endif // #ifndef MDT_ALGORITHM_TEST_H

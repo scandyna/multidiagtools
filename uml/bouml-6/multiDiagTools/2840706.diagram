@@ -1,0 +1,13 @@
+format 211
+
+classcanvas 128002 class_ref 3225346 // callable_context
+  classdiagramsettings member_max_width 0 end
+  xyz 212 39 2000
+end
+classcanvas 128130 class_ref 3225474 // eval
+  classdiagramsettings member_max_width 0 end
+  xyz 42 41 2006
+end
+line 128258 ---+
+  from ref 128130 z 2007 to ref 128002
+end
