@@ -40,6 +40,7 @@ class Sandbox : public QObject
   void staticCounter4();
 
   void columnConstant();
+  void transforms();
 
   void someOtherToying();
 

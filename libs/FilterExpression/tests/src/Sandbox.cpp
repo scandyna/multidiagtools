@@ -28,7 +28,12 @@
 #include <boost/typeof/std/ostream.hpp>
 #include <boost/mpl/assert.hpp>
 
+#include <boost/core/demangle.hpp>
+
 #include <type_traits>
+#include <typeinfo>
+#include <utility>
+#include <iostream>
 
 namespace proto = boost::proto;
 
@@ -632,9 +637,17 @@ struct ColumnIndexContext : proto::callable_context<ColumnIndexContext const>
     return 0;
   }
 
+//   result_type operator()(proto::_child_c<0>, proto::_child_c<1>::) const
+//   {
+//     qDebug() << " _child0:" ;
+//     return 0;
+//   }
+
   template<int Index>
   const auto addIndex()
   {
+//     qDebug() << "addIndex() - i: " << MDT_STATIC_COUNTER_READ(ColumnIndexContext);
+    qDebug() << "addIndex() - i: " << Index;
     return typename proto::terminal< placeholder<Index> >::type {{}};
   }
 
@@ -645,64 +658,17 @@ int getFieldIndex()
   return 2;
 }
 
-
-template<int N>
-struct MyAbs
-{
-  static constexpr int value = (N < 0) ? -N : N;
-};
-
-template<int M, int N>
-struct MyGcd
-{
-  MyGcd()
-  {
-    qDebug() << "MyGcd<M,N> - Why called ????";
-  }
-  
-  static constexpr int value = MyGcd<N, M%N>::value;
-};
-
-template<int M>
-struct MyGcd<M, 0>
-{
-  static_assert(M != 0, "");
-  static constexpr int value = M;
-};
-
-
-template<typename T>
-struct MyRank
-{
-  static constexpr int value = 0;
-};
-
-template<typename U, int N>
-struct MyRank<U[N]>
-{
-  static constexpr int value = 1 + MyRank<U>::value;
-};
-
-
-template<typename T>
-struct MyRank2 : std::integral_constant<int, 0>
-{
-};
-
-template<typename U, int N>
-struct MyRank2<U[N]> : std::integral_constant<int, 1 + MyRank2<U>::value >
-{
-};
-
-template<typename U>
-struct MyRank2<U[]> : std::integral_constant<int, 1 + MyRank2<U>::value>
-{
-};
+#define addIndexToContext(ctx) \
+        ctx.addIndex<MDT_STATIC_COUNTER_READ(counter)>(); \
+        MDT_STATIC_COUNTER_INC(counter);
 
 void Sandbox::columnConstant()
 {
   ///MDT_FILTER_EXPRESSION_COLUMN(Name, 4);
   ///MDT_FILTER_EXPRESSION_COLUMN(Value, 1);
+
+//   struct counter{};
+//   MDT_STATIC_COUNTER_REGISTER(counter);
 
   ColumnIndexContext ctx;
   auto Name = ctx.addIndex<0>();
@@ -716,47 +682,76 @@ void Sandbox::columnConstant()
   
   proto::display_expr( (Name == 20) && (Value < 25) /* || (i == 3) */ );
   proto::eval( (Name == 20)  && (Value < 25) /*|| (i == 3) */ , ctx );
-  
-// //   constexpr int myArray[] = {1,2,3};
-  
-  qDebug() << "MyAbs<-2>: " << MyAbs<-2>::value;
-  qDebug() << "MyGcd<4,2>: " << MyGcd<4,2>::value;
-  qDebug() << "MyRank<int[2][3]>: " << MyRank<int[2][3]>::value;
-//   qDebug() << "MyRank<myArray>: " << MyRank<myArray>::value;
-  qDebug() << "MyRank2<int[2][3]>: " << MyRank2<int[2][3]>::value;
-//   qDebug() << "MyRank2<myArray>: " << MyRank2<myArray>::value;
+
 }
 
-
-template<int N>
-struct Sum
+struct MyCustom : proto::callable
 {
-  enum{ value = N + Sum<N-1>::value };
-};
+  typedef int result_type;
 
-template<>
-struct Sum<1>
-{
-  enum { value = 1 };
-};
-
-constexpr int c11sum(int N)
-{
-  int s = 0;
-  for(int i = 0; i <= N; ++i){
-    s += i;
+//   template<typename T>
+  int operator()(int a) const
+  {
+    qDebug() << "a: " << a;
+    return a+5;
   }
-  return s;
+
+  template<typename T, typename U>
+  int operator()(const T & t, const U & u) const
+  {
+//     qDebug() << "MyCustom , t: " << typeid(T).name();
+    std::cout << "MyCustom , T: " << boost::core::demangle(typeid(T).name()) << std::endl;
+    std::cout << "MyCustom , U: " << boost::core::demangle(typeid(U).name()) << std::endl;
+
+    qDebug() << "t: " << proto::value(t) << " , u: " << proto::value(u);
+
+    return proto::value(t) + proto::value(u) + 3;
+  }
+};
+
+struct MyEval : proto::or_<
+                  proto::when<
+                    proto::plus<MyEval, MyEval> ,
+                    proto::call<MyCustom(proto::_left, proto::_right)>
+//                     proto::terminal<proto::_> ,
+//                     proto::call<MyCustom(proto::_value)>
+                  >
+                >
+{
+};
+
+struct LeftMostLeaf : proto::or_<
+                        proto::when<
+                          proto::terminal< proto::_ > ,
+                          proto::_value
+                        > ,
+                        proto::when<
+                          proto::_ ,
+                          LeftMostLeaf( proto::_child0 )
+                        >
+                      >
+{
+};
+
+void Sandbox::transforms()
+{
+//   proto::terminal< placeholder<0> >::type Name{{}};
+//   proto::terminal< placeholder<0> >::type Value{{}};
+// 
+//   proto::display_expr( (Name == 20) && (Value < 25) );
+
+  proto::terminal<int>::type NameIndex{2};
+
+  proto::display_expr( NameIndex == 20 );
+
+  MyEval e;
+  int i = e( NameIndex + 20 );
+  qDebug() << "i: " << i;
 }
+
 
 void Sandbox::someOtherToying()
 {
-  qDebug() << "Sum<2>: " << Sum<2>::value;
-  qDebug() << "Sum<3>: " << Sum<3>::value;
-  static_assert(Sum<3>::value == 6, "");
-
-  qDebug() << "c11sum(3): " << c11sum(3);
-  static_assert(c11sum(3) == 6, "");
 }
 
 
