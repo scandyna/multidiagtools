@@ -685,53 +685,80 @@ void Sandbox::columnConstant()
 
 }
 
-struct MyCustom : proto::callable
-{
-  typedef int result_type;
+// struct LeftMostLeaf : proto::or_<
+//                         proto::when<
+//                           proto::terminal< proto::_ > ,
+//                           proto::_value
+//                         > ,
+//                         proto::when<
+//                           proto::_ ,
+//                           LeftMostLeaf( proto::_child0 )
+//                         >
+//                       >
+// {
+// };
 
-//   template<typename T>
-  int operator()(int a) const
-  {
-    qDebug() << "a: " << a;
-    return a+5;
-  }
+// struct MyCustom : proto::callable
+// {
+//   typedef void result_type;
+// 
+// //   template<typename T>
+//   void operator()(int a) const
+//   {
+//     qDebug() << "a: " << a;
+// //     return a+5;
+//   }
+// 
+//   template<typename T, typename U>
+//   void operator()(const T & t, const U & u) const
+//   {
+//     std::cout << "MyCustom , T: " << boost::core::demangle(typeid(T).name()) << std::endl;
+//     std::cout << "MyCustom , U: " << boost::core::demangle(typeid(U).name()) << std::endl;
+// 
+// //     qDebug() << "t: " << proto::value(t) << " , u: " << proto::value(u);
+//     qDebug() << "index(" << proto::value(t) << ") == " << proto::value(u);
+// 
+// //     return proto::value(t) + proto::value(u) + 3;
+//   }
+// };
+
+struct MyEqualTo : proto::callable
+{
+  typedef void result_type;
 
   template<typename T, typename U>
-  int operator()(const T & t, const U & u) const
+  void operator()(const T & t, const U & u) const
   {
-//     qDebug() << "MyCustom , t: " << typeid(T).name();
-    std::cout << "MyCustom , T: " << boost::core::demangle(typeid(T).name()) << std::endl;
-    std::cout << "MyCustom , U: " << boost::core::demangle(typeid(U).name()) << std::endl;
-
-    qDebug() << "t: " << proto::value(t) << " , u: " << proto::value(u);
-
-    return proto::value(t) + proto::value(u) + 3;
+    qDebug() << "index(" << proto::value(t) << ") == " << proto::value(u);
   }
+
+};
+
+struct MyLessTo : proto::callable
+{
+  typedef void result_type;
+
+  template<typename T, typename U>
+  void operator()(const T & t, const U & u) const
+  {
+    qDebug() << "index(" << proto::value(t) << ") < " << proto::value(u);
+  }
+
 };
 
 struct MyEval : proto::or_<
                   proto::when<
-                    proto::plus<MyEval, MyEval> ,
-                    proto::call<MyCustom(proto::_left, proto::_right)>
-//                     proto::terminal<proto::_> ,
-//                     proto::call<MyCustom(proto::_value)>
+                    proto::equal_to< proto::terminal<proto::_>, proto::terminal<proto::_> > ,
+                    proto::call<MyEqualTo(proto::_left, proto::_right)>
+                  > ,
+                  proto::when<
+                    proto::less< proto::terminal<proto::_>, proto::terminal<proto::_> > ,
+                    proto::call<MyLessTo(proto::_left, proto::_right)>
                   >
                 >
 {
 };
 
-struct LeftMostLeaf : proto::or_<
-                        proto::when<
-                          proto::terminal< proto::_ > ,
-                          proto::_value
-                        > ,
-                        proto::when<
-                          proto::_ ,
-                          LeftMostLeaf( proto::_child0 )
-                        >
-                      >
-{
-};
 
 void Sandbox::transforms()
 {
@@ -745,8 +772,9 @@ void Sandbox::transforms()
   proto::display_expr( NameIndex == 20 );
 
   MyEval e;
-  int i = e( NameIndex + 20 );
-  qDebug() << "i: " << i;
+  e( NameIndex == 20 );
+//   int i = e( NameIndex + 20 );
+//   qDebug() << "i: " << i;
 }
 
 

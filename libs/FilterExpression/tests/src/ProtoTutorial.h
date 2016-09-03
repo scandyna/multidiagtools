@@ -18,34 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SANDBOX_TEST_H
-#define MDT_SANDBOX_TEST_H
+#ifndef MDT_PROTO_TUTORIAL_H
+#define MDT_PROTO_TUTORIAL_H
 
 #include <QObject>
 #include <QtTest/QtTest>
 
-class Sandbox : public QObject
+class ProtoTutorial : public QObject
 {
  Q_OBJECT
 
  private slots:
 
-  void helloWorld();
   void helloCalculator();
-  void calculatorSandbox();
-
-  void staticCounter();
-  void staticCounter2();
-  void staticCounter3();
-  void staticCounter4();
-
-  void columnConstant();
-  void transforms();
-
-  void someOtherToying();
+  void calculatorWrapperMain();
+  void leftMostLeafMain();
 
   void initTestCase();
   void cleanupTestCase();
 };
 
-#endif // #ifndef MDT_SANDBOX_TEST_H
+#endif // #ifndef MDT_PROTO_TUTORIAL_H
