@@ -16,6 +16,13 @@ classcanvas 128642 class_ref 2838530 // TableTemplate
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 280 273 2012
 end
+note 129154 "Should be usable for any SELECT statement.
+Reanme it:
+ - SelectTable ?
+ - ???
+
+-> Note: SelectField allready exists, could be consistant to rename SelectTable ?"
+  xyzwh 66 408 2000 635 179
 relationcanvas 128258 relation_ref 3280770 // <dependency>
   geometry HV unfixed
   from ref 128002 z 2007 to point 542 134

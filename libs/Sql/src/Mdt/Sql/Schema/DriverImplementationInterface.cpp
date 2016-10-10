@@ -437,7 +437,7 @@ QString DriverImplementationInterface::getJoinClauseDefinition(const JoinClause&
   const auto tableToJoin = join.tableToJoin();
   const auto keyList = join.keyList();
 
-  sql = QStringLiteral(" ") % joinOperatorKeyWord(join.joinOperator()) %QStringLiteral(" ") % escapeTableName(tableToJoin.tableName());
+  sql = QStringLiteral(" ") % joinOperatorKeyWord(join.joinOperator()) % QStringLiteral(" ") % escapeTableName(tableToJoin.tableName());
   if(!tableToJoin.alias().isEmpty()){
     sql += QStringLiteral(" ") % escapeTableName(tableToJoin.alias());
   }

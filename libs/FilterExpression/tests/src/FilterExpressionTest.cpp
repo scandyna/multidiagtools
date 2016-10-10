@@ -33,6 +33,8 @@
 #include <utility>
 #include <QString>
 #include <QVariant>
+#include <string>
+#include <tuple>
 
 namespace proto = boost::proto;
 namespace mpl = boost::mpl;
@@ -60,20 +62,28 @@ namespace mpl = boost::mpl;
 /// Evt: struct avec un setter ? (PAS de constructeur (int), pas d'opératuer() ,...
 /// See steo1-01
 
+struct ColumnIndexData
+{
+  ColumnIndexData(int i, const QString & tbl = QString())
+   : index(i) , table(tbl)
+  {
+    std::cout << "ColumnIndexData(" << i << ", " << tbl.toStdString() << ")" << std::endl;
+  }
+
+  int index;
+  QString table;
+};
 
 struct ColumnIndexTag
 {
-  constexpr ColumnIndexTag(int i)
-   : value(i)
+  ColumnIndexTag(const ColumnIndexData & d)
+   : data(d)
   {
   }
 
-//   constexpr int operator()()
-//   {
-//     return m_index;
-//   }
-
-  int value;
+  ColumnIndexData data;
+//   int value;
+//   QString table;
 };
 
 /*
@@ -96,7 +106,14 @@ struct FilterExpressionGrammar;
 // {
 // };
 
-struct MatchValue : proto::terminal<QVariant>
+/**
+ * NOTE: add notion of table ?  '.' cannot be overloaded. Evt: subscript ? client[Id] == 25 && Address[Street] == "Street 45"
+ */
+
+struct MatchValue : proto::or_<
+                        proto::terminal< proto::convertible_to<int> > ,
+                        proto::terminal<QString>
+                      >
 {
 };
 
@@ -117,16 +134,13 @@ struct And : proto::logical_and< FilterExpressionGrammar, FilterExpressionGramma
 {
 };
 
-// struct MatcheEqual : proto::equal_to< FilterExpressionGrammar, FilterExpressionGrammar >
+
+// struct Terminal : proto::or_<
+//                       ColumnIndex ,
+//                       MatchValue
+//                     >
 // {
 // };
-
-struct Terminal : proto::or_<
-                      ColumnIndex ,
-                      MatchValue
-                    >
-{
-};
 
 struct FilterExpressionGrammar : proto::or_<
                                       Compare ,
@@ -142,7 +156,7 @@ struct MatchEqualAction : proto::callable
   template<typename Ci, typename V>
   void operator()(const Ci & ci, const V & v) const
   {
-    std::cout << "MatchEqualAction: column " << proto::value(ci).value << " == " << proto::value(v) << std::endl;
+    std::cout << "MatchEqualAction: " << proto::value(ci).data.table.toStdString() << ".column " << proto::value(ci).data.index << " == " << proto::value(v).toStdString() << std::endl;
   }
 };
 
@@ -167,6 +181,7 @@ struct FilterExpressionEval : proto::or_<
 template<typename Expr>
 void displayAndCheckExpression(const Expr & expr)
 {
+//   static_assert(proto::matches<Expr, FilterExpressionGrammar>::value, "");  // NOTE: does never match with QVariant !
   const bool matches = proto::matches<Expr, FilterExpressionGrammar>::value;
 
   proto::display_expr(expr);
@@ -195,15 +210,13 @@ int getFieldIndex(const QString & fieldName)
 
 void FilterExpressionTest::sandbox()
 {
-  ColumnIndexType Name = {2};
-  ColumnIndexType DynField = { getFieldIndex("5") };
+  ColumnIndexType Name = { ColumnIndexData(2, "Client") };
+  ColumnIndexType DynField = { ColumnIndexData( getFieldIndex("5") ) };
 
 //   std::cout << "Type of ColumnIndexType: " << boost::core::demangle( typeid(ColumnIndexType).name ) << std::endl;
 
-  qDebug() << "Name: " << proto::value(Name).value << " , DynField: " << proto::value(DynField).value;
-
-  displayAndCheckExpression( Name == "PS é ö" );
-  evaluateExpression( Name == "PS é ö" );
+  displayAndCheckExpression( Name == QString("PS é ö") );
+  evaluateExpression( Name == QString("PS é ö") );
   displayAndCheckExpression( 25 == Name );
   displayAndCheckExpression( Name == 25 && Name < 15 );
   displayAndCheckExpression( Name == 25 && DynField == 10 );

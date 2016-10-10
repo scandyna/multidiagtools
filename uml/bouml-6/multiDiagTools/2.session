@@ -1,4 +1,4 @@
-window_sizes 1280 961 281 993 906 0
+window_sizes 1280 961 270 1004 906 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -11,13 +11,27 @@ diagrams
     983 906 100 7 0 142
   classdiagram_ref 2833922 // sandbox
     993 906 100 18 0 0
-  active  classdiagram_ref 2841090 // Example
+  classdiagram_ref 2841090 // Example
     993 906 100 18 0 0
   classdiagram_ref 2847746 // sandboxColumnConstant
     993 906 100 4 0 0
+  classdiagram_ref 2554370 // JoinClause
+    120 110 100 21 60 0
+  classdiagram_ref 2593794 // Table
+    1004 906 100 4 0 0
+  classdiagram_ref 2594050 // SelectOperator
+    120 110 100 4 0 0
+  classdiagram_ref 2860930 // WhereClauseExpression
+    120 110 100 4 0 0
+  classdiagram_ref 2861058 // JoinConstraintExpression
+    120 110 100 4 0 0
+  classdiagram_ref 2860802 // overview
+    120 110 100 4 0 0
+  active  classdiagram_ref 2868098 // JoinClause
+    1004 906 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2841090 // Example
+selected class_ref 3247490 // TableField
 open
   
 package_ref 549506 // Algorithm
@@ -29,6 +43,12 @@ package_ref 549506 // Algorithm
 package_ref 516226 // SqlItemModel
   
 package_ref 582274 // SqlItemEditor
+  class_ref 3247490 // TableField
+  
+package_ref 443522 // Schema
+  class_ref 3239810 // JoinConstraintExpression
+  classdiagram_ref 2860930 // WhereClauseExpression
+  class_ref 3239682 // WhereClauseExpression
   
 package_ref 430082 // Dsp
   classview_ref 1518082 // context

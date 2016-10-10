@@ -1,0 +1,60 @@
+format 211
+
+classcanvas 128002 class_ref 3240194 // TableFieldTerminalData
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 311.3 2000
+end
+classcanvas 128130 class_ref 3240322 // MainTableFieldTag
+  classdiagramsettings member_max_width 0 end
+  xyz 464.5 494.3 2000
+end
+classcanvas 128258 class_ref 3240450 // TableToJoinFieldTag
+  classdiagramsettings member_max_width 0 end
+  xyz 241.5 494.3 2000
+end
+classcanvas 128386 class_ref 3240578 // ComparisonPredicate
+  classdiagramsettings member_max_width 0 end
+  xyz 293.6 187.6 2000
+end
+classcanvas 128514 class_ref 3225602 // or_
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 133.7 39.8 2005
+end
+classcanvas 129026 class_ref 3240706 // SearchCondition
+  classdiagramsettings member_max_width 0 end
+  xyz 134.7 187.6 2000
+end
+classcanvas 129538 class_ref 3240834 // Literal
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 187.6 2000
+end
+classcanvas 130306 class_ref 3239938 // MainTableField
+  classdiagramsettings member_max_width 0 end
+  xyz 281.5 311.3 2000
+end
+classcanvas 130434 class_ref 3240066 // TableToJoinField
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 494.3 2000
+end
+relationcanvas 128898 relation_ref 3662722 // <generalisation>
+  geometry VHV unfixed
+  from ref 128386 z 2006 to point 366 146
+  line 130050 z 2006 to point 191 146
+  line 130178 z 2006 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 3662850 // <generalisation>
+  from ref 129026 z 2006 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 3662978 // <generalisation>
+  geometry VHV unfixed
+  from ref 129538 z 2006 to point 64 146
+  line 129794 z 2006 to point 191 146
+  line 129922 z 2006 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

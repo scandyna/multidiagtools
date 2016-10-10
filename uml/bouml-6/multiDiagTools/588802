@@ -1,6 +1,6 @@
 format 211
 "FilterExpression" // Mdt::FilterExpression
-  revision 3
+  revision 4
   modified_by 2 "philippe"
   // class settings
   
