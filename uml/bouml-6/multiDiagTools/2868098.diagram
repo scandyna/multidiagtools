@@ -2,18 +2,18 @@ format 211
 
 classcanvas 128002 class_ref 3247362 // JoinConstraintField
   classdiagramsettings member_max_width 0 end
-  xyz 404 154 2000
+  xyz 40.5 203.5 2000
 end
 classcanvas 128130 class_ref 3239810 // JoinConstraintExpression
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 280.5 2000
+  xyz 40.5 352.5 2000
 end
 classcanvas 128258 class_ref 3225090 // terminal
   classdiagramsettings member_max_width 0 show_context_mode uml end
-  xyz 396 48 2005
+  xyz 257.5 203.5 2005
 end
-classcanvas 128514 class_ref 3247490 // TableField
+classcanvas 128514 class_ref 3247490 // TableFieldTerminal
   classdiagramsettings member_max_width 0 show_context_mode uml end
-  xyz 39 39 2000
+  xyz 40.5 40.5 2000
 end
 end

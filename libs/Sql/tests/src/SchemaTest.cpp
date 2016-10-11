@@ -281,22 +281,6 @@ void SchemaTest::collationTest()
   QVERIFY(collation.isNull());
 }
 
-void SchemaTest::fieldNameTest()
-{
-  using Mdt::Sql::FieldName;
-
-  FieldName fieldA("A");
-  QCOMPARE(fieldA.toString(), QString("A"));
-}
-
-void SchemaTest::tableNameTest()
-{
-  using Mdt::Sql::Schema::TableName;
-
-  TableName tableA("A");
-  QCOMPARE(tableA.toString(), QString("A"));
-}
-
 void SchemaTest::fieldTest()
 {
   using Mdt::Sql::Schema::Collation;
@@ -690,7 +674,7 @@ void SchemaTest::indexListTest()
   using Mdt::Sql::Schema::Index;
   using Mdt::Sql::Schema::IndexList;
   using Mdt::Sql::FieldName;
-  using Mdt::Sql::Schema::TableName;
+  using Mdt::Sql::TableName;
 
   /*
    * Setup index

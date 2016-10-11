@@ -23,13 +23,16 @@
 
 #include <QString>
 
+namespace Mdt{ namespace Sql{
+  class TableName;
+}}
+
 namespace Mdt{ namespace Sql{ namespace Schema{
 
   template<typename T>
   class TableTemplate;
 
   class Table;
-  class TableName;
 
   /*! \brief SQL table used by View
    */

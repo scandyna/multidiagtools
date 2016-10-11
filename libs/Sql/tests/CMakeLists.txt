@@ -20,6 +20,11 @@ target_link_libraries(mdtsqltest Qt5::Test)
 
 #================= Tests ====================
 
+# Target MdtSqlSimpleTypesTest
+add_executable(mdtsqlsimpletypestest src/SimpleTypesTest.cpp)
+target_link_libraries(mdtsqlsimpletypestest "mdtsqltest")
+add_test(MdtSqlSimpleTypesTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlsimpletypestest)
+
 # Target MdtSqlQueryTest
 add_executable(mdtsqlquerytest src/QueryTest.cpp)
 target_link_libraries(mdtsqlquerytest "mdtsqltest")

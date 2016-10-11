@@ -18,36 +18,34 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_TABLE_NAME_H
-#define MDT_SQL_SCHEMA_TABLE_NAME_H
+#ifndef MDT_SQL_JOIN_CONSTRAINT_FIELD_H
+#define MDT_SQL_JOIN_CONSTRAINT_FIELD_H
 
-#include <QString>
+#include "Expression/JoinConstraint/TableFieldTerminal.h"
 
-namespace Mdt{ namespace Sql{ namespace Schema{
+namespace Mdt{ namespace Sql{
 
-  /*! \brief Wrapper for compile time checking
-   */
-  class TableName
+  struct JoinConstraintFieldTag
   {
-   public:
-
-    /*! \breif Constructor
-     */
-    explicit TableName(const QString & name)
-     : pvTableName(name) {}
-
-    /*! \brief Get table name as string
-     */
-    QString toString() const
-    {
-      return pvTableName;
-    }
-
-   private:
-
-    QString pvTableName;
   };
 
-}}} // namespace Mdt{ namespace Sql{ namespace Schema{
+  /*! \brief Field terminal used in a JoinConstraintExpression
+   *
+   * Typical usage:
+   * \code
+   * #include <Mdt/Sql/JoinConstraintField.h>
+   *
+   * using Mdt::Sql::JoinConstraintField;
+   * using Mdt::Sql::FieldName;
+   *
+   * JoinConstraintField cliendId(...., FieldName("Id_PK") );
+   * // cliendId is a terminal that can be used in a JoinConstraintExpression
+   *
+   * \endcode
+   */
+  using JoinConstraintField = Expression::JoinConstraint::TableFieldTerminal< JoinConstraintFieldTag >;
 
-#endif // MDT_SQL_SCHEMA_TABLE_NAME_H
+
+}} // namespace Mdt{ namespace Sql{
+
+#endif // #ifndef MDT_SQL_JOIN_CONSTRAINT_FIELD_H

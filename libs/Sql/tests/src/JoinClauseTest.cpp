@@ -20,12 +20,18 @@
  ****************************************************************************/
 #include "JoinClauseTest.h"
 #include "Mdt/Application.h"
+#include "Mdt/Sql/JoinConstraintField.h"
 #include <QDebug>
 
 #include <iostream>
 #include <string>
 
 #include <QString>
+
+#include <QSqlDatabase>
+#include <QSqlDriver>
+#include <QSqlField>
+#include <QVariant>
 
 #include <boost/proto/extends.hpp>
 
@@ -36,6 +42,7 @@ namespace proto = boost::proto;
 
 void JoinClauseTest::initTestCase()
 {
+  QSqlDatabase::addDatabase("QSQLITE");
 }
 
 void JoinClauseTest::cleanupTestCase()
@@ -111,7 +118,8 @@ struct Grammar;
 
 struct MatchValue : boost::proto::or_<
                         boost::proto::terminal< boost::proto::convertible_to<int> > ,
-                        boost::proto::terminal< QString >
+                        boost::proto::terminal< QString > ,
+                        boost::proto::terminal< const char * const >
                       >
 {
 };
@@ -144,62 +152,47 @@ struct Grammar : boost::proto::or_<
  * Transforms
  */
 
-struct MyEscape
-{
-  MyEscape(int v)
-   : value(v)
-  {
-  }
-
-  int value;
-};
+// struct MyEscape
+// {
+//   MyEscape(int v)
+//    : value(v)
+//   {
+//   }
+// 
+//   int value;
+// };
 
 struct MatchEqualAction : boost::proto::callable
 {
   typedef QString result_type;
 
-//   template<typename Ci, typename V>
-//   void operator()(const Ci & ci, const V & v) const
-//   {
-//     //std::cout << "MatchEqualAction: " << boost::proto::value(ci).tableName.toStdString() << ".column " << boost::proto::value(ci).data.index << " == " << boost::proto::value(v).toStdString() << std::endl;
-//     std::cout << "MatchEqualAction: " << boost::proto::value(ci).tableName.toStdString() << " == " << boost::proto::value(v).toStdString() << std::endl;
-//   }
-
   template<typename V>
-  QString operator()(const JoinConstraintField & f, const V & v, const MyEscape & esc) const
+  QString operator()(const JoinConstraintField & f, const V & v, const QSqlDatabase & db) const
   {
-//     std::cout << "MatchEqualAction(" << this << "): " << f.tableName.toStdString() << " == " << value(boost::proto::value(v)) << std::endl;
-//     std::cout << "_data: " << boost::core::demangle( typeid(boost::proto::_data).name() ) << std::endl;
-    qDebug() << "esc: " << esc.value;
-    return f.tableName + " = " + value(boost::proto::value(v));
-    //return "f == v";
+    auto *driver = db.driver();
+    Q_ASSERT(driver != nullptr);
+    QVariant var = boost::proto::value(v);
+    QSqlField field("", var.type());
+    field.setValue(var);
+
+    return driver->escapeIdentifier(f.tableName, QSqlDriver::TableName) + " = " + driver->formatValue(field);
+    //return driver->escapeIdentifier(f.tableName, QSqlDriver::TableName) + " = " + value(boost::proto::value(v), driver);
   }
 
   QString operator()(const JoinConstraintField & lf, const JoinConstraintField & rf) const
   {
-    std::cout << "MatchEqualAction(" << this << "): " << lf.tableName.toStdString() << " == " << rf.tableName.toStdString() << std::endl;
-    //return "lf == rf";
     return lf.tableName + " = " + rf.tableName;
   }
 
-//   QString operator()(const JoinConstraintField & lf, const QString & s) const
-//   {
-//     return lf.tableName + " == " + s;
-//   }
-// 
-//   QString operator()(const JoinConstraintField & lf, int v) const
-//   {
-//     return lf.tableName + " == " + QString::number(v);
-//   }
-
  private:
 
-  QString value(int v) const
+  QString value(int v, const QSqlDriver * const driver) const
   {
+    QSqlField field("", QVariant(v).type());
     return QString::number(v);
   }
 
-  QString value(const QString & v) const
+  QString value(const QString & v, const QSqlDriver * const driver) const
   {
     return v;
   }
@@ -209,24 +202,10 @@ struct AndTransform : boost::proto::callable
 {
   typedef QString result_type;
 
-//   template<typename L, typename R>
-//   QString operator()(const L & l, const R & r) const
-//   {
-//     //std::cout << "AndTransform: " << boost::proto::value(l).toStdString() << std::endl;
-//     std::cout << boost::core::demangle( typeid(l).name() ) << std::endl;
-//     return "l && r";
-//     //return getResult(boost::proto::value(l), boost::proto::value(r));
-//   }
-
   QString operator()(const QString & l, const QString & r) const
   {
     return l + " AND " + r;
   }
-
-//   QString getResult(const JoinConstraintField & l, const JoinConstraintField & r) const
-//   {
-//     return l.tableName + " AND " + r.tableName;
-//   }
 };
 
 struct CompareAction : boost::proto::or_<
@@ -284,10 +263,12 @@ struct FilterExpressionEval : boost::proto::or_<
 template<typename Expr>
 void evaluateExpression(const Expr & expr)
 {
+  QSqlDatabase db = QSqlDatabase::database();
+
   std::cout << "***** Evaluate ***********" << std::endl;
   proto::display_expr(expr);
   FilterExpressionEval eval;
-  std::cout << "eval: "  << eval(expr, 0, MyEscape(35)).toStdString() << std::endl;
+  std::cout << "eval: "  << eval(expr, 0, db).toStdString() << std::endl;
   std::cout << "**************************" << std::endl;
 }
 
@@ -298,10 +279,17 @@ void JoinClauseTest::sandbox()
 
   //proto::display_expr( clientId == 5 || clientId == adrClientId || adrClientId < 8 );
   evaluateExpression( clientId == 75 );
-  evaluateExpression( clientId == adrClientId && clientId == 25 );
+  evaluateExpression( clientId == adrClientId && clientId == "ök7h" );
 
   qDebug() << "clientId table: " << clientId.tableName;
   qDebug() << "adrClientId table: " << adrClientId.tableName;
+}
+
+void JoinClauseTest::joinConstraintFieldTest()
+{
+  using Mdt::Sql::JoinConstraintField;
+
+  
 }
 
 /*

@@ -36,6 +36,8 @@ class JoinClauseTest : public QObject
 
   void sandbox();
 
+  void joinConstraintFieldTest();
+
   void initTestCase();
   void cleanupTestCase();
 };

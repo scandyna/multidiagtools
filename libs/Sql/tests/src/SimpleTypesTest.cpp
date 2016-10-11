@@ -18,23 +18,52 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ViewTable.h"
-#include "TableTemplate.h"
-#include "Table.h"
-#include "../TableName.h"
+#include "SimpleTypesTest.h"
+#include "Mdt/Application.h"
+#include "Mdt/Sql/FieldName.h"
+#include "Mdt/Sql/TableName.h"
 
-namespace Mdt{ namespace Sql{ namespace Schema{
-
-ViewTable::ViewTable(const Table & table, const QString & alias)
- : pvTableName(table.tableName()),
-   pvAlias(alias)
+void SimpleTypesTest::initTestCase()
 {
 }
 
-ViewTable::ViewTable(const TableName & name, const QString & alias)
- : pvTableName(name.toString()),
-   pvAlias(alias)
+void SimpleTypesTest::cleanupTestCase()
 {
 }
 
-}}} // namespace Mdt{ namespace Sql{ namespace Schema{
+/*
+ * Tests
+ */
+
+void SimpleTypesTest::fieldNameTest()
+{
+  using Mdt::Sql::FieldName;
+
+  FieldName fieldA("A");
+  QCOMPARE(fieldA.toString(), QString("A"));
+}
+
+void SimpleTypesTest::tableNameTest()
+{
+  using Mdt::Sql::TableName;
+
+  TableName tableA("A");
+  QCOMPARE(tableA.toString(), QString("A"));
+}
+
+
+/*
+ * Main
+ */
+
+int main(int argc, char **argv)
+{
+  Mdt::Application app(argc, argv);
+  SimpleTypesTest test;
+
+  if(!app.init()){
+    return 1;
+  }
+
+  return QTest::qExec(&test, argc, argv);
+}

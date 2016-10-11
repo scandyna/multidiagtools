@@ -1,6 +1,6 @@
 format 211
 "Sql" // Mdt::Sql
-  revision 21
+  revision 22
   modified_by 2 "philippe"
   // class settings
   
@@ -511,7 +511,7 @@ ${inlines}
     end
   end
 
-  classview 1419266 "FieldName"
+  classview 1419266 "SimpleTypes"
     
     classdiagramsettings member_max_width 0 end
     
@@ -533,6 +533,27 @@ ${inlines}
     end
 
     class 2940418 "FieldName"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2580610 "TableName"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 2940546 "TableName"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {

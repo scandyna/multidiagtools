@@ -247,7 +247,7 @@ void SchemaViewTest::joinClauseTest()
   using Mdt::Sql::Schema::JoinClause;
   using Mdt::Sql::Schema::JoinOperator;
   using Mdt::Sql::Schema::ViewTable;
-  using Mdt::Sql::Schema::TableName;
+  using Mdt::Sql::TableName;
 
   Schema::Client_tbl client;
   ViewTable CLI(client, "CLI");
@@ -319,7 +319,7 @@ void SchemaViewTest::joinClauseListTest()
   using Mdt::Sql::Schema::JoinClauseList;
   using Mdt::Sql::Schema::JoinOperator;
   using Mdt::Sql::Schema::ViewTable;
-  using Mdt::Sql::Schema::TableName;
+  using Mdt::Sql::TableName;
 
   Schema::Client_tbl client;
   ViewTable CLI(client, "CLI");
@@ -464,7 +464,7 @@ void SchemaViewTest::viewTableTest()
 {
   using Mdt::Sql::Schema::ViewTable;
   using Mdt::Sql::Schema::Table;
-  using Mdt::Sql::Schema::TableName;
+  using Mdt::Sql::TableName;
 
   Table Connector_tbl;
   Connector_tbl.setTableName("Connector_tbl");
@@ -534,7 +534,7 @@ void SchemaViewTest::viewTest()
   using Mdt::Sql::Schema::View;
   using Mdt::Sql::Schema::ViewTable;
   using Mdt::Sql::Schema::SelectField;
-  using Mdt::Sql::Schema::TableName;
+  using Mdt::Sql::TableName;
   using Mdt::Sql::Schema::JoinClause;
   using Mdt::Sql::Schema::JoinOperator;
   using Mdt::Sql::Schema::MainTableField;

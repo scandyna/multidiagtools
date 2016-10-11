@@ -23,7 +23,7 @@
 
 #include "Index.h"
 #include "Mdt/Sql/FieldName.h"
-#include "TableName.h"
+#include "Mdt/Sql/TableName.h"
 #include <QVector>
 
 namespace Mdt{ namespace Sql{ namespace Schema{

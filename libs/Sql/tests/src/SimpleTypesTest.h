@@ -18,13 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_TEST_H
-#define MDT_SQL_SCHEMA_TEST_H
+#ifndef MDT_SIMPLE_TYPES_TEST_H
+#define MDT_SIMPLE_TYPES_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
 
-class SchemaTest : public QObject
+class SimpleTypesTest : public QObject
 {
  Q_OBJECT
 
@@ -33,47 +33,9 @@ class SchemaTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void fieldTypeListTest();
-  void fieldTypeNameTest();
-  void fiedTypeListModelTest();
-
-  void charsetTest();
-  void localeTest();
-  void collationTest();
-
-  void fieldTest();
-  void fieldListTest();
-
-  void autoIncrementPrimaryKeyTest();
-  void singleFieldPrimaryKeyTest();
-  void primaryKeyTest();
-  void primaryKeyContainerTest();
-
-  void indexTest();
-  void indexListTest();
-  void indexListModelTest();
-
-  void parentTableFieldNameTest();
-  void childTableFieldNameTest();
-
-  void foreignKeyActionTest();
-  void foreignKeyTest();
-  void foreignKeyListTest();
-
-  void tablePrimaryKeyTest();
-  void tablePrimaryKeyAicBenchmark();
-  void tablePrimaryKeyMcBenchmark();
-  void tableTest();
-  void tableModelTest();
-  void tableListTest();
-
-  void tablePopulationTest();
-  void tablePopulationListTest();
-
-  void triggerTest();
-  void triggerListTest();
-
-  void schemaTest();
+  void fieldNameTest();
+  void tableNameTest();
 };
 
-#endif // #ifndef MDT_SQL_SCHEMA_TEST_H
+
+#endif // #ifndef MDT_SIMPLE_TYPES_TEST_H

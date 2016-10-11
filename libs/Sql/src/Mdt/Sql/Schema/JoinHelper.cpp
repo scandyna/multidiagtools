@@ -21,7 +21,7 @@
 #include "JoinHelper.h"
 #include "Table.h"
 #include "ForeignKey.h"
-#include "TableName.h"
+#include "../TableName.h"
 #include "ViewTable.h"
 #include "MainTableField.h"
 #include "TableToJoinField.h"

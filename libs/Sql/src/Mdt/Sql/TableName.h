@@ -18,23 +18,36 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ViewTable.h"
-#include "TableTemplate.h"
-#include "Table.h"
-#include "../TableName.h"
+#ifndef MDT_SQL_TABLE_NAME_H
+#define MDT_SQL_TABLE_NAME_H
 
-namespace Mdt{ namespace Sql{ namespace Schema{
+#include <QString>
 
-ViewTable::ViewTable(const Table & table, const QString & alias)
- : pvTableName(table.tableName()),
-   pvAlias(alias)
-{
-}
+namespace Mdt{ namespace Sql{
 
-ViewTable::ViewTable(const TableName & name, const QString & alias)
- : pvTableName(name.toString()),
-   pvAlias(alias)
-{
-}
+  /*! \brief Wrapper for compile time checking
+   */
+  class TableName
+  {
+   public:
 
-}}} // namespace Mdt{ namespace Sql{ namespace Schema{
+    /*! \breif Constructor
+     */
+    explicit TableName(const QString & name)
+     : pvTableName(name) {}
+
+    /*! \brief Get table name as string
+     */
+    QString toString() const
+    {
+      return pvTableName;
+    }
+
+   private:
+
+    QString pvTableName;
+  };
+
+}} // namespace Mdt{ namespace Sql{
+
+#endif // MDT_SQL_TABLE_NAME_H

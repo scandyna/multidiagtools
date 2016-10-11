@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 94
+  revision 95
   modified_by 2 "philippe"
   // class settings
   
@@ -4393,27 +4393,6 @@ ${inlines}
     
     activitydiagramsettings
      end
-    classdiagram 2580610 "TableName"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 2940546 "TableName"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
     classdiagram 2461698 "Table"
       classdiagramsettings member_max_width 0 end
       size B-Landscape

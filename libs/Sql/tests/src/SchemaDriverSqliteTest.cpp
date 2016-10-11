@@ -1534,7 +1534,7 @@ void SchemaDriverSqliteTest::joinClauseDefinitionTest()
   using Mdt::Sql::Schema::JoinClause;
   using Mdt::Sql::Schema::JoinOperator;
   using Mdt::Sql::Schema::ViewTable;
-  using Mdt::Sql::Schema::TableName;
+  using Mdt::Sql::TableName;
 
   Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
   QString expectedSql;
@@ -1605,7 +1605,7 @@ void SchemaDriverSqliteTest::viewDefinitionTest()
   using Mdt::Sql::FieldName;
   using Mdt::Sql::Schema::View;
   using Mdt::Sql::Schema::ViewTable;
-  using Mdt::Sql::Schema::TableName;
+  using Mdt::Sql::TableName;
   using Mdt::Sql::Schema::MainTableField;
   using Mdt::Sql::Schema::TableToJoinField;
   using Mdt::Sql::Schema::JoinClause;
