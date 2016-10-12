@@ -36,14 +36,15 @@ namespace Mdt{ namespace Sql{
    * #include <Mdt/Sql/JoinConstraintField.h>
    *
    * using Mdt::Sql::JoinConstraintField;
+   * using Mdt::Sql::TableName;
    * using Mdt::Sql::FieldName;
    *
-   * JoinConstraintField cliendId(...., FieldName("Id_PK") );
+   * JoinConstraintField cliendId(TableName("Client_tbl"), FieldName("Id_PK") );
    * // cliendId is a terminal that can be used in a JoinConstraintExpression
    *
    * \endcode
    */
-  using JoinConstraintField = Expression::JoinConstraint::TableFieldTerminal< JoinConstraintFieldTag >;
+  using JoinConstraintField = const Expression::JoinConstraint::TableFieldTerminal< JoinConstraintFieldTag >;
 
 
 }} // namespace Mdt{ namespace Sql{

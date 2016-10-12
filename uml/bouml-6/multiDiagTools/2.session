@@ -27,30 +27,30 @@ diagrams
     120 110 100 4 0 0
   classdiagram_ref 2860802 // overview
     120 110 100 4 0 0
-  active  classdiagram_ref 2868098 // JoinClause
+  classdiagram_ref 2868098 // JoinClause
+    1004 906 100 4 0 0
+  active  classdiagram_ref 2868226 // TableField
     1004 906 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2461698 // Table
+selected classview_ref 1531394 // Grammar
 open
   
-  package_ref 549506 // Algorithm
+package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
   class_ref 3225986 // CalculatorContext
   class_ref 3226498 // Calculator
   classview_ref 1511426 // Sandbox
   
-  package_ref 516226 // SqlItemModel
+package_ref 516226 // SqlItemModel
   
-  package_ref 582274 // SqlItemEditor
+package_ref 582274 // SqlItemEditor
   class_ref 3247490 // TableFieldTerminal
-  classview_ref 1320706 // Table
-  class_ref 3239810 // JoinConstraintExpression
-  class_ref 2940546 // TableName
-  classdiagram_ref 2860930 // WhereClauseExpression
-  class_ref 3239682 // WhereClauseExpression
   
-  package_ref 430082 // Dsp
+package_ref 443522 // Schema
+  class_ref 3239810 // JoinConstraintExpression
+  
+package_ref 430082 // Dsp
   classview_ref 1518082 // context
   classview_ref 1517954 // proto
 end

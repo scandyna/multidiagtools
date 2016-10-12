@@ -28,18 +28,26 @@ class JoinClauseTest : public QObject
 {
  Q_OBJECT
 
- private:
-
-  // Compile time checks
-
  private slots:
-
-  void sandbox();
-
-  void joinConstraintFieldTest();
 
   void initTestCase();
   void cleanupTestCase();
+
+ private:
+
+  /*
+   * Compile time tests
+   */
+
+  void grammarComparisonTest();
+  void grammarLogicalExpressionTest();
+
+ private slots:
+
+  void sandbox2();
+  void sandbox();
+
+  void joinConstraintFieldTest();
 };
 
 

@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_TABLE_FIELD_TERMINAL_H
 #define MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_TABLE_FIELD_TERMINAL_H
 
+#include "Mdt/Sql/TableName.h"
 #include "Mdt/Sql/FieldName.h"
 #include <QString>
 #include <boost/proto/extends.hpp>
@@ -32,7 +33,7 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
    * \tparam Tag Type to make target terminal a unique type
    */
   template<typename Tag, typename Domain = boost::proto::default_domain>
-  class TableFieldTerminal : boost::proto::extends<
+  struct TableFieldTerminal : boost::proto::extends<
                                       boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<Tag> >,
                                       TableFieldTerminal< Tag, Domain >,
                                       Domain
@@ -50,11 +51,18 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
     typedef typename boost::proto::result_of::value<terminal_type &>::type        reference;
     typedef typename boost::proto::result_of::value<const terminal_type &>::type  const_reference;
 
-    /*! \brief Constructor
-    */
-    TableFieldTerminal(const QString & tn)
+    /*
+     * This will define operator()= , which permit to give better error messages with grammars.
+     * (Without this, error could look like 'error: no match for operator= ......'
+     */
+    BOOST_PROTO_EXTENDS_USING_ASSIGN(TableFieldTerminal)
+
+    /*! \brief Construct a terminal by defining table name and field name
+     */
+    TableFieldTerminal(const TableName & tn, const FieldName & fn)
     : base_type(terminal_type::make(Tag())),
-      mTableName(tn)
+      mTableName(tn.toString()),
+      mFieldName(fn.toString())
     {
     }
 
@@ -77,7 +85,6 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
     QString mTableName;
     QString mFieldName;
   };
-
 
 }}}} // namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
 
