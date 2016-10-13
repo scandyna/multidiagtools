@@ -345,15 +345,17 @@ void JoinClauseTest::grammarComparisonTest()
   static_assert( !expressionMatchesGrammar< decltype( clientId && adrClientId ) , Comparison >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( clientId || adrClientId ) , Comparison >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( clientId = adrClientId ) , Comparison >() , "" );
-
+  static_assert( !expressionMatchesGrammar< decltype( clientId == (adrClientId < 25) ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( (clientId == adrClientId) == 32 ) , Comparison >() , "" );
+//   static_assert( !expressionMatchesGrammar< decltype( clientId == clientId ) , Comparison >() , "" );
 }
 
-void JoinClauseTest::grammarLogicalExpressionTest()
+void JoinClauseTest::grammarTest()
 {
   namespace JoinConstraint = Mdt::Sql::Expression::JoinConstraint;
   namespace Sql = Mdt::Sql;
 
-  using JoinConstraint::LogicalExpression;
+  using JoinConstraint::Grammar;
   using Sql::JoinConstraintField;
   using Sql::TableName;
   using Sql::FieldName;
@@ -361,26 +363,27 @@ void JoinClauseTest::grammarLogicalExpressionTest()
   JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
   JoinConstraintField adrClientId(TableName("Address_tbl"), FieldName("Client_Id_FK"));
 
-  static_assert( !expressionMatchesGrammar< decltype( clientId == 25 ) , LogicalExpression >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( clientId == adrClientId ) , LogicalExpression >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( clientId && 25 ) , LogicalExpression >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( clientId && adrClientId ) , LogicalExpression >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( clientId || 25 ) , LogicalExpression >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( clientId || adrClientId ) , LogicalExpression >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == 25) && (adrClientId == 52) ) , LogicalExpression >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (adrClientId < 20) ) , LogicalExpression >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId < 25) && (adrClientId == clientId) ) , LogicalExpression >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (clientId > 10) && (adrClientId < 100) ) , LogicalExpression >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (clientId > 10) && (adrClientId < 100) && (adrClientId > 2) ) , LogicalExpression >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (clientId > 10) && (clientId < 1000) && (adrClientId < 100) && (adrClientId > 2) ) , LogicalExpression >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == 25) || (adrClientId == 52) ) , LogicalExpression >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (adrClientId < 20) ) , LogicalExpression >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId < 25) || (adrClientId == clientId) ) , LogicalExpression >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (clientId > 10) || (adrClientId < 100) ) , LogicalExpression >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (clientId > 10) || (adrClientId < 100) || (adrClientId > 2) ) , LogicalExpression >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (clientId > 10) || (clientId < 1000) || (adrClientId < 100) || (adrClientId > 2) ) , LogicalExpression >() , "" );
-
-  /// \todo Combine && and ||
+  static_assert( !expressionMatchesGrammar< decltype( clientId == 25 ) , Grammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId == adrClientId ) , Grammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId && 25 ) , Grammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId && adrClientId ) , Grammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId || 25 ) , Grammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId || adrClientId ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == 25) && (adrClientId == 52) ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (adrClientId < 20) ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId < 25) && (adrClientId == clientId) ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (clientId > 10) && (adrClientId < 100) ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (clientId > 10) && (adrClientId < 100) && (adrClientId > 2) ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (clientId > 10) && (clientId < 1000) && (adrClientId < 100) && (adrClientId > 2) ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == 25) || (adrClientId == 52) ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (adrClientId < 20) ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId < 25) || (adrClientId == clientId) ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (clientId > 10) || (adrClientId < 100) ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (clientId > 10) || (adrClientId < 100) || (adrClientId > 2) ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (clientId > 10) || (clientId < 1000) || (adrClientId < 100) || (adrClientId > 2) ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && ( (adrClientId < 20) || (clientId < 50) ) ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( ( (clientId == adrClientId) || (clientId == 2) ) && ( (adrClientId < 20) || (clientId < 50) ) ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || ( (adrClientId > 20) && (adrClientId < 50) ) ) , Grammar >() , "" );
 }
 
 void JoinClauseTest::sandbox2()
@@ -388,15 +391,25 @@ void JoinClauseTest::sandbox2()
   namespace JoinConstraint = Mdt::Sql::Expression::JoinConstraint;
   namespace Sql = Mdt::Sql;
 
-  using JoinConstraint::LogicalExpression;
+  using JoinConstraint::Grammar;
   using Sql::JoinConstraintField;
   using Sql::TableName;
   using Sql::FieldName;
 
-  JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
-  JoinConstraintField adrClientId(TableName("Address_tbl"), FieldName("Client_Id_FK"));
+  JoinConstraintField A(TableName("A"), FieldName("a"));
+  JoinConstraintField B(TableName("B"), FieldName("b"));
 
-  boost::proto::display_expr( clientId == adrClientId && clientId > 10 && clientId != 50 && adrClientId < 100 && adrClientId >= 2 );
+  std::cout << "**************************************************" << std::endl;
+  std::cout <<               "(A == B) && ( (A > 10) || (A != 50) )" << std::endl;
+  boost::proto::display_expr( (A == B) && ( (A > 10) || (A != 50) ) );
+  
+  std::cout << "**************************************************" << std::endl;
+  std::cout <<               "(A == B) || ( (A > 10) && (A != 50) )" << std::endl;
+  boost::proto::display_expr( (A == B) || ( (A > 10) && (A != 50) ) );
+  
+  std::cout << "**************************************************" << std::endl;
+  std::cout <<               "( (A == 1) || (A > 2) ) && ( (B < 10) || (B > 50) )" << std::endl;
+  boost::proto::display_expr( ( (A == 1) || (A > 2) ) && ( (B < 10) || (B > 50) ) );
 }
 
 // void JoinClauseTest::grammarMatchValueTest()

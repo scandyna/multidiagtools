@@ -77,19 +77,28 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
   {
   };
 
-  struct LogicalExpression : boost::proto::or_<
-                                boost::proto::logical_and< Comparison , Comparison > ,
-                                boost::proto::logical_and< LogicalExpression , Comparison > ,
-                                boost::proto::logical_or< Comparison , Comparison > ,
-                                boost::proto::logical_or< LogicalExpression , Comparison >
-                              >
+  struct LogicalAnd : boost::proto::or_<
+                        boost::proto::logical_and< Comparison , Comparison > ,
+                        boost::proto::logical_and< Grammar , Comparison > ,
+                        boost::proto::logical_and< Comparison , Grammar > ,
+                        boost::proto::logical_and< Grammar , Grammar >
+                      >
+  {
+  };
+
+  struct LogicalOr : boost::proto::or_<
+                        boost::proto::logical_or< Comparison , Comparison > ,
+                        boost::proto::logical_or< Grammar , Comparison > ,
+                        boost::proto::logical_or< Comparison , Grammar > ,
+                        boost::proto::logical_or< Grammar , Grammar >
+                      >
   {
   };
 
   struct Grammar : boost::proto::or_<
-                     Comparison ,
-                     LogicalExpression
-                   >
+                                LogicalAnd ,
+                                LogicalOr
+                              >
   {
   };
 

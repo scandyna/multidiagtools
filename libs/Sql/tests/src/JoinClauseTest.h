@@ -40,7 +40,7 @@ class JoinClauseTest : public QObject
    */
 
   void grammarComparisonTest();
-  void grammarLogicalExpressionTest();
+  void grammarTest();
 
  private slots:
 
