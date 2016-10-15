@@ -1,6 +1,6 @@
 format 211
 "Expression" // Mdt::Sql::Expression
-  revision 2
+  revision 4
   modified_by 2 "philippe"
   // class settings
   
@@ -26,6 +26,104 @@ format 211
   activitydiagramsettings
    end
   
+  classview 1544706 "Expression"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2887810 "Container"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3267202 "ExpressionContainerInterface"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 4676354 "~ExpressionContainerInterface"
+	abstract cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
+
+      operation 4677250 "toSql"
+	abstract cpp_virtual public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3267330 "ExpressionContainerImpl"
+      visibility package 
+      nformals 1
+      formal name "T" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3688706 // <generalisation>
+	relation 3669506 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3688706 // <generalisation>
+	  b parent class_ref 3267202 // ExpressionContainerInterface
+      end
+
+      attribute 3034754 "expression"
+	public explicit_type "T"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+  end
+
   classview 1524866 "SearchCondition"
     
     classdiagramsettings member_max_width 0 end

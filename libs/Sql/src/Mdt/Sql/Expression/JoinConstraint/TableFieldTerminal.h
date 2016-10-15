@@ -25,6 +25,7 @@
 #include "Mdt/Sql/FieldName.h"
 #include <QString>
 #include <boost/proto/extends.hpp>
+#include <boost/proto/operators.hpp>
 
 namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
 

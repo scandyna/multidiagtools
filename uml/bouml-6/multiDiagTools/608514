@@ -1,6 +1,6 @@
 format 211
 "JoinConstraint" // Mdt::Sql::Expression::JoinConstraint
-  revision 3
+  revision 6
   modified_by 2 "philippe"
   // class settings
   
@@ -127,6 +127,129 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+  end
+
+  classview 1538178 "Domain"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2881282 "Domain"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3260546 "Domain"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+  end
+
+  classview 1551234 "Generator"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 2894338 "SqlGenerator"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3273858 "ExpressionContainer"
+      visibility package 
+      nformals 1
+      formal name "Expr" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3695490 // <generalisation>
+	relation 3676290 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3695490 // <generalisation>
+	  b parent class_ref 3267202 // ExpressionContainerInterface
+      end
+
+      operation 4683778 "toSql"
+	public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 3041282 "Expression"
+	private explicit_type "Expr"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 3695746 // <directional composition>
+	relation 3676546 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 3695746 // <directional composition>
+	  b parent class_ref 3247362 // JoinConstraintField
+      end
     end
   end
 end

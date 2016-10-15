@@ -18,37 +18,21 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_JOIN_CLAUSE_TEST_H
-#define MDT_JOIN_CLAUSE_TEST_H
+#include "JoinConstraintExpression.h"
+#include "Expression/ExpressionContainerInterface.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace Sql{
 
-class JoinClauseTest : public QObject
+JoinConstraintExpression::~JoinConstraintExpression()
 {
- Q_OBJECT
+}
 
- private slots:
+QString JoinConstraintExpression::toSql(const QSqlDatabase & db) const
+{
+  Q_ASSERT(mContainer);
+  Q_ASSERT(db.isValid());
 
-  void initTestCase();
-  void cleanupTestCase();
+  return mContainer->toSql(db);
+}
 
- private:
-
-  /*
-   * Compile time tests
-   */
-
-  void joinConstraintGrammarComparisonTest();
-  void joinConstraintGrammarTest();
-
- private slots:
-
-  void sandbox2();
-  void sandbox();
-
-  void joinConstraintFieldTest();
-};
-
-
-#endif // #ifndef MDT_JOIN_CLAUSE_TEST_H
+}} // namespace Mdt{ namespace Sql{

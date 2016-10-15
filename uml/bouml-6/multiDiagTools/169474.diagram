@@ -2,7 +2,7 @@ format 211
 
 classcanvas 128002 class_ref 182402 // Error
   classdiagramsettings member_max_width 0 end
-  xyz 337 121 2000
+  xyz 554 114 2000
 end
 classcanvas 129922 class_ref 2064130 // mdtErrorPrivate
   classdiagramsettings member_max_width 0 end
@@ -26,8 +26,8 @@ relationcanvas 131458 relation_ref 2424578 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131586 relation_ref 2424706 // <directional composition>
-  from ref 128002 z 2001 stereotype "<<*>>" xyz 399.5 198 3000 to ref 131330
-  role_a_pos 311 166 3000 no_role_b
+  from ref 128002 z 2001 stereotype "<<*>>" xyz 507.5 194 3000 to ref 131330
+  role_a_pos 311 163 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132226 relation_ref 2437762 // <generalisation>

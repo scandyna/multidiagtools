@@ -27,26 +27,37 @@ diagrams
     120 110 100 4 0 0
   classdiagram_ref 2860802 // overview
     120 110 100 4 0 0
-  classdiagram_ref 2868098 // JoinClause
-    1004 906 100 4 0 0
-  active  classdiagram_ref 2874754 // Grammar
+  classdiagram_ref 169474 // Error
+    120 110 100 4 36 0
+  classdiagram_ref 2508162 // Overview
+    1004 906 100 18 0 0
+  active  classdiagram_ref 2868098 // JoinConstraintExpression
+    1004 906 100 18 0 0
+  classdiagram_ref 2887810 // Container
     1004 906 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2874754 // Grammar
+selected classdiagram_ref 2868098 // JoinConstraintExpression
 open
+  classview_ref 1353730 // Overview
   
   package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
+  classview_ref 161666 // Error
   
   package_ref 516226 // SqlItemModel
   
   package_ref 582274 // SqlItemEditor
+  class_ref 3267202 // ExpressionContainerInterface
+  class_ref 3267330 // ExpressionContainerImpl
   class_ref 3247490 // TableFieldTerminal
   classview_ref 1531394 // Grammar
-  
-  package_ref 443522 // Schema
-  class_ref 3239810 // JoinConstraintExpression
+  classview_ref 1538178 // Domain
+  class_ref 3273858 // ExpressionContainer
+  class_ref 3247362 // JoinConstraintField
+  operation_ref 4676482 // operator=
+  operation_ref 4676610 // toSql
+  classview_ref 1405954 // Select
   
   package_ref 430082 // Dsp
   classview_ref 1518082 // context

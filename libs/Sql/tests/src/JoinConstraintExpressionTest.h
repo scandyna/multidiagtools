@@ -18,13 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_JOIN_CLAUSE_TEST_H
-#define MDT_JOIN_CLAUSE_TEST_H
+#ifndef MDT_JOIN_CONSTRAINT_EXPRESSION_TEST_H
+#define MDT_JOIN_CONSTRAINT_EXPRESSION_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
 
-class JoinClauseTest : public QObject
+class JoinConstraintExpressionTest : public QObject
 {
  Q_OBJECT
 
@@ -39,16 +39,13 @@ class JoinClauseTest : public QObject
    * Compile time tests
    */
 
-  void joinConstraintGrammarComparisonTest();
-  void joinConstraintGrammarTest();
+  void grammarComparisonTest();
+  void grammarTest();
 
  private slots:
 
-  void sandbox2();
-  void sandbox();
-
-  void joinConstraintFieldTest();
+  void fieldTest();
 };
 
 
-#endif // #ifndef MDT_JOIN_CLAUSE_TEST_H
+#endif // #ifndef MDT_JOIN_CONSTRAINT_EXPRESSION_TEST_H

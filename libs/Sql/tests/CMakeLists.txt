@@ -25,6 +25,16 @@ add_executable(mdtsqlsimpletypestest src/SimpleTypesTest.cpp)
 target_link_libraries(mdtsqlsimpletypestest "mdtsqltest")
 add_test(MdtSqlSimpleTypesTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlsimpletypestest)
 
+# Target MdtSqlJoinClauseTest
+add_executable(mdtsqljoinclausetest src/JoinClauseTest.cpp)
+target_link_libraries(mdtsqljoinclausetest "mdtsqltest")
+add_test(MdtSqlJoinClauseTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqljoinclausetest)
+
+# Target MdtSqlJoinConstraintExpressionTest
+add_executable(mdtsqljoinconstraintexpressiontest src/JoinConstraintExpressionTest.cpp)
+target_link_libraries(mdtsqljoinconstraintexpressiontest "mdtsqltest")
+add_test(MdtSqlJoinConstraintExpressionTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqljoinconstraintexpressiontest)
+
 # Target MdtSqlQueryTest
 add_executable(mdtsqlquerytest src/QueryTest.cpp)
 target_link_libraries(mdtsqlquerytest "mdtsqltest")
@@ -60,10 +70,6 @@ add_executable(mdtsqlschemaviewtest src/SchemaViewTest.cpp)
 target_link_libraries(mdtsqlschemaviewtest "mdtsqltest")
 add_test(MdtSqlSchemaViewTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlschemaviewtest)
 
-# Target MdtSqlJoinClauseTest
-add_executable(mdtsqljoinclausetest src/JoinClauseTest.cpp)
-target_link_libraries(mdtsqljoinclausetest "mdtsqltest")
-add_test(MdtSqlJoinClauseTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqljoinclausetest)
 
 # Target MdtSqlSearchConditionExpressionTest
 add_executable(mdtsqlsearchconditionexpressiontest src/SearchConditionExpressionTest.cpp)

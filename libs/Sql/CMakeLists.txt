@@ -8,6 +8,7 @@ set(SOURCES_FILES
     src/Mdt/Sql/Error.cpp
     src/Mdt/Sql/Query.cpp
     src/Mdt/Sql/InsertQuery.cpp
+    src/Mdt/Sql/JoinConstraintExpression.cpp
     src/Mdt/Sql/Schema/Driver.cpp
     src/Mdt/Sql/Schema/DriverImplementationInterface.cpp
     src/Mdt/Sql/Schema/DriverSQLite.cpp

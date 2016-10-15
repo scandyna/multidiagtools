@@ -2,18 +2,55 @@ format 211
 
 classcanvas 128002 class_ref 3247362 // JoinConstraintField
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 203.5 2000
+  xyz 160 370 2000
 end
 classcanvas 128130 class_ref 3239810 // JoinConstraintExpression
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 352.5 2000
-end
-classcanvas 128258 class_ref 3225090 // terminal
-  classdiagramsettings member_max_width 0 show_context_mode uml end
-  xyz 257.5 203.5 2005
+  xyz 176 38 2000
 end
 classcanvas 128514 class_ref 3247490 // TableFieldTerminal
   classdiagramsettings member_max_width 0 show_context_mode uml end
-  xyz 40.5 40.5 2000
+  xyz 40 225 2000
+end
+classcanvas 128642 class_ref 3225730 // extends
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 40.5 536.5 2005
+end
+classcanvas 128770 class_ref 3260546 // Domain
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 271.5 536.5 2000
+end
+classcanvas 129282 class_ref 3273858 // ExpressionContainer
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 456 360 2005
+end
+classcanvas 129410 class_ref 3267202 // ExpressionContainerInterface
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 481 71 2006
+end
+relationcanvas 129666 relation_ref 3676290 // <generalisation>
+  decenter_begin 488
+  decenter_end 486
+  from ref 129282 z 2007 to ref 129410
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 3676418 // <directional composition>
+  from ref 128130 z 2007 to ref 129410
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 3676546 // <directional composition>
+  decenter_end 550
+  from ref 129282 z 2006 to ref 128002
+  no_role_a no_role_b
+  multiplicity_a_pos 306 417 3000 no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 3676674 // <dependency>
+  decenter_begin 525
+  decenter_end 509
+  from ref 128002 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end
