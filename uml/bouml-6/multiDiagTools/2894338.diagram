@@ -1,7 +1,106 @@
 format 211
 
-classcanvas 128002 class_ref 3273858 // SqlGenerator
+classcanvas 128130 class_ref 3280386 // GetJoinConstraintFieldSql
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 40.5 2000
+  xyz 857.8 170 2000
+end
+classcanvas 128258 class_ref 3280514 // callable
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 570.6 42.6 2000
+end
+classcanvas 128514 class_ref 3280642 // GetLiteralValueSql
+  classdiagramsettings member_max_width 0 end
+  xyz 40.4 170 2000
+end
+classcanvas 129026 class_ref 3280770 // GetCompareEqualSql
+  classdiagramsettings member_max_width 0 end
+  xyz 473.6 170 2000
+end
+classcanvas 129538 class_ref 3225602 // or_
+  classdiagramsettings member_max_width 0 end
+  xyz 418.5 311.2 2005
+end
+classcanvas 129666 class_ref 3280898 // GetTerminalSql
+  classdiagramsettings member_max_width 0 end
+  xyz 539.2 456.7 2000
+end
+classcanvas 129922 class_ref 3281026 // GetComparisonSql
+  classdiagramsettings member_max_width 0 end
+  xyz 208.6 456.7 2000
+end
+classcanvas 130178 class_ref 3281154 // GetExpressionSql
+  classdiagramsettings member_max_width 0 end
+  xyz 688.9 456.7 2000
+end
+classcanvas 131202 class_ref 3281282 // GetLogicalAndSql
+  classdiagramsettings member_max_width 0 end
+  xyz 40.7 456.7 2000
+end
+classcanvas 131330 class_ref 3281410 // GetLogicalOrSql
+  classdiagramsettings member_max_width 0 end
+  xyz 382.5 456.7 2000
+end
+relationcanvas 128386 relation_ref 3683202 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 523
+  from ref 128130 z 2001 to point 1068 128
+  line 129282 z 2001 to point 645 128
+  line 129410 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 3683330 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 508
+  decenter_end 523
+  from ref 128514 z 2001 to point 237 128
+  line 128770 z 2001 to point 645 128
+  line 128898 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 3683458 // <generalisation>
+  decenter_begin 510
+  decenter_end 523
+  from ref 129026 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 3683586 // <generalisation>
+  geometry VHV unfixed
+  from ref 129666 z 2006 to point 591.7 416.2
+  line 131970 z 2006 to point 438 416.2
+  line 132098 z 2006 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 3683714 // <generalisation>
+  geometry VHV unfixed
+  from ref 129922 z 2006 to point 272.6 416.6
+  line 130690 z 2006 to point 438 416.6
+  line 130818 z 2006 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130562 relation_ref 3683842 // <generalisation>
+  geometry VHV unfixed
+  from ref 130178 z 2006 to point 749.9 416.6
+  line 130946 z 2006 to point 438 416.6
+  line 131074 z 2006 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131458 relation_ref 3683970 // <generalisation>
+  geometry VHV unfixed
+  from ref 131202 z 2006 to point 101.7 416.2
+  line 131714 z 2006 to point 438 416.2
+  line 131842 z 2006 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131586 relation_ref 3684098 // <generalisation>
+  from ref 131330 z 2006 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end

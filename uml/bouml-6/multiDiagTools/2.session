@@ -31,13 +31,15 @@ diagrams
     120 110 100 4 36 0
   classdiagram_ref 2508162 // Overview
     1004 906 100 18 0 0
-  active  classdiagram_ref 2868098 // JoinConstraintExpression
+  classdiagram_ref 2868098 // JoinConstraintExpression
     1004 906 100 18 0 0
   classdiagram_ref 2887810 // Container
     1004 906 100 4 0 0
+  active  classdiagram_ref 2894338 // SqlGenerator
+    1004 906 90 21 0 24
 end
 show_stereotypes
-selected classdiagram_ref 2868098 // JoinConstraintExpression
+selected class_ref 3225602 // or_
 open
   classview_ref 1353730 // Overview
   
@@ -52,8 +54,9 @@ open
   class_ref 3267330 // ExpressionContainerImpl
   class_ref 3247490 // TableFieldTerminal
   classview_ref 1531394 // Grammar
-  classview_ref 1538178 // Domain
-  class_ref 3273858 // ExpressionContainer
+  class_ref 3280386 // GetJoinConstraintFieldSql
+  class_ref 3280642 // GetLiteralValueSql
+  class_ref 3280770 // GetCompareEqualSql
   class_ref 3247362 // JoinConstraintField
   operation_ref 4676482 // operator=
   operation_ref 4676610 // toSql

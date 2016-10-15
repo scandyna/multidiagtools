@@ -1,6 +1,6 @@
 format 211
 "proto" // boost::proto
-  revision 4
+  revision 5
   modified_by 2 "philippe"
   // class settings
   
@@ -178,6 +178,27 @@ ${inlines}
         explicit_extends ""
       formal name "Super" type "class" explicit_default_value ""
         explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2900866 "callable"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3280514 "callable"
+      visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
