@@ -96,6 +96,7 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
   };
 
   struct Grammar : boost::proto::or_<
+                                Comparison ,
                                 LogicalAnd ,
                                 LogicalOr
                               >

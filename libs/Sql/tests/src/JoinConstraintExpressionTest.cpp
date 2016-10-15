@@ -23,7 +23,10 @@
 #include "Mdt/Sql/JoinConstraintField.h"
 #include "Mdt/Sql/JoinConstraintExpression.h"
 #include "Mdt/Sql/Expression/JoinConstraint/Grammar.h"
+#include <QSqlDatabase>
 #include <boost/proto/matches.hpp>
+
+#include <boost/proto/proto.hpp>
 
 /*
  * Init / cleanup
@@ -138,8 +141,8 @@ void JoinConstraintExpressionTest::grammarTest()
   JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
   JoinConstraintField adrClientId(TableName("Address_tbl"), FieldName("Client_Id_FK"));
 
-  static_assert( !expressionMatchesGrammar< decltype( clientId == 25 ) , Grammar >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( clientId == adrClientId ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( clientId == 25 ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( clientId == adrClientId ) , Grammar >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( clientId && 25 ) , Grammar >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( clientId && adrClientId ) , Grammar >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( clientId || 25 ) , Grammar >() , "" );
@@ -167,6 +170,55 @@ void JoinConstraintExpressionTest::grammarTest()
 
 void JoinConstraintExpressionTest::fieldTest()
 {
+  namespace Sql = Mdt::Sql;
+
+  using Sql::JoinConstraintField;
+  using Sql::TableName;
+  using Sql::FieldName;
+
+
+  JoinConstraintField A(TableName("A_tbl"), FieldName("id_A"));
+  QCOMPARE(A.tableName(), QString("A_tbl"));
+  QCOMPARE(A.fieldName(), QString("id_A"));
+}
+
+void JoinConstraintExpressionTest::expressionContructCopySqliteTest()
+{
+  namespace Sql = Mdt::Sql;
+
+  using Sql::TableName;
+  using Sql::FieldName;
+  using Sql::JoinConstraintField;
+  using Sql::JoinConstraintExpression;
+
+  auto db = QSqlDatabase::addDatabase("QSQLITE");
+  if(!db.isValid()){
+    QSKIP("QSQLITE driver is not available - Skip test");
+  }
+
+  JoinConstraintField A(TableName("A"), FieldName("a"));
+  JoinConstraintField B(TableName("B"), FieldName("b"));
+  QString expectedSql;
+
+  /*
+   * Default construct
+   */
+  JoinConstraintExpression exp;
+  /*
+   * Construct
+   */
+  JoinConstraintExpression exp1( A == 2 );
+  expectedSql = "\"A\".\"a\"=2";
+  QCOMPARE(exp1.toSql(db), expectedSql);
+
+}
+
+void JoinConstraintExpressionTest::expressionAssignSqliteTest()
+{
+  auto db = QSqlDatabase::addDatabase("QSQLITE");
+  if(!db.isValid()){
+    QSKIP("QSQLITE driver is not available - Skip test");
+  }
 
 }
 

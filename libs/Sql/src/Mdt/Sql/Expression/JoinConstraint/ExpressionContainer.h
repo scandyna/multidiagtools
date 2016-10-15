@@ -26,6 +26,10 @@
 #include <QString>
 #include <QSqlDatabase>
 
+#include "Mdt/Sql/JoinConstraintField.h"
+
+#include <boost/proto/proto.hpp>
+
 namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
 
   /*! \brief Implementation of join constraint expression container
@@ -47,7 +51,7 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
      */
     template<typename InExpr>
     ExpressionContainer(const InExpr & expr)
-     : mExpression( boost::proto::_deep_copy(expr) )
+     : mExpression( boost::proto::deep_copy(expr) )
     {
     }
 

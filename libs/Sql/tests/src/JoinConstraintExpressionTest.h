@@ -45,6 +45,9 @@ class JoinConstraintExpressionTest : public QObject
  private slots:
 
   void fieldTest();
+
+  void expressionContructCopySqliteTest();
+  void expressionAssignSqliteTest();
 };
 
 
