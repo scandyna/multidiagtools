@@ -23,6 +23,7 @@
 #include "Mdt/Sql/JoinConstraintField.h"
 #include "Mdt/Sql/JoinConstraintExpression.h"
 #include "Mdt/Sql/Expression/JoinConstraint/Grammar.h"
+#include "Mdt/Sql/Expression/JoinConstraint/SqlTransform.h"
 #include <QSqlDatabase>
 #include <boost/proto/matches.hpp>
 
@@ -34,6 +35,11 @@
 
 void JoinConstraintExpressionTest::initTestCase()
 {
+  // Get database instance
+  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  if(!pvDatabase.isValid()){
+    QSKIP("QSQLITE driver is not available - Skip all tests");  // Will also skip all tests
+  }
 }
 
 void JoinConstraintExpressionTest::cleanupTestCase()
@@ -49,6 +55,16 @@ constexpr bool expressionMatchesGrammar()
 {
   return boost::proto::matches< Expr, Grammar >::value;
 }
+
+/// \todo Should add grammarLiteralValueTest to check int, float, double, const char*, QDate, ...
+/**
+ * \note How to distiguisch :"some string" or "Date-Time" formatted string ??
+ *  - Check while generating SQL ??
+ *  - Simply request user to be explicit (f.ex. QDate("xx.yy.zz") ) ?
+ *  - Define some TAG for date/time/datetime literal terminal ?
+ *   -> Ex: Date("xx.yy.zz")
+ * --> QDate/etc.. seems to be the simplest..
+ */
 
 void JoinConstraintExpressionTest::grammarComparisonTest()
 {
@@ -182,6 +198,108 @@ void JoinConstraintExpressionTest::fieldTest()
   QCOMPARE(A.fieldName(), QString("id_A"));
 }
 
+// void JoinConstraintExpressionTest::transforGetJoinConstraintFieldSqlTest()
+// {
+//   namespace Sql = Mdt::Sql;
+// 
+//   using Sql::JoinConstraintField;
+//   using Sql::TableName;
+//   using Sql::FieldName;
+//   using Sql::Expression::JoinConstraint::GetJoinConstraintFieldSql;
+// 
+//   auto db = pvDatabase;
+//   QVERIFY(db.isValid());
+//   QString expectedSql;
+//   GetJoinConstraintFieldSql transform;
+// 
+//   JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
+//   expectedSql = "\"Client_tbl\".\"Id_PK\"";
+//   QCOMPARE(transform(clientId, db), expectedSql);
+// }
+
+// void JoinConstraintExpressionTest::transforGetLiteralValueSqlTest()
+// {
+// 
+// }
+
+void JoinConstraintExpressionTest::transformGetTerminalSql()
+{
+  namespace Sql = Mdt::Sql;
+
+  using Sql::JoinConstraintField;
+  using Sql::TableName;
+  using Sql::FieldName;
+  using Sql::Expression::JoinConstraint::GetTerminalSql;
+
+  auto db = pvDatabase;
+  QVERIFY(db.isValid());
+  QString expectedSql;
+  GetTerminalSql transform;
+
+  JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
+  expectedSql = "\"Client_tbl\".\"Id_PK\"";
+  /// QCOMPARE(transform(clientId, 0, db), expectedSql);
+
+}
+
+void JoinConstraintExpressionTest::transformGetComparisonSql()
+{
+  namespace Sql = Mdt::Sql;
+
+  using Sql::JoinConstraintField;
+  using Sql::TableName;
+  using Sql::FieldName;
+  using Sql::Expression::JoinConstraint::GetComparisonSql;
+
+  auto db = pvDatabase;
+  QVERIFY(db.isValid());
+  QString expectedSql;
+  GetComparisonSql transform;
+
+  JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
+  JoinConstraintField adrClientId(TableName("Address_tbl"), FieldName("Client_Id_FK"));
+  /*
+   * Check Field == Field
+   */
+  expectedSql = "\"Client_tbl\".\"Id_PK\"=\"Address_tbl\".\"Client_Id_FK\"";
+  QCOMPARE(transform(clientId == adrClientId, 0, db), expectedSql);
+  /*
+   * Check Field == int
+   */
+  expectedSql = "\"Client_tbl\".\"Id_PK\"=25";
+  QCOMPARE(transform(clientId == 25, 0, db), expectedSql);
+}
+
+void JoinConstraintExpressionTest::transforLogicalAndSqlTransformTest()
+{
+  namespace Sql = Mdt::Sql;
+
+  using Sql::JoinConstraintField;
+  using Sql::TableName;
+  using Sql::FieldName;
+  using Sql::Expression::JoinConstraint::LogicalAndSqlTransform;
+
+  auto db = pvDatabase;
+  QVERIFY(db.isValid());
+  QString expectedSql;
+  LogicalAndSqlTransform transform;
+
+  JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
+  JoinConstraintField adrClientId(TableName("Address_tbl"), FieldName("Client_Id_FK"));
+  /*
+   * Check (field == int) AND (field == int)
+   */
+  expectedSql = "(\"Client_tbl\".\"Id_PK\"=25)AND(\"Address_tbl\".\"Client_Id_FK\"=44)";
+  QCOMPARE(transform( (clientId == 25) && (adrClientId == 44), 0, db), expectedSql);
+  /*
+   * Check (field == int) AND (field == int) AND (field == int)
+   */
+  expectedSql = "(\"Client_tbl\".\"Id_PK\"=25)AND(\"Address_tbl\".\"Client_Id_FK\"=44)AND(\"Client_tbl\".\"Id_PK\"=36)";
+  QCOMPARE(transform( (clientId == 25) && (adrClientId == 44) && (clientId == 36), 0, db), expectedSql);
+
+}
+
+
 void JoinConstraintExpressionTest::expressionContructCopySqliteTest()
 {
   namespace Sql = Mdt::Sql;
@@ -191,10 +309,8 @@ void JoinConstraintExpressionTest::expressionContructCopySqliteTest()
   using Sql::JoinConstraintField;
   using Sql::JoinConstraintExpression;
 
-  auto db = QSqlDatabase::addDatabase("QSQLITE");
-  if(!db.isValid()){
-    QSKIP("QSQLITE driver is not available - Skip test");
-  }
+  auto db = pvDatabase;
+  QVERIFY(db.isValid());
 
   JoinConstraintField A(TableName("A"), FieldName("a"));
   JoinConstraintField B(TableName("B"), FieldName("b"));
@@ -215,10 +331,8 @@ void JoinConstraintExpressionTest::expressionContructCopySqliteTest()
 
 void JoinConstraintExpressionTest::expressionAssignSqliteTest()
 {
-  auto db = QSqlDatabase::addDatabase("QSQLITE");
-  if(!db.isValid()){
-    QSKIP("QSQLITE driver is not available - Skip test");
-  }
+  auto db = pvDatabase;
+  QVERIFY(db.isValid());
 
 }
 

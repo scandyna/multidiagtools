@@ -1,6 +1,6 @@
 format 211
 "JoinConstraint" // Mdt::Sql::Expression::JoinConstraint
-  revision 7
+  revision 8
   modified_by 2 "philippe"
   // class settings
   
@@ -269,12 +269,12 @@ ${inlines}
     
     activitydiagramsettings
      end
-    classdiagram 2894338 "SqlGenerator"
+    classdiagram 2894338 "SqlTransform"
       classdiagramsettings member_max_width 0 end
       size B-Landscape
     end
 
-    class 3280386 "GetJoinConstraintFieldSql"
+    class 3280386 "GetTerminalSql"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -312,34 +312,11 @@ ${inlines}
 	
 	
       end
-    end
 
-    class 3280642 "GetLiteralValueSql"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3702530 // <generalisation>
-	relation 3683330 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3702530 // <generalisation>
-	  b parent class_ref 3280514 // callable
-      end
-
-      operation 4690818 "operator()"
+      operation 4697474 "operator()"
 	public return_type class_ref 161026 // QString
 	nparams 2
-	  param in name "value" type class_ref 161154 // QVariant
+	  param in name "expr" explicit_type "T"
 	  param in name "db" type class_ref 405122 // QSqlDatabase
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
@@ -391,32 +368,6 @@ ${inlines}
 	
 	
 	
-      end
-    end
-
-    class 3280898 "GetTerminalSql"
-      visibility package 
-      nactuals 1
-      actual class class_ref 3225602 // or_
-        rank 0 explicit_value ""
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3702786 // <generalisation>
-	relation 3683586 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3702786 // <generalisation>
-	  b parent class_ref 3225602 // or_
       end
     end
 
@@ -474,9 +425,6 @@ ${inlines}
 
     class 3281282 "GetLogicalAndSql"
       visibility package 
-      nactuals 1
-      actual class class_ref 3225602 // or_
-        rank 0 explicit_value ""
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -489,20 +437,34 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3703170 // <generalisation>
-	relation 3683970 ---|>
+      classrelation 3709826 // <generalisation>
+	relation 3690626 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 3703170 // <generalisation>
-	  b parent class_ref 3225602 // or_
+	    classrelation_ref 3709826 // <generalisation>
+	  b parent class_ref 3280514 // callable
+      end
+
+      operation 4697730 "operator()"
+	public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "left" type class_ref 161026 // QString
+	  param in name "right" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
     class 3281410 "GetLogicalOrSql"
       visibility package 
-      nactuals 1
-      actual class class_ref 3225602 // or_
-        rank 0 explicit_value ""
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -515,13 +477,47 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3703298 // <generalisation>
-	relation 3684098 ---|>
+      classrelation 3709954 // <generalisation>
+	relation 3690754 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 3703298 // <generalisation>
-	  b parent class_ref 3225602 // or_
+	    classrelation_ref 3709954 // <generalisation>
+	  b parent class_ref 3280514 // callable
+      end
+
+      operation 4697602 "operator()"
+	public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "left" type class_ref 161026 // QString
+	  param in name "right" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
+
+    class 3287938 "SqlTransform"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
   end
 end

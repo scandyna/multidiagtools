@@ -18,48 +18,31 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_JOIN_CONSTRAINT_EXPRESSION_TEST_H
-#define MDT_JOIN_CONSTRAINT_EXPRESSION_TEST_H
-
-#include <QObject>
-#include <QtTest/QtTest>
+#include "SqlTransform.h"
 #include <QSqlDatabase>
+#include <QSqlDriver>
+#include <QStringBuilder>
 
-class JoinConstraintExpressionTest : public QObject
+namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
+
+// QString GetJoinConstraintFieldSql::operator()(const JoinConstraintField & f, const QSqlDatabase & db) const
+// {
+//   return "M";
+// }
+
+QString GetTerminalSql::operator()(const JoinConstraintField & f, const QSqlDatabase & db) const
 {
- Q_OBJECT
+  return "TermSql";
+}
 
- private slots:
+QString GetCompareEqualSql::operator()(const QString & left, const QString & right) const
+{
+  return left % QStringLiteral("=") % right;
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+QString GetLogicalAndSql::operator()(const QString& left, const QString& right) const
+{
+  return left % QStringLiteral(" AND ") % right;
+}
 
- private:
-
-  /*
-   * Compile time tests
-   */
-
-  void grammarComparisonTest();
-  void grammarTest();
-
- private slots:
-
-  void fieldTest();
-
-//   void transforGetJoinConstraintFieldSqlTest();
-//   void transforGetLiteralValueSqlTest();
-  void transformGetTerminalSql();
-  void transformGetComparisonSql();
-  void transforLogicalAndSqlTransformTest();
-
-  void expressionContructCopySqliteTest();
-  void expressionAssignSqliteTest();
-
- private:
-
-  QSqlDatabase pvDatabase;
-};
-
-
-#endif // #ifndef MDT_JOIN_CONSTRAINT_EXPRESSION_TEST_H
+}}}} // namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
