@@ -26,15 +26,18 @@
 
 namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
 
-QString GetTerminalSql::operator()(const TableField & /*f*/, const QSqlDatabase & /*db*/) const
+QString GetTerminalSql::operator()(const TableField & tf, const QSqlDatabase & db) const
 {
-  return "TermSql";
+  const auto *driver = db.driver();
+  Q_ASSERT(driver != nullptr);
+
+  return driver->escapeIdentifier(tf.tableName(), QSqlDriver::TableName) % QStringLiteral(".") % driver->escapeIdentifier(tf.fieldName(), QSqlDriver::FieldName);
 }
 
 QString GetTerminalSql::operator()(const QVariant & value, const QSqlDatabase & db) const
 {
   Q_ASSERT(db.driver() != nullptr);
-  
+
   QSqlField field("", value.type());
   field.setValue(value);
 
@@ -42,15 +45,45 @@ QString GetTerminalSql::operator()(const QVariant & value, const QSqlDatabase & 
 }
 
 
-
-QString GetCompareEqualSql::operator()(const QString & left, const QString & right) const
+QString GetCompareEqualToSql::operator()(const QString & left, const QString & right) const
 {
   return left % QStringLiteral("=") % right;
 }
 
+QString GetCompareNotEqualToSql::operator()(const QString& left, const QString& right) const
+{
+  return left % QStringLiteral("<>") % right;
+}
+
+QString GetCompareLessSql::operator()(const QString& left, const QString& right) const
+{
+  return left % QStringLiteral("<") % right;
+}
+
+QString GetCompareLessEqualSql::operator()(const QString& left, const QString& right) const
+{
+  return left % QStringLiteral("<=") % right;
+}
+
+QString GetCompareGreaterSql::operator()(const QString& left, const QString& right) const
+{
+  return left % QStringLiteral(">") % right;
+}
+
+QString GetCompareGreaterEqualSql::operator()(const QString& left, const QString& right) const
+{
+  return left % QStringLiteral(">=") % right;
+}
+
+
 QString GetLogicalAndSql::operator()(const QString& left, const QString& right) const
 {
-  return left % QStringLiteral(" AND ") % right;
+  return QStringLiteral("(") % left % QStringLiteral(")AND(") % right % QStringLiteral(")");
+}
+
+QString GetLogicalOrSql::operator()(const QString& left, const QString& right) const
+{
+  return QStringLiteral("(") % left % QStringLiteral(")OR(") % right % QStringLiteral(")");
 }
 
 }}}} // namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{

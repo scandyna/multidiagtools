@@ -49,15 +49,9 @@ class JoinConstraintExpressionTest : public QObject
 
   void fieldTest();
 
-//   void transforGetJoinConstraintFieldSqlTest();
-//   void transforGetLiteralValueSqlTest();
   void terminalSqlTransformTest();
   void comparisonSqlTransformTest();
   void sqlTransformTest();
-
-//   void transformGetTerminalSql();
-  void transformGetComparisonSql();
-  void transforLogicalAndSqlTransformTest();
 
   void expressionContructCopySqliteTest();
   void expressionAssignSqliteTest();
