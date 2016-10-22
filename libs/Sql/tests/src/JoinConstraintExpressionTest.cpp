@@ -66,6 +66,19 @@ constexpr bool expressionMatchesGrammar()
  * --> QDate/etc.. seems to be the simplest..
  */
 
+// void JoinConstraintExpressionTest::terminalTypeTest()
+// {
+//   namespace Sql = Mdt::Sql;
+// 
+//   using Sql::JoinConstraintField;
+//   using Sql::TableName;
+//   using Sql::FieldName;
+// 
+//   JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
+// 
+//   decltype( boost::proto::_value()(clientId) );
+// }
+
 void JoinConstraintExpressionTest::grammarComparisonTest()
 {
   namespace JoinConstraint = Mdt::Sql::Expression::JoinConstraint;
@@ -194,8 +207,8 @@ void JoinConstraintExpressionTest::fieldTest()
 
 
   JoinConstraintField A(TableName("A_tbl"), FieldName("id_A"));
-  QCOMPARE(A.tableName(), QString("A_tbl"));
-  QCOMPARE(A.fieldName(), QString("id_A"));
+  QCOMPARE( boost::proto::_value()(A).tableName(), QString("A_tbl"));
+  QCOMPARE( boost::proto::_value()(A).fieldName(), QString("id_A"));
 }
 
 // void JoinConstraintExpressionTest::transforGetJoinConstraintFieldSqlTest()
@@ -222,25 +235,129 @@ void JoinConstraintExpressionTest::fieldTest()
 // 
 // }
 
-void JoinConstraintExpressionTest::transformGetTerminalSql()
+void JoinConstraintExpressionTest::terminalSqlTransformTest()
 {
   namespace Sql = Mdt::Sql;
 
   using Sql::JoinConstraintField;
   using Sql::TableName;
   using Sql::FieldName;
-  using Sql::Expression::JoinConstraint::GetTerminalSql;
+  using Sql::Expression::JoinConstraint::LeftTerminalSqlTransform;
+  using Sql::Expression::JoinConstraint::RightTerminalSqlTransform;
 
   auto db = pvDatabase;
   QVERIFY(db.isValid());
   QString expectedSql;
-  GetTerminalSql transform;
+  LeftTerminalSqlTransform leftTerminalTransform;
+  RightTerminalSqlTransform rightTerminalTransform;
 
   JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
+  /*
+   * Left terminal
+   */
   expectedSql = "\"Client_tbl\".\"Id_PK\"";
-  /// QCOMPARE(transform(clientId, 0, db), expectedSql);
+  QCOMPARE(leftTerminalTransform(clientId, 0, db), expectedSql);
+  /*
+   * Right terminal with JoinConstraintField
+   */
+  expectedSql = "\"Client_tbl\".\"Id_PK\"";
+  QCOMPARE(rightTerminalTransform(clientId, 0, db), expectedSql);
+  /*
+   * Right terminal with literal value
+   */
+  // int literal
+  expectedSql = "25";
+  QCOMPARE(rightTerminalTransform(boost::proto::lit(25), 0, db), expectedSql);
+  // string literal
+  expectedSql = "'str'";
+  QCOMPARE(rightTerminalTransform(boost::proto::lit("str"), 0, db), expectedSql);
 
 }
+
+void JoinConstraintExpressionTest::comparisonSqlTransformTest()
+{
+  namespace Sql = Mdt::Sql;
+
+  using Sql::JoinConstraintField;
+  using Sql::TableName;
+  using Sql::FieldName;
+  using Sql::Expression::JoinConstraint::ComparisonSqlTransform;
+
+  auto db = pvDatabase;
+  QVERIFY(db.isValid());
+  QString expectedSql;
+  ComparisonSqlTransform transform;
+
+  JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
+  /*
+   * ==
+   */
+  expectedSql = "\"Client_tbl\".\"Id_PK\"=25";
+  QCOMPARE(transform(clientId == 25, 0, db), expectedSql);
+
+}
+
+void JoinConstraintExpressionTest::sqlTransformTest()
+{
+  namespace Sql = Mdt::Sql;
+
+  using Sql::JoinConstraintField;
+  using Sql::TableName;
+  using Sql::FieldName;
+  using Sql::Expression::JoinConstraint::SqlTransform;
+
+  auto db = pvDatabase;
+  QVERIFY(db.isValid());
+  QString expectedSql;
+  SqlTransform transform;
+
+  JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
+  /*
+   * Simple ==
+   */
+  expectedSql = "\"Client_tbl\".\"Id_PK\"=25";
+  QCOMPARE(transform(clientId == 25, 0, db), expectedSql);
+  /*
+   * AND
+   */
+  expectedSql = "(\"Client_tbl\".\"Id_PK\"=25)AND(\"Client_tbl\".\"Id_PK\"=44)";
+  QCOMPARE(transform( (clientId == 25) && (clientId == 44), 0, db), expectedSql);
+  /*
+   * OR
+   */
+  expectedSql = "(\"Client_tbl\".\"Id_PK\"=25)OR(\"Client_tbl\".\"Id_PK\"=44)";
+  QCOMPARE(transform( (clientId == 25) || (clientId == 44), 0, db), expectedSql);
+  /*
+   * AND , OR
+   */
+  expectedSql = "Some str";
+  QCOMPARE(transform( ((clientId == 25) && (clientId == 77)) || (clientId == 44), 0, db), expectedSql);
+  expectedSql = "Some str";
+  QCOMPARE(transform( ((clientId == 25) && (clientId == 77)) || ((clientId == 44) && (clientId == 88)), 0, db), expectedSql);
+  expectedSql = "Some str";
+  QCOMPARE(transform( ((clientId == 25) || (clientId == 77)) && (clientId == 44), 0, db), expectedSql);
+
+}
+
+// void JoinConstraintExpressionTest::transformGetTerminalSql()
+// {
+//   namespace Sql = Mdt::Sql;
+// 
+//   using Sql::JoinConstraintField;
+//   using Sql::TableName;
+//   using Sql::FieldName;
+//   using Sql::Expression::JoinConstraint::GetTerminalSql;
+// 
+//   auto db = pvDatabase;
+//   QVERIFY(db.isValid());
+//   QString expectedSql;
+//   GetTerminalSql transform;
+// 
+//   JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
+//   expectedSql = "\"Client_tbl\".\"Id_PK\"";
+//   /// QCOMPARE(transform(clientId, 0, db), expectedSql);
+// 
+// }
 
 void JoinConstraintExpressionTest::transformGetComparisonSql()
 {
@@ -262,12 +379,12 @@ void JoinConstraintExpressionTest::transformGetComparisonSql()
    * Check Field == Field
    */
   expectedSql = "\"Client_tbl\".\"Id_PK\"=\"Address_tbl\".\"Client_Id_FK\"";
-  QCOMPARE(transform(clientId == adrClientId, 0, db), expectedSql);
+  ///QCOMPARE(transform(clientId == adrClientId, 0, db), expectedSql);
   /*
    * Check Field == int
    */
   expectedSql = "\"Client_tbl\".\"Id_PK\"=25";
-  QCOMPARE(transform(clientId == 25, 0, db), expectedSql);
+  ///QCOMPARE(transform(clientId == 25, 0, db), expectedSql);
 }
 
 void JoinConstraintExpressionTest::transforLogicalAndSqlTransformTest()
@@ -289,13 +406,13 @@ void JoinConstraintExpressionTest::transforLogicalAndSqlTransformTest()
   /*
    * Check (field == int) AND (field == int)
    */
-  expectedSql = "(\"Client_tbl\".\"Id_PK\"=25)AND(\"Address_tbl\".\"Client_Id_FK\"=44)";
-  QCOMPARE(transform( (clientId == 25) && (adrClientId == 44), 0, db), expectedSql);
+//   expectedSql = "(\"Client_tbl\".\"Id_PK\"=25)AND(\"Address_tbl\".\"Client_Id_FK\"=44)";
+//   QCOMPARE(transform( (clientId == 25) && (adrClientId == 44), 0, db), expectedSql);
   /*
    * Check (field == int) AND (field == int) AND (field == int)
    */
-  expectedSql = "(\"Client_tbl\".\"Id_PK\"=25)AND(\"Address_tbl\".\"Client_Id_FK\"=44)AND(\"Client_tbl\".\"Id_PK\"=36)";
-  QCOMPARE(transform( (clientId == 25) && (adrClientId == 44) && (clientId == 36), 0, db), expectedSql);
+//   expectedSql = "(\"Client_tbl\".\"Id_PK\"=25)AND(\"Address_tbl\".\"Client_Id_FK\"=44)AND(\"Client_tbl\".\"Id_PK\"=36)";
+//   QCOMPARE(transform( (clientId == 25) && (adrClientId == 44) && (clientId == 36), 0, db), expectedSql);
 
 }
 

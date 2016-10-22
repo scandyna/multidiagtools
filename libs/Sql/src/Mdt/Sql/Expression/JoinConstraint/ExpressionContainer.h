@@ -66,8 +66,9 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
      *
      * \pre db must be valid (must have a driver loaded)
      */
-    QString toSql(const QSqlDatabase & db) const override
+    QString toSql(const QSqlDatabase & /*db*/) const override
     {
+      return "NotImpl";
     }
 
    private:

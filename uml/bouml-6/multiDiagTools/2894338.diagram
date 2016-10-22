@@ -1,86 +1,78 @@
 format 211
 
-classcanvas 128130 class_ref 3280386 // GetTerminalSql
-  classdiagramsettings member_max_width 0 end
-  xyz 41.8 167.4 2000
-end
 classcanvas 128258 class_ref 3280514 // callable
   classdiagramsettings member_max_width 0 show_context_mode uml end
-  xyz 994.4 42.2 2000
-end
-classcanvas 129026 class_ref 3280770 // GetCompareEqualSql
-  classdiagramsettings member_max_width 0 end
-  xyz 1277.4 170 2000
+  xyz 518 319.4 2000
 end
 classcanvas 129538 class_ref 3225602 // or_
   classdiagramsettings member_max_width 0 end
-  xyz 252.2 327.2 2005
+  xyz 279 588.9 2005
 end
-classcanvas 129922 class_ref 3281026 // GetComparisonSql
+classcanvas 129922 class_ref 3281026 // ComparisonSqlTransform
   classdiagramsettings member_max_width 0 end
-  xyz 208.2 472.7 2000
-end
-classcanvas 130178 class_ref 3281154 // GetExpressionSql
-  classdiagramsettings member_max_width 0 end
-  xyz 40.9 472.7 2000
+  xyz 38.5 733.9 2000
 end
 classcanvas 131202 class_ref 3281282 // GetLogicalAndSql
   classdiagramsettings member_max_width 0 end
-  xyz 897.4 170 2000
+  xyz 41 447.4 2000
 end
 classcanvas 131330 class_ref 3281410 // GetLogicalOrSql
   classdiagramsettings member_max_width 0 end
-  xyz 513.2 170 2000
+  xyz 421 447.4 2000
 end
 classcanvas 132226 class_ref 3287938 // SqlTransform
   classdiagramsettings member_max_width 0 end
-  xyz 422.3 328.5 2000
+  xyz 252 733.9 2000
 end
-relationcanvas 128386 relation_ref 3683202 // <generalisation>
-  geometry VHV unfixed
-  decenter_end 469
-  from ref 128130 z 2001 to point 254 128
-  line 129282 z 2001 to point 1061 128
-  line 129410 z 2001 to ref 128258
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
+classcanvas 133762 class_ref 3301378 // when
+  classdiagramsettings member_max_width 0 end
+  xyz 303.7 40.9 2005
 end
-relationcanvas 129154 relation_ref 3683458 // <generalisation>
-  geometry VHV unfixed
-  decenter_end 469
-  from ref 129026 z 2001 to point 1443 128
-  line 132866 z 2001 to point 1061 128
-  line 132994 z 2001 to ref 128258
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
+classcanvas 135554 class_ref 3301762 // LogicalAndSqlTransform
+  classdiagramsettings member_max_width 0 end
+  xyz 241.7 191.9 2000
+end
+classcanvas 135810 class_ref 3301890 // LogicalOrSqlTransform
+  classdiagramsettings member_max_width 0 end
+  xyz 39.9 191.9 2011
 end
 relationcanvas 130050 relation_ref 3683714 // <generalisation>
-  from ref 129922 z 2006 to ref 129538
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 130562 relation_ref 3683842 // <generalisation>
   geometry VHV unfixed
-  from ref 130178 z 2006 to point 101.9 431.7
-  line 130946 z 2006 to point 272.2 431.7
-  line 131074 z 2006 to ref 129538
+  from ref 129922 z 2006 to point 123 692.6
+  line 134146 z 2006 to point 299 692.6
+  line 134274 z 2006 to ref 129538
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132738 relation_ref 3690626 // <generalisation>
+  geometry VHV unfixed
   decenter_begin 486
-  decenter_end 469
-  from ref 131202 z 2001 to ref 128258
+  from ref 131202 z 2001 to point 205 405
+  line 135042 z 2001 to point 590 405
+  line 135170 z 2001 to ref 128258
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 133122 relation_ref 3690754 // <generalisation>
+  from ref 131330 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 134914 relation_ref 3697794 // <generalisation>
+  from ref 132226 z 2006 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 135682 relation_ref 3697922 // <generalisation>
+  from ref 135554 z 2006 to ref 133762
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 135938 relation_ref 3698050 // <generalisation>
   geometry VHV unfixed
-  decenter_begin 486
-  decenter_end 469
-  from ref 131330 z 2001 to point 677 128
-  line 133250 z 2001 to point 1061 128
-  line 133378 z 2001 to ref 128258
+  from ref 135810 z 2012 to point 117 148
+  line 136066 z 2012 to point 324 148
+  line 136194 z 2012 to ref 133762
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

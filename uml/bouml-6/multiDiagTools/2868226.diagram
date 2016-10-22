@@ -1,7 +1,11 @@
 format 211
 
-classcanvas 128130 class_ref 3247490 // TableField
+classcanvas 128130 class_ref 3247490 // TableFieldTerminal
   classdiagramsettings member_max_width 0 end
-  xyz 167 313 2000
+  xyz 82 196 2000
+end
+classcanvas 128514 class_ref 3294594 // TableField
+  classdiagramsettings member_max_width 0 end
+  xyz 321 183 2000
 end
 end

@@ -1,6 +1,6 @@
 format 211
 "proto" // boost::proto
-  revision 6
+  revision 8
   modified_by 2 "philippe"
   // class settings
   
@@ -136,6 +136,32 @@ ${inlines}
       end
     end
 
+    classdiagram 2914050 "when"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3301378 "when"
+      visibility package 
+      nformals 2
+      formal name "Grammar" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "PrimitiveTransform" type "class" explicit_default_value ""
+        explicit_extends ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
     classdiagram 2840962 "extends"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -199,6 +225,34 @@ ${inlines}
 
     class 3280514 "callable"
       visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 2907522 "basic_expr"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3294466 "basic_expr"
+      visibility package 
+      nformals 3
+      formal name "Tag" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "Args" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "Arity" type "class" explicit_default_value ""
+        explicit_extends ""
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};

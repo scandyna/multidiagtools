@@ -22,18 +22,26 @@
 #include <QSqlDatabase>
 #include <QSqlDriver>
 #include <QStringBuilder>
+#include <QSqlField>
 
 namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
 
-// QString GetJoinConstraintFieldSql::operator()(const JoinConstraintField & f, const QSqlDatabase & db) const
-// {
-//   return "M";
-// }
-
-QString GetTerminalSql::operator()(const JoinConstraintField & f, const QSqlDatabase & db) const
+QString GetTerminalSql::operator()(const TableField & /*f*/, const QSqlDatabase & /*db*/) const
 {
   return "TermSql";
 }
+
+QString GetTerminalSql::operator()(const QVariant & value, const QSqlDatabase & db) const
+{
+  Q_ASSERT(db.driver() != nullptr);
+  
+  QSqlField field("", value.type());
+  field.setValue(value);
+
+  return db.driver()->formatValue(field);
+}
+
+
 
 QString GetCompareEqualSql::operator()(const QString & left, const QString & right) const
 {

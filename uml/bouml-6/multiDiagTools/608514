@@ -1,6 +1,6 @@
 format 211
 "JoinConstraint" // Mdt::Sql::Expression::JoinConstraint
-  revision 8
+  revision 10
   modified_by 2 "philippe"
   // class settings
   
@@ -47,6 +47,45 @@ format 211
       size A4
     end
 
+    class 3294594 "TableField"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3028098 "TableName"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3028226 "FieldName"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
     class 3247490 "TableFieldTerminal"
       visibility package 
       nformals 2
@@ -66,29 +105,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      attribute 3028098 "tableName"
-	public type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 3028226 "fieldName"
-	public type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
     end
   end
 
@@ -253,7 +269,7 @@ ${inlines}
     end
   end
 
-  classview 1551234 "Generator"
+  classview 1551234 "SqlTransform"
     
     classdiagramsettings member_max_width 0 end
     
@@ -269,9 +285,9 @@ ${inlines}
     
     activitydiagramsettings
      end
-    classdiagram 2894338 "SqlTransform"
+    classdiagram 2914178 "TerminalSqlTransform"
       classdiagramsettings member_max_width 0 end
-      size B-Landscape
+      size A4
     end
 
     class 3280386 "GetTerminalSql"
@@ -299,7 +315,7 @@ ${inlines}
       operation 4690690 "operator()"
 	public return_type class_ref 161026 // QString
 	nparams 2
-	  param in name "tf" type class_ref 3247362 // JoinConstraintField
+	  param in name "tf" type class_ref 3294594 // TableField
 	  param in name "db" type class_ref 405122 // QSqlDatabase
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
@@ -316,7 +332,7 @@ ${inlines}
       operation 4697474 "operator()"
 	public return_type class_ref 161026 // QString
 	nparams 2
-	  param in name "expr" explicit_type "T"
+	  param in name "value" type class_ref 161154 // QVariant
 	  param in name "db" type class_ref 405122 // QSqlDatabase
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
@@ -331,7 +347,66 @@ ${inlines}
       end
     end
 
-    class 3280770 "GetCompareEqualSql"
+    class 3301122 "LeftTerminalSqlTransform"
+      visibility package 
+      nactuals 2
+      actual class class_ref 3301378 // when
+        rank 0 explicit_value ""
+      actual class class_ref 3301378 // when
+        rank 1 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3716482 // <generalisation>
+	relation 3697282 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3716482 // <generalisation>
+	  b parent class_ref 3301378 // when
+      end
+    end
+
+    class 3301250 "RightTerminalSqlTransform"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3716610 // <generalisation>
+	relation 3697410 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3716610 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    classdiagram 2914434 "ComparisonSqlTransform"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3280770 "GetCompareEqualToSql"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -371,7 +446,61 @@ ${inlines}
       end
     end
 
-    class 3281026 "GetComparisonSql"
+    class 3301506 "CompareEqualToSqlTransform"
+      visibility package 
+      nactuals 2
+      actual class class_ref 3301378 // when
+        rank 0 explicit_value ""
+      actual class class_ref 3301378 // when
+        rank 1 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3716738 // <generalisation>
+	relation 3697538 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3716738 // <generalisation>
+	  b parent class_ref 3301378 // when
+      end
+    end
+
+    class 3301634 "CompareEqualitySqlTransform"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3716866 // <generalisation>
+	relation 3697666 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3716866 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    class 3281026 "ComparisonSqlTransform"
       visibility package 
       nactuals 1
       actual class class_ref 3225602 // or_
@@ -397,30 +526,9 @@ ${inlines}
       end
     end
 
-    class 3281154 "GetExpressionSql"
-      visibility package 
-      nactuals 1
-      actual class class_ref 3225602 // or_
-        rank 0 explicit_value ""
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3703042 // <generalisation>
-	relation 3683842 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3703042 // <generalisation>
-	  b parent class_ref 3225602 // or_
-      end
+    classdiagram 2894338 "SqlTransform"
+      classdiagramsettings member_max_width 0 end
+      size B-Landscape
     end
 
     class 3281282 "GetLogicalAndSql"
@@ -505,6 +613,9 @@ ${inlines}
 
     class 3287938 "SqlTransform"
       visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -517,7 +628,69 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      classrelation 3716994 // <generalisation>
+	relation 3697794 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3716994 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
     end
 
+    class 3301762 "LogicalAndSqlTransform"
+      visibility package 
+      nactuals 2
+      actual class class_ref 3301378 // when
+        rank 0 explicit_value ""
+      actual class class_ref 3301378 // when
+        rank 1 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3717122 // <generalisation>
+	relation 3697922 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3717122 // <generalisation>
+	  b parent class_ref 3301378 // when
+      end
+    end
+
+    class 3301890 "LogicalOrSqlTransform"
+      visibility package 
+      nactuals 2
+      actual class class_ref 3301378 // when
+        rank 0 explicit_value ""
+      actual class class_ref 3301378 // when
+        rank 1 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3717250 // <generalisation>
+	relation 3698050 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3717250 // <generalisation>
+	  b parent class_ref 3301378 // when
+      end
+    end
   end
 end

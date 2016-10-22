@@ -38,44 +38,32 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
 
   struct SqlTransform;
 
-//   struct GetJoinConstraintFieldSql : boost::proto::callable
-//   {
-//     typedef QString result_type;
-// 
-//     QString operator()(const JoinConstraintField & f, const QSqlDatabase & db) const;
-//   };
-
   struct GetTerminalSql : boost::proto::callable
   {
     typedef QString result_type;
 
-    QString operator()(const JoinConstraintField & f, const QSqlDatabase & db) const;
+    QString operator()(const TableField & tf, const QSqlDatabase & db) const;
 
-    template<typename T>
-    QString operator()(const T & expr, const QSqlDatabase & db) const
-    {
-      return QVariant( boost::proto::value(expr) ).toString();
-    }
+    QString operator()(const QVariant & value, const QSqlDatabase & db) const;
+
   };
 
-//   struct GetTerminalSql : boost::proto::or_<
-//                             boost::proto::when<
-//                               JoinConstraintField ,
-//                               boost::proto::call<GetJoinConstraintFieldSql(boost::proto::_value, boost::proto::_data)>
-//                             >
-//                           >
-//   {
-//   };
+  struct LeftTerminalSqlTransform : boost::proto::when<
+                                        JoinConstraintField ,
+                                        boost::proto::call<GetTerminalSql(boost::proto::_value, boost::proto::_data)>
+                                      >
+  {
+  };
 
-//   struct CatSql : boost::proto::callable
-//   {
-//     typedef QString result_type;
-// 
-//     QString operator()(const QString & left, const QString & right, const char * const op) const
-//     {
-//       return "CAT";
-//     }
-//   };
+  struct RightTerminalSqlTransform : boost::proto::or_<
+                                        LeftTerminalSqlTransform ,
+                                        boost::proto::when<
+                                          LiteralValue ,
+                                          boost::proto::call<GetTerminalSql(boost::proto::_value, boost::proto::_data)>
+                                        >
+                                      >
+  {
+  };
 
   struct GetCompareEqualSql : boost::proto::callable
   {
@@ -96,6 +84,55 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
   {
   };
 
+  struct GetCompareEqualToSql : boost::proto::callable
+  {
+    typedef QString result_type;
+
+    QString operator()(const QString & left, const QString & right) const
+    {
+      return "=";
+    }
+  };
+
+//   struct CompareEqualToSqlTransform : boost::proto::when<
+//                                           boost::proto::equal_to<LeftTerminalSqlTransform, RightTerminalSqlTransform> ,
+//                                           boost::proto::call<GetCompareEqualToSql(boost::proto::_left, boost::proto::_right)>
+//                                         >
+//   {
+//   };
+
+  struct CompareEqualToSqlTransform : boost::proto::when<
+                                        boost::proto::equal_to<LeftTerminalSqlTransform, RightTerminalSqlTransform> ,
+                                        boost::proto::call<GetCompareEqualToSql( LeftTerminalSqlTransform(boost::proto::_left), RightTerminalSqlTransform(boost::proto::_right) )>
+                                      >
+  {
+  };
+
+  struct CompareEqualitySqlTransform : boost::proto::or_<
+                                          CompareEqualToSqlTransform
+                                        >
+  {
+  };
+
+  struct ComparisonSqlTransform : boost::proto::or_<
+                                      CompareEqualitySqlTransform
+                                    >
+  {
+  };
+
+//   struct ComparisonSqlTransform : boost::proto::or_<
+//                                       boost::proto::when<
+//                                         ///boost::proto::equal_to< boost::proto::terminal<boost::proto::_>, boost::proto::terminal<boost::proto::_> > ,
+//                                         CompareEqual ,
+//                                         boost::proto::call< GetCompareEqualSql(
+//                                           boost::proto::call<GetTerminalSql(boost::proto::_left, boost::proto::_data)> ,
+//                                           boost::proto::call<GetTerminalSql(boost::proto::_right, boost::proto::_data)>
+//                                         ) >
+//                                       >
+//                                     >
+//   {
+//   };
+
   struct GetLogicalAndSql : boost::proto::callable
   {
     typedef QString result_type;
@@ -103,37 +140,69 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
     QString operator()(const QString & left, const QString & right) const;
   };
 
-  struct LogicalAndSqlTransform : boost::proto::or_<
-                                    boost::proto::when<
-                                      boost::proto::logical_and< Comparison , Comparison > ,
-                                      boost::proto::call< GetLogicalAndSql(
-                                                            GetComparisonSql(boost::proto::_left) ,
-                                                            GetComparisonSql(boost::proto::_right)
-                                                          ) >
-                                    > ,
-                                    boost::proto::when<
-                                      boost::proto::logical_and< SqlTransform , Comparison > ,
-                                      boost::proto::call< GetLogicalAndSql(
-                                                            SqlTransform(boost::proto::_left) , /// \todo Seems to work, but why ??
-                                                            GetComparisonSql(boost::proto::_right)
-                                                          ) >
+  struct LogicalAndSqlTransform : boost::proto::when<
+                                      boost::proto::logical_and< SqlTransform , SqlTransform > ,
+                                      boost::proto::call< GetLogicalAndSql( SqlTransform(boost::proto::_left), SqlTransform(boost::proto::_right) ) >
                                     >
+  {
+  };
+
+  struct GetLogicalOrSql : boost::proto::callable
+  {
+    typedef QString result_type;
+
+    QString operator()(const QString & left, const QString & right) const
+    {
+      return "OR";
+    }
+  };
+
+  struct LogicalOrSqlTransform : boost::proto::when<
+                                    boost::proto::logical_or< SqlTransform, SqlTransform > ,
+                                    boost::proto::call< GetLogicalOrSql( SqlTransform(boost::proto::_left), SqlTransform(boost::proto::_right) ) >
                                   >
   {
   };
 
   struct SqlTransform : boost::proto::or_<
-                          boost::proto::when<
-                            Comparison ,
-                            GetComparisonSql
-                          > ,
-                          boost::proto::when<
-                            LogicalAnd ,
-                            LogicalAndSqlTransform
-                          >
+                          LogicalAndSqlTransform ,
+                          LogicalOrSqlTransform ,
+                          ComparisonSqlTransform
                         >
   {
   };
+
+//   struct SqlTransform : boost::proto::or_<
+//                           boost::proto::when<
+//                             Comparison ,
+//                             GetComparisonSql
+//                           > ,
+//                           boost::proto::when<
+//                             LogicalAnd ,
+//                             LogicalAndSqlTransform
+//                           >
+//                         >
+//   {
+//   };
+
+//   struct LogicalAndSqlTransform : boost::proto::or_<
+//                                     boost::proto::when<
+//                                       boost::proto::logical_and< Comparison , Comparison > ,
+//                                       boost::proto::call< GetLogicalAndSql(
+//                                                             GetComparisonSql(boost::proto::_left) ,
+//                                                             GetComparisonSql(boost::proto::_right)
+//                                                           ) >
+//                                     > ,
+//                                     boost::proto::when<
+//                                       boost::proto::logical_and< SqlTransform , Comparison > ,
+//                                       boost::proto::call< GetLogicalAndSql(
+//                                                             SqlTransform(boost::proto::_left) , /// \todo Seems to work, but why ??
+//                                                             GetComparisonSql(boost::proto::_right)
+//                                                           ) >
+//                                     >
+//                                   >
+//   {
+//   };
 
 }}}} // namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
 

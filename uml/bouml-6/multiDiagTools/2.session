@@ -1,4 +1,4 @@
-window_sizes 1280 961 270 1004 906 0
+window_sizes 1280 963 270 1004 908 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -36,38 +36,35 @@ diagrams
   classdiagram_ref 2887810 // Container
     1004 906 100 4 0 0
   active  classdiagram_ref 2894338 // SqlTransform
-    1004 906 80 21 0 81
+    1004 908 100 21 0 4
+  classdiagram_ref 2914434 // ComparisonSqlTransform
+    120 110 100 4 0 0
 end
 show_stereotypes
-selected 
-package_ref 129 // multiDiagTools
+selected classdiagram_ref 2894338 // SqlTransform
 open
   classview_ref 1353730 // Overview
   
-package_ref 549506 // Algorithm
+  package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
   classview_ref 161666 // Error
   
-package_ref 516226 // SqlItemModel
+  package_ref 516226 // SqlItemModel
   
-package_ref 582274 // SqlItemEditor
+  package_ref 582274 // SqlItemEditor
   class_ref 3267202 // ExpressionContainerInterface
   class_ref 3267330 // ExpressionContainerImpl
+  class_ref 3294594 // TableField
   class_ref 3247490 // TableFieldTerminal
   classview_ref 1531394 // Grammar
-  class_ref 3280386 // GetTerminalSql
-  class_ref 3280770 // GetCompareEqualSql
-  classrelation_ref 3709826 // <generalisation>
-  operation_ref 4697730 // operator()
-  class_ref 3281410 // GetLogicalOrSql
   class_ref 3287938 // SqlTransform
   class_ref 3247362 // JoinConstraintField
   operation_ref 4676482 // operator=
   operation_ref 4676610 // toSql
   classview_ref 1405954 // Select
   
-package_ref 430082 // Dsp
+  package_ref 430082 // Dsp
   classview_ref 1518082 // context
-  classview_ref 1517954 // proto
+  class_ref 3301378 // when
 end
 end
