@@ -1,6 +1,6 @@
 format 211
 
-classcanvas 128002 class_ref 3239682 // WhereClauseExpression
+classcanvas 128002 class_ref 3239682 // WhereExpression
   classdiagramsettings member_max_width 0 end
   xyz 172 250 2000
 end

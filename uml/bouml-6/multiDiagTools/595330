@@ -1,6 +1,6 @@
 format 211
 "proto" // boost::proto
-  revision 8
+  revision 10
   modified_by 2 "philippe"
   // class settings
   
@@ -265,6 +265,73 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    classdiagram 2921858 "logical"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3309570 "logical_and"
+      visibility package 
+      nformals 2
+      formal name "T" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "U" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 1
+      actual class class_ref 3225218 // transform
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3725314 // <generalisation>
+	relation 3706114 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3725314 // <generalisation>
+	  b parent class_ref 3225218 // transform
+      end
+    end
+
+    class 3309698 "logical_or"
+      visibility package 
+      nformals 2
+      formal name "T" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "U" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 1
+      actual class class_ref 3225218 // transform
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3725442 // <generalisation>
+	relation 3706242 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3725442 // <generalisation>
+	  b parent class_ref 3225218 // transform
+      end
     end
   end
 end
