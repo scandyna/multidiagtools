@@ -22,13 +22,14 @@
 #define MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_EXPRESSION_CONTAINER_H
 
 #include "Mdt/Sql/Expression/ExpressionContainerInterface.h"
+#include "Mdt/Sql/Expression/JoinConstraint/SqlTransform.h"
 #include <boost/proto/deep_copy.hpp>
 #include <QString>
 #include <QSqlDatabase>
 
-#include "Mdt/Sql/JoinConstraintField.h"
+// #include "Mdt/Sql/JoinConstraintField.h"
 
-#include <boost/proto/proto.hpp>
+// #include <boost/proto/proto.hpp>
 
 namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
 
@@ -66,9 +67,11 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
      *
      * \pre db must be valid (must have a driver loaded)
      */
-    QString toSql(const QSqlDatabase & /*db*/) const override
+    QString toSql(const QSqlDatabase & db) const override
     {
-      return "NotImpl";
+      Q_ASSERT(db.isValid());
+      SqlTransform transform;
+      return transform(mExpression, 0, db);
     }
 
    private:

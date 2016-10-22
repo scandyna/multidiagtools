@@ -87,6 +87,22 @@ namespace Mdt{ namespace Sql{
       static_assert( boost::proto::matches< Expr, Expression::JoinConstraint::Grammar>::value , "Type of Expr is not a valid join constraint expression." );
     }
 
+    /*! \brief Construct a expression as copy of other
+     */
+    JoinConstraintExpression(const JoinConstraintExpression & other) = default;
+
+    /*! \brief Construct a expression by moving other
+     */
+    JoinConstraintExpression(JoinConstraintExpression && other) = default;
+
+    /*! \brief Assign other expression to this
+     */
+    JoinConstraintExpression & operator=(const JoinConstraintExpression & other) = default;
+
+    /*! \brief Assign other expression to this
+     */
+    JoinConstraintExpression & operator=(JoinConstraintExpression &&) = default;
+
     /*! \brief Set expression
      *
      * See the constructors documentation for usage and preconditions.

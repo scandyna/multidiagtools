@@ -348,17 +348,97 @@ void JoinConstraintExpressionTest::expressionContructCopySqliteTest()
   /*
    * Construct
    */
-  JoinConstraintExpression exp1( A == 2 );
-  expectedSql = "\"A\".\"a\"=2";
+  // Construct a expression
+  JoinConstraintExpression exp1( A == 1 );
+  expectedSql = "\"A\".\"a\"=1";
   QCOMPARE(exp1.toSql(db), expectedSql);
-
+  // Construct a expression (move constructor)
+  JoinConstraintExpression exp2 = ( A == 2 );
+  expectedSql = "\"A\".\"a\"=2";
+  QCOMPARE(exp2.toSql(db), expectedSql);
+  // Copy construct
+  JoinConstraintExpression exp22( exp2 );
+  QCOMPARE(exp22.toSql(db), expectedSql);
+  /*
+   * Check lifetime
+   */
+  // Create exp3
+  auto *exp3 = new JoinConstraintExpression( A == 3 );
+  expectedSql = "\"A\".\"a\"=3";
+  QCOMPARE(exp3->toSql(db), expectedSql);
+  // Copy construct exp33 based on exp3
+  JoinConstraintExpression exp33( *exp3 );
+  expectedSql = "\"A\".\"a\"=3";
+  QCOMPARE(exp33.toSql(db), expectedSql);
+  // Delete exp3 and check that exp33 is still valid
+  delete exp3;
+  exp3 = nullptr;
+  expectedSql = "\"A\".\"a\"=3";
+  QCOMPARE(exp33.toSql(db), expectedSql);
 }
 
 void JoinConstraintExpressionTest::expressionAssignSqliteTest()
 {
+  namespace Sql = Mdt::Sql;
+
+  using Sql::TableName;
+  using Sql::FieldName;
+  using Sql::JoinConstraintField;
+  using Sql::JoinConstraintExpression;
+
   auto db = pvDatabase;
   QVERIFY(db.isValid());
 
+  JoinConstraintField A(TableName("A"), FieldName("a"));
+  JoinConstraintField B(TableName("B"), FieldName("b"));
+  QString expectedSql;
+
+  // Use setter
+  JoinConstraintExpression exp1;
+  exp1.setExpression( A == 1 );
+  expectedSql = "\"A\".\"a\"=1";
+  QCOMPARE(exp1.toSql(db), expectedSql);
+  // Move assing
+  exp1 = ( A == 11 );
+  expectedSql = "\"A\".\"a\"=11";
+  QCOMPARE(exp1.toSql(db), expectedSql);
+  /*
+   * Check copy assign
+   */
+  JoinConstraintExpression exp2( A == 2 );
+  expectedSql = "\"A\".\"a\"=2";
+  QCOMPARE(exp2.toSql(db), expectedSql);
+  // Assign
+  exp2 = exp1;
+  expectedSql = "\"A\".\"a\"=11";
+  QCOMPARE(exp2.toSql(db), expectedSql);
+  // Change exp1 and check that exp2 is not touched
+  exp1.setExpression( A == 1 );
+  expectedSql = "\"A\".\"a\"=1";
+  QCOMPARE(exp1.toSql(db), expectedSql);
+  expectedSql = "\"A\".\"a\"=11";
+  QCOMPARE(exp2.toSql(db), expectedSql);
+  // Change exp2 and check that exp1 is not touched
+  exp2.setExpression( A == 2 );
+  expectedSql = "\"A\".\"a\"=1";
+  QCOMPARE(exp1.toSql(db), expectedSql);
+  expectedSql = "\"A\".\"a\"=2";
+  QCOMPARE(exp2.toSql(db), expectedSql);
+  /*
+   * Check lifetime
+   */
+  // Create exp3
+  auto *exp3 = new JoinConstraintExpression( A == 3 );
+  expectedSql = "\"A\".\"a\"=3";
+  QCOMPARE(exp3->toSql(db), expectedSql);
+  // Assign exp3 to exp1
+  exp1 = *exp3;
+  QCOMPARE(exp1.toSql(db), expectedSql);
+  // Delete exp3 and check that exp33 is still valid
+  delete exp3;
+  exp3 = nullptr;
+  expectedSql = "\"A\".\"a\"=3";
+  QCOMPARE(exp1.toSql(db), expectedSql);
 }
 
 
