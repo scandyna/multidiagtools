@@ -26,8 +26,9 @@
 #include "Mdt/Sql/Expression/JoinConstraint/SqlTransform.h"
 #include <QSqlDatabase>
 #include <boost/proto/matches.hpp>
+#include <boost/proto/literal.hpp>
 
-#include <boost/proto/proto.hpp>
+// #include <boost/proto/proto.hpp>
 
 /*
  * Init / cleanup

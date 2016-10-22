@@ -18,35 +18,25 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_JOIN_CONSTRAINT_FIELD_H
-#define MDT_SQL_JOIN_CONSTRAINT_FIELD_H
+#ifndef MDT_SQL_EXPRESSION_COMPARISON_H
+#define MDT_SQL_EXPRESSION_COMPARISON_H
 
-#include "Expression/TableFieldTerminal.h"
+#include "Terminal.h"
+#include <boost/proto/traits.hpp>
+#include <boost/proto/matches.hpp>
 
-namespace Mdt{ namespace Sql{
+namespace Mdt{ namespace Sql{ namespace Expression{
 
-  struct JoinConstraintFieldTag
+  /*! \brief Equality comparison grammar
+   */
+  template<typename Tag>
+  struct CompareEquality : boost::proto::or_<
+                              boost::proto::equal_to< LeftTerminal<Tag> , RightTerminal<Tag> > ,
+                              boost::proto::not_equal_to< LeftTerminal<Tag> , RightTerminal<Tag> >
+                            >
   {
   };
 
-  /*! \brief Field terminal used in a JoinConstraintExpression
-   *
-   * Typical usage:
-   * \code
-   * #include <Mdt/Sql/JoinConstraintField.h>
-   *
-   * using Mdt::Sql::JoinConstraintField;
-   * using Mdt::Sql::TableName;
-   * using Mdt::Sql::FieldName;
-   *
-   * JoinConstraintField cliendId(TableName("Client_tbl"), FieldName("Id_PK") );
-   * // cliendId is a terminal that can be used in a JoinConstraintExpression
-   *
-   * \endcode
-   */
-  using JoinConstraintField = const Expression::TableFieldTerminal< JoinConstraintFieldTag >;
+}}} // namespace Mdt{ namespace Sql{ namespace Expression{
 
-
-}} // namespace Mdt{ namespace Sql{
-
-#endif // #ifndef MDT_SQL_JOIN_CONSTRAINT_FIELD_H
+#endif // #ifndef MDT_SQL_EXPRESSION_COMPARISON_H

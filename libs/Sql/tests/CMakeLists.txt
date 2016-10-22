@@ -25,6 +25,11 @@ add_executable(mdtsqlsimpletypestest src/SimpleTypesTest.cpp)
 target_link_libraries(mdtsqlsimpletypestest "mdtsqltest")
 add_test(MdtSqlSimpleTypesTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlsimpletypestest)
 
+# Target MdtSqlExpressionTest
+add_executable(mdtsqlexpressiontest src/ExpressionTest.cpp)
+target_link_libraries(mdtsqlexpressiontest "mdtsqltest")
+add_test(MdtSqlExpressionTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlexpressiontest)
+
 # Target MdtSqlJoinClauseTest
 add_executable(mdtsqljoinclausetest src/JoinClauseTest.cpp)
 target_link_libraries(mdtsqljoinclausetest "mdtsqltest")

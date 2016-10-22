@@ -21,24 +21,20 @@
 #ifndef MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_EXPRESSION_CONTAINER_H
 #define MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_EXPRESSION_CONTAINER_H
 
-#include "Mdt/Sql/Expression/ExpressionContainerInterface.h"
+#include "ExpressionContainerInterface.h"
 #include "Mdt/Sql/Expression/JoinConstraint/SqlTransform.h"
 #include <boost/proto/deep_copy.hpp>
 #include <QString>
 #include <QSqlDatabase>
 
-// #include "Mdt/Sql/JoinConstraintField.h"
-
-// #include <boost/proto/proto.hpp>
-
-namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
+namespace Mdt{ namespace Sql{ namespace Expression{
 
   /*! \brief Implementation of join constraint expression container
    *
    * \tparam Type of the expression to store
    */
   template<typename Expr>
-  class ExpressionContainer : public ExpressionContainerInterface
+  class JoinConstraintExpressionContainer : public ExpressionContainerInterface
   {
    public:
 
@@ -51,17 +47,17 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
      * \tparam InExpr The expression to store
      */
     template<typename InExpr>
-    ExpressionContainer(const InExpr & expr)
+    JoinConstraintExpressionContainer(const InExpr & expr)
      : mExpression( boost::proto::deep_copy(expr) )
     {
     }
 
     // Copy disabled
-    ExpressionContainer(const ExpressionContainer &) = delete;
-    ExpressionContainer & operator=(const ExpressionContainer &) = delete;
+    JoinConstraintExpressionContainer(const JoinConstraintExpressionContainer &) = delete;
+    JoinConstraintExpressionContainer & operator=(const JoinConstraintExpressionContainer &) = delete;
     // Move disabled
-    ExpressionContainer(ExpressionContainer &&) = delete;
-    ExpressionContainer & operator=(ExpressionContainer &&) = delete;
+    JoinConstraintExpressionContainer(JoinConstraintExpressionContainer &&) = delete;
+    JoinConstraintExpressionContainer & operator=(JoinConstraintExpressionContainer &&) = delete;
 
     /*! \brief Get SQL string of the expression
      *
@@ -70,7 +66,7 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
     QString toSql(const QSqlDatabase & db) const override
     {
       Q_ASSERT(db.isValid());
-      SqlTransform transform;
+      JoinConstraint::SqlTransform transform;
       return transform(mExpression, 0, db);
     }
 
@@ -79,10 +75,6 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
     Expr mExpression;
   };
 
-//   QString ExpressionContainer<Expr>::toSql(const QSqlDatabase & db) const
-//   {
-//   }
-
-}}}} // namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
+}}} // namespace Mdt{ namespace Sql{ namespace Expression{
 
 #endif // #ifndef MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_EXPRESSION_CONTAINER_H

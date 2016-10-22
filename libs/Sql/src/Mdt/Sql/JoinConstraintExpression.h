@@ -23,7 +23,7 @@
 
 #include "JoinConstraintField.h"
 #include "Expression/JoinConstraint/Grammar.h"
-#include "Expression/JoinConstraint/ExpressionContainer.h"
+#include "Expression/JoinConstraintExpressionContainer.h"
 #include <QString>
 #include <QSqlDatabase>
 #include <boost/proto/matches.hpp>
@@ -82,7 +82,7 @@ namespace Mdt{ namespace Sql{
      */
     template<typename Expr>
     JoinConstraintExpression(const Expr & expr)
-     : mContainer( new Expression::JoinConstraint::ExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) )
+     : mContainer( new Expression::JoinConstraintExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) )
     {
       static_assert( boost::proto::matches< Expr, Expression::JoinConstraint::Grammar>::value , "Type of Expr is not a valid join constraint expression." );
     }
@@ -111,7 +111,7 @@ namespace Mdt{ namespace Sql{
     void setExpression(const Expr & expr)
     {
       static_assert( boost::proto::matches< Expr, Expression::JoinConstraint::Grammar>::value , "Type of Expr is not a valid join constraint expression." );
-      mContainer.reset( new Expression::JoinConstraint::ExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) );
+      mContainer.reset( new Expression::JoinConstraintExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) );
     }
 
     /*! \brief Get SQL representation of stored expression

@@ -1,6 +1,6 @@
 format 211
 "Expression" // Mdt::Sql::Expression
-  revision 7
+  revision 8
   modified_by 2 "philippe"
   // class settings
   
@@ -983,7 +983,7 @@ ${inlines}
       size A4
     end
 
-    class 3316482 "JoinConstraintContainer"
+    class 3316482 "JoinConstraintExpressionContainer"
       visibility package 
       nformals 1
       formal name "Expr" type "class" explicit_default_value ""
@@ -1034,6 +1034,37 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    classdiagram 2935554 "Grammar"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3323010 "JoinConstraintExpressionGrammar"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3739138 // <generalisation>
+	relation 3719938 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3739138 // <generalisation>
+	  b parent class_ref 3225602 // or_
       end
     end
   end

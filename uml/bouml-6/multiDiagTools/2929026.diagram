@@ -1,6 +1,6 @@
 format 211
 
-classcanvas 128002 class_ref 3316482 // JoinConstraintContainer
+classcanvas 128002 class_ref 3316482 // JoinConstraintExpressionContainer
   classdiagramsettings member_max_width 0 end
   xyz 36 160 2000
 end

@@ -18,35 +18,47 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_JOIN_CONSTRAINT_FIELD_H
-#define MDT_SQL_JOIN_CONSTRAINT_FIELD_H
+#ifndef MDT_EXPRESSION_TEST_H
+#define MDT_EXPRESSION_TEST_H
 
-#include "Expression/TableFieldTerminal.h"
+#include <QObject>
+#include <QtTest/QtTest>
+#include <QSqlDatabase>
 
-namespace Mdt{ namespace Sql{
+class ExpressionTest : public QObject
+{
+ Q_OBJECT
 
-  struct JoinConstraintFieldTag
-  {
-  };
+ private slots:
 
-  /*! \brief Field terminal used in a JoinConstraintExpression
-   *
-   * Typical usage:
-   * \code
-   * #include <Mdt/Sql/JoinConstraintField.h>
-   *
-   * using Mdt::Sql::JoinConstraintField;
-   * using Mdt::Sql::TableName;
-   * using Mdt::Sql::FieldName;
-   *
-   * JoinConstraintField cliendId(TableName("Client_tbl"), FieldName("Id_PK") );
-   * // cliendId is a terminal that can be used in a JoinConstraintExpression
-   *
-   * \endcode
+  void initTestCase();
+  void cleanupTestCase();
+
+ private:
+
+  /*
+   * Compile time tests
    */
-  using JoinConstraintField = const Expression::TableFieldTerminal< JoinConstraintFieldTag >;
+
+  void literalValueTest();
+  void terminalTest();
+  void comparisonTest();
+
+ private slots:
+
+//   void fieldTest();
+// 
+//   void terminalSqlTransformTest();
+//   void comparisonSqlTransformTest();
+//   void sqlTransformTest();
+// 
+//   void expressionContructCopySqliteTest();
+//   void expressionAssignSqliteTest();
+
+ private:
+
+  QSqlDatabase pvDatabase;
+};
 
 
-}} // namespace Mdt{ namespace Sql{
-
-#endif // #ifndef MDT_SQL_JOIN_CONSTRAINT_FIELD_H
+#endif // #ifndef MDT_EXPRESSION_TEST_H

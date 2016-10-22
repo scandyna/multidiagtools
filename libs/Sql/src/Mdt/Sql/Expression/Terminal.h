@@ -18,35 +18,35 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_JOIN_CONSTRAINT_FIELD_H
-#define MDT_SQL_JOIN_CONSTRAINT_FIELD_H
+#ifndef MDT_SQL_EXPRESSION_TERMINAL_H
+#define MDT_SQL_EXPRESSION_TERMINAL_H
 
-#include "Expression/TableFieldTerminal.h"
+#include "TableFieldTerminal.h"
+#include "LiteralValue.h"
+#include <boost/proto/traits.hpp>
+#include <boost/proto/matches.hpp>
 
-namespace Mdt{ namespace Sql{
+namespace Mdt{ namespace Sql{ namespace Expression{
 
-  struct JoinConstraintFieldTag
+  /*! \brief Terminal grammar for the left part of a binary expression
+   */
+  template<typename Tag>
+  struct LeftTerminal : boost::proto::or_<
+                            TableFieldTerminal<Tag>
+                          >
   {
   };
 
-  /*! \brief Field terminal used in a JoinConstraintExpression
-   *
-   * Typical usage:
-   * \code
-   * #include <Mdt/Sql/JoinConstraintField.h>
-   *
-   * using Mdt::Sql::JoinConstraintField;
-   * using Mdt::Sql::TableName;
-   * using Mdt::Sql::FieldName;
-   *
-   * JoinConstraintField cliendId(TableName("Client_tbl"), FieldName("Id_PK") );
-   * // cliendId is a terminal that can be used in a JoinConstraintExpression
-   *
-   * \endcode
+  /*! \brief Terminal grammar for the right part of a binary expression
    */
-  using JoinConstraintField = const Expression::TableFieldTerminal< JoinConstraintFieldTag >;
+  template<typename Tag>
+  struct RightTerminal : boost::proto::or_<
+                            TableFieldTerminal<Tag> ,
+                            LiteralValue
+                          >
+  {
+  };
 
+}}} // namespace Mdt{ namespace Sql{ namespace Expression{
 
-}} // namespace Mdt{ namespace Sql{
-
-#endif // #ifndef MDT_SQL_JOIN_CONSTRAINT_FIELD_H
+#endif // #ifndef MDT_SQL_EXPRESSION_TERMINAL_H

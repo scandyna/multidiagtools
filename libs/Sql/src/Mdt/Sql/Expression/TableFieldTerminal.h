@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_TABLE_FIELD_TERMINAL_H
-#define MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_TABLE_FIELD_TERMINAL_H
+#ifndef MDT_SQL_EXPRESSION_TABLE_FIELD_TERMINAL_H
+#define MDT_SQL_EXPRESSION_TABLE_FIELD_TERMINAL_H
 
 #include "Mdt/Sql/TableName.h"
 #include "Mdt/Sql/FieldName.h"
@@ -28,7 +28,7 @@
 #include <boost/proto/extends.hpp>
 #include <boost/proto/operators.hpp>
 
-namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
+namespace Mdt{ namespace Sql{ namespace Expression{
 
   /*! \brief TableField holds a table name and a field name
    */
@@ -101,6 +101,6 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
     }
   };
 
-}}}} // namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
+}}} // namespace Mdt{ namespace Sql{ namespace Expression{
 
-#endif // #ifndef MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_TABLE_FIELD_TERMINAL_H
+#endif // #ifndef MDT_SQL_EXPRESSION_TABLE_FIELD_TERMINAL_H

@@ -1,4 +1,4 @@
-window_sizes 1280 963 329 945 908 0
+window_sizes 1280 963 411 863 908 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -35,33 +35,15 @@ diagrams
     1004 906 100 4 0 0
   classdiagram_ref 2900994 // Container
     120 110 100 4 0 0
-  active  classdiagram_ref 2868098 // JoinConstraintExpression
-    945 908 100 18 0 0
-  classdiagram_ref 2921346 // JoinConstraintField
-    120 110 100 4 0 0
   classdiagram_ref 2921218 // WhereField
     120 110 100 4 0 0
-  classdiagram_ref 2868226 // TableField
-    120 110 100 4 0 0
-  classdiagram_ref 2921474 // Grammar
-    120 110 100 18 0 0
-  classdiagram_ref 2921730 // Terminal
-    1004 944 100 4 12 0
-  classdiagram_ref 2928386 // Comparison
-    120 110 100 4 0 0
-  classdiagram_ref 2928514 // SqlTransform
-    120 110 100 4 0 0
-  classdiagram_ref 2928770 // Logical
-    120 110 100 4 0 0
-  classdiagram_ref 2928898 // Grammar
-    120 110 100 4 0 0
-  classdiagram_ref 2929026 // Container
-    120 110 100 4 0 0
-  classdiagram_ref 2920962 // WhereExpression
+  active  classdiagram_ref 2921474 // Grammar
+    863 908 100 18 0 0
+  classdiagram_ref 2935554 // Grammar
     120 110 100 4 0 0
 end
 show_stereotypes
-selected class_ref 3316482 // JoinConstraintContainer
+selected classdiagram_ref 2868226 // TableField
 open
   classview_ref 1353730 // Overview
   
@@ -72,10 +54,10 @@ open
   package_ref 516226 // SqlItemModel
   
   package_ref 582274 // SqlItemEditor
-  classview_ref 1544706 // ExpressionContainer
-  class_ref 3308546 // WhereExpressionContainer
-  class_ref 3316354 // WhereExpressionGrammar
-  class_ref 3316482 // JoinConstraintContainer
+  classview_ref 1531522 // Terminals
+  classview_ref 1564546 // Grammar
+  classview_ref 1564418 // Where
+  classview_ref 1571202 // JoinConstraint
   classview_ref 1531394 // Grammar
   classview_ref 1557762 // Container
   classdiagram_ref 2914178 // TerminalSqlTransform
