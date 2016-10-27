@@ -20,6 +20,13 @@ target_link_libraries(mdtsqltest Qt5::Test)
 
 #================= Tests ====================
 
+# TODO Create a function that takes a test name and generates all the rest
+#      Example for MdtSqlExpressionTest:
+#       - Name to give as input: ExpressionTest
+#       - Test name to generate: MdtSqlExpressionTest
+#       - Test file to compile: src/ExpressionTest.cpp
+#       - Test executable to generate: mdtsqlexpressiontest
+
 # Target MdtSqlSimpleTypesTest
 add_executable(mdtsqlsimpletypestest src/SimpleTypesTest.cpp)
 target_link_libraries(mdtsqlsimpletypestest "mdtsqltest")
@@ -30,15 +37,20 @@ add_executable(mdtsqlexpressiontest src/ExpressionTest.cpp)
 target_link_libraries(mdtsqlexpressiontest "mdtsqltest")
 add_test(MdtSqlExpressionTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlexpressiontest)
 
-# Target MdtSqlJoinClauseTest
-add_executable(mdtsqljoinclausetest src/JoinClauseTest.cpp)
-target_link_libraries(mdtsqljoinclausetest "mdtsqltest")
-add_test(MdtSqlJoinClauseTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqljoinclausetest)
+# Target MdtSqlWhereExpressionTest
+add_executable(mdtsqlwhereexpressiontest src/WhereExpressionTest.cpp)
+target_link_libraries(mdtsqlwhereexpressiontest "mdtsqltest")
+add_test(MdtSqlWhereExpressionTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlwhereexpressiontest)
 
 # Target MdtSqlJoinConstraintExpressionTest
 add_executable(mdtsqljoinconstraintexpressiontest src/JoinConstraintExpressionTest.cpp)
 target_link_libraries(mdtsqljoinconstraintexpressiontest "mdtsqltest")
 add_test(MdtSqlJoinConstraintExpressionTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqljoinconstraintexpressiontest)
+
+# Target MdtSqlJoinClauseTest
+add_executable(mdtsqljoinclausetest src/JoinClauseTest.cpp)
+target_link_libraries(mdtsqljoinclausetest "mdtsqltest")
+add_test(MdtSqlJoinClauseTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqljoinclausetest)
 
 # Target MdtSqlQueryTest
 add_executable(mdtsqlquerytest src/QueryTest.cpp)

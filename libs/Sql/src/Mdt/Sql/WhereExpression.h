@@ -18,12 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_JOIN_CONSTRAINT_EXPRESSION_H
-#define MDT_SQL_JOIN_CONSTRAINT_EXPRESSION_H
+#ifndef MDT_SQL_WHERE_EXPRESSION_H
+#define MDT_SQL_WHERE_EXPRESSION_H
 
-#include "JoinConstraintField.h"
-#include "Expression/JoinConstraintExpressionContainer.h"
-#include "Expression/JoinConstraintExpressionGrammar.h"
+#include "WhereField.h"
+#include "Expression/WhereExpressionContainer.h"
+#include "Expression/WhereExpressionGrammar.h"
 #include <QString>
 #include <QSqlDatabase>
 #include <boost/proto/matches.hpp>
@@ -35,75 +35,75 @@ namespace Mdt{ namespace Sql{
     struct ExpressionContainerInterface;
   }
 
-  /*! \brief Join constraint expression
+  /*! \brief Where expression
    *
    * Typical usage:
    * \code
-   * #include <Mdt/Sql/JoinConstraintExpression.h>
+   * #include <Mdt/Sql/WhereExpression.h>
    *
    * namespace Sql = Mdt::Sql;
    *
-   * using Sql::JoinConstraintExpression;
-   * using Sql::JoinConstraintField;
+   * using Sql::WhereExpression;
+   * using Sql::WhereField;
    * using Sql::TableName;
    * using Sql::FieldName;
    *
-   * JoinConstraintField cliendId(TableName("Client_tbl"), FieldName("Id_PK") );
-   * JoinConstraintField adrCliendId(TableName("Address_tbl"), FieldName("Client_Id_FK") );
+   * WhereField cliendId(TableName("Client_tbl"), FieldName("Id_PK") );
+   * WhereField adrCliendId(TableName("Address_tbl"), FieldName("Client_Id_FK") );
    *
-   * JoinConstraintExpression joinConstraint( adrCliendId == cliendId );
+   * WhereExpression whereExp( adrCliendId == cliendId );
    * \endcode
    */
-  class JoinConstraintExpression
+  class WhereExpression
   {
    public:
 
     /*! \brief Construct a empty expression
      */
-    JoinConstraintExpression() = default;
+    WhereExpression() = default;
 
     // Destructor must have its implementation in cpp file
-    ~JoinConstraintExpression();
+    ~WhereExpression();
 
     /*! \brief Construct a expression
      *
      * \tparam Expr Type of the expression.
      * \param expr Expression to hold.
-     * \pre Expr must be a join constraint expression type.
-     *       A joint constraint expression is based on JoinConstraintField,
+     * \pre Expr must be a where expression type.
+     *       A where expression is based on WhereField,
      *       comparison operators, logical AND, logical OR.
      *       For example (see example code above for details):
      *       \code
-     *       // Example of valid join constraint expression
+     *       // Example of valid where expression
      *       adrCliendId == cliendId
      *       (adrCliendId == cliendId) && (adrCliendId >= 2)
      *
-     *       // Example of invalid join constraint expression
+     *       // Example of invalid where expression
      *       adrCliendId + cliendId
      *       \endcode
      */
     template<typename Expr>
-    JoinConstraintExpression(const Expr & expr)
-     : mContainer( new Expression::JoinConstraintExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) )
+    WhereExpression(const Expr & expr)
+     : mContainer( new Expression::WhereExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) )
     {
-      static_assert( boost::proto::matches< Expr, Expression::JoinConstraintExpressionGrammar>::value , "Type of Expr is not a valid join constraint expression." );
+      static_assert( boost::proto::matches< Expr, Expression::WhereExpressionGrammar>::value , "Type of Expr is not a valid where expression." );
     }
 
     /*! \brief Construct a expression as copy of other
      */
-    JoinConstraintExpression(const JoinConstraintExpression & other) = default;
+    WhereExpression(const WhereExpression & other) = default;
 
     /*! \brief Construct a expression by moving other
      */
-    JoinConstraintExpression(JoinConstraintExpression && other) = default;
+    WhereExpression(WhereExpression && other) = default;
 
     /*! \brief Assign other expression to this
      */
-    JoinConstraintExpression & operator=(const JoinConstraintExpression & other) = default;
+    WhereExpression & operator=(const WhereExpression & other) = default;
 
     /*! \brief Assign other expression to this
      */
-    JoinConstraintExpression & operator=(JoinConstraintExpression &&) = default;
+    WhereExpression & operator=(WhereExpression &&) = default;
 
     /*! \brief Set expression
      *
@@ -112,8 +112,8 @@ namespace Mdt{ namespace Sql{
     template<typename Expr>
     void setExpression(const Expr & expr)
     {
-      static_assert( boost::proto::matches< Expr, Expression::JoinConstraintExpressionGrammar>::value , "Type of Expr is not a valid join constraint expression." );
-      mContainer.reset( new Expression::JoinConstraintExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) );
+      static_assert( boost::proto::matches< Expr, Expression::WhereExpressionGrammar>::value , "Type of Expr is not a valid where expression." );
+      mContainer.reset( new Expression::WhereExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) );
     }
 
     /*! \brief Get SQL representation of stored expression
@@ -136,4 +136,4 @@ namespace Mdt{ namespace Sql{
 
 }} // namespace Mdt{ namespace Sql{
 
-#endif // #ifndef MDT_SQL_JOIN_CONSTRAINT_EXPRESSION_H
+#endif // #ifndef MDT_SQL_WHERE_EXPRESSION_H

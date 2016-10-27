@@ -18,23 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_EXPRESSION_CONTAINER_H
-#define MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_EXPRESSION_CONTAINER_H
+#ifndef MDT_SQL_EXPRESSION_WHERE_EXPRESSION_CONTAINER_H
+#define MDT_SQL_EXPRESSION_WHERE_EXPRESSION_CONTAINER_H
 
 #include "ExpressionContainerInterface.h"
-#include "JoinConstraintExpressionSqlTransform.h"
+#include "WhereExpressionSqlTransform.h"
 #include <boost/proto/deep_copy.hpp>
 #include <QString>
 #include <QSqlDatabase>
 
 namespace Mdt{ namespace Sql{ namespace Expression{
 
-  /*! \brief Implementation of join constraint expression container
+  /*! \brief Implementation of where expression container
    *
    * \tparam Expr Type of the expression to store
    */
   template<typename Expr>
-  class JoinConstraintExpressionContainer : public ExpressionContainerInterface
+  class WhereExpressionContainer : public ExpressionContainerInterface
   {
    public:
 
@@ -47,17 +47,17 @@ namespace Mdt{ namespace Sql{ namespace Expression{
      * \tparam InExpr The expression to store
      */
     template<typename InExpr>
-    JoinConstraintExpressionContainer(const InExpr & expr)
+    WhereExpressionContainer(const InExpr & expr)
      : mExpression( boost::proto::deep_copy(expr) )
     {
     }
 
     // Copy disabled
-    JoinConstraintExpressionContainer(const JoinConstraintExpressionContainer &) = delete;
-    JoinConstraintExpressionContainer & operator=(const JoinConstraintExpressionContainer &) = delete;
+    WhereExpressionContainer(const WhereExpressionContainer &) = delete;
+    WhereExpressionContainer & operator=(const WhereExpressionContainer &) = delete;
     // Move disabled
-    JoinConstraintExpressionContainer(JoinConstraintExpressionContainer &&) = delete;
-    JoinConstraintExpressionContainer & operator=(JoinConstraintExpressionContainer &&) = delete;
+    WhereExpressionContainer(WhereExpressionContainer &&) = delete;
+    WhereExpressionContainer & operator=(WhereExpressionContainer &&) = delete;
 
     /*! \brief Get SQL string of the expression
      *
@@ -66,7 +66,7 @@ namespace Mdt{ namespace Sql{ namespace Expression{
     QString toSql(const QSqlDatabase & db) const override
     {
       Q_ASSERT(db.isValid());
-      JoinConstraintExpressionSqlTransform transform;
+      WhereExpressionSqlTransform transform;
       return transform(mExpression, 0, db);
     }
 
@@ -77,4 +77,4 @@ namespace Mdt{ namespace Sql{ namespace Expression{
 
 }}} // namespace Mdt{ namespace Sql{ namespace Expression{
 
-#endif // #ifndef MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_EXPRESSION_CONTAINER_H
+#endif // #ifndef MDT_SQL_EXPRESSION_WHERE_EXPRESSION_CONTAINER_H

@@ -32,9 +32,6 @@ namespace Mdt{ namespace Sql{ namespace Expression{
 
   struct JoinConstraintExpressionSqlTransform;
 
-  /*! \brief SQL transform for && binary expression
-   */
-
   /*! \brief Transforms a joint constraint expression to its SQL represetation
    */
   struct JoinConstraintExpressionSqlTransform : boost::proto::or_<
