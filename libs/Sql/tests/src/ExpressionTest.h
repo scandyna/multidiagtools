@@ -50,10 +50,6 @@ class ExpressionTest : public QObject
 
   void terminalSqlTransformTest();
   void comparisonSqlTransformTest();
-//   void sqlTransformTest();
-// 
-//   void expressionContructCopySqliteTest();
-//   void expressionAssignSqliteTest();
 
  private:
 

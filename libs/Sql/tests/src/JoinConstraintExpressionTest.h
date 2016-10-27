@@ -40,8 +40,6 @@ class JoinConstraintExpressionTest : public QObject
    * Compile time tests
    */
 
-//   void terminalTypeTest();
-
   void grammarComparisonTest();
   void grammarTest();
 
@@ -49,8 +47,6 @@ class JoinConstraintExpressionTest : public QObject
 
   void fieldTest();
 
-//   void terminalSqlTransformTest();
-//   void comparisonSqlTransformTest();
   void sqlTransformTest();
 
   void expressionContructCopySqliteTest();

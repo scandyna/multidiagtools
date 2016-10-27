@@ -64,7 +64,7 @@ constexpr bool expressionMatchesGrammar()
   return boost::proto::matches< Expr, Grammar >::value;
 }
 
-/// \todo Should add grammarLiteralValueTest to check int, float, double, const char*, QDate, ...
+/// \todo Should also check int, float, double, const char*, QDate, ...
 /**
  * \note How to distiguisch :"some string" or "Date-Time" formatted string ??
  *  - Check while generating SQL ??

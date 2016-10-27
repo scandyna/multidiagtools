@@ -57,29 +57,6 @@ constexpr bool expressionMatchesGrammar()
   return boost::proto::matches< Expr, Grammar >::value;
 }
 
-/// \todo Should add grammarLiteralValueTest to check int, float, double, const char*, QDate, ...
-/**
- * \note How to distiguisch :"some string" or "Date-Time" formatted string ??
- *  - Check while generating SQL ??
- *  - Simply request user to be explicit (f.ex. QDate("xx.yy.zz") ) ?
- *  - Define some TAG for date/time/datetime literal terminal ?
- *   -> Ex: Date("xx.yy.zz")
- * --> QDate/etc.. seems to be the simplest..
- */
-
-// void JoinConstraintExpressionTest::terminalTypeTest()
-// {
-//   namespace Sql = Mdt::Sql;
-// 
-//   using Sql::JoinConstraintField;
-//   using Sql::TableName;
-//   using Sql::FieldName;
-// 
-//   JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
-// 
-//   decltype( boost::proto::_value()(clientId) );
-// }
-
 void JoinConstraintExpressionTest::grammarComparisonTest()
 {
   using Sql::Expression::Comparison;
@@ -203,84 +180,12 @@ void JoinConstraintExpressionTest::fieldTest()
   QCOMPARE( boost::proto::_value()(A).fieldName(), QString("id_A"));
 }
 
-// void JoinConstraintExpressionTest::terminalSqlTransformTest()
-// {
-//   using Sql::JoinConstraintField;
-//   using Sql::TableName;
-//   using Sql::FieldName;
-//   using Sql::Expression::JoinConstraint::LeftTerminalSqlTransform;
-//   using Sql::Expression::JoinConstraint::RightTerminalSqlTransform;
-// 
-//   auto db = pvDatabase;
-//   QVERIFY(db.isValid());
-//   QString expectedSql;
-//   LeftTerminalSqlTransform leftTerminalTransform;
-//   RightTerminalSqlTransform rightTerminalTransform;
-// 
-//   JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
-//   /*
-//    * Left terminal
-//    */
-//   expectedSql = "\"Client_tbl\".\"Id_PK\"";
-//   QCOMPARE(leftTerminalTransform(clientId, 0, db), expectedSql);
-//   /*
-//    * Right terminal with JoinConstraintField
-//    */
-//   expectedSql = "\"Client_tbl\".\"Id_PK\"";
-//   QCOMPARE(rightTerminalTransform(clientId, 0, db), expectedSql);
-//   /*
-//    * Right terminal with literal value
-//    */
-//   // int literal
-//   expectedSql = "25";
-//   QCOMPARE(rightTerminalTransform(boost::proto::lit(25), 0, db), expectedSql);
-//   // string literal
-//   expectedSql = "'str'";
-//   QCOMPARE(rightTerminalTransform(boost::proto::lit("str"), 0, db), expectedSql);
-// 
-// }
-
-// void JoinConstraintExpressionTest::comparisonSqlTransformTest()
-// {
-//   using Sql::JoinConstraintField;
-//   using Sql::TableName;
-//   using Sql::FieldName;
-//   using Sql::Expression::JoinConstraint::ComparisonSqlTransform;
-// 
-//   auto db = pvDatabase;
-//   QVERIFY(db.isValid());
-//   QString expectedSql;
-//   ComparisonSqlTransform transform;
-// 
-//   JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
-// 
-//   // ==
-//   expectedSql = "\"Client_tbl\".\"Id_PK\"=25";
-//   QCOMPARE(transform(clientId == 25, 0, db), expectedSql);
-//   // !=
-//   expectedSql = "\"Client_tbl\".\"Id_PK\"<>25";
-//   QCOMPARE(transform(clientId != 25, 0, db), expectedSql);
-//   // <
-//   expectedSql = "\"Client_tbl\".\"Id_PK\"<25";
-//   QCOMPARE(transform(clientId < 25, 0, db), expectedSql);
-//   // <=
-//   expectedSql = "\"Client_tbl\".\"Id_PK\"<=25";
-//   QCOMPARE(transform(clientId <= 25, 0, db), expectedSql);
-//   // >
-//   expectedSql = "\"Client_tbl\".\"Id_PK\">25";
-//   QCOMPARE(transform(clientId > 25, 0, db), expectedSql);
-//   // <=
-//   expectedSql = "\"Client_tbl\".\"Id_PK\">=25";
-//   QCOMPARE(transform(clientId >= 25, 0, db), expectedSql);
-// }
-
 void JoinConstraintExpressionTest::sqlTransformTest()
 {
   using Sql::JoinConstraintField;
   using Sql::TableName;
   using Sql::FieldName;
   using Sql::Expression::JoinConstraintExpressionSqlTransform;
-//   using Sql::Expression::JoinConstraint::SqlTransform;
 
   auto db = pvDatabase;
   QVERIFY(db.isValid());
