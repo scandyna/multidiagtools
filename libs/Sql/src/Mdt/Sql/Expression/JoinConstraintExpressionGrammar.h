@@ -18,47 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_EXPRESSION_TEST_H
-#define MDT_EXPRESSION_TEST_H
+#ifndef MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_EXPRESSION_GRAMMAR_H
+#define MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_EXPRESSION_GRAMMAR_H
 
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QSqlDatabase>
+#include "Mdt/Sql/JoinConstraintField.h"
+#include "Comparison.h"
 
-class ExpressionTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace Sql{ namespace Expression{
 
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
- private:
-
-  /*
-   * Compile time tests
+  /*! \brief Grammar of a join constrain expression
    */
+  struct JoinConstraintExpressionGrammar : boost::proto::or_<
+                                              boost::proto::logical_and< JoinConstraintExpressionGrammar , JoinConstraintExpressionGrammar > ,
+                                              boost::proto::logical_or< JoinConstraintExpressionGrammar , JoinConstraintExpressionGrammar > ,
+                                              Comparison
+                                            >
+  {
+  };
 
-  void literalValueTest();
-  void terminalTest();
-  void comparisonTest();
+}}} // namespace Mdt{ namespace Sql{ namespace Expression{
 
- private slots:
-
-  void fieldTest();
-
-  void terminalSqlTransformTest();
-  void comparisonSqlTransformTest();
-//   void sqlTransformTest();
-// 
-//   void expressionContructCopySqliteTest();
-//   void expressionAssignSqliteTest();
-
- private:
-
-  QSqlDatabase pvDatabase;
-};
-
-
-#endif // #ifndef MDT_EXPRESSION_TEST_H
+#endif // #ifndef MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_EXPRESSION_GRAMMAR_H

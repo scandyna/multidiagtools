@@ -25,43 +25,21 @@ diagrams
     120 110 100 4 0 0
   classdiagram_ref 2861058 // JoinConstraintExpression
     120 110 100 4 0 0
-  classdiagram_ref 2860802 // overview
-    120 110 100 4 0 0
-  classdiagram_ref 169474 // Error
-    120 110 100 4 36 0
-  classdiagram_ref 2508162 // Overview
-    1004 906 100 18 0 0
-  classdiagram_ref 2887810 // Container
-    1004 906 100 4 0 0
-  classdiagram_ref 2900994 // Container
-    120 110 100 4 0 0
-  classdiagram_ref 2921218 // WhereField
-    120 110 100 4 0 0
-  active  classdiagram_ref 2921474 // Grammar
-    863 908 100 18 0 0
-  classdiagram_ref 2935554 // Grammar
-    120 110 100 4 0 0
+  active  classdiagram_ref 2860802 // overview
+    863 908 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2868226 // TableField
 open
-  classview_ref 1353730 // Overview
+  
+  package_ref 409858 // principes
   
   package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
-  classview_ref 161666 // Error
   
   package_ref 516226 // SqlItemModel
   
   package_ref 582274 // SqlItemEditor
-  classview_ref 1531522 // Terminals
-  classview_ref 1564546 // Grammar
-  classview_ref 1564418 // Where
   classview_ref 1571202 // JoinConstraint
-  classview_ref 1531394 // Grammar
-  classview_ref 1557762 // Container
-  classdiagram_ref 2914178 // TerminalSqlTransform
-  classdiagram_ref 2894338 // SqlTransform
   classview_ref 1538050 // JoinClause
   class_ref 3308418 // WhereField
   

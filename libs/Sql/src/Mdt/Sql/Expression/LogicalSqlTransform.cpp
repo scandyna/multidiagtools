@@ -18,47 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_EXPRESSION_TEST_H
-#define MDT_EXPRESSION_TEST_H
+#include "LogicalSqlTransform.h"
+#include <QStringBuilder>
 
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QSqlDatabase>
+namespace Mdt{ namespace Sql{ namespace Expression{
 
-class ExpressionTest : public QObject
+QString GetLogicalAndSql::operator()(const QString & left, const QString & right) const
 {
- Q_OBJECT
+  return QStringLiteral("(") % left % QStringLiteral(")AND(") % right % QStringLiteral(")");
+}
 
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
- private:
-
-  /*
-   * Compile time tests
-   */
-
-  void literalValueTest();
-  void terminalTest();
-  void comparisonTest();
-
- private slots:
-
-  void fieldTest();
-
-  void terminalSqlTransformTest();
-  void comparisonSqlTransformTest();
-//   void sqlTransformTest();
-// 
-//   void expressionContructCopySqliteTest();
-//   void expressionAssignSqliteTest();
-
- private:
-
-  QSqlDatabase pvDatabase;
-};
+QString GetLogicalOrSql::operator()(const QString & left, const QString & right) const
+{
+  return QStringLiteral("(") % left % QStringLiteral(")OR(") % right % QStringLiteral(")");
+}
 
 
-#endif // #ifndef MDT_EXPRESSION_TEST_H
+}}} // namespace Mdt{ namespace Sql{ namespace Expression{

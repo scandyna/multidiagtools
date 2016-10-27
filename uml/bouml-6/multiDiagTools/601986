@@ -1,6 +1,6 @@
 format 211
 "Expression" // Mdt::Sql::Expression
-  revision 8
+  revision 10
   modified_by 2 "philippe"
   // class settings
   
@@ -1067,6 +1067,37 @@ ${inlines}
 	  b parent class_ref 3225602 // or_
       end
     end
+
+    classdiagram 2942082 "SqlTransform"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3329538 "JoinConstraintExpressionSqlTransform"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3745666 // <generalisation>
+	relation 3726466 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3745666 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
   end
 
   classview 1524866 "SearchCondition"
@@ -1286,5 +1317,4 @@ ${inlines}
     end
   end
 
-  package_ref 608514 // JoinConstraint
 end

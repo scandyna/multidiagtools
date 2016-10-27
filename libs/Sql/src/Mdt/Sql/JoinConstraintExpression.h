@@ -22,8 +22,8 @@
 #define MDT_SQL_JOIN_CONSTRAINT_EXPRESSION_H
 
 #include "JoinConstraintField.h"
-#include "Expression/JoinConstraint/Grammar.h"
 #include "Expression/JoinConstraintExpressionContainer.h"
+#include "Expression/JoinConstraintExpressionGrammar.h"
 #include <QString>
 #include <QSqlDatabase>
 #include <boost/proto/matches.hpp>
@@ -41,10 +41,12 @@ namespace Mdt{ namespace Sql{
    * \code
    * #include <Mdt/Sql/JoinConstraintExpression.h>
    *
-   * using Mdt::Sql::JoinConstraintExpression;
-   * using Mdt::Sql::JoinConstraintField;
-   * using Mdt::Sql::TableName;
-   * using Mdt::Sql::FieldName;
+   * namespace Sql = Mdt::Sql;
+   *
+   * using Sql::JoinConstraintExpression;
+   * using Sql::JoinConstraintField;
+   * using Sql::TableName;
+   * using Sql::FieldName;
    *
    * JoinConstraintField cliendId(TableName("Client_tbl"), FieldName("Id_PK") );
    * JoinConstraintField adrCliendId(TableName("Address_tbl"), FieldName("Client_Id_FK") );
@@ -84,7 +86,7 @@ namespace Mdt{ namespace Sql{
     JoinConstraintExpression(const Expr & expr)
      : mContainer( new Expression::JoinConstraintExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) )
     {
-      static_assert( boost::proto::matches< Expr, Expression::JoinConstraint::Grammar>::value , "Type of Expr is not a valid join constraint expression." );
+      static_assert( boost::proto::matches< Expr, Expression::JoinConstraintExpressionGrammar>::value , "Type of Expr is not a valid join constraint expression." );
     }
 
     /*! \brief Construct a expression as copy of other
@@ -110,7 +112,7 @@ namespace Mdt{ namespace Sql{
     template<typename Expr>
     void setExpression(const Expr & expr)
     {
-      static_assert( boost::proto::matches< Expr, Expression::JoinConstraint::Grammar>::value , "Type of Expr is not a valid join constraint expression." );
+      static_assert( boost::proto::matches< Expr, Expression::JoinConstraintExpressionGrammar>::value , "Type of Expr is not a valid join constraint expression." );
       mContainer.reset( new Expression::JoinConstraintExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) );
     }
 

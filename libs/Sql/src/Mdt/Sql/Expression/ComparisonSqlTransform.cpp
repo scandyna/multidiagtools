@@ -18,23 +18,39 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_EXPRESSION_LITERAL_VALUE_H
-#define MDT_SQL_EXPRESSION_LITERAL_VALUE_H
-
-#include <boost/proto/traits.hpp>
-#include <boost/proto/matches.hpp>
+#include "ComparisonSqlTransform.h"
+#include <QStringBuilder>
 
 namespace Mdt{ namespace Sql{ namespace Expression{
 
-  /*! \brief Literal value grammar
-   */
-  struct LiteralValue : boost::proto::or_<
-                          boost::proto::terminal< boost::proto::convertible_to<int> > ,
-                          boost::proto::terminal< const char * const >
-                        >
-  {
-  };
+QString GetCompareEqualToSql::operator()(const QString & left, const QString & right) const
+{
+  return left % QStringLiteral("=") % right;
+}
+
+QString GetCompareNotEqualToSql::operator()(const QString & left, const QString & right) const
+{
+  return left % QStringLiteral("<>") % right;
+}
+
+QString GetCompareLessSql::operator()(const QString & left, const QString & right) const
+{
+  return left % QStringLiteral("<") % right;
+}
+
+QString GetCompareLessEqualSql::operator()(const QString & left, const QString & right) const
+{
+  return left % QStringLiteral("<=") % right;
+}
+
+QString GetCompareGreaterSql::operator()(const QString & left, const QString & right) const
+{
+  return left % QStringLiteral(">") % right;
+}
+
+QString GetCompareGreaterEqualSql::operator()(const QString & left, const QString & right) const
+{
+  return left % QStringLiteral(">=") % right;
+}
 
 }}} // namespace Mdt{ namespace Sql{ namespace Expression{
-
-#endif // #ifndef MDT_SQL_EXPRESSION_LITERAL_VALUE_H

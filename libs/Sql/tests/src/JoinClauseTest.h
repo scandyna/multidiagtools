@@ -33,10 +33,10 @@ class JoinClauseTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
- private slots:
-
-  void sandbox2();
-  void sandbox();
+//  private slots:
+// 
+//   void sandbox2();
+//   void sandbox();
 
 };
 

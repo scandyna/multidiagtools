@@ -22,13 +22,13 @@
 #include "Mdt/Application.h"
 #include "Mdt/Sql/JoinConstraintField.h"
 #include "Mdt/Sql/JoinConstraintExpression.h"
-#include "Mdt/Sql/Expression/JoinConstraint/Grammar.h"
-#include "Mdt/Sql/Expression/JoinConstraint/SqlTransform.h"
+#include "Mdt/Sql/Expression/JoinConstraintExpressionGrammar.h"
+#include "Mdt/Sql/Expression/JoinConstraintExpressionSqlTransform.h"
 #include <QSqlDatabase>
 #include <boost/proto/matches.hpp>
 #include <boost/proto/literal.hpp>
 
-// #include <boost/proto/proto.hpp>
+namespace Sql = Mdt::Sql;
 
 /*
  * Init / cleanup
@@ -82,10 +82,7 @@ constexpr bool expressionMatchesGrammar()
 
 void JoinConstraintExpressionTest::grammarComparisonTest()
 {
-  namespace JoinConstraint = Mdt::Sql::Expression::JoinConstraint;
-  namespace Sql = Mdt::Sql;
-
-  using JoinConstraint::Comparison;
+  using Sql::Expression::Comparison;
   using Sql::JoinConstraintField;
   using Sql::TableName;
   using Sql::FieldName;
@@ -160,10 +157,7 @@ void JoinConstraintExpressionTest::grammarComparisonTest()
 
 void JoinConstraintExpressionTest::grammarTest()
 {
-  namespace JoinConstraint = Mdt::Sql::Expression::JoinConstraint;
-  namespace Sql = Mdt::Sql;
-
-  using JoinConstraint::Grammar;
+  using Sql::Expression::JoinConstraintExpressionGrammar;
   using Sql::JoinConstraintField;
   using Sql::TableName;
   using Sql::FieldName;
@@ -171,27 +165,27 @@ void JoinConstraintExpressionTest::grammarTest()
   JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
   JoinConstraintField adrClientId(TableName("Address_tbl"), FieldName("Client_Id_FK"));
 
-  static_assert(  expressionMatchesGrammar< decltype( clientId == 25 ) , Grammar >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( clientId == adrClientId ) , Grammar >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( clientId && 25 ) , Grammar >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( clientId && adrClientId ) , Grammar >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( clientId || 25 ) , Grammar >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( clientId || adrClientId ) , Grammar >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == 25) && (adrClientId == 52) ) , Grammar >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (adrClientId < 20) ) , Grammar >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId < 25) && (adrClientId == clientId) ) , Grammar >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (clientId > 10) && (adrClientId < 100) ) , Grammar >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (clientId > 10) && (adrClientId < 100) && (adrClientId > 2) ) , Grammar >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (clientId > 10) && (clientId < 1000) && (adrClientId < 100) && (adrClientId > 2) ) , Grammar >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == 25) || (adrClientId == 52) ) , Grammar >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (adrClientId < 20) ) , Grammar >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId < 25) || (adrClientId == clientId) ) , Grammar >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (clientId > 10) || (adrClientId < 100) ) , Grammar >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (clientId > 10) || (adrClientId < 100) || (adrClientId > 2) ) , Grammar >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (clientId > 10) || (clientId < 1000) || (adrClientId < 100) || (adrClientId > 2) ) , Grammar >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && ( (adrClientId < 20) || (clientId < 50) ) ) , Grammar >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( ( (clientId == adrClientId) || (clientId == 2) ) && ( (adrClientId < 20) || (clientId < 50) ) ) , Grammar >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || ( (adrClientId > 20) && (adrClientId < 50) ) ) , Grammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( clientId == 25 ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( clientId == adrClientId ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId && 25 ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId && adrClientId ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId || 25 ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId || adrClientId ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == 25) && (adrClientId == 52) ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (adrClientId < 20) ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId < 25) && (adrClientId == clientId) ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (clientId > 10) && (adrClientId < 100) ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (clientId > 10) && (adrClientId < 100) && (adrClientId > 2) ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && (clientId > 10) && (clientId < 1000) && (adrClientId < 100) && (adrClientId > 2) ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == 25) || (adrClientId == 52) ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (adrClientId < 20) ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId < 25) || (adrClientId == clientId) ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (clientId > 10) || (adrClientId < 100) ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (clientId > 10) || (adrClientId < 100) || (adrClientId > 2) ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || (clientId > 10) || (clientId < 1000) || (adrClientId < 100) || (adrClientId > 2) ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) && ( (adrClientId < 20) || (clientId < 50) ) ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( ( (clientId == adrClientId) || (clientId == 2) ) && ( (adrClientId < 20) || (clientId < 50) ) ) , JoinConstraintExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (clientId == adrClientId) || ( (adrClientId > 20) && (adrClientId < 50) ) ) , JoinConstraintExpressionGrammar >() , "" );
 }
 
 /*
@@ -200,106 +194,98 @@ void JoinConstraintExpressionTest::grammarTest()
 
 void JoinConstraintExpressionTest::fieldTest()
 {
-  namespace Sql = Mdt::Sql;
-
   using Sql::JoinConstraintField;
   using Sql::TableName;
   using Sql::FieldName;
-
 
   JoinConstraintField A(TableName("A_tbl"), FieldName("id_A"));
   QCOMPARE( boost::proto::_value()(A).tableName(), QString("A_tbl"));
   QCOMPARE( boost::proto::_value()(A).fieldName(), QString("id_A"));
 }
 
-void JoinConstraintExpressionTest::terminalSqlTransformTest()
-{
-  namespace Sql = Mdt::Sql;
+// void JoinConstraintExpressionTest::terminalSqlTransformTest()
+// {
+//   using Sql::JoinConstraintField;
+//   using Sql::TableName;
+//   using Sql::FieldName;
+//   using Sql::Expression::JoinConstraint::LeftTerminalSqlTransform;
+//   using Sql::Expression::JoinConstraint::RightTerminalSqlTransform;
+// 
+//   auto db = pvDatabase;
+//   QVERIFY(db.isValid());
+//   QString expectedSql;
+//   LeftTerminalSqlTransform leftTerminalTransform;
+//   RightTerminalSqlTransform rightTerminalTransform;
+// 
+//   JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
+//   /*
+//    * Left terminal
+//    */
+//   expectedSql = "\"Client_tbl\".\"Id_PK\"";
+//   QCOMPARE(leftTerminalTransform(clientId, 0, db), expectedSql);
+//   /*
+//    * Right terminal with JoinConstraintField
+//    */
+//   expectedSql = "\"Client_tbl\".\"Id_PK\"";
+//   QCOMPARE(rightTerminalTransform(clientId, 0, db), expectedSql);
+//   /*
+//    * Right terminal with literal value
+//    */
+//   // int literal
+//   expectedSql = "25";
+//   QCOMPARE(rightTerminalTransform(boost::proto::lit(25), 0, db), expectedSql);
+//   // string literal
+//   expectedSql = "'str'";
+//   QCOMPARE(rightTerminalTransform(boost::proto::lit("str"), 0, db), expectedSql);
+// 
+// }
 
-  using Sql::JoinConstraintField;
-  using Sql::TableName;
-  using Sql::FieldName;
-  using Sql::Expression::JoinConstraint::LeftTerminalSqlTransform;
-  using Sql::Expression::JoinConstraint::RightTerminalSqlTransform;
-
-  auto db = pvDatabase;
-  QVERIFY(db.isValid());
-  QString expectedSql;
-  LeftTerminalSqlTransform leftTerminalTransform;
-  RightTerminalSqlTransform rightTerminalTransform;
-
-  JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
-  /*
-   * Left terminal
-   */
-  expectedSql = "\"Client_tbl\".\"Id_PK\"";
-  QCOMPARE(leftTerminalTransform(clientId, 0, db), expectedSql);
-  /*
-   * Right terminal with JoinConstraintField
-   */
-  expectedSql = "\"Client_tbl\".\"Id_PK\"";
-  QCOMPARE(rightTerminalTransform(clientId, 0, db), expectedSql);
-  /*
-   * Right terminal with literal value
-   */
-  // int literal
-  expectedSql = "25";
-  QCOMPARE(rightTerminalTransform(boost::proto::lit(25), 0, db), expectedSql);
-  // string literal
-  expectedSql = "'str'";
-  QCOMPARE(rightTerminalTransform(boost::proto::lit("str"), 0, db), expectedSql);
-
-}
-
-void JoinConstraintExpressionTest::comparisonSqlTransformTest()
-{
-  namespace Sql = Mdt::Sql;
-
-  using Sql::JoinConstraintField;
-  using Sql::TableName;
-  using Sql::FieldName;
-  using Sql::Expression::JoinConstraint::ComparisonSqlTransform;
-
-  auto db = pvDatabase;
-  QVERIFY(db.isValid());
-  QString expectedSql;
-  ComparisonSqlTransform transform;
-
-  JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
-
-  // ==
-  expectedSql = "\"Client_tbl\".\"Id_PK\"=25";
-  QCOMPARE(transform(clientId == 25, 0, db), expectedSql);
-  // !=
-  expectedSql = "\"Client_tbl\".\"Id_PK\"<>25";
-  QCOMPARE(transform(clientId != 25, 0, db), expectedSql);
-  // <
-  expectedSql = "\"Client_tbl\".\"Id_PK\"<25";
-  QCOMPARE(transform(clientId < 25, 0, db), expectedSql);
-  // <=
-  expectedSql = "\"Client_tbl\".\"Id_PK\"<=25";
-  QCOMPARE(transform(clientId <= 25, 0, db), expectedSql);
-  // >
-  expectedSql = "\"Client_tbl\".\"Id_PK\">25";
-  QCOMPARE(transform(clientId > 25, 0, db), expectedSql);
-  // <=
-  expectedSql = "\"Client_tbl\".\"Id_PK\">=25";
-  QCOMPARE(transform(clientId >= 25, 0, db), expectedSql);
-}
+// void JoinConstraintExpressionTest::comparisonSqlTransformTest()
+// {
+//   using Sql::JoinConstraintField;
+//   using Sql::TableName;
+//   using Sql::FieldName;
+//   using Sql::Expression::JoinConstraint::ComparisonSqlTransform;
+// 
+//   auto db = pvDatabase;
+//   QVERIFY(db.isValid());
+//   QString expectedSql;
+//   ComparisonSqlTransform transform;
+// 
+//   JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
+// 
+//   // ==
+//   expectedSql = "\"Client_tbl\".\"Id_PK\"=25";
+//   QCOMPARE(transform(clientId == 25, 0, db), expectedSql);
+//   // !=
+//   expectedSql = "\"Client_tbl\".\"Id_PK\"<>25";
+//   QCOMPARE(transform(clientId != 25, 0, db), expectedSql);
+//   // <
+//   expectedSql = "\"Client_tbl\".\"Id_PK\"<25";
+//   QCOMPARE(transform(clientId < 25, 0, db), expectedSql);
+//   // <=
+//   expectedSql = "\"Client_tbl\".\"Id_PK\"<=25";
+//   QCOMPARE(transform(clientId <= 25, 0, db), expectedSql);
+//   // >
+//   expectedSql = "\"Client_tbl\".\"Id_PK\">25";
+//   QCOMPARE(transform(clientId > 25, 0, db), expectedSql);
+//   // <=
+//   expectedSql = "\"Client_tbl\".\"Id_PK\">=25";
+//   QCOMPARE(transform(clientId >= 25, 0, db), expectedSql);
+// }
 
 void JoinConstraintExpressionTest::sqlTransformTest()
 {
-  namespace Sql = Mdt::Sql;
-
   using Sql::JoinConstraintField;
   using Sql::TableName;
   using Sql::FieldName;
-  using Sql::Expression::JoinConstraint::SqlTransform;
+  using Sql::Expression::JoinConstraintExpressionSqlTransform;
+//   using Sql::Expression::JoinConstraint::SqlTransform;
 
   auto db = pvDatabase;
   QVERIFY(db.isValid());
   QString expectedSql;
-  SqlTransform transform;
+  JoinConstraintExpressionSqlTransform transform;
 
   JoinConstraintField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
   /*
@@ -328,8 +314,6 @@ void JoinConstraintExpressionTest::sqlTransformTest()
 
 void JoinConstraintExpressionTest::expressionContructCopySqliteTest()
 {
-  namespace Sql = Mdt::Sql;
-
   using Sql::TableName;
   using Sql::FieldName;
   using Sql::JoinConstraintField;
@@ -380,8 +364,6 @@ void JoinConstraintExpressionTest::expressionContructCopySqliteTest()
 
 void JoinConstraintExpressionTest::expressionAssignSqliteTest()
 {
-  namespace Sql = Mdt::Sql;
-
   using Sql::TableName;
   using Sql::FieldName;
   using Sql::JoinConstraintField;

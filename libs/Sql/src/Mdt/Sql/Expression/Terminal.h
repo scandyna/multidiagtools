@@ -30,18 +30,16 @@ namespace Mdt{ namespace Sql{ namespace Expression{
 
   /*! \brief Terminal grammar for the left part of a binary expression
    */
-  template<typename Tag>
   struct LeftTerminal : boost::proto::or_<
-                            TableFieldTerminal<Tag>
+                            TableFieldTerminal<DefaultTableFieldTag>
                           >
   {
   };
 
   /*! \brief Terminal grammar for the right part of a binary expression
    */
-  template<typename Tag>
   struct RightTerminal : boost::proto::or_<
-                            TableFieldTerminal<Tag> ,
+                            TableFieldTerminal<DefaultTableFieldTag> ,
                             LiteralValue
                           >
   {

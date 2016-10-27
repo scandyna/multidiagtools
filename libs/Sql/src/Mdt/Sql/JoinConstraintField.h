@@ -25,10 +25,6 @@
 
 namespace Mdt{ namespace Sql{
 
-  struct JoinConstraintFieldTag
-  {
-  };
-
   /*! \brief Field terminal used in a JoinConstraintExpression
    *
    * Typical usage:
@@ -44,7 +40,7 @@ namespace Mdt{ namespace Sql{
    *
    * \endcode
    */
-  using JoinConstraintField = const Expression::TableFieldTerminal< JoinConstraintFieldTag >;
+  using JoinConstraintField = const Expression::TableFieldTerminal< Expression::DefaultTableFieldTag >;
 
 
 }} // namespace Mdt{ namespace Sql{

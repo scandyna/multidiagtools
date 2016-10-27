@@ -49,8 +49,8 @@ class JoinConstraintExpressionTest : public QObject
 
   void fieldTest();
 
-  void terminalSqlTransformTest();
-  void comparisonSqlTransformTest();
+//   void terminalSqlTransformTest();
+//   void comparisonSqlTransformTest();
   void sqlTransformTest();
 
   void expressionContructCopySqliteTest();

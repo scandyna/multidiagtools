@@ -23,17 +23,19 @@
 #include "Mdt/Sql/Expression/LiteralValue.h"
 #include "Mdt/Sql/Expression/Terminal.h"
 #include "Mdt/Sql/Expression/Comparison.h"
+#include "Mdt/Sql/Expression/TerminalSqlTransform.h"
+#include "Mdt/Sql/Expression/ComparisonSqlTransform.h"
 #include <QSqlDatabase>
 #include <boost/proto/matches.hpp>
 #include <boost/proto/literal.hpp>
+#include <boost/proto/transform/arg.hpp>
 
 namespace Sql = Mdt::Sql;
 
 /*
  * Terminal type used in tests
  */
-struct TestTerminalTag{};
-using TestTerminal = const Sql::Expression::TableFieldTerminal<TestTerminalTag>;
+using TestTerminal = const Sql::Expression::TableFieldTerminal<>;
 
 /*
  * Init / cleanup
@@ -91,32 +93,158 @@ void ExpressionTest::terminalTest()
   TestTerminal A(TableName("A"), FieldName("a"));
 
   // LeftTerminal
-  static_assert(  expressionMatchesGrammar< decltype( A ) , LeftTerminal<TestTerminalTag> >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( boost::proto::lit(25) ) , LeftTerminal<TestTerminalTag> >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A ) , LeftTerminal >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( boost::proto::lit(25) ) , LeftTerminal >() , "" );
   // RightTerminal
-  static_assert(  expressionMatchesGrammar< decltype( A ) , RightTerminal<TestTerminalTag> >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit(25) ) , RightTerminal<TestTerminalTag> >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A ) , RightTerminal >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit(25) ) , RightTerminal >() , "" );
 }
 
 void ExpressionTest::comparisonTest()
 {
-  using Sql::Expression::CompareEquality;
+  using Sql::Expression::Comparison;
   using Sql::Expression::LeftTerminal;
   using Sql::Expression::RightTerminal;
   using Sql::TableName;
   using Sql::FieldName;
 
   TestTerminal A(TableName("A"), FieldName("a"));
+  TestTerminal B(TableName("B"), FieldName("b"));
 
-  static_assert(  expressionMatchesGrammar< decltype( A == 25 ) , CompareEquality<TestTerminalTag> >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( 25 == A ) , CompareEquality<TestTerminalTag> >() , "" );
-
+  // ==
+  static_assert(  expressionMatchesGrammar< decltype( A == 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 == A ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A == B ) , Comparison >() , "" );
+  // !=
+  static_assert(  expressionMatchesGrammar< decltype( A != 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 != A ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A != B ) , Comparison >() , "" );
+  // <
+  static_assert(  expressionMatchesGrammar< decltype( A < 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 < A ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A < B ) , Comparison >() , "" );
+  // <=
+  static_assert(  expressionMatchesGrammar< decltype( A <= 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 <= A ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A <= B ) , Comparison >() , "" );
+  // >
+  static_assert(  expressionMatchesGrammar< decltype( A > 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 > A ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A > B ) , Comparison >() , "" );
+  // >=
+  static_assert(  expressionMatchesGrammar< decltype( A >= 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 >= A ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A >= B ) , Comparison >() , "" );
+  // Invalid expressions
+  static_assert( !expressionMatchesGrammar< decltype( 25 + A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A + 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A + B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 - A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A - 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A - B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 * A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A * 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A * B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 / A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A / 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A / B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 % A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A % 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A % B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 << A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A << 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A << B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 >> A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A >> 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A >> B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 || A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A || 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A || B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 && A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A && 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A && B ) , Comparison >() , "" );
 }
 
 /*
  * Rutime tests
  */
 
+void ExpressionTest::fieldTest()
+{
+  using Sql::TableName;
+  using Sql::FieldName;
+
+  TestTerminal A(TableName("A_tbl"), FieldName("a_field"));
+  QCOMPARE( boost::proto::_value()(A).tableName(), QString("A_tbl"));
+  QCOMPARE( boost::proto::_value()(A).fieldName(), QString("a_field"));
+}
+
+void ExpressionTest::terminalSqlTransformTest()
+{
+  using Sql::TableName;
+  using Sql::FieldName;
+  using Sql::Expression::LeftTerminalSqlTransform;
+  using Sql::Expression::RightTerminalSqlTransform;
+
+  auto db = pvDatabase;
+  QVERIFY(db.isValid());
+  QString expectedSql;
+  LeftTerminalSqlTransform leftTerminalTransform;
+  RightTerminalSqlTransform rightTerminalTransform;
+
+  TestTerminal clientId(TableName("Client_tbl"), FieldName("Id_PK"));
+  /*
+   * Left terminal
+   */
+  expectedSql = "\"Client_tbl\".\"Id_PK\"";
+  QCOMPARE(leftTerminalTransform(clientId, 0, db), expectedSql);
+  /*
+   * Right terminal with TestTerminal
+   */
+  expectedSql = "\"Client_tbl\".\"Id_PK\"";
+  QCOMPARE(rightTerminalTransform(clientId, 0, db), expectedSql);
+  /*
+   * Right terminal with literal value
+   */
+  // int literal
+  expectedSql = "25";
+  QCOMPARE(rightTerminalTransform(boost::proto::lit(25), 0, db), expectedSql);
+  // string literal
+  expectedSql = "'str'";
+  QCOMPARE(rightTerminalTransform(boost::proto::lit("str"), 0, db), expectedSql);
+}
+
+void ExpressionTest::comparisonSqlTransformTest()
+{
+  using Sql::TableName;
+  using Sql::FieldName;
+  using Sql::Expression::ComparisonSqlTransform;
+
+  auto db = pvDatabase;
+  QVERIFY(db.isValid());
+  QString expectedSql;
+  ComparisonSqlTransform transform;
+  TestTerminal clientId(TableName("Client_tbl"), FieldName("Id_PK"));
+
+  // ==
+  expectedSql = "\"Client_tbl\".\"Id_PK\"=25";
+  QCOMPARE(transform(clientId == 25, 0, db), expectedSql);
+  // !=
+  expectedSql = "\"Client_tbl\".\"Id_PK\"<>25";
+  QCOMPARE(transform(clientId != 25, 0, db), expectedSql);
+  // <
+  expectedSql = "\"Client_tbl\".\"Id_PK\"<25";
+  QCOMPARE(transform(clientId < 25, 0, db), expectedSql);
+  // <=
+  expectedSql = "\"Client_tbl\".\"Id_PK\"<=25";
+  QCOMPARE(transform(clientId <= 25, 0, db), expectedSql);
+  // >
+  expectedSql = "\"Client_tbl\".\"Id_PK\">25";
+  QCOMPARE(transform(clientId > 25, 0, db), expectedSql);
+  // <=
+  expectedSql = "\"Client_tbl\".\"Id_PK\">=25";
+  QCOMPARE(transform(clientId >= 25, 0, db), expectedSql);
+}
 
 
 /*

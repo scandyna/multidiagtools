@@ -27,13 +27,40 @@
 
 namespace Mdt{ namespace Sql{ namespace Expression{
 
-  /*! \brief Equality comparison grammar
+  /*! \brief Equality or inequality comparison grammar
    */
-  template<typename Tag>
   struct CompareEquality : boost::proto::or_<
-                              boost::proto::equal_to< LeftTerminal<Tag> , RightTerminal<Tag> > ,
-                              boost::proto::not_equal_to< LeftTerminal<Tag> , RightTerminal<Tag> >
+                              boost::proto::equal_to< LeftTerminal , RightTerminal > ,
+                              boost::proto::not_equal_to< LeftTerminal , RightTerminal >
                             >
+  {
+  };
+
+  /*! \brief Less or less equal comparison grammar
+   */
+  struct CompareLess : boost::proto::or_<
+                          boost::proto::less< LeftTerminal , RightTerminal > ,
+                          boost::proto::less_equal< LeftTerminal , RightTerminal >
+                        >
+  {
+  };
+
+  /*! \brief Greater or greater equal comparison grammar
+   */
+  struct CompareGreater : boost::proto::or_<
+                              boost::proto::greater< LeftTerminal , RightTerminal > ,
+                              boost::proto::greater_equal< LeftTerminal , RightTerminal >
+                            >
+  {
+  };
+
+  /*! \brief Comparison grammar
+   */
+  struct Comparison : boost::proto::or_<
+                          CompareEquality ,
+                          CompareLess ,
+                          CompareGreater
+                        >
   {
   };
 

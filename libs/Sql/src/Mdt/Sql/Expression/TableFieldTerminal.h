@@ -30,6 +30,19 @@
 
 namespace Mdt{ namespace Sql{ namespace Expression{
 
+  /*! \brief Tag to differentiate TableFieldTerminal
+   *
+   * When using default defined Comparison grammar
+   *  and ComparisonSqlTransform transform,
+   *  this tag must be used.
+   *
+   * To use a other tag, grammar and transform
+   *  must be completely redefined.
+   */
+  struct DefaultTableFieldTag
+  {
+  };
+
   /*! \brief TableField holds a table name and a field name
    */
   class TableField
@@ -68,7 +81,7 @@ namespace Mdt{ namespace Sql{ namespace Expression{
    *
    * \tparam Tag Type to make target terminal a unique type
    */
-  template<typename Tag, typename Domain = boost::proto::default_domain>
+  template<typename Tag = DefaultTableFieldTag, typename Domain = boost::proto::default_domain>
   struct TableFieldTerminal : boost::proto::extends<
                                       boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<TableField> >,
                                       TableFieldTerminal< Tag, Domain >,
@@ -83,10 +96,13 @@ namespace Mdt{ namespace Sql{ namespace Expression{
 
    public:
 
-    typedef typename boost::proto::result_of::value<terminal_type>::type          value_type;
-    typedef typename boost::proto::result_of::value<terminal_type &>::type        reference;
-    typedef typename boost::proto::result_of::value<const terminal_type &>::type  const_reference;
+//     typedef typename boost::proto::result_of::value<terminal_type>::type          value_type;
+//     typedef typename boost::proto::result_of::value<terminal_type &>::type        reference;
+//     typedef typename boost::proto::result_of::value<const terminal_type &>::type  const_reference;
 
+    typedef TableField          value_type;
+    typedef TableField &        reference;
+    typedef const TableField &  const_reference;
     /*
      * This will define operator()= , which permit to give better error messages with grammars.
      * (Without this, error could look like 'error: no match for operator= ......'

@@ -22,7 +22,7 @@
 #define MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_EXPRESSION_CONTAINER_H
 
 #include "ExpressionContainerInterface.h"
-#include "Mdt/Sql/Expression/JoinConstraint/SqlTransform.h"
+#include "JoinConstraintExpressionSqlTransform.h"
 #include <boost/proto/deep_copy.hpp>
 #include <QString>
 #include <QSqlDatabase>
@@ -66,7 +66,7 @@ namespace Mdt{ namespace Sql{ namespace Expression{
     QString toSql(const QSqlDatabase & db) const override
     {
       Q_ASSERT(db.isValid());
-      JoinConstraint::SqlTransform transform;
+      JoinConstraintExpressionSqlTransform transform;
       return transform(mExpression, 0, db);
     }
 

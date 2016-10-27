@@ -18,10 +18,10 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_SQL_TRANSFORM_H
-#define MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_SQL_TRANSFORM_H
+#ifndef MDT_SQL_EXPRESSION_COMPARISON_SQL_TRANSFORM_H
+#define MDT_SQL_EXPRESSION_COMPARISON_SQL_TRANSFORM_H
 
-#include "Mdt/Sql/JoinConstraintField.h"
+#include "TerminalSqlTransform.h"
 #include <QString>
 #include <QVariant>
 #include <boost/proto/traits.hpp>
@@ -29,42 +29,10 @@
 #include <boost/proto/transform/when.hpp>
 #include <boost/proto/transform.hpp>
 
-/// \todo See how to split ?
-#include "Grammar.h"
+namespace Mdt{ namespace Sql{ namespace Expression{
 
-class QSqlDatabase;
-
-namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
-
-  struct SqlTransform;
-
-  struct GetTerminalSql : boost::proto::callable
-  {
-    typedef QString result_type;
-
-    QString operator()(const TableField & tf, const QSqlDatabase & db) const;
-
-    QString operator()(const QVariant & value, const QSqlDatabase & db) const;
-
-  };
-
-  struct LeftTerminalSqlTransform : boost::proto::when<
-                                        JoinConstraintField ,
-                                        boost::proto::call<GetTerminalSql(boost::proto::_value, boost::proto::_data)>
-                                      >
-  {
-  };
-
-  struct RightTerminalSqlTransform : boost::proto::or_<
-                                        LeftTerminalSqlTransform ,
-                                        boost::proto::when<
-                                          LiteralValue ,
-                                          boost::proto::call<GetTerminalSql(boost::proto::_value, boost::proto::_data)>
-                                        >
-                                      >
-  {
-  };
-
+  /*! \brief Callable transform that returns SQL representation for == binary expression
+   */
   struct GetCompareEqualToSql : boost::proto::callable
   {
     typedef QString result_type;
@@ -72,13 +40,17 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
     QString operator()(const QString & left, const QString & right) const;
   };
 
+  /*! \brief SQL transform for == binary expression
+   */
   struct CompareEqualToSqlTransform : boost::proto::when<
-                                        boost::proto::equal_to<LeftTerminalSqlTransform, RightTerminalSqlTransform> ,
+                                        boost::proto::equal_to< LeftTerminal , RightTerminal > ,
                                         boost::proto::call<GetCompareEqualToSql( LeftTerminalSqlTransform(boost::proto::_left), RightTerminalSqlTransform(boost::proto::_right) )>
                                       >
   {
   };
 
+  /*! \brief Callable transform that returns SQL representation for != binary expression
+   */
   struct GetCompareNotEqualToSql : boost::proto::callable
   {
     typedef QString result_type;
@@ -86,13 +58,17 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
     QString operator()(const QString & left, const QString & right) const;
   };
 
+  /*! \brief SQL transform for != binary expression
+   */
   struct CompareNotEqualToSqlTransform : boost::proto::when<
-                                          boost::proto::not_equal_to<LeftTerminalSqlTransform, RightTerminalSqlTransform> ,
-                                          boost::proto::call<GetCompareNotEqualToSql( LeftTerminalSqlTransform(boost::proto::_left), RightTerminalSqlTransform(boost::proto::_right) )>
+                                        boost::proto::not_equal_to< LeftTerminal , RightTerminal > ,
+                                        boost::proto::call<GetCompareNotEqualToSql( LeftTerminalSqlTransform(boost::proto::_left), RightTerminalSqlTransform(boost::proto::_right) )>
                                       >
   {
   };
 
+  /*! \brief SQL transform for == or != binary expression
+   */
   struct CompareEqualitySqlTransform : boost::proto::or_<
                                           CompareEqualToSqlTransform ,
                                           CompareNotEqualToSqlTransform
@@ -100,6 +76,8 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
   {
   };
 
+  /*! \brief Callable transform that returns SQL representation for < binary expression
+   */
   struct GetCompareLessSql : boost::proto::callable
   {
     typedef QString result_type;
@@ -107,6 +85,8 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
     QString operator()(const QString & left, const QString & right) const;
   };
 
+  /*! \brief Callable transform that returns SQL representation for <= binary expression
+   */
   struct GetCompareLessEqualSql : boost::proto::callable
   {
     typedef QString result_type;
@@ -114,19 +94,23 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
     QString operator()(const QString & left, const QString & right) const;
   };
 
+  /*! \brief SQL transform for < or <= binary expression
+   */
   struct CompareLessSqlTransform : boost::proto::or_<
                                       boost::proto::when<
-                                        boost::proto::less< LeftTerminalSqlTransform, RightTerminalSqlTransform > ,
+                                        boost::proto::less< LeftTerminal, RightTerminal > ,
                                         boost::proto::call< GetCompareLessSql( LeftTerminalSqlTransform(boost::proto::_left), RightTerminalSqlTransform(boost::proto::_right) ) >
                                       > ,
                                       boost::proto::when<
-                                        boost::proto::less_equal< LeftTerminalSqlTransform, RightTerminalSqlTransform > ,
+                                        boost::proto::less_equal< LeftTerminal, RightTerminal > ,
                                         boost::proto::call< GetCompareLessEqualSql( LeftTerminalSqlTransform(boost::proto::_left), RightTerminalSqlTransform(boost::proto::_right) ) >
                                       >
                                     >
   {
   };
 
+  /*! \brief Callable transform that returns SQL representation for > binary expression
+   */
   struct GetCompareGreaterSql : boost::proto::callable
   {
     typedef QString result_type;
@@ -134,6 +118,8 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
     QString operator()(const QString & left, const QString & right) const;
   };
 
+  /*! \brief Callable transform that returns SQL representation for >= binary expression
+   */
   struct GetCompareGreaterEqualSql : boost::proto::callable
   {
     typedef QString result_type;
@@ -141,19 +127,23 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
     QString operator()(const QString & left, const QString & right) const;
   };
 
+  /*! \brief SQL transform for > or >= binary expression
+   */
   struct CompareGreaterSqlTransform : boost::proto::or_<
                                           boost::proto::when<
-                                            boost::proto::greater< LeftTerminalSqlTransform , RightTerminalSqlTransform > ,
+                                            boost::proto::greater< LeftTerminal , RightTerminal > ,
                                             boost::proto::call< GetCompareGreaterSql( LeftTerminalSqlTransform(boost::proto::_left), RightTerminalSqlTransform(boost::proto::_right) ) >
                                           > ,
                                           boost::proto::when<
-                                            boost::proto::greater_equal< LeftTerminalSqlTransform , RightTerminalSqlTransform > , 
+                                            boost::proto::greater_equal< LeftTerminal , RightTerminal > , 
                                             boost::proto::call< GetCompareGreaterEqualSql( LeftTerminalSqlTransform(boost::proto::_left), RightTerminalSqlTransform(boost::proto::_right) ) >
                                           >
                                         >
   {
   };
 
+  /*! \brief SQL transform for valid comparison binary expression
+   */
   struct ComparisonSqlTransform : boost::proto::or_<
                                       CompareEqualitySqlTransform ,
                                       CompareLessSqlTransform ,
@@ -162,42 +152,6 @@ namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
   {
   };
 
-  struct GetLogicalAndSql : boost::proto::callable
-  {
-    typedef QString result_type;
+}}} // namespace Mdt{ namespace Sql{ namespace Expression{
 
-    QString operator()(const QString & left, const QString & right) const;
-  };
-
-  struct LogicalAndSqlTransform : boost::proto::when<
-                                      boost::proto::logical_and< SqlTransform , SqlTransform > ,
-                                      boost::proto::call< GetLogicalAndSql( SqlTransform(boost::proto::_left), SqlTransform(boost::proto::_right) ) >
-                                    >
-  {
-  };
-
-  struct GetLogicalOrSql : boost::proto::callable
-  {
-    typedef QString result_type;
-
-    QString operator()(const QString & left, const QString & right) const;
-  };
-
-  struct LogicalOrSqlTransform : boost::proto::when<
-                                    boost::proto::logical_or< SqlTransform, SqlTransform > ,
-                                    boost::proto::call< GetLogicalOrSql( SqlTransform(boost::proto::_left), SqlTransform(boost::proto::_right) ) >
-                                  >
-  {
-  };
-
-  struct SqlTransform : boost::proto::or_<
-                          LogicalAndSqlTransform ,
-                          LogicalOrSqlTransform ,
-                          ComparisonSqlTransform
-                        >
-  {
-  };
-
-}}}} // namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
-
-#endif // #ifndef MDT_SQL_EXPRESSION_JOIN_CONSTRAINT_SQL_TRANSFORM_H
+#endif // #ifndef MDT_SQL_EXPRESSION_COMPARISON_SQL_TRANSFORM_H

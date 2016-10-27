@@ -18,13 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "SqlTransform.h"
+#include "TerminalSqlTransform.h"
 #include <QSqlDatabase>
 #include <QSqlDriver>
 #include <QStringBuilder>
 #include <QSqlField>
 
-namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
+namespace Mdt{ namespace Sql{ namespace Expression{
 
 QString GetTerminalSql::operator()(const TableField & tf, const QSqlDatabase & db) const
 {
@@ -45,45 +45,4 @@ QString GetTerminalSql::operator()(const QVariant & value, const QSqlDatabase & 
 }
 
 
-QString GetCompareEqualToSql::operator()(const QString & left, const QString & right) const
-{
-  return left % QStringLiteral("=") % right;
-}
-
-QString GetCompareNotEqualToSql::operator()(const QString& left, const QString& right) const
-{
-  return left % QStringLiteral("<>") % right;
-}
-
-QString GetCompareLessSql::operator()(const QString& left, const QString& right) const
-{
-  return left % QStringLiteral("<") % right;
-}
-
-QString GetCompareLessEqualSql::operator()(const QString& left, const QString& right) const
-{
-  return left % QStringLiteral("<=") % right;
-}
-
-QString GetCompareGreaterSql::operator()(const QString& left, const QString& right) const
-{
-  return left % QStringLiteral(">") % right;
-}
-
-QString GetCompareGreaterEqualSql::operator()(const QString& left, const QString& right) const
-{
-  return left % QStringLiteral(">=") % right;
-}
-
-
-QString GetLogicalAndSql::operator()(const QString& left, const QString& right) const
-{
-  return QStringLiteral("(") % left % QStringLiteral(")AND(") % right % QStringLiteral(")");
-}
-
-QString GetLogicalOrSql::operator()(const QString& left, const QString& right) const
-{
-  return QStringLiteral("(") % left % QStringLiteral(")OR(") % right % QStringLiteral(")");
-}
-
-}}}} // namespace Mdt{ namespace Sql{ namespace Expression{ namespace JoinConstraint{
+}}} // namespace Mdt{ namespace Sql{ namespace Expression{

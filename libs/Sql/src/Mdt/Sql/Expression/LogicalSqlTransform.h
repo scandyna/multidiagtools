@@ -18,47 +18,32 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_EXPRESSION_TEST_H
-#define MDT_EXPRESSION_TEST_H
+#ifndef MDT_SQL_EXPRESSION_LOGICAL_SQL_TRANSFORM_H
+#define MDT_SQL_EXPRESSION_LOGICAL_SQL_TRANSFORM_H
 
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QSqlDatabase>
+#include <QString>
+#include <boost/proto/proto_fwd.hpp>
 
-class ExpressionTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace Sql{ namespace Expression{
 
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
- private:
-
-  /*
-   * Compile time tests
+  /*! \brief Callable transform that returns SQL representation for && binary expression
    */
+  struct GetLogicalAndSql : boost::proto::callable
+  {
+    typedef QString result_type;
 
-  void literalValueTest();
-  void terminalTest();
-  void comparisonTest();
+    QString operator()(const QString & left, const QString & right) const;
+  };
 
- private slots:
+  /*! \brief Callable transform that returns SQL representation for || binary expression
+   */
+  struct GetLogicalOrSql : boost::proto::callable
+  {
+    typedef QString result_type;
 
-  void fieldTest();
+    QString operator()(const QString & left, const QString & right) const;
+  };
 
-  void terminalSqlTransformTest();
-  void comparisonSqlTransformTest();
-//   void sqlTransformTest();
-// 
-//   void expressionContructCopySqliteTest();
-//   void expressionAssignSqliteTest();
+}}} // namespace Mdt{ namespace Sql{ namespace Expression{
 
- private:
-
-  QSqlDatabase pvDatabase;
-};
-
-
-#endif // #ifndef MDT_EXPRESSION_TEST_H
+#endif // #ifndef MDT_SQL_EXPRESSION_LOGICAL_SQL_TRANSFORM_H
