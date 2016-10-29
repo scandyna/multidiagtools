@@ -86,9 +86,3 @@ add_test(MdtSqlSchemaDriverPostgreSqlTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlsche
 add_executable(mdtsqlschemaviewtest src/SchemaViewTest.cpp)
 target_link_libraries(mdtsqlschemaviewtest "mdtsqltest")
 add_test(MdtSqlSchemaViewTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlschemaviewtest)
-
-
-# Target MdtSqlSearchConditionExpressionTest
-add_executable(mdtsqlsearchconditionexpressiontest src/SearchConditionExpressionTest.cpp)
-target_link_libraries(mdtsqlsearchconditionexpressiontest "mdtsqltest")
-add_test(MdtSqlSearchConditionExpressionTest ${CMAKE_CURRENT_BINARY_DIR}/mdtsqlsearchconditionexpressiontest)

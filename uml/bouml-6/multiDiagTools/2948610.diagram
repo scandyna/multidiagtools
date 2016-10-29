@@ -1,0 +1,34 @@
+format 211
+
+classcanvas 128002 class_ref 3233154 // SelectTable
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 256.5 2000
+end
+classcanvas 128130 class_ref 1994882 // SelectField
+  classdiagramsettings member_max_width 0 end
+  xyz 207 42 2000
+end
+classcanvas 128258 class_ref 2960770 // SelectFieldListItem
+  classdiagramsettings member_max_width 0 end
+  xyz 186 130 2006
+end
+classcanvas 128514 class_ref 2960642 // SelectFieldList
+  classdiagramsettings member_max_width 0 end
+  xyz 39 130 2012
+end
+note 128770 "Souplesse: concept polymorphique Entité concrète ou chaine SQL"
+  xyzwh 62 339 2000 527 61
+note 128898 "Global pour module SQL: fonction qui échape TableName, FieldName, Value. Utilise QSqlDriver, mais centralise. Aussi, macro/autre pour indiquer le caller, evite des assert() à répétition."
+  xyzwh 62 438 2000 669 73
+relationcanvas 128386 relation_ref 3324418 // <directional composition>
+  decenter_begin 466
+  from ref 128258 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 3324546 // <directional composition>
+  from ref 128514 z 2013 to ref 128258
+  no_role_a no_role_b
+  multiplicity_a_pos 170 162 3000 no_multiplicity_b
+end
+end

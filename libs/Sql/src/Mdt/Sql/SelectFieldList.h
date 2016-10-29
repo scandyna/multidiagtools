@@ -18,13 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_SELECT_FIELD_LIST_H
-#define MDT_SQL_SCHEMA_SELECT_FIELD_LIST_H
+#ifndef MDT_SQL_SELECT_FIELD_LIST_H
+#define MDT_SQL_SELECT_FIELD_LIST_H
 
 #include "SelectField.h"
 #include <vector>
 
-namespace Mdt{ namespace Sql{ namespace Schema{
+namespace Mdt{ namespace Sql{
 
   struct SelectFieldListItem
   {
@@ -96,6 +96,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     std::vector<SelectFieldListItem> pvItemList;
   };
 
-}}} // namespace Mdt{ namespace Sql{ namespace Schema{
+}} // namespace Mdt{ namespace Sql{
 
-#endif // #ifndef MDT_SQL_SCHEMA_SELECT_FIELD_LIST_H
+#endif // #ifndef MDT_SQL_SELECT_FIELD_LIST_H

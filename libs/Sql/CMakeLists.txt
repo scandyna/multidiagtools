@@ -8,6 +8,7 @@ set(SOURCES_FILES
     src/Mdt/Sql/Error.cpp
     src/Mdt/Sql/Query.cpp
     src/Mdt/Sql/InsertQuery.cpp
+    src/Mdt/Sql/SelectTable.cpp
     src/Mdt/Sql/Expression/TerminalSqlTransform.cpp
     src/Mdt/Sql/Expression/ComparisonSqlTransform.cpp
     src/Mdt/Sql/Expression/LogicalSqlTransform.cpp
@@ -26,7 +27,9 @@ set(SOURCES_FILES
     src/Mdt/Sql/Schema/IndexListModel.cpp
     src/Mdt/Sql/Schema/Table.cpp
     src/Mdt/Sql/Schema/TableModel.cpp
+
     src/Mdt/Sql/Schema/ViewTable.cpp
+
     src/Mdt/Sql/Schema/JoinClause.cpp
     src/Mdt/Sql/Schema/JoinHelper.cpp
     src/Mdt/Sql/Schema/View.cpp

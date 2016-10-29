@@ -18,42 +18,46 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_VIEW_TABLE_H
-#define MDT_SQL_SCHEMA_VIEW_TABLE_H
+#ifndef MDT_SQL_SELECT_TABLE_H
+#define MDT_SQL_SELECT_TABLE_H
 
 #include <QString>
 
 namespace Mdt{ namespace Sql{
+
   class TableName;
-}}
 
-namespace Mdt{ namespace Sql{ namespace Schema{
+  namespace Schema{
 
-  template<typename T>
-  class TableTemplate;
+    template<typename T>
+    class TableTemplate;
 
-  class Table;
+    class Table;
 
-  /*! \brief SQL table used by View
+  } // namespace Schema{
+
+  /*! \brief Table used in a SQL SELECT statement
    *
-   * \todo Once Schema::View is updated (using SelectTable) , this class will be obselete
+   * In a SQL SELECT statement, mainly in a FROM clause,
+   *  a table can be designed by its table name or a alias.
+   *  SelectTable represents this.
    */
-  class ViewTable
+  class SelectTable
   {
    public:
 
     /*! \brief Default constructor
      */
-    ViewTable() {}
+    SelectTable() {}
 
     /*! \brief Constructor
      */
-    explicit ViewTable(const Table & table, const QString & alias = QString());
+    explicit SelectTable(const Schema::Table & table, const QString & alias = QString());
 
     /*! \brief Constructor
      */
     template <typename T>
-    explicit ViewTable(const TableTemplate<T> & table, const QString & alias = QString())
+    explicit SelectTable(const Schema::TableTemplate<T> & table, const QString & alias = QString())
      : pvTableName(table.tableName()),
        pvAlias(alias)
     {
@@ -61,7 +65,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Constructor
      */
-    explicit ViewTable(const TableName & name, const QString & alias = QString());
+    explicit SelectTable(const TableName & name, const QString & alias = QString());
 
     /*! \brief Set table name
      */
@@ -125,6 +129,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     QString pvAlias;
   };
 
-}}} // namespace Mdt{ namespace Sql{ namespace Schema{
+}} // namespace Mdt{ namespace Sql{
 
-#endif // #ifndef MDT_SQL_SCHEMA_VIEW_TABLE_H
+#endif // #ifndef MDT_SQL_SELECT_TABLE_H

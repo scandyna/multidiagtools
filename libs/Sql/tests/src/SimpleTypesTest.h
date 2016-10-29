@@ -35,6 +35,11 @@ class SimpleTypesTest : public QObject
 
   void fieldNameTest();
   void tableNameTest();
+
+  void selectFieldTest();
+  void selectFieldListTest();
+
+  void selectTableTest();
 };
 
 

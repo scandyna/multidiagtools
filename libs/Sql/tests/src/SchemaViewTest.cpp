@@ -20,8 +20,6 @@
  ****************************************************************************/
 #include "SchemaViewTest.h"
 #include "Mdt/Application.h"
-#include "Mdt/Sql/Schema/SelectField.h"
-#include "Mdt/Sql/Schema/SelectFieldList.h"
 #include "Mdt/Sql/Schema/TableTemplate.h"
 #include "Mdt/Sql/Schema/JoinClause.h"
 #include "Mdt/Sql/Schema/JoinHelper.h"
@@ -46,73 +44,6 @@ void SchemaViewTest::cleanupTestCase()
 /*
  * Tests
  */
-
-void SchemaViewTest::selectFieldTest()
-{
-  using Mdt::Sql::Schema::SelectField;
-  using Mdt::Sql::Schema::Field;
-  using Mdt::Sql::FieldName;
-
-  SelectField SF1("Name");
-  QCOMPARE(SF1.fieldName(), QString("Name"));
-  QVERIFY(SF1.alias().isEmpty());
-  SelectField SF2("Name", "AliasName");
-  QCOMPARE(SF2.fieldName(), QString("Name"));
-  QCOMPARE(SF2.alias(), QString("AliasName"));
-
-//   /*
-//    * Setup fields
-//    */
-//   Field Name;
-//   Name.setName("Name");
-// 
-//   /*
-//    * Create based on a field
-//    */
-//   SelectField SF1(Name);
-//   QCOMPARE(SF1.fieldName(), QString("Name"));
-//   QVERIFY(SF1.alias().isEmpty());
-//   SelectField SF2(Name, "AliasName");
-//   QCOMPARE(SF2.fieldName(), QString("Name"));
-//   QCOMPARE(SF2.alias(), QString("AliasName"));
-//   /*
-//    * Create based on a field name
-//    */
-//   SelectField SF3(FieldName("SF3"));
-//   QCOMPARE(SF3.fieldName(), QString("SF3"));
-//   QVERIFY(SF3.alias().isEmpty());
-//   SelectField SF4(FieldName("SF4"), "Sf4Alias");
-//   QCOMPARE(SF4.fieldName(), QString("SF4"));
-//   QCOMPARE(SF4.alias(), QString("Sf4Alias"));
-}
-
-void SchemaViewTest::selectFieldListTest()
-{
-  using Mdt::Sql::Schema::SelectField;
-  using Mdt::Sql::FieldName;
-
-  /*
-   * Initial state
-   */
-  Mdt::Sql::Schema::SelectFieldList list;
-  QCOMPARE(list.size(), 0);
-  QVERIFY(list.isEmpty());
-  /*
-   * Add 1 element
-   */
-//   list.append("Client_tbl", SelectField(FieldName("Id_PK")));
-  list.append("Client_tbl", SelectField("Id_PK"));
-  QCOMPARE(list.size(), 1);
-  QVERIFY(!list.isEmpty());
-  QCOMPARE(list.selectFieldAt(0).fieldName(), QString("Id_PK"));
-  QCOMPARE(list.tableNameAt(0), QString("Client_tbl"));
-  /*
-   * Clear
-   */
-  list.clear();
-  QCOMPARE(list.size(), 0);
-  QVERIFY(list.isEmpty());
-}
 
 void SchemaViewTest::mainTableFieldTest()
 {
@@ -533,7 +464,6 @@ void SchemaViewTest::viewTest()
   using Mdt::Sql::FieldName;
   using Mdt::Sql::Schema::View;
   using Mdt::Sql::Schema::ViewTable;
-  using Mdt::Sql::Schema::SelectField;
   using Mdt::Sql::TableName;
   using Mdt::Sql::Schema::JoinClause;
   using Mdt::Sql::Schema::JoinOperator;

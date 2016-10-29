@@ -18,22 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SEARCH_CONDITION_EXPRESSION_TEST_H
-#define MDT_SQL_SEARCH_CONDITION_EXPRESSION_TEST_H
+#include "SelectTable.h"
+#include "TableName.h"
+#include "Schema/TableTemplate.h"
+#include "Schema/Table.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace Sql{
 
-class SearchConditionExpressionTest : public QObject
+SelectTable::SelectTable(const Schema::Table & table, const QString & alias)
+ : pvTableName(table.tableName()),
+   pvAlias(alias)
 {
- Q_OBJECT
+}
 
- private slots:
+SelectTable::SelectTable(const TableName & name, const QString & alias)
+ : pvTableName(name.toString()),
+   pvAlias(alias)
+{
+}
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void sandbox();
-};
-
-#endif // #ifndef MDT_SQL_SEARCH_CONDITION_EXPRESSION_TEST_H
+}} // namespace Mdt{ namespace Sql{

@@ -48,6 +48,6 @@ relationcanvas 129154 relation_ref 3324546 // <directional composition>
   decenter_end 520
   from ref 128770 z 2001 to ref 128898
   no_role_a no_role_b
-  multiplicity_a_pos 216 130 3000 no_multiplicity_b
+  multiplicity_a_pos 216 126 3000 no_multiplicity_b
 end
 end

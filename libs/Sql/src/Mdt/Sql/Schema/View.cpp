@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "View.h"
-#include "SelectField.h"
+#include "Mdt/Sql/SelectField.h"
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 

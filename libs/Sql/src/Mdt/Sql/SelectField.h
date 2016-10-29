@@ -18,16 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_SELECT_FIELD_H
-#define MDT_SQL_SCHEMA_SELECT_FIELD_H
+#ifndef MDT_SQL_SELECT_FIELD_H
+#define MDT_SQL_SELECT_FIELD_H
 
-// #include "Field.h"
 // #include "FieldName.h"
 #include <QString>
 
-namespace Mdt{ namespace Sql{ namespace Schema{
+namespace Mdt{ namespace Sql{
 
-  /*! \brief SelectField represents a field in a SQL SELECT statement used in SQL View
+  /*! \brief SelectField represents a field in a SQL SELECT statement
    */
   class SelectField
   {
@@ -68,6 +67,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     QString pvAlias;
   };
 
-}}} // namespace Mdt{ namespace Sql{ namespace Schema{
+}} // namespace Mdt{ namespace Sql{
 
-#endif // #ifndef MDT_SQL_SCHEMA_SELECT_FIELD_H
+#endif // #ifndef MDT_SQL_SELECT_FIELD_H

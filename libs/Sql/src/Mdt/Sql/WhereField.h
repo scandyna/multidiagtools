@@ -38,7 +38,7 @@ namespace Mdt{ namespace Sql{
    * using Sql::FieldName;
    *
    * WhereField cliendId(TableName("Client_tbl"), FieldName("Id_PK") );
-   * // cliendId is a terminal that can be used in a JoinConstraintExpression
+   * // cliendId is a terminal that can be used in a WhereExpression
    *
    * \endcode
    */

@@ -1458,7 +1458,7 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
 void SchemaDriverSqliteTest::selectFieldDefinitionTest()
 {
   using Mdt::Sql::FieldName;
-  using Mdt::Sql::Schema::SelectField;
+  using Mdt::Sql::SelectField;
 
   Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
 
@@ -1474,8 +1474,8 @@ void SchemaDriverSqliteTest::selectFieldDefinitionTest()
 void SchemaDriverSqliteTest::selectFieldListDefinitionTest()
 {
   using Mdt::Sql::FieldName;
-  using Mdt::Sql::Schema::SelectField;
-  using Mdt::Sql::Schema::SelectFieldList;
+  using Mdt::Sql::SelectField;
+  using Mdt::Sql::SelectFieldList;
 
   Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
   SelectFieldList list;

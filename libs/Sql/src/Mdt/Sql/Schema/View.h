@@ -22,8 +22,8 @@
 #define MDT_SQL_SCHEMA_VIEW_H
 
 #include "ViewTable.h"
-#include "SelectFieldList.h"
 #include "Field.h"
+#include "Mdt/Sql/SelectFieldList.h"
 #include "Mdt/Sql/FieldName.h"
 #include "AutoIncrementPrimaryKey.h"
 #include "SingleFieldPrimaryKey.h"
