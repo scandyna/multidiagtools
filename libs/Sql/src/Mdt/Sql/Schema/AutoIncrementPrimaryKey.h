@@ -32,6 +32,22 @@ namespace Mdt{ namespace Sql{ namespace Schema{
   {
    public:
 
+    /*! \brief Construct a null auto increment primary key
+     */
+    AutoIncrementPrimaryKey() = default;
+
+    /*! \brief Construct a auto increment primary key
+     */
+    AutoIncrementPrimaryKey(const QString & fieldName)
+     : pvFieldName(fieldName)
+    {
+    }
+
+    AutoIncrementPrimaryKey(const AutoIncrementPrimaryKey &) = default;
+    AutoIncrementPrimaryKey & operator=(const AutoIncrementPrimaryKey &) = default;
+    AutoIncrementPrimaryKey(AutoIncrementPrimaryKey &&) = default;
+    AutoIncrementPrimaryKey & operator=(AutoIncrementPrimaryKey &&) = default;
+
     /*! \brief Set field name
      */
     void setFieldName(const QString & name)

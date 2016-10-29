@@ -49,6 +49,8 @@
 #include <QTableView>
 #include <QTreeView>
 
+namespace Sql = Mdt::Sql;
+
 void SchemaTest::initTestCase()
 {
   QSqlDatabase::addDatabase("QSQLITE", "SQLITE_1");
@@ -65,8 +67,8 @@ void SchemaTest::cleanupTestCase()
 
 void SchemaTest::fieldTypeListTest()
 {
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::FieldTypeList;
+  using Sql::Schema::FieldType;
+  using Sql::Schema::FieldTypeList;
 
   /*
    * Initial state
@@ -406,11 +408,10 @@ void SchemaTest::autoIncrementPrimaryKeyTest()
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
   using Mdt::Sql::Schema::FieldType;
 
-  AutoIncrementPrimaryKey pk;
-
   /*
-   * Initial state
+   * Default constructed initial state
    */
+  AutoIncrementPrimaryKey pk;
   QVERIFY(pk.isNull());
   /*
    * Set/get
@@ -425,6 +426,13 @@ void SchemaTest::autoIncrementPrimaryKeyTest()
   pk.clear();
   QVERIFY(pk.fieldName().isEmpty());
   QVERIFY(pk.isNull());
+  /*
+   * Construct with field name
+   */
+  AutoIncrementPrimaryKey pk2("Id_PK_2");
+  QCOMPARE(pk2.fieldName(), QString("Id_PK_2"));
+  QVERIFY(pk2.fieldType() == FieldType::Integer);
+  QVERIFY(!pk2.isNull());
 }
 
 void SchemaTest::singleFieldPrimaryKeyTest()
@@ -440,7 +448,8 @@ void SchemaTest::singleFieldPrimaryKeyTest()
    */
   QVERIFY(pk.fieldType() == FieldType::UnknownType);
   QCOMPARE(pk.fieldLength(), -1);
-  QVERIFY(pk.collation().isCaseSensitive());
+  /// \todo Check what should be default
+  QVERIFY(!pk.collation().isCaseSensitive());
   QVERIFY(pk.isNull());
   /*
    * Set/get on Integer primary key
@@ -460,7 +469,8 @@ void SchemaTest::singleFieldPrimaryKeyTest()
   QVERIFY(pk.fieldType() == FieldType::UnknownType);
   QVERIFY(pk.fieldName().isEmpty());
   QCOMPARE(pk.fieldLength(), -1);
-  QVERIFY(pk.collation().isCaseSensitive());
+  /// \todo Check what should be default
+  QVERIFY(!pk.collation().isCaseSensitive());
   QVERIFY(pk.isNull());
   /*
    * Set/get on a text primary key
@@ -474,7 +484,7 @@ void SchemaTest::singleFieldPrimaryKeyTest()
   QVERIFY(pk.fieldType() == FieldType::Varchar);
   QCOMPARE(pk.fieldName(), QString("Code_PK"));
   QCOMPARE(pk.fieldLength(), 50);
-  QVERIFY(pk.collation().isCaseSensitive());
+  QVERIFY(!pk.collation().isCaseSensitive());
   /*
    * Clear
    */
@@ -482,7 +492,8 @@ void SchemaTest::singleFieldPrimaryKeyTest()
   QVERIFY(pk.fieldType() == FieldType::UnknownType);
   QVERIFY(pk.fieldName().isEmpty());
   QCOMPARE(pk.fieldLength(), -1);
-  QVERIFY(pk.collation().isCaseSensitive());
+  /// \todo Check what should be default
+  QVERIFY(!pk.collation().isCaseSensitive());
   QVERIFY(pk.isNull());
 }
 

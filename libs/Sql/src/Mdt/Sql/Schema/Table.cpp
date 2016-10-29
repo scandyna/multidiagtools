@@ -57,7 +57,7 @@ void Table::addForeignKey(ForeignKey fk)
   pvForeignKeyList.append(fk);
 }
 
-ForeignKey Table::foreignKeyReferencing(const QString& tableName) const
+ForeignKey Table::foreignKeyReferencing(const QString & tableName) const
 {
   return pvForeignKeyList.foreignKeyReferencing(tableName);
 }

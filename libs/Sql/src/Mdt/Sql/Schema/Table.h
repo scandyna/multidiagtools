@@ -215,6 +215,9 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     void addForeignKey(ForeignKey fk);
 
     /*! \brief Get foreign key that references table designed by tableName
+     *
+     * If no foreign key that references tableName exists in this table,
+     *  a null ForeignKey is returned.
      */
     ForeignKey foreignKeyReferencing(const QString & tableName) const;
 

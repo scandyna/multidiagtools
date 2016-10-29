@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 96
+  revision 97
   modified_by 2 "philippe"
   // class settings
   
@@ -5088,93 +5088,6 @@ ${inlines}
 	    cpp default "#include in source"
 	    classrelation_ref 3300738 // <dependency>
 	  b parent class_ref 2852610 // SingleFieldPrimaryKey
-      end
-    end
-
-    class 2967810 "JoinOperator"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      class 2967682 "ConstraintOperator"
-	visibility package stereotype "enum"
-	cpp_decl "${comment}enum ${name} {
-${items}
-};
-"
-	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
-${items};
-${members}}
-"
-	php_decl "${comment}${visibility}final class ${name} {
-${items}}
-"
-	python_2_2 python_decl "class ${name}:
-${docstring}${members}
-"
-	idl_decl "${comment}enum ${name} {
-${items}};
-"
-	explicit_switch_type ""
-	mysql_decl ""
-	
-      end
-
-      class 2967554 "RelativeFieldComparisonOperator"
-	visibility package stereotype "enum"
-	cpp_decl "${comment}enum ${name} {
-${items}
-};
-"
-	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
-${items};
-${members}}
-"
-	php_decl "${comment}${visibility}final class ${name} {
-${items}}
-"
-	python_2_2 python_decl "class ${name}:
-${docstring}${members}
-"
-	idl_decl "${comment}enum ${name} {
-${items}};
-"
-	explicit_switch_type ""
-	mysql_decl ""
-	
-      end
-
-      class 2967426 "AbsoluteFieldComparisonOperator"
-	visibility package stereotype "enum"
-	cpp_decl "${comment}enum ${name} {
-${items}
-};
-"
-	java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
-${items};
-${members}}
-"
-	php_decl "${comment}${visibility}final class ${name} {
-${items}}
-"
-	python_2_2 python_decl "class ${name}:
-${docstring}${members}
-"
-	idl_decl "${comment}enum ${name} {
-${items}};
-"
-	explicit_switch_type ""
-	mysql_decl ""
-	
       end
     end
 

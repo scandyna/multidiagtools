@@ -14,6 +14,7 @@ set(SOURCES_FILES
     src/Mdt/Sql/Expression/LogicalSqlTransform.cpp
     src/Mdt/Sql/JoinConstraintExpression.cpp
     src/Mdt/Sql/WhereExpression.cpp
+    src/Mdt/Sql/SelectStatement.cpp
     src/Mdt/Sql/Schema/Driver.cpp
     src/Mdt/Sql/Schema/DriverImplementationInterface.cpp
     src/Mdt/Sql/Schema/DriverSQLite.cpp

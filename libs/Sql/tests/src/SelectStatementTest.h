@@ -33,7 +33,11 @@ class SelectStatementTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  
+  void addFieldTest();
+  void addAllFieldsTest();
+
+  void simpleSelectTest();
+  void simpleSelectWithSchemaTest();
 };
 
 
