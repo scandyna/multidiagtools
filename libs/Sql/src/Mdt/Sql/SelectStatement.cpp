@@ -50,4 +50,14 @@ void SelectStatement::addField(const SelectTable & table, const Schema::SingleFi
   addField( table, SelectField(field.fieldName(), fieldAlias) );
 }
 
+void SelectStatement::addAllFields(const SelectTable & table)
+{
+  addField( table, SelectField("*") );
+}
+
+void SelectStatement::setTable(const SelectTable & table)
+{
+
+}
+
 }} // namespace Mdt{ namespace Sql{

@@ -1,0 +1,35 @@
+format 211
+
+classcanvas 128002 class_ref 3336450 // JoinClauseItem
+  classdiagramsettings member_max_width 0 end
+  xyz 41 154 2000
+end
+classcanvas 128130 class_ref 2967810 // JoinOperator
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 48 42 2006
+end
+classcanvas 128386 class_ref 3233154 // SelectTable
+  classdiagramsettings hide_operations yes member_max_width 0 end
+  xyz 192 124 2006
+end
+classcanvas 128642 class_ref 3336706 // JoinConstraint
+  classdiagramsettings member_max_width 0 end
+  xyz 47 242 2006
+end
+relationcanvas 128258 relation_ref 3733890 // <directional composition>
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 3734146 // <directional composition>
+  from ref 128002 z 2007 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 3734274 // <directional composition>
+  decenter_end 457
+  from ref 128002 z 2007 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

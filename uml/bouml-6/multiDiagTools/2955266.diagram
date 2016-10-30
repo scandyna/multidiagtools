@@ -2,33 +2,70 @@ format 211
 
 classcanvas 128002 class_ref 3336194 // FromClause
   classdiagramsettings member_max_width 0 end
-  xyz 192 42 2000
+  xyz 146 130 2000
 end
 classcanvas 128130 class_ref 3233154 // SelectTable
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 161 151 2000
+  xyz 472 172 2000
 end
 classcanvas 128386 class_ref 3336322 // JoinClause
   classdiagramsettings member_max_width 0 end
-  xyz 39 170 2000
+  xyz 247 42 2000
+end
+classcanvas 128898 class_ref 161026 // QString
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 42 202 2000
+end
+classcanvas 129282 class_ref 3350274 // static_visitor
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 415 400 2005
+end
+classcanvas 129410 class_ref 3350402 // FromClauseSqlTransformVisitor
+  classdiagramsettings member_max_width 0 end
+  xyz 36 544 2000
+end
+classcanvas 129666 class_ref 3350530 // FromClauseIsNullVisitor
+  classdiagramsettings member_max_width 0 end
+  xyz 354 544 2000
+end
+classcanvas 130178 class_ref 3350658 // FromClauseSqlTransform
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 744.5 2005
 end
 relationcanvas 128258 relation_ref 3732994 // <directional composition>
-  decenter_begin 449
-  decenter_end 470
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128514 relation_ref 3733122 // <directional composition>
-  geometry HV unfixed
-  decenter_begin 550
-  from ref 128002 z 2001 to point 78 77
-  line 128770 z 2001 to ref 128386
+  from ref 128002 z 2001 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128642 relation_ref 3733506 // <directional composition>
-  from ref 128386 z 2001 to ref 128130
+  from ref 128386 z 2001 to point 576 64
+  line 129154 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 3748226 // <directional composition>
+  from ref 128002 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 3748866 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 525
+  from ref 129410 z 2006 to point 174 504
+  line 129922 z 2006 to point 485 504
+  line 130050 z 2006 to ref 129282
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 3748994 // <generalisation>
+  decenter_begin 513
+  decenter_end 525
+  from ref 129666 z 2006 to ref 129282
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

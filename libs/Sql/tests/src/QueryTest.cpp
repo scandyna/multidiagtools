@@ -23,6 +23,7 @@
 #include "Mdt/Application.h"
 #include "Mdt/Sql/Query.h"
 #include "Mdt/Sql/InsertQuery.h"
+#include "Mdt/Sql/SelectQuery.h"
 #include "Schema/TestSchema.h"
 #include "Schema/Client_tbl.h"
 #include "Schema/Address_tbl.h"

@@ -126,6 +126,14 @@ namespace Mdt{ namespace Sql{
      */
     void addField(const SelectTable & table, const Schema::SingleFieldPrimaryKey & field , const QString & fieldAlias = QString());
 
+    /*! \brief Add all fields for given table
+     */
+    void addAllFields(const SelectTable & table);
+
+    /*! \brief Set table
+     */
+    void setTable(const SelectTable & table);
+
     /*! \brief Get list of fields
      */
     SelectFieldList fieldList() const

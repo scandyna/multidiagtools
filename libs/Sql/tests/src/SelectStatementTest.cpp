@@ -82,29 +82,52 @@ void SelectStatementTest::addFieldTest()
    */
   auto list = stm.fieldList();
   QCOMPARE(list.size(), 9);
+  QCOMPARE(list.tableNameAt(0), QString("CLI"));
   QCOMPARE(list.selectFieldAt(0).fieldName(), QString("A"));
   QCOMPARE(list.selectFieldAt(0).alias(), QString("A_alias"));
+  QCOMPARE(list.tableNameAt(1), QString("CLI"));
   QCOMPARE(list.selectFieldAt(1).fieldName(), QString("B"));
   QCOMPARE(list.selectFieldAt(1).alias(), QString("B_alias"));
+  QCOMPARE(list.tableNameAt(2), QString("CLI"));
   QCOMPARE(list.selectFieldAt(2).fieldName(), QString("C"));
   QVERIFY(list.selectFieldAt(2).alias().isEmpty());
+  QCOMPARE(list.tableNameAt(3), QString("CLI"));
   QCOMPARE(list.selectFieldAt(3).fieldName(), QString("D"));
   QCOMPARE(list.selectFieldAt(3).alias(), QString("D_alias"));
+  QCOMPARE(list.tableNameAt(4), QString("CLI"));
   QCOMPARE(list.selectFieldAt(4).fieldName(), QString("E"));
   QVERIFY(list.selectFieldAt(4).alias().isEmpty());
+  QCOMPARE(list.tableNameAt(5), QString("CLI"));
   QCOMPARE(list.selectFieldAt(5).fieldName(), QString("F"));
   QCOMPARE(list.selectFieldAt(5).alias(), QString("F_alias"));
+  QCOMPARE(list.tableNameAt(6), QString("CLI"));
   QCOMPARE(list.selectFieldAt(6).fieldName(), QString("G"));
   QVERIFY(list.selectFieldAt(6).alias().isEmpty());
+  QCOMPARE(list.tableNameAt(7), QString("CLI"));
   QCOMPARE(list.selectFieldAt(7).fieldName(), QString("H"));
   QCOMPARE(list.selectFieldAt(7).alias(), QString("H_alias"));
+  QCOMPARE(list.tableNameAt(8), QString("CLI"));
   QCOMPARE(list.selectFieldAt(8).fieldName(), QString("I"));
   QVERIFY(list.selectFieldAt(8).alias().isEmpty());
 }
 
 void SelectStatementTest::addAllFieldsTest()
 {
-  QFAIL("Not implemented");
+  using Sql::SelectStatement;
+  using Sql::SelectTable;
+  using Sql::TableName;
+
+  SelectTable CLI(TableName("Client_tbl"), "CLI");
+  SelectStatement stm;
+
+  stm.addAllFields(CLI);
+  /*
+   * Check
+   */
+  auto list =stm.fieldList();
+  QCOMPARE(list.size(), 1);
+  QCOMPARE(list.tableNameAt(0), QString("CLI"));
+  QCOMPARE(list.selectFieldAt(0).fieldName(), QString("*"));
 }
 
 void SelectStatementTest::simpleSelectTest()
