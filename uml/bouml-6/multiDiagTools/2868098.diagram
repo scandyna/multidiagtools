@@ -2,23 +2,27 @@ format 211
 
 classcanvas 128130 class_ref 3239810 // JoinConstraintExpression
   classdiagramsettings member_max_width 0 end
-  xyz 440 38 2000
+  xyz 857.2 39.6 2000
 end
 classcanvas 129410 class_ref 3267202 // ExpressionContainerInterface
   classdiagramsettings member_max_width 0 show_context_mode uml end
-  xyz 61 71 2006
+  xyz 477.6 87.6 2006
 end
 classcanvas 129922 class_ref 3316482 // JoinConstraintExpressionContainer
   classdiagramsettings member_max_width 0 show_context_mode uml end
-  xyz 41 224 2012
+  xyz 41.4 248.2 2012
 end
 relationcanvas 129794 relation_ref 3676418 // <directional composition>
+  decenter_begin 520
   from ref 128130 z 2007 to ref 129410
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130050 relation_ref 3713410 // <generalisation>
-  from ref 129922 z 2013 to ref 129410
+  geometry VHV unfixed
+  from ref 129922 z 2013 to point 230.4 208
+  line 130434 z 2013 to point 646.6 208
+  line 130562 z 2013 to ref 129410
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

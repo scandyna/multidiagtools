@@ -23,25 +23,25 @@ diagrams
     120 110 100 18 0 0
   classdiagram_ref 2948610 // overview
     863 908 100 4 0 0
-  classdiagram_ref 2955394 // JoinClause
-    120 110 100 4 0 0
   classdiagram_ref 2955650 // overview
     120 110 100 4 0 0
-  active  classdiagram_ref 2955266 // FromClause
-    863 908 100 4 0 0
   classdiagram_ref 2854274 // SelectTable
     120 110 100 4 0 0
   classdiagram_ref 2955138 // SelectStatement
     863 908 100 4 0 0
-  classdiagram_ref 2968706 // JoinClauseItem
-    120 110 100 4 0 0
   classdiagram_ref 2868098 // JoinConstraintExpression
-    120 110 100 18 0 0
+    120 110 90 21 0 17
   classdiagram_ref 2968834 // JoinConstraint
+    120 110 100 18 0 0
+  classdiagram_ref 2968706 // JoinClauseItem
+    120 110 100 18 0 0
+  classdiagram_ref 2975618 // JoinConstraintFieldPairList
     120 110 100 4 0 0
+  active  classdiagram_ref 2955394 // JoinClause
+    863 908 100 23 0 293
 end
 show_stereotypes
-selected attribute_ref 3067906 // Driver
+selected classdiagram_ref 2955266 // FromClause
 open
   
   package_ref 409858 // principes
@@ -52,11 +52,9 @@ open
   package_ref 516226 // SqlItemModel
   
   package_ref 582274 // SqlItemEditor
-  operation_ref 4733314 // isNull
-  class_ref 3350402 // FromClauseSqlTransformVisitor
-  class_ref 3350530 // FromClauseIsNullVisitor
-  class_ref 3350658 // FromClauseSqlTransform
+  classview_ref 1405954 // Select
   class_ref 3349762 // JoinConstraintOperator
+  class_ref 3350018 // JoinConstraintUsing
   class_ref 3343234 // SelectQuery
   
   package_ref 430082 // Dsp

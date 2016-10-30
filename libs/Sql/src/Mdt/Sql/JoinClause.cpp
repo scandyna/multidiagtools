@@ -18,26 +18,10 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_JOIN_CLAUSE_TEST_H
-#define MDT_JOIN_CLAUSE_TEST_H
+#include "JoinClause.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QSqlDatabase>
-
-class JoinClauseTest : public QObject
-{
- Q_OBJECT
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
- private:
-
-  QSqlDatabase mDatabase;
-};
+namespace Mdt{ namespace Sql{
 
 
-#endif // #ifndef MDT_JOIN_CLAUSE_TEST_H
+
+}} // namespace Mdt{ namespace Sql{

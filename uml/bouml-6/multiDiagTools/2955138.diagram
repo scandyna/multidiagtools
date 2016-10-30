@@ -2,23 +2,24 @@ format 211
 
 classcanvas 128002 class_ref 3336066 // SelectStatement
   classdiagramsettings member_max_width 0 end
-  xyz 38 42 2000
+  xyz 42 130 2000
 end
 classcanvas 128130 class_ref 2960642 // SelectFieldList
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 283 322 2000
+  xyz 287 42 2000
 end
 classcanvas 128386 class_ref 3336194 // FromClause
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 672 130 2000
+  xyz 680 214 2000
 end
 relationcanvas 128258 relation_ref 3733250 // <directional composition>
+  decenter_begin 505
+  decenter_end 532
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128514 relation_ref 3733378 // <directional composition>
-  decenter_end 434
   from ref 128002 z 2001 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

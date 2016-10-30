@@ -20,15 +20,7 @@
  ****************************************************************************/
 #include "JoinClauseTest.h"
 #include "Mdt/Application.h"
-#include <QDebug>
-
-#include <QString>
-
-#include <QSqlDatabase>
-#include <QSqlDriver>
-#include <QSqlField>
-#include <QVariant>
-
+#include "Mdt/Sql/JoinClause.h"
 
 /*
  * Init and cleanup
@@ -36,16 +28,16 @@
 
 void JoinClauseTest::initTestCase()
 {
-  QSqlDatabase::addDatabase("QSQLITE");
+  // Get database instance
+  mDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  if(!mDatabase.isValid()){
+    QSKIP("QSQLITE driver is not available - Skip all tests");  // Will also skip all tests
+  }
 }
 
 void JoinClauseTest::cleanupTestCase()
 {
 }
-
-/*
- * Compile time tests
- */
 
 
 /*
