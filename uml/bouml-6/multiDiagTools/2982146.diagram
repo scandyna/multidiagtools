@@ -1,0 +1,102 @@
+format 211
+
+classcanvas 128002 class_ref 3357314 // JoinConstraintFieldPairList
+  classdiagramsettings member_max_width 0 end
+  xyz 275 338 2000
+end
+classcanvas 128130 class_ref 3357442 // JoinConstraintFieldPair
+  classdiagramsettings member_max_width 0 end
+  xyz 495 338 2006
+end
+classcanvas 128386 class_ref 3363970 // JoinConstraintFieldPairListSqlTransform
+  classdiagramsettings member_max_width 0 end
+  xyz 181.5 464.5 2000
+end
+classcanvas 128514 class_ref 3349762 // JoinConstraintOperator
+  classdiagramsettings member_max_width 0 end
+  xyz 191 42 3005
+end
+classcanvas 128642 class_ref 3336706 // JoinConstraint
+  classdiagramsettings member_max_width 0 end
+  xyz 315 154 3011
+end
+classcanvas 129026 class_ref 3350018 // JoinConstraintUsing
+  classdiagramsettings member_max_width 0 end
+  xyz 385 66 3017
+end
+classcanvas 129282 class_ref 3336450 // JoinClauseItem
+  classdiagramsettings member_max_width 0 end
+  xyz 473 162 3017
+end
+classcanvas 129538 class_ref 3336578 // JoinClauseItemList
+  classdiagramsettings member_max_width 0 end
+  xyz 625 162 3023
+end
+classcanvas 129794 class_ref 3336322 // JoinClause
+  classdiagramsettings member_max_width 0 end
+  xyz 655 250 3029
+end
+classcanvas 130050 class_ref 3233154 // SelectTable
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 455 250 3035
+end
+classcanvas 130562 class_ref 3239810 // JoinConstraintExpression
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 40 162 3017
+end
+relationcanvas 128258 relation_ref 3755906 // <directional composition>
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  multiplicity_a_pos 479 370 3000 no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 3748354 // <directional composition>
+  decenter_begin 196
+  decenter_end 889
+  from ref 128642 z 3012 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128898 relation_ref 3756034 // <directional composition>
+  from ref 128642 z 3012 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 3748738 // <directional composition>
+  decenter_begin 794
+  decenter_end 104
+  from ref 128642 z 3018 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129410 relation_ref 3734274 // <directional composition>
+  from ref 129282 z 3018 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 3733634 // <directional composition>
+  from ref 129538 z 3024 to ref 129282
+  no_role_a no_role_b
+  multiplicity_a_pos 593 194 3000 no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 3733762 // <directional composition>
+  decenter_end 525
+  from ref 129794 z 3030 to ref 129538
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 3733506 // <directional composition>
+  from ref 129794 z 3036 to ref 130050
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130306 relation_ref 3734146 // <directional composition>
+  from ref 129282 z 3036 to ref 130050
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130690 relation_ref 3755778 // <directional composition>
+  from ref 128642 z 3018 to ref 130562
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

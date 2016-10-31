@@ -2,15 +2,19 @@ format 211
 
 classcanvas 128002 class_ref 3357314 // JoinConstraintFieldPairList
   classdiagramsettings member_max_width 0 end
-  xyz 41 41 2000
+  xyz 41 38 2000
 end
 classcanvas 128130 class_ref 3357442 // JoinConstraintFieldPair
   classdiagramsettings member_max_width 0 end
-  xyz 591 63 2000
+  xyz 591 79 2000
+end
+classcanvas 128386 class_ref 3363970 // JoinConstraintFieldPairListSqlTransform
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 280.5 2000
 end
 relationcanvas 128258 relation_ref 3755906 // <directional composition>
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 575 114 3000 no_multiplicity_b
+  multiplicity_a_pos 575 131 3000 no_multiplicity_b
 end
 end

@@ -12,6 +12,8 @@ set(SOURCES_FILES
     src/Mdt/Sql/Expression/TerminalSqlTransform.cpp
     src/Mdt/Sql/Expression/ComparisonSqlTransform.cpp
     src/Mdt/Sql/Expression/LogicalSqlTransform.cpp
+    src/Mdt/Sql/Impl/JoinConstraintFieldPairList.cpp
+    src/Mdt/Sql/Impl/JoinConstraintFieldPairListSqlTransform.cpp
     src/Mdt/Sql/JoinConstraintExpression.cpp
     src/Mdt/Sql/JoinClause.cpp
     src/Mdt/Sql/FromClause.cpp
