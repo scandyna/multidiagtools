@@ -26,14 +26,15 @@
 namespace Mdt{ namespace Sql{
 
 SelectTable::SelectTable(const Schema::Table & table, const QString & alias)
- : pvTableName(table.tableName()),
-   pvAlias(alias)
+ : mTableName(table.tableName()),
+   mAlias(alias),
+   mForeignKeyList(table.foreignKeyList())
 {
 }
 
 SelectTable::SelectTable(const TableName & name, const QString & alias)
- : pvTableName(name.toString()),
-   pvAlias(alias)
+ : mTableName(name.toString()),
+   mAlias(alias)
 {
 }
 

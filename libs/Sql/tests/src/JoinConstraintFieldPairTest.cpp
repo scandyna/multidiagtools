@@ -23,6 +23,13 @@
 #include "Mdt/Sql/Impl/JoinConstraintFieldPair.h"
 #include "Mdt/Sql/Impl/JoinConstraintFieldPairList.h"
 #include "Mdt/Sql/Impl/JoinConstraintFieldPairListSqlTransform.h"
+#include "Mdt/Sql/SelectTable.h"
+#include "Mdt/Sql/Schema/ForeignKey.h"
+#include "Mdt/Sql/Schema/ParentTableFieldName.h"
+#include "Mdt/Sql/Schema/ChildTableFieldName.h"
+#include "Mdt/Sql/Schema/AutoIncrementPrimaryKey.h"
+#include "Mdt/Sql/Schema/PrimaryKey.h"
+#include "Mdt/Sql/Schema/Table.h"
 
 namespace Sql = Mdt::Sql;
 
@@ -72,6 +79,129 @@ void JoinConstraintFieldPairTest::fieldPairListTest()
   QVERIFY(!list.isEmpty());
   QCOMPARE(list.at(0).leftField(), QString("a1"));
   QCOMPARE(list.at(0).rightField(), QString("b1"));
+}
+
+void JoinConstraintFieldPairTest::fromForeignKeyTest()
+{
+  using Sql::Impl::JoinConstraintFieldPairList;
+  using Sql::Schema::ParentTableFieldName;
+  using Sql::Schema::ChildTableFieldName;
+  using Sql::Schema::ForeignKey;
+
+  /*
+   * Setup foreign key
+   */
+  ForeignKey fk;
+  fk.addKeyFields( ParentTableFieldName("p1"), ChildTableFieldName("c1") );
+}
+
+void JoinConstraintFieldPairTest::fromTablesTest()
+{
+  using Sql::Impl::JoinConstraintFieldPairList;
+  using Sql::SelectTable;
+  using Sql::Schema::ParentTableFieldName;
+  using Sql::Schema::ChildTableFieldName;
+  using Sql::Schema::ForeignKey;
+  using Sql::Schema::Table;
+  using Sql::Schema::AutoIncrementPrimaryKey;
+  using Sql::Schema::PrimaryKey;
+  using Sql::Schema::Field;
+  using Sql::Schema::FieldType;
+
+  /*
+   * Common table fields
+   */
+  AutoIncrementPrimaryKey Id_PK("Id_PK");
+  Field p1;
+  p1.setType(FieldType::Integer);
+  p1.setName("p1_PK");
+  Field p2;
+  p2.setType(FieldType::Integer);
+  p2.setName("p2_PK");
+  Field c1;
+  c1.setType(FieldType::Integer);
+  c1.setName("c1_FK");
+  Field c2;
+  c2.setType(FieldType::Integer);
+  c2.setName("c2_FK");
+  /*
+   * 1 field relation
+   */
+  // Parent table
+  Table PA;
+  PA.setTableName("PA");
+  PA.setPrimaryKey(Id_PK);
+  // Child table
+  Table CA;
+  CA.setTableName("CA");
+  CA.setPrimaryKey(Id_PK);
+  CA.addField(c1);
+  ForeignKey fkCA;
+  fkCA.setParentTable(PA);
+  fkCA.addKeyFields( ParentTableFieldName(Id_PK), ChildTableFieldName(c1) );
+  CA.addForeignKey(fkCA);
+  // Select tables
+  SelectTable SPA(PA, "SPA");
+  SelectTable SCA(CA, "SCA");
+  // Check with left: SPA and right: SCA
+  JoinConstraintFieldPairList list1 = JoinConstraintFieldPairList::fromTables(SPA, SCA);
+  QCOMPARE(list1.leftTable(), QString("SPA"));
+  QCOMPARE(list1.rightTable(), QString("SCA"));
+  QCOMPARE(list1.size(), 1);
+  QCOMPARE(list1.at(0).leftField(), QString("Id_PK"));
+  QCOMPARE(list1.at(0).rightField(), QString("c1_FK"));
+  // Check with left: SCA and right: SPA
+  list1 = JoinConstraintFieldPairList::fromTables(SCA, SPA);
+  QCOMPARE(list1.leftTable(), QString("SCA"));
+  QCOMPARE(list1.rightTable(), QString("SPA"));
+  QCOMPARE(list1.size(), 1);
+  QCOMPARE(list1.at(0).leftField(), QString("c1_FK"));
+  QCOMPARE(list1.at(0).rightField(), QString("Id_PK"));
+  /*
+   * 2 fields relation
+   */
+  // Parent table
+  Table PB;
+  PB.setTableName("PB");
+  PB.addField(p1);
+  PB.addField(p2);
+  PrimaryKey pkPB;
+  pkPB.addField(p1);
+  pkPB.addField(p2);
+  PB.setPrimaryKey(pkPB);
+  // Child table
+  Table CB;
+  CB.setPrimaryKey(Id_PK);
+  CB.setTableName("CB");
+  CB.addField(c1);
+  CB.addField(c2);
+  ForeignKey fkCB;
+  fkCB.setParentTable(PB);
+  fkCB.setChildTable(CB);
+  fkCB.addKeyFields( ParentTableFieldName(p1), ChildTableFieldName(c1) );
+  fkCB.addKeyFields( ParentTableFieldName(p2), ChildTableFieldName(c2) );
+  CB.addForeignKey(fkCB);
+  // Select tables
+  SelectTable SPB(PB, "SPB");
+  SelectTable SCB(CB, "SCB");
+  // Check with left: SPB and right: SCB
+  JoinConstraintFieldPairList list2 = JoinConstraintFieldPairList::fromTables(SPB, SCB);
+  QCOMPARE(list2.leftTable(), QString("SPB"));
+  QCOMPARE(list2.rightTable(), QString("SCB"));
+  QCOMPARE(list2.size(), 2);
+  QCOMPARE(list2.at(0).leftField(), QString("p1_PK"));
+  QCOMPARE(list2.at(0).rightField(), QString("c1_FK"));
+  QCOMPARE(list2.at(1).leftField(), QString("p2_PK"));
+  QCOMPARE(list2.at(1).rightField(), QString("c2_FK"));
+  // Check with left: SCB and right: SPB
+  list2 = JoinConstraintFieldPairList::fromTables(SCB, SPB);
+  QCOMPARE(list2.leftTable(), QString("SCB"));
+  QCOMPARE(list2.rightTable(), QString("SPB"));
+  QCOMPARE(list2.size(), 2);
+  QCOMPARE(list2.at(0).leftField(), QString("c1_FK"));
+  QCOMPARE(list2.at(0).rightField(), QString("p1_PK"));
+  QCOMPARE(list2.at(1).leftField(), QString("c2_FK"));
+  QCOMPARE(list2.at(1).rightField(), QString("p2_PK"));
 }
 
 void JoinConstraintFieldPairTest::sqlTransformTest()

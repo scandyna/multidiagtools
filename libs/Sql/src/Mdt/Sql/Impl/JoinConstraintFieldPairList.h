@@ -25,6 +25,10 @@
 #include <QString>
 #include <vector>
 
+namespace Mdt{ namespace Sql{
+  class SelectTable;
+}}
+
 namespace Mdt{ namespace Sql{ namespace Impl{
 
   /*! \brief List of field name pairs
@@ -92,6 +96,15 @@ namespace Mdt{ namespace Sql{ namespace Impl{
       Q_ASSERT(index < size());
       return mList[index];
     }
+
+    /*! \brief Get a JoinConstraintFieldPairList from tables
+     *
+     * \pre At least left must have a foreign key that refers to right,
+     *      or right must have one that refers to left.
+     * \pre The foreign key that links left and right must have at least 1 field,
+     *      and its parent and child fields count must be the same.
+     */
+    static JoinConstraintFieldPairList fromTables(const SelectTable & left, const SelectTable & right);
 
    private:
 

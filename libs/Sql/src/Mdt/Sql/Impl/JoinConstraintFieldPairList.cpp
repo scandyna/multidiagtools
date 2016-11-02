@@ -19,9 +19,53 @@
  **
  ****************************************************************************/
 #include "JoinConstraintFieldPairList.h"
+#include "Mdt/Sql/SelectTable.h"
+#include "Mdt/Sql/Schema/ForeignKey.h"
+#include <QStringList>
+#include <QString>
+#include <QByteArray>
 
 namespace Mdt{ namespace Sql{ namespace Impl{
 
+JoinConstraintFieldPairList JoinConstraintFieldPairList::fromTables(const SelectTable & left, const SelectTable & right)
+{
+  JoinConstraintFieldPairList fpList(left.aliasOrTableName(), right.aliasOrTableName());
+  QStringList leftFieldList;
+  QStringList rightFieldList;
+  Schema::ForeignKey fk;
+
+  // Get the foreign key that links left and right
+  fk = left.foreignKeyReferencing(right);
+  if(!fk.isNull()){
+    leftFieldList = fk.childTableFieldNameList();
+    rightFieldList = fk.parentTableFieldNameList();
+  }else{
+    fk = right.foreignKeyReferencing(left);
+    if(!fk.isNull()){
+      leftFieldList = fk.parentTableFieldNameList();
+      rightFieldList = fk.childTableFieldNameList();
+    }
+  }
+  /*
+   * If a precondition is not satisfied, generate a message.
+   * This semms heavy, but can be very usefull for the user.
+   */
+#ifndef QT_NO_DEBUG
+  QString whatStr;
+  // Check that a foreign key was found.
+  whatStr = QString("No foreign key is linking tables '%1' and '%2'").arg(left.aliasOrTableName(), right.aliasOrTableName());
+  Q_ASSERT_X(!fk.isNull(), "JoinConstraintFieldPairList::fromTables()", whatStr.toLocal8Bit().constData());
+  // Check that parent and child field count is the same
+  whatStr = QString("Foreign key that links table '%1' and '%2' has not the same field count in parent (refering) and child.").arg(left.aliasOrTableName(), right.aliasOrTableName());
+  Q_ASSERT_X(leftFieldList.size() == rightFieldList.size(), "JoinConstraintFieldPairList::fromTables()", whatStr.toLocal8Bit().constData());
+#endif // #ifndef QT_NO_DEBUG
+  // Build list of field pairs
+  for(int i = 0; i < leftFieldList.size(); ++i){
+    fpList.addFieldPair(leftFieldList.at(i), rightFieldList.at(i));
+  }
+
+  return fpList;
+}
 
 
 }}} // namespace Mdt{ namespace Sql{ namespace Impl{

@@ -40,6 +40,7 @@ class SimpleTypesTest : public QObject
   void selectFieldListTest();
 
   void selectTableTest();
+  void selectTableForeignKeyTest();
 };
 
 

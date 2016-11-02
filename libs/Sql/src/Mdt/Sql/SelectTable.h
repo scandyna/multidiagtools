@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_SELECT_TABLE_H
 #define MDT_SQL_SELECT_TABLE_H
 
+#include "Schema/ForeignKeyList.h"
 #include <QString>
 
 namespace Mdt{ namespace Sql{
@@ -58,8 +59,9 @@ namespace Mdt{ namespace Sql{
      */
     template <typename T>
     explicit SelectTable(const Schema::TableTemplate<T> & table, const QString & alias = QString())
-     : pvTableName(table.tableName()),
-       pvAlias(alias)
+     : mTableName(table.tableName()),
+       mAlias(alias),
+       mForeignKeyList(table.foreignKeyList())
     {
     }
 
@@ -71,39 +73,48 @@ namespace Mdt{ namespace Sql{
      */
     void setTableName(const QString & name)
     {
-      pvTableName = name;
+      mTableName = name;
     }
 
     /*! \brief Get table name
      */
     QString tableName() const
     {
-      return pvTableName;
+      return mTableName;
     }
 
     /*! \brief Set alias
      */
     void setAlias(const QString & alias)
     {
-      pvAlias = alias;
+      mAlias = alias;
     }
 
     /*! \brief Get table name alias
      */
     QString alias() const
     {
-      return pvAlias;
+      return mAlias;
     }
 
     /*! \brief Get alias if set, or table name else
      */
     QString aliasOrTableName() const
     {
-      if(pvAlias.isEmpty()){
-        return pvTableName;
+      if(mAlias.isEmpty()){
+        return mTableName;
       }else{
-        return pvAlias;
+        return mAlias;
       }
+    }
+
+    /*! \brief Get foreign key that references table
+     *
+     * If no foreign key was found, a null one is returned.
+     */
+    Schema::ForeignKey foreignKeyReferencing(const SelectTable & table) const
+    {
+      return mForeignKeyList.foreignKeyReferencing(table.mTableName);
     }
 
     /*! \brief Check if this view table is null
@@ -112,21 +123,22 @@ namespace Mdt{ namespace Sql{
      */
     bool isNull() const
     {
-      return pvTableName.isEmpty();
+      return mTableName.isEmpty();
     }
 
     /*! \brief Clear
      */
     void clear()
     {
-      pvTableName.clear();
-      pvAlias.clear();
+      mTableName.clear();
+      mAlias.clear();
     }
 
    private:
 
-    QString pvTableName;
-    QString pvAlias;
+    QString mTableName;
+    QString mAlias;
+    Schema::ForeignKeyList mForeignKeyList;
   };
 
 }} // namespace Mdt{ namespace Sql{

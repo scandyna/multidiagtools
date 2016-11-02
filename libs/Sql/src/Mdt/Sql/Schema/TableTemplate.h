@@ -165,14 +165,21 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     Table toTable() const
     {
-      return pvTable;
+      return mTable;
     }
 
     /*! \brief Get table name
      */
     QString tableName() const
     {
-      return pvTable.tableName();
+      return mTable.tableName();
+    }
+
+    /*! \brief Get list of foreign keys
+     */
+    ForeignKeyList foreignKeyList() const
+    {
+      return mTable.foreignKeyList();
     }
 
    protected:
@@ -181,42 +188,42 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void setTemporary(bool temporary)
     {
-      pvTable.setTemporary(temporary);
+      mTable.setTemporary(temporary);
     }
 
     /*! \brief Set table name
      */
     void setTableName(const QString & name)
     {
-      pvTable.setTableName(name);
+      mTable.setTableName(name);
     }
 
     /*! \brief Set primary key
      */
     void setPrimaryKey(const AutoIncrementPrimaryKey & pk)
     {
-      pvTable.setPrimaryKey(pk);
+      mTable.setPrimaryKey(pk);
     }
 
     /*! \brief Set primary key
      */
     void setPrimaryKey(const SingleFieldPrimaryKey & pk)
     {
-      pvTable.setPrimaryKey(pk);
+      mTable.setPrimaryKey(pk);
     }
 
     /*! \brief Set primary key
      */
     void setPrimaryKey(const PrimaryKey & pk)
     {
-      pvTable.setPrimaryKey(pk);
+      mTable.setPrimaryKey(pk);
     }
 
     /*! \brief Add a field
      */
     void addField(const Field & field)
     {
-      pvTable.addField(field);
+      mTable.addField(field);
     }
 
     /*! \brief Add a foreign key
@@ -226,7 +233,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void addForeignKey(const ForeignKey & fk)
     {
-      pvTable.addForeignKey(fk);
+      mTable.addForeignKey(fk);
     }
 
     /*! \brief Get primary key
@@ -235,7 +242,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     AutoIncrementPrimaryKey autoIncrementPrimaryKey() const
     {
-      return pvTable.autoIncrementPrimaryKey();
+      return mTable.autoIncrementPrimaryKey();
     }
 
     /*! \brief Get primary key
@@ -244,7 +251,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     SingleFieldPrimaryKey singleFieldPrimaryKey() const
     {
-      return pvTable.singleFieldPrimaryKey();
+      return mTable.singleFieldPrimaryKey();
     }
 
     /*! \brief Get primary key
@@ -253,7 +260,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     PrimaryKey primaryKey() const
     {
-      return pvTable.primaryKey();
+      return mTable.primaryKey();
     }
 
     /*! \brief Get field at index
@@ -264,12 +271,12 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     Field field(int index) const
     {
-      return pvTable.field(index);
+      return mTable.field(index);
     }
 
    private:
 
-    Table pvTable;
+    Table mTable;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

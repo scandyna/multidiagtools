@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "SimpleTypesTest.h"
 #include "Schema/Client_tbl.h"
+#include "Schema/Address_tbl.h"
 #include "Mdt/Application.h"
 #include "Mdt/Sql/FieldName.h"
 #include "Mdt/Sql/TableName.h"
@@ -166,6 +167,75 @@ void SimpleTypesTest::selectTableTest()
   QVERIFY(st.tableName().isEmpty());
   QVERIFY(st.alias().isEmpty());
   QVERIFY(st.isNull());
+}
+
+void SimpleTypesTest::selectTableForeignKeyTest()
+{
+  using Sql::SelectTable;
+  using Sql::TableName;
+  using Sql::Schema::Table;
+  using Sql::Schema::AutoIncrementPrimaryKey;
+  using Sql::Schema::Field;
+  using Sql::Schema::ForeignKey;
+  using Sql::Schema::ParentTableFieldName;
+  using Sql::Schema::ChildTableFieldName;
+
+  ForeignKey fk;
+  /*
+   * Check with Schema::Table
+   */
+  // Setup common fields
+  AutoIncrementPrimaryKey Id_PK("Id_PK");
+  // Setup parent table
+  Table Parent;
+  Parent.setTableName("Parent_tbl");
+  Parent.setPrimaryKey(Id_PK);
+  // Setup child table
+  Table Child;
+  Child.setTableName("Child_tbl");
+  Field ParentId;
+  ParentId.setName("Parent_Id_FK");
+  Child.setPrimaryKey(Id_PK);
+  Child.addField(ParentId);
+  ForeignKey fkParentId;
+  fkParentId.setParentTable(Parent);
+  fkParentId.addKeyFields( ParentTableFieldName(Id_PK), ChildTableFieldName(ParentId) );
+  Child.addForeignKey(fkParentId);
+  // Setup parent select table and check
+  SelectTable P(Parent, "P");
+  QCOMPARE(P.aliasOrTableName(), QString("P"));
+
+  // Setup child select table and check
+  SelectTable C(Child, "C");
+  QCOMPARE(C.aliasOrTableName(), QString("C"));
+  fk = C.foreignKeyReferencing(P);
+  QVERIFY(!fk.isNull());
+  QCOMPARE(fk.parentTableName(), P.tableName());
+  QCOMPARE(fk.childTableName(), C.tableName());
+  QCOMPARE(fk.parentTableFieldNameList().size(), 1);
+  QCOMPARE(fk.parentTableFieldNameList().at(0), QString("Id_PK"));
+  QCOMPARE(fk.childTableFieldNameList().size(), 1);
+  QCOMPARE(fk.childTableFieldNameList().at(0), QString("Parent_Id_FK"));
+  /*
+   * Check with table template
+   */
+  // Client
+  Schema::Client_tbl client;
+  SelectTable CLI(client, "CLI");
+  QCOMPARE(CLI.aliasOrTableName(), QString("CLI"));
+  
+  // Address
+  Schema::Address_tbl address;
+  SelectTable ADR(address, "ADR");
+  QCOMPARE(ADR.aliasOrTableName(), QString("ADR"));
+  fk = ADR.foreignKeyReferencing(CLI);
+  QVERIFY(!fk.isNull());
+  QCOMPARE(fk.parentTableName(), CLI.tableName());
+  QCOMPARE(fk.childTableName(), ADR.tableName());
+  QCOMPARE(fk.parentTableFieldNameList().size(), 1);
+  QCOMPARE(fk.parentTableFieldNameList().at(0), client.Id_PK().fieldName());
+  QCOMPARE(fk.childTableFieldNameList().size(), 1);
+  QCOMPARE(fk.childTableFieldNameList().at(0), address.Client_Id_FK().name());
 }
 
 /*
