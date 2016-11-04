@@ -20,9 +20,9 @@
  ****************************************************************************/
 #include "JoinConstraintFieldPairTest.h"
 #include "Mdt/Application.h"
-#include "Mdt/Sql/Impl/JoinConstraintFieldPair.h"
-#include "Mdt/Sql/Impl/JoinConstraintFieldPairList.h"
-#include "Mdt/Sql/Impl/JoinConstraintFieldPairListSqlTransform.h"
+#include "Mdt/Sql/JoinConstraintFieldPair.h"
+#include "Mdt/Sql/JoinConstraintFieldPairList.h"
+#include "Mdt/Sql/JoinConstraintFieldPairListSqlTransform.h"
 #include "Mdt/Sql/SelectTable.h"
 #include "Mdt/Sql/Schema/ForeignKey.h"
 #include "Mdt/Sql/Schema/ParentTableFieldName.h"
@@ -52,7 +52,7 @@ void JoinConstraintFieldPairTest::cleanupTestCase()
 
 void JoinConstraintFieldPairTest::fieldPairTest()
 {
-  using Sql::Impl::JoinConstraintFieldPair;
+  using Sql::JoinConstraintFieldPair;
 
   JoinConstraintFieldPair fp("a", "b");
   QCOMPARE(fp.leftField(), QString("a"));
@@ -61,7 +61,7 @@ void JoinConstraintFieldPairTest::fieldPairTest()
 
 void JoinConstraintFieldPairTest::fieldPairListTest()
 {
-  using Sql::Impl::JoinConstraintFieldPairList;
+  using Sql::JoinConstraintFieldPairList;
 
   /*
    * Initial state
@@ -71,19 +71,21 @@ void JoinConstraintFieldPairTest::fieldPairListTest()
   QCOMPARE(list.rightTable(), QString("B"));
   QCOMPARE(list.size(), 0);
   QVERIFY(list.isEmpty());
+  QVERIFY(list.isNull());
   /*
    * Build
    */
   list.addFieldPair("a1", "b1");
   QCOMPARE(list.size(), 1);
   QVERIFY(!list.isEmpty());
+  QVERIFY(!list.isNull());
   QCOMPARE(list.at(0).leftField(), QString("a1"));
   QCOMPARE(list.at(0).rightField(), QString("b1"));
 }
 
 void JoinConstraintFieldPairTest::fromForeignKeyTest()
 {
-  using Sql::Impl::JoinConstraintFieldPairList;
+  using Sql::JoinConstraintFieldPairList;
   using Sql::Schema::ParentTableFieldName;
   using Sql::Schema::ChildTableFieldName;
   using Sql::Schema::ForeignKey;
@@ -97,7 +99,7 @@ void JoinConstraintFieldPairTest::fromForeignKeyTest()
 
 void JoinConstraintFieldPairTest::fromTablesTest()
 {
-  using Sql::Impl::JoinConstraintFieldPairList;
+  using Sql::JoinConstraintFieldPairList;
   using Sql::SelectTable;
   using Sql::Schema::ParentTableFieldName;
   using Sql::Schema::ChildTableFieldName;
@@ -206,8 +208,8 @@ void JoinConstraintFieldPairTest::fromTablesTest()
 
 void JoinConstraintFieldPairTest::sqlTransformTest()
 {
-  using Sql::Impl::JoinConstraintFieldPairList;
-  using Sql::Impl::JoinConstraintFieldPairListSqlTransform;
+  using Sql::JoinConstraintFieldPairList;
+  using Sql::JoinConstraintFieldPairListSqlTransform;
 
   auto db = mDatabase;
   QString expectedSql;

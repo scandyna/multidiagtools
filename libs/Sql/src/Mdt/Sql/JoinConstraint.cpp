@@ -18,25 +18,49 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_JOIN_CLAUSE_TEST_H
-#define MDT_JOIN_CLAUSE_TEST_H
+#include "JoinConstraint.h"
+#include "SelectTable.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QSqlDatabase>
+namespace Mdt{ namespace Sql{
 
-class JoinClauseTest : public QObject
+/*
+ * JoinConstraintIsNullVisitor
+ */
+class JoinConstraintIsNullVisitor : boost::static_visitor<bool>
 {
- Q_OBJECT
+ public:
 
- private slots:
+  bool operator()(const JoinConstraintExpression & expr) const
+  {
+    return expr.isNull();
+  }
 
-  void initTestCase();
-  void cleanupTestCase();
-
- private:
-
-  QSqlDatabase mDatabase;
+  bool operator()(const JoinConstraintFieldPairList & fpl) const
+  {
+    return fpl.isNull();
+  }
 };
 
-#endif // #ifndef MDT_JOIN_CLAUSE_TEST_H
+/*
+ * JoinConstraint implementation
+ */
+
+void JoinConstraint::setOnExpression(const JoinConstraintExpression & expr)
+{
+  mOperator = JoinConstraintOperator::On;
+  mConstraint = expr;
+}
+
+void JoinConstraint::setOnExpression(const SelectTable & left, const SelectTable & right)
+{
+  mOperator = JoinConstraintOperator::On;
+  mConstraint = JoinConstraintFieldPairList::fromTables(left, right);
+}
+
+bool JoinConstraint::isNull() const
+{
+  return boost::apply_visitor( JoinConstraintIsNullVisitor(), mConstraint );
+}
+
+
+}} // namespace Mdt{ namespace Sql{

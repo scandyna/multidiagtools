@@ -18,37 +18,51 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_IMPL_JOIN_CONSTRAINT_FIELD_PAIR_LIST_SQL_TRANSFORM_H
-#define MDT_SQL_IMPL_JOIN_CONSTRAINT_FIELD_PAIR_LIST_SQL_TRANSFORM_H
+#ifndef MDT_SQL_JOIN_CONSTRAINT_FIELD_PAIR_H
+#define MDT_SQL_JOIN_CONSTRAINT_FIELD_PAIR_H
 
 #include <QString>
 
-class QSqlDatabase;
-class QSqlDriver;
+namespace Mdt{ namespace Sql{
 
-namespace Mdt{ namespace Sql{ namespace Impl{
-
-  class JoinConstraintFieldPairList;
-  class JoinConstraintFieldPair;
-
-  /*! \brief Transform a list of field pairs to SQL
+  /*! \brief Container for a pair of field names
    */
-  class JoinConstraintFieldPairListSqlTransform
+  class JoinConstraintFieldPair
   {
    public:
 
-    /*! \brief Get SQL string of list
+    /*! \brief Construct a field pair
      *
-     * \pre list must not be empty
-     * \pre db must be valid (have a driver loaded)
+     * \pre left and right must not be empty
      */
-    static QString getSql(const JoinConstraintFieldPairList & list, const QSqlDatabase & db);
+    JoinConstraintFieldPair(const QString & left, const QString & right)
+     : mLeftField(left) ,
+       mRightField(right)
+    {
+      Q_ASSERT(!mLeftField.isEmpty());
+      Q_ASSERT(!mRightField.isEmpty());
+    }
+
+    /*! \brief Get left field
+     */
+    QString leftField() const
+    {
+      return mLeftField;
+    }
+
+    /*! \brief Get right field
+     */
+    QString rightField() const
+    {
+      return mRightField;
+    }
 
    private:
 
-    static QString getFieldPairSql(const QString & leftTable, const QString & rightTable, const JoinConstraintFieldPair & pair, const QSqlDriver * const driver);
+    QString mLeftField;
+    QString mRightField;
   };
 
-}}} // namespace Mdt{ namespace Sql{ namespace Impl{
+}} // namespace Mdt{ namespace Sql{
 
-#endif // #ifndef MDT_SQL_IMPL_JOIN_CONSTRAINT_FIELD_PAIR_LIST_SQL_TRANSFORM_H
+#endif // #ifndef MDT_SQL_JOIN_CONSTRAINT_FIELD_PAIR_H

@@ -31,21 +31,21 @@ namespace Mdt{ namespace Sql{
   {
    public:
 
-    /*! \breif Constructor
+    /*! \breif Construct explicitely from a table name
      */
     explicit TableName(const QString & name)
-     : pvTableName(name) {}
+     : mTableName(name) {}
 
     /*! \brief Get table name as string
      */
     QString toString() const
     {
-      return pvTableName;
+      return mTableName;
     }
 
    private:
 
-    QString pvTableName;
+    QString mTableName;
   };
 
 }} // namespace Mdt{ namespace Sql{

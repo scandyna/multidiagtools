@@ -18,18 +18,16 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_IMPL_JOIN_CONSTRAINT_FIELD_PAIR_LIST_H
-#define MDT_SQL_IMPL_JOIN_CONSTRAINT_FIELD_PAIR_LIST_H
+#ifndef MDT_SQL_JOIN_CONSTRAINT_FIELD_PAIR_LIST_H
+#define MDT_SQL_JOIN_CONSTRAINT_FIELD_PAIR_LIST_H
 
 #include "JoinConstraintFieldPair.h"
 #include <QString>
 #include <vector>
 
 namespace Mdt{ namespace Sql{
-  class SelectTable;
-}}
 
-namespace Mdt{ namespace Sql{ namespace Impl{
+  class SelectTable;
 
   /*! \brief List of field name pairs
    */
@@ -86,6 +84,16 @@ namespace Mdt{ namespace Sql{ namespace Impl{
       return mList.empty();
     }
 
+    /*! \brief Check if null
+     *
+     * Returns true if isEmpty() is true
+     *  or leftTable is empty or right is empty.
+     */
+    bool isNull() const
+    {
+      return ( isEmpty() || mLeftTable.isEmpty() || mRightTable.isEmpty() );
+    }
+
     /*! \brief Get field par at index
      *
      * \pre index must be in valid range
@@ -113,6 +121,6 @@ namespace Mdt{ namespace Sql{ namespace Impl{
     std::vector<JoinConstraintFieldPair> mList;
   };
 
-}}} // namespace Mdt{ namespace Sql{ namespace Impl{
+}} // namespace Mdt{ namespace Sql{
 
-#endif // #ifndef MDT_SQL_IMPL_JOIN_CONSTRAINT_FIELD_PAIR_LIST_H
+#endif // #ifndef MDT_SQL_JOIN_CONSTRAINT_FIELD_PAIR_LIST_H

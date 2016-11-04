@@ -18,14 +18,14 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_JOIN_CLAUSE_TEST_H
-#define MDT_JOIN_CLAUSE_TEST_H
+#ifndef MDT_JOIN_CONSTRAINT_TEST_H
+#define MDT_JOIN_CONSTRAINT_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
 #include <QSqlDatabase>
 
-class JoinClauseTest : public QObject
+class JoinConstraintTest : public QObject
 {
  Q_OBJECT
 
@@ -34,9 +34,16 @@ class JoinClauseTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
+  void setOnExpressionTest();
+  void onExpressionSqlTransformTest();
+
+  void setOnExpressionFromTablesTest();
+  void onExpressionFromTablesSqlTransformTest();
+
  private:
 
   QSqlDatabase mDatabase;
 };
 
-#endif // #ifndef MDT_JOIN_CLAUSE_TEST_H
+
+#endif // #ifndef MDT_JOIN_CONSTRAINT_TEST_H

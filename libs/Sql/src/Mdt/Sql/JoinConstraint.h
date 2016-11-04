@@ -18,54 +18,52 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_FIELD_NAME_H
-#define MDT_SQL_FIELD_NAME_H
+#ifndef MDT_SQL_JOIN_JOIN_CONSTRAINT_H
+#define MDT_SQL_JOIN_JOIN_CONSTRAINT_H
 
-#include "Schema/Field.h"
-#include "Schema/AutoIncrementPrimaryKey.h"
-#include "Schema/SingleFieldPrimaryKey.h"
-#include <QString>
+#include "JoinConstraintOperator.h"
+#include "JoinConstraintExpression.h"
+#include "JoinConstraintFieldPairList.h"
+#include <boost/variant.hpp>
 
 namespace Mdt{ namespace Sql{
 
-  /*! \brief Wrapper for compile time checking
+  class SelectTable;
+
+  /*! \brief Join constraint part of a JoinClause
    */
-  class FieldName
+  class JoinConstraint
   {
    public:
 
-    /*! \breif Construct explicitly from a field name
+    /*! \brief Set a ON expression
      */
-    explicit FieldName(const QString & name)
-     : mFieldName(name) {}
+    void setOnExpression(const JoinConstraintExpression & expr);
 
-    /*! \brief Construct from a field
+    /*! \brief Generate a ON expression to join left and right table
      */
-    FieldName(const Schema::Field & field)
-     : mFieldName(field.name()) {}
+    void setOnExpression(const SelectTable & left, const SelectTable & right);
 
-    /*! \brief Construct from a auto increment primary key
+    /*! \brief Check if this constraint is null
      */
-    FieldName(const Schema::AutoIncrementPrimaryKey & pk)
-     : mFieldName(pk.fieldName()) {}
+    bool isNull() const;
 
-    /*! \brief Construct from a single field primary key
+    /*! \brief Get constraint operator
+     *
+     * Note: if this join constraint is null,
+     *        returned operator has no sense.
      */
-    FieldName(const Schema::SingleFieldPrimaryKey & pk)
-     : mFieldName(pk.fieldName()) {}
-
-    /*! \brief Get filed name as string
-     */
-    QString toString() const
+    JoinConstraintOperator constraintOperator() const
     {
-      return mFieldName;
+      return mOperator;
     }
 
    private:
 
-    QString mFieldName;
+    JoinConstraintOperator mOperator;
+    boost::variant<JoinConstraintExpression, JoinConstraintFieldPairList> mConstraint;
   };
 
 }} // namespace Mdt{ namespace Sql{
 
-#endif // MDT_SQL_FIELD_NAME_H
+#endif // #ifndef MDT_SQL_JOIN_JOIN_CONSTRAINT_H

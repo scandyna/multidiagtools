@@ -23,6 +23,8 @@
 
 #include "Mdt/Sql/TableName.h"
 #include "Mdt/Sql/FieldName.h"
+#include "Mdt/Sql/SelectTable.h"
+// #include "Mdt/Sql/Schema/Field.h"
 #include <QString>
 #include <boost/proto/expr.hpp>
 #include <boost/proto/extends.hpp>
@@ -54,6 +56,14 @@ namespace Mdt{ namespace Sql{ namespace Expression{
     TableField(const TableName & tn, const FieldName & fn)
     : mTableName(tn.toString()),
       mFieldName(fn.toString())
+    {
+    }
+
+    /*! \brief Construct a table/field from a select table and field name
+     */
+    TableField(const SelectTable & sc, const FieldName & fn)
+     : mTableName(sc.tableName()),
+       mFieldName(fn.toString())
     {
     }
 
@@ -112,7 +122,14 @@ namespace Mdt{ namespace Sql{ namespace Expression{
     /*! \brief Construct a terminal by defining table name and field name
      */
     TableFieldTerminal(const TableName & tn, const FieldName & fn)
-    : base_type(terminal_type::make( TableField(tn, fn) ))
+     : base_type(terminal_type::make( TableField(tn, fn) ))
+    {
+    }
+
+    /*! \brief Construct a terminal from a select table and field name
+     */
+    TableFieldTerminal(const SelectTable & sc, const FieldName & fn)
+     : base_type(terminal_type::make( TableField(sc, fn) ))
     {
     }
   };

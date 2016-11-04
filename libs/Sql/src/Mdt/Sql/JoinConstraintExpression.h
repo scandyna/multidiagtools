@@ -116,6 +116,15 @@ namespace Mdt{ namespace Sql{
       mContainer.reset( new Expression::JoinConstraintExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) );
     }
 
+    /*! \brief Check if this expression is null
+     *
+     * Returns true unless a expression was set.
+     */
+    bool isNull() const
+    {
+      return !mContainer;
+    }
+
     /*! \brief Get SQL representation of stored expression
      *
      * If we take clientId and adrCliendId of above example code,

@@ -38,7 +38,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Construct a auto increment primary key
      */
-    AutoIncrementPrimaryKey(const QString & fieldName)
+    explicit AutoIncrementPrimaryKey(const QString & fieldName)
      : pvFieldName(fieldName)
     {
     }

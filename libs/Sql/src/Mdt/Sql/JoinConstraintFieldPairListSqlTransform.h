@@ -18,51 +18,37 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_IMPL_JOIN_CONSTRAINT_FIELD_PAIR_H
-#define MDT_SQL_IMPL_JOIN_CONSTRAINT_FIELD_PAIR_H
+#ifndef MDT_SQL_JOIN_CONSTRAINT_FIELD_PAIR_LIST_SQL_TRANSFORM_H
+#define MDT_SQL_JOIN_CONSTRAINT_FIELD_PAIR_LIST_SQL_TRANSFORM_H
 
 #include <QString>
 
-namespace Mdt{ namespace Sql{ namespace Impl{
+class QSqlDatabase;
+class QSqlDriver;
 
-  /*! \brief Container for a pair of field names
+namespace Mdt{ namespace Sql{
+
+  class JoinConstraintFieldPairList;
+  class JoinConstraintFieldPair;
+
+  /*! \brief Transform a list of field pairs to SQL
    */
-  class JoinConstraintFieldPair
+  class JoinConstraintFieldPairListSqlTransform
   {
    public:
 
-    /*! \brief Construct a field pair
+    /*! \brief Get SQL string of list
      *
-     * \pre left and right must not be empty
+     * \pre list must not be empty
+     * \pre db must be valid (have a driver loaded)
      */
-    JoinConstraintFieldPair(const QString & left, const QString & right)
-     : mLeftField(left) ,
-       mRightField(right)
-    {
-      Q_ASSERT(!mLeftField.isEmpty());
-      Q_ASSERT(!mRightField.isEmpty());
-    }
-
-    /*! \brief Get left field
-     */
-    QString leftField() const
-    {
-      return mLeftField;
-    }
-
-    /*! \brief Get right field
-     */
-    QString rightField() const
-    {
-      return mRightField;
-    }
+    static QString getSql(const JoinConstraintFieldPairList & list, const QSqlDatabase & db);
 
    private:
 
-    QString mLeftField;
-    QString mRightField;
+    static QString getFieldPairSql(const QString & leftTable, const QString & rightTable, const JoinConstraintFieldPair & pair, const QSqlDriver * const driver);
   };
 
-}}} // namespace Mdt{ namespace Sql{ namespace Impl{
+}} // namespace Mdt{ namespace Sql{
 
-#endif // #ifndef MDT_SQL_IMPL_JOIN_CONSTRAINT_FIELD_PAIR_H
+#endif // #ifndef MDT_SQL_JOIN_CONSTRAINT_FIELD_PAIR_LIST_SQL_TRANSFORM_H

@@ -25,7 +25,7 @@
 #include <QSqlDriver>
 #include <QStringBuilder>
 
-namespace Mdt{ namespace Sql{ namespace Impl{
+namespace Mdt{ namespace Sql{
 
 QString JoinConstraintFieldPairListSqlTransform::getSql(const JoinConstraintFieldPairList & list, const QSqlDatabase & db)
 {
@@ -59,4 +59,4 @@ QString JoinConstraintFieldPairListSqlTransform::getFieldPairSql(const QString &
   return sql;
 }
 
-}}} // namespace Mdt{ namespace Sql{ namespace Impl{
+}} // namespace Mdt{ namespace Sql{

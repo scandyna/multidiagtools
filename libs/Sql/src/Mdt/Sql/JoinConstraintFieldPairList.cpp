@@ -19,13 +19,13 @@
  **
  ****************************************************************************/
 #include "JoinConstraintFieldPairList.h"
-#include "Mdt/Sql/SelectTable.h"
-#include "Mdt/Sql/Schema/ForeignKey.h"
+#include "SelectTable.h"
+#include "Schema/ForeignKey.h"
 #include <QStringList>
 #include <QString>
 #include <QByteArray>
 
-namespace Mdt{ namespace Sql{ namespace Impl{
+namespace Mdt{ namespace Sql{
 
 JoinConstraintFieldPairList JoinConstraintFieldPairList::fromTables(const SelectTable & left, const SelectTable & right)
 {
@@ -68,4 +68,4 @@ JoinConstraintFieldPairList JoinConstraintFieldPairList::fromTables(const Select
 }
 
 
-}}} // namespace Mdt{ namespace Sql{ namespace Impl{
+}} // namespace Mdt{ namespace Sql{

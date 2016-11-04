@@ -43,18 +43,50 @@ void SimpleTypesTest::cleanupTestCase()
  * Tests
  */
 
+QString fieldNameTestFunction(const Sql::FieldName & fn)
+{
+  return fn.toString();
+}
+
 void SimpleTypesTest::fieldNameTest()
 {
   using Sql::FieldName;
+  using Sql::Schema::Field;
+  using Sql::Schema::AutoIncrementPrimaryKey;
+  using Sql::Schema::SingleFieldPrimaryKey;
 
-  FieldName fieldA("A");
-  QCOMPARE(fieldA.toString(), QString("A"));
+  // Must not compile
+//   QCOMPARE(fieldNameTestFunction("Bug"), QString("Bug"));
+
+  // From explicit field name
+  QCOMPARE(fieldNameTestFunction(FieldName("A")), QString("A"));
+  // From a field
+  Field B;
+  B.setName("B");
+  QCOMPARE(fieldNameTestFunction(B), QString("B"));
+  // From a AI PK
+  AutoIncrementPrimaryKey Id_PK("Id_PK");
+  QCOMPARE(fieldNameTestFunction(Id_PK), QString("Id_PK"));
+  // From a single field PK
+  SingleFieldPrimaryKey C;
+  C.setFieldName("C");
+  QCOMPARE(fieldNameTestFunction(C), QString("C"));
+}
+
+QString tableNameTestFunction(const Sql::TableName & tn)
+{
+  return tn.toString();
 }
 
 void SimpleTypesTest::tableNameTest()
 {
   using Sql::TableName;
 
+  // Must not compile
+//   QCOMPARE(tableNameTestFunction("A"), QString("A"));
+
+  // From explicit table name
+  QCOMPARE(tableNameTestFunction(TableName("B")), QString("B"));
   TableName tableA("A");
   QCOMPARE(tableA.toString(), QString("A"));
 }
@@ -110,6 +142,9 @@ void SimpleTypesTest::selectTableTest()
   Table Connector_tbl;
   Connector_tbl.setTableName("Connector_tbl");
   Schema::Client_tbl client;
+
+  // Must not compile
+//   SelectTable Bug("Bug");
 
   /*
    * Create based on a Table
@@ -223,7 +258,6 @@ void SimpleTypesTest::selectTableForeignKeyTest()
   Schema::Client_tbl client;
   SelectTable CLI(client, "CLI");
   QCOMPARE(CLI.aliasOrTableName(), QString("CLI"));
-  
   // Address
   Schema::Address_tbl address;
   SelectTable ADR(address, "ADR");

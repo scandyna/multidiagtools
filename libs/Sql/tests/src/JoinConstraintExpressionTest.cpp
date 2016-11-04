@@ -235,11 +235,13 @@ void JoinConstraintExpressionTest::expressionContructCopySqliteTest()
    * Default construct
    */
   JoinConstraintExpression exp;
+  QVERIFY(exp.isNull());
   /*
    * Construct
    */
   // Construct a expression
   JoinConstraintExpression exp1( A == 1 );
+  QVERIFY(!exp1.isNull());
   expectedSql = "\"A\".\"a\"=1";
   QCOMPARE(exp1.toSql(db), expectedSql);
   // Construct a expression (move constructor)
@@ -283,7 +285,9 @@ void JoinConstraintExpressionTest::expressionAssignSqliteTest()
 
   // Use setter
   JoinConstraintExpression exp1;
+  QVERIFY(exp1.isNull());
   exp1.setExpression( A == 1 );
+  QVERIFY(!exp1.isNull());
   expectedSql = "\"A\".\"a\"=1";
   QCOMPARE(exp1.toSql(db), expectedSql);
   // Move assing
