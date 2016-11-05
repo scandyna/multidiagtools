@@ -18,31 +18,31 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_JOIN_CLAUSE_TEST_H
-#define MDT_JOIN_CLAUSE_TEST_H
-
-#include <QObject>
-#include <QtTest/QtTest>
+#include "JoinClauseItemSqlTransform.h"
+#include "JoinClauseItem.h"
+#include "JoinConstraintSqlTransform.h"
 #include <QSqlDatabase>
+#include <QStringBuilder>
+#include <QSqlDriver>
 
-class JoinClauseTest : public QObject
+namespace Mdt{ namespace Sql{
+
+QString JoinClauseItemSqlTransform::getSql(const JoinClauseItem & item, const QSqlDatabase & db)
 {
- Q_OBJECT
+  QString sql;
+  const QString tableAlias = item.tableAlias();
+  const auto * driver = db.driver();
+  Q_ASSERT(driver != nullptr);
 
- private slots:
+  sql = joinOperatorString(item.joinOperator()) % QStringLiteral(" ")
+      % driver->escapeIdentifier(item.tableName(), QSqlDriver::TableName);
+  if(!tableAlias.isEmpty()){
+    sql += QStringLiteral(" ") % driver->escapeIdentifier(tableAlias, QSqlDriver::TableName);
+  }
+  sql += QStringLiteral("\n ") % JoinConstraintSqlTransform::getSql(item.constraint(), db);
 
-  void initTestCase();
-  void cleanupTestCase();
+  return sql;
+}
 
-  void joinClauseItemTest();
-  void joinClauseItemSqlTransformTest();
 
-  void autoJoinClauseItemTest();
-  void autoJoinClauseItemSqlTransformTest();
-
- private:
-
-  QSqlDatabase mDatabase;
-};
-
-#endif // #ifndef MDT_JOIN_CLAUSE_TEST_H
+}} // namespace Mdt{ namespace Sql{

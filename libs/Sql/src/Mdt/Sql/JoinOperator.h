@@ -18,31 +18,19 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_JOIN_CLAUSE_TEST_H
-#define MDT_JOIN_CLAUSE_TEST_H
+#ifndef MDT_SQL_JOIN_OPERATOR_H
+#define MDT_SQL_JOIN_OPERATOR_H
 
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QSqlDatabase>
+namespace Mdt{ namespace Sql{
 
-class JoinClauseTest : public QObject
-{
- Q_OBJECT
+  /*! \brief JOIN operator
+   */
+  enum class JoinOperator
+  {
+    Join,     /*!< JOIN operator */
+    LeftJoin  /*!< LEFT JOIN */
+  };
 
- private slots:
+}} // namespace Mdt{ namespace Sql{
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void joinClauseItemTest();
-  void joinClauseItemSqlTransformTest();
-
-  void autoJoinClauseItemTest();
-  void autoJoinClauseItemSqlTransformTest();
-
- private:
-
-  QSqlDatabase mDatabase;
-};
-
-#endif // #ifndef MDT_JOIN_CLAUSE_TEST_H
+#endif // #ifndef MDT_SQL_JOIN_OPERATOR_H

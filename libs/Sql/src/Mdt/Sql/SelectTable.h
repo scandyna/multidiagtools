@@ -119,7 +119,7 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Check if this view table is null
      *
-     * ViewTable is null if table name is not set
+     * SelectTable is null if table name is not set
      */
     bool isNull() const
     {

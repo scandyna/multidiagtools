@@ -2,19 +2,19 @@ format 211
 
 classcanvas 128002 class_ref 3336450 // JoinClauseItem
   classdiagramsettings member_max_width 0 end
-  xyz 215 42 2000
+  xyz 40 73 2000
 end
 classcanvas 128642 class_ref 3336706 // JoinConstraint
   classdiagramsettings member_max_width 0 end
-  xyz 210 248 2006
+  xyz 698 39 2006
 end
 classcanvas 128898 class_ref 3239810 // JoinConstraintExpression
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 663 298 2012
+  xyz 815 290 2012
 end
-classcanvas 129154 class_ref 3336578 // JoinClauseItemList
+classcanvas 129410 class_ref 3377410 // JoinClauseItemSqlTransform
   classdiagramsettings member_max_width 0 end
-  xyz 41 106 2006
+  xyz 184 428 2000
 end
 relationcanvas 128770 relation_ref 3734274 // <directional composition>
   from ref 128002 z 2007 to ref 128642
@@ -25,11 +25,5 @@ relationcanvas 129026 relation_ref 3755778 // <directional composition>
   from ref 128642 z 2013 to ref 128898
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 129282 relation_ref 3733634 // <directional composition>
-  decenter_end 521
-  from ref 129154 z 2007 to ref 128002
-  no_role_a no_role_b
-  multiplicity_a_pos 199 137 3000 no_multiplicity_b
 end
 end

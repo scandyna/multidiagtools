@@ -75,6 +75,12 @@ void JoinConstraintTest::setOnExpressionTest()
   jc.setOnExpression(adrClientId == clientId);
   QVERIFY(!jc.isNull());
   QVERIFY(jc.constraintOperator() == JoinConstraintOperator::On);
+  /*
+   * Construct ON expression
+   */
+  JoinConstraint jc2(clientId == adrClientId);
+  QVERIFY(!jc2.isNull());
+  QVERIFY(jc2.constraintOperator() == JoinConstraintOperator::On);
 }
 
 void JoinConstraintTest::onExpressionSqlTransformTest()
@@ -92,9 +98,8 @@ void JoinConstraintTest::onExpressionSqlTransformTest()
   JoinConstraintField adrClientId(ADR, FieldName("Client_Id_FK"));
   QString expectedSql;
   auto db = mDatabase;
-  JoinConstraint jc;
 
-  jc.setOnExpression(adrClientId == clientId);
+  JoinConstraint jc(adrClientId == clientId);
   expectedSql = "ON \"ADR\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
   QCOMPARE( JoinConstraintSqlTransform::getSql(jc, db) , expectedSql );
 }
@@ -121,6 +126,12 @@ void JoinConstraintTest::setOnExpressionFromTablesTest()
   jc.setOnExpression(CLI, ADR);
   QVERIFY(!jc.isNull());
   QVERIFY(jc.constraintOperator() == JoinConstraintOperator::On);
+  /*
+   * Construct ON expression
+   */
+  JoinConstraint jc2(ADR, CLI);
+  QVERIFY(!jc2.isNull());
+  QVERIFY(jc2.constraintOperator() == JoinConstraintOperator::On);
 }
 
 void JoinConstraintTest::onExpressionFromTablesSqlTransformTest()
@@ -135,9 +146,8 @@ void JoinConstraintTest::onExpressionFromTablesSqlTransformTest()
   SelectTable ADR(address, "ADR");
   QString expectedSql;
   auto db = mDatabase;
-  JoinConstraint jc;
 
-  jc.setOnExpression(ADR, CLI);
+  JoinConstraint jc(ADR, CLI);
   expectedSql = "ON \"ADR\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
   QCOMPARE( JoinConstraintSqlTransform::getSql(jc, db) , expectedSql );
 }

@@ -17,6 +17,7 @@ set(SOURCES_FILES
     src/Mdt/Sql/JoinConstraintExpression.cpp
     src/Mdt/Sql/JoinConstraint.cpp
     src/Mdt/Sql/JoinConstraintSqlTransform.cpp
+    src/Mdt/Sql/JoinClauseItemSqlTransform.cpp
     src/Mdt/Sql/JoinClause.cpp
     src/Mdt/Sql/FromClause.cpp
     src/Mdt/Sql/FromClauseSqlTransform.cpp

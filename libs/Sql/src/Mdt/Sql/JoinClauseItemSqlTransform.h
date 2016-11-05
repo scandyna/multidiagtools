@@ -18,31 +18,45 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_JOIN_CLAUSE_TEST_H
-#define MDT_JOIN_CLAUSE_TEST_H
+#ifndef MDT_SQL_JOIN_CLAUSE_ITEM_SQL_TRANSFORM_H
+#define MDT_SQL_JOIN_CLAUSE_ITEM_SQL_TRANSFORM_H
 
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QSqlDatabase>
+#include "JoinOperator.h"
+#include <QString>
 
-class JoinClauseTest : public QObject
-{
- Q_OBJECT
+class QSqlDatabase;
 
- private slots:
+namespace Mdt{ namespace Sql{
 
-  void initTestCase();
-  void cleanupTestCase();
+  class JoinClauseItem;
 
-  void joinClauseItemTest();
-  void joinClauseItemSqlTransformTest();
+  /*! \brief Transform a JoinClauseItem to its SQL representation
+   */
+  class JoinClauseItemSqlTransform
+  {
+   public:
 
-  void autoJoinClauseItemTest();
-  void autoJoinClauseItemSqlTransformTest();
+    /*! \brief Get SQL string for item
+     *
+     * \pre db must be valid (a driver must be loaded
+     */
+    static QString getSql(const JoinClauseItem & item, const QSqlDatabase & db);
 
- private:
+  private:
 
-  QSqlDatabase mDatabase;
-};
+    static QString joinOperatorString(JoinOperator op)
+    {
+      switch(op)
+      {
+        case JoinOperator::Join:
+          return QStringLiteral("JOIN");
+        case JoinOperator::LeftJoin:
+          return QStringLiteral("LEFT JOIN");
+      }
+      return QString();
+    }
+  };
 
-#endif // #ifndef MDT_JOIN_CLAUSE_TEST_H
+}} // namespace Mdt{ namespace Sql{
+
+#endif // #ifndef MDT_SQL_JOIN_CLAUSE_ITEM_SQL_TRANSFORM_H

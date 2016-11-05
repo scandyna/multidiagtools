@@ -45,6 +45,18 @@ class JoinConstraintIsNullVisitor : boost::static_visitor<bool>
  * JoinConstraint implementation
  */
 
+JoinConstraint::JoinConstraint(const JoinConstraintExpression & expr)
+ : mOperator(JoinConstraintOperator::On) ,
+   mConstraint(expr)
+{
+}
+
+JoinConstraint::JoinConstraint(const SelectTable & left, const SelectTable & right)
+ : mOperator(JoinConstraintOperator::On) ,
+   mConstraint( JoinConstraintFieldPairList::fromTables(left, right) )
+{
+}
+
 void JoinConstraint::setOnExpression(const JoinConstraintExpression & expr)
 {
   mOperator = JoinConstraintOperator::On;

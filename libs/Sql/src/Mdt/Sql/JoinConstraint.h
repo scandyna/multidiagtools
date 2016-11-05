@@ -36,6 +36,24 @@ namespace Mdt{ namespace Sql{
   {
    public:
 
+    /*! \brief Construct a null join constraint
+     */
+    JoinConstraint() = default;
+
+    /*! \brief Construct a ON join constraint expression
+     */
+    JoinConstraint(const JoinConstraintExpression & expr);
+
+    /*! \brief Construct a ON join constraint linking left and right tables
+     */
+    JoinConstraint(const SelectTable & left, const SelectTable & right);
+
+    // Copy and move
+    JoinConstraint(const JoinConstraint &) = default;
+    JoinConstraint(JoinConstraint &&) = default;
+    JoinConstraint & operator=(const JoinConstraint &) = default;
+    JoinConstraint & operator=(JoinConstraint &&) = default;
+
     /*! \brief Set a ON expression
      */
     void setOnExpression(const JoinConstraintExpression & expr);
