@@ -40,6 +40,9 @@ class JoinClauseTest : public QObject
   void autoJoinClauseItemTest();
   void autoJoinClauseItemSqlTransformTest();
 
+  void joinClauseItemListTest();
+  void joinClauseItemListSqlTransformTest();
+
  private:
 
   QSqlDatabase mDatabase;

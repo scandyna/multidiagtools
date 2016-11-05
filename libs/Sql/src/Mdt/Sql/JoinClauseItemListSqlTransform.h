@@ -18,31 +18,31 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "JoinClauseItemSqlTransform.h"
-#include "JoinClauseItem.h"
-#include "JoinConstraintSqlTransform.h"
-#include <QSqlDatabase>
-#include <QStringBuilder>
-#include <QSqlDriver>
+#ifndef MDT_SQL_JOIN_CLAUSE_ITEM_LIST_SQL_TRANSFORM_H
+#define MDT_SQL_JOIN_CLAUSE_ITEM_LIST_SQL_TRANSFORM_H
+
+#include <QString>
+
+class QSqlDatabase;
 
 namespace Mdt{ namespace Sql{
 
-QString JoinClauseItemSqlTransform::getSql(const JoinClauseItem & item, const QSqlDatabase & db)
-{
-  QString sql;
-  const QString tableAlias = item.tableAlias();
-  const auto * driver = db.driver();
-  Q_ASSERT(driver != nullptr);
+  class JoinClauseItemList;
 
-  sql = QStringLiteral(" ") % joinOperatorString(item.joinOperator()) % QStringLiteral(" ")
-      % driver->escapeIdentifier(item.tableName(), QSqlDriver::TableName);
-  if(!tableAlias.isEmpty()){
-    sql += QStringLiteral(" ") % driver->escapeIdentifier(tableAlias, QSqlDriver::TableName);
-  }
-  sql += QStringLiteral("\n  ") % JoinConstraintSqlTransform::getSql(item.constraint(), db);
+  /*! \brief Transform a JoinClauseItemList to its SQL representation
+   */
+  class JoinClauseItemListSqlTransform
+  {
+   public:
 
-  return sql;
-}
-
+    /*! \brief Get SQL string of list
+     *
+     * \pre list must not be empty
+     * \pre db must be valid (a driver must be loaded)
+     */
+    static QString getSql(const JoinClauseItemList & list, const QSqlDatabase & db);
+  };
 
 }} // namespace Mdt{ namespace Sql{
+
+#endif // #ifndef MDT_SQL_JOIN_CLAUSE_ITEM_LIST_SQL_TRANSFORM_H

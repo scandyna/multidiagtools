@@ -11,13 +11,11 @@ diagrams
     983 906 100 7 0 142
   classdiagram_ref 2982146 // overview
     120 110 100 4 0 0
-  active  classdiagram_ref 2968706 // JoinClauseItem
-    956 908 100 18 0 36
-  classdiagram_ref 2955394 // JoinClause
-    956 908 100 23 24 529
+  active  classdiagram_ref 2955394 // JoinClause
+    956 908 100 23 24 202
 end
 show_stereotypes
-selected operation_ref 4770178 // getSql
+selected operation_ref 4776706 // getSql
 open
   
   package_ref 409858 // principes
@@ -34,6 +32,7 @@ open
   class_ref 3350018 // JoinConstraintUsing
   class_ref 3349762 // JoinConstraintOperator
   class_ref 3377410 // JoinClauseItemSqlTransform
+  class_ref 3383938 // JoinClauseItemListSqlTransform
   classview_ref 1419266 // SimpleTypes
   
   package_ref 430082 // Dsp

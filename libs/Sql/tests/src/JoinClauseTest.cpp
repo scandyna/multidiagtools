@@ -22,6 +22,8 @@
 #include "Mdt/Application.h"
 #include "Mdt/Sql/JoinClauseItem.h"
 #include "Mdt/Sql/JoinClauseItemSqlTransform.h"
+#include "Mdt/Sql/JoinClauseItemList.h"
+#include "Mdt/Sql/JoinClauseItemListSqlTransform.h"
 #include "Mdt/Sql/JoinClause.h"
 #include "Schema/Client_tbl.h"
 #include "Schema/Address_tbl.h"
@@ -92,15 +94,15 @@ void JoinClauseTest::joinClauseItemSqlTransformTest()
 
   // JOIN
   JoinClauseItem item1(JoinOperator::Join, ADR, adrClientId == clientId);
-  expectedSql = "JOIN \"Address_tbl\" \"ADR\"\n ON \"ADR\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
+  expectedSql = " JOIN \"Address_tbl\" \"ADR\"\n  ON \"ADR\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
   QCOMPARE( JoinClauseItemSqlTransform::getSql(item1, db) , expectedSql );
   // LEFT JOIN
   JoinClauseItem item2(JoinOperator::LeftJoin, ADR, adrClientId == clientId);
-  expectedSql = "LEFT JOIN \"Address_tbl\" \"ADR\"\n ON \"ADR\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
+  expectedSql = " LEFT JOIN \"Address_tbl\" \"ADR\"\n  ON \"ADR\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
   QCOMPARE( JoinClauseItemSqlTransform::getSql(item2, db) , expectedSql );
   // JOIN , no alias
   JoinClauseItem item3(JoinOperator::Join, ADR2, adrClientId2 == clientId);
-  expectedSql = "JOIN \"Address_tbl\"\n ON \"Address_tbl\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
+  expectedSql = " JOIN \"Address_tbl\"\n  ON \"Address_tbl\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
   QCOMPARE( JoinClauseItemSqlTransform::getSql(item3, db) , expectedSql );
 }
 
@@ -139,12 +141,79 @@ void JoinClauseTest::autoJoinClauseItemSqlTransformTest()
 
   // JOIN
   JoinClauseItem item1(JoinOperator::Join, ADR, CLI);
-  expectedSql = "JOIN \"Address_tbl\" \"ADR\"\n ON \"ADR\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
+  expectedSql = " JOIN \"Address_tbl\" \"ADR\"\n  ON \"ADR\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
   QCOMPARE( JoinClauseItemSqlTransform::getSql(item1, db) , expectedSql );
   // LEFT JOIN
   JoinClauseItem item2(JoinOperator::LeftJoin, ADR, CLI);
-  expectedSql = "LEFT JOIN \"Address_tbl\" \"ADR\"\n ON \"ADR\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
+  expectedSql = " LEFT JOIN \"Address_tbl\" \"ADR\"\n  ON \"ADR\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
   QCOMPARE( JoinClauseItemSqlTransform::getSql(item2, db) , expectedSql );
+}
+
+void JoinClauseTest::joinClauseItemListTest()
+{
+  using Sql::JoinClauseItemList;
+  using Sql::JoinOperator;
+  using Sql::SelectTable;
+  using Sql::JoinConstraintField;
+
+  Schema::Client_tbl client;
+  Schema::Address_tbl address;
+  SelectTable CLI(client, "CLI");
+  SelectTable ADR1(address, "ADR1");
+  SelectTable ADR2(address, "ADR2");
+  JoinConstraintField clientId(CLI, client.Id_PK());
+  JoinConstraintField adrClientId(ADR1, address.Client_Id_FK());
+
+  /*
+   * Initial state
+   */
+  JoinClauseItemList list;
+  QCOMPARE(list.size(), 0);
+  QVERIFY(list.isEmpty());
+  /*
+   * Append with explicit constraint
+   */
+  list.append(JoinOperator::Join, ADR1, adrClientId == clientId);
+  QCOMPARE(list.size(), 1);
+  QVERIFY(!list.isEmpty());
+  QCOMPARE(list.at(0).tableAlias(), QString("ADR1"));
+  /*
+   * Append with auto join
+   */
+  list.append(JoinOperator::Join, ADR2, CLI);
+  QCOMPARE(list.size(), 2);
+  QCOMPARE(list.at(1).tableAlias(), QString("ADR2"));
+}
+
+void JoinClauseTest::joinClauseItemListSqlTransformTest()
+{
+  using Sql::JoinClauseItemListSqlTransform;
+  using Sql::JoinClauseItemList;
+  using Sql::JoinOperator;
+  using Sql::SelectTable;
+  using Sql::JoinConstraintField;
+
+  Schema::Client_tbl client;
+  Schema::Address_tbl address;
+  SelectTable CLI(client, "CLI");
+  SelectTable ADR1(address, "ADR1");
+  SelectTable ADR2(address, "ADR2");
+  JoinConstraintField clientId(CLI, client.Id_PK());
+  JoinConstraintField adrClientId(ADR1, address.Client_Id_FK());
+  QString expectedSql;
+  auto db = mDatabase;
+  JoinClauseItemList list;
+
+  list.append(JoinOperator::Join, ADR1, adrClientId == clientId);
+  expectedSql = " JOIN \"Address_tbl\" \"ADR1\"\n" \
+                "  ON \"ADR1\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
+  QCOMPARE( JoinClauseItemListSqlTransform::getSql(list, db) , expectedSql );
+  list.append(JoinOperator::Join, ADR2, CLI);
+  expectedSql = " JOIN \"Address_tbl\" \"ADR1\"\n" \
+                "  ON \"ADR1\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"\n" \
+                " JOIN \"Address_tbl\" \"ADR2\"\n" \
+                "  ON \"ADR2\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
+  QCOMPARE( JoinClauseItemListSqlTransform::getSql(list, db) , expectedSql );
 }
 
 /*

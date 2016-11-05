@@ -18,28 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
+#include "JoinClauseItemListSqlTransform.h"
 #include "JoinClauseItemSqlTransform.h"
-#include "JoinClauseItem.h"
-#include "JoinConstraintSqlTransform.h"
+#include "JoinClauseItemList.h"
 #include <QSqlDatabase>
 #include <QStringBuilder>
-#include <QSqlDriver>
 
 namespace Mdt{ namespace Sql{
 
-QString JoinClauseItemSqlTransform::getSql(const JoinClauseItem & item, const QSqlDatabase & db)
+QString JoinClauseItemListSqlTransform::getSql(const JoinClauseItemList & list, const QSqlDatabase & db)
 {
   QString sql;
-  const QString tableAlias = item.tableAlias();
-  const auto * driver = db.driver();
-  Q_ASSERT(driver != nullptr);
+  Q_ASSERT(!list.isEmpty());
+  Q_ASSERT(db.isValid());
 
-  sql = QStringLiteral(" ") % joinOperatorString(item.joinOperator()) % QStringLiteral(" ")
-      % driver->escapeIdentifier(item.tableName(), QSqlDriver::TableName);
-  if(!tableAlias.isEmpty()){
-    sql += QStringLiteral(" ") % driver->escapeIdentifier(tableAlias, QSqlDriver::TableName);
+  sql = JoinClauseItemSqlTransform::getSql(list.at(0), db);
+  for(int i = 1; i < list.size(); ++i){
+    sql += QStringLiteral("\n") % JoinClauseItemSqlTransform::getSql(list.at(i), db);
   }
-  sql += QStringLiteral("\n  ") % JoinConstraintSqlTransform::getSql(item.constraint(), db);
 
   return sql;
 }
