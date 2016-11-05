@@ -12,10 +12,10 @@ diagrams
   classdiagram_ref 2982146 // overview
     120 110 100 4 0 0
   active  classdiagram_ref 2968834 // JoinConstraint
-    956 908 100 7 72 0
+    956 908 100 7 24 0
 end
 show_stereotypes
-selected classdiagram_ref 2580610 // TableName
+selected attribute_ref 3088642 // Database
 open
   
 package_ref 409858 // principes

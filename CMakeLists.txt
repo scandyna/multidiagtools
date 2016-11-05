@@ -50,7 +50,7 @@ include_directories("${CMAKE_BINARY_DIR}")
 # C++ standard
 set(CMAKE_CXX_STANDARD 14)
 
-# Compiler wrnings options
+# Compiler warnings options
 add_compile_options(-Wall -Wextra)
 # add_compile_options(-Werror -Wpedantic)
 
@@ -68,7 +68,7 @@ if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
   add_compile_options(-O3)
 endif()
 
-# On UNIX, we allways add debug symbols (will be stripped and put into separate  .dbg files)
+# On UNIX, we allways add debug symbols (will be stripped and put into separate .dbg files)
 if(UNIX)
   if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
     add_compile_options(-g)

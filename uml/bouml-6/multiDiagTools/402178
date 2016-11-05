@@ -1,6 +1,6 @@
 format 211
 "Sql" // Mdt::Sql
-  revision 40
+  revision 41
   modified_by 2 "philippe"
   // class settings
   
@@ -1639,8 +1639,8 @@ ${inlines}
 	  b parent class_ref 3350274 // static_visitor
       end
 
-      attribute 3088642 "Driver"
-	private type class_ref 2796546 // QSqlDriver
+      attribute 3088642 "Database"
+	private type class_ref 405122 // QSqlDatabase
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""

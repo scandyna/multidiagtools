@@ -62,7 +62,7 @@ namespace Mdt{ namespace Sql{ namespace Expression{
     /*! \brief Construct a table/field from a select table and field name
      */
     TableField(const SelectTable & sc, const FieldName & fn)
-     : mTableName(sc.tableName()),
+     : mTableName(sc.aliasOrTableName()),
        mFieldName(fn.toString())
     {
     }

@@ -21,6 +21,7 @@
 #include "JoinConstraintTest.h"
 #include "Mdt/Application.h"
 #include "Mdt/Sql/JoinConstraint.h"
+#include "Mdt/Sql/JoinConstraintSqlTransform.h"
 #include "Mdt/Sql/SelectTable.h"
 #include "Schema/Client_tbl.h"
 #include "Schema/Address_tbl.h"
@@ -74,12 +75,28 @@ void JoinConstraintTest::setOnExpressionTest()
   jc.setOnExpression(adrClientId == clientId);
   QVERIFY(!jc.isNull());
   QVERIFY(jc.constraintOperator() == JoinConstraintOperator::On);
-  
 }
 
 void JoinConstraintTest::onExpressionSqlTransformTest()
 {
+  using Sql::JoinConstraintSqlTransform;
+  using Sql::JoinConstraint;
+  using Sql::JoinConstraintField;
+  using Sql::SelectTable;
+  using Sql::TableName;
+  using Sql::FieldName;
 
+  SelectTable CLI(TableName("Client_tbl"), "CLI");
+  SelectTable ADR(TableName("Address_tbl"), "ADR");
+  JoinConstraintField clientId(CLI, FieldName("Id_PK"));
+  JoinConstraintField adrClientId(ADR, FieldName("Client_Id_FK"));
+  QString expectedSql;
+  auto db = mDatabase;
+  JoinConstraint jc;
+
+  jc.setOnExpression(adrClientId == clientId);
+  expectedSql = "ON \"ADR\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
+  QCOMPARE( JoinConstraintSqlTransform::getSql(jc, db) , expectedSql );
 }
 
 void JoinConstraintTest::setOnExpressionFromTablesTest()
@@ -104,12 +121,25 @@ void JoinConstraintTest::setOnExpressionFromTablesTest()
   jc.setOnExpression(CLI, ADR);
   QVERIFY(!jc.isNull());
   QVERIFY(jc.constraintOperator() == JoinConstraintOperator::On);
-
 }
 
 void JoinConstraintTest::onExpressionFromTablesSqlTransformTest()
 {
+  using Sql::JoinConstraintSqlTransform;
+  using Sql::JoinConstraint;
+  using Sql::SelectTable;
 
+  Schema::Client_tbl client;
+  Schema::Address_tbl address;
+  SelectTable CLI(client, "CLI");
+  SelectTable ADR(address, "ADR");
+  QString expectedSql;
+  auto db = mDatabase;
+  JoinConstraint jc;
+
+  jc.setOnExpression(ADR, CLI);
+  expectedSql = "ON \"ADR\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
+  QCOMPARE( JoinConstraintSqlTransform::getSql(jc, db) , expectedSql );
 }
 
 /*

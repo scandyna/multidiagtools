@@ -184,16 +184,21 @@ void ExpressionTest::fieldTest()
   QCOMPARE( boost::proto::_value()(A).tableName(), QString("A_tbl"));
   QCOMPARE( boost::proto::_value()(A).fieldName(), QString("a_field"));
   // Create from a select table and field name
-  SelectTable SB(TableName("B_tbl"), "SB");
+  SelectTable SB(TableName("B_tbl"), "B");
   TestTerminal B(SB, FieldName("b_field"));
-  QCOMPARE( boost::proto::_value()(B).tableName(), QString("B_tbl"));
+  QCOMPARE( boost::proto::_value()(B).tableName(), QString("B"));
   QCOMPARE( boost::proto::_value()(B).fieldName(), QString("b_field"));
   // Create from a select table and a field
   Schema::Client_tbl client;
   SelectTable CLI(client, "CLI");
   TestTerminal clientId(CLI, client.Id_PK());
-  QCOMPARE( boost::proto::_value()(clientId).tableName(), QString("Client_tbl"));
+  QCOMPARE( boost::proto::_value()(clientId).tableName(), QString("CLI"));
   QCOMPARE( boost::proto::_value()(clientId).fieldName(), QString("Id_PK"));
+  // Create from a select table without alias
+  SelectTable SD(TableName("D_tbl"));
+  TestTerminal D(SD, FieldName("d_field"));
+  QCOMPARE( boost::proto::_value()(D).tableName(), QString("D_tbl"));
+  QCOMPARE( boost::proto::_value()(D).fieldName(), QString("d_field"));
 }
 
 void ExpressionTest::terminalSqlTransformTest()

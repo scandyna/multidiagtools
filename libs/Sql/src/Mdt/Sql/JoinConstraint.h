@@ -58,6 +58,15 @@ namespace Mdt{ namespace Sql{
       return mOperator;
     }
 
+    /*! \internal Access internal variant
+     *
+     * This is used by transforms and unit tests
+     */
+    const auto & constraint() const
+    {
+      return mConstraint;
+    }
+
    private:
 
     JoinConstraintOperator mOperator;
