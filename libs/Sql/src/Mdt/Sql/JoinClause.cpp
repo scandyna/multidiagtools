@@ -61,6 +61,7 @@ void JoinClause::joinTableOn(JoinOperator op, const SelectTable & table)
 void JoinClause::joinTableOn(JoinOperator op, const SelectTable & table, const SelectTable & constraintOnTable)
 {
   Q_ASSERT(!table.isNull());
+  Q_ASSERT(!constraintOnTable.isNull());
   /*
    * If a precondition is not satisfied, generate a message.
    * This seems heavy, but can be very usefull for the user.

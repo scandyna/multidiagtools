@@ -239,9 +239,12 @@ void JoinClauseTest::joinClauseTest()
   QCOMPARE(clause.tableName(), QString("Client_tbl"));
   QCOMPARE(clause.tableAlias(), QString("CLI"));
   QCOMPARE(clause.itemList().size(), 0);
+  QVERIFY(!clause.hasJoinedTable());
+  QVERIFY(!clause.isNull());
   // Join table on expression
   clause.joinTableOn(JoinOperator::Join, ADR1, adrClientId1 == clientId);
   QCOMPARE(clause.itemList().size(), 1);
+  QVERIFY(clause.hasJoinedTable());
   // Join table automatically
   clause.joinTableOn(JoinOperator::Join, ADR2);
   QCOMPARE(clause.itemList().size(), 2);

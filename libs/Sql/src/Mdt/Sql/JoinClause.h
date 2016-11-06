@@ -68,6 +68,7 @@ namespace Mdt{ namespace Sql{
      *  and also generate the apropriate join constraint.
      *
      * \pre table must not be null
+     * \pre constraintOnTable must not be null
      * \pre table or constraintOnTable must have a relation defined by their foreign key
      */
     void joinTableOn(JoinOperator op, const SelectTable & table, const SelectTable & constraintOnTable);
@@ -84,6 +85,22 @@ namespace Mdt{ namespace Sql{
     QString tableAlias() const
     {
       return mFromTable.alias();
+    }
+
+    /*! \brief Check if this join clause is null
+     *
+     * Join clause is null if fromTable is null.
+     */
+    bool isNull() const
+    {
+      return mFromTable.isNull();
+    }
+
+    /*! \brief Check if this clause has at least 1 joined table
+     */
+    bool hasJoinedTable() const
+    {
+      return !mItemList.isEmpty();
     }
 
     /*! \internal Access list of join clause items

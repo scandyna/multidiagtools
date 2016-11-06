@@ -24,6 +24,8 @@
 #include "Mdt/Sql/FromClauseSqlTransform.h"
 #include "Mdt/Sql/SelectTable.h"
 #include "Mdt/Sql/TableName.h"
+#include "Schema/Client_tbl.h"
+#include "Schema/Address_tbl.h"
 #include <QString>
 
 namespace Sql = Mdt::Sql;
@@ -51,6 +53,7 @@ void FromClauseTest::setTableTest()
   using Sql::TableName;
   using Sql::SelectTable;
   using Sql::FromClause;
+  using Sql::JoinClause;
 
   SelectTable table(TableName("Client_tbl"), "CLI");
   /*
@@ -63,12 +66,51 @@ void FromClauseTest::setTableTest()
    */
   clause.setTable(table);
   QVERIFY(!clause.isNull());
-  QCOMPARE( boost::get<SelectTable>(clause.clause()).tableName() , QString("Client_tbl") );
+  QCOMPARE( boost::get<JoinClause>(clause.clause()).tableName() , QString("Client_tbl") );
 }
 
 void FromClauseTest::setJoinClauseTest()
 {
-  QFAIL("Not implemented");
+  using Sql::FromClause;
+  using Sql::JoinOperator;
+  using Sql::JoinClause;
+  using Sql::SelectTable;
+  using Sql::JoinConstraintField;
+
+  Schema::Client_tbl client;
+  Schema::Address_tbl address;
+  SelectTable CLI(client, "CLI");
+  SelectTable CLI3(client, "CLI3");
+  SelectTable ADR1(address, "ADR1");
+  SelectTable ADR2(address, "ADR2");
+  SelectTable ADR3(address, "ADR3");
+  JoinConstraintField clientId(CLI, client.Id_PK());
+  JoinConstraintField adrClientId1(ADR1, address.Client_Id_FK());
+  const JoinClause *joinClause = nullptr;
+
+  /*
+   * Initial state
+   */
+  FromClause fromClause;
+  QVERIFY(fromClause.isNull());
+  /*
+   * Set table
+   */
+  fromClause.setTable(CLI);
+  QVERIFY(!fromClause.isNull());
+  joinClause = boost::get<JoinClause>(&(fromClause.clause()));
+  QVERIFY(joinClause != nullptr);
+  QCOMPARE(joinClause->tableName(), QString("Client_tbl"));
+  QCOMPARE(joinClause->itemList().size(), 0);
+  /*
+   * Join tables
+   */
+  fromClause.joinTableOn(JoinOperator::Join, ADR1, adrClientId1 == clientId);
+  QCOMPARE(joinClause->itemList().size(), 1);
+  fromClause.joinTableOn(JoinOperator::Join, ADR2);
+  QCOMPARE(joinClause->itemList().size(), 2);
+  fromClause.joinTableOn(JoinOperator::Join, ADR3, CLI3);
+  QCOMPARE(joinClause->itemList().size(), 3);
 }
 
 void FromClauseTest::setSqlStringTest()
@@ -93,6 +135,7 @@ void FromClauseTest::switchTableSqlStringTest()
   using Sql::TableName;
   using Sql::SelectTable;
   using Sql::FromClause;
+  using Sql::JoinClause;
 
   SelectTable table(TableName("A_tbl"), "A");
   /*
@@ -105,7 +148,7 @@ void FromClauseTest::switchTableSqlStringTest()
    */
   clause.setTable(table);
   QVERIFY(!clause.isNull());
-  QCOMPARE( boost::get<SelectTable>(clause.clause()).tableName() , QString("A_tbl") );
+  QCOMPARE( boost::get<JoinClause>(clause.clause()).tableName() , QString("A_tbl") );
   /*
    * Set SQL string
    */
@@ -138,7 +181,53 @@ void FromClauseTest::tableSqlTransformTest()
 
 void FromClauseTest::joinClauseSqlTransformTest()
 {
-  QFAIL("Not implemented");
+  using Sql::FromClause;
+  using Sql::JoinOperator;
+  using Sql::SelectTable;
+  using Sql::JoinConstraintField;
+  using Sql::FromClauseSqlTransform;
+
+  const auto db = mDatabase;
+  QString expectedSql;
+  Schema::Client_tbl client;
+  Schema::Address_tbl address;
+  SelectTable CLI(client, "CLI");
+  SelectTable CLI3(client, "CLI3");
+  SelectTable ADR1(address, "ADR1");
+  SelectTable ADR2(address, "ADR2");
+  SelectTable ADR3(address, "ADR3");
+  JoinConstraintField clientId(CLI, client.Id_PK());
+  JoinConstraintField adrClientId1(ADR1, address.Client_Id_FK());
+  FromClause fromClause;
+
+  // Only from table
+  fromClause.setTable(CLI);
+  expectedSql = "FROM \"Client_tbl\" \"CLI\"";
+  QCOMPARE( FromClauseSqlTransform::getSql(fromClause, db) , expectedSql );
+  // Join table on expression
+  fromClause.joinTableOn(JoinOperator::Join, ADR1, adrClientId1 == clientId);
+  expectedSql = "FROM \"Client_tbl\" \"CLI\"\n"\
+                " JOIN \"Address_tbl\" \"ADR1\"\n"\
+                "  ON \"ADR1\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
+  QCOMPARE( FromClauseSqlTransform::getSql(fromClause, db) , expectedSql );
+  // Join table automatically
+  fromClause.joinTableOn(JoinOperator::Join, ADR2);
+  expectedSql = "FROM \"Client_tbl\" \"CLI\"\n"\
+                " JOIN \"Address_tbl\" \"ADR1\"\n"\
+                "  ON \"ADR1\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"\n"\
+                " JOIN \"Address_tbl\" \"ADR2\"\n"\
+                "  ON \"ADR2\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
+  QCOMPARE( FromClauseSqlTransform::getSql(fromClause, db) , expectedSql );
+  // Join table automatically
+  fromClause.joinTableOn(JoinOperator::Join, ADR3, CLI3);
+  expectedSql = "FROM \"Client_tbl\" \"CLI\"\n"\
+                " JOIN \"Address_tbl\" \"ADR1\"\n"\
+                "  ON \"ADR1\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"\n"\
+                " JOIN \"Address_tbl\" \"ADR2\"\n"\
+                "  ON \"ADR2\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"\n"\
+                " JOIN \"Address_tbl\" \"ADR3\"\n"\
+                "  ON \"ADR3\".\"Client_Id_FK\"=\"CLI3\".\"Id_PK\"";
+  QCOMPARE( FromClauseSqlTransform::getSql(fromClause, db) , expectedSql );
 }
 
 void FromClauseTest::sqlStringSqlTransformTest()
@@ -153,6 +242,36 @@ void FromClauseTest::sqlStringSqlTransformTest()
   clause.setSqlString("A_tbl, B_tbl");
   expectedSql = "FROM A_tbl, B_tbl";
   QCOMPARE( FromClauseSqlTransform::getSql(clause, db) , expectedSql );
+}
+
+void FromClauseTest::joinClauseBenchmark()
+{
+  using Sql::FromClause;
+  using Sql::JoinOperator;
+  using Sql::SelectTable;
+  using Sql::JoinConstraintField;
+  using Sql::FromClauseSqlTransform;
+
+  QBENCHMARK{
+    const auto db = mDatabase;
+    QString expectedSql;
+    Schema::Client_tbl client;
+    Schema::Address_tbl address;
+    SelectTable CLI(client, "CLI");
+    SelectTable CLI3(client, "CLI3");
+    SelectTable ADR1(address, "ADR1");
+    SelectTable ADR2(address, "ADR2");
+    SelectTable ADR3(address, "ADR3");
+    JoinConstraintField clientId(CLI, client.Id_PK());
+    JoinConstraintField adrClientId1(ADR1, address.Client_Id_FK());
+    FromClause fromClause;
+
+    fromClause.setTable(CLI);
+    fromClause.joinTableOn(JoinOperator::Join, ADR1, adrClientId1 == clientId);
+    fromClause.joinTableOn(JoinOperator::Join, ADR2);
+    fromClause.joinTableOn(JoinOperator::Join, ADR3, CLI3);
+    QVERIFY( !FromClauseSqlTransform::getSql(fromClause, db).isEmpty() );
+  }
 }
 
 /*

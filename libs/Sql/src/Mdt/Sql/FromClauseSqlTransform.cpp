@@ -20,8 +20,8 @@
  ****************************************************************************/
 #include "FromClauseSqlTransform.h"
 #include "FromClause.h"
+#include "JoinClauseSqlTransform.h"
 #include <QSqlDatabase>
-#include <QSqlDriver>
 #include <QStringBuilder>
 #include <boost/variant.hpp>
 
@@ -34,20 +34,21 @@ class FromClauseSqlTransformVisitor : boost::static_visitor<QString>
 {
  public:
 
-  FromClauseSqlTransformVisitor(const QSqlDriver * const driver)
-   : mDriver(driver)
+  FromClauseSqlTransformVisitor(const QSqlDatabase & db)
+   : mDatabase(db)
   {
-    Q_ASSERT(mDriver != nullptr);
   }
 
-  QString operator()(const SelectTable & table) const
+  QString operator()(const boost::blank &) const
+  {
+    return QString();
+  }
+
+  QString operator()(const JoinClause & joinClause) const
   {
     QString sql;
 
-    sql = QStringLiteral("FROM ") % escapeTableName(table.tableName());
-    if(!table.alias().isEmpty()){
-      sql += QStringLiteral(" ") % escapeTableName(table.alias());
-    }
+    sql = QStringLiteral("FROM ") % JoinClauseSqlTransform::getSql(joinClause, mDatabase);
 
     return sql;
   }
@@ -59,12 +60,7 @@ class FromClauseSqlTransformVisitor : boost::static_visitor<QString>
 
  private:
 
-  QString escapeTableName(const QString & table) const
-  {
-    return mDriver->escapeIdentifier(table, QSqlDriver::TableName);
-  }
-
-  const QSqlDriver * const mDriver;
+  const QSqlDatabase & mDatabase;
 };
 
 /*
@@ -76,7 +72,7 @@ QString FromClauseSqlTransform::getSql(const FromClause & clause, const QSqlData
   Q_ASSERT(!clause.isNull());
   Q_ASSERT(db.isValid());
 
-  return boost::apply_visitor( FromClauseSqlTransformVisitor(db.driver()) , clause.clause() );
+  return boost::apply_visitor( FromClauseSqlTransformVisitor(db) , clause.clause() );
 }
 
 }} // namespace Mdt{ namespace Sql{

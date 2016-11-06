@@ -43,6 +43,8 @@ class FromClauseTest : public QObject
   void joinClauseSqlTransformTest();
   void sqlStringSqlTransformTest();
 
+  void joinClauseBenchmark();
+
  private:
 
   QSqlDatabase mDatabase;

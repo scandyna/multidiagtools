@@ -22,6 +22,7 @@
 #define MDT_SQL_FROM_CLAUSE_H
 
 #include "SelectTable.h"
+#include "JoinClause.h"
 #include <QString>
 #include <boost/variant.hpp>
 
@@ -39,19 +40,59 @@ namespace Mdt{ namespace Sql{
    public:
 
     /*! \brief Set table
+     *
+     * If a raw SQL string was set,
+     *  it will be cleared.
+     *
+     * \pre No joined table must allready been set.
+     * \pre table must not be null.
      */
     void setTable(const SelectTable & table);
 
-    /*! \brief Set join clause
+    /*! \brief Join a table
+     *
+     * Join table with expr as constraint
+     *
+     * \pre table must not be null
+     * \pre expr must not be null
+     * \pre From table must allready been set (see setTable()).
      */
-//     void setJoinClause(const JoinClause & clause);
+    void joinTableOn(JoinOperator op, const SelectTable & table, const JoinConstraintExpression & expr);
+
+    /*! \brief Join a table automatically
+     *
+     * Will fetch table's foreign key list
+     *  and fromTable's foreign key list about relation
+     *  and also generate the apropriate join constraint.
+     *
+     * \pre table must not be null
+     * \pre table or fromTable must have a relation defined by their foreign key
+     * \pre From table must allready been set (see setTable()).
+     */
+    void joinTableOn(JoinOperator op, const SelectTable & table);
+
+    /*! \brief Join a table automatically
+     *
+     * Will fetch table's foreign key list
+     *  and constraintOnTable's foreign key list about relation
+     *  and also generate the apropriate join constraint.
+     *
+     * \pre table must not be null
+     * \pre constraintOnTable must not be null
+     * \pre table or constraintOnTable must have a relation defined by their foreign key
+     * \pre From table must allready been set (see setTable()).
+     */
+    void joinTableOn(JoinOperator op, const SelectTable & table, const SelectTable & constraintOnTable);
 
     /*! \brief Set raw SQL string
      *
      * For clauses that are not handeld,
      *  a raw FROM clause can be passed.
      *
-     * \param sql From clause that come after the FROM keyword
+     * Setting a raw SQL string will clear table
+     *  and joined tables allready set.
+     *
+     * \param sql From clause that comes after the FROM keyword
      *             (FROM keyword must not be part of sql string)
      */
     void setSqlString(const QString & sql);
@@ -64,14 +105,14 @@ namespace Mdt{ namespace Sql{
      *
      * This function is used by transforms and unit tests
      */
-    const boost::variant<SelectTable, QString> & clause() const
+    const auto & clause() const
     {
       return mClause;
     }
 
    private:
 
-    boost::variant<SelectTable, QString> mClause;
+    boost::variant<boost::blank, JoinClause, QString> mClause;
   };
 
 }} // namespace Mdt{ namespace Sql{
