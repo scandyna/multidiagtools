@@ -119,6 +119,15 @@ namespace Mdt{ namespace Sql{
      */
     void addAllFields(const SelectTable & table);
 
+    /*! \brief Set table
+     *
+     * This is the same than setFromTable()
+     */
+    void setTable(const SelectTable & table)
+    {
+      setFromTable(table);
+    }
+
     /*! \brief Set from table
      *
      * If a raw SQL string was set,

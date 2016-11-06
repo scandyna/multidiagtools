@@ -144,6 +144,9 @@ void SelectStatementTest::simpleSelectTest()
   stm.addField(CLI, SelectField("Id_PK", "Client_Id") );
   stm.addField(CLI, FieldName("Name"), "ClientName");
   stm.addField(CLI, FieldName("Remarks"));
+  stm.setTable(CLI);
+  QCOMPARE(stm.fieldList().size(), 3);
+  QCOMPARE(stm.fromClause().table().tableName(), QString("Client_tbl"));
 }
 
 void SelectStatementTest::simpleSelectWithSchemaTest()
@@ -158,6 +161,14 @@ void SelectStatementTest::simpleSelectWithSchemaTest()
 
   stm.addField(CLI, client.Id_PK(), "Client_Id");
   stm.addField(CLI, client.Name());
+  stm.setTable(CLI);
+  QCOMPARE(stm.fieldList().size(), 2);
+  QCOMPARE(stm.fromClause().table().tableName(), QString("Client_tbl"));
+}
+
+void SelectStatementTest::selectJoinTest()
+{
+  QFAIL("Not implemented");
 }
 
 

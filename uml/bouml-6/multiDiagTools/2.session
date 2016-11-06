@@ -9,11 +9,13 @@ diagrams
     120 110 100 8 0 0
   classdiagram_ref 2760962 // ItemViewController
     983 906 100 7 0 142
-  active  classdiagram_ref 2955266 // FromClause
-    956 908 100 21 0 544
+  classdiagram_ref 2948610 // overview
+    120 110 100 4 0 0
+  active  classdiagram_ref 2955138 // SelectStatement
+    956 908 100 18 0 0
 end
 show_stereotypes
-selected classrelation_ref 3795074 // <generalisation>
+selected classdiagram_ref 2955266 // FromClause
 open
   
   package_ref 409858 // principes
@@ -24,10 +26,7 @@ open
   package_ref 516226 // SqlItemModel
   
   package_ref 582274 // SqlItemEditor
-  operation_ref 4796418 // joinTableOn
-  operation_ref 4796546 // joinTableOn
-  operation_ref 4796674 // joinTableOn
-  class_ref 3396994 // FromClauseJoinTableOnExressionVisitor
+  classview_ref 1405954 // Select
   class_ref 3397122 // FromClauseJoinTableOnFromTableVisitor
   
   package_ref 430082 // Dsp

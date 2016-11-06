@@ -38,6 +38,8 @@ class SelectStatementTest : public QObject
 
   void simpleSelectTest();
   void simpleSelectWithSchemaTest();
+
+  void selectJoinTest();
 };
 
 

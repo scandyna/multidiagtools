@@ -1,6 +1,6 @@
 format 211
 "Sql" // Mdt::Sql
-  revision 48
+  revision 49
   modified_by 2 "philippe"
   // class settings
   
@@ -511,7 +511,7 @@ ${inlines}
 
     classdiagram 2955138 "SelectStatement"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 3336066 "SelectStatement"
@@ -631,29 +631,11 @@ ${inlines}
       operation 4718722 "joinTable"
 	public explicit_return_type "void"
 	nparams 2
-	  param in name "A" type class_ref 3233154 // SelectTable
-	  param in name "B" type class_ref 3233154 // SelectTable
+	  param in name "table" type class_ref 3233154 // SelectTable
+	  param in name "onConstraintTable" type class_ref 3233154 // SelectTable
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4718850 "joinTable"
-	public explicit_return_type "void"
-	nparams 3
-	  param in name "A" type class_ref 3233154 // SelectTable
-	  param in name "B" type class_ref 3233154 // SelectTable
-	  param in name "onConstraint" type class_ref 3239810 // JoinConstraintExpression
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -695,6 +677,36 @@ ${inlines}
 	
 	
       end
+
+      classrelation 3801730 // <directional composition>
+	relation 3782530 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3801730 // <directional composition>
+	  b parent class_ref 2954114 // SelectOperator
+      end
+    end
+
+    classdiagram 3001730 "SelectStatementSqlTransform"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3403778 "SelectStatementSqlTransform"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 
@@ -716,7 +728,7 @@ ${inlines}
      end
     classdiagram 2955266 "FromClause"
       classdiagramsettings member_max_width 0 end
-      size B-Landscape
+      size C-Landscape
     end
 
     class 3336194 "FromClause"
@@ -1220,6 +1232,58 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 3795202 // <generalisation>
+	  b parent class_ref 3350274 // static_visitor
+      end
+    end
+
+    class 3403906 "FromClauseGetTableVisitor"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3350274 // static_visitor
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3801858 // <generalisation>
+	relation 3782658 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3801858 // <generalisation>
+	  b parent class_ref 3350274 // static_visitor
+      end
+    end
+
+    class 3404034 "FromClauseGetJoinClauseItemListVisitor"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3350274 // static_visitor
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3801986 // <generalisation>
+	relation 3782786 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3801986 // <generalisation>
 	  b parent class_ref 3350274 // static_visitor
       end
     end
