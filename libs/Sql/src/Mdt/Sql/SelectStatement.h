@@ -23,6 +23,7 @@
 
 #include "SelectField.h"
 #include "SelectFieldList.h"
+#include "FromClause.h"
 #include "SelectTable.h"
 #include "JoinConstraintField.h"
 #include "JoinConstraintExpression.h"
@@ -66,7 +67,7 @@ namespace Mdt{ namespace Sql{
    * stm.addField(CLI, FieldName("Name"));
    * stm.addField(ADR, FieldName("Id_PK"), "Address_Id");
    * stm.addField(ADR, FieldName("Street"));
-   * stm.setTable(CLI);
+   * stm.setFromTable(CLI);
    * stm.joinTable(ADR, adrClientId == clientId);
    * \endcode
    *
@@ -98,7 +99,7 @@ namespace Mdt{ namespace Sql{
    * stm.addField(CLI, client.Name());
    * stm.addField(ADR, address.Id_PK(), "Address_Id");
    * stm.addField(ADR, address.Stree());
-   * stm.setTable(CLI);
+   * stm.setFromTable(CLI);
    * stm.joinTable(ADR);
    * \endcode
    */
@@ -114,25 +115,19 @@ namespace Mdt{ namespace Sql{
      */
     void addField(const SelectTable & table, const FieldName & field , const QString & fieldAlias = QString());
 
-    /*! \brief Add a field to the statement
-     */
-    void addField(const SelectTable & table, const Schema::Field & field , const QString & fieldAlias = QString());
-
-    /*! \brief Add a field to the statement
-     */
-    void addField(const SelectTable & table, const Schema::AutoIncrementPrimaryKey & field , const QString & fieldAlias = QString());
-
-    /*! \brief Add a field to the statement
-     */
-    void addField(const SelectTable & table, const Schema::SingleFieldPrimaryKey & field , const QString & fieldAlias = QString());
-
     /*! \brief Add all fields for given table
      */
     void addAllFields(const SelectTable & table);
 
-    /*! \brief Set table
+    /*! \brief Set from table
+     *
+     * If a raw SQL string was set,
+     *  it will be cleared.
+     *
+     * \pre No joined table must allready been set.
+     * \pre table must not be null.
      */
-    void setTable(const SelectTable & table);
+    void setFromTable(const SelectTable & table);
 
     /*! \brief Get list of fields
      */
@@ -141,9 +136,19 @@ namespace Mdt{ namespace Sql{
       return mFieldList;
     }
 
+    /*! \internal Access mFromClause
+     *
+     * Used by transforms and unit tests
+     */
+    const FromClause & fromClause() const
+    {
+      return mFromClause;
+    }
+
    private:
 
     SelectFieldList mFieldList;
+    FromClause mFromClause;
   };
 
 }} // namespace Mdt{ namespace Sql{

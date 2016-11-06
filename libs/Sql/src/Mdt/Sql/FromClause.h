@@ -110,6 +110,22 @@ namespace Mdt{ namespace Sql{
       return mClause;
     }
 
+    /*! \internal Get FROM table
+     *
+     * Used for unit tests.
+     */
+    SelectTable table() const;
+
+    /*! \internal Get list of join clause item
+     *
+     * Used for unit tests.
+     */
+    JoinClauseItemList joinClauseItemList() const;
+
+    /*! \internal Get raw SQL string
+     */
+    QString sqlString() const;
+
    private:
 
     boost::variant<boost::blank, JoinClause, QString> mClause;

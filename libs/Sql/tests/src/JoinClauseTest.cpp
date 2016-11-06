@@ -236,6 +236,7 @@ void JoinClauseTest::joinClauseTest()
 
   // Only from table
   JoinClause clause(CLI);
+  QCOMPARE(clause.fromTable().tableName(), QString("Client_tbl"));
   QCOMPARE(clause.tableName(), QString("Client_tbl"));
   QCOMPARE(clause.tableAlias(), QString("CLI"));
   QCOMPARE(clause.itemList().size(), 0);

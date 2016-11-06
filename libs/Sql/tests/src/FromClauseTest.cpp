@@ -59,21 +59,22 @@ void FromClauseTest::setTableTest()
   /*
    * Initial state
    */
-  FromClause clause;
-  QVERIFY(clause.isNull());
+  FromClause fromClause;
+  QVERIFY(fromClause.isNull());
+  QVERIFY(fromClause.table().isNull());
   /*
    * Set table
    */
-  clause.setTable(table);
-  QVERIFY(!clause.isNull());
-  QCOMPARE( boost::get<JoinClause>(clause.clause()).tableName() , QString("Client_tbl") );
+  fromClause.setTable(table);
+  QVERIFY(!fromClause.isNull());
+  QVERIFY(!fromClause.table().isNull());
+  QCOMPARE(fromClause.table().tableName(), QString("Client_tbl"));
 }
 
 void FromClauseTest::setJoinClauseTest()
 {
   using Sql::FromClause;
   using Sql::JoinOperator;
-  using Sql::JoinClause;
   using Sql::SelectTable;
   using Sql::JoinConstraintField;
 
@@ -86,31 +87,29 @@ void FromClauseTest::setJoinClauseTest()
   SelectTable ADR3(address, "ADR3");
   JoinConstraintField clientId(CLI, client.Id_PK());
   JoinConstraintField adrClientId1(ADR1, address.Client_Id_FK());
-  const JoinClause *joinClause = nullptr;
 
   /*
    * Initial state
    */
   FromClause fromClause;
   QVERIFY(fromClause.isNull());
+  QCOMPARE(fromClause.joinClauseItemList().size(), 0);
   /*
    * Set table
    */
   fromClause.setTable(CLI);
   QVERIFY(!fromClause.isNull());
-  joinClause = boost::get<JoinClause>(&(fromClause.clause()));
-  QVERIFY(joinClause != nullptr);
-  QCOMPARE(joinClause->tableName(), QString("Client_tbl"));
-  QCOMPARE(joinClause->itemList().size(), 0);
+  QCOMPARE(fromClause.table().tableName() , QString("Client_tbl"));
+  QCOMPARE(fromClause.joinClauseItemList().size(), 0);
   /*
    * Join tables
    */
   fromClause.joinTableOn(JoinOperator::Join, ADR1, adrClientId1 == clientId);
-  QCOMPARE(joinClause->itemList().size(), 1);
+  QCOMPARE(fromClause.joinClauseItemList().size(), 1);
   fromClause.joinTableOn(JoinOperator::Join, ADR2);
-  QCOMPARE(joinClause->itemList().size(), 2);
+  QCOMPARE(fromClause.joinClauseItemList().size(), 2);
   fromClause.joinTableOn(JoinOperator::Join, ADR3, CLI3);
-  QCOMPARE(joinClause->itemList().size(), 3);
+  QCOMPARE(fromClause.joinClauseItemList().size(), 3);
 }
 
 void FromClauseTest::setSqlStringTest()
@@ -120,14 +119,14 @@ void FromClauseTest::setSqlStringTest()
   /*
    * Initial state
    */
-  FromClause clause;
-  QVERIFY(clause.isNull());
+  FromClause fromClause;
+  QVERIFY(fromClause.isNull());
   /*
    * Set SQL string
    */
-  clause.setSqlString("Client_tbl CLI, Address_tbl ADR");
-  QVERIFY(!clause.isNull());
-  QCOMPARE( boost::get<QString>(clause.clause()) , QString("Client_tbl CLI, Address_tbl ADR") );
+  fromClause.setSqlString("Client_tbl CLI, Address_tbl ADR");
+  QVERIFY(!fromClause.isNull());
+  QCOMPARE(fromClause.sqlString(), QString("Client_tbl CLI, Address_tbl ADR"));
 }
 
 void FromClauseTest::switchTableSqlStringTest()
@@ -135,26 +134,25 @@ void FromClauseTest::switchTableSqlStringTest()
   using Sql::TableName;
   using Sql::SelectTable;
   using Sql::FromClause;
-  using Sql::JoinClause;
 
   SelectTable table(TableName("A_tbl"), "A");
   /*
    * Initial state
    */
-  FromClause clause;
-  QVERIFY(clause.isNull());
+  FromClause fromClause;
+  QVERIFY(fromClause.isNull());
   /*
    * Set table
    */
-  clause.setTable(table);
-  QVERIFY(!clause.isNull());
-  QCOMPARE( boost::get<JoinClause>(clause.clause()).tableName() , QString("A_tbl") );
+  fromClause.setTable(table);
+  QVERIFY(!fromClause.isNull());
+  QCOMPARE(fromClause.table().tableName(), QString("A_tbl"));
   /*
    * Set SQL string
    */
-  clause.setSqlString("A_tbl A, B_tbl B");
-  QVERIFY(!clause.isNull());
-  QCOMPARE( boost::get<QString>(clause.clause()) , QString("A_tbl A, B_tbl B") );
+  fromClause.setSqlString("A_tbl A, B_tbl B");
+  QVERIFY(!fromClause.isNull());
+  QCOMPARE(fromClause.sqlString(), QString("A_tbl A, B_tbl B"));
 }
 
 void FromClauseTest::tableSqlTransformTest()

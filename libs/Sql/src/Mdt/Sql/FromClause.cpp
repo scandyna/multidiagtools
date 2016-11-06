@@ -46,6 +46,75 @@ class FromClauseIsNullVisitor : boost::static_visitor<bool>
 };
 
 /*
+ * FromClauseGetTableVisitor
+ */
+class FromClauseGetTableVisitor : boost::static_visitor<SelectTable>
+{
+ public:
+
+  SelectTable operator()(const boost::blank &) const
+  {
+    return SelectTable();
+  }
+
+  SelectTable operator()(const JoinClause & joinClause) const
+  {
+    return joinClause.fromTable();
+  }
+
+  SelectTable operator()(const QString &) const
+  {
+    return SelectTable();
+  }
+};
+
+/*
+ * FromClauseGetJoinClauseItemListVisitor
+ */
+class FromClauseGetJoinClauseItemListVisitor : boost::static_visitor<JoinClauseItemList>
+{
+ public:
+
+  JoinClauseItemList operator()(const boost::blank &) const
+  {
+    return JoinClauseItemList();
+  }
+
+  JoinClauseItemList operator()(const JoinClause & joinClause) const
+  {
+    return joinClause.itemList();
+  }
+
+  JoinClauseItemList operator()(const QString &) const
+  {
+    return JoinClauseItemList();
+  }
+};
+
+/*
+ * FromClauseGetSqlStringListVisitor
+ */
+class FromClauseGetSqlStringListVisitor : boost::static_visitor<QString>
+{
+ public:
+
+  QString operator()(const boost::blank &) const
+  {
+    return QString();
+  }
+
+  QString operator()(const JoinClause &) const
+  {
+    return QString();
+  }
+
+  QString operator()(const QString & sql) const
+  {
+    return sql;
+  }
+};
+
+/*
  * FromClauseJoinTableOnExressionVisitor
  */
 class FromClauseJoinTableOnExressionVisitor : boost::static_visitor<>
@@ -201,6 +270,21 @@ void FromClause::setSqlString(const QString & sql)
 bool FromClause::isNull() const
 {
   return boost::apply_visitor( FromClauseIsNullVisitor() , mClause );
+}
+
+SelectTable FromClause::table() const
+{
+  return boost::apply_visitor( FromClauseGetTableVisitor() , mClause );
+}
+
+JoinClauseItemList FromClause::joinClauseItemList() const
+{
+  return boost::apply_visitor( FromClauseGetJoinClauseItemListVisitor() , mClause );
+}
+
+QString FromClause::sqlString() const
+{
+  return boost::apply_visitor( FromClauseGetSqlStringListVisitor() , mClause );
 }
 
 }} // namespace Mdt{ namespace Sql{

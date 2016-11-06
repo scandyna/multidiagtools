@@ -124,7 +124,7 @@ void SelectStatementTest::addAllFieldsTest()
   /*
    * Check
    */
-  auto list =stm.fieldList();
+  auto list = stm.fieldList();
   QCOMPARE(list.size(), 1);
   QCOMPARE(list.tableNameAt(0), QString("CLI"));
   QCOMPARE(list.selectFieldAt(0).fieldName(), QString("*"));

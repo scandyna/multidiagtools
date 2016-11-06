@@ -35,29 +35,16 @@ void SelectStatement::addField(const SelectTable & table, const FieldName & fiel
   addField( table, SelectField(field.toString(), fieldAlias) );
 }
 
-void SelectStatement::addField(const SelectTable & table, const Schema::Field & field, const QString & fieldAlias)
-{
-  addField( table, SelectField(field.name(), fieldAlias) );
-}
-
-void SelectStatement::addField(const SelectTable & table, const Schema::AutoIncrementPrimaryKey & field, const QString & fieldAlias)
-{
-  addField( table, SelectField(field.fieldName(), fieldAlias) );
-}
-
-void SelectStatement::addField(const SelectTable & table, const Schema::SingleFieldPrimaryKey & field, const QString & fieldAlias)
-{
-  addField( table, SelectField(field.fieldName(), fieldAlias) );
-}
-
 void SelectStatement::addAllFields(const SelectTable & table)
 {
   addField( table, SelectField("*") );
 }
 
-void SelectStatement::setTable(const SelectTable & table)
+void SelectStatement::setFromTable(const SelectTable & table)
 {
+  Q_ASSERT(!table.isNull());
 
+  
 }
 
 }} // namespace Mdt{ namespace Sql{

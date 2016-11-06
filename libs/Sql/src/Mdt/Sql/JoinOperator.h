@@ -28,7 +28,7 @@ namespace Mdt{ namespace Sql{
   enum class JoinOperator
   {
     Join,     /*!< JOIN operator */
-    LeftJoin  /*!< LEFT JOIN */
+    LeftJoin  /*!< LEFT JOIN operator */
   };
 
 }} // namespace Mdt{ namespace Sql{

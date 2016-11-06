@@ -103,6 +103,15 @@ namespace Mdt{ namespace Sql{
       return !mItemList.isEmpty();
     }
 
+    /*! \internal Access from table
+     *
+     * Used for unit tests.
+     */
+    const SelectTable & fromTable() const
+    {
+      return mFromTable;
+    }
+
     /*! \internal Access list of join clause items
      *
      * Used by transforms and unit tests.

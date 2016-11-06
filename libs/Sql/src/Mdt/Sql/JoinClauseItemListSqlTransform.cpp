@@ -40,5 +40,4 @@ QString JoinClauseItemListSqlTransform::getSql(const JoinClauseItemList & list, 
   return sql;
 }
 
-
 }} // namespace Mdt{ namespace Sql{
