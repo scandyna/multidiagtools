@@ -24,6 +24,8 @@
 #include <QSqlDatabase>
 #include <QSqlDriver>
 #include <QStringBuilder>
+#include <QLatin1String>
+#include <QLatin1Char>
 
 namespace Mdt{ namespace Sql{
 
@@ -36,7 +38,7 @@ QString JoinConstraintFieldPairListSqlTransform::getSql(const JoinConstraintFiel
 
   sql = getFieldPairSql(list.leftTable(), list.rightTable(), list.at(0), db.driver());
   for(int i = 1; i < list.size(); ++i){
-    sql += QStringLiteral(" AND ") % getFieldPairSql(list.leftTable(), list.rightTable(), list.at(i), db.driver());
+    sql += QLatin1String(" AND ") % getFieldPairSql(list.leftTable(), list.rightTable(), list.at(i), db.driver());
   }
 
   return sql;
@@ -46,17 +48,13 @@ QString JoinConstraintFieldPairListSqlTransform::getFieldPairSql(const QString &
 {
   Q_ASSERT(driver != nullptr);
 
-  QString sql;
-
-  sql = driver->escapeIdentifier(leftTable, QSqlDriver::TableName)
-      % QStringLiteral(".")
+  return driver->escapeIdentifier(leftTable, QSqlDriver::TableName)
+      % QLatin1Char('.')
       % driver->escapeIdentifier(pair.leftField(), QSqlDriver::FieldName)
-      % QStringLiteral("=")
+      % QLatin1Char('=')
       % driver->escapeIdentifier(rightTable, QSqlDriver::TableName)
-      % QStringLiteral(".")
+      % QLatin1Char('.')
       % driver->escapeIdentifier(pair.rightField(), QSqlDriver::FieldName);
-
-  return sql;
 }
 
 }} // namespace Mdt{ namespace Sql{

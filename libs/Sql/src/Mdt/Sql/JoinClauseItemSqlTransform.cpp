@@ -24,6 +24,8 @@
 #include <QSqlDatabase>
 #include <QStringBuilder>
 #include <QSqlDriver>
+#include <QLatin1Char>
+#include <QLatin1String>
 
 namespace Mdt{ namespace Sql{
 
@@ -34,12 +36,12 @@ QString JoinClauseItemSqlTransform::getSql(const JoinClauseItem & item, const QS
   const auto * driver = db.driver();
   Q_ASSERT(driver != nullptr);
 
-  sql = QStringLiteral(" ") % joinOperatorString(item.joinOperator()) % QStringLiteral(" ")
+  sql = QLatin1Char(' ') % joinOperatorString(item.joinOperator()) % QLatin1Char(' ')
       % driver->escapeIdentifier(item.tableName(), QSqlDriver::TableName);
   if(!tableAlias.isEmpty()){
-    sql += QStringLiteral(" ") % driver->escapeIdentifier(tableAlias, QSqlDriver::TableName);
+    sql += QLatin1Char(' ') % driver->escapeIdentifier(tableAlias, QSqlDriver::TableName);
   }
-  sql += QStringLiteral("\n  ") % JoinConstraintSqlTransform::getSql(item.constraint(), db);
+  sql += QLatin1String("\n  ") % JoinConstraintSqlTransform::getSql(item.constraint(), db);
 
   return sql;
 }

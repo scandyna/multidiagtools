@@ -21,6 +21,8 @@
 #ifndef MDT_SQL_SCHEMA_FIELD_TYPE_H
 #define MDT_SQL_SCHEMA_FIELD_TYPE_H
 
+#include <QtGlobal>
+
 namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief Field type
@@ -39,5 +41,9 @@ namespace Mdt{ namespace Sql{ namespace Schema{
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{
+
+QT_BEGIN_NAMESPACE
+Q_DECLARE_TYPEINFO(Mdt::Sql::Schema::FieldType, Q_PRIMITIVE_TYPE);
+QT_END_NAMESPACE
 
 #endif // #ifndef MDT_SQL_SCHEMA_FIELD_TYPE_H

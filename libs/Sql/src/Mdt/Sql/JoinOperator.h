@@ -21,6 +21,8 @@
 #ifndef MDT_SQL_JOIN_OPERATOR_H
 #define MDT_SQL_JOIN_OPERATOR_H
 
+#include <QtGlobal>
+
 namespace Mdt{ namespace Sql{
 
   /*! \brief JOIN operator
@@ -32,5 +34,9 @@ namespace Mdt{ namespace Sql{
   };
 
 }} // namespace Mdt{ namespace Sql{
+
+QT_BEGIN_NAMESPACE
+Q_DECLARE_TYPEINFO(Mdt::Sql::JoinOperator, Q_PRIMITIVE_TYPE);
+QT_END_NAMESPACE
 
 #endif // #ifndef MDT_SQL_JOIN_OPERATOR_H

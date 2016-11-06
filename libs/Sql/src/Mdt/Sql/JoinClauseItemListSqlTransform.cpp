@@ -23,6 +23,7 @@
 #include "JoinClauseItemList.h"
 #include <QSqlDatabase>
 #include <QStringBuilder>
+#include <QLatin1Char>
 
 namespace Mdt{ namespace Sql{
 
@@ -34,7 +35,7 @@ QString JoinClauseItemListSqlTransform::getSql(const JoinClauseItemList & list, 
 
   sql = JoinClauseItemSqlTransform::getSql(list.at(0), db);
   for(int i = 1; i < list.size(); ++i){
-    sql += QStringLiteral("\n") % JoinClauseItemSqlTransform::getSql(list.at(i), db);
+    sql += QLatin1Char('\n') % JoinClauseItemSqlTransform::getSql(list.at(i), db);
   }
 
   return sql;

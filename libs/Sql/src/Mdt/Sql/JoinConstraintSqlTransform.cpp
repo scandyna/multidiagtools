@@ -25,6 +25,7 @@
 #include "JoinConstraintFieldPairListSqlTransform.h"
 #include <QSqlDatabase>
 #include <QStringBuilder>
+#include <QLatin1String>
 #include <boost/variant.hpp>
 
 namespace Mdt{ namespace Sql{
@@ -43,12 +44,13 @@ class JoinConstraintSqlTransformVisitor : boost::static_visitor<QString>
 
   QString operator()(const JoinConstraintExpression & expr) const
   {
-    return QStringLiteral("ON ") % expr.toSql(mDatabase);
+    return QLatin1String("ON ") % expr.toSql(mDatabase);
+
   }
 
   QString operator()(const JoinConstraintFieldPairList & fpl) const
   {
-    return QStringLiteral("ON ") % JoinConstraintFieldPairListSqlTransform::getSql(fpl, mDatabase);
+    return QLatin1String("ON ") % JoinConstraintFieldPairListSqlTransform::getSql(fpl, mDatabase);
   }
 
  private:

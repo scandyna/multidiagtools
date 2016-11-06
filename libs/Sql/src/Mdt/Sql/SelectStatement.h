@@ -47,7 +47,6 @@ namespace Mdt{ namespace Sql{
    * namespace Sql = Mdt::Sql;
    *
    * using Sql::SelectStatement;
-   * using Sql::SelectField;
    * using Sql::SelectTable;
    * using Sql::FieldName;
    * using Sql::TableName;
@@ -72,7 +71,7 @@ namespace Mdt{ namespace Sql{
    * \endcode
    *
    * Above example does not use any predefined entities.
-   *  If a schema allready exists (see Mdt::Sql::Shema namespace for details),
+   *  If a schema allready exists (see Mdt::Sql::Schema namespace for details),
    *  it is better to reuse informations it allready contains:
    * \code
    * #include "Mdt/Sql/SelectStatement.h"
@@ -82,7 +81,6 @@ namespace Mdt{ namespace Sql{
    * namespace Sql = Mdt::Sql;
    *
    * using Sql::SelectStatement;
-   * using Sql::SelectField;
    * using Sql::SelectTable;
    *
    * // Create instances of defined entities
