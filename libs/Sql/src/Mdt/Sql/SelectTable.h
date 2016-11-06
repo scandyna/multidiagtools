@@ -117,6 +117,13 @@ namespace Mdt{ namespace Sql{
       return mForeignKeyList.foreignKeyReferencing(table.mTableName);
     }
 
+    /*! \brief Check if at least 1 foreign is defined
+     */
+    bool hasForeignKey() const
+    {
+      return !mForeignKeyList.isEmpty();
+    }
+
     /*! \brief Check if this view table is null
      *
      * SelectTable is null if table name is not set

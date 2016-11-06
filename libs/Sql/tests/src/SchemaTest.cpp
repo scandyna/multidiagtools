@@ -1070,11 +1070,13 @@ void SchemaTest::foreignKeyListTest()
    */
   ForeignKeyList list;
   QCOMPARE(list.size(), 0);
+  QVERIFY(list.isEmpty());
   /*
    * Add 1 element
    */
   list.append(fk_Connector_Id_FK);
   QCOMPARE(list.size(), 1);
+  QVERIFY(!list.isEmpty());
   QCOMPARE(list.at(0).parentTableName(), QString("Connector_tbl"));
   QCOMPARE(list.at(0).childTableName(), QString("Contact_tbl"));
   for(const auto & fk : list){

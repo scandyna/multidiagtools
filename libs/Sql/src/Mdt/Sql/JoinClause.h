@@ -21,19 +21,84 @@
 #ifndef MDT_SQL_JOIN_CLAUSE_H
 #define MDT_SQL_JOIN_CLAUSE_H
 
+#include "JoinOperator.h"
+#include "SelectTable.h"
+#include "JoinClauseItemList.h"
+
 namespace Mdt{ namespace Sql{
 
-  /*! \brief
+  class JoinConstraintExpression;
+
+  /*! \brief Join clause of a SelectStatement
    */
   class JoinClause
   {
    public:
 
-    
+    /*! \brief Construct a join clause
+     *
+     * \pre fromTable must not be null
+     */
+    JoinClause(const SelectTable & fromTable);
+
+    /*! \brief Join a table
+     *
+     * Join table with expr as constraint
+     *
+     * \pre table must not be null
+     * \pre expr must not be null
+     */
+    void joinTableOn(JoinOperator op, const SelectTable & table, const JoinConstraintExpression & expr);
+
+    /*! \brief Join a table automatically
+     *
+     * Will fetch table's foreign key list
+     *  and fromTable's foreign key list about relation
+     *  and also generate the apropriate join constraint.
+     *
+     * \pre table must not be null
+     * \pre table or fromTable must have a relation defined by their foreign key
+     */
+    void joinTableOn(JoinOperator op, const SelectTable & table);
+
+    /*! \brief Join a table automatically
+     *
+     * Will fetch table's foreign key list
+     *  and constraintOnTable's foreign key list about relation
+     *  and also generate the apropriate join constraint.
+     *
+     * \pre table must not be null
+     * \pre table or constraintOnTable must have a relation defined by their foreign key
+     */
+    void joinTableOn(JoinOperator op, const SelectTable & table, const SelectTable & constraintOnTable);
+
+    /*! \brief Get from table name
+     */
+    QString tableName() const
+    {
+      return mFromTable.tableName();
+    }
+
+    /*! \brief Get from table alias
+     */
+    QString tableAlias() const
+    {
+      return mFromTable.alias();
+    }
+
+    /*! \internal Access list of join clause items
+     *
+     * Used by transforms and unit tests.
+     */
+    const JoinClauseItemList & itemList() const
+    {
+      return mItemList;
+    }
 
    private:
 
-    
+    SelectTable mFromTable;
+    JoinClauseItemList mItemList;
   };
 
 }} // namespace Mdt{ namespace Sql{

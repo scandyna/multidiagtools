@@ -239,10 +239,11 @@ void SimpleTypesTest::selectTableForeignKeyTest()
   // Setup parent select table and check
   SelectTable P(Parent, "P");
   QCOMPARE(P.aliasOrTableName(), QString("P"));
-
+  QVERIFY(!P.hasForeignKey());
   // Setup child select table and check
   SelectTable C(Child, "C");
   QCOMPARE(C.aliasOrTableName(), QString("C"));
+  QVERIFY(C.hasForeignKey());
   fk = C.foreignKeyReferencing(P);
   QVERIFY(!fk.isNull());
   QCOMPARE(fk.parentTableName(), P.tableName());

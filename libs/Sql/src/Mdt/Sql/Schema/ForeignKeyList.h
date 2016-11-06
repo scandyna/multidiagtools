@@ -40,14 +40,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void append(const ForeignKey & fk)
     {
-      pvForeignKeyList.append(fk);
+      mForeignKeyList.append(fk);
     }
 
     /*! \brief Update child table name for each foreign key in this list
      */
     void updateChildTableName(const QString & tableName)
     {
-      for(auto & fk : pvForeignKeyList){
+      for(auto & fk : mForeignKeyList){
         fk.setChildTableName(tableName);
       }
     }
@@ -56,7 +56,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     int size() const
     {
-      return pvForeignKeyList.size();
+      return mForeignKeyList.size();
+    }
+
+    /*! \brief Check if list is empty
+     */
+    bool isEmpty() const
+    {
+      return mForeignKeyList.isEmpty();
     }
 
     /*! \brief Get foreign key at index
@@ -68,7 +75,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       Q_ASSERT(index >= 0);
       Q_ASSERT(index < size());
 
-      return pvForeignKeyList.at(index);
+      return mForeignKeyList.at(index);
     }
 
     /*! \brief Get foreign key that references table designed by tableName
@@ -76,7 +83,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     ForeignKey foreignKeyReferencing(const QString & tableName) const
     {
       ForeignKey fk;
-      for(const auto & _fk : pvForeignKeyList){
+      for(const auto & _fk : mForeignKeyList){
         if( QString::compare(_fk.parentTableName(), tableName, Qt::CaseInsensitive) == 0){
           fk = _fk;
           break;
@@ -89,26 +96,26 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     const_iterator begin() const
     {
-      return pvForeignKeyList.cbegin();
+      return mForeignKeyList.cbegin();
     }
 
     /*! \brief Get end const iterator
      */
     const_iterator end() const
     {
-      return pvForeignKeyList.cend();
+      return mForeignKeyList.cend();
     }
 
     /*! \brief Clear
      */
     void clear()
     {
-      pvForeignKeyList.clear();
+      mForeignKeyList.clear();
     }
 
    private:
 
-    QVector<ForeignKey> pvForeignKeyList;
+    QVector<ForeignKey> mForeignKeyList;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

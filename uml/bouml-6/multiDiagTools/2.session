@@ -12,10 +12,10 @@ diagrams
   classdiagram_ref 2982146 // overview
     120 110 100 4 0 0
   active  classdiagram_ref 2955394 // JoinClause
-    956 908 100 23 24 202
+    956 908 100 23 0 0
 end
 show_stereotypes
-selected operation_ref 4776706 // getSql
+selected classdiagram_ref 2955266 // FromClause
 open
   
   package_ref 409858 // principes
@@ -31,8 +31,8 @@ open
   classdiagram_ref 2988674 // JoinConstraintUsing
   class_ref 3350018 // JoinConstraintUsing
   class_ref 3349762 // JoinConstraintOperator
-  class_ref 3377410 // JoinClauseItemSqlTransform
-  class_ref 3383938 // JoinClauseItemListSqlTransform
+  operation_ref 4783234 // JoinClause
+  operation_ref 4740354 // joinTableOn
   classview_ref 1419266 // SimpleTypes
   
   package_ref 430082 // Dsp

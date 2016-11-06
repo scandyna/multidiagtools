@@ -1,6 +1,6 @@
 format 211
 "Sql" // Mdt::Sql
-  revision 44
+  revision 46
   modified_by 2 "philippe"
   // class settings
   
@@ -2134,30 +2134,13 @@ ${inlines}
 	MysqlColumn
       end
 
-      operation 4740098 "setTable"
-	public explicit_return_type "void"
+      operation 4783234 "JoinClause"
+	public explicit_return_type ""
 	nparams 1
-	  param in name "table" type class_ref 3233154 // SelectTable
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+	  param in name "fromTable" type class_ref 3233154 // SelectTable
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4740226 "joinTableOn"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "op" type class_ref 2967810 // JoinOperator
-	  param in name "table" type class_ref 3233154 // SelectTable
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
 {
   ${body}}
 "
@@ -2176,6 +2159,23 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4740226 "joinTableOn"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "op" type class_ref 2967810 // JoinOperator
+	  param in name "table" type class_ref 3233154 // SelectTable
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "

@@ -48,15 +48,15 @@ JoinConstraintFieldPairList JoinConstraintFieldPairList::fromTables(const Select
   }
   /*
    * If a precondition is not satisfied, generate a message.
-   * This semms heavy, but can be very usefull for the user.
+   * This seems heavy, but can be very usefull for the user.
    */
 #ifndef QT_NO_DEBUG
   QString whatStr;
   // Check that a foreign key was found.
-  whatStr = QString("No foreign key is linking tables '%1' and '%2'").arg(left.aliasOrTableName(), right.aliasOrTableName());
+  whatStr = QString("Deducing relation between '%1' and '%2' is not possible because no foreign key is linking them together.").arg(left.aliasOrTableName(), right.aliasOrTableName());
   Q_ASSERT_X(!fk.isNull(), "JoinConstraintFieldPairList::fromTables()", whatStr.toLocal8Bit().constData());
   // Check that parent and child field count is the same
-  whatStr = QString("Foreign key that links table '%1' and '%2' has not the same field count in parent (refering) and child.").arg(left.aliasOrTableName(), right.aliasOrTableName());
+  whatStr = QString("Deducing relation between '%1' and '%2' is not possible because foreign key that links them together has not the same field count in parent (refering) and child.").arg(left.aliasOrTableName(), right.aliasOrTableName());
   Q_ASSERT_X(leftFieldList.size() == rightFieldList.size(), "JoinConstraintFieldPairList::fromTables()", whatStr.toLocal8Bit().constData());
 #endif // #ifndef QT_NO_DEBUG
   // Build list of field pairs

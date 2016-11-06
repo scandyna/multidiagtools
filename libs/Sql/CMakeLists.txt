@@ -20,6 +20,7 @@ set(SOURCES_FILES
     src/Mdt/Sql/JoinClauseItemSqlTransform.cpp
     src/Mdt/Sql/JoinClauseItemListSqlTransform.cpp
     src/Mdt/Sql/JoinClause.cpp
+    src/Mdt/Sql/JoinClauseSqlTransform.cpp
     src/Mdt/Sql/FromClause.cpp
     src/Mdt/Sql/FromClauseSqlTransform.cpp
     src/Mdt/Sql/WhereExpression.cpp

@@ -30,7 +30,7 @@ namespace Mdt{ namespace Sql{
 QString JoinClauseItemSqlTransform::getSql(const JoinClauseItem & item, const QSqlDatabase & db)
 {
   QString sql;
-  const QString tableAlias = item.tableAlias();
+  const auto tableAlias = item.tableAlias();
   const auto * driver = db.driver();
   Q_ASSERT(driver != nullptr);
 
