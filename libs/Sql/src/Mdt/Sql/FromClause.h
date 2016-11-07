@@ -97,7 +97,7 @@ namespace Mdt{ namespace Sql{
      */
     void setSqlString(const QString & sql);
 
-    /*! \brief Check if this join clause is null
+    /*! \brief Check if from join clause is null
      */
     bool isNull() const;
 

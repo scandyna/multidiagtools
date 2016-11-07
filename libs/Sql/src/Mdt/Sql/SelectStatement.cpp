@@ -44,7 +44,63 @@ void SelectStatement::setFromTable(const SelectTable & table)
 {
   Q_ASSERT(!table.isNull());
 
-  
+  mFromClause.setTable(table);
+}
+
+void SelectStatement::joinTable(const SelectTable & table, const JoinConstraintExpression & expr)
+{
+  Q_ASSERT(!table.isNull());
+  Q_ASSERT(!expr.isNull());
+  Q_ASSERT(!mFromClause.isNull());
+
+  mFromClause.joinTableOn(JoinOperator::Join, table, expr);
+}
+
+void SelectStatement::joinTable(const SelectTable & table)
+{
+  Q_ASSERT(!table.isNull());
+  // Assertion that table or fromTable must have foreign key is done in JoinClause with a message explaining it
+  Q_ASSERT(!mFromClause.isNull());
+
+  mFromClause.joinTableOn(JoinOperator::Join, table);
+}
+
+void SelectStatement::joinTable(const SelectTable & table, const SelectTable & constraintOnTable)
+{
+  Q_ASSERT(!table.isNull());
+  Q_ASSERT(!constraintOnTable.isNull());
+  // Assertion that table or constraintOnTable must have foreign key is done in JoinClause with a message explaining it
+  Q_ASSERT(!mFromClause.isNull());
+
+  mFromClause.joinTableOn(JoinOperator::Join, table, constraintOnTable);
+}
+
+void SelectStatement::leftJoinTable(const SelectTable & table, const JoinConstraintExpression & expr)
+{
+  Q_ASSERT(!table.isNull());
+  Q_ASSERT(!expr.isNull());
+  Q_ASSERT(!mFromClause.isNull());
+
+  mFromClause.joinTableOn(JoinOperator::LeftJoin, table, expr);
+}
+
+void SelectStatement::leftJoinTable(const SelectTable & table)
+{
+  Q_ASSERT(!table.isNull());
+  // Assertion that table or fromTable must have foreign key is done in JoinClause with a message explaining it
+  Q_ASSERT(!mFromClause.isNull());
+
+  mFromClause.joinTableOn(JoinOperator::LeftJoin, table);
+}
+
+void SelectStatement::leftJoinTable(const SelectTable & table, const SelectTable & constraintOnTable)
+{
+  Q_ASSERT(!table.isNull());
+  Q_ASSERT(!constraintOnTable.isNull());
+  // Assertion that table or constraintOnTable must have foreign key is done in JoinClause with a message explaining it
+  Q_ASSERT(!mFromClause.isNull());
+
+  mFromClause.joinTableOn(JoinOperator::LeftJoin, table, constraintOnTable);
 }
 
 }} // namespace Mdt{ namespace Sql{

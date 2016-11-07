@@ -27,6 +27,7 @@
 #include "Mdt/Sql/Schema/AutoIncrementPrimaryKey.h"
 #include "Mdt/Sql/Schema/SingleFieldPrimaryKey.h"
 #include "Schema/Client_tbl.h"
+#include "Schema/Address_tbl.h"
 
 namespace Sql = Mdt::Sql;
 
@@ -168,7 +169,47 @@ void SelectStatementTest::simpleSelectWithSchemaTest()
 
 void SelectStatementTest::selectJoinTest()
 {
-  QFAIL("Not implemented");
+  using Sql::SelectStatement;
+  using Sql::SelectTable;
+  using Sql::JoinConstraintField;
+  using Sql::JoinOperator;
+
+  Schema::Client_tbl client;
+  Schema::Address_tbl address;
+  SelectTable CLI(client, "CLI");
+  SelectTable CLI3(client, "CLI3");
+  SelectTable CLI6(client, "CLI6");
+  SelectTable ADR1(address, "ADR1");
+  SelectTable ADR2(address, "ADR2");
+  SelectTable ADR3(address, "ADR3");
+  SelectTable ADR4(address, "ADR4");
+  SelectTable ADR5(address, "ADR5");
+  SelectTable ADR6(address, "ADR6");
+  JoinConstraintField clientId(CLI, client.Id_PK());
+  JoinConstraintField adrClientId1(ADR1, address.Client_Id_FK());
+  JoinConstraintField adrClientId4(ADR4, address.Client_Id_FK());
+
+  SelectStatement stm;
+  stm.addField(CLI, client.Id_PK(), "Client_Id");
+  stm.addField(CLI, client.Name());
+  stm.addField(ADR1, address.Street(), "Street1");
+  stm.setFromTable(CLI);
+  stm.joinTable(ADR1, adrClientId1 == clientId);
+  stm.joinTable(ADR2);
+  stm.joinTable(ADR3, CLI3);
+  stm.leftJoinTable(ADR4, adrClientId4 == clientId);
+  stm.leftJoinTable(ADR5);
+  stm.leftJoinTable(ADR6, CLI6);
+
+  QCOMPARE(stm.fieldList().size(), 3);
+  QCOMPARE(stm.fromClause().table().tableName(), QString("Client_tbl"));
+  QCOMPARE(stm.fromClause().joinClauseItemList().size(), 6);
+  QVERIFY(stm.fromClause().joinClauseItemList().at(0).joinOperator() == JoinOperator::Join);
+  QVERIFY(stm.fromClause().joinClauseItemList().at(1).joinOperator() == JoinOperator::Join);
+  QVERIFY(stm.fromClause().joinClauseItemList().at(2).joinOperator() == JoinOperator::Join);
+  QVERIFY(stm.fromClause().joinClauseItemList().at(3).joinOperator() == JoinOperator::LeftJoin);
+  QVERIFY(stm.fromClause().joinClauseItemList().at(4).joinOperator() == JoinOperator::LeftJoin);
+  QVERIFY(stm.fromClause().joinClauseItemList().at(5).joinOperator() == JoinOperator::LeftJoin);
 }
 
 

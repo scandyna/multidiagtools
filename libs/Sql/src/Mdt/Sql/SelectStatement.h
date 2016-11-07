@@ -23,6 +23,7 @@
 
 #include "SelectField.h"
 #include "SelectFieldList.h"
+#include "JoinOperator.h"
 #include "FromClause.h"
 #include "SelectTable.h"
 #include "JoinConstraintField.h"
@@ -135,6 +136,76 @@ namespace Mdt{ namespace Sql{
      * \pre table must not be null.
      */
     void setFromTable(const SelectTable & table);
+
+    /*! \brief Join a table
+     *
+     * Join table with expr as constraint
+     *
+     * \pre table must not be null
+     * \pre expr must not be null
+     * \pre From table must allready been set (see setFromTable()).
+     */
+    void joinTable(const SelectTable & table, const JoinConstraintExpression & expr);
+
+    /*! \brief Join a table automatically
+     *
+     * Will fetch table's foreign key list
+     *  and fromTable's foreign key list about relation
+     *  and also generate the apropriate join constraint.
+     *
+     * \pre table must not be null
+     * \pre table or fromTable must have a relation defined by their foreign key
+     * \pre From table must allready been set (see setFromTable()).
+     */
+    void joinTable(const SelectTable & table);
+
+    /*! \brief Join a table automatically
+     *
+     * Will fetch table's foreign key list
+     *  and constraintOnTable's foreign key list about relation
+     *  and also generate the apropriate join constraint.
+     *
+     * \pre table must not be null
+     * \pre constraintOnTable must not be null
+     * \pre table or constraintOnTable must have a relation defined by their foreign key
+     * \pre From table must allready been set (see setFromTable()).
+     */
+    void joinTable(const SelectTable & table, const SelectTable & constraintOnTable);
+
+    /*! \brief Left join a table
+     *
+     * Join table with expr as constraint
+     *
+     * \pre table must not be null
+     * \pre expr must not be null
+     * \pre From table must allready been set (see setFromTable()).
+     */
+    void leftJoinTable(const SelectTable & table, const JoinConstraintExpression & expr);
+
+    /*! \brief Left join a table automatically
+     *
+     * Will fetch table's foreign key list
+     *  and fromTable's foreign key list about relation
+     *  and also generate the apropriate join constraint.
+     *
+     * \pre table must not be null
+     * \pre table or fromTable must have a relation defined by their foreign key
+     * \pre From table must allready been set (see setFromTable()).
+     */
+    void leftJoinTable(const SelectTable & table);
+
+    /*! \brief Left join a table automatically
+     *
+     * Will fetch table's foreign key list
+     *  and constraintOnTable's foreign key list about relation
+     *  and also generate the apropriate join constraint.
+     *
+     * \pre table must not be null
+     * \pre constraintOnTable must not be null
+     * \pre table or constraintOnTable must have a relation defined by their foreign key
+     * \pre From table must allready been set (see setFromTable()).
+     */
+    void leftJoinTable(const SelectTable & table, const SelectTable & constraintOnTable);
 
     /*! \brief Get list of fields
      */
