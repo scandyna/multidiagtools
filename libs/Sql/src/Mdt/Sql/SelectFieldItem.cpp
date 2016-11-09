@@ -18,27 +18,41 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SIMPLE_TYPES_TEST_H
-#define MDT_SIMPLE_TYPES_TEST_H
+#include "SelectFieldItem.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace Sql{
 
-class SimpleTypesTest : public QObject
+
+SelectFieldItem::SelectFieldItem(const SelectTable & table, const FieldName & field, const QString & fieldAlias)
+ : mTableName(table.aliasOrTableName()) ,
+   mItem( SelectField(field.toString(), fieldAlias) )
 {
- Q_OBJECT
+  Q_ASSERT(!mTableName.isEmpty());
+  Q_ASSERT(!field.isNull());
+}
 
- private slots:
+SelectFieldItem::SelectFieldItem(const FieldName & field, const QString & fieldAlias)
+ : mItem( SelectField(field.toString(), fieldAlias) )
+{
+  Q_ASSERT(!field.isNull());
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+SelectFieldItem::SelectFieldItem(const SelectTable & table, const SelectAllField & allField)
+ : mTableName(table.aliasOrTableName()),
+   mItem( allField )
+{
+  Q_ASSERT(!mTableName.isEmpty());
+}
 
-  void fieldNameTest();
-  void tableNameTest();
+SelectFieldItem::SelectFieldItem(const SelectAllField & allField)
+ : mItem( allField )
+{
+}
 
-  void selectTableTest();
-  void selectTableForeignKeyTest();
-};
+SelectFieldItem::SelectFieldItem(const SelectFieldRawSql & sql)
+ : mItem( sql )
+{
+  Q_ASSERT(!sql.sql.isEmpty());
+}
 
-
-#endif // #ifndef MDT_SIMPLE_TYPES_TEST_H
+}} // namespace Mdt{ namespace Sql{

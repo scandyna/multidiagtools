@@ -18,13 +18,14 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SIMPLE_TYPES_TEST_H
-#define MDT_SIMPLE_TYPES_TEST_H
+#ifndef MDT_SELECT_FIELD_TEST_H
+#define MDT_SELECT_FIELD_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
+#include <QSqlDatabase>
 
-class SimpleTypesTest : public QObject
+class SelectFieldTest : public QObject
 {
  Q_OBJECT
 
@@ -33,12 +34,18 @@ class SimpleTypesTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void fieldNameTest();
-  void tableNameTest();
+  void selectFieldTest();
+  void selectFieldSqlTransformTest();
 
-  void selectTableTest();
-  void selectTableForeignKeyTest();
+  void selectFieldItemSqlTransformTest();
+
+  void selectFieldListTest();
+  void selectFieldListSqlTransformTest();
+
+ private:
+
+  QSqlDatabase mDatabase;
 };
 
 
-#endif // #ifndef MDT_SIMPLE_TYPES_TEST_H
+#endif // #ifndef MDT_SELECT_FIELD_TEST_H

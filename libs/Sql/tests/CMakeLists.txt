@@ -34,6 +34,7 @@ endfunction()
 #================= Tests ====================
 
 addSqlTest("SimpleTypesTest")
+addSqlTest("SelectFieldTest")
 addSqlTest("ExpressionTest")
 addSqlTest("WhereExpressionTest")
 addSqlTest("JoinConstraintExpressionTest")

@@ -9,6 +9,10 @@ set(SOURCES_FILES
     src/Mdt/Sql/Query.cpp
     src/Mdt/Sql/InsertQuery.cpp
     src/Mdt/Sql/SelectTable.cpp
+    src/Mdt/Sql/SelectFieldSqlTransform.cpp
+    src/Mdt/Sql/SelectFieldItem.cpp
+    src/Mdt/Sql/SelectFieldItemSqlTransform.cpp
+    src/Mdt/Sql/SelectFieldListSqlTransform.cpp
     src/Mdt/Sql/Expression/TerminalSqlTransform.cpp
     src/Mdt/Sql/Expression/ComparisonSqlTransform.cpp
     src/Mdt/Sql/Expression/LogicalSqlTransform.cpp

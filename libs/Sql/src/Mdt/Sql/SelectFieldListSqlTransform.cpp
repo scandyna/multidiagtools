@@ -18,27 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SIMPLE_TYPES_TEST_H
-#define MDT_SIMPLE_TYPES_TEST_H
+#include "SelectFieldListSqlTransform.h"
+#include "SelectFieldList.h"
+#include <QSqlDatabase>
+#include <QSqlDriver>
+#include <QStringBuilder>
+#include <QLatin1Char>
+#include <QLatin1String>
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace Sql{
 
-class SimpleTypesTest : public QObject
+QString SelectFieldListSqlTransform::getSql(const SelectFieldList & fieldList, const QSqlDatabase & db)
 {
- Q_OBJECT
 
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void fieldNameTest();
-  void tableNameTest();
-
-  void selectTableTest();
-  void selectTableForeignKeyTest();
-};
+}
 
 
-#endif // #ifndef MDT_SIMPLE_TYPES_TEST_H
+}} // namespace Mdt{ namespace Sql{

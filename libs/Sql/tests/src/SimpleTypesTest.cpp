@@ -71,6 +71,9 @@ void SimpleTypesTest::fieldNameTest()
   SingleFieldPrimaryKey C;
   C.setFieldName("C");
   QCOMPARE(fieldNameTestFunction(C), QString("C"));
+  // Null flag
+  QVERIFY(FieldName("").isNull());
+  QVERIFY(!FieldName("D").isNull());
 }
 
 QString tableNameTestFunction(const Sql::TableName & tn)
@@ -89,48 +92,6 @@ void SimpleTypesTest::tableNameTest()
   QCOMPARE(tableNameTestFunction(TableName("B")), QString("B"));
   TableName tableA("A");
   QCOMPARE(tableA.toString(), QString("A"));
-}
-
-void SimpleTypesTest::selectFieldTest()
-{
-  using Sql::SelectField;
-  using Sql::FieldName;
-
-  SelectField SF1("Name");
-  QCOMPARE(SF1.fieldName(), QString("Name"));
-  QVERIFY(SF1.alias().isEmpty());
-  SelectField SF2("Name", "AliasName");
-  QCOMPARE(SF2.fieldName(), QString("Name"));
-  QCOMPARE(SF2.alias(), QString("AliasName"));
-
-}
-
-void SimpleTypesTest::selectFieldListTest()
-{
-  using Sql::SelectField;
-  using Sql::FieldName;
-
-  /*
-   * Initial state
-   */
-  Sql::SelectFieldList list;
-  QCOMPARE(list.size(), 0);
-  QVERIFY(list.isEmpty());
-  /*
-   * Add 1 element
-   */
-//   list.append("Client_tbl", SelectField(FieldName("Id_PK")));
-  list.append("Client_tbl", SelectField("Id_PK"));
-  QCOMPARE(list.size(), 1);
-  QVERIFY(!list.isEmpty());
-  QCOMPARE(list.selectFieldAt(0).fieldName(), QString("Id_PK"));
-  QCOMPARE(list.tableNameAt(0), QString("Client_tbl"));
-  /*
-   * Clear
-   */
-  list.clear();
-  QCOMPARE(list.size(), 0);
-  QVERIFY(list.isEmpty());
 }
 
 void SimpleTypesTest::selectTableTest()

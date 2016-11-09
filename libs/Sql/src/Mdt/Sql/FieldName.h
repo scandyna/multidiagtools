@@ -54,6 +54,13 @@ namespace Mdt{ namespace Sql{
     FieldName(const Schema::SingleFieldPrimaryKey & pk)
      : mFieldName(pk.fieldName()) {}
 
+    /*! \brief Check if this field name is null
+     */
+    bool isNull() const
+    {
+      return mFieldName.isEmpty();
+    }
+
     /*! \brief Get filed name as string
      */
     QString toString() const

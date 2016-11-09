@@ -18,27 +18,29 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SIMPLE_TYPES_TEST_H
-#define MDT_SIMPLE_TYPES_TEST_H
+#include "SelectFieldSqlTransform.h"
+#include "SelectField.h"
+#include <QSqlDatabase>
+#include <QSqlDriver>
+#include <QStringBuilder>
+#include <QLatin1Char>
+#include <QLatin1String>
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace Sql{
 
-class SimpleTypesTest : public QObject
+QString SelectFieldSqlTransform::getSql(const SelectField & field, const QSqlDatabase & db)
 {
- Q_OBJECT
+  QString sql;
+  const auto *driver = db.driver();
+  Q_ASSERT(driver != nullptr);
 
- private slots:
+  sql = driver->escapeIdentifier(field.fieldName(), QSqlDriver::FieldName);
+  if(!field.alias().isEmpty()){
+    sql += QLatin1String(" AS ") % driver->escapeIdentifier(field.alias() , QSqlDriver::FieldName);
+  }
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void fieldNameTest();
-  void tableNameTest();
-
-  void selectTableTest();
-  void selectTableForeignKeyTest();
-};
+  return sql;
+}
 
 
-#endif // #ifndef MDT_SIMPLE_TYPES_TEST_H
+}} // namespace Mdt{ namespace Sql{
