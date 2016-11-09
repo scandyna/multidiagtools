@@ -125,9 +125,11 @@ void SelectFieldTest::selectFieldItemSqlTransformTest()
 
 void SelectFieldTest::selectFieldListTest()
 {
-  using Sql::SelectField;
+  using Sql::SelectTable;
+  using Sql::TableName;
   using Sql::FieldName;
 
+  SelectTable CLI(TableName("Client_tbl"), "CLI");
   /*
    * Initial state
    */
@@ -135,31 +137,77 @@ void SelectFieldTest::selectFieldListTest()
   QCOMPARE(list.size(), 0);
   QVERIFY(list.isEmpty());
   /*
-   * Add 1 element
+   * Add fields
    */
-//   list.append("Client_tbl", SelectField(FieldName("Id_PK")));
-  list.append("Client_tbl", SelectField("Id_PK"));
+  // Table and field
+  list.addField(CLI, FieldName("FieldA"));
   QCOMPARE(list.size(), 1);
   QVERIFY(!list.isEmpty());
-  QCOMPARE(list.selectFieldAt(0).fieldName(), QString("Id_PK"));
-  QCOMPARE(list.tableNameAt(0), QString("Client_tbl"));
+  QCOMPARE(list.tableNameAt(0), QString("CLI"));
+  // Field
+  list.addField(FieldName("FieldB"));
+  QCOMPARE(list.size(), 2);
+  QVERIFY(list.tableNameAt(1).isEmpty());
+  // All fields for table
+  list.addAllFields(CLI);
+  QCOMPARE(list.size(), 3);
+  QCOMPARE(list.tableNameAt(2), QString("CLI"));
+  // All fields (no table defined)
+  list.addAllFields();
+  QCOMPARE(list.size(), 4);
+  QVERIFY(list.tableNameAt(3).isEmpty());
+  // Custom SQL
+  list.addRawSqlFieldExpression("CustomFieldExpr");
+  QCOMPARE(list.size(), 5);
+  QVERIFY(list.tableNameAt(4).isEmpty());
   /*
    * Clear
    */
   list.clear();
   QCOMPARE(list.size(), 0);
   QVERIFY(list.isEmpty());
+
+  /*
+   * Add 1 element
+   */
+//   list.append("Client_tbl", SelectField(FieldName("Id_PK")));
+//   list.append("Client_tbl", SelectField("Id_PK"));
+//   QCOMPARE(list.size(), 1);
+//   QVERIFY(!list.isEmpty());
+// //   QCOMPARE(list.selectFieldAt(0).fieldName(), QString("Id_PK"));
+//   QCOMPARE(list.tableNameAt(0), QString("Client_tbl"));
+//   /*
+//    * Clear
+//    */
+//   list.clear();
+//   QCOMPARE(list.size(), 0);
+//   QVERIFY(list.isEmpty());
 }
 
 void SelectFieldTest::selectFieldListSqlTransformTest()
 {
   using Sql::SelectFieldListSqlTransform;
-  using Sql::SelectField;
   using Sql::FieldName;
 
   Sql::SelectFieldList list;
+  QString expectedSql;
+  auto db = mDatabase;
 
-  QFAIL("Not implemented");
+  // 1 field
+  list.addField(FieldName("FieldA"));
+  expectedSql = " \"FieldA\"";
+  QCOMPARE( SelectFieldListSqlTransform::getSql(list, db) , expectedSql );
+  // 2 fields
+  list.addField(FieldName("FieldB"));
+  expectedSql = " \"FieldA\",\n"
+                " \"FieldB\"";
+  QCOMPARE( SelectFieldListSqlTransform::getSql(list, db) , expectedSql );  
+  // 3 fields
+  list.addField(FieldName("FieldC"));
+  expectedSql = " \"FieldA\",\n"\
+                " \"FieldB\",\n"\
+                " \"FieldC\"";
+  QCOMPARE( SelectFieldListSqlTransform::getSql(list, db) , expectedSql );  
 }
 
 /*

@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "SelectFieldItemSqlTransform.h"
 #include "SelectFieldItem.h"
+#include "SelectFieldSqlTransform.h"
 #include "SelectField.h"
 #include <QSqlDatabase>
 #include <QSqlDriver>
@@ -46,16 +47,7 @@ class SelectFieldItemSqlTransformVisitor : boost::static_visitor<QString>
 
   QString operator()(const SelectField & field) const
   {
-    QString sql;
-    const auto *driver = mDatabase.driver();
-    Q_ASSERT(driver != nullptr);
-
-    sql = getTableNameSql() % driver->escapeIdentifier(field.fieldName(), QSqlDriver::FieldName);
-    if(!field.alias().isEmpty()){
-      sql += QLatin1String(" AS ") % driver->escapeIdentifier(field.alias(), QSqlDriver::FieldName);
-    }
-
-    return sql;
+    return getTableNameSql() % SelectFieldSqlTransform::getSql(field, mDatabase);
   }
 
   QString operator()(const SelectAllField &) const

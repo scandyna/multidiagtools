@@ -22,78 +22,142 @@
 #define MDT_SQL_SELECT_FIELD_LIST_H
 
 #include "SelectField.h"
+#include "SelectFieldItem.h"
 #include <vector>
 
 namespace Mdt{ namespace Sql{
 
-  struct SelectFieldListItem
-  {
-    SelectField selectField;
-    QString tableName;
+//   struct SelectFieldListItem
+//   {
+//     SelectField selectField;
+//     QString tableName;
+// 
+//     SelectFieldListItem(const QString & tbl, const SelectField & fld)
+//      : selectField(fld), tableName(tbl) {}
+//   };
 
-    SelectFieldListItem(const QString & tbl, const SelectField & fld)
-     : selectField(fld), tableName(tbl) {}
-  };
-
-  /*! \brief List of SelectField
+  /*! \brief List of SelectFieldItem
    */
   class SelectFieldList
   {
    public:
 
+    /*! \brief Add a field by specifying table and field
+     *
+     * \pre table must not be null
+     * \pre field must not be null
+     */
+    void addField(const SelectTable & table, const FieldName & field, const QString & fieldAlias = QString())
+    {
+      Q_ASSERT(!table.isNull());
+      Q_ASSERT(!field.isNull());
+      mItemList.emplace_back(table, field, fieldAlias);
+    }
+
+    /*! \brief Add a field by specifying field
+     *
+     * \pre field must not be null
+     */
+    void addField(const FieldName & field, const QString & fieldAlias = QString())
+    {
+      Q_ASSERT(!field.isNull());
+      mItemList.emplace_back(field, fieldAlias);
+    }
+
+    /*! \brief Add all fields for table (the * in SQL)
+     *
+     * \pre table must not be null
+     */
+    void addAllFields(const SelectTable & table)
+    {
+      Q_ASSERT(!table.isNull());
+      mItemList.emplace_back(table, SelectAllField());
+    }
+
+    /*! \brief Add all fields (the * in SQL, not table defined)
+     */
+    void addAllFields()
+    {
+      mItemList.emplace_back(SelectAllField());
+    }
+
+    /*! \brief Add a raw SQL string
+     *
+     * \pre sql must not be a empty string
+     */
+    void addRawSqlFieldExpression(const QString & sql)
+    {
+      Q_ASSERT(!sql.isEmpty());
+      mItemList.emplace_back(SelectFieldRawSql(sql));
+    }
+
     /*! \brief Add a item
      */
+    [[deprecated]]
     void append(const QString & tableName, const SelectField & selectField)
     {
-      pvItemList.emplace_back(tableName, selectField);
+//       pvItemList.emplace_back(tableName, selectField);
     }
 
     /*! \brief Get count of elements
      */
     int size() const
     {
-      return pvItemList.size();
+      return mItemList.size();
     }
 
     /*! \brief Check if field list is empty
      */
     bool isEmpty() const
     {
-      return pvItemList.empty();
+      return mItemList.empty();
+    }
+
+    /*! \brief Get select field item at index
+     *
+     * \pre index must be in valid range
+     */
+    const SelectFieldItem & itemAt(int index) const
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < size());
+      return mItemList[index];
     }
 
     /*! \brief Get select field at index
      *
      * \pre index must be valid
      */
+    [[deprecated]]
     const SelectField & selectFieldAt(int index) const
     {
       Q_ASSERT(index >= 0);
       Q_ASSERT(index < size());
-      return pvItemList[index].selectField;
+//       return pvItemList[index].selectField;
     }
 
-    /*! \brief Get table name at index
+    /*! \brief Get table name or alias at index
      *
-     * \pre index must be valid
+     * \pre index must be in valid range
      */
-    const QString & tableNameAt(int index) const
+    QString tableNameAt(int index) const
     {
       Q_ASSERT(index >= 0);
       Q_ASSERT(index < size());
-      return pvItemList[index].tableName;
+      return mItemList[index].tableName();
     }
 
     /*! \brief Clear
      */
     void clear()
     {
-      pvItemList.clear();
+      mItemList.clear();
     }
 
    private:
 
-    std::vector<SelectFieldListItem> pvItemList;
+//     std::vector<SelectFieldListItem> pvItemList;
+    std::vector<SelectFieldItem> mItemList;
   };
 
 }} // namespace Mdt{ namespace Sql{
