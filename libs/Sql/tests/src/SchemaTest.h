@@ -56,6 +56,9 @@ class SchemaTest : public QObject
   void parentTableFieldNameTest();
   void childTableFieldNameTest();
 
+  /// \todo explore for better in Table
+  void varArgSandbox();
+
   void foreignKeyActionTest();
   void foreignKeyTest();
   void foreignKeyListTest();

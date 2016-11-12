@@ -18,40 +18,19 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SELECT_STATEMENT_TEST_H
-#define MDT_SELECT_STATEMENT_TEST_H
+#ifndef MDT_SQL_SELECT_OPERATOR_H
+#define MDT_SQL_SELECT_OPERATOR_H
 
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QSqlDatabase>
+namespace Mdt{ namespace Sql{
 
-class SelectStatementTest : public QObject
-{
- Q_OBJECT
+  /*! \brief Select opertaor used by SelectStatement
+   */
+  enum class SelectOperator
+  {
+    Select,         /*!< SELECT operator */
+    SelectDistinct  /*!< SELECT DISTINCT operator */
+  };
 
- private slots:
+}} // namespace Mdt{ namespace Sql{
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void selectOperatorTest();
-
-  void addFieldTest();
-//   void addAllFieldsTest();
-
-  void simpleSelectTest();
-  void simpleSelectWithSchemaTest();
-
-  void selectJoinTest();
-
-  void selectFromSqlTransformTest();
-  void selectFromJoinSqlTransformTest();
-  void selectFromWhereSqlTransformTest();
-
- private:
-
-  QSqlDatabase mDatabase;
-};
-
-
-#endif // #ifndef MDT_SELECT_STATEMENT_TEST_H
+#endif // #ifndef MDT_SQL_SELECT_OPERATOR_H

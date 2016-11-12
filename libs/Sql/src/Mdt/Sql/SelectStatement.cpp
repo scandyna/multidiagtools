@@ -25,19 +25,43 @@
 
 namespace Mdt{ namespace Sql{
 
-void SelectStatement::addField(const SelectTable & table, const SelectField & field)
-{
-  mFieldList.append(table.aliasOrTableName(), field);
-}
+// void SelectStatement::addField(const SelectTable & table, const SelectField & field)
+// {
+//   mFieldList.append(table.aliasOrTableName(), field);
+// }
 
 void SelectStatement::addField(const SelectTable & table, const FieldName & field, const QString & fieldAlias)
 {
-  addField( table, SelectField(field.toString(), fieldAlias) );
+  Q_ASSERT(!table.isNull());
+  Q_ASSERT(!field.isNull());
+
+  mFieldList.addField(table, field, fieldAlias);
+}
+
+void SelectStatement::addField(const FieldName & field, const QString & fieldAlias)
+{
+  Q_ASSERT(!field.isNull());
+
+  mFieldList.addField(field, fieldAlias);
 }
 
 void SelectStatement::addAllFields(const SelectTable & table)
 {
-  addField( table, SelectField("*") );
+  Q_ASSERT(!table.isNull());
+
+  mFieldList.addAllFields(table);
+}
+
+void SelectStatement::addAllFields()
+{
+  mFieldList.addAllFields();
+}
+
+void SelectStatement::addRawSqlFieldExpression(const QString & sql)
+{
+  Q_ASSERT(!sql.isEmpty());
+
+  mFieldList.addRawSqlFieldExpression(sql);
 }
 
 void SelectStatement::setFromTable(const SelectTable & table)

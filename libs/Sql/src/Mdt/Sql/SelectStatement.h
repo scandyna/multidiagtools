@@ -21,6 +21,7 @@
 #ifndef MDT_SQL_SELECT_STATEMENT_H
 #define MDT_SQL_SELECT_STATEMENT_H
 
+#include "SelectOperator.h"
 #include "SelectField.h"
 #include "SelectFieldList.h"
 #include "JoinOperator.h"
@@ -36,6 +37,7 @@ namespace Mdt{ namespace Sql{
     class AutoIncrementPrimaryKey;
     class SingleFieldPrimaryKey;
   }
+  class FieldName;
 
   /*! \brief Helper class to create a SQL SELECT statement
    *
@@ -106,17 +108,54 @@ namespace Mdt{ namespace Sql{
   {
    public:
 
-    /*! \brief Add a field to the statement
+    /*! \brief Set select operator
+     *
+     * Default is Select
      */
-    void addField(const SelectTable & table, const SelectField & field);
+    void setSelectOperator(SelectOperator op)
+    {
+      mSelectOperator = op;
+    }
+
+    /*! \brief Get select operator
+     */
+    SelectOperator selectOperator() const
+    {
+      return mSelectOperator;
+    }
 
     /*! \brief Add a field to the statement
+     */
+//     void addField(const SelectTable & table, const SelectField & field);
+
+    /*! \brief Add a field by specifying table and field
+     *
+     * \pre table must not be null
+     * \pre field must not be null
      */
     void addField(const SelectTable & table, const FieldName & field , const QString & fieldAlias = QString());
 
-    /*! \brief Add all fields for given table
+    /*! \brief Add a field by specifying field
+     *
+     * \pre field must not be null
+     */
+    void addField(const FieldName & field , const QString & fieldAlias = QString());
+
+    /*! \brief Add all fields for table (the * in SQL)
+     *
+     * \pre table must not be null
      */
     void addAllFields(const SelectTable & table);
+
+    /*! \brief Add all fields (the * in SQL, not table defined)
+     */
+    void addAllFields();
+
+    /*! \brief Add a raw SQL string to select a field
+     *
+     * \pre sql must not be a empty string
+     */
+    void addRawSqlFieldExpression(const QString & sql);
 
     /*! \brief Set table
      *
@@ -207,9 +246,11 @@ namespace Mdt{ namespace Sql{
      */
     void leftJoinTable(const SelectTable & table, const SelectTable & constraintOnTable);
 
-    /*! \brief Get list of fields
+    /*! \internal Get list of fields
+     *
+     * Used by transforms and unit tests
      */
-    SelectFieldList fieldList() const
+    const SelectFieldList & fieldList() const
     {
       return mFieldList;
     }
@@ -225,6 +266,7 @@ namespace Mdt{ namespace Sql{
 
    private:
 
+    SelectOperator mSelectOperator = SelectOperator::Select;
     SelectFieldList mFieldList;
     FromClause mFromClause;
   };

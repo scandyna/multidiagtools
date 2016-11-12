@@ -29,6 +29,7 @@ set(SOURCES_FILES
     src/Mdt/Sql/FromClauseSqlTransform.cpp
     src/Mdt/Sql/WhereExpression.cpp
     src/Mdt/Sql/SelectStatement.cpp
+    src/Mdt/Sql/SelectStatementSqlTransform.cpp
     src/Mdt/Sql/SelectQuery.cpp
     src/Mdt/Sql/Schema/Driver.cpp
     src/Mdt/Sql/Schema/DriverImplementationInterface.cpp

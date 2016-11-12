@@ -49,6 +49,11 @@
 #include <QTableView>
 #include <QTreeView>
 
+/// \todo Just for vargArgSandbox()
+#include <vector>
+#include <array>
+#include <iostream>
+
 namespace Sql = Mdt::Sql;
 
 void SchemaTest::initTestCase()
@@ -875,6 +880,82 @@ void SchemaTest::childTableFieldNameTest()
   ChildTableFieldName f(Name);
   QCOMPARE(f.fieldName(), QString("Name"));
 }
+
+/*! \todo Check to have better syntax in Table
+ *
+ * When adding foreign keys, have a syntax like:
+ *   addForeignKey( xxFields(A, B) , referingTable(Tbl), referingFields(RA, RB) );
+ *
+ *  xxFields() and referingFields() have constructors with variadic argguments.
+ *
+ * Note: see to create or update FieldNameList ?? <- Better FieldList ? <- conflicting with existing class ??
+ *       For refering: ReferingFieldNameList ?    <- Better ReferingFieldList ?
+ */
+
+class VarArgFieldSandbox
+{
+ public:
+
+  template<typename...T>
+  VarArgFieldSandbox(const T & ...fields)
+  {
+    mVector.reserve(sizeof...(fields));
+    fillVector(fields...);
+  }
+
+  int size() const
+  {
+    return mVector.size();
+  }
+
+  int at(int index) const
+  {
+    return mVector.at(index);
+  }
+
+ private:
+
+  void fillVector()
+  {
+    std::cout << "fillVector()" << std::endl;
+  }
+
+  /// Check also type with static_assert()
+  template<typename T, typename...Ts>
+  void fillVector(const T & field, const Ts & ...fields)
+  {
+//     std::cout << "fillVector(" << field << " , ...)" << " , sizeof(...): " << sizeof...(fields) << " , idx: " << mSize - sizeof...(fields) - 1 << std::endl;
+    mVector.push_back(field);
+    fillVector(fields...);
+  }
+
+  std::vector<int> mVector;
+//   const int mSize;
+};
+
+void varArgTestFunction(char c, const VarArgFieldSandbox & fa, const VarArgFieldSandbox & fb)
+{
+  std::cout << "c: " << c << " , fa: " << fa.size() << " elements , fb: " << fb.size() << " elements" << std::endl;
+}
+
+void SchemaTest::varArgSandbox()
+{
+  // 0 argument
+  auto v0 = VarArgFieldSandbox();
+  QCOMPARE(v0.size(), 0);
+  // 1 argument
+  auto v1 = VarArgFieldSandbox(1);
+  QCOMPARE(v1.size(), 1);
+  QCOMPARE(v1.at(0), 1);
+  // 2 arguments
+  auto v2 = VarArgFieldSandbox(1, 2);
+  QCOMPARE(v2.size(), 2);
+  QCOMPARE(v2.at(0), 1);
+  QCOMPARE(v2.at(1), 2);
+
+  varArgTestFunction('a', VarArgFieldSandbox(1,2,3,4,5), VarArgFieldSandbox(10,11));
+}
+
 
 void SchemaTest::foreignKeyActionTest()
 {

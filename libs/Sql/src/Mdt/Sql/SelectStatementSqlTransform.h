@@ -18,40 +18,36 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SELECT_STATEMENT_TEST_H
-#define MDT_SELECT_STATEMENT_TEST_H
+#ifndef MDT_SQL_SELECT_STATEMENT_SQL_TRANSFORM_H
+#define MDT_SQL_SELECT_STATEMENT_SQL_TRANSFORM_H
 
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QSqlDatabase>
+#include "SelectOperator.h"
+#include <QString>
 
-class SelectStatementTest : public QObject
-{
- Q_OBJECT
+class QSqlDatabase;
 
- private slots:
+namespace Mdt{ namespace Sql{
 
-  void initTestCase();
-  void cleanupTestCase();
+  class SelectStatement;
 
-  void selectOperatorTest();
+  /*! \brief Transform a SelectStatement to its SQL representation
+   */
+  class SelectStatementSqlTransform
+  {
+   public:
 
-  void addFieldTest();
-//   void addAllFieldsTest();
+    /*! \brief Get SQL string of stm
+     *
+     * \pre stm must have a non empty list of select fields
+     * \pre db must be valid (must have a driver loaded)
+     */
+    static QString getSql(const SelectStatement & stm, const QSqlDatabase & db);
 
-  void simpleSelectTest();
-  void simpleSelectWithSchemaTest();
+   private:
 
-  void selectJoinTest();
+    static QString getSelectOperatorString(SelectOperator op);
+  };
 
-  void selectFromSqlTransformTest();
-  void selectFromJoinSqlTransformTest();
-  void selectFromWhereSqlTransformTest();
+}} // namespace Mdt{ namespace Sql{
 
- private:
-
-  QSqlDatabase mDatabase;
-};
-
-
-#endif // #ifndef MDT_SELECT_STATEMENT_TEST_H
+#endif // #ifndef MDT_SQL_SELECT_STATEMENT_SQL_TRANSFORM_H

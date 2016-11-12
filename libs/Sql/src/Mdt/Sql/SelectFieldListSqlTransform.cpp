@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "SelectFieldListSqlTransform.h"
+#include "SelectFieldItemSqlTransform.h"
 #include "SelectFieldList.h"
 #include <QSqlDatabase>
 #include <QSqlDriver>
@@ -30,7 +31,17 @@ namespace Mdt{ namespace Sql{
 
 QString SelectFieldListSqlTransform::getSql(const SelectFieldList & fieldList, const QSqlDatabase & db)
 {
+  Q_ASSERT(!fieldList.isEmpty());
+  Q_ASSERT(db.isValid());
 
+  QString sql;
+
+  sql = QLatin1Char(' ') % SelectFieldItemSqlTransform::getSql(fieldList.itemAt(0), db);
+  for(int i = 1; i < fieldList.size(); ++i){
+    sql += QLatin1String(",\n ") % SelectFieldItemSqlTransform::getSql(fieldList.itemAt(i), db);
+  }
+
+  return sql;
 }
 
 

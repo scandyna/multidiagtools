@@ -23,6 +23,7 @@
 #include "Mdt/Sql/SelectStatement.h"
 #include "Mdt/Sql/FieldName.h"
 #include "Mdt/Sql/TableName.h"
+#include "Mdt/Sql/SelectStatementSqlTransform.h"
 #include "Mdt/Sql/Schema/Field.h"
 #include "Mdt/Sql/Schema/AutoIncrementPrimaryKey.h"
 #include "Mdt/Sql/Schema/SingleFieldPrimaryKey.h"
@@ -33,6 +34,11 @@ namespace Sql = Mdt::Sql;
 
 void SelectStatementTest::initTestCase()
 {
+  // Get database instance
+  mDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  if(!mDatabase.isValid()){
+    QSKIP("QSQLITE driver is not available - Skip all tests");  // Will also skip all tests
+  }
 }
 
 void SelectStatementTest::cleanupTestCase()
@@ -42,6 +48,19 @@ void SelectStatementTest::cleanupTestCase()
 /*
  * Tests
  */
+
+void SelectStatementTest::selectOperatorTest()
+{
+  using Sql::SelectStatement;
+  using Sql::SelectOperator;
+
+  // Default
+  Sql::SelectStatement stm;
+  QVERIFY(stm.selectOperator() == SelectOperator::Select);
+  // Set
+  stm.setSelectOperator(SelectOperator::SelectDistinct);
+  QVERIFY(stm.selectOperator() == SelectOperator::SelectDistinct);
+}
 
 void SelectStatementTest::addFieldTest()
 {
@@ -65,71 +84,85 @@ void SelectStatementTest::addFieldTest()
   /*
    * Add fields using avaliable overloads
    */
-  stm.addField(CLI, SelectField("A", "A_alias") );
-  stm.addField(CLI, FieldName("B"), "B_alias");
-  stm.addField(CLI, FieldName("C"));
-  field.setName("D");
-  stm.addField(CLI, field, "D_alias");
-  field.setName("E");
-  stm.addField(CLI, field);
-  stm.addField(CLI, AutoIncrementPrimaryKey("F"), "F_alias");
-  stm.addField(CLI, AutoIncrementPrimaryKey("G"));
-  sfpk.setFieldName("H");
-  stm.addField(CLI, sfpk, "H_alias");
-  sfpk.setFieldName("I");
-  stm.addField(CLI, sfpk);
-  /*
-   * Check
-   */
-  auto list = stm.fieldList();
-  QCOMPARE(list.size(), 9);
-  QCOMPARE(list.tableNameAt(0), QString("CLI"));
-  QCOMPARE(list.selectFieldAt(0).fieldName(), QString("A"));
-  QCOMPARE(list.selectFieldAt(0).alias(), QString("A_alias"));
-  QCOMPARE(list.tableNameAt(1), QString("CLI"));
-  QCOMPARE(list.selectFieldAt(1).fieldName(), QString("B"));
-  QCOMPARE(list.selectFieldAt(1).alias(), QString("B_alias"));
-  QCOMPARE(list.tableNameAt(2), QString("CLI"));
-  QCOMPARE(list.selectFieldAt(2).fieldName(), QString("C"));
-  QVERIFY(list.selectFieldAt(2).alias().isEmpty());
-  QCOMPARE(list.tableNameAt(3), QString("CLI"));
-  QCOMPARE(list.selectFieldAt(3).fieldName(), QString("D"));
-  QCOMPARE(list.selectFieldAt(3).alias(), QString("D_alias"));
-  QCOMPARE(list.tableNameAt(4), QString("CLI"));
-  QCOMPARE(list.selectFieldAt(4).fieldName(), QString("E"));
-  QVERIFY(list.selectFieldAt(4).alias().isEmpty());
-  QCOMPARE(list.tableNameAt(5), QString("CLI"));
-  QCOMPARE(list.selectFieldAt(5).fieldName(), QString("F"));
-  QCOMPARE(list.selectFieldAt(5).alias(), QString("F_alias"));
-  QCOMPARE(list.tableNameAt(6), QString("CLI"));
-  QCOMPARE(list.selectFieldAt(6).fieldName(), QString("G"));
-  QVERIFY(list.selectFieldAt(6).alias().isEmpty());
-  QCOMPARE(list.tableNameAt(7), QString("CLI"));
-  QCOMPARE(list.selectFieldAt(7).fieldName(), QString("H"));
-  QCOMPARE(list.selectFieldAt(7).alias(), QString("H_alias"));
-  QCOMPARE(list.tableNameAt(8), QString("CLI"));
-  QCOMPARE(list.selectFieldAt(8).fieldName(), QString("I"));
-  QVERIFY(list.selectFieldAt(8).alias().isEmpty());
-}
-
-void SelectStatementTest::addAllFieldsTest()
-{
-  using Sql::SelectStatement;
-  using Sql::SelectTable;
-  using Sql::TableName;
-
-  SelectTable CLI(TableName("Client_tbl"), "CLI");
-  SelectStatement stm;
-
+//   stm.addField(CLI, SelectField("A", "A_alias") );
+  stm.addField(CLI, FieldName("A"), "A_alias");
+  stm.addField(CLI, FieldName("B"));
+  stm.addField(FieldName("C"), "C_alias");
+  stm.addField(FieldName("D"));
   stm.addAllFields(CLI);
-  /*
-   * Check
-   */
-  auto list = stm.fieldList();
-  QCOMPARE(list.size(), 1);
-  QCOMPARE(list.tableNameAt(0), QString("CLI"));
-  QCOMPARE(list.selectFieldAt(0).fieldName(), QString("*"));
+  stm.addAllFields();
+  stm.addRawSqlFieldExpression("CustomField AS CustomAlias");
+  QCOMPARE(stm.fieldList().size(), 7);
+  QCOMPARE(stm.fieldList().tableNameAt(0), QString("CLI"));
+  QCOMPARE(stm.fieldList().tableNameAt(1), QString("CLI"));
+  QVERIFY(stm.fieldList().tableNameAt(2).isEmpty());
+  QVERIFY(stm.fieldList().tableNameAt(3).isEmpty());
+  QCOMPARE(stm.fieldList().tableNameAt(4), QString("CLI"));
+  QVERIFY(stm.fieldList().tableNameAt(5).isEmpty());
+  QVERIFY(stm.fieldList().tableNameAt(6).isEmpty());
+
+//   field.setName("D");
+//   stm.addField(CLI, field, "D_alias");
+//   field.setName("E");
+//   stm.addField(CLI, field);
+//   stm.addField(CLI, AutoIncrementPrimaryKey("F"), "F_alias");
+//   stm.addField(CLI, AutoIncrementPrimaryKey("G"));
+//   sfpk.setFieldName("H");
+//   stm.addField(CLI, sfpk, "H_alias");
+//   sfpk.setFieldName("I");
+//   stm.addField(CLI, sfpk);
+//   /*
+//    * Check
+//    */
+//   auto list = stm.fieldList();
+//   QCOMPARE(list.size(), 9);
+//   QCOMPARE(list.tableNameAt(0), QString("CLI"));
+//   QCOMPARE(list.selectFieldAt(0).fieldName(), QString("A"));
+//   QCOMPARE(list.selectFieldAt(0).alias(), QString("A_alias"));
+//   QCOMPARE(list.tableNameAt(1), QString("CLI"));
+//   QCOMPARE(list.selectFieldAt(1).fieldName(), QString("B"));
+//   QCOMPARE(list.selectFieldAt(1).alias(), QString("B_alias"));
+//   QCOMPARE(list.tableNameAt(2), QString("CLI"));
+//   QCOMPARE(list.selectFieldAt(2).fieldName(), QString("C"));
+//   QVERIFY(list.selectFieldAt(2).alias().isEmpty());
+//   QCOMPARE(list.tableNameAt(3), QString("CLI"));
+//   QCOMPARE(list.selectFieldAt(3).fieldName(), QString("D"));
+//   QCOMPARE(list.selectFieldAt(3).alias(), QString("D_alias"));
+//   QCOMPARE(list.tableNameAt(4), QString("CLI"));
+//   QCOMPARE(list.selectFieldAt(4).fieldName(), QString("E"));
+//   QVERIFY(list.selectFieldAt(4).alias().isEmpty());
+//   QCOMPARE(list.tableNameAt(5), QString("CLI"));
+//   QCOMPARE(list.selectFieldAt(5).fieldName(), QString("F"));
+//   QCOMPARE(list.selectFieldAt(5).alias(), QString("F_alias"));
+//   QCOMPARE(list.tableNameAt(6), QString("CLI"));
+//   QCOMPARE(list.selectFieldAt(6).fieldName(), QString("G"));
+//   QVERIFY(list.selectFieldAt(6).alias().isEmpty());
+//   QCOMPARE(list.tableNameAt(7), QString("CLI"));
+//   QCOMPARE(list.selectFieldAt(7).fieldName(), QString("H"));
+//   QCOMPARE(list.selectFieldAt(7).alias(), QString("H_alias"));
+//   QCOMPARE(list.tableNameAt(8), QString("CLI"));
+//   QCOMPARE(list.selectFieldAt(8).fieldName(), QString("I"));
+//   QVERIFY(list.selectFieldAt(8).alias().isEmpty());
 }
+
+// void SelectStatementTest::addAllFieldsTest()
+// {
+//   using Sql::SelectStatement;
+//   using Sql::SelectTable;
+//   using Sql::TableName;
+// 
+//   SelectTable CLI(TableName("Client_tbl"), "CLI");
+//   SelectStatement stm;
+// 
+//   stm.addAllFields(CLI);
+//   /*
+//    * Check
+//    */
+//   auto list = stm.fieldList();
+//   QCOMPARE(list.size(), 1);
+//   QCOMPARE(list.tableNameAt(0), QString("CLI"));
+//   QCOMPARE(list.selectFieldAt(0).fieldName(), QString("*"));
+// }
 
 void SelectStatementTest::simpleSelectTest()
 {
@@ -142,7 +175,7 @@ void SelectStatementTest::simpleSelectTest()
   SelectTable CLI(TableName("Client_tbl"), "CLI");
   SelectStatement stm;
 
-  stm.addField(CLI, SelectField("Id_PK", "Client_Id") );
+  stm.addField(CLI, FieldName("Id_PK"), "Client_Id");
   stm.addField(CLI, FieldName("Name"), "ClientName");
   stm.addField(CLI, FieldName("Remarks"));
   stm.setTable(CLI);
@@ -210,6 +243,52 @@ void SelectStatementTest::selectJoinTest()
   QVERIFY(stm.fromClause().joinClauseItemList().at(3).joinOperator() == JoinOperator::LeftJoin);
   QVERIFY(stm.fromClause().joinClauseItemList().at(4).joinOperator() == JoinOperator::LeftJoin);
   QVERIFY(stm.fromClause().joinClauseItemList().at(5).joinOperator() == JoinOperator::LeftJoin);
+}
+
+void SelectStatementTest::selectFromSqlTransformTest()
+{
+  using Sql::SelectStatementSqlTransform;
+  using Sql::SelectStatement;
+  using Sql::SelectOperator;
+  using Sql::SelectTable;
+  using Sql::FieldName;
+
+  Schema::Client_tbl client;
+  SelectTable CLI(client, "CLI");
+  auto db = mDatabase;
+  QString expectedSql;
+
+  // Check with some simple statement
+  SelectStatement stm1;
+  stm1.addField(CLI, client.Id_PK(), "Client_Id");
+  stm1.addField(CLI, client.Name());
+  stm1.addField(FieldName("Remarks"));
+  stm1.setFromTable(CLI);
+  expectedSql = "SELECT\n"\
+                " \"CLI\".\"Id_PK\" AS \"Client_Id\",\n"\
+                " \"CLI\".\"Name\",\n"\
+                " \"Remarks\"\n"\
+                "FROM \"Client_tbl\" \"CLI\"";
+  QCOMPARE( SelectStatementSqlTransform::getSql(stm1, db) , expectedSql );
+  // Check with SELECT DISTINCT and *
+  SelectStatement stm2;
+  stm2.setSelectOperator(SelectOperator::SelectDistinct);
+  stm2.addAllFields();
+  stm2.setFromTable(CLI);
+  expectedSql = "SELECT DISTINCT\n"\
+                " *\n"\
+                "FROM \"Client_tbl\" \"CLI\"";
+  QCOMPARE( SelectStatementSqlTransform::getSql(stm2, db) , expectedSql );
+}
+
+void SelectStatementTest::selectFromJoinSqlTransformTest()
+{
+  QFAIL("Not Implemented");
+}
+
+void SelectStatementTest::selectFromWhereSqlTransformTest()
+{
+  QFAIL("Not Implemented");
 }
 
 

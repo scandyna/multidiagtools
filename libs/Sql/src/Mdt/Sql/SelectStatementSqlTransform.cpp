@@ -18,31 +18,41 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SELECT_FIELD_LIST_SQL_TRANSFORM_H
-#define MDT_SQL_SELECT_FIELD_LIST_SQL_TRANSFORM_H
-
-#include <QString>
-
-class QSqlDatabase;
+#include "SelectStatementSqlTransform.h"
+#include "SelectStatement.h"
+#include "SelectFieldListSqlTransform.h"
+#include "FromClauseSqlTransform.h"
+#include <QSqlDatabase>
+#include <QLatin1Char>
+#include <QLatin1String>
+#include <QStringBuilder>
 
 namespace Mdt{ namespace Sql{
 
-  class SelectFieldList;
+QString SelectStatementSqlTransform::getSql(const SelectStatement & stm, const QSqlDatabase & db)
+{
+  Q_ASSERT(!stm.fieldList().isEmpty());
+  Q_ASSERT(db.isValid());
 
-  /*! \brief Transform a SelectFieldList to its SQL representation
-   */
-  class SelectFieldListSqlTransform
-  {
-   public:
+  QString sql;
 
-    /*! \brief Get SQL string representation of fieldList
-     *
-     * \pre fieldList must not be empty
-     * \pre db must be valid (a driver must be loaded)
-     */
-    static QString getSql(const SelectFieldList & fieldList, const QSqlDatabase & db);
-  };
+  sql = getSelectOperatorString(stm.selectOperator()) \
+      % QLatin1Char('\n') \
+      % SelectFieldListSqlTransform::getSql(stm.fieldList(), db) \
+      % QLatin1Char('\n') \
+      % FromClauseSqlTransform::getSql(stm.fromClause(), db);
+
+  return sql;
+}
+
+QString SelectStatementSqlTransform::getSelectOperatorString(SelectOperator op)
+{
+  switch(op){
+    case SelectOperator::Select:
+      return QLatin1String("SELECT");
+    case SelectOperator::SelectDistinct:
+      return QLatin1String("SELECT DISTINCT");
+  }
+}
 
 }} // namespace Mdt{ namespace Sql{
-
-#endif // #ifndef

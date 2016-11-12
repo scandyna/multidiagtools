@@ -113,7 +113,7 @@ namespace Mdt{ namespace Sql{
       return mItemList.empty();
     }
 
-    /*! \brief Get select field item at index
+    /*! \brief Access select field item at index
      *
      * \pre index must be in valid range
      */

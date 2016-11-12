@@ -1,6 +1,6 @@
 format 211
 "Sql" // Mdt::Sql
-  revision 53
+  revision 55
   modified_by 2 "philippe"
   // class settings
   
@@ -502,6 +502,22 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+      operation 4831234 "getSql"
+	class_operation public return_type class_ref 161026 // QString
+	nparams 2
+	  param in name "stm" type class_ref 3336066 // SelectStatement
+	  param in name "db" type class_ref 405122 // QSqlDatabase
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 3008642 "SelectFieldSqlTransform"
