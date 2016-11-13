@@ -22,7 +22,6 @@
 #define MDT_SQL_SELECT_STATEMENT_H
 
 #include "SelectOperator.h"
-#include "SelectField.h"
 #include "SelectFieldList.h"
 #include "JoinOperator.h"
 #include "FromClause.h"
@@ -134,10 +133,6 @@ namespace Mdt{ namespace Sql{
     {
       return mSelectOperator;
     }
-
-    /*! \brief Add a field to the statement
-     */
-//     void addField(const SelectTable & table, const SelectField & field);
 
     /*! \brief Add a field by specifying table and field
      *
@@ -262,6 +257,17 @@ namespace Mdt{ namespace Sql{
      * \pre expr must not be null
      */
     void setWhereExpression(const WhereExpression & expr);
+
+    /*! \brief Check if this statement is null
+     *
+     * A select statement is null as long as:
+     *  - No table was set
+     *  - No field was added
+     */
+    bool isNull() const
+    {
+      return (mFromClause.isNull() || mFieldList.isEmpty());
+    }
 
     /*! \internal Get list of fields
      *

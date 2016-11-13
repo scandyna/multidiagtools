@@ -66,9 +66,9 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Set select operator
      */
-    void setSelectOperator(View::SelectOperator s)
+    void setSelectOperator(SelectOperator op)
     {
-      pvView.setSelectOperator(s);
+      pvView.setSelectOperator(op);
     }
 
     /*! \brief Set table

@@ -336,7 +336,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Get select key word
      */
-    QString selectKeyWord(View::SelectOperator op) const;
+    QString selectKeyWord(Mdt::Sql::SelectOperator op) const;
 
     /*! \brief Get JOIN operator key word
      */

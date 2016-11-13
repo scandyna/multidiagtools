@@ -20,10 +20,12 @@
  ****************************************************************************/
 #include "SchemaViewTest.h"
 #include "Mdt/Application.h"
+#include "Mdt/Sql/Schema/View.h"
+#include "Mdt/Sql/Schema/ViewSqlTransform.h"
+
 #include "Mdt/Sql/Schema/TableTemplate.h"
 #include "Mdt/Sql/Schema/JoinClause.h"
 #include "Mdt/Sql/Schema/JoinHelper.h"
-#include "Mdt/Sql/Schema/View.h"
 #include "Mdt/Sql/Schema/ViewList.h"
 #include "Mdt/Sql/Schema/ForeignKey.h"
 #include "Schema/Client_tbl.h"
@@ -33,8 +35,15 @@
 #include <QTableView>
 #include <QTreeView>
 
+namespace Sql = Mdt::Sql;
+
 void SchemaViewTest::initTestCase()
 {
+  // Get database instance
+  mDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  if(!mDatabase.isValid()){
+    QSKIP("QSQLITE driver is not available - Skip all tests");  // Will also skip all tests
+  }
 }
 
 void SchemaViewTest::cleanupTestCase()
@@ -44,6 +53,122 @@ void SchemaViewTest::cleanupTestCase()
 /*
  * Tests
  */
+
+void SchemaViewTest::selectOperatorTest()
+{
+  using Sql::SelectOperator;
+  using Sql::Schema::View;
+
+  // Default operator
+  View view;
+  QVERIFY(view.selectOperator() == SelectOperator::Select);
+  // Set
+  view.setSelectOperator(SelectOperator::SelectDistinct);
+  QVERIFY(view.selectOperator() == SelectOperator::SelectDistinct);
+}
+
+void SchemaViewTest::addFieldTest()
+{
+  using Sql::Schema::View;
+  using Sql::SelectTable;
+  using Sql::FieldName;
+  using Sql::TableName;
+
+  SelectTable CLI(TableName("Client_tbl"), "CLI");
+  View view;
+  /*
+   * Add fields using avaliable overloads
+   */
+  view.addField(CLI, FieldName("A"), "A_alias");
+  view.addField(CLI, FieldName("B"));
+  view.addField(FieldName("C"), "C_alias");
+  view.addField(FieldName("D"));
+  view.addAllFields(CLI);
+  view.addAllFields();
+  view.addRawSqlFieldExpression("CustomField AS CustomAlias");
+  QCOMPARE(view.selectStatement().fieldList().size(), 7);
+  QCOMPARE(view.selectStatement().fieldList().tableNameAt(0), QString("CLI"));
+  QCOMPARE(view.selectStatement().fieldList().tableNameAt(1), QString("CLI"));
+  QVERIFY(view.selectStatement().fieldList().tableNameAt(2).isEmpty());
+  QVERIFY(view.selectStatement().fieldList().tableNameAt(3).isEmpty());
+  QCOMPARE(view.selectStatement().fieldList().tableNameAt(4), QString("CLI"));
+  QVERIFY(view.selectStatement().fieldList().tableNameAt(5).isEmpty());
+  QVERIFY(view.selectStatement().fieldList().tableNameAt(6).isEmpty());
+}
+
+void SchemaViewTest::isNullTest()
+{
+  using Sql::Schema::View;
+  using Sql::SelectTable;
+  using Sql::FieldName;
+  using Sql::TableName;
+
+  SelectTable CLI(TableName("Client_tbl"), "CLI");
+
+  View view1;
+  QVERIFY(view1.isNull());
+  view1.setName("view1");
+  QVERIFY(view1.isNull());
+  view1.setFromTable(CLI);
+  QVERIFY(view1.isNull());
+  view1.addAllFields();
+  QVERIFY(!view1.isNull());
+
+  View view2;
+  QVERIFY(view2.isNull());
+  view2.setFromTable(CLI);
+  QVERIFY(view2.isNull());
+  view2.setName("view2");
+  QVERIFY(view2.isNull());
+  view2.addAllFields();
+  QVERIFY(!view2.isNull());
+
+  View view3;
+  QVERIFY(view3.isNull());
+  view3.setFromTable(CLI);
+  QVERIFY(view3.isNull());
+  view3.addAllFields();
+  QVERIFY(view3.isNull());
+  view3.setName("view3");
+  QVERIFY(!view3.isNull());
+}
+
+void SchemaViewTest::dropViewSqlTransformTest()
+{
+  using Sql::Schema::ViewSqlTransform;
+  using Sql::Schema::View;
+
+  auto db = mDatabase;
+  QString expectedSql;
+
+  View view1;
+  view1.setName("view1");
+  expectedSql = "DROP VIEW IF EXISTS \"view1\";";
+  QCOMPARE( ViewSqlTransform::getSqlToDropView(view1, db) , expectedSql );
+}
+
+void SchemaViewTest::createViewSqlTransformTest()
+{
+  using Sql::Schema::ViewSqlTransform;
+  using Sql::Schema::View;
+  using Sql::SelectTable;
+  using Sql::TableName;
+
+  auto db = mDatabase;
+  QString expectedSql;
+  SelectTable CLI(TableName("Client_tbl"), "CLI");
+
+  View view1;
+  view1.setName("view1");
+  view1.addAllFields();
+  view1.setFromTable(CLI);
+  expectedSql = "CREATE VIEW IF NOT EXISTS \"view1\" AS\n"\
+                "SELECT\n"\
+                " *\n"\
+                "FROM \"Client_tbl\" \"CLI\";";
+  QCOMPARE( ViewSqlTransform::getSqlToCreateView(view1, db) , expectedSql );
+}
+
 
 void SchemaViewTest::mainTableFieldTest()
 {
@@ -479,21 +604,21 @@ void SchemaViewTest::viewTest()
   /*
    * Initial state
    */
-  QVERIFY(view.selectOperator() == View::Select);
+//   QVERIFY(view.selectOperator() == View::Select);
   QVERIFY(view.isNull());
   /*
    * Simple (single table) view - No alias for table name
    */
   view.clear();
   view.setName("Simple_view");
-  view.setSelectOperator(View::SelectDistinct);
+//   view.setSelectOperator(View::SelectDistinct);
   view.setTable(ClientTv);
   view.addSelectField(ClientTv, client.Id_PK());
   view.addSelectField(ClientTv, client.Name(), "ClientName");
   // Check
   QVERIFY(!view.isNull());
   QCOMPARE(view.name(), QString("Simple_view"));
-  QVERIFY(view.selectOperator() == View::SelectDistinct);
+//   QVERIFY(view.selectOperator() == View::SelectDistinct);
   QCOMPARE(view.tableName(), QString("Client_tbl"));
   QVERIFY(view.tableNameAlias().isEmpty());
   QCOMPARE(view.selectFieldList().size(), 2);
@@ -506,7 +631,7 @@ void SchemaViewTest::viewTest()
    */
   view.clear();
   QVERIFY(view.name().isEmpty());
-  QVERIFY(view.selectOperator() == View::Select);
+//   QVERIFY(view.selectOperator() == View::Select);
   QVERIFY(view.tableName().isEmpty());
   QVERIFY(view.selectFieldList().isEmpty());
   QVERIFY(view.joinClauseList().isEmpty());
@@ -516,14 +641,14 @@ void SchemaViewTest::viewTest()
    */
   view.clear();
   view.setName("Simple_view");
-  view.setSelectOperator(View::SelectDistinct);
+//   view.setSelectOperator(View::SelectDistinct);
   view.setTable(CLI);
   view.addSelectField(CLI, client.Id_PK());
   view.addSelectField(CLI, client.Name(), "ClientName");
   // Check
   QVERIFY(!view.isNull());
   QCOMPARE(view.name(), QString("Simple_view"));
-  QVERIFY(view.selectOperator() == View::SelectDistinct);
+//   QVERIFY(view.selectOperator() == View::SelectDistinct);
   QCOMPARE(view.tableName(), QString("Client_tbl"));
   QCOMPARE(view.tableNameAlias(), QString("CLI"));
   QCOMPARE(view.selectFieldList().size(), 2);
@@ -536,7 +661,7 @@ void SchemaViewTest::viewTest()
    */
   view.clear();
   QVERIFY(view.name().isEmpty());
-  QVERIFY(view.selectOperator() == View::Select);
+//   QVERIFY(view.selectOperator() == View::Select);
   QVERIFY(view.tableName().isEmpty());
   QVERIFY(view.selectFieldList().isEmpty());
   QVERIFY(view.joinClauseList().isEmpty());
@@ -558,7 +683,7 @@ void SchemaViewTest::viewTest()
   // Check
   QVERIFY(!view.isNull());
   QCOMPARE(view.name(), QString("CLI_ADR_view"));
-  QVERIFY(view.selectOperator() == View::Select);
+//   QVERIFY(view.selectOperator() == View::Select);
   QCOMPARE(view.tableName(), QString("Client_tbl"));
   QCOMPARE(view.selectFieldList().size(), 3);
   QCOMPARE(view.selectFieldList().tableNameAt(0), QString("CLI"));
@@ -575,7 +700,7 @@ void SchemaViewTest::viewTest()
    */
   view.clear();
   QVERIFY(view.name().isEmpty());
-  QVERIFY(view.selectOperator() == View::Select);
+//   QVERIFY(view.selectOperator() == View::Select);
   QVERIFY(view.tableName().isEmpty());
   QVERIFY(view.selectFieldList().isEmpty());
   QVERIFY(view.joinClauseList().isEmpty());

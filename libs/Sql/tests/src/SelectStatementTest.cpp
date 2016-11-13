@@ -65,7 +65,6 @@ void SelectStatementTest::selectOperatorTest()
 void SelectStatementTest::addFieldTest()
 {
   using Sql::SelectStatement;
-  using Sql::SelectField;
   using Sql::SelectTable;
   using Sql::FieldName;
   using Sql::TableName;
@@ -84,7 +83,6 @@ void SelectStatementTest::addFieldTest()
   /*
    * Add fields using avaliable overloads
    */
-//   stm.addField(CLI, SelectField("A", "A_alias") );
   stm.addField(CLI, FieldName("A"), "A_alias");
   stm.addField(CLI, FieldName("B"));
   stm.addField(FieldName("C"), "C_alias");
@@ -163,6 +161,30 @@ void SelectStatementTest::addFieldTest()
 //   QCOMPARE(list.tableNameAt(0), QString("CLI"));
 //   QCOMPARE(list.selectFieldAt(0).fieldName(), QString("*"));
 // }
+
+void SelectStatementTest::isNullTest()
+{
+  using Sql::SelectStatement;
+  using Sql::SelectTable;
+  using Sql::FieldName;
+  using Sql::TableName;
+
+  SelectTable CLI(TableName("Client_tbl"), "CLI");
+
+  SelectStatement stm1;
+  QVERIFY(stm1.isNull());
+  stm1.addAllFields();
+  QVERIFY(stm1.isNull());
+  stm1.setFromTable(CLI);
+  QVERIFY(!stm1.isNull());
+
+  SelectStatement stm2;
+  QVERIFY(stm2.isNull());
+  stm2.setFromTable(CLI);
+  QVERIFY(stm2.isNull());
+  stm2.addAllFields();
+  QVERIFY(!stm2.isNull());
+}
 
 void SelectStatementTest::simpleSelectTest()
 {

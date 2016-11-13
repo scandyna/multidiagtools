@@ -21,6 +21,10 @@
 #ifndef MDT_SQL_SCHEMA_VIEW_H
 #define MDT_SQL_SCHEMA_VIEW_H
 
+#include "../SelectStatement.h"
+#include "../SelectTable.h"
+#include "../FieldName.h"
+
 #include "ViewTable.h"
 #include "Field.h"
 #include "Mdt/Sql/SelectFieldList.h"
@@ -29,6 +33,7 @@
 #include "SingleFieldPrimaryKey.h"
 #include "JoinClauseList.h"
 #include "JoinClause.h"
+
 #include <QString>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -40,10 +45,27 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *
    * Typical usage:
    * \code
-   *  #include "Mdt/Sql/Schema/View.h"
-   *  #include "MyEntities/Client.h"  // A entitiy defined with TableTemplate
+   * #include "Mdt/Sql/Schema/View.h"
+   * #include "MyEntities/Client.h"   // A entitiy defined with TableTemplate
+   * #include "MyEntities/Address.h"  // A entitiy defined with TableTemplate
    *
-   *  using Mdt::Sql::Schema::View;
+   * namespace Sql = Mdt::Sql;
+   *
+   * using Sql::Schema::View;
+   * using Sql::SelectTable;
+   *
+   * // Create instances of defined entities
+   * Client client;
+   * Address address;
+   *
+   * // Define tables with their aliases
+   * SelectTable CLI(client, "CLI");
+   * SelectTable ADR(address, "ADR");
+   *
+   * // Create view
+   * View view;
+   * view.setName("Client_address_view");
+   *
    *  using Mdt::Sql::Schema::ViewTable;
    *  using Mdt::Sql::Schema::TableName;
    *  using Mdt::Sql::Schema::FieldName;
@@ -52,17 +74,12 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *  using Mdt::Sql::Schema::MainTableField;
    *  using Mdt::Sql::Schema::TableToJoinField;
    *
-   *  // Create instances of defined entities
-   *  Client client;
    *
-   *  // Define tables with their aliases
-   *  ViewTable CLI(client, "CLI");
-   *  ViewTable ADR(TableName("Address_tbl"), "ADR");
    *  JoinClause join;
    *  JoinKey key;
-   *  View view;
    *
-   *  view.setName("Client_address_view");
+   *
+   *  
    *  view.setTable(CLI);
    *  view.addSelectField(CLI, client.Id_PK(), "Client_Id");
    *  view.addSelectField(CLI, client.Name());
@@ -73,22 +90,26 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *  join.addKey( MainTableField(client.Id_PK()), TableToJoinField("Client_Id_FK") );
    *  view.addJoinClause(join);
    * \endcode
+   *
+   * \sa SelectStatement
    */
   class View
   {
    public:
 
     /*! \brief Select operator
+     *
+     * \deprecated
      */
-    enum SelectOperator
-    {
-      Select,         /*!< SELECT operator */
-      SelectDistinct  /*!< SELECT DISTINCT oprator */
-    };
+//     enum SelectOperator
+//     {
+//       Select,         /*!< SELECT operator */
+//       SelectDistinct  /*!< SELECT DISTINCT oprator */
+//     };
 
-    /*! \brief Constructor
-     */
-    View();
+//     /*! \brief Constructor
+//      */
+//     View();
 
     /*! \brief Set the name of the view
      */
@@ -98,7 +119,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     QString name() const
     {
-      return pvName;
+      return mName;
     }
 
     /*! \brief Set select operator
@@ -111,28 +132,79 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     SelectOperator selectOperator() const
     {
-      return pvSelectOperator;
+      return mSelectStatement.selectOperator();
     }
+
+    /*! \brief Add a field by specifying table and field
+     *
+     * \pre table must not be null
+     * \pre field must not be null
+     */
+    void addField(const SelectTable & table, const FieldName & field , const QString & fieldAlias = QString());
+
+    /*! \brief Add a field by specifying field
+     *
+     * \pre field must not be null
+     */
+    void addField(const FieldName & field , const QString & fieldAlias = QString());
+
+    /*! \brief Add all fields for table (the * in SQL)
+     *
+     * \pre table must not be null
+     */
+    void addAllFields(const SelectTable & table);
+
+    /*! \brief Add all fields (the * in SQL, not table defined)
+     */
+    void addAllFields();
+
+    /*! \brief Add a raw SQL string to select a field
+     *
+     * \pre sql must not be a empty string
+     */
+    void addRawSqlFieldExpression(const QString & sql);
+
+    /*! \brief Set table
+     *
+     * This is the same than setFromTable()
+     */
+    void setTable(const SelectTable & table);
+
+    /*! \brief Set from table
+     *
+     * If a raw SQL string was set,
+     *  it will be cleared.
+     *
+     * \pre No joined table must allready been set.
+     * \pre table must not be null.
+     */
+    void setFromTable(const SelectTable & table);
+
 
     /*! \brief Set table
      *
      * Will be used for the FROM clause
+     * \deprecated
      */
     void setTable(const ViewTable & table);
 
     /*! \brief Add a field to select
+     * \deprecated
      */
     void addSelectField(const ViewTable & table, const Field & field, const QString & fieldAlias = QString());
 
     /*! \brief Add a field to select
+     * \deprecated
      */
     void addSelectField(const ViewTable & table, const FieldName & fieldName, const QString & fieldAlias = QString());
 
     /*! \brief Add a field to select
+     * \deprecated
      */
     void addSelectField(const ViewTable & table, const AutoIncrementPrimaryKey & pk, const QString & fieldAlias = QString());
 
     /*! \brief Add a field to select
+     * \deprecated
      */
     void addSelectField(const ViewTable & table, const SingleFieldPrimaryKey & pk, const QString & fieldAlias = QString());
 
@@ -140,6 +212,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *
      * For example, if table has its alias set to "CLI",
      *  the equivalent SQL statement will be SELECT CLI.*
+     * \deprecated
      */
     void addSelectAllFields(const ViewTable & table);
 
@@ -171,6 +244,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     }
 
     /*! \brief Get select field list
+     * \deprecated
      */
     SelectFieldList selectFieldList() const
     {
@@ -178,10 +252,12 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     }
 
     /*! \brief Add a JOIN clause
+     * \deprecated
      */
     void addJoinClause(const JoinClause & join);
 
     /*! \brief Get list of JOIN clauses
+     * \deprecated
      */
     JoinClauseList joinClauseList() const
     {
@@ -190,24 +266,33 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Check if this View is null
      *
-     * A View is null if:
+     * A view is null as long as:
      *  - View name was not set
-     *  - (Main) table was not set
-     *  - No select field was added
+     *  - No table was set
+     *  - No field was added
      */
     bool isNull() const
     {
-      return ( pvName.isEmpty() || pvTable.isNull() || pvSelectFieldList.isEmpty() );
+      return ( mName.isEmpty() || mSelectStatement.isNull() );
     }
 
     /*! \brief Clear
      */
     void clear();
 
+    /*! \internal Access select statement
+     */
+    const SelectStatement & selectStatement() const
+    {
+      return mSelectStatement;
+    }
+
    private:
 
-    SelectOperator pvSelectOperator;
-    QString pvName;
+    QString mName;
+    Mdt::Sql::SelectStatement mSelectStatement;
+
+//     SelectOperator pvSelectOperator;
     ViewTable pvTable;
     SelectFieldList pvSelectFieldList;
     JoinClauseList pvJoinClauseList;

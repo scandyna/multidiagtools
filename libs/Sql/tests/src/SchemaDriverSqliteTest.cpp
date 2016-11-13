@@ -1627,7 +1627,7 @@ void SchemaDriverSqliteTest::viewDefinitionTest()
    */
   view.clear();
   view.setName("Client_view");
-  view.setSelectOperator(View::SelectDistinct);
+//   view.setSelectOperator(View::SelectDistinct);
   view.setTable(CientTv);
   view.addSelectField(CientTv, client.Id_PK());
   view.addSelectField(CientTv, client.Name());

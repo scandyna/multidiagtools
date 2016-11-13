@@ -9,13 +9,11 @@ diagrams
     120 110 100 8 0 0
   classdiagram_ref 2760962 // ItemViewController
     983 906 100 7 0 142
-  classdiagram_ref 2955138 // SelectStatement
+  active  classdiagram_ref 2593922 // View
     956 908 100 18 0 0
-  active  classdiagram_ref 3001730 // SelectStatementSqlTransform
-    956 908 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 4831234 // getSql
+selected operation_ref 3116674 // addSelectField
 open
   
   package_ref 409858 // principes
@@ -26,7 +24,9 @@ open
   package_ref 516226 // SqlItemModel
   
   package_ref 582274 // SqlItemEditor
-  class_ref 3403778 // SelectStatementSqlTransform
+  class_ref 1994754 // View
+  class_ref 3437186 // ViewSqlTransform
+  classview_ref 1405954 // Select
   class_ref 3424002 // SelectAllField
   operation_ref 4810498 // addAllFields
   operation_ref 4810626 // addRawSqlFieldExpression

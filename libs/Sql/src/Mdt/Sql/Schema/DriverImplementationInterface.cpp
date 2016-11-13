@@ -685,14 +685,14 @@ QString DriverImplementationInterface::escapeFieldDefaultValue(const Field & fie
   return field.defaultValue().toString();
 }
 
-QString DriverImplementationInterface::selectKeyWord(View::SelectOperator op) const
+QString DriverImplementationInterface::selectKeyWord(Mdt::Sql::SelectOperator op) const
 {
-  switch(op){
-    case View::Select:
-      return QStringLiteral("SELECT");
-    case View::SelectDistinct:
-      return QStringLiteral("SELECT");
-  }
+//   switch(op){
+//     case View::Select:
+//       return QStringLiteral("SELECT");
+//     case View::SelectDistinct:
+//       return QStringLiteral("SELECT");
+//   }
   return QString();
 }
 

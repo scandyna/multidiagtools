@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include <QtTest/QtTest>
+#include <QSqlDatabase>
 
 class SchemaViewTest : public QObject
 {
@@ -32,6 +33,15 @@ class SchemaViewTest : public QObject
 
   void initTestCase();
   void cleanupTestCase();
+
+  void selectOperatorTest();
+
+  void addFieldTest();
+
+  void isNullTest();
+
+  void dropViewSqlTransformTest();
+  void createViewSqlTransformTest();
 
   void mainTableFieldTest();
   void tableToJoinFieldTest();
@@ -44,6 +54,10 @@ class SchemaViewTest : public QObject
   void viewTableTest();
   void viewTest();
   void viewListTest();
+
+ private:
+
+  QSqlDatabase mDatabase;
 };
 
 #endif // #ifndef MDT_SQL_SCHEMA_VIEW_TEST_H

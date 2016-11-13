@@ -23,20 +23,69 @@
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-View::View()
- : pvSelectOperator(Select)
-{
-}
+// View::View()
+//  : pvSelectOperator(Select)
+// {
+// }
 
 void View::setName(const QString & name)
 {
-  pvName = name;
+  mName = name;
 }
 
-void View::setSelectOperator(View::SelectOperator s)
+void View::setSelectOperator(SelectOperator op)
 {
-  pvSelectOperator = s;
+  mSelectStatement.setSelectOperator(op);
 }
+
+void View::addField(const SelectTable & table, const FieldName & field, const QString & fieldAlias)
+{
+  Q_ASSERT(!table.isNull());
+  Q_ASSERT(!field.isNull());
+
+  mSelectStatement.addField(table, field, fieldAlias);
+}
+
+void View::addField(const FieldName & field, const QString & fieldAlias)
+{
+  Q_ASSERT(!field.isNull());
+
+  mSelectStatement.addField(field, fieldAlias);
+}
+
+void View::addAllFields(const SelectTable & table)
+{
+  Q_ASSERT(!table.isNull());
+
+  mSelectStatement.addAllFields(table);
+}
+
+void View::addAllFields()
+{
+  mSelectStatement.addAllFields();
+}
+
+void View::addRawSqlFieldExpression(const QString & sql)
+{
+  Q_ASSERT(!sql.isEmpty());
+
+  mSelectStatement.addRawSqlFieldExpression(sql);
+}
+
+void View::setTable(const SelectTable & table)
+{
+  Q_ASSERT(!table.isNull());
+
+  mSelectStatement.setTable(table);
+}
+
+void View::setFromTable(const SelectTable & table)
+{
+  Q_ASSERT(!table.isNull());
+
+  mSelectStatement.setFromTable(table);
+}
+
 
 void View::setTable(const ViewTable& table)
 {
@@ -75,8 +124,8 @@ void View::addJoinClause(const JoinClause & join)
 
 void View::clear()
 {
-  pvSelectOperator = Select;
-  pvName.clear();
+//   pvSelectOperator = Select;
+  mName.clear();
   pvTable.clear();
   pvSelectFieldList.clear();
   pvJoinClauseList.clear();

@@ -18,42 +18,38 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SELECT_STATEMENT_TEST_H
-#define MDT_SELECT_STATEMENT_TEST_H
+#ifndef MDT_SQL_SCHEMA_VIEW_SQL_TRANSFORM_H
+#define MDT_SQL_SCHEMA_VIEW_SQL_TRANSFORM_H
 
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QSqlDatabase>
+#include <QString>
 
-class SelectStatementTest : public QObject
-{
- Q_OBJECT
+class QSqlDatabase;
 
- private slots:
+namespace Mdt{ namespace Sql{ namespace Schema{
 
-  void initTestCase();
-  void cleanupTestCase();
+  class View;
 
-  void selectOperatorTest();
+  /*! \brief Transform a View to its SQL representation
+   */
+  class ViewSqlTransform
+  {
+   public:
 
-  void addFieldTest();
-//   void addAllFieldsTest();
+    /*! \brief Get SQL string to create view
+     *
+     * \pre view must not be null
+     * \pre db must be valid (must have a driver loaded)
+     */
+    static QString getSqlToCreateView(const View & view, const QSqlDatabase & db);
 
-  void isNullTest();
+    /*! \brief Get SQL string to drop view
+     *
+     * \pre view must have its name set
+     * \pre db must be valid (must have a driver loaded)
+     */
+    static QString getSqlToDropView(const View & view, const QSqlDatabase & db);
+  };
 
-  void simpleSelectTest();
-  void simpleSelectWithSchemaTest();
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{
 
-  void selectJoinTest();
-
-  void selectFromSqlTransformTest();
-  void selectFromJoinSqlTransformTest();
-  void selectFromWhereSqlTransformTest();
-
- private:
-
-  QSqlDatabase mDatabase;
-};
-
-
-#endif // #ifndef MDT_SELECT_STATEMENT_TEST_H
+#endif // #ifndef MDT_SQL_SCHEMA_VIEW_SQL_TRANSFORM_H
