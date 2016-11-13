@@ -37,18 +37,10 @@
 #include "IndexList.h"
 #include "Table.h"
 #include "TableTemplate.h"
-
-// #include "JoinOperator.h"
-// #include "JoinClause.h"
-
 #include "View.h"
 #include "TablePopulation.h"
 #include "Trigger.h"
 #include "Schema.h"
-
-// #include "Mdt/Sql/SelectField.h"
-// #include "Mdt/Sql/SelectFieldList.h"
-
 #include "Mdt/Error.h"
 #include "Mdt/Expected.h"
 #include <QSqlDatabase>
@@ -243,36 +235,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     bool dropTable(const Table & table);
 
-    /*! \brief Get SelectField definition
-     *
-     * Can be overloaded if default implementation does not work for a specific DBMS
-     */
-//     virtual QString getSelectFieldDefinition(const SelectField & selectField) const;
-
-    /*! \brief Get SelectFieldList definition
-     *
-     * Can be overloaded if default implementation does not work for a specific DBMS
-     */
-//     virtual QString getSelectFieldListDefinition(const SelectFieldList & selectFieldList) const;
-
-    /*! \brief Get JoinClause definition
-     *
-     * Can be overloaded if default implementation does not work for a specific DBMS
-     */
-//     virtual QString getJoinClauseDefinition(const JoinClause & join) const;
-
-    /*! \brief Get SQL statement to create a view
-     *
-     * Can be overloaded if default implementation does not work for a specific DBMS
-     */
-//     virtual QString getSqlToCreateView(const View & view) const;
-
-    /*! \brief Get SQL statement to drop a view
-     *
-     * Can be overloaded if default implementation does not work for a specific DBMS
-     */
-//     virtual QString getSqlToDropView(const View & view) const;
-
     /*! \brief Create a view in database
      */
     bool createView(const View & view);
@@ -337,22 +299,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Escape default value
      */
     QString escapeFieldDefaultValue(const Field & field) const;
-
-    /*! \brief Get select key word
-     */
-    QString selectKeyWord(Mdt::Sql::SelectOperator op) const;
-
-    /*! \brief Get JOIN operator key word
-     */
-    QString joinOperatorKeyWord(JoinOperator::Operator op) const;
-
-    /*! \brief Get JOIN constraint operator key word
-     */
-    QString joinConstraintOperatorKeyWord(JoinOperator::ConstraintOperator op) const;
-
-    /*! \brief Get JOIN field comparison operator
-     */
-    QString joinFieldComparisonOperatorKeyWord(JoinOperator::AbsoluteFieldComparisonOperator op) const;
 
     /*! \brief Get trigger event key word
      */

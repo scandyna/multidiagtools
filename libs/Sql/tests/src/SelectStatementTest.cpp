@@ -143,25 +143,6 @@ void SelectStatementTest::addFieldTest()
 //   QVERIFY(list.selectFieldAt(8).alias().isEmpty());
 }
 
-// void SelectStatementTest::addAllFieldsTest()
-// {
-//   using Sql::SelectStatement;
-//   using Sql::SelectTable;
-//   using Sql::TableName;
-// 
-//   SelectTable CLI(TableName("Client_tbl"), "CLI");
-//   SelectStatement stm;
-// 
-//   stm.addAllFields(CLI);
-//   /*
-//    * Check
-//    */
-//   auto list = stm.fieldList();
-//   QCOMPARE(list.size(), 1);
-//   QCOMPARE(list.tableNameAt(0), QString("CLI"));
-//   QCOMPARE(list.selectFieldAt(0).fieldName(), QString("*"));
-// }
-
 void SelectStatementTest::isNullTest()
 {
   using Sql::SelectStatement;

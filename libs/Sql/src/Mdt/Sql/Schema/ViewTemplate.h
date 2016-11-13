@@ -216,58 +216,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       mView.leftJoinTable(table, constraintOnTable);
     }
 
-    
-    
-    
-    /*! \brief Set table
-     */
-    void setTable(const ViewTable & table)
-    {
-      mView.setTable(table);
-    }
-
-    /*! \brief Add a field to select
-     */
-    void addSelectField(const ViewTable & table, const Field & field, const QString & fieldAlias = QString())
-    {
-      mView.addSelectField(table, field, fieldAlias);
-    }
-
-    /*! \brief Add a field to select
-     */
-    void addSelectField(const ViewTable & table, const FieldName & fieldName, const QString & fieldAlias = QString())
-    {
-      mView.addSelectField(table, fieldName, fieldAlias);
-    }
-
-    /*! \brief Add a field to select
-     */
-    void addSelectField(const ViewTable & table, const AutoIncrementPrimaryKey & pk, const QString & fieldAlias = QString())
-    {
-      mView.addSelectField(table, pk, fieldAlias);
-    }
-
-    /*! \brief Add a field to select
-     */
-    void addSelectField(const ViewTable & table, const SingleFieldPrimaryKey & pk, const QString & fieldAlias = QString())
-    {
-      mView.addSelectField(table, pk, fieldAlias);
-    }
-
-    /*! \brief Add a select all field for table
-     */
-    void addSelectAllFields(const ViewTable & table)
-    {
-      mView.addSelectAllFields(table);
-    }
-
-    /*! \brief Add a JOIN clause
-     */
-    void addJoinClause(const JoinClause & join)
-    {
-      mView.addJoinClause(join);
-    }
-
    private:
 
     View mView;

@@ -27,15 +27,6 @@
 
 namespace Mdt{ namespace Sql{
 
-//   struct SelectFieldListItem
-//   {
-//     SelectField selectField;
-//     QString tableName;
-// 
-//     SelectFieldListItem(const QString & tbl, const SelectField & fld)
-//      : selectField(fld), tableName(tbl) {}
-//   };
-
   /*! \brief List of SelectFieldItem
    */
   class SelectFieldList
@@ -91,14 +82,6 @@ namespace Mdt{ namespace Sql{
       mItemList.emplace_back(SelectFieldRawSql(sql));
     }
 
-    /*! \brief Add a item
-     */
-    [[deprecated]]
-    void append(const QString & tableName, const SelectField & selectField)
-    {
-//       pvItemList.emplace_back(tableName, selectField);
-    }
-
     /*! \brief Get count of elements
      */
     int size() const
@@ -124,18 +107,6 @@ namespace Mdt{ namespace Sql{
       return mItemList[index];
     }
 
-    /*! \brief Get select field at index
-     *
-     * \pre index must be valid
-     */
-    [[deprecated]]
-    const SelectField & selectFieldAt(int index) const
-    {
-      Q_ASSERT(index >= 0);
-      Q_ASSERT(index < size());
-//       return pvItemList[index].selectField;
-    }
-
     /*! \brief Get table name or alias at index
      *
      * \pre index must be in valid range
@@ -156,7 +127,6 @@ namespace Mdt{ namespace Sql{
 
    private:
 
-//     std::vector<SelectFieldListItem> pvItemList;
     std::vector<SelectFieldItem> mItemList;
   };
 

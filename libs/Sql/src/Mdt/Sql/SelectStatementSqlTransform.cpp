@@ -57,6 +57,7 @@ QString SelectStatementSqlTransform::getSelectOperatorString(SelectOperator op)
     case SelectOperator::SelectDistinct:
       return QLatin1String("SELECT DISTINCT");
   }
+  return QString();
 }
 
 }} // namespace Mdt{ namespace Sql{

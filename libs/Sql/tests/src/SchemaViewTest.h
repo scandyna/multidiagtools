@@ -45,16 +45,6 @@ class SchemaViewTest : public QObject
   void dropViewSqlTransformTest();
   void createViewSqlTransformTest();
 
-  void mainTableFieldTest();
-  void tableToJoinFieldTest();
-  void joinKeyTest();
-  void joinKeyListTest();
-  void joinClauseTest();
-  void joinClauseListTest();
-  void joinHelperJoinFromFkTest();
-
-  void viewTableTest();
-  void viewTest();
   void viewListTest();
 
  private:

@@ -23,8 +23,6 @@
 #include "Client_tbl.h"
 #include "Address_tbl.h"
 
-#include "Mdt/Sql/Schema/JoinHelper.h"
-
 namespace Schema{
 
 namespace Sql = Mdt::Sql;
@@ -33,14 +31,6 @@ ClientAdrressView::ClientAdrressView()
 {
   using Sql::Schema::View;
   using Sql::SelectTable;
-  
-  
-  using Mdt::Sql::Schema::ViewTable;
-  using Mdt::Sql::Schema::JoinClause;
-  using Mdt::Sql::Schema::JoinOperator;
-  using Mdt::Sql::Schema::JoinHelper;
-  using Mdt::Sql::Schema::MainTableField;
-  using Mdt::Sql::Schema::TableToJoinField;
 
   // Create instance of our defined entities
   Client_tbl client;
@@ -57,19 +47,6 @@ ClientAdrressView::ClientAdrressView()
   addField(ADR, address.Street());
   setFromTable(CLI);
   joinTable(ADR);
-//   setTable(CLI);
-//   addSelectAllFields(CLI);
-//   addSelectField(ADR, address.Id_PK(), "Address_Id");
-//   addSelectField(ADR, address.Street());
-//   addJoinClause(JoinHelper::joinClauseFromTables(client, CLI, address, ADR, JoinOperator::Join));
-  /*
-   * Or, join clause can also be expressed manually
-   */
-//   JoinClause join;
-//   join.setMainTable(CLI);
-//   join.setTableToJoin(ADR);
-//   join.addKey( MainTableField(client.Id_PK()), TableToJoinField(address.Client_Id_FK()) );
-//   addJoinClause(join);
 }
 
 } // namespace Schema{

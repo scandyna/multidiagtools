@@ -59,11 +59,6 @@ class SchemaDriverSqliteTest : public QObject
   void reversePrimaryKeyTest();
   void reverseForeignKeyTest();
 
-//   void selectFieldDefinitionTest();
-//   void selectFieldListDefinitionTest();
-//   void joinClauseDefinitionTest();
-//   void viewDefinitionTest();
-
   void simpleCreateAndDropViewTest();
 
   void triggerDefinitionTest();

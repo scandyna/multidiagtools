@@ -25,11 +25,6 @@
 
 namespace Mdt{ namespace Sql{
 
-// void SelectStatement::addField(const SelectTable & table, const SelectField & field)
-// {
-//   mFieldList.append(table.aliasOrTableName(), field);
-// }
-
 void SelectStatement::addField(const SelectTable & table, const FieldName & field, const QString & fieldAlias)
 {
   Q_ASSERT(!table.isNull());

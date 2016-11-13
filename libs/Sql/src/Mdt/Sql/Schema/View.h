@@ -24,16 +24,6 @@
 #include "../SelectStatement.h"
 #include "../SelectTable.h"
 #include "../FieldName.h"
-
-#include "ViewTable.h"
-#include "Field.h"
-#include "Mdt/Sql/SelectFieldList.h"
-#include "Mdt/Sql/FieldName.h"
-#include "AutoIncrementPrimaryKey.h"
-#include "SingleFieldPrimaryKey.h"
-#include "JoinClauseList.h"
-#include "JoinClause.h"
-
 #include <QString>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -218,91 +208,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void leftJoinTable(const SelectTable & table, const SelectTable & constraintOnTable);
 
-
-
-    /*! \brief Set table
-     *
-     * Will be used for the FROM clause
-     * \deprecated
-     */
-    void setTable(const ViewTable & table);
-
-    /*! \brief Add a field to select
-     * \deprecated
-     */
-    void addSelectField(const ViewTable & table, const Field & field, const QString & fieldAlias = QString());
-
-    /*! \brief Add a field to select
-     * \deprecated
-     */
-    void addSelectField(const ViewTable & table, const FieldName & fieldName, const QString & fieldAlias = QString());
-
-    /*! \brief Add a field to select
-     * \deprecated
-     */
-    void addSelectField(const ViewTable & table, const AutoIncrementPrimaryKey & pk, const QString & fieldAlias = QString());
-
-    /*! \brief Add a field to select
-     * \deprecated
-     */
-    void addSelectField(const ViewTable & table, const SingleFieldPrimaryKey & pk, const QString & fieldAlias = QString());
-
-    /*! \brief Add a select all field for table
-     *
-     * For example, if table has its alias set to "CLI",
-     *  the equivalent SQL statement will be SELECT CLI.*
-     * \deprecated
-     */
-    void addSelectAllFields(const ViewTable & table);
-
-    /*! \brief Get table name
-     *
-     * Returns the table name of table set by setTable()
-     */
-    QString tableName() const
-    {
-      return pvTable.tableName();
-    }
-
-    /*! \brief Get table name alias
-     *
-     * Returns the table alias of table set by setTable()
-     */
-    QString tableNameAlias() const
-    {
-      return pvTable.alias();
-    }
-
-    /*! \brief Get table
-     *
-     * Returns the table set by setTable()
-     */
-    ViewTable table() const
-    {
-      return pvTable;
-    }
-
-    /*! \brief Get select field list
-     * \deprecated
-     */
-    SelectFieldList selectFieldList() const
-    {
-      return pvSelectFieldList;
-    }
-
-    /*! \brief Add a JOIN clause
-     * \deprecated
-     */
-    void addJoinClause(const JoinClause & join);
-
-    /*! \brief Get list of JOIN clauses
-     * \deprecated
-     */
-    JoinClauseList joinClauseList() const
-    {
-      return pvJoinClauseList;
-    }
-
     /*! \brief Check if this View is null
      *
      * A view is null as long as:
@@ -315,10 +220,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return ( mName.isEmpty() || mSelectStatement.isNull() );
     }
 
-    /*! \brief Clear
-     */
-    void clear();
-
     /*! \internal Access select statement
      */
     const SelectStatement & selectStatement() const
@@ -330,11 +231,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     QString mName;
     Mdt::Sql::SelectStatement mSelectStatement;
-
-//     SelectOperator pvSelectOperator;
-    ViewTable pvTable;
-    SelectFieldList pvSelectFieldList;
-    JoinClauseList pvJoinClauseList;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

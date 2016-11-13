@@ -2,80 +2,40 @@ format 211
 
 classcanvas 128002 class_ref 1994754 // View
   classdiagramsettings member_max_width 0 end
-  xyz 241 40 2000
+  xyz 41 165 2000
 end
 classcanvas 128130 class_ref 2960642 // SelectFieldList
-  classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 682 114 2000
+  classdiagramsettings hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 434 66 2000
 end
 classcanvas 128258 class_ref 2960770 // SelectFieldItem
-  classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 741 215 2006
+  classdiagramsettings hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 746 39 2006
 end
 classcanvas 128514 class_ref 1994882 // SelectField
-  classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 930 223 3005
-end
-classcanvas 129026 class_ref 1994626 // ViewTable
-  classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 49 103 3005
-end
-classcanvas 129410 class_ref 1995138 // JoinClause
-  classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 39 289 3011
-end
-classcanvas 129666 class_ref 2974466 // JoinClauseList
-  classdiagramsettings member_max_width 0 end
-  xyz 391 330 2000
+  classdiagramsettings hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 758 183 3005
 end
 classcanvas 130050 class_ref 2981250 // ViewList
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 496.5 2000
+  xyz 465.5 384.5 2000
 end
 classcanvas 130178 class_ref 3336066 // SelectStatement
-  classdiagramsettings member_max_width 0 end
-  xyz 250 547 2006
+  classdiagramsettings hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 479 210 2006
 end
 classcanvas 130562 class_ref 3437186 // ViewSqlTransform
   classdiagramsettings member_max_width 0 end
-  xyz 159 477 2000
+  xyz 40.5 384.5 2000
 end
 relationcanvas 128386 relation_ref 3324546 // <directional composition>
+  decenter_end 532
   from ref 128130 z 2007 to ref 128258
   no_role_a no_role_b
-  multiplicity_a_pos 801 188 3000 no_multiplicity_b
+  multiplicity_a_pos 730 105 3000 no_multiplicity_b
 end
 relationcanvas 128642 relation_ref 3324418 // <directional composition>
-  decenter_begin 457
   from ref 128258 z 3006 to ref 128514
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 128898 relation_ref 3331202 // <directional composition>
-  from ref 128002 z 2001 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 129282 relation_ref 2329090 // <directional composition>
-  from ref 128002 z 3006 to ref 129026
-  no_role_a no_role_b
-  multiplicity_a_pos 209 144 3000 no_multiplicity_b
-end
-relationcanvas 129538 relation_ref 2329218 // <directional composition>
-  decenter_begin 520
-  decenter_end 523
-  from ref 129410 z 3012 to ref 129026
-  no_role_a no_role_b
-  multiplicity_a_pos 110 195 3000 no_multiplicity_b
-end
-relationcanvas 129794 relation_ref 3344642 // <directional composition>
-  from ref 129666 z 3012 to ref 129410
-  no_role_a no_role_b
-  multiplicity_a_pos 219 362 3000 no_multiplicity_b
-end
-relationcanvas 129922 relation_ref 3344770 // <directional composition>
-  decenter_end 457
-  from ref 128002 z 2001 to ref 129666
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
@@ -85,6 +45,7 @@ relationcanvas 130306 relation_ref 3733250 // <directional composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130434 relation_ref 3796226 // <directional composition>
+  decenter_begin 468
   from ref 128002 z 2007 to ref 130178
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
