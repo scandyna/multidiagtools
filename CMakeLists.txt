@@ -272,9 +272,9 @@ add_test (mdtAlgorithmsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtalgori
 # mdtMathTest
 add_test (mdtMathTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtmathtest)
 # mdtErrorTest
-add_test (mdtErrorTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdterrortest)
+# add_test (mdtErrorTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdterrortest)
 # mdtErrorGuiTest
-add_test (mdtErrorGuiTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdterrorguitest)
+# add_test (mdtErrorGuiTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdterrorguitest)
 # mdtBufferTest
 add_test (mdtBufferTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtbuffertest)
 # mdtFrameTest
@@ -312,20 +312,20 @@ add_test (mdtIoWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtiowid
 add_test (mdtWidgetsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtwidgetstest)
 
 # mdtDataTableTest
-add_test (mdtDataTableTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtdatatabletest)
+# add_test (mdtDataTableTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtdatatabletest)
 
 # mdtDatabaseTestOld
-add_test (mdtDatabaseTestOld ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtdatabasetestold)
+# add_test (mdtDatabaseTestOld ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtdatabasetestold)
 
 # * mdtdatabase *
 add_test (mdtClConnectorTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtclconnectortest)
-add_test (mdtDatabaseTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtdatabasetest)
-add_test (mdtDatabaseWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtdatabasewidgettest)
+# add_test (mdtDatabaseTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtdatabasetest)
+# add_test (mdtDatabaseWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtdatabasewidgettest)
 add_test (mdtSqlCopierTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtsqlcopiertest)
 add_test (mdtSqlApplicationWidgetsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdatabase/mdtsqlapplicationwidgetstest)
 
 # mdtIoWidgetTest
-add_test (mdtIoWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtiowidgettest)
+# add_test (mdtIoWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtiowidgettest)
 
 # * mdtport *
 
