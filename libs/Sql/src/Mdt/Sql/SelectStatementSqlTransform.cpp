@@ -22,6 +22,7 @@
 #include "SelectStatement.h"
 #include "SelectFieldListSqlTransform.h"
 #include "FromClauseSqlTransform.h"
+#include "WhereExpression.h"
 #include <QSqlDatabase>
 #include <QLatin1Char>
 #include <QLatin1String>
@@ -41,6 +42,9 @@ QString SelectStatementSqlTransform::getSql(const SelectStatement & stm, const Q
       % SelectFieldListSqlTransform::getSql(stm.fieldList(), db) \
       % QLatin1Char('\n') \
       % FromClauseSqlTransform::getSql(stm.fromClause(), db);
+  if(!stm.whereExpression().isNull()){
+    sql += QLatin1String("\nWHERE ") % stm.whereExpression().toSql(db);
+  }
 
   return sql;
 }

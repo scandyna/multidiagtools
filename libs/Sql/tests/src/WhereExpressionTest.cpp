@@ -161,11 +161,13 @@ void WhereExpressionTest::expressionContructCopySqliteTest()
    * Default construct
    */
   WhereExpression exp;
+  QVERIFY(exp.isNull());
   /*
    * Construct
    */
   // Construct a expression
   WhereExpression exp1( A == 1 );
+  QVERIFY(!exp1.isNull());
   expectedSql = "\"A\".\"a\"=1";
   QCOMPARE(exp1.toSql(db), expectedSql);
   // Construct a expression (move constructor)

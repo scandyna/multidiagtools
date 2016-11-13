@@ -29,6 +29,7 @@
 #include "SelectTable.h"
 #include "JoinConstraintField.h"
 #include "JoinConstraintExpression.h"
+#include "WhereExpression.h"
 
 namespace Mdt{ namespace Sql{
 
@@ -54,6 +55,7 @@ namespace Mdt{ namespace Sql{
    * using Sql::FieldName;
    * using Sql::TableName;
    * using Sql::JoinConstraintField;
+   * using Sql::WhereField;
    *
    * // Define tables with their alias
    * SelectTable CLI(TableName("Client_tbl") , "CLI");
@@ -63,6 +65,9 @@ namespace Mdt{ namespace Sql{
    * JoinConstraintField clientId(CLI, FieldName("Id_PK"));
    * JoinConstraintField adrClientId(ADR, FieldName("Client_Id_FK"));
    *
+   * // Define fields for where expression
+   * WhereField clientName(CLI, FieldName("Name"));
+   *
    * // Create SELECT statement
    * SelectStatement stm;
    * stm.addField(CLI, FieldName("Id_PK"), "Client_Id");
@@ -71,6 +76,7 @@ namespace Mdt{ namespace Sql{
    * stm.addField(ADR, FieldName("Street"));
    * stm.setFromTable(CLI);
    * stm.joinTable(ADR, adrClientId == clientId);
+   * stm.setWhereExpression( (clientName == "Name 1") || (clientName == "Name 2") );
    * \endcode
    *
    * Above example does not use any predefined entities.
@@ -85,6 +91,7 @@ namespace Mdt{ namespace Sql{
    *
    * using Sql::SelectStatement;
    * using Sql::SelectTable;
+   * using Sql::WhereField;
    *
    * // Create instances of defined entities
    * Client client;
@@ -94,6 +101,9 @@ namespace Mdt{ namespace Sql{
    * SelectTable CLI(client , "CLI");
    * SelectTable ADR(address , "ADR");
    *
+   * // Define fields for where expression
+   * WhereField clientName(CLI, client.Name());
+   *
    * // Create SELECT statement
    * SelectStatement stm;
    * stm.addField(CLI, client.Id_PK(), "Client_Id");
@@ -102,6 +112,7 @@ namespace Mdt{ namespace Sql{
    * stm.addField(ADR, address.Stree());
    * stm.setFromTable(CLI);
    * stm.joinTable(ADR);
+   * stm.setWhereExpression( (clientName == "Name 1") || (clientName == "Name 2") );
    * \endcode
    */
   class SelectStatement
@@ -246,6 +257,12 @@ namespace Mdt{ namespace Sql{
      */
     void leftJoinTable(const SelectTable & table, const SelectTable & constraintOnTable);
 
+    /*! \brief Set where expression
+     *
+     * \pre expr must not be null
+     */
+    void setWhereExpression(const WhereExpression & expr);
+
     /*! \internal Get list of fields
      *
      * Used by transforms and unit tests
@@ -264,11 +281,21 @@ namespace Mdt{ namespace Sql{
       return mFromClause;
     }
 
+    /*! \internal Access mWhereExpression
+     *
+     * Used for transforms and unit tests
+     */
+    const WhereExpression & whereExpression() const
+    {
+      return mWhereExpression;
+    }
+
    private:
 
     SelectOperator mSelectOperator = SelectOperator::Select;
     SelectFieldList mFieldList;
     FromClause mFromClause;
+    WhereExpression mWhereExpression;
   };
 
 }} // namespace Mdt{ namespace Sql{

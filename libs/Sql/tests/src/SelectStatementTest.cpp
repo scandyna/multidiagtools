@@ -285,9 +285,7 @@ void SelectStatementTest::selectFromJoinSqlTransformTest()
 {
   using Sql::SelectStatementSqlTransform;
   using Sql::SelectStatement;
-  using Sql::SelectOperator;
   using Sql::SelectTable;
-  using Sql::FieldName;
 
   Schema::Client_tbl client;
   Schema::Address_tbl address;
@@ -312,7 +310,26 @@ void SelectStatementTest::selectFromJoinSqlTransformTest()
 
 void SelectStatementTest::selectFromWhereSqlTransformTest()
 {
-  QFAIL("Not Implemented");
+  using Sql::SelectStatementSqlTransform;
+  using Sql::SelectStatement;
+  using Sql::SelectTable;
+  using Sql::WhereField;
+
+  Schema::Client_tbl client;
+  SelectTable CLI(client, "CLI");
+  WhereField clientName(CLI, client.Name());
+  auto db = mDatabase;
+  QString expectedSql;
+
+  SelectStatement stm1;
+  stm1.addAllFields();
+  stm1.setFromTable(CLI);
+  stm1.setWhereExpression(clientName != "Name 1");
+  expectedSql = "SELECT\n"\
+                " *\n"\
+                "FROM \"Client_tbl\" \"CLI\"\n"\
+                "WHERE \"CLI\".\"Name\"<>'Name 1'";
+  QCOMPARE( SelectStatementSqlTransform::getSql(stm1, db) , expectedSql );
 }
 
 

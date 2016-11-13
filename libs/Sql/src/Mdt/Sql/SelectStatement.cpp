@@ -127,4 +127,11 @@ void SelectStatement::leftJoinTable(const SelectTable & table, const SelectTable
   mFromClause.joinTableOn(JoinOperator::LeftJoin, table, constraintOnTable);
 }
 
+void SelectStatement::setWhereExpression(const WhereExpression & expr)
+{
+  Q_ASSERT(!expr.isNull());
+
+  mWhereExpression = expr;
+}
+
 }} // namespace Mdt{ namespace Sql{
