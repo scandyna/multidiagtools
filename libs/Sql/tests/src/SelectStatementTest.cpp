@@ -283,7 +283,31 @@ void SelectStatementTest::selectFromSqlTransformTest()
 
 void SelectStatementTest::selectFromJoinSqlTransformTest()
 {
-  QFAIL("Not Implemented");
+  using Sql::SelectStatementSqlTransform;
+  using Sql::SelectStatement;
+  using Sql::SelectOperator;
+  using Sql::SelectTable;
+  using Sql::FieldName;
+
+  Schema::Client_tbl client;
+  Schema::Address_tbl address;
+  SelectTable CLI(client, "CLI");
+  SelectTable ADR(address, "ADR");
+  auto db = mDatabase;
+  QString expectedSql;
+
+  SelectStatement stm1;
+  stm1.addField(CLI, client.Name());
+  stm1.addAllFields(ADR);
+  stm1.setFromTable(CLI);
+  stm1.joinTable(ADR);
+  expectedSql = "SELECT\n"\
+                " \"CLI\".\"Name\",\n"\
+                " \"ADR\".*\n"\
+                "FROM \"Client_tbl\" \"CLI\"\n"\
+                " JOIN \"Address_tbl\" \"ADR\"\n"\
+                "  ON \"ADR\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\"";
+  QCOMPARE( SelectStatementSqlTransform::getSql(stm1, db) , expectedSql );
 }
 
 void SelectStatementTest::selectFromWhereSqlTransformTest()
