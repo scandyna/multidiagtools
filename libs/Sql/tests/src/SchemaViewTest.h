@@ -40,6 +40,8 @@ class SchemaViewTest : public QObject
 
   void isNullTest();
 
+  void joinTest();
+
   void dropViewSqlTransformTest();
   void createViewSqlTransformTest();
 

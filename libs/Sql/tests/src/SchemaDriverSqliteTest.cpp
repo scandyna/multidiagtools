@@ -22,7 +22,9 @@
 #include "Mdt/Application.h"
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/Schema/DriverSQLite.h"
+
 #include "Mdt/Sql/Schema/JoinHelper.h"
+
 #include "Schema/Client_tbl.h"
 #include "Schema/Address_tbl.h"
 #include "Schema/ClientAddressView.h"
@@ -35,23 +37,23 @@
 void SchemaDriverSqliteTest::initTestCase()
 {
   // Get database instance
-  pvDatabase = QSqlDatabase::addDatabase("QSQLITE");
-  if(!pvDatabase.isValid()){
+  mDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  if(!mDatabase.isValid()){
     QSKIP("QSQLITE driver is not available - Skip all tests");  // Will also skip all tests
   }
   // Create a database
   QVERIFY(pvTempFile.open());
   pvTempFile.close();
-  pvDatabase.setDatabaseName(pvTempFile.fileName());
-  QVERIFY(pvDatabase.open());
-  QSqlQuery query(pvDatabase);
+  mDatabase.setDatabaseName(pvTempFile.fileName());
+  QVERIFY(mDatabase.open());
+  QSqlQuery query(mDatabase);
   // Specify encoding (is important for some tests)
   QVERIFY(query.exec("PRAGMA encoding = \"UTF-8\""));
 }
 
 void SchemaDriverSqliteTest::cleanupTestCase()
 {
-  pvDatabase.close();
+  mDatabase.close();
 }
 
 /*
@@ -63,7 +65,7 @@ void SchemaDriverSqliteTest::driverInstanceTest()
   using Mdt::Sql::Schema::Driver;
   using Mdt::Sql::Schema::DriverType;
 
-  auto db = pvDatabase;
+  auto db = mDatabase;
   /*
    * Create a SQLite driver
    */
@@ -77,7 +79,7 @@ void SchemaDriverSqliteTest::availableFieldTypeTest()
 {
   using Mdt::Sql::Schema::FieldType;
 
-  Mdt::Sql::Schema::Driver driver(pvDatabase);
+  Mdt::Sql::Schema::Driver driver(mDatabase);
   QVERIFY(driver.isValid());
   auto list = driver.getAvailableFieldTypeList();
 
@@ -96,7 +98,7 @@ void SchemaDriverSqliteTest::fieldTypeMapTest()
 {
   using Mdt::Sql::Schema::FieldType;
 
-  Mdt::Sql::Schema::Driver driver(pvDatabase);
+  Mdt::Sql::Schema::Driver driver(mDatabase);
   QVERIFY(driver.isValid());
 
   /*
@@ -137,7 +139,7 @@ void SchemaDriverSqliteTest::fieldTypeFromStringTest()
 {
   using Mdt::Sql::Schema::FieldType;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
 
   QVERIFY(driver.fieldTypeFromString("BOOLEAN") == FieldType::Boolean);
   QVERIFY(driver.fieldTypeFromString("boolean") == FieldType::Boolean);
@@ -167,7 +169,7 @@ void SchemaDriverSqliteTest::fieldTypeFromStringTest()
 
 void SchemaDriverSqliteTest::fieldLengthFromStringTest()
 {
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
 
   QCOMPARE(driver.fieldLengthFromString("INTEGER"), -1);
   QCOMPARE(driver.fieldLengthFromString("VARCHAR"), -1);
@@ -184,7 +186,7 @@ void SchemaDriverSqliteTest::databaseDefaultCharsetTest()
 {
   using Mdt::Sql::Schema::Charset;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   Charset cs;
 
   /*
@@ -198,7 +200,7 @@ void SchemaDriverSqliteTest::collationDefinitionTest()
 {
   using Mdt::Sql::Schema::Collation;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   Collation collation;
 
   /*
@@ -236,7 +238,7 @@ void SchemaDriverSqliteTest::fieldDefinitionTest()
   using Mdt::Sql::Schema::FieldType;
   using Mdt::Sql::Schema::Field;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   QString expectedSql;
   Field field;
 
@@ -351,7 +353,7 @@ void SchemaDriverSqliteTest::autoIncrementPrimaryKeyDefinitionTest()
 {
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   QString expectedSql;
   AutoIncrementPrimaryKey pk;
 
@@ -368,7 +370,7 @@ void SchemaDriverSqliteTest::singleFieldPrimaryKeyDefinitionTest()
   using Mdt::Sql::Schema::SingleFieldPrimaryKey;
   using Mdt::Sql::Schema::FieldType;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   QString expectedSql;
   SingleFieldPrimaryKey pk;
 
@@ -417,7 +419,7 @@ void SchemaDriverSqliteTest::primaryKeyDefinitionTest()
   using Mdt::Sql::Schema::FieldType;
   using Mdt::Sql::Schema::Field;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   QString expectedSql;
   PrimaryKey pk;
   Field Id_A_PK, Id_B_PK;
@@ -454,7 +456,7 @@ void SchemaDriverSqliteTest::indexDefinitionTest()
   using Mdt::Sql::Schema::Index;
   using Mdt::Sql::Schema::Table;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   QString expectedSql;
   Field Id_A, Id_B;
   Index index;
@@ -523,7 +525,7 @@ void SchemaDriverSqliteTest::foreignKeyDefinitionTest()
   using Mdt::Sql::Schema::ParentTableFieldName;
   using Mdt::Sql::Schema::ChildTableFieldName;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   QString expectedSql;
   ForeignKey fk;
 
@@ -624,7 +626,7 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   using Mdt::Sql::Schema::ChildTableFieldName;
   using Mdt::Sql::Schema::ForeignKey;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   QString expectedSql;
   Table table;
 
@@ -916,7 +918,7 @@ void SchemaDriverSqliteTest::simpleCreateAndDropTableTest()
   using Mdt::Sql::Schema::FieldType;
   using Mdt::Sql::Schema::ForeignKey;
 
-  Mdt::Sql::Schema::Driver driver(pvDatabase);
+  Mdt::Sql::Schema::Driver driver(mDatabase);
   QVERIFY(driver.isValid());
   Schema::Client_tbl client_tbl;
 
@@ -925,16 +927,16 @@ void SchemaDriverSqliteTest::simpleCreateAndDropTableTest()
    * More checks are done in next tests
    */
   // Check versions that takes a Table type
-  QVERIFY(!pvDatabase.tables().contains(client_tbl.tableName()));
+  QVERIFY(!mDatabase.tables().contains(client_tbl.tableName()));
   QVERIFY(driver.createTable(client_tbl.toTable()));
-  QVERIFY(pvDatabase.tables().contains(client_tbl.tableName()));
+  QVERIFY(mDatabase.tables().contains(client_tbl.tableName()));
   QVERIFY(driver.dropTable(client_tbl.toTable()));
-  QVERIFY(!pvDatabase.tables().contains(client_tbl.tableName()));
+  QVERIFY(!mDatabase.tables().contains(client_tbl.tableName()));
   // Check versions that takes a TableTemplate type
   QVERIFY(driver.createTable(client_tbl));
-  QVERIFY(pvDatabase.tables().contains(client_tbl.tableName()));
+  QVERIFY(mDatabase.tables().contains(client_tbl.tableName()));
   QVERIFY(driver.dropTable(client_tbl));
-  QVERIFY(!pvDatabase.tables().contains(client_tbl.tableName()));
+  QVERIFY(!mDatabase.tables().contains(client_tbl.tableName()));
 }
 
 void SchemaDriverSqliteTest::reverseFieldListTest()
@@ -947,7 +949,7 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
   using Mdt::Sql::Schema::PrimaryKeyContainer;
   using Mdt::Sql::Schema::CaseSensitivity;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   Field field;
   FieldList fieldList;
 
@@ -1041,7 +1043,7 @@ void SchemaDriverSqliteTest::reverseIndexListTest()
   using Mdt::Sql::Schema::Index;
   using Mdt::Sql::Schema::IndexList;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   Field field;
   FieldList fieldList;
   IndexList indexList;
@@ -1129,7 +1131,7 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   using Mdt::Sql::Schema::PrimaryKey;
   using Mdt::Sql::Schema::PrimaryKeyContainer;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   Table table;
   Mdt::Expected<PrimaryKeyContainer> ret;
   PrimaryKeyContainer pk;
@@ -1251,7 +1253,7 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   using Mdt::Sql::Schema::ForeignKey;
   using Mdt::Sql::Schema::ForeignKeyList;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   Table table;
   ForeignKey fk;
   Mdt::Expected<ForeignKeyList> ret;
@@ -1455,261 +1457,261 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   QVERIFY(driver.dropTable(table));
 }
 
-void SchemaDriverSqliteTest::selectFieldDefinitionTest()
-{
-  using Mdt::Sql::FieldName;
-  using Mdt::Sql::SelectField;
+// void SchemaDriverSqliteTest::selectFieldDefinitionTest()
+// {
+//   using Mdt::Sql::FieldName;
+//   using Mdt::Sql::SelectField;
+// 
+//   Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+// 
+//   QCOMPARE(driver.getSelectFieldDefinition( SelectField("Id_PK") ), QString("\"Id_PK\""));
+//   QCOMPARE(driver.getSelectFieldDefinition( SelectField("Id_PK", "Client_Id") ), QString("\"Id_PK\" AS \"Client_Id\""));
+//   QCOMPARE(driver.getSelectFieldDefinition( SelectField("*") ), QString("*"));
+// 
+// //   QCOMPARE(driver.getSelectFieldDefinition( SelectField(FieldName("Id_PK")) ), QString("\"Id_PK\""));
+// //   QCOMPARE(driver.getSelectFieldDefinition( SelectField(FieldName("Id_PK"), "Client_Id") ), QString("\"Id_PK\" AS \"Client_Id\""));
+// //   QCOMPARE(driver.getSelectFieldDefinition( SelectField(FieldName("*")) ), QString("*"));
+// }
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+// void SchemaDriverSqliteTest::selectFieldListDefinitionTest()
+// {
+//   using Mdt::Sql::FieldName;
+//   using Mdt::Sql::SelectField;
+//   using Mdt::Sql::SelectFieldList;
+// 
+//   Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+//   SelectFieldList list;
+//   QString expectedSql;
+// 
+//   /*
+//    * Select field list with only field defined
+//    */
+//   // Single field list
+//   list.clear();
+//   list.append("", SelectField("Id_PK") );
+//   expectedSql = " \"Id_PK\"";
+//   QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
+//   // 2 fields list
+//   list.clear();
+//   list.append("", SelectField("Id_PK") );
+//   list.append("", SelectField("Name") );
+//   expectedSql  = " \"Id_PK\",\n";
+//   expectedSql += " \"Name\"";
+//   QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
+//   // 2 field with field alias defined
+//   list.clear();
+//   list.append("", SelectField("Id_PK") );
+//   list.append("", SelectField("Name", "ClientName") );
+//   expectedSql  = " \"Id_PK\",\n";
+//   expectedSql += " \"Name\" AS \"ClientName\"";
+//   QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
+//   /*
+//    * Select field list with table name defined
+//    */
+//   // Single field list
+//   list.clear();
+//   list.append("CLI", SelectField("Id_PK") );
+//   expectedSql = " \"CLI\".\"Id_PK\"";
+//   QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
+//   // 2 fields list
+//   list.clear();
+//   list.append("CLI", SelectField("Id_PK") );
+//   list.append("CNN", SelectField("Name") );
+//   expectedSql  = " \"CLI\".\"Id_PK\",\n";
+//   expectedSql += " \"CNN\".\"Name\"";
+//   QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
+//   // 2 field with field alias defined
+//   list.clear();
+//   list.append("CLI", SelectField("Id_PK") );
+//   list.append("CNN", SelectField("Name", "ClientName") );
+//   expectedSql  = " \"CLI\".\"Id_PK\",\n";
+//   expectedSql += " \"CNN\".\"Name\" AS \"ClientName\"";
+//   QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
+// }
 
-  QCOMPARE(driver.getSelectFieldDefinition( SelectField("Id_PK") ), QString("\"Id_PK\""));
-  QCOMPARE(driver.getSelectFieldDefinition( SelectField("Id_PK", "Client_Id") ), QString("\"Id_PK\" AS \"Client_Id\""));
-  QCOMPARE(driver.getSelectFieldDefinition( SelectField("*") ), QString("*"));
+// void SchemaDriverSqliteTest::joinClauseDefinitionTest()
+// {
+//   using Mdt::Sql::Schema::MainTableField;
+//   using Mdt::Sql::Schema::TableToJoinField;
+//   using Mdt::Sql::Schema::JoinClause;
+//   using Mdt::Sql::Schema::JoinOperator;
+//   using Mdt::Sql::Schema::ViewTable;
+//   using Mdt::Sql::TableName;
+// 
+//   Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+//   QString expectedSql;
+//   JoinClause join;
+// 
+//   /*
+//    * Join 2 tables - No alias - 1 pair of fields
+//    */
+//   join.clear();
+//   join.setMainTable(ViewTable(TableName("Client_tbl")));
+//   join.setTableToJoin(ViewTable(TableName("Address_tbl")));
+//   join.addKey(MainTableField("Id_PK"), TableToJoinField("Client_Id_FK"));
+//   // Check
+//   expectedSql  = " JOIN \"Address_tbl\"\n";
+//   expectedSql += "  ON \"Client_tbl\".\"Id_PK\" = \"Address_tbl\".\"Client_Id_FK\"";
+//   QCOMPARE(driver.getJoinClauseDefinition(join), expectedSql);
+//   /*
+//    * Join 2 tables - LEFT JOIN
+//    */
+//   join.clear();
+//   join.setJoinOperator(JoinOperator::LeftJoin);
+//   join.setMainTable(ViewTable(TableName("Client_tbl")));
+//   join.setTableToJoin(ViewTable(TableName("Address_tbl")));
+//   join.addKey(MainTableField("Id_PK"), TableToJoinField("Client_Id_FK"));
+//   // Check
+//   expectedSql  = " LEFT JOIN \"Address_tbl\"\n";
+//   expectedSql += "  ON \"Client_tbl\".\"Id_PK\" = \"Address_tbl\".\"Client_Id_FK\"";
+//   QCOMPARE(driver.getJoinClauseDefinition(join), expectedSql);
+//   /*
+//    * Join 2 tables - Table alias
+//    */
+//   join.clear();
+//   join.setMainTable(ViewTable(TableName("Client_tbl"), "CLI"));
+//   join.setTableToJoin(ViewTable(TableName("Address_tbl"), "ADR"));
+//   join.addKey(MainTableField("Id_PK"), TableToJoinField("Client_Id_FK"));
+//   // Check
+//   expectedSql  = " JOIN \"Address_tbl\" \"ADR\"\n";
+//   expectedSql += "  ON \"CLI\".\"Id_PK\" = \"ADR\".\"Client_Id_FK\"";
+//   QCOMPARE(driver.getJoinClauseDefinition(join), expectedSql);
+//   /*
+//    * Join 2 tables - 2 pair of fields
+//    */
+//   join.clear();
+//   join.setMainTable(ViewTable(TableName("Main_tbl"), "M"));
+//   join.setTableToJoin(ViewTable(TableName("Other_tbl"), "O"));
+//   join.addKey(MainTableField("Id_A_PK"), TableToJoinField("Id_A_FK"));
+//   join.addKey(MainTableField("Id_B_PK"), TableToJoinField("Id_B_FK"));
+//   // Check
+//   expectedSql  = " JOIN \"Other_tbl\" \"O\"\n";
+//   expectedSql += "  ON \"M\".\"Id_A_PK\" = \"O\".\"Id_A_FK\"\n";
+//   expectedSql += "  AND \"M\".\"Id_B_PK\" = \"O\".\"Id_B_FK\"";
+//   QCOMPARE(driver.getJoinClauseDefinition(join), expectedSql);
+//   /*
+//    * Join 2 tables - Id_A_PK < Id_A_FK
+//    */
+//   join.clear();
+//   join.setMainTable(ViewTable(TableName("Main_tbl"), "M"));
+//   join.setTableToJoin(ViewTable(TableName("Other_tbl"), "O"));
+//   join.addKey(MainTableField("Id_A_PK"), JoinOperator::LessThan, TableToJoinField("Id_A_FK"));
+//   // Check
+//   expectedSql  = " JOIN \"Other_tbl\" \"O\"\n";
+//   expectedSql += "  ON \"M\".\"Id_A_PK\" < \"O\".\"Id_A_FK\"";
+//   QCOMPARE(driver.getJoinClauseDefinition(join), expectedSql);
+// }
 
-//   QCOMPARE(driver.getSelectFieldDefinition( SelectField(FieldName("Id_PK")) ), QString("\"Id_PK\""));
-//   QCOMPARE(driver.getSelectFieldDefinition( SelectField(FieldName("Id_PK"), "Client_Id") ), QString("\"Id_PK\" AS \"Client_Id\""));
-//   QCOMPARE(driver.getSelectFieldDefinition( SelectField(FieldName("*")) ), QString("*"));
-}
-
-void SchemaDriverSqliteTest::selectFieldListDefinitionTest()
-{
-  using Mdt::Sql::FieldName;
-  using Mdt::Sql::SelectField;
-  using Mdt::Sql::SelectFieldList;
-
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
-  SelectFieldList list;
-  QString expectedSql;
-
-  /*
-   * Select field list with only field defined
-   */
-  // Single field list
-  list.clear();
-  list.append("", SelectField("Id_PK") );
-  expectedSql = " \"Id_PK\"";
-  QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
-  // 2 fields list
-  list.clear();
-  list.append("", SelectField("Id_PK") );
-  list.append("", SelectField("Name") );
-  expectedSql  = " \"Id_PK\",\n";
-  expectedSql += " \"Name\"";
-  QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
-  // 2 field with field alias defined
-  list.clear();
-  list.append("", SelectField("Id_PK") );
-  list.append("", SelectField("Name", "ClientName") );
-  expectedSql  = " \"Id_PK\",\n";
-  expectedSql += " \"Name\" AS \"ClientName\"";
-  QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
-  /*
-   * Select field list with table name defined
-   */
-  // Single field list
-  list.clear();
-  list.append("CLI", SelectField("Id_PK") );
-  expectedSql = " \"CLI\".\"Id_PK\"";
-  QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
-  // 2 fields list
-  list.clear();
-  list.append("CLI", SelectField("Id_PK") );
-  list.append("CNN", SelectField("Name") );
-  expectedSql  = " \"CLI\".\"Id_PK\",\n";
-  expectedSql += " \"CNN\".\"Name\"";
-  QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
-  // 2 field with field alias defined
-  list.clear();
-  list.append("CLI", SelectField("Id_PK") );
-  list.append("CNN", SelectField("Name", "ClientName") );
-  expectedSql  = " \"CLI\".\"Id_PK\",\n";
-  expectedSql += " \"CNN\".\"Name\" AS \"ClientName\"";
-  QCOMPARE(driver.getSelectFieldListDefinition(list), expectedSql);
-}
-
-void SchemaDriverSqliteTest::joinClauseDefinitionTest()
-{
-  using Mdt::Sql::Schema::MainTableField;
-  using Mdt::Sql::Schema::TableToJoinField;
-  using Mdt::Sql::Schema::JoinClause;
-  using Mdt::Sql::Schema::JoinOperator;
-  using Mdt::Sql::Schema::ViewTable;
-  using Mdt::Sql::TableName;
-
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
-  QString expectedSql;
-  JoinClause join;
-
-  /*
-   * Join 2 tables - No alias - 1 pair of fields
-   */
-  join.clear();
-  join.setMainTable(ViewTable(TableName("Client_tbl")));
-  join.setTableToJoin(ViewTable(TableName("Address_tbl")));
-  join.addKey(MainTableField("Id_PK"), TableToJoinField("Client_Id_FK"));
-  // Check
-  expectedSql  = " JOIN \"Address_tbl\"\n";
-  expectedSql += "  ON \"Client_tbl\".\"Id_PK\" = \"Address_tbl\".\"Client_Id_FK\"";
-  QCOMPARE(driver.getJoinClauseDefinition(join), expectedSql);
-  /*
-   * Join 2 tables - LEFT JOIN
-   */
-  join.clear();
-  join.setJoinOperator(JoinOperator::LeftJoin);
-  join.setMainTable(ViewTable(TableName("Client_tbl")));
-  join.setTableToJoin(ViewTable(TableName("Address_tbl")));
-  join.addKey(MainTableField("Id_PK"), TableToJoinField("Client_Id_FK"));
-  // Check
-  expectedSql  = " LEFT JOIN \"Address_tbl\"\n";
-  expectedSql += "  ON \"Client_tbl\".\"Id_PK\" = \"Address_tbl\".\"Client_Id_FK\"";
-  QCOMPARE(driver.getJoinClauseDefinition(join), expectedSql);
-  /*
-   * Join 2 tables - Table alias
-   */
-  join.clear();
-  join.setMainTable(ViewTable(TableName("Client_tbl"), "CLI"));
-  join.setTableToJoin(ViewTable(TableName("Address_tbl"), "ADR"));
-  join.addKey(MainTableField("Id_PK"), TableToJoinField("Client_Id_FK"));
-  // Check
-  expectedSql  = " JOIN \"Address_tbl\" \"ADR\"\n";
-  expectedSql += "  ON \"CLI\".\"Id_PK\" = \"ADR\".\"Client_Id_FK\"";
-  QCOMPARE(driver.getJoinClauseDefinition(join), expectedSql);
-  /*
-   * Join 2 tables - 2 pair of fields
-   */
-  join.clear();
-  join.setMainTable(ViewTable(TableName("Main_tbl"), "M"));
-  join.setTableToJoin(ViewTable(TableName("Other_tbl"), "O"));
-  join.addKey(MainTableField("Id_A_PK"), TableToJoinField("Id_A_FK"));
-  join.addKey(MainTableField("Id_B_PK"), TableToJoinField("Id_B_FK"));
-  // Check
-  expectedSql  = " JOIN \"Other_tbl\" \"O\"\n";
-  expectedSql += "  ON \"M\".\"Id_A_PK\" = \"O\".\"Id_A_FK\"\n";
-  expectedSql += "  AND \"M\".\"Id_B_PK\" = \"O\".\"Id_B_FK\"";
-  QCOMPARE(driver.getJoinClauseDefinition(join), expectedSql);
-  /*
-   * Join 2 tables - Id_A_PK < Id_A_FK
-   */
-  join.clear();
-  join.setMainTable(ViewTable(TableName("Main_tbl"), "M"));
-  join.setTableToJoin(ViewTable(TableName("Other_tbl"), "O"));
-  join.addKey(MainTableField("Id_A_PK"), JoinOperator::LessThan, TableToJoinField("Id_A_FK"));
-  // Check
-  expectedSql  = " JOIN \"Other_tbl\" \"O\"\n";
-  expectedSql += "  ON \"M\".\"Id_A_PK\" < \"O\".\"Id_A_FK\"";
-  QCOMPARE(driver.getJoinClauseDefinition(join), expectedSql);
-}
-
-void SchemaDriverSqliteTest::viewDefinitionTest()
-{
-  using Mdt::Sql::FieldName;
-  using Mdt::Sql::Schema::View;
-  using Mdt::Sql::Schema::ViewTable;
-  using Mdt::Sql::TableName;
-  using Mdt::Sql::Schema::MainTableField;
-  using Mdt::Sql::Schema::TableToJoinField;
-  using Mdt::Sql::Schema::JoinClause;
-  using Mdt::Sql::Schema::JoinOperator;
-  using Mdt::Sql::Schema::JoinHelper;
-
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
-  QString expectedSql;
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
-  ViewTable CientTv(client);
-  ViewTable CLI(client, "CLI");
-  ViewTable ADR(address, "ADR");
-  View view;
-  JoinClause join;
-
-  /*
-   * Simple (single table) view - No alias on table name
-   */
-  view.clear();
-  view.setName("Client_view");
-//   view.setSelectOperator(View::SelectDistinct);
-  view.setTable(CientTv);
-  view.addSelectField(CientTv, client.Id_PK());
-  view.addSelectField(CientTv, client.Name());
-  // Check SQL to drop view
-  expectedSql = "DROP VIEW IF EXISTS \"Client_view\";";
-  QCOMPARE(driver.getSqlToDropView(view), expectedSql);
-  // Check SQL to create view
-  expectedSql  = "CREATE VIEW \"Client_view\" AS\n";
-  expectedSql += "SELECT\n";
-  expectedSql += " \"Client_tbl\".\"Id_PK\",\n";
-  expectedSql += " \"Client_tbl\".\"Name\"\n";
-  expectedSql += "FROM \"Client_tbl\";";
-  QCOMPARE(driver.getSqlToCreateView(view), expectedSql);
-  /*
-   * View with a join and alias on table name
-   */
-  view.clear();
-  view.setName("Client_view");
-  view.setTable(CLI);
-  view.addSelectField(CLI, client.Id_PK());
-  view.addSelectField(CLI, client.Name());
-  view.addSelectAllFields(ADR);
-  join.clear();
-  join.setMainTable(CLI);
-  join.setTableToJoin(ADR);
-  join.addKey(MainTableField(client.Id_PK()), TableToJoinField(address.Client_Id_FK()));
-  view.addJoinClause(join);
-  // Check SQL to create view
-  expectedSql  = "CREATE VIEW \"Client_view\" AS\n";
-  expectedSql += "SELECT\n";
-  expectedSql += " \"CLI\".\"Id_PK\",\n";
-  expectedSql += " \"CLI\".\"Name\",\n";
-  expectedSql += " \"ADR\".*\n";
-  expectedSql += "FROM \"Client_tbl\" \"CLI\"\n";
-  expectedSql += " JOIN \"Address_tbl\" \"ADR\"\n";
-  expectedSql += "  ON \"CLI\".\"Id_PK\" = \"ADR\".\"Client_Id_FK\";";
-  QCOMPARE(driver.getSqlToCreateView(view), expectedSql);
-  /*
-   * Client - Address view using JoinHelper
-   */
-  view.clear();
-  view.setName("Client_view");
-  view.setTable(CLI);
-  view.addSelectField(CLI, client.Id_PK());
-  view.addSelectField(CLI, client.Name());
-  view.addSelectAllFields(ADR);
-  view.addJoinClause(JoinHelper::joinClauseFromTables(client, CLI, address, ADR));
-  // Check SQL to create view
-  expectedSql  = "CREATE VIEW \"Client_view\" AS\n";
-  expectedSql += "SELECT\n";
-  expectedSql += " \"CLI\".\"Id_PK\",\n";
-  expectedSql += " \"CLI\".\"Name\",\n";
-  expectedSql += " \"ADR\".*\n";
-  expectedSql += "FROM \"Client_tbl\" \"CLI\"\n";
-  expectedSql += " JOIN \"Address_tbl\" \"ADR\"\n";
-  expectedSql += "  ON \"CLI\".\"Id_PK\" = \"ADR\".\"Client_Id_FK\";";
-  QCOMPARE(driver.getSqlToCreateView(view), expectedSql);
-  /*
-   * Address - Client view using JoinHelper
-   */
-  view.clear();
-  view.setName("Address_view");
-  view.setTable(ADR);
-  view.addSelectField(CLI, client.Id_PK());
-  view.addSelectField(CLI, client.Name());
-  view.addSelectAllFields(ADR);
-  view.addJoinClause(JoinHelper::joinClauseFromTables(address, ADR, client, CLI));
-  // Check SQL to create view
-  expectedSql  = "CREATE VIEW \"Address_view\" AS\n";
-  expectedSql += "SELECT\n";
-  expectedSql += " \"CLI\".\"Id_PK\",\n";
-  expectedSql += " \"CLI\".\"Name\",\n";
-  expectedSql += " \"ADR\".*\n";
-  expectedSql += "FROM \"Address_tbl\" \"ADR\"\n";
-  expectedSql += " JOIN \"Client_tbl\" \"CLI\"\n";
-  expectedSql += "  ON \"ADR\".\"Client_Id_FK\" = \"CLI\".\"Id_PK\";";
-  QCOMPARE(driver.getSqlToCreateView(view), expectedSql);
-}
+// void SchemaDriverSqliteTest::viewDefinitionTest()
+// {
+//   using Mdt::Sql::FieldName;
+//   using Mdt::Sql::Schema::View;
+//   using Mdt::Sql::Schema::ViewTable;
+//   using Mdt::Sql::TableName;
+//   using Mdt::Sql::Schema::MainTableField;
+//   using Mdt::Sql::Schema::TableToJoinField;
+//   using Mdt::Sql::Schema::JoinClause;
+//   using Mdt::Sql::Schema::JoinOperator;
+//   using Mdt::Sql::Schema::JoinHelper;
+// 
+//   Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+//   QString expectedSql;
+//   Schema::Client_tbl client;
+//   Schema::Address_tbl address;
+//   ViewTable CientTv(client);
+//   ViewTable CLI(client, "CLI");
+//   ViewTable ADR(address, "ADR");
+//   View view;
+//   JoinClause join;
+// 
+//   /*
+//    * Simple (single table) view - No alias on table name
+//    */
+//   view.clear();
+//   view.setName("Client_view");
+// //   view.setSelectOperator(View::SelectDistinct);
+//   view.setTable(CientTv);
+//   view.addSelectField(CientTv, client.Id_PK());
+//   view.addSelectField(CientTv, client.Name());
+//   // Check SQL to drop view
+//   expectedSql = "DROP VIEW IF EXISTS \"Client_view\";";
+//   QCOMPARE(driver.getSqlToDropView(view), expectedSql);
+//   // Check SQL to create view
+//   expectedSql  = "CREATE VIEW \"Client_view\" AS\n";
+//   expectedSql += "SELECT\n";
+//   expectedSql += " \"Client_tbl\".\"Id_PK\",\n";
+//   expectedSql += " \"Client_tbl\".\"Name\"\n";
+//   expectedSql += "FROM \"Client_tbl\";";
+//   QCOMPARE(driver.getSqlToCreateView(view), expectedSql);
+//   /*
+//    * View with a join and alias on table name
+//    */
+//   view.clear();
+//   view.setName("Client_view");
+//   view.setTable(CLI);
+//   view.addSelectField(CLI, client.Id_PK());
+//   view.addSelectField(CLI, client.Name());
+//   view.addSelectAllFields(ADR);
+//   join.clear();
+//   join.setMainTable(CLI);
+//   join.setTableToJoin(ADR);
+//   join.addKey(MainTableField(client.Id_PK()), TableToJoinField(address.Client_Id_FK()));
+//   view.addJoinClause(join);
+//   // Check SQL to create view
+//   expectedSql  = "CREATE VIEW \"Client_view\" AS\n";
+//   expectedSql += "SELECT\n";
+//   expectedSql += " \"CLI\".\"Id_PK\",\n";
+//   expectedSql += " \"CLI\".\"Name\",\n";
+//   expectedSql += " \"ADR\".*\n";
+//   expectedSql += "FROM \"Client_tbl\" \"CLI\"\n";
+//   expectedSql += " JOIN \"Address_tbl\" \"ADR\"\n";
+//   expectedSql += "  ON \"CLI\".\"Id_PK\" = \"ADR\".\"Client_Id_FK\";";
+//   QCOMPARE(driver.getSqlToCreateView(view), expectedSql);
+//   /*
+//    * Client - Address view using JoinHelper
+//    */
+//   view.clear();
+//   view.setName("Client_view");
+//   view.setTable(CLI);
+//   view.addSelectField(CLI, client.Id_PK());
+//   view.addSelectField(CLI, client.Name());
+//   view.addSelectAllFields(ADR);
+//   view.addJoinClause(JoinHelper::joinClauseFromTables(client, CLI, address, ADR));
+//   // Check SQL to create view
+//   expectedSql  = "CREATE VIEW \"Client_view\" AS\n";
+//   expectedSql += "SELECT\n";
+//   expectedSql += " \"CLI\".\"Id_PK\",\n";
+//   expectedSql += " \"CLI\".\"Name\",\n";
+//   expectedSql += " \"ADR\".*\n";
+//   expectedSql += "FROM \"Client_tbl\" \"CLI\"\n";
+//   expectedSql += " JOIN \"Address_tbl\" \"ADR\"\n";
+//   expectedSql += "  ON \"CLI\".\"Id_PK\" = \"ADR\".\"Client_Id_FK\";";
+//   QCOMPARE(driver.getSqlToCreateView(view), expectedSql);
+//   /*
+//    * Address - Client view using JoinHelper
+//    */
+//   view.clear();
+//   view.setName("Address_view");
+//   view.setTable(ADR);
+//   view.addSelectField(CLI, client.Id_PK());
+//   view.addSelectField(CLI, client.Name());
+//   view.addSelectAllFields(ADR);
+//   view.addJoinClause(JoinHelper::joinClauseFromTables(address, ADR, client, CLI));
+//   // Check SQL to create view
+//   expectedSql  = "CREATE VIEW \"Address_view\" AS\n";
+//   expectedSql += "SELECT\n";
+//   expectedSql += " \"CLI\".\"Id_PK\",\n";
+//   expectedSql += " \"CLI\".\"Name\",\n";
+//   expectedSql += " \"ADR\".*\n";
+//   expectedSql += "FROM \"Address_tbl\" \"ADR\"\n";
+//   expectedSql += " JOIN \"Client_tbl\" \"CLI\"\n";
+//   expectedSql += "  ON \"ADR\".\"Client_Id_FK\" = \"CLI\".\"Id_PK\";";
+//   QCOMPARE(driver.getSqlToCreateView(view), expectedSql);
+// }
 
 void SchemaDriverSqliteTest::simpleCreateAndDropViewTest()
 {
-  Mdt::Sql::Schema::Driver driver(pvDatabase);
+  Mdt::Sql::Schema::Driver driver(mDatabase);
   QVERIFY(driver.isValid());
   Schema::ClientAdrressView view;
   Schema::Client_tbl client;
@@ -1719,16 +1721,16 @@ void SchemaDriverSqliteTest::simpleCreateAndDropViewTest()
   QVERIFY(driver.createTable(client));
   QVERIFY(driver.createTable(address));
   // Check version that takes a View
-  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains(view.name()));
+  QVERIFY(!mDatabase.tables(QSql::AllTables).contains(view.name()));
   QVERIFY(driver.createView(view.toView()));
-  QVERIFY(pvDatabase.tables(QSql::AllTables).contains(view.name()));
+  QVERIFY(mDatabase.tables(QSql::AllTables).contains(view.name()));
   QVERIFY(driver.dropView(view.toView()));
-  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains(view.name()));
+  QVERIFY(!mDatabase.tables(QSql::AllTables).contains(view.name()));
   // Check version that takes a ViewTemplate
   QVERIFY(driver.createView(view));
-  QVERIFY(pvDatabase.tables(QSql::AllTables).contains(view.name()));
+  QVERIFY(mDatabase.tables(QSql::AllTables).contains(view.name()));
   QVERIFY(driver.dropView(view));
-  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains(view.name()));
+  QVERIFY(!mDatabase.tables(QSql::AllTables).contains(view.name()));
   // Cleanup
   QVERIFY(driver.dropTable(client));
   QVERIFY(driver.dropTable(address));
@@ -1738,7 +1740,7 @@ void SchemaDriverSqliteTest::triggerDefinitionTest()
 {
   using Mdt::Sql::Schema::Trigger;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   QString expectedSql;
   Trigger trigger;
 
@@ -1767,10 +1769,10 @@ void SchemaDriverSqliteTest::simpleTriggerCreateDropTest()
 {
   using Mdt::Sql::Schema::Trigger;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   Trigger trigger;
   Schema::Client_tbl client;
-  QSqlQuery query(pvDatabase);
+  QSqlQuery query(mDatabase);
 
   /*
    * Setup trigger
@@ -1813,9 +1815,9 @@ void SchemaDriverSqliteTest::tablePopulationTest()
 {
   using Mdt::Sql::Schema::TablePopulation;
 
-  Mdt::Sql::Schema::DriverSQLite driver(pvDatabase);
+  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   Schema::Client_tbl client;
-  QSqlQuery query(pvDatabase);
+  QSqlQuery query(mDatabase);
   TablePopulation tp;
 
   /*
@@ -1855,31 +1857,31 @@ void SchemaDriverSqliteTest::tablePopulationTest()
 
 void SchemaDriverSqliteTest::simpleCreateAndDropSchemaTest()
 {
-  Mdt::Sql::Schema::Driver driver(pvDatabase);
+  Mdt::Sql::Schema::Driver driver(mDatabase);
   QVERIFY(driver.isValid());
   Schema::TestSchema schema;
 
   // Check with version that takes a Schema
-  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("Client_tbl"));
-  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("Address_tbl"));
-  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
+  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Address_tbl"));
+  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
   QVERIFY(driver.createSchema(schema.toSchema()));
-  QVERIFY(pvDatabase.tables(QSql::AllTables).contains("Client_tbl"));
-  QVERIFY(pvDatabase.tables(QSql::AllTables).contains("Address_tbl"));
-  QVERIFY(pvDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
+  QVERIFY(mDatabase.tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(mDatabase.tables(QSql::AllTables).contains("Address_tbl"));
+  QVERIFY(mDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
   QVERIFY(driver.dropSchema(schema.toSchema()));
-  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("Client_tbl"));
-  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("Address_tbl"));
-  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
+  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Address_tbl"));
+  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
   // Check with version that takes a SchemaTemplate
   QVERIFY(driver.createSchema(schema));
-  QVERIFY(pvDatabase.tables(QSql::AllTables).contains("Client_tbl"));
-  QVERIFY(pvDatabase.tables(QSql::AllTables).contains("Address_tbl"));
-  QVERIFY(pvDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
+  QVERIFY(mDatabase.tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(mDatabase.tables(QSql::AllTables).contains("Address_tbl"));
+  QVERIFY(mDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
   QVERIFY(driver.dropSchema(schema));
-  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("Client_tbl"));
-  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("Address_tbl"));
-  QVERIFY(!pvDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
+  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Client_tbl"));
+  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Address_tbl"));
+  QVERIFY(!mDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
 }
 
 /*

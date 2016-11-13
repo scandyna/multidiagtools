@@ -45,14 +45,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     View toView() const
     {
-      return pvView;
+      return mView;
     }
 
     /*! \brief Get the name of the view
      */
     QString name() const
     {
-      return pvView.name();
+      return mView.name();
     }
 
    protected:
@@ -61,68 +61,216 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void setName(const QString & name)
     {
-      pvView.setName(name);
+      mView.setName(name);
     }
 
     /*! \brief Set select operator
      */
     void setSelectOperator(SelectOperator op)
     {
-      pvView.setSelectOperator(op);
+      mView.setSelectOperator(op);
     }
 
+    /*! \brief Add a field by specifying table and field
+     *
+     * \pre table must not be null
+     * \pre field must not be null
+     */
+    void addField(const SelectTable & table, const FieldName & field , const QString & fieldAlias = QString())
+    {
+      mView.addField(table, field, fieldAlias);
+    }
+
+    /*! \brief Add a field by specifying field
+     *
+     * \pre field must not be null
+     */
+    void addField(const FieldName & field , const QString & fieldAlias = QString())
+    {
+      mView.addField(field, fieldAlias);
+    }
+
+    /*! \brief Add all fields for table (the * in SQL)
+     *
+     * \pre table must not be null
+     */
+    void addAllFields(const SelectTable & table)
+    {
+      mView.addAllFields(table);
+    }
+
+    /*! \brief Add all fields (the * in SQL, not table defined)
+     */
+    void addAllFields()
+    {
+      mView.addAllFields();
+    }
+
+    /*! \brief Add a raw SQL string to select a field
+     *
+     * \pre sql must not be a empty string
+     */
+    void addRawSqlFieldExpression(const QString & sql)
+    {
+      mView.addRawSqlFieldExpression(sql);
+    }
+
+    /*! \brief Set from table
+     *
+     * If a raw SQL string was set,
+     *  it will be cleared.
+     *
+     * \pre No joined table must allready been set.
+     * \pre table must not be null.
+     */
+    void setFromTable(const SelectTable & table)
+    {
+      mView.setFromTable(table);
+    }
+
+    /*! \brief Join a table
+     *
+     * Join table with expr as constraint
+     *
+     * \pre table must not be null
+     * \pre expr must not be null
+     * \pre From table must allready been set (see setFromTable()).
+     */
+    void joinTable(const SelectTable & table, const JoinConstraintExpression & expr)
+    {
+      mView.joinTable(table, expr);
+    }
+
+    /*! \brief Join a table automatically
+     *
+     * Will fetch table's foreign key list
+     *  and fromTable's foreign key list about relation
+     *  and also generate the apropriate join constraint.
+     *
+     * \pre table must not be null
+     * \pre table or fromTable must have a relation defined by their foreign key
+     * \pre From table must allready been set (see setFromTable()).
+     */
+    void joinTable(const SelectTable & table)
+    {
+      mView.joinTable(table);
+    }
+
+    /*! \brief Join a table automatically
+     *
+     * Will fetch table's foreign key list
+     *  and constraintOnTable's foreign key list about relation
+     *  and also generate the apropriate join constraint.
+     *
+     * \pre table must not be null
+     * \pre constraintOnTable must not be null
+     * \pre table or constraintOnTable must have a relation defined by their foreign key
+     * \pre From table must allready been set (see setFromTable()).
+     */
+    void joinTable(const SelectTable & table, const SelectTable & constraintOnTable)
+    {
+      mView.joinTable(table, constraintOnTable);
+    }
+
+    /*! \brief Left join a table
+     *
+     * Join table with expr as constraint
+     *
+     * \pre table must not be null
+     * \pre expr must not be null
+     * \pre From table must allready been set (see setFromTable()).
+     */
+    void leftJoinTable(const SelectTable & table, const JoinConstraintExpression & expr)
+    {
+      mView.leftJoinTable(table, expr);
+    }
+
+    /*! \brief Left join a table automatically
+     *
+     * Will fetch table's foreign key list
+     *  and fromTable's foreign key list about relation
+     *  and also generate the apropriate join constraint.
+     *
+     * \pre table must not be null
+     * \pre table or fromTable must have a relation defined by their foreign key
+     * \pre From table must allready been set (see setFromTable()).
+     */
+    void leftJoinTable(const SelectTable & table)
+    {
+      mView.leftJoinTable(table);
+    }
+
+    /*! \brief Left join a table automatically
+     *
+     * Will fetch table's foreign key list
+     *  and constraintOnTable's foreign key list about relation
+     *  and also generate the apropriate join constraint.
+     *
+     * \pre table must not be null
+     * \pre constraintOnTable must not be null
+     * \pre table or constraintOnTable must have a relation defined by their foreign key
+     * \pre From table must allready been set (see setFromTable()).
+     */
+    void leftJoinTable(const SelectTable & table, const SelectTable & constraintOnTable)
+    {
+      mView.leftJoinTable(table, constraintOnTable);
+    }
+
+    
+    
+    
     /*! \brief Set table
      */
     void setTable(const ViewTable & table)
     {
-      pvView.setTable(table);
+      mView.setTable(table);
     }
 
     /*! \brief Add a field to select
      */
     void addSelectField(const ViewTable & table, const Field & field, const QString & fieldAlias = QString())
     {
-      pvView.addSelectField(table, field, fieldAlias);
+      mView.addSelectField(table, field, fieldAlias);
     }
 
     /*! \brief Add a field to select
      */
     void addSelectField(const ViewTable & table, const FieldName & fieldName, const QString & fieldAlias = QString())
     {
-      pvView.addSelectField(table, fieldName, fieldAlias);
+      mView.addSelectField(table, fieldName, fieldAlias);
     }
 
     /*! \brief Add a field to select
      */
     void addSelectField(const ViewTable & table, const AutoIncrementPrimaryKey & pk, const QString & fieldAlias = QString())
     {
-      pvView.addSelectField(table, pk, fieldAlias);
+      mView.addSelectField(table, pk, fieldAlias);
     }
 
     /*! \brief Add a field to select
      */
     void addSelectField(const ViewTable & table, const SingleFieldPrimaryKey & pk, const QString & fieldAlias = QString())
     {
-      pvView.addSelectField(table, pk, fieldAlias);
+      mView.addSelectField(table, pk, fieldAlias);
     }
 
     /*! \brief Add a select all field for table
      */
     void addSelectAllFields(const ViewTable & table)
     {
-      pvView.addSelectAllFields(table);
+      mView.addSelectAllFields(table);
     }
 
     /*! \brief Add a JOIN clause
      */
     void addJoinClause(const JoinClause & join)
     {
-      pvView.addJoinClause(join);
+      mView.addJoinClause(join);
     }
 
    private:
 
-    View pvView;
+    View mView;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

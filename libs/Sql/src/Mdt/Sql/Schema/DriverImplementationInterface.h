@@ -37,14 +37,18 @@
 #include "IndexList.h"
 #include "Table.h"
 #include "TableTemplate.h"
-#include "JoinOperator.h"
-#include "JoinClause.h"
+
+// #include "JoinOperator.h"
+// #include "JoinClause.h"
+
 #include "View.h"
 #include "TablePopulation.h"
 #include "Trigger.h"
 #include "Schema.h"
-#include "Mdt/Sql/SelectField.h"
-#include "Mdt/Sql/SelectFieldList.h"
+
+// #include "Mdt/Sql/SelectField.h"
+// #include "Mdt/Sql/SelectFieldList.h"
+
 #include "Mdt/Error.h"
 #include "Mdt/Expected.h"
 #include <QSqlDatabase>
@@ -63,9 +67,9 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Constructor
      */
     DriverImplementationInterface(const QSqlDatabase & db)
-     : pvDatabase(db)
+     : mDatabase(db)
     {
-      Q_ASSERT(pvDatabase.isValid());
+      Q_ASSERT(mDatabase.isValid());
     }
 
     /*! \brief Get QSqlDriver instance
@@ -74,8 +78,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     QSqlDriver *qsqlDriver() const
     {
-      Q_ASSERT(pvDatabase.driver() != nullptr);
-      return pvDatabase.driver();
+      Q_ASSERT(mDatabase.driver() != nullptr);
+      return mDatabase.driver();
     }
 
     /*! \brief Get driver type
@@ -243,31 +247,31 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *
      * Can be overloaded if default implementation does not work for a specific DBMS
      */
-    virtual QString getSelectFieldDefinition(const SelectField & selectField) const;
+//     virtual QString getSelectFieldDefinition(const SelectField & selectField) const;
 
     /*! \brief Get SelectFieldList definition
      *
      * Can be overloaded if default implementation does not work for a specific DBMS
      */
-    virtual QString getSelectFieldListDefinition(const SelectFieldList & selectFieldList) const;
+//     virtual QString getSelectFieldListDefinition(const SelectFieldList & selectFieldList) const;
 
     /*! \brief Get JoinClause definition
      *
      * Can be overloaded if default implementation does not work for a specific DBMS
      */
-    virtual QString getJoinClauseDefinition(const JoinClause & join) const;
+//     virtual QString getJoinClauseDefinition(const JoinClause & join) const;
 
     /*! \brief Get SQL statement to create a view
      *
      * Can be overloaded if default implementation does not work for a specific DBMS
      */
-    virtual QString getSqlToCreateView(const View & view) const;
+//     virtual QString getSqlToCreateView(const View & view) const;
 
     /*! \brief Get SQL statement to drop a view
      *
      * Can be overloaded if default implementation does not work for a specific DBMS
      */
-    virtual QString getSqlToDropView(const View & view) const;
+//     virtual QString getSqlToDropView(const View & view) const;
 
     /*! \brief Create a view in database
      */
@@ -313,7 +317,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     Mdt::Error lastError() const
     {
-      return pvLastError;
+      return mLastError;
     }
 
    protected:
@@ -358,14 +362,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void setLastError(const Mdt::Error & error) const
     {
-      pvLastError = error;
+      mLastError = error;
     }
 
     /*! \brief Access database object
      */
     const QSqlDatabase & database() const
     {
-      return pvDatabase;
+      return mDatabase;
     }
 
     /*! \brief Call QObject::tr()
@@ -374,8 +378,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
    private:
 
-    QSqlDatabase pvDatabase;
-    mutable Mdt::Error pvLastError;
+    QSqlDatabase mDatabase;
+    mutable Mdt::Error mLastError;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

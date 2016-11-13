@@ -59,10 +59,10 @@ class SchemaDriverSqliteTest : public QObject
   void reversePrimaryKeyTest();
   void reverseForeignKeyTest();
 
-  void selectFieldDefinitionTest();
-  void selectFieldListDefinitionTest();
-  void joinClauseDefinitionTest();
-  void viewDefinitionTest();
+//   void selectFieldDefinitionTest();
+//   void selectFieldListDefinitionTest();
+//   void joinClauseDefinitionTest();
+//   void viewDefinitionTest();
 
   void simpleCreateAndDropViewTest();
 
@@ -76,7 +76,7 @@ class SchemaDriverSqliteTest : public QObject
  private:
 
   QTemporaryFile pvTempFile;  // We keep it as member, so file is destroyed automatically
-  QSqlDatabase pvDatabase;
+  QSqlDatabase mDatabase;
 };
 
 #endif // #ifndef MDT_SQL_SCHEMA_DRIVER_SQLITE_TEST_H

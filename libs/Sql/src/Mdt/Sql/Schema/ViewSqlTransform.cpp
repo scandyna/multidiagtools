@@ -36,7 +36,7 @@ QString ViewSqlTransform::getSqlToCreateView(const View & view, const QSqlDataba
   const auto *driver = db.driver();
   Q_ASSERT(driver != nullptr);
 
-  return QLatin1String("CREATE VIEW IF NOT EXISTS ") \
+  return QLatin1String("CREATE VIEW ") \
          % driver->escapeIdentifier(view.name(), QSqlDriver::TableName) \
          % QLatin1String(" AS\n") \
          % SelectStatementSqlTransform::getSql(view.selectStatement(), db) \

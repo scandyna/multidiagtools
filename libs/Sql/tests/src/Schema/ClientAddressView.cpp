@@ -22,13 +22,19 @@
 
 #include "Client_tbl.h"
 #include "Address_tbl.h"
+
 #include "Mdt/Sql/Schema/JoinHelper.h"
 
 namespace Schema{
 
+namespace Sql = Mdt::Sql;
+
 ClientAdrressView::ClientAdrressView()
 {
-  using Mdt::Sql::Schema::View;
+  using Sql::Schema::View;
+  using Sql::SelectTable;
+  
+  
   using Mdt::Sql::Schema::ViewTable;
   using Mdt::Sql::Schema::JoinClause;
   using Mdt::Sql::Schema::JoinOperator;
@@ -41,16 +47,21 @@ ClientAdrressView::ClientAdrressView()
   Address_tbl address;
 
   // Define tables with their aliases
-  ViewTable CLI(client, "CLI");
-  ViewTable ADR(address, "ADR");
+  SelectTable CLI(client, "CLI");
+  SelectTable ADR(address, "ADR");
 
   // Setup the view itself
   setName("ClientAddress_view");
-  setTable(CLI);
-  addSelectAllFields(CLI);
-  addSelectField(ADR, address.Id_PK(), "Address_Id");
-  addSelectField(ADR, address.Street());
-  addJoinClause(JoinHelper::joinClauseFromTables(client, CLI, address, ADR, JoinOperator::Join));
+  addAllFields(CLI);
+  addField(ADR, address.Id_PK(), "Address_Id");
+  addField(ADR, address.Street());
+  setFromTable(CLI);
+  joinTable(ADR);
+//   setTable(CLI);
+//   addSelectAllFields(CLI);
+//   addSelectField(ADR, address.Id_PK(), "Address_Id");
+//   addSelectField(ADR, address.Street());
+//   addJoinClause(JoinHelper::joinClauseFromTables(client, CLI, address, ADR, JoinOperator::Join));
   /*
    * Or, join clause can also be expressed manually
    */

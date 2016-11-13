@@ -29,6 +29,7 @@
 #include "Mdt/Sql/Schema/ViewList.h"
 #include "Mdt/Sql/Schema/ForeignKey.h"
 #include "Schema/Client_tbl.h"
+#include "Schema/Address_tbl.h"
 #include "Schema/ClientAddressView.h"
 #include <QSqlDatabase>
 #include <QComboBox>
@@ -133,6 +134,51 @@ void SchemaViewTest::isNullTest()
   QVERIFY(!view3.isNull());
 }
 
+void SchemaViewTest::joinTest()
+{
+  using Sql::Schema::View;
+  using Sql::SelectTable;
+  using Sql::JoinConstraintField;
+  using Sql::JoinOperator;
+
+  Schema::Client_tbl client;
+  Schema::Address_tbl address;
+  SelectTable CLI(client, "CLI");
+  SelectTable CLI3(client, "CLI3");
+  SelectTable CLI6(client, "CLI6");
+  SelectTable ADR1(address, "ADR1");
+  SelectTable ADR2(address, "ADR2");
+  SelectTable ADR3(address, "ADR3");
+  SelectTable ADR4(address, "ADR4");
+  SelectTable ADR5(address, "ADR5");
+  SelectTable ADR6(address, "ADR6");
+  JoinConstraintField clientId(CLI, client.Id_PK());
+  JoinConstraintField adrClientId1(ADR1, address.Client_Id_FK());
+  JoinConstraintField adrClientId4(ADR4, address.Client_Id_FK());
+
+  View view;
+  view.addField(CLI, client.Id_PK(), "Client_Id");
+  view.addField(CLI, client.Name());
+  view.addField(ADR1, address.Street(), "Street1");
+  view.setFromTable(CLI);
+  view.joinTable(ADR1, adrClientId1 == clientId);
+  view.joinTable(ADR2);
+  view.joinTable(ADR3, CLI3);
+  view.leftJoinTable(ADR4, adrClientId4 == clientId);
+  view.leftJoinTable(ADR5);
+  view.leftJoinTable(ADR6, CLI6);
+
+  QCOMPARE(view.selectStatement().fieldList().size(), 3);
+  QCOMPARE(view.selectStatement().fromClause().table().tableName(), QString("Client_tbl"));
+  QCOMPARE(view.selectStatement().fromClause().joinClauseItemList().size(), 6);
+  QVERIFY(view.selectStatement().fromClause().joinClauseItemList().at(0).joinOperator() == JoinOperator::Join);
+  QVERIFY(view.selectStatement().fromClause().joinClauseItemList().at(1).joinOperator() == JoinOperator::Join);
+  QVERIFY(view.selectStatement().fromClause().joinClauseItemList().at(2).joinOperator() == JoinOperator::Join);
+  QVERIFY(view.selectStatement().fromClause().joinClauseItemList().at(3).joinOperator() == JoinOperator::LeftJoin);
+  QVERIFY(view.selectStatement().fromClause().joinClauseItemList().at(4).joinOperator() == JoinOperator::LeftJoin);
+  QVERIFY(view.selectStatement().fromClause().joinClauseItemList().at(5).joinOperator() == JoinOperator::LeftJoin);
+}
+
 void SchemaViewTest::dropViewSqlTransformTest()
 {
   using Sql::Schema::ViewSqlTransform;
@@ -154,19 +200,35 @@ void SchemaViewTest::createViewSqlTransformTest()
   using Sql::SelectTable;
   using Sql::TableName;
 
+  Schema::Client_tbl client;
+  Schema::Address_tbl address;
   auto db = mDatabase;
   QString expectedSql;
-  SelectTable CLI(TableName("Client_tbl"), "CLI");
+  SelectTable CLI(client, "CLI");
+  SelectTable ADR(address, "ADR");
 
   View view1;
   view1.setName("view1");
   view1.addAllFields();
   view1.setFromTable(CLI);
-  expectedSql = "CREATE VIEW IF NOT EXISTS \"view1\" AS\n"\
+  expectedSql = "CREATE VIEW \"view1\" AS\n"\
                 "SELECT\n"\
                 " *\n"\
                 "FROM \"Client_tbl\" \"CLI\";";
   QCOMPARE( ViewSqlTransform::getSqlToCreateView(view1, db) , expectedSql );
+
+  View view2;
+  view2.setName("view2");
+  view2.addAllFields();
+  view2.setFromTable(CLI);
+  view2.joinTable(ADR);
+  expectedSql = "CREATE VIEW \"view2\" AS\n"\
+                "SELECT\n"\
+                " *\n"\
+                "FROM \"Client_tbl\" \"CLI\"\n"\
+                " JOIN \"Address_tbl\" \"ADR\"\n"\
+                "  ON \"ADR\".\"Client_Id_FK\"=\"CLI\".\"Id_PK\";";
+  QCOMPARE( ViewSqlTransform::getSqlToCreateView(view2, db) , expectedSql );
 }
 
 

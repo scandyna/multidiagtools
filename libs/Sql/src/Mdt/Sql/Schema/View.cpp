@@ -23,11 +23,6 @@
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-// View::View()
-//  : pvSelectOperator(Select)
-// {
-// }
-
 void View::setName(const QString & name)
 {
   mName = name;
@@ -85,6 +80,63 @@ void View::setFromTable(const SelectTable & table)
 
   mSelectStatement.setFromTable(table);
 }
+
+void View::joinTable(const SelectTable & table, const JoinConstraintExpression & expr)
+{
+  Q_ASSERT(!table.isNull());
+  Q_ASSERT(!expr.isNull());
+  Q_ASSERT(!mSelectStatement.fromClause().isNull());
+
+  mSelectStatement.joinTable(table, expr);
+}
+
+void View::joinTable(const SelectTable & table)
+{
+  Q_ASSERT(!table.isNull());
+  // Assertion that table or fromTable must have foreign key is done in JoinClause with a message explaining it
+  Q_ASSERT(!mSelectStatement.fromClause().isNull());
+
+  mSelectStatement.joinTable(table);
+}
+
+void View::joinTable(const SelectTable & table, const SelectTable & constraintOnTable)
+{
+  Q_ASSERT(!table.isNull());
+  Q_ASSERT(!constraintOnTable.isNull());
+  // Assertion that table or constraintOnTable must have foreign key is done in JoinClause with a message explaining it
+  Q_ASSERT(!mSelectStatement.fromClause().isNull());
+
+  mSelectStatement.joinTable(table, constraintOnTable);
+}
+
+void View::leftJoinTable(const SelectTable & table, const JoinConstraintExpression & expr)
+{
+  Q_ASSERT(!table.isNull());
+  Q_ASSERT(!expr.isNull());
+  Q_ASSERT(!mSelectStatement.fromClause().isNull());
+
+  mSelectStatement.leftJoinTable(table, expr);
+}
+
+void View::leftJoinTable(const SelectTable & table)
+{
+  Q_ASSERT(!table.isNull());
+  // Assertion that table or fromTable must have foreign key is done in JoinClause with a message explaining it
+  Q_ASSERT(!mSelectStatement.fromClause().isNull());
+
+  mSelectStatement.leftJoinTable(table);
+}
+
+void View::leftJoinTable(const SelectTable & table, const SelectTable & constraintOnTable)
+{
+  Q_ASSERT(!table.isNull());
+  Q_ASSERT(!constraintOnTable.isNull());
+  // Assertion that table or constraintOnTable must have foreign key is done in JoinClause with a message explaining it
+  Q_ASSERT(!mSelectStatement.fromClause().isNull());
+
+  mSelectStatement.leftJoinTable(table, constraintOnTable);
+}
+
 
 
 void View::setTable(const ViewTable& table)

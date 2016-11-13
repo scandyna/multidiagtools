@@ -21,6 +21,7 @@
 #include "DriverImplementationInterface.h"
 #include "Mdt/Sql/Error.h"
 #include "../InsertQuery.h"
+#include "ViewSqlTransform.h"
 #include <QStringList>
 #include <QStringBuilder>
 #include <QLatin1String>
@@ -325,7 +326,7 @@ QString DriverImplementationInterface::getSqlToDropTable(const Table& table) con
 
 bool DriverImplementationInterface::createTable(const Table & table)
 {
-  QSqlQuery query(pvDatabase);
+  QSqlQuery query(mDatabase);
   const QString tableName = table.tableName();
   const auto indexList = table.indexList();
   const auto fkList = table.foreignKeyList();
@@ -378,7 +379,7 @@ bool DriverImplementationInterface::dropTable(const Table& table)
    * Note: we assume that DBMS will automatically drop indexes related to table.
    *       SQLite tells it explicitly in the documentation.
    */
-  QSqlQuery query(pvDatabase);
+  QSqlQuery query(mDatabase);
   QString sql;
 
   sql = getSqlToDropTable(table);
@@ -394,104 +395,104 @@ bool DriverImplementationInterface::dropTable(const Table& table)
   return true;
 }
 
-QString DriverImplementationInterface::getSelectFieldDefinition(const SelectField & selectField) const
-{
-  QString sql;
+// QString DriverImplementationInterface::getSelectFieldDefinition(const SelectField & selectField) const
+// {
+//   QString sql;
+// 
+//   if(selectField.fieldName() == QLatin1String("*")){
+//     sql = QStringLiteral("*");
+//   }else{
+//     sql = escapeFieldName(selectField.fieldName());
+//   }
+//   if(!selectField.alias().isEmpty()){
+//     sql += QStringLiteral(" AS ") % escapeFieldName(selectField.alias());
+//   }
+// 
+//   return sql;
+// }
 
-  if(selectField.fieldName() == QLatin1String("*")){
-    sql = QStringLiteral("*");
-  }else{
-    sql = escapeFieldName(selectField.fieldName());
-  }
-  if(!selectField.alias().isEmpty()){
-    sql += QStringLiteral(" AS ") % escapeFieldName(selectField.alias());
-  }
+// QString DriverImplementationInterface::getSelectFieldListDefinition(const SelectFieldList& selectFieldList) const
+// {
+//   QString sql;
+//   QStringList strList;
+// 
+//   for(int i = 0; i < selectFieldList.size(); ++i){
+//     QString str;
+//     if(selectFieldList.tableNameAt(i).isEmpty()){
+//       str = QStringLiteral(" ");
+//     }else{
+//       str = QStringLiteral(" ") % escapeTableName(selectFieldList.tableNameAt(i)) % QStringLiteral(".");
+//     }
+//     str += getSelectFieldDefinition(selectFieldList.selectFieldAt(i));
+//     strList.append(str);
+//   }
+//   sql = strList.join(",\n");
+// 
+//   return sql;
+// }
 
-  return sql;
-}
+// QString DriverImplementationInterface::getJoinClauseDefinition(const JoinClause& join) const
+// {
+//   QString sql;
+//   const auto mainTable = join.mainTable();
+//   const auto tableToJoin = join.tableToJoin();
+//   const auto keyList = join.keyList();
+// 
+//   sql = QStringLiteral(" ") % joinOperatorKeyWord(join.joinOperator()) % QStringLiteral(" ") % escapeTableName(tableToJoin.tableName());
+//   if(!tableToJoin.alias().isEmpty()){
+//     sql += QStringLiteral(" ") % escapeTableName(tableToJoin.alias());
+//   }
+//   for(const auto & key : keyList){
+//     sql += QStringLiteral("\n  ") % joinConstraintOperatorKeyWord(key.constraintOperator()) \
+//          % QStringLiteral(" ") % escapeTableName(mainTable.aliasOrTableName()) \
+//          % QStringLiteral(".") % escapeFieldName(key.mainTableFieldName()) \
+//          % QStringLiteral(" ") % joinFieldComparisonOperatorKeyWord(key.fieldComparisonOperator()) \
+//          % QStringLiteral(" ") % escapeTableName(tableToJoin.aliasOrTableName()) \
+//          % QStringLiteral(".") % escapeFieldName(key.tableToJoinFieldName());
+//   }
+// 
+//   return sql;
+// }
 
-QString DriverImplementationInterface::getSelectFieldListDefinition(const SelectFieldList& selectFieldList) const
-{
-  QString sql;
-  QStringList strList;
+// QString DriverImplementationInterface::getSqlToCreateView(const View & view) const
+// {
+//   QString sql;
+//   const auto joinClauseList = view.joinClauseList();
+// 
+//   // Build header
+//   sql = QStringLiteral("CREATE VIEW ") % escapeTableName(view.name()) % QStringLiteral(" AS\n") \
+//   // Add SELECT statement
+//       % selectKeyWord(view.selectOperator()) % QStringLiteral("\n") \
+//       % getSelectFieldListDefinition(view.selectFieldList()) \
+//   // Add FROM statement
+//       % QStringLiteral("\nFROM ") % escapeTableName(view.tableName());
+//   if(!view.tableNameAlias().isEmpty()){
+//     sql += QStringLiteral(" ") % escapeTableName(view.tableNameAlias());
+//   }
+//   // \todo Add JOIN statement
+//   for(const auto & join : joinClauseList){
+//     sql += QStringLiteral("\n") % getJoinClauseDefinition(join);
+//   }
+//   sql += QStringLiteral(";");
+// 
+//   return sql;
+// }
 
-  for(int i = 0; i < selectFieldList.size(); ++i){
-    QString str;
-    if(selectFieldList.tableNameAt(i).isEmpty()){
-      str = QStringLiteral(" ");
-    }else{
-      str = QStringLiteral(" ") % escapeTableName(selectFieldList.tableNameAt(i)) % QStringLiteral(".");
-    }
-    str += getSelectFieldDefinition(selectFieldList.selectFieldAt(i));
-    strList.append(str);
-  }
-  sql = strList.join(",\n");
-
-  return sql;
-}
-
-QString DriverImplementationInterface::getJoinClauseDefinition(const JoinClause& join) const
-{
-  QString sql;
-  const auto mainTable = join.mainTable();
-  const auto tableToJoin = join.tableToJoin();
-  const auto keyList = join.keyList();
-
-  sql = QStringLiteral(" ") % joinOperatorKeyWord(join.joinOperator()) % QStringLiteral(" ") % escapeTableName(tableToJoin.tableName());
-  if(!tableToJoin.alias().isEmpty()){
-    sql += QStringLiteral(" ") % escapeTableName(tableToJoin.alias());
-  }
-  for(const auto & key : keyList){
-    sql += QStringLiteral("\n  ") % joinConstraintOperatorKeyWord(key.constraintOperator()) \
-         % QStringLiteral(" ") % escapeTableName(mainTable.aliasOrTableName()) \
-         % QStringLiteral(".") % escapeFieldName(key.mainTableFieldName()) \
-         % QStringLiteral(" ") % joinFieldComparisonOperatorKeyWord(key.fieldComparisonOperator()) \
-         % QStringLiteral(" ") % escapeTableName(tableToJoin.aliasOrTableName()) \
-         % QStringLiteral(".") % escapeFieldName(key.tableToJoinFieldName());
-  }
-
-  return sql;
-}
-
-QString DriverImplementationInterface::getSqlToCreateView(const View& view) const
-{
-  QString sql;
-  const auto joinClauseList = view.joinClauseList();
-
-  // Build header
-  sql = QStringLiteral("CREATE VIEW ") % escapeTableName(view.name()) % QStringLiteral(" AS\n") \
-  // Add SELECT statement
-      % selectKeyWord(view.selectOperator()) % QStringLiteral("\n") \
-      % getSelectFieldListDefinition(view.selectFieldList()) \
-  // Add FROM statement
-      % QStringLiteral("\nFROM ") % escapeTableName(view.tableName());
-  if(!view.tableNameAlias().isEmpty()){
-    sql += QStringLiteral(" ") % escapeTableName(view.tableNameAlias());
-  }
-  // \todo Add JOIN statement
-  for(const auto & join : joinClauseList){
-    sql += QStringLiteral("\n") % getJoinClauseDefinition(join);
-  }
-  sql += QStringLiteral(";");
-
-  return sql;
-}
-
-QString DriverImplementationInterface::getSqlToDropView(const View& view) const
-{
-  QString sql;
-
-  sql = QStringLiteral("DROP VIEW IF EXISTS ") % escapeTableName(view.name()) % QStringLiteral(";");
-
-  return sql;
-}
+// QString DriverImplementationInterface::getSqlToDropView(const View& view) const
+// {
+//   QString sql;
+// 
+//   sql = QStringLiteral("DROP VIEW IF EXISTS ") % escapeTableName(view.name()) % QStringLiteral(";");
+// 
+//   return sql;
+// }
 
 bool DriverImplementationInterface::createView(const View & view)
 {
-  QSqlQuery query(pvDatabase);
+  QSqlQuery query(mDatabase);
   QString sql;
 
-  sql = getSqlToCreateView(view);
+  sql = ViewSqlTransform::getSqlToCreateView(view, mDatabase);
   if(!query.exec(sql)){
     QString msg = tr("Creating view '%1' failed.").arg(view.name());
     auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverImplementationInterface");
@@ -506,10 +507,10 @@ bool DriverImplementationInterface::createView(const View & view)
 
 bool DriverImplementationInterface::dropView(const View & view)
 {
-  QSqlQuery query(pvDatabase);
+  QSqlQuery query(mDatabase);
   QString sql;
 
-  sql = getSqlToDropView(view);
+  sql = ViewSqlTransform::getSqlToDropView(view, mDatabase);
   if(!query.exec(sql)){
     QString msg = tr("Removing view '%1' failed.").arg(view.name());
     auto error = mdtErrorNew(msg, Mdt::Error::Critical, "DriverImplementationInterface");
@@ -542,7 +543,7 @@ QString DriverImplementationInterface::getSqlToCreateTrigger(const Trigger& trig
 
 bool DriverImplementationInterface::createTrigger(const Trigger& trigger)
 {
-  QSqlQuery query(pvDatabase);
+  QSqlQuery query(mDatabase);
   QString sql;
 
   sql = getSqlToCreateTrigger(trigger);
@@ -560,7 +561,7 @@ bool DriverImplementationInterface::createTrigger(const Trigger& trigger)
 
 bool DriverImplementationInterface::dropTrigger(const Trigger& trigger)
 {
-  QSqlQuery query(pvDatabase);
+  QSqlQuery query(mDatabase);
   QString sql;
 
   sql = getSqlToDropTrigger(trigger);
