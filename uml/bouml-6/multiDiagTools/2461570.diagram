@@ -2,56 +2,64 @@ format 211
 
 classcanvas 128002 class_ref 2775682 // ForeignKey
   classdiagramsettings member_max_width 0 end
-  xyz 298 202 2000
+  xyz 448 152 2000
 end
 classcanvas 128898 class_ref 2775554 // PrimaryKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 824.5 40.5 2005
+  xyz 903.5 720.5 2005
 end
 classcanvas 129410 class_ref 2887042 // Action
   classdiagramsettings member_max_width 0 end
-  xyz 666 382 2006
+  xyz 570 42 2006
 end
 classcanvas 131970 class_ref 2893698 // ParentTableFieldName
   classdiagramsettings member_max_width 0 end
-  xyz 281 41 2000
+  xyz 41 273 2000
 end
 classcanvas 132226 class_ref 2893826 // ChildTableFieldName
   classdiagramsettings member_max_width 0 end
-  xyz 344 647 2000
+  xyz 800 295 2000
 end
 classcanvas 132482 class_ref 2900610 // ForeignKeyList
   classdiagramsettings member_max_width 0 end
-  xyz 24 370 2000
+  xyz 488 578 2000
 end
 classcanvas 132738 class_ref 3417090 // ForeignKeySetup
   classdiagramsettings member_max_width 0 end
-  xyz 37 65 2000
+  xyz 376 716 2000
 end
 classcanvas 132866 class_ref 3417218 // ForeignKeyAction
   classdiagramsettings member_max_width 0 end
-  xyz 696.5 824.5 2005
+  xyz 696.5 720.5 2005
 end
 note 132994 "Could be reused while declaring several foreign keys with same options."
-  xyzwh 33 231 2000 297 93
-line 131714 ---+
+  xyzwh 40 722 2000 297 93
+classcanvas 133378 class_ref 3443842 // FieldNameList
+  classdiagramsettings member_max_width 0 end
+  xyz 162 547 2000
+end
+classcanvas 133506 class_ref 3443970 // ReferringFieldNameList
+  classdiagramsettings member_max_width 0 end
+  xyz 129 91 2000
+end
+line 131714 ---+ decenter_end 510
   from ref 129410 z 2007 to ref 128002
 relationcanvas 132098 relation_ref 3273346 // <dependency>
-  decenter_begin 485
   from ref 128002 z 2001 to ref 131970
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132354 relation_ref 3273474 // <dependency>
-  decenter_begin 485
   from ref 128002 z 2001 to ref 132226
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132610 relation_ref 3283074 // <directional composition>
+  decenter_begin 515
+  decenter_end 510
   from ref 132482 z 2001 to ref 128002
   no_role_a no_role_b
-  multiplicity_a_pos 282 406 3000 no_multiplicity_b
+  multiplicity_a_pos 592 546 3000 no_multiplicity_b
 end
 line 133122 -_-_
   from ref 132994 z 2001 to ref 132738

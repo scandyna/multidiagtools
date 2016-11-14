@@ -1,0 +1,16 @@
+format 211
+
+classcanvas 128002 class_ref 3443970 // ReferringFieldNameList
+  classdiagramsettings member_max_width 0 end
+  xyz 95 266 2000
+end
+classcanvas 128130 class_ref 3443714 // FieldNameListBase
+  classdiagramsettings member_max_width 0 end
+  xyz 35 40 2005
+end
+relationcanvas 128258 relation_ref 3803138 // <generalisation>
+  from ref 128002 z 2006 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

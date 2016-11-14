@@ -2,35 +2,19 @@ format 211
 
 classcanvas 128002 class_ref 2775554 // PrimaryKey
   classdiagramsettings member_max_width 0 end
-  xyz 287.5 384.5 2000
+  xyz 42 36 2000
 end
 classcanvas 128130 class_ref 2775042 // Field
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 40.5 384.5 2000
+  xyz 410 77 2000
 end
 classcanvas 128386 class_ref 2824706 // AutoIncrementPrimaryKey
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 649.5 2000
+  xyz 443.5 408.5 2000
 end
-note 128642 "Something is ambigious:
- - A primary key is generally added and references fields (like a index).
- - It can be convenient to directly create fields and its primary key in schema definition.
- -> Create a helper class like AutoIncrementPrimaryKey ??"
-  xyzwh 40.5 866.5 2000 683 97
 classcanvas 128770 class_ref 2852610 // SingleFieldPrimaryKey
   classdiagramsettings member_max_width 0 end
-  xyz 377.5 649.5 2000
-end
-classcanvas 129026 class_ref 2852738 // PrimaryKeyContainer
-  classdiagramsettings member_max_width 0 end
-  xyz 40 42 2000
-end
-note 129154 "Based on a union
--> See boost::variant !"
-  xyzwh 431 91 2000 171 59
-classcanvas 129410 class_ref 2852866 // Type
-  classdiagramsettings member_max_width 0 end
-  xyz 178 239 2006
+  xyz 656.5 40.5 2000
 end
 note 129666 "See:
  - UUID
@@ -40,9 +24,10 @@ note 129666 "See:
  - TIMESTAMP
  - TIMESTAMPTZ
  - NUMERIC"
-  xyzwh 455 161 2000 323 205
-line 129538 ---+
-  from ref 129410 z 2007 to ref 129026
-line 129282 -_-_
-  from ref 129026 z 2001 to ref 129154
+  xyzwh 40.5 408.5 2000 323 205
+relationcanvas 130178 relation_ref 3810050 // <dependency>
+  from ref 128002 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
 end

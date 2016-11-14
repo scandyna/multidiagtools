@@ -58,13 +58,6 @@ class SchemaTest : public QObject
   void foreignKeyTest();
   void foreignKeyListTest();
 
-//   void tablePrimaryKeyTest();
-//   void tablePrimaryKeyAicBenchmark();
-//   void tablePrimaryKeyMcBenchmark();
-//   void tableTest();
-//   void tableModelTest();
-//   void tableListTest();
-
   void tablePopulationTest();
   void tablePopulationListTest();
 

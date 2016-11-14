@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 103
+  revision 105
   modified_by 2 "philippe"
   // class settings
   
@@ -2606,7 +2606,7 @@ ${inlines}
      end
     classdiagram 2461442 "PrimaryKey"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size B
     end
 
     class 2775554 "PrimaryKey"
@@ -2633,6 +2633,22 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      operation 4851330 "PrimaryKey"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "fieldList" explicit_type "Ts..."
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
       operation 4138498 "addField"
@@ -2726,6 +2742,46 @@ ${inlines}
 	
 	
 	
+      end
+
+      operation 4851842 "addFieldList"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4851714 "addFieldList"
+	private explicit_return_type "void"
+	nparams 2
+	  param in name "field" type class_ref 2775042 // Field
+	  param in name "fieldList" explicit_type "Ts..."
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3829250 // <dependency>
+	relation 3810050 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3829250 // <dependency>
+	  b parent class_ref 2775042 // Field
       end
     end
 
@@ -2880,9 +2936,14 @@ ${inlines}
       end
     end
 
+    classdiagram 3021954 "Container"
+      classdiagramsettings member_max_width 0 end
+      size A4-Landscape
+    end
+
     class 2852738 "PrimaryKeyContainer"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
+      visibility package stereotype "union"
+      cpp_decl "${comment}${template}union ${name}
 {
 ${members}};
 ${inlines}
@@ -2890,7 +2951,9 @@ ${inlines}
       java_decl ""
       php_decl ""
       python_2_2 python_decl ""
-      idl_decl ""
+      idl_decl "${comment}union ${name} switch(${switch}) {
+${members}};
+"
       explicit_switch_type ""
       mysql_decl ""
       
@@ -2933,7 +2996,7 @@ ${items}};
       operation 4243970 "setPrimaryKey"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "pk" type class_ref 2775554 // PrimaryKey
+	  param in name "fieldList" explicit_type "Ts..."
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -3006,6 +3069,33 @@ ${items}};
 	
 	
 	
+      end
+
+      classrelation 3828994 // <directional composition>
+	relation 3809794 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3828994 // <directional composition>
+	  b parent class_ref 2775554 // PrimaryKey
+      end
+
+      classrelation 3829122 // <directional composition>
+	relation 3809922 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3829122 // <directional composition>
+	  b parent class_ref 2824706 // AutoIncrementPrimaryKey
+      end
+
+      classrelation 3829378 // <directional composition>
+	relation 3810178 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3829378 // <directional composition>
+	  b parent class_ref 2852610 // SingleFieldPrimaryKey
       end
     end
   end
@@ -3476,6 +3566,37 @@ ${inlines}
     
     activitydiagramsettings
      end
+    classdiagram 3015426 "RefferingFieldNameList"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3443970 "ReferringFieldNameList"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3443714 // FieldNameListBase
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3822338 // <generalisation>
+	relation 3803138 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3822338 // <generalisation>
+	  b parent class_ref 3443714 // FieldNameListBase
+      end
+    end
+
     classdiagram 2461570 "ForeignKey"
       classdiagramsettings member_max_width 0 end
       size B-Landscape
