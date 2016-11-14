@@ -60,8 +60,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    * Table table;
    * table.setName("Address_tbl");
    * // Setup Id_PK field
-   * AutoIncrementPrimaryKey Id_PK;
-   * Id_PK.setFieldName("Id_PK");
+   * AutoIncrementPrimaryKey Id_PK("Id_PK");
    * // Setup Client_Id_FK field
    * Field Client_Id_FK;
    * Client_Id_FK.setName("Client_Id_FK");

@@ -18,13 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SIMPLE_TYPES_TEST_H
-#define MDT_SIMPLE_TYPES_TEST_H
+#ifndef MDT_SQL_SCHEMA_PRIMARY_KEY_TEST_H
+#define MDT_SQL_SCHEMA_PRIMARY_KEY_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
 
-class SimpleTypesTest : public QObject
+class SchemaPrimaryKeyTest : public QObject
 {
  Q_OBJECT
 
@@ -33,11 +33,11 @@ class SimpleTypesTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void tableNameTest();
+  void autoIncrementPrimaryKeyTest();
+  void singleFieldPrimaryKeyTest();
+  void primaryKeyTest();
+  void primaryKeyContainerTest();
 
-  void selectTableTest();
-  void selectTableForeignKeyTest();
 };
 
-
-#endif // #ifndef MDT_SIMPLE_TYPES_TEST_H
+#endif // #ifndef MDT_SQL_SCHEMA_PRIMARY_KEY_TEST_H

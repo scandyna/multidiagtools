@@ -44,10 +44,10 @@ class SchemaTest : public QObject
   void fieldTest();
   void fieldListTest();
 
-  void autoIncrementPrimaryKeyTest();
-  void singleFieldPrimaryKeyTest();
-  void primaryKeyTest();
-  void primaryKeyContainerTest();
+//   void autoIncrementPrimaryKeyTest();
+//   void singleFieldPrimaryKeyTest();
+//   void primaryKeyTest();
+//   void primaryKeyContainerTest();
 
   void indexTest();
   void indexListTest();

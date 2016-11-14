@@ -18,26 +18,43 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SIMPLE_TYPES_TEST_H
-#define MDT_SIMPLE_TYPES_TEST_H
+#ifndef MDT_SQL_FIELD_NAME_LIST_H
+#define MDT_SQL_FIELD_NAME_LIST_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "FieldNameListBase.h"
+#include "FieldName.h"
 
-class SimpleTypesTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace Sql{
 
- private slots:
+  /*! \brief List of field names
+   *
+   * Typical usage:
+   * \code
+   * #include "FieldNameList.h"
+   *
+   * namespace Sql = Mdt::Sql;
+   *
+   * using Sql::FieldName;
+   * using Sql::FieldNameList;
+   *
+   * FieldNameList list( FieldName("A") , FieldName("B") );
+   * \endcode
+   */
+  class FieldNameList : public FieldNameListBase<FieldNameList>
+  {
+   public:
 
-  void initTestCase();
-  void cleanupTestCase();
+    using FieldNameListBase::FieldNameListBase;
 
-  void tableNameTest();
+//   private:
+// 
+//     void addField(const FieldName & field)
+//     {
+//       addFieldName(field.toString());
+//     }
 
-  void selectTableTest();
-  void selectTableForeignKeyTest();
-};
+  };
 
+}} // namespace Mdt{ namespace Sql{
 
-#endif // #ifndef MDT_SIMPLE_TYPES_TEST_H
+#endif // #ifndef MDT_SQL_FIELD_NAME_LIST_H

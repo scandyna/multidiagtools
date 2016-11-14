@@ -48,34 +48,6 @@ QString fieldNameTestFunction(const Sql::FieldName & fn)
   return fn.toString();
 }
 
-void SimpleTypesTest::fieldNameTest()
-{
-  using Sql::FieldName;
-  using Sql::Schema::Field;
-  using Sql::Schema::AutoIncrementPrimaryKey;
-  using Sql::Schema::SingleFieldPrimaryKey;
-
-  // Must not compile
-//   QCOMPARE(fieldNameTestFunction("Bug"), QString("Bug"));
-
-  // From explicit field name
-  QCOMPARE(fieldNameTestFunction(FieldName("A")), QString("A"));
-  // From a field
-  Field B;
-  B.setName("B");
-  QCOMPARE(fieldNameTestFunction(B), QString("B"));
-  // From a AI PK
-  AutoIncrementPrimaryKey Id_PK("Id_PK");
-  QCOMPARE(fieldNameTestFunction(Id_PK), QString("Id_PK"));
-  // From a single field PK
-  SingleFieldPrimaryKey C;
-  C.setFieldName("C");
-  QCOMPARE(fieldNameTestFunction(C), QString("C"));
-  // Null flag
-  QVERIFY(FieldName("").isNull());
-  QVERIFY(!FieldName("D").isNull());
-}
-
 QString tableNameTestFunction(const Sql::TableName & tn)
 {
   return tn.toString();

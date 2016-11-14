@@ -18,26 +18,33 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SIMPLE_TYPES_TEST_H
-#define MDT_SIMPLE_TYPES_TEST_H
+#include "SchemaForeignKeyTest.h"
+#include "Mdt/Application.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
-
-class SimpleTypesTest : public QObject
+void SchemaForeignKeyTest::initTestCase()
 {
- Q_OBJECT
+}
 
- private slots:
+void SchemaForeignKeyTest::cleanupTestCase()
+{
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+/*
+ * Tests
+ */
 
-  void tableNameTest();
+/*
+ * Main
+ */
 
-  void selectTableTest();
-  void selectTableForeignKeyTest();
-};
+int main(int argc, char **argv)
+{
+  Mdt::Application app(argc, argv);
+  SchemaForeignKeyTest test;
 
+  if(!app.init()){
+    return 1;
+  }
 
-#endif // #ifndef MDT_SIMPLE_TYPES_TEST_H
+  return QTest::qExec(&test, argc, argv);
+}
