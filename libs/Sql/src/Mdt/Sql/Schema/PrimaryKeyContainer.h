@@ -32,9 +32,9 @@ namespace Mdt{ namespace Sql{ namespace Schema{
   /*! \brief Conatin one type of primary key
    *
    * To help defining SQL schema in most possible easy way,
-   *  several primary key types exsits.
+   *  several primary key types exists.
    *
-   * To store this varaints of primary key in a unified way,
+   * To store this variants of primary key in a unified way,
    *  for example in a Table, this container class helps.
    */
   class PrimaryKeyContainer
@@ -44,11 +44,11 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Default container
      */
     PrimaryKeyContainer()
-     : pvType(PrimaryKeyType) {}
+     : mType(PrimaryKeyType) {}
 
     /*! \brief Primary key type
      *
-     * If a method exist to get infromation
+     * If a method exist to get information
      *  from stored primary key,
      *  its recommended to use it.
      *  If getting the stored primary key object itself,
@@ -65,24 +65,33 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void setPrimaryKey(const AutoIncrementPrimaryKey & pk)
     {
-      pvPrimaryKey = pk;
-      pvType = AutoIncrementPrimaryKeyType;
+      mPrimaryKey = pk;
+      mType = AutoIncrementPrimaryKeyType;
     }
 
     /*! \brief Set primary key
      */
     void setPrimaryKey(const SingleFieldPrimaryKey & pk)
     {
-      pvPrimaryKey = pk;
-      pvType = SingleFieldPrimaryKeyType;
+      mPrimaryKey = pk;
+      mType = SingleFieldPrimaryKeyType;
     }
 
     /*! \brief Set primary key
      */
     void setPrimaryKey(const PrimaryKey & pk)
     {
-      pvPrimaryKey = pk;
-      pvType = PrimaryKeyType;
+      mPrimaryKey = pk;
+      mType = PrimaryKeyType;
+    }
+
+    /*! \brief Set primary key with list of fields
+     */
+    template<typename...Ts>
+    void setPrimaryKey(const Ts & ...fieldList)
+    {
+      mPrimaryKey = PrimaryKey(fieldList...);
+      mType = PrimaryKeyType;
     }
 
     /*! \brief Get field name
@@ -114,7 +123,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     Type primaryKeyType() const
     {
-      return pvType;
+      return mType;
     }
 
     /*! \brief Get primary key
@@ -141,8 +150,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
    private:
 
-    boost::variant<PrimaryKey, AutoIncrementPrimaryKey, SingleFieldPrimaryKey> pvPrimaryKey;
-    Type pvType;
+    boost::variant<PrimaryKey, AutoIncrementPrimaryKey, SingleFieldPrimaryKey> mPrimaryKey;
+    Type mType;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

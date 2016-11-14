@@ -25,6 +25,8 @@
 #include "Mdt/Sql/Schema/PrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKeyContainer.h"
 
+namespace Sql = Mdt::Sql;
+
 void SchemaPrimaryKeyTest::initTestCase()
 {
 }
@@ -39,8 +41,8 @@ void SchemaPrimaryKeyTest::cleanupTestCase()
 
 void SchemaPrimaryKeyTest::autoIncrementPrimaryKeyTest()
 {
-  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
-  using Mdt::Sql::Schema::FieldType;
+  using Sql::Schema::AutoIncrementPrimaryKey;
+  using Sql::Schema::FieldType;
 
   /*
    * Default constructed initial state
@@ -71,9 +73,9 @@ void SchemaPrimaryKeyTest::autoIncrementPrimaryKeyTest()
 
 void SchemaPrimaryKeyTest::singleFieldPrimaryKeyTest()
 {
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::Field;
-  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
+  using Sql::Schema::FieldType;
+  using Sql::Schema::Field;
+  using Sql::Schema::SingleFieldPrimaryKey;
 
   SingleFieldPrimaryKey pk;
 
@@ -133,41 +135,65 @@ void SchemaPrimaryKeyTest::singleFieldPrimaryKeyTest()
 
 void SchemaPrimaryKeyTest::primaryKeyTest()
 {
-  using Mdt::Sql::Schema::Field;
-  using Mdt::Sql::Schema::PrimaryKey;
-
-  PrimaryKey pk;
+  using Sql::Schema::Field;
+  using Sql::Schema::PrimaryKey;
 
   /*
-   * Initial state
+   * Mutable usage
    */
+  // Initial state
+  PrimaryKey pk;
   QCOMPARE(pk.fieldCount(), 0);
   QVERIFY(pk.isNull());
-  /*
-   * Set/get
-   */
+  // Set/get
   Field Id_PK;
   Id_PK.setName("Id_PK");
   pk.addField(Id_PK);
   QCOMPARE(pk.fieldCount(), 1);
   QVERIFY(!pk.isNull());
   QCOMPARE(pk.fieldNameList().at(0), QString("Id_PK"));
-  /*
-   * Clear
-   */
+  // Clear
   pk.clear();
   QCOMPARE(pk.fieldCount(), 0);
   QVERIFY(pk.isNull());
+  /*
+   * Construct with variadic arguments
+   */
+  // Setup fields
+  Field fieldA, fieldB, fieldC;
+  fieldA.setName("A");
+  fieldB.setName("B");
+  fieldC.setName("C");
+  // 1 field
+  PrimaryKey pk1(fieldA);
+  QCOMPARE(pk1.fieldCount(), 1);
+  QCOMPARE(pk1.fieldNameList().at(0), QString("A"));
+  // 2 fields
+  PrimaryKey pk2(fieldA, fieldB);
+  QCOMPARE(pk2.fieldCount(), 2);
+  QCOMPARE(pk2.fieldNameList().at(0), QString("A"));
+  QCOMPARE(pk2.fieldNameList().at(1), QString("B"));
+  // 3 fields
+  PrimaryKey pk3(fieldA, fieldB, fieldC);
+  QCOMPARE(pk3.fieldCount(), 3);
+  QCOMPARE(pk3.fieldNameList().at(0), QString("A"));
+  QCOMPARE(pk3.fieldNameList().at(1), QString("B"));
+  QCOMPARE(pk3.fieldNameList().at(2), QString("C"));
+  /*
+   * Must not compile
+   */
+//   PrimaryKey badPk1("A");
+//   PrimaryKey badPk2(Sql::Schema::AutoIncrementPrimaryKey("A"));
 }
 
 void SchemaPrimaryKeyTest::primaryKeyContainerTest()
 {
-  using Mdt::Sql::Schema::Field;
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
-  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
-  using Mdt::Sql::Schema::PrimaryKey;
-  using Mdt::Sql::Schema::PrimaryKeyContainer;
+  using Sql::Schema::Field;
+  using Sql::Schema::FieldType;
+  using Sql::Schema::AutoIncrementPrimaryKey;
+  using Sql::Schema::SingleFieldPrimaryKey;
+  using Sql::Schema::PrimaryKey;
+  using Sql::Schema::PrimaryKeyContainer;
 
   /*
    * Setup fields
@@ -242,6 +268,19 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   container.clear();
   QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
   QCOMPARE(container.primaryKey().fieldCount(), 0);
+  /*
+   * Set PrimaryKey with list of fields
+   */
+  // Switch first to AutoIncrementPrimaryKey
+  container.setPrimaryKey( AutoIncrementPrimaryKey("Id_PK") );
+  QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  // Set PrimaryKey
+  container.setPrimaryKey(Id_A, Id_B);
+  QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QVERIFY(container.fieldName().isEmpty());
+  QVERIFY(container.fieldType() == FieldType::UnknownType);
+  QCOMPARE(container.fieldLength(), -1);
+  QCOMPARE(container.primaryKey().fieldCount(), 2);
 }
 
 /*

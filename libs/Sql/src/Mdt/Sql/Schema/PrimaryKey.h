@@ -32,51 +32,79 @@ namespace Mdt{ namespace Sql{ namespace Schema{
   {
    public:
 
+    /*! \brief Construct a empty primary key
+     */
+    PrimaryKey() = default;
+
+    /*! \brief Construct a primary key with a list of fields
+     */
+    template<typename...Ts>
+    PrimaryKey(const Ts & ...fieldList)
+    {
+      mFieldNameList.reserve(sizeof...(fieldList));
+      addFieldList(fieldList...);
+    }
+
     /*! \brief Add a field to this primary key
      */
     void addField(const Field & field)
     {
-      pvFieldNameList.append(field.name());
+      mFieldNameList.append(field.name());
     }
 
     /*! \brief Add a field to this primary key
      */
     void addFieldName(const QString & name)
     {
-      pvFieldNameList.append(name);
+      mFieldNameList.append(name);
     }
 
     /*! \brief Get field count
      */
     int fieldCount() const
     {
-      return pvFieldNameList.count();
+      return mFieldNameList.count();
     }
 
     /*! \brief Get field name list
      */
     QStringList fieldNameList() const
     {
-      return pvFieldNameList;
+      return mFieldNameList;
     }
 
     /*! \brief Check if primary key is null
      */
     bool isNull() const
     {
-      return pvFieldNameList.isEmpty();
+      return mFieldNameList.isEmpty();
     }
 
     /*! \brief Clear
      */
     void clear()
     {
-      pvFieldNameList.clear();
+      mFieldNameList.clear();
     }
 
    private:
 
-    QStringList pvFieldNameList;
+    /*! \brief Helper to add fields with variadic function
+     */
+    void addFieldList()
+    {
+    }
+
+    /*! \brief Helper to add fields with variadic function
+     */
+    template<typename...Ts>
+    void addFieldList(const Field & field, const Ts & ...fieldList)
+    {
+      addField(field);
+      addFieldList(fieldList...);
+    }
+
+    QStringList mFieldNameList;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

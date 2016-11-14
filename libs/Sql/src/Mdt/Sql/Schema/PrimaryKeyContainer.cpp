@@ -86,7 +86,7 @@ QString PrimaryKeyContainer::fieldName() const
 {
   FieldNameVisitor visitor;
 
-  boost::apply_visitor(visitor, pvPrimaryKey);
+  boost::apply_visitor(visitor, mPrimaryKey);
 
   return visitor.fieldName;
 }
@@ -95,7 +95,7 @@ FieldType PrimaryKeyContainer::fieldType() const
 {
   FieldTypeVisitor visitor;
 
-  boost::apply_visitor(visitor, pvPrimaryKey);
+  boost::apply_visitor(visitor, mPrimaryKey);
 
   return visitor.fieldType;
 }
@@ -104,33 +104,33 @@ int PrimaryKeyContainer::fieldLength() const
 {
   FieldLengthVisitor visitor;
 
-  boost::apply_visitor(visitor, pvPrimaryKey);
+  boost::apply_visitor(visitor, mPrimaryKey);
 
   return visitor.fieldLength;
 }
 
 AutoIncrementPrimaryKey PrimaryKeyContainer::autoIncrementPrimaryKey() const
 {
-  Q_ASSERT(pvType == AutoIncrementPrimaryKeyType);
-  return boost::get<AutoIncrementPrimaryKey>(pvPrimaryKey);
+  Q_ASSERT(mType == AutoIncrementPrimaryKeyType);
+  return boost::get<AutoIncrementPrimaryKey>(mPrimaryKey);
 }
 
 SingleFieldPrimaryKey PrimaryKeyContainer::singleFieldPrimaryKey() const
 {
-  Q_ASSERT(pvType == SingleFieldPrimaryKeyType);
-  return boost::get<SingleFieldPrimaryKey>(pvPrimaryKey);
+  Q_ASSERT(mType == SingleFieldPrimaryKeyType);
+  return boost::get<SingleFieldPrimaryKey>(mPrimaryKey);
 }
 
 PrimaryKey PrimaryKeyContainer::primaryKey() const
 {
-  Q_ASSERT(pvType == PrimaryKeyType);
-  return boost::get<PrimaryKey>(pvPrimaryKey);
+  Q_ASSERT(mType == PrimaryKeyType);
+  return boost::get<PrimaryKey>(mPrimaryKey);
 }
 
 void PrimaryKeyContainer::clear()
 {
-  pvPrimaryKey = PrimaryKey();
-  pvType = PrimaryKeyType;
+  mPrimaryKey = PrimaryKey();
+  mType = PrimaryKeyType;
 }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{
