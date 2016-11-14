@@ -44,11 +44,6 @@ class SchemaTest : public QObject
   void fieldTest();
   void fieldListTest();
 
-//   void autoIncrementPrimaryKeyTest();
-//   void singleFieldPrimaryKeyTest();
-//   void primaryKeyTest();
-//   void primaryKeyContainerTest();
-
   void indexTest();
   void indexListTest();
   void indexListModelTest();
@@ -63,12 +58,12 @@ class SchemaTest : public QObject
   void foreignKeyTest();
   void foreignKeyListTest();
 
-  void tablePrimaryKeyTest();
-  void tablePrimaryKeyAicBenchmark();
-  void tablePrimaryKeyMcBenchmark();
-  void tableTest();
-  void tableModelTest();
-  void tableListTest();
+//   void tablePrimaryKeyTest();
+//   void tablePrimaryKeyAicBenchmark();
+//   void tablePrimaryKeyMcBenchmark();
+//   void tableTest();
+//   void tableModelTest();
+//   void tableListTest();
 
   void tablePopulationTest();
   void tablePopulationListTest();

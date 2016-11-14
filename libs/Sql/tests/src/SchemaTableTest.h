@@ -18,13 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_FOREIGN_KEY_TEST_H
-#define MDT_SQL_SCHEMA_FOREIGN_KEY_TEST_H
+#ifndef MDT_SQL_SCHEMA_TABLE_TEST_H
+#define MDT_SQL_SCHEMA_TABLE_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
 
-class SchemaForeignKeyTest : public QObject
+class SchemaTableTest : public QObject
 {
  Q_OBJECT
 
@@ -32,6 +32,14 @@ class SchemaForeignKeyTest : public QObject
 
   void initTestCase();
   void cleanupTestCase();
+
+  void tablePrimaryKeyTest();
+  void tablePrimaryKeyAicBenchmark();
+  void tablePrimaryKeyMcBenchmark();
+  void tableTest();
+  void tableModelTest();
+  void tableListTest();
+
 };
 
-#endif // #ifndef MDT_SQL_SCHEMA_FOREIGN_KEY_TEST_H
+#endif // #ifndef MDT_SQL_SCHEMA_TABLE_TEST_H
