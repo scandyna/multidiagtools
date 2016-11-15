@@ -43,7 +43,7 @@ void Table::setAutoIncrementPrimaryKey(const QString & fieldName)
 void Table::setPrimaryKey(const PrimaryKey& pk)
 {
   mPrimaryKey.setPrimaryKey(pk);
-  setPrimaryKeyIndexList(pk);
+  updatePrimaryKeyFlags(pk);
 //   mPrimaryKeyFieldIndex = -1;
 //   mPrimaryKey.setPrimaryKey(pk);
 //   // Update pvPrimaryKeyFieldIndexList
@@ -92,14 +92,14 @@ int Table::fieldIndex(const QString & fieldName) const
     if(QString::compare(mPrimaryKey.fieldName(), fieldName, Qt::CaseInsensitive) == 0){
       return 0;
     }else{
-      int index = pvFieldList.fieldIndex(fieldName);
+      int index = mFieldList.fieldIndex(fieldName);
       if(index < 0){
         return index;
       }
       return index + 1;
     }
   }else{
-    return pvFieldList.fieldIndex(fieldName);
+    return mFieldList.fieldIndex(fieldName);
   }
 }
 
@@ -231,12 +231,12 @@ void Table::clear()
   mPrimaryKey.clear();
   pvIsTemporary = false;
   pvTableName.clear();
-  pvFieldList.clear();
+  mFieldList.clear();
   pvForeignKeyList.clear();
   pvIndexList.clear();
 }
 
-void Table::setPrimaryKeyIndexList(const PrimaryKey & pk)
+void Table::updatePrimaryKeyFlags(const PrimaryKey & pk)
 {
   mPrimaryKeyFieldIndex = -1;
   // Update mPrimaryKeyFieldIndexList
@@ -244,8 +244,9 @@ void Table::setPrimaryKeyIndexList(const PrimaryKey & pk)
   const auto fieldNameList = pk.fieldNameList();
   for(const auto & fieldName : fieldNameList){
     int idx = fieldIndex(fieldName);
-    Q_ASSERT_X(idx >= 0, "Table::setPrimaryKeyIndexList()", "pk contains a field that not exists in table");
+    Q_ASSERT_X(idx >= 0, "Table::updatePrimaryKeyFlags()", "pk contains a field that not exists in table");
     mPrimaryKeyFieldIndexList.emplace_back(idx);
+    mFieldList[idx].setRequired(true);
   }
 }
 
@@ -258,9 +259,9 @@ const Field & Table::refFieldConst(int index) const
    */
   if(mPrimaryKeyFieldIndex == 0){
     Q_ASSERT(index > 0);
-    return pvFieldList.at(index - 1);
+    return mFieldList.at(index - 1);
   }else{
-    return pvFieldList.at(index);
+    return mFieldList.at(index);
   }
 }
 

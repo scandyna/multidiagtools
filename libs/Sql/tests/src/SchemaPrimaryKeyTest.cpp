@@ -136,6 +136,7 @@ void SchemaPrimaryKeyTest::singleFieldPrimaryKeyTest()
 void SchemaPrimaryKeyTest::primaryKeyTest()
 {
   using Sql::Schema::Field;
+  using Sql::Schema::FieldType;
   using Sql::Schema::PrimaryKey;
 
   /*
@@ -148,6 +149,7 @@ void SchemaPrimaryKeyTest::primaryKeyTest()
   // Set/get
   Field Id_PK;
   Id_PK.setName("Id_PK");
+  Id_PK.setType(FieldType::Integer);
   pk.addField(Id_PK);
   QCOMPARE(pk.fieldCount(), 1);
   QVERIFY(!pk.isNull());
@@ -162,8 +164,11 @@ void SchemaPrimaryKeyTest::primaryKeyTest()
   // Setup fields
   Field fieldA, fieldB, fieldC;
   fieldA.setName("A");
+  fieldA.setType(FieldType::Integer);
   fieldB.setName("B");
+  fieldB.setType(FieldType::Integer);
   fieldC.setName("C");
+  fieldC.setType(FieldType::Integer);
   // 1 field
   PrimaryKey pk1(fieldA);
   QCOMPARE(pk1.fieldCount(), 1);
@@ -179,6 +184,13 @@ void SchemaPrimaryKeyTest::primaryKeyTest()
   QCOMPARE(pk3.fieldNameList().at(0), QString("A"));
   QCOMPARE(pk3.fieldNameList().at(1), QString("B"));
   QCOMPARE(pk3.fieldNameList().at(2), QString("C"));
+  /*
+   * Check contains()
+   */
+  QVERIFY(pk3.contains("A"));
+  QVERIFY(pk3.contains("a"));
+  QVERIFY(!pk3.contains("Z"));
+  QVERIFY(!pk3.contains(""));
   /*
    * Must not compile
    */

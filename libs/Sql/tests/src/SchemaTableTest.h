@@ -37,7 +37,7 @@ class SchemaTableTest : public QObject
   void setSingleFieldPrimaryKeyTest();
   void setPrimaryKeyTest();
 
-  void tablePrimaryKeyTest();
+//   void tablePrimaryKeyTest();
   void tablePrimaryKeyAicBenchmark();
   void tablePrimaryKeyMcBenchmark();
   void tableTest();

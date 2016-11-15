@@ -38,6 +38,9 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     PrimaryKey() = default;
 
     /*! \brief Construct a primary key with a list of fields
+     *
+     * \pre No field in fieldList must be null
+     * \pre Each field in fieldList must have a different name
      */
     template<typename...Ts>
     PrimaryKey(const Ts & ...fieldList)
@@ -47,16 +50,26 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     }
 
     /*! \brief Add a field to this primary key
+     *
+     * \pre field must not be null
+     * \pre No field with the same name as field must allready been set to this primary key
      */
     void addField(const Field & field)
     {
+      Q_ASSERT(!field.isNull());
+      Q_ASSERT(!contains(field.name()));
       mFieldNameList.append(field.name());
     }
 
     /*! \brief Add a field to this primary key
+     *
+     * \pre name must not be empty
+     * \pre No field with the same name must allready been set to this primary key
      */
     void addFieldName(const QString & name)
     {
+      Q_ASSERT(!name.isEmpty());
+      Q_ASSERT(!contains(name));
       mFieldNameList.append(name);
     }
 
@@ -65,6 +78,16 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     int fieldCount() const
     {
       return mFieldNameList.count();
+    }
+
+    /*! \brief Check if a field with fieldName exists in this primary key
+     *
+     * Note that field names are compared in a case insensitive way.
+     *  For exapmple, Id_PK is the same field as ID_PK
+     */
+    bool contains(const QString & fieldName) const
+    {
+      return mFieldNameList.contains(fieldName, Qt::CaseInsensitive);
     }
 
     /*! \brief Get field name list

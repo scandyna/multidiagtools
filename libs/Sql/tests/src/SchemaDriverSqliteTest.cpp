@@ -31,6 +31,8 @@
 #include <QSqlRecord>
 #include <QSqlError>
 
+namespace Sql = Mdt::Sql;
+
 void SchemaDriverSqliteTest::initTestCase()
 {
   // Get database instance
@@ -412,11 +414,11 @@ void SchemaDriverSqliteTest::singleFieldPrimaryKeyDefinitionTest()
 
 void SchemaDriverSqliteTest::primaryKeyDefinitionTest()
 {
-  using Mdt::Sql::Schema::PrimaryKey;
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::Field;
+  using Sql::Schema::PrimaryKey;
+  using Sql::Schema::FieldType;
+  using Sql::Schema::Field;
 
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+  Sql::Schema::DriverSQLite driver(mDatabase);
   QString expectedSql;
   PrimaryKey pk;
   Field Id_A_PK, Id_B_PK;
@@ -425,7 +427,9 @@ void SchemaDriverSqliteTest::primaryKeyDefinitionTest()
    * Setup fields
    */
   Id_A_PK.setName("Id_A_PK");
+  Id_A_PK.setType(FieldType::Integer);
   Id_B_PK.setName("Id_B_PK");
+  Id_B_PK.setType(FieldType::Integer);
   /*
    * Simple 1 field PK
    */
@@ -613,11 +617,9 @@ void SchemaDriverSqliteTest::foreignKeyDefinitionTest()
 
 void SchemaDriverSqliteTest::tableDefinitionTest()
 {
-  using Mdt::Sql::Schema::Field;
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
-  using Mdt::Sql::Schema::PrimaryKey;
-  using Mdt::Sql::Schema::Table;
+  using Sql::Schema::Field;
+  using Sql::Schema::FieldType;
+  using Sql::Schema::Table;
   using Mdt::Sql::Schema::ParentTableFieldName;
   using Mdt::Sql::Schema::ChildTableFieldName;
   using Mdt::Sql::Schema::ForeignKey;
@@ -630,10 +632,10 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
    * Setup fields, primary keys, foreeign keys
    */
   // Code_PK
-  SingleFieldPrimaryKey Code_PK;
-  Code_PK.setFieldName("Code_PK");
-  Code_PK.setFieldType(FieldType::Varchar);
-  Code_PK.setFieldLength(20);
+  Field Code_PK;
+  Code_PK.setName("Code_PK");
+  Code_PK.setType(FieldType::Varchar);
+  Code_PK.setLength(20);
   // Id_A
   Field Id_A;
   Id_A.setName("Id_A");
@@ -644,10 +646,6 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   Id_B.setName("Id_B");
   Id_B.setType(FieldType::Integer);
   Id_B.setRequired(true);
-  // Id_AB_PK primary key
-  PrimaryKey Id_AB_PK;
-  Id_AB_PK.addField(Id_A);
-  Id_AB_PK.addField(Id_B);
   // Name
   Field Name;
   Name.setName("Name");
@@ -747,8 +745,12 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   table.setTableName("Client_tbl");
   table.setPrimaryKey(Code_PK);
   // Check
+//   expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
+//   expectedSql += "  \"Code_PK\" VARCHAR(20) NOT NULL PRIMARY KEY\n";
+//   expectedSql += ");\n";
   expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
-  expectedSql += "  \"Code_PK\" VARCHAR(20) NOT NULL PRIMARY KEY\n";
+  expectedSql += "  \"Code_PK\" VARCHAR(20) NOT NULL DEFAULT NULL,\n";
+  expectedSql += "  PRIMARY KEY (\"Code_PK\")\n";
   expectedSql += ");\n";
   QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
   /*
@@ -762,9 +764,14 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   table.setPrimaryKey(Code_PK);
   table.addField(Name);
   // Check
+//   expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
+//   expectedSql += "  \"Code_PK\" VARCHAR(20) NOT NULL PRIMARY KEY,\n";
+//   expectedSql += "  \"Name\" VARCHAR(50) DEFAULT NULL\n";
+//   expectedSql += ");\n";
   expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
-  expectedSql += "  \"Code_PK\" VARCHAR(20) NOT NULL PRIMARY KEY,\n";
-  expectedSql += "  \"Name\" VARCHAR(50) DEFAULT NULL\n";
+  expectedSql += "  \"Code_PK\" VARCHAR(20) NOT NULL DEFAULT NULL,\n";
+  expectedSql += "  \"Name\" VARCHAR(50) DEFAULT NULL,\n";
+  expectedSql += "  PRIMARY KEY (\"Code_PK\")\n";
   expectedSql += ");\n";
   QCOMPARE(driver.getSqlToCreateTable(table), expectedSql);
   /*
@@ -788,9 +795,7 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   // Setup table
   table.clear();
   table.setTableName("Client_tbl");
-  table.addField(Id_A);
-  table.addField(Id_B);
-  table.setPrimaryKey(Id_AB_PK);
+  table.setPrimaryKey(Id_A, Id_B);
   // Check
   expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
   expectedSql += "  \"Id_A\" INTEGER NOT NULL DEFAULT NULL,\n";
@@ -806,10 +811,8 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   // Setup table
   table.clear();
   table.setTableName("Client_tbl");
-  table.addField(Id_A);
-  table.addField(Id_B);
+  table.setPrimaryKey(Id_A, Id_B);
   table.addField(Name);
-  table.setPrimaryKey(Id_AB_PK);
   // Check
   expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
   expectedSql += "  \"Id_A\" INTEGER NOT NULL DEFAULT NULL,\n";
@@ -849,10 +852,8 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   // Setup table
   table.clear();
   table.setTableName("Contact_tbl");
-  table.addField(Id_A);
-  table.addField(Id_B);
+  table.setPrimaryKey(Id_A, Id_B);
   table.addField(Connector_Id_FK);
-  table.setPrimaryKey(Id_AB_PK);
   table.addForeignKey(fk_Connector_Id_FK);
   // Check
   expectedSql  = "CREATE TABLE \"Contact_tbl\" (\n";
@@ -1116,17 +1117,16 @@ void SchemaDriverSqliteTest::reverseIndexListTest()
 
 void SchemaDriverSqliteTest::reversePrimaryKeyTest()
 {
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::Field;
-  using Mdt::Sql::Schema::Table;
+  using Sql::Schema::FieldType;
+  using Sql::Schema::Field;
+  using Sql::Schema::Table;
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
-  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
   using Mdt::Sql::Schema::PrimaryKey;
   using Mdt::Sql::Schema::PrimaryKeyContainer;
 
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+  Sql::Schema::DriverSQLite driver(mDatabase);
   Table table;
-  Mdt::Expected<PrimaryKeyContainer> ret;
+  Expected<PrimaryKeyContainer> ret;
   PrimaryKeyContainer pk;
 
   /*
@@ -1136,10 +1136,10 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   AutoIncrementPrimaryKey Id_PK;
   Id_PK.setFieldName("Id_PK");
   // Code_PK
-  SingleFieldPrimaryKey Code_PK;
-  Code_PK.setFieldName("Code_PK");
-  Code_PK.setFieldType(FieldType::Varchar); // Must not be Integer, else it will become a auto increment PK in SQLite
-  Code_PK.setFieldLength(50);
+  Field Code_PK;
+  Code_PK.setName("Code_PK");
+  Code_PK.setType(FieldType::Varchar); // Must not be Integer, else it will become a auto increment PK in SQLite
+  Code_PK.setLength(50);
   /*
    * Setup fields
    */
@@ -1239,7 +1239,6 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   using Mdt::Sql::Schema::Field;
   using Mdt::Sql::Schema::Table;
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
-  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
   using Mdt::Sql::Schema::PrimaryKey;
   using Mdt::Sql::Schema::ParentTableFieldName;
   using Mdt::Sql::Schema::ChildTableFieldName;
@@ -1294,10 +1293,10 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   AutoIncrementPrimaryKey Id_PK;
   Id_PK.setFieldName("Id_PK");
   // Code_PK
-  SingleFieldPrimaryKey Code_PK;
-  Code_PK.setFieldName("Code_PK");
-  Code_PK.setFieldType(FieldType::Varchar);
-  Code_PK.setFieldLength(50);
+  Field Code_PK;
+  Code_PK.setName("Code_PK");
+  Code_PK.setType(FieldType::Varchar);
+  Code_PK.setLength(50);
   // Id_AB_PK
   PrimaryKey Id_AB_PK;
   Id_AB_PK.addField(Id_A);

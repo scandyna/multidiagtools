@@ -69,6 +69,18 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return pvFieldList.at(index);
     }
 
+    /*! \brief Access field at index for modification
+     *
+     * \pre index must be valid
+     */
+    Field & operator[](int index)
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < size());
+
+      return pvFieldList[index];
+    }
+
     /*! \brief Get index of field with fieldName
      *
      * If fieldName not exists in this table,

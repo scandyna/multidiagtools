@@ -256,7 +256,7 @@ Mdt::Expected<PrimaryKeyContainer> DriverSQLite::getTablePrimaryKeyFromDatabase(
     /*
      * If field is of type INTEGER (not INT !),
      * we habe a INTEGER PRIMARY KEY which is a auto increment primary key
-     * Note: type can be INTEGRE or INTEGER AUTO INCREMENT, which is the same.
+     * Note: type can be INTEGER or INTEGER AUTO INCREMENT, which is the same.
      */
     if(fieldTypeName.startsWith(QLatin1String("INTEGER"))){
       AutoIncrementPrimaryKey k;

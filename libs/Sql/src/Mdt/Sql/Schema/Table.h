@@ -97,6 +97,91 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    * table.addForeignKey(fk_Client_Id_FK);
    * \endcode
    *
+   * Example for a simple table with composed primary key:
+   * \code
+   * #include "Mdt/Sql/Schema/Table.h"
+   *
+   * namespace Sql = Mdt::Sql;
+   *
+   * using Sql::Schema::Table;
+   * using Sql::Schema::Field;
+   * using Sql::Schema::FieldType;
+   *
+   * // Setup Id_A
+   * Field Id_A:
+   * Id_A.setName("Id_A");
+   * Id_A.setType(FieldType::Integer);
+   * // Setup Id_B
+   * Field Id_B:
+   * Id_A.setName("Id_B");
+   * Id_B.setType(FieldType::Integer);
+   * // Setup Name
+   * Field Name;
+   * Name.setName("Name");
+   * Name.setType(FieldType::Varchar);
+   * Name.setLength(100);
+   *
+   * // Setup table
+   * Table table;
+   * table.setName("MyTable_tbl");
+   * table.setPrimaryKey(Id_A, Id_B);
+   * table.addField(Name);
+   * \endcode
+   *
+   * Example with foreign key referring to a allready existing table:
+   * \code
+   * #include "Mdt/Sql/Schema/Table.h"
+   * #include "Client.h"  // Defaindes a Client based on TableTemplate
+   *
+   * namespace Sql = Mdt::Sql;
+   *
+   * using Sql::Schema::Table;
+   * using Sql::Schema::Field;
+   * using Sql::Schema::FieldType;
+   * using Sql::Schema::ForeignKeyParameters;
+   *
+   * using Mdt::Sql::Schema::ForeignKey;
+   * using Mdt::Sql::Schema::ParentTableFieldName;
+   * using Mdt::Sql::Schema::ChildTableFieldName;
+   *
+   * // Somewhere defined table
+   * Table client = getFromSomeWhere();
+   *
+   * // Setup street field
+   * Field Street:
+   * Street.setName("Street");
+   * Street.setType(FieldType::Varchar);
+   * Street.setLength(100);
+   * // Setup Client_Id_FK field
+   * Field Client_Id_FK;
+   * Client_Id_FK.setName("Client_Id_FK");
+   * Client_Id_FK.setType(FieldType::Integer);
+   * Client_Id_FK.setRequired(true);
+   *
+   * // Define a common foreign key parameters
+   * ForeignKeyParameters fkParameters;
+   *
+   * // Setup table
+   * Table table;
+   * table.setName("Address_tbl");
+   * table.setAutoIncrementPrimaryKey("Id_PK");
+   * table.addField(Street);
+   * table.addForeignKey( Client_Id_FK, client, client.Id_PK() );
+   *
+   * // Add fileds to the table
+   * table.setPrimaryKey(Id_PK);
+   * table.addField(Client_Id_FK);
+   * table.addField(Street);
+   * // Setup fk_Client_Id_FK foreign key
+   * ForeignKey fk_Client_Id_FK;
+   * fk_Client_Id_FK.setParentTable(Client_tbl);
+   * fk_Client_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
+   * fk_Client_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
+   * fk_Client_Id_FK.setCreateChildIndex(true);
+   * fk_Client_Id_FK.addKeyFields(ParentTableFieldName(client_tbl.autoIncrementPrimaryKey()), ChildTableFieldName(Client_Id_FK));
+   * table.addForeignKey(fk_Client_Id_FK);
+   * \endcode
+   *
    * \sa TableTemplate
    */
   class Table
@@ -138,19 +223,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return pvTableName;
     }
 
-    /*! \brief Set primary key
-     *
-     * Note that pk's field will allways appear as first field in table
-     *
-     * \pre A field with pk's field name must not allready been set
-     */
-//     void setPrimaryKey(const AutoIncrementPrimaryKey & pk)
-//     {
-//       Q_ASSERT(!contains(pk.fieldName()));
-//       mPrimaryKeyFieldIndex = 0;
-//       mPrimaryKey.setPrimaryKey(pk);
-//     }
-
     /*! \brief Set a auto increment primary key
      *
      * \pre fieldName must not be empty
@@ -162,6 +234,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *
      * Will set each field in fieldList as member of the primary key of this table.
      *  If a field does not allready exist, it will also be added to this table.
+     *  If a field does not have its required flag set, it will also be set.
      *
      * \pre Each field in fieldList must have a different field name.
      */
@@ -171,7 +244,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       PrimaryKey pk(fieldList...);
       addFieldListIfNotExists(fieldList...);
       mPrimaryKey.setPrimaryKey(pk);
-      setPrimaryKeyIndexList(pk);
+      updatePrimaryKeyFlags(pk);
     }
 
     /*! \brief Set primary key
@@ -180,12 +253,12 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *
      * \pre A field with pk's field name must not allready been set
      */
-    void setPrimaryKey(const SingleFieldPrimaryKey & pk)
-    {
-      Q_ASSERT(!contains(pk.fieldName()));
-      mPrimaryKeyFieldIndex = 0;
-      mPrimaryKey.setPrimaryKey(pk);
-    }
+//     void setPrimaryKey(const SingleFieldPrimaryKey & pk)
+//     {
+//       Q_ASSERT(!contains(pk.fieldName()));
+//       mPrimaryKeyFieldIndex = 0;
+//       mPrimaryKey.setPrimaryKey(pk);
+//     }
 
     /*! \brief Set primary key
      *
@@ -234,7 +307,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     void addField(const Field & field)
     {
       Q_ASSERT(!contains(field));
-      pvFieldList.append(field);
+      mFieldList.append(field);
     }
 
     /*! \brief Add a foreign key
@@ -284,7 +357,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     int fieldCount() const
     {
-      return (pvFieldList.size() + mPrimaryKeyFieldIndex + 1);
+      return (mFieldList.size() + mPrimaryKeyFieldIndex + 1);
     }
 
     /*! \brief Get index of field with fieldName in this table
@@ -410,8 +483,11 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     }
 
     /*! \brief Set list of indexes for primary key
+     *
+     * Will set list of indexes for primary key.
+     * Each field that is part of primary key will be updated to be required.
      */
-    void setPrimaryKeyIndexList(const PrimaryKey & pk);
+    void updatePrimaryKeyFlags(const PrimaryKey & pk);
 
     /*! \brief Access field at index
      */
@@ -421,7 +497,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     bool pvIsTemporary;
     QString pvTableName;
     PrimaryKeyContainer mPrimaryKey;
-    FieldList pvFieldList;
+    FieldList mFieldList;
     std::vector<int> mPrimaryKeyFieldIndexList;  // Used by isFieldPartOfPrimaryKey() for PrimaryKey (multi-column)
     ForeignKeyList pvForeignKeyList;
     IndexList pvIndexList;

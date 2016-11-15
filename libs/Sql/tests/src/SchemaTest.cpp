@@ -401,6 +401,12 @@ void SchemaTest::fieldListTest()
   QVERIFY(!list.contains(""));
   QVERIFY(!list.contains("AAA"));
   /*
+   * Update element
+   */
+  QCOMPARE(list.at(0).name(), QString("Afield"));
+  list[0].setName("OtherFieldName");
+  QCOMPARE(list.at(0).name(), QString("OtherFieldName"));
+  /*
    * Clear
    */
   list.clear();
