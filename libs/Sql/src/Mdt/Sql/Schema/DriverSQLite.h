@@ -62,10 +62,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     QString getPrimaryKeyFieldDefinition(const AutoIncrementPrimaryKey & pk) const override;
 
-    /*! \brief Get field definition of a single field primary key
-     */
-//     QString getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey & pk) const override;
-
     /*! \brief Get primary key for table from database
      */
     virtual Mdt::Expected<PrimaryKeyContainer> getTablePrimaryKeyFromDatabase(const QString & tableName) const override;

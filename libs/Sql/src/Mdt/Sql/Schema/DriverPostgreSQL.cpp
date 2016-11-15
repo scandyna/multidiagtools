@@ -90,11 +90,6 @@ QString DriverPostgreSQL::getPrimaryKeyFieldDefinition(const AutoIncrementPrimar
 
 }
 
-// QString DriverPostgreSQL::getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey& pk) const
-// {
-// 
-// }
-
 Mdt::Expected<PrimaryKeyContainer> DriverPostgreSQL::getTablePrimaryKeyFromDatabase(const QString& tableName) const
 {
 

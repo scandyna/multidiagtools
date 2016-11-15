@@ -42,7 +42,6 @@ namespace Mdt{ namespace Sql{
     class Table;
     class Field;
     class AutoIncrementPrimaryKey;
-//     class SingleFieldPrimaryKey;
 
   }
 
@@ -115,10 +114,6 @@ namespace Mdt{ namespace Sql{
     /*! \brief Add a value for a specified field
      */
     void addValue(const Schema::AutoIncrementPrimaryKey & field, const QVariant & value);
-
-    /*! \brief Add a value for a specified field
-     */
-//     void addValue(const Schema::SingleFieldPrimaryKey & field, const QVariant & value);
 
     /*! \brief Execute insert query
      */

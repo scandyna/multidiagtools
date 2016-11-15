@@ -22,7 +22,6 @@
 #define MDT_SQL_SCHEMA_PRIMARY_KEY_CONTAINER_H
 
 #include "AutoIncrementPrimaryKey.h"
-// #include "SingleFieldPrimaryKey.h"
 #include "PrimaryKey.h"
 #include "FieldType.h"
 #include <boost/variant.hpp>
@@ -57,7 +56,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     enum Type
     {
       AutoIncrementPrimaryKeyType,  /*!< This container stores a AutoIncrementPrimaryKey */
-//       SingleFieldPrimaryKeyType,    /*!< This container stores a SingleFieldPrimaryKey */
       PrimaryKeyType                /*!< This container stores a PrimaryKey */
     };
 
@@ -67,22 +65,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     {
       mPrimaryKey = pk;
       mType = AutoIncrementPrimaryKeyType;
-    }
-
-    /*! \brief Set primary key
-     */
-//     void setPrimaryKey(const SingleFieldPrimaryKey & pk)
-//     {
-//       mPrimaryKey = pk;
-//       mType = SingleFieldPrimaryKeyType;
-//     }
-
-    /*! \brief Set primary key
-     */
-    void setPrimaryKey(const PrimaryKey & pk)
-    {
-      mPrimaryKey = pk;
-      mType = PrimaryKeyType;
     }
 
     /*! \brief Set primary key with list of fields
@@ -131,12 +113,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      * \pre Stored primary key must be of type AutoIncrementPrimaryKey
      */
     AutoIncrementPrimaryKey autoIncrementPrimaryKey() const;
-
-    /*! \brief Get primary key
-     *
-     * \pre Stored primary key must be of type SingleFieldPrimaryKey
-     */
-//     SingleFieldPrimaryKey singleFieldPrimaryKey() const;
 
     /*! \brief Get primary key
      *

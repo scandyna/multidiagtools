@@ -40,22 +40,6 @@ void Table::setAutoIncrementPrimaryKey(const QString & fieldName)
   mPrimaryKey.setPrimaryKey( AutoIncrementPrimaryKey(fieldName) );
 }
 
-void Table::setPrimaryKey(const PrimaryKey& pk)
-{
-  mPrimaryKey.setPrimaryKey(pk);
-  updatePrimaryKeyFlags(pk);
-//   mPrimaryKeyFieldIndex = -1;
-//   mPrimaryKey.setPrimaryKey(pk);
-//   // Update pvPrimaryKeyFieldIndexList
-//   mPrimaryKeyFieldIndexList.clear();
-//   const auto & fieldNameList = pk.fieldNameList();
-//   for(const auto & fieldName : fieldNameList){
-//     int idx = fieldIndex(fieldName);
-//     Q_ASSERT_X(idx >= 0, "Table::setPrimaryKey()", "pk contains a field that not exists in table");
-//     mPrimaryKeyFieldIndexList.emplace_back(idx);
-//   }
-}
-
 void Table::addForeignKey(ForeignKey fk)
 {
   Q_ASSERT(!fk.parentTableName().isEmpty());
@@ -148,7 +132,7 @@ bool Table::isFieldPartOfPrimaryKey(int index) const
 
   /*
    * If primary key has a field definition
-   * (a AutoIncrementPrimaryKey or a SingleFieldPrimaryKey),
+   * (a AutoIncrementPrimaryKey),
    * we allways represent it as first field in table.
    * Else, (for multi column PrimaryKey),
    * we check if index exists in pvPrimaryKeyFieldIndexList.

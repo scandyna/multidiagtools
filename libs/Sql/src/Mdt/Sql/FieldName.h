@@ -23,7 +23,6 @@
 
 #include "Schema/Field.h"
 #include "Schema/AutoIncrementPrimaryKey.h"
-// #include "Schema/SingleFieldPrimaryKey.h"
 #include <QString>
 
 namespace Mdt{ namespace Sql{
@@ -48,11 +47,6 @@ namespace Mdt{ namespace Sql{
      */
     FieldName(const Schema::AutoIncrementPrimaryKey & pk)
      : mFieldName(pk.fieldName()) {}
-
-    /*! \brief Construct from a single field primary key
-     */
-//     FieldName(const Schema::SingleFieldPrimaryKey & pk)
-//      : mFieldName(pk.fieldName()) {}
 
     /*! \brief Check if this field name is null
      */

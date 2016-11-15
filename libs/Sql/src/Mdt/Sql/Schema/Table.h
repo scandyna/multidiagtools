@@ -128,7 +128,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    * table.addField(Name);
    * \endcode
    *
-   * Example with foreign key referring to a allready existing table:
+   * Example with foreign key refering to a allready existing table:
    * \code
    * #include "Mdt/Sql/Schema/Table.h"
    * #include "Client.h"  // Defaindes a Client based on TableTemplate
@@ -247,25 +247,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       updatePrimaryKeyFlags(pk);
     }
 
-    /*! \brief Set primary key
-     *
-     * Note that pk's field will allways appear as first field in table
-     *
-     * \pre A field with pk's field name must not allready been set
-     */
-//     void setPrimaryKey(const SingleFieldPrimaryKey & pk)
-//     {
-//       Q_ASSERT(!contains(pk.fieldName()));
-//       mPrimaryKeyFieldIndex = 0;
-//       mPrimaryKey.setPrimaryKey(pk);
-//     }
-
-    /*! \brief Set primary key
-     *
-     * \pre Each field name in pk must exist in this table
-     */
-    void setPrimaryKey(const PrimaryKey & pk);
-
     /*! \brief Get type of stored primary key
      */
     PrimaryKeyContainer::Type primaryKeyType() const
@@ -281,15 +262,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     {
       return mPrimaryKey.autoIncrementPrimaryKey();
     }
-
-    /*! \brief Get primary key
-     *
-     * \pre Stored primary key must be of type SingleFieldPrimaryKey
-     */
-//     SingleFieldPrimaryKey singleFieldPrimaryKey() const
-//     {
-//       return mPrimaryKey.singleFieldPrimaryKey();
-//     }
 
     /*! \brief Get primary key
      *

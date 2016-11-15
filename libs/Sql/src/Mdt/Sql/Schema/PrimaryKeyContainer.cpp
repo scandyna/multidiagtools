@@ -19,63 +19,53 @@
  **
  ****************************************************************************/
 #include "PrimaryKeyContainer.h"
+#include <QString>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-class FieldNameVisitor : public boost::static_visitor<>
+class FieldNameVisitor : public boost::static_visitor<QString>
 {
  public:
 
-  void operator()(const AutoIncrementPrimaryKey & pk)
+  QString operator()(const AutoIncrementPrimaryKey & pk) const
   {
-    fieldName = pk.fieldName();
+    return pk.fieldName();
   }
-//   void operator()(const SingleFieldPrimaryKey & pk)
-//   {
-//     fieldName = pk.fieldName();
-//   }
-  void operator()(const PrimaryKey &)
+
+  QString operator()(const PrimaryKey &) const
   {
+    return QString();
   }
-  QString fieldName;
 };
 
-class FieldTypeVisitor : public boost::static_visitor<>
+class FieldTypeVisitor : public boost::static_visitor<FieldType>
 {
  public:
 
-  void operator()(const AutoIncrementPrimaryKey & pk)
+  FieldType operator()(const AutoIncrementPrimaryKey & pk) const
   {
-    fieldType = pk.fieldType();
+    return pk.fieldType();
   }
-//   void operator()(const SingleFieldPrimaryKey & pk)
-//   {
-//     fieldType = pk.fieldType();
-//   }
-  void operator()(const PrimaryKey &)
+
+  FieldType operator()(const PrimaryKey &) const
   {
-    fieldType = FieldType::UnknownType;
+    return FieldType::UnknownType;
   }
-  FieldType fieldType;
 };
 
-class FieldLengthVisitor : public boost::static_visitor<>
+class FieldLengthVisitor : public boost::static_visitor<int>
 {
  public:
 
-  void operator()(const AutoIncrementPrimaryKey &)
+  int operator()(const AutoIncrementPrimaryKey &) const
   {
-    fieldLength = -1;
+    return -1;
   }
-//   void operator()(const SingleFieldPrimaryKey & pk)
-//   {
-//     fieldLength = pk.fieldLength();
-//   }
-  void operator()(const PrimaryKey &)
+
+  int operator()(const PrimaryKey &) const
   {
-    fieldLength = -1;
+    return -1;
   }
-  int fieldLength;
 };
 
 /*
@@ -84,29 +74,17 @@ class FieldLengthVisitor : public boost::static_visitor<>
 
 QString PrimaryKeyContainer::fieldName() const
 {
-  FieldNameVisitor visitor;
-
-  boost::apply_visitor(visitor, mPrimaryKey);
-
-  return visitor.fieldName;
+  return boost::apply_visitor( FieldNameVisitor() , mPrimaryKey );
 }
 
 FieldType PrimaryKeyContainer::fieldType() const
 {
-  FieldTypeVisitor visitor;
-
-  boost::apply_visitor(visitor, mPrimaryKey);
-
-  return visitor.fieldType;
+  return boost::apply_visitor(FieldTypeVisitor(), mPrimaryKey);
 }
 
 int PrimaryKeyContainer::fieldLength() const
 {
-  FieldLengthVisitor visitor;
-
-  boost::apply_visitor(visitor, mPrimaryKey);
-
-  return visitor.fieldLength;
+  return boost::apply_visitor( FieldLengthVisitor() , mPrimaryKey );
 }
 
 AutoIncrementPrimaryKey PrimaryKeyContainer::autoIncrementPrimaryKey() const
@@ -114,12 +92,6 @@ AutoIncrementPrimaryKey PrimaryKeyContainer::autoIncrementPrimaryKey() const
   Q_ASSERT(mType == AutoIncrementPrimaryKeyType);
   return boost::get<AutoIncrementPrimaryKey>(mPrimaryKey);
 }
-
-// SingleFieldPrimaryKey PrimaryKeyContainer::singleFieldPrimaryKey() const
-// {
-//   Q_ASSERT(mType == SingleFieldPrimaryKeyType);
-//   return boost::get<SingleFieldPrimaryKey>(mPrimaryKey);
-// }
 
 PrimaryKey PrimaryKeyContainer::primaryKey() const
 {

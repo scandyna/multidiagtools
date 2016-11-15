@@ -22,7 +22,6 @@
 #define MDT_SQL_SCHEMA_PARENT_TABLE_FIELD_NAME_H
 
 #include "AutoIncrementPrimaryKey.h"
-// #include "SingleFieldPrimaryKey.h"
 #include "Field.h"
 #include <QString>
 
@@ -38,11 +37,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     explicit ParentTableFieldName(const AutoIncrementPrimaryKey & pk)
      : pvFieldName(pk.fieldName()) {}
-
-    /*! \brief Constructor
-     */
-//     explicit ParentTableFieldName(const SingleFieldPrimaryKey & pk)
-//      : pvFieldName(pk.fieldName()) {}
 
     /*! \brief Constructor
      */

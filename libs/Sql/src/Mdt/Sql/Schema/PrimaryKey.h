@@ -129,13 +129,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       addFieldList(fieldList...);
     }
 
-//     template<typename...Ts>
-//     void addFieldList(const Field & field, const Ts & ...fieldList)
-//     {
-//       addField(field);
-//       addFieldList(fieldList...);
-//     }
-
     QStringList mFieldNameList;
   };
 

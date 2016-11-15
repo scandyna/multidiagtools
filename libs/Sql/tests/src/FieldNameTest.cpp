@@ -49,7 +49,6 @@ void FieldNameTest::fieldNameTest()
   using Sql::FieldName;
   using Sql::Schema::Field;
   using Sql::Schema::AutoIncrementPrimaryKey;
-//   using Sql::Schema::SingleFieldPrimaryKey;
 
   // Must not compile
 //   QCOMPARE(fieldNameTestFunction("Bug"), QString("Bug"));
@@ -63,10 +62,6 @@ void FieldNameTest::fieldNameTest()
   // From a AI PK
   AutoIncrementPrimaryKey Id_PK("Id_PK");
   QCOMPARE(fieldNameTestFunction(Id_PK), QString("Id_PK"));
-//   // From a single field PK
-//   SingleFieldPrimaryKey C;
-//   C.setFieldName("C");
-//   QCOMPARE(fieldNameTestFunction(C), QString("C"));
   // Null flag
   QVERIFY(FieldName("").isNull());
   QVERIFY(!FieldName("C").isNull());

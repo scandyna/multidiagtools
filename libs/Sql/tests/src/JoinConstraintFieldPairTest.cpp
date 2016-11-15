@@ -105,7 +105,6 @@ void JoinConstraintFieldPairTest::fromTablesTest()
   using Sql::Schema::ChildTableFieldName;
   using Sql::Schema::ForeignKey;
   using Sql::Schema::Table;
-  using Sql::Schema::PrimaryKey;
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
 
@@ -163,12 +162,7 @@ void JoinConstraintFieldPairTest::fromTablesTest()
   // Parent table
   Table PB;
   PB.setTableName("PB");
-  PB.addField(p1);
-  PB.addField(p2);
-  PrimaryKey pkPB;
-  pkPB.addField(p1);
-  pkPB.addField(p2);
-  PB.setPrimaryKey(pkPB);
+  PB.setPrimaryKey(p1, p2);
   // Child table
   Table CB;
   CB.setAutoIncrementPrimaryKey("Id_PK");

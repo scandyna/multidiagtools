@@ -106,28 +106,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       mTable.setPrimaryKey(fieldList...);
     }
 
-
-    /*! \brief Set primary key
-     */
-    void setPrimaryKey(const AutoIncrementPrimaryKey & pk)
-    {
-      mTable.setPrimaryKey(pk);
-    }
-
-    /*! \brief Set primary key
-     */
-//     void setPrimaryKey(const SingleFieldPrimaryKey & pk)
-//     {
-//       mTable.setPrimaryKey(pk);
-//     }
-
-    /*! \brief Set primary key
-     */
-    void setPrimaryKey(const PrimaryKey & pk)
-    {
-      mTable.setPrimaryKey(pk);
-    }
-
     /*! \brief Add a field
      */
     void addField(const Field & field)
@@ -153,15 +131,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     {
       return mTable.autoIncrementPrimaryKey();
     }
-
-    /*! \brief Get primary key
-     *
-     * \pre Stored primary key must be of type SingleFieldPrimaryKey
-     */
-//     SingleFieldPrimaryKey singleFieldPrimaryKey() const
-//     {
-//       return mTable.singleFieldPrimaryKey();
-//     }
 
     /*! \brief Get primary key
      *

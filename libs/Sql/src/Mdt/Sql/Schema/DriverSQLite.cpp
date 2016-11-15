@@ -207,26 +207,6 @@ QString DriverSQLite::getPrimaryKeyFieldDefinition(const AutoIncrementPrimaryKey
   return sql;
 }
 
-// QString DriverSQLite::getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey& pk) const
-// {
-//   QString sql;
-// 
-//   // Field name and type
-//   sql = escapeFieldName(pk.fieldName()) % QStringLiteral(" ") % FieldTypeName::nameFromType( pk.fieldType() );
-//   // Length
-//   if(pk.fieldLength() > 0){
-//     sql += QStringLiteral("(") % QString::number(pk.fieldLength()) % QStringLiteral(")");
-//   }
-//   // Primary key constraint
-//   sql += QStringLiteral(" NOT NULL PRIMARY KEY");
-//   // Collation
-//   if(!pk.collation().isNull()){
-//     sql += QStringLiteral(" ") % getCollationDefinition(pk.collation());
-//   }
-// 
-//   return sql;
-// }
-
 Mdt::Expected<PrimaryKeyContainer> DriverSQLite::getTablePrimaryKeyFromDatabase(const QString & tableName) const
 {
   Mdt::Expected<PrimaryKeyContainer> ret;
@@ -264,16 +244,6 @@ Mdt::Expected<PrimaryKeyContainer> DriverSQLite::getTablePrimaryKeyFromDatabase(
       PrimaryKey k;
       k.addFieldName( pkFieldList[0].value("name").toString() );
       pk.setPrimaryKey(k);
-//       SingleFieldPrimaryKey k;
-//       k.setFieldName(fieldName);
-//       k.setFieldType( fieldTypeFromString(fieldTypeName) );
-//       int length = fieldLengthFromString(fieldTypeName);
-//       if(length < -1){
-//         ret = lastError();
-//         return ret;
-//       }
-//       k.setFieldLength(length);
-//       pk.setPrimaryKey(k);
     }
   }else{
     // We have a multi column primary key

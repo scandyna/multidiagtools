@@ -364,54 +364,6 @@ void SchemaDriverSqliteTest::autoIncrementPrimaryKeyDefinitionTest()
   QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
 }
 
-// void SchemaDriverSqliteTest::singleFieldPrimaryKeyDefinitionTest()
-// {
-//   using Mdt::Sql::Schema::SingleFieldPrimaryKey;
-//   using Mdt::Sql::Schema::FieldType;
-// 
-//   Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
-//   QString expectedSql;
-//   SingleFieldPrimaryKey pk;
-// 
-//   /*
-//    * Integer primary key
-//    * Note: SQL statement must contain NOT NULL (see SQLite documentation about NULL and PK)
-//    */
-//   // Setup primary key
-//   pk.clear();
-//   pk.setFieldType(FieldType::Integer);
-//   pk.setFieldName("Id_PK");
-//   // Check
-//   expectedSql = "\"Id_PK\" INTEGER NOT NULL PRIMARY KEY";
-//   QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
-//   /*
-//    * Text primary key
-//    * Note: SQL statement must contain NOT NULL (see SQLite documentation about NULL and PK)
-//    */
-//   // Setup primary key
-//   pk.clear();
-//   pk.setFieldType(FieldType::Varchar);
-//   pk.setFieldLength(20);
-//   pk.setFieldName("Code_PK");
-//   // Check
-//   expectedSql = "\"Code_PK\" VARCHAR(20) NOT NULL PRIMARY KEY";
-//   QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
-//   /*
-//    * Text primary key
-//    * We specifiy a collation
-//    * Note: SQL statement must contain NOT NULL (see SQLite documentation about NULL and PK)
-//    */
-//   // Setup primary key
-//   pk.clear();
-//   pk.setFieldType(FieldType::Varchar);
-//   pk.setFieldLength(20);
-//   pk.setFieldName("Code_PK");
-//   pk.setCaseSensitive(true);
-//   // Check
-//   expectedSql = "\"Code_PK\" VARCHAR(20) NOT NULL PRIMARY KEY COLLATE BINARY";
-//   QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
-// }
-
 void SchemaDriverSqliteTest::primaryKeyDefinitionTest()
 {
   using Sql::Schema::PrimaryKey;
@@ -745,9 +697,6 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   table.setTableName("Client_tbl");
   table.setPrimaryKey(Code_PK);
   // Check
-//   expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
-//   expectedSql += "  \"Code_PK\" VARCHAR(20) NOT NULL PRIMARY KEY\n";
-//   expectedSql += ");\n";
   expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
   expectedSql += "  \"Code_PK\" VARCHAR(20) NOT NULL DEFAULT NULL,\n";
   expectedSql += "  PRIMARY KEY (\"Code_PK\")\n";
@@ -764,10 +713,6 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   table.setPrimaryKey(Code_PK);
   table.addField(Name);
   // Check
-//   expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
-//   expectedSql += "  \"Code_PK\" VARCHAR(20) NOT NULL PRIMARY KEY,\n";
-//   expectedSql += "  \"Name\" VARCHAR(50) DEFAULT NULL\n";
-//   expectedSql += ");\n";
   expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
   expectedSql += "  \"Code_PK\" VARCHAR(20) NOT NULL DEFAULT NULL,\n";
   expectedSql += "  \"Name\" VARCHAR(50) DEFAULT NULL,\n";
@@ -1033,7 +978,6 @@ void SchemaDriverSqliteTest::reverseIndexListTest()
   using Mdt::Sql::Schema::Field;
   using Mdt::Sql::Schema::FieldList;
   using Mdt::Sql::Schema::Table;
-  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
   using Mdt::Sql::Schema::Index;
   using Mdt::Sql::Schema::IndexList;
 
@@ -1045,9 +989,6 @@ void SchemaDriverSqliteTest::reverseIndexListTest()
   /*
    * Setup fields
    */
-  // Id_PK
-  AutoIncrementPrimaryKey Id_PK;
-  Id_PK.setFieldName("Id_PK");
   // Name - Will generate a index for the unique constraint (on most databases)
   Field Name;
   Name.setName("Name");
@@ -1120,8 +1061,6 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   using Sql::Schema::FieldType;
   using Sql::Schema::Field;
   using Sql::Schema::Table;
-  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
-  using Mdt::Sql::Schema::PrimaryKey;
   using Sql::Schema::PrimaryKeyContainer;
 
   Sql::Schema::DriverSQLite driver(mDatabase);
@@ -1132,9 +1071,6 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   /*
    * Setup primary keys with field definitions
    */
-  // Id_PK
-  AutoIncrementPrimaryKey Id_PK;
-  Id_PK.setFieldName("Id_PK");
   // Code_PK
   Field Code_PK;
   Code_PK.setName("Code_PK");
@@ -1159,13 +1095,6 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   Name.setType(FieldType::Varchar);
   Name.setLength(50);
   Name.setUnique(true);
-  /*
-   * Setup primary keys that only refers to existing fields
-   */
-  // Id_AB_PK
-  PrimaryKey Id_AB_PK;
-  Id_AB_PK.addField(Id_A);
-  Id_AB_PK.addField(Id_B);
 
   /*
    * Check with a auto increment primary key
@@ -1211,10 +1140,8 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   // Setup and create table
   table.clear();
   table.setTableName("Connector_tbl");
-  table.addField(Id_A);
-  table.addField(Id_B);
+  table.setPrimaryKey(Id_A, Id_B);
   table.addField(Name);
-  table.setPrimaryKey(Id_AB_PK);
   QVERIFY(driver.createTable(table));
   // Get primary key from database
   ret = driver.getTablePrimaryKeyFromDatabase(table.tableName());
@@ -1234,8 +1161,6 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   using Mdt::Sql::Schema::FieldType;
   using Mdt::Sql::Schema::Field;
   using Mdt::Sql::Schema::Table;
-  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
-  using Mdt::Sql::Schema::PrimaryKey;
   using Mdt::Sql::Schema::ParentTableFieldName;
   using Mdt::Sql::Schema::ChildTableFieldName;
   using Mdt::Sql::Schema::ForeignKey;
@@ -1285,18 +1210,11 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   /*
    * Setup primary keys
    */
-  // Id_PK
-  AutoIncrementPrimaryKey Id_PK;
-  Id_PK.setFieldName("Id_PK");
   // Code_PK
   Field Code_PK;
   Code_PK.setName("Code_PK");
   Code_PK.setType(FieldType::Varchar);
   Code_PK.setLength(50);
-  // Id_AB_PK
-  PrimaryKey Id_AB_PK;
-  Id_AB_PK.addField(Id_A);
-  Id_AB_PK.addField(Id_B);
   /*
    * Setup tables that will be reused
    */
@@ -1308,10 +1226,8 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   // Connector_tbl
   Table Connector_tbl;
   Connector_tbl.setTableName("Connector_tbl");
-  Connector_tbl.addField(Id_A);
-  Connector_tbl.addField(Id_B);
+  Connector_tbl.setPrimaryKey(Id_A, Id_B);
   Connector_tbl.addField(Name);
-  Connector_tbl.setPrimaryKey(Id_AB_PK);
   /*
    * Cleanup and create tables that will be reused
    */

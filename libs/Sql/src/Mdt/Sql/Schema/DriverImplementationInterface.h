@@ -29,7 +29,6 @@
 #include "Charset.h"
 #include "Collation.h"
 #include "AutoIncrementPrimaryKey.h"
-// #include "SingleFieldPrimaryKey.h"
 #include "PrimaryKey.h"
 #include "PrimaryKeyContainer.h"
 #include "ForeignKey.h"
@@ -167,10 +166,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Get field definition of a auto increment primary key
      */
     virtual QString getPrimaryKeyFieldDefinition(const AutoIncrementPrimaryKey & pk) const = 0;
-
-    /*! \brief Get field definition of a single field primary key
-     */
-//     virtual QString getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey & pk) const = 0;
 
     /*! \brief Get primary key definition
      */

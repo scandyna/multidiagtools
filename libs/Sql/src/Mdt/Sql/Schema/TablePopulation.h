@@ -25,7 +25,6 @@
 #include "TableTemplate.h"
 #include "Field.h"
 #include "AutoIncrementPrimaryKey.h"
-// #include "SingleFieldPrimaryKey.h"
 #include <QString>
 #include <QStringList>
 #include <QVariant>
@@ -122,17 +121,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       Q_ASSERT(pvDataRowList.isEmpty());
       pvFieldNameList.append( pk.fieldName() );
     }
-
-    /*! \brief Add a field
-     *
-     * \pre No data must exist in this table population when adding a field
-     */
-//     void addField(const SingleFieldPrimaryKey & pk)
-//     {
-//       Q_ASSERT(pvCurrentDataRow.isEmpty());
-//       Q_ASSERT(pvDataRowList.isEmpty());
-//       pvFieldNameList.append( pk.fieldName() );
-//     }
 
     /*! \brief Get field names count
      */
