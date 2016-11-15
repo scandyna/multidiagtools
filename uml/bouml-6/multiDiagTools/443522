@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 105
+  revision 107
   modified_by 2 "philippe"
   // class settings
   
@@ -1011,7 +1011,7 @@ ${inlines}
       operation 4258690 "getPrimaryKeyFieldDefinition"
 	abstract cpp_virtual public return_type class_ref 161026 // QString
 	nparams 1
-	  param in name "pk" type class_ref 2852610 // SingleFieldPrimaryKey
+	  param in name "pk" explicit_type "SingleFieldPrimaryKey"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	
@@ -2873,69 +2873,6 @@ ${inlines}
       end
     end
 
-    class 2852610 "SingleFieldPrimaryKey"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 2707970 "Type"
-	private type class_ref 2774914 // FieldType
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2708098 "Length"
-	private explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2708226 "Name"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 2708354 "Collation"
-	private type class_ref 2789378 // Collation
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-
     classdiagram 3021954 "Container"
       classdiagramsettings member_max_width 0 end
       size A4-Landscape
@@ -3012,7 +2949,7 @@ ${items}};
       operation 4244098 "setPrimaryKey"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "pk" type class_ref 2852610 // SingleFieldPrimaryKey
+	  param in name "pk" explicit_type "SingleFieldPrimaryKey"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -3089,14 +3026,6 @@ ${items}};
 	  b parent class_ref 2824706 // AutoIncrementPrimaryKey
       end
 
-      classrelation 3829378 // <directional composition>
-	relation 3810178 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3829378 // <directional composition>
-	  b parent class_ref 2852610 // SingleFieldPrimaryKey
-      end
     end
   end
 
@@ -4324,7 +4253,7 @@ ${inlines}
       operation 4315010 "ParentTableFieldName"
 	public explicit_return_type ""
 	nparams 1
-	  param in name "pk" type class_ref 2852610 // SingleFieldPrimaryKey
+	  param in name "pk" explicit_type "SingleFieldPrimaryKey"
 	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
@@ -4366,14 +4295,6 @@ ${inlines}
 	
 	
 	
-      end
-
-      classrelation 3299842 // <dependency>
-	relation 3281538 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3299842 // <dependency>
-	  b parent class_ref 2852610 // SingleFieldPrimaryKey
       end
 
       classrelation 3299970 // <dependency>

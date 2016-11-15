@@ -116,10 +116,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Set primary key
      */
-    void setPrimaryKey(const SingleFieldPrimaryKey & pk)
-    {
-      mTable.setPrimaryKey(pk);
-    }
+//     void setPrimaryKey(const SingleFieldPrimaryKey & pk)
+//     {
+//       mTable.setPrimaryKey(pk);
+//     }
 
     /*! \brief Set primary key
      */
@@ -158,10 +158,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *
      * \pre Stored primary key must be of type SingleFieldPrimaryKey
      */
-    SingleFieldPrimaryKey singleFieldPrimaryKey() const
-    {
-      return mTable.singleFieldPrimaryKey();
-    }
+//     SingleFieldPrimaryKey singleFieldPrimaryKey() const
+//     {
+//       return mTable.singleFieldPrimaryKey();
+//     }
 
     /*! \brief Get primary key
      *

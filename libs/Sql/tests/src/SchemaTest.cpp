@@ -28,7 +28,7 @@
 #include "Mdt/Sql/Schema/Field.h"
 #include "Mdt/Sql/Schema/FieldList.h"
 #include "Mdt/Sql/Schema/AutoIncrementPrimaryKey.h"
-#include "Mdt/Sql/Schema/SingleFieldPrimaryKey.h"
+// #include "Mdt/Sql/Schema/SingleFieldPrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKeyContainer.h"
 #include "Mdt/Sql/Schema/Index.h"
@@ -634,7 +634,7 @@ void SchemaTest::parentTableFieldNameTest()
 {
   using Mdt::Sql::Schema::ParentTableFieldName;
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
-  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
+//   using Mdt::Sql::Schema::SingleFieldPrimaryKey;
   using Mdt::Sql::Schema::Field;
   using Mdt::Sql::Schema::FieldType;
 
@@ -645,8 +645,8 @@ void SchemaTest::parentTableFieldNameTest()
   AutoIncrementPrimaryKey Id_PK;
   Id_PK.setFieldName("Id_PK");
   // Code_PK
-  SingleFieldPrimaryKey Code_PK;
-  Code_PK.setFieldName("Code_PK");
+//   SingleFieldPrimaryKey Code_PK;
+//   Code_PK.setFieldName("Code_PK");
   // Name
   Field Name;
   Name.setName("Name");
@@ -655,8 +655,8 @@ void SchemaTest::parentTableFieldNameTest()
    */
   ParentTableFieldName aic(Id_PK);
   QCOMPARE(aic.fieldName(), QString("Id_PK"));
-  ParentTableFieldName sfpk(Code_PK);
-  QCOMPARE(sfpk.fieldName(), QString("Code_PK"));
+//   ParentTableFieldName sfpk(Code_PK);
+//   QCOMPARE(sfpk.fieldName(), QString("Code_PK"));
   ParentTableFieldName f(Name);
   QCOMPARE(f.fieldName(), QString("Name"));
 }

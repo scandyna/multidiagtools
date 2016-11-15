@@ -16,10 +16,6 @@ classcanvas 129026 class_ref 2852866 // Type
   classdiagramsettings member_max_width 0 end
   xyz 42 206 2006
 end
-classcanvas 129282 class_ref 2852610 // SingleFieldPrimaryKey
-  classdiagramsettings member_max_width 0 end
-  xyz 258 377 2000
-end
 relationcanvas 128770 relation_ref 3809794 // <directional composition>
   from ref 128002 z 2011 to ref 128386
   no_role_a no_role_b
@@ -33,9 +29,4 @@ relationcanvas 128898 relation_ref 3809922 // <directional composition>
 end
 line 129154 ---+
   from ref 129026 z 2007 to ref 128002
-relationcanvas 129410 relation_ref 3810178 // <directional composition>
-  from ref 128002 z 2001 to ref 129282
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 end

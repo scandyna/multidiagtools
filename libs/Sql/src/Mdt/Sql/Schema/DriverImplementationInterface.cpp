@@ -276,10 +276,10 @@ QString DriverImplementationInterface::getSqlToCreateTable(const Table & table) 
       sql += QStringLiteral("  ") % getPrimaryKeyFieldDefinition(table.autoIncrementPrimaryKey());
       firstFieldIndex = 1;
       break;
-    case PrimaryKeyContainer::SingleFieldPrimaryKeyType:
-      sql += QStringLiteral("  ") % getPrimaryKeyFieldDefinition(table.singleFieldPrimaryKey());
-      firstFieldIndex = 1;
-      break;
+//     case PrimaryKeyContainer::SingleFieldPrimaryKeyType:
+//       sql += QStringLiteral("  ") % getPrimaryKeyFieldDefinition(table.singleFieldPrimaryKey());
+//       firstFieldIndex = 1;
+//       break;
     case PrimaryKeyContainer::PrimaryKeyType:
       firstFieldIndex = 0;
       break;

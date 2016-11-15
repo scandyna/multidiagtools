@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "InsertQuery.h"
 #include "Schema/AutoIncrementPrimaryKey.h"
-#include "Schema/SingleFieldPrimaryKey.h"
+// #include "Schema/SingleFieldPrimaryKey.h"
 #include "Schema/Field.h"
 #include "Schema/Table.h"
 #include "Mdt/Sql/Error.h"
@@ -66,11 +66,11 @@ void InsertQuery::addValue(const Schema::AutoIncrementPrimaryKey& field, const Q
   pvValueList.append(value);
 }
 
-void InsertQuery::addValue(const Schema::SingleFieldPrimaryKey& field, const QVariant& value)
-{
-  pvFieldNameList << escapeFieldName(field.fieldName());
-  pvValueList.append(value);
-}
+// void InsertQuery::addValue(const Schema::SingleFieldPrimaryKey& field, const QVariant& value)
+// {
+//   pvFieldNameList << escapeFieldName(field.fieldName());
+//   pvValueList.append(value);
+// }
 
 bool InsertQuery::exec()
 {

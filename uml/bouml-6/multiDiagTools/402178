@@ -1,6 +1,6 @@
 format 211
 "Sql" // Mdt::Sql
-  revision 58
+  revision 59
   modified_by 2 "philippe"
   // class settings
   
@@ -102,7 +102,7 @@ ${inlines}
       operation 4756354 "FieldName"
 	public explicit_return_type ""
 	nparams 1
-	  param in name "pk" type class_ref 2852610 // SingleFieldPrimaryKey
+	  param in name "pk" explicit_type "SingleFieldPrimaryKey"
 	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
@@ -842,14 +842,6 @@ ${inlines}
 	    cpp default "#include in source"
 	    classrelation_ref 3299202 // <dependency>
 	  b parent class_ref 2775042 // Field
-      end
-
-      classrelation 3299330 // <dependency>
-	relation 3281026 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3299330 // <dependency>
-	  b parent class_ref 2852610 // SingleFieldPrimaryKey
       end
 
       classrelation 3299458 // <dependency>
@@ -3783,7 +3775,7 @@ ${inlines}
       operation 4400386 "addValue"
 	public explicit_return_type "void"
 	nparams 2
-	  param in name "field" type class_ref 2852610 // SingleFieldPrimaryKey
+	  param in name "field" explicit_type "SingleFieldPrimaryKey"
 	  param in name "value" type class_ref 161154 // QVariant
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3915,14 +3907,6 @@ ${inlines}
 	
 	
 	
-      end
-
-      classrelation 3384066 // <dependency>
-	relation 3365634 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3384066 // <dependency>
-	  b parent class_ref 2852610 // SingleFieldPrimaryKey
       end
 
       classrelation 3384194 // <dependency>

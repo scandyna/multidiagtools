@@ -26,7 +26,7 @@
 #include "Mdt/Sql/SelectStatementSqlTransform.h"
 #include "Mdt/Sql/Schema/Field.h"
 #include "Mdt/Sql/Schema/AutoIncrementPrimaryKey.h"
-#include "Mdt/Sql/Schema/SingleFieldPrimaryKey.h"
+// #include "Mdt/Sql/Schema/SingleFieldPrimaryKey.h"
 #include "Schema/Client_tbl.h"
 #include "Schema/Address_tbl.h"
 
@@ -71,13 +71,13 @@ void SelectStatementTest::addFieldTest()
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
   using Sql::Schema::AutoIncrementPrimaryKey;
-  using Sql::Schema::SingleFieldPrimaryKey;
+//   using Sql::Schema::SingleFieldPrimaryKey;
 
   SelectTable CLI(TableName("Client_tbl"), "CLI");
   Field field;
   field.setType(FieldType::Integer);
-  SingleFieldPrimaryKey sfpk;
-  sfpk.setFieldType(FieldType::Integer);
+//   SingleFieldPrimaryKey sfpk;
+//   sfpk.setFieldType(FieldType::Integer);
   SelectStatement stm;
 
   /*

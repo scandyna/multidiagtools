@@ -21,7 +21,6 @@
 #include "SelectStatement.h"
 #include "Schema/Field.h"
 #include "Schema/AutoIncrementPrimaryKey.h"
-#include "Schema/SingleFieldPrimaryKey.h"
 
 namespace Mdt{ namespace Sql{
 

@@ -21,7 +21,7 @@
 #include "SchemaPrimaryKeyTest.h"
 #include "Mdt/Application.h"
 #include "Mdt/Sql/Schema/AutoIncrementPrimaryKey.h"
-#include "Mdt/Sql/Schema/SingleFieldPrimaryKey.h"
+// #include "Mdt/Sql/Schema/SingleFieldPrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKeyContainer.h"
 
@@ -71,67 +71,67 @@ void SchemaPrimaryKeyTest::autoIncrementPrimaryKeyTest()
   QVERIFY(!pk2.isNull());
 }
 
-void SchemaPrimaryKeyTest::singleFieldPrimaryKeyTest()
-{
-  using Sql::Schema::FieldType;
-  using Sql::Schema::Field;
-  using Sql::Schema::SingleFieldPrimaryKey;
-
-  SingleFieldPrimaryKey pk;
-
-  /*
-   * Initial state
-   */
-  QVERIFY(pk.fieldType() == FieldType::UnknownType);
-  QCOMPARE(pk.fieldLength(), -1);
-  /// \todo Check what should be default
-  QVERIFY(!pk.collation().isCaseSensitive());
-  QVERIFY(pk.isNull());
-  /*
-   * Set/get on Integer primary key
-   */
-  // Setup primary key
-  pk.setFieldType(FieldType::Integer);
-  QVERIFY(pk.isNull());
-  pk.setFieldName("Id_PK");
-  QVERIFY(!pk.isNull());
-  // Check
-  QVERIFY(pk.fieldType() == FieldType::Integer);
-  QCOMPARE(pk.fieldName(), QString("Id_PK"));
-  /*
-   * Clear
-   */
-  pk.clear();
-  QVERIFY(pk.fieldType() == FieldType::UnknownType);
-  QVERIFY(pk.fieldName().isEmpty());
-  QCOMPARE(pk.fieldLength(), -1);
-  /// \todo Check what should be default
-  QVERIFY(!pk.collation().isCaseSensitive());
-  QVERIFY(pk.isNull());
-  /*
-   * Set/get on a text primary key
-   */
-  // Setup primary key
-  pk.setFieldType(FieldType::Varchar);
-  pk.setFieldName("Code_PK");
-  pk.setFieldLength(50);
-  // Check
-  QVERIFY(!pk.isNull());
-  QVERIFY(pk.fieldType() == FieldType::Varchar);
-  QCOMPARE(pk.fieldName(), QString("Code_PK"));
-  QCOMPARE(pk.fieldLength(), 50);
-  QVERIFY(!pk.collation().isCaseSensitive());
-  /*
-   * Clear
-   */
-  pk.clear();
-  QVERIFY(pk.fieldType() == FieldType::UnknownType);
-  QVERIFY(pk.fieldName().isEmpty());
-  QCOMPARE(pk.fieldLength(), -1);
-  /// \todo Check what should be default
-  QVERIFY(!pk.collation().isCaseSensitive());
-  QVERIFY(pk.isNull());
-}
+// void SchemaPrimaryKeyTest::singleFieldPrimaryKeyTest()
+// {
+//   using Sql::Schema::FieldType;
+//   using Sql::Schema::Field;
+//   using Sql::Schema::SingleFieldPrimaryKey;
+// 
+//   SingleFieldPrimaryKey pk;
+// 
+//   /*
+//    * Initial state
+//    */
+//   QVERIFY(pk.fieldType() == FieldType::UnknownType);
+//   QCOMPARE(pk.fieldLength(), -1);
+//   /// \todo Check what should be default
+//   QVERIFY(!pk.collation().isCaseSensitive());
+//   QVERIFY(pk.isNull());
+//   /*
+//    * Set/get on Integer primary key
+//    */
+//   // Setup primary key
+//   pk.setFieldType(FieldType::Integer);
+//   QVERIFY(pk.isNull());
+//   pk.setFieldName("Id_PK");
+//   QVERIFY(!pk.isNull());
+//   // Check
+//   QVERIFY(pk.fieldType() == FieldType::Integer);
+//   QCOMPARE(pk.fieldName(), QString("Id_PK"));
+//   /*
+//    * Clear
+//    */
+//   pk.clear();
+//   QVERIFY(pk.fieldType() == FieldType::UnknownType);
+//   QVERIFY(pk.fieldName().isEmpty());
+//   QCOMPARE(pk.fieldLength(), -1);
+//   /// \todo Check what should be default
+//   QVERIFY(!pk.collation().isCaseSensitive());
+//   QVERIFY(pk.isNull());
+//   /*
+//    * Set/get on a text primary key
+//    */
+//   // Setup primary key
+//   pk.setFieldType(FieldType::Varchar);
+//   pk.setFieldName("Code_PK");
+//   pk.setFieldLength(50);
+//   // Check
+//   QVERIFY(!pk.isNull());
+//   QVERIFY(pk.fieldType() == FieldType::Varchar);
+//   QCOMPARE(pk.fieldName(), QString("Code_PK"));
+//   QCOMPARE(pk.fieldLength(), 50);
+//   QVERIFY(!pk.collation().isCaseSensitive());
+//   /*
+//    * Clear
+//    */
+//   pk.clear();
+//   QVERIFY(pk.fieldType() == FieldType::UnknownType);
+//   QVERIFY(pk.fieldName().isEmpty());
+//   QCOMPARE(pk.fieldLength(), -1);
+//   /// \todo Check what should be default
+//   QVERIFY(!pk.collation().isCaseSensitive());
+//   QVERIFY(pk.isNull());
+// }
 
 void SchemaPrimaryKeyTest::primaryKeyTest()
 {
@@ -203,7 +203,7 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
   using Sql::Schema::AutoIncrementPrimaryKey;
-  using Sql::Schema::SingleFieldPrimaryKey;
+//   using Sql::Schema::SingleFieldPrimaryKey;
   using Sql::Schema::PrimaryKey;
   using Sql::Schema::PrimaryKeyContainer;
 
@@ -230,10 +230,10 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   AutoIncrementPrimaryKey Id_PK;
   Id_PK.setFieldName("Id_PK");
   // Code_PK
-  SingleFieldPrimaryKey Code_PK;
-  Code_PK.setFieldName("Code_PK");
-  Code_PK.setFieldType(FieldType::Varchar);
-  Code_PK.setFieldLength(50);
+//   SingleFieldPrimaryKey Code_PK;
+//   Code_PK.setFieldName("Code_PK");
+//   Code_PK.setFieldType(FieldType::Varchar);
+//   Code_PK.setFieldLength(50);
   // Primary key of Id_A and Id_B
   PrimaryKey Id_A_Id_B_PK;
   Id_A_Id_B_PK.addField(Id_A);
@@ -259,12 +259,12 @@ void SchemaPrimaryKeyTest::primaryKeyContainerTest()
   /*
    * SingleFieldPrimaryKey
    */
-  container.setPrimaryKey(Code_PK);
-  QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::SingleFieldPrimaryKeyType);
-  QCOMPARE(container.fieldName(), QString("Code_PK"));
-  QVERIFY(container.fieldType() == FieldType::Varchar);
-  QCOMPARE(container.fieldLength(), 50);
-  QCOMPARE(container.singleFieldPrimaryKey().fieldName(), QString("Code_PK"));
+//   container.setPrimaryKey(Code_PK);
+//   QVERIFY(container.primaryKeyType() == PrimaryKeyContainer::SingleFieldPrimaryKeyType);
+//   QCOMPARE(container.fieldName(), QString("Code_PK"));
+//   QVERIFY(container.fieldType() == FieldType::Varchar);
+//   QCOMPARE(container.fieldLength(), 50);
+//   QCOMPARE(container.singleFieldPrimaryKey().fieldName(), QString("Code_PK"));
   /*
    * PrimaryKey
    */

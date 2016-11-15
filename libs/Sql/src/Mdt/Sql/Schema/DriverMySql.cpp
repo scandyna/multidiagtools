@@ -113,10 +113,10 @@ QString DriverMySql::getPrimaryKeyFieldDefinition(const AutoIncrementPrimaryKey 
 
 }
 
-QString DriverMySql::getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey & pk) const
-{
-
-}
+// QString DriverMySql::getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey & pk) const
+// {
+// 
+// }
 
 Mdt::Expected<PrimaryKeyContainer> DriverMySql::getTablePrimaryKeyFromDatabase(const QString& tableName) const
 {

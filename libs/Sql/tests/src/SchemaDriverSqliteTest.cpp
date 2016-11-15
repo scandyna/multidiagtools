@@ -364,53 +364,53 @@ void SchemaDriverSqliteTest::autoIncrementPrimaryKeyDefinitionTest()
   QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
 }
 
-void SchemaDriverSqliteTest::singleFieldPrimaryKeyDefinitionTest()
-{
-  using Mdt::Sql::Schema::SingleFieldPrimaryKey;
-  using Mdt::Sql::Schema::FieldType;
-
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
-  QString expectedSql;
-  SingleFieldPrimaryKey pk;
-
-  /*
-   * Integer primary key
-   * Note: SQL statement must contain NOT NULL (see SQLite documentation about NULL and PK)
-   */
-  // Setup primary key
-  pk.clear();
-  pk.setFieldType(FieldType::Integer);
-  pk.setFieldName("Id_PK");
-  // Check
-  expectedSql = "\"Id_PK\" INTEGER NOT NULL PRIMARY KEY";
-  QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
-  /*
-   * Text primary key
-   * Note: SQL statement must contain NOT NULL (see SQLite documentation about NULL and PK)
-   */
-  // Setup primary key
-  pk.clear();
-  pk.setFieldType(FieldType::Varchar);
-  pk.setFieldLength(20);
-  pk.setFieldName("Code_PK");
-  // Check
-  expectedSql = "\"Code_PK\" VARCHAR(20) NOT NULL PRIMARY KEY";
-  QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
-  /*
-   * Text primary key
-   * We specifiy a collation
-   * Note: SQL statement must contain NOT NULL (see SQLite documentation about NULL and PK)
-   */
-  // Setup primary key
-  pk.clear();
-  pk.setFieldType(FieldType::Varchar);
-  pk.setFieldLength(20);
-  pk.setFieldName("Code_PK");
-  pk.setCaseSensitive(true);
-  // Check
-  expectedSql = "\"Code_PK\" VARCHAR(20) NOT NULL PRIMARY KEY COLLATE BINARY";
-  QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
-}
+// void SchemaDriverSqliteTest::singleFieldPrimaryKeyDefinitionTest()
+// {
+//   using Mdt::Sql::Schema::SingleFieldPrimaryKey;
+//   using Mdt::Sql::Schema::FieldType;
+// 
+//   Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+//   QString expectedSql;
+//   SingleFieldPrimaryKey pk;
+// 
+//   /*
+//    * Integer primary key
+//    * Note: SQL statement must contain NOT NULL (see SQLite documentation about NULL and PK)
+//    */
+//   // Setup primary key
+//   pk.clear();
+//   pk.setFieldType(FieldType::Integer);
+//   pk.setFieldName("Id_PK");
+//   // Check
+//   expectedSql = "\"Id_PK\" INTEGER NOT NULL PRIMARY KEY";
+//   QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
+//   /*
+//    * Text primary key
+//    * Note: SQL statement must contain NOT NULL (see SQLite documentation about NULL and PK)
+//    */
+//   // Setup primary key
+//   pk.clear();
+//   pk.setFieldType(FieldType::Varchar);
+//   pk.setFieldLength(20);
+//   pk.setFieldName("Code_PK");
+//   // Check
+//   expectedSql = "\"Code_PK\" VARCHAR(20) NOT NULL PRIMARY KEY";
+//   QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
+//   /*
+//    * Text primary key
+//    * We specifiy a collation
+//    * Note: SQL statement must contain NOT NULL (see SQLite documentation about NULL and PK)
+//    */
+//   // Setup primary key
+//   pk.clear();
+//   pk.setFieldType(FieldType::Varchar);
+//   pk.setFieldLength(20);
+//   pk.setFieldName("Code_PK");
+//   pk.setCaseSensitive(true);
+//   // Check
+//   expectedSql = "\"Code_PK\" VARCHAR(20) NOT NULL PRIMARY KEY COLLATE BINARY";
+//   QCOMPARE(driver.getPrimaryKeyFieldDefinition(pk), expectedSql);
+// }
 
 void SchemaDriverSqliteTest::primaryKeyDefinitionTest()
 {
@@ -1122,11 +1122,11 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   using Sql::Schema::Table;
   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
   using Mdt::Sql::Schema::PrimaryKey;
-  using Mdt::Sql::Schema::PrimaryKeyContainer;
+  using Sql::Schema::PrimaryKeyContainer;
 
   Sql::Schema::DriverSQLite driver(mDatabase);
   Table table;
-  Expected<PrimaryKeyContainer> ret;
+  Mdt::Expected<PrimaryKeyContainer> ret;
   PrimaryKeyContainer pk;
 
   /*
@@ -1188,7 +1188,6 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   QVERIFY(driver.dropTable(table));
   /*
    * Check with a single field primary key
-   *  -> Primary key defined as COLUMN constraint
    */
   // Setup and create table
   table.clear();
@@ -1201,16 +1200,13 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   QVERIFY(ret);
   pk = ret.value();
   // Check
-  QVERIFY(pk.primaryKeyType() == PrimaryKeyContainer::SingleFieldPrimaryKeyType);
-  QCOMPARE(pk.singleFieldPrimaryKey().fieldName(), QString("Code_PK"));
-  QVERIFY(pk.singleFieldPrimaryKey().fieldType() == FieldType::Varchar);
-  QCOMPARE(pk.singleFieldPrimaryKey().fieldLength(), 50);
-  /// \todo Collation once defined
+  QVERIFY(pk.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
+  QCOMPARE(pk.primaryKey().fieldCount(), 1);
+  QCOMPARE(pk.primaryKey().fieldNameList().at(0), QString("Code_PK"));
   // Drop table
   QVERIFY(driver.dropTable(table));
   /*
    * Check with a multiple fields primary key
-   *  -> Primary key defined as TABLE constraint
    */
   // Setup and create table
   table.clear();

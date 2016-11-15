@@ -12,10 +12,6 @@ classcanvas 128386 class_ref 2824706 // AutoIncrementPrimaryKey
   classdiagramsettings member_max_width 0 end
   xyz 443.5 408.5 2000
 end
-classcanvas 128770 class_ref 2852610 // SingleFieldPrimaryKey
-  classdiagramsettings member_max_width 0 end
-  xyz 656.5 40.5 2000
-end
 note 129666 "See:
  - UUID
  - SERIAL

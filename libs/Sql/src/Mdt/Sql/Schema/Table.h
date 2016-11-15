@@ -286,10 +286,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *
      * \pre Stored primary key must be of type SingleFieldPrimaryKey
      */
-    SingleFieldPrimaryKey singleFieldPrimaryKey() const
-    {
-      return mPrimaryKey.singleFieldPrimaryKey();
-    }
+//     SingleFieldPrimaryKey singleFieldPrimaryKey() const
+//     {
+//       return mPrimaryKey.singleFieldPrimaryKey();
+//     }
 
     /*! \brief Get primary key
      *

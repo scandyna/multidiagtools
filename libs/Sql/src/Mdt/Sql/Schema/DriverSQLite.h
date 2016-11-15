@@ -64,7 +64,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Get field definition of a single field primary key
      */
-    QString getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey & pk) const override;
+//     QString getPrimaryKeyFieldDefinition(const SingleFieldPrimaryKey & pk) const override;
 
     /*! \brief Get primary key for table from database
      */

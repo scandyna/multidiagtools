@@ -22,7 +22,6 @@
 #define MDT_SQL_SCHEMA_CHILD_TABLE_FIELD_NAME_H
 
 #include "AutoIncrementPrimaryKey.h"
-#include "SingleFieldPrimaryKey.h"
 #include "Field.h"
 #include <QString>
 

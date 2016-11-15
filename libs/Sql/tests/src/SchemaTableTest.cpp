@@ -661,7 +661,7 @@ void SchemaTableTest::tableTest()
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
   using Sql::Schema::AutoIncrementPrimaryKey;
-  using Sql::Schema::SingleFieldPrimaryKey;
+//   using Sql::Schema::SingleFieldPrimaryKey;
   using Sql::Schema::PrimaryKey;
   using Sql::Schema::PrimaryKeyContainer;
   using Sql::Schema::ParentTableFieldName;
@@ -833,7 +833,7 @@ void SchemaTableTest::tableModelTest()
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
   using Sql::Schema::AutoIncrementPrimaryKey;
-  using Sql::Schema::SingleFieldPrimaryKey;
+//   using Sql::Schema::SingleFieldPrimaryKey;
   using Sql::Schema::PrimaryKey;
 
   QModelIndex index;

@@ -42,6 +42,11 @@ note 131842 "Add addForeignKey functions:
  - For many fields: variadic template ???
   -> Simpler: std::tuple ?"
   xyzwh 13 65 2000 437 113
+note 131970 "For setPrimaryKey()
+ - One with variadics
+ - Keep the one that gets a PrimaryKey as argument (for reverse)
+ - Or??"
+  xyzwh 257 206 2010 457 125
 relationcanvas 128642 relation_ref 3128322 // <directional composition>
   decenter_begin 480
   decenter_end 479

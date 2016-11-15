@@ -30,10 +30,10 @@ class FieldNameVisitor : public boost::static_visitor<>
   {
     fieldName = pk.fieldName();
   }
-  void operator()(const SingleFieldPrimaryKey & pk)
-  {
-    fieldName = pk.fieldName();
-  }
+//   void operator()(const SingleFieldPrimaryKey & pk)
+//   {
+//     fieldName = pk.fieldName();
+//   }
   void operator()(const PrimaryKey &)
   {
   }
@@ -48,10 +48,10 @@ class FieldTypeVisitor : public boost::static_visitor<>
   {
     fieldType = pk.fieldType();
   }
-  void operator()(const SingleFieldPrimaryKey & pk)
-  {
-    fieldType = pk.fieldType();
-  }
+//   void operator()(const SingleFieldPrimaryKey & pk)
+//   {
+//     fieldType = pk.fieldType();
+//   }
   void operator()(const PrimaryKey &)
   {
     fieldType = FieldType::UnknownType;
@@ -67,10 +67,10 @@ class FieldLengthVisitor : public boost::static_visitor<>
   {
     fieldLength = -1;
   }
-  void operator()(const SingleFieldPrimaryKey & pk)
-  {
-    fieldLength = pk.fieldLength();
-  }
+//   void operator()(const SingleFieldPrimaryKey & pk)
+//   {
+//     fieldLength = pk.fieldLength();
+//   }
   void operator()(const PrimaryKey &)
   {
     fieldLength = -1;
@@ -115,11 +115,11 @@ AutoIncrementPrimaryKey PrimaryKeyContainer::autoIncrementPrimaryKey() const
   return boost::get<AutoIncrementPrimaryKey>(mPrimaryKey);
 }
 
-SingleFieldPrimaryKey PrimaryKeyContainer::singleFieldPrimaryKey() const
-{
-  Q_ASSERT(mType == SingleFieldPrimaryKeyType);
-  return boost::get<SingleFieldPrimaryKey>(mPrimaryKey);
-}
+// SingleFieldPrimaryKey PrimaryKeyContainer::singleFieldPrimaryKey() const
+// {
+//   Q_ASSERT(mType == SingleFieldPrimaryKeyType);
+//   return boost::get<SingleFieldPrimaryKey>(mPrimaryKey);
+// }
 
 PrimaryKey PrimaryKeyContainer::primaryKey() const
 {

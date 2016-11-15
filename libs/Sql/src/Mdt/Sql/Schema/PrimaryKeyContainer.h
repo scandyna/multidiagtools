@@ -22,7 +22,7 @@
 #define MDT_SQL_SCHEMA_PRIMARY_KEY_CONTAINER_H
 
 #include "AutoIncrementPrimaryKey.h"
-#include "SingleFieldPrimaryKey.h"
+// #include "SingleFieldPrimaryKey.h"
 #include "PrimaryKey.h"
 #include "FieldType.h"
 #include <boost/variant.hpp>
@@ -57,7 +57,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     enum Type
     {
       AutoIncrementPrimaryKeyType,  /*!< This container stores a AutoIncrementPrimaryKey */
-      SingleFieldPrimaryKeyType,    /*!< This container stores a SingleFieldPrimaryKey */
+//       SingleFieldPrimaryKeyType,    /*!< This container stores a SingleFieldPrimaryKey */
       PrimaryKeyType                /*!< This container stores a PrimaryKey */
     };
 
@@ -71,11 +71,11 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Set primary key
      */
-    void setPrimaryKey(const SingleFieldPrimaryKey & pk)
-    {
-      mPrimaryKey = pk;
-      mType = SingleFieldPrimaryKeyType;
-    }
+//     void setPrimaryKey(const SingleFieldPrimaryKey & pk)
+//     {
+//       mPrimaryKey = pk;
+//       mType = SingleFieldPrimaryKeyType;
+//     }
 
     /*! \brief Set primary key
      */
@@ -136,7 +136,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *
      * \pre Stored primary key must be of type SingleFieldPrimaryKey
      */
-    SingleFieldPrimaryKey singleFieldPrimaryKey() const;
+//     SingleFieldPrimaryKey singleFieldPrimaryKey() const;
 
     /*! \brief Get primary key
      *
@@ -150,7 +150,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
    private:
 
-    boost::variant<PrimaryKey, AutoIncrementPrimaryKey, SingleFieldPrimaryKey> mPrimaryKey;
+    boost::variant<PrimaryKey, AutoIncrementPrimaryKey> mPrimaryKey;
     Type mType;
   };
 

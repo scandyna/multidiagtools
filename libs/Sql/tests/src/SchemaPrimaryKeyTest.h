@@ -34,7 +34,7 @@ class SchemaPrimaryKeyTest : public QObject
   void cleanupTestCase();
 
   void autoIncrementPrimaryKeyTest();
-  void singleFieldPrimaryKeyTest();
+//   void singleFieldPrimaryKeyTest();
   void primaryKeyTest();
   void primaryKeyContainerTest();
 

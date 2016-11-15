@@ -46,7 +46,7 @@ class SchemaDriverSqliteTest : public QObject
   void collationDefinitionTest();
   void fieldDefinitionTest();
   void autoIncrementPrimaryKeyDefinitionTest();
-  void singleFieldPrimaryKeyDefinitionTest();
+//   void singleFieldPrimaryKeyDefinitionTest();
   void primaryKeyDefinitionTest();
   void indexDefinitionTest();
   void foreignKeyDefinitionTest();
