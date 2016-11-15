@@ -23,6 +23,7 @@
 
 #include "Field.h"
 #include <QStringList>
+#include <type_traits>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
@@ -97,12 +98,20 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Helper to add fields with variadic function
      */
-    template<typename...Ts>
-    void addFieldList(const Field & field, const Ts & ...fieldList)
+    template<typename T, typename...Ts>
+    void addFieldList(const T & field, const Ts & ...fieldList)
     {
+      static_assert( std::is_same<T, Field>::value , "Only field of type Field can be added to PrimaryKey" );
       addField(field);
       addFieldList(fieldList...);
     }
+
+//     template<typename...Ts>
+//     void addFieldList(const Field & field, const Ts & ...fieldList)
+//     {
+//       addField(field);
+//       addFieldList(fieldList...);
+//     }
 
     QStringList mFieldNameList;
   };

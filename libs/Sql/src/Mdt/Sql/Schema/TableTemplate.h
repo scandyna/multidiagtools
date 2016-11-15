@@ -31,130 +31,16 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *  a schema table.
    *
    * Example of Client_tbl.h:
-   * \code
-   * #ifndef SCHEMA_CLIENT_TBL_H
-   * #define SCHEMA_CLIENT_TBL_H
-   *
-   * #include "Mdt/Sql/Schema/TableTemplate.h"
-   *
-   * namespace Schema{
-   *
-   *  class Client_tbl : public Mdt::Sql::Schema::TableTemplate<Client_tbl>
-   *  {
-   *   public:
-   *
-   *    Client_tbl();
-   *
-   *    // We expose Id_PK which will be used when defining Address_tbl
-   *    Mdt::Sql::Schema::AutoIncrementPrimaryKey Id_PK() const
-   *    {
-   *      return autoIncrementPrimaryKey();
-   *    }
-   *  };
-   *
-   * } // namespace Schema{
-   *
-   * #endif // #ifndef SCHEMA_CLIENT_TBL_H
-   * \endcode
+   * \include libs/Sql/tests/src/Schema/Client_tbl.h
    *
    * Client_tbl.cpp would look like this:
-   * \code
-   * #include "Client_tbl.h"
+   * \include libs/Sql/tests/src/Schema/Client_tbl.cpp
    *
-   * namespace Schema{
+   * Example of Address_tbl.h:
+   * \include libs/Sql/tests/src/Schema/Address_tbl.h
    *
-   *  Client_tbl::Client_tbl()
-   *  {
-   *    using Mdt::Sql::Schema::FieldType;
-   *    using Mdt::Sql::Schema::Field;
-   *    using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
-   *
-   *    // Id_PK
-   *    AutoIncrementPrimaryKey Id_PK;
-   *    Id_PK.setFieldName("Id_PK");
-   *    // Name
-   *    Field Name;
-   *    Name.setName("Name");
-   *    Name.setType(FieldType::Varchar);
-   *    Name.setLength(150);
-   *    // Setup table
-   *    setTableName("Client_tbl");
-   *    setPrimaryKey(Id_PK);
-   *    addField(Name);
-   *  }
-   *
-   * } // namespace Schema{
-   * \endcode
-   *
-   * We could also define Address_tbl.
-   *  Address_tbl.h would look like this:
-   * \code
-   * #ifndef SCHEMA_ADDRESS_TBL_H
-   * #define SCHEMA_ADDRESS_TBL_H
-   *
-   * #include "Mdt/Sql/Schema/TableTemplate.h"
-   *
-   * namespace Schema{
-   *
-   *  class Address_tbl : public Mdt::Sql::Schema::TableTemplate<Address_tbl>
-   *  {
-   *   public:
-   *
-   *    Address_tbl();
-   *  };
-   *
-   * } // namespace Schema{
-   *
-   * #endif // #ifndef SCHEMA_ADDRESS_TBL_H
-   * \endcode
-   *  Address_tbl.cpp would look like this:
-   * \code
-   * #include "Address_tbl.h"
-   * #include "Client_tbl.h"
-   *
-   * namespace Schema{
-   *
-   *  Address_tbl::Address_tbl()
-   *  {
-   *    using Mdt::Sql::Schema::FieldType;
-   *    using Mdt::Sql::Schema::Field;
-   *    using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
-   *    using Mdt::Sql::Schema::ForeignKey;
-   *    using Mdt::Sql::Schema::ParentTableFieldName;
-   *    using Mdt::Sql::Schema::ChildTableFieldName;
-   *
-   *    Client_tbl client_tbl;
-   *
-   *    // Id_PK
-   *    AutoIncrementPrimaryKey Id_PK;
-   *    Id_PK.setFieldName("Id_PK");
-   *    // Client_Id_FK
-   *    Field Client_Id_FK;
-   *    Client_Id_FK.setName("Client_Id_FK");
-   *    Client_Id_FK.setType(FieldType::Integer);
-   *    Client_Id_FK.setRequired(true);
-   *    // Street
-   *    Field Street;
-   *    Street.setName("Street");
-   *    Street.setType(FieldType::Varchar);
-   *    Street.setLength(150);
-   *    // Setup Fk_Client_Id_FK
-   *    ForeignKey Fk_Client_Id_FK;
-   *    Fk_Client_Id_FK.setParentTable(client_tbl);
-   *    Fk_Client_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
-   *    Fk_Client_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
-   *    Fk_Client_Id_FK.setCreateChildIndex(true);
-   *    Fk_Client_Id_FK.addKeyFields(ParentTableFieldName(client_tbl.Id_PK()), ChildTableFieldName(Client_Id_FK));
-   *    // Setup table
-   *    setTableName("Address_tbl");
-   *    setPrimaryKey(Id_PK);
-   *    addField(Street);
-   *    addField(Client_Id_FK);
-   *    addForeignKey(Fk_Client_Id_FK);
-   *  }
-   *
-   * } // namespace Schema{
-   * \endcode
+   * Address_tbl.cpp would look like this:
+   * \include libs/Sql/tests/src/Schema/Address_tbl.cpp
    */
   template<typename Derived>
   class TableTemplate
@@ -197,6 +83,29 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     {
       mTable.setTableName(name);
     }
+
+    /*! \brief Set a auto increment primary key
+     *
+     * \pre A field having fieldName as name must not allready exist in this table
+     */
+    void setAutoIncrementPrimaryKey(const QString & fieldName)
+    {
+      mTable.setAutoIncrementPrimaryKey(fieldName);
+    }
+
+    /*! \brief Set primary key
+     *
+     * Will set each field in fieldList as member of the primary key of this table.
+     *  If a field does not allready exist, it will also be added to this table.
+     *
+     * \pre Each field in fieldList must have a different field name.
+     */
+    template<typename...Ts>
+    void setPrimaryKey(const Ts & ...fieldList)
+    {
+      mTable.setPrimaryKey(fieldList...);
+    }
+
 
     /*! \brief Set primary key
      */

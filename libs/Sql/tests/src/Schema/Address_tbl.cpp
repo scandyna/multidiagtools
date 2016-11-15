@@ -21,22 +21,21 @@
 #include "Address_tbl.h"
 #include "Client_tbl.h"
 
+namespace Sql = Mdt::Sql;
+
+using Sql::Schema::FieldType;
+using Sql::Schema::Field;
+
 namespace Schema{
 
 Address_tbl::Address_tbl()
 {
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::Field;
-  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
   using Mdt::Sql::Schema::ForeignKey;
   using Mdt::Sql::Schema::ParentTableFieldName;
   using Mdt::Sql::Schema::ChildTableFieldName;
 
   Client_tbl client_tbl;
 
-  // Id_PK
-  AutoIncrementPrimaryKey Id_PK;
-  Id_PK.setFieldName("Id_PK");
   // Client_Id_FK
   Field Client_Id_FK;
   Client_Id_FK.setName("Client_Id_FK");
@@ -66,7 +65,7 @@ Address_tbl::Address_tbl()
   Fk_Client_Id_FK.addKeyFields(ParentTableFieldName(client_tbl.Id_PK()), ChildTableFieldName(Client_Id_FK));
   // Setup table
   setTableName("Address_tbl");
-  setPrimaryKey(Id_PK);
+  setAutoIncrementPrimaryKey("Id_PK");
   addField(Client_Id_FK);
   addField(Street);
   addField(FieldAA);
@@ -76,18 +75,12 @@ Address_tbl::Address_tbl()
 
 Address2_tbl::Address2_tbl()
 {
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::Field;
-  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
   using Mdt::Sql::Schema::ForeignKey;
   using Mdt::Sql::Schema::ParentTableFieldName;
   using Mdt::Sql::Schema::ChildTableFieldName;
 
   Client2_tbl client2_tbl;
 
-  // Id_PK
-  AutoIncrementPrimaryKey Id_PK;
-  Id_PK.setFieldName("Id_PK");
   // Client_Id_FK
   Field Client_Id_FK;
   Client_Id_FK.setName("Client_Id_FK");
@@ -117,7 +110,7 @@ Address2_tbl::Address2_tbl()
   Fk_Client_Id_FK.addKeyFields(ParentTableFieldName(client2_tbl.Id_PK()), ChildTableFieldName(Client_Id_FK));
   // Setup table
   setTableName("Address2_tbl");
-  setPrimaryKey(Id_PK);
+  setAutoIncrementPrimaryKey("Id_PK");
   addField(Client_Id_FK);
   addField(Street);
   addField(FieldAA);

@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "Table.h"
+#include "AutoIncrementPrimaryKey.h"
 #include <algorithm>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -30,18 +31,29 @@ void Table::setTableName(const QString & name)
   pvIndexList.updateTableName(name);
 }
 
+void Table::setAutoIncrementPrimaryKey(const QString & fieldName)
+{
+  Q_ASSERT(!fieldName.isEmpty());
+  Q_ASSERT(!contains(fieldName));
+
+  mPrimaryKeyFieldIndex = 0;
+  mPrimaryKey.setPrimaryKey( AutoIncrementPrimaryKey(fieldName) );
+}
+
 void Table::setPrimaryKey(const PrimaryKey& pk)
 {
-  pvPrimaryKeyFieldIndex = -1;
-  pvPrimaryKey.setPrimaryKey(pk);
-  // Update pvPrimaryKeyFieldIndexList
-  pvPrimaryKeyFieldIndexList.clear();
-  const auto & fieldNameList = pk.fieldNameList();
-  for(const auto & fieldName : fieldNameList){
-    int idx = fieldIndex(fieldName);
-    Q_ASSERT_X(idx >= 0, "Table::setPrimaryKey()", "pk contains a field that not exists in table");
-    pvPrimaryKeyFieldIndexList.emplace_back(idx);
-  }
+  mPrimaryKey.setPrimaryKey(pk);
+  setPrimaryKeyIndexList(pk);
+//   mPrimaryKeyFieldIndex = -1;
+//   mPrimaryKey.setPrimaryKey(pk);
+//   // Update pvPrimaryKeyFieldIndexList
+//   mPrimaryKeyFieldIndexList.clear();
+//   const auto & fieldNameList = pk.fieldNameList();
+//   for(const auto & fieldName : fieldNameList){
+//     int idx = fieldIndex(fieldName);
+//     Q_ASSERT_X(idx >= 0, "Table::setPrimaryKey()", "pk contains a field that not exists in table");
+//     mPrimaryKeyFieldIndexList.emplace_back(idx);
+//   }
 }
 
 void Table::addForeignKey(ForeignKey fk)
@@ -74,10 +86,10 @@ void Table::addIndex(Index index)
   pvIndexList.append(index);
 }
 
-int Table::fieldIndex(const QString& fieldName) const
+int Table::fieldIndex(const QString & fieldName) const
 {
-  if(pvPrimaryKeyFieldIndex == 0){
-    if(QString::compare(pvPrimaryKey.fieldName(), fieldName, Qt::CaseInsensitive) == 0){
+  if(mPrimaryKeyFieldIndex == 0){
+    if(QString::compare(mPrimaryKey.fieldName(), fieldName, Qt::CaseInsensitive) == 0){
       return 0;
     }else{
       int index = pvFieldList.fieldIndex(fieldName);
@@ -101,8 +113,8 @@ QString Table::fieldName(int index) const
    * (a AutoIncrementPrimaryKey or a SingleFieldPrimaryKey),
    * we allways represent it as first field in table.
    */
-  if(index == pvPrimaryKeyFieldIndex){
-    return pvPrimaryKey.fieldName();
+  if(index == mPrimaryKeyFieldIndex){
+    return mPrimaryKey.fieldName();
   }
   return refFieldConst(index).name();
 }
@@ -112,8 +124,8 @@ FieldType Table::fieldType(int index) const
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < fieldCount());
 
-  if(index == pvPrimaryKeyFieldIndex){
-    return pvPrimaryKey.fieldType();
+  if(index == mPrimaryKeyFieldIndex){
+    return mPrimaryKey.fieldType();
   }
   return refFieldConst(index).type();
 }
@@ -123,8 +135,8 @@ int Table::fieldLength(int index) const
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < fieldCount());
 
-  if(index == pvPrimaryKeyFieldIndex){
-    return pvPrimaryKey.fieldLength();
+  if(index == mPrimaryKeyFieldIndex){
+    return mPrimaryKey.fieldLength();
   }
   return refFieldConst(index).length();
 }
@@ -141,13 +153,13 @@ bool Table::isFieldPartOfPrimaryKey(int index) const
    * Else, (for multi column PrimaryKey),
    * we check if index exists in pvPrimaryKeyFieldIndexList.
    */
-  if(index == pvPrimaryKeyFieldIndex){
+  if(index == mPrimaryKeyFieldIndex){
     return true;
   }
-  if(pvPrimaryKeyFieldIndexList.empty()){
+  if(mPrimaryKeyFieldIndexList.empty()){
     return false;
   }
-  return (std::find(pvPrimaryKeyFieldIndexList.cbegin(), pvPrimaryKeyFieldIndexList.cend(), index) != pvPrimaryKeyFieldIndexList.cend());
+  return (std::find(mPrimaryKeyFieldIndexList.cbegin(), mPrimaryKeyFieldIndexList.cend(), index) != mPrimaryKeyFieldIndexList.cend());
 }
 
 bool Table::isFieldAutoIncrement(int index) const
@@ -159,8 +171,8 @@ bool Table::isFieldAutoIncrement(int index) const
    * The only case for which
    *  is a AutoIncrementPrimaryKey
    */
-  if(index == pvPrimaryKeyFieldIndex){
-    return (pvPrimaryKey.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
+  if(index == mPrimaryKeyFieldIndex){
+    return (mPrimaryKey.primaryKeyType() == PrimaryKeyContainer::AutoIncrementPrimaryKeyType);
   }
   return false;
 }
@@ -170,7 +182,7 @@ bool Table::isFieldRequired(int index) const
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < fieldCount());
 
-  if(index == pvPrimaryKeyFieldIndex){
+  if(index == mPrimaryKeyFieldIndex){
     return true;
   }
   return refFieldConst(index).isRequired();
@@ -181,7 +193,7 @@ bool Table::isFieldUnique(int index) const
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < fieldCount());
 
-  if(index == pvPrimaryKeyFieldIndex){
+  if(index == mPrimaryKeyFieldIndex){
     return true;
   }
   return refFieldConst(index).isUnique();
@@ -192,7 +204,7 @@ QVariant Table::fieldDefaultValue(int index) const
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < fieldCount());
 
-  if(index == pvPrimaryKeyFieldIndex){
+  if(index == mPrimaryKeyFieldIndex){
     return QVariant();
   }
   return refFieldConst(index).defaultValue();
@@ -202,7 +214,7 @@ Field Table::field(int index) const
 {
   Q_ASSERT(index >= 0);
   Q_ASSERT(index < fieldCount());
-  Q_ASSERT(index != pvPrimaryKeyFieldIndex);
+  Q_ASSERT(index != mPrimaryKeyFieldIndex);
 
   return refFieldConst(index);
 }
@@ -214,14 +226,27 @@ bool Table::isNull() const
 
 void Table::clear()
 {
-  pvPrimaryKeyFieldIndex = -1;
-  pvPrimaryKeyFieldIndexList.clear();
-  pvPrimaryKey.clear();
+  mPrimaryKeyFieldIndex = -1;
+  mPrimaryKeyFieldIndexList.clear();
+  mPrimaryKey.clear();
   pvIsTemporary = false;
   pvTableName.clear();
   pvFieldList.clear();
   pvForeignKeyList.clear();
   pvIndexList.clear();
+}
+
+void Table::setPrimaryKeyIndexList(const PrimaryKey & pk)
+{
+  mPrimaryKeyFieldIndex = -1;
+  // Update mPrimaryKeyFieldIndexList
+  mPrimaryKeyFieldIndexList.clear();
+  const auto fieldNameList = pk.fieldNameList();
+  for(const auto & fieldName : fieldNameList){
+    int idx = fieldIndex(fieldName);
+    Q_ASSERT_X(idx >= 0, "Table::setPrimaryKeyIndexList()", "pk contains a field that not exists in table");
+    mPrimaryKeyFieldIndexList.emplace_back(idx);
+  }
 }
 
 const Field & Table::refFieldConst(int index) const
@@ -231,7 +256,7 @@ const Field & Table::refFieldConst(int index) const
    * (a AutoIncrementPrimaryKey or a SingleFieldPrimaryKey),
    * we allways represent it as first field in table.
    */
-  if(pvPrimaryKeyFieldIndex == 0){
+  if(mPrimaryKeyFieldIndex == 0){
     Q_ASSERT(index > 0);
     return pvFieldList.at(index - 1);
   }else{

@@ -33,6 +33,10 @@ class SchemaTableTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
+  void setAutoIncrementPrimaryKeyTest();
+  void setSingleFieldPrimaryKeyTest();
+  void setPrimaryKeyTest();
+
   void tablePrimaryKeyTest();
   void tablePrimaryKeyAicBenchmark();
   void tablePrimaryKeyMcBenchmark();

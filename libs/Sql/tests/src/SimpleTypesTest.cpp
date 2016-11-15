@@ -142,7 +142,6 @@ void SimpleTypesTest::selectTableForeignKeyTest()
   using Sql::SelectTable;
   using Sql::TableName;
   using Sql::Schema::Table;
-  using Sql::Schema::AutoIncrementPrimaryKey;
   using Sql::Schema::Field;
   using Sql::Schema::ForeignKey;
   using Sql::Schema::ParentTableFieldName;
@@ -153,21 +152,20 @@ void SimpleTypesTest::selectTableForeignKeyTest()
    * Check with Schema::Table
    */
   // Setup common fields
-  AutoIncrementPrimaryKey Id_PK("Id_PK");
   // Setup parent table
   Table Parent;
   Parent.setTableName("Parent_tbl");
-  Parent.setPrimaryKey(Id_PK);
+  Parent.setAutoIncrementPrimaryKey("Id_PK");
   // Setup child table
   Table Child;
   Child.setTableName("Child_tbl");
   Field ParentId;
   ParentId.setName("Parent_Id_FK");
-  Child.setPrimaryKey(Id_PK);
+  Child.setAutoIncrementPrimaryKey("Id_PK");
   Child.addField(ParentId);
   ForeignKey fkParentId;
   fkParentId.setParentTable(Parent);
-  fkParentId.addKeyFields( ParentTableFieldName(Id_PK), ChildTableFieldName(ParentId) );
+  fkParentId.addKeyFields( ParentTableFieldName("Id_PK"), ChildTableFieldName(ParentId) );
   Child.addForeignKey(fkParentId);
   // Setup parent select table and check
   SelectTable P(Parent, "P");

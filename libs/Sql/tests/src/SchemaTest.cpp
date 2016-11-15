@@ -784,7 +784,6 @@ void SchemaTest::foreignKeyTest()
   using Mdt::Sql::Schema::Table;
   using Mdt::Sql::Schema::Field;
   using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
   using Mdt::Sql::Schema::ParentTableFieldName;
   using Mdt::Sql::Schema::ChildTableFieldName;
   using Mdt::Sql::Schema::Index;
@@ -795,9 +794,6 @@ void SchemaTest::foreignKeyTest()
   /*
    * Setup fields
    */
-  // Id_PK
-  AutoIncrementPrimaryKey Id_PK;
-  Id_PK.setFieldName("Id_PK");
   // Connector_Id_FK
   Field Connector_Id_FK;
   Connector_Id_FK.setName("Connector_Id_FK");
@@ -813,13 +809,13 @@ void SchemaTest::foreignKeyTest()
    */
   Table Connector_tbl;
   Connector_tbl.setTableName("Connector_tbl");
-  Connector_tbl.setPrimaryKey(Id_PK);
+  Connector_tbl.setAutoIncrementPrimaryKey("Id_PK");
   /*
    * Init Contact_tbl
    */
   Table Contact_tbl;
   Contact_tbl.setTableName("Contact_tbl");
-  Contact_tbl.setPrimaryKey(Id_PK);
+  Contact_tbl.setAutoIncrementPrimaryKey("Id_PK");
   /*
    * Initial state
    */
@@ -836,7 +832,7 @@ void SchemaTest::foreignKeyTest()
   QVERIFY(fk.isNull());
   fk.setChildTable(Contact_tbl);
   QVERIFY(fk.isNull());
-  fk.addKeyFields(ParentTableFieldName(Id_PK), ChildTableFieldName(Connector_Id_FK));
+  fk.addKeyFields(ParentTableFieldName("Id_PK"), ChildTableFieldName(Connector_Id_FK));
   QVERIFY(!fk.isNull());
   fk.setOnDeleteAction(ForeignKey::Restrict);
   fk.setOnUpdateAction(ForeignKey::Cascade);
@@ -903,7 +899,6 @@ void SchemaTest::foreignKeyListTest()
   using Mdt::Sql::Schema::Table;
   using Mdt::Sql::Schema::Field;
   using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
   using Mdt::Sql::Schema::ParentTableFieldName;
   using Mdt::Sql::Schema::ChildTableFieldName;
 
@@ -911,9 +906,6 @@ void SchemaTest::foreignKeyListTest()
   /*
    * Setup fields
    */
-  // Id_PK
-  AutoIncrementPrimaryKey Id_PK;
-  Id_PK.setFieldName("Id_PK");
   // Connector_Id_FK
   Field Connector_Id_FK;
   Connector_Id_FK.setName("Connector_Id_FK");
@@ -924,20 +916,20 @@ void SchemaTest::foreignKeyListTest()
    */
   Table Connector_tbl;
   Connector_tbl.setTableName("Connector_tbl");
-  Connector_tbl.setPrimaryKey(Id_PK);
+  Connector_tbl.setAutoIncrementPrimaryKey("Id_PK");
   /*
    * Init Contact_tbl
    */
   Table Contact_tbl;
   Contact_tbl.setTableName("Contact_tbl");
-  Contact_tbl.setPrimaryKey(Id_PK);
+  Contact_tbl.setAutoIncrementPrimaryKey("Id_PK");
   /*
    * Setup fk_Connector_Id_FK
    */
   ForeignKey fk_Connector_Id_FK;
   fk_Connector_Id_FK.setParentTable(Connector_tbl);
   fk_Connector_Id_FK.setChildTable(Contact_tbl);
-  fk_Connector_Id_FK.addKeyFields(ParentTableFieldName(Id_PK), ChildTableFieldName(Connector_Id_FK));
+  fk_Connector_Id_FK.addKeyFields(ParentTableFieldName("Id_PK"), ChildTableFieldName(Connector_Id_FK));
   QVERIFY(!fk_Connector_Id_FK.isNull());
   /*
    * Initial state

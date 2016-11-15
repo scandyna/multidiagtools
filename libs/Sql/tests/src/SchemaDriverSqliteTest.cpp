@@ -615,7 +615,6 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
 {
   using Mdt::Sql::Schema::Field;
   using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
   using Mdt::Sql::Schema::SingleFieldPrimaryKey;
   using Mdt::Sql::Schema::PrimaryKey;
   using Mdt::Sql::Schema::Table;
@@ -630,9 +629,6 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   /*
    * Setup fields, primary keys, foreeign keys
    */
-  // Id_PK
-  AutoIncrementPrimaryKey Id_PK;
-  Id_PK.setFieldName("Id_PK");
   // Code_PK
   SingleFieldPrimaryKey Code_PK;
   Code_PK.setFieldName("Code_PK");
@@ -670,17 +666,17 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   // Init Connector_tbl
   Table Connector_tbl;
   Connector_tbl.setTableName("Connector_tbl");
-  Connector_tbl.setPrimaryKey(Id_PK);
+  Connector_tbl.setAutoIncrementPrimaryKey("Id_PK");
   // fk_Connector_Id_FK
   ForeignKey fk_Connector_Id_FK;
   fk_Connector_Id_FK.setParentTable(Connector_tbl);
-  fk_Connector_Id_FK.addKeyFields(ParentTableFieldName(Id_PK), ChildTableFieldName(Connector_Id_FK));
+  fk_Connector_Id_FK.addKeyFields(ParentTableFieldName("Id_PK"), ChildTableFieldName(Connector_Id_FK));
   fk_Connector_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
   fk_Connector_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
   // Init Type_tbl
   Table Type_tbl;
   Type_tbl.setTableName("Type_tbl");
-  Type_tbl.setPrimaryKey(Id_PK);
+  Type_tbl.setAutoIncrementPrimaryKey("Id_PK");
   // Type_Id_FK
   Field Type_Id_FK;
   Type_Id_FK.setName("Type_Id_FK");
@@ -689,7 +685,7 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   // fk_Type_Id_FK
   ForeignKey fk_Type_Id_FK;
   fk_Type_Id_FK.setParentTable(Type_tbl);
-  fk_Type_Id_FK.addKeyFields(ParentTableFieldName(Id_PK), ChildTableFieldName(Type_Id_FK));
+  fk_Type_Id_FK.addKeyFields(ParentTableFieldName("Id_PK"), ChildTableFieldName(Type_Id_FK));
   fk_Type_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
   fk_Type_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
 
@@ -701,7 +697,7 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   // Setup table
   table.clear();
   table.setTableName("Client_tbl");
-  table.setPrimaryKey(Id_PK);
+  table.setAutoIncrementPrimaryKey("Id_PK");
   // Check
   expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
   expectedSql += "  \"Id_PK\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT\n";
@@ -715,7 +711,7 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   // Setup table
   table.clear();
   table.setTableName("Client_tbl");
-  table.setPrimaryKey(Id_PK);
+  table.setAutoIncrementPrimaryKey("Id_PK");
   table.addField(Name);
   // Check
   expectedSql  = "CREATE TABLE \"Client_tbl\" (\n";
@@ -731,7 +727,7 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   // Setup table
   table.clear();
   table.setTableName("Client_tbl");
-  table.setPrimaryKey(Id_PK);
+  table.setAutoIncrementPrimaryKey("Id_PK");
   table.addField(Name);
   table.addField(Remarks);
   // Check
@@ -831,7 +827,7 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   // Setup table
   table.clear();
   table.setTableName("Contact_tbl");
-  table.setPrimaryKey(Id_PK);
+  table.setAutoIncrementPrimaryKey("Id_PK");
   table.addField(Connector_Id_FK);
   table.addForeignKey(fk_Connector_Id_FK);
   // Check
@@ -879,7 +875,7 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   // Setup table
   table.clear();
   table.setTableName("Contact_tbl");
-  table.setPrimaryKey(Id_PK);
+  table.setAutoIncrementPrimaryKey("Id_PK");
   table.addField(Connector_Id_FK);
   table.addField(Type_Id_FK);
   table.addForeignKey(fk_Connector_Id_FK);
@@ -975,7 +971,7 @@ void SchemaDriverSqliteTest::reverseFieldListTest()
    */
   Table Connector_tbl;
   Connector_tbl.setTableName("Connector_tbl");
-  Connector_tbl.setPrimaryKey(Id_PK);
+  Connector_tbl.setAutoIncrementPrimaryKey("Id_PK");
   Connector_tbl.addField(Name);
   Connector_tbl.addField(Remarks);
   /*
@@ -1075,7 +1071,7 @@ void SchemaDriverSqliteTest::reverseIndexListTest()
    */
   Table Connector_tbl;
   Connector_tbl.setTableName("Connector_tbl");
-  Connector_tbl.setPrimaryKey(Id_PK);
+  Connector_tbl.setAutoIncrementPrimaryKey("Id_PK");
   Connector_tbl.addField(Name);
   Connector_tbl.addField(A);
   Connector_tbl.addField(B);
@@ -1177,7 +1173,7 @@ void SchemaDriverSqliteTest::reversePrimaryKeyTest()
   // Setup and create table
   table.clear();
   table.setTableName("Connector_tbl");
-  table.setPrimaryKey(Id_PK);
+  table.setAutoIncrementPrimaryKey("Id_PK");
   table.addField(Name);
   QVERIFY(driver.dropTable(table));
   QVERIFY(driver.createTable(table));
@@ -1335,7 +1331,7 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   // Setup and create table
   table.clear();
   table.setTableName("Contact_tbl");
-  table.setPrimaryKey(Id_PK);
+  table.setAutoIncrementPrimaryKey("Id_PK");
   table.addField(Code_FK);
   fk.clear();
   fk.setParentTable(Type_tbl);
@@ -1368,7 +1364,7 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   // Setup and create table
   table.clear();
   table.setTableName("Contact_tbl");
-  table.setPrimaryKey(Id_PK);
+  table.setAutoIncrementPrimaryKey("Id_PK");
   table.addField(Id_A_FK);
   table.addField(Id_B_FK);
   fk.clear();
@@ -1404,7 +1400,7 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   // Setup and create table
   table.clear();
   table.setTableName("Contact_tbl");
-  table.setPrimaryKey(Id_PK);
+  table.setAutoIncrementPrimaryKey("Id_PK");
   table.addField(Code_FK);
   table.addField(Id_A_FK);
   table.addField(Id_B_FK);

@@ -105,7 +105,6 @@ void JoinConstraintFieldPairTest::fromTablesTest()
   using Sql::Schema::ChildTableFieldName;
   using Sql::Schema::ForeignKey;
   using Sql::Schema::Table;
-  using Sql::Schema::AutoIncrementPrimaryKey;
   using Sql::Schema::PrimaryKey;
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
@@ -113,7 +112,6 @@ void JoinConstraintFieldPairTest::fromTablesTest()
   /*
    * Common table fields
    */
-  AutoIncrementPrimaryKey Id_PK("Id_PK");
   Field p1;
   p1.setType(FieldType::Integer);
   p1.setName("p1_PK");
@@ -132,15 +130,15 @@ void JoinConstraintFieldPairTest::fromTablesTest()
   // Parent table
   Table PA;
   PA.setTableName("PA");
-  PA.setPrimaryKey(Id_PK);
+  PA.setAutoIncrementPrimaryKey("Id_PK");
   // Child table
   Table CA;
   CA.setTableName("CA");
-  CA.setPrimaryKey(Id_PK);
+  CA.setAutoIncrementPrimaryKey("Id_PK");
   CA.addField(c1);
   ForeignKey fkCA;
   fkCA.setParentTable(PA);
-  fkCA.addKeyFields( ParentTableFieldName(Id_PK), ChildTableFieldName(c1) );
+  fkCA.addKeyFields( ParentTableFieldName("Id_PK"), ChildTableFieldName(c1) );
   CA.addForeignKey(fkCA);
   // Select tables
   SelectTable SPA(PA, "SPA");
@@ -173,7 +171,7 @@ void JoinConstraintFieldPairTest::fromTablesTest()
   PB.setPrimaryKey(pkPB);
   // Child table
   Table CB;
-  CB.setPrimaryKey(Id_PK);
+  CB.setAutoIncrementPrimaryKey("Id_PK");
   CB.setTableName("CB");
   CB.addField(c1);
   CB.addField(c2);

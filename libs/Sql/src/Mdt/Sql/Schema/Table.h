@@ -23,12 +23,14 @@
 
 #include "Field.h"
 #include "FieldList.h"
+#include "PrimaryKey.h"
 #include "PrimaryKeyContainer.h"
 #include "ForeignKey.h"
 #include "ForeignKeyList.h"
 #include "IndexList.h"
 #include <QString>
 #include <vector>
+#include <type_traits>
 
 // #include <QDebug>
 
@@ -44,15 +46,30 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief SQL schema table
    *
-   * Typical usage to define a table:
+   * Typical usage to define a simple table:
    * \code
-   * using Mdt::Sql::Schema::Table;
-   * using Mdt::Sql::Schema::Field;
-   * using Mdt::Sql::Schema::FieldType;
-   * using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
+   * #include "Mdt/Sql/Schema/Table.h"
+   *
+   * namespace Sql = Mdt::Sql;
+   *
+   * using Sql::Schema::Table;
+   * using Sql::Schema::Field;
+   * using Sql::Schema::FieldType;
    * using Mdt::Sql::Schema::ForeignKey;
    * using Mdt::Sql::Schema::ParentTableFieldName;
    * using Mdt::Sql::Schema::ChildTableFieldName;
+   *
+   * // Setup street field
+   * Field Street:
+   * Street.setName("Street");
+   * Street.setType(FieldType::Varchar);
+   * Street.setLength(100);
+   *
+   * // Setup table
+   * Table table;
+   * table.setName("Address_tbl");
+   * table.setAutoIncrementPrimaryKey("Id_PK");
+   * table.addField(Street);
    *
    * // Somewhere defined table
    * Table Client_tbl = getFromSomeWhere();
@@ -66,11 +83,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    * Client_Id_FK.setName("Client_Id_FK");
    * Client_Id_FK.setType(FieldType::Integer);
    * Client_Id_FK.setRequired(true);
-   * // Setup street field
-   * Field Street:
-   * Street.setName("Street");
-   * Street.setType(FieldType::Varchar);
-   * Street.setLength(100);
    * // Add fileds to the table
    * table.setPrimaryKey(Id_PK);
    * table.addField(Client_Id_FK);
@@ -94,7 +106,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     /*! \brief Create a default constructed table
      */
     Table()
-     : pvPrimaryKeyFieldIndex(-1) ,
+     : mPrimaryKeyFieldIndex(-1) ,
        pvIsTemporary(false)
     {
     }
@@ -132,11 +144,34 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      *
      * \pre A field with pk's field name must not allready been set
      */
-    void setPrimaryKey(const AutoIncrementPrimaryKey & pk)
+//     void setPrimaryKey(const AutoIncrementPrimaryKey & pk)
+//     {
+//       Q_ASSERT(!contains(pk.fieldName()));
+//       mPrimaryKeyFieldIndex = 0;
+//       mPrimaryKey.setPrimaryKey(pk);
+//     }
+
+    /*! \brief Set a auto increment primary key
+     *
+     * \pre fieldName must not be empty
+     * \pre A field having fieldName as name must not allready exist in this table
+     */
+    void setAutoIncrementPrimaryKey(const QString & fieldName);
+
+    /*! \brief Set primary key
+     *
+     * Will set each field in fieldList as member of the primary key of this table.
+     *  If a field does not allready exist, it will also be added to this table.
+     *
+     * \pre Each field in fieldList must have a different field name.
+     */
+    template<typename...Ts>
+    void setPrimaryKey(const Ts & ...fieldList)
     {
-      Q_ASSERT(!contains(pk.fieldName()));
-      pvPrimaryKeyFieldIndex = 0;
-      pvPrimaryKey.setPrimaryKey(pk);
+      PrimaryKey pk(fieldList...);
+      addFieldListIfNotExists(fieldList...);
+      mPrimaryKey.setPrimaryKey(pk);
+      setPrimaryKeyIndexList(pk);
     }
 
     /*! \brief Set primary key
@@ -148,8 +183,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     void setPrimaryKey(const SingleFieldPrimaryKey & pk)
     {
       Q_ASSERT(!contains(pk.fieldName()));
-      pvPrimaryKeyFieldIndex = 0;
-      pvPrimaryKey.setPrimaryKey(pk);
+      mPrimaryKeyFieldIndex = 0;
+      mPrimaryKey.setPrimaryKey(pk);
     }
 
     /*! \brief Set primary key
@@ -162,7 +197,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     PrimaryKeyContainer::Type primaryKeyType() const
     {
-      return pvPrimaryKey.primaryKeyType();
+      return mPrimaryKey.primaryKeyType();
     }
 
     /*! \brief Get primary key
@@ -171,7 +206,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     AutoIncrementPrimaryKey autoIncrementPrimaryKey() const
     {
-      return pvPrimaryKey.autoIncrementPrimaryKey();
+      return mPrimaryKey.autoIncrementPrimaryKey();
     }
 
     /*! \brief Get primary key
@@ -180,7 +215,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     SingleFieldPrimaryKey singleFieldPrimaryKey() const
     {
-      return pvPrimaryKey.singleFieldPrimaryKey();
+      return mPrimaryKey.singleFieldPrimaryKey();
     }
 
     /*! \brief Get primary key
@@ -189,7 +224,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     PrimaryKey primaryKey() const
     {
-      return pvPrimaryKey.primaryKey();
+      return mPrimaryKey.primaryKey();
     }
 
     /*! \brief Add a field
@@ -198,7 +233,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void addField(const Field & field)
     {
-      Q_ASSERT(!contains(field.name()));
+      Q_ASSERT(!contains(field));
       pvFieldList.append(field);
     }
 
@@ -249,7 +284,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     int fieldCount() const
     {
-      return (pvFieldList.size() + pvPrimaryKeyFieldIndex + 1);
+      return (pvFieldList.size() + mPrimaryKeyFieldIndex + 1);
     }
 
     /*! \brief Get index of field with fieldName in this table
@@ -270,6 +305,16 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     bool contains(const QString & fieldName) const
     {
       return (fieldIndex(fieldName) > -1);
+    }
+
+    /*! \brief Check if a field exists in this table
+     *
+     * Note that field names are compared in a case insensitive way.
+     *  For exapmple, Id_PK is the same field as ID_PK
+     */
+    bool contains(const Field & field) const
+    {
+      return contains(field.name());
     }
 
     /*! \brief Get field name at index
@@ -347,16 +392,37 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
    private:
 
+    /*! \brief Helper to add fields with variadic function
+     */
+    void addFieldListIfNotExists()
+    {
+    }
+
+    /*! \brief Helper to add fields with variadic function
+     */
+    template<typename...Ts>
+    void addFieldListIfNotExists(const Field & field, const Ts & ...fieldList)
+    {
+      if(!contains(field)){
+        addField(field);
+      }
+      addFieldListIfNotExists(fieldList...);
+    }
+
+    /*! \brief Set list of indexes for primary key
+     */
+    void setPrimaryKeyIndexList(const PrimaryKey & pk);
+
     /*! \brief Access field at index
      */
     const Field & refFieldConst(int index) const;
 
-    int pvPrimaryKeyFieldIndex; // Used if pvPrimaryKey is AutoIncrementPrimaryKey or SingleFieldPrimaryKey
+    int mPrimaryKeyFieldIndex; // Used if pvPrimaryKey is AutoIncrementPrimaryKey or SingleFieldPrimaryKey
     bool pvIsTemporary;
     QString pvTableName;
-    PrimaryKeyContainer pvPrimaryKey;
+    PrimaryKeyContainer mPrimaryKey;
     FieldList pvFieldList;
-    std::vector<int> pvPrimaryKeyFieldIndexList;  // Used by isFieldPartOfPrimaryKey() for PrimaryKey (multi-column)
+    std::vector<int> mPrimaryKeyFieldIndexList;  // Used by isFieldPartOfPrimaryKey() for PrimaryKey (multi-column)
     ForeignKeyList pvForeignKeyList;
     IndexList pvIndexList;
   };
