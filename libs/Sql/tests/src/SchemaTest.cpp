@@ -28,7 +28,6 @@
 #include "Mdt/Sql/Schema/Field.h"
 #include "Mdt/Sql/Schema/FieldList.h"
 #include "Mdt/Sql/Schema/AutoIncrementPrimaryKey.h"
-// #include "Mdt/Sql/Schema/SingleFieldPrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKeyContainer.h"
 #include "Mdt/Sql/Schema/Index.h"

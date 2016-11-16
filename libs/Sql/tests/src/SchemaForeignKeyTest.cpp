@@ -23,10 +23,12 @@
 #include "Mdt/Sql/Schema/ForeignKeySettings.h"
 #include "Mdt/Sql/Schema/ForeignTable.h"
 #include "Mdt/Sql/Schema/ForeignField.h"
+#include "Mdt/Sql/Schema/ForeignFieldList.h"
 #include "Mdt/Sql/Schema/Table.h"
 #include "Schema/Client_tbl.h"
 #include "Schema/Address_tbl.h"
 #include <QString>
+#include <QStringList>
 
 namespace Sql = Mdt::Sql;
 
@@ -125,6 +127,55 @@ void SchemaForeignKeyTest::foreignFieldTest()
   QCOMPARE( foreignFieldTestFunction(ForeignField(AutoIncrementPrimaryKey("C"))) , QString("C") );
   QCOMPARE( foreignFieldTestFunction(ForeignField(client.Id_PK())) , QString("Id_PK") );
   QCOMPARE( foreignFieldTestFunction(ForeignField(client.Name())) , QString("Name") );
+}
+
+QStringList foreignFieldListTestFunction(const Sql::Schema::ForeignFieldList & list)
+{
+  return list.fieldNameList();
+}
+
+void SchemaForeignKeyTest::foreignFieldListTest()
+{
+  using Sql::Schema::ForeignFieldList;
+  using Sql::Schema::AutoIncrementPrimaryKey;
+  using Sql::Schema::Field;
+  using Sql::Schema::FieldType;
+
+  Schema::Client_tbl client;
+  Field field;
+  field.setType(FieldType::Integer);
+  QStringList list;
+
+  // Must not compile
+//   QCOMPARE( foreignFieldListTestFunction("Bad").size() , 1 );
+//   QCOMPARE( foreignFieldListTestFunction(client.Id_PK()).size() , 1 );
+//   QCOMPARE( foreignFieldListTestFunction(client.Name()).size() , 1 );
+
+  // 1 field
+  list = foreignFieldListTestFunction( ForeignFieldList("A") );
+  QCOMPARE(list.size(), 1);
+  QCOMPARE(list.at(0), QString("A"));
+  // 2 fields
+  field.setName("B");
+  list = foreignFieldListTestFunction( ForeignFieldList(field, "C") );
+  QCOMPARE(list.size(), 2);
+  QCOMPARE(list.at(0), QString("B"));
+  QCOMPARE(list.at(1), QString("C"));
+  // 3 fields
+  field.setName("E");
+  list = foreignFieldListTestFunction( ForeignFieldList(AutoIncrementPrimaryKey("D"), field, "F") );
+  QCOMPARE(list.size(), 3);
+  QCOMPARE(list.at(0), QString("D"));
+  QCOMPARE(list.at(1), QString("E"));
+  QCOMPARE(list.at(2), QString("F"));
+  // 4 fields
+  field.setName("G");
+  list = foreignFieldListTestFunction( ForeignFieldList(field, "H", client.Id_PK(), client.Name()) );
+  QCOMPARE(list.size(), 4);
+  QCOMPARE(list.at(0), QString("G"));
+  QCOMPARE(list.at(1), QString("H"));
+  QCOMPARE(list.at(2), QString("Id_PK"));
+  QCOMPARE(list.at(3), QString("Name"));
 }
 
 /*

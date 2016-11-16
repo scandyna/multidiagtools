@@ -18,25 +18,53 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_FOREIGN_KEY_TEST_H
-#define MDT_SQL_SCHEMA_FOREIGN_KEY_TEST_H
+#include "SchemaFieldTest.h"
+#include "Mdt/Application.h"
+#include "Mdt/Sql/Schema/Field.h"
+#include "Mdt/Sql/Schema/FieldList.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Sql = Mdt::Sql;
 
-class SchemaForeignKeyTest : public QObject
+void SchemaFieldTest::initTestCase()
 {
- Q_OBJECT
+}
 
- private slots:
+void SchemaFieldTest::cleanupTestCase()
+{
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+/*
+ * Tests
+ */
 
-  void settingsTest();
-  void foreignTableTest();
-  void foreignFieldTest();
-  void foreignFieldListTest();
-};
+void SchemaFieldTest::fieldTest()
+{
 
-#endif // #ifndef MDT_SQL_SCHEMA_FOREIGN_KEY_TEST_H
+}
+
+void SchemaFieldTest::fieldListMutatingTest()
+{
+
+}
+
+void SchemaFieldTest::fieldListVarArgConstructTest()
+{
+
+}
+
+
+/*
+ * Main
+ */
+
+int main(int argc, char **argv)
+{
+  Mdt::Application app(argc, argv);
+  SchemaFieldTest test;
+
+  if(!app.init()){
+    return 1;
+  }
+
+  return QTest::qExec(&test, argc, argv);
+}

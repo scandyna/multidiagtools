@@ -131,7 +131,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    * Example with foreign key referring to a allready existing table:
    * \code
    * #include "Mdt/Sql/Schema/Table.h"
-   * #include "Client.h"  // Defaindes a Client based on TableTemplate
+   * #include "Client.h"  // Defindes a Client based on TableTemplate
    *
    * namespace Sql = Mdt::Sql;
    *

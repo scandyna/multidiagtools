@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 107
+  revision 109
   modified_by 2 "philippe"
   // class settings
   
@@ -1867,7 +1867,7 @@ ${inlines}
 
     classdiagram 2461186 "Field"
       classdiagramsettings draw_all_relations no member_max_width 0 end
-      size A4-Landscape
+      size B
     end
 
     class 2775042 "Field"
@@ -1884,22 +1884,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      operation 4123650 "isStringType"
-	class_operation public explicit_return_type "bool"
-	nparams 1
-	  param in name "type" type class_ref 2774914 // FieldType
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       attribute 2626690 "Type"
 	private type class_ref 2774914 // FieldType
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -2050,6 +2034,86 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      operation 4858754 "FieldList"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "fieldList" explicit_type "Ts..."
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4858882 "addField"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "field" type class_ref 2775042 // Field
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4859010 "at"
+	public return_type class_ref 2775042 // Field
+	nparams 1
+	  param in name "index" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4859138 "addFieldList"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4859266 "addFieldList"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "field" explicit_type "T"
+	  param in name "fieldList" explicit_type "Ts..."
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -3025,7 +3089,6 @@ ${items}};
 	    classrelation_ref 3829122 // <directional composition>
 	  b parent class_ref 2824706 // AutoIncrementPrimaryKey
       end
-
     end
   end
 
@@ -3495,16 +3558,42 @@ ${inlines}
     
     activitydiagramsettings
      end
-    classdiagram 3015426 "RefferingFieldNameList"
+    classdiagram 3028482 "ForeignKeyAction"
       classdiagramsettings member_max_width 0 end
       size A4
     end
 
-    class 3443970 "ReferringFieldNameList"
+    class 3417218 "ForeignKeyAction"
+      visibility package stereotype "enum"
+      cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+      php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+      python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+      idl_decl "${comment}enum ${name} {
+${items}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 3028610 "ForeignKeySettings"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3450498 "ForeignKeySettings"
       visibility package 
-      nactuals 1
-      actual class class_ref 3443714 // FieldNameListBase
-        rank 0 explicit_value ""
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -3517,18 +3606,356 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3822338 // <generalisation>
-	relation 3803138 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3822338 // <generalisation>
-	  b parent class_ref 3443714 // FieldNameListBase
+      classrelation 3835778 // <directional composition>
+	relation 3816578 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3835778 // <directional composition>
+	  b parent class_ref 3417218 // ForeignKeyAction
+      end
+
+      attribute 3128834 "OnDeleteAction"
+	private type class_ref 3417218 // ForeignKeyAction
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3128962 "OnUpdateAction"
+	private type class_ref 3417218 // ForeignKeyAction
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3129090 "CreateIndex"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    classdiagram 3028738 "ForeignTable"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3450626 "ForeignTable"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 4858370 "ForeignTable"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "tableName" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4858498 "ForeignTable"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "table" type class_ref 2775810 // Table
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4858626 "ForeignTable"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "table" explicit_type "T"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4866946 "tableName"
+	public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 3015426 "ForeignField"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3450754 "ForeignField"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3129218 "FieldName"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 4859394 "ForeignField"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "fieldName" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4859522 "ForeignField"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "field" type class_ref 3218562 // Field
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4859650 "ForeignField"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "pk" type class_ref 2824706 // AutoIncrementPrimaryKey
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4867074 "fieldName"
+	public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3443970 "ForeignFieldList"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3129346 "FieldNameList"
+	private type class_ref 160770 // QStringList
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 4859778 "ForeignFieldList"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "fieldList" explicit_type "Ts..."
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4859906 "ForeignFieldList"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "pk" type class_ref 2775554 // PrimaryKey
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4860034 "addFieldList"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4860162 "addFieldList"
+	private explicit_return_type ""
+	nparams 2
+	  param in name "field" explicit_type "T"
+	  param in name "fieldList" explicit_type "Ts..."
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4860290 "addField"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "fieldName" type class_ref 161026 // QString
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4860418 "addField"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "field" type class_ref 3218562 // Field
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
     classdiagram 2461570 "ForeignKey"
       classdiagramsettings member_max_width 0 end
-      size B-Landscape
+      size C
     end
 
     class 2775682 "ForeignKey"
@@ -3825,6 +4252,47 @@ ${items}};
 	
 	
 	
+      end
+
+      classrelation 3835906 // <dependency>
+	relation 3816706 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3835906 // <dependency>
+	  b parent class_ref 2873090 // FieldList
+      end
+
+      classrelation 3836034 // <directional composition>
+	relation 3816834 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3836034 // <directional composition>
+	  b parent class_ref 3450498 // ForeignKeySettings
+      end
+
+      classrelation 3836162 // <dependency>
+	relation 3816962 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3836162 // <dependency>
+	  b parent class_ref 3450626 // ForeignTable
+      end
+
+      classrelation 3836290 // <dependency>
+	relation 3817090 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3836290 // <dependency>
+	  b parent class_ref 3450754 // ForeignField
+      end
+
+      classrelation 3836418 // <dependency>
+	relation 3817218 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3836418 // <dependency>
+	  b parent class_ref 3443970 // ForeignFieldList
       end
     end
 
@@ -4467,30 +4935,6 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
-    end
-
-    class 3417218 "ForeignKeyAction"
-      visibility package stereotype "enum"
-      cpp_decl "${comment}enum ${name} {
-${items}
-};
-"
-      java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
-${items};
-${members}}
-"
-      php_decl "${comment}${visibility}final class ${name} {
-${items}}
-"
-      python_2_2 python_decl "class ${name}:
-${docstring}${members}
-"
-      idl_decl "${comment}enum ${name} {
-${items}};
-"
-      explicit_switch_type ""
-      mysql_decl ""
-      
     end
   end
 
