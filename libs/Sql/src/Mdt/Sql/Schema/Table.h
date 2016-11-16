@@ -128,7 +128,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    * table.addField(Name);
    * \endcode
    *
-   * Example with foreign key refering to a allready existing table:
+   * Example with foreign key referring to a allready existing table:
    * \code
    * #include "Mdt/Sql/Schema/Table.h"
    * #include "Client.h"  // Defaindes a Client based on TableTemplate
@@ -138,14 +138,19 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    * using Sql::Schema::Table;
    * using Sql::Schema::Field;
    * using Sql::Schema::FieldType;
-   * using Sql::Schema::ForeignKeyParameters;
+   * using Sql::Schema::ForeignKeyAction;
+   * using Sql::Schema::ForeignKeySettings;
+   * using Sql::Schema::ForeignTable;
+   * using Sql::Schema::ForeignField;
+   * using Sql::Schema::ForeignFieldList;
+   * using Sql::Schema::FieldList;
    *
    * using Mdt::Sql::Schema::ForeignKey;
    * using Mdt::Sql::Schema::ParentTableFieldName;
    * using Mdt::Sql::Schema::ChildTableFieldName;
    *
    * // Somewhere defined table
-   * Table client = getFromSomeWhere();
+   * Client client;
    *
    * // Setup street field
    * Field Street:
@@ -158,15 +163,21 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    * Client_Id_FK.setType(FieldType::Integer);
    * Client_Id_FK.setRequired(true);
    *
-   * // Define a common foreign key parameters
-   * ForeignKeyParameters fkParameters;
+   * // Define common foreign key settings
+   * ForeignKeySettings defaultFkSettings;
+   * defaultFkSettings.setOnDeleteAction(ForeignKeyAction::Restrict);
+   * defaultFkSettings.setOnUpdateAction(ForeignKeyAction::Cascade);
+   * defaultFkSettings.setCreateIndex(true);
    *
    * // Setup table
    * Table table;
    * table.setName("Address_tbl");
    * table.setAutoIncrementPrimaryKey("Id_PK");
    * table.addField(Street);
-   * table.addForeignKey( Client_Id_FK, client, client.Id_PK() );
+   * table.addForeignKey( Client_Id_FK, ForeignTable(client), ForeignField(client.Id_PK()), defaultFkSettings );
+   * table.addForeignKey( FieldList(Client_Id_FK), ForeignTable(client), ForeignFieldList(client.Id_PK()), defaultFkSettings );
+   * table.addForeignKey( Client_Id_FK, ReferringTable(client), ReferringField(client.Id_PK()), defaultFkSettings );
+   * table.addForeignKey( FieldList(Client_Id_FK), ReferringTable(client), ReferringFieldList(client.Id_PK()), defaultFkSettings );
    *
    * // Add fileds to the table
    * table.setPrimaryKey(Id_PK);

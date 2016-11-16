@@ -18,24 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_FOREIGN_KEY_TEST_H
-#define MDT_SQL_SCHEMA_FOREIGN_KEY_TEST_H
+#ifndef MDT_SQL_SCHEMA_FOREIGN_KEY_ACTION_H
+#define MDT_SQL_SCHEMA_FOREIGN_KEY_ACTION_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace Sql{ namespace Schema{
 
-class SchemaForeignKeyTest : public QObject
-{
- Q_OBJECT
+  /*! \brief Foreign key action
+   */
+  enum class ForeignKeyAction
+  {
+    NoAction,   /*!< No action */
+    Restrict,   /*!< Restrict */
+    SetNull,    /*!< Set NULL */
+    SetDefault, /*!< Set default */
+    Cascade     /*!< Cascade */
+  };
 
- private slots:
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void settingsTest();
-  void foreignTableTest();
-  void foreignFieldTest();
-};
-
-#endif // #ifndef MDT_SQL_SCHEMA_FOREIGN_KEY_TEST_H
+#endif // #ifndef MDT_SQL_SCHEMA_FOREIGN_KEY_ACTION_H
