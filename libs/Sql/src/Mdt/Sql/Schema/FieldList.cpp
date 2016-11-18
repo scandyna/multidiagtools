@@ -18,53 +18,32 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_TEST_H
-#define MDT_SQL_SCHEMA_TEST_H
+#include "FieldList.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace Sql{ namespace Schema{
 
-class SchemaTest : public QObject
+int FieldList::fieldIndex(const QString& fieldName) const
 {
- Q_OBJECT
+  const auto name = fieldName.toUpper();
+  for(int i = 0; i < pvFieldList.size(); ++i){
+    if(pvFieldList.at(i).name().toUpper() == name){
+      return i;
+    }
+  }
+  return -1;
+}
 
- private slots:
+QStringList FieldList::toFieldNameList() const
+{
+  QStringList list;
 
-  void initTestCase();
-  void cleanupTestCase();
+  list.reserve(size());
+  for(const auto & field : pvFieldList){
+    list.append(field.name());
+  }
 
-//   void fieldTypeListTest();
-//   void fieldTypeNameTest();
-//   void fiedTypeListModelTest();
+  return list;
+}
 
-  void charsetTest();
-  void localeTest();
-  void collationTest();
 
-//   void fieldTest();
-//   void fieldListTest();
-
-  void indexTest();
-  void indexListTest();
-  void indexListModelTest();
-
-  void parentTableFieldNameTest();
-  void childTableFieldNameTest();
-
-  /// \todo explore for better in Table
-  void varArgSandbox();
-
-  void foreignKeyActionTest();
-  void foreignKeyTest();
-  void foreignKeyListTest();
-
-  void tablePopulationTest();
-  void tablePopulationListTest();
-
-  void triggerTest();
-  void triggerListTest();
-
-  void schemaTest();
-};
-
-#endif // #ifndef MDT_SQL_SCHEMA_TEST_H
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{

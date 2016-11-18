@@ -23,6 +23,7 @@
 
 #include "Field.h"
 #include <QVector>
+#include <QStringList>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
@@ -36,11 +37,36 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     typedef QVector<Field>::const_iterator const_iterator;
 
-    /*! \brief Append a field
+    /*! \brief Construct a empty field list
      */
-    void append(const Field & f)
+    FieldList() = default;
+
+    /*! \brief Construct a list with fields in fieldList
+     */
+    template<typename...Ts>
+    FieldList(const Ts & ...fieldList)
     {
-      pvFieldList.append(f);
+      addFieldList(fieldList...);
+    }
+
+    /*! \brief Add field to this list
+     *
+     * \pre field must not be null
+     */
+    void addField(const Field & field)
+    {
+      Q_ASSERT(!field.isNull());
+      pvFieldList.append(field);
+    }
+
+    /*! \brief Append a field
+     *
+     * \pre field must not be null
+     */
+    void append(const Field & field)
+    {
+      Q_ASSERT(!field.isNull());
+      pvFieldList.append(field);
     }
 
     /*! \brief Get count of elements
@@ -89,16 +115,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      * Note that field names are compared in a case insensitive way.
      *  For exapmple, Id_PK is the same field as ID_PK
      */
-    int fieldIndex(const QString & fieldName) const
-    {
-      const auto name = fieldName.toUpper();
-      for(int i = 0; i < pvFieldList.size(); ++i){
-        if(pvFieldList.at(i).name().toUpper() == name){
-          return i;
-        }
-      }
-      return -1;
-    }
+    int fieldIndex(const QString & fieldName) const;
 
     /*! \brief Check if a field with fieldName exists in this list
      *
@@ -124,6 +141,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return pvFieldList.cend();
     }
 
+    /*! \brief Get a list of field names
+     */
+    QStringList toFieldNameList() const;
+
     /*! \brief Clear
      */
     void clear()
@@ -132,6 +153,21 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     }
 
    private:
+
+    /*! \brief Add a list of fields (this is the terminal for variadic addFieldList() )
+     */
+    void addFieldList()
+    {
+    }
+
+    /*! \brief Add a list of fields
+     */
+    template<typename T, typename...Ts>
+    void addFieldList(const T & field, const Ts & ...fieldList)
+    {
+      addField(field);
+      addFieldList(fieldList...);
+    }
 
     QVector<Field> pvFieldList;
   };

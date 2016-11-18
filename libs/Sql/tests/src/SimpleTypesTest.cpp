@@ -143,6 +143,7 @@ void SimpleTypesTest::selectTableForeignKeyTest()
   using Sql::TableName;
   using Sql::Schema::Table;
   using Sql::Schema::Field;
+  using Sql::Schema::FieldType;
   using Sql::Schema::ForeignKey;
   using Sql::Schema::ParentTableFieldName;
   using Sql::Schema::ChildTableFieldName;
@@ -160,6 +161,7 @@ void SimpleTypesTest::selectTableForeignKeyTest()
   Table Child;
   Child.setTableName("Child_tbl");
   Field ParentId;
+  ParentId.setType(FieldType::Integer);
   ParentId.setName("Parent_Id_FK");
   Child.setAutoIncrementPrimaryKey("Id_PK");
   Child.addField(ParentId);

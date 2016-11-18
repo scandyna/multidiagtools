@@ -69,122 +69,122 @@ void SchemaTest::cleanupTestCase()
  * Tests
  */
 
-void SchemaTest::fieldTypeListTest()
-{
-  using Sql::Schema::FieldType;
-  using Sql::Schema::FieldTypeList;
-
-  /*
-   * Initial state
-   */
-  FieldTypeList list;
-  QCOMPARE(list.size(), 0);
-  /*
-   * Add one element
-   */
-  list.append(FieldType::Boolean);
-  QCOMPARE(list.size(), 1);
-  QVERIFY(list.at(0) == FieldType::Boolean);
-  for(auto ft : list){
-    QVERIFY(ft == FieldType::Boolean);
-  }
-  /*
-   * Clear
-   */
-  list.clear();
-  QCOMPARE(list.size(), 0);
-}
-
-void SchemaTest::fieldTypeNameTest()
-{
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::FieldTypeName;
-
-  /*
-   * Field type -> name
-   */
-  QVERIFY(FieldTypeName::nameFromType(FieldType::UnknownType).isEmpty());
-  QCOMPARE(FieldTypeName::nameFromType(FieldType::Boolean), QString("BOOLEAN"));
-  QCOMPARE(FieldTypeName::nameFromType(FieldType::Integer), QString("INTEGER"));
-  QCOMPARE(FieldTypeName::nameFromType(FieldType::Float), QString("FLOAT"));
-  QCOMPARE(FieldTypeName::nameFromType(FieldType::Double), QString("DOUBLE"));
-  QCOMPARE(FieldTypeName::nameFromType(FieldType::Varchar), QString("VARCHAR"));
-  QCOMPARE(FieldTypeName::nameFromType(FieldType::Date), QString("DATE"));
-  QCOMPARE(FieldTypeName::nameFromType(FieldType::Time), QString("TIME"));
-  QCOMPARE(FieldTypeName::nameFromType(FieldType::DateTime), QString("DATETIME"));
-  /*
-   * Name -> field type
-   */
-  QVERIFY(FieldTypeName::typeFromName("") == FieldType::UnknownType);
-  QVERIFY(FieldTypeName::typeFromName("BOOLEAN") == FieldType::Boolean);
-  QVERIFY(FieldTypeName::typeFromName("INTEGER") == FieldType::Integer);
-  QVERIFY(FieldTypeName::typeFromName("FLOAT") == FieldType::Float);
-  QVERIFY(FieldTypeName::typeFromName("DOUBLE") == FieldType::Double);
-  QVERIFY(FieldTypeName::typeFromName("VARCHAR") == FieldType::Varchar);
-  QVERIFY(FieldTypeName::typeFromName("DATE") == FieldType::Date);
-  QVERIFY(FieldTypeName::typeFromName("TIME") == FieldType::Time);
-  QVERIFY(FieldTypeName::typeFromName("DATETIME") == FieldType::DateTime);
-  QVERIFY(FieldTypeName::typeFromName("abcd") == FieldType::UnknownType);
-}
-
-void SchemaTest::fiedTypeListModelTest()
-{
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::FieldTypeList;
-  using Mdt::Sql::Schema::FieldTypeListModel;
-
-  FieldTypeListModel model;
-  QModelIndex index;
-  FieldTypeList list;
-  QComboBox cb;
-
-  /*
-   * Setup combobox
-   */
-  cb.setModel(&model);
-  /*
-   * Initial state
-   */
-  QCOMPARE(model.rowCount(), 0);
-  /*
-   * Populate model
-   */
-  list.clear();
-  list.append(FieldType::Boolean);
-  list.append(FieldType::Integer);
-  list.append(FieldType::Varchar);
-  model.setFieldTypeList(list);
-  /*
-   * Check
-   */
-  QCOMPARE(model.rowCount(), 3);
-  // Row 0
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("BOOLEAN"));
-  QVERIFY(model.fieldType(0) == FieldType::Boolean);
-  // Row 1
-  index = model.index(1, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("INTEGER"));
-  QVERIFY(model.fieldType(1) == FieldType::Integer);
-  // Row 2
-  index = model.index(2, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("VARCHAR"));
-  QVERIFY(model.fieldType(2) == FieldType::Varchar);
-  // Get field type from invalid row
-  QVERIFY(model.fieldType(-1) == FieldType::UnknownType);
-  QVERIFY(model.fieldType(3) == FieldType::UnknownType);
-  QVERIFY(model.fieldType(5) == FieldType::UnknownType);
-  /*
-   * Play
-   */
-//   cb.show();
-//   while(cb.isVisible()){
-//     QTest::qWait(500);
+// void SchemaTest::fieldTypeListTest()
+// {
+//   using Sql::Schema::FieldType;
+//   using Sql::Schema::FieldTypeList;
+// 
+//   /*
+//    * Initial state
+//    */
+//   FieldTypeList list;
+//   QCOMPARE(list.size(), 0);
+//   /*
+//    * Add one element
+//    */
+//   list.append(FieldType::Boolean);
+//   QCOMPARE(list.size(), 1);
+//   QVERIFY(list.at(0) == FieldType::Boolean);
+//   for(auto ft : list){
+//     QVERIFY(ft == FieldType::Boolean);
 //   }
-}
+//   /*
+//    * Clear
+//    */
+//   list.clear();
+//   QCOMPARE(list.size(), 0);
+// }
+
+// void SchemaTest::fieldTypeNameTest()
+// {
+//   using Mdt::Sql::Schema::FieldType;
+//   using Mdt::Sql::Schema::FieldTypeName;
+// 
+//   /*
+//    * Field type -> name
+//    */
+//   QVERIFY(FieldTypeName::nameFromType(FieldType::UnknownType).isEmpty());
+//   QCOMPARE(FieldTypeName::nameFromType(FieldType::Boolean), QString("BOOLEAN"));
+//   QCOMPARE(FieldTypeName::nameFromType(FieldType::Integer), QString("INTEGER"));
+//   QCOMPARE(FieldTypeName::nameFromType(FieldType::Float), QString("FLOAT"));
+//   QCOMPARE(FieldTypeName::nameFromType(FieldType::Double), QString("DOUBLE"));
+//   QCOMPARE(FieldTypeName::nameFromType(FieldType::Varchar), QString("VARCHAR"));
+//   QCOMPARE(FieldTypeName::nameFromType(FieldType::Date), QString("DATE"));
+//   QCOMPARE(FieldTypeName::nameFromType(FieldType::Time), QString("TIME"));
+//   QCOMPARE(FieldTypeName::nameFromType(FieldType::DateTime), QString("DATETIME"));
+//   /*
+//    * Name -> field type
+//    */
+//   QVERIFY(FieldTypeName::typeFromName("") == FieldType::UnknownType);
+//   QVERIFY(FieldTypeName::typeFromName("BOOLEAN") == FieldType::Boolean);
+//   QVERIFY(FieldTypeName::typeFromName("INTEGER") == FieldType::Integer);
+//   QVERIFY(FieldTypeName::typeFromName("FLOAT") == FieldType::Float);
+//   QVERIFY(FieldTypeName::typeFromName("DOUBLE") == FieldType::Double);
+//   QVERIFY(FieldTypeName::typeFromName("VARCHAR") == FieldType::Varchar);
+//   QVERIFY(FieldTypeName::typeFromName("DATE") == FieldType::Date);
+//   QVERIFY(FieldTypeName::typeFromName("TIME") == FieldType::Time);
+//   QVERIFY(FieldTypeName::typeFromName("DATETIME") == FieldType::DateTime);
+//   QVERIFY(FieldTypeName::typeFromName("abcd") == FieldType::UnknownType);
+// }
+
+// void SchemaTest::fiedTypeListModelTest()
+// {
+//   using Mdt::Sql::Schema::FieldType;
+//   using Mdt::Sql::Schema::FieldTypeList;
+//   using Mdt::Sql::Schema::FieldTypeListModel;
+// 
+//   FieldTypeListModel model;
+//   QModelIndex index;
+//   FieldTypeList list;
+//   QComboBox cb;
+// 
+//   /*
+//    * Setup combobox
+//    */
+//   cb.setModel(&model);
+//   /*
+//    * Initial state
+//    */
+//   QCOMPARE(model.rowCount(), 0);
+//   /*
+//    * Populate model
+//    */
+//   list.clear();
+//   list.append(FieldType::Boolean);
+//   list.append(FieldType::Integer);
+//   list.append(FieldType::Varchar);
+//   model.setFieldTypeList(list);
+//   /*
+//    * Check
+//    */
+//   QCOMPARE(model.rowCount(), 3);
+//   // Row 0
+//   index = model.index(0, 0);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index), QVariant("BOOLEAN"));
+//   QVERIFY(model.fieldType(0) == FieldType::Boolean);
+//   // Row 1
+//   index = model.index(1, 0);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index), QVariant("INTEGER"));
+//   QVERIFY(model.fieldType(1) == FieldType::Integer);
+//   // Row 2
+//   index = model.index(2, 0);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(model.data(index), QVariant("VARCHAR"));
+//   QVERIFY(model.fieldType(2) == FieldType::Varchar);
+//   // Get field type from invalid row
+//   QVERIFY(model.fieldType(-1) == FieldType::UnknownType);
+//   QVERIFY(model.fieldType(3) == FieldType::UnknownType);
+//   QVERIFY(model.fieldType(5) == FieldType::UnknownType);
+//   /*
+//    * Play
+//    */
+// //   cb.show();
+// //   while(cb.isVisible()){
+// //     QTest::qWait(500);
+// //   }
+// }
 
 void SchemaTest::charsetTest()
 {
@@ -287,131 +287,131 @@ void SchemaTest::collationTest()
   QVERIFY(collation.isNull());
 }
 
-void SchemaTest::fieldTest()
-{
-  using Mdt::Sql::Schema::Collation;
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::Field;
+// void SchemaTest::fieldTest()
+// {
+//   using Mdt::Sql::Schema::Collation;
+//   using Mdt::Sql::Schema::FieldType;
+//   using Mdt::Sql::Schema::Field;
+// 
+//   Field field;
+// 
+//   /*
+//    * Initial state
+//    */
+//   QVERIFY(field.type() == FieldType::UnknownType);
+//   QVERIFY(!field.isRequired());
+//   QVERIFY(!field.isUnique());
+//   QCOMPARE(field.length(), -1);
+//   QVERIFY(field.isNull());
+//   /*
+//    * Simple set/get check
+//    */
+//   // Setup a required and unique integer field
+//   field.setType(FieldType::Integer);
+//   QVERIFY(field.isNull());
+//   field.setName("Id_PK");
+//   QVERIFY(!field.isNull());
+//   field.setRequired(true);
+//   field.setUnique(true);
+//   // Check
+//   QVERIFY(field.type() == FieldType::Integer);
+//   QCOMPARE(field.name(), QString("Id_PK"));
+//   QVERIFY(field.isRequired());
+//   QVERIFY(field.isUnique());
+//   /*
+//    * Clear
+//    */
+//   field.clear();
+//   QVERIFY(field.type() == FieldType::UnknownType);
+//   QVERIFY(field.name().isEmpty());
+//   QVERIFY(!field.isRequired());
+//   QVERIFY(!field.isUnique());
+//   QVERIFY(field.defaultValue().isNull());
+//   QCOMPARE(field.length(), -1);
+//   QVERIFY(field.collation().isNull());
+//   QVERIFY(field.isNull());
+//   /*
+//    * Simple set/get check
+//    */
+//   // Setup a text field
+//   field.setName("Name");
+//   QVERIFY(field.isNull());
+//   field.setType(FieldType::Varchar);
+//   QVERIFY(!field.isNull());
+//   field.setLength(50);
+//   field.setDefaultValue("Empty");
+//   field.setCaseSensitive(false);
+//   // Check
+//   QVERIFY(field.type() == FieldType::Varchar);
+//   QCOMPARE(field.name(), QString("Name"));
+//   QVERIFY(!field.isRequired());
+//   QCOMPARE(field.length(), 50);
+//   QCOMPARE(field.defaultValue(), QVariant("Empty"));
+//   QVERIFY(!field.collation().isCaseSensitive());
+//   /*
+//    * Clear
+//    */
+//   field.clear();
+//   QVERIFY(field.type() == FieldType::UnknownType);
+//   QVERIFY(field.name().isEmpty());
+//   QVERIFY(!field.isRequired());
+//   QVERIFY(!field.isUnique());
+//   QVERIFY(field.defaultValue().isNull());
+//   QCOMPARE(field.length(), -1);
+//   QVERIFY(field.collation().isNull());
+//   QVERIFY(field.isNull());
+// }
 
-  Field field;
-
-  /*
-   * Initial state
-   */
-  QVERIFY(field.type() == FieldType::UnknownType);
-  QVERIFY(!field.isRequired());
-  QVERIFY(!field.isUnique());
-  QCOMPARE(field.length(), -1);
-  QVERIFY(field.isNull());
-  /*
-   * Simple set/get check
-   */
-  // Setup a required and unique integer field
-  field.setType(FieldType::Integer);
-  QVERIFY(field.isNull());
-  field.setName("Id_PK");
-  QVERIFY(!field.isNull());
-  field.setRequired(true);
-  field.setUnique(true);
-  // Check
-  QVERIFY(field.type() == FieldType::Integer);
-  QCOMPARE(field.name(), QString("Id_PK"));
-  QVERIFY(field.isRequired());
-  QVERIFY(field.isUnique());
-  /*
-   * Clear
-   */
-  field.clear();
-  QVERIFY(field.type() == FieldType::UnknownType);
-  QVERIFY(field.name().isEmpty());
-  QVERIFY(!field.isRequired());
-  QVERIFY(!field.isUnique());
-  QVERIFY(field.defaultValue().isNull());
-  QCOMPARE(field.length(), -1);
-  QVERIFY(field.collation().isNull());
-  QVERIFY(field.isNull());
-  /*
-   * Simple set/get check
-   */
-  // Setup a text field
-  field.setName("Name");
-  QVERIFY(field.isNull());
-  field.setType(FieldType::Varchar);
-  QVERIFY(!field.isNull());
-  field.setLength(50);
-  field.setDefaultValue("Empty");
-  field.setCaseSensitive(false);
-  // Check
-  QVERIFY(field.type() == FieldType::Varchar);
-  QCOMPARE(field.name(), QString("Name"));
-  QVERIFY(!field.isRequired());
-  QCOMPARE(field.length(), 50);
-  QCOMPARE(field.defaultValue(), QVariant("Empty"));
-  QVERIFY(!field.collation().isCaseSensitive());
-  /*
-   * Clear
-   */
-  field.clear();
-  QVERIFY(field.type() == FieldType::UnknownType);
-  QVERIFY(field.name().isEmpty());
-  QVERIFY(!field.isRequired());
-  QVERIFY(!field.isUnique());
-  QVERIFY(field.defaultValue().isNull());
-  QCOMPARE(field.length(), -1);
-  QVERIFY(field.collation().isNull());
-  QVERIFY(field.isNull());
-}
-
-void SchemaTest::fieldListTest()
-{
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::Field;
-  using Mdt::Sql::Schema::FieldList;
-
-  Field field;
-  FieldList list;
-
-  /*
-   * Initial state
-   */
-  QCOMPARE(list.size(), 0);
-  QVERIFY(list.isEmpty());
-  /*
-   * Add one element
-   */
-  field.setName("Afield");
-  list.append(field);
-  QCOMPARE(list.size(), 1);
-  QVERIFY(!list.isEmpty());
-  QCOMPARE(list.at(0).name(), QString("Afield"));
-  for(const auto & f : list){
-    QCOMPARE(f.name(), QString("Afield"));
-  }
-  /*
-   * Check index and contains methods.
-   * Note: we use case insensitive search
-   */
-  QCOMPARE(list.fieldIndex("Afield"), 0);
-  QCOMPARE(list.fieldIndex("AFIeld"), 0);
-  QCOMPARE(list.fieldIndex(""), -1);
-  QCOMPARE(list.fieldIndex("AAA"), -1);
-  QVERIFY(list.contains("Afield"));
-  QVERIFY(list.contains("AFIeld"));
-  QVERIFY(!list.contains(""));
-  QVERIFY(!list.contains("AAA"));
-  /*
-   * Update element
-   */
-  QCOMPARE(list.at(0).name(), QString("Afield"));
-  list[0].setName("OtherFieldName");
-  QCOMPARE(list.at(0).name(), QString("OtherFieldName"));
-  /*
-   * Clear
-   */
-  list.clear();
-  QCOMPARE(list.size(), 0);
-  QVERIFY(list.isEmpty());
-}
+// void SchemaTest::fieldListTest()
+// {
+//   using Mdt::Sql::Schema::FieldType;
+//   using Mdt::Sql::Schema::Field;
+//   using Mdt::Sql::Schema::FieldList;
+// 
+//   Field field;
+//   FieldList list;
+// 
+//   /*
+//    * Initial state
+//    */
+//   QCOMPARE(list.size(), 0);
+//   QVERIFY(list.isEmpty());
+//   /*
+//    * Add one element
+//    */
+//   field.setName("Afield");
+//   list.append(field);
+//   QCOMPARE(list.size(), 1);
+//   QVERIFY(!list.isEmpty());
+//   QCOMPARE(list.at(0).name(), QString("Afield"));
+//   for(const auto & f : list){
+//     QCOMPARE(f.name(), QString("Afield"));
+//   }
+//   /*
+//    * Check index and contains methods.
+//    * Note: we use case insensitive search
+//    */
+//   QCOMPARE(list.fieldIndex("Afield"), 0);
+//   QCOMPARE(list.fieldIndex("AFIeld"), 0);
+//   QCOMPARE(list.fieldIndex(""), -1);
+//   QCOMPARE(list.fieldIndex("AAA"), -1);
+//   QVERIFY(list.contains("Afield"));
+//   QVERIFY(list.contains("AFIeld"));
+//   QVERIFY(!list.contains(""));
+//   QVERIFY(!list.contains("AAA"));
+//   /*
+//    * Update element
+//    */
+//   QCOMPARE(list.at(0).name(), QString("Afield"));
+//   list[0].setName("OtherFieldName");
+//   QCOMPARE(list.at(0).name(), QString("OtherFieldName"));
+//   /*
+//    * Clear
+//    */
+//   list.clear();
+//   QCOMPARE(list.size(), 0);
+//   QVERIFY(list.isEmpty());
+// }
 
 void SchemaTest::indexTest()
 {
@@ -424,6 +424,7 @@ void SchemaTest::indexTest()
    * Setup a field
    */
   Field Id_A;
+  Id_A.setType(FieldType::Integer);
   Id_A.setName("Id_A");
   /*
    * Setup a table
