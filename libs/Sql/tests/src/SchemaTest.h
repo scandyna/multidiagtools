@@ -33,16 +33,9 @@ class SchemaTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-//   void fieldTypeListTest();
-//   void fieldTypeNameTest();
-//   void fiedTypeListModelTest();
-
   void charsetTest();
   void localeTest();
   void collationTest();
-
-//   void fieldTest();
-//   void fieldListTest();
 
   void indexTest();
   void indexListTest();
@@ -50,9 +43,6 @@ class SchemaTest : public QObject
 
   void parentTableFieldNameTest();
   void childTableFieldNameTest();
-
-  /// \todo explore for better in Table
-  void varArgSandbox();
 
   void foreignKeyActionTest();
   void foreignKeyTest();
