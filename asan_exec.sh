@@ -11,6 +11,12 @@ suppression_file="$root_directory/asan_suppressions.txt"
 # 1 means enabled
 leaks_detection="1"
 
+print_help()
+{
+  echo "For interactive usage: asan_exec.sh executable"
+  echo "Or, directly tell to enable or disable leak detections: asan_exec.sh --detect_leaks=[1|0] executable"
+}
+
 # Ask the user if he wanst to enable or disable leaks detection
 ask_on_off()
 {
@@ -25,12 +31,6 @@ ask_on_off()
   else
     leaks_detection="0"
   fi
-}
-
-print_help()
-{
-  echo "For interactive usage: asan_exec.sh executable"
-  echo "Or, directly tell to enable or disable leak detections: asan_exec.sh --detect_leaks=[1|0] executable"
 }
 
 parse_detect_leaks_option()
@@ -48,6 +48,14 @@ parse_detect_leaks_option()
   fi
 }
 
+setup_variables()
+{
+  export ASAN_OPTIONS="detect_leaks=$leaks_detection"
+  export LSAN_OPTIONS="suppressions=$suppression_file"
+}
+
+# Main
+
 if (( $# == 0 ))
 then
   echo "Error: expected a command to execute - Abort"
@@ -58,10 +66,14 @@ fi
 if (( $# == 1 ))
 then
   ask_on_off
+  setup_variables
+  exec "${@:1}"
 else
   parse_detect_leaks_option "$1"
+  setup_variables
+  exec "${@:2}"
 fi
 
-export ASAN_OPTIONS="detect_leaks=$leaks_detection"
-export LSAN_OPTIONS="suppressions=$suppression_file"
-exec "${@:2}"
+
+
+
