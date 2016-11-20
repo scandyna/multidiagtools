@@ -115,9 +115,47 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Add a foreign key
      *
+     * \param field The field of this table that will be part of the foreign key
+     * \param foreignTable The table to which the foreign key refers
+     * \param foreignField The field, in foreignTable, to which the foreign key refers
+     * \param settings The settings for the foreign key
+     *
+     * If field does not allready exist in this table, it will also be added.
+     *
+     * \pre field must not be null
+     * \pre foreignTable's name must not be empty
+     * \pre foreignField's name must not be empty
+     */
+    void addForeignKey(const Field & field, const ForeignTable & foreignTable, const ForeignField & foreignField, const ForeignKeySettings & settings)
+    {
+      mTable.addForeignKey(field, foreignTable, foreignField, settings);
+    }
+
+    /*! \brief Add a foreign key
+     *
+     * \param fieldList A list of fields of this table that will be part of the foreign key
+     * \param foreignTable The table to which the foreign key refers
+     * \param foreignFieldList A list of fields, in foreignTable, to which the foreign key refers
+     * \param settings The settings for the foreign key
+     *
+     * Each field in fieldList that does not allready exist in this table will also be added.
+     *
+     * \pre fieldList must not contain any null field
+     * \pre foreignTable's name must not be empty
+     * \pre foreignFieldList must not contains any field with a empty field name
+     * \pre fieldList and foreignFieldList must be of same size and at least contain 1 field
+     */
+    void addForeignKey(const FieldList & fieldList, const ForeignTable & foreignTable, const ForeignFieldList & foreignFieldList, const ForeignKeySettings & settings)
+    {
+      mTable.addForeignKey(fieldList, foreignTable, foreignFieldList, settings);
+    }
+
+    /*! \brief Add a foreign key
+     *
      * \note Child table name defined in fk is ignored. This table name is also considered as child table.
      * \pre Each field of child table in fk must exist in this table
      */
+    [[deprecated]]
     void addForeignKey(const ForeignKey & fk)
     {
       mTable.addForeignKey(fk);

@@ -28,6 +28,7 @@
 #include "Mdt/Sql/SelectFieldList.h"
 #include "Mdt/Sql/SelectTable.h"
 #include "Mdt/Sql/Schema/Table.h"
+#include "Mdt/Sql/Schema/ForeignTable.h"
 
 namespace Sql = Mdt::Sql;
 
@@ -145,14 +146,14 @@ void SimpleTypesTest::selectTableForeignKeyTest()
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
   using Sql::Schema::ForeignKey;
-  using Sql::Schema::ParentTableFieldName;
-  using Sql::Schema::ChildTableFieldName;
+  using Sql::Schema::ForeignKeySettings;
+  using Sql::Schema::ForeignTable;
+  using Sql::Schema::ForeignField;
 
   ForeignKey fk;
   /*
    * Check with Schema::Table
    */
-  // Setup common fields
   // Setup parent table
   Table Parent;
   Parent.setTableName("Parent_tbl");
@@ -164,11 +165,7 @@ void SimpleTypesTest::selectTableForeignKeyTest()
   ParentId.setType(FieldType::Integer);
   ParentId.setName("Parent_Id_FK");
   Child.setAutoIncrementPrimaryKey("Id_PK");
-  Child.addField(ParentId);
-  ForeignKey fkParentId;
-  fkParentId.setParentTable(Parent);
-  fkParentId.addKeyFields( ParentTableFieldName("Id_PK"), ChildTableFieldName(ParentId) );
-  Child.addForeignKey(fkParentId);
+  Child.addForeignKey(ParentId, ForeignTable(Parent), ForeignField("Id_PK"), ForeignKeySettings());
   // Setup parent select table and check
   SelectTable P(Parent, "P");
   QCOMPARE(P.aliasOrTableName(), QString("P"));

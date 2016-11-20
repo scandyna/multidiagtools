@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "Address_tbl.h"
 #include "Client_tbl.h"
+#include "Mdt/Sql/Schema/ForeignTable.h"
 
 namespace Sql = Mdt::Sql;
 
@@ -32,11 +33,17 @@ Address_tbl::Address_tbl()
 {
   using Sql::Schema::ForeignKey;
   using Sql::Schema::ForeignKeyAction;
-  using Sql::Schema::ParentTableFieldName;
-  using Sql::Schema::ChildTableFieldName;
+  using Sql::Schema::ForeignTable;
+  using Sql::Schema::ForeignField;
+  using Sql::Schema::ForeignKeySettings;
 
   Client_tbl client_tbl;
 
+  // Common foreign key settings
+  ForeignKeySettings fkSettings;
+  fkSettings.setIndexed(true);
+  fkSettings.setOnDeleteAction(ForeignKeyAction::Restrict);
+  fkSettings.setOnUpdateAction(ForeignKeyAction::Cascade);
   // Client_Id_FK
   Field Client_Id_FK;
   Client_Id_FK.setName("Client_Id_FK");
@@ -57,32 +64,30 @@ Address_tbl::Address_tbl()
   FieldAB.setName("FieldAB");
   FieldAB.setType(FieldType::Varchar);
   FieldAB.setLength(50);
-  // Fk_Client_Id_FK
-  ForeignKey Fk_Client_Id_FK;
-  Fk_Client_Id_FK.setForeignTable(client_tbl);
-  Fk_Client_Id_FK.setOnDeleteAction(ForeignKeyAction::Restrict);
-  Fk_Client_Id_FK.setOnUpdateAction(ForeignKeyAction::Cascade);
-  Fk_Client_Id_FK.setIndexed(true);
-  Fk_Client_Id_FK.addKeyFields(ParentTableFieldName(client_tbl.Id_PK()), ChildTableFieldName(Client_Id_FK));
   // Setup table
   setTableName("Address_tbl");
   setAutoIncrementPrimaryKey("Id_PK");
-  addField(Client_Id_FK);
+  addForeignKey(Client_Id_FK, ForeignTable(client_tbl), ForeignField(client_tbl.Id_PK()), fkSettings);
   addField(Street);
   addField(FieldAA);
   addField(FieldAB);
-  addForeignKey(Fk_Client_Id_FK);
 }
 
 Address2_tbl::Address2_tbl()
 {
   using Sql::Schema::ForeignKey;
   using Sql::Schema::ForeignKeyAction;
-  using Sql::Schema::ParentTableFieldName;
-  using Sql::Schema::ChildTableFieldName;
+  using Sql::Schema::ForeignTable;
+  using Sql::Schema::ForeignField;
+  using Sql::Schema::ForeignKeySettings;
 
   Client2_tbl client2_tbl;
 
+  // Common foreign key settings
+  ForeignKeySettings fkSettings;
+  fkSettings.setIndexed(true);
+  fkSettings.setOnDeleteAction(ForeignKeyAction::Restrict);
+  fkSettings.setOnUpdateAction(ForeignKeyAction::Cascade);
   // Client_Id_FK
   Field Client_Id_FK;
   Client_Id_FK.setName("Client_Id_FK");
@@ -103,21 +108,13 @@ Address2_tbl::Address2_tbl()
   FieldAB.setName("FieldAB");
   FieldAB.setType(FieldType::Varchar);
   FieldAB.setLength(50);
-  // Fk_Client_Id_FK
-  ForeignKey Fk_Client_Id_FK;
-  Fk_Client_Id_FK.setParentTable(client2_tbl);
-  Fk_Client_Id_FK.setOnDeleteAction(ForeignKeyAction::Restrict);
-  Fk_Client_Id_FK.setOnUpdateAction(ForeignKeyAction::Cascade);
-  Fk_Client_Id_FK.setIndexed(true);
-  Fk_Client_Id_FK.addKeyFields(ParentTableFieldName(client2_tbl.Id_PK()), ChildTableFieldName(Client_Id_FK));
   // Setup table
   setTableName("Address2_tbl");
   setAutoIncrementPrimaryKey("Id_PK");
-  addField(Client_Id_FK);
+  addForeignKey(Client_Id_FK, ForeignTable(client2_tbl), ForeignField(client2_tbl.Id_PK()), fkSettings);
   addField(Street);
   addField(FieldAA);
   addField(FieldAB);
-  addForeignKey(Fk_Client_Id_FK);
 }
 
 } // namespace Schema{
