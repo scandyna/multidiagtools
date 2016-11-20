@@ -36,25 +36,34 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    public:
 
     /*! \brief Construct with a table name
+     *
+     * \pre tableName must not be empty
      */
     explicit ForeignTable(const QString & tableName)
      : mTableName(tableName)
     {
+      Q_ASSERT(!mTableName.isEmpty());
     }
 
     /*! \brief Construct on base of a table
+     *
+     * \pre table must have a non empty table name
      */
     explicit ForeignTable(const Table & table)
      : mTableName(table.tableName())
     {
+      Q_ASSERT(!mTableName.isEmpty());
     }
 
     /*! \brief Construct on base of a table
+     *
+     * \pre table must have a non empty table name
      */
     template<typename T>
     explicit ForeignTable(const TableTemplate<T> & table)
      : mTableName(table.tableName())
     {
+      Q_ASSERT(!mTableName.isEmpty());
     }
 
     /*! \brief Get table name

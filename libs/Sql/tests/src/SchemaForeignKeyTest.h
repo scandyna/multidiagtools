@@ -47,6 +47,11 @@ class SchemaForeignKeyTest : public QObject
   void foreignKeySetFieldsTest();
   void foreignKeyIsNullTest();
   void foreignKeyGetIndexTest();
+
+  void foreignKeyListAddTest();
+  void foreignKeyListUpdateTableTest();
+  void foreignKeyListGettersTest();
+  void foreignKeyListIteratorsTest();
 };
 
 #endif // #ifndef MDT_SQL_SCHEMA_FOREIGN_KEY_TEST_H

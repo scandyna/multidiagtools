@@ -242,7 +242,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     QString tableName() const
     {
-      return pvTableName;
+      return mTableName;
     }
 
     /*! \brief Set a auto increment primary key
@@ -310,6 +310,12 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      * \param foreignTable The table to which the foreign key refers
      * \param foreignField The field, in foreignTable, to which the foreign key refers
      * \param settings The settings for the foreign key
+     *
+     * If field does not allready exist in this table, it will also be added.
+     *
+     * \pre field must not be null
+     * \pre foreignTable's name must not be empty
+     * \pre foreignField's name must not be empty
      */
     void addForeignKey(const Field & field, const ForeignTable & foreignTable, const ForeignField & foreignField, const ForeignKeySettings & settings);
 
@@ -319,10 +325,19 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      * \param foreignTable The table to which the foreign key refers
      * \param foreignFieldList A list of fields, in foreignTable, to which the foreign key refers
      * \param settings The settings for the foreign key
+     *
+     * Each field in fieldList that does not allready exist in this table will also be added.
+     *
+     * \pre fieldList must not contain any null field
+     * \pre foreignTable's name must not be empty
+     * \pre foreignFieldList must not contains any field with a empty field name
+     * \pre fieldList and foreignFieldList must be of same size and at least contain 1 field
      */
-    void addForeignKey(const FieldList & fieldList, const ForeignTable & foreignTable, const ForeignFieldList & ForeignFieldList, const ForeignKeySettings & settings);
+    void addForeignKey(const FieldList & fieldList, const ForeignTable & foreignTable, const ForeignFieldList & foreignFieldList, const ForeignKeySettings & settings);
 
     /*! \brief Add a foreign key
+     *
+     * \todo UPDATE... or better: remove !
      *
      * \note Child table name defined in fk is ignored. This table name is also considered as child table.
      * \note If fk requests to create a index (i.e. Foreign::createChildIndex() is true),
@@ -351,7 +366,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     ForeignKey foreignKeyReferencing(const Table & table) const
     {
-      return foreignKeyReferencing(table.pvTableName);
+      return foreignKeyReferencing(table.mTableName);
     }
 
     /*! \brief Get foreign key that references table designed by tableName
@@ -365,7 +380,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     ForeignKeyList foreignKeyList() const
     {
-      return pvForeignKeyList;
+      return mForeignKeyList;
     }
 
     /*! \brief Add a index
@@ -528,11 +543,11 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     int mPrimaryKeyFieldIndex; // Used if pvPrimaryKey is AutoIncrementPrimaryKey or SingleFieldPrimaryKey
     bool pvIsTemporary;
-    QString pvTableName;
+    QString mTableName;
     PrimaryKeyContainer mPrimaryKey;
     FieldList mFieldList;
     std::vector<int> mPrimaryKeyFieldIndexList;  // Used by isFieldPartOfPrimaryKey() for PrimaryKey (multi-column)
-    ForeignKeyList pvForeignKeyList;
+    ForeignKeyList mForeignKeyList;
     IndexList pvIndexList;
   };
 

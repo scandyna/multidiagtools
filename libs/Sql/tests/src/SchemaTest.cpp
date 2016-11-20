@@ -462,196 +462,196 @@ void SchemaTest::childTableFieldNameTest()
 //   QVERIFY(ForeignKey::actionFromString("cascade") == ForeignKey::Cascade);
 // }
 
-void SchemaTest::foreignKeyTest()
-{
-  using Mdt::Sql::Schema::ForeignKey;
-  using Mdt::Sql::Schema::Table;
-  using Mdt::Sql::Schema::Field;
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::ParentTableFieldName;
-  using Mdt::Sql::Schema::ChildTableFieldName;
-  using Mdt::Sql::Schema::Index;
+// void SchemaTest::foreignKeyTest()
+// {
+//   using Mdt::Sql::Schema::ForeignKey;
+//   using Mdt::Sql::Schema::Table;
+//   using Mdt::Sql::Schema::Field;
+//   using Mdt::Sql::Schema::FieldType;
+//   using Mdt::Sql::Schema::ParentTableFieldName;
+//   using Mdt::Sql::Schema::ChildTableFieldName;
+//   using Mdt::Sql::Schema::Index;
+// 
+//   Index index;
+//   Schema::Client_tbl client_tbl;
+//   Schema::Address_tbl address_tbl;
+//   /*
+//    * Setup fields
+//    */
+//   // Connector_Id_FK
+//   Field Connector_Id_FK;
+//   Connector_Id_FK.setName("Connector_Id_FK");
+//   Connector_Id_FK.setType(FieldType::Integer);
+//   Connector_Id_FK.setRequired(true);
+//   // Client_Id_FK
+//   Field Client_Id_FK;
+//   Client_Id_FK.setName("Client_Id_FK");
+//   Client_Id_FK.setType(FieldType::Integer);
+//   Client_Id_FK.setRequired(true);
+//   /*
+//    * Init Connector_tbl
+//    */
+//   Table Connector_tbl;
+//   Connector_tbl.setTableName("Connector_tbl");
+//   Connector_tbl.setAutoIncrementPrimaryKey("Id_PK");
+//   /*
+//    * Init Contact_tbl
+//    */
+//   Table Contact_tbl;
+//   Contact_tbl.setTableName("Contact_tbl");
+//   Contact_tbl.setAutoIncrementPrimaryKey("Id_PK");
+//   /*
+//    * Initial state
+//    */
+//   ForeignKey fk;
+// //   QVERIFY(fk.onDeleteAction() == ForeignKey::NoAction);
+// //   QVERIFY(fk.onUpdateAction() == ForeignKey::NoAction);
+// //   QVERIFY(!fk.createChildIndex());
+//   QVERIFY(fk.isNull());
+//   /*
+//    * Set/get
+//    */
+//   // Set
+//   fk.setParentTable(Connector_tbl);
+//   QVERIFY(fk.isNull());
+//   fk.setChildTable(Contact_tbl);
+//   QVERIFY(fk.isNull());
+//   fk.addKeyFields(ParentTableFieldName("Id_PK"), ChildTableFieldName(Connector_Id_FK));
+//   QVERIFY(!fk.isNull());
+// //   fk.setOnDeleteAction(ForeignKey::Restrict);
+// //   fk.setOnUpdateAction(ForeignKey::Cascade);
+// //   fk.setCreateChildIndex(true);
+//   // Check
+//   QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
+//   QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
+//   QCOMPARE(fk.parentTableFieldNameList().size(), 1);
+//   QCOMPARE(fk.parentTableFieldNameList().at(0), QString("Id_PK"));
+//   QCOMPARE(fk.childTableFieldNameList().size(), 1);
+//   QCOMPARE(fk.childTableFieldNameList().at(0), QString("Connector_Id_FK"));
+// //   QVERIFY(fk.onDeleteAction() == ForeignKey::Restrict);
+// //   QVERIFY(fk.onUpdateAction() == ForeignKey::Cascade);
+// //   QVERIFY(fk.createChildIndex());
+//   // Check index for child table
+//   index = fk.getChildTableIndex();
+//   QCOMPARE(index.tableName(), QString("Contact_tbl"));
+//   QCOMPARE(index.fieldCount(), 1);
+//   QCOMPARE(index.fieldName(0), QString("Connector_Id_FK"));
+//   QCOMPARE(index.name(), QString("Contact_tbl_Connector_Id_FK_index"));
+//   /*
+//    * Clear
+//    */
+//   fk.clear();
+//   QVERIFY(fk.parentTableName().isEmpty());
+//   QVERIFY(fk.childTableName().isEmpty());
+//   QCOMPARE(fk.parentTableFieldNameList().size(), 0);
+//   QCOMPARE(fk.childTableFieldNameList().size(), 0);
+// //   QVERIFY(fk.onDeleteAction() == ForeignKey::NoAction);
+// //   QVERIFY(fk.onUpdateAction() == ForeignKey::NoAction);
+// //   QVERIFY(!fk.createChildIndex());
+//   QVERIFY(fk.isNull());
+//   /*
+//    * Setup fk for Address_tbl
+//    */
+//   fk.setParentTable(client_tbl);
+//   fk.setChildTable(address_tbl);
+//   fk.addKeyFields(ParentTableFieldName(client_tbl.Id_PK()), ChildTableFieldName(Client_Id_FK));
+//   // Check
+//   QCOMPARE(fk.parentTableName(), QString("Client_tbl"));
+//   QCOMPARE(fk.childTableName(), QString("Address_tbl"));
+//   QCOMPARE(fk.parentTableFieldNameList().size(), 1);
+//   QCOMPARE(fk.parentTableFieldNameList().at(0), QString("Id_PK"));
+//   QCOMPARE(fk.childTableFieldNameList().size(), 1);
+//   QCOMPARE(fk.childTableFieldNameList().at(0), QString("Client_Id_FK"));
+//   /*
+//    * Clear
+//    */
+//   fk.clear();
+//   QVERIFY(fk.parentTableName().isEmpty());
+//   QVERIFY(fk.childTableName().isEmpty());
+//   QCOMPARE(fk.parentTableFieldNameList().size(), 0);
+//   QCOMPARE(fk.childTableFieldNameList().size(), 0);
+// //   QVERIFY(fk.onDeleteAction() == ForeignKey::NoAction);
+// //   QVERIFY(fk.onUpdateAction() == ForeignKey::NoAction);
+// //   QVERIFY(!fk.createChildIndex());
+//   QVERIFY(fk.isNull());
+// }
 
-  Index index;
-  Schema::Client_tbl client_tbl;
-  Schema::Address_tbl address_tbl;
-  /*
-   * Setup fields
-   */
-  // Connector_Id_FK
-  Field Connector_Id_FK;
-  Connector_Id_FK.setName("Connector_Id_FK");
-  Connector_Id_FK.setType(FieldType::Integer);
-  Connector_Id_FK.setRequired(true);
-  // Client_Id_FK
-  Field Client_Id_FK;
-  Client_Id_FK.setName("Client_Id_FK");
-  Client_Id_FK.setType(FieldType::Integer);
-  Client_Id_FK.setRequired(true);
-  /*
-   * Init Connector_tbl
-   */
-  Table Connector_tbl;
-  Connector_tbl.setTableName("Connector_tbl");
-  Connector_tbl.setAutoIncrementPrimaryKey("Id_PK");
-  /*
-   * Init Contact_tbl
-   */
-  Table Contact_tbl;
-  Contact_tbl.setTableName("Contact_tbl");
-  Contact_tbl.setAutoIncrementPrimaryKey("Id_PK");
-  /*
-   * Initial state
-   */
-  ForeignKey fk;
-//   QVERIFY(fk.onDeleteAction() == ForeignKey::NoAction);
-//   QVERIFY(fk.onUpdateAction() == ForeignKey::NoAction);
-//   QVERIFY(!fk.createChildIndex());
-  QVERIFY(fk.isNull());
-  /*
-   * Set/get
-   */
-  // Set
-  fk.setParentTable(Connector_tbl);
-  QVERIFY(fk.isNull());
-  fk.setChildTable(Contact_tbl);
-  QVERIFY(fk.isNull());
-  fk.addKeyFields(ParentTableFieldName("Id_PK"), ChildTableFieldName(Connector_Id_FK));
-  QVERIFY(!fk.isNull());
-//   fk.setOnDeleteAction(ForeignKey::Restrict);
-//   fk.setOnUpdateAction(ForeignKey::Cascade);
-//   fk.setCreateChildIndex(true);
-  // Check
-  QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
-  QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
-  QCOMPARE(fk.parentTableFieldNameList().size(), 1);
-  QCOMPARE(fk.parentTableFieldNameList().at(0), QString("Id_PK"));
-  QCOMPARE(fk.childTableFieldNameList().size(), 1);
-  QCOMPARE(fk.childTableFieldNameList().at(0), QString("Connector_Id_FK"));
-//   QVERIFY(fk.onDeleteAction() == ForeignKey::Restrict);
-//   QVERIFY(fk.onUpdateAction() == ForeignKey::Cascade);
-//   QVERIFY(fk.createChildIndex());
-  // Check index for child table
-  index = fk.getChildTableIndex();
-  QCOMPARE(index.tableName(), QString("Contact_tbl"));
-  QCOMPARE(index.fieldCount(), 1);
-  QCOMPARE(index.fieldName(0), QString("Connector_Id_FK"));
-  QCOMPARE(index.name(), QString("Contact_tbl_Connector_Id_FK_index"));
-  /*
-   * Clear
-   */
-  fk.clear();
-  QVERIFY(fk.parentTableName().isEmpty());
-  QVERIFY(fk.childTableName().isEmpty());
-  QCOMPARE(fk.parentTableFieldNameList().size(), 0);
-  QCOMPARE(fk.childTableFieldNameList().size(), 0);
-//   QVERIFY(fk.onDeleteAction() == ForeignKey::NoAction);
-//   QVERIFY(fk.onUpdateAction() == ForeignKey::NoAction);
-//   QVERIFY(!fk.createChildIndex());
-  QVERIFY(fk.isNull());
-  /*
-   * Setup fk for Address_tbl
-   */
-  fk.setParentTable(client_tbl);
-  fk.setChildTable(address_tbl);
-  fk.addKeyFields(ParentTableFieldName(client_tbl.Id_PK()), ChildTableFieldName(Client_Id_FK));
-  // Check
-  QCOMPARE(fk.parentTableName(), QString("Client_tbl"));
-  QCOMPARE(fk.childTableName(), QString("Address_tbl"));
-  QCOMPARE(fk.parentTableFieldNameList().size(), 1);
-  QCOMPARE(fk.parentTableFieldNameList().at(0), QString("Id_PK"));
-  QCOMPARE(fk.childTableFieldNameList().size(), 1);
-  QCOMPARE(fk.childTableFieldNameList().at(0), QString("Client_Id_FK"));
-  /*
-   * Clear
-   */
-  fk.clear();
-  QVERIFY(fk.parentTableName().isEmpty());
-  QVERIFY(fk.childTableName().isEmpty());
-  QCOMPARE(fk.parentTableFieldNameList().size(), 0);
-  QCOMPARE(fk.childTableFieldNameList().size(), 0);
-//   QVERIFY(fk.onDeleteAction() == ForeignKey::NoAction);
-//   QVERIFY(fk.onUpdateAction() == ForeignKey::NoAction);
-//   QVERIFY(!fk.createChildIndex());
-  QVERIFY(fk.isNull());
-}
-
-void SchemaTest::foreignKeyListTest()
-{
-  using Mdt::Sql::Schema::ForeignKey;
-  using Mdt::Sql::Schema::ForeignKeyList;
-  using Mdt::Sql::Schema::Table;
-  using Mdt::Sql::Schema::Field;
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::ParentTableFieldName;
-  using Mdt::Sql::Schema::ChildTableFieldName;
-
-  ForeignKey fk;
-  /*
-   * Setup fields
-   */
-  // Connector_Id_FK
-  Field Connector_Id_FK;
-  Connector_Id_FK.setName("Connector_Id_FK");
-  Connector_Id_FK.setType(FieldType::Integer);
-  Connector_Id_FK.setRequired(true);
-  /*
-   * Setup Connector_tbl
-   */
-  Table Connector_tbl;
-  Connector_tbl.setTableName("Connector_tbl");
-  Connector_tbl.setAutoIncrementPrimaryKey("Id_PK");
-  /*
-   * Init Contact_tbl
-   */
-  Table Contact_tbl;
-  Contact_tbl.setTableName("Contact_tbl");
-  Contact_tbl.setAutoIncrementPrimaryKey("Id_PK");
-  /*
-   * Setup fk_Connector_Id_FK
-   */
-  ForeignKey fk_Connector_Id_FK;
-  fk_Connector_Id_FK.setParentTable(Connector_tbl);
-  fk_Connector_Id_FK.setChildTable(Contact_tbl);
-  fk_Connector_Id_FK.addKeyFields(ParentTableFieldName("Id_PK"), ChildTableFieldName(Connector_Id_FK));
-  QVERIFY(!fk_Connector_Id_FK.isNull());
-  /*
-   * Initial state
-   */
-  ForeignKeyList list;
-  QCOMPARE(list.size(), 0);
-  QVERIFY(list.isEmpty());
-  /*
-   * Add 1 element
-   */
-  list.append(fk_Connector_Id_FK);
-  QCOMPARE(list.size(), 1);
-  QVERIFY(!list.isEmpty());
-  QCOMPARE(list.at(0).parentTableName(), QString("Connector_tbl"));
-  QCOMPARE(list.at(0).childTableName(), QString("Contact_tbl"));
-  for(const auto & fk : list){
-    QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
-    QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
-  }
-  fk = list.foreignKeyReferencing("Contact_tbl");
-  QVERIFY(fk.isNull());
-  fk = list.foreignKeyReferencing("Connector_tbl");
-  QVERIFY(!fk.isNull());
-  QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
-  QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
-  /*
-   * Check updating child table name
-   */
-  list.updateChildTableName("NewChildTable_tbl");
-  QCOMPARE(list.size(), 1);
-  QCOMPARE(list.at(0).parentTableName(), QString("Connector_tbl"));
-  QCOMPARE(list.at(0).childTableName(), QString("NewChildTable_tbl"));
-  /*
-   * Clear
-   */
-  list.clear();
-  QCOMPARE(list.size(), 0);
-}
+// void SchemaTest::foreignKeyListTest()
+// {
+//   using Mdt::Sql::Schema::ForeignKey;
+//   using Mdt::Sql::Schema::ForeignKeyList;
+//   using Mdt::Sql::Schema::Table;
+//   using Mdt::Sql::Schema::Field;
+//   using Mdt::Sql::Schema::FieldType;
+//   using Mdt::Sql::Schema::ParentTableFieldName;
+//   using Mdt::Sql::Schema::ChildTableFieldName;
+// 
+//   ForeignKey fk;
+//   /*
+//    * Setup fields
+//    */
+//   // Connector_Id_FK
+//   Field Connector_Id_FK;
+//   Connector_Id_FK.setName("Connector_Id_FK");
+//   Connector_Id_FK.setType(FieldType::Integer);
+//   Connector_Id_FK.setRequired(true);
+//   /*
+//    * Setup Connector_tbl
+//    */
+//   Table Connector_tbl;
+//   Connector_tbl.setTableName("Connector_tbl");
+//   Connector_tbl.setAutoIncrementPrimaryKey("Id_PK");
+//   /*
+//    * Init Contact_tbl
+//    */
+//   Table Contact_tbl;
+//   Contact_tbl.setTableName("Contact_tbl");
+//   Contact_tbl.setAutoIncrementPrimaryKey("Id_PK");
+//   /*
+//    * Setup fk_Connector_Id_FK
+//    */
+//   ForeignKey fk_Connector_Id_FK;
+//   fk_Connector_Id_FK.setParentTable(Connector_tbl);
+//   fk_Connector_Id_FK.setChildTable(Contact_tbl);
+//   fk_Connector_Id_FK.addKeyFields(ParentTableFieldName("Id_PK"), ChildTableFieldName(Connector_Id_FK));
+//   QVERIFY(!fk_Connector_Id_FK.isNull());
+//   /*
+//    * Initial state
+//    */
+//   ForeignKeyList list;
+//   QCOMPARE(list.size(), 0);
+//   QVERIFY(list.isEmpty());
+//   /*
+//    * Add 1 element
+//    */
+//   list.append(fk_Connector_Id_FK);
+//   QCOMPARE(list.size(), 1);
+//   QVERIFY(!list.isEmpty());
+//   QCOMPARE(list.at(0).parentTableName(), QString("Connector_tbl"));
+//   QCOMPARE(list.at(0).childTableName(), QString("Contact_tbl"));
+//   for(const auto & fk : list){
+//     QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
+//     QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
+//   }
+//   fk = list.foreignKeyReferencing("Contact_tbl");
+//   QVERIFY(fk.isNull());
+//   fk = list.foreignKeyReferencing("Connector_tbl");
+//   QVERIFY(!fk.isNull());
+//   QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
+//   QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
+//   /*
+//    * Check updating child table name
+//    */
+//   list.updateChildTableName("NewChildTable_tbl");
+//   QCOMPARE(list.size(), 1);
+//   QCOMPARE(list.at(0).parentTableName(), QString("Connector_tbl"));
+//   QCOMPARE(list.at(0).childTableName(), QString("NewChildTable_tbl"));
+//   /*
+//    * Clear
+//    */
+//   list.clear();
+//   QCOMPARE(list.size(), 0);
+// }
 
 void SchemaTest::tablePopulationTest()
 {

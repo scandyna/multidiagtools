@@ -120,6 +120,7 @@ void SchemaForeignKeyTest::foreignKeySettingsTest()
 {
   using Sql::Schema::ForeignKeyAction;
   using Sql::Schema::ForeignKey;
+  using Sql::Schema::ForeignKeySettings;
 
   /*
    * Default settings
@@ -143,6 +144,17 @@ void SchemaForeignKeyTest::foreignKeySettingsTest()
   fk.clear();
   QVERIFY(fk.onDeleteAction() == ForeignKeyAction::NoAction);
   QVERIFY(fk.onUpdateAction() == ForeignKeyAction::NoAction);
+  /*
+   * Set settings
+   */
+  ForeignKeySettings settings;
+  settings.setOnDeleteAction(ForeignKeyAction::SetDefault);
+  settings.setOnUpdateAction(ForeignKeyAction::SetNull);
+  settings.setIndexed(true);
+  fk.setSettings(settings);
+  QVERIFY(fk.onDeleteAction() == ForeignKeyAction::SetDefault);
+  QVERIFY(fk.onUpdateAction() == ForeignKeyAction::SetNull);
+  QVERIFY(fk.isIndexed());
 }
 
 void SchemaForeignKeyTest::foreignKeyTableNameTest()
@@ -449,6 +461,176 @@ void SchemaForeignKeyTest::foreignKeyGetIndexTest()
   QCOMPARE(index.fieldCount(), 1);
   QCOMPARE(index.fieldName(0), QString("Client_Id_FK"));
   QCOMPARE(index.name(), QString("Address_tbl_Client_Id_FK_index"));
+}
+
+void SchemaForeignKeyTest::foreignKeyListAddTest()
+{
+  using Sql::Schema::ForeignKeyList;
+  using Sql::Schema::Field;
+  using Sql::Schema::FieldType;
+  using Sql::Schema::FieldList;
+  using Sql::Schema::ForeignTable;
+  using Sql::Schema::ForeignField;
+  using Sql::Schema::ForeignFieldList;
+  using Sql::Schema::ForeignKeySettings;
+  using Sql::Schema::ForeignKeyAction;
+
+  Schema::Client_tbl client;
+  Schema::Address_tbl address;
+  ForeignKeySettings settings;
+  settings.setOnDeleteAction(ForeignKeyAction::Restrict);
+  /*
+   * Initial state
+   */
+  ForeignKeyList list;
+  QCOMPARE(list.size(), 0);
+  /*
+   * Add 1 field foreign key
+   */
+  list.addForeignKey(address.tableName(), address.Client_Id_FK(), ForeignTable(client), ForeignField(client.Id_PK()), settings);
+  QCOMPARE( list.size(), 1 );
+  QCOMPARE( list.at(0).tableName() , QString("Address_tbl") );
+  QCOMPARE( list.at(0).foreignTableName(), QString("Client_tbl") );
+  QCOMPARE( list.at(0).fieldNameList(), QStringList({"Client_Id_FK"}) );
+  QCOMPARE( list.at(0).foreignTableFieldNameList() , QStringList({"Id_PK"}) );
+  QVERIFY( list.at(0).onDeleteAction() == ForeignKeyAction::Restrict );
+  /*
+   * Add 2 fields foreign key
+   */
+  // Setup fields
+  Field Id_A;
+  Id_A.setType(FieldType::Integer);
+  Id_A.setName("Id_A");
+  Field Id_A_FK;
+  Id_A_FK.setType(FieldType::Integer);
+  Id_A_FK.setName("Id_A_FK");
+  Field Id_B;
+  Id_B.setType(FieldType::Integer);
+  Id_B.setName("Id_B");
+  Field Id_B_FK;
+  Id_B_FK.setType(FieldType::Integer);
+  Id_B_FK.setName("Id_B_FK");
+  // Check
+  list.addForeignKey("Table", FieldList(Id_A_FK, Id_B_FK) , ForeignTable("ForeignTable"), ForeignFieldList(Id_A, Id_B), settings);
+  QCOMPARE( list.size(), 2 );
+  QCOMPARE( list.at(1).tableName() , QString("Table") );
+  QCOMPARE( list.at(1).foreignTableName(), QString("ForeignTable") );
+  QCOMPARE( list.at(1).fieldNameList(), QStringList({"Id_A_FK", "Id_B_FK"}) );
+  QCOMPARE( list.at(1).foreignTableFieldNameList() , QStringList({"Id_A", "Id_B"}) );
+  QVERIFY( list.at(1).onDeleteAction() == ForeignKeyAction::Restrict );
+  /*
+   * Clear
+   */
+  list.clear();
+  QCOMPARE( list.size(), 0 );
+}
+
+void SchemaForeignKeyTest::foreignKeyListUpdateTableTest()
+{
+  using Sql::Schema::ForeignKeyList;
+  using Sql::Schema::ForeignTable;
+  using Sql::Schema::ForeignField;
+  using Sql::Schema::ForeignKeySettings;
+
+  Schema::Client_tbl client;
+  Schema::Address_tbl address;
+  ForeignKeyList list;
+
+  list.addForeignKey("", address.Client_Id_FK(), ForeignTable(client), ForeignField(client.Id_PK()), ForeignKeySettings());
+  list.addForeignKey("", address.Client_Id_FK(), ForeignTable(client), ForeignField(client.Id_PK()), ForeignKeySettings());
+  QCOMPARE( list.size(), 2 );
+  QVERIFY( list.at(0).tableName().isEmpty() );
+  QVERIFY( list.at(1).tableName().isEmpty() );
+  list.updateTableName("TableA");
+  QCOMPARE( list.at(0).tableName() , QString("TableA") );
+  QCOMPARE( list.at(1).tableName() , QString("TableA") );
+  list.updateChildTableName("TableB");
+  QCOMPARE( list.at(0).tableName() , QString("TableB") );
+  QCOMPARE( list.at(1).tableName() , QString("TableB") );
+}
+
+void SchemaForeignKeyTest::foreignKeyListGettersTest()
+{
+  using Sql::Schema::ForeignKeyList;
+  using Sql::Schema::Field;
+  using Sql::Schema::FieldType;
+  using Sql::Schema::FieldList;
+  using Sql::Schema::ForeignTable;
+  using Sql::Schema::ForeignField;
+  using Sql::Schema::ForeignFieldList;
+  using Sql::Schema::ForeignKeySettings;
+  using Sql::Schema::ForeignKeyAction;
+
+  /*
+   * Setup fields
+   */
+  Field Id;
+  Id.setType(FieldType::Integer);
+  Id.setName("Id");
+  Field Id_FK;
+  Id_FK.setType(FieldType::Integer);
+  Id_FK.setName("Id_FK");
+  /*
+   * Initial state
+   */
+  ForeignKeyList list;
+  QCOMPARE( list.size(), 0 );
+  QVERIFY( list.isEmpty() );
+  /*
+   * Add and check
+   */
+  list.addForeignKey("A", Id_FK, ForeignTable("FA"), ForeignField(Id), ForeignKeySettings());
+  QCOMPARE( list.size(), 1 );
+  QVERIFY( !list.isEmpty() );
+  QVERIFY( !list.at(0).isNull() );
+  list.addForeignKey("B", Id_FK, ForeignTable("FB"), ForeignField(Id), ForeignKeySettings());
+  QCOMPARE( list.size(), 2 );
+  QVERIFY( !list.isEmpty() );
+  QVERIFY( !list.at(0).isNull() );
+  QVERIFY( !list.at(1).isNull() );
+  /*
+   * Check foreignKeyReferencing()
+   */
+  QCOMPARE( list.foreignKeyReferencing("FA").tableName() , QString("A") );
+  QCOMPARE( list.foreignKeyReferencing("FA").foreignTableName() , QString("FA") );
+  QCOMPARE( list.foreignKeyReferencing("fa").foreignTableName() , QString("FA") );
+  QCOMPARE( list.foreignKeyReferencing("Fa").foreignTableName() , QString("FA") );
+  QCOMPARE( list.foreignKeyReferencing("FB").tableName() , QString("B") );
+  QCOMPARE( list.foreignKeyReferencing("FB").foreignTableName() , QString("FB") );
+  QCOMPARE( list.foreignKeyReferencing("fb").foreignTableName() , QString("FB") );
+  QCOMPARE( list.foreignKeyReferencing("Fb").foreignTableName() , QString("FB") );
+  QVERIFY( list.foreignKeyReferencing("").tableName().isEmpty() );
+  QVERIFY( list.foreignKeyReferencing("").foreignTableName().isEmpty() );
+  QVERIFY( list.foreignKeyReferencing("A").tableName().isEmpty() );
+  QVERIFY( list.foreignKeyReferencing("A").foreignTableName().isEmpty() );
+  QVERIFY( list.foreignKeyReferencing("B").tableName().isEmpty() );
+  QVERIFY( list.foreignKeyReferencing("B").foreignTableName().isEmpty() );
+  QVERIFY( list.foreignKeyReferencing("K").tableName().isEmpty() );
+  QVERIFY( list.foreignKeyReferencing("K").foreignTableName().isEmpty() );
+  /*
+   * Clear
+   */
+  list.clear();
+  QCOMPARE( list.size(), 0 );
+  QVERIFY( list.isEmpty() );
+}
+
+void SchemaForeignKeyTest::foreignKeyListIteratorsTest()
+{
+  using Sql::Schema::ForeignKeyList;
+  using Sql::Schema::ForeignTable;
+  using Sql::Schema::ForeignField;
+  using Sql::Schema::ForeignKeySettings;
+
+  Schema::Client_tbl client;
+  Schema::Address_tbl address;
+  ForeignKeyList list;
+
+  list.addForeignKey(address.tableName(), address.Client_Id_FK(), ForeignTable(client), ForeignField(client.Id_PK()), ForeignKeySettings());
+  for(const auto & fk : list){
+    QCOMPARE( fk.tableName() , QString("Address_tbl") );
+    QCOMPARE( fk.foreignTableName() , QString("Client_tbl") );
+  }
 }
 
 /*

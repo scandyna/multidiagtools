@@ -315,6 +315,13 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return mSettings.onUpdateAction();
     }
 
+    /*! \brief Set settings
+     */
+    void setSettings(const ForeignKeySettings & settings)
+    {
+      mSettings = settings;
+    }
+
     /*! \brief Check if this foreign key is null
      *
      * ForeignKey is null if one mandatory attribute is not set.

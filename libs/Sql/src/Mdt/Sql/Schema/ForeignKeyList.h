@@ -26,6 +26,12 @@
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
+  class Field;
+  class FieldList;
+  class ForeignTable;
+  class ForeignField;
+  class ForeignFieldList;
+
   /*! \brief List of ForeignKey
    */
   class ForeignKeyList
@@ -43,14 +49,44 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       mForeignKeyList.append(fk);
     }
 
-    /*! \brief Update child table name for each foreign key in this list
+    /*! \brief Add a foreign key
+     *
+     * \param tableName Name of the table that contains this foreign key (also named child table)
+     * \param field The field of table (designed by tableName) that will be part of the foreign key
+     * \param foreignTable The table to which the foreign key refers
+     * \param foreignField The field, in foreignTable, to which the foreign key refers
+     * \param settings The settings for the foreign key
+     * \pre field must not be null
+     * \pre foreignTable's name must not be empty
+     * \pre foreignField's name must not be empty
      */
-    void updateChildTableName(const QString & tableName)
-    {
-      for(auto & fk : mForeignKeyList){
-        fk.setChildTableName(tableName);
-      }
-    }
+    void addForeignKey(const QString & tableName, const Field & field, const ForeignTable & foreignTable, const ForeignField & foreignField, const ForeignKeySettings & settings);
+
+    /*! \brief Add a foreign key
+     *
+     * \param tableName Name of the table that contains this foreign key (also named child table)
+     * \param fieldList A list of fields of table (designed by tableName) that will be part of the foreign key
+     * \param foreignTable The table to which the foreign key refers
+     * \param foreignFieldList A list of fields, in foreignTable, to which the foreign key refers
+     * \param settings The settings for the foreign key
+     * \pre fieldList must not contain any null field
+     * \pre foreignTable's name must not be empty
+     * \pre foreignFieldList must not contains any field with a empty field name
+     * \pre fieldList and foreignFieldList must be of same size
+     */
+    void addForeignKey(const QString & tableName, const FieldList & fieldList, const ForeignTable & foreignTable, const ForeignFieldList & foreignFieldList, const ForeignKeySettings & settings);
+
+    /*! \brief Update (child) table name for each foreign key in this list
+     *
+     * This is the same as updateChildTableName()
+     */
+    void updateTableName(const QString & tableName);
+
+    /*! \brief Update child table name for each foreign key in this list
+     *
+     * This is the same as updateTableName()
+     */
+    void updateChildTableName(const QString & tableName);
 
     /*! \brief Get count of elements
      */
@@ -79,18 +115,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     }
 
     /*! \brief Get foreign key that references table designed by tableName
+     *
+     * Note that searching tableName is done in a case insensitive way.
      */
-    ForeignKey foreignKeyReferencing(const QString & tableName) const
-    {
-      ForeignKey fk;
-      for(const auto & _fk : mForeignKeyList){
-        if( QString::compare(_fk.parentTableName(), tableName, Qt::CaseInsensitive) == 0){
-          fk = _fk;
-          break;
-        }
-      }
-      return fk;
-    }
+    ForeignKey foreignKeyReferencing(const QString & tableName) const;
 
     /*! \brief Get begin const iterator
      */

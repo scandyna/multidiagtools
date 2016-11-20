@@ -45,8 +45,8 @@ class SchemaTest : public QObject
   void childTableFieldNameTest();
 
 //   void foreignKeyActionTest();
-  void foreignKeyTest();
-  void foreignKeyListTest();
+//   void foreignKeyTest();
+//   void foreignKeyListTest();
 
   void tablePopulationTest();
   void tablePopulationListTest();

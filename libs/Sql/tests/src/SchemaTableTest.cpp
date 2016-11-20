@@ -419,7 +419,6 @@ void SchemaTableTest::setForeignKeySingleFieldTest()
   using Sql::Schema::ForeignKeyAction;
 
   Schema::Client_tbl client;
-
   /*
    * Setup fields
    */
@@ -443,16 +442,34 @@ void SchemaTableTest::setForeignKeySingleFieldTest()
   /*
    * Check
    */
+  // Check that field was added to table
+  QCOMPARE( table.fieldCount() , 2 );
+  QCOMPARE( table.fieldName(1) , QString("Client_Id_FK") );
+  QVERIFY( table.fieldType(1) == FieldType::Integer );
+  QVERIFY( table.isFieldRequired(1) );
   // Get foreign key referencing client and check
   auto fk = table.foreignKeyReferencing(client);
-  
+  QCOMPARE( fk.tableName() , QString("Address_tbl") );
+  QCOMPARE( fk.foreignTableName() , QString("Client_tbl") );
   // Check also getting foreign key referencing by table
   auto fk1 = table.foreignKeyReferencing(client.toTable());
-  
+  QCOMPARE( fk1.tableName() , QString("Address_tbl") );
+  QCOMPARE( fk1.foreignTableName() , QString("Client_tbl") );
   // Check also getting foreign key referencing by table name
   auto fk2 = table.foreignKeyReferencing(client.tableName());
-  
-  QFAIL("Not implemented");
+  QCOMPARE( fk2.tableName() , QString("Address_tbl") );
+  QCOMPARE( fk2.foreignTableName() , QString("Client_tbl") );
+  /*
+   * Add a other foreign key on Client_Id_FK
+   */
+  table.addForeignKey(Client_Id_FK, ForeignTable("OtherTable"), ForeignField("OtherField"), fkSettings);
+  // Check that no other field was added
+  QCOMPARE( table.fieldCount() , 2 );
+  QCOMPARE( table.fieldName(1) , QString("Client_Id_FK") );
+  // Check that foreign key was correctly added
+  fk = table.foreignKeyReferencing("OtherTable");
+  QCOMPARE( fk.tableName() , QString("Address_tbl") );
+  QCOMPARE( fk.foreignTableName() , QString("OtherTable") );
 }
 
 void SchemaTableTest::setForeignKeyMultipleFieldsTest()
@@ -461,6 +478,7 @@ void SchemaTableTest::setForeignKeyMultipleFieldsTest()
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
   using Sql::Schema::FieldList;
+  using Sql::Schema::ForeignField;
   using Sql::Schema::ForeignFieldList;
   using Sql::Schema::ForeignTable;
   using Sql::Schema::ForeignKeySettings;
@@ -489,21 +507,41 @@ void SchemaTableTest::setForeignKeyMultipleFieldsTest()
   fkSettings.setOnDeleteAction(ForeignKeyAction::Restrict);
   /*
    * Setup child table
+   *
+   * Note: we not set primary key,
+   *  so we can check that adding foreign key adds fields
    */
   Table link;
   link.setTableName("Link_tbl");
-  link.setPrimaryKey(startConnectionId, endConnectionId);
   link.addForeignKey( FieldList(startConnectionId, endConnectionId) , ForeignTable(articleLink) , ForeignFieldList(startConnectionId, endConnectionId) , fkSettings );
   /*
    * Check
    */
+  // Check that fields were added to table
+  QCOMPARE( link.fieldCount() , 2 );
+  QCOMPARE( link.fieldName(0) , QString("Start_Connection_Id") );
+  QVERIFY( link.fieldType(0) == FieldType::Integer );
+  QCOMPARE( link.fieldName(1) , QString("End_Connection_Id") );
+  QVERIFY( link.fieldType(1) == FieldType::Integer );
   // Get foreign key referencing articleLink and check
   auto fk = link.foreignKeyReferencing(articleLink);
-  
+  QCOMPARE( fk.tableName() , QString("Link_tbl") );
+  QCOMPARE( fk.foreignTableName() , QString("ArticleLink_tbl") );
   // Check also getting foreign key referencing by table name
-  auto fk1 = link.foreignKeyReferencing(articleLink.tableName());
-  
-  QFAIL("Not implemented");
+  fk = link.foreignKeyReferencing(articleLink.tableName());
+  QCOMPARE( fk.tableName() , QString("Link_tbl") );
+  QCOMPARE( fk.foreignTableName() , QString("ArticleLink_tbl") );
+  /*
+   * Add a other foreign key on Start_Connection_Id
+   */
+  link.addForeignKey(startConnectionId, ForeignTable("OtherTable"), ForeignField("OtherField"), fkSettings);
+  // Check that no other field was added
+  QCOMPARE( link.fieldCount() , 2 );
+  QCOMPARE( link.fieldName(0) , QString("Start_Connection_Id") );
+  // Check that foreign key was correctly added
+  fk = link.foreignKeyReferencing("OtherTable");
+  QCOMPARE( fk.tableName() , QString("Link_tbl") );
+  QCOMPARE( fk.foreignTableName() , QString("OtherTable") );
 }
 
 void SchemaTableTest::tablePrimaryKeyAicBenchmark()
@@ -599,8 +637,9 @@ void SchemaTableTest::tableTest()
   using Sql::Schema::AutoIncrementPrimaryKey;
   using Sql::Schema::PrimaryKey;
   using Sql::Schema::PrimaryKeyContainer;
-  using Sql::Schema::ParentTableFieldName;
-  using Sql::Schema::ChildTableFieldName;
+  using Sql::Schema::ForeignKeySettings;
+  using Sql::Schema::ForeignTable;
+  using Sql::Schema::ForeignField;
   using Sql::Schema::ForeignKey;
   using Sql::Schema::Index;
 
@@ -634,13 +673,6 @@ void SchemaTableTest::tableTest()
   Connector_tbl.setTableName("Connector_tbl");
   Connector_tbl.setAutoIncrementPrimaryKey("Id_PK");
   /*
-   * Setup foreign keys
-   */
-  // fk_Connector_Id_FK
-  ForeignKey fk_Connector_Id_FK;
-  fk_Connector_Id_FK.setParentTable(Connector_tbl);
-  fk_Connector_Id_FK.addKeyFields(ParentTableFieldName("Id_PK"), ChildTableFieldName(Connector_Id_FK));
-  /*
    * Setup index
    */
   Index index;
@@ -662,8 +694,7 @@ void SchemaTableTest::tableTest()
   QVERIFY(!table.isNull());
   table.addField(Name);
   table.addField(Remarks);
-  table.addField(Connector_Id_FK);
-  table.addForeignKey(fk_Connector_Id_FK);
+  table.addForeignKey(Connector_Id_FK, ForeignTable(Connector_tbl), ForeignField("Id_PK"), ForeignKeySettings());
   table.addIndex(index);
   // Check
   QCOMPARE(table.fieldCount(), 4);

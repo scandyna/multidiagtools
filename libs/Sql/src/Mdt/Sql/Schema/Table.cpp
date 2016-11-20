@@ -27,8 +27,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
 void Table::setTableName(const QString & name)
 {
-  pvTableName = name;
-  pvForeignKeyList.updateChildTableName(name);
+  mTableName = name;
+  mForeignKeyList.updateChildTableName(name);
   pvIndexList.updateTableName(name);
 }
 
@@ -43,12 +43,25 @@ void Table::setAutoIncrementPrimaryKey(const QString & fieldName)
 
 void Table::addForeignKey(const Field & field, const ForeignTable & foreignTable, const ForeignField & foreignField, const ForeignKeySettings & settings)
 {
+  Q_ASSERT(!field.isNull());
 
+  if(!contains(field)){
+    addField(field);
+  }
+  mForeignKeyList.addForeignKey(mTableName, field, foreignTable, foreignField, settings);
 }
 
-void Table::addForeignKey(const FieldList & fieldList, const ForeignTable & foreignTable, const ForeignFieldList & ForeignFieldList, const ForeignKeySettings & settings)
+void Table::addForeignKey(const FieldList & fieldList, const ForeignTable & foreignTable, const ForeignFieldList & foreignFieldList, const ForeignKeySettings & settings)
 {
+  Q_ASSERT(fieldList.size() == foreignFieldList.size());
+  Q_ASSERT(!fieldList.isEmpty());
 
+  for(const auto & field : fieldList){
+    if(!contains(field)){
+      addField(field);
+    }
+  }
+  mForeignKeyList.addForeignKey(mTableName, fieldList, foreignTable, foreignFieldList, settings);
 }
 
 void Table::addForeignKey(ForeignKey fk)
@@ -61,12 +74,12 @@ void Table::addForeignKey(ForeignKey fk)
 #endif // #ifndef QT_NO_DEBUG
 
   fk.setChildTable(*this);
-  pvForeignKeyList.append(fk);
+  mForeignKeyList.append(fk);
 }
 
 ForeignKey Table::foreignKeyReferencing(const QString & tableName) const
 {
-  return pvForeignKeyList.foreignKeyReferencing(tableName);
+  return mForeignKeyList.foreignKeyReferencing(tableName);
 }
 
 void Table::addIndex(Index index)
@@ -77,7 +90,7 @@ void Table::addIndex(Index index)
   }
 #endif // #ifndef QT_NO_DEBUG
 
-  index.setTableName(pvTableName);
+  index.setTableName(mTableName);
   pvIndexList.append(index);
 }
 
@@ -216,7 +229,7 @@ Field Table::field(int index) const
 
 bool Table::isNull() const
 {
-  return ( pvTableName.isEmpty() || (fieldCount() < 1) );
+  return ( mTableName.isEmpty() || (fieldCount() < 1) );
 }
 
 void Table::clear()
@@ -225,9 +238,9 @@ void Table::clear()
   mPrimaryKeyFieldIndexList.clear();
   mPrimaryKey.clear();
   pvIsTemporary = false;
-  pvTableName.clear();
+  mTableName.clear();
   mFieldList.clear();
-  pvForeignKeyList.clear();
+  mForeignKeyList.clear();
   pvIndexList.clear();
 }
 
