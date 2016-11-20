@@ -31,6 +31,7 @@
 #include "AutoIncrementPrimaryKey.h"
 #include "PrimaryKey.h"
 #include "PrimaryKeyContainer.h"
+#include "ForeignKeyAction.h"
 #include "ForeignKey.h"
 #include "Index.h"
 #include "IndexList.h"

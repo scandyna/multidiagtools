@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "DriverImplementationInterface.h"
+#include "ForeignKeyActionSqlTransform.h"
 #include "Mdt/Sql/Error.h"
 #include "../InsertQuery.h"
 #include "ViewSqlTransform.h"
@@ -208,8 +209,8 @@ QString DriverImplementationInterface::getForeignKeyDefinition(const ForeignKey 
       % QStringLiteral(" (") \
       % parentTableFieldNameList.join(',') \
       % QStringLiteral(")\n") \
-      % QStringLiteral("   ON DELETE ") % ForeignKey::actionString(fk.onDeleteAction()) % QStringLiteral("\n") \
-      % QStringLiteral("   ON UPDATE ") % ForeignKey::actionString(fk.onUpdateAction());
+      % QStringLiteral("   ON DELETE ") % ForeignKeyActionSqlTransform::getSql(fk.onDeleteAction()) % QStringLiteral("\n") \
+      % QStringLiteral("   ON UPDATE ") % ForeignKeyActionSqlTransform::getSql(fk.onUpdateAction());
 
   return sql;
 }
@@ -352,7 +353,7 @@ bool DriverImplementationInterface::createTable(const Table & table)
   }
   // Create indexes for FK
   for(const auto & fk : fkList){
-    if(fk.createChildIndex()){
+    if(fk.isIndexed()){
       auto index = fk.getChildTableIndex();
       sql = getSqlToCreateIndex(index);
       if(!query.exec(sql)){

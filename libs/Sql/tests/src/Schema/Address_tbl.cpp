@@ -30,9 +30,10 @@ namespace Schema{
 
 Address_tbl::Address_tbl()
 {
-  using Mdt::Sql::Schema::ForeignKey;
-  using Mdt::Sql::Schema::ParentTableFieldName;
-  using Mdt::Sql::Schema::ChildTableFieldName;
+  using Sql::Schema::ForeignKey;
+  using Sql::Schema::ForeignKeyAction;
+  using Sql::Schema::ParentTableFieldName;
+  using Sql::Schema::ChildTableFieldName;
 
   Client_tbl client_tbl;
 
@@ -58,10 +59,10 @@ Address_tbl::Address_tbl()
   FieldAB.setLength(50);
   // Fk_Client_Id_FK
   ForeignKey Fk_Client_Id_FK;
-  Fk_Client_Id_FK.setParentTable(client_tbl);
-  Fk_Client_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
-  Fk_Client_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
-  Fk_Client_Id_FK.setCreateChildIndex(true);
+  Fk_Client_Id_FK.setForeignTable(client_tbl);
+  Fk_Client_Id_FK.setOnDeleteAction(ForeignKeyAction::Restrict);
+  Fk_Client_Id_FK.setOnUpdateAction(ForeignKeyAction::Cascade);
+  Fk_Client_Id_FK.setIndexed(true);
   Fk_Client_Id_FK.addKeyFields(ParentTableFieldName(client_tbl.Id_PK()), ChildTableFieldName(Client_Id_FK));
   // Setup table
   setTableName("Address_tbl");
@@ -75,9 +76,10 @@ Address_tbl::Address_tbl()
 
 Address2_tbl::Address2_tbl()
 {
-  using Mdt::Sql::Schema::ForeignKey;
-  using Mdt::Sql::Schema::ParentTableFieldName;
-  using Mdt::Sql::Schema::ChildTableFieldName;
+  using Sql::Schema::ForeignKey;
+  using Sql::Schema::ForeignKeyAction;
+  using Sql::Schema::ParentTableFieldName;
+  using Sql::Schema::ChildTableFieldName;
 
   Client2_tbl client2_tbl;
 
@@ -104,9 +106,9 @@ Address2_tbl::Address2_tbl()
   // Fk_Client_Id_FK
   ForeignKey Fk_Client_Id_FK;
   Fk_Client_Id_FK.setParentTable(client2_tbl);
-  Fk_Client_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
-  Fk_Client_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
-  Fk_Client_Id_FK.setCreateChildIndex(true);
+  Fk_Client_Id_FK.setOnDeleteAction(ForeignKeyAction::Restrict);
+  Fk_Client_Id_FK.setOnUpdateAction(ForeignKeyAction::Cascade);
+  Fk_Client_Id_FK.setIndexed(true);
   Fk_Client_Id_FK.addKeyFields(ParentTableFieldName(client2_tbl.Id_PK()), ChildTableFieldName(Client_Id_FK));
   // Setup table
   setTableName("Address2_tbl");

@@ -9,13 +9,11 @@ diagrams
     120 110 100 8 0 0
   classdiagram_ref 2760962 // ItemViewController
     956 908 100 7 0 142
-  classdiagram_ref 2461570 // ForeignKey
-    956 908 90 8 0 45
-  active  classdiagram_ref 2461186 // Field
-    956 908 100 7 0 0
+  active  classdiagram_ref 2461570 // ForeignKey
+    956 908 90 8 0 0
 end
 show_stereotypes
-selected class_ref 2775554 // PrimaryKey
+selected attribute_ref 2819074 // ForeignTableFieldNameList
 open
   
   package_ref 409858 // principes
@@ -26,10 +24,10 @@ open
   package_ref 516226 // SqlItemModel
   
   package_ref 582274 // SqlItemEditor
-  classview_ref 1164418 // Field
-  classview_ref 1347202 // PrimaryKey
   class_ref 3417218 // ForeignKeyAction
-  class_ref 3443714 // FieldNameListBase
+  class_ref 2775682 // ForeignKey
+  class_ref 2893826 // ChildTableFieldName
+  classview_ref 1320706 // Table
   classview_ref 1419266 // SimpleTypes
   
   package_ref 430082 // Dsp

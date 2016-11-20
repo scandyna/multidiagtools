@@ -25,6 +25,10 @@
 #include "FieldList.h"
 #include "PrimaryKey.h"
 #include "PrimaryKeyContainer.h"
+#include "ForeignField.h"
+#include "ForeignFieldList.h"
+#include "ForeignKeySettings.h"
+
 #include "ForeignKey.h"
 #include "ForeignKeyList.h"
 #include "IndexList.h"
@@ -35,6 +39,11 @@
 // #include <QDebug>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
+
+  class ForeignTable;
+
+  template<typename T>
+  class TableTemplate;
 
   /*! \brief Rule when updating collation on a Table
    */
@@ -131,12 +140,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    * Example with foreign key referring to a allready existing table:
    * \code
    * #include "Mdt/Sql/Schema/Table.h"
+   * #include "Mdt/Sql/Schema/ForeignTable.h"
    * #include "Client.h"  // Defindes a Client based on TableTemplate
    *
    * namespace Sql = Mdt::Sql;
    *
    * using Sql::Schema::Table;
    * using Sql::Schema::Field;
+   * using Sql::Schema::FieldList;
    * using Sql::Schema::FieldType;
    * using Sql::Schema::ForeignKeyAction;
    * using Sql::Schema::ForeignKeySettings;
@@ -295,6 +306,24 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Add a foreign key
      *
+     * \param field The field of this table that will be part of the foreign key
+     * \param foreignTable The table to which the foreign key refers
+     * \param foreignField The field, in foreignTable, to which the foreign key refers
+     * \param settings The settings for the foreign key
+     */
+    void addForeignKey(const Field & field, const ForeignTable & foreignTable, const ForeignField & foreignField, const ForeignKeySettings & settings);
+
+    /*! \brief Add a foreign key
+     *
+     * \param fieldList A list of fields of this table that will be part of the foreign key
+     * \param foreignTable The table to which the foreign key refers
+     * \param foreignFieldList A list of fields, in foreignTable, to which the foreign key refers
+     * \param settings The settings for the foreign key
+     */
+    void addForeignKey(const FieldList & fieldList, const ForeignTable & foreignTable, const ForeignFieldList & ForeignFieldList, const ForeignKeySettings & settings);
+
+    /*! \brief Add a foreign key
+     *
      * \note Child table name defined in fk is ignored. This table name is also considered as child table.
      * \note If fk requests to create a index (i.e. Foreign::createChildIndex() is true),
      *        no index is added at all in this table.
@@ -303,6 +332,27 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      * \pre Each field of child table in fk must exist in this table
      */
     void addForeignKey(ForeignKey fk);
+
+    /*! \brief Get foreign key that references table
+     *
+     * If no foreign key that references table exists in this table,
+     *  a null ForeignKey is returned.
+     */
+    template<typename T>
+    ForeignKey foreignKeyReferencing(const TableTemplate<T> & table) const
+    {
+      return foreignKeyReferencing(table.tableName());
+    }
+
+    /*! \brief Get foreign key that references table
+     *
+     * If no foreign key that references table exists in this table,
+     *  a null ForeignKey is returned.
+     */
+    ForeignKey foreignKeyReferencing(const Table & table) const
+    {
+      return foreignKeyReferencing(table.pvTableName);
+    }
 
     /*! \brief Get foreign key that references table designed by tableName
      *

@@ -434,33 +434,33 @@ void SchemaTest::childTableFieldNameTest()
   QCOMPARE(f.fieldName(), QString("Name"));
 }
 
-void SchemaTest::foreignKeyActionTest()
-{
-  using Mdt::Sql::Schema::ForeignKey;
-
-  /*
-   * Action -> string
-   */
-  QCOMPARE(ForeignKey::actionString(ForeignKey::NoAction), QString("NO ACTION"));
-  QCOMPARE(ForeignKey::actionString(ForeignKey::Restrict), QString("RESTRICT"));
-  QCOMPARE(ForeignKey::actionString(ForeignKey::SetNull), QString("SET NULL"));
-  QCOMPARE(ForeignKey::actionString(ForeignKey::SetDefault), QString("SET DEFAULT"));
-  QCOMPARE(ForeignKey::actionString(ForeignKey::Cascade), QString("CASCADE"));
-  /*
-   * String -> Action
-   */
-  QVERIFY(ForeignKey::actionFromString("") == ForeignKey::NoAction);
-  QVERIFY(ForeignKey::actionFromString("NO ACTION") == ForeignKey::NoAction);
-  QVERIFY(ForeignKey::actionFromString("no action") == ForeignKey::NoAction);
-  QVERIFY(ForeignKey::actionFromString("RESTRICT") == ForeignKey::Restrict);
-  QVERIFY(ForeignKey::actionFromString("restrict") == ForeignKey::Restrict);
-  QVERIFY(ForeignKey::actionFromString("SET NULL") == ForeignKey::SetNull);
-  QVERIFY(ForeignKey::actionFromString("set null") == ForeignKey::SetNull);
-  QVERIFY(ForeignKey::actionFromString("SET DEFAULT") == ForeignKey::SetDefault);
-  QVERIFY(ForeignKey::actionFromString("set default") == ForeignKey::SetDefault);
-  QVERIFY(ForeignKey::actionFromString("CASCADE") == ForeignKey::Cascade);
-  QVERIFY(ForeignKey::actionFromString("cascade") == ForeignKey::Cascade);
-}
+// void SchemaTest::foreignKeyActionTest()
+// {
+//   using Mdt::Sql::Schema::ForeignKey;
+// 
+//   /*
+//    * Action -> string
+//    */
+//   QCOMPARE(ForeignKey::actionString(ForeignKey::NoAction), QString("NO ACTION"));
+//   QCOMPARE(ForeignKey::actionString(ForeignKey::Restrict), QString("RESTRICT"));
+//   QCOMPARE(ForeignKey::actionString(ForeignKey::SetNull), QString("SET NULL"));
+//   QCOMPARE(ForeignKey::actionString(ForeignKey::SetDefault), QString("SET DEFAULT"));
+//   QCOMPARE(ForeignKey::actionString(ForeignKey::Cascade), QString("CASCADE"));
+//   /*
+//    * String -> Action
+//    */
+//   QVERIFY(ForeignKey::actionFromString("") == ForeignKey::NoAction);
+//   QVERIFY(ForeignKey::actionFromString("NO ACTION") == ForeignKey::NoAction);
+//   QVERIFY(ForeignKey::actionFromString("no action") == ForeignKey::NoAction);
+//   QVERIFY(ForeignKey::actionFromString("RESTRICT") == ForeignKey::Restrict);
+//   QVERIFY(ForeignKey::actionFromString("restrict") == ForeignKey::Restrict);
+//   QVERIFY(ForeignKey::actionFromString("SET NULL") == ForeignKey::SetNull);
+//   QVERIFY(ForeignKey::actionFromString("set null") == ForeignKey::SetNull);
+//   QVERIFY(ForeignKey::actionFromString("SET DEFAULT") == ForeignKey::SetDefault);
+//   QVERIFY(ForeignKey::actionFromString("set default") == ForeignKey::SetDefault);
+//   QVERIFY(ForeignKey::actionFromString("CASCADE") == ForeignKey::Cascade);
+//   QVERIFY(ForeignKey::actionFromString("cascade") == ForeignKey::Cascade);
+// }
 
 void SchemaTest::foreignKeyTest()
 {
@@ -504,9 +504,9 @@ void SchemaTest::foreignKeyTest()
    * Initial state
    */
   ForeignKey fk;
-  QVERIFY(fk.onDeleteAction() == ForeignKey::NoAction);
-  QVERIFY(fk.onUpdateAction() == ForeignKey::NoAction);
-  QVERIFY(!fk.createChildIndex());
+//   QVERIFY(fk.onDeleteAction() == ForeignKey::NoAction);
+//   QVERIFY(fk.onUpdateAction() == ForeignKey::NoAction);
+//   QVERIFY(!fk.createChildIndex());
   QVERIFY(fk.isNull());
   /*
    * Set/get
@@ -518,9 +518,9 @@ void SchemaTest::foreignKeyTest()
   QVERIFY(fk.isNull());
   fk.addKeyFields(ParentTableFieldName("Id_PK"), ChildTableFieldName(Connector_Id_FK));
   QVERIFY(!fk.isNull());
-  fk.setOnDeleteAction(ForeignKey::Restrict);
-  fk.setOnUpdateAction(ForeignKey::Cascade);
-  fk.setCreateChildIndex(true);
+//   fk.setOnDeleteAction(ForeignKey::Restrict);
+//   fk.setOnUpdateAction(ForeignKey::Cascade);
+//   fk.setCreateChildIndex(true);
   // Check
   QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
   QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
@@ -528,9 +528,9 @@ void SchemaTest::foreignKeyTest()
   QCOMPARE(fk.parentTableFieldNameList().at(0), QString("Id_PK"));
   QCOMPARE(fk.childTableFieldNameList().size(), 1);
   QCOMPARE(fk.childTableFieldNameList().at(0), QString("Connector_Id_FK"));
-  QVERIFY(fk.onDeleteAction() == ForeignKey::Restrict);
-  QVERIFY(fk.onUpdateAction() == ForeignKey::Cascade);
-  QVERIFY(fk.createChildIndex());
+//   QVERIFY(fk.onDeleteAction() == ForeignKey::Restrict);
+//   QVERIFY(fk.onUpdateAction() == ForeignKey::Cascade);
+//   QVERIFY(fk.createChildIndex());
   // Check index for child table
   index = fk.getChildTableIndex();
   QCOMPARE(index.tableName(), QString("Contact_tbl"));
@@ -545,9 +545,9 @@ void SchemaTest::foreignKeyTest()
   QVERIFY(fk.childTableName().isEmpty());
   QCOMPARE(fk.parentTableFieldNameList().size(), 0);
   QCOMPARE(fk.childTableFieldNameList().size(), 0);
-  QVERIFY(fk.onDeleteAction() == ForeignKey::NoAction);
-  QVERIFY(fk.onUpdateAction() == ForeignKey::NoAction);
-  QVERIFY(!fk.createChildIndex());
+//   QVERIFY(fk.onDeleteAction() == ForeignKey::NoAction);
+//   QVERIFY(fk.onUpdateAction() == ForeignKey::NoAction);
+//   QVERIFY(!fk.createChildIndex());
   QVERIFY(fk.isNull());
   /*
    * Setup fk for Address_tbl
@@ -570,9 +570,9 @@ void SchemaTest::foreignKeyTest()
   QVERIFY(fk.childTableName().isEmpty());
   QCOMPARE(fk.parentTableFieldNameList().size(), 0);
   QCOMPARE(fk.childTableFieldNameList().size(), 0);
-  QVERIFY(fk.onDeleteAction() == ForeignKey::NoAction);
-  QVERIFY(fk.onUpdateAction() == ForeignKey::NoAction);
-  QVERIFY(!fk.createChildIndex());
+//   QVERIFY(fk.onDeleteAction() == ForeignKey::NoAction);
+//   QVERIFY(fk.onUpdateAction() == ForeignKey::NoAction);
+//   QVERIFY(!fk.createChildIndex());
   QVERIFY(fk.isNull());
 }
 

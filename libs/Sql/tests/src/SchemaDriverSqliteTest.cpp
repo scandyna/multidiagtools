@@ -469,14 +469,15 @@ void SchemaDriverSqliteTest::indexDefinitionTest()
 
 void SchemaDriverSqliteTest::foreignKeyDefinitionTest()
 {
-  using Mdt::Sql::Schema::Field;
-  using Mdt::Sql::Schema::FieldType;
-  using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
-  using Mdt::Sql::Schema::PrimaryKey;
-  using Mdt::Sql::Schema::Table;
-  using Mdt::Sql::Schema::ForeignKey;
-  using Mdt::Sql::Schema::ParentTableFieldName;
-  using Mdt::Sql::Schema::ChildTableFieldName;
+  using Sql::Schema::Field;
+  using Sql::Schema::FieldType;
+  using Sql::Schema::AutoIncrementPrimaryKey;
+  using Sql::Schema::PrimaryKey;
+  using Sql::Schema::Table;
+  using Sql::Schema::ForeignKey;
+  using Sql::Schema::ForeignKeyAction;
+  using Sql::Schema::ParentTableFieldName;
+  using Sql::Schema::ChildTableFieldName;
 
   Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   QString expectedSql;
@@ -536,8 +537,8 @@ void SchemaDriverSqliteTest::foreignKeyDefinitionTest()
   expectedSql += "   ON UPDATE NO ACTION";
   QCOMPARE(driver.getForeignKeyDefinition(fk), expectedSql);
   // Set on delete and update actions
-  fk.setOnDeleteAction(ForeignKey::Restrict);
-  fk.setOnUpdateAction(ForeignKey::Cascade);
+  fk.setOnDeleteAction(ForeignKeyAction::Restrict);
+  fk.setOnUpdateAction(ForeignKeyAction::Cascade);
   expectedSql  = "  FOREIGN KEY (\"Client_Id_FK\")\n";
   expectedSql += "   REFERENCES \"Client_tbl\" (\"Id_PK\")\n";
   expectedSql += "   ON DELETE RESTRICT\n";
@@ -558,8 +559,8 @@ void SchemaDriverSqliteTest::foreignKeyDefinitionTest()
   expectedSql += "   ON UPDATE NO ACTION";
   QCOMPARE(driver.getForeignKeyDefinition(fk), expectedSql);
   // Set on delete and update actions
-  fk.setOnDeleteAction(ForeignKey::Restrict);
-  fk.setOnUpdateAction(ForeignKey::Cascade);
+  fk.setOnDeleteAction(ForeignKeyAction::Restrict);
+  fk.setOnUpdateAction(ForeignKeyAction::Cascade);
   expectedSql  = "  FOREIGN KEY (\"Id_A_FK\",\"Id_B_FK\")\n";
   expectedSql += "   REFERENCES \"Client_tbl\" (\"Id_A_PK\",\"Id_B_PK\")\n";
   expectedSql += "   ON DELETE RESTRICT\n";
@@ -574,7 +575,8 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   using Sql::Schema::Table;
   using Mdt::Sql::Schema::ParentTableFieldName;
   using Mdt::Sql::Schema::ChildTableFieldName;
-  using Mdt::Sql::Schema::ForeignKey;
+  using Sql::Schema::ForeignKeyAction;
+  using Sql::Schema::ForeignKey;
 
   Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   QString expectedSql;
@@ -621,8 +623,8 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   ForeignKey fk_Connector_Id_FK;
   fk_Connector_Id_FK.setParentTable(Connector_tbl);
   fk_Connector_Id_FK.addKeyFields(ParentTableFieldName("Id_PK"), ChildTableFieldName(Connector_Id_FK));
-  fk_Connector_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
-  fk_Connector_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
+  fk_Connector_Id_FK.setOnDeleteAction(ForeignKeyAction::Restrict);
+  fk_Connector_Id_FK.setOnUpdateAction(ForeignKeyAction::Cascade);
   // Init Type_tbl
   Table Type_tbl;
   Type_tbl.setTableName("Type_tbl");
@@ -636,8 +638,8 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   ForeignKey fk_Type_Id_FK;
   fk_Type_Id_FK.setParentTable(Type_tbl);
   fk_Type_Id_FK.addKeyFields(ParentTableFieldName("Id_PK"), ChildTableFieldName(Type_Id_FK));
-  fk_Type_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
-  fk_Type_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
+  fk_Type_Id_FK.setOnDeleteAction(ForeignKeyAction::Restrict);
+  fk_Type_Id_FK.setOnUpdateAction(ForeignKeyAction::Cascade);
 
   /*
    * Check SQL to create table:
@@ -1163,7 +1165,8 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   using Mdt::Sql::Schema::Table;
   using Mdt::Sql::Schema::ParentTableFieldName;
   using Mdt::Sql::Schema::ChildTableFieldName;
-  using Mdt::Sql::Schema::ForeignKey;
+  using Sql::Schema::ForeignKeyAction;
+  using Sql::Schema::ForeignKey;
   using Mdt::Sql::Schema::ForeignKeyList;
 
   Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
@@ -1247,8 +1250,8 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   fk.clear();
   fk.setParentTable(Type_tbl);
   fk.setChildTable(table);
-  fk.setOnDeleteAction(ForeignKey::Restrict);
-  fk.setOnUpdateAction(ForeignKey::Cascade);
+  fk.setOnDeleteAction(ForeignKeyAction::Restrict);
+  fk.setOnUpdateAction(ForeignKeyAction::Cascade);
   fk.addKeyFields(ParentTableFieldName(Code_PK), ChildTableFieldName(Code_FK));
   table.addForeignKey(fk);
   QVERIFY(driver.dropTable(table));
@@ -1261,8 +1264,8 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   fk = fkList.at(0);
   QCOMPARE(fk.parentTableName(), QString("Type_tbl"));
   QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
-  QVERIFY(fk.onDeleteAction() == ForeignKey::Restrict);
-  QVERIFY(fk.onUpdateAction() == ForeignKey::Cascade);
+  QVERIFY(fk.onDeleteAction() == ForeignKeyAction::Restrict);
+  QVERIFY(fk.onUpdateAction() == ForeignKeyAction::Cascade);
   QCOMPARE(fk.parentTableFieldNameList().size(), 1);
   QCOMPARE(fk.parentTableFieldNameList().at(0), QString("Code_PK"));
   QCOMPARE(fk.childTableFieldNameList().size(), 1);
@@ -1281,8 +1284,8 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   fk.clear();
   fk.setParentTable(Connector_tbl);
   fk.setChildTable(table);
-  fk.setOnDeleteAction(ForeignKey::Restrict);
-  fk.setOnUpdateAction(ForeignKey::Cascade);
+  fk.setOnDeleteAction(ForeignKeyAction::Restrict);
+  fk.setOnUpdateAction(ForeignKeyAction::Cascade);
   fk.addKeyFields(ParentTableFieldName(Id_A), ChildTableFieldName(Id_A_FK));
   fk.addKeyFields(ParentTableFieldName(Id_B), ChildTableFieldName(Id_B_FK));
   table.addForeignKey(fk);
@@ -1295,8 +1298,8 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   fk = fkList.at(0);
   QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
   QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
-  QVERIFY(fk.onDeleteAction() == ForeignKey::Restrict);
-  QVERIFY(fk.onUpdateAction() == ForeignKey::Cascade);
+  QVERIFY(fk.onDeleteAction() == ForeignKeyAction::Restrict);
+  QVERIFY(fk.onUpdateAction() == ForeignKeyAction::Cascade);
   QCOMPARE(fk.parentTableFieldNameList().size(), 2);
   QCOMPARE(fk.parentTableFieldNameList().at(0), QString("Id_A"));
   QCOMPARE(fk.parentTableFieldNameList().at(1), QString("Id_B"));
@@ -1318,15 +1321,15 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   fk.clear();
   fk.setParentTable(Type_tbl);
   fk.setChildTable(table);
-  fk.setOnDeleteAction(ForeignKey::Restrict);
-  fk.setOnUpdateAction(ForeignKey::Cascade);
+  fk.setOnDeleteAction(ForeignKeyAction::Restrict);
+  fk.setOnUpdateAction(ForeignKeyAction::Cascade);
   fk.addKeyFields(ParentTableFieldName(Code_PK), ChildTableFieldName(Code_FK));
   table.addForeignKey(fk);
   fk.clear();
   fk.setParentTable(Connector_tbl);
   fk.setChildTable(table);
-  fk.setOnDeleteAction(ForeignKey::Restrict);
-  fk.setOnUpdateAction(ForeignKey::Cascade);
+  fk.setOnDeleteAction(ForeignKeyAction::Restrict);
+  fk.setOnUpdateAction(ForeignKeyAction::Cascade);
   fk.addKeyFields(ParentTableFieldName(Id_A), ChildTableFieldName(Id_A_FK));
   fk.addKeyFields(ParentTableFieldName(Id_B), ChildTableFieldName(Id_B_FK));
   table.addForeignKey(fk);
@@ -1340,8 +1343,8 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   fk = fkList.at(1);
   QCOMPARE(fk.parentTableName(), QString("Type_tbl"));
   QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
-  QVERIFY(fk.onDeleteAction() == ForeignKey::Restrict);
-  QVERIFY(fk.onUpdateAction() == ForeignKey::Cascade);
+  QVERIFY(fk.onDeleteAction() == ForeignKeyAction::Restrict);
+  QVERIFY(fk.onUpdateAction() == ForeignKeyAction::Cascade);
   QCOMPARE(fk.parentTableFieldNameList().size(), 1);
   QCOMPARE(fk.parentTableFieldNameList().at(0), QString("Code_PK"));
   QCOMPARE(fk.childTableFieldNameList().size(), 1);
@@ -1349,8 +1352,8 @@ void SchemaDriverSqliteTest::reverseForeignKeyTest()
   fk = fkList.at(0);
   QCOMPARE(fk.parentTableName(), QString("Connector_tbl"));
   QCOMPARE(fk.childTableName(), QString("Contact_tbl"));
-  QVERIFY(fk.onDeleteAction() == ForeignKey::Restrict);
-  QVERIFY(fk.onUpdateAction() == ForeignKey::Cascade);
+  QVERIFY(fk.onDeleteAction() == ForeignKeyAction::Restrict);
+  QVERIFY(fk.onUpdateAction() == ForeignKeyAction::Cascade);
   QCOMPARE(fk.parentTableFieldNameList().size(), 2);
   QCOMPARE(fk.parentTableFieldNameList().at(0), QString("Id_A"));
   QCOMPARE(fk.parentTableFieldNameList().at(1), QString("Id_B"));

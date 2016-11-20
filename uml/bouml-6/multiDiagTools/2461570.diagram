@@ -2,132 +2,101 @@ format 211
 
 classcanvas 128002 class_ref 2775682 // ForeignKey
   classdiagramsettings member_max_width 0 end
-  xyz 512.6 152.8 2000
+  xyz 175.7 232.7 2000
 end
 classcanvas 128898 class_ref 2775554 // PrimaryKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 915.1 984.7 2005
-end
-classcanvas 129410 class_ref 2887042 // Action
-  classdiagramsettings member_max_width 0 end
-  xyz 634.4 42.2 2006
+  xyz 40.9 720.1 2005
 end
 classcanvas 131970 class_ref 2893698 // ParentTableFieldName
-  classdiagramsettings member_max_width 0 end
-  xyz 905.6 449 2000
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 751.4 218 2000
 end
 classcanvas 132226 class_ref 2893826 // ChildTableFieldName
-  classdiagramsettings member_max_width 0 end
-  xyz 864.8 103.4 2000
-end
-classcanvas 132482 class_ref 2900610 // ForeignKeyList
-  classdiagramsettings member_max_width 0 end
-  xyz 864 242.4 2000
-end
-classcanvas 132738 class_ref 3417090 // ForeignKeySetup
-  classdiagramsettings member_max_width 0 end
-  xyz 387.4 984.7 2000
-end
-classcanvas 132866 class_ref 3417218 // ForeignKeyAction
-  classdiagramsettings member_max_width 0 end
-  xyz 708.2 984.1 2005
-end
-note 132994 "Could be reused while declaring several foreign keys with same options."
-  xyzwh 176.8 434 2000 297 93
-classcanvas 133378 class_ref 3443842 // FieldNameList
-  classdiagramsettings member_max_width 0 end
-  xyz 1082.6 984.7 2000
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 351.2 594.8 2000
 end
 classcanvas 133506 class_ref 3443970 // ForeignFieldList
-  classdiagramsettings member_max_width 0 end
-  xyz 40.6 984.4 2000
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 330.4 42.2 2000
 end
 classcanvas 133634 class_ref 2873090 // FieldList
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 866 347.5 2000
+  xyz 466 130 2000
 end
 classcanvas 133890 class_ref 3417218 // ForeignKeyAction
   classdiagramsettings member_max_width 0 end
-  xyz 41.8 306 2000
+  xyz 945.4 402.8 2000
 end
 classcanvas 134018 class_ref 3450498 // ForeignKeySettings
   classdiagramsettings member_max_width 0 end
-  xyz 208.6 288 2006
+  xyz 888.4 512.2 2006
 end
 classcanvas 134530 class_ref 3450626 // ForeignTable
-  classdiagramsettings member_max_width 0 end
-  xyz 849.8 627.9 2011
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 41.4 370.6 2011
 end
 classcanvas 134786 class_ref 3450754 // ForeignField
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 809.2 770 2012
+  xyz 714.4 306.8 2012
 end
 classcanvas 135042 class_ref 3443970 // ForeignFieldList
   classdiagramsettings hide_operations yes member_max_width 0 end
-  xyz 578.4 842.4 2005
+  xyz 714.4 410 2005
 end
-line 131714 ---+ decenter_end 510
-  from ref 129410 z 2007 to ref 128002
 relationcanvas 132098 relation_ref 3273346 // <dependency>
-  decenter_begin 955
+  decenter_begin 47
+  decenter_end 666
   from ref 128002 z 2001 to ref 131970
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132354 relation_ref 3273474 // <dependency>
-  decenter_begin 41
-  decenter_end 656
   from ref 128002 z 2001 to ref 132226
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 132610 relation_ref 3283074 // <directional composition>
-  decenter_end 311
-  from ref 132482 z 2001 to ref 128002
-  no_role_a no_role_b
-  multiplicity_a_pos 834 287 3000 no_multiplicity_b
-end
 relationcanvas 133762 relation_ref 3816706 // <dependency>
-  decenter_begin 581
-  from ref 128002 z 2001 to ref 133634
+  geometry VH unfixed
+  from ref 128002 z 2001 to point 420 158
+  line 138498 z 2001 to ref 133634
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 134146 relation_ref 3816578 // <directional composition>
-  decenter_begin 533
-  decenter_end 550
   from ref 134018 z 2007 to ref 133890
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 134274 relation_ref 3816834 // <directional composition>
-  decenter_end 533
+  decenter_begin 949
+  decenter_end 228
   from ref 128002 z 2007 to ref 134018
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 134658 relation_ref 3816962 // <dependency>
-  geometry VH unfixed
-  decenter_begin 945
-  from ref 128002 z 2012 to point 805 660
-  line 135426 z 2012 to ref 134530
+  from ref 128002 z 2012 to ref 134530
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 134914 relation_ref 3817090 // <dependency>
-  geometry VH unfixed
-  decenter_begin 817
-  from ref 128002 z 2013 to point 765 777
-  line 135298 z 2013 to ref 134786
+  decenter_begin 322
+  from ref 128002 z 2013 to ref 134786
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 135170 relation_ref 3817218 // <dependency>
-  decenter_begin 510
+  decenter_begin 648
   from ref 128002 z 2006 to ref 135042
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-line 134402 -_-_ decenter_end 510
-  from ref 134018 z 2007 to ref 132994
+relationcanvas 137090 relation_ref 3837570 // <dependency>
+  decenter_begin 418
+  decenter_end 461
+  from ref 128002 z 2001 to ref 133506
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
 end

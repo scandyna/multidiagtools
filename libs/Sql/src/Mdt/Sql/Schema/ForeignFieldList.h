@@ -49,6 +49,13 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       addFieldList(fieldList...);
     }
 
+    /*! \brief Get count of filed names in this list
+     */
+    int size() const
+    {
+      return mFieldNameList.size();
+    }
+
     /*! \brief Get list of field names
      */
     QStringList fieldNameList() const

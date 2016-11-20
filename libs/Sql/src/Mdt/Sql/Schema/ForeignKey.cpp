@@ -20,31 +20,51 @@
  ****************************************************************************/
 #include "ForeignKey.h"
 #include "Table.h"
+#include "Index.h"
+#include "Field.h"
+#include "FieldList.h"
+#include "ForeignField.h"
+#include "ForeignFieldList.h"
 #include <QLatin1String>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
-void ForeignKey::setParentTable(const Table & table)
+void ForeignKey::setTable(const Table & table)
 {
-  pvParentTableName = table.tableName();
+  mTableName = table.tableName();
 }
 
 void ForeignKey::setChildTable(const Table & table)
 {
-  pvChildTableName = table.tableName();
+  mTableName = table.tableName();
 }
 
-Index ForeignKey::getChildTableIndex() const
+void ForeignKey::setForeignTable(const Table & table)
 {
-  Index index;
+  mForeignTableName = table.tableName();
+}
 
-  index.setTableName(pvChildTableName);
-  for(const auto & fieldName : pvChildTableFieldNameList){
-    index.addFieldName(fieldName);
-  }
-  index.generateName();
+void ForeignKey::setParentTable(const Table & table)
+{
+  mForeignTableName = table.tableName();
+}
 
-  return index;
+void ForeignKey::setFields(const Field & field, const ForeignField & foreignTableField)
+{
+  Q_ASSERT(!field.isNull());
+
+  mFieldNameList.clear();
+  mForeignTableFieldNameList.clear();
+  mFieldNameList.append(field.name());
+  mForeignTableFieldNameList.append(foreignTableField.fieldName());
+}
+
+void ForeignKey::setFields(const FieldList & fieldList, const ForeignFieldList & foreignTableFieldList)
+{
+  Q_ASSERT(fieldList.size() == foreignTableFieldList.size());
+
+  mFieldNameList = fieldList.toFieldNameList();
+  mForeignTableFieldNameList = foreignTableFieldList.fieldNameList();
 }
 
 void ForeignKey::addKeyFields(const ParentTableFieldName & parentTableFieldName, const ChildTableFieldName & childTableFieldName)
@@ -52,58 +72,35 @@ void ForeignKey::addKeyFields(const ParentTableFieldName & parentTableFieldName,
   Q_ASSERT(!parentTableFieldName.fieldName().isEmpty());
   Q_ASSERT(!childTableFieldName.fieldName().isEmpty());
 
-  pvParentTableFieldNameList.append(parentTableFieldName.fieldName());
-  pvChildTableFieldNameList.append(childTableFieldName.fieldName());
+  mForeignTableFieldNameList.append(parentTableFieldName.fieldName());
+  mFieldNameList.append(childTableFieldName.fieldName());
+}
+
+Index ForeignKey::getIndex() const
+{
+  Index index;
+
+  index.setTableName(mTableName);
+  for(const auto & fieldName : mFieldNameList){
+    index.addFieldName(fieldName);
+  }
+  index.generateName();
+
+  return index;
+}
+
+Index ForeignKey::getChildTableIndex() const
+{
+  return getIndex();
 }
 
 void ForeignKey::clear()
 {
-  pvCreateChildIndex = false;
-  pvOnDeleteAction = NoAction;
-  pvOnUpdateAction = NoAction;
-  pvParentTableName.clear();
-  pvChildTableName.clear();
-  pvParentTableFieldNameList.clear();
-  pvChildTableFieldNameList.clear();
-}
-
-QString ForeignKey::actionString(ForeignKey::Action action)
-{
-  switch(action){
-    case NoAction:
-      return QStringLiteral("NO ACTION");
-    case Restrict:
-      return QStringLiteral("RESTRICT");
-    case SetNull:
-      return QStringLiteral("SET NULL");
-    case SetDefault:
-      return QStringLiteral("SET DEFAULT");
-    case Cascade:
-      return QStringLiteral("CASCADE");
-  }
-  return QString();
-}
-
-ForeignKey::Action ForeignKey::actionFromString(const QString& actionStr)
-{
-  Action action;
-  const QString str = actionStr.trimmed().toUpper();
-
-  if(str == QLatin1String("NO ACTION")){
-    action = NoAction;
-  }else if(str == QLatin1String("RESTRICT")){
-    action = Restrict;
-  }else if(str == QLatin1String("SET NULL")){
-    action = SetNull;
-  }else if(str == QLatin1String("SET DEFAULT")){
-    action = SetDefault;
-  }else if(str == QLatin1String("CASCADE")){
-    action = Cascade;
-  }else{
-    action = NoAction;
-  }
-
-  return action;
+  mSettings.clear();
+  mTableName.clear();
+  mForeignTableName.clear();
+  mForeignTableFieldNameList.clear();
+  mFieldNameList.clear();
 }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

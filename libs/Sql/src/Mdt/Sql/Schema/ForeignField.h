@@ -34,24 +34,33 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    public:
 
     /*! \brief Construct from a field name
+     *
+     * \pre fieldName must not be empty
      */
     explicit ForeignField(const QString & fieldName)
      : mFieldName(fieldName)
     {
+      Q_ASSERT(!mFieldName.isEmpty());
     }
 
     /*! \brief Construct from a field
+     *
+     * \pre field's name must not be empty
      */
     explicit ForeignField(const Field & field)
      : mFieldName(field.name())
     {
+      Q_ASSERT(!mFieldName.isEmpty());
     }
 
     /*! \brief Construct from a AutoIncrementPrimaryKey
+     *
+     * \pre pk's field name must not be empty
      */
     explicit ForeignField(const AutoIncrementPrimaryKey & pk)
      : mFieldName(pk.fieldName())
     {
+      Q_ASSERT(!mFieldName.isEmpty());
     }
 
     /*! \brief Get field name

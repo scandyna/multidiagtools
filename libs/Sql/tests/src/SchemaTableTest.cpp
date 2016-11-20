@@ -21,6 +21,7 @@
 #include "SchemaTableTest.h"
 #include "Mdt/Application.h"
 #include "Mdt/Sql/Schema/Table.h"
+#include "Mdt/Sql/Schema/ForeignTable.h"
 #include "Mdt/Sql/Schema/TableModel.h"
 #include "Mdt/Sql/Schema/TableList.h"
 #include "Schema/Client_tbl.h"
@@ -405,6 +406,104 @@ void SchemaTableTest::setPrimaryKeyTest()
   QVERIFY(!table.contains(""));
   QVERIFY(table.primaryKeyType() == PrimaryKeyContainer::PrimaryKeyType);
   QCOMPARE(table.primaryKey().fieldCount(), 2);
+}
+
+void SchemaTableTest::setForeignKeySingleFieldTest()
+{
+  using Sql::Schema::Table;
+  using Sql::Schema::Field;
+  using Sql::Schema::FieldType;
+  using Sql::Schema::ForeignField;
+  using Sql::Schema::ForeignTable;
+  using Sql::Schema::ForeignKeySettings;
+  using Sql::Schema::ForeignKeyAction;
+
+  Schema::Client_tbl client;
+
+  /*
+   * Setup fields
+   */
+  Field Client_Id_FK;
+  Client_Id_FK.setName("Client_Id_FK");
+  Client_Id_FK.setType(FieldType::Integer);
+  Client_Id_FK.setRequired(true);
+  /*
+   * Setup foreign key settings
+   */
+  ForeignKeySettings fkSettings;
+  fkSettings.setIndexed(true);
+  fkSettings.setOnDeleteAction(ForeignKeyAction::Restrict);
+  /*
+   * Setup table
+   */
+  Table table;
+  table.setTableName("Address_tbl");
+  table.setAutoIncrementPrimaryKey("Id_PK");
+  table.addForeignKey(Client_Id_FK, ForeignTable(client), ForeignField(client.Id_PK()), fkSettings);
+  /*
+   * Check
+   */
+  // Get foreign key referencing client and check
+  auto fk = table.foreignKeyReferencing(client);
+  
+  // Check also getting foreign key referencing by table
+  auto fk1 = table.foreignKeyReferencing(client.toTable());
+  
+  // Check also getting foreign key referencing by table name
+  auto fk2 = table.foreignKeyReferencing(client.tableName());
+  
+  QFAIL("Not implemented");
+}
+
+void SchemaTableTest::setForeignKeyMultipleFieldsTest()
+{
+  using Sql::Schema::Table;
+  using Sql::Schema::Field;
+  using Sql::Schema::FieldType;
+  using Sql::Schema::FieldList;
+  using Sql::Schema::ForeignFieldList;
+  using Sql::Schema::ForeignTable;
+  using Sql::Schema::ForeignKeySettings;
+  using Sql::Schema::ForeignKeyAction;
+
+  /*
+   * Setup fields for child table
+   */
+  Field startConnectionId;
+  startConnectionId.setType(FieldType::Integer);
+  startConnectionId.setName("Start_Connection_Id");
+  Field endConnectionId;
+  endConnectionId.setType(FieldType::Integer);
+  endConnectionId.setName("End_Connection_Id");
+  /*
+   * Setup parent table
+   */
+  Table articleLink;
+  articleLink.setTableName("ArticleLink_tbl");
+  articleLink.setPrimaryKey(startConnectionId, endConnectionId);
+  /*
+   * Setup foreign key settings
+   */
+  ForeignKeySettings fkSettings;
+  fkSettings.setIndexed(true);
+  fkSettings.setOnDeleteAction(ForeignKeyAction::Restrict);
+  /*
+   * Setup child table
+   */
+  Table link;
+  link.setTableName("Link_tbl");
+  link.setPrimaryKey(startConnectionId, endConnectionId);
+  link.addForeignKey( FieldList(startConnectionId, endConnectionId) , ForeignTable(articleLink) , ForeignFieldList(startConnectionId, endConnectionId) , fkSettings );
+  /*
+   * Check
+   */
+  // Get foreign key referencing articleLink and check
+  auto fk = link.foreignKeyReferencing(articleLink);
+  
+  // Check also getting foreign key referencing by table name
+  auto fk1 = link.foreignKeyReferencing(articleLink.tableName());
+  
+  QFAIL("Not implemented");
 }
 
 void SchemaTableTest::tablePrimaryKeyAicBenchmark()

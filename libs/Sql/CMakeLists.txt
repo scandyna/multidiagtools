@@ -40,6 +40,7 @@ set(SOURCES_FILES
     src/Mdt/Sql/Schema/FieldTypeName.cpp
     src/Mdt/Sql/Schema/FieldTypeListModel.cpp
     src/Mdt/Sql/Schema/PrimaryKeyContainer.cpp
+    src/Mdt/Sql/Schema/ForeignKeyActionSqlTransform.cpp
     src/Mdt/Sql/Schema/ForeignKey.cpp
     src/Mdt/Sql/Schema/Index.cpp
     src/Mdt/Sql/Schema/IndexListModel.cpp

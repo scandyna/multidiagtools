@@ -36,29 +36,30 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      * \sa clear()
      */
     ForeignKeySettings()
-     : mCreateIndex(false),
+     : mIndexed(false),
        mOnDeleteAction(ForeignKeyAction::NoAction),
        mOnUpdateAction(ForeignKeyAction::NoAction)
     {
     }
 
-    /*! \brief Set if a index must be created
+    /*! \brief Set this foreign key indexed
      *
-     * If set, a index will be created on the
-     *  fields that are part of the foreign key.
-     *  Note: this has no impact on foreign table,
-     *        only on fields of the (child) table.
+     * When a ForeignKey is indexed, a index exists for the table that contains this foreign key.
+     *  All fields, for this (child) table, that are part of this foreign key, are indexed.
+     *  Note: this has no impact on foreign (parent) table.
      */
-    void setCreateIndex(bool create)
+    void setIndexed(bool indexed)
     {
-      mCreateIndex = create;
+      mIndexed = indexed;
     }
 
-    /*! \brief Check if a index must be created
+    /*! \brief Check if this foreign key is indexed
+     *
+     * \sa setIndexed()
      */
-    bool createIndex() const
+    bool isIndexed() const
     {
-      return mCreateIndex;
+      return mIndexed;
     }
 
     /*! \brief Set on delete action
@@ -98,14 +99,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void clear()
     {
-      mCreateIndex = false;
+      mIndexed = false;
       mOnDeleteAction = ForeignKeyAction::NoAction;
       mOnUpdateAction = ForeignKeyAction::NoAction;
     }
 
    private:
 
-    bool mCreateIndex;
+    bool mIndexed;
     ForeignKeyAction mOnDeleteAction;
     ForeignKeyAction mOnUpdateAction;
   };

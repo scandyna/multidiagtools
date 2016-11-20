@@ -2,6 +2,15 @@ format 211
 
 classcanvas 128002 class_ref 3417218 // ForeignKeyAction
   classdiagramsettings member_max_width 0 end
-  xyz 40.5 40.5 2000
+  xyz 457 46 2000
+end
+classcanvas 128130 class_ref 3457282 // ForeignKeyActionSqlTransform
+  classdiagramsettings member_max_width 0 end
+  xyz 42 39 2000
+end
+relationcanvas 128258 relation_ref 3823746 // <dependency>
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end

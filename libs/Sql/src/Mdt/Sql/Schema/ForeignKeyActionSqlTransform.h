@@ -18,34 +18,29 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_TABLE_TEST_H
-#define MDT_SQL_SCHEMA_TABLE_TEST_H
+#ifndef MDT_SQL_SCHEMA_FOREIGN_KEY_ACTION_SQL_TRANSFORM_H
+#define MDT_SQL_SCHEMA_FOREIGN_KEY_ACTION_SQL_TRANSFORM_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "ForeignKeyAction.h"
+#include <QString>
 
-class SchemaTableTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace Sql{ namespace Schema{
 
- private slots:
+  /*! \brief Transform a ForeignKeyAction to its SQL representation
+   */
+  class ForeignKeyActionSqlTransform
+  {
+   public:
 
-  void initTestCase();
-  void cleanupTestCase();
+    /*! \brief Get SQL representation of action
+     */
+    static QString getSql(ForeignKeyAction action);
 
-  void setAutoIncrementPrimaryKeyTest();
-  void setSingleFieldPrimaryKeyTest();
-  void setPrimaryKeyTest();
+    /*! \brief Get action from string representation
+     */
+    static ForeignKeyAction fromActionString(const QString & actionStr);
+  };
 
-  void setForeignKeySingleFieldTest();
-  void setForeignKeyMultipleFieldsTest();
+}}} // namespace Mdt{ namespace Sql{ namespace Schema{
 
-  void tablePrimaryKeyAicBenchmark();
-  void tablePrimaryKeyMcBenchmark();
-  void tableTest();
-  void tableModelTest();
-  void tableListTest();
-
-};
-
-#endif // #ifndef MDT_SQL_SCHEMA_TABLE_TEST_H
+#endif // #ifndef MDT_SQL_SCHEMA_FOREIGN_KEY_ACTION_SQL_TRANSFORM_H

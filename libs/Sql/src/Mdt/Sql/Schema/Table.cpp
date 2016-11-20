@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "Table.h"
 #include "AutoIncrementPrimaryKey.h"
+#include "ForeignTable.h"
 #include <algorithm>
 
 namespace Mdt{ namespace Sql{ namespace Schema{
@@ -38,6 +39,16 @@ void Table::setAutoIncrementPrimaryKey(const QString & fieldName)
 
   mPrimaryKeyFieldIndex = 0;
   mPrimaryKey.setPrimaryKey( AutoIncrementPrimaryKey(fieldName) );
+}
+
+void Table::addForeignKey(const Field & field, const ForeignTable & foreignTable, const ForeignField & foreignField, const ForeignKeySettings & settings)
+{
+
+}
+
+void Table::addForeignKey(const FieldList & fieldList, const ForeignTable & foreignTable, const ForeignFieldList & ForeignFieldList, const ForeignKeySettings & settings)
+{
+
 }
 
 void Table::addForeignKey(ForeignKey fk)
