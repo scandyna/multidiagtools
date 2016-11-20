@@ -64,19 +64,6 @@ void Table::addForeignKey(const FieldList & fieldList, const ForeignTable & fore
   mForeignKeyList.addForeignKey(mTableName, fieldList, foreignTable, foreignFieldList, settings);
 }
 
-void Table::addForeignKey(ForeignKey fk)
-{
-  Q_ASSERT(!fk.parentTableName().isEmpty());
-#ifndef QT_NO_DEBUG
-  for(const auto & fieldName : fk.childTableFieldNameList()){
-    Q_ASSERT(contains(fieldName));
-  }
-#endif // #ifndef QT_NO_DEBUG
-
-  fk.setChildTable(*this);
-  mForeignKeyList.append(fk);
-}
-
 ForeignKey Table::foreignKeyReferencing(const QString & tableName) const
 {
   return mForeignKeyList.foreignKeyReferencing(tableName);

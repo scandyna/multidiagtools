@@ -24,6 +24,7 @@
 #include "Mdt/Sql/JoinConstraintFieldPairList.h"
 #include "Mdt/Sql/JoinConstraintFieldPairListSqlTransform.h"
 #include "Mdt/Sql/SelectTable.h"
+#include "Mdt/Sql/Schema/ForeignTable.h"
 #include "Mdt/Sql/Schema/ForeignKey.h"
 #include "Mdt/Sql/Schema/ParentTableFieldName.h"
 #include "Mdt/Sql/Schema/ChildTableFieldName.h"
@@ -86,24 +87,27 @@ void JoinConstraintFieldPairTest::fieldPairListTest()
 void JoinConstraintFieldPairTest::fromForeignKeyTest()
 {
   using Sql::JoinConstraintFieldPairList;
-  using Sql::Schema::ParentTableFieldName;
-  using Sql::Schema::ChildTableFieldName;
+//   using Sql::Schema::ParentTableFieldName;
+//   using Sql::Schema::ChildTableFieldName;
   using Sql::Schema::ForeignKey;
 
   /*
    * Setup foreign key
    */
   ForeignKey fk;
-  fk.addKeyFields( ParentTableFieldName("p1"), ChildTableFieldName("c1") );
+//   fk.addKeyFields( ParentTableFieldName("p1"), ChildTableFieldName("c1") );
+  QFAIL("Not implemented");
 }
 
 void JoinConstraintFieldPairTest::fromTablesTest()
 {
   using Sql::JoinConstraintFieldPairList;
   using Sql::SelectTable;
-  using Sql::Schema::ParentTableFieldName;
-  using Sql::Schema::ChildTableFieldName;
-  using Sql::Schema::ForeignKey;
+  using Sql::Schema::ForeignTable;
+  using Sql::Schema::ForeignField;
+  using Sql::Schema::FieldList;
+  using Sql::Schema::ForeignFieldList;
+  using Sql::Schema::ForeignKeySettings;
   using Sql::Schema::Table;
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
@@ -134,11 +138,7 @@ void JoinConstraintFieldPairTest::fromTablesTest()
   Table CA;
   CA.setTableName("CA");
   CA.setAutoIncrementPrimaryKey("Id_PK");
-  CA.addField(c1);
-  ForeignKey fkCA;
-  fkCA.setParentTable(PA);
-  fkCA.addKeyFields( ParentTableFieldName("Id_PK"), ChildTableFieldName(c1) );
-  CA.addForeignKey(fkCA);
+  CA.addForeignKey(c1, ForeignTable(PA), ForeignField("Id_PK"), ForeignKeySettings());
   // Select tables
   SelectTable SPA(PA, "SPA");
   SelectTable SCA(CA, "SCA");
@@ -167,14 +167,7 @@ void JoinConstraintFieldPairTest::fromTablesTest()
   Table CB;
   CB.setAutoIncrementPrimaryKey("Id_PK");
   CB.setTableName("CB");
-  CB.addField(c1);
-  CB.addField(c2);
-  ForeignKey fkCB;
-  fkCB.setParentTable(PB);
-  fkCB.setChildTable(CB);
-  fkCB.addKeyFields( ParentTableFieldName(p1), ChildTableFieldName(c1) );
-  fkCB.addKeyFields( ParentTableFieldName(p2), ChildTableFieldName(c2) );
-  CB.addForeignKey(fkCB);
+  CB.addForeignKey( FieldList(c1, c2), ForeignTable(PB), ForeignFieldList(p1, p2), ForeignKeySettings() );
   // Select tables
   SelectTable SPB(PB, "SPB");
   SelectTable SCB(CB, "SCB");

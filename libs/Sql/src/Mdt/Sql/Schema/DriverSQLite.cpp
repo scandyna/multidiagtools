@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "DriverSQLite.h"
 #include "FieldTypeName.h"
+#include "ForeignTable.h"
 #include "ForeignKeyActionSqlTransform.h"
 #include "Mdt/Sql/Error.h"
 #include "Mdt/Algorithm.h"
@@ -285,8 +286,6 @@ Mdt::Expected<ForeignKeyList> DriverSQLite::getTableForeignKeyListFromDatabase(c
       ForeignKey fk;
       fk.setParentTableName( query.value("table").toString() );
       fk.setChildTableName( tableName );
-//       fk.setOnDeleteAction( ForeignKey::actionFromString( query.value("on_delete").toString() ) );
-//       fk.setOnUpdateAction( ForeignKey::actionFromString( query.value("on_update").toString() ) );
       fk.setOnDeleteAction( ForeignKeyActionSqlTransform::fromActionString( query.value("on_delete").toString() ) );
       fk.setOnUpdateAction( ForeignKeyActionSqlTransform::fromActionString( query.value("on_update").toString() ) );
       fk.addKeyFields(parentField, childField);

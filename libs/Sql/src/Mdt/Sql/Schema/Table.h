@@ -335,19 +335,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void addForeignKey(const FieldList & fieldList, const ForeignTable & foreignTable, const ForeignFieldList & foreignFieldList, const ForeignKeySettings & settings);
 
-    /*! \brief Add a foreign key
-     *
-     * \todo UPDATE... or better: remove !
-     *
-     * \note Child table name defined in fk is ignored. This table name is also considered as child table.
-     * \note If fk requests to create a index (i.e. Foreign::createChildIndex() is true),
-     *        no index is added at all in this table.
-     *        When creating table in database using a Driver instance,
-     *        Driver will take care to create these indexes.
-     * \pre Each field of child table in fk must exist in this table
-     */
-    void addForeignKey(ForeignKey fk);
-
     /*! \brief Get foreign key that references table
      *
      * If no foreign key that references table exists in this table,

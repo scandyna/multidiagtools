@@ -150,17 +150,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       mTable.addForeignKey(fieldList, foreignTable, foreignFieldList, settings);
     }
 
-    /*! \brief Add a foreign key
-     *
-     * \note Child table name defined in fk is ignored. This table name is also considered as child table.
-     * \pre Each field of child table in fk must exist in this table
-     */
-    [[deprecated]]
-    void addForeignKey(const ForeignKey & fk)
-    {
-      mTable.addForeignKey(fk);
-    }
-
     /*! \brief Get primary key
      *
      * \pre Stored primary key must be of type AutoIncrementPrimaryKey
