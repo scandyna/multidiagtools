@@ -277,18 +277,18 @@ Mdt::Expected<ForeignKeyList> DriverSQLite::getTableForeignKeyListFromDatabase(c
   }
   while(query.next()){
     int fkId = query.value("id").toInt();
-    ParentTableFieldName parentField( query.value("to").toString() );
-    ChildTableFieldName childField( query.value("from").toString() );
+    QString fieldName = query.value("from").toString();
+    ForeignField foreignTableField( query.value("to").toString() );
     // Check if a FK must be created or just updated
     if(fkMap.contains(fkId)){
-      fkMap[fkId].addKeyFields(parentField, childField);
+      fkMap[fkId].addFieldNames(fieldName, foreignTableField);
     }else{
       ForeignKey fk;
       fk.setParentTableName( query.value("table").toString() );
       fk.setChildTableName( tableName );
       fk.setOnDeleteAction( ForeignKeyActionSqlTransform::fromActionString( query.value("on_delete").toString() ) );
       fk.setOnUpdateAction( ForeignKeyActionSqlTransform::fromActionString( query.value("on_update").toString() ) );
-      fk.addKeyFields(parentField, childField);
+      fk.addFieldNames(fieldName, foreignTableField);
       fkMap.insert(fkId, fk);
     }
   }

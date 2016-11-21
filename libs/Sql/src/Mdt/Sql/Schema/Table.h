@@ -147,18 +147,11 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *
    * using Sql::Schema::Table;
    * using Sql::Schema::Field;
-   * using Sql::Schema::FieldList;
    * using Sql::Schema::FieldType;
    * using Sql::Schema::ForeignKeyAction;
    * using Sql::Schema::ForeignKeySettings;
    * using Sql::Schema::ForeignTable;
    * using Sql::Schema::ForeignField;
-   * using Sql::Schema::ForeignFieldList;
-   * using Sql::Schema::FieldList;
-   *
-   * using Mdt::Sql::Schema::ForeignKey;
-   * using Mdt::Sql::Schema::ParentTableFieldName;
-   * using Mdt::Sql::Schema::ChildTableFieldName;
    *
    * // Somewhere defined table
    * Client client;
@@ -182,26 +175,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    *
    * // Setup table
    * Table table;
-   * table.setName("Address_tbl");
+   * table.setTableName("Address_tbl");
    * table.setAutoIncrementPrimaryKey("Id_PK");
    * table.addField(Street);
    * table.addForeignKey( Client_Id_FK, ForeignTable(client), ForeignField(client.Id_PK()), defaultFkSettings );
-   * table.addForeignKey( FieldList(Client_Id_FK), ForeignTable(client), ForeignFieldList(client.Id_PK()), defaultFkSettings );
-   * table.addForeignKey( Client_Id_FK, ReferringTable(client), ReferringField(client.Id_PK()), defaultFkSettings );
-   * table.addForeignKey( FieldList(Client_Id_FK), ReferringTable(client), ReferringFieldList(client.Id_PK()), defaultFkSettings );
-   *
-   * // Add fileds to the table
-   * table.setPrimaryKey(Id_PK);
-   * table.addField(Client_Id_FK);
-   * table.addField(Street);
-   * // Setup fk_Client_Id_FK foreign key
-   * ForeignKey fk_Client_Id_FK;
-   * fk_Client_Id_FK.setParentTable(Client_tbl);
-   * fk_Client_Id_FK.setOnDeleteAction(ForeignKey::Restrict);
-   * fk_Client_Id_FK.setOnUpdateAction(ForeignKey::Cascade);
-   * fk_Client_Id_FK.setCreateChildIndex(true);
-   * fk_Client_Id_FK.addKeyFields(ParentTableFieldName(client_tbl.autoIncrementPrimaryKey()), ChildTableFieldName(Client_Id_FK));
-   * table.addForeignKey(fk_Client_Id_FK);
    * \endcode
    *
    * \sa TableTemplate

@@ -44,7 +44,6 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     /*! \brief Append a foreign key
      */
-    [[deprecated]]
     void append(const ForeignKey & fk)
     {
       mForeignKeyList.append(fk);

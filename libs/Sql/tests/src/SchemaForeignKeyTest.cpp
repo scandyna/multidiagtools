@@ -399,6 +399,25 @@ void SchemaForeignKeyTest::foreignKeySetFieldsTest()
   QCOMPARE( fk.childTableFieldNameList(), QStringList({"Id_A_FK", "Id_B_FK"}) );
   QCOMPARE( fk.foreignTableFieldNameList(), QStringList({"Id_A", "Id_B"}) );
   QCOMPARE( fk.parentTableFieldNameList(), QStringList({"Id_A", "Id_B"}) );
+  /*
+   * Clear
+   */
+  fk.clear();
+  QVERIFY( fk.fieldNameList().isEmpty() );
+  QVERIFY( fk.foreignTableFieldNameList().isEmpty() );
+  /*
+   * Check adding couple of fields
+   */
+  fk.addFieldNames("A", ForeignField("FA"));
+  QCOMPARE( fk.fieldNameList(), QStringList({"A"}) );
+  QCOMPARE( fk.childTableFieldNameList(), QStringList({"A"}) );
+  QCOMPARE( fk.foreignTableFieldNameList(), QStringList({"FA"}) );
+  QCOMPARE( fk.parentTableFieldNameList(), QStringList({"FA"}) );
+  fk.addFieldNames("B", ForeignField("FB"));
+  QCOMPARE( fk.fieldNameList(), QStringList({"A","B"}) );
+  QCOMPARE( fk.childTableFieldNameList(), QStringList({"A","B"}) );
+  QCOMPARE( fk.foreignTableFieldNameList(), QStringList({"FA","FB"}) );
+  QCOMPARE( fk.parentTableFieldNameList(), QStringList({"FA","FB"}) );
 }
 
 void SchemaForeignKeyTest::foreignKeyIsNullTest()
@@ -466,6 +485,7 @@ void SchemaForeignKeyTest::foreignKeyGetIndexTest()
 void SchemaForeignKeyTest::foreignKeyListAddTest()
 {
   using Sql::Schema::ForeignKeyList;
+  using Sql::Schema::ForeignKey;
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
   using Sql::Schema::FieldList;
@@ -518,6 +538,21 @@ void SchemaForeignKeyTest::foreignKeyListAddTest()
   QCOMPARE( list.at(1).fieldNameList(), QStringList({"Id_A_FK", "Id_B_FK"}) );
   QCOMPARE( list.at(1).foreignTableFieldNameList() , QStringList({"Id_A", "Id_B"}) );
   QVERIFY( list.at(1).onDeleteAction() == ForeignKeyAction::Restrict );
+  /*
+   * Setup a foreign key and add it
+   */
+  ForeignKey fk;
+  fk.setTableName("Table2");
+  fk.setForeignTableName("ForeignTable2");
+  fk.setFields(Id_A_FK, ForeignField(Id_A));
+  fk.setOnDeleteAction(ForeignKeyAction::SetDefault);
+  list.append(fk);
+  QCOMPARE( list.size(), 3 );
+  QCOMPARE( list.at(2).tableName() , QString("Table2") );
+  QCOMPARE( list.at(2).foreignTableName(), QString("ForeignTable2") );
+  QCOMPARE( list.at(2).fieldNameList(), QStringList({"Id_A_FK"}) );
+  QCOMPARE( list.at(2).foreignTableFieldNameList() , QStringList({"Id_A"}) );
+  QVERIFY( list.at(2).onDeleteAction() == ForeignKeyAction::SetDefault );
   /*
    * Clear
    */

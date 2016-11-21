@@ -67,13 +67,12 @@ void ForeignKey::setFields(const FieldList & fieldList, const ForeignFieldList &
   mForeignTableFieldNameList = foreignTableFieldList.fieldNameList();
 }
 
-void ForeignKey::addKeyFields(const ParentTableFieldName & parentTableFieldName, const ChildTableFieldName & childTableFieldName)
+void ForeignKey::addFieldNames(const QString & fieldName, const ForeignField & foreignTableField)
 {
-  Q_ASSERT(!parentTableFieldName.fieldName().isEmpty());
-  Q_ASSERT(!childTableFieldName.fieldName().isEmpty());
+  Q_ASSERT(!fieldName.isEmpty());
 
-  mForeignTableFieldNameList.append(parentTableFieldName.fieldName());
-  mFieldNameList.append(childTableFieldName.fieldName());
+  mFieldNameList.append(fieldName);
+  mForeignTableFieldNameList.append(foreignTableField.fieldName());
 }
 
 Index ForeignKey::getIndex() const

@@ -210,14 +210,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void setFields(const FieldList & fieldList, const ForeignFieldList & foreignTableFieldList);
 
-    /*! \brief Add a couple of relation fields
+    /*! \brief Add a couple of fields that links table and foreign table
      *
-     * \param parentTableFieldName Field name in parent table (also called referenced table)
-     * \param childTableFieldName Field name in child table (also called referencing table)
-     * \pre both field name must not be empty
+     * \param fieldName Name of the field in the (child) table that is part of this foreign key
+     * \param foreignTableField The field in foreign (parent) table to which field refers to
+     * \pre fieldName must not be empty
+     * \pre foreignTableField must not be a empty field name
      */
-    [[deprecated]]
-    void addKeyFields(const ParentTableFieldName & parentTableFieldName, const ChildTableFieldName & childTableFieldName);
+    void addFieldNames(const QString & fieldName, const ForeignField & foreignTableField);
 
     /*! \brief Get field name list of table
      *
