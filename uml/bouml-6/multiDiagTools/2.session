@@ -1,4 +1,4 @@
-window_sizes 1280 963 318 956 908 0
+window_sizes 1280 963 292 982 908 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -7,30 +7,30 @@ diagrams
     120 110 100 21 0 226
   classdiagram_ref 2761090 // WidgetMapperController
     120 110 100 8 0 0
-  classdiagram_ref 2760962 // ItemViewController
-    956 908 100 7 0 142
-  classdiagram_ref 3035394 // ForeignKeyList
-    956 908 100 18 0 0
-  active  classdiagram_ref 2461570 // ForeignKey
-    956 908 100 8 0 302
+  active  classdiagram_ref 2760962 // ItemViewController
+    982 908 90 7 0 24
 end
 show_stereotypes
-selected 
-package_ref 129 // multiDiagTools
+selected class_ref 3476866 // RowChangeEvent
 open
   
-package_ref 409858 // principes
+  package_ref 409858 // principes
   
-package_ref 549506 // Algorithm
+  package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
   
-package_ref 516226 // SqlItemModel
+  package_ref 516226 // SqlItemModel
+  class_ref 3476866 // RowChangeEvent
+  class_ref 3145090 // RowChangeEventDispatcher
+  classview_ref 1498370 // EditEvent
+  classview_ref 1287042 // Controller
+  classview_ref 1392898 // ControllerRelation
   
-package_ref 582274 // SqlItemEditor
-  classview_ref 1373314 // ForeignKey
-  classview_ref 1419266 // SimpleTypes
+  package_ref 582274 // SqlItemEditor
   
-package_ref 430082 // Dsp
+  package_ref 402178 // Sql
+  
+  package_ref 430082 // Dsp
   classview_ref 1577730 // variant
 end
 end

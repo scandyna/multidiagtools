@@ -31,6 +31,8 @@
 #include <QTextEdit>
 #include <QPlainTextEdit>
 
+namespace ItemEditor = Mdt::ItemEditor;
+
 void DataWidgetMapperTest::initTestCase()
 {
 }
@@ -45,7 +47,7 @@ void DataWidgetMapperTest::cleanupTestCase()
 
 void DataWidgetMapperTest::mappedWidgetTest()
 {
-  using Mdt::ItemEditor::MappedWidget;
+  using ItemEditor::MappedWidget;
 
   auto *w = new QWidget;
 
@@ -59,6 +61,8 @@ void DataWidgetMapperTest::mappedWidgetTest()
   // MappedWidget must not own the widget
   delete mw;
   QCOMPARE(w->objectName(), QString("TestWidget"));
+
+  delete w;
 }
 
 void DataWidgetMapperTest::mappedWidgetListTest()
@@ -479,6 +483,11 @@ void DataWidgetMapperTest::modelItemEditableFlagWidgetsWithRoTest()
   mapper.setCurrentRow(0);
   QCOMPARE(editor0->property("readOnly"), QVariant(false));
   QCOMPARE(editor1->property("readOnly"), QVariant(false));
+  /*
+   * Cleanup
+   */
+  delete editor0;
+  delete editor1;
 }
 
 void DataWidgetMapperTest::modelItemEditableFlagWidgetsWithRoTest_data()
@@ -544,6 +553,11 @@ void DataWidgetMapperTest::modelItemEditableFlagWidgetsWithoutRoTest()
   mapper.setCurrentRow(0);
   QVERIFY(editor0->isEnabled());
   QVERIFY(editor1->isEnabled());
+  /*
+   * Cleanup
+   */
+  delete editor0;
+  delete editor1;
 }
 
 void DataWidgetMapperTest::modelItemEditableFlagWidgetsWithoutRoTest_data()

@@ -27,7 +27,7 @@
 #include <QMetaMethod>
 #include <QMetaProperty>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -51,15 +51,11 @@ void DataWidgetMapper::setModel(QAbstractItemModel* model)
   if(!pvModel.isNull()){
     disconnect(pvModel, &QAbstractItemModel::dataChanged, this, &DataWidgetMapper::onModelDataChanged);
     disconnect(pvModel, &QAbstractItemModel::modelReset, this, &DataWidgetMapper::onModelReset);
-//     disconnect(pvModel, &QAbstractItemModel::columnsInserted, this, &DataWidgetMapper::onModelColumnsInserted);
   }
   pvModel = model;
   connect(pvModel, &QAbstractItemModel::dataChanged, this, &DataWidgetMapper::onModelDataChanged);
   connect(pvModel, &QAbstractItemModel::modelReset, this, &DataWidgetMapper::onModelReset);
-//   connect(pvModel, &QAbstractItemModel::columnsInserted, this, &DataWidgetMapper::onModelColumnsInserted);
   setCurrentRow(-1);
-//   pvCurrentRow = -1;
-//   updateAllMappedWidgets(true);
 }
 
 QAbstractItemModel* DataWidgetMapper::model() const
@@ -120,13 +116,11 @@ void DataWidgetMapper::setCurrentRow(int row)
   bool rowHasChanged = (row != pvCurrentRow);
 
   pvCurrentRow = row;
-  ///updateAllMappedWidgets();
   if(rowHasChanged){
     updateAllMappedWidgets(true);
     emit currentRowChanged(row);
   }else{
     updateAllMappedWidgets(false);
-    ///updateAllMappedWidgets(true);
   }
 }
 
@@ -162,10 +156,8 @@ void DataWidgetMapper::onDataEditionStarted()
   emit dataEditionStarted();
 }
 
-void DataWidgetMapper::onModelDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles)
+void DataWidgetMapper::onModelDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> &)
 {
-//   qDebug() << "onModelDataChanged() - topLeftData: " << pvModel->data(topLeft) << " - roles: " << roles;
-
   if(topLeft.parent().isValid()){
     return;
   }
@@ -183,14 +175,8 @@ void DataWidgetMapper::onModelDataChanged(const QModelIndex & topLeft, const QMo
 
 void DataWidgetMapper::onModelReset()
 {
-  qDebug() << "onModelReset()";
   setCurrentRow(-1);
 }
-
-// void DataWidgetMapper::onModelColumnsInserted(const QModelIndex& parent, int first, int last)
-// {
-//   qDebug() << "onModelColumnsInserted() - first: " << first << " , last: " << last;
-// }
 
 void DataWidgetMapper::connectUserPropertyNotifySignal(QWidget*const widget, DataWidgetMapper::ConnectAction ca)
 {

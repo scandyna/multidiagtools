@@ -2,27 +2,25 @@ format 211
 
 classcanvas 128002 class_ref 3090434 // AbstractController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 639 151 2000
+  xyz 255 42 2000
 end
 classcanvas 128130 class_ref 146946 // QAbstractItemModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 249 339 2006
+  xyz 641 242 2006
 end
 classcanvas 128514 class_ref 3145090 // RowChangeEventDispatcher
   classdiagramsettings member_max_width 0 end
-  xyz 42 41 2000
+  xyz 42 127 2000
 end
 classcanvas 129538 class_ref 2706434 // NavigationActions
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 40.5 456.5 2000
+  xyz 40.5 480.5 2000
 end
 classcanvas 130434 class_ref 404610 // QDataWidgetMapper
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 65 339 2012
+  xyz 641 154 2012
 end
-relationcanvas 128642 relation_ref 3547394 // <directional composition>
-  decenter_begin 395
-  decenter_end 482
+relationcanvas 128642 relation_ref 3547394 // <composition>
   from ref 128002 z 2001 to ref 128514
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -30,7 +28,7 @@ end
 relationcanvas 130562 relation_ref 491010 // <association>
   from ref 130434 z 2013 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 216 368 3000 no_multiplicity_b
+  multiplicity_a_pos 680 215 3000 no_multiplicity_b
 end
 relationcanvas 131586 relation_ref 3561602 // <unidirectional association>
   from ref 128514 z 2007 to ref 128130

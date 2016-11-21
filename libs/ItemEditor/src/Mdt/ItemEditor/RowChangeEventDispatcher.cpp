@@ -22,7 +22,7 @@
 #include "AbstractController.h"
 #include "ControllerStatePermission.h"
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -106,19 +106,31 @@ void RowChangeEventDispatcher::onRowsInserted(const QModelIndex& /*parent*/, int
   if(ControllerStatePermission::canChangeCurrentRow(mController->controllerState())){
     pvRowState.setCurrentRow(last);
   }
-  qDebug() << "RowChangeEventDispatcher::onRowsInserted() - rows: " << pvRowState.rowCount() << " , current: " << pvRowState.currentRow();
-
   emit rowStateUpdated(pvRowState);
 }
 
-void RowChangeEventDispatcher::onRowsRemoved(const QModelIndex& /*parent*/, int first, int last)
+void RowChangeEventDispatcher::onRowsRemoved(const QModelIndex& /*parent*/, int first, int /*last*/)
 {
   Q_ASSERT(!pvModel.isNull());
 
   pvRowState.setRowCount(pvModel->rowCount());
-  if(pvRowState.currentRow() >= pvRowState.rowCount()){
-    pvRowState.setCurrentRow(pvRowState.rowCount()-1);
+  /*
+   * Define new current row:
+   *  - If we remove before current row, we must update
+   *  - Else, we let is a is
+   */
+  int row = pvRowState.currentRow();
+  if(first < row){
+    --row;
   }
+  // Also assure that we not go after last row in model
+  if(row >= pvRowState.rowCount()){
+    row = pvRowState.rowCount()-1;
+  }
+  pvRowState.setCurrentRow(row);
+//   if(pvRowState.currentRow() >= pvRowState.rowCount()){
+//     pvRowState.setCurrentRow(pvRowState.rowCount()-1);
+//   }
   emit rowStateUpdated(pvRowState);
 }
 

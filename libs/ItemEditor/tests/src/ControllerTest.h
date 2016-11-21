@@ -47,6 +47,7 @@ class ControllerTest : public QObject
   void tableViewControllerInsertTest();
   void tableViewControllerInsertFromModelTest();
   void tableViewControllerRemoveTest();
+  void tableViewControllerRemoveFromModelTest();
 
   void widgetMapperControllerSetModelTest();
   void widgetMapperControllerCurrentRowChangedTest();
@@ -55,6 +56,7 @@ class ControllerTest : public QObject
   void widgetMapperControllerInsertTest();
   void widgetMapperControllerInsertFromModelTest();
   void widgetMapperControllerRemoveTest();
+  void widgetMapperControllerRemoveFromModelTest();
 
  private:
 

@@ -157,7 +157,8 @@ void RowChangeTest::eventDispatcherTest()
   using Mdt::ItemEditor::RowChangeEventDispatcher;
   using Mdt::ItemEditor::TableViewController;
 
-  RowChangeEventDispatcher dispatcher(new TableViewController);
+  TableViewController controller;
+  RowChangeEventDispatcher dispatcher(&controller);
   QList<QVariant> spyItem;
   QStringListModel model;
   QModelIndex index;
@@ -405,7 +406,8 @@ void RowChangeTest::eventDispatcherInsertTest()
   using ItemEditor::RowChangeEventDispatcher;
   using ItemEditor::TableViewController;
 
-  RowChangeEventDispatcher dispatcher(new TableViewController);
+  TableViewController controller;
+  RowChangeEventDispatcher dispatcher(&controller);
   QList<QVariant> spyItem;
   QStringListModel model;
   QModelIndex index;
@@ -541,7 +543,8 @@ void RowChangeTest::eventDispatcherRemoveTest()
   using ItemEditor::RowChangeEventDispatcher;
   using ItemEditor::TableViewController;
 
-  RowChangeEventDispatcher dispatcher(new TableViewController);
+  TableViewController controller;
+  RowChangeEventDispatcher dispatcher(&controller);
   QList<QVariant> spyItem;
   QStringListModel model;
   QModelIndex index;
@@ -558,6 +561,9 @@ void RowChangeTest::eventDispatcherRemoveTest()
   rowStateSpy.clear();
   /*
    * Remove at beginning - current row is also at beginning
+   *
+   * Now: A,B,C,D   - After remove: B,C,D
+   *      ^                         ^
    */
   QCOMPARE(dispatcher.rowCount(), 4);
   QCOMPARE(dispatcher.currentRow(), 0);
@@ -572,6 +578,9 @@ void RowChangeTest::eventDispatcherRemoveTest()
   QCOMPARE(rs.currentRow(), 0);
   /*
    * Remove at end - current row is also at end
+   *
+   * Now: B,C,D   - After remove: B,C
+   *          ^                     ^
    */
   // Move to end
   dispatcher.setCurrentRow(2);
@@ -588,6 +597,46 @@ void RowChangeTest::eventDispatcherRemoveTest()
   rs = spyItem.at(0).value<RowState>();
   QCOMPARE(rs.rowCount(), model.rowCount());
   QCOMPARE(rs.currentRow(), 1);
+  /*
+   * Remove after current row
+   *
+   * Now: A,B,C,D   - After remove: A,B,C
+   *      ^                         ^
+   */
+  // Reset model
+  model.setStringList({"A","B","C","D"});
+  rowStateSpy.clear();
+  QCOMPARE(dispatcher.rowCount(), 4);
+  QCOMPARE(dispatcher.currentRow(), 0);
+  // Remove and check
+  QVERIFY(model.removeRow(3));
+  QCOMPARE(dispatcher.rowCount(), 3);
+  QCOMPARE(dispatcher.currentRow(), 0);
+  // Check that row state was signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), model.rowCount());
+  QCOMPARE(rs.currentRow(), 0);
+  /*
+   * Remove before current row
+   *
+   * Now: A,B,C   - After remove: B,C
+   *        ^                     ^
+   */
+  dispatcher.setCurrentRow(1);
+  rowStateSpy.clear();
+  QCOMPARE(dispatcher.currentRow(), 1);
+  // Remove and check
+  QVERIFY(model.removeRow(0));
+  QCOMPARE(dispatcher.rowCount(), 2);
+  QCOMPARE(dispatcher.currentRow(), 0);
+  // Check that row state was signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), model.rowCount());
+  QCOMPARE(rs.currentRow(), 0);
   /*
    * Remove at with a 1 element model
    */

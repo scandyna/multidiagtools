@@ -174,10 +174,6 @@ namespace Mdt{ namespace ItemEditor{
      */
     void onModelReset();
 
-    /*! \brief Called when model has new columns inserted
-     */
-//     void onModelColumnsInserted(const QModelIndex & parent, int first, int last);
-
    private:
 
     enum class ConnectAction

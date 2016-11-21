@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 83
+  revision 84
   modified_by 2 "philippe"
   // class settings
   
@@ -994,6 +994,38 @@ ${inlines}
     
     activitydiagramsettings
      end
+    classdiagram 3041922 "RowChangeEvent"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3476866 "RowChangeEvent"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3142658 "UpdateFromModel"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
     classdiagram 2767746 "EventDispatcher"
       classdiagramsettings member_max_width 0 end
       size D-Landscape
@@ -1013,8 +1045,8 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      attribute 2948354 "CurrentRow"
-	private explicit_type "int"
+      attribute 2948354 "RowState"
+	private type class_ref 3075458 // RowState
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -1198,6 +1230,34 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 3869826 // <composition>
+	relation_ref 3547394 // <composition>
+      end
+
+      attribute 3142402 "Model"
+	private type class_ref 146946 // QAbstractItemModel
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3142530 "Controller"
+	private type class_ref 3090434 // AbstractController
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
 
@@ -2700,13 +2760,14 @@ ${inlines}
 	  b parent class_ref 138626 // QObject
       end
 
-      classrelation 3566210 // <directional composition>
-	relation 3547394 *-->
+      classrelation 3566210 // <composition>
+	relation 3547394 *---
 	  a role_name "" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
-	    classrelation_ref 3566210 // <directional composition>
-	  b parent class_ref 3145090 // RowChangeEventDispatcher
+	    classrelation_ref 3566210 // <composition>
+	  b role_name "" private
+	    classrelation_ref 3869826 // <composition>
       end
 
       classrelation 3601026 // <unidirectional association>

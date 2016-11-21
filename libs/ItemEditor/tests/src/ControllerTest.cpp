@@ -38,6 +38,8 @@
 #include <QMetaProperty>
 #include <QMetaMethod>
 
+namespace ItemEditor = Mdt::ItemEditor;
+
 void ControllerTest::initTestCase()
 {
 }
@@ -615,10 +617,6 @@ void ControllerTest::tableViewControllerInsertFromModelTest()
   QVERIFY(controller.insert());
   QCOMPARE(controller.rowCount(), 2);
   QCOMPARE(controller.currentRow(), 0);
-  
-  view.show();
-  QTest::qWait(2000);
-
   /*
    * Begin editing
    */
@@ -626,20 +624,11 @@ void ControllerTest::tableViewControllerInsertFromModelTest()
   QVERIFY(index.isValid());
   beginEditing(view, index, BeginEditTrigger::DoubleClick);
   QVERIFY(controller.controllerState() == ControllerState::Editing);
-  
-  QTest::qWait(2000);
-  
   editText(view, index, "ABCD");
-  
-  QTest::qWait(2000);
-  
   /*
    * Insert at end of model
    */
   QVERIFY(model.insertRow(2));
-  
-  QTest::qWait(2000);
-  
   QVERIFY(controller.controllerState() == ControllerState::Editing);
   QCOMPARE(controller.rowCount(), 3);
   QCOMPARE(controller.currentRow(), 0);
@@ -654,10 +643,10 @@ void ControllerTest::tableViewControllerInsertFromModelTest()
 
 void ControllerTest::tableViewControllerRemoveTest()
 {
-  using Mdt::ItemEditor::TableViewController;
-  using Mdt::ItemEditor::ControllerState;
+  using ItemEditor::TableViewController;
+  using ItemEditor::ControllerState;
 
-  QStringListModel model;
+  QStringListModel model({"A","B"});
   QModelIndex index;
   QTableView view;
   TableViewController controller;
@@ -667,10 +656,123 @@ void ControllerTest::tableViewControllerRemoveTest()
    */
   controller.setModel(&model);
   controller.setView(&view);
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Edit and check that remove fails
+   */
+   // Begin editing
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  beginEditing(view, index, BeginEditTrigger::DoubleClick);
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  editText(view, index, "ABCD");
+  // Try to remove
+  QVERIFY(!controller.remove());
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  // End editing and check
+  endEditing(view, index, EndEditTrigger::EnterKeyClick);
+  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::DisplayRole).toString(), QString("ABCD"));
+  /*
+   * Remove
+   */
+  QVERIFY(controller.remove());
+  QCOMPARE(controller.rowCount(), 1);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Remove
+   */
+  QVERIFY(controller.remove());
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  /*
+   * Remove
+   */
+  QVERIFY(!controller.remove());
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  /*
+   * Play
+   */
+//   view.show();
+//   while(view.isVisible()){
+//     QTest::qWait(500);
+//   }
+}
+
+void ControllerTest::tableViewControllerRemoveFromModelTest()
+{
+  using ItemEditor::TableViewController;
+  using ItemEditor::ControllerState;
+
+  QStringListModel model({"A","B","C","D"});
+  QModelIndex index;
+  QTableView view;
+  TableViewController controller;
+
+  /*
+   * Setup
+   */
+  controller.setModel(&model);
+  controller.setView(&view);
+  QCOMPARE(controller.rowCount(), 4);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Edit row 0 , remove last row
+   */
+   // Begin editing
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  beginEditing(view, index, BeginEditTrigger::DoubleClick);
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  editText(view, index, "1234");
+  // Remove last row
+  QVERIFY(model.removeRow(3));
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  // End editing and check
+  endEditing(view, index, EndEditTrigger::EnterKeyClick);
+  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::DisplayRole).toString(), QString("1234"));
+  /*
+   * Go to row 1 , remove row 0
+   */
+  // Go to row 1
+  QVERIFY(controller.setCurrentRow(1));
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 1);
+  // Remove row 0 , and check that controller goes to row 0
+  QVERIFY(model.removeRow(0));
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Remove current row (row 0)
+   */
+  QVERIFY(model.removeRow(0));
+  QCOMPARE(controller.rowCount(), 1);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Remove last row
+   */
+  QVERIFY(model.removeRow(0));
   QCOMPARE(controller.rowCount(), 0);
   QCOMPARE(controller.currentRow(), -1);
 
-  QFAIL("Not implemented");
+  /*
+   * Play
+   */
+//   view.show();
+//   while(view.isVisible()){
+//     QTest::qWait(500);
+//   }
 }
 
 void ControllerTest::widgetMapperControllerSetModelTest()
@@ -1086,6 +1188,10 @@ void ControllerTest::widgetMapperControllerEditTest()
   // Check that we can change current row
   QVERIFY(controller.setCurrentRow(0));
   QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Cleanup
+   */
+  delete editor0;
 }
 
 void ControllerTest::widgetMapperControllerEditTest_data()
@@ -1125,17 +1231,10 @@ void ControllerTest::widgetMapperControllerInsertTest()
   QCOMPARE(controller.rowCount(), 0);
   QCOMPARE(controller.currentRow(), -1);
   QVERIFY(!editor0.isEnabled());
-  
-  editor0.show();
-  QTest::qWait(2000);
-  
   /*
    * Insert at beginning
    */
   QVERIFY(controller.insert());
-  
-  QTest::qWait(2000);
-  
   QCOMPARE(controller.rowCount(), 1);
   QCOMPARE(controller.currentRow(), 0);
   QVERIFY(editor0.isEnabled());
@@ -1178,10 +1277,6 @@ void ControllerTest::widgetMapperControllerInsertFromModelTest()
   controller.addMapping(&editor0, 0);
   QCOMPARE(controller.rowCount(), 0);
   QCOMPARE(controller.currentRow(), -1);
-  
-  editor0.show();
-  QTest::qWait(2000);
-  
   /*
    * Insert at beginning
    */
@@ -1192,19 +1287,12 @@ void ControllerTest::widgetMapperControllerInsertFromModelTest()
   /*
    * Begin editing
    */
-  QTest::qWait(2000);
-  
   editor0.setText("ABCD");
   QVERIFY(controller.controllerState() == ControllerState::Editing);
   /*
    * Insert at end in model
    */
-  QTest::qWait(2000);
-  
   QVERIFY(model.insertRow(2));
-  
-  QTest::qWait(2000);
-  
   QVERIFY(controller.controllerState() == ControllerState::Editing);
   QCOMPARE(controller.rowCount(), 3);
   QCOMPARE(controller.currentRow(), 0);
@@ -1219,7 +1307,8 @@ void ControllerTest::widgetMapperControllerInsertFromModelTest()
 
 void ControllerTest::widgetMapperControllerRemoveTest()
 {
-  using Mdt::ItemEditor::WidgetMapperController;
+  using ItemEditor::WidgetMapperController;
+  using ItemEditor::ControllerState;
 
   QStringListModel model;
   QLineEdit editor0;
@@ -1229,12 +1318,121 @@ void ControllerTest::widgetMapperControllerRemoveTest()
   /*
    * Setup
    */
+  model.setStringList({"A","B"});
   controller.setModel(&model);
   controller.addMapping(&editor0, 0);
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Edit and check that remove fails
+   */
+  // Begin editing
+  editor0.setText("1234");
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  // Try to remove
+  QVERIFY(!controller.remove());
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  // End editing
+  QVERIFY(controller.submit());
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::DisplayRole).toString(), QString("1234"));
+  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  /*
+   * Remove
+   */
+  QVERIFY(controller.remove());
+  QCOMPARE(controller.rowCount(), 1);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Remove
+   */
+  QVERIFY(controller.remove());
   QCOMPARE(controller.rowCount(), 0);
   QCOMPARE(controller.currentRow(), -1);
+  /*
+   * Remove
+   */
+  QVERIFY(!controller.remove());
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  /*
+   * Play
+   */
+//   editor0.show();
+//   while(editor0.isVisible()){
+//     QTest::qWait(500);
+//   }
+}
 
-  QFAIL("Not implemeneted");
+void ControllerTest::widgetMapperControllerRemoveFromModelTest()
+{
+  using ItemEditor::WidgetMapperController;
+  using ItemEditor::ControllerState;
+
+  QStringListModel model;
+  QLineEdit editor0;
+  WidgetMapperController controller;
+  QModelIndex index;
+
+  /*
+   * Setup
+   */
+  model.setStringList({"A","B","C","D"});
+  controller.setModel(&model);
+  controller.addMapping(&editor0, 0);
+  QCOMPARE(controller.rowCount(), 4);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Edit row 0 , remove last row
+   */
+  // Begin editing
+  editor0.setText("1234");
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  // Remove last row
+  QVERIFY(model.removeRow(3));
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  QVERIFY(controller.controllerState() == ControllerState::Editing);
+  // End editing and check
+  // End editing
+  QVERIFY(controller.submit());
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index, Qt::DisplayRole).toString(), QString("1234"));
+  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  /*
+   * Go to row 1 , remove row 0
+   */
+  // Go to row 1
+  QVERIFY(controller.setCurrentRow(1));
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 1);
+  // Remove row 0 , and check that controller goes to row 0
+  QVERIFY(model.removeRow(0));
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Remove current row (row 0)
+   */
+  QVERIFY(model.removeRow(0));
+  QCOMPARE(controller.rowCount(), 1);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Remove last row
+   */
+  QVERIFY(model.removeRow(0));
+  QCOMPARE(controller.rowCount(), 0);
+  QCOMPARE(controller.currentRow(), -1);
+  /*
+   * Play
+   */
+//   editor0.show();
+//   while(editor0.isVisible()){
+//     QTest::qWait(500);
+//   }
 }
 
 /*

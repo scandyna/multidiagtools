@@ -25,7 +25,7 @@
 #include "ControllerStatePermission.h"
 #include <QAbstractItemModel>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -128,27 +128,18 @@ bool AbstractController::insert()
 {
   Q_ASSERT(!pvModel.isNull());
 
-  qDebug() << "Insert...";
   if(!ControllerStatePermission::canInsert(pvControllerState)){
-    qDebug() << "Not allowed to insert..";
     return false;
   }
-  bool ok = false;
   switch(pvInsertLocation){
     case InsertAtBeginning:
-      ok = pvModel->insertRow(0);
-      break;
+      return pvModel->insertRow(0);
     case InsertAtEnd:
       /// \todo Fetch all
-      ok = pvModel->insertRow( rowCount() );
-      break;
+      return pvModel->insertRow( rowCount() );
   }
-  if(!ok){
-    return false;
-  }
-  ///updateRowState(pvRowChangeEventDispatcher->currentRowState());
 
-  return true;
+  return false;
 }
 
 bool AbstractController::remove()
@@ -221,13 +212,11 @@ void AbstractController::registerItemDelegate(EventCatchItemDelegate* delegate)
 
 void AbstractController::onDataEditionStarted()
 {
-  qDebug() << "AbstractController::onDataEditionStarted() ..";
   setControllerState(ControllerState::Editing);
 }
 
 void AbstractController::onDataEditionDone()
 {
-  qDebug() << "AbstractController::onDataEditionDone() ..";
   setControllerState(ControllerState::Visualizing);
 }
 
