@@ -82,19 +82,6 @@ void JoinConstraintFieldPairTest::fieldPairListTest()
   QCOMPARE(list.at(0).rightField(), QString("b1"));
 }
 
-void JoinConstraintFieldPairTest::fromForeignKeyTest()
-{
-  using Sql::JoinConstraintFieldPairList;
-  using Sql::Schema::ForeignKey;
-
-  /*
-   * Setup foreign key
-   */
-  ForeignKey fk;
-//   fk.addKeyFields( ParentTableFieldName("p1"), ChildTableFieldName("c1") );
-  QFAIL("Not implemented");
-}
-
 void JoinConstraintFieldPairTest::fromTablesTest()
 {
   using Sql::JoinConstraintFieldPairList;

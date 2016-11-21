@@ -33,10 +33,16 @@
 namespace Mdt{ namespace Sql{
 
   namespace Schema{
+
+    template<typename T>
+    class TableTemplate;
+
+    class Table;
     class Field;
     class AutoIncrementPrimaryKey;
     class SingleFieldPrimaryKey;
-  }
+  } // namespace Schema{
+
   class FieldName;
 
   /*! \brief Helper class to create a SQL SELECT statement
@@ -113,6 +119,25 @@ namespace Mdt{ namespace Sql{
    * stm.joinTable(ADR);
    * stm.setWhereExpression( (clientName == "Name 1") || (clientName == "Name 2") );
    * \endcode
+   *
+   * For select statement that only get data from 1 table, we could also avoid using SelectTable:
+   * \code
+   * #include "Mdt/Sql/SelectStatement.h"
+   * #include "MyEntities/Client.h"   // A entitiy defined with TableTemplate
+   *
+   * namespace Sql = Mdt::Sql;
+   *
+   * using Sql::SelectStatement;
+   *
+   * // Create instance of defined entity
+   * Client client;
+   *
+   * // Create SELECT statement
+   * SelectStatement stm;
+   * stm.addField(client.Id_PK(), "Client_Id");
+   * stm.addField(client.Name());
+   * stm.setFromTable(client);
+   * \endcode
    */
   class SelectStatement
   {
@@ -165,9 +190,28 @@ namespace Mdt{ namespace Sql{
 
     /*! \brief Set table
      *
-     * This is the same than setFromTable()
+     * This is the same than setFromTable(const SelectTable & table)
      */
     void setTable(const SelectTable & table)
+    {
+      setFromTable(table);
+    }
+
+    /*! \brief Set table
+     *
+     * This is the same than setFromTable(const Schema::Table & table)
+     */
+    void setTable(const Schema::Table & table)
+    {
+      setFromTable(table);
+    }
+
+    /*! \brief Set table
+     *
+     * This is the same than setFromTable(const Schema::TableTemplate<T> & table)
+     */
+    template<typename T>
+    void setTable(const Schema::TableTemplate<T> & table)
     {
       setFromTable(table);
     }
@@ -181,6 +225,31 @@ namespace Mdt{ namespace Sql{
      * \pre table must not be null.
      */
     void setFromTable(const SelectTable & table);
+
+    /*! \brief Set from table
+     *
+     * If a raw SQL string was set,
+     *  it will be cleared.
+     *
+     * \pre No joined table must allready been set.
+     * \pre table must have a non empty name.
+     */
+    void setFromTable(const Schema::Table & table);
+
+    /*! \brief Set from table
+     *
+     * If a raw SQL string was set,
+     *  it will be cleared.
+     *
+     * \pre No joined table must allready been set.
+     * \pre table must have a non empty name.
+     */
+    template<typename T>
+    void setFromTable(const Schema::TableTemplate<T> & table)
+    {
+      Q_ASSERT(!table.tableName().isEmpty());
+      setFromTable(SelectTable(table));
+    }
 
     /*! \brief Join a table
      *

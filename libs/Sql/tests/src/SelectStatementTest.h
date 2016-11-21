@@ -36,6 +36,8 @@ class SelectStatementTest : public QObject
 
   void selectOperatorTest();
 
+  void setTableTest();
+
   void addFieldTest();
 
   void isNullTest();

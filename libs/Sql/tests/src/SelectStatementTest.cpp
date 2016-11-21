@@ -61,6 +61,49 @@ void SelectStatementTest::selectOperatorTest()
   QVERIFY(stm.selectOperator() == SelectOperator::SelectDistinct);
 }
 
+void SelectStatementTest::setTableTest()
+{
+  using Sql::SelectStatement;
+  using Sql::SelectTable;
+  using Sql::Schema::Table;
+
+  Schema::Client client;
+  SelectStatement stm;
+  SelectTable Client(client);
+  SelectTable CLI(client, "CLI");
+
+  // Set with SelectTable - No alias
+  stm.setFromTable(Client);
+  QCOMPARE( stm.fromClause().table().tableName() , QString("Client_tbl") );
+  QVERIFY( stm.fromClause().table().alias().isEmpty() );
+  stm.setTable(Client);
+  QCOMPARE( stm.fromClause().table().tableName() , QString("Client_tbl") );
+  QVERIFY( stm.fromClause().table().alias().isEmpty() );
+  // Set with SelectTable - With alias
+  stm.setFromTable(CLI);
+  QCOMPARE( stm.fromClause().table().tableName() , QString("Client_tbl") );
+  QCOMPARE( stm.fromClause().table().alias() , QString("CLI") );
+  stm.setTable(CLI);
+  QCOMPARE( stm.fromClause().table().tableName() , QString("Client_tbl") );
+  QCOMPARE( stm.fromClause().table().alias() , QString("CLI") );
+  // Set with Table
+  Table A;
+  A.setTableName("A");
+  stm.setFromTable(A);
+  QCOMPARE( stm.fromClause().table().tableName() , QString("A") );
+  QVERIFY( stm.fromClause().table().alias().isEmpty() );
+  stm.setTable(A);
+  QCOMPARE( stm.fromClause().table().tableName() , QString("A") );
+  QVERIFY( stm.fromClause().table().alias().isEmpty() );
+  // Set with TableTemplate
+  stm.setFromTable(client);
+  QCOMPARE( stm.fromClause().table().tableName() , QString("Client_tbl") );
+  QVERIFY( stm.fromClause().table().alias().isEmpty() );
+  stm.setTable(client);
+  QCOMPARE( stm.fromClause().table().tableName() , QString("Client_tbl") );
+  QVERIFY( stm.fromClause().table().alias().isEmpty() );
+}
+
 void SelectStatementTest::addFieldTest()
 {
   using Sql::SelectStatement;

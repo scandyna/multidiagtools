@@ -67,5 +67,4 @@ JoinConstraintFieldPairList JoinConstraintFieldPairList::fromTables(const Select
   return fpList;
 }
 
-
 }} // namespace Mdt{ namespace Sql{

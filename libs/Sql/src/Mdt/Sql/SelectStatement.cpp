@@ -21,6 +21,7 @@
 #include "SelectStatement.h"
 #include "Schema/Field.h"
 #include "Schema/AutoIncrementPrimaryKey.h"
+#include "Schema/Table.h"
 
 namespace Mdt{ namespace Sql{
 
@@ -63,6 +64,13 @@ void SelectStatement::setFromTable(const SelectTable & table)
   Q_ASSERT(!table.isNull());
 
   mFromClause.setTable(table);
+}
+
+void SelectStatement::setFromTable(const Schema::Table & table)
+{
+  Q_ASSERT(!table.tableName().isEmpty());
+
+  mFromClause.setTable(SelectTable(table));
 }
 
 void SelectStatement::joinTable(const SelectTable & table, const JoinConstraintExpression & expr)

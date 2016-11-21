@@ -39,7 +39,6 @@ class JoinConstraintFieldPairTest : public QObject
   void fieldPairTest();
   void fieldPairListTest();
 
-  void fromForeignKeyTest();
   void fromTablesTest();
 
   void sqlTransformTest();
