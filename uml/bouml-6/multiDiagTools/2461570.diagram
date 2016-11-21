@@ -8,14 +8,6 @@ classcanvas 128898 class_ref 2775554 // PrimaryKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 40.9 720.1 2005
 end
-classcanvas 131970 class_ref 2893698 // ParentTableFieldName
-  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 751.4 218 2000
-end
-classcanvas 132226 class_ref 2893826 // ChildTableFieldName
-  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 351.2 594.8 2000
-end
 classcanvas 133506 class_ref 3443970 // ForeignFieldList
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 330.4 42.2 2000
@@ -44,18 +36,6 @@ classcanvas 135042 class_ref 3443970 // ForeignFieldList
   classdiagramsettings hide_operations yes member_max_width 0 end
   xyz 714.4 410 2005
 end
-relationcanvas 132098 relation_ref 3273346 // <dependency>
-  decenter_begin 47
-  decenter_end 666
-  from ref 128002 z 2001 to ref 131970
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 132354 relation_ref 3273474 // <dependency>
-  from ref 128002 z 2001 to ref 132226
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 relationcanvas 133762 relation_ref 3816706 // <dependency>
   geometry VH unfixed
   from ref 128002 z 2001 to point 420 158
@@ -72,11 +52,6 @@ relationcanvas 134274 relation_ref 3816834 // <directional composition>
   decenter_begin 949
   decenter_end 228
   from ref 128002 z 2007 to ref 134018
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 134658 relation_ref 3816962 // <dependency>
-  from ref 128002 z 2012 to ref 134530
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

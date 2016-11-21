@@ -26,8 +26,6 @@
 #include "Mdt/Sql/SelectTable.h"
 #include "Mdt/Sql/Schema/ForeignTable.h"
 #include "Mdt/Sql/Schema/ForeignKey.h"
-#include "Mdt/Sql/Schema/ParentTableFieldName.h"
-#include "Mdt/Sql/Schema/ChildTableFieldName.h"
 #include "Mdt/Sql/Schema/AutoIncrementPrimaryKey.h"
 #include "Mdt/Sql/Schema/PrimaryKey.h"
 #include "Mdt/Sql/Schema/Table.h"
@@ -87,8 +85,6 @@ void JoinConstraintFieldPairTest::fieldPairListTest()
 void JoinConstraintFieldPairTest::fromForeignKeyTest()
 {
   using Sql::JoinConstraintFieldPairList;
-//   using Sql::Schema::ParentTableFieldName;
-//   using Sql::Schema::ChildTableFieldName;
   using Sql::Schema::ForeignKey;
 
   /*

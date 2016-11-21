@@ -21,9 +21,6 @@
 #ifndef MDT_SQL_SCHEMA_FOREIGN_KEY_H
 #define MDT_SQL_SCHEMA_FOREIGN_KEY_H
 
-#include "ParentTableFieldName.h"
-#include "ChildTableFieldName.h"
-
 #include "ForeignKeyAction.h"
 #include "ForeignKeySettings.h"
 #include <QString>

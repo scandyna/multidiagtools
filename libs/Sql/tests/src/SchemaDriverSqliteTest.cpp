@@ -558,10 +558,6 @@ void SchemaDriverSqliteTest::tableDefinitionTest()
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
   using Sql::Schema::Table;
-  
-  using Mdt::Sql::Schema::ParentTableFieldName;
-  using Mdt::Sql::Schema::ChildTableFieldName;
-  
   using Sql::Schema::ForeignTable;
   using Sql::Schema::ForeignField;
   using Sql::Schema::FieldList;

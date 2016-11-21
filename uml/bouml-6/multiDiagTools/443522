@@ -1,6 +1,6 @@
 format 211
 "Schema" // Mdt::Sql::Schema
-  revision 115
+  revision 116
   modified_by 2 "philippe"
   // class settings
   
@@ -4185,22 +4185,6 @@ ${inlines}
 	
       end
 
-      classrelation 3291650 // <dependency>
-	relation 3273346 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3291650 // <dependency>
-	  b parent class_ref 2893698 // ParentTableFieldName
-      end
-
-      classrelation 3291778 // <dependency>
-	relation 3273474 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3291778 // <dependency>
-	  b parent class_ref 2893826 // ChildTableFieldName
-      end
-
       classrelation 3291906 // <dependency>
 	relation 3273602 -_->
 	  a public
@@ -4780,177 +4764,6 @@ ${items}};
       end
     end
 
-    class 2893698 "ParentTableFieldName"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 2758914 "FieldName"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 4314882 "ParentTableFieldName"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "pk" type class_ref 2824706 // AutoIncrementPrimaryKey
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4315010 "ParentTableFieldName"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "pk" explicit_type "SingleFieldPrimaryKey"
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4315138 "ParentTableFieldName"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "field" type class_ref 2775042 // Field
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4315266 "fieldName"
-	public return_type class_ref 161026 // QString
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 3299970 // <dependency>
-	relation 3281666 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3299970 // <dependency>
-	  b parent class_ref 2824706 // AutoIncrementPrimaryKey
-      end
-
-      classrelation 3300098 // <dependency>
-	relation 3281794 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3300098 // <dependency>
-	  b parent class_ref 2775042 // Field
-      end
-    end
-
-    class 2893826 "ChildTableFieldName"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 2759042 "FieldName"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 4315650 "ChildTableFieldName"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "field" type class_ref 2775042 // Field
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4315778 "fieldName"
-	public return_type class_ref 161026 // QString
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 3300226 // <dependency>
-	relation 3281922 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3300226 // <dependency>
-	  b parent class_ref 2775042 // Field
-      end
-    end
   end
 
   classview 1320706 "Table"
