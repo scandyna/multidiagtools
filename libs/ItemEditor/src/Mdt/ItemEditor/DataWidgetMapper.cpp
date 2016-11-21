@@ -27,7 +27,7 @@
 #include <QMetaMethod>
 #include <QMetaProperty>
 
-// #include <QDebug>
+#include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -50,12 +50,16 @@ void DataWidgetMapper::setModel(QAbstractItemModel* model)
   }
   if(!pvModel.isNull()){
     disconnect(pvModel, &QAbstractItemModel::dataChanged, this, &DataWidgetMapper::onModelDataChanged);
+    disconnect(pvModel, &QAbstractItemModel::modelReset, this, &DataWidgetMapper::onModelReset);
+//     disconnect(pvModel, &QAbstractItemModel::columnsInserted, this, &DataWidgetMapper::onModelColumnsInserted);
   }
   pvModel = model;
   connect(pvModel, &QAbstractItemModel::dataChanged, this, &DataWidgetMapper::onModelDataChanged);
+  connect(pvModel, &QAbstractItemModel::modelReset, this, &DataWidgetMapper::onModelReset);
+//   connect(pvModel, &QAbstractItemModel::columnsInserted, this, &DataWidgetMapper::onModelColumnsInserted);
   setCurrentRow(-1);
 //   pvCurrentRow = -1;
-//   updateAllMappedWidgets();
+//   updateAllMappedWidgets(true);
 }
 
 QAbstractItemModel* DataWidgetMapper::model() const
@@ -92,7 +96,7 @@ void DataWidgetMapper::addMapping(QWidget* widget, int column)
   pvMappedWidgetList.addWidget(widget, column, hasReadOnlyProperty);
   connectUserPropertyNotifySignal(widget, ConnectAction::Connect);
   widget->installEventFilter(pvDelegate);
-  updateMappedWidget(widget, column, hasReadOnlyProperty);
+  updateMappedWidget(widget, column, hasReadOnlyProperty, true);
 }
 
 void DataWidgetMapper::clearMapping()
@@ -102,7 +106,7 @@ void DataWidgetMapper::clearMapping()
       auto *widget = mw.widget();
       if(widget != nullptr){
         connectUserPropertyNotifySignal(widget, ConnectAction::Disctonnect);
-        updateMappedWidget(widget, -1, mw.hasReadOnlyProperty());
+        updateMappedWidget(widget, -1, mw.hasReadOnlyProperty(), true);
         widget->setEnabled(true);
         widget->removeEventFilter(pvDelegate);
       }
@@ -116,9 +120,13 @@ void DataWidgetMapper::setCurrentRow(int row)
   bool rowHasChanged = (row != pvCurrentRow);
 
   pvCurrentRow = row;
-  updateAllMappedWidgets();
+  ///updateAllMappedWidgets();
   if(rowHasChanged){
+    updateAllMappedWidgets(true);
     emit currentRowChanged(row);
+  }else{
+    updateAllMappedWidgets(false);
+    ///updateAllMappedWidgets(true);
   }
 }
 
@@ -140,7 +148,7 @@ bool DataWidgetMapper::submit()
 
 void DataWidgetMapper::revert()
 {
-  updateAllMappedWidgets();
+  updateAllMappedWidgets(true);
   pvEditionStartNotified = false;
   emit dataEditionDone();
 }
@@ -154,8 +162,10 @@ void DataWidgetMapper::onDataEditionStarted()
   emit dataEditionStarted();
 }
 
-void DataWidgetMapper::onModelDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> &)
+void DataWidgetMapper::onModelDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles)
 {
+//   qDebug() << "onModelDataChanged() - topLeftData: " << pvModel->data(topLeft) << " - roles: " << roles;
+
   if(topLeft.parent().isValid()){
     return;
   }
@@ -166,10 +176,21 @@ void DataWidgetMapper::onModelDataChanged(const QModelIndex & topLeft, const QMo
     // Update current widget if its column is in range topLeft, bottomRight
     int column = mw.column();
     if( (column >= topLeft.column()) && (column <= bottomRight.column()) ){
-      updateMappedWidget(mw.widget(), column, mw.hasReadOnlyProperty());
+      updateMappedWidget(mw.widget(), column, mw.hasReadOnlyProperty(), true);
     }
   }
 }
+
+void DataWidgetMapper::onModelReset()
+{
+  qDebug() << "onModelReset()";
+  setCurrentRow(-1);
+}
+
+// void DataWidgetMapper::onModelColumnsInserted(const QModelIndex& parent, int first, int last)
+// {
+//   qDebug() << "onModelColumnsInserted() - first: " << first << " , last: " << last;
+// }
 
 void DataWidgetMapper::connectUserPropertyNotifySignal(QWidget*const widget, DataWidgetMapper::ConnectAction ca)
 {
@@ -191,7 +212,7 @@ void DataWidgetMapper::connectUserPropertyNotifySignal(QWidget*const widget, Dat
   }
 }
 
-void DataWidgetMapper::updateMappedWidget(QWidget * const widget, int column, bool hasReadOnlyProperty)
+void DataWidgetMapper::updateMappedWidget(QWidget * const widget, int column, bool hasReadOnlyProperty, bool updateDataFromModel)
 {
   Q_ASSERT(!pvModel.isNull());
   Q_ASSERT(!pvDelegate.isNull());
@@ -201,7 +222,9 @@ void DataWidgetMapper::updateMappedWidget(QWidget * const widget, int column, bo
   }
   pvUpdatingMappedWidget = true;
   auto index = pvModel->index(pvCurrentRow, column);
-  pvDelegate->setEditorData(widget, index);
+  if(updateDataFromModel){
+    pvDelegate->setEditorData(widget, index);
+  }
   /*
    * On invalid index, widget must allways be disabled,
    * else, if editable flag is not set, and widget has not readOnly property,
@@ -221,10 +244,10 @@ void DataWidgetMapper::updateMappedWidget(QWidget * const widget, int column, bo
   pvUpdatingMappedWidget = false;
 }
 
-void DataWidgetMapper::updateAllMappedWidgets()
+void DataWidgetMapper::updateAllMappedWidgets(bool updateDataFromModel)
 {
   for(const auto & mw : pvMappedWidgetList){
-    updateMappedWidget(mw.widget(), mw.column(), mw.hasReadOnlyProperty());
+    updateMappedWidget(mw.widget(), mw.column(), mw.hasReadOnlyProperty(), updateDataFromModel);
   }
 }
 

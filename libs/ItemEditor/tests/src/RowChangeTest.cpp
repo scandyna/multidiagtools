@@ -24,7 +24,7 @@
 #include "Mdt/ItemEditor/RowState.h"
 #include "Mdt/ItemEditor/RowChangeEventDispatcher.h"
 #include "Mdt/ItemEditor/ItemSelectionModel.h"
-// #include "Mdt/ItemEditor/NavigationActions.h"
+#include "Mdt/ItemEditor/TableViewController.h"
 #include <QSignalSpy>
 #include <QItemSelectionModel>
 #include <QStringListModel>
@@ -33,6 +33,8 @@
 
 #include <QDebug>
 
+namespace ItemEditor = Mdt::ItemEditor;
+
 void RowChangeTest::initTestCase()
 {
 }
@@ -40,7 +42,6 @@ void RowChangeTest::initTestCase()
 void RowChangeTest::cleanupTestCase()
 {
 }
-
 
 /*
  * Tests
@@ -154,8 +155,9 @@ void RowChangeTest::eventDispatcherTest()
 {
   using Mdt::ItemEditor::RowState;
   using Mdt::ItemEditor::RowChangeEventDispatcher;
+  using Mdt::ItemEditor::TableViewController;
 
-  RowChangeEventDispatcher dispatcher;
+  RowChangeEventDispatcher dispatcher(new TableViewController);
   QList<QVariant> spyItem;
   QStringListModel model;
   QModelIndex index;
@@ -399,10 +401,11 @@ void RowChangeTest::eventDispatcherTest()
 
 void RowChangeTest::eventDispatcherInsertTest()
 {
-  using Mdt::ItemEditor::RowState;
-  using Mdt::ItemEditor::RowChangeEventDispatcher;
+  using ItemEditor::RowState;
+  using ItemEditor::RowChangeEventDispatcher;
+  using ItemEditor::TableViewController;
 
-  RowChangeEventDispatcher dispatcher;
+  RowChangeEventDispatcher dispatcher(new TableViewController);
   QList<QVariant> spyItem;
   QStringListModel model;
   QModelIndex index;
@@ -534,10 +537,11 @@ void RowChangeTest::eventDispatcherInsertTest()
 
 void RowChangeTest::eventDispatcherRemoveTest()
 {
-  using Mdt::ItemEditor::RowState;
-  using Mdt::ItemEditor::RowChangeEventDispatcher;
+  using ItemEditor::RowState;
+  using ItemEditor::RowChangeEventDispatcher;
+  using ItemEditor::TableViewController;
 
-  RowChangeEventDispatcher dispatcher;
+  RowChangeEventDispatcher dispatcher(new TableViewController);
   QList<QVariant> spyItem;
   QStringListModel model;
   QModelIndex index;

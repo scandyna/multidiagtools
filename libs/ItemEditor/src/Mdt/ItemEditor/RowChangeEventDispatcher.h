@@ -30,6 +30,8 @@ class QAbstractItemModel;
 
 namespace Mdt{ namespace ItemEditor{
 
+  class AbstractController;
+
   /*! \brief RowChangeEventDispatcher receives row change events from different objects and signal them when appropriate
    *
    * A RowState contains informations about row count and current row.
@@ -79,7 +81,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Constructor
      */
-    explicit RowChangeEventDispatcher(QObject* parent = nullptr);
+    explicit RowChangeEventDispatcher(AbstractController *controller);
 
     // Copy disabled
     RowChangeEventDispatcher(const RowChangeEventDispatcher &) = delete;
@@ -102,6 +104,13 @@ namespace Mdt{ namespace ItemEditor{
      * \pre row must be < rowCount()
      */
     void setCurrentRow(int row);
+
+    /*! \brief Get current row state
+     */
+    RowState currentRowState() const
+    {
+      return pvRowState;
+    }
 
     /*! \brief Get row count
      */
@@ -149,6 +158,7 @@ namespace Mdt{ namespace ItemEditor{
 
     RowState pvRowState;
     QPointer<QAbstractItemModel> pvModel;
+    QPointer<AbstractController> mController;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

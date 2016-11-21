@@ -157,8 +157,8 @@ void DataWidgetMapperTest::setModelTest()
   /*
    * Populate model with 1 column
    *
-   * Note: changing current row when model changes its row count
-   *       is done by the controller.
+   * Note: widget mapper allways goes to row -1 after a model reset.
+   *       The controller then set a appropriate current row.
    */
   model.populate(3, 1);
   QCOMPARE(mapper.currentRow(), -1);
@@ -186,20 +186,22 @@ void DataWidgetMapperTest::setModelTest()
   /*
    * Populate model with 2 columns
    *
-   * Note: widget mapper does not listen to model reset etc..
-   *       The controller do this, and it will set mapper's current row.
+   * Note: widget mapper allways goes to row -1 after a model reset.
+   *       The controller then set a appropriate current row.
    */
   model.populate(3, 2);
-  QCOMPARE(mapper.currentRow(), 0);
-  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 1);
+  QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), -1);
   QCOMPARE(editStartedSpy.count(), 0);
-  // Go to first row again
+  // Go to first row
   mapper.setCurrentRow(0);
   // Check that current row changed was not signaled
-  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(rowChangedSpy.count(), 1);
+  QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), 0);
   // Check that no edition started was signaled
   QCOMPARE(editStartedSpy.count(), 0);
-  // Check thhat editors state was updated
+  // Check that editors state was updated
   QVERIFY(edit0.isEnabled());
   QVERIFY(edit1.isEnabled());
   index = model.index(0, 0);

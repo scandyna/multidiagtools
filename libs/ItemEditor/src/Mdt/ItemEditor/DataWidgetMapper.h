@@ -93,7 +93,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Adds a mapping between a widget and a column from the model
      *
-     * Once widget is mapped, data will be excanged between model and widget
+     * Once widget is mapped, data will be exchanged between model and widget
      *  using this mapper's delegate.
      *  If this mapper refers to a invalid index, widget will be disabled.
      *
@@ -167,6 +167,17 @@ namespace Mdt{ namespace ItemEditor{
      */
     void onModelDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles);
 
+    /*! \brief Called from model after a reset
+     *
+     * Will allways place the mapper to currentRow -1
+     * (Controller can then set currentRow to a appropriate row)
+     */
+    void onModelReset();
+
+    /*! \brief Called when model has new columns inserted
+     */
+//     void onModelColumnsInserted(const QModelIndex & parent, int first, int last);
+
    private:
 
     enum class ConnectAction
@@ -181,11 +192,11 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Update editor
      */
-    void updateMappedWidget(QWidget * const widget, int column, bool hasReadOnlyProperty);
+    void updateMappedWidget(QWidget * const widget, int column, bool hasReadOnlyProperty, bool updateDataFromModel);
 
     /*! \brief Update all mapped widgets
      */
-    void updateAllMappedWidgets();
+    void updateAllMappedWidgets(bool updateDataFromModel);
 
     /*! \brief Commit widget's data to model
      */

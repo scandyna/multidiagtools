@@ -615,6 +615,10 @@ void ControllerTest::tableViewControllerInsertFromModelTest()
   QVERIFY(controller.insert());
   QCOMPARE(controller.rowCount(), 2);
   QCOMPARE(controller.currentRow(), 0);
+  
+  view.show();
+  QTest::qWait(2000);
+
   /*
    * Begin editing
    */
@@ -622,11 +626,20 @@ void ControllerTest::tableViewControllerInsertFromModelTest()
   QVERIFY(index.isValid());
   beginEditing(view, index, BeginEditTrigger::DoubleClick);
   QVERIFY(controller.controllerState() == ControllerState::Editing);
+  
+  QTest::qWait(2000);
+  
   editText(view, index, "ABCD");
+  
+  QTest::qWait(2000);
+  
   /*
    * Insert at end of model
    */
   QVERIFY(model.insertRow(2));
+  
+  QTest::qWait(2000);
+  
   QVERIFY(controller.controllerState() == ControllerState::Editing);
   QCOMPARE(controller.rowCount(), 3);
   QCOMPARE(controller.currentRow(), 0);
@@ -1111,18 +1124,28 @@ void ControllerTest::widgetMapperControllerInsertTest()
   controller.addMapping(&editor0, 0);
   QCOMPARE(controller.rowCount(), 0);
   QCOMPARE(controller.currentRow(), -1);
+  QVERIFY(!editor0.isEnabled());
+  
+  editor0.show();
+  QTest::qWait(2000);
+  
   /*
    * Insert at beginning
    */
   QVERIFY(controller.insert());
+  
+  QTest::qWait(2000);
+  
   QCOMPARE(controller.rowCount(), 1);
   QCOMPARE(controller.currentRow(), 0);
+  QVERIFY(editor0.isEnabled());
   /*
    * Insert at beginning
    */
   QVERIFY(controller.insert());
   QCOMPARE(controller.rowCount(), 2);
   QCOMPARE(controller.currentRow(), 0);
+  QVERIFY(editor0.isEnabled());
   /*
    * Insert at end
    */
@@ -1131,6 +1154,7 @@ void ControllerTest::widgetMapperControllerInsertTest()
   QVERIFY(controller.insert());
   QCOMPARE(controller.rowCount(), 3);
   QCOMPARE(controller.currentRow(), 2);
+  QVERIFY(editor0.isEnabled());
 }
 
 void ControllerTest::widgetMapperControllerInsertFromModelTest()
@@ -1154,6 +1178,10 @@ void ControllerTest::widgetMapperControllerInsertFromModelTest()
   controller.addMapping(&editor0, 0);
   QCOMPARE(controller.rowCount(), 0);
   QCOMPARE(controller.currentRow(), -1);
+  
+  editor0.show();
+  QTest::qWait(2000);
+  
   /*
    * Insert at beginning
    */
@@ -1164,12 +1192,19 @@ void ControllerTest::widgetMapperControllerInsertFromModelTest()
   /*
    * Begin editing
    */
+  QTest::qWait(2000);
+  
   editor0.setText("ABCD");
   QVERIFY(controller.controllerState() == ControllerState::Editing);
   /*
    * Insert at end in model
    */
+  QTest::qWait(2000);
+  
   QVERIFY(model.insertRow(2));
+  
+  QTest::qWait(2000);
+  
   QVERIFY(controller.controllerState() == ControllerState::Editing);
   QCOMPARE(controller.rowCount(), 3);
   QCOMPARE(controller.currentRow(), 0);

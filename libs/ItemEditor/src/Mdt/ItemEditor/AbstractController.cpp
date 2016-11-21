@@ -133,15 +133,22 @@ bool AbstractController::insert()
     qDebug() << "Not allowed to insert..";
     return false;
   }
+  bool ok = false;
   switch(pvInsertLocation){
     case InsertAtBeginning:
-      return pvModel->insertRow(0);
+      ok = pvModel->insertRow(0);
+      break;
     case InsertAtEnd:
       /// \todo Fetch all
-      return pvModel->insertRow( rowCount() );
+      ok = pvModel->insertRow( rowCount() );
+      break;
   }
+  if(!ok){
+    return false;
+  }
+  ///updateRowState(pvRowChangeEventDispatcher->currentRowState());
 
-  return false;
+  return true;
 }
 
 bool AbstractController::remove()

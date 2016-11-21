@@ -19,14 +19,18 @@
  **
  ****************************************************************************/
 #include "RowChangeEventDispatcher.h"
+#include "AbstractController.h"
+#include "ControllerStatePermission.h"
 
-// #include <QDebug>
+#include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
-RowChangeEventDispatcher::RowChangeEventDispatcher(QObject* parent)
- : QObject(parent)
+RowChangeEventDispatcher::RowChangeEventDispatcher(AbstractController *controller)
+ : QObject(controller),
+   mController(controller)
 {
+  Q_ASSERT(!mController.isNull());
 }
 
 QAbstractItemModel* RowChangeEventDispatcher::model() const
@@ -95,11 +99,15 @@ void RowChangeEventDispatcher::onModelReset()
 
 void RowChangeEventDispatcher::onRowsInserted(const QModelIndex& /*parent*/, int /*first*/, int last)
 {
+  Q_ASSERT(!mController.isNull());
   Q_ASSERT(!pvModel.isNull());
 
-  /// \todo Must check if current row can change before emit !
   pvRowState.setRowCount(pvModel->rowCount());
-  pvRowState.setCurrentRow(last);
+  if(ControllerStatePermission::canChangeCurrentRow(mController->controllerState())){
+    pvRowState.setCurrentRow(last);
+  }
+  qDebug() << "RowChangeEventDispatcher::onRowsInserted() - rows: " << pvRowState.rowCount() << " , current: " << pvRowState.currentRow();
+
   emit rowStateUpdated(pvRowState);
 }
 
