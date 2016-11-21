@@ -30,17 +30,17 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    * TableTemplate is a wraper of Table that permit to define
    *  a schema table.
    *
-   * Example of Client_tbl.h:
-   * \include libs/Sql/tests/src/Schema/Client_tbl.h
+   * Example of Client.h:
+   * \include libs/Sql/tests/src/Schema/Client.h
    *
-   * Client_tbl.cpp would look like this:
-   * \include libs/Sql/tests/src/Schema/Client_tbl.cpp
+   * Client.cpp would look like this:
+   * \include libs/Sql/tests/src/Schema/Client.cpp
    *
-   * Example of Address_tbl.h:
-   * \include libs/Sql/tests/src/Schema/Address_tbl.h
+   * Example of Address.h:
+   * \include libs/Sql/tests/src/Schema/Address.h
    *
-   * Address_tbl.cpp would look like this:
-   * \include libs/Sql/tests/src/Schema/Address_tbl.cpp
+   * Address.cpp would look like this:
+   * \include libs/Sql/tests/src/Schema/Address.cpp
    */
   template<typename Derived>
   class TableTemplate

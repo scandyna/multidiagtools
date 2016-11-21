@@ -42,6 +42,8 @@ class SchemaTableTest : public QObject
 
   void tablePrimaryKeyAicBenchmark();
   void tablePrimaryKeyMcBenchmark();
+  void createClientTableBenchmark();
+  void createAddressTableBenchmark();
   void tableTest();
   void tableModelTest();
   void tableListTest();

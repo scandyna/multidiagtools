@@ -24,8 +24,8 @@
 #include "Mdt/Sql/Schema/ForeignTable.h"
 #include "Mdt/Sql/Schema/TableModel.h"
 #include "Mdt/Sql/Schema/TableList.h"
-#include "Schema/Client_tbl.h"
-#include "Schema/Address_tbl.h"
+#include "Schema/Client.h"
+#include "Schema/Address.h"
 #include <QComboBox>
 #include <QTableView>
 #include <QTreeView>
@@ -418,7 +418,7 @@ void SchemaTableTest::setForeignKeySingleFieldTest()
   using Sql::Schema::ForeignKeySettings;
   using Sql::Schema::ForeignKeyAction;
 
-  Schema::Client_tbl client;
+  Schema::Client client;
   /*
    * Setup fields
    */
@@ -629,6 +629,40 @@ void SchemaTableTest::tablePrimaryKeyMcBenchmark()
   }
 }
 
+void SchemaTableTest::createClientTableBenchmark()
+{
+  QString tableName;
+  QString idPkFieldName;
+  QString nameFieldName;
+
+  QBENCHMARK{
+    Schema::Client client;
+    tableName = client.tableName();
+    idPkFieldName = client.Id_PK().fieldName();
+    nameFieldName = client.Name().name();
+  }
+  QCOMPARE(tableName, QString("Client_tbl"));
+  QCOMPARE(idPkFieldName, QString("Id_PK"));
+  QCOMPARE(nameFieldName, QString("Name"));
+}
+
+void SchemaTableTest::createAddressTableBenchmark()
+{
+  QString tableName;
+  QString idPkFieldName;
+  QString streetFieldName;
+
+  QBENCHMARK{
+    Schema::Address address;
+    tableName = address.tableName();
+    idPkFieldName = address.Id_PK().fieldName();
+    streetFieldName = address.Street().name();
+  }
+  QCOMPARE(tableName, QString("Address_tbl"));
+  QCOMPARE(idPkFieldName, QString("Id_PK"));
+  QCOMPARE(streetFieldName, QString("Street"));
+}
+
 void SchemaTableTest::tableTest()
 {
   using Sql::Schema::Table;
@@ -767,7 +801,7 @@ void SchemaTableTest::tableListTest()
   using Sql::Schema::Table;
   using Sql::Schema::TableList;
 
-  Schema::Client_tbl client;
+  Schema::Client client;
   TableList list;
 
   /*
@@ -799,7 +833,6 @@ void SchemaTableTest::tableModelTest()
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
   using Sql::Schema::AutoIncrementPrimaryKey;
-//   using Sql::Schema::SingleFieldPrimaryKey;
   using Sql::Schema::PrimaryKey;
 
   QModelIndex index;
@@ -890,7 +923,7 @@ void SchemaTableTest::tableModelTest()
   /*
    * Check with Client_tbl defined in Schema
    */
-  model.setTable(Schema::Client_tbl().toTable());
+  model.setTable(Schema::Client().toTable());
   QCOMPARE(model.rowCount(), 4);
   /*
    * Play

@@ -23,8 +23,8 @@
 #include "Mdt/Sql/Schema/View.h"
 #include "Mdt/Sql/Schema/ViewSqlTransform.h"
 #include "Mdt/Sql/Schema/ViewList.h"
-#include "Schema/Client_tbl.h"
-#include "Schema/Address_tbl.h"
+#include "Schema/Client.h"
+#include "Schema/Address.h"
 #include "Schema/ClientAddressView.h"
 #include <QSqlDatabase>
 #include <QComboBox>
@@ -136,8 +136,8 @@ void SchemaViewTest::joinTest()
   using Sql::JoinConstraintField;
   using Sql::JoinOperator;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   SelectTable CLI(client, "CLI");
   SelectTable CLI3(client, "CLI3");
   SelectTable CLI6(client, "CLI6");
@@ -195,8 +195,8 @@ void SchemaViewTest::createViewSqlTransformTest()
   using Sql::SelectTable;
   using Sql::TableName;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   auto db = mDatabase;
   QString expectedSql;
   SelectTable CLI(client, "CLI");

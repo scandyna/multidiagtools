@@ -25,7 +25,7 @@
 #include "Mdt/Sql/Expression/Comparison.h"
 #include "Mdt/Sql/Expression/TerminalSqlTransform.h"
 #include "Mdt/Sql/Expression/ComparisonSqlTransform.h"
-#include "Schema/Client_tbl.h"
+#include "Schema/Client.h"
 #include <QSqlDatabase>
 #include <boost/proto/matches.hpp>
 #include <boost/proto/literal.hpp>
@@ -189,7 +189,7 @@ void ExpressionTest::fieldTest()
   QCOMPARE( boost::proto::_value()(B).tableName(), QString("B"));
   QCOMPARE( boost::proto::_value()(B).fieldName(), QString("b_field"));
   // Create from a select table and a field
-  Schema::Client_tbl client;
+  Schema::Client client;
   SelectTable CLI(client, "CLI");
   TestTerminal clientId(CLI, client.Id_PK());
   QCOMPARE( boost::proto::_value()(clientId).tableName(), QString("CLI"));

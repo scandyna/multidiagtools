@@ -7,8 +7,12 @@ enable_testing()
 #================= SQL test library ====================
 
 set(SOURCES_FILES
-    src/Schema/Client_tbl.cpp
-    src/Schema/Address_tbl.cpp
+#     src/Schema/Client_tbl.cpp
+#     src/Schema/Address_tbl.cpp
+    src/Schema/Client.cpp
+    src/Schema/Client2.cpp
+    src/Schema/Address.cpp
+    src/Schema/Address2.cpp
     src/Schema/ClientAddressView.cpp
     src/Schema/TestSchema.cpp
 )

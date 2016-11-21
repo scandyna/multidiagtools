@@ -19,8 +19,8 @@
  **
  ****************************************************************************/
 #include "SimpleTypesTest.h"
-#include "Schema/Client_tbl.h"
-#include "Schema/Address_tbl.h"
+#include "Schema/Client.h"
+#include "Schema/Address.h"
 #include "Mdt/Application.h"
 #include "Mdt/Sql/FieldName.h"
 #include "Mdt/Sql/TableName.h"
@@ -75,7 +75,7 @@ void SimpleTypesTest::selectTableTest()
 
   Table Connector_tbl;
   Connector_tbl.setTableName("Connector_tbl");
-  Schema::Client_tbl client;
+  Schema::Client client;
 
   // Must not compile
 //   SelectTable Bug("Bug");
@@ -186,11 +186,11 @@ void SimpleTypesTest::selectTableForeignKeyTest()
    * Check with table template
    */
   // Client
-  Schema::Client_tbl client;
+  Schema::Client client;
   SelectTable CLI(client, "CLI");
   QCOMPARE(CLI.aliasOrTableName(), QString("CLI"));
   // Address
-  Schema::Address_tbl address;
+  Schema::Address address;
   SelectTable ADR(address, "ADR");
   QCOMPARE(ADR.aliasOrTableName(), QString("ADR"));
   fk = ADR.foreignKeyReferencing(CLI);

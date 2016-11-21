@@ -23,8 +23,8 @@
 #include "Mdt/Sql/Schema/Driver.h"
 #include "Mdt/Sql/Schema/DriverSQLite.h"
 #include "Mdt/Sql/Schema/ForeignTable.h"
-#include "Schema/Client_tbl.h"
-#include "Schema/Address_tbl.h"
+#include "Schema/Client.h"
+#include "Schema/Address.h"
 #include "Schema/ClientAddressView.h"
 #include "Schema/TestSchema.h"
 #include <QSqlDatabase>
@@ -480,8 +480,8 @@ void SchemaDriverSqliteTest::foreignKeyDefinitionTest()
 
   Sql::Schema::DriverSQLite driver(mDatabase);
   QString expectedSql;
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   ForeignKey fk;
 
   /*
@@ -839,7 +839,7 @@ void SchemaDriverSqliteTest::simpleCreateAndDropTableTest()
 
   Mdt::Sql::Schema::Driver driver(mDatabase);
   QVERIFY(driver.isValid());
-  Schema::Client_tbl client_tbl;
+  Schema::Client client_tbl;
 
   /*
    * Here we simply check that we can create and drop a table.
@@ -1326,8 +1326,8 @@ void SchemaDriverSqliteTest::simpleCreateAndDropViewTest()
   Mdt::Sql::Schema::Driver driver(mDatabase);
   QVERIFY(driver.isValid());
   Schema::ClientAdrressView view;
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
 
   // Create tables
   QVERIFY(driver.createTable(client));
@@ -1363,7 +1363,7 @@ void SchemaDriverSqliteTest::triggerDefinitionTest()
   trigger.setTemporary(true);
   trigger.setName("TestTrigger");
   trigger.setEvent(Trigger::AfterInsert);
-  trigger.setTable(Schema::Client_tbl());
+  trigger.setTable(Schema::Client());
   trigger.setScript(" UPDATE Client_tbl SET Name = 'Some name';");
   // Check SQL for DROP
   expectedSql = "DROP TRIGGER IF EXISTS \"TestTrigger\";";
@@ -1383,7 +1383,7 @@ void SchemaDriverSqliteTest::simpleTriggerCreateDropTest()
 
   Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
   Trigger trigger;
-  Schema::Client_tbl client;
+  Schema::Client client;
   QSqlQuery query(mDatabase);
 
   /*
@@ -1428,7 +1428,7 @@ void SchemaDriverSqliteTest::tablePopulationTest()
   using Mdt::Sql::Schema::TablePopulation;
 
   Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
-  Schema::Client_tbl client;
+  Schema::Client client;
   QSqlQuery query(mDatabase);
   TablePopulation tp;
 

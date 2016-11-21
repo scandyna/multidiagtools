@@ -26,8 +26,8 @@
 #include "Mdt/Sql/JoinClauseItemListSqlTransform.h"
 #include "Mdt/Sql/JoinClause.h"
 #include "Mdt/Sql/JoinClauseSqlTransform.h"
-#include "Schema/Client_tbl.h"
-#include "Schema/Address_tbl.h"
+#include "Schema/Client.h"
+#include "Schema/Address.h"
 
 namespace Sql = Mdt::Sql;
 /*
@@ -59,8 +59,8 @@ void JoinClauseTest::joinClauseItemTest()
   using Sql::SelectTable;
   using Sql::JoinConstraintField;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   SelectTable CLI(client, "CLI");
   SelectTable ADR(address, "ADR");
   JoinConstraintField clientId(CLI, client.Id_PK());
@@ -82,8 +82,8 @@ void JoinClauseTest::joinClauseItemSqlTransformTest()
   using Sql::SelectTable;
   using Sql::JoinConstraintField;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   SelectTable CLI(client, "CLI");
   SelectTable ADR(address, "ADR");
   SelectTable ADR2(address);
@@ -113,8 +113,8 @@ void JoinClauseTest::autoJoinClauseItemTest()
   using Sql::JoinOperator;
   using Sql::SelectTable;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   SelectTable CLI(client, "CLI");
   SelectTable ADR(address, "ADR");
 
@@ -133,8 +133,8 @@ void JoinClauseTest::autoJoinClauseItemSqlTransformTest()
   using Sql::JoinOperator;
   using Sql::SelectTable;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   SelectTable CLI(client, "CLI");
   SelectTable ADR(address, "ADR");
   QString expectedSql;
@@ -157,8 +157,8 @@ void JoinClauseTest::joinClauseItemListTest()
   using Sql::SelectTable;
   using Sql::JoinConstraintField;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   SelectTable CLI(client, "CLI");
   SelectTable ADR1(address, "ADR1");
   SelectTable ADR2(address, "ADR2");
@@ -194,8 +194,8 @@ void JoinClauseTest::joinClauseItemListSqlTransformTest()
   using Sql::SelectTable;
   using Sql::JoinConstraintField;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   SelectTable CLI(client, "CLI");
   SelectTable ADR1(address, "ADR1");
   SelectTable ADR2(address, "ADR2");
@@ -224,8 +224,8 @@ void JoinClauseTest::joinClauseTest()
   using Sql::SelectTable;
   using Sql::JoinConstraintField;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   SelectTable CLI(client, "CLI");
   SelectTable CLI3(client, "CLI3");
   SelectTable ADR1(address, "ADR1");
@@ -262,8 +262,8 @@ void JoinClauseTest::joinClauseSqlTransformTest()
   using Sql::SelectTable;
   using Sql::JoinConstraintField;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   SelectTable CLI(client, "CLI");
   SelectTable CLI3(client, "CLI3");
   SelectTable ADR1(address, "ADR1");

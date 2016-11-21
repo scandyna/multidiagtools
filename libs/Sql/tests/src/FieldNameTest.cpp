@@ -19,8 +19,8 @@
  **
  ****************************************************************************/
 #include "FieldNameTest.h"
-#include "Schema/Client_tbl.h"
-#include "Schema/Address_tbl.h"
+#include "Schema/Client.h"
+#include "Schema/Address.h"
 #include "Mdt/Application.h"
 #include "Mdt/Sql/FieldName.h"
 #include "Mdt/Sql/FieldNameList.h"

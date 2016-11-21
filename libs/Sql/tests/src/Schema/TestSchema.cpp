@@ -19,19 +19,21 @@
  **
  ****************************************************************************/
 #include "TestSchema.h"
-#include "Client_tbl.h"
-#include "Address_tbl.h"
+#include "Client.h"
+#include "Client2.h"
+#include "Address.h"
+#include "Address2.h"
 #include "ClientAddressView.h"
 
 namespace Schema{
 
 TestSchema::TestSchema()
 {
-  addTable(Client_tbl());
-  addTable(Address_tbl());
+  addTable(Client());
+  addTable(Address());
   addView(ClientAdrressView());
-  addTable(Client2_tbl());
-  addTable(Address2_tbl());
+  addTable(Client2());
+  addTable(Address2());
 }
 
 } // namespace Schema{

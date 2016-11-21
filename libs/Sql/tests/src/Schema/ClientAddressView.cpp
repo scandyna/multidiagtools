@@ -20,8 +20,8 @@
  ****************************************************************************/
 #include "ClientAddressView.h"
 
-#include "Client_tbl.h"
-#include "Address_tbl.h"
+#include "Client.h"
+#include "Address.h"
 
 namespace Schema{
 
@@ -33,8 +33,8 @@ ClientAdrressView::ClientAdrressView()
   using Sql::SelectTable;
 
   // Create instance of our defined entities
-  Client_tbl client;
-  Address_tbl address;
+  Client client;
+  Address address;
 
   // Define tables with their aliases
   SelectTable CLI(client, "CLI");

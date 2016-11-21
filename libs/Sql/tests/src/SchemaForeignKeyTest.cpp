@@ -29,8 +29,8 @@
 #include "Mdt/Sql/Schema/ForeignKeyList.h"
 #include "Mdt/Sql/Schema/Index.h"
 #include "Mdt/Sql/Schema/Table.h"
-#include "Schema/Client_tbl.h"
-#include "Schema/Address_tbl.h"
+#include "Schema/Client.h"
+#include "Schema/Address.h"
 #include <QString>
 #include <QStringList>
 
@@ -162,8 +162,8 @@ void SchemaForeignKeyTest::foreignKeyTableNameTest()
   using Sql::Schema::ForeignKey;
   using Sql::Schema::Table;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   ForeignKey fk;
   /*
    * Set table and foreign table
@@ -241,7 +241,7 @@ void SchemaForeignKeyTest::foreignTableTest()
   using Sql::Schema::ForeignTable;
   using Sql::Schema::Table;
 
-  Schema::Client_tbl client;
+  Schema::Client client;
   Table table;
   table.setTableName("B");
 
@@ -267,7 +267,7 @@ void SchemaForeignKeyTest::foreignFieldTest()
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
 
-  Schema::Client_tbl client;
+  Schema::Client client;
   Field B;
   B.setName("B");
   B.setType(FieldType::Integer);
@@ -298,7 +298,7 @@ void SchemaForeignKeyTest::foreignFieldListTest()
   using Sql::Schema::Field;
   using Sql::Schema::FieldType;
 
-  Schema::Client_tbl client;
+  Schema::Client client;
   Field field;
   field.setType(FieldType::Integer);
   QStringList list;
@@ -346,8 +346,8 @@ void SchemaForeignKeyTest::foreignKeySetFieldsTest()
   using Sql::Schema::ForeignField;
   using Sql::Schema::ForeignFieldList;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   ForeignKey fk;
   /*
    * Set 1 field relation
@@ -427,8 +427,8 @@ void SchemaForeignKeyTest::foreignKeyIsNullTest()
   using Sql::Schema::ForeignField;
   using Sql::Schema::ForeignFieldList;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   /*
    * Initial state
    */
@@ -461,8 +461,8 @@ void SchemaForeignKeyTest::foreignKeyGetIndexTest()
   using Sql::Schema::ForeignField;
   using Sql::Schema::ForeignFieldList;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   ForeignKey fk;
   Index index;
 
@@ -495,8 +495,8 @@ void SchemaForeignKeyTest::foreignKeyListAddTest()
   using Sql::Schema::ForeignKeySettings;
   using Sql::Schema::ForeignKeyAction;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   ForeignKeySettings settings;
   settings.setOnDeleteAction(ForeignKeyAction::Restrict);
   /*
@@ -567,8 +567,8 @@ void SchemaForeignKeyTest::foreignKeyListUpdateTableTest()
   using Sql::Schema::ForeignField;
   using Sql::Schema::ForeignKeySettings;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   ForeignKeyList list;
 
   list.addForeignKey("", address.Client_Id_FK(), ForeignTable(client), ForeignField(client.Id_PK()), ForeignKeySettings());
@@ -657,8 +657,8 @@ void SchemaForeignKeyTest::foreignKeyListIteratorsTest()
   using Sql::Schema::ForeignField;
   using Sql::Schema::ForeignKeySettings;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   ForeignKeyList list;
 
   list.addForeignKey(address.tableName(), address.Client_Id_FK(), ForeignTable(client), ForeignField(client.Id_PK()), ForeignKeySettings());

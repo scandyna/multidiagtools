@@ -24,8 +24,8 @@
 #include "Mdt/Sql/FromClauseSqlTransform.h"
 #include "Mdt/Sql/SelectTable.h"
 #include "Mdt/Sql/TableName.h"
-#include "Schema/Client_tbl.h"
-#include "Schema/Address_tbl.h"
+#include "Schema/Client.h"
+#include "Schema/Address.h"
 #include <QString>
 
 namespace Sql = Mdt::Sql;
@@ -78,8 +78,8 @@ void FromClauseTest::setJoinClauseTest()
   using Sql::SelectTable;
   using Sql::JoinConstraintField;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   SelectTable CLI(client, "CLI");
   SelectTable CLI3(client, "CLI3");
   SelectTable ADR1(address, "ADR1");
@@ -187,8 +187,8 @@ void FromClauseTest::joinClauseSqlTransformTest()
 
   const auto db = mDatabase;
   QString expectedSql;
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   SelectTable CLI(client, "CLI");
   SelectTable CLI3(client, "CLI3");
   SelectTable ADR1(address, "ADR1");
@@ -253,8 +253,8 @@ void FromClauseTest::joinClauseBenchmark()
   QBENCHMARK{
     const auto db = mDatabase;
     QString expectedSql;
-    Schema::Client_tbl client;
-    Schema::Address_tbl address;
+    Schema::Client client;
+    Schema::Address address;
     SelectTable CLI(client, "CLI");
     SelectTable CLI3(client, "CLI3");
     SelectTable ADR1(address, "ADR1");

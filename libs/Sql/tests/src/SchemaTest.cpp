@@ -40,8 +40,8 @@
 #include "Mdt/Sql/Schema/TableList.h"
 #include "Mdt/Sql/Schema/TablePopulation.h"
 #include "Mdt/Sql/Schema/Schema.h"
-#include "Schema/Client_tbl.h"
-#include "Schema/Address_tbl.h"
+#include "Schema/Client.h"
+#include "Schema/Address.h"
 #include "Schema/ClientAddressView.h"
 #include <QSqlDatabase>
 #include <QComboBox>
@@ -223,7 +223,7 @@ void SchemaTest::indexTest()
   /*
    * Check setting table name from user defined table
    */
-  index.setTable(Schema::Address_tbl());
+  index.setTable(Schema::Address());
   QCOMPARE(index.tableName(), QString("Address_tbl"));
   /*
    * Clear
@@ -384,61 +384,11 @@ void SchemaTest::indexListModelTest()
   */
 }
 
-// void SchemaTest::parentTableFieldNameTest()
-// {
-//   using Mdt::Sql::Schema::ParentTableFieldName;
-//   using Mdt::Sql::Schema::AutoIncrementPrimaryKey;
-// //   using Mdt::Sql::Schema::SingleFieldPrimaryKey;
-//   using Mdt::Sql::Schema::Field;
-//   using Mdt::Sql::Schema::FieldType;
-// 
-//   /*
-//    * Setup fields
-//    */
-//   // Id_PK
-//   AutoIncrementPrimaryKey Id_PK;
-//   Id_PK.setFieldName("Id_PK");
-//   // Code_PK
-// //   SingleFieldPrimaryKey Code_PK;
-// //   Code_PK.setFieldName("Code_PK");
-//   // Name
-//   Field Name;
-//   Name.setName("Name");
-//   /*
-//    * Test
-//    */
-//   ParentTableFieldName aic(Id_PK);
-//   QCOMPARE(aic.fieldName(), QString("Id_PK"));
-// //   ParentTableFieldName sfpk(Code_PK);
-// //   QCOMPARE(sfpk.fieldName(), QString("Code_PK"));
-//   ParentTableFieldName f(Name);
-//   QCOMPARE(f.fieldName(), QString("Name"));
-// }
-
-// void SchemaTest::childTableFieldNameTest()
-// {
-//   using Mdt::Sql::Schema::ChildTableFieldName;
-//   using Mdt::Sql::Schema::Field;
-//   using Mdt::Sql::Schema::FieldType;
-// 
-//   /*
-//    * Setup fields
-//    */
-//   // Name
-//   Field Name;
-//   Name.setName("Name");
-//   /*
-//    * Tests
-//    */
-//   ChildTableFieldName f(Name);
-//   QCOMPARE(f.fieldName(), QString("Name"));
-// }
-
 void SchemaTest::tablePopulationTest()
 {
   using Mdt::Sql::Schema::TablePopulation;
 
-  Schema::Client_tbl client;
+  Schema::Client client;
 
   /*
    * Initial state
@@ -489,7 +439,7 @@ void SchemaTest::tablePopulationListTest()
   using Mdt::Sql::Schema::TablePopulation;
   using Mdt::Sql::Schema::TablePopulationList;
 
-  Schema::Client_tbl client;
+  Schema::Client client;
 
   /*
    * Initial state
@@ -519,7 +469,7 @@ void SchemaTest::triggerTest()
 {
   using Mdt::Sql::Schema::Trigger;
 
-  Schema::Client_tbl client;
+  Schema::Client client;
 
   /*
    * Initial state
@@ -587,8 +537,8 @@ void SchemaTest::schemaTest()
   using Mdt::Sql::Schema::Trigger;
 
   Mdt::Sql::Schema::Schema schema;
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   Schema::ClientAdrressView clientAddressView;
   TablePopulation tp;
   Trigger trigger;

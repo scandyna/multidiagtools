@@ -25,8 +25,8 @@
 #include "Mdt/Sql/InsertQuery.h"
 #include "Mdt/Sql/SelectQuery.h"
 #include "Schema/TestSchema.h"
-#include "Schema/Client_tbl.h"
-#include "Schema/Address_tbl.h"
+#include "Schema/Client.h"
+#include "Schema/Address.h"
 
 #include <QDebug>
 
@@ -83,7 +83,7 @@ void QueryTest::insertQueryTest()
   using Mdt::Sql::FieldName;
 
   InsertQueryTest query(pvDatabase);
-  Schema::Client_tbl client;
+  Schema::Client client;
   QString expectedSql;
 
   /*

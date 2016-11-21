@@ -23,8 +23,8 @@
 #include "Mdt/Sql/JoinConstraint.h"
 #include "Mdt/Sql/JoinConstraintSqlTransform.h"
 #include "Mdt/Sql/SelectTable.h"
-#include "Schema/Client_tbl.h"
-#include "Schema/Address_tbl.h"
+#include "Schema/Client.h"
+#include "Schema/Address.h"
 
 namespace Sql = Mdt::Sql;
 
@@ -110,8 +110,8 @@ void JoinConstraintTest::setOnExpressionFromTablesTest()
   using Sql::JoinConstraintOperator;
   using Sql::SelectTable;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   SelectTable CLI(client, "CLI");
   SelectTable ADR(address, "ADR");
 
@@ -140,8 +140,8 @@ void JoinConstraintTest::onExpressionFromTablesSqlTransformTest()
   using Sql::JoinConstraint;
   using Sql::SelectTable;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   SelectTable CLI(client, "CLI");
   SelectTable ADR(address, "ADR");
   QString expectedSql;

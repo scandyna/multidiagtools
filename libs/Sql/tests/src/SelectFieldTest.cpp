@@ -27,7 +27,7 @@
 #include "Mdt/Sql/SelectFieldSqlTransform.h"
 #include "Mdt/Sql/SelectFieldListSqlTransform.h"
 #include "Mdt/Sql/FieldName.h"
-#include "Schema/Client_tbl.h"
+#include "Schema/Client.h"
 
 namespace Sql = Mdt::Sql;
 
@@ -90,7 +90,7 @@ void SelectFieldTest::selectFieldItemSqlTransformTest()
 
   QString expectedSql;
   auto db = mDatabase;
-  Schema::Client_tbl client;
+  Schema::Client client;
   SelectTable Client(client);
   SelectTable CLI(client, "CLI");
 

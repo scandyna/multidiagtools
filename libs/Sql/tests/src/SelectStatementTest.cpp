@@ -26,8 +26,8 @@
 #include "Mdt/Sql/SelectStatementSqlTransform.h"
 #include "Mdt/Sql/Schema/Field.h"
 #include "Mdt/Sql/Schema/AutoIncrementPrimaryKey.h"
-#include "Schema/Client_tbl.h"
-#include "Schema/Address_tbl.h"
+#include "Schema/Client.h"
+#include "Schema/Address.h"
 
 namespace Sql = Mdt::Sql;
 
@@ -188,7 +188,7 @@ void SelectStatementTest::simpleSelectWithSchemaTest()
   using Sql::SelectField;
   using Sql::SelectTable;
 
-  Schema::Client_tbl client;
+  Schema::Client client;
   SelectTable CLI(client, "CLI");
   SelectStatement stm;
 
@@ -206,8 +206,8 @@ void SelectStatementTest::selectJoinTest()
   using Sql::JoinConstraintField;
   using Sql::JoinOperator;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   SelectTable CLI(client, "CLI");
   SelectTable CLI3(client, "CLI3");
   SelectTable CLI6(client, "CLI6");
@@ -252,7 +252,7 @@ void SelectStatementTest::selectFromSqlTransformTest()
   using Sql::SelectTable;
   using Sql::FieldName;
 
-  Schema::Client_tbl client;
+  Schema::Client client;
   SelectTable CLI(client, "CLI");
   auto db = mDatabase;
   QString expectedSql;
@@ -286,8 +286,8 @@ void SelectStatementTest::selectFromJoinSqlTransformTest()
   using Sql::SelectStatement;
   using Sql::SelectTable;
 
-  Schema::Client_tbl client;
-  Schema::Address_tbl address;
+  Schema::Client client;
+  Schema::Address address;
   SelectTable CLI(client, "CLI");
   SelectTable ADR(address, "ADR");
   auto db = mDatabase;
@@ -314,7 +314,7 @@ void SelectStatementTest::selectFromWhereSqlTransformTest()
   using Sql::SelectTable;
   using Sql::WhereField;
 
-  Schema::Client_tbl client;
+  Schema::Client client;
   SelectTable CLI(client, "CLI");
   WhereField clientName(CLI, client.Name());
   auto db = mDatabase;
