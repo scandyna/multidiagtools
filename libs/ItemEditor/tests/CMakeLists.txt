@@ -19,54 +19,28 @@ target_link_libraries(mdtitemeditortest "${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUF
 target_link_libraries(mdtitemeditortest "mdtapplication${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtitemeditortest Qt5::Test)
 
+#=============== Helper functions ===========
+
+# Add a test for this Sql lib
+function(addItemEditorTest testName)
+  set(complteTestName "MdtSql${testName}")
+  set(sourceFilePath "src/${testName}.cpp")
+  string(TOLOWER ${complteTestName} executableName)
+  add_executable(${executableName} ${sourceFilePath})
+  target_link_libraries(${executableName} "mdtitemeditortest")
+  add_test(${complteTestName} ${CMAKE_CURRENT_BINARY_DIR}/${executableName})
+#  message("Test name: ${complteTestName} , src: ${sourceFilePath} , exec: ${executableName}")
+endfunction()
+
 #================= Tests ====================
 
-# Target MdtItemEditorItemModelTest
-add_executable(mdtitemeditoritemmodeltest src/ItemModelTest.cpp)
-target_link_libraries(mdtitemeditoritemmodeltest mdtitemeditortest)
-add_test(MdtItemEditorItemModelTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditoritemmodeltest)
-
-# Target MdtItemEditorItemSelectionModelTest
-add_executable(mdtitemeditoritemselectionmodeltest src/ItemSelectionModelTest.cpp)
-target_link_libraries(mdtitemeditoritemselectionmodeltest mdtitemeditortest)
-add_test(MdtItemEditorItemSelectionModelTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditoritemselectionmodeltest)
-
-# Target MdtItemEditorRowChangeTest
-add_executable(mdtitemeditorrowchangetest src/RowChangeTest.cpp)
-target_link_libraries(mdtitemeditorrowchangetest mdtitemeditortest)
-add_test(MdtItemEditorRowChangeTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditorrowchangetest)
-
-# Target MdtItemEditorActionsTest
-add_executable(mdtitemeditoractionstest src/ActionsTest.cpp)
-target_link_libraries(mdtitemeditoractionstest mdtitemeditortest)
-add_test(MdtItemEditorActionsTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditoractionstest)
-
-# Target MdtItemEditorStandardWidgetsTest
-add_executable(mdtitemeditorstandardwidgetstest src/StandardWidgetsTest.cpp)
-target_link_libraries(mdtitemeditorstandardwidgetstest mdtitemeditortest)
-add_test(MdtItemEditorStandardWidgetsTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditorstandardwidgetstest)
-
-# Target MdtItemEditorItemDelegateTest
-add_executable(mdtitemeditoritemdelegatetest src/ItemDelegateTest.cpp)
-target_link_libraries(mdtitemeditoritemdelegatetest mdtitemeditortest)
-add_test(MdtItemEditorItemDelegateTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditoritemdelegatetest)
-
-# Target MdtItemEditorItemViewTest
-add_executable(mdtitemeditoritemviewtest src/ItemViewTest.cpp)
-target_link_libraries(mdtitemeditoritemviewtest mdtitemeditortest)
-add_test(MdtItemEditorItemViewTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditoritemviewtest)
-
-# Target MdtItemEditorDataWidgetMapperTest
-add_executable(mdtitemeditordatawidgetmappertest src/DataWidgetMapperTest.cpp)
-target_link_libraries(mdtitemeditordatawidgetmappertest mdtitemeditortest)
-add_test(MdtItemEditorDataWidgetMapperTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditordatawidgetmappertest)
-
-# Target MdtItemEditorControllerTest
-add_executable(mdtitemeditorcontrollertest src/ControllerTest.cpp)
-target_link_libraries(mdtitemeditorcontrollertest mdtitemeditortest)
-add_test(MdtItemEditorControllerTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditorcontrollertest)
-
-# Target MdtItemEditorTestEditorTest
-add_executable(mdtitemeditortesteditortest src/TestEditorTest.cpp)
-target_link_libraries(mdtitemeditortesteditortest mdtitemeditortest)
-add_test(MdtItemEditorTestEditorTest ${CMAKE_CURRENT_BINARY_DIR}/mdtitemeditortesteditortest)
+addItemEditorTest("ItemModelTest")
+addItemEditorTest("ItemSelectionModelTest")
+addItemEditorTest("RowChangeTest")
+addItemEditorTest("ActionsTest")
+addItemEditorTest("StandardWidgetsTest")
+addItemEditorTest("ItemDelegateTest")
+addItemEditorTest("ItemViewTest")
+addItemEditorTest("DataWidgetMapperTest")
+addItemEditorTest("ControllerTest")
+addItemEditorTest("TestEditorTest")
