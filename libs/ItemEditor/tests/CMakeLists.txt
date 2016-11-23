@@ -21,9 +21,9 @@ target_link_libraries(mdtitemeditortest Qt5::Test)
 
 #=============== Helper functions ===========
 
-# Add a test for this Sql lib
+# Add a test for this ItemEditor lib
 function(addItemEditorTest testName)
-  set(complteTestName "MdtSql${testName}")
+  set(complteTestName "MdtItemEditor${testName}")
   set(sourceFilePath "src/${testName}.cpp")
   string(TOLOWER ${complteTestName} executableName)
   add_executable(${executableName} ${sourceFilePath})
@@ -44,3 +44,5 @@ addItemEditorTest("ItemViewTest")
 addItemEditorTest("DataWidgetMapperTest")
 addItemEditorTest("ControllerTest")
 addItemEditorTest("TestEditorTest")
+addItemEditorTest("FilterExpressionTest")
+addItemEditorTest("FilterProxyModelTest")

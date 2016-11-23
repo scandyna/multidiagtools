@@ -1,0 +1,31 @@
+format 211
+
+classcanvas 128002 class_ref 3483778 // SqlFilterExpression
+  classdiagramsettings member_max_width 0 end
+  xyz 112 42 2000
+end
+classcanvas 128130 class_ref 3483650 // FilterSqlExpressionContainer
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 47 234 2000
+end
+classcanvas 128514 class_ref 3483522 // FilterProxyModelExpressionContainer
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 42 146 2006
+end
+classcanvas 128898 class_ref 3498626 // FilterProxyModelExpression
+  classdiagramsettings member_max_width 0 end
+  xyz 471 117 2005
+end
+relationcanvas 128770 relation_ref 3850882 // <directional composition>
+  decenter_begin 514
+  decenter_end 508
+  from ref 128002 z 2007 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 3866242 // <directional composition>
+  from ref 128898 z 2007 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

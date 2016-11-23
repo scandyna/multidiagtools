@@ -67,9 +67,9 @@ void ItemDelegateTest::sandbox()
   model.setStringList(list);
   
   tableView.show();
-  while(tableView.isVisible()){
-    QTest::qWait(500);
-  }
+//   while(tableView.isVisible()){
+//     QTest::qWait(500);
+//   }
 }
 
 void ItemDelegateTest::itemDelegateProxyTest()
@@ -203,9 +203,9 @@ void ItemDelegateTest::itemDelegateProxyTableViewTest()
   /*
    * Play
    */
-  while(view.isVisible()){
-    QTest::qWait(500);
-  }
+//   while(view.isVisible()){
+//     QTest::qWait(500);
+//   }
 }
 
 void ItemDelegateTest::itemDelegateProxyTableViewEditTest()
@@ -302,10 +302,10 @@ void ItemDelegateTest::eventCatchItemDelegateTableViewEditTest()
   /*
    * Play
    */
-  view.resize(300, 200);
-  while(view.isVisible()){
-    QTest::qWait(500);
-  }
+//   view.resize(300, 200);
+//   while(view.isVisible()){
+//     QTest::qWait(500);
+//   }
 }
 
 /*

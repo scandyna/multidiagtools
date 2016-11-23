@@ -1,0 +1,78 @@
+format 211
+
+classcanvas 128002 class_ref 719874 // QSortFilterProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 42 41 2000
+end
+classcanvas 128130 class_ref 3483906 // FilterProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 224 250 2000
+end
+classcanvas 128258 class_ref 720002 // mdtSortFilterProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 382 250 2006
+end
+classcanvas 128642 class_ref 3484034 // SortProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 71 250 2006
+end
+classcanvas 129410 class_ref 3484162 // SortColumnList
+  classdiagramsettings member_max_width 0 end
+  xyz 70.5 332.5 2000
+end
+classcanvas 130818 class_ref 3483778 // SqlFilterExpression
+  classdiagramsettings member_max_width 0 end
+  xyz 40 570 2011
+end
+note 131586 "Also look for a runtime defined filter expression.
+(Will be used by relation)"
+  xyzwh 327 569 2000 315 63
+classcanvas 131842 class_ref 3484546 // SomeSortAlgorithmA
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 712.5 2000
+end
+classcanvas 131970 class_ref 3484674 // SomeSortAlgorithB
+  classdiagramsettings member_max_width 0 end
+  xyz 471.5 712.5 2000
+end
+classcanvas 132610 class_ref 3491202 // FilterColumnList
+  classdiagramsettings member_max_width 0 end
+  xyz 234 335 2011
+end
+classcanvas 132738 class_ref 3491330 // FilterExpression
+  classdiagramsettings member_max_width 0 end
+  xyz 182 504 2000
+end
+classcanvas 132994 class_ref 3491458 // FilterColumn
+  classdiagramsettings member_max_width 0 end
+  xyz 188 427 2000
+end
+classcanvas 133122 class_ref 3491586 // FilterModelColumn
+  classdiagramsettings member_max_width 0 end
+  xyz 305 417 2011
+end
+relationcanvas 128386 relation_ref 902274 // <generalisation>
+  geometry VHV unfixed
+  from ref 128258 z 2007 to point 622 208
+  line 130306 z 2007 to point 278 208
+  line 130434 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132098 relation_ref 3858562 // <generalisation>
+  decenter_begin 462
+  from ref 128130 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132226 relation_ref 3858690 // <generalisation>
+  geometry VHV unfixed
+  from ref 128642 z 2007 to point 126 208
+  line 132354 z 2007 to point 278 208
+  line 132482 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 131714 -_-_
+  from ref 130818 z 2012 to ref 131586
+end

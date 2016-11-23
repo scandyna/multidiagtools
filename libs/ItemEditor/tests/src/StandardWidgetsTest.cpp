@@ -101,9 +101,9 @@ void StandardWidgetsTest::standardWindowTest()
   /*
    * Play
    */
-  while(window.isVisible()){
-    QTest::qWait(500);
-  }
+//   while(window.isVisible()){
+//     QTest::qWait(500);
+//   }
 }
 
 /*

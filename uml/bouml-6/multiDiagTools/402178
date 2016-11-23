@@ -1,6 +1,6 @@
 format 211
 "Sql" // Mdt::Sql
-  revision 60
+  revision 61
   modified_by 2 "philippe"
   // class settings
   
@@ -3360,24 +3360,6 @@ ${inlines}
       mysql_decl ""
       
     end
-  end
-
-  classview 1412738 "SelectXXYY"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
   end
 
   classview 1184770 "Query"

@@ -24,7 +24,6 @@
 #include "Mdt/Sql/TableName.h"
 #include "Mdt/Sql/FieldName.h"
 #include "Mdt/Sql/SelectTable.h"
-// #include "Mdt/Sql/Schema/Field.h"
 #include <QString>
 #include <boost/proto/expr.hpp>
 #include <boost/proto/extends.hpp>

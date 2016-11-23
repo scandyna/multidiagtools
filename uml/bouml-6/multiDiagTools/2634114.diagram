@@ -23,5 +23,5 @@ note 128514 "1) Prevent loosing data that are editing
 note 128642 "For QDataWidgetMapper:
  - See Q_PROPERTY()
  - See also delegate"
-  xyzwh 40 595 2000 497 73
+  xyzwh 40 596 2000 507 81
 end

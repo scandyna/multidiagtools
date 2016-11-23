@@ -1,0 +1,55 @@
+format 211
+
+classcanvas 128002 class_ref 3491458 // FilterColumn
+  classdiagramsettings member_max_width 0 end
+  xyz 327.8 186.2 2000
+end
+classcanvas 128130 class_ref 3491586 // FilterModelColumn
+  classdiagramsettings member_max_width 0 end
+  xyz 41.6 298.6 2000
+end
+classcanvas 128258 class_ref 3225730 // extends
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 353.8 40.2 2005
+end
+classcanvas 128898 class_ref 3491714 // FilterColumnData
+  classdiagramsettings member_max_width 0 end
+  xyz 559 186.2 2000
+end
+classcanvas 129026 class_ref 3491842 // FilterModelColumnData
+  classdiagramsettings member_max_width 0 end
+  xyz 576.4 287.6 2000
+end
+note 129666 "We need also row here.
+-> This is a  RelationFilter, or something like this."
+  xyzwh 341 445 2000 406 72
+relationcanvas 128386 relation_ref 3858818 // <generalisation>
+  decenter_end 470
+  from ref 128002 z 2006 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128514 relation_ref 3858946 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 470
+  from ref 128130 z 2006 to point 285 144.4
+  line 129410 z 2006 to point 421 144.4
+  line 129538 z 2006 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 3859074 // <dependency>
+  from ref 128002 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 3859202 // <dependency>
+  from ref 128130 z 2001 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 129794 -_-_
+  from ref 128130 z 2001 to ref 129666
+line 129922 -_-_
+  from ref 129026 z 2001 to ref 129666
+end

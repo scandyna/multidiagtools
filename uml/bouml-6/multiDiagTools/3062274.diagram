@@ -1,0 +1,56 @@
+format 211
+
+classcanvas 128002 class_ref 3483906 // FilterProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 426.6 511.8 2000
+end
+classcanvas 128130 class_ref 719874 // QSortFilterProxyModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 586.6 426.2 2006
+end
+classcanvas 128770 class_ref 3498498 // CheckEqualTo
+  classdiagramsettings member_max_width 0 end
+  xyz 703.4 282.8 2000
+end
+classcanvas 128898 class_ref 3280514 // callable
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 778.8 42.6 2000
+end
+classcanvas 129154 class_ref 3498626 // FilterProxyModelExpression
+  classdiagramsettings member_max_width 0 end
+  xyz 39.8 511.8 2000
+end
+classcanvas 129538 class_ref 3498754 // GetTerminalValue
+  classdiagramsettings member_max_width 0 end
+  xyz 41.8 167.2 2000
+end
+note 130050 "Proto default ?"
+  xyzwh 464.6 284.9 2011 201 54
+relationcanvas 128258 relation_ref 3858562 // <generalisation>
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 3865858 // <generalisation>
+  decenter_end 523
+  from ref 128770 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 3866114 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 523
+  from ref 129538 z 2001 to point 350 128
+  line 129794 z 2001 to point 853 128
+  line 129922 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131202 relation_ref 3866498 // <directional composition>
+  from ref 128002 z 2001 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 130178 -_-_
+  from ref 128770 z 2012 to ref 130050
+end

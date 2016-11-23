@@ -1,0 +1,11 @@
+format 211
+
+classcanvas 128002 class_ref 3491714 // FilterColumnData
+  classdiagramsettings member_max_width 0 end
+  xyz 101 213 2000
+end
+classcanvas 128130 class_ref 3491842 // FilterModelColumnData
+  classdiagramsettings member_max_width 0 end
+  xyz 289 211 2000
+end
+end

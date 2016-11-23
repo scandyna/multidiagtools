@@ -1,4 +1,4 @@
-window_sizes 1280 963 292 982 908 0
+window_sizes 1280 963 356 918 908 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2358146 // LinkStorage
@@ -7,11 +7,29 @@ diagrams
     120 110 100 21 0 226
   classdiagram_ref 2761090 // WidgetMapperController
     120 110 100 8 0 0
-  active  classdiagram_ref 2760962 // ItemViewController
+  classdiagram_ref 2760962 // ItemViewController
     982 908 90 7 0 24
+  classdiagram_ref 2573954 // Overview
+    120 110 90 22 12 0
+  classdiagram_ref 2921218 // WhereField
+    120 110 100 4 0 0
+  classdiagram_ref 2468610 // Relation
+    120 110 100 21 0 0
+  classdiagram_ref 3049090 // ModelSandbox
+    964 908 100 18 0 0
+  active  classdiagram_ref 3055618 // FilterColumn
+    918 908 90 21 0 0
+  classdiagram_ref 3048706 // FilterExpression
+    120 110 100 4 0 0
+  classdiagram_ref 3062274 // FilterProxyModel
+    120 110 90 18 0 0
+  classdiagram_ref 3048962 // SqlFilterExpression
+    120 110 100 4 0 0
+  classdiagram_ref 3062402 // FilterProxyModelExpression
+    918 908 90 18 0 0
 end
 show_stereotypes
-selected class_ref 3476866 // RowChangeEvent
+selected classdiagram_ref 3055618 // FilterColumn
 open
   
   package_ref 409858 // principes
@@ -20,17 +38,23 @@ open
   classview_ref 1293698 // CoreApplication
   
   package_ref 516226 // SqlItemModel
-  class_ref 3476866 // RowChangeEvent
-  class_ref 3145090 // RowChangeEventDispatcher
-  classview_ref 1498370 // EditEvent
-  classview_ref 1287042 // Controller
-  classview_ref 1392898 // ControllerRelation
+  classview_ref 1603842 // Terminals
+  classview_ref 1603970 // Grammars
+  classview_ref 1604098 // Containers
+  classview_ref 1327362 // SqlSandbox
+  class_ref 3483522 // FilterProxyModelExpressionContainer
+  class_ref 3498370 // FilterProxyModelEval
+  classdiagram_ref 3049090 // ModelSandbox
+  class_ref 3484546 // SomeSortAlgorithmA
+  class_ref 3484674 // SomeSortAlgorithB
+  class_ref 3498498 // CheckEqualTo
+  class_ref 3498754 // GetTerminalValue
   
   package_ref 582274 // SqlItemEditor
-  
-  package_ref 402178 // Sql
+  classview_ref 1564674 // SqlTransform
   
   package_ref 430082 // Dsp
+  classview_ref 1517954 // proto
   classview_ref 1577730 // variant
 end
 end
