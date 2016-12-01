@@ -18,42 +18,45 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_FILTER_EXPRESSION_TEST_H
-#define MDT_ITEM_EDITOR_FILTER_EXPRESSION_TEST_H
+#ifndef MDT_ITEM_EDITOR_LIKE_EXPRESSION_H
+#define MDT_ITEM_EDITOR_LIKE_EXPRESSION_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include <QString>
 
-class FilterExpressionTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace ItemEditor{
 
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  /*
-   * Compile time tests
+  /*! \brief Expression using wildcards in a FilterExpression
+   *
+   * Supported wildcards are:
+   * <table class="srcdoc_td_left">
+   *  <tr><th>Wildcard</th><th>Description</th></tr>
+   *  <tr><td>% or *</td><td>A substitue for 0 or more characters</td></tr>
+   *  <tr><td>_ or ?</td><td>A substitue for 1 character</td></tr>
+   * </table>
    */
+  class LikeExpression
+  {
+   public:
 
-  void literalValueTest();
-  void leftTerminalTest();
+    /*! \brief Construct a like expression
+     */
+    explicit LikeExpression(const QString & expr)
+     : mExpression(expr)
+    {
+    }
 
-  /*
-   * Runtime tests
-   */
+    /*! \brief Get expression
+     */
+    QString expression() const
+    {
+      return mExpression;
+    }
 
-  void filterColumnTest();
+   private:
 
-  void likeExpressionRegexTransformEscapeTest();
-  void likeExpressionRegexTransformEscapeTest_data();
-  void likeExpressionRegexTransformTest();
-  void likeExpressionRegexTransformTest_data();
-  void likeExpressionRegexTest();
-  void likeExpressionRegexTest_data();
+    QString mExpression;
+  };
 
-  void sandbox();
-};
+}} // namespace Mdt{ namespace ItemEditor{
 
-#endif // #ifndef MDT_ITEM_EDITOR_FILTER_EXPRESSION_TEST_H
+#endif // #ifndef MDT_ITEM_EDITOR_LIKE_EXPRESSION_H

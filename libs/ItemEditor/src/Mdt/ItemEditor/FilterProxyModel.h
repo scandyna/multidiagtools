@@ -29,11 +29,15 @@ namespace Mdt{ namespace ItemEditor{
    * \code
    * #include <Mdt/ItemEditor/FilterProxyModel.h>
    * #include <QTableView>
+   * #include <QRegularExpression>
    * #include "ClientTableModel.h"
+   *
+   * -> Update includes and using once fixed
    *
    * namepsace ItemEditor = Mdt::ItemEditor;
    * using ItemEditor::FilterProxyModel;
    * using ItemEditor::FilterColumn;
+   * using ItemEditor::LikeExpression;
    *
    * auto *view = new QTableView;
    * auto *model = new ClientTableModel(view);
@@ -45,13 +49,11 @@ namespace Mdt{ namespace ItemEditor{
    * // Setup a filter and apply it
    * FilterColumn clientFirstName(1);
    * FilterColumn clientLastName(2);
-   * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == "%B%") );
+   * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == QRegularExpression("B")) );
+   * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == LikeExpression("%B%")) );
+   * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == LikeExpression("A?B%\\?%")) );
+   * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == LikeExpression("A?B%'?'%")) );
    * \endcode
-   *
-   * \todo With LIKE match:
-   *   - What if data contains % ?
-   *   - Overload % like this (% is a binary operator in C++): name == ("" % "B" % "") <- Works ??
-   *   - Overload * like this: name == *"B"* <- Works ??
    *
    * Example to filter data by matching data from a other model:
    * \todo seems to have no sense..

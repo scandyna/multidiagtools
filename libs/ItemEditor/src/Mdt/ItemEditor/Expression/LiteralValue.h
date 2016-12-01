@@ -18,42 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_FILTER_EXPRESSION_TEST_H
-#define MDT_ITEM_EDITOR_FILTER_EXPRESSION_TEST_H
+#ifndef MDT_ITEM_EDITOR_EXPRESSION_LITERAL_VALUE_H
+#define MDT_ITEM_EDITOR_EXPRESSION_LITERAL_VALUE_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include <boost/proto/traits.hpp>
+#include <boost/proto/matches.hpp>
 
-class FilterExpressionTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace ItemEditor{ namespace Expression{
 
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  /*
-   * Compile time tests
+  /*! \brief Literal value grammar
    */
+  struct LiteralValue : boost::proto::or_<
+                          boost::proto::terminal< boost::proto::convertible_to<int> > ,
+                          boost::proto::terminal< const char * const >
+                        >
+  {
+  };
 
-  void literalValueTest();
-  void leftTerminalTest();
+}}} // namespace Mdt{ namespace ItemEditor{ namespace Expression{
 
-  /*
-   * Runtime tests
-   */
-
-  void filterColumnTest();
-
-  void likeExpressionRegexTransformEscapeTest();
-  void likeExpressionRegexTransformEscapeTest_data();
-  void likeExpressionRegexTransformTest();
-  void likeExpressionRegexTransformTest_data();
-  void likeExpressionRegexTest();
-  void likeExpressionRegexTest_data();
-
-  void sandbox();
-};
-
-#endif // #ifndef MDT_ITEM_EDITOR_FILTER_EXPRESSION_TEST_H
+#endif // #ifndef MDT_ITEM_EDITOR_EXPRESSION_LITERAL_VALUE_H
