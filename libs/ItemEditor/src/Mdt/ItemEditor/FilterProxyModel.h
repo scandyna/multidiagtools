@@ -29,7 +29,6 @@ namespace Mdt{ namespace ItemEditor{
    * \code
    * #include <Mdt/ItemEditor/FilterProxyModel.h>
    * #include <QTableView>
-   * #include <QRegularExpression>
    * #include "ClientTableModel.h"
    *
    * -> Update includes and using once fixed
@@ -49,10 +48,7 @@ namespace Mdt{ namespace ItemEditor{
    * // Setup a filter and apply it
    * FilterColumn clientFirstName(1);
    * FilterColumn clientLastName(2);
-   * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == QRegularExpression("B")) );
-   * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == LikeExpression("%B%")) );
    * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == LikeExpression("A?B%\\?%")) );
-   * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == LikeExpression("A?B%'?'%")) );
    * \endcode
    *
    * Example to filter data by matching data from a other model:

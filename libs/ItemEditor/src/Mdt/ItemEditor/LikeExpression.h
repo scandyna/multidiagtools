@@ -27,6 +27,8 @@ namespace Mdt{ namespace ItemEditor{
 
   /*! \brief Expression using wildcards in a FilterExpression
    *
+   * \todo See if reuse Mdt::FilterExpression::LikeExpression . using alias ?
+   *
    * Supported wildcards are:
    * <table class="srcdoc_td_left">
    *  <tr><th>Wildcard</th><th>Description</th></tr>

@@ -27,34 +27,27 @@ diagrams
     120 110 100 4 0 0
   classdiagram_ref 3062402 // FilterProxyModelExpression
     918 908 90 18 0 0
-  classdiagram_ref 3069186 // Like
-    918 908 100 4 0 0
-  classdiagram_ref 3075970 // WildcardTerminal
-    120 110 100 4 0 0
-  active  classdiagram_ref 3075842 // WildcardExpression
+  active  classdiagram_ref 3069186 // Like
     918 908 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 3062530 // Terminal
+selected classdiagram_ref 3075842 // LikeExpression
 open
   
-package_ref 409858 // principes
+  package_ref 409858 // principes
   
-package_ref 549506 // Algorithm
+  package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
+  class_ref 3519874 // LikeExpressionRegexTransform
+  class_ref 3519746 // LikeExpressionSqlTransform
   
-package_ref 588802 // FilterExpression
+  package_ref 516226 // SqlItemModel
+  classview_ref 1604226 // Filter
   
-package_ref 516226 // SqlItemModel
-  classview_ref 1603842 // Terminals
-  classview_ref 1610882 // Comparison
-  classview_ref 1603970 // Grammars
-  classview_ref 1604098 // Containers
-  
-package_ref 582274 // SqlItemEditor
+  package_ref 582274 // SqlItemEditor
   classview_ref 1531522 // Terminals
   
-package_ref 430082 // Dsp
+  package_ref 430082 // Dsp
   classview_ref 1517954 // proto
   classview_ref 1577730 // variant
 end

@@ -20,218 +20,19 @@
  ****************************************************************************/
 #include "FilterExpressionTest.h"
 #include "Mdt/Application.h"
+#include "Mdt/FilterExpression/LikeExpression.h"
+#include "Mdt/FilterExpression/LikeExpressionRegexTransform.h"
+// #include <QString>
+// #include <QVariant>
+#include <boost/proto/matches.hpp>
+#include <boost/proto/literal.hpp>
+#include <boost/proto/transform/arg.hpp>
+// #include <type_traits>
+// #include <typeinfo>
+
 #include <QDebug>
-#include <iostream>
-#include <vector>
-#include <boost/proto/proto.hpp>
-#include <boost/typeof/std/ostream.hpp>
-#include <boost/mpl/assert.hpp>
-#include <boost/mpl/int.hpp>
-#include <boost/core/demangle.hpp>
-#include <type_traits>
-#include <typeinfo>
-#include <utility>
-#include <QString>
-#include <QVariant>
-#include <string>
-#include <tuple>
 
-namespace proto = boost::proto;
-namespace mpl = boost::mpl;
-
-/*******************************************************************************
- * Terminal type discriminator here
- ******************************************************************************/
-/// struct variable_tag {};
-
-/*******************************************************************************
- * Last step, we have to redefine _x to be an analytical_expression
- ******************************************************************************/
-/// analytical_expression< boost::proto::terminal< variable_tag >::type > const _x;
-
-/*
- * Mains
- */
-// int main()
-// {
-///   check_for_match( 3*_x + 1.f/_x);
-// }
-
-/// Mais: possible d'assigner une valeur à _x ? semblerait que pas directement
-
-/// Evt: struct avec un setter ? (PAS de constructeur (int), pas d'opératuer() ,...
-/// See steo1-01
-
-struct ColumnIndexData
-{
-  ColumnIndexData(int i, const QString & tbl = QString())
-   : index(i) , table(tbl)
-  {
-    std::cout << "ColumnIndexData(" << i << ", " << tbl.toStdString() << ")" << std::endl;
-  }
-
-  int index;
-  QString table;
-};
-
-struct ColumnIndexTag
-{
-  ColumnIndexTag(const ColumnIndexData & d)
-   : data(d)
-  {
-  }
-
-  ColumnIndexData data;
-//   int value;
-//   QString table;
-};
-
-/*
- * Column index placeholder
- */
-struct ColumnIndex : proto::terminal<ColumnIndexTag>
-{
-};
-
-using ColumnIndexType = const ColumnIndex::type;
-
-/*
- * Grammar
- */
-struct FilterExpressionGrammar;
-
-// struct MatchValue : proto::or_<
-//                         proto::terminal<int>
-//                       >
-// {
-// };
-
-/**
- * NOTE: add notion of table ?  '.' cannot be overloaded. Evt: subscript ? client[Id] == 25 && Address[Street] == "Street 45"
- */
-
-struct MatchValue : proto::or_<
-                        proto::terminal< proto::convertible_to<int> > ,
-                        proto::terminal<QString>
-                      >
-{
-};
-
-struct MatchEqual : proto::or_<
-                        proto::equal_to< ColumnIndex, MatchValue > ,
-                        proto::equal_to< FilterExpressionGrammar, FilterExpressionGrammar >
-                      >
-{
-};
-
-struct Compare : proto::or_<
-                      MatchEqual
-                    >
-{
-};
-
-struct And : proto::logical_and< FilterExpressionGrammar, FilterExpressionGrammar >
-{
-};
-
-
-// struct Terminal : proto::or_<
-//                       ColumnIndex ,
-//                       MatchValue
-//                     >
-// {
-// };
-
-struct FilterExpressionGrammar : proto::or_<
-                                      Compare ,
-                                      And
-                                    >
-{
-};
-
-struct MatchEqualAction : proto::callable
-{
-  typedef void result_type;
-
-  template<typename Ci, typename V>
-  void operator()(const Ci & ci, const V & v) const
-  {
-    std::cout << "MatchEqualAction: " << proto::value(ci).data.table.toStdString() << ".column " << proto::value(ci).data.index << " == " << proto::value(v).toStdString() << std::endl;
-  }
-};
-
-struct CompareAction : proto::or_<
-                            proto::when<
-                              proto::equal_to< ColumnIndex, MatchValue > ,
-                              proto::call<MatchEqualAction(proto::_left, proto::_right)>
-                            >
-                          >
-{
-};
-
-struct FilterExpressionEval : proto::or_<
-                                    proto::when<
-                                      Compare ,
-                                      CompareAction
-                                    >
-                                  >
-{
-};
-
-template<typename Expr>
-void displayAndCheckExpression(const Expr & expr)
-{
-//   static_assert(proto::matches<Expr, FilterExpressionGrammar>::value, "");  // NOTE: does never match with QVariant !
-  const bool matches = proto::matches<Expr, FilterExpressionGrammar>::value;
-
-  proto::display_expr(expr);
-  if(matches){
-    std::cout << "-----> matches ";
-  }else{
-    std::cout << "-----> does not match ";
-  }
-  std::cout << "the FilterExpressionGrammar" << std::endl;
-}
-
-template<typename Expr>
-void evaluateExpression(const Expr expr)
-{
-  std::cout << "***** Evaluate ***********" << std::endl;
-  proto::display_expr(expr);
-  FilterExpressionEval eval;
-  eval(expr);
-  std::cout << "**************************" << std::endl;
-}
-
-int getFieldIndex(const QString & fieldName)
-{
-  return fieldName.toInt();
-}
-
-void FilterExpressionTest::sandbox()
-{
-  ColumnIndexType Name = { ColumnIndexData(2, "Client") };
-  ColumnIndexType DynField = { ColumnIndexData( getFieldIndex("5") ) };
-
-//   std::cout << "Type of ColumnIndexType: " << boost::core::demangle( typeid(ColumnIndexType).name ) << std::endl;
-
-  displayAndCheckExpression( Name == QString("PS é ö") );
-  evaluateExpression( Name == QString("PS é ö") );
-  displayAndCheckExpression( 25 == Name );
-  displayAndCheckExpression( Name == 25 && Name < 15 );
-  displayAndCheckExpression( Name == 25 && DynField == 10 );
-}
-
-/*
- * Voir:
- * Name == 25 <- Ok
- * 25 == Name <- Nok
- * Name == 25 && Name < 15  <- Ok
- * (Name == 25) && Name < 15  <- Ok
- * Name == (25 && Name) < 15  <- Nok
- * Name == Remarks <- Nok
- * ....
- */
+namespace FilterExpression = Mdt::FilterExpression;
 
 void FilterExpressionTest::initTestCase()
 {
@@ -239,6 +40,261 @@ void FilterExpressionTest::initTestCase()
 
 void FilterExpressionTest::cleanupTestCase()
 {
+}
+
+/*
+ * Compile time tests
+ */
+
+
+/*
+ * Runtime tests
+ */
+
+void FilterExpressionTest::likeExpressionRegexTransformEscapeTest()
+{
+  using FilterExpression::LikeExpressionRegexTransform;
+
+  QFETCH(QString, str);
+  QFETCH(QString, expectedResult);
+
+  LikeExpressionRegexTransform::escapeRegexMetacharacters(str);
+  QCOMPARE( str, expectedResult );
+}
+
+void FilterExpressionTest::likeExpressionRegexTransformEscapeTest_data()
+{
+  QTest::addColumn<QString>("str");
+  QTest::addColumn<QString>("expectedResult");
+
+  /*
+   * Check without any metacharacters
+   */
+  QTest::newRow("A") << "A" << "A";
+  QTest::newRow("AB") << "AB" << "AB";
+  QTest::newRow("ABC") << "ABC" << "ABC";
+  /*
+   * Wildcards are transformed to regex metacharacters (later) if they are not escaped.
+   * If already escaped, they must be keeped untouched.
+   */
+  // Check various combinaisons with token ?
+  QTest::newRow("A") << "A" << "A";
+  QTest::newRow("?") << "?" << "?";
+  QTest::newRow("\\?") << "\\?" << "\\?";
+  QTest::newRow("?A") << "?A" << "?A";
+  QTest::newRow("\\?A") << "\\?A" << "\\?A";
+  QTest::newRow("A?") << "A?" << "A?";
+  QTest::newRow("A\\?") << "A\\?" << "A\\?";
+  QTest::newRow("A?B") << "A?B" << "A?B";
+  QTest::newRow("A\\?B") << "A\\?B" << "A\\?B";
+  QTest::newRow("??") << "??" << "??";
+  QTest::newRow("\\??") << "\\??" << "\\??";
+  QTest::newRow("?\\?") << "?\\?" << "?\\?";
+  QTest::newRow("\\?\\?") << "\\?\\?" << "\\?\\?";
+  // Checks with other tokens
+  QTest::newRow("A*") << "A*" << "A*";
+  QTest::newRow("A\\*") << "A\\*" << "A\\*";
+  QTest::newRow("A_") << "A_" << "A_";
+  QTest::newRow("A\\_") << "A\\_" << "A\\_";
+  QTest::newRow("A%") << "A%" << "A%";
+  QTest::newRow("A\\%") << "A\\%" << "A\\%";
+  /*
+   * All regexp metacharacters (that are not wildcards) must simply be escaped
+   * (note that \ is a metacharacter)
+   */
+  // Check escaping '\'
+  QTest::newRow("\\") << "\\" << "\\\\";
+  QTest::newRow("\\\\") << "\\\\" << "\\\\\\\\";
+  QTest::newRow("\\A") << "\\A" << "\\\\A";
+  QTest::newRow("\\AB") << "\\AB" << "\\\\AB";
+  QTest::newRow("A\\") << "A\\" << "A\\\\";
+  QTest::newRow("A\\B") << "A\\B" << "A\\\\B";
+  QTest::newRow("A\\B\\") << "A\\B\\" << "A\\\\B\\\\";
+  QTest::newRow("A\\B\\C") << "A\\B\\C" << "A\\\\B\\\\C";
+  QTest::newRow("A\\B\\C\\") << "A\\B\\C\\" << "A\\\\B\\\\C\\\\";
+  // Check escaping regex metacharacters
+  QTest::newRow("{") << "{" << "\\{";
+  QTest::newRow("A{") << "A{" << "A\\{";
+  QTest::newRow("A\\{") << "A\\{" << "A\\\\\\{";  // Escape '\' and '{'
+  QTest::newRow("A}") << "A}" << "A\\}";
+  QTest::newRow("A\\}") << "A\\}" << "A\\\\\\}";  // Escape '\' and '}'
+  QTest::newRow("A[") << "A[" << "A\\[";
+  QTest::newRow("A\\[") << "A\\[" << "A\\\\\\[";  // Escape '\' and '['
+  QTest::newRow("A]") << "A]" << "A\\]";
+  QTest::newRow("A\\]") << "A\\]" << "A\\\\\\]";  // Escape '\' and ']'
+  QTest::newRow("A(") << "A(" << "A\\(";
+  QTest::newRow("A\\(") << "A\\(" << "A\\\\\\(";  // Escape '\' and '('
+  QTest::newRow("A)") << "A)" << "A\\)";
+  QTest::newRow("A\\)") << "A\\)" << "A\\\\\\)";  // Escape '\' and ')'
+  QTest::newRow("^") << "^" << "\\^";
+  QTest::newRow("$") << "$" << "\\$";
+  QTest::newRow(".") << "." << "\\.";
+  QTest::newRow("+") << "+" << "\\+";
+  QTest::newRow("|") << "|" << "\\|";
+  QTest::newRow("\\|") << "\\|" << "\\\\\\|";     // Escape '\' and '|'
+  /*
+   * Check with some expressions that could have some sense
+   */
+  QTest::newRow("A?B") << "A?B" << "A?B";
+  QTest::newRow("A??B") << "A??B" << "A??B";
+  QTest::newRow("*A") << "*A" << "*A";
+  QTest::newRow("A*") << "A*" << "A*";
+  QTest::newRow("*A*") << "*A*" << "*A*";
+}
+
+void FilterExpressionTest::likeExpressionRegexTransformEscapeBenchmark()
+{
+  using FilterExpression::LikeExpressionRegexTransform;
+
+  QString str;
+  QBENCHMARK{
+    str = "*A?B{0102}??C*D\\?E";
+    LikeExpressionRegexTransform::escapeRegexMetacharacters(str);
+  }
+  QCOMPARE(str, QString("*A?B\\{0102\\}??C*D\\?E"));
+}
+
+void FilterExpressionTest::likeExpressionRegexTransformTest()
+{
+  using FilterExpression::LikeExpression;
+  using FilterExpression::LikeExpressionRegexTransform;
+
+  QFETCH(QString, likeExpression);
+  QFETCH(QString, expectedRegex);
+  QString regex;
+
+  // Must not compile
+//   QCOMPARE( LikeExpressionRegexTransform::getRegexPattern("A") , QString("A") );
+
+  regex = LikeExpressionRegexTransform::getRegexPattern(LikeExpression(likeExpression));
+  QCOMPARE(regex, expectedRegex);
+}
+
+void FilterExpressionTest::likeExpressionRegexTransformTest_data()
+{
+  QTest::addColumn<QString>("likeExpression");
+  QTest::addColumn<QString>("expectedRegex");
+
+  /*
+   * Check without any metacharacters
+   */
+  QTest::newRow("LIKE A") << "A" << "^A$";
+  QTest::newRow("LIKE AB") << "AB" << "^AB$";
+  QTest::newRow("LIKE ABC") << "ABC" << "^ABC$";
+  /*
+   * Wildcards are transformed to regex metacharacters if they are not escaped.
+   * If already escaped, they must be keeped untouched.
+   */
+  QTest::newRow("LIKE ?") << "?" << "^.$";
+  QTest::newRow("LIKE \\?") << "\\?" << "^\\?$";
+  QTest::newRow("LIKE ??") << "??" << "^..$";
+  QTest::newRow("LIKE ?\\?") << "?\\?" << "^.\\?$";
+  QTest::newRow("LIKE ?A") << "?A" << "^.A$";
+  QTest::newRow("LIKE \\?A") << "\\?A" << "^\\?A$";
+  QTest::newRow("LIKE A?") << "A?" << "^A.$";
+  QTest::newRow("LIKE A\\?") << "A\\?" << "^A\\?$";
+  QTest::newRow("LIKE _A") << "_A" << "^.A$";
+  QTest::newRow("LIKE *A") << "*A" << "^.*A$";
+  QTest::newRow("LIKE \\*A") << "\\*A" << "^\\*A$";
+  QTest::newRow("LIKE A%") << "A%" << "^A.*$";
+  QTest::newRow("LIKE *A?") << "*A?" << "^.*A.$";
+  QTest::newRow("LIKE *A*") << "*A*" << "^.*A.*$";
+  // Check alternate escaped and not escaped wildcards
+  QTest::newRow("LIKE ?\\??") << "?\\??" << "^.\\?.$";
+  QTest::newRow("LIKE ?\\???") << "?\\???" << "^.\\?..$";
+  QTest::newRow("LIKE ?\\??\\?") << "?\\??\\?" << "^.\\?.\\?$";
+  QTest::newRow("LIKE *\\**") << "*\\**" << "^.*\\*.*$";
+  QTest::newRow("LIKE *\\***") << "*\\***" << "^.*\\*.*.*$";
+  QTest::newRow("LIKE *\\**\\*") << "*\\**\\*" << "^.*\\*.*\\*$";
+  // Check also strings which conatins every wildcard, in every order
+  QTest::newRow("LIKE ?_%*") << "?_%*" << "^...*.*$";
+  QTest::newRow("LIKE *?_%") << "*?_%" << "^.*...*$";
+  QTest::newRow("LIKE %*?_") << "%*?_" << "^.*.*..$";
+  QTest::newRow("LIKE _%*?") << "_%*?" << "^..*.*.$";
+  // Check also with some dots
+  QTest::newRow("LIKE .*") << ".*" << "^\\..*$";
+  QTest::newRow("LIKE .%") << ".%" << "^\\..*$";
+  QTest::newRow("LIKE .%.*") << ".%.*" << "^\\..*\\..*$";
+  /*
+   * All regexp metacharacters (that are not wildcards) must simply be escaped
+   * (note that \ is a metacharacter)
+   */
+  // Check with expression containing regexp metacharacters
+  QTest::newRow("LIKE {A}") << "{A}" << "^\\{A\\}$";
+  QTest::newRow("LIKE {*A}") << "{*A}" << "^\\{.*A\\}$";
+  QTest::newRow("LIKE [A]") << "[A]" << "^\\[A\\]$";
+  QTest::newRow("LIKE (A)") << "(A)" << "^\\(A\\)$";
+  QTest::newRow("LIKE 0x1.5") << "0x1.5" << "^0x1\\.5$";
+  QTest::newRow("LIKE A+B") << "A+B" << "^A\\+B$";
+  QTest::newRow("LIKE A|B") << "A|B" << "^A\\|B$";
+  QTest::newRow("LIKE \\") << "\\" << "^\\\\$";
+  QTest::newRow("LIKE \\*") << "\\*" << "^\\*$";
+  // Check expressions with '\' followed by a regexp metacharacter
+  QTest::newRow("LIKE A\\|B") << "A\\|B" << "^A\\\\\\|B$";  // Escape '\' and '|'
+  // Check expressions with regexp abbreviations
+  QTest::newRow("LIKE \\d") << "\\d" << "^\\\\d$";  // Similar to LIKE '\d'
+  QTest::newRow("LIKE \\s") << "\\s" << "^\\\\s$";
+  QTest::newRow("LIKE \\w") << "\\w" << "^\\\\w$";
+  QTest::newRow("LIKE \\D") << "\\D" << "^\\\\D$";
+  QTest::newRow("LIKE \\S") << "\\S" << "^\\\\S$";
+  QTest::newRow("LIKE \\W") << "\\W" << "^\\\\W$";
+  QTest::newRow("LIKE \\N") << "\\N" << "^\\\\N$";
+  QTest::newRow("LIKE \\b") << "\\b" << "^\\\\b$";
+}
+
+void FilterExpressionTest::likeExpressionRegexTransformBenchmark()
+{
+  using FilterExpression::LikeExpression;
+  using FilterExpression::LikeExpressionRegexTransform;
+
+  QString result;
+  LikeExpression likeExpr("*A?B{0102}??C*D\\?E");
+  QBENCHMARK{
+    result = LikeExpressionRegexTransform::getRegexPattern(likeExpr);
+  }
+  QCOMPARE(result, QString("^.*A.B\\{0102\\}..C.*D\\?E$"));
+}
+
+void FilterExpressionTest::likeExpressionRegexTest()
+{
+  using FilterExpression::LikeExpression;
+  using FilterExpression::LikeExpressionRegexTransform;
+
+  QFETCH(QString , str);
+  QFETCH(QString , likeExpression);
+  QFETCH(bool , expectedMatches);
+  QRegularExpression regex;
+  QString pattern;
+
+  pattern = LikeExpressionRegexTransform::getRegexPattern( LikeExpression(likeExpression) );
+  regex.setPattern(pattern);
+  QVERIFY(regex.isValid());
+  bool matches = regex.match(str).hasMatch();
+  QCOMPARE( matches , expectedMatches );
+}
+
+void FilterExpressionTest::likeExpressionRegexTest_data()
+{
+  QTest::addColumn<QString>("str");
+  QTest::addColumn<QString>("likeExpression");
+  QTest::addColumn<bool>("expectedMatches");
+
+  QTest::newRow("A LIKE A |y") << "A" << "A" << true;
+  QTest::newRow("A LIKE B |n") << "A" << "B" << false;
+  QTest::newRow("ABC LIKE A |n") << "ABC" << "A" << false;
+  QTest::newRow("ABC LIKE B |n") << "ABC" << "B" << false;
+  QTest::newRow("ABC LIKE ?B |n") << "ABC" << "?B" << false;
+  QTest::newRow("ABC LIKE B? |n") << "ABC" << "B?" << false;
+  QTest::newRow("ABC LIKE ?B? |y") << "ABC" << "?B?" << true;
+  QTest::newRow("ABC LIKE _B |n") << "ABC" << "_B" << false;
+  QTest::newRow("ABC LIKE B_ |n") << "ABC" << "B_" << false;
+  QTest::newRow("ABC LIKE _B_ |y") << "ABC" << "_B_" << true;
+  QTest::newRow("ABC LIKE *B |n") << "ABC" << "*B" << false;
+  QTest::newRow("ABC LIKE B* |n") << "ABC" << "B*" << false;
+  QTest::newRow("ABC LIKE *B* |y") << "ABC" << "*B*" << true;
+  QTest::newRow("ABC LIKE %B |n") << "ABC" << "%B" << false;
+  QTest::newRow("ABC LIKE B% |n") << "ABC" << "B%" << false;
+  QTest::newRow("ABC LIKE %B% |y") << "ABC" << "%B%" << true;
 }
 
 /*

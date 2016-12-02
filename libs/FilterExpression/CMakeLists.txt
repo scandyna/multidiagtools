@@ -6,7 +6,7 @@ project(multidiagtools)
 
 # List of source files
 set(SOURCES_FILES 
-#     src/Mdt/Algorithm.cpp
+    src/Mdt/FilterExpression/LikeExpressionRegexTransform.cpp
 )
 
 # Get Boost include directory if not allready set

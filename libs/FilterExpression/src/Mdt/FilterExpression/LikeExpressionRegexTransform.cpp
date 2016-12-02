@@ -29,7 +29,7 @@
 
 // #include <QDebug>
 
-namespace Mdt{ namespace ItemEditor{
+namespace Mdt{ namespace FilterExpression{
 
 QString LikeExpressionRegexTransform::getRegexPattern(const LikeExpression & expr)
 {
@@ -170,4 +170,4 @@ bool LikeExpressionRegexTransform::isTokenWildcard(const QChar & c)
   return (c == '?' || c == '*' || c == '%' || c == '_');
 }
 
-}} // namespace Mdt{ namespace ItemEditor{
+}} // namespace Mdt{ namespace FilterExpression{

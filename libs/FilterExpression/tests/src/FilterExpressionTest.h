@@ -30,10 +30,32 @@ class FilterExpressionTest : public QObject
 
  private slots:
 
-  void sandbox();
-
   void initTestCase();
   void cleanupTestCase();
+
+ private:
+
+  /*
+   * Compile time tests
+   */
+
+  void literalValueTest();
+
+ private slots:
+
+  /*
+   * Runtime tests
+   */
+
+  void likeExpressionRegexTransformEscapeTest();
+  void likeExpressionRegexTransformEscapeTest_data();
+  void likeExpressionRegexTransformEscapeBenchmark();
+  void likeExpressionRegexTransformTest();
+  void likeExpressionRegexTransformTest_data();
+  void likeExpressionRegexTransformBenchmark();
+  void likeExpressionRegexTest();
+  void likeExpressionRegexTest_data();
+
 };
 
 

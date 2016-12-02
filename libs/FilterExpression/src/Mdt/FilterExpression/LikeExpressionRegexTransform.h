@@ -18,17 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_LIKE_EXPRESSION_REGEX_TRANSFORM_H
-#define MDT_ITEM_EDITOR_LIKE_EXPRESSION_REGEX_TRANSFORM_H
+#ifndef MDT_FILTER_EXPRESSION_LIKE_EXPRESSION_REGEX_TRANSFORM_H
+#define MDT_FILTER_EXPRESSION_LIKE_EXPRESSION_REGEX_TRANSFORM_H
 
 #include <QString>
 #include <QChar>
-#include <QStringList>
 
-// class QChar;
-class QLatin1String;
-
-namespace Mdt{ namespace ItemEditor{
+namespace Mdt{ namespace FilterExpression{
 
   class LikeExpression;
 
@@ -75,6 +71,6 @@ namespace Mdt{ namespace ItemEditor{
     static bool isTokenWildcard(const QChar & c);
   };
 
-}} // namespace Mdt{ namespace ItemEditor{
+}} // namespace Mdt{ namespace FilterExpression{
 
-#endif // #ifndef MDT_ITEM_EDITOR_LIKE_EXPRESSION_REGEX_TRANSFORM_H
+#endif // #ifndef MDT_FILTER_EXPRESSION_LIKE_EXPRESSION_REGEX_TRANSFORM_H
