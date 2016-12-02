@@ -50,15 +50,6 @@ class FilterExpressionTest : public QObject
 
   void filterColumnTest();
 
-//   void likeExpressionRegexTransformEscapeTest();
-//   void likeExpressionRegexTransformEscapeTest_data();
-//   void likeExpressionRegexTransformEscapeBenchmark();
-//   void likeExpressionRegexTransformTest();
-//   void likeExpressionRegexTransformTest_data();
-//   void likeExpressionRegexTransformBenchmark();
-//   void likeExpressionRegexTest();
-//   void likeExpressionRegexTest_data();
-
   void sandbox();
 };
 
