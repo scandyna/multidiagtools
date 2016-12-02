@@ -1,0 +1,29 @@
+format 211
+
+classcanvas 128002 class_ref 3513090 // LikeExpression
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 275.5 2000
+end
+note 128130 "Problem:
+Depending on contect, not the same chars are used to match. 
+In SQL:  _ matche a single caracter , % matches 0 or more
+Other: ? matches a single car , * 0 or more
+Should have a typed system, that only support ? and * , but that transform it correctly (to a QRegularExpression , or a SQL string) "
+  xyzwh 40.5 40.5 2000 781 155
+note 128258 "Note: here we are back to problem of overloading * in C++ (and, is can ? be overloaded?)"
+  xyzwh 40.5 581.5 2000 611 59
+note 128386 "See how boost.Spirit dos such thing !"
+  xyzwh 40.5 438.5 2000 433 63
+note 128514 "See also what QRegularExpression can help to parse the wildcardExpression
+-> To solve the problem of escaped * or ?
+Ex: match: %'A ?'"
+  xyzwh 349 245 2000 479 127
+classcanvas 128642 class_ref 3519746 // LikeExpressionSqlTransform
+  classdiagramsettings member_max_width 0 end
+  xyz 450 711 2000
+end
+classcanvas 128770 class_ref 3519874 // LikeExpressionRegexTransform
+  classdiagramsettings member_max_width 0 end
+  xyz 152 710 2000
+end
+end

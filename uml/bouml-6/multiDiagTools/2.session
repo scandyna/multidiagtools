@@ -17,7 +17,7 @@ diagrams
     120 110 100 21 0 0
   classdiagram_ref 3049090 // ModelSandbox
     964 908 100 18 0 0
-  active  classdiagram_ref 3055618 // FilterColumn
+  classdiagram_ref 3055618 // FilterColumn
     918 908 90 21 0 0
   classdiagram_ref 3048706 // FilterExpression
     120 110 100 4 0 0
@@ -27,33 +27,34 @@ diagrams
     120 110 100 4 0 0
   classdiagram_ref 3062402 // FilterProxyModelExpression
     918 908 90 18 0 0
+  classdiagram_ref 3069186 // Like
+    918 908 100 4 0 0
+  classdiagram_ref 3075970 // WildcardTerminal
+    120 110 100 4 0 0
+  active  classdiagram_ref 3075842 // WildcardExpression
+    918 908 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 3055618 // FilterColumn
+selected classdiagram_ref 3062530 // Terminal
 open
   
-  package_ref 409858 // principes
+package_ref 409858 // principes
   
-  package_ref 549506 // Algorithm
+package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
   
-  package_ref 516226 // SqlItemModel
+package_ref 588802 // FilterExpression
+  
+package_ref 516226 // SqlItemModel
   classview_ref 1603842 // Terminals
+  classview_ref 1610882 // Comparison
   classview_ref 1603970 // Grammars
   classview_ref 1604098 // Containers
-  classview_ref 1327362 // SqlSandbox
-  class_ref 3483522 // FilterProxyModelExpressionContainer
-  class_ref 3498370 // FilterProxyModelEval
-  classdiagram_ref 3049090 // ModelSandbox
-  class_ref 3484546 // SomeSortAlgorithmA
-  class_ref 3484674 // SomeSortAlgorithB
-  class_ref 3498498 // CheckEqualTo
-  class_ref 3498754 // GetTerminalValue
   
-  package_ref 582274 // SqlItemEditor
-  classview_ref 1564674 // SqlTransform
+package_ref 582274 // SqlItemEditor
+  classview_ref 1531522 // Terminals
   
-  package_ref 430082 // Dsp
+package_ref 430082 // Dsp
   classview_ref 1517954 // proto
   classview_ref 1577730 // variant
 end

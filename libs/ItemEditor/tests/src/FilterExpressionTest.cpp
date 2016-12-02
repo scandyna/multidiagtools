@@ -92,19 +92,6 @@ void FilterExpressionTest::filterColumnTest()
   QCOMPARE( boost::proto::_value()(A).columnIndex() , 1 );
 }
 
-// void FilterExpressionTest::likeExpressionRegexTransformEscapeTest()
-// {
-//   using ItemEditor::LikeExpressionRegexTransform;
-// 
-//   QFETCH(QString, str);
-//   QFETCH(QString, token);
-//   QFETCH(QString, escapeStr);
-//   QFETCH(QString, expectedResult);
-// 
-//   LikeExpressionRegexTransform::escape(str, token, escapeStr);
-//   QCOMPARE( str, expectedResult );
-// }
-
 void FilterExpressionTest::likeExpressionRegexTransformEscapeTest()
 {
   using ItemEditor::LikeExpressionRegexTransform;
@@ -167,18 +154,25 @@ void FilterExpressionTest::likeExpressionRegexTransformEscapeTest_data()
   QTest::newRow("A\\B\\C") << "A\\B\\C" << "A\\\\B\\\\C";
   QTest::newRow("A\\B\\C\\") << "A\\B\\C\\" << "A\\\\B\\\\C\\\\";
   // Check escaping regex metacharacters
+  QTest::newRow("{") << "{" << "\\{";
   QTest::newRow("A{") << "A{" << "A\\{";
-  QTest::newRow("A\\{") << "A\\{" << "A\\\\\\{";   // Escape '\' and '{'
+  QTest::newRow("A\\{") << "A\\{" << "A\\\\\\{";  // Escape '\' and '{'
   QTest::newRow("A}") << "A}" << "A\\}";
-  QTest::newRow("A\\}") << "A\\}" << "A\\\\\\}";   // Escape '\' and '}'
+  QTest::newRow("A\\}") << "A\\}" << "A\\\\\\}";  // Escape '\' and '}'
   QTest::newRow("A[") << "A[" << "A\\[";
-  QTest::newRow("A\\[") << "A\\[" << "A\\\\\\[";   // Escape '\' and '['
+  QTest::newRow("A\\[") << "A\\[" << "A\\\\\\[";  // Escape '\' and '['
   QTest::newRow("A]") << "A]" << "A\\]";
-  QTest::newRow("A\\]") << "A\\]" << "A\\\\\\]";   // Escape '\' and ']'
+  QTest::newRow("A\\]") << "A\\]" << "A\\\\\\]";  // Escape '\' and ']'
   QTest::newRow("A(") << "A(" << "A\\(";
-  QTest::newRow("A\\(") << "A\\(" << "A\\\\\\(";   // Escape '\' and '('
+  QTest::newRow("A\\(") << "A\\(" << "A\\\\\\(";  // Escape '\' and '('
   QTest::newRow("A)") << "A)" << "A\\)";
-  QTest::newRow("A\\)") << "A\\)" << "A\\\\\\)";   // Escape '\' and ')'
+  QTest::newRow("A\\)") << "A\\)" << "A\\\\\\)";  // Escape '\' and ')'
+  QTest::newRow("^") << "^" << "\\^";
+  QTest::newRow("$") << "$" << "\\$";
+  QTest::newRow(".") << "." << "\\.";
+  QTest::newRow("+") << "+" << "\\+";
+  QTest::newRow("|") << "|" << "\\|";
+  QTest::newRow("\\|") << "\\|" << "\\\\\\|";     // Escape '\' and '|'
   /*
    * Check with some expressions that could have some sense
    */
@@ -187,93 +181,19 @@ void FilterExpressionTest::likeExpressionRegexTransformEscapeTest_data()
   QTest::newRow("*A") << "*A" << "*A";
   QTest::newRow("A*") << "A*" << "A*";
   QTest::newRow("*A*") << "*A*" << "*A*";
-
-//   QTest::newRow("A") << "A" << "d" << "a" << "A";
-//   QTest::newRow("Ad") << "Ad" << "d" << "a" << "Aad";
-//   QTest::newRow("Aad") << "Aad" << "d" << "a" << "Aad";
-//   // Check various combinaisons with '\'
-//   QTest::newRow("A") << "A" << "d" << "\\" << "A";
-//   QTest::newRow("Ad") << "Ad" << "d" << "\\" << "A\\d";
-//   QTest::newRow("A\\d") << "A\\d" << "d" << "\\" << "A\\d";
-//   QTest::newRow("AdBd") << "AdBd" << "d" << "\\" << "A\\dB\\d";
-//   QTest::newRow("A\\dBd") << "A\\dBd" << "d" << "\\" << "A\\dB\\d";
-//   QTest::newRow("AdB\\d") << "AdB\\d" << "d" << "\\" << "A\\dB\\d";
-//   QTest::newRow("AdB\\C") << "AdB\\C" << "d" << "\\" << "A\\dB\\C";
-
 }
 
-// void FilterExpressionTest::likeExpressionRegexTransformEscapeTest_data()
-// {
-//   QTest::addColumn<QString>("str");
-//   QTest::addColumn<QString>("token");
-//   QTest::addColumn<QString>("escapeStr");
-//   QTest::addColumn<QString>("expectedResult");
-// 
-//   /*
-//    * Check without any metacharacters
-//    */
-//   QTest::newRow("A") << "A" << "[" << "\\" << "A";
-//   QTest::newRow("AB") << "AB" << "[" << "\\" << "AB";
-//   QTest::newRow("ABC") << "ABC" << "[" << "\\" << "ABC";
-//   QTest::newRow("A") << "A" << "*" << "\\" << "A";
-//   QTest::newRow("AB") << "AB" << "*" << "\\" << "AB";
-//   QTest::newRow("ABC") << "ABC" << "*" << "\\" << "ABC";
-//   /*
-//    * Wildcards are transformed to regex metacharacters (later) if they are not escaped.
-//    * If already escaped, they must be keeped untouched.
-//    */
-//   // Check various combinaisons with token ?
-//   QTest::newRow("A") << "A" << "?" << "\\" << "A";
-//   QTest::newRow("?") << "?" << "?" << "\\" << "?";
-//   QTest::newRow("\\?") << "\\?" << "?" << "\\" << "\\?";
-//   QTest::newRow("?A") << "?A" << "?" << "\\" << "?A";
-//   QTest::newRow("\\?A") << "\\?A" << "?" << "\\" << "\\?A";
-//   QTest::newRow("A?") << "A?" << "?" << "\\" << "A?";
-//   QTest::newRow("A\\?") << "A\\?" << "?" << "\\" << "A\\?";
-//   // Checks with other tokens
-//   QTest::newRow("A*") << "A*" << "*" << "\\" << "A*";
-//   QTest::newRow("A\\*") << "A\\*" << "*" << "\\" << "A\\*";
-//   QTest::newRow("A_") << "A_" << "_" << "\\" << "A_";
-//   QTest::newRow("A\\_") << "A\\_" << "_" << "\\" << "A\\_";
-//   QTest::newRow("A%") << "A%" << "%" << "\\" << "A%";
-//   QTest::newRow("A\\%") << "A\\%" << "%" << "\\" << "A\\%";
-//   /*
-//    * All regexp metacharacters (that are not wildcards) must simply be escaped
-//    * (note that \ is a metacharacter)
-//    */
-//   // Check escaping regex metacharacters
-//   QTest::newRow("A") << "A" << "{" << "\\" << "A";
-//   QTest::newRow("A{") << "A{" << "{" << "\\" << "A\\{";
-//   QTest::newRow("A\\{") << "A\\{" << "{" << "\\" << "A\\\\\\{";   // Escape '\' and '{'
-//   QTest::newRow("A") << "A" << "}" << "\\" << "A";
-//   QTest::newRow("A}") << "A}" << "}" << "\\" << "A\\}";
-//   QTest::newRow("A\\}") << "A\\}" << "}" << "\\" << "A\\\\\\}";   // Escape '\' and '}'
-//   QTest::newRow("A") << "A" << "[" << "\\" << "A";
-//   QTest::newRow("A[") << "A[" << "[" << "\\" << "A\\[";
-//   QTest::newRow("A\\[") << "A\\[" << "[" << "\\" << "A\\\\\\[";   // Escape '\' and '['
-//   QTest::newRow("A") << "A" << "]" << "\\" << "A";
-//   QTest::newRow("A]") << "A]" << "]" << "\\" << "A\\]";
-//   QTest::newRow("A\\]") << "A\\]" << "]" << "\\" << "A\\\\\\]";   // Escape '\' and ']'
-//   QTest::newRow("A") << "A" << "(" << "\\" << "A";
-//   QTest::newRow("A(") << "A(" << "(" << "\\" << "A\\(";
-//   QTest::newRow("A\\(") << "A\\(" << "(" << "\\" << "A\\\\\\(";   // Escape '\' and '('
-//   QTest::newRow("A") << "A" << ")" << "\\" << "A";
-//   QTest::newRow("A)") << "A)" << ")" << "\\" << "A\\)";
-//   QTest::newRow("A\\)") << "A\\)" << ")" << "\\" << "A\\\\\\)";   // Escape '\' and ')'
-// 
-// //   QTest::newRow("A") << "A" << "d" << "a" << "A";
-// //   QTest::newRow("Ad") << "Ad" << "d" << "a" << "Aad";
-// //   QTest::newRow("Aad") << "Aad" << "d" << "a" << "Aad";
-// //   // Check various combinaisons with '\'
-// //   QTest::newRow("A") << "A" << "d" << "\\" << "A";
-// //   QTest::newRow("Ad") << "Ad" << "d" << "\\" << "A\\d";
-// //   QTest::newRow("A\\d") << "A\\d" << "d" << "\\" << "A\\d";
-// //   QTest::newRow("AdBd") << "AdBd" << "d" << "\\" << "A\\dB\\d";
-// //   QTest::newRow("A\\dBd") << "A\\dBd" << "d" << "\\" << "A\\dB\\d";
-// //   QTest::newRow("AdB\\d") << "AdB\\d" << "d" << "\\" << "A\\dB\\d";
-// //   QTest::newRow("AdB\\C") << "AdB\\C" << "d" << "\\" << "A\\dB\\C";
-// 
-// }
+void FilterExpressionTest::likeExpressionRegexTransformEscapeBenchmark()
+{
+  using ItemEditor::LikeExpressionRegexTransform;
+
+  QString str;
+  QBENCHMARK{
+    str = "*A?B{0102}??C*D\\?E";
+    LikeExpressionRegexTransform::escapeRegexMetacharacters(str);
+  }
+  QCOMPARE(str, QString("*A?B\\{0102\\}??C*D\\?E"));
+}
 
 void FilterExpressionTest::likeExpressionRegexTransformTest()
 {
@@ -296,33 +216,64 @@ void FilterExpressionTest::likeExpressionRegexTransformTest_data()
   QTest::addColumn<QString>("likeExpression");
   QTest::addColumn<QString>("expectedRegex");
 
-  QTest::newRow("LIKE B") << "B" << "^B$";
-  QTest::newRow("LIKE ?B") << "?B" << "^.B$";
-  QTest::newRow("LIKE \\?B") << "\\?B" << "^\\?B$";
-  QTest::newRow("LIKE '?B'") << "'?B'" << "^\\?B$";
-  QTest::newRow("LIKE _B") << "_B" << "^.B$";
-  QTest::newRow("LIKE *B") << "*B" << "^.*B$";
-  QTest::newRow("LIKE %B") << "%B" << "^.*B$";
-  QTest::newRow("LIKE %B?") << "%B?" << "^.*B.$";
-  QTest::newRow("LIKE %B%") << "%B%" << "^.*B.*$";
-  // Check unescaping wildcards that are not metacharacters in regexp
-  QTest::newRow("LIKE \\_") << "\\_" << "^_$";
-  // Check escaping regexp metacharacters
-  QTest::newRow("LIKE {") << "{" << "^\\{$";
-  QTest::newRow("LIKE \\{") << "\\{" << "^\\{$";
-  QTest::newRow("LIKE }") << "}" << "^\\}$";
-  QTest::newRow("LIKE [") << "[" << "^\\[$";
-  QTest::newRow("LIKE ]") << "]" << "^\\]$";
-  QTest::newRow("LIKE (") << "(" << "^\\($";
-  QTest::newRow("LIKE )") << ")" << "^\\)$";
-  QTest::newRow("LIKE ^") << "^" << "^\\^$";
-  QTest::newRow("LIKE $") << "$" << "^\\$$";
-  QTest::newRow("LIKE .") << "." << "^\\.$";
-  QTest::newRow("LIKE |") << "|" << "^\\|$";
-  QTest::newRow("LIKE +") << "+" << "^\\+$";
+  /*
+   * Check without any metacharacters
+   */
+  QTest::newRow("LIKE A") << "A" << "^A$";
+  QTest::newRow("LIKE AB") << "AB" << "^AB$";
+  QTest::newRow("LIKE ABC") << "ABC" << "^ABC$";
+  /*
+   * Wildcards are transformed to regex metacharacters if they are not escaped.
+   * If already escaped, they must be keeped untouched.
+   */
+  QTest::newRow("LIKE ?") << "?" << "^.$";
+  QTest::newRow("LIKE \\?") << "\\?" << "^\\?$";
+  QTest::newRow("LIKE ??") << "??" << "^..$";
+  QTest::newRow("LIKE ?\\?") << "?\\?" << "^.\\?$";
+  QTest::newRow("LIKE ?A") << "?A" << "^.A$";
+  QTest::newRow("LIKE \\?A") << "\\?A" << "^\\?A$";
+  QTest::newRow("LIKE A?") << "A?" << "^A.$";
+  QTest::newRow("LIKE A\\?") << "A\\?" << "^A\\?$";
+  QTest::newRow("LIKE _A") << "_A" << "^.A$";
+  QTest::newRow("LIKE *A") << "*A" << "^.*A$";
+  QTest::newRow("LIKE \\*A") << "\\*A" << "^\\*A$";
+  QTest::newRow("LIKE A%") << "A%" << "^A.*$";
+  QTest::newRow("LIKE *A?") << "*A?" << "^.*A.$";
+  QTest::newRow("LIKE *A*") << "*A*" << "^.*A.*$";
+  // Check alternate escaped and not escaped wildcards
+  QTest::newRow("LIKE ?\\??") << "?\\??" << "^.\\?.$";
+  QTest::newRow("LIKE ?\\???") << "?\\???" << "^.\\?..$";
+  QTest::newRow("LIKE ?\\??\\?") << "?\\??\\?" << "^.\\?.\\?$";
+  QTest::newRow("LIKE *\\**") << "*\\**" << "^.*\\*.*$";
+  QTest::newRow("LIKE *\\***") << "*\\***" << "^.*\\*.*.*$";
+  QTest::newRow("LIKE *\\**\\*") << "*\\**\\*" << "^.*\\*.*\\*$";
+  // Check also strings which conatins every wildcard, in every order
+  QTest::newRow("LIKE ?_%*") << "?_%*" << "^...*.*$";
+  QTest::newRow("LIKE *?_%") << "*?_%" << "^.*...*$";
+  QTest::newRow("LIKE %*?_") << "%*?_" << "^.*.*..$";
+  QTest::newRow("LIKE _%*?") << "_%*?" << "^..*.*.$";
+  // Check also with some dots
+  QTest::newRow("LIKE .*") << ".*" << "^\\..*$";
+  QTest::newRow("LIKE .%") << ".%" << "^\\..*$";
+  QTest::newRow("LIKE .%.*") << ".%.*" << "^\\..*\\..*$";
+  /*
+   * All regexp metacharacters (that are not wildcards) must simply be escaped
+   * (note that \ is a metacharacter)
+   */
+  // Check with expression containing regexp metacharacters
+  QTest::newRow("LIKE {A}") << "{A}" << "^\\{A\\}$";
+  QTest::newRow("LIKE {*A}") << "{*A}" << "^\\{.*A\\}$";
+  QTest::newRow("LIKE [A]") << "[A]" << "^\\[A\\]$";
+  QTest::newRow("LIKE (A)") << "(A)" << "^\\(A\\)$";
+  QTest::newRow("LIKE 0x1.5") << "0x1.5" << "^0x1\\.5$";
+  QTest::newRow("LIKE A+B") << "A+B" << "^A\\+B$";
+  QTest::newRow("LIKE A|B") << "A|B" << "^A\\|B$";
   QTest::newRow("LIKE \\") << "\\" << "^\\\\$";
-  // Check escaping regexp abbreviations
-  QTest::newRow("LIKE \\d") << "\\d" << "^\\\\d$";
+  QTest::newRow("LIKE \\*") << "\\*" << "^\\*$";
+  // Check expressions with '\' followed by a regexp metacharacter
+  QTest::newRow("LIKE A\\|B") << "A\\|B" << "^A\\\\\\|B$";  // Escape '\' and '|'
+  // Check expressions with regexp abbreviations
+  QTest::newRow("LIKE \\d") << "\\d" << "^\\\\d$";  // Similar to LIKE '\d'
   QTest::newRow("LIKE \\s") << "\\s" << "^\\\\s$";
   QTest::newRow("LIKE \\w") << "\\w" << "^\\\\w$";
   QTest::newRow("LIKE \\D") << "\\D" << "^\\\\D$";
@@ -331,6 +282,34 @@ void FilterExpressionTest::likeExpressionRegexTransformTest_data()
   QTest::newRow("LIKE \\N") << "\\N" << "^\\\\N$";
   QTest::newRow("LIKE \\b") << "\\b" << "^\\\\b$";
 
+//   QTest::newRow("LIKE \\{") << "\\{" << "^\\{$";
+//   QTest::newRow("LIKE }") << "}" << "^\\}$";
+//   QTest::newRow("LIKE [") << "[" << "^\\[$";
+//   QTest::newRow("LIKE ]") << "]" << "^\\]$";
+//   QTest::newRow("LIKE (") << "(" << "^\\($";
+//   QTest::newRow("LIKE )") << ")" << "^\\)$";
+//   QTest::newRow("LIKE ^") << "^" << "^\\^$";
+//   QTest::newRow("LIKE $") << "$" << "^\\$$";
+//   QTest::newRow("LIKE .") << "." << "^\\.$";
+//   QTest::newRow("LIKE |") << "|" << "^\\|$";
+//   QTest::newRow("LIKE +") << "+" << "^\\+$";
+//   QTest::newRow("LIKE \\") << "\\" << "^\\\\$";
+//   // Check escaping regexp abbreviations
+//   
+
+}
+
+void FilterExpressionTest::likeExpressionRegexTransformBenchmark()
+{
+  using ItemEditor::LikeExpression;
+  using ItemEditor::LikeExpressionRegexTransform;
+
+  QString result;
+  LikeExpression likeExpr("*A?B{0102}??C*D\\?E");
+  QBENCHMARK{
+    result = LikeExpressionRegexTransform::getRegexPattern(likeExpr);
+  }
+  QCOMPARE(result, QString("^.*A.B\\{0102\\}..C.*D\\?E$"));
 }
 
 void FilterExpressionTest::likeExpressionRegexTest()

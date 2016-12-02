@@ -1,6 +1,6 @@
 format 211
 "Expression" // Mdt::ItemEditor::Expression
-  revision 3
+  revision 7
   modified_by 2 "philippe"
   // class settings
   
@@ -42,6 +42,189 @@ format 211
     
     activitydiagramsettings
      end
+    classdiagram 3069058 "LiteralValue"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3505794 "LiteralValue"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3899138 // <generalisation>
+	relation 3873410 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3899138 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    classdiagram 3062530 "Terminal"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3505538 "LeftTerminal"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3899010 // <generalisation>
+	relation 3873282 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3899010 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    class 3505666 "RightTerminal"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3898882 // <generalisation>
+	relation 3873154 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3898882 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    class 3512962 "SqlRightTerminal"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3905794 // <generalisation>
+	relation 3880066 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3905794 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+  end
+
+  classview 1610882 "Comparison"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3069186 "Like"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3506050 "FilterColumnCompareEqual"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 3506178 "FilterColumnComparison"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 3506306 "LikeComparison"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
   end
 
   classview 1603970 "Grammars"
@@ -60,10 +243,6 @@ format 211
     
     activitydiagramsettings
      end
-    classdiagram 3062530 "FilterGrammar"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
   end
 
   classview 1604098 "Containers"

@@ -27,102 +27,110 @@
 #include <QStringBuilder>
 
 #include <algorithm>
-#include <iterator>
 
 #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
-QStringList LikeExpressionRegexTransform::mRegexReserved = {"(",")","[","]","{","}"};
+// QString LikeExpressionRegexTransform::getRegexPattern(const LikeExpression & expr)
+// {
+//   QString resultPattern;
+//   QString pattern = expr.expression();
+//   QRegularExpression regex;
+// 
+//   // Replace regular expression metacharacters and abbreviations
+//   pattern.replace(QLatin1String("{"), QLatin1String("\\{"));
+//   pattern.replace(QLatin1String("}"), QLatin1String("\\}"));
+//   pattern.replace(QLatin1String("["), QLatin1String("\\["));
+//   pattern.replace(QLatin1String("]"), QLatin1String("\\]"));
+//   pattern.replace(QLatin1String("("), QLatin1String("\\("));
+//   pattern.replace(QLatin1String(")"), QLatin1String("\\)"));
+//   pattern.replace(QLatin1String("+"), QLatin1String("\\+"));
+//   pattern.replace(QLatin1String("|"), QLatin1String("\\|"));
+//   pattern.replace(QLatin1String("^"), QLatin1String("\\^"));
+//   pattern.replace(QLatin1String("$"), QLatin1String("\\$"));
+//   pattern.replace(QLatin1String("."), QLatin1String("\\."));
+//   pattern.replace(QLatin1String("\\d"), QLatin1String("\\\\d"));
+//   pattern.replace(QLatin1String("\\D"), QLatin1String("\\\\D"));
+//   pattern.replace(QLatin1String("\\s"), QLatin1String("\\\\s"));
+//   pattern.replace(QLatin1String("\\S"), QLatin1String("\\\\S"));
+//   pattern.replace(QLatin1String("\\w"), QLatin1String("\\\\w"));
+//   pattern.replace(QLatin1String("\\W"), QLatin1String("\\\\W"));
+//   pattern.replace(QLatin1String("\\N"), QLatin1String("\\\\N"));
+// 
+//   /// \todo Comment
+//   //regex.setPattern("[^\\\\]\\?");
+//   regex.setPattern("\\?");
+// //   qDebug() << "Error: " << regex.errorString();
+//   Q_ASSERT(regex.isValid());
+//   pattern.replace(regex, QLatin1String("."));
+// 
+//   /// \todo Comment
+//   regex.setPattern("\\_");
+//   Q_ASSERT(regex.isValid());
+//   pattern.replace(regex, QLatin1String("."));
+// 
+//   /// \todo Comment
+//   regex.setPattern("\\*");
+//   Q_ASSERT(regex.isValid());
+//   pattern.replace(regex, QLatin1String(".*"));
+// 
+//   /// \todo Comment
+//   regex.setPattern("\\%");
+//   Q_ASSERT(regex.isValid());
+//   pattern.replace(regex, QLatin1String(".*"));
+// 
+//   resultPattern = QLatin1Char('^') % pattern % QLatin1Char('$');
+// 
+//   return resultPattern;
+// }
 
 QString LikeExpressionRegexTransform::getRegexPattern(const LikeExpression & expr)
 {
-  QString resultPattern;
   QString pattern = expr.expression();
-  QRegularExpression regex;
 
-  // Replace regular expression metacharacters and abbreviations
-  pattern.replace(QLatin1String("{"), QLatin1String("\\{"));
-  pattern.replace(QLatin1String("}"), QLatin1String("\\}"));
-  pattern.replace(QLatin1String("["), QLatin1String("\\["));
-  pattern.replace(QLatin1String("]"), QLatin1String("\\]"));
-  pattern.replace(QLatin1String("("), QLatin1String("\\("));
-  pattern.replace(QLatin1String(")"), QLatin1String("\\)"));
-  pattern.replace(QLatin1String("+"), QLatin1String("\\+"));
-  pattern.replace(QLatin1String("|"), QLatin1String("\\|"));
-  pattern.replace(QLatin1String("^"), QLatin1String("\\^"));
-  pattern.replace(QLatin1String("$"), QLatin1String("\\$"));
-  pattern.replace(QLatin1String("."), QLatin1String("\\."));
-  pattern.replace(QLatin1String("\\d"), QLatin1String("\\\\d"));
-  pattern.replace(QLatin1String("\\D"), QLatin1String("\\\\D"));
-  pattern.replace(QLatin1String("\\s"), QLatin1String("\\\\s"));
-  pattern.replace(QLatin1String("\\S"), QLatin1String("\\\\S"));
-  pattern.replace(QLatin1String("\\w"), QLatin1String("\\\\w"));
-  pattern.replace(QLatin1String("\\W"), QLatin1String("\\\\W"));
-  pattern.replace(QLatin1String("\\N"), QLatin1String("\\\\N"));
+  escapeRegexMetacharacters(pattern);
+  replaceWildcards(pattern);
+//   replaceWildcard(pattern, '?', QLatin1String("."));
+//   replaceWildcard(pattern, '_', QLatin1String("."));
+//   replaceWildcard(pattern, '%', QLatin1String(".*"));
+//   replaceWildcard(pattern, '*', QLatin1String(".*"));
+  pattern = '^' % pattern % '$';
 
-  /// \todo Comment
-  //regex.setPattern("[^\\\\]\\?");
-  regex.setPattern("\\?");
-//   qDebug() << "Error: " << regex.errorString();
-  Q_ASSERT(regex.isValid());
-  pattern.replace(regex, QLatin1String("."));
-
-  /// \todo Comment
-  regex.setPattern("\\_");
-  Q_ASSERT(regex.isValid());
-  pattern.replace(regex, QLatin1String("."));
-
-  /// \todo Comment
-  regex.setPattern("\\*");
-  Q_ASSERT(regex.isValid());
-  pattern.replace(regex, QLatin1String(".*"));
-
-  /// \todo Comment
-  regex.setPattern("\\%");
-  Q_ASSERT(regex.isValid());
-  pattern.replace(regex, QLatin1String(".*"));
-
-  resultPattern = QLatin1Char('^') % pattern % QLatin1Char('$');
-
-  return resultPattern;
+  return pattern;
 }
 
-bool testFunt(const QChar & c1, const QChar & c2)
+void LikeExpressionRegexTransform::escapeRegexMetacharacters(QString & str)
 {
-  qDebug() << "c1: " << c1 << " , c2: " << c2;
-  return true;
+  escapeBackslash(str);
+  str.replace('{', QLatin1String("\\{"));
+  str.replace('}', QLatin1String("\\}"));
+  str.replace('[', QLatin1String("\\["));
+  str.replace(']', QLatin1String("\\]"));
+  str.replace('(', QLatin1String("\\("));
+  str.replace(')', QLatin1String("\\)"));
+  str.replace('^', QLatin1String("\\^"));
+  str.replace('$', QLatin1String("\\$"));
+  str.replace('.', QLatin1String("\\."));
+  str.replace('+', QLatin1String("\\+"));
+  str.replace('|', QLatin1String("\\|"));
 }
 
-/// \todo Make private
 void LikeExpressionRegexTransform::escapeBackslash(QString & str)
 {
-  const QString & cpy = str;
-  QString result;
-
   if(str.isEmpty()){
     return;
   }
-  if(str.size() == 1){
-    if(str.at(0) == '\\'){
-      str.append('\\');
-    }
-    return;
-  }
-  
   int i = str.indexOf('\\');
   while( (i > -1) && (i < str.size()) ){
-    qDebug() << "str: " << str << " , i: " << i;
     /*
      * If we matched '\' at last char, we never have a wildcard after -> escape.
      * Else, we have to check if following char is a wildcard
      */
     if( i == (str.size()-1) ){
-      qDebug() << "At last char: " << str.at(i);
       str.insert(i, '\\');
     }else{
       Q_ASSERT( i < (str.size()-1) );
-      qDebug() << "Before last char , i: " << i << " ch: " << str.at(i) << " , next: " << str.at(i+1);
       if( !isTokenWildcard(str.at(i+1)) ){
         str.insert(i, '\\');
       }
@@ -135,89 +143,177 @@ void LikeExpressionRegexTransform::escapeBackslash(QString & str)
       i = str.indexOf('\\', i);
     }
   }
-  
-//   Q_ASSERT(str.size() > 1);
-//   const int lastMatch = str.size() - 1;
+}
+
+// void LikeExpressionRegexTransform::replaceWildcard(QString & str, const QChar & wildcard, const QString & regexMeta)
+// {
+//   qDebug() << "str: " << str << " , wildcard: " << wildcard << " , regexMeta: " << regexMeta;
+// 
+//   if(str.isEmpty()){
+//     return;
+//   }
+// //   if( (str.size() == 1) && (str.at(0) == wildcard) ){
+// //     qDebug() << " - replace.";
+// //     return;
+// //   }
+//   const int n = regexMeta.size();
+//   Q_ASSERT(n > 0);
+//   int i = str.indexOf(wildcard);
+//   while( (i > -1) && (i < str.size()) ){
+//     qDebug() << " - i: " << i;
+//     /*
+//      * If wildcard is found at first position in str, it is cannot be escaped.
+//      * Else, we must check:
+//      *  - If found wildcard is escaped, don't replace
+//      *  - 
+//      */
+//     if(i == 0){
+//       qDebug() << " - replace.... c[0]: " << str.at(0);
+//       str.replace(0, 1, regexMeta);
+//       i += n-1;
+//     }else if( (str.at(i) == wildcard) && (str.at(i-1) != '\\') ){
+//       qDebug() << " - replace.... i: " << i << "c[i]: " << str.at(i) << " , c[i-1]: " << str.at(i-1);
+//       str.replace(i, 1, regexMeta);
+//       i += n-1;
+//     }
+//     
+//     
+//     ++i;
+//     if(i < str.size()){
+//       i = str.indexOf(wildcard, i);
+//     }
+//   }
 //   
-//   while( (i >= 0) && (i < lastMatch) ){
-//     i = str.indexOf('\\', i);
-//     qDebug() << "i: " << i << " , lastMatch: " << lastMatch;
-//     if(i < lastMatch && i >= 0){
-//       qDebug() << "i: " << i << " , c1: " << str.at(i) << " , c2: " << str.at(i+1);
-//     }
-//     if( (i >= 0) && (i < lastMatch) && (!isTokenWildcard(str.at(i+1))) ){
-//       str.insert(i, '\\');
-//       ++i;
-//     }
-//   }
-  
-//   auto it1 = cpy.constBegin();
-//   auto it2 = it1+1;
-//   const auto last = cpy.constEnd();
-//   while(it2 != last){
-//     qDebug() << "it1: " << *it1 << ", it2: " << *it2;
-//     if(*it1 == '\\'){
-//       
-//     }
-//     ++it1;
-//     ++it2;
-//   }
-  
-  /// \todo precondition, etc..
-//   std::transform(cpy.constBegin(), cpy.constEnd(), cpy.constBegin()+1, std::back_inserter(result), testFunt);
-  
-//   qDebug() << "result: " << result;
-//   str.replace('\\', QLatin1String("\\\\"));
-}
+// //   Q_ASSERT(isTokenWildcard(wildcard));
+// // 
+// //   
+// // 
+// //   QRegularExpression regex;
+// //   QString pattern = QLatin1String("[^\\\\]\\") + QChar(wildcard);
+// //   qDebug() << " - pattern: " << pattern;
+// // //   regex.setPattern("\\{0,0}" + QChar(wildcard));
+// //   regex.setPattern(pattern);
+// //   Q_ASSERT(regex.isValid());
+// //   str.replace(regex, regexMeta);
+// 
+//   qDebug() << " -> str: " << str;
+// }
 
-void LikeExpressionRegexTransform::escapeRegexMetacharacters(QString & str)
+void LikeExpressionRegexTransform::replaceWildcards(QString & str)
 {
-  escapeBackslash(str);
-  str.replace('{', QLatin1String("\\{"));
-  str.replace('}', QLatin1String("\\}"));
-  str.replace('[', QLatin1String("\\["));
-  str.replace(']', QLatin1String("\\]"));
-  str.replace('(', QLatin1String("\\("));
-  str.replace(')', QLatin1String("\\)"));
-}
+//   qDebug() << "str: " << str;
 
-/// \todo obselete
-void LikeExpressionRegexTransform::escape(QString & str, const QString & token, const QString & escapeStr)
-{
-  Q_ASSERT(!token.isEmpty());
-
-  QString es = escapeStr;
-  
-  qDebug() << mRegexReserved;
-  
-  QRegularExpression regex;
-  if(es == "\\"){
-    es = "\\\\";
+  if(str.isEmpty()){
+    return;
   }
-  regex.setPattern(es + "{0,1}" + token);
-  qDebug() << "regex: " << regex.pattern() << " , matches " << str << " : " << regex.match(str).hasMatch();
-  Q_ASSERT(regex.isValid());
-  str.replace(regex, escapeStr+token);
+
+  auto wc = findFirstWildcard(str, 0);
+  int i = wc.index;
+  while( (i > -1) && (i < str.size()) ){
+    Q_ASSERT(!wc.wildcard.isNull());
+//     qDebug() << "- replace " << wc.wildcard << " at " << i;
+    i = replaceWildcard(str, i, wc.wildcard);
+    ///++i;
+    if(i < str.size()){
+      wc = findFirstWildcard(str, i);
+      i = wc.index;
+    }
+  }
+//   if(wc.index > -1){
+//     qDebug() << "- found " << wc.wildcard << " at index " << wc.index;
+//   }
+}
+
+int LikeExpressionRegexTransform::replaceWildcard(QString & str, int pos, const QChar & wildcard)
+{
+  Q_ASSERT(pos >= 0);
+  Q_ASSERT(pos < str.size());
+
+  switch(wildcard.toLatin1()){
+    case '?':
+      str.replace(pos, 1, '.');
+      return pos + 1;
+    case '_':
+      str.replace(pos, 1, '.');
+      return pos + 1;
+    case '%':
+      str.replace(pos, 1, QLatin1String(".*"));
+      return pos + 2;
+    case '*':
+      str.replace(pos, 1, QLatin1String(".*"));
+      return pos + 2;
+  }
+  return -1;
+}
+
+LikeExpressionRegexTransformWildcardMatch LikeExpressionRegexTransform::findFirstWildcard(const QString & str, int from)
+{
+  Q_ASSERT(!str.isEmpty());
+  Q_ASSERT(from >= 0);
+  Q_ASSERT(from < str.size());
+
+//   qDebug() << " str: " << str << " , from: " << from;
+  
+  LikeExpressionRegexTransformWildcardMatch wc;
+  auto it = str.constBegin() + from;
+  const auto last = str.constEnd();
+
+  while(it != last){
+    it = std::find_if(it, last, [](const QChar & c){ return isTokenWildcard(c); });
+    // If we found a wildcard, see if it is not escaped
+    if(it != last){
+      /*
+       * If wildcard is found at first position in str, it is cannot be escaped.
+       * Else, we must check.
+       */
+//       qDebug() << " - potential match: " << *it;
+      if(it == str.constBegin()){
+//         qDebug() << " - match at 0: " << *it;
+        wc.index = 0;
+        wc.wildcard = *it;
+        break;
+      }else{
+        if(*(it-1) != '\\'){
+//           qDebug() << " - match: " << *it;
+          wc.index = it - str.constBegin();
+          wc.wildcard = *it;
+          break;
+        }
+      }
+      ++it;
+    }
+  }
+
+//   auto it = std::find_if(str.constBegin()+from, str.constEnd(), [](const QChar & c){ return isTokenWildcard(c); });
+//   // If we found a wildcard, see if it is not escaped
+//   if(it != str.constEnd()){
+//     /*
+//      * If wildcard is found at first position in str, it is cannot be escaped.
+//      * Else, we must check.
+//      */
+//     if(it == str.constBegin()){
+//       qDebug() << " - match: " << *it;
+//       wc.index = 0;
+//       wc.wildcard = *it;
+//     }else{
+//       if(*(it-1) != '\\'){
+//         qDebug() << " - match: " << *it;
+//         wc.index = it - str.constBegin();
+//         wc.wildcard = *it;
+//       }
+//     }
+//   }
+  Q_ASSERT( (wc.index < 0) || (!wc.wildcard.isNull()) );
+  
+//   i = str.indexOf('?', from);
+  
+
+  return wc;
 }
 
 bool LikeExpressionRegexTransform::isTokenWildcard(const QChar & c)
 {
   return (c == '?' || c == '*' || c == '%' || c == '_');
 }
-
-// bool LikeExpressionRegexTransform::isTokenWildcard(const QString & token)
-// {
-//   if(token.size() != 1){
-//     return false;
-//   }
-//   const char c = token.at(0).toLatin1();
-// 
-//   return (c == '?' || c == '*' || c == '%' || c == '_');
-// }
-
-// void LikeExpressionRegexTransform::escapeWildcard(QString& str, const QChar & token)
-// {
-// 
-// }
 
 }} // namespace Mdt{ namespace ItemEditor{

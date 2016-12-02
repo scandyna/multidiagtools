@@ -22,13 +22,21 @@
 #define MDT_ITEM_EDITOR_LIKE_EXPRESSION_REGEX_TRANSFORM_H
 
 #include <QString>
+#include <QChar>
 #include <QStringList>
 
-class QChar;
+// class QChar;
+class QLatin1String;
 
 namespace Mdt{ namespace ItemEditor{
 
   class LikeExpression;
+
+  struct LikeExpressionRegexTransformWildcardMatch
+  {
+    int index = -1;
+    QChar wildcard;
+  };
 
   /*! \brief Transform a LikeExpression to a regular expression
    */
@@ -40,26 +48,32 @@ namespace Mdt{ namespace ItemEditor{
      */
     static QString getRegexPattern(const LikeExpression & expr);
 
-    /*! \brief Only escapes '\' if not escaping a wildcard character
-     */
-    static void escapeBackslash(QString & str);
-
     /*! \brief Escape regexp metacharacters
      */
     static void escapeRegexMetacharacters(QString & str);
 
-    /*! \brief Escape each occurence of token with escape in str
-     */
-    static void escape(QString & str, const QString & token, const QString & escapeStr);
-
    private:
 
+    /*! \brief Only escapes '\' if not escaping a wildcard character
+     */
+    static void escapeBackslash(QString & str);
 
-    static bool isTokenWildcard(const QChar & token);
-//     static bool isTokenWildcard(const QString & token);
-    static void escapeWildcard(QString & str, const QChar & token);
+    /*! \brief Replace wildcards if not escaped
+     */
+    static void replaceWildcards(QString & str);
 
-    static QStringList mRegexReserved;
+    /*! \brief Replace wildcard at position pos in str
+     * \return next index in str
+     */
+    static int replaceWildcard(QString & str, int pos, const QChar & wildcard);
+
+//     static void replaceWildcard(QString & str, const QChar & wildcard, const QString & regexMeta);
+
+    /*! \brief Find a wildcard in str
+     */
+    static LikeExpressionRegexTransformWildcardMatch findFirstWildcard(const QString & str, int from);
+
+    static bool isTokenWildcard(const QChar & c);
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
