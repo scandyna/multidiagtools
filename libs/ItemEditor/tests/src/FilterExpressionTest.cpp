@@ -281,22 +281,6 @@ void FilterExpressionTest::likeExpressionRegexTransformTest_data()
   QTest::newRow("LIKE \\W") << "\\W" << "^\\\\W$";
   QTest::newRow("LIKE \\N") << "\\N" << "^\\\\N$";
   QTest::newRow("LIKE \\b") << "\\b" << "^\\\\b$";
-
-//   QTest::newRow("LIKE \\{") << "\\{" << "^\\{$";
-//   QTest::newRow("LIKE }") << "}" << "^\\}$";
-//   QTest::newRow("LIKE [") << "[" << "^\\[$";
-//   QTest::newRow("LIKE ]") << "]" << "^\\]$";
-//   QTest::newRow("LIKE (") << "(" << "^\\($";
-//   QTest::newRow("LIKE )") << ")" << "^\\)$";
-//   QTest::newRow("LIKE ^") << "^" << "^\\^$";
-//   QTest::newRow("LIKE $") << "$" << "^\\$$";
-//   QTest::newRow("LIKE .") << "." << "^\\.$";
-//   QTest::newRow("LIKE |") << "|" << "^\\|$";
-//   QTest::newRow("LIKE +") << "+" << "^\\+$";
-//   QTest::newRow("LIKE \\") << "\\" << "^\\\\$";
-//   // Check escaping regexp abbreviations
-//   
-
 }
 
 void FilterExpressionTest::likeExpressionRegexTransformBenchmark()
@@ -325,7 +309,6 @@ void FilterExpressionTest::likeExpressionRegexTest()
 
   pattern = LikeExpressionRegexTransform::getRegexPattern( LikeExpression(likeExpression) );
   regex.setPattern(pattern);
-  qDebug() << "Pattern: " << pattern << " , error: " << regex.errorString();
   QVERIFY(regex.isValid());
   bool matches = regex.match(str).hasMatch();
   QCOMPARE( matches , expectedMatches );

@@ -63,11 +63,10 @@ namespace Mdt{ namespace ItemEditor{
     static void replaceWildcards(QString & str);
 
     /*! \brief Replace wildcard at position pos in str
+     *
      * \return next index in str
      */
     static int replaceWildcard(QString & str, int pos, const QChar & wildcard);
-
-//     static void replaceWildcard(QString & str, const QChar & wildcard, const QString & regexMeta);
 
     /*! \brief Find a wildcard in str
      */
