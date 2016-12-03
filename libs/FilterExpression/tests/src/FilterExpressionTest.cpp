@@ -88,6 +88,10 @@ void FilterExpressionTest::likeExpressionRegexTransformEscapeTest_data()
   QTest::newRow("A") << "A" << "A";
   QTest::newRow("AB") << "AB" << "AB";
   QTest::newRow("ABC") << "ABC" << "ABC";
+  QTest::newRow("A_") << "A_" << "A_";
+  QTest::newRow("A\\_") << "A\\_" << "A\\\\_";
+  QTest::newRow("A%") << "A%" << "A%";
+  QTest::newRow("A\\%") << "A\\%" << "A\\\\%";
   /*
    * Wildcards are transformed to regex metacharacters (later) if they are not escaped.
    * If already escaped, they must be keeped untouched.
@@ -109,10 +113,6 @@ void FilterExpressionTest::likeExpressionRegexTransformEscapeTest_data()
   // Checks with other tokens
   QTest::newRow("A*") << "A*" << "A*";
   QTest::newRow("A\\*") << "A\\*" << "A\\*";
-  QTest::newRow("A_") << "A_" << "A_";
-  QTest::newRow("A\\_") << "A\\_" << "A\\_";
-  QTest::newRow("A%") << "A%" << "A%";
-  QTest::newRow("A\\%") << "A\\%" << "A\\%";
   /*
    * All regexp metacharacters (that are not wildcards) must simply be escaped
    * (note that \ is a metacharacter)
@@ -197,6 +197,8 @@ void FilterExpressionTest::likeExpressionRegexTransformTest_data()
   QTest::newRow("LIKE A") << "A" << "^A$";
   QTest::newRow("LIKE AB") << "AB" << "^AB$";
   QTest::newRow("LIKE ABC") << "ABC" << "^ABC$";
+  QTest::newRow("LIKE _A") << "_A" << "^_A$";
+  QTest::newRow("LIKE A%") << "A%" << "^A%$";
   /*
    * Wildcards are transformed to regex metacharacters if they are not escaped.
    * If already escaped, they must be keeped untouched.
@@ -209,10 +211,8 @@ void FilterExpressionTest::likeExpressionRegexTransformTest_data()
   QTest::newRow("LIKE \\?A") << "\\?A" << "^\\?A$";
   QTest::newRow("LIKE A?") << "A?" << "^A.$";
   QTest::newRow("LIKE A\\?") << "A\\?" << "^A\\?$";
-  QTest::newRow("LIKE _A") << "_A" << "^.A$";
   QTest::newRow("LIKE *A") << "*A" << "^.*A$";
   QTest::newRow("LIKE \\*A") << "\\*A" << "^\\*A$";
-  QTest::newRow("LIKE A%") << "A%" << "^A.*$";
   QTest::newRow("LIKE *A?") << "*A?" << "^.*A.$";
   QTest::newRow("LIKE *A*") << "*A*" << "^.*A.*$";
   // Check alternate escaped and not escaped wildcards
@@ -223,14 +223,12 @@ void FilterExpressionTest::likeExpressionRegexTransformTest_data()
   QTest::newRow("LIKE *\\***") << "*\\***" << "^.*\\*.*.*$";
   QTest::newRow("LIKE *\\**\\*") << "*\\**\\*" << "^.*\\*.*\\*$";
   // Check also strings which conatins every wildcard, in every order
-  QTest::newRow("LIKE ?_%*") << "?_%*" << "^...*.*$";
-  QTest::newRow("LIKE *?_%") << "*?_%" << "^.*...*$";
-  QTest::newRow("LIKE %*?_") << "%*?_" << "^.*.*..$";
-  QTest::newRow("LIKE _%*?") << "_%*?" << "^..*.*.$";
+  QTest::newRow("LIKE ?*") << "?*" << "^..*$";
+  QTest::newRow("LIKE *?") << "*?" << "^.*.$";
   // Check also with some dots
+  QTest::newRow("LIKE .?") << ".?" << "^\\..$";
   QTest::newRow("LIKE .*") << ".*" << "^\\..*$";
-  QTest::newRow("LIKE .%") << ".%" << "^\\..*$";
-  QTest::newRow("LIKE .%.*") << ".%.*" << "^\\..*\\..*$";
+  QTest::newRow("LIKE .*.?") << ".*.?" << "^\\..*\\..$";
   /*
    * All regexp metacharacters (that are not wildcards) must simply be escaped
    * (note that \ is a metacharacter)
@@ -295,22 +293,65 @@ void FilterExpressionTest::likeExpressionRegexTest_data()
   QTest::addColumn<QString>("likeExpression");
   QTest::addColumn<bool>("expectedMatches");
 
-  QTest::newRow("A LIKE A |y") << "A" << "A" << true;
-  QTest::newRow("A LIKE B |n") << "A" << "B" << false;
-  QTest::newRow("ABC LIKE A |n") << "ABC" << "A" << false;
-  QTest::newRow("ABC LIKE B |n") << "ABC" << "B" << false;
-  QTest::newRow("ABC LIKE ?B |n") << "ABC" << "?B" << false;
-  QTest::newRow("ABC LIKE B? |n") << "ABC" << "B?" << false;
-  QTest::newRow("ABC LIKE ?B? |y") << "ABC" << "?B?" << true;
-  QTest::newRow("ABC LIKE _B |n") << "ABC" << "_B" << false;
-  QTest::newRow("ABC LIKE B_ |n") << "ABC" << "B_" << false;
-  QTest::newRow("ABC LIKE _B_ |y") << "ABC" << "_B_" << true;
-  QTest::newRow("ABC LIKE *B |n") << "ABC" << "*B" << false;
-  QTest::newRow("ABC LIKE B* |n") << "ABC" << "B*" << false;
-  QTest::newRow("ABC LIKE *B* |y") << "ABC" << "*B*" << true;
-  QTest::newRow("ABC LIKE %B |n") << "ABC" << "%B" << false;
-  QTest::newRow("ABC LIKE B% |n") << "ABC" << "B%" << false;
-  QTest::newRow("ABC LIKE %B% |y") << "ABC" << "%B%" << true;
+  // Check with data without any wildcard or metacharacter
+  QTest::newRow("A LIKE A") << "A" << "A" << true;
+  QTest::newRow("B LIKE A") << "B" << "A" << false;
+  QTest::newRow("AB LIKE A") << "AB" << "A" << false;
+  QTest::newRow("BA LIKE A") << "BA" << "A" << false;
+  QTest::newRow("ABC LIKE A") << "ABC" << "A" << false;
+  QTest::newRow("ABC LIKE B") << "ABC" << "B" << false;
+  QTest::newRow("A LIKE ?A") << "A" << "?A" << false;
+  QTest::newRow("AB LIKE ?A") << "AB" << "?A" << false;
+  QTest::newRow("BA LIKE ?A") << "BA" << "?A" << true;
+  QTest::newRow("A LIKE A?") << "A" << "A?" << false;
+  QTest::newRow("AB LIKE A?") << "AB" << "A?" << true;
+  QTest::newRow("ABC LIKE A?") << "ABC" << "A?" << false;
+  QTest::newRow("A LIKE *A") << "A" << "*A" << true;
+  QTest::newRow("AB LIKE *A") << "AB" << "*A" << false;
+  QTest::newRow("BA LIKE *A") << "BA" << "*A" << true;
+  QTest::newRow("ABC LIKE *A") << "ABC" << "*A" << false;
+  QTest::newRow("A LIKE A*") << "A" << "A*" << true;
+  QTest::newRow("AB LIKE A*") << "AB" << "A*" << true;
+  QTest::newRow("BA LIKE A*") << "BA" << "A*" << false;
+  QTest::newRow("ABC LIKE A*") << "ABC" << "A*" << true;
+  QTest::newRow("A LIKE *A*") << "A" << "*A*" << true;
+  QTest::newRow("BA LIKE *A*") << "BA" << "*A*" << true;
+  QTest::newRow("AB LIKE *A*") << "AB" << "*A*" << true;
+  QTest::newRow("ABC LIKE *A*") << "ABC" << "*A*" << true;
+  QTest::newRow("B LIKE *A*") << "B" << "*A*" << false;
+  // Check matching ? and *
+  QTest::newRow("A LIKE ?") << "A" << "?" << true;
+  QTest::newRow("? LIKE ?") << "?" << "?" << true;
+  QTest::newRow("?? LIKE ?") << "??" << "?" << false;
+  QTest::newRow("A LIKE \\?") << "A" << "\\?" << false;
+  QTest::newRow("? LIKE \\?") << "?" << "\\?" << true;
+  QTest::newRow("A LIKE \\*") << "A" << "\\*" << false;
+  QTest::newRow("* LIKE \\*") << "*" << "\\*" << true;
+  // Check matching % and _
+  QTest::newRow("A LIKE %") << "A" << "%" << false;
+  QTest::newRow("% LIKE %") << "%" << "%" << true;
+  QTest::newRow("A LIKE _") << "A" << "_" << false;
+  QTest::newRow("_ LIKE _") << "_" << "_" << true;
+  // Check matching regexp keywords
+  QTest::newRow("A LIKE {") << "A" << "{" << false;
+  QTest::newRow("{ LIKE {") << "{" << "{" << true;
+  QTest::newRow("d LIKE d") << "d" << "d" << true;
+  QTest::newRow("\\d LIKE d") << "\\d" << "d" << false;
+  QTest::newRow("d LIKE \\d") << "d" << "\\d" << false;
+  QTest::newRow("\\d LIKE \\d") << "\\d" << "\\d" << true;
+
+//   QTest::newRow("ABC LIKE ?B |n") << "ABC" << "?B" << false;
+//   QTest::newRow("ABC LIKE B? |n") << "ABC" << "B?" << false;
+//   QTest::newRow("ABC LIKE ?B? |y") << "ABC" << "?B?" << true;
+//   QTest::newRow("ABC LIKE _B |n") << "ABC" << "_B" << false;
+//   QTest::newRow("ABC LIKE B_ |n") << "ABC" << "B_" << false;
+//   QTest::newRow("ABC LIKE _B_ |y") << "ABC" << "_B_" << true;
+//   QTest::newRow("ABC LIKE *B |n") << "ABC" << "*B" << false;
+//   QTest::newRow("ABC LIKE B* |n") << "ABC" << "B*" << false;
+//   QTest::newRow("ABC LIKE *B* |y") << "ABC" << "*B*" << true;
+//   QTest::newRow("ABC LIKE %B |n") << "ABC" << "%B" << false;
+//   QTest::newRow("ABC LIKE B% |n") << "ABC" << "B%" << false;
+//   QTest::newRow("ABC LIKE %B% |y") << "ABC" << "%B%" << true;
 }
 
 /*

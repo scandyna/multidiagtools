@@ -30,9 +30,11 @@ namespace Mdt{ namespace FilterExpression{
    * Supported wildcards are:
    * <table class="srcdoc_td_left">
    *  <tr><th>Wildcard</th><th>Description</th></tr>
-   *  <tr><td>% or *</td><td>A substitue for 0 or more characters</td></tr>
-   *  <tr><td>_ or ?</td><td>A substitue for 1 character</td></tr>
+   *  <tr><td>*</td><td>A substitue for 0 or more characters</td></tr>
+   *  <tr><td>?</td><td>A substitue for 1 character</td></tr>
    * </table>
+   *
+   * To match a wildcard, escape it with a '\'.
    */
   class LikeExpression
   {

@@ -44,6 +44,7 @@ QString LikeExpressionRegexTransform::getRegexPattern(const LikeExpression & exp
 
 void LikeExpressionRegexTransform::escapeRegexMetacharacters(QString & str)
 {
+//   str = QRegularExpression::escape(str);
   escapeBackslash(str);
   str.replace('{', QLatin1String("\\{"));
   str.replace('}', QLatin1String("\\}"));
@@ -167,7 +168,8 @@ LikeExpressionRegexTransformWildcardMatch LikeExpressionRegexTransform::findFirs
 
 bool LikeExpressionRegexTransform::isTokenWildcard(const QChar & c)
 {
-  return (c == '?' || c == '*' || c == '%' || c == '_');
+//   return (c == '?' || c == '*' || c == '%' || c == '_');
+  return (c == '?' || c == '*');
 }
 
 }} // namespace Mdt{ namespace FilterExpression{
