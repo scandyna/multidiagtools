@@ -47,6 +47,7 @@ class FilterExpressionTest : public QObject
    * Runtime tests
    */
 
+  void likeExpressionTest();
   void likeExpressionRegexTransformEscapeTest();
   void likeExpressionRegexTransformEscapeTest_data();
   void likeExpressionRegexTransformEscapeBenchmark();

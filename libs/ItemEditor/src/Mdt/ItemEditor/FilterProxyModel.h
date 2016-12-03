@@ -36,7 +36,7 @@ namespace Mdt{ namespace ItemEditor{
    * namepsace ItemEditor = Mdt::ItemEditor;
    * using ItemEditor::FilterProxyModel;
    * using ItemEditor::FilterColumn;
-   * using ItemEditor::LikeExpression;
+   * using Like = ItemEditor::LikeExpression; <-- See if ItemEditor or Mdt::FilterExpression
    *
    * auto *view = new QTableView;
    * auto *model = new ClientTableModel(view);
@@ -48,7 +48,7 @@ namespace Mdt{ namespace ItemEditor{
    * // Setup a filter and apply it
    * FilterColumn clientFirstName(1);
    * FilterColumn clientLastName(2);
-   * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == LikeExpression("A?B%\\?%")) );
+   * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == Like("A?B%\\?%")) );
    * \endcode
    *
    * Example to filter data by matching data from a other model:

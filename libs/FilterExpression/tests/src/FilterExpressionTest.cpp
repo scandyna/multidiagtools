@@ -51,6 +51,21 @@ void FilterExpressionTest::cleanupTestCase()
  * Runtime tests
  */
 
+QString likeExpressionTestFunction(const FilterExpression::LikeExpression & expr)
+{
+  return expr.expression();
+}
+
+void FilterExpressionTest::likeExpressionTest()
+{
+  using Like = FilterExpression::LikeExpression;
+
+  // Must not compile
+//   QCOMPARE( likeExpressionTestFunction("A?B") , QString("A?B") );
+
+  QCOMPARE( likeExpressionTestFunction(Like("A?B")) , QString("A?B") );
+}
+
 void FilterExpressionTest::likeExpressionRegexTransformEscapeTest()
 {
   using FilterExpression::LikeExpressionRegexTransform;
@@ -156,8 +171,9 @@ void FilterExpressionTest::likeExpressionRegexTransformEscapeBenchmark()
 
 void FilterExpressionTest::likeExpressionRegexTransformTest()
 {
-  using FilterExpression::LikeExpression;
+//   using FilterExpression::LikeExpression;
   using FilterExpression::LikeExpressionRegexTransform;
+  using Like = FilterExpression::LikeExpression;
 
   QFETCH(QString, likeExpression);
   QFETCH(QString, expectedRegex);
@@ -166,7 +182,7 @@ void FilterExpressionTest::likeExpressionRegexTransformTest()
   // Must not compile
 //   QCOMPARE( LikeExpressionRegexTransform::getRegexPattern("A") , QString("A") );
 
-  regex = LikeExpressionRegexTransform::getRegexPattern(LikeExpression(likeExpression));
+  regex = LikeExpressionRegexTransform::getRegexPattern(Like(likeExpression));
   QCOMPARE(regex, expectedRegex);
 }
 
