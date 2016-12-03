@@ -339,19 +339,16 @@ void FilterExpressionTest::likeExpressionRegexTest_data()
   QTest::newRow("\\d LIKE d") << "\\d" << "d" << false;
   QTest::newRow("d LIKE \\d") << "d" << "\\d" << false;
   QTest::newRow("\\d LIKE \\d") << "\\d" << "\\d" << true;
-
-//   QTest::newRow("ABC LIKE ?B |n") << "ABC" << "?B" << false;
-//   QTest::newRow("ABC LIKE B? |n") << "ABC" << "B?" << false;
-//   QTest::newRow("ABC LIKE ?B? |y") << "ABC" << "?B?" << true;
-//   QTest::newRow("ABC LIKE _B |n") << "ABC" << "_B" << false;
-//   QTest::newRow("ABC LIKE B_ |n") << "ABC" << "B_" << false;
-//   QTest::newRow("ABC LIKE _B_ |y") << "ABC" << "_B_" << true;
-//   QTest::newRow("ABC LIKE *B |n") << "ABC" << "*B" << false;
-//   QTest::newRow("ABC LIKE B* |n") << "ABC" << "B*" << false;
-//   QTest::newRow("ABC LIKE *B* |y") << "ABC" << "*B*" << true;
-//   QTest::newRow("ABC LIKE %B |n") << "ABC" << "%B" << false;
-//   QTest::newRow("ABC LIKE B% |n") << "ABC" << "B%" << false;
-//   QTest::newRow("ABC LIKE %B% |y") << "ABC" << "%B%" << true;
+  QTest::newRow("A LIKE Q") << "A" << "Q" << false;
+  QTest::newRow("Q LIKE Q") << "Q" << "Q" << true;
+  QTest::newRow("A LIKE \\Q") << "A" << "\\Q" << false;
+  QTest::newRow("Q LIKE \\Q") << "Q" << "\\Q" << false;
+  QTest::newRow("\\Q LIKE \\Q") << "\\Q" << "\\Q" << true;
+  QTest::newRow("A LIKE E") << "A" << "E" << false;
+  QTest::newRow("E LIKE E") << "E" << "E" << true;
+  QTest::newRow("A LIKE \\E") << "A" << "\\E" << false;
+  QTest::newRow("E LIKE \\E") << "E" << "\\E" << false;
+  QTest::newRow("\\E LIKE \\E") << "\\E" << "\\E" << true;
 }
 
 /*
