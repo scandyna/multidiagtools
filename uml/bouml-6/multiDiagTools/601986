@@ -1,6 +1,6 @@
 format 211
 "Expression" // Mdt::Sql::Expression
-  revision 11
+  revision 12
   modified_by 2 "philippe"
   // class settings
   
@@ -707,6 +707,27 @@ ${inlines}
 	
 	
       end
+    end
+
+    classdiagram 3082370 "LikeExpression"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3519746 "LikeExpressionSqlTransform"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 

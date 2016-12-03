@@ -1,6 +1,6 @@
 format 211
 "FilterExpression" // Mdt::FilterExpression
-  revision 10
+  revision 11
   modified_by 2 "philippe"
   // class settings
   
@@ -509,22 +509,6 @@ ${inlines}
     end
 
     class 3519874 "LikeExpressionRegexTransform"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
-    class 3519746 "LikeExpressionSqlTransform"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
