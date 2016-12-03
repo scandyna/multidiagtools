@@ -16,6 +16,7 @@ set(SOURCES_FILES
     src/Mdt/Sql/Expression/TerminalSqlTransform.cpp
     src/Mdt/Sql/Expression/ComparisonSqlTransform.cpp
     src/Mdt/Sql/Expression/LogicalSqlTransform.cpp
+    src/Mdt/Sql/Expression/LikeExpressionSqlTransform.cpp
     src/Mdt/Sql/JoinConstraintFieldPairList.cpp
     src/Mdt/Sql/JoinConstraintFieldPairListSqlTransform.cpp
     src/Mdt/Sql/JoinConstraintExpression.cpp
@@ -56,6 +57,7 @@ set(SOURCES_FILES
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../Expected/src")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../Algorithm/src")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../FilterExpression/src")
 # Because some headers are generated during building (config.h, Qt's UIC), we also build path
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
