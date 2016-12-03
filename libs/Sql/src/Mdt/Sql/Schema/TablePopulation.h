@@ -49,13 +49,16 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    * tp.setTable(client);
    * // Add fields
    * tp.addField(client.Id_PK());
-   * tp.addFieldName(client.Name());
+   * tp.addField(client.Name());
    * // Add data
-   * tp << 1 << "Name 1";
-   * tp.commitCurrentRow();
-   * tp << 2 << "Name 2";
-   * tp.commitCurrentRow();
+   * tp.addRow(1, "Name 1");
+   * tp.addRow(2, "Name 2");
    * \endcode
+   *
+   * To populate a database, you can use a Driver instance.
+   *
+   * \sa Driver
+   * \sa Schema
    */
   class TablePopulation
   {
@@ -68,21 +71,21 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void setName(const QString & name)
     {
-      pvName = name;
+      mName = name;
     }
 
     /*! \brief Get identification name
      */
     QString name() const
     {
-      return pvName;
+      return mName;
     }
 
     /*! \brief Set table
      */
     void setTable(const Table & table)
     {
-      pvTableName = table.tableName();
+      mTableName = table.tableName();
     }
 
     /*! \brief Set table
@@ -90,14 +93,21 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     template<typename T>
     void setTable(const TableTemplate<T> & table)
     {
-      pvTableName = table.tableName();
+      mTableName = table.tableName();
+    }
+
+    /*! \brief Set table name
+     */
+    void setTableName(const QString & name)
+    {
+      mTableName = name;
     }
 
     /*! \brief Get table name
      */
     QString tableName() const
     {
-      return pvTableName;
+      return mTableName;
     }
 
     /*! \brief Add a field
@@ -106,9 +116,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void addField(const Field & field)
     {
-      Q_ASSERT(pvCurrentDataRow.isEmpty());
-      Q_ASSERT(pvDataRowList.isEmpty());
-      pvFieldNameList.append( field.name() );
+      Q_ASSERT(mDataRowList.isEmpty());
+      mFieldNameList.append( field.name() );
     }
 
     /*! \brief Add a field
@@ -117,16 +126,25 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void addField(const AutoIncrementPrimaryKey & pk)
     {
-      Q_ASSERT(pvCurrentDataRow.isEmpty());
-      Q_ASSERT(pvDataRowList.isEmpty());
-      pvFieldNameList.append( pk.fieldName() );
+      Q_ASSERT(mDataRowList.isEmpty());
+      mFieldNameList.append( pk.fieldName() );
+    }
+
+    /*! \brief Add a field name
+     *
+     * \pre No data must exist in this table population when adding a field
+     */
+    void addFieldName(const QString & name)
+    {
+      Q_ASSERT(mDataRowList.isEmpty());
+      mFieldNameList.append(name);
     }
 
     /*! \brief Get field names count
      */
     int fieldcount() const
     {
-      return pvFieldNameList.size();
+      return mFieldNameList.size();
     }
 
     /*! \brief Get field name at fieldIndex
@@ -136,42 +154,35 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     QString fieldName(int fieldIndex) const
     {
       Q_ASSERT(fieldIndex >= 0);
-      Q_ASSERT(fieldIndex < pvFieldNameList.size());
-      return pvFieldNameList.at(fieldIndex);
+      Q_ASSERT(fieldIndex < mFieldNameList.size());
+      return mFieldNameList.at(fieldIndex);
     }
 
     /*! \brief Get list of field names
      */
     QStringList fieldNameList() const
     {
-      return pvFieldNameList;
+      return mFieldNameList;
     }
 
-    /*! \brief Stream data into current row
-     */
-    QVariantList & operator<<(const QVariant & value)
-    {
-      pvCurrentDataRow << value;
-      Q_ASSERT(pvCurrentDataRow.size() <= pvFieldNameList.size());
-      return pvCurrentDataRow;
-    }
-
-    /*! \brief Commit current row of data
+    /*! \brief Add a row of data
      *
-     * \pre Current row of data must contain the same amount of elements than fieldNameList
+     * \pre The count of arguments in dataList must match fieldcount()
      */
-    void commitCurrentRow()
+    template<typename...Ts>
+    void addRow(const Ts & ...dataList)
     {
-      Q_ASSERT(pvCurrentDataRow.size() == pvFieldNameList.size());
-      pvDataRowList << pvCurrentDataRow;
-      pvCurrentDataRow.clear();
+      Q_ASSERT(sizeof...(dataList) == mFieldNameList.size());
+      mDataRowList.append(QVariantList());
+      mDataRowList[mDataRowList.size()-1].reserve(sizeof...(dataList));
+      addRowImpl(dataList...);
     }
 
     /*! \brief Get row count
      */
     int rowCount() const
     {
-      return pvDataRowList.size();
+      return mDataRowList.size();
     }
 
     /*! \brief Get data at given row and fieldIndex
@@ -181,30 +192,43 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     QVariant data(int row, int fieldIndex) const
     {
       Q_ASSERT(row >= 0);
-      Q_ASSERT(row < pvDataRowList.size());
+      Q_ASSERT(row < mDataRowList.size());
       Q_ASSERT(fieldIndex >= 0);
-      Q_ASSERT(fieldIndex < pvFieldNameList.size());
-      return pvDataRowList.at(row).at(fieldIndex);
+      Q_ASSERT(fieldIndex < mFieldNameList.size());
+      return mDataRowList.at(row).at(fieldIndex);
     }
 
     /*! \brief Clear
      */
     void clear()
     {
-      pvName.clear();
-      pvTableName.clear();
-      pvFieldNameList.clear();
-      pvCurrentDataRow.clear();
-      pvDataRowList.clear();
+      mName.clear();
+      mTableName.clear();
+      mFieldNameList.clear();
+      mDataRowList.clear();
     }
 
    private:
 
-    QString pvName;
-    QString pvTableName;
-    QStringList pvFieldNameList;
-    QVariantList pvCurrentDataRow;
-    QVector<QVariantList> pvDataRowList;
+    /*! \brief Terminal condition for addRow()
+     */
+    void addRowImpl()
+    {
+    }
+
+    /*! \brief Part of addRow(...)
+     */
+    template<typename T, typename...Ts>
+    void addRowImpl(const T & data, const Ts & ...dataList)
+    {
+      mDataRowList[mDataRowList.size()-1].append(data);
+      addRowImpl(dataList...);
+    }
+
+    QString mName;
+    QString mTableName;
+    QStringList mFieldNameList;
+    QVector<QVariantList> mDataRowList;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

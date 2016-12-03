@@ -38,7 +38,7 @@
 #include "Mdt/Sql/Schema/Table.h"
 #include "Mdt/Sql/Schema/TableModel.h"
 #include "Mdt/Sql/Schema/TableList.h"
-#include "Mdt/Sql/Schema/TablePopulation.h"
+// #include "Mdt/Sql/Schema/TablePopulation.h"
 #include "Mdt/Sql/Schema/Schema.h"
 #include "Schema/Client.h"
 #include "Schema/Address.h"
@@ -384,87 +384,6 @@ void SchemaTest::indexListModelTest()
   */
 }
 
-void SchemaTest::tablePopulationTest()
-{
-  using Mdt::Sql::Schema::TablePopulation;
-
-  Schema::Client client;
-
-  /*
-   * Initial state
-   */
-  TablePopulation tp;
-  /*
-   * Set attributes
-   */
-  tp.setName("Client_tbl population");
-  tp.setTable(client);
-  tp.addField(client.Id_PK());
-  tp.addField(client.Name());
-  // Check
-  QCOMPARE(tp.name(), QString("Client_tbl population"));
-  QCOMPARE(tp.tableName(), client.tableName());
-  QCOMPARE(tp.fieldcount(), 2);
-  QCOMPARE(tp.fieldName(0), QString("Id_PK"));
-  QCOMPARE(tp.fieldNameList().at(0), QString("Id_PK"));
-  /*
-   * Add data
-   */
-  QCOMPARE(tp.rowCount(), 0);
-  tp << 1 << "Name 1";
-  tp.commitCurrentRow();
-  tp << 2 << "Name 2";
-  tp.commitCurrentRow();
-  tp << 3 << "Name 3";
-  tp.commitCurrentRow();
-  QCOMPARE(tp.rowCount(), 3);
-  QCOMPARE(tp.data(0, 0), QVariant(1));
-  QCOMPARE(tp.data(0, 1), QVariant("Name 1"));
-  QCOMPARE(tp.data(1, 0), QVariant(2));
-  QCOMPARE(tp.data(1, 1), QVariant("Name 2"));
-  QCOMPARE(tp.data(2, 0), QVariant(3));
-  QCOMPARE(tp.data(2, 1), QVariant("Name 3"));
-  /*
-   * Clear
-   */
-  tp.clear();
-  QVERIFY(tp.name().isEmpty());
-  QVERIFY(tp.tableName().isEmpty());
-  QCOMPARE(tp.fieldcount(), 0);
-  QCOMPARE(tp.rowCount(), 0);
-}
-
-void SchemaTest::tablePopulationListTest()
-{
-  using Mdt::Sql::Schema::TablePopulation;
-  using Mdt::Sql::Schema::TablePopulationList;
-
-  Schema::Client client;
-
-  /*
-   * Initial state
-   */
-  TablePopulationList list;
-  QVERIFY(list.isEmpty());
-  /*
-   * Add 1 element
-   */
-  TablePopulation tp;
-  tp.setName("Test");
-  list.append(tp);
-  QCOMPARE(list.size(), 1);
-  QVERIFY(!list.isEmpty());
-  QCOMPARE(list.at(0).name(), QString("Test"));
-  for(const auto & t : list){
-    QCOMPARE(t.name(), QString("Test"));
-  }
-  /*
-   * Clear
-   */
-  list.clear();
-  QVERIFY(list.isEmpty());
-}
-
 void SchemaTest::triggerTest()
 {
   using Mdt::Sql::Schema::Trigger;
@@ -571,6 +490,9 @@ void SchemaTest::schemaTest()
   schema.addTablePopulation(tp);
   QCOMPARE(schema.tablePopulationCount(), 1);
   QCOMPARE(schema.tablePopulationName(0), QString("TP1"));
+  // Edit table population
+  schema.refTablePopulationAt(0).setName("TP11");
+  QCOMPARE(schema.tablePopulationName(0), QString("TP11"));
   /*
    * Add triggers
    */

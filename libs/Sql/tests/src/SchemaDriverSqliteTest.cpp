@@ -1438,10 +1438,8 @@ void SchemaDriverSqliteTest::tablePopulationTest()
   tp.setTable(client);
   tp.addField(client.Id_PK());
   tp.addField(client.Name());
-  tp << 1 << "Name 1";
-  tp.commitCurrentRow();
-  tp << 2 << "Name 2";
-  tp.commitCurrentRow();
+  tp.addRow(1, "Name 1");
+  tp.addRow(2, "Name 2");
   /*
    * Create Client_tbl
    */
@@ -1473,7 +1471,9 @@ void SchemaDriverSqliteTest::simpleCreateAndDropSchemaTest()
   QVERIFY(driver.isValid());
   Schema::TestSchema schema;
 
-  // Check with version that takes a Schema
+  /*
+   * Check with version that takes a Schema
+   */
   QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Client_tbl"));
   QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Address_tbl"));
   QVERIFY(!mDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
@@ -1485,11 +1485,27 @@ void SchemaDriverSqliteTest::simpleCreateAndDropSchemaTest()
   QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Client_tbl"));
   QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Address_tbl"));
   QVERIFY(!mDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
-  // Check with version that takes a SchemaTemplate
+  /*
+   * Check with version that takes a SchemaTemplate
+   */
+  // Populate the schema with some data
+  schema.addClient("Name 1");
+  schema.addClient("Name 2");
+  // Create schema and check
   QVERIFY(driver.createSchema(schema));
   QVERIFY(mDatabase.tables(QSql::AllTables).contains("Client_tbl"));
   QVERIFY(mDatabase.tables(QSql::AllTables).contains("Address_tbl"));
   QVERIFY(mDatabase.tables(QSql::AllTables).contains("ClientAddress_view"));
+  // Check also that data where added
+  {
+    QSqlQuery query(mDatabase);
+    QVERIFY(query.exec("SELECT Name FROM Client_tbl"));
+    QVERIFY(query.next());
+    QCOMPARE(query.value(0), QVariant("Name 1"));
+    QVERIFY(query.next());
+    QCOMPARE(query.value(0), QVariant("Name 2"));
+  }
+  // Drop schema
   QVERIFY(driver.dropSchema(schema));
   QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Client_tbl"));
   QVERIFY(!mDatabase.tables(QSql::AllTables).contains("Address_tbl"));

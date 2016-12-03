@@ -40,6 +40,11 @@ namespace Mdt{ namespace Sql{ namespace Schema{
   class ViewTemplate;
 
   /*! \brief Container for database schema
+   *
+   * To store a schema to a database, you can use a Driver instance.
+   *
+   * \sa SchemaTemplate
+   * \sa Driver
    */
   class Schema
   {
@@ -128,6 +133,17 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     int tablePopulationCount() const
     {
       return pvTablePopulationList.size();
+    }
+
+    /*! \brief Access table population at index (for edition)
+     *
+     * \pre index must be in a valid range
+     */
+    TablePopulation & refTablePopulationAt(int index)
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < pvTablePopulationList.size());
+      return pvTablePopulationList[index];
     }
 
     /*! \brief Get table population name

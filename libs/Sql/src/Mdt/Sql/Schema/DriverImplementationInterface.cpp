@@ -516,6 +516,7 @@ bool DriverImplementationInterface::createSchema(const Schema & schema)
   const auto tableList = schema.tableList();
   const auto viewList = schema.viewList();
   const auto triggerList = schema.triggerList();
+  const auto tablePopulationList = schema.tablePopulationList();
 
   /// \todo use transactions !
 
@@ -538,7 +539,11 @@ bool DriverImplementationInterface::createSchema(const Schema & schema)
     }
   }
   // Populate tables
-  
+  for(const auto & tp : tablePopulationList){
+    if(!populateTable(tp)){
+      return false;
+    }
+  }
 
   return true;
 }

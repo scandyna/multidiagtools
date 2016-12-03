@@ -35,6 +35,10 @@ namespace Mdt{ namespace Sql{ namespace Schema{
    * TestSchema.cpp would look like this:
    * \include libs/Sql/tests/src/Schema/TestSchema.cpp
    *
+   * To store a schema to a database, you can use a Driver instance.
+   *
+   * \sa Schema
+   * \sa Driver
    */
   template<typename Derived>
   class SchemaTemplate
@@ -45,7 +49,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     Schema toSchema() const
     {
-      return pvSchema;
+      return mSchema;
     }
 
    protected:
@@ -54,7 +58,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void addTable(const Table & table)
     {
-      pvSchema.addTable(table);
+      mSchema.addTable(table);
     }
 
     /*! \brief Add a table
@@ -62,14 +66,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     template<typename T>
     void addTable(const TableTemplate<T> & table)
     {
-      pvSchema.addTable(table);
+      mSchema.addTable(table);
     }
 
     /*! \brief Add a view
      */
     void addView(const View & view)
     {
-      pvSchema.addView(view);
+      mSchema.addView(view);
     }
 
     /*! \brief Add a view
@@ -77,12 +81,30 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     template<typename T>
     void addView(const ViewTemplate<T> & view)
     {
-      pvSchema.addView(view);
+      mSchema.addView(view);
+    }
+
+    /*! \brief Add a table population
+     */
+    void addTablePopulation(const TablePopulation & tp)
+    {
+      mSchema.addTablePopulation(tp);
+    }
+
+    /*! \brief Access table population at index (for edition)
+     *
+     * \pre index must be in a valid range
+     */
+    TablePopulation & refTablePopulationAt(int index)
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < mSchema.tablePopulationCount());
+      return mSchema.refTablePopulationAt(index);
     }
 
    private:
 
-    Schema pvSchema;
+    Schema mSchema;
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Schema{

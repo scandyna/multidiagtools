@@ -25,11 +25,34 @@
 
 namespace Schema{
 
+  /*! \brief Create schema used in Sql library unit tests
+   */
   class TestSchema : public Mdt::Sql::Schema::SchemaTemplate<TestSchema>
   {
    public:
 
+    /*! \brief Construct a test schema
+     */
     TestSchema();
+
+    /*! \brief Add a client (to Client_tbl)
+     */
+    void addClient(const QString & name);
+
+    /*! \brief Add a client (to Client_tbl)
+     *
+     * \pre id must be > 0
+     */
+    void addClient(qlonglong id, const QString & name);
+
+   private:
+
+    /*! \brief Indexes of table populations
+     */
+    enum TablePopulationIndex
+    {
+      ClientTpIndex = 0
+    };
   };
 
 } // namespace Schema{

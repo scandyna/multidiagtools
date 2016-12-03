@@ -18,13 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_SCHEMA_TEST_H
-#define MDT_SQL_SCHEMA_TEST_H
+#ifndef MDT_SQL_SCHEMA_TABLE_POPULATION_TEST_H
+#define MDT_SQL_SCHEMA_TABLE_POPULATION_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
 
-class SchemaTest : public QObject
+class SchemaTablePopulationTest : public QObject
 {
  Q_OBJECT
 
@@ -33,18 +33,9 @@ class SchemaTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void charsetTest();
-  void localeTest();
-  void collationTest();
-
-  void indexTest();
-  void indexListTest();
-  void indexListModelTest();
-
-  void triggerTest();
-  void triggerListTest();
-
-  void schemaTest();
+  void tablePopulationTest();
+  void tablePopulationListTest();
 };
 
-#endif // #ifndef MDT_SQL_SCHEMA_TEST_H
+
+#endif // #ifndef MDT_SQL_SCHEMA_TABLE_POPULATION_TEST_H

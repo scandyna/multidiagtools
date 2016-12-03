@@ -38,6 +38,8 @@ class LikeExpressionSqliteTest : public QObject
   void sqlTransformTest_data();
   void sqlTransformBenchmark();
 
+  void matchTest();
+
  private:
 
   QSqlDatabase mDatabase;

@@ -133,6 +133,11 @@ void LikeExpressionSqliteTest::sqlTransformBenchmark()
   QFAIL("Not implemented");
 }
 
+void LikeExpressionSqliteTest::matchTest()
+{
+  QFAIL("Not implemented");
+}
+
 /*
  * Main
  */

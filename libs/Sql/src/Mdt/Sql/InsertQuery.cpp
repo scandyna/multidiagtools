@@ -42,7 +42,7 @@ void InsertQuery::setTableName(const QString & name)
   pvTableName = name;
 }
 
-void InsertQuery::setTable(const Schema::Table& table)
+void InsertQuery::setTable(const Schema::Table & table)
 {
   pvTableName = table.tableName();
 }

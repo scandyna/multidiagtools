@@ -69,6 +69,18 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       return pvList.at(index);
     }
 
+    /*! \brief Access table population at given index (for edition)
+     *
+     * \pre index must be valid
+     */
+    TablePopulation & operator[](int index)
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < size());
+
+      return pvList[index];
+    }
+
     /*! \brief Get begin const iterator
      */
     const_iterator begin() const

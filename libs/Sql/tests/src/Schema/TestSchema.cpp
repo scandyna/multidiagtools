@@ -19,21 +19,46 @@
  **
  ****************************************************************************/
 #include "TestSchema.h"
+#include "Mdt/Sql/Schema/TablePopulation.h"
 #include "Client.h"
 #include "Client2.h"
 #include "Address.h"
 #include "Address2.h"
 #include "ClientAddressView.h"
 
+namespace Sql = Mdt::Sql;
+using Sql::Schema::TablePopulation;
+
 namespace Schema{
 
 TestSchema::TestSchema()
 {
-  addTable(Client());
+  Client client;
+
+  addTable(client);
   addTable(Address());
   addView(ClientAdrressView());
   addTable(Client2());
   addTable(Address2());
+  // Add a table population for Client
+  TablePopulation tp;
+  tp.setName("Client data");
+  tp.setTable(client);
+  tp.addField(client.Id_PK());
+  tp.addField(client.Name());
+  addTablePopulation(tp);
+}
+
+void TestSchema::addClient(const QString & name)
+{
+  refTablePopulationAt(ClientTpIndex).addRow(QVariant(), name);
+}
+
+void TestSchema::addClient(qlonglong id, const QString & name)
+{
+  Q_ASSERT(id > 0);
+
+  refTablePopulationAt(ClientTpIndex).addRow(id, name);
 }
 
 } // namespace Schema{
