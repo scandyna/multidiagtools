@@ -25,10 +25,7 @@
 #include <QLatin1String>
 #include <QChar>
 #include <utility>
-// #include <string>
-
 #include <vector>
-
 #include <initializer_list>
 
 namespace Mdt{
@@ -66,7 +63,6 @@ namespace Algorithm{
    * \endcode
    */
   int indexOfFirstNonEscapedToken(const QString & str, int from, const std::vector<QChar>  & tokens, const QChar & escape);
-//   int indexOfFirstNonEscapedToken(const QString & str, int from, const std::initializer_list<QChar>  & tokens, const QChar & escape);
 
   /*! \brief Get a string in which each non escaped token is replaced
    *

@@ -22,9 +22,7 @@
 #include <algorithm>
 #include <iterator>
 
-#include <array>
-
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace Algorithm{
 
@@ -53,9 +51,7 @@ int indexOfFirstNonEscapedToken(const QString & str, int from, const std::vector
   const auto last = str.constEnd();
 
   while(it != last){
-    it = std::find_if(it, last, [tokens](const QChar & c){
-                                  return ( std::find(tokens.begin(), tokens.end(), c) != tokens.end());
-                                });
+    it = std::find_first_of(it, last, tokens.cbegin(), tokens.cend());
     // If we found a token, see if it is not escaped
     if(it != last){
       /*
@@ -112,6 +108,5 @@ QString replaceNonEscapedTokens(const QString & str, const std::initializer_list
 
   return result;
 }
-
 
 }} // namespace Mdt{ namespace Algorithm{
