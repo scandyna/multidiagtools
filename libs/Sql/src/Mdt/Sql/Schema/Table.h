@@ -55,6 +55,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
   /*! \brief SQL schema table
    *
+   * \todo Modify obselete example
    * Typical usage to define a simple table:
    * \code
    * #include "Mdt/Sql/Schema/Table.h"

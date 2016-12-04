@@ -13,6 +13,7 @@ set(SOURCES_FILES
     src/Schema/Address2.cpp
     src/Schema/ClientAddressView.cpp
     src/Schema/TestSchema.cpp
+    src/Schema/LikeExpressionTestSchema.cpp
 )
 
 add_library(mdtsqltest SHARED ${SOURCES_FILES})

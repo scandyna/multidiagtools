@@ -43,9 +43,11 @@ namespace Mdt{ namespace Sql{ namespace Expression{
      */
     static QString getSql(const Mdt::FilterExpression::LikeExpression & expr, const QSqlDatabase & db);
 
-    /*! \brief Escape metacharacters in str
+//    private:
+
+    /*! \brief Escape SQL LIKE metacharacters in str
      */
-    static void escapeMetacharacters(QString & str);
+    static void escapeSqlLikeMetacharacters(QString & str);
   };
 
 }}} // namespace Mdt{ namespace Sql{ namespace Expression{

@@ -23,6 +23,7 @@
 #include <QSqlDatabase>
 #include <QSqlDriver>
 #include <QStringBuilder>
+#include <QLatin1String>
 #include <QSqlField>
 #include <QVariant>
 
@@ -33,19 +34,23 @@ namespace Mdt{ namespace Sql{ namespace Expression{
 QString LikeExpressionSqlTransform::getSql(const Mdt::FilterExpression::LikeExpression & expr, const QSqlDatabase & db)
 {
   QString sql;
+  QString pattern = expr.expression();
   const auto *driver = db.driver();
   Q_ASSERT(driver != nullptr);
   QSqlField field("", QVariant::String);
-  field.setValue(expr.expression());
 
-  qDebug() << "expr: " << expr.expression() << " , formatted: " << driver->formatValue(field);
+  escapeSqlLikeMetacharacters(pattern);
+  field.setValue(pattern);
+//   qDebug() << "expr: " << expr.expression() << " , formatted: " << driver->formatValue(field);
+  sql = QLatin1String("LIKE ") % driver->formatValue(field);
 
   return sql;
 }
 
-void LikeExpressionSqlTransform::escapeMetacharacters(QString & str)
+void LikeExpressionSqlTransform::escapeSqlLikeMetacharacters(QString & str)
 {
-
+  str.replace('_', QLatin1String("\\_"));
+  str.replace('%', QLatin1String("\\%"));
 }
 
 }}} // namespace Mdt{ namespace Sql{ namespace Expression{

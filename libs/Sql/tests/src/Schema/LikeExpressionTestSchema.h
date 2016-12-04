@@ -18,30 +18,26 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ALGORITHM_TEST_H
-#define MDT_ALGORITHM_TEST_H
+#ifndef MDT_SQL_LIKE_EXPRESSION_TEST_SCHEMA_H
+#define MDT_SQL_LIKE_EXPRESSION_TEST_SCHEMA_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "Mdt/Sql/Schema/SchemaTemplate.h"
+#include <QString>
 
-class AlgorithmTest : public QObject
-{
- Q_OBJECT
+namespace Schema{
 
- private slots:
+  class LikeExpressionTestSchema : public Mdt::Sql::Schema::SchemaTemplate<LikeExpressionTestSchema>
+  {
+   public:
 
-  void initTestCase();
-  void cleanupTestCase();
+    LikeExpressionTestSchema();
 
-  void removeFirstLastCharIfTest();
+    // Add a row to StrData_tbl
+    void addStrRow(const QString & str);
+    // Add a row to MetaData_tbl
+    void addMetaRow(const QString & meta);
+  };
 
-  void indexOfFirstNonEscapedTokenTest();
-  void indexOfFirstNonEscapedTokenTest_data();
-  void indexOfFirstNonEscapedTokenBenchmark();
+} // namespace Schema{
 
-  void replaceNonEscapedTokensTest();
-  void replaceNonEscapedTokensTest_data();
-  void replaceNonEscapedTokensBenchmark();
-};
-
-#endif // #ifndef MDT_ALGORITHM_TEST_H
+#endif // #ifndef MDT_SQL_LIKE_EXPRESSION_TEST_SCHEMA_H

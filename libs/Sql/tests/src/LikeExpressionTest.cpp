@@ -50,7 +50,7 @@ void LikeExpressionTest::sqlTransformEscapeTest()
   QFETCH(QString, str);
   QFETCH(QString, expectedResult);
 
-  LikeExpressionSqlTransform::escapeMetacharacters(str);
+  LikeExpressionSqlTransform::escapeSqlLikeMetacharacters(str);
   QCOMPARE( str, expectedResult );
 }
 

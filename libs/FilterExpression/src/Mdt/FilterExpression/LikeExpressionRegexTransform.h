@@ -28,11 +28,11 @@ namespace Mdt{ namespace FilterExpression{
 
   class LikeExpression;
 
-  struct LikeExpressionRegexTransformWildcardMatch
-  {
-    int index = -1;
-    QChar wildcard;
-  };
+//   struct LikeExpressionRegexTransformWildcardMatch
+//   {
+//     int index = -1;
+//     QChar wildcard;
+//   };
 
   /*! \brief Transform a LikeExpression to a regular expression
    */
@@ -62,11 +62,11 @@ namespace Mdt{ namespace FilterExpression{
      *
      * \return next index in str
      */
-    static int replaceWildcard(QString & str, int pos, const QChar & wildcard);
+//     static int replaceWildcard(QString & str, int pos, const QChar & wildcard);
 
     /*! \brief Find a wildcard in str
      */
-    static LikeExpressionRegexTransformWildcardMatch findFirstWildcard(const QString & str, int from);
+//     static LikeExpressionRegexTransformWildcardMatch findFirstWildcard(const QString & str, int from);
 
     static bool isTokenWildcard(const QChar & c);
   };

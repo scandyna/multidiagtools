@@ -19,6 +19,12 @@
  **
  ****************************************************************************/
 #include "Algorithm.h"
+#include <algorithm>
+#include <iterator>
+
+#include <array>
+
+#include <QDebug>
 
 namespace Mdt{ namespace Algorithm{
 
@@ -34,6 +40,77 @@ QString removeFirstLastCharIf(const QString & str, QChar c)
   }
 
   return retStr;
+}
+
+int indexOfFirstNonEscapedToken(const QString & str, int from, const std::vector<QChar> & tokens, const QChar & escape)
+{
+  Q_ASSERT(!str.isEmpty());
+  Q_ASSERT(from >= 0);
+  Q_ASSERT(from < str.size());
+  Q_ASSERT(tokens.size() > 0);
+
+  auto it = str.constBegin() + from;
+  const auto last = str.constEnd();
+
+  while(it != last){
+    it = std::find_if(it, last, [tokens](const QChar & c){
+                                  return ( std::find(tokens.begin(), tokens.end(), c) != tokens.end());
+                                });
+    // If we found a token, see if it is not escaped
+    if(it != last){
+      /*
+       * If token is found at first position in str, it cannot be escaped.
+       * Else, we must check.
+       */
+      if(it == str.constBegin()){
+        return 0;
+      }else{
+        if(*(it-1) != escape){
+          return it - str.constBegin();
+        }
+      }
+      ++it;
+    }
+  }
+
+  return -1;
+}
+
+QString replaceNonEscapedTokens(const QString & str, const std::initializer_list< std::pair<QChar, QString> > & replaceList, const QChar & escape)
+{
+  QString result = str;
+
+  if(result.isEmpty()){
+    return result;
+  }
+  /*
+   * Create list of tokens to match
+   */
+  std::vector<QChar> tokens;
+  tokens.reserve(replaceList.size());
+  std::transform(replaceList.begin(), replaceList.end(), std::back_inserter(tokens), [](const auto & p){return p.first;}  );
+  /*
+   * Process
+   */
+  int i = indexOfFirstNonEscapedToken(result, 0, tokens , escape);
+  QChar token;
+  while( (i > -1) && (i < result.size()) ){
+    const QChar c = result.at(i);
+    // Find token/replacement pair that match in current position in result
+    const auto it = std::find_if(replaceList.begin(), replaceList.end(), [c](const auto & p){return p.first == c;} );
+    Q_ASSERT(it != replaceList.end());
+    const auto replacement = *it;
+    // Replace
+    result.replace(i, 1, replacement.second);
+    // Go to position after replacement
+    i += replacement.second.size();
+    // Find next token to replace
+    if(i < result.size()){
+      i = indexOfFirstNonEscapedToken(result, i, tokens , escape);
+    }
+  }
+
+  return result;
 }
 
 

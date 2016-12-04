@@ -25,7 +25,7 @@
 
 namespace Schema{
 
-  /*! \brief Create schema used in Sql library unit tests
+  /*! \brief Schema used in Sql library unit tests
    */
   class TestSchema : public Mdt::Sql::Schema::SchemaTemplate<TestSchema>
   {

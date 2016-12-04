@@ -21,9 +21,12 @@
 #ifndef MDT_SQL_LIKE_EXPRESSION_TEST_H
 #define MDT_SQL_LIKE_EXPRESSION_TEST_H
 
+#include "Mdt/FilterExpression/LikeExpression.h"
 #include <QObject>
 #include <QtTest/QtTest>
+#include <QTemporaryFile>
 #include <QSqlDatabase>
+#include <QVariantList>
 
 class LikeExpressionSqliteTest : public QObject
 {
@@ -42,6 +45,11 @@ class LikeExpressionSqliteTest : public QObject
 
  private:
 
+  QVariantList getStrData(const Mdt::FilterExpression::LikeExpression & expr);
+  QVariantList getMetaData(const Mdt::FilterExpression::LikeExpression & expr);
+  QVariantList getData(const QString & tableName, const Mdt::FilterExpression::LikeExpression & expr);
+
+  QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
   QSqlDatabase mDatabase;
 };
 
