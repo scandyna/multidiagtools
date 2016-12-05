@@ -38,6 +38,49 @@ namespace Algorithm{
    */
   QString removeFirstLastCharIf(const QString & str, QChar c);
 
+  /*! \brief Find the first token that is escaped in str
+   *
+   * \param str String in which to find token
+   * \param from Index in str from which to start
+   * \param tokens List of elements that are tokens
+   * \param escape Char that is used to escape
+   * \pre from must be in a valid position in str: 0 <= from < str length .
+   *      This implies also that str is not empty.
+   * \pre tokens must not be a empty list
+   * \todo Define what happens when escape is same as a token
+   * \return The position of escape that matched a token, or -1 if no token was found.
+   *
+   * Example:
+   * \code
+   * QString str = "A?B\\?CD\\?E";
+   * int i;
+   *
+   * i = indexOfFirstEscapedToken(str, 0, {'?','*'}, '\\');
+   * // i == 3
+   *
+   * i = indexOfFirstEscapedToken(str, 4, {'?','*'}, '\\');
+   * // i == 7
+   * \endcode
+   */
+  int indexOfFirstEscapedToken(const QString & str, int from, const std::vector<QChar>  & tokens, const QChar & escape);
+
+  /*! \brief Get a string in which each escaped token is unescaped
+   *
+   * \param str String in which to find escaped tokens
+   * \param tokens List of elements that are tokens
+   * \param escape Char that is used to escape
+   * \return str with tokens unescaped
+   *
+   * Example:
+   * \code
+   * QString str = "A*B?C\\?D";
+   *
+   * str = unescapeEscapedTokens(str, {'?',"*"}, '\\' );
+   * // str == "A*B?C?D"
+   * \endcode
+   */
+  QString unescapeEscapedTokens(const QString & str, const std::vector<QChar> & tokens, const QChar & escape);
+
   /*! \brief Find the first token that is not escaped in str
    *
    * \param str String in which to find token
@@ -79,7 +122,6 @@ namespace Algorithm{
    * str = replaceNonEscapedTokens(str, {{'?',"."},{'*',".*"}}, '\\' );
    * // str == "A%B_C\\?D"
    * \endcode
-   * 
    */
   QString replaceNonEscapedTokens(const QString & str, const std::initializer_list< std::pair<QChar,QString> > & replaceList, const QChar & escape);
 

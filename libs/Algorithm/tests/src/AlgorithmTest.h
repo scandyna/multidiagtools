@@ -35,6 +35,14 @@ class AlgorithmTest : public QObject
 
   void removeFirstLastCharIfTest();
 
+  void indexOfFirstEscapedTokenTest();
+  void indexOfFirstEscapedTokenTest_data();
+  void indexOfFirstEscapedTokenBenchmark();
+
+  void unescapeEscapedTokensTest();
+  void unescapeEscapedTokensTest_data();
+  void unescapeEscapedTokensBenchmark();
+
   void indexOfFirstNonEscapedTokenTest();
   void indexOfFirstNonEscapedTokenTest_data();
   void indexOfFirstNonEscapedTokenBenchmark();

@@ -40,6 +40,50 @@ QString removeFirstLastCharIf(const QString & str, QChar c)
   return retStr;
 }
 
+int indexOfFirstEscapedToken(const QString & str, int from, const std::vector<QChar> & tokens, const QChar & escape)
+{
+  Q_ASSERT(!str.isEmpty());
+  Q_ASSERT(from >= 0);
+  Q_ASSERT(from < str.size());
+  Q_ASSERT(tokens.size() > 0);
+
+  auto it = str.constBegin() + from;
+  it = std::adjacent_find(it, str.constEnd(),
+    [escape, tokens](const QChar & a, const QChar & b)
+    {
+      if(a != escape){
+        return false;
+      }
+      return ( std::find(tokens.cbegin(), tokens.cend(), b) != tokens.cend() );
+    }
+  );
+  if(it == str.constEnd()){
+    return -1;
+  }
+  return it - str.constBegin();
+}
+
+QString unescapeEscapedTokens(const QString & str, const std::vector<QChar> & tokens, const QChar & escape)
+{
+  QString result = str;
+
+  if(result.isEmpty()){
+    return result;
+  }
+  int i = indexOfFirstEscapedToken(result, 0, tokens , escape);
+  while( (i > -1) && (i < result.size()) ){
+    // Remove current matching escape
+    result.remove(i, 1);
+    ++i;
+    // Find next escaped token
+    if(i < result.size()){
+      i = indexOfFirstEscapedToken(result, i, tokens , escape);
+    }
+  }
+
+  return result;
+}
+
 int indexOfFirstNonEscapedToken(const QString & str, int from, const std::vector<QChar> & tokens, const QChar & escape)
 {
   Q_ASSERT(!str.isEmpty());
