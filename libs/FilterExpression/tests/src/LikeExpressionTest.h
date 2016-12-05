@@ -18,13 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_FILTER_EXPRESSION_TEST_H
-#define MDT_FILTER_EXPRESSION_TEST_H
+#ifndef MDT_LIKE_EXPRESSION_TEST_H
+#define MDT_LIKE_EXPRESSION_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
 
-class FilterExpressionTest : public QObject
+class LikeExpressionTest : public QObject
 {
  Q_OBJECT
 
@@ -39,25 +39,23 @@ class FilterExpressionTest : public QObject
    * Compile time tests
    */
 
-  void literalValueTest();
-
  private slots:
 
   /*
    * Runtime tests
    */
 
-//   void likeExpressionTest();
-//   void likeExpressionRegexTransformEscapeTest();
-//   void likeExpressionRegexTransformEscapeTest_data();
-//   void likeExpressionRegexTransformEscapeBenchmark();
-//   void likeExpressionRegexTransformTest();
-//   void likeExpressionRegexTransformTest_data();
-//   void likeExpressionRegexTransformBenchmark();
-//   void likeExpressionRegexTest();
-//   void likeExpressionRegexTest_data();
+  void likeExpressionTest();
+  void likeExpressionRegexTransformEscapeTest();
+  void likeExpressionRegexTransformEscapeTest_data();
+  void likeExpressionRegexTransformEscapeBenchmark();
+  void likeExpressionRegexTransformTest();
+  void likeExpressionRegexTransformTest_data();
+  void likeExpressionRegexTransformBenchmark();
+  void likeExpressionRegexTest();
+  void likeExpressionRegexTest_data();
 
 };
 
 
-#endif // #ifndef MDT_FILTER_EXPRESSION_TEST_H
+#endif // #ifndef MDT_LIKE_EXPRESSION_TEST_H
