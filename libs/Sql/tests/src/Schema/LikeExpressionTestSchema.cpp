@@ -58,7 +58,7 @@ LikeExpressionTestSchema::LikeExpressionTestSchema()
   addTablePopulation(strDataTp);
   TablePopulation metaDataTp;
   metaDataTp.setName("MetaData pop");
-  metaDataTp.setTable(strData);
+  metaDataTp.setTable(metaData);
   metaDataTp.addField(data);
   addTablePopulation(metaDataTp);
 //   // Setup Str table

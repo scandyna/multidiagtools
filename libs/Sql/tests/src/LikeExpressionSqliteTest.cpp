@@ -101,51 +101,20 @@ void LikeExpressionSqliteTest::sqlTransformTest_data()
   // Check with '
   QTest::newRow("LIKE '") << "'" << "LIKE ''''";
   // Check with '\'
-  /// \todo Correct ?
   QTest::newRow("LIKE \\") << "\\" << "LIKE '\\'";
-
-//   QTest::newRow("LIKE %\\") << "%\\" << "LIKE '%\\'";
-
-//   // Check alternate escaped and not escaped wildcards with %
-//   QTest::newRow("LIKE %\\%%") << "%\\%%" << "LIKE '%\\%%' ESCAPE '\\'";
-//   QTest::newRow("LIKE %\\%%%") << "%\\%%%" << "LIKE '%\\%%%' ESCAPE '\\'";
-//   QTest::newRow("LIKE %\\%%\\%") << "%\\%%\\%" << "LIKE '%\\%%\\%' ESCAPE '\\'";
-
-//   QTest::newRow("LIKE \\_") << "\\_" << "LIKE '\\_' ESCAPE '\\'";
-//   QTest::newRow("LIKE \\%") << "\\%" << "LIKE '\\%' ESCAPE '\\'";
-//   QTest::newRow("LIKE ?") << "?" << "LIKE '_'";
-//   QTest::newRow("LIKE \\?") << "\\?" << "LIKE '?'";
-//   QTest::newRow("LIKE ??") << "??" << "LIKE '__'";
-//   QTest::newRow("LIKE ?\\?") << "?\\?" << "LIKE '_?'";
-//   QTest::newRow("LIKE ?A") << "?A" << "LIKE '_A'";
-//   QTest::newRow("LIKE \\?A") << "\\?A" << "LIKE '?A'";
-//   QTest::newRow("LIKE A?") << "A?" << "LIKE 'A_'";
-//   QTest::newRow("LIKE A\\?") << "A\\?" << "LIKE 'A?'";
-//   QTest::newRow("LIKE _A") << "_A" << "LIKE '_A'";
-//   QTest::newRow("LIKE *A") << "*A" << "^.*A$";
-//   QTest::newRow("LIKE \\*A") << "\\*A" << "^\\*A$";
-//   QTest::newRow("LIKE A%") << "A%" << "^A.*$";
-//   QTest::newRow("LIKE *A?") << "*A?" << "^.*A.$";
-//   QTest::newRow("LIKE *A*") << "*A*" << "^.*A.*$";
-//   // Check alternate escaped and not escaped wildcards
-//   QTest::newRow("LIKE ?\\??") << "?\\??" << "^.\\?.$";
-//   QTest::newRow("LIKE ?\\???") << "?\\???" << "^.\\?..$";
-//   QTest::newRow("LIKE ?\\??\\?") << "?\\??\\?" << "^.\\?.\\?$";
-//   // Check also strings which conatins every wildcard, in every order
-//   QTest::newRow("LIKE ?_%*") << "?_%*" << "^...*.*$";
-//   QTest::newRow("LIKE *?_%") << "*?_%" << "^.*...*$";
-//   QTest::newRow("LIKE %*?_") << "%*?_" << "^.*.*..$";
-//   QTest::newRow("LIKE _%*?") << "_%*?" << "^..*.*.$";
-//   // Check also with some dots
-//   QTest::newRow("LIKE .*") << ".*" << "^\\..*$";
-//   QTest::newRow("LIKE .%") << ".%" << "^\\..*$";
-//   QTest::newRow("LIKE .%.*") << ".%.*" << "^\\..*\\..*$";
-
 }
 
 void LikeExpressionSqliteTest::sqlTransformBenchmark()
 {
-  QFAIL("Not implemented");
+  using Sql::Expression::LikeExpressionSqlTransform;
+  using Like = Mdt::FilterExpression::LikeExpression;
+
+  QString sql;
+
+  QBENCHMARK{
+    sql = LikeExpressionSqlTransform::getSql(Like("ABCD?EF\\?GH*IJKL\\*M%2"), mDatabase);
+  }
+  QCOMPARE( sql, QString("LIKE 'ABCD_EF?GH%IJKL*M\\%2' ESCAPE '\\'") );
 }
 
 void LikeExpressionSqliteTest::matchTest()
@@ -168,6 +137,13 @@ void LikeExpressionSqliteTest::matchTest()
   schema.addMetaRow("_");
   schema.addMetaRow("%");
   schema.addMetaRow("\\");
+  schema.addMetaRow("(");
+  schema.addMetaRow(")");
+  schema.addMetaRow("{");
+  schema.addMetaRow("}");
+  schema.addMetaRow("[");
+  schema.addMetaRow("]");
+  schema.addMetaRow("$");
   QVERIFY(driver.dropSchema(schema));
   QVERIFY(driver.createSchema(schema));
   /*
@@ -178,22 +154,33 @@ void LikeExpressionSqliteTest::matchTest()
   QCOMPARE( getMetaData(Like("A")) , QVariantList() );
   // Check with wildcards in expression
   QCOMPARE( getStrData(Like("?")) , QVariantList({"A"}) );
-  QCOMPARE( getMetaData(Like("?")) , QVariantList({"?","*","'","_","%","\\"}) );
+  QCOMPARE( getMetaData(Like("?")) , QVariantList({"?","*","'","_","%","\\","(",")","{","}","[","]","$"}) );
   QCOMPARE( getStrData(Like("\\?")) , QVariantList() );
   QCOMPARE( getMetaData(Like("\\?")) , QVariantList({"?"}) );
   QCOMPARE( getStrData(Like("*")) , QVariantList({"A","AB","ABC","ABCD"}) );
-  QCOMPARE( getMetaData(Like("*")) , QVariantList({"?","*","'","_","%","\\"}) );
+  QCOMPARE( getMetaData(Like("*")) , QVariantList({"?","*","'","_","%","\\","(",")","{","}","[","]","$"}) );
   QCOMPARE( getStrData(Like("\\*")) , QVariantList() );
   QCOMPARE( getMetaData(Like("\\*")) , QVariantList({"*"}) );
   // Check matching '\'
-  /// \todo Should '\' be scaped to match ??
   QCOMPARE( getStrData(Like("\\")) , QVariantList() );
   QCOMPARE( getMetaData(Like("\\")) , QVariantList({"\\"}) );
+  // Check matching '
+  QCOMPARE( getStrData(Like("'")) , QVariantList() );
+  QCOMPARE( getMetaData(Like("'")) , QVariantList({"'"}) );
   // Check with SQL LIKE metacharacters in expression
   QCOMPARE( getStrData(Like("_")) , QVariantList() );
   QCOMPARE( getMetaData(Like("_")) , QVariantList({"_"}) );
   QCOMPARE( getStrData(Like("%")) , QVariantList() );
   QCOMPARE( getMetaData(Like("%")) , QVariantList({"%"}) );
+  // Check matching other special chars
+  QCOMPARE( getStrData(Like("(")) , QVariantList() );
+  QCOMPARE( getMetaData(Like("(")) , QVariantList({"("}) );
+  QCOMPARE( getStrData(Like("[")) , QVariantList() );
+  QCOMPARE( getMetaData(Like("[")) , QVariantList({"["}) );
+  QCOMPARE( getStrData(Like("[a-Z]")) , QVariantList() );
+  QCOMPARE( getMetaData(Like("[a-Z]")) , QVariantList() );
+  QCOMPARE( getStrData(Like("{")) , QVariantList() );
+  QCOMPARE( getMetaData(Like("{")) , QVariantList({"{"}) );
   // Check some more realistic expressions
   QCOMPARE( getStrData(Like("B")) , QVariantList() );
   QCOMPARE( getMetaData(Like("B")) , QVariantList() );
@@ -231,9 +218,6 @@ QVariantList LikeExpressionSqliteTest::getData(const QString& tableName, const M
   QString sql = "SELECT Data FROM " + tableName;
   sql += " WHERE Data " + LikeExpressionSqlTransform::getSql(expr, mDatabase);
   QSqlQuery query(mDatabase);
-  
-  qDebug() << "SQL: " << sql;
-  
   if(!query.exec(sql)){
     qDebug() << "Error: " << query.lastError();
     return data;
