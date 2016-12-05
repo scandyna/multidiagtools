@@ -22,15 +22,8 @@
 #include "Mdt/Application.h"
 #include "Mdt/FilterExpression/LikeExpression.h"
 #include "Mdt/FilterExpression/LikeExpressionRegexTransform.h"
-// #include <QString>
-// #include <QVariant>
-#include <boost/proto/matches.hpp>
-#include <boost/proto/literal.hpp>
-#include <boost/proto/transform/arg.hpp>
-// #include <type_traits>
-// #include <typeinfo>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace FilterExpression = Mdt::FilterExpression;
 

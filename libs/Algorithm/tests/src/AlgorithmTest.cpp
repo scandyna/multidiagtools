@@ -22,7 +22,7 @@
 #include "Mdt/Algorithm.h"
 #include "Mdt/Application.h"
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Algorithm = Mdt::Algorithm;
 

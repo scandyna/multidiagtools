@@ -28,7 +28,7 @@
 #include <QSqlField>
 #include <QVariant>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Algorithm = Mdt::Algorithm;
 

@@ -44,39 +44,24 @@ LikeExpressionTestSchema::LikeExpressionTestSchema()
   strData.setAutoIncrementPrimaryKey("Id_PK");
   strData.addField(data);
   addTable(strData);
+  // StrData table population
+  TablePopulation strDataTp;
+  strDataTp.setName("StrData pop");
+  strDataTp.setTable(strData);
+  strDataTp.addField(data);
+  addTablePopulation(strDataTp);
   // MetaData table
   Table metaData;
   metaData.setTableName("MetaData_tbl");
   metaData.setAutoIncrementPrimaryKey("Id_PK");
   metaData.addField(data);
   addTable(metaData);
-  // Setup table population
-  TablePopulation strDataTp;
-  strDataTp.setName("StrData pop");
-  strDataTp.setTable(strData);
-  strDataTp.addField(data);
-  addTablePopulation(strDataTp);
+  // MetaData table population
   TablePopulation metaDataTp;
   metaDataTp.setName("MetaData pop");
   metaDataTp.setTable(metaData);
   metaDataTp.addField(data);
   addTablePopulation(metaDataTp);
-//   // Setup Str table
-//   Field str;
-//   str.setName("Str");
-//   str.setType(FieldType::Varchar);
-//   str.setLength(50);
-//   Field meta;
-//   meta.setName("Meta");
-//   meta.setType(FieldType::Varchar);
-//   meta.setLength(50);
-//   // Setup table
-//   Table data;
-//   data.setTableName("Data_tbl");
-//   data.setAutoIncrementPrimaryKey("Id_PK");
-//   data.addField(str);
-//   data.addField(meta);
-//   addTable(data);
 }
 
 void LikeExpressionTestSchema::addStrRow(const QString& str)
@@ -88,10 +73,5 @@ void LikeExpressionTestSchema::addMetaRow(const QString& meta)
 {
   refTablePopulationAt(1).addRow(meta);
 }
-
-// void LikeExpressionTestSchema::addRow(const QString & str, const QString & meta)
-// {
-//   refTablePopulationAt(0).addRow(QVariant(), str, meta);
-// }
 
 } // namespace Schema{
