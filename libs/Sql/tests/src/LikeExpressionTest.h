@@ -23,7 +23,7 @@
 
 #include <QObject>
 #include <QtTest/QtTest>
-#include <QSqlDatabase>
+// #include <QSqlDatabase>
 
 class LikeExpressionTest : public QObject
 {
@@ -34,13 +34,10 @@ class LikeExpressionTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void sqlTransformEscapeTest();
-  void sqlTransformEscapeTest_data();
-  void sqlTransformEscapeBenchmark();
 
- private:
-
-  QSqlDatabase mDatabase;
+//  private:
+// 
+//   QSqlDatabase mDatabase;
 };
 
 #endif // #ifndef MDT_SQL_LIKE_EXPRESSION_TEST_H

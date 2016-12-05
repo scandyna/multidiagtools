@@ -27,12 +27,6 @@ namespace Sql = Mdt::Sql;
 
 void LikeExpressionTest::initTestCase()
 {
-  /// \todo Remove if unused
-  // Get database instance
-//   mDatabase = QSqlDatabase::addDatabase("QSQLITE");
-//   if(!mDatabase.isValid()){
-//     QSKIP("QSQLITE driver is not available - Skip all tests");  // Will also skip all tests
-//   }
 }
 
 void LikeExpressionTest::cleanupTestCase()
@@ -43,102 +37,6 @@ void LikeExpressionTest::cleanupTestCase()
  * Tests
  */
 
-void LikeExpressionTest::sqlTransformEscapeTest()
-{
-  using Sql::Expression::LikeExpressionSqlTransform;
-
-  QFETCH(QString, str);
-  QFETCH(QString, expectedResult);
-
-  LikeExpressionSqlTransform::escapeSqlLikeMetacharacters(str);
-  QCOMPARE( str, expectedResult );
-}
-
-void LikeExpressionTest::sqlTransformEscapeTest_data()
-{
-  QTest::addColumn<QString>("str");
-  QTest::addColumn<QString>("expectedResult");
-
-  /*
-   * Check without any metacharacters
-   */
-  QTest::newRow("A") << "A" << "A";
-  QTest::newRow("AB") << "AB" << "AB";
-  QTest::newRow("ABC") << "ABC" << "ABC";
-  /*
-   * Wildcards are transformed to LIKE metacharacters (later) if they are not escaped.
-   * If already escaped, they must be keeped untouched.
-   */
-  // Check various combinaisons with token ?
-  QTest::newRow("?") << "?" << "?";
-  QTest::newRow("\\?") << "\\?" << "\\?";
-  QTest::newRow("?A") << "?A" << "?A";
-  QTest::newRow("\\?A") << "\\?A" << "\\?A";
-  QTest::newRow("A?") << "A?" << "A?";
-  QTest::newRow("A\\?") << "A\\?" << "A\\?";
-  QTest::newRow("A?B") << "A?B" << "A?B";
-  QTest::newRow("A\\?B") << "A\\?B" << "A\\?B";
-  QTest::newRow("??") << "??" << "??";
-  QTest::newRow("\\??") << "\\??" << "\\??";
-  QTest::newRow("?\\?") << "?\\?" << "?\\?";
-  QTest::newRow("\\?\\?") << "\\?\\?" << "\\?\\?";
-  // Checks with other tokens
-  QTest::newRow("A*") << "A*" << "A*";
-  QTest::newRow("A\\*") << "A\\*" << "A\\*";
-  QTest::newRow("A_") << "A_" << "A_";
-  QTest::newRow("A\\_") << "A\\_" << "A\\_";
-  QTest::newRow("A%") << "A%" << "A%";
-  QTest::newRow("A\\%") << "A\\%" << "A\\%";
-  /*
-   * All regexp metacharacters (that are not wildcards) must simply be escaped
-   * (note that \ is a metacharacter)
-   */
-  /// \todo ADAPT
-  // Check escaping '\'
-  QTest::newRow("\\") << "\\" << "\\\\";
-  QTest::newRow("\\\\") << "\\\\" << "\\\\\\\\";
-  QTest::newRow("\\A") << "\\A" << "\\\\A";
-  QTest::newRow("\\AB") << "\\AB" << "\\\\AB";
-  QTest::newRow("A\\") << "A\\" << "A\\\\";
-  QTest::newRow("A\\B") << "A\\B" << "A\\\\B";
-  QTest::newRow("A\\B\\") << "A\\B\\" << "A\\\\B\\\\";
-  QTest::newRow("A\\B\\C") << "A\\B\\C" << "A\\\\B\\\\C";
-  QTest::newRow("A\\B\\C\\") << "A\\B\\C\\" << "A\\\\B\\\\C\\\\";
-  // Check escaping regex metacharacters
-  QTest::newRow("{") << "{" << "\\{";
-  QTest::newRow("A{") << "A{" << "A\\{";
-  QTest::newRow("A\\{") << "A\\{" << "A\\\\\\{";  // Escape '\' and '{'
-  QTest::newRow("A}") << "A}" << "A\\}";
-  QTest::newRow("A\\}") << "A\\}" << "A\\\\\\}";  // Escape '\' and '}'
-  QTest::newRow("A[") << "A[" << "A\\[";
-  QTest::newRow("A\\[") << "A\\[" << "A\\\\\\[";  // Escape '\' and '['
-  QTest::newRow("A]") << "A]" << "A\\]";
-  QTest::newRow("A\\]") << "A\\]" << "A\\\\\\]";  // Escape '\' and ']'
-  QTest::newRow("A(") << "A(" << "A\\(";
-  QTest::newRow("A\\(") << "A\\(" << "A\\\\\\(";  // Escape '\' and '('
-  QTest::newRow("A)") << "A)" << "A\\)";
-  QTest::newRow("A\\)") << "A\\)" << "A\\\\\\)";  // Escape '\' and ')'
-  QTest::newRow("^") << "^" << "\\^";
-  QTest::newRow("$") << "$" << "\\$";
-  QTest::newRow(".") << "." << "\\.";
-  QTest::newRow("+") << "+" << "\\+";
-  QTest::newRow("|") << "|" << "\\|";
-  QTest::newRow("\\|") << "\\|" << "\\\\\\|";     // Escape '\' and '|'
-  /*
-   * Check with some expressions that could have some sense
-   */
-  QTest::newRow("A?B") << "A?B" << "A?B";
-  QTest::newRow("A??B") << "A??B" << "A??B";
-  QTest::newRow("*A") << "*A" << "*A";
-  QTest::newRow("A*") << "A*" << "A*";
-  QTest::newRow("*A*") << "*A*" << "*A*";
-
-}
-
-void LikeExpressionTest::sqlTransformEscapeBenchmark()
-{
-  QFAIL("Not implemented");
-}
 
 /*
  * Main
