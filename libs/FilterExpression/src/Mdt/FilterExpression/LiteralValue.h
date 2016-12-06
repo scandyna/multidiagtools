@@ -18,13 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SQL_EXPRESSION_LITERAL_VALUE_H
-#define MDT_SQL_EXPRESSION_LITERAL_VALUE_H
+#ifndef MDT_FILTER_EXPRESSION_LITERAL_VALUE_H
+#define MDT_FILTER_EXPRESSION_LITERAL_VALUE_H
 
 #include <boost/proto/traits.hpp>
 #include <boost/proto/matches.hpp>
 
-namespace Mdt{ namespace Sql{ namespace Expression{
+namespace Mdt{ namespace FilterExpression{
 
   /*! \brief Literal value grammar
    */
@@ -35,6 +35,6 @@ namespace Mdt{ namespace Sql{ namespace Expression{
   {
   };
 
-}}} // namespace Mdt{ namespace Sql{ namespace Expression{
+}} // namespace Mdt{ namespace FilterExpression{
 
-#endif // #ifndef MDT_SQL_EXPRESSION_LITERAL_VALUE_H
+#endif // #ifndef MDT_FILTER_EXPRESSION_LITERAL_VALUE_H

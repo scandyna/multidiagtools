@@ -22,7 +22,7 @@
 #define MDT_SQL_EXPRESSION_TERMINAL_H
 
 #include "TableFieldTerminal.h"
-#include "LiteralValue.h"
+#include "Mdt/FilterExpression/LiteralValue.h"
 #include <boost/proto/traits.hpp>
 #include <boost/proto/matches.hpp>
 
@@ -40,7 +40,7 @@ namespace Mdt{ namespace Sql{ namespace Expression{
    */
   struct RightTerminal : boost::proto::or_<
                             TableFieldTerminal<DefaultTableFieldTag> ,
-                            LiteralValue
+                            Mdt::FilterExpression::LiteralValue
                           >
   {
   };

@@ -58,7 +58,7 @@ namespace Mdt{ namespace Sql{ namespace Expression{
   struct RightTerminalSqlTransform : boost::proto::or_<
                                         LeftTerminalSqlTransform ,
                                         boost::proto::when<
-                                          LiteralValue ,
+                                          Mdt::FilterExpression::LiteralValue ,
                                           boost::proto::call<GetTerminalSql(boost::proto::_value, boost::proto::_data)>
                                         >
                                       >

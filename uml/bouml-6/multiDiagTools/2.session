@@ -1,25 +1,20 @@
 window_sizes 1280 963 356 918 908 0
 cleanlooks_style
-diagrams
-  classdiagram_ref 2928386 // Comparison
-    734 726 100 4 0 0
-  active  classdiagram_ref 3082370 // LikeExpression
-    918 908 100 4 0 0
-end
 show_stereotypes
-selected operation_ref 4948226 // operator()
+selected classdiagram_ref 2921474 // Grammar
 open
   
   package_ref 409858 // principes
   
   package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
+  class_ref 3308674 // LiteralValue
   
   package_ref 516226 // SqlItemModel
   
   package_ref 582274 // SqlItemEditor
-  class_ref 3280770 // GetCompareEqualToSql
-  classview_ref 1564290 // Where
+  classview_ref 1531522 // Terminals
+  classview_ref 1564546 // Grammar
   
   package_ref 430082 // Dsp
   classview_ref 1517954 // proto

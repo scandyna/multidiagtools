@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "FilterExpressionTest.h"
 #include "Mdt/Application.h"
+#include "Mdt/FilterExpression/LiteralValue.h"
 // #include "Mdt/FilterExpression/LikeExpressionTerminal.h"
 // #include <QString>
 // #include <QVariant>
@@ -31,7 +32,7 @@
 
 #include <QDebug>
 
-// namespace FilterExpression = Mdt::FilterExpression;
+namespace FilterExpression = Mdt::FilterExpression;
 
 void FilterExpressionTest::initTestCase()
 {
@@ -44,6 +45,31 @@ void FilterExpressionTest::cleanupTestCase()
 /*
  * Compile time tests
  */
+
+template<typename Expr, typename Grammar>
+constexpr bool expressionMatchesGrammar()
+{
+  return boost::proto::matches< Expr, Grammar >::value;
+}
+
+/// \todo Should also check int, float, double, const char*, QDate, ...
+/**
+ * \note How to distiguisch :"some string" or "Date-Time" formatted string ??
+ *  - Check while generating SQL ??
+ *  - Simply request user to be explicit (f.ex. QDate("xx.yy.zz") ) ?
+ *  - Define some TAG for date/time/datetime literal terminal ?
+ *   -> Ex: Date("xx.yy.zz")
+ * --> QDate/etc.. seems to be the simplest..
+ */
+
+void FilterExpressionTest::literalValueTest()
+{
+  using FilterExpression::LiteralValue;
+
+  static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit(25) ) , LiteralValue >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit("ID44") ) , LiteralValue >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit(u8"éèj") ) , LiteralValue >() , "" );
+}
 
 
 /*

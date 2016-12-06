@@ -40,7 +40,6 @@ class ExpressionTest : public QObject
    * Compile time tests
    */
 
-  void literalValueTest();
   void terminalTest();
   void comparisonTest();
 

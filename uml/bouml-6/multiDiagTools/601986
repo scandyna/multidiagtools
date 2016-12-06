@@ -1,6 +1,6 @@
 format 211
 "Expression" // Mdt::Sql::Expression
-  revision 14
+  revision 15
   modified_by 2 "philippe"
   // class settings
   
@@ -149,32 +149,6 @@ ${inlines}
     classdiagram 2921474 "Grammar"
       classdiagramsettings member_max_width 0 end
       size A4-Landscape
-    end
-
-    class 3308674 "LiteralValue"
-      visibility package 
-      nactuals 1
-      actual class class_ref 3225602 // or_
-        rank 0 explicit_value ""
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3724418 // <generalisation>
-	relation 3705218 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3724418 // <generalisation>
-	  b parent class_ref 3225602 // or_
-      end
     end
 
     class 3309314 "LeftTerminal"
@@ -754,7 +728,6 @@ ${inlines}
       mysql_decl ""
       
     end
-
   end
 
   classview 1544706 "ExpressionContainer"

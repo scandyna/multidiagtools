@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "ExpressionTest.h"
 #include "Mdt/Application.h"
-#include "Mdt/Sql/Expression/LiteralValue.h"
 #include "Mdt/Sql/Expression/Terminal.h"
 #include "Mdt/Sql/Expression/Comparison.h"
 #include "Mdt/Sql/Expression/TerminalSqlTransform.h"
@@ -63,25 +62,6 @@ template<typename Expr, typename Grammar>
 constexpr bool expressionMatchesGrammar()
 {
   return boost::proto::matches< Expr, Grammar >::value;
-}
-
-/// \todo Should also check int, float, double, const char*, QDate, ...
-/**
- * \note How to distiguisch :"some string" or "Date-Time" formatted string ??
- *  - Check while generating SQL ??
- *  - Simply request user to be explicit (f.ex. QDate("xx.yy.zz") ) ?
- *  - Define some TAG for date/time/datetime literal terminal ?
- *   -> Ex: Date("xx.yy.zz")
- * --> QDate/etc.. seems to be the simplest..
- */
-
-void ExpressionTest::literalValueTest()
-{
-  using Sql::Expression::LiteralValue;
-
-  static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit(25) ) , LiteralValue >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit("ID44") ) , LiteralValue >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit(u8"éèj") ) , LiteralValue >() , "" );
 }
 
 void ExpressionTest::terminalTest()
