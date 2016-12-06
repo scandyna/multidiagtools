@@ -64,12 +64,20 @@ void WhereExpressionTest::grammarTest()
   using Sql::WhereField;
   using Sql::TableName;
   using Sql::FieldName;
+  using Like = Sql::LikeExpression;
 
   WhereField clientId(TableName("Client_tbl"), FieldName("Id_PK"));
   WhereField adrClientId(TableName("Address_tbl"), FieldName("Client_Id_FK"));
 
   static_assert(  expressionMatchesGrammar< decltype( clientId == 25 ) , WhereExpressionGrammar >() , "" );
   static_assert(  expressionMatchesGrammar< decltype( clientId == adrClientId ) , WhereExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( clientId == Like("?25?") ) , WhereExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId != Like("?25?") ) , WhereExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId < Like("?25?") ) , WhereExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId > Like("?25?") ) , WhereExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId <= Like("?25?") ) , WhereExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( clientId >= Like("?25?") ) , WhereExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( Like("?25?") == clientId ) , WhereExpressionGrammar >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( clientId && 25 ) , WhereExpressionGrammar >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( clientId && adrClientId ) , WhereExpressionGrammar >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( clientId || 25 ) , WhereExpressionGrammar >() , "" );
@@ -109,6 +117,7 @@ void WhereExpressionTest::fieldTest()
 void WhereExpressionTest::sqlTransformTest()
 {
   using Sql::WhereField;
+  using Like = Sql::LikeExpression;
   using Sql::TableName;
   using Sql::FieldName;
   using Sql::Expression::WhereExpressionSqlTransform;
@@ -122,8 +131,15 @@ void WhereExpressionTest::sqlTransformTest()
   /*
    * Simple ==
    */
+  // Check with integral value
   expectedSql = "\"Client_tbl\".\"Id_PK\"=25";
   QCOMPARE(transform(clientId == 25, 0, db), expectedSql);
+  // Check with string literal
+  expectedSql = "\"Client_tbl\".\"Id_PK\"='A25'";
+  QCOMPARE(transform(clientId == "A25", 0, db), expectedSql);
+  // Check with LIKE expression
+  expectedSql = "\"Client_tbl\".\"Id_PK\" LIKE '_25_'";
+  QCOMPARE(transform(clientId == Like("?25?"), 0, db), expectedSql);
   /*
    * AND
    */
@@ -141,6 +157,8 @@ void WhereExpressionTest::sqlTransformTest()
   QCOMPARE(transform( ((clientId > 1) && (clientId < 10)) || (clientId == 44), 0, db), expectedSql);
   expectedSql = "((\"Client_tbl\".\"Id_PK\">1)AND(\"Client_tbl\".\"Id_PK\"<10))OR((\"Client_tbl\".\"Id_PK\">20)AND(\"Client_tbl\".\"Id_PK\"<30))";
   QCOMPARE(transform( ((clientId > 1) && (clientId < 10)) || ((clientId > 20) && (clientId < 30)), 0, db), expectedSql);
+  expectedSql = "((\"Client_tbl\".\"Id_PK\">1)AND(\"Client_tbl\".\"Id_PK\"<10))OR(\"Client_tbl\".\"Id_PK\" LIKE '44%')";
+  QCOMPARE(transform( ((clientId > 1) && (clientId < 10)) || (clientId == Like("44*")), 0, db), expectedSql);
 }
 
 void WhereExpressionTest::expressionContructCopySqliteTest()

@@ -22,12 +22,15 @@
 #define MDT_SQL_EXPRESSION_COMPARISON_SQL_TRANSFORM_H
 
 #include "TerminalSqlTransform.h"
+#include "../LikeExpression.h"
 #include <QString>
 #include <QVariant>
 #include <boost/proto/traits.hpp>
 #include <boost/proto/matches.hpp>
 #include <boost/proto/transform/when.hpp>
 #include <boost/proto/transform.hpp>
+
+class QSqlDatabase;
 
 namespace Mdt{ namespace Sql{ namespace Expression{
 
@@ -38,13 +41,21 @@ namespace Mdt{ namespace Sql{ namespace Expression{
     typedef QString result_type;
 
     QString operator()(const QString & left, const QString & right) const;
+
+    QString operator()(const QString & left, const LikeExpression & right, const QSqlDatabase & db) const;
   };
 
   /*! \brief SQL transform for == binary expression
    */
-  struct CompareEqualToSqlTransform : boost::proto::when<
-                                        boost::proto::equal_to< LeftTerminal , RightTerminal > ,
-                                        boost::proto::call<GetCompareEqualToSql( LeftTerminalSqlTransform(boost::proto::_left), RightTerminalSqlTransform(boost::proto::_right) )>
+  struct CompareEqualToSqlTransform : boost::proto::or_<
+                                        boost::proto::when<
+                                          boost::proto::equal_to< LeftTerminal , LikeExpression > ,
+                                          boost::proto::call<GetCompareEqualToSql( LeftTerminalSqlTransform(boost::proto::_left), boost::proto::_right, boost::proto::_data )>
+                                        > ,
+                                        boost::proto::when<
+                                          boost::proto::equal_to< LeftTerminal , RightTerminal > ,
+                                          boost::proto::call<GetCompareEqualToSql( LeftTerminalSqlTransform(boost::proto::_left), RightTerminalSqlTransform(boost::proto::_right) )>
+                                        >
                                       >
   {
   };

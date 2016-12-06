@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "ComparisonSqlTransform.h"
+#include "LikeExpressionSqlTransform.h"
 #include <QStringBuilder>
 
 namespace Mdt{ namespace Sql{ namespace Expression{
@@ -26,6 +27,11 @@ namespace Mdt{ namespace Sql{ namespace Expression{
 QString GetCompareEqualToSql::operator()(const QString & left, const QString & right) const
 {
   return left % QStringLiteral("=") % right;
+}
+
+QString GetCompareEqualToSql::operator()(const QString & left, const LikeExpression & right, const QSqlDatabase & db) const
+{
+  return left % QStringLiteral(" ") % LikeExpressionSqlTransform::getSql(boost::proto::value(right), db);
 }
 
 QString GetCompareNotEqualToSql::operator()(const QString & left, const QString & right) const

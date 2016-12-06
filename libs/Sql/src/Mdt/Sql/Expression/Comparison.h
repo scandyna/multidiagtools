@@ -22,6 +22,7 @@
 #define MDT_SQL_EXPRESSION_COMPARISON_H
 
 #include "Terminal.h"
+#include "../LikeExpression.h"
 #include <boost/proto/traits.hpp>
 #include <boost/proto/matches.hpp>
 
@@ -31,6 +32,7 @@ namespace Mdt{ namespace Sql{ namespace Expression{
    */
   struct CompareEquality : boost::proto::or_<
                               boost::proto::equal_to< LeftTerminal , RightTerminal > ,
+                              boost::proto::equal_to< LeftTerminal , LikeExpression > ,
                               boost::proto::not_equal_to< LeftTerminal , RightTerminal >
                             >
   {
