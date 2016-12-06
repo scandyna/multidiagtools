@@ -20,9 +20,9 @@
  ****************************************************************************/
 #include "LikeExpressionSqliteTest.h"
 #include "Mdt/Application.h"
+#include "Mdt/Sql/LikeExpression.h"
 #include "Mdt/Sql/Expression/LikeExpressionSqlTransform.h"
 #include "Mdt/Sql/Schema/Driver.h"
-#include "Mdt/FilterExpression/LikeExpression.h"
 #include "Schema/LikeExpressionTestSchema.h"
 #include <QSqlQuery>
 #include <QSqlError>
@@ -57,14 +57,13 @@ void LikeExpressionSqliteTest::cleanupTestCase()
 void LikeExpressionSqliteTest::sqlTransformTest()
 {
   using Sql::Expression::LikeExpressionSqlTransform;
-  using Like = Mdt::FilterExpression::LikeExpression;
 
   QFETCH(QString, likeExpression);
   QFETCH(QString, expectedSql);
   QString sql;
   auto db = mDatabase;
 
-  sql = LikeExpressionSqlTransform::getSql(Like(likeExpression), db);
+  sql = LikeExpressionSqlTransform::getSql(likeExpression, db);
   QCOMPARE(sql, expectedSql);
 }
 
@@ -107,19 +106,18 @@ void LikeExpressionSqliteTest::sqlTransformTest_data()
 void LikeExpressionSqliteTest::sqlTransformBenchmark()
 {
   using Sql::Expression::LikeExpressionSqlTransform;
-  using Like = Mdt::FilterExpression::LikeExpression;
 
   QString sql;
 
   QBENCHMARK{
-    sql = LikeExpressionSqlTransform::getSql(Like("ABCD?EF\\?GH*IJKL\\*M%2"), mDatabase);
+    sql = LikeExpressionSqlTransform::getSql("ABCD?EF\\?GH*IJKL\\*M%2", mDatabase);
   }
   QCOMPARE( sql, QString("LIKE 'ABCD_EF?GH%IJKL*M\\%2' ESCAPE '\\'") );
 }
 
 void LikeExpressionSqliteTest::matchTest()
 {
-  using Like = Mdt::FilterExpression::LikeExpression;
+  using Like = Sql::LikeExpression;
 
   Sql::Schema::Driver driver(mDatabase);
   Schema::LikeExpressionTestSchema schema;
@@ -200,23 +198,23 @@ void LikeExpressionSqliteTest::matchTest()
  * Helper
  */
 
-QVariantList LikeExpressionSqliteTest::getStrData(const Mdt::FilterExpression::LikeExpression& expr)
+QVariantList LikeExpressionSqliteTest::getStrData(const Sql::LikeExpression& expr)
 {
   return getData("StrData_tbl", expr);
 }
 
-QVariantList LikeExpressionSqliteTest::getMetaData(const Mdt::FilterExpression::LikeExpression& expr)
+QVariantList LikeExpressionSqliteTest::getMetaData(const Sql::LikeExpression& expr)
 {
   return getData("MetaData_tbl", expr);
 }
 
-QVariantList LikeExpressionSqliteTest::getData(const QString& tableName, const Mdt::FilterExpression::LikeExpression& expr)
+QVariantList LikeExpressionSqliteTest::getData(const QString& tableName, const Sql::LikeExpression& expr)
 {
   using Sql::Expression::LikeExpressionSqlTransform;
 
   QVariantList data;
   QString sql = "SELECT Data FROM " + tableName;
-  sql += " WHERE Data " + LikeExpressionSqlTransform::getSql(expr, mDatabase);
+  sql += " WHERE Data " + LikeExpressionSqlTransform::getSql(expr.expression(), mDatabase);
   QSqlQuery query(mDatabase);
   if(!query.exec(sql)){
     qDebug() << "Error: " << query.lastError();

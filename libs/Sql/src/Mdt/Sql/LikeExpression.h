@@ -18,38 +18,17 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "LikeExpressionTest.h"
-#include "Mdt/Application.h"
-#include "Mdt/Sql/Expression/LikeExpressionSqlTransform.h"
-#include "Mdt/Sql/LikeExpression.h"
+#ifndef MDT_SQL_LIKE_EXPRESSION_H
+#define MDT_SQL_LIKE_EXPRESSION_H
 
-namespace Sql = Mdt::Sql;
+#include "Mdt/FilterExpression/LikeExpressionTerminal.h"
 
-void LikeExpressionTest::initTestCase()
-{
-}
+namespace Mdt{ namespace Sql{
 
-void LikeExpressionTest::cleanupTestCase()
-{
-}
+  /*! \brief Expression using wildcards in a WhereExpression
+   */
+  using LikeExpression = const Mdt::FilterExpression::LikeExpressionTerminal<>;
 
-/*
- * Tests
- */
+}} // namespace Mdt{ namespace Sql{
 
-
-/*
- * Main
- */
-
-int main(int argc, char **argv)
-{
-  Mdt::Application app(argc, argv);
-  LikeExpressionTest test;
-
-  if(!app.init()){
-    return 1;
-  }
-
-  return QTest::qExec(&test, argc, argv);
-}
+#endif // #ifndef MDT_SQL_LIKE_EXPRESSION_H

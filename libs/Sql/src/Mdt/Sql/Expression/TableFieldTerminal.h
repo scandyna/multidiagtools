@@ -114,7 +114,7 @@ namespace Mdt{ namespace Sql{ namespace Expression{
     typedef const TableField &  const_reference;
     /*
      * This will define operator()= , which permit to give better error messages with grammars.
-     * (Without this, error could look like 'error: no match for operator= ......'
+     * (Without this, error could look like 'error: no match for operator= ......')
      */
     BOOST_PROTO_EXTENDS_USING_ASSIGN(TableFieldTerminal)
 

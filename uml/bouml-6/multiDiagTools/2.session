@@ -1,54 +1,29 @@
 window_sizes 1280 963 356 918 908 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 2358146 // LinkStorage
-    922 903 100 4 0 0
-  classdiagram_ref 2707842 // TestEditor
-    120 110 100 21 0 226
-  classdiagram_ref 2761090 // WidgetMapperController
-    120 110 100 8 0 0
-  classdiagram_ref 2760962 // ItemViewController
-    982 908 90 7 0 24
-  classdiagram_ref 2573954 // Overview
-    120 110 90 22 12 0
-  classdiagram_ref 2921218 // WhereField
-    120 110 100 4 0 0
-  classdiagram_ref 2468610 // Relation
-    120 110 100 21 0 0
-  classdiagram_ref 3049090 // ModelSandbox
-    964 908 100 18 0 0
-  classdiagram_ref 3055618 // FilterColumn
-    918 908 90 21 0 0
-  classdiagram_ref 3048706 // FilterExpression
-    120 110 100 4 0 0
-  classdiagram_ref 3062274 // FilterProxyModel
-    120 110 90 18 0 0
-  classdiagram_ref 3048962 // SqlFilterExpression
-    120 110 100 4 0 0
-  classdiagram_ref 3062402 // FilterProxyModelExpression
-    918 908 90 18 0 0
-  classdiagram_ref 3082370 // LikeExpression
+  classdiagram_ref 3088898 // LikeExpression
     120 110 100 4 0 0
   active  classdiagram_ref 3075842 // LikeExpression
     918 908 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 3075842 // LikeExpression
 open
   
-package_ref 409858 // principes
+  package_ref 409858 // principes
   
-package_ref 549506 // Algorithm
+  package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
+  class_ref 3513090 // LikeExpressionTerminal
   class_ref 3519874 // LikeExpressionRegexTransform
   
-package_ref 516226 // SqlItemModel
+  package_ref 516226 // SqlItemModel
   
-package_ref 582274 // SqlItemEditor
-  classview_ref 1531522 // Terminals
-  class_ref 3519746 // LikeExpressionSqlTransform
+  package_ref 582274 // SqlItemEditor
   
-package_ref 430082 // Dsp
+  package_ref 601986 // Expression
+  classview_ref 1564290 // Where
+  
+  package_ref 430082 // Dsp
   classview_ref 1517954 // proto
   classview_ref 1577730 // variant
 end

@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "LikeExpressionSqlTransform.h"
-#include "Mdt/FilterExpression/LikeExpression.h"
 #include "Mdt/Algorithm.h"
 #include <QSqlDatabase>
 #include <QSqlDriver>
@@ -34,16 +33,16 @@ namespace Algorithm = Mdt::Algorithm;
 
 namespace Mdt{ namespace Sql{ namespace Expression{
 
-QString LikeExpressionSqlTransform::getSql(const Mdt::FilterExpression::LikeExpression & expr, const QSqlDatabase & db)
+QString LikeExpressionSqlTransform::getSql(const QString & expr, const QSqlDatabase & db)
 {
   QString sql;
-  QString pattern = expr.expression();
+  QString pattern = expr;
   const auto *driver = db.driver();
   Q_ASSERT(driver != nullptr);
   QSqlField field("", QVariant::String);
 
   escapeSqlLikeMetacharacters(pattern);
-  bool hasEscape = expr.expression() != pattern;
+  bool hasEscape = expr != pattern;
   pattern = Algorithm::replaceNonEscapedTokens(pattern, {{'?',"_"},{'*',"%"}}, '\\');
   pattern = Algorithm::unescapeEscapedTokens(pattern, {'?','*'}, '\\');
   field.setValue(pattern);

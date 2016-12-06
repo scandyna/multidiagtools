@@ -25,10 +25,6 @@
 
 class QSqlDatabase;
 
-namespace Mdt{ namespace FilterExpression{
-  class LikeExpression;
-}}
-
 namespace Mdt{ namespace Sql{ namespace Expression{
 
   /*! \brief Transform a LikeExpression to its SQL representation
@@ -41,7 +37,7 @@ namespace Mdt{ namespace Sql{ namespace Expression{
      *
      * \pre db must be valid (must have a driver loaded)
      */
-    static QString getSql(const Mdt::FilterExpression::LikeExpression & expr, const QSqlDatabase & db);
+    static QString getSql(const QString & expr, const QSqlDatabase & db);
 
    private:
 

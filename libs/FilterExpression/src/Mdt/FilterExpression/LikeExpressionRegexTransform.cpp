@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "LikeExpressionRegexTransform.h"
-#include "LikeExpression.h"
 #include "Mdt/Algorithm.h"
 #include <QRegularExpression>
 #include <QLatin1String>
@@ -32,9 +31,9 @@
 
 namespace Mdt{ namespace FilterExpression{
 
-QString LikeExpressionRegexTransform::getRegexPattern(const LikeExpression & expr)
+QString LikeExpressionRegexTransform::getRegexPattern(const QString & expr)
 {
-  QString pattern = expr.expression();
+  QString pattern = expr;
 
   escapeRegexMetacharacters(pattern);
   replaceWildcards(pattern);

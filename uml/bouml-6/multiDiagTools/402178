@@ -1,6 +1,6 @@
 format 211
 "Sql" // Mdt::Sql
-  revision 61
+  revision 63
   modified_by 2 "philippe"
   // class settings
   
@@ -3262,6 +3262,11 @@ ${inlines}
       end
     end
 
+    classdiagram 3088898 "LikeExpression"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
     classdiagram 2920962 "WhereExpression"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -3320,6 +3325,27 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    class 3526402 "LikeExpression"
+      visibility package stereotype "typedef" base_type class_ref 3513090 // LikeExpressionTerminal
+      cpp_decl "${comment}typedef ${type} ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl "${comment}typedef ${type} ${name};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3912322 // <dependency>
+	relation 3886594 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3912322 // <dependency>
+	  b parent class_ref 3513090 // LikeExpressionTerminal
       end
     end
   end

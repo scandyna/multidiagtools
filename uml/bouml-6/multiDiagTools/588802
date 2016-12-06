@@ -1,6 +1,6 @@
 format 211
 "FilterExpression" // Mdt::FilterExpression
-  revision 11
+  revision 13
   modified_by 2 "philippe"
   // class settings
   
@@ -465,8 +465,18 @@ ${inlines}
       size A4
     end
 
-    class 3513090 "LikeExpression"
+    class 3513090 "LikeExpressionTerminal"
       visibility package 
+      nformals 1
+      formal name "Domain" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 3
+      actual class class_ref 3225730 // extends
+        rank 0 explicit_value ""
+      actual class class_ref 3225730 // extends
+        rank 1 explicit_value ""
+      actual class class_ref 3225730 // extends
+        rank 2 explicit_value ""
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -479,25 +489,36 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      attribute 3163266 "Expression"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 4935042 "LikeExpression"
-	public explicit_return_type ""
+      operation 4935042 "LikeExpressionTerminal"
+	cpp_inline public explicit_return_type ""
 	nparams 1
 	  param in name "expr" type class_ref 161026 // QString
 	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 3912450 // <generalisation>
+	relation 3886722 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3912450 // <generalisation>
+	  b parent class_ref 3225730 // extends
+      end
+
+      operation 4941570 "expression"
+	cpp_inline public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "

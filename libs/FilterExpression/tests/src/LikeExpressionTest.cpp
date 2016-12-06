@@ -20,8 +20,11 @@
  ****************************************************************************/
 #include "LikeExpressionTest.h"
 #include "Mdt/Application.h"
-#include "Mdt/FilterExpression/LikeExpression.h"
+#include "Mdt/FilterExpression/LikeExpressionTerminal.h"
 #include "Mdt/FilterExpression/LikeExpressionRegexTransform.h"
+#include <boost/proto/matches.hpp>
+#include <boost/proto/literal.hpp>
+#include <boost/proto/transform/arg.hpp>
 
 // #include <QDebug>
 
@@ -44,19 +47,23 @@ void LikeExpressionTest::cleanupTestCase()
  * Runtime tests
  */
 
-QString likeExpressionTestFunction(const FilterExpression::LikeExpression & expr)
+QString likeExpressionTestFunction(const FilterExpression::LikeExpressionTerminal<> & expr)
 {
   return expr.expression();
 }
 
 void LikeExpressionTest::likeExpressionTest()
 {
-  using Like = FilterExpression::LikeExpression;
+  using Like = FilterExpression::LikeExpressionTerminal<>;
 
   // Must not compile
 //   QCOMPARE( likeExpressionTestFunction("A?B") , QString("A?B") );
 
   QCOMPARE( likeExpressionTestFunction(Like("A?B")) , QString("A?B") );
+
+  Like A("?A?");
+  QCOMPARE( boost::proto::_value()(A), QString("?A?"));
+  QCOMPARE( boost::proto::value(A), QString("?A?"));
 }
 
 void LikeExpressionTest::likeExpressionRegexTransformEscapeTest()
@@ -164,18 +171,13 @@ void LikeExpressionTest::likeExpressionRegexTransformEscapeBenchmark()
 
 void LikeExpressionTest::likeExpressionRegexTransformTest()
 {
-//   using FilterExpression::LikeExpression;
   using FilterExpression::LikeExpressionRegexTransform;
-  using Like = FilterExpression::LikeExpression;
 
   QFETCH(QString, likeExpression);
   QFETCH(QString, expectedRegex);
   QString regex;
 
-  // Must not compile
-//   QCOMPARE( LikeExpressionRegexTransform::getRegexPattern("A") , QString("A") );
-
-  regex = LikeExpressionRegexTransform::getRegexPattern(Like(likeExpression));
+  regex = LikeExpressionRegexTransform::getRegexPattern(likeExpression);
   QCOMPARE(regex, expectedRegex);
 }
 
@@ -251,11 +253,10 @@ void LikeExpressionTest::likeExpressionRegexTransformTest_data()
 
 void LikeExpressionTest::likeExpressionRegexTransformBenchmark()
 {
-  using FilterExpression::LikeExpression;
   using FilterExpression::LikeExpressionRegexTransform;
 
   QString result;
-  LikeExpression likeExpr("*A?B{0102}??C*D\\?E");
+  QString likeExpr("*A?B{0102}??C*D\\?E");
   QBENCHMARK{
     result = LikeExpressionRegexTransform::getRegexPattern(likeExpr);
   }
@@ -264,7 +265,6 @@ void LikeExpressionTest::likeExpressionRegexTransformBenchmark()
 
 void LikeExpressionTest::likeExpressionRegexTest()
 {
-  using FilterExpression::LikeExpression;
   using FilterExpression::LikeExpressionRegexTransform;
 
   QFETCH(QString , str);
@@ -273,7 +273,7 @@ void LikeExpressionTest::likeExpressionRegexTest()
   QRegularExpression regex;
   QString pattern;
 
-  pattern = LikeExpressionRegexTransform::getRegexPattern( LikeExpression(likeExpression) );
+  pattern = LikeExpressionRegexTransform::getRegexPattern( likeExpression );
   regex.setPattern(pattern);
   QVERIFY(regex.isValid());
   bool matches = regex.match(str).hasMatch();

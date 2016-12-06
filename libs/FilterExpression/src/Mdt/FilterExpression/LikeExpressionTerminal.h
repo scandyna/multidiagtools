@@ -18,10 +18,14 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_FILTER_EXPRESSION_LIKE_EXPRESSION_H
-#define MDT_FILTER_EXPRESSION_LIKE_EXPRESSION_H
+#ifndef MDT_FILTER_EXPRESSION_LIKE_EXPRESSION_TERMINAL_H
+#define MDT_FILTER_EXPRESSION_LIKE_EXPRESSION_TERMINAL_H
 
 #include <QString>
+#include <boost/proto/expr.hpp>
+#include <boost/proto/extends.hpp>
+#include <boost/proto/operators.hpp>
+#include <boost/proto/traits.hpp>
 
 namespace Mdt{ namespace FilterExpression{
 
@@ -36,14 +40,34 @@ namespace Mdt{ namespace FilterExpression{
    *
    * To match a wildcard, escape it with a '\'.
    */
-  class LikeExpression
+  template<typename Domain = boost::proto::default_domain>
+  struct LikeExpressionTerminal : boost::proto::extends<
+                                      boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<QString> >,
+                                      LikeExpressionTerminal< Domain >,
+                                      Domain
+                                    >
   {
+   private:
+
+    typedef boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<QString> >  terminal_type;
+    typedef LikeExpressionTerminal< Domain >                                                      LikeExpression_t;
+    typedef boost::proto::extends< terminal_type, LikeExpression_t, Domain >                      base_type;
+
    public:
+
+    typedef QString          value_type;
+    typedef QString &        reference;
+    typedef const QString &  const_reference;
+    /*
+     * This will define operator()= , which permit to give better error messages with grammars.
+     * (Without this, error could look like 'error: no match for operator= ......')
+     */
+    BOOST_PROTO_EXTENDS_USING_ASSIGN(LikeExpressionTerminal)
 
     /*! \brief Construct a like expression
      */
-    explicit LikeExpression(const QString & expr)
-     : mExpression(expr)
+    explicit LikeExpressionTerminal(const QString & expr)
+    : base_type(terminal_type::make( QString(expr) ))
     {
     }
 
@@ -51,14 +75,10 @@ namespace Mdt{ namespace FilterExpression{
      */
     QString expression() const
     {
-      return mExpression;
+      return boost::proto::value(*this);
     }
-
-   private:
-
-    QString mExpression;
   };
 
 }} // namespace Mdt{ namespace FilterExpression{
 
-#endif // #ifndef MDT_FILTER_EXPRESSION_LIKE_EXPRESSION_H
+#endif // #ifndef MDT_FILTER_EXPRESSION_LIKE_EXPRESSION_TERMINAL_H

@@ -20,8 +20,7 @@
  ****************************************************************************/
 #include "FilterExpressionTest.h"
 #include "Mdt/Application.h"
-#include "Mdt/FilterExpression/LikeExpression.h"
-#include "Mdt/FilterExpression/LikeExpressionRegexTransform.h"
+// #include "Mdt/FilterExpression/LikeExpressionTerminal.h"
 // #include <QString>
 // #include <QVariant>
 #include <boost/proto/matches.hpp>
@@ -32,7 +31,7 @@
 
 #include <QDebug>
 
-namespace FilterExpression = Mdt::FilterExpression;
+// namespace FilterExpression = Mdt::FilterExpression;
 
 void FilterExpressionTest::initTestCase()
 {

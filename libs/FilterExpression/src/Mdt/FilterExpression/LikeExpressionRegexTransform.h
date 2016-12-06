@@ -26,8 +26,6 @@
 
 namespace Mdt{ namespace FilterExpression{
 
-  class LikeExpression;
-
   /*! \brief Transform a LikeExpression to a regular expression
    */
   class LikeExpressionRegexTransform
@@ -36,7 +34,7 @@ namespace Mdt{ namespace FilterExpression{
 
     /*! \brief Get regular expression of expr
      */
-    static QString getRegexPattern(const LikeExpression & expr);
+    static QString getRegexPattern(const QString & expr);
 
     /*! \brief Escape regexp metacharacters
      */
