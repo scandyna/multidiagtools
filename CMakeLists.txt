@@ -15,6 +15,10 @@
 # CMake minimal requiered version
 cmake_minimum_required(VERSION 3.2.0)
 
+#################################################################################################################################################
+# *** Common setup ***
+#################################################################################################################################################
+
 # Project
 project(multidiagtools)
 
@@ -91,6 +95,27 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 # As moc files are generated in the binary dir, tell CMake to always look for includes there
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+#################################################################################################################################################
+# *** Helper function (must be placed before add_subdirectory(..) ***
+#################################################################################################################################################
+
+# Separate debug symbols into a separate .dbg file
+function(mdtSeparateDebugSymbols libraryBinName)
+  set(completeLibBinName "${CMAKE_SHARED_LIBRARY_PREFIX}${libraryBinName}${MDTLIB_VERSION_SUFFIX}")
+  message("mdtSeparateDebugSymbols: ${libraryBinName}")
+  add_custom_command(TARGET "${libraryBinName}${MDTLIB_VERSION_SUFFIX}"
+                    POST_BUILD
+                    COMMAND objcopy --only-keep-debug "${completeLibBinName}.so" "${completeLibBinName}.dbg"
+                    COMMAND strip --strip-debug --strip-unneeded "${completeLibBinName}.so"
+                    COMMAND objcopy --add-gnu-debuglink="${completeLibBinName}.dbg" "${completeLibBinName}.so"
+                    COMMAND chmod -x "${completeLibBinName}.dbg")
+  install(FILES "${libraryBinName}${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+endfunction()
+
+#################################################################################################################################################
+# *** Find common dependencies ***
+#################################################################################################################################################
+
 # Thread support
 find_package(Threads REQUIRED)
 
@@ -117,6 +142,10 @@ find_package(Boost REQUIRED)
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
 endif(Boost_FOUND)
+
+#################################################################################################################################################
+# *** Librairies section ***
+#################################################################################################################################################
 
 # Headers that are used allmost everywhere
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/libs/QtSolutions/include")
@@ -165,19 +194,13 @@ include_directories("${CMAKE_BINARY_DIR}/tests/mdtutilsgui")
 
 # NOTE: Support Windows pas terminé
 if(UNIX)
-include_directories("${PROJECT_SOURCE_DIR}/src/mdtport/linux")
-
-# include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport/linux")
-
+  include_directories("${PROJECT_SOURCE_DIR}/src/mdtport/linux")
+  # include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport/linux")
 endif(UNIX)
 
 # Enable testing
 # Must be placed before any add_subdirectory() command, else tests that are defined in sub-directories will be ignored
 enable_testing()
-
-#################################################################################################################################################
-# *** Librairies section ***
-#################################################################################################################################################
 
 # Libraries and headers install directories
 if(WIN32)

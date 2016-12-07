@@ -1,5 +1,4 @@
 # Project file for Multi Diag Tools
-# * Part: CableList *
 
 # Project
 project(multidiagtools)
@@ -53,13 +52,7 @@ install(TARGETS "${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB
 
 # Strip library and put debug symbols into separate file
 if(UNIX)
-  add_custom_command(TARGET "${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}"
-                    POST_BUILD
-                    COMMAND objcopy --only-keep-debug "${CMAKE_SHARED_LIBRARY_PREFIX}${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}.so" "${CMAKE_SHARED_LIBRARY_PREFIX}${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}.dbg"
-                    COMMAND strip --strip-debug --strip-unneeded "${CMAKE_SHARED_LIBRARY_PREFIX}${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}.so"
-                    COMMAND objcopy --add-gnu-debuglink="${CMAKE_SHARED_LIBRARY_PREFIX}${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}.dbg" "${CMAKE_SHARED_LIBRARY_PREFIX}${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}.so"
-                    COMMAND chmod -x "${CMAKE_SHARED_LIBRARY_PREFIX}${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}.dbg")
-  install(FILES "${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+  mdtSeparateDebugSymbols(${LIBRARY_BIN_NAME})
 endif(UNIX)
 
 # Unit tests
