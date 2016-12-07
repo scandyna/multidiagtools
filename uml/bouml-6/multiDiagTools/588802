@@ -1,6 +1,6 @@
 format 211
 "FilterExpression" // Mdt::FilterExpression
-  revision 14
+  revision 15
   modified_by 2 "philippe"
   // class settings
   
@@ -558,6 +558,7 @@ ${inlines}
 	
 	
       end
+
     end
 
     class 3519874 "LikeExpressionRegexTransform"
@@ -575,5 +576,6 @@ ${inlines}
       mysql_decl ""
       
     end
+
   end
 end

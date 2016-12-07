@@ -41,6 +41,9 @@ class FilterExpressionTest : public QObject
 
   void literalValueTest();
   void leftTerminalTest();
+  void rightTerminalTest();
+  void comparisonTest();
+  void filterExpressionGrammarTest();
 
  private slots:
 

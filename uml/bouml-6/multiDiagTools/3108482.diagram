@@ -1,0 +1,63 @@
+format 211
+
+classcanvas 128002 class_ref 3532930 // TransformDataXxYyZz
+  classdiagramsettings member_max_width 0 end
+  xyz 647.2 324.4 2000
+end
+note 128130 "Passed to the _data part"
+  xyzwh 927.6 348.4 2000 275 57
+classcanvas 128386 class_ref 3533058 // CompareEqualToXxYyZz
+  classdiagramsettings member_max_width 0 end
+  xyz 42.6 167.2 2000
+end
+classcanvas 128514 class_ref 3280514 // callable
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 910.6 42.6 2000
+end
+classcanvas 128770 class_ref 3491458 // FilterColumnTerminal
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 41.2 328 2000
+end
+classcanvas 128898 class_ref 3533314 // FilterColumn
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 68.2 434.2 2006
+end
+classcanvas 129154 class_ref 3491714 // FilterColumnData
+  classdiagramsettings hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 337.8 330 2006
+end
+note 129410 "when< terminal<_> > , _value > ,
+when<equal<FilterColumn, LiteralValue> >, call<CompareEqualToxxxx>(_left, _right,_data)  >
+when<equal<FilterColumn,  LikeExpression> >, call<CompareLikeToxxxx>(_left, _right,_data)  > ,
+otherwise<_default<TransformXy>>"
+  xyzwh 40.4 589.4 2000 688 112
+classcanvas 129538 class_ref 3533570 // CompareLikeToXxYyZz
+  classdiagramsettings member_max_width 0 end
+  xyz 685.6 170 2005
+end
+relationcanvas 128642 relation_ref 3900034 // <generalisation>
+  geometry VHV unfixed
+  from ref 128386 z 2001 to point 342.6 128
+  line 129794 z 2001 to point 982.6 128
+  line 129922 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 3900290 // <dependency>
+  from ref 128898 z 2007 to ref 128770
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 3859074 // <directional composition>
+  from ref 128770 z 2007 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 3900546 // <generalisation>
+  from ref 129538 z 2006 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 128258 -_-_
+  from ref 128002 z 2001 to ref 128130
+end

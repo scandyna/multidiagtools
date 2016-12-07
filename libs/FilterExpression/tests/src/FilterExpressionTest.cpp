@@ -66,9 +66,13 @@ void FilterExpressionTest::literalValueTest()
 {
   using FilterExpression::LiteralValue;
 
+  struct MyType{};
+  boost::proto::terminal<MyType>::type _x{{}};
+
   static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit(25) ) , LiteralValue >() , "" );
   static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit("ID44") ) , LiteralValue >() , "" );
   static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit(u8"éèj") ) , LiteralValue >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( _x ) , LiteralValue >() , "" );
 }
 
 

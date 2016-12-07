@@ -1,6 +1,6 @@
 format 211
 "Expression" // Mdt::ItemEditor::Expression
-  revision 9
+  revision 11
   modified_by 2 "philippe"
   // class settings
   
@@ -130,29 +130,29 @@ ${inlines}
       end
     end
 
-    class 3512962 "SqlRightTerminal"
-      visibility package 
-      nactuals 1
-      actual class class_ref 3225602 // or_
-        rank 0 explicit_value ""
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
+    classdiagram 3108610 "Like"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3533186 "LikeExpression"
+      visibility package stereotype "typedef" explicit_base_type ""
+      cpp_decl "${comment}typedef ${type} ${name};
 "
       java_decl ""
       php_decl ""
       python_2_2 python_decl ""
-      idl_decl ""
+      idl_decl "${comment}typedef ${type} ${name};
+"
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3905794 // <generalisation>
-	relation 3880066 ---|>
+      classrelation 3925890 // <dependency>
+	relation 3900162 -_->
 	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3905794 // <generalisation>
-	  b parent class_ref 3225602 // or_
+	    cpp default "#include in source"
+	    classrelation_ref 3925890 // <dependency>
+	  b parent class_ref 3513090 // LikeExpressionTerminal
       end
     end
   end
@@ -243,6 +243,10 @@ ${inlines}
     
     activitydiagramsettings
      end
+    classdiagram 3101954 "Comparison"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
   end
 
   classview 1604098 "Containers"
@@ -285,6 +289,179 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+  end
+
+  classview 1623938 "FilterModelTransforms"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3108482 "Sandbox"
+      classdiagramsettings member_max_width 0 end
+      size B-Landscape
+    end
+
+    class 3532930 "TransformDataXxYyZz"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3163266 "Model"
+	private type class_ref 146946 // QAbstractItemModel
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3163394 "Row"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3163522 "CaseSensitivity"
+	private explicit_type "Qt::CaseSensitivity"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 3533058 "CompareEqualToXxYyZz"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3925762 // <generalisation>
+	relation 3900034 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3925762 // <generalisation>
+	  b parent class_ref 3280514 // callable
+      end
+
+      operation 4954754 "operator()"
+	public explicit_return_type "bool"
+	nparams 3
+	  param in name "column" type class_ref 3491714 // FilterColumnData
+	  param in name "value" type class_ref 161026 // QString
+	  param in name "data" type class_ref 3532930 // TransformDataXxYyZz
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4955010 "operator()"
+	public explicit_return_type "bool"
+	nparams 3
+	  param in name "column" type class_ref 3491714 // FilterColumnData
+	  param in name "value" explicit_type "QDate"
+	  param in name "data" type class_ref 3532930 // TransformDataXxYyZz
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3533570 "CompareLikeToXxYyZz"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3926274 // <generalisation>
+	relation 3900546 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3926274 // <generalisation>
+	  b parent class_ref 3280514 // callable
+      end
+
+      operation 4954882 "operator()"
+	public explicit_return_type "bool"
+	nparams 3
+	  param in name "column" type class_ref 3491714 // FilterColumnData
+	  param in name "expr" type class_ref 161026 // QString
+	  param in name "data" type class_ref 3532930 // TransformDataXxYyZz
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 end

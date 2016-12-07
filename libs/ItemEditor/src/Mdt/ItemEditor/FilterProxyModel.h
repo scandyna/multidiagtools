@@ -48,7 +48,7 @@ namespace Mdt{ namespace ItemEditor{
    * // Setup a filter and apply it
    * FilterColumn clientFirstName(1);
    * FilterColumn clientLastName(2);
-   * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == Like("A?B%\\?%")) );
+   * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == Like("A?B*\\?*")) );
    * \endcode
    *
    * Example to filter data by matching data from a other model:

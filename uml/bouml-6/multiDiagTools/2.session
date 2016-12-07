@@ -1,22 +1,36 @@
 window_sizes 1280 963 356 918 908 0
 cleanlooks_style
+diagrams
+  classdiagram_ref 3069058 // LiteralValue
+    734 726 100 4 0 0
+  classdiagram_ref 3062530 // Terminal
+    120 110 100 4 0 0
+  classdiagram_ref 3069186 // Like
+    120 110 100 4 0 0
+  active  classdiagram_ref 3108482 // Sandbox
+    918 908 90 21 0 0
+end
 show_stereotypes
-selected classdiagram_ref 2921474 // Grammar
+selected classdiagram_ref 3075842 // LikeExpression
 open
   
-  package_ref 409858 // principes
+package_ref 409858 // principes
   
-  package_ref 549506 // Algorithm
+package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
-  class_ref 3308674 // LiteralValue
+  classview_ref 1617410 // Terminals
   
-  package_ref 516226 // SqlItemModel
+package_ref 516098 // ItemModel
   
-  package_ref 582274 // SqlItemEditor
-  classview_ref 1531522 // Terminals
-  classview_ref 1564546 // Grammar
+package_ref 516226 // SqlItemModel
+  class_ref 3532930 // TransformDataXxYyZz
+  class_ref 3533058 // CompareEqualToXxYyZz
+  class_ref 3533570 // CompareLikeToXxYyZz
+  classview_ref 1604226 // Filter
   
-  package_ref 430082 // Dsp
+package_ref 582274 // SqlItemEditor
+  
+package_ref 430082 // Dsp
   classview_ref 1517954 // proto
   classview_ref 1577730 // variant
 end
