@@ -24,7 +24,9 @@
 #include "Mdt/ItemModel/Expression/LeftTerminal.h"
 #include "Mdt/ItemModel/Expression/RightTerminal.h"
 #include "Mdt/ItemModel/Expression/Comparison.h"
-#include "Mdt/ItemModel/Expression/FilterExpressionGrammar.h"
+// #include "Mdt/ItemModel/Expression/FilterExpressionGrammar.h"
+#include "Mdt/ItemModel/FilterExpression.h"
+#include "Mdt/ItemModel/VariantTableModel.h"
 #include <QRegularExpression>
 #include <boost/proto/matches.hpp>
 #include <boost/proto/literal.hpp>
@@ -35,6 +37,7 @@
 // #include <QDebug>
 
 namespace ItemModel = Mdt::ItemModel;
+using ItemModel::VariantTableModel;
 
 void FilterExpressionTest::initTestCase()
 {
@@ -195,22 +198,67 @@ void FilterExpressionTest::filterColumnTest()
   QCOMPARE( boost::proto::_value()(A).columnIndex() , 1 );
 }
 
-void FilterExpressionTest::sandbox()
+void FilterExpressionTest::expressionCopyTest()
 {
-//   using ItemModel::FilterColumn;
-// 
-//   FilterColumn a(1);
-// 
-//   ///boost::proto::display_expr( a % "A" );
-//   
-//   QRegularExpression exp;
-//   exp.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
-//   exp.setPattern("A");
-//   checkMatches("A" , exp);
-//   checkMatches("ABC" , exp);
-//   checkMatches("123ABC" , exp);
-//   checkMatches("123BC" , exp);
-//   checkMatches("123abc" , exp);
+  using ItemModel::FilterColumn;
+  using ItemModel::FilterExpression;
+
+  QModelIndex index;
+  FilterColumn col(0);
+  /*
+   * Setup table model
+   */
+  VariantTableModel model;
+  model.populate(1,1);
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("0A"));
+  /*
+   * Default construct and set
+   */
+  FilterExpression filter;
+  QVERIFY(filter.isNull());
+  filter.setExpression(col == 25);
+  QVERIFY(!filter.isNull());
+  QVERIFY(!filter.eval(&model, 0));
+  filter.setExpression(col == "0A");
+  QVERIFY(filter.eval(&model, 0));
+  /*
+   * Copy
+   */
+  // Copy construct
+  FilterExpression filter2 = filter;
+  QVERIFY(!filter2.isNull());
+  QVERIFY(filter2.eval(&model, 0));
+  filter2.setExpression(col == 12);
+  QVERIFY(!filter2.eval(&model, 0));
+  QVERIFY(filter.eval(&model, 0));  // Check that original filter is untouched
+  // Copy assign
+  filter2 = filter;
+  QVERIFY(!filter2.isNull());
+  QVERIFY(filter2.eval(&model, 0));
+  filter2.setExpression(col == 12);
+  QVERIFY(!filter2.eval(&model, 0));
+  QVERIFY(filter.eval(&model, 0));  // Check that original filter is untouched
+  /*
+   * Move
+   */
+  auto tempFilter31 = filter;
+  auto tempFilter32 = filter;
+  // Move construct
+  FilterExpression filter3 = std::move(tempFilter31);
+  QVERIFY(!filter3.isNull());
+  QVERIFY(filter3.eval(&model, 0));
+  filter3.setExpression(col == 12);
+  QVERIFY(!filter3.eval(&model, 0));
+  QVERIFY(filter.eval(&model, 0));  // Check that original filter is untouched
+  // Move assign
+  filter3 = std::move(tempFilter32);
+  QVERIFY(!filter3.isNull());
+  QVERIFY(filter3.eval(&model, 0));
+  filter3.setExpression(col == 12);
+  QVERIFY(!filter3.eval(&model, 0));
+  QVERIFY(filter.eval(&model, 0));  // Check that original filter is untouched
 }
 
 /*

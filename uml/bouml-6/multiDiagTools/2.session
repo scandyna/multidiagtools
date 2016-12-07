@@ -9,15 +9,14 @@ diagrams
     120 110 100 18 0 0
 end
 show_stereotypes
-selected classview_ref 1637122 // VariantTableModel
+selected operation_ref 4915202 // setExpression
 open
   
   package_ref 409858 // principes
   
   package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
-  
-  package_ref 516098 // ItemModel
+  class_ref 3498626 // FilterExpression
   classview_ref 1604226 // Filter
   
   package_ref 582274 // SqlItemEditor

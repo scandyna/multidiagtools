@@ -18,43 +18,9 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H
-#define MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H
+#include "FilterExpressionContainer.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
 
-class FilterExpressionTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace ItemModel{ namespace Expression{
 
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
- private:
-
-  /*
-   * Compile time tests
-   */
-
-  void literalValueTest();
-  void leftTerminalTest();
-  void rightTerminalTest();
-  void comparisonTest();
-  void filterExpressionGrammarTest();
-
- private slots:
-
-  /*
-   * Runtime tests
-   */
-
-  void filterColumnTest();
-
-  void expressionCopyTest();
-
-};
-
-#endif // #ifndef MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H
+}}} // namespace Mdt{ namespace ItemModel{ namespace Expression{

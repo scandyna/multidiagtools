@@ -7,6 +7,8 @@ project(multidiagtools)
 set(SOURCES_FILES
     src/Mdt/ItemModel/VariantTableModel.cpp
     src/Mdt/ItemModel/VariantTableModelItem.cpp
+    src/Mdt/ItemModel/Expression/FilterExpressionContainer.cpp
+    src/Mdt/ItemModel/FilterExpression.cpp
     src/Mdt/ItemModel/FilterProxyModel.cpp
 )
 

@@ -18,43 +18,33 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H
-#define MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H
+#include "FilterExpression.h"
+#include <QAbstractItemModel>
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace ItemModel{
 
-class FilterExpressionTest : public QObject
+FilterExpression::~FilterExpression()
 {
- Q_OBJECT
+}
 
- private slots:
+// void FilterExpression::setExpression(const auto & expr)
+// {
+//   static_assert( boost::proto::matches< decltype(expr), Expression::FilterExpressionGrammar>::value , "Type of expr is not a valid filter expression." );
+// }
 
-  void initTestCase();
-  void cleanupTestCase();
+bool FilterExpression::eval(const QAbstractItemModel*const model, int row) const
+{
+  Q_ASSERT(!isNull());
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < model->rowCount());
 
- private:
+  return mContainer->eval(model, row);
+}
 
-  /*
-   * Compile time tests
-   */
+// void FilterExpression::storeExpression(const auto & expr)
+// {
+//   mContainer.reset( new Expression::FilterExpressionContainer< typename boost::proto::result_of::deep_copy<decltype(expr)>::type >(expr) );
+// }
 
-  void literalValueTest();
-  void leftTerminalTest();
-  void rightTerminalTest();
-  void comparisonTest();
-  void filterExpressionGrammarTest();
-
- private slots:
-
-  /*
-   * Runtime tests
-   */
-
-  void filterColumnTest();
-
-  void expressionCopyTest();
-
-};
-
-#endif // #ifndef MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H
+}} // namespace Mdt{ namespace ItemModel{
