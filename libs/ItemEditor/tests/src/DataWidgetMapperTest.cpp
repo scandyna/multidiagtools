@@ -19,10 +19,10 @@
  **
  ****************************************************************************/
 #include "DataWidgetMapperTest.h"
-#include "TestTableModel.h"
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/MappedWidgetList.h"
 #include "Mdt/ItemEditor/DataWidgetMapper.h"
+#include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSignalSpy>
 #include <QModelIndex>
 #include <QLineEdit>
@@ -32,6 +32,7 @@
 #include <QPlainTextEdit>
 
 namespace ItemEditor = Mdt::ItemEditor;
+using Mdt::ItemModel::VariantTableModel;
 
 void DataWidgetMapperTest::initTestCase()
 {
@@ -124,7 +125,7 @@ void DataWidgetMapperTest::setModelTest()
   using Mdt::ItemEditor::DataWidgetMapper;
 
   DataWidgetMapper mapper;
-  TestTableModel model;
+  VariantTableModel model;
   QModelIndex index;
   QLineEdit edit0, edit1;
 
@@ -228,7 +229,7 @@ void DataWidgetMapperTest::setModelTest()
    * Widget mapper must go to row -1 after model was set.
    * The controller will tell it which row to go later.
    */
-  TestTableModel model2;
+  VariantTableModel model2;
   model2.populate(4, 2);
   mapper.setModel(&model2);
   QCOMPARE(mapper.currentRow(), -1);
@@ -264,7 +265,7 @@ void DataWidgetMapperTest::setCurrentRowTest()
   using Mdt::ItemEditor::DataWidgetMapper;
 
   DataWidgetMapper mapper;
-  TestTableModel model;
+  VariantTableModel model;
   QModelIndex index;
   QLineEdit edit0, edit1;
 
@@ -307,7 +308,7 @@ void DataWidgetMapperTest::editStartDoneSignalTest()
   using Mdt::ItemEditor::DataWidgetMapper;
 
   DataWidgetMapper mapper;
-  TestTableModel model;
+  VariantTableModel model;
   QModelIndex index;
   QFETCH(QWidget*, editor0);
   QFETCH(QWidget*, editor1);
@@ -449,7 +450,7 @@ void DataWidgetMapperTest::modelItemEditableFlagWidgetsWithRoTest()
   using Mdt::ItemEditor::DataWidgetMapper;
 
   DataWidgetMapper mapper;
-  TestTableModel model;
+  VariantTableModel model;
   QModelIndex index;
   QFETCH(QWidget*, editor0);
   QFETCH(QWidget*, editor1);
@@ -519,7 +520,7 @@ void DataWidgetMapperTest::modelItemEditableFlagWidgetsWithoutRoTest()
   using Mdt::ItemEditor::DataWidgetMapper;
 
   DataWidgetMapper mapper;
-  TestTableModel model;
+  VariantTableModel model;
   QModelIndex index;
   QFETCH(QWidget*, editor0);
   QFETCH(QWidget*, editor1);
@@ -586,7 +587,7 @@ void DataWidgetMapperTest::setDataFromModelQLineEditTest()
   using Mdt::ItemEditor::DataWidgetMapper;
 
   DataWidgetMapper mapper;
-  TestTableModel model;
+  VariantTableModel model;
   QModelIndex index;
   QLineEdit editor0;
   QLineEdit editor1;
@@ -634,7 +635,7 @@ void DataWidgetMapperTest::submitDataQLineEditTest()
   using Mdt::ItemEditor::DataWidgetMapper;
 
   DataWidgetMapper mapper;
-  TestTableModel model;
+  VariantTableModel model;
   QModelIndex index;
   QLineEdit editor0;
   QLineEdit editor1;
@@ -686,7 +687,7 @@ void DataWidgetMapperTest::revertDataQLineEditTest()
   using Mdt::ItemEditor::DataWidgetMapper;
 
   DataWidgetMapper mapper;
-  TestTableModel model;
+  VariantTableModel model;
   QModelIndex index;
   QLineEdit editor0;
   QLineEdit editor1;

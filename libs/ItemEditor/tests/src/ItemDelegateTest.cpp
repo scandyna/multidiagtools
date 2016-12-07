@@ -21,9 +21,9 @@
 #include "ItemDelegateTest.h"
 #include "ItemViewTestEdit.h"
 #include "Mdt/Application.h"
-#include "TestTableModel.h"
 #include "Mdt/ItemEditor/ItemDelegateProxy.h"
 #include "Mdt/ItemEditor/EventCatchItemDelegate.h"
+#include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSignalSpy>
 // #include <QItemSelectionModel>
 // #include <QStringListModel>
@@ -35,6 +35,8 @@
 #include <QPainter>
 
 #include <QDebug>
+
+using Mdt::ItemModel::VariantTableModel;
 
 void ItemDelegateTest::initTestCase()
 {
@@ -183,7 +185,7 @@ void ItemDelegateTest::itemDelegateProxyTableViewTest()
 {
   using Mdt::ItemEditor::ItemDelegateProxy;
 
-  TestTableModel model;
+  VariantTableModel model;
   QTableView view;
   ItemDelegateProxy proxy;
 
@@ -214,7 +216,7 @@ void ItemDelegateTest::itemDelegateProxyTableViewEditTest()
 
   QTableView view;
   ItemDelegateProxy proxy;
-  TestTableModel model;
+  VariantTableModel model;
   QModelIndex index;
   QFETCH(BeginEditTrigger, beginEditTrigger);
   QFETCH(EndEditTrigger, endEditTrigger);
@@ -263,7 +265,7 @@ void ItemDelegateTest::eventCatchItemDelegateTableViewEditTest()
 
   QTableView view;
   EventCatchItemDelegate delegate;
-  TestTableModel model;
+  VariantTableModel model;
   QModelIndex index;
   QSignalSpy editionStartedSpy(&delegate, &EventCatchItemDelegate::dataEditionStarted);
   QSignalSpy editionDoneSpy(&delegate, &EventCatchItemDelegate::dataEditionDone);

@@ -21,8 +21,8 @@
 #include "ItemSelectionModelTest.h"
 #include "ItemViewTestEdit.h"
 #include "Mdt/Application.h"
-#include "TestTableModel.h"
 #include "Mdt/ItemEditor/ItemSelectionModel.h"
+#include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSignalSpy>
 // #include <QItemSelectionModel>
 // #include <QStringListModel>
@@ -39,6 +39,7 @@
 
 #include <QDebug>
 
+using Mdt::ItemModel::VariantTableModel;
 
 /*
  * Init and cleanup
@@ -61,7 +62,7 @@ void ItemSelectionModelTest::setCurrentIndexTest()
 {
   using Mdt::ItemEditor::ItemSelectionModel;
 
-  TestTableModel model;
+  VariantTableModel model;
   QModelIndex index;
   QList<QVariant> spyItem;
 
@@ -151,7 +152,7 @@ void ItemSelectionModelTest::tableViewSetCurrentIndexTest()
   using Mdt::ItemEditor::ItemSelectionModel;
 
   QTableView view;
-  TestTableModel model;
+  VariantTableModel model;
   QModelIndex index;
   QList<QVariant> spyItem;
 
@@ -253,7 +254,7 @@ void ItemSelectionModelTest::tableViewSetCurrentIndexTest()
 //   using Mdt::ItemEditor::ControllerState;
 // 
 //   QTableView view;
-//   TestTableModel model;
+//   VariantTableModel model;
 //   QModelIndex index;
 // 
 //   /*

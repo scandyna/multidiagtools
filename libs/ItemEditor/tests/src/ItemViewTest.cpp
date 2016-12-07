@@ -21,8 +21,8 @@
 #include "ItemViewTest.h"
 #include "ItemViewTestEdit.h"
 #include "Mdt/Application.h"
-#include "TestTableModel.h"
 #include "Mdt/ItemEditor/ItemSelectionModel.h"
+#include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSignalSpy>
 // #include <QItemSelectionModel>
 // #include <QStringListModel>
@@ -39,6 +39,7 @@
 
 #include <QDebug>
 
+using Mdt::ItemModel::VariantTableModel;
 
 /*
  * Init and cleanup
@@ -60,7 +61,7 @@ void ItemViewTest::cleanupTestCase()
 void ItemViewTest::tableViewEditBeginEndTest()
 {
   QTableView view;
-  TestTableModel model;
+  VariantTableModel model;
   QModelIndex index;
   QFETCH(int, rows);
   QFETCH(int, columns);

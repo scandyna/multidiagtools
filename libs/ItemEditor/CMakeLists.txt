@@ -32,6 +32,7 @@ set(SOURCES_FILES
 # Headers directories
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../FilterExpression/src")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../ItemModel/src")
 # Because some headers are generated during building (config.h, Qt's UIC), we also build path
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
@@ -46,6 +47,7 @@ add_library(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES})
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterror${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdtfilterexpression${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdtitemmodel${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} Qt5::Widgets)
 
 # Qt Designer plugins

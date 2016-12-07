@@ -19,12 +19,12 @@
  **
  ****************************************************************************/
 #include "RowChangeTest.h"
-#include "TestTableModel.h"
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/RowState.h"
 #include "Mdt/ItemEditor/RowChangeEventDispatcher.h"
 #include "Mdt/ItemEditor/ItemSelectionModel.h"
 #include "Mdt/ItemEditor/TableViewController.h"
+#include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSignalSpy>
 #include <QItemSelectionModel>
 #include <QStringListModel>
@@ -34,6 +34,7 @@
 #include <QDebug>
 
 namespace ItemEditor = Mdt::ItemEditor;
+using Mdt::ItemModel::VariantTableModel;
 
 void RowChangeTest::initTestCase()
 {

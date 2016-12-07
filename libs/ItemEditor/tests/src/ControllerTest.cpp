@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "ControllerTest.h"
-#include "TestTableModel.h"
 #include "ItemViewTestEdit.h"
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/ControllerStatePermission.h"
@@ -27,6 +26,7 @@
 #include "Mdt/ItemEditor/TableViewController.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"
 #include "Mdt/ItemEditor/ItemSelectionModel.h"
+#include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSignalSpy>
 #include <QStringListModel>
 #include <QTableView>
@@ -39,6 +39,7 @@
 #include <QMetaMethod>
 
 namespace ItemEditor = Mdt::ItemEditor;
+using Mdt::ItemModel::VariantTableModel;
 
 void ControllerTest::initTestCase()
 {
@@ -91,7 +92,7 @@ void ControllerTest::tableViewControllerSetModelTest()
   using Mdt::ItemEditor::TableViewController;
   using Mdt::ItemEditor::RowState;
 
-  TestTableModel tableModel;
+  VariantTableModel tableModel;
   QStringListModel listModel;
   QTableView tableView;
   TableViewController controller;
@@ -149,7 +150,7 @@ void ControllerTest::tableViewControllerCurrentRowChangeTest()
   using Mdt::ItemEditor::TableViewController;
   using Mdt::ItemEditor::RowState;
 
-  TestTableModel modelA, modelB;
+  VariantTableModel modelA, modelB;
   QModelIndex index;
   QTableView viewA, viewB;
   TableViewController controller;
@@ -351,7 +352,7 @@ void ControllerTest::tableViewControllerCurrentRowChangeTest()
 
 void ControllerTest::tableViewCurrentRowChangeBenchmark()
 {
-  TestTableModel model;
+  VariantTableModel model;
   QModelIndex index;
   QTableView view;
 
@@ -376,7 +377,7 @@ void ControllerTest::tableViewControllerCurrentRowChangeBenchmark()
 {
   using Mdt::ItemEditor::TableViewController;
 
-  TestTableModel model;
+  VariantTableModel model;
   QModelIndex index;
   QTableView view;
   TableViewController controller;
@@ -402,7 +403,7 @@ void ControllerTest::tableViewControllerEditTest()
   using Mdt::ItemEditor::TableViewController;
   using Mdt::ItemEditor::ControllerState;
 
-  TestTableModel model;
+  VariantTableModel model;
   QModelIndex index;
   QTableView view;
   TableViewController controller;
@@ -780,7 +781,7 @@ void ControllerTest::widgetMapperControllerSetModelTest()
   using Mdt::ItemEditor::WidgetMapperController;
   using Mdt::ItemEditor::RowState;
 
-  TestTableModel tableModel;
+  VariantTableModel tableModel;
   QStringListModel listModel;
   QLineEdit editA, editB;
   WidgetMapperController controller;
@@ -937,7 +938,7 @@ void ControllerTest::widgetMapperControllerCurrentRowChangedTest()
   using Mdt::ItemEditor::WidgetMapperController;
   using Mdt::ItemEditor::RowState;
 
-  TestTableModel model;
+  VariantTableModel model;
   QLineEdit editA, editB;
   WidgetMapperController controller;
   QModelIndex index;
@@ -1091,7 +1092,7 @@ void ControllerTest::widgetMapperControllerEditTest()
   
   QFETCH(QWidget*, editor0);
 
-  TestTableModel model;
+  VariantTableModel model;
   QLineEdit editA, editB;
   WidgetMapperController controller;
   QModelIndex index;

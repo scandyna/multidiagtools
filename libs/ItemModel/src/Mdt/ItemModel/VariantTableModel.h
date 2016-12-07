@@ -40,7 +40,7 @@ namespace Mdt{ namespace ItemModel{
    *
    * view.setModel(&model);
    * view.show();
-   * model.populate();
+   * model.populate(3, 2);
    * \endcode
    *
    * This class is mostly used in unit tests in Mdt libraries.
