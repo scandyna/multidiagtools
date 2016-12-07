@@ -18,25 +18,25 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_FILTER_PROXY_MODEL_H
-#define MDT_ITEM_EDITOR_FILTER_PROXY_MODEL_H
+#ifndef MDT_ITEM_MODEL_FILTER_PROXY_MODEL_H
+#define MDT_ITEM_MODEL_FILTER_PROXY_MODEL_H
 
-namespace Mdt{ namespace ItemEditor{
+namespace Mdt{ namespace ItemModel{
 
   /*! \brief Provides support for filtering data between another model and a view
    *
    * Example of usage:
    * \code
-   * #include <Mdt/ItemEditor/FilterProxyModel.h>
+   * #include <Mdt/ItemModel/FilterProxyModel.h>
    * #include <QTableView>
    * #include "ClientTableModel.h"
    *
    * -> Update includes and using once fixed
    *
-   * namepsace ItemEditor = Mdt::ItemEditor;
-   * using ItemEditor::FilterProxyModel;
-   * using ItemEditor::FilterColumn;
-   * using Like = ItemEditor::LikeExpression; <-- See if ItemEditor or Mdt::FilterExpression
+   * namepsace ItemModel = Mdt::ItemModel;
+   * using ItemModel::FilterProxyModel;
+   * using ItemModel::FilterColumn;
+   * using Like = ItemModel::LikeExpression; <-- See if ItemModel or Mdt::FilterExpression
    *
    * auto *view = new QTableView;
    * auto *model = new ClientTableModel(view);
@@ -54,15 +54,15 @@ namespace Mdt{ namespace ItemEditor{
    * Example to filter data by matching data from a other model:
    * \todo seems to have no sense..
    * \code
-   * #include <Mdt/ItemEditor/FilterProxyModel.h>
+   * #include <Mdt/ItemModel/FilterProxyModel.h>
    * #include <QTableView>
    * #include "ClientTableModel.h"
    * #include "AddressTableModel.h"
    *
-   * namepsace ItemEditor = Mdt::ItemEditor;
-   * using ItemEditor::FilterProxyModel;
-   * using ItemEditor::FilterColumn;
-   * using ItemEditor::FilterModelColumn;
+   * namepsace ItemModel = Mdt::ItemModel;
+   * using ItemModel::FilterProxyModel;
+   * using ItemModel::FilterColumn;
+   * using ItemModel::FilterModelColumn;
    *
    * auto *view = new QTableView;
    * auto *addressModel = new AddressTableModel(view);
@@ -85,6 +85,6 @@ namespace Mdt{ namespace ItemEditor{
   {
   };
 
-}} // namespace Mdt{ namespace ItemEditor{
+}} // namespace Mdt{ namespace ItemModel{
 
-#endif // #ifndef MDT_ITEM_EDITOR_FILTER_PROXY_MODEL_H
+#endif // #ifndef MDT_ITEM_MODEL_FILTER_PROXY_MODEL_H

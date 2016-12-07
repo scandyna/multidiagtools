@@ -18,13 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_FILTER_EXPRESSION_TEST_H
-#define MDT_ITEM_EDITOR_FILTER_EXPRESSION_TEST_H
+#ifndef MDT_MODEL_EDITOR_FILTER_PROXY_MODEL_TEST_H
+#define MDT_MODEL_EDITOR_FILTER_PROXY_MODEL_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
 
-class FilterExpressionTest : public QObject
+class FilterProxyModelTest : public QObject
 {
  Q_OBJECT
 
@@ -33,27 +33,6 @@ class FilterExpressionTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
- private:
-
-  /*
-   * Compile time tests
-   */
-
-  void literalValueTest();
-  void leftTerminalTest();
-  void rightTerminalTest();
-  void comparisonTest();
-  void filterExpressionGrammarTest();
-
- private slots:
-
-  /*
-   * Runtime tests
-   */
-
-  void filterColumnTest();
-
-  void sandbox();
 };
 
-#endif // #ifndef MDT_ITEM_EDITOR_FILTER_EXPRESSION_TEST_H
+#endif // #ifndef MDT_MODEL_EDITOR_FILTER_PROXY_MODEL_TEST_H

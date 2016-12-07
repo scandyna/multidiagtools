@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_EXPRESSION_COMPARISON_H
-#define MDT_ITEM_EDITOR_EXPRESSION_COMPARISON_H
+#ifndef MDT_ITEM_MODEL_EXPRESSION_COMPARISON_H
+#define MDT_ITEM_MODEL_EXPRESSION_COMPARISON_H
 
 #include "LeftTerminal.h"
 #include "RightTerminal.h"
@@ -27,7 +27,7 @@
 #include <boost/proto/traits.hpp>
 #include <boost/proto/matches.hpp>
 
-namespace Mdt{ namespace ItemEditor{ namespace Expression{
+namespace Mdt{ namespace ItemModel{ namespace Expression{
 
   /*! \brief Equality or inequality comparison grammar
    */
@@ -67,6 +67,6 @@ namespace Mdt{ namespace ItemEditor{ namespace Expression{
   {
   };
 
-}}} // namespace Mdt{ namespace ItemEditor{ namespace Expression{
+}}} // namespace Mdt{ namespace ItemModel{ namespace Expression{
 
-#endif // #ifndef MDT_ITEM_EDITOR_EXPRESSION_COMPARISON_H
+#endif // #ifndef MDT_ITEM_MODEL_EXPRESSION_COMPARISON_H

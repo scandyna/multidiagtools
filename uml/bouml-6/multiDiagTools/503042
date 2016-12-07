@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 94
+  revision 95
   modified_by 2 "philippe"
   // class settings
   
@@ -26,8 +26,6 @@ format 211
   activitydiagramsettings
    end
   
-  package_ref 608514 // Expression
-
   package_ref 562562 // MVDoverview
 
   package_ref 569090 // tests
@@ -6366,117 +6364,6 @@ ${inlines}
     
     activitydiagramsettings
      end
-    classdiagram 3055618 "FilterColumn"
-      classdiagramsettings member_max_width 0 end
-      size B-Landscape
-    end
-
-    class 3491458 "FilterColumnTerminal"
-      visibility package 
-      nformals 1
-      formal name "Domain" type "class" explicit_default_value ""
-        explicit_extends ""
-      nactuals 3
-      actual class class_ref 3225730 // extends
-        rank 0 explicit_value ""
-      actual class class_ref 3225730 // extends
-        rank 1 explicit_value ""
-      actual class class_ref 3225730 // extends
-        rank 2 explicit_value ""
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3884546 // <generalisation>
-	relation 3858818 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3884546 // <generalisation>
-	  b parent class_ref 3225730 // extends
-      end
-
-      classrelation 3884802 // <directional composition>
-	relation 3859074 *-->
-	  a role_name "" public
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3884802 // <directional composition>
-	  b parent class_ref 3491714 // FilterColumnData
-      end
-
-      operation 4907266 "FilterColumnTerminal"
-	cpp_inline public explicit_return_type ""
-	nparams 1
-	  param in name "column" explicit_type "int"
-	cpp_decl "  ${comment}${inline}${name}${(}${t0} ${p0}${v0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
-    class 3491714 "FilterColumnData"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 3149826 "Column"
-	private explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-
-    class 3533314 "FilterColumn"
-      visibility package stereotype "typedef" explicit_base_type ""
-      cpp_decl "${comment}typedef ${type} ${name};
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl "${comment}typedef ${type} ${name};
-"
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3926018 // <dependency>
-	relation 3900290 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3926018 // <dependency>
-	  b parent class_ref 3491458 // FilterColumnTerminal
-      end
-    end
-
     class 3491586 "FilterModelColumn"
       visibility package 
       nactuals 3
@@ -6568,76 +6455,6 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
-      end
-    end
-
-    classdiagram 3062274 "FilterProxyModel"
-      classdiagramsettings member_max_width 0 end
-      size A4-Landscape
-    end
-
-    class 3483906 "FilterProxyModel"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3884290 // <generalisation>
-	relation 3858562 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3884290 // <generalisation>
-	  b parent class_ref 719874 // QSortFilterProxyModel
-      end
-
-      operation 4915074 "setFilter"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "expr" explicit_type "Expr"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4913922 "filterAcceptsRow"
-	cpp_virtual private explicit_return_type "bool"
-	nparams 2
-	  param in name "source_row" explicit_type "int"
-	  param in name "source_parent" type class_ref 147330 // QModelIndex
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 3892226 // <directional composition>
-	relation 3866498 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3892226 // <directional composition>
-	  b parent class_ref 3498626 // FilterProxyModelExpression
       end
     end
 

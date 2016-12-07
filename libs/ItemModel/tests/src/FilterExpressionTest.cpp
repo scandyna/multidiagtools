@@ -20,19 +20,21 @@
  ****************************************************************************/
 #include "FilterExpressionTest.h"
 #include "Mdt/Application.h"
-#include "Mdt/ItemEditor/FilterColumn.h"
-#include "Mdt/ItemEditor/Expression/LeftTerminal.h"
-#include "Mdt/ItemEditor/Expression/RightTerminal.h"
-#include "Mdt/ItemEditor/Expression/Comparison.h"
-#include "Mdt/ItemEditor/Expression/FilterExpressionGrammar.h"
+#include "Mdt/ItemModel/FilterColumn.h"
+#include "Mdt/ItemModel/Expression/LeftTerminal.h"
+#include "Mdt/ItemModel/Expression/RightTerminal.h"
+#include "Mdt/ItemModel/Expression/Comparison.h"
+#include "Mdt/ItemModel/Expression/FilterExpressionGrammar.h"
 #include <QRegularExpression>
 #include <boost/proto/matches.hpp>
 #include <boost/proto/literal.hpp>
 #include <boost/proto/transform/arg.hpp>
 
+#include <boost/proto/proto.hpp>
+
 // #include <QDebug>
 
-namespace ItemEditor = Mdt::ItemEditor;
+namespace ItemModel = Mdt::ItemModel;
 
 void FilterExpressionTest::initTestCase()
 {
@@ -55,7 +57,7 @@ constexpr bool expressionMatchesGrammar()
 void FilterExpressionTest::literalValueTest()
 {
   using Mdt::FilterExpression::LiteralValue;
-  using ItemEditor::FilterColumn;
+  using ItemModel::FilterColumn;
 
   static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit(25) ) , LiteralValue >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( FilterColumn(1) ) , LiteralValue >() , "" );
@@ -63,8 +65,8 @@ void FilterExpressionTest::literalValueTest()
 
 void FilterExpressionTest::leftTerminalTest()
 {
-  using ItemEditor::Expression::LeftTerminal;
-  using ItemEditor::FilterColumn;
+  using ItemModel::Expression::LeftTerminal;
+  using ItemModel::FilterColumn;
 
   FilterColumn A(1);
 
@@ -74,9 +76,9 @@ void FilterExpressionTest::leftTerminalTest()
 
 void FilterExpressionTest::rightTerminalTest()
 {
-  using ItemEditor::Expression::RightTerminal;
-  using ItemEditor::FilterColumn;
-  using Like = ItemEditor::LikeExpression;
+  using ItemModel::Expression::RightTerminal;
+  using ItemModel::FilterColumn;
+  using Like = ItemModel::LikeExpression;
 
   FilterColumn A(1);
 
@@ -87,9 +89,9 @@ void FilterExpressionTest::rightTerminalTest()
 
 void FilterExpressionTest::comparisonTest()
 {
-  using ItemEditor::Expression::Comparison;
-  using ItemEditor::FilterColumn;
-  using Like = ItemEditor::LikeExpression;
+  using ItemModel::Expression::Comparison;
+  using ItemModel::FilterColumn;
+  using Like = ItemModel::LikeExpression;
 
   FilterColumn A(1);
   FilterColumn B(2);
@@ -151,9 +153,9 @@ void FilterExpressionTest::comparisonTest()
 
 void FilterExpressionTest::filterExpressionGrammarTest()
 {
-  using ItemEditor::Expression::FilterExpressionGrammar;
-  using ItemEditor::FilterColumn;
-  using Like = ItemEditor::LikeExpression;
+  using ItemModel::Expression::FilterExpressionGrammar;
+  using ItemModel::FilterColumn;
+  using Like = ItemModel::LikeExpression;
 
   FilterColumn A(1);
   FilterColumn B(2);
@@ -187,7 +189,7 @@ void FilterExpressionTest::filterExpressionGrammarTest()
 
 void FilterExpressionTest::filterColumnTest()
 {
-  using ItemEditor::FilterColumn;
+  using ItemModel::FilterColumn;
 
   FilterColumn A(1);
   QCOMPARE( boost::proto::_value()(A).columnIndex() , 1 );
@@ -195,7 +197,7 @@ void FilterExpressionTest::filterColumnTest()
 
 void FilterExpressionTest::sandbox()
 {
-//   using ItemEditor::FilterColumn;
+//   using ItemModel::FilterColumn;
 // 
 //   FilterColumn a(1);
 // 

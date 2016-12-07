@@ -20,5 +20,5 @@
  ****************************************************************************/
 #include "FilterProxyModel.h"
 
-namespace Mdt{ namespace ItemEditor{
-}} // namespace Mdt{ namespace ItemEditor{
+namespace Mdt{ namespace ItemModel{
+}} // namespace Mdt{ namespace ItemModel{

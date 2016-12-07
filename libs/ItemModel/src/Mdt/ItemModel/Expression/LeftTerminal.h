@@ -18,25 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_EXPRESSION_RIGHT_TERMINAL_H
-#define MDT_ITEM_EDITOR_EXPRESSION_RIGHT_TERMINAL_H
+#ifndef MDT_ITEM_MODEL_EXPRESSION_LEFT_TERMINAL_H
+#define MDT_ITEM_MODEL_EXPRESSION_LEFT_TERMINAL_H
 
-#include "Mdt/FilterExpression/LiteralValue.h"
-#include "../LikeExpression.h"
+#include "../FilterColumn.h"
 #include <boost/proto/traits.hpp>
 #include <boost/proto/matches.hpp>
 
-namespace Mdt{ namespace ItemEditor{ namespace Expression{
+namespace Mdt{ namespace ItemModel{ namespace Expression{
 
   /*! \brief Terminal grammar for the left part of a binary expression
    */
-  struct RightTerminal : boost::proto::or_<
-                            Mdt::FilterExpression::LiteralValue,
-                            LikeExpression
+  struct LeftTerminal : boost::proto::or_<
+                            FilterColumn
                           >
   {
   };
 
-}}} // namespace Mdt{ namespace ItemEditor{ namespace Expression{
+}}} // namespace Mdt{ namespace ItemModel{ namespace Expression{
 
-#endif // #ifndef MDT_ITEM_EDITOR_EXPRESSION_RIGHT_TERMINAL_H
+#endif // #ifndef MDT_ITEM_MODEL_EXPRESSION_LEFT_TERMINAL_H

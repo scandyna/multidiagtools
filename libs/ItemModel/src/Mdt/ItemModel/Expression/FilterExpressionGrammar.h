@@ -18,12 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_EXPRESSION_FILTER_EXPRESSION_GRAMMAR_H
-#define MDT_ITEM_EDITOR_EXPRESSION_FILTER_EXPRESSION_GRAMMAR_H
+#ifndef MDT_ITEM_MODEL_EXPRESSION_FILTER_EXPRESSION_GRAMMAR_H
+#define MDT_ITEM_MODEL_EXPRESSION_FILTER_EXPRESSION_GRAMMAR_H
 
 #include "Comparison.h"
 
-namespace Mdt{ namespace ItemEditor{ namespace Expression{
+namespace Mdt{ namespace ItemModel{ namespace Expression{
 
   /*! \brief Grammar of a FilterExpression
    */
@@ -35,6 +35,6 @@ namespace Mdt{ namespace ItemEditor{ namespace Expression{
   {
   };
 
-}}} // namespace Mdt{ namespace ItemEditor{ namespace Expression{
+}}} // namespace Mdt{ namespace ItemModel{ namespace Expression{
 
-#endif // #ifndef MDT_ITEM_EDITOR_EXPRESSION_FILTER_EXPRESSION_GRAMMAR_H
+#endif // #ifndef MDT_ITEM_MODEL_EXPRESSION_FILTER_EXPRESSION_GRAMMAR_H

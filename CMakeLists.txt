@@ -102,7 +102,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Separate debug symbols into a separate .dbg file
 function(mdtSeparateDebugSymbols libraryBinName)
   set(completeLibBinName "${CMAKE_SHARED_LIBRARY_PREFIX}${libraryBinName}${MDTLIB_VERSION_SUFFIX}")
-  message("mdtSeparateDebugSymbols: ${libraryBinName}")
   add_custom_command(TARGET "${libraryBinName}${MDTLIB_VERSION_SUFFIX}"
                     POST_BUILD
                     COMMAND objcopy --only-keep-debug "${completeLibBinName}.so" "${completeLibBinName}.dbg"
@@ -232,8 +231,8 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutils")
 # Numeric library
 add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Numeric")
 
-# Filter expression
 add_subdirectory("${PROJECT_SOURCE_DIR}/libs/FilterExpression")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/ItemModel")
 
 # * mdtcsv *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtcsv")

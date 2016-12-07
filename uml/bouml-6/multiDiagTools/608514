@@ -1,6 +1,6 @@
 format 211
-"Expression" // Mdt::ItemEditor::Expression
-  revision 11
+"Expression" // Mdt::ItemModel::Expression
+  revision 12
   modified_by 2 "philippe"
   // class settings
   
@@ -127,32 +127,6 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 3898882 // <generalisation>
 	  b parent class_ref 3225602 // or_
-      end
-    end
-
-    classdiagram 3108610 "Like"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 3533186 "LikeExpression"
-      visibility package stereotype "typedef" explicit_base_type ""
-      cpp_decl "${comment}typedef ${type} ${name};
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl "${comment}typedef ${type} ${name};
-"
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3925890 // <dependency>
-	relation 3900162 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3925890 // <dependency>
-	  b parent class_ref 3513090 // LikeExpressionTerminal
       end
     end
   end

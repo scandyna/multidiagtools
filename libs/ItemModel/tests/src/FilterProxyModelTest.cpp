@@ -18,21 +18,35 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_FILTER_PROXY_MODEL_TEST_H
-#define MDT_ITEM_EDITOR_FILTER_PROXY_MODEL_TEST_H
+#include "FilterProxyModelTest.h"
+#include "Mdt/Application.h"
+#include "Mdt/ItemModel/FilterProxyModel.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
-
-class FilterProxyModelTest : public QObject
+void FilterProxyModelTest::initTestCase()
 {
- Q_OBJECT
+}
 
- private slots:
+void FilterProxyModelTest::cleanupTestCase()
+{
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+/*
+ * Tests
+ */
 
-};
+/*
+ * Main
+ */
 
-#endif // #ifndef MDT_ITEM_EDITOR_FILTER_PROXY_MODEL_TEST_H
+int main(int argc, char **argv)
+{
+  Mdt::Application app(argc, argv);
+  FilterProxyModelTest test;
+
+  if(!app.init()){
+    return 1;
+  }
+//   app.debugEnvironnement();
+
+  return QTest::qExec(&test, argc, argv);
+}

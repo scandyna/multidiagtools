@@ -18,15 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_FILTER_COLUMN_H
-#define MDT_ITEM_EDITOR_FILTER_COLUMN_H
+#ifndef MDT_ITEM_MODEL_FILTER_COLUMN_H
+#define MDT_ITEM_MODEL_FILTER_COLUMN_H
 
 #include <QtGlobal>
 #include <boost/proto/expr.hpp>
 #include <boost/proto/extends.hpp>
 #include <boost/proto/operators.hpp>
 
-namespace Mdt{ namespace ItemEditor{
+namespace Mdt{ namespace ItemModel{
 
   /*! \brief Data container for FilterColumn
    */
@@ -95,6 +95,6 @@ namespace Mdt{ namespace ItemEditor{
    */
   using FilterColumn = FilterColumnTerminal<>;
 
-}} // namespace Mdt{ namespace ItemEditor{
+}} // namespace Mdt{ namespace ItemModel{
 
-#endif // #ifndef MDT_ITEM_EDITOR_FILTER_COLUMN_H
+#endif // #ifndef MDT_ITEM_MODEL_FILTER_COLUMN_H
