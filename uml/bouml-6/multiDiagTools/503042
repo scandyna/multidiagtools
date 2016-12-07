@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 95
+  revision 96
   modified_by 2 "philippe"
   // class settings
   
@@ -6463,120 +6463,6 @@ ${inlines}
       size A4-Landscape
     end
 
-    class 3498626 "FilterProxyModelExpression"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3891970 // <directional composition>
-	relation 3866242 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3891970 // <directional composition>
-	  b parent class_ref 3483522 // FilterProxyModelExpressionContainer
-      end
-
-      operation 4915202 "setFilter"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "expr" explicit_type "Expr"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4914306 "eval"
-	cpp_inline public explicit_return_type "bool"
-	nparams 2
-	  param in name "model" type class_ref 146946 // QAbstractItemModel
-	  param in name "row" explicit_type "int"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
-    class 3483522 "FilterProxyModelExpressionContainer"
-      abstract visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      operation 4915330 "~FilterProxyModelExpressionContainer"
-	abstract cpp_virtual public explicit_return_type ""
-	nparams 0
-	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
-"
-	
-	
-	
-	
-      end
-    end
-
-    class 3499010 "FilterProxyModelExpressionEval"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3892098 // <generalisation>
-	relation 3866370 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3892098 // <generalisation>
-	  b parent class_ref 3483522 // FilterProxyModelExpressionContainer
-      end
-
-      classrelation 3892354 // <dependency>
-	relation 3866626 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3892354 // <dependency>
-	  b parent class_ref 3498370 // FilterProxyModelEval
-      end
-    end
-
     class 3498882 "ModelRow"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
@@ -6797,22 +6683,6 @@ ${inlines}
     end
 
     class 3491202 "FilterColumnList"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
-    class 3491330 "FilterExpression"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {

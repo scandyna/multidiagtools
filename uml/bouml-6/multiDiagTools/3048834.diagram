@@ -1,24 +1,24 @@
 format 211
 
-classcanvas 128130 class_ref 3483522 // FilterProxyModelExpressionContainer
+classcanvas 128130 class_ref 3483522 // ContainerInterface
   classdiagramsettings member_max_width 0 end
-  xyz 425 66 2000
+  xyz 419 47 2000
 end
-classcanvas 128258 class_ref 3499010 // FilterProxyModelExpressionEval
+classcanvas 128258 class_ref 3499010 // FilterExpressionContainer
   classdiagramsettings member_max_width 0 end
-  xyz 439 154 2006
+  xyz 419 169 2006
 end
-classcanvas 128514 class_ref 3498626 // FilterProxyModelExpression
-  classdiagramsettings member_max_width 0 end
-  xyz 39 37 2006
+classcanvas 128514 class_ref 3498626 // FilterExpression
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 39 40 2006
 end
 relationcanvas 128386 relation_ref 3866370 // <generalisation>
-  decenter_begin 515
   from ref 128258 z 2007 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128642 relation_ref 3866242 // <directional composition>
+  decenter_begin 457
   from ref 128514 z 2007 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

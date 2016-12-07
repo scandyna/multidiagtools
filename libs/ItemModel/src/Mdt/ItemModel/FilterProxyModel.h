@@ -36,7 +36,7 @@ namespace Mdt{ namespace ItemModel{
    * namepsace ItemModel = Mdt::ItemModel;
    * using ItemModel::FilterProxyModel;
    * using ItemModel::FilterColumn;
-   * using Like = ItemModel::LikeExpression; <-- See if ItemModel or Mdt::FilterExpression
+   * using Like = ItemModel::LikeExpression;
    *
    * auto *view = new QTableView;
    * auto *model = new ClientTableModel(view);

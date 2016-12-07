@@ -1,18 +1,23 @@
 window_sizes 1280 963 356 918 908 0
 cleanlooks_style
+diagrams
+  classdiagram_ref 3108482 // FilterTransform
+    734 726 100 21 0 0
+  active  classdiagram_ref 3048834 // FilterExpression
+    918 908 100 4 0 0
+  classdiagram_ref 3115394 // FilterExpression
+    120 110 100 18 0 0
+end
 show_stereotypes
-selected class_ref 3505666 // RightTerminal
+selected classview_ref 1637122 // VariantTableModel
 open
   
   package_ref 409858 // principes
   
   package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
-  classview_ref 1603842 // Terminals
-  classdiagram_ref 3055618 // FilterColumn
-  classdiagram_ref 3108610 // Like
   
-  package_ref 516226 // SqlItemModel
+  package_ref 516098 // ItemModel
   classview_ref 1604226 // Filter
   
   package_ref 582274 // SqlItemEditor
