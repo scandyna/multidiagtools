@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "TestEditorTest.h"
 #include "TestWindowEditor.h"
-#include "TestTableModel.h"
 #include "TestFormEditionWidget.h"
 #include "TestTableEditionWidget.h"
 #include "Mdt/Application.h"

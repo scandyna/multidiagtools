@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "ActionsTest.h"
-#include "TestTableModel.h"
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/RowState.h"
 #include "Mdt/ItemEditor/NavigationActions.h"

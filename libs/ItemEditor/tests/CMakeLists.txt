@@ -7,7 +7,6 @@ enable_testing()
 #================= Item/View test library ====================
 
 set(SOURCES_FILES
-  src/TestTableModel.cpp
   src/ItemViewTestEdit.cpp
   src/TestTableEditionWidget.cpp
   src/TestFormEditionWidget.cpp
@@ -34,7 +33,6 @@ endfunction()
 
 #================= Tests ====================
 
-addItemEditorTest("ItemModelTest")
 addItemEditorTest("ItemSelectionModelTest")
 addItemEditorTest("RowChangeTest")
 addItemEditorTest("ActionsTest")
