@@ -100,15 +100,7 @@ namespace Mdt{ namespace ItemModel{
     {
       static_assert( boost::proto::matches<Expr, Expression::FilterExpressionGrammar>::value , "Type of expr is not a valid filter expression." );
       mContainer.reset( new Expression::FilterExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) );
-      //static_assert( boost::proto::matches< decltype(expr), Expression::FilterExpressionGrammar>::value , "Type of expr is not a valid filter expression." );
-//       storeExpression(expr);
     }
-//     template<typename Expr>
-//     void setExpression(const Expr & expr)
-//     {
-//       static_assert( boost::proto::matches< Expr, Expression::FilterExpressionGrammar>::value , "Type of Expr is not a valid filter expression." );
-//       mContainer.reset( new Expression::FilterExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) );
-//     }
 
     /*! \brief Check if this expression is null
      */
@@ -126,8 +118,6 @@ namespace Mdt{ namespace ItemModel{
     bool eval(const QAbstractItemModel * const model, int row) const;
 
    private:
-
-//     void storeExpression(const auto & expr);
 
     std::shared_ptr<const Expression::ContainerInterface> mContainer;
   };

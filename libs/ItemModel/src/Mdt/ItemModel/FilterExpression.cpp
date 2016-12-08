@@ -27,11 +27,6 @@ FilterExpression::~FilterExpression()
 {
 }
 
-// void FilterExpression::setExpression(const auto & expr)
-// {
-//   static_assert( boost::proto::matches< decltype(expr), Expression::FilterExpressionGrammar>::value , "Type of expr is not a valid filter expression." );
-// }
-
 bool FilterExpression::eval(const QAbstractItemModel*const model, int row) const
 {
   Q_ASSERT(!isNull());
@@ -41,10 +36,5 @@ bool FilterExpression::eval(const QAbstractItemModel*const model, int row) const
 
   return mContainer->eval(model, row);
 }
-
-// void FilterExpression::storeExpression(const auto & expr)
-// {
-//   mContainer.reset( new Expression::FilterExpressionContainer< typename boost::proto::result_of::deep_copy<decltype(expr)>::type >(expr) );
-// }
 
 }} // namespace Mdt{ namespace ItemModel{

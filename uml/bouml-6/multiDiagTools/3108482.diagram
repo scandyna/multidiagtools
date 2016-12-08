@@ -1,50 +1,49 @@
 format 211
 
-classcanvas 128002 class_ref 3532930 // FilterTransformData
+classcanvas 128002 class_ref 3532930 // FilterEvalData
   classdiagramsettings member_max_width 0 end
-  xyz 39 732.6 2000
+  xyz 367.2 36 2000
 end
 note 128130 "Passed to the _data part"
-  xyzwh 319.4 756.6 2000 275 57
+  xyzwh 647.2 60 2000 275 57
 classcanvas 128770 class_ref 3491458 // FilterColumnTerminal
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 281.2 296.2 2000
+  xyz 41 558.5 2000
 end
 classcanvas 128898 class_ref 3533314 // FilterColumn
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 40 298.8 2006
+  xyz 68 664.5 2006
 end
 classcanvas 129154 class_ref 3491714 // FilterColumnData
   classdiagramsettings hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 293.2 402.8 2006
+  xyz 337 560.5 2006
 end
-note 129410 "when< terminal<_> > , _value > ,
+note 129410 "when< terminal<_> > , _value > ,  <-- No, we need specific types
 when<equal<FilterColumn, LiteralValue> >, call<CompareEqualToxxxx>(_left, _right,_data)  >
 when<equal<FilterColumn,  LikeExpression> >, call<CompareLikeToxxxx>(_left, _right,_data)  > ,
 otherwise<_default<TransformXy>>"
-  xyzwh 39.7 544.1 2000 688 112
+  xyzwh 40 814.5 2000 688 112
 classcanvas 130306 class_ref 3280514 // callable
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 178.8 42.6 2000
+  xyz 174 304.5 2000
 end
 classcanvas 130434 class_ref 3533058 // CompareEqualTo
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 192.8 170.8 2006
+  xyz 188 432.5 2006
 end
-classcanvas 130690 class_ref 3533570 // CompareLikeTo
-  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 40.4 170.8 2011
-end
-classcanvas 131202 class_ref 3540098 // FilterTransform
+classcanvas 131202 class_ref 3540098 // FilterEval
   classdiagramsettings member_max_width 0 end
-  xyz 410.6 146.2 2000
+  xyz 193.8 178.6 2000
 end
 classcanvas 131330 class_ref 3225602 // or_
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 404.6 40.8 2005
+  xyz 169.8 40.85 2005
+end
+classcanvas 131586 class_ref 3547394 // ComparisonEval
+  classdiagramsettings member_max_width 0 end
+  xyz 40.4 178.6 2000
 end
 relationcanvas 129026 relation_ref 3900290 // <dependency>
-  decenter_begin 434
   from ref 128898 z 2007 to ref 128770
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -55,23 +54,20 @@ relationcanvas 129282 relation_ref 3859074 // <directional composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130562 relation_ref 3900034 // <generalisation>
-  decenter_begin 462
-  decenter_end 469
   from ref 130434 z 2007 to ref 130306
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 130818 relation_ref 3900546 // <generalisation>
-  geometry VHV unfixed
-  decenter_end 469
-  from ref 130690 z 2012 to point 94 128
-  line 130946 z 2012 to point 245 128
-  line 131074 z 2012 to ref 130306
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131458 relation_ref 3907074 // <generalisation>
   from ref 131202 z 2006 to ref 131330
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131714 relation_ref 3914114 // <generalisation>
+  geometry VHV unfixed
+  from ref 131586 z 2006 to point 96 142
+  line 131842 z 2006 to point 227 142
+  line 131970 z 2006 to ref 131330
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

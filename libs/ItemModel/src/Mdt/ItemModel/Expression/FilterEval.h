@@ -18,9 +18,28 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "FilterExpressionContainer.h"
+#ifndef MDT_ITEM_MODEL_EXPRESSION_FILTER_EVAL_H
+#define MDT_ITEM_MODEL_EXPRESSION_FILTER_EVAL_H
 
+#include "ComparisonEval.h"
+#include <boost/proto/traits.hpp>
+#include <boost/proto/matches.hpp>
+#include <boost/proto/transform/when.hpp>
+#include <boost/proto/transform.hpp>
 
 namespace Mdt{ namespace ItemModel{ namespace Expression{
 
+  /*! \brief Evaluates a FilterExpression
+   */
+  struct FilterEval : boost::proto::or_<
+                        ComparisonEval ,
+                        boost::proto::otherwise<
+                          boost::proto::_default<FilterEval>
+                        >
+                      >
+  {
+  };
+
 }}} // namespace Mdt{ namespace ItemModel{ namespace Expression{
+
+#endif // #ifndef MDT_ITEM_MODEL_EXPRESSION_FILTER_EVAL_H

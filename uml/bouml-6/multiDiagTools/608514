@@ -1,6 +1,6 @@
 format 211
 "Expression" // Mdt::ItemModel::Expression
-  revision 14
+  revision 17
   modified_by 2 "philippe"
   // class settings
   
@@ -363,7 +363,7 @@ ${inlines}
     end
   end
 
-  classview 1623938 "FilterTransform"
+  classview 1623938 "FilterEval"
     
     classdiagramsettings member_max_width 0 end
     
@@ -379,12 +379,38 @@ ${inlines}
     
     activitydiagramsettings
      end
-    classdiagram 3108482 "FilterTransform"
+    classdiagram 3108482 "FilterEval"
       classdiagramsettings member_max_width 0 end
       size B-Landscape
     end
 
-    class 3532930 "FilterTransformData"
+    class 3540098 "FilterEval"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3932802 // <generalisation>
+	relation 3907074 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3932802 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    class 3532930 "FilterEvalData"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -465,9 +491,27 @@ ${inlines}
       operation 4954754 "operator()"
 	public explicit_return_type "bool"
 	nparams 3
-	  param in name "column" type class_ref 3491714 // FilterColumnData
+	  param in name "column" type class_ref 3533314 // FilterColumn
+	  param in name "like" type class_ref 3533186 // LikeExpression
+	  param in name "data" type class_ref 3532930 // FilterEvalData
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4969346 "operator()"
+	public explicit_return_type "bool"
+	nparams 3
+	  param in name "column" type class_ref 3533314 // FilterColumn
 	  param in name "value" type class_ref 161026 // QString
-	  param in name "data" type class_ref 3532930 // FilterTransformData
+	  param in name "data" type class_ref 3532930 // FilterEvalData
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
@@ -480,15 +524,15 @@ ${inlines}
 	
       end
 
-      operation 4955010 "operator()"
+      operation 4969474 "operator()"
 	public explicit_return_type "bool"
 	nparams 3
-	  param in name "column" type class_ref 3491714 // FilterColumnData
-	  param in name "value" explicit_type "QDate"
-	  param in name "data" type class_ref 3532930 // FilterTransformData
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+	  param in name "column" type class_ref 3533314 // FilterColumn
+	  param in name "value" explicit_type "int"
+	  param in name "data" type class_ref 3532930 // FilterEvalData
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -499,48 +543,7 @@ ${inlines}
       end
     end
 
-    class 3533570 "CompareLikeTo"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3926274 // <generalisation>
-	relation 3900546 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3926274 // <generalisation>
-	  b parent class_ref 3280514 // callable
-      end
-
-      operation 4954882 "operator()"
-	public explicit_return_type "bool"
-	nparams 3
-	  param in name "column" type class_ref 3491714 // FilterColumnData
-	  param in name "expr" type class_ref 161026 // QString
-	  param in name "data" type class_ref 3532930 // FilterTransformData
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
-    class 3540098 "FilterTransform"
+    class 3547394 "ComparisonEval"
       visibility package 
       nactuals 1
       actual class class_ref 3225602 // or_
@@ -557,11 +560,11 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3932802 // <generalisation>
-	relation 3907074 ---|>
+      classrelation 3939842 // <generalisation>
+	relation 3914114 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 3932802 // <generalisation>
+	    classrelation_ref 3939842 // <generalisation>
 	  b parent class_ref 3225602 // or_
       end
     end

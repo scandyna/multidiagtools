@@ -53,6 +53,10 @@ class FilterExpressionTest : public QObject
 
   void filterColumnTest();
 
+  void evalDataTest();
+  void comparisonEvalTest();
+  void filterEvalTest();
+
   void expressionCopyTest();
 
 };

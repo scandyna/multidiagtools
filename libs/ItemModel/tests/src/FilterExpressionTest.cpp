@@ -24,7 +24,8 @@
 #include "Mdt/ItemModel/Expression/LeftTerminal.h"
 #include "Mdt/ItemModel/Expression/RightTerminal.h"
 #include "Mdt/ItemModel/Expression/Comparison.h"
-// #include "Mdt/ItemModel/Expression/FilterExpressionGrammar.h"
+#include "Mdt/ItemModel/Expression/ComparisonEval.h"
+#include "Mdt/ItemModel/Expression/FilterEval.h"
 #include "Mdt/ItemModel/FilterExpression.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QRegularExpression>
@@ -196,6 +197,99 @@ void FilterExpressionTest::filterColumnTest()
 
   FilterColumn A(1);
   QCOMPARE( boost::proto::_value()(A).columnIndex() , 1 );
+}
+
+void FilterExpressionTest::evalDataTest()
+{
+  using ItemModel::Expression::FilterEvalData;
+
+  VariantTableModel model;
+  model.populate(2,1);
+
+  FilterEvalData data(&model, 1, Qt::CaseInsensitive);
+  QCOMPARE(data.model(), &model);
+  QCOMPARE(data.row(), 1);
+  QVERIFY(data.caseSensitivity() == Qt::CaseInsensitive);
+}
+
+void FilterExpressionTest::comparisonEvalTest()
+{
+  using ItemModel::FilterColumn;
+  using ItemModel::Expression::FilterEvalData;
+  using ItemModel::Expression::ComparisonEval;
+  using Like = ItemModel::LikeExpression;
+
+  QModelIndex index;
+  /*
+   * Setup table model
+   */
+  VariantTableModel model;
+  model.populate(1,1);
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("0A"));
+  /*
+   * Setup columns and data and transform
+   */
+  FilterColumn A(0);
+  FilterEvalData data(&model, 0, Qt::CaseInsensitive);
+  ComparisonEval eval;
+  /*
+   * Tests
+   */
+  // ==
+  QVERIFY( !eval(A == 2 , 0, data) );
+  QVERIFY( !eval(A == "A" , 0, data) );
+  QVERIFY(  eval(A == "0A" , 0, data) );
+  QVERIFY( !eval(A == Like("A") , 0, data) );
+  QVERIFY(  eval(A == Like("?A") , 0, data) );
+
+  QFAIL("Not complete");
+}
+
+void FilterExpressionTest::filterEvalTest()
+{
+  using ItemModel::FilterColumn;
+  using ItemModel::Expression::FilterEvalData;
+  using ItemModel::Expression::FilterEval;
+  using Like = ItemModel::LikeExpression;
+
+  QModelIndex index;
+  /*
+   * Setup table model
+   */
+  VariantTableModel model;
+  model.populate(1,1);
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("0A"));
+  /*
+   * Setup columns and data and transform
+   */
+  FilterColumn A(0);
+  FilterEvalData data(&model, 0, Qt::CaseInsensitive);
+  FilterEval eval;
+  /*
+   * Tests
+   */
+  // Only comparison
+  QVERIFY(  eval(A == "0A" , 0, data) );
+  // Comparison and &&
+  QVERIFY(  eval(A == "0A" && A == Like("?A") , 0, data) );
+  QVERIFY( !eval(A == "0A" && A == 2 , 0, data) );
+  QVERIFY( !eval(A == "0A" && A == 2 && A == 3 , 0, data) );
+  // Comparison and ||
+  QVERIFY(  eval( (A == "0A") || (A == Like("?A")) , 0, data) );
+  QVERIFY(  eval( (A == "0A") || (A == 2) , 0, data) );
+  QVERIFY( !eval( (A == 1) || (A == 2) , 0, data) );
+  QVERIFY(  eval( (A == "0A") || (A == 2) || (A == 3) , 0, data) );
+  QVERIFY( !eval( (A == 1) || (A == 2) || (A == 3) , 0, data) );
+  // Comparison and && and ||
+  QVERIFY(  eval(A == "0A" || ((A == 1)&&(A == 2)) , 0, data) );
+  QVERIFY(  eval(A == "0A" && ((A == 1)||(A == 2)) , 0, data) );
+
+
+  QFAIL("Not complete");
 }
 
 void FilterExpressionTest::expressionCopyTest()

@@ -1,22 +1,20 @@
 window_sizes 1280 963 356 918 908 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 3108482 // FilterTransform
-    734 726 100 21 0 0
-  active  classdiagram_ref 3048834 // FilterExpression
-    918 908 100 4 0 0
-  classdiagram_ref 3115394 // FilterExpression
-    120 110 100 18 0 0
+  classdiagram_ref 3108482 // FilterEval
+    918 908 100 21 0 0
+  active  classdiagram_ref 3115138 // Comparison
+    918 908 100 21 0 0
 end
 show_stereotypes
-selected operation_ref 4915202 // setExpression
+selected operation_ref 4969474 // operator()
 open
   
   package_ref 409858 // principes
   
   package_ref 549506 // Algorithm
   classview_ref 1293698 // CoreApplication
-  class_ref 3498626 // FilterExpression
+  class_ref 3533058 // CompareEqualTo
   classview_ref 1604226 // Filter
   
   package_ref 582274 // SqlItemEditor
