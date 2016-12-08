@@ -27,14 +27,14 @@ FilterExpression::~FilterExpression()
 {
 }
 
-bool FilterExpression::eval(const QAbstractItemModel*const model, int row) const
+bool FilterExpression::eval(const QAbstractItemModel*const model, int row, Qt::CaseSensitivity caseSensitivity) const
 {
   Q_ASSERT(!isNull());
   Q_ASSERT(model != nullptr);
   Q_ASSERT(row >= 0);
   Q_ASSERT(row < model->rowCount());
 
-  return mContainer->eval(model, row);
+  return mContainer->eval(model, row, caseSensitivity);
 }
 
 }} // namespace Mdt{ namespace ItemModel{

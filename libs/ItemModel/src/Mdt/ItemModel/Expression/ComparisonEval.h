@@ -33,9 +33,7 @@
 #include <boost/proto/transform.hpp>
 
 // #include <boost/proto/proto.hpp>
-
 // #include <QDebug>
-
 
 namespace Mdt{ namespace ItemModel{ namespace Expression{
 
@@ -57,14 +55,20 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
   {
     typedef bool result_type;
 
-    bool operator()(const FilterColumn & col, const LikeExpression & expr, const FilterEvalData & data) const
+    /*
+     * When using boost::proto::deep_copy(),
+     * FilterColumn can not be deduced.
+     * This is because we use a template.
+     */
+    template<typename FC, typename LikeExpr>
+    bool operator()(const FC & col, const LikeExpr & expr, const FilterEvalData & data) const
     {
-      return isLike( boost::proto::value(col), expr, data );
+      return isLike( boost::proto::value(col), boost::proto::value(expr), data );
     }
 
    private:
 
-    bool isLike(const FilterColumnData & col, const LikeExpression & like, const FilterEvalData & data) const;
+    bool isLike(const FilterColumnData & col, const QString & like, const FilterEvalData & data) const;
   };
 
   /*! \brief == comparison callable
@@ -73,23 +77,19 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
   {
     typedef bool result_type;
 
-//     bool operator()(const FilterColumn & col, const LikeExpression & expr, const FilterEvalData & data) const
-//     {
-//       return isLike( boost::proto::value(col), expr, data );
-//     }
-
-    template<typename V>
-    bool operator()(const FilterColumn & col, const V & value, const FilterEvalData & data) const
+    /*
+     * When using boost::proto::deep_copy(),
+     * FilterColumn can not be deduced.
+     * This is because we use a template.
+     */
+    template<typename FC, typename V>
+    bool operator()(const FC & col, const V & value, const FilterEvalData & data) const
     {
       return isEqual( boost::proto::value(col), boost::proto::value(value), data );
     }
 
     static bool isEqual(const FilterColumnData & col, const QString & value, const FilterEvalData & data);
     static bool isEqual(const FilterColumnData & col, int value, const FilterEvalData & data);
-
-//    private:
-// 
-//     bool isLike(const FilterColumnData & col, const LikeExpression & like, const FilterEvalData & data) const;
   };
 
   /*! \brief != comparison callable
@@ -109,15 +109,15 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
    */
   struct CompareEqualityEval : boost::proto::or_<
                                 boost::proto::when<
-                                  boost::proto::equal_to< LeftTerminal, LikeExpression > ,
+                                  boost::proto::equal_to< FilterColumn, LikeExpression > ,
                                   boost::proto::call< CompareLikeTo(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
                                 > ,
                                 boost::proto::when<
-                                  boost::proto::equal_to< LeftTerminal, RightTerminal > ,
+                                  boost::proto::equal_to< FilterColumn, RightTerminal > ,
                                   boost::proto::call< CompareEqualTo(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
                                 > ,
                                 boost::proto::when<
-                                  boost::proto::not_equal_to< LeftTerminal, RightTerminal > ,
+                                  boost::proto::not_equal_to< FilterColumn, RightTerminal > ,
                                   boost::proto::call< CompareNotEqualTo(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
                                 >
                               >

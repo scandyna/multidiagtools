@@ -40,9 +40,9 @@ QVariant getVariantValue(const FilterColumnData & col, const FilterEvalData & da
   return model->data(index);
 }
 
-bool CompareLikeTo::isLike(const FilterColumnData & col, const LikeExpression & like, const FilterEvalData & data) const
+bool CompareLikeTo::isLike(const FilterColumnData & col, const QString & like, const FilterEvalData & data) const
 {
-  qDebug() << "isLike(): expr: " << like.expression();
+  qDebug() << "isLike(): expr: " << like;
   return false;
 }
 
@@ -58,11 +58,5 @@ bool CompareEqualTo::isEqual(const FilterColumnData & col, int value, const Filt
   qDebug() << "isEqual(int): value: " << value;
   return ( getVariantValue(col, data) == value );
 }
-
-// bool CompareEqualTo::isLike(const FilterColumnData & col, const LikeExpression & like, const FilterEvalData & data) const
-// {
-//   qDebug() << "isLike(): expr: " << like.expression();
-//   return false;
-// }
 
 }}} // namespace Mdt{ namespace ItemModel{ namespace Expression{

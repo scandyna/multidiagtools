@@ -22,7 +22,10 @@
 #define MDT_ITEM_MODEL_EXPRESSION_FILTER_EXPRESSION_CONTAINER_H
 
 #include "ContainerInterface.h"
+#include "FilterEval.h"
+#include "FilterEvalData.h"
 #include <QAbstractItemModel>
+#include <Qt>
 #include <boost/proto/deep_copy.hpp>
 
 namespace Mdt{ namespace ItemModel{ namespace Expression{
@@ -63,13 +66,14 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
      * \pre model must be a valid pointer (not null)
      * \pre must be in valid range ( 0 <= row < model->rowCount() )
      */
-    bool eval(const QAbstractItemModel * const model, int row) const override
+    bool eval(const QAbstractItemModel * const model, int row, Qt::CaseSensitivity cs) const override
     {
       Q_ASSERT(model != nullptr);
       Q_ASSERT(row >= 0);
       Q_ASSERT(row < model->rowCount());
 
-      return false;
+      FilterEval ev;
+      return ev(mExpression, 0, FilterEvalData(model, row, cs));
     }
 
    private:

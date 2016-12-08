@@ -23,6 +23,7 @@
 
 #include "Expression/FilterExpressionGrammar.h"
 #include "Expression/FilterExpressionContainer.h"
+#include <Qt>
 #include <boost/proto/matches.hpp>
 #include <memory>
 
@@ -115,7 +116,7 @@ namespace Mdt{ namespace ItemModel{
      * \pre model must be a valid pointer (not null)
      * \pre must be in valid range ( 0 <= row < model->rowCount() )
      */
-    bool eval(const QAbstractItemModel * const model, int row) const;
+    bool eval(const QAbstractItemModel * const model, int row, Qt::CaseSensitivity caseSensitivity) const;
 
    private:
 

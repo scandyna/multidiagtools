@@ -239,6 +239,15 @@ void FilterExpressionTest::comparisonEvalTest()
   FilterColumn A(0);
   FilterEvalData data(&model, 0, Qt::CaseInsensitive);
   ComparisonEval eval;
+  
+  /// sandbox
+  boost::proto::display_expr( A == 1 );
+  boost::proto::display_expr( boost::proto::deep_copy(A == 1) );
+
+  
+  eval(A == 2 , 0, data);
+  eval( boost::proto::deep_copy(A == 2) , 0, data);
+  
   /*
    * Tests
    */
@@ -330,26 +339,26 @@ void FilterExpressionTest::expressionCopyTest()
   QVERIFY(filter.isNull());
   filter.setExpression(col == 25);
   QVERIFY(!filter.isNull());
-  QVERIFY(!filter.eval(&model, 0));
+  QVERIFY(!filter.eval(&model, 0, Qt::CaseInsensitive));
   filter.setExpression(col == "0A");
-  QVERIFY(filter.eval(&model, 0));
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));
   /*
    * Copy
    */
   // Copy construct
   FilterExpression filter2 = filter;
   QVERIFY(!filter2.isNull());
-  QVERIFY(filter2.eval(&model, 0));
+  QVERIFY(filter2.eval(&model, 0, Qt::CaseInsensitive));
   filter2.setExpression(col == 12);
-  QVERIFY(!filter2.eval(&model, 0));
-  QVERIFY(filter.eval(&model, 0));  // Check that original filter is untouched
+  QVERIFY(!filter2.eval(&model, 0, Qt::CaseInsensitive));
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));  // Check that original filter is untouched
   // Copy assign
   filter2 = filter;
   QVERIFY(!filter2.isNull());
-  QVERIFY(filter2.eval(&model, 0));
+  QVERIFY(filter2.eval(&model, 0, Qt::CaseInsensitive));
   filter2.setExpression(col == 12);
-  QVERIFY(!filter2.eval(&model, 0));
-  QVERIFY(filter.eval(&model, 0));  // Check that original filter is untouched
+  QVERIFY(!filter2.eval(&model, 0, Qt::CaseInsensitive));
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));  // Check that original filter is untouched
   /*
    * Move
    */
@@ -358,17 +367,58 @@ void FilterExpressionTest::expressionCopyTest()
   // Move construct
   FilterExpression filter3 = std::move(tempFilter31);
   QVERIFY(!filter3.isNull());
-  QVERIFY(filter3.eval(&model, 0));
+  QVERIFY(filter3.eval(&model, 0, Qt::CaseInsensitive));
   filter3.setExpression(col == 12);
-  QVERIFY(!filter3.eval(&model, 0));
-  QVERIFY(filter.eval(&model, 0));  // Check that original filter is untouched
+  QVERIFY(!filter3.eval(&model, 0, Qt::CaseInsensitive));
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));  // Check that original filter is untouched
   // Move assign
   filter3 = std::move(tempFilter32);
   QVERIFY(!filter3.isNull());
-  QVERIFY(filter3.eval(&model, 0));
+  QVERIFY(filter3.eval(&model, 0, Qt::CaseInsensitive));
   filter3.setExpression(col == 12);
-  QVERIFY(!filter3.eval(&model, 0));
-  QVERIFY(filter.eval(&model, 0));  // Check that original filter is untouched
+  QVERIFY(!filter3.eval(&model, 0, Qt::CaseInsensitive));
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));  // Check that original filter is untouched
+}
+
+void FilterExpressionTest::expressionTest()
+{
+  using ItemModel::FilterColumn;
+  using ItemModel::FilterExpression;
+  using Like = ItemModel::LikeExpression;
+
+  QModelIndex index;
+  FilterColumn col(0);
+  /*
+   * Setup table model
+   */
+  VariantTableModel model;
+  model.populate(1,1);
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QCOMPARE(model.data(index), QVariant("0A"));
+  /*
+   * Because boost::proto::deep_copy() changes somewhat types,
+   * check with each valid operators.
+   * (will validate that all compiles)
+   */
+  FilterExpression filter;
+  // ==
+  filter.setExpression(col == 25);
+  QVERIFY(!filter.eval(&model, 0, Qt::CaseInsensitive));
+  // Like
+  filter.setExpression(col == Like("?A"));
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));
+  // !=
+  
+  // <
+  
+  // <=
+  
+  // >
+  
+  // >=
+
+  QFAIL("Not complete");
 }
 
 /*
