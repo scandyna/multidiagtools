@@ -2,14 +2,26 @@ format 211
 
 classcanvas 128002 class_ref 3533058 // CompareEqualTo
   classdiagramsettings member_max_width 0 end
-  xyz 41 128 2000
+  xyz 641 167 2000
 end
 classcanvas 128258 class_ref 3280514 // callable
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 246 42 2006
+  xyz 830 42 2006
+end
+classcanvas 128514 class_ref 3553922 // CompareLikeTo
+  classdiagramsettings member_max_width 0 end
+  xyz 41 170 2012
 end
 relationcanvas 128386 relation_ref 3900034 // <generalisation>
   from ref 128002 z 2007 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 3920642 // <generalisation>
+  geometry VHV unfixed
+  from ref 128514 z 2013 to point 318 128
+  line 128770 z 2013 to point 902 128
+  line 128898 z 2013 to ref 128258
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

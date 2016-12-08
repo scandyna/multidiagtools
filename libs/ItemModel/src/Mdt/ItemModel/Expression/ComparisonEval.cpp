@@ -40,38 +40,29 @@ QVariant getVariantValue(const FilterColumnData & col, const FilterEvalData & da
   return model->data(index);
 }
 
-bool CompareEqualTo::isLike(const FilterColumnData & col, const LikeExpression & like, const FilterEvalData & data) const
+bool CompareLikeTo::isLike(const FilterColumnData & col, const LikeExpression & like, const FilterEvalData & data) const
 {
   qDebug() << "isLike(): expr: " << like.expression();
   return false;
 }
 
-bool CompareEqualTo::isEqual(const FilterColumnData& col, const QString & value, const FilterEvalData & data) const
+bool CompareEqualTo::isEqual(const FilterColumnData& col, const QString & value, const FilterEvalData & data)
 {
   qDebug() << "isEqual(QString): value: " << value;
   
   return (QString::compare( getStringValue(col, data), value, data.caseSensitivity() ) == 0);
 }
 
-bool CompareEqualTo::isEqual(const FilterColumnData & col, int value, const FilterEvalData & data) const
+bool CompareEqualTo::isEqual(const FilterColumnData & col, int value, const FilterEvalData & data)
 {
   qDebug() << "isEqual(int): value: " << value;
   return ( getVariantValue(col, data) == value );
 }
 
-// QVariant CompareEqualTo::getValue(const FilterColumnData & col, const FilterEvalData& data) const
+// bool CompareEqualTo::isLike(const FilterColumnData & col, const LikeExpression & like, const FilterEvalData & data) const
 // {
-//   const auto * model = data.model();
-//   Q_ASSERT(model != nullptr);
-//   Q_ASSERT(col.columnIndex() < model->rowCount());
-// 
-//   qDebug() << "row: " << data.row();
-// 
-//   const auto index = model->index(data.row(), col.columnIndex());
-//   Q_ASSERT(index.isValid());
-// 
-//   return model->data(index);
+//   qDebug() << "isLike(): expr: " << like.expression();
+//   return false;
 // }
-
 
 }}} // namespace Mdt{ namespace ItemModel{ namespace Expression{

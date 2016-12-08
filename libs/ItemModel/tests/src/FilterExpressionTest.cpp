@@ -88,7 +88,7 @@ void FilterExpressionTest::rightTerminalTest()
 
   static_assert( !expressionMatchesGrammar< decltype( A ) , RightTerminal >() , "" );
   static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit(25) ) , RightTerminal >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( Like("A?") ) , RightTerminal >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( Like("A?") ) , RightTerminal >() , "" );
 }
 
 void FilterExpressionTest::comparisonTest()
@@ -107,22 +107,27 @@ void FilterExpressionTest::comparisonTest()
   static_assert( !expressionMatchesGrammar< decltype( A == B ) , Comparison >() , "" );
   // !=
   static_assert(  expressionMatchesGrammar< decltype( A != 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A != Like("25*") ) , Comparison >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( 25 != A ) , Comparison >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( A != B ) , Comparison >() , "" );
   // <
   static_assert(  expressionMatchesGrammar< decltype( A < 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A < Like("25*") ) , Comparison >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( 25 < A ) , Comparison >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( A < B ) , Comparison >() , "" );
   // <=
   static_assert(  expressionMatchesGrammar< decltype( A <= 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A <= Like("25*") ) , Comparison >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( 25 <= A ) , Comparison >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( A <= B ) , Comparison >() , "" );
   // >
   static_assert(  expressionMatchesGrammar< decltype( A > 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A > Like("25*") ) , Comparison >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( 25 > A ) , Comparison >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( A > B ) , Comparison >() , "" );
   // >=
   static_assert(  expressionMatchesGrammar< decltype( A >= 25 ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A >= Like("25*") ) , Comparison >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( 25 >= A ) , Comparison >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( A >= B ) , Comparison >() , "" );
   // Invalid expressions
@@ -243,6 +248,17 @@ void FilterExpressionTest::comparisonEvalTest()
   QVERIFY(  eval(A == "0A" , 0, data) );
   QVERIFY( !eval(A == Like("A") , 0, data) );
   QVERIFY(  eval(A == Like("?A") , 0, data) );
+  // !=
+  QVERIFY(  eval(A != 2 , 0, data) );
+  QVERIFY(  eval(A != "A" , 0, data) );
+  QVERIFY( !eval(A != "0A" , 0, data) );
+  // <
+  
+  // <=
+  
+  // >
+  
+  // >=
 
   QFAIL("Not complete");
 }

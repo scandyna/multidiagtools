@@ -51,9 +51,9 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
     return getVariantValue(col, data).toString();
   }
 
-  /*! \brief == comparison callable
+  /*! \brief Like comparison callable
    */
-  struct CompareEqualTo : boost::proto::callable
+  struct CompareLikeTo : boost::proto::callable
   {
     typedef bool result_type;
 
@@ -62,27 +62,63 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
       return isLike( boost::proto::value(col), expr, data );
     }
 
+   private:
+
+    bool isLike(const FilterColumnData & col, const LikeExpression & like, const FilterEvalData & data) const;
+  };
+
+  /*! \brief == comparison callable
+   */
+  struct CompareEqualTo : boost::proto::callable
+  {
+    typedef bool result_type;
+
+//     bool operator()(const FilterColumn & col, const LikeExpression & expr, const FilterEvalData & data) const
+//     {
+//       return isLike( boost::proto::value(col), expr, data );
+//     }
+
     template<typename V>
     bool operator()(const FilterColumn & col, const V & value, const FilterEvalData & data) const
     {
       return isEqual( boost::proto::value(col), boost::proto::value(value), data );
     }
 
-   private:
+    static bool isEqual(const FilterColumnData & col, const QString & value, const FilterEvalData & data);
+    static bool isEqual(const FilterColumnData & col, int value, const FilterEvalData & data);
 
-    bool isLike(const FilterColumnData & col, const LikeExpression & like, const FilterEvalData & data) const;
-    bool isEqual(const FilterColumnData & col, const QString & value, const FilterEvalData & data) const;
-    bool isEqual(const FilterColumnData & col, int value, const FilterEvalData & data) const;
+//    private:
+// 
+//     bool isLike(const FilterColumnData & col, const LikeExpression & like, const FilterEvalData & data) const;
+  };
 
-//     QVariant getValue(const FilterColumnData & col, const FilterEvalData & data) const;
+  /*! \brief != comparison callable
+   */
+  struct CompareNotEqualTo : boost::proto::callable
+  {
+    typedef bool result_type;
+
+    template<typename V>
+    bool operator()(const FilterColumn & col, const V & value, const FilterEvalData & data) const
+    {
+      return !CompareEqualTo::isEqual( boost::proto::value(col), boost::proto::value(value), data );
+    }
   };
 
   /*! \brief == comparison eval
    */
-  struct CompareEqualToEval : boost::proto::or_<
+  struct CompareEqualityEval : boost::proto::or_<
+                                boost::proto::when<
+                                  boost::proto::equal_to< LeftTerminal, LikeExpression > ,
+                                  boost::proto::call< CompareLikeTo(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
+                                > ,
                                 boost::proto::when<
                                   boost::proto::equal_to< LeftTerminal, RightTerminal > ,
                                   boost::proto::call< CompareEqualTo(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
+                                > ,
+                                boost::proto::when<
+                                  boost::proto::not_equal_to< LeftTerminal, RightTerminal > ,
+                                  boost::proto::call< CompareNotEqualTo(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
                                 >
                               >
   {
@@ -91,7 +127,7 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
   /*! \brief Comparison part of a FilterEval
    */
   struct ComparisonEval : boost::proto::or_<
-                            CompareEqualToEval
+                            CompareEqualityEval
                           >
   {
   };

@@ -31,8 +31,7 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
   /*! \brief Terminal grammar for the left part of a binary expression
    */
   struct RightTerminal : boost::proto::or_<
-                            Mdt::FilterExpression::LiteralValue,
-                            LikeExpression
+                            Mdt::FilterExpression::LiteralValue
                           >
   {
   };
