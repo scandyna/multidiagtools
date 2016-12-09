@@ -100,6 +100,8 @@ void FilterExpressionTest::comparisonTest()
   FilterColumn A(1);
   FilterColumn B(2);
 
+  // Not a comparison
+  static_assert( !expressionMatchesGrammar< decltype( A ) , Comparison >() , "" );
   // ==
   static_assert(  expressionMatchesGrammar< decltype( A == 25 ) , Comparison >() , "" );
   static_assert(  expressionMatchesGrammar< decltype( A == Like("25*") ) , Comparison >() , "" );

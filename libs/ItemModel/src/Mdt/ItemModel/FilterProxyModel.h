@@ -21,6 +21,11 @@
 #ifndef MDT_ITEM_MODEL_FILTER_PROXY_MODEL_H
 #define MDT_ITEM_MODEL_FILTER_PROXY_MODEL_H
 
+#include "FilterExpression.h"
+#include "FilterColumn.h"
+#include "LikeExpression.h"
+#include <QSortFilterProxyModel>
+
 namespace Mdt{ namespace ItemModel{
 
   /*! \brief Provides support for filtering data between another model and a view
@@ -30,8 +35,6 @@ namespace Mdt{ namespace ItemModel{
    * #include <Mdt/ItemModel/FilterProxyModel.h>
    * #include <QTableView>
    * #include "ClientTableModel.h"
-   *
-   * -> Update includes and using once fixed
    *
    * namepsace ItemModel = Mdt::ItemModel;
    * using ItemModel::FilterProxyModel;
@@ -81,8 +84,47 @@ namespace Mdt{ namespace ItemModel{
    * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == "%B%") );
    * \endcode
    */
-  class FilterProxyModel
+  class FilterProxyModel : public QSortFilterProxyModel
   {
+   Q_OBJECT
+
+   public:
+
+    /*! \brief Construct a model
+     */
+    explicit FilterProxyModel(QObject* parent = nullptr);
+
+    /*! \brief Set filter
+     *
+     * \tparam Expr Type of the expression.
+     * \param expression Expression to apply as filter.
+     * \pre Expr must be a filter expression type.
+     *       A filter expression is based on FilterColumn,
+     *       comparison operators, logical AND, logical OR.
+     *       For example (see example code above for details):
+     *       \code
+     *       // Example of valid filter expression
+     *       cliendId == 25
+     *       (cliendId == 25) && (clientName != "A")
+     *
+     *       // Example of invalid filter expression
+     *       cliendId + 5
+     *       \endcode
+     */
+    template<typename Expr>
+    void setFilter(const Expr & expression)
+    {
+      mFilterExpression.setExpression(expression);
+      invalidateFilter();
+    }
+
+   private:
+
+    /*! \brief Return true if filter expression was set and evaluates true
+     */
+    bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const override;
+
+    FilterExpression mFilterExpression;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

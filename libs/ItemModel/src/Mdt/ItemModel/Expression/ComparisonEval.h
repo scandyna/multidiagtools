@@ -32,9 +32,6 @@
 #include <boost/proto/transform/when.hpp>
 #include <boost/proto/transform.hpp>
 
-// #include <boost/proto/proto.hpp>
-// #include <QDebug>
-
 namespace Mdt{ namespace ItemModel{ namespace Expression{
 
   /*! \brief Get value of QVariant type

@@ -21,6 +21,7 @@
 #ifndef MDT_MODEL_EDITOR_FILTER_PROXY_MODEL_TEST_H
 #define MDT_MODEL_EDITOR_FILTER_PROXY_MODEL_TEST_H
 
+#include "Mdt/ItemModel/VariantTableModel.h"
 #include <QObject>
 #include <QtTest/QtTest>
 
@@ -33,6 +34,15 @@ class FilterProxyModelTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
+  void filterTest();
+  void filterBenchmark();
+  void filterBenchmark_data();
+  void filterLikeBenchmark();
+  void filterLikeBenchmark_data();
+
+ private:
+
+  void populateModel(Mdt::ItemModel::VariantTableModel & model);
 };
 
 #endif // #ifndef MDT_MODEL_EDITOR_FILTER_PROXY_MODEL_TEST_H

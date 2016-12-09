@@ -19,6 +19,29 @@
  **
  ****************************************************************************/
 #include "FilterProxyModel.h"
+#include "Mdt/Error.h"
+#include <QModelIndex>
+
+// #include <QDebug>
 
 namespace Mdt{ namespace ItemModel{
+
+FilterProxyModel::FilterProxyModel(QObject* parent)
+ : QSortFilterProxyModel(parent)
+{
+}
+
+bool FilterProxyModel::filterAcceptsRow(int source_row, const QModelIndex& source_parent) const
+{
+  if(source_parent.isValid()){
+    auto error = mdtErrorNewQ(tr("Only list and table models/views are supported. Filter can return wrong results with a hierarchical model."), Mdt::Error::Warning, this );
+    error.commit();
+    return false;
+  }
+  if(mFilterExpression.isNull()){
+    return true;
+  }
+  return mFilterExpression.eval(sourceModel(), source_row, filterCaseSensitivity());
+}
+
 }} // namespace Mdt{ namespace ItemModel{
