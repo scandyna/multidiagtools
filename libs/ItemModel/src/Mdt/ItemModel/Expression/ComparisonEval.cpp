@@ -19,10 +19,13 @@
  **
  ****************************************************************************/
 #include "ComparisonEval.h"
+#include "Mdt/FilterExpression/LikeExpressionRegexTransform.h"
+#include <QRegularExpression>
+#include <QRegularExpressionMatch>
 #include <QAbstractItemModel>
 #include <QModelIndex>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace ItemModel{ namespace Expression{
 
@@ -30,9 +33,7 @@ QVariant getVariantValue(const FilterColumnData & col, const FilterEvalData & da
 {
   const auto * model = data.model();
   Q_ASSERT(model != nullptr);
-  Q_ASSERT(col.columnIndex() < model->rowCount());
-
-  qDebug() << "row: " << data.row();
+  Q_ASSERT(col.columnIndex() < model->columnCount());
 
   const auto index = model->index(data.row(), col.columnIndex());
   Q_ASSERT(index.isValid());
@@ -42,21 +43,67 @@ QVariant getVariantValue(const FilterColumnData & col, const FilterEvalData & da
 
 bool CompareLikeTo::isLike(const FilterColumnData & col, const QString & like, const FilterEvalData & data) const
 {
-  qDebug() << "isLike(): expr: " << like;
-  return false;
+  using Mdt::FilterExpression::LikeExpressionRegexTransform;
+
+  QRegularExpression regex;
+
+  if(data.caseSensitivity() == Qt::CaseInsensitive){
+    regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+  }
+  regex.setPattern( LikeExpressionRegexTransform::getRegexPattern(like) );
+  Q_ASSERT(regex.isValid());
+
+  return regex.match( getStringValue(col, data) ).hasMatch();
 }
 
 bool CompareEqualTo::isEqual(const FilterColumnData& col, const QString & value, const FilterEvalData & data)
 {
-  qDebug() << "isEqual(QString): value: " << value;
-  
   return (QString::compare( getStringValue(col, data), value, data.caseSensitivity() ) == 0);
 }
 
 bool CompareEqualTo::isEqual(const FilterColumnData & col, int value, const FilterEvalData & data)
 {
-  qDebug() << "isEqual(int): value: " << value;
   return ( getVariantValue(col, data) == value );
+}
+
+bool CompareLessThan::isLessThan(const FilterColumnData& col, const QString& value, const FilterEvalData& data) const
+{
+  return (QString::compare( getStringValue(col, data), value, data.caseSensitivity() ) < 0);
+}
+
+bool CompareLessThan::isLessThan(const FilterColumnData& col, int value, const FilterEvalData& data) const
+{
+  return ( getVariantValue(col, data) < value );
+}
+
+bool CompareLessEqualTo::isLessEqual(const FilterColumnData& col, const QString& value, const FilterEvalData& data) const
+{
+  return (QString::compare( getStringValue(col, data), value, data.caseSensitivity() ) <= 0);
+}
+
+bool CompareLessEqualTo::isLessEqual(const FilterColumnData& col, int value, const FilterEvalData& data) const
+{
+  return ( getVariantValue(col, data) <= value );
+}
+
+bool CompareGreaterThan::isGreaterThan(const FilterColumnData& col, const QString& value, const FilterEvalData& data) const
+{
+  return (QString::compare( getStringValue(col, data), value, data.caseSensitivity() ) > 0);
+}
+
+bool CompareGreaterThan::isGreaterThan(const FilterColumnData& col, int value, const FilterEvalData& data) const
+{
+  return ( getVariantValue(col, data) > value );
+}
+
+bool CompareGreaterEqualTo::isGreaterEqual(const FilterColumnData& col, const QString& value, const FilterEvalData& data) const
+{
+  return (QString::compare( getStringValue(col, data), value, data.caseSensitivity() ) >= 0);
+}
+
+bool CompareGreaterEqualTo::isGreaterEqual(const FilterColumnData& col, int value, const FilterEvalData& data) const
+{
+  return ( getVariantValue(col, data) >= value );
 }
 
 }}} // namespace Mdt{ namespace ItemModel{ namespace Expression{

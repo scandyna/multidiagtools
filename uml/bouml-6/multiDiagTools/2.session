@@ -1,12 +1,11 @@
 window_sizes 1280 963 356 918 908 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 3108482 // FilterEval
-    918 908 100 21 0 0
-  active  classdiagram_ref 3115138 // Comparison
-    918 908 80 21 0 0
+  active  classdiagram_ref 3108482 // FilterEval
+    918 908 100 21 0 32
 end
 show_stereotypes
+selected classdiagram_ref 3115138 // Comparison
 open
   
   package_ref 409858 // principes

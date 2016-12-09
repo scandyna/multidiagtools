@@ -98,14 +98,14 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
   {
     typedef bool result_type;
 
-    template<typename V>
-    bool operator()(const FilterColumn & col, const V & value, const FilterEvalData & data) const
+    template<typename FC, typename V>
+    bool operator()(const FC & col, const V & value, const FilterEvalData & data) const
     {
       return !CompareEqualTo::isEqual( boost::proto::value(col), boost::proto::value(value), data );
     }
   };
 
-  /*! \brief == comparison eval
+  /*! \brief == and != comparison eval
    */
   struct CompareEqualityEval : boost::proto::or_<
                                 boost::proto::when<
@@ -124,10 +124,114 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
   {
   };
 
+  /*! \brief < comparison callable
+   */
+  struct CompareLessThan : boost::proto::callable
+  {
+    typedef bool result_type;
+
+    template<typename FC, typename V>
+    bool operator()(const FC & col, const V & value, const FilterEvalData & data) const
+    {
+      return isLessThan( boost::proto::value(col), boost::proto::value(value), data );
+    }
+
+   private:
+
+    bool isLessThan(const FilterColumnData & col, const QString & value, const FilterEvalData & data) const;
+    bool isLessThan(const FilterColumnData & col, int value, const FilterEvalData & data) const;
+  };
+
+  /*! \brief <= comparison callable
+   */
+  struct CompareLessEqualTo : boost::proto::callable
+  {
+    typedef bool result_type;
+
+    template<typename FC, typename V>
+    bool operator()(const FC & col, const V & value, const FilterEvalData & data) const
+    {
+      return isLessEqual( boost::proto::value(col), boost::proto::value(value), data );
+    }
+
+   private:
+
+    bool isLessEqual(const FilterColumnData & col, const QString & value, const FilterEvalData & data) const;
+    bool isLessEqual(const FilterColumnData & col, int value, const FilterEvalData & data) const;
+  };
+
+  /*! \brief < and <= comparison eval
+   */
+  struct CompareLessEval : boost::proto::or_<
+                              boost::proto::when<
+                                boost::proto::less< FilterColumn, RightTerminal > ,
+                                boost::proto::call< CompareLessThan(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
+                              > ,
+                              boost::proto::when<
+                                boost::proto::less_equal< FilterColumn, RightTerminal > ,
+                                boost::proto::call< CompareLessEqualTo(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
+                              >
+                            >
+  {
+  };
+
+  /*! \brief > comparison callable
+   */
+  struct CompareGreaterThan : boost::proto::callable
+  {
+    typedef bool result_type;
+
+    template<typename FC, typename V>
+    bool operator()(const FC & col, const V & value, const FilterEvalData & data) const
+    {
+      return isGreaterThan( boost::proto::value(col), boost::proto::value(value), data );
+    }
+
+   private:
+
+    bool isGreaterThan(const FilterColumnData & col, const QString & value, const FilterEvalData & data) const;
+    bool isGreaterThan(const FilterColumnData & col, int value, const FilterEvalData & data) const;
+  };
+
+  /*! \brief >= comparison callable
+   */
+  struct CompareGreaterEqualTo : boost::proto::callable
+  {
+    typedef bool result_type;
+
+    template<typename FC, typename V>
+    bool operator()(const FC & col, const V & value, const FilterEvalData & data) const
+    {
+      return isGreaterEqual( boost::proto::value(col), boost::proto::value(value), data );
+    }
+
+   private:
+
+    bool isGreaterEqual(const FilterColumnData & col, const QString & value, const FilterEvalData & data) const;
+    bool isGreaterEqual(const FilterColumnData & col, int value, const FilterEvalData & data) const;
+  };
+
+  /*! \brief > and >= comparison eval
+   */
+  struct CompareGreaterEval : boost::proto::or_<
+                                boost::proto::when<
+                                  boost::proto::greater< FilterColumn, RightTerminal > ,
+                                  boost::proto::call< CompareGreaterThan(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
+                                > ,
+                                boost::proto::when<
+                                  boost::proto::greater_equal< FilterColumn, RightTerminal > ,
+                                  boost::proto::call< CompareGreaterEqualTo(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
+                                >
+                              >
+  {
+  };
+
   /*! \brief Comparison part of a FilterEval
    */
   struct ComparisonEval : boost::proto::or_<
-                            CompareEqualityEval
+                            CompareEqualityEval,
+                            CompareGreaterEval,
+                            CompareLessEval
                           >
   {
   };

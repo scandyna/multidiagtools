@@ -59,6 +59,7 @@ class FilterExpressionTest : public QObject
 
   void expressionCopyTest();
   void expressionTest();
+  void expressionBenchmark();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H

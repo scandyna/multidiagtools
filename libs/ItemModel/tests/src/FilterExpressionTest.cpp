@@ -33,7 +33,7 @@
 #include <boost/proto/literal.hpp>
 #include <boost/proto/transform/arg.hpp>
 
-#include <boost/proto/proto.hpp>
+// #include <boost/proto/proto.hpp>
 
 // #include <QDebug>
 
@@ -227,49 +227,84 @@ void FilterExpressionTest::comparisonEvalTest()
   QModelIndex index;
   /*
    * Setup table model
+   * Each column stores a specific type:
+   * ----------------------------
+   * | String | int |
+   * ----------------------------
+   * |  ABC   |  3  |
+   * ----------------------------
    */
   VariantTableModel model;
-  model.populate(1,1);
+  model.populate(1,2);
+  // Set string
   index = model.index(0, 0);
   QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("0A"));
+  model.setData(index, "ABC");
+  // Set int
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  model.setData(index, 3);
+  // Check
+  index = model.index(0, 0);
+  QCOMPARE(model.data(index), QVariant("ABC"));
+  index = model.index(0, 1);
+  QCOMPARE(model.data(index), QVariant(3));
   /*
    * Setup columns and data and transform
    */
-  FilterColumn A(0);
+  FilterColumn strCol(0);
+  FilterColumn intCol(1);
   FilterEvalData data(&model, 0, Qt::CaseInsensitive);
   ComparisonEval eval;
-  
-  /// sandbox
-  boost::proto::display_expr( A == 1 );
-  boost::proto::display_expr( boost::proto::deep_copy(A == 1) );
-
-  
-  eval(A == 2 , 0, data);
-  eval( boost::proto::deep_copy(A == 2) , 0, data);
-  
   /*
    * Tests
    */
-  // ==
-  QVERIFY( !eval(A == 2 , 0, data) );
-  QVERIFY( !eval(A == "A" , 0, data) );
-  QVERIFY(  eval(A == "0A" , 0, data) );
-  QVERIFY( !eval(A == Like("A") , 0, data) );
-  QVERIFY(  eval(A == Like("?A") , 0, data) );
-  // !=
-  QVERIFY(  eval(A != 2 , 0, data) );
-  QVERIFY(  eval(A != "A" , 0, data) );
-  QVERIFY( !eval(A != "0A" , 0, data) );
-  // <
-  
-  // <=
-  
-  // >
-  
-  // >=
-
-  QFAIL("Not complete");
+  // == with string
+  QVERIFY(  eval(strCol == "ABC" , 0, data) );
+  QVERIFY(  eval(strCol == "abc" , 0, data) );
+  QVERIFY( !eval(strCol == "A" , 0, data) );
+  // == with int
+  QVERIFY(  eval(intCol == 3 , 0, data) );
+  QVERIFY( !eval(intCol == 5 , 0, data) );
+  // Like
+  QVERIFY( !eval(strCol == Like("A") , 0, data) );
+  QVERIFY(  eval(strCol == Like("?B?") , 0, data) );
+  QVERIFY(  eval(strCol == Like("?b?") , 0, data) );
+  // != with string
+  QVERIFY( !eval(strCol != "ABC" , 0, data) );
+  QVERIFY( !eval(strCol != "abc" , 0, data) );
+  QVERIFY(  eval(strCol != "A" , 0, data) );
+  // != with int
+  QVERIFY( !eval(intCol != 3 , 0, data) );
+  QVERIFY(  eval(intCol != 5 , 0, data) );
+  // < with string
+  QVERIFY(  eval(strCol < "ZZZ" , 0, data) );
+  QVERIFY( !eval(strCol < "AAA" , 0, data) );
+  // < with int
+  QVERIFY(  eval(intCol < 5 , 0, data) );
+  QVERIFY( !eval(intCol < 2 , 0, data) );
+  // <= with string
+  QVERIFY(  eval(strCol <= "ZZZ" , 0, data) );
+  QVERIFY(  eval(strCol <= "ABC" , 0, data) );
+  QVERIFY( !eval(strCol <= "AAA" , 0, data) );
+  // <= with int
+  QVERIFY(  eval(intCol <= 5 , 0, data) );
+  QVERIFY(  eval(intCol <= 3 , 0, data) );
+  QVERIFY( !eval(intCol <= 2 , 0, data) );
+  // > with string
+  QVERIFY( !eval(strCol > "ZZZ" , 0, data) );
+  QVERIFY(  eval(strCol > "AAA" , 0, data) );
+  // > with int
+  QVERIFY( !eval(intCol > 5 , 0, data) );
+  QVERIFY(  eval(intCol > 2 , 0, data) );
+  // >= with string
+  QVERIFY( !eval(strCol >= "ZZZ" , 0, data) );
+  QVERIFY(  eval(strCol >= "ABC" , 0, data) );
+  QVERIFY(  eval(strCol >= "AAA" , 0, data) );
+  // >= with int
+  QVERIFY( !eval(intCol >= 5 , 0, data) );
+  QVERIFY(  eval(intCol >= 3 , 0, data) );
+  QVERIFY(  eval(intCol >= 2 , 0, data) );
 }
 
 void FilterExpressionTest::filterEvalTest()
@@ -281,40 +316,54 @@ void FilterExpressionTest::filterEvalTest()
 
   QModelIndex index;
   /*
-   * Setup table model
+   * Setup table model:
+   * ----------------------------
+   * | Id | Name |
+   * ----------------------------
+   * | 1  | ABC  |
+   * ----------------------------
    */
   VariantTableModel model;
-  model.populate(1,1);
+  model.populate(1,2);
+  // Set Id
   index = model.index(0, 0);
   QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("0A"));
+  model.setData(index, 1);
+  // Set Name
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  model.setData(index, "ABC");
+  // Check
+  index = model.index(0, 0);
+  QCOMPARE(model.data(index), QVariant(1));
+  index = model.index(0, 1);
+  QCOMPARE(model.data(index), QVariant("ABC"));
   /*
    * Setup columns and data and transform
    */
-  FilterColumn A(0);
+  FilterColumn Id(0);
+  FilterColumn Name(1);
   FilterEvalData data(&model, 0, Qt::CaseInsensitive);
   FilterEval eval;
   /*
    * Tests
    */
   // Only comparison
-  QVERIFY(  eval(A == "0A" , 0, data) );
+  QVERIFY(  eval(Id == 1 , 0, data) );
+  QVERIFY(  eval(Id != 2 , 0, data) );
   // Comparison and &&
-  QVERIFY(  eval(A == "0A" && A == Like("?A") , 0, data) );
-  QVERIFY( !eval(A == "0A" && A == 2 , 0, data) );
-  QVERIFY( !eval(A == "0A" && A == 2 && A == 3 , 0, data) );
+  QVERIFY(  eval(Id == 1 && Name == Like("?B?") , 0, data) );
+  QVERIFY( !eval(Id == 1 && Name == "B" , 0, data) );
+  QVERIFY( !eval(Id == 1 && Name == "B" && Name == "C" , 0, data) );
   // Comparison and ||
-  QVERIFY(  eval( (A == "0A") || (A == Like("?A")) , 0, data) );
-  QVERIFY(  eval( (A == "0A") || (A == 2) , 0, data) );
-  QVERIFY( !eval( (A == 1) || (A == 2) , 0, data) );
-  QVERIFY(  eval( (A == "0A") || (A == 2) || (A == 3) , 0, data) );
-  QVERIFY( !eval( (A == 1) || (A == 2) || (A == 3) , 0, data) );
-  // Comparison and && and ||
-  QVERIFY(  eval(A == "0A" || ((A == 1)&&(A == 2)) , 0, data) );
-  QVERIFY(  eval(A == "0A" && ((A == 1)||(A == 2)) , 0, data) );
-
-
-  QFAIL("Not complete");
+  QVERIFY(  eval( (Id == 2) || (Name == Like("A*")) , 0, data) );
+  QVERIFY(  eval( (Id == 1) || (Name == "A") , 0, data) );
+  QVERIFY( !eval( (Id == 2) || (Name == "A") , 0, data) );
+  QVERIFY(  eval( (Id > 5) || (Name == "A") || (Name == "ABC") , 0, data) );
+  QVERIFY( !eval( (Id > 5) || (Name == "A") || (Name == "B") , 0, data) );
+  // Comparison and || and &&
+  QVERIFY(  eval(Id > 10 || ((Id < 5)&&(Name == Like("?B?"))) , 0, data) );
+  QVERIFY( !eval(Id > 0 && ((Name == "A")||(Name == "B")) , 0, data) );
 }
 
 void FilterExpressionTest::expressionCopyTest()
@@ -387,38 +436,139 @@ void FilterExpressionTest::expressionTest()
   using Like = ItemModel::LikeExpression;
 
   QModelIndex index;
-  FilterColumn col(0);
   /*
    * Setup table model
+   * Each column stores a specific type:
+   * ----------------------------
+   * | String | int |
+   * ----------------------------
+   * |  ABC   |  3  |
+   * ----------------------------
    */
   VariantTableModel model;
-  model.populate(1,1);
+  model.populate(1,2);
+  // Set string
   index = model.index(0, 0);
   QVERIFY(index.isValid());
-  QCOMPARE(model.data(index), QVariant("0A"));
+  model.setData(index, "ABC");
+  // Set int
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  model.setData(index, 3);
+  // Check
+  index = model.index(0, 0);
+  QCOMPARE(model.data(index), QVariant("ABC"));
+  index = model.index(0, 1);
+  QCOMPARE(model.data(index), QVariant(3));
   /*
    * Because boost::proto::deep_copy() changes somewhat types,
    * check with each valid operators.
    * (will validate that all compiles)
    */
   FilterExpression filter;
-  // ==
-  filter.setExpression(col == 25);
+  FilterColumn strCol(0);
+  FilterColumn intCol(1);
+  // == with string
+  filter.setExpression(strCol == "ABC");
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));
+  filter.setExpression(strCol == "abc");
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));
+  filter.setExpression(strCol == "a");
+  QVERIFY(!filter.eval(&model, 0, Qt::CaseSensitive));
+  // == with int
+  filter.setExpression(intCol == 3);
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));
+  filter.setExpression(intCol == 25);
   QVERIFY(!filter.eval(&model, 0, Qt::CaseInsensitive));
   // Like
-  filter.setExpression(col == Like("?A"));
+  filter.setExpression(strCol == Like("?B?"));
   QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));
-  // !=
-  
+  QVERIFY(filter.eval(&model, 0, Qt::CaseSensitive));
+  filter.setExpression(strCol == Like("?b?"));
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));
+  QVERIFY(!filter.eval(&model, 0, Qt::CaseSensitive));
+  // != with string
+  filter.setExpression(strCol != "Z");
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));
+  // != with int
+  filter.setExpression(intCol != 3);
+  QVERIFY(!filter.eval(&model, 0, Qt::CaseInsensitive));
+  filter.setExpression(intCol != 25);
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));
   // <
-  
+  filter.setExpression(intCol < 5);
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));
+  filter.setExpression(intCol < 2);
+  QVERIFY(!filter.eval(&model, 0, Qt::CaseInsensitive));
   // <=
-  
+  filter.setExpression(intCol <= 5);
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));
+  filter.setExpression(intCol <= 3);
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));
+  filter.setExpression(intCol <= 2);
+  QVERIFY(!filter.eval(&model, 0, Qt::CaseInsensitive));
   // >
-  
+  filter.setExpression(intCol > 5);
+  QVERIFY(!filter.eval(&model, 0, Qt::CaseInsensitive));
+  filter.setExpression(intCol > 2);
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));
   // >=
+  filter.setExpression(intCol >= 5);
+  QVERIFY(!filter.eval(&model, 0, Qt::CaseInsensitive));
+  filter.setExpression(intCol >= 3);
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));
+  filter.setExpression(intCol >= 2);
+  QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));
+}
 
-  QFAIL("Not complete");
+void FilterExpressionTest::expressionBenchmark()
+{
+  using ItemModel::FilterColumn;
+  using ItemModel::Expression::FilterEvalData;
+  using ItemModel::Expression::FilterEval;
+  using Like = ItemModel::LikeExpression;
+
+  QModelIndex index;
+  /*
+   * Setup table model:
+   * ----------------------------
+   * | Id | Name | Remarks
+   * ----------------------------
+   * | 1  | ABC  | 1234ABCD
+   * ----------------------------
+   */
+  VariantTableModel model;
+  model.populate(1,3);
+  // Set Id
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setData(index, 1);
+  // Set Name
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  model.setData(index, "ABC");
+  // Set Name
+  index = model.index(0, 2);
+  QVERIFY(index.isValid());
+  model.setData(index, "1234ABCD");
+  // Check
+  index = model.index(0, 0);
+  QCOMPARE(model.data(index), QVariant(1));
+  index = model.index(0, 1);
+  QCOMPARE(model.data(index), QVariant("ABC"));
+  index = model.index(0, 2);
+  QCOMPARE(model.data(index), QVariant("1234ABCD"));
+  /*
+   * Setup columns and data and transform
+   */
+  FilterColumn id(0);
+  FilterColumn name(1);
+  FilterColumn rem(2);
+  FilterEvalData data(&model, 0, Qt::CaseInsensitive);
+  FilterEval eval;
+  QBENCHMARK{
+    QVERIFY( eval(id > 0 && (name == Like("?B?") && rem == Like("*2*b*c?")), 0, data) );
+  }
 }
 
 /*

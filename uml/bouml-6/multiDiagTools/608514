@@ -1,6 +1,6 @@
 format 211
 "Expression" // Mdt::ItemModel::Expression
-  revision 18
+  revision 19
   modified_by 2 "philippe"
   // class settings
   
@@ -564,7 +564,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     class 3547394 "ComparisonEval"
