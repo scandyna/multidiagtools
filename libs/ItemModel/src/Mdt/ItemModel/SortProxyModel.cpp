@@ -18,29 +18,14 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_MODEL_EDITOR_SORT_PROXY_MODEL_TEST_H
-#define MDT_MODEL_EDITOR_SORT_PROXY_MODEL_TEST_H
+#include "SortProxyModel.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace ItemModel{
 
-class SortProxyModelTest : public QObject
+SortProxyModel::SortProxyModel(QObject* parent)
+ : QSortFilterProxyModel(parent)
 {
- Q_OBJECT
+}
 
- private slots:
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void columnSortOrderTest();
-  void columnSortOrderListTest();
-  void columnSortOrderListBenchmark();
-
-//   void sortAlphaTest();
-//   void sortAlphaCiTest();
-//   void sortAlphNumNaturalTest();
-//   void sortAlphaMultiColumnTest();
-};
-
-#endif // #ifndef MDT_MODEL_EDITOR_SORT_PROXY_MODEL_TEST_H
+}} // namespace Mdt{ namespace ItemModel{

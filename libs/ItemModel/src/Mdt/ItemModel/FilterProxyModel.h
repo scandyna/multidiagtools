@@ -118,6 +118,13 @@ namespace Mdt{ namespace ItemModel{
       invalidateFilter();
     }
 
+    // Disable copy
+    FilterProxyModel(const FilterProxyModel &) = delete;
+    FilterProxyModel & operator=(const FilterProxyModel &) = delete;
+    // Disable move
+    FilterProxyModel(FilterProxyModel &&) = delete;
+    FilterProxyModel & operator=(FilterProxyModel &&) = delete;
+
    private:
 
     /*! \brief Return true if filter expression was set and evaluates true

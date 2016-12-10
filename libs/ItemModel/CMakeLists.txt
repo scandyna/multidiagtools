@@ -10,6 +10,7 @@ set(SOURCES_FILES
     src/Mdt/ItemModel/Expression/ComparisonEval.cpp
     src/Mdt/ItemModel/FilterExpression.cpp
     src/Mdt/ItemModel/FilterProxyModel.cpp
+    src/Mdt/ItemModel/SortProxyModel.cpp
 )
 
 # Get Boost include directory if not allready set

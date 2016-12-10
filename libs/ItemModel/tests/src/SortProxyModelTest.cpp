@@ -20,6 +20,13 @@
  ****************************************************************************/
 #include "SortProxyModelTest.h"
 #include "Mdt/Application.h"
+#include "Mdt/ItemModel/SortProxyModel.h"
+#include "Mdt/ItemModel/VariantTableModel.h"
+#include "Mdt/ItemModel/ColumnSortOrderList.h"
+
+namespace ItemModel = Mdt::ItemModel;
+using ItemModel::VariantTableModel;
+using ItemModel::SortProxyModel;
 
 void SortProxyModelTest::initTestCase()
 {
@@ -32,6 +39,25 @@ void SortProxyModelTest::cleanupTestCase()
 /*
  * Tests
  */
+
+void SortProxyModelTest::columnSortOrderTest()
+{
+  using ItemModel::ColumnSortOrder;
+
+  ColumnSortOrder cso(1, Qt::DescendingOrder);
+  QCOMPARE(cso.column(), 1);
+  QVERIFY(cso.sortOrder() == Qt::DescendingOrder);
+}
+
+void SortProxyModelTest::columnSortOrderListTest()
+{
+  QFAIL("Not complete");
+}
+
+void SortProxyModelTest::columnSortOrderListBenchmark()
+{
+  QFAIL("Not complete");
+}
 
 /*
  * Main

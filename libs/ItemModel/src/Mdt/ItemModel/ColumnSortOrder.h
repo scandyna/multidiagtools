@@ -18,29 +18,51 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_MODEL_EDITOR_SORT_PROXY_MODEL_TEST_H
-#define MDT_MODEL_EDITOR_SORT_PROXY_MODEL_TEST_H
+#ifndef MDT_ITEM_MODEL_COLUMN_SORT_ORDER_H
+#define MDT_ITEM_MODEL_COLUMN_SORT_ORDER_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include <Qt>
+#include <QtGlobal>
 
-class SortProxyModelTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace ItemModel{
 
- private slots:
+  /*! \brief Item of a ColumnSortOrderList
+   */
+  class ColumnSortOrder
+  {
+   public:
 
-  void initTestCase();
-  void cleanupTestCase();
+    /*! \brief Constructor
+     *
+     * \pre column must be >= 0
+     */
+    constexpr ColumnSortOrder(int column, Qt::SortOrder sortOrder) noexcept
+     : mColumn(column),
+       mSortOrder(sortOrder)
+    {
+      Q_ASSERT(mColumn >= 0);
+    }
 
-  void columnSortOrderTest();
-  void columnSortOrderListTest();
-  void columnSortOrderListBenchmark();
+    /*! \brief Get column
+     */
+    constexpr int column() const noexcept
+    {
+      return mColumn;
+    }
 
-//   void sortAlphaTest();
-//   void sortAlphaCiTest();
-//   void sortAlphNumNaturalTest();
-//   void sortAlphaMultiColumnTest();
-};
+    /*! \brief Get sort order
+     */
+    constexpr Qt::SortOrder sortOrder() const noexcept
+    {
+      return mSortOrder;
+    }
 
-#endif // #ifndef MDT_MODEL_EDITOR_SORT_PROXY_MODEL_TEST_H
+   private:
+
+    int mColumn;
+    Qt::SortOrder mSortOrder;
+  };
+
+}} // namespace Mdt{ namespace ItemModel{
+
+#endif // MDT_ITEM_MODEL_COLUMN_SORT_ORDER_H
