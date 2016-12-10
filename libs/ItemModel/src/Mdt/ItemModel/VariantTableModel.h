@@ -53,13 +53,13 @@ namespace Mdt{ namespace ItemModel{
      */
     VariantTableModel(VariantTableModelStorageRule storageRule = VariantTableModelStorageRule::GroupDisplayAndEditRoleData, QObject *parent = nullptr);
 
-    /*! \brief Get column count
-     */
-    int columnCount(const QModelIndex & parent = QModelIndex()) const override;
-
     /*! \brief Get row count
      */
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
+
+    /*! \brief Get column count
+     */
+    int columnCount(const QModelIndex & parent = QModelIndex()) const override;
 
     /*! \brief Get data at index
      *
@@ -108,6 +108,69 @@ namespace Mdt{ namespace ItemModel{
      */
     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole) override;
 
+    /*! \brief Resize model
+     *
+     * For new count of rows, respectively columns,
+     *  that is greater than current count, new null elements are added.
+     *  For count that is less than current one, elements are removed.
+     *
+     * This method will also reset the model.
+     *
+     * \pre rows must be >= 0
+     * \pre columns must be >= 0
+     */
+    void resize(int rows, int columns);
+
+    /*! \brief Populate a column with int values
+     *
+     * For each row, starting from 0,
+     *  value at column will be updated.
+     *
+     * For example, if we have a model with 3 rows and 2 columns:
+     * <table class="srcdoc_td_center">
+     *  <tr><th>Col 0</th><th>Col 1</th></tr>
+     *  <tr><td>A</td><td></td></tr>
+     *  <tr><td>B</td><td></td></tr>
+     *  <tr><td>C</td><td></td></tr>
+     * </table>
+     * populateColumnWithInt(1, 2, 4) will update second column:
+     * <table class="srcdoc_td_center">
+     *  <tr><th>Col 0</th><th>Col 1</th></tr>
+     *  <tr><td>A</td><td>2</td></tr>
+     *  <tr><td>B</td><td>6</td></tr>
+     *  <tr><td>C</td><td>10</td></tr>
+     * </table>
+     *
+     * \pre column must be in valid range ( 0 <= column < columnCount() )
+     */
+    void populateColumnWithInt(int column, int firstValue, int increment = 1);
+
+    /*! \brief Populate a column with ASCII values
+     *
+     * For each row, starting from 0,
+     *  value at column will be updated.
+     *
+     * For example, if we have a model with 3 rows and 2 columns:
+     * <table class="srcdoc_td_center">
+     *  <tr><th>Col 0</th><th>Col 1</th></tr>
+     *  <tr><td>A</td><td></td></tr>
+     *  <tr><td>B</td><td></td></tr>
+     *  <tr><td>C</td><td></td></tr>
+     * </table>
+     * populateColumnWithAscii(1, 'b', 3) will update second column:
+     * <table class="srcdoc_td_center">
+     *  <tr><th>Col 0</th><th>Col 1</th></tr>
+     *  <tr><td>A</td><td>'b'</td></tr>
+     *  <tr><td>B</td><td>'e'</td></tr>
+     *  <tr><td>C</td><td>'h'</td></tr>
+     * </table>
+     *
+     * \pre column must be in valid range ( 0 <= column < columnCount() )
+     *
+     * Note: no checks are done for firstValue and increment.
+     */
+    void populateColumnWithAscii(int column, char firstValue, int increment = 1);
+
     /*! \brief Populate model with data
      *
      * Form is:
@@ -126,6 +189,14 @@ namespace Mdt{ namespace ItemModel{
     void clear();
 
    private:
+
+    /*! \brief Resize rows
+     */
+    void resizeRowCount(int rows);
+
+    /*! \brief Resize columns
+     */
+    void resizeColumnCount(int columns);
 
     VariantTableModelRow generateRowData(int currentRow) const;
 

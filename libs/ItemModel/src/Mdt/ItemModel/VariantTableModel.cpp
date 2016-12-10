@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "VariantTableModel.h"
 #include <QChar>
+#include <algorithm>
 
 namespace Mdt{ namespace ItemModel{
 
@@ -30,18 +31,18 @@ VariantTableModel::VariantTableModel(VariantTableModelStorageRule storageRule, Q
 {
 }
 
-int VariantTableModel::columnCount(const QModelIndex& parent) const
-{
-  Q_UNUSED(parent);
-  return mColumnCount;
-}
-
 int VariantTableModel::rowCount(const QModelIndex& parent) const
 {
    if(parent.isValid()){
      return 0;
    }
    return mData.size();
+}
+
+int VariantTableModel::columnCount(const QModelIndex& parent) const
+{
+  Q_UNUSED(parent);
+  return mColumnCount;
 }
 
 QVariant VariantTableModel::data(const QModelIndex& index, int role) const
@@ -102,6 +103,41 @@ bool VariantTableModel::setData(const QModelIndex& index, const QVariant& value,
   return false;
 }
 
+void VariantTableModel::resize(int rows, int columns)
+{
+  Q_ASSERT(rows >= 0);
+  Q_ASSERT(columns >= 0);
+
+  resizeRowCount(rows);
+  resizeColumnCount(columns);
+}
+
+void VariantTableModel::populateColumnWithInt(int column, int firstValue, int increment)
+{
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < mColumnCount);
+
+  const int n = rowCount();
+  for(int row = 0; row < n; ++row){
+    auto idx = index(row, column);
+    setData(idx, firstValue);
+    firstValue += increment;
+  }
+}
+
+void VariantTableModel::populateColumnWithAscii(int column, char firstValue, int increment)
+{
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < mColumnCount);
+
+  const int n = rowCount();
+  for(int row = 0; row < n; ++row){
+    auto idx = index(row, column);
+    setData(idx, QChar(firstValue));
+    firstValue += increment;
+  }
+}
+
 void VariantTableModel::populate(int rows, int columns)
 {
   beginResetModel();
@@ -120,6 +156,19 @@ void VariantTableModel::clear()
   mData.clear();
   mColumnCount = 0;
   endResetModel();
+}
+
+void VariantTableModel::resizeRowCount(int rows)
+{
+  mData.resize( rows, VariantTableModelRow(mStorageRule, mColumnCount) );
+}
+
+void VariantTableModel::resizeColumnCount(int columns)
+{
+  for(auto & row : mData){
+    row.resize(columns, mStorageRule);
+  }
+  mColumnCount = columns;
 }
 
 VariantTableModelRow VariantTableModel::generateRowData(int currentRow) const

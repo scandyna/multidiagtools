@@ -1,6 +1,6 @@
 format 211
 "Expression" // Mdt::ItemModel::Expression
-  revision 19
+  revision 20
   modified_by 2 "philippe"
   // class settings
   
@@ -450,6 +450,18 @@ ${inlines}
 
       attribute 3163522 "CaseSensitivity"
 	private explicit_type "Qt::CaseSensitivity"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3177346 "Locale"
+	private type class_ref 418818 // QLocale
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""

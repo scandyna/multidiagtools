@@ -483,6 +483,115 @@ void VariantTableModelTest::tableModelViewTest()
 //   }
 }
 
+void VariantTableModelTest::tableModelResizeTest()
+{
+  VariantTableModel model;
+  QModelIndex index;
+
+  /*
+   * Resize with more
+   */
+  // Initial state
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 0);
+  // Resize and check that we have null variants
+  model.resize(1, 2);
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 2);
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  QVERIFY(model.data(index).isNull());
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  QVERIFY(model.data(index).isNull());
+  // Set some data
+  index = model.index(0, 0);
+  model.setData(index, 1);
+  index = model.index(0, 1);
+  model.setData(index, "A");
+  // Add a row
+  model.resize(2, 2);
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(model.columnCount(), 2);
+  // Check that existing data are still here
+  index = model.index(0, 0);
+  QCOMPARE(model.data(index), QVariant(1));
+  index = model.index(0, 1);
+  QCOMPARE(model.data(index), QVariant("A"));
+  // Check that new rows has null variants
+  index = model.index(1, 0);
+  QVERIFY(index.isValid());
+  QVERIFY(model.data(index).isNull());
+  index = model.index(1, 1);
+  QVERIFY(index.isValid());
+  QVERIFY(model.data(index).isNull());
+  /*
+   * Resize with less
+   */
+  model.resize(1, 1);
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 1);
+  // Check that existing data are still here
+  index = model.index(0, 0);
+  QCOMPARE(model.data(index), QVariant(1));
+}
+
+void VariantTableModelTest::tableModelPopulateColumnTest()
+{
+  VariantTableModel model;
+  QModelIndex index;
+
+  model.resize(3, 2);
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(model.columnCount(), 2);
+  /*
+   * Populate column 0 with ints
+   */
+  // Default increment (1)
+  model.populateColumnWithInt(0, 1);
+  // Check that model still the same dimentions
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(model.columnCount(), 2);
+  // Check data
+  index = model.index(0, 0);
+  QCOMPARE(model.data(index), QVariant(1));
+  index = model.index(1, 0);
+  QCOMPARE(model.data(index), QVariant(2));
+  index = model.index(2, 0);
+  QCOMPARE(model.data(index), QVariant(3));
+  // Other increment
+  model.populateColumnWithInt(0, 2, 4);
+  index = model.index(0, 0);
+  QCOMPARE(model.data(index), QVariant(2));
+  index = model.index(1, 0);
+  QCOMPARE(model.data(index), QVariant(6));
+  index = model.index(2, 0);
+  QCOMPARE(model.data(index), QVariant(10));
+  /*
+   * Populate column 1 with ASCII
+   */
+  // Default increment (1)
+  model.populateColumnWithAscii(1, 'A');
+  // Check that model still the same dimentions
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(model.columnCount(), 2);
+  // Check data
+  index = model.index(0, 1);
+  QCOMPARE(model.data(index), QVariant("A"));
+  index = model.index(1, 1);
+  QCOMPARE(model.data(index), QVariant("B"));
+  index = model.index(2, 1);
+  QCOMPARE(model.data(index), QVariant("C"));
+  // Other increment
+  model.populateColumnWithAscii(1, 'b', 3);
+  index = model.index(0, 1);
+  QCOMPARE(model.data(index), QVariant("b"));
+  index = model.index(1, 1);
+  QCOMPARE(model.data(index), QVariant("e"));
+  index = model.index(2, 1);
+  QCOMPARE(model.data(index), QVariant("h"));
+}
+
 /*
  * Main
  */

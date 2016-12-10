@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 96
+  revision 97
   modified_by 2 "philippe"
   // class settings
   
@@ -6554,7 +6554,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 3876610 // <directional composition>
-	  b parent class_ref 3483522 // FilterProxyModelExpressionContainer
+	  b parent class_ref 3483522 // ContainerInterface
       end
 
       operation 4900482 "toSql"

@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 175
+  revision 176
   modified_by 2 "philippe"
   // class settings
   
@@ -7998,6 +7998,27 @@ ${inlines}
     end
 
     class 3512834 "QRegularExpression"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    classdiagram 3122178 "QCollator"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3560578 "QCollator"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {

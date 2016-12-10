@@ -1,0 +1,24 @@
+format 211
+
+classcanvas 128002 class_ref 3560706 // SortProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 87 210 2000
+end
+classcanvas 128130 class_ref 719874 // QSortFilterProxyModel
+  classdiagramsettings member_max_width 0 end
+  xyz 42 41 2005
+end
+classcanvas 128386 class_ref 3560578 // QCollator
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 352.5 2000
+end
+classcanvas 128514 class_ref 418818 // QLocale
+  classdiagramsettings member_max_width 0 end
+  xyz 193.5 352.5 2000
+end
+relationcanvas 128258 relation_ref 3927170 // <generalisation>
+  from ref 128002 z 2006 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

@@ -120,6 +120,20 @@ namespace Mdt{ namespace ItemModel{
       mRowData[column].setData(value, role);
     }
 
+    /*! \brief Resize row to columns count of columns
+     *
+     * For new count columns that is greater than current count,
+     *  new null elements are added.
+     *  For count that is less than current one, elements are removed.
+     *
+     * \pre columns must be >= 0
+     */
+    void resize(int columns, VariantTableModelStorageRule storageRule)
+    {
+      Q_ASSERT(columns >= 0);
+      mRowData.resize(columns, storageRule);
+    }
+
    private:
 
     std::vector<VariantTableModelItem> mRowData;

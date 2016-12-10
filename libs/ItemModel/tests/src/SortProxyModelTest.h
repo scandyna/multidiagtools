@@ -18,33 +18,25 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_VARIANT_TABLE_MODEL_TEST_H
-#define MDT_ITEM_MODEL_VARIANT_TABLE_MODEL_TEST_H
+#ifndef MDT_MODEL_EDITOR_SORT_PROXY_MODEL_TEST_H
+#define MDT_MODEL_EDITOR_SORT_PROXY_MODEL_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
 
-class VariantTableModelTest : public QObject
+class SortProxyModelTest : public QObject
 {
-  Q_OBJECT
+ Q_OBJECT
 
  private slots:
 
   void initTestCase();
   void cleanupTestCase();
 
-  void commonDataItemTest();
-  void separateEditDataItemTest();
-  void itemFlagsTest();
-
-  void dataRowTest();
-
-  void tableModelTest();
-  void tableModelSeparateEditTest();
-  void tableModelFlagTest();
-  void tableModelViewTest();
-  void tableModelResizeTest();
-  void tableModelPopulateColumnTest();
+//   void sortAlphaTest();
+//   void sortAlphaCiTest();
+//   void sortAlphNumNaturalTest();
+//   void sortAlphaMultiColumnTest();
 };
 
-#endif // #ifndef MDT_ITEM_MODEL_VARIANT_TABLE_MODEL_TEST_H
+#endif // #ifndef MDT_MODEL_EDITOR_SORT_PROXY_MODEL_TEST_H

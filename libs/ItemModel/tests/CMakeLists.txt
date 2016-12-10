@@ -21,5 +21,6 @@ endfunction()
 #================= Tests ====================
 
 addItemModelTest("VariantTableModelTest")
-addItemModelTest("FilterProxyModelTest")
 addItemModelTest("FilterExpressionTest")
+addItemModelTest("FilterProxyModelTest")
+addItemModelTest("SortProxyModelTest")
