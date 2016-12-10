@@ -10,6 +10,7 @@ set(SOURCES_FILES
     src/Mdt/ItemModel/Expression/ComparisonEval.cpp
     src/Mdt/ItemModel/FilterExpression.cpp
     src/Mdt/ItemModel/FilterProxyModel.cpp
+    src/Mdt/ItemModel/ColumnSortStringAttributesList.cpp
     src/Mdt/ItemModel/SortProxyModel.cpp
 )
 

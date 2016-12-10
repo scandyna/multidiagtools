@@ -18,50 +18,60 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_COLUMN_SORT_ORDER_LIST_H
-#define MDT_ITEM_MODEL_COLUMN_SORT_ORDER_LIST_H
+#ifndef MDT_ITEM_MODEL_COLUMN_SORT_STRING_ATTRIBUTES_H
+#define MDT_ITEM_MODEL_COLUMN_SORT_STRING_ATTRIBUTES_H
 
-#include "ColumnSortOrder.h"
-#include <vector>
+#include <Qt>
+#include <QtGlobal>
 
 namespace Mdt{ namespace ItemModel{
 
-  /*! \brief List of column sort order used by SortProxyModel
+  /*! \brief Hold attributes to sort strings
    */
-  class ColumnSortOrderList
+  class ColumnSortStringAttributes
   {
    public:
 
-    /*! \brief Const iterator
+    /*! \brief Constructor
+     *
+     * \pre column must be >= 0
      */
-    typedef std::vector<ColumnSortOrder>::const_reverse_iterator const_reverse_iterator;
-
-    /*! \brief Add a column to sort order
-     */
-    void addColumn(int column, Qt::SortOrder sortOrder)
+    constexpr ColumnSortStringAttributes(int column, Qt::CaseSensitivity caseSensitivity, bool numericMode) noexcept
+     : mColumn(column),
+       mCaseSensitivity(caseSensitivity),
+       mNumericMode(numericMode)
     {
-      mList.emplace_back(column, sortOrder);
+      Q_ASSERT(mColumn >= 0);
     }
 
-    /*! \brief Get a reverse iterator to the beginning
+    /*! \brief Get column
      */
-    const_reverse_iterator crbegin() const
+    constexpr int column() const noexcept
     {
-      return mList.crbegin();
+      return mColumn;
     }
 
-    /*! \brief Get a reverse iterator to the end
+    /*! \brief Get case sensitivity
      */
-    const_reverse_iterator crend() const
+    constexpr Qt::CaseSensitivity caseSensitivity() const noexcept
     {
-      return mList.crend();
+      return mCaseSensitivity;
+    }
+
+    /*! \brief Check if numerci mode in enabled
+     */
+    constexpr bool numericMode() const noexcept
+    {
+      return mNumericMode;
     }
 
    private:
 
-    std::vector<ColumnSortOrder> mList;
+    int mColumn;
+    Qt::CaseSensitivity mCaseSensitivity;
+    bool mNumericMode;
   };
 
 }} // namespace Mdt{ namespace ItemModel{
 
-#endif // MDT_ITEM_MODEL_COLUMN_SORT_ORDER_LIST_H
+#endif // #ifndef MDT_ITEM_MODEL_COLUMN_SORT_STRING_ATTRIBUTES_H

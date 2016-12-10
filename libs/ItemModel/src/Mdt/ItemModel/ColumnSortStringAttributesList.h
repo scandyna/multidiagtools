@@ -18,50 +18,35 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_COLUMN_SORT_ORDER_LIST_H
-#define MDT_ITEM_MODEL_COLUMN_SORT_ORDER_LIST_H
+#ifndef MDT_ITEM_MODEL_COLUMN_SORT_STRING_ATTRIBUTES_LIST_H
+#define MDT_ITEM_MODEL_COLUMN_SORT_STRING_ATTRIBUTES_LIST_H
 
-#include "ColumnSortOrder.h"
+#include "ColumnSortStringAttributes.h"
 #include <vector>
 
 namespace Mdt{ namespace ItemModel{
 
-  /*! \brief List of column sort order used by SortProxyModel
+  /*! \brief List of ColumnSortStringAttributes used by SortProxyModel
    */
-  class ColumnSortOrderList
+  class ColumnSortStringAttributesList
   {
    public:
 
-    /*! \brief Const iterator
+    /*! \brief Add a column
      */
-    typedef std::vector<ColumnSortOrder>::const_reverse_iterator const_reverse_iterator;
+    void addColumn(int column, Qt::CaseSensitivity caseSensitivity, bool numericMode);
 
-    /*! \brief Add a column to sort order
+    /*! \brief Get attributes for column
+     *
+     * \pre column must exist in this list
      */
-    void addColumn(int column, Qt::SortOrder sortOrder)
-    {
-      mList.emplace_back(column, sortOrder);
-    }
-
-    /*! \brief Get a reverse iterator to the beginning
-     */
-    const_reverse_iterator crbegin() const
-    {
-      return mList.crbegin();
-    }
-
-    /*! \brief Get a reverse iterator to the end
-     */
-    const_reverse_iterator crend() const
-    {
-      return mList.crend();
-    }
+    const ColumnSortStringAttributes & attributesForColumn(int column) const;
 
    private:
 
-    std::vector<ColumnSortOrder> mList;
+    std::vector<ColumnSortStringAttributes> mList;
   };
 
 }} // namespace Mdt{ namespace ItemModel{
 
-#endif // MDT_ITEM_MODEL_COLUMN_SORT_ORDER_LIST_H
+#endif // #ifndef MDT_ITEM_MODEL_COLUMN_SORT_STRING_ATTRIBUTES_LIST_H

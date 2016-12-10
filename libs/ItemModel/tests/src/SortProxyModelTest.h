@@ -37,6 +37,10 @@ class SortProxyModelTest : public QObject
   void columnSortOrderListTest();
   void columnSortOrderListBenchmark();
 
+  void columnSortStringAttributesTest();
+  void columnSortStringAttributesListTest();
+  void columnSortStringAttributesBenchmark();
+
 //   void sortAlphaTest();
 //   void sortAlphaCiTest();
 //   void sortAlphNumNaturalTest();

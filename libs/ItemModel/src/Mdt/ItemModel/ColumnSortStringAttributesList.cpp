@@ -18,50 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_COLUMN_SORT_ORDER_LIST_H
-#define MDT_ITEM_MODEL_COLUMN_SORT_ORDER_LIST_H
-
-#include "ColumnSortOrder.h"
-#include <vector>
+#include "ColumnSortStringAttributesList.h"
+#include <QtGlobal>
+#include <algorithm>
 
 namespace Mdt{ namespace ItemModel{
 
-  /*! \brief List of column sort order used by SortProxyModel
-   */
-  class ColumnSortOrderList
-  {
-   public:
+void ColumnSortStringAttributesList::addColumn(int column, Qt::CaseSensitivity caseSensitivity, bool numericMode)
+{
+  mList.emplace_back(column, caseSensitivity, numericMode);
+}
 
-    /*! \brief Const iterator
-     */
-    typedef std::vector<ColumnSortOrder>::const_reverse_iterator const_reverse_iterator;
-
-    /*! \brief Add a column to sort order
-     */
-    void addColumn(int column, Qt::SortOrder sortOrder)
-    {
-      mList.emplace_back(column, sortOrder);
-    }
-
-    /*! \brief Get a reverse iterator to the beginning
-     */
-    const_reverse_iterator crbegin() const
-    {
-      return mList.crbegin();
-    }
-
-    /*! \brief Get a reverse iterator to the end
-     */
-    const_reverse_iterator crend() const
-    {
-      return mList.crend();
-    }
-
-   private:
-
-    std::vector<ColumnSortOrder> mList;
-  };
+const ColumnSortStringAttributes & ColumnSortStringAttributesList::attributesForColumn(int column) const
+{
+  const auto it = std::find_if(mList.cbegin(), mList.cend(), [column](const ColumnSortStringAttributes & csa){
+                                                                  return (csa.column() == column);
+                                                             });
+  Q_ASSERT(it != mList.cend());
+  return *it;
+}
 
 }} // namespace Mdt{ namespace ItemModel{
-
-#endif // MDT_ITEM_MODEL_COLUMN_SORT_ORDER_LIST_H

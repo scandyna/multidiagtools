@@ -4,15 +4,19 @@ diagrams
   classdiagram_ref 3108482 // FilterEval
     734 726 100 21 0 0
   active  classdiagram_ref 3122306 // SortProxyModel
-    918 908 100 4 0 0
+    918 908 90 21 0 197
 end
 show_stereotypes
-selected operation_ref 4989570 // resize
+selected operation_ref 4996354 // attributesAtColumn
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   class_ref 3540482 // VariantTableModel
+  class_ref 3567234 // ColumnSortStringAttributes
+  class_ref 3567362 // ColumnSortStringAttributesList
+  class_ref 3567490 // ColumnSortOrder
+  class_ref 3567618 // ColumnSortOrderList
   
   package_ref 582274 // SqlItemEditor
   
