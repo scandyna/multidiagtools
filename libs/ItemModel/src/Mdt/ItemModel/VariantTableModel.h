@@ -165,11 +165,41 @@ namespace Mdt{ namespace ItemModel{
      *  <tr><td>C</td><td>'h'</td></tr>
      * </table>
      *
-     * \pre column must be in valid range ( 0 <= column < columnCount() )
+     * \pre \a column must be in valid range ( 0 <= column < columnCount() )
      *
      * Note: no checks are done for firstValue and increment.
      */
     void populateColumnWithAscii(int column, char firstValue, int increment = 1);
+
+    /*! \brief Populate a column with data
+     *
+     * For example, if we have a model with 3 rows and 2 columns:
+     * \code
+     * model.populateColumn(0, {1,2,3});
+     * \endcode
+     * will update first column:
+     * <table class="srcdoc_td_center">
+     *  <tr><th>Col 0</th><th>Col 1</th></tr>
+     *  <tr><td>1</td><td></td></tr>
+     *  <tr><td>2</td><td></td></tr>
+     *  <tr><td>3</td><td></td></tr>
+     * </table>
+     * If we populate column 0 with less data than rowCount(), like this:
+     * \code
+     * model.populateColumn(0, {'A','B'});
+     * \endcode
+     * the last row will be keeped untouched:
+     * <table class="srcdoc_td_center">
+     *  <tr><th>Col 0</th><th>Col 1</th></tr>
+     *  <tr><td>A</td><td></td></tr>
+     *  <tr><td>B</td><td></td></tr>
+     *  <tr><td>3</td><td></td></tr>
+     * </table>
+     *
+     * \pre \a column must be in valid range ( 0 <= column < columnCount() )
+     * \pre \a data size must be <= rowCount()
+     */
+    void populateColumn(int column, const std::vector<QVariant> & data);
 
     /*! \brief Populate model with data
      *

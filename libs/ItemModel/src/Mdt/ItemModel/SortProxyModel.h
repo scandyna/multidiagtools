@@ -21,6 +21,7 @@
 #ifndef MDT_ITEM_MODEL_SORT_PROXY_MODEL_H
 #define MDT_ITEM_MODEL_SORT_PROXY_MODEL_H
 
+#include "ColumnSortOrderList.h"
 #include <QSortFilterProxyModel>
 
 namespace Mdt{ namespace ItemModel{
@@ -47,8 +48,14 @@ namespace Mdt{ namespace ItemModel{
    * proxyModel->addColumnToSortOrder(0, Qt::AscendingOrder);
    * proxyModel->addColumnToSortOrder(2, Qt::AscendingOrder);
    * proxyModel->addColumnToSortOrder(1, Qt::AscendingOrder);
-   * 
    * \endcode
+   *
+   * \todo Define:
+   *        - dynamicSortFilter
+   *        - isSortLocaleAware
+   *        - sortCaseSensitivity (which is single-column): ignore ???
+   *        - sortRole
+   *        - what impact have filter* functions ?
    */
   class SortProxyModel : public QSortFilterProxyModel
   {
@@ -72,12 +79,14 @@ namespace Mdt{ namespace ItemModel{
      *
      * For example, to sort columns in order 0, 2, 1
      *  all ascending, call:
-     *  - clearColumnsSortOrder();
-     *  - addColumnToSortOrder(0, Qt::AscendingOrder);
-     *  - addColumnToSortOrder(2, Qt::AscendingOrder);
-     *  - addColumnToSortOrder(1, Qt::AscendingOrder);
+     * \code
+     * proxyModel.clearColumnsSortOrder();  // If a sort order was previously set
+     * proxyModel.addColumnToSortOrder(0, Qt::AscendingOrder);
+     * proxyModel.addColumnToSortOrder(2, Qt::AscendingOrder);
+     * proxyModel.addColumnToSortOrder(1, Qt::AscendingOrder);
+     * \endcode
      *
-     * \pre column must be in valid range ( 0 <= column < columnCount() ).
+     * \pre \a column must be in valid range ( 0 <= column < columnCount() ).
      */
     void addColumnToSortOrder(int column, Qt::SortOrder order = Qt::AscendingOrder);
 
@@ -89,7 +98,7 @@ namespace Mdt{ namespace ItemModel{
      *  If numericMode is true, numbers in strings are sorted in a natural way.
      *  For example: 10A,2A will be sorted 2A,10A .
      *
-     * \pre column must be in valid range ( 0 <= column < columnCount() ).
+     * \pre \a column must be in valid range ( 0 <= column < columnCount() ).
      */
     void addColumnToSortOrder(int column, Qt::CaseSensitivity caseSensitivity, bool numericMode, Qt::SortOrder order = Qt::AscendingOrder);
 
@@ -99,9 +108,38 @@ namespace Mdt{ namespace ItemModel{
      */
     void clearColumnsSortOrder();
 
+    /*! \brief Set string sorting attributes for a given column
+     */
+    void setColumnStringSortAttribute(int column, Qt::CaseSensitivity caseSensitivity, bool numericMode);
+
+    /*! \brief Sort a specific column
+     *
+     * If attributes for string sorting where set with setColumnStringSortAttribute()
+     *  or addColumnToSortOrder(int, Qt::CaseSensitivity, bool, Qt::SortOrder) ,
+     *  they will be used (except sortOrder, which will follow the argument passed to this method).
+     *
+     * As for QSortFilterProxyModel, if \a column is -1, the sort order of the underlaying model is restored.
+     *
+     * \pre \a column must be -1 or a valid range ( -1 >= \a column < columnCount() ).
+     *
+     * \todo Document:
+     *        - how does this interact with dynamicSortFilter ?
+     */
+    void sort(int column, Qt::SortOrder sortOrder = Qt::AscendingOrder) override;
+
+    /*! \brief Sort by multiple columns
+     *
+     * Sorts the model by each column added with addColumnToSortOrder().
+     */
+    void sort();
+
    private:
 
-    
+    /*! \brief Overloaded form QSortFilterProxyModel to privide multi-column and natural sort
+     */
+    bool lessThan(const QModelIndex & source_left, const QModelIndex & source_right) const override;
+
+    ColumnSortOrderList mColumnSortOrderList;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

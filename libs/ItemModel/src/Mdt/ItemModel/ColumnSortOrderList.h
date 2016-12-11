@@ -57,6 +57,20 @@ namespace Mdt{ namespace ItemModel{
       return mList.crend();
     }
 
+    /*! \brief Check if list is empty
+     */
+    bool isEmpty() const
+    {
+      return mList.empty();
+    }
+
+    /*! \brief Clear list
+     */
+    void clear()
+    {
+      mList.clear();
+    }
+
    private:
 
     std::vector<ColumnSortOrder> mList;

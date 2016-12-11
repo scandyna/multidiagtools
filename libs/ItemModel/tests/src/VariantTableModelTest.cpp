@@ -21,6 +21,8 @@
 #include "VariantTableModelTest.h"
 #include "Mdt/Application.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
+#include <QSignalSpy>
+#include <QVariantList>
 #include <QTableView>
 #include <QTreeView>
 #include <QListView>
@@ -438,6 +440,77 @@ void VariantTableModelTest::tableModelFlagTest()
   QCOMPARE(model.flags(index), standardFlags);
 }
 
+void VariantTableModelTest::tableModelSignalTest()
+{
+  QModelIndex index;
+  QVariantList arguments;
+  /*
+   * Setup model and signa spies
+   */
+  VariantTableModel model;
+  QSignalSpy resetSpy(&model, &VariantTableModel::modelReset);
+  QSignalSpy dataChangedSpy(&model, &VariantTableModel::dataChanged);
+  QVERIFY(resetSpy.isValid());
+  QVERIFY(dataChangedSpy.isValid());
+  /*
+   * Resize
+   */
+  QCOMPARE(resetSpy.count(), 0);
+  QCOMPARE(dataChangedSpy.count(), 0);
+  model.resize(2, 1);
+  QCOMPARE(resetSpy.count(), 1);
+  QCOMPARE(dataChangedSpy.count(), 0);
+  /*
+   * Set data
+   */
+  resetSpy.clear();
+  dataChangedSpy.clear();
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setData(index, "A");
+  QCOMPARE(resetSpy.count(), 0);
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  index = arguments.at(0).toModelIndex();
+  QVERIFY(index.isValid());
+  QCOMPARE(index.row(), 0);
+  QCOMPARE(index.column(), 0);
+  QCOMPARE( arguments.at(1).toModelIndex(), index );
+  /*
+   * populateColumnWithInt
+   */
+  resetSpy.clear();
+  dataChangedSpy.clear();
+  model.populateColumnWithInt(0, 1);
+  QCOMPARE(resetSpy.count(), 0);
+  QCOMPARE(dataChangedSpy.count(), 2);
+  /*
+   * populateColumnWithAscii
+   */
+  resetSpy.clear();
+  dataChangedSpy.clear();
+  model.populateColumnWithAscii(0, 'A');
+  QCOMPARE(resetSpy.count(), 0);
+  QCOMPARE(dataChangedSpy.count(), 2);
+  /*
+   * populateColumn
+   */
+  resetSpy.clear();
+  dataChangedSpy.clear();
+  model.populateColumn(0, {10,55});
+  QCOMPARE(resetSpy.count(), 0);
+  QCOMPARE(dataChangedSpy.count(), 2);
+  /*
+   * populate
+   */
+  resetSpy.clear();
+  dataChangedSpy.clear();
+  model.populate(3, 1);
+  QCOMPARE(resetSpy.count(), 1);
+  QCOMPARE(dataChangedSpy.count(), 0);
+}
+
 void VariantTableModelTest::tableModelViewTest()
 {
   VariantTableModel model;
@@ -590,6 +663,32 @@ void VariantTableModelTest::tableModelPopulateColumnTest()
   QCOMPARE(model.data(index), QVariant("e"));
   index = model.index(2, 1);
   QCOMPARE(model.data(index), QVariant("h"));
+  /*
+   * Populate column 0 with data
+   */
+  model.populateColumn(0, {53,"BEF", "P"});
+  // Check that model still the same dimentions
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(model.columnCount(), 2);
+  // Check data
+  index = model.index(0, 0);
+  QCOMPARE(model.data(index), QVariant(53));
+  index = model.index(1, 0);
+  QCOMPARE(model.data(index), QVariant("BEF"));
+  index = model.index(2, 0);
+  QCOMPARE(model.data(index), QVariant("P"));
+  // Check partial population
+  model.populateColumn(0, {"A",7});
+  // Check that model still the same dimentions
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(model.columnCount(), 2);
+  // Check data
+  index = model.index(0, 0);
+  QCOMPARE(model.data(index), QVariant("A"));
+  index = model.index(1, 0);
+  QCOMPARE(model.data(index), QVariant(7));
+  index = model.index(2, 0);
+  QCOMPARE(model.data(index), QVariant("P"));
 }
 
 /*

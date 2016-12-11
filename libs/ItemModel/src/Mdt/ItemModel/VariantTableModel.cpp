@@ -108,8 +108,10 @@ void VariantTableModel::resize(int rows, int columns)
   Q_ASSERT(rows >= 0);
   Q_ASSERT(columns >= 0);
 
+  beginResetModel();
   resizeRowCount(rows);
   resizeColumnCount(columns);
+  endResetModel();
 }
 
 void VariantTableModel::populateColumnWithInt(int column, int firstValue, int increment)
@@ -135,6 +137,20 @@ void VariantTableModel::populateColumnWithAscii(int column, char firstValue, int
     auto idx = index(row, column);
     setData(idx, QChar(firstValue));
     firstValue += increment;
+  }
+}
+
+void VariantTableModel::populateColumn(int column, const std::vector<QVariant> & data)
+{
+  Q_ASSERT((int)data.size() <= rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < columnCount());
+
+  const int n = data.size();
+  for(int row = 0; row < n; ++row){
+    auto idx = index(row, column);
+    Q_ASSERT(idx.isValid());
+    setData(idx, data[row]);
   }
 }
 

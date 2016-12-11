@@ -23,6 +23,11 @@
 
 #include <QObject>
 #include <QtTest/QtTest>
+#include <QVariant>
+#include <Qt>
+#include <vector>
+
+class QAbstractItemModel;
 
 class SortProxyModelTest : public QObject
 {
@@ -41,10 +46,20 @@ class SortProxyModelTest : public QObject
   void columnSortStringAttributesListTest();
   void columnSortStringAttributesBenchmark();
 
+  void sortIntTest();
+  void sortIntBenchmark();
+  void dynamicSortEventSingleColumnTest();
+  void dynamicSortEventMultiColumnTest();
+  void viewsTest();
 //   void sortAlphaTest();
 //   void sortAlphaCiTest();
 //   void sortAlphNumNaturalTest();
 //   void sortAlphaMultiColumnTest();
+
+ private:
+
+  static QVariant getModelData(const QAbstractItemModel & model, int row, int column);
+  static bool isModelIntColumnSorted(const QAbstractItemModel & model, int column);
 };
 
 #endif // #ifndef MDT_MODEL_EDITOR_SORT_PROXY_MODEL_TEST_H
