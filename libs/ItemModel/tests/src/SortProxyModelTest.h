@@ -48,6 +48,7 @@ class SortProxyModelTest : public QObject
 
   void sortIntTest();
   void sortIntBenchmark();
+  void sortIntBenchmark_data();
   void dynamicSortEventSingleColumnTest();
   void dynamicSortEventMultiColumnTest();
   void viewsTest();

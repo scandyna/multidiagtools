@@ -259,6 +259,29 @@ void SortProxyModelTest::sortIntTest()
   QCOMPARE(getModelData(proxyModel, 4, 0), QVariant(2));
   QCOMPARE(getModelData(proxyModel, 4, 1), QVariant(3));
   /*
+   * 2 columns sort
+   * -> Check other than by column 0, 1
+   */
+  model.populateColumn(3, {2,2,2,1,1});
+  model.populateColumn(1, {3,2,1,2,1});
+  proxyModel.clearColumnsSortOrder();
+  proxyModel.addColumnToSortOrder(3, Qt::AscendingOrder);
+  proxyModel.addColumnToSortOrder(1, Qt::AscendingOrder);
+  proxyModel.sort(-1);  // Restore model sort
+  QVERIFY(!isModelIntColumnSorted(proxyModel, 3));
+  QVERIFY(!isModelIntColumnSorted(proxyModel, 1));
+  proxyModel.sort();
+  QCOMPARE(getModelData(proxyModel, 0, 3), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 3), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 2, 3), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 3, 3), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 4, 3), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 4, 1), QVariant(3));
+  /*
    * 3 columns sort
    */
   // Disable sorting before model resize
@@ -297,7 +320,38 @@ void SortProxyModelTest::sortIntTest()
 
 void SortProxyModelTest::sortIntBenchmark()
 {
-  QFAIL("Not complete");
+  QFETCH(int, n);
+  VariantTableModel model;
+  SortProxyModel proxyModel;
+  /*
+   * Setup models
+   */
+  proxyModel.setSourceModel(&model);
+  proxyModel.setDynamicSortFilter(false);
+  proxyModel.addColumnToSortOrder(1, Qt::DescendingOrder);
+  proxyModel.addColumnToSortOrder(0, Qt::DescendingOrder);
+  proxyModel.addColumnToSortOrder(3, Qt::DescendingOrder);
+  model.resize(n, 5);
+  model.populateColumnWithInt(0, 1);
+  model.populateColumnWithInt(1, 1, 3);
+  model.populateColumnWithInt(2, 10, 4);
+  model.populateColumnWithInt(3, 100, 7);
+  model.populateColumnWithInt(4, 15, 2);
+  QBENCHMARK{
+    proxyModel.sort();
+  }
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(n));
+  QCOMPARE(getModelData(proxyModel, n-1, 0), QVariant(1));
+}
+
+void SortProxyModelTest::sortIntBenchmark_data()
+{
+  QTest::addColumn<int>("n");
+
+  QTest::newRow("10") << 10;
+  QTest::newRow("100") << 100;
+  QTest::newRow("1'000") << 1000;
+  QTest::newRow("10'000") << 10000;
 }
 
 void SortProxyModelTest::dynamicSortEventSingleColumnTest()

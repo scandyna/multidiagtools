@@ -33,7 +33,7 @@ SortProxyModel::SortProxyModel(QObject* parent)
 
 void SortProxyModel::addColumnToSortOrder(int column, Qt::SortOrder sortOrder)
 {
-  qDebug() << "add(" << column << ")";
+//   qDebug() << "add(" << column << ")";
   mColumnSortOrderList.addColumn(column, sortOrder);
 }
 
@@ -52,13 +52,13 @@ void SortProxyModel::sort(int column, Qt::SortOrder order)
   Q_ASSERT(column >= -1);
   Q_ASSERT(column < columnCount());
 
-  qDebug() << "sort(" << column << ")";
+//   qDebug() << "sort(" << column << ")";
   QSortFilterProxyModel::sort(column, order);
 }
 
 void SortProxyModel::sort()
 {
-  qDebug() << "sort()";
+//   qDebug() << "sort()";
   std::for_each(mColumnSortOrderList.crbegin(), mColumnSortOrderList.crend(), [this](const ColumnSortOrder & cso){
                                                                   sort(cso.column(), cso.sortOrder());
                                                                 });
@@ -66,7 +66,7 @@ void SortProxyModel::sort()
 
 bool SortProxyModel::lessThan(const QModelIndex & source_left, const QModelIndex & source_right) const
 {
-  qDebug() << "lessThan, left: " << sourceModel()->data(source_left) << " , right: " << sourceModel()->data(source_right);
+//   qDebug() << "lessThan, left: " << sourceModel()->data(source_left) << " , right: " << sourceModel()->data(source_right);
   return QSortFilterProxyModel::lessThan(source_left, source_right);
 }
 
