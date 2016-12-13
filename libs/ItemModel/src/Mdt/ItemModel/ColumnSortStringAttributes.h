@@ -32,7 +32,16 @@ namespace Mdt{ namespace ItemModel{
   {
    public:
 
-    /*! \brief Constructor
+    /*! \brief Construct null attributes
+     */
+    constexpr ColumnSortStringAttributes() noexcept
+     : mColumn(-1),
+       mCaseSensitivity(Qt::CaseInsensitive),
+       mNumericMode(false)
+    {
+    }
+
+    /*! \brief Constructor valid attributes
      *
      * \pre column must be >= 0
      */
@@ -63,6 +72,13 @@ namespace Mdt{ namespace ItemModel{
     constexpr bool numericMode() const noexcept
     {
       return mNumericMode;
+    }
+
+    /*! \brief Check if attributes is null
+     */
+    constexpr bool isNull() const noexcept
+    {
+      return mColumn < 0;
     }
 
    private:

@@ -26,16 +26,42 @@ namespace Mdt{ namespace ItemModel{
 
 void ColumnSortStringAttributesList::addColumn(int column, Qt::CaseSensitivity caseSensitivity, bool numericMode)
 {
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(attributesForColumn(column).isNull());
+
   mList.emplace_back(column, caseSensitivity, numericMode);
 }
 
-const ColumnSortStringAttributes & ColumnSortStringAttributesList::attributesForColumn(int column) const
+void ColumnSortStringAttributesList::setColumn(int column, Qt::CaseSensitivity caseSensitivity, bool numericMode)
 {
+  Q_ASSERT(column >= 0);
+
+  auto it = std::find_if(mList.begin(), mList.end(), [column](const ColumnSortStringAttributes & csa){
+                                                                  return (csa.column() == column);
+                                                             });
+  if(it == mList.cend()){
+    addColumn(column, caseSensitivity, numericMode);
+  }else{
+    *it = ColumnSortStringAttributes(column, caseSensitivity, numericMode);
+  }
+}
+
+ColumnSortStringAttributes ColumnSortStringAttributesList::attributesForColumn(int column) const
+{
+  Q_ASSERT(column >= 0);
+
   const auto it = std::find_if(mList.cbegin(), mList.cend(), [column](const ColumnSortStringAttributes & csa){
                                                                   return (csa.column() == column);
                                                              });
-  Q_ASSERT(it != mList.cend());
+  if(it == mList.cend()){
+    return ColumnSortStringAttributes();
+  }
   return *it;
+}
+
+void ColumnSortStringAttributesList::clear()
+{
+  mList.clear();
 }
 
 }} // namespace Mdt{ namespace ItemModel{

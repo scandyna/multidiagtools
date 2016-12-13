@@ -1,6 +1,6 @@
 format 211
 "ItemModel" // Mdt::ItemModel
-  revision 11
+  revision 12
   modified_by 2 "philippe"
   // class settings
   
@@ -1066,6 +1066,14 @@ ${inlines}
 	    classrelation_ref 3959810 // <directional composition>
 	  b parent class_ref 3567618 // ColumnSortOrderList
       end
+
+      classrelation 3966338 // <dependency>
+	relation 3940610 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3966338 // <dependency>
+	  b parent class_ref 3574146 // StringNumericMode
+      end
     end
 
     class 3567234 "ColumnSortStringAttributes"
@@ -1117,7 +1125,6 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
-
     end
 
     class 3567362 "ColumnSortStringAttributesList"
@@ -1177,7 +1184,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     class 3567490 "ColumnSortOrder"
@@ -1287,6 +1293,51 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    class 3574146 "StringNumericMode"
+      visibility package stereotype "enum"
+      cpp_decl "${comment}enum ${name} {
+${items}
+};
+"
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}enum ${name}${implements} {
+${items};
+${members}}
+"
+      php_decl "${comment}${visibility}final class ${name} {
+${items}}
+"
+      python_2_2 python_decl "class ${name}:
+${docstring}${members}
+"
+      idl_decl "${comment}enum ${name} {
+${items}};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3191170 "Alphabetical"
+	public type class_ref 3574146 // StringNumericMode
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3191298 "Natural"
+	public type class_ref 3574146 // StringNumericMode
+	cpp_decl "  ${name}${value},${comment}"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
     end
   end

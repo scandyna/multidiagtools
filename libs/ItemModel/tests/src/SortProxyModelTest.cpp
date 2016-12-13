@@ -24,6 +24,7 @@
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include "Mdt/ItemModel/ColumnSortOrderList.h"
 #include "Mdt/ItemModel/ColumnSortStringAttributesList.h"
+#include <QStringList>
 #include <QModelIndex>
 #include <QTableView>
 #include <QTreeView>
@@ -39,6 +40,7 @@
 namespace ItemModel = Mdt::ItemModel;
 using ItemModel::VariantTableModel;
 using ItemModel::SortProxyModel;
+using ItemModel::StringNumericMode;
 
 void SortProxyModelTest::initTestCase()
 {
@@ -112,10 +114,16 @@ void SortProxyModelTest::columnSortStringAttributesTest()
 {
   using ItemModel::ColumnSortStringAttributes;
 
+  // Valid attributes
   ColumnSortStringAttributes csa(1, Qt::CaseSensitive, true);
+  QVERIFY(!csa.isNull());
   QCOMPARE(csa.column(), 1);
   QVERIFY(csa.caseSensitivity() == Qt::CaseSensitive);
   QVERIFY(csa.numericMode());
+  // Null attributes
+  ColumnSortStringAttributes nullCsa;
+  QVERIFY(nullCsa.isNull());
+  QVERIFY(!nullCsa.numericMode());
 }
 
 void SortProxyModelTest::columnSortStringAttributesListTest()
@@ -125,24 +133,68 @@ void SortProxyModelTest::columnSortStringAttributesListTest()
 
   ColumnSortStringAttributesList list;
 
+  /*
+   * Check adding
+   */
   list.addColumn(2, Qt::CaseSensitive, true);
   list.addColumn(1, Qt::CaseInsensitive, false);
   list.addColumn(3, Qt::CaseSensitive, false);
+  list.addColumn(0, Qt::CaseInsensitive, true);
   // Check attributes for column 1
-  auto csa = list.attributesForColumn(1);
+  auto csa = list.attributesForColumn(0);
+  QVERIFY(!csa.isNull());
+  QCOMPARE(csa.column(), 0);
+  QVERIFY(csa.caseSensitivity() == Qt::CaseInsensitive);
+  QVERIFY(csa.numericMode());
+  // Check attributes for column 1
+  csa = list.attributesForColumn(1);
+  QVERIFY(!csa.isNull());
   QCOMPARE(csa.column(), 1);
   QVERIFY(csa.caseSensitivity() == Qt::CaseInsensitive);
   QVERIFY(!csa.numericMode());
   // Check attributes for column 2
   csa = list.attributesForColumn(2);
+  QVERIFY(!csa.isNull());
   QCOMPARE(csa.column(), 2);
   QVERIFY(csa.caseSensitivity() == Qt::CaseSensitive);
   QVERIFY(csa.numericMode());
   // Check attributes for column 3
   csa = list.attributesForColumn(3);
+  QVERIFY(!csa.isNull());
   QCOMPARE(csa.column(), 3);
   QVERIFY(csa.caseSensitivity() == Qt::CaseSensitive);
   QVERIFY(!csa.numericMode());
+  /*
+   * Check attributes for non existing column
+   */
+  csa = list.attributesForColumn(5);
+  QVERIFY(csa.isNull());
+  /*
+   * Check setting
+   */
+  // Set attributes for existing column
+  list.setColumn(1, Qt::CaseSensitive, true);
+  csa = list.attributesForColumn(1);
+  QVERIFY(!csa.isNull());
+  QCOMPARE(csa.column(), 1);
+  QVERIFY(csa.caseSensitivity() == Qt::CaseSensitive);
+  QVERIFY(csa.numericMode());
+  // Set attributes for non existing column
+  list.setColumn(6, Qt::CaseSensitive, true);
+  csa = list.attributesForColumn(6);
+  QVERIFY(!csa.isNull());
+  QCOMPARE(csa.column(), 6);
+  QVERIFY(csa.caseSensitivity() == Qt::CaseSensitive);
+  QVERIFY(csa.numericMode());
+  /*
+   * Clear
+   */
+  list.clear();
+  QVERIFY(list.attributesForColumn(0).isNull());
+  QVERIFY(list.attributesForColumn(1).isNull());
+  QVERIFY(list.attributesForColumn(2).isNull());
+  QVERIFY(list.attributesForColumn(3).isNull());
+  QVERIFY(list.attributesForColumn(6).isNull());
 }
 
 void SortProxyModelTest::columnSortStringAttributesBenchmark()
@@ -192,7 +244,7 @@ void SortProxyModelTest::sortIntTest()
    */
   // Sort ascending
   model.populateColumn(0, {9,1,3,6,4});
-  QVERIFY(!isModelIntColumnSorted(proxyModel, 0));
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
   proxyModel.sort(0, Qt::AscendingOrder);
   QCOMPARE(proxyModel.sortColumn(), 0);
   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(1));
@@ -211,24 +263,24 @@ void SortProxyModelTest::sortIntTest()
    * No column to sort
    */
   proxyModel.sort(-1);  // Restore model sort
-  QVERIFY(!isModelIntColumnSorted(proxyModel, 0));
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
   proxyModel.sort();
-  QVERIFY(!isModelIntColumnSorted(proxyModel, 0));
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
   /*
    * 1 column sort
    */
   // Sort ascending
   proxyModel.sort(-1);  // Restore model sort
-  QVERIFY(!isModelIntColumnSorted(proxyModel, 0));
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
   proxyModel.addColumnToSortOrder(0, Qt::AscendingOrder);
   proxyModel.sort();
-  QVERIFY(isModelIntColumnSorted(proxyModel, 0));
+  QVERIFY(isModelColumnSortedNumeric(proxyModel, 0));
   // Clear
   proxyModel.sort(-1);  // Restore model sort
-  QVERIFY(!isModelIntColumnSorted(proxyModel, 0));
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
   proxyModel.clearColumnsSortOrder();
   proxyModel.sort();
-  QVERIFY(!isModelIntColumnSorted(proxyModel, 0));
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
   // Sort desending
   proxyModel.addColumnToSortOrder(0, Qt::DescendingOrder);
   proxyModel.sort();
@@ -245,8 +297,8 @@ void SortProxyModelTest::sortIntTest()
   proxyModel.clearColumnsSortOrder();
   proxyModel.addColumnToSortOrder(0, Qt::AscendingOrder);
   proxyModel.addColumnToSortOrder(1, Qt::AscendingOrder);
-  QVERIFY(!isModelIntColumnSorted(proxyModel, 0));
-  QVERIFY(!isModelIntColumnSorted(proxyModel, 1));
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 1));
   proxyModel.sort();
   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(1));
   QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
@@ -268,8 +320,8 @@ void SortProxyModelTest::sortIntTest()
   proxyModel.addColumnToSortOrder(3, Qt::AscendingOrder);
   proxyModel.addColumnToSortOrder(1, Qt::AscendingOrder);
   proxyModel.sort(-1);  // Restore model sort
-  QVERIFY(!isModelIntColumnSorted(proxyModel, 3));
-  QVERIFY(!isModelIntColumnSorted(proxyModel, 1));
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 3));
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 1));
   proxyModel.sort();
   QCOMPARE(getModelData(proxyModel, 0, 3), QVariant(1));
   QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
@@ -294,9 +346,9 @@ void SortProxyModelTest::sortIntTest()
   proxyModel.addColumnToSortOrder(0, Qt::AscendingOrder);
   proxyModel.addColumnToSortOrder(1, Qt::AscendingOrder);
   proxyModel.addColumnToSortOrder(2, Qt::AscendingOrder);
-  QVERIFY(!isModelIntColumnSorted(proxyModel, 0));
-  QVERIFY(!isModelIntColumnSorted(proxyModel, 1));
-  QVERIFY(!isModelIntColumnSorted(proxyModel, 2));
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 1));
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 2));
   proxyModel.sort();
   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(100));
   QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(10));
@@ -354,6 +406,193 @@ void SortProxyModelTest::sortIntBenchmark_data()
   QTest::newRow("10'000") << 10000;
 }
 
+void SortProxyModelTest::sortRoleTest()
+{
+
+  /// \note process with ints..
+
+  /*
+   * Sort by DisplayRole
+   */
+  
+  /*
+   * Sort by EditRole
+   */
+  
+  QFAIL("Not complete");
+}
+
+void SortProxyModelTest::sortStringCsTest()
+{
+  VariantTableModel model;
+  SortProxyModel proxyModel;
+  /*
+   * Setup models
+   * Note: we must be shure that sorting is not done locale aware,
+   *       else caseSensitivity is allways CaseInsensitive on some platforms.
+   */
+  proxyModel.setSourceModel(&model);
+  proxyModel.setDynamicSortFilter(false);
+  proxyModel.setSortLocaleAware(false);
+  model.resize(6, 1);
+  model.populateColumn(0, {"c","b","a","C","B","A"});
+  QVERIFY(!proxyModel.isSortLocaleAware());
+  /*
+   * Sort using QSortFilterProxyModel::sortCaseSensitivity()
+   */
+  // Case sensitive
+  proxyModel.setSortCaseSensitivity(Qt::CaseSensitive);
+  QVERIFY(!isModelColumnSortedAscii(proxyModel, 0, Qt::CaseSensitive));
+  proxyModel.sort(0, Qt::AscendingOrder);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A"));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("B"));
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant("C"));
+  QCOMPARE(getModelData(proxyModel, 3, 0), QVariant("a"));
+  QCOMPARE(getModelData(proxyModel, 4, 0), QVariant("b"));
+  QCOMPARE(getModelData(proxyModel, 5, 0), QVariant("c"));
+  QVERIFY(isModelColumnSortedAscii(proxyModel, 0, Qt::CaseSensitive));
+  // Case insensitive
+  proxyModel.sort(-1);
+  proxyModel.setSortCaseSensitivity(Qt::CaseInsensitive);
+  QVERIFY(!isModelColumnSortedAscii(proxyModel, 0, Qt::CaseInsensitive));
+  proxyModel.sort(0, Qt::AscendingOrder);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("a"));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("A"));
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant("b"));
+  QCOMPARE(getModelData(proxyModel, 3, 0), QVariant("B"));
+  QCOMPARE(getModelData(proxyModel, 4, 0), QVariant("c"));
+  QCOMPARE(getModelData(proxyModel, 5, 0), QVariant("C"));
+  QVERIFY(isModelColumnSortedAscii(proxyModel, 0, Qt::CaseInsensitive));
+  /*
+   * Sort using case sensitivity set by addColumnToSortOrder()
+   */
+  // Case sensitive
+  proxyModel.setSortCaseSensitivity(Qt::CaseInsensitive); // Setup global case sensitiviy opposite to check
+  proxyModel.addColumnToSortOrder(0, StringNumericMode::Alphabetical, Qt::AscendingOrder, Qt::CaseSensitive);
+  proxyModel.sort(-1);
+  QVERIFY(!isModelColumnSortedAscii(proxyModel, 0, Qt::CaseSensitive));
+  proxyModel.sort();
+  QVERIFY(isModelColumnSortedAscii(proxyModel, 0, Qt::CaseSensitive));
+  // Case insensitive
+  proxyModel.setSortCaseSensitivity(Qt::CaseSensitive); // Setup global case sensitiviy opposite to check
+  proxyModel.clearColumnsSortOrder();
+  proxyModel.addColumnToSortOrder(0, StringNumericMode::Alphabetical, Qt::AscendingOrder, Qt::CaseInsensitive);
+  proxyModel.sort(-1);
+  QVERIFY(!isModelColumnSortedAscii(proxyModel, 0, Qt::CaseInsensitive));
+  proxyModel.sort();
+  QVERIFY(isModelColumnSortedAscii(proxyModel, 0, Qt::CaseInsensitive));
+  proxyModel.clearColumnsSortOrder();
+  /*
+   * Sort using case sensitivity set by setColumnStringSortAttribute()
+   */
+  // Case sensitive
+  proxyModel.setSortCaseSensitivity(Qt::CaseInsensitive); // Setup global case sensitiviy opposite to check
+  proxyModel.setColumnStringSortAttributes(0, StringNumericMode::Alphabetical, Qt::CaseSensitive);
+  proxyModel.sort(-1);
+  QVERIFY(!isModelColumnSortedAscii(proxyModel, 0, Qt::CaseSensitive));
+  proxyModel.sort(0, Qt::AscendingOrder);
+  QVERIFY(isModelColumnSortedAscii(proxyModel, 0, Qt::CaseSensitive));
+  // Case insensitive
+  proxyModel.setSortCaseSensitivity(Qt::CaseSensitive); // Setup global case sensitiviy opposite to check
+  proxyModel.setColumnStringSortAttributes(0, StringNumericMode::Alphabetical, Qt::CaseInsensitive);
+  proxyModel.sort(-1);
+  QVERIFY(!isModelColumnSortedAscii(proxyModel, 0, Qt::CaseInsensitive));
+  proxyModel.sort(0, Qt::AscendingOrder);
+  QVERIFY(isModelColumnSortedAscii(proxyModel, 0, Qt::CaseInsensitive));
+  /*
+   * Check clearColumnsStringSortAttributes()
+   */
+  proxyModel.clearColumnsStringSortAttributes();
+  // Case sensitive
+  proxyModel.setSortCaseSensitivity(Qt::CaseSensitive);
+  proxyModel.sort(-1);
+  QVERIFY(!isModelColumnSortedAscii(proxyModel, 0, Qt::CaseSensitive));
+  proxyModel.sort(0, Qt::AscendingOrder);
+  QVERIFY(isModelColumnSortedAscii(proxyModel, 0, Qt::CaseSensitive));
+  // Case insensitive
+  proxyModel.setSortCaseSensitivity(Qt::CaseInsensitive);
+  proxyModel.sort(-1);
+  QVERIFY(!isModelColumnSortedAscii(proxyModel, 0, Qt::CaseInsensitive));
+  proxyModel.sort(0, Qt::AscendingOrder);
+  QVERIFY(isModelColumnSortedAscii(proxyModel, 0, Qt::CaseInsensitive));
+}
+
+/// \todo Possibly this test is to compilaced and oberkill...
+void SortProxyModelTest::sortStringLocaleTest()
+{
+  /*
+   * Sort localAware
+   */
+  
+  /*
+   * Sort non locale localAware
+   */
+  
+  
+  QFAIL("Not complete");
+}
+
+void SortProxyModelTest::sortStringNumericModeTest()
+{
+  QFAIL("Not complete");
+}
+
+void SortProxyModelTest::sortStringAlphaTest()
+{
+  VariantTableModel model;
+  SortProxyModel proxyModel;
+  /*
+   * Setup models
+   */
+  proxyModel.setSourceModel(&model);
+  proxyModel.setDynamicSortFilter(false);
+  model.resize(5, 5);
+
+  
+  
+  /*
+   * Single column sort with no attributes set
+   */
+  // Case sensitive
+  
+  // Case insensitive
+  
+  
+  /*
+   * Check isSortLocaleAware (from QSortFilterProxyModel)
+   */
+  
+  /*
+   * Single column sort with some attributes set
+   */
+
+  QFAIL("Not complete");
+}
+
+void SortProxyModelTest::sortStringMultiColumnTest()
+{
+  /*
+   * Multi-column sort with no attributes set
+   */
+
+  QFAIL("Not complete");
+}
+
+void SortProxyModelTest::sortStringBenchmark()
+{
+  QFAIL("Not complete");
+}
+
+void SortProxyModelTest::sortStringBenchmark_data()
+{
+  QTest::addColumn<int>("n");
+
+  QTest::newRow("10") << 10;
+  QTest::newRow("100") << 100;
+  QTest::newRow("1'000") << 1000;
+  QTest::newRow("10'000") << 10000;
+}
+
 void SortProxyModelTest::dynamicSortEventSingleColumnTest()
 {
   VariantTableModel model;
@@ -367,14 +606,14 @@ void SortProxyModelTest::dynamicSortEventSingleColumnTest()
   model.resize(5, 5);
   qDebug() << "TEST: set data 0, {9,1,3,6,4}";
   model.populateColumn(0, {9,1,3,6,4});
-  QVERIFY(!isModelIntColumnSorted(proxyModel, 0));
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
   /*
    * When enabling dynamicSortFilter property, sort must be processed
    * -> Note: without having to call sort()
    */
   qDebug() << "TEST: setDynamicSortFilter(true)";
   proxyModel.setDynamicSortFilter(true);
-  QVERIFY(isModelIntColumnSorted(proxyModel, 0));
+  QVERIFY(isModelColumnSortedNumeric(proxyModel, 0));
   /*
    * Check catching at modelReset()
    */
@@ -410,7 +649,7 @@ QVariant SortProxyModelTest::getModelData(const QAbstractItemModel & model, int 
   return model.data(index);
 }
 
-bool SortProxyModelTest::isModelIntColumnSorted(const QAbstractItemModel& model, int column)
+bool SortProxyModelTest::isModelColumnSortedNumeric(const QAbstractItemModel& model, int column)
 {
   Q_ASSERT(column >= 0);
   Q_ASSERT(column < model.columnCount());
@@ -421,6 +660,37 @@ bool SortProxyModelTest::isModelIntColumnSorted(const QAbstractItemModel& model,
     data.push_back( getModelData(model, row, column) );
   }
   return std::is_sorted(data.cbegin(), data.cend());
+}
+
+bool SortProxyModelTest::isModelColumnSortedAscii(const QAbstractItemModel& model, int column, Qt::CaseSensitivity caseSensitiviy)
+{
+  QStringList list;
+  const int n = model.rowCount();
+  for(int row = 0; row < n; ++row){
+    list << getModelData(model, row, column).toString();
+  }
+
+  return std::is_sorted(list.cbegin(), list.cend(), [caseSensitiviy](const QString & a, const QString & b){ return QString::compare(a, b, caseSensitiviy) < 0; });
+}
+
+void SortProxyModelTest::displayModels(QAbstractItemModel* sourceModel, QSortFilterProxyModel* proxyModel)
+{
+  Q_ASSERT(sourceModel != nullptr);
+  Q_ASSERT(proxyModel != nullptr);
+
+  QTableView sourceView;
+  QTableView proxyView;
+
+  sourceView.setModel(sourceModel);
+  sourceView.setWindowTitle("Source");
+  proxyView.setModel(proxyModel);
+  proxyView.setWindowTitle("Proxy");
+  proxyView.setSortingEnabled(true);
+  sourceView.show();
+  proxyView.show();
+  while(sourceView.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 /*

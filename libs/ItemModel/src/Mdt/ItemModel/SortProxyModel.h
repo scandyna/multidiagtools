@@ -22,6 +22,8 @@
 #define MDT_ITEM_MODEL_SORT_PROXY_MODEL_H
 
 #include "ColumnSortOrderList.h"
+#include "StringNumericMode.h"
+#include "ColumnSortStringAttributesList.h"
 #include <QSortFilterProxyModel>
 
 namespace Mdt{ namespace ItemModel{
@@ -41,19 +43,23 @@ namespace Mdt{ namespace ItemModel{
    * auto *model = new ClientTableModel(view);
    * auto *proxyModel = new SortProxyModel(view);
    *
+   * proxyModel->setSortLocaleAware(true);
    * proxyModel->setSourceModel(model);
    * view->setModel(proxyModel);
    *
    * // Setup model to sort by columns 0, 2, 1 ascending:
    * proxyModel->addColumnToSortOrder(0, Qt::AscendingOrder);
-   * proxyModel->addColumnToSortOrder(2, Qt::AscendingOrder);
+   * proxyModel->addColumnToSortOrder(2, StringNumericMode::Natural, Qt::AscendingOrder);
    * proxyModel->addColumnToSortOrder(1, Qt::AscendingOrder);
+   *
+   * proxyModel->sort();
    * \endcode
+   *
+   * \sa FilterProxyModel
    *
    * \todo Define:
    *        - dynamicSortFilter
    *        - isSortLocaleAware
-   *        - sortCaseSensitivity (which is single-column): ignore ???
    *        - sortRole
    *        - what impact have filter* functions ?
    */
@@ -88,35 +94,55 @@ namespace Mdt{ namespace ItemModel{
      *
      * \pre \a column must be in valid range ( 0 <= column < columnCount() ).
      */
-    void addColumnToSortOrder(int column, Qt::SortOrder order = Qt::AscendingOrder);
+    void addColumnToSortOrder(int column, Qt::SortOrder sortOrder = Qt::AscendingOrder);
 
     /*! \brief Add a column to columns sort order
      *
-     * \overload
-     *
      * This version gives more control of string sorting.
-     *  If numericMode is true, numbers in strings are sorted in a natural way.
-     *  For example: 10A,2A will be sorted 2A,10A .
      *
-     * \pre \a column must be in valid range ( 0 <= column < columnCount() ).
+     * \pre \a column must be in valid range ( 0 <= column < columnCount() )
+     * \sa addColumnToSortOrder(int, Qt::SortOrder)
+     * \sa setColumnStringSortAttributes()
      */
-    void addColumnToSortOrder(int column, Qt::CaseSensitivity caseSensitivity, bool numericMode, Qt::SortOrder order = Qt::AscendingOrder);
+    void addColumnToSortOrder(int column, StringNumericMode numericMode, Qt::SortOrder sortOrder = Qt::AscendingOrder, Qt::CaseSensitivity caseSensitivity = Qt::CaseInsensitive);
 
     /*! \brief Clear columns sort order
      *
      * \sa addColumnToSortOrder()
+     * \sa clearColumnsStringSortAttributes()
      */
     void clearColumnsSortOrder();
 
     /*! \brief Set string sorting attributes for a given column
+     *
+     *  If numericMode is Natural, numbers in strings are sorted in a natural way.
+     *  For example: 10A,2A will be sorted 2A,10A .
+     *
+     * \note If QSortFilterProxyModel::isSortLocaleAware() is true,
+     *       sorting is allways case insensitive on some platforms (for example on POSIX).
+     *       Also, if \a numericMode is Natural, sorting is allways done local aware.
+     *
+     * \pre \a column must be in valid range ( 0 <= column < columnCount() ).
+     * \sa clearColumnsStringSortAttributes()
      */
-    void setColumnStringSortAttribute(int column, Qt::CaseSensitivity caseSensitivity, bool numericMode);
+    void setColumnStringSortAttributes(int column, StringNumericMode numericMode, Qt::CaseSensitivity caseSensitivity = Qt::CaseInsensitive);
+
+    /*! \brief Clear string sort attributes
+     *
+     * \sa setColumnStringSortAttributes()
+     */
+    void clearColumnsStringSortAttributes();
 
     /*! \brief Sort a specific column
      *
-     * If attributes for string sorting where set with setColumnStringSortAttribute()
-     *  or addColumnToSortOrder(int, Qt::CaseSensitivity, bool, Qt::SortOrder) ,
-     *  they will be used (except sortOrder, which will follow the argument passed to this method).
+     * Different attributes for string sorting can be set for any column.
+     *  They can be set using setColumnStringSortAttributes() ,
+     *  or directly while adding a column using addColumnToSortOrder(int, StringNumericMode, Qt::SortOrder, Qt::CaseSensitivity) .
+     *
+     * If case sensitivity was set for \a column , it will be used,
+     *  else, QSortFilterProxyModel::sortCaseSensitivity() is considered.
+     *
+     * \a sortOrder is allways used, regardless of any attributes set for \a column .
      *
      * As for QSortFilterProxyModel, if \a column is -1, the sort order of the underlaying model is restored.
      *
@@ -130,6 +156,10 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Sort by multiple columns
      *
      * Sorts the model by each column added with addColumnToSortOrder().
+     *
+     * For each column, that is in sort order, and that have a case sensitivity defined by a string sort sttributes,
+     *  this one will be used.
+     *  For other columns, that are in sort order, QSortFilterProxyModel::sortCaseSensitivity() is considered.
      */
     void sort();
 
@@ -139,7 +169,12 @@ namespace Mdt{ namespace ItemModel{
      */
     bool lessThan(const QModelIndex & source_left, const QModelIndex & source_right) const override;
 
+    /*! \brief Helper to sort strings
+     */
+    bool lessThatString(const QString & left, const QString & right, int column) const;
+
     ColumnSortOrderList mColumnSortOrderList;
+    ColumnSortStringAttributesList mColumnSortStringAttributesList;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

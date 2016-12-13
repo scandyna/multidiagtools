@@ -33,14 +33,32 @@ namespace Mdt{ namespace ItemModel{
    public:
 
     /*! \brief Add a column
+     *
+     * \pre No attribute must allready been set for \a column
+     * \pre column must be >= 0
      */
     void addColumn(int column, Qt::CaseSensitivity caseSensitivity, bool numericMode);
 
+    /*! \brief Add or update a column
+     *
+     * If \a column not allready exists, it will be added, else it will be updated
+     *
+     * \pre column must be >= 0
+     */
+    void setColumn(int column, Qt::CaseSensitivity caseSensitivity, bool numericMode);
+
     /*! \brief Get attributes for column
      *
-     * \pre column must exist in this list
+     * If column not exists in this list,
+     *  null attributes is returned.
+     *
+     * \pre column must be >= 0
      */
-    const ColumnSortStringAttributes & attributesForColumn(int column) const;
+    ColumnSortStringAttributes attributesForColumn(int column) const;
+
+    /*! \brief Clear
+     */
+    void clear();
 
    private:
 

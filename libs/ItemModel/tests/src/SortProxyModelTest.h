@@ -28,6 +28,7 @@
 #include <vector>
 
 class QAbstractItemModel;
+class QSortFilterProxyModel;
 
 class SortProxyModelTest : public QObject
 {
@@ -49,18 +50,29 @@ class SortProxyModelTest : public QObject
   void sortIntTest();
   void sortIntBenchmark();
   void sortIntBenchmark_data();
+
+  void sortRoleTest();
+
+  void sortStringCsTest();
+  void sortStringLocaleTest();
+  void sortStringNumericModeTest();
+
+  void sortStringAlphaTest();
+//   void sortAlphaCiTest();
+//   void sortAlphNumNaturalTest();
+  void sortStringMultiColumnTest();
+  void sortStringBenchmark();
+  void sortStringBenchmark_data();
   void dynamicSortEventSingleColumnTest();
   void dynamicSortEventMultiColumnTest();
   void viewsTest();
-//   void sortAlphaTest();
-//   void sortAlphaCiTest();
-//   void sortAlphNumNaturalTest();
-//   void sortAlphaMultiColumnTest();
 
  private:
 
   static QVariant getModelData(const QAbstractItemModel & model, int row, int column);
-  static bool isModelIntColumnSorted(const QAbstractItemModel & model, int column);
+  static bool isModelColumnSortedNumeric(const QAbstractItemModel & model, int column);
+  static bool isModelColumnSortedAscii(const QAbstractItemModel & model, int column, Qt::CaseSensitivity caseSensitiviy);
+  static void displayModels(QAbstractItemModel *sourceModel, QSortFilterProxyModel *proxyModel);
 };
 
 #endif // #ifndef MDT_MODEL_EDITOR_SORT_PROXY_MODEL_TEST_H
