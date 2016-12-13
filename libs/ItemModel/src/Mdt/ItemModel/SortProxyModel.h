@@ -164,6 +164,22 @@ namespace Mdt{ namespace ItemModel{
      */
     void sort();
 
+    /*! \brief Re-implemented from QSortFilterProxyModel
+     */
+    void setDynamicSortFilter(bool enable);
+
+    /*! \brief Re-implemented from QSortFilterProxyModel
+     */
+    void setSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity);
+
+    /*! \brief Re-implemented from QSortFilterProxyModel
+     */
+    void setSortLocaleAware(bool on);
+
+    /*! \brief Re-implemented from QSortFilterProxyModel
+     */
+    void setSortRole(int role);
+
    private:
 
     /*! \brief Overloaded form QSortFilterProxyModel to privide multi-column and natural sort

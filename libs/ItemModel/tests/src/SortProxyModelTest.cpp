@@ -672,11 +672,92 @@ void SortProxyModelTest::sortStringLocalAwareBenchmark_data()
   QTest::newRow("10'000") << 10000;
 }
 
+void SortProxyModelTest::sortSetterEventTest()
+{
+  VariantTableModel model;
+  SortProxyModel proxyModel;
+  /*
+   * Setup models
+   */
+  proxyModel.setSourceModel(&model);
+  proxyModel.setDynamicSortFilter(false);
+  model.resize(4, 2);
+  /*
+   * When a setter is updated, QSortFilterProxyModel calls his private sort() implementation.
+   * This version will sort column == QSortFilterProxyModel::sortColumn(),
+   * which holds the column passed to QSortFilterProxyModel::sort(int, Qt::SortOrder).
+   *
+   * To make shure that our setters works, we test with 2 columns.
+   *
+   * Note:
+   *  - addColumnToSortOrder() does not automatically sort
+   */
+  proxyModel.addColumnToSortOrder(0, Qt::AscendingOrder);
+  proxyModel.addColumnToSortOrder(1, Qt::AscendingOrder);
+  model.populateColumn(0, {4,3,2,1});
+  model.populateColumn(1, {2,1,2,1});
+  /*
+   * Check setDynamicSortFilter()
+   */
+  proxyModel.setDynamicSortFilter(true);
+  QVERIFY(proxyModel.dynamicSortFilter());
+  proxyModel.sort(-1);
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
+  proxyModel.setDynamicSortFilter(false);
+  QVERIFY(!proxyModel.dynamicSortFilter());
+  QVERIFY(isModelColumnSortedNumeric(proxyModel, 0));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(2));
+  /*
+   * Check setSortCaseSensitivity()
+   */
+  proxyModel.setSortCaseSensitivity(Qt::CaseInsensitive);
+  QVERIFY(proxyModel.sortCaseSensitivity() == Qt::CaseInsensitive);
+  proxyModel.sort(-1);
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
+  proxyModel.setSortCaseSensitivity(Qt::CaseSensitive);
+  QVERIFY(proxyModel.sortCaseSensitivity() == Qt::CaseSensitive);
+  QVERIFY(isModelColumnSortedNumeric(proxyModel, 0));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(2));
+  /*
+   * Check setSortLocaleAware()
+   */
+  proxyModel.setSortLocaleAware(true);
+  QVERIFY(proxyModel.isSortLocaleAware());
+  proxyModel.sort(-1);
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
+  proxyModel.setSortLocaleAware(false);
+  QVERIFY(!proxyModel.isSortLocaleAware());
+  QVERIFY(isModelColumnSortedNumeric(proxyModel, 0));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(2));
+  /*
+   * Check setSortRole()
+   */
+  proxyModel.setSortRole(Qt::EditRole);
+  QVERIFY(proxyModel.sortRole() == Qt::EditRole);
+  proxyModel.sort(-1);
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
+  proxyModel.setSortRole(Qt::DisplayRole);
+  QVERIFY(proxyModel.sortRole() == Qt::DisplayRole);
+  QVERIFY(isModelColumnSortedNumeric(proxyModel, 0));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(2));
+}
+
 void SortProxyModelTest::dynamicSortEventSingleColumnTest()
 {
   VariantTableModel model;
   SortProxyModel proxyModel;
-
   /*
    * Setup models
    */

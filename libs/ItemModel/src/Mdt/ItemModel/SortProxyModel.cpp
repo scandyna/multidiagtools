@@ -66,16 +66,51 @@ void SortProxyModel::sort(int column, Qt::SortOrder order)
   Q_ASSERT(column >= -1);
   Q_ASSERT(column < columnCount());
 
-//   qDebug() << "sort(" << column << "," << order <<")";
+//   qDebug() << "sort(" << column << ")";
   QSortFilterProxyModel::sort(column, order);
 }
 
 void SortProxyModel::sort()
 {
-//   qDebug() << "sort()";
   std::for_each(mColumnSortOrderList.crbegin(), mColumnSortOrderList.crend(), [this](const ColumnSortOrder & cso){
                                                                   sort(cso.column(), cso.sortOrder());
                                                                 });
+}
+
+void SortProxyModel::setDynamicSortFilter(bool enable)
+{
+  const bool resort = enable != dynamicSortFilter();
+  QSortFilterProxyModel::setDynamicSortFilter(enable);
+  if(resort){
+    sort();
+  }
+}
+
+void SortProxyModel::setSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity)
+{
+  const bool resort = caseSensitivity != sortCaseSensitivity();
+  QSortFilterProxyModel::setSortCaseSensitivity(caseSensitivity);
+  if(resort){
+    sort();
+  }
+}
+
+void SortProxyModel::setSortLocaleAware(bool on)
+{
+  const bool resort = on != isSortLocaleAware();
+  QSortFilterProxyModel::setSortLocaleAware(on);
+  if(resort){
+    sort();
+  }
+}
+
+void SortProxyModel::setSortRole(int role)
+{
+  const bool resort = role != sortRole();
+  QSortFilterProxyModel::setSortRole(role);
+  if(resort){
+    sort();
+  }
 }
 
 bool SortProxyModel::lessThan(const QModelIndex & source_left, const QModelIndex & source_right) const
@@ -87,13 +122,11 @@ bool SortProxyModel::lessThan(const QModelIndex & source_left, const QModelIndex
   }
   const auto leftData = sourceModel()->data(source_left, sortRole());
   const auto rightData = sourceModel()->data(source_right, sortRole());
-//   qDebug() << "lessThan, left: " << leftData << " , right: " << rightData;
   /*
    * Handle string comparisons
    */
   if( (leftData.type() == QVariant::String) && (rightData.type() == QVariant::String) ){
     Q_ASSERT( source_left.column() == source_right.column() );
-//     qDebug() << "RESULT: " << lessThatString(leftData.toString(), rightData.toString(), source_left.column());
     return lessThatString(leftData.toString(), rightData.toString(), source_left.column());
   }
   return QSortFilterProxyModel::lessThan(source_left, source_right);
@@ -110,10 +143,7 @@ bool SortProxyModel::lessThatString(const QString & left, const QString & right,
     caseSensitivity = attributes.caseSensitivity();
   }
   // If sorting is not locale aware, use default implementation
-//   qDebug() << "isSortLocaleAware(): " << isSortLocaleAware();
-//   qDebug() << "numericMode: " << attributes.numericMode();
   if( !isSortLocaleAware() && !attributes.numericMode() ){
-//     qDebug() << "Sorting RAW..";
     return (QString::compare(left, right, caseSensitivity) < 0);
   }
   // Compare locale aware
