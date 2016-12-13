@@ -534,7 +534,55 @@ void SortProxyModelTest::sortStringLocaleTest()
 
 void SortProxyModelTest::sortStringNumericModeTest()
 {
-  QFAIL("Not complete");
+  VariantTableModel model;
+  SortProxyModel proxyModel;
+  /*
+   * Setup models
+   */
+  proxyModel.setSourceModel(&model);
+  proxyModel.setDynamicSortFilter(false);
+  proxyModel.setSortLocaleAware(false);
+  model.resize(3, 1);
+  model.populateColumn(0, {"a10","a2","a1"});
+  /*
+   * Alphabetical mumeric order
+   * - Default
+   */
+  proxyModel.sort(-1);
+  proxyModel.sort(0, Qt::AscendingOrder);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("a1"));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("a10"));
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant("a2"));
+  /*
+   * Natural numeric mode
+   * - Setup with addColumnToSortOrder()
+   */
+  proxyModel.addColumnToSortOrder(0, StringNumericMode::Natural);
+  proxyModel.sort(-1);
+  proxyModel.sort(0, Qt::AscendingOrder);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("a1"));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("a2"));
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant("a10"));
+  /*
+   * Back to Alphabetical numeric order
+   *  - clearColumnsStringSortAttributes()
+   */
+  proxyModel.clearColumnsStringSortAttributes();
+  proxyModel.sort(-1);
+  proxyModel.sort(0, Qt::AscendingOrder);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("a1"));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("a10"));
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant("a2"));
+  /*
+   * Natural numeric mode
+   * - Setup with setColumnStringSortAttributes()
+   */
+  proxyModel.setColumnStringSortAttributes(0, StringNumericMode::Natural);
+  proxyModel.sort(-1);
+  proxyModel.sort(0, Qt::AscendingOrder);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("a1"));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("a2"));
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant("a10"));
 }
 
 void SortProxyModelTest::sortStringAlphaTest()
@@ -578,12 +626,61 @@ void SortProxyModelTest::sortStringMultiColumnTest()
   QFAIL("Not complete");
 }
 
-void SortProxyModelTest::sortStringBenchmark()
+void SortProxyModelTest::sortStringNonLocalAwareBenchmark()
 {
-  QFAIL("Not complete");
+  QFETCH(int, n);
+  VariantTableModel model;
+  SortProxyModel proxyModel;
+  /*
+   * Setup models
+   */
+  proxyModel.setSourceModel(&model);
+  proxyModel.setDynamicSortFilter(false);
+  proxyModel.setSortLocaleAware(false);
+  proxyModel.addColumnToSortOrder(1, Qt::AscendingOrder);
+  proxyModel.addColumnToSortOrder(0, Qt::AscendingOrder);
+  proxyModel.addColumnToSortOrder(3, Qt::AscendingOrder);
+  model.populate(n, 5);
+  QBENCHMARK{
+    proxyModel.sort();
+  }
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("0A"));
+  QCOMPARE(getModelData(proxyModel, n-1, 0), QVariant("9A"));
 }
 
-void SortProxyModelTest::sortStringBenchmark_data()
+void SortProxyModelTest::sortStringNonLocalAwareBenchmark_data()
+{
+  QTest::addColumn<int>("n");
+
+  QTest::newRow("10") << 10;
+  QTest::newRow("100") << 100;
+  QTest::newRow("1'000") << 1000;
+  QTest::newRow("10'000") << 10000;
+}
+
+void SortProxyModelTest::sortStringLocalAwareBenchmark()
+{
+  QFETCH(int, n);
+  VariantTableModel model;
+  SortProxyModel proxyModel;
+  /*
+   * Setup models
+   */
+  proxyModel.setSourceModel(&model);
+  proxyModel.setDynamicSortFilter(false);
+  proxyModel.setSortLocaleAware(true);
+  proxyModel.addColumnToSortOrder(1, StringNumericMode::Natural, Qt::AscendingOrder);
+  proxyModel.addColumnToSortOrder(0, StringNumericMode::Natural, Qt::AscendingOrder);
+  proxyModel.addColumnToSortOrder(3, StringNumericMode::Natural, Qt::AscendingOrder);
+  model.populate(n, 5);
+  QBENCHMARK{
+    proxyModel.sort();
+  }
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("0A"));
+  QCOMPARE(getModelData(proxyModel, n-1, 0), QVariant(QString::number(n-1) + "A"));
+}
+
+void SortProxyModelTest::sortStringLocalAwareBenchmark_data()
 {
   QTest::addColumn<int>("n");
 

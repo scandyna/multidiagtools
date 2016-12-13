@@ -25,6 +25,7 @@
 #include "StringNumericMode.h"
 #include "ColumnSortStringAttributesList.h"
 #include <QSortFilterProxyModel>
+#include <QCollator>
 
 namespace Mdt{ namespace ItemModel{
 
@@ -175,6 +176,7 @@ namespace Mdt{ namespace ItemModel{
 
     ColumnSortOrderList mColumnSortOrderList;
     ColumnSortStringAttributesList mColumnSortStringAttributesList;
+    mutable QCollator mCollator;
   };
 
 }} // namespace Mdt{ namespace ItemModel{
