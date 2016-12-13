@@ -611,7 +611,7 @@ void VariantTableModelTest::tableModelResizeTest()
 
 void VariantTableModelTest::tableModelPopulateColumnTest()
 {
-  VariantTableModel model;
+  VariantTableModel model(VariantTableModelStorageRule::SeparateDisplayAndEditRoleData);
   QModelIndex index;
 
   model.resize(3, 2);
@@ -689,6 +689,25 @@ void VariantTableModelTest::tableModelPopulateColumnTest()
   QCOMPARE(model.data(index), QVariant(7));
   index = model.index(2, 0);
   QCOMPARE(model.data(index), QVariant("P"));
+  /*
+   * Populate column 0 with data
+   *  -> EditRole
+   */
+  model.populateColumn(0, {"A","B","C"}, Qt::DisplayRole);
+  model.populateColumn(0, {1,2,3}, Qt::EditRole);
+  // Check that model still the same dimentions
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(model.columnCount(), 2);
+  // Check data
+  index = model.index(0, 0);
+  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(model.data(index, Qt::EditRole), QVariant(1));
+  index = model.index(1, 0);
+  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("B"));
+  QCOMPARE(model.data(index, Qt::EditRole), QVariant(2));
+  index = model.index(2, 0);
+  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("C"));
+  QCOMPARE(model.data(index, Qt::EditRole), QVariant(3));
 }
 
 /*

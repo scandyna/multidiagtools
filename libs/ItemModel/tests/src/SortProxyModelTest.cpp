@@ -39,6 +39,7 @@
 
 namespace ItemModel = Mdt::ItemModel;
 using ItemModel::VariantTableModel;
+using ItemModel::VariantTableModelStorageRule;
 using ItemModel::SortProxyModel;
 using ItemModel::StringNumericMode;
 
@@ -408,18 +409,33 @@ void SortProxyModelTest::sortIntBenchmark_data()
 
 void SortProxyModelTest::sortRoleTest()
 {
-
-  /// \note process with ints..
+  VariantTableModel model(VariantTableModelStorageRule::SeparateDisplayAndEditRoleData);
+  SortProxyModel proxyModel;
+  /*
+   * Setup models
+   */
+  proxyModel.setSourceModel(&model);
+  proxyModel.setDynamicSortFilter(false);
+  model.resize(5, 5);
+  model.populateColumn(0, {"A","B","C"}, Qt::DisplayRole);
+  model.populateColumn(0, {3,2,1}, Qt::EditRole);
 
   /*
    * Sort by DisplayRole
    */
-  
+  proxyModel.setSortRole(Qt::DisplayRole);
+  proxyModel.sort(0, Qt::AscendingOrder);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A"));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("B"));
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant("C"));
   /*
    * Sort by EditRole
    */
-  
-  QFAIL("Not complete");
+  proxyModel.setSortRole(Qt::EditRole);
+  proxyModel.sort(0, Qt::AscendingOrder);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("C"));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("B"));
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant("A"));
 }
 
 void SortProxyModelTest::sortStringCsTest()
@@ -568,6 +584,28 @@ void SortProxyModelTest::sortStringNumericModeTest()
   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("a1"));
   QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("a2"));
   QCOMPARE(getModelData(proxyModel, 2, 0), QVariant("a10"));
+}
+
+void SortProxyModelTest::sortStringIntMixedTest()
+{
+  VariantTableModel model;
+  SortProxyModel proxyModel;
+  /*
+   * Setup models
+   */
+  proxyModel.setSourceModel(&model);
+  proxyModel.setDynamicSortFilter(false);
+  proxyModel.setSortLocaleAware(false);
+  model.resize(4, 1);
+  model.populateColumn(0, {4,"3",2,"1"});
+  /*
+   * Check
+   */
+  proxyModel.sort(0, Qt::AscendingOrder);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("1"));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant("3"));
+  QCOMPARE(getModelData(proxyModel, 3, 0), QVariant(4));
 }
 
 void SortProxyModelTest::sortStringNonLocalAwareBenchmark()

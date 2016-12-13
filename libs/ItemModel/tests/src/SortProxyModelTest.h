@@ -55,6 +55,8 @@ class SortProxyModelTest : public QObject
 
   void sortStringCsTest();
   void sortStringNumericModeTest();
+  void sortStringIntMixedTest();
+
   void sortStringNonLocalAwareBenchmark();
   void sortStringNonLocalAwareBenchmark_data();
   void sortStringLocalAwareBenchmark();

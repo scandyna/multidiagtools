@@ -85,8 +85,8 @@ bool SortProxyModel::lessThan(const QModelIndex & source_left, const QModelIndex
   if( (!source_left.isValid()) || (!source_right.isValid()) ){
     return QSortFilterProxyModel::lessThan(source_left, source_right);
   }
-  const auto leftData = sourceModel()->data(source_left);
-  const auto rightData = sourceModel()->data(source_right);
+  const auto leftData = sourceModel()->data(source_left, sortRole());
+  const auto rightData = sourceModel()->data(source_right, sortRole());
 //   qDebug() << "lessThan, left: " << leftData << " , right: " << rightData;
   /*
    * Handle string comparisons
