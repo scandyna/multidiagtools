@@ -517,21 +517,6 @@ void SortProxyModelTest::sortStringCsTest()
   QVERIFY(isModelColumnSortedAscii(proxyModel, 0, Qt::CaseInsensitive));
 }
 
-/// \todo Possibly this test is to compilaced and oberkill...
-void SortProxyModelTest::sortStringLocaleTest()
-{
-  /*
-   * Sort localAware
-   */
-  
-  /*
-   * Sort non locale localAware
-   */
-  
-  
-  QFAIL("Not complete");
-}
-
 void SortProxyModelTest::sortStringNumericModeTest()
 {
   VariantTableModel model;
@@ -583,47 +568,6 @@ void SortProxyModelTest::sortStringNumericModeTest()
   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("a1"));
   QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("a2"));
   QCOMPARE(getModelData(proxyModel, 2, 0), QVariant("a10"));
-}
-
-void SortProxyModelTest::sortStringAlphaTest()
-{
-  VariantTableModel model;
-  SortProxyModel proxyModel;
-  /*
-   * Setup models
-   */
-  proxyModel.setSourceModel(&model);
-  proxyModel.setDynamicSortFilter(false);
-  model.resize(5, 5);
-
-  
-  
-  /*
-   * Single column sort with no attributes set
-   */
-  // Case sensitive
-  
-  // Case insensitive
-  
-  
-  /*
-   * Check isSortLocaleAware (from QSortFilterProxyModel)
-   */
-  
-  /*
-   * Single column sort with some attributes set
-   */
-
-  QFAIL("Not complete");
-}
-
-void SortProxyModelTest::sortStringMultiColumnTest()
-{
-  /*
-   * Multi-column sort with no attributes set
-   */
-
-  QFAIL("Not complete");
 }
 
 void SortProxyModelTest::sortStringNonLocalAwareBenchmark()
@@ -726,11 +670,6 @@ void SortProxyModelTest::dynamicSortEventSingleColumnTest()
 }
 
 void SortProxyModelTest::dynamicSortEventMultiColumnTest()
-{
-  QFAIL("Not complete");
-}
-
-void SortProxyModelTest::viewsTest()
 {
   QFAIL("Not complete");
 }

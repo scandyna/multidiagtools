@@ -54,22 +54,14 @@ class SortProxyModelTest : public QObject
   void sortRoleTest();
 
   void sortStringCsTest();
-  void sortStringLocaleTest();
   void sortStringNumericModeTest();
-
-  void sortStringAlphaTest();
-//   void sortAlphaCiTest();
-//   void sortAlphNumNaturalTest();
-  void sortStringMultiColumnTest();
   void sortStringNonLocalAwareBenchmark();
   void sortStringNonLocalAwareBenchmark_data();
   void sortStringLocalAwareBenchmark();
   void sortStringLocalAwareBenchmark_data();
 
-
   void dynamicSortEventSingleColumnTest();
   void dynamicSortEventMultiColumnTest();
-  void viewsTest();
 
  private:
 
