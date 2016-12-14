@@ -134,6 +134,36 @@ namespace Mdt{ namespace ItemModel{
       mRowData.resize(columns, storageRule);
     }
 
+    /*! \brief Insert \a count columns before \a column
+     *
+     * If column is 0, new columns are prepended.
+     * If column is columnCount(), columns are appended.
+     *
+     * \pre \a column must be in correct range ( 0 <= column <= columnCount() )
+     * \pre \a count must be >= 1
+     */
+    void insertColumns(int column, int count, VariantTableModelStorageRule storageRule)
+    {
+      Q_ASSERT(column >= 0);
+      Q_ASSERT(column <= columnCount());
+      Q_ASSERT(count >= 1);
+      mRowData.insert( mRowData.cbegin() + column, count, storageRule );
+    }
+
+    /*! \brief Remove \a count columns starting with \a column
+     *
+     * \pre \a column must be >= 0
+     * \pre \a count must be >= 1
+     * \pre \a column + \a count must be in correct range ( 0 <= column <= columnCount() )
+     */
+    void removeColumns(int column, int count)
+    {
+      Q_ASSERT(column >= 0);
+      Q_ASSERT(count >= 1);
+      Q_ASSERT( (column + count ) <= columnCount() );
+      mRowData.erase(mRowData.cbegin()+column, mRowData.cbegin()+column+count);
+    }
+
    private:
 
     std::vector<VariantTableModelItem> mRowData;

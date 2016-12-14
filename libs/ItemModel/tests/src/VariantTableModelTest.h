@@ -38,6 +38,8 @@ class VariantTableModelTest : public QObject
   void itemFlagsTest();
 
   void dataRowTest();
+  void dataRowInsertColumnsTest();
+  void dataRowRemoveColumnsTest();
 
   void tableModelTest();
   void tableModelSeparateEditTest();
@@ -46,6 +48,9 @@ class VariantTableModelTest : public QObject
   void tableModelViewTest();
   void tableModelResizeTest();
   void tableModelPopulateColumnTest();
+  void tableModelInsertColumnsTest();
+  void tableModelRemoveColumnsTest();
+  void tableModelChangeColumnsCountSignalTest();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_VARIANT_TABLE_MODEL_TEST_H

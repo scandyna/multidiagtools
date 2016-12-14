@@ -221,6 +221,206 @@ void VariantTableModelTest::dataRowTest()
   QCOMPARE(row.data(2, Qt::EditRole) , QVariant("EA2"));
 }
 
+void VariantTableModelTest::dataRowInsertColumnsTest()
+{
+  VariantTableModelStorageRule storageRule = VariantTableModelStorageRule::GroupDisplayAndEditRoleData;
+  VariantTableModelRow row(storageRule, 1);
+  QCOMPARE(row.columnCount(), 1);
+  /*
+   * Initial state
+   * |A|
+   */
+  QCOMPARE(row.columnCount(), 1);
+  row.setData(0, "A", Qt::DisplayRole);
+  QCOMPARE(row.data(0, Qt::DisplayRole), QVariant("A"));
+  /*
+   * Append 1 column
+   * |A|B|
+   */
+  row.insertColumns(1, 1, storageRule);
+  QCOMPARE(row.columnCount(), 2);
+  row.setData(1, "B", Qt::DisplayRole);
+  QCOMPARE(row.data(0, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(row.data(1, Qt::DisplayRole), QVariant("B"));
+  /*
+   * Append 2 columns
+   * |A|B|C|D|
+   */
+  row.insertColumns(2, 2, storageRule);
+  QCOMPARE(row.columnCount(), 4);
+  row.setData(2, "C", Qt::DisplayRole);
+  row.setData(3, "D", Qt::DisplayRole);
+  QCOMPARE(row.data(0, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(row.data(1, Qt::DisplayRole), QVariant("B"));
+  QCOMPARE(row.data(2, Qt::DisplayRole), QVariant("C"));
+  QCOMPARE(row.data(3, Qt::DisplayRole), QVariant("D"));
+  /*
+   * Prepend 1 column
+   * |9|A|B|C|D|
+   */
+  row.insertColumns(0, 1, storageRule);
+  QCOMPARE(row.columnCount(), 5);
+  row.setData(0, 9, Qt::DisplayRole);
+  QCOMPARE(row.data(0, Qt::DisplayRole), QVariant(9));
+  QCOMPARE(row.data(1, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(row.data(2, Qt::DisplayRole), QVariant("B"));
+  QCOMPARE(row.data(3, Qt::DisplayRole), QVariant("C"));
+  QCOMPARE(row.data(4, Qt::DisplayRole), QVariant("D"));
+  /*
+   * Prepend 2 columns
+   * |7|8|9|A|B|C|D|
+   */
+  row.insertColumns(0, 2, storageRule);
+  QCOMPARE(row.columnCount(), 7);
+  row.setData(0, 7, Qt::DisplayRole);
+  row.setData(1, 8, Qt::DisplayRole);
+  QCOMPARE(row.data(0, Qt::DisplayRole), QVariant(7));
+  QCOMPARE(row.data(1, Qt::DisplayRole), QVariant(8));
+  QCOMPARE(row.data(2, Qt::DisplayRole), QVariant(9));
+  QCOMPARE(row.data(3, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(row.data(4, Qt::DisplayRole), QVariant("B"));
+  QCOMPARE(row.data(5, Qt::DisplayRole), QVariant("C"));
+  QCOMPARE(row.data(6, Qt::DisplayRole), QVariant("D"));
+  /*
+   * Insert 1 column before column 1
+   * Before:
+   * |7|8|9|A|B|C|D|
+   *   ^
+   * After:
+   * |7|N|8|9|A|B|C|D|
+   */
+  row.insertColumns(1, 1, storageRule);
+  QCOMPARE(row.columnCount(), 8);
+  row.setData(1, "N", Qt::DisplayRole);
+  QCOMPARE(row.data(0, Qt::DisplayRole), QVariant(7));
+  QCOMPARE(row.data(1, Qt::DisplayRole), QVariant("N"));
+  QCOMPARE(row.data(2, Qt::DisplayRole), QVariant(8));
+  QCOMPARE(row.data(3, Qt::DisplayRole), QVariant(9));
+  QCOMPARE(row.data(4, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(row.data(5, Qt::DisplayRole), QVariant("B"));
+  QCOMPARE(row.data(6, Qt::DisplayRole), QVariant("C"));
+  QCOMPARE(row.data(7, Qt::DisplayRole), QVariant("D"));
+  /*
+   * Insert 2 columns before column 1
+   * Before:
+   * |7|N|8|9|A|B|C|D|
+   *   ^
+   * After:
+   * |7|L|M|N|8|9|A|B|C|D|
+   */
+  row.insertColumns(1, 2, storageRule);
+  QCOMPARE(row.columnCount(), 10);
+  row.setData(1, "L", Qt::DisplayRole);
+  row.setData(2, "M", Qt::DisplayRole);
+  QCOMPARE(row.data(0, Qt::DisplayRole), QVariant(7));
+  QCOMPARE(row.data(1, Qt::DisplayRole), QVariant("L"));
+  QCOMPARE(row.data(2, Qt::DisplayRole), QVariant("M"));
+  QCOMPARE(row.data(3, Qt::DisplayRole), QVariant("N"));
+  QCOMPARE(row.data(4, Qt::DisplayRole), QVariant(8));
+  QCOMPARE(row.data(5, Qt::DisplayRole), QVariant(9));
+  QCOMPARE(row.data(6, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(row.data(7, Qt::DisplayRole), QVariant("B"));
+  QCOMPARE(row.data(8, Qt::DisplayRole), QVariant("C"));
+  QCOMPARE(row.data(9, Qt::DisplayRole), QVariant("D"));
+}
+
+void VariantTableModelTest::dataRowRemoveColumnsTest()
+{
+  VariantTableModelRow row(VariantTableModelStorageRule::GroupDisplayAndEditRoleData, 10);
+  QCOMPARE(row.columnCount(), 10);
+  /*
+   * Initial state
+   * |A|B|C|D|E|F|G|H|I|J|
+   */
+  QCOMPARE(row.columnCount(), 10);
+  row.setData(0, "A", Qt::DisplayRole);
+  row.setData(1, "B", Qt::DisplayRole);
+  row.setData(2, "C", Qt::DisplayRole);
+  row.setData(3, "D", Qt::DisplayRole);
+  row.setData(4, "E", Qt::DisplayRole);
+  row.setData(5, "F", Qt::DisplayRole);
+  row.setData(6, "G", Qt::DisplayRole);
+  row.setData(7, "H", Qt::DisplayRole);
+  row.setData(8, "I", Qt::DisplayRole);
+  row.setData(9, "J", Qt::DisplayRole);
+  QCOMPARE(row.data(0, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(row.data(1, Qt::DisplayRole), QVariant("B"));
+  QCOMPARE(row.data(2, Qt::DisplayRole), QVariant("C"));
+  QCOMPARE(row.data(3, Qt::DisplayRole), QVariant("D"));
+  QCOMPARE(row.data(4, Qt::DisplayRole), QVariant("E"));
+  QCOMPARE(row.data(5, Qt::DisplayRole), QVariant("F"));
+  QCOMPARE(row.data(6, Qt::DisplayRole), QVariant("G"));
+  QCOMPARE(row.data(7, Qt::DisplayRole), QVariant("H"));
+  QCOMPARE(row.data(8, Qt::DisplayRole), QVariant("I"));
+  QCOMPARE(row.data(9, Qt::DisplayRole), QVariant("J"));
+  /*
+   * Remove 1 column at end
+   * |A|B|C|D|E|F|G|H|I|
+   */
+  row.removeColumns(9, 1);
+  QCOMPARE(row.columnCount(), 9);
+  QCOMPARE(row.data(0, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(row.data(1, Qt::DisplayRole), QVariant("B"));
+  QCOMPARE(row.data(2, Qt::DisplayRole), QVariant("C"));
+  QCOMPARE(row.data(3, Qt::DisplayRole), QVariant("D"));
+  QCOMPARE(row.data(4, Qt::DisplayRole), QVariant("E"));
+  QCOMPARE(row.data(5, Qt::DisplayRole), QVariant("F"));
+  QCOMPARE(row.data(6, Qt::DisplayRole), QVariant("G"));
+  QCOMPARE(row.data(7, Qt::DisplayRole), QVariant("H"));
+  QCOMPARE(row.data(8, Qt::DisplayRole), QVariant("I"));
+  /*
+   * Remove 2 columns at end
+   * |A|B|C|D|E|F|G|
+   */
+  row.removeColumns(7, 2);
+  QCOMPARE(row.columnCount(), 7);
+  QCOMPARE(row.data(0, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(row.data(1, Qt::DisplayRole), QVariant("B"));
+  QCOMPARE(row.data(2, Qt::DisplayRole), QVariant("C"));
+  QCOMPARE(row.data(3, Qt::DisplayRole), QVariant("D"));
+  QCOMPARE(row.data(4, Qt::DisplayRole), QVariant("E"));
+  QCOMPARE(row.data(5, Qt::DisplayRole), QVariant("F"));
+  QCOMPARE(row.data(6, Qt::DisplayRole), QVariant("G"));
+  /*
+   * Remove 1 column at begin
+   * |B|C|D|E|F|G|
+   */
+  row.removeColumns(0, 1);
+  QCOMPARE(row.columnCount(), 6);
+  QCOMPARE(row.data(0, Qt::DisplayRole), QVariant("B"));
+  QCOMPARE(row.data(1, Qt::DisplayRole), QVariant("C"));
+  QCOMPARE(row.data(2, Qt::DisplayRole), QVariant("D"));
+  QCOMPARE(row.data(3, Qt::DisplayRole), QVariant("E"));
+  QCOMPARE(row.data(4, Qt::DisplayRole), QVariant("F"));
+  QCOMPARE(row.data(5, Qt::DisplayRole), QVariant("G"));
+  /*
+   * Remove 2 columns at begin
+   * |D|E|F|G|
+   */
+  row.removeColumns(0, 2);
+  QCOMPARE(row.columnCount(), 4);
+  QCOMPARE(row.data(0, Qt::DisplayRole), QVariant("D"));
+  QCOMPARE(row.data(1, Qt::DisplayRole), QVariant("E"));
+  QCOMPARE(row.data(2, Qt::DisplayRole), QVariant("F"));
+  QCOMPARE(row.data(3, Qt::DisplayRole), QVariant("G"));
+  /*
+   * Remove E
+   * |D|F|G|
+   */
+  row.removeColumns(1, 1);
+  QCOMPARE(row.columnCount(), 3);
+  QCOMPARE(row.data(0, Qt::DisplayRole), QVariant("D"));
+  QCOMPARE(row.data(1, Qt::DisplayRole), QVariant("F"));
+  QCOMPARE(row.data(2, Qt::DisplayRole), QVariant("G"));
+  /*
+   * Remove F and G
+   * |D|
+   */
+  row.removeColumns(1, 2);
+  QCOMPARE(row.columnCount(), 1);
+  QCOMPARE(row.data(0, Qt::DisplayRole), QVariant("D"));
+}
+
 void VariantTableModelTest::tableModelTest()
 {
   QModelIndex index;
@@ -237,7 +437,7 @@ void VariantTableModelTest::tableModelTest()
   model.populate(3, 2);
   QCOMPARE(model.rowCount(), 3);
   QCOMPARE(model.columnCount(), 2);
-  // Check row 0
+  // Check row 0 - also check data(index, role)
   index = model.index(0, 0);
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("0A"));
@@ -246,15 +446,11 @@ void VariantTableModelTest::tableModelTest()
   QVERIFY(index.isValid());
   QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("0B"));
   QCOMPARE(model.data(index, Qt::EditRole), QVariant("0B"));
-  // Check row 1
-  index = model.index(1, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("1A"));
-  QCOMPARE(model.data(index, Qt::EditRole), QVariant("1A"));
-  index = model.index(1, 1);
-  QVERIFY(index.isValid());
-  QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("1B"));
-  QCOMPARE(model.data(index, Qt::EditRole), QVariant("1B"));
+  // Check row 1 - also check data(row, column, role)
+  QCOMPARE(model.data(1, 0, Qt::DisplayRole), QVariant("1A"));
+  QCOMPARE(model.data(1, 0, Qt::EditRole), QVariant("1A"));
+  QCOMPARE(model.data(1, 1, Qt::DisplayRole), QVariant("1B"));
+  QCOMPARE(model.data(1, 1, Qt::EditRole), QVariant("1B"));
   // Check row 2
   index = model.index(2, 0);
   QVERIFY(index.isValid());
@@ -445,7 +641,7 @@ void VariantTableModelTest::tableModelSignalTest()
   QModelIndex index;
   QVariantList arguments;
   /*
-   * Setup model and signa spies
+   * Setup model and signal spies
    */
   VariantTableModel model;
   QSignalSpy resetSpy(&model, &VariantTableModel::modelReset);
@@ -708,6 +904,224 @@ void VariantTableModelTest::tableModelPopulateColumnTest()
   index = model.index(2, 0);
   QCOMPARE(model.data(index, Qt::DisplayRole), QVariant("C"));
   QCOMPARE(model.data(index, Qt::EditRole), QVariant(3));
+}
+
+void VariantTableModelTest::tableModelInsertColumnsTest()
+{
+  VariantTableModel model;
+  QModelIndex index;
+
+  /*
+   * Populate model
+   */
+  model.resize(3, 1);
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(model.columnCount(), 1);
+  model.populateColumn(0, {1,2,3});
+  QCOMPARE(model.data(0, 0), QVariant(1));
+  QCOMPARE(model.data(1, 0), QVariant(2));
+  QCOMPARE(model.data(2, 0), QVariant(3));
+  /*
+   * Append a column
+   */
+  model.appendColumn();
+  QCOMPARE(model.columnCount(), 2);
+  // Check that initial data are keeped untouched
+  QCOMPARE(model.data(0, 0), QVariant(1));
+  QCOMPARE(model.data(1, 0), QVariant(2));
+  QCOMPARE(model.data(2, 0), QVariant(3));
+  // Check that new column can be used
+  model.populateColumn(1, {"A","B","C"});
+  QCOMPARE(model.data(0, 1), QVariant("A"));
+  QCOMPARE(model.data(1, 1), QVariant("B"));
+  QCOMPARE(model.data(2, 1), QVariant("C"));
+  /*
+   * Prepend a column
+   */
+  model.prependColumn();
+  QCOMPARE(model.columnCount(), 3);
+  // New column is before, so our data are now shifted
+  QVERIFY(model.data(0, 0).isNull());
+  QCOMPARE(model.data(0, 1), QVariant(1));
+  QCOMPARE(model.data(0, 2), QVariant("A"));
+  // Check that new column can be used
+  model.populateColumn(0, {"E","F","G"});
+  QCOMPARE(model.data(0, 0), QVariant("E"));
+  QCOMPARE(model.data(1, 0), QVariant("F"));
+  QCOMPARE(model.data(2, 0), QVariant("G"));
+  /*
+   * Insert a column in the middle
+   * Initial (data at row 0):
+   * -------------
+   * | E | 1 | A |
+   * -------------
+   *      ^
+   * New:
+   * -------------------
+   * | E | New | 1 | A |
+   * -------------------
+   */
+  model.insertColumn(1);
+  QCOMPARE(model.columnCount(), 4);
+  // Check that column was inserted at correct place
+  QCOMPARE(model.data(0, 0), QVariant("E"));
+  QVERIFY(model.data(0, 1).isNull());
+  QCOMPARE(model.data(0, 2), QVariant(1));
+  QCOMPARE(model.data(0, 3), QVariant("A"));
+  // Check that new column can be used
+  model.populateColumn(1, {"I","J","K"});
+  QCOMPARE(model.data(0, 1), QVariant("I"));
+  QCOMPARE(model.data(1, 1), QVariant("J"));
+  QCOMPARE(model.data(2, 1), QVariant("K"));
+  /*
+   * Insert 2 columns in the middle
+   * Initial (data at row 0):
+   * ---------
+   * |E|I|1|A|
+   * ---------
+   *       ^
+   * New:
+   * -------------
+   * |E|I|1|2|3|A|
+   * -------------
+   */
+  model.insertColumns(3, 2);
+  QCOMPARE(model.columnCount(), 6);
+  // Check that column was inserted at correct place
+  QCOMPARE(model.data(0, 0), QVariant("E"));
+  QCOMPARE(model.data(0, 1), QVariant("I"));
+  QCOMPARE(model.data(0, 2), QVariant(1));
+  QVERIFY(model.data(0, 3).isNull());
+  QVERIFY(model.data(0, 4).isNull());
+  QCOMPARE(model.data(0, 5), QVariant("A"));
+  // Check that new columns can be used
+  model.setData(0, 3, 2);
+  model.setData(0, 4, 3);
+  QCOMPARE(model.data(0, 0), QVariant("E"));
+  QCOMPARE(model.data(0, 1), QVariant("I"));
+  QCOMPARE(model.data(0, 2), QVariant(1));
+  QCOMPARE(model.data(0, 3), QVariant(2));
+  QCOMPARE(model.data(0, 4), QVariant(3));
+  QCOMPARE(model.data(0, 5), QVariant("A"));
+}
+
+void VariantTableModelTest::tableModelRemoveColumnsTest()
+{
+  VariantTableModel model;
+  QModelIndex index;
+
+  /*
+   * Populate model
+   * -------------
+   * |A|B|C|D|E|F|
+   * -------------
+   */
+  model.resize(1, 6);
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 6);
+  model.setData(0, 0, "A");
+  model.setData(0, 1, "B");
+  model.setData(0, 2, "C");
+  model.setData(0, 3, "D");
+  model.setData(0, 4, "E");
+  model.setData(0, 5, "F");
+  QCOMPARE(model.data(0, 0), QVariant("A"));
+  QCOMPARE(model.data(0, 1), QVariant("B"));
+  QCOMPARE(model.data(0, 2), QVariant("C"));
+  QCOMPARE(model.data(0, 3), QVariant("D"));
+  QCOMPARE(model.data(0, 4), QVariant("E"));
+  QCOMPARE(model.data(0, 5), QVariant("F"));
+  /*
+   * Remove last column
+   * -----------
+   * |A|B|C|D|E|
+   * -----------
+   */
+  model.removeLastColumn();
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 5);
+  QCOMPARE(model.data(0, 0), QVariant("A"));
+  QCOMPARE(model.data(0, 1), QVariant("B"));
+  QCOMPARE(model.data(0, 2), QVariant("C"));
+  QCOMPARE(model.data(0, 3), QVariant("D"));
+  QCOMPARE(model.data(0, 4), QVariant("E"));
+  /*
+   * Remove first column
+   * ---------
+   * |B|C|D|E|
+   * ---------
+   */
+  model.removeFirstColumn();
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 4);
+  QCOMPARE(model.data(0, 0), QVariant("B"));
+  QCOMPARE(model.data(0, 1), QVariant("C"));
+  QCOMPARE(model.data(0, 2), QVariant("D"));
+  QCOMPARE(model.data(0, 3), QVariant("E"));
+  /*
+   * Remove C
+   * ---------
+   * |B|D|E|
+   * ---------
+   */
+  model.removeColumn(1);
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 3);
+  QCOMPARE(model.data(0, 0), QVariant("B"));
+  QCOMPARE(model.data(0, 1), QVariant("D"));
+  QCOMPARE(model.data(0, 2), QVariant("E"));
+  /*
+   * Remove D and E
+   * ---
+   * |B|
+   * ---
+   */
+  model.removeColumns(1, 2);
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 1);
+  QCOMPARE(model.data(0, 0), QVariant("B"));
+}
+
+void VariantTableModelTest::tableModelChangeColumnsCountSignalTest()
+{
+  QModelIndex index;
+  QVariantList arguments;
+  /*
+   * Setup model and signal spies
+   */
+  VariantTableModel model;
+  QSignalSpy insertSpy(&model, &VariantTableModel::columnsInserted);
+  QSignalSpy removeSpy(&model, &VariantTableModel::columnsRemoved);
+  QVERIFY(insertSpy.isValid());
+  QVERIFY(removeSpy.isValid());
+
+  model.resize(1, 1);
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 1);
+  insertSpy.clear();
+  removeSpy.clear();
+  /*
+   * Append a column
+   */
+  model.appendColumn();
+  QCOMPARE(insertSpy.count(), 1);
+  QCOMPARE(removeSpy.count(), 0);
+  arguments = insertSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid());
+  QCOMPARE(arguments.at(1), QVariant(1));
+  QCOMPARE(arguments.at(2), QVariant(1));
+  /*
+   * Remove a column
+   */
+  model.removeLastColumn();
+  QCOMPARE(insertSpy.count(), 0);
+  QCOMPARE(removeSpy.count(), 1);
+  arguments = removeSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid());
+  QCOMPARE(arguments.at(1), QVariant(1));
+  QCOMPARE(arguments.at(2), QVariant(1));
 }
 
 /*

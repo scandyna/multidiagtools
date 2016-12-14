@@ -58,6 +58,19 @@ QVariant VariantTableModel::data(const QModelIndex& index, int role) const
   return QVariant();
 }
 
+QVariant VariantTableModel::data(int row, int column, int role) const
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < columnCount());
+
+  const auto idx = index(row, column);
+  Q_ASSERT(idx.isValid());
+
+  return data(idx, role);
+}
+
 void VariantTableModel::setItemEnabled(const QModelIndex& index, bool enable)
 {
   Q_ASSERT(index.row() >= 0);
@@ -101,6 +114,83 @@ bool VariantTableModel::setData(const QModelIndex& index, const QVariant& value,
     return true;
   }
   return false;
+}
+
+bool VariantTableModel::setData(int row, int column, const QVariant& value, int role)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < columnCount());
+
+  const auto idx = index(row, column);
+  Q_ASSERT(idx.isValid());
+
+  return setData(idx, value, role);
+}
+
+void VariantTableModel::appendColumn()
+{
+  insertColumns(columnCount(), 1);
+}
+
+void VariantTableModel::prependColumn()
+{
+  insertColumns(0, 1);
+}
+
+bool VariantTableModel::insertColumns(int column, int count, const QModelIndex & parent)
+{
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column <= columnCount());
+  Q_ASSERT(count >= 1);
+
+  if(parent.isValid()){
+    return false;
+  }
+  beginInsertColumns(parent, column, column+count-1);
+  for(auto & rowData : mData){
+    rowData.insertColumns(column, count, mStorageRule);
+  }
+  mColumnCount += count;
+  endInsertColumns();
+
+  return true;
+}
+
+void VariantTableModel::removeFirstColumn()
+{
+  if(columnCount() < 1){
+    return;
+  }
+  removeColumns(0, 1);
+}
+
+void VariantTableModel::removeLastColumn()
+{
+  if(columnCount() < 1){
+    return;
+  }
+  removeColumns( columnCount()-1, 1 );
+}
+
+bool VariantTableModel::removeColumns(int column, int count, const QModelIndex & parent)
+{
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(count >= 1);
+  Q_ASSERT( (column + count ) <= columnCount() );
+
+  if(parent.isValid()){
+    return false;
+  }
+  beginRemoveColumns(parent, column, column+count-1);
+  for(auto & rowData : mData){
+    rowData.removeColumns(column, count);
+  }
+  mColumnCount -= count;
+  endRemoveColumns();
+
+  return true;
 }
 
 void VariantTableModel::resize(int rows, int columns)

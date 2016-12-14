@@ -74,6 +74,14 @@ namespace Mdt{ namespace ItemModel{
      */
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
 
+    /*! \brief Get data at row and column
+     *
+     * \pre row must be in valid range ( 0 <= row < rowCount() )
+     * \pre column must be in valid range ( 0 <= column < columnCount() )
+     * \sa data(const QModelIndex &, int)
+     */
+    QVariant data(int row, int column, int role = Qt::DisplayRole) const;
+
     /*! \brief Set item enabled at index
      *
      * \pre index must be in valid range
@@ -107,6 +115,45 @@ namespace Mdt{ namespace ItemModel{
      *      ( 0 <= index.row() < rowCount() and 0 <= index.column() < columnCount() )
      */
     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole) override;
+
+    /*! \brief Set data at row and column
+     *
+     * \pre row must be in valid range ( 0 <= row < rowCount() )
+     * \pre column must be in valid range ( 0 <= column < columnCount() )
+     * \sa setData(const QModelIndex &, const QVariant &, int)
+     */
+    bool setData(int row, int column, const QVariant & value, int role = Qt::EditRole);
+
+    /*! \brief Append a column
+     */
+    void appendColumn();
+
+    /*! \brief Prepend a column
+     */
+    void prependColumn();
+
+    /*! \brief Implement QAbstractTableModel::insertColumns()
+     *
+     * \pre \a column must be in correct range ( 0 <= column <= columnCount() )
+     * \pre \a count must be >= 1
+     */
+    bool insertColumns(int column, int count, const QModelIndex & parent = QModelIndex()) override;
+
+    /*! \brief Remove first column
+     */
+    void removeFirstColumn();
+
+    /*! \brief Remove last column
+     */
+    void removeLastColumn();
+
+    /*! \brief Implement QAbstractTableModel::removeColumns()
+     *
+     * \pre \a column must be >= 0
+     * \pre \a count must be >= 1
+     * \pre \a column + \a count must be in correct range ( 0 <= column <= columnCount() )
+     */
+    bool removeColumns(int column, int count, const QModelIndex & parent = QModelIndex()) override;
 
     /*! \brief Resize model
      *
