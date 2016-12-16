@@ -650,6 +650,8 @@ void VariantTableModelTest::tableModelSignalTest()
   QVERIFY(dataChangedSpy.isValid());
   /*
    * Resize
+   * Some unit tests assumes that modelReset() signal is emitted after resize(),
+   * make shure that this is the case.
    */
   QCOMPARE(resetSpy.count(), 0);
   QCOMPARE(dataChangedSpy.count(), 0);
@@ -985,7 +987,7 @@ void VariantTableModelTest::tableModelInsertColumnsTest()
    * |E|I|1|2|3|A|
    * -------------
    */
-  model.insertColumns(3, 2);
+  QVERIFY(model.insertColumns(3, 2));
   QCOMPARE(model.columnCount(), 6);
   // Check that column was inserted at correct place
   QCOMPARE(model.data(0, 0), QVariant("E"));
@@ -1076,7 +1078,7 @@ void VariantTableModelTest::tableModelRemoveColumnsTest()
    * |B|
    * ---
    */
-  model.removeColumns(1, 2);
+  QVERIFY(model.removeColumns(1, 2));
   QCOMPARE(model.rowCount(), 1);
   QCOMPARE(model.columnCount(), 1);
   QCOMPARE(model.data(0, 0), QVariant("B"));
@@ -1084,7 +1086,6 @@ void VariantTableModelTest::tableModelRemoveColumnsTest()
 
 void VariantTableModelTest::tableModelChangeColumnsCountSignalTest()
 {
-  QModelIndex index;
   QVariantList arguments;
   /*
    * Setup model and signal spies
@@ -1115,6 +1116,193 @@ void VariantTableModelTest::tableModelChangeColumnsCountSignalTest()
    * Remove a column
    */
   model.removeLastColumn();
+  QCOMPARE(insertSpy.count(), 0);
+  QCOMPARE(removeSpy.count(), 1);
+  arguments = removeSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid());
+  QCOMPARE(arguments.at(1), QVariant(1));
+  QCOMPARE(arguments.at(2), QVariant(1));
+}
+
+void VariantTableModelTest::tableModelInsertRowsTest()
+{
+  VariantTableModel model;
+  /*
+   * Setup model
+   */
+  model.resize(0, 1);
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 1);
+  /*
+   * Append a row
+   * ---
+   * |A|
+   * ---
+   */
+  model.appendRow();
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 1);
+  // Check that inserted row can be used
+  model.setData(0, 0, "A");
+  QCOMPARE(model.data(0, 0), QVariant("A"));
+  /*
+   * Prepend a row
+   * ---
+   * |1|
+   * ---
+   * |A|
+   * ---
+   */
+  model.prependRow();
+  QCOMPARE(model.rowCount(), 2);
+  QCOMPARE(model.columnCount(), 1);
+  // Check that row was inserted at correctplace
+  QVERIFY(model.data(0, 0).isNull());
+  QCOMPARE(model.data(1, 0), QVariant("A"));
+  // Check that inserted row can be used
+  model.setData(0, 0, 1);
+  QCOMPARE(model.data(0, 0), QVariant(1));
+  QCOMPARE(model.data(1, 0), QVariant("A"));
+  /*
+   * Insert 2 rows before A
+   * Before:
+   *  ---
+   *  |1|
+   * >---
+   *  |A|
+   *  ---
+   * After:
+   * ---
+   * |1|
+   * ---
+   * |2|
+   * ---
+   * |3|
+   * ---
+   * |A|
+   * ---
+   */
+  QVERIFY(model.insertRows(1, 2));
+  QCOMPARE(model.rowCount(), 4);
+  QCOMPARE(model.columnCount(), 1);
+  // Check that rows where inserted at correctplace
+  QCOMPARE(model.data(0, 0), QVariant(1));
+  QVERIFY(model.data(1, 0).isNull());
+  QVERIFY(model.data(2, 0).isNull());
+  QCOMPARE(model.data(3, 0), QVariant("A"));
+  // Check that inserted row can be used
+  model.setData(1, 0, 2);
+  model.setData(2, 0, 3);
+  QCOMPARE(model.data(0, 0), QVariant(1));
+  QCOMPARE(model.data(1, 0), QVariant(2));
+  QCOMPARE(model.data(2, 0), QVariant(3));
+  QCOMPARE(model.data(3, 0), QVariant("A"));
+}
+
+void VariantTableModelTest::tableModelRemoveRowsTest()
+{
+  VariantTableModel model;
+  /*
+   * Setup model
+   * ---
+   * |A|
+   * ---
+   * |B|
+   * ---
+   * |C|
+   * ---
+   * |D|
+   * ---
+   * |E|
+   * ---
+   */
+  model.resize(5, 1);
+  model.populateColumn(0, {"A","B","C","D","E"});
+  QCOMPARE(model.rowCount(), 5);
+  QCOMPARE(model.columnCount(), 1);
+  /*
+   * Remove last row
+   * ---
+   * |A|
+   * ---
+   * |B|
+   * ---
+   * |C|
+   * ---
+   * |D|
+   * ---
+   */
+  model.removeLastRow();
+  QCOMPARE(model.rowCount(), 4);
+  QCOMPARE(model.columnCount(), 1);
+  // Check that correct row was removed
+  QCOMPARE(model.data(0, 0), QVariant("A"));
+  QCOMPARE(model.data(1, 0), QVariant("B"));
+  QCOMPARE(model.data(2, 0), QVariant("C"));
+  QCOMPARE(model.data(3, 0), QVariant("D"));
+  /*
+   * Remove first row
+   * ---
+   * |B|
+   * ---
+   * |C|
+   * ---
+   * |D|
+   * ---
+   */
+  model.removeFirstRow();
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(model.columnCount(), 1);
+  // Check that correct row was removed
+  QCOMPARE(model.data(0, 0), QVariant("B"));
+  QCOMPARE(model.data(1, 0), QVariant("C"));
+  QCOMPARE(model.data(2, 0), QVariant("D"));
+  /*
+   * Remove C and D
+   * ---
+   * |B|
+   * ---
+   */
+  QVERIFY(model.removeRows(1, 2));
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 1);
+  // Check that correct rows were removed
+  QCOMPARE(model.data(0, 0), QVariant("B"));
+}
+
+void VariantTableModelTest::tableModelChangeRowsCountSignalTest()
+{
+  QVariantList arguments;
+  /*
+   * Setup model and signal spies
+   */
+  VariantTableModel model;
+  QSignalSpy insertSpy(&model, &VariantTableModel::rowsInserted);
+  QSignalSpy removeSpy(&model, &VariantTableModel::rowsRemoved);
+  QVERIFY(insertSpy.isValid());
+  QVERIFY(removeSpy.isValid());
+
+  model.resize(1, 1);
+  QCOMPARE(model.rowCount(), 1);
+  QCOMPARE(model.columnCount(), 1);
+  insertSpy.clear();
+  removeSpy.clear();
+  /*
+   * Append a row
+   */
+  model.appendRow();
+  QCOMPARE(insertSpy.count(), 1);
+  QCOMPARE(removeSpy.count(), 0);
+  arguments = insertSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  QVERIFY(!arguments.at(0).toModelIndex().isValid());
+  QCOMPARE(arguments.at(1), QVariant(1));
+  QCOMPARE(arguments.at(2), QVariant(1));
+  /*
+   * Remove a row
+   */
+  model.removeLastRow();
   QCOMPARE(insertSpy.count(), 0);
   QCOMPARE(removeSpy.count(), 1);
   arguments = removeSpy.takeFirst();

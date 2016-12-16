@@ -124,6 +124,37 @@ namespace Mdt{ namespace ItemModel{
      */
     bool setData(int row, int column, const QVariant & value, int role = Qt::EditRole);
 
+    /*! \brief Append a row
+     */
+    void appendRow();
+
+    /*! \brief Prepend a row
+     */
+    void prependRow();
+
+    /*! \brief Implement QAbstractTableModel::insertRows()
+     *
+     * \pre \a row must be in correct range ( 0 <= column <= rowCount() )
+     * \pre \a count must be >= 1
+     */
+    bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
+
+    /*! \brief Remove first row
+     */
+    void removeFirstRow();
+
+    /*! \brief Remove last row
+     */
+    void removeLastRow();
+
+    /*! \brief Implement QAbstractTableModel::removeRows()
+     *
+     * \pre \a row must be >= 0
+     * \pre \a count must be >= 1
+     * \pre \a row + \a count must be in correct range ( 0 <= column <= rowCount() )
+     */
+    bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
+
     /*! \brief Append a column
      */
     void appendColumn();

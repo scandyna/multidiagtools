@@ -51,6 +51,9 @@ class VariantTableModelTest : public QObject
   void tableModelInsertColumnsTest();
   void tableModelRemoveColumnsTest();
   void tableModelChangeColumnsCountSignalTest();
+  void tableModelInsertRowsTest();
+  void tableModelRemoveRowsTest();
+  void tableModelChangeRowsCountSignalTest();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_VARIANT_TABLE_MODEL_TEST_H

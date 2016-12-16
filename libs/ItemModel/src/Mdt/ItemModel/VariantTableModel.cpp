@@ -129,6 +129,64 @@ bool VariantTableModel::setData(int row, int column, const QVariant& value, int 
   return setData(idx, value, role);
 }
 
+void VariantTableModel::appendRow()
+{
+  insertRows(rowCount(), 1);
+}
+
+void VariantTableModel::prependRow()
+{
+  insertRows(0, 1);
+}
+
+bool VariantTableModel::insertRows(int row, int count, const QModelIndex & parent)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row <= rowCount());
+  Q_ASSERT(count >= 1);
+
+  if(parent.isValid()){
+    return false;
+  }
+  beginInsertRows(parent, row, row+count-1);
+  mData.insert( mData.cbegin() + row, count, VariantTableModelRow(mStorageRule, mColumnCount) );
+  endInsertRows();
+
+  return true;
+}
+
+void VariantTableModel::removeFirstRow()
+{
+  if(rowCount() < 1){
+    return;
+  }
+  removeRows(0, 1);
+}
+
+void VariantTableModel::removeLastRow()
+{
+  if(rowCount() < 1){
+    return;
+  }
+  removeRows( rowCount()-1, 1 );
+}
+
+bool VariantTableModel::removeRows(int row, int count, const QModelIndex& parent)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(count >= 1);
+  Q_ASSERT( (row + count ) <= rowCount() );
+
+  if(parent.isValid()){
+    return false;
+  }
+  beginRemoveRows(parent, row, row+count-1);
+  mData.erase( mData.cbegin() + row, mData.cbegin() + row + count);
+  endRemoveRows();
+
+  return true;
+}
+
 void VariantTableModel::appendColumn()
 {
   insertColumns(columnCount(), 1);
