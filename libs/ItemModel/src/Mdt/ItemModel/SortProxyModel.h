@@ -206,10 +206,6 @@ namespace Mdt{ namespace ItemModel{
      */
     void setSourceModel(QAbstractItemModel* sourceModel) override;
 
-    /*! \brief Re-implemented from QSortFilterProxyModel
-     */
-//     bool insertRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
-
    signals:
 
     /*! \brief Emitted when model was sorted

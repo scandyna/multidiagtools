@@ -68,8 +68,6 @@ class SortProxyModelTest : public QObject
   void sortSignalTest();
   void sortSetterEventTest();
   void dynamicSortTest();
-  void dynamicSortEventSinglColumnTest();
-  void dynamicSortEventMultiColumnTest();
 
   // Should mybe be implemented in SQL ItemModel library ?
   void fetchTest();

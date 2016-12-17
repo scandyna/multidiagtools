@@ -883,11 +883,7 @@ void SortProxyModelTest::sortSetterEventTest()
   QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
   proxyModel.setDynamicSortFilter(false);
   QVERIFY(!proxyModel.dynamicSortFilter());
-  QVERIFY(isModelColumnSortedNumeric(proxyModel, 0));
-  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
-  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(2));
-  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(1));
-  QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(2));
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
   /*
    * Check setSortCaseSensitivity()
    */
@@ -1145,45 +1141,6 @@ void SortProxyModelTest::dynamicSortTest()
   // Check signals
   QCOMPARE(columnSortedSpy.count(), 0);
   QCOMPARE(modelSortedSpy.count(), 0);
-}
-
-void SortProxyModelTest::dynamicSortEventSinglColumnTest()
-{
-  VariantTableModel model;
-  SortProxyModel proxyModel;
-  /*
-   * Setup models
-   */
-  proxyModel.setSourceModel(&model);
-  proxyModel.setDynamicSortFilter(false);
-  model.resize(5, 5);
-  qDebug() << "TEST: set data 0, {9,1,3,6,4}";
-  model.populateColumn(0, {9,1,3,6,4});
-  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
-  /*
-   * When enabling dynamicSortFilter property, sort must be processed
-   * -> Note: without having to call sort()
-   */
-  qDebug() << "TEST: setDynamicSortFilter(true)";
-  proxyModel.setDynamicSortFilter(true);
-  QVERIFY(isModelColumnSortedNumeric(proxyModel, 0));
-  /*
-   * Check catching at modelReset()
-   */
-  
-  /*
-   * Check data change:
-   *  - When change in column == QSortFilterProxyModel::sortColumn()
-   *  - When change in column != QSortFilterProxyModel::sortColumn()
-   */
-  
-
-  QFAIL("Not complete");
-}
-
-void SortProxyModelTest::dynamicSortEventMultiColumnTest()
-{
-  QFAIL("Not complete");
 }
 
 void SortProxyModelTest::fetchTest()
