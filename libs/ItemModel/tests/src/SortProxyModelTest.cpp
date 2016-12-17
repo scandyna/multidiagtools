@@ -30,6 +30,8 @@
 #include <QTreeView>
 #include <QListView>
 #include <QComboBox>
+#include <QSignalSpy>
+#include <QVariantList>
 #include <iterator>
 #include <vector>
 #include <array>
@@ -379,12 +381,12 @@ void SortProxyModelTest::sortIntBenchmark()
   /*
    * Setup models
    */
+  model.resize(n, 5);
   proxyModel.setSourceModel(&model);
   proxyModel.setDynamicSortFilter(false);
   proxyModel.addColumnToSortOrder(1, Qt::DescendingOrder);
   proxyModel.addColumnToSortOrder(0, Qt::DescendingOrder);
   proxyModel.addColumnToSortOrder(3, Qt::DescendingOrder);
-  model.resize(n, 5);
   model.populateColumnWithInt(0, 1);
   model.populateColumnWithInt(1, 1, 3);
   model.populateColumnWithInt(2, 10, 4);
@@ -616,13 +618,13 @@ void SortProxyModelTest::sortStringNonLocalAwareBenchmark()
   /*
    * Setup models
    */
+  model.populate(n, 5);
   proxyModel.setSourceModel(&model);
   proxyModel.setDynamicSortFilter(false);
   proxyModel.setSortLocaleAware(false);
   proxyModel.addColumnToSortOrder(1, Qt::AscendingOrder);
   proxyModel.addColumnToSortOrder(0, Qt::AscendingOrder);
   proxyModel.addColumnToSortOrder(3, Qt::AscendingOrder);
-  model.populate(n, 5);
   QBENCHMARK{
     proxyModel.sort();
   }
@@ -648,13 +650,13 @@ void SortProxyModelTest::sortStringLocalAwareBenchmark()
   /*
    * Setup models
    */
+  model.populate(n, 5);
   proxyModel.setSourceModel(&model);
   proxyModel.setDynamicSortFilter(false);
   proxyModel.setSortLocaleAware(true);
   proxyModel.addColumnToSortOrder(1, StringNumericMode::Natural, Qt::AscendingOrder);
   proxyModel.addColumnToSortOrder(0, StringNumericMode::Natural, Qt::AscendingOrder);
   proxyModel.addColumnToSortOrder(3, StringNumericMode::Natural, Qt::AscendingOrder);
-  model.populate(n, 5);
   QBENCHMARK{
     proxyModel.sort();
   }
@@ -670,6 +672,182 @@ void SortProxyModelTest::sortStringLocalAwareBenchmark_data()
   QTest::newRow("100") << 100;
   QTest::newRow("1'000") << 1000;
   QTest::newRow("10'000") << 10000;
+}
+
+void SortProxyModelTest::sortSetModelTest()
+{
+  /*
+   * Setup proxy model without source model set
+   */
+  SortProxyModel proxyModel;
+  proxyModel.setDynamicSortFilter(false);
+  proxyModel.setColumnStringSortAttributes(0, StringNumericMode::Alphabetical);
+  proxyModel.setSortLocaleAware(false);
+  proxyModel.addColumnToSortOrder(0);
+  /*
+   * Try to sort without source model set
+   */
+  proxyModel.sort();
+  /*
+   * Setup source model
+   */
+  VariantTableModel model;
+  model.resize(3, 1);
+  model.populateColumn(0, {"C","B","A"});
+  proxyModel.setSourceModel(&model);
+  /*
+   * Sort with source model set
+   */
+  QVERIFY(!isModelColumnSortedAscii(proxyModel, 0, Qt::CaseInsensitive));
+  proxyModel.sort();
+  QVERIFY(isModelColumnSortedAscii(proxyModel, 0, Qt::CaseInsensitive));
+  /*
+   * Check also setting up proxy model with source model set,
+   * but only set dimentions after setup.
+   * Such situation happens when using, for example, QSqlTableModel: 
+   * We must be able to setup everything, and call select later.
+   * Only once select was called, model will be populated.
+   */
+  VariantTableModel model2;
+  SortProxyModel proxyModel2;
+  proxyModel2.setSourceModel(&model2);
+  proxyModel2.setDynamicSortFilter(false);
+  proxyModel2.setColumnStringSortAttributes(0, StringNumericMode::Alphabetical);
+  proxyModel2.setSortLocaleAware(false);
+  proxyModel2.addColumnToSortOrder(0);
+  model2.resize(3, 1);
+  model2.populateColumn(0, {"C","B","A"});
+  QVERIFY(!isModelColumnSortedAscii(proxyModel2, 0, Qt::CaseInsensitive));
+  proxyModel2.sort();
+  QVERIFY(isModelColumnSortedAscii(proxyModel2, 0, Qt::CaseInsensitive));
+}
+
+void SortProxyModelTest::sortColumnCountChangeTest()
+{
+  VariantTableModel model;
+  SortProxyModel proxyModel;
+  /*
+   * Setup models
+   */
+  proxyModel.setSourceModel(&model);
+  proxyModel.setDynamicSortFilter(false);
+  proxyModel.addColumnToSortOrder(0, Qt::AscendingOrder);
+  proxyModel.addColumnToSortOrder(1, Qt::AscendingOrder);
+  proxyModel.addColumnToSortOrder(2, Qt::AscendingOrder);
+  model.resize(8, 3);
+  model.populateColumn(0, {2,2,2,2,1,1,1,1});
+  model.populateColumn(1, {2,2,1,1,2,2,1,1});
+  model.populateColumn(2, {2,1,2,1,2,1,2,1});
+  /*
+   * Initial:
+   * Sort with in normal situation
+   */
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
+  proxyModel.sort();
+  QVERIFY(isModelColumnSortedNumeric(proxyModel, 0));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 4, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 5, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 6, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 7, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 0, 2), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 2), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 2, 2), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 3, 2), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 4, 2), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 5, 2), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 6, 2), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 7, 2), QVariant(2));
+  /*
+   * Remove last column
+   */
+  proxyModel.sort(-1);
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
+  model.removeLastColumn();
+  QCOMPARE(proxyModel.columnCount(), 2);
+  proxyModel.sort();
+  QVERIFY(isModelColumnSortedNumeric(proxyModel, 0));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 4, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 5, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 6, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 7, 1), QVariant(2));
+  /*
+   * Append a column
+   */
+  proxyModel.sort(-1);
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
+  model.appendColumn();
+  model.populateColumn(2, {2,1,2,1,2,1,2,1});
+  QCOMPARE(proxyModel.columnCount(), 3);
+  proxyModel.sort();
+  QVERIFY(isModelColumnSortedNumeric(proxyModel, 0));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 4, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 5, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 6, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 7, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 0, 2), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 2), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 2, 2), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 3, 2), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 4, 2), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 5, 2), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 6, 2), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 7, 2), QVariant(2));
+}
+
+void SortProxyModelTest::sortSignalTest()
+{
+  QVariantList arguments;
+  VariantTableModel model;
+  SortProxyModel proxyModel;
+  QSignalSpy columnSortedSpy(&proxyModel, &SortProxyModel::columnSorted);
+  QSignalSpy modelSortedSpy(&proxyModel, &SortProxyModel::modelSorted);
+  QVERIFY(columnSortedSpy.isValid());
+  QVERIFY(modelSortedSpy.isValid());
+  /*
+   * Setup models
+   */
+  proxyModel.setSourceModel(&model);
+  proxyModel.setDynamicSortFilter(false);
+  proxyModel.addColumnToSortOrder(0);
+  proxyModel.addColumnToSortOrder(1);
+  model.resize(4, 2);
+  model.populateColumn(0, {2,2,1,1});
+  model.populateColumn(1, {2,1,2,1});
+  columnSortedSpy.clear();
+  modelSortedSpy.clear();
+  /*
+   * Sort column 0
+   */
+  proxyModel.sort(0, Qt::AscendingOrder);
+  QCOMPARE(columnSortedSpy.count(), 1);
+  arguments = columnSortedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0), QVariant(0));
+  QCOMPARE(modelSortedSpy.count(), 0);
+  /*
+   * Sort model
+   */
+  proxyModel.sort();
+  QCOMPARE(columnSortedSpy.count(), 2);
+  arguments = columnSortedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0), QVariant(1));
+  arguments = columnSortedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0), QVariant(0));
+  QCOMPARE(modelSortedSpy.count(), 1);
 }
 
 void SortProxyModelTest::sortSetterEventTest()
@@ -754,7 +932,222 @@ void SortProxyModelTest::sortSetterEventTest()
   QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(2));
 }
 
-void SortProxyModelTest::dynamicSortEventSingleColumnTest()
+void SortProxyModelTest::dynamicSortTest()
+{
+  QModelIndex index;
+  QVariantList arguments;
+  VariantTableModel model;
+  SortProxyModel proxyModel;
+  QSignalSpy columnSortedSpy(&proxyModel, &SortProxyModel::columnSorted);
+  QSignalSpy modelSortedSpy(&proxyModel, &SortProxyModel::modelSorted);
+  QVERIFY(columnSortedSpy.isValid());
+  QVERIFY(modelSortedSpy.isValid());
+  /*
+   * When source model is updated, QSortFilterProxyModel updates his mapping,
+   * which will sort column == QSortFilterProxyModel::sortColumn(),
+   * which holds the column passed to QSortFilterProxyModel::sort(int, Qt::SortOrder).
+   *
+   * To make shure that SortProxyModel handles events correctly, test with 2 columns.
+   *
+   */
+  proxyModel.addColumnToSortOrder(0, Qt::AscendingOrder);
+  proxyModel.addColumnToSortOrder(1, Qt::AscendingOrder);
+  /*
+   * Check that setDynamicSortFilter() only callst sort() when switching OFF->ON
+   */
+  columnSortedSpy.clear();
+  modelSortedSpy.clear();
+  proxyModel.setDynamicSortFilter(false);
+  QCOMPARE(columnSortedSpy.count(), 0);
+  QCOMPARE(modelSortedSpy.count(), 0);
+  proxyModel.setDynamicSortFilter(false);
+  QCOMPARE(columnSortedSpy.count(), 0);
+  QCOMPARE(modelSortedSpy.count(), 0);
+  proxyModel.setDynamicSortFilter(true);
+  QCOMPARE(columnSortedSpy.count(), 2);
+  QCOMPARE(modelSortedSpy.count(), 1);
+  columnSortedSpy.clear();
+  modelSortedSpy.clear();
+  proxyModel.setDynamicSortFilter(true);
+  QCOMPARE(columnSortedSpy.count(), 0);
+  QCOMPARE(modelSortedSpy.count(), 0);
+  proxyModel.setDynamicSortFilter(false);
+  QCOMPARE(columnSortedSpy.count(), 0);
+  QCOMPARE(modelSortedSpy.count(), 0);
+  // Enable dynamic sort for next tests
+  proxyModel.setDynamicSortFilter(true);
+  QCOMPARE(columnSortedSpy.count(), 2);
+  QCOMPARE(modelSortedSpy.count(), 1);
+  /*
+   * Set model
+   */
+  // Populate model
+  model.resize(4, 3);
+  model.populateColumn(0, {2,2,1,1});
+  model.populateColumn(1, {2,1,2,1});
+  model.populateColumn(2, {"D","C","B","A"});
+  columnSortedSpy.clear();
+  modelSortedSpy.clear();
+  // Set model and check
+  proxyModel.setSourceModel(&model);
+  QVERIFY(isModelColumnSortedNumeric(proxyModel, 0));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(2));
+  QCOMPARE(columnSortedSpy.count(), 2);
+  QCOMPARE(modelSortedSpy.count(), 1);
+  /*
+   * Remove last row
+   *  - Has nothing to do
+   */
+  columnSortedSpy.clear();
+  modelSortedSpy.clear();
+  model.removeLastRow();
+  QCOMPARE(proxyModel.rowCount(), 3);
+  QVERIFY(isModelColumnSortedNumeric(proxyModel, 0));
+  QCOMPARE(columnSortedSpy.count(), 0);
+  QCOMPARE(modelSortedSpy.count(), 0);
+  /*
+   * Append a row
+   */
+  proxyModel.sort(-1);
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
+  columnSortedSpy.clear();
+  modelSortedSpy.clear();
+  model.appendRow();
+  /*
+   * Appending  row inserts Null values.
+   * Null < anything is allways false,
+   * so we cannot check data in a reliable way.
+   */
+  QCOMPARE(columnSortedSpy.count(), 2);
+  QCOMPARE(modelSortedSpy.count(), 1);
+//   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(1));
+//   QCOMPARE(getModelData(proxyModel, 1, 0), QVariant(2));
+//   QCOMPARE(getModelData(proxyModel, 2, 0), QVariant(2));
+//   QVERIFY(getModelData(proxyModel, 3, 0).isNull());
+//   QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(2));
+//   QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(1));
+//   QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(2));
+//   QVERIFY(getModelData(proxyModel, 3, 1).isNull());
+  /*
+   * Model reset
+   */
+  columnSortedSpy.clear();
+  modelSortedSpy.clear();
+  model.repopulateByColumns({{2,2,1,1},{2,1,2,1},{"D","C","B","A"}});
+  // Check signals
+  QCOMPARE(columnSortedSpy.count(), 2);
+  QCOMPARE(modelSortedSpy.count(), 1);
+  /*
+   * Check that model is sorted
+   * -----
+   * |1|1|
+   * -----
+   * |1|2|
+   * -----
+   * |2|1|
+   * -----
+   * |2|2|
+   * -----
+   */
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 3, 0), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(2));
+  /*
+   * Change data in column 0 (sorted column)
+   */
+  columnSortedSpy.clear();
+  modelSortedSpy.clear();
+  index = proxyModel.index(0, 0);
+  proxyModel.setData(index, 5);
+  // Check signals
+  QCOMPARE(columnSortedSpy.count(), 2);
+  QCOMPARE(modelSortedSpy.count(), 1);
+  /*
+   * Check that model is sorted
+   * -----
+   * |1|2|
+   * -----
+   * |2|1|
+   * -----
+   * |2|2|
+   * -----
+   * |5|1|
+   * -----
+   */
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 3, 0), QVariant(5));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(1));
+  /*
+   * Restore to unsorted model
+   * -----
+   * |2|2|
+   * -----
+   * |2|1|
+   * -----
+   * |1|2|
+   * -----
+   * |1|1|
+   * -----
+   */
+  model.repopulateByColumns({{2,2,1,1},{2,1,2,1},{"D","C","B","A"}});
+  proxyModel.sort(-1);
+  QVERIFY(!isModelColumnSortedNumeric(proxyModel, 0));
+  /*
+   * Change data in column 1 (sorted column)
+   */
+  columnSortedSpy.clear();
+  modelSortedSpy.clear();
+  index = proxyModel.index(0, 1);
+  proxyModel.setData(index, 5);
+  // Check signals
+  QCOMPARE(columnSortedSpy.count(), 2);
+  QCOMPARE(modelSortedSpy.count(), 1);
+  /*
+   * Check that model is sorted
+   * -----
+   * |1|1|
+   * -----
+   * |1|2|
+   * -----
+   * |2|1|
+   * -----
+   * |2|5|
+   * -----
+   */
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 3, 0), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(5));
+  /*
+   * Change data in column 2 (Not sorted column)
+   */
+  columnSortedSpy.clear();
+  modelSortedSpy.clear();
+  index = proxyModel.index(0, 2);
+  proxyModel.setData(index, "Z");
+  // Check signals
+  QCOMPARE(columnSortedSpy.count(), 0);
+  QCOMPARE(modelSortedSpy.count(), 0);
+}
+
+void SortProxyModelTest::dynamicSortEventSinglColumnTest()
 {
   VariantTableModel model;
   SortProxyModel proxyModel;
@@ -791,6 +1184,11 @@ void SortProxyModelTest::dynamicSortEventSingleColumnTest()
 void SortProxyModelTest::dynamicSortEventMultiColumnTest()
 {
   QFAIL("Not complete");
+}
+
+void SortProxyModelTest::fetchTest()
+{
+  QFAIL("Not implemented. Maybe should be in SqlItemModel lib ?");
 }
 
 /*
@@ -840,7 +1238,7 @@ void SortProxyModelTest::displayModels(QAbstractItemModel* sourceModel, QSortFil
   sourceView.setWindowTitle("Source");
   proxyView.setModel(proxyModel);
   proxyView.setWindowTitle("Proxy");
-  proxyView.setSortingEnabled(true);
+  //proxyView.setSortingEnabled(true);
   sourceView.show();
   proxyView.show();
   while(sourceView.isVisible()){

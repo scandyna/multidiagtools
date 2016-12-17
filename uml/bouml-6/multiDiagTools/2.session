@@ -1,23 +1,22 @@
 window_sizes 1280 963 356 918 908 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 3108482 // FilterEval
-    734 726 100 21 0 0
-  active  classdiagram_ref 3122306 // SortProxyModel
-    918 908 100 21 0 0
+  active  classdiagram_ref 3128834 // sandbox
+    918 908 100 4 0 0
 end
 show_stereotypes
-selected attribute_ref 3191298 // Natural
+selected class_ref 3491458 // FilterColumnTerminal
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
-  class_ref 3540482 // VariantTableModel
-  class_ref 3567234 // ColumnSortStringAttributes
-  class_ref 3567362 // ColumnSortStringAttributesList
-  class_ref 3567490 // ColumnSortOrder
-  class_ref 3567618 // ColumnSortOrderList
-  class_ref 3574146 // StringNumericMode
+  classview_ref 1623938 // FilterEval
+  classview_ref 1650306 // RowMapper
+  classview_ref 1630466 // Filter
+  class_ref 3580930 // ParentModelColumnData
+  class_ref 3581058 // ParentModelColumnTerminal
+  attribute_ref 3197826 // Model
+  classview_ref 1327362 // SqlSandbox
   
   package_ref 582274 // SqlItemEditor
   

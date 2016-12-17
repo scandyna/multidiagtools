@@ -304,6 +304,22 @@ void VariantTableModel::populateColumn(int column, const std::vector<QVariant> &
   }
 }
 
+void VariantTableModel::repopulateByColumns(const std::vector< std::vector<QVariant> > & data, Qt::ItemDataRole role)
+{
+  Q_ASSERT(!data.empty());
+
+  const int rows = data[0].size();
+  const int columns = data.size();
+
+  beginResetModel();
+  resizeRowCount(rows);
+  resizeColumnCount(columns);
+  for(int col = 0; col < columns; ++col){
+    populateColumn(col, data[col], role);
+  }
+  endResetModel();
+}
+
 void VariantTableModel::populate(int rows, int columns)
 {
   beginResetModel();

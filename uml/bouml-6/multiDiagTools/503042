@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 97
+  revision 99
   modified_by 2 "philippe"
   // class settings
   
@@ -6458,77 +6458,6 @@ ${inlines}
       end
     end
 
-    classdiagram 3062402 "FilterProxyModelExpression"
-      classdiagramsettings member_max_width 0 end
-      size A4-Landscape
-    end
-
-    class 3498882 "ModelRow"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 3156610 "Model"
-	private type class_ref 146946 // QAbstractItemModel
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 3156738 "Row"
-	private explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-
-    class 3498370 "FilterProxyModelEval"
-      visibility package 
-      nactuals 1
-      actual class class_ref 3225602 // or_
-        rank 0 explicit_value ""
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      associated_diagram classdiagram_ref 3062274 // FilterProxyModel
-      classrelation 3891458 // <generalisation>
-	relation 3865730 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3891458 // <generalisation>
-	  b parent class_ref 3225602 // or_
-      end
-    end
-
     classdiagram 3048706 "FilterExpression"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -6577,29 +6506,6 @@ ${inlines}
     classdiagram 3049090 "ModelSandbox"
       classdiagramsettings member_max_width 0 end
       size A4-Landscape
-    end
-
-    class 3484034 "SortProxyModel"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3884418 // <generalisation>
-	relation 3858690 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3884418 // <generalisation>
-	  b parent class_ref 719874 // QSortFilterProxyModel
-      end
     end
 
     class 3484162 "SortColumnList"
@@ -6696,105 +6602,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-    end
-
-    class 3498498 "CheckEqualTo"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3891586 // <generalisation>
-	relation 3865858 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3891586 // <generalisation>
-	  b parent class_ref 3280514 // callable
-      end
-
-      operation 4914050 "operator()"
-	public explicit_return_type "bool"
-	nparams 2
-	  param in name "a" type class_ref 161154 // QVariant
-	  param in name "b" type class_ref 161154 // QVariant
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
-    class 3498754 "GetTerminalValue"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3891842 // <generalisation>
-	relation 3866114 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3891842 // <generalisation>
-	  b parent class_ref 3280514 // callable
-      end
-
-      operation 4914690 "operator()"
-	public return_type class_ref 161154 // QVariant
-	nparams 3
-	  param in name "model" type class_ref 146946 // QAbstractItemModel
-	  param in name "row" explicit_type "int"
-	  param in name "column" type class_ref 3491714 // FilterColumnData
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4914818 "operator()"
-	public return_type class_ref 161154 // QVariant
-	nparams 3
-	  param in name "model" type class_ref 146946 // QAbstractItemModel
-	  param in name "row" explicit_type "int"
-	  param in name "column" type class_ref 3491842 // FilterModelColumnData
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
     end
   end
 

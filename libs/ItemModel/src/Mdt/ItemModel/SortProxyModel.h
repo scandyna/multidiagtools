@@ -59,13 +59,18 @@ namespace Mdt{ namespace ItemModel{
    * \sa FilterProxyModel
    *
    * \todo Define:
+   *        - columnCount() changed due to:
+   *          -> inser columns
+   *          -> remove columns
+   *          -> model reset
+   *        - change model
    *        - dynamicSortFilter
-   *        - isSortLocaleAware
-   *        - sortRole
    *        - what impact have filter* functions ?
    */
   class SortProxyModel : public QSortFilterProxyModel
   {
+   Q_OBJECT
+
    public:
 
     /*! \brief Construct a sort proxy model
@@ -93,7 +98,11 @@ namespace Mdt{ namespace ItemModel{
      * proxyModel.addColumnToSortOrder(1, Qt::AscendingOrder);
      * \endcode
      *
-     * \pre \a column must be in valid range ( 0 <= column < columnCount() ).
+     * When source model changes, resets, or its columns count changes,
+     *  it is assumed that columns added to sort order are still valid.
+     *  If, after such event, a column does not exist in model, it will simply be ignored.
+     *
+     * \pre \a column must be >= 0
      */
     void addColumnToSortOrder(int column, Qt::SortOrder sortOrder = Qt::AscendingOrder);
 
@@ -101,11 +110,18 @@ namespace Mdt{ namespace ItemModel{
      *
      * This version gives more control of string sorting.
      *
-     * \pre \a column must be in valid range ( 0 <= column < columnCount() )
+     * \pre \a column must be >= 0
      * \sa addColumnToSortOrder(int, Qt::SortOrder)
      * \sa setColumnStringSortAttributes()
      */
     void addColumnToSortOrder(int column, StringNumericMode numericMode, Qt::SortOrder sortOrder = Qt::AscendingOrder, Qt::CaseSensitivity caseSensitivity = Qt::CaseInsensitive);
+
+    /*! \brief Get a list of column sort order
+     */
+    ColumnSortOrderList columnSortOrderList() const
+    {
+      return mColumnSortOrderList;
+    }
 
     /*! \brief Clear columns sort order
      *
@@ -123,7 +139,11 @@ namespace Mdt{ namespace ItemModel{
      *       sorting is allways case insensitive on some platforms (for example on POSIX).
      *       Also, if \a numericMode is Natural, sorting is allways done local aware.
      *
-     * \pre \a column must be in valid range ( 0 <= column < columnCount() ).
+     * When source model changes, resets, or its columns count changes,
+     *  it is assumed that each column, for which a attribute was set, is still valid.
+     *  If, after such event, a column does not exist in model, it will simply be ignored.
+     *
+     * \pre \a column must be >= 0
      * \sa clearColumnsStringSortAttributes()
      */
     void setColumnStringSortAttributes(int column, StringNumericMode numericMode, Qt::CaseSensitivity caseSensitivity = Qt::CaseInsensitive);
@@ -177,8 +197,38 @@ namespace Mdt{ namespace ItemModel{
     void setSortLocaleAware(bool on);
 
     /*! \brief Re-implemented from QSortFilterProxyModel
+     *
+     * Note that \a role will be the same for all columns in sort order.
      */
     void setSortRole(int role);
+
+    /*! \brief Re-implemented from QSortFilterProxyModel
+     */
+    void setSourceModel(QAbstractItemModel* sourceModel) override;
+
+    /*! \brief Re-implemented from QSortFilterProxyModel
+     */
+//     bool insertRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
+
+   signals:
+
+    /*! \brief Emitted when model was sorted
+     *
+     * This signal is only emitted when sort() was called.
+     *  If sort(int, Qt::SortOrder) is called, this signal is not emitted.
+     */
+    void modelSorted();
+
+    /*! \brief Emitted when a column was sorted
+     */
+    void columnSorted(int column);
+
+   private slots:
+
+    void onRowsInserted(const QModelIndex & parent, int first, int last);
+    void onModelAboutToBeReset();
+    void onModelReset();
+    void onDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles);
 
    private:
 
@@ -190,9 +240,14 @@ namespace Mdt{ namespace ItemModel{
      */
     bool lessThatString(const QString & left, const QString & right, int column) const;
 
+    /*! \brief Check if mColumnSortOrderList contains a column that is in range [left,right]
+     */
+    bool isColumnInSortOrder(int left, int right) const;
+
     ColumnSortOrderList mColumnSortOrderList;
     ColumnSortStringAttributesList mColumnSortStringAttributesList;
     mutable QCollator mCollator;
+    bool pvDynamicSortWasEnabled; // Used only by onModelAboutToBeReset() and onModelReset()
   };
 
 }} // namespace Mdt{ namespace ItemModel{

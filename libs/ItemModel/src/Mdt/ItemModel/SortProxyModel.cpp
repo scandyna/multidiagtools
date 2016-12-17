@@ -36,12 +36,15 @@ SortProxyModel::SortProxyModel(QObject* parent)
 
 void SortProxyModel::addColumnToSortOrder(int column, Qt::SortOrder sortOrder)
 {
-//   qDebug() << "add(" << column << ")";
+  Q_ASSERT(column >= 0);
+
   mColumnSortOrderList.addColumn(column, sortOrder);
 }
 
 void SortProxyModel::addColumnToSortOrder(int column, StringNumericMode numericMode, Qt::SortOrder sortOrder, Qt::CaseSensitivity caseSensitivity)
 {
+  Q_ASSERT(column >= 0);
+
   addColumnToSortOrder(column, sortOrder);
   setColumnStringSortAttributes(column, numericMode, caseSensitivity);
 }
@@ -53,6 +56,8 @@ void SortProxyModel::clearColumnsSortOrder()
 
 void SortProxyModel::setColumnStringSortAttributes(int column, StringNumericMode numericMode, Qt::CaseSensitivity caseSensitivity)
 {
+  Q_ASSERT(column >= 0);
+
   mColumnSortStringAttributesList.setColumn(column, caseSensitivity, numericMode == StringNumericMode::Natural);
 }
 
@@ -64,22 +69,29 @@ void SortProxyModel::clearColumnsStringSortAttributes()
 void SortProxyModel::sort(int column, Qt::SortOrder order)
 {
   Q_ASSERT(column >= -1);
-  Q_ASSERT(column < columnCount());
+//  Q_ASSERT(column < columnCount());
 
-//   qDebug() << "sort(" << column << ")";
+  qDebug() << "sort(" << column << ")";
   QSortFilterProxyModel::sort(column, order);
+  emit columnSorted(column);
 }
 
 void SortProxyModel::sort()
 {
+  qDebug() << "sort()";
   std::for_each(mColumnSortOrderList.crbegin(), mColumnSortOrderList.crend(), [this](const ColumnSortOrder & cso){
                                                                   sort(cso.column(), cso.sortOrder());
                                                                 });
+  emit modelSorted();
 }
 
 void SortProxyModel::setDynamicSortFilter(bool enable)
 {
-  const bool resort = enable != dynamicSortFilter();
+  /*
+   * Only resort when enabling
+   */
+  const bool resort = ( (enable != dynamicSortFilter()) && enable );
+  qDebug() << "Must resort: " << resort;
   QSortFilterProxyModel::setDynamicSortFilter(enable);
   if(resort){
     sort();
@@ -113,6 +125,93 @@ void SortProxyModel::setSortRole(int role)
   }
 }
 
+void SortProxyModel::setSourceModel(QAbstractItemModel* sourceModel)
+{
+  Q_ASSERT(sourceModel != nullptr);
+  /*
+   * If dynamic sort is enabled, we must sort once the model was set.
+   * QSortFilterProxyModel handles this.
+   * If QSortFilterProxyModel::sort() was previously called with a column > -1,
+   * sorting will be processed after model was set.
+   * To prevent sorting 2x , disable dynamic sort while setting source model
+   */
+  const bool dynSortEnabled = dynamicSortFilter();
+  setDynamicSortFilter(false);
+  disconnect( sourceModel, &QAbstractItemModel::rowsInserted, this, &SortProxyModel::onRowsInserted );
+  disconnect( sourceModel, &QAbstractItemModel::modelAboutToBeReset, this, &SortProxyModel::onModelAboutToBeReset );
+  disconnect( sourceModel, &QAbstractItemModel::modelReset, this, &SortProxyModel::onModelReset );
+  disconnect( sourceModel, &QAbstractItemModel::dataChanged, this, &SortProxyModel::onDataChanged );
+  QSortFilterProxyModel::setSourceModel(sourceModel);
+  connect( sourceModel, &QAbstractItemModel::rowsInserted, this, &SortProxyModel::onRowsInserted );
+  connect( sourceModel, &QAbstractItemModel::modelAboutToBeReset, this, &SortProxyModel::onModelAboutToBeReset );
+  connect( sourceModel, &QAbstractItemModel::modelReset, this, &SortProxyModel::onModelReset );
+  connect( sourceModel, &QAbstractItemModel::dataChanged, this, &SortProxyModel::onDataChanged );
+  // setDynamicSortFilter() will call sort() itself if dynamic sort is enabled
+  setDynamicSortFilter(dynSortEnabled);
+}
+
+// bool SortProxyModel::insertRows(int row, int count, const QModelIndex & parent)
+// {
+//   // To prevent sorting 2x, we proceed similar way than in setSourceModel()
+//   const bool dynSortEnabled = dynamicSortFilter();
+//   setDynamicSortFilter(false);
+//   const bool ok = QSortFilterProxyModel::insertRows(row, count, parent);
+//   qDebug() << "Row inserted..";
+//   setDynamicSortFilter(dynSortEnabled);
+// 
+//   return ok;
+// }
+
+void SortProxyModel::onRowsInserted(const QModelIndex &, int, int)
+{
+  qDebug() << "Rows inserted..";
+  if(dynamicSortFilter()){
+    sort();
+  }
+}
+
+void SortProxyModel::onModelAboutToBeReset()
+{
+  qDebug() << "Model will reset ...";
+  /*
+   * QSortFilterProxyModel uses its private sort methods.
+   * To prevent sorting 2x the model, disable dynamic sort
+   */
+  pvDynamicSortWasEnabled = dynamicSortFilter();
+  setDynamicSortFilter(false);
+}
+
+void SortProxyModel::onModelReset()
+{
+  qDebug() << "Model reset";
+  /*
+   * Dynamic sort was disabled by onModelAboutToBeReset().
+   * Re-enable it if it was before.
+   * This will also call sort() if dynamic sort was enabled.
+   */
+  setDynamicSortFilter(pvDynamicSortWasEnabled);
+}
+
+void SortProxyModel::onDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> &)
+{
+  /*
+   * If dynamic sort is enabled, QSortFilterProxyModel will sort using its private implementation
+   * (which seems optimized to not sort all rows).
+   * To have a minimum to resort, we should:
+   *  - Implement a function that proceeds as QSortFilterProxyModel's private implementation, which looks not easy
+   *  - Filter dataChanged() , which looks ugly
+   *
+   * For instance, sort the model if range topLeft,bottomRight contains a column that exists in sortOrderList.
+   */
+  qDebug() << "dataChanged";
+  if(dynamicSortFilter()){
+    qDebug() << " -> restort: " << isColumnInSortOrder(topLeft.column(), bottomRight.column());
+    if( isColumnInSortOrder(topLeft.column(), bottomRight.column()) ){
+      sort();
+    }
+  }
+}
+
 bool SortProxyModel::lessThan(const QModelIndex & source_left, const QModelIndex & source_right) const
 {
   Q_ASSERT( sourceModel() != nullptr );
@@ -120,8 +219,12 @@ bool SortProxyModel::lessThan(const QModelIndex & source_left, const QModelIndex
   if( (!source_left.isValid()) || (!source_right.isValid()) ){
     return QSortFilterProxyModel::lessThan(source_left, source_right);
   }
+  
+  ///qDebug() << "lessThan , column: " << source_left.column();
+  
   const auto leftData = sourceModel()->data(source_left, sortRole());
   const auto rightData = sourceModel()->data(source_right, sortRole());
+  ///qDebug() << "L: " << leftData << " < R: " << rightData << " ? " << ( QSortFilterProxyModel::lessThan(source_left, source_right) );
   /*
    * Handle string comparisons
    */
@@ -150,6 +253,14 @@ bool SortProxyModel::lessThatString(const QString & left, const QString & right,
   mCollator.setCaseSensitivity(caseSensitivity); // Ignored on some platforms
   mCollator.setNumericMode(attributes.numericMode());
   return (mCollator.compare(left, right) < 0 );
+}
+
+bool SortProxyModel::isColumnInSortOrder(int left, int right) const
+{
+  qDebug() << "isColumnInSortOrder(" << left << ", " << right << ")";
+  return ( std::find_if(mColumnSortOrderList.crbegin(), mColumnSortOrderList.crend(), [left, right](const ColumnSortOrder & cso){
+    return ( (cso.column() >= left) && (cso.column() <= right) ); 
+  }) != mColumnSortOrderList.crend() );
 }
 
 }} // namespace Mdt{ namespace ItemModel{

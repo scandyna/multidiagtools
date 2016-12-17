@@ -1,6 +1,6 @@
 format 211
 "Expression" // Mdt::ItemModel::Expression
-  revision 20
+  revision 22
   modified_by 2 "philippe"
   // class settings
   
@@ -308,14 +308,6 @@ ${inlines}
 	  b parent class_ref 3483522 // ContainerInterface
       end
 
-      classrelation 3892354 // <dependency>
-	relation 3866626 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3892354 // <dependency>
-	  b parent class_ref 3498370 // FilterProxyModelEval
-      end
-
       attribute 3170050 "Expression"
 	private explicit_type "Expr"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -470,6 +462,15 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      classrelation 3973122 // <directional composition>
+	relation 3947394 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3973122 // <directional composition>
+	  b parent class_ref 3581314 // ParentModelEvalData
       end
     end
 

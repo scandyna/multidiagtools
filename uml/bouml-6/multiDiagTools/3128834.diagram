@@ -1,0 +1,53 @@
+format 211
+
+classcanvas 128002 class_ref 3580674 // RelationFilterExpression
+  classdiagramsettings member_max_width 0 end
+  xyz 40.5 296.5 2000
+end
+classcanvas 129026 class_ref 3581058 // ParentModelColumnTerminal
+  classdiagramsettings member_max_width 0 end
+  xyz 39 152 2000
+end
+classcanvas 129154 class_ref 3581186 // ParentModelValue
+  classdiagramsettings member_max_width 0 end
+  xyz 289.5 296.5 2000
+end
+classcanvas 129282 class_ref 3580930 // ParentModelColumnData
+  classdiagramsettings member_max_width 0 end
+  xyz 274 154 2000
+end
+classcanvas 129410 class_ref 3580802 // ParentModelColumn
+  classdiagramsettings member_max_width 0 end
+  xyz 65 42 2000
+end
+classcanvas 129794 class_ref 3532930 // FilterEvalData
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 120 449 2000
+end
+classcanvas 129922 class_ref 3581314 // ParentModelEvalData
+  classdiagramsettings member_max_width 0 end
+  xyz 507 472 2000
+end
+note 130050 "Note: could simply re-use FilterExpression !?
+Just add new Terminal"
+  xyzwh 451 303 2000 313 83
+classcanvas 130178 class_ref 3491458 // FilterColumnTerminal
+  classdiagramsettings member_max_width 0 end
+  xyz 476 93 2005
+end
+relationcanvas 129538 relation_ref 3947138 // <directional composition>
+  from ref 129026 z 2001 to ref 129282
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 3947266 // <dependency>
+  from ref 129410 z 2001 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130306 relation_ref 3947394 // <directional composition>
+  from ref 129794 z 2001 to ref 129922
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

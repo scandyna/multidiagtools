@@ -281,6 +281,28 @@ namespace Mdt{ namespace ItemModel{
      */
     void populateColumn(int column, const std::vector<QVariant> & data, Qt::ItemDataRole role = Qt::DisplayRole);
 
+    /*! \brief Repopulate model with data
+     *
+     * Calling:
+     * \code
+     * model.populateByColumns({{1,2,3},{"A","B","C"}});
+     * \endcode
+     * will populate the model:
+     * <table class="srcdoc_td_center">
+     *  <tr><th>Col 0</th><th>Col 1</th></tr>
+     *  <tr><td>1</td><td>A</td></tr>
+     *  <tr><td>2</td><td>B</td></tr>
+     *  <tr><td>3</td><td>C</td></tr>
+     * </table>
+     *
+     * This method will also reset the model.
+     *
+     * \pre \a data must have at least 1 row
+     * \pre each row must have at least 1 column
+     * \pre each column must be the same size
+     */
+    void repopulateByColumns(const std::vector< std::vector<QVariant> > & data, Qt::ItemDataRole role = Qt::DisplayRole);
+
     /*! \brief Populate model with data
      *
      * Form is:

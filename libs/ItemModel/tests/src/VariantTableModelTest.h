@@ -48,6 +48,7 @@ class VariantTableModelTest : public QObject
   void tableModelViewTest();
   void tableModelResizeTest();
   void tableModelPopulateColumnTest();
+  void tableModelRepopulateByColumnTest();
   void tableModelInsertColumnsTest();
   void tableModelRemoveColumnsTest();
   void tableModelChangeColumnsCountSignalTest();

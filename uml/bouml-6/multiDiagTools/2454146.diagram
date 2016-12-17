@@ -42,7 +42,7 @@ classcanvas 129794 class_ref 719874 // QSortFilterProxyModel
 end
 classcanvas 129922 class_ref 2693250 // Relation
   classdiagramsettings member_max_width 0 show_context_mode uml end
-  xyz 477 601 2000
+  xyz 202 572 2000
 end
 relationcanvas 128514 relation_ref 3120514 // <unidirectional association>
   decenter_begin 581

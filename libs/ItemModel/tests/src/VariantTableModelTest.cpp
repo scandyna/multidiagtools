@@ -908,6 +908,33 @@ void VariantTableModelTest::tableModelPopulateColumnTest()
   QCOMPARE(model.data(index, Qt::EditRole), QVariant(3));
 }
 
+void VariantTableModelTest::tableModelRepopulateByColumnTest()
+{
+  VariantTableModel model;
+  QVariantList arguments;
+  QSignalSpy resetSpy(&model, &VariantTableModel::modelReset);
+  QVERIFY(resetSpy.isValid());
+  /*
+   * Initial state
+   */
+  QCOMPARE(model.rowCount(), 0);
+  QCOMPARE(model.columnCount(), 0);
+  QCOMPARE(resetSpy.count(), 0);
+  /*
+   * Populate
+   */
+  model.repopulateByColumns({{1,2,3},{"A","B","C"}});
+  QCOMPARE(model.rowCount(), 3);
+  QCOMPARE(model.columnCount(), 2);
+  QCOMPARE(resetSpy.count(), 1);
+  QCOMPARE(model.data(0, 0), QVariant(1));
+  QCOMPARE(model.data(1, 0), QVariant(2));
+  QCOMPARE(model.data(2, 0), QVariant(3));
+  QCOMPARE(model.data(0, 1), QVariant("A"));
+  QCOMPARE(model.data(1, 1), QVariant("B"));
+  QCOMPARE(model.data(2, 1), QVariant("C"));
+}
+
 void VariantTableModelTest::tableModelInsertColumnsTest()
 {
   VariantTableModel model;
