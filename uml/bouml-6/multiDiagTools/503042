@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 99
+  revision 100
   modified_by 2 "philippe"
   // class settings
   
@@ -6364,100 +6364,6 @@ ${inlines}
     
     activitydiagramsettings
      end
-    class 3491586 "FilterModelColumn"
-      visibility package 
-      nactuals 3
-      actual class class_ref 3225730 // extends
-        rank 0 explicit_value ""
-      actual class class_ref 3225730 // extends
-        rank 1 explicit_value ""
-      actual class class_ref 3225730 // extends
-        rank 2 explicit_value ""
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3884674 // <generalisation>
-	relation 3858946 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3884674 // <generalisation>
-	  b parent class_ref 3225730 // extends
-      end
-
-      classrelation 3884930 // <dependency>
-	relation 3859202 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3884930 // <dependency>
-	  b parent class_ref 3491842 // FilterModelColumnData
-      end
-
-      operation 4907394 "FilterModelColumn"
-	public explicit_return_type ""
-	nparams 2
-	  param in name "matchModel" type class_ref 146946 // QAbstractItemModel
-	  param in name "matchColumn" explicit_type "int"
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
-    class 3491842 "FilterModelColumnData"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 3149954 "MatchModel"
-	private type class_ref 146946 // QAbstractItemModel
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 3150082 "MatchColumn"
-	private explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-
     classdiagram 3048706 "FilterExpression"
       classdiagramsettings member_max_width 0 end
       size A4

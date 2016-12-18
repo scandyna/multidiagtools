@@ -30,6 +30,7 @@
 #include "Mdt/ItemModel/Expression/RelationFilterExpressionGrammar.h"
 #include "Mdt/ItemModel/Expression/ComparisonEval.h"
 #include "Mdt/ItemModel/Expression/FilterEval.h"
+#include "Mdt/ItemModel/Expression/ParentModelEvalData.h"
 #include "Mdt/ItemModel/FilterExpression.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QRegularExpression>
@@ -287,17 +288,56 @@ void FilterExpressionTest::parentModelColumnTest()
   QCOMPARE( boost::proto::_value()(P).columnIndex() , 3 );
 }
 
+void FilterExpressionTest::parentModelEvalDataTest()
+{
+  using ItemModel::Expression::ParentModelEvalData;
+
+  VariantTableModel model;
+  model.resize(2, 2);
+  /*
+   * Default constructed
+   */
+  ParentModelEvalData data1;
+  QVERIFY(data1.isNull());
+  QVERIFY(data1.model() == nullptr);
+  QCOMPARE(data1.row(), -1);
+  /*
+   * Construct valid
+   */
+  ParentModelEvalData data2(&model, 1);
+  QVERIFY(!data2.isNull());
+  QVERIFY(data2.model() == &model);
+  QCOMPARE(data2.row(), 1);
+}
+
 void FilterExpressionTest::evalDataTest()
 {
   using ItemModel::Expression::FilterEvalData;
+  using ItemModel::Expression::ParentModelEvalData;
 
+  VariantTableModel parentModel;
+  parentModel.populate(3,1);
   VariantTableModel model;
   model.populate(2,1);
 
+  /*
+   * Construct for filter
+   */
   FilterEvalData data(&model, 1, Qt::CaseInsensitive);
   QCOMPARE(data.model(), &model);
   QCOMPARE(data.row(), 1);
+  QVERIFY(data.parentModel() == nullptr);
+  QCOMPARE(data.parentModelRow(), -1);
   QVERIFY(data.caseSensitivity() == Qt::CaseInsensitive);
+  /*
+   * Construct for relation filter
+   */
+  FilterEvalData rData(&model, 1, ParentModelEvalData(&parentModel, 2), Qt::CaseSensitive);
+  QCOMPARE(rData.model(), &model);
+  QCOMPARE(rData.row(), 1);
+  QVERIFY(rData.parentModel() == &parentModel);
+  QCOMPARE(rData.parentModelRow(), 2);
+  QVERIFY(rData.caseSensitivity() == Qt::CaseSensitive);
 }
 
 void FilterExpressionTest::comparisonEvalTest()
@@ -389,7 +429,7 @@ void FilterExpressionTest::filterEvalTest()
   using ItemModel::Expression::FilterEval;
   using Like = ItemModel::LikeExpression;
 
-  QModelIndex index;
+//   QModelIndex index;
   /*
    * Setup table model:
    * ----------------------------
@@ -431,6 +471,79 @@ void FilterExpressionTest::filterEvalTest()
   // Comparison and || and &&
   QVERIFY(  eval(Id > 10 || ((Id < 5)&&(Name == Like("?B?"))) , 0, data) );
   QVERIFY( !eval(Id > 0 && ((Name == "A")||(Name == "B")) , 0, data) );
+}
+
+void FilterExpressionTest::relationFilterEvalTest()
+{
+  using ItemModel::Expression::FilterEvalData;
+  using ItemModel::Expression::ParentModelEvalData;
+  using ItemModel::Expression::FilterEval;
+
+  /*
+   * Setup parent table model
+   * ----------------------------
+   * | Id | CODE |
+   * ----------------------------
+   * | 2  |  B   |
+   * ----------------------------
+   */
+  VariantTableModel parentModel;
+  parentModel.resize(1, 2);
+  parentModel.populateColumn(0, {2});
+  parentModel.populateColumn(1, {"B"});
+  /*
+   * Setup (child) table model
+   * ----------------------------
+   * | Id | CODE |
+   * ----------------------------
+   * | 1  |  A   |
+   * ----------------------------
+   * | 2  |  B   |
+   * ----------------------------
+   * | 3  |  C   |
+   * ----------------------------
+   */
+  VariantTableModel model;
+  model.resize(3, 2);
+  model.populateColumn(0, {1,2,3});
+  model.populateColumn(1, {"A","B","C"});
+  /*
+   * Setup eval and columns
+   */
+  FilterEvalData row0EvalData(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive);
+  FilterEvalData row1EvalData(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive);
+  FilterEvalData row2EvalData(&model, 2, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive);
+  FilterEval eval;
+  ParentModelColumn parentId(0);
+  ParentModelColumn parentCode(0);
+  FilterColumn id(0);
+  FilterColumn code(1);
+  /*
+   * Tests
+   */
+  // ==
+  QVERIFY( !eval(id == parentId, 0, row0EvalData) );
+  QVERIFY(  eval(id == parentId, 0, row1EvalData) );
+  // !=
+  QVERIFY(  eval(id != parentId, 0, row0EvalData) );
+  QVERIFY( !eval(id != parentId, 0, row1EvalData) );
+  // <
+  QVERIFY(  eval(id < parentId, 0, row0EvalData) );
+  QVERIFY( !eval(id < parentId, 0, row1EvalData) );
+  // <=
+  QVERIFY(  eval(id <= parentId, 0, row0EvalData) );
+  QVERIFY(  eval(id <= parentId, 0, row1EvalData) );
+  QVERIFY( !eval(id <= parentId, 0, row2EvalData) );
+  // >
+  QVERIFY( !eval(id > parentId, 0, row1EvalData) );
+  QVERIFY(  eval(id > parentId, 0, row2EvalData) );
+  // >=
+  QVERIFY( !eval(id >= parentId, 0, row0EvalData) );
+  QVERIFY(  eval(id >= parentId, 0, row1EvalData) );
+  QVERIFY(  eval(id >= parentId, 0, row2EvalData) );
+  // Comparison and || and &&
+  QVERIFY(  eval((id == parentId) || (code == parentCode && id == parentId), 0, row1EvalData) );
+  QVERIFY( !eval((id == parentId) && (code < parentCode || id < parentId), 0, row1EvalData) );
 }
 
 void FilterExpressionTest::expressionCopyTest()
@@ -582,18 +695,20 @@ void FilterExpressionTest::expressionTest()
 void FilterExpressionTest::expressionRelationTest()
 {
   using ItemModel::FilterExpression;
-  using Like = ItemModel::LikeExpression;
+  using ItemModel::Expression::ParentModelEvalData;
 
   /*
    * Setup parent table model
    * ----------------------------
    * | Id | CODE |
    * ----------------------------
-   * | 1  |  A   |
+   * | 2  |  B   |
    * ----------------------------
    */
   VariantTableModel parentModel;
-
+  parentModel.resize(1, 2);
+  parentModel.populateColumn(0, {2});
+  parentModel.populateColumn(1, {"B"});
   /*
    * Setup (child) table model
    * ----------------------------
@@ -603,14 +718,13 @@ void FilterExpressionTest::expressionRelationTest()
    * ----------------------------
    * | 2  |  B   |
    * ----------------------------
+   * | 3  |  C   |
+   * ----------------------------
    */
   VariantTableModel model;
-  model.resize(1, 2);
-  model.populateColumn(0, {"ABC"});
-  model.populateColumn(1, {3});
-  // Check
-  QCOMPARE(model.data(0, 0), QVariant("ABC"));
-  QCOMPARE(model.data(0, 1), QVariant(3));
+  model.resize(3, 2);
+  model.populateColumn(0, {1,2,3});
+  model.populateColumn(1, {"A","B","C"});
   /*
    * Because boost::proto::deep_copy() changes somewhat types,
    * check with each valid operators.
@@ -622,31 +736,55 @@ void FilterExpressionTest::expressionRelationTest()
   FilterColumn id(0);
   FilterColumn code(1);
   // ==
-  filter.setExpression(id == parentId);
-  
-  // Like
-  
+  filter.setRelationExpression(id == parentId);
+  QVERIFY( !filter.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY(  filter.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
   // !=
-  
+  filter.setRelationExpression(id != parentId);
+  QVERIFY(  filter.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY( !filter.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
   // <
-  
+  filter.setRelationExpression(id < parentId);
+  QVERIFY(  filter.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY( !filter.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY( !filter.eval(&model, 2, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
   // <=
-  
+  filter.setRelationExpression(id <= parentId);
+  QVERIFY(  filter.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY(  filter.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY( !filter.eval(&model, 2, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
   // >
-  
+  filter.setRelationExpression(id > parentId);
+  QVERIFY( !filter.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY( !filter.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY(  filter.eval(&model, 2, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
   // >=
-
-  QFAIL("Not complete");
+  filter.setRelationExpression(id >= parentId);
+  QVERIFY( !filter.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY(  filter.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY(  filter.eval(&model, 2, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
 }
 
 void FilterExpressionTest::expressionBenchmark()
 {
   using ItemModel::FilterColumn;
   using ItemModel::Expression::FilterEvalData;
+  using ItemModel::Expression::ParentModelEvalData;
   using ItemModel::Expression::FilterEval;
   using Like = ItemModel::LikeExpression;
 
-  QModelIndex index;
+  /*
+   * Setup parent table model
+   * -------------
+   * | Id | CODE |
+   * -------------
+   * | 1  |  B   |
+   * -------------
+   */
+  VariantTableModel parentModel;
+  parentModel.resize(1, 2);
+  parentModel.populateColumn(0, {1});
+  parentModel.populateColumn(1, {"B"});
   /*
    * Setup table model:
    * ----------------------------
@@ -664,12 +802,13 @@ void FilterExpressionTest::expressionBenchmark()
    * Setup columns and data and transform
    */
   FilterColumn id(0);
+  ParentModelColumn parentId(0);
   FilterColumn name(1);
   FilterColumn rem(2);
-  FilterEvalData data(&model, 0, Qt::CaseInsensitive);
+  FilterEvalData data(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive);
   FilterEval eval;
   QBENCHMARK{
-    QVERIFY( eval(id > 0 && (name == Like("?B?") && rem == Like("*2*b*c?")), 0, data) );
+    QVERIFY( eval(id == parentId && (name == Like("?B?") && rem == Like("*2*b*c?")), 0, data) );
   }
 }
 

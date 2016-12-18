@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_FILTER_EXPRESSION_H
 
 #include "Expression/FilterExpressionGrammar.h"
+#include "Expression/RelationFilterExpressionGrammar.h"
 #include "Expression/FilterExpressionContainer.h"
 #include <Qt>
 #include <boost/proto/matches.hpp>
@@ -96,16 +97,25 @@ namespace Mdt{ namespace ItemModel{
      *       cliendId + 5
      *       \endcode
      */
-    template<typename Expr, typename Grammar = Expression::FilterExpressionGrammar>
+    template<typename Expr>
     void setExpression(const Expr & expr)
     {
-      static_assert( boost::proto::matches<Expr, Grammar>::value , "Type of expr is not a valid filter expression." );
+      static_assert( boost::proto::matches<Expr, Expression::FilterExpressionGrammar>::value , "Type of expr is not a valid filter expression." );
       mContainer.reset( new Expression::FilterExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) );
     }
-    /**
-     * \todo Better: create second function: setRelationExpression() that matches the correct grammar.
-     * NOTE: do not pass parent model/row here, create a eval() overload for this
+
+    /*! \brief Set expression for a relation filter
+     *
+     * \tparam Expr Type of the expression.
+     * \param expr Expression to hold.
+     * \pre Expr must be a relation filter expression type.
      */
+    template<typename Expr>
+    void setRelationExpression(const Expr & expr)
+    {
+      static_assert( boost::proto::matches<Expr, Expression::RelationFilterExpressionGrammar>::value , "Type of expr is not a valid relation filter expression." );
+      mContainer.reset( new Expression::FilterExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) );
+    }
 
     /*! \brief Check if this expression is null
      */
@@ -117,10 +127,19 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Evaluate if row matches stored expression in model
      *
      * \pre this expression must not be null
-     * \pre model must be a valid pointer (not null)
-     * \pre must be in valid range ( 0 <= row < model->rowCount() )
+     * \pre \a model must be a valid pointer (not null)
+     * \pre \a must be in valid range ( 0 <= row < model->rowCount() )
      */
     bool eval(const QAbstractItemModel * const model, int row, Qt::CaseSensitivity caseSensitivity) const;
+
+    /*! \brief Evaluate if row matches stored expression in model
+     *
+     * \pre this expression must not be null
+     * \pre \a model must be a valid pointer (not null)
+     * \pre \a must be in valid range ( 0 <= row < model->rowCount() )
+     * \pre \a parentModelData must not be null
+     */
+    bool eval(const QAbstractItemModel*const model, int row, const Expression::ParentModelEvalData & parentModelData, Qt::CaseSensitivity caseSensitivity) const;
 
    private:
 

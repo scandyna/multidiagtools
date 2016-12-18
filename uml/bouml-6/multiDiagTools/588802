@@ -1,6 +1,6 @@
 format 211
 "FilterExpression" // Mdt::FilterExpression
-  revision 15
+  revision 16
   modified_by 2 "philippe"
   // class settings
   
@@ -558,7 +558,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     class 3519874 "LikeExpressionRegexTransform"
@@ -576,6 +575,27 @@ ${inlines}
       mysql_decl ""
       
     end
+  end
 
+  classview 1663362 "RuntimeExpression"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3135490 "sandbox"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
   end
 end

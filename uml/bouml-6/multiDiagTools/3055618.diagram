@@ -2,64 +2,55 @@ format 211
 
 classcanvas 128002 class_ref 3491458 // FilterColumnTerminal
   classdiagramsettings member_max_width 0 end
-  xyz 175 288 2000
-end
-classcanvas 128130 class_ref 3491586 // FilterModelColumn
-  classdiagramsettings member_max_width 0 end
-  xyz 369 186 2000
+  xyz 359 184 2000
 end
 classcanvas 128258 class_ref 3225730 // extends
   classdiagramsettings member_max_width 0 show_context_mode uml end
-  xyz 541 40 2005
+  xyz 785 40 2005
 end
 classcanvas 128898 class_ref 3491714 // FilterColumnData
   classdiagramsettings member_max_width 0 end
-  xyz 455 298 2000
+  xyz 415 302 2000
 end
-classcanvas 129026 class_ref 3491842 // FilterModelColumnData
-  classdiagramsettings member_max_width 0 end
-  xyz 992 287 2000
-end
-note 129666 "We need also row here.
--> This is a  RelationFilter, or something like this."
-  xyzwh 905 176 2000 406 72
 classcanvas 130050 class_ref 3533314 // FilterColumn
   classdiagramsettings member_max_width 0 end
-  xyz 41 290 2000
+  xyz 577 302 2000
 end
+classcanvas 130690 class_ref 3587970 // ColumnTerminal
+  classdiagramsettings member_max_width 0 show_context_mode uml end
+  xyz 713 296 2011
+end
+note 131330 "Old stuff"
+  xyzwh 42 194 2000 277 61
 relationcanvas 128386 relation_ref 3858818 // <generalisation>
   geometry VHV unfixed
-  from ref 128002 z 2006 to point 294 144
-  line 130306 z 2006 to point 614 144
-  line 130434 z 2006 to ref 128258
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 128514 relation_ref 3858946 // <generalisation>
-  from ref 128130 z 2006 to ref 128258
+  decenter_end 523
+  from ref 128002 z 2006 to point 478 144
+  line 131074 z 2006 to point 861 144
+  line 131202 z 2006 to ref 128258
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129154 relation_ref 3859074 // <directional composition>
+  decenter_end 528
   from ref 128002 z 2001 to ref 128898
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 129282 relation_ref 3859202 // <dependency>
-  geometry VH unfixed
-  from ref 128130 z 2001 to point 614 326
-  line 130562 z 2001 to ref 129026
+relationcanvas 130818 relation_ref 3954050 // <generalisation>
+  decenter_end 523
+  from ref 130690 z 2012 to ref 128258
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 130178 relation_ref 3900290 // <dependency>
-  decenter_begin 550
-  from ref 130050 z 2001 to ref 128002
+relationcanvas 130946 relation_ref 3954178 // <dependency>
+  from ref 130050 z 2012 to ref 130690
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-line 129794 -_-_ decenter_end 555
-  from ref 128130 z 2001 to ref 129666
-line 129922 -_-_ decenter_begin 480 decenter_end 490
-  from ref 129026 z 2001 to ref 129666
+line 131458 -_-_
+  from ref 128002 z 2001 to ref 131330
+line 131586 -_-_ geometry HV unfixed decenter_begin 557 decenter_end 483
+  from ref 128898 z 2001 to point 173 333
+  line 131714 z 2001 to ref 131330
 end

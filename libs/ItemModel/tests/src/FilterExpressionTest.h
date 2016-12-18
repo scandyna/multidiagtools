@@ -56,9 +56,11 @@ class FilterExpressionTest : public QObject
   void filterColumnTest();
   void parentModelColumnTest();
 
+  void parentModelEvalDataTest();
   void evalDataTest();
   void comparisonEvalTest();
   void filterEvalTest();
+  void relationFilterEvalTest();
 
   void expressionCopyTest();
   void expressionTest();

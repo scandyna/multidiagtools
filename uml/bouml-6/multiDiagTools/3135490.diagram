@@ -1,0 +1,14 @@
+format 211
+
+note 128002 "Use Boost Graph to build the tree ?"
+  xyzwh 65 53 2000 389 59
+note 128130 "Text based with boots spirit ?
+ - Dialog generates text
+ - User can input expression directly in text"
+  xyzwh 68 131 2000 519 85
+note 128258 "Terminals:
+ - For SQL
+ - For ItemModel
+-> Myabe templat nodes"
+  xyzwh 73 248 2000 725 281
+end

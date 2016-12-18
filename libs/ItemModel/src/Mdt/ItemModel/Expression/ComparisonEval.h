@@ -22,10 +22,13 @@
 #define MDT_ITEM_MODEL_EXPRESSION_COMPARISON_EVAL_H
 
 #include "../FilterColumn.h"
+#include "../ParentModelColumn.h"
 #include "ColumnTerminal.h"
 #include "FilterEvalData.h"
+
 #include "LeftTerminal.h"
 #include "RightTerminal.h"
+
 #include <QString>
 #include <QVariant>
 #include <boost/proto/traits.hpp>
@@ -38,6 +41,10 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
   /*! \brief Get value of QVariant type
    */
   QVariant getVariantValue(const FilterColumnData & col, const FilterEvalData & data);
+
+  /*! \brief Get value of QVariant type
+   */
+  QVariant getVariantValue(const ParentModelColumnData & col, const FilterEvalData & data);
 
   /*! \brief Get value of QString type
    */
@@ -88,6 +95,7 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
     static bool isEqual(const FilterColumnData & col, const QString & value, const FilterEvalData & data);
     static bool isEqual(const FilterColumnData & col, int value, const FilterEvalData & data);
+    static bool isEqual(const FilterColumnData & col, const ParentModelColumnData & parentCol, const FilterEvalData & data);
   };
 
   /*! \brief != comparison callable
@@ -111,8 +119,16 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
                                   boost::proto::call< CompareLikeTo(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
                                 > ,
                                 boost::proto::when<
+                                  boost::proto::equal_to< FilterColumn, ParentModelColumn > ,
+                                  boost::proto::call< CompareEqualTo(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
+                                > ,
+                                boost::proto::when<
                                   boost::proto::equal_to< FilterColumn, RightTerminal > ,
                                   boost::proto::call< CompareEqualTo(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
+                                > ,
+                                boost::proto::when<
+                                  boost::proto::not_equal_to< FilterColumn, ParentModelColumn > ,
+                                  boost::proto::call< CompareNotEqualTo(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
                                 > ,
                                 boost::proto::when<
                                   boost::proto::not_equal_to< FilterColumn, RightTerminal > ,
@@ -138,6 +154,7 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
     bool isLessThan(const FilterColumnData & col, const QString & value, const FilterEvalData & data) const;
     bool isLessThan(const FilterColumnData & col, int value, const FilterEvalData & data) const;
+    bool isLessThan(const FilterColumnData & col, const ParentModelColumnData & parentCol, const FilterEvalData & data) const;
   };
 
   /*! \brief <= comparison callable
@@ -156,6 +173,7 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
     bool isLessEqual(const FilterColumnData & col, const QString & value, const FilterEvalData & data) const;
     bool isLessEqual(const FilterColumnData & col, int value, const FilterEvalData & data) const;
+    bool isLessEqual(const FilterColumnData & col, const ParentModelColumnData & parentCol, const FilterEvalData & data) const;
   };
 
   /*! \brief < and <= comparison eval
@@ -166,7 +184,15 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
                                 boost::proto::call< CompareLessThan(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
                               > ,
                               boost::proto::when<
+                                boost::proto::less< FilterColumn, ParentModelColumn > ,
+                                boost::proto::call< CompareLessThan(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
+                              > ,
+                              boost::proto::when<
                                 boost::proto::less_equal< FilterColumn, RightTerminal > ,
+                                boost::proto::call< CompareLessEqualTo(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
+                              > ,
+                              boost::proto::when<
+                                boost::proto::less_equal< FilterColumn, ParentModelColumn > ,
                                 boost::proto::call< CompareLessEqualTo(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
                               >
                             >
@@ -189,6 +215,7 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
     bool isGreaterThan(const FilterColumnData & col, const QString & value, const FilterEvalData & data) const;
     bool isGreaterThan(const FilterColumnData & col, int value, const FilterEvalData & data) const;
+    bool isGreaterThan(const FilterColumnData & col, const ParentModelColumnData & parentCol, const FilterEvalData & data) const;
   };
 
   /*! \brief >= comparison callable
@@ -207,6 +234,7 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
     bool isGreaterEqual(const FilterColumnData & col, const QString & value, const FilterEvalData & data) const;
     bool isGreaterEqual(const FilterColumnData & col, int value, const FilterEvalData & data) const;
+    bool isGreaterEqual(const FilterColumnData & col, const ParentModelColumnData & parentCol, const FilterEvalData & data) const;
   };
 
   /*! \brief > and >= comparison eval
@@ -217,7 +245,15 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
                                   boost::proto::call< CompareGreaterThan(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
                                 > ,
                                 boost::proto::when<
+                                  boost::proto::greater< FilterColumn, ParentModelColumn > ,
+                                  boost::proto::call< CompareGreaterThan(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
+                                > ,
+                                boost::proto::when<
                                   boost::proto::greater_equal< FilterColumn, RightTerminal > ,
+                                  boost::proto::call< CompareGreaterEqualTo(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
+                                > ,
+                                boost::proto::when<
+                                  boost::proto::greater_equal< FilterColumn, ParentModelColumn > ,
                                   boost::proto::call< CompareGreaterEqualTo(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
                                 >
                               >

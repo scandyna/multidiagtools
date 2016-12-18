@@ -1,6 +1,6 @@
 format 211
 "ItemModel" // Mdt::ItemModel
-  revision 14
+  revision 16
   modified_by 2 "philippe"
   // class settings
   
@@ -727,91 +727,6 @@ ${items}};
       size B-Landscape
     end
 
-    class 3491458 "FilterColumnTerminal"
-      visibility package 
-      nformals 1
-      formal name "Domain" type "class" explicit_default_value ""
-        explicit_extends ""
-      nactuals 3
-      actual class class_ref 3225730 // extends
-        rank 0 explicit_value ""
-      actual class class_ref 3225730 // extends
-        rank 1 explicit_value ""
-      actual class class_ref 3225730 // extends
-        rank 2 explicit_value ""
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3884546 // <generalisation>
-	relation 3858818 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3884546 // <generalisation>
-	  b parent class_ref 3225730 // extends
-      end
-
-      classrelation 3884802 // <directional composition>
-	relation 3859074 *-->
-	  a role_name "" public
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3884802 // <directional composition>
-	  b parent class_ref 3491714 // FilterColumnData
-      end
-
-      operation 4907266 "FilterColumnTerminal"
-	cpp_inline public explicit_return_type ""
-	nparams 1
-	  param in name "column" explicit_type "int"
-	cpp_decl "  ${comment}${inline}${name}${(}${t0} ${p0}${v0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}${t0} ${p0}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
-    class 3491714 "FilterColumnData"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 3149826 "Column"
-	private explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-
     class 3533314 "FilterColumn"
       visibility package stereotype "typedef" explicit_base_type ""
       cpp_decl "${comment}typedef ${type} ${name};
@@ -824,12 +739,12 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3926018 // <dependency>
-	relation 3900290 -_->
+      classrelation 3979906 // <dependency>
+	relation 3954178 -_->
 	  a public
 	    cpp default "#include in source"
-	    classrelation_ref 3926018 // <dependency>
-	  b parent class_ref 3491458 // FilterColumnTerminal
+	    classrelation_ref 3979906 // <dependency>
+	  b parent class_ref 3587970 // ColumnTerminal
       end
     end
 
@@ -902,13 +817,31 @@ ${inlines}
 	
       end
 
-      operation 4915202 "setExpression"
+      operation 4915202 "setFilter"
 	public explicit_return_type "void"
 	nparams 1
 	  param in name "expr" explicit_type "Expr"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5003650 "setFilter"
+	public explicit_return_type "void"
+	nparams 3
+	  param in name "parentModel" type class_ref 146946 // QAbstractItemModel
+	  param in name "pmRow" explicit_type "int"
+	  param in name "expr" explicit_type "Expr"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -1003,6 +936,103 @@ ${inlines}
 "
 	    classrelation_ref 3892226 // <directional composition>
 	  b parent class_ref 3498626 // FilterExpression
+      end
+    end
+  end
+
+  classview 1656834 "Relation"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3128834 "sandbox"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3580802 "ParentModelColumn"
+      visibility package stereotype "typedef" explicit_base_type ""
+      cpp_decl "${comment}typedef ${type} ${name};
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl "${comment}typedef ${type} ${name};
+"
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3980034 // <dependency>
+	relation 3954306 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 3980034 // <dependency>
+	  b parent class_ref 3587970 // ColumnTerminal
+      end
+    end
+
+    class 3581314 "ParentModelEvalData"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3197826 "Model"
+	private type class_ref 146946 // QAbstractItemModel
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3198082 "Row"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 5010434 "isNull"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end
@@ -1350,174 +1380,6 @@ ${items}};
       attribute 3191298 "Natural"
 	public type class_ref 3574146 // StringNumericMode
 	cpp_decl "  ${name}${value},${comment}"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-  end
-
-  classview 1656834 "Relation"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
-    classdiagram 3128834 "sandbox"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 3580674 "RelationFilterExpression"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
-    class 3580802 "ParentModelColumn"
-      visibility package stereotype "typedef" explicit_base_type ""
-      cpp_decl "${comment}typedef ${type} ${name};
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl "${comment}typedef ${type} ${name};
-"
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3972994 // <dependency>
-	relation 3947266 -_->
-	  a public
-	    cpp default "#include in source"
-	    classrelation_ref 3972994 // <dependency>
-	  b parent class_ref 3581058 // ParentModelColumnTerminal
-      end
-    end
-
-    class 3580930 "ParentModelColumnData"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 3197954 "Column"
-	private explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-    end
-
-    class 3581058 "ParentModelColumnTerminal"
-      visibility package 
-      nformals 1
-      formal name "Domain" type "class" explicit_default_value ""
-        explicit_extends ""
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3972866 // <directional composition>
-	relation 3947138 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3972866 // <directional composition>
-	  b parent class_ref 3580930 // ParentModelColumnData
-      end
-    end
-
-    class 3581186 "ParentModelValue"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-    end
-
-    class 3581314 "ParentModelEvalData"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      attribute 3197826 "Model"
-	private type class_ref 146946 // QAbstractItemModel
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      attribute 3198082 "Row"
-	private explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
 	java_decl ""
 	php_decl ""
 	python_decl ""

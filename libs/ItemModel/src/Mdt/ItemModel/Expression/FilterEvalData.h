@@ -21,6 +21,8 @@
 #ifndef MDT_ITEM_MODEL_EXPRESSION_FILTER_EVAL_DATA_H
 #define MDT_ITEM_MODEL_EXPRESSION_FILTER_EVAL_DATA_H
 
+#include "ParentModelEvalData.h"
+#include <QPointer>
 #include <QAbstractItemModel>
 #include <Qt>
 
@@ -47,6 +49,24 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
       Q_ASSERT(mRow < mModel->rowCount());
     }
 
+    /*! \brief Construct eval data
+     *
+     * \pre \a model must be a valid pointer
+     * \pre \a row must be in valid range ( 0 <= row < model.rowCount() )
+     * \pre \a parentModelData must not be null
+     */
+    FilterEvalData(const QAbstractItemModel * const model, int row, const ParentModelEvalData & parentModelData, Qt::CaseSensitivity cs)
+     : mModel(model),
+       mRow(row),
+       mCaseSensitivity(cs),
+       mParentData(parentModelData)
+    {
+      Q_ASSERT(mModel != nullptr);
+      Q_ASSERT(mRow >= 0);
+      Q_ASSERT(mRow < mModel->rowCount());
+      Q_ASSERT(!mParentData.isNull());
+    }
+
     /*! \brief Get model
      */
     const QAbstractItemModel *model() const
@@ -61,6 +81,20 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
       return mRow;
     }
 
+    /*! \brief Get parent model
+     */
+    const QAbstractItemModel *parentModel() const
+    {
+      return mParentData.model();
+    }
+
+    /*! \brief Get parent model row
+     */
+    int parentModelRow() const
+    {
+      return mParentData.row();
+    }
+
     /*! \brief Get case sensitivity
      */
     Qt::CaseSensitivity caseSensitivity() const
@@ -70,9 +104,11 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
    private:
 
-    const QAbstractItemModel * const mModel;
+    ///const QAbstractItemModel * const mModel;
+    const QPointer<const QAbstractItemModel> mModel;
     const int mRow;
     const Qt::CaseSensitivity mCaseSensitivity;
+    const ParentModelEvalData mParentData;
   };
 
 }}} // namespace Mdt{ namespace ItemModel{ namespace Expression{

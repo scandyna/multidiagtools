@@ -21,6 +21,7 @@
 #ifndef MDT_ITEM_MODEL_EXPRESSION_CONTAINER_INTERFACE_H
 #define MDT_ITEM_MODEL_EXPRESSION_CONTAINER_INTERFACE_H
 
+#include "ParentModelEvalData.h"
 #include <Qt>
 
 class QAbstractItemModel;
@@ -45,10 +46,18 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
     /*! \brief Evaluate if row matches stored expression in model
      *
-     * \pre model must be a valid pointer (not null)
-     * \pre must be in valid range ( 0 <= row < model->rowCount() )
+     * \pre \a model must be a valid pointer (not null)
+     * \pre \a must be in valid range ( 0 <= row < model->rowCount() )
      */
     virtual bool eval(const QAbstractItemModel * const model, int row, Qt::CaseSensitivity caseSensitivity) const = 0;
+
+    /*! \brief Evaluate if row matches stored expression in model
+     *
+     * \pre \a model must be a valid pointer (not null)
+     * \pre \a must be in valid range ( 0 <= row < model->rowCount() )
+     * \pre \a parentModelData must not be null
+     */
+    virtual bool eval(const QAbstractItemModel * const model, int row, const ParentModelEvalData & parentModelData , Qt::CaseSensitivity caseSensitivity) const = 0;
   };
 
 }}} // namespace Mdt{ namespace ItemModel{ namespace Expression{

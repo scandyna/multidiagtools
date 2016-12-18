@@ -41,6 +41,18 @@ QVariant getVariantValue(const FilterColumnData & col, const FilterEvalData & da
   return model->data(index);
 }
 
+QVariant getVariantValue(const ParentModelColumnData & col, const FilterEvalData & data)
+{
+  const auto * model = data.parentModel();
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(col.columnIndex() < model->columnCount());
+
+  const auto index = model->index(data.parentModelRow(), col.columnIndex());
+  Q_ASSERT(index.isValid());
+
+  return model->data(index);
+}
+
 bool CompareLikeTo::isLike(const FilterColumnData & col, const QString & like, const FilterEvalData & data) const
 {
   using Mdt::FilterExpression::LikeExpressionRegexTransform;
@@ -66,6 +78,11 @@ bool CompareEqualTo::isEqual(const FilterColumnData & col, int value, const Filt
   return ( getVariantValue(col, data) == value );
 }
 
+bool CompareEqualTo::isEqual(const FilterColumnData &  col, const ParentModelColumnData & parentCol, const FilterEvalData& data)
+{
+  return ( getVariantValue(col, data) == getVariantValue(parentCol, data) );
+}
+
 bool CompareLessThan::isLessThan(const FilterColumnData& col, const QString& value, const FilterEvalData& data) const
 {
   return (QString::compare( getStringValue(col, data), value, data.caseSensitivity() ) < 0);
@@ -74,6 +91,11 @@ bool CompareLessThan::isLessThan(const FilterColumnData& col, const QString& val
 bool CompareLessThan::isLessThan(const FilterColumnData& col, int value, const FilterEvalData& data) const
 {
   return ( getVariantValue(col, data) < value );
+}
+
+bool CompareLessThan::isLessThan(const FilterColumnData& col, const ParentModelColumnData& parentCol, const FilterEvalData& data) const
+{
+  return ( getVariantValue(col, data) < getVariantValue(parentCol, data) );
 }
 
 bool CompareLessEqualTo::isLessEqual(const FilterColumnData& col, const QString& value, const FilterEvalData& data) const
@@ -86,6 +108,11 @@ bool CompareLessEqualTo::isLessEqual(const FilterColumnData& col, int value, con
   return ( getVariantValue(col, data) <= value );
 }
 
+bool CompareLessEqualTo::isLessEqual(const FilterColumnData& col, const ParentModelColumnData& parentCol, const FilterEvalData& data) const
+{
+  return ( getVariantValue(col, data) <= getVariantValue(parentCol, data) );
+}
+
 bool CompareGreaterThan::isGreaterThan(const FilterColumnData& col, const QString& value, const FilterEvalData& data) const
 {
   return (QString::compare( getStringValue(col, data), value, data.caseSensitivity() ) > 0);
@@ -96,6 +123,11 @@ bool CompareGreaterThan::isGreaterThan(const FilterColumnData& col, int value, c
   return ( getVariantValue(col, data) > value );
 }
 
+bool CompareGreaterThan::isGreaterThan(const FilterColumnData& col, const ParentModelColumnData& parentCol, const FilterEvalData& data) const
+{
+  return ( getVariantValue(col, data) > getVariantValue(parentCol, data) );
+}
+
 bool CompareGreaterEqualTo::isGreaterEqual(const FilterColumnData& col, const QString& value, const FilterEvalData& data) const
 {
   return (QString::compare( getStringValue(col, data), value, data.caseSensitivity() ) >= 0);
@@ -104,6 +136,11 @@ bool CompareGreaterEqualTo::isGreaterEqual(const FilterColumnData& col, const QS
 bool CompareGreaterEqualTo::isGreaterEqual(const FilterColumnData& col, int value, const FilterEvalData& data) const
 {
   return ( getVariantValue(col, data) >= value );
+}
+
+bool CompareGreaterEqualTo::isGreaterEqual(const FilterColumnData& col, const ParentModelColumnData& parentCol, const FilterEvalData& data) const
+{
+  return ( getVariantValue(col, data) >= getVariantValue(parentCol, data) );
 }
 
 }}} // namespace Mdt{ namespace ItemModel{ namespace Expression{

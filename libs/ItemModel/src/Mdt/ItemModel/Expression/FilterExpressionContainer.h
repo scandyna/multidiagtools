@@ -63,8 +63,8 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
     /*! \brief Evaluate if row matches stored expression in model
      *
-     * \pre model must be a valid pointer (not null)
-     * \pre must be in valid range ( 0 <= row < model->rowCount() )
+     * \pre \a model must be a valid pointer (not null)
+     * \pre \a must be in valid range ( 0 <= row < model->rowCount() )
      */
     bool eval(const QAbstractItemModel * const model, int row, Qt::CaseSensitivity cs) const override
     {
@@ -74,6 +74,23 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
       FilterEval ev;
       return ev(mExpression, 0, FilterEvalData(model, row, cs));
+    }
+
+    /*! \brief Evaluate if row matches stored expression in model
+     *
+     * \pre \a model must be a valid pointer (not null)
+     * \pre \a must be in valid range ( 0 <= row < model->rowCount() )
+     * \pre \a parentModelData must not be null
+     */
+    bool eval(const QAbstractItemModel*const model, int row, const ParentModelEvalData& parentModelData, Qt::CaseSensitivity cs) const override
+    {
+      Q_ASSERT(model != nullptr);
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(row < model->rowCount());
+      Q_ASSERT(!parentModelData.isNull());
+
+      FilterEval ev;
+      return ev(mExpression, 0, FilterEvalData(model, row, parentModelData, cs));
     }
 
    private:
