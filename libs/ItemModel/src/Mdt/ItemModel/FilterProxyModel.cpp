@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "FilterProxyModel.h"
-#include "Mdt/Error.h"
+// #include "Mdt/Error.h"
 #include <QModelIndex>
 
 // #include <QDebug>
@@ -34,8 +34,8 @@ FilterProxyModel::FilterProxyModel(QObject* parent)
 bool FilterProxyModel::filterAcceptsRow(int source_row, const QModelIndex& source_parent) const
 {
   if(source_parent.isValid()){
-    auto error = mdtErrorNewQ(tr("Only list and table models/views are supported. Filter can return wrong results with a hierarchical model."), Mdt::Error::Warning, this );
-    error.commit();
+//     auto error = mdtErrorNewQ(tr("Only list and table models/views are supported. Filter can return wrong results with a hierarchical model."), Mdt::Error::Warning, this );
+//     error.commit();
     return false;
   }
   if(mFilterExpression.isNull()){

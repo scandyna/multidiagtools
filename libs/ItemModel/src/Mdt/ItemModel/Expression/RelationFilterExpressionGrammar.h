@@ -18,52 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H
-#define MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H
+#ifndef MDT_ITEM_MODEL_EXPRESSION_RELATION_FILTER_EXPRESSION_GRAMMAR_H
+#define MDT_ITEM_MODEL_EXPRESSION_RELATION_FILTER_EXPRESSION_GRAMMAR_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "RelationFilterComparison.h"
 
-class FilterExpressionTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace ItemModel{ namespace Expression{
 
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
- private:
-
-  /*
-   * Compile time tests
+  /*! \brief Grammar of a FilterExpression
    */
+  struct RelationFilterExpressionGrammar : boost::proto::or_<
+                                            boost::proto::logical_and< RelationFilterExpressionGrammar , RelationFilterExpressionGrammar > ,
+                                            boost::proto::logical_or< RelationFilterExpressionGrammar , RelationFilterExpressionGrammar > ,
+                                            RelationFilterComparison
+                                          >
+  {
+  };
 
-  void literalValueTest();
-  void leftTerminalTest();
-  void rightTerminalTest();
-  void filterComparisonTest();
-  void filterExpressionGrammarTest();
-  void relationFilterComparisonTest();
-  void relationExpressionGrammarTest();
+}}} // namespace Mdt{ namespace ItemModel{ namespace Expression{
 
- private slots:
-
-  /*
-   * Runtime tests
-   */
-
-  void filterColumnTest();
-  void parentModelColumnTest();
-
-  void evalDataTest();
-  void comparisonEvalTest();
-  void filterEvalTest();
-
-  void expressionCopyTest();
-  void expressionTest();
-  void expressionRelationTest();
-  void expressionBenchmark();
-};
-
-#endif // #ifndef MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H
+#endif // #ifndef MDT_ITEM_MODEL_EXPRESSION_RELATION_FILTER_EXPRESSION_GRAMMAR_H

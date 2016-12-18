@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_EXPRESSION_COMPARISON_EVAL_H
 
 #include "../FilterColumn.h"
+#include "ColumnTerminal.h"
 #include "FilterEvalData.h"
 #include "LeftTerminal.h"
 #include "RightTerminal.h"

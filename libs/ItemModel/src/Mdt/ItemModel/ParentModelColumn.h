@@ -18,52 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H
-#define MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H
+#ifndef MDT_ITEM_MODEL_PARENT_MODEL_COLUMN_H
+#define MDT_ITEM_MODEL_PARENT_MODEL_COLUMN_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "Expression/ColumnTerminal.h"
 
-class FilterExpressionTest : public QObject
-{
- Q_OBJECT
+namespace Mdt{ namespace ItemModel{
 
- private slots:
+  struct ParentModelColumnTag
+  {
+  };
 
-  void initTestCase();
-  void cleanupTestCase();
+  using ParentModelColumnData = Expression::ColumnData<ParentModelColumnTag>;
 
- private:
-
-  /*
-   * Compile time tests
+  /*! \brief ParentModelColumn is a (boost:proto) terminal that represents a column index in a item model, used for FilterExpression
    */
+  using ParentModelColumn = Expression::ColumnTerminal<ParentModelColumnTag>;
 
-  void literalValueTest();
-  void leftTerminalTest();
-  void rightTerminalTest();
-  void filterComparisonTest();
-  void filterExpressionGrammarTest();
-  void relationFilterComparisonTest();
-  void relationExpressionGrammarTest();
+}} // namespace Mdt{ namespace ItemModel{
 
- private slots:
-
-  /*
-   * Runtime tests
-   */
-
-  void filterColumnTest();
-  void parentModelColumnTest();
-
-  void evalDataTest();
-  void comparisonEvalTest();
-  void filterEvalTest();
-
-  void expressionCopyTest();
-  void expressionTest();
-  void expressionRelationTest();
-  void expressionBenchmark();
-};
-
-#endif // #ifndef MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H
+#endif // #ifndef MDT_ITEM_MODEL_PARENT_MODEL_COLUMN_H

@@ -22,11 +22,20 @@
 #include "Mdt/Application.h"
 #include "Mdt/ItemModel/FilterProxyModel.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
+#include <QStringList>
 #include <QModelIndex>
 #include <QTableView>
 #include <QListView>
 #include <QTreeView>
 #include <QComboBox>
+#include <QSignalSpy>
+#include <QVariantList>
+#include <iterator>
+#include <vector>
+#include <array>
+#include <algorithm>
+
+#include <QDebug>
 
 namespace ItemModel = Mdt::ItemModel;
 using ItemModel::VariantTableModel;
@@ -78,8 +87,19 @@ void FilterProxyModelTest::filterTest()
   // Initial state
   QCOMPARE(proxyModel.rowCount(), 0);
   QCOMPARE(proxyModel.columnCount(), 0);
-  // Populate
-  populateModel(model);
+  /*
+   * Populate model:
+   * ----------------------------
+   * | Id | Name |
+   * ----------------------------
+   * | 1  | ABC  |
+   * ----------------------------
+   * | 2  | DEF  |
+   * ----------------------------
+   * | 3  | GHI  |
+   * ----------------------------
+   */
+  model.repopulateByColumns({{1,2,3},{"ABC","DEF","GHI"}});
   QCOMPARE(proxyModel.rowCount(), 3);
   QCOMPARE(proxyModel.columnCount(), 2);
   /*
@@ -214,55 +234,50 @@ void FilterProxyModelTest::filterLikeBenchmark_data()
   QTest::newRow("10'000 el.") << 10000;
 }
 
-void FilterProxyModelTest::populateModel(VariantTableModel & model)
+void FilterProxyModelTest::filterRoleTest()
 {
-  QModelIndex index;
-  /*
-   * Populate table model:
-   * ----------------------------
-   * | Id | Name |
-   * ----------------------------
-   * | 1  | ABC  |
-   * ----------------------------
-   * | 2  | DEF  |
-   * ----------------------------
-   * | 3  | GHI  |
-   * ----------------------------
-   */
-  model.populate(3,2);
-  /*
-   * Row 0
-   */
-  // Set Id
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  model.setData(index, 1);
-  // Set Name
-  index = model.index(0, 1);
-  QVERIFY(index.isValid());
-  model.setData(index, "ABC");
-  /*
-   * Row 1
-   */
-  // Set Id
-  index = model.index(1, 0);
-  QVERIFY(index.isValid());
-  model.setData(index, 2);
-  // Set Name
-  index = model.index(1, 1);
-  QVERIFY(index.isValid());
-  model.setData(index, "DEF");
-  /*
-   * Row 2
-   */
-  // Set Id
-  index = model.index(2, 0);
-  QVERIFY(index.isValid());
-  model.setData(index, 3);
-  // Set Name
-  index = model.index(2, 1);
-  QVERIFY(index.isValid());
-  model.setData(index, "GHI");
+  QFAIL("Not complete");
+}
+
+void FilterProxyModelTest::setterEventTest()
+{
+  QFAIL("Not complete");
+}
+
+void FilterProxyModelTest::dynamicFilterTest()
+{
+  QFAIL("Not complete");
+}
+
+/*
+ * Helpers
+ */
+
+QVariant FilterProxyModelTest::getModelData(const QAbstractItemModel& model, int row, int column)
+{
+  auto index = model.index(row, column);
+  Q_ASSERT(index.isValid());
+  return model.data(index);
+}
+
+void FilterProxyModelTest::displayModels(QAbstractItemModel* sourceModel, QSortFilterProxyModel* proxyModel)
+{
+  Q_ASSERT(sourceModel != nullptr);
+  Q_ASSERT(proxyModel != nullptr);
+
+  QTableView sourceView;
+  QTableView proxyView;
+
+  sourceView.setModel(sourceModel);
+  sourceView.setWindowTitle("Source");
+  proxyView.setModel(proxyModel);
+  proxyView.setWindowTitle("Proxy");
+  //proxyView.setSortingEnabled(true);
+  sourceView.show();
+  proxyView.show();
+  while(sourceView.isVisible()){
+    QTest::qWait(500);
+  }
 }
 
 /*

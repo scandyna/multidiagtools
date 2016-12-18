@@ -21,7 +21,7 @@
 #ifndef MDT_ITEM_MODEL_EXPRESSION_FILTER_EXPRESSION_GRAMMAR_H
 #define MDT_ITEM_MODEL_EXPRESSION_FILTER_EXPRESSION_GRAMMAR_H
 
-#include "Comparison.h"
+#include "FilterComparison.h"
 
 namespace Mdt{ namespace ItemModel{ namespace Expression{
 
@@ -30,7 +30,7 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
   struct FilterExpressionGrammar : boost::proto::or_<
                                     boost::proto::logical_and< FilterExpressionGrammar , FilterExpressionGrammar > ,
                                     boost::proto::logical_or< FilterExpressionGrammar , FilterExpressionGrammar > ,
-                                    Comparison
+                                    FilterComparison
                                   >
   {
   };

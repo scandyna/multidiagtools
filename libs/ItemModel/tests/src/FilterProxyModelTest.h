@@ -25,6 +25,9 @@
 #include <QObject>
 #include <QtTest/QtTest>
 
+class QAbstractItemModel;
+class QSortFilterProxyModel;
+
 class FilterProxyModelTest : public QObject
 {
  Q_OBJECT
@@ -40,9 +43,15 @@ class FilterProxyModelTest : public QObject
   void filterLikeBenchmark();
   void filterLikeBenchmark_data();
 
+  void filterRoleTest();
+
+  void setterEventTest();
+  void dynamicFilterTest();
+
  private:
 
-  void populateModel(Mdt::ItemModel::VariantTableModel & model);
+  static QVariant getModelData(const QAbstractItemModel & model, int row, int column);
+  static void displayModels(QAbstractItemModel *sourceModel, QSortFilterProxyModel *proxyModel);
 };
 
 #endif // #ifndef MDT_MODEL_EDITOR_FILTER_PROXY_MODEL_TEST_H

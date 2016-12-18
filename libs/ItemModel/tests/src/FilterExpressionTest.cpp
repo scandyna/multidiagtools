@@ -21,9 +21,13 @@
 #include "FilterExpressionTest.h"
 #include "Mdt/Application.h"
 #include "Mdt/ItemModel/FilterColumn.h"
+#include "Mdt/ItemModel/ParentModelColumn.h"
+
 #include "Mdt/ItemModel/Expression/LeftTerminal.h"
 #include "Mdt/ItemModel/Expression/RightTerminal.h"
-#include "Mdt/ItemModel/Expression/Comparison.h"
+
+#include "Mdt/ItemModel/Expression/FilterExpressionGrammar.h"
+#include "Mdt/ItemModel/Expression/RelationFilterExpressionGrammar.h"
 #include "Mdt/ItemModel/Expression/ComparisonEval.h"
 #include "Mdt/ItemModel/Expression/FilterEval.h"
 #include "Mdt/ItemModel/FilterExpression.h"
@@ -39,6 +43,8 @@
 
 namespace ItemModel = Mdt::ItemModel;
 using ItemModel::VariantTableModel;
+using ItemModel::FilterColumn;
+using ItemModel::ParentModelColumn;
 
 void FilterExpressionTest::initTestCase()
 {
@@ -61,7 +67,6 @@ constexpr bool expressionMatchesGrammar()
 void FilterExpressionTest::literalValueTest()
 {
   using Mdt::FilterExpression::LiteralValue;
-  using ItemModel::FilterColumn;
 
   static_assert(  expressionMatchesGrammar< decltype( boost::proto::lit(25) ) , LiteralValue >() , "" );
   static_assert( !expressionMatchesGrammar< decltype( FilterColumn(1) ) , LiteralValue >() , "" );
@@ -91,75 +96,82 @@ void FilterExpressionTest::rightTerminalTest()
   static_assert( !expressionMatchesGrammar< decltype( Like("A?") ) , RightTerminal >() , "" );
 }
 
-void FilterExpressionTest::comparisonTest()
+void FilterExpressionTest::filterComparisonTest()
 {
-  using ItemModel::Expression::Comparison;
+  using ItemModel::Expression::FilterComparison;
   using ItemModel::FilterColumn;
   using Like = ItemModel::LikeExpression;
 
   FilterColumn A(1);
   FilterColumn B(2);
+  ParentModelColumn P(5);
 
   // Not a comparison
-  static_assert( !expressionMatchesGrammar< decltype( A ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A ) , FilterComparison >() , "" );
   // ==
-  static_assert(  expressionMatchesGrammar< decltype( A == 25 ) , Comparison >() , "" );
-  static_assert(  expressionMatchesGrammar< decltype( A == Like("25*") ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( 25 == A ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( A == B ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A == 25 ) , FilterComparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A == Like("25*") ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 == A ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A == B ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A == P ) , FilterComparison >() , "" );
   // !=
-  static_assert(  expressionMatchesGrammar< decltype( A != 25 ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( A != Like("25*") ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( 25 != A ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( A != B ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A != 25 ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A != Like("25*") ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 != A ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A != B ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A != P ) , FilterComparison >() , "" );
   // <
-  static_assert(  expressionMatchesGrammar< decltype( A < 25 ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( A < Like("25*") ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( 25 < A ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( A < B ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A < 25 ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A < Like("25*") ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 < A ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A < B ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A < P ) , FilterComparison >() , "" );
   // <=
-  static_assert(  expressionMatchesGrammar< decltype( A <= 25 ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( A <= Like("25*") ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( 25 <= A ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( A <= B ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A <= 25 ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A <= Like("25*") ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 <= A ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A <= B ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A <= P ) , FilterComparison >() , "" );
   // >
-  static_assert(  expressionMatchesGrammar< decltype( A > 25 ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( A > Like("25*") ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( 25 > A ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( A > B ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A > 25 ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A > Like("25*") ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 > A ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A > B ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A > P ) , FilterComparison >() , "" );
   // >=
-  static_assert(  expressionMatchesGrammar< decltype( A >= 25 ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( A >= Like("25*") ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( 25 >= A ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( A >= B ) , Comparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A >= 25 ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A >= Like("25*") ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 >= A ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A >= B ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A >= P ) , FilterComparison >() , "" );
   // Invalid expressions
-  static_assert( !expressionMatchesGrammar< decltype( 25 + A ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A + 25 ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A + B ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( 25 - A ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A - 25 ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A - B ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( 25 * A ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A * 25 ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A * B ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( 25 / A ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A / 25 ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A / B ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( 25 % A ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A % 25 ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A % B ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( 25 << A ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A << 25 ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A << B ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( 25 >> A ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A >> 25 ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A >> B ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( 25 || A ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A || 25 ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A || B ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype( 25 && A ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A && 25 ) , Comparison >() , "" );
-  static_assert( !expressionMatchesGrammar< decltype(  A && B ) , Comparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 + A ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A + 25 ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A + B ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 - A ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A - 25 ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A - B ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 * A ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A * 25 ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A * B ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 / A ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A / 25 ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A / B ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 % A ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A % 25 ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A % B ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 << A ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A << 25 ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A << B ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 >> A ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A >> 25 ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A >> B ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 || A ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A || 25 ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A || B ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( 25 && A ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A && 25 ) , FilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype(  A && B ) , FilterComparison >() , "" );
 }
 
 void FilterExpressionTest::filterExpressionGrammarTest()
@@ -170,6 +182,7 @@ void FilterExpressionTest::filterExpressionGrammarTest()
 
   FilterColumn A(1);
   FilterColumn B(2);
+  ParentModelColumn P(5);
 
   // Comparisons
   static_assert(  expressionMatchesGrammar< decltype( A == 25 ) , FilterExpressionGrammar >() , "" );
@@ -182,16 +195,80 @@ void FilterExpressionTest::filterExpressionGrammarTest()
   static_assert( !expressionMatchesGrammar< decltype( (A == 25) == 44 ) , FilterExpressionGrammar >() , "" );
   // AND
   static_assert( !expressionMatchesGrammar< decltype( A && 25 ) , FilterExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( A > 25 && B == P ) , FilterExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A > 25 && B == "A" ) , FilterExpressionGrammar >() , "" );
   static_assert(  expressionMatchesGrammar< decltype( A > 25 && B == Like("*s") ) , FilterExpressionGrammar >() , "" );
   static_assert(  expressionMatchesGrammar< decltype( A > 25 && B == Like("*s") && B < 46 ) , FilterExpressionGrammar >() , "" );
   static_assert(  expressionMatchesGrammar< decltype( A > 25 && A < 50 && B == Like("*s") && B < 46 ) , FilterExpressionGrammar >() , "" );
   // OR
   static_assert( !expressionMatchesGrammar< decltype( A || 25 ) , FilterExpressionGrammar >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( (A == 25) || (B == P) ) , FilterExpressionGrammar >() , "" );
   static_assert(  expressionMatchesGrammar< decltype( (A == 25) || (B == 44) ) , FilterExpressionGrammar >() , "" );
   static_assert(  expressionMatchesGrammar< decltype( (A == 25) || (B == 44) || (B == 77) ) , FilterExpressionGrammar >() , "" );
   // AND , OR
   static_assert(  expressionMatchesGrammar< decltype( (A == 25) || (B == 26 && A < 50) ) , FilterExpressionGrammar >() , "" );
   static_assert(  expressionMatchesGrammar< decltype( (A == 25) && ((B == 26) || (A < 50)) ) , FilterExpressionGrammar >() , "" );
+}
+
+void FilterExpressionTest::relationFilterComparisonTest()
+{
+  using ItemModel::Expression::RelationFilterComparison;
+
+  FilterColumn A(1);
+  ParentModelColumn P(5);
+
+  // ==
+  static_assert(  expressionMatchesGrammar< decltype( A == 25 ) , RelationFilterComparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A == P ) , RelationFilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( P == 25 ) , RelationFilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( P == A ) , RelationFilterComparison >() , "" );
+  // !=
+  static_assert(  expressionMatchesGrammar< decltype( A != 25 ) , RelationFilterComparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A != P ) , RelationFilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( P != 25 ) , RelationFilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( P != A ) , RelationFilterComparison >() , "" );
+  // <
+  static_assert(  expressionMatchesGrammar< decltype( A < 25 ) , RelationFilterComparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A < P ) , RelationFilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( P < 25 ) , RelationFilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( P < A ) , RelationFilterComparison >() , "" );
+  // <=
+  static_assert(  expressionMatchesGrammar< decltype( A <= 25 ) , RelationFilterComparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A <= P ) , RelationFilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( P <= 25 ) , RelationFilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( P <= A ) , RelationFilterComparison >() , "" );
+  // >
+  static_assert(  expressionMatchesGrammar< decltype( A > 25 ) , RelationFilterComparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A > P ) , RelationFilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( P > 25 ) , RelationFilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( P > A ) , RelationFilterComparison >() , "" );
+  // >=
+  static_assert(  expressionMatchesGrammar< decltype( A >= 25 ) , RelationFilterComparison >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A >= P ) , RelationFilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( P >= 25 ) , RelationFilterComparison >() , "" );
+  static_assert( !expressionMatchesGrammar< decltype( P >= A ) , RelationFilterComparison >() , "" );
+
+}
+
+void FilterExpressionTest::relationExpressionGrammarTest()
+{
+  using ItemModel::Expression::RelationFilterExpressionGrammar;
+
+  FilterColumn A(1);
+  FilterColumn B(1);
+  ParentModelColumn P(5);
+
+  // AND
+  static_assert(  expressionMatchesGrammar< decltype( A > 25 && B == P ) , RelationFilterExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A > 25 && B == "A" ) , RelationFilterExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( A > 25 && A < 50 && B == P && B < 46 ) , RelationFilterExpressionGrammar >() , "" );
+  // OR
+  static_assert(  expressionMatchesGrammar< decltype( (A == 25) || (B == P) ) , RelationFilterExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (A == 25) || (B == 44) ) , RelationFilterExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (A == P) || (B == 44) || (B == 77) ) , RelationFilterExpressionGrammar >() , "" );
+  // AND , OR
+  static_assert(  expressionMatchesGrammar< decltype( (A == P) || (B == 26 && A < 50) ) , RelationFilterExpressionGrammar >() , "" );
+  static_assert(  expressionMatchesGrammar< decltype( (A == P) && ((B == 26) || (A < 50)) ) , RelationFilterExpressionGrammar >() , "" );
 }
 
 /*
@@ -200,10 +277,14 @@ void FilterExpressionTest::filterExpressionGrammarTest()
 
 void FilterExpressionTest::filterColumnTest()
 {
-  using ItemModel::FilterColumn;
-
   FilterColumn A(1);
   QCOMPARE( boost::proto::_value()(A).columnIndex() , 1 );
+}
+
+void FilterExpressionTest::parentModelColumnTest()
+{
+  ParentModelColumn P(3);
+  QCOMPARE( boost::proto::_value()(P).columnIndex() , 3 );
 }
 
 void FilterExpressionTest::evalDataTest()
@@ -237,20 +318,12 @@ void FilterExpressionTest::comparisonEvalTest()
    * ----------------------------
    */
   VariantTableModel model;
-  model.populate(1,2);
-  // Set string
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  model.setData(index, "ABC");
-  // Set int
-  index = model.index(0, 1);
-  QVERIFY(index.isValid());
-  model.setData(index, 3);
+  model.resize(1, 2);
+  model.populateColumn(0, {"ABC"});
+  model.populateColumn(1, {3});
   // Check
-  index = model.index(0, 0);
-  QCOMPARE(model.data(index), QVariant("ABC"));
-  index = model.index(0, 1);
-  QCOMPARE(model.data(index), QVariant(3));
+  QCOMPARE(model.data(0, 0), QVariant("ABC"));
+  QCOMPARE(model.data(0, 1), QVariant(3));
   /*
    * Setup columns and data and transform
    */
@@ -326,20 +399,12 @@ void FilterExpressionTest::filterEvalTest()
    * ----------------------------
    */
   VariantTableModel model;
-  model.populate(1,2);
-  // Set Id
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  model.setData(index, 1);
-  // Set Name
-  index = model.index(0, 1);
-  QVERIFY(index.isValid());
-  model.setData(index, "ABC");
+  model.resize(1, 2);
+  model.populateColumn(0, {1});
+  model.populateColumn(1, {"ABC"});
   // Check
-  index = model.index(0, 0);
-  QCOMPARE(model.data(index), QVariant(1));
-  index = model.index(0, 1);
-  QCOMPARE(model.data(index), QVariant("ABC"));
+  QCOMPARE(model.data(0, 0), QVariant(1));
+  QCOMPARE(model.data(0, 1), QVariant("ABC"));
   /*
    * Setup columns and data and transform
    */
@@ -437,7 +502,6 @@ void FilterExpressionTest::expressionTest()
   using ItemModel::FilterExpression;
   using Like = ItemModel::LikeExpression;
 
-  QModelIndex index;
   /*
    * Setup table model
    * Each column stores a specific type:
@@ -448,20 +512,12 @@ void FilterExpressionTest::expressionTest()
    * ----------------------------
    */
   VariantTableModel model;
-  model.populate(1,2);
-  // Set string
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  model.setData(index, "ABC");
-  // Set int
-  index = model.index(0, 1);
-  QVERIFY(index.isValid());
-  model.setData(index, 3);
+  model.resize(1, 2);
+  model.populateColumn(0, {"ABC"});
+  model.populateColumn(1, {3});
   // Check
-  index = model.index(0, 0);
-  QCOMPARE(model.data(index), QVariant("ABC"));
-  index = model.index(0, 1);
-  QCOMPARE(model.data(index), QVariant(3));
+  QCOMPARE(model.data(0, 0), QVariant("ABC"));
+  QCOMPARE(model.data(0, 1), QVariant(3));
   /*
    * Because boost::proto::deep_copy() changes somewhat types,
    * check with each valid operators.
@@ -523,6 +579,66 @@ void FilterExpressionTest::expressionTest()
   QVERIFY(filter.eval(&model, 0, Qt::CaseInsensitive));
 }
 
+void FilterExpressionTest::expressionRelationTest()
+{
+  using ItemModel::FilterExpression;
+  using Like = ItemModel::LikeExpression;
+
+  /*
+   * Setup parent table model
+   * ----------------------------
+   * | Id | CODE |
+   * ----------------------------
+   * | 1  |  A   |
+   * ----------------------------
+   */
+  VariantTableModel parentModel;
+
+  /*
+   * Setup (child) table model
+   * ----------------------------
+   * | Id | CODE |
+   * ----------------------------
+   * | 1  |  A   |
+   * ----------------------------
+   * | 2  |  B   |
+   * ----------------------------
+   */
+  VariantTableModel model;
+  model.resize(1, 2);
+  model.populateColumn(0, {"ABC"});
+  model.populateColumn(1, {3});
+  // Check
+  QCOMPARE(model.data(0, 0), QVariant("ABC"));
+  QCOMPARE(model.data(0, 1), QVariant(3));
+  /*
+   * Because boost::proto::deep_copy() changes somewhat types,
+   * check with each valid operators.
+   * (will validate that all compiles)
+   */
+  FilterExpression filter;
+  ParentModelColumn parentId(0);
+  ParentModelColumn parentCode(0);
+  FilterColumn id(0);
+  FilterColumn code(1);
+  // ==
+  filter.setExpression(id == parentId);
+  
+  // Like
+  
+  // !=
+  
+  // <
+  
+  // <=
+  
+  // >
+  
+  // >=
+
+  QFAIL("Not complete");
+}
+
 void FilterExpressionTest::expressionBenchmark()
 {
   using ItemModel::FilterColumn;
@@ -540,26 +656,10 @@ void FilterExpressionTest::expressionBenchmark()
    * ----------------------------
    */
   VariantTableModel model;
-  model.populate(1,3);
-  // Set Id
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  model.setData(index, 1);
-  // Set Name
-  index = model.index(0, 1);
-  QVERIFY(index.isValid());
-  model.setData(index, "ABC");
-  // Set Name
-  index = model.index(0, 2);
-  QVERIFY(index.isValid());
-  model.setData(index, "1234ABCD");
-  // Check
-  index = model.index(0, 0);
-  QCOMPARE(model.data(index), QVariant(1));
-  index = model.index(0, 1);
-  QCOMPARE(model.data(index), QVariant("ABC"));
-  index = model.index(0, 2);
-  QCOMPARE(model.data(index), QVariant("1234ABCD"));
+  model.resize(1, 3);
+  model.populateColumn(0, {1});
+  model.populateColumn(1, {"ABC"});
+  model.populateColumn(2, {"1234ABCD"});
   /*
    * Setup columns and data and transform
    */

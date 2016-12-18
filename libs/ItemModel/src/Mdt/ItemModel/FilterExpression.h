@@ -96,12 +96,16 @@ namespace Mdt{ namespace ItemModel{
      *       cliendId + 5
      *       \endcode
      */
-    template<typename Expr>
+    template<typename Expr, typename Grammar = Expression::FilterExpressionGrammar>
     void setExpression(const Expr & expr)
     {
-      static_assert( boost::proto::matches<Expr, Expression::FilterExpressionGrammar>::value , "Type of expr is not a valid filter expression." );
+      static_assert( boost::proto::matches<Expr, Grammar>::value , "Type of expr is not a valid filter expression." );
       mContainer.reset( new Expression::FilterExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) );
     }
+    /**
+     * \todo Better: create second function: setRelationExpression() that matches the correct grammar.
+     * NOTE: do not pass parent model/row here, create a eval() overload for this
+     */
 
     /*! \brief Check if this expression is null
      */

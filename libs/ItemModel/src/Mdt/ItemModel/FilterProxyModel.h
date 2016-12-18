@@ -118,6 +118,33 @@ namespace Mdt{ namespace ItemModel{
       invalidateFilter();
     }
 
+    /*! \brief Set relation filter
+     *
+     * This variant is used by Relation
+     *
+     * \tparam Expr Type of the expression.
+     * \param expression Expression to apply as filter.
+     * \pre \a parentModel must be a valid pointer
+     * \pre \a parentModelRow must be in valid range ( 0 <= \a parentModelRow < parentModel->rowCount() )
+     * \pre \a Expr must be a relation filter expression type.
+     * 
+     * \todo parentModelRow should not be here
+     */
+    template<typename Expr>
+    void setRelationFilter(const QAbstractItemModel * const parentModel, int parentModelRow, const Expr & expression)
+    {
+      Q_ASSERT(parentModel != nullptr);
+      Q_ASSERT(parentModelRow >= 0);
+      Q_ASSERT(parentModelRow < parentModel->rowCount());
+      
+    }
+
+    /*! \brief Apply filter for relation ....
+     *
+     * \todo document, implement, ...
+     */
+    void setParentModelCurrentRow(int row);
+
     // Disable copy
     FilterProxyModel(const FilterProxyModel &) = delete;
     FilterProxyModel & operator=(const FilterProxyModel &) = delete;
