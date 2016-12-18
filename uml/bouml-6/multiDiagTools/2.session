@@ -1,25 +1,23 @@
 window_sizes 1280 963 356 918 908 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 3048834 // FilterExpression
-    120 110 100 18 0 0
-  classdiagram_ref 3108482 // FilterEval
-    120 110 100 21 0 0
-  active  classdiagram_ref 3128834 // sandbox
+  classdiagram_ref 3062274 // FilterProxyModel
+    734 726 100 18 0 0
+  classdiagram_ref 3128834 // ColumnAndData
+    120 110 100 4 0 0
+  active  classdiagram_ref 3142018 // RelationFilterProxyModel
     918 908 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 5010434 // isNull
+selected classdiagram_ref 3142146 // Container
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
-  class_ref 3580930 // ParentModelColumnData
-  classview_ref 1603970 // Grammars
-  classview_ref 1623938 // FilterEval
   classview_ref 1650306 // RowMapper
   classview_ref 1630466 // Filter
-  attribute_ref 3197826 // Model
+  class_ref 3594754 // RelationFilterProxyModel
+  operation_ref 5017346 // prependModel
   classview_ref 1327362 // SqlSandbox
   
   package_ref 582274 // SqlItemEditor

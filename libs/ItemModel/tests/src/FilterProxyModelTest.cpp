@@ -41,6 +41,7 @@ namespace ItemModel = Mdt::ItemModel;
 using ItemModel::VariantTableModel;
 using ItemModel::FilterProxyModel;
 using ItemModel::FilterColumn;
+using ItemModel::ParentModelColumn;
 using Like = ItemModel::LikeExpression;
 
 void FilterProxyModelTest::initTestCase()

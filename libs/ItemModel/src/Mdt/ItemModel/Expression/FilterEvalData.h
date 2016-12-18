@@ -104,7 +104,6 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
    private:
 
-    ///const QAbstractItemModel * const mModel;
     const QPointer<const QAbstractItemModel> mModel;
     const int mRow;
     const Qt::CaseSensitivity mCaseSensitivity;

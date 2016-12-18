@@ -53,36 +53,6 @@ namespace Mdt{ namespace ItemModel{
    * FilterColumn clientLastName(2);
    * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == Like("A?B*\\?*")) );
    * \endcode
-   *
-   * Example to filter data by matching data from a other model:
-   * \todo seems to have no sense..
-   * \code
-   * #include <Mdt/ItemModel/FilterProxyModel.h>
-   * #include <QTableView>
-   * #include "ClientTableModel.h"
-   * #include "AddressTableModel.h"
-   *
-   * namepsace ItemModel = Mdt::ItemModel;
-   * using ItemModel::FilterProxyModel;
-   * using ItemModel::FilterColumn;
-   * using ItemModel::FilterModelColumn;
-   *
-   * auto *view = new QTableView;
-   * auto *addressModel = new AddressTableModel(view);
-   * auto *proxyModel = new FilterProxyModel(view);
-   * auto *clientModel = new ClientTableModel;
-   *
-   * // Setup view act on addressModel
-   * proxyModel->setSourceModel(addressModel);
-   * view->setModel(proxyModel);
-   *
-   * // Setup a filter and apply it
-   * FilterModelColumn
-   * 
-   * FilterColumn clientFirstName(1);
-   * FilterColumn clientLastName(2);
-   * proxyModel->setFilter( (clientFirstName == "A") && (clientLastName == "%B%") );
-   * \endcode
    */
   class FilterProxyModel : public QSortFilterProxyModel
   {
@@ -93,6 +63,13 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Construct a model
      */
     explicit FilterProxyModel(QObject* parent = nullptr);
+
+    // Disable copy
+    FilterProxyModel(const FilterProxyModel &) = delete;
+    FilterProxyModel & operator=(const FilterProxyModel &) = delete;
+    // Disable move
+    FilterProxyModel(FilterProxyModel &&) = delete;
+    FilterProxyModel & operator=(FilterProxyModel &&) = delete;
 
     /*! \brief Set filter
      *
@@ -117,40 +94,6 @@ namespace Mdt{ namespace ItemModel{
       mFilterExpression.setExpression(expression);
       invalidateFilter();
     }
-
-    /*! \brief Set relation filter
-     *
-     * This variant is used by Relation
-     *
-     * \tparam Expr Type of the expression.
-     * \param expression Expression to apply as filter.
-     * \pre \a parentModel must be a valid pointer
-     * \pre \a parentModelRow must be in valid range ( 0 <= \a parentModelRow < parentModel->rowCount() )
-     * \pre \a Expr must be a relation filter expression type.
-     * 
-     * \todo parentModelRow should not be here
-     */
-    template<typename Expr>
-    void setRelationFilter(const QAbstractItemModel * const parentModel, int parentModelRow, const Expr & expression)
-    {
-      Q_ASSERT(parentModel != nullptr);
-      Q_ASSERT(parentModelRow >= 0);
-      Q_ASSERT(parentModelRow < parentModel->rowCount());
-      
-    }
-
-    /*! \brief Apply filter for relation ....
-     *
-     * \todo document, implement, ...
-     */
-    void setParentModelCurrentRow(int row);
-
-    // Disable copy
-    FilterProxyModel(const FilterProxyModel &) = delete;
-    FilterProxyModel & operator=(const FilterProxyModel &) = delete;
-    // Disable move
-    FilterProxyModel(FilterProxyModel &&) = delete;
-    FilterProxyModel & operator=(FilterProxyModel &&) = delete;
 
    private:
 
