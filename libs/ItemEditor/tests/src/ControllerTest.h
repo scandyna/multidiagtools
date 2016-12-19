@@ -38,15 +38,6 @@ class ControllerTest : public QObject
 
   void statePermissionTest();
 
-  void widgetMapperControllerSetModelTest();
-  void widgetMapperControllerCurrentRowChangedTest();
-  void widgetMapperControllerEditTest();
-  void widgetMapperControllerEditTest_data();
-  void widgetMapperControllerInsertTest();
-  void widgetMapperControllerInsertFromModelTest();
-  void widgetMapperControllerRemoveTest();
-  void widgetMapperControllerRemoveFromModelTest();
-
  private:
 
   // Helper function for editing in a QAbstractItemView
