@@ -38,17 +38,6 @@ class ControllerTest : public QObject
 
   void statePermissionTest();
 
-  void tableViewControllerBasicStateTest();
-  void tableViewControllerSetModelTest();
-  void tableViewControllerCurrentRowChangeTest();
-  void tableViewCurrentRowChangeBenchmark();
-  void tableViewControllerCurrentRowChangeBenchmark();
-  void tableViewControllerEditTest();
-  void tableViewControllerInsertTest();
-  void tableViewControllerInsertFromModelTest();
-  void tableViewControllerRemoveTest();
-  void tableViewControllerRemoveFromModelTest();
-
   void widgetMapperControllerSetModelTest();
   void widgetMapperControllerCurrentRowChangedTest();
   void widgetMapperControllerEditTest();
