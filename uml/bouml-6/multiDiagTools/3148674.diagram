@@ -1,0 +1,102 @@
+format 211
+
+classcanvas 128130 class_ref 2693250 // SqlRelation
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 319.5 46.5 2000
+end
+classcanvas 128258 class_ref 2767362 // Relation
+  classdiagramsettings member_max_width 0 end
+  xyz 665 40.5 2000
+end
+classcanvas 128514 class_ref 3090434 // AbstractController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 629.75 126 2000
+end
+classcanvas 129026 class_ref 2927362 // SqlTableViewController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 39.75 463.5 2012
+end
+classcanvas 129282 class_ref 3138306 // AbstractWidgetMapperController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 587 252 2006
+end
+classcanvas 129538 class_ref 3138434 // WidgetMapperController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 614 378 2012
+end
+classcanvas 129794 class_ref 3138562 // SqlWidgetMapperTableController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 352 378 2018
+end
+classcanvas 130562 class_ref 3601410 // AbstractRelation
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 507.5 40.5 2000
+end
+note 130690 "Parent can have 0-n child controllers.
+Each one can also have 0-n childs.
+-> this is a tree"
+  xyzwh 40.5 767.5 2000 525 85
+note 130818 "Events parent -> child:
+ - Filter child
+ - Enable/disable child
+ - Check about state before perform action"
+  xyzwh 40.5 588.5 2000 513 99
+note 130946 "Events child -> parent:
+ - "
+  xyzwh 40.5 932.5 2000 509 75
+classcanvas 131074 class_ref 3601538 // ControllerList
+  classdiagramsettings member_max_width 0 end
+  xyz 769.5 40.5 2005
+end
+classcanvas 131714 class_ref 3498626 // FilterExpression
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 645.5 767.5 2016
+end
+classcanvas 131842 class_ref 3239682 // WhereExpression
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 633.5 588.5 2021
+end
+classcanvas 132610 class_ref 3138178 // TableViewController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 238.75 463.5 2026
+end
+relationcanvas 131330 relation_ref 3968002 // <unidirectional association>
+  geometry VH unfixed
+  from ref 131074 z 2006 to point 816 146
+  line 131586 z 2006 to ref 128514
+  no_role_a no_role_b
+  multiplicity_a_pos 769 158 3000 no_multiplicity_b
+end
+relationcanvas 131970 relation_ref 3968258 // <directional composition>
+  from ref 128258 z 2006 to ref 131074
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132098 relation_ref 3968386 // <generalisation>
+  from ref 128258 z 2001 to ref 130562
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132354 relation_ref 3968642 // <directional composition>
+  geometry HV unfixed
+  from ref 128514 z 2001 to point 564 146
+  line 132482 z 2001 to ref 130562
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133122 relation_ref 3968514 // <unidirectional association>
+  from ref 128258 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133250 relation_ref 3983362 // <generalisation>
+  from ref 129538 z 2013 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133378 relation_ref 3983490 // <generalisation>
+  from ref 132610 z 2027 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

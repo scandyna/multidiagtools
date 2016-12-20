@@ -2,19 +2,19 @@ format 211
 
 classcanvas 128002 class_ref 3068802 // AbstractEditorWidget
   classdiagramsettings member_max_width 0 end
-  xyz 40.9 120.35 2000
+  xyz 195.6 127.9 2000
 end
 classcanvas 128130 class_ref 316162 // QWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 120.9 39.1 2006
+  xyz 328.6 41.45 2006
 end
 classcanvas 128386 class_ref 3089026 // SomeUserDefinedWidget
   classdiagramsettings member_max_width 0 end
-  xyz 310.1 153 2000
+  xyz 276.6 356.35 2000
 end
 classcanvas 128514 class_ref 3089154 // Ui::SomeUserDefinedWidget
   classdiagramsettings member_max_width 0 end
-  xyz 299.1 39.1 2000
+  xyz 41.15 356.35 2000
 end
 relationcanvas 128258 relation_ref 3441794 // <generalisation>
   from ref 128002 z 2007 to ref 128130
@@ -22,12 +22,13 @@ relationcanvas 128258 relation_ref 3441794 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128642 relation_ref 3457538 // <generalisation>
+  decenter_begin 422
+  decenter_end 422
   from ref 128386 z 2001 to ref 128514
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 3457794 // <generalisation>
-  decenter_end 469
   from ref 128386 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

@@ -1,51 +1,51 @@
 format 211
 
-classcanvas 128002 class_ref 2684802 // TableController
+classcanvas 128002 class_ref 2684802 // AbstractItemViewController
   classdiagramsettings member_max_width 0 end
-  xyz 727.667 222.333 2010
+  xyz 335 321.3 2010
 end
 classcanvas 128642 class_ref 2693250 // Relation
   classdiagramsettings member_max_width 0 end
-  xyz 657.667 83.1667 2000
+  xyz 304 175.3 2000
 end
 classcanvas 129026 class_ref 2686466 // ControllerInputEvent
   classdiagramsettings member_max_width 0 end
-  xyz 1348.78 238.778 2016
+  xyz 805.3 325.3 2016
 end
 classcanvas 129538 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 606 561.306 2000
+  xyz 580.8 715.55 2000
 end
 classcanvas 129666 class_ref 2684930 // ControllerState
   classdiagramsettings member_max_width 0 end
-  xyz 790.667 356.444 2016
+  xyz 435 506 2016
 end
 classcanvas 130050 class_ref 2684674 // ControllerStateMachine
   classdiagramsettings member_max_width 0 end
-  xyz 528.556 248.333 2016
+  xyz 135 370.3 2016
 end
 note 131458 "Only available in SQL ?
 Or, ab common base that handles GUI states ??"
-  xyzwh 1154.89 77.5556 2000 227 117
+  xyzwh 39.3 169.3 2000 227 117
 classcanvas 131714 class_ref 2699778 // ControllerDelegate
   classdiagramsettings member_max_width 0 end
-  xyz 920 560.056 2000
+  xyz 894.4 715.5 2000
 end
 classcanvas 132610 class_ref 2739714 // QWebSocket
   classdiagramsettings member_max_width 0 end
-  xyz 747 684.806 2006
+  xyz 717.35 839.65 2006
 end
 classcanvas 132866 class_ref 2739842 // QWebSocketServer
   classdiagramsettings member_max_width 0 end
-  xyz 573.25 684.806 2006
+  xyz 544.8 839.65 2006
 end
 note 133378 "What could be a abstraction of a filter ?
 Imagine custom models (application specific).
 Should we provide a interface ?"
-  xyzwh 40.0556 88.1667 2000 579 91
+  xyzwh 241 40 2000 579 91
 classcanvas 133634 class_ref 2782850 // TableControllerRelation
   classdiagramsettings member_max_width 0 end
-  xyz 42 683.056 2022
+  xyz 39.6 839.75 2022
 end
 relationcanvas 128770 relation_ref 3063298 // <unidirectional association>
   from ref 128002 z 2011 to ref 128642
@@ -53,9 +53,10 @@ relationcanvas 128770 relation_ref 3063298 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129282 relation_ref 3063554 // <unidirectional association>
-  from ref 128642 z 2017 to point 886 40
-  line 134914 z 2017 to point 1421 40
-  line 135042 z 2017 to ref 129026
+  geometry HV unfixed
+  decenter_begin 523
+  from ref 128642 z 2017 to point 875 227
+  line 134914 z 2017 to ref 129026
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
@@ -65,50 +66,52 @@ relationcanvas 129794 relation_ref 3056514 // <directional composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130434 relation_ref 3063682 // <association>
+  decenter_begin 555
+  decenter_end 517
   from ref 130050 z 2017 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130818 relation_ref 3063938 // <unidirectional association>
-  decenter_begin 279
-  decenter_end 147
-  from ref 129026 z 2017 to point 1082 250
-  line 134274 z 2017 to point 1082 236
-  line 134402 z 2017 to ref 128002
+  decenter_begin 222
+  decenter_end 97
+  from ref 129026 z 2017 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132738 relation_ref 3091714 // <generalisation>
   geometry VHV unfixed
-  from ref 132610 z 2007 to point 792 644
-  line 135170 z 2007 to point 636 644
+  decenter_begin 536
+  from ref 132610 z 2007 to point 765 799.8
+  line 135170 z 2007 to point 601 799.8
   line 135298 z 2007 to ref 129538
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132994 relation_ref 3091842 // <generalisation>
-  decenter_begin 474
   from ref 132866 z 2007 to ref 129538
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 133762 relation_ref 3135362 // <generalisation>
   geometry VHV unfixed
-  from ref 133634 z 2023 to point 285 644
-  line 134530 z 2023 to point 636 644
+  from ref 133634 z 2023 to point 272.6 799.8
+  line 134530 z 2023 to point 610.8 799.8
   line 134658 z 2023 to ref 129538
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 134786 relation_ref 3379842 // <unidirectional association>
-  decenter_begin 547
-  decenter_end 790
-  from ref 128002 z 2017 to ref 129026
+  decenter_begin 377
+  decenter_end 777
+  from ref 128002 z 2017 to point 765.8 375.8
+  line 135426 z 2017 to point 765.8 360.8
+  line 135554 z 2017 to ref 129026
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-line 131586 -_-_ decenter_end 524
+line 131586 -_-_ decenter_begin 521 decenter_end 523
   from ref 131458 z 2001 to ref 128642
-line 133506 -_-_ decenter_begin 524 decenter_end 527
+line 133506 -_-_
   from ref 128642 z 2001 to ref 133378
 end

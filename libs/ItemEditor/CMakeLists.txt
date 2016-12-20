@@ -15,9 +15,6 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/EditionActions.cpp
     src/Mdt/ItemEditor/ControllerStatePermission.cpp
     src/Mdt/ItemEditor/AbstractController.cpp
-    
-    src/Mdt/ItemEditor/AbstractItemViewController.cpp
-    
     src/Mdt/ItemEditor/ItemViewPrivateContainer.cpp
     src/Mdt/ItemEditor/TableViewController.cpp
     src/Mdt/ItemEditor/MappedWidgetList.cpp

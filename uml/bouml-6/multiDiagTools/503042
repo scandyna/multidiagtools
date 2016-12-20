@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 100
+  revision 103
   modified_by 2 "philippe"
   // class settings
   
@@ -97,15 +97,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3081730 // <association>
-	relation 3063682 ----
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3081730 // <association>
-	  b role_name "" package
-	    classrelation_ref 3082114 // <association>
-      end
     end
 
     class 2685058 "NavigationBar"
@@ -210,14 +201,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3081986 // <unidirectional association>
-	relation 3063938 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3081986 // <unidirectional association>
-	  b parent class_ref 2684802 // AbstractItemViewController
-      end
     end
 
     class 2686594 "ControllerField"
@@ -1073,22 +1056,6 @@ ${inlines}
 	
       end
 
-      operation 4578050 "setSelectionModel"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "model" type class_ref 1382914 // QItemSelectionModel
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 4577026 "setCurrentRow"
 	public explicit_return_type "void"
 	nparams 1
@@ -1198,24 +1165,6 @@ ${inlines}
 	  b parent class_ref 146946 // QAbstractItemModel
       end
 
-      operation 4576386 "updateCurrentIndex"
-	stereotype "slot"
-	private explicit_return_type "void"
-	nparams 2
-	  param in name "current" type class_ref 147330 // QModelIndex
-	  param in name "previous" type class_ref 147330 // QModelIndex
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 4592514 "requestCurrentRow"
 	public explicit_return_type ""
 	nparams 1
@@ -1259,6 +1208,7 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
+
     end
 
     sequencediagram 2767874 "ItemViewExamples"
@@ -2367,6 +2317,22 @@ ${inlines}
 	
       end
 
+      operation 5024130 "setFilter"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "filter" type class_ref 3498626 // FilterExpression
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 4477570 "addChildController"
 	public explicit_return_type ""
 	nparams 0
@@ -2604,23 +2570,6 @@ ${inlines}
 	
       end
 
-      operation 4493058 "controllerStateChanged"
-	stereotype "signal"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "state" type class_ref 2684930 // ControllerState
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 4509186 "rowStateChanged"
 	stereotype "signal"
 	public explicit_return_type "void"
@@ -2638,14 +2587,14 @@ ${inlines}
 	
       end
 
-      operation 4500226 "modelChanged"
+      operation 4493058 "controllerStateChanged"
 	stereotype "signal"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "model" type class_ref 146946 // QAbstractItemModel
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -2671,10 +2620,10 @@ ${inlines}
 	
       end
 
-      operation 4535554 "registerSelectionModel"
+      operation 5037698 "referenceItemModel"
 	protected explicit_return_type "void"
 	nparams 1
-	  param in name "model" type class_ref 1382914 // QItemSelectionModel
+	  param in name "model" type class_ref 146946 // QAbstractItemModel
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
@@ -2687,13 +2636,44 @@ ${inlines}
 	
       end
 
-      operation 4606210 "registerItemDelegate"
+      operation 5037826 "registerItemModel"
 	protected explicit_return_type "void"
-	nparams 1
-	  param in name "delegate" type class_ref 3015170 // EventCatchItemDelegate
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4493186 "onDataEditionStarted"
+	stereotype "slot"
+	protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4493314 "onDataEditionDone"
+	stereotype "slot"
+	protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -2720,38 +2700,6 @@ ${inlines}
 	
       end
 
-      operation 4493186 "onDataEditionStarted"
-	stereotype "slot"
-	private explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4493314 "onDataEditionDone"
-	stereotype "slot"
-	private explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       classrelation 3501058 // <generalisation>
 	relation 3482242 ---|>
 	  a public
@@ -2768,15 +2716,6 @@ ${inlines}
 	    classrelation_ref 3566210 // <composition>
 	  b role_name "" private
 	    classrelation_ref 3869826 // <composition>
-      end
-
-      classrelation 3601026 // <unidirectional association>
-	relation 3581826 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3601026 // <unidirectional association>
-	  b parent class_ref 3015170 // EventCatchItemDelegate
       end
 
       operation 4606338 "setControllerState"
@@ -2839,14 +2778,41 @@ ${items}};
 	  MysqlColumn
 	end
       end
+
+      classrelation 3994498 // <directional composition>
+	relation 3968642 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3994498 // <directional composition>
+	  b parent class_ref 3601410 // AbstractRelation
+      end
+
+      classrelation 3994626 // <directional composition>
+	relation 3968770 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3994626 // <directional composition>
+	  b parent class_ref 3594882 // ProxyModelContainer
+      end
+
+      classrelation 4001410 // <unidirectional association>
+	relation 3975554 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4001410 // <unidirectional association>
+	  b parent class_ref 146946 // QAbstractItemModel
+      end
     end
 
-    classdiagram 2760962 "ItemViewController"
+    classdiagram 2760962 "TableViewController"
       classdiagramsettings member_max_width 0 end
-      size B
+      size B-Landscape
     end
 
-    class 2684802 "AbstractItemViewController"
+    class 3138178 "TableViewController"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -2860,70 +2826,21 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3073538 // <unidirectional association>
-	relation 3055618 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3073538 // <unidirectional association>
-	  b parent class_ref 2686210 // EditorActions
-      end
-
-      classrelation 3073794 // <directional composition>
-	relation 3055874 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3073794 // <directional composition>
-	  b parent class_ref 2686338 // ControllerStateFilter
-      end
-
-      classrelation 3074434 // <directional composition>
-	relation 3056514 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3074434 // <directional composition>
-	  b parent class_ref 2684930 // ControllerState
-      end
-
-      classrelation 3074690 // <unidirectional association>
-	relation 3056642 --->
-	  a role_name "" multiplicity "*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
-"
-	    classrelation_ref 3074690 // <unidirectional association>
-	  b parent class_ref 2686594 // ControllerField
-      end
-
-      classrelation 3081346 // <unidirectional association>
-	relation 3063298 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3081346 // <unidirectional association>
-	  b parent class_ref 2693250 // Relation
-      end
-
-      classrelation 3082114 // <association>
-	relation_ref 3063682 // <association>
-      end
-
-      classrelation 3398274 // <unidirectional association>
-	relation 3379842 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3398274 // <unidirectional association>
-	  b parent class_ref 2686466 // ControllerInputEvent
-      end
-
-      classrelation 3478146 // <generalisation>
-	relation 3459586 ---|>
+      classrelation 4009346 // <generalisation>
+	relation 3983490 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 3478146 // <generalisation>
+	    classrelation_ref 4009346 // <generalisation>
 	  b parent class_ref 3090434 // AbstractController
+      end
+
+      classrelation 4010114 // <directional composition>
+	relation 3984258 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4010114 // <directional composition>
+	  b parent class_ref 3608066 // ItemViewPrivateContainer
       end
 
       operation 4549378 "setModel"
@@ -2958,18 +2875,6 @@ ${inlines}
 	
       end
 
-      attribute 2935298 "View"
-	private type class_ref 2160258 // QAbstractItemView
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
       operation 4556034 "view"
 	public return_type class_ref 2160258 // QAbstractItemView
 	nparams 0
@@ -2983,46 +2888,6 @@ ${inlines}
 	
 	
 	
-      end
-
-      operation 4556162 "updateModel"
-	stereotype "slot"
-	private explicit_return_type "void"
-	nparams 1
-	  param in name "model" type class_ref 146946 // QAbstractItemModel
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
-    class 3138178 "TableViewController"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3545218 // <generalisation>
-	relation 3526402 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3545218 // <generalisation>
-	  b parent class_ref 2684802 // AbstractItemViewController
       end
     end
 
@@ -3040,15 +2905,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3328898 // <unidirectional association>
-	relation 3310466 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3328898 // <unidirectional association>
-	  b parent class_ref 174210 // QSqlTableModel
-      end
-
       attribute 2907010 "Model"
 	private type class_ref 174210 // QSqlTableModel
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -3214,13 +3070,14 @@ ${inlines}
 	
       end
 
-      classrelation 3545474 // <generalisation>
-	relation 3526658 ---|>
+      classrelation 4008962 // <generalisation>
+	relation 3983106 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 3545474 // <generalisation>
-	  b parent class_ref 2684802 // AbstractItemViewController
+	    classrelation_ref 4008962 // <generalisation>
+	  b parent class_ref 3614594 // AbstractSqlController
       end
+
     end
 
     classdiagram 2761090 "WidgetMapperController"
@@ -3252,14 +3109,6 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
-      end
-
-      classrelation 3545602 // <generalisation>
-	relation 3526786 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3545602 // <generalisation>
-	  b parent class_ref 3090434 // AbstractController
       end
 
       classrelation 3648002 // <unidirectional association>
@@ -3368,12 +3217,12 @@ ${inlines}
 	
       end
 
-      classrelation 3545730 // <generalisation>
-	relation 3526914 ---|>
+      classrelation 4009218 // <generalisation>
+	relation 3983362 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 3545730 // <generalisation>
-	  b parent class_ref 3138306 // AbstractWidgetMapperController
+	    classrelation_ref 4009218 // <generalisation>
+	  b parent class_ref 3090434 // AbstractController
       end
     end
 
@@ -3391,21 +3240,12 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3546114 // <unidirectional association>
-	relation 3527298 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3546114 // <unidirectional association>
-	  b parent class_ref 174210 // QSqlTableModel
-      end
-
-      classrelation 3552642 // <generalisation>
-	relation 3533826 ---|>
+      classrelation 4009090 // <generalisation>
+	relation 3983234 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 3552642 // <generalisation>
-	  b parent class_ref 3138306 // AbstractWidgetMapperController
+	    classrelation_ref 4009090 // <generalisation>
+	  b parent class_ref 3614594 // AbstractSqlController
       end
     end
 
@@ -3472,6 +3312,388 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    class 3608066 "ItemViewPrivateContainer"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4001794 // <unidirectional association>
+	relation 3975938 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4001794 // <unidirectional association>
+	  b parent class_ref 2160258 // QAbstractItemView
+      end
+
+      classrelation 4001922 // <unidirectional association>
+	relation 3976066 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4001922 // <unidirectional association>
+	  b parent class_ref 3015170 // EventCatchItemDelegate
+      end
+
+      attribute 3211522 "SelectionModel"
+	private type class_ref 3021826 // ItemSelectionModel
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3211266 "View"
+	private type class_ref 2160258 // QAbstractItemView
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3211394 "Delegate"
+	private type class_ref 3015170 // EventCatchItemDelegate
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 5030658 "setModel"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "model" type class_ref 146946 // QAbstractItemModel
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5030786 "setView"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "view" type class_ref 2160258 // QAbstractItemView
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5030914 "setModelToView"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "model" type class_ref 146946 // QAbstractItemModel
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5031042 "setItemDelegateToView"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5031170 "setSelectionModelToView"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3614594 "AbstractSqlController"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4008450 // <generalisation>
+	relation 3982594 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4008450 // <generalisation>
+	  b parent class_ref 3090434 // AbstractController
+      end
+
+      classrelation 4008706 // <unidirectional association>
+	relation 3982850 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 4008706 // <unidirectional association>
+	  b parent class_ref 174210 // QSqlTableModel
+      end
+    end
+
+    class 3614722 "AbstractSqlItemViewController"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+  end
+
+  classview 1676418 "Relation"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3148674 "sandbox"
+      classdiagramsettings member_max_width 0 end
+      size B-Landscape
+    end
+
+    class 2767362 "Relation"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3994114 // <directional composition>
+	relation 3968258 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 3994114 // <directional composition>
+	  b parent class_ref 3601538 // ControllerList
+      end
+
+      classrelation 3994242 // <generalisation>
+	relation 3968386 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 3994242 // <generalisation>
+	  b parent class_ref 3601410 // AbstractRelation
+      end
+
+      classrelation 3994370 // <unidirectional association>
+	relation 3968514 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3994370 // <unidirectional association>
+	  b parent class_ref 3090434 // AbstractController
+      end
+    end
+
+    class 2693250 "SqlRelation"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3081602 // <unidirectional association>
+	relation 3063554 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3081602 // <unidirectional association>
+	  b parent class_ref 2686466 // ControllerInputEvent
+      end
+
+      operation 4131970 "fromForeignKey"
+	class_operation public return_type class_ref 2693250 // SqlRelation
+	nparams 1
+	  param in name "fk" type class_ref 2775682 // ForeignKey
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4384898 "fromTables"
+	class_operation public return_type class_ref 2693250 // SqlRelation
+	nparams 2
+	  param in name "parentTable" type class_ref 2775810 // Table
+	  param in name "childTable" type class_ref 2775810 // Table
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4385026 "fromTableAndView"
+	class_operation public return_type class_ref 2693250 // SqlRelation
+	nparams 2
+	  param in name "parentTable" type class_ref 2775810 // Table
+	  param in name "childView" type class_ref 1994754 // View
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3601410 "AbstractRelation"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 5024002 "~AbstractRelation"
+	abstract cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3601538 "ControllerList"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3993730 // <unidirectional association>
+	relation 3968002 --->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
+"
+	    classrelation_ref 3993730 // <unidirectional association>
+	  b parent class_ref 3090434 // AbstractController
       end
     end
   end
@@ -4946,15 +5168,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3494018 // <directional composition>
-	relation 3475202 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 3494018 // <directional composition>
-	  b parent class_ref 2684802 // AbstractItemViewController
-      end
-
       classrelation 3511298 // <generalisation>
 	relation 3492482 ---|>
 	  a public
@@ -6158,102 +6371,6 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 3446786 // <generalisation>
 	  b parent class_ref 370434 // QDialog
-      end
-    end
-  end
-
-  classview 1327362 "SqlSandbox"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
-    classdiagram 2468610 "Relation"
-      classdiagramsettings member_max_width 0 end
-      size B-Landscape
-    end
-
-    class 2693250 "Relation"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 3081602 // <unidirectional association>
-	relation 3063554 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3081602 // <unidirectional association>
-	  b parent class_ref 2686466 // ControllerInputEvent
-      end
-
-      operation 4131970 "fromForeignKey"
-	class_operation public return_type class_ref 2693250 // Relation
-	nparams 1
-	  param in name "fk" type class_ref 2775682 // ForeignKey
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4384898 "fromTables"
-	class_operation public return_type class_ref 2693250 // Relation
-	nparams 2
-	  param in name "parentTable" type class_ref 2775810 // Table
-	  param in name "childTable" type class_ref 2775810 // Table
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4385026 "fromTableAndView"
-	class_operation public return_type class_ref 2693250 // Relation
-	nparams 2
-	  param in name "parentTable" type class_ref 2775810 // Table
-	  param in name "childView" type class_ref 1994754 // View
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
       end
     end
   end

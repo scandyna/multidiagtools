@@ -1,26 +1,30 @@
 window_sizes 1280 963 356 918 908 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 3062274 // FilterProxyModel
-    734 726 100 18 0 0
-  classdiagram_ref 3128834 // ColumnAndData
-    120 110 100 4 0 0
-  active  classdiagram_ref 3142018 // RelationFilterProxyModel
-    918 908 100 4 0 0
+  classdiagram_ref 3148674 // sandbox
+    734 726 100 21 0 0
+  classdiagram_ref 2760962 // TableViewController
+    918 908 100 21 0 177
+  active  classdiagram_ref 2761218 // ControllerOverview
+    918 908 100 23 0 0
 end
 show_stereotypes
-selected classdiagram_ref 3142146 // Container
+selected classdiagram_ref 2761218 // ControllerOverview
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   classview_ref 1650306 // RowMapper
   classview_ref 1630466 // Filter
-  class_ref 3594754 // RelationFilterProxyModel
-  operation_ref 5017346 // prependModel
-  classview_ref 1327362 // SqlSandbox
+  class_ref 3145090 // RowChangeEventDispatcher
+  operation_ref 4549378 // setModel
+  operation_ref 4549506 // setView
+  attribute_ref 3211522 // SelectionModel
+  class_ref 2767362 // Relation
+  class_ref 3601410 // AbstractRelation
   
   package_ref 582274 // SqlItemEditor
+  classview_ref 1564290 // Where
   
   package_ref 430082 // Dsp
   classview_ref 1211650 // graph
