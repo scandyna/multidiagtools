@@ -30,8 +30,6 @@
 namespace Mdt{ namespace ItemEditor{
 
   class RowChangeEventDispatcher;
-//   class ItemSelectionModel;
-//   class EventCatchItemDelegate;
 
   /*! \brief Common base for controllers
    */
@@ -187,10 +185,6 @@ namespace Mdt{ namespace ItemEditor{
      */
     void currentRowChanged(int row);
 
-    /*! \brief Emitted each time model changed
-     */
-//     void modelChanged(QAbstractItemModel *model);
-
    protected:
 
     /*! \brief Submit data to model
@@ -220,24 +214,6 @@ namespace Mdt{ namespace ItemEditor{
      * \sa referenceItemModel()
      */
     void registerItemModel();
-
-    /*! \brief Register selection model
-     *
-     * Will set selectionModel to the internal event handling.
-     *
-     * If a editor uses a view that handle selection with a QItemSelectionModel (like QTableView),
-     *  replace its selection model with a ItemSelectionModel,
-     *  and register it with this method.
-     *  This way, the controller can block row change when needed.
-     */
-//     void registerSelectionModel(ItemSelectionModel *selectionModel);
-
-    /*! \brief Register item delegate
-     *
-     * Once delegate is registered, this controller is able to detect when user beginns editing,
-     *  and can update components in a coherent manner.
-     */
-//     void registerItemDelegate(EventCatchItemDelegate *delegate);
 
    protected slots:
 
@@ -271,8 +247,6 @@ namespace Mdt{ namespace ItemEditor{
     ControllerState pvControllerState = ControllerState::Visualizing;
     RowChangeEventDispatcher *pvRowChangeEventDispatcher;
     QPointer<QAbstractItemModel> pvModel;
-//     QPointer<ItemSelectionModel>  pvSelectionModel;
-//     QPointer<EventCatchItemDelegate> pvDelegate;
     InsertLocation pvInsertLocation;
   };
 
