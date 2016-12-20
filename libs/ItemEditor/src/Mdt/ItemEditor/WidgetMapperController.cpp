@@ -26,8 +26,45 @@
 namespace Mdt{ namespace ItemEditor{
 
 WidgetMapperController::WidgetMapperController(QObject* parent)
- : AbstractWidgetMapperController(new DataWidgetMapper, parent)
+ : AbstractController(parent),
+   mWidgetMapper(new DataWidgetMapper(this))
 {
+  connect(this, &WidgetMapperController::currentRowChanged, mWidgetMapper, &DataWidgetMapper::setCurrentRow);
+  connect(mWidgetMapper, &DataWidgetMapper::dataEditionStarted, this, &WidgetMapperController::onDataEditionStarted);
+  connect(mWidgetMapper, &DataWidgetMapper::dataEditionDone, this, &WidgetMapperController::onDataEditionDone);
+}
+
+void WidgetMapperController::setModel(QAbstractItemModel* _model)
+{
+  Q_ASSERT(_model != nullptr);
+
+  referenceItemModel(_model);
+  mWidgetMapper->setModel(_model);
+  registerItemModel();
+  Q_ASSERT(model() == mWidgetMapper->model());
+}
+
+void WidgetMapperController::addMapping(QWidget* widget, int column)
+{
+  Q_ASSERT(widget != nullptr);
+  Q_ASSERT_X(model() != nullptr, "WidgetMapperController::addMapping()", "model must be set before mapping widgets");
+
+  mWidgetMapper->addMapping(widget, column);
+}
+
+void WidgetMapperController::clearMapping()
+{
+  mWidgetMapper->clearMapping();
+}
+
+bool WidgetMapperController::submitDataToModel()
+{
+  return mWidgetMapper->submit();
+}
+
+void WidgetMapperController::revertDataFromModel()
+{
+  mWidgetMapper->revert();
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

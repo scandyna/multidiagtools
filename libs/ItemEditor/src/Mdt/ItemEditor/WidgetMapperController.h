@@ -21,13 +21,19 @@
 #ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_H
 #define MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_H
 
-#include "AbstractWidgetMapperController.h"
+// #include "AbstractWidgetMapperController.h"
+#include "AbstractController.h"
+#include <QByteArray>
+
+class QWidget;
 
 namespace Mdt{ namespace ItemEditor{
 
+  class DataWidgetMapper;
+
   /*! \brief Controller for DataWidgetMapper
    */
-  class WidgetMapperController : public AbstractWidgetMapperController
+  class WidgetMapperController : public AbstractController
   {
    Q_OBJECT
 
@@ -37,7 +43,57 @@ namespace Mdt{ namespace ItemEditor{
      */
     explicit WidgetMapperController(QObject* parent = nullptr);
 
+    /*! \brief Get widget mapper
+     */
+    DataWidgetMapper *widgetMapper() const
+    {
+      return mWidgetMapper;
+    }
+
+    /*! \brief Set model
+     *
+     * \note Because model can be shared with several objects (f.ex. other views),
+     *        the controller does not take ownership of it (it will not delete it).
+     * \pre No widget must be mapped when setting a model. If widget has been mapped, call clearMapping() first.
+     *       Which widget must be mapped with which column is only known from application developper,
+     *       this is the reason why no automatic remapping is done when changing the model.
+     * \pre model must be a valid pointer
+     */
+    void setModel(QAbstractItemModel *model) override;
+
+    /*! \brief Adds a mapping between a widget and a column from the model
+     *
+     * For more informations, see DataWidgetMapper documentation.
+     *
+     * \pre model must be set before mapping any widget
+     * \pre widget pointer must be valid
+     * \sa setModel()
+     */
+    void addMapping(QWidget *widget, int column);
+
+    /*! \brief Clear mapping
+     *
+     * After that call, all widgets that were mapped will no longer
+     *  been handled by this controller.
+     *
+     * \note Mapped widgets are not owned by this controller,
+     *        so thei will not be deleted.
+     */
+    void clearMapping();
+
    private:
+
+    /*! \brief Submit data to model
+     *
+     * Tell widget mapper to submit data to model.
+     */
+    bool submitDataToModel() override;
+
+    /*! \brief Revert data from model
+     */
+    void revertDataFromModel() override;
+
+    DataWidgetMapper *mWidgetMapper;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
