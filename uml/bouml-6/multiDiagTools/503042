@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 103
+  revision 104
   modified_by 2 "philippe"
   // class settings
   
@@ -1208,7 +1208,6 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
-
     end
 
     sequencediagram 2767874 "ItemViewExamples"
@@ -2620,6 +2619,28 @@ ${inlines}
 	
       end
 
+      operation 5044482 "submitDataToModel"
+	abstract cpp_virtual protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5044610 "revertDataFromModel"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
       operation 5037698 "referenceItemModel"
 	protected explicit_return_type "void"
 	nparams 1
@@ -3077,7 +3098,6 @@ ${inlines}
 	    classrelation_ref 4008962 // <generalisation>
 	  b parent class_ref 3614594 // AbstractSqlController
       end
-
     end
 
     classdiagram 2761090 "WidgetMapperController"
@@ -3085,7 +3105,7 @@ ${inlines}
       size C
     end
 
-    class 3138306 "AbstractWidgetMapperController"
+    class 3138434 "WidgetMapperController"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -3111,23 +3131,12 @@ ${inlines}
 	MysqlColumn
       end
 
-      classrelation 3648002 // <unidirectional association>
-	relation 3628802 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+      operation 4562946 "widgetMapper"
+	protected return_type class_ref 3191554 // DataWidgetMapper
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	    classrelation_ref 3648002 // <unidirectional association>
-	  b parent class_ref 3191554 // DataWidgetMapper
-      end
-
-      operation 4569858 "AbstractWidgetMapperController"
-	public explicit_return_type ""
-	nparams 2
-	  param in name "mapper" type class_ref 404610 // QDataWidgetMapper
-	  param in name "parent" type class_ref 138626 // QObject
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -3170,6 +3179,21 @@ ${inlines}
 	
       end
 
+      operation 5044354 "clearMapping"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 4655618 "addHeaderMapping"
 	public explicit_return_type "void"
 	nparams 2
@@ -3186,24 +3210,17 @@ ${inlines}
 	
 	
       end
-    end
 
-    class 3138434 "WidgetMapperController"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      operation 4562946 "widgetMapper"
-	protected return_type class_ref 3191554 // DataWidgetMapper
+      classrelation 4009218 // <generalisation>
+	relation 3983362 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4009218 // <generalisation>
+	  b parent class_ref 3090434 // AbstractController
+      end
+
+      operation 5044738 "submitDataToModel"
+	cpp_virtual private explicit_return_type "bool"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3217,12 +3234,28 @@ ${inlines}
 	
       end
 
-      classrelation 4009218 // <generalisation>
-	relation 3983362 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4009218 // <generalisation>
-	  b parent class_ref 3090434 // AbstractController
+      operation 5044866 "revertDataFromModel"
+	cpp_virtual private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4016642 // <directional composition>
+	relation 3990786 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4016642 // <directional composition>
+	  b parent class_ref 3191554 // DataWidgetMapper
       end
     end
 

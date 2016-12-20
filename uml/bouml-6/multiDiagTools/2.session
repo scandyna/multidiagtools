@@ -9,7 +9,7 @@ diagrams
     918 908 100 23 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2761218 // ControllerOverview
+selected operation_ref 5044866 // revertDataFromModel
 open
   
   package_ref 409858 // principes
@@ -17,8 +17,15 @@ open
   classview_ref 1650306 // RowMapper
   classview_ref 1630466 // Filter
   class_ref 3145090 // RowChangeEventDispatcher
+  operation_ref 5044482 // submitDataToModel
+  operation_ref 5044610 // revertDataFromModel
   operation_ref 4549378 // setModel
   operation_ref 4549506 // setView
+  attribute_ref 2941826 // WidgetMapper
+  operation_ref 4562690 // setModel
+  operation_ref 4569602 // addMapping
+  operation_ref 5044354 // clearMapping
+  operation_ref 4655618 // addHeaderMapping
   attribute_ref 3211522 // SelectionModel
   class_ref 2767362 // Relation
   class_ref 3601410 // AbstractRelation

@@ -21,7 +21,6 @@
 #ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_H
 #define MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_H
 
-// #include "AbstractWidgetMapperController.h"
 #include "AbstractController.h"
 #include <QByteArray>
 

@@ -16,10 +16,6 @@ classcanvas 129026 class_ref 2927362 // SqlTableViewController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 39.75 463.5 2012
 end
-classcanvas 129282 class_ref 3138306 // AbstractWidgetMapperController
-  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 587 252 2006
-end
 classcanvas 129538 class_ref 3138434 // WidgetMapperController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 614 378 2012

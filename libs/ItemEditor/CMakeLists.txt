@@ -19,7 +19,6 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/TableViewController.cpp
     src/Mdt/ItemEditor/MappedWidgetList.cpp
     src/Mdt/ItemEditor/DataWidgetMapper.cpp
-    src/Mdt/ItemEditor/AbstractWidgetMapperController.cpp
     src/Mdt/ItemEditor/WidgetMapperController.cpp
     src/Mdt/ItemEditor/StandardEditorLayoutWidget.cpp
     src/Mdt/ItemEditor/AbstractEditorWidget.cpp
