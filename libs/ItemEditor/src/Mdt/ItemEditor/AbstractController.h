@@ -184,7 +184,7 @@ namespace Mdt{ namespace ItemEditor{
      */
     void currentRowChanged(int row);
 
-    /*! \brief Emitted each time a model was set
+    /*! \brief Emitted each time model changed
      */
     void modelChanged(QAbstractItemModel *model);
 

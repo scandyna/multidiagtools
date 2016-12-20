@@ -92,6 +92,7 @@ void AbstractItemViewController::setModelToView(QAbstractItemModel* model)
      * QAbstractItemView does not delete the old selection model.
      * While we are owning our view, we can safely delete it here.
      */
+    /// \todo Are we really owning the view ?
     auto *oldSelectionModel = pvView->selectionModel();
     pvView->setModel(model);
     if(oldSelectionModel != nullptr){

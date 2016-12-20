@@ -117,7 +117,7 @@ void RowChangeEventDispatcher::onRowsRemoved(const QModelIndex& /*parent*/, int 
   /*
    * Define new current row:
    *  - If we remove before current row, we must update
-   *  - Else, we let is a is
+   *  - Else, we let it as is
    */
   int row = pvRowState.currentRow();
   if(first < row){
