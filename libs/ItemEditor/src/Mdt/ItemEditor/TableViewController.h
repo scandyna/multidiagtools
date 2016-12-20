@@ -21,13 +21,20 @@
 #ifndef MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_H
 #define MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_H
 
-#include "AbstractItemViewController.h"
+// #include "AbstractItemViewController.h"
+#include "AbstractController.h"
+#include <memory>
+
+class QAbstractItemModel;
+class QAbstractItemView;
 
 namespace Mdt{ namespace ItemEditor{
 
+  class ItemViewPrivateContainer;
+
   /*! \brief TableViewController acts on a QAbstractTableModel and a QAbstractItemView
    */
-  class TableViewController : public AbstractItemViewController
+  class TableViewController : public AbstractController
   {
    Q_OBJECT
 
@@ -37,12 +44,62 @@ namespace Mdt{ namespace ItemEditor{
      */
     explicit TableViewController(QObject* parent = nullptr);
 
+    // Destructor - unique_ptr needs define of ItemViewPrivateContainer to delet it
+    ~TableViewController();
+
     // Copy disabled
     TableViewController(const TableViewController &) = delete;
     TableViewController & operator=(const TableViewController &) = delete;
     // Move disabled
     TableViewController(TableViewController &&) = delete;
     TableViewController & operator=(TableViewController &&) = delete;
+
+    /*! \brief Attach view to this controller
+     *
+     * Once view is attached, this controller
+     *  take control of it.
+     *
+     * \note A controller will only control 1 view.
+     *       Also, controller does not take ownership
+     *       of the view (it will not delete it).
+     * \pre view must be a valid pointer.
+     */
+    void setView(QAbstractItemView *view);
+
+    /*! \brief Get view attached to this controller
+     *
+     * Will also return a nullptr if no view was set
+     */
+    QAbstractItemView *view() const;
+
+    /*! \brief Set model
+     *
+     * \note Because model can be shared with several objects (f.ex. other views),
+     *        the controller does not take ownership of it (it will not delete it).
+     * \pre model must be a valid pointer
+     */
+    void setModel(QAbstractItemModel *model) override;
+
+   private:
+
+    /*! \brief Submit data to model
+     */
+    bool submitDataToModel() override;
+
+    /*! \brief Revert data from model
+     */
+    void revertDataFromModel() override;
+
+    void registerModelAndSelectionModel();
+
+    /*! \brief Register item delegate
+     *
+     * Once delegate is registered, this controller is able to detect when user beginns editing,
+     *  and can update components in a coherent manner.
+     */
+//     void registerItemDelegate();
+
+    std::unique_ptr<ItemViewPrivateContainer> mContainer;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -103,7 +103,7 @@ void TableViewControllerTest::setModelTest()
    */
   controller.setModel(&listModel);
   QVERIFY(controller.model() == &listModel);
-  // Check that row state signaled
+  // Check that row state was signaled
   QCOMPARE(rowStateSpy.count(), 1);
   spyItem = rowStateSpy.takeFirst();
   rs = spyItem.at(0).value<RowState>();

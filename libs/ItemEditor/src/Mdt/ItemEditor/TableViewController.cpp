@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "TableViewController.h"
+#include "ItemViewPrivateContainer.h"
 #include <QAbstractTableModel>
 
 // #include <QDebug>
@@ -26,8 +27,67 @@
 namespace Mdt{ namespace ItemEditor{
 
 TableViewController::TableViewController(QObject* parent)
- : AbstractItemViewController(parent)
+ : AbstractController(parent),
+   mContainer(new ItemViewPrivateContainer)
 {
+  connect(mContainer->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionStarted, this, &TableViewController::onDataEditionStarted);
+  connect(mContainer->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionDone, this, &TableViewController::onDataEditionDone);
+}
+
+TableViewController::~TableViewController()
+{
+}
+
+void TableViewController::setView(QAbstractItemView* view)
+{
+  Q_ASSERT(view != nullptr);
+
+  mContainer->setView(view);
+  registerModelAndSelectionModel();
+}
+
+QAbstractItemView* TableViewController::view() const
+{
+  return mContainer->view();
+}
+
+void TableViewController::setModel(QAbstractItemModel* model)
+{
+  mContainer->setModel(model);
+  referenceItemModel(model);
+  registerModelAndSelectionModel();
+}
+
+bool TableViewController::submitDataToModel()
+{
+  mContainer->proxyItemDelegate()->commitCurrentEditorData();
+  return true;
+}
+
+void TableViewController::revertDataFromModel()
+{
+  mContainer->proxyItemDelegate()->closeCurrentEditor();
+}
+
+void TableViewController::registerModelAndSelectionModel()
+{
+  /*
+   * Order of signal/slot connections matters here.
+   * We must be sure that model is set to the view
+   * before it is registered (set to RowChangeEventDispatcher).
+   * Not doing so will produces a problem when model resets:
+   *  - Controller receives the event and updates current row to 0 (if model contains data)
+   *  - Controller updates current index of view
+   *  - View will reset (and current will also be lost!)
+   */
+  if( (mContainer->model() == nullptr) || (mContainer->view() == nullptr) ){
+    return;
+  }
+  disconnect(mContainer->selectionModel(), &ItemSelectionModel::currentRowChangeRequested, this, &TableViewController::setCurrentRow);
+  disconnect(this, &TableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
+  connect(mContainer->selectionModel(), &ItemSelectionModel::currentRowChangeRequested, this, &TableViewController::setCurrentRow);
+  connect(this, &TableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
+  registerItemModel();
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

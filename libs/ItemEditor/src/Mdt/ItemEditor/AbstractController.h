@@ -30,8 +30,8 @@
 namespace Mdt{ namespace ItemEditor{
 
   class RowChangeEventDispatcher;
-  class ItemSelectionModel;
-  class EventCatchItemDelegate;
+//   class ItemSelectionModel;
+//   class EventCatchItemDelegate;
 
   /*! \brief Common base for controllers
    */
@@ -84,6 +84,9 @@ namespace Mdt{ namespace ItemEditor{
      * \note Because model can be shared with several objects (f.ex. other views),
      *        the controller does not take ownership of it (it will not delete it).
      * \pre model must be a valid pointer
+     *
+     * When implementing a controller, subclass should re-implement this method,
+     *  and use referenceItemModel() then registerItemModel() when setup is complete.
      */
     virtual void setModel(QAbstractItemModel *model);
 
@@ -186,7 +189,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Emitted each time model changed
      */
-    void modelChanged(QAbstractItemModel *model);
+//     void modelChanged(QAbstractItemModel *model);
 
    protected:
 
@@ -203,7 +206,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Reference model
      *
-     * Will only hold a reference to model and emit modelChanged().
+     * Will only hold a reference to model.
      *
      * \sa registerItemModel()
      */
@@ -212,6 +215,7 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Register item model
      *
      * The model set with referenceModel() will be added to internal event handling.
+     *  Subclass should only call this method once it has finished setup
      *
      * \sa referenceItemModel()
      */
@@ -226,14 +230,14 @@ namespace Mdt{ namespace ItemEditor{
      *  and register it with this method.
      *  This way, the controller can block row change when needed.
      */
-    void registerSelectionModel(ItemSelectionModel *selectionModel);
+//     void registerSelectionModel(ItemSelectionModel *selectionModel);
 
     /*! \brief Register item delegate
      *
      * Once delegate is registered, this controller is able to detect when user beginns editing,
      *  and can update components in a coherent manner.
      */
-    void registerItemDelegate(EventCatchItemDelegate *delegate);
+//     void registerItemDelegate(EventCatchItemDelegate *delegate);
 
    protected slots:
 
@@ -267,8 +271,8 @@ namespace Mdt{ namespace ItemEditor{
     ControllerState pvControllerState = ControllerState::Visualizing;
     RowChangeEventDispatcher *pvRowChangeEventDispatcher;
     QPointer<QAbstractItemModel> pvModel;
-    QPointer<ItemSelectionModel>  pvSelectionModel;
-    QPointer<EventCatchItemDelegate> pvDelegate;
+//     QPointer<ItemSelectionModel>  pvSelectionModel;
+//     QPointer<EventCatchItemDelegate> pvDelegate;
     InsertLocation pvInsertLocation;
   };
 

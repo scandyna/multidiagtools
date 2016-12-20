@@ -32,7 +32,7 @@ AbstractItemViewController::AbstractItemViewController(QObject* parent)
  : AbstractController(parent),
    pvDelegate(new EventCatchItemDelegate(this))
 {
-  connect(this, &AbstractItemViewController::modelChanged, this, &AbstractItemViewController::setModelToView);
+  ///connect(this, &AbstractItemViewController::modelChanged, this, &AbstractItemViewController::setModelToView);
 }
 
 void AbstractItemViewController::setView(QAbstractItemView* view)
@@ -48,7 +48,7 @@ void AbstractItemViewController::setView(QAbstractItemView* view)
     pvDelegate->setItemDelegate(delegate);
   }
   pvView->setItemDelegate(pvDelegate);
-  registerItemDelegate(pvDelegate);
+  ///registerItemDelegate(pvDelegate);
 }
 
 QAbstractItemView* AbstractItemViewController::view() const
@@ -102,7 +102,7 @@ void AbstractItemViewController::setModelToView(QAbstractItemModel* model)
     auto *selectionModel = new ItemSelectionModel(model);
     pvView->setSelectionModel(selectionModel);
     registerItemModel();
-    registerSelectionModel(selectionModel);
+    ///registerSelectionModel(selectionModel);
   }
 }
 

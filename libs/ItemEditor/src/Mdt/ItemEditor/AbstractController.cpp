@@ -19,8 +19,8 @@
  **
  ****************************************************************************/
 #include "AbstractController.h"
-#include "ItemSelectionModel.h"
-#include "EventCatchItemDelegate.h"
+// #include "ItemSelectionModel.h"
+// #include "EventCatchItemDelegate.h"
 #include "RowChangeEventDispatcher.h"
 #include "ControllerStatePermission.h"
 #include <QAbstractItemModel>
@@ -165,7 +165,7 @@ void AbstractController::referenceItemModel(QAbstractItemModel* model)
     return;
   }
   pvModel = model;
-  emit modelChanged(pvModel);
+ /// emit modelChanged(pvModel);
 }
 
 void AbstractController::registerItemModel()
@@ -178,37 +178,37 @@ void AbstractController::registerItemModel()
   pvRowChangeEventDispatcher->setModel(pvModel);
 }
 
-void AbstractController::registerSelectionModel(ItemSelectionModel* selectionModel)
-{
-  Q_ASSERT(selectionModel != nullptr);
-  Q_ASSERT(pvRowChangeEventDispatcher->model() != nullptr);
-  Q_ASSERT(selectionModel->model() == pvRowChangeEventDispatcher->model());
+// void AbstractController::registerSelectionModel(ItemSelectionModel* selectionModel)
+// {
+//   Q_ASSERT(selectionModel != nullptr);
+//   Q_ASSERT(pvRowChangeEventDispatcher->model() != nullptr);
+//   Q_ASSERT(selectionModel->model() == pvRowChangeEventDispatcher->model());
+// 
+//   if(selectionModel == pvSelectionModel){
+//     return;
+//   }
+//   if(!pvSelectionModel.isNull()){
+//     disconnect(selectionModel, &ItemSelectionModel::currentRowChangeRequested, this, &AbstractController::setCurrentRow);
+//     disconnect(this, &AbstractController::currentRowChanged, selectionModel, &ItemSelectionModel::updateCurrentRow);
+//   }
+//   pvSelectionModel = selectionModel;
+//   connect(selectionModel, &ItemSelectionModel::currentRowChangeRequested, this, &AbstractController::setCurrentRow);
+//   connect(this, &AbstractController::currentRowChanged, selectionModel, &ItemSelectionModel::updateCurrentRow);
+//   pvSelectionModel->updateCurrentRow(pvRowChangeEventDispatcher->currentRow());
+// }
 
-  if(selectionModel == pvSelectionModel){
-    return;
-  }
-  if(!pvSelectionModel.isNull()){
-    disconnect(selectionModel, &ItemSelectionModel::currentRowChangeRequested, this, &AbstractController::setCurrentRow);
-    disconnect(this, &AbstractController::currentRowChanged, selectionModel, &ItemSelectionModel::updateCurrentRow);
-  }
-  pvSelectionModel = selectionModel;
-  connect(selectionModel, &ItemSelectionModel::currentRowChangeRequested, this, &AbstractController::setCurrentRow);
-  connect(this, &AbstractController::currentRowChanged, selectionModel, &ItemSelectionModel::updateCurrentRow);
-  pvSelectionModel->updateCurrentRow(pvRowChangeEventDispatcher->currentRow());
-}
-
-void AbstractController::registerItemDelegate(EventCatchItemDelegate* delegate)
-{
-  Q_ASSERT(delegate != nullptr);
-
-  if(!pvDelegate.isNull()){
-    disconnect(pvDelegate, &EventCatchItemDelegate::dataEditionStarted, this, &AbstractController::onDataEditionStarted);
-    disconnect(pvDelegate, &EventCatchItemDelegate::dataEditionDone, this, &AbstractController::onDataEditionDone);
-  }
-  pvDelegate = delegate;
-  connect(pvDelegate, &EventCatchItemDelegate::dataEditionStarted, this, &AbstractController::onDataEditionStarted);
-  connect(pvDelegate, &EventCatchItemDelegate::dataEditionDone, this, &AbstractController::onDataEditionDone);
-}
+// void AbstractController::registerItemDelegate(EventCatchItemDelegate* delegate)
+// {
+//   Q_ASSERT(delegate != nullptr);
+// 
+//   if(!pvDelegate.isNull()){
+//     disconnect(pvDelegate, &EventCatchItemDelegate::dataEditionStarted, this, &AbstractController::onDataEditionStarted);
+//     disconnect(pvDelegate, &EventCatchItemDelegate::dataEditionDone, this, &AbstractController::onDataEditionDone);
+//   }
+//   pvDelegate = delegate;
+//   connect(pvDelegate, &EventCatchItemDelegate::dataEditionStarted, this, &AbstractController::onDataEditionStarted);
+//   connect(pvDelegate, &EventCatchItemDelegate::dataEditionDone, this, &AbstractController::onDataEditionDone);
+// }
 
 void AbstractController::onDataEditionStarted()
 {
