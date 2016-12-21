@@ -18,17 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_FILTER_PROXY_MODEL_TEST_H
-#define MDT_ITEM_MODEL_FILTER_PROXY_MODEL_TEST_H
+#ifndef MDT_ITEM_MODEL_PROXY_MODEL_CONTAINER_TEST_H
+#define MDT_ITEM_MODEL_PROXY_MODEL_CONTAINER_TEST_H
 
-#include "Mdt/ItemModel/VariantTableModel.h"
 #include <QObject>
 #include <QtTest/QtTest>
 
-class QAbstractItemModel;
-class QSortFilterProxyModel;
-
-class FilterProxyModelTest : public QObject
+class ProxyModelContainerTest : public QObject
 {
  Q_OBJECT
 
@@ -37,21 +33,14 @@ class FilterProxyModelTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void filterTest();
-  void filterBenchmark();
-  void filterBenchmark_data();
-  void filterLikeBenchmark();
-  void filterLikeBenchmark_data();
-
-  void filterRoleTest();
-
-  void setterEventTest();
-  void dynamicFilterTest();
-
- private:
-
-  static QVariant getModelData(const QAbstractItemModel & model, int row, int column);
-  static void displayModels(QAbstractItemModel *sourceModel, QSortFilterProxyModel *proxyModel);
+  void initialStateTest();
+  void appendTest();
+  void appendThenSetSourceModelTest();
+  void prependTest();
+  void prependThenSetSourceModelTest();
+  void searchTest();
+  void removeAtTest();
+  void searchRemoveTest();
 };
 
-#endif // #ifndef MDT_ITEM_MODEL_FILTER_PROXY_MODEL_TEST_H
+#endif // #ifndef MDT_ITEM_MODEL_PROXY_MODEL_CONTAINER_TEST_H

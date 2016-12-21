@@ -6,13 +6,11 @@ classcanvas 128002 class_ref 3594882 // ProxyModelContainer
 end
 classcanvas 128130 class_ref 719618 // QAbstractProxyModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 432 82 2005
+  xyz 464 170 2005
 end
-note 128386 "ProxyModelChain ?"
-  xyzwh 60 196 2000 247 51
 relationcanvas 128258 relation_ref 3961346 // <unidirectional association>
   from ref 128002 z 2006 to ref 128130
   no_role_a no_role_b
-  multiplicity_a_pos 416 114 3000 no_multiplicity_b
+  multiplicity_a_pos 448 197 3000 no_multiplicity_b
 end
 end

@@ -1,6 +1,6 @@
 format 211
 "ItemModel" // Mdt::ItemModel
-  revision 18
+  revision 20
   modified_by 2 "philippe"
   // class settings
   
@@ -1446,7 +1446,7 @@ ${items}};
      end
     classdiagram 3142146 "Container"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 3594882 "ProxyModelContainer"
@@ -1488,7 +1488,22 @@ ${inlines}
 	
       end
 
-      operation 5017346 "prependModel"
+      operation 5051394 "sourceModel"
+	public return_type class_ref 146946 // QAbstractItemModel
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5017346 "prependProxyModel"
 	public explicit_return_type "void"
 	nparams 1
 	  param in name "model" type class_ref 719618 // QAbstractProxyModel
@@ -1504,7 +1519,7 @@ ${inlines}
 	
       end
 
-      operation 5017218 "appendModel"
+      operation 5017218 "appendProxyModel"
 	public explicit_return_type "void"
 	nparams 1
 	  param in name "model" type class_ref 719618 // QAbstractProxyModel
@@ -1520,7 +1535,22 @@ ${inlines}
 	
       end
 
-      operation 5017474 "lastModel"
+      operation 5051906 "firstProxyModel"
+	public return_type class_ref 719618 // QAbstractProxyModel
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5017474 "lastProxyModel"
 	public return_type class_ref 719618 // QAbstractProxyModel
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -1543,6 +1573,82 @@ ${inlines}
 	    classrelation_ref 3994754 // <directional composition>
 	  b parent class_ref 719874 // QSortFilterProxyModel
       end
+
+      operation 5051522 "containsProxyModelOfType"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5051650 "indexOfFirstProxyModelOfType"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5052418 "firstProxyModelOfType"
+	public return_type class_ref 719618 // QAbstractProxyModel
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5051778 "removeFirstProxyModelOfType"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5052290 "deleteFirstProxyModelOfType"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
     end
   end
 end

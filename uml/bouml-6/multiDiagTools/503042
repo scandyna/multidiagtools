@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 104
+  revision 106
   modified_by 2 "philippe"
   // class settings
   
@@ -3259,7 +3259,7 @@ ${inlines}
       end
     end
 
-    class 3138562 "SqlWidgetMapperTableController"
+    class 3138562 "SqlWidgetMapperController"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
