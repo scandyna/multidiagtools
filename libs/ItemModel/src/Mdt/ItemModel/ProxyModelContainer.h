@@ -21,13 +21,12 @@
 #ifndef MDT_ITEM_MODEL_PROXY_MODEL_CONTAINER_H
 #define MDT_ITEM_MODEL_PROXY_MODEL_CONTAINER_H
 
+#include <QAbstractProxyModel>
+#include <QAbstractItemModel>
 #include <QPointer>
 #include <vector>
 #include <algorithm>
 #include <typeinfo>
-
-class QAbstractProxyModel;
-class QAbstractItemModel;
 
 namespace Mdt{ namespace ItemModel{
 

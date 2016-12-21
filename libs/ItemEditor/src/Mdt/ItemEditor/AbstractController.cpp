@@ -45,8 +45,20 @@ void AbstractController::setModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);
 
-  referenceItemModel(model);
-  registerItemModel();
+  pvModel = model;
+  setModelToView(model);
+//   referenceItemModel(model);
+//   registerItemModel();
+}
+
+void AbstractController::modelSetToView()
+{
+  Q_ASSERT(!pvModel.isNull());
+
+  if(pvModel == pvRowChangeEventDispatcher->model()){
+    return;
+  }
+  pvRowChangeEventDispatcher->setModel(pvModel);
 }
 
 int AbstractController::rowCount() const
@@ -155,25 +167,25 @@ bool AbstractController::remove()
   return pvModel->removeRow(row);
 }
 
-void AbstractController::referenceItemModel(QAbstractItemModel* model)
-{
-  Q_ASSERT(model != nullptr);
+// void AbstractController::referenceItemModel(QAbstractItemModel* model)
+// {
+//   Q_ASSERT(model != nullptr);
+// 
+//   if(model == pvModel){
+//     return;
+//   }
+//   pvModel = model;
+// }
 
-  if(model == pvModel){
-    return;
-  }
-  pvModel = model;
-}
-
-void AbstractController::registerItemModel()
-{
-  Q_ASSERT(!pvModel.isNull());
-
-  if(pvModel == pvRowChangeEventDispatcher->model()){
-    return;
-  }
-  pvRowChangeEventDispatcher->setModel(pvModel);
-}
+// void AbstractController::registerItemModel()
+// {
+//   Q_ASSERT(!pvModel.isNull());
+// 
+//   if(pvModel == pvRowChangeEventDispatcher->model()){
+//     return;
+//   }
+//   pvRowChangeEventDispatcher->setModel(pvModel);
+// }
 
 void AbstractController::onDataEditionStarted()
 {

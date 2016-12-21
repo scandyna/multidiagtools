@@ -23,6 +23,7 @@
 
 #include "RowState.h"
 #include "ControllerState.h"
+#include "Mdt/ItemModel/ProxyModelContainer.h"
 #include <QObject>
 #include <QPointer>
 #include <QAbstractItemModel>
@@ -198,13 +199,37 @@ namespace Mdt{ namespace ItemEditor{
      */
     virtual void revertDataFromModel() = 0;
 
+    /*! \brief Set model to the view
+     *
+     * This method is called each time the model changes,
+     *  because of a call of setModel() ,
+     *  or a proxy model was inserted/removed.
+     *
+     * When implementing a controller,
+     *  subclass must implement this method.
+     *  Once the model could be successfully be set to its view,
+     *  modelSetToView() should be called.
+     *
+     * \sa modelSetToView()
+     */
+    virtual void setModelToView(QAbstractItemModel *model) = 0;
+
+    /*! \brief Add model model to internal event handling
+     *
+     * Subclass that implements a controller
+     *  should only call this method once it could set the model to the view.
+     *
+     * \sa setModelToView()
+     */
+    void modelSetToView();
+
     /*! \brief Reference model
      *
      * Will only hold a reference to model.
      *
      * \sa registerItemModel()
      */
-    void referenceItemModel(QAbstractItemModel *model);
+//     void referenceItemModel(QAbstractItemModel *model);
 
     /*! \brief Register item model
      *
@@ -213,7 +238,7 @@ namespace Mdt{ namespace ItemEditor{
      *
      * \sa referenceItemModel()
      */
-    void registerItemModel();
+//     void registerItemModel();
 
    protected slots:
 
@@ -246,8 +271,11 @@ namespace Mdt{ namespace ItemEditor{
 
     ControllerState pvControllerState = ControllerState::Visualizing;
     RowChangeEventDispatcher *pvRowChangeEventDispatcher;
+    
     QPointer<QAbstractItemModel> pvModel;
+    
     InsertLocation pvInsertLocation;
+    Mdt::ItemModel::ProxyModelContainer mModelContainer;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

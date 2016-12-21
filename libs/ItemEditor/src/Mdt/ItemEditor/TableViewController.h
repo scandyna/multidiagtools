@@ -78,9 +78,13 @@ namespace Mdt{ namespace ItemEditor{
      *        the controller does not take ownership of it (it will not delete it).
      * \pre model must be a valid pointer
      */
-    void setModel(QAbstractItemModel *model) override;
+//     void setModel(QAbstractItemModel *model) override;
 
    private:
+
+    /*! \brief Set model to the view
+     */
+    void setModelToView(QAbstractItemModel *model) override;
 
     /*! \brief Submit data to model
      */

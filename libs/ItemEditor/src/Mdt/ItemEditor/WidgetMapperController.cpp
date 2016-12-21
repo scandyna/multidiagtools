@@ -34,15 +34,15 @@ WidgetMapperController::WidgetMapperController(QObject* parent)
   connect(mWidgetMapper, &DataWidgetMapper::dataEditionDone, this, &WidgetMapperController::onDataEditionDone);
 }
 
-void WidgetMapperController::setModel(QAbstractItemModel* _model)
-{
-  Q_ASSERT(_model != nullptr);
-
-  referenceItemModel(_model);
-  mWidgetMapper->setModel(_model);
-  registerItemModel();
-  Q_ASSERT(model() == mWidgetMapper->model());
-}
+// void WidgetMapperController::setModel(QAbstractItemModel* _model)
+// {
+//   Q_ASSERT(_model != nullptr);
+// 
+//   referenceItemModel(_model);
+//   mWidgetMapper->setModel(_model);
+//   registerItemModel();
+//   Q_ASSERT(model() == mWidgetMapper->model());
+// }
 
 void WidgetMapperController::addMapping(QWidget* widget, int column)
 {
@@ -55,6 +55,16 @@ void WidgetMapperController::addMapping(QWidget* widget, int column)
 void WidgetMapperController::clearMapping()
 {
   mWidgetMapper->clearMapping();
+}
+
+void WidgetMapperController::setModelToView(QAbstractItemModel* _model)
+{
+  Q_ASSERT(_model != nullptr);
+
+  ///referenceItemModel(_model);
+  mWidgetMapper->setModel(_model);
+  modelSetToView();
+  Q_ASSERT(model() == mWidgetMapper->model());
 }
 
 bool WidgetMapperController::submitDataToModel()

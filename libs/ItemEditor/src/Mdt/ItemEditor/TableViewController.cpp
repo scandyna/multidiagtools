@@ -51,10 +51,17 @@ QAbstractItemView* TableViewController::view() const
   return mContainer->view();
 }
 
-void TableViewController::setModel(QAbstractItemModel* model)
+// void TableViewController::setModel(QAbstractItemModel* model)
+// {
+//   mContainer->setModel(model);
+//   referenceItemModel(model);
+//   registerModelAndSelectionModel();
+// }
+
+void TableViewController::setModelToView(QAbstractItemModel* model)
 {
   mContainer->setModel(model);
-  referenceItemModel(model);
+  ///referenceItemModel(model);
   registerModelAndSelectionModel();
 }
 
@@ -87,7 +94,8 @@ void TableViewController::registerModelAndSelectionModel()
   disconnect(this, &TableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
   connect(mContainer->selectionModel(), &ItemSelectionModel::currentRowChangeRequested, this, &TableViewController::setCurrentRow);
   connect(this, &TableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
-  registerItemModel();
+  ///registerItemModel();
+  modelSetToView();
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

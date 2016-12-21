@@ -58,7 +58,7 @@ namespace Mdt{ namespace ItemEditor{
      *       this is the reason why no automatic remapping is done when changing the model.
      * \pre model must be a valid pointer
      */
-    void setModel(QAbstractItemModel *model) override;
+//     void setModel(QAbstractItemModel *model) override;
 
     /*! \brief Adds a mapping between a widget and a column from the model
      *
@@ -81,6 +81,10 @@ namespace Mdt{ namespace ItemEditor{
     void clearMapping();
 
    private:
+
+    /*! \brief Set model to the view
+     */
+    void setModelToView(QAbstractItemModel *model) override;
 
     /*! \brief Submit data to model
      *
