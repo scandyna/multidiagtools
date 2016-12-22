@@ -1,0 +1,294 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
+#include "ControllerRelationTest.h"
+#include "ItemViewTestEdit.h"
+#include "Mdt/Application.h"
+#include "Mdt/ItemModel/VariantTableModel.h"
+#include "Mdt/ItemEditor/TableViewController.h"
+#include "Mdt/ItemEditor/WidgetMapperController.h"
+#include "Mdt/ItemEditor/ControllerRelation.h"
+#include "Mdt/ItemEditor/ControllerRelationList.h"
+#include <QSignalSpy>
+#include <QStringListModel>
+#include <QTableView>
+#include <QSpinBox>
+#include <QComboBox>
+#include <QObject>
+#include <QMetaObject>
+#include <QMetaProperty>
+#include <QMetaMethod>
+
+namespace ItemModel = Mdt::ItemModel;
+namespace ItemEditor = Mdt::ItemEditor;
+using ItemModel::VariantTableModel;
+using ItemModel::FilterColumn;
+using ItemModel::ParentModelColumn;
+using ItemEditor::TableViewController;
+using ItemEditor::WidgetMapperController;
+using ItemEditor::ControllerRelation;
+using ItemEditor::ControllerRelationList;
+using ItemEditor::ControllerState;
+
+void ControllerRelationTest::initTestCase()
+{
+}
+
+void ControllerRelationTest::cleanupTestCase()
+{
+}
+
+/*
+ * Tests
+ */
+
+void ControllerRelationTest::setControllersTest()
+{
+  TableViewController parentController;
+  TableViewController childController;
+  /*
+   * Create relation
+   */
+  ControllerRelation relation(&parentController);
+  QVERIFY(relation.proxyModel() != nullptr);
+  QVERIFY(relation.proxyModel()->parentModel() == parentController.modelForView());
+
+  QFAIL("Not complete");
+}
+
+void ControllerRelationTest::changeModelTest()
+{
+  /*
+   * Change model in parent controller
+   */
+  
+  
+  /*
+   * Enable filter in parent controller
+   */
+  
+  /*
+   * Disable filter in parent controller
+   */
+  
+  
+  
+  QFAIL("Not complete");
+}
+
+void ControllerRelationTest::setModelToControllersFirstTest()
+{
+  /*
+   * Setup parent model and controller
+   */
+  VariantTableModel parentModel;
+  TableViewController parentController;
+  parentController.setModel(&parentModel);
+  /*
+   * Setup child model and controller
+   */
+  VariantTableModel childModel;
+  TableViewController childController;
+  childController.setModel(&childModel);
+  /*
+   * Setup relation
+   */
+  ControllerRelation relation(&parentController);
+  QVERIFY(relation.proxyModel()->parentModel() == parentController.modelForView());
+  relation.setChildController(&childController, FilterColumn(0) == ParentModelColumn(0));
+  QVERIFY(relation.proxyModel()->parentModel() == parentController.modelForView());
+  QVERIFY(relation.proxyModel()->sourceModel() == &childModel);
+  QVERIFY(childController.model() == relation.proxyModel());
+}
+
+void ControllerRelationTest::setModelToControllersAfterTest()
+{
+  /*
+   * Setup parent and child controllers
+   */
+  TableViewController parentController;
+  TableViewController childController;
+  /*
+   * Setup relation
+   */
+  ControllerRelation relation(&parentController);
+  relation.setChildController(&childController, FilterColumn(0) == ParentModelColumn(0));
+  QVERIFY(relation.proxyModel() != nullptr);
+  QVERIFY(relation.proxyModel()->parentModel() == nullptr);
+  QVERIFY(relation.proxyModel()->sourceModel() == nullptr);
+  /*
+   * Setup parent model
+   */
+  VariantTableModel parentModel;
+  parentController.setModel(&parentModel);
+  relation.updateParentControllerModel();
+  QVERIFY(relation.proxyModel()->parentModel() == parentController.modelForView());
+  QVERIFY(relation.proxyModel()->sourceModel() == nullptr);
+  /*
+   * Setup child model
+   */
+  VariantTableModel childModel;
+  childController.setModel(&childModel);
+  relation.updateChildControllerModel();
+  QVERIFY(relation.proxyModel()->parentModel() == parentController.modelForView());
+  QVERIFY(relation.proxyModel()->sourceModel() == &childModel);
+  QVERIFY(childController.model() == relation.proxyModel());
+}
+
+void ControllerRelationTest::parentTableChildTableTest()
+{
+  /*
+   * Setup parent model
+   * -------------
+   * | Id | Name |
+   * -------------
+   * | 1  | C1   |
+   * -------------
+   * | 2  | C2   |
+   * -------------
+   */
+  VariantTableModel clientModel;
+  clientModel.resize(2, 2);
+  clientModel.populateColumn(0, {1,2});
+  clientModel.populateColumn(1, {"C1","C2"});
+  /*
+   * Setup child model
+   * ------------------------
+   * | Id | Cli_Id | Street |
+   * ------------------------
+   * | 11 |   1    |  S11   |
+   * ------------------------
+   * | 12 |   1    |  S12   |
+   * ------------------------
+   * | 21 |   2    |  S21   |
+   * ------------------------
+   */
+  VariantTableModel addressModel;
+  addressModel.resize(3, 3);
+  addressModel.populateColumn(0, {11,12,21});
+  addressModel.populateColumn(1, {1 ,1 ,2 });
+  addressModel.populateColumn(2, {"S11","S12","S21"});
+  /*
+   * Setup controllers and views
+   */
+  QTableView clientView;
+  TableViewController clientController;
+  clientController.setModel(&clientModel);
+  clientController.setView(&clientView);
+  QTableView addressView;
+  TableViewController addressController;
+  addressController.setModel(&addressModel);
+  addressController.setView(&addressView);
+  /*
+   * Setup relation
+   */
+  ParentModelColumn addressClientId(0);
+  FilterColumn clientId(1);
+  ControllerRelation relation(&clientController);
+  relation.setChildController(&addressController, clientId == addressClientId);
+  /*
+   * Play
+   */
+  clientModel.setHeaderData(0, Qt::Horizontal, "Id");
+  clientModel.setHeaderData(1, Qt::Horizontal, "Name");
+  clientView.setWindowTitle("Client");
+  clientView.resizeColumnsToContents();
+  clientView.show();
+  addressView.setWindowTitle("Address");
+  addressView.resizeColumnsToContents();
+  addressView.show();
+  while(clientView.isVisible()){
+    QTest::qWait(500);
+  }
+
+  QFAIL("Not complete");
+}
+
+void ControllerRelationTest::relationListBasicSetGetTest()
+{
+  /*
+   * Setup parent model and controller
+   */
+  VariantTableModel parentModel;
+  TableViewController parentController;
+  parentController.setModel(&parentModel);
+  /*
+   * Setup child model and controller
+   */
+  VariantTableModel childModel;
+  TableViewController childController;
+  childController.setModel(&childModel);
+  /*
+   * Setup relation list
+   */
+  ControllerRelationList relationList(&parentController);
+  QCOMPARE(relationList.childControllerCount(), 0);
+  QVERIFY(relationList.cbegin() == relationList.cend());
+  /*
+   * Add child controller
+   */
+  relationList.addChildController(&childController, FilterColumn(0) == ParentModelColumn(0));
+  QCOMPARE(relationList.childControllerCount(), 1);
+  QVERIFY(relationList.cbegin() != relationList.cend());
+
+  QFAIL("Not complete");
+}
+
+
+/*
+ * Helpers
+ */
+
+void ControllerRelationTest::beginEditing(QAbstractItemView& view, const QModelIndex& index, BeginEditTrigger trigger)
+{
+  ItemViewTestEdit::beginEditing(view, index, trigger);
+}
+
+void ControllerRelationTest::editText(QAbstractItemView& view, const QModelIndex& editingIndex, const QString& str)
+{
+  ItemViewTestEdit::editText(view, editingIndex, str);
+}
+
+void ControllerRelationTest::endEditing(QAbstractItemView& view, const QModelIndex& editingIndex, EndEditTrigger trigger)
+{
+  ItemViewTestEdit::endEditing(view, editingIndex, trigger);
+}
+
+void ControllerRelationTest::edit(QAbstractItemView& view, const QModelIndex& index, const QString& str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger)
+{
+  ItemViewTestEdit::edit(view, index, str, beginEditTrigger, endEditTrigger);
+}
+
+/*
+ * Main
+ */
+
+int main(int argc, char **argv)
+{
+  Mdt::Application app(argc, argv);
+  ControllerRelationTest test;
+
+  if(!app.init()){
+    return 1;
+  }
+//   app.debugEnvironnement();
+
+  return QTest::qExec(&test, argc, argv);
+}

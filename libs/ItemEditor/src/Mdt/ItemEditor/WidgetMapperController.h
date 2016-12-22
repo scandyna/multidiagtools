@@ -49,17 +49,6 @@ namespace Mdt{ namespace ItemEditor{
       return mWidgetMapper;
     }
 
-    /*! \brief Set model
-     *
-     * \note Because model can be shared with several objects (f.ex. other views),
-     *        the controller does not take ownership of it (it will not delete it).
-     * \pre No widget must be mapped when setting a model. If widget has been mapped, call clearMapping() first.
-     *       Which widget must be mapped with which column is only known from application developper,
-     *       this is the reason why no automatic remapping is done when changing the model.
-     * \pre model must be a valid pointer
-     */
-//     void setModel(QAbstractItemModel *model) override;
-
     /*! \brief Adds a mapping between a widget and a column from the model
      *
      * For more informations, see DataWidgetMapper documentation.

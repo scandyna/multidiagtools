@@ -21,12 +21,11 @@
 #include "ControllerTest.h"
 #include "ItemViewTestEdit.h"
 #include "Mdt/Application.h"
+#include "Mdt/ItemModel/VariantTableModel.h"
 #include "Mdt/ItemEditor/ControllerStatePermission.h"
-// #include "Mdt/ItemEditor/MappedWidgetList.h"
 #include "Mdt/ItemEditor/TableViewController.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"
 #include "Mdt/ItemEditor/ItemSelectionModel.h"
-#include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSignalSpy>
 #include <QStringListModel>
 #include <QTableView>
@@ -38,8 +37,12 @@
 #include <QMetaProperty>
 #include <QMetaMethod>
 
+namespace ItemModel = Mdt::ItemModel;
 namespace ItemEditor = Mdt::ItemEditor;
-using Mdt::ItemModel::VariantTableModel;
+using ItemModel::VariantTableModel;
+using ItemEditor::ControllerState;
+using ItemEditor::TableViewController;
+using ItemEditor::WidgetMapperController;
 
 void ControllerTest::initTestCase()
 {
@@ -74,6 +77,31 @@ void ControllerTest::statePermissionTest()
   QVERIFY(ControllerStatePermission::canRemove(ControllerState::Visualizing));
   QVERIFY(!ControllerStatePermission::canRemove(ControllerState::Editing));
 }
+
+// void ControllerTest::controllerListTest()
+// {
+//   ControllerList list;
+//   TableViewController tableController;
+// 
+//   /*
+//    * Initial state
+//    */
+//   QCOMPARE(list.size(), 0);
+//   QVERIFY(list.isEmpty());
+//   QVERIFY(list.cbegin() == list.cend());
+//   /*
+//    * Add 1 element
+//    */
+//   list.addController(&tableController);
+//   QCOMPARE(list.size(), 1);
+//   QVERIFY(!list.isEmpty());
+//   QVERIFY(list.cbegin() != list.cend());
+//   /*
+//    * Clear
+//    */
+//   list.clear();
+//   QVERIFY(list.isEmpty());
+// }
 
 /*
  * Helper functions

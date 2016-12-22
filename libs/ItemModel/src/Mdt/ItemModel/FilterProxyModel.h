@@ -21,16 +21,18 @@
 #ifndef MDT_ITEM_MODEL_FILTER_PROXY_MODEL_H
 #define MDT_ITEM_MODEL_FILTER_PROXY_MODEL_H
 
-#include "FilterExpression.h"
 #include "FilterColumn.h"
 #include "LikeExpression.h"
+#include "FilterExpression.h"
 #include <QSortFilterProxyModel>
 
 namespace Mdt{ namespace ItemModel{
 
+  class FilterExpression;
+
   /*! \brief Provides support for filtering data between another model and a view
    *
-   * Example of usage:
+   * Example to use compile time dfined filter:
    * \code
    * #include <Mdt/ItemModel/FilterProxyModel.h>
    * #include <QTableView>
@@ -73,9 +75,8 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Set filter
      *
-     * \tparam Expr Type of the expression.
      * \param expression Expression to apply as filter.
-     * \pre Expr must be a filter expression type.
+     * \pre \a expression must be a filter expression type.
      *       A filter expression is based on FilterColumn,
      *       comparison operators, logical AND, logical OR.
      *       For example (see example code above for details):

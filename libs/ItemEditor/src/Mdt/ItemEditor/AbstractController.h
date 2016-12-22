@@ -24,6 +24,7 @@
 #include "RowState.h"
 #include "ControllerState.h"
 #include "Mdt/ItemModel/ProxyModelContainer.h"
+#include "Mdt/ItemModel/FilterProxyModel.h"
 #include <QObject>
 #include <QPointer>
 #include <QAbstractItemModel>
@@ -83,11 +84,8 @@ namespace Mdt{ namespace ItemEditor{
      * \note Because model can be shared with several objects (f.ex. other views),
      *        the controller does not take ownership of it (it will not delete it).
      * \pre model must be a valid pointer
-     *
-     * When implementing a controller, subclass should re-implement this method,
-     *  and use referenceItemModel() then registerItemModel() when setup is complete.
      */
-    virtual void setModel(QAbstractItemModel *model);
+    void setModel(QAbstractItemModel *model);
 
     /*! \brief Get model
      *
@@ -97,7 +95,20 @@ namespace Mdt{ namespace ItemEditor{
      */
     QAbstractItemModel *model() const
     {
-      return pvModel;
+      return mModelContainer.sourceModel();
+    }
+
+    /*! \brief Get the model that is used by the view
+     *
+     * Can be the same as model() if no proxy model exists,
+     *  a proxy model or a nullptr if no proxy model, and no model was set.
+     */
+    QAbstractItemModel *modelForView() const
+    {
+      if(mModelContainer.proxyModelCount() < 1){
+        return mModelContainer.sourceModel();
+      }
+      return mModelContainer.lastProxyModel();
     }
 
     /*! \brief Get row count
@@ -123,6 +134,34 @@ namespace Mdt{ namespace ItemEditor{
      *  -1 is returned.
      */
     int currentRow() const;
+
+    /*! \brief Set filter enabled
+     *
+     * \sa isFilterEnabled()
+     */
+    void setFilterEnabled(bool enable);
+
+    /*! \brief Check if filter is enabled
+     *
+     * \sa setFilterEnabled()
+     */
+    bool isFilterEnabled() const;
+
+    /*! \brief Set filter
+     *
+     * If filter is not enabled, it will enabled before applying expression.
+     *
+     * \param expression Expression to apply as filter.
+     * \pre \a expression must be a filter expression type.
+     * \sa Mdt::ItemModel::FilterProxyModel
+     * \sa setFilterEnabled()
+     */
+    template<typename Expr>
+    void setFilter(const Expr & expression)
+    {
+      setFilterEnabled(true);
+      filterModel()->setFilter(expression);
+    }
 
    public slots:
 
@@ -188,17 +227,6 @@ namespace Mdt{ namespace ItemEditor{
 
    protected:
 
-    /*! \brief Submit data to model
-     *
-     * Subclass should request the view it handles
-     *  to submit data to the model.
-     */
-    virtual bool submitDataToModel() = 0;
-
-    /*! \brief Revert data from model
-     */
-    virtual void revertDataFromModel() = 0;
-
     /*! \brief Set model to the view
      *
      * This method is called each time the model changes,
@@ -223,22 +251,16 @@ namespace Mdt{ namespace ItemEditor{
      */
     void modelSetToView();
 
-    /*! \brief Reference model
+    /*! \brief Submit data to model
      *
-     * Will only hold a reference to model.
-     *
-     * \sa registerItemModel()
+     * Subclass should request the view it handles
+     *  to submit data to the model.
      */
-//     void referenceItemModel(QAbstractItemModel *model);
+    virtual bool submitDataToModel() = 0;
 
-    /*! \brief Register item model
-     *
-     * The model set with referenceModel() will be added to internal event handling.
-     *  Subclass should only call this method once it has finished setup
-     *
-     * \sa referenceItemModel()
+    /*! \brief Revert data from model
      */
-//     void registerItemModel();
+    virtual void revertDataFromModel() = 0;
 
    protected slots:
 
@@ -269,11 +291,14 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setControllerState(ControllerState state);
 
+    /*! \brief Get filter proxy model
+     *
+     * \pre Filter must be enabled
+     */
+    Mdt::ItemModel::FilterProxyModel *filterModel() const;
+
     ControllerState pvControllerState = ControllerState::Visualizing;
     RowChangeEventDispatcher *pvRowChangeEventDispatcher;
-    
-    QPointer<QAbstractItemModel> pvModel;
-    
     InsertLocation pvInsertLocation;
     Mdt::ItemModel::ProxyModelContainer mModelContainer;
   };

@@ -40,7 +40,7 @@ classcanvas 138754 class_ref 3138434 // WidgetMapperController
   classdiagramsettings member_max_width 0 end
   xyz 497 306 2014
 end
-classcanvas 139010 class_ref 3138562 // SqlWidgetMapperTableController
+classcanvas 139010 class_ref 3138562 // SqlWidgetMapperController
   classdiagramsettings member_max_width 0 end
   xyz 37 434 2048
 end
@@ -96,7 +96,7 @@ relationcanvas 157442 relation_ref 3983234 // <generalisation>
   geometry VHV unfixed
   decenter_begin 515
   decenter_end 470
-  from ref 139010 z 2049 to point 149 392
+  from ref 139010 z 2049 to point 132 392
   line 159106 z 2049 to point 373 392
   line 159234 z 2049 to ref 155906
   no_role_a no_role_b

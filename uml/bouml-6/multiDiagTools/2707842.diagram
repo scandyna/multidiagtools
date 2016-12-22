@@ -2,85 +2,82 @@ format 211
 
 classcanvas 128002 class_ref 3090050 // TestWindowEditor
   classdiagramsettings member_max_width 0 end
-  xyz 859.15 402.55 2000
+  xyz 275.7 817.95 2000
 end
 classcanvas 128130 class_ref 2706306 // StandardWindow
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 985 320.1 2000
+  xyz 402.7 731.95 2000
 end
 classcanvas 128386 class_ref 552450 // QMainWindow
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 993 159.7 2006
+  xyz 410.7 168.75 2006
 end
 classcanvas 128642 class_ref 316162 // QWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 683.3 39.1 2012
+  xyz 429.7 41.85 2012
 end
 classcanvas 128898 class_ref 3088642 // StandardEditorLayoutWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 622.05 407.4 2018
+  xyz 39.75 825.95 2018
 end
 classcanvas 129538 class_ref 3090178 // TestFormEditionWidget
   classdiagramsettings member_max_width 0 end
-  xyz 428.9 490.45 2000
+  xyz 837.2 375.15 2000
 end
 classcanvas 129666 class_ref 3096962 // AbstractWindow
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 990.15 240.7 2012
+  xyz 407.45 644.25 2012
 end
 classcanvas 130050 class_ref 3103618 // TestTableEditionWidget
   classdiagramsettings member_max_width 0 end
-  xyz 45.3 742.4 2000
+  xyz 508.6 557.55 2000
 end
 classcanvas 131330 class_ref 3068802 // AbstractEditorWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 508.9 159.7 2018
+  xyz 917.2 168.75 2018
 end
 classcanvas 131842 class_ref 3104130 // TableViewWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 66.3 662 2024
+  xyz 529.6 470.85 2024
 end
 classcanvas 132738 class_ref 3118082 // AbstractTableViewWidget
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 39.3 340.2 2030
+  xyz 502.6 296.45 2030
 end
 classcanvas 134018 class_ref 3131650 // Ui::TestFormEditionWidget
   classdiagramsettings member_max_width 0 end
-  xyz 778.8 501.6 2000
+  xyz 900.2 476.35 2000
 end
 classcanvas 135042 class_ref 3138434 // WidgetMapperController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 194.05 501.6 2018
+  xyz 630.75 383.15 2018
 end
 classcanvas 136194 class_ref 404610 // QDataWidgetMapper
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 206.05 581 2000
-end
-classcanvas 136450 class_ref 3138306 // AbstractWidgetMapperController
-  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 168.45 422.6 2024
+  xyz 40.3 958 2000
 end
 relationcanvas 128258 relation_ref 3458946 // <generalisation>
-  decenter_begin 490
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 971394 // <generalisation>
-  geometry VHV unfixed
-  from ref 128386 z 2013 to point 1043 120
-  line 135938 z 2013 to point 714 120
-  line 136066 z 2013 to ref 128642
+  from ref 128386 z 2013 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129026 relation_ref 3458178 // <generalisation>
-  decenter_begin 482
-  from ref 128898 z 2019 to ref 128642
+  geometry VHV unfixed
+  decenter_begin 517
+  from ref 128898 z 2019 to point 138 127.7
+  line 136706 z 2019 to point 447 127.7
+  line 136834 z 2019 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129154 relation_ref 3459074 // <dependency>
+  decenter_begin 442
+  decenter_end 422
   from ref 128002 z 2019 to ref 128898
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -99,8 +96,8 @@ relationcanvas 129922 relation_ref 3466370 // <generalisation>
 end
 relationcanvas 131458 relation_ref 3441794 // <generalisation>
   geometry VHV unfixed
-  from ref 131330 z 2019 to point 580 120
-  line 133122 z 2019 to point 714 120
+  from ref 131330 z 2019 to point 989.8 127.7
+  line 133122 z 2019 to point 460.6 127.7
   line 133250 z 2019 to ref 128642
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -112,8 +109,8 @@ relationcanvas 132098 relation_ref 3475330 // <generalisation>
 end
 relationcanvas 132866 relation_ref 3492354 // <generalisation>
   geometry VHV unfixed
-  from ref 132738 z 2031 to point 124 301
-  line 135682 z 2031 to point 580 301
+  from ref 132738 z 2031 to point 587.2 254.8
+  line 135682 z 2031 to point 989.8 254.8
   line 135810 z 2031 to ref 131330
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -124,24 +121,19 @@ relationcanvas 132994 relation_ref 3492482 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 134146 relation_ref 3519874 // <generalisation>
-  decenter_begin 542
   from ref 129538 z 2001 to ref 134018
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 135426 relation_ref 3533954 // <directional composition>
-  decenter_begin 542
+  decenter_begin 557
+  decenter_end 577
   from ref 129538 z 2019 to ref 135042
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 135554 relation_ref 3534082 // <generalisation>
   from ref 129538 z 2019 to ref 131330
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 136578 relation_ref 3526914 // <generalisation>
-  from ref 135042 z 2025 to ref 136450
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

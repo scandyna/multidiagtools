@@ -25,11 +25,13 @@
 
 // #include <QDebug>
 
+namespace ItemModel = Mdt::ItemModel;
+using ItemModel::FilterProxyModel;
+
 namespace Mdt{ namespace ItemEditor{
 
 AbstractController::AbstractController(QObject* parent)
  : QObject(parent),
-   pvModel(nullptr),
    pvInsertLocation(InsertAtBeginning)
 {
   pvRowChangeEventDispatcher = new RowChangeEventDispatcher(this);
@@ -45,20 +47,19 @@ void AbstractController::setModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);
 
-  pvModel = model;
-  setModelToView(model);
-//   referenceItemModel(model);
-//   registerItemModel();
+  mModelContainer.setSourceModel(model);
+  setModelToView(modelForView());
 }
 
 void AbstractController::modelSetToView()
 {
-  Q_ASSERT(!pvModel.isNull());
+  auto *model = modelForView();
+  Q_ASSERT(model != nullptr);
 
-  if(pvModel == pvRowChangeEventDispatcher->model()){
+  if(model == pvRowChangeEventDispatcher->model()){
     return;
   }
-  pvRowChangeEventDispatcher->setModel(pvModel);
+  pvRowChangeEventDispatcher->setModel(model);
 }
 
 int AbstractController::rowCount() const
@@ -69,6 +70,24 @@ int AbstractController::rowCount() const
 int AbstractController::currentRow() const
 {
   return pvRowChangeEventDispatcher->currentRow();
+}
+
+void AbstractController::setFilterEnabled(bool enable)
+{
+  if(enable == isFilterEnabled()){
+    return;
+  }
+  if(enable){
+    mModelContainer.prependProxyModel(new FilterProxyModel(this));
+  }else{
+    mModelContainer.deleteFirstProxyModelOfType<FilterProxyModel>();
+  }
+  setModelToView(modelForView());
+}
+
+bool AbstractController::isFilterEnabled() const
+{
+  return mModelContainer.containsProxyModelOfType<FilterProxyModel>();
 }
 
 bool AbstractController::setCurrentRow(int row)
@@ -136,17 +155,18 @@ void AbstractController::revert()
 
 bool AbstractController::insert()
 {
-  Q_ASSERT(!pvModel.isNull());
+  auto *model = modelForView();
+  Q_ASSERT(model != nullptr);
 
   if(!ControllerStatePermission::canInsert(pvControllerState)){
     return false;
   }
   switch(pvInsertLocation){
     case InsertAtBeginning:
-      return pvModel->insertRow(0);
+      return model->insertRow(0);
     case InsertAtEnd:
       /// \todo Fetch all
-      return pvModel->insertRow( rowCount() );
+      return model->insertRow( rowCount() );
   }
 
   return false;
@@ -154,7 +174,8 @@ bool AbstractController::insert()
 
 bool AbstractController::remove()
 {
-  Q_ASSERT(!pvModel.isNull());
+  auto *model = modelForView();
+  Q_ASSERT(model != nullptr);
 
   if(!ControllerStatePermission::canRemove(pvControllerState)){
     return false;
@@ -164,28 +185,8 @@ bool AbstractController::remove()
     return false;
   }
 
-  return pvModel->removeRow(row);
+  return model->removeRow(row);
 }
-
-// void AbstractController::referenceItemModel(QAbstractItemModel* model)
-// {
-//   Q_ASSERT(model != nullptr);
-// 
-//   if(model == pvModel){
-//     return;
-//   }
-//   pvModel = model;
-// }
-
-// void AbstractController::registerItemModel()
-// {
-//   Q_ASSERT(!pvModel.isNull());
-// 
-//   if(pvModel == pvRowChangeEventDispatcher->model()){
-//     return;
-//   }
-//   pvRowChangeEventDispatcher->setModel(pvModel);
-// }
 
 void AbstractController::onDataEditionStarted()
 {
@@ -211,6 +212,13 @@ void AbstractController::setControllerState(ControllerState state)
   }else{
     pvControllerState = state;
   }
+}
+
+FilterProxyModel* AbstractController::filterModel() const
+{
+  auto *model = mModelContainer.firstProxyModelOfType<FilterProxyModel>();
+  Q_ASSERT(model != nullptr);
+  return reinterpret_cast<FilterProxyModel*>(model);
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

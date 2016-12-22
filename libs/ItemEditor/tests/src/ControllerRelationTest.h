@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_CONTROLLER_TEST_H
-#define MDT_ITEM_EDITOR_CONTROLLER_TEST_H
+#ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_TEST_H
+#define MDT_ITEM_EDITOR_CONTROLLER_RELATION_TEST_H
 
 #include "ItemViewTestEditTriggers.h"
 #include <QObject>
@@ -27,7 +27,7 @@
 
 class QAbstractItemView;
 
-class ControllerTest : public QObject
+class ControllerRelationTest : public QObject
 {
   Q_OBJECT
 
@@ -36,9 +36,14 @@ class ControllerTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void statePermissionTest();
+  void setControllersTest();
+  void changeModelTest();
+  
+  void setModelToControllersFirstTest();
+  void setModelToControllersAfterTest();
+  void parentTableChildTableTest();
 
-//   void controllerListTest();
+  void relationListBasicSetGetTest();
 
  private:
 
@@ -49,4 +54,4 @@ class ControllerTest : public QObject
   void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
 };
 
-#endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_TEST_H
+#endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_TEST_H

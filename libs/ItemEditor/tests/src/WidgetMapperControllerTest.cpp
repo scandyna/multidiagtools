@@ -699,6 +699,16 @@ void WidgetMapperControllerTest::removeFromModelTest()
 //   }
 }
 
+void WidgetMapperControllerTest::filterTest()
+{
+  QFAIL("Not complete");
+}
+
+void WidgetMapperControllerTest::sortTest()
+{
+  QFAIL("Not complete");
+}
+
 /*
  * Main
  */

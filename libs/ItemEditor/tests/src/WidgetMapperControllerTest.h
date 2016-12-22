@@ -41,6 +41,8 @@ class WidgetMapperControllerTest : public QObject
   void insertFromModelTest();
   void removeTest();
   void removeFromModelTest();
+  void filterTest();
+  void sortTest();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_WIDGET_MAPPER_CONTROLLER_TEST_H

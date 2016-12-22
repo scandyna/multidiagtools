@@ -72,14 +72,6 @@ namespace Mdt{ namespace ItemEditor{
      */
     QAbstractItemView *view() const;
 
-    /*! \brief Set model
-     *
-     * \note Because model can be shared with several objects (f.ex. other views),
-     *        the controller does not take ownership of it (it will not delete it).
-     * \pre model must be a valid pointer
-     */
-//     void setModel(QAbstractItemModel *model) override;
-
    private:
 
     /*! \brief Set model to the view

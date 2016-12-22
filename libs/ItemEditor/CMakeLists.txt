@@ -20,6 +20,8 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/MappedWidgetList.cpp
     src/Mdt/ItemEditor/DataWidgetMapper.cpp
     src/Mdt/ItemEditor/WidgetMapperController.cpp
+    src/Mdt/ItemEditor/ControllerRelationList.cpp
+    src/Mdt/ItemEditor/ControllerRelation.cpp
     src/Mdt/ItemEditor/StandardEditorLayoutWidget.cpp
     src/Mdt/ItemEditor/AbstractEditorWidget.cpp
     src/Mdt/ItemEditor/AbstractTableViewWidget.cpp

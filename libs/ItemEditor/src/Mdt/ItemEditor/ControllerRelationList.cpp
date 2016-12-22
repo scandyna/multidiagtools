@@ -18,35 +18,30 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_CONTROLLER_TEST_H
-#define MDT_ITEM_EDITOR_CONTROLLER_TEST_H
+#include "ControllerRelationList.h"
+#include "AbstractController.h"
+#include <QtGlobal>
 
-#include "ItemViewTestEditTriggers.h"
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace ItemEditor{
 
-class QAbstractItemView;
-
-class ControllerTest : public QObject
+ControllerRelationList::ControllerRelationList(AbstractController* parentController)
+ : mParentController(parentController)
 {
-  Q_OBJECT
+  Q_ASSERT(!mParentController.isNull());
+}
 
- private slots:
+ControllerRelationList::~ControllerRelationList()
+{
+  clearRelations();
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+void ControllerRelationList::clearRelations()
+{
+  for(auto relation : mList){
+    delete relation;
+  }
+  mList.clear();
+}
 
-  void statePermissionTest();
 
-//   void controllerListTest();
-
- private:
-
-  // Helper function for editing in a QAbstractItemView
-  void beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger trigger);
-  void editText(QAbstractItemView & view, const QModelIndex & editingIndex, const QString & str);
-  void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger);
-  void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
-};
-
-#endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_TEST_H
+}} // namespace Mdt{ namespace ItemEditor{

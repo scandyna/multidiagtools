@@ -46,6 +46,8 @@ class TableViewControllerTest : public QObject
   void insertFromModelTest();
   void removeTest();
   void removeFromModelTest();
+  void filterTest();
+  void sortTest();
 
  private:
 

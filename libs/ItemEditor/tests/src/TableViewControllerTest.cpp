@@ -21,9 +21,7 @@
 #include "TableViewControllerTest.h"
 #include "ItemViewTestEdit.h"
 #include "Mdt/Application.h"
-#include "Mdt/ItemEditor/ControllerStatePermission.h"
 #include "Mdt/ItemEditor/TableViewController.h"
-#include "Mdt/ItemEditor/ItemSelectionModel.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSignalSpy>
 #include <QStringListModel>
@@ -36,9 +34,12 @@
 #include <QMetaMethod>
 
 namespace ItemEditor = Mdt::ItemEditor;
-using Mdt::ItemModel::VariantTableModel;
-using Mdt::ItemEditor::TableViewController;
-using Mdt::ItemEditor::ControllerState;
+namespace ItemModel = Mdt::ItemModel;
+using ItemEditor::TableViewController;
+using ItemEditor::ControllerState;
+using ItemModel::VariantTableModel;
+using ItemModel::FilterColumn;
+using ItemModel::ParentModelColumn;
 
 void TableViewControllerTest::initTestCase()
 {
@@ -730,6 +731,80 @@ void TableViewControllerTest::removeFromModelTest()
 //   while(view.isVisible()){
 //     QTest::qWait(500);
 //   }
+}
+
+void TableViewControllerTest::filterTest()
+{
+  VariantTableModel model;
+  QTableView view;
+  TableViewController controller;
+  /*
+   * Setup
+   */
+  model.resize(3, 2);
+  model.populateColumn(0, {1,2,3});
+  model.populateColumn(1, {"A","B","C"});
+  controller.setModel(&model);
+  controller.setView(&view);
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Check enable/disable filter
+   */
+  // Enable filter
+  QVERIFY(!controller.isFilterEnabled());
+  controller.setFilterEnabled(true);
+  QVERIFY(controller.isFilterEnabled());
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  // Disable filter
+  controller.setFilterEnabled(false);
+  QVERIFY(!controller.isFilterEnabled());
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  // Enable filter
+  controller.setFilterEnabled(true);
+  QVERIFY(controller.isFilterEnabled());
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Apply a filter
+   */
+  controller.setFilter( FilterColumn(0) > 1 );
+  QCOMPARE(controller.rowCount(), 2);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Disable filter
+   */
+  controller.setFilterEnabled(false);
+  QCOMPARE(controller.rowCount(), 3);
+  QCOMPARE(controller.currentRow(), 0);
+  /*
+   * Apply a filter
+   *  -> Must also enable filter
+   */
+  controller.setFilter( FilterColumn(0) == 2 );
+  QCOMPARE(controller.rowCount(), 1);
+  QCOMPARE(controller.currentRow(), 0);
+  /**
+   * \todo
+   * Try while editing
+   */
+
+  /*
+   * Play
+   */
+//   view.show();
+//   while(view.isVisible()){
+//     QTest::qWait(500);
+//   }
+
+  QFAIL("Not complete");
+}
+
+void TableViewControllerTest::sortTest()
+{
+  QFAIL("Not complete");
 }
 
 /*

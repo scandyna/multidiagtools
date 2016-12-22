@@ -1,25 +1,28 @@
-window_sizes 1280 963 356 918 908 0
+window_sizes 1280 963 351 923 908 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 3148674 // sandbox
-    734 726 100 21 0 0
+  active  classdiagram_ref 3148674 // sandbox
+    923 908 100 8 0 304
   classdiagram_ref 2761218 // ControllerOverview
     120 110 100 23 0 0
-  active  classdiagram_ref 2707074 // AbstractController
-    918 908 100 23 0 151
+  classdiagram_ref 2707074 // AbstractController
+    918 908 100 23 48 0
 end
 show_stereotypes
+selected operation_ref 5067394 // setParentCurrentRow
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
-  classview_ref 1650306 // RowMapper
-  classview_ref 1630466 // Filter
-  operation_ref 5051394 // sourceModel
-  operation_ref 5052418 // firstProxyModelOfType
-  operation_ref 5052290 // deleteFirstProxyModelOfType
-  classview_ref 1287042 // Controller
-  classview_ref 1676418 // Relation
+  
+  package_ref 569090 // tests
+  operation_ref 5059330 // modelForView
+  operation_ref 5058946 // setFilterEnabled
+  operation_ref 5059074 // isFilterEnabled
+  operation_ref 5037698 // setModelToView
+  operation_ref 5037826 // modelSetToView
+  class_ref 3614594 // AbstractSqlController
+  attribute_ref 3224962 // ParentController
   
   package_ref 582274 // SqlItemEditor
   classview_ref 1564290 // Where

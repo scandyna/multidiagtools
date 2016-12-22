@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "FilterProxyModel.h"
-// #include "Mdt/Error.h"
 #include <QModelIndex>
 
 // #include <QDebug>
