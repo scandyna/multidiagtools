@@ -18,46 +18,14 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ControllerRelation.h"
-#include "AbstractItemModelController.h"
-#include <QObject>
-
-#include <QDebug>
-
-using Mdt::ItemModel::RelationFilterProxyModel;
+#include "SqlTableViewController.h"
 
 namespace Mdt{ namespace ItemEditor{
 
-ControllerRelation::ControllerRelation(AbstractItemModelController* parentController)
- : mParentController(parentController)
+SqlTableViewController::SqlTableViewController(QObject* parent)
+ : AbstractSqlController(parent)
 {
-  Q_ASSERT(!mParentController.isNull());
-
-  updateParentControllerModel();
-  QObject::connect(mParentController, &AbstractItemModelController::currentRowChanged, &mProxyModel, &RelationFilterProxyModel::setParentModelMatchRow);
 }
 
-void ControllerRelation::updateParentControllerModel()
-{
-  Q_ASSERT(!mParentController.isNull());
-
-  auto *model = mParentController->modelForView();
-  if(model == nullptr){
-    return;
-  }
-  mProxyModel.setParentModel(model);
-}
-
-void ControllerRelation::updateChildControllerModel()
-{
- Q_ASSERT(!mChildController.isNull());
-
- auto *model = mChildController->model();
- if(model == nullptr){
-   return;
- }
- mProxyModel.setSourceModel(model);
- mChildController->setModel(&mProxyModel);
-}
 
 }} // namespace Mdt{ namespace ItemEditor{

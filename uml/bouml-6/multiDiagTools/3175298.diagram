@@ -1,0 +1,54 @@
+format 211
+
+classcanvas 128002 class_ref 3090434 // AbstractController
+  classdiagramsettings member_max_width 0 end
+  xyz 158 39 2000
+end
+classcanvas 128130 class_ref 3138178 // TableViewController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 311 1170 2006
+end
+classcanvas 128386 class_ref 3138434 // WidgetMapperController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 109 1170 2006
+end
+classcanvas 128642 class_ref 3614594 // AbstractSqlController
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 41 1010 2006
+end
+classcanvas 128898 class_ref 3634434 // AbstractItemModelController
+  classdiagramsettings member_max_width 0 end
+  xyz 226 1007 2005
+end
+relationcanvas 128770 relation_ref 3982594 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 470
+  from ref 128642 z 2007 to point 109 968
+  line 130434 z 2007 to point 382 968
+  line 130562 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129026 relation_ref 4011650 // <generalisation>
+  decenter_begin 510
+  from ref 128898 z 2006 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 4011778 // <generalisation>
+  decenter_begin 525
+  decenter_end 510
+  from ref 128130 z 2007 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 4011906 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 510
+  from ref 128386 z 2007 to point 190 1128
+  line 130178 z 2007 to point 381 1128
+  line 130306 z 2007 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

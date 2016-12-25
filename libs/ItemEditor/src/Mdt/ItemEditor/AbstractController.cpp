@@ -43,7 +43,15 @@ void AbstractController::setInsertLocation(AbstractController::InsertLocation il
   pvInsertLocation = il;
 }
 
-void AbstractController::setModel(QAbstractItemModel* model)
+// void AbstractController::setModel(QAbstractItemModel* model)
+// {
+//   Q_ASSERT(model != nullptr);
+// 
+//   mModelContainer.setSourceModel(model);
+//   setModelToView(modelForView());
+// }
+
+void AbstractController::registerModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);
 

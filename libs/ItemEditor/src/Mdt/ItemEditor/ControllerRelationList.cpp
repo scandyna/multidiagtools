@@ -19,12 +19,12 @@
  **
  ****************************************************************************/
 #include "ControllerRelationList.h"
-#include "AbstractController.h"
+#include "AbstractItemModelController.h"
 #include <QtGlobal>
 
 namespace Mdt{ namespace ItemEditor{
 
-ControllerRelationList::ControllerRelationList(AbstractController* parentController)
+ControllerRelationList::ControllerRelationList(AbstractItemModelController* parentController)
  : mParentController(parentController)
 {
   Q_ASSERT(!mParentController.isNull());

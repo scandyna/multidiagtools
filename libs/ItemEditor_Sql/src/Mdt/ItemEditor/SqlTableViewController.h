@@ -18,46 +18,37 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ControllerRelation.h"
-#include "AbstractItemModelController.h"
-#include <QObject>
+#ifndef MDT_ITEM_EDITOR_SQL_TABLE_VIEW_CONTROLLER_H
+#define MDT_ITEM_EDITOR_SQL_TABLE_VIEW_CONTROLLER_H
 
-#include <QDebug>
-
-using Mdt::ItemModel::RelationFilterProxyModel;
+#include "AbstractSqlController.h"
 
 namespace Mdt{ namespace ItemEditor{
 
-ControllerRelation::ControllerRelation(AbstractItemModelController* parentController)
- : mParentController(parentController)
-{
-  Q_ASSERT(!mParentController.isNull());
+  /*! \brief SqlTableViewController acts on a QSqlTableModel
+   */
+  class SqlTableViewController : public AbstractSqlController
+  {
+   Q_OBJECT
 
-  updateParentControllerModel();
-  QObject::connect(mParentController, &AbstractItemModelController::currentRowChanged, &mProxyModel, &RelationFilterProxyModel::setParentModelMatchRow);
-}
+   public:
 
-void ControllerRelation::updateParentControllerModel()
-{
-  Q_ASSERT(!mParentController.isNull());
+    /*! \brief Constructor
+     */
+    explicit SqlTableViewController(QObject* parent = nullptr);
 
-  auto *model = mParentController->modelForView();
-  if(model == nullptr){
-    return;
-  }
-  mProxyModel.setParentModel(model);
-}
+    // Copy disabled
+    SqlTableViewController(const SqlTableViewController &) = delete;
+    SqlTableViewController & operator=(const SqlTableViewController &) = delete;
+    // Move disabled
+    SqlTableViewController(SqlTableViewController &&) = delete;
+    SqlTableViewController & operator=(SqlTableViewController &&) = delete;
 
-void ControllerRelation::updateChildControllerModel()
-{
- Q_ASSERT(!mChildController.isNull());
+   private:
 
- auto *model = mChildController->model();
- if(model == nullptr){
-   return;
- }
- mProxyModel.setSourceModel(model);
- mChildController->setModel(&mProxyModel);
-}
+    
+  };
 
 }} // namespace Mdt{ namespace ItemEditor{
+
+#endif // #ifndef MDT_ITEM_EDITOR_SQL_TABLE_VIEW_CONTROLLER_H

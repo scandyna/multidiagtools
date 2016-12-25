@@ -252,6 +252,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/libs/Sql")
 
 # ** Item/View **
 add_subdirectory("${PROJECT_SOURCE_DIR}/libs/ItemEditor")
+add_subdirectory("${PROJECT_SOURCE_DIR}/libs/ItemEditor_Sql")
 
 # SerialPort
 add_subdirectory("${PROJECT_SOURCE_DIR}/libs/SerialPort")

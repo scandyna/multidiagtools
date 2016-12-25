@@ -26,7 +26,7 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-  class AbstractController;
+  class AbstractItemModelController;
 
   /*! \brief Relation between a parent controller and a child controller
    *
@@ -41,7 +41,7 @@ namespace Mdt{ namespace ItemEditor{
      *
      * \pre \a parentController must be a valid pointer
      */
-    explicit ControllerRelation(AbstractController *parentController);
+    explicit ControllerRelation(AbstractItemModelController *parentController);
 
     /*! \brief Set child controller
      *
@@ -51,7 +51,7 @@ namespace Mdt{ namespace ItemEditor{
      * \pre \a conditions must be a valid relation filter expression
      */
     template<typename Expr>
-    void setChildController(AbstractController *controller, const Expr & conditions)
+    void setChildController(AbstractItemModelController *controller, const Expr & conditions)
     {
       Q_ASSERT(controller != nullptr);
       mChildController = controller;
@@ -76,8 +76,8 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    QPointer<AbstractController> mParentController;
-    QPointer<AbstractController> mChildController;
+    QPointer<AbstractItemModelController> mParentController;
+    QPointer<AbstractItemModelController> mChildController;
     Mdt::ItemModel::RelationFilterProxyModel mProxyModel;
   };
 

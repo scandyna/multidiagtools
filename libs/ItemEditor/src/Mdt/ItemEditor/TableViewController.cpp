@@ -27,7 +27,7 @@
 namespace Mdt{ namespace ItemEditor{
 
 TableViewController::TableViewController(QObject* parent)
- : AbstractController(parent),
+ : AbstractItemModelController(parent),
    mContainer(new ItemViewPrivateContainer)
 {
   connect(mContainer->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionStarted, this, &TableViewController::onDataEditionStarted);

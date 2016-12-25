@@ -5,41 +5,20 @@ project(multidiagtools)
 
 # List of source files
 set(SOURCES_FILES
-    src/Mdt/ItemEditor/ItemDelegateProxy.cpp
-    src/Mdt/ItemEditor/EventCatchItemDelegate.cpp
-    src/Mdt/ItemEditor/ItemSelectionModel.cpp
-    src/Mdt/ItemEditor/RowChangeEventDispatcher.cpp
-    src/Mdt/ItemEditor/NavigationActions.cpp
-    src/Mdt/ItemEditor/InsertAction.cpp
-    src/Mdt/ItemEditor/RemoveAction.cpp
-    src/Mdt/ItemEditor/EditionActions.cpp
-    src/Mdt/ItemEditor/ControllerStatePermission.cpp
-    src/Mdt/ItemEditor/AbstractController.cpp
-    src/Mdt/ItemEditor/AbstractItemModelController.cpp
-    src/Mdt/ItemEditor/ItemViewPrivateContainer.cpp
-    src/Mdt/ItemEditor/TableViewController.cpp
-    src/Mdt/ItemEditor/MappedWidgetList.cpp
-    src/Mdt/ItemEditor/DataWidgetMapper.cpp
-    src/Mdt/ItemEditor/WidgetMapperController.cpp
-    src/Mdt/ItemEditor/ControllerRelationList.cpp
-    src/Mdt/ItemEditor/ControllerRelation.cpp
-    src/Mdt/ItemEditor/StandardEditorLayoutWidget.cpp
-    src/Mdt/ItemEditor/AbstractEditorWidget.cpp
-    src/Mdt/ItemEditor/AbstractTableViewWidget.cpp
-    src/Mdt/ItemEditor/TableViewWidget.cpp
-    src/Mdt/ItemEditor/StandardWindow.cpp
-    src/Mdt/ItemEditor/AbstractWindow.cpp
+    src/Mdt/ItemEditor/AbstractSqlController.cpp
+    src/Mdt/ItemEditor/SqlTableViewController.cpp
 )
 
 # Headers directories
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../FilterExpression/src")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../ItemModel/src")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../ItemEditor/src")
 # Because some headers are generated during building (config.h, Qt's UIC), we also build path
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Output library name
-set(LIBRARY_NAME "ItemEditor")
+set(LIBRARY_NAME "ItemEditor_Sql")
 
 # Output library technical names
 string(TOLOWER ${LIBRARY_NAME} LIBRARY_NAME_LC)
@@ -50,10 +29,11 @@ target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterror${MDT
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterrorgui${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdtfilterexpression${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdtitemmodel${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdtitemeditor${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} Qt5::Widgets)
 
 # Qt Designer plugins
-add_subdirectory("qttools")
+# add_subdirectory("qttools")
 
 # Translation files
 set(TS_FILES

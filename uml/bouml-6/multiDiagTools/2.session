@@ -1,30 +1,23 @@
-window_sizes 1280 963 351 923 908 0
+window_sizes 1280 963 320 954 908 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 3148674 // sandbox
-    923 908 100 8 0 304
-  classdiagram_ref 2761218 // ControllerOverview
-    120 110 100 23 0 0
-  classdiagram_ref 2707074 // AbstractController
-    918 908 100 23 48 0
+  active  classdiagram_ref 3168386 // AbstractSqlController
+    954 908 100 4 300 0
 end
 show_stereotypes
-selected operation_ref 5067394 // setParentCurrentRow
+selected operation_ref 5081218 // setTable
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
-  
-  package_ref 569090 // tests
-  operation_ref 5059330 // modelForView
-  operation_ref 5058946 // setFilterEnabled
-  operation_ref 5059074 // isFilterEnabled
-  operation_ref 5037698 // setModelToView
-  operation_ref 5037826 // modelSetToView
-  class_ref 3614594 // AbstractSqlController
-  attribute_ref 3224962 // ParentController
-  
-  package_ref 582274 // SqlItemEditor
+  operation_ref 4479234 // setModel
+  operation_ref 4515970 // model
+  class_ref 2767362 // ControllerRelationList
+  class_ref 3627906 // ControllerRelation
+  attribute_ref 2907010 // Model
+  operation_ref 5080578 // setModel
+  operation_ref 5080706 // model
+  class_ref 3621250 // SqlControllerRelationList
   classview_ref 1564290 // Where
   
   package_ref 430082 // Dsp

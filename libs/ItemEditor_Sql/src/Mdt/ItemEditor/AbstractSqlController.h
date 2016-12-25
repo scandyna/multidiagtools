@@ -18,46 +18,37 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ControllerRelation.h"
-#include "AbstractItemModelController.h"
-#include <QObject>
+#ifndef MDT_ITEM_EDITOR_ABSTRACT_SQL_CONTROLLER_H
+#define MDT_ITEM_EDITOR_ABSTRACT_SQL_CONTROLLER_H
 
-#include <QDebug>
-
-using Mdt::ItemModel::RelationFilterProxyModel;
+#include "Mdt/ItemEditor/AbstractController.h"
 
 namespace Mdt{ namespace ItemEditor{
 
-ControllerRelation::ControllerRelation(AbstractItemModelController* parentController)
- : mParentController(parentController)
-{
-  Q_ASSERT(!mParentController.isNull());
+  /*! \brief Common base for SQL controllers
+   */
+  class AbstractSqlController : public AbstractController
+  {
+   Q_OBJECT
 
-  updateParentControllerModel();
-  QObject::connect(mParentController, &AbstractItemModelController::currentRowChanged, &mProxyModel, &RelationFilterProxyModel::setParentModelMatchRow);
-}
+   public:
 
-void ControllerRelation::updateParentControllerModel()
-{
-  Q_ASSERT(!mParentController.isNull());
+    /*! \brief Constructor
+     */
+    explicit AbstractSqlController(QObject* parent = nullptr);
 
-  auto *model = mParentController->modelForView();
-  if(model == nullptr){
-    return;
-  }
-  mProxyModel.setParentModel(model);
-}
+    // Copy disabled
+    AbstractSqlController(const AbstractSqlController &) = delete;
+    AbstractSqlController & operator=(const AbstractSqlController &) = delete;
+    // Move disabled
+    AbstractSqlController(AbstractSqlController &&) = delete;
+    AbstractSqlController & operator=(AbstractSqlController &&) = delete;
 
-void ControllerRelation::updateChildControllerModel()
-{
- Q_ASSERT(!mChildController.isNull());
+   private:
 
- auto *model = mChildController->model();
- if(model == nullptr){
-   return;
- }
- mProxyModel.setSourceModel(model);
- mChildController->setModel(&mProxyModel);
-}
+    
+  };
 
 }} // namespace Mdt{ namespace ItemEditor{
+
+#endif // #ifndef MDT_ITEM_EDITOR_ABSTRACT_SQL_CONTROLLER_H

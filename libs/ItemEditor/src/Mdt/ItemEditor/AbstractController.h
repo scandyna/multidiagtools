@@ -85,7 +85,7 @@ namespace Mdt{ namespace ItemEditor{
      *        the controller does not take ownership of it (it will not delete it).
      * \pre model must be a valid pointer
      */
-    void setModel(QAbstractItemModel *model);
+//     void setModel(QAbstractItemModel *model);
 
     /*! \brief Get model
      *
@@ -93,10 +93,10 @@ namespace Mdt{ namespace ItemEditor{
      *  or a nullptr if no one was set,
      *  or model was delete elsewhere in application.
      */
-    QAbstractItemModel *model() const
-    {
-      return mModelContainer.sourceModel();
-    }
+//     QAbstractItemModel *model() const
+//     {
+//       return mModelContainer.sourceModel();
+//     }
 
     /*! \brief Get the model that is used by the view
      *
@@ -227,10 +227,34 @@ namespace Mdt{ namespace ItemEditor{
 
    protected:
 
+    /*! \brief Register model
+     *
+     * This method should be called by a common base class
+     *  that handles a more or less specific item model.
+     *
+     * This method should never be called 
+     *  by a subclass implementing a concrete controller.
+     *
+     * \pre model must be a valid pointer
+     * \sa setModelToView()
+     */
+    void registerModel(QAbstractItemModel *model);
+
+    /*! \brief Get model
+     *
+     * Returns the model set with registerModel(),
+     *  or a nullptr if no one was set,
+     *  or model was delete elsewhere in application.
+     */
+    QAbstractItemModel *registeredModel() const
+    {
+      return mModelContainer.sourceModel();
+    }
+
     /*! \brief Set model to the view
      *
      * This method is called each time the model changes,
-     *  because of a call of setModel() ,
+     *  because of a call of registerModel() ,
      *  or a proxy model was inserted/removed.
      *
      * When implementing a controller,

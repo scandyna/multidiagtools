@@ -21,8 +21,7 @@
 #ifndef MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_H
 #define MDT_ITEM_EDITOR_TABLE_VIEW_CONTROLLER_H
 
-// #include "AbstractItemViewController.h"
-#include "AbstractController.h"
+#include "AbstractItemModelController.h"
 #include <memory>
 
 class QAbstractItemModel;
@@ -34,7 +33,7 @@ namespace Mdt{ namespace ItemEditor{
 
   /*! \brief TableViewController acts on a QAbstractTableModel and a QAbstractItemView
    */
-  class TableViewController : public AbstractController
+  class TableViewController : public AbstractItemModelController
   {
    Q_OBJECT
 

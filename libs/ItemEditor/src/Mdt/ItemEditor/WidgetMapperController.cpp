@@ -26,7 +26,7 @@
 namespace Mdt{ namespace ItemEditor{
 
 WidgetMapperController::WidgetMapperController(QObject* parent)
- : AbstractController(parent),
+ : AbstractItemModelController(parent),
    mWidgetMapper(new DataWidgetMapper(this))
 {
   connect(this, &WidgetMapperController::currentRowChanged, mWidgetMapper, &DataWidgetMapper::setCurrentRow);
