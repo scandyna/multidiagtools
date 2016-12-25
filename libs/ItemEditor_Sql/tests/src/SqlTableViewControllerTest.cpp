@@ -32,6 +32,7 @@
 #include <QMetaObject>
 #include <QMetaProperty>
 #include <QMetaMethod>
+#include <QSqlQuery>
 
 namespace ItemEditor = Mdt::ItemEditor;
 namespace ItemModel = Mdt::ItemModel;
@@ -43,6 +44,19 @@ using ItemModel::ParentModelColumn;
 
 void SqlTableViewControllerTest::initTestCase()
 {
+  // Get database instance
+  mDatabase = QSqlDatabase::addDatabase("QSQLITE");
+  if(!mDatabase.isValid()){
+    QSKIP("QSQLITE driver is not available - Skip all tests");  // Will also skip all tests
+  }
+  // Create a database
+  QVERIFY(mTempFile.open());
+  mTempFile.close();
+  mDatabase.setDatabaseName(mTempFile.fileName());
+  QVERIFY(mDatabase.open());
+  QSqlQuery query(mDatabase);
+  // Specify encoding (is important for some tests)
+  QVERIFY(query.exec("PRAGMA encoding = \"UTF-8\""));
 }
 
 void SqlTableViewControllerTest::cleanupTestCase()

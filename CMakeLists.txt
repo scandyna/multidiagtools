@@ -63,7 +63,7 @@ add_compile_options(-Wall -Wextra)
 #       when using add_compile_options(), it is not at first,
 #       so we use CMAKE_CXX_FLAGS (yes, a workaround)
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fsanitize=undefined")
 endif()
 
 # Optimisation options:

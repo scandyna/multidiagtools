@@ -24,6 +24,8 @@
 #include "ItemViewTestEditTriggers.h"
 #include <QObject>
 #include <QtTest/QtTest>
+#include <QTemporaryFile>
+#include <QSqlDatabase>
 
 class QAbstractItemView;
 
@@ -50,6 +52,9 @@ class SqlTableViewControllerTest : public QObject
   void editText(QAbstractItemView & view, const QModelIndex & editingIndex, const QString & str);
   void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger);
   void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
+
+  QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
+  QSqlDatabase mDatabase;
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_SQL_TABLE_VIEW_CONTROLLER_TEST_H
