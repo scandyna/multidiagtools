@@ -38,6 +38,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
   class DriverImplementationInterface;
   class Table;
   class View;
+  class TablePopulation;
   class Schema;
 
   template<typename T>
@@ -48,6 +49,9 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
   template<typename T>
   class SchemaTemplate;
+
+  template<typename T>
+  class TablePopulationTemplate;
 
   /*! \brief SQL Schema driver
    *
@@ -194,6 +198,22 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     bool dropView(const ViewTemplate<T> & view)
     {
       return dropView(view.toView());
+    }
+
+    /*! \brief Populate a table
+     *
+     * \pre Driver must be valid
+     */
+    bool populateTable(const TablePopulation & tp);
+
+    /*! \brief Populate a table
+     *
+     * \pre Driver must be valid
+     */
+    template<typename T>
+    bool populateTable(const TablePopulationTemplate<T> & tp)
+    {
+      return populateTable(tp.toTablePopulation());
     }
 
     /*! \brief Create schema in database

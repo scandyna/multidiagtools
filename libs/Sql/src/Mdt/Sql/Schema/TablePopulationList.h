@@ -26,6 +26,9 @@
 
 namespace Mdt{ namespace Sql{ namespace Schema{
 
+  template<typename T>
+  class TablePopulationTemplate;
+
   /*! \brief List of TablePopulation
    */
   class TablePopulationList
@@ -41,6 +44,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     void append(const TablePopulation & tp)
     {
       pvList.append(tp);
+    }
+
+    /*! \brief Append a table population
+     */
+    template<typename T>
+    void append(const TablePopulationTemplate<T> & tp)
+    {
+      pvList.append(tp.toTablePopulation());
     }
 
     /*! \brief Get count of elements

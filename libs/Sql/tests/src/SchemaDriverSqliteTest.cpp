@@ -27,6 +27,7 @@
 #include "Schema/Address.h"
 #include "Schema/ClientAddressView.h"
 #include "Schema/TestSchema.h"
+#include "Schema/ClientPopulation.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -1425,21 +1426,18 @@ void SchemaDriverSqliteTest::simpleTriggerCreateDropTest()
 
 void SchemaDriverSqliteTest::tablePopulationTest()
 {
-  using Mdt::Sql::Schema::TablePopulation;
+  using Sql::Schema::TablePopulation;
 
-  Mdt::Sql::Schema::DriverSQLite driver(mDatabase);
+  Sql::Schema::Driver driver(mDatabase);
   Schema::Client client;
+  Schema::ClientPopulation tp;
   QSqlQuery query(mDatabase);
-  TablePopulation tp;
 
   /*
    * Setup table population
    */
-  tp.setTable(client);
-  tp.addField(client.Id_PK());
-  tp.addField(client.Name());
-  tp.addRow(1, "Name 1");
-  tp.addRow(2, "Name 2");
+  tp.addClient(1, "Name 1");
+  tp.addClient(2, "Name 2");
   /*
    * Create Client_tbl
    */

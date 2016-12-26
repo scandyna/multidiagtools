@@ -121,6 +121,12 @@ bool Driver::dropView(const View & view)
   return pvImpl->dropView(view);
 }
 
+bool Driver::populateTable(const TablePopulation & tp)
+{
+  Q_ASSERT(isValid());
+  return pvImpl->populateTable(tp);
+}
+
 bool Driver::createSchema(const Schema& schema)
 {
   Q_ASSERT(isValid());

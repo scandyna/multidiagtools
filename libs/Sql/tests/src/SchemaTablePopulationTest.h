@@ -34,6 +34,7 @@ class SchemaTablePopulationTest : public QObject
   void cleanupTestCase();
 
   void tablePopulationTest();
+  void clientPopulationTest();
   void tablePopulationListTest();
 };
 

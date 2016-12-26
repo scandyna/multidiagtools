@@ -43,6 +43,7 @@
 #include "Schema/Client.h"
 #include "Schema/Address.h"
 #include "Schema/ClientAddressView.h"
+#include "Schema/ClientPopulation.h"
 #include <QSqlDatabase>
 #include <QComboBox>
 #include <QTableView>
@@ -459,6 +460,7 @@ void SchemaTest::schemaTest()
   Schema::Client client;
   Schema::Address address;
   Schema::ClientAdrressView clientAddressView;
+  Schema::ClientPopulation clientPopulation;
   TablePopulation tp;
   Trigger trigger;
 
@@ -493,6 +495,12 @@ void SchemaTest::schemaTest()
   // Edit table population
   schema.refTablePopulationAt(0).setName("TP11");
   QCOMPARE(schema.tablePopulationName(0), QString("TP11"));
+  /*
+   * Add table population template
+   */
+  schema.addTablePopulation(clientPopulation);
+  QCOMPARE(schema.tablePopulationCount(), 2);
+  QCOMPARE(schema.refTablePopulationAt(1).tableName(), QString("Client_tbl"));
   /*
    * Add triggers
    */

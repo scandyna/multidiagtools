@@ -23,6 +23,7 @@
 #include "Mdt/Sql/Schema/TablePopulation.h"
 #include "Mdt/Sql/Schema/TablePopulationList.h"
 #include "Schema/Client.h"
+#include "Schema/ClientPopulation.h"
 
 namespace Sql = Mdt::Sql;
 
@@ -95,12 +96,37 @@ void SchemaTablePopulationTest::tablePopulationTest()
   QCOMPARE(tp.fieldName(0), QString("a"));
 }
 
+void SchemaTablePopulationTest::clientPopulationTest()
+{
+  Schema::ClientPopulation p;
+
+  QCOMPARE(p.name(), QString("Client data"));
+  QCOMPARE(p.tableName(), QString("Client_tbl"));
+  QCOMPARE(p.fieldcount(), 2);
+  QCOMPARE(p.fieldName(0), QString("Id_PK"));
+  QCOMPARE(p.fieldName(1), QString("Name"));
+  QCOMPARE(p.fieldNameList(), QStringList({"Id_PK","Name"}));
+  QCOMPARE(p.rowCount(), 0);
+  /*
+   * Check adding clients
+   */
+  p.addClient(1, "A");
+  QCOMPARE(p.rowCount(), 1);
+  QCOMPARE(p.data(0, 0), QVariant(1));
+  QCOMPARE(p.data(0, 1), QVariant("A"));
+  p.addClient("B");
+  QCOMPARE(p.rowCount(), 2);
+  QVERIFY(p.data(1, 0).isNull());
+  QCOMPARE(p.data(1, 1), QVariant("B"));
+}
+
 void SchemaTablePopulationTest::tablePopulationListTest()
 {
   using Sql::Schema::TablePopulation;
   using Sql::Schema::TablePopulationList;
 
   Schema::Client client;
+  Schema::ClientPopulation clientPopulation;
 
   /*
    * Initial state
@@ -145,6 +171,13 @@ void SchemaTablePopulationTest::tablePopulationListTest()
   // Edit tp2
   list[1].setName("tp22");
   QCOMPARE(list.at(1).name(), QString("tp22"));
+  /*
+   * Check adding table population template
+   */
+  list.clear();
+  list.append(clientPopulation);
+  QCOMPARE(list.size(), 1);
+  QCOMPARE(list.at(0).tableName(), QString("Client_tbl"));
 }
 
 /*

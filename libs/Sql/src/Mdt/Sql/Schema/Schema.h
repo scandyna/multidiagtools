@@ -39,6 +39,9 @@ namespace Mdt{ namespace Sql{ namespace Schema{
   template<typename T>
   class ViewTemplate;
 
+  template<typename T>
+  class TablePopulationTemplate;
+
   /*! \brief Container for database schema
    *
    * To store a schema to a database, you can use a Driver instance.
@@ -128,11 +131,19 @@ namespace Mdt{ namespace Sql{ namespace Schema{
      */
     void addTablePopulation(const TablePopulation & tp);
 
+    /*! \brief Add a table population
+     */
+    template<typename T>
+    void addTablePopulation(const TablePopulationTemplate<T> & tp)
+    {
+      mTablePopulationList.append(tp);
+    }
+
     /*! \brief Get count of table population
      */
     int tablePopulationCount() const
     {
-      return pvTablePopulationList.size();
+      return mTablePopulationList.size();
     }
 
     /*! \brief Access table population at index (for edition)
@@ -142,8 +153,8 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     TablePopulation & refTablePopulationAt(int index)
     {
       Q_ASSERT(index >= 0);
-      Q_ASSERT(index < pvTablePopulationList.size());
-      return pvTablePopulationList[index];
+      Q_ASSERT(index < mTablePopulationList.size());
+      return mTablePopulationList[index];
     }
 
     /*! \brief Get table population name
@@ -153,15 +164,15 @@ namespace Mdt{ namespace Sql{ namespace Schema{
     QString tablePopulationName(int index) const
     {
       Q_ASSERT(index >= 0);
-      Q_ASSERT(index < pvTablePopulationList.size());
-      return pvTablePopulationList.at(index).name();
+      Q_ASSERT(index < mTablePopulationList.size());
+      return mTablePopulationList.at(index).name();
     }
 
     /*! \brief Get all table populations
      */
     TablePopulationList tablePopulationList() const
     {
-      return pvTablePopulationList;
+      return mTablePopulationList;
     }
 
     /*! \brief Add a trigger
@@ -201,7 +212,7 @@ namespace Mdt{ namespace Sql{ namespace Schema{
 
     TableList pvTableList;
     ViewList pvViewList;
-    TablePopulationList pvTablePopulationList;
+    TablePopulationList mTablePopulationList;
     TriggerList pvTriggerList;
   };
 

@@ -11,6 +11,7 @@ set(SOURCES_FILES
     src/Schema/Client2.cpp
     src/Schema/Address.cpp
     src/Schema/Address2.cpp
+    src/Schema/ClientPopulation.cpp
     src/Schema/ClientAddressView.cpp
     src/Schema/TestSchema.cpp
     src/Schema/LikeExpressionTestSchema.cpp

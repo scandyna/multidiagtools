@@ -34,7 +34,7 @@ void Schema::addView(const View & view)
 
 void Schema::addTablePopulation(const TablePopulation& tp)
 {
-  pvTablePopulationList.append(tp);
+  mTablePopulationList.append(tp);
 }
 
 void Schema::addTrigger(const Trigger& trigger)
@@ -46,7 +46,7 @@ void Schema::clear()
 {
   pvTableList.clear();
   pvViewList.clear();
-  pvTablePopulationList.clear();
+  mTablePopulationList.clear();
   pvTriggerList.clear();
 }
 
