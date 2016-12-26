@@ -76,6 +76,9 @@ void ControllerTest::statePermissionTest()
   // Remove
   QVERIFY(ControllerStatePermission::canRemove(ControllerState::Visualizing));
   QVERIFY(!ControllerStatePermission::canRemove(ControllerState::Editing));
+  // Select
+  QVERIFY(ControllerStatePermission::canSelect(ControllerState::Visualizing));
+  QVERIFY(!ControllerStatePermission::canSelect(ControllerState::Editing));
 }
 
 // void ControllerTest::controllerListTest()

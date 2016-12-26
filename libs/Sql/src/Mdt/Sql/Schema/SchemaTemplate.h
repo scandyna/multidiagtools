@@ -91,6 +91,14 @@ namespace Mdt{ namespace Sql{ namespace Schema{
       mSchema.addTablePopulation(tp);
     }
 
+    /*! \brief Add a table population
+     */
+    template<typename T>
+    void addTablePopulation(const TablePopulationTemplate<T> & tp)
+    {
+      mSchema.addTablePopulation(tp);
+    }
+
     /*! \brief Access table population at index (for edition)
      *
      * \pre index must be in a valid range

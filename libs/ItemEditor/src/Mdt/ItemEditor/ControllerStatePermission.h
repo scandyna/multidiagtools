@@ -53,6 +53,10 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Check if it is possible to remove for state
      */
     static bool canRemove(ControllerState state);
+
+    /*! \brief Check if it is possible to select data from database
+     */
+    static bool canSelect(ControllerState state);
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

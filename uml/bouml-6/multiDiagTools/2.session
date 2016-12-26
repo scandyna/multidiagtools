@@ -2,13 +2,13 @@ window_sizes 1280 963 320 954 908 0
 cleanlooks_style
 diagrams
   active  classdiagram_ref 3168386 // AbstractSqlController
-    954 908 100 4 300 0
+    954 908 100 4 316 0
 end
 show_stereotypes
 selected operation_ref 5081218 // setTable
 open
   
-  package_ref 409858 // principes
+package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   operation_ref 4479234 // setModel
   operation_ref 4515970 // model
@@ -20,7 +20,7 @@ open
   class_ref 3621250 // SqlControllerRelationList
   classview_ref 1564290 // Where
   
-  package_ref 430082 // Dsp
+package_ref 430082 // Dsp
   classview_ref 1211650 // graph
   classview_ref 1517954 // proto
   classview_ref 1577730 // variant

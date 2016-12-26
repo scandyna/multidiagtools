@@ -77,4 +77,15 @@ bool ControllerStatePermission::canRemove(ControllerState state)
   return false;
 }
 
+bool ControllerStatePermission::canSelect(ControllerState state)
+{
+  switch(state){
+    case ControllerState::Visualizing:
+      return true;
+    case ControllerState::Editing:
+      break;
+  }
+  return false;
+}
+
 }} // namespace Mdt{ namespace ItemEditor{

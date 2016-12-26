@@ -504,6 +504,7 @@ bool DriverImplementationInterface::populateTable(const TablePopulation & tp)
     }
     if(!query.exec()){
       setLastError(query.lastError());
+      return false;
     }
     query.clear();
   }

@@ -25,6 +25,7 @@
 #include "ControllerState.h"
 #include "Mdt/ItemModel/ProxyModelContainer.h"
 #include "Mdt/ItemModel/FilterProxyModel.h"
+#include "Mdt/Error.h"
 #include <QObject>
 #include <QPointer>
 #include <QAbstractItemModel>
@@ -163,6 +164,13 @@ namespace Mdt{ namespace ItemEditor{
       filterModel()->setFilter(expression);
     }
 
+    /*! \brief Get last error
+     */
+    Mdt::Error lastError() const
+    {
+      return mLastError;
+    }
+
    public slots:
 
     /*! \brief Set current row
@@ -286,6 +294,13 @@ namespace Mdt{ namespace ItemEditor{
      */
     virtual void revertDataFromModel() = 0;
 
+    /*! \brief Set last error
+     */
+    void setLastError(const Mdt::Error & error)
+    {
+      mLastError = error;
+    }
+
    protected slots:
 
     /*! \brief Actions to perform once editing started
@@ -325,6 +340,7 @@ namespace Mdt{ namespace ItemEditor{
     RowChangeEventDispatcher *pvRowChangeEventDispatcher;
     InsertLocation pvInsertLocation;
     Mdt::ItemModel::ProxyModelContainer mModelContainer;
+    Mdt::Error mLastError;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

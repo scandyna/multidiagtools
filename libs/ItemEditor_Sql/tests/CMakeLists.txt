@@ -10,6 +10,9 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../../ItemEditor/tests/src")
 
 set(SOURCES_FILES
   src/Schema/Client.cpp
+  src/Schema/Address.cpp
+  src/Schema/ClientAddressSchema.cpp
+  src/Schema/ClientPopulation.cpp
 )
 
 add_library(mdtitemeditorsqltest SHARED ${SOURCES_FILES})

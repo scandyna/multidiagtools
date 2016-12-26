@@ -21,6 +21,7 @@
 #include "Error.h"
 #include <QSqlQuery>
 #include <QSqlDatabase>
+#include <QSqlQueryModel>
 #include <QString>
 #include <QObject>
 #include <QMetaObject>
@@ -51,6 +52,30 @@ Mdt::Error Sql::Error::fromQSqlQuery(const QSqlQuery& query, const QString& file
   Q_ASSERT(obj->metaObject() != nullptr);
 
   return fromQSqlQuery(query, file, line, obj->metaObject()->className(), functionName);
+}
+
+Mdt::Error Error::fromQSqlQueryModel(const QSqlQueryModel & queryModel, const QString & file, int line, const QString & className, const QString & functionName)
+{
+  Mdt::Error error;
+  auto sqlError = queryModel.lastError();
+  QString msg;
+
+  msg = tr("Reported from QSqlQueryModel: %1").arg(sqlError.text());
+  if(sqlError.type() == QSqlError::StatementError){
+    msg += tr(" , SQL: %1").arg(queryModel.query().lastQuery());
+  }
+  error.setError<QSqlError::ErrorType>(sqlError.type(), msg, levelFromQSqlErrorType(sqlError.type()));
+  error.setSource(file, line, className, functionName);
+
+  return error;
+}
+
+Mdt::Error Sql::Error::fromQSqlQueryModel(const QSqlQueryModel & queryModel, const QString& file, int line, const QObject*const obj, const QString& functionName)
+{
+  Q_ASSERT(obj != nullptr);
+  Q_ASSERT(obj->metaObject() != nullptr);
+
+  return fromQSqlQueryModel(queryModel, file, line, obj->metaObject()->className(), functionName);
 }
 
 Mdt::Error Sql::Error::fromQSqlDatabase(const QSqlDatabase & db, const QString& file, int line, const QString& className, const QString& functionName)

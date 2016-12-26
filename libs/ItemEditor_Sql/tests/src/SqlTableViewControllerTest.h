@@ -22,6 +22,8 @@
 #define MDT_ITEM_EDITOR_SQL_TABLE_VIEW_CONTROLLER_TEST_H
 
 #include "ItemViewTestEditTriggers.h"
+#include "Schema/ClientAddressSchema.h"
+#include "Schema/ClientPopulation.h"
 #include <QObject>
 #include <QtTest/QtTest>
 #include <QTemporaryFile>
@@ -40,18 +42,26 @@ class SqlTableViewControllerTest : public QObject
 
   void setModelThenViewTest();
   void setViewThenModelTest();
+  void setDefaultModelThenViewTest();
+  void setViewThenDefaultModelTest();
   void changeModelTest();
-
+  void changeDefaultModelTest();
   void setTableTest();
-  
+  void selectTest();
+  void currentRowChangeTest();
+  void stateChangeSignalTest();
 
  private:
 
   // Helper function for editing in a QAbstractItemView
-  void beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger trigger);
-  void editText(QAbstractItemView & view, const QModelIndex & editingIndex, const QString & str);
-  void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger);
-  void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
+  void beginEditing(QAbstractItemView & view, int row, int column, BeginEditTrigger trigger);
+  void editText(QAbstractItemView & view, int editingRow, int editingColumn, const QString & str);
+  void endEditing(QAbstractItemView & view, int editingRow, int editingColumn, EndEditTrigger trigger);
+  void edit(QAbstractItemView & view, int row, int column, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
+
+  void createSchema(const Schema::ClientAddressSchema & schema);
+  bool deleteClientData();
+  bool repopulateClientTable(const Schema::ClientPopulation & tp);
 
   QTemporaryFile mTempFile;  // We keep it as member, so file is destroyed automatically
   QSqlDatabase mDatabase;
