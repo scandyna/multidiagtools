@@ -62,11 +62,13 @@ void TestEditorTest::widowEditorTest()
 
   formEditor.setModel(&model);
   formEditorWindow.setCentralWidget(&formEditor);
-  formEditorWindow.setMainEditorWidget(&formEditor);
+  formEditorWindow.setMainController(formEditor.controller());
+  ///formEditorWindow.setMainEditorWidget(&formEditor);
   formEditorWindow.show();
   tableEditor.setModel(&model);
   tableEditorWindow.setCentralWidget(&tableEditor);
-  tableEditorWindow.setMainEditorWidget(&tableEditor);
+  ///tableEditorWindow.setMainEditorWidget(&tableEditor);
+  tableEditorWindow.setMainController(tableEditor.controller());
   tableEditorWindow.show();
 //   model.populate(3, 1);
 

@@ -22,12 +22,11 @@
 #define MDT_ITEM_EDITOR_TABLE_VIEW_WIDGET_H
 
 #include "AbstractTableViewWidget.h"
+#include "TableViewController.h"
 
 class QAbstractItemModel;
 
 namespace Mdt{ namespace ItemEditor{
-
-  class TableViewController;
 
   /*! \brief QTableView based editor
    */
@@ -41,6 +40,13 @@ namespace Mdt{ namespace ItemEditor{
      */
     explicit TableViewWidget(QWidget* parent = nullptr);
 
+    /*! \brief Get controller
+     */
+    TableViewController *controller() const
+    {
+      return mController;
+    }
+
     /*! \brief Set model
      *
      * \note Because model can be shared with several objects (f.ex. other views),
@@ -51,7 +57,7 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    TableViewController *pvController;
+    TableViewController *mController;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

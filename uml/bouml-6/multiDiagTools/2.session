@@ -1,28 +1,22 @@
-window_sizes 1280 963 320 954 908 0
+window_sizes 1280 963 310 964 908 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 3168386 // AbstractSqlController
-    954 908 100 4 316 0
+  active  classdiagram_ref 3182210 // SqlClientEditorOverview
+    964 908 100 21 0 0
 end
 show_stereotypes
-selected operation_ref 5081218 // setTable
+selected attribute_ref 3231490 // Controller
 open
   
-package_ref 409858 // principes
+  package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
-  operation_ref 4479234 // setModel
-  operation_ref 4515970 // model
-  class_ref 2767362 // ControllerRelationList
-  class_ref 3627906 // ControllerRelation
-  attribute_ref 2907010 // Model
-  operation_ref 5080578 // setModel
-  operation_ref 5080706 // model
-  class_ref 3621250 // SqlControllerRelationList
-  classview_ref 1564290 // Where
+  classview_ref 1472258 // Editor
+  classview_ref 1287042 // Controller
+  classview_ref 1689474 // SqlController
+  attribute_ref 3231490 // Controller
+  class_ref 3640962 // ClientWidget
+  class_ref 3641090 // AddressWidget
   
-package_ref 430082 // Dsp
-  classview_ref 1211650 // graph
-  classview_ref 1517954 // proto
-  classview_ref 1577730 // variant
+  package_ref 430082 // Dsp
 end
 end

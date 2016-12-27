@@ -18,36 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AbstractTableViewWidget.h"
-#include "TableViewController.h"
-// #include "EventCatchItemDelegate.h"
-// #include "ItemSelectionModel.h"
-#include <QTableView>
-#include <QVBoxLayout>
+#ifndef ADDRESS_H
+#define ADDRESS_H
 
-// #include <QDebug>
+#include "Mdt/Sql/Schema/TableTemplate.h"
 
-namespace Mdt{ namespace ItemEditor{
-
-AbstractTableViewWidget::AbstractTableViewWidget(QWidget* parent)
- : QWidget(parent),
-   mView(new QTableView)
+/*! \brief Definition of the Address entity
+ */
+class Address : public Mdt::Sql::Schema::TableTemplate<Address>
 {
-  // Layout widgets
-  auto *l = new QVBoxLayout;
-  l->addWidget(mView);
-  setLayout(l);
-}
+ public:
 
-// void AbstractTableViewWidget::setController(TableViewController* controller)
-// {
-//   Q_ASSERT(controller != nullptr);
-// 
-//   controller->setView(mView);
-// //   auto tableViewController = dynamic_cast<TableViewController*>(controller);
-// //   Q_ASSERT(tableViewController != nullptr);
-// //   tableViewController->setView(pvView);
-// //   AbstractEditorWidget::setController(controller);
-// }
+  /*! \brief The constructor will build the structure of Address
+   */
+  Address();
+};
 
-}} // namespace Mdt{ namespace ItemEditor{
+#endif // #ifndef ADDRESS_H

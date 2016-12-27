@@ -18,36 +18,48 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AbstractTableViewWidget.h"
-#include "TableViewController.h"
-// #include "EventCatchItemDelegate.h"
-// #include "ItemSelectionModel.h"
-#include <QTableView>
-#include <QVBoxLayout>
+#ifndef MDT_ITEM_EDITOR_SQL_TABLE_VIEW_WIDGET_H
+#define MDT_ITEM_EDITOR_SQL_TABLE_VIEW_WIDGET_H
 
-// #include <QDebug>
+#include "Mdt/ItemEditor/AbstractTableViewWidget.h"
+#include "SqlTableViewController.h"
+
+class QSqlTableModel;
 
 namespace Mdt{ namespace ItemEditor{
 
-AbstractTableViewWidget::AbstractTableViewWidget(QWidget* parent)
- : QWidget(parent),
-   mView(new QTableView)
-{
-  // Layout widgets
-  auto *l = new QVBoxLayout;
-  l->addWidget(mView);
-  setLayout(l);
-}
+  /*! \brief QTableView based SQL editor
+   */
+  class SqlTableViewWidget : public AbstractTableViewWidget
+  {
+   Q_OBJECT
 
-// void AbstractTableViewWidget::setController(TableViewController* controller)
-// {
-//   Q_ASSERT(controller != nullptr);
-// 
-//   controller->setView(mView);
-// //   auto tableViewController = dynamic_cast<TableViewController*>(controller);
-// //   Q_ASSERT(tableViewController != nullptr);
-// //   tableViewController->setView(pvView);
-// //   AbstractEditorWidget::setController(controller);
-// }
+   public:
+
+    /*! \brief Constructor
+     */
+    explicit SqlTableViewWidget(QWidget* parent = nullptr);
+
+    /*! \brief Get controller
+     */
+    SqlTableViewController *controller() const
+    {
+      return mController;
+    }
+
+    /*! \brief Set model
+     *
+     * \note Because model can be shared with several objects (f.ex. other views),
+     *        the editor does not take ownership of it (it will not delete it).
+     * \pre model must be a valid pointer
+     */
+    void setModel(QSqlTableModel *model);
+
+   private:
+
+    SqlTableViewController *mController;
+  };
 
 }} // namespace Mdt{ namespace ItemEditor{
+
+#endif // #ifndef MDT_ITEM_EDITOR_SQL_TABLE_VIEW_WIDGET_H

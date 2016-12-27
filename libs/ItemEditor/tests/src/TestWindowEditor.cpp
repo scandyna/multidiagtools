@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "TestWindowEditor.h"
 #include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
+// #include "Mdt/ItemEditor/TableViewController.h"
 #include "TestTableEditionWidget.h"
 #include "TestFormEditionWidget.h"
 
@@ -38,7 +39,8 @@ TestWindowEditor::TestWindowEditor(QWidget* parent)
   layoutWidget->setMainWidget(pvFormEditionWidget);
   layoutWidget->addChildWidget(pvTableEditionWidget, tr("Table"));
   setCentralWidget(layoutWidget);
-  setMainEditorWidget(pvTableEditionWidget);
+  ///setMainEditorWidget(pvTableEditionWidget);
+  setMainController(pvTableEditionWidget->controller());
 }
 
 void TestWindowEditor::setModel(QAbstractTableModel* model)

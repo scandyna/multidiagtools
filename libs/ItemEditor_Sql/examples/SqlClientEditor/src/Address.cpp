@@ -18,36 +18,37 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AbstractTableViewWidget.h"
-#include "TableViewController.h"
-// #include "EventCatchItemDelegate.h"
-// #include "ItemSelectionModel.h"
-#include <QTableView>
-#include <QVBoxLayout>
+#include "Address.h"
+#include "Client.h"
+#include "Mdt/Sql/Schema/ForeignTable.h"
 
-// #include <QDebug>
+namespace Sql = Mdt::Sql;
 
-namespace Mdt{ namespace ItemEditor{
+using Sql::Schema::FieldType;
+using Sql::Schema::Field;
 
-AbstractTableViewWidget::AbstractTableViewWidget(QWidget* parent)
- : QWidget(parent),
-   mView(new QTableView)
+Address::Address()
 {
-  // Layout widgets
-  auto *l = new QVBoxLayout;
-  l->addWidget(mView);
-  setLayout(l);
+  using Sql::Schema::ForeignKey;
+  using Sql::Schema::ForeignKeyAction;
+  using Sql::Schema::ForeignTable;
+  using Sql::Schema::ForeignField;
+  using Sql::Schema::ForeignKeySettings;
+
+  Client client;
+
+  // Foreign key settings
+  ForeignKeySettings fkSettings;
+  fkSettings.setIndexed(true);
+  fkSettings.setOnDeleteAction(ForeignKeyAction::Restrict);
+  fkSettings.setOnUpdateAction(ForeignKeyAction::Cascade);
+  // Client ID
+  Field Client_Id_FK;
+  Client_Id_FK.setName("Client_Id_FK");
+  Client_Id_FK.setType(FieldType::Integer);
+  Client_Id_FK.setRequired(true);
+  // Setup table
+  setTableName("Address_tbl");
+  setAutoIncrementPrimaryKey("Id_PK");
+  addForeignKey(Client_Id_FK, ForeignTable(client), ForeignField(client.Id_PK()), fkSettings);
 }
-
-// void AbstractTableViewWidget::setController(TableViewController* controller)
-// {
-//   Q_ASSERT(controller != nullptr);
-// 
-//   controller->setView(mView);
-// //   auto tableViewController = dynamic_cast<TableViewController*>(controller);
-// //   Q_ASSERT(tableViewController != nullptr);
-// //   tableViewController->setView(pvView);
-// //   AbstractEditorWidget::setController(controller);
-// }
-
-}} // namespace Mdt{ namespace ItemEditor{

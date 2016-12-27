@@ -56,7 +56,16 @@ namespace Mdt{ namespace ItemEditor{
      *
      * \note widget will not be placed anywhere, use setCentralWidget() fir this.
      */
-    void setMainEditorWidget(AbstractEditorWidget *widget);
+//     void setMainEditorWidget(AbstractEditorWidget *widget);
+
+    /*! \brief Set main controller
+     *
+     * This helper method will do needed signals/slots connections
+     *  between \a controller and actions.
+     *
+     * \pre controller must be a valid pointer
+     */
+    void setMainController(AbstractController *controller);
 
    protected:
 
@@ -90,11 +99,11 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    NavigationActions *pvNavigationActions;
-    InsertAction *pvInsertAction;
-    EditionActions *pvEditionActions;
-    RemoveAction *pvRemoveAction;
-    QPointer<AbstractController> pvController;
+    NavigationActions *mNavigationActions;
+    InsertAction *mInsertAction;
+    EditionActions *mEditionActions;
+    RemoveAction *mRemoveAction;
+    QPointer<AbstractController> mController;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

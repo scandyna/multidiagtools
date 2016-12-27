@@ -84,7 +84,6 @@ void SqlTableViewControllerTest::setModelThenViewTest()
 
   QTableView tableView;
   QSqlTableModel model(nullptr, mDatabase);
-  ///SqlTableViewController controller(mDatabase);
   SqlTableViewController controller;
   QSignalSpy rowStateSpy(&controller, &SqlTableViewController::rowStateChanged);
   QList<QVariant> spyItem;
@@ -94,8 +93,6 @@ void SqlTableViewControllerTest::setModelThenViewTest()
   /*
    * Initial state
    */
-//   QPointer<QSqlTableModel> originalModel = controller.model();
-//   QVERIFY(!originalModel.isNull());
   QVERIFY(controller.model() == nullptr);
   QVERIFY(controller.view() == nullptr);
   QCOMPARE(rowStateSpy.count(), 0);
@@ -104,8 +101,6 @@ void SqlTableViewControllerTest::setModelThenViewTest()
    */
   controller.setModel(&model);
   QVERIFY(controller.model() == &model);
-  // Check that original model was deleted
-  ///QVERIFY(originalModel.isNull());
   // Check that row state was not signaled (no view is attached)
   QCOMPARE(rowStateSpy.count(), 0);
   /*
@@ -135,7 +130,6 @@ void SqlTableViewControllerTest::setViewThenModelTest()
 
   QTableView tableView;
   QSqlTableModel model(nullptr, mDatabase);
-  ///SqlTableViewController controller(mDatabase);
   SqlTableViewController controller;
   QSignalSpy rowStateSpy(&controller, &SqlTableViewController::rowStateChanged);
   QList<QVariant> spyItem;
@@ -155,10 +149,6 @@ void SqlTableViewControllerTest::setViewThenModelTest()
   QCOMPARE(controller.view(), &tableView);
   // Check that row state was not signaled (no model was set)
   QCOMPARE(rowStateSpy.count(), 0);
-//   spyItem = rowStateSpy.takeFirst();
-//   rs = spyItem.at(0).value<RowState>();
-//   QCOMPARE(rs.rowCount(), 0);
-//   QCOMPARE(rs.currentRow(), -1);
   /*
    * Set model
    */
@@ -267,7 +257,6 @@ void SqlTableViewControllerTest::changeModelTest()
   using ItemEditor::RowState;
 
   QTableView tableView;
-  ///SqlTableViewController controller(mDatabase);
   SqlTableViewController controller;
   QSignalSpy rowStateSpy(&controller, &SqlTableViewController::rowStateChanged);
   QList<QVariant> spyItem;
@@ -296,10 +285,6 @@ void SqlTableViewControllerTest::changeModelTest()
   QCOMPARE(controller.view(), &tableView);
   // Check that row state was not signaled (no model was set)
   QCOMPARE(rowStateSpy.count(), 0);
-//   spyItem = rowStateSpy.takeFirst();
-//   rs = spyItem.at(0).value<RowState>();
-//   QCOMPARE(rs.rowCount(), 0);
-//   QCOMPARE(rs.currentRow(), -1);
   /*
    * Set empty model
    */
@@ -348,7 +333,6 @@ void SqlTableViewControllerTest::changeDefaultModelTest()
 void SqlTableViewControllerTest::setTableTest()
 {
   QTableView tableView;
-  ///SqlTableViewController controller(mDatabase);
   SqlTableViewController controller;
   Schema::Client client;
 
@@ -377,7 +361,6 @@ void SqlTableViewControllerTest::selectTest()
 
   Schema::Client client;
   QTableView tableView;
-  ///SqlTableViewController controller(mDatabase);
   SqlTableViewController controller;
   QSignalSpy rowStateSpy(&controller, &SqlTableViewController::rowStateChanged);
   QList<QVariant> spyItem;

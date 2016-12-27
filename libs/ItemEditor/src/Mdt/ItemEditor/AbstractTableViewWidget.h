@@ -21,16 +21,20 @@
 #ifndef MDT_ITEM_EDITOR_ABSTRACT_TABLE_VIEW_WIDGET_H
 #define MDT_ITEM_EDITOR_ABSTRACT_TABLE_VIEW_WIDGET_H
 
-#include "AbstractEditorWidget.h"
+///#include "AbstractEditorWidget.h"
+#include <QWidget>
+#include <QPointer>
 
 class QTableView;
 class QAbstractItemModel;
 
 namespace Mdt{ namespace ItemEditor{
 
+  class TableViewController;
+
   /*! \brief Common base for QTableView based editor
    */
-  class AbstractTableViewWidget : public AbstractEditorWidget
+  class AbstractTableViewWidget : public QWidget
   {
    Q_OBJECT
 
@@ -40,20 +44,30 @@ namespace Mdt{ namespace ItemEditor{
      */
     explicit AbstractTableViewWidget(QWidget* parent = nullptr);
 
+    /*! \brief Get view
+     */
+    QTableView *view() const
+    {
+      return mView;
+    }
+
    protected:
 
     /*! \brief Set controller
      *
      * Subclass that owns its controller
      *  must tell it by calling this method.
-     *
-     * \pre controller must be a TableViewController
      */
-    void setController(AbstractController *controller) override;
+//     template<typename Controller>
+//     void setController(Controller *controller)
+//     {
+//       Q_ASSERT(controller != nullptr);
+//       controller->setView(mView);
+//     }
 
    private:
 
-    QTableView *pvView;
+    QTableView *mView;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

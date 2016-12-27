@@ -1,0 +1,176 @@
+format 211
+
+classcanvas 128130 class_ref 3118082 // AbstractTableViewWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 457 434 2006
+end
+classcanvas 128642 class_ref 3068674 // StandardSqlFormWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 292.4 690 2012
+end
+classcanvas 128770 class_ref 3068930 // StandardSqlTableWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 496.4 690 2000
+end
+classcanvas 128898 class_ref 3088770 // AbstractSqlEditorWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 495.4 562 2018
+end
+classcanvas 129282 class_ref 3089410 // StandardSqlEditorLayoutWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 740.4 650 2024
+end
+classcanvas 130050 class_ref 3088642 // StandardEditorLayoutWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 750.4 562 2030
+end
+classcanvas 130434 class_ref 3104258 // SqlTableViewWidget
+  classdiagramsettings member_max_width 0 end
+  xyz 474 346 2029
+end
+classcanvas 131970 class_ref 3096962 // AbstractWindow
+  classdiagramsettings member_max_width 0 end
+  xyz 458 130 2000
+end
+classcanvas 132098 class_ref 2706306 // StandardWindow
+  classdiagramsettings member_max_width 0 end
+  xyz 456 42 2006
+end
+classcanvas 132482 class_ref 2927362 // SqlTableViewController
+  classdiagramsettings member_max_width 0 end
+  xyz 273 346 2035
+end
+classcanvas 132738 class_ref 3138562 // SqlWidgetMapperController
+  classdiagramsettings member_max_width 0 end
+  xyz 42 346 2000
+end
+classcanvas 133122 class_ref 3640962 // ClientWidget
+  classdiagramsettings member_max_width 0 end
+  color green
+  xyz 840.5 40.5 2000
+end
+classcanvas 133250 class_ref 3641090 // AddressWidget
+  classdiagramsettings member_max_width 0 end
+  color green
+  xyz 489 258 2000
+end
+classcanvas 133378 class_ref 3641218 // ClientEditor
+  classdiagramsettings member_max_width 0 end
+  color green
+  xyz 40.5 826.7 2000
+end
+classcanvas 133506 class_ref 2838530 // TableTemplate
+  classdiagramsettings member_max_width 0 end
+  xyz 116.4 559.85 2005
+end
+classcanvas 133634 class_ref 3641346 // Client
+  classdiagramsettings member_max_width 0 end
+  color green
+  xyz 143.4 702.15 2000
+end
+classcanvas 133890 class_ref 3641474 // Address
+  classdiagramsettings member_max_width 0 end
+  color green
+  xyz 39.85 702.15 2000
+end
+classcanvas 134402 class_ref 3648002 // AbstractController
+  classdiagramsettings member_max_width 0 end
+  xyz 287 130 2000
+end
+classcanvas 134786 class_ref 3614594 // AbstractSqlController
+  classdiagramsettings member_max_width 0 end
+  xyz 281 218 2041
+end
+classcanvas 136578 class_ref 638338 // QTableView
+  classdiagramsettings member_max_width 0 end
+  xyz 673 434 2006
+end
+relationcanvas 129026 relation_ref 3457026 // <generalisation>
+  decenter_begin 520
+  decenter_end 520
+  from ref 128770 z 2019 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 3457154 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 520
+  from ref 128642 z 2019 to point 374 647.4
+  line 135554 z 2019 to point 581 647.4
+  line 135682 z 2019 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130306 relation_ref 3458050 // <generalisation>
+  from ref 129282 z 2031 to ref 130050
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130562 relation_ref 3492610 // <generalisation>
+  from ref 130434 z 2030 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132226 relation_ref 3466370 // <generalisation>
+  decenter_begin 462
+  decenter_end 461
+  from ref 132098 z 2007 to ref 131970
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132610 relation_ref 3475074 // <directional composition>
+  from ref 130434 z 2036 to ref 132482
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133762 relation_ref 4018562 // <generalisation>
+  from ref 133634 z 2006 to ref 133506
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 134018 relation_ref 4018690 // <generalisation>
+  geometry VHV unfixed
+  decenter_begin 538
+  from ref 133890 z 2006 to point 71 662.9
+  line 134146 z 2006 to point 165 662.9
+  line 134274 z 2006 to ref 133506
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 134914 relation_ref 4025346 // <generalisation>
+  decenter_begin 470
+  from ref 134786 z 2042 to ref 134402
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 135042 relation_ref 3983234 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 470
+  from ref 132738 z 2042 to point 134 303.3
+  line 138114 z 2042 to point 349 303.3
+  line 138242 z 2042 to ref 134786
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 135170 relation_ref 3983106 // <generalisation>
+  decenter_end 470
+  from ref 132482 z 2042 to ref 134786
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 136834 relation_ref 4025602 // <directional composition>
+  from ref 128130 z 2007 to ref 136578
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 137346 relation_ref 4025858 // <unidirectional association>
+  from ref 131970 z 2001 to ref 134402
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 138370 relation_ref 4026370 // <generalisation>
+  from ref 133250 z 2030 to ref 130434
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

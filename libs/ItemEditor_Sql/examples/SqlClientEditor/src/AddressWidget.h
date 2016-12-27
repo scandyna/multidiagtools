@@ -18,36 +18,26 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AbstractTableViewWidget.h"
-#include "TableViewController.h"
-// #include "EventCatchItemDelegate.h"
-// #include "ItemSelectionModel.h"
-#include <QTableView>
-#include <QVBoxLayout>
+#ifndef ADDRESS_WIDGET_H
+#define ADDRESS_WIDGET_H
 
-// #include <QDebug>
+#include "Mdt/ItemEditor/SqlTableViewWidget.h"
 
-namespace Mdt{ namespace ItemEditor{
-
-AbstractTableViewWidget::AbstractTableViewWidget(QWidget* parent)
- : QWidget(parent),
-   mView(new QTableView)
+/*! \brief Address editor
+ */
+class AddressWidget : public Mdt::ItemEditor::SqlTableViewWidget
 {
-  // Layout widgets
-  auto *l = new QVBoxLayout;
-  l->addWidget(mView);
-  setLayout(l);
-}
+ Q_OBJECT
 
-// void AbstractTableViewWidget::setController(TableViewController* controller)
-// {
-//   Q_ASSERT(controller != nullptr);
-// 
-//   controller->setView(mView);
-// //   auto tableViewController = dynamic_cast<TableViewController*>(controller);
-// //   Q_ASSERT(tableViewController != nullptr);
-// //   tableViewController->setView(pvView);
-// //   AbstractEditorWidget::setController(controller);
-// }
+ public:
 
-}} // namespace Mdt{ namespace ItemEditor{
+  /*! \brief Constructor
+   */
+  explicit AddressWidget(QWidget* parent = nullptr);
+
+ private:
+
+  
+};
+
+#endif // #ifndef ADDRESS_WIDGET_H

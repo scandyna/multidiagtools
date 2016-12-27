@@ -18,36 +18,32 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AbstractTableViewWidget.h"
-#include "TableViewController.h"
-// #include "EventCatchItemDelegate.h"
-// #include "ItemSelectionModel.h"
-#include <QTableView>
-#include <QVBoxLayout>
+#include "Mdt/Application.h"
+#include "Mdt/ItemEditor/StandardWindow.h"
+#include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
+#include "AddressWidget.h"
 
-// #include <QDebug>
+using namespace Mdt::ItemEditor;
 
-namespace Mdt{ namespace ItemEditor{
-
-AbstractTableViewWidget::AbstractTableViewWidget(QWidget* parent)
- : QWidget(parent),
-   mView(new QTableView)
+/*! \brief Main of SqlClientEditor example
+ */
+int main(int argc, char **argv)
 {
-  // Layout widgets
-  auto *l = new QVBoxLayout;
-  l->addWidget(mView);
-  setLayout(l);
+  Mdt::Application app(argc, argv);
+  StandardWindow mainWindow;
+  auto *editorWidget = new StandardEditorLayoutWidget;
+  auto *addressWidget = new AddressWidget;
+
+  // Setup editor widget
+  editorWidget->setMainWidget(addressWidget);
+  // Setup main window
+  mainWindow.setCentralWidget(editorWidget);
+  mainWindow.setMainController(addressWidget->controller());
+  mainWindow.show();
+  // Setup and run application
+  if(!app.init()){
+    return 1;
+  }
+
+  return app.exec();
 }
-
-// void AbstractTableViewWidget::setController(TableViewController* controller)
-// {
-//   Q_ASSERT(controller != nullptr);
-// 
-//   controller->setView(mView);
-// //   auto tableViewController = dynamic_cast<TableViewController*>(controller);
-// //   Q_ASSERT(tableViewController != nullptr);
-// //   tableViewController->setView(pvView);
-// //   AbstractEditorWidget::setController(controller);
-// }
-
-}} // namespace Mdt{ namespace ItemEditor{

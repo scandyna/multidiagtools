@@ -1,0 +1,157 @@
+format 211
+"SqlClientEditor" // Mdt::ItemEditor::Examples::SqlClientEditor
+  revision 2
+  modified_by 2 "philippe"
+  // class settings
+  
+  classdiagramsettings member_max_width 0 end
+  
+  usecasediagramsettings end
+  
+  sequencediagramsettings end
+  
+  collaborationdiagramsettings end
+  
+  objectdiagramsettings end
+  
+  componentdiagramsettings
+   end
+  
+  deploymentdiagramsettings
+   end
+  
+  statediagramsettings
+   end
+  
+  activitydiagramsettings
+   end
+  
+  classview 1696258 "SqlClientEditor"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3182210 "SqlClientEditorOverview"
+      classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+      size B-Landscape
+    end
+
+    class 3640962 "ClientWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 3641090 "AddressWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4052354 // <generalisation>
+	relation 4026370 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4052354 // <generalisation>
+	  b parent class_ref 3104258 // SqlTableViewWidget
+      end
+    end
+
+    class 3641218 "ClientEditor"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+    end
+
+    class 3641346 "Client"
+      visibility package 
+      nactuals 1
+      actual class class_ref 2838530 // TableTemplate
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4044546 // <generalisation>
+	relation 4018562 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4044546 // <generalisation>
+	  b parent class_ref 2838530 // TableTemplate
+      end
+    end
+
+    class 3641474 "Address"
+      visibility package 
+      nactuals 1
+      actual class class_ref 2838530 // TableTemplate
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4044674 // <generalisation>
+	relation 4018690 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4044674 // <generalisation>
+	  b parent class_ref 2838530 // TableTemplate
+      end
+    end
+  end
+end

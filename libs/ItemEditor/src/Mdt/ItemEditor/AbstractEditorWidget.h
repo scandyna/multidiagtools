@@ -32,6 +32,8 @@ namespace Mdt{ namespace ItemEditor{
    *  but references the one a subclass handles.
    *  This permit to create specific controllers and editors,
    *  but also requires some more work when subclassing AbstractEditorWidget.
+   *
+   * \todo This class seems to be obselete
    */
   class AbstractEditorWidget : public QWidget
   {

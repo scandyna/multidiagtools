@@ -18,36 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AbstractTableViewWidget.h"
-#include "TableViewController.h"
-// #include "EventCatchItemDelegate.h"
-// #include "ItemSelectionModel.h"
+#include "SqlTableViewWidget.h"
 #include <QTableView>
-#include <QVBoxLayout>
-
-// #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
-AbstractTableViewWidget::AbstractTableViewWidget(QWidget* parent)
- : QWidget(parent),
-   mView(new QTableView)
+SqlTableViewWidget::SqlTableViewWidget(QWidget* parent)
+ : AbstractTableViewWidget(parent),
+   mController(new SqlTableViewController(this))
 {
-  // Layout widgets
-  auto *l = new QVBoxLayout;
-  l->addWidget(mView);
-  setLayout(l);
+  mController->setView(view());
 }
 
-// void AbstractTableViewWidget::setController(TableViewController* controller)
-// {
-//   Q_ASSERT(controller != nullptr);
-// 
-//   controller->setView(mView);
-// //   auto tableViewController = dynamic_cast<TableViewController*>(controller);
-// //   Q_ASSERT(tableViewController != nullptr);
-// //   tableViewController->setView(pvView);
-// //   AbstractEditorWidget::setController(controller);
-// }
+void SqlTableViewWidget::setModel(QSqlTableModel* model)
+{
+  Q_ASSERT(model != nullptr);
+
+  mController->setModel(model);
+}
 
 }} // namespace Mdt{ namespace ItemEditor{

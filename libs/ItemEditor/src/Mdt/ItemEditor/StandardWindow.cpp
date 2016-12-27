@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "StandardWindow.h"
+#include "ui_StandardWindow.h"
 #include "NavigationActions.h"
 #include "InsertAction.h"
 #include <QMenu>
@@ -28,24 +29,29 @@
 namespace Mdt{ namespace ItemEditor{
 
 StandardWindow::StandardWindow(QWidget* parent)
- : AbstractWindow(parent)
+ : AbstractWindow(parent) ,
+   mUiStandardWindow(new Ui::StandardWindow)
 {
-  setupUi(this);
+  mUiStandardWindow->setupUi(this);
   setupNavigationElements();
+}
+
+StandardWindow::~StandardWindow()
+{
 }
 
 void StandardWindow::setupNavigationElements()
 {
   auto *actions = navigationActions();
 
-  tlbMain->addAction(actions->toFirst());
-  tlbMain->addAction(actions->toPrevious());
-  tlbMain->addAction(actions->toNext());
-  tlbMain->addAction(actions->toLast());
-  tlbMain->addAction(editionActions()->submitAction());
-  tlbMain->addAction(editionActions()->revertAction());
-  tlbMain->addAction(insertAction()->insertAction());
-  tlbMain->addAction(removeAction()->removeAction());
+  mUiStandardWindow->tlbMain->addAction(actions->toFirst());
+  mUiStandardWindow->tlbMain->addAction(actions->toPrevious());
+  mUiStandardWindow->tlbMain->addAction(actions->toNext());
+  mUiStandardWindow->tlbMain->addAction(actions->toLast());
+  mUiStandardWindow->tlbMain->addAction(editionActions()->submitAction());
+  mUiStandardWindow->tlbMain->addAction(editionActions()->revertAction());
+  mUiStandardWindow->tlbMain->addAction(insertAction()->insertAction());
+  mUiStandardWindow->tlbMain->addAction(removeAction()->removeAction());
 
   auto *navigationMenu = menuBar()->addMenu(tr("&Navigation"));
   navigationMenu->addAction(actions->toFirst());

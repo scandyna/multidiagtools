@@ -29,22 +29,22 @@ namespace Mdt{ namespace ItemEditor{
 
 StandardEditorLayoutWidget::StandardEditorLayoutWidget(QWidget* parent)
  : QWidget(parent),
-   pvMainLayout(new QVBoxLayout),
-   pvMainWidget(nullptr),
-   pvChildsTabWidget(nullptr)
+   mMainLayout(new QVBoxLayout),
+   mMainWidget(nullptr),
+   mChildsTabWidget(nullptr)
 {
-  setLayout(pvMainLayout);
+  setLayout(mMainLayout);
 }
 
 void StandardEditorLayoutWidget::setMainWidget(QWidget* widget)
 {
   Q_ASSERT(widget != nullptr);
 
-  if(pvMainWidget != nullptr){
-    delete pvMainWidget;
+  if(mMainWidget != nullptr){
+    delete mMainWidget;
   }
-  pvMainWidget = widget;
-  pvMainLayout->insertWidget(0, widget);
+  mMainWidget = widget;
+  mMainLayout->insertWidget(0, widget);
 }
 
 void StandardEditorLayoutWidget::addChildWidget(QWidget* widget, const QString& label, const QIcon& icon)
@@ -52,16 +52,16 @@ void StandardEditorLayoutWidget::addChildWidget(QWidget* widget, const QString& 
   Q_ASSERT(widget != nullptr);
 
   // Setup tab widget if needed
-  if(pvChildsTabWidget == nullptr){
-    pvChildsTabWidget = new QTabWidget;
-    pvMainLayout->addWidget(pvChildsTabWidget, 5);
+  if(mChildsTabWidget == nullptr){
+    mChildsTabWidget = new QTabWidget;
+    mMainLayout->addWidget(mChildsTabWidget, 5);
   }
-  Q_ASSERT(pvChildsTabWidget != nullptr);
+  Q_ASSERT(mChildsTabWidget != nullptr);
   // Add widget
   if(icon.isNull()){
-    pvChildsTabWidget->addTab(widget, label);
+    mChildsTabWidget->addTab(widget, label);
   }else{
-    pvChildsTabWidget->addTab(widget, icon, label);
+    mChildsTabWidget->addTab(widget, icon, label);
   }
 }
 

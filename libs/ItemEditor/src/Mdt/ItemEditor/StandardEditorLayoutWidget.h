@@ -31,6 +31,15 @@ class QVBoxLayout;
 namespace Mdt{ namespace ItemEditor{
 
   /*! \brief Provides a standard layout of for a editor
+   *
+   * Example of usage:
+   * \code
+   * #include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
+   *
+   * Mdt::ItemEditor::StandardEditorLayoutWidget editorWidget;
+   * \endcode
+   *
+   * \todo Document correctly once fixed
    */
   class StandardEditorLayoutWidget : public QWidget
   {
@@ -63,9 +72,9 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    QVBoxLayout *pvMainLayout;
-    QWidget *pvMainWidget;
-    QTabWidget *pvChildsTabWidget;
+    QVBoxLayout *mMainLayout;
+    QWidget *mMainWidget;
+    QTabWidget *mChildsTabWidget;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

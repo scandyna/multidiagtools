@@ -23,6 +23,8 @@
  *
  * \section itemeditor_concept Concept
  *
+ *  
+ *
  * \section itemeditor_controller Controller
  *
  *  Mdt::ItemEditor::TableViewController can be used with a model based on QAbstractTableModel

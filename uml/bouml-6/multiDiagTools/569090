@@ -1,6 +1,6 @@
 format 211
 "tests" // Mdt::ItemEditor::tests
-  revision 31
+  revision 32
   modified_by 2 "philippe"
   // class settings
   
@@ -386,4 +386,5 @@ ${inlines}
       
     end
   end
+
 end

@@ -18,36 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AbstractTableViewWidget.h"
-#include "TableViewController.h"
-// #include "EventCatchItemDelegate.h"
-// #include "ItemSelectionModel.h"
-#include <QTableView>
-#include <QVBoxLayout>
+#include "Client.h"
 
-// #include <QDebug>
+namespace Sql = Mdt::Sql;
 
-namespace Mdt{ namespace ItemEditor{
+using Sql::Schema::FieldType;
+using Sql::Schema::Field;
 
-AbstractTableViewWidget::AbstractTableViewWidget(QWidget* parent)
- : QWidget(parent),
-   mView(new QTableView)
+Client::Client()
 {
-  // Layout widgets
-  auto *l = new QVBoxLayout;
-  l->addWidget(mView);
-  setLayout(l);
+  // First name
+  Field FirstName;
+  FirstName.setName("FirstName");
+  FirstName.setType(FieldType::Varchar);
+  FirstName.setLength(100);
+  
+  // Setup table
+  setTableName("Client_tbl");
+  setAutoIncrementPrimaryKey("Id_PK");
+  addField(FirstName);
 }
-
-// void AbstractTableViewWidget::setController(TableViewController* controller)
-// {
-//   Q_ASSERT(controller != nullptr);
-// 
-//   controller->setView(mView);
-// //   auto tableViewController = dynamic_cast<TableViewController*>(controller);
-// //   Q_ASSERT(tableViewController != nullptr);
-// //   tableViewController->setView(pvView);
-// //   AbstractEditorWidget::setController(controller);
-// }
-
-}} // namespace Mdt{ namespace ItemEditor{

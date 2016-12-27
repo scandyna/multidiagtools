@@ -7,6 +7,7 @@ project(multidiagtools)
 set(SOURCES_FILES
     src/Mdt/ItemEditor/AbstractSqlController.cpp
     src/Mdt/ItemEditor/SqlTableViewController.cpp
+    src/Mdt/ItemEditor/SqlTableViewWidget.cpp
 )
 
 # Headers directories
@@ -15,7 +16,7 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../FilterExpression/src")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../ItemModel/src")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../ItemEditor/src")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../Sql/src")
-# Because some headers are generated during building (config.h, Qt's UIC), we also build path
+# Because some headers are generated during building (config.h, Qt's UIC), we also add build path
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Output library name
@@ -60,3 +61,5 @@ endif(UNIX)
 
 # Unit tests
 add_subdirectory("tests")
+# Examples
+add_subdirectory("examples")
