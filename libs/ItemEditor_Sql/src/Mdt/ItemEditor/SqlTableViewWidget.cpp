@@ -23,11 +23,17 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-SqlTableViewWidget::SqlTableViewWidget(QWidget* parent)
+SqlTableViewWidget::SqlTableViewWidget(QWidget* parent, const QSqlDatabase & db)
  : AbstractTableViewWidget(parent),
    mController(new SqlTableViewController(this))
 {
+  mController->setDefaultModel(db);
   mController->setView(view());
+}
+
+SqlTableViewWidget::SqlTableViewWidget(const QSqlDatabase & db)
+ : SqlTableViewWidget(nullptr, db)
+{
 }
 
 void SqlTableViewWidget::setModel(QSqlTableModel* model)

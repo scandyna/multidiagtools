@@ -19,10 +19,13 @@
  **
  ****************************************************************************/
 #include "AddressWidget.h"
+#include "Address.h"
 #include <QSqlDatabase>
 
-AddressWidget::AddressWidget(QWidget* parent)
- : SqlTableViewWidget(parent)
+AddressWidget::AddressWidget(const QSqlDatabase & db)
+ : SqlTableViewWidget(db)
 {
-  controller()->setDefaultModel(QSqlDatabase());
+  controller()->setTable(Address());
+  controller()->select();
+  ///controller()->setDefaultModel(QSqlDatabase());
 }

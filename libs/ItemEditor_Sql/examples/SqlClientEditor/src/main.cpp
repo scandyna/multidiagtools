@@ -21,29 +21,58 @@
 #include "Mdt/Application.h"
 #include "Mdt/ItemEditor/StandardWindow.h"
 #include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
+#include "Mdt/Sql/Schema/Driver.h"
 #include "AddressWidget.h"
+#include "ClientEditorSchema.h"
+#include <QSqlDatabase>
+#include <QTemporaryFile>
+#include <QDebug>
 
 using namespace Mdt::ItemEditor;
+namespace Sql = Mdt::Sql;
 
 /*! \brief Main of SqlClientEditor example
  */
 int main(int argc, char **argv)
 {
+  // Setup application
   Mdt::Application app(argc, argv);
-  StandardWindow mainWindow;
-  auto *editorWidget = new StandardEditorLayoutWidget;
-  auto *addressWidget = new AddressWidget;
-
-  // Setup editor widget
-  editorWidget->setMainWidget(addressWidget);
-  // Setup main window
-  mainWindow.setCentralWidget(editorWidget);
-  mainWindow.setMainController(addressWidget->controller());
-  mainWindow.show();
-  // Setup and run application
   if(!app.init()){
     return 1;
   }
+  // Setup database
+  auto db = QSqlDatabase::addDatabase("QSQLITE");
+  if(!db.isValid()){
+    return 1;
+  }
+  QTemporaryFile file;
+  if(!file.open()){
+    qFatal("Unable to open temporary file");
+    return 1;
+  }
+  db.setDatabaseName(file.fileName());
+  if(!db.open()){
+    qFatal("Unable to open database");
+    return 1;
+  }
+  /// \todo Enable FK support + this and above should all be done with a helper class
+  Sql::Schema::Driver driver(db);
+  if(!driver.createSchema(ClientEditorSchema())){
+    return 1;
+  }
+  // Setup Client widget
+  
+  // Setup Address widget
+  auto *addressWidget = new AddressWidget(db);
+  
+  // Setup editor widget
+  auto *editorWidget = new StandardEditorLayoutWidget;
+  editorWidget->setMainWidget(addressWidget);
+  // Setup main window
+  StandardWindow mainWindow;
+  mainWindow.setCentralWidget(editorWidget);
+  mainWindow.setMainController(addressWidget->controller());
+  mainWindow.show();
 
   return app.exec();
 }

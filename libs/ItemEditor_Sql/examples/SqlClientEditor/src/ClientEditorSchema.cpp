@@ -18,26 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef ADDRESS_WIDGET_H
-#define ADDRESS_WIDGET_H
+#include "ClientEditorSchema.h"
+#include "Client.h"
+#include "Address.h"
 
-#include "Mdt/ItemEditor/SqlTableViewWidget.h"
-
-/*! \brief Address editor
- */
-class AddressWidget : public Mdt::ItemEditor::SqlTableViewWidget
+ClientEditorSchema::ClientEditorSchema()
 {
- Q_OBJECT
-
- public:
-
-  /*! \brief Constructor
-   */
-  explicit AddressWidget(const QSqlDatabase & db);
-
- private:
-
-  
-};
-
-#endif // #ifndef ADDRESS_WIDGET_H
+  addTable(Client());
+  addTable(Address());
+}

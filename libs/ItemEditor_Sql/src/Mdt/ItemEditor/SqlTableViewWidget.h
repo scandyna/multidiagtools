@@ -23,8 +23,10 @@
 
 #include "Mdt/ItemEditor/AbstractTableViewWidget.h"
 #include "SqlTableViewController.h"
+#include <QSqlDatabase>
 
 class QSqlTableModel;
+//class QSqlDatabase;
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -38,7 +40,11 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Constructor
      */
-    explicit SqlTableViewWidget(QWidget* parent = nullptr);
+    explicit SqlTableViewWidget(QWidget* parent, const QSqlDatabase & db);
+
+    /*! \brief Constructor
+     */
+    explicit SqlTableViewWidget(const QSqlDatabase & db);
 
     /*! \brief Get controller
      */

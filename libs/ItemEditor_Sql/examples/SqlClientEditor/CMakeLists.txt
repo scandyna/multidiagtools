@@ -8,6 +8,7 @@ set(SOURCES_FILES
     src/main.cpp
     src/Client.cpp
     src/Address.cpp
+    src/ClientEditorSchema.cpp
     src/AddressWidget.cpp
 )
 
