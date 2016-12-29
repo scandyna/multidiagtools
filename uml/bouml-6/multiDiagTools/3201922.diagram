@@ -1,0 +1,19 @@
+format 211
+
+classcanvas 128002 class_ref 3668226 // ActionList
+  classdiagramsettings member_max_width 0 end
+  xyz 215 94 2000
+end
+note 128130 "Think about a container that could be used by:
+ - StandardWindow
+ - AbstractTableViewWidget
+-> Iterate over the list to connect/disconnect signal/slots
+-> CRTP inheritance ?"
+  xyzwh 137.5 510.5 2000 631 117
+classcanvas 128258 class_ref 2706434 // NavigationActions
+  classdiagramsettings member_max_width 0 end
+  xyz 440 29 2005
+end
+note 128386 "Hmm.. How to know which action does what while iterating ??"
+  xyzwh 8 222 2000 421 91
+end

@@ -51,7 +51,7 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Construct a model
      */
-    VariantTableModel(VariantTableModelStorageRule storageRule = VariantTableModelStorageRule::GroupDisplayAndEditRoleData, QObject *parent = nullptr);
+    explicit VariantTableModel(VariantTableModelStorageRule storageRule = VariantTableModelStorageRule::GroupDisplayAndEditRoleData, QObject *parent = nullptr);
 
     /*! \brief Get row count
      */

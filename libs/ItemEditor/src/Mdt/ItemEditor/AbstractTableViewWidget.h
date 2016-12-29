@@ -27,10 +27,14 @@
 
 class QTableView;
 class QAbstractItemModel;
+class QToolBar;
+class QVBoxLayout;
+class QHBoxLayout;
 
 namespace Mdt{ namespace ItemEditor{
 
-  class TableViewController;
+  class AbstractController;
+  class InsertAction;
 
   /*! \brief Common base for QTableView based editor
    */
@@ -51,23 +55,31 @@ namespace Mdt{ namespace ItemEditor{
       return mView;
     }
 
+    /*! \brief Add a tool bar to the top area
+     */
+    QToolBar *addToolBarToTopArea();
+
+    /*! \brief Add insert action to top area
+     */
+    void addInsertActionToTopArea(const QString & toolTip = QString());
+
    protected:
 
-    /*! \brief Set controller
-     *
-     * Subclass that owns its controller
-     *  must tell it by calling this method.
+    /*! \brief Access controller
      */
-//     template<typename Controller>
-//     void setController(Controller *controller)
-//     {
-//       Q_ASSERT(controller != nullptr);
-//       controller->setView(mView);
-//     }
+    virtual AbstractController *refController() const = 0;
 
    private:
 
+    void createTopBarLayoutIfNot();
+    void createTopEditBarIfNot();
+
     QTableView *mView;
+    QVBoxLayout *mMainLayout;
+    QHBoxLayout *mTopBarLayout = nullptr;
+    QHBoxLayout *mBottomBarLayout = nullptr;
+    QToolBar *mTopEditBar = nullptr;
+    InsertAction *mInsertAction = nullptr;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

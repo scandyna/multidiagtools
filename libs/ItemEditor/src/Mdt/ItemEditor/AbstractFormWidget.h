@@ -18,19 +18,17 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_TABLE_VIEW_WIDGET_H
-#define MDT_ITEM_EDITOR_TABLE_VIEW_WIDGET_H
+#ifndef MDT_ITEM_EDITOR_ABSTRACT_FORM_WIDGET_H
+#define MDT_ITEM_EDITOR_ABSTRACT_FORM_WIDGET_H
 
-#include "AbstractTableViewWidget.h"
-#include "TableViewController.h"
-
-class QAbstractItemModel;
+#include "WidgetMapperController.h"
+#include <QWidget>
 
 namespace Mdt{ namespace ItemEditor{
 
-  /*! \brief QTableView based editor
+  /*! \brief Base class to create widgets using WidgetMapperController
    */
-  class TableViewWidget : public AbstractTableViewWidget
+  class AbstractFormWidget : public QWidget
   {
    Q_OBJECT
 
@@ -38,11 +36,11 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Constructor
      */
-    explicit TableViewWidget(QWidget* parent = nullptr);
+    explicit AbstractFormWidget(QWidget* parent = nullptr);
 
     /*! \brief Get controller
      */
-    TableViewController *controller() const
+    WidgetMapperController *controller() const
     {
       return mController;
     }
@@ -57,14 +55,9 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    AbstractController* refController() const override
-    {
-      return mController;
-    }
-
-    TableViewController *mController;
+    WidgetMapperController *mController;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
 
-#endif // #ifndef MDT_ITEM_EDITOR_TABLE_VIEW_WIDGET_H
+#endif // #ifndef MDT_ITEM_EDITOR_ABSTRACT_FORM_WIDGET_H

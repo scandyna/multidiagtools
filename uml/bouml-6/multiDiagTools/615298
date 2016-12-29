@@ -1,6 +1,6 @@
 format 211
 "SqlClientEditor" // Mdt::ItemEditor::Examples::SqlClientEditor
-  revision 2
+  revision 3
   modified_by 2 "philippe"
   // class settings
   

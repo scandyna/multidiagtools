@@ -63,6 +63,11 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
+    AbstractController* refController() const override
+    {
+      return mController;
+    }
+
     SqlTableViewController *mController;
   };
 

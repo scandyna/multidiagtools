@@ -24,7 +24,10 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/ControllerRelationList.cpp
     src/Mdt/ItemEditor/ControllerRelation.cpp
     src/Mdt/ItemEditor/StandardEditorLayoutWidget.cpp
+    
     src/Mdt/ItemEditor/AbstractEditorWidget.cpp
+    
+    src/Mdt/ItemEditor/AbstractFormWidget.cpp
     src/Mdt/ItemEditor/AbstractTableViewWidget.cpp
     src/Mdt/ItemEditor/TableViewWidget.cpp
     src/Mdt/ItemEditor/StandardWindow.cpp
@@ -77,3 +80,5 @@ endif(UNIX)
 
 # Unit tests
 add_subdirectory("tests")
+# Examples
+add_subdirectory("examples")

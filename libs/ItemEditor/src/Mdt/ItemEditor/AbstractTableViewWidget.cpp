@@ -19,11 +19,13 @@
  **
  ****************************************************************************/
 #include "AbstractTableViewWidget.h"
+#include "AbstractController.h"
 #include "TableViewController.h"
-// #include "EventCatchItemDelegate.h"
-// #include "ItemSelectionModel.h"
+#include "InsertAction.h"
 #include <QTableView>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QToolBar>
 
 // #include <QDebug>
 
@@ -31,23 +33,57 @@ namespace Mdt{ namespace ItemEditor{
 
 AbstractTableViewWidget::AbstractTableViewWidget(QWidget* parent)
  : QWidget(parent),
-   mView(new QTableView)
+   mView(new QTableView),
+   mMainLayout(new QVBoxLayout)
 {
+  Q_ASSERT(mTopBarLayout == nullptr);
+  Q_ASSERT(mBottomBarLayout == nullptr);
+  Q_ASSERT(mTopEditBar == nullptr);
+  Q_ASSERT(mInsertAction == nullptr);
+
   // Layout widgets
-  auto *l = new QVBoxLayout;
-  l->addWidget(mView);
-  setLayout(l);
+  mMainLayout->addWidget(mView);
+  setLayout(mMainLayout);
 }
 
-// void AbstractTableViewWidget::setController(TableViewController* controller)
-// {
-//   Q_ASSERT(controller != nullptr);
-// 
-//   controller->setView(mView);
-// //   auto tableViewController = dynamic_cast<TableViewController*>(controller);
-// //   Q_ASSERT(tableViewController != nullptr);
-// //   tableViewController->setView(pvView);
-// //   AbstractEditorWidget::setController(controller);
-// }
+QToolBar* AbstractTableViewWidget::addToolBarToTopArea()
+{
+  auto *bar = new QToolBar;
+
+  createTopBarLayoutIfNot();
+  mTopBarLayout->addWidget(bar);
+
+  return bar;
+}
+
+void AbstractTableViewWidget::addInsertActionToTopArea(const QString & toolTip)
+{
+  if(mInsertAction == nullptr){
+    createTopEditBarIfNot();
+    mInsertAction = new InsertAction(this);
+    mTopEditBar->addAction(mInsertAction->insertAction());
+    Q_ASSERT(refController() != nullptr);
+    connect(mInsertAction, &InsertAction::insertTriggered, refController(), &AbstractController::insert);
+  }
+  Q_ASSERT(mInsertAction != nullptr);
+  mInsertAction->insertAction()->setToolTip(toolTip);
+}
+
+void AbstractTableViewWidget::createTopBarLayoutIfNot()
+{
+  if(mTopBarLayout == nullptr){
+    mTopBarLayout = new QHBoxLayout;
+    mMainLayout->insertLayout(0, mTopBarLayout);
+  }
+  Q_ASSERT(mTopBarLayout != nullptr);
+}
+
+void AbstractTableViewWidget::createTopEditBarIfNot()
+{
+  if(mTopEditBar == nullptr){
+    mTopEditBar = addToolBarToTopArea();
+  }
+  Q_ASSERT(mTopEditBar != nullptr);
+}
 
 }} // namespace Mdt{ namespace ItemEditor{

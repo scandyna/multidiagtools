@@ -99,6 +99,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # *** Helper function (must be placed before add_subdirectory(..) ***
 #################################################################################################################################################
 
+# NOTE should be renamed mdtSeparateLibraryDebugSymbols
 # Separate debug symbols into a separate .dbg file
 function(mdtSeparateDebugSymbols libraryBinName)
   set(completeLibBinName "${CMAKE_SHARED_LIBRARY_PREFIX}${libraryBinName}${MDTLIB_VERSION_SUFFIX}")

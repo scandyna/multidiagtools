@@ -18,53 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_TABLE_VIEW_WIDGET_H
-#define MDT_ITEM_EDITOR_TABLE_VIEW_WIDGET_H
-
-#include "AbstractTableViewWidget.h"
-#include "TableViewController.h"
-
-class QAbstractItemModel;
+#include "AbstractFormWidget.h"
 
 namespace Mdt{ namespace ItemEditor{
 
-  /*! \brief QTableView based editor
-   */
-  class TableViewWidget : public AbstractTableViewWidget
-  {
-   Q_OBJECT
+AbstractFormWidget::AbstractFormWidget(QWidget* parent)
+ : QWidget(parent),
+   mController(new WidgetMapperController(this))
+{
+}
 
-   public:
+void AbstractFormWidget::setModel(QAbstractItemModel* model)
+{
+  Q_ASSERT(model != nullptr);
 
-    /*! \brief Constructor
-     */
-    explicit TableViewWidget(QWidget* parent = nullptr);
+  mController->setModel(model);
+}
 
-    /*! \brief Get controller
-     */
-    TableViewController *controller() const
-    {
-      return mController;
-    }
-
-    /*! \brief Set model
-     *
-     * \note Because model can be shared with several objects (f.ex. other views),
-     *        the editor does not take ownership of it (it will not delete it).
-     * \pre model must be a valid pointer
-     */
-    void setModel(QAbstractItemModel *model);
-
-   private:
-
-    AbstractController* refController() const override
-    {
-      return mController;
-    }
-
-    TableViewController *mController;
-  };
 
 }} // namespace Mdt{ namespace ItemEditor{
-
-#endif // #ifndef MDT_ITEM_EDITOR_TABLE_VIEW_WIDGET_H
