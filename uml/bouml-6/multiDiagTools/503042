@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 117
+  revision 120
   modified_by 2 "philippe"
   // class settings
   
@@ -3959,21 +3959,6 @@ ${inlines}
 	MysqlColumn
       end
 
-      operation 5103618 "~AbstractActionContainer"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 5102850 "setRowState"
 	stereotype "slot"
 	public explicit_return_type "void"
@@ -4008,29 +3993,14 @@ ${inlines}
 	
       end
 
-      operation 5103746 "disableActions"
+      operation 5103746 "setActionsDisabled"
 	stereotype "slot"
 	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+	nparams 1
+	  param in name "disable" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 5104002 "enableActions"
-	stereotype "slot"
-	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -4085,13 +4055,10 @@ ${inlines}
 	
       end
 
-      operation 5103490 "stateChanged"
+      operation 5103490 "updateEnableState"
 	abstract cpp_virtual protected explicit_return_type "void"
-	nparams 3
-	  param in name "rowCount" explicit_type "int"
-	  param in name "currentRow" explicit_type "int"
-	  param in name "controllerState" type class_ref 2684930 // ControllerState
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	
@@ -4121,7 +4088,7 @@ ${inlines}
 
     classdiagram 2413698 "NavigationActions"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size B
     end
 
     class 2706434 "NavigationActions"
@@ -4229,14 +4196,6 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
-      end
-
-      classrelation 3089922 // <generalisation>
-	relation 3071746 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3089922 // <generalisation>
-	  b parent class_ref 138626 // QObject
       end
 
       operation 4061698 "NavigationActions"
@@ -4421,6 +4380,14 @@ ${inlines}
 	
 	
       end
+
+      classrelation 4080514 // <generalisation>
+	relation 4054530 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4080514 // <generalisation>
+	  b parent class_ref 3668354 // AbstractActionContainer
+      end
     end
 
     classdiagram 2420866 "EditionActions"
@@ -4442,14 +4409,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3096578 // <generalisation>
-	relation 3078402 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3096578 // <generalisation>
-	  b parent class_ref 138626 // QObject
-      end
-
       classrelation 3096706 // <directional composition>
 	relation 3078530 *-->
 	  a role_name "" multiplicity "2" private
@@ -4602,6 +4561,14 @@ ${inlines}
 	
 	
       end
+
+      classrelation 4080386 // <generalisation>
+	relation 4054402 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4080386 // <generalisation>
+	  b parent class_ref 3668354 // AbstractActionContainer
+      end
     end
 
     classdiagram 2687106 "InsertAction"
@@ -4623,14 +4590,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3445762 // <generalisation>
-	relation 3427330 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3445762 // <generalisation>
-	  b parent class_ref 138626 // QObject
-      end
-
       classrelation 3445890 // <directional composition>
 	relation 3427458 *-->
 	  a role_name "" private
@@ -4723,6 +4682,14 @@ ${inlines}
 	    classrelation_ref 3446018 // <dependency>
 	  b parent class_ref 2684930 // ControllerState
       end
+
+      classrelation 4080258 // <generalisation>
+	relation 4054274 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4080258 // <generalisation>
+	  b parent class_ref 3668354 // AbstractActionContainer
+      end
     end
 
     classdiagram 2687234 "RemoveAction"
@@ -4752,14 +4719,6 @@ ${inlines}
 	  b parent class_ref 2684930 // ControllerState
       end
 
-      classrelation 3446274 // <generalisation>
-	relation 3427842 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 3446274 // <generalisation>
-	  b parent class_ref 138626 // QObject
-      end
-
       classrelation 3446402 // <directional composition>
 	relation 3427970 *-->
 	  a role_name "" private
@@ -4769,7 +4728,7 @@ ${inlines}
 	  b parent class_ref 693250 // QAction
       end
 
-      attribute 2577410 "Remove"
+      attribute 2577410 "RemoveAction"
 	private type class_ref 693250 // QAction
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -4797,54 +4756,8 @@ ${inlines}
 	
       end
 
-      operation 4449026 "setControllerState"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "state" type class_ref 2684930 // ControllerState
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4070146 "action"
+      operation 4070146 "removeAction"
 	public return_type class_ref 693250 // QAction
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4070530 "enable"
-	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4070658 "disable"
-	public explicit_return_type "void"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -4861,6 +4774,44 @@ ${inlines}
       operation 4071170 "removeTriggered"
 	stereotype "signal"
 	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4080130 // <generalisation>
+	relation 4054146 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4080130 // <generalisation>
+	  b parent class_ref 3668354 // AbstractActionContainer
+      end
+
+      operation 5118722 "updateEnableState"
+	cpp_virtual private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5118850 "disableAllActions"
+	cpp_virtual private explicit_return_type "void"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "

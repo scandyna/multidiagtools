@@ -24,43 +24,33 @@
 namespace Mdt{ namespace ItemEditor{
 
 EditionActions::EditionActions(QObject* parent)
- : QObject(parent)
+ : AbstractActionContainer(parent)
 {
-  pvSubmitAction = new QAction(QIcon::fromTheme("document-save"), tr("Submit"), this);
-  pvRevertAction = new QAction(QIcon::fromTheme("document-revert"), tr("Revert"), this);
-  pvSubmitAction->setObjectName("SubmitAction");
-  pvRevertAction->setObjectName("RevertAction");
-  connect(pvSubmitAction, &QAction::triggered, this, &EditionActions::submitTriggered);
-  connect(pvRevertAction, &QAction::triggered, this, &EditionActions::revertTriggered);
-  updateEnableStates();
+  mSubmitAction = new QAction(QIcon::fromTheme("document-save"), tr("Submit"), this);
+  mRevertAction = new QAction(QIcon::fromTheme("document-revert"), tr("Revert"), this);
+  mSubmitAction->setObjectName("SubmitAction");
+  mRevertAction->setObjectName("RevertAction");
+  connect(mSubmitAction, &QAction::triggered, this, &EditionActions::submitTriggered);
+  connect(mRevertAction, &QAction::triggered, this, &EditionActions::revertTriggered);
+  mSubmitAction->setEnabled(false);
+  mRevertAction->setEnabled(false);
 }
 
-void EditionActions::setRowState(RowState rs)
+void EditionActions::updateEnableState()
 {
-  pvRowState = rs;
-  updateEnableStates();
-}
-
-void EditionActions::setControllerState(ControllerState state)
-{
-  pvControllerState = state;
-  updateEnableStates();
-}
-
-void EditionActions::updateEnableStates()
-{
-  if(pvRowState.isNull()){
+  if(rowStateIsNull()){
     disableAllActions();
     return;
   }
-  pvSubmitAction->setEnabled( ControllerStatePermission::canSubmit(pvControllerState) );
-  pvRevertAction->setEnabled( ControllerStatePermission::canRevert(pvControllerState) );
+  mSubmitAction->setEnabled( ControllerStatePermission::canSubmit(controllerState()) );
+  mRevertAction->setEnabled( ControllerStatePermission::canRevert(controllerState()) );
 }
 
 void EditionActions::disableAllActions()
 {
-  pvSubmitAction->setEnabled(false);
-  pvRevertAction->setEnabled(false);
+  mSubmitAction->setEnabled(false);
+  mRevertAction->setEnabled(false);
 }
+
 
 }} // namespace Mdt{ namespace ItemEditor{

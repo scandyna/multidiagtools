@@ -29,5 +29,5 @@ AddressWidget::AddressWidget(QWidget* parent)
   addInsertActionToBottomArea();
   setInsertActionText(tr("Add address"));
   addRemoveActionToBottomBar();
-  setRemoveActionText(tr("Delete addresses"));
+  setRemoveActionText(tr("Remove addresse"));
 }

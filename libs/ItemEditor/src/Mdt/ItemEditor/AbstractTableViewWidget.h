@@ -34,6 +34,7 @@ class QHBoxLayout;
 namespace Mdt{ namespace ItemEditor{
 
   class AbstractController;
+  class AbstractActionContainer;
   class InsertAction;
   class RemoveAction;
 
@@ -83,6 +84,15 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Set remove action text
      */
     void setRemoveActionText(const QString & text);
+
+    /*! \brief Register actions
+     *
+     * Once registered, actions will be informed
+     *  each time row state or controller state changes.
+     *
+     * \pre actions must be a valid pointer
+     */
+    void registerActions(AbstractActionContainer *actions);
 
    protected:
 

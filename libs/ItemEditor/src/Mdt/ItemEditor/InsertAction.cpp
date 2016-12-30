@@ -25,17 +25,21 @@
 namespace Mdt{ namespace ItemEditor{
 
 InsertAction::InsertAction(QObject* parent)
- : QObject(parent)
+ : AbstractActionContainer(parent)
 {
-  pvAction = new QAction(QIcon::fromTheme("document-new"), tr("Insert"), this);
-  pvAction->setObjectName("Insert");
-  connect(pvAction, &QAction::triggered, this, &InsertAction::insertTriggered);
+  mAction = new QAction(QIcon::fromTheme("document-new"), tr("Insert"), this);
+  mAction->setObjectName("Insert");
+  connect(mAction, &QAction::triggered, this, &InsertAction::insertTriggered);
 }
 
-void InsertAction::setControllerState(ControllerState state)
+void InsertAction::updateEnableState()
 {
-  pvAction->setEnabled( ControllerStatePermission::canInsert(state) );
+  mAction->setEnabled( ControllerStatePermission::canInsert(controllerState()) );
 }
 
+void InsertAction::disableAllActions()
+{
+  mAction->setEnabled(false);
+}
 
 }} // namespace Mdt{ namespace ItemEditor{

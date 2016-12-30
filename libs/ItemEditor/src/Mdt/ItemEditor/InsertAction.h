@@ -21,7 +21,7 @@
 #ifndef MDT_ITEM_EDITOR_INSERT_ACTION_H
 #define MDT_ITEM_EDITOR_INSERT_ACTION_H
 
-#include "ControllerState.h"
+#include "AbstractActionContainer.h"
 #include <QAction>
 
 namespace Mdt{ namespace ItemEditor{
@@ -35,7 +35,7 @@ namespace Mdt{ namespace ItemEditor{
    * For a example on how InsertAction could be used,
    *  see StandardWindow.h and StandardWindow.cpp .
    */
-  class InsertAction : public QObject
+  class InsertAction : public AbstractActionContainer
   {
    Q_OBJECT
 
@@ -56,14 +56,8 @@ namespace Mdt{ namespace ItemEditor{
      */
     QAction *insertAction() const
     {
-      return pvAction;
+      return mAction;
     }
-
-   public slots:
-
-    /*! \brief Set controller state
-     */
-    void setControllerState(Mdt::ItemEditor::ControllerState state);
 
    signals:
 
@@ -73,7 +67,10 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    QAction *pvAction;
+    void updateEnableState() override;
+    void disableAllActions() override;
+
+    QAction *mAction;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

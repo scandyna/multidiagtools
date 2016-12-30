@@ -22,69 +22,58 @@
 #include "ControllerStatePermission.h"
 #include <QIcon>
 
-// #include <QDebug>
-
 namespace Mdt{ namespace ItemEditor{
 
 NavigationActions::NavigationActions(QObject* parent)
- : QObject(parent),
-   pvToFirst(new QAction(QIcon::fromTheme("go-first"), tr("To first"), this)),
-   pvToPrevious(new QAction(QIcon::fromTheme("go-previous"), tr("To previous"), this)),
-   pvToNext(new QAction(QIcon::fromTheme("go-next"), tr("To next"), this)),
-   pvToLast(new QAction(QIcon::fromTheme("go-last"), tr("To last"), this))
+ : AbstractActionContainer(parent),
+   mToFirst(new QAction(QIcon::fromTheme("go-first"), tr("To first"), this)),
+   mToPrevious(new QAction(QIcon::fromTheme("go-previous"), tr("To previous"), this)),
+   mToNext(new QAction(QIcon::fromTheme("go-next"), tr("To next"), this)),
+   mToLast(new QAction(QIcon::fromTheme("go-last"), tr("To last"), this))
 {
-  pvToFirst->setObjectName("ToFirst");
-  pvToPrevious->setObjectName("ToPrevious");
-  pvToNext->setObjectName("ToNext");
-  pvToLast->setObjectName("ToLast");
-  connect(pvToFirst, &QAction::triggered, this, &NavigationActions::toFirstTriggered);
-  connect(pvToPrevious, &QAction::triggered, this, &NavigationActions::toPreviousTriggered);
-  connect(pvToNext, &QAction::triggered, this, &NavigationActions::toNextTriggered);
-  connect(pvToLast, &QAction::triggered, this, &NavigationActions::toLastTriggered);
-  updateEnableStates();
+  mToFirst->setObjectName("ToFirst");
+  mToPrevious->setObjectName("ToPrevious");
+  mToNext->setObjectName("ToNext");
+  mToLast->setObjectName("ToLast");
+  connect(mToFirst, &QAction::triggered, this, &NavigationActions::toFirstTriggered);
+  connect(mToPrevious, &QAction::triggered, this, &NavigationActions::toPreviousTriggered);
+  connect(mToNext, &QAction::triggered, this, &NavigationActions::toNextTriggered);
+  connect(mToLast, &QAction::triggered, this, &NavigationActions::toLastTriggered);
+  mToFirst->setEnabled(false);
+  mToPrevious->setEnabled(false);
+  mToNext->setEnabled(false);
+  mToLast->setEnabled(false);
 }
 
-void NavigationActions::setRowState(RowState rs)
+void NavigationActions::updateEnableState()
 {
-  pvRowState = rs;
-  updateEnableStates();
-}
+  int n = rowCount();
+  int row = currentRow();
 
-void NavigationActions::setControllerState(ControllerState state)
-{
-  pvControllerState = state;
-  updateEnableStates();
-}
-
-void NavigationActions::updateEnableStates()
-{
-  int n = pvRowState.rowCount();
-  int row = pvRowState.currentRow();
-
-  if(!ControllerStatePermission::canChangeCurrentRow(pvControllerState)){
+  if(!ControllerStatePermission::canChangeCurrentRow(controllerState())){
     disableAllActions();
     return;
   }
-  if(pvRowState.isValid()){
-    pvToFirst->setEnabled( row > 0 );
-    pvToPrevious->setEnabled( row > 0 );
-    pvToNext->setEnabled( row < (n-1) );
-    pvToLast->setEnabled( row < (n-1) );
+  if(rowStateIsValid()){
+    mToFirst->setEnabled( row > 0 );
+    mToPrevious->setEnabled( row > 0 );
+    mToNext->setEnabled( row < (n-1) );
+    mToLast->setEnabled( row < (n-1) );
   }else if(row < n){
     Q_ASSERT(row == -1);
-    pvToFirst->setEnabled(true);
-    pvToPrevious->setEnabled(false);
-    pvToNext->setEnabled(true);
-    pvToLast->setEnabled(true);
+    mToFirst->setEnabled(true);
+    mToPrevious->setEnabled(false);
+    mToNext->setEnabled(true);
+    mToLast->setEnabled(true);
   }
 }
 
 void NavigationActions::disableAllActions()
 {
-  pvToFirst->setEnabled(false);
-  pvToPrevious->setEnabled(false);
-  pvToNext->setEnabled(false);
-  pvToLast->setEnabled(false);
+  mToFirst->setEnabled(false);
+  mToPrevious->setEnabled(false);
+  mToNext->setEnabled(false);
+  mToLast->setEnabled(false);
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

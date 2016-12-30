@@ -2,40 +2,53 @@ format 211
 
 classcanvas 128002 class_ref 3062018 // RemoveAction
   classdiagramsettings member_max_width 0 end
-  xyz 413 165.5 2000
+  xyz 106.5 455.25 2000
 end
 classcanvas 128130 class_ref 2684930 // ControllerState
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 519 384 2000
+  xyz 392.25 503.25 2000
 end
 classcanvas 128386 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 541 41.75 2000
+  xyz 528 40.75 2000
 end
 classcanvas 128642 class_ref 693250 // QAction
   classdiagramsettings member_max_width 0 end
-  xyz 39 197.5 2006
+  xyz 390 613.75 2006
+end
+classcanvas 129666 class_ref 3668354 // AbstractActionContainer
+  classdiagramsettings member_max_width 0 end
+  xyz 41.75 164.25 2006
 end
 relationcanvas 128258 relation_ref 3427714 // <dependency>
+  decenter_begin 478
+  decenter_end 449
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 128514 relation_ref 3427842 // <generalisation>
-  from ref 128002 z 2001 to ref 128386
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 relationcanvas 128770 relation_ref 853890 // <generalisation>
-  geometry VHV unfixed
-  from ref 128642 z 2007 to point 207 125
-  line 129410 z 2007 to point 571 125
-  line 129538 z 2007 to ref 128386
+  from ref 128642 z 2007 to ref 128386
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128898 relation_ref 3427970 // <directional composition>
-  from ref 128002 z 2007 to ref 128642
+  geometry VH unfixed
+  from ref 128002 z 2007 to point 226 671
+  line 130050 z 2007 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 4047362 // <generalisation>
+  geometry VHV unfixed
+  from ref 129666 z 2007 to point 229 125
+  line 130178 z 2007 to point 558 125
+  line 130306 z 2007 to ref 128386
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 4054146 // <generalisation>
+  from ref 128002 z 2007 to ref 129666
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

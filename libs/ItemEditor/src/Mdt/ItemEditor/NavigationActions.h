@@ -21,8 +21,7 @@
 #ifndef MDT_ITEM_EDITOR_NAVIGATION_ACTIONS_H
 #define MDT_ITEM_EDITOR_NAVIGATION_ACTIONS_H
 
-#include "RowState.h"
-#include "ControllerState.h"
+#include "AbstractActionContainer.h"
 #include <QAction>
 
 namespace Mdt{ namespace ItemEditor{
@@ -36,7 +35,7 @@ namespace Mdt{ namespace ItemEditor{
    * For a example on how NavigationActions could be used,
    *  see StandardWindow.h and StandardWindow.cpp .
    */
-  class NavigationActions : public QObject
+  class NavigationActions : public AbstractActionContainer
   {
    Q_OBJECT
 
@@ -57,39 +56,29 @@ namespace Mdt{ namespace ItemEditor{
      */
     QAction *toFirst()
     {
-      return pvToFirst;
+      return mToFirst;
     }
 
     /*! \brief Get toPrevious action
      */
     QAction *toPrevious()
     {
-      return pvToPrevious;
+      return mToPrevious;
     }
 
     /*! \brief Get toNext action
      */
     QAction *toNext()
     {
-      return pvToNext;
+      return mToNext;
     }
 
     /*! \brief Get toLast action
      */
     QAction *toLast()
     {
-      return pvToLast;
+      return mToLast;
     }
-
-   public slots:
-
-    /*! \brief Set row state
-     */
-    void setRowState(Mdt::ItemEditor::RowState rs);
-
-    /*! \brief Set controller state
-     */
-    void setControllerState(Mdt::ItemEditor::ControllerState state);
 
    signals:
 
@@ -113,18 +102,16 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Update actions enable states
      */
-    void updateEnableStates();
+    void updateEnableState() override;
 
     /*! \brief Disable all actions
      */
-    void disableAllActions();
+    void disableAllActions() override;
 
-    RowState pvRowState;
-    ControllerState pvControllerState = ControllerState::Visualizing;
-    QAction *pvToFirst;
-    QAction *pvToPrevious;
-    QAction *pvToNext;
-    QAction *pvToLast;
+    QAction *mToFirst;
+    QAction *mToPrevious;
+    QAction *mToNext;
+    QAction *mToLast;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -77,9 +77,15 @@ void ActionsTest::abstractActionContainerTest()
   /*
    * Check setters and getters
    */
+  // Check row state vilidity
   rs.setRowCount(20);
+  rs.setCurrentRow(20);
+  act.setRowState(rs);
+  QVERIFY(!act.rowStateIsValid());
   rs.setCurrentRow(10);
   act.setRowState(rs);
+  QVERIFY(act.rowStateIsValid());
+  // Check other states
   act.setControllerState(ControllerState::Editing);
   QCOMPARE(act.rowCount(), 20);
   QCOMPARE(act.currentRow(), 10);

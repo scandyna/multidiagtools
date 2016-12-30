@@ -72,6 +72,13 @@ namespace Mdt{ namespace ItemEditor{
       return mRowState.isNull();
     }
 
+    /*! \brief Check if row state is valid
+     */
+    bool rowStateIsValid() const
+    {
+      return mRowState.isValid();
+    }
+
     /*! \brief Get controller state
      */
     ControllerState controllerState() const

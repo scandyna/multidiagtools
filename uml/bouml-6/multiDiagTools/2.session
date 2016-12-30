@@ -1,32 +1,22 @@
-window_sizes 1280 963 301 973 908 0
+window_sizes 1280 963 387 887 908 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 3188738 // ClientEditorExampleOverview
-    855 908 100 4 0 0
-  active  classdiagram_ref 3182082 // TableViewWidget
-    973 908 100 21 0 457
-  classdiagram_ref 2420866 // EditionActions
-    120 110 100 18 0 0
-  classdiagram_ref 3201794 // ActionOverview
-    120 110 100 4 0 0
-  classdiagram_ref 3201922 // ActionList
-    120 110 100 4 0 0
-  classdiagram_ref 2413698 // NavigationActions
-    120 110 100 18 0 0
-  classdiagram_ref 3202178 // TableViewWidgetActions
-    120 110 100 4 0 0
+  classdiagram_ref 3182082 // TableViewWidget
+    709 726 100 21 0 440
+  active  classdiagram_ref 3201794 // ActionOverview
+    887 908 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 5112194 // unregisterActions
+selected class_ref 3668354 // AbstractActionContainer
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   classview_ref 1472258 // Editor
+  classview_ref 1676418 // Relation
   classview_ref 1286786 // Actions
-  class_ref 3118082 // AbstractTableViewWidget
-  operation_ref 5112066 // registerActions
-  operation_ref 5112194 // unregisterActions
+  classview_ref 1465474 // EditorWidget
+  classview_ref 1286658 // Window
   classview_ref 1696386 // ClientEditor
   class_ref 3640962 // ClientWidget
   class_ref 3641090 // AddressWidget

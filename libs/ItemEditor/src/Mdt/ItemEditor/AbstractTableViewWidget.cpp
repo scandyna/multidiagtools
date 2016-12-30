@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "AbstractTableViewWidget.h"
 #include "AbstractController.h"
+#include "AbstractActionContainer.h"
 #include "TableViewController.h"
 #include "InsertAction.h"
 #include "RemoveAction.h"
@@ -103,6 +104,17 @@ void AbstractTableViewWidget::setRemoveActionText(const QString& text)
   mRemoveAction->removeAction()->setText(text);
 }
 
+void AbstractTableViewWidget::registerActions(AbstractActionContainer* actions)
+{
+  Q_ASSERT(actions != nullptr);
+
+  auto *controller = refController();
+  Q_ASSERT(controller != nullptr);
+
+  connect(controller, &AbstractController::rowStateChanged, actions, &AbstractActionContainer::setRowState);
+  connect(controller, &AbstractController::controllerStateChanged, actions, &AbstractActionContainer::setControllerState);
+}
+
 void AbstractTableViewWidget::createTopBarLayoutIfNot()
 {
   if(mTopBarLayout == nullptr){
@@ -147,6 +159,7 @@ void AbstractTableViewWidget::createInsertActionIfNot()
     connect(mInsertAction, &InsertAction::insertTriggered, refController(), &AbstractController::insert);
   }
   Q_ASSERT(mInsertAction != nullptr);
+  registerActions(mInsertAction);
 }
 
 void AbstractTableViewWidget::createRemoveActionIfNot()
@@ -157,6 +170,7 @@ void AbstractTableViewWidget::createRemoveActionIfNot()
     connect(mRemoveAction, &RemoveAction::removeTriggered, refController(), &AbstractController::remove);
   }
   Q_ASSERT(mRemoveAction != nullptr);
+  registerActions(mRemoveAction);
 }
 
 

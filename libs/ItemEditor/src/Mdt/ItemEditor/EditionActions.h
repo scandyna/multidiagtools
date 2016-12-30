@@ -21,8 +21,7 @@
 #ifndef MDT_ITEM_EDITOR_EDITION_ACTIONS_H
 #define MDT_ITEM_EDITOR_EDITION_ACTIONS_H
 
-#include "RowState.h"
-#include "ControllerState.h"
+#include "AbstractActionContainer.h"
 #include <QAction>
 
 namespace Mdt{ namespace ItemEditor{
@@ -36,7 +35,7 @@ namespace Mdt{ namespace ItemEditor{
    * For a example on how EditionActions could be used,
    *  see StandardWindow.h and StandardWindow.cpp .
    */
-  class EditionActions : public QObject
+  class EditionActions : public AbstractActionContainer
   {
    Q_OBJECT
 
@@ -57,25 +56,15 @@ namespace Mdt{ namespace ItemEditor{
      */
     QAction *submitAction() const
     {
-      return pvSubmitAction;
+      return mSubmitAction;
     }
 
     /*! \brief Get revert action
      */
     QAction *revertAction() const
     {
-      return pvRevertAction;
+      return mRevertAction;
     }
-
-   public slots:
-
-    /*! \brief Set row state
-     */
-    void setRowState(Mdt::ItemEditor::RowState rs);
-
-    /*! \brief Set controller state
-     */
-    void setControllerState(Mdt::ItemEditor::ControllerState state);
 
    signals:
 
@@ -91,17 +80,16 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Update actions enable states
      */
-    void updateEnableStates();
+    void updateEnableState() override;
 
     /*! \brief Disable all actions
      */
-    void disableAllActions();
+    void disableAllActions() override;
 
-    RowState pvRowState;
-    ControllerState pvControllerState = ControllerState::Visualizing;
-    QAction *pvSubmitAction;
-    QAction *pvRevertAction;
+    QAction *mSubmitAction;
+    QAction *mRevertAction;
   };
+
 }} // namespace Mdt{ namespace ItemEditor{
 
 #endif // #ifndef MDT_ITEM_EDITOR_EDITION_ACTIONS_H
