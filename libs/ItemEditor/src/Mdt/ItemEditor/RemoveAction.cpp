@@ -24,39 +24,26 @@
 namespace Mdt{ namespace ItemEditor{
 
 RemoveAction::RemoveAction(QObject* parent)
- : QObject(parent)
+ : AbstractActionContainer(parent)
 {
-  pvRemoveAction = new QAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this);
-  pvRemoveAction->setObjectName("RemoveAction");
-  connect(pvRemoveAction, &QAction::triggered, this, &RemoveAction::removeTriggered);
-  updateEnableStates();
+  mRemoveAction = new QAction(QIcon::fromTheme("edit-delete"), tr("Remove"), this);
+  mRemoveAction->setObjectName("RemoveAction");
+  connect(mRemoveAction, &QAction::triggered, this, &RemoveAction::removeTriggered);
+  mRemoveAction->setEnabled(false);
 }
 
-void RemoveAction::setRowState(RowState rs)
+void RemoveAction::updateEnableState()
 {
-  pvRowState = rs;
-  updateEnableStates();
-}
-
-void RemoveAction::setControllerState(ControllerState state)
-{
-  pvControllerState = state;
-  updateEnableStates();
-}
-
-void RemoveAction::updateEnableStates()
-{
-  if(pvRowState.isNull()){
+  if(rowStateIsNull()){
     disableAllActions();
     return;
   }
-  pvRemoveAction->setEnabled( ControllerStatePermission::canRemove(pvControllerState) );
+  mRemoveAction->setEnabled( ControllerStatePermission::canRemove(controllerState()) );
 }
 
 void RemoveAction::disableAllActions()
 {
-  pvRemoveAction->setEnabled(false);
+  mRemoveAction->setEnabled(false);
 }
-
 
 }} // namespace Mdt{ namespace ItemEditor{

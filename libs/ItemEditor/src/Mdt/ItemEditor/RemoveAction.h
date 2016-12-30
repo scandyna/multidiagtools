@@ -21,8 +21,7 @@
 #ifndef MDT_ITEM_EDITOR_REMOVE_ACTION_H
 #define MDT_ITEM_EDITOR_REMOVE_ACTION_H
 
-#include "RowState.h"
-#include "ControllerState.h"
+#include "AbstractActionContainer.h"
 #include <QAction>
 
 namespace Mdt{ namespace ItemEditor{
@@ -36,7 +35,7 @@ namespace Mdt{ namespace ItemEditor{
    * For a example on how RemoveAction could be used,
    *  see StandardWindow.h and StandardWindow.cpp .
    */
-  class RemoveAction : public QObject
+  class RemoveAction : public AbstractActionContainer
   {
    Q_OBJECT
 
@@ -57,18 +56,8 @@ namespace Mdt{ namespace ItemEditor{
      */
     QAction *removeAction() const
     {
-      return pvRemoveAction;
+      return mRemoveAction;
     }
-
-   public slots:
-
-    /*! \brief Set row state
-     */
-    void setRowState(Mdt::ItemEditor::RowState rs);
-
-    /*! \brief Set controller state
-     */
-    void setControllerState(Mdt::ItemEditor::ControllerState state);
 
    signals:
 
@@ -80,15 +69,13 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Update actions enable states
      */
-    void updateEnableStates();
+    void updateEnableState() override;
 
     /*! \brief Disable all actions
      */
-    void disableAllActions();
+    void disableAllActions() override;
 
-    RowState pvRowState;
-    ControllerState pvControllerState = ControllerState::Visualizing;
-    QAction *pvRemoveAction;
+    QAction *mRemoveAction;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

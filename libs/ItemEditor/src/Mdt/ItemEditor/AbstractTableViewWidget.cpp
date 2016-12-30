@@ -22,10 +22,12 @@
 #include "AbstractController.h"
 #include "TableViewController.h"
 #include "InsertAction.h"
+#include "RemoveAction.h"
 #include <QTableView>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QToolBar>
+#include <QAction>
 
 // #include <QDebug>
 
@@ -39,7 +41,9 @@ AbstractTableViewWidget::AbstractTableViewWidget(QWidget* parent)
   Q_ASSERT(mTopBarLayout == nullptr);
   Q_ASSERT(mBottomBarLayout == nullptr);
   Q_ASSERT(mTopEditBar == nullptr);
+  Q_ASSERT(mBottomEditBar == nullptr);
   Q_ASSERT(mInsertAction == nullptr);
+  Q_ASSERT(mRemoveAction == nullptr);
 
   // Layout widgets
   mMainLayout->addWidget(mView);
@@ -56,17 +60,47 @@ QToolBar* AbstractTableViewWidget::addToolBarToTopArea()
   return bar;
 }
 
-void AbstractTableViewWidget::addInsertActionToTopArea(const QString & toolTip)
+QToolBar* AbstractTableViewWidget::addToolBarToBottomArea()
 {
-  if(mInsertAction == nullptr){
-    createTopEditBarIfNot();
-    mInsertAction = new InsertAction(this);
-    mTopEditBar->addAction(mInsertAction->insertAction());
-    Q_ASSERT(refController() != nullptr);
-    connect(mInsertAction, &InsertAction::insertTriggered, refController(), &AbstractController::insert);
-  }
-  Q_ASSERT(mInsertAction != nullptr);
-  mInsertAction->insertAction()->setToolTip(toolTip);
+  auto *bar = new QToolBar;
+
+  createBottomBarLayoutIfNot();
+  mBottomBarLayout->addWidget(bar);
+
+  return bar;
+}
+
+void AbstractTableViewWidget::addInsertActionToTopArea()
+{
+  createInsertActionIfNot();
+  createTopEditBarIfNot();
+  mTopEditBar->addAction(mInsertAction->insertAction());
+}
+
+void AbstractTableViewWidget::addInsertActionToBottomArea()
+{
+  createInsertActionIfNot();
+  createBottomEditBarIfNot();
+  mBottomEditBar->addAction(mInsertAction->insertAction());
+}
+
+void AbstractTableViewWidget::setInsertActionText(const QString& text)
+{
+  createInsertActionIfNot();
+  mInsertAction->insertAction()->setText(text);
+}
+
+void AbstractTableViewWidget::addRemoveActionToBottomBar()
+{
+  createRemoveActionIfNot();
+  createBottomEditBarIfNot();
+  mBottomEditBar->addAction(mRemoveAction->removeAction());
+}
+
+void AbstractTableViewWidget::setRemoveActionText(const QString& text)
+{
+  createRemoveActionIfNot();
+  mRemoveAction->removeAction()->setText(text);
 }
 
 void AbstractTableViewWidget::createTopBarLayoutIfNot()
@@ -78,12 +112,52 @@ void AbstractTableViewWidget::createTopBarLayoutIfNot()
   Q_ASSERT(mTopBarLayout != nullptr);
 }
 
+void AbstractTableViewWidget::createBottomBarLayoutIfNot()
+{
+  if(mBottomBarLayout == nullptr){
+    mBottomBarLayout = new QHBoxLayout;
+    mMainLayout->addLayout(mBottomBarLayout);
+  }
+  Q_ASSERT(mBottomBarLayout != nullptr);
+}
+
 void AbstractTableViewWidget::createTopEditBarIfNot()
 {
   if(mTopEditBar == nullptr){
     mTopEditBar = addToolBarToTopArea();
   }
   Q_ASSERT(mTopEditBar != nullptr);
+  mTopEditBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 }
+
+void AbstractTableViewWidget::createBottomEditBarIfNot()
+{
+  if(mBottomEditBar == nullptr){
+    mBottomEditBar = addToolBarToBottomArea();
+  }
+  Q_ASSERT(mBottomEditBar != nullptr);
+  mBottomEditBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+}
+
+void AbstractTableViewWidget::createInsertActionIfNot()
+{
+  if(mInsertAction == nullptr){
+    mInsertAction = new InsertAction(this);
+    Q_ASSERT(refController() != nullptr);
+    connect(mInsertAction, &InsertAction::insertTriggered, refController(), &AbstractController::insert);
+  }
+  Q_ASSERT(mInsertAction != nullptr);
+}
+
+void AbstractTableViewWidget::createRemoveActionIfNot()
+{
+  if(mRemoveAction == nullptr){
+    mRemoveAction = new RemoveAction(this);
+    Q_ASSERT(refController() != nullptr);
+    connect(mRemoveAction, &RemoveAction::removeTriggered, refController(), &AbstractController::remove);
+  }
+  Q_ASSERT(mRemoveAction != nullptr);
+}
+
 
 }} // namespace Mdt{ namespace ItemEditor{

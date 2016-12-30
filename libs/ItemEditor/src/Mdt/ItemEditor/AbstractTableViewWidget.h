@@ -35,6 +35,7 @@ namespace Mdt{ namespace ItemEditor{
 
   class AbstractController;
   class InsertAction;
+  class RemoveAction;
 
   /*! \brief Common base for QTableView based editor
    */
@@ -59,9 +60,29 @@ namespace Mdt{ namespace ItemEditor{
      */
     QToolBar *addToolBarToTopArea();
 
+    /*! \brief Add a tool bar to the bottom area
+     */
+    QToolBar *addToolBarToBottomArea();
+
     /*! \brief Add insert action to top area
      */
-    void addInsertActionToTopArea(const QString & toolTip = QString());
+    void addInsertActionToTopArea();
+
+    /*! \brief Add insert action to bottom area
+     */
+    void addInsertActionToBottomArea();
+
+    /*! \brief Set insert action text
+     */
+    void setInsertActionText(const QString & text);
+
+    /*! \brief Add remove action to bottom area
+     */
+    void addRemoveActionToBottomBar();
+
+    /*! \brief Set remove action text
+     */
+    void setRemoveActionText(const QString & text);
 
    protected:
 
@@ -72,14 +93,20 @@ namespace Mdt{ namespace ItemEditor{
    private:
 
     void createTopBarLayoutIfNot();
+    void createBottomBarLayoutIfNot();
     void createTopEditBarIfNot();
+    void createBottomEditBarIfNot();
+    void createInsertActionIfNot();
+    void createRemoveActionIfNot();
 
     QTableView *mView;
     QVBoxLayout *mMainLayout;
     QHBoxLayout *mTopBarLayout = nullptr;
     QHBoxLayout *mBottomBarLayout = nullptr;
     QToolBar *mTopEditBar = nullptr;
+    QToolBar *mBottomEditBar = nullptr;
     InsertAction *mInsertAction = nullptr;
+    RemoveAction *mRemoveAction = nullptr;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

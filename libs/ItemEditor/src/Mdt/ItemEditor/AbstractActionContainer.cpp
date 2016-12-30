@@ -18,16 +18,41 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AddressWidget.h"
-#include "AddressModel.h"
+#include "AbstractActionContainer.h"
 
-AddressWidget::AddressWidget(QWidget* parent)
- : TableViewWidget(parent)
+namespace Mdt{ namespace ItemEditor{
+
+AbstractActionContainer::AbstractActionContainer(QObject* parent)
+ : QObject(parent)
 {
-  auto *model = new AddressModel(this);
-  setModel(model);
-  addInsertActionToBottomArea();
-  setInsertActionText(tr("Add address"));
-  addRemoveActionToBottomBar();
-  setRemoveActionText(tr("Delete addresses"));
 }
+
+void AbstractActionContainer::setRowState(RowState rs)
+{
+  const bool changed = (rs != mRowState);
+  mRowState = rs;
+  if( changed && !mActionsDisabled ){
+    updateEnableState();
+  }
+}
+
+void AbstractActionContainer::setControllerState(ControllerState state)
+{
+  const bool changed = (state != mControllerState);
+  mControllerState = state;
+  if( changed && !mActionsDisabled ){
+    updateEnableState();
+  }
+}
+
+void AbstractActionContainer::setActionsDisabled(bool disable)
+{
+  mActionsDisabled = disable;
+  if(disable){
+    disableAllActions();
+  }else{
+    updateEnableState();
+  }
+}
+
+}} // namespace Mdt{ namespace ItemEditor{
