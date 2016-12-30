@@ -14,6 +14,7 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/InsertAction.cpp
     src/Mdt/ItemEditor/RemoveAction.cpp
     src/Mdt/ItemEditor/EditionActions.cpp
+    src/Mdt/ItemEditor/ResizeToContentsAction.cpp
     src/Mdt/ItemEditor/ControllerStatePermission.cpp
     src/Mdt/ItemEditor/AbstractController.cpp
     src/Mdt/ItemEditor/AbstractItemModelController.cpp

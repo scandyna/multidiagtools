@@ -18,17 +18,32 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "AddressWidget.h"
-#include "AddressModel.h"
+#include "ResizeToContentsAction.h"
+#include "ControllerState.h"
 
-AddressWidget::AddressWidget(QWidget* parent)
- : TableViewWidget(parent)
+namespace Mdt{ namespace ItemEditor{
+
+ResizeToContentsAction::ResizeToContentsAction(QObject* parent)
+ : AbstractActionContainer(parent)
 {
-  auto *model = new AddressModel(this);
-  setModel(model);
-  addResizeToContentsActionToTopBar();
-  addInsertActionToBottomArea();
-  setInsertActionText(tr("Add address"));
-  addRemoveActionToBottomBar();
-  setRemoveActionText(tr("Remove addresse"));
+  mResizeToContentsAction = new QAction(QIcon::fromTheme("zoom-fit-best"), tr("Resize to contents"), this);
+  mResizeToContentsAction->setObjectName("ResizeToContentsAction");
+  connect(mResizeToContentsAction, &QAction::triggered, this, &ResizeToContentsAction::resizeToContentsTriggered);
+  mResizeToContentsAction->setEnabled(false);
 }
+
+void ResizeToContentsAction::updateEnableState()
+{
+  if(rowStateIsNull()){
+    disableAllActions();
+    return;
+  }
+  mResizeToContentsAction->setEnabled( controllerState() == ControllerState::Visualizing );
+}
+
+void ResizeToContentsAction::disableAllActions()
+{
+  mResizeToContentsAction->setEnabled(false);
+}
+
+}} // namespace Mdt{ namespace ItemEditor{

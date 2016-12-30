@@ -37,6 +37,7 @@ namespace Mdt{ namespace ItemEditor{
   class AbstractActionContainer;
   class InsertAction;
   class RemoveAction;
+  class ResizeToContentsAction;
 
   /*! \brief Common base for QTableView based editor
    */
@@ -85,6 +86,10 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setRemoveActionText(const QString & text);
 
+    /*! \brief Add resize to contents action to top area
+     */
+    void addResizeToContentsActionToTopBar();
+
     /*! \brief Register actions
      *
      * Once registered, actions will be informed
@@ -93,6 +98,12 @@ namespace Mdt{ namespace ItemEditor{
      * \pre actions must be a valid pointer
      */
     void registerActions(AbstractActionContainer *actions);
+
+   public slots:
+
+    /*! \brief Resize the view to its contents
+     */
+    void resizeViewToContents();
 
    protected:
 
@@ -104,19 +115,23 @@ namespace Mdt{ namespace ItemEditor{
 
     void createTopBarLayoutIfNot();
     void createBottomBarLayoutIfNot();
+    void createTopToolsBarIfNot();
     void createTopEditBarIfNot();
     void createBottomEditBarIfNot();
     void createInsertActionIfNot();
     void createRemoveActionIfNot();
+    void createResizeToContentsActionIfNot();
 
     QTableView *mView;
     QVBoxLayout *mMainLayout;
     QHBoxLayout *mTopBarLayout = nullptr;
     QHBoxLayout *mBottomBarLayout = nullptr;
+    QToolBar *mTopToolsBar = nullptr;
     QToolBar *mTopEditBar = nullptr;
     QToolBar *mBottomEditBar = nullptr;
     InsertAction *mInsertAction = nullptr;
     RemoveAction *mRemoveAction = nullptr;
+    ResizeToContentsAction *mResizeToContentsAction = nullptr;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

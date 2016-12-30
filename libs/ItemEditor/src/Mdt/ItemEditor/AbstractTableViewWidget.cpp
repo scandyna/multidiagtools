@@ -24,6 +24,7 @@
 #include "TableViewController.h"
 #include "InsertAction.h"
 #include "RemoveAction.h"
+#include "ResizeToContentsAction.h"
 #include <QTableView>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -41,10 +42,12 @@ AbstractTableViewWidget::AbstractTableViewWidget(QWidget* parent)
 {
   Q_ASSERT(mTopBarLayout == nullptr);
   Q_ASSERT(mBottomBarLayout == nullptr);
+  Q_ASSERT(mTopToolsBar == nullptr);
   Q_ASSERT(mTopEditBar == nullptr);
   Q_ASSERT(mBottomEditBar == nullptr);
   Q_ASSERT(mInsertAction == nullptr);
   Q_ASSERT(mRemoveAction == nullptr);
+  Q_ASSERT(mResizeToContentsAction == nullptr);
 
   // Layout widgets
   mMainLayout->addWidget(mView);
@@ -104,6 +107,13 @@ void AbstractTableViewWidget::setRemoveActionText(const QString& text)
   mRemoveAction->removeAction()->setText(text);
 }
 
+void AbstractTableViewWidget::addResizeToContentsActionToTopBar()
+{
+  createResizeToContentsActionIfNot();
+  createTopToolsBarIfNot();
+  mTopToolsBar->addAction(mResizeToContentsAction->resizeToContentsAction());
+}
+
 void AbstractTableViewWidget::registerActions(AbstractActionContainer* actions)
 {
   Q_ASSERT(actions != nullptr);
@@ -113,6 +123,13 @@ void AbstractTableViewWidget::registerActions(AbstractActionContainer* actions)
 
   connect(controller, &AbstractController::rowStateChanged, actions, &AbstractActionContainer::setRowState);
   connect(controller, &AbstractController::controllerStateChanged, actions, &AbstractActionContainer::setControllerState);
+}
+
+void AbstractTableViewWidget::resizeViewToContents()
+{
+  Q_ASSERT(mView != nullptr);
+  mView->resizeColumnsToContents();
+  mView->resizeRowsToContents();
 }
 
 void AbstractTableViewWidget::createTopBarLayoutIfNot()
@@ -131,6 +148,15 @@ void AbstractTableViewWidget::createBottomBarLayoutIfNot()
     mMainLayout->addLayout(mBottomBarLayout);
   }
   Q_ASSERT(mBottomBarLayout != nullptr);
+}
+
+void AbstractTableViewWidget::createTopToolsBarIfNot()
+{
+  if(mTopToolsBar == nullptr){
+    mTopToolsBar = addToolBarToTopArea();
+  }
+  Q_ASSERT(mTopToolsBar != nullptr);
+  mTopToolsBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 }
 
 void AbstractTableViewWidget::createTopEditBarIfNot()
@@ -171,6 +197,16 @@ void AbstractTableViewWidget::createRemoveActionIfNot()
   }
   Q_ASSERT(mRemoveAction != nullptr);
   registerActions(mRemoveAction);
+}
+
+void AbstractTableViewWidget::createResizeToContentsActionIfNot()
+{
+  if(mResizeToContentsAction == nullptr){
+    mResizeToContentsAction = new ResizeToContentsAction(this);
+    connect(mResizeToContentsAction, &ResizeToContentsAction::resizeToContentsTriggered, this, &AbstractTableViewWidget::resizeViewToContents);
+  }
+  Q_ASSERT(mResizeToContentsAction != nullptr);
+  registerActions(mResizeToContentsAction);
 }
 
 

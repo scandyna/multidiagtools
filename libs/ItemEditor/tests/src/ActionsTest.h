@@ -82,6 +82,7 @@ class ActionsTest : public QObject
   void editionActionsTest();
   void insertActionTest();
   void removeActionTest();
+  void resizeToContentsTest();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_ACTIONS_TEST_H

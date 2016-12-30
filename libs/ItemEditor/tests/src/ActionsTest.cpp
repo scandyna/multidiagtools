@@ -26,6 +26,7 @@
 #include "Mdt/ItemEditor/EditionActions.h"
 #include "Mdt/ItemEditor/InsertAction.h"
 #include "Mdt/ItemEditor/RemoveAction.h"
+#include "Mdt/ItemEditor/ResizeToContentsAction.h"
 #include "Mdt/ItemEditor/ControllerState.h"
 #include <QSignalSpy>
 #include <QItemSelectionModel>
@@ -485,6 +486,66 @@ void ActionsTest::removeActionTest()
    */
   delete action;
   QVERIFY(removeAction.isNull());
+}
+
+void ActionsTest::resizeToContentsTest()
+{
+  using ItemEditor::ResizeToContentsAction;
+
+  RowState rs;
+  auto *action = new ResizeToContentsAction(nullptr);
+  QPointer<QAction> resizeToContentsAction = action->resizeToContentsAction();
+  /*
+   * Initial state
+   */
+  QVERIFY(resizeToContentsAction != nullptr);
+  QVERIFY(!resizeToContentsAction->isEnabled());
+  /*
+   * Check controller state
+   */
+  // Set a valid row state
+  rs.setRowCount(2);
+  rs.setCurrentRow(0);
+  action->setRowState(rs);
+  // Visualizing state
+  action->setControllerState(ControllerState::Visualizing);
+  QVERIFY(resizeToContentsAction->isEnabled());
+  // Editing state
+  action->setControllerState(ControllerState::Editing);
+  QVERIFY(!resizeToContentsAction->isEnabled());
+  /*
+   * Check setting row sate in Editing state
+   */
+  action->setControllerState(ControllerState::Editing);
+  // Set valid row state
+  rs.setRowCount(2);
+  rs.setCurrentRow(0);
+  action->setRowState(rs);
+  QVERIFY(!resizeToContentsAction->isEnabled());
+  // Null row state
+  rs.setRowCount(0);
+  rs.setCurrentRow(-1);
+  action->setRowState(rs);
+  QVERIFY(!resizeToContentsAction->isEnabled());
+  /*
+   * Check setting row sate in Visualizing state
+   */
+  action->setControllerState(ControllerState::Visualizing);
+  // Set valid row state
+  rs.setRowCount(2);
+  rs.setCurrentRow(0);
+  action->setRowState(rs);
+  QVERIFY(resizeToContentsAction->isEnabled());
+  // Null row state
+  rs.setRowCount(0);
+  rs.setCurrentRow(-1);
+  action->setRowState(rs);
+  QVERIFY(!resizeToContentsAction->isEnabled());
+  /*
+   * Clear
+   */
+  delete action;
+  QVERIFY(resizeToContentsAction.isNull());
 }
 
 /*

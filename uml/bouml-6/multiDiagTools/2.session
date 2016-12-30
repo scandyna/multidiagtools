@@ -1,22 +1,17 @@
 window_sizes 1280 963 387 887 908 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 3182082 // TableViewWidget
-    709 726 100 21 0 440
-  active  classdiagram_ref 3201794 // ActionOverview
-    887 908 100 4 0 0
+  active  classdiagram_ref 3148674 // Overview
+    887 908 80 8 0 0
 end
 show_stereotypes
-selected class_ref 3668354 // AbstractActionContainer
+selected classdiagram_ref 3148674 // Overview
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   classview_ref 1472258 // Editor
   classview_ref 1676418 // Relation
-  classview_ref 1286786 // Actions
-  classview_ref 1465474 // EditorWidget
-  classview_ref 1286658 // Window
   classview_ref 1696386 // ClientEditor
   class_ref 3640962 // ClientWidget
   class_ref 3641090 // AddressWidget

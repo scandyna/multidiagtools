@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 120
+  revision 121
   modified_by 2 "philippe"
   // class settings
   
@@ -4935,7 +4935,7 @@ ${inlines}
       size A4
     end
 
-    class 3668610 "TableViewWidgetActions"
+    class 3675138 "ResizeToContentsAction"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -4949,15 +4949,73 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 4073602 // <generalisation>
-	relation 4047618 ---|>
+      attribute 3251458 "ResizeToContentsAction"
+	private type class_ref 693250 // QAction
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 4087042 // <generalisation>
+	relation 4061058 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 4073602 // <generalisation>
+	    classrelation_ref 4087042 // <generalisation>
 	  b parent class_ref 3668354 // AbstractActionContainer
       end
 
-      attribute 3251458 "ResizeToContentsAction"
+      operation 5104770 "resizeToContentsAction"
+	public return_type class_ref 693250 // QAction
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5105154 "resizeToContentsTriggered"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 3675266 "ExportActions"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      attribute 3251714 "ExportToCsvFileAction"
 	private type class_ref 693250 // QAction
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
@@ -4981,47 +5039,12 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 3251714 "ExportToCsvFileAction"
-	private type class_ref 693250 // QAction
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 5104642 "TableViewWidgetActions"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "parent" type class_ref 138626 // QObject
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 5104770 "resizeToContentsAction"
-	public return_type class_ref 693250 // QAction
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
+      classrelation 4087170 // <generalisation>
+	relation 4061186 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4087170 // <generalisation>
+	  b parent class_ref 3668354 // AbstractActionContainer
       end
 
       operation 5104898 "exportToClipBoardAction"
@@ -5041,22 +5064,6 @@ ${inlines}
 
       operation 5105026 "exportToCsvFileAction"
 	public return_type class_ref 693250 // QAction
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 5105154 "resizeToContentsTriggered"
-	stereotype "signal"
-	public explicit_return_type "void"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
