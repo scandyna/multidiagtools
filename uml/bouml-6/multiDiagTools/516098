@@ -1,6 +1,6 @@
 format 211
 "ItemModel" // Mdt::ItemModel
-  revision 22
+  revision 24
   modified_by 2 "philippe"
   // class settings
   
@@ -1020,6 +1020,35 @@ ${inlines}
       end
     end
 
+    classdiagram 3221890 "RelationFilterExpression"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3695362 "RelationFilterExpression"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4108034 // <directional composition>
+	relation 4082050 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4108034 // <directional composition>
+	  b parent class_ref 3483522 // ContainerInterface
+      end
+    end
+
     classdiagram 3142018 "RelationFilterProxyModel"
       classdiagramsettings member_max_width 0 end
       size A4
@@ -1071,6 +1100,43 @@ ${inlines}
 "
 	    classrelation_ref 3986946 // <directional composition>
 	  b parent class_ref 3498626 // FilterExpression
+      end
+    end
+
+    classdiagram 3215362 "SqlRelationFilterProxyModel"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3688834 "SqlRelationFilterProxyModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4101378 // <generalisation>
+	relation 4075394 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4101378 // <generalisation>
+	  b parent class_ref 719874 // QSortFilterProxyModel
+      end
+
+      classrelation 4101506 // <directional composition>
+	relation 4075522 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4101506 // <directional composition>
+	  b parent class_ref 3239682 // WhereExpression
       end
     end
   end

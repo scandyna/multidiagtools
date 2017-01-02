@@ -91,21 +91,6 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Set relation filter
      *
-     * \tparam Expr Type of the expression.
-     * \param expression Expression to apply as filter.
-     * \pre \a Expr must be a relation filter expression type.
-     * 
-     * \sa setParentModelMatchRow()
-     */
-//     template<typename Expr>
-//     void setFilter(const Expr & expression)
-//     {
-//       mFilterExpression.setRelationExpression(expression);
-//       invalidateFilter();
-//     }
-
-    /*! \brief Set relation filter
-     *
      * \param expression Expression to apply as filter.
      * \pre \a expression must not be null
      *

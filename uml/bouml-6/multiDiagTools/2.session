@@ -1,17 +1,41 @@
-window_sizes 1280 963 387 887 908 0
+window_sizes 1280 963 353 921 908 0
 cleanlooks_style
 diagrams
-  active  classdiagram_ref 3148674 // Overview
-    887 908 80 8 0 0
+  active  classdiagram_ref 3208706 // ControllerRelation
+    921 908 100 21 0 0
+  classdiagram_ref 2707074 // AbstractController
+    120 110 100 23 0 0
+  classdiagram_ref 3221890 // RelationFilterExpression
+    120 110 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 3148674 // Overview
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
+  classview_ref 1604098 // Containers
+  classview_ref 1630466 // Filter
+  class_ref 3695362 // RelationFilterExpression
   classview_ref 1472258 // Editor
-  classview_ref 1676418 // Relation
+  operation_ref 5125506 // addChildController
+  operation_ref 5126786 // sourceModel
+  operation_ref 5140482 // setRelationFilterEnabled
+  operation_ref 5140610 // isRelationFilterEnabled
+  operation_ref 5140738 // setRelationFilter
+  operation_ref 5140866 // addChildController
+  operation_ref 5125378 // ~AbstractControllerRelation
+  classrelation_ref 4030722 // <directional composition>
+  attribute_ref 3224962 // ParentController
+  attribute_ref 3224706 // ChildController
+  classrelation_ref 4093698 // <generalisation>
+  attribute_ref 3265538 // ParentController
+  attribute_ref 3265666 // ChildController
+  operation_ref 5059842 // canChangeCurrentRow
+  operation_ref 5067010 // addChildController
+  operation_ref 5133826 // relationCount
+  operation_ref 5133954 // clearRelations
+  classview_ref 1689474 // SqlController
+  class_ref 3621250 // SqlControllerRelationList
   classview_ref 1696386 // ClientEditor
   class_ref 3640962 // ClientWidget
   class_ref 3641090 // AddressWidget

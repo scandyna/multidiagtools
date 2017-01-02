@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,12 +19,15 @@
  **
  ****************************************************************************/
 #include "ControllerRelationList.h"
-#include "AbstractItemModelController.h"
+#include "AbstractController.h"
+
+// #include "AbstractItemModelController.h"
+
 #include <QtGlobal>
 
 namespace Mdt{ namespace ItemEditor{
 
-ControllerRelationList::ControllerRelationList(AbstractItemModelController* parentController)
+ControllerRelationList::ControllerRelationList(AbstractController* parentController)
  : mParentController(parentController)
 {
   Q_ASSERT(!mParentController.isNull());
@@ -33,6 +36,15 @@ ControllerRelationList::ControllerRelationList(AbstractItemModelController* pare
 ControllerRelationList::~ControllerRelationList()
 {
   clearRelations();
+}
+
+void ControllerRelationList::addChildController(AbstractController* controller, const ItemModel::RelationFilterExpression& conditions)
+{
+  Q_ASSERT(controller != nullptr);
+
+  auto *relation = new ControllerRelation(mParentController);
+  relation->setChildController(controller, conditions);
+  mList.push_back(relation);
 }
 
 void ControllerRelationList::clearRelations()

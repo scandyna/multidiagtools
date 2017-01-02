@@ -21,14 +21,16 @@
 #ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_H
 #define MDT_ITEM_EDITOR_CONTROLLER_RELATION_H
 
-#include "Mdt/ItemModel/RelationFilterProxyModel.h"
+// #include "Mdt/ItemModel/RelationFilterProxyModel.h"
+
+#include "Mdt/ItemModel/RelationFilterExpression.h"
 #include <QPointer>
 
 namespace Mdt{ namespace ItemEditor{
 
   class AbstractController;
   
-  class AbstractItemModelController;
+//   class AbstractItemModelController;
 
   /*! \brief Relation between a parent controller and a child controller
    *
@@ -43,7 +45,7 @@ namespace Mdt{ namespace ItemEditor{
      *
      * \pre \a parentController must be a valid pointer
      */
-    explicit ControllerRelation(AbstractItemModelController *parentController);
+    explicit ControllerRelation(AbstractController *parentController);
 
     /*! \brief Set child controller
      *
@@ -52,35 +54,46 @@ namespace Mdt{ namespace ItemEditor{
      * \pre \a controller must be a valid pointer
      * \pre \a conditions must be a valid relation filter expression
      */
-    template<typename Expr>
-    void setChildController(AbstractItemModelController *controller, const Expr & conditions)
-    {
-      Q_ASSERT(controller != nullptr);
-      mChildController = controller;
-      updateChildControllerModel();
-      mProxyModel.setFilter(conditions);
-    }
+//     template<typename Expr>
+//     void setChildController(AbstractItemModelController *controller, const Expr & conditions)
+//     {
+//       Q_ASSERT(controller != nullptr);
+//       mChildController = controller;
+//       //updateChildControllerModel();
+//       mProxyModel.setFilter(conditions);
+//     }
+
+    /*! \brief Set child controller
+     *
+     * \pre \a controller must be a valid pointer
+     * \pre \a conditions must be a valid relation filter expression
+     */
+    void setChildController(AbstractController *controller, const Mdt::ItemModel::RelationFilterExpression & conditions);
+
+    /*! \brief Set parent controller's model to child controller
+     */
+    void setParentControllerModelToChildController();
 
     /*! \brief Update parent controller model
      */
-    void updateParentControllerModel();
+//     void updateParentControllerModel();
 
     /*! \brief Update child controller model
      */
-    void updateChildControllerModel();
+//     void updateChildControllerModel();
 
     /*! \brief Access relation filter proxy model
      */
-    Mdt::ItemModel::RelationFilterProxyModel *proxyModel() /*const*/
-    {
-      return &mProxyModel;
-    }
+//     Mdt::ItemModel::RelationFilterProxyModel *proxyModel() /*const*/
+//     {
+//       return &mProxyModel;
+//     }
 
    private:
 
     QPointer<AbstractController> mParentController;
     QPointer<AbstractController> mChildController;
-    Mdt::ItemModel::RelationFilterProxyModel mProxyModel;
+//     Mdt::ItemModel::RelationFilterProxyModel mProxyModel;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

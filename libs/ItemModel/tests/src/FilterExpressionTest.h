@@ -64,7 +64,6 @@ class FilterExpressionTest : public QObject
 
   void expressionCopyTest();
   void expressionTest();
-  void expressionRelationTest();
   void expressionBenchmark();
 
   void relationExpressionCopyTest();

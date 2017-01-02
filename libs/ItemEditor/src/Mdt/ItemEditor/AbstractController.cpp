@@ -21,12 +21,14 @@
 #include "AbstractController.h"
 #include "RowChangeEventDispatcher.h"
 #include "ControllerStatePermission.h"
+#include "Mdt/ItemModel/RelationFilterProxyModel.h"
 #include <QAbstractItemModel>
 
 // #include <QDebug>
 
 namespace ItemModel = Mdt::ItemModel;
 using ItemModel::FilterProxyModel;
+using ItemModel::RelationFilterProxyModel;
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -96,6 +98,45 @@ void AbstractController::setFilterEnabled(bool enable)
 bool AbstractController::isFilterEnabled() const
 {
   return mModelContainer.containsProxyModelOfType<FilterProxyModel>();
+}
+
+void AbstractController::setRelationFilterEnabled(bool enable)
+{
+  if(enable == isRelationFilterEnabled()){
+    return;
+  }
+  if(enable){
+    mModelContainer.prependProxyModel(new RelationFilterProxyModel(this));
+  }else{
+    mModelContainer.deleteFirstProxyModelOfType<RelationFilterProxyModel>();
+  }
+  setModelToView(modelForView());
+}
+
+bool AbstractController::isRelationFilterEnabled() const
+{
+  return mModelContainer.containsProxyModelOfType<RelationFilterProxyModel>();
+}
+
+void AbstractController::setRelationFilterParentModel(QAbstractItemModel* model)
+{
+  Q_ASSERT(model != nullptr);
+
+  setRelationFilterEnabled(true);
+  relationFilterModel()->setParentModel(model);
+}
+
+void AbstractController::setRelationFilter(const ItemModel::RelationFilterExpression & expression)
+{
+  setRelationFilterEnabled(true);
+  relationFilterModel()->setFilter(expression);
+}
+
+RelationFilterProxyModel* AbstractController::relationFilterModel() const
+{
+  auto *model = mModelContainer.firstProxyModelOfType<RelationFilterProxyModel>();
+  Q_ASSERT(model != nullptr);
+  return reinterpret_cast<RelationFilterProxyModel*>(model);
 }
 
 bool AbstractController::setCurrentRow(int row)

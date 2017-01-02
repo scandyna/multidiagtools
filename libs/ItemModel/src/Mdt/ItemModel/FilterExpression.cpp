@@ -37,15 +37,4 @@ bool FilterExpression::eval(const QAbstractItemModel*const model, int row, Qt::C
   return mContainer->eval(model, row, caseSensitivity);
 }
 
-bool FilterExpression::eval(const QAbstractItemModel*const model, int row, const Expression::ParentModelEvalData & parentModelData, Qt::CaseSensitivity caseSensitivity) const
-{
-  Q_ASSERT(!isNull());
-  Q_ASSERT(model != nullptr);
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < model->rowCount());
-  Q_ASSERT(!parentModelData.isNull());
-
-  return mContainer->eval(model, row, parentModelData, caseSensitivity);
-}
-
 }} // namespace Mdt{ namespace ItemModel{

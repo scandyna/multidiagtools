@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -35,6 +35,9 @@ class ControllerRelationTest : public QObject
 
   void initTestCase();
   void cleanupTestCase();
+
+  void enableDisableRelationFilterTest();
+  void setRelationParentModelTest();
 
   void setControllersTest();
   void changeModelTest();

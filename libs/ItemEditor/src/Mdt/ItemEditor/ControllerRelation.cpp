@@ -20,8 +20,9 @@
  ****************************************************************************/
 #include "ControllerRelation.h"
 #include "AbstractController.h"
+#include "Mdt/ItemModel/RelationFilterProxyModel.h"
 
-#include "AbstractItemModelController.h"
+// #include "AbstractItemModelController.h"
 
 #include <QObject>
 
@@ -31,36 +32,59 @@ using Mdt::ItemModel::RelationFilterProxyModel;
 
 namespace Mdt{ namespace ItemEditor{
 
-ControllerRelation::ControllerRelation(AbstractItemModelController* parentController)
+ControllerRelation::ControllerRelation(AbstractController* parentController)
  : mParentController(parentController)
 {
   Q_ASSERT(!mParentController.isNull());
 
-  updateParentControllerModel();
-  QObject::connect(mParentController, &AbstractItemModelController::currentRowChanged, &mProxyModel, &RelationFilterProxyModel::setParentModelMatchRow);
+  ///updateParentControllerModel();
+//   QObject::connect(mParentController, &AbstractController::currentRowChanged, &mProxyModel, &RelationFilterProxyModel::setParentModelMatchRow);
 }
 
-void ControllerRelation::updateParentControllerModel()
+void ControllerRelation::setChildController(AbstractController* controller, const ItemModel::RelationFilterExpression& conditions)
+{
+  Q_ASSERT(controller != nullptr);
+
+  mChildController = controller;
+  mChildController->setRelationFilter(conditions);
+  setParentControllerModelToChildController();
+  QObject::connect(mParentController, &AbstractController::currentRowChanged, mChildController->relationFilterModel(), &RelationFilterProxyModel::setParentModelMatchRow);
+}
+
+void ControllerRelation::setParentControllerModelToChildController()
 {
   Q_ASSERT(!mParentController.isNull());
+  Q_ASSERT(!mChildController.isNull());
 
   auto *model = mParentController->modelForView();
   if(model == nullptr){
     return;
   }
-  mProxyModel.setParentModel(model);
+  mChildController->setRelationFilterParentModel(model);
 }
 
-void ControllerRelation::updateChildControllerModel()
-{
- Q_ASSERT(!mChildController.isNull());
+// void ControllerRelation::updateParentControllerModel()
+// {
+//   Q_ASSERT(!mParentController.isNull());
+// 
+//   auto *model = mParentController->modelForView();
+//   if(model == nullptr){
+//     return;
+//   }
+//   mParentController->setRelationFilterParentModel(model);
+//   ///mProxyModel.setParentModel(model);
+// }
 
-//  auto *model = mChildController->model();
-//  if(model == nullptr){
-//    return;
-//  }
-//  mProxyModel.setSourceModel(model);
-//  mChildController->setModel(&mProxyModel);
-}
+// void ControllerRelation::updateChildControllerModel()
+// {
+//  Q_ASSERT(!mChildController.isNull());
+// 
+// //  auto *model = mChildController->model();
+// //  if(model == nullptr){
+// //    return;
+// //  }
+// //  mProxyModel.setSourceModel(model);
+// //  mChildController->setModel(&mProxyModel);
+// }
 
 }} // namespace Mdt{ namespace ItemEditor{

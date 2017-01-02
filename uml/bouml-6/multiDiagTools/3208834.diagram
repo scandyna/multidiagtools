@@ -1,0 +1,15 @@
+format 211
+
+classcanvas 128002 class_ref 3601410 // ControllerRelationListHandlerXxYy
+  classdiagramsettings member_max_width 0 end
+  xyz 40.4 285.9 2000
+end
+classcanvas 128130 class_ref 2767362 // ControllerRelationList
+  classdiagramsettings member_max_width 0 end
+  xyz 40.7 40.3 2006
+end
+classcanvas 128386 class_ref 3621250 // SqlControllerRelationList
+  classdiagramsettings member_max_width 0 end
+  xyz 40.6 528.8 2006
+end
+end

@@ -30,6 +30,13 @@
 #include <QPointer>
 #include <QAbstractItemModel>
 
+namespace Mdt{ namespace ItemModel{
+
+  class RelationFilterProxyModel;
+  class RelationFilterExpression;
+
+}} // namespace Mdt{ namespace ItemModel{
+
 namespace Mdt{ namespace ItemEditor{
 
   class RowChangeEventDispatcher;
@@ -165,7 +172,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Set filter
      *
-     * If filter is not enabled, it will enabled before applying expression.
+     * If filter is not enabled, it will be enabled before applying expression.
      *
      * \param expression Expression to apply as filter.
      * \pre \a expression must be a filter expression type.
@@ -178,6 +185,44 @@ namespace Mdt{ namespace ItemEditor{
       setFilterEnabled(true);
       filterModel()->setFilter(expression);
     }
+
+    /*! \brief Set relation filter enabled
+     *
+     * \sa isRelationFilterEnabled()
+     */
+    void setRelationFilterEnabled(bool enable);
+
+    /*! \brief Check if relation filter is enabled
+     *
+     * \sa setRelationFilterEnabled()
+     */
+    bool isRelationFilterEnabled() const;
+
+    /*! \brief Set relation filter's parent model
+     *
+     * If relation filter is not enabled, it will be enabled before setting its parent model.
+     *
+     * \pre \a model must be a valid pointer.
+     */
+    void setRelationFilterParentModel(QAbstractItemModel *model);
+
+    /*! \brief Set relation filter
+     *
+     * If relation filter is not enabled, it will be enabled before applying expression.
+     *
+     * \param expression Expression to apply as filter.
+     * \pre \a expression must be a relation filter expression.
+     * \sa Mdt::ItemModel::RelationFilterProxyModel
+     * \sa setRelationFilterEnabled()
+     * \sa setRelationFilterParentModel()
+     */
+    void setRelationFilter(const Mdt::ItemModel::RelationFilterExpression & expression);
+
+    /*! \brief Get relation filter proxy model
+     *
+     * \pre Relation filter must be enabled
+     */
+    Mdt::ItemModel::RelationFilterProxyModel *relationFilterModel() const;
 
     /*! \brief Get last error
      */

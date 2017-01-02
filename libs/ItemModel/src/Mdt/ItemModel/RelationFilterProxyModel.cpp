@@ -21,8 +21,6 @@
 #include "RelationFilterProxyModel.h"
 #include "Expression/ParentModelEvalData.h"
 
-// #include <QDebug>
-
 using Mdt::ItemModel::Expression::ParentModelEvalData;
 
 namespace Mdt{ namespace ItemModel{
@@ -51,14 +49,7 @@ void RelationFilterProxyModel::setFilter(const RelationFilterExpression& express
 void RelationFilterProxyModel::setParentModelMatchRow(int row)
 {
   mParentModelRow = row;
-//   qDebug() << "RelationFilterProxyModel::setParentModelMatchRow(" << row << ")";
-//   qDebug() << "- parent model: " << mParentModel << " , source model: " << sourceModel();
-//   qDebug() << "- expression set: " << !mFilterExpression.isNull();
-  
   invalidateFilter();
-//   qDebug() << "- parent rows: " << mParentModel->rowCount();
-//   qDebug() << "- source rows: " << sourceModel()->rowCount();
-//   qDebug() << "- this   rows: " << rowCount();
 }
 
 bool RelationFilterProxyModel::filterAcceptsRow(int source_row, const QModelIndex & source_parent) const
@@ -75,7 +66,6 @@ bool RelationFilterProxyModel::filterAcceptsRow(int source_row, const QModelInde
   if(mFilterExpression.isNull()){
     return true;
   }
-//   qDebug() << "-> eval() ...";
   return mFilterExpression.eval(sourceModel(), source_row, ParentModelEvalData(mParentModel, mParentModelRow), filterCaseSensitivity());
 }
 

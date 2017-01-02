@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -27,7 +27,8 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-  class AbstractItemModelController;
+  class AbstractController;
+//   class AbstractItemModelController;
 
   /*! \brief Container of controller relations
    *
@@ -46,7 +47,7 @@ namespace Mdt{ namespace ItemEditor{
      *
      * \pre \a parentController must be a valid pointer
      */
-    explicit ControllerRelationList(AbstractItemModelController *parentController);
+    explicit ControllerRelationList(AbstractController *parentController);
 
     /*! \brief Clear created relations
      */
@@ -64,14 +65,16 @@ namespace Mdt{ namespace ItemEditor{
      * \pre \a controller must be a valid pointer
      * \pre \a conditions must be a valid relation filter expression
      */
-    template<typename Expr>
-    void addChildController(AbstractItemModelController *controller, const Expr & conditions)
-    {
-      Q_ASSERT(controller != nullptr);
-      auto *relation = new ControllerRelation(mParentController);
-      relation->setChildController(controller, conditions);
-      mList.push_back(relation);
-    }
+    void addChildController(AbstractController *controller, const Mdt::ItemModel::RelationFilterExpression & conditions);
+    
+//     template<typename Expr>
+//     void addChildController(AbstractController *controller, const Expr & conditions)
+//     {
+//       Q_ASSERT(controller != nullptr);
+//       auto *relation = new ControllerRelation(mParentController);
+//       relation->setChildController(controller, conditions);
+//       mList.push_back(relation);
+//     }
 
     /*! \brief Get count of child controllers
      */
@@ -107,7 +110,7 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    QPointer<AbstractItemModelController> mParentController;
+    QPointer<AbstractController> mParentController;
     std::vector<ControllerRelation*> mList;
   };
 }} // namespace Mdt{ namespace ItemEditor{

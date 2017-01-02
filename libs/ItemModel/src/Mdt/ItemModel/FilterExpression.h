@@ -22,7 +22,6 @@
 #define MDT_ITEM_MODEL_FILTER_EXPRESSION_H
 
 #include "Expression/FilterExpressionGrammar.h"
-#include "Expression/RelationFilterExpressionGrammar.h"
 #include "Expression/FilterExpressionContainer.h"
 #include <Qt>
 #include <boost/proto/matches.hpp>
@@ -104,19 +103,6 @@ namespace Mdt{ namespace ItemModel{
       mContainer.reset( new Expression::FilterExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) );
     }
 
-    /*! \brief Set expression for a relation filter
-     *
-     * \tparam Expr Type of the expression.
-     * \param expr Expression to hold.
-     * \pre Expr must be a relation filter expression type.
-     */
-    template<typename Expr>
-    void setRelationExpression(const Expr & expr)
-    {
-      static_assert( boost::proto::matches<Expr, Expression::RelationFilterExpressionGrammar>::value , "Type of expr is not a valid relation filter expression." );
-      mContainer.reset( new Expression::FilterExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) );
-    }
-
     /*! \brief Check if this expression is null
      */
     bool isNull() const
@@ -131,15 +117,6 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a must be in valid range ( 0 <= row < model->rowCount() )
      */
     bool eval(const QAbstractItemModel * const model, int row, Qt::CaseSensitivity caseSensitivity) const;
-
-    /*! \brief Evaluate if row matches stored expression in model
-     *
-     * \pre this expression must not be null
-     * \pre \a model must be a valid pointer (not null)
-     * \pre \a row must be in valid range ( 0 <= row < model->rowCount() )
-     * \pre \a parentModelData must not be null
-     */
-    bool eval(const QAbstractItemModel*const model, int row, const Expression::ParentModelEvalData & parentModelData, Qt::CaseSensitivity caseSensitivity) const;
 
    private:
 
