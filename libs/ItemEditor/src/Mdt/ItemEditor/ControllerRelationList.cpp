@@ -20,9 +20,6 @@
  ****************************************************************************/
 #include "ControllerRelationList.h"
 #include "AbstractController.h"
-
-// #include "AbstractItemModelController.h"
-
 #include <QtGlobal>
 
 namespace Mdt{ namespace ItemEditor{
@@ -54,6 +51,5 @@ void ControllerRelationList::clearRelations()
   }
   mList.clear();
 }
-
 
 }} // namespace Mdt{ namespace ItemEditor{

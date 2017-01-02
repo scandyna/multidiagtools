@@ -21,16 +21,12 @@
 #ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_H
 #define MDT_ITEM_EDITOR_CONTROLLER_RELATION_H
 
-// #include "Mdt/ItemModel/RelationFilterProxyModel.h"
-
 #include "Mdt/ItemModel/RelationFilterExpression.h"
 #include <QPointer>
 
 namespace Mdt{ namespace ItemEditor{
 
   class AbstractController;
-  
-//   class AbstractItemModelController;
 
   /*! \brief Relation between a parent controller and a child controller
    *
@@ -49,22 +45,6 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Set child controller
      *
-     * Will replace model in \a controller with a RelationFilterProxyModel.
-     *
-     * \pre \a controller must be a valid pointer
-     * \pre \a conditions must be a valid relation filter expression
-     */
-//     template<typename Expr>
-//     void setChildController(AbstractItemModelController *controller, const Expr & conditions)
-//     {
-//       Q_ASSERT(controller != nullptr);
-//       mChildController = controller;
-//       //updateChildControllerModel();
-//       mProxyModel.setFilter(conditions);
-//     }
-
-    /*! \brief Set child controller
-     *
      * \pre \a controller must be a valid pointer
      * \pre \a conditions must be a valid relation filter expression
      */
@@ -74,26 +54,10 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setParentControllerModelToChildController();
 
-    /*! \brief Update parent controller model
-     */
-//     void updateParentControllerModel();
-
-    /*! \brief Update child controller model
-     */
-//     void updateChildControllerModel();
-
-    /*! \brief Access relation filter proxy model
-     */
-//     Mdt::ItemModel::RelationFilterProxyModel *proxyModel() /*const*/
-//     {
-//       return &mProxyModel;
-//     }
-
    private:
 
     QPointer<AbstractController> mParentController;
     QPointer<AbstractController> mChildController;
-//     Mdt::ItemModel::RelationFilterProxyModel mProxyModel;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

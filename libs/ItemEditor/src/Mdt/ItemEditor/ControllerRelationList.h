@@ -28,7 +28,6 @@
 namespace Mdt{ namespace ItemEditor{
 
   class AbstractController;
-//   class AbstractItemModelController;
 
   /*! \brief Container of controller relations
    *
@@ -66,15 +65,6 @@ namespace Mdt{ namespace ItemEditor{
      * \pre \a conditions must be a valid relation filter expression
      */
     void addChildController(AbstractController *controller, const Mdt::ItemModel::RelationFilterExpression & conditions);
-    
-//     template<typename Expr>
-//     void addChildController(AbstractController *controller, const Expr & conditions)
-//     {
-//       Q_ASSERT(controller != nullptr);
-//       auto *relation = new ControllerRelation(mParentController);
-//       relation->setChildController(controller, conditions);
-//       mList.push_back(relation);
-//     }
 
     /*! \brief Get count of child controllers
      */
@@ -82,13 +72,6 @@ namespace Mdt{ namespace ItemEditor{
     {
       return mList.size();
     }
-
-    /*! \brief Check if list is empty
-     */
-//     bool isEmpty() const
-//     {
-//       return mList.empty();
-//     }
 
     /*! \brief Get begin const iterator
      */
@@ -113,6 +96,7 @@ namespace Mdt{ namespace ItemEditor{
     QPointer<AbstractController> mParentController;
     std::vector<ControllerRelation*> mList;
   };
+
 }} // namespace Mdt{ namespace ItemEditor{
 
 #endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_LIST_H

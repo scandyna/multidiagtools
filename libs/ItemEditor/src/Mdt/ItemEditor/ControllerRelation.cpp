@@ -21,12 +21,9 @@
 #include "ControllerRelation.h"
 #include "AbstractController.h"
 #include "Mdt/ItemModel/RelationFilterProxyModel.h"
-
-// #include "AbstractItemModelController.h"
-
 #include <QObject>
 
-#include <QDebug>
+// #include <QDebug>
 
 using Mdt::ItemModel::RelationFilterProxyModel;
 
@@ -36,15 +33,15 @@ ControllerRelation::ControllerRelation(AbstractController* parentController)
  : mParentController(parentController)
 {
   Q_ASSERT(!mParentController.isNull());
-
-  ///updateParentControllerModel();
-//   QObject::connect(mParentController, &AbstractController::currentRowChanged, &mProxyModel, &RelationFilterProxyModel::setParentModelMatchRow);
 }
 
 void ControllerRelation::setChildController(AbstractController* controller, const ItemModel::RelationFilterExpression& conditions)
 {
   Q_ASSERT(controller != nullptr);
 
+  if(!mChildController.isNull()){
+    QObject::disconnect(mParentController, &AbstractController::currentRowChanged, mChildController->relationFilterModel(), &RelationFilterProxyModel::setParentModelMatchRow);
+  }
   mChildController = controller;
   mChildController->setRelationFilter(conditions);
   setParentControllerModelToChildController();
@@ -62,29 +59,5 @@ void ControllerRelation::setParentControllerModelToChildController()
   }
   mChildController->setRelationFilterParentModel(model);
 }
-
-// void ControllerRelation::updateParentControllerModel()
-// {
-//   Q_ASSERT(!mParentController.isNull());
-// 
-//   auto *model = mParentController->modelForView();
-//   if(model == nullptr){
-//     return;
-//   }
-//   mParentController->setRelationFilterParentModel(model);
-//   ///mProxyModel.setParentModel(model);
-// }
-
-// void ControllerRelation::updateChildControllerModel()
-// {
-//  Q_ASSERT(!mChildController.isNull());
-// 
-// //  auto *model = mChildController->model();
-// //  if(model == nullptr){
-// //    return;
-// //  }
-// //  mProxyModel.setSourceModel(model);
-// //  mChildController->setModel(&mProxyModel);
-// }
 
 }} // namespace Mdt{ namespace ItemEditor{
