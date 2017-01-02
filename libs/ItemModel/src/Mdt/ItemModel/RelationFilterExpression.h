@@ -1,0 +1,129 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
+#ifndef MDT_ITEM_MODEL_RELATION_FILTER_EXPRESSION_H
+#define MDT_ITEM_MODEL_RELATION_FILTER_EXPRESSION_H
+
+#include "Expression/RelationFilterExpressionGrammar.h"
+#include "Expression/FilterExpressionContainer.h"
+#include <Qt>
+#include <boost/proto/matches.hpp>
+#include <memory>
+
+class QAbstractItemModel;
+
+namespace Mdt{ namespace ItemModel{
+
+  namespace Expression {
+    class ContainerInterface;
+  }
+
+  /*! \brief Filter expression used in RelationFilterProxyModel
+   *
+   * Example of usage:
+   * \code
+   * #include "Mdt/ItemModel/RelationFilterExpression.h"
+   *
+   * using Mdt::ItemModel::RelationFilterExpression;
+   * using Mdt::ItemModel::FilterColumn;
+   * using Mdt::ItemModel::ParentModelColumn;
+   * using Like = Mdt::ItemModel::LikeExpression;
+   *
+   * ParentModelColumn clientId(0);
+   * FilterColumn addressClientId(1);
+   *
+   * RelationFilterExpression filter( addressClientId == clientId );
+   * \endcode
+   */
+  class RelationFilterExpression
+  {
+   public:
+
+    /*! \brief Construct a empty expression
+     */
+    RelationFilterExpression() = default;
+
+    /*! \brief Construct a expression
+     *
+     * \tparam Expr Type of the expression.
+     * \param expr Expression to hold.
+     * \pre Expr must be a relation filter expression type.
+     *       A relation filter expression is based on FilterColumn, ParentModelColumn,
+     *       comparison operators, logical AND, logical OR.
+     *       For example (see example code above for details):
+     *       \code
+     *       // Example of valid relation filter expression
+     *       addressClientId == cliendId
+     *       (addressClientId == cliendId) && (cliendId > 25)
+     *
+     *       // Example of invalid relation filter expression
+     *       cliendId + 5
+     *       \endcode
+     */
+    template<typename Expr>
+    RelationFilterExpression(const Expr & expr)
+     : mContainer( new Expression::FilterExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) )
+    {
+      static_assert( boost::proto::matches<Expr, Expression::RelationFilterExpressionGrammar>::value , "Type of expr is not a valid relation filter expression." );
+    }
+
+    // Destructor must have its implementation in cpp file
+    ~RelationFilterExpression();
+
+    /*! \brief Construct a expression as copy of other
+     */
+    RelationFilterExpression(const RelationFilterExpression & other) = default;
+
+    /*! \brief Construct a expression by moving other
+     */
+    RelationFilterExpression(RelationFilterExpression && other) = default;
+
+    /*! \brief Assign other expression to this
+     */
+    RelationFilterExpression & operator=(const RelationFilterExpression & other) = default;
+
+    /*! \brief Assign other expression to this
+     */
+    RelationFilterExpression & operator=(RelationFilterExpression &&) = default;
+
+    /*! \brief Check if this expression is null
+     */
+    bool isNull() const
+    {
+      return !mContainer;
+    }
+
+    /*! \brief Evaluate if row matches stored expression in model
+     *
+     * \pre this expression must not be null
+     * \pre \a model must be a valid pointer (not null)
+     * \pre \a row must be in valid range ( 0 <= row < model->rowCount() )
+     * \pre \a parentModelData must not be null
+     */
+    bool eval(const QAbstractItemModel*const model, int row, const Expression::ParentModelEvalData & parentModelData, Qt::CaseSensitivity caseSensitivity) const;
+
+   private:
+
+    std::shared_ptr<const Expression::ContainerInterface> mContainer;
+  };
+
+}} // namespace Mdt{ namespace ItemModel{
+
+#endif // #ifndef MDT_ITEM_MODEL_RELATION_FILTER_EXPRESSION_H

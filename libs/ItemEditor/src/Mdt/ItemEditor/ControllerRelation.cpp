@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,7 +19,10 @@
  **
  ****************************************************************************/
 #include "ControllerRelation.h"
+#include "AbstractController.h"
+
 #include "AbstractItemModelController.h"
+
 #include <QObject>
 
 #include <QDebug>
@@ -52,12 +55,12 @@ void ControllerRelation::updateChildControllerModel()
 {
  Q_ASSERT(!mChildController.isNull());
 
- auto *model = mChildController->model();
- if(model == nullptr){
-   return;
- }
- mProxyModel.setSourceModel(model);
- mChildController->setModel(&mProxyModel);
+//  auto *model = mChildController->model();
+//  if(model == nullptr){
+//    return;
+//  }
+//  mProxyModel.setSourceModel(model);
+//  mChildController->setModel(&mProxyModel);
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

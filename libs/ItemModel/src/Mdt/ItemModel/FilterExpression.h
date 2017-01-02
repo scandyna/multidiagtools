@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -136,7 +136,7 @@ namespace Mdt{ namespace ItemModel{
      *
      * \pre this expression must not be null
      * \pre \a model must be a valid pointer (not null)
-     * \pre \a must be in valid range ( 0 <= row < model->rowCount() )
+     * \pre \a row must be in valid range ( 0 <= row < model->rowCount() )
      * \pre \a parentModelData must not be null
      */
     bool eval(const QAbstractItemModel*const model, int row, const Expression::ParentModelEvalData & parentModelData, Qt::CaseSensitivity caseSensitivity) const;

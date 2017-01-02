@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -79,6 +79,7 @@ void TableViewControllerTest::setModelTest()
    * Initial state
    */
   QVERIFY(controller.model() == nullptr);
+  QVERIFY(controller.sourceModel() == nullptr);
   QVERIFY(controller.view() == nullptr);
   QCOMPARE(rowStateSpy.count(), 0);
   /*
@@ -86,6 +87,7 @@ void TableViewControllerTest::setModelTest()
    */
   controller.setModel(&tableModel);
   QVERIFY(controller.model() == &tableModel);
+  QVERIFY(controller.sourceModel() == &tableModel);
   // Check that row state was not signaled (no view is attached)
   QCOMPARE(rowStateSpy.count(), 0);
   /*

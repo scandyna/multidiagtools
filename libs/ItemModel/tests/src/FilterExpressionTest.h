@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -66,6 +66,9 @@ class FilterExpressionTest : public QObject
   void expressionTest();
   void expressionRelationTest();
   void expressionBenchmark();
+
+  void relationExpressionCopyTest();
+  void relationExpressionTest();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H

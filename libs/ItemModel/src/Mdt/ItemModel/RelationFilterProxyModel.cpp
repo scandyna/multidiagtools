@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,7 +21,7 @@
 #include "RelationFilterProxyModel.h"
 #include "Expression/ParentModelEvalData.h"
 
-#include <QDebug>
+// #include <QDebug>
 
 using Mdt::ItemModel::Expression::ParentModelEvalData;
 
@@ -40,18 +40,25 @@ void RelationFilterProxyModel::setParentModel(QAbstractItemModel *model)
   invalidateFilter();
 }
 
+void RelationFilterProxyModel::setFilter(const RelationFilterExpression& expression)
+{
+  Q_ASSERT(!expression.isNull());
+
+  mFilterExpression = expression;
+  invalidateFilter();
+}
+
 void RelationFilterProxyModel::setParentModelMatchRow(int row)
 {
   mParentModelRow = row;
-  qDebug() << "RelationFilterProxyModel::setParentModelMatchRow(" << row << ")";
-  qDebug() << "- parent model: " << mParentModel << " , source model: " << sourceModel();
-  qDebug() << "- expression set: " << !mFilterExpression.isNull();
+//   qDebug() << "RelationFilterProxyModel::setParentModelMatchRow(" << row << ")";
+//   qDebug() << "- parent model: " << mParentModel << " , source model: " << sourceModel();
+//   qDebug() << "- expression set: " << !mFilterExpression.isNull();
   
   invalidateFilter();
-  
-  qDebug() << "- parent rows: " << mParentModel->rowCount();
-  qDebug() << "- source rows: " << sourceModel()->rowCount();
-  qDebug() << "- this   rows: " << rowCount();
+//   qDebug() << "- parent rows: " << mParentModel->rowCount();
+//   qDebug() << "- source rows: " << sourceModel()->rowCount();
+//   qDebug() << "- this   rows: " << rowCount();
 }
 
 bool RelationFilterProxyModel::filterAcceptsRow(int source_row, const QModelIndex & source_parent) const
@@ -68,7 +75,7 @@ bool RelationFilterProxyModel::filterAcceptsRow(int source_row, const QModelInde
   if(mFilterExpression.isNull()){
     return true;
   }
-  qDebug() << "-> eval() ...";
+//   qDebug() << "-> eval() ...";
   return mFilterExpression.eval(sourceModel(), source_row, ParentModelEvalData(mParentModel, mParentModelRow), filterCaseSensitivity());
 }
 

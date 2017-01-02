@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,7 +21,7 @@
 #ifndef MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_H
 #define MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_H
 
-#include "FilterExpression.h"
+#include "RelationFilterExpression.h"
 #include "ParentModelColumn.h"
 #include "FilterColumn.h"
 #include "LikeExpression.h"
@@ -97,12 +97,21 @@ namespace Mdt{ namespace ItemModel{
      * 
      * \sa setParentModelMatchRow()
      */
-    template<typename Expr>
-    void setFilter(const Expr & expression)
-    {
-      mFilterExpression.setRelationExpression(expression);
-      invalidateFilter();
-    }
+//     template<typename Expr>
+//     void setFilter(const Expr & expression)
+//     {
+//       mFilterExpression.setRelationExpression(expression);
+//       invalidateFilter();
+//     }
+
+    /*! \brief Set relation filter
+     *
+     * \param expression Expression to apply as filter.
+     * \pre \a expression must not be null
+     *
+     * \sa setParentModelMatchRow()
+     */
+    void setFilter(const RelationFilterExpression & expression);
 
    public slots:
 
@@ -123,7 +132,7 @@ namespace Mdt{ namespace ItemModel{
 
     int mParentModelRow = -1;
     QPointer<QAbstractItemModel> mParentModel;
-    FilterExpression mFilterExpression;
+    RelationFilterExpression mFilterExpression;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

@@ -18,38 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_MODEL_EDITOR_RELATION_FILTER_PROXY_MODEL_TEST_H
-#define MDT_MODEL_EDITOR_RELATION_FILTER_PROXY_MODEL_TEST_H
+#include "RelationFilterExpression.h"
+#include <QAbstractItemModel>
 
-#include "Mdt/ItemModel/VariantTableModel.h"
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace ItemModel{
 
-class QAbstractItemModel;
-class QSortFilterProxyModel;
-
-class RelationFilterProxyModelTest : public QObject
+RelationFilterExpression::~RelationFilterExpression()
 {
- Q_OBJECT
+}
 
- private slots:
+bool RelationFilterExpression::eval(const QAbstractItemModel*const model, int row, const Expression::ParentModelEvalData& parentModelData, Qt::CaseSensitivity caseSensitivity) const
+{
+  Q_ASSERT(!isNull());
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < model->rowCount());
+  Q_ASSERT(!parentModelData.isNull());
 
-  void initTestCase();
-  void cleanupTestCase();
+  return mContainer->eval(model, row, parentModelData, caseSensitivity);
+}
 
-  void filterTest();
-  void filterBenchmark();
-  void filterBenchmark_data();
-
-  void filterRoleTest();
-  void setModelTest();
-  void setterEventTest();
-  void dynamicFilterTest();
-
- private:
-
-  static QVariant getModelData(const QAbstractItemModel & model, int row, int column);
-  static void displayModels(QAbstractItemModel *sourceModel, QSortFilterProxyModel *proxyModel);
-};
-
-#endif // #ifndef MDT_MODEL_EDITOR_RELATION_FILTER_PROXY_MODEL_TEST_H
+}} // namespace Mdt{ namespace ItemModel{

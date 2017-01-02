@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -32,6 +32,7 @@
 #include "Mdt/ItemModel/Expression/FilterEval.h"
 #include "Mdt/ItemModel/Expression/ParentModelEvalData.h"
 #include "Mdt/ItemModel/FilterExpression.h"
+#include "Mdt/ItemModel/RelationFilterExpression.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QRegularExpression>
 #include <boost/proto/matches.hpp>
@@ -810,6 +811,157 @@ void FilterExpressionTest::expressionBenchmark()
   QBENCHMARK{
     QVERIFY( eval(id == parentId && (name == Like("?B?") && rem == Like("*2*b*c?")), 0, data) );
   }
+}
+
+void FilterExpressionTest::relationExpressionCopyTest()
+{
+  using ItemModel::FilterColumn;
+  using ItemModel::ParentModelColumn;
+  using ItemModel::RelationFilterExpression;
+  using ItemModel::Expression::ParentModelEvalData;
+
+  ParentModelColumn parentModelId(0);
+  FilterColumn modelParentId(1);
+  /*
+   * Setup parent table model
+   * ------
+   * | Id |
+   * ------
+   * | 2  |
+   * ------
+   */
+  VariantTableModel parentModel;
+  parentModel.resize(1, 1);
+  parentModel.populateColumn(0, {2});
+  /*
+   * Setup (child) table model
+   * ------------------
+   * | Id  | ParentId |
+   * ------------------
+   * | 11  |    1     |
+   * ------------------
+   * | 21  |    2     |
+   * ------------------
+   * | 33  |    3     |
+   * ------------------
+   */
+  VariantTableModel model;
+  model.resize(3, 2);
+  model.populateColumn(0, {11,21,31});
+  model.populateColumn(1, {1 ,2 ,3 });
+  /*
+   * Default constructor
+   */
+  RelationFilterExpression filter1;
+  QVERIFY(filter1.isNull());
+  /*
+   * Constructor
+   */
+  RelationFilterExpression filter2(modelParentId == parentModelId);
+  QVERIFY(!filter2.isNull());
+  QVERIFY(!filter2.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY( filter2.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  /*
+   * Copy
+   */
+  // Copy construct
+  RelationFilterExpression filter3 = filter2;
+  QVERIFY(!filter3.isNull());
+  QVERIFY(!filter3.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY( filter3.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  // Copy assign
+  QVERIFY(filter1.isNull());
+  filter1 = filter2;
+  QVERIFY(!filter1.isNull());
+  QVERIFY(!filter1.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY( filter1.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  /*
+   * Move
+   */
+  auto tempFilter41 = filter2;
+  auto tempFilter42 = filter2;
+  // Move construct
+  RelationFilterExpression filter4 = std::move(tempFilter41);
+  QVERIFY(!filter4.isNull());
+  QVERIFY(!filter4.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY( filter4.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  // Move assign
+  filter4 = std::move(tempFilter42);
+  QVERIFY(!filter4.isNull());
+  QVERIFY(!filter4.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY( filter4.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+}
+
+void FilterExpressionTest::relationExpressionTest()
+{
+  using ItemModel::FilterColumn;
+  using ItemModel::ParentModelColumn;
+  using ItemModel::RelationFilterExpression;
+  using ItemModel::Expression::ParentModelEvalData;
+
+  /*
+   * Setup parent table model
+   * ------
+   * | Id |
+   * ------
+   * | 2  |
+   * ------
+   */
+  VariantTableModel parentModel;
+  parentModel.resize(1, 1);
+  parentModel.populateColumn(0, {2});
+  /*
+   * Setup (child) table model
+   * ------------------
+   * | Id  | ParentId |
+   * ------------------
+   * | 11  |    1     |
+   * ------------------
+   * | 21  |    2     |
+   * ------------------
+   * | 33  |    3     |
+   * ------------------
+   */
+  VariantTableModel model;
+  model.resize(3, 2);
+  model.populateColumn(0, {11,21,31});
+  model.populateColumn(1, {1 ,2 ,3 });
+  /*
+   * Because boost::proto::deep_copy() changes somewhat types,
+   * check with each valid operators.
+   * (will validate that all compiles)
+   */
+  RelationFilterExpression filter;
+  ParentModelColumn parentModelId(0);
+  FilterColumn modelParentId(1);
+  // ==
+  filter = (modelParentId == parentModelId);
+  QVERIFY( !filter.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY(  filter.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  // !=
+  filter = (modelParentId != parentModelId);
+  QVERIFY(  filter.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY( !filter.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  // <
+  filter = (modelParentId < parentModelId);
+  QVERIFY(  filter.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY( !filter.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY( !filter.eval(&model, 2, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  // <=
+  filter = (modelParentId <= parentModelId);
+  QVERIFY(  filter.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY(  filter.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY( !filter.eval(&model, 2, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  // >
+  filter = (modelParentId > parentModelId);
+  QVERIFY( !filter.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY( !filter.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY(  filter.eval(&model, 2, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  // >=
+  filter = (modelParentId >= parentModelId);
+  QVERIFY( !filter.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY(  filter.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+  QVERIFY(  filter.eval(&model, 2, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
 }
 
 /*

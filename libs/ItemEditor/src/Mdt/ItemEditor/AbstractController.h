@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -98,6 +98,21 @@ namespace Mdt{ namespace ItemEditor{
 //     {
 //       return mModelContainer.sourceModel();
 //     }
+
+    /*! \brief Get the source model
+     *
+     * Subclass that acts on a specific item model
+     *  (derived from QAbstractItemModel)
+     *  should have setModel() and model() methods.
+     *  sourceModel() also returns the same as model(),
+     *  but a pointer to QAbstractItemModel base class.
+     *
+     * Can also be a nullptr if no model was set.
+     */
+    QAbstractItemModel *sourceModel() const
+    {
+      return mModelContainer.sourceModel();
+    }
 
     /*! \brief Get the model that is used by the view
      *
@@ -254,10 +269,11 @@ namespace Mdt{ namespace ItemEditor{
      *  or a nullptr if no one was set,
      *  or model was delete elsewhere in application.
      */
-    QAbstractItemModel *registeredModel() const
-    {
-      return mModelContainer.sourceModel();
-    }
+//     [[deprecated]]
+//     QAbstractItemModel *registeredModel() const
+//     {
+//       return mModelContainer.sourceModel();
+//     }
 
     /*! \brief Set model to the view
      *
