@@ -2,129 +2,99 @@ format 211
 
 classcanvas 128130 class_ref 2693250 // SqlRelation
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 769.5 966.5 2000
+  xyz 672.5 40.5 2000
 end
 classcanvas 128258 class_ref 2767362 // ControllerRelationList
   classdiagramsettings member_max_width 0 end
   color lightred
-  xyz 192 474 2000
+  xyz 228 40 2000
 end
 note 130818 "Events parent -> child:
  - Update child's parent model
  - Filter child 
  - Enable/disable child
  - Check about state before perform action"
-  xyzwh 40.5 600.5 2000 515 131
+  xyzwh 40.5 448.5 2000 515 131
 note 130946 "Events child -> parent:
  - "
-  xyzwh 40.5 811.5 2000 509 75
+  xyzwh 40.5 659.5 2000 509 75
 classcanvas 131074 class_ref 3601538 // ControllerRelationItemList
   classdiagramsettings member_max_width 0 end
-  xyz 635.5 600.5 2005
+  xyz 629.5 659.5 2005
 end
 classcanvas 131842 class_ref 3239682 // WhereExpression
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
-  xyz 629.5 811.5 2021
+  xyz 635.5 448.5 2021
 end
 classcanvas 134146 class_ref 3614594 // AbstractSqlController
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 193 258 2024
+  xyz 229 234 2024
 end
 classcanvas 136194 class_ref 3621250 // SqlControllerRelationList
   classdiagramsettings member_max_width 0 end
   color lightred
-  xyz 186 170 2000
+  xyz 418 234 2000
 end
 classcanvas 138370 class_ref 3627906 // ControllerRelation
   classdiagramsettings member_max_width 0 end
   color lightred
-  xyz 40 386 3010
-end
-classcanvas 139010 class_ref 3634434 // AbstractItemModelController
-  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 514 258 2032
+  xyz 56 40 3010
 end
 note 140418 "Sate: relatedControllerEditing"
-  xyzwh 40.5 966.5 2000 649 71
-classcanvas 140546 class_ref 3681794 // AbstractControllerRelation
-  classdiagramsettings member_max_width 0 end
-  color lightred
-  xyz 385 42 2005
-end
+  xyzwh 40.5 814.5 2000 649 71
 classcanvas 141058 class_ref 3681922 // SqlControllerRelation
   classdiagramsettings member_max_width 0 end
   color lightred
-  xyz 402 170 2000
+  xyz 434 322 2000
 end
 classcanvas 144002 class_ref 3648002 // AbstractController
   classdiagramsettings member_max_width 0 end
-  xyz 207 386 2038
+  xyz 239 146 2038
+end
+classcanvas 145410 class_ref 3708546 // ControllerRelationImpl
+  classdiagramsettings member_max_width 0 end
+  xyz 42 146 3016
 end
 relationcanvas 138882 relation_ref 4005122 // <directional composition>
-  geometry HV unfixed
-  from ref 128258 z 3011 to point 102 494
-  line 145154 z 3011 to ref 138370
+  from ref 128258 z 3011 to ref 138370
   no_role_a no_role_b
-  multiplicity_a_pos 89 440 3000 no_multiplicity_b
-end
-relationcanvas 140674 relation_ref 4067714 // <generalisation>
-  geometry VHV unfixed
-  decenter_end 475
-  from ref 138370 z 3011 to point 102 128
-  line 144898 z 3011 to point 469 128
-  line 145026 z 3011 to ref 140546
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 141186 relation_ref 4067842 // <generalisation>
-  decenter_begin 469
-  decenter_end 475
-  from ref 141058 z 2006 to ref 140546
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
+  multiplicity_a_pos 194 82 3000 no_multiplicity_b
 end
 relationcanvas 141570 relation_ref 4067970 // <unidirectional association>
-  geometry VH unfixed
-  decenter_begin 469
-  from ref 141058 z 2025 to point 469 278
-  line 143874 z 2025 to ref 134146
+  geometry HV unfixed
+  from ref 141058 z 2025 to point 302 342
+  line 145794 z 2025 to ref 134146
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 143106 relation_ref 4068226 // <directional composition>
-  decenter_begin 523
   from ref 134146 z 2025 to ref 136194
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 143746 relation_ref 4068354 // <directional composition>
+  decenter_end 469
   from ref 136194 z 2001 to ref 141058
   no_role_a no_role_b
-  multiplicity_a_pos 386 202 3000 no_multiplicity_b
+  multiplicity_a_pos 488 295 3000 no_multiplicity_b
 end
 relationcanvas 144130 relation_ref 4025346 // <generalisation>
-  decenter_begin 523
   from ref 134146 z 2039 to ref 144002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 144258 relation_ref 4025474 // <generalisation>
-  geometry VHV unfixed
-  decenter_begin 517
-  from ref 139010 z 2039 to point 613 344
-  line 144514 z 2039 to point 270 344
-  line 144642 z 2039 to ref 144002
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 relationcanvas 144386 relation_ref 4068738 // <directional composition>
-  decenter_end 522
   from ref 144002 z 2039 to ref 128258
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 144770 relation_ref 4068866 // <unidirectional association>
-  from ref 138370 z 3011 to ref 144002
+relationcanvas 145538 relation_ref 4095362 // <generalisation>
+  from ref 145410 z 3017 to ref 138370
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 145666 relation_ref 4095490 // <unidirectional association>
+  from ref 145410 z 3017 to ref 144002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

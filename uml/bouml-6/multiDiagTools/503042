@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 125
+  revision 130
   modified_by 2 "philippe"
   // class settings
   
@@ -3132,10 +3132,48 @@ ${inlines}
 	
 	
       end
+
+      operation 5148034 "parentController"
+	abstract cpp_virtual public return_type class_ref 3648002 // AbstractController
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5148162 "childController"
+	abstract cpp_virtual public return_type class_ref 3648002 // AbstractController
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5148290 "setParentControllerModelToChildModel"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
     end
 
     class 3627906 "ControllerRelation"
       visibility package 
+      nformals 2
+      formal name "Controller" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "Derived" type "class" explicit_default_value ""
+        explicit_extends ""
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -3158,7 +3196,7 @@ ${inlines}
       end
 
       attribute 3224962 "ParentController"
-	private type class_ref 3648002 // AbstractController
+	private explicit_type "Controller"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -3170,7 +3208,7 @@ ${inlines}
       end
 
       attribute 3224706 "ChildController"
-	private type class_ref 3648002 // AbstractController
+	private explicit_type "Controller"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
@@ -3182,6 +3220,98 @@ ${inlines}
       end
 
       operation 5125634 "ControllerRelation"
+	cpp_inline public explicit_return_type ""
+	nparams 1
+	  param in name "parentController" explicit_type "Controller"
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5161986 "parentController"
+	cpp_inline public explicit_return_type "Controller"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5162114 "childController"
+	cpp_inline public explicit_return_type "Controller"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5125762 "setChildController"
+	cpp_inline public explicit_return_type "void"
+	nparams 2
+	  param in name "controller" explicit_type "Controller"
+	  param in name "conditions" explicit_type "T"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+    end
+
+    class 3708546 "ControllerRelationImpl"
+      visibility package 
+      nactuals 2
+      actual class class_ref 3627906 // ControllerRelation
+        rank 0 explicit_value ""
+      actual class class_ref 3627906 // ControllerRelation
+        rank 1 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4121346 // <generalisation>
+	relation 4095362 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4121346 // <generalisation>
+	  b parent class_ref 3627906 // ControllerRelation
+      end
+
+      operation 5161858 "ControllerRelationImpl"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "parentController" type class_ref 3648002 // AbstractController
@@ -3197,14 +3327,22 @@ ${inlines}
 	
       end
 
-      operation 5125762 "setChildController"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "controller" type class_ref 3648002 // AbstractController
-	  param in name "conditions" type class_ref 3695362 // RelationFilterExpression
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+      classrelation 4121474 // <unidirectional association>
+	relation 4095490 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+	    classrelation_ref 4121474 // <unidirectional association>
+	  b parent class_ref 3648002 // AbstractController
+      end
+
+      operation 5168642 "registerChildController"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "conditions" type class_ref 3695362 // RelationFilterExpression
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -3214,16 +3352,8 @@ ${inlines}
 	
       end
 
-      classrelation 4093698 // <generalisation>
-	relation 4067714 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4093698 // <generalisation>
-	  b parent class_ref 3681794 // AbstractControllerRelation
-      end
-
-      operation 5126018 "setParentControllerModelToChildController"
-	cpp_virtual public explicit_return_type "void"
+      operation 5168770 "unregisterChildController"
+	public explicit_return_type "void"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3237,13 +3367,19 @@ ${inlines}
 	
       end
 
-      classrelation 4094850 // <unidirectional association>
-	relation 4068866 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+      operation 5161730 "setParentControllerModelToChildController"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	    classrelation_ref 4094850 // <unidirectional association>
-	  b parent class_ref 3648002 // AbstractController
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -3261,14 +3397,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 4093826 // <generalisation>
-	relation 4067842 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4093826 // <generalisation>
-	  b parent class_ref 3681794 // AbstractControllerRelation
-      end
-
       classrelation 4093954 // <unidirectional association>
 	relation 4067970 --->
 	  a role_name "" private
@@ -3301,7 +3429,6 @@ ${inlines}
 	mysql_decl ""
 	MysqlColumn
       end
-
     end
 
     classdiagram 3208834 "ControllerRelationList"
@@ -3309,10 +3436,47 @@ ${inlines}
       size B-Landscape
     end
 
+    class 3701890 "AbstractControllerRelationList"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 5147650 "~AbstractControllerRelationList"
+	abstract cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
+
+      operation 5147522 "setParentControllerModelToChildControllers"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+    end
+
     class 3601410 "ControllerRelationListHandlerXxYy"
       visibility package 
       nformals 1
-      formal name "RelationListType" type "class" explicit_default_value ""
+      formal name "Relation" type "class" explicit_default_value ""
         explicit_extends ""
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -3356,10 +3520,39 @@ ${inlines}
 	
 	
       end
+
+      operation 5148418 "setParentControllerModelToChildControllers"
+	cpp_inline public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4114818 // <directional composition>
+	relation 4088834 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 4114818 // <directional composition>
+	  b parent class_ref 3681794 // AbstractControllerRelation
+      end
     end
 
     class 2767362 "ControllerRelationList"
       visibility package 
+      nformals 2
+      formal name "Controller" type "class" explicit_default_value ""
+        explicit_extends ""
+      formal name "Impl" type "class" explicit_default_value ""
+        explicit_extends ""
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -3386,13 +3579,14 @@ ${inlines}
       end
 
       operation 5067010 "addChildController"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "controller" type class_ref 3648002 // AbstractController
-	  param in name "filter" explicit_type "Expr"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+	cpp_inline public explicit_return_type "void"
+	nparams 3
+	  param in name "controller" explicit_type "Controller"
+	  param in name "conditions" explicit_type "T"
+	  param in name "impl" explicit_type "Impl"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -3403,7 +3597,7 @@ ${inlines}
       end
 
       operation 5133826 "relationCount"
-	public explicit_return_type "int"
+	cpp_inline public explicit_return_type "int"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3418,7 +3612,7 @@ ${inlines}
       end
 
       operation 5133954 "clearRelations"
-	public explicit_return_type "void"
+	cpp_inline public explicit_return_type "void"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3432,24 +3626,8 @@ ${inlines}
 	
       end
 
-      operation 5060354 "setParentModelToChildControllers"
-	cpp_virtual public explicit_return_type "void"
-	nparams 1
-	  param in name "model" type class_ref 146946 // QAbstractItemModel
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 5066882 "applyOperationPnAllChilds"
-	public explicit_return_type ""
+	cpp_inline public explicit_return_type ""
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3470,6 +3648,29 @@ ${inlines}
 "
 	    classrelation_ref 4031106 // <directional composition>
 	  b parent class_ref 3627906 // ControllerRelation
+      end
+
+      classrelation 4114562 // <generalisation>
+	relation 4088578 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4114562 // <generalisation>
+	  b parent class_ref 3701890 // AbstractControllerRelationList
+      end
+
+      operation 5147778 "setParentControllerModelToChildControllers"
+	cpp_virtual cpp_inline public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -3503,6 +3704,39 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    class 3702018 "SetChildControllerToRelation"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 5148546 "operator()"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "relation" explicit_type "RelationT"
+	  param in name "childController" explicit_type "ControllerT"
+	  param in name "conditions" explicit_type "ConditionT"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 
@@ -3966,7 +4200,7 @@ ${inlines}
 	public explicit_return_type "void"
 	nparams 2
 	  param in name "controller" type class_ref 3614594 // AbstractSqlController
-	  param in name "condition" explicit_type "Expr"
+	  param in name "condition" type class_ref 3239682 // WhereExpression
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
@@ -3979,11 +4213,22 @@ ${inlines}
 	
       end
 
-      operation 5060226 "setParentModelToChildControllers"
-	abstract cpp_virtual cpp_inline public explicit_return_type "void"
-	nparams 1
-	  param in name "model" type class_ref 174210 // QSqlTableModel
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+      classrelation 4114690 // <generalisation>
+	relation 4088706 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4114690 // <generalisation>
+	  b parent class_ref 3701890 // AbstractControllerRelationList
+      end
+
+      operation 5147906 "setParentControllerModelToChildControllers"
+	cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
 "
 	
 	

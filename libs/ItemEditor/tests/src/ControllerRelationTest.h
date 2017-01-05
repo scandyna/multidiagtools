@@ -41,10 +41,13 @@ class ControllerRelationTest : public QObject
 
   void setControllersTest();
   void changeModelTest();
-  
-  void setModelToControllersFirstTest();
-  void setModelToControllersAfterTest();
+
+  void relationSetModelToControllersFirstTest();
+  void relationSetModelToControllersAfterTest();
   void parentTableChildTableTest();
+
+  void relationListSetModelToControllersFirstTest();
+  void relationListSetModelToControllersAfterTest();
 
   void relationListBasicSetGetTest();
 

@@ -21,18 +21,41 @@
 #ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_H
 #define MDT_ITEM_EDITOR_CONTROLLER_RELATION_H
 
-#include "Mdt/ItemModel/RelationFilterExpression.h"
+// #include "Mdt/ItemModel/RelationFilterExpression.h"
 #include <QPointer>
 
 namespace Mdt{ namespace ItemEditor{
 
-  class AbstractController;
+//   class AbstractController;
 
   /*! \brief Relation between a parent controller and a child controller
    *
+   * ControllerRelation is a class template used by ControllerRelationList
+   *  to handle relations between controllers.
+   *
+   * To be usefull, a class that implements some of concrete controller's
+   *  method in a specific way must be created as subclass of this.
+   *
+   *  The implementation subclass must provide following methods:
+   * \code
+   * // Make signal/slot connections and whatever is required.
+   * // Filter is of implementation specific filter expression type
+   * void registerChildController(const Filter & conditions);
+   *
+   * // Disconnect signal/slots and do whatever is required.
+   * void unregisterChildController();
+   *
+   * // This method is called when parent controller's model changed.
+   * void setParentControllerModelToChildController();
+   * \endcode
+   *
    * ControllerRelation does not own any controller,
    *  deleting them is the responsability of the user of this class.
+   *
+   * \tparam Controller Must be AbstractController or subclass
+   * \tparam Derived Class that inherits from this and that implements specific methods
    */
+  template<typename Controller, typename Derived>
   class ControllerRelation
   {
    public:
@@ -41,23 +64,60 @@ namespace Mdt{ namespace ItemEditor{
      *
      * \pre \a parentController must be a valid pointer
      */
-    explicit ControllerRelation(AbstractController *parentController);
+    explicit ControllerRelation(Controller *parentController)
+     : mParentController(parentController)
+    {
+    }
+//     explicit ControllerRelation(AbstractController *parentController);
+
+    /*! \brief Get parent controller
+     */
+    Controller *parentController() const
+    {
+      return mParentController;
+    }
+
+    /*! \brief Get child controller
+     */
+    Controller *childController() const
+    {
+      return mChildController;
+    }
 
     /*! \brief Set child controller
      *
      * \pre \a controller must be a valid pointer
      * \pre \a conditions must be a valid relation filter expression
      */
-    void setChildController(AbstractController *controller, const Mdt::ItemModel::RelationFilterExpression & conditions);
+    template<typename T>
+    void setChildController(Controller *controller, const T & conditions)
+    {
+      Q_ASSERT(controller != nullptr);
+
+      if(!mChildController.isNull()){
+        impl()->unregisterChildController();
+      }
+      mChildController = controller;
+      impl()->registerChildController(conditions);
+      impl()->setParentControllerModelToChildController();
+    }
+//     void setChildController(AbstractController *controller, const Mdt::ItemModel::RelationFilterExpression & conditions);
 
     /*! \brief Set parent controller's model to child controller
      */
-    void setParentControllerModelToChildController();
+//     void setParentControllerModelToChildController()
+//     {
+//     }
 
    private:
 
-    QPointer<AbstractController> mParentController;
-    QPointer<AbstractController> mChildController;
+     Derived *impl()
+     {
+       return static_cast<Derived*>(this);
+     }
+
+    QPointer<Controller> mParentController;
+    QPointer<Controller> mChildController;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

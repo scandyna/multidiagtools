@@ -24,32 +24,32 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-ControllerRelationList::ControllerRelationList(AbstractController* parentController)
- : mParentController(parentController)
-{
-  Q_ASSERT(!mParentController.isNull());
-}
+// ControllerRelationList::ControllerRelationList(AbstractController* parentController)
+//  : mParentController(parentController)
+// {
+//   Q_ASSERT(!mParentController.isNull());
+// }
 
-ControllerRelationList::~ControllerRelationList()
-{
-  clearRelations();
-}
+// ControllerRelationList::~ControllerRelationList()
+// {
+//   clearRelations();
+// }
 
-void ControllerRelationList::addChildController(AbstractController* controller, const ItemModel::RelationFilterExpression& conditions)
-{
-  Q_ASSERT(controller != nullptr);
+// void ControllerRelationList::addChildController(AbstractController* controller, const ItemModel::RelationFilterExpression& conditions)
+// {
+//   Q_ASSERT(controller != nullptr);
+// 
+//   auto *relation = new ControllerRelation(mParentController);
+//   relation->setChildController(controller, conditions);
+//   mList.push_back(relation);
+// }
 
-  auto *relation = new ControllerRelation(mParentController);
-  relation->setChildController(controller, conditions);
-  mList.push_back(relation);
-}
-
-void ControllerRelationList::clearRelations()
-{
-  for(auto relation : mList){
-    delete relation;
-  }
-  mList.clear();
-}
+// void ControllerRelationList::clearRelations()
+// {
+//   for(auto relation : mList){
+//     delete relation;
+//   }
+//   mList.clear();
+// }
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -33,24 +33,40 @@ namespace Mdt{ namespace ItemEditor{
    *
    * Controllers are only referenced in this list,
    *  they will never be destroyed.
+   *
+   * \tparam Controller Must be AbstractController or subclass
+   * \tparam RelationImpl Specifi implementation of ControllerRelation
    */
+  template<typename Controller, typename RelationImpl>
   class ControllerRelationList
   {
    public:
 
+//     typedef ControllerRelation<Controller, Relation> value_type;
+
     /*! \brief STL-style const iterator
      */
-    typedef std::vector<ControllerRelation*>::const_iterator const_iterator;
+    typedef typename std::vector<RelationImpl*>::const_iterator const_iterator;
+//     typedef typename std::vector<value_type*>::const_iterator const_iterator;
+//     typedef std::vector<ControllerRelation*>::const_iterator const_iterator;
 
     /*! \brief Construct a relation
      *
      * \pre \a parentController must be a valid pointer
      */
-    explicit ControllerRelationList(AbstractController *parentController);
+    explicit ControllerRelationList(Controller *parentController)
+     : mParentController(parentController)
+    {
+      Q_ASSERT(!mParentController.isNull());
+    }
+//     explicit ControllerRelationList(AbstractController *parentController);
 
     /*! \brief Clear created relations
      */
-    ~ControllerRelationList();
+    ~ControllerRelationList()
+    {
+      clearRelations();
+    }
 
     // Disable copy
     ControllerRelationList(const ControllerRelationList &) = delete;
@@ -64,7 +80,15 @@ namespace Mdt{ namespace ItemEditor{
      * \pre \a controller must be a valid pointer
      * \pre \a conditions must be a valid relation filter expression
      */
-    void addChildController(AbstractController *controller, const Mdt::ItemModel::RelationFilterExpression & conditions);
+    template<typename T>
+    void addChildController(Controller *controller, const T & conditions)
+    {
+      Q_ASSERT(controller != nullptr);
+      auto *relation = new RelationImpl(mParentController);
+      relation->setChildController(controller, conditions);
+      mList.push_back(relation);
+    }
+//     void addChildController(AbstractController *controller, const Mdt::ItemModel::RelationFilterExpression & conditions);
 
     /*! \brief Get count of child controllers
      */
@@ -89,12 +113,20 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Remove all relations
      */
-    void clearRelations();
+    void clearRelations()
+    {
+      for(auto relation : mList){
+        delete relation;
+      }
+      mList.clear();
+    }
 
    private:
 
-    QPointer<AbstractController> mParentController;
-    std::vector<ControllerRelation*> mList;
+    QPointer<Controller> mParentController;
+    std::vector<RelationImpl*> mList;
+//     QPointer<AbstractController> mParentController;
+//     std::vector<ControllerRelation*> mList;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
