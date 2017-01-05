@@ -44,13 +44,6 @@ namespace Mdt{ namespace ItemEditor{
      */
     explicit ControllerRelationImpl(AbstractController *parentController);
 
-    /*! \brief Set child controller
-     *
-     * \pre \a controller must be a valid pointer
-     * \pre \a conditions must be a valid relation filter expression
-     */
-//     void setChildController(AbstractController *controller, const Mdt::ItemModel::RelationFilterExpression & conditions);
-
     /*! \brief Register child controller
      *
      * \pre \a conditions must be a valid relation filter expression
@@ -64,11 +57,6 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Set parent controller's model to child controller
      */
     void setParentControllerModelToChildController();
-
-//    private:
-// 
-//     QPointer<AbstractController> mParentController;
-//     QPointer<AbstractController> mChildController;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

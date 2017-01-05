@@ -19,45 +19,7 @@
  **
  ****************************************************************************/
 #include "ControllerRelation.h"
-// #include "AbstractController.h"
-// #include "Mdt/ItemModel/RelationFilterProxyModel.h"
-// #include <QObject>
-
-// #include <QDebug>
-
-// using Mdt::ItemModel::RelationFilterProxyModel;
 
 namespace Mdt{ namespace ItemEditor{
-
-// ControllerRelation::ControllerRelation(AbstractController* parentController)
-//  : mParentController(parentController)
-// {
-//   Q_ASSERT(!mParentController.isNull());
-// }
-
-// void ControllerRelation::setChildController(AbstractController* controller, const ItemModel::RelationFilterExpression& conditions)
-// {
-//   Q_ASSERT(controller != nullptr);
-// 
-//   if(!mChildController.isNull()){
-//     QObject::disconnect(mParentController, &AbstractController::currentRowChanged, mChildController->relationFilterModel(), &RelationFilterProxyModel::setParentModelMatchRow);
-//   }
-//   mChildController = controller;
-//   mChildController->setRelationFilter(conditions);
-//   setParentControllerModelToChildController();
-//   QObject::connect(mParentController, &AbstractController::currentRowChanged, mChildController->relationFilterModel(), &RelationFilterProxyModel::setParentModelMatchRow);
-// }
-
-// void ControllerRelation::setParentControllerModelToChildController()
-// {
-//   Q_ASSERT(!mParentController.isNull());
-//   Q_ASSERT(!mChildController.isNull());
-// 
-//   auto *model = mParentController->modelForView();
-//   if(model == nullptr){
-//     return;
-//   }
-//   mChildController->setRelationFilterParentModel(model);
-// }
 
 }} // namespace Mdt{ namespace ItemEditor{

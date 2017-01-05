@@ -21,12 +21,9 @@
 #ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_H
 #define MDT_ITEM_EDITOR_CONTROLLER_RELATION_H
 
-// #include "Mdt/ItemModel/RelationFilterExpression.h"
 #include <QPointer>
 
 namespace Mdt{ namespace ItemEditor{
-
-//   class AbstractController;
 
   /*! \brief Relation between a parent controller and a child controller
    *
@@ -68,7 +65,6 @@ namespace Mdt{ namespace ItemEditor{
      : mParentController(parentController)
     {
     }
-//     explicit ControllerRelation(AbstractController *parentController);
 
     /*! \brief Get parent controller
      */
@@ -101,13 +97,6 @@ namespace Mdt{ namespace ItemEditor{
       impl()->registerChildController(conditions);
       impl()->setParentControllerModelToChildController();
     }
-//     void setChildController(AbstractController *controller, const Mdt::ItemModel::RelationFilterExpression & conditions);
-
-    /*! \brief Set parent controller's model to child controller
-     */
-//     void setParentControllerModelToChildController()
-//     {
-//     }
 
    private:
 

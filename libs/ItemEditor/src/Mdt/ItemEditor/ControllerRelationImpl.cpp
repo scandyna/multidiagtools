@@ -23,7 +23,7 @@
 #include "Mdt/ItemModel/RelationFilterProxyModel.h"
 #include <QObject>
 
-#include <QDebug>
+// #include <QDebug>
 
 using Mdt::ItemModel::RelationFilterProxyModel;
 
@@ -33,19 +33,6 @@ ControllerRelationImpl::ControllerRelationImpl(AbstractController* parentControl
  : ControllerRelation(parentController)
 {
 }
-
-// void ControllerRelationImpl::setChildController(AbstractController* controller, const ItemModel::RelationFilterExpression& conditions)
-// {
-//   Q_ASSERT(controller != nullptr);
-// 
-//   if(!mChildController.isNull()){
-//     QObject::disconnect(mParentController, &AbstractController::currentRowChanged, mChildController->relationFilterModel(), &RelationFilterProxyModel::setParentModelMatchRow);
-//   }
-//   mChildController = controller;
-//   mChildController->setRelationFilter(conditions);
-//   setParentControllerModelToChildController();
-//   QObject::connect(mParentController, &AbstractController::currentRowChanged, mChildController->relationFilterModel(), &RelationFilterProxyModel::setParentModelMatchRow);
-// }
 
 void ControllerRelationImpl::registerChildController(const ItemModel::RelationFilterExpression & conditions)
 {
