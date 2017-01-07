@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -35,7 +35,7 @@ class StandardWidgetsTest : public QObject
 
   void standardEditorLayoutWidgetTest();
 
-  void standardWindowTest();
+//   void standardWindowTest();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_STANDARD_WIDGETS_TEST_H

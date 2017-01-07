@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,7 +25,10 @@ using namespace Mdt::ItemModel;
 AddressModel::AddressModel(QObject* parent)
  : VariantTableModel(VariantTableModelStorageRule::GroupDisplayAndEditRoleData, parent)
 {
-  resize(0, 3);
+  resize(2, 3);
+  populateColumn(0, {11,21});
+  populateColumn(1, {1, 2});
+  populateColumn(2, {"Street 11","Street 21"});
 }
 
 QVariant AddressModel::headerData(int section, Qt::Orientation orientation, int role) const

@@ -18,44 +18,48 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_STANDARD_WINDOW_H
-#define MDT_ITEM_EDITOR_STANDARD_WINDOW_H
+#ifndef MDT_ITEM_EDITOR_WINDOW_TEST_H
+#define MDT_ITEM_EDITOR_WINDOW_TEST_H
 
-#include "AbstractWindow.h"
-#include <memory>
+#include "Mdt/ItemEditor/AbstractWindow.h"
+#include "Mdt/ItemEditor/NavigationActions.h"
+#include "Mdt/ItemEditor/EditionActions.h"
+#include "Mdt/ItemEditor/InsertAction.h"
+#include "Mdt/ItemEditor/RemoveAction.h"
+#include <QObject>
+#include <QtTest/QtTest>
 
-namespace Mdt{ namespace ItemEditor{
+using namespace Mdt::ItemEditor;
 
-  namespace Ui{
-    class StandardWindow;
-  }
+class AbstractWindowTester : public AbstractWindow
+{
+ Q_OBJECT
 
-  /*! \brief StandardWindow can be used as editor for basic cases
-   *
-   * Based on AbstractWindow (which is based on QMainWindow), it displays a menu, toolbar and a status bar.
-   */
-  class StandardWindow : public AbstractWindow
-  {
-   Q_OBJECT
+ public:
 
-   public:
+  AbstractWindowTester(QWidget* parent = nullptr);
+  NavigationActions *navigationActions();
+  EditionActions *editionActions();
+  InsertAction *insertAction();
+  RemoveAction *removeAction();
+};
 
-    /*! \brief Construct a empty window
-     */
-    StandardWindow(QWidget *parent = nullptr);
+class WindowTest : public QObject
+{
+  Q_OBJECT
 
-    // unique_ptr needs complete definition to destruct Ui::StandardWindow
-    ~StandardWindow();
+ private slots:
 
-   private:
+  void initTestCase();
+  void cleanupTestCase();
 
-    /*! \brief Setup navigation elements
-     */
-    void setupNavigationElements();
+  void initActionsTest();
 
-    std::unique_ptr<Ui::StandardWindow> mUiStandardWindow;
-  };
+  void setupControllerBeforeSetTest();
+  void setupControllerAfterSetTest();
 
-}} // namespace Mdt{ namespace ItemEditor{
+  void standardWindowTest();
+};
 
-#endif // #ifndef MDT_ITEM_EDITOR_STANDARD_WINDOW_H
+
+#endif // #ifndef MDT_ITEM_EDITOR_WINDOW_TEST_H

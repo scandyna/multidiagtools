@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -92,19 +92,19 @@ void StandardWidgetsTest::standardEditorLayoutWidgetTest()
   QVERIFY(widget4.isNull());
 }
 
-void StandardWidgetsTest::standardWindowTest()
-{
-  Mdt::ItemEditor::StandardWindow window;
-
-  window.show();
-
-  /*
-   * Play
-   */
-//   while(window.isVisible()){
-//     QTest::qWait(500);
-//   }
-}
+// void StandardWidgetsTest::standardWindowTest()
+// {
+//   Mdt::ItemEditor::StandardWindow window;
+// 
+//   window.show();
+// 
+//   /*
+//    * Play
+//    */
+// //   while(window.isVisible()){
+// //     QTest::qWait(500);
+// //   }
+// }
 
 /*
  * Main

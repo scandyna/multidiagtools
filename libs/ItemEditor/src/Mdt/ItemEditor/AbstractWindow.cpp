@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -122,6 +122,8 @@ void AbstractWindow::setMainController(AbstractController* controller)
     connect(mNavigationActions, &NavigationActions::toLastTriggered, controller, &AbstractController::toLast);
     connect(controller, &AbstractController::rowStateChanged, mNavigationActions, &NavigationActions::setRowState);
     connect(controller, &AbstractController::controllerStateChanged, mNavigationActions, &NavigationActions::setControllerState);
+    mNavigationActions->setControllerState(controller->controllerState());
+    mNavigationActions->setRowState(controller->rowState());
   }
   // Connect edition actions
   if(mEditionActions != nullptr){
@@ -135,6 +137,8 @@ void AbstractWindow::setMainController(AbstractController* controller)
     connect(mEditionActions, &EditionActions::revertTriggered, controller, &AbstractController::revert);
     connect(controller, &AbstractController::rowStateChanged, mEditionActions, &EditionActions::setRowState);
     connect(controller, &AbstractController::controllerStateChanged, mEditionActions, &EditionActions::setControllerState);
+    mEditionActions->setControllerState(controller->controllerState());
+    mEditionActions->setRowState(controller->rowState());
   }
   // Connect insert action
   if(mInsertAction != nullptr){
@@ -144,6 +148,8 @@ void AbstractWindow::setMainController(AbstractController* controller)
     }
     connect(mInsertAction, &InsertAction::insertTriggered, controller, &AbstractController::insert);
     connect(controller, &AbstractController::controllerStateChanged, mInsertAction, &InsertAction::setControllerState);
+    mInsertAction->setControllerState(controller->controllerState());
+    mInsertAction->setRowState(controller->rowState());
   }
   // Connect remove actions
   if(mRemoveAction != nullptr){
@@ -155,6 +161,8 @@ void AbstractWindow::setMainController(AbstractController* controller)
     connect(mRemoveAction, &RemoveAction::removeTriggered, controller, &AbstractController::remove);
     connect(controller, &AbstractController::rowStateChanged, mRemoveAction, &RemoveAction::setRowState);
     connect(controller, &AbstractController::controllerStateChanged, mRemoveAction, &RemoveAction::setControllerState);
+    mRemoveAction->setControllerState(controller->controllerState());
+    mRemoveAction->setRowState(controller->rowState());
   }
 }
 

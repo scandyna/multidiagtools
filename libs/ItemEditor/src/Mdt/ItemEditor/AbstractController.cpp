@@ -34,7 +34,8 @@ namespace Mdt{ namespace ItemEditor{
 
 AbstractController::AbstractController(QObject* parent)
  : QObject(parent),
-   pvInsertLocation(InsertAtBeginning)
+   pvInsertLocation(InsertAtBeginning),
+   mRelationList(this)
 {
   pvRowChangeEventDispatcher = new RowChangeEventDispatcher(this);
   connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateUpdated, this, &AbstractController::updateRowState);
@@ -82,6 +83,11 @@ int AbstractController::currentRow() const
   return pvRowChangeEventDispatcher->currentRow();
 }
 
+RowState AbstractController::rowState() const
+{
+  return pvRowChangeEventDispatcher->currentRowState();
+}
+
 void AbstractController::setFilterEnabled(bool enable)
 {
   if(enable == isFilterEnabled()){
@@ -93,6 +99,7 @@ void AbstractController::setFilterEnabled(bool enable)
     mModelContainer.deleteFirstProxyModelOfType<FilterProxyModel>();
   }
   setModelToView(modelForView());
+  mRelationList.setParentControllerModelToChildControllers();
 }
 
 bool AbstractController::isFilterEnabled() const
@@ -137,6 +144,13 @@ RelationFilterProxyModel* AbstractController::relationFilterModel() const
   auto *model = mModelContainer.firstProxyModelOfType<RelationFilterProxyModel>();
   Q_ASSERT(model != nullptr);
   return reinterpret_cast<RelationFilterProxyModel*>(model);
+}
+
+void AbstractController::addChildController(AbstractController *controller, const ItemModel::RelationFilterExpression & conditions)
+{
+  Q_ASSERT(controller != nullptr);
+
+  mRelationList.addChildController(controller, conditions);
 }
 
 bool AbstractController::setCurrentRow(int row)

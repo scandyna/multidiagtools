@@ -51,6 +51,10 @@ class ControllerRelationTest : public QObject
 
   void relationListBasicSetGetTest();
 
+  void controllerAddChildControllerTest();
+  void controllerChangeModelForViewTest();
+  void controllerRelationFilterTest();
+
  private:
 
   // Helper function for editing in a QAbstractItemView

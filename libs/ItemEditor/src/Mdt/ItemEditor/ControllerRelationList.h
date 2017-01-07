@@ -27,8 +27,6 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-  class AbstractController;
-
   /*! \brief Container of controller relations
    *
    * Controllers are only referenced in this list,
@@ -42,15 +40,11 @@ namespace Mdt{ namespace ItemEditor{
   {
    public:
 
-//     typedef ControllerRelation<Controller, Relation> value_type;
-
     /*! \brief STL-style const iterator
      */
     typedef typename std::vector<RelationImpl*>::const_iterator const_iterator;
-//     typedef typename std::vector<value_type*>::const_iterator const_iterator;
-//     typedef std::vector<ControllerRelation*>::const_iterator const_iterator;
 
-    /*! \brief Construct a relation
+    /*! \brief Construct a relation list
      *
      * \pre \a parentController must be a valid pointer
      */
@@ -58,8 +52,12 @@ namespace Mdt{ namespace ItemEditor{
      : mParentController(parentController)
     {
       Q_ASSERT(!mParentController.isNull());
+      /*
+       * parentController is not yet completely constructed,
+       * so we only reference it in this constructor,
+       * and avoid using it now.
+       */
     }
-//     explicit ControllerRelationList(AbstractController *parentController);
 
     /*! \brief Clear created relations
      */
@@ -88,7 +86,16 @@ namespace Mdt{ namespace ItemEditor{
       relation->setChildController(controller, conditions);
       mList.push_back(relation);
     }
-//     void addChildController(AbstractController *controller, const Mdt::ItemModel::RelationFilterExpression & conditions);
+
+    /*! \brief Set parent controller's model to all child controllers
+     */
+    void setParentControllerModelToChildControllers()
+    {
+      for(auto *relation : mList){
+        Q_ASSERT(relation != nullptr);
+        relation->setParentControllerModelToChildController();
+      }
+    }
 
     /*! \brief Get count of child controllers
      */
@@ -125,8 +132,6 @@ namespace Mdt{ namespace ItemEditor{
 
     QPointer<Controller> mParentController;
     std::vector<RelationImpl*> mList;
-//     QPointer<AbstractController> mParentController;
-//     std::vector<ControllerRelation*> mList;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

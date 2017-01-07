@@ -41,6 +41,7 @@ void ControllerRelationImpl::registerChildController(const ItemModel::RelationFi
 
   childController()->setRelationFilter(conditions);
   QObject::connect(parentController(), &AbstractController::currentRowChanged, childController()->relationFilterModel(), &RelationFilterProxyModel::setParentModelMatchRow);
+  childController()->relationFilterModel()->setParentModelMatchRow( parentController()->currentRow() );
 }
 
 void ControllerRelationImpl::unregisterChildController()

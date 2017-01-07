@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,7 +25,9 @@ using namespace Mdt::ItemModel;
 ClientModel::ClientModel(QObject* parent)
  : VariantTableModel(VariantTableModelStorageRule::GroupDisplayAndEditRoleData, parent)
 {
-  resize(0, 2);
+  resize(2, 2);
+  populateColumn(0, {1,2});
+  populateColumn(1, {"Name 1","Name 2"});
 }
 
 QVariant ClientModel::headerData(int section, Qt::Orientation orientation, int role) const

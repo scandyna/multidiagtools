@@ -23,6 +23,8 @@
 
 #include "RowState.h"
 #include "ControllerState.h"
+#include "ControllerRelationImpl.h"
+#include "ControllerRelationList.h"
 #include "Mdt/ItemModel/ProxyModelContainer.h"
 #include "Mdt/ItemModel/FilterProxyModel.h"
 #include "Mdt/Error.h"
@@ -158,6 +160,13 @@ namespace Mdt{ namespace ItemEditor{
      */
     int currentRow() const;
 
+    /*! \brief Get row state
+     *
+     * \sa rowCount()
+     * \sa currentRow()
+     */
+    RowState rowState() const;
+
     /*! \brief Set filter enabled
      *
      * \sa isFilterEnabled()
@@ -223,6 +232,21 @@ namespace Mdt{ namespace ItemEditor{
      * \pre Relation filter must be enabled
      */
     Mdt::ItemModel::RelationFilterProxyModel *relationFilterModel() const;
+
+    /*! \brief Add a child controller
+     *
+     * Once \a controller becomes child of this controller,
+     *  it will be filtered regarding \a conditions .
+     *
+     * When state of this controller changes,
+     *  state all childs will also be updated.
+     *
+     * \note Because \a controller can be shared with several objects,
+     *        this controller does not take ownership of it (it will not delete it).
+     * \pre \a controller must be a valid pointer
+     * \pre \a expression must be a relation filter expression
+     */
+    void addChildController(AbstractController *controller, const Mdt::ItemModel::RelationFilterExpression & conditions);
 
     /*! \brief Get last error
      */
@@ -401,6 +425,7 @@ namespace Mdt{ namespace ItemEditor{
     RowChangeEventDispatcher *pvRowChangeEventDispatcher;
     InsertLocation pvInsertLocation;
     Mdt::ItemModel::ProxyModelContainer mModelContainer;
+    ControllerRelationList<AbstractController, ControllerRelationImpl> mRelationList;
     Mdt::Error mLastError;
   };
 

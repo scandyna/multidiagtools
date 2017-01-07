@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "Mdt/Application.h"
+#include "Mdt/ItemModel/RelationFilterExpression.h"
 #include "Mdt/ItemEditor/StandardWindow.h"
 #include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
 #include "ClientWidget.h"
@@ -26,6 +27,7 @@
 #include <QDebug>
 
 using namespace Mdt::ItemEditor;
+using namespace Mdt::ItemModel;
 
 /*! \brief Main of ClientEditor example
  */
@@ -44,6 +46,10 @@ int main(int argc, char **argv)
   auto *editorWidget = new StandardEditorLayoutWidget;
   editorWidget->setMainWidget(clientWidget);
   editorWidget->addChildWidget(addressWidget, "Addresses");
+  // Setup relation
+  ParentModelColumn clientId(0);
+  FilterColumn addressClientId(1);
+  clientWidget->controller()->addChildController(addressWidget->controller(), addressClientId == clientId);
   // Setup main window
   StandardWindow mainWindow;
   mainWindow.setCentralWidget(editorWidget);
