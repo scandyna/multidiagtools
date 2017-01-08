@@ -18,32 +18,39 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ResizeToContentsAction.h"
-#include "ControllerState.h"
+#include "RelationKeyTest.h"
+#include "Mdt/Application.h"
+#include "Mdt/ItemModel/RelationKey.h"
 
-namespace Mdt{ namespace ItemEditor{
+using namespace Mdt::ItemModel;
 
-ResizeToContentsAction::ResizeToContentsAction(QObject* parent)
- : AbstractActionContainer(parent)
+void RelationKeyTest::initTestCase()
 {
-  mResizeToContentsAction = new QAction(QIcon::fromTheme("zoom-fit-best"), tr("Resize to contents"), this);
-  mResizeToContentsAction->setObjectName("ResizeToContentsAction");
-  connect(mResizeToContentsAction, &QAction::triggered, this, &ResizeToContentsAction::resizeToContentsTriggered);
-  mResizeToContentsAction->setEnabled(false);
 }
 
-void ResizeToContentsAction::updateEnableState()
+void RelationKeyTest::cleanupTestCase()
 {
-  if(rowStateIsNull()){
-    disableAllActions();
-    return;
+}
+
+/*
+ * Tests
+ */
+
+
+
+/*
+ * Main
+ */
+
+int main(int argc, char **argv)
+{
+  Mdt::Application app(argc, argv);
+  RelationKeyTest test;
+
+  if(!app.init()){
+    return 1;
   }
-  mResizeToContentsAction->setEnabled( controllerState() == ControllerState::Visualizing );
-}
+//   app.debugEnvironnement();
 
-void ResizeToContentsAction::disableAllActions()
-{
-  mResizeToContentsAction->setEnabled(false);
+  return QTest::qExec(&test, argc, argv);
 }
-
-}} // namespace Mdt{ namespace ItemEditor{

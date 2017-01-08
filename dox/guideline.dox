@@ -37,7 +37,7 @@
  * When a function fails, it should be possible to get the reason why it failed.
  *  This is done by using the Mdt::Error class.
  *
- * Functionnal classes should store a mdtError as member
+ * Functionnal classes should store a Mdt::Error as member
  *  and provide lastError() function.
  *  Their member functions should follow these rules:
  *   - If the function can fail, but returns no data,
@@ -52,7 +52,7 @@
  *  because they do not, for example, read files.
  *  If it occurs that function can fail, they should follow these rules:
  *   - If the function can fail,
- *      it should return a mdtExpected.
+ *      it should return a Mdt::Expected.
  *
  * \section error_handlig Error handling
  *

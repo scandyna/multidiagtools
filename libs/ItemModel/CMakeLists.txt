@@ -15,6 +15,8 @@ set(SOURCES_FILES
     src/Mdt/ItemModel/ColumnSortStringAttributesList.cpp
     src/Mdt/ItemModel/SortProxyModel.cpp
     src/Mdt/ItemModel/ProxyModelContainer.cpp
+    src/Mdt/ItemModel/ColumnList.cpp
+    src/Mdt/ItemModel/RelationKey.cpp
 )
 
 # Get Boost include directory if not allready set

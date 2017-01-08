@@ -18,32 +18,46 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ResizeToContentsAction.h"
-#include "ControllerState.h"
+#ifndef MDT_ITEM_MODEL_PRIMARY_KEY_H
+#define MDT_ITEM_MODEL_PRIMARY_KEY_H
 
-namespace Mdt{ namespace ItemEditor{
+#include "ColumnList.h"
+#include <initializer_list>
 
-ResizeToContentsAction::ResizeToContentsAction(QObject* parent)
- : AbstractActionContainer(parent)
-{
-  mResizeToContentsAction = new QAction(QIcon::fromTheme("zoom-fit-best"), tr("Resize to contents"), this);
-  mResizeToContentsAction->setObjectName("ResizeToContentsAction");
-  connect(mResizeToContentsAction, &QAction::triggered, this, &ResizeToContentsAction::resizeToContentsTriggered);
-  mResizeToContentsAction->setEnabled(false);
-}
+namespace Mdt{ namespace ItemModel{
 
-void ResizeToContentsAction::updateEnableState()
-{
-  if(rowStateIsNull()){
-    disableAllActions();
-    return;
-  }
-  mResizeToContentsAction->setEnabled( controllerState() == ControllerState::Visualizing );
-}
+  /*! \brief List of columns in a item model that represents a primary key
+   */
+  class PrimaryKey
+  {
+   public:
 
-void ResizeToContentsAction::disableAllActions()
-{
-  mResizeToContentsAction->setEnabled(false);
-}
+    /*! \brief Construct a null primary key
+     */
+    PrimaryKey() = default;
 
-}} // namespace Mdt{ namespace ItemEditor{
+    /*! \brief Construct a primary key
+     *
+     * \pre Each element in \a list must be >= 0
+     * \pre Each element in \a list must be unique
+     */
+    PrimaryKey(std::initializer_list<int> list)
+     : mColumnList(list)
+    {
+    }
+
+    /*! \brief Check if this primary key is null
+     */
+    bool isNull() const noexcept
+    {
+      return mColumnList.isEmpty();
+    }
+
+   private:
+
+    ColumnList mColumnList;
+  };
+
+}} // namespace Mdt{ namespace ItemModel{
+
+#endif // #ifndef MDT_ITEM_MODEL_PRIMARY_KEY_H

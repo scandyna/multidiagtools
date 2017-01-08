@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_MODEL_EDITOR_SORT_PROXY_MODEL_TEST_H
-#define MDT_MODEL_EDITOR_SORT_PROXY_MODEL_TEST_H
+#ifndef MDT_ITEM_MODEL_SORT_PROXY_MODEL_TEST_H
+#define MDT_ITEM_MODEL_SORT_PROXY_MODEL_TEST_H
 
 #include <QObject>
 #include <QtTest/QtTest>
@@ -80,4 +80,4 @@ class SortProxyModelTest : public QObject
   static void displayModels(QAbstractItemModel *sourceModel, QSortFilterProxyModel *proxyModel);
 };
 
-#endif // #ifndef MDT_MODEL_EDITOR_SORT_PROXY_MODEL_TEST_H
+#endif // #ifndef MDT_ITEM_MODEL_SORT_PROXY_MODEL_TEST_H

@@ -18,32 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ResizeToContentsAction.h"
-#include "ControllerState.h"
+#ifndef MDT_ITEM_MODEL_KEY_TEST_H
+#define MDT_ITEM_MODEL_KEY_TEST_H
 
-namespace Mdt{ namespace ItemEditor{
+#include <QObject>
+#include <QtTest/QtTest>
 
-ResizeToContentsAction::ResizeToContentsAction(QObject* parent)
- : AbstractActionContainer(parent)
+class KeyTest : public QObject
 {
-  mResizeToContentsAction = new QAction(QIcon::fromTheme("zoom-fit-best"), tr("Resize to contents"), this);
-  mResizeToContentsAction->setObjectName("ResizeToContentsAction");
-  connect(mResizeToContentsAction, &QAction::triggered, this, &ResizeToContentsAction::resizeToContentsTriggered);
-  mResizeToContentsAction->setEnabled(false);
-}
+ Q_OBJECT
 
-void ResizeToContentsAction::updateEnableState()
-{
-  if(rowStateIsNull()){
-    disableAllActions();
-    return;
-  }
-  mResizeToContentsAction->setEnabled( controllerState() == ControllerState::Visualizing );
-}
+ private slots:
 
-void ResizeToContentsAction::disableAllActions()
-{
-  mResizeToContentsAction->setEnabled(false);
-}
+  void initTestCase();
+  void cleanupTestCase();
 
-}} // namespace Mdt{ namespace ItemEditor{
+  void columnListTest();
+
+  void primaryKeyTest();
+};
+
+#endif // #ifndef MDT_ITEM_MODEL_KEY_TEST_H

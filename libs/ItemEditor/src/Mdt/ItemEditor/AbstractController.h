@@ -27,6 +27,7 @@
 #include "ControllerRelationList.h"
 #include "Mdt/ItemModel/ProxyModelContainer.h"
 #include "Mdt/ItemModel/FilterProxyModel.h"
+#include "Mdt/ItemModel/PrimaryKey.h"
 #include "Mdt/Error.h"
 #include <QObject>
 #include <QPointer>
@@ -166,6 +167,13 @@ namespace Mdt{ namespace ItemEditor{
      * \sa currentRow()
      */
     RowState rowState() const;
+
+    /*! \brief Get primary key
+     *
+     * \note When source model changes,
+     *        the primary key will be cleared.
+     */
+    Mdt::ItemModel::PrimaryKey primaryKey() const;
 
     /*! \brief Set filter enabled
      *
@@ -379,6 +387,13 @@ namespace Mdt{ namespace ItemEditor{
      */
     virtual void revertDataFromModel() = 0;
 
+    /*! \brief Set primary key
+     *
+     * \pre Each column in \a pk must be in unique range ( 0 <= column < sourceModel()->columnCount() )
+     * \pre Each column in \a pk must be unique
+     */
+    void setPrimaryKey(const Mdt::ItemModel::PrimaryKey & pk);
+
     /*! \brief Set last error
      */
     void setLastError(const Mdt::Error & error)
@@ -424,6 +439,7 @@ namespace Mdt{ namespace ItemEditor{
     ControllerState pvControllerState = ControllerState::Visualizing;
     RowChangeEventDispatcher *pvRowChangeEventDispatcher;
     InsertLocation pvInsertLocation;
+    Mdt::ItemModel::PrimaryKey mPrimaryKey;
     Mdt::ItemModel::ProxyModelContainer mModelContainer;
     ControllerRelationList<AbstractController, ControllerRelationImpl> mRelationList;
     Mdt::Error mLastError;

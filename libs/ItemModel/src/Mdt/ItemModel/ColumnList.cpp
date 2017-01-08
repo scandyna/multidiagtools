@@ -18,32 +18,29 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ResizeToContentsAction.h"
-#include "ControllerState.h"
+#include "ColumnList.h"
+#include <QtGlobal>
+#include <set>
 
-namespace Mdt{ namespace ItemEditor{
+#ifdef QT_DEBUG
+#define mdtItemModelColumnListAssert(list)  \
+for(const auto col : list)  \
+{                           \
+  Q_ASSERT(col >= 0);       \
+  std::set<int> s(mColumnList.cbegin(), mColumnList.cend());  \
+  Q_ASSERT(s.size() == mColumnList.size());                   \
+}
+#else
+#define mdtItemModelColumnListAssert(list)
+#endif // #ifdef QT_DEBUG
 
-ResizeToContentsAction::ResizeToContentsAction(QObject* parent)
- : AbstractActionContainer(parent)
+namespace Mdt{ namespace ItemModel{
+
+ColumnList::ColumnList(std::initializer_list< int > list)
+ : mColumnList(list)
 {
-  mResizeToContentsAction = new QAction(QIcon::fromTheme("zoom-fit-best"), tr("Resize to contents"), this);
-  mResizeToContentsAction->setObjectName("ResizeToContentsAction");
-  connect(mResizeToContentsAction, &QAction::triggered, this, &ResizeToContentsAction::resizeToContentsTriggered);
-  mResizeToContentsAction->setEnabled(false);
+  mdtItemModelColumnListAssert(mColumnList);
 }
 
-void ResizeToContentsAction::updateEnableState()
-{
-  if(rowStateIsNull()){
-    disableAllActions();
-    return;
-  }
-  mResizeToContentsAction->setEnabled( controllerState() == ControllerState::Visualizing );
-}
 
-void ResizeToContentsAction::disableAllActions()
-{
-  mResizeToContentsAction->setEnabled(false);
-}
-
-}} // namespace Mdt{ namespace ItemEditor{
+}} // namespace Mdt{ namespace ItemModel{

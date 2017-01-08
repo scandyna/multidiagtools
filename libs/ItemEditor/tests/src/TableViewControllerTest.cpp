@@ -60,6 +60,7 @@ void TableViewControllerTest::basicStateTest()
    */
   TableViewController controller;
   QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QVERIFY(controller.primaryKey().isNull());
 }
 
 void TableViewControllerTest::setModelTest()
@@ -119,6 +120,11 @@ void TableViewControllerTest::setModelTest()
 //   while(tableView.isVisible()){
 //     QTest::qWait(500);
 //   }
+}
+
+void TableViewControllerTest::primaryKeyTest()
+{
+  QFAIL("Not complete");
 }
 
 void TableViewControllerTest::currentRowChangeTest()

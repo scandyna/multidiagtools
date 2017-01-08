@@ -46,6 +46,26 @@ void AbstractController::setInsertLocation(AbstractController::InsertLocation il
   pvInsertLocation = il;
 }
 
+int AbstractController::rowCount() const
+{
+  return pvRowChangeEventDispatcher->rowCount();
+}
+
+int AbstractController::currentRow() const
+{
+  return pvRowChangeEventDispatcher->currentRow();
+}
+
+RowState AbstractController::rowState() const
+{
+  return pvRowChangeEventDispatcher->currentRowState();
+}
+
+ItemModel::PrimaryKey AbstractController::primaryKey() const
+{
+  return mPrimaryKey;
+}
+
 // void AbstractController::setModel(QAbstractItemModel* model)
 // {
 //   Q_ASSERT(model != nullptr);
@@ -73,19 +93,9 @@ void AbstractController::modelSetToView()
   pvRowChangeEventDispatcher->setModel(model);
 }
 
-int AbstractController::rowCount() const
+void AbstractController::setPrimaryKey(const ItemModel::PrimaryKey & pk)
 {
-  return pvRowChangeEventDispatcher->rowCount();
-}
-
-int AbstractController::currentRow() const
-{
-  return pvRowChangeEventDispatcher->currentRow();
-}
-
-RowState AbstractController::rowState() const
-{
-  return pvRowChangeEventDispatcher->currentRowState();
+  mPrimaryKey = pk;
 }
 
 void AbstractController::setFilterEnabled(bool enable)
