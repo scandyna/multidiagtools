@@ -33,4 +33,14 @@ void AbstractItemModelController::setModel(QAbstractItemModel* model)
   registerModel(model);
 }
 
+void AbstractItemModelController::setPrimaryKey(const ItemModel::PrimaryKey & pk)
+{
+  AbstractController::setPrimaryKey(pk);
+}
+
+void AbstractItemModelController::setForeignKey(const ItemModel::ForeignKey & fk)
+{
+  AbstractController::setForeignKey(fk);
+}
+
 }} // namespace Mdt{ namespace ItemEditor{

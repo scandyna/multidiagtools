@@ -53,6 +53,22 @@ namespace Mdt{ namespace ItemModel{
       return mColumnList.isEmpty();
     }
 
+    /*! \brief Get the greates column
+     *
+     * Returns -1 if this list is empty.
+     */
+    int greatestColumn() const
+    {
+      return mColumnList.greatestColumn();
+    }
+
+    /*! \brief Clear
+     */
+    void clear()
+    {
+      mColumnList.clear();
+    }
+
    private:
 
     ColumnList mColumnList;

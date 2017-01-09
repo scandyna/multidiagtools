@@ -18,43 +18,62 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ColumnList.h"
-#include <QtGlobal>
-#include <set>
-#include <algorithm>
+#ifndef MDT_ITEM_MODEL_FOREIGN_KEY_H
+#define MDT_ITEM_MODEL_FOREIGN_KEY_H
 
-#ifdef QT_DEBUG
-#define mdtItemModelColumnListAssert(list)  \
-for(const auto col : list)  \
-{                           \
-  Q_ASSERT(col >= 0);       \
-  std::set<int> s(mColumnList.cbegin(), mColumnList.cend());  \
-  Q_ASSERT(s.size() == mColumnList.size());                   \
-}
-#else
-#define mdtItemModelColumnListAssert(list)
-#endif // #ifdef QT_DEBUG
+#include "ColumnList.h"
+#include <initializer_list>
 
 namespace Mdt{ namespace ItemModel{
 
-ColumnList::ColumnList(std::initializer_list< int > list)
- : mColumnList(list)
-{
-  mdtItemModelColumnListAssert(mColumnList);
-}
+  /*! \brief List of columns in a item model that represents a foreign key
+   */
+  class ForeignKey
+  {
+   public:
 
-int ColumnList::greatestColumn() const
-{
-  const auto it = std::max_element(mColumnList.cbegin(), mColumnList.cend());
-  if(it == mColumnList.cend()){
-    return -1;
-  }
-  return *it;
-}
+    /*! \brief Construct a null foreign key
+     */
+    ForeignKey() = default;
 
-void ColumnList::clear()
-{
-  mColumnList.clear();
-}
+    /*! \brief Construct a foreign key
+     *
+     * \pre Each element in \a list must be >= 0
+     * \pre Each element in \a list must be unique
+     */
+    ForeignKey(std::initializer_list<int> list)
+     : mColumnList(list)
+    {
+    }
+
+    /*! \brief Check if this foreign key is null
+     */
+    bool isNull() const noexcept
+    {
+      return mColumnList.isEmpty();
+    }
+
+    /*! \brief Get the greates column
+     *
+     * Returns -1 if this list is empty.
+     */
+    int greatestColumn() const
+    {
+      return mColumnList.greatestColumn();
+    }
+
+    /*! \brief Clear
+     */
+    void clear()
+    {
+      mColumnList.clear();
+    }
+
+   private:
+
+    ColumnList mColumnList;
+  };
 
 }} // namespace Mdt{ namespace ItemModel{
+
+#endif // #ifndef MDT_ITEM_MODEL_FOREIGN_KEY_H

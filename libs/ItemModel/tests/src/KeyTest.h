@@ -36,6 +36,8 @@ class KeyTest : public QObject
   void columnListTest();
 
   void primaryKeyTest();
+
+  void foreignKeyTest();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_KEY_TEST_H

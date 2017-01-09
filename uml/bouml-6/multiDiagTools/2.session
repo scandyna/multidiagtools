@@ -1,8 +1,6 @@
 window_sizes 1280 963 304 970 908 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 3228418 // KeyOverview
-    970 908 100 4 0 0
   classdiagram_ref 2761218 // ControllerOverview
     120 110 100 23 0 0
   classdiagram_ref 3148674 // Overview
@@ -15,32 +13,22 @@ diagrams
     120 110 100 4 0 0
   classdiagram_ref 3234946 // RelationTerminal
     120 110 100 18 0 0
-  classdiagram_ref 3235074 // ColumnList
-    120 110 100 4 0 0
-  classdiagram_ref 3235202 // PrimaryKey
-    120 110 100 4 0 0
   classdiagram_ref 3235330 // Relation
     120 110 100 18 0 0
   active  classdiagram_ref 3175298 // AbstractItemModelController
-    970 908 100 7 0 0
+    970 908 100 7 84 0
 end
 show_stereotypes
-selected operation_ref 5190658 // setPrimaryKey
+selected classdiagram_ref 3241858 // RWaccessProxyModel
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   class_ref 3722498 // RelationTerminal
-  class_ref 3715074 // ColumnList
-  operation_ref 5190402 // RelationKey
-  class_ref 3715714 // RelationKeyItem
-  attribute_ref 3285634 // ParentModel
-  attribute_ref 3285762 // ChildModel
-  operation_ref 5188994 // copyParentPkToChildFk
-  classview_ref 1630466 // Filter
-  class_ref 3722754 // Relation
+  classview_ref 1709442 // ColumnList
+  classview_ref 1702914 // Key
+  classview_ref 1715970 // ReadWriteAccess
   classview_ref 1472258 // Editor
-  class_ref 3634434 // AbstractItemModelController
   operation_ref 5189634 // sqlPrimaryKey
   operation_ref 5189762 // sqlForeignKey
   classdiagram_ref 3168642 // SqlWidgetMapperController

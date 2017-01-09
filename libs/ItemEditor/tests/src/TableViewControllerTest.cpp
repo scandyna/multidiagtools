@@ -40,6 +40,7 @@ using ItemEditor::ControllerState;
 using ItemModel::VariantTableModel;
 using ItemModel::FilterColumn;
 using ItemModel::ParentModelColumn;
+using ItemModel::PrimaryKey;
 
 void TableViewControllerTest::initTestCase()
 {
@@ -124,6 +125,57 @@ void TableViewControllerTest::setModelTest()
 
 void TableViewControllerTest::primaryKeyTest()
 {
+  /*
+   * Initial state
+   */
+  TableViewController controller;
+  QVERIFY(controller.primaryKey().isNull());
+  /*
+   * Set model to controller
+   */
+  VariantTableModel model;
+  model.resize(5,4);
+  controller.setModel(&model);
+  controller.setPrimaryKey({0,1});
+  QVERIFY(!controller.primaryKey().isNull());
+  /*
+   * Set another model to controller
+   */
+  VariantTableModel model2;
+  model2.resize(3, 2);
+  controller.setModel(&model2);
+  QVERIFY(controller.primaryKey().isNull());
+  controller.setPrimaryKey({0});
+  QVERIFY(!controller.primaryKey().isNull());
+
+  QFAIL("Not complete");
+}
+
+void TableViewControllerTest::foreignKeyTest()
+{
+  /*
+   * Initial state
+   */
+  TableViewController controller;
+  QVERIFY(controller.foreignKey().isNull());
+  /*
+   * Set model to controller
+   */
+  VariantTableModel model;
+  model.resize(5,4);
+  controller.setModel(&model);
+  controller.setForeignKey({0,2});
+  QVERIFY(!controller.foreignKey().isNull());
+  /*
+   * Set another model to controller
+   */
+  VariantTableModel model2;
+  model2.resize(3, 2);
+  controller.setModel(&model2);
+  QVERIFY(controller.foreignKey().isNull());
+  controller.setForeignKey({0});
+  QVERIFY(!controller.foreignKey().isNull());
+
   QFAIL("Not complete");
 }
 

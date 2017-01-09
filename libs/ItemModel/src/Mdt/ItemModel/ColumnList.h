@@ -45,7 +45,7 @@ namespace Mdt{ namespace ItemModel{
      * \pre Each element in \a list must be >= 0
      * \pre Each element in \a list must be unique
      */
-    ColumnList(std::initializer_list<int> list);
+    explicit ColumnList(std::initializer_list<int> list);
 
     /*! \brief Get count of columns
      */
@@ -60,6 +60,16 @@ namespace Mdt{ namespace ItemModel{
     {
       return mColumnList.empty();
     }
+
+    /*! \brief Get the greates column
+     *
+     * Returns -1 if this list is empty.
+     */
+    int greatestColumn() const;
+
+    /*! \brief Clear
+     */
+    void clear();
 
     /*! \brief Get const iterator to the beginning of the list
      */

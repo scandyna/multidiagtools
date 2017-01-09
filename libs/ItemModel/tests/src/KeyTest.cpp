@@ -22,6 +22,7 @@
 #include "Mdt/Application.h"
 #include "Mdt/ItemModel/ColumnList.h"
 #include "Mdt/ItemModel/PrimaryKey.h"
+#include "Mdt/ItemModel/ForeignKey.h"
 
 using namespace Mdt::ItemModel;
 
@@ -46,13 +47,21 @@ void KeyTest::columnListTest()
   QCOMPARE(list1.size(), 0);
   QVERIFY(list1.isEmpty());
   QVERIFY(list1.begin() == list1.end());
+  QCOMPARE(list1.greatestColumn(), -1);
   /*
    * Construct list
    */
-  ColumnList list2({0,1,2});
+  ColumnList list2({0,3,2});
   QCOMPARE(list2.size(), 3);
   QVERIFY(!list2.isEmpty());
   QVERIFY(list2.begin() != list2.end());
+  QCOMPARE(list2.greatestColumn(), 3);
+  /*
+   * Clear
+   */
+  list2.clear();
+  QCOMPARE(list2.size(), 0);
+  QVERIFY(list2.isEmpty());
 
   QFAIL("Not complete");
 }
@@ -64,11 +73,41 @@ void KeyTest::primaryKeyTest()
    */
   PrimaryKey pk1;
   QVERIFY(pk1.isNull());
+  QCOMPARE(pk1.greatestColumn(), -1);
   /*
    * Construct a primary key
    */
   PrimaryKey pk2({0,3,1});
   QVERIFY(!pk2.isNull());
+  QCOMPARE(pk2.greatestColumn(), 3);
+  /*
+   * Clear
+   */
+  pk2.clear();
+  QVERIFY(pk2.isNull());
+
+  QFAIL("Not complete");
+}
+
+void KeyTest::foreignKeyTest()
+{
+  /*
+   * Contruct a null foreign key
+   */
+  ForeignKey fk1;
+  QVERIFY(fk1.isNull());
+  QCOMPARE(fk1.greatestColumn(), -1);
+  /*
+   * Contruct a foreign key
+   */
+  ForeignKey fk2({1,3});
+  QVERIFY(!fk2.isNull());
+  QCOMPARE(fk2.greatestColumn(), 3);
+  /*
+   * Clear
+   */
+  fk2.clear();
+  QVERIFY(fk2.isNull());
 
   QFAIL("Not complete");
 }

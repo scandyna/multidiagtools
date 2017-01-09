@@ -28,6 +28,7 @@
 #include "Mdt/ItemModel/ProxyModelContainer.h"
 #include "Mdt/ItemModel/FilterProxyModel.h"
 #include "Mdt/ItemModel/PrimaryKey.h"
+#include "Mdt/ItemModel/ForeignKey.h"
 #include "Mdt/Error.h"
 #include <QObject>
 #include <QPointer>
@@ -174,6 +175,13 @@ namespace Mdt{ namespace ItemEditor{
      *        the primary key will be cleared.
      */
     Mdt::ItemModel::PrimaryKey primaryKey() const;
+
+    /*! \brief Get foreign key
+     *
+     * \note When source model changes,
+     *        the foreign key will be cleared.
+     */
+    Mdt::ItemModel::ForeignKey foreignKey() const;
 
     /*! \brief Set filter enabled
      *
@@ -389,10 +397,21 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Set primary key
      *
-     * \pre Each column in \a pk must be in unique range ( 0 <= column < sourceModel()->columnCount() )
+     * \note When source model changes, the primary key will be cleared.
+     * \pre sourceModel must be set before setting the primary key
+     * \pre Each column in \a pk must be in valid range ( 0 <= column < sourceModel()->columnCount() )
      * \pre Each column in \a pk must be unique
      */
     void setPrimaryKey(const Mdt::ItemModel::PrimaryKey & pk);
+
+    /*! \brief Set foreign key
+     *
+     * \note When source model changes, the foreign key will be cleared.
+     * \pre sourceModel must be set before setting the foreign key
+     * \pre Each column in \a fk must be in valid range ( 0 <= column < sourceModel()->columnCount() )
+     * \pre Each column in \a fk must be unique
+     */
+    void setForeignKey(const Mdt::ItemModel::ForeignKey & fk);
 
     /*! \brief Set last error
      */
@@ -440,6 +459,7 @@ namespace Mdt{ namespace ItemEditor{
     RowChangeEventDispatcher *pvRowChangeEventDispatcher;
     InsertLocation pvInsertLocation;
     Mdt::ItemModel::PrimaryKey mPrimaryKey;
+    Mdt::ItemModel::ForeignKey mForeignKey;
     Mdt::ItemModel::ProxyModelContainer mModelContainer;
     ControllerRelationList<AbstractController, ControllerRelationImpl> mRelationList;
     Mdt::Error mLastError;

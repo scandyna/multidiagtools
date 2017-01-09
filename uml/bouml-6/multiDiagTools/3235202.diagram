@@ -2,11 +2,11 @@ format 211
 
 classcanvas 128002 class_ref 3715330 // PrimaryKey
   classdiagramsettings member_max_width 0 end
-  xyz 41 66 2000
+  xyz 40 54 2000
 end
 classcanvas 128130 class_ref 3715074 // ColumnList
   classdiagramsettings member_max_width 0 end
-  xyz 169 39 2006
+  xyz 257 35 2006
 end
 relationcanvas 128258 relation_ref 4116482 // <directional composition>
   from ref 128002 z 2007 to ref 128130

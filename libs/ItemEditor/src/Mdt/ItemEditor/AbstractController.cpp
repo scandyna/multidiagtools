@@ -66,6 +66,11 @@ ItemModel::PrimaryKey AbstractController::primaryKey() const
   return mPrimaryKey;
 }
 
+ItemModel::ForeignKey AbstractController::foreignKey() const
+{
+  return mForeignKey;
+}
+
 // void AbstractController::setModel(QAbstractItemModel* model)
 // {
 //   Q_ASSERT(model != nullptr);
@@ -78,6 +83,8 @@ void AbstractController::registerModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);
 
+  mPrimaryKey.clear();
+  mForeignKey.clear();
   mModelContainer.setSourceModel(model);
   setModelToView(modelForView());
 }
@@ -95,8 +102,20 @@ void AbstractController::modelSetToView()
 
 void AbstractController::setPrimaryKey(const ItemModel::PrimaryKey & pk)
 {
+  Q_ASSERT(sourceModel() != nullptr);
+  Q_ASSERT(pk.greatestColumn() < sourceModel()->columnCount());
+
   mPrimaryKey = pk;
 }
+
+void AbstractController::setForeignKey(const ItemModel::ForeignKey & fk)
+{
+  Q_ASSERT(sourceModel() != nullptr);
+  Q_ASSERT(fk.greatestColumn() < sourceModel()->columnCount());
+
+  mForeignKey = fk;
+}
+
 
 void AbstractController::setFilterEnabled(bool enable)
 {
