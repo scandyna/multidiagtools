@@ -160,7 +160,7 @@ void RowChangeTest::eventDispatcherTest()
 //   using Mdt::ItemEditor::TableViewController;
 
   TableViewController controller;
-  RowChangeEventDispatcher dispatcher(&controller);
+  RowChangeEventDispatcher dispatcher(nullptr);
   QList<QVariant> spyItem;
   QStringListModel model;
   QModelIndex index;
@@ -269,7 +269,7 @@ void RowChangeTest::eventDispatcherTest()
 //   using Mdt::ItemEditor::RowChangeEventDispatcher;
 //   using Mdt::ItemEditor::ItemSelectionModel;
 // 
-//   RowChangeEventDispatcher dispatcher;
+//   RowChangeEventDispatcher dispatcher(nullptr);
 //   QList<QVariant> spyItem;
 //   QStringListModel model;
 //   ItemSelectionModel selectionModel(&model);
@@ -409,7 +409,7 @@ void RowChangeTest::eventDispatcherInsertTest()
 //   using ItemEditor::TableViewController;
 
   TableViewController controller;
-  RowChangeEventDispatcher dispatcher(&controller);
+  RowChangeEventDispatcher dispatcher(nullptr);
   QList<QVariant> spyItem;
   QStringListModel model;
   QModelIndex index;
@@ -486,7 +486,7 @@ void RowChangeTest::eventDispatcherInsertTest()
 void RowChangeTest::eventDispatcherInsertFromModelTest()
 {
   TableViewController controller;
-  RowChangeEventDispatcher dispatcher(&controller);
+  RowChangeEventDispatcher dispatcher(nullptr);
   QList<QVariant> spyItem;
   QStringListModel model;
   QModelIndex index;
@@ -599,7 +599,7 @@ void RowChangeTest::eventDispatcherInsertFromModelTest()
 void RowChangeTest::eventDispatcherInsertFromModelMultiTest()
 {
   TableViewController controller;
-  RowChangeEventDispatcher dispatcher(&controller);
+  RowChangeEventDispatcher dispatcher(nullptr);
   QList<QVariant> spyItem;
   QStringListModel model;
   QModelIndex index;
@@ -699,7 +699,7 @@ void RowChangeTest::eventDispatcherInsertFromModelMultiTest()
 void RowChangeTest::eventDispatcherInsertAtBeginningTest()
 {
   TableViewController controller;
-  RowChangeEventDispatcher dispatcher(&controller);
+  RowChangeEventDispatcher dispatcher(nullptr);
   QList<QVariant> spyItem;
   QStringListModel model;
   QModelIndex index;
@@ -745,7 +745,7 @@ void RowChangeTest::eventDispatcherInsertAtBeginningTest()
 void RowChangeTest::eventDispatcherInsertAtEndTest()
 {
   TableViewController controller;
-  RowChangeEventDispatcher dispatcher(&controller);
+  RowChangeEventDispatcher dispatcher(nullptr);
   QList<QVariant> spyItem;
   QStringListModel model;
   QModelIndex index;
@@ -793,7 +793,7 @@ void RowChangeTest::eventDispatcherInsertAtEndTest()
 //   using Mdt::ItemEditor::RowState;
 //   using Mdt::ItemEditor::RowChangeEventDispatcher;
 // 
-//   RowChangeEventDispatcher dispatcher;
+//   RowChangeEventDispatcher dispatcher(nullptr);
 //   QList<QVariant> spyItem;
 //   QStringListModel model;
 //   QItemSelectionModel selectionModel(&model);
@@ -863,7 +863,7 @@ void RowChangeTest::eventDispatcherRemoveTest()
 //   using ItemEditor::TableViewController;
 
   TableViewController controller;
-  RowChangeEventDispatcher dispatcher(&controller);
+  RowChangeEventDispatcher dispatcher(nullptr);
   QList<QVariant> spyItem;
   QStringListModel model;
   QModelIndex index;
@@ -997,7 +997,7 @@ void RowChangeTest::eventDispatcherRemoveTest()
 //   using Mdt::ItemEditor::RowChangeEventDispatcher;
 //   using Mdt::ItemEditor::ItemSelectionModel;
 // 
-//   RowChangeEventDispatcher dispatcher;
+//   RowChangeEventDispatcher dispatcher(nullptr);
 //   QList<QVariant> spyItem;
 //   QStringListModel model;
 //   ItemSelectionModel selectionModel(&model);
@@ -1078,7 +1078,7 @@ void RowChangeTest::eventDispatcherRemoveTest()
 //   using Mdt::ItemEditor::RowChangeEventMapper;
 //   using Mdt::ItemEditor::RowChangeEventDispatcher;
 // 
-//   RowChangeEventDispatcher dispatcher;
+//   RowChangeEventDispatcher dispatcher(nullptr);
 //   RowChangeEventMapper mapper;
 //   QList<QVariant> spyItem;
 //   QStringListModel model;

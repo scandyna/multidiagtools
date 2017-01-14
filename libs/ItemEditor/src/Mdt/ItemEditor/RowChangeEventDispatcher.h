@@ -30,7 +30,7 @@ class QAbstractItemModel;
 
 namespace Mdt{ namespace ItemEditor{
 
-  class AbstractController;
+//   class AbstractController;
 
   /*! \brief RowChangeEventDispatcher receives row change events from different objects and signal them when appropriate
    *
@@ -81,7 +81,8 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Constructor
      */
-    explicit RowChangeEventDispatcher(AbstractController *controller);
+    explicit RowChangeEventDispatcher(QObject *parent);
+//     explicit RowChangeEventDispatcher(AbstractController *controller);
 
     // Copy disabled
     RowChangeEventDispatcher(const RowChangeEventDispatcher &) = delete;
@@ -205,7 +206,7 @@ namespace Mdt{ namespace ItemEditor{
 
     RowState mRowState;
     QPointer<QAbstractItemModel> mModel;
-    QPointer<AbstractController> mController;
+//     QPointer<AbstractController> mController;
     bool mInsertingFromController = false;
   };
 
