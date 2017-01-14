@@ -265,12 +265,10 @@ bool AbstractController::insert()
   bool ok = false;
   switch(pvInsertLocation){
     case InsertAtBeginning:
-      ///ok = model->insertRow(0);
       ok = pvRowChangeEventDispatcher->insertRowAtBeginning();
       break;
     case InsertAtEnd:
-      /// \todo Fetch all
-      ///ok = model->insertRow( rowCount() );
+      /// \todo Fetch all (or not?)
       ok = pvRowChangeEventDispatcher->insertRowAtEnd();
       break;
   }

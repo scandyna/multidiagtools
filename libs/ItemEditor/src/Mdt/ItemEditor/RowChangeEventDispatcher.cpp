@@ -19,19 +19,9 @@
  **
  ****************************************************************************/
 #include "RowChangeEventDispatcher.h"
-// #include "AbstractController.h"
 #include "ControllerStatePermission.h"
 
-// #include <QDebug>
-
 namespace Mdt{ namespace ItemEditor{
-
-// RowChangeEventDispatcher::RowChangeEventDispatcher(AbstractController *controller)
-//  : QObject(controller),
-//    mController(controller)
-// {
-//   Q_ASSERT(!mController.isNull());
-// }
 
 RowChangeEventDispatcher::RowChangeEventDispatcher(QObject *parent)
  : QObject(parent)
@@ -118,7 +108,6 @@ void RowChangeEventDispatcher::onModelReset()
 
 void RowChangeEventDispatcher::onRowsInserted(const QModelIndex& /*parent*/, int first, int last)
 {
-//   Q_ASSERT(!mController.isNull());
   Q_ASSERT(!mModel.isNull());
 
   mRowState.setRowCount(mModel->rowCount());
@@ -138,9 +127,6 @@ void RowChangeEventDispatcher::onRowsInserted(const QModelIndex& /*parent*/, int
       mRowState.setCurrentRow(row);
     }
   }
-//   if(ControllerStatePermission::canChangeCurrentRow(mController->controllerState())){
-//     mRowState.setCurrentRow(last);
-//   }
   emit rowStateUpdated(mRowState);
   emit rowsInserted();
 }
