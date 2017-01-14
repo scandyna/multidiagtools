@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -30,7 +30,8 @@ namespace Mdt{ namespace ItemEditor{
   enum class ControllerState
   {
     Visualizing,  /*!< Visualizing state */
-    Editing       /*!< Editing state */
+    Editing,      /*!< Editing state */
+    Inserting     /*!< Inserting state */
   };
 
   /// \todo Add ModelNotSet (or NoModelSet) state ?

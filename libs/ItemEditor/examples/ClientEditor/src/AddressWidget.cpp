@@ -27,6 +27,7 @@ AddressWidget::AddressWidget(QWidget* parent)
   auto *model = new AddressModel(this);
   setModel(model);
   addResizeToContentsActionToTopBar();
+  addEditionActionsToBottomArea();
   addInsertActionToBottomArea();
   setInsertActionText(tr("Add address"));
   addRemoveActionToBottomBar();

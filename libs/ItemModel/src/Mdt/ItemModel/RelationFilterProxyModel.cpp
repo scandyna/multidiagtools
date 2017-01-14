@@ -21,6 +21,8 @@
 #include "RelationFilterProxyModel.h"
 #include "Expression/ParentModelEvalData.h"
 
+#include <QDebug>
+
 using Mdt::ItemModel::Expression::ParentModelEvalData;
 
 namespace Mdt{ namespace ItemModel{
@@ -66,6 +68,13 @@ bool RelationFilterProxyModel::filterAcceptsRow(int source_row, const QModelInde
   if(mFilterExpression.isNull()){
     return true;
   }
+  /*
+   * QSortFilterProxyModel seems to ignore dynamicSortFilter during insertion.
+   */
+  if(!dynamicSortFilter()){
+    return true;
+  }
+  qDebug() << "RelationFilterProxyModel: eval ..";
   return mFilterExpression.eval(sourceModel(), source_row, ParentModelEvalData(mParentModel, mParentModelRow), filterCaseSensitivity());
 }
 

@@ -25,10 +25,10 @@ using namespace Mdt::ItemModel;
 AddressModel::AddressModel(QObject* parent)
  : VariantTableModel(VariantTableModelStorageRule::GroupDisplayAndEditRoleData, parent)
 {
-  resize(2, 3);
-  populateColumn(0, {11,21});
-  populateColumn(1, {1, 2});
-  populateColumn(2, {"Street 11","Street 21"});
+  resize(5, 3);
+  populateColumn(0, {11,12,21,22,23});
+  populateColumn(1, {1, 1, 2, 2, 2});
+  populateColumn(2, {"Street 11","Street 12","Street 21","Street 22","Street 23"});
 }
 
 QVariant AddressModel::headerData(int section, Qt::Orientation orientation, int role) const

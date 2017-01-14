@@ -56,7 +56,7 @@ namespace Mdt{ namespace ItemModel{
     int mChildModelColumn;
   };
 
-  /*! \brief Relation map between a primary key in parent model and a foreign key in child model
+  /*! \brief Relation map between a key in parent model and a key in child model
    */
   class RelationKey
   {

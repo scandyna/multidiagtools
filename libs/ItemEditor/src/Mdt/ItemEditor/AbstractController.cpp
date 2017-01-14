@@ -24,7 +24,7 @@
 #include "Mdt/ItemModel/RelationFilterProxyModel.h"
 #include <QAbstractItemModel>
 
-// #include <QDebug>
+#include <QDebug>
 
 namespace ItemModel = Mdt::ItemModel;
 using ItemModel::FilterProxyModel;
@@ -39,6 +39,8 @@ AbstractController::AbstractController(QObject* parent)
 {
   pvRowChangeEventDispatcher = new RowChangeEventDispatcher(this);
   connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateUpdated, this, &AbstractController::updateRowState);
+//   connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowsInserted, this, &AbstractController::onRowsInserted);
+  connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowsRemoved, this, &AbstractController::onRowsRemoved);
 }
 
 void AbstractController::setInsertLocation(AbstractController::InsertLocation il)
@@ -232,9 +234,15 @@ void AbstractController::toLast()
 bool AbstractController::submit()
 {
   if(!ControllerStatePermission::canSubmit(pvControllerState)){
+    qDebug() << "AbstractController: connot submit in state " << (int)pvControllerState;
     return false;
   }
-  return submitDataToModel();
+  if(!submitDataToModel()){
+    return false;
+  }
+  enableDynamicFilters();
+
+  return true;
 }
 
 void AbstractController::revert()
@@ -253,15 +261,26 @@ bool AbstractController::insert()
   if(!ControllerStatePermission::canInsert(pvControllerState)){
     return false;
   }
+  disableDynamicFilters();
+  bool ok = false;
   switch(pvInsertLocation){
     case InsertAtBeginning:
-      return model->insertRow(0);
+      ///ok = model->insertRow(0);
+      ok = pvRowChangeEventDispatcher->insertRowAtBeginning();
+      break;
     case InsertAtEnd:
       /// \todo Fetch all
-      return model->insertRow( rowCount() );
+      ///ok = model->insertRow( rowCount() );
+      ok = pvRowChangeEventDispatcher->insertRowAtEnd();
+      break;
   }
+  if(!ok){
+    return false;
+  }
+//   /// \todo check if ok
+//   setControllerState(ControllerState::Inserting);
 
-  return false;
+  return true;
 }
 
 bool AbstractController::remove()
@@ -290,6 +309,20 @@ void AbstractController::onDataEditionDone()
   setControllerState(ControllerState::Visualizing);
 }
 
+// void AbstractController::onRowsInserted()
+// {
+//   qDebug() << "AbstractController: rows inserted , rows: " << rowCount();
+//   setControllerState(ControllerState::Inserting);
+// }
+
+void AbstractController::onRowsRemoved()
+{
+  qDebug() << "AbstractController: rows removed , rows: " << rowCount();
+  if(controllerState() == ControllerState::Inserting){
+    setControllerState(ControllerState::Visualizing);
+  }
+}
+
 void AbstractController::updateRowState(RowState rs)
 {
   emit currentRowChanged(rs.currentRow());
@@ -311,6 +344,28 @@ FilterProxyModel* AbstractController::filterModel() const
   auto *model = mModelContainer.firstProxyModelOfType<FilterProxyModel>();
   Q_ASSERT(model != nullptr);
   return reinterpret_cast<FilterProxyModel*>(model);
+}
+
+void AbstractController::disableDynamicFilters()
+{
+  if(isFilterEnabled()){
+    filterModel()->setDynamicSortFilter(false);
+  }
+  if(isRelationFilterEnabled()){
+    qDebug() << "AbstractController: disabling relation dynamic filter ..";
+    relationFilterModel()->setDynamicSortFilter(false);
+  }
+}
+
+void AbstractController::enableDynamicFilters()
+{
+  if(isFilterEnabled()){
+    filterModel()->setDynamicSortFilter(true);
+  }
+  if(isRelationFilterEnabled()){
+    qDebug() << "AbstractController: enabling relation dynamic filter ..";
+    relationFilterModel()->setDynamicSortFilter(true);
+  }
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

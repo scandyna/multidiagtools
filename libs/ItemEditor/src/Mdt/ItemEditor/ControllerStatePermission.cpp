@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -28,7 +28,9 @@ bool ControllerStatePermission::canChangeCurrentRow(ControllerState state)
     case ControllerState::Visualizing:
       return true;
     case ControllerState::Editing:
-      break;
+      return false;
+    case ControllerState::Inserting:
+      return false;
   }
   return false;
 }
@@ -39,7 +41,9 @@ bool ControllerStatePermission::canInsert(ControllerState state)
     case ControllerState::Visualizing:
       return true;
     case ControllerState::Editing:
-      break;
+      return false;
+    case ControllerState::Inserting:
+      return false;
   }
   return false;
 }
@@ -51,6 +55,8 @@ bool ControllerStatePermission::canSubmit(ControllerState state)
       return false;
     case ControllerState::Editing:
       return true;
+    case ControllerState::Inserting:
+      return false;
   }
   return false;
 }
@@ -62,6 +68,8 @@ bool ControllerStatePermission::canRevert(ControllerState state)
       return false;
     case ControllerState::Editing:
       return true;
+    case ControllerState::Inserting:
+      return false;
   }
   return false;
 }
@@ -72,7 +80,9 @@ bool ControllerStatePermission::canRemove(ControllerState state)
     case ControllerState::Visualizing:
       return true;
     case ControllerState::Editing:
-      break;
+      return false;
+    case ControllerState::Inserting:
+      return true;
   }
   return false;
 }
@@ -83,7 +93,9 @@ bool ControllerStatePermission::canSelect(ControllerState state)
     case ControllerState::Visualizing:
       return true;
     case ControllerState::Editing:
-      break;
+      return false;
+    case ControllerState::Inserting:
+      return false;
   }
   return false;
 }

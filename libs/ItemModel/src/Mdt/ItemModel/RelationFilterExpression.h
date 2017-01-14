@@ -23,6 +23,7 @@
 
 #include "Expression/RelationFilterExpressionGrammar.h"
 #include "Expression/FilterExpressionContainer.h"
+#include "RelationKey.h"
 #include <Qt>
 #include <boost/proto/matches.hpp>
 #include <memory>
@@ -118,6 +119,10 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a parentModelData must not be null
      */
     bool eval(const QAbstractItemModel*const model, int row, const Expression::ParentModelEvalData & parentModelData, Qt::CaseSensitivity caseSensitivity) const;
+
+    /*! \brief
+     */
+    
 
    private:
 

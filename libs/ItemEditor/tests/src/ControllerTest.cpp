@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -64,21 +64,27 @@ void ControllerTest::statePermissionTest()
   // Current row change
   QVERIFY(ControllerStatePermission::canChangeCurrentRow(ControllerState::Visualizing));
   QVERIFY(!ControllerStatePermission::canChangeCurrentRow(ControllerState::Editing));
+  QVERIFY(!ControllerStatePermission::canChangeCurrentRow(ControllerState::Inserting));
   // Insert
   QVERIFY(ControllerStatePermission::canInsert(ControllerState::Visualizing));
   QVERIFY(!ControllerStatePermission::canInsert(ControllerState::Editing));
+  QVERIFY(!ControllerStatePermission::canInsert(ControllerState::Inserting));
   // Submit
   QVERIFY(!ControllerStatePermission::canSubmit(ControllerState::Visualizing));
   QVERIFY(ControllerStatePermission::canSubmit(ControllerState::Editing));
+  QVERIFY(!ControllerStatePermission::canSubmit(ControllerState::Inserting));
   // Revert
   QVERIFY(!ControllerStatePermission::canRevert(ControllerState::Visualizing));
   QVERIFY(ControllerStatePermission::canRevert(ControllerState::Editing));
+  QVERIFY(!ControllerStatePermission::canRevert(ControllerState::Inserting));
   // Remove
   QVERIFY(ControllerStatePermission::canRemove(ControllerState::Visualizing));
   QVERIFY(!ControllerStatePermission::canRemove(ControllerState::Editing));
+  QVERIFY(ControllerStatePermission::canRemove(ControllerState::Inserting));
   // Select
   QVERIFY(ControllerStatePermission::canSelect(ControllerState::Visualizing));
   QVERIFY(!ControllerStatePermission::canSelect(ControllerState::Editing));
+  QVERIFY(!ControllerStatePermission::canSelect(ControllerState::Inserting));
 }
 
 // void ControllerTest::controllerListTest()

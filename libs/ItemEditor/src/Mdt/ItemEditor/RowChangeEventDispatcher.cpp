@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -35,7 +35,7 @@ RowChangeEventDispatcher::RowChangeEventDispatcher(AbstractController *controlle
 
 QAbstractItemModel* RowChangeEventDispatcher::model() const
 {
-  return pvModel;
+  return mModel;
 }
 
 void RowChangeEventDispatcher::setCurrentRow(int row)
@@ -48,102 +48,147 @@ void RowChangeEventDispatcher::setCurrentRow(int row)
 
 int RowChangeEventDispatcher::rowCount() const
 {
-  if(pvModel.isNull()){
+  if(mModel.isNull()){
     return 0;
   }
-  return pvModel->rowCount();
+  return mModel->rowCount();
 }
 
 int RowChangeEventDispatcher::currentRow() const
 {
-  return pvRowState.currentRow();
+  return mRowState.currentRow();
+}
+
+bool RowChangeEventDispatcher::insertRowAtBeginning()
+{
+  Q_ASSERT(!mModel.isNull());
+
+  return insertRowBefore(0);
+}
+
+bool RowChangeEventDispatcher::insertRowAtEnd()
+{
+  Q_ASSERT(!mModel.isNull());
+
+  return insertRowBefore(mModel->rowCount());
 }
 
 void RowChangeEventDispatcher::setModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);
 
-  if(!pvModel.isNull()){
-    disconnect(pvModel, &QAbstractItemModel::modelReset, this, &RowChangeEventDispatcher::onModelReset);
-    disconnect(pvModel, &QAbstractItemModel::rowsInserted, this, &RowChangeEventDispatcher::onRowsInserted);
+  if(!mModel.isNull()){
+    disconnect(mModel, &QAbstractItemModel::modelReset, this, &RowChangeEventDispatcher::onModelReset);
+    disconnect(mModel, &QAbstractItemModel::rowsInserted, this, &RowChangeEventDispatcher::onRowsInserted);
 //     disconnect(pvModel, &QAbstractItemModel::rowsAboutToBeRemoved, this, &RowChangeEventDispatcher::onRowsAboutToBeRemoved);
-    disconnect(pvModel, &QAbstractItemModel::rowsRemoved, this, &RowChangeEventDispatcher::onRowsRemoved);
+    disconnect(mModel, &QAbstractItemModel::rowsRemoved, this, &RowChangeEventDispatcher::onRowsRemoved);
   }
-  pvModel = model;
-  connect(pvModel, &QAbstractItemModel::modelReset, this, &RowChangeEventDispatcher::onModelReset);
-  connect(pvModel, &QAbstractItemModel::rowsInserted, this, &RowChangeEventDispatcher::onRowsInserted);
+  mModel = model;
+  connect(mModel, &QAbstractItemModel::modelReset, this, &RowChangeEventDispatcher::onModelReset);
+  connect(mModel, &QAbstractItemModel::rowsInserted, this, &RowChangeEventDispatcher::onRowsInserted);
 //   connect(pvModel, &QAbstractItemModel::rowsAboutToBeRemoved, this, &RowChangeEventDispatcher::onRowsAboutToBeRemoved);
-  connect(pvModel, &QAbstractItemModel::rowsRemoved, this, &RowChangeEventDispatcher::onRowsRemoved);
+  connect(mModel, &QAbstractItemModel::rowsRemoved, this, &RowChangeEventDispatcher::onRowsRemoved);
   onModelReset();
 }
 
 void RowChangeEventDispatcher::onModelReset()
 {
-  Q_ASSERT(!pvModel.isNull());
+  Q_ASSERT(!mModel.isNull());
 
   /*
    * If model has data, we go to first row
    */
-  pvRowState.setRowCount(pvModel->rowCount());
-  if(pvRowState.rowCount() > 0){
-    pvRowState.setCurrentRow(0);
+  mRowState.setRowCount(mModel->rowCount());
+  if(mRowState.rowCount() > 0){
+    mRowState.setCurrentRow(0);
   }else{
-    pvRowState.setCurrentRow(-1);
+    mRowState.setCurrentRow(-1);
   }
-  Q_ASSERT(pvRowState.rowCount() == pvModel->rowCount());
+  Q_ASSERT(mRowState.rowCount() == mModel->rowCount());
   /*
    * We must allways signal when a model was reset.
    */
-  emit rowStateUpdated(pvRowState);
+  emit rowStateUpdated(mRowState);
 }
 
-void RowChangeEventDispatcher::onRowsInserted(const QModelIndex& /*parent*/, int /*first*/, int last)
+void RowChangeEventDispatcher::onRowsInserted(const QModelIndex& /*parent*/, int first, int last)
 {
   Q_ASSERT(!mController.isNull());
-  Q_ASSERT(!pvModel.isNull());
+  Q_ASSERT(!mModel.isNull());
 
-  pvRowState.setRowCount(pvModel->rowCount());
-  if(ControllerStatePermission::canChangeCurrentRow(mController->controllerState())){
-    pvRowState.setCurrentRow(last);
+  mRowState.setRowCount(mModel->rowCount());
+  /*
+   * If insertion was called from controller,
+   * we must update current row.
+   * If insertion was called outside of our controller, we must:
+   * - Not update current row if insertion occured after current row
+   * - Update current row to point to the same data if insertion occured before current row
+   */
+  if(mInsertingFromController){
+    mRowState.setCurrentRow(last);
+  }else{
+    int row = mRowState.currentRow();
+    if(row >= first){
+      row = row + 1 + last - first;
+      mRowState.setCurrentRow(row);
+    }
   }
-  emit rowStateUpdated(pvRowState);
+//   if(ControllerStatePermission::canChangeCurrentRow(mController->controllerState())){
+//     mRowState.setCurrentRow(last);
+//   }
+  emit rowStateUpdated(mRowState);
+  emit rowsInserted();
 }
 
 void RowChangeEventDispatcher::onRowsRemoved(const QModelIndex& /*parent*/, int first, int /*last*/)
 {
-  Q_ASSERT(!pvModel.isNull());
+  Q_ASSERT(!mModel.isNull());
 
-  pvRowState.setRowCount(pvModel->rowCount());
+  mRowState.setRowCount(mModel->rowCount());
   /*
    * Define new current row:
    *  - If we remove before current row, we must update
    *  - Else, we let it as is
    */
-  int row = pvRowState.currentRow();
+  int row = mRowState.currentRow();
   if(first < row){
     --row;
   }
   // Also assure that we not go after last row in model
-  if(row >= pvRowState.rowCount()){
-    row = pvRowState.rowCount()-1;
+  if(row >= mRowState.rowCount()){
+    row = mRowState.rowCount()-1;
   }
-  pvRowState.setCurrentRow(row);
+  mRowState.setCurrentRow(row);
 //   if(pvRowState.currentRow() >= pvRowState.rowCount()){
 //     pvRowState.setCurrentRow(pvRowState.rowCount()-1);
 //   }
-  emit rowStateUpdated(pvRowState);
+  emit rowsRemoved();
+  emit rowStateUpdated(mRowState);
+}
+
+bool RowChangeEventDispatcher::insertRowBefore(int row)
+{
+  Q_ASSERT(!mModel.isNull());
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row <= mModel->rowCount());
+
+  mInsertingFromController = true;
+  const bool ok = mModel->insertRow(row);
+  mInsertingFromController = false;
+
+  return ok;
 }
 
 void RowChangeEventDispatcher::updateCurrentRow(int row)
 {
-  if(pvModel.isNull()){
+  if(mModel.isNull()){
     return;
   }
-  Q_ASSERT(pvRowState.rowCount() == pvModel->rowCount());
-  auto previousRowState = pvRowState;
-  pvRowState.setCurrentRow(row);
-  if(pvRowState != previousRowState){
-    emit rowStateUpdated(pvRowState);
+  Q_ASSERT(mRowState.rowCount() == mModel->rowCount());
+  auto previousRowState = mRowState;
+  mRowState.setCurrentRow(row);
+  if(mRowState != previousRowState){
+    emit rowStateUpdated(mRowState);
   }
 }
 

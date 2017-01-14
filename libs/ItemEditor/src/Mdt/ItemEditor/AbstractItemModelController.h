@@ -22,6 +22,7 @@
 #define MDT_ITEM_EDITOR_ABSTRACT_ITEM_MODEL_CONTROLLER_H
 
 #include "AbstractController.h"
+#include <initializer_list>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -73,6 +74,15 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setPrimaryKey(const Mdt::ItemModel::PrimaryKey & pk);
 
+    /*! \brief Set primary key
+     *
+     * \note When source model changes, the primary key will be cleared.
+     * \pre sourceModel must be set before setting the primary key
+     * \pre Each column in \a list must be in valid range ( 0 <= column < sourceModel()->columnCount() )
+     * \pre Each column in \a list must be unique
+     */
+    void setPrimaryKey(std::initializer_list<int> list);
+
     /*! \brief Set foreign key
      *
      * \note When source model changes, the foreign key will be cleared.
@@ -81,6 +91,15 @@ namespace Mdt{ namespace ItemEditor{
      * \pre Each column in \a fk must be unique
      */
     void setForeignKey(const Mdt::ItemModel::ForeignKey & fk);
+
+    /*! \brief Set foreign key
+     *
+     * \note When source model changes, the foreign key will be cleared.
+     * \pre sourceModel must be set before setting the foreign key
+     * \pre Each column in \a list must be in valid range ( 0 <= column < sourceModel()->columnCount() )
+     * \pre Each column in \a list must be unique
+     */
+    void setForeignKey(std::initializer_list<int> list);
 
    private:
 

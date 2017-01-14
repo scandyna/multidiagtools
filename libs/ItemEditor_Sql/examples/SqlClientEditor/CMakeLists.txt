@@ -9,7 +9,7 @@ set(SOURCES_FILES
     src/Client.cpp
     src/Address.cpp
     src/ClientEditorSchema.cpp
-    src/AddressWidget.cpp
+    src/SqlAddressWidget.cpp
 )
 
 # Headers directories

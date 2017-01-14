@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -39,6 +39,10 @@ class RowChangeTest : public QObject
   void eventDispatcherTest();
 //   void eventDispatcherWithSelectionModelTest();
   void eventDispatcherInsertTest();
+  void eventDispatcherInsertFromModelTest();
+  void eventDispatcherInsertFromModelMultiTest();
+  void eventDispatcherInsertAtBeginningTest();
+  void eventDispatcherInsertAtEndTest();
 //   void eventDispatcherWithSelectionModelInsertTest();
   void eventDispatcherRemoveTest();
 //   void eventDispatcherWithSelectionModelRemoveTest();

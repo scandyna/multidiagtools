@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -109,7 +109,7 @@ namespace Mdt{ namespace ItemEditor{
      */
     RowState currentRowState() const
     {
-      return pvRowState;
+      return mRowState;
     }
 
     /*! \brief Get row count
@@ -120,6 +120,26 @@ namespace Mdt{ namespace ItemEditor{
      */
     int currentRow() const;
 
+    /*! \brief Insert a row at beginning
+     *
+     * The controller uses this method to insert a row into the model.
+     *  When using this method, this dispatcher will allways tell
+     *  the new inserted row as current row.
+     *
+     * \pre A model must be set
+     */
+    bool insertRowAtBeginning();
+
+    /*! \brief Insert a row at end
+     *
+     * The controller uses this method to insert a row into the model.
+     *  When using this method, this dispatcher will allways tell
+     *  the new inserted row as current row.
+     *
+     * \pre A model must be set
+     */
+    bool insertRowAtEnd();
+
    signals:
 
     /*! \brief Emitted when row state was updated
@@ -129,6 +149,22 @@ namespace Mdt{ namespace ItemEditor{
      *  current changed, model was set or repopulated.
      */
     void rowStateUpdated(Mdt::ItemEditor::RowState rs);
+
+    /*! \brief Emitted when rows have been inserted into the model
+     *
+     * This signal only tells the controller that some rows where
+     *  inserted into the model.
+     *  rowStateUpdated() is also emitted to tell new row state.
+     */
+    void rowsInserted();
+
+    /*! \brief Emitted when rows have been removed from the model
+     *
+     * This signal only tells the controller that some rows where
+     *  removed from the model.
+     *  rowStateUpdated() is also emitted to tell new row state.
+     */
+    void rowsRemoved();
 
    public slots:
 
@@ -152,13 +188,25 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
+    /*! \brief Insert a row
+     *
+     * The controller uses this method to insert a row into the model.
+     *  When using this method, this dispatcher will allways tell
+     *  the new inserted row as current row.
+     *
+     * \pre A model must be set
+     * \pre row must be in correct range ( 0 <= row <= model->rowCount() )
+     */
+    bool insertRowBefore(int row);
+
     /*! \brief Update current row
      */
     void updateCurrentRow(int row);
 
-    RowState pvRowState;
-    QPointer<QAbstractItemModel> pvModel;
+    RowState mRowState;
+    QPointer<QAbstractItemModel> mModel;
     QPointer<AbstractController> mController;
+    bool mInsertingFromController = false;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,26 +18,14 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef ADDRESS_WIDGET_H
-#define ADDRESS_WIDGET_H
+#include "SqlAddressWidget.h"
+#include "Address.h"
+#include <QSqlDatabase>
 
-#include "Mdt/ItemEditor/SqlTableViewWidget.h"
-
-/*! \brief Address editor
- */
-class AddressWidget : public Mdt::ItemEditor::SqlTableViewWidget
+SqlAddressWidget::SqlAddressWidget(const QSqlDatabase & db)
+ : SqlTableViewWidget(db)
 {
- Q_OBJECT
-
- public:
-
-  /*! \brief Constructor
-   */
-  explicit AddressWidget(const QSqlDatabase & db);
-
- private:
-
-  
-};
-
-#endif // #ifndef ADDRESS_WIDGET_H
+  controller()->setTable(Address());
+  controller()->select();
+  ///controller()->setDefaultModel(QSqlDatabase());
+}

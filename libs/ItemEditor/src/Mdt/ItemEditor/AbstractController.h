@@ -46,6 +46,40 @@ namespace Mdt{ namespace ItemEditor{
   class RowChangeEventDispatcher;
 
   /*! \brief Common base for controllers
+   *
+   * \par Edition
+   *  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   *
+   * \par Primary key
+   *  A primary key can be set with setPrimaryKey().
+   *
+   * \par Insertion
+   *  To insert a row, use insert() slot, which will also update this controller state,
+   *   and emit related signals.
+   *   When a new row is inserted from model, for example using QAbstractItemModel::insertRow(),
+   *   the controller will:
+   *    - If rows have been inserted after currentRow(), nothing changes.
+   *    - If rowCount() was 0, nothing changes.
+   *    - If rows have been inserted before currentRow(),
+   *       currentRow() will be adjusted to point to the same data as before insertion.
+   *
+   *    - NO-> If currentRow() was not valid (because the model was empty), it will be set to first row. <- NO
+   *    - 
+   *      This allows applying relations filters to its child controllers automatically.
+   *    NOTE: and when a filter is applyed ????????
+   *   When a new row is inerted from model, the controller will xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   *   When a new row is inerted from a empty model 
+   *
+   * \par Filters
+   *  To set a filter, use setFilter().
+   *   Once the filter was applied, currentRow() will be updated:
+   *    - For all cases, if rowCount() becomes 0, currentRow() will become invalid (-1).
+   *    - If a primary key was set, and its values allready exists, currentRow() will be adjusted point to it.
+   *    - If a primary key was set, but its values no longer exists, currentRow() will be adjusted point to first row.
+   *    - If no primary key was set, currentRow() will be adjusted point to first row.
+   *
+   * \par Relation handling
+   *  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
    */
   class AbstractController : public QObject
   {
@@ -432,6 +466,20 @@ namespace Mdt{ namespace ItemEditor{
 
    private slots:
 
+    /*! \brief Actions to perform once rows have been inserted
+     *
+     * This slot is only called by RowChangeEventDispatcher,
+     *  to update this controller state.
+     */
+//     void onRowsInserted();
+
+    /*! \brief Actions to perform once rows have been removed
+     *
+     * This slot is only called by RowChangeEventDispatcher,
+     *  to update this controller state.
+     */
+    void onRowsRemoved();
+
     /*! \brief Update row state
      *
      * This slot is only called by RowChangeEventDispatcher,
@@ -454,6 +502,22 @@ namespace Mdt{ namespace ItemEditor{
      * \pre Filter must be enabled
      */
     Mdt::ItemModel::FilterProxyModel *filterModel() const;
+
+    /*! \brief Disable dynamic filters
+     *
+     * Will internally check if some filter is enabled first.
+     *  Calling this method if no filter is enabled
+     *  is ok, and simply does nothing.
+     */
+    void disableDynamicFilters();
+
+    /*! \brief (Re)-enable dynamic filters
+     *
+     * Will internally check if some filter is enabled first.
+     *  Calling this method if no filter is enabled
+     *  is ok, and simply does nothing.
+     */
+    void enableDynamicFilters();
 
     ControllerState pvControllerState = ControllerState::Visualizing;
     RowChangeEventDispatcher *pvRowChangeEventDispatcher;

@@ -20,6 +20,10 @@
  ****************************************************************************/
 #include "AbstractItemModelController.h"
 
+namespace ItemModel = Mdt::ItemModel;
+using ItemModel::PrimaryKey;
+using ItemModel::ForeignKey;
+
 namespace Mdt{ namespace ItemEditor{
 
 AbstractItemModelController::AbstractItemModelController(QObject* parent)
@@ -38,9 +42,19 @@ void AbstractItemModelController::setPrimaryKey(const ItemModel::PrimaryKey & pk
   AbstractController::setPrimaryKey(pk);
 }
 
+void AbstractItemModelController::setPrimaryKey(std::initializer_list<int> list)
+{
+  setPrimaryKey(PrimaryKey(list));
+}
+
 void AbstractItemModelController::setForeignKey(const ItemModel::ForeignKey & fk)
 {
   AbstractController::setForeignKey(fk);
+}
+
+void AbstractItemModelController::setForeignKey(std::initializer_list<int> list)
+{
+  setForeignKey(ForeignKey(list));
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

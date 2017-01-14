@@ -24,6 +24,8 @@
 #include "ItemViewTestEditTriggers.h"
 #include <QObject>
 #include <QtTest/QtTest>
+#include <QVariant>
+#include <Qt>
 
 class QAbstractItemView;
 
@@ -44,7 +46,7 @@ class ControllerRelationTest : public QObject
 
   void relationSetModelToControllersFirstTest();
   void relationSetModelToControllersAfterTest();
-  void parentTableChildTableTest();
+  void relationFilterTest();
 
   void relationListSetModelToControllersFirstTest();
   void relationListSetModelToControllersAfterTest();
@@ -62,6 +64,9 @@ class ControllerRelationTest : public QObject
   void editText(QAbstractItemView & view, const QModelIndex & editingIndex, const QString & str);
   void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger);
   void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
+  // Helper functions get/set data in a model
+  bool setModelData(QAbstractItemModel *model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
+  QVariant getModelData(QAbstractItemModel *model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_TEST_H

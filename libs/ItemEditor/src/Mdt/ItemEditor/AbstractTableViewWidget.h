@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -37,6 +37,7 @@ namespace Mdt{ namespace ItemEditor{
   class AbstractActionContainer;
   class InsertAction;
   class RemoveAction;
+  class EditionActions;
   class ResizeToContentsAction;
 
   /*! \brief Common base for QTableView based editor
@@ -86,6 +87,10 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setRemoveActionText(const QString & text);
 
+    /*! \brief Add edition actions to bottom area
+     */
+    void addEditionActionsToBottomArea();
+
     /*! \brief Add resize to contents action to top area
      */
     void addResizeToContentsActionToTopBar();
@@ -120,6 +125,7 @@ namespace Mdt{ namespace ItemEditor{
     void createBottomEditBarIfNot();
     void createInsertActionIfNot();
     void createRemoveActionIfNot();
+    void createEditionActionsIfNot();
     void createResizeToContentsActionIfNot();
 
     QTableView *mView;
@@ -131,6 +137,7 @@ namespace Mdt{ namespace ItemEditor{
     QToolBar *mBottomEditBar = nullptr;
     InsertAction *mInsertAction = nullptr;
     RemoveAction *mRemoveAction = nullptr;
+    EditionActions *mEditionActions = nullptr;
     ResizeToContentsAction *mResizeToContentsAction = nullptr;
   };
 

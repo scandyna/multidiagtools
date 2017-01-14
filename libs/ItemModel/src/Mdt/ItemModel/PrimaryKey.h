@@ -41,7 +41,7 @@ namespace Mdt{ namespace ItemModel{
      * \pre Each element in \a list must be >= 0
      * \pre Each element in \a list must be unique
      */
-    PrimaryKey(std::initializer_list<int> list)
+    explicit PrimaryKey(std::initializer_list<int> list)
      : mColumnList(list)
     {
     }

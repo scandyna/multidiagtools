@@ -234,7 +234,7 @@ void ControllerRelationTest::relationSetModelToControllersAfterTest()
   QCOMPARE(childController.relationFilterModel()->parentModel(), &parentModel);
 }
 
-void ControllerRelationTest::parentTableChildTableTest()
+void ControllerRelationTest::relationFilterTest()
 {
   QModelIndex index;
   /*
@@ -277,6 +277,7 @@ void ControllerRelationTest::parentTableChildTableTest()
   clientController.setView(&clientView);
   QTableView addressView;
   TableViewController addressController;
+  addressController.setInsertLocation(TableViewController::InsertAtEnd);
   addressController.setModel(&addressModel);
   addressController.setView(&addressView);
   /*
@@ -301,6 +302,41 @@ void ControllerRelationTest::parentTableChildTableTest()
   index = addressView.model()->index(0, 0);
   QCOMPARE(addressView.model()->data(index), QVariant(21));
   /*
+   * Insert a row in address model
+   * Address model filtered on client 1, after inert done:
+   * ------------------------
+   * | Id | Cli_Id | Street |
+   * ------------------------
+   * | 21 |   2    |  S21   |
+   * ------------------------
+   * | 22 |   2    |  S22   |
+   * ------------------------
+   */
+  QVERIFY(addressController.insertLocation() == TableViewController::InsertAtEnd);
+  QVERIFY(addressController.insert());
+  // New inserted row must not be filtered until it is saved
+  QCOMPARE(addressView.model()->rowCount(), 2);
+  QVERIFY(setModelData(addressView.model(), 1, 0, 22));
+  QVERIFY(setModelData(addressView.model(), 1, 1, 2));
+  QVERIFY(setModelData(addressView.model(), 1, 2, "S22"));
+  /*
+   * Save by calling controller's method
+   */
+  QVERIFY(addressController.submit());
+  QCOMPARE(addressView.model()->rowCount(), 2);
+  QCOMPARE(getModelData(addressView.model(), 0, 0), QVariant(21));
+  QCOMPARE(getModelData(addressView.model(), 0, 1), QVariant(2));
+  QCOMPARE(getModelData(addressView.model(), 1, 0), QVariant(22));
+  QCOMPARE(getModelData(addressView.model(), 1, 1), QVariant(2));
+  /*
+   * Check that relation filter works again
+   */
+  
+  /**
+   * \todo Check also submiting in view directly
+   */
+  
+  /*
    * Play
    */
   clientModel.setHeaderData(0, Qt::Horizontal, "Id");
@@ -314,6 +350,8 @@ void ControllerRelationTest::parentTableChildTableTest()
   while(clientView.isVisible()){
     QTest::qWait(500);
   }
+  
+  QFAIL("Not complete");
 }
 
 void ControllerRelationTest::relationListSetModelToControllersFirstTest()
@@ -480,6 +518,40 @@ void ControllerRelationTest::endEditing(QAbstractItemView& view, const QModelInd
 void ControllerRelationTest::edit(QAbstractItemView& view, const QModelIndex& index, const QString& str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger)
 {
   ItemViewTestEdit::edit(view, index, str, beginEditTrigger, endEditTrigger);
+}
+
+bool ControllerRelationTest::setModelData(QAbstractItemModel *model, int row, int column, const QVariant& value, Qt::ItemDataRole role)
+{
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < model->rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < model->columnCount());
+
+  auto index = model->index(row, column);
+  if(!index.isValid()){
+    qDebug() << "index is not valid: " << index;
+    return false;
+  }
+
+  return model->setData(index, value, role);
+}
+
+QVariant ControllerRelationTest::getModelData(QAbstractItemModel* model, int row, int column, Qt::ItemDataRole role)
+{
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < model->rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < model->columnCount());
+
+  auto index = model->index(row, column);
+  if(!index.isValid()){
+    qDebug() << "index is not valid: " << index;
+    return QVariant();
+  }
+
+  return model->data(index, role);
 }
 
 /*

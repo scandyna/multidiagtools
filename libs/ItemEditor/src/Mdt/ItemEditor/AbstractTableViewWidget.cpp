@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,6 +24,7 @@
 #include "TableViewController.h"
 #include "InsertAction.h"
 #include "RemoveAction.h"
+#include "EditionActions.h"
 #include "ResizeToContentsAction.h"
 #include <QTableView>
 #include <QVBoxLayout>
@@ -47,6 +48,7 @@ AbstractTableViewWidget::AbstractTableViewWidget(QWidget* parent)
   Q_ASSERT(mBottomEditBar == nullptr);
   Q_ASSERT(mInsertAction == nullptr);
   Q_ASSERT(mRemoveAction == nullptr);
+  Q_ASSERT(mEditionActions == nullptr);
   Q_ASSERT(mResizeToContentsAction == nullptr);
 
   // Layout widgets
@@ -105,6 +107,14 @@ void AbstractTableViewWidget::setRemoveActionText(const QString& text)
 {
   createRemoveActionIfNot();
   mRemoveAction->removeAction()->setText(text);
+}
+
+void AbstractTableViewWidget::addEditionActionsToBottomArea()
+{
+  createEditionActionsIfNot();
+  createBottomEditBarIfNot();
+  mBottomEditBar->addAction(mEditionActions->submitAction());
+  mBottomEditBar->addAction(mEditionActions->revertAction());
 }
 
 void AbstractTableViewWidget::addResizeToContentsActionToTopBar()
@@ -196,7 +206,19 @@ void AbstractTableViewWidget::createRemoveActionIfNot()
     connect(mRemoveAction, &RemoveAction::removeTriggered, refController(), &AbstractController::remove);
   }
   Q_ASSERT(mRemoveAction != nullptr);
-  registerActions(mRemoveAction);
+  registerActions(mRemoveAction); /// \todo What wenn multiple calls ?
+}
+
+void AbstractTableViewWidget::createEditionActionsIfNot()
+{
+  if(mEditionActions == nullptr){
+    mEditionActions = new EditionActions(this);
+    Q_ASSERT(refController() != nullptr);
+    connect(mEditionActions, &EditionActions::submitTriggered, refController(), &AbstractController::submit);
+    connect(mEditionActions, &EditionActions::revertTriggered, refController(), &AbstractController::revert);
+    registerActions(mEditionActions);
+  }
+  Q_ASSERT(mEditionActions != nullptr);
 }
 
 void AbstractTableViewWidget::createResizeToContentsActionIfNot()

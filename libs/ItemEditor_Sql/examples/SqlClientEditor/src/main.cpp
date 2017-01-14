@@ -22,7 +22,7 @@
 #include "Mdt/ItemEditor/StandardWindow.h"
 #include "Mdt/ItemEditor/StandardEditorLayoutWidget.h"
 #include "Mdt/Sql/Schema/Driver.h"
-#include "AddressWidget.h"
+#include "SqlAddressWidget.h"
 #include "ClientEditorSchema.h"
 #include <QSqlDatabase>
 #include <QTemporaryFile>
@@ -63,7 +63,7 @@ int main(int argc, char **argv)
   // Setup Client widget
   
   // Setup Address widget
-  auto *addressWidget = new AddressWidget(db);
+  auto *addressWidget = new SqlAddressWidget(db);
   
   // Setup editor widget
   auto *editorWidget = new StandardEditorLayoutWidget;
