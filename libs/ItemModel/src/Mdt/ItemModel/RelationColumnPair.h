@@ -18,40 +18,52 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "RelationKey.h"
-#include "PrimaryKey.h"
-#include "ForeignKey.h"
+#ifndef MDT_ITEM_MODEL_RELATION_COLUMN_PAIR_H
+#define MDT_ITEM_MODEL_RELATION_COLUMN_PAIR_H
+
 #include <QtGlobal>
-#include <algorithm>
-#include <iterator>
 
 namespace Mdt{ namespace ItemModel{
 
-void RelationKey::addColumnPair(int parentModelColumn, int childModelColumn)
-{
-  Q_ASSERT(parentModelColumn >= 0);
-  Q_ASSERT(childModelColumn >= 0);
+  /*! \brief Pair of parent model coulumn and child model column in a relation
+   */
+  class RelationColumnPair
+  {
+   public:
 
-  mColumnPairList.emplace_back(parentModelColumn, childModelColumn);
-}
+    /*! \brief Construct a column pair
+     *
+     * \pre parentModelColumn must be >= 0
+     * \pre childModelColumn must be >= 0
+     */
+    explicit constexpr RelationColumnPair(int parentModelColumn, int childModelColumn) noexcept
+     : mParentModelColumn(parentModelColumn),
+       mChildModelColumn(childModelColumn)
+    {
+      Q_ASSERT(mParentModelColumn >= 0);
+      Q_ASSERT(mChildModelColumn >= 0);
+    }
 
-void RelationKey::setKey(const PrimaryKey & parentModelPk, const ForeignKey & childModelFk)
-{
-  Q_ASSERT(!parentModelPk.isNull());
-  Q_ASSERT(!childModelFk.isNull());
-  Q_ASSERT(parentModelPk.columnCount() == childModelFk.columnCount());
+    /*! \brief Get parent model column
+     */
+    constexpr int parentModelColumn() const noexcept
+    {
+      return mParentModelColumn;
+    }
 
-  clear();
-  mColumnPairList.reserve(parentModelPk.columnCount());
-  const auto op = [](int parentModelColumn, int childModelColumn){
-    return RelationColumnPair(parentModelColumn, childModelColumn);
+    /*! \brief Get child model column
+     */
+    constexpr int childModelColumn() const noexcept
+    {
+      return mChildModelColumn;
+    }
+
+   private:
+
+    int mParentModelColumn;
+    int mChildModelColumn;
   };
-  std::transform(parentModelPk.begin(), parentModelPk.end(), childModelFk.begin(), std::back_inserter(mColumnPairList), op);
-}
-
-void RelationKey::clear()
-{
-  mColumnPairList.clear();
-}
 
 }} // namespace Mdt{ namespace ItemModel{
+
+#endif // #ifndef MDT_ITEM_MODEL_RELATION_COLUMN_PAIR_H

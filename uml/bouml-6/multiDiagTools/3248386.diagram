@@ -1,0 +1,46 @@
+format 211
+
+classcanvas 128002 class_ref 3722242 // RelationRecordMap
+  classdiagramsettings member_max_width 0 end
+  xyz 540.5 41.75 2000
+end
+classcanvas 128130 class_ref 3715586 // RelationKey
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 613.5 294.25 2006
+end
+classcanvas 128386 class_ref 3735810 // RelationKeyCopier
+  classdiagramsettings member_max_width 0 end
+  xyz 36.5 204.5 2000
+end
+classcanvas 128514 class_ref 138626 // QObject
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 274.5 118.75 2000
+end
+classcanvas 129666 class_ref 3715714 // RelationColumnPair
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 741.25 294.25 3005
+end
+relationcanvas 128258 relation_ref 4115842 // <directional composition>
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 4130562 // <generalisation>
+  from ref 128386 z 2001 to ref 128514
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 4130690 // <directional composition>
+  decenter_end 577
+  from ref 128386 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 4109058 // <directional composition>
+  decenter_begin 577
+  decenter_end 577
+  from ref 128130 z 3006 to ref 129666
+  no_role_a no_role_b
+  multiplicity_a_pos 725 329 3000 no_multiplicity_b
+end
+end

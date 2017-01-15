@@ -24,10 +24,6 @@ classcanvas 130690 class_ref 3533314 // FilterColumn
   classdiagramsettings member_max_width 0 end
   xyz 289 42 2016
 end
-classcanvas 130946 class_ref 3498626 // FilterExpression
-  classdiagramsettings member_max_width 0 end
-  xyz 40.5 520.5 2005
-end
 classcanvas 131202 class_ref 3587842 // ColumnData
   classdiagramsettings member_max_width 0 end
   xyz 479 152 2000

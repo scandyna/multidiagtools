@@ -118,7 +118,6 @@ void AbstractController::setForeignKey(const ItemModel::ForeignKey & fk)
   mForeignKey = fk;
 }
 
-
 void AbstractController::setFilterEnabled(bool enable)
 {
   if(enable == isFilterEnabled()){
@@ -176,6 +175,39 @@ RelationFilterProxyModel* AbstractController::relationFilterModel() const
   Q_ASSERT(model != nullptr);
   return reinterpret_cast<RelationFilterProxyModel*>(model);
 }
+
+void AbstractController::setDynamicFiltersEnabled(bool enable)
+{
+  if(isFilterEnabled()){
+    filterModel()->setDynamicSortFilter(enable);
+  }
+  if(isRelationFilterEnabled()){
+    qDebug() << "AbstractController: set relation dynamic filter " << enable;
+    relationFilterModel()->setDynamicSortFilter(enable);
+  }
+}
+
+// void AbstractController::disableDynamicFilters()
+// {
+//   if(isFilterEnabled()){
+//     filterModel()->setDynamicSortFilter(false);
+//   }
+//   if(isRelationFilterEnabled()){
+//     qDebug() << "AbstractController: disabling relation dynamic filter ..";
+//     relationFilterModel()->setDynamicSortFilter(false);
+//   }
+// }
+
+// void AbstractController::enableDynamicFilters()
+// {
+//   if(isFilterEnabled()){
+//     filterModel()->setDynamicSortFilter(true);
+//   }
+//   if(isRelationFilterEnabled()){
+//     qDebug() << "AbstractController: enabling relation dynamic filter ..";
+//     relationFilterModel()->setDynamicSortFilter(true);
+//   }
+// }
 
 void AbstractController::addChildController(AbstractController *controller, const ItemModel::RelationFilterExpression & conditions)
 {
@@ -240,7 +272,7 @@ bool AbstractController::submit()
   if(!submitDataToModel()){
     return false;
   }
-  enableDynamicFilters();
+  ///enableDynamicFilters();
 
   return true;
 }
@@ -261,7 +293,7 @@ bool AbstractController::insert()
   if(!ControllerStatePermission::canInsert(pvControllerState)){
     return false;
   }
-  disableDynamicFilters();
+  ///disableDynamicFilters();
   bool ok = false;
   switch(pvInsertLocation){
     case InsertAtBeginning:
@@ -342,28 +374,6 @@ FilterProxyModel* AbstractController::filterModel() const
   auto *model = mModelContainer.firstProxyModelOfType<FilterProxyModel>();
   Q_ASSERT(model != nullptr);
   return reinterpret_cast<FilterProxyModel*>(model);
-}
-
-void AbstractController::disableDynamicFilters()
-{
-  if(isFilterEnabled()){
-    filterModel()->setDynamicSortFilter(false);
-  }
-  if(isRelationFilterEnabled()){
-    qDebug() << "AbstractController: disabling relation dynamic filter ..";
-    relationFilterModel()->setDynamicSortFilter(false);
-  }
-}
-
-void AbstractController::enableDynamicFilters()
-{
-  if(isFilterEnabled()){
-    filterModel()->setDynamicSortFilter(true);
-  }
-  if(isRelationFilterEnabled()){
-    qDebug() << "AbstractController: enabling relation dynamic filter ..";
-    relationFilterModel()->setDynamicSortFilter(true);
-  }
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

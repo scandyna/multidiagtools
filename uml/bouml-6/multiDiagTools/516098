@@ -1,6 +1,6 @@
 format 211
 "ItemModel" // Mdt::ItemModel
-  revision 29
+  revision 30
   modified_by 2 "philippe"
   // class settings
   
@@ -984,91 +984,12 @@ ${inlines}
       end
     end
 
-    class 3715586 "RelationKey"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 4135042 // <directional composition>
-	relation 4109058 *-->
-	  a role_name "" multiplicity "*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 4135042 // <directional composition>
-	  b parent class_ref 3715714 // RelationKeyItem
-      end
-
-      attribute 3278850 "Items"
-	private type class_ref 3715714 // RelationKeyItem
-	multiplicity "*"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-      end
-
-      operation 5190402 "RelationKey"
-	public explicit_return_type ""
-	nparams 2
-	  param in name "parentPk" type class_ref 3715330 // PrimaryKey
-	  param in name "childFk" type class_ref 3715458 // ForeignKey
-	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 5181826 "getParentModelKey"
-	public return_type class_ref 3715074 // ColumnList
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 5181954 "getChildModelKey"
-	public return_type class_ref 3715074 // ColumnList
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
+    classdiagram 3248514 "RelationKey"
+      classdiagramsettings member_max_width 0 end
+      size A4
     end
 
-    class 3715714 "RelationKeyItem"
+    class 3715714 "RelationColumnPair"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -1104,6 +1025,122 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+    end
+
+    class 3715586 "RelationKey"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4135042 // <directional composition>
+	relation 4109058 *-->
+	  a role_name "" multiplicity "*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 4135042 // <directional composition>
+	  b parent class_ref 3715714 // RelationColumnPair
+      end
+
+      attribute 3278850 "Items"
+	private type class_ref 3715714 // RelationColumnPair
+	multiplicity "*"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 5190402 "RelationKey"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "  ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5212674 "addColumnPair"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "parentModelColumn" explicit_type "int"
+	  param in name "childModelColumn" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5213058 "setKey"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "parentPk" type class_ref 3715330 // PrimaryKey
+	  param in name "childFk" type class_ref 3715458 // ForeignKey
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5212802 "isNull"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5212930 "clear"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -1570,7 +1607,7 @@ ${inlines}
 
     classdiagram 3142018 "RelationFilterProxyModel"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 3594754 "RelationFilterProxyModel"
@@ -1612,13 +1649,13 @@ ${inlines}
 	
       end
 
-      classrelation 3986946 // <directional composition>
-	relation 3961218 *-->
+      classrelation 4156418 // <directional composition>
+	relation 4130434 *-->
 	  a role_name "" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
-	    classrelation_ref 3986946 // <directional composition>
-	  b parent class_ref 3498626 // FilterExpression
+	    classrelation_ref 4156418 // <directional composition>
+	  b parent class_ref 3695362 // RelationFilterExpression
       end
     end
 
@@ -1658,6 +1695,180 @@ ${inlines}
 	  b parent class_ref 3239682 // WhereExpression
       end
     end
+
+    classdiagram 3248386 "RelationKeyCopier"
+      classdiagramsettings member_max_width 0 end
+      size B-Landscape
+    end
+
+    class 3735810 "RelationKeyCopier"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4156546 // <generalisation>
+	relation 4130562 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4156546 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      attribute 3292674 "RelationKey"
+	private type class_ref 3715586 // RelationKey
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3292418 "ParentModel"
+	private type class_ref 146946 // QAbstractItemModel
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3292546 "ChildModel"
+	private type class_ref 146946 // QAbstractItemModel
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 4156674 // <directional composition>
+	relation 4130690 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4156674 // <directional composition>
+	  b parent class_ref 3715586 // RelationKey
+      end
+
+      operation 5211394 "setParentModel"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "model" type class_ref 146946 // QAbstractItemModel
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5211522 "setChildModel"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "model" type class_ref 146946 // QAbstractItemModel
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5213186 "addColumnPair"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "parentModelColumn" explicit_type "int"
+	  param in name "childModelColumn" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5213314 "setKey"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "parentPk" type class_ref 3715330 // PrimaryKey
+	  param in name "childFk" type class_ref 3715458 // ForeignKey
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5213442 "clearKey"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5211266 "onChildModelRowsInserted"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 3
+	  param in name "p" type class_ref 147330 // QModelIndex
+	  param in name "first" explicit_type "int"
+	  param in name "last" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
   end
 
   classview 1643778 "Sort"
@@ -2058,6 +2269,84 @@ ${inlines}
     end
   end
 
+  classview 1682946 "ReadWriteFlags"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3161730 "ReadWriteFlagsProxyModel"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3627778 "ReadWriteFlagsProxyModel"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4030466 // <generalisation>
+	relation 4004482 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4030466 // <generalisation>
+	  b parent class_ref 1752450 // QIdentityProxyModel
+      end
+
+      operation 5067138 "setReadOnly"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "ro" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5067266 "setColumnReadOnly"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "col" explicit_type "int"
+	  param in name "ro" explicit_type "bool"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+  end
+
   classview 1669890 "ProxyModelContainer"
     
     classdiagramsettings member_max_width 0 end
@@ -2261,84 +2550,6 @@ ${inlines}
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-  end
-
-  classview 1682946 "ReadWriteFlags"
-    
-    classdiagramsettings member_max_width 0 end
-    
-    collaborationdiagramsettings end
-    
-    objectdiagramsettings end
-    
-    sequencediagramsettings end
-    
-    statediagramsettings
-     end
-    
-    
-    activitydiagramsettings
-     end
-    classdiagram 3161730 "ReadWriteFlagsProxyModel"
-      classdiagramsettings member_max_width 0 end
-      size A4
-    end
-
-    class 3627778 "ReadWriteFlagsProxyModel"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 4030466 // <generalisation>
-	relation 4004482 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4030466 // <generalisation>
-	  b parent class_ref 1752450 // QIdentityProxyModel
-      end
-
-      operation 5067138 "setReadOnly"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "ro" explicit_type "bool"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 5067266 "setColumnReadOnly"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "col" explicit_type "int"
-	  param in name "ro" explicit_type "bool"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "

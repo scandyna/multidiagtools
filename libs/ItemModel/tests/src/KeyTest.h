@@ -34,10 +34,10 @@ class KeyTest : public QObject
   void cleanupTestCase();
 
   void columnListTest();
-
   void primaryKeyTest();
-
   void foreignKeyTest();
+  void columnPairTest();
+  void relationKeyTest();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_KEY_TEST_H

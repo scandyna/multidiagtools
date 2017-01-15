@@ -63,12 +63,8 @@ namespace Mdt{ namespace ItemEditor{
    *    - If rows have been inserted before currentRow(),
    *       currentRow() will be adjusted to point to the same data as before insertion.
    *
-   *    - NO-> If currentRow() was not valid (because the model was empty), it will be set to first row. <- NO
-   *    - 
    *      This allows applying relations filters to its child controllers automatically.
    *    NOTE: and when a filter is applyed ????????
-   *   When a new row is inerted from model, the controller will xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-   *   When a new row is inerted from a empty model 
    *
    * \par Filters
    *  To set a filter, use setFilter().
@@ -79,7 +75,32 @@ namespace Mdt{ namespace ItemEditor{
    *    - If no primary key was set, currentRow() will be adjusted point to first row.
    *
    * \par Relation handling
-   *  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   *  Common case of a relation is a child model having a foreign key referring to a primary key of a parent model:
+   *   \code
+   *    Controller clientController;
+   *    clientController.setPrimaryKey({0});
+   *    Controller addressController;
+   *    addressController.setForeignKey({1});
+   *    clientController.addChildController(addressController);
+   *   \endcode
+   *   Now, addressController will be filtered for values in column 1 that correspond to values in column 0 of clientController.
+   *    A relation can handle more that 1 column, in whitch case they must all match (AND constraint).
+   *   Using above code will offer a good support for edition.
+   *   A relation can be defined with more complex conditions:
+   *   \code
+   *    Controller unitController;
+   *    Controller linkController;
+   *    ParentModelColumn unitId(0);
+   *    ChildModelColumn startUnitId(0);
+   *    ChildModelColumn endUnitId(1);
+   *    unitController.addChildController(linkController, (startUnitId == unitId) || (endUnitId == unitId) );
+   *   \endcode
+   *   Support for edition can be offered, but will only take in account relation pairs that are equaly compared
+   *    (ChildModelColumn == ParentModelColumn, ChildModelColumn <= ParentModelColumn, ChildModelColumn >= ParentModelColumn).
+   *   When edition is supported in a relation, some event are handled:
+   *    - When a new row is inserted into child controller's model,
+   *       values of the parent controller are copied to child controller
+   *       for each column pairs in the relation.
    */
   class AbstractController : public QObject
   {
@@ -219,6 +240,11 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Set filter enabled
      *
+     * \note Enabling filter will insert a proxy model
+     *        and disabling filter will remove it.
+     *        To temporarily disable filtering,
+     *        setDynamicFiltersEnabled() should be used.
+     * \sa setDynamicFiltersEnabled()
      * \sa isFilterEnabled()
      */
     void setFilterEnabled(bool enable);
@@ -247,6 +273,11 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Set relation filter enabled
      *
+     * \note Enabling relation filter will insert a proxy model
+     *        and disabling relation filter will remove it.
+     *        To temporarily disable relation filtering,
+     *        setDynamicFiltersEnabled() should be used.
+     * \sa setDynamicFiltersEnabled()
      * \sa isRelationFilterEnabled()
      */
     void setRelationFilterEnabled(bool enable);
@@ -282,6 +313,34 @@ namespace Mdt{ namespace ItemEditor{
      * \pre Relation filter must be enabled
      */
     Mdt::ItemModel::RelationFilterProxyModel *relationFilterModel() const;
+
+    /*! \brief Set dynamic filters enabled/disabled
+     *
+     * Will act on dynamic filter property of filter
+     *  and relation filter if enabled.
+     *  If no filter and no relation filter
+     *  is enabled, this method simply does nothing.
+     *
+     * \sa setFilter()
+     * \sa setRelationFilter()
+     */
+    void setDynamicFiltersEnabled(bool enable);
+
+    /*! \brief Disable dynamic filters
+     *
+     * Will internally check if some filter is enabled first.
+     *  Calling this method if no filter is enabled
+     *  is ok, and simply does nothing.
+     */
+//     void disableDynamicFilters();
+
+    /*! \brief (Re)-enable dynamic filters
+     *
+     * Will internally check if some filter is enabled first.
+     *  Calling this method if no filter is enabled
+     *  is ok, and simply does nothing.
+     */
+//     void enableDynamicFilters();
 
     /*! \brief Add a child controller
      *
@@ -502,22 +561,6 @@ namespace Mdt{ namespace ItemEditor{
      * \pre Filter must be enabled
      */
     Mdt::ItemModel::FilterProxyModel *filterModel() const;
-
-    /*! \brief Disable dynamic filters
-     *
-     * Will internally check if some filter is enabled first.
-     *  Calling this method if no filter is enabled
-     *  is ok, and simply does nothing.
-     */
-    void disableDynamicFilters();
-
-    /*! \brief (Re)-enable dynamic filters
-     *
-     * Will internally check if some filter is enabled first.
-     *  Calling this method if no filter is enabled
-     *  is ok, and simply does nothing.
-     */
-    void enableDynamicFilters();
 
     ControllerState pvControllerState = ControllerState::Visualizing;
     RowChangeEventDispatcher *pvRowChangeEventDispatcher;

@@ -32,6 +32,10 @@ namespace Mdt{ namespace ItemModel{
   {
    public:
 
+    /*! \brief STL const iterator
+     */
+    typedef ColumnList::const_iterator const_iterator;
+
     /*! \brief Construct a null primary key
      */
     PrimaryKey() = default;
@@ -44,6 +48,13 @@ namespace Mdt{ namespace ItemModel{
     explicit PrimaryKey(std::initializer_list<int> list)
      : mColumnList(list)
     {
+    }
+
+    /*! \brief Get count of columns
+     */
+    int columnCount() const
+    {
+      return mColumnList.size();
     }
 
     /*! \brief Check if this primary key is null
@@ -67,6 +78,20 @@ namespace Mdt{ namespace ItemModel{
     void clear()
     {
       mColumnList.clear();
+    }
+
+    /*! \brief Get const iterator to the first column
+     */
+    const_iterator begin() const
+    {
+      return mColumnList.begin();
+    }
+
+    /*! \brief Get const iterator to the last
+     */
+    const_iterator end() const
+    {
+      return mColumnList.end();
     }
 
    private:

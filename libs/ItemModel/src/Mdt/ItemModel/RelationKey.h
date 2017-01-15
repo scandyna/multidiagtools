@@ -21,40 +21,43 @@
 #ifndef MDT_ITEM_MODEL_RELATION_KEY_H
 #define MDT_ITEM_MODEL_RELATION_KEY_H
 
-#include <QtGlobal>
+#include "RelationColumnPair.h"
 #include <vector>
 
 namespace Mdt{ namespace ItemModel{
 
   /*! \internal Item of a RelationKey
    */
-  class RelationKeyItem
-  {
-   public:
+//   class RelationKeyItem
+//   {
+//    public:
+// 
+//     constexpr RelationKeyItem(int parentModelColumn, int childModelColumn) noexcept
+//      : mParentModelColumn(parentModelColumn),
+//        mChildModelColumn(childModelColumn)
+//     {
+//       Q_ASSERT(mParentModelColumn >= 0);
+//       Q_ASSERT(mChildModelColumn >= 0);
+//     }
+// 
+//     constexpr int parentModelColumn() const noexcept
+//     {
+//       return mParentModelColumn;
+//     }
+// 
+//     constexpr int childModelColumn() const noexcept
+//     {
+//       return mChildModelColumn;
+//     }
+// 
+//    private:
+// 
+//     int mParentModelColumn;
+//     int mChildModelColumn;
+//   };
 
-    constexpr RelationKeyItem(int parentModelColumn, int childModelColumn) noexcept
-     : mParentModelColumn(parentModelColumn),
-       mChildModelColumn(childModelColumn)
-    {
-      Q_ASSERT(mParentModelColumn >= 0);
-      Q_ASSERT(mChildModelColumn >= 0);
-    }
-
-    constexpr int parentModelColumn() const noexcept
-    {
-      return mParentModelColumn;
-    }
-
-    constexpr int childModelColumn() const noexcept
-    {
-      return mChildModelColumn;
-    }
-
-   private:
-
-    int mParentModelColumn;
-    int mChildModelColumn;
-  };
+  class PrimaryKey;
+  class ForeignKey;
 
   /*! \brief Relation map between a key in parent model and a key in child model
    */
@@ -62,11 +65,53 @@ namespace Mdt{ namespace ItemModel{
   {
    public:
 
-    
+    /*! \brief STL const iterator
+     */
+    typedef std::vector<RelationColumnPair>::const_iterator const_iterator;
+
+    /*! \brief Add a pair of columns
+     *
+     * \pre parentModelColumn must be >= 0
+     * \pre childModelColumn must be >= 0
+     */
+    void addColumnPair(int parentModelColumn, int childModelColumn);
+
+    /*! \brief Set rekation key from parent model primary key and child model foreign key
+     *
+     * \pre parentModelPk must not be null
+     * \pre childModelFk must not be null
+     * \pre Both parentModelPk and childModelFk must have the same count of fields
+     */
+    void setKey(const PrimaryKey & parentModelPk, const ForeignKey & childModelFk);
+
+    /*! \brief Check if this relation key is null
+     */
+    bool isNull() const
+    {
+      return mColumnPairList.empty();
+    }
+
+    /*! \brief Clear
+     */
+    void clear();
+
+    /*! \brief Get const iterator to the beginning
+     */
+    const_iterator begin() const
+    {
+      return mColumnPairList.cbegin();
+    }
+
+    /*! \brief Get const iterator to the end
+     */
+    const_iterator end() const
+    {
+      return mColumnPairList.cend();
+    }
 
    private:
 
-    std::vector<RelationKeyItem> mItems;
+    std::vector<RelationColumnPair> mColumnPairList;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

@@ -4,38 +4,39 @@ diagrams
   classdiagram_ref 2761218 // ControllerOverview
     120 110 100 23 0 0
   classdiagram_ref 3148674 // Overview
-    120 110 100 22 0 0
-  classdiagram_ref 2707074 // AbstractController
-    120 110 100 23 0 0
-  classdiagram_ref 3135362 // ColumnTerminal
-    120 110 100 4 0 0
-  classdiagram_ref 3234946 // RelationTerminal
+    970 908 100 22 0 0
+  classdiagram_ref 3142018 // RelationFilterProxyModel
     120 110 100 18 0 0
-  classdiagram_ref 3175298 // AbstractItemModelController
-    970 908 100 7 84 0
-  classdiagram_ref 3228418 // KeyOverview
+  active  classdiagram_ref 3248514 // RelationKey
     970 908 100 4 0 0
-  active  classdiagram_ref 3235330 // Relation
-    970 908 100 18 0 0
+  classdiagram_ref 3228418 // KeyOverview
+    120 110 100 4 0 0
 end
 show_stereotypes
 selected classdiagram_ref 3235330 // Relation
 open
   
-package_ref 409858 // principes
+  package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   class_ref 3722498 // RelationTerminal
   classview_ref 1709442 // ColumnList
-  classview_ref 1702914 // Key
-  classview_ref 1656834 // Relation
+  class_ref 3715586 // RelationKey
+  attribute_ref 3292674 // RelationKey
+  operation_ref 5211394 // setParentModel
+  operation_ref 5211522 // setChildModel
+  operation_ref 5213186 // addColumnPair
+  operation_ref 5213314 // setKey
+  operation_ref 5213442 // clearKey
+  operation_ref 5211266 // onChildModelRowsInserted
   classview_ref 1715970 // ReadWriteAccess
+  classview_ref 1682946 // ReadWriteFlags
   classview_ref 1472258 // Editor
   classdiagram_ref 3168642 // SqlWidgetMapperController
   class_ref 3138562 // SqlWidgetMapperController
   classdiagram_ref 3168258 // Overview
   classview_ref 1689602 // SqlRelation
   
-package_ref 430082 // Dsp
+  package_ref 430082 // Dsp
   classview_ref 1517954 // proto
 end
 end
