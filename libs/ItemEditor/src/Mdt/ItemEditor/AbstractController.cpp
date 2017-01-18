@@ -77,6 +77,31 @@ ItemModel::ForeignKey AbstractController::foreignKey() const
   return mForeignKey;
 }
 
+void AbstractController::prependProxyModel(QAbstractProxyModel* proxyModel)
+{
+  Q_ASSERT(proxyModel != nullptr);
+
+  auto *oldModelForView = modelForView();
+  mModelContainer.prependProxyModel(proxyModel);
+  updateModelForViewIfChanged(oldModelForView);
+}
+
+void AbstractController::appendProxyModel(QAbstractProxyModel* proxyModel)
+{
+  Q_ASSERT(proxyModel != nullptr);
+
+  auto *oldModelForView = modelForView();
+  mModelContainer.appendProxyModel(proxyModel);
+  updateModelForViewIfChanged(oldModelForView);
+}
+
+void AbstractController::removeProxyModel(QAbstractProxyModel* model)
+{
+  auto *oldModelForView = modelForView();
+  mModelContainer.removeProxyModel(model);
+  updateModelForViewIfChanged(oldModelForView);
+}
+
 // void AbstractController::setModel(QAbstractItemModel* model)
 // {
 //   Q_ASSERT(model != nullptr);
@@ -84,46 +109,6 @@ ItemModel::ForeignKey AbstractController::foreignKey() const
 //   mModelContainer.setSourceModel(model);
 //   setModelToView(modelForView());
 // }
-
-void AbstractController::registerModel(QAbstractItemModel* model)
-{
-  Q_ASSERT(model != nullptr);
-
-  mPrimaryKey.clear();
-  mForeignKey.clear();
-  mModelContainer.setSourceModel(model);
-  emit sourceModelChanged(model);
-  model = modelForView();
-  emit modelForViewChanged(model);
-  setModelToView(model);
-}
-
-void AbstractController::modelSetToView()
-{
-  auto *model = modelForView();
-  Q_ASSERT(model != nullptr);
-
-  if(model == pvRowChangeEventDispatcher->model()){
-    return;
-  }
-  pvRowChangeEventDispatcher->setModel(model);
-}
-
-void AbstractController::setPrimaryKey(const ItemModel::PrimaryKey & pk)
-{
-  Q_ASSERT(sourceModel() != nullptr);
-  Q_ASSERT(pk.greatestColumn() < sourceModel()->columnCount());
-
-  mPrimaryKey = pk;
-}
-
-void AbstractController::setForeignKey(const ItemModel::ForeignKey & fk)
-{
-  Q_ASSERT(sourceModel() != nullptr);
-  Q_ASSERT(fk.greatestColumn() < sourceModel()->columnCount());
-
-  mForeignKey = fk;
-}
 
 void AbstractController::setFilterEnabled(bool enable)
 {
@@ -340,6 +325,46 @@ bool AbstractController::remove()
   return model->removeRow(row);
 }
 
+void AbstractController::registerModel(QAbstractItemModel* model)
+{
+  Q_ASSERT(model != nullptr);
+
+  mPrimaryKey.clear();
+  mForeignKey.clear();
+  mModelContainer.setSourceModel(model);
+  emit sourceModelChanged(model);
+  model = modelForView();
+  emit modelForViewChanged(model);
+  setModelToView(model);
+}
+
+void AbstractController::modelSetToView()
+{
+  auto *model = modelForView();
+  Q_ASSERT(model != nullptr);
+
+  if(model == pvRowChangeEventDispatcher->model()){
+    return;
+  }
+  pvRowChangeEventDispatcher->setModel(model);
+}
+
+void AbstractController::setPrimaryKey(const ItemModel::PrimaryKey & pk)
+{
+  Q_ASSERT(sourceModel() != nullptr);
+  Q_ASSERT(pk.greatestColumn() < sourceModel()->columnCount());
+
+  mPrimaryKey = pk;
+}
+
+void AbstractController::setForeignKey(const ItemModel::ForeignKey & fk)
+{
+  Q_ASSERT(sourceModel() != nullptr);
+  Q_ASSERT(fk.greatestColumn() < sourceModel()->columnCount());
+
+  mForeignKey = fk;
+}
+
 void AbstractController::onDataEditionStarted()
 {
   setControllerState(ControllerState::Editing);
@@ -385,15 +410,6 @@ FilterProxyModel* AbstractController::filterModel() const
   auto *model = mModelContainer.firstProxyModelOfType<FilterProxyModel>();
   Q_ASSERT(model != nullptr);
   return reinterpret_cast<FilterProxyModel*>(model);
-}
-
-void AbstractController::prependProxyModel(QAbstractProxyModel* proxyModel)
-{
-  Q_ASSERT(proxyModel != nullptr);
-
-  auto *oldModelForView = modelForView();
-  mModelContainer.appendProxyModel(proxyModel);
-  updateModelForViewIfChanged(oldModelForView);
 }
 
 void AbstractController::updateModelForViewIfChanged(QAbstractItemModel* oldModelForView)

@@ -29,6 +29,7 @@
 #include "Mdt/ItemEditor/ItemSelectionModel.h"
 #include <QSignalSpy>
 #include <QStringListModel>
+#include <QSortFilterProxyModel>
 #include <QTableView>
 #include <QLineEdit>
 #include <QSpinBox>
@@ -153,6 +154,99 @@ void ControllerTest::setModelSignalTest()
   
   
   QFAIL("Not complete");
+}
+
+void ControllerTest::addRemoveProxyModelTest()
+{
+  ItemModelControllerTester controller;
+  /*
+   * Set a model
+   */
+  QStringListModel model1;
+  controller.setModel(&model1);
+  QCOMPARE(controller.model(), &model1);
+  QCOMPARE(controller.sourceModel(), &model1);
+  QCOMPARE(controller.modelForView(), &model1);
+  /*
+   * Prepend a proxy model
+   */
+  QSortFilterProxyModel proxyModel1;
+  controller.prependProxyModel(&proxyModel1);
+  QCOMPARE(controller.sourceModel(), &model1);
+  QCOMPARE(controller.modelForView(), &proxyModel1);
+  /*
+   * Append a proxy model
+   */
+  QSortFilterProxyModel proxyModel2;
+  controller.appendProxyModel(&proxyModel2);
+  QCOMPARE(controller.sourceModel(), &model1);
+  QCOMPARE(controller.modelForView(), &proxyModel2);
+  /*
+   * Remove proxy models
+   */
+  controller.removeProxyModel(&proxyModel1);
+  QCOMPARE(controller.sourceModel(), &model1);
+  QCOMPARE(controller.modelForView(), &proxyModel2);
+  controller.removeProxyModel(&proxyModel2);
+  QCOMPARE(controller.sourceModel(), &model1);
+  QCOMPARE(controller.modelForView(), &model1);
+}
+
+void ControllerTest::addRemoveProxyModelSignalTest()
+{
+  ItemModelControllerTester controller;
+  QVariantList arguments;
+  QSignalSpy sourceModelSpy(&controller, &ItemModelControllerTester::sourceModelChanged);
+  QSignalSpy ModelForViewSpy(&controller, &ItemModelControllerTester::modelForViewChanged);
+  QVERIFY(sourceModelSpy.isValid());
+  QVERIFY(ModelForViewSpy.isValid());
+  /*
+   * Set a model
+   */
+  QStringListModel model1;
+  controller.setModel(&model1);
+  sourceModelSpy.clear();
+  ModelForViewSpy.clear();
+  /*
+   * Append a proxy model
+   */
+  QSortFilterProxyModel proxyModel1;
+  controller.appendProxyModel(&proxyModel1);
+  // Check source model signal
+  QCOMPARE(sourceModelSpy.count(), 0);
+  // Check model for view signal
+  QCOMPARE(ModelForViewSpy.count(), 1);
+  arguments = ModelForViewSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &proxyModel1);
+  /*
+   * Prepend a proxy model
+   */
+  QSortFilterProxyModel proxyModel2;
+  controller.prependProxyModel(&proxyModel2);
+  // Check source model signal
+  QCOMPARE(sourceModelSpy.count(), 0);
+  // Check model for view signal
+  QCOMPARE(ModelForViewSpy.count(), 0);
+  /*
+   * Remove first proxy model
+   */
+  controller.removeProxyModel(&proxyModel2);
+  // Check source model signal
+  QCOMPARE(sourceModelSpy.count(), 0);
+  // Check model for view signal
+  QCOMPARE(ModelForViewSpy.count(), 0);
+  /*
+   * Remove last proxy model
+   */
+  controller.removeProxyModel(&proxyModel1);
+  // Check source model signal
+  QCOMPARE(sourceModelSpy.count(), 0);
+  // Check model for view signal
+  QCOMPARE(ModelForViewSpy.count(), 1);
+  arguments = ModelForViewSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &model1);
 }
 
 void ControllerTest::filterCheckModelTest()

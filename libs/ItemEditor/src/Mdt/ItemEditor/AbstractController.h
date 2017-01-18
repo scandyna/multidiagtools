@@ -241,6 +241,35 @@ namespace Mdt{ namespace ItemEditor{
      */
     Mdt::ItemModel::ForeignKey foreignKey() const;
 
+    /*! \brief Prepend a proxy model
+     *
+     * If, after \a proxyModel was added, modelForView() has changed,
+     *  setModelToView() is called and modelForViewChanged() is emitted.
+     *
+     * \pre \a proxyModel must be a valid pointer
+     */
+    void prependProxyModel(QAbstractProxyModel *proxyModel);
+
+    /*! \brief Append a proxy model
+     *
+     * If, after \a proxyModel was added, modelForView() has changed,
+     *  setModelToView() is called and modelForViewChanged() is emitted.
+     *
+     * \pre \a proxyModel must be a valid pointer
+     */
+    void appendProxyModel(QAbstractProxyModel *proxyModel);
+
+    /*! \brief Remove a proxy model
+     *
+     * Remove the proxy model referenced by \a proxyModel.
+     *
+     * If, after \a proxyModel was removed, modelForView() has changed,
+     *  setModelToView() is called and modelForViewChanged() is emitted.
+     *
+     * \note \a proxyModel is only removed from list of proxy models, but not deleted.
+     */
+    void removeProxyModel(QAbstractProxyModel *proxyModel);
+
     /*! \brief Set filter enabled
      *
      * \note Enabling filter will insert a proxy model
@@ -576,15 +605,6 @@ namespace Mdt{ namespace ItemEditor{
      * \pre Filter must be enabled
      */
     Mdt::ItemModel::FilterProxyModel *filterModel() const;
-
-    /*! \brief Prepend a proxy model
-     *
-     * If, after \a proxyModel was added, modelForView() has changed,
-     *  setModelToView() is called and modelForViewChanged() is emitted.
-     *
-     * \pre \a proxyModel must be a valid pointer
-     */
-    void prependProxyModel(QAbstractProxyModel *proxyModel);
 
     /*! \brief Remove and delete the first proxy model of type T
      *
