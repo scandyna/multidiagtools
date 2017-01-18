@@ -55,15 +55,15 @@ void TableViewControllerTest::cleanupTestCase()
  * Tests
  */
 
-void TableViewControllerTest::basicStateTest()
-{
-  /*
-   * Initial state
-   */
-  TableViewController controller;
-  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
-  QVERIFY(controller.primaryKey().isNull());
-}
+// void TableViewControllerTest::basicStateTest()
+// {
+//   /*
+//    * Initial state
+//    */
+//   TableViewController controller;
+//   QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+//   QVERIFY(controller.primaryKey().isNull());
+// }
 
 void TableViewControllerTest::setModelTest()
 {

@@ -18,24 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_KEY_TEST_H
-#define MDT_ITEM_MODEL_KEY_TEST_H
+#include "ItemModelControllerTester.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
-
-class KeyTest : public QObject
+ItemModelControllerTester::ItemModelControllerTester(QObject* parent)
+ : AbstractItemModelController(parent)
 {
- Q_OBJECT
+}
 
- private slots:
+void ItemModelControllerTester::setModelToView(QAbstractItemModel* /*model*/)
+{
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+bool ItemModelControllerTester::submitDataToModel()
+{
+  return false;
+}
 
-  void columnListTest();
-  void primaryKeyTest();
-  void foreignKeyTest();
-};
-
-#endif // #ifndef MDT_ITEM_MODEL_KEY_TEST_H
+void ItemModelControllerTester::revertDataFromModel()
+{
+}

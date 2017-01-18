@@ -37,7 +37,7 @@ class TableViewControllerTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void basicStateTest();
+//   void basicStateTest();
   void setModelTest();
   void primaryKeyTest();
   void foreignKeyTest();

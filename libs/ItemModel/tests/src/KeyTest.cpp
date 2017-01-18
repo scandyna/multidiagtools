@@ -23,7 +23,7 @@
 #include "Mdt/ItemModel/ColumnList.h"
 #include "Mdt/ItemModel/PrimaryKey.h"
 #include "Mdt/ItemModel/ForeignKey.h"
-#include "Mdt/ItemModel/RelationKey.h"
+// #include "Mdt/ItemModel/RelationKey.h"
 
 using namespace Mdt::ItemModel;
 
@@ -113,57 +113,6 @@ void KeyTest::foreignKeyTest()
    */
   fk2.clear();
   QVERIFY(fk2.isNull());
-}
-
-void KeyTest::columnPairTest()
-{
-  RelationColumnPair p(1, 2);
-  QCOMPARE(p.parentModelColumn(), 1);
-  QCOMPARE(p.childModelColumn(), 2);
-}
-
-void KeyTest::relationKeyTest()
-{
-  /*
-   * Initial state
-   */
-  RelationKey key;
-  QVERIFY(key.isNull());
-  QVERIFY(key.begin() == key.end());
-  /*
-   * Add column pair
-   */
-  key.addColumnPair(1, 2);
-  QVERIFY(!key.isNull());
-  /*
-   * Iterate
-   */
-  for(const auto cp : key){
-    QCOMPARE(cp.parentModelColumn(), 1);
-    QCOMPARE(cp.childModelColumn(), 2);
-  }
-  /*
-   * Set key
-   */
-  PrimaryKey pk({3,4});
-  ForeignKey fk({5,6});
-  key.setKey(pk, fk);
-  // Check first pair
-  auto it = key.begin();
-  QVERIFY(it != key.end());
-  QCOMPARE(it->parentModelColumn(), 3);
-  QCOMPARE(it->childModelColumn(), 5);
-  // Check second pair
-  ++it;
-  QVERIFY(it != key.end());
-  QCOMPARE(it->parentModelColumn(), 4);
-  QCOMPARE(it->childModelColumn(), 6);
-  /*
-   * Clear
-   */
-  key.clear();
-  QVERIFY(key.isNull());
-  QVERIFY(key.begin() == key.end());
 }
 
 /*

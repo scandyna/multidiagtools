@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "ControllerTest.h"
+#include "ItemModelControllerTester.h"
 #include "ItemViewTestEdit.h"
 #include "Mdt/Application.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
@@ -37,12 +38,15 @@
 #include <QMetaProperty>
 #include <QMetaMethod>
 
-namespace ItemModel = Mdt::ItemModel;
-namespace ItemEditor = Mdt::ItemEditor;
-using ItemModel::VariantTableModel;
-using ItemEditor::ControllerState;
-using ItemEditor::TableViewController;
-using ItemEditor::WidgetMapperController;
+using namespace Mdt::ItemModel;
+using namespace Mdt::ItemEditor;
+
+// namespace ItemModel = Mdt::ItemModel;
+// namespace ItemEditor = Mdt::ItemEditor;
+// using ItemModel::VariantTableModel;
+// using ItemEditor::ControllerState;
+// using ItemEditor::TableViewController;
+// using ItemEditor::WidgetMapperController;
 
 void ControllerTest::initTestCase()
 {
@@ -86,6 +90,150 @@ void ControllerTest::statePermissionTest()
   QVERIFY(!ControllerStatePermission::canSelect(ControllerState::Editing));
   QVERIFY(!ControllerStatePermission::canSelect(ControllerState::Inserting));
 }
+
+void ControllerTest::basicStateTest()
+{
+  /*
+   * Initial state
+   */
+  ItemModelControllerTester controller;
+  QVERIFY(controller.controllerState() == ControllerState::Visualizing);
+  QVERIFY(controller.primaryKey().isNull());
+}
+
+void ControllerTest::setModelTest()
+{
+  /*
+   * Initial state
+   */
+  ItemModelControllerTester controller;
+  QVERIFY(controller.model() == nullptr);
+  QVERIFY(controller.sourceModel() == nullptr);
+  QVERIFY(controller.modelForView() == nullptr);
+  /*
+   * Set a model
+   */
+  QStringListModel model1;
+  controller.setModel(&model1);
+  QCOMPARE(controller.model(), &model1);
+  QCOMPARE(controller.sourceModel(), &model1);
+  QCOMPARE(controller.modelForView(), &model1);
+
+  QFAIL("Not complete");
+}
+
+void ControllerTest::setModelSignalTest()
+{
+  ItemModelControllerTester controller;
+  QVariantList arguments;
+  QSignalSpy sourceModelSpy(&controller, &ItemModelControllerTester::sourceModelChanged);
+  QSignalSpy ModelForViewSpy(&controller, &ItemModelControllerTester::modelForViewChanged);
+  QVERIFY(sourceModelSpy.isValid());
+  QVERIFY(ModelForViewSpy.isValid());
+  /*
+   * Initial state
+   */
+  QCOMPARE(sourceModelSpy.count(), 0);
+  QCOMPARE(ModelForViewSpy.count(), 0);
+  /*
+   * Set a model
+   */
+  QStringListModel model1;
+  controller.setModel(&model1);
+  // Check source model signal
+  QCOMPARE(sourceModelSpy.count(), 1);
+  arguments = sourceModelSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &model1);
+  // Check model for view signal
+  QCOMPARE(ModelForViewSpy.count(), 1);
+  arguments = ModelForViewSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &model1);
+  
+  
+  QFAIL("Not complete");
+}
+
+void ControllerTest::filterCheckModelTest()
+{
+  ItemModelControllerTester controller;
+  /*
+   * Set a model
+   */
+  QStringListModel model1;
+  controller.setModel(&model1);
+  QCOMPARE(controller.model(), &model1);
+  QCOMPARE(controller.sourceModel(), &model1);
+  QCOMPARE(controller.modelForView(), &model1);
+  /*
+   * Initial state
+   */
+  QVERIFY(!controller.isFilterEnabled());
+  /*
+   * Enable filter
+   */
+  controller.setFilterEnabled(true);
+  QVERIFY(controller.isFilterEnabled());
+  QCOMPARE(controller.sourceModel(), &model1);
+  QVERIFY(controller.modelForView() != nullptr);
+  QVERIFY(controller.modelForView() != &model1);
+  /*
+   * Disable filter
+   */
+  controller.setFilterEnabled(false);
+  QVERIFY(!controller.isFilterEnabled());
+  QCOMPARE(controller.sourceModel(), &model1);
+  QCOMPARE(controller.modelForView(), &model1);
+  /*
+   * Check that setting a filter also enables filter
+   */
+  controller.setFilter(FilterColumn(0) == 2);
+  QVERIFY(controller.isFilterEnabled());
+}
+
+void ControllerTest::filterCheckModelSignalTest()
+{
+  ItemModelControllerTester controller;
+  QVariantList arguments;
+  QSignalSpy sourceModelSpy(&controller, &ItemModelControllerTester::sourceModelChanged);
+  QSignalSpy ModelForViewSpy(&controller, &ItemModelControllerTester::modelForViewChanged);
+  QVERIFY(sourceModelSpy.isValid());
+  QVERIFY(ModelForViewSpy.isValid());
+  /*
+   * Set a model
+   */
+  QStringListModel model1;
+  controller.setModel(&model1);
+  sourceModelSpy.clear();
+  ModelForViewSpy.clear();
+  /*
+   * Enable filter
+   */
+  controller.setFilterEnabled(true);
+  // Check source model signal
+  QCOMPARE(sourceModelSpy.count(), 0);
+  // Check model for view signal
+  QCOMPARE(ModelForViewSpy.count(), 1);
+  arguments = ModelForViewSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  QVERIFY(arguments.at(0).value<QAbstractItemModel*>() != nullptr);
+  QVERIFY(arguments.at(0).value<QAbstractItemModel*>() != &model1);
+  /*
+   * Disable filter
+   */
+  controller.setFilterEnabled(false);
+  // Check source model signal
+  QCOMPARE(sourceModelSpy.count(), 0);
+  // Check model for view signal
+  QCOMPARE(ModelForViewSpy.count(), 1);
+  arguments = ModelForViewSpy.takeFirst();
+  QCOMPARE(arguments.size(), 1);
+  QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &model1);
+
+  QFAIL("Not complete");
+}
+
 
 // void ControllerTest::controllerListTest()
 // {

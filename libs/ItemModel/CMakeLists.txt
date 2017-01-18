@@ -17,6 +17,7 @@ set(SOURCES_FILES
     src/Mdt/ItemModel/ProxyModelContainer.cpp
     src/Mdt/ItemModel/ColumnList.cpp
     src/Mdt/ItemModel/RelationKey.cpp
+    src/Mdt/ItemModel/RelationKeyCopier.cpp
 )
 
 # Get Boost include directory if not allready set

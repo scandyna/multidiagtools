@@ -22,6 +22,9 @@
 #include "RowChangeEventDispatcher.h"
 #include "ControllerStatePermission.h"
 #include "Mdt/ItemModel/RelationFilterProxyModel.h"
+
+///#include "Mdt/ItemModel/RelationKeyCopier.h"
+
 #include <QAbstractItemModel>
 
 #include <QDebug>
@@ -29,6 +32,7 @@
 namespace ItemModel = Mdt::ItemModel;
 using ItemModel::FilterProxyModel;
 using ItemModel::RelationFilterProxyModel;
+///using ItemModel::RelationKeyCopier;
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -88,7 +92,10 @@ void AbstractController::registerModel(QAbstractItemModel* model)
   mPrimaryKey.clear();
   mForeignKey.clear();
   mModelContainer.setSourceModel(model);
-  setModelToView(modelForView());
+  emit sourceModelChanged(model);
+  model = modelForView();
+  emit modelForViewChanged(model);
+  setModelToView(model);
 }
 
 void AbstractController::modelSetToView()
@@ -124,11 +131,13 @@ void AbstractController::setFilterEnabled(bool enable)
     return;
   }
   if(enable){
-    mModelContainer.prependProxyModel(new FilterProxyModel(this));
+    prependProxyModel(new FilterProxyModel(this));
+//     mModelContainer.prependProxyModel(new FilterProxyModel(this));
   }else{
-    mModelContainer.deleteFirstProxyModelOfType<FilterProxyModel>();
+    deleteFirstProxyModelOfType<FilterProxyModel>();
+//     mModelContainer.deleteFirstProxyModelOfType<FilterProxyModel>();
   }
-  setModelToView(modelForView());
+//   setModelToView(modelForView());
   mRelationList.setParentControllerModelToChildControllers();
 }
 
@@ -143,11 +152,13 @@ void AbstractController::setRelationFilterEnabled(bool enable)
     return;
   }
   if(enable){
-    mModelContainer.prependProxyModel(new RelationFilterProxyModel(this));
+    prependProxyModel(new RelationFilterProxyModel(this));
+//     mModelContainer.prependProxyModel(new RelationFilterProxyModel(this));
   }else{
-    mModelContainer.deleteFirstProxyModelOfType<RelationFilterProxyModel>();
+    deleteFirstProxyModelOfType<RelationFilterProxyModel>();
+//     mModelContainer.deleteFirstProxyModelOfType<RelationFilterProxyModel>();
   }
-  setModelToView(modelForView());
+//   setModelToView(modelForView());
 }
 
 bool AbstractController::isRelationFilterEnabled() const
@@ -374,6 +385,26 @@ FilterProxyModel* AbstractController::filterModel() const
   auto *model = mModelContainer.firstProxyModelOfType<FilterProxyModel>();
   Q_ASSERT(model != nullptr);
   return reinterpret_cast<FilterProxyModel*>(model);
+}
+
+void AbstractController::prependProxyModel(QAbstractProxyModel* proxyModel)
+{
+  Q_ASSERT(proxyModel != nullptr);
+
+  auto *oldModelForView = modelForView();
+  mModelContainer.appendProxyModel(proxyModel);
+  updateModelForViewIfChanged(oldModelForView);
+}
+
+void AbstractController::updateModelForViewIfChanged(QAbstractItemModel* oldModelForView)
+{
+  Q_ASSERT(oldModelForView != nullptr);
+
+  auto *newModelForView = modelForView();
+  if(newModelForView != oldModelForView){
+    setModelToView(newModelForView);
+    emit modelForViewChanged(newModelForView);
+  }
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

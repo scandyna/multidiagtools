@@ -283,10 +283,10 @@ void ControllerRelationTest::relationFilterTest()
   /*
    * Setup relation
    */
-  ParentModelColumn addressClientId(0);
-  FilterColumn clientId(1);
+  ParentModelColumn clientId(0);
+  FilterColumn addressClientId(1);
   ControllerRelationImpl relation(&clientController);
-  relation.setChildController(&addressController, clientId == addressClientId);
+  relation.setChildController(&addressController, addressClientId == clientId);
   /*
    * Check that filter was applied for current client
    */

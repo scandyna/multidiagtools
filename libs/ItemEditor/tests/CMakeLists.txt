@@ -7,6 +7,7 @@ enable_testing()
 #================= Item/View test library ====================
 
 set(SOURCES_FILES
+  src/ItemModelControllerTester.cpp
   src/ItemViewTestEdit.cpp
   src/TestTableEditionWidget.cpp
   src/TestFormEditionWidget.cpp

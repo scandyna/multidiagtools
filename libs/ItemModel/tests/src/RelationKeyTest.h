@@ -32,6 +32,11 @@ class RelationKeyTest : public QObject
 
   void initTestCase();
   void cleanupTestCase();
+
+  void columnPairTest();
+  void relationKeyTest();
+  void keyCopierSetupTest();
+  void keyCopierCopyTest();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_RELATION_KEY_TEST_H

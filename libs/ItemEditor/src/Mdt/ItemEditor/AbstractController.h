@@ -34,10 +34,13 @@
 #include <QPointer>
 #include <QAbstractItemModel>
 
+class QAbstractProxyModel;
+
 namespace Mdt{ namespace ItemModel{
 
   class RelationFilterProxyModel;
   class RelationFilterExpression;
+  ///class RelationKeyCopier;
 
 }} // namespace Mdt{ namespace ItemModel{
 
@@ -182,7 +185,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Get the model that is used by the view
      *
-     * Can be the same as model() if no proxy model exists,
+     * Can be the same as sourceModel() if no proxy model exists,
      *  a proxy model or a nullptr if no proxy model, and no model was set.
      */
     QAbstractItemModel *modelForView() const
@@ -408,6 +411,18 @@ namespace Mdt{ namespace ItemEditor{
 
    signals:
 
+    /*! \brief Emitted each time source model changed
+     *
+     * \sa sourceModel()
+     */
+    void sourceModelChanged(QAbstractItemModel *model);
+
+    /*! \brief Emitted each time model for the view changed
+     *
+     * \sa modelForView()
+     */
+    void modelForViewChanged(QAbstractItemModel *model);
+
     /*! \brief Emitted each time row count or current row changed
      *
      * This is used for components that need row count
@@ -562,12 +577,44 @@ namespace Mdt{ namespace ItemEditor{
      */
     Mdt::ItemModel::FilterProxyModel *filterModel() const;
 
+    /*! \brief Prepend a proxy model
+     *
+     * If, after \a proxyModel was added, modelForView() has changed,
+     *  setModelToView() is called and modelForViewChanged() is emitted.
+     *
+     * \pre \a proxyModel must be a valid pointer
+     */
+    void prependProxyModel(QAbstractProxyModel *proxyModel);
+
+    /*! \brief Remove and delete the first proxy model of type T
+     *
+     * If, after the first proxy model of type T was removed (and deleted), modelForView() has changed,
+     *  setModelToView() is called and modelForViewChanged() is emitted.
+     */
+    template<typename T>
+    void deleteFirstProxyModelOfType()
+    {
+      auto *oldModelForView = modelForView();
+      mModelContainer.deleteFirstProxyModelOfType<T>();
+      updateModelForViewIfChanged(oldModelForView);
+    }
+
+    /*! \brief Update model for view if changed
+     *
+     * If \a oldModelForView is different than modelForView(),
+     *  setModelToView() is called and modelForViewChanged() is emitted.
+     */
+    void updateModelForViewIfChanged(QAbstractItemModel *oldModelForView);
+
     ControllerState pvControllerState = ControllerState::Visualizing;
     RowChangeEventDispatcher *pvRowChangeEventDispatcher;
     InsertLocation pvInsertLocation;
     Mdt::ItemModel::PrimaryKey mPrimaryKey;
     Mdt::ItemModel::ForeignKey mForeignKey;
     Mdt::ItemModel::ProxyModelContainer mModelContainer;
+    
+    ///QPointer<Mdt::ItemModel::RelationKeyCopier> mRelationKeyCopier;
+    
     ControllerRelationList<AbstractController, ControllerRelationImpl> mRelationList;
     Mdt::Error mLastError;
   };

@@ -18,24 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_KEY_TEST_H
-#define MDT_ITEM_MODEL_KEY_TEST_H
+#ifndef MDT_ITEM_EDITOR_ITEM_MODEL_CONTROLLER_TESTER_H
+#define MDT_ITEM_EDITOR_ITEM_MODEL_CONTROLLER_TESTER_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "Mdt/ItemEditor/AbstractItemModelController.h"
 
-class KeyTest : public QObject
+class ItemModelControllerTester : public Mdt::ItemEditor::AbstractItemModelController
 {
  Q_OBJECT
 
- private slots:
+ public:
 
-  void initTestCase();
-  void cleanupTestCase();
+  explicit ItemModelControllerTester(QObject* parent = nullptr);
 
-  void columnListTest();
-  void primaryKeyTest();
-  void foreignKeyTest();
+ private:
+
+  void setModelToView(QAbstractItemModel *model) override;
+  bool submitDataToModel() override;
+  void revertDataFromModel() override;
 };
 
-#endif // #ifndef MDT_ITEM_MODEL_KEY_TEST_H
+#endif // #ifndef MDT_ITEM_EDITOR_ITEM_MODEL_CONTROLLER_TESTER_H

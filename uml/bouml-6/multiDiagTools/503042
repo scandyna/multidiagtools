@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 136
+  revision 138
   modified_by 2 "philippe"
   // class settings
   
@@ -2527,6 +2527,15 @@ ${inlines}
 "
 	    classrelation_ref 4142338 // <directional composition>
 	  b parent class_ref 3715458 // ForeignKey
+      end
+
+      classrelation 4163202 // <directional composition>
+	relation 4137218 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4163202 // <directional composition>
+	  b parent class_ref 3735810 // RelationKeyCopier
       end
     end
 

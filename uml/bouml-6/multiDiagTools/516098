@@ -1,6 +1,6 @@
 format 211
 "ItemModel" // Mdt::ItemModel
-  revision 30
+  revision 33
   modified_by 2 "philippe"
   // class settings
   
@@ -1786,11 +1786,12 @@ ${inlines}
 
       operation 5211522 "setChildModel"
 	public explicit_return_type "void"
-	nparams 1
+	nparams 2
 	  param in name "model" type class_ref 146946 // QAbstractItemModel
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+	  param in name "copyTriggers" explicit_type "CopyTriggers"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -1834,12 +1835,14 @@ ${inlines}
 	
       end
 
-      operation 5213442 "clearKey"
+      operation 5226498 "setParentModelCurrentRow"
+	stereotype "slot"
 	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+	nparams 1
+	  param in name "row" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -1867,8 +1870,42 @@ ${inlines}
 	
 	
       end
-    end
 
+      operation 5219970 "onParentModelDataChanged"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 3
+	  param in name "topLeft" type class_ref 147330 // QModelIndex
+	  param in name "bottomRight" type class_ref 147330 // QModelIndex
+	  param in name "roles" explicit_type "int"
+	multiplicity "*"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5213442 "clearKey"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
   end
 
   classview 1643778 "Sort"

@@ -37,6 +37,11 @@ class ControllerTest : public QObject
   void cleanupTestCase();
 
   void statePermissionTest();
+  void basicStateTest();
+  void setModelTest();
+  void setModelSignalTest();
+  void filterCheckModelTest();
+  void filterCheckModelSignalTest();
 
 //   void controllerListTest();
 

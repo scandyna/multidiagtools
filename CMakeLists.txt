@@ -100,6 +100,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 #################################################################################################################################################
 
 # NOTE should be renamed mdtSeparateLibraryDebugSymbols
+# NOTE should only do this in UNIX
 # Separate debug symbols into a separate .dbg file
 function(mdtSeparateDebugSymbols libraryBinName)
   set(completeLibBinName "${CMAKE_SHARED_LIBRARY_PREFIX}${libraryBinName}${MDTLIB_VERSION_SUFFIX}")
