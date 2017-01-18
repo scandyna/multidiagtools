@@ -40,7 +40,14 @@ class ProxyModelContainerTest : public QObject
   void prependThenSetSourceModelTest();
   void searchTest();
   void removeAtTest();
+  /*
+   * Bug:
+   * crash when removing last proxy model
+   * F.example: removeAt(1) when container has 2 proxy models
+   */
+  void removeAtIndexBugTest();
   void searchRemoveTest();
+  void searchPointerRemoveTest();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_PROXY_MODEL_CONTAINER_TEST_H

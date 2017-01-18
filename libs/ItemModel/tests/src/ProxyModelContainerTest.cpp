@@ -27,6 +27,8 @@
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSortFilterProxyModel>
 
+#include <QDebug>
+
 namespace ItemModel = Mdt::ItemModel;
 using ItemModel::VariantTableModel;
 using ItemModel::ProxyModelContainer;
@@ -213,6 +215,7 @@ void ProxyModelContainerTest::searchTest()
   RelationFilterProxyModel relationModel;
   FilterProxyModel filterModel;
   SortProxyModel sortModel;
+  QSortFilterProxyModel notInContainerModel;
 
   /*
    * Setup container
@@ -222,7 +225,14 @@ void ProxyModelContainerTest::searchTest()
   container.appendProxyModel(&filterModel);
   container.appendProxyModel(&sortModel);
   /*
-   * Check getting index
+   * Check getting index of proxy model
+   */
+  QCOMPARE(container.indexOfProxyModel(&relationModel), 0);
+  QCOMPARE(container.indexOfProxyModel(&filterModel), 1);
+  QCOMPARE(container.indexOfProxyModel(&sortModel), 2);
+  QCOMPARE(container.indexOfProxyModel(&notInContainerModel), -1);
+  /*
+   * Check getting index of proxy model of type
    */
   QCOMPARE(container.indexOfFirstProxyModelOfType<RelationFilterProxyModel>(), 0);
   QCOMPARE(container.indexOfFirstProxyModelOfType<FilterProxyModel>(), 1);
@@ -230,7 +240,7 @@ void ProxyModelContainerTest::searchTest()
   QCOMPARE(container.indexOfFirstProxyModelOfType<QSortFilterProxyModel>(), -1);
   QCOMPARE(container.indexOfFirstProxyModelOfType<QAbstractProxyModel>(), -1);
   /*
-   * Check contains
+   * Check contains proxy model of type
    */
   QVERIFY(container.containsProxyModelOfType<RelationFilterProxyModel>());
   QVERIFY(container.containsProxyModelOfType<FilterProxyModel>());
@@ -338,6 +348,44 @@ void ProxyModelContainerTest::removeAtTest()
   QVERIFY(sortModel.isNull());
 }
 
+void ProxyModelContainerTest::removeAtIndexBugTest()
+{
+  ProxyModelContainer container;
+  VariantTableModel model;
+  QPointer<FilterProxyModel>  filterModel = new FilterProxyModel;
+  QPointer<SortProxyModel> sortModel = new SortProxyModel;
+
+  /*
+   * Setup container
+   */
+  container.setSourceModel(&model);
+  container.appendProxyModel(filterModel);
+  container.appendProxyModel(sortModel);
+  QCOMPARE(container.proxyModelCount(), 2);
+  QVERIFY(container.firstProxyModel() == filterModel);
+  QVERIFY(container.firstProxyModel()->sourceModel() == &model);
+  QVERIFY(container.lastProxyModel() == sortModel);
+  QVERIFY(container.lastProxyModel()->sourceModel() == filterModel);
+  /*
+   * Remove last
+   */
+  container.removeProxyModelAt(1);
+  QCOMPARE(container.proxyModelCount(), 1);
+  QVERIFY(container.firstProxyModel() == filterModel);
+  QVERIFY(container.firstProxyModel()->sourceModel() == &model);
+  QVERIFY(container.lastProxyModel() == filterModel);
+  /*
+   * Remove last
+   */
+  container.removeProxyModelAt(0);
+  QCOMPARE(container.proxyModelCount(), 0);
+  /*
+   * Free
+   */
+  delete filterModel;
+  delete sortModel;
+}
+
 void ProxyModelContainerTest::searchRemoveTest()
 {
   ProxyModelContainer container;
@@ -392,6 +440,57 @@ void ProxyModelContainerTest::searchRemoveTest()
   QVERIFY(!sortModel.isNull());
   delete relationModel;
   delete sortModel;
+}
+
+void ProxyModelContainerTest::searchPointerRemoveTest()
+{
+  ProxyModelContainer container;
+  VariantTableModel model;
+  QPointer<FilterProxyModel>  filterModel = new FilterProxyModel;
+  QPointer<SortProxyModel> sortModel = new SortProxyModel;
+  QPointer<QSortFilterProxyModel> notInContainerModel = new QSortFilterProxyModel;
+  /*
+   * Setup container
+   */
+  container.setSourceModel(&model);
+  container.appendProxyModel(filterModel);
+  container.appendProxyModel(sortModel);
+  QCOMPARE(container.proxyModelCount(), 2);
+  QVERIFY(container.firstProxyModel() == filterModel);
+  QVERIFY(container.firstProxyModel()->sourceModel() == &model);
+  QVERIFY(container.lastProxyModel() == sortModel);
+  QVERIFY(container.lastProxyModel()->sourceModel() == filterModel);
+  /*
+   * Remove existing
+   */
+  container.removeProxyModel(sortModel);
+  QCOMPARE(container.proxyModelCount(), 1);
+  QVERIFY(container.firstProxyModel() == filterModel);
+  QVERIFY(container.firstProxyModel()->sourceModel() == &model);
+  QVERIFY(container.lastProxyModel() == filterModel);
+  /*
+   * Try to remove non existing
+   */
+  container.removeProxyModel(notInContainerModel);
+  QCOMPARE(container.proxyModelCount(), 1);
+  /*
+   * Try to delete non existing
+   */
+  container.deleteProxyModel(notInContainerModel);
+  QCOMPARE(container.proxyModelCount(), 1);
+  /*
+   * Delete existing
+   */
+  container.deleteProxyModel(filterModel);
+  QCOMPARE(container.proxyModelCount(), 0);
+  /*
+   * Check pointers and free
+   */
+  QVERIFY(!sortModel.isNull());
+  delete sortModel;
+  QVERIFY(filterModel.isNull());
+  QVERIFY(!notInContainerModel.isNull());
+  delete notInContainerModel;
 }
 
 /*

@@ -157,6 +157,19 @@ namespace Mdt{ namespace ItemModel{
       return mList[index];
     }
 
+    /*! \brief Get the index of the proxy model
+     *
+     * \return The index of the proxy model that is referenced by \a model, or -1 if not found.
+     */
+    int indexOfProxyModel(QAbstractProxyModel *model) const
+    {
+      const auto it = std::find(mList.cbegin(), mList.cend(), model);
+      if(it == mList.cend()){
+        return -1;
+      }
+      return it - mList.cbegin();
+    }
+
     /*! \brief Check if a proxy model of type T exists in this container
      */
     template<typename T>
@@ -197,6 +210,20 @@ namespace Mdt{ namespace ItemModel{
       Q_ASSERT(i < proxyModelCount());
       return mList[i];
     }
+
+    /*! \brief Remove a proxy model
+     *
+     * Will remove proxy model referenced by \a model.
+     *  Does nothing if \a model does not exists in this container.
+     */
+    void removeProxyModel(QAbstractProxyModel *model);
+
+    /*! \brief Delete a proxy model
+     *
+     * Will remove and delete proxy model referenced by \a model.
+     *  Does nothing if \a model does not exists in this container.
+     */
+    void deleteProxyModel(QAbstractProxyModel *model);
 
     /*! \brief Remove proxy model at index
      *

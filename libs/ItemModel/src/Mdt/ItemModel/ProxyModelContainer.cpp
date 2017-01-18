@@ -61,6 +61,24 @@ void ProxyModelContainer::prependProxyModel(QAbstractProxyModel* model)
   mList.insert(mList.cbegin(), model);
 }
 
+void ProxyModelContainer::removeProxyModel(QAbstractProxyModel* model)
+{
+  const auto index = indexOfProxyModel(model);
+  if(index >= 0){
+    Q_ASSERT(index < proxyModelCount());
+    removeProxyModelAt(index);
+  }
+}
+
+void ProxyModelContainer::deleteProxyModel(QAbstractProxyModel* model)
+{
+  const auto index = indexOfProxyModel(model);
+  if(index >= 0){
+    Q_ASSERT(index < proxyModelCount());
+    deleteProxyModelAt(index);
+  }
+}
+
 void ProxyModelContainer::removeProxyModelAt(int index)
 {
   Q_ASSERT(index >= 0);
@@ -70,7 +88,9 @@ void ProxyModelContainer::removeProxyModelAt(int index)
   if(mList.empty()){
     return;
   }
-  updateSourceModelForProxyModelAt(index);
+  if(index < proxyModelCount()){
+    updateSourceModelForProxyModelAt(index);
+  }
 }
 
 void ProxyModelContainer::deleteProxyModelAt(int index)
