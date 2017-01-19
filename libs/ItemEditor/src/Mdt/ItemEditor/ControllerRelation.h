@@ -45,6 +45,7 @@ namespace Mdt{ namespace ItemEditor{
    * // This method is called when parent controller's model changed.
    * void setParentControllerModelToChildController();
    * \endcode
+   * \todo Check if setParentControllerModelToChildController() is not obelete
    *
    * ControllerRelation does not own any controller,
    *  deleting them is the responsability of the user of this class.

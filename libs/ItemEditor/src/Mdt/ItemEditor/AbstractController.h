@@ -38,9 +38,8 @@ class QAbstractProxyModel;
 
 namespace Mdt{ namespace ItemModel{
 
-  class RelationFilterProxyModel;
+//   class RelationFilterProxyModel;
   class RelationFilterExpression;
-  ///class RelationKeyCopier;
 
 }} // namespace Mdt{ namespace ItemModel{
 
@@ -303,49 +302,6 @@ namespace Mdt{ namespace ItemEditor{
       filterModel()->setFilter(expression);
     }
 
-    /*! \brief Set relation filter enabled
-     *
-     * \note Enabling relation filter will insert a proxy model
-     *        and disabling relation filter will remove it.
-     *        To temporarily disable relation filtering,
-     *        setDynamicFiltersEnabled() should be used.
-     * \sa setDynamicFiltersEnabled()
-     * \sa isRelationFilterEnabled()
-     */
-//     void setRelationFilterEnabled(bool enable);
-
-    /*! \brief Check if relation filter is enabled
-     *
-     * \sa setRelationFilterEnabled()
-     */
-//     bool isRelationFilterEnabled() const;
-
-    /*! \brief Set relation filter's parent model
-     *
-     * If relation filter is not enabled, it will be enabled before setting its parent model.
-     *
-     * \pre \a model must be a valid pointer.
-     */
-//     void setRelationFilterParentModel(QAbstractItemModel *model);
-
-    /*! \brief Set relation filter
-     *
-     * If relation filter is not enabled, it will be enabled before applying expression.
-     *
-     * \param expression Expression to apply as filter.
-     * \pre \a expression must be a relation filter expression.
-     * \sa Mdt::ItemModel::RelationFilterProxyModel
-     * \sa setRelationFilterEnabled()
-     * \sa setRelationFilterParentModel()
-     */
-//     void setRelationFilter(const Mdt::ItemModel::RelationFilterExpression & expression);
-
-    /*! \brief Get relation filter proxy model
-     *
-     * \pre Relation filter must be enabled
-     */
-//     Mdt::ItemModel::RelationFilterProxyModel *relationFilterModel() const;
-
     /*! \brief Set dynamic filters enabled/disabled
      *
      * Will act on dynamic filter property of filter
@@ -357,22 +313,6 @@ namespace Mdt{ namespace ItemEditor{
      * \sa setRelationFilter()
      */
     void setDynamicFiltersEnabled(bool enable);
-
-    /*! \brief Disable dynamic filters
-     *
-     * Will internally check if some filter is enabled first.
-     *  Calling this method if no filter is enabled
-     *  is ok, and simply does nothing.
-     */
-//     void disableDynamicFilters();
-
-    /*! \brief (Re)-enable dynamic filters
-     *
-     * Will internally check if some filter is enabled first.
-     *  Calling this method if no filter is enabled
-     *  is ok, and simply does nothing.
-     */
-//     void enableDynamicFilters();
 
     /*! \brief Add a child controller
      *
@@ -632,9 +572,6 @@ namespace Mdt{ namespace ItemEditor{
     Mdt::ItemModel::PrimaryKey mPrimaryKey;
     Mdt::ItemModel::ForeignKey mForeignKey;
     Mdt::ItemModel::ProxyModelContainer mModelContainer;
-    
-    ///QPointer<Mdt::ItemModel::RelationKeyCopier> mRelationKeyCopier;
-    
     ControllerRelationList<AbstractController, ControllerRelationImpl> mRelationList;
     Mdt::Error mLastError;
   };

@@ -37,10 +37,14 @@ ControllerRelationImpl::ControllerRelationImpl(AbstractController* parentControl
 {
   Q_ASSERT(parentController != nullptr);
 
+  mKeyCopier->setCopyTriggers(RelationKeyCopier::ChildModelRowsInserted);
   if(parentController->modelForView() != nullptr){
     mProxyModel->setParentModel(parentController->modelForView());
+    mKeyCopier->setParentModel(parentController->modelForView());
   }
+  mKeyCopier->setChildModel(mProxyModel.get());
   QObject::connect(parentController, &AbstractController::modelForViewChanged, mProxyModel.get(), &RelationFilterProxyModel::setParentModel);
+  QObject::connect(parentController, &AbstractController::modelForViewChanged, mKeyCopier.get(), &RelationKeyCopier::setParentModel);
 }
 
 // unique_ptr needs complete definition of RelationFilterExpression and RelationKeyCopier
@@ -62,12 +66,9 @@ void ControllerRelationImpl::registerChildController(const ItemModel::RelationFi
   mChildSourceModelChangedConnection = QObject::connect(childController(), &AbstractController::sourceModelChanged, mProxyModel.get(), &RelationFilterProxyModel::setSourceModel);
   childController()->prependProxyModel(mProxyModel.get());
   mProxyModel->setFilter(conditions);
-  mParentModelCurrentRowChangedConnection = QObject::connect(parentController(), &AbstractController::currentRowChanged, mProxyModel.get(), &RelationFilterProxyModel::setParentModelMatchRow);
+  mParentModelCurrentRowChangedConnection1 = QObject::connect(parentController(), &AbstractController::currentRowChanged, mProxyModel.get(), &RelationFilterProxyModel::setParentModelMatchRow);
+  mParentModelCurrentRowChangedConnection2 = QObject::connect(parentController(), &AbstractController::currentRowChanged, mKeyCopier.get(), &RelationKeyCopier::setParentModelCurrentRow);
   mProxyModel->setParentModelMatchRow( parentController()->currentRow() );
-  
-//   childController()->setRelationFilter(conditions);
-//   QObject::connect(parentController(), &AbstractController::currentRowChanged, childController()->relationFilterModel(), &RelationFilterProxyModel::setParentModelMatchRow);
-//   childController()->relationFilterModel()->setParentModelMatchRow( parentController()->currentRow() );
 }
 
 void ControllerRelationImpl::unregisterChildController()
@@ -75,10 +76,10 @@ void ControllerRelationImpl::unregisterChildController()
   Q_ASSERT(parentController() != nullptr);
   Q_ASSERT(childController() != nullptr);
 
-  QObject::disconnect(mParentModelCurrentRowChangedConnection);
+  QObject::disconnect(mParentModelCurrentRowChangedConnection1);
+  QObject::disconnect(mParentModelCurrentRowChangedConnection2);
   QObject::disconnect(mChildSourceModelChangedConnection);
   childController()->removeProxyModel(mProxyModel.get());
-//   QObject::disconnect(parentController(), &AbstractController::currentRowChanged, childController()->relationFilterModel(), &RelationFilterProxyModel::setParentModelMatchRow);
 }
 
 void ControllerRelationImpl::setParentControllerModelToChildController()

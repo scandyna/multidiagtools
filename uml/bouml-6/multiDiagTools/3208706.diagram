@@ -25,7 +25,7 @@ classcanvas 131842 class_ref 3735810 // RelationKeyCopier
   xyz 28.1 557.6 2000
 end
 classcanvas 132610 class_ref 3594754 // RelationFilterProxyModel
-  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
   xyz 202 145 2012
 end
 relationcanvas 129538 relation_ref 4025346 // <generalisation>

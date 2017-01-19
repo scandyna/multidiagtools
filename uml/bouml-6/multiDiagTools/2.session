@@ -4,7 +4,7 @@ diagrams
   classdiagram_ref 2761218 // ControllerOverview
     120 110 100 23 0 0
   active  classdiagram_ref 3208706 // ControllerRelation
-    859 908 100 21 0 36
+    859 908 100 21 0 13
 end
 show_stereotypes
 selected operation_ref 5211522 // setChildModel
@@ -14,6 +14,7 @@ open
   classview_ref 1293698 // CoreApplication
   classview_ref 1603842 // Terminals
   operation_ref 5211394 // setParentModel
+  operation_ref 5211522 // setChildModel
   classview_ref 1715970 // ReadWriteAccess
   classview_ref 1682946 // ReadWriteFlags
   classview_ref 1472258 // Editor

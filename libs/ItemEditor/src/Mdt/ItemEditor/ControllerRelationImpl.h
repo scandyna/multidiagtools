@@ -68,6 +68,8 @@ namespace Mdt{ namespace ItemEditor{
     void unregisterChildController();
 
     /*! \brief Set parent controller's model to child controller
+     *
+     * \todo Possibly obselete
      */
     void setParentControllerModelToChildController();
 
@@ -85,7 +87,8 @@ namespace Mdt{ namespace ItemEditor{
 
     std::unique_ptr<Mdt::ItemModel::RelationFilterProxyModel> mProxyModel;
     std::unique_ptr<Mdt::ItemModel::RelationKeyCopier> mKeyCopier;
-    QMetaObject::Connection mParentModelCurrentRowChangedConnection;
+    QMetaObject::Connection mParentModelCurrentRowChangedConnection1;
+    QMetaObject::Connection mParentModelCurrentRowChangedConnection2;
     QMetaObject::Connection mChildSourceModelChangedConnection;
   };
 
