@@ -23,7 +23,16 @@
 
 #include "ControllerRelation.h"
 #include "Mdt/ItemModel/RelationFilterExpression.h"
+#include <QObject>
 #include <QPointer>
+#include <memory>
+
+namespace Mdt{ namespace ItemModel{
+
+  class RelationFilterProxyModel;
+  class RelationKeyCopier;
+
+}} // namespace Mdt{ namespace ItemModel{
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -44,6 +53,10 @@ namespace Mdt{ namespace ItemEditor{
      */
     explicit ControllerRelationImpl(AbstractController *parentController);
 
+    /*! \brief Destructor
+     */
+    ~ControllerRelationImpl();
+
     /*! \brief Register child controller
      *
      * \pre \a conditions must be a valid relation filter expression
@@ -57,6 +70,23 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Set parent controller's model to child controller
      */
     void setParentControllerModelToChildController();
+
+    /*! \internal Access relation filter proxy model
+     *
+     * \note When this relation is deleted, the returned pointer becomes dangling.
+     *       This method is used for unit tests.
+     */
+    Mdt::ItemModel::RelationFilterProxyModel *relationFilterModel() const
+    {
+      return mProxyModel.get();
+    }
+
+   private:
+
+    std::unique_ptr<Mdt::ItemModel::RelationFilterProxyModel> mProxyModel;
+    std::unique_ptr<Mdt::ItemModel::RelationKeyCopier> mKeyCopier;
+    QMetaObject::Connection mParentModelCurrentRowChangedConnection;
+    QMetaObject::Connection mChildSourceModelChangedConnection;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

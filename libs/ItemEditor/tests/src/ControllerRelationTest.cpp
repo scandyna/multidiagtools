@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "ControllerRelationTest.h"
+#include "ItemModelControllerTester.h"
 #include "ItemViewTestEdit.h"
 #include "Mdt/Application.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
@@ -63,65 +64,65 @@ void ControllerRelationTest::cleanupTestCase()
  * Tests
  */
 
-void ControllerRelationTest::enableDisableRelationFilterTest()
-{
-  VariantTableModel model;
-  QTableView view;
-  /*
-   * Initial state
-   */
-  TableViewController controller;
-  QVERIFY(!controller.isRelationFilterEnabled());
-  /*
-   * Setup
-   */
-  model.resize(3, 2);
-  model.populateColumn(0, {1,2,3});
-  model.populateColumn(1, {"A","B","C"});
-  controller.setModel(&model);
-  controller.setView(&view);
-  QCOMPARE(controller.rowCount(), 3);
-  QCOMPARE(controller.currentRow(), 0);
-  QVERIFY(!controller.isRelationFilterEnabled());
-  /*
-   * Enable / disable
-   */
-  /// \todo Check what should be correct behaviour when no parent model was set, etc...
-  // Enable
-  controller.setRelationFilterEnabled(true);
-  QVERIFY(controller.isRelationFilterEnabled());
-  QCOMPARE(controller.rowCount(), 3);
-  QCOMPARE(controller.currentRow(), 0);
-  // Disable
-  controller.setRelationFilterEnabled(false);
-  QVERIFY(!controller.isRelationFilterEnabled());
-  QCOMPARE(controller.rowCount(), 3);
-  QCOMPARE(controller.currentRow(), 0);
-  // Enable
-  controller.setRelationFilterEnabled(true);
-  QVERIFY(controller.isRelationFilterEnabled());
-  QCOMPARE(controller.rowCount(), 3);
-  QCOMPARE(controller.currentRow(), 0);
+// void ControllerRelationTest::enableDisableRelationFilterTest()
+// {
+//   VariantTableModel model;
+//   QTableView view;
+//   /*
+//    * Initial state
+//    */
+//   TableViewController controller;
+//   QVERIFY(!controller.isRelationFilterEnabled());
+//   /*
+//    * Setup
+//    */
+//   model.resize(3, 2);
+//   model.populateColumn(0, {1,2,3});
+//   model.populateColumn(1, {"A","B","C"});
+//   controller.setModel(&model);
+//   controller.setView(&view);
+//   QCOMPARE(controller.rowCount(), 3);
+//   QCOMPARE(controller.currentRow(), 0);
+//   QVERIFY(!controller.isRelationFilterEnabled());
+//   /*
+//    * Enable / disable
+//    */
+//   /// \todo Check what should be correct behaviour when no parent model was set, etc...
+//   // Enable
+//   controller.setRelationFilterEnabled(true);
+//   QVERIFY(controller.isRelationFilterEnabled());
+//   QCOMPARE(controller.rowCount(), 3);
+//   QCOMPARE(controller.currentRow(), 0);
+//   // Disable
+//   controller.setRelationFilterEnabled(false);
+//   QVERIFY(!controller.isRelationFilterEnabled());
+//   QCOMPARE(controller.rowCount(), 3);
+//   QCOMPARE(controller.currentRow(), 0);
+//   // Enable
+//   controller.setRelationFilterEnabled(true);
+//   QVERIFY(controller.isRelationFilterEnabled());
+//   QCOMPARE(controller.rowCount(), 3);
+//   QCOMPARE(controller.currentRow(), 0);
+// 
+//   QFAIL("Not complete");
+// }
 
-  QFAIL("Not complete");
-}
-
-void ControllerRelationTest::setRelationParentModelTest()
-{
-  VariantTableModel parentModel;
-  TableViewController controller;
-
-  QVERIFY(!controller.isRelationFilterEnabled());
-  controller.setRelationFilterParentModel(&parentModel);
-  QVERIFY(controller.isRelationFilterEnabled());
-  
-  QFAIL("Not complete");
-}
+// void ControllerRelationTest::setRelationParentModelTest()
+// {
+//   VariantTableModel parentModel;
+//   TableViewController controller;
+// 
+// //   QVERIFY(!controller.isRelationFilterEnabled());
+// //   controller.setRelationFilterParentModel(&parentModel);
+// //   QVERIFY(controller.isRelationFilterEnabled());
+//   
+//   QFAIL("Not complete");
+// }
 
 void ControllerRelationTest::setControllersTest()
 {
-  TableViewController parentController;
-  TableViewController childController;
+  ItemModelControllerTester parentController;
+  ItemModelControllerTester childController;
   /*
    * Create relation
    */
@@ -160,16 +161,17 @@ void ControllerRelationTest::relationSetModelToControllersFirstTest()
    * Setup parent model and controller
    */
   VariantTableModel parentModel;
-  TableViewController parentController;
+  ItemModelControllerTester parentController;
   parentController.setModel(&parentModel);
   QCOMPARE(parentController.sourceModel(), &parentModel);
   /*
    * Setup child model and controller
    */
   VariantTableModel childModel;
-  TableViewController childController;
+  ItemModelControllerTester childController;
   childController.setModel(&childModel);
   QCOMPARE(childController.sourceModel(), &childModel);
+  QCOMPARE(childController.modelForView(), &childModel);
   /*
    * Setup relation
    */
@@ -177,16 +179,21 @@ void ControllerRelationTest::relationSetModelToControllersFirstTest()
 //   ControllerRelation<AbstractController, ControllerRelationImpl> relation(&parentController);
   ControllerRelationImpl relation(&parentController);
   QCOMPARE(parentController.sourceModel(), &parentModel);
-  QVERIFY(!parentController.isRelationFilterEnabled());
+//   QVERIFY(!parentController.isRelationFilterEnabled());
   QCOMPARE(childController.sourceModel(), &childModel);
-  QVERIFY(!childController.isRelationFilterEnabled());
+  QCOMPARE(childController.modelForView(), &childModel);
+//   QVERIFY(!childController.isRelationFilterEnabled());
   relation.setChildController(&childController, FilterColumn(0) == ParentModelColumn(0));
   QCOMPARE(parentController.sourceModel(), &parentModel);
-  QVERIFY(!parentController.isRelationFilterEnabled());
+  QCOMPARE(relation.relationFilterModel()->parentModel(), &parentModel);
+  QCOMPARE(relation.relationFilterModel()->sourceModel(), &childModel);
   QCOMPARE(childController.sourceModel(), &childModel);
-  QVERIFY(childController.isRelationFilterEnabled());
-  QCOMPARE(childController.relationFilterModel()->sourceModel(), &childModel);
-  QCOMPARE(childController.relationFilterModel()->parentModel(), &parentModel);
+  QCOMPARE(childController.modelForView(), relation.relationFilterModel());
+//   QVERIFY(!parentController.isRelationFilterEnabled());
+//   QCOMPARE(childController.sourceModel(), &childModel);
+//   QVERIFY(childController.isRelationFilterEnabled());
+//   QCOMPARE(childController.relationFilterModel()->sourceModel(), &childModel);
+//   QCOMPARE(childController.relationFilterModel()->parentModel(), &parentModel);
 }
 
 void ControllerRelationTest::relationSetModelToControllersAfterTest()
@@ -194,8 +201,8 @@ void ControllerRelationTest::relationSetModelToControllersAfterTest()
   /*
    * Setup parent and child controllers
    */
-  TableViewController parentController;
-  TableViewController childController;
+  ItemModelControllerTester parentController;
+  ItemModelControllerTester childController;
   /*
    * Setup relation
    */
@@ -204,34 +211,45 @@ void ControllerRelationTest::relationSetModelToControllersAfterTest()
   ControllerRelationImpl relation(&parentController);
   relation.setChildController(&childController, FilterColumn(0) == ParentModelColumn(0));
   QVERIFY(parentController.sourceModel() == nullptr);
-  QVERIFY(!parentController.isRelationFilterEnabled());
+//   QVERIFY(!parentController.isRelationFilterEnabled());
   QVERIFY(childController.sourceModel() == nullptr);
-  QVERIFY(childController.isRelationFilterEnabled());
-  QVERIFY(childController.relationFilterModel()->sourceModel() == nullptr);
-  QVERIFY(childController.relationFilterModel()->parentModel() == nullptr);
+  QVERIFY(relation.relationFilterModel()->parentModel() == nullptr);
+  QVERIFY(relation.relationFilterModel()->sourceModel() == nullptr);
+//   QVERIFY(childController.isRelationFilterEnabled());
+//   QVERIFY(childController.relationFilterModel()->sourceModel() == nullptr);
+//   QVERIFY(childController.relationFilterModel()->parentModel() == nullptr);
   /*
    * Setup parent model
    */
   VariantTableModel parentModel;
   parentController.setModel(&parentModel);
-  relation.setParentControllerModelToChildController();
+  ///relation.setParentControllerModelToChildController();
   QCOMPARE(parentController.sourceModel(), &parentModel);
-  QVERIFY(!parentController.isRelationFilterEnabled());
   QVERIFY(childController.sourceModel() == nullptr);
-  QVERIFY(childController.isRelationFilterEnabled());
-  QVERIFY(childController.relationFilterModel()->sourceModel() == nullptr);
-  QVERIFY(childController.relationFilterModel()->parentModel() == &parentModel);
+  QCOMPARE(relation.relationFilterModel()->parentModel(), &parentModel);
+  QVERIFY(relation.relationFilterModel()->sourceModel() == nullptr);
+//   QVERIFY(!parentController.isRelationFilterEnabled());
+//   QVERIFY(childController.sourceModel() == nullptr);
+//   QVERIFY(childController.isRelationFilterEnabled());
+//   QVERIFY(childController.relationFilterModel()->sourceModel() == nullptr);
+//   QVERIFY(childController.relationFilterModel()->parentModel() == &parentModel);
   /*
    * Setup child model
    */
   VariantTableModel childModel;
   childController.setModel(&childModel);
   QCOMPARE(parentController.sourceModel(), &parentModel);
-  QVERIFY(!parentController.isRelationFilterEnabled());
+  QCOMPARE(relation.relationFilterModel()->parentModel(), &parentModel);
+  QCOMPARE(relation.relationFilterModel()->sourceModel(), &childModel);
   QCOMPARE(childController.sourceModel(), &childModel);
-  QVERIFY(childController.isRelationFilterEnabled());
-  QCOMPARE(childController.relationFilterModel()->sourceModel(), &childModel);
-  QCOMPARE(childController.relationFilterModel()->parentModel(), &parentModel);
+  QCOMPARE(childController.modelForView(), relation.relationFilterModel());
+
+//   QCOMPARE(parentController.sourceModel(), &parentModel);
+//   QVERIFY(!parentController.isRelationFilterEnabled());
+//   QCOMPARE(childController.sourceModel(), &childModel);
+//   QVERIFY(childController.isRelationFilterEnabled());
+//   QCOMPARE(childController.relationFilterModel()->sourceModel(), &childModel);
+//   QCOMPARE(childController.relationFilterModel()->parentModel(), &parentModel);
 }
 
 void ControllerRelationTest::relationFilterTest()
@@ -356,23 +374,24 @@ void ControllerRelationTest::relationFilterTest()
 
 void ControllerRelationTest::relationListSetModelToControllersFirstTest()
 {
+  ControllerRelationImpl *relation;
   /*
    * Setup parent model and controller
    */
   VariantTableModel parentModel;
-  TableViewController parentController;
+  ItemModelControllerTester parentController;
   parentController.setModel(&parentModel);
   /*
    * Setup first child model and controller
    */
   VariantTableModel childModel1;
-  TableViewController childController1;
+  ItemModelControllerTester childController1;
   childController1.setModel(&childModel1);
   /*
    * Setup second child model and controller
    */
   VariantTableModel childModel2;
-  TableViewController childController2;
+  ItemModelControllerTester childController2;
   childController2.setModel(&childModel2);
   /*
    * Setup relation list
@@ -383,15 +402,19 @@ void ControllerRelationTest::relationListSetModelToControllersFirstTest()
   // Add first child controller
   relationList.addChildController(&childController1, FilterColumn(0) == ParentModelColumn(0));
   QCOMPARE(relationList.childControllerCount(), 1);
-  QVERIFY(childController1.isRelationFilterEnabled());
-  QCOMPARE(childController1.relationFilterModel()->sourceModel(), &childModel1);
-  QCOMPARE(childController1.relationFilterModel()->parentModel(), &parentModel);
+  relation = *(relationList.cbegin());
+  QCOMPARE(childController1.modelForView(), relation->relationFilterModel());
+//   QVERIFY(childController1.isRelationFilterEnabled());
+//   QCOMPARE(childController1.relationFilterModel()->sourceModel(), &childModel1);
+//   QCOMPARE(childController1.relationFilterModel()->parentModel(), &parentModel);
   // Add second child controller
   relationList.addChildController(&childController2, FilterColumn(0) == ParentModelColumn(0));
   QCOMPARE(relationList.childControllerCount(), 2);
-  QVERIFY(childController2.isRelationFilterEnabled());
-  QCOMPARE(childController2.relationFilterModel()->sourceModel(), &childModel2);
-  QCOMPARE(childController2.relationFilterModel()->parentModel(), &parentModel);
+  relation = *(relationList.cbegin() + 1);
+  QCOMPARE(childController2.modelForView(), relation->relationFilterModel());
+//   QVERIFY(childController2.isRelationFilterEnabled());
+//   QCOMPARE(childController2.relationFilterModel()->sourceModel(), &childModel2);
+//   QCOMPARE(childController2.relationFilterModel()->parentModel(), &parentModel);
 }
 
 void ControllerRelationTest::relationListSetModelToControllersAfterTest()
@@ -406,13 +429,13 @@ void ControllerRelationTest::relationListBasicSetGetTest()
    * Setup parent model and controller
    */
   VariantTableModel parentModel;
-  TableViewController parentController;
+  ItemModelControllerTester parentController;
   parentController.setModel(&parentModel);
   /*
    * Setup child model and controller
    */
   VariantTableModel childModel;
-  TableViewController childController;
+  ItemModelControllerTester childController;
   childController.setModel(&childModel);
   /*
    * Setup relation list
@@ -437,13 +460,13 @@ void ControllerRelationTest::controllerAddChildControllerTest()
    * Setup parent model and controller
    */
   VariantTableModel parentModel;
-  TableViewController parentController;
+  ItemModelControllerTester parentController;
   parentController.setModel(&parentModel);
   /*
    * Setup child model and controller
    */
   VariantTableModel childModel;
-  TableViewController childController;
+  ItemModelControllerTester childController;
   childController.setModel(&childModel);
   /*
    * Add child controller
@@ -451,9 +474,11 @@ void ControllerRelationTest::controllerAddChildControllerTest()
   ParentModelColumn pmc(0);
   FilterColumn fc(0);
   parentController.addChildController(&childController, fc == pmc);
-  QVERIFY(childController.isRelationFilterEnabled());
-  QCOMPARE(childController.relationFilterModel()->parentModel(), &parentModel);
-  QCOMPARE(childController.relationFilterModel()->sourceModel(), &childModel);
+//   QVERIFY(childController.isRelationFilterEnabled());
+//   QCOMPARE(childController.relationFilterModel()->parentModel(), &parentModel);
+//   QCOMPARE(childController.relationFilterModel()->sourceModel(), &childModel);
+
+  QFAIL("Not complete (missing check of correct model mappings)");
 }
 
 void ControllerRelationTest::controllerChangeModelForViewTest()
@@ -476,9 +501,9 @@ void ControllerRelationTest::controllerChangeModelForViewTest()
   ParentModelColumn pmc(0);
   FilterColumn fc(0);
   parentController.addChildController(&childController, fc == pmc);
-  QVERIFY(childController.isRelationFilterEnabled());
-  QCOMPARE(childController.relationFilterModel()->parentModel(), &parentModel);
-  QCOMPARE(childController.relationFilterModel()->sourceModel(), &childModel);
+//   QVERIFY(childController.isRelationFilterEnabled());
+//   QCOMPARE(childController.relationFilterModel()->parentModel(), &parentModel);
+//   QCOMPARE(childController.relationFilterModel()->sourceModel(), &childModel);
   /*
    * Enable filter on parent controller
    */
@@ -486,8 +511,10 @@ void ControllerRelationTest::controllerChangeModelForViewTest()
   parentController.setFilter(fc > 5);
   QVERIFY(parentController.modelForView() != &parentModel);
   QVERIFY(parentController.isFilterEnabled());
-  QCOMPARE(childController.relationFilterModel()->parentModel(), parentController.modelForView());
-  QCOMPARE(childController.relationFilterModel()->sourceModel(), &childModel);
+//   QCOMPARE(childController.relationFilterModel()->parentModel(), parentController.modelForView());
+//   QCOMPARE(childController.relationFilterModel()->sourceModel(), &childModel);
+  
+  QFAIL("Not complete (missing check of correct model mappings)");
 }
 
 void ControllerRelationTest::controllerRelationFilterTest()

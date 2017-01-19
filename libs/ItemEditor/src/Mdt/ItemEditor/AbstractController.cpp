@@ -131,56 +131,56 @@ bool AbstractController::isFilterEnabled() const
   return mModelContainer.containsProxyModelOfType<FilterProxyModel>();
 }
 
-void AbstractController::setRelationFilterEnabled(bool enable)
-{
-  if(enable == isRelationFilterEnabled()){
-    return;
-  }
-  if(enable){
-    prependProxyModel(new RelationFilterProxyModel(this));
-//     mModelContainer.prependProxyModel(new RelationFilterProxyModel(this));
-  }else{
-    deleteFirstProxyModelOfType<RelationFilterProxyModel>();
-//     mModelContainer.deleteFirstProxyModelOfType<RelationFilterProxyModel>();
-  }
-//   setModelToView(modelForView());
-}
+// void AbstractController::setRelationFilterEnabled(bool enable)
+// {
+//   if(enable == isRelationFilterEnabled()){
+//     return;
+//   }
+//   if(enable){
+//     prependProxyModel(new RelationFilterProxyModel(this));
+// //     mModelContainer.prependProxyModel(new RelationFilterProxyModel(this));
+//   }else{
+//     deleteFirstProxyModelOfType<RelationFilterProxyModel>();
+// //     mModelContainer.deleteFirstProxyModelOfType<RelationFilterProxyModel>();
+//   }
+// //   setModelToView(modelForView());
+// }
 
-bool AbstractController::isRelationFilterEnabled() const
-{
-  return mModelContainer.containsProxyModelOfType<RelationFilterProxyModel>();
-}
+// bool AbstractController::isRelationFilterEnabled() const
+// {
+//   return mModelContainer.containsProxyModelOfType<RelationFilterProxyModel>();
+// }
 
-void AbstractController::setRelationFilterParentModel(QAbstractItemModel* model)
-{
-  Q_ASSERT(model != nullptr);
+// void AbstractController::setRelationFilterParentModel(QAbstractItemModel* model)
+// {
+//   Q_ASSERT(model != nullptr);
+// 
+//   setRelationFilterEnabled(true);
+//   relationFilterModel()->setParentModel(model);
+// }
 
-  setRelationFilterEnabled(true);
-  relationFilterModel()->setParentModel(model);
-}
+// void AbstractController::setRelationFilter(const ItemModel::RelationFilterExpression & expression)
+// {
+//   setRelationFilterEnabled(true);
+//   relationFilterModel()->setFilter(expression);
+// }
 
-void AbstractController::setRelationFilter(const ItemModel::RelationFilterExpression & expression)
-{
-  setRelationFilterEnabled(true);
-  relationFilterModel()->setFilter(expression);
-}
-
-RelationFilterProxyModel* AbstractController::relationFilterModel() const
-{
-  auto *model = mModelContainer.firstProxyModelOfType<RelationFilterProxyModel>();
-  Q_ASSERT(model != nullptr);
-  return reinterpret_cast<RelationFilterProxyModel*>(model);
-}
+// RelationFilterProxyModel* AbstractController::relationFilterModel() const
+// {
+//   auto *model = mModelContainer.firstProxyModelOfType<RelationFilterProxyModel>();
+//   Q_ASSERT(model != nullptr);
+//   return reinterpret_cast<RelationFilterProxyModel*>(model);
+// }
 
 void AbstractController::setDynamicFiltersEnabled(bool enable)
 {
   if(isFilterEnabled()){
     filterModel()->setDynamicSortFilter(enable);
   }
-  if(isRelationFilterEnabled()){
-    qDebug() << "AbstractController: set relation dynamic filter " << enable;
-    relationFilterModel()->setDynamicSortFilter(enable);
-  }
+//   if(isRelationFilterEnabled()){
+//     qDebug() << "AbstractController: set relation dynamic filter " << enable;
+//     relationFilterModel()->setDynamicSortFilter(enable);
+//   }
 }
 
 // void AbstractController::disableDynamicFilters()
@@ -414,8 +414,6 @@ FilterProxyModel* AbstractController::filterModel() const
 
 void AbstractController::updateModelForViewIfChanged(QAbstractItemModel* oldModelForView)
 {
-  Q_ASSERT(oldModelForView != nullptr);
-
   auto *newModelForView = modelForView();
   if(newModelForView != oldModelForView){
     setModelToView(newModelForView);

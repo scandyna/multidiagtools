@@ -38,8 +38,8 @@ class ControllerRelationTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void enableDisableRelationFilterTest();
-  void setRelationParentModelTest();
+//   void enableDisableRelationFilterTest();
+//   void setRelationParentModelTest();
 
   void setControllersTest();
   void changeModelTest();

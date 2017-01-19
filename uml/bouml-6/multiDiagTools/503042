@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 138
+  revision 140
   modified_by 2 "philippe"
   // class settings
   
@@ -2528,15 +2528,6 @@ ${inlines}
 	    classrelation_ref 4142338 // <directional composition>
 	  b parent class_ref 3715458 // ForeignKey
       end
-
-      classrelation 4163202 // <directional composition>
-	relation 4137218 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 4163202 // <directional composition>
-	  b parent class_ref 3735810 // RelationKeyCopier
-      end
     end
 
     classdiagram 3175298 "AbstractItemModelController"
@@ -3658,15 +3649,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 4030722 // <directional composition>
-	relation 4004738 *-->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 4030722 // <directional composition>
-	  b parent class_ref 3594754 // RelationFilterProxyModel
-      end
-
       attribute 3224962 "ParentController"
 	private explicit_type "Controller"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -3851,6 +3833,24 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 4169730 // <directional composition>
+	relation 4143746 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4169730 // <directional composition>
+	  b parent class_ref 3735810 // RelationKeyCopier
+      end
+
+      classrelation 4169986 // <directional composition>
+	relation 4144002 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4169986 // <directional composition>
+	  b parent class_ref 3594754 // RelationFilterProxyModel
       end
     end
 

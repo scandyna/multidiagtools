@@ -21,17 +21,34 @@
 #include "ControllerRelationImpl.h"
 #include "AbstractController.h"
 #include "Mdt/ItemModel/RelationFilterProxyModel.h"
-#include <QObject>
+#include "Mdt/ItemModel/RelationKeyCopier.h"
 
 // #include <QDebug>
 
 using Mdt::ItemModel::RelationFilterProxyModel;
+using Mdt::ItemModel::RelationKeyCopier;
 
 namespace Mdt{ namespace ItemEditor{
 
 ControllerRelationImpl::ControllerRelationImpl(AbstractController* parentController)
- : ControllerRelation(parentController)
+ : ControllerRelation(parentController),
+   mProxyModel(new RelationFilterProxyModel),
+   mKeyCopier(new RelationKeyCopier)
 {
+  Q_ASSERT(parentController != nullptr);
+
+  if(parentController->modelForView() != nullptr){
+    mProxyModel->setParentModel(parentController->modelForView());
+  }
+  QObject::connect(parentController, &AbstractController::modelForViewChanged, mProxyModel.get(), &RelationFilterProxyModel::setParentModel);
+}
+
+// unique_ptr needs complete definition of RelationFilterExpression and RelationKeyCopier
+ControllerRelationImpl::~ControllerRelationImpl()
+{
+  if(childController() != nullptr){
+    childController()->removeProxyModel(mProxyModel.get());
+  }
 }
 
 void ControllerRelationImpl::registerChildController(const ItemModel::RelationFilterExpression & conditions)
@@ -39,9 +56,18 @@ void ControllerRelationImpl::registerChildController(const ItemModel::RelationFi
   Q_ASSERT(parentController() != nullptr);
   Q_ASSERT(childController() != nullptr);
 
-  childController()->setRelationFilter(conditions);
-  QObject::connect(parentController(), &AbstractController::currentRowChanged, childController()->relationFilterModel(), &RelationFilterProxyModel::setParentModelMatchRow);
-  childController()->relationFilterModel()->setParentModelMatchRow( parentController()->currentRow() );
+  if(childController()->sourceModel() != nullptr){
+    mProxyModel->setSourceModel( childController()->sourceModel() );
+  }
+  mChildSourceModelChangedConnection = QObject::connect(childController(), &AbstractController::sourceModelChanged, mProxyModel.get(), &RelationFilterProxyModel::setSourceModel);
+  childController()->prependProxyModel(mProxyModel.get());
+  mProxyModel->setFilter(conditions);
+  mParentModelCurrentRowChangedConnection = QObject::connect(parentController(), &AbstractController::currentRowChanged, mProxyModel.get(), &RelationFilterProxyModel::setParentModelMatchRow);
+  mProxyModel->setParentModelMatchRow( parentController()->currentRow() );
+  
+//   childController()->setRelationFilter(conditions);
+//   QObject::connect(parentController(), &AbstractController::currentRowChanged, childController()->relationFilterModel(), &RelationFilterProxyModel::setParentModelMatchRow);
+//   childController()->relationFilterModel()->setParentModelMatchRow( parentController()->currentRow() );
 }
 
 void ControllerRelationImpl::unregisterChildController()
@@ -49,7 +75,10 @@ void ControllerRelationImpl::unregisterChildController()
   Q_ASSERT(parentController() != nullptr);
   Q_ASSERT(childController() != nullptr);
 
-  QObject::disconnect(parentController(), &AbstractController::currentRowChanged, childController()->relationFilterModel(), &RelationFilterProxyModel::setParentModelMatchRow);
+  QObject::disconnect(mParentModelCurrentRowChangedConnection);
+  QObject::disconnect(mChildSourceModelChangedConnection);
+  childController()->removeProxyModel(mProxyModel.get());
+//   QObject::disconnect(parentController(), &AbstractController::currentRowChanged, childController()->relationFilterModel(), &RelationFilterProxyModel::setParentModelMatchRow);
 }
 
 void ControllerRelationImpl::setParentControllerModelToChildController()
@@ -61,7 +90,7 @@ void ControllerRelationImpl::setParentControllerModelToChildController()
   if(model == nullptr){
     return;
   }
-  childController()->setRelationFilterParentModel(model);
+//   childController()->setRelationFilterParentModel(model);
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

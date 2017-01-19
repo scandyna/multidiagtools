@@ -312,13 +312,13 @@ namespace Mdt{ namespace ItemEditor{
      * \sa setDynamicFiltersEnabled()
      * \sa isRelationFilterEnabled()
      */
-    void setRelationFilterEnabled(bool enable);
+//     void setRelationFilterEnabled(bool enable);
 
     /*! \brief Check if relation filter is enabled
      *
      * \sa setRelationFilterEnabled()
      */
-    bool isRelationFilterEnabled() const;
+//     bool isRelationFilterEnabled() const;
 
     /*! \brief Set relation filter's parent model
      *
@@ -326,7 +326,7 @@ namespace Mdt{ namespace ItemEditor{
      *
      * \pre \a model must be a valid pointer.
      */
-    void setRelationFilterParentModel(QAbstractItemModel *model);
+//     void setRelationFilterParentModel(QAbstractItemModel *model);
 
     /*! \brief Set relation filter
      *
@@ -338,13 +338,13 @@ namespace Mdt{ namespace ItemEditor{
      * \sa setRelationFilterEnabled()
      * \sa setRelationFilterParentModel()
      */
-    void setRelationFilter(const Mdt::ItemModel::RelationFilterExpression & expression);
+//     void setRelationFilter(const Mdt::ItemModel::RelationFilterExpression & expression);
 
     /*! \brief Get relation filter proxy model
      *
      * \pre Relation filter must be enabled
      */
-    Mdt::ItemModel::RelationFilterProxyModel *relationFilterModel() const;
+//     Mdt::ItemModel::RelationFilterProxyModel *relationFilterModel() const;
 
     /*! \brief Set dynamic filters enabled/disabled
      *
