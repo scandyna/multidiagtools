@@ -37,6 +37,13 @@ class RelationKeyTest : public QObject
   void relationKeyTest();
   void keyCopierSetupTest();
   void keyCopierCopyTest();
+  
+  /**
+   * \todo Must check that copier only set values (related to key) if they are null
+   * Should also benchmark the overhead of allways checking
+   * Or: have a flag that tells if copy must be made or not ?
+   * Main goal: work with a relation filter proxy model, which allways removes and inserts rows
+   */
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_RELATION_KEY_TEST_H

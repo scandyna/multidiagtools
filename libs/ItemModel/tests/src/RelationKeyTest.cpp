@@ -53,13 +53,21 @@ void RelationKeyTest::relationKeyTest()
    * Initial state
    */
   RelationKey key;
+  QCOMPARE(key.columnPairCount(), 0);
   QVERIFY(key.isNull());
+  QVERIFY(!key.containsColumnPair(1, 2));
   QVERIFY(key.begin() == key.end());
   /*
    * Add column pair
    */
   key.addColumnPair(1, 2);
+  QCOMPARE(key.columnPairCount(), 1);
   QVERIFY(!key.isNull());
+  QCOMPARE(key.columnPairAt(0).parentModelColumn(), 1);
+  QCOMPARE(key.columnPairAt(0).childModelColumn(), 2);
+  QVERIFY(key.containsColumnPair(1, 2));
+  QVERIFY(!key.containsColumnPair(2, 1));
+  QVERIFY(!key.containsColumnPair(1, 1));
   /*
    * Iterate
    */
@@ -258,6 +266,7 @@ void RelationKeyTest::keyCopierCopyTest()
   QFAIL("Not complete");
 }
 
+/// \todo Add some test that removes rows (something goes wrong with current row..)
 
 /*
  * Main

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -63,7 +63,7 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
     /*
      * When using boost::proto::deep_copy(),
      * FilterColumn can not be deduced.
-     * This is because we use a template.
+     * This is why we use templates.
      */
     template<typename FC, typename LikeExpr>
     bool operator()(const FC & col, const LikeExpr & expr, const FilterEvalData & data) const

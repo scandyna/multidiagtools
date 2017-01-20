@@ -120,9 +120,30 @@ namespace Mdt{ namespace ItemModel{
      */
     bool eval(const QAbstractItemModel*const model, int row, const Expression::ParentModelEvalData & parentModelData, Qt::CaseSensitivity caseSensitivity) const;
 
-    /*! \brief
+    /*! \brief Get a relation key that contains pais of equly compared columns of this expression
+     *
+     * For example, this expression:
+     * \code
+     * ParentModelColumn clientId(0);
+     * ChildModelColumn addressClientId(1);
+     * addressClientId == cliendId;
+     * \endcode
+     * The resulting relation key will contain 1 column pair
+     *  with parent model column equal to 0
+     *  and child model column equal to 1
+     *
+     * Lets take a more complex expression:
+     * \code
+     * ChildModelColumn(1) <= ParentModelColumn(11) && ChildModelColumn(2) < ParentModelColumn(12);
+     * \endcode
+     * The resulting relation key will only contain 1 column pair,
+     *  with parent model column equal to 11
+     *  and child model column equal to 1,
+     *  because ChildModelColumn(2) < ParentModelColumn(12) is not a equality.
+     *
+     * \pre this expression must not be null
      */
-    
+    RelationKey getRelationKeyForEquality() const;
 
    private:
 

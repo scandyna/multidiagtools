@@ -22,39 +22,10 @@
 #define MDT_ITEM_MODEL_RELATION_KEY_H
 
 #include "RelationColumnPair.h"
+#include <QtGlobal>
 #include <vector>
 
 namespace Mdt{ namespace ItemModel{
-
-  /*! \internal Item of a RelationKey
-   */
-//   class RelationKeyItem
-//   {
-//    public:
-// 
-//     constexpr RelationKeyItem(int parentModelColumn, int childModelColumn) noexcept
-//      : mParentModelColumn(parentModelColumn),
-//        mChildModelColumn(childModelColumn)
-//     {
-//       Q_ASSERT(mParentModelColumn >= 0);
-//       Q_ASSERT(mChildModelColumn >= 0);
-//     }
-// 
-//     constexpr int parentModelColumn() const noexcept
-//     {
-//       return mParentModelColumn;
-//     }
-// 
-//     constexpr int childModelColumn() const noexcept
-//     {
-//       return mChildModelColumn;
-//     }
-// 
-//    private:
-// 
-//     int mParentModelColumn;
-//     int mChildModelColumn;
-//   };
 
   class PrimaryKey;
   class ForeignKey;
@@ -83,6 +54,28 @@ namespace Mdt{ namespace ItemModel{
      * \pre Both parentModelPk and childModelFk must have the same count of fields
      */
     void setKey(const PrimaryKey & parentModelPk, const ForeignKey & childModelFk);
+
+    /*! \brief Get count of column pairs in this key
+     */
+    int columnPairCount() const
+    {
+      return mColumnPairList.size();
+    }
+
+    /*! \brief Check if this container allready has a column pair
+     */
+    bool containsColumnPair(int parentModelColumn, int childModelColumn) const;
+
+    /*! \brief Get column pair at index
+     *
+     * \pre \a index must be in a valid range ( 0 <= index < columnPairCount() )
+     */
+    RelationColumnPair columnPairAt(int index) const
+    {
+      Q_ASSERT(index >= 0);
+      Q_ASSERT(index < columnPairCount());
+      return mColumnPairList[index];
+    }
 
     /*! \brief Check if this relation key is null
      */

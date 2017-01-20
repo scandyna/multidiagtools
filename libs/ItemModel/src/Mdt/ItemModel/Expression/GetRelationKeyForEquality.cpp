@@ -18,31 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "RelationFilterExpression.h"
-#include <QAbstractItemModel>
+#include "GetRelationKeyForEquality.h"
 
-namespace Mdt{ namespace ItemModel{
+#include <QDebug>
 
-RelationFilterExpression::~RelationFilterExpression()
+namespace Mdt{ namespace ItemModel{ namespace Expression{
+
+void AddRelationColumnPair::addColumnPair(const FilterColumnData & childModelColumn, const ParentModelColumnData & parentModelColumn, RelationKey & key)
 {
+  qDebug() << "addColumnPair() - childModelColumn: " << childModelColumn.columnIndex() << " , parentModelColumn: " << parentModelColumn.columnIndex();
+  if(!key.containsColumnPair( parentModelColumn.columnIndex(), childModelColumn.columnIndex() )){
+    key.addColumnPair( parentModelColumn.columnIndex(), childModelColumn.columnIndex() );
+  }
 }
 
-bool RelationFilterExpression::eval(const QAbstractItemModel*const model, int row, const Expression::ParentModelEvalData& parentModelData, Qt::CaseSensitivity caseSensitivity) const
-{
-  Q_ASSERT(!isNull());
-  Q_ASSERT(model != nullptr);
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < model->rowCount());
-  Q_ASSERT(!parentModelData.isNull());
-
-  return mContainer->eval(model, row, parentModelData, caseSensitivity);
-}
-
-RelationKey RelationFilterExpression::getRelationKeyForEquality() const
-{
-  Q_ASSERT(!isNull());
-
-  return mContainer->getRelationKeyForEquality();
-}
-
-}} // namespace Mdt{ namespace ItemModel{
+}}} // namespace Mdt{ namespace ItemModel{ namespace Expression{

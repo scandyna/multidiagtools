@@ -18,31 +18,7 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "RelationFilterExpression.h"
-#include <QAbstractItemModel>
+#include "FilterExpressionContainer.h"
 
-namespace Mdt{ namespace ItemModel{
-
-RelationFilterExpression::~RelationFilterExpression()
-{
-}
-
-bool RelationFilterExpression::eval(const QAbstractItemModel*const model, int row, const Expression::ParentModelEvalData& parentModelData, Qt::CaseSensitivity caseSensitivity) const
-{
-  Q_ASSERT(!isNull());
-  Q_ASSERT(model != nullptr);
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < model->rowCount());
-  Q_ASSERT(!parentModelData.isNull());
-
-  return mContainer->eval(model, row, parentModelData, caseSensitivity);
-}
-
-RelationKey RelationFilterExpression::getRelationKeyForEquality() const
-{
-  Q_ASSERT(!isNull());
-
-  return mContainer->getRelationKeyForEquality();
-}
-
-}} // namespace Mdt{ namespace ItemModel{
+namespace Mdt{ namespace ItemModel{ namespace Expression{
+}}} // namespace Mdt{ namespace ItemModel{ namespace Expression{

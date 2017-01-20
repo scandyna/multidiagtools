@@ -21,7 +21,6 @@
 #include "RelationKey.h"
 #include "PrimaryKey.h"
 #include "ForeignKey.h"
-#include <QtGlobal>
 #include <algorithm>
 #include <iterator>
 
@@ -47,6 +46,14 @@ void RelationKey::setKey(const PrimaryKey & parentModelPk, const ForeignKey & ch
     return RelationColumnPair(parentModelColumn, childModelColumn);
   };
   std::transform(parentModelPk.begin(), parentModelPk.end(), childModelFk.begin(), std::back_inserter(mColumnPairList), op);
+}
+
+bool RelationKey::containsColumnPair(int parentModelColumn, int childModelColumn) const
+{
+  const auto pred = [parentModelColumn, childModelColumn](const RelationColumnPair & pair){
+    return ( pair.parentModelColumn() == parentModelColumn && pair.childModelColumn() == childModelColumn );
+  };
+  return ( std::find_if(mColumnPairList.cbegin(), mColumnPairList.cend(), pred) != mColumnPairList.cend() );
 }
 
 void RelationKey::clear()

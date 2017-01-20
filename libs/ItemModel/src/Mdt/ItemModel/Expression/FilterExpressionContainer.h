@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,6 +24,7 @@
 #include "ContainerInterface.h"
 #include "FilterEval.h"
 #include "FilterEvalData.h"
+#include "GetRelationKeyForEquality.h"
 #include <QAbstractItemModel>
 #include <Qt>
 #include <boost/proto/deep_copy.hpp>
@@ -91,6 +92,18 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
 
       FilterEval ev;
       return ev(mExpression, 0, FilterEvalData(model, row, parentModelData, cs));
+    }
+
+    /*! \brief Get a relation key that contains pais of equly compared columns of this expression
+     */
+    RelationKey getRelationKeyForEquality() const override
+    {
+      RelationKey key;
+      GetRelationKeyForEquality g;
+
+      g(mExpression, 0, key);
+
+      return key;
     }
 
    private:

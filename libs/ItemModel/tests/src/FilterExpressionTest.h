@@ -68,6 +68,7 @@ class FilterExpressionTest : public QObject
 
   void relationExpressionCopyTest();
   void relationExpressionTest();
+  void getRelationKeyForEqualityTest();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H

@@ -1,28 +1,22 @@
 window_sizes 1280 963 415 859 908 0
 cleanlooks_style
 diagrams
-  classdiagram_ref 2761218 // ControllerOverview
-    120 110 100 23 0 0
-  active  classdiagram_ref 3208706 // ControllerRelation
-    859 908 100 21 0 13
+  classdiagram_ref 3248514 // RelationKey
+    687 726 100 4 0 0
+  active  classdiagram_ref 3255042 // GetRelationKeyForEquality
+    859 908 100 21 0 0
 end
 show_stereotypes
-selected operation_ref 5211522 // setChildModel
+selected operation_ref 5233026 // operator()
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
-  classview_ref 1603842 // Terminals
-  operation_ref 5211394 // setParentModel
-  operation_ref 5211522 // setChildModel
+  class_ref 3742594 // AddRelationColumnPair
+  classview_ref 1702914 // Key
+  classview_ref 1656834 // Relation
   classview_ref 1715970 // ReadWriteAccess
   classview_ref 1682946 // ReadWriteFlags
-  classview_ref 1472258 // Editor
-  classdiagram_ref 3168642 // SqlWidgetMapperController
-  class_ref 3138562 // SqlWidgetMapperController
-  classview_ref 1676418 // Relation
-  classdiagram_ref 3168258 // Overview
-  classview_ref 1689602 // SqlRelation
   
   package_ref 430082 // Dsp
   classview_ref 1517954 // proto

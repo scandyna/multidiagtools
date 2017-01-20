@@ -47,6 +47,8 @@ namespace ItemModel = Mdt::ItemModel;
 using ItemModel::VariantTableModel;
 using ItemModel::FilterColumn;
 using ItemModel::ParentModelColumn;
+using ItemModel::RelationFilterExpression;
+using ItemModel::RelationKey;
 
 void FilterExpressionTest::initTestCase()
 {
@@ -889,6 +891,54 @@ void FilterExpressionTest::relationExpressionTest()
   QVERIFY( !filter.eval(&model, 0, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
   QVERIFY(  filter.eval(&model, 1, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
   QVERIFY(  filter.eval(&model, 2, ParentModelEvalData(&parentModel, 0), Qt::CaseInsensitive) );
+}
+
+void FilterExpressionTest::getRelationKeyForEqualityTest()
+{
+  RelationFilterExpression expression;
+  RelationKey key;
+
+  // ==
+  expression = ( FilterColumn(1) == ParentModelColumn(11) );
+  key = expression.getRelationKeyForEquality();
+  QCOMPARE(key.columnPairCount(), 1);
+  QCOMPARE(key.columnPairAt(0).parentModelColumn(), 11);
+  QCOMPARE(key.columnPairAt(0).childModelColumn(), 1);
+  // <=
+  expression = ( FilterColumn(1) <= ParentModelColumn(11) );
+  key = expression.getRelationKeyForEquality();
+  QCOMPARE(key.columnPairCount(), 1);
+  QCOMPARE(key.columnPairAt(0).parentModelColumn(), 11);
+  QCOMPARE(key.columnPairAt(0).childModelColumn(), 1);
+  // >=
+  expression = ( FilterColumn(1) >= ParentModelColumn(11) );
+  key = expression.getRelationKeyForEquality();
+  QCOMPARE(key.columnPairCount(), 1);
+  QCOMPARE(key.columnPairAt(0).parentModelColumn(), 11);
+  QCOMPARE(key.columnPairAt(0).childModelColumn(), 1);
+  // !=
+  expression = ( FilterColumn(1) != ParentModelColumn(11) );
+  QCOMPARE(key.columnPairCount(), 0);
+  // <
+  expression = ( FilterColumn(1) < ParentModelColumn(11) );
+  QCOMPARE(key.columnPairCount(), 0);
+  // >
+  expression = ( FilterColumn(1) > ParentModelColumn(11) );
+  QCOMPARE(key.columnPairCount(), 0);
+  // Combine
+  expression = ( FilterColumn(1) == ParentModelColumn(11) && FilterColumn(2) <= ParentModelColumn(12) );
+  key = expression.getRelationKeyForEquality();
+  QCOMPARE(key.columnPairCount(), 2);
+  QCOMPARE(key.columnPairAt(0).parentModelColumn(), 11);
+  QCOMPARE(key.columnPairAt(0).childModelColumn(), 1);
+  QCOMPARE(key.columnPairAt(0).parentModelColumn(), 12);
+  QCOMPARE(key.columnPairAt(0).childModelColumn(), 2);
+  // Check that no dupplicate exists in relation key
+  expression = ( (FilterColumn(1) <= ParentModelColumn(11)) || (FilterColumn(1) >= ParentModelColumn(11)) );
+  key = expression.getRelationKeyForEquality();
+  QCOMPARE(key.columnPairCount(), 1);
+  QCOMPARE(key.columnPairAt(0).parentModelColumn(), 11);
+  QCOMPARE(key.columnPairAt(0).childModelColumn(), 1);
 }
 
 /*

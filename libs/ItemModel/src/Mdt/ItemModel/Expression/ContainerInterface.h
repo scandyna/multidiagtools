@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_EXPRESSION_CONTAINER_INTERFACE_H
 
 #include "ParentModelEvalData.h"
+#include "../RelationKey.h"
 #include <Qt>
 
 class QAbstractItemModel;
@@ -58,6 +59,10 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
      * \pre \a parentModelData must not be null
      */
     virtual bool eval(const QAbstractItemModel * const model, int row, const ParentModelEvalData & parentModelData , Qt::CaseSensitivity caseSensitivity) const = 0;
+
+    /*! \brief Get a relation key that contains pais of equly compared columns of this expression
+     */
+    virtual RelationKey getRelationKeyForEquality() const = 0;
   };
 
 }}} // namespace Mdt{ namespace ItemModel{ namespace Expression{

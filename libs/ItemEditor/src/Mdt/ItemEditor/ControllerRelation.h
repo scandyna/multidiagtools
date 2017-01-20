@@ -99,6 +99,10 @@ namespace Mdt{ namespace ItemEditor{
       impl()->setParentControllerModelToChildController();
     }
 
+    /** \todo Add setParentControllerState() and setChildControllerState()
+     * Should react to AbstractController::controllerStateChanged()
+     */
+
    private:
 
      Derived *impl()

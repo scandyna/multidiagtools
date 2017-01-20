@@ -221,6 +221,7 @@ bool AbstractController::insert()
     return false;
   }
   ///disableDynamicFilters();
+  setControllerState(ControllerState::Inserting);
   bool ok = false;
   switch(pvInsertLocation){
     case InsertAtBeginning:
