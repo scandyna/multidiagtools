@@ -122,6 +122,8 @@ void TableViewControllerTest::setModelTest()
 //   while(tableView.isVisible()){
 //     QTest::qWait(500);
 //   }
+
+  QFAIL("Missing set nullptr model");
 }
 
 void TableViewControllerTest::primaryKeyTest()

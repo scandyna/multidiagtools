@@ -21,40 +21,31 @@
 #ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_H
 #define MDT_ITEM_EDITOR_CONTROLLER_RELATION_H
 
+#include "ControllerRelationImplBase.h"
+#include "Mdt/ItemModel/RelationFilterExpression.h"
+#include <QObject>
 #include <QPointer>
+#include <memory>
+
+class QAbstractItemModel;
+
+namespace Mdt{ namespace ItemModel{
+
+  class RelationFilterProxyModel;
+  class RelationKeyCopier;
+
+}} // namespace Mdt{ namespace ItemModel{
 
 namespace Mdt{ namespace ItemEditor{
 
+  class AbstractController;
+
   /*! \brief Relation between a parent controller and a child controller
    *
-   * ControllerRelation is a class template used by ControllerRelationList
-   *  to handle relations between controllers.
-   *
-   * To be usefull, a class that implements some of concrete controller's
-   *  method in a specific way must be created as subclass of this.
-   *
-   *  The implementation subclass must provide following methods:
-   * \code
-   * // Make signal/slot connections and whatever is required.
-   * // Filter is of implementation specific filter expression type
-   * void registerChildController(const Filter & conditions);
-   *
-   * // Disconnect signal/slots and do whatever is required.
-   * void unregisterChildController();
-   *
-   * // This method is called when parent controller's model changed.
-   * void setParentControllerModelToChildController();
-   * \endcode
-   * \todo Check if setParentControllerModelToChildController() is not obelete
-   *
-   * ControllerRelation does not own any controller,
+   * ControllerRelationImpl does not own any controller,
    *  deleting them is the responsability of the user of this class.
-   *
-   * \tparam Controller Must be AbstractController or subclass
-   * \tparam Derived Class that inherits from this and that implements specific methods
    */
-  template<typename Controller, typename Derived>
-  class ControllerRelation
+  class ControllerRelation : public ControllerRelationImplBase<AbstractController, ControllerRelation>
   {
    public:
 
@@ -62,56 +53,65 @@ namespace Mdt{ namespace ItemEditor{
      *
      * \pre \a parentController must be a valid pointer
      */
-    explicit ControllerRelation(Controller *parentController)
-     : mParentController(parentController)
-    {
-    }
+    explicit ControllerRelation(AbstractController *parentController);
 
-    /*! \brief Get parent controller
+    /*! \brief Destructor
      */
-    Controller *parentController() const
-    {
-      return mParentController;
-    }
+    ~ControllerRelation();
 
-    /*! \brief Get child controller
-     */
-    Controller *childController() const
-    {
-      return mChildController;
-    }
-
-    /*! \brief Set child controller
+    /*! \brief Register child controller
      *
-     * \pre \a controller must be a valid pointer
      * \pre \a conditions must be a valid relation filter expression
      */
-    template<typename T>
-    void setChildController(Controller *controller, const T & conditions)
-    {
-      Q_ASSERT(controller != nullptr);
+    void registerChildController(const Mdt::ItemModel::RelationFilterExpression & conditions);
 
-      if(!mChildController.isNull()){
-        impl()->unregisterChildController();
-      }
-      mChildController = controller;
-      impl()->registerChildController(conditions);
-      impl()->setParentControllerModelToChildController();
+    /*! \brief Unregister child controller
+     */
+    void unregisterChildController();
+
+   /*! \brief Actions to perform in a specific state of the parent controller
+    */
+   void onParentControllerStateChaged(Mdt::ItemEditor::ControllerState newState);
+
+   /*! \brief Actions to perform in a specific state of the child controller
+    */
+   void onChildControllerStateChaged(Mdt::ItemEditor::ControllerState newState);
+
+    /*! \brief Set parent controller's model to child controller
+     *
+     * \todo Possibly obselete
+     */
+    void setParentControllerModelToChildController();
+
+    /*! \internal Access relation filter proxy model
+     *
+     * \note When this relation is deleted, the returned pointer becomes dangling.
+     *       This method is used for unit tests.
+     */
+    Mdt::ItemModel::RelationFilterProxyModel *relationFilterModel() const
+    {
+      return mProxyModel.get();
     }
 
-    /** \todo Add setParentControllerState() and setChildControllerState()
-     * Should react to AbstractController::controllerStateChanged()
+    /*! \internal Access relation key copier
+     *
+     * \note When this relation is deleted, the returned pointer becomes dangling.
+     *       This method is used for unit tests.
      */
+    Mdt::ItemModel::RelationKeyCopier *relationKeyCopier() const
+    {
+      return mKeyCopier.get();
+    }
 
    private:
 
-     Derived *impl()
-     {
-       return static_cast<Derived*>(this);
-     }
+    void onParentControllerModelChanged(QAbstractItemModel *model);
 
-    QPointer<Controller> mParentController;
-    QPointer<Controller> mChildController;
+    std::unique_ptr<Mdt::ItemModel::RelationFilterProxyModel> mProxyModel;
+    std::unique_ptr<Mdt::ItemModel::RelationKeyCopier> mKeyCopier;
+//     QMetaObject::Connection mParentModelCurrentRowChangedConnection1;
+//     QMetaObject::Connection mParentModelCurrentRowChangedConnection2;
+    QMetaObject::Connection mChildSourceModelChangedConnection;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

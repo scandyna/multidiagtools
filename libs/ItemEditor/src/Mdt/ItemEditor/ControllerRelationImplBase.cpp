@@ -18,39 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_MODEL_EDITOR_RELATION_FILTER_PROXY_MODEL_TEST_H
-#define MDT_MODEL_EDITOR_RELATION_FILTER_PROXY_MODEL_TEST_H
+#include "ControllerRelationImplBase.h"
 
-#include "Mdt/ItemModel/VariantTableModel.h"
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace ItemEditor{
 
-class QAbstractItemModel;
-class QSortFilterProxyModel;
-
-class RelationFilterProxyModelTest : public QObject
-{
- Q_OBJECT
-
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void parentModelMatchRowTest();
-  void filterTest();
-  void filterBenchmark();
-  void filterBenchmark_data();
-
-  void filterRoleTest();
-  void setModelTest();
-  void setterEventTest();
-  void dynamicFilterTest();
-
- private:
-
-  static QVariant getModelData(const QAbstractItemModel & model, int row, int column);
-  static void displayModels(QAbstractItemModel *sourceModel, QSortFilterProxyModel *proxyModel);
-};
-
-#endif // #ifndef MDT_MODEL_EDITOR_RELATION_FILTER_PROXY_MODEL_TEST_H
+}} // namespace Mdt{ namespace ItemEditor{

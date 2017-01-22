@@ -44,9 +44,10 @@ void RelationKeyCopier::setCopyTriggers(CopyTriggers triggers)
 void RelationKeyCopier::setParentModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);
+//   Q_ASSERT( mKey.isNull() || (mKey.greatestParentModelColumn() < model->columnCount()) );
 
   mParentModel = model;
-  clearKey();
+  ///clearKey();
   setParentModelCurrentRow(-1);
   reconnectSignalSlotsIfOk();
 }
@@ -54,35 +55,41 @@ void RelationKeyCopier::setParentModel(QAbstractItemModel* model)
 void RelationKeyCopier::setChildModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);
+//   Q_ASSERT( mKey.isNull() || (mKey.greatestChildModelColumn() < model->columnCount()) );
 
   mChildModel = model;
-  clearKey();
+  ///clearKey();
   reconnectSignalSlotsIfOk();
 }
 
 void RelationKeyCopier::addColumnPair(int parentModelColumn, int childModelColumn)
 {
-  Q_ASSERT(!mParentModel.isNull());
-  Q_ASSERT(!mChildModel.isNull());
   Q_ASSERT(parentModelColumn >= 0);
-  Q_ASSERT(parentModelColumn < mParentModel->columnCount());
+//   Q_ASSERT( mParentModel.isNull() || (parentModelColumn < mParentModel->columnCount()) );
   Q_ASSERT(childModelColumn >= 0);
-  Q_ASSERT(childModelColumn < mChildModel->columnCount());
+//   Q_ASSERT( mChildModel.isNull() || (childModelColumn < mChildModel->columnCount()) );
 
   mKey.addColumnPair(parentModelColumn, childModelColumn);
 }
 
 void RelationKeyCopier::setKey(const PrimaryKey& parentModelPk, const ForeignKey& childModelFk)
 {
-  Q_ASSERT(!mParentModel.isNull());
-  Q_ASSERT(!mChildModel.isNull());
   Q_ASSERT(!parentModelPk.isNull());
   Q_ASSERT(!childModelFk.isNull());
   Q_ASSERT(parentModelPk.columnCount() == childModelFk.columnCount());
-  Q_ASSERT(parentModelPk.greatestColumn() < mParentModel->columnCount());
-  Q_ASSERT(childModelFk.greatestColumn() < mChildModel->columnCount());
+//   Q_ASSERT( mParentModel.isNull() || (parentModelPk.greatestColumn() < mParentModel->columnCount()) );
+//   Q_ASSERT( mChildModel.isNull() || (childModelFk.greatestColumn() < mChildModel->columnCount()) );
 
   mKey.setKey(parentModelPk, childModelFk);
+}
+
+void RelationKeyCopier::setKey(const RelationKey & key)
+{
+  Q_ASSERT(!key.isNull());
+//   Q_ASSERT( mParentModel.isNull() || (key.greatestParentModelColumn() < mParentModel->columnCount()) );
+//   Q_ASSERT( mChildModel.isNull() || (key.greatestChildModelColumn() < mChildModel->columnCount()) );
+
+  mKey = key;
 }
 
 void RelationKeyCopier::setParentModelCurrentRow(int row)
@@ -129,6 +136,7 @@ void RelationKeyCopier::copyKeyData(int childModelRow)
   Q_ASSERT(mParentModelCurrentRow >= 0);
   Q_ASSERT(mParentModelCurrentRow < mParentModel->rowCount());
 
+  qDebug() << "copyKeyData() - pairs: " << mKey.columnPairCount();
   for(const auto columnPair : mKey){
     const auto parentModelIndex = mParentModel->index(mParentModelCurrentRow, columnPair.parentModelColumn());
     const auto childModelIndex = mChildModel->index(childModelRow, columnPair.childModelColumn());

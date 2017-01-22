@@ -98,6 +98,13 @@ namespace Mdt{ namespace ItemModel{
      */
     void setFilter(const RelationFilterExpression & expression);
 
+    /*! \brief Get row of parent model for which filter must match
+     */
+    int parentModelMatchRow() const
+    {
+      return mParentModelRow;
+    }
+
    public slots:
 
     /*! \brief Set row of parent model for which filter must match

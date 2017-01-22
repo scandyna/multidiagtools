@@ -38,14 +38,12 @@ class ControllerRelationTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-//   void enableDisableRelationFilterTest();
-//   void setRelationParentModelTest();
-
   void setControllersTest();
-  void changeModelTest();
 
-  void relationSetModelToControllersFirstTest();
-  void relationSetModelToControllersAfterTest();
+  void setModelToControllersFirstTest();
+  void setModelToControllersAfterTest();
+  void changeModelTest();
+  void parentControllerCurrentRowTest();
   void relationFilterTest();
 
   void relationListSetModelToControllersFirstTest();

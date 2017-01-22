@@ -37,6 +37,7 @@ void RelationFilterProxyModel::setParentModel(QAbstractItemModel *model)
   Q_ASSERT(model != nullptr);
 
   mParentModel = model;
+  mParentModelRow = -1;
   invalidateFilter();
 }
 
@@ -71,10 +72,10 @@ bool RelationFilterProxyModel::filterAcceptsRow(int source_row, const QModelInde
   /*
    * QSortFilterProxyModel seems to ignore dynamicSortFilter during insertion.
    */
-  if(!dynamicSortFilter()){
-    return true;
-  }
-  qDebug() << "RelationFilterProxyModel: eval ..";
+//   if(!dynamicSortFilter()){
+//     return true;
+//   }
+//   qDebug() << "RelationFilterProxyModel: eval ..";
   return mFilterExpression.eval(sourceModel(), source_row, ParentModelEvalData(mParentModel, mParentModelRow), filterCaseSensitivity());
 }
 

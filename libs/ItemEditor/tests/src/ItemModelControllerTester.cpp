@@ -27,6 +27,7 @@ ItemModelControllerTester::ItemModelControllerTester(QObject* parent)
 
 void ItemModelControllerTester::setModelToView(QAbstractItemModel* /*model*/)
 {
+  modelSetToView();
 }
 
 bool ItemModelControllerTester::submitDataToModel()

@@ -61,7 +61,7 @@ namespace Mdt{ namespace ItemModel{
       return mColumnList.empty();
     }
 
-    /*! \brief Get the greates column
+    /*! \brief Get the greatest column
      *
      * Returns -1 if this list is empty.
      */

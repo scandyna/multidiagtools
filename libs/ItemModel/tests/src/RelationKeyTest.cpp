@@ -56,6 +56,8 @@ void RelationKeyTest::relationKeyTest()
   QCOMPARE(key.columnPairCount(), 0);
   QVERIFY(key.isNull());
   QVERIFY(!key.containsColumnPair(1, 2));
+  QCOMPARE(key.greatestParentModelColumn(), -1);
+  QCOMPARE(key.greatestChildModelColumn(), -1);
   QVERIFY(key.begin() == key.end());
   /*
    * Add column pair
@@ -68,6 +70,8 @@ void RelationKeyTest::relationKeyTest()
   QVERIFY(key.containsColumnPair(1, 2));
   QVERIFY(!key.containsColumnPair(2, 1));
   QVERIFY(!key.containsColumnPair(1, 1));
+  QCOMPARE(key.greatestParentModelColumn(), 1);
+  QCOMPARE(key.greatestChildModelColumn(), 2);
   /*
    * Iterate
    */
@@ -91,6 +95,9 @@ void RelationKeyTest::relationKeyTest()
   QVERIFY(it != key.end());
   QCOMPARE(it->parentModelColumn(), 4);
   QCOMPARE(it->childModelColumn(), 6);
+  // Check greatest columns
+  QCOMPARE(key.greatestParentModelColumn(), 4);
+  QCOMPARE(key.greatestChildModelColumn(), 6);
   /*
    * Clear
    */
@@ -101,9 +108,6 @@ void RelationKeyTest::relationKeyTest()
 
 void RelationKeyTest::keyCopierSetupTest()
 {
-  
-  
-  
   /*
    * Initial state
    */
@@ -142,10 +146,10 @@ void RelationKeyTest::keyCopierSetupTest()
   VariantTableModel parentModel;
   parentModel.resize(2, 3);
   kc.setParentModel(&parentModel);
-  QVERIFY(kc.key().isNull());
+  QVERIFY(!kc.key().isNull());
   QCOMPARE(kc.parentModelCurrentRow(), -1);
   /*
-   * Set key using setKey()
+   * Set key using setKey(PK,FK)
    */
   PrimaryKey pk({0});
   ForeignKey fk({0});
@@ -157,7 +161,55 @@ void RelationKeyTest::keyCopierSetupTest()
   VariantTableModel childModel;
   childModel.resize(1, 5);
   kc.setChildModel(&childModel);
-  QVERIFY(kc.key().isNull());
+  QVERIFY(!kc.key().isNull());
+  /*
+   * Set key using setKey(RelationKey)
+   */
+  RelationKey key;
+  key.addColumnPair(1, 2);
+  kc.setKey(key);
+  QVERIFY(!kc.key().isNull());
+}
+
+void RelationKeyTest::keyCopierParentModelCurrentRowTest()
+{
+  /*
+   * Initial state
+   */
+  RelationKeyCopier kc;
+  QCOMPARE(kc.parentModelCurrentRow(), -1);
+  kc.setParentModelCurrentRow(-1);
+  QCOMPARE(kc.parentModelCurrentRow(), -1);
+  /*
+   * Set parent model
+   */
+  VariantTableModel parentModel;
+  parentModel.resize(2, 1);
+  kc.setParentModel(&parentModel);
+  QCOMPARE(kc.parentModelCurrentRow(), -1);
+  kc.setParentModelCurrentRow(1);
+  QCOMPARE(kc.parentModelCurrentRow(), 1);
+  /*
+   * Set child model
+   */
+  VariantTableModel childModel;
+  childModel.resize(3, 1);
+  kc.setChildModel(&childModel);
+  QCOMPARE(kc.parentModelCurrentRow(), 1);
+  /*
+   * Change parent model current row
+   */
+  kc.setParentModelCurrentRow(1);
+  QCOMPARE(kc.parentModelCurrentRow(), 1);
+  kc.setParentModelCurrentRow(0);
+  QCOMPARE(kc.parentModelCurrentRow(), 0);
+  /*
+   * Change parent model
+   */
+  VariantTableModel parentModel2;
+  parentModel2.resize(3, 1);
+  kc.setParentModel(&parentModel2);
+  QCOMPARE(kc.parentModelCurrentRow(), -1);
 }
 
 void RelationKeyTest::keyCopierCopyTest()

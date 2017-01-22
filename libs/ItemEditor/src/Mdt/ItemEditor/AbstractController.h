@@ -23,7 +23,7 @@
 
 #include "RowState.h"
 #include "ControllerState.h"
-#include "ControllerRelationImpl.h"
+#include "ControllerRelation.h"
 #include "ControllerRelationList.h"
 #include "Mdt/ItemModel/ProxyModelContainer.h"
 #include "Mdt/ItemModel/FilterProxyModel.h"
@@ -388,6 +388,9 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Emitted each time model for the view changed
      *
+     * If no model was set ( sourceModel() returns a nullptr ),
+     *  and no proxy model is set, \a model is a nullptr.
+     *
      * \sa modelForView()
      */
     void modelForViewChanged(QAbstractItemModel *model);
@@ -567,12 +570,12 @@ namespace Mdt{ namespace ItemEditor{
     void updateModelForViewIfChanged(QAbstractItemModel *oldModelForView);
 
     ControllerState pvControllerState = ControllerState::Visualizing;
-    RowChangeEventDispatcher *pvRowChangeEventDispatcher;
+    RowChangeEventDispatcher *mRowChangeEventDispatcher;
     InsertLocation pvInsertLocation;
     Mdt::ItemModel::PrimaryKey mPrimaryKey;
     Mdt::ItemModel::ForeignKey mForeignKey;
     Mdt::ItemModel::ProxyModelContainer mModelContainer;
-    ControllerRelationList<AbstractController, ControllerRelationImpl> mRelationList;
+    ControllerRelationList<AbstractController, ControllerRelation> mRelationList;
     Mdt::Error mLastError;
   };
 

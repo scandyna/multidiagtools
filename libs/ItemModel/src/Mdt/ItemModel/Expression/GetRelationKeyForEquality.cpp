@@ -20,13 +20,10 @@
  ****************************************************************************/
 #include "GetRelationKeyForEquality.h"
 
-#include <QDebug>
-
 namespace Mdt{ namespace ItemModel{ namespace Expression{
 
 void AddRelationColumnPair::addColumnPair(const FilterColumnData & childModelColumn, const ParentModelColumnData & parentModelColumn, RelationKey & key)
 {
-  qDebug() << "addColumnPair() - childModelColumn: " << childModelColumn.columnIndex() << " , parentModelColumn: " << parentModelColumn.columnIndex();
   if(!key.containsColumnPair( parentModelColumn.columnIndex(), childModelColumn.columnIndex() )){
     key.addColumnPair( parentModelColumn.columnIndex(), childModelColumn.columnIndex() );
   }

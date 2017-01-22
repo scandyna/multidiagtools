@@ -241,6 +241,25 @@ void RowChangeTest::eventDispatcherTest()
   QCOMPARE(rs.rowCount(), model.rowCount());
   QCOMPARE(rs.currentRow(), 0);
   /*
+   * Set a null pointer model
+   * Must reset and signal row state
+   * (is different than before)
+   */
+  dispatcher.setModel(nullptr);
+  QCOMPARE(dispatcher.rowCount(), 0);
+  QCOMPARE(dispatcher.currentRow(), -1);
+  // Check that row state was signaled
+  QCOMPARE(rowStateSpy.count(), 1);
+  spyItem = rowStateSpy.takeFirst();
+  rs = spyItem.at(0).value<RowState>();
+  QCOMPARE(rs.rowCount(), 0);
+  QCOMPARE(rs.currentRow(), -1);
+  /*
+   * Set a null pointer model again
+   */
+  dispatcher.setModel(nullptr);
+  QCOMPARE(rowStateSpy.count(), 0);
+  /*
    * Play
    */
 //   QTableView tv;
@@ -249,6 +268,7 @@ void RowChangeTest::eventDispatcherTest()
 //   while(tv.isVisible()){
 //     QTest::qWait(500);
 //   }
+  
 }
 
 void RowChangeTest::eventDispatcherInsertFromModelTest()

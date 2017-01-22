@@ -35,6 +35,16 @@ namespace Mdt{ namespace ItemModel{
   class ForeignKey;
 
   /*! \brief Copies data from parent model to child model on some events regarding relation key
+   *
+   * \par Keep models and relation key coherent
+   *  There is no good solution for RelationKeyCopier to check
+   *   if relation key is valid, regarding models, in a reliable way.
+   *   The user of this class should take care of this.
+   *   When setting parent model, child model, and relation key,
+   *   no check will be done about columns that are to big regarding models.
+   *   Then processing the copy, out of bound check is done,
+   *   and nothing happens for a pair of columns when at least one is in invalid range.
+   *   This also alows to change models and relation key at any time.
    */
   class RelationKeyCopier : public QObject
   {
@@ -75,7 +85,7 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Set parent model
      *
-     * Will also clear the key and set parent model current row to -1.
+     * Will also set parent model current row to -1.
      *
      * RelationKeyCopier will not own the model
      *  (it will not delete it).
@@ -86,8 +96,6 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Set child model
      *
-     * Will also clear the key.
-     *
      * RelationKeyCopier will not own the model
      *  (it will not delete it).
      *
@@ -97,23 +105,24 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Add a pair of columns
      *
-     * \note key will be cleared if parent or child model changes
-     * \pre parent model and child model must be set
-     * \pre parentModelColumn must be in range 0 <= parentModelColumn < parent model's column count
-     * \pre childModelColumn must be in range 0 <= childModelColumn < child model's column count
+     * \pre \a parentModelColumn must be >= 0
+     * \pre \a childModelColumn must be >= 0
      */
     void addColumnPair(int parentModelColumn, int childModelColumn);
 
-    /*! \brief Set rekation key from parent model primary key and child model foreign key
+    /*! \brief Set relation key from parent model primary key and child model foreign key
      *
-     * \note key will be cleared if parent or child model changes
-     * \pre parent model and child model must be set
      * \pre parentModelPk must not be null
      * \pre childModelFk must not be null
-     * \pre Both parentModelPk and childModelFk must have the same count of fields
-     * \pre Count of fields must be <= both parent and child model column count
+     * \pre Both parentModelPk and childModelFk must have the same count of column indexes
      */
     void setKey(const PrimaryKey & parentModelPk, const ForeignKey & childModelFk);
+
+    /*! \brief Set relation key
+     *
+     * \pre \a key must not be null
+     */
+    void setKey(const RelationKey & key);
 
     /*! \brief Get relation key
      */

@@ -56,6 +56,30 @@ bool RelationKey::containsColumnPair(int parentModelColumn, int childModelColumn
   return ( std::find_if(mColumnPairList.cbegin(), mColumnPairList.cend(), pred) != mColumnPairList.cend() );
 }
 
+int RelationKey::greatestParentModelColumn() const
+{
+  const auto cmp = [](const RelationColumnPair & a, const RelationColumnPair & b){
+    return (a.parentModelColumn() < b.parentModelColumn());
+  };
+  const auto it = std::max_element(mColumnPairList.cbegin(), mColumnPairList.cend(), cmp);
+  if(it == mColumnPairList.cend()){
+    return -1;
+  }
+  return it->parentModelColumn();
+}
+
+int RelationKey::greatestChildModelColumn() const
+{
+  const auto cmp = [](const RelationColumnPair & a, const RelationColumnPair & b){
+    return (a.childModelColumn() < b.childModelColumn());
+  };
+  const auto it = std::max_element(mColumnPairList.cbegin(), mColumnPairList.cend(), cmp);
+  if(it == mColumnPairList.cend()){
+    return -1;
+  }
+  return it->childModelColumn();
+}
+
 void RelationKey::clear()
 {
   mColumnPairList.clear();

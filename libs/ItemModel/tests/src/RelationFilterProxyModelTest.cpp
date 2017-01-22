@@ -56,6 +56,48 @@ void RelationFilterProxyModelTest::cleanupTestCase()
  * Tests
  */
 
+void RelationFilterProxyModelTest::parentModelMatchRowTest()
+{
+  /*
+   * Initial state
+   */
+  RelationFilterProxyModel proxyModel;
+  QCOMPARE(proxyModel.parentModelMatchRow(), -1);
+  // Set current row must be accepted without parent model set
+  proxyModel.setParentModelMatchRow(-1);
+  QCOMPARE(proxyModel.parentModelMatchRow(), -1);
+  /*
+   * Set parent model
+   */
+  VariantTableModel parentModel;
+  parentModel.resize(3, 1);
+  proxyModel.setParentModel(&parentModel);
+  QCOMPARE(proxyModel.parentModelMatchRow(), -1);
+  proxyModel.setParentModelMatchRow(1);
+  QCOMPARE(proxyModel.parentModelMatchRow(), 1);
+  /*
+   * Set source model
+   */
+  VariantTableModel model;
+  model.resize(2, 1);
+  proxyModel.setSourceModel(&model);
+  QCOMPARE(proxyModel.parentModelMatchRow(), 1);
+  /*
+   * Change parent model match row
+   */
+  proxyModel.setParentModelMatchRow(2);
+  QCOMPARE(proxyModel.parentModelMatchRow(), 2);
+  proxyModel.setParentModelMatchRow(0);
+  QCOMPARE(proxyModel.parentModelMatchRow(), 0);
+  /*
+   * Change parent model
+   */
+  VariantTableModel parentModel2;
+  parentModel2.resize(3, 1);
+  proxyModel.setParentModel(&parentModel2);
+  QCOMPARE(proxyModel.parentModelMatchRow(), -1);
+}
+
 void RelationFilterProxyModelTest::filterTest()
 {
   /*
@@ -136,11 +178,15 @@ void RelationFilterProxyModelTest::filterBenchmark()
    * -----------------
    * | Id | ParentId |
    * -----------------
-   * | 1  |   1      |
+   * | 1  |   -1     |
    * -----------------
-   * | 2  |   1      |
+   * | 2  |    0     |
    * -----------------
-   * | .. |   2      |
+   * | 3  |    1     |
+   * -----------------
+   * | 4  |    2     |
+   * -----------------
+   * | .. |    ..    |
    * -----------------
    */
   VariantTableModel model;

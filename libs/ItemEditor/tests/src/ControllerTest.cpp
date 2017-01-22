@@ -156,6 +156,58 @@ void ControllerTest::setModelSignalTest()
   QFAIL("Not complete");
 }
 
+void ControllerTest::setModelRowCountTest()
+{
+  /*
+   * Initial state
+   */
+  ItemModelControllerTester controller;
+  QCOMPARE(controller.rowCount(), 0);
+  /*
+   * Set model
+   */
+  VariantTableModel model;
+  model.resize(2, 1);
+  controller.setModel(&model);
+  QCOMPARE(controller.rowCount(), 2);
+
+  QFAIL("Not complete");
+}
+
+void ControllerTest::setModelRowCountSignalTest()
+{
+  QFAIL("Not complete");
+}
+
+void ControllerTest::addRemoveProxyModelWithoutSourceModelTest()
+{
+  /*
+   * Initial state
+   */
+  ItemModelControllerTester controller;
+  QVERIFY(controller.sourceModel() == nullptr);
+  QVERIFY(controller.modelForView() == nullptr);
+  /*
+   * Prepend a proxy model
+   */
+  QSortFilterProxyModel proxyModel1;
+  controller.prependProxyModel(&proxyModel1);
+  QCOMPARE(controller.modelForView(), &proxyModel1);
+  /*
+   * Append a proxy model
+   */
+  QSortFilterProxyModel proxyModel2;
+  controller.appendProxyModel(&proxyModel2);
+  QCOMPARE(controller.modelForView(), &proxyModel2);
+  /*
+   * Remove proxy models
+   */
+  controller.removeProxyModel(&proxyModel1);
+  QCOMPARE(controller.modelForView(), &proxyModel2);
+  controller.removeProxyModel(&proxyModel2);
+  QVERIFY(controller.modelForView() == nullptr);
+}
+
 void ControllerTest::addRemoveProxyModelTest()
 {
   ItemModelControllerTester controller;

@@ -23,8 +23,9 @@ set(SOURCES_FILES
     src/Mdt/ItemEditor/MappedWidgetList.cpp
     src/Mdt/ItemEditor/DataWidgetMapper.cpp
     src/Mdt/ItemEditor/WidgetMapperController.cpp
+    src/Mdt/ItemEditor/AbstractControllerRelation.cpp
+    src/Mdt/ItemEditor/ControllerRelationImplBase.cpp
     src/Mdt/ItemEditor/ControllerRelation.cpp
-    src/Mdt/ItemEditor/ControllerRelationImpl.cpp
     src/Mdt/ItemEditor/ControllerRelationList.cpp
     src/Mdt/ItemEditor/StandardEditorLayoutWidget.cpp
     

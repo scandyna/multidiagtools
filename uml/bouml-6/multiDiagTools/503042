@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 141
+  revision 143
   modified_by 2 "philippe"
   // class settings
   
@@ -3551,8 +3551,13 @@ ${inlines}
       size C-Landscape
     end
 
-    class 2693250 "SqlRelation"
-      visibility package 
+    classdiagram 3261570 "ControllerRelationBase"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3749250 "AbstractControllerRelation"
+      abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -3565,56 +3570,86 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 3081602 // <unidirectional association>
-	relation 3063554 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 3081602 // <unidirectional association>
-	  b parent class_ref 2686466 // ControllerInputEvent
+      classrelation 4183298 // <generalisation>
+	relation 4157314 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4183298 // <generalisation>
+	  b parent class_ref 138626 // QObject
       end
 
-      operation 4131970 "fromForeignKey"
-	class_operation public return_type class_ref 2693250 // SqlRelation
+      operation 5246594 "AbstractControllerRelation"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "parentController" type class_ref 3648002 // AbstractController
+	  param in name "parent" type class_ref 138626 // QObject
+	cpp_decl "  ${comment}${inline}${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} 
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5239554 "setParentControllerState"
+	stereotype "slot"
+	abstract cpp_virtual protected explicit_return_type ""
 	nparams 1
-	  param in name "fk" type class_ref 2775682 // ForeignKey
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5239810 "setChildControllerState"
+	stereotype "slot"
+	abstract cpp_virtual protected explicit_return_type ""
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5246722 "abstractParentController"
+	abstract cpp_virtual protected return_type class_ref 3648002 // AbstractController
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5246850 "abstractChildController"
+	abstract cpp_virtual protected return_type class_ref 3648002 // AbstractController
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 5246978 "registerAbstractChildController"
+	protected explicit_return_type "void"
+	nparams 1
+	  param in name "controller" type class_ref 3648002 // AbstractController
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4384898 "fromTables"
-	class_operation public return_type class_ref 2693250 // SqlRelation
-	nparams 2
-	  param in name "parentTable" type class_ref 2775810 // Table
-	  param in name "childTable" type class_ref 2775810 // Table
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 4385026 "fromTableAndView"
-	class_operation public return_type class_ref 2693250 // SqlRelation
-	nparams 2
-	  param in name "parentTable" type class_ref 2775810 // Table
-	  param in name "childView" type class_ref 1994754 // View
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -3630,7 +3665,7 @@ ${inlines}
       size B-Landscape
     end
 
-    class 3627906 "ControllerRelation"
+    class 3627906 "ControllerRelationImplBase"
       visibility package 
       nformals 2
       formal name "Controller" type "class" explicit_default_value ""
@@ -3673,7 +3708,7 @@ ${inlines}
 	MysqlColumn
       end
 
-      operation 5125634 "ControllerRelation"
+      operation 5125634 "ControllerRelationImplBase"
 	cpp_inline public explicit_return_type ""
 	nparams 1
 	  param in name "parentController" explicit_type "Controller"
@@ -3735,14 +3770,84 @@ ${inlines}
 	
 	
       end
+
+      classrelation 4183554 // <generalisation>
+	relation 4157570 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4183554 // <generalisation>
+	  b parent class_ref 3749250 // AbstractControllerRelation
+      end
+
+      operation 5239682 "setParentControllerState"
+	cpp_virtual private explicit_return_type ""
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5239938 "setChildControllerState"
+	cpp_virtual private explicit_return_type ""
+	nparams 1
+	  param in name "state" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5247106 "abstractParentController"
+	cpp_virtual protected return_type class_ref 3648002 // AbstractController
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5247234 "abstractChildController"
+	cpp_virtual protected return_type class_ref 3648002 // AbstractController
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
-    class 3708546 "ControllerRelationImpl"
+    class 3708546 "ControllerRelation"
       visibility package 
       nactuals 2
-      actual class class_ref 3627906 // ControllerRelation
+      actual class class_ref 3627906 // ControllerRelationImplBase
         rank 0 explicit_value ""
-      actual class class_ref 3627906 // ControllerRelation
+      actual class class_ref 3627906 // ControllerRelationImplBase
         rank 1 explicit_value ""
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -3761,10 +3866,10 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 4121346 // <generalisation>
-	  b parent class_ref 3627906 // ControllerRelation
+	  b parent class_ref 3627906 // ControllerRelationImplBase
       end
 
-      operation 5161858 "ControllerRelationImpl"
+      operation 5161858 "ControllerRelation"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "parentController" type class_ref 3648002 // AbstractController
@@ -3852,14 +3957,30 @@ ${inlines}
 	    classrelation_ref 4169986 // <directional composition>
 	  b parent class_ref 3594754 // RelationFilterProxyModel
       end
+
+      operation 5240066 "onParentControllerStateChanged"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "newState" type class_ref 2684930 // ControllerState
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
-    class 3681922 "SqlControllerRelationImpl"
+    class 3681922 "SqlControllerRelation"
       visibility package 
       nactuals 2
-      actual class class_ref 3627906 // ControllerRelation
+      actual class class_ref 3627906 // ControllerRelationImplBase
         rank 0 explicit_value ""
-      actual class class_ref 3627906 // ControllerRelation
+      actual class class_ref 3627906 // ControllerRelationImplBase
         rank 1 explicit_value ""
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
@@ -3887,7 +4008,7 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 4128002 // <generalisation>
-	  b parent class_ref 3627906 // ControllerRelation
+	  b parent class_ref 3627906 // ControllerRelationImplBase
       end
     end
 
@@ -4056,7 +4177,7 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
 	    classrelation_ref 4031106 // <directional composition>
-	  b parent class_ref 3627906 // ControllerRelation
+	  b parent class_ref 3627906 // ControllerRelationImplBase
       end
 
       operation 5147778 "setParentControllerModelToChildControllers"
@@ -4089,6 +4210,80 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    class 2693250 "SqlRelation"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 3081602 // <unidirectional association>
+	relation 3063554 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 3081602 // <unidirectional association>
+	  b parent class_ref 2686466 // ControllerInputEvent
+      end
+
+      operation 4131970 "fromForeignKey"
+	class_operation public return_type class_ref 2693250 // SqlRelation
+	nparams 1
+	  param in name "fk" type class_ref 2775682 // ForeignKey
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4384898 "fromTables"
+	class_operation public return_type class_ref 2693250 // SqlRelation
+	nparams 2
+	  param in name "parentTable" type class_ref 2775810 // Table
+	  param in name "childTable" type class_ref 2775810 // Table
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 4385026 "fromTableAndView"
+	class_operation public return_type class_ref 2693250 // SqlRelation
+	nparams 2
+	  param in name "parentTable" type class_ref 2775810 // Table
+	  param in name "childView" type class_ref 1994754 // View
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 

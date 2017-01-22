@@ -39,10 +39,10 @@ AbstractController::AbstractController(QObject* parent)
    pvInsertLocation(InsertAtBeginning),
    mRelationList(this)
 {
-  pvRowChangeEventDispatcher = new RowChangeEventDispatcher(this);
-  connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateUpdated, this, &AbstractController::updateRowState);
+  mRowChangeEventDispatcher = new RowChangeEventDispatcher(this);
+  connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowStateUpdated, this, &AbstractController::updateRowState);
 //   connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowsInserted, this, &AbstractController::onRowsInserted);
-  connect(pvRowChangeEventDispatcher, &RowChangeEventDispatcher::rowsRemoved, this, &AbstractController::onRowsRemoved);
+  connect(mRowChangeEventDispatcher, &RowChangeEventDispatcher::rowsRemoved, this, &AbstractController::onRowsRemoved);
 }
 
 void AbstractController::setInsertLocation(AbstractController::InsertLocation il)
@@ -52,17 +52,17 @@ void AbstractController::setInsertLocation(AbstractController::InsertLocation il
 
 int AbstractController::rowCount() const
 {
-  return pvRowChangeEventDispatcher->rowCount();
+  return mRowChangeEventDispatcher->rowCount();
 }
 
 int AbstractController::currentRow() const
 {
-  return pvRowChangeEventDispatcher->currentRow();
+  return mRowChangeEventDispatcher->currentRow();
 }
 
 RowState AbstractController::rowState() const
 {
-  return pvRowChangeEventDispatcher->currentRowState();
+  return mRowChangeEventDispatcher->currentRowState();
 }
 
 ItemModel::PrimaryKey AbstractController::primaryKey() const
@@ -159,7 +159,7 @@ bool AbstractController::setCurrentRow(int row)
    *       until we found row, or no more data is available,
    *       and consider this value as current row.
    */
-  pvRowChangeEventDispatcher->setCurrentRow(row);
+  mRowChangeEventDispatcher->setCurrentRow(row);
 
   return true;
 }
@@ -225,11 +225,11 @@ bool AbstractController::insert()
   bool ok = false;
   switch(pvInsertLocation){
     case InsertAtBeginning:
-      ok = pvRowChangeEventDispatcher->insertRowAtBeginning();
+      ok = mRowChangeEventDispatcher->insertRowAtBeginning();
       break;
     case InsertAtEnd:
       /// \todo Fetch all (or not?)
-      ok = pvRowChangeEventDispatcher->insertRowAtEnd();
+      ok = mRowChangeEventDispatcher->insertRowAtEnd();
       break;
   }
   if(!ok){
@@ -273,12 +273,10 @@ void AbstractController::registerModel(QAbstractItemModel* model)
 void AbstractController::modelSetToView()
 {
   auto *model = modelForView();
-  Q_ASSERT(model != nullptr);
-
-  if(model == pvRowChangeEventDispatcher->model()){
+  if(model == mRowChangeEventDispatcher->model()){
     return;
   }
-  pvRowChangeEventDispatcher->setModel(model);
+  mRowChangeEventDispatcher->setModel(model);
 }
 
 void AbstractController::setPrimaryKey(const ItemModel::PrimaryKey & pk)

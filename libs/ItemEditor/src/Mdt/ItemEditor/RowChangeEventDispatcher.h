@@ -89,6 +89,9 @@ namespace Mdt{ namespace ItemEditor{
     RowChangeEventDispatcher & operator=(RowChangeEventDispatcher &&) = delete;
 
     /*! \brief Get model
+     *
+     * Can return a nullptr if not model was set,
+     *  or a nullptr was set as model.
      */
     QAbstractItemModel *model() const;
 

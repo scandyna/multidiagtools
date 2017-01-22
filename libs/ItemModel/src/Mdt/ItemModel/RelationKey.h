@@ -77,6 +77,18 @@ namespace Mdt{ namespace ItemModel{
       return mColumnPairList[index];
     }
 
+    /*! \brief Get the greatest column for parent model
+     *
+     * Returns -1 if this key is empty.
+     */
+    int greatestParentModelColumn() const;
+
+    /*! \brief Get the greatest column for child model
+     *
+     * Returns -1 if this key is empty.
+     */
+    int greatestChildModelColumn() const;
+
     /*! \brief Check if this relation key is null
      */
     bool isNull() const

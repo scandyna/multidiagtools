@@ -40,6 +40,9 @@ class ControllerTest : public QObject
   void basicStateTest();
   void setModelTest();
   void setModelSignalTest();
+  void setModelRowCountTest();
+  void setModelRowCountSignalTest();
+  void addRemoveProxyModelWithoutSourceModelTest();
   void addRemoveProxyModelTest();
   void addRemoveProxyModelSignalTest();
   void filterCheckModelTest();

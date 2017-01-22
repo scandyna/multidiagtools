@@ -1,6 +1,6 @@
 format 211
 "Qt" // Qt
-  revision 183
+  revision 184
   modified_by 2 "philippe"
   // class settings
   
@@ -55,7 +55,7 @@ format 211
     end
 
     class 138626 "QObject"
-      visibility package 
+      abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
 ${inlines}

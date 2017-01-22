@@ -21,7 +21,7 @@
 #ifndef MDT_ITEM_EDITOR_CONTROLLER_LIST_H
 #define MDT_ITEM_EDITOR_CONTROLLER_LIST_H
 
-#include "ControllerRelation.h"
+// #include "ControllerRelation.h"
 #include <QPointer>
 #include <vector>
 

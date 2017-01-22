@@ -70,7 +70,7 @@ bool RowChangeEventDispatcher::insertRowAtEnd()
 
 void RowChangeEventDispatcher::setModel(QAbstractItemModel* model)
 {
-  Q_ASSERT(model != nullptr);
+//   Q_ASSERT(model != nullptr);
 
   if(!mModel.isNull()){
     disconnect(mModel, &QAbstractItemModel::modelReset, this, &RowChangeEventDispatcher::onModelReset);
@@ -79,11 +79,18 @@ void RowChangeEventDispatcher::setModel(QAbstractItemModel* model)
     disconnect(mModel, &QAbstractItemModel::rowsRemoved, this, &RowChangeEventDispatcher::onRowsRemoved);
   }
   mModel = model;
-  connect(mModel, &QAbstractItemModel::modelReset, this, &RowChangeEventDispatcher::onModelReset);
-  connect(mModel, &QAbstractItemModel::rowsInserted, this, &RowChangeEventDispatcher::onRowsInserted);
-//   connect(pvModel, &QAbstractItemModel::rowsAboutToBeRemoved, this, &RowChangeEventDispatcher::onRowsAboutToBeRemoved);
-  connect(mModel, &QAbstractItemModel::rowsRemoved, this, &RowChangeEventDispatcher::onRowsRemoved);
-  onModelReset();
+  if(mModel.isNull()){
+    if(!mRowState.isNull()){
+      mRowState.clear();
+      emit rowStateUpdated(mRowState);
+    }
+  }else{
+    connect(mModel, &QAbstractItemModel::modelReset, this, &RowChangeEventDispatcher::onModelReset);
+    connect(mModel, &QAbstractItemModel::rowsInserted, this, &RowChangeEventDispatcher::onRowsInserted);
+//     connect(pvModel, &QAbstractItemModel::rowsAboutToBeRemoved, this, &RowChangeEventDispatcher::onRowsAboutToBeRemoved);
+    connect(mModel, &QAbstractItemModel::rowsRemoved, this, &RowChangeEventDispatcher::onRowsRemoved);
+    onModelReset();
+  }
 }
 
 void RowChangeEventDispatcher::onModelReset()
