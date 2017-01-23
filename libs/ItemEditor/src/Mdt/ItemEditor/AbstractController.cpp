@@ -197,8 +197,10 @@ bool AbstractController::submit()
     return false;
   }
   if(!submitDataToModel()){
+    qDebug() << "AbstractController: submit failed";
     return false;
   }
+  setControllerState(ControllerState::Visualizing);
   ///enableDynamicFilters();
 
   return true;
@@ -235,6 +237,7 @@ bool AbstractController::insert()
   if(!ok){
     return false;
   }
+  ///setControllerState(ControllerState::Editing);
 //   /// \todo check if ok
 //   setControllerState(ControllerState::Inserting);
 
@@ -330,7 +333,7 @@ void AbstractController::setControllerState(ControllerState state)
   if(state != pvControllerState){
     pvControllerState = state;
     emit controllerStateChanged(state);
-  }else{
+  }else{ /// \todo ??
     pvControllerState = state;
   }
 }

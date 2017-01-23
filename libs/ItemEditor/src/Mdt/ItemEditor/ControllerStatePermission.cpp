@@ -43,7 +43,7 @@ bool ControllerStatePermission::canInsert(ControllerState state)
     case ControllerState::Editing:
       return false;
     case ControllerState::Inserting:
-      return false;
+      return true;
   }
   return false;
 }
@@ -56,7 +56,7 @@ bool ControllerStatePermission::canSubmit(ControllerState state)
     case ControllerState::Editing:
       return true;
     case ControllerState::Inserting:
-      return false;
+      return true;
   }
   return false;
 }

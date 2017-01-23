@@ -36,8 +36,11 @@ class RelationKeyTest : public QObject
   void columnPairTest();
   void relationKeyTest();
   void keyCopierSetupTest();
+  void keyCopierTriggersTest();
+  void keyCopierTriggerBenchmark();
   void keyCopierParentModelCurrentRowTest();
-  void keyCopierCopyTest();
+  void keyCopierInsertIntoChildModelTest();
+  void keyCopierEditParentModelTest();
   
   /**
    * \todo Must check that copier only set values (related to key) if they are null

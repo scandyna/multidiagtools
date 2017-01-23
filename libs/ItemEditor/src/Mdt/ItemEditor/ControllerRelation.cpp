@@ -44,9 +44,7 @@ ControllerRelation::ControllerRelation(AbstractController* parentController)
     mProxyModel->setParentModel(parentController->modelForView());
     mKeyCopier->setParentModel(parentController->modelForView());
   }
-  mKeyCopier->setChildModel(mProxyModel.get());
-//   QObject::connect(parentController, &AbstractController::modelForViewChanged, this, &ControllerRelation::onParentControllerModelChanged);
-//   QObject::connect(parentController, &AbstractController::modelForViewChanged, this, &ControllerRelation::onParentControllerModelChanged);
+  ///mKeyCopier->setChildModel(mProxyModel.get());
   QObject::connect(parentController, &AbstractController::modelForViewChanged, mProxyModel.get(), &RelationFilterProxyModel::setParentModel);
   QObject::connect(parentController, &AbstractController::modelForViewChanged, mKeyCopier.get(), &RelationKeyCopier::setParentModel);
   QObject::connect(parentController, &AbstractController::currentRowChanged, mProxyModel.get(), &RelationFilterProxyModel::setParentModelMatchRow);
@@ -70,13 +68,14 @@ void ControllerRelation::registerChildController(const ItemModel::RelationFilter
 
   if(childController()->sourceModel() != nullptr){
     mProxyModel->setSourceModel( childController()->sourceModel() );
+    mKeyCopier->setChildModel( childController()->sourceModel() );
   }
-  mChildSourceModelChangedConnection = QObject::connect(childController(), &AbstractController::sourceModelChanged, mProxyModel.get(), &RelationFilterProxyModel::setSourceModel);
+  mChildSourceModelChangedConnection1 = 
+    QObject::connect(childController(), &AbstractController::sourceModelChanged, mProxyModel.get(), &RelationFilterProxyModel::setSourceModel);
+  mChildSourceModelChangedConnection2 = 
+    QObject::connect(childController(), &AbstractController::sourceModelChanged, mKeyCopier.get(), &RelationKeyCopier::setChildModel);
   childController()->prependProxyModel(mProxyModel.get());
   mProxyModel->setFilter(conditions);
-//   mParentModelCurrentRowChangedConnection1 = QObject::connect(parentController(), &AbstractController::currentRowChanged, mProxyModel.get(), &RelationFilterProxyModel::setParentModelMatchRow);
-//   mParentModelCurrentRowChangedConnection2 = QObject::connect(parentController(), &AbstractController::currentRowChanged, mKeyCopier.get(), &RelationKeyCopier::setParentModelCurrentRow);
-//   mProxyModel->setParentModelMatchRow( parentController()->currentRow() );
   mKeyCopier->setKey( conditions.getRelationKeyForEquality() );
 }
 
@@ -85,9 +84,8 @@ void ControllerRelation::unregisterChildController()
   Q_ASSERT(parentController() != nullptr);
   Q_ASSERT(childController() != nullptr);
 
-//   QObject::disconnect(mParentModelCurrentRowChangedConnection1);
-//   QObject::disconnect(mParentModelCurrentRowChangedConnection2);
-  QObject::disconnect(mChildSourceModelChangedConnection);
+  QObject::disconnect(mChildSourceModelChangedConnection1);
+  QObject::disconnect(mChildSourceModelChangedConnection2);
   childController()->removeProxyModel(mProxyModel.get());
 }
 
@@ -100,6 +98,12 @@ void ControllerRelation::onChildControllerStateChaged(ControllerState newState)
 {
   if(newState == ControllerState::Inserting){
     qDebug() << "ControllerRelation: child controller goes inserting state...";
+    ///mProxyModel->setDynamicSortFilter(false);
+    ///mKeyCopier->setChildModelRowsInsertedTriggerEnabled(true);
+  }else{
+    qDebug() << "ControllerRelation: child controller has exited inserting state...";
+    ///mKeyCopier->setChildModelRowsInsertedTriggerEnabled(false);
+    ///mProxyModel->setDynamicSortFilter(true);
   }
 }
 
@@ -120,11 +124,7 @@ void ControllerRelation::onParentControllerModelChanged(QAbstractItemModel* mode
   Q_ASSERT(model != nullptr);
 
   mProxyModel->setParentModel(model);
-  
-  /// \todo Define if should be done another way...
-  auto key = mKeyCopier->key();
   mKeyCopier->setParentModel(model);
-  mKeyCopier->setKey(key);
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

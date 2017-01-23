@@ -111,7 +111,8 @@ namespace Mdt{ namespace ItemEditor{
     std::unique_ptr<Mdt::ItemModel::RelationKeyCopier> mKeyCopier;
 //     QMetaObject::Connection mParentModelCurrentRowChangedConnection1;
 //     QMetaObject::Connection mParentModelCurrentRowChangedConnection2;
-    QMetaObject::Connection mChildSourceModelChangedConnection;
+    QMetaObject::Connection mChildSourceModelChangedConnection1;
+    QMetaObject::Connection mChildSourceModelChangedConnection2;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

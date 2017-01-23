@@ -112,7 +112,7 @@ void RelationKeyTest::keyCopierSetupTest()
    * Initial state
    */
   RelationKeyCopier kc;
-  QVERIFY(kc.copyTriggers() & RelationKeyCopier::ChildModelRowsInserted);
+  QVERIFY(!(kc.copyTriggers() & RelationKeyCopier::ChildModelRowsInserted));
   QVERIFY(!(kc.copyTriggers() & RelationKeyCopier::ParentModelDataChanged));
   QVERIFY(kc.key().isNull());
   QCOMPARE(kc.parentModelCurrentRow(), -1);
@@ -171,6 +171,59 @@ void RelationKeyTest::keyCopierSetupTest()
   QVERIFY(!kc.key().isNull());
 }
 
+void RelationKeyTest::keyCopierTriggersTest()
+{
+  /*
+   * Initial state
+   */
+  RelationKeyCopier kc;
+  QCOMPARE(kc.copyTriggers(), RelationKeyCopier::NoTrigger);
+  QVERIFY(!kc.isChildModelRowsInsertedTriggerEnabled());
+  /*
+   * Set ChildModelRowsInserted trigger
+   */
+  kc.setChildModelRowsInsertedTriggerEnabled(true);
+  QCOMPARE(kc.copyTriggers(), RelationKeyCopier::ChildModelRowsInserted);
+  QVERIFY(kc.isChildModelRowsInsertedTriggerEnabled());
+  kc.setChildModelRowsInsertedTriggerEnabled(false);
+  QCOMPARE(kc.copyTriggers(), RelationKeyCopier::NoTrigger);
+  QVERIFY(!kc.isChildModelRowsInsertedTriggerEnabled());
+  /*
+   * Set ParentModelDataChanged trigger
+   */
+  kc.setCopyTriggers(RelationKeyCopier::ParentModelDataChanged);
+  QCOMPARE(kc.copyTriggers(), RelationKeyCopier::ParentModelDataChanged);
+  /*
+   * Set both
+   */
+  kc.setCopyTriggers(RelationKeyCopier::ChildModelRowsInserted | RelationKeyCopier::ParentModelDataChanged);
+  QVERIFY( (kc.copyTriggers() & RelationKeyCopier::ChildModelRowsInserted) );
+  QVERIFY( (kc.copyTriggers() & RelationKeyCopier::ParentModelDataChanged) );
+  kc.setChildModelRowsInsertedTriggerEnabled(false);
+  QVERIFY(!(kc.copyTriggers() & RelationKeyCopier::ChildModelRowsInserted) );
+  QVERIFY( (kc.copyTriggers() & RelationKeyCopier::ParentModelDataChanged) );
+  kc.setChildModelRowsInsertedTriggerEnabled(true);
+  QVERIFY( (kc.copyTriggers() & RelationKeyCopier::ChildModelRowsInserted) );
+  QVERIFY( (kc.copyTriggers() & RelationKeyCopier::ParentModelDataChanged) );
+}
+
+void RelationKeyTest::keyCopierTriggerBenchmark()
+{
+  RelationKeyCopier kc;
+  VariantTableModel parentModel;
+  parentModel.resize(1,1);
+  VariantTableModel childModel;
+  childModel.resize(1,1);
+  kc.setParentModel(&parentModel);
+  kc.setChildModel(&childModel);
+  QBENCHMARK{
+    kc.setChildModelRowsInsertedTriggerEnabled(true);
+    kc.setChildModelRowsInsertedTriggerEnabled(false);
+    kc.setChildModelRowsInsertedTriggerEnabled(true);
+  }
+  QVERIFY(kc.isChildModelRowsInsertedTriggerEnabled());
+}
+
 void RelationKeyTest::keyCopierParentModelCurrentRowTest()
 {
   /*
@@ -212,7 +265,7 @@ void RelationKeyTest::keyCopierParentModelCurrentRowTest()
   QCOMPARE(kc.parentModelCurrentRow(), -1);
 }
 
-void RelationKeyTest::keyCopierCopyTest()
+void RelationKeyTest::keyCopierInsertIntoChildModelTest()
 {
   RelationKeyCopier kc;
   /*
@@ -246,6 +299,7 @@ void RelationKeyTest::keyCopierCopyTest()
   ForeignKey fk({1,2});
   kc.setKey(pk, fk);
   kc.setParentModelCurrentRow(0);
+  kc.setChildModelRowsInsertedTriggerEnabled(true);
   /*
    * Insert a row into child model
    * ------------
@@ -305,17 +359,85 @@ void RelationKeyTest::keyCopierCopyTest()
   QCOMPARE(childModel.data(2, 2), QVariant("A"));
   QCOMPARE(childModel.data(3, 1), QVariant(2));
   QCOMPARE(childModel.data(3, 2), QVariant("B"));
+  QCOMPARE(childModel.data(4, 1), QVariant(2));
+  QCOMPARE(childModel.data(4, 2), QVariant("B"));
+  /*
+   * Disable copy on insertion into child model
+   * Insert a row at end
+   * ------------
+   * |Id|IdA|IdB|
+   * ------------
+   * |  | 2 | B |
+   * ------------
+   * |  | 2 | B |
+   * ------------
+   * |  | 1 | A |
+   * ------------
+   * |  | 2 | B |
+   * ------------
+   * |  | 2 | B |
+   * ------------
+   * |  |   |   |
+   * ------------
+   */
+  kc.setChildModelRowsInsertedTriggerEnabled(false);
+  childModel.insertRow(5);
+  QCOMPARE(childModel.rowCount(), 6);
+  QCOMPARE(childModel.data(0, 1), QVariant(2));
+  QCOMPARE(childModel.data(0, 2), QVariant("B"));
+  QCOMPARE(childModel.data(1, 1), QVariant(2));
+  QCOMPARE(childModel.data(1, 2), QVariant("B"));
+  QCOMPARE(childModel.data(2, 1), QVariant(1));
+  QCOMPARE(childModel.data(2, 2), QVariant("A"));
   QCOMPARE(childModel.data(3, 1), QVariant(2));
   QCOMPARE(childModel.data(3, 2), QVariant("B"));
-
-  /**
-   * Check inserting tow child mode -> Ok
-   * Check changing in parent model:
-   *  - Nok
-   *  - Change flags, then OK if index in key
+  QCOMPARE(childModel.data(4, 1), QVariant(2));
+  QCOMPARE(childModel.data(4, 2), QVariant("B"));
+  QVERIFY(childModel.data(5, 1).isNull());
+  QVERIFY(childModel.data(5, 2).isNull());
+  /*
+   * Enable copy on insertion into child model
+   * Insert a row at end
+   * ------------
+   * |Id|IdA|IdB|
+   * ------------
+   * |  | 2 | B |
+   * ------------
+   * |  | 2 | B |
+   * ------------
+   * |  | 1 | A |
+   * ------------
+   * |  | 2 | B |
+   * ------------
+   * |  | 2 | B |
+   * ------------
+   * |  |   |   |
+   * ------------
+   * |  | 2 | B |
+   * ------------
    */
+  kc.setChildModelRowsInsertedTriggerEnabled(true);
+  childModel.insertRow(6);
+  QCOMPARE(childModel.rowCount(), 7);
+  QCOMPARE(childModel.data(0, 1), QVariant(2));
+  QCOMPARE(childModel.data(0, 2), QVariant("B"));
+  QCOMPARE(childModel.data(1, 1), QVariant(2));
+  QCOMPARE(childModel.data(1, 2), QVariant("B"));
+  QCOMPARE(childModel.data(2, 1), QVariant(1));
+  QCOMPARE(childModel.data(2, 2), QVariant("A"));
+  QCOMPARE(childModel.data(3, 1), QVariant(2));
+  QCOMPARE(childModel.data(3, 2), QVariant("B"));
+  QCOMPARE(childModel.data(4, 1), QVariant(2));
+  QCOMPARE(childModel.data(4, 2), QVariant("B"));
+  QVERIFY(childModel.data(5, 1).isNull());
+  QVERIFY(childModel.data(5, 2).isNull());
+  QCOMPARE(childModel.data(6, 1), QVariant(2));
+  QCOMPARE(childModel.data(6, 2), QVariant("B"));
+}
 
-  QFAIL("Not complete");
+void RelationKeyTest::keyCopierEditParentModelTest()
+{
+  QFAIL("Not implemented");
 }
 
 /// \todo Add some test that removes rows (something goes wrong with current row..)

@@ -56,6 +56,7 @@ namespace Mdt{ namespace ItemModel{
      */
     enum CopyTrigger
     {
+      NoTrigger              = 0x00,  /*!< No copy will be made */
       ChildModelRowsInserted = 0x01,  /*!< Copy occurs when rows have been inserted into child model */
       ParentModelDataChanged = 0x02   /*!< Copy occurs when data changes in a column in parent model that is part of the key.
                                             When implementing a module that acts on a database (for example Mdt::ItemEditor::AbstractSqlController),
@@ -70,7 +71,7 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Set copy triggers
      *
-     * Default copy triggers is ChildModelRowsInserted
+     * Default is NoTrigger
      *
      * \sa CopyTriggers
      */
@@ -81,6 +82,17 @@ namespace Mdt{ namespace ItemModel{
     CopyTriggers copyTriggers() const
     {
       return mCopyTriggers;
+    }
+
+    /*! \brief Set ChildModelRowsInserted trigger enabled/disabled
+     */
+    void setChildModelRowsInsertedTriggerEnabled(bool enable);
+
+    /*! \brief Check if ChildModelRowsInserted trigger is enabled
+     */
+    bool isChildModelRowsInsertedTriggerEnabled() const
+    {
+      return (mCopyTriggers & ChildModelRowsInserted);
     }
 
     /*! \brief Set parent model
@@ -187,7 +199,7 @@ namespace Mdt{ namespace ItemModel{
     QPointer<QAbstractItemModel> mChildModel;
     QMetaObject::Connection mChildModelRowsInsertedConnection;
     QMetaObject::Connection mParentModelDataChangedConnection;
-    CopyTriggers mCopyTriggers = ChildModelRowsInserted;
+    CopyTriggers mCopyTriggers = NoTrigger;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

@@ -41,6 +41,15 @@ void RelationKeyCopier::setCopyTriggers(CopyTriggers triggers)
   reconnectSignalSlotsIfOk();
 }
 
+void RelationKeyCopier::setChildModelRowsInsertedTriggerEnabled(bool enable)
+{
+  if(enable){
+    setCopyTriggers(mCopyTriggers | ChildModelRowsInserted);
+  }else{
+    setCopyTriggers(mCopyTriggers & ~ChildModelRowsInserted);
+  }
+}
+
 void RelationKeyCopier::setParentModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);
@@ -149,9 +158,11 @@ void RelationKeyCopier::reconnectSignalSlotsIfOk()
   if( mParentModel.isNull() || mChildModel.isNull() ){
     return;
   }
+  qDebug() << "Disconnect all if ...";
   disconnect(mChildModelRowsInsertedConnection);
   disconnect(mParentModelDataChangedConnection);
   if(mCopyTriggers & ChildModelRowsInserted){
+    qDebug() << "connect ChildModelRowsInserted - child model: " << mChildModel;
     mChildModelRowsInsertedConnection = connect(mChildModel, &QAbstractItemModel::rowsInserted, this, &RelationKeyCopier::onChildModelRowsInserted);
   }
   if(mCopyTriggers & ParentModelDataChanged){
