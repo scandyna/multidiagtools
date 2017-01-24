@@ -33,6 +33,8 @@
 #include <QMetaProperty>
 #include <QMetaMethod>
 
+#include <QDebug>
+
 namespace ItemEditor = Mdt::ItemEditor;
 using Mdt::ItemModel::VariantTableModel;
 using Mdt::ItemEditor::WidgetMapperController;
@@ -481,7 +483,8 @@ void WidgetMapperControllerTest::editTest_data()
 
 void WidgetMapperControllerTest::insertTest()
 {
-  QStringListModel model;
+  VariantTableModel model;
+  model.resize(0, 1);
   QLineEdit editor0;
   WidgetMapperController controller;
   QModelIndex index;
@@ -498,6 +501,7 @@ void WidgetMapperControllerTest::insertTest()
   QCOMPARE(controller.rowCount(), 0);
   QCOMPARE(controller.currentRow(), -1);
   QVERIFY(!editor0.isEnabled());
+  QVERIFY(editor0.text().isEmpty());
   /*
    * Insert at beginning
    */
@@ -505,6 +509,9 @@ void WidgetMapperControllerTest::insertTest()
   QCOMPARE(controller.rowCount(), 1);
   QCOMPARE(controller.currentRow(), 0);
   QVERIFY(editor0.isEnabled());
+  QVERIFY(editor0.text().isEmpty());
+  editor0.setText("B");
+  QVERIFY(controller.submit());
   /*
    * Insert at beginning
    */
@@ -512,6 +519,9 @@ void WidgetMapperControllerTest::insertTest()
   QCOMPARE(controller.rowCount(), 2);
   QCOMPARE(controller.currentRow(), 0);
   QVERIFY(editor0.isEnabled());
+  QVERIFY(editor0.text().isEmpty());
+  editor0.setText("A");
+  QVERIFY(controller.submit());
   /*
    * Insert at end
    */
@@ -521,6 +531,15 @@ void WidgetMapperControllerTest::insertTest()
   QCOMPARE(controller.rowCount(), 3);
   QCOMPARE(controller.currentRow(), 2);
   QVERIFY(editor0.isEnabled());
+  QVERIFY(editor0.text().isEmpty());
+  editor0.setText("C");
+  QVERIFY(controller.submit());
+  /*
+   * Check data in model
+   */
+  QCOMPARE(model.data(0, 0), QVariant("A"));
+  QCOMPARE(model.data(1, 0), QVariant("B"));
+  QCOMPARE(model.data(2, 0), QVariant("C"));
 }
 
 void WidgetMapperControllerTest::insertFromModelTest()

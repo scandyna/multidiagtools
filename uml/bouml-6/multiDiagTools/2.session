@@ -11,14 +11,15 @@ diagrams
     120 110 100 22 0 0
 end
 show_stereotypes
-selected class_ref 3627906 // ControllerRelationImplBase
+selected classdiagram_ref 2761218 // ControllerOverview
 open
   
-package_ref 409858 // principes
+  package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
+  classview_ref 1287042 // Controller
   class_ref 3601538 // ControllerRelationItemList
   
-package_ref 430082 // Dsp
+  package_ref 430082 // Dsp
   classview_ref 1517954 // proto
 end
 end

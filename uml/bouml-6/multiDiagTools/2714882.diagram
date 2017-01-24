@@ -2,38 +2,34 @@ format 211
 
 classcanvas 128002 class_ref 138626 // QObject
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 610.3 40.3 2000
+  xyz 697 79.75 2000
 end
 classcanvas 128130 class_ref 404610 // QDataWidgetMapper
   classdiagramsettings member_max_width 0 end
-  xyz 760.3 165 2006
+  xyz 78.5 202.5 2006
 end
 classcanvas 128898 class_ref 3015170 // EventCatchItemDelegate
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 556 595.3 2000
+  xyz 645 632.25 2000
 end
 classcanvas 129026 class_ref 1914498 // QAbstractItemDelegate
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 561 338 2011
+  xyz 650 203.25 2011
 end
 classcanvas 129282 class_ref 605570 // QStyledItemDelegate
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 570.3 425.3 2017
+  xyz 657 463.25 2017
 end
 classcanvas 129538 class_ref 3015042 // ItemDelegateProxy
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 576.3 510.3 2023
+  xyz 663 547.75 2023
 end
 note 130690 "Create a adapter ?"
-  xyzwh 40.5 1025.7 2014 231 47
-classcanvas 130818 class_ref 3090434 // AbstractController
-  classdiagramsettings member_max_width 0 end
-  xyz 39.3 165 2012
-end
+  xyzwh 40.5 757.5 2014 231 47
 relationcanvas 128258 relation_ref 3434882 // <generalisation>
   geometry VHV unfixed
-  from ref 128130 z 2007 to point 1025.8 125.8
-  line 132226 z 2007 to point 640.8 125.8
+  from ref 128130 z 2007 to point 343 164
+  line 132226 z 2007 to point 727 164
   line 132354 z 2007 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -59,28 +55,13 @@ relationcanvas 129922 relation_ref 3386882 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130562 relation_ref 3467394 // <directional composition>
-  from ref 128130 z 2012 to ref 129026
+  decenter_end 422
+  from ref 128130 z 2012 to point 40 398
+  line 132482 z 2012 to point 40 40
+  line 132610 z 2012 to point 846 40
+  line 132738 z 2012 to point 846 222
+  line 132866 z 2012 to ref 129026
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 131458 relation_ref 3482242 // <generalisation>
-  geometry VHV unfixed
-  decenter_begin 505
-  from ref 130818 z 2013 to point 257 125.8
-  line 131714 z 2013 to point 627 125.8
-  line 131842 z 2013 to ref 128002
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 131586 relation_ref 3581826 // <unidirectional association>
-  decenter_begin 608
-  decenter_end 666
-  from ref 130818 z 2013 to point 515.8 640.8
-  line 131970 z 2013 to point 515.8 625.8
-  line 132098 z 2013 to ref 128898
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-line 131330 -_-_ decenter_begin 556 decenter_end 200
-  from ref 130818 z 2013 to ref 128898
 end

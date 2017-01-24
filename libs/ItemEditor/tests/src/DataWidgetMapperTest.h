@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -37,7 +37,11 @@ class DataWidgetMapperTest : public QObject
   void mappedWidgetListTest();
 
   void setModelTest();
-  void setCurrentRowTest();
+  void setCurrentRowWidgetTest();
+  void setCurrentRowSignalTest();
+  void insertWidgetTest();
+  void insertSignalTest();
+  void insertFromModelWidgetTest();
   void editStartDoneSignalTest();
   void editStartDoneSignalTest_data();
   void modelItemEditableFlagWidgetsWithRoTest();

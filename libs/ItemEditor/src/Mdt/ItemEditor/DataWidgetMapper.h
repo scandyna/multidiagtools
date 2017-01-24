@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -35,7 +35,7 @@ namespace Mdt{ namespace ItemEditor{
   /*! \brief DataWidgetMapper provides mapping between a column of data model to widgets
    *
    * Qt provides QDataWidgetMapper, which provides such mapping.
-   *  Some feature are missing in QDataWidgetMapper to work with AbstractWidgetMapperController:
+   *  Some feature are missing in QDataWidgetMapper to work with WidgetMapperController:
    *   - Enable/disable mapped widgets regarding current row, controller state, etc..
    *      (is possible to fix without changing QDataWidgetMapper)
    *   - Clear widgets content on invalid current row or empty model
@@ -44,7 +44,7 @@ namespace Mdt{ namespace ItemEditor{
    *      (found no clean solution for that)
    *
    * This is why DataWidgetMapper was created, which provides less functionality
-   *  than QDataWidgetMapper, but can interact with AbstractWidgetMapperController as expected.
+   *  than QDataWidgetMapper, but can interact with WidgetMapperController as expected.
    */
   class DataWidgetMapper : public QObject
   {
@@ -121,7 +121,7 @@ namespace Mdt{ namespace ItemEditor{
      */
     int currentRow() const
     {
-      return pvCurrentRow;
+      return mCurrentRow;
     }
 
    public slots:
@@ -188,11 +188,11 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Update editor
      */
-    void updateMappedWidget(QWidget * const widget, int column, bool hasReadOnlyProperty, bool updateDataFromModel);
+    void updateMappedWidget(QWidget * const widget, int column, bool hasReadOnlyProperty);
 
     /*! \brief Update all mapped widgets
      */
-    void updateAllMappedWidgets(bool updateDataFromModel);
+    void updateAllMappedWidgets();
 
     /*! \brief Commit widget's data to model
      */
@@ -202,12 +202,12 @@ namespace Mdt{ namespace ItemEditor{
      */
     bool commitAllMappedWidgetsData();
     
-    int pvCurrentRow;
-    bool pvUpdatingMappedWidget;
-    bool pvEditionStartNotified;
-    QPointer<QAbstractItemModel> pvModel;
-    QPointer<QAbstractItemDelegate> pvDelegate;
-    MappedWidgetList pvMappedWidgetList;
+    int mCurrentRow;
+    bool mUpdatingMappedWidget;
+    bool mEditingState;
+    QPointer<QAbstractItemModel> mModel;
+    QPointer<QAbstractItemDelegate> mDelegate;
+    MappedWidgetList mMappedWidgetList;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{
