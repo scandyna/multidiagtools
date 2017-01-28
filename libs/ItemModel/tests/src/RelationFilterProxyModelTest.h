@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_MODEL_EDITOR_RELATION_FILTER_PROXY_MODEL_TEST_H
-#define MDT_MODEL_EDITOR_RELATION_FILTER_PROXY_MODEL_TEST_H
+#ifndef MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
+#define MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
 
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QObject>
@@ -46,11 +46,17 @@ class RelationFilterProxyModelTest : public QObject
   void setModelTest();
   void setterEventTest();
   void dynamicFilterTest();
+  void dynamicFilterInsertTest();
 
  private:
 
-  static QVariant getModelData(const QAbstractItemModel & model, int row, int column);
   static void displayModels(QAbstractItemModel *sourceModel, QSortFilterProxyModel *proxyModel);
+  // Helper functions get/set data in a model
+  static bool setModelData(QAbstractItemModel *model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
+  static bool setModelData(QAbstractItemModel & model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
+  static QVariant getModelData(const QAbstractItemModel *model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
+  static QVariant getModelData(const QAbstractItemModel & model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
+
 };
 
-#endif // #ifndef MDT_MODEL_EDITOR_RELATION_FILTER_PROXY_MODEL_TEST_H
+#endif // #ifndef MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H

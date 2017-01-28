@@ -30,12 +30,11 @@
 #include <QComboBox>
 #include <QSignalSpy>
 #include <QVariantList>
+#include <QDebug>
 #include <iterator>
 #include <vector>
 #include <array>
 #include <algorithm>
-
-#include <QDebug>
 
 namespace ItemModel = Mdt::ItemModel;
 using ItemModel::VariantTableModel;
@@ -241,16 +240,261 @@ void RelationFilterProxyModelTest::dynamicFilterTest()
   QFAIL("Not complete");
 }
 
+void RelationFilterProxyModelTest::dynamicFilterInsertTest()
+{
+  /*
+   * Setup parent model
+   * -------------
+   * | Id | Name |
+   * -------------
+   * | 1  | C1   |
+   * -------------
+   * | 2  | C2   |
+   * -------------
+   */
+  VariantTableModel clientModel;
+  clientModel.resize(2, 2);
+  clientModel.populateColumn(0, {1,2});
+  clientModel.populateColumn(1, {"C1","C2"});
+  /*
+   * Setup source model
+   * ------------------------
+   * | Id | Cli_Id | Street |
+   * ------------------------
+   * | 11 |   1    |  S11   |
+   * ------------------------
+   * | 12 |   1    |  S12   |
+   * ------------------------
+   * | 25 |   2    |  S25   |
+   * ------------------------
+   */
+  VariantTableModel addressModel;
+  addressModel.resize(3, 3);
+  addressModel.populateColumn(0, {11,12,25});
+  addressModel.populateColumn(1, {1 ,1 ,2 });
+  addressModel.populateColumn(2, {"S11","S12","S25"});
+  /*
+   * Setup proxy model
+   */
+  ParentModelColumn clientId(0);
+  FilterColumn addressClientId(1);
+  RelationFilterProxyModel proxyModel;
+  proxyModel.setParentModel(&clientModel);
+  proxyModel.setSourceModel(&addressModel);
+  proxyModel.setFilter(addressClientId == clientId);
+  proxyModel.setDynamicSortFilter(true);
+  /*
+   * Filter on client 2:
+   *  Address model              Proxy model
+   * ------------------------   ------------------------
+   * | Id | Cli_Id | Street |   | Id | Cli_Id | Street |
+   * ------------------------   ------------------------
+   * | 11 |   1    |  S11   |   | 25 |   2    |  S25   |
+   * ------------------------   ------------------------
+   * | 12 |   1    |  S12   |
+   * ------------------------
+   * | 25 |   2    |  S25   |
+   * ------------------------
+   */
+  proxyModel.setParentModelMatchRow(1);
+  QCOMPARE(proxyModel.rowCount(), 1);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(25));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 0, 2), QVariant("S25"));
+  /*
+   * Insert into source model, at beginning
+   */
+  addressModel.prependRow();
+  QCOMPARE(proxyModel.rowCount(), 1);
+  /*
+   * Edit inserted row
+   * Proxy model must return this after edition was done:
+   *  Address model              Proxy model
+   * ------------------------   ------------------------
+   * | Id | Cli_Id | Street |   | Id | Cli_Id | Street |
+   * ------------------------   ------------------------
+   * | 24 |   2    |  S24   |   | 24 |   2    |  S24   |
+   * ------------------------   ------------------------
+   * | 11 |   1    |  S11   |   | 25 |   2    |  S25   |
+   * ------------------------   ------------------------
+   * | 12 |   1    |  S12   |
+   * ------------------------
+   * | 25 |   2    |  S25   |
+   * ------------------------
+   */
+  setModelData(addressModel, 0, 0, 24);
+  setModelData(addressModel, 0, 1, 2);
+  setModelData(addressModel, 0, 2, "S24");
+  QCOMPARE(proxyModel.rowCount(), 2);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(24));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 0, 2), QVariant("S24"));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant(25));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 1, 2), QVariant("S25"));
+  /*
+   * Insert into source model, at end
+   */
+  addressModel.appendRow();
+  QCOMPARE(proxyModel.rowCount(), 2);
+  /*
+   * Edit inserted row
+   * Proxy model must return this after edition was done:
+   *  Address model              Proxy model
+   * ------------------------   ------------------------
+   * | Id | Cli_Id | Street |   | Id | Cli_Id | Street |
+   * ------------------------   ------------------------
+   * | 24 |   2    |  S24   |   | 24 |   2    |  S24   |
+   * ------------------------   ------------------------
+   * | 11 |   1    |  S11   |   | 25 |   2    |  S25   |
+   * ------------------------   ------------------------
+   * | 12 |   1    |  S12   |   | 26 |   2    |  S26   |
+   * ------------------------   ------------------------
+   * | 25 |   2    |  S25   |
+   * ------------------------
+   * | 26 |   2    |  S26   |
+   * ------------------------
+   */
+  setModelData(addressModel, 4, 0, 26);
+  setModelData(addressModel, 4, 1, 2);
+  setModelData(addressModel, 4, 2, "S26");
+  QCOMPARE(proxyModel.rowCount(), 3);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(24));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 0, 2), QVariant("S24"));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant(25));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 1, 2), QVariant("S25"));
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant(26));
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 2, 2), QVariant("S26"));
+  /*
+   * Insert into proxy model, at the beginning
+   * Now, proxy model must copy client ID:
+   *  Address model              Proxy model
+   * ------------------------   ------------------------
+   * | Id | Cli_Id | Street |   | Id | Cli_Id | Street |
+   * ------------------------   ------------------------
+   * |    |   2    |        |   |    |   2    |        |
+   * ------------------------   ------------------------
+   * | 24 |   2    |  S24   |   | 24 |   2    |  S24   |
+   * ------------------------   ------------------------
+   * | 11 |   1    |  S11   |   | 25 |   2    |  S25   |
+   * ------------------------   ------------------------
+   * | 12 |   1    |  S12   |   | 26 |   2    |  S26   |
+   * ------------------------   ------------------------
+   * | 25 |   2    |  S25   |
+   * ------------------------
+   * | 26 |   2    |  S26   |
+   * ------------------------
+   */
+  QVERIFY(proxyModel.insertRow(0));
+  QCOMPARE(proxyModel.rowCount(), 4);
+  QVERIFY(getModelData(proxyModel, 0, 0).isNull());
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(2));
+  QVERIFY(getModelData(proxyModel, 0, 2).isNull());
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant(24));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 1, 2), QVariant("S24"));
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant(25));
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 2, 2), QVariant("S25"));
+  QCOMPARE(getModelData(proxyModel, 3, 0), QVariant(26));
+  QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 3, 2), QVariant("S26"));
+  /*
+   * Edit inserted row
+   * Proxy model must return this after edition was done:
+   *  Address model              Proxy model
+   * ------------------------   ------------------------
+   * | Id | Cli_Id | Street |   | Id | Cli_Id | Street |
+   * ------------------------   ------------------------
+   * | 23 |   2    |  S23   |   | 23 |   2    |  S23   |
+   * ------------------------   ------------------------
+   * | 24 |   2    |  S24   |   | 24 |   2    |  S24   |
+   * ------------------------   ------------------------
+   * | 11 |   1    |  S11   |   | 25 |   2    |  S25   |
+   * ------------------------   ------------------------
+   * | 12 |   1    |  S12   |   | 26 |   2    |  S26   |
+   * ------------------------   ------------------------
+   * | 25 |   2    |  S25   |
+   * ------------------------
+   * | 26 |   2    |  S26   |
+   * ------------------------
+   */
+  setModelData(proxyModel, 0, 0, 23);
+  setModelData(proxyModel, 0, 2, "S23");
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(23));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 0, 2), QVariant("S23"));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant(24));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 1, 2), QVariant("S24"));
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant(25));
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 2, 2), QVariant("S25"));
+  QCOMPARE(getModelData(proxyModel, 3, 0), QVariant(26));
+  QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 3, 2), QVariant("S26"));
+  /*
+   * Insert into proxy model, at the end.
+   * Note: when calling proxyModel.insertRow(4),
+   *       QSortFilterProxyModel will insert before row 4 in source model
+   *       (Experienced in Qt 5.5.1 Linux).
+   * Now, proxy model must copy client ID:
+   *  Address model              Proxy model
+   * ------------------------   ------------------------
+   * | Id | Cli_Id | Street |   | Id | Cli_Id | Street |
+   * ------------------------   ------------------------
+   * | 23 |   2    |  S23   |   | 23 |   2    |  S23   |
+   * ------------------------   ------------------------
+   * | 24 |   2    |  S24   |   | 24 |   2    |  S24   |
+   * ------------------------   ------------------------
+   * | 11 |   1    |  S11   |   |    |   2    |        |
+   * ------------------------   ------------------------
+   * | 12 |   1    |  S12   |   | 25 |   2    |  S25   |
+   * ------------------------   ------------------------
+   * |    |   2    |        |   | 26 |   2    |  S26   |
+   * ------------------------   ------------------------
+   * | 25 |   2    |  S25   |
+   * ------------------------
+   * | 26 |   2    |  S26   |
+   * ------------------------
+   */
+  QVERIFY(proxyModel.insertRow(4));
+  QCOMPARE(proxyModel.rowCount(), 5);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(23));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 0, 2), QVariant("S23"));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant(24));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 1, 2), QVariant("S24"));
+  QVERIFY(getModelData(proxyModel, 2, 0).isNull());
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(2));
+  QVERIFY(getModelData(proxyModel, 2, 2).isNull());
+  QCOMPARE(getModelData(proxyModel, 3, 0), QVariant(25));
+  QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 3, 2), QVariant("S25"));
+  QCOMPARE(getModelData(proxyModel, 4, 0), QVariant(26));
+  QCOMPARE(getModelData(proxyModel, 4, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 4, 2), QVariant("S26"));
+
+
+//   displayModels(&addressModel, &proxyModel);
+
+  /** \todo
+   *  - RelationFilterProxyModel should itself copy key data (using RelationKeyCopier)
+   *  - Check that inserting (in proxy model) transparently works
+   *  - Note: proxy model should transparently get relation key in setFilter()
+   *  - RelationFilterProxyModel: try using rowsInserted() signal from QSortFilterProxyModel
+   */
+  QFAIL("Not complete");
+
+}
+
 /*
  * Helper
  */
-
-QVariant RelationFilterProxyModelTest::getModelData(const QAbstractItemModel& model, int row, int column)
-{
-  auto index = model.index(row, column);
-  Q_ASSERT(index.isValid());
-  return model.data(index);
-}
 
 void RelationFilterProxyModelTest::displayModels(QAbstractItemModel* sourceModel, QSortFilterProxyModel* proxyModel)
 {
@@ -269,6 +513,50 @@ void RelationFilterProxyModelTest::displayModels(QAbstractItemModel* sourceModel
   while(sourceView.isVisible()){
     QTest::qWait(500);
   }
+}
+
+bool RelationFilterProxyModelTest::setModelData(QAbstractItemModel* model, int row, int column, const QVariant& value, Qt::ItemDataRole role)
+{
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < model->rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < model->columnCount());
+
+  auto index = model->index(row, column);
+  if(!index.isValid()){
+    qDebug() << "index is not valid: " << index;
+    return false;
+  }
+
+  return model->setData(index, value, role);
+}
+
+bool RelationFilterProxyModelTest::setModelData(QAbstractItemModel& model, int row, int column, const QVariant& value, Qt::ItemDataRole role)
+{
+  return setModelData(&model, row, column, value, role);
+}
+
+QVariant RelationFilterProxyModelTest::getModelData(const QAbstractItemModel* model, int row, int column, Qt::ItemDataRole role)
+{
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < model->rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < model->columnCount());
+
+  auto index = model->index(row, column);
+  if(!index.isValid()){
+    qDebug() << "index is not valid: " << index;
+    return QVariant();
+  }
+
+  return model->data(index, role);
+}
+
+QVariant RelationFilterProxyModelTest::getModelData(const QAbstractItemModel & model, int row, int column, Qt::ItemDataRole role)
+{
+  return getModelData(&model, row, column, role);
 }
 
 /*

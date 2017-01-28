@@ -38,7 +38,7 @@ RelationKeyCopier::RelationKeyCopier(QObject* parent)
 void RelationKeyCopier::setCopyTriggers(CopyTriggers triggers)
 {
   mCopyTriggers = triggers;
-  reconnectSignalSlotsIfOk();
+//   reconnectSignalSlotsIfOk();
 }
 
 void RelationKeyCopier::setChildModelRowsInsertedTriggerEnabled(bool enable)
@@ -58,7 +58,7 @@ void RelationKeyCopier::setParentModel(QAbstractItemModel* model)
   mParentModel = model;
   ///clearKey();
   setParentModelCurrentRow(-1);
-  reconnectSignalSlotsIfOk();
+//   reconnectSignalSlotsIfOk();
 }
 
 void RelationKeyCopier::setChildModel(QAbstractItemModel* model)
@@ -68,7 +68,7 @@ void RelationKeyCopier::setChildModel(QAbstractItemModel* model)
 
   mChildModel = model;
   ///clearKey();
-  reconnectSignalSlotsIfOk();
+//   reconnectSignalSlotsIfOk();
 }
 
 void RelationKeyCopier::addColumnPair(int parentModelColumn, int childModelColumn)
@@ -101,6 +101,29 @@ void RelationKeyCopier::setKey(const RelationKey & key)
   mKey = key;
 }
 
+bool RelationKeyCopier::copyAllKeyData(RowRange childModelRowRange, const QModelIndex & parent)
+{
+  if(mParentModel.isNull() || mChildModel.isNull()){
+    return false;
+  }
+  if(!childModelRowRange.isValid()){
+    return false;
+  }
+  if(childModelRowRange.rowCount() > mChildModel->rowCount(parent)){
+    return false;
+  }
+  if( (mParentModelCurrentRow < 0) || (mParentModelCurrentRow >= mParentModel->rowCount()) ){
+    return false;
+  }
+  const int last = childModelRowRange.lastRow();
+  for(int row = childModelRowRange.firstRow(); row <= last; ++row){
+    if( !copyKeyDataForRow(row) ){
+      return false;
+    }
+  }
+  return true;
+}
+
 void RelationKeyCopier::setParentModelCurrentRow(int row)
 {
   if(mParentModel.isNull()){
@@ -119,7 +142,7 @@ void RelationKeyCopier::onChildModelRowsInserted(const QModelIndex & /*parent*/,
   Q_ASSERT(!mParentModel.isNull());
   Q_ASSERT(!mChildModel.isNull());
 
-  qDebug() << "onChildModelRowsInserted() first: " << first << " , last " << last;
+  qDebug() << "onChildModelRowsInserted() first: " << first << " , last " << last << " - model: " << mChildModel;
   if(mParentModelCurrentRow < 0){
     return;
   }
@@ -136,6 +159,37 @@ void RelationKeyCopier::onParentModelDataChanged(const QModelIndex& topLeft, con
   qDebug() << "onParentModelDataChanged() topLeft " << topLeft << " , bottomRight " << bottomRight << " , roles " << roles;
 }
 
+bool RelationKeyCopier::copyKeyDataForRow(int childModelRow)
+{
+  Q_ASSERT(!mParentModel.isNull());
+  Q_ASSERT(!mChildModel.isNull());
+  Q_ASSERT(childModelRow >= 0);
+  Q_ASSERT(childModelRow < mChildModel->rowCount());
+  Q_ASSERT(mParentModelCurrentRow >= 0);
+  Q_ASSERT(mParentModelCurrentRow < mParentModel->rowCount());
+
+  /** \todo Should fix which place what is checked:
+   *  - Allaways check ranges ?
+   *  - Simply check indexes ? (index will be invalid if range is invalid
+   *  - Runtime check or assertions ?
+   */
+
+  qDebug() << "copyKeyData() - pairs: " << mKey.columnPairCount();
+//   qDebug() << "copyKeyData() - chil model: " << mChildModel << " - row: " << childModelRow << " - pairs: " << mKey.columnPairCount();
+  for(const auto columnPair : mKey){
+    const auto parentModelIndex = mParentModel->index(mParentModelCurrentRow, columnPair.parentModelColumn());
+    const auto childModelIndex = mChildModel->index(childModelRow, columnPair.childModelColumn());
+    qDebug() << "copyKeyData() - childModelIndex: " << childModelIndex;
+    qDebug() << "copyKeyData() - current: " << mChildModel->data(childModelIndex);
+    if( !mChildModel->setData( childModelIndex , mParentModel->data(parentModelIndex) ) ){
+      return false;
+    }
+    qDebug() << "copyKeyData() - updated: " << mChildModel->data(childModelIndex);
+  }
+
+  return true;
+}
+
 void RelationKeyCopier::copyKeyData(int childModelRow)
 {
   Q_ASSERT(!mParentModel.isNull());
@@ -149,26 +203,28 @@ void RelationKeyCopier::copyKeyData(int childModelRow)
   for(const auto columnPair : mKey){
     const auto parentModelIndex = mParentModel->index(mParentModelCurrentRow, columnPair.parentModelColumn());
     const auto childModelIndex = mChildModel->index(childModelRow, columnPair.childModelColumn());
+    qDebug() << "copyKeyData() - current: " << mChildModel->data(childModelIndex);
     mChildModel->setData( childModelIndex , mParentModel->data(parentModelIndex) );
+    qDebug() << "copyKeyData() - updated: " << mChildModel->data(childModelIndex);
   }
 }
 
-void RelationKeyCopier::reconnectSignalSlotsIfOk()
-{
-  if( mParentModel.isNull() || mChildModel.isNull() ){
-    return;
-  }
-  qDebug() << "Disconnect all if ...";
-  disconnect(mChildModelRowsInsertedConnection);
-  disconnect(mParentModelDataChangedConnection);
-  if(mCopyTriggers & ChildModelRowsInserted){
-    qDebug() << "connect ChildModelRowsInserted - child model: " << mChildModel;
-    mChildModelRowsInsertedConnection = connect(mChildModel, &QAbstractItemModel::rowsInserted, this, &RelationKeyCopier::onChildModelRowsInserted);
-  }
-  if(mCopyTriggers & ParentModelDataChanged){
-    mParentModelDataChangedConnection = connect(mParentModel, &QAbstractItemModel::dataChanged, this, &RelationKeyCopier::onParentModelDataChanged);
-  }
-}
+// void RelationKeyCopier::reconnectSignalSlotsIfOk()
+// {
+//   if( mParentModel.isNull() || mChildModel.isNull() ){
+//     return;
+//   }
+//   qDebug() << "Disconnect all if ...";
+//   disconnect(mChildModelRowsInsertedConnection);
+//   disconnect(mParentModelDataChangedConnection);
+//   if(mCopyTriggers & ChildModelRowsInserted){
+//     qDebug() << "connect ChildModelRowsInserted - child model: " << mChildModel;
+//     mChildModelRowsInsertedConnection = connect(mChildModel, &QAbstractItemModel::rowsInserted, this, &RelationKeyCopier::onChildModelRowsInserted);
+//   }
+//   if(mCopyTriggers & ParentModelDataChanged){
+//     mParentModelDataChangedConnection = connect(mParentModel, &QAbstractItemModel::dataChanged, this, &RelationKeyCopier::onParentModelDataChanged);
+//   }
+// }
 
 void RelationKeyCopier::clearKey()
 {

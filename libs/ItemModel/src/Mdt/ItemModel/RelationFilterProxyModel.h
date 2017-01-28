@@ -27,8 +27,11 @@
 #include "LikeExpression.h"
 #include <QSortFilterProxyModel>
 #include <QPointer>
+#include <memory>
 
 namespace Mdt{ namespace ItemModel{
+
+  class RelationKeyCopier;
 
   /*! \brief Provides support for filtering data between another model and a view
    *
@@ -69,6 +72,8 @@ namespace Mdt{ namespace ItemModel{
      */
     explicit RelationFilterProxyModel(QObject* parent = nullptr);
 
+    // Destructor - unique_ptr needs to know how to destruct RelationKeyCopier
+    ~RelationFilterProxyModel();
     // Disable copy
     RelationFilterProxyModel(const RelationFilterProxyModel &) = delete;
     RelationFilterProxyModel & operator=(const RelationFilterProxyModel &) = delete;
@@ -105,6 +110,10 @@ namespace Mdt{ namespace ItemModel{
       return mParentModelRow;
     }
 
+    /*! \brief Re-implemented from QSortFilterProxyModel
+     */
+    void setDynamicSortFilter(bool enable);
+
    public slots:
 
     /*! \brief Set row of parent model for which filter must match
@@ -116,15 +125,29 @@ namespace Mdt{ namespace ItemModel{
      */
     void setParentModelMatchRow(int row);
 
+//    private slots:
+// 
+//     void onRowsAboutToBeInserted(const QModelIndex & parent, int first, int last);
+// 
+    /*! \brief Actions to perform when rows have been inserted into this proxy model
+     */
+    void onRowsInserted(const QModelIndex & parent, int first, int last);
+
    private:
+
+    bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
+
+//     void beginInsertRows(const QModelIndex & parent, int first, int last) override;
 
     /*! \brief Return true if filter expression was set and evaluates true
      */
     bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const override;
 
     int mParentModelRow = -1;
+    bool mInserting = false;
     QPointer<QAbstractItemModel> mParentModel;
     RelationFilterExpression mFilterExpression;
+    std::unique_ptr<RelationKeyCopier> mKeyCopier;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

@@ -22,12 +22,14 @@
 #define MDT_ITEM_MODEL_RELATION_KEY_COPIER_H
 
 #include "RelationKey.h"
+#include "RowRange.h"
 #include <QObject>
 #include <QPointer>
 #include <QFlags>
+#include <QModelIndex>
 
 class QAbstractItemModel;
-class QModelIndex;
+// class QModelIndex;
 
 namespace Mdt{ namespace ItemModel{
 
@@ -150,6 +152,10 @@ namespace Mdt{ namespace ItemModel{
       return mParentModelCurrentRow;
     }
 
+    /*! \brief Copy all key data from parent model to child model for given row range for child model
+     */
+    bool copyAllKeyData(RowRange childModelRowRange, const QModelIndex & parent = QModelIndex());
+
    public slots:
 
     /*! \brief Set current row in parent model
@@ -181,13 +187,17 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Copy key data from parent model to child model
      */
+    bool copyKeyDataForRow(int childModelRow);
+
+    /*! \brief Copy key data from parent model to child model
+     */
     void copyKeyData(int childModelRow);
 
     /*! \brief Proceed to signal/slot connections regarding mCopyTriggers
      *
      * If a model is not valid when calling this method, it does nothing.
      */
-    void reconnectSignalSlotsIfOk();
+//     void reconnectSignalSlotsIfOk();
 
     /*! \brief Clear key
      */
