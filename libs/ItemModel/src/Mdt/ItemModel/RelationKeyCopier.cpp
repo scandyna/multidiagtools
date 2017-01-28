@@ -174,17 +174,17 @@ bool RelationKeyCopier::copyKeyDataForRow(int childModelRow)
    *  - Runtime check or assertions ?
    */
 
-  qDebug() << "copyKeyData() - pairs: " << mKey.columnPairCount();
+//   qDebug() << "copyKeyData() - pairs: " << mKey.columnPairCount();
 //   qDebug() << "copyKeyData() - chil model: " << mChildModel << " - row: " << childModelRow << " - pairs: " << mKey.columnPairCount();
   for(const auto columnPair : mKey){
     const auto parentModelIndex = mParentModel->index(mParentModelCurrentRow, columnPair.parentModelColumn());
     const auto childModelIndex = mChildModel->index(childModelRow, columnPair.childModelColumn());
-    qDebug() << "copyKeyData() - childModelIndex: " << childModelIndex;
-    qDebug() << "copyKeyData() - current: " << mChildModel->data(childModelIndex);
+//     qDebug() << "copyKeyData() - childModelIndex: " << childModelIndex;
+//     qDebug() << "copyKeyData() - current: " << mChildModel->data(childModelIndex);
     if( !mChildModel->setData( childModelIndex , mParentModel->data(parentModelIndex) ) ){
       return false;
     }
-    qDebug() << "copyKeyData() - updated: " << mChildModel->data(childModelIndex);
+//     qDebug() << "copyKeyData() - updated: " << mChildModel->data(childModelIndex);
   }
 
   return true;

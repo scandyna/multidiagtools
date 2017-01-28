@@ -114,6 +114,10 @@ namespace Mdt{ namespace ItemModel{
      */
     void setDynamicSortFilter(bool enable);
 
+    /*! \brief Reimplemented from QSortFilterProxyModel
+     */
+    bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
+
    public slots:
 
     /*! \brief Set row of parent model for which filter must match
@@ -132,10 +136,6 @@ namespace Mdt{ namespace ItemModel{
     void onRowsInserted(const QModelIndex & parent, int first, int last);
 
    private:
-
-    /*! \brief Reimplemented from QSortFilterProxyModel
-     */
-    bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
 
     /*! \brief Return true if filter expression was set and evaluates true
      */

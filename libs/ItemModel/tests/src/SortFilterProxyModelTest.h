@@ -31,6 +31,8 @@ class SortFilterProxyModelTest : public TestBase
 
   void initTestCase();
   void cleanupTestCase();
+
+  void QSortFilterProxyModelFilterInsertTest();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_SORT_FILTER_PROXY_MODEL_TEST_H

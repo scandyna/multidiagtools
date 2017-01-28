@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "RelationFilterProxyModelTest.h"
-#include "Mdt/Application.h"
 #include "Mdt/ItemModel/RelationFilterProxyModel.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QStringList>
@@ -513,85 +512,7 @@ void RelationFilterProxyModelTest::dynamicFilterInsertTest()
 }
 
 /*
- * Helper
- */
-
-// void RelationFilterProxyModelTest::displayModels(QAbstractItemModel* sourceModel, QSortFilterProxyModel* proxyModel)
-// {
-//   Q_ASSERT(sourceModel != nullptr);
-//   Q_ASSERT(proxyModel != nullptr);
-// 
-//   QTableView sourceView;
-//   QTableView proxyView;
-// 
-//   sourceView.setModel(sourceModel);
-//   sourceView.setWindowTitle("Source");
-//   proxyView.setModel(proxyModel);
-//   proxyView.setWindowTitle("Proxy");
-//   sourceView.show();
-//   proxyView.show();
-//   while(sourceView.isVisible()){
-//     QTest::qWait(500);
-//   }
-// }
-
-// bool RelationFilterProxyModelTest::setModelData(QAbstractItemModel* model, int row, int column, const QVariant& value, Qt::ItemDataRole role)
-// {
-//   Q_ASSERT(model != nullptr);
-//   Q_ASSERT(row >= 0);
-//   Q_ASSERT(row < model->rowCount());
-//   Q_ASSERT(column >= 0);
-//   Q_ASSERT(column < model->columnCount());
-// 
-//   auto index = model->index(row, column);
-//   if(!index.isValid()){
-//     qDebug() << "index is not valid: " << index;
-//     return false;
-//   }
-// 
-//   return model->setData(index, value, role);
-// }
-// 
-// bool RelationFilterProxyModelTest::setModelData(QAbstractItemModel& model, int row, int column, const QVariant& value, Qt::ItemDataRole role)
-// {
-//   return setModelData(&model, row, column, value, role);
-// }
-// 
-// QVariant RelationFilterProxyModelTest::getModelData(const QAbstractItemModel* model, int row, int column, Qt::ItemDataRole role)
-// {
-//   Q_ASSERT(model != nullptr);
-//   Q_ASSERT(row >= 0);
-//   Q_ASSERT(row < model->rowCount());
-//   Q_ASSERT(column >= 0);
-//   Q_ASSERT(column < model->columnCount());
-// 
-//   auto index = model->index(row, column);
-//   if(!index.isValid()){
-//     qDebug() << "index is not valid: " << index;
-//     return QVariant();
-//   }
-// 
-//   return model->data(index, role);
-// }
-// 
-// QVariant RelationFilterProxyModelTest::getModelData(const QAbstractItemModel & model, int row, int column, Qt::ItemDataRole role)
-// {
-//   return getModelData(&model, row, column, role);
-// }
-
-/*
  * Main
  */
-
-int main(int argc, char **argv)
-{
-  Mdt::Application app(argc, argv);
-  RelationFilterProxyModelTest test;
-
-  if(!app.init()){
-    return 1;
-  }
-//   app.debugEnvironnement();
-
-  return QTest::qExec(&test, argc, argv);
-}
+MDT_ITEM_MODEL_TEST_MAIN(RelationFilterProxyModelTest)
+// MDT_ITEM_MODEL_TEST_MAIN_DEBUG_ENV(RelationFilterProxyModelTest)
