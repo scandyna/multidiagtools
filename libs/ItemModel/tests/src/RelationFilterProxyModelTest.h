@@ -21,14 +21,14 @@
 #ifndef MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
 #define MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
 
-#include "Mdt/ItemModel/VariantTableModel.h"
-#include <QObject>
-#include <QtTest/QtTest>
+#include "TestBase.h"
+// #include <QObject>
+// #include <QtTest/QtTest>
 
-class QAbstractItemModel;
-class QSortFilterProxyModel;
+// class QAbstractItemModel;
+// class QSortFilterProxyModel;
 
-class RelationFilterProxyModelTest : public QObject
+class RelationFilterProxyModelTest : public TestBase
 {
  Q_OBJECT
 
@@ -48,15 +48,14 @@ class RelationFilterProxyModelTest : public QObject
   void dynamicFilterTest();
   void dynamicFilterInsertTest();
 
- private:
-
-  static void displayModels(QAbstractItemModel *sourceModel, QSortFilterProxyModel *proxyModel);
-  // Helper functions get/set data in a model
-  static bool setModelData(QAbstractItemModel *model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
-  static bool setModelData(QAbstractItemModel & model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
-  static QVariant getModelData(const QAbstractItemModel *model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
-  static QVariant getModelData(const QAbstractItemModel & model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
-
+//  private:
+// 
+// //   static void displayModels(QAbstractItemModel *sourceModel, QSortFilterProxyModel *proxyModel);
+//   // Helper functions get/set data in a model
+//   static bool setModelData(QAbstractItemModel *model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
+//   static bool setModelData(QAbstractItemModel & model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
+//   static QVariant getModelData(const QAbstractItemModel *model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
+//   static QVariant getModelData(const QAbstractItemModel & model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
