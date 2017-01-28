@@ -132,7 +132,7 @@ void RelationKeyCopier::setParentModelCurrentRow(int row)
   Q_ASSERT(row >= -1);
   Q_ASSERT(row < mParentModel->rowCount());
   
-  qDebug() << "setParentModelCurrentRow() - row: " << row;
+//   qDebug() << "setParentModelCurrentRow() - row: " << row;
   
   mParentModelCurrentRow = row;
 }

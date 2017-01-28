@@ -21,7 +21,7 @@
 #include "ControllerRelation.h"
 #include "AbstractController.h"
 #include "Mdt/ItemModel/RelationFilterProxyModel.h"
-#include "Mdt/ItemModel/RelationKeyCopier.h"
+// #include "Mdt/ItemModel/RelationKeyCopier.h"
 #include <QAbstractItemModel>
 #include <QObject>
 

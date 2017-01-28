@@ -125,19 +125,17 @@ namespace Mdt{ namespace ItemModel{
      */
     void setParentModelMatchRow(int row);
 
-//    private slots:
-// 
-//     void onRowsAboutToBeInserted(const QModelIndex & parent, int first, int last);
-// 
+   private slots:
+
     /*! \brief Actions to perform when rows have been inserted into this proxy model
      */
     void onRowsInserted(const QModelIndex & parent, int first, int last);
 
    private:
 
+    /*! \brief Reimplemented from QSortFilterProxyModel
+     */
     bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
-
-//     void beginInsertRows(const QModelIndex & parent, int first, int last) override;
 
     /*! \brief Return true if filter expression was set and evaluates true
      */

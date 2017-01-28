@@ -230,6 +230,145 @@ void ControllerRelationTest::parentControllerCurrentRowTest()
 
 void ControllerRelationTest::relationFilterTest()
 {
+  /*
+   * Setup parent model
+   * -------------
+   * | Id | Name |
+   * -------------
+   * | 1  | C1   |
+   * -------------
+   * | 2  | C2   |
+   * -------------
+   */
+  VariantTableModel clientModel;
+  clientModel.setObjectName("clientModel");
+  clientModel.resize(2, 2);
+  clientModel.populateColumn(0, {1,2});
+  clientModel.populateColumn(1, {"C1","C2"});
+  /*
+   * Setup child model
+   * ------------------------
+   * | Id | Cli_Id | Street |
+   * ------------------------
+   * | 11 |   1    |  S11   |
+   * ------------------------
+   * | 12 |   1    |  S12   |
+   * ------------------------
+   * | 21 |   2    |  S21   |
+   * ------------------------
+   */
+  VariantTableModel addressModel;
+  addressModel.setObjectName("addressModel");
+  addressModel.resize(3, 3);
+  addressModel.populateColumn(0, {11,12,21});
+  addressModel.populateColumn(1, {1 ,1 ,2 });
+  addressModel.populateColumn(2, {"S11","S12","S21"});
+  /*
+   * Setup controllers and views
+   */
+  ItemModelControllerTester clientController;
+  clientController.setModel(&clientModel);
+  ItemModelControllerTester addressController;
+  addressController.setModel(&addressModel);
+  /*
+   * Setup relation
+   */
+  ParentModelColumn clientId(0);
+  FilterColumn addressClientId(1);
+  ControllerRelation relation(&clientController);
+  relation.setChildController(&addressController, addressClientId == clientId);
+  /*
+   * Check that filter was applied for current client
+   * ------------------------
+   * | Id | Cli_Id | Street |
+   * ------------------------
+   * | 11 |   1    |  S11   |
+   * ------------------------
+   * | 12 |   1    |  S12   |
+   * ------------------------
+   */
+  QCOMPARE(clientController.currentRow(), 0);
+  QCOMPARE(addressController.modelForView()->rowCount(), 2);
+  QCOMPARE(getModelData(addressController.modelForView(), 0, 0), QVariant(11));
+  QCOMPARE(getModelData(addressController.modelForView(), 1, 0), QVariant(12));
+  /*
+   * Change current client and check address model
+   * ------------------------
+   * | Id | Cli_Id | Street |
+   * ------------------------
+   * | 21 |   2    |  S21   |
+   * ------------------------
+   */
+  QVERIFY(clientController.setCurrentRow(1));
+  QCOMPARE(addressController.modelForView()->rowCount(), 1);
+  QCOMPARE(getModelData(addressController.modelForView(), 0, 0), QVariant(21));
+  QCOMPARE(getModelData(addressController.modelForView(), 0, 1), QVariant(2));
+  /*
+   * Insert a row into address model, at end
+   * Address model filtered on client 2, after insert done:
+   * ------------------------
+   * | Id | Cli_Id | Street |
+   * ------------------------
+   * | 21 |   2    |  S21   |
+   * ------------------------
+   * |    |   2    |        |
+   * ------------------------
+   */
+  addressController.setInsertLocation(TableViewController::InsertAtEnd);
+  qDebug() << "TEST: insert at end";
+  QVERIFY(addressController.insert());
+  QCOMPARE(addressController.modelForView()->rowCount(), 2);
+  QCOMPARE(getModelData(addressController.modelForView(), 0, 0), QVariant(21));
+  QCOMPARE(getModelData(addressController.modelForView(), 0, 1), QVariant(2));
+  QCOMPARE(getModelData(addressController.modelForView(), 1, 1), QVariant(2));
+  /*
+   * Edit freshly inserted row
+   * Address model filtered on client 2, after edition done:
+   * ------------------------
+   * | Id | Cli_Id | Street |
+   * ------------------------
+   * | 21 |   2    |  S21   |
+   * ------------------------
+   * | 22 |   2    |  S22   |
+   * ------------------------
+   */
+  setModelData(addressController.modelForView(), 1, 0, 22);
+  setModelData(addressController.modelForView(), 1, 2, "S22");
+  QCOMPARE(getModelData(addressController.modelForView(), 0, 0), QVariant(21));
+  QCOMPARE(getModelData(addressController.modelForView(), 0, 1), QVariant(2));
+  QCOMPARE(getModelData(addressController.modelForView(), 0, 2), QVariant("S21"));
+  QCOMPARE(getModelData(addressController.modelForView(), 1, 0), QVariant(22));
+  QCOMPARE(getModelData(addressController.modelForView(), 1, 1), QVariant(2));
+  QCOMPARE(getModelData(addressController.modelForView(), 1, 2), QVariant("S22"));
+  /*
+   * Insert a row into address model, at beginning
+   * Address model filtered on client 2, after insert done:
+   * ------------------------
+   * | Id | Cli_Id | Street |
+   * ------------------------
+   * |    |   2    |        |
+   * ------------------------
+   * | 21 |   2    |  S21   |
+   * ------------------------
+   * | 22 |   2    |  S22   |
+   * ------------------------
+   */
+  addressController.setInsertLocation(TableViewController::InsertAtBeginning);
+  QVERIFY(addressController.insert());
+  QCOMPARE(addressController.modelForView()->rowCount(), 3);
+  QVERIFY(getModelData(addressController.modelForView(), 0, 0).isNull());
+  QCOMPARE(getModelData(addressController.modelForView(), 0, 1), QVariant(2));
+  QVERIFY(getModelData(addressController.modelForView(), 0, 2).isNull());
+  QCOMPARE(getModelData(addressController.modelForView(), 1, 0), QVariant(21));
+  QCOMPARE(getModelData(addressController.modelForView(), 1, 1), QVariant(2));
+  QCOMPARE(getModelData(addressController.modelForView(), 1, 2), QVariant("S21"));
+  QCOMPARE(getModelData(addressController.modelForView(), 2, 0), QVariant(22));
+  QCOMPARE(getModelData(addressController.modelForView(), 2, 1), QVariant(2));
+  QCOMPARE(getModelData(addressController.modelForView(), 2, 2), QVariant("S22"));
+}
+
+void ControllerRelationTest::relationFilterTableViewTest()
+{
   QModelIndex index;
   /*
    * Setup parent model
@@ -297,7 +436,7 @@ void ControllerRelationTest::relationFilterTest()
   QCOMPARE(addressView.model()->data(index), QVariant(21));
   /*
    * Insert a row in address model
-   * Address model filtered on client 1, after inert done:
+   * Address model filtered on client 2, after inert done:
    * ------------------------
    * | Id | Cli_Id | Street |
    * ------------------------

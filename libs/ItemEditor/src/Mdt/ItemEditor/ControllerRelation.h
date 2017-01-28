@@ -32,7 +32,7 @@ class QAbstractItemModel;
 namespace Mdt{ namespace ItemModel{
 
   class RelationFilterProxyModel;
-  class RelationKeyCopier;
+//   class RelationKeyCopier;
 
 }} // namespace Mdt{ namespace ItemModel{
 
@@ -98,17 +98,17 @@ namespace Mdt{ namespace ItemEditor{
      * \note When this relation is deleted, the returned pointer becomes dangling.
      *       This method is used for unit tests.
      */
-    Mdt::ItemModel::RelationKeyCopier *relationKeyCopier() const
-    {
-      return mKeyCopier.get();
-    }
+//     Mdt::ItemModel::RelationKeyCopier *relationKeyCopier() const
+//     {
+//       return mKeyCopier.get();
+//     }
 
    private:
 
     void onParentControllerModelChanged(QAbstractItemModel *model);
 
     std::unique_ptr<Mdt::ItemModel::RelationFilterProxyModel> mProxyModel;
-    std::unique_ptr<Mdt::ItemModel::RelationKeyCopier> mKeyCopier;
+//     std::unique_ptr<Mdt::ItemModel::RelationKeyCopier> mKeyCopier;
 //     QMetaObject::Connection mParentModelCurrentRowChangedConnection1;
 //     QMetaObject::Connection mParentModelCurrentRowChangedConnection2;
     QMetaObject::Connection mChildSourceModelChangedConnection1;

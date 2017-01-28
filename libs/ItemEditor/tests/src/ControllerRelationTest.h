@@ -44,7 +44,9 @@ class ControllerRelationTest : public QObject
   void setModelToControllersAfterTest();
   void changeModelTest();
   void parentControllerCurrentRowTest();
+  
   void relationFilterTest();
+  void relationFilterTableViewTest();
 
   void relationListSetModelToControllersFirstTest();
   void relationListSetModelToControllersAfterTest();

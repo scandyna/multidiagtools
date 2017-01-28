@@ -224,6 +224,7 @@ bool AbstractController::insert()
   }
   ///disableDynamicFilters();
   setControllerState(ControllerState::Inserting);
+  qDebug() << "AC: insert into " << model;
   bool ok = false;
   switch(pvInsertLocation){
     case InsertAtBeginning:

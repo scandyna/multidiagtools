@@ -23,7 +23,7 @@
 #include "RowRange.h"
 #include "Expression/ParentModelEvalData.h"
 
-#include <QDebug>
+// #include <QDebug>
 
 using Mdt::ItemModel::Expression::ParentModelEvalData;
 
@@ -34,7 +34,6 @@ RelationFilterProxyModel::RelationFilterProxyModel(QObject* parent)
    mKeyCopier(new RelationKeyCopier)
 {
   mKeyCopier->setChildModel(this);
-//   connect(this, &RelationFilterProxyModel::rowsAboutToBeInserted, this, &RelationFilterProxyModel::onRowsAboutToBeInserted);
   connect(this, &RelationFilterProxyModel::rowsInserted, this, &RelationFilterProxyModel::onRowsInserted);
 }
 
@@ -63,7 +62,6 @@ void RelationFilterProxyModel::setFilter(const RelationFilterExpression & expres
 
 void RelationFilterProxyModel::setDynamicSortFilter(bool enable)
 {
-  qDebug() << "RFPM::setDynamicSortFilter(" << enable << ")";
   QSortFilterProxyModel::setDynamicSortFilter(enable);
 }
 
@@ -74,24 +72,16 @@ void RelationFilterProxyModel::setParentModelMatchRow(int row)
   invalidateFilter();
 }
 
-// void RelationFilterProxyModel::onRowsAboutToBeInserted(const QModelIndex& parent, int first, int last)
-// {
-//   qDebug() << "RFPM: onRowsAboutToBeInserted() - first: " << first << " , last: " << last;
-// }
-
 void RelationFilterProxyModel::onRowsInserted(const QModelIndex& parent, int first, int last)
 {
-  qDebug() << "RFPM: onRowsInserted() - first: " << first << " , last: " << last;
   if(!mInserting){
     return;
   }
-  qDebug() << "RFPM: onRowsInserted() - copy key data ...";
   RowRange r;
   r.setFirstRow(first);
   r.setLastRow(last);
-  if(!mKeyCopier->copyAllKeyData(r, parent)){
-    return; /// \todo Error ?
-  }
+  mKeyCopier->copyAllKeyData(r, parent);
+  mInserting = false;
 }
 
 bool RelationFilterProxyModel::insertRows(int row, int count, const QModelIndex & parent)
@@ -104,31 +94,13 @@ bool RelationFilterProxyModel::insertRows(int row, int count, const QModelIndex 
    * reports expected first, last row for this proxy model.
    * So, we do key data copy in onRowsInserted() slot.
    */
-//   qDebug() << "RFPM: insertRows() - row: " << row << " - source row: " << mapToSource(index(row, 0)).row();
-  qDebug() << "RFPM: insertRows() - row: " << row << " - count: " << count;
-  mInserting = true;  /// \todo Should create a state guard
+  mInserting = true;
   if( !QSortFilterProxyModel::insertRows(row, count, parent) ){
     mInserting = false;
     return false;
   }
-//   qDebug() << "RFPM: insertRows() - copy key data ...";
-//   RowRange r;
-//   r.setFirstRow(row);
-//   r.setRowCount(count);
-//   if(!mKeyCopier->copyAllKeyData(r, parent)){
-//     mInserting = false;
-//     return false;
-//   }
-//   mInserting = false;
-  qDebug() << "RFPM: insertRows() OK";
-
   return true;
 }
-
-// void RelationFilterProxyModel::beginInsertRows(const QModelIndex& parent, int first, int last)
-// {
-// 
-// }
 
 bool RelationFilterProxyModel::filterAcceptsRow(int source_row, const QModelIndex & source_parent) const
 {
@@ -147,13 +119,6 @@ bool RelationFilterProxyModel::filterAcceptsRow(int source_row, const QModelInde
   if(mInserting){
     return true;
   }
-  /*
-   * QSortFilterProxyModel seems to ignore dynamicSortFilter during insertion.
-   */
-//   if(!dynamicSortFilter()){
-//     return true;
-//   }
-  qDebug() << "RFPM: eval ..";
   return mFilterExpression.eval(sourceModel(), source_row, ParentModelEvalData(mParentModel, mParentModelRow), filterCaseSensitivity());
 }
 

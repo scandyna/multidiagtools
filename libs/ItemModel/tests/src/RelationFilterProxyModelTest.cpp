@@ -478,18 +478,35 @@ void RelationFilterProxyModelTest::dynamicFilterInsertTest()
   QCOMPARE(getModelData(proxyModel, 4, 0), QVariant(26));
   QCOMPARE(getModelData(proxyModel, 4, 1), QVariant(2));
   QCOMPARE(getModelData(proxyModel, 4, 2), QVariant("S26"));
-
-
-//   displayModels(&addressModel, &proxyModel);
-
-  /** \todo
-   *  - RelationFilterProxyModel should itself copy key data (using RelationKeyCopier)
-   *  - Check that inserting (in proxy model) transparently works
-   *  - Note: proxy model should transparently get relation key in setFilter()
-   *  - RelationFilterProxyModel: try using rowsInserted() signal from QSortFilterProxyModel
+  /*
+   * Filter on client 1
+   *  Address model              Proxy model
+   * ------------------------   ------------------------
+   * | Id | Cli_Id | Street |   | Id | Cli_Id | Street |
+   * ------------------------   ------------------------
+   * | 23 |   2    |  S23   |   | 11 |   1    |  S11   |
+   * ------------------------   ------------------------
+   * | 24 |   2    |  S24   |   | 12 |   1    |  S12   |
+   * ------------------------   ------------------------
+   * | 11 |   1    |  S11   |
+   * ------------------------
+   * | 12 |   1    |  S12   |
+   * ------------------------
+   * |    |   2    |        |
+   * ------------------------
+   * | 25 |   2    |  S25   |
+   * ------------------------
+   * | 26 |   2    |  S26   |
+   * ------------------------
    */
-  QFAIL("Not complete");
-
+  proxyModel.setParentModelMatchRow(0);
+  QCOMPARE(proxyModel.rowCount(), 2);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(11));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 0, 2), QVariant("S11"));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant(12));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 2), QVariant("S12"));
 }
 
 /*
