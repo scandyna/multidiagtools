@@ -202,14 +202,14 @@ void ControllerRelationTest::parentControllerCurrentRowTest()
   QCOMPARE(parentController.currentRow(), 0);
   ControllerRelation relation(&parentController);
   QCOMPARE(relation.relationFilterModel()->parentModelMatchRow(), 0);
-  QCOMPARE(relation.relationKeyCopier()->parentModelCurrentRow(), 0);
+//   QCOMPARE(relation.relationKeyCopier()->parentModelCurrentRow(), 0);
   /*
    * Change parent controller current row
    */
   QVERIFY(parentController.setCurrentRow(1));
   QCOMPARE(parentController.currentRow(), 1);
   QCOMPARE(relation.relationFilterModel()->parentModelMatchRow(), 1);
-  QCOMPARE(relation.relationKeyCopier()->parentModelCurrentRow(), 1);
+//   QCOMPARE(relation.relationKeyCopier()->parentModelCurrentRow(), 1);
   /*
    * Change parent controllers model
    */
@@ -218,14 +218,14 @@ void ControllerRelationTest::parentControllerCurrentRowTest()
   parentController.setModel(&parentModel2);
   QCOMPARE(parentController.currentRow(), 0);
   QCOMPARE(relation.relationFilterModel()->parentModelMatchRow(), 0);
-  QCOMPARE(relation.relationKeyCopier()->parentModelCurrentRow(), 0);
+//   QCOMPARE(relation.relationKeyCopier()->parentModelCurrentRow(), 0);
   /*
    * Change parent controller current row
    */
   QVERIFY(parentController.setCurrentRow(1));
   QCOMPARE(parentController.currentRow(), 1);
   QCOMPARE(relation.relationFilterModel()->parentModelMatchRow(), 1);
-  QCOMPARE(relation.relationKeyCopier()->parentModelCurrentRow(), 1);
+//   QCOMPARE(relation.relationKeyCopier()->parentModelCurrentRow(), 1);
 }
 
 void ControllerRelationTest::relationFilterTest()
@@ -304,7 +304,7 @@ void ControllerRelationTest::relationFilterTest()
   QCOMPARE(getModelData(addressController.modelForView(), 0, 0), QVariant(21));
   QCOMPARE(getModelData(addressController.modelForView(), 0, 1), QVariant(2));
   /*
-   * Insert a row into address model, at end
+   * Insert a row with address controller, at end
    * Address model filtered on client 2, after insert done:
    * ------------------------
    * | Id | Cli_Id | Street |

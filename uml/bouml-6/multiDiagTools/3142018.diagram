@@ -12,6 +12,14 @@ classcanvas 128898 class_ref 3695362 // RelationFilterExpression
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
   xyz 40 138 2000
 end
+classcanvas 129154 class_ref 3735810 // RelationKeyCopier
+  classdiagramsettings member_max_width 0 end
+  xyz 139 454 2000
+end
+classcanvas 129410 class_ref 138626 // QObject
+  classdiagramsettings member_max_width 0 end
+  xyz 134 321 2006
+end
 relationcanvas 128258 relation_ref 3961090 // <generalisation>
   from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
@@ -19,6 +27,16 @@ relationcanvas 128258 relation_ref 3961090 // <generalisation>
 end
 relationcanvas 129026 relation_ref 4130434 // <directional composition>
   from ref 128002 z 2001 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 4164098 // <directional composition>
+  from ref 128002 z 2001 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 4130562 // <generalisation>
+  from ref 129154 z 2007 to ref 129410
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

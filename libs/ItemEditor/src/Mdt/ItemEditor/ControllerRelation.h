@@ -112,7 +112,7 @@ namespace Mdt{ namespace ItemEditor{
 //     QMetaObject::Connection mParentModelCurrentRowChangedConnection1;
 //     QMetaObject::Connection mParentModelCurrentRowChangedConnection2;
     QMetaObject::Connection mChildSourceModelChangedConnection1;
-    QMetaObject::Connection mChildSourceModelChangedConnection2;
+//     QMetaObject::Connection mChildSourceModelChangedConnection2;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

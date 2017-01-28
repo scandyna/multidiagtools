@@ -2,20 +2,29 @@ window_sizes 1280 963 306 968 908 0
 cleanlooks_style
 diagrams
   classdiagram_ref 3208706 // ControllerRelation
-    687 726 100 21 0 0
-  active  classdiagram_ref 3261570 // ControllerRelationBase
+    687 726 90 21 120 189
+  classdiagram_ref 3261570 // ControllerRelationBase
     968 908 100 20 0 0
   classdiagram_ref 3208834 // ControllerRelationList
     120 110 100 21 0 21
   classdiagram_ref 3148674 // Overview
     120 110 100 22 0 0
+  classdiagram_ref 3142018 // RelationFilterProxyModel
+    968 908 100 18 0 0
+  active  classdiagram_ref 3274626 // SortFilterProxyModel
+    968 908 100 18 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2761218 // ControllerOverview
+selected operation_ref 5261570 // inserting
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
+  class_ref 3762306 // SortFilterProxyModel
+  classview_ref 1630466 // Filter
+  classrelation_ref 4101506 // <directional composition>
+  classview_ref 1643778 // Sort
+  classview_ref 1669890 // ProxyModelContainer
   classview_ref 1287042 // Controller
   class_ref 3601538 // ControllerRelationItemList
   
