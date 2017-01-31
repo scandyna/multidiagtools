@@ -25,7 +25,9 @@
 #include "ParentModelColumn.h"
 #include "FilterColumn.h"
 #include "LikeExpression.h"
+
 #include <QSortFilterProxyModel>
+
 #include <QPointer>
 #include <memory>
 
