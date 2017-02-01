@@ -40,169 +40,16 @@ void SortFilterProxyModelTest::cleanupTestCase()
  * Tests
  */
 
-void SortFilterProxyModelTest::QSortFilterProxyModelFilterInsertRowTest()
-{
-  QStringListModel model;
-  QSortFilterProxyModel proxyModel;
-  /*
-   * Setup proxy model
-   */
-  proxyModel.setSourceModel(&model);
-  proxyModel.setDynamicSortFilter(true);
-  proxyModel.setFilterRegExp("^A");
-  /*
-   * Populate model with initial data
-   * Source model    Proxy model
-   * ------          ------
-   * | A5 |          | A5 |
-   * ------          ------
-   * | B5 |
-   * ------
-   */
-  model.setStringList(QStringList({"A5","B5"}));
-  QCOMPARE(proxyModel.rowCount(), 1);
-  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A5"));
-  /*
-   * Insert a row at the begining
-   * Source model    Proxy model
-   * ------          ------
-   * |    |          | A5 |
-   * ------          ------
-   * | A5 |
-   * ------
-   * | B5 |
-   * ------
-   */
-  QVERIFY(proxyModel.insertRow(0));
-  // Check source model
-  QCOMPARE(model.rowCount(), 3);
-  QVERIFY(getModelData(model, 0, 0).isNull());
-  QCOMPARE(getModelData(model, 1, 0), QVariant("A5"));
-  QCOMPARE(getModelData(model, 2, 0), QVariant("B5"));
-  // Check proxy model
-  QCOMPARE(proxyModel.rowCount(), 1);
-  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A5"));
-  /*
-   * Edit inserted row
-   * Source model    Proxy model
-   * ------          ------
-   * | A4 |          | A4 |
-   * ------          ------
-   * | A5 |          | A5 |
-   * ------          ------
-   * | B5 |
-   * ------
-   */
-  QVERIFY(setModelData(model, 0, 0, "A4"));
-  // Check source model
-  QCOMPARE(model.rowCount(), 3);
-  QCOMPARE(getModelData(model, 0, 0), QVariant("A4"));
-  QCOMPARE(getModelData(model, 1, 0), QVariant("A5"));
-  QCOMPARE(getModelData(model, 2, 0), QVariant("B5"));
-  // Check proxy model
-  QCOMPARE(proxyModel.rowCount(), 2);
-  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A4"));
-  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("A5"));
-  /*
-   * Insert a row at the end
-   *
-   * Expected:
-   * Source model    Proxy model
-   * ------          ------
-   * | A4 |          | A4 |
-   * ------          ------
-   * | A5 |          | A5 |
-   * ------          ------
-   * | B5 |
-   * ------
-   * |    |
-   * ------
-   *
-   * What QSortFilterProxyModel does:
-   * Source model    Proxy model
-   * ------          ------
-   * | A4 |          | A4 |
-   * ------          ------
-   * | A5 |          | A5 |
-   * ------          ------
-   * |    |
-   * ------
-   * | B5 |
-   * ------
-   */
-  QVERIFY(proxyModel.insertRow(2));
-  // Check source model
-  QCOMPARE(model.rowCount(), 4);
-  QCOMPARE(getModelData(model, 0, 0), QVariant("A4"));
-  QCOMPARE(getModelData(model, 1, 0), QVariant("A5"));
-  QCOMPARE(getModelData(model, 2, 0), QVariant("B5"));
-  QVERIFY(getModelData(model, 3, 0).isNull());
-  // Check proxy model
-  QCOMPARE(proxyModel.rowCount(), 2);
-  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A4"));
-  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("A5"));
-  /*
-   * Edit inserted row
-   * Source model    Proxy model
-   * ------          ------
-   * | A4 |          | A4 |
-   * ------          ------
-   * | A5 |          | A5 |
-   * ------          ------
-   * | B5 |          | A6 |
-   * ------          ------
-   * | A6 |
-   * ------
-   */
-  QVERIFY(setModelData(model, 3, 0, "A6"));
-  // Check source model
-  QCOMPARE(model.rowCount(), 4);
-  QCOMPARE(getModelData(model, 0, 0), QVariant("A4"));
-  QCOMPARE(getModelData(model, 1, 0), QVariant("A5"));
-  QCOMPARE(getModelData(model, 2, 0), QVariant("B5"));
-  QCOMPARE(getModelData(model, 3, 0), QVariant("A6"));
-  QVERIFY(getModelData(model, 3, 0).isNull());
-  // Check proxy model
-  QCOMPARE(proxyModel.rowCount(), 3);
-  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A4"));
-  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("A5"));
-  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant("A6"));
-}
-
-void SortFilterProxyModelTest::QSortFilterProxyModelFilterInsertRowTest2()
-{
-  QFETCH(QStringList, initialModelList);
-  QFETCH(int, row);
-  QFETCH(QStringList, expectedModelList);
-  QFETCH(QStringList, expectedProxyModelList);
-  QStringListModel model;
-  QSortFilterProxyModel proxyModel;
-  /*
-   * Setup models
-   */
-  model.setStringList(initialModelList);
-  proxyModel.setSourceModel(&model);
-  proxyModel.setDynamicSortFilter(true);
-  proxyModel.setFilterRegExp("^A");
-  
-  qDebug() << "initialModelList: " << initialModelList;
-  qDebug() << "expectedModelList: " << expectedModelList;
-  qDebug() << "expectedProxyModelList: " << expectedProxyModelList;
-  
-  /*
-   * Insert and check
-   */
-  QVERIFY(proxyModel.insertRow(row));
-  // Check source model
-  QCOMPARE(model.stringList(), expectedModelList);
-  // Check proxy model
-  QCOMPARE(proxyModel.rowCount(), expectedProxyModelList.count());
-  for(int r = 0; r < proxyModel.rowCount(); ++r){
-    QModelIndex index = proxyModel.index(r, 0);
-    QVERIFY(index.isValid());
-    QCOMPARE(proxyModel.data(index).toString(), expectedProxyModelList.at(r));
-  }
-  
+// void SortFilterProxyModelTest::QSortFilterProxyModelFilterInsertRowTest()
+// {
+//   QStringListModel model;
+//   QSortFilterProxyModel proxyModel;
+//   /*
+//    * Setup proxy model
+//    */
+//   proxyModel.setSourceModel(&model);
+//   proxyModel.setDynamicSortFilter(true);
+//   proxyModel.setFilterRegExp("^A");
 //   /*
 //    * Populate model with initial data
 //    * Source model    Proxy model
@@ -239,35 +86,279 @@ void SortFilterProxyModelTest::QSortFilterProxyModelFilterInsertRowTest2()
 //    * Edit inserted row
 //    * Source model    Proxy model
 //    * ------          ------
-//    * | B4 |          | A5 |
+//    * | A4 |          | A4 |
+//    * ------          ------
+//    * | A5 |          | A5 |
+//    * ------          ------
+//    * | B5 |
+//    * ------
+//    */
+//   QVERIFY(setModelData(model, 0, 0, "A4"));
+//   // Check source model
+//   QCOMPARE(model.rowCount(), 3);
+//   QCOMPARE(getModelData(model, 0, 0), QVariant("A4"));
+//   QCOMPARE(getModelData(model, 1, 0), QVariant("A5"));
+//   QCOMPARE(getModelData(model, 2, 0), QVariant("B5"));
+//   // Check proxy model
+//   QCOMPARE(proxyModel.rowCount(), 2);
+//   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A4"));
+//   QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("A5"));
+//   /*
+//    * Insert a row at the end
+//    *
+//    * Expected:
+//    * Source model    Proxy model
+//    * ------          ------
+//    * | A4 |          | A4 |
+//    * ------          ------
+//    * | A5 |          | A5 |
+//    * ------          ------
+//    * | B5 |
+//    * ------
+//    * |    |
+//    * ------
+//    *
+//    * What QSortFilterProxyModel does:
+//    * Source model    Proxy model
+//    * ------          ------
+//    * | A4 |          | A4 |
+//    * ------          ------
+//    * | A5 |          | A5 |
+//    * ------          ------
+//    * |    |
+//    * ------
+//    * | B5 |
+//    * ------
+//    */
+//   QVERIFY(proxyModel.insertRow(2));
+//   // Check source model
+//   QCOMPARE(model.rowCount(), 4);
+//   QCOMPARE(getModelData(model, 0, 0), QVariant("A4"));
+//   QCOMPARE(getModelData(model, 1, 0), QVariant("A5"));
+//   QCOMPARE(getModelData(model, 2, 0), QVariant("B5"));
+//   QVERIFY(getModelData(model, 3, 0).isNull());
+//   // Check proxy model
+//   QCOMPARE(proxyModel.rowCount(), 2);
+//   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A4"));
+//   QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("A5"));
+//   /*
+//    * Edit inserted row
+//    * Source model    Proxy model
+//    * ------          ------
+//    * | A4 |          | A4 |
+//    * ------          ------
+//    * | A5 |          | A5 |
+//    * ------          ------
+//    * | B5 |          | A6 |
+//    * ------          ------
+//    * | A6 |
+//    * ------
+//    */
+//   QVERIFY(setModelData(model, 3, 0, "A6"));
+//   // Check source model
+//   QCOMPARE(model.rowCount(), 4);
+//   QCOMPARE(getModelData(model, 0, 0), QVariant("A4"));
+//   QCOMPARE(getModelData(model, 1, 0), QVariant("A5"));
+//   QCOMPARE(getModelData(model, 2, 0), QVariant("B5"));
+//   QCOMPARE(getModelData(model, 3, 0), QVariant("A6"));
+//   QVERIFY(getModelData(model, 3, 0).isNull());
+//   // Check proxy model
+//   QCOMPARE(proxyModel.rowCount(), 3);
+//   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A4"));
+//   QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("A5"));
+//   QCOMPARE(getModelData(proxyModel, 2, 0), QVariant("A6"));
+// }
+
+void SortFilterProxyModelTest::QSortFilterProxyModelFilterInsertRowTest()
+{
+  QFETCH(QStringList, initialModelList);
+  QFETCH(int, row);
+  QFETCH(QStringList, expectedModelList);
+  QFETCH(QStringList, expectedProxyModelList);
+  QStringListModel model;
+  QSortFilterProxyModel proxyModel;
+  /*
+   * Setup models
+   */
+  model.setStringList(initialModelList);
+  proxyModel.setSourceModel(&model);
+  proxyModel.setDynamicSortFilter(true);
+  proxyModel.setFilterRegExp("^A");
+  /*
+   * Insert and check
+   */
+  QVERIFY(proxyModel.insertRow(row));
+  // Check source model
+  QCOMPARE(model.stringList(), expectedModelList);
+  // Check proxy model
+  QCOMPARE(proxyModel.rowCount(), expectedProxyModelList.count());
+  for(int r = 0; r < proxyModel.rowCount(); ++r){
+    QModelIndex index = proxyModel.index(r, 0);
+    QVERIFY(index.isValid());
+    QCOMPARE(proxyModel.data(index).toString(), expectedProxyModelList.at(r));
+  }
+}
+
+void SortFilterProxyModelTest::QSortFilterProxyModelFilterInsertRowTest_data()
+{
+  setupInsertRowTestData();
+}
+
+// void SortFilterProxyModelTest::filterInsertRowTest()
+// {
+//   QStringListModel model;
+//   SortFilterProxyModel proxyModel;
+//   /*
+//    * Setup proxy model
+//    */
+//   proxyModel.setSourceModel(&model);
+//   proxyModel.setDynamicSortFilter(true);
+//   proxyModel.setFilterRegExp("^A");
+//   /*
+//    * Populate model with initial data
+//    * Source model    Proxy model
+//    * ------          ------
+//    * | A5 |          | A5 |
+//    * ------          ------
+//    * | B5 |
+//    * ------
+//    */
+//   model.setStringList(QStringList({"A5","B5"}));
+//   QCOMPARE(proxyModel.rowCount(), 1);
+//   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A5"));
+//   /*
+//    * Insert a row at the begining
+//    * Source model    Proxy model
+//    * ------          ------
+//    * |    |          | A5 |
 //    * ------          ------
 //    * | A5 |
 //    * ------
 //    * | B5 |
 //    * ------
 //    */
-//   
-//   /// \todo Change to data driven test - With this comments. Remove dependency on helper functions See Qt tst_
-//   /// Each item: initial data for model, insertion row, expected list
-//   /// Comment each item
-//   
-//   QVERIFY(setModelData(model, 0, 0, "B4"));
+//   QVERIFY(proxyModel.insertRow(0));
 //   // Check source model
 //   QCOMPARE(model.rowCount(), 3);
-//   QCOMPARE(getModelData(model, 0, 0), QVariant("B4"));
+//   QVERIFY(getModelData(model, 0, 0).isNull());
 //   QCOMPARE(getModelData(model, 1, 0), QVariant("A5"));
 //   QCOMPARE(getModelData(model, 2, 0), QVariant("B5"));
 //   // Check proxy model
 //   QCOMPARE(proxyModel.rowCount(), 1);
 //   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A5"));
 //   /*
-//    * Insert a row after "A5" in proxy model
+//    * Edit inserted row
+//    * Source model    Proxy model
+//    * ------          ------
+//    * | A4 |          | A4 |
+//    * ------          ------
+//    * | A5 |          | A5 |
+//    * ------          ------
+//    * | B5 |
+//    * ------
 //    */
-// 
-//   QFAIL("Not complete");
+//   QVERIFY(setModelData(model, 0, 0, "A4"));
+//   // Check source model
+//   QCOMPARE(model.rowCount(), 3);
+//   QCOMPARE(getModelData(model, 0, 0), QVariant("A4"));
+//   QCOMPARE(getModelData(model, 1, 0), QVariant("A5"));
+//   QCOMPARE(getModelData(model, 2, 0), QVariant("B5"));
+//   // Check proxy model
+//   QCOMPARE(proxyModel.rowCount(), 2);
+//   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A4"));
+//   QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("A5"));
+//   /*
+//    * Insert a row at the end
+//    * Source model    Proxy model
+//    * ------          ------
+//    * | A4 |          | A4 |
+//    * ------          ------
+//    * | A5 |          | A5 |
+//    * ------          ------
+//    * | B5 |
+//    * ------
+//    * |    |
+//    * ------
+//    */
+//   QVERIFY(proxyModel.insertRow(2));
+//   // Check source model
+//   QCOMPARE(model.rowCount(), 4);
+//   QCOMPARE(getModelData(model, 0, 0), QVariant("A4"));
+//   QCOMPARE(getModelData(model, 1, 0), QVariant("A5"));
+//   QCOMPARE(getModelData(model, 2, 0), QVariant("B5"));
+//   QVERIFY(getModelData(model, 3, 0).isNull());
+//   // Check proxy model
+//   QCOMPARE(proxyModel.rowCount(), 2);
+//   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A4"));
+//   QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("A5"));
+//   /*
+//    * Edit inserted row
+//    * Source model    Proxy model
+//    * ------          ------
+//    * | A4 |          | A4 |
+//    * ------          ------
+//    * | A5 |          | A5 |
+//    * ------          ------
+//    * | B5 |          | A6 |
+//    * ------          ------
+//    * | A6 |
+//    * ------
+//    */
+//   QVERIFY(setModelData(model, 3, 0, "A6"));
+//   // Check source model
+//   QCOMPARE(model.rowCount(), 4);
+//   QCOMPARE(getModelData(model, 0, 0), QVariant("A4"));
+//   QCOMPARE(getModelData(model, 1, 0), QVariant("A5"));
+//   QCOMPARE(getModelData(model, 2, 0), QVariant("B5"));
+//   QCOMPARE(getModelData(model, 3, 0), QVariant("A6"));
+//   QVERIFY(getModelData(model, 3, 0).isNull());
+//   // Check proxy model
+//   QCOMPARE(proxyModel.rowCount(), 3);
+//   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A4"));
+//   QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("A5"));
+//   QCOMPARE(getModelData(proxyModel, 2, 0), QVariant("A6"));
+// }
+
+void SortFilterProxyModelTest::filterInsertRowTest()
+{
+  QFETCH(QStringList, initialModelList);
+  QFETCH(int, row);
+  QFETCH(QStringList, expectedModelList);
+  QFETCH(QStringList, expectedProxyModelList);
+  QStringListModel model;
+  SortFilterProxyModel proxyModel;
+  /*
+   * Setup models
+   */
+  model.setStringList(initialModelList);
+  proxyModel.setSourceModel(&model);
+  proxyModel.setDynamicSortFilter(true);
+  proxyModel.setFilterRegExp("^A");
+  /*
+   * Insert and check
+   */
+  QVERIFY(proxyModel.insertRow(row));
+  // Check source model
+  QCOMPARE(model.stringList(), expectedModelList);
+  // Check proxy model
+  QCOMPARE(proxyModel.rowCount(), expectedProxyModelList.count());
+  for(int r = 0; r < proxyModel.rowCount(); ++r){
+    QModelIndex index = proxyModel.index(r, 0);
+    QVERIFY(index.isValid());
+    QCOMPARE(proxyModel.data(index).toString(), expectedProxyModelList.at(r));
+  }
 }
 
-void SortFilterProxyModelTest::QSortFilterProxyModelFilterInsertRowTest2_data()
+void SortFilterProxyModelTest::filterInsertRowTest_data()
+{
+  setupInsertRowTestData();
+}
+
+/*
+ * Helper functions
+ */
+
+void SortFilterProxyModelTest::setupInsertRowTestData()
 {
   QTest::addColumn<QStringList>("initialModelList");
   QTest::addColumn<int>("row");
@@ -325,123 +416,8 @@ void SortFilterProxyModelTest::QSortFilterProxyModelFilterInsertRowTest2_data()
                     << 1
                     << (QStringList() << "B4" << "A5" << "")
                     << (QStringList() << "A5");
-
 }
 
-void SortFilterProxyModelTest::filterInsertRowTest()
-{
-  QStringListModel model;
-  SortFilterProxyModel proxyModel;
-  /*
-   * Setup proxy model
-   */
-  proxyModel.setSourceModel(&model);
-  proxyModel.setDynamicSortFilter(true);
-  proxyModel.setFilterRegExp("^A");
-  /*
-   * Populate model with initial data
-   * Source model    Proxy model
-   * ------          ------
-   * | A5 |          | A5 |
-   * ------          ------
-   * | B5 |
-   * ------
-   */
-  model.setStringList(QStringList({"A5","B5"}));
-  QCOMPARE(proxyModel.rowCount(), 1);
-  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A5"));
-  /*
-   * Insert a row at the begining
-   * Source model    Proxy model
-   * ------          ------
-   * |    |          | A5 |
-   * ------          ------
-   * | A5 |
-   * ------
-   * | B5 |
-   * ------
-   */
-  QVERIFY(proxyModel.insertRow(0));
-  // Check source model
-  QCOMPARE(model.rowCount(), 3);
-  QVERIFY(getModelData(model, 0, 0).isNull());
-  QCOMPARE(getModelData(model, 1, 0), QVariant("A5"));
-  QCOMPARE(getModelData(model, 2, 0), QVariant("B5"));
-  // Check proxy model
-  QCOMPARE(proxyModel.rowCount(), 1);
-  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A5"));
-  /*
-   * Edit inserted row
-   * Source model    Proxy model
-   * ------          ------
-   * | A4 |          | A4 |
-   * ------          ------
-   * | A5 |          | A5 |
-   * ------          ------
-   * | B5 |
-   * ------
-   */
-  QVERIFY(setModelData(model, 0, 0, "A4"));
-  // Check source model
-  QCOMPARE(model.rowCount(), 3);
-  QCOMPARE(getModelData(model, 0, 0), QVariant("A4"));
-  QCOMPARE(getModelData(model, 1, 0), QVariant("A5"));
-  QCOMPARE(getModelData(model, 2, 0), QVariant("B5"));
-  // Check proxy model
-  QCOMPARE(proxyModel.rowCount(), 2);
-  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A4"));
-  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("A5"));
-  /*
-   * Insert a row at the end
-   * Source model    Proxy model
-   * ------          ------
-   * | A4 |          | A4 |
-   * ------          ------
-   * | A5 |          | A5 |
-   * ------          ------
-   * | B5 |
-   * ------
-   * |    |
-   * ------
-   */
-  QVERIFY(proxyModel.insertRow(2));
-  // Check source model
-  QCOMPARE(model.rowCount(), 4);
-  QCOMPARE(getModelData(model, 0, 0), QVariant("A4"));
-  QCOMPARE(getModelData(model, 1, 0), QVariant("A5"));
-  QCOMPARE(getModelData(model, 2, 0), QVariant("B5"));
-  QVERIFY(getModelData(model, 3, 0).isNull());
-  // Check proxy model
-  QCOMPARE(proxyModel.rowCount(), 2);
-  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A4"));
-  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("A5"));
-  /*
-   * Edit inserted row
-   * Source model    Proxy model
-   * ------          ------
-   * | A4 |          | A4 |
-   * ------          ------
-   * | A5 |          | A5 |
-   * ------          ------
-   * | B5 |          | A6 |
-   * ------          ------
-   * | A6 |
-   * ------
-   */
-  QVERIFY(setModelData(model, 3, 0, "A6"));
-  // Check source model
-  QCOMPARE(model.rowCount(), 4);
-  QCOMPARE(getModelData(model, 0, 0), QVariant("A4"));
-  QCOMPARE(getModelData(model, 1, 0), QVariant("A5"));
-  QCOMPARE(getModelData(model, 2, 0), QVariant("B5"));
-  QCOMPARE(getModelData(model, 3, 0), QVariant("A6"));
-  QVERIFY(getModelData(model, 3, 0).isNull());
-  // Check proxy model
-  QCOMPARE(proxyModel.rowCount(), 3);
-  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant("A4"));
-  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant("A5"));
-  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant("A6"));
-}
 
 /*
  * Main

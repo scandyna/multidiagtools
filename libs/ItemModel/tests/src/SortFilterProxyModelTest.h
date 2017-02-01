@@ -32,11 +32,16 @@ class SortFilterProxyModelTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
+//   void QSortFilterProxyModelFilterInsertRowTest();
   void QSortFilterProxyModelFilterInsertRowTest();
-  void QSortFilterProxyModelFilterInsertRowTest2();
-  void QSortFilterProxyModelFilterInsertRowTest2_data();
+  void QSortFilterProxyModelFilterInsertRowTest_data();
 
   void filterInsertRowTest();
+  void filterInsertRowTest_data();
+
+ private:
+
+  void setupInsertRowTestData();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_SORT_FILTER_PROXY_MODEL_TEST_H
