@@ -15,6 +15,17 @@ target_link_libraries(mdtitemmodeltest "${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFF
 target_link_libraries(mdtitemmodeltest "mdtapplication${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtitemmodeltest Qt5::Test)
 
+#=============== Qt5 item model test library =====
+
+set(QT5_SOURCES_FILES
+    qt5/dynamictreemodel.cpp
+    qt5/modeltest.cpp
+)
+
+add_library(mdtitemmodelqt5test SHARED ${QT5_SOURCES_FILES})
+target_link_libraries(mdtitemmodelqt5test Qt5::Widgets)
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/qt5")
+
 #=============== Helper functions ===========
 
 # Add a test for this ItemModel lib
@@ -24,6 +35,7 @@ function(addItemModelTest testName)
   string(TOLOWER ${complteTestName} executableName)
   add_executable(${executableName} ${sourceFilePath})
   target_link_libraries(${executableName} "mdtitemmodeltest")
+  target_link_libraries(${executableName} "mdtitemmodelqt5test")
 #   target_link_libraries(${executableName} "${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX}")
 #   target_link_libraries(${executableName} "mdtapplication${MDTLIB_VERSION_SUFFIX}")
 #   target_link_libraries(${executableName} Qt5::Test)
@@ -32,6 +44,7 @@ endfunction()
 
 #================= Tests ====================
 
+addItemModelTest("qt5_tst_modeltest")
 addItemModelTest("VariantTableModelTest")
 addItemModelTest("RowRangeTest")
 addItemModelTest("SortFilterProxyModelTest")
