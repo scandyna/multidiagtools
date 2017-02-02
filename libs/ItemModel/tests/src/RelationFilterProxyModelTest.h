@@ -32,13 +32,14 @@ class RelationFilterProxyModelTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
+  void setModelTest();
+
   void parentModelMatchRowTest();
   void filterTest();
   void filterBenchmark();
   void filterBenchmark_data();
 
   void filterRoleTest();
-  void setModelTest();
   void setterEventTest();
   void dynamicFilterTest();
   void dynamicFilterInsertTest();

@@ -20,11 +20,6 @@ classcanvas 129410 class_ref 138626 // QObject
   classdiagramsettings member_max_width 0 end
   xyz 134 321 2006
 end
-relationcanvas 128258 relation_ref 3961090 // <generalisation>
-  from ref 128002 z 2001 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
 relationcanvas 129026 relation_ref 4130434 // <directional composition>
   from ref 128002 z 2001 to ref 128898
   no_role_a no_role_b

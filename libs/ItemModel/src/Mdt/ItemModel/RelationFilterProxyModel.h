@@ -21,13 +21,11 @@
 #ifndef MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_H
 #define MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_H
 
+#include "SortFilterProxyModel.h"
 #include "RelationFilterExpression.h"
 #include "ParentModelColumn.h"
 #include "FilterColumn.h"
 #include "LikeExpression.h"
-
-#include <QSortFilterProxyModel>
-
 #include <QPointer>
 #include <memory>
 
@@ -53,7 +51,7 @@ namespace Mdt{ namespace ItemModel{
    * auto *addressModel = new AddressTableModel(view);
    * auto *proxyModel = new RelationFilterProxyModel(view);
    *
-   * // Setup view act on addressModel
+   * // Setup view acting on addressModel
    * proxyModel->setParentModel(clientModel);
    * proxyModel->setSourceModel(addressModel);
    * view->setModel(proxyModel);
@@ -64,7 +62,7 @@ namespace Mdt{ namespace ItemModel{
    * proxyModel->setParentModelMatchRow(0);
    * \endcode
    */
-  class RelationFilterProxyModel : public QSortFilterProxyModel
+  class RelationFilterProxyModel : public SortFilterProxyModel
   {
    Q_OBJECT
 
@@ -112,11 +110,11 @@ namespace Mdt{ namespace ItemModel{
       return mParentModelRow;
     }
 
-    /*! \brief Re-implemented from QSortFilterProxyModel
+    /*! \brief Re-implemented from SortFilterProxyModel
      */
     void setDynamicSortFilter(bool enable);
 
-    /*! \brief Reimplemented from QSortFilterProxyModel
+    /*! \brief Reimplemented from SortFilterProxyModel
      */
     bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
 
@@ -133,6 +131,10 @@ namespace Mdt{ namespace ItemModel{
 
    private slots:
 
+    /*! \brief Actions to perform when source model changed
+     */
+    void onSourceModelChanged();
+
     /*! \brief Actions to perform when rows have been inserted into this proxy model
      */
     void onRowsInserted(const QModelIndex & parent, int first, int last);
@@ -148,6 +150,7 @@ namespace Mdt{ namespace ItemModel{
     QPointer<QAbstractItemModel> mParentModel;
     RelationFilterExpression mFilterExpression;
     std::unique_ptr<RelationKeyCopier> mKeyCopier;
+    QMetaObject::Connection mRowsInsertedConnection;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

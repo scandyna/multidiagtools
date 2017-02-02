@@ -23,18 +23,17 @@
 #include "RowRange.h"
 #include "Expression/ParentModelEvalData.h"
 
-#include <QDebug>
+// #include <QDebug>
 
 using Mdt::ItemModel::Expression::ParentModelEvalData;
 
 namespace Mdt{ namespace ItemModel{
 
 RelationFilterProxyModel::RelationFilterProxyModel(QObject* parent)
- : QSortFilterProxyModel(parent),
+ : SortFilterProxyModel(parent),
    mKeyCopier(new RelationKeyCopier)
 {
-  mKeyCopier->setChildModel(this);  /// \todo Check: think it should be source model
-  connect(this, &RelationFilterProxyModel::rowsInserted, this, &RelationFilterProxyModel::onRowsInserted);
+  connect(this, &RelationFilterProxyModel::sourceModelChanged, this, &RelationFilterProxyModel::onSourceModelChanged);
 }
 
 RelationFilterProxyModel::~RelationFilterProxyModel()
@@ -62,55 +61,16 @@ void RelationFilterProxyModel::setFilter(const RelationFilterExpression & expres
 
 void RelationFilterProxyModel::setDynamicSortFilter(bool enable)
 {
-  QSortFilterProxyModel::setDynamicSortFilter(enable);
+  SortFilterProxyModel::setDynamicSortFilter(enable);
 }
 
 bool RelationFilterProxyModel::insertRows(int row, int count, const QModelIndex & parent)
 {
-  /*
-   * QSortFilterProxyModel::insertRows() is implemented something like this:
-   * - Create a list of source rows that matches filterAcceptsRow() , if not allready done
-   * - Check row on list size (looks like a bug: should check the highest source row in the list, not list size)
-   * - Determine source_row:
-   *   -> If row >= list size: source_row = liste size (Again, this seems wrong)
-   *   -> Else: source_row = row at in list (Ok)
-   * - Call sourceModel::insertRows(source_row, count, source_parent)
-   *
-   * This says that, if row > this proxy model's rowCount(),
-   * the insert location will be wrong (= not as expected).
-   * As workaround, we proceed this way:
-   * - Turn mInserting flag ON to tell filterAcceptsRow() to accept all rows,
-   *   so the size of QSortFilterProxyModel's list of source rows will be equal to source model's row count
-   * - Invalidate filter to force QSortFilterProxyModel to recreate its mapping (the list of source rows)
-   * - Call QSortFilterProxyModel::insertRows()
-   * - Turn mInserting flag off to tell filterAcceptsRow() to proceed in normal way
-   * - Invalidate filter ? Or not.
-   * 
-   * QSortFilterProxyModel will insert rows into source model
-   * without mapping row to source.
-   * If we copy key data from here, we end up editing the wrong row.
-   * But, QSortFilterProxyModel::rowsInserted() signal
-   * reports expected first, last row for this proxy model.
-   * So, we do key data copy in onRowsInserted() slot.
-   */
-  qDebug() << "RFPM::insertRows() - row: " << row << " , row count: " << rowCount() << " , src row count: " << sourceModel()->rowCount();
-  
   mInserting = true;
-  
-  /// If row > rowCount()
-  invalidateFilter();
-  
-  if( !QSortFilterProxyModel::insertRows(row, count, parent) ){
-    mInserting = false;
-    return false;
-  }
+  const bool ok = SortFilterProxyModel::insertRows(row, count, parent);
   mInserting = false;
-  
-  /// Maybe not invalidate here ?
-  invalidateFilter();
-  
-  qDebug() << "RFPM::insertRows() - DONE";
-  return true;
+
+  return ok;
 }
 
 void RelationFilterProxyModel::setParentModelMatchRow(int row)
@@ -120,18 +80,26 @@ void RelationFilterProxyModel::setParentModelMatchRow(int row)
   invalidateFilter();
 }
 
+void RelationFilterProxyModel::onSourceModelChanged()
+{
+  disconnect(mRowsInsertedConnection);
+  auto *model = sourceModel();
+  if(model == nullptr){
+    return;
+  }
+  mKeyCopier->setChildModel(model);
+  mRowsInsertedConnection = connect(model, &QAbstractItemModel::rowsInserted, this, &RelationFilterProxyModel::onRowsInserted);
+}
+
 void RelationFilterProxyModel::onRowsInserted(const QModelIndex& parent, int first, int last)
 {
   if(!mInserting){
     return;
   }
-  qDebug() << "RFPM::onRowsInserted() - first: " << first;
   RowRange r;
   r.setFirstRow(first);
   r.setLastRow(last);
   mKeyCopier->copyAllKeyData(r, parent);
-
-  qDebug() << "RFPM::onRowsInserted() - DONE";
 }
 
 bool RelationFilterProxyModel::filterAcceptsRow(int source_row, const QModelIndex & source_parent) const
@@ -146,11 +114,6 @@ bool RelationFilterProxyModel::filterAcceptsRow(int source_row, const QModelInde
     return false;
   }
   if(mFilterExpression.isNull()){
-    return true;
-  }
-  qDebug() << "RFPM::filterAcceptsRow() - eval..";
-  if(mInserting){
-    qDebug() << "RFPM::filterAcceptsRow() - mInserting -> accept";
     return true;
   }
   return mFilterExpression.eval(sourceModel(), source_row, ParentModelEvalData(mParentModel, mParentModelRow), filterCaseSensitivity());

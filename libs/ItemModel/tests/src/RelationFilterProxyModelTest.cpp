@@ -54,6 +54,39 @@ void RelationFilterProxyModelTest::cleanupTestCase()
  * Tests
  */
 
+void RelationFilterProxyModelTest::setModelTest()
+{
+  /*
+   * Initial state
+   */
+  RelationFilterProxyModel proxyModel;
+  QCOMPARE(proxyModel.rowCount(), 0);
+  /*
+   * Set filter
+   */
+  ParentModelColumn pmc(0);
+  FilterColumn fc(0);
+  proxyModel.setFilter(fc == pmc);
+  /*
+   * Set source model
+   */
+  VariantTableModel model;
+  model.resize(6, 1);
+  model.populateColumn(0, {1,2,2,3,3,3});
+  proxyModel.setSourceModel(&model);
+  QCOMPARE(proxyModel.rowCount(), 0);
+  /*
+   * Set parent model
+   */
+  VariantTableModel parentModel;
+  model.resize(3, 1);
+  model.populateColumn(0, {1,2,3});
+  
+  /*
+   */
+  QFAIL("Not complete");
+}
+
 void RelationFilterProxyModelTest::parentModelMatchRowTest()
 {
   /*
@@ -224,11 +257,6 @@ void RelationFilterProxyModelTest::filterRoleTest()
   QFAIL("Not complete");
 }
 
-void RelationFilterProxyModelTest::setModelTest()
-{
-  QFAIL("Not complete");
-}
-
 void RelationFilterProxyModelTest::setterEventTest()
 {
   QFAIL("Not complete");
@@ -388,9 +416,6 @@ void RelationFilterProxyModelTest::dynamicFilterInsertTest()
    * ------------------------
    */
   QVERIFY(proxyModel.insertRow(0));
-  
-  displayModels(addressModel, proxyModel);
-  
   QCOMPARE(proxyModel.rowCount(), 4);
   QVERIFY(getModelData(proxyModel, 0, 0).isNull());
   QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(2));
@@ -440,9 +465,6 @@ void RelationFilterProxyModelTest::dynamicFilterInsertTest()
   QCOMPARE(getModelData(proxyModel, 3, 2), QVariant("S26"));
   /*
    * Insert into proxy model, at the end.
-   * Note: when calling proxyModel.insertRow(4),
-   *       QSortFilterProxyModel will insert before row 4 in source model
-   *       (Experienced in Qt 5.5.1 Linux).
    * Now, proxy model must copy client ID:
    *  Address model              Proxy model
    * ------------------------   ------------------------
@@ -452,15 +474,15 @@ void RelationFilterProxyModelTest::dynamicFilterInsertTest()
    * ------------------------   ------------------------
    * | 24 |   2    |  S24   |   | 24 |   2    |  S24   |
    * ------------------------   ------------------------
-   * | 11 |   1    |  S11   |   |    |   2    |        |
+   * | 11 |   1    |  S11   |   | 25 |   2    |  S25   |
    * ------------------------   ------------------------
-   * | 12 |   1    |  S12   |   | 25 |   2    |  S25   |
+   * | 12 |   1    |  S12   |   | 26 |   2    |  S26   |
    * ------------------------   ------------------------
-   * |    |   2    |        |   | 26 |   2    |  S26   |
+   * | 25 |   2    |  S25   |   |    |   2    |        |
    * ------------------------   ------------------------
-   * | 25 |   2    |  S25   |
-   * ------------------------
    * | 26 |   2    |  S26   |
+   * ------------------------
+   * |    |   2    |        |
    * ------------------------
    */
   QVERIFY(proxyModel.insertRow(4));
@@ -471,15 +493,15 @@ void RelationFilterProxyModelTest::dynamicFilterInsertTest()
   QCOMPARE(getModelData(proxyModel, 1, 0), QVariant(24));
   QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(2));
   QCOMPARE(getModelData(proxyModel, 1, 2), QVariant("S24"));
-  QVERIFY(getModelData(proxyModel, 2, 0).isNull());
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant(25));
   QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(2));
-  QVERIFY(getModelData(proxyModel, 2, 2).isNull());
-  QCOMPARE(getModelData(proxyModel, 3, 0), QVariant(25));
+  QCOMPARE(getModelData(proxyModel, 2, 2), QVariant("S25"));
+  QCOMPARE(getModelData(proxyModel, 3, 0), QVariant(26));
   QCOMPARE(getModelData(proxyModel, 3, 1), QVariant(2));
-  QCOMPARE(getModelData(proxyModel, 3, 2), QVariant("S25"));
-  QCOMPARE(getModelData(proxyModel, 4, 0), QVariant(26));
+  QCOMPARE(getModelData(proxyModel, 3, 2), QVariant("S26"));
+  QVERIFY(getModelData(proxyModel, 4, 0).isNull());
   QCOMPARE(getModelData(proxyModel, 4, 1), QVariant(2));
-  QCOMPARE(getModelData(proxyModel, 4, 2), QVariant("S26"));
+  QVERIFY(getModelData(proxyModel, 4, 2).isNull());
   /*
    * Filter on client 1
    *  Address model              Proxy model
@@ -494,11 +516,11 @@ void RelationFilterProxyModelTest::dynamicFilterInsertTest()
    * ------------------------
    * | 12 |   1    |  S12   |
    * ------------------------
-   * |    |   2    |        |
-   * ------------------------
    * | 25 |   2    |  S25   |
    * ------------------------
    * | 26 |   2    |  S26   |
+   * ------------------------
+   * |    |   2    |        |
    * ------------------------
    */
   proxyModel.setParentModelMatchRow(0);
