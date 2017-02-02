@@ -55,6 +55,9 @@ void SortFilterProxyModelTest::QSortFilterProxyModelFilterInsertRowTest()
   proxyModel.setSourceModel(&model);
   proxyModel.setDynamicSortFilter(true);
   proxyModel.setFilterRegExp("^A");
+  if(row >= proxyModel.rowCount()){
+    QSKIP("Probably fails (QTBUG-58499)");
+  }
   /*
    * Insert and check
    */

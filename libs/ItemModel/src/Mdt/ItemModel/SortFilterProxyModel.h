@@ -37,8 +37,6 @@ namespace Mdt{ namespace ItemModel{
      */
     explicit SortFilterProxyModel(QObject* parent = nullptr);
 
-    // Destructor - unique_ptr needs to know how to destruct RelationKeyCopier
-//     ~SortFilterProxyModel();
     // Disable copy
     SortFilterProxyModel(const SortFilterProxyModel &) = delete;
     SortFilterProxyModel & operator=(const SortFilterProxyModel &) = delete;
@@ -49,23 +47,6 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Reimplemented from QSortFilterProxyModel
      */
     bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex()) override;
-
-   protected:
-
-    /*! \brief Reimplemented from QSortFilterProxyModel
-     */
-//     bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const override;
-
-    /*! \brief Check if rows are about to be inserted into this proxy model
-     */
-//     bool insertingRows() const
-//     {
-//       return mInsertingRows;
-//     }
-
-//    private:
-// 
-//     bool mInsertingRows = false;
   };
 
 }} // namespace Mdt{ namespace ItemModel{
