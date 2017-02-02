@@ -58,14 +58,14 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Check if rows are about to be inserted into this proxy model
      */
-    bool insertingRows() const
-    {
-      return mInsertingRows;
-    }
+//     bool insertingRows() const
+//     {
+//       return mInsertingRows;
+//     }
 
-   private:
-
-    bool mInsertingRows = false;
+//    private:
+// 
+//     bool mInsertingRows = false;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

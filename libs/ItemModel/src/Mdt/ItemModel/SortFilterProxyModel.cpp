@@ -32,6 +32,7 @@ SortFilterProxyModel::SortFilterProxyModel(QObject* parent)
 bool SortFilterProxyModel::insertRows(int row, int count, const QModelIndex& parent)
 {
   /*
+   * See: https://bugreports.qt.io/browse/QTBUG-58499
    * QSortFilterProxyModel::insertRows() is implemented something like this:
    * - Create a list of source rows that matches filterAcceptsRow() , if not allready done
    * - Check row on list size (looks like a bug: should check the highest source row in the list, not list size)
@@ -48,11 +49,37 @@ bool SortFilterProxyModel::insertRows(int row, int count, const QModelIndex& par
    * - Invalidate filter to force QSortFilterProxyModel to recreate its mapping (the list of source rows)
    * - Call QSortFilterProxyModel::insertRows()
    * - Turn mInsertingRows flag off to tell filterAcceptsRow() to proceed in normal way
-   * - Invalidate filter ? Or not.
+   * - Invalidate filter to apply normal filter again
    */
   qDebug() << "SFPM::insertRows() - row: " << row << " , row count: " << rowCount() << " , src row count: " << sourceModel()->rowCount();
 
-  return QSortFilterProxyModel::insertRows(row, count, parent);
+  /*
+   * When row is >= rowCount() , QSortFilterProxyModel inserts rows in a inexpected way.
+   * See https://bugreports.qt.io/browse/QTBUG-58499
+   * As workaround, we insert rows at end of the source model if row is > rowCount()
+   */
+  Q_ASSERT(sourceModel() != nullptr);
+  if(row < rowCount(parent)){
+    return QSortFilterProxyModel::insertRows(row, count, parent);
+  }
+  return sourceModel()->insertRows(sourceModel()->rowCount(parent), count, parent);
+
+//   mInsertingRows = true;
+//   invalidateFilter();
+//   qDebug() << "SFPM::insertRows() - row count: " << rowCount();
+//   const bool ok = QSortFilterProxyModel::insertRows(row, count, parent);
+//   mInsertingRows = false;
+//   invalidateFilter();
+// 
+//   return ok;
 }
+
+// bool SortFilterProxyModel::filterAcceptsRow(int source_row, const QModelIndex& source_parent) const
+// {
+//   if(mInsertingRows){
+//     return true;
+//   }
+//   return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
+// }
 
 }} // namespace Mdt{ namespace ItemModel{

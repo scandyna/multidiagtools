@@ -32,7 +32,6 @@ class SortFilterProxyModelTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-//   void QSortFilterProxyModelFilterInsertRowTest();
   void QSortFilterProxyModelFilterInsertRowTest();
   void QSortFilterProxyModelFilterInsertRowTest_data();
 
