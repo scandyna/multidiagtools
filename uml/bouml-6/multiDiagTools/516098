@@ -1,6 +1,6 @@
 format 211
 "ItemModel" // Mdt::ItemModel
-  revision 41
+  revision 43
   modified_by 2 "philippe"
   // class settings
   
@@ -1873,14 +1873,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 4156546 // <generalisation>
-	relation 4130562 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4156546 // <generalisation>
-	  b parent class_ref 138626 // QObject
-      end
-
       attribute 3292674 "RelationKey"
 	private type class_ref 3715586 // RelationKey
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
@@ -2096,7 +2088,7 @@ ${inlines}
 
     classdiagram 3142018 "RelationFilterProxyModel"
       classdiagramsettings member_max_width 0 end
-      size A4-Landscape
+      size B-Landscape
     end
 
     class 3594754 "RelationFilterProxyModel"

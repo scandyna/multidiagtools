@@ -20,6 +20,9 @@
  ****************************************************************************/
 #include "AddressWidget.h"
 #include "AddressModel.h"
+#include "Mdt/ItemEditor/TableViewController.h"
+
+using namespace Mdt::ItemEditor;
 
 AddressWidget::AddressWidget(QWidget* parent)
  : TableViewWidget(parent)
@@ -32,4 +35,5 @@ AddressWidget::AddressWidget(QWidget* parent)
   setInsertActionText(tr("Add address"));
   addRemoveActionToBottomBar();
   setRemoveActionText(tr("Remove addresse"));
+  controller()->setInsertLocation(TableViewController::InsertAtEnd);
 }

@@ -31,5 +31,5 @@ ClientWidget::ClientWidget(QWidget* parent)
   auto *ctlr = controller();
   ctlr->addMapping(fld_Id, 0);
   ctlr->addMapping(fld_Name, 1);
-//   ctlr->setInsertLocation(WidgetMapperController::InsertAtEnd);
+  ctlr->setInsertLocation(WidgetMapperController::InsertAtEnd);
 }

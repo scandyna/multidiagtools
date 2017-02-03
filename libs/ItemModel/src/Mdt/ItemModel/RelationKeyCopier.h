@@ -23,20 +23,18 @@
 
 #include "RelationKey.h"
 #include "RowRange.h"
-#include <QObject>
 #include <QPointer>
 #include <QFlags>
 #include <QModelIndex>
 
 class QAbstractItemModel;
-// class QModelIndex;
 
 namespace Mdt{ namespace ItemModel{
 
   class PrimaryKey;
   class ForeignKey;
 
-  /*! \brief Copies data from parent model to child model on some events regarding relation key
+  /*! \brief Copies data from parent model to child model regarding relation key
    *
    * \par Keep models and relation key coherent
    *  There is no good solution for RelationKeyCopier to check
@@ -48,54 +46,9 @@ namespace Mdt{ namespace ItemModel{
    *   and nothing happens for a pair of columns when at least one is in invalid range.
    *   This also alows to change models and relation key at any time.
    */
-  class RelationKeyCopier : public QObject
+  class RelationKeyCopier
   {
-   Q_OBJECT
-
    public:
-
-    /*! \brief Copy trigger
-     */
-    enum CopyTrigger
-    {
-      NoTrigger              = 0x00,  /*!< No copy will be made */
-      ChildModelRowsInserted = 0x01,  /*!< Copy occurs when rows have been inserted into child model */
-      ParentModelDataChanged = 0x02   /*!< Copy occurs when data changes in a column in parent model that is part of the key.
-                                            When implementing a module that acts on a database (for example Mdt::ItemEditor::AbstractSqlController),
-                                            this flag should not be used, but better set DBMS's foreign key ON UPDATE option.
-                                            \todo This is currently not implemented */
-    };
-    Q_DECLARE_FLAGS(CopyTriggers, CopyTrigger)
-
-    /*! \brief Constructor
-     */
-    explicit RelationKeyCopier(QObject* parent = nullptr);
-
-    /*! \brief Set copy triggers
-     *
-     * Default is NoTrigger
-     *
-     * \sa CopyTriggers
-     */
-    void setCopyTriggers(CopyTriggers triggers);
-
-    /*! \brief Get copy triggers
-     */
-    CopyTriggers copyTriggers() const
-    {
-      return mCopyTriggers;
-    }
-
-    /*! \brief Set ChildModelRowsInserted trigger enabled/disabled
-     */
-    void setChildModelRowsInsertedTriggerEnabled(bool enable);
-
-    /*! \brief Check if ChildModelRowsInserted trigger is enabled
-     */
-    bool isChildModelRowsInsertedTriggerEnabled() const
-    {
-      return (mCopyTriggers & ChildModelRowsInserted);
-    }
 
     /*! \brief Set parent model
      *
@@ -156,8 +109,6 @@ namespace Mdt{ namespace ItemModel{
      */
     bool copyAllKeyData(RowRange childModelRowRange, const QModelIndex & parent = QModelIndex());
 
-   public slots:
-
     /*! \brief Set current row in parent model
      *
      * If parent model was not set, this slot does nothing.
@@ -167,53 +118,18 @@ namespace Mdt{ namespace ItemModel{
      */
     void setParentModelCurrentRow(int row);
 
-   private slots:
-
-    /*! \brief Actions to perform when rows have been inserted into the child model
-     *
-     * \pre mParentModel must not be null
-     * \pre mChildModel must not be null
-     */
-    void onChildModelRowsInserted(const QModelIndex & parent, int first, int last);
-
-    /*! \brief Actions to perform when data has changed in parent model
-     *
-     * \pre mParentModel must not be null
-     * \pre mChildModel must not be null
-     */
-    void onParentModelDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles);
-
    private:
 
     /*! \brief Copy key data from parent model to child model
      */
     bool copyKeyDataForRow(int childModelRow);
 
-    /*! \brief Copy key data from parent model to child model
-     */
-    void copyKeyData(int childModelRow);
-
-    /*! \brief Proceed to signal/slot connections regarding mCopyTriggers
-     *
-     * If a model is not valid when calling this method, it does nothing.
-     */
-//     void reconnectSignalSlotsIfOk();
-
-    /*! \brief Clear key
-     */
-    void clearKey();
-
     int mParentModelCurrentRow = -1;
     RelationKey mKey;
     QPointer<QAbstractItemModel> mParentModel;
     QPointer<QAbstractItemModel> mChildModel;
-    QMetaObject::Connection mChildModelRowsInsertedConnection;
-    QMetaObject::Connection mParentModelDataChangedConnection;
-    CopyTriggers mCopyTriggers = NoTrigger;
   };
 
 }} // namespace Mdt{ namespace ItemModel{
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(Mdt::ItemModel::RelationKeyCopier::CopyTriggers)
 
 #endif // #ifndef MDT_ITEM_MODEL_RELATION_KEY_COPIER_H

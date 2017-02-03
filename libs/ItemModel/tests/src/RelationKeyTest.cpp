@@ -112,8 +112,8 @@ void RelationKeyTest::keyCopierSetupTest()
    * Initial state
    */
   RelationKeyCopier kc;
-  QVERIFY(!(kc.copyTriggers() & RelationKeyCopier::ChildModelRowsInserted));
-  QVERIFY(!(kc.copyTriggers() & RelationKeyCopier::ParentModelDataChanged));
+//   QVERIFY(!(kc.copyTriggers() & RelationKeyCopier::ChildModelRowsInserted));
+//   QVERIFY(!(kc.copyTriggers() & RelationKeyCopier::ParentModelDataChanged));
   QVERIFY(kc.key().isNull());
   QCOMPARE(kc.parentModelCurrentRow(), -1);
   // Set current row without parent model
@@ -171,58 +171,58 @@ void RelationKeyTest::keyCopierSetupTest()
   QVERIFY(!kc.key().isNull());
 }
 
-void RelationKeyTest::keyCopierTriggersTest()
-{
-  /*
-   * Initial state
-   */
-  RelationKeyCopier kc;
-  QCOMPARE(kc.copyTriggers(), RelationKeyCopier::NoTrigger);
-  QVERIFY(!kc.isChildModelRowsInsertedTriggerEnabled());
-  /*
-   * Set ChildModelRowsInserted trigger
-   */
-  kc.setChildModelRowsInsertedTriggerEnabled(true);
-  QCOMPARE(kc.copyTriggers(), RelationKeyCopier::ChildModelRowsInserted);
-  QVERIFY(kc.isChildModelRowsInsertedTriggerEnabled());
-  kc.setChildModelRowsInsertedTriggerEnabled(false);
-  QCOMPARE(kc.copyTriggers(), RelationKeyCopier::NoTrigger);
-  QVERIFY(!kc.isChildModelRowsInsertedTriggerEnabled());
-  /*
-   * Set ParentModelDataChanged trigger
-   */
-  kc.setCopyTriggers(RelationKeyCopier::ParentModelDataChanged);
-  QCOMPARE(kc.copyTriggers(), RelationKeyCopier::ParentModelDataChanged);
-  /*
-   * Set both
-   */
-  kc.setCopyTriggers(RelationKeyCopier::ChildModelRowsInserted | RelationKeyCopier::ParentModelDataChanged);
-  QVERIFY( (kc.copyTriggers() & RelationKeyCopier::ChildModelRowsInserted) );
-  QVERIFY( (kc.copyTriggers() & RelationKeyCopier::ParentModelDataChanged) );
-  kc.setChildModelRowsInsertedTriggerEnabled(false);
-  QVERIFY(!(kc.copyTriggers() & RelationKeyCopier::ChildModelRowsInserted) );
-  QVERIFY( (kc.copyTriggers() & RelationKeyCopier::ParentModelDataChanged) );
-  kc.setChildModelRowsInsertedTriggerEnabled(true);
-  QVERIFY( (kc.copyTriggers() & RelationKeyCopier::ChildModelRowsInserted) );
-  QVERIFY( (kc.copyTriggers() & RelationKeyCopier::ParentModelDataChanged) );
-}
+// void RelationKeyTest::keyCopierTriggersTest()
+// {
+//   /*
+//    * Initial state
+//    */
+//   RelationKeyCopier kc;
+//   QCOMPARE(kc.copyTriggers(), RelationKeyCopier::NoTrigger);
+//   QVERIFY(!kc.isChildModelRowsInsertedTriggerEnabled());
+//   /*
+//    * Set ChildModelRowsInserted trigger
+//    */
+//   kc.setChildModelRowsInsertedTriggerEnabled(true);
+//   QCOMPARE(kc.copyTriggers(), RelationKeyCopier::ChildModelRowsInserted);
+//   QVERIFY(kc.isChildModelRowsInsertedTriggerEnabled());
+//   kc.setChildModelRowsInsertedTriggerEnabled(false);
+//   QCOMPARE(kc.copyTriggers(), RelationKeyCopier::NoTrigger);
+//   QVERIFY(!kc.isChildModelRowsInsertedTriggerEnabled());
+//   /*
+//    * Set ParentModelDataChanged trigger
+//    */
+//   kc.setCopyTriggers(RelationKeyCopier::ParentModelDataChanged);
+//   QCOMPARE(kc.copyTriggers(), RelationKeyCopier::ParentModelDataChanged);
+//   /*
+//    * Set both
+//    */
+//   kc.setCopyTriggers(RelationKeyCopier::ChildModelRowsInserted | RelationKeyCopier::ParentModelDataChanged);
+//   QVERIFY( (kc.copyTriggers() & RelationKeyCopier::ChildModelRowsInserted) );
+//   QVERIFY( (kc.copyTriggers() & RelationKeyCopier::ParentModelDataChanged) );
+//   kc.setChildModelRowsInsertedTriggerEnabled(false);
+//   QVERIFY(!(kc.copyTriggers() & RelationKeyCopier::ChildModelRowsInserted) );
+//   QVERIFY( (kc.copyTriggers() & RelationKeyCopier::ParentModelDataChanged) );
+//   kc.setChildModelRowsInsertedTriggerEnabled(true);
+//   QVERIFY( (kc.copyTriggers() & RelationKeyCopier::ChildModelRowsInserted) );
+//   QVERIFY( (kc.copyTriggers() & RelationKeyCopier::ParentModelDataChanged) );
+// }
 
-void RelationKeyTest::keyCopierTriggerBenchmark()
-{
-  RelationKeyCopier kc;
-  VariantTableModel parentModel;
-  parentModel.resize(1,1);
-  VariantTableModel childModel;
-  childModel.resize(1,1);
-  kc.setParentModel(&parentModel);
-  kc.setChildModel(&childModel);
-  QBENCHMARK{
-    kc.setChildModelRowsInsertedTriggerEnabled(true);
-    kc.setChildModelRowsInsertedTriggerEnabled(false);
-    kc.setChildModelRowsInsertedTriggerEnabled(true);
-  }
-  QVERIFY(kc.isChildModelRowsInsertedTriggerEnabled());
-}
+// void RelationKeyTest::keyCopierTriggerBenchmark()
+// {
+//   RelationKeyCopier kc;
+//   VariantTableModel parentModel;
+//   parentModel.resize(1,1);
+//   VariantTableModel childModel;
+//   childModel.resize(1,1);
+//   kc.setParentModel(&parentModel);
+//   kc.setChildModel(&childModel);
+//   QBENCHMARK{
+//     kc.setChildModelRowsInsertedTriggerEnabled(true);
+//     kc.setChildModelRowsInsertedTriggerEnabled(false);
+//     kc.setChildModelRowsInsertedTriggerEnabled(true);
+//   }
+//   QVERIFY(kc.isChildModelRowsInsertedTriggerEnabled());
+// }
 
 void RelationKeyTest::keyCopierParentModelCurrentRowTest()
 {
@@ -268,6 +268,7 @@ void RelationKeyTest::keyCopierParentModelCurrentRowTest()
 void RelationKeyTest::keyCopierInsertIntoChildModelTest()
 {
   RelationKeyCopier kc;
+  RowRange r;
   /*
    * Setup parent model
    * ---------
@@ -299,7 +300,7 @@ void RelationKeyTest::keyCopierInsertIntoChildModelTest()
   ForeignKey fk({1,2});
   kc.setKey(pk, fk);
   kc.setParentModelCurrentRow(0);
-  kc.setChildModelRowsInsertedTriggerEnabled(true);
+//   kc.setChildModelRowsInsertedTriggerEnabled(true);
   /*
    * Insert a row into child model
    * ------------
@@ -309,6 +310,9 @@ void RelationKeyTest::keyCopierInsertIntoChildModelTest()
    * ------------
    */
   childModel.insertRow(0);
+  r.setFirstRow(0);
+  r.setRowCount(1);
+  QVERIFY(kc.copyAllKeyData(r));
   QCOMPARE(childModel.rowCount(), 1);
   QCOMPARE(childModel.data(0, 1), QVariant(1));
   QCOMPARE(childModel.data(0, 2), QVariant("A"));
@@ -326,6 +330,9 @@ void RelationKeyTest::keyCopierInsertIntoChildModelTest()
    */
   kc.setParentModelCurrentRow(1);
   childModel.insertRows(1, 2);
+  r.setFirstRow(1);
+  r.setRowCount(2);
+  QVERIFY(kc.copyAllKeyData(r));
   QCOMPARE(childModel.rowCount(), 3);
   QCOMPARE(childModel.data(0, 1), QVariant(1));
   QCOMPARE(childModel.data(0, 2), QVariant("A"));
@@ -350,6 +357,9 @@ void RelationKeyTest::keyCopierInsertIntoChildModelTest()
    * ------------
    */
   childModel.insertRows(0, 2);
+  r.setFirstRow(0);
+  r.setRowCount(2);
+  QVERIFY(kc.copyAllKeyData(r));
   QCOMPARE(childModel.rowCount(), 5);
   QCOMPARE(childModel.data(0, 1), QVariant(2));
   QCOMPARE(childModel.data(0, 2), QVariant("B"));
@@ -380,21 +390,21 @@ void RelationKeyTest::keyCopierInsertIntoChildModelTest()
    * |  |   |   |
    * ------------
    */
-  kc.setChildModelRowsInsertedTriggerEnabled(false);
-  childModel.insertRow(5);
-  QCOMPARE(childModel.rowCount(), 6);
-  QCOMPARE(childModel.data(0, 1), QVariant(2));
-  QCOMPARE(childModel.data(0, 2), QVariant("B"));
-  QCOMPARE(childModel.data(1, 1), QVariant(2));
-  QCOMPARE(childModel.data(1, 2), QVariant("B"));
-  QCOMPARE(childModel.data(2, 1), QVariant(1));
-  QCOMPARE(childModel.data(2, 2), QVariant("A"));
-  QCOMPARE(childModel.data(3, 1), QVariant(2));
-  QCOMPARE(childModel.data(3, 2), QVariant("B"));
-  QCOMPARE(childModel.data(4, 1), QVariant(2));
-  QCOMPARE(childModel.data(4, 2), QVariant("B"));
-  QVERIFY(childModel.data(5, 1).isNull());
-  QVERIFY(childModel.data(5, 2).isNull());
+//   kc.setChildModelRowsInsertedTriggerEnabled(false);
+//   childModel.insertRow(5);
+//   QCOMPARE(childModel.rowCount(), 6);
+//   QCOMPARE(childModel.data(0, 1), QVariant(2));
+//   QCOMPARE(childModel.data(0, 2), QVariant("B"));
+//   QCOMPARE(childModel.data(1, 1), QVariant(2));
+//   QCOMPARE(childModel.data(1, 2), QVariant("B"));
+//   QCOMPARE(childModel.data(2, 1), QVariant(1));
+//   QCOMPARE(childModel.data(2, 2), QVariant("A"));
+//   QCOMPARE(childModel.data(3, 1), QVariant(2));
+//   QCOMPARE(childModel.data(3, 2), QVariant("B"));
+//   QCOMPARE(childModel.data(4, 1), QVariant(2));
+//   QCOMPARE(childModel.data(4, 2), QVariant("B"));
+//   QVERIFY(childModel.data(5, 1).isNull());
+//   QVERIFY(childModel.data(5, 2).isNull());
   /*
    * Enable copy on insertion into child model
    * Insert a row at end
@@ -416,23 +426,23 @@ void RelationKeyTest::keyCopierInsertIntoChildModelTest()
    * |  | 2 | B |
    * ------------
    */
-  kc.setChildModelRowsInsertedTriggerEnabled(true);
-  childModel.insertRow(6);
-  QCOMPARE(childModel.rowCount(), 7);
-  QCOMPARE(childModel.data(0, 1), QVariant(2));
-  QCOMPARE(childModel.data(0, 2), QVariant("B"));
-  QCOMPARE(childModel.data(1, 1), QVariant(2));
-  QCOMPARE(childModel.data(1, 2), QVariant("B"));
-  QCOMPARE(childModel.data(2, 1), QVariant(1));
-  QCOMPARE(childModel.data(2, 2), QVariant("A"));
-  QCOMPARE(childModel.data(3, 1), QVariant(2));
-  QCOMPARE(childModel.data(3, 2), QVariant("B"));
-  QCOMPARE(childModel.data(4, 1), QVariant(2));
-  QCOMPARE(childModel.data(4, 2), QVariant("B"));
-  QVERIFY(childModel.data(5, 1).isNull());
-  QVERIFY(childModel.data(5, 2).isNull());
-  QCOMPARE(childModel.data(6, 1), QVariant(2));
-  QCOMPARE(childModel.data(6, 2), QVariant("B"));
+//   kc.setChildModelRowsInsertedTriggerEnabled(true);
+//   childModel.insertRow(6);
+//   QCOMPARE(childModel.rowCount(), 7);
+//   QCOMPARE(childModel.data(0, 1), QVariant(2));
+//   QCOMPARE(childModel.data(0, 2), QVariant("B"));
+//   QCOMPARE(childModel.data(1, 1), QVariant(2));
+//   QCOMPARE(childModel.data(1, 2), QVariant("B"));
+//   QCOMPARE(childModel.data(2, 1), QVariant(1));
+//   QCOMPARE(childModel.data(2, 2), QVariant("A"));
+//   QCOMPARE(childModel.data(3, 1), QVariant(2));
+//   QCOMPARE(childModel.data(3, 2), QVariant("B"));
+//   QCOMPARE(childModel.data(4, 1), QVariant(2));
+//   QCOMPARE(childModel.data(4, 2), QVariant("B"));
+//   QVERIFY(childModel.data(5, 1).isNull());
+//   QVERIFY(childModel.data(5, 2).isNull());
+//   QCOMPARE(childModel.data(6, 1), QVariant(2));
+//   QCOMPARE(childModel.data(6, 2), QVariant("B"));
 }
 
 void RelationKeyTest::keyCopierEditParentModelTest()

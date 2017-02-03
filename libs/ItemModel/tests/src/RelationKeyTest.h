@@ -36,8 +36,8 @@ class RelationKeyTest : public QObject
   void columnPairTest();
   void relationKeyTest();
   void keyCopierSetupTest();
-  void keyCopierTriggersTest();
-  void keyCopierTriggerBenchmark();
+//   void keyCopierTriggersTest();
+//   void keyCopierTriggerBenchmark();
   void keyCopierParentModelCurrentRowTest();
   void keyCopierInsertIntoChildModelTest();
   void keyCopierEditParentModelTest();
