@@ -5,7 +5,9 @@ project(multidiagtools)
 
 # List of source files
 set(SOURCES_FILES
+    src/Mdt/ItemModel/Range.cpp
     src/Mdt/ItemModel/RowRange.cpp
+    src/Mdt/ItemModel/ColumnRange.cpp
     src/Mdt/ItemModel/VariantTableModel.cpp
     src/Mdt/ItemModel/VariantTableModelItem.cpp
     src/Mdt/ItemModel/SortFilterProxyModel.cpp

@@ -18,91 +18,91 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_ROW_RANGE_H
-#define MDT_ITEM_MODEL_ROW_RANGE_H
+#ifndef MDT_ITEM_MODEL_COLUMN_RANGE_H
+#define MDT_ITEM_MODEL_COLUMN_RANGE_H
 
 #include "Range.h"
 #include <QModelIndex>
 
 namespace Mdt{ namespace ItemModel{
 
-  /*! \brief RowRange represents a range of rows in item models
+  /*! \brief ColumnRange represents a range of columns in item models
    */
-  class RowRange : public Range
+  class ColumnRange : public Range
   {
    public:
 
-    /*! \brief Set first row
+    /*! \brief Set first column
      */
-    constexpr void setFirstRow(int row) noexcept
+    constexpr void setFirstColumn(int column) noexcept
     {
-      setFirst(row);
+      setFirst(column);
     }
 
     /*! \brief Set first model index
      */
     constexpr void setFirstIndex(const QModelIndex & index) noexcept
     {
-      setFirstRow(index.row());
+      setFirstColumn(index.column());
     }
 
-    /*! \brief Get first row
+    /*! \brief Get first column
      *
-     * \warning The first row is returned as it was set.
+     * \warning The first column is returned as it was set.
      *           The validity of this range should be checked
      *           before using the returned value.
      *
      * \sa isValid()
      */
-    constexpr int firstRow() const noexcept
+    constexpr int firstColumn() const noexcept
     {
       return first();
     }
 
-    /*! \brief Set last row
+    /*! \brief Set last column
      */
-    constexpr void setLastRow(int row) noexcept
+    constexpr void setLastColumn(int column) noexcept
     {
-      setLast(row);
+      setLast(column);
     }
 
     /*! \brief Set last model index
      */
     constexpr void setLastIndex(const QModelIndex & index) noexcept
     {
-      setLastRow(index.row());
+      setLastColumn(index.column());
     }
 
-    /*! \brief Get last row
+    /*! \brief Get last column
      *
-     * \warning The last row is returned as it was set.
+     * \warning The last column is returned as it was set.
      *           The validity of this range should be checked
      *           before using the returned value.
      *
      * \sa isValid()
      */
-    constexpr int lastRow() const noexcept
+    constexpr int lastColumn() const noexcept
     {
       return last();
     }
 
-    /*! \brief Set row count
+    /*! \brief Set column count
      *
-     * \note This method must be called after setFirstRow()
+     * \note This method must be called after setFirstColumn()
      */
-    constexpr void setRowCount(int count) noexcept
+    constexpr void setColumnCount(int count) noexcept
     {
       setCount(count);
     }
 
-    /*! \brief Get row count
+    /*! \brief Get column count
      *
-     * Returns row count of this range if it is valid,
+     * Returns column count of this range if it is valid,
      *  otherwise 0.
      *
      * \sa isValid()
      */
-    constexpr int rowCount() const noexcept
+    constexpr int columnCount() const noexcept
     {
       return count();
     }
@@ -110,4 +110,4 @@ namespace Mdt{ namespace ItemModel{
 
 }} // namespace Mdt{ namespace ItemModel{
 
-#endif // #ifndef MDT_ITEM_MODEL_ROW_RANGE_H
+#endif // #ifndef MDT_ITEM_MODEL_COLUMN_RANGE_H

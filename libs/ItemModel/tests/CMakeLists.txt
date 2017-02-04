@@ -46,7 +46,7 @@ endfunction()
 
 addItemModelTest("qt5_tst_modeltest")
 addItemModelTest("VariantTableModelTest")
-addItemModelTest("RowRangeTest")
+addItemModelTest("RangeTest")
 addItemModelTest("SortFilterProxyModelTest")
 addItemModelTest("FilterExpressionTest")
 addItemModelTest("FilterProxyModelTest")

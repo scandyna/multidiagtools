@@ -27,6 +27,8 @@
 #include "FilterColumn.h"
 #include "LikeExpression.h"
 #include <QPointer>
+#include <QModelIndex>
+#include <QVector>
 #include <memory>
 
 namespace Mdt{ namespace ItemModel{
@@ -139,6 +141,10 @@ namespace Mdt{ namespace ItemModel{
      */
     void onRowsInserted(const QModelIndex & parent, int first, int last);
 
+    /*! \brief Actions to perform when parent model data changed
+     */
+    void onParentModelDataChanged(const QModelIndex & topLeft, const QModelIndex & bottomRight, const QVector<int> & roles = QVector<int>());
+
    private:
 
     /*! \brief Return true if filter expression was set and evaluates true
@@ -151,6 +157,7 @@ namespace Mdt{ namespace ItemModel{
     RelationFilterExpression mFilterExpression;
     std::unique_ptr<RelationKeyCopier> mKeyCopier;
     QMetaObject::Connection mRowsInsertedConnection;
+    QMetaObject::Connection mParentModelDataChangedConnection;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

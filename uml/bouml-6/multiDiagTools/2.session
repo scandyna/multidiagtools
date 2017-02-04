@@ -9,15 +9,22 @@ diagrams
     968 908 100 21 0 0
   classdiagram_ref 3274626 // SortFilterProxyModel
     968 908 100 18 0 0
-  active  classdiagram_ref 3248386 // RelationKeyCopier
-    968 908 100 21 0 0
+  active  classdiagram_ref 3281154 // ColumnRange
+    968 908 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 3208706 // ControllerRelation
+selected operation_ref 5275906 // setFirstColumn
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
+  operation_ref 5275394 // clear
+  operation_ref 5275522 // isValid
+  operation_ref 5275650 // isEmpty
+  operation_ref 5275778 // isNull
+  operation_ref 5274882 // first
+  class_ref 3755778 // RowRange
+  class_ref 3768834 // ColumnRange
   class_ref 3762306 // SortFilterProxyModel
   classview_ref 1630466 // Filter
   classrelation_ref 4101506 // <directional composition>

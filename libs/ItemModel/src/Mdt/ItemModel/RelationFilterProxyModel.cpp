@@ -23,7 +23,7 @@
 #include "RowRange.h"
 #include "Expression/ParentModelEvalData.h"
 
-// #include <QDebug>
+#include <QDebug>
 
 using Mdt::ItemModel::Expression::ParentModelEvalData;
 
@@ -44,7 +44,9 @@ void RelationFilterProxyModel::setParentModel(QAbstractItemModel *model)
 {
   Q_ASSERT(model != nullptr);
 
+  disconnect(mParentModelDataChangedConnection);
   mParentModel = model;
+  mParentModelDataChangedConnection = connect(model, &QAbstractItemModel::dataChanged, this, &RelationFilterProxyModel::onParentModelDataChanged);
   mParentModelRow = -1;
   mKeyCopier->setParentModel(model);
   invalidateFilter();
@@ -100,6 +102,13 @@ void RelationFilterProxyModel::onRowsInserted(const QModelIndex& parent, int fir
   r.setFirstRow(first);
   r.setLastRow(last);
   mKeyCopier->copyAllKeyData(r, parent);
+}
+
+void RelationFilterProxyModel::onParentModelDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QVector< int >& roles)
+{
+  qDebug() << "RFPM::onParentModelDataChanged()";
+  qDebug() << " -> topLeft: " << topLeft;
+  qDebug() << " -> bottomRight: " << bottomRight;
 }
 
 bool RelationFilterProxyModel::filterAcceptsRow(int source_row, const QModelIndex & source_parent) const
