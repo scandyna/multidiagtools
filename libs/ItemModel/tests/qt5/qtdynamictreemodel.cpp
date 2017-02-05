@@ -26,7 +26,7 @@
 **
 ****************************************************************************/
 
-#include "dynamictreemodel.h"
+#include "qtdynamictreemodel.h"
 
 #include <QtCore/QHash>
 #include <QtCore/QList>
@@ -34,13 +34,13 @@
 #include <QtCore/QDebug>
 
 
-DynamicTreeModel::DynamicTreeModel(QObject *parent)
+QtDynamicTreeModel::QtDynamicTreeModel(QObject *parent)
   : QAbstractItemModel(parent),
     nextId(1)
 {
 }
 
-QModelIndex DynamicTreeModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex QtDynamicTreeModel::index(int row, int column, const QModelIndex &parent) const
 {
 //   if (column != 0)
 //     return QModelIndex();
@@ -78,7 +78,7 @@ QModelIndex DynamicTreeModel::index(int row, int column, const QModelIndex &pare
 
 }
 
-qint64 DynamicTreeModel::findParentId(qint64 searchId) const
+qint64 QtDynamicTreeModel::findParentId(qint64 searchId) const
 {
   if (searchId <= 0)
     return -1;
@@ -100,7 +100,7 @@ qint64 DynamicTreeModel::findParentId(qint64 searchId) const
   return -1;
 }
 
-QModelIndex DynamicTreeModel::parent(const QModelIndex &index) const
+QModelIndex QtDynamicTreeModel::parent(const QModelIndex &index) const
 {
   if (!index.isValid())
     return QModelIndex();
@@ -124,7 +124,7 @@ QModelIndex DynamicTreeModel::parent(const QModelIndex &index) const
 
 }
 
-int DynamicTreeModel::rowCount(const QModelIndex &index ) const
+int QtDynamicTreeModel::rowCount(const QModelIndex &index ) const
 {
   QList<QList<qint64> > cols = m_childItems.value(index.internalId());
 
@@ -137,13 +137,13 @@ int DynamicTreeModel::rowCount(const QModelIndex &index ) const
   return cols.at(0).size();
 }
 
-int DynamicTreeModel::columnCount(const QModelIndex &index ) const
+int QtDynamicTreeModel::columnCount(const QModelIndex &index ) const
 {
 //   Q_UNUSED(index);
   return m_childItems.value(index.internalId()).size();
 }
 
-QVariant DynamicTreeModel::data(const QModelIndex &index, int role) const
+QVariant QtDynamicTreeModel::data(const QModelIndex &index, int role) const
 {
   if (!index.isValid())
     return QVariant();
@@ -155,7 +155,7 @@ QVariant DynamicTreeModel::data(const QModelIndex &index, int role) const
   return QVariant();
 }
 
-void DynamicTreeModel::clear()
+void QtDynamicTreeModel::clear()
 {
   beginResetModel();
   m_items.clear();
@@ -165,7 +165,7 @@ void DynamicTreeModel::clear()
 }
 
 
-ModelChangeCommand::ModelChangeCommand( DynamicTreeModel *model, QObject *parent )
+ModelChangeCommand::ModelChangeCommand( QtDynamicTreeModel *model, QObject *parent )
     : QObject(parent), m_model(model), m_numCols(1), m_startRow(-1), m_endRow(-1)
 {
 
@@ -185,7 +185,7 @@ QModelIndex ModelChangeCommand::findIndex(QList<int> rows)
   return parent;
 }
 
-ModelInsertCommand::ModelInsertCommand(DynamicTreeModel *model, QObject *parent )
+ModelInsertCommand::ModelInsertCommand(QtDynamicTreeModel *model, QObject *parent )
     : ModelChangeCommand(model, parent)
 {
 
@@ -217,7 +217,7 @@ void ModelInsertCommand::doCommand()
 }
 
 
-ModelMoveCommand::ModelMoveCommand(DynamicTreeModel *model, QObject *parent)
+ModelMoveCommand::ModelMoveCommand(QtDynamicTreeModel *model, QObject *parent)
   : ModelChangeCommand(model, parent)
 {
 
@@ -270,7 +270,7 @@ void ModelMoveCommand::emitPostSignal()
     m_model->endMoveRows();
 }
 
-ModelResetCommand::ModelResetCommand(DynamicTreeModel* model, QObject* parent)
+ModelResetCommand::ModelResetCommand(QtDynamicTreeModel* model, QObject* parent)
   : ModelMoveCommand(model, parent)
 {
 
@@ -298,7 +298,7 @@ void ModelResetCommand::emitPostSignal()
     m_model->endResetModel();
 }
 
-ModelResetCommandFixed::ModelResetCommandFixed(DynamicTreeModel* model, QObject* parent)
+ModelResetCommandFixed::ModelResetCommandFixed(QtDynamicTreeModel* model, QObject* parent)
   : ModelMoveCommand(model, parent)
 {
 
@@ -326,7 +326,7 @@ void ModelResetCommandFixed::emitPostSignal()
     m_model->endResetModel();
 }
 
-ModelChangeChildrenLayoutsCommand::ModelChangeChildrenLayoutsCommand(DynamicTreeModel* model, QObject* parent)
+ModelChangeChildrenLayoutsCommand::ModelChangeChildrenLayoutsCommand(QtDynamicTreeModel* model, QObject* parent)
   : ModelChangeCommand(model, parent)
 {
 

@@ -26,8 +26,8 @@
 **
 ****************************************************************************/
 
-#ifndef DYNAMICTREEMODEL_H
-#define DYNAMICTREEMODEL_H
+#ifndef QTDYNAMICTREEMODEL_H
+#define QTDYNAMICTREEMODEL_H
 
 #include <QAbstractItemModel>
 
@@ -35,12 +35,12 @@
 #include <QList>
 
 
-class DynamicTreeModel : public QAbstractItemModel
+class QtDynamicTreeModel : public QAbstractItemModel
 {
   Q_OBJECT
 
 public:
-  DynamicTreeModel(QObject *parent = 0);
+  QtDynamicTreeModel(QObject *parent = 0);
 
   QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
   QModelIndex parent(const QModelIndex &index) const;
@@ -86,7 +86,7 @@ class ModelChangeCommand : public QObject
   Q_OBJECT
 public:
 
-  ModelChangeCommand( DynamicTreeModel *model, QObject *parent = 0 );
+  ModelChangeCommand( QtDynamicTreeModel *model, QObject *parent = 0 );
 
   virtual ~ModelChangeCommand() {}
 
@@ -103,7 +103,7 @@ public:
   virtual void doCommand() = 0;
 
 protected:
-  DynamicTreeModel* m_model;
+  QtDynamicTreeModel* m_model;
   QList<int> m_rowNumbers;
   int m_numCols;
   int m_startRow;
@@ -119,7 +119,7 @@ class ModelInsertCommand : public ModelChangeCommand
 
 public:
 
-  ModelInsertCommand(DynamicTreeModel *model, QObject *parent = 0 );
+  ModelInsertCommand(QtDynamicTreeModel *model, QObject *parent = 0 );
   virtual ~ModelInsertCommand() {}
 
   virtual void doCommand();
@@ -130,7 +130,7 @@ class ModelMoveCommand : public ModelChangeCommand
 {
   Q_OBJECT
 public:
-  ModelMoveCommand(DynamicTreeModel *model, QObject *parent);
+  ModelMoveCommand(QtDynamicTreeModel *model, QObject *parent);
 
   virtual ~ModelMoveCommand() {}
 
@@ -156,7 +156,7 @@ class ModelResetCommand : public ModelMoveCommand
 {
   Q_OBJECT
 public:
-  ModelResetCommand(DynamicTreeModel* model, QObject* parent = 0);
+  ModelResetCommand(QtDynamicTreeModel* model, QObject* parent = 0);
 
   virtual ~ModelResetCommand();
 
@@ -172,7 +172,7 @@ class ModelResetCommandFixed : public ModelMoveCommand
 {
   Q_OBJECT
 public:
-  ModelResetCommandFixed(DynamicTreeModel* model, QObject* parent = 0);
+  ModelResetCommandFixed(QtDynamicTreeModel* model, QObject* parent = 0);
 
   virtual ~ModelResetCommandFixed();
 
@@ -185,7 +185,7 @@ class ModelChangeChildrenLayoutsCommand : public ModelChangeCommand
 {
   Q_OBJECT
 public:
-  ModelChangeChildrenLayoutsCommand(DynamicTreeModel *model, QObject *parent);
+  ModelChangeChildrenLayoutsCommand(QtDynamicTreeModel *model, QObject *parent);
 
   virtual ~ModelChangeChildrenLayoutsCommand() {}
 

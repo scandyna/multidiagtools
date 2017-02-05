@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "VariantTableModelTest.h"
+#include "qtmodeltest.h"
 #include "Mdt/Application.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSignalSpy>
@@ -1337,6 +1338,15 @@ void VariantTableModelTest::tableModelChangeRowsCountSignalTest()
   QVERIFY(!arguments.at(0).toModelIndex().isValid());
   QCOMPARE(arguments.at(1), QVariant(1));
   QCOMPARE(arguments.at(2), QVariant(1));
+}
+
+void VariantTableModelTest::tableModelQtModelTest()
+{
+  VariantTableModel model;
+  model.resize(5, 2);
+  model.populateColumnWithInt(0, 1);
+  model.populateColumnWithAscii(1, 'A');
+  QtModelTest mt(&model);
 }
 
 /*

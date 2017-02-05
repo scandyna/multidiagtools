@@ -26,7 +26,7 @@
 **
 ****************************************************************************/
 
-#include "modeltest.h"
+#include "qtmodeltest.h"
 
 #include <QtCore/QtCore>
 #include <QtTest/QtTest>
@@ -34,7 +34,7 @@
 /*!
     Connect to all of the models signals.  Whenever anything happens recheck everything.
 */
-ModelTest::ModelTest ( QAbstractItemModel *_model, QObject *parent ) : QObject ( parent ), model ( _model ), fetchingMore ( false )
+QtModelTest::QtModelTest ( QAbstractItemModel *_model, QObject *parent ) : QObject ( parent ), model ( _model ), fetchingMore ( false )
 {
     if (!model)
         qFatal("%s: model must not be null", Q_FUNC_INFO);
@@ -85,7 +85,7 @@ ModelTest::ModelTest ( QAbstractItemModel *_model, QObject *parent ) : QObject (
     runAllTests();
 }
 
-void ModelTest::runAllTests()
+void QtModelTest::runAllTests()
 {
     if ( fetchingMore )
         return;
@@ -102,7 +102,7 @@ void ModelTest::runAllTests()
     nonDestructiveBasicTest tries to call a number of the basic functions (not all)
     to make sure the model doesn't outright segfault, testing the functions that makes sense.
 */
-void ModelTest::nonDestructiveBasicTest()
+void QtModelTest::nonDestructiveBasicTest()
 {
     QVERIFY(!model->buddy(QModelIndex()).isValid());
     model->canFetchMore ( QModelIndex() );
@@ -138,7 +138,7 @@ void ModelTest::nonDestructiveBasicTest()
 
     Models that are dynamically populated are not as fully tested here.
  */
-void ModelTest::rowCount()
+void QtModelTest::rowCount()
 {
 //     qDebug() << "rc";
     // check top row
@@ -164,7 +164,7 @@ void ModelTest::rowCount()
 /*!
     Tests model's implementation of QAbstractItemModel::columnCount() and hasChildren()
  */
-void ModelTest::columnCount()
+void QtModelTest::columnCount()
 {
     // check top row
     QModelIndex topIndex = model->index ( 0, 0, QModelIndex() );
@@ -182,7 +182,7 @@ void ModelTest::columnCount()
 /*!
     Tests model's implementation of QAbstractItemModel::hasIndex()
  */
-void ModelTest::hasIndex()
+void QtModelTest::hasIndex()
 {
 //     qDebug() << "hi";
     // Make sure that invalid values returns an invalid index
@@ -207,7 +207,7 @@ void ModelTest::hasIndex()
 /*!
     Tests model's implementation of QAbstractItemModel::index()
  */
-void ModelTest::index()
+void QtModelTest::index()
 {
 //     qDebug() << "i";
     // Make sure that invalid values returns an invalid index
@@ -237,7 +237,7 @@ void ModelTest::index()
 /*!
     Tests model's implementation of QAbstractItemModel::parent()
  */
-void ModelTest::parent()
+void QtModelTest::parent()
 {
 //     qDebug() << "p";
     // Make sure the model won't crash and will return an invalid QModelIndex
@@ -293,7 +293,7 @@ void ModelTest::parent()
     found the basic bugs because it is easier to figure out the problem in
     those tests then this one.
  */
-void ModelTest::checkChildren ( const QModelIndex &parent, int currentDepth )
+void QtModelTest::checkChildren ( const QModelIndex &parent, int currentDepth )
 {
     // First just try walking back up the tree.
     QModelIndex p = parent;
@@ -395,8 +395,9 @@ void ModelTest::checkChildren ( const QModelIndex &parent, int currentDepth )
 /*!
     Tests model's implementation of QAbstractItemModel::data()
  */
-void ModelTest::data()
+void QtModelTest::data()
 {
+//     qDebug() << "data";
     // Invalid index should return an invalid qvariant
     QVERIFY( !model->data ( QModelIndex() ).isValid() );
 
@@ -468,7 +469,7 @@ void ModelTest::data()
 
     \sa rowsInserted()
  */
-void ModelTest::rowsAboutToBeInserted ( const QModelIndex &parent, int start, int /* end */)
+void QtModelTest::rowsAboutToBeInserted ( const QModelIndex &parent, int start, int /* end */)
 {
 //     Q_UNUSED(end);
 //    qDebug() << "rowsAboutToBeInserted" << "start=" << start << "end=" << end << "parent=" << model->data ( parent ).toString()
@@ -487,13 +488,13 @@ void ModelTest::rowsAboutToBeInserted ( const QModelIndex &parent, int start, in
 
     \sa rowsAboutToBeInserted()
  */
-void ModelTest::rowsInserted ( const QModelIndex & parent, int start, int end )
+void QtModelTest::rowsInserted ( const QModelIndex & parent, int start, int end )
 {
     Changing c = insert.pop();
     QCOMPARE(c.parent, parent);
 //    qDebug() << "rowsInserted"  << "start=" << start << "end=" << end << "oldsize=" << c.oldSize
 //    << "parent=" << model->data ( parent ).toString() << "current rowcount of parent=" << model->rowCount ( parent );
-
+// 
 //    for (int ii=start; ii <= end; ii++)
 //    {
 //      qDebug() << "itemWasInserted:" << ii << model->data ( model->index ( ii, 0, parent ));
@@ -513,13 +514,13 @@ void ModelTest::rowsInserted ( const QModelIndex & parent, int start, int end )
     QCOMPARE(c.next, model->data(model->index(end + 1, 0, c.parent)));
 }
 
-void ModelTest::layoutAboutToBeChanged()
+void QtModelTest::layoutAboutToBeChanged()
 {
     for ( int i = 0; i < qBound ( 0, model->rowCount(), 100 ); ++i )
         changing.append ( QPersistentModelIndex ( model->index ( i, 0 ) ) );
 }
 
-void ModelTest::layoutChanged()
+void QtModelTest::layoutChanged()
 {
     for ( int i = 0; i < changing.count(); ++i ) {
         QPersistentModelIndex p = changing[i];
@@ -533,7 +534,7 @@ void ModelTest::layoutChanged()
 
     \sa rowsRemoved()
  */
-void ModelTest::rowsAboutToBeRemoved ( const QModelIndex &parent, int start, int end )
+void QtModelTest::rowsAboutToBeRemoved ( const QModelIndex &parent, int start, int end )
 {
 qDebug() << "ratbr" << parent << start << end;
     Changing c;
@@ -549,7 +550,7 @@ qDebug() << "ratbr" << parent << start << end;
 
     \sa rowsAboutToBeRemoved()
  */
-void ModelTest::rowsRemoved ( const QModelIndex & parent, int start, int end )
+void QtModelTest::rowsRemoved ( const QModelIndex & parent, int start, int end )
 {
   qDebug() << "rr" << parent << start << end;
     Changing c = remove.pop();
@@ -559,7 +560,7 @@ void ModelTest::rowsRemoved ( const QModelIndex & parent, int start, int end )
     QCOMPARE(c.next, model->data(model->index(start, 0, c.parent)));
 }
 
-void ModelTest::dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
+void QtModelTest::dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight)
 {
     QVERIFY(topLeft.isValid());
     QVERIFY(bottomRight.isValid());
@@ -573,7 +574,7 @@ void ModelTest::dataChanged(const QModelIndex &topLeft, const QModelIndex &botto
     QVERIFY(bottomRight.column() < columnCount);
 }
 
-void ModelTest::headerDataChanged(Qt::Orientation orientation, int start, int end)
+void QtModelTest::headerDataChanged(Qt::Orientation orientation, int start, int end)
 {
     QVERIFY(start >= 0);
     QVERIFY(end >= 0);

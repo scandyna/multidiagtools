@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -66,11 +66,11 @@ namespace Mdt{ namespace ItemModel{
      * If storage rule (passed in constructor) is SeparateDisplayAndEditRoleData,
      *  data for Qt::EditRole will be distinct from data for Qt::DisplayRole.
      *
-     * If role is other than Qt::DisplayRole or Qt::EditRole,
+     * If \a role is other than Qt::DisplayRole or Qt::EditRole,
      *  an null value is returned.
      *
-     * \pre index must be in valid range
-     *      ( 0 <= index.row() < rowCount() and 0 <= index.column() < columnCount() )
+     * If \a index is not valid, or out of range,
+     *  an null value is returned.
      */
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
 
@@ -98,8 +98,8 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Get flags at index
      *
-     * \pre index must be in valid range
-     *      ( 0 <= index.row() < rowCount() and 0 <= index.column() < columnCount() )
+     * If \a index is not valid, or out of range,
+     *  this method returns QAbstractTableModel's flags.
      */
     Qt::ItemFlags flags(const QModelIndex & index) const override;
 
@@ -108,11 +108,11 @@ namespace Mdt{ namespace ItemModel{
      * If storage rule (passed in constructor) is SeparateDisplayAndEditRoleData,
      *  data for Qt::EditRole will be distinct from data for Qt::DisplayRole.
      *
-     * If role is other than Qt::DisplayRole or Qt::EditRole,
+     * If \a role is other than Qt::DisplayRole or Qt::EditRole,
      *  no data is set and this function returns false.
      *
-     * \pre index must be in valid range
-     *      ( 0 <= index.row() < rowCount() and 0 <= index.column() < columnCount() )
+     * If \a index is not valid, or out of range,
+     *  this method returns false.
      */
     bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole) override;
 

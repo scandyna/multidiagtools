@@ -34,6 +34,8 @@ class TestBase : public QObject
 
  protected:
 
+  static void displayModel(QAbstractItemModel *model);
+  static void displayModel(QAbstractItemModel & model);
   static void displayModels(QAbstractItemModel *sourceModel, QSortFilterProxyModel *proxyModel);
   static void displayModels(QAbstractItemModel & sourceModel, QSortFilterProxyModel & proxyModel);
   // Helper functions get/set data in a model

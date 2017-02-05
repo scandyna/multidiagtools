@@ -18,8 +18,8 @@ target_link_libraries(mdtitemmodeltest Qt5::Test)
 #=============== Qt5 item model test library =====
 
 set(QT5_SOURCES_FILES
-    qt5/dynamictreemodel.cpp
-    qt5/modeltest.cpp
+    qt5/qtdynamictreemodel.cpp
+    qt5/qtmodeltest.cpp
 )
 
 add_library(mdtitemmodelqt5test SHARED ${QT5_SOURCES_FILES})

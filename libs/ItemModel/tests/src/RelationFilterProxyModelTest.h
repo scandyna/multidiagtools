@@ -48,6 +48,8 @@ class RelationFilterProxyModelTest : public TestBase
   void dynamicFilterInsertTest();
   void parentModelKeyChangeTest();
   void parentModelKeyMultiColumnKeyChangeTest();
+
+  void qtModelTest();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H

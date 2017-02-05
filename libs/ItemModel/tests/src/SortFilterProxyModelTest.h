@@ -38,6 +38,8 @@ class SortFilterProxyModelTest : public TestBase
   void filterInsertRowTest();
   void filterInsertRowTest_data();
 
+  void qtModelTest();
+
  private:
 
   void setupInsertRowTestData();

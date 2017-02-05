@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,10 +21,9 @@
 #ifndef MDT_ITEM_MODEL_VARIANT_TABLE_MODEL_TEST_H
 #define MDT_ITEM_MODEL_VARIANT_TABLE_MODEL_TEST_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "TestBase.h"
 
-class VariantTableModelTest : public QObject
+class VariantTableModelTest : public TestBase
 {
   Q_OBJECT
 
@@ -55,6 +54,7 @@ class VariantTableModelTest : public QObject
   void tableModelInsertRowsTest();
   void tableModelRemoveRowsTest();
   void tableModelChangeRowsCountSignalTest();
+  void tableModelQtModelTest();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_VARIANT_TABLE_MODEL_TEST_H

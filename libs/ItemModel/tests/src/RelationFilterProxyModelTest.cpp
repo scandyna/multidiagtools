@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "RelationFilterProxyModelTest.h"
+#include "qtmodeltest.h"
 #include "Mdt/ItemModel/RelationFilterProxyModel.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QStringList>
@@ -825,6 +826,59 @@ void RelationFilterProxyModelTest::parentModelKeyChangeTest()
 void RelationFilterProxyModelTest::parentModelKeyMultiColumnKeyChangeTest()
 {
   QFAIL("Not complete");
+}
+
+void RelationFilterProxyModelTest::qtModelTest()
+{
+  /*
+   * Setup parent model
+   * -------------
+   * | Id | Name |
+   * -------------
+   * | 1  | C1   |
+   * -------------
+   * | 2  | C2   |
+   * -------------
+   */
+  VariantTableModel clientModel;
+  clientModel.resize(2, 2);
+  clientModel.populateColumn(0, {1,2});
+  clientModel.populateColumn(1, {"C1","C2"});
+  /*
+   * Setup source model
+   * ------------------------
+   * | Id | Cli_Id | Street |
+   * ------------------------
+   * | 11 |   1    |  S11   |
+   * ------------------------
+   * | 12 |   1    |  S12   |
+   * ------------------------
+   * | 25 |   2    |  S25   |
+   * ------------------------
+   */
+  VariantTableModel addressModel;
+  addressModel.resize(3, 3);
+  addressModel.populateColumn(0, {11,12,25});
+  addressModel.populateColumn(1, {1 ,1 ,2 });
+  addressModel.populateColumn(2, {"S11","S12","S25"});
+  /*
+   * Setup proxy model
+   */
+  ParentModelColumn clientId(0);
+  FilterColumn addressClientId(1);
+  RelationFilterProxyModel proxyModel;
+  proxyModel.setParentModel(&clientModel);
+  proxyModel.setSourceModel(&addressModel);
+  proxyModel.setFilter(addressClientId == clientId);
+  proxyModel.setDynamicSortFilter(true);
+  proxyModel.setParentModelMatchRow(0);
+  /*
+   * Test
+   */
+  QCOMPARE(proxyModel.rowCount(), 2);
+  QtModelTest mt(&proxyModel);
+  QtModelTest smt(&addressModel);
+  QtModelTest pmt(&clientModel);
 }
 
 /*

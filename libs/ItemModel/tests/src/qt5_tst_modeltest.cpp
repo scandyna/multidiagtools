@@ -31,8 +31,8 @@
 #include <QtGui/QtGui>
 #include <QtWidgets/QtWidgets>
 
-#include "modeltest.h"
-#include "dynamictreemodel.h"
+#include "qtmodeltest.h"
+#include "qtdynamictreemodel.h"
 
 
 class tst_ModelTest : public QObject
@@ -57,8 +57,8 @@ void tst_ModelTest::stringListModel()
     QStringListModel model;
     QSortFilterProxyModel proxy;
 
-    ModelTest t1(&model);
-    ModelTest t2(&proxy);
+    QtModelTest t1(&model);
+    QtModelTest t2(&proxy);
 
     proxy.setSourceModel(&model);
 
@@ -73,7 +73,7 @@ void tst_ModelTest::treeWidgetModel()
 {
     QTreeWidget widget;
 
-    ModelTest t1(widget.model());
+    QtModelTest t1(widget.model());
 
     QTreeWidgetItem *root = new QTreeWidgetItem(&widget, QStringList("root"));
     for (int i = 0; i < 20; ++i) {
@@ -94,8 +94,8 @@ void tst_ModelTest::standardItemModel()
     QSortFilterProxyModel proxy;
 
 
-    ModelTest t1(&model);
-    ModelTest t2(&proxy);
+    QtModelTest t1(&model);
+    QtModelTest t2(&proxy);
 
     proxy.setSourceModel(&model);
 
@@ -111,12 +111,12 @@ void tst_ModelTest::standardItemModel()
 
 void tst_ModelTest::testInsertThroughProxy()
 {
-    DynamicTreeModel *model = new DynamicTreeModel(this);
+    QtDynamicTreeModel *model = new QtDynamicTreeModel(this);
 
     QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
     proxy->setSourceModel(model);
 
-    new ModelTest(proxy, this);
+    new QtModelTest(proxy, this);
 
     ModelInsertCommand *insertCommand = new ModelInsertCommand(model, this);
     insertCommand->setNumCols(4);
@@ -243,7 +243,7 @@ public:
 
 void tst_ModelTest::moveSourceItems()
 {
-    DynamicTreeModel *model = new DynamicTreeModel(this);
+    QtDynamicTreeModel *model = new QtDynamicTreeModel(this);
     AccessibleProxyModel *proxy = new AccessibleProxyModel(this);
     proxy->setSourceModel(model);
 
@@ -273,7 +273,7 @@ void tst_ModelTest::moveSourceItems()
 
 void tst_ModelTest::testResetThroughProxy()
 {
-    DynamicTreeModel *model = new DynamicTreeModel(this);
+    QtDynamicTreeModel *model = new QtDynamicTreeModel(this);
 
     ModelInsertCommand *insertCommand = new ModelInsertCommand(model, this);
     insertCommand->setStartRow(0);

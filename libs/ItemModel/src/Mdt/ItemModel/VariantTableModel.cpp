@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -47,11 +47,14 @@ int VariantTableModel::columnCount(const QModelIndex& parent) const
 
 QVariant VariantTableModel::data(const QModelIndex& index, int role) const
 {
+  if(!index.isValid()){
+    return QVariant();
+  }
   Q_ASSERT(index.row() >= 0);
-  Q_ASSERT(index.row() < (int)mData.size());
   Q_ASSERT(index.column() >= 0);
-  Q_ASSERT(index.column() < mColumnCount);
-
+  if( (index.row() >= (int)mData.size()) || (index.column() >= mColumnCount) ){
+    return QVariant();
+  }
   if( (role == Qt::DisplayRole) || (role == Qt::EditRole) ){
     return mData[index.row()].data(index.column(), role);
   }
@@ -93,21 +96,27 @@ void VariantTableModel::setItemEditable(const QModelIndex& index, bool editable)
 
 Qt::ItemFlags VariantTableModel::flags(const QModelIndex& index) const
 {
+  if(!index.isValid()){
+    return QAbstractTableModel::flags(index);
+  }
   Q_ASSERT(index.row() >= 0);
-  Q_ASSERT(index.row() < (int)mData.size());
   Q_ASSERT(index.column() >= 0);
-  Q_ASSERT(index.column() < mColumnCount);
-
+  if( (index.row() >= (int)mData.size()) || (index.column() >= mColumnCount) ){
+    return QAbstractTableModel::flags(index);
+  }
   return mData[index.row()].flags(index.column(), QAbstractTableModel::flags(index));
 }
 
 bool VariantTableModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
+  if(!index.isValid()){
+    return false;
+  }
   Q_ASSERT(index.row() >= 0);
-  Q_ASSERT(index.row() < (int)mData.size());
   Q_ASSERT(index.column() >= 0);
-  Q_ASSERT(index.column() < mColumnCount);
-
+  if( (index.row() >= (int)mData.size()) || (index.column() >= mColumnCount) ){
+    return false;
+  }
   if( (role == Qt::DisplayRole) || (role == Qt::EditRole) ){
     mData[index.row()].setData(index.column(), value, role);
     emit dataChanged(index, index);

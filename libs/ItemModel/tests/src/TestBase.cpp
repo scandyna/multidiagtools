@@ -22,11 +22,48 @@
 #include <QAbstractItemModel>
 #include <QSortFilterProxyModel>
 #include <QModelIndex>
+#include <QListView>
 #include <QTableView>
+#include <QTreeView>
+#include <QComboBox>
 #include <QDialog>
 #include <QGridLayout>
 #include <QLabel>
 #include <QDebug>
+
+void TestBase::displayModel(QAbstractItemModel* model)
+{
+  Q_ASSERT(model != nullptr);
+
+  QDialog dialog;
+  auto *layout = new QGridLayout;
+
+  auto *listView = new QListView;
+  auto *tableView = new QTableView;
+  auto *treeView = new QTreeView;
+  auto *comboBox = new QComboBox;
+
+  layout->addWidget(listView, 0, 0);
+  layout->addWidget(tableView, 0, 1);
+  layout->addWidget(treeView, 0, 2);
+  layout->addWidget(comboBox, 0, 3);
+  dialog.setLayout(layout);
+
+  listView->setModel(model);
+  tableView->setModel(model);
+  treeView->setModel(model);
+  comboBox->setModel(model);
+  comboBox->setMinimumWidth(100);
+
+  dialog.setWindowTitle("Dialog to display a model");
+  dialog.resize(1000, 500);
+  dialog.exec();
+}
+
+void TestBase::displayModel(QAbstractItemModel& model)
+{
+  displayModel(&model);
+}
 
 void TestBase::displayModels(QAbstractItemModel* sourceModel, QSortFilterProxyModel* proxyModel)
 {

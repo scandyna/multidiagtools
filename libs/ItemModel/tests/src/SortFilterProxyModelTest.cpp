@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "SortFilterProxyModelTest.h"
+#include "qtmodeltest.h"
 #include "Mdt/ItemModel/SortFilterProxyModel.h"
 #include <QStringListModel>
 #include <QSortFilterProxyModel>
@@ -175,6 +176,23 @@ void SortFilterProxyModelTest::setupInsertRowTestData()
                     << 1
                     << (QStringList() << "B4" << "A5" << "")
                     << (QStringList() << "A5");
+}
+
+void SortFilterProxyModelTest::qtModelTest()
+{
+  QStringListModel model;
+  SortFilterProxyModel proxyModel;
+  /*
+   * Setup models
+   */
+  model.setStringList(QStringList({"A","B","C"}));
+  proxyModel.setSourceModel(&model);
+  proxyModel.setDynamicSortFilter(true);
+  proxyModel.setFilterRegExp("^A");
+  /*
+   * Test
+   */
+  QtModelTest mt(&proxyModel);
 }
 
 
