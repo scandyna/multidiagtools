@@ -18,44 +18,55 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_COLUMN_LIST_H
-#define MDT_ITEM_MODEL_COLUMN_LIST_H
-
 #include "RowColumnListBase.h"
-#include <initializer_list>
+#include <QtGlobal>
+#include <set>
+#include <algorithm>
+
+#ifdef QT_DEBUG
+#define mdtItemModelRowColumnListAssert(list)  \
+for(const auto col : list)  \
+{                           \
+  Q_ASSERT(col >= 0);       \
+  std::set<int> s(mList.cbegin(), mList.cend());  \
+  Q_ASSERT(s.size() == mList.size());                   \
+}
+#else
+#define mdtItemModelRowColumnListAssert(list)
+#endif // #ifdef QT_DEBUG
 
 namespace Mdt{ namespace ItemModel{
 
-  /*! \brief A list of column indexes in a item model
-   */
-  class ColumnList : public RowColumnListBase
-  {
-   public:
+RowColumnListBase::RowColumnListBase(std::initializer_list< int > list)
+ : mList(list)
+{
+  mdtItemModelRowColumnListAssert(mList);
+}
 
-    /*! \brief Construct a empty list
-     */
-    ColumnList() noexcept = default;
+bool RowColumnListBase::contains(int e) const
+{
+  return (std::find(mList.cbegin(), mList.cend(), e) != mList.cend());
+}
 
-    /*! \brief Construct a list of columns
-     *
-     * \pre Each column in \a list must be >= 0
-     * \pre Each column in \a list must be unique
-     */
-    explicit ColumnList(std::initializer_list<int> list)
-     : RowColumnListBase(list)
-    {}
+void RowColumnListBase::append(int e)
+{
+  Q_ASSERT(e >= 0);
+  Q_ASSERT(!contains(e));
+  mList.push_back(e);
+}
 
-    /*! \brief Get the greatest column
-     *
-     * Returns -1 if this list is empty.
-     */
-    int greatestColumn() const
-    {
-      return greatest();
-    }
+int RowColumnListBase::greatest() const
+{
+  const auto it = std::max_element(mList.cbegin(), mList.cend());
+  if(it == mList.cend()){
+    return -1;
+  }
+  return *it;
+}
 
-  };
+void RowColumnListBase::clear()
+{
+  mList.clear();
+}
 
 }} // namespace Mdt{ namespace ItemModel{
-
-#endif // #ifndef MDT_ITEM_MODEL_COLUMN_LIST_H

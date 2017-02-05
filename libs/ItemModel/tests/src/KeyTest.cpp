@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "KeyTest.h"
 #include "Mdt/Application.h"
+#include "Mdt/ItemModel/RowList.h"
 #include "Mdt/ItemModel/ColumnList.h"
 #include "Mdt/ItemModel/PrimaryKey.h"
 #include "Mdt/ItemModel/ForeignKey.h"
@@ -39,6 +40,48 @@ void KeyTest::cleanupTestCase()
  * Tests
  */
 
+void KeyTest::rowListTest()
+{
+  /*
+   * Construct a empty list
+   */
+  RowList list1;
+  QCOMPARE(list1.size(), 0);
+  QVERIFY(list1.isEmpty());
+  QVERIFY(list1.begin() == list1.end());
+  QVERIFY(!list1.contains(0));
+  QCOMPARE(list1.greatestRow(), -1);
+  /*
+   * Construct list
+   */
+  RowList list2({0,3,2});
+  QCOMPARE(list2.size(), 3);
+  QVERIFY(!list2.isEmpty());
+  QCOMPARE(list2.at(1), 3);
+  QVERIFY(list2.begin() != list2.end());
+  QCOMPARE(list2.greatestRow(), 3);
+  /*
+   * Check contains
+   */
+  QVERIFY(list2.contains(0));
+  QVERIFY(!list2.contains(1));
+  QVERIFY(list2.contains(2));
+  QVERIFY(list2.contains(3));
+  QVERIFY(!list2.contains(4));
+  /*
+   * Clear
+   */
+  list2.clear();
+  QCOMPARE(list2.size(), 0);
+  QVERIFY(list2.isEmpty());
+  /*
+   * Append
+   */
+  list2.append(1);
+  QCOMPARE(list2.size(), 1);
+  QCOMPARE(list2.at(0), 1);
+}
+
 void KeyTest::columnListTest()
 {
   /*
@@ -48,6 +91,7 @@ void KeyTest::columnListTest()
   QCOMPARE(list1.size(), 0);
   QVERIFY(list1.isEmpty());
   QVERIFY(list1.begin() == list1.end());
+  QVERIFY(!list1.contains(0));
   QCOMPARE(list1.greatestColumn(), -1);
   /*
    * Construct list
@@ -55,14 +99,29 @@ void KeyTest::columnListTest()
   ColumnList list2({0,3,2});
   QCOMPARE(list2.size(), 3);
   QVERIFY(!list2.isEmpty());
+  QCOMPARE(list2.at(1), 3);
   QVERIFY(list2.begin() != list2.end());
   QCOMPARE(list2.greatestColumn(), 3);
+  /*
+   * Check contains
+   */
+  QVERIFY(list2.contains(0));
+  QVERIFY(!list2.contains(1));
+  QVERIFY(list2.contains(2));
+  QVERIFY(list2.contains(3));
+  QVERIFY(!list2.contains(4));
   /*
    * Clear
    */
   list2.clear();
   QCOMPARE(list2.size(), 0);
   QVERIFY(list2.isEmpty());
+  /*
+   * Append
+   */
+  list2.append(1);
+  QCOMPARE(list2.size(), 1);
+  QCOMPARE(list2.at(0), 1);
 }
 
 void KeyTest::primaryKeyTest()

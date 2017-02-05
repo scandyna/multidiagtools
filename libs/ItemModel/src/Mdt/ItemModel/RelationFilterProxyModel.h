@@ -26,6 +26,7 @@
 #include "ParentModelColumn.h"
 #include "FilterColumn.h"
 #include "LikeExpression.h"
+#include "RowList.h"
 #include <QPointer>
 #include <QModelIndex>
 #include <QVector>
@@ -115,6 +116,10 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Re-implemented from SortFilterProxyModel
      */
     void setDynamicSortFilter(bool enable);
+
+    /*! \brief Get a list of rows in source model that are currently avaiable in this proxy model
+     */
+    RowList getCurrentSourceModelRowList() const;
 
     /*! \brief Reimplemented from SortFilterProxyModel
      */

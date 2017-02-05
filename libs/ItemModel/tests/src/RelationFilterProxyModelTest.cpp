@@ -35,12 +35,13 @@
 #include <array>
 #include <algorithm>
 
-namespace ItemModel = Mdt::ItemModel;
-using ItemModel::VariantTableModel;
-using ItemModel::RelationFilterProxyModel;
-using ItemModel::FilterColumn;
-using ItemModel::ParentModelColumn;
-using Like = ItemModel::LikeExpression;
+using namespace Mdt::ItemModel;
+// namespace ItemModel = Mdt::ItemModel;
+// using ItemModel::VariantTableModel;
+// using ItemModel::RelationFilterProxyModel;
+// using ItemModel::FilterColumn;
+// using ItemModel::ParentModelColumn;
+// using Like = ItemModel::LikeExpression;
 
 void RelationFilterProxyModelTest::initTestCase()
 {
@@ -250,6 +251,69 @@ void RelationFilterProxyModelTest::filterBenchmark_data()
   QTest::newRow("100") << 100;
   QTest::newRow("1'000") << 1000;
   QTest::newRow("10'000") << 10000;
+}
+
+void RelationFilterProxyModelTest::filterGetCurrentSourceRowListTest()
+{
+  RowList list;
+  /*
+   * Setup parent table model
+   * ------
+   * | Id |
+   * ------
+   * | 1  |
+   * ------
+   * | 2  |
+   * ------
+   */
+  VariantTableModel parentModel;
+  parentModel.resize(2, 1);
+  parentModel.populateColumn(0, {1,2});
+  /*
+   * Setup (child) table model
+   * -----------------
+   * | Id | ParentId |
+   * -----------------
+   * | 11 |   1      |
+   * -----------------
+   * | 12 |   1      |
+   * -----------------
+   * | 21 |   2      |
+   * -----------------
+   * | 13 |   1      |
+   * -----------------
+   */
+  VariantTableModel model;
+  model.resize(4, 2);
+  model.populateColumn(0, {11,12,21,13});
+  model.populateColumn(1, {1 ,1 ,2 ,1 });
+  /*
+   * Setup proxy model
+   */
+  ParentModelColumn parentModelId(0);
+  FilterColumn modelParentId(1);
+  RelationFilterProxyModel proxyModel;
+  proxyModel.setParentModel(&parentModel);
+  proxyModel.setSourceModel(&model);
+  proxyModel.setFilter(modelParentId == parentModelId);
+  /*
+   * Check for parent Id 1
+   */
+  proxyModel.setParentModelMatchRow(0);
+  QCOMPARE(proxyModel.rowCount(), 3);
+  list = proxyModel.getCurrentSourceModelRowList();
+  QCOMPARE(list.size(), 3);
+  QCOMPARE(list.at(0), 0);
+  QCOMPARE(list.at(1), 1);
+  QCOMPARE(list.at(2), 3);
+  /*
+   * Check for parent Id 2
+   */
+  proxyModel.setParentModelMatchRow(1);
+  QCOMPARE(proxyModel.rowCount(), 1);
+  list = proxyModel.getCurrentSourceModelRowList();
+  QCOMPARE(list.size(), 1);
+  QCOMPARE(list.at(0), 2);
 }
 
 void RelationFilterProxyModelTest::filterRoleTest()
@@ -699,7 +763,7 @@ void RelationFilterProxyModelTest::parentModelKeyChangeTest()
    * ------------------------
    */
   // Edit client model
-  QVERIFY(setModelData(clientModel,0, 0, 3));
+  QVERIFY(setModelData(clientModel,1, 0, 3));
   // Check address model
   QCOMPARE(addressModel.rowCount(), 3);
   QCOMPARE(getModelData(addressModel, 0, 0), QVariant(11));
@@ -716,12 +780,46 @@ void RelationFilterProxyModelTest::parentModelKeyChangeTest()
   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(25));
   QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(3));
   QCOMPARE(getModelData(proxyModel, 0, 2), QVariant("S25"));
-
-  /**
-   * \todo What to do when client ID is edited for row != parentModelMatchRow ?
+  /*
+   * Edit ID of client 2 -> set to 1
+   * Proxy model must update Cli_Id in address model:
+   *  Address model              Proxy model
+   * ------------------------   ------------------------
+   * | Id | Cli_Id | Street |   | Id | Cli_Id | Street |
+   * ------------------------   ------------------------
+   * | 11 |   1    |  S11   |   | 11 |   1    |  S11   |
+   * ------------------------   ------------------------
+   * | 12 |   1    |  S12   |   | 12 |   1    |  S12   |
+   * ------------------------   ------------------------
+   * | 25 |   1    |  S25   |   | 25 |   1    |  S25   |
+   * ------------------------   ------------------------
    */
-
-  QFAIL("Not complete");
+  // Edit client model
+  QVERIFY(setModelData(clientModel,1, 0, 1));
+  // Check address model
+  QCOMPARE(addressModel.rowCount(), 3);
+  QCOMPARE(getModelData(addressModel, 0, 0), QVariant(11));
+  QCOMPARE(getModelData(addressModel, 0, 1), QVariant(1));
+  QCOMPARE(getModelData(addressModel, 0, 2), QVariant("S11"));
+  QCOMPARE(getModelData(addressModel, 1, 0), QVariant(12));
+  QCOMPARE(getModelData(addressModel, 1, 1), QVariant(1));
+  QCOMPARE(getModelData(addressModel, 1, 2), QVariant("S12"));
+  QCOMPARE(getModelData(addressModel, 2, 0), QVariant(25));
+  QCOMPARE(getModelData(addressModel, 2, 1), QVariant(1));
+  QCOMPARE(getModelData(addressModel, 2, 2), QVariant("S25"));
+  // Check proxy model
+  QCOMPARE(proxyModel.rowCount(), 3);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(11));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 0, 2), QVariant("S11"));
+  QCOMPARE(getModelData(proxyModel, 1, 0), QVariant(12));
+  QCOMPARE(getModelData(proxyModel, 1, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 1, 2), QVariant("S12"));
+  QCOMPARE(getModelData(proxyModel, 2, 0), QVariant(25));
+  QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 2, 2), QVariant("S25"));
+  
+  QFAIL("Check with roles missing");
 }
 
 void RelationFilterProxyModelTest::parentModelKeyMultiColumnKeyChangeTest()

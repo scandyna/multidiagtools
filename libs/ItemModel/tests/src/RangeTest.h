@@ -36,6 +36,7 @@ class RangeTest : public QObject
   void initialStateTest();
   void setFirstLastTest();
   void setFirstCountTest();
+  void containsTest();
 
   void setGetBenchmark();
 

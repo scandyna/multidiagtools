@@ -132,6 +132,16 @@ namespace Mdt{ namespace ItemModel{
       return 0;
     }
 
+    /*! \brief Check if this range contains a element
+     */
+    constexpr bool contains(int e) const noexcept
+    {
+      if(!isValid()){
+        return false;
+      }
+      return ( (e >= mFirst) && (e <= mLast) );
+    }
+
    private:
 
     int mFirst = -1;

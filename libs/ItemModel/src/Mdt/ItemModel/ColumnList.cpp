@@ -19,42 +19,7 @@
  **
  ****************************************************************************/
 #include "ColumnList.h"
-#include <QtGlobal>
-#include <set>
-#include <algorithm>
-
-#ifdef QT_DEBUG
-#define mdtItemModelColumnListAssert(list)  \
-for(const auto col : list)  \
-{                           \
-  Q_ASSERT(col >= 0);       \
-  std::set<int> s(mColumnList.cbegin(), mColumnList.cend());  \
-  Q_ASSERT(s.size() == mColumnList.size());                   \
-}
-#else
-#define mdtItemModelColumnListAssert(list)
-#endif // #ifdef QT_DEBUG
 
 namespace Mdt{ namespace ItemModel{
-
-ColumnList::ColumnList(std::initializer_list< int > list)
- : mColumnList(list)
-{
-  mdtItemModelColumnListAssert(mColumnList);
-}
-
-int ColumnList::greatestColumn() const
-{
-  const auto it = std::max_element(mColumnList.cbegin(), mColumnList.cend());
-  if(it == mColumnList.cend()){
-    return -1;
-  }
-  return *it;
-}
-
-void ColumnList::clear()
-{
-  mColumnList.clear();
-}
 
 }} // namespace Mdt{ namespace ItemModel{

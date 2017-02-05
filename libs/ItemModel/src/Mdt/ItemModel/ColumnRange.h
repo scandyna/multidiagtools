@@ -106,6 +106,14 @@ namespace Mdt{ namespace ItemModel{
     {
       return count();
     }
+    
+    /*! \brief Check if this range contains column
+     */
+    constexpr bool containsColumn(int column) const noexcept
+    {
+      return contains(column);
+    }
+
   };
 
 }} // namespace Mdt{ namespace ItemModel{

@@ -23,6 +23,8 @@
 
 #include "RelationKey.h"
 #include "RowRange.h"
+#include "ColumnRange.h"
+#include "RowList.h"
 #include <QPointer>
 #include <QFlags>
 #include <QModelIndex>
@@ -106,8 +108,19 @@ namespace Mdt{ namespace ItemModel{
     }
 
     /*! \brief Copy all key data from parent model to child model for given row range for child model
+     *
+     * \todo Define and fix preconditions
      */
     bool copyAllKeyData(RowRange childModelRowRange, const QModelIndex & parent = QModelIndex());
+
+    /*! \brief Copy key data from parent model to child model
+     *
+     * Will only affect rows from \a childModelRowList in child model.
+     *  Will also only copy data that exists in key regarding \a parentModelColumnRange .
+     *
+     * \todo Define and fix preconditions
+     */
+    bool copyKeyData(const RowList & childModelRowList, ColumnRange parentModelColumnRange);
 
     /*! \brief Set current row in parent model
      *
@@ -123,6 +136,10 @@ namespace Mdt{ namespace ItemModel{
     /*! \brief Copy key data from parent model to child model
      */
     bool copyKeyDataForRow(int childModelRow);
+
+    /*! \brief Copy key data from parent model to child model
+     */
+    bool copyKeyDataForRow(int childModelRow, ColumnRange parentModelColumnRange);
 
     int mParentModelCurrentRow = -1;
     RelationKey mKey;

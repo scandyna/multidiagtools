@@ -21,6 +21,7 @@
 #include "RelationFilterProxyModel.h"
 #include "RelationKeyCopier.h"
 #include "RowRange.h"
+#include "ColumnRange.h"
 #include "Expression/ParentModelEvalData.h"
 
 #include <QDebug>
@@ -66,6 +67,22 @@ void RelationFilterProxyModel::setDynamicSortFilter(bool enable)
   SortFilterProxyModel::setDynamicSortFilter(enable);
 }
 
+RowList RelationFilterProxyModel::getCurrentSourceModelRowList() const
+{
+  RowList list;
+
+  if(columnCount() < 1){
+    return list;
+  }
+  const int n = rowCount();
+  for(int row = 0; row < n; ++row){
+    const auto idx = index(row, 0);
+    list.append( mapToSource(idx).row() );
+  }
+
+  return list;
+}
+
 bool RelationFilterProxyModel::insertRows(int row, int count, const QModelIndex & parent)
 {
   mInserting = true;
@@ -104,11 +121,24 @@ void RelationFilterProxyModel::onRowsInserted(const QModelIndex& parent, int fir
   mKeyCopier->copyAllKeyData(r, parent);
 }
 
-void RelationFilterProxyModel::onParentModelDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QVector< int >& roles)
+void RelationFilterProxyModel::onParentModelDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QVector<int> & roles)
 {
-  qDebug() << "RFPM::onParentModelDataChanged()";
-  qDebug() << " -> topLeft: " << topLeft;
-  qDebug() << " -> bottomRight: " << bottomRight;
+  qDebug() << "RFPM::onParentModelDataChanged() - roles: " << roles;
+  /*
+   * We only act on currently filtered rows.
+   * Those are filtered regarding parent model row
+   */
+  RowRange r;
+  r.setFirstIndex(topLeft);
+  r.setLastIndex(bottomRight);
+  if(!r.containsRow(mParentModelRow)){
+    return;
+  }
+  ColumnRange c;
+  c.setFirstIndex(topLeft);
+  c.setLastIndex(bottomRight);
+  mKeyCopier->copyKeyData( getCurrentSourceModelRowList(), c );
+  invalidateFilter();
 }
 
 bool RelationFilterProxyModel::filterAcceptsRow(int source_row, const QModelIndex & source_parent) const

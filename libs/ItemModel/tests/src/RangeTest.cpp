@@ -47,6 +47,7 @@ public:
   constexpr int last() const noexcept { return Range::last(); }
   constexpr void setCount(int c) noexcept { Range::setCount(c); }
   constexpr int count() const noexcept { return Range::count(); }
+  constexpr int contains(int e) const noexcept { return Range::contains(e); }
 };
 
 /*
@@ -59,6 +60,7 @@ void RangeTest::initialStateTest()
   QCOMPARE(r.first(), -1);
   QCOMPARE(r.last(), -1);
   QCOMPARE(r.count(), 0);
+  QVERIFY(!r.contains(0));
   QVERIFY(r.isEmpty());
   QVERIFY(r.isNull());
   QVERIFY(!r.isValid());
@@ -179,6 +181,36 @@ void RangeTest::setFirstCountTest()
   QVERIFY(!r.isValid());
 }
 
+void RangeTest::containsTest()
+{
+  RangeTestClass r;
+  /*
+   * Set valid range
+   */
+  // 1 element range
+  r.setFirst(0);
+  r.setLast(0);
+  QVERIFY(r.contains(0));
+  QVERIFY(!r.contains(1));
+  // 2 elements range
+  r.setFirst(0);
+  r.setLast(1);
+  QVERIFY(r.contains(0));
+  QVERIFY(r.contains(1));
+  QVERIFY(!r.contains(2));
+  // > 2 elements range starting from > 0
+  r.setFirst(10);
+  r.setLast(15);
+  QVERIFY(!r.contains(9));
+  QVERIFY(r.contains(10));
+  QVERIFY(r.contains(11));
+  QVERIFY(r.contains(12));
+  QVERIFY(r.contains(13));
+  QVERIFY(r.contains(14));
+  QVERIFY(r.contains(15));
+  QVERIFY(!r.contains(16));
+}
+
 void RangeTest::setGetBenchmark()
 {
   QBENCHMARK{
@@ -188,6 +220,8 @@ void RangeTest::setGetBenchmark()
     QCOMPARE(r.first(), 10);
     QCOMPARE(r.last(), 29);
     QCOMPARE(r.count(), 20);
+    QVERIFY(r.contains(10));
+    QVERIFY(r.contains(15));
     QVERIFY(!r.isEmpty());
     QVERIFY(!r.isNull());
     QVERIFY(r.isValid());
@@ -216,6 +250,7 @@ void RangeTest::rowSetFirstLastTest()
   QCOMPARE(r.firstRow(), 10);
   QCOMPARE(r.lastRow(), 20);
   QCOMPARE(r.rowCount(), 11);
+  QVERIFY(r.containsRow(12));
   QVERIFY(!r.isEmpty());
   QVERIFY(!r.isNull());
   QVERIFY(r.isValid());
@@ -277,6 +312,7 @@ void RangeTest::columnSetFirstLastTest()
   QCOMPARE(r.firstColumn(), 10);
   QCOMPARE(r.lastColumn(), 20);
   QCOMPARE(r.columnCount(), 11);
+  QVERIFY(r.containsColumn(12));
   QVERIFY(!r.isEmpty());
   QVERIFY(!r.isNull());
   QVERIFY(r.isValid());

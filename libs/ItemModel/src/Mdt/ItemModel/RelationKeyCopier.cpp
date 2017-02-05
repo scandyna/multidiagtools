@@ -92,6 +92,24 @@ bool RelationKeyCopier::copyAllKeyData(RowRange childModelRowRange, const QModel
   return true;
 }
 
+bool RelationKeyCopier::copyKeyData(const RowList & childModelRowList, ColumnRange parentModelColumnRange)
+{
+  Q_ASSERT(!mParentModel.isNull());
+  Q_ASSERT(!mChildModel.isNull());
+  Q_ASSERT(parentModelColumnRange.isValid());
+  Q_ASSERT(mParentModelCurrentRow >= 0);
+  Q_ASSERT(mParentModelCurrentRow < mParentModel->rowCount());
+
+  for(int row : childModelRowList){
+    if( !copyKeyDataForRow(row, parentModelColumnRange) ){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+
 void RelationKeyCopier::setParentModelCurrentRow(int row)
 {
   if(mParentModel.isNull()){
@@ -117,6 +135,29 @@ bool RelationKeyCopier::copyKeyDataForRow(int childModelRow)
     const auto childModelIndex = mChildModel->index(childModelRow, columnPair.childModelColumn());
     if( !mChildModel->setData( childModelIndex , mParentModel->data(parentModelIndex) ) ){
       return false;
+    }
+  }
+
+  return true;
+}
+
+bool RelationKeyCopier::copyKeyDataForRow(int childModelRow, ColumnRange parentModelColumnRange)
+{
+  Q_ASSERT(!mParentModel.isNull());
+  Q_ASSERT(!mChildModel.isNull());
+  Q_ASSERT(childModelRow >= 0);
+  Q_ASSERT(childModelRow < mChildModel->rowCount());
+  Q_ASSERT(mParentModelCurrentRow >= 0);
+  Q_ASSERT(mParentModelCurrentRow < mParentModel->rowCount());
+  Q_ASSERT(parentModelColumnRange.isValid());
+
+  for(const auto columnPair : mKey){
+    if( parentModelColumnRange.containsColumn(columnPair.parentModelColumn()) ){
+      const auto parentModelIndex = mParentModel->index(mParentModelCurrentRow, columnPair.parentModelColumn());
+      const auto childModelIndex = mChildModel->index(childModelRow, columnPair.childModelColumn());
+      if( !mChildModel->setData( childModelIndex , mParentModel->data(parentModelIndex) ) ){
+        return false;
+      }
     }
   }
 

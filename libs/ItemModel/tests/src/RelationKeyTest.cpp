@@ -25,6 +25,9 @@
 #include "Mdt/ItemModel/RelationKey.h"
 #include "Mdt/ItemModel/RelationKeyCopier.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
+#include <QSignalSpy>
+#include <QVariantList>
+#include <QModelIndex>
 
 using namespace Mdt::ItemModel;
 
@@ -447,7 +450,258 @@ void RelationKeyTest::keyCopierInsertIntoChildModelTest()
 
 void RelationKeyTest::keyCopierEditParentModelTest()
 {
-  QFAIL("Not implemented");
+  RelationKeyCopier kc;
+  RowList childModelRowList;
+  ColumnRange parentModelColumnRange;
+  QModelIndex index;
+  /*
+   * Setup parent model
+   * ----------------
+   * |IdA|IdB| Name |
+   * ----------------
+   * | 1 | A |  1A  |
+   * ----------------
+   * | 2 | B |  2B  |
+   * ----------------
+   */
+  VariantTableModel parentModel;
+  parentModel.resize(2, 3);
+  parentModel.populateColumn(0, {1 ,2});
+  parentModel.populateColumn(1, {"A","B"});
+  parentModel.populateColumn(2, {"1A","2B"});
+  /*
+   * Setup child model
+   * ------------
+   * |Id|IdA|IdB|
+   * ------------
+   * |11| 1 | A |
+   * ------------
+   * |12| 1 | A |
+   * ------------
+   * |21| 2 | B |
+   * ------------
+   * |13| 1 | A |
+   * ------------
+   */
+  VariantTableModel childModel;
+  childModel.resize(4, 3);
+  childModel.populateColumn(0, {11,12,21,13});
+  childModel.populateColumn(1, {1 ,1 ,2 ,1});
+  childModel.populateColumn(2, {"A","A","B","A"});
+  /*
+   * Setup signal spy
+   */
+  QSignalSpy childModelDataChangedSpy(&childModel, &VariantTableModel::dataChanged);
+  QVERIFY(childModelDataChangedSpy.isValid());
+  QVariantList arguments;
+  /*
+   * Setup relation copier
+   */
+  kc.setParentModel(&parentModel);
+  kc.setChildModel(&childModel);
+  PrimaryKey pk({0,1});
+  ForeignKey fk({1,2});
+  kc.setKey(pk, fk);
+  /*
+   * Edit IdA for first row in parent model
+   *
+   * Parent model:
+   * ----------------
+   * |IdA|IdB| Name |
+   * ----------------
+   * | 3 | A |  1A  |
+   * ----------------
+   * | 2 | B |  2B  |
+   * ----------------
+   *
+   * Child model:
+   * ------------
+   * |Id|IdA|IdB|
+   * ------------
+   * |11| 3 | A |
+   * ------------
+   * |12| 3 | A |
+   * ------------
+   * |21| 2 | B |
+   * ------------
+   * |13| 3 | A |
+   * ------------
+   */
+  kc.setParentModelCurrentRow(0);
+  childModelRowList = RowList({0,1,3});
+  parentModelColumnRange.setFirstColumn(0);
+  parentModelColumnRange.setLastColumn(0);
+  childModelDataChangedSpy.clear();
+  QVERIFY(parentModel.setData(0, 0, 3));
+  QVERIFY(kc.copyKeyData(childModelRowList, parentModelColumnRange));
+  // Check child model model
+  QCOMPARE(childModel.rowCount(), 4);
+  QCOMPARE(childModel.data(0, 0), QVariant(11));
+  QCOMPARE(childModel.data(0, 1), QVariant(3));
+  QCOMPARE(childModel.data(0, 2), QVariant("A"));
+  QCOMPARE(childModel.data(1, 0), QVariant(12));
+  QCOMPARE(childModel.data(1, 1), QVariant(3));
+  QCOMPARE(childModel.data(1, 2), QVariant("A"));
+  QCOMPARE(childModel.data(2, 0), QVariant(21));
+  QCOMPARE(childModel.data(2, 1), QVariant(2));
+  QCOMPARE(childModel.data(2, 2), QVariant("B"));
+  QCOMPARE(childModel.data(3, 0), QVariant(13));
+  QCOMPARE(childModel.data(3, 1), QVariant(3));
+  QCOMPARE(childModel.data(3, 2), QVariant("A"));
+  // Check signals
+  QCOMPARE(childModelDataChangedSpy.count(), 3);
+  // Row 0 in child model
+  arguments = childModelDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  // Check topLeft index
+  index = arguments.at(0).value<QModelIndex>();
+  QCOMPARE(index.row(), 0);
+  QCOMPARE(index.column(), 1);
+  // Check bottomRight index
+  index = arguments.at(1).value<QModelIndex>();
+  QCOMPARE(index.row(), 0);
+  QCOMPARE(index.column(), 1);
+  // Row 1 in child model
+  arguments = childModelDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  // Check topLeft index
+  index = arguments.at(0).value<QModelIndex>();
+  QCOMPARE(index.row(), 1);
+  QCOMPARE(index.column(), 1);
+  // Check bottomRight index
+  index = arguments.at(1).value<QModelIndex>();
+  QCOMPARE(index.row(), 1);
+  QCOMPARE(index.column(), 1);
+  // Row 3 in child model
+  arguments = childModelDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  // Check topLeft index
+  index = arguments.at(0).value<QModelIndex>();
+  QCOMPARE(index.row(), 3);
+  QCOMPARE(index.column(), 1);
+  // Check bottomRight index
+  index = arguments.at(1).value<QModelIndex>();
+  QCOMPARE(index.row(), 3);
+  QCOMPARE(index.column(), 1);
+  /*
+   * Edit Name for first row in parent model
+   *
+   * Parent model:
+   * ----------------
+   * |IdA|IdB| Name |
+   * ----------------
+   * | 3 | A |  3A  |
+   * ----------------
+   * | 2 | B |  2B  |
+   * ----------------
+   *
+   * Child model:
+   * ------------
+   * |Id|IdA|IdB|
+   * ------------
+   * |11| 3 | A |
+   * ------------
+   * |12| 3 | A |
+   * ------------
+   * |21| 2 | B |
+   * ------------
+   * |13| 3 | A |
+   * ------------
+   */
+  kc.setParentModelCurrentRow(0);
+  childModelRowList = RowList({0,1,3});
+  parentModelColumnRange.setFirstColumn(2);
+  parentModelColumnRange.setLastColumn(2);
+  childModelDataChangedSpy.clear();
+  QVERIFY(parentModel.setData(0, 2, "3A"));
+  QVERIFY(kc.copyKeyData(childModelRowList, parentModelColumnRange));
+  // Check child model model (must be untouched)
+  QCOMPARE(childModel.rowCount(), 4);
+  QCOMPARE(childModel.data(0, 0), QVariant(11));
+  QCOMPARE(childModel.data(0, 1), QVariant(3));
+  QCOMPARE(childModel.data(0, 2), QVariant("A"));
+  QCOMPARE(childModel.data(1, 0), QVariant(12));
+  QCOMPARE(childModel.data(1, 1), QVariant(3));
+  QCOMPARE(childModel.data(1, 2), QVariant("A"));
+  QCOMPARE(childModel.data(2, 0), QVariant(21));
+  QCOMPARE(childModel.data(2, 1), QVariant(2));
+  QCOMPARE(childModel.data(2, 2), QVariant("B"));
+  QCOMPARE(childModel.data(3, 0), QVariant(13));
+  QCOMPARE(childModel.data(3, 1), QVariant(3));
+  QCOMPARE(childModel.data(3, 2), QVariant("A"));
+  // Check signals
+  QCOMPARE(childModelDataChangedSpy.count(), 0);
+  /*
+   * Edit IdA and IdB for second row in parent model
+   *
+   * Parent model:
+   * ----------------
+   * |IdA|IdB| Name |
+   * ----------------
+   * | 3 | A |  3A  |
+   * ----------------
+   * | 4 | D |  2B  |
+   * ----------------
+   *
+   * Child model:
+   * ------------
+   * |Id|IdA|IdB|
+   * ------------
+   * |11| 3 | A |
+   * ------------
+   * |12| 3 | A |
+   * ------------
+   * |21| 4 | D |
+   * ------------
+   * |13| 3 | A |
+   * ------------
+   */
+  kc.setParentModelCurrentRow(1);
+  childModelRowList = RowList({2});
+  parentModelColumnRange.setFirstColumn(0);
+  parentModelColumnRange.setLastColumn(1);
+  childModelDataChangedSpy.clear();
+  QVERIFY(parentModel.setData(1, 0, 4));
+  QVERIFY(parentModel.setData(1, 1, "D"));
+  QVERIFY(kc.copyKeyData(childModelRowList, parentModelColumnRange));
+  // Check child model model (must be untouched)
+  QCOMPARE(childModel.rowCount(), 4);
+  QCOMPARE(childModel.data(0, 0), QVariant(11));
+  QCOMPARE(childModel.data(0, 1), QVariant(3));
+  QCOMPARE(childModel.data(0, 2), QVariant("A"));
+  QCOMPARE(childModel.data(1, 0), QVariant(12));
+  QCOMPARE(childModel.data(1, 1), QVariant(3));
+  QCOMPARE(childModel.data(1, 2), QVariant("A"));
+  QCOMPARE(childModel.data(2, 0), QVariant(21));
+  QCOMPARE(childModel.data(2, 1), QVariant(4));
+  QCOMPARE(childModel.data(2, 2), QVariant("D"));
+  QCOMPARE(childModel.data(3, 0), QVariant(13));
+  QCOMPARE(childModel.data(3, 1), QVariant(3));
+  QCOMPARE(childModel.data(3, 2), QVariant("A"));
+  // Check signals
+  QCOMPARE(childModelDataChangedSpy.count(), 2);
+  // Row 2, column 1 in child model
+  arguments = childModelDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  // Check topLeft index
+  index = arguments.at(0).value<QModelIndex>();
+  QCOMPARE(index.row(), 2);
+  QCOMPARE(index.column(), 1);
+  // Check bottomRight index
+  index = arguments.at(1).value<QModelIndex>();
+  QCOMPARE(index.row(), 2);
+  QCOMPARE(index.column(), 1);
+  // Row 2, column 2 in child model
+  arguments = childModelDataChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  // Check topLeft index
+  index = arguments.at(0).value<QModelIndex>();
+  QCOMPARE(index.row(), 2);
+  QCOMPARE(index.column(), 2);
+  // Check bottomRight index
+  index = arguments.at(1).value<QModelIndex>();
+  QCOMPARE(index.row(), 2);
+  QCOMPARE(index.column(), 2);
 }
 
 /// \todo Add some test that removes rows (something goes wrong with current row..)

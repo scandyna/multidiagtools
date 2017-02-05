@@ -18,36 +18,43 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
-#define MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
+#ifndef MDT_ITEM_MODEL_ROW_LIST_H
+#define MDT_ITEM_MODEL_ROW_LIST_H
 
-#include "TestBase.h"
+#include "RowColumnListBase.h"
+#include <initializer_list>
 
-class RelationFilterProxyModelTest : public TestBase
-{
- Q_OBJECT
+namespace Mdt{ namespace ItemModel{
 
- private slots:
+  /*! \brief A list of row indexes in a item model
+   */
+  class RowList : public RowColumnListBase
+  {
+   public:
 
-  void initTestCase();
-  void cleanupTestCase();
+    /*! \brief Construct a empty list
+     */
+    RowList() noexcept = default;
 
-  void setModelTest();
+    /*! \brief Construct a list of rows
+     *
+     * \pre Each row in \a list must be >= 0
+     * \pre Each row in \a list must be unique
+     */
+    explicit RowList(std::initializer_list<int> list)
+     : RowColumnListBase(list)
+    {}
 
-  void parentModelMatchRowTest();
-  void filterTest();
-  void filterBenchmark();
-  void filterBenchmark_data();
+    /*! \brief Get the greatest row
+     *
+     * Returns -1 if this list is empty.
+     */
+    int greatestRow() const
+    {
+      return greatest();
+    }
+  };
 
-  void filterGetCurrentSourceRowListTest();
+}} // namespace Mdt{ namespace ItemModel{
 
-  void filterRoleTest();
-  void setterEventTest();
-  void dynamicFilterTest();
-  void dynamicFilterMultiColumnKeyTest();
-  void dynamicFilterInsertTest();
-  void parentModelKeyChangeTest();
-  void parentModelKeyMultiColumnKeyChangeTest();
-};
-
-#endif // #ifndef MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
+#endif // #ifndef MDT_ITEM_MODEL_ROW_LIST_H

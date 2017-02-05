@@ -33,6 +33,7 @@ class KeyTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
+  void rowListTest();
   void columnListTest();
   void primaryKeyTest();
   void foreignKeyTest();
