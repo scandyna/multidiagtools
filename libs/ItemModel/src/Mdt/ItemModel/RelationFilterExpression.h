@@ -83,6 +83,7 @@ namespace Mdt{ namespace ItemModel{
      : mContainer( new Expression::FilterExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) )
     {
       static_assert( boost::proto::matches<Expr, Expression::RelationFilterExpressionGrammar>::value , "Type of expr is not a valid relation filter expression." );
+      setGreatestColumns();
     }
 
     // Destructor must have its implementation in cpp file
@@ -145,9 +146,27 @@ namespace Mdt{ namespace ItemModel{
      */
     RelationKey getRelationKeyForEquality() const;
 
+    /*! \brief Get the greatest column in this expression
+     */
+    int greatestColumn() const
+    {
+      return mGreatestColumn;
+    }
+
+    /*! \brief Get the greatest parent model column in this expression
+     */
+    int parentModelGreatestColumn() const
+    {
+      return mParentModelGreatestColumn;
+    }
+
    private:
 
+    void setGreatestColumns();
+
     std::shared_ptr<const Expression::ContainerInterface> mContainer;
+    int mGreatestColumn = -1;
+    int mParentModelGreatestColumn = -1;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

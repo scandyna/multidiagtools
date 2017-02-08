@@ -1,6 +1,6 @@
 format 211
 "Expression" // Mdt::ItemModel::Expression
-  revision 28
+  revision 29
   modified_by 2 "philippe"
   // class settings
   
@@ -346,79 +346,6 @@ ${inlines}
 	
       end
     end
-
-    classdiagram 3255042 "GetRelationKeyForEquality"
-      classdiagramsettings member_max_width 0 end
-      size B-Landscape
-    end
-
-    class 3742338 "GetRelationKeyForEquality"
-      visibility package 
-      nactuals 1
-      actual class class_ref 3225602 // or_
-        rank 0 explicit_value ""
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 4176514 // <generalisation>
-	relation 4150530 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4176514 // <generalisation>
-	  b parent class_ref 3225602 // or_
-      end
-    end
-
-    class 3742594 "AddRelationColumnPair"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 4176770 // <generalisation>
-	relation 4150786 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4176770 // <generalisation>
-	  b parent class_ref 3280514 // callable
-      end
-
-      operation 5233026 "operator()"
-	public explicit_return_type "void"
-	nparams 3
-	  param in name "childModelColumn" explicit_type "CMC"
-	  param in name "parentModelColumn" explicit_type "PMC"
-	  param in name "data" type class_ref 3715586 // RelationKey
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
   end
 
   classview 1610882 "Comparison"
@@ -924,6 +851,209 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 3939842 // <generalisation>
 	  b parent class_ref 3225602 // or_
+      end
+    end
+  end
+
+  classview 1735554 "RelationKeyTranform"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3255042 "GetRelationKeyForEquality"
+      classdiagramsettings member_max_width 0 end
+      size B-Landscape
+    end
+
+    class 3742338 "GetRelationKeyForEquality"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4176514 // <generalisation>
+	relation 4150530 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4176514 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    class 3742594 "AddRelationColumnPair"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4176770 // <generalisation>
+	relation 4150786 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4176770 // <generalisation>
+	  b parent class_ref 3280514 // callable
+      end
+
+      operation 5233026 "operator()"
+	public explicit_return_type "void"
+	nparams 3
+	  param in name "childModelColumn" explicit_type "CMC"
+	  param in name "parentModelColumn" explicit_type "PMC"
+	  param in name "data" type class_ref 3715586 // RelationKey
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+  end
+
+  classview 1735682 "GreatestColumnTransform"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3294466 "All"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3782146 "GreatestColumnTransform"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4229506 // <generalisation>
+	relation 4203522 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4229506 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    class 3782274 "GreatestParentModelColumnTransform"
+      visibility package 
+      nactuals 1
+      actual class class_ref 3225602 // or_
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4229634 // <generalisation>
+	relation 4203650 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4229634 // <generalisation>
+	  b parent class_ref 3225602 // or_
+      end
+    end
+
+    class 3782402 "GetGreatestColumn"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 4229762 // <generalisation>
+	relation 4203778 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4229762 // <generalisation>
+	  b parent class_ref 3280514 // callable
+      end
+
+      operation 5290626 "operator()"
+	public explicit_return_type "int"
+	nparams 2
+	  param in name "column" explicit_type "FC"
+	  param in name "current" explicit_type "S"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end

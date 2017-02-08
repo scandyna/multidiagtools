@@ -14,6 +14,7 @@ set(SOURCES_FILES
     src/Mdt/ItemModel/Expression/FilterExpressionContainer.cpp
     src/Mdt/ItemModel/Expression/ComparisonEval.cpp
     src/Mdt/ItemModel/Expression/GetRelationKeyForEquality.cpp
+    src/Mdt/ItemModel/Expression/GreatestColumnTransform.cpp
     src/Mdt/ItemModel/FilterExpression.cpp
     src/Mdt/ItemModel/FilterProxyModel.cpp
     src/Mdt/ItemModel/RelationFilterExpression.cpp

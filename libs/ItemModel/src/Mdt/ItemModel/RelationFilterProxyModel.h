@@ -132,6 +132,7 @@ namespace Mdt{ namespace ItemModel{
      * If row is out of bound, filter will allways evaluate false,
      *  and this proxy model will present no data.
      *
+     * \pre \a row must be >= -1
      * \sa setFilter()
      */
     void setParentModelMatchRow(int row);

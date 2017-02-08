@@ -23,6 +23,7 @@
 #include "RowRange.h"
 #include "ColumnRange.h"
 #include "Expression/ParentModelEvalData.h"
+#include <algorithm>
 
 #include <QDebug>
 
@@ -94,18 +95,31 @@ bool RelationFilterProxyModel::insertRows(int row, int count, const QModelIndex 
 
 void RelationFilterProxyModel::setParentModelMatchRow(int row)
 {
-  mParentModelRow = row;
-  mKeyCopier->setParentModelCurrentRow(row);
+  Q_ASSERT(row >= -1);
+
+  qDebug() << "RFPM::setParentModelMatchRow() - REQ row " << row;
+  if(mParentModel.isNull()){
+    mParentModelRow = -1;
+  }else{
+    qDebug() << " -> PM rows: " << mParentModel->rowCount();
+    if(row < mParentModel->rowCount()){
+      mParentModelRow = row;
+    }else{
+      mParentModelRow = -1;
+    }
+  }
+  qDebug() << "RFPM::setParentModelMatchRow() - row set to " << mParentModelRow;
+  mKeyCopier->setParentModelCurrentRow(mParentModelRow);
   invalidateFilter();
 }
 
 void RelationFilterProxyModel::onSourceModelChanged()
 {
-  disconnect(mRowsInsertedConnection);
   auto *model = sourceModel();
-  if(model == nullptr){
-    return;
-  }
+  Q_ASSERT(model != nullptr);
+  /// NOTE: setting source model produces a model reset (=call filterAcceptsRow() )
+  /// Mybe: reset filter if current source model was set ?
+  disconnect(mRowsInsertedConnection);
   mKeyCopier->setChildModel(model);
   mRowsInsertedConnection = connect(model, &QAbstractItemModel::rowsInserted, this, &RelationFilterProxyModel::onRowsInserted);
 }
@@ -143,18 +157,26 @@ void RelationFilterProxyModel::onParentModelDataChanged(const QModelIndex& topLe
 
 bool RelationFilterProxyModel::filterAcceptsRow(int source_row, const QModelIndex & source_parent) const
 {
+  if(mParentModelRow < 0){
+    return false;
+  }
   if(source_parent.isValid()){
     return false;
   }
-  if(mParentModel.isNull() || (sourceModel() == nullptr)){
-    return false;
-  }
-  if( (mParentModelRow < 0) || (mParentModelRow >= mParentModel->rowCount()) ){
-    return false;
-  }
+  Q_ASSERT(!mParentModel.isNull());
+  Q_ASSERT(sourceModel() != nullptr);
+  Q_ASSERT(mParentModelRow >= 0);
+  Q_ASSERT(mParentModelRow < mParentModel->rowCount());
+//   if(mParentModel.isNull() || (sourceModel() == nullptr)){
+//     return false;
+//   }
+//   if( (mParentModelRow < 0) || (mParentModelRow >= mParentModel->rowCount()) ){
+//     return false;
+//   }
   if(mFilterExpression.isNull()){
     return true;
   }
+  qDebug() << "RFPM: eval ...";
   return mFilterExpression.eval(sourceModel(), source_row, ParentModelEvalData(mParentModel, mParentModelRow), filterCaseSensitivity());
 }
 

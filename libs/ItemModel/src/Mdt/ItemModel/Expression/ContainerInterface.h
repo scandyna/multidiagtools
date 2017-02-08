@@ -60,9 +60,18 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
      */
     virtual bool eval(const QAbstractItemModel * const model, int row, const ParentModelEvalData & parentModelData , Qt::CaseSensitivity caseSensitivity) const = 0;
 
-    /*! \brief Get a relation key that contains pais of equly compared columns of this expression
+    /*! \brief Get a relation key that contains pais of equaly compared columns of this expression
      */
     virtual RelationKey getRelationKeyForEquality() const = 0;
+
+    /*! \brief Get the greatest column in this expression
+     */
+    virtual int getGreatestColumn() const = 0;
+
+    /*! \brief Get the greatest parent model column in this expression
+     */
+    virtual int getGreatestParentModelColumn() const = 0;
+
   };
 
 }}} // namespace Mdt{ namespace ItemModel{ namespace Expression{

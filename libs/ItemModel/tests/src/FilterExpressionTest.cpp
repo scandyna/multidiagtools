@@ -39,7 +39,7 @@
 #include <boost/proto/literal.hpp>
 #include <boost/proto/transform/arg.hpp>
 
-// #include <boost/proto/proto.hpp>
+#include <boost/proto/proto.hpp>
 
 // #include <QDebug>
 
@@ -47,6 +47,7 @@ namespace ItemModel = Mdt::ItemModel;
 using ItemModel::VariantTableModel;
 using ItemModel::FilterColumn;
 using ItemModel::ParentModelColumn;
+using ItemModel::FilterExpression;
 using ItemModel::RelationFilterExpression;
 using ItemModel::RelationKey;
 
@@ -928,7 +929,7 @@ void FilterExpressionTest::getRelationKeyForEqualityTest()
   expression = ( FilterColumn(1) > ParentModelColumn(11) );
   key = expression.getRelationKeyForEquality();
   QCOMPARE(key.columnPairCount(), 0);
-  // Combine
+  // Combine &&
   expression = ( FilterColumn(1) == ParentModelColumn(11) && FilterColumn(2) <= ParentModelColumn(12) );
   key = expression.getRelationKeyForEquality();
   QCOMPARE(key.columnPairCount(), 2);
@@ -936,12 +937,85 @@ void FilterExpressionTest::getRelationKeyForEqualityTest()
   QCOMPARE(key.columnPairAt(0).childModelColumn(), 1);
   QCOMPARE(key.columnPairAt(1).parentModelColumn(), 12);
   QCOMPARE(key.columnPairAt(1).childModelColumn(), 2);
+  // Combine ||
+  expression = ( (FilterColumn(1) == ParentModelColumn(11)) || (FilterColumn(2) <= ParentModelColumn(12)) );
+  key = expression.getRelationKeyForEquality();
+  QCOMPARE(key.columnPairCount(), 2);
+  QCOMPARE(key.columnPairAt(0).parentModelColumn(), 11);
+  QCOMPARE(key.columnPairAt(0).childModelColumn(), 1);
+  QCOMPARE(key.columnPairAt(1).parentModelColumn(), 12);
+  QCOMPARE(key.columnPairAt(1).childModelColumn(), 2);
   // Check that no dupplicate exists in relation key
-  expression = ( (FilterColumn(1) <= ParentModelColumn(11)) || (FilterColumn(1) >= ParentModelColumn(11)) );
+  expression = ( (FilterColumn(1) <= ParentModelColumn(11)) && (FilterColumn(1) >= ParentModelColumn(11)) );
   key = expression.getRelationKeyForEquality();
   QCOMPARE(key.columnPairCount(), 1);
   QCOMPARE(key.columnPairAt(0).parentModelColumn(), 11);
   QCOMPARE(key.columnPairAt(0).childModelColumn(), 1);
+}
+
+void FilterExpressionTest::expressionGreatestColumnTest()
+{
+  /// Complete test
+  
+  // Null expression
+  FilterExpression expression;
+  QCOMPARE(expression.greatestColumn(), -1);
+  // ==
+  expression.setExpression( FilterColumn(1) == "A" );
+  QCOMPARE(expression.greatestColumn(), 1);
+  // <=
+  expression.setExpression( FilterColumn(2) <= "A" );
+  QCOMPARE(expression.greatestColumn(), 2);
+  // >=
+  expression.setExpression( FilterColumn(3) >= "A" );
+  QCOMPARE(expression.greatestColumn(), 3);
+  // !=
+  expression.setExpression( FilterColumn(4) != "A" );
+  QCOMPARE(expression.greatestColumn(), 4);
+  // <
+  expression.setExpression( FilterColumn(6) < "A" );
+  QCOMPARE(expression.greatestColumn(), 6);
+  // >
+  expression.setExpression( FilterColumn(7) > "A" );
+  QCOMPARE(expression.greatestColumn(), 7);
+  
+  qDebug() << "TEST: TTE";
+  Mdt::ItemModel::Expression::TraverseTreeExpression tte;
+  tte( (FilterColumn(1) == "A" && FilterColumn(2) == "B") || (FilterColumn(3) == "C") );
+
+  qDebug() << "TEST: EVAL";
+  Mdt::ItemModel::Expression::MyCallableContext ctx;
+  boost::proto::eval( (FilterColumn(1) == "A" && FilterColumn(2) == "B") || (FilterColumn(3) == "C") , ctx);
+  qDebug() << "TEST: Eval result: " << ctx.getVal();
+
+  qDebug() << "TEST: display_expr";
+  boost::proto::display_expr( (FilterColumn(1) == "A" && FilterColumn(2) == "B") || (FilterColumn(3) == "C") );
+
+  // Combine
+  expression.setExpression( FilterColumn(1) == "A" && FilterColumn(2) == "B" );
+  QCOMPARE(expression.greatestColumn(), 2);
+  
+  boost::proto::display_expr( (FilterColumn(2) == "A") || (FilterColumn(3) > "B") );
+  qDebug() << "TEST: set expr..";
+  expression.setExpression( (FilterColumn(2) == "A") || (FilterColumn(3) > "B") );
+  QCOMPARE(expression.greatestColumn(), 3);
+  
+  boost::proto::display_expr( (FilterColumn(3) == "A") || (FilterColumn(2) > "B" && FilterColumn(7) > 25) );
+  qDebug() << "TEST: set expr..";
+  expression.setExpression( (FilterColumn(3) == "A") || (FilterColumn(2) > "B" && FilterColumn(7) > 25) );
+  QCOMPARE(expression.greatestColumn(), 7);
+}
+
+void FilterExpressionTest::relationExpressionGreatestColumnTest()
+{
+  /// Just check correct call..
+  QFAIL("not complete");
+}
+
+void FilterExpressionTest::relationExpressionGreatestParentModelColumnTest()
+{
+  /// Complete test
+  QFAIL("not complete");
 }
 
 /*

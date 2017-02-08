@@ -45,4 +45,12 @@ RelationKey RelationFilterExpression::getRelationKeyForEquality() const
   return mContainer->getRelationKeyForEquality();
 }
 
+void RelationFilterExpression::setGreatestColumns()
+{
+  Q_ASSERT(!isNull());
+
+  mGreatestColumn = mContainer->getGreatestColumn();
+  mParentModelGreatestColumn = mContainer->getGreatestParentModelColumn();
+}
+
 }} // namespace Mdt{ namespace ItemModel{

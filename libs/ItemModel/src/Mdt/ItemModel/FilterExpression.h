@@ -101,6 +101,7 @@ namespace Mdt{ namespace ItemModel{
     {
       static_assert( boost::proto::matches<Expr, Expression::FilterExpressionGrammar>::value , "Type of expr is not a valid filter expression." );
       mContainer.reset( new Expression::FilterExpressionContainer< typename boost::proto::result_of::deep_copy<Expr>::type >(expr) );
+      setGreatestColumn();
     }
 
     /*! \brief Check if this expression is null
@@ -118,9 +119,19 @@ namespace Mdt{ namespace ItemModel{
      */
     bool eval(const QAbstractItemModel * const model, int row, Qt::CaseSensitivity caseSensitivity) const;
 
+    /*! \brief Get the greatest column in this expression
+     */
+    int greatestColumn() const
+    {
+      return mGreatestColumn;
+    }
+
    private:
 
+    void setGreatestColumn();
+
     std::shared_ptr<const Expression::ContainerInterface> mContainer;
+    int mGreatestColumn = -1;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

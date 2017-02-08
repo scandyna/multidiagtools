@@ -37,4 +37,11 @@ bool FilterExpression::eval(const QAbstractItemModel*const model, int row, Qt::C
   return mContainer->eval(model, row, caseSensitivity);
 }
 
+void FilterExpression::setGreatestColumn()
+{
+  Q_ASSERT(!isNull());
+
+  mGreatestColumn = mContainer->getGreatestColumn();
+}
+
 }} // namespace Mdt{ namespace ItemModel{

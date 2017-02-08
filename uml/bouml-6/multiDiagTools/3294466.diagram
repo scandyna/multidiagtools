@@ -1,0 +1,43 @@
+format 211
+
+classcanvas 128002 class_ref 3782146 // GreatestColumnTransform
+  classdiagramsettings member_max_width 0 end
+  xyz 39 186 2000
+end
+classcanvas 128130 class_ref 3225602 // or_
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 320 40 2005
+end
+classcanvas 128258 class_ref 3280514 // callable
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 show_context_mode uml end
+  xyz 110 314 2000
+end
+classcanvas 128514 class_ref 3782274 // GreatestParentModelColumnTransform
+  classdiagramsettings member_max_width 0 end
+  xyz 255 186 2000
+end
+classcanvas 129026 class_ref 3782402 // GetGreatestColumn
+  classdiagramsettings member_max_width 0 end
+  xyz 40 402 2000
+end
+relationcanvas 128386 relation_ref 4203522 // <generalisation>
+  geometry VHV unfixed
+  decenter_end 528
+  from ref 128002 z 2006 to point 126 144
+  line 128770 z 2006 to point 381 144
+  line 128898 z 2006 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 4203650 // <generalisation>
+  decenter_end 528
+  from ref 128514 z 2006 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 4203778 // <generalisation>
+  from ref 129026 z 2001 to ref 128258
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

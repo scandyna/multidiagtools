@@ -64,29 +64,42 @@ void RelationFilterProxyModelTest::setModelTest()
   RelationFilterProxyModel proxyModel;
   QCOMPARE(proxyModel.rowCount(), 0);
   /*
-   * Set filter
+   * Check that we can do setup without any model set
    */
   ParentModelColumn pmc(0);
-  FilterColumn fc(0);
+  FilterColumn fc(1);
   proxyModel.setFilter(fc == pmc);
+  proxyModel.setFilterRole(Qt::DisplayRole);
+  proxyModel.setDynamicSortFilter(true);
   /*
    * Set source model
    */
   VariantTableModel model;
-  model.resize(6, 1);
-  model.populateColumn(0, {1,2,2,3,3,3});
+  model.resize(6, 2);
+  model.populateColumn(1, {1,2,2,3,3,3});
   proxyModel.setSourceModel(&model);
   QCOMPARE(proxyModel.rowCount(), 0);
   /*
    * Set parent model
    */
   VariantTableModel parentModel;
-  model.resize(3, 1);
-  model.populateColumn(0, {1,2,3});
-  
+  parentModel.resize(3, 1);
+  parentModel.populateColumn(0, {1,2,3});
+  proxyModel.setParentModel(&parentModel);
+  QCOMPARE(proxyModel.rowCount(), 0);
   /*
+   * Apply filter
    */
-  QFAIL("Not complete");
+  proxyModel.setParentModelMatchRow(0);
+  QCOMPARE(proxyModel.rowCount(), 1);
+  /*
+   * Change source model with lower row/column count
+   */
+  VariantTableModel model2;
+  model2.resize(4, 1);
+  model2.populateColumn(0, {1,2,2,3});
+  proxyModel.setSourceModel(&model2);
+  QCOMPARE(proxyModel.rowCount(), 0);
 }
 
 void RelationFilterProxyModelTest::parentModelMatchRowTest()
@@ -99,6 +112,9 @@ void RelationFilterProxyModelTest::parentModelMatchRowTest()
   // Set current row must be accepted without parent model set
   proxyModel.setParentModelMatchRow(-1);
   QCOMPARE(proxyModel.parentModelMatchRow(), -1);
+  // Verify bound checking
+  proxyModel.setParentModelMatchRow(0);
+  QCOMPARE(proxyModel.parentModelMatchRow(), -1);
   /*
    * Set parent model
    */
@@ -106,6 +122,10 @@ void RelationFilterProxyModelTest::parentModelMatchRowTest()
   parentModel.resize(3, 1);
   proxyModel.setParentModel(&parentModel);
   QCOMPARE(proxyModel.parentModelMatchRow(), -1);
+  // Verify bound checking
+  proxyModel.setParentModelMatchRow(5);
+  QCOMPARE(proxyModel.parentModelMatchRow(), -1);
+  // Set a valid row
   proxyModel.setParentModelMatchRow(1);
   QCOMPARE(proxyModel.parentModelMatchRow(), 1);
   /*
@@ -114,7 +134,11 @@ void RelationFilterProxyModelTest::parentModelMatchRowTest()
   VariantTableModel model;
   model.resize(2, 1);
   proxyModel.setSourceModel(&model);
+  // Check that match row was keeped
   QCOMPARE(proxyModel.parentModelMatchRow(), 1);
+  // Verify bound checking
+  proxyModel.setParentModelMatchRow(5);
+  QCOMPARE(proxyModel.parentModelMatchRow(), -1);
   /*
    * Change parent model match row
    */

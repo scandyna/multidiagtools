@@ -69,6 +69,9 @@ class FilterExpressionTest : public QObject
   void relationExpressionCopyTest();
   void relationExpressionTest();
   void getRelationKeyForEqualityTest();
+  void expressionGreatestColumnTest();
+  void relationExpressionGreatestColumnTest();
+  void relationExpressionGreatestParentModelColumnTest();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H
