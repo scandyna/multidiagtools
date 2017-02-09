@@ -21,25 +21,16 @@
 #include "GreatestColumnTransform.h"
 #include <algorithm>
 
-#include <QDebug>
-
 namespace Mdt{ namespace ItemModel{ namespace Expression{
 
-void GetGreatestColumn::setGreatestColumn(const FilterColumnData & columnData, const QVariant &, GreatestColumnData & currentGreatestColumn)
+void GetGreatestColumnContext::evalTerminal(const FilterColumnData & fcd)
 {
-  qDebug() << "column: " << columnData.columnIndex() << " , current: " << currentGreatestColumn.column;
-  currentGreatestColumn.column = std::max(columnData.columnIndex(), currentGreatestColumn.column);
-  qDebug() << " -> new current: " << currentGreatestColumn.column;
+  mGreatestColumn = std::max(fcd.columnIndex(), mGreatestColumn);
 }
 
-void GetGreatestColumn::setGreatestColumn(const FilterColumnData& columnData, const ParentModelColumnData& parentModelColumnData, GreatestColumnData& currentGreatestColumn)
+void GetGreatestColumnContext::evalTerminal(const ParentModelColumnData & pmcd)
 {
-  qDebug() << "column: " << columnData.columnIndex();
-  qDebug() << "current: " << currentGreatestColumn.column;
-  qDebug() << "PMCD: " << parentModelColumnData.columnIndex();
-  qDebug() << "current PMC: " << currentGreatestColumn.parentModelColumn;
-  currentGreatestColumn.column = std::max(columnData.columnIndex(), currentGreatestColumn.column);
-  currentGreatestColumn.parentModelColumn = std::max(parentModelColumnData.columnIndex(), currentGreatestColumn.parentModelColumn);
+  mGreatestParentModelColumn = std::max(pmcd.columnIndex(), mGreatestParentModelColumn);
 }
 
 }}} // namespace Mdt{ namespace ItemModel{ namespace Expression{

@@ -50,7 +50,7 @@ void RelationFilterExpression::setGreatestColumns()
   Q_ASSERT(!isNull());
 
   mGreatestColumn = mContainer->getGreatestColumn();
-  mParentModelGreatestColumn = mContainer->getGreatestParentModelColumn();
+  mGreatestParentModelColumn = mContainer->getGreatestParentModelColumn();
 }
 
 }} // namespace Mdt{ namespace ItemModel{

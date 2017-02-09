@@ -29,6 +29,7 @@
 #include <QAbstractItemModel>
 #include <Qt>
 #include <boost/proto/deep_copy.hpp>
+#include <boost/proto/eval.hpp>
 
 namespace Mdt{ namespace ItemModel{ namespace Expression{
 
@@ -111,24 +112,22 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
      */
     int getGreatestColumn() const override
     {
-      GreatestColumnData data;
-      GreatestColumnTransform transform;
+      GetGreatestColumnContext ctx;
 
-      transform(mExpression, 0, data);
+      boost::proto::eval(mExpression, ctx);
 
-      return data.column;
+      return ctx.greatestColumn();
     }
 
     /*! \brief Get the greatest parent model column in this expression
      */
     int getGreatestParentModelColumn() const override
     {
-      GreatestColumnData data;
-      GreatestColumnTransform transform;
+      GetGreatestColumnContext ctx;
 
-      transform(mExpression, 0, data);
+      boost::proto::eval(mExpression, ctx);
 
-      return data.parentModelColumn;
+      return ctx.greatestParentModelColumn();
     }
 
    private:

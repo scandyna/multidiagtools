@@ -1,6 +1,6 @@
 format 211
 "Expression" // Mdt::ItemModel::Expression
-  revision 29
+  revision 30
   modified_by 2 "philippe"
   // class settings
   
@@ -1017,8 +1017,13 @@ ${inlines}
       end
     end
 
-    class 3782402 "GetGreatestColumn"
+    class 3782402 "GetGreatestColumnContext"
       visibility package 
+      nactuals 2
+      actual class class_ref 3788930 // callable_context
+        rank 0 explicit_value ""
+      actual class class_ref 3788930 // callable_context
+        rank 1 explicit_value ""
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -1031,22 +1036,124 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 4229762 // <generalisation>
-	relation 4203778 ---|>
+      classrelation 4236290 // <generalisation>
+	relation 4210306 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 4229762 // <generalisation>
-	  b parent class_ref 3280514 // callable
+	    classrelation_ref 4236290 // <generalisation>
+	  b parent class_ref 3788930 // callable_context
+      end
+
+      attribute 3319170 "GreatestColumn"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 3319298 "GreatestParentModelColumn"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
 
       operation 5290626 "operator()"
-	public explicit_return_type "int"
+	public explicit_return_type "void"
 	nparams 2
-	  param in name "column" explicit_type "FC"
-	  param in name "current" explicit_type "S"
+	  param in name "" explicit_type "terminal"
+	  param in name "termData" explicit_type "T"
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5297154 "greatestColumn"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5297282 "greatestParentModelColumn"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5297410 "evalTerminal"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "fcd" type class_ref 3491714 // FilterColumnData
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5297538 "evalTerminal"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "pmcd" type class_ref 3580930 // ParentModelColumnData
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5297666 "evalTerminal"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "" explicit_type "T"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "

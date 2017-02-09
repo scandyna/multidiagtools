@@ -155,9 +155,9 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Get the greatest parent model column in this expression
      */
-    int parentModelGreatestColumn() const
+    int greatestParentModelColumn() const
     {
-      return mParentModelGreatestColumn;
+      return mGreatestParentModelColumn;
     }
 
    private:
@@ -166,7 +166,7 @@ namespace Mdt{ namespace ItemModel{
 
     std::shared_ptr<const Expression::ContainerInterface> mContainer;
     int mGreatestColumn = -1;
-    int mParentModelGreatestColumn = -1;
+    int mGreatestParentModelColumn = -1;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

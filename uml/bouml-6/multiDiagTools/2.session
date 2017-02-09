@@ -21,20 +21,20 @@ diagrams
     120 110 100 4 0 0
   classdiagram_ref 3287938 // RowColumnListBase
     120 110 100 4 0 0
-  active  classdiagram_ref 3294466 // All
-    968 908 100 4 0 0
-  classdiagram_ref 3255042 // GetRelationKeyForEquality
-    120 110 100 21 0 0
+  active  classdiagram_ref 3255042 // GetRelationKeyForEquality
+    968 908 100 21 0 0
 end
 show_stereotypes
-selected operation_ref 5290626 // operator()
+selected operation_ref 5297666 // evalTerminal
 open
   
 package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   classview_ref 1603842 // Terminals
   classview_ref 1735554 // RelationKeyTranform
-  class_ref 3782402 // GetGreatestColumn
+  attribute_ref 3319170 // GreatestColumn
+  attribute_ref 3319298 // GreatestParentModelColumn
+  operation_ref 5290626 // operator()
   classview_ref 1702914 // Key
   classview_ref 1630466 // Filter
   classrelation_ref 4101506 // <directional composition>
@@ -42,6 +42,6 @@ package_ref 409858 // principes
   class_ref 3601538 // ControllerRelationItemList
   
 package_ref 430082 // Dsp
-  classview_ref 1517954 // proto
+  class_ref 3788930 // callable_context
 end
 end

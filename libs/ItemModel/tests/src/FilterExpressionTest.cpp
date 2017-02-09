@@ -39,8 +39,7 @@
 #include <boost/proto/literal.hpp>
 #include <boost/proto/transform/arg.hpp>
 
-#include <boost/proto/proto.hpp>
-
+// #include <boost/proto/proto.hpp>
 // #include <QDebug>
 
 namespace ItemModel = Mdt::ItemModel;
@@ -955,8 +954,6 @@ void FilterExpressionTest::getRelationKeyForEqualityTest()
 
 void FilterExpressionTest::expressionGreatestColumnTest()
 {
-  /// Complete test
-  
   // Null expression
   FilterExpression expression;
   QCOMPARE(expression.greatestColumn(), -1);
@@ -978,44 +975,36 @@ void FilterExpressionTest::expressionGreatestColumnTest()
   // >
   expression.setExpression( FilterColumn(7) > "A" );
   QCOMPARE(expression.greatestColumn(), 7);
-  
-  qDebug() << "TEST: TTE";
-  Mdt::ItemModel::Expression::TraverseTreeExpression tte;
-  tte( (FilterColumn(1) == "A" && FilterColumn(2) == "B") || (FilterColumn(3) == "C") );
-
-  qDebug() << "TEST: EVAL";
-  Mdt::ItemModel::Expression::MyCallableContext ctx;
-  boost::proto::eval( (FilterColumn(1) == "A" && FilterColumn(2) == "B") || (FilterColumn(3) == "C") , ctx);
-  qDebug() << "TEST: Eval result: " << ctx.getVal();
-
-  qDebug() << "TEST: display_expr";
-  boost::proto::display_expr( (FilterColumn(1) == "A" && FilterColumn(2) == "B") || (FilterColumn(3) == "C") );
-
-  // Combine
+  // Combine &&
   expression.setExpression( FilterColumn(1) == "A" && FilterColumn(2) == "B" );
   QCOMPARE(expression.greatestColumn(), 2);
-  
-  boost::proto::display_expr( (FilterColumn(2) == "A") || (FilterColumn(3) > "B") );
-  qDebug() << "TEST: set expr..";
+  expression.setExpression( FilterColumn(2) == "A" && FilterColumn(1) == "B" );
+  QCOMPARE(expression.greatestColumn(), 2);
+  // Combine ||
   expression.setExpression( (FilterColumn(2) == "A") || (FilterColumn(3) > "B") );
   QCOMPARE(expression.greatestColumn(), 3);
-  
-  boost::proto::display_expr( (FilterColumn(3) == "A") || (FilterColumn(2) > "B" && FilterColumn(7) > 25) );
-  qDebug() << "TEST: set expr..";
+  expression.setExpression( (FilterColumn(4) == "A") || (FilterColumn(3) > "B") );
+  QCOMPARE(expression.greatestColumn(), 4);
+  // Combine || and &&
   expression.setExpression( (FilterColumn(3) == "A") || (FilterColumn(2) > "B" && FilterColumn(7) > 25) );
+  QCOMPARE(expression.greatestColumn(), 7);
+  expression.setExpression( (FilterColumn(3) == "A") || (FilterColumn(7) > "B" && FilterColumn(2) > 25) );
   QCOMPARE(expression.greatestColumn(), 7);
 }
 
 void FilterExpressionTest::relationExpressionGreatestColumnTest()
 {
-  /// Just check correct call..
-  QFAIL("not complete");
-}
-
-void FilterExpressionTest::relationExpressionGreatestParentModelColumnTest()
-{
-  /// Complete test
-  QFAIL("not complete");
+  // Null expression
+  RelationFilterExpression expression;
+  QCOMPARE(expression.greatestColumn(), -1);
+  QCOMPARE(expression.greatestParentModelColumn(), -1);
+  // Combine || and &&
+  expression = ( (FilterColumn(3) == ParentModelColumn(13)) || (FilterColumn(2) > ParentModelColumn(12) && FilterColumn(7) > ParentModelColumn(17)) );
+  QCOMPARE(expression.greatestColumn(), 7);
+  QCOMPARE(expression.greatestParentModelColumn(), 17);
+  expression = ( (FilterColumn(3) == ParentModelColumn(13)) || (FilterColumn(7) > ParentModelColumn(17) && FilterColumn(2) > ParentModelColumn(12)) );
+  QCOMPARE(expression.greatestColumn(), 7);
+  QCOMPARE(expression.greatestParentModelColumn(), 17);
 }
 
 /*
