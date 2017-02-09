@@ -1,6 +1,6 @@
 format 211
 "Expression" // Mdt::ItemModel::Expression
-  revision 30
+  revision 31
   modified_by 2 "philippe"
   // class settings
   
@@ -876,11 +876,13 @@ ${inlines}
       size B-Landscape
     end
 
-    class 3742338 "GetRelationKeyForEquality"
+    class 3742338 "GetRelationKeyForEqualityContext"
       visibility package 
-      nactuals 1
-      actual class class_ref 3225602 // or_
+      nactuals 2
+      actual class class_ref 3788930 // callable_context
         rank 0 explicit_value ""
+      actual class class_ref 3788930 // callable_context
+        rank 1 explicit_value ""
       cpp_decl "${comment}${template}class ${name}${inherit}
 {
 ${members}};
@@ -893,55 +895,15 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 4176514 // <generalisation>
-	relation 4150530 ---|>
+      classrelation 4243074 // <generalisation>
+	relation 4217090 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 4176514 // <generalisation>
-	  b parent class_ref 3225602 // or_
+	    classrelation_ref 4243074 // <generalisation>
+	  b parent class_ref 3788930 // callable_context
       end
     end
 
-    class 3742594 "AddRelationColumnPair"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit}
-{
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      mysql_decl ""
-      
-      classrelation 4176770 // <generalisation>
-	relation 4150786 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4176770 // <generalisation>
-	  b parent class_ref 3280514 // callable
-      end
-
-      operation 5233026 "operator()"
-	public explicit_return_type "void"
-	nparams 3
-	  param in name "childModelColumn" explicit_type "CMC"
-	  param in name "parentModelColumn" explicit_type "PMC"
-	  param in name "data" type class_ref 3715586 // RelationKey
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
   end
 
   classview 1735682 "GreatestColumnTransform"

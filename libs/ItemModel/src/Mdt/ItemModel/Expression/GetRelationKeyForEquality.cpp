@@ -22,10 +22,10 @@
 
 namespace Mdt{ namespace ItemModel{ namespace Expression{
 
-void AddRelationColumnPair::addColumnPair(const FilterColumnData & childModelColumn, const ParentModelColumnData & parentModelColumn, RelationKey & key)
+void GetRelationKeyForEqualityContext::evalNode(const FilterColumnData& fcd, const ParentModelColumnData& pmcd)
 {
-  if(!key.containsColumnPair( parentModelColumn.columnIndex(), childModelColumn.columnIndex() )){
-    key.addColumnPair( parentModelColumn.columnIndex(), childModelColumn.columnIndex() );
+  if(!mKey.containsColumnPair( pmcd.columnIndex(), fcd.columnIndex() )){
+    mKey.addColumnPair( pmcd.columnIndex(), fcd.columnIndex() );
   }
 }
 

@@ -25,105 +25,49 @@
 #include "../ParentModelColumn.h"
 #include "../RelationKey.h"
 #include "ColumnTerminal.h"
-#include <boost/proto/traits.hpp>
-#include <boost/proto/matches.hpp>
-#include <boost/proto/transform/when.hpp>
-#include <boost/proto/transform.hpp>
+#include <boost/proto/context.hpp>
 
 namespace Mdt{ namespace ItemModel{ namespace Expression{
 
-  /*! \brief Add a relation column pair
+  /*! \brief Callable context to get a RelationKey for equality
    */
-  struct AddRelationColumnPair : boost::proto::callable
+  struct GetRelationKeyForEqualityContext : boost::proto::callable_context<GetRelationKeyForEqualityContext, boost::proto::null_context>
   {
-    /*
-     * To be able to use boost::proto::_default,
-     * we must provide standard C++ binary opertaors return type
-     * (which is bool)
-     */
-    typedef bool result_type;
+    typedef void result_type;
 
-    /*
-     * When using boost::proto::deep_copy(),
-     * terminal types can not be deduced.
-     * This is why we use templates.
-     */
-    template<typename CMC, typename PMC>
-    bool operator()(const CMC & childModelColumn, const PMC & parentModelColumn, RelationKey & key) const
+    template<typename L, typename R>
+    void operator()(boost::proto::tag::equal_to, const L & left, const R & right)
     {
-      addColumnPair( boost::proto::value(childModelColumn), boost::proto::value(parentModelColumn), key);
-      return true;  // Force evaluation of the complete expression
+      evalNode( boost::proto::value(left), boost::proto::value(right) );
+    }
+
+    template<typename L, typename R>
+    void operator()(boost::proto::tag::less_equal, const L & left, const R & right)
+    {
+      evalNode( boost::proto::value(left), boost::proto::value(right) );
+    }
+
+    template<typename L, typename R>
+    void operator()(boost::proto::tag::greater_equal, const L & left, const R & right)
+    {
+      evalNode( boost::proto::value(left), boost::proto::value(right) );
+    }
+
+    RelationKey relationKey() const
+    {
+      return mKey;
     }
 
    private:
 
-    static void addColumnPair(const FilterColumnData & childModelColumn, const ParentModelColumnData & parentModelColumn, RelationKey & key);
-  };
+    void evalNode(const FilterColumnData & fcd, const ParentModelColumnData & pmcd);
 
-  /*! \brief Callable that does nothing and that is used by VoidRelationKeyInequality
-   */
-  struct VoidRelationKeyCallable : boost::proto::callable
-  {
-    typedef bool result_type;
-
-    bool operator()() const
+    template<typename L, typename R>
+    void evalNode(const L &, const R &)
     {
-      return true;
     }
-  };
 
-  /*! \brief Used by GetRelationKeyForEquality to prevent to insert inequlity into the relation key
-   */
-  struct VoidRelationKeyInequality : boost::proto::or_<
-                                        boost::proto::when<
-                                          boost::proto::not_equal_to< boost::proto::_, boost::proto::_ >,
-                                          boost::proto::call< VoidRelationKeyCallable() >
-                                        > ,
-                                        boost::proto::when<
-                                          boost::proto::less< boost::proto::_, boost::proto::_ >,
-                                          boost::proto::call< VoidRelationKeyCallable() >
-                                        > ,
-                                        boost::proto::when<
-                                          boost::proto::greater< boost::proto::_, boost::proto::_ >,
-                                          boost::proto::call< VoidRelationKeyCallable() >
-                                        >
-                                      >
-  {
-  };
-
-  /*! \brief Get a RelationKey for equality
-   */
-  struct GetRelationKeyForEquality : boost::proto::or_<
-                                      boost::proto::when<
-                                        boost::proto::equal_to< FilterColumn, ParentModelColumn > ,
-                                        boost::proto::call< AddRelationColumnPair(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
-                                      > ,
-                                      boost::proto::when<
-                                        boost::proto::equal_to< boost::proto::_, boost::proto::_ >,
-                                        boost::proto::call< VoidRelationKeyCallable() >
-                                      > ,
-                                      boost::proto::when<
-                                        boost::proto::less_equal< FilterColumn, ParentModelColumn > ,
-                                        boost::proto::call< AddRelationColumnPair(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
-                                      > ,
-                                      boost::proto::when<
-                                        boost::proto::less_equal< boost::proto::_, boost::proto::_ >,
-                                        boost::proto::call< VoidRelationKeyCallable() >
-                                      > ,
-                                      boost::proto::when<
-                                        boost::proto::greater_equal< FilterColumn, ParentModelColumn > ,
-                                        boost::proto::call< AddRelationColumnPair(boost::proto::_left, boost::proto::_right, boost::proto::_data) >
-                                      > ,
-                                      boost::proto::when<
-                                        boost::proto::greater_equal< boost::proto::_, boost::proto::_ >,
-                                        boost::proto::call< VoidRelationKeyCallable() >
-                                      > ,
-                                      VoidRelationKeyInequality ,
-                                      boost::proto::otherwise<
-                                        boost::proto::_default<GetRelationKeyForEquality>
-                                      >
-                                     >
-  {
+    RelationKey mKey;
   };
 
 }}} // namespace Mdt{ namespace ItemModel{ namespace Expression{

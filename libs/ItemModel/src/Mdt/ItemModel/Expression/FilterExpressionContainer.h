@@ -100,12 +100,11 @@ namespace Mdt{ namespace ItemModel{ namespace Expression{
      */
     RelationKey getRelationKeyForEquality() const override
     {
-      RelationKey key;
-      GetRelationKeyForEquality g;
+      GetRelationKeyForEqualityContext ctx;
 
-      g(mExpression, 0, key);
+      boost::proto::eval(mExpression, ctx);
 
-      return key;
+      return ctx.relationKey();
     }
 
     /*! \brief Get the greatest column in this expression
