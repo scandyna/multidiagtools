@@ -45,12 +45,71 @@ RelationKey RelationFilterExpression::getRelationKeyForEquality() const
   return mContainer->getRelationKeyForEquality();
 }
 
+RelationFilterExpression RelationFilterExpression::fromRelationKey(const RelationKey & relationKey)
+{
+  Q_ASSERT(!relationKey.isNull());
+  Q_ASSERT(relationKey.columnPairCount() <= 4);
+
+  switch(relationKey.columnPairCount()){
+    case 1:
+      return fromColumnPairs(relationKey.columnPairAt(0));
+      break;
+    case 2:
+      return fromColumnPairs(relationKey.columnPairAt(0), relationKey.columnPairAt(1));
+      break;
+    case 3:
+      return fromColumnPairs(relationKey.columnPairAt(0), relationKey.columnPairAt(1), relationKey.columnPairAt(2));
+      break;
+    case 4:
+      return fromColumnPairs(relationKey.columnPairAt(0), relationKey.columnPairAt(1), relationKey.columnPairAt(2), relationKey.columnPairAt(3));
+      break;
+    default:
+      ;
+  }
+
+  return RelationFilterExpression();  // Will assert if called
+}
+
 void RelationFilterExpression::setGreatestColumns()
 {
   Q_ASSERT(!isNull());
 
   mGreatestColumn = mContainer->getGreatestColumn();
   mGreatestParentModelColumn = mContainer->getGreatestParentModelColumn();
+}
+
+RelationFilterExpression RelationFilterExpression::fromColumnPairs(RelationColumnPair pair1)
+{
+  return ( FilterColumn(pair1.childModelColumn()) == ParentModelColumn(pair1.parentModelColumn()) );
+}
+
+RelationFilterExpression RelationFilterExpression::fromColumnPairs(RelationColumnPair pair1, RelationColumnPair pair2)
+{
+  return (
+    ( FilterColumn(pair1.childModelColumn()) == ParentModelColumn(pair1.parentModelColumn()) ) &&
+    ( FilterColumn(pair2.childModelColumn()) == ParentModelColumn(pair2.parentModelColumn()) )
+  );
+}
+
+RelationFilterExpression RelationFilterExpression::fromColumnPairs(RelationColumnPair pair1, RelationColumnPair pair2,
+                                                                   RelationColumnPair pair3)
+{
+  return (
+    ( FilterColumn(pair1.childModelColumn()) == ParentModelColumn(pair1.parentModelColumn()) ) &&
+    ( FilterColumn(pair2.childModelColumn()) == ParentModelColumn(pair2.parentModelColumn()) ) &&
+    ( FilterColumn(pair3.childModelColumn()) == ParentModelColumn(pair3.parentModelColumn()) )
+  );
+}
+
+RelationFilterExpression RelationFilterExpression::fromColumnPairs(RelationColumnPair pair1, RelationColumnPair pair2,
+                                                                   RelationColumnPair pair3, RelationColumnPair pair4)
+{
+  return (
+    ( FilterColumn(pair1.childModelColumn()) == ParentModelColumn(pair1.parentModelColumn()) ) &&
+    ( FilterColumn(pair2.childModelColumn()) == ParentModelColumn(pair2.parentModelColumn()) ) &&
+    ( FilterColumn(pair3.childModelColumn()) == ParentModelColumn(pair3.parentModelColumn()) ) &&
+    ( FilterColumn(pair4.childModelColumn()) == ParentModelColumn(pair4.parentModelColumn()) )
+  );
 }
 
 }} // namespace Mdt{ namespace ItemModel{

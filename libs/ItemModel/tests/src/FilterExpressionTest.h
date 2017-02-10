@@ -71,6 +71,8 @@ class FilterExpressionTest : public QObject
   void getRelationKeyForEqualityTest();
   void expressionGreatestColumnTest();
   void relationExpressionGreatestColumnTest();
+
+  void expressionFromRelationKeyTest();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_FILTER_EXPRESSION_TEST_H

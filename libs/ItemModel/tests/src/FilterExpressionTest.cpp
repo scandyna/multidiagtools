@@ -1007,6 +1007,69 @@ void FilterExpressionTest::relationExpressionGreatestColumnTest()
   QCOMPARE(expression.greatestParentModelColumn(), 17);
 }
 
+void FilterExpressionTest::expressionFromRelationKeyTest()
+{
+  RelationFilterExpression expression;
+  RelationKey key;
+  /*
+   * 1 column pair
+   */
+  key.addColumnPair(0, 1);
+  expression = RelationFilterExpression::fromRelationKey(key);
+  key = expression.getRelationKeyForEquality();
+  QCOMPARE(key.columnPairCount(), 1);
+  QCOMPARE(key.columnPairAt(0).childModelColumn(), 1);
+  QCOMPARE(key.columnPairAt(0).parentModelColumn(), 0);
+  /*
+   * 2 column pair
+   */
+  key.clear();
+  key.addColumnPair(0, 1);
+  key.addColumnPair(5, 6);
+  expression = RelationFilterExpression::fromRelationKey(key);
+  key = expression.getRelationKeyForEquality();
+  QCOMPARE(key.columnPairCount(), 2);
+  QCOMPARE(key.columnPairAt(0).childModelColumn(), 1);
+  QCOMPARE(key.columnPairAt(0).parentModelColumn(), 0);
+  QCOMPARE(key.columnPairAt(1).childModelColumn(), 6);
+  QCOMPARE(key.columnPairAt(1).parentModelColumn(), 5);
+  /*
+   * 3 column pair
+   */
+  key.clear();
+  key.addColumnPair(0, 1);
+  key.addColumnPair(5, 6);
+  key.addColumnPair(3, 4);
+  expression = RelationFilterExpression::fromRelationKey(key);
+  key = expression.getRelationKeyForEquality();
+  QCOMPARE(key.columnPairCount(), 3);
+  QCOMPARE(key.columnPairAt(0).childModelColumn(), 1);
+  QCOMPARE(key.columnPairAt(0).parentModelColumn(), 0);
+  QCOMPARE(key.columnPairAt(1).childModelColumn(), 6);
+  QCOMPARE(key.columnPairAt(1).parentModelColumn(), 5);
+  QCOMPARE(key.columnPairAt(2).childModelColumn(), 4);
+  QCOMPARE(key.columnPairAt(2).parentModelColumn(), 3);
+  /*
+   * 4 column pair
+   */
+  key.clear();
+  key.addColumnPair(0, 1);
+  key.addColumnPair(5, 6);
+  key.addColumnPair(3, 4);
+  key.addColumnPair(9, 7);
+  expression = RelationFilterExpression::fromRelationKey(key);
+  key = expression.getRelationKeyForEquality();
+  QCOMPARE(key.columnPairCount(), 4);
+  QCOMPARE(key.columnPairAt(0).childModelColumn(), 1);
+  QCOMPARE(key.columnPairAt(0).parentModelColumn(), 0);
+  QCOMPARE(key.columnPairAt(1).childModelColumn(), 6);
+  QCOMPARE(key.columnPairAt(1).parentModelColumn(), 5);
+  QCOMPARE(key.columnPairAt(2).childModelColumn(), 4);
+  QCOMPARE(key.columnPairAt(2).parentModelColumn(), 3);
+  QCOMPARE(key.columnPairAt(3).childModelColumn(), 7);
+  QCOMPARE(key.columnPairAt(3).parentModelColumn(), 9);
+}
+
 /*
  * Main
  */

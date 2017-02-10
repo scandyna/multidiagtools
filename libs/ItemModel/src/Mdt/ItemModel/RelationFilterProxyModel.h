@@ -27,6 +27,7 @@
 #include "FilterColumn.h"
 #include "LikeExpression.h"
 #include "RowList.h"
+#include "RelationKey.h"
 #include <QPointer>
 #include <QModelIndex>
 #include <QVector>
@@ -105,6 +106,17 @@ namespace Mdt{ namespace ItemModel{
      * \sa setParentModelMatchRow()
      */
     void setFilter(const RelationFilterExpression & expression);
+
+    /*! \brief Set relation filter
+     *
+     * For each pairs of parent/child model column in \a relationKey,
+     *  a equality criteria will be created.
+     *  Each pairs are alos chained with a AND constraint.
+     *
+     * \pre \a relationKey must not be null
+     * \pre \a relationKey must contain max 4 columns pairs
+     */
+    void setFilter(const RelationKey & relationKey);
 
     /*! \brief Get row of parent model for which filter must match
      */

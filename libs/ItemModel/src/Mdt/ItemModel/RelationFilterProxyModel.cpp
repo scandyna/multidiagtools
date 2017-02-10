@@ -63,6 +63,14 @@ void RelationFilterProxyModel::setFilter(const RelationFilterExpression & expres
   invalidateFilter();
 }
 
+void RelationFilterProxyModel::setFilter(const RelationKey & relationKey)
+{
+  Q_ASSERT(!relationKey.isNull());
+  Q_ASSERT(relationKey.columnPairCount() <= 4);
+
+  
+}
+
 void RelationFilterProxyModel::setDynamicSortFilter(bool enable)
 {
   SortFilterProxyModel::setDynamicSortFilter(enable);

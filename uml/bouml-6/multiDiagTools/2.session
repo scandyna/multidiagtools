@@ -9,24 +9,21 @@ diagrams
     968 908 100 21 0 0
   classdiagram_ref 3274626 // SortFilterProxyModel
     968 908 100 18 0 0
-  classdiagram_ref 3248514 // RelationKey
-    120 110 100 4 0 0
-  active  classdiagram_ref 3248386 // RelationKeyCopier
-    968 908 100 21 0 0
+  active  classdiagram_ref 3221890 // RelationFilterExpression
+    968 908 100 18 0 0
 end
 show_stereotypes
-selected class_ref 3788930 // callable_context
+selected operation_ref 5304322 // fromRelationKey
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   classview_ref 1603842 // Terminals
   classview_ref 1735554 // RelationKeyTranform
-  attribute_ref 3319170 // GreatestColumn
-  attribute_ref 3319298 // GreatestParentModelColumn
-  operation_ref 5290626 // operator()
+  classview_ref 1735682 // GreatestColumnTransform
   classview_ref 1702914 // Key
   classview_ref 1630466 // Filter
+  class_ref 3695362 // RelationFilterExpression
   classrelation_ref 4101506 // <directional composition>
   classview_ref 1287042 // Controller
   class_ref 3601538 // ControllerRelationItemList

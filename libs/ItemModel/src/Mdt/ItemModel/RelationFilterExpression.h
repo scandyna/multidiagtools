@@ -24,6 +24,7 @@
 #include "Expression/RelationFilterExpressionGrammar.h"
 #include "Expression/FilterExpressionContainer.h"
 #include "RelationKey.h"
+#include "RelationColumnPair.h"
 #include <Qt>
 #include <boost/proto/matches.hpp>
 #include <memory>
@@ -121,7 +122,7 @@ namespace Mdt{ namespace ItemModel{
      */
     bool eval(const QAbstractItemModel*const model, int row, const Expression::ParentModelEvalData & parentModelData, Qt::CaseSensitivity caseSensitivity) const;
 
-    /*! \brief Get a relation key that contains pais of equly compared columns of this expression
+    /*! \brief Get a relation key that contains pairs of equly compared columns of this expression
      *
      * For example, this expression:
      * \code
@@ -146,6 +147,13 @@ namespace Mdt{ namespace ItemModel{
      */
     RelationKey getRelationKeyForEquality() const;
 
+    /*! \brief Get a relation filter expression from a relation key
+     *
+     * \pre \a relationKey must not be null
+     * \pre \a relationKey must contain max. 4 pairs of columns
+     */
+    static RelationFilterExpression fromRelationKey(const RelationKey & relationKey);
+
     /*! \brief Get the greatest column in this expression
      */
     int greatestColumn() const
@@ -163,6 +171,11 @@ namespace Mdt{ namespace ItemModel{
    private:
 
     void setGreatestColumns();
+
+    static RelationFilterExpression fromColumnPairs(RelationColumnPair pair1);
+    static RelationFilterExpression fromColumnPairs(RelationColumnPair pair1, RelationColumnPair pair2);
+    static RelationFilterExpression fromColumnPairs(RelationColumnPair pair1, RelationColumnPair pair2, RelationColumnPair pair3);
+    static RelationFilterExpression fromColumnPairs(RelationColumnPair pair1, RelationColumnPair pair2, RelationColumnPair pair3, RelationColumnPair pair4);
 
     std::shared_ptr<const Expression::ContainerInterface> mContainer;
     int mGreatestColumn = -1;

@@ -1,6 +1,6 @@
 format 211
 "ItemModel" // Mdt::ItemModel
-  revision 47
+  revision 48
   modified_by 2 "philippe"
   // class settings
   
@@ -2418,7 +2418,7 @@ ${inlines}
 
     classdiagram 3221890 "RelationFilterExpression"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 3695362 "RelationFilterExpression"
@@ -2442,6 +2442,53 @@ ${inlines}
 "
 	    classrelation_ref 4108034 // <directional composition>
 	  b parent class_ref 3483522 // ContainerInterface
+      end
+
+      operation 5304194 "getRelationKeyForEquality"
+	public return_type class_ref 3715586 // RelationKey
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5304322 "fromRelationKey"
+	class_operation public return_type class_ref 3695362 // RelationFilterExpression
+	nparams 1
+	  param in name "relationKey" type class_ref 3715586 // RelationKey
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5304450 "fromColumnPairs"
+	class_operation private return_type class_ref 3695362 // RelationFilterExpression
+	nparams 1
+	  param in name "pair1" type class_ref 3715714 // RelationColumnPair
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
