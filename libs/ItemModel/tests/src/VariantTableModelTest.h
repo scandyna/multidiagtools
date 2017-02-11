@@ -44,6 +44,8 @@ class VariantTableModelTest : public TestBase
   void tableModelSeparateEditTest();
   void tableModelFlagTest();
   void tableModelSignalTest();
+  void tableModelDataChangedSignalRolesTest();
+  void tableModelDataChangedSignalRolesSeparateEditTest();
   void tableModelViewTest();
   void tableModelResizeTest();
   void tableModelPopulateColumnTest();

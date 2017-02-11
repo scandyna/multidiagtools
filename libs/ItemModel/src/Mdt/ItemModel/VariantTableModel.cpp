@@ -31,6 +31,11 @@ VariantTableModel::VariantTableModel(VariantTableModelStorageRule storageRule, Q
 {
 }
 
+void VariantTableModel::setPassRolesInDataChaged(bool pass)
+{
+  mPassRolesInDataChanged = pass;
+}
+
 int VariantTableModel::rowCount(const QModelIndex& parent) const
 {
    if(parent.isValid()){
@@ -119,7 +124,15 @@ bool VariantTableModel::setData(const QModelIndex& index, const QVariant& value,
   }
   if( (role == Qt::DisplayRole) || (role == Qt::EditRole) ){
     mData[index.row()].setData(index.column(), value, role);
-    emit dataChanged(index, index);
+    if(mPassRolesInDataChanged){
+      if(mStorageRule == VariantTableModelStorageRule::SeparateDisplayAndEditRoleData){
+        emit dataChanged(index, index, {role});
+      }else{
+        emit dataChanged(index, index, {Qt::DisplayRole, Qt::EditRole});
+      }
+    }else{
+      emit dataChanged(index, index);
+    }
     return true;
   }
   return false;

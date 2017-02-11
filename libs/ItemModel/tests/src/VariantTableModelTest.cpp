@@ -28,6 +28,7 @@
 #include <QTreeView>
 #include <QListView>
 #include <QComboBox>
+#include <QVector>
 
 namespace ItemModel = Mdt::ItemModel;
 using ItemModel::VariantTableModel;
@@ -708,6 +709,95 @@ void VariantTableModelTest::tableModelSignalTest()
   model.populate(3, 1);
   QCOMPARE(resetSpy.count(), 1);
   QCOMPARE(dataChangedSpy.count(), 0);
+}
+
+void VariantTableModelTest::tableModelDataChangedSignalRolesTest()
+{
+  QVariantList arguments;
+  QVector<int> roles;
+  /*
+   * Setup model and signal spy
+   */
+  VariantTableModel model;
+  model.resize(1, 1);
+  QSignalSpy dataChangedSpy(&model, &VariantTableModel::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+  /*
+   * By default, Qt::DisplayRole and Qt::EditRole must be emitted
+   */
+  QVERIFY(model.setData(0, 0, "A"));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  roles = arguments.at(2).value<QVector<int>>();
+  QCOMPARE(roles.size(), 2);
+  QCOMPARE((Qt::ItemDataRole)roles.at(0), Qt::DisplayRole);
+  QCOMPARE((Qt::ItemDataRole)roles.at(1), Qt::EditRole);
+  /*
+   * If passed role is not Qt::DisplayRole or Qt::EditRole,
+   * setData() must fail and dataChanged() must not be emitted.
+   */
+  QVERIFY(!model.setData(0, 0, "AA", Qt::ToolTipRole));
+  QCOMPARE(dataChangedSpy.count(), 0);
+  /*
+   * Tell model to not emit roles in dataChanged()
+   */
+  model.setPassRolesInDataChaged(false);
+  QVERIFY(model.setData(0, 0, "B"));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  roles = arguments.at(2).value<QVector<int>>();
+  QCOMPARE(roles.size(), 0);
+}
+
+void VariantTableModelTest::tableModelDataChangedSignalRolesSeparateEditTest()
+{
+  QVariantList arguments;
+  QVector<int> roles;
+  /*
+   * Setup model and signal spy
+   */
+  VariantTableModel model(VariantTableModelStorageRule::SeparateDisplayAndEditRoleData);
+  model.resize(1, 1);
+  QSignalSpy dataChangedSpy(&model, &VariantTableModel::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+  /*
+   * By default, role passed to setData() must be emitted,
+   * if it is Qt::DisplayRole or Qt::EditRole
+   */
+  // DisplayRole
+  QVERIFY(model.setData(0, 0, "DA", Qt::DisplayRole));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  roles = arguments.at(2).value<QVector<int>>();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE((Qt::ItemDataRole)roles.at(0), Qt::DisplayRole);
+  // EditRole
+  QVERIFY(model.setData(0, 0, "EA", Qt::EditRole));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  roles = arguments.at(2).value<QVector<int>>();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE((Qt::ItemDataRole)roles.at(0), Qt::EditRole);
+  /*
+   * If passed role is not Qt::DisplayRole or Qt::EditRole,
+   * setData() must fail and dataChanged() must not be emitted.
+   */
+  QVERIFY(!model.setData(0, 0, "AA", Qt::ToolTipRole));
+  QCOMPARE(dataChangedSpy.count(), 0);
+  /*
+   * Tell model to not emit roles in dataChanged()
+   */
+  model.setPassRolesInDataChaged(false);
+  QVERIFY(model.setData(0, 0, "B"));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.size(), 3);
+  roles = arguments.at(2).value<QVector<int>>();
+  QCOMPARE(roles.size(), 0);
 }
 
 void VariantTableModelTest::tableModelViewTest()

@@ -53,6 +53,12 @@ namespace Mdt{ namespace ItemModel{
      */
     explicit VariantTableModel(VariantTableModelStorageRule storageRule = VariantTableModelStorageRule::GroupDisplayAndEditRoleData, QObject *parent = nullptr);
 
+    /*! \brief Tell if this model must pass roles in data changed signal
+     *
+     * By default, roles are passed in dataChanged() signal.
+     */
+    void setPassRolesInDataChaged(bool pass);
+
     /*! \brief Get row count
      */
     int rowCount(const QModelIndex & parent = QModelIndex()) const override;
@@ -335,6 +341,7 @@ namespace Mdt{ namespace ItemModel{
     VariantTableModelStorageRule mStorageRule;
     int mColumnCount;
     std::vector<VariantTableModelRow> mData;
+    bool mPassRolesInDataChanged = true;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

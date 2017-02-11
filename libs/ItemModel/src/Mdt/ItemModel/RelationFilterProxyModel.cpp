@@ -68,7 +68,7 @@ void RelationFilterProxyModel::setFilter(const RelationKey & relationKey)
   Q_ASSERT(!relationKey.isNull());
   Q_ASSERT(relationKey.columnPairCount() <= 4);
 
-  
+  mFilterExpression = RelationFilterExpression::fromRelationKey(relationKey);
 }
 
 void RelationFilterProxyModel::setDynamicSortFilter(bool enable)
@@ -105,18 +105,18 @@ void RelationFilterProxyModel::setParentModelMatchRow(int row)
 {
   Q_ASSERT(row >= -1);
 
-  qDebug() << "RFPM::setParentModelMatchRow() - REQ row " << row;
+//   qDebug() << "RFPM::setParentModelMatchRow() - REQ row " << row;
   if(mParentModel.isNull()){
     mParentModelRow = -1;
   }else{
-    qDebug() << " -> PM rows: " << mParentModel->rowCount();
+//     qDebug() << " -> PM rows: " << mParentModel->rowCount();
     if(row < mParentModel->rowCount()){
       mParentModelRow = row;
     }else{
       mParentModelRow = -1;
     }
   }
-  qDebug() << "RFPM::setParentModelMatchRow() - row set to " << mParentModelRow;
+//   qDebug() << "RFPM::setParentModelMatchRow() - row set to " << mParentModelRow;
   mKeyCopier->setParentModelCurrentRow(mParentModelRow);
   invalidateFilter();
 }
@@ -125,8 +125,6 @@ void RelationFilterProxyModel::onSourceModelChanged()
 {
   auto *model = sourceModel();
   Q_ASSERT(model != nullptr);
-  /// NOTE: setting source model produces a model reset (=call filterAcceptsRow() )
-  /// Mybe: reset filter if current source model was set ?
   disconnect(mRowsInsertedConnection);
   mKeyCopier->setChildModel(model);
   mRowsInsertedConnection = connect(model, &QAbstractItemModel::rowsInserted, this, &RelationFilterProxyModel::onRowsInserted);
@@ -184,7 +182,14 @@ bool RelationFilterProxyModel::filterAcceptsRow(int source_row, const QModelInde
   if(mFilterExpression.isNull()){
     return true;
   }
-  qDebug() << "RFPM: eval ...";
+  /*
+   * After a model reset, possibly due to changing source model,
+   * filter expression possibly does not match until setFilter() is called again.
+   * We don't want to constraint setup order, so do bound checking here.
+   */
+  if( sourceModel()->columnCount() < (mFilterExpression.greatestColumn()+1) ){
+    return false;
+  }
   return mFilterExpression.eval(sourceModel(), source_row, ParentModelEvalData(mParentModel, mParentModelRow), filterCaseSensitivity());
 }
 

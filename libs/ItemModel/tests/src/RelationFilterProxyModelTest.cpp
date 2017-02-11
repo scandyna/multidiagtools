@@ -93,7 +93,9 @@ void RelationFilterProxyModelTest::setModelTest()
   proxyModel.setParentModelMatchRow(0);
   QCOMPARE(proxyModel.rowCount(), 1);
   /*
-   * Change source model with lower row/column count
+   * Change source model with lower column count
+   * Goal: check that setup order does not matter
+   *       ( setSourceModel() , setFilter() )
    */
   VariantTableModel model2;
   model2.resize(4, 1);
