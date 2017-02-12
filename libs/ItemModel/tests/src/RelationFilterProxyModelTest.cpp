@@ -22,6 +22,7 @@
 #include "qtmodeltest.h"
 #include "Mdt/ItemModel/RelationFilterProxyModel.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
+#include "Mdt/ItemModel/FormatProxyModel.h"
 #include <QStringList>
 #include <QModelIndex>
 #include <QTableView>
@@ -861,6 +862,8 @@ void RelationFilterProxyModelTest::parentModelKeyChangeRolesTest()
   clientModel.resize(1, 2);
   clientModel.populateColumn(0, {1});
   clientModel.populateColumn(1, {"C1"});
+  FormatProxyModel clientFormatModel;
+  clientFormatModel.setSourceModel(&clientModel);
   /*
    * Setup source model
    * ------------------------
@@ -880,7 +883,7 @@ void RelationFilterProxyModelTest::parentModelKeyChangeRolesTest()
   ParentModelColumn clientId(0);
   FilterColumn addressClientId(1);
   RelationFilterProxyModel proxyModel;
-  proxyModel.setParentModel(&clientModel);
+  proxyModel.setParentModel(&clientFormatModel);
   proxyModel.setSourceModel(&addressModel);
   proxyModel.setFilter(addressClientId == clientId);
   proxyModel.setDynamicSortFilter(true);
@@ -899,7 +902,7 @@ void RelationFilterProxyModelTest::parentModelKeyChangeRolesTest()
   QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
   QCOMPARE(getModelData(proxyModel, 0, 2), QVariant("A"));
   /*
-   * Set a tool tip in client ID (must do nothing)
+   * Set a format for client ID (must do nothing)
    *  Address model              Proxy model
    * ------------------------   ------------------------
    * | Id | Cli_Id | Street |   | Id | Cli_Id | Street |
@@ -907,8 +910,11 @@ void RelationFilterProxyModelTest::parentModelKeyChangeRolesTest()
    * | 11 |   1    |   A    |   | 11 |   1    |   A    |
    * ------------------------   ------------------------
    */
-  
-  
+  clientFormatModel.setTextAlignmentForColumn(0, Qt::AlignCenter);
+  QCOMPARE(proxyModel.rowCount(), 1);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(11));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 0, 2), QVariant("A"));
   /*
    * Check changing Edit role - model pass it in dataChanged
    */

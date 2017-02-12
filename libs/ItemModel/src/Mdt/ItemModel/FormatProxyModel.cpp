@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "FormatProxyModel.h"
+#include <QVector>
 
 namespace Mdt{ namespace ItemModel{
 
@@ -33,6 +34,7 @@ void FormatProxyModel::setTextAlignmentForColumn(int column, Qt::Alignment align
   Q_ASSERT(column < columnCount());
 
   mTextAlignmentMap.setFormatForColumn(column, alignment);
+  signalFormatChangedForColumn(column, Qt::TextAlignmentRole);
 }
 
 void FormatProxyModel::clearTextAlignmentForColumn(int column)
@@ -41,6 +43,7 @@ void FormatProxyModel::clearTextAlignmentForColumn(int column)
   Q_ASSERT(column < columnCount());
 
   mTextAlignmentMap.clearFormatForColumn(column);
+  signalFormatChangedForColumn(column, Qt::TextAlignmentRole);
 }
 
 
@@ -58,6 +61,7 @@ void FormatProxyModel::setTextFontForColumn(int column, const QFont& font)
   Q_ASSERT(column < columnCount());
 
   mTextFontMap.setFormatForColumn(column, font);
+  signalFormatChangedForColumn(column, Qt::FontRole);
 }
 
 void FormatProxyModel::clearTextFontForColumn(int column)
@@ -66,6 +70,7 @@ void FormatProxyModel::clearTextFontForColumn(int column)
   Q_ASSERT(column < columnCount());
 
   mTextFontMap.clearFormatForColumn(column);
+  signalFormatChangedForColumn(column, Qt::FontRole);
 }
 
 QVariant FormatProxyModel::textFontForColumn(int column) const
@@ -93,6 +98,18 @@ QVariant FormatProxyModel::data(const QModelIndex & index, int role) const
       ;
   }
   return QAbstractProxyModel::data(index, role);
+}
+
+void FormatProxyModel::signalFormatChangedForColumn(int column, int role)
+{
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < columnCount());
+
+  const int n = rowCount();
+  for(int row = 0; row < n; ++row){
+    const auto idx = index(row, column);
+    emit dataChanged(idx, idx, {role});
+  }
 }
 
 }} // namespace Mdt{ namespace ItemModel{

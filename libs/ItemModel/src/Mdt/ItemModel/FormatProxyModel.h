@@ -92,6 +92,8 @@ namespace Mdt{ namespace ItemModel{
 
    private:
 
+    void signalFormatChangedForColumn(int column, int role);
+
     ColumnFormatMap mTextAlignmentMap;
     ColumnFormatMap mTextFontMap;
   };

@@ -22,6 +22,9 @@
 #include "qtmodeltest.h"
 #include "Mdt/ItemModel/FormatProxyModel.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
+#include <QSignalSpy>
+#include <QVariantList>
+#include <QVector>
 
 using namespace Mdt::ItemModel;
 
@@ -114,6 +117,88 @@ void FormatProxyModelTest::textAlignmentTest()
   QVERIFY(getModelData(proxyModel, 0, 1, Qt::TextAlignmentRole).isNull());
 }
 
+void FormatProxyModelTest::textAlignmentSignalTest()
+{
+  QVariantList arguments;
+  QModelIndex index;
+  QVector<int> roles;
+  /*
+   * Setup model
+   */
+  VariantTableModel model;
+  model.resize(2, 2);
+  model.populateColumn(0, {1,2});
+  model.populateColumn(1, {"A","B"});
+  /*
+   * Setup proxy model
+   */
+  FormatProxyModel proxyModel;
+  proxyModel.setSourceModel(&model);
+  /*
+   * Setup signal spy
+   */
+  QSignalSpy dataChangedSpy(&proxyModel, &FormatProxyModel::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+  /*
+   * Set alignment for column 1
+   */
+  proxyModel.setTextAlignmentForColumn(1, Qt::AlignCenter);
+  QCOMPARE(dataChangedSpy.count(), 2);
+  // Check for row 0
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  index = arguments.at(0).toModelIndex(); // topLeft
+  QCOMPARE(index.row(), 0);
+  QCOMPARE(index.column(), 1);
+  index = arguments.at(1).toModelIndex(); // bottomRight
+  QCOMPARE(index.row(), 0);
+  QCOMPARE(index.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::TextAlignmentRole);
+  // Check for row 1
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  index = arguments.at(0).toModelIndex(); // topLeft
+  QCOMPARE(index.row(), 1);
+  QCOMPARE(index.column(), 1);
+  index = arguments.at(1).toModelIndex(); // bottomRight
+  QCOMPARE(index.row(), 1);
+  QCOMPARE(index.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::TextAlignmentRole);
+  /*
+   * Clear alignment of column 1
+   */
+  proxyModel.clearTextAlignmentForColumn(1);
+  QCOMPARE(dataChangedSpy.count(), 2);
+  // Check for row 0
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  index = arguments.at(0).toModelIndex(); // topLeft
+  QCOMPARE(index.row(), 0);
+  QCOMPARE(index.column(), 1);
+  index = arguments.at(1).toModelIndex(); // bottomRight
+  QCOMPARE(index.row(), 0);
+  QCOMPARE(index.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::TextAlignmentRole);
+  // Check for row 1
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  index = arguments.at(0).toModelIndex(); // topLeft
+  QCOMPARE(index.row(), 1);
+  QCOMPARE(index.column(), 1);
+  index = arguments.at(1).toModelIndex(); // bottomRight
+  QCOMPARE(index.row(), 1);
+  QCOMPARE(index.column(), 1);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::TextAlignmentRole);
+}
+
 void FormatProxyModelTest::textFontTest()
 {
   /*
@@ -162,9 +247,48 @@ void FormatProxyModelTest::textFontTest()
   QVERIFY(getModelData(proxyModel, 0, 1, Qt::FontRole).isNull());
 }
 
-void FormatProxyModelTest::setterEventTest()
+void FormatProxyModelTest::textFontSignalTest()
 {
-  QFAIL("Not complete");
+  QVariantList arguments;
+  QModelIndex index;
+  QVector<int> roles;
+  /*
+   * Setup model
+   */
+  VariantTableModel model;
+  model.resize(1, 2);
+  model.populateColumn(0, {1});
+  model.populateColumn(1, {"A"});
+  /*
+   * Setup proxy model
+   */
+  FormatProxyModel proxyModel;
+  proxyModel.setSourceModel(&model);
+  /*
+   * Setup signal spy
+   */
+  QSignalSpy dataChangedSpy(&proxyModel, &FormatProxyModel::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+  /*
+   * Set font for column 1
+   */
+  proxyModel.setTextFontForColumn(1, QFont("Times", 14));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::FontRole);
+  /*
+   * Clear font of column 1
+   */
+  proxyModel.clearTextFontForColumn(1);
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::FontRole);
 }
 
 void FormatProxyModelTest::qtModelTest()

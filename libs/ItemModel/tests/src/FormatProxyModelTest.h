@@ -34,8 +34,9 @@ class FormatProxyModelTest : public TestBase
 
   void setModelTest();
   void textAlignmentTest();
+  void textAlignmentSignalTest();
   void textFontTest();
-  void setterEventTest();
+  void textFontSignalTest();
   void qtModelTest();
   
   void getDiplayRoleDataBenchmark();
