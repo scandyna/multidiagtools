@@ -888,6 +888,11 @@ void RelationFilterProxyModelTest::parentModelKeyChangeRolesTest()
   proxyModel.setFilter(addressClientId == clientId);
   proxyModel.setDynamicSortFilter(true);
   /*
+   * Setup signal spy
+   */
+  QSignalSpy dataChangedSpy(&proxyModel, &RelationFilterProxyModel::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+  /*
    * Filter on client 1:
    *  Address model              Proxy model
    * ------------------------   ------------------------
@@ -901,6 +906,7 @@ void RelationFilterProxyModelTest::parentModelKeyChangeRolesTest()
   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(11));
   QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
   QCOMPARE(getModelData(proxyModel, 0, 2), QVariant("A"));
+  dataChangedSpy.clear();
   /*
    * Set a format for client ID (must do nothing)
    *  Address model              Proxy model
@@ -915,15 +921,37 @@ void RelationFilterProxyModelTest::parentModelKeyChangeRolesTest()
   QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(11));
   QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
   QCOMPARE(getModelData(proxyModel, 0, 2), QVariant("A"));
+  QCOMPARE(dataChangedSpy.count(), 0);
   /*
    * Check changing Edit role - model pass it in dataChanged
+   *  Address model              Proxy model
+   * ------------------------   ------------------------
+   * | Id | Cli_Id | Street |   | Id | Cli_Id | Street |
+   * ------------------------   ------------------------
+   * | 11 |   2    |   A    |   | 11 |   2    |   A    |
+   * ------------------------   ------------------------
    */
-  
+  clientModel.setData(0, 0, 2);
+  QCOMPARE(proxyModel.rowCount(), 1);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(11));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(2));
+  QCOMPARE(getModelData(proxyModel, 0, 2), QVariant("A"));
+  QCOMPARE(dataChangedSpy.count(), 1);
   /*
    * Check changing edit role - model not pass in dataChanged
+   *  Address model              Proxy model
+   * ------------------------   ------------------------
+   * | Id | Cli_Id | Street |   | Id | Cli_Id | Street |
+   * ------------------------   ------------------------
+   * | 11 |   3    |   A    |   | 11 |   3    |   A    |
+   * ------------------------   ------------------------
    */
-
-  QFAIL("Not complete");
+  clientModel.setPassRolesInDataChaged(false);
+  clientModel.setData(0, 0, 3);
+  QCOMPARE(proxyModel.rowCount(), 1);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(11));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(3));
+  QCOMPARE(getModelData(proxyModel, 0, 2), QVariant("A"));
 }
 
 void RelationFilterProxyModelTest::parentModelKeyMultiColumnKeyChangeTest()

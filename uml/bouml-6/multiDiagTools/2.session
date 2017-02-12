@@ -15,19 +15,17 @@ diagrams
     968 908 100 18 0 0
 end
 show_stereotypes
-selected operation_ref 5326466 // clearFormatForColumn
+selected class_ref 3068802 // AbstractEditorWidget
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
   classview_ref 1709442 // RowAndColumnList
   classview_ref 1656834 // Relation
-  attribute_ref 3325954 // Value
-  operation_ref 5326466 // clearFormatForColumn
-  operation_ref 5312002 // formatForColumn
-  class_ref 3795458 // FormatProxyModel
+  classview_ref 1742210 // Format
   classview_ref 1287042 // Controller
   class_ref 3601538 // ControllerRelationItemList
+  operation_ref 4468866 // setLastError
   
   package_ref 430082 // Dsp
   class_ref 3788930 // callable_context

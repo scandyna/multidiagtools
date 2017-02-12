@@ -21,14 +21,14 @@
 #ifndef MDT_ITEM_EDITOR_ABSTRACT_FORM_WIDGET_H
 #define MDT_ITEM_EDITOR_ABSTRACT_FORM_WIDGET_H
 
+#include "AbstractEditorWidget.h"
 #include "WidgetMapperController.h"
-#include <QWidget>
 
 namespace Mdt{ namespace ItemEditor{
 
   /*! \brief Base class to create widgets using WidgetMapperController
    */
-  class AbstractFormWidget : public QWidget
+  class AbstractFormWidget : public AbstractEditorWidget
   {
    Q_OBJECT
 
@@ -54,6 +54,11 @@ namespace Mdt{ namespace ItemEditor{
     void setModel(QAbstractItemModel *model);
 
    private:
+
+    AbstractController* abstractController() const override
+    {
+      return mController;
+    }
 
     WidgetMapperController *mController;
   };

@@ -23,7 +23,7 @@
 namespace Mdt{ namespace ItemEditor{
 
 AbstractFormWidget::AbstractFormWidget(QWidget* parent)
- : QWidget(parent),
+ : AbstractEditorWidget(parent),
    mController(new WidgetMapperController(this))
 {
 }

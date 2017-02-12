@@ -57,7 +57,9 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    AbstractController* refController() const override
+    /*! \brief Get controller
+     */
+    AbstractController *abstractController() const override
     {
       return mController;
     }

@@ -21,7 +21,9 @@
 #include "AddressWidget.h"
 #include "AddressModel.h"
 #include "Mdt/ItemEditor/TableViewController.h"
+#include "Mdt/ItemModel/FormatProxyModel.h"
 
+using namespace Mdt::ItemModel;
 using namespace Mdt::ItemEditor;
 
 AddressWidget::AddressWidget(QWidget* parent)
@@ -36,4 +38,16 @@ AddressWidget::AddressWidget(QWidget* parent)
   addRemoveActionToBottomBar();
   setRemoveActionText(tr("Remove addresse"));
   controller()->setInsertLocation(TableViewController::InsertAtEnd);
+  /*
+   * Setup some formatting
+   */
+  auto formatModel = new FormatProxyModel(this);
+  formatModel->setTextAlignmentForColumn(0, Qt::AlignCenter);
+  formatModel->setTextAlignmentForColumn(1, Qt::AlignCenter);
+  QFont font;
+  font.setFamily("Times");
+  font.setPointSize(12);
+  font.setBold(true);
+  formatModel->setTextFontForColumn(2, font);
+  appendProxyModel(formatModel);
 }

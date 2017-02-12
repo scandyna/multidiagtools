@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -63,7 +63,9 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    AbstractController* refController() const override
+    /*! \brief Get controller
+     */
+    AbstractController *abstractController() const override
     {
       return mController;
     }

@@ -37,7 +37,7 @@
 namespace Mdt{ namespace ItemEditor{
 
 AbstractTableViewWidget::AbstractTableViewWidget(QWidget* parent)
- : QWidget(parent),
+ : AbstractEditorWidget(parent),
    mView(new QTableView),
    mMainLayout(new QVBoxLayout)
 {
@@ -128,7 +128,7 @@ void AbstractTableViewWidget::registerActions(AbstractActionContainer* actions)
 {
   Q_ASSERT(actions != nullptr);
 
-  auto *controller = refController();
+  auto *controller = abstractController();
   Q_ASSERT(controller != nullptr);
 
   connect(controller, &AbstractController::rowStateChanged, actions, &AbstractActionContainer::setRowState);
@@ -191,8 +191,8 @@ void AbstractTableViewWidget::createInsertActionIfNot()
 {
   if(mInsertAction == nullptr){
     mInsertAction = new InsertAction(this);
-    Q_ASSERT(refController() != nullptr);
-    connect(mInsertAction, &InsertAction::insertTriggered, refController(), &AbstractController::insert);
+    Q_ASSERT(abstractController() != nullptr);
+    connect(mInsertAction, &InsertAction::insertTriggered, abstractController(), &AbstractController::insert);
   }
   Q_ASSERT(mInsertAction != nullptr);
   registerActions(mInsertAction);
@@ -202,8 +202,8 @@ void AbstractTableViewWidget::createRemoveActionIfNot()
 {
   if(mRemoveAction == nullptr){
     mRemoveAction = new RemoveAction(this);
-    Q_ASSERT(refController() != nullptr);
-    connect(mRemoveAction, &RemoveAction::removeTriggered, refController(), &AbstractController::remove);
+    Q_ASSERT(abstractController() != nullptr);
+    connect(mRemoveAction, &RemoveAction::removeTriggered, abstractController(), &AbstractController::remove);
   }
   Q_ASSERT(mRemoveAction != nullptr);
   registerActions(mRemoveAction); /// \todo What wenn multiple calls ?
@@ -213,9 +213,9 @@ void AbstractTableViewWidget::createEditionActionsIfNot()
 {
   if(mEditionActions == nullptr){
     mEditionActions = new EditionActions(this);
-    Q_ASSERT(refController() != nullptr);
-    connect(mEditionActions, &EditionActions::submitTriggered, refController(), &AbstractController::submit);
-    connect(mEditionActions, &EditionActions::revertTriggered, refController(), &AbstractController::revert);
+    Q_ASSERT(abstractController() != nullptr);
+    connect(mEditionActions, &EditionActions::submitTriggered, abstractController(), &AbstractController::submit);
+    connect(mEditionActions, &EditionActions::revertTriggered, abstractController(), &AbstractController::revert);
     registerActions(mEditionActions);
   }
   Q_ASSERT(mEditionActions != nullptr);

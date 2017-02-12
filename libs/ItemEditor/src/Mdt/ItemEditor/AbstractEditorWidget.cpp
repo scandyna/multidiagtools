@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -23,17 +23,30 @@
 namespace Mdt{ namespace ItemEditor{
 
 AbstractEditorWidget::AbstractEditorWidget(QWidget* parent)
- : QWidget(parent),
-   pvController(nullptr)
+ : QWidget(parent)
 {
 }
 
-void AbstractEditorWidget::setController(AbstractController* controller)
+void AbstractEditorWidget::prependProxyModel(QAbstractProxyModel* proxyModel)
 {
-  Q_ASSERT(controller != nullptr);
+  Q_ASSERT(abstractController() != nullptr);
 
-  pvController = controller;
+  abstractController()->prependProxyModel(proxyModel);
 }
+
+void AbstractEditorWidget::appendProxyModel(QAbstractProxyModel* proxyModel)
+{
+  Q_ASSERT(abstractController() != nullptr);
+
+  abstractController()->appendProxyModel(proxyModel);
+}
+
+// void AbstractEditorWidget::setController(AbstractController* controller)
+// {
+//   Q_ASSERT(controller != nullptr);
+// 
+//   pvController = controller;
+// }
 
 }} // namespace Mdt{ namespace ItemEditor{
 

@@ -25,7 +25,7 @@
 #include "Expression/ParentModelEvalData.h"
 #include <algorithm>
 
-#include <QDebug>
+// #include <QDebug>
 
 using Mdt::ItemModel::Expression::ParentModelEvalData;
 
@@ -143,7 +143,9 @@ void RelationFilterProxyModel::onRowsInserted(const QModelIndex& parent, int fir
 
 void RelationFilterProxyModel::onParentModelDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QVector<int> & roles)
 {
-  qDebug() << "RFPM::onParentModelDataChanged() - roles: " << roles;
+  if( (!roles.isEmpty()) && (!roles.contains(Qt::EditRole)) && (!roles.contains(Qt::DisplayRole)) ){
+    return;
+  }
   /*
    * We only act on currently filtered rows.
    * Those are filtered regarding parent model row

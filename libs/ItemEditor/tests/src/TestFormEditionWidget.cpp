@@ -30,7 +30,7 @@ TestFormEditionWidget::TestFormEditionWidget(QWidget* parent)
 {
   setupUi(this);
   pvController = new WidgetMapperController(this);
-  setController(pvController);
+//   setController(pvController);
   pvController->setInsertLocation(WidgetMapperController::InsertAtEnd);
 }
 

@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 150
+  revision 151
   modified_by 2 "philippe"
   // class settings
   
@@ -5978,7 +5978,7 @@ ${inlines}
      end
     classdiagram 3181826 "Overview"
       classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     classdiagram 2700418 "EditorWidget"
@@ -6034,21 +6034,6 @@ ${inlines}
 	MysqlColumn
       end
 
-      operation 4508546 "controller"
-	public explicit_return_type "AbstractController"
-	nparams 0
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 4468610 "lastError"
 	public return_type class_ref 182402 // Error
 	nparams 0
@@ -6064,26 +6049,10 @@ ${inlines}
 	
       end
 
-      operation 4508418 "setController"
-	abstract cpp_virtual protected explicit_return_type "void"
-	nparams 1
-	  param in name "controller" explicit_type "AbstractController"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 4468738 "displayLastError"
-	protected explicit_return_type "void"
+      operation 4508546 "abstractController"
+	abstract cpp_virtual protected explicit_return_type "AbstractController"
 	nparams 0
 	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
 "
 	
 	
@@ -6107,17 +6076,21 @@ ${inlines}
 	
       end
 
-      attribute 2915714 "Controller"
-	private explicit_type "AbstractController"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
+      operation 4468738 "displayLastError"
+	protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
       end
+
     end
 
     classdiagram 3182082 "TableViewWidget"
@@ -6223,14 +6196,6 @@ ${inlines}
 	  b parent class_ref 638338 // QTableView
       end
 
-      classrelation 4052226 // <generalisation>
-	relation 4026242 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4052226 // <generalisation>
-	  b parent class_ref 316162 // QWidget
-      end
-
       operation 5102210 "addToolBarToTopArea"
 	public return_type class_ref 2706690 // QToolBar
 	nparams 1
@@ -6307,6 +6272,14 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 4256386 // <generalisation>
+	relation 4230402 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4256386 // <generalisation>
+	  b parent class_ref 3068802 // AbstractEditorWidget
       end
     end
 
@@ -6495,14 +6468,6 @@ ${inlines}
       explicit_switch_type ""
       mysql_decl ""
       
-      classrelation 4065794 // <generalisation>
-	relation 4039810 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 4065794 // <generalisation>
-	  b parent class_ref 316162 // QWidget
-      end
-
       classrelation 4066306 // <directional composition>
 	relation 4040322 *-->
 	  a role_name "" private
@@ -6553,6 +6518,14 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 4256258 // <generalisation>
+	relation 4230274 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 4256258 // <generalisation>
+	  b parent class_ref 3068802 // AbstractEditorWidget
       end
     end
 

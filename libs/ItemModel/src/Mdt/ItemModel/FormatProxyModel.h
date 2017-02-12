@@ -44,7 +44,7 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Set text alignment for column
      *
-     * \pre \a column must be in valid range ( 0 <= column < columnCount() )
+     * \pre \a column must be >= 0
      */
     void setTextAlignmentForColumn(int column, Qt::Alignment alignment);
 
@@ -66,7 +66,7 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Set text font for column
      *
-     * \pre \a column must be in valid range ( 0 <= column < columnCount() )
+     * \pre \a column must be >= 0
      */
     void setTextFontForColumn(int column, const QFont & font);
 

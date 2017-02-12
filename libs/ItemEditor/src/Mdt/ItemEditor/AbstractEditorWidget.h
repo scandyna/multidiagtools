@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,16 +24,14 @@
 #include "AbstractController.h"
 #include <QWidget>
 
+class QAbstractProxyModel;
+
 namespace Mdt{ namespace ItemEditor{
 
   /*! \brief Base class to create a editor widget
    *
    * AbstractEditorWidget does not own any controller,
    *  but references the one a subclass handles.
-   *  This permit to create specific controllers and editors,
-   *  but also requires some more work when subclassing AbstractEditorWidget.
-   *
-   * \todo This class seems to be obselete
    */
   class AbstractEditorWidget : public QWidget
   {
@@ -45,26 +43,44 @@ namespace Mdt{ namespace ItemEditor{
      */
     explicit AbstractEditorWidget(QWidget* parent = nullptr);
 
-    /*! \brief Get controller
+//     /*! \brief Get controller
+//      */
+//     AbstractController *controller() const
+//     {
+//       Q_ASSERT(pvController != nullptr);
+//       return pvController;
+//     }
+
+    /*! \brief Prepend a proxy model
+     *
+     * \pre \a proxyModel must be a valid pointer
      */
-    AbstractController *controller() const
-    {
-      Q_ASSERT(pvController != nullptr);
-      return pvController;
-    }
+    void prependProxyModel(QAbstractProxyModel *proxyModel);
+
+    /*! \brief Append a proxy model
+     *
+     * \pre \a proxyModel must be a valid pointer
+     */
+    void appendProxyModel(QAbstractProxyModel *proxyModel);
 
    protected:
 
-    /*! \brief Set controller
+    /*! \brief Get controller
      *
-     * Subclass that owns its controller
-     *  must tell it by calling this method.
+     * Subclass using a contrete controller must implement this method.
      */
-    virtual void setController(AbstractController *controller);
+    virtual AbstractController *abstractController() const = 0;
 
-   private:
+//     /*! \brief Set controller
+//      *
+//      * Subclass that owns its controller
+//      *  must tell it by calling this method.
+//      */
+//     virtual void setController(AbstractController *controller);
 
-    AbstractController *pvController;
+//    private:
+// 
+//     AbstractController *pvController;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

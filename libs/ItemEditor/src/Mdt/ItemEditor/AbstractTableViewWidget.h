@@ -21,7 +21,7 @@
 #ifndef MDT_ITEM_EDITOR_ABSTRACT_TABLE_VIEW_WIDGET_H
 #define MDT_ITEM_EDITOR_ABSTRACT_TABLE_VIEW_WIDGET_H
 
-///#include "AbstractEditorWidget.h"
+#include "AbstractEditorWidget.h"
 #include <QWidget>
 #include <QPointer>
 
@@ -42,7 +42,7 @@ namespace Mdt{ namespace ItemEditor{
 
   /*! \brief Common base for QTableView based editor
    */
-  class AbstractTableViewWidget : public QWidget
+  class AbstractTableViewWidget : public AbstractEditorWidget
   {
    Q_OBJECT
 
@@ -110,11 +110,11 @@ namespace Mdt{ namespace ItemEditor{
      */
     void resizeViewToContents();
 
-   protected:
-
-    /*! \brief Access controller
-     */
-    virtual AbstractController *refController() const = 0;
+//    protected:
+// 
+//     /*! \brief Access controller
+//      */
+//     virtual AbstractController *refController() const = 0;
 
    private:
 

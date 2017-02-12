@@ -44,11 +44,6 @@ void FormatProxyModelTest::cleanupTestCase()
  * Tests
  */
 
-void FormatProxyModelTest::setModelTest()
-{
-  QFAIL("Not complete");
-}
-
 void FormatProxyModelTest::textAlignmentTest()
 {
   /*
@@ -289,6 +284,29 @@ void FormatProxyModelTest::textFontSignalTest()
   roles = arguments.at(2).value< QVector<int> >();
   QCOMPARE(roles.size(), 1);
   QCOMPARE(roles.at(0), (int)Qt::FontRole);
+}
+
+void FormatProxyModelTest::setModelTest()
+{
+  /*
+   * Check that we can do setup before setting source model
+   */
+  FormatProxyModel proxyModel;
+  proxyModel.setTextAlignmentForColumn(0, Qt::AlignCenter);
+  proxyModel.setTextFontForColumn(1, QFont("Times", 12));
+  QCOMPARE(proxyModel.rowCount(), 0);
+  QCOMPARE(proxyModel.columnCount(), 0);
+  /*
+   * Set source model
+   */
+  VariantTableModel model;
+  model.resize(1, 2);
+  model.populateColumn(0, {1});
+  model.populateColumn(1, {"A"});
+  proxyModel.setSourceModel(&model);
+  // Check that format are still correct
+  QCOMPARE(getModelData(proxyModel, 0, 0, Qt::TextAlignmentRole), QVariant(Qt::AlignCenter));
+  QCOMPARE(getModelData(proxyModel, 0, 1, Qt::FontRole).value<QFont>().pointSize(), 12);
 }
 
 void FormatProxyModelTest::qtModelTest()

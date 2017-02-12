@@ -31,7 +31,6 @@ FormatProxyModel::FormatProxyModel(QObject* parent)
 void FormatProxyModel::setTextAlignmentForColumn(int column, Qt::Alignment alignment)
 {
   Q_ASSERT(column >= 0);
-  Q_ASSERT(column < columnCount());
 
   mTextAlignmentMap.setFormatForColumn(column, alignment);
   signalFormatChangedForColumn(column, Qt::TextAlignmentRole);
@@ -58,7 +57,6 @@ QVariant FormatProxyModel::textAlignmentForColumn(int column) const
 void FormatProxyModel::setTextFontForColumn(int column, const QFont& font)
 {
   Q_ASSERT(column >= 0);
-  Q_ASSERT(column < columnCount());
 
   mTextFontMap.setFormatForColumn(column, font);
   signalFormatChangedForColumn(column, Qt::FontRole);
@@ -103,6 +101,10 @@ QVariant FormatProxyModel::data(const QModelIndex & index, int role) const
 void FormatProxyModel::signalFormatChangedForColumn(int column, int role)
 {
   Q_ASSERT(column >= 0);
+
+  if(sourceModel() == nullptr){
+    return;
+  }
   Q_ASSERT(column < columnCount());
 
   const int n = rowCount();

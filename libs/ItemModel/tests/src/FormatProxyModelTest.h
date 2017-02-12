@@ -32,11 +32,11 @@ class FormatProxyModelTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void setModelTest();
   void textAlignmentTest();
   void textAlignmentSignalTest();
   void textFontTest();
   void textFontSignalTest();
+  void setModelTest();
   void qtModelTest();
   
   void getDiplayRoleDataBenchmark();

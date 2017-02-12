@@ -39,6 +39,11 @@ class TestFormEditionWidget : public Mdt::ItemEditor::AbstractEditorWidget, Ui::
 
  private:
 
+  Mdt::ItemEditor::AbstractController* abstractController() const override
+  {
+    return pvController;
+  }
+
   Mdt::ItemEditor::WidgetMapperController *pvController;
 };
 

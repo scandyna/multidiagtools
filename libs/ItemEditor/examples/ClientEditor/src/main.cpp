@@ -57,24 +57,24 @@ int main(int argc, char **argv)
   mainWindow.setWindowTitle("Client editor");
   mainWindow.show();
 
-  /// \todo to debug
-  TableViewWidget clientWidget2;
-  clientWidget2.controller()->setInsertLocation(TableViewController::InsertAtBeginning);
-  clientWidget2.setWindowTitle("Client 2");
-  clientWidget2.setModel(clientWidget->controller()->model());
-  clientWidget2.addEditionActionsToBottomArea();
-  clientWidget2.addInsertActionToBottomArea();
-  clientWidget2.addRemoveActionToBottomBar();
-  clientWidget2.show();
-
-  TableViewWidget clientWidget3;
-  clientWidget3.controller()->setInsertLocation(TableViewController::InsertAtEnd);
-  clientWidget3.setWindowTitle("Client 3");
-  clientWidget3.setModel(clientWidget->controller()->model());
-  clientWidget3.addEditionActionsToBottomArea();
-  clientWidget3.addInsertActionToBottomArea();
-  clientWidget3.addRemoveActionToBottomBar();
-  clientWidget3.show();
+//   /// \todo to debug
+//   TableViewWidget clientWidget2;
+//   clientWidget2.controller()->setInsertLocation(TableViewController::InsertAtBeginning);
+//   clientWidget2.setWindowTitle("Client 2");
+//   clientWidget2.setModel(clientWidget->controller()->model());
+//   clientWidget2.addEditionActionsToBottomArea();
+//   clientWidget2.addInsertActionToBottomArea();
+//   clientWidget2.addRemoveActionToBottomBar();
+//   clientWidget2.show();
+// 
+//   TableViewWidget clientWidget3;
+//   clientWidget3.controller()->setInsertLocation(TableViewController::InsertAtEnd);
+//   clientWidget3.setWindowTitle("Client 3");
+//   clientWidget3.setModel(clientWidget->controller()->model());
+//   clientWidget3.addEditionActionsToBottomArea();
+//   clientWidget3.addInsertActionToBottomArea();
+//   clientWidget3.addRemoveActionToBottomBar();
+//   clientWidget3.show();
 
   return app.exec();
 }
