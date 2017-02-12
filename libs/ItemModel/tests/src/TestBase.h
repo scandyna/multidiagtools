@@ -26,7 +26,7 @@
 #include <QtTest/QtTest>
 
 class QAbstractItemModel;
-class QSortFilterProxyModel;
+class QAbstractProxyModel;
 
 class TestBase : public QObject
 {
@@ -36,8 +36,8 @@ class TestBase : public QObject
 
   static void displayModel(QAbstractItemModel *model);
   static void displayModel(QAbstractItemModel & model);
-  static void displayModels(QAbstractItemModel *sourceModel, QSortFilterProxyModel *proxyModel);
-  static void displayModels(QAbstractItemModel & sourceModel, QSortFilterProxyModel & proxyModel);
+  static void displayModels(QAbstractItemModel *sourceModel, QAbstractProxyModel *proxyModel);
+  static void displayModels(QAbstractItemModel & sourceModel, QAbstractProxyModel & proxyModel);
   // Helper functions get/set data in a model
   static bool setModelData(QAbstractItemModel *model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
   static bool setModelData(QAbstractItemModel & model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);

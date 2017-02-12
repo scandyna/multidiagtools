@@ -8,6 +8,8 @@ set(SOURCES_FILES
     src/Mdt/ItemModel/Range.cpp
     src/Mdt/ItemModel/RowRange.cpp
     src/Mdt/ItemModel/ColumnRange.cpp
+    src/Mdt/ItemModel/ColumnFormatMapItem.cpp
+    src/Mdt/ItemModel/ColumnFormatMap.cpp
     src/Mdt/ItemModel/VariantTableModel.cpp
     src/Mdt/ItemModel/VariantTableModelItem.cpp
     src/Mdt/ItemModel/SortFilterProxyModel.cpp
@@ -21,6 +23,7 @@ set(SOURCES_FILES
     src/Mdt/ItemModel/RelationFilterProxyModel.cpp
     src/Mdt/ItemModel/ColumnSortStringAttributesList.cpp
     src/Mdt/ItemModel/SortProxyModel.cpp
+    src/Mdt/ItemModel/FormatProxyModel.cpp
     src/Mdt/ItemModel/ProxyModelContainer.cpp
     src/Mdt/ItemModel/RowColumnListBase.cpp
     src/Mdt/ItemModel/RowList.cpp
@@ -59,6 +62,7 @@ target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdterror${MDT
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdtalgorithm${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} "mdtfilterexpression${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} Qt5::Core)
+target_link_libraries(${LIBRARY_BIN_NAME}${MDTLIB_VERSION_SUFFIX} Qt5::Gui)
 
 # Translation files
 # # set(TS_FILES

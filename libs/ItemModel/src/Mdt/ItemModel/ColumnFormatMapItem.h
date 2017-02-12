@@ -18,39 +18,47 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
-#define MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
+#ifndef MDT_ITEM_MODEL_COLUMN_FORMAT_MAP_ITEM_H
+#define MDT_ITEM_MODEL_COLUMN_FORMAT_MAP_ITEM_H
 
-#include "TestBase.h"
+#include <QVariant>
+#include <QtGlobal>
 
-class RelationFilterProxyModelTest : public TestBase
-{
- Q_OBJECT
+namespace Mdt{ namespace ItemModel{
 
- private slots:
+  /*! \brief Item of a ColumnFormatMap
+   */
+  class ColumnFormatMapItem
+  {
+   public:
 
-  void initTestCase();
-  void cleanupTestCase();
+    /*! \brief Construct a item
+     *
+     * \pre \a column must be >= 0
+     * \pre \a value must not be null
+     */
+    explicit ColumnFormatMapItem(int column, const QVariant & value);
 
-  void setModelTest();
+    /*! \brief Get column
+     */
+    int column() const
+    {
+      return mColumn;
+    }
 
-  void parentModelMatchRowTest();
-  void filterTest();
-  void filterBenchmark();
-  void filterBenchmark_data();
+    /*! \brief Get value
+     */
+    QVariant value() const
+    {
+      return mValue;
+    }
 
-  void filterGetCurrentSourceRowListTest();
+   private:
 
-  void filterRoleTest();
-  void setterEventTest();
-  void dynamicFilterTest();
-  void dynamicFilterMultiColumnKeyTest();
-  void dynamicFilterInsertTest();
-  void parentModelKeyChangeTest();
-  void parentModelKeyChangeRolesTest();
-  void parentModelKeyMultiColumnKeyChangeTest();
+    int mColumn;
+    QVariant mValue;
+  };
 
-  void qtModelTest();
-};
+}} // namespace Mdt{ namespace ItemModel{
 
-#endif // #ifndef MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
+#endif // #ifndef MDT_ITEM_MODEL_COLUMN_FORMAT_MAP_ITEM_H

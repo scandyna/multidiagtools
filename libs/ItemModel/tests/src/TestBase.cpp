@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "TestBase.h"
 #include <QAbstractItemModel>
-#include <QSortFilterProxyModel>
+#include <QAbstractProxyModel>
 #include <QModelIndex>
 #include <QListView>
 #include <QTableView>
@@ -65,7 +65,7 @@ void TestBase::displayModel(QAbstractItemModel& model)
   displayModel(&model);
 }
 
-void TestBase::displayModels(QAbstractItemModel* sourceModel, QSortFilterProxyModel* proxyModel)
+void TestBase::displayModels(QAbstractItemModel* sourceModel, QAbstractProxyModel* proxyModel)
 {
   Q_ASSERT(sourceModel != nullptr);
   Q_ASSERT(proxyModel != nullptr);
@@ -91,7 +91,7 @@ void TestBase::displayModels(QAbstractItemModel* sourceModel, QSortFilterProxyMo
   dialog.exec();
 }
 
-void TestBase::displayModels(QAbstractItemModel& sourceModel, QSortFilterProxyModel& proxyModel)
+void TestBase::displayModels(QAbstractItemModel& sourceModel, QAbstractProxyModel& proxyModel)
 {
   displayModels(&sourceModel, &proxyModel);
 }

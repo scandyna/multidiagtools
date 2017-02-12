@@ -18,39 +18,17 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
-#define MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
+#include "ColumnFormatMapItem.h"
 
-#include "TestBase.h"
+namespace Mdt{ namespace ItemModel{
 
-class RelationFilterProxyModelTest : public TestBase
+ColumnFormatMapItem::ColumnFormatMapItem(int column, const QVariant & value)
+ : mColumn(column),
+   mValue(value)
 {
- Q_OBJECT
+  Q_ASSERT(mColumn >= 0);
+  Q_ASSERT(!mValue.isNull());
+}
 
- private slots:
 
-  void initTestCase();
-  void cleanupTestCase();
-
-  void setModelTest();
-
-  void parentModelMatchRowTest();
-  void filterTest();
-  void filterBenchmark();
-  void filterBenchmark_data();
-
-  void filterGetCurrentSourceRowListTest();
-
-  void filterRoleTest();
-  void setterEventTest();
-  void dynamicFilterTest();
-  void dynamicFilterMultiColumnKeyTest();
-  void dynamicFilterInsertTest();
-  void parentModelKeyChangeTest();
-  void parentModelKeyChangeRolesTest();
-  void parentModelKeyMultiColumnKeyChangeTest();
-
-  void qtModelTest();
-};
-
-#endif // #ifndef MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
+}} // namespace Mdt{ namespace ItemModel{

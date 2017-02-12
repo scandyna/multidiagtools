@@ -845,8 +845,79 @@ void RelationFilterProxyModelTest::parentModelKeyChangeTest()
   QCOMPARE(getModelData(proxyModel, 2, 0), QVariant(25));
   QCOMPARE(getModelData(proxyModel, 2, 1), QVariant(1));
   QCOMPARE(getModelData(proxyModel, 2, 2), QVariant("S25"));
+}
+
+void RelationFilterProxyModelTest::parentModelKeyChangeRolesTest()
+{
+  /*
+   * Setup parent model
+   * -------------
+   * | Id | Name |
+   * -------------
+   * | 1  | C1   |
+   * -------------
+   */
+  VariantTableModel clientModel;
+  clientModel.resize(1, 2);
+  clientModel.populateColumn(0, {1});
+  clientModel.populateColumn(1, {"C1"});
+  /*
+   * Setup source model
+   * ------------------------
+   * | Id | Cli_Id | Street |
+   * ------------------------
+   * | 11 |   1    |   A    |
+   * ------------------------
+   */
+  VariantTableModel addressModel;
+  addressModel.resize(1, 3);
+  addressModel.populateColumn(0, {11});
+  addressModel.populateColumn(1, {1});
+  addressModel.populateColumn(2, {"A"});
+  /*
+   * Setup proxy model
+   */
+  ParentModelColumn clientId(0);
+  FilterColumn addressClientId(1);
+  RelationFilterProxyModel proxyModel;
+  proxyModel.setParentModel(&clientModel);
+  proxyModel.setSourceModel(&addressModel);
+  proxyModel.setFilter(addressClientId == clientId);
+  proxyModel.setDynamicSortFilter(true);
+  /*
+   * Filter on client 1:
+   *  Address model              Proxy model
+   * ------------------------   ------------------------
+   * | Id | Cli_Id | Street |   | Id | Cli_Id | Street |
+   * ------------------------   ------------------------
+   * | 11 |   1    |   A    |   | 11 |   1    |   A    |
+   * ------------------------   ------------------------
+   */
+  proxyModel.setParentModelMatchRow(0);
+  QCOMPARE(proxyModel.rowCount(), 1);
+  QCOMPARE(getModelData(proxyModel, 0, 0), QVariant(11));
+  QCOMPARE(getModelData(proxyModel, 0, 1), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 0, 2), QVariant("A"));
+  /*
+   * Set a tool tip in client ID (must do nothing)
+   *  Address model              Proxy model
+   * ------------------------   ------------------------
+   * | Id | Cli_Id | Street |   | Id | Cli_Id | Street |
+   * ------------------------   ------------------------
+   * | 11 |   1    |   A    |   | 11 |   1    |   A    |
+   * ------------------------   ------------------------
+   */
   
-  QFAIL("Check with roles missing");
+  
+  /*
+   * Check changing Edit role - model pass it in dataChanged
+   */
+  
+  /*
+   * Check changing edit role - model not pass in dataChanged
+   */
+
+  QFAIL("Not complete");
 }
 
 void RelationFilterProxyModelTest::parentModelKeyMultiColumnKeyChangeTest()

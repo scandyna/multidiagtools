@@ -9,22 +9,23 @@ diagrams
     968 908 100 21 0 0
   classdiagram_ref 3274626 // SortFilterProxyModel
     968 908 100 18 0 0
-  active  classdiagram_ref 3221890 // RelationFilterExpression
+  classdiagram_ref 3307522 // FormatProxyModel
+    120 110 100 4 0 0
+  active  classdiagram_ref 3307778 // FormatMap
     968 908 100 18 0 0
 end
 show_stereotypes
-selected operation_ref 5304322 // fromRelationKey
+selected operation_ref 5326466 // clearFormatForColumn
 open
   
   package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
-  classview_ref 1603842 // Terminals
-  classview_ref 1735554 // RelationKeyTranform
-  classview_ref 1735682 // GreatestColumnTransform
-  classview_ref 1702914 // Key
-  classview_ref 1630466 // Filter
-  class_ref 3695362 // RelationFilterExpression
-  classrelation_ref 4101506 // <directional composition>
+  classview_ref 1709442 // RowAndColumnList
+  classview_ref 1656834 // Relation
+  attribute_ref 3325954 // Value
+  operation_ref 5326466 // clearFormatForColumn
+  operation_ref 5312002 // formatForColumn
+  class_ref 3795458 // FormatProxyModel
   classview_ref 1287042 // Controller
   class_ref 3601538 // ControllerRelationItemList
   

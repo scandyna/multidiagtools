@@ -18,12 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
-#define MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
+#ifndef MDT_ITEM_MODEL_COLUMN_FORMAT_TEST_H
+#define MDT_ITEM_MODEL_COLUMN_FORMAT_TEST_H
 
 #include "TestBase.h"
 
-class RelationFilterProxyModelTest : public TestBase
+class ColumnFormatTest : public TestBase
 {
  Q_OBJECT
 
@@ -32,25 +32,16 @@ class RelationFilterProxyModelTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
-  void setModelTest();
+  void mapItemQFontTest();
+  void mapItemQFlagsEnumTest();
+  void mapItemQBrushTest();
 
-  void parentModelMatchRowTest();
-  void filterTest();
-  void filterBenchmark();
-  void filterBenchmark_data();
+  void mapQFontTest();
+  void mapQFlagsEnumTest();
+  void mapQBrushTest();
 
-  void filterGetCurrentSourceRowListTest();
-
-  void filterRoleTest();
-  void setterEventTest();
-  void dynamicFilterTest();
-  void dynamicFilterMultiColumnKeyTest();
-  void dynamicFilterInsertTest();
-  void parentModelKeyChangeTest();
-  void parentModelKeyChangeRolesTest();
-  void parentModelKeyMultiColumnKeyChangeTest();
-
-  void qtModelTest();
+  void mapQFontBenchmark();
+  void mapQFlagsEnumBenchmark();
 };
 
-#endif // #ifndef MDT_ITEM_MODEL_RELATION_FILTER_PROXY_MODEL_TEST_H
+#endif // #ifndef MDT_ITEM_MODEL_COLUMN_FORMAT_TEST_H
