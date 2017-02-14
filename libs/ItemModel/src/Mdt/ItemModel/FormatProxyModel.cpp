@@ -79,6 +79,24 @@ QVariant FormatProxyModel::textFontForColumn(int column) const
   return mTextFontMap.formatForColumn(column);
 }
 
+void FormatProxyModel::setTextColorForColumn(int column, const QColor& color)
+{
+  Q_ASSERT(column >= 0);
+}
+
+void FormatProxyModel::clearTextColorForColumn(int column)
+{
+  Q_ASSERT(column >= 0);
+}
+
+QVariant FormatProxyModel::foregroundBrushForColumn(int column) const
+{
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < columnCount());
+
+  return QVariant();
+}
+
 QVariant FormatProxyModel::data(const QModelIndex & index, int role) const
 {
   if(!index.isValid()){

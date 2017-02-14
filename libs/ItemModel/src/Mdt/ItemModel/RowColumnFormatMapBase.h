@@ -18,74 +18,59 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_COLUMN_FORMAT_MAP_H
-#define MDT_ITEM_MODEL_COLUMN_FORMAT_MAP_H
+#ifndef MDT_ITEM_MODEL_ROW_COLUMN_FORMAT_MAP_BASE_H
+#define MDT_ITEM_MODEL_ROW_COLUMN_FORMAT_MAP_BASE_H
 
 #include "ColumnFormatMapItem.h"
-
-#include "RowColumnFormatMapBase.h"
 #include <QVariant>
 #include <QtGlobal>
 #include <vector>
 
 namespace Mdt{ namespace ItemModel{
 
-  /*! \brief Stores formats for certain column in a item model
+  /*! \brief Base class for RowFormatMap and ColumnFormatMap
    */
-  class ColumnFormatMap
+  class RowColumnFormatMapBase
   {
    public:
 
-    /*! \brief Set format for given column
+    /*! \brief Set a format for index
      *
-     * \pre \a column must be >= 0
+     * \pre \a index must be >= 0
      */
-    template<typename T>
-    void setFormatForColumn(int column, const T & format)
-    {
-      Q_ASSERT(column >= 0);
-      mBase.setFormatVariantForIndex(column, QVariant(format));
-      //setFormatVariantForColumn(column, QVariant(format));
-    }
+    void setFormatVariantForIndex(int index, const QVariant & format);
 
-    /*! \brief Clear format for given column
+    /*! \brief Clear format for given index
      *
-     * Does nothing if no format was set for \a column .
+     * Does nothing if no format was set for \a index .
      *
-     * \pre \a column must be >= 0
+     * \pre \a index must be >= 0
      */
-    void clearFormatForColumn(int column);
+    void clearFormatForIndex(int index);
 
-    /*! \brief Get format for given column
+    /*! \brief Get format for given index
      *
-     * Returns a QVariant with value of type passed in setFormatForColumn()
-     *  if a format was set for \a column,
+     * Returns a QVariant with value of type passed in setFormatVariantForIndex()
+     *  if a format was set for \a index,
      *  otherwise a null QVariant.
      *
-     * \pre \a column must be >= 0
+     * \pre \a index must be >= 0
      */
-    QVariant formatForColumn(int column) const
-    {
-      Q_ASSERT(column >= 0);
-      return mBase.formatForIndex(column);
-    }
+    QVariant formatForIndex(int index) const;
 
    private:
-
-    RowColumnFormatMapBase mBase;
 
     using iterator = std::vector<ColumnFormatMapItem>::iterator;
     using const_iterator = std::vector<ColumnFormatMapItem>::const_iterator;
 
-    const_iterator iteratorForColumn(int column) const;
-    iterator iteratorForColumnW(int column);
+    const_iterator iteratorForIndex(int column) const;
+    iterator iteratorForIndexW(int column);
 
 //     int itemIndexForColumn(int column) const;
-    void setFormatVariantForColumn(int column, const QVariant & format);
   
     std::vector<ColumnFormatMapItem> mItems;
   };
 
 }} // namespace Mdt{ namespace ItemModel{
 
-#endif // #ifndef MDT_ITEM_MODEL_COLUMN_FORMAT_MAP_H
+#endif // #ifndef MDT_ITEM_MODEL_ROW_COLUMN_FORMAT_MAP_BASE_H

@@ -26,6 +26,7 @@
 #include <QVariant>
 #include <QFont>
 #include <QBrush>
+#include <QColor>
 #include <Qt>
 
 namespace Mdt{ namespace ItemModel{
@@ -86,6 +87,28 @@ namespace Mdt{ namespace ItemModel{
      */
     QVariant textFontForColumn(int column) const;
 
+    /*! \brief Set text color for column
+     *
+     * \pre \a column must be >= 0
+     */
+    void setTextColorForColumn(int column, const QColor & color);
+
+    /*! \brief Clear text color for column
+     *
+     * \pre \a column must be >= 0
+     */
+    void clearTextColorForColumn(int column);
+
+    /*! \brief Get foreground brush for given column
+     *
+     * Returns a QVariant with value of type QBrush
+     *  if a text color was set for \a column,
+     *  otherwise a null QVariant.
+     *
+     * \pre \a column must be in valid range ( 0 <= column < columnCount() )
+     */
+    QVariant foregroundBrushForColumn(int column) const;
+
     /*! \brief Get data for given index and role
      */
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
@@ -96,6 +119,7 @@ namespace Mdt{ namespace ItemModel{
 
     ColumnFormatMap mTextAlignmentMap;
     ColumnFormatMap mTextFontMap;
+    ColumnFormatMap mForegroundBrushColumnMap;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

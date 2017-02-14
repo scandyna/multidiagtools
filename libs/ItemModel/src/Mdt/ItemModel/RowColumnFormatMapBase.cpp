@@ -18,37 +18,48 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ColumnFormatMap.h"
+#include "RowColumnFormatMapBase.h"
 #include <algorithm>
 
 // #include <QDebug>
 
 namespace Mdt{ namespace ItemModel{
 
-void ColumnFormatMap::clearFormatForColumn(int column)
+void RowColumnFormatMapBase::setFormatVariantForIndex(int index, const QVariant & format)
 {
-  Q_ASSERT(column >= 0);
+  Q_ASSERT(index >= 0);
 
-  mBase.clearFormatForIndex(column);
-//   const auto it = iteratorForColumn(column);
-//   if(it != mItems.cend()){
-//     mItems.erase(it);
-//   }
+  auto it = iteratorForIndexW(index);
+  if(it == mItems.end()){
+    mItems.emplace_back(index, format);
+  }else{
+    *it = ColumnFormatMapItem(index, format);
+  }
 }
 
-// QVariant ColumnFormatMap::formatForColumn(int column) const
-// {
-//   Q_ASSERT(column >= 0);
-// 
-//   const auto it = iteratorForColumn(column);
-//   if(it != mItems.cend()){
-//     return it->value();
-//   }
-// 
-//   return QVariant();
-// }
+void RowColumnFormatMapBase::clearFormatForIndex(int index)
+{
+  Q_ASSERT(index >= 0);
 
-ColumnFormatMap::const_iterator ColumnFormatMap::iteratorForColumn(int column) const
+  const auto it = iteratorForIndex(index);
+  if(it != mItems.cend()){
+    mItems.erase(it);
+  }
+}
+
+QVariant RowColumnFormatMapBase::formatForIndex(int index) const
+{
+  Q_ASSERT(index >= 0);
+
+  const auto it = iteratorForIndex(index);
+  if(it != mItems.cend()){
+    return it->value();
+  }
+
+  return QVariant();
+}
+
+RowColumnFormatMapBase::const_iterator RowColumnFormatMapBase::iteratorForIndex(int column) const
 {
   Q_ASSERT(column >= 0);
 
@@ -58,7 +69,7 @@ ColumnFormatMap::const_iterator ColumnFormatMap::iteratorForColumn(int column) c
   return std::find_if(mItems.cbegin(), mItems.cend(), pred);
 }
 
-ColumnFormatMap::iterator ColumnFormatMap::iteratorForColumnW(int column)
+RowColumnFormatMapBase::iterator RowColumnFormatMapBase::iteratorForIndexW(int column)
 {
   Q_ASSERT(column >= 0);
 
@@ -68,7 +79,7 @@ ColumnFormatMap::iterator ColumnFormatMap::iteratorForColumnW(int column)
   return std::find_if(mItems.begin(), mItems.end(), pred);
 }
 
-// int ColumnFormatMap::itemIndexForColumn(int column) const
+// int RowColumnFormatMapBase::itemIndexForColumn(int column) const
 // {
 //   Q_ASSERT(column >= 0);
 // 
@@ -81,24 +92,5 @@ ColumnFormatMap::iterator ColumnFormatMap::iteratorForColumnW(int column)
 // 
 //   return it - mItems.cbegin();
 // }
-
-void ColumnFormatMap::setFormatVariantForColumn(int column, const QVariant & format)
-{
-  Q_ASSERT(column >= 0);
-
-  auto it = iteratorForColumnW(column);
-  if(it == mItems.end()){
-    mItems.emplace_back(column, format);
-  }else{
-    *it = ColumnFormatMapItem(column, format);
-  }
-
-//   const int index = itemIndexForColumn(column);
-//   if(index >= 0){
-//     mItems[index] = ColumnFormatMapItem(column, format);
-//   }else{
-//     mItems.emplace_back(column, format);
-//   }
-}
 
 }} // namespace Mdt{ namespace ItemModel{
