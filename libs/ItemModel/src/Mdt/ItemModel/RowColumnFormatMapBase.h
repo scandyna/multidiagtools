@@ -21,7 +21,7 @@
 #ifndef MDT_ITEM_MODEL_ROW_COLUMN_FORMAT_MAP_BASE_H
 #define MDT_ITEM_MODEL_ROW_COLUMN_FORMAT_MAP_BASE_H
 
-#include "ColumnFormatMapItem.h"
+#include "RowOrColumnFormatMapItem.h"
 #include <QVariant>
 #include <QtGlobal>
 #include <vector>
@@ -60,15 +60,15 @@ namespace Mdt{ namespace ItemModel{
 
    private:
 
-    using iterator = std::vector<ColumnFormatMapItem>::iterator;
-    using const_iterator = std::vector<ColumnFormatMapItem>::const_iterator;
+    using iterator = std::vector<RowOrColumnFormatMapItem>::iterator;
+    using const_iterator = std::vector<RowOrColumnFormatMapItem>::const_iterator;
 
     const_iterator iteratorForIndex(int column) const;
     iterator iteratorForIndexW(int column);
 
 //     int itemIndexForColumn(int column) const;
   
-    std::vector<ColumnFormatMapItem> mItems;
+    std::vector<RowOrColumnFormatMapItem> mItems;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

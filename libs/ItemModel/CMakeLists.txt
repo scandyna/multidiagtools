@@ -8,8 +8,9 @@ set(SOURCES_FILES
     src/Mdt/ItemModel/Range.cpp
     src/Mdt/ItemModel/RowRange.cpp
     src/Mdt/ItemModel/ColumnRange.cpp
-    src/Mdt/ItemModel/ColumnFormatMapItem.cpp
+    src/Mdt/ItemModel/RowOrColumnFormatMapItem.cpp
     src/Mdt/ItemModel/RowColumnFormatMapBase.cpp
+    src/Mdt/ItemModel/RowFormatMap.cpp
     src/Mdt/ItemModel/ColumnFormatMap.cpp
     src/Mdt/ItemModel/VariantTableModel.cpp
     src/Mdt/ItemModel/VariantTableModelItem.cpp

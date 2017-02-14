@@ -33,7 +33,7 @@ void RowColumnFormatMapBase::setFormatVariantForIndex(int index, const QVariant 
   if(it == mItems.end()){
     mItems.emplace_back(index, format);
   }else{
-    *it = ColumnFormatMapItem(index, format);
+    *it = RowOrColumnFormatMapItem(index, format);
   }
 }
 
@@ -63,8 +63,8 @@ RowColumnFormatMapBase::const_iterator RowColumnFormatMapBase::iteratorForIndex(
 {
   Q_ASSERT(column >= 0);
 
-  const auto pred = [column](const ColumnFormatMapItem & item){
-    return item.column() == column;
+  const auto pred = [column](const RowOrColumnFormatMapItem & item){
+    return item.index() == column;
   };
   return std::find_if(mItems.cbegin(), mItems.cend(), pred);
 }
@@ -73,8 +73,8 @@ RowColumnFormatMapBase::iterator RowColumnFormatMapBase::iteratorForIndexW(int c
 {
   Q_ASSERT(column >= 0);
 
-  const auto pred = [column](const ColumnFormatMapItem & item){
-    return item.column() == column;
+  const auto pred = [column](const RowOrColumnFormatMapItem & item){
+    return item.index() == column;
   };
   return std::find_if(mItems.begin(), mItems.end(), pred);
 }

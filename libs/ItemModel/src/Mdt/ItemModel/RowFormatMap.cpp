@@ -18,47 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_COLUMN_FORMAT_MAP_ITEM_H
-#define MDT_ITEM_MODEL_COLUMN_FORMAT_MAP_ITEM_H
-
-#include <QVariant>
-#include <QtGlobal>
+#include "RowFormatMap.h"
 
 namespace Mdt{ namespace ItemModel{
 
-  /*! \brief Item of a ColumnFormatMap
-   */
-  class ColumnFormatMapItem
-  {
-   public:
+void RowFormatMap::clearFormatForRow(int row)
+{
+  Q_ASSERT(row >= 0);
 
-    /*! \brief Construct a item
-     *
-     * \pre \a column must be >= 0
-     * \pre \a value must not be null
-     */
-    explicit ColumnFormatMapItem(int column, const QVariant & value);
-
-    /*! \brief Get column
-     */
-    int column() const
-    {
-      return mColumn;
-    }
-
-    /*! \brief Get value
-     */
-    QVariant value() const
-    {
-      return mValue;
-    }
-
-   private:
-
-    int mColumn;
-    QVariant mValue;
-  };
+  mBase.clearFormatForIndex(row);
+}
 
 }} // namespace Mdt{ namespace ItemModel{
-
-#endif // #ifndef MDT_ITEM_MODEL_COLUMN_FORMAT_MAP_ITEM_H

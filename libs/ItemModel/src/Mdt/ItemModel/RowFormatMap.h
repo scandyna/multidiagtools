@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_COLUMN_FORMAT_MAP_H
-#define MDT_ITEM_MODEL_COLUMN_FORMAT_MAP_H
+#ifndef MDT_ITEM_MODEL_ROW_FORMAT_MAP_H
+#define MDT_ITEM_MODEL_ROW_FORMAT_MAP_H
 
 #include "RowColumnFormatMapBase.h"
 #include <QVariant>
@@ -27,43 +27,43 @@
 
 namespace Mdt{ namespace ItemModel{
 
-  /*! \brief Stores formats for certain column in a item model
+  /*! \brief Stores formats for certain row in a item model
    */
-  class ColumnFormatMap
+  class RowFormatMap
   {
    public:
 
-    /*! \brief Set format for given column
+    /*! \brief Set format for given row
      *
-     * \pre \a column must be >= 0
+     * \pre \a row must be >= 0
      */
     template<typename T>
-    void setFormatForColumn(int column, const T & format)
+    void setFormatForRow(int row, const T & format)
     {
-      Q_ASSERT(column >= 0);
-      mBase.setFormatVariantForIndex(column, QVariant(format));
+      Q_ASSERT(row >= 0);
+      mBase.setFormatVariantForIndex(row, QVariant(format));
     }
 
-    /*! \brief Clear format for given column
+    /*! \brief Clear format for given row
      *
-     * Does nothing if no format was set for \a column .
+     * Does nothing if no format was set for \a row .
      *
-     * \pre \a column must be >= 0
+     * \pre \a row must be >= 0
      */
-    void clearFormatForColumn(int column);
+    void clearFormatForRow(int row);
 
-    /*! \brief Get format for given column
+    /*! \brief Get format for given row
      *
-     * Returns a QVariant with value of type passed in setFormatForColumn()
-     *  if a format was set for \a column,
+     * Returns a QVariant with value of type passed in setFormatForRow()
+     *  if a format was set for \a row,
      *  otherwise a null QVariant.
      *
-     * \pre \a column must be >= 0
+     * \pre \a row must be >= 0
      */
-    QVariant formatForColumn(int column) const
+    QVariant formatForRow(int row) const
     {
-      Q_ASSERT(column >= 0);
-      return mBase.formatForIndex(column);
+      Q_ASSERT(row >= 0);
+      return mBase.formatForIndex(row);
     }
 
    private:
@@ -73,4 +73,4 @@ namespace Mdt{ namespace ItemModel{
 
 }} // namespace Mdt{ namespace ItemModel{
 
-#endif // #ifndef MDT_ITEM_MODEL_COLUMN_FORMAT_MAP_H
+#endif // #ifndef MDT_ITEM_MODEL_ROW_FORMAT_MAP_H

@@ -18,15 +18,17 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ColumnFormatMap.h"
+#include "RowOrColumnFormatMapItem.h"
 
 namespace Mdt{ namespace ItemModel{
 
-void ColumnFormatMap::clearFormatForColumn(int column)
+RowOrColumnFormatMapItem::RowOrColumnFormatMapItem(int index, const QVariant & value)
+ : mIndex(index),
+   mValue(value)
 {
-  Q_ASSERT(column >= 0);
-
-  mBase.clearFormatForIndex(column);
+  Q_ASSERT(mIndex >= 0);
+  Q_ASSERT(!mValue.isNull());
 }
+
 
 }} // namespace Mdt{ namespace ItemModel{

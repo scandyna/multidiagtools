@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "FormatMapTest.h"
+#include "Mdt/ItemModel/RowFormatMap.h"
 #include "Mdt/ItemModel/ColumnFormatMap.h"
 #include <QFont>
 #include <Qt>
@@ -46,23 +47,23 @@ void FormatMapTest::cleanupTestCase()
 void FormatMapTest::rowOrColumnItemQFontTest()
 {
   QFont font("Times", 10);
-  ColumnFormatMapItem item(0, font);
-  QCOMPARE(item.column(), 0);
+  RowOrColumnFormatMapItem item(0, font);
+  QCOMPARE(item.index(), 0);
   QCOMPARE(item.value().value<QFont>().pointSize(), 10);
 }
 
 void FormatMapTest::rowOrColumnItemQFlagsEnumTest()
 {
-  ColumnFormatMapItem item(0, Qt::AlignCenter);
-  QCOMPARE(item.column(), 0);
+  RowOrColumnFormatMapItem item(0, Qt::AlignCenter);
+  QCOMPARE(item.index(), 0);
   QCOMPARE(item.value(), QVariant(Qt::AlignCenter));
 }
 
 void FormatMapTest::rowOrColumnItemQBrushTest()
 {
   QBrush brush(QColor(50, 100, 200));
-  ColumnFormatMapItem item(0, brush);
-  QCOMPARE(item.column(), 0);
+  RowOrColumnFormatMapItem item(0, brush);
+  QCOMPARE(item.index(), 0);
   QCOMPARE(item.value().value<QBrush>().color().red(), 50);
   QCOMPARE(item.value().value<QBrush>().color().green(), 100);
   QCOMPARE(item.value().value<QBrush>().color().blue(), 200);
@@ -166,7 +167,11 @@ void FormatMapTest::rowColumnMapBaseQBrushTest()
 
 void FormatMapTest::rowMapQFlagsEnumTest()
 {
-  QFAIL("Not complete");
+  RowFormatMap map;
+  map.setFormatForRow(1, Qt::AlignLeft);
+  QCOMPARE(map.formatForRow(1), QVariant(Qt::AlignLeft));
+  map.clearFormatForRow(1);
+  QVERIFY(map.formatForRow(1).isNull());
 }
 
 void FormatMapTest::columnMapQFlagsEnumTest()
