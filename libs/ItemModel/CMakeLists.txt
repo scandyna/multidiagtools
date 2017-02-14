@@ -12,6 +12,7 @@ set(SOURCES_FILES
     src/Mdt/ItemModel/RowColumnFormatMapBase.cpp
     src/Mdt/ItemModel/RowFormatMap.cpp
     src/Mdt/ItemModel/ColumnFormatMap.cpp
+    src/Mdt/ItemModel/FormatMap.cpp
     src/Mdt/ItemModel/VariantTableModel.cpp
     src/Mdt/ItemModel/VariantTableModelItem.cpp
     src/Mdt/ItemModel/SortFilterProxyModel.cpp

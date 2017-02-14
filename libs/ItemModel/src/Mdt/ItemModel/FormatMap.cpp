@@ -18,38 +18,31 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_FORMAT_MAP_TEST_H
-#define MDT_ITEM_MODEL_FORMAT_MAP_TEST_H
+#include "FormatMap.h"
 
-#include "TestBase.h"
+namespace Mdt{ namespace ItemModel{
 
-class FormatMapTest : public TestBase
+void FormatMap::clearFormatForRow(int row)
 {
- Q_OBJECT
+  Q_ASSERT(row >= 0);
 
- private slots:
+  mRowMap.clearFormatForRow(row);
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+void FormatMap::clearFormatForColumn(int column)
+{
+  Q_ASSERT(column >= 0);
 
-  void rowOrColumnItemQFontTest();
-  void rowOrColumnItemQFlagsEnumTest();
-  void rowOrColumnItemQBrushTest();
+  mColumnMap.clearFormatForColumn(column);
+}
 
-  void rowColumnMapBaseQFontTest();
-  void rowColumnMapBaseQFlagsEnumTest();
-  void rowColumnMapBaseQBrushTest();
 
-  void rowMapQFlagsEnumTest();
-  void columnMapQFlagsEnumTest();
+QVariant FormatMap::formatForIndex(int row, int column) const
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(column >= 0);
 
-  void mapIndexQFlagsEnumTest();
-  void mapRowQFlagsEnumTest();
-  void mapColumnQFlagsEnumTest();
-  void mapPriorityQFlagsEnumTest();
+  return QVariant();
+}
 
-  void mapQFontBenchmark();
-  void mapQFlagsEnumBenchmark();
-};
-
-#endif // #ifndef MDT_ITEM_MODEL_FORMAT_MAP_TEST_H
+}} // namespace Mdt{ namespace ItemModel{

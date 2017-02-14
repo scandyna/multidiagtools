@@ -21,6 +21,7 @@
 #include "FormatMapTest.h"
 #include "Mdt/ItemModel/RowFormatMap.h"
 #include "Mdt/ItemModel/ColumnFormatMap.h"
+#include "Mdt/ItemModel/FormatMap.h"
 #include <QFont>
 #include <Qt>
 #include <QBrush>
@@ -183,6 +184,35 @@ void FormatMapTest::columnMapQFlagsEnumTest()
   QVERIFY(map.formatForColumn(2).isNull());
 }
 
+void FormatMapTest::mapIndexQFlagsEnumTest()
+{
+  QFAIL("Not complete");
+}
+
+void FormatMapTest::mapRowQFlagsEnumTest()
+{
+  FormatMap map;
+  map.setFormatForRow(1, Qt::AlignLeft);
+  QCOMPARE(map.formatForIndex(1, 0), QVariant(Qt::AlignLeft));
+  map.clearFormatForRow(1);
+  QVERIFY(map.formatForIndex(1, 0).isNull());
+}
+
+void FormatMapTest::mapColumnQFlagsEnumTest()
+{
+  FormatMap map;
+  map.setFormatForColumn(2, Qt::AlignCenter);
+  QCOMPARE(map.formatForIndex(0, 2), QVariant(Qt::AlignCenter));
+  map.clearFormatForColumn(2);
+  QVERIFY(map.formatForIndex(0, 2).isNull());
+}
+
+void FormatMapTest::mapPriorityQFlagsEnumTest()
+{
+  QFAIL("Not complete");
+}
+
+/// \todo adapt benchmarks to FormatMap
 void FormatMapTest::mapQFontBenchmark()
 {
   ColumnFormatMap map;
