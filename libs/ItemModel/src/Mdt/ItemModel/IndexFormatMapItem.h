@@ -18,46 +18,56 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_FORMAT_MAP_TEST_H
-#define MDT_ITEM_MODEL_FORMAT_MAP_TEST_H
+#ifndef MDT_ITEM_MODEL_INDEX_FORMAT_MAP_ITEM_H
+#define MDT_ITEM_MODEL_INDEX_FORMAT_MAP_ITEM_H
 
-#include "TestBase.h"
+#include <QVariant>
+#include <QtGlobal>
 
-class FormatMapTest : public TestBase
-{
- Q_OBJECT
+namespace Mdt{ namespace ItemModel{
 
- private slots:
+  /*! \brief Item of a IndexFormatMap
+   */
+  class IndexFormatMapItem
+  {
+   public:
 
-  void initTestCase();
-  void cleanupTestCase();
+    /*! \brief Construct a item
+     *
+     * \pre \a row must be >= 0
+     * \pre \a column must be >= 0
+     * \pre \a value must not be null
+     */
+    explicit IndexFormatMapItem(int row, int column, const QVariant & value);
 
-  void indexItemQFontTest();
-  void indexItemQFlagsEnumTest();
-  void indexItemQBrushTest();
+    /*! \brief Get row
+     */
+    int row() const
+    {
+      return mRow;
+    }
 
-  void indexMapQFontTest();
-  void indexMapQFlagsEnumTest();
-  void indexMapQBrushTest();
+    /*! \brief Get column
+     */
+    int column() const
+    {
+      return mColumn;
+    }
 
-  void rowOrColumnItemQFontTest();
-  void rowOrColumnItemQFlagsEnumTest();
-  void rowOrColumnItemQBrushTest();
+    /*! \brief Get value
+     */
+    QVariant value() const
+    {
+      return mValue;
+    }
 
-  void rowColumnMapBaseQFontTest();
-  void rowColumnMapBaseQFlagsEnumTest();
-  void rowColumnMapBaseQBrushTest();
+   private:
 
-  void rowMapQFlagsEnumTest();
-  void columnMapQFlagsEnumTest();
+    int mRow;
+    int mColumn;
+    QVariant mValue;
+  };
 
-  void mapIndexQFlagsEnumTest();
-  void mapRowQFlagsEnumTest();
-  void mapColumnQFlagsEnumTest();
-  void mapPriorityQFlagsEnumTest();
+}} //namespace Mdt{ namespace ItemModel{
 
-  void mapQFontBenchmark();
-  void mapQFlagsEnumBenchmark();
-};
-
-#endif // #ifndef MDT_ITEM_MODEL_FORMAT_MAP_TEST_H
+#endif // #ifndef MDT_ITEM_MODEL_INDEX_FORMAT_MAP_ITEM_H

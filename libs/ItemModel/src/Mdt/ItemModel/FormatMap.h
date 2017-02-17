@@ -21,16 +21,67 @@
 #ifndef MDT_ITEM_MODEL_FORMAT_MAP_H
 #define MDT_ITEM_MODEL_FORMAT_MAP_H
 
+#include "IndexFormatMap.h"
 #include "RowFormatMap.h"
 #include "ColumnFormatMap.h"
+#include <array>
 
 namespace Mdt{ namespace ItemModel{
+
+  /*! \brief Format map priority
+   */
+  enum class FormatMapPriority
+  {
+    Index,
+    Row,
+    Column
+  };
 
   /*! \brief Stores formats for certain row, column and index in a item model
    */
   class FormatMap
   {
    public:
+
+    /*! \brief Construct a format map
+     */
+    explicit FormatMap();
+
+    /*! \brief Set priority when format conflics
+     *
+     * Define which format should be choosen when
+     *  many where set for a specific index.
+     *
+     * For example:
+     * \code
+     * setPriority({FormatMapPriority::Row, FormatMapPriority::Column, FormatMapPriority::Index});
+     * \endcode
+     *
+     * Default is index, then row, then column.
+     */
+    void setPriority(const std::array<FormatMapPriority, 3> & priority);
+
+    /*! \brief Set format for given row and column
+     *
+     * \pre \a row must be >= 0
+     * \pre \a column must be >= 0
+     */
+    template<typename T>
+    void setFormatForIndex(int row, int column, const T & format)
+    {
+      Q_ASSERT(row >= 0);
+      Q_ASSERT(column >= 0);
+      mIndexMap.setFormatForIndex(row, column, format);
+    }
+
+    /*! \brief Clear format for given row and column
+     *
+     * Does nothing if no format was set for \a row and \a column .
+     *
+     * \pre \a row must be >= 0
+     * \pre \a column must be >= 0
+     */
+    void clearFormatForIndex(int row, int column);
 
     /*! \brief Set format for given row
      *
@@ -84,8 +135,10 @@ namespace Mdt{ namespace ItemModel{
 
    private:
 
+    IndexFormatMap mIndexMap;
     RowFormatMap mRowMap;
     ColumnFormatMap mColumnMap;
+    std::array<FormatMapPriority, 3> mPriority;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

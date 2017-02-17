@@ -2,6 +2,8 @@
 
 # Helper sript to enable/disable ASAN memory leaks detection
 
+# NOTE: see ASAN_OPTIONS: check_initialization_order=1:strict_init_order=1:detect_odr_violation=1
+
 # ASAN suppression file
 root_directory=$(dirname "$0")
 suppression_file="$root_directory/asan_suppressions.txt"

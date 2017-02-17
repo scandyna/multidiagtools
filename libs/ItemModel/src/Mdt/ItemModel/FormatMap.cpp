@@ -19,8 +19,27 @@
  **
  ****************************************************************************/
 #include "FormatMap.h"
+#include <algorithm>
 
 namespace Mdt{ namespace ItemModel{
+
+FormatMap::FormatMap()
+ : mPriority{FormatMapPriority::Index, FormatMapPriority::Row, FormatMapPriority::Column}
+{
+}
+
+void FormatMap::setPriority(const std::array< FormatMapPriority, int(3) >& priority)
+{
+  mPriority = priority;
+}
+
+void FormatMap::clearFormatForIndex(int row, int column)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(column >= 0);
+
+  mIndexMap.clearFormatForIndex(row, column);
+}
 
 void FormatMap::clearFormatForRow(int row)
 {
@@ -42,7 +61,25 @@ QVariant FormatMap::formatForIndex(int row, int column) const
   Q_ASSERT(row >= 0);
   Q_ASSERT(column >= 0);
 
-  return QVariant();
+  QVariant format;
+  
+  const auto pred = [&format, this, row, column](FormatMapPriority priority){
+    switch(priority){
+      case FormatMapPriority::Index:
+        format = mIndexMap.formatForIndex(row, column);
+        break;
+      case FormatMapPriority::Row:
+        format = mRowMap.formatForRow(row);
+        break;
+      case FormatMapPriority::Column:
+        format = mColumnMap.formatForColumn(column);
+        break;
+    }
+    return !format.isNull();
+  };
+  std::find_if(mPriority.cbegin(), mPriority.cend(), pred);
+
+  return format;
 }
 
 }} // namespace Mdt{ namespace ItemModel{

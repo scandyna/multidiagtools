@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 151
+  revision 152
   modified_by 2 "philippe"
   // class settings
   
@@ -6090,7 +6090,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     classdiagram 3182082 "TableViewWidget"

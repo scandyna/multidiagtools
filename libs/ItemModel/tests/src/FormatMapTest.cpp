@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "FormatMapTest.h"
+#include "Mdt/ItemModel/IndexFormatMap.h"
 #include "Mdt/ItemModel/RowFormatMap.h"
 #include "Mdt/ItemModel/ColumnFormatMap.h"
 #include "Mdt/ItemModel/FormatMap.h"
@@ -44,6 +45,130 @@ void FormatMapTest::cleanupTestCase()
 /*
  * Tests
  */
+
+void FormatMapTest::indexItemQFontTest()
+{
+  QFont font("Times", 10);
+  IndexFormatMapItem item(1, 2, font);
+  QCOMPARE(item.row(), 1);
+  QCOMPARE(item.column(), 2);
+  QCOMPARE(item.value().value<QFont>().pointSize(), 10);
+}
+
+void FormatMapTest::indexItemQFlagsEnumTest()
+{
+  IndexFormatMapItem item(1, 2, Qt::AlignCenter);
+  QCOMPARE(item.row(), 1);
+  QCOMPARE(item.column(), 2);
+  QCOMPARE(item.value(), QVariant(Qt::AlignCenter));
+}
+
+void FormatMapTest::indexItemQBrushTest()
+{
+  QBrush brush(QColor(50, 100, 200));
+  IndexFormatMapItem item(1, 2, brush);
+  QCOMPARE(item.row(), 1);
+  QCOMPARE(item.column(), 2);
+  QCOMPARE(item.value().value<QBrush>().color().red(), 50);
+  QCOMPARE(item.value().value<QBrush>().color().green(), 100);
+  QCOMPARE(item.value().value<QBrush>().color().blue(), 200);
+}
+
+void FormatMapTest::indexMapQFontTest()
+{
+  IndexFormatMap map;
+  QFont font;
+  font.setBold(true);
+  font.setPointSize(10);
+  map.setFormatForIndex(1, 2, font);
+  QVERIFY(map.formatForIndex(1, 1).isNull());
+  QCOMPARE(map.formatForIndex(1, 2).value<QFont>().bold(), true);
+  QCOMPARE(map.formatForIndex(1, 2).value<QFont>().pointSize(), 10);
+}
+
+/*
+ * This is the complete test for index format map
+ */
+void FormatMapTest::indexMapQFlagsEnumTest()
+{
+  /*
+   * Initial state
+   */
+  IndexFormatMap map;
+  QVERIFY(map.formatForIndex(1, 1).isNull());
+  QVERIFY(map.formatForIndex(1, 2).isNull());
+  QVERIFY(map.formatForIndex(2, 3).isNull());
+  /*
+   * Set alignments
+   */
+  // Set for index 1, 1
+  map.setFormatForIndex(1, 1, Qt::AlignCenter);
+  QCOMPARE(map.formatForIndex(1, 1), QVariant(Qt::AlignCenter));
+  QVERIFY(map.formatForIndex(1, 2).isNull());
+  QVERIFY(map.formatForIndex(2, 3).isNull());
+  // Set for index 1, 2
+  map.setFormatForIndex(1, 2, Qt::AlignRight);
+  QCOMPARE(map.formatForIndex(1, 1), QVariant(Qt::AlignCenter));
+  QCOMPARE(map.formatForIndex(1, 2), QVariant(Qt::AlignRight));
+  QVERIFY(map.formatForIndex(2, 3).isNull());
+  // Set for index 2, 3
+  map.setFormatForIndex(2, 3, Qt::AlignLeft);
+  QCOMPARE(map.formatForIndex(1, 1), QVariant(Qt::AlignCenter));
+  QCOMPARE(map.formatForIndex(1, 2), QVariant(Qt::AlignRight));
+  QCOMPARE(map.formatForIndex(2, 3), QVariant(Qt::AlignLeft));
+  /*
+   * Change for index 2, 3
+   */
+  map.setFormatForIndex<>(2, 3, Qt::AlignBottom);
+  QCOMPARE(map.formatForIndex(1, 1), QVariant(Qt::AlignCenter));
+  QCOMPARE(map.formatForIndex(1, 2), QVariant(Qt::AlignRight));
+  QCOMPARE(map.formatForIndex(2, 3), QVariant(Qt::AlignBottom));
+  /*
+   * Clear for index 2, 3
+   */
+  map.clearFormatForIndex(2, 3);
+  QCOMPARE(map.formatForIndex(1, 1), QVariant(Qt::AlignCenter));
+  QCOMPARE(map.formatForIndex(1, 2), QVariant(Qt::AlignRight));
+  QVERIFY(map.formatForIndex(2, 3).isNull());
+  // Try to clear for same index agin
+  map.clearFormatForIndex(2, 3);
+  QCOMPARE(map.formatForIndex(1, 1), QVariant(Qt::AlignCenter));
+  QCOMPARE(map.formatForIndex(1, 2), QVariant(Qt::AlignRight));
+  QVERIFY(map.formatForIndex(2, 3).isNull());
+  /*
+   * Clear for a non existing index
+   */
+  map.clearFormatForIndex(25, 30);
+  QCOMPARE(map.formatForIndex(1, 1), QVariant(Qt::AlignCenter));
+  QCOMPARE(map.formatForIndex(1, 2), QVariant(Qt::AlignRight));
+  QVERIFY(map.formatForIndex(2, 3).isNull());
+  /*
+   * Clear for index 1, 1
+   */
+  map.clearFormatForIndex(1, 1);
+  QVERIFY(map.formatForIndex(1, 1).isNull());
+  QCOMPARE(map.formatForIndex(1, 2), QVariant(Qt::AlignRight));
+  QVERIFY(map.formatForIndex(2, 3).isNull());
+  /*
+   * Clear for column 1, 2
+   */
+  map.clearFormatForIndex(1, 2);
+  QVERIFY(map.formatForIndex(1, 1).isNull());
+  QVERIFY(map.formatForIndex(1, 2).isNull());
+  QVERIFY(map.formatForIndex(2, 3).isNull());
+}
+
+void FormatMapTest::indexMapQBrushTest()
+{
+  IndexFormatMap map;
+  QBrush brush;
+  brush.setColor(QColor(10, 20, 30));
+  map.setFormatForIndex(1, 2, brush);
+  QVERIFY(map.formatForIndex(1, 1).isNull());
+  QCOMPARE(map.formatForIndex(1, 2).value<QBrush>().color().red(), 10);
+  QCOMPARE(map.formatForIndex(1, 2).value<QBrush>().color().green(), 20);
+  QCOMPARE(map.formatForIndex(1, 2).value<QBrush>().color().blue(), 30);
+}
 
 void FormatMapTest::rowOrColumnItemQFontTest()
 {
@@ -83,7 +208,7 @@ void FormatMapTest::rowColumnMapBaseQFontTest()
 }
 
 /*
- * This is the complete test
+ * This is the complete test for row/column format map
  */
 void FormatMapTest::rowColumnMapBaseQFlagsEnumTest()
 {
@@ -186,7 +311,11 @@ void FormatMapTest::columnMapQFlagsEnumTest()
 
 void FormatMapTest::mapIndexQFlagsEnumTest()
 {
-  QFAIL("Not complete");
+  FormatMap map;
+  map.setFormatForIndex(1, 2, Qt::AlignCenter);
+  QCOMPARE(map.formatForIndex(1, 2), QVariant(Qt::AlignCenter));
+  map.clearFormatForIndex(1, 2);
+  QVERIFY(map.formatForIndex(1, 2).isNull());
 }
 
 void FormatMapTest::mapRowQFlagsEnumTest()
@@ -209,13 +338,59 @@ void FormatMapTest::mapColumnQFlagsEnumTest()
 
 void FormatMapTest::mapPriorityQFlagsEnumTest()
 {
-  QFAIL("Not complete");
+  FormatMap map;
+  /*
+   * Setup map:
+   *                          AlignCenter
+   *           ---------------------------
+   *           |            |            |
+   *           ---------------------------
+   * AlignLeft |            |            |
+   *           ---------------------------
+   * AlignLeft |            | AlignRight |
+   *           ---------------------------
+   */
+  map.setFormatForIndex(2, 1, Qt::AlignRight);
+  map.setFormatForRow(1, Qt::AlignLeft);
+  map.setFormatForRow(2, Qt::AlignLeft);
+  map.setFormatForColumn(1, Qt::AlignCenter);
+  // Check with priority: row, column, index
+  map.setPriority({FormatMapPriority::Row, FormatMapPriority::Column, FormatMapPriority::Index});
+  QVERIFY(map.formatForIndex(0, 0).isNull());
+  QCOMPARE(map.formatForIndex(0, 1), QVariant(Qt::AlignCenter));
+  QCOMPARE(map.formatForIndex(1, 0), QVariant(Qt::AlignLeft));
+  QCOMPARE(map.formatForIndex(1, 1), QVariant(Qt::AlignLeft));
+  QCOMPARE(map.formatForIndex(2, 0), QVariant(Qt::AlignLeft));
+  QCOMPARE(map.formatForIndex(2, 1), QVariant(Qt::AlignLeft));
+  // Check with priority: column, row, index
+  map.setPriority({FormatMapPriority::Column, FormatMapPriority::Row, FormatMapPriority::Index});
+  QVERIFY(map.formatForIndex(0, 0).isNull());
+  QCOMPARE(map.formatForIndex(0, 1), QVariant(Qt::AlignCenter));
+  QCOMPARE(map.formatForIndex(1, 0), QVariant(Qt::AlignLeft));
+  QCOMPARE(map.formatForIndex(1, 1), QVariant(Qt::AlignCenter));
+  QCOMPARE(map.formatForIndex(2, 0), QVariant(Qt::AlignLeft));
+  QCOMPARE(map.formatForIndex(2, 1), QVariant(Qt::AlignCenter));
+  // Check with priority: index, row, column
+  map.setPriority({FormatMapPriority::Index, FormatMapPriority::Row, FormatMapPriority::Column});
+  QVERIFY(map.formatForIndex(0, 0).isNull());
+  QCOMPARE(map.formatForIndex(0, 1), QVariant(Qt::AlignCenter));
+  QCOMPARE(map.formatForIndex(1, 0), QVariant(Qt::AlignLeft));
+  QCOMPARE(map.formatForIndex(1, 1), QVariant(Qt::AlignLeft));
+  QCOMPARE(map.formatForIndex(2, 0), QVariant(Qt::AlignLeft));
+  QCOMPARE(map.formatForIndex(2, 1), QVariant(Qt::AlignRight));
+  // Check with priority: index, column, row
+  map.setPriority({FormatMapPriority::Index, FormatMapPriority::Column, FormatMapPriority::Row});
+  QVERIFY(map.formatForIndex(0, 0).isNull());
+  QCOMPARE(map.formatForIndex(0, 1), QVariant(Qt::AlignCenter));
+  QCOMPARE(map.formatForIndex(1, 0), QVariant(Qt::AlignLeft));
+  QCOMPARE(map.formatForIndex(1, 1), QVariant(Qt::AlignCenter));
+  QCOMPARE(map.formatForIndex(2, 0), QVariant(Qt::AlignLeft));
+  QCOMPARE(map.formatForIndex(2, 1), QVariant(Qt::AlignRight));
 }
 
-/// \todo adapt benchmarks to FormatMap
 void FormatMapTest::mapQFontBenchmark()
 {
-  ColumnFormatMap map;
+  FormatMap map;
   QFont font1;
   font1.setPointSize(11);
   QFont font2;
@@ -223,34 +398,33 @@ void FormatMapTest::mapQFontBenchmark()
   QFont font3;
   font3.setPointSize(13);
   QBENCHMARK{
-    map.setFormatForColumn(1, font1);
-    map.setFormatForColumn(3, font2);
+    map.setFormatForIndex(1, 2, font1);
+    map.setFormatForRow(3, font2);
     map.setFormatForColumn(5, font3);
-    QVERIFY(map.formatForColumn(0).isNull());
-    QCOMPARE(map.formatForColumn(1).value<QFont>().pointSize(), 11);
-    QVERIFY(map.formatForColumn(2).isNull());
-    QCOMPARE(map.formatForColumn(3).value<QFont>().pointSize(), 12);
-    QVERIFY(map.formatForColumn(4).isNull());
-    QCOMPARE(map.formatForColumn(5).value<QFont>().pointSize(), 13);
+    QVERIFY(map.formatForIndex(0, 0).isNull());
+    QCOMPARE(map.formatForIndex(1, 2).value<QFont>().pointSize(), 11);
+    QVERIFY(map.formatForIndex(2, 0).isNull());
+    QCOMPARE(map.formatForIndex(3, 0).value<QFont>().pointSize(), 12);
+    QVERIFY(map.formatForIndex(4, 0).isNull());
+    QCOMPARE(map.formatForIndex(0, 5).value<QFont>().pointSize(), 13);
   }
 }
 
 void FormatMapTest::mapQFlagsEnumBenchmark()
 {
-  ColumnFormatMap map;
+  FormatMap map;
   QBENCHMARK{
-    map.setFormatForColumn(1, Qt::AlignLeft);
-    map.setFormatForColumn(3, Qt::AlignCenter);
+    map.setFormatForIndex(1, 2, Qt::AlignLeft);
+    map.setFormatForRow(3, Qt::AlignCenter);
     map.setFormatForColumn(5, Qt::AlignRight);
-    QVERIFY(map.formatForColumn(0).isNull());
-    QCOMPARE(map.formatForColumn(1).toInt(), (int)Qt::AlignLeft);
-    QVERIFY(map.formatForColumn(2).isNull());
-    QCOMPARE(map.formatForColumn(3).toInt(), (int)Qt::AlignCenter);
-    QVERIFY(map.formatForColumn(4).isNull());
-    QCOMPARE(map.formatForColumn(5).toInt(), (int)Qt::AlignRight);
+    QVERIFY(map.formatForIndex(0, 0).isNull());
+    QCOMPARE(map.formatForIndex(1, 2).toInt(), (int)Qt::AlignLeft);
+    QVERIFY(map.formatForIndex(2, 0).isNull());
+    QCOMPARE(map.formatForIndex(3, 0).toInt(), (int)Qt::AlignCenter);
+    QVERIFY(map.formatForIndex(4, 0).isNull());
+    QCOMPARE(map.formatForIndex(0, 5).toInt(), (int)Qt::AlignRight);
   }
 }
-
 
 /*
  * Main
