@@ -28,6 +28,13 @@ FormatProxyModel::FormatProxyModel(QObject* parent)
 {
 }
 
+void FormatProxyModel::setPriority(const std::array<FormatMapPriority, int(3)> & priority)
+{
+  mTextAlignmentMap.setPriority(priority);
+  mTextFontMap.setPriority(priority);
+  mForegroundBrushColumnMap.setPriority(priority);
+}
+
 void FormatProxyModel::setTextAlignmentForColumn(int column, Qt::Alignment alignment)
 {
   Q_ASSERT(column >= 0);
@@ -46,12 +53,14 @@ void FormatProxyModel::clearTextAlignmentForColumn(int column)
 }
 
 
-QVariant FormatProxyModel::textAlignmentForColumn(int column) const
+QVariant FormatProxyModel::textAlignment(int row, int column) const
 {
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
   Q_ASSERT(column >= 0);
   Q_ASSERT(column < columnCount());
 
-  return mTextAlignmentMap.formatForColumn(column);
+  return mTextAlignmentMap.formatForIndex(row, column);
 }
 
 void FormatProxyModel::setTextFontForColumn(int column, const QFont& font)
@@ -71,12 +80,14 @@ void FormatProxyModel::clearTextFontForColumn(int column)
   signalFormatChangedForColumn(column, Qt::FontRole);
 }
 
-QVariant FormatProxyModel::textFontForColumn(int column) const
+QVariant FormatProxyModel::textFont(int row, int column) const
 {
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
   Q_ASSERT(column >= 0);
   Q_ASSERT(column < columnCount());
 
-  return mTextFontMap.formatForColumn(column);
+  return mTextFontMap.formatForIndex(row, column);
 }
 
 void FormatProxyModel::setTextColorForColumn(int column, const QColor& color)
@@ -89,8 +100,10 @@ void FormatProxyModel::clearTextColorForColumn(int column)
   Q_ASSERT(column >= 0);
 }
 
-QVariant FormatProxyModel::foregroundBrushForColumn(int column) const
+QVariant FormatProxyModel::foregroundBrush(int row, int column) const
 {
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
   Q_ASSERT(column >= 0);
   Q_ASSERT(column < columnCount());
 
@@ -107,13 +120,13 @@ QVariant FormatProxyModel::data(const QModelIndex & index, int role) const
   }
   switch(role){
     case Qt::TextAlignmentRole:
-      return textAlignmentForColumn(index.column());
+      return textAlignment(index.row(), index.column());
     case Qt::FontRole:
-      return textFontForColumn(index.column());
+      return textFont(index.row(), index.column());
     default:
       ;
   }
-  return QAbstractProxyModel::data(index, role);
+  return QIdentityProxyModel::data(index, role);
 }
 
 void FormatProxyModel::signalFormatChangedForColumn(int column, int role)

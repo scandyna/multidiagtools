@@ -66,8 +66,8 @@ void FormatProxyModelTest::textAlignmentTest()
   QCOMPARE(getModelData(proxyModel, 0, 0, Qt::DisplayRole), QVariant(1));
   QCOMPARE(getModelData(proxyModel, 0, 1, Qt::DisplayRole), QVariant("A"));
   // Check getter
-  QVERIFY(proxyModel.textAlignmentForColumn(0).isNull());
-  QVERIFY(proxyModel.textAlignmentForColumn(1).isNull());
+  QVERIFY(proxyModel.textAlignment(0, 0).isNull());
+  QVERIFY(proxyModel.textAlignment(0, 1).isNull());
   // Check data for TextAlignmentRole
   QVERIFY(getModelData(proxyModel, 0, 0, Qt::TextAlignmentRole).isNull());
   QVERIFY(getModelData(proxyModel, 0, 1, Qt::TextAlignmentRole).isNull());
@@ -79,8 +79,8 @@ void FormatProxyModelTest::textAlignmentTest()
   QCOMPARE(getModelData(proxyModel, 0, 0, Qt::DisplayRole), QVariant(1));
   QCOMPARE(getModelData(proxyModel, 0, 1, Qt::DisplayRole), QVariant("A"));
   // Check getter
-  QCOMPARE(proxyModel.textAlignmentForColumn(0), QVariant(Qt::AlignCenter));
-  QVERIFY(proxyModel.textAlignmentForColumn(1).isNull());
+  QCOMPARE(proxyModel.textAlignment(0, 0), QVariant(Qt::AlignCenter));
+  QVERIFY(proxyModel.textAlignment(0, 1).isNull());
   // Check data for TextAlignmentRole
   QCOMPARE(getModelData(proxyModel, 0, 0, Qt::TextAlignmentRole), QVariant(Qt::AlignCenter));
   QVERIFY(getModelData(proxyModel, 0, 1, Qt::TextAlignmentRole).isNull());
@@ -92,8 +92,8 @@ void FormatProxyModelTest::textAlignmentTest()
   QCOMPARE(getModelData(proxyModel, 0, 0, Qt::DisplayRole), QVariant(1));
   QCOMPARE(getModelData(proxyModel, 0, 1, Qt::DisplayRole), QVariant("A"));
   // Check getter
-  QCOMPARE(proxyModel.textAlignmentForColumn(0), QVariant(Qt::AlignCenter));
-  QCOMPARE(proxyModel.textAlignmentForColumn(1), QVariant(Qt::AlignRight));
+  QCOMPARE(proxyModel.textAlignment(0, 0), QVariant(Qt::AlignCenter));
+  QCOMPARE(proxyModel.textAlignment(0, 1), QVariant(Qt::AlignRight));
   // Check data for TextAlignmentRole
   QCOMPARE(getModelData(proxyModel, 0, 0, Qt::TextAlignmentRole), QVariant(Qt::AlignCenter));
   QCOMPARE(getModelData(proxyModel, 0, 1, Qt::TextAlignmentRole), QVariant(Qt::AlignRight));
@@ -105,8 +105,8 @@ void FormatProxyModelTest::textAlignmentTest()
   QCOMPARE(getModelData(proxyModel, 0, 0, Qt::DisplayRole), QVariant(1));
   QCOMPARE(getModelData(proxyModel, 0, 1, Qt::DisplayRole), QVariant("A"));
   // Check getter
-  QCOMPARE(proxyModel.textAlignmentForColumn(0), QVariant(Qt::AlignCenter));
-  QVERIFY(proxyModel.textAlignmentForColumn(1).isNull());
+  QCOMPARE(proxyModel.textAlignment(0, 0), QVariant(Qt::AlignCenter));
+  QVERIFY(proxyModel.textAlignment(0, 1).isNull());
   // Check data for TextAlignmentRole
   QCOMPARE(getModelData(proxyModel, 0, 0, Qt::TextAlignmentRole), QVariant(Qt::AlignCenter));
   QVERIFY(getModelData(proxyModel, 0, 1, Qt::TextAlignmentRole).isNull());
@@ -220,9 +220,9 @@ void FormatProxyModelTest::textFontTest()
   QCOMPARE(getModelData(proxyModel, 0, 0, Qt::DisplayRole), QVariant(1));
   QCOMPARE(getModelData(proxyModel, 0, 1, Qt::DisplayRole), QVariant("A"));
   // Check getter
-  QVERIFY(proxyModel.textFontForColumn(0).isNull());
-  QCOMPARE(proxyModel.textFontForColumn(1).value<QFont>().pointSize(), 14);
-  QCOMPARE(proxyModel.textFontForColumn(1).value<QFont>().bold(), true);
+  QVERIFY(proxyModel.textFont(0, 0).isNull());
+  QCOMPARE(proxyModel.textFont(0, 1).value<QFont>().pointSize(), 14);
+  QCOMPARE(proxyModel.textFont(0, 1).value<QFont>().bold(), true);
   // Check data for FontRole
   QVERIFY(getModelData(proxyModel, 0, 0, Qt::FontRole).isNull());
   QCOMPARE(getModelData(proxyModel, 0, 1, Qt::FontRole).value<QFont>().pointSize(), 14);
@@ -235,8 +235,8 @@ void FormatProxyModelTest::textFontTest()
   QCOMPARE(getModelData(proxyModel, 0, 0, Qt::DisplayRole), QVariant(1));
   QCOMPARE(getModelData(proxyModel, 0, 1, Qt::DisplayRole), QVariant("A"));
   // Check getter
-  QVERIFY(proxyModel.textFontForColumn(0).isNull());
-  QVERIFY(proxyModel.textFontForColumn(1).isNull());
+  QVERIFY(proxyModel.textFont(0, 0).isNull());
+  QVERIFY(proxyModel.textFont(0, 1).isNull());
   // Check data for FontRole
   QVERIFY(getModelData(proxyModel, 0, 0, Qt::FontRole).isNull());
   QVERIFY(getModelData(proxyModel, 0, 1, Qt::FontRole).isNull());

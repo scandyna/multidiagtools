@@ -21,7 +21,7 @@
 #ifndef MDT_ITEM_MODEL_FORMAT_PROXY_MODEL_H
 #define MDT_ITEM_MODEL_FORMAT_PROXY_MODEL_H
 
-#include "ColumnFormatMap.h"
+#include "FormatMap.h"
 #include <QIdentityProxyModel>
 #include <QVariant>
 #include <QFont>
@@ -43,6 +43,20 @@ namespace Mdt{ namespace ItemModel{
      */
     explicit FormatProxyModel(QObject *parent = nullptr);
 
+    /*! \brief Set priority when format conflics
+     *
+     * Define which format should be choosen when
+     *  many where set for a specific index.
+     *
+     * For example:
+     * \code
+     * setPriority({FormatMapPriority::Row, FormatMapPriority::Column, FormatMapPriority::Index});
+     * \endcode
+     *
+     * Default is index, then row, then column.
+     */
+    void setPriority(const std::array<FormatMapPriority, 3> & priority);
+
     /*! \brief Set text alignment for column
      *
      * \pre \a column must be >= 0
@@ -55,15 +69,16 @@ namespace Mdt{ namespace ItemModel{
      */
     void clearTextAlignmentForColumn(int column);
 
-    /*! \brief Get text alignment for given column
+    /*! \brief Get text alignment for given row and column
      *
      * Returns a QVariant with value of type Qt::Alignment
-     *  if a alignment was set for \a column,
+     *  if a alignment was set for \a row and \a column,
      *  otherwise a null QVariant.
      *
+     * \pre \a row must be in valid range ( 0 <= row < rowCount() )
      * \pre \a column must be in valid range ( 0 <= column < columnCount() )
      */
-    QVariant textAlignmentForColumn(int column) const;
+    QVariant textAlignment(int row, int column) const;
 
     /*! \brief Set text font for column
      *
@@ -77,15 +92,16 @@ namespace Mdt{ namespace ItemModel{
      */
     void clearTextFontForColumn(int column);
 
-    /*! \brief Get text font for given column
+    /*! \brief Get text font for given row and column
      *
      * Returns a QVariant with value of type QFont
-     *  if a font was set for \a column,
+     *  if a font was set for \a row and \a column,
      *  otherwise a null QVariant.
      *
+     * \pre \a row must be in valid range ( 0 <= row < rowCount() )
      * \pre \a column must be in valid range ( 0 <= column < columnCount() )
      */
-    QVariant textFontForColumn(int column) const;
+    QVariant textFont(int row, int column) const;
 
     /*! \brief Set text color for column
      *
@@ -99,15 +115,16 @@ namespace Mdt{ namespace ItemModel{
      */
     void clearTextColorForColumn(int column);
 
-    /*! \brief Get foreground brush for given column
+    /*! \brief Get foreground brush for given row and column
      *
      * Returns a QVariant with value of type QBrush
-     *  if a text color was set for \a column,
+     *  if a text color was set for \a row and \a column,
      *  otherwise a null QVariant.
      *
+     * \pre \a row must be in valid range ( 0 <= row < rowCount() )
      * \pre \a column must be in valid range ( 0 <= column < columnCount() )
      */
-    QVariant foregroundBrushForColumn(int column) const;
+    QVariant foregroundBrush(int row, int column) const;
 
     /*! \brief Get data for given index and role
      */
@@ -117,9 +134,9 @@ namespace Mdt{ namespace ItemModel{
 
     void signalFormatChangedForColumn(int column, int role);
 
-    ColumnFormatMap mTextAlignmentMap;
-    ColumnFormatMap mTextFontMap;
-    ColumnFormatMap mForegroundBrushColumnMap;
+    FormatMap mTextAlignmentMap;
+    FormatMap mTextFontMap;
+    FormatMap mForegroundBrushColumnMap;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

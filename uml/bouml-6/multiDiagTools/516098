@@ -1,6 +1,6 @@
 format 211
 "ItemModel" // Mdt::ItemModel
-  revision 55
+  revision 56
   modified_by 2 "philippe"
   // class settings
   
@@ -3808,7 +3808,7 @@ ${inlines}
 
     classdiagram 3307522 "FormatProxyModel"
       classdiagramsettings member_max_width 0 end
-      size A4
+      size A4-Landscape
     end
 
     class 3795458 "FormatProxyModel"
@@ -3833,23 +3833,6 @@ ${inlines}
 	  b parent class_ref 1752450 // QIdentityProxyModel
       end
 
-      operation 5310978 "setTextAlignmentForColumn"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "column" explicit_type "int"
-	  param in name "alignment" explicit_type "Qt::Alignment"
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 5332994 "setTextAlignmentForRow"
 	public explicit_return_type "void"
 	nparams 2
@@ -3867,13 +3850,31 @@ ${inlines}
 	
       end
 
-      operation 5311106 "textAlignmentForIndex"
-	public return_type class_ref 161154 // QVariant
-	nparams 1
-	  param in name "index" type class_ref 147330 // QModelIndex
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+      operation 5310978 "setTextAlignmentForColumn"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "column" explicit_type "int"
+	  param in name "alignment" explicit_type "Qt::Alignment"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5311106 "textAlignment"
+	public return_type class_ref 161154 // QVariant
+	nparams 2
+	  param in name "row" explicit_type "int"
+	  param in name "column" explicit_type "int"
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}
 {
   ${body}}
 "
@@ -3915,6 +3916,15 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 4270210 // <directional composition>
+	relation 4244226 *-->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 4270210 // <directional composition>
+	  b parent class_ref 3809538 // FormatMap
       end
     end
 
