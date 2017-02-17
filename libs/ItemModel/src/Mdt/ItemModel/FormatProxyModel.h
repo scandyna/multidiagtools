@@ -57,6 +57,32 @@ namespace Mdt{ namespace ItemModel{
      */
     void setPriority(const std::array<FormatMapPriority, 3> & priority);
 
+    /*! \brief Set text alignment for row and column
+     *
+     * \pre \a row must be >= 0
+     * \pre \a column must be >= 0
+     */
+    void setTextAlignmentForIndex(int row, int column, Qt::Alignment alignment);
+
+    /*! \brief Clear text alignment for row and column
+     *
+     * \pre \a row must be >= 0
+     * \pre \a column must be >= 0
+     */
+    void clearTextAlignmentForIndex(int row, int column);
+
+    /*! \brief Set text alignment for row
+     *
+     * \pre \a row must be >= 0
+     */
+    void setTextAlignmentForRow(int row, Qt::Alignment alignment);
+
+    /*! \brief Clear text alignment for row
+     *
+     * \pre \a row must be >= 0
+     */
+    void clearTextAlignmentForRow(int row);
+
     /*! \brief Set text alignment for column
      *
      * \pre \a column must be >= 0
@@ -80,6 +106,32 @@ namespace Mdt{ namespace ItemModel{
      */
     QVariant textAlignment(int row, int column) const;
 
+    /*! \brief Set text font for row and column
+     *
+     * \pre \a row must be >= 0
+     * \pre \a column must be >= 0
+     */
+    void setTextFontForIndex(int row, int column, const QFont & font);
+
+    /*! \brief Clear text font for row and column
+     *
+     * \pre \a row must be >= 0
+     * \pre \a column must be >= 0
+     */
+    void clearTextFontForIndex(int row, int column);
+
+    /*! \brief Set text font for row
+     *
+     * \pre \a row must be >= 0
+     */
+    void setTextFontForRow(int row, const QFont & font);
+
+    /*! \brief Clear text font for row
+     *
+     * \pre \a row must be >= 0
+     */
+    void clearTextFontForRow(int row);
+
     /*! \brief Set text font for column
      *
      * \pre \a column must be >= 0
@@ -88,7 +140,7 @@ namespace Mdt{ namespace ItemModel{
 
     /*! \brief Clear text font for column
      *
-     * \pre \a column must be in valid range ( 0 <= column < columnCount() )
+     * \pre \a column must be >= 0
      */
     void clearTextFontForColumn(int column);
 
@@ -132,6 +184,8 @@ namespace Mdt{ namespace ItemModel{
 
    private:
 
+    void signalFormatChangedForIndex(int row, int column, int role);
+    void signalFormatChangedForRow(int row, int role);
     void signalFormatChangedForColumn(int column, int role);
 
     FormatMap mTextAlignmentMap;

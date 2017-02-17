@@ -33,7 +33,9 @@ class FormatProxyModelTest : public TestBase
   void cleanupTestCase();
 
   void textAlignmentTest();
-  void textAlignmentSignalTest();
+  void textAlignmentIndexSignalTest();
+  void textAlignmentRowSignalTest();
+  void textAlignmentColumnSignalTest();
   void textFontTest();
   void textFontSignalTest();
   void setModelTest();

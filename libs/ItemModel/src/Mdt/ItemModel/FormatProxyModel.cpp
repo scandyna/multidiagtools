@@ -35,6 +35,40 @@ void FormatProxyModel::setPriority(const std::array<FormatMapPriority, int(3)> &
   mForegroundBrushColumnMap.setPriority(priority);
 }
 
+void FormatProxyModel::setTextAlignmentForIndex(int row, int column, Qt::Alignment alignment)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(column >= 0);
+
+  mTextAlignmentMap.setFormatForIndex(row, column, alignment);
+  signalFormatChangedForIndex(row, column, Qt::TextAlignmentRole);
+}
+
+void FormatProxyModel::clearTextAlignmentForIndex(int row, int column)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(column >= 0);
+
+  mTextAlignmentMap.clearFormatForIndex(row, column);
+  signalFormatChangedForIndex(row, column, Qt::TextAlignmentRole);
+}
+
+void FormatProxyModel::setTextAlignmentForRow(int row, Qt::Alignment alignment)
+{
+  Q_ASSERT(row >= 0);
+
+  mTextAlignmentMap.setFormatForRow(row, alignment);
+  signalFormatChangedForRow(row, Qt::TextAlignmentRole);
+}
+
+void FormatProxyModel::clearTextAlignmentForRow(int row)
+{
+  Q_ASSERT(row >= 0);
+
+  mTextAlignmentMap.clearFormatForRow(row);
+  signalFormatChangedForRow(row, Qt::TextAlignmentRole);
+}
+
 void FormatProxyModel::setTextAlignmentForColumn(int column, Qt::Alignment alignment)
 {
   Q_ASSERT(column >= 0);
@@ -52,7 +86,6 @@ void FormatProxyModel::clearTextAlignmentForColumn(int column)
   signalFormatChangedForColumn(column, Qt::TextAlignmentRole);
 }
 
-
 QVariant FormatProxyModel::textAlignment(int row, int column) const
 {
   Q_ASSERT(row >= 0);
@@ -61,6 +94,40 @@ QVariant FormatProxyModel::textAlignment(int row, int column) const
   Q_ASSERT(column < columnCount());
 
   return mTextAlignmentMap.formatForIndex(row, column);
+}
+
+void FormatProxyModel::setTextFontForIndex(int row, int column, const QFont& font)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(column >= 0);
+
+  mTextFontMap.setFormatForIndex(row, column, font);
+  signalFormatChangedForIndex(row, column, Qt::FontRole);
+}
+
+void FormatProxyModel::clearTextFontForIndex(int row, int column)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(column >= 0);
+
+  mTextFontMap.clearFormatForIndex(row, column);
+  signalFormatChangedForIndex(row, column, Qt::FontRole);
+}
+
+void FormatProxyModel::setTextFontForRow(int row, const QFont& font)
+{
+  Q_ASSERT(row >= 0);
+
+  mTextFontMap.setFormatForRow(row, font);
+  signalFormatChangedForRow(row, Qt::FontRole);
+}
+
+void FormatProxyModel::clearTextFontForRow(int row)
+{
+  Q_ASSERT(row >= 0);
+
+  mTextFontMap.clearFormatForRow(row);
+  signalFormatChangedForRow(row, Qt::FontRole);
 }
 
 void FormatProxyModel::setTextFontForColumn(int column, const QFont& font)
@@ -74,7 +141,6 @@ void FormatProxyModel::setTextFontForColumn(int column, const QFont& font)
 void FormatProxyModel::clearTextFontForColumn(int column)
 {
   Q_ASSERT(column >= 0);
-  Q_ASSERT(column < columnCount());
 
   mTextFontMap.clearFormatForColumn(column);
   signalFormatChangedForColumn(column, Qt::FontRole);
@@ -127,6 +193,35 @@ QVariant FormatProxyModel::data(const QModelIndex & index, int role) const
       ;
   }
   return QIdentityProxyModel::data(index, role);
+}
+
+void FormatProxyModel::signalFormatChangedForIndex(int row, int column, int role)
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(column >= 0);
+
+  if(sourceModel() == nullptr){
+    return;
+  }
+  Q_ASSERT(row < rowCount());
+  Q_ASSERT(column < columnCount());
+
+  const auto idx = index(row, column);
+  emit dataChanged(idx, idx, {role});
+}
+
+void FormatProxyModel::signalFormatChangedForRow(int row, int role)
+{
+  Q_ASSERT(row >= 0);
+
+  if(sourceModel() == nullptr){
+    return;
+  }
+  Q_ASSERT(row < rowCount());
+
+  const auto topLeft = index(row, 0);
+  const auto bottomRight = index(row, columnCount()-1);
+  emit dataChanged(topLeft, bottomRight, {role});
 }
 
 void FormatProxyModel::signalFormatChangedForColumn(int column, int role)
