@@ -38,6 +38,10 @@ class FormatProxyModelTest : public TestBase
   void textAlignmentColumnSignalTest();
   void textFontTest();
   void textFontSignalTest();
+  void textColorTest();
+  void textColorSignalTest();
+  void backgroundColorTest();
+  void backgroundColorSignalTest();
   void setModelTest();
   void qtModelTest();
   

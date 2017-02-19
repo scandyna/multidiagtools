@@ -155,6 +155,32 @@ namespace Mdt{ namespace ItemModel{
      */
     QVariant textFont(int row, int column) const;
 
+    /*! \brief Set text color for row and column
+     *
+     * \pre \a row must be >= 0
+     * \pre \a column must be >= 0
+     */
+    void setTextColorForIndex(int row, int column, const QColor & color);
+
+    /*! \brief Clear text color for row and column
+     *
+     * \pre \a row must be >= 0
+     * \pre \a column must be >= 0
+     */
+    void clearTextColorForIndex(int row, int column);
+
+    /*! \brief Set text color for row
+     *
+     * \pre \a row must be >= 0
+     */
+    void setTextColorForRow(int row, const QColor & color);
+
+    /*! \brief Clear text color for row
+     *
+     * \pre \a row must be >= 0
+     */
+    void clearTextColorForRow(int row);
+
     /*! \brief Set text color for column
      *
      * \pre \a column must be >= 0
@@ -178,6 +204,74 @@ namespace Mdt{ namespace ItemModel{
      */
     QVariant foregroundBrush(int row, int column) const;
 
+    /*! \brief Set background brush for row and column
+     *
+     * \pre \a row must be >= 0
+     * \pre \a column must be >= 0
+     */
+    void setBackgroundBrushForIndex(int row, int column, const QBrush & brush);
+
+    /*! \brief Set background color for row and column
+     *
+     * \pre \a row must be >= 0
+     * \pre \a column must be >= 0
+     */
+    void setBackgroundColorForIndex(int row, int column, const QColor & color, Qt::BrushStyle style = Qt::SolidPattern);
+
+    /*! \brief Clear background brush for row and column
+     *
+     * \pre \a row must be >= 0
+     * \pre \a column must be >= 0
+     */
+    void clearBackgroundBrushForIndex(int row, int column);
+
+    /*! \brief Set background brush for row
+     *
+     * \pre \a row must be >= 0
+     */
+    void setBackgroundBrushForRow(int row, const QBrush & brush);
+
+    /*! \brief Set background color for row
+     *
+     * \pre \a row must be >= 0
+     */
+    void setBackgroundColorForRow(int row, const QColor & color, Qt::BrushStyle style = Qt::SolidPattern);
+
+    /*! \brief Clear background brush for row
+     *
+     * \pre \a row must be >= 0
+     */
+    void clearBackgroundBrushForRow(int row);
+
+    /*! \brief Set background brush for column
+     *
+     * \pre \a column must be >= 0
+     */
+    void setBackgroundBrushForColumn(int column, const QBrush & brush);
+
+    /*! \brief Set background color for column
+     *
+     * \pre \a column must be >= 0
+     */
+    void setBackgroundColorForColumn(int column, const QColor & color, Qt::BrushStyle style = Qt::SolidPattern);
+
+    /*! \brief Clear background brush for column
+     *
+     * \pre \a column must be >= 0
+     */
+    void clearBackgroundBrushForColumn(int column);
+
+    /*! \brief Get background brush for given row and column
+     *
+     * Returns a QVariant with value of type QBrush
+     *  if a background brush was set for \a row and \a column,
+     *  otherwise a null QVariant.
+     *
+     * \pre \a row must be in valid range ( 0 <= row < rowCount() )
+     * \pre \a column must be in valid range ( 0 <= column < columnCount() )
+     */
+    QVariant backgroundBrush(int row, int column) const;
+
     /*! \brief Get data for given index and role
      */
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
@@ -190,7 +284,8 @@ namespace Mdt{ namespace ItemModel{
 
     FormatMap mTextAlignmentMap;
     FormatMap mTextFontMap;
-    FormatMap mForegroundBrushColumnMap;
+    FormatMap mForegroundBrushMap;
+    FormatMap mBackgroundBrushMap;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

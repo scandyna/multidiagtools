@@ -389,38 +389,6 @@ void FormatProxyModelTest::textFontTest()
   QVERIFY(getModelData(proxyModel, 0, 0, Qt::FontRole).isNull());
   QVERIFY(getModelData(proxyModel, 0, 1, Qt::FontRole).isNull());
   QVERIFY(getModelData(proxyModel, 1, 0, Qt::FontRole).isNull());
-  /*
-   * Set font for column 1
-   */
-//   QFont font;
-//   font.setFamily("Times");
-//   font.setPointSize(14);
-//   font.setBold(true);
-//   proxyModel.setTextFontForColumn(1, font);
-//   // Check data for DisplayRole
-//   QCOMPARE(getModelData(proxyModel, 0, 0, Qt::DisplayRole), QVariant(1));
-//   QCOMPARE(getModelData(proxyModel, 0, 1, Qt::DisplayRole), QVariant("A"));
-//   // Check getter
-//   QVERIFY(proxyModel.textFont(0, 0).isNull());
-//   QCOMPARE(proxyModel.textFont(0, 1).value<QFont>().pointSize(), 14);
-//   QCOMPARE(proxyModel.textFont(0, 1).value<QFont>().bold(), true);
-//   // Check data for FontRole
-//   QVERIFY(getModelData(proxyModel, 0, 0, Qt::FontRole).isNull());
-//   QCOMPARE(getModelData(proxyModel, 0, 1, Qt::FontRole).value<QFont>().pointSize(), 14);
-//   QCOMPARE(getModelData(proxyModel, 0, 1, Qt::FontRole).value<QFont>().bold(), true);
-//   /*
-//    * Clear text font for column 1
-//    */
-//   proxyModel.clearTextFontForColumn(1);
-//   // Check data for DisplayRole
-//   QCOMPARE(getModelData(proxyModel, 0, 0, Qt::DisplayRole), QVariant(1));
-//   QCOMPARE(getModelData(proxyModel, 0, 1, Qt::DisplayRole), QVariant("A"));
-//   // Check getter
-//   QVERIFY(proxyModel.textFont(0, 0).isNull());
-//   QVERIFY(proxyModel.textFont(0, 1).isNull());
-//   // Check data for FontRole
-//   QVERIFY(getModelData(proxyModel, 0, 0, Qt::FontRole).isNull());
-//   QVERIFY(getModelData(proxyModel, 0, 1, Qt::FontRole).isNull());
 }
 
 void FormatProxyModelTest::textFontSignalTest()
@@ -507,6 +475,319 @@ void FormatProxyModelTest::textFontSignalTest()
   QCOMPARE(roles.at(0), (int)Qt::FontRole);
 }
 
+void FormatProxyModelTest::textColorTest()
+{
+  /*
+   * Setup model
+   */
+  VariantTableModel model;
+  model.resize(3, 2);
+  model.populateColumn(0, {1,2,3});
+  model.populateColumn(1, {"A","B","C"});
+  /*
+   * Setup proxy model
+   */
+  FormatProxyModel proxyModel;
+  proxyModel.setSourceModel(&model);
+  /*
+   * Setup colors
+   */
+  QColor color10(10, 0, 0);
+  QColor color20(20, 0, 0);
+  QColor color30(30, 0, 0);
+  /*
+   * Setup text colors (we only check red part):
+   *           30
+   *    -----------
+   *    | 10 |    |
+   *    -----------
+   * 20 |    |    |
+   *    -----------
+   */
+  proxyModel.setTextColorForIndex(0, 0, color10);
+  proxyModel.setTextColorForRow(1, color20);
+  proxyModel.setTextColorForColumn(1, color30);
+  // Check data for DisplayRole
+  QCOMPARE(getModelData(proxyModel, 0, 0, Qt::DisplayRole), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 0, 1, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(getModelData(proxyModel, 1, 0, Qt::DisplayRole), QVariant(2));
+  // Check getter
+  QCOMPARE(proxyModel.foregroundBrush(0, 0).value<QBrush>().color().red(), 10);
+  QCOMPARE(proxyModel.foregroundBrush(0, 1).value<QBrush>().color().red(), 30);
+  QCOMPARE(proxyModel.foregroundBrush(1, 0).value<QBrush>().color().red(), 20);
+  // Check data for ForegroundRole
+  QCOMPARE(getModelData(proxyModel, 0, 0, Qt::ForegroundRole).value<QBrush>().color().red(), 10);
+  QCOMPARE(getModelData(proxyModel, 0, 1, Qt::ForegroundRole).value<QBrush>().color().red(), 30);
+  QCOMPARE(getModelData(proxyModel, 1, 0, Qt::ForegroundRole).value<QBrush>().color().red(), 20);
+  /*
+   * Clear text fonts:
+   *
+   *    -----------
+   *    |    |    |
+   *    -----------
+   *    |    |    |
+   *    -----------
+   */
+  proxyModel.clearTextColorForIndex(0, 0);
+  proxyModel.clearTextColorForRow(1);
+  proxyModel.clearTextColorForColumn(1);
+  // Check data for DisplayRole
+  QCOMPARE(getModelData(proxyModel, 0, 0, Qt::DisplayRole), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 0, 1, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(getModelData(proxyModel, 1, 0, Qt::DisplayRole), QVariant(2));
+  // Check getter
+  QVERIFY(proxyModel.foregroundBrush(0, 0).isNull());
+  QVERIFY(proxyModel.foregroundBrush(0, 1).isNull());
+  QVERIFY(proxyModel.foregroundBrush(1, 0).isNull());
+  // Check data for ForegroundRole
+  QVERIFY(getModelData(proxyModel, 0, 0, Qt::ForegroundRole).isNull());
+  QVERIFY(getModelData(proxyModel, 0, 1, Qt::ForegroundRole).isNull());
+  QVERIFY(getModelData(proxyModel, 1, 0, Qt::ForegroundRole).isNull());
+}
+
+void FormatProxyModelTest::textColorSignalTest()
+{
+  QVariantList arguments;
+  QModelIndex index;
+  QVector<int> roles;
+  /*
+   * Setup model
+   */
+  VariantTableModel model;
+  model.resize(1, 2);
+  model.populateColumn(0, {1});
+  model.populateColumn(1, {"A"});
+  /*
+   * Setup proxy model
+   */
+  FormatProxyModel proxyModel;
+  proxyModel.setSourceModel(&model);
+  /*
+   * Setup signal spy
+   */
+  QSignalSpy dataChangedSpy(&proxyModel, &FormatProxyModel::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+  /*
+   * Set text color for index 0, 1
+   */
+  proxyModel.setTextColorForIndex(0, 1, QColor(Qt::red));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::ForegroundRole);
+  /*
+   * Clear text color of index 0, 1
+   */
+  proxyModel.clearTextColorForIndex(0, 1);
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::ForegroundRole);
+  /*
+   * Set text color for row 0
+   */
+  proxyModel.setTextColorForRow(0, QColor(Qt::red));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::ForegroundRole);
+  /*
+   * Clear text color of row 0
+   */
+  proxyModel.clearTextColorForRow(0);
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::ForegroundRole);
+  /*
+   * Set text color for column 1
+   */
+  proxyModel.setTextColorForColumn(1, QColor(Qt::red));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::ForegroundRole);
+  /*
+   * Clear text color of column 1
+   */
+  proxyModel.clearTextColorForColumn(1);
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::ForegroundRole);
+}
+
+void FormatProxyModelTest::backgroundColorTest()
+{
+  /*
+   * Setup model
+   */
+  VariantTableModel model;
+  model.resize(3, 2);
+  model.populateColumn(0, {1,2,3});
+  model.populateColumn(1, {"A","B","C"});
+  /*
+   * Setup proxy model
+   */
+  FormatProxyModel proxyModel;
+  proxyModel.setSourceModel(&model);
+  /*
+   * Setup colors
+   */
+  QColor color10(10, 0, 0);
+  QColor color20(20, 0, 0);
+  QColor color30(30, 0, 0);
+  /*
+   * Setup background colors (we only check red part):
+   *           30
+   *    -----------
+   *    | 10 |    |
+   *    -----------
+   * 20 |    |    |
+   *    -----------
+   */
+  proxyModel.setBackgroundColorForIndex(0, 0, color10);
+  proxyModel.setBackgroundColorForRow(1, color20);
+  proxyModel.setBackgroundBrushForColumn(1, color30);
+  // Check data for DisplayRole
+  QCOMPARE(getModelData(proxyModel, 0, 0, Qt::DisplayRole), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 0, 1, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(getModelData(proxyModel, 1, 0, Qt::DisplayRole), QVariant(2));
+  // Check getter
+  QCOMPARE(proxyModel.backgroundBrush(0, 0).value<QBrush>().color().red(), 10);
+  QCOMPARE(proxyModel.backgroundBrush(0, 1).value<QBrush>().color().red(), 30);
+  QCOMPARE(proxyModel.backgroundBrush(1, 0).value<QBrush>().color().red(), 20);
+  // Check data for ForegroundRole
+  QCOMPARE(getModelData(proxyModel, 0, 0, Qt::BackgroundRole).value<QBrush>().color().red(), 10);
+  QCOMPARE(getModelData(proxyModel, 0, 1, Qt::BackgroundRole).value<QBrush>().color().red(), 30);
+  QCOMPARE(getModelData(proxyModel, 1, 0, Qt::BackgroundRole).value<QBrush>().color().red(), 20);
+  /*
+   * Clear text fonts:
+   *
+   *    -----------
+   *    |    |    |
+   *    -----------
+   *    |    |    |
+   *    -----------
+   */
+  proxyModel.clearBackgroundBrushForIndex(0, 0);
+  proxyModel.clearBackgroundBrushForRow(1);
+  proxyModel.clearBackgroundBrushForColumn(1);
+  // Check data for DisplayRole
+  QCOMPARE(getModelData(proxyModel, 0, 0, Qt::DisplayRole), QVariant(1));
+  QCOMPARE(getModelData(proxyModel, 0, 1, Qt::DisplayRole), QVariant("A"));
+  QCOMPARE(getModelData(proxyModel, 1, 0, Qt::DisplayRole), QVariant(2));
+  // Check getter
+  QVERIFY(proxyModel.backgroundBrush(0, 0).isNull());
+  QVERIFY(proxyModel.backgroundBrush(0, 1).isNull());
+  QVERIFY(proxyModel.backgroundBrush(1, 0).isNull());
+  // Check data for ForegroundRole
+  QVERIFY(getModelData(proxyModel, 0, 0, Qt::BackgroundRole).isNull());
+  QVERIFY(getModelData(proxyModel, 0, 1, Qt::BackgroundRole).isNull());
+  QVERIFY(getModelData(proxyModel, 1, 0, Qt::BackgroundRole).isNull());
+  
+  proxyModel.setBackgroundColorForRow(0, Qt::green, Qt::Dense1Pattern);
+  proxyModel.setTextAlignmentForColumn(0, Qt::AlignCenter);
+  proxyModel.setTextColorForIndex(0, 0, Qt::red);
+  displayModel(proxyModel);
+}
+
+void FormatProxyModelTest::backgroundColorSignalTest()
+{
+  QVariantList arguments;
+  QModelIndex index;
+  QVector<int> roles;
+  /*
+   * Setup model
+   */
+  VariantTableModel model;
+  model.resize(1, 2);
+  model.populateColumn(0, {1});
+  model.populateColumn(1, {"A"});
+  /*
+   * Setup proxy model
+   */
+  FormatProxyModel proxyModel;
+  proxyModel.setSourceModel(&model);
+  /*
+   * Setup signal spy
+   */
+  QSignalSpy dataChangedSpy(&proxyModel, &FormatProxyModel::dataChanged);
+  QVERIFY(dataChangedSpy.isValid());
+  /*
+   * Set background color for index 0, 1
+   */
+  proxyModel.setBackgroundColorForIndex(0, 1, QColor(Qt::red));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::BackgroundRole);
+  /*
+   * Clear text color of index 0, 1
+   */
+  proxyModel.clearBackgroundBrushForIndex(0, 1);
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::BackgroundRole);
+  /*
+   * Set background color for row 0
+   */
+  proxyModel.setBackgroundColorForRow(0, QColor(Qt::red));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::BackgroundRole);
+  /*
+   * Clear text color of row 0
+   */
+  proxyModel.clearBackgroundBrushForRow(0);
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::BackgroundRole);
+  /*
+   * Set background color for column 0
+   */
+  proxyModel.setBackgroundColorForColumn(0, QColor(Qt::red));
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::BackgroundRole);
+  /*
+   * Clear text color of column 0
+   */
+  proxyModel.clearBackgroundBrushForColumn(0);
+  QCOMPARE(dataChangedSpy.count(), 1);
+  arguments = dataChangedSpy.takeFirst();
+  QCOMPARE(arguments.count(), 3);
+  roles = arguments.at(2).value< QVector<int> >();
+  QCOMPARE(roles.size(), 1);
+  QCOMPARE(roles.at(0), (int)Qt::BackgroundRole);
+}
+
 void FormatProxyModelTest::setModelTest()
 {
   /*
@@ -570,7 +851,7 @@ void FormatProxyModelTest::getDiplayRoleDataBenchmark()
   proxyModel.setTextAlignmentForColumn(0, Qt::AlignCenter);
   QBENCHMARK{
     for(int row = 0; row < n; ++row){
-      QCOMPARE(proxyModel.data( proxyModel.index(row, 0) ), QVariant(row+1));
+      QCOMPARE(proxyModel.data( proxyModel.index(row, 0) ).toInt(), row+1);
       QVERIFY(!proxyModel.data( proxyModel.index(row, 1) ).isNull());
     }
   }
@@ -604,7 +885,7 @@ void FormatProxyModelTest::getTextAlignmentRoleDataBenchmark()
   proxyModel.setTextAlignmentForColumn(0, Qt::AlignCenter);
   QBENCHMARK{
     for(int row = 0; row < n; ++row){
-      QCOMPARE(proxyModel.data( proxyModel.index(row, 0) , Qt::TextAlignmentRole ), QVariant(Qt::AlignCenter));
+      QCOMPARE(proxyModel.data( proxyModel.index(row, 0) , Qt::TextAlignmentRole ).toInt(), (int)Qt::AlignCenter);
       QVERIFY(proxyModel.data( proxyModel.index(row, 1) , Qt::TextAlignmentRole).isNull());
     }
   }
