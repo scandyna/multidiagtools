@@ -23,6 +23,7 @@
 
 #include "Expression/RelationFilterExpressionGrammar.h"
 #include "Expression/FilterExpressionContainer.h"
+#include "ChildModelColumn.h"
 #include "RelationKey.h"
 #include "RelationColumnPair.h"
 #include <Qt>
@@ -43,13 +44,13 @@ namespace Mdt{ namespace ItemModel{
    * \code
    * #include "Mdt/ItemModel/RelationFilterExpression.h"
    *
-   * using Mdt::ItemModel::RelationFilterExpression;
-   * using Mdt::ItemModel::FilterColumn;
+   * using namespace Mdt::ItemModel::RelationFilterExpression;
+   * using Mdt::ItemModel::ChildModelColumn;
    * using Mdt::ItemModel::ParentModelColumn;
    * using Like = Mdt::ItemModel::LikeExpression;
    *
    * ParentModelColumn clientId(0);
-   * FilterColumn addressClientId(1);
+   * ChildModelColumn addressClientId(1);
    *
    * RelationFilterExpression filter( addressClientId == clientId );
    * \endcode
@@ -67,13 +68,13 @@ namespace Mdt{ namespace ItemModel{
      * \tparam Expr Type of the expression.
      * \param expr Expression to hold.
      * \pre Expr must be a relation filter expression type.
-     *       A relation filter expression is based on FilterColumn, ParentModelColumn,
+     *       A relation filter expression is based on ChildModelColumn, ParentModelColumn,
      *       comparison operators, logical AND, logical OR.
-     *       For example (see example code above for details):
+     *       For example (see code above for details):
      *       \code
      *       // Example of valid relation filter expression
      *       addressClientId == cliendId
-     *       (addressClientId == cliendId) && (cliendId > 25)
+     *       (addressClientId == cliendId) && (addressClientId > 25)
      *
      *       // Example of invalid relation filter expression
      *       cliendId + 5

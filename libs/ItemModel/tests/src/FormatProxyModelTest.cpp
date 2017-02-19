@@ -697,11 +697,6 @@ void FormatProxyModelTest::backgroundColorTest()
   QVERIFY(getModelData(proxyModel, 0, 0, Qt::BackgroundRole).isNull());
   QVERIFY(getModelData(proxyModel, 0, 1, Qt::BackgroundRole).isNull());
   QVERIFY(getModelData(proxyModel, 1, 0, Qt::BackgroundRole).isNull());
-  
-  proxyModel.setBackgroundColorForRow(0, Qt::green, Qt::Dense1Pattern);
-  proxyModel.setTextAlignmentForColumn(0, Qt::AlignCenter);
-  proxyModel.setTextColorForIndex(0, 0, Qt::red);
-  displayModel(proxyModel);
 }
 
 void FormatProxyModelTest::backgroundColorSignalTest()

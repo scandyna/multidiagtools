@@ -24,7 +24,7 @@
 #include "SortFilterProxyModel.h"
 #include "RelationFilterExpression.h"
 #include "ParentModelColumn.h"
-#include "FilterColumn.h"
+#include "ChildModelColumn.h"
 #include "LikeExpression.h"
 #include "RowList.h"
 #include "RelationKey.h"
@@ -46,9 +46,7 @@ namespace Mdt{ namespace ItemModel{
    * #include "ClientTableModel.h"
    * #include "AddressTableModel.h"
    *
-   * namepsace ItemModel = Mdt::ItemModel;
-   * using ItemModel::RelationFilterProxyModel;
-   * using ItemModel::ParentModelColumn;
+   * using namepsace Mdt::ItemModel;
    *
    * auto *view = new QTableView;
    * auto *clientModel = new ClientTableModel;
@@ -61,8 +59,9 @@ namespace Mdt{ namespace ItemModel{
    * view->setModel(proxyModel);
    *
    * // Setup a filter and apply it
+   * ChildModelColumn addressClientId(1);
    * ParentModelColumn clientId(0);
-   * proxyModel->setFilter( cliendId == addressClientId );
+   * proxyModel->setFilter( addressClientId == cliendId );
    * proxyModel->setParentModelMatchRow(0);
    * \endcode
    */

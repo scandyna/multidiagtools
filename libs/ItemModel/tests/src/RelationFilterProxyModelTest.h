@@ -36,6 +36,7 @@ class RelationFilterProxyModelTest : public TestBase
 
   void parentModelMatchRowTest();
   void filterTest();
+  void filterMultiColumnTest();
   void filterBenchmark();
   void filterBenchmark_data();
 
@@ -44,11 +45,11 @@ class RelationFilterProxyModelTest : public TestBase
   void filterRoleTest();
   void setterEventTest();
   void dynamicFilterTest();
-  void dynamicFilterMultiColumnKeyTest();
   void dynamicFilterInsertTest();
+  void dynamicFilterInsertMultiColumnTest();
   void parentModelKeyChangeTest();
-  void parentModelKeyChangeRolesTest();
   void parentModelKeyMultiColumnKeyChangeTest();
+  void parentModelKeyChangeRolesTest();
 
   void qtModelTest();
 };

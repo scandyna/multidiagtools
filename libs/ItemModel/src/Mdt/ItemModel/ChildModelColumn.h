@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2017 Philippe Steinmann.
+ ** Copyright (C) 2011-2016 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,23 +18,19 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_PARENT_MODEL_COLUMN_H
-#define MDT_ITEM_MODEL_PARENT_MODEL_COLUMN_H
+#ifndef MDT_ITEM_MODEL_CHILD_MODEL_COLUMN_H
+#define MDT_ITEM_MODEL_CHILD_MODEL_COLUMN_H
 
-#include "Expression/ColumnTerminal.h"
+#include "FilterColumn.h"
 
 namespace Mdt{ namespace ItemModel{
 
-  struct ParentModelColumnTag
-  {
-  };
-
-  using ParentModelColumnData = Expression::ColumnData<ParentModelColumnTag>;
-
-  /*! \brief ParentModelColumn is a (boost:proto) terminal that represents a column index in a item model, used for RelationFilterExpression
+  /*! \brief ChildModelColumn is a (boost:proto) terminal that represents a column index in a item model, used for RelationFilterExpression
+   *
+   * This is alias to FilterColumn, that can be more intuitive to create RelationFilterExpression.
    */
-  using ParentModelColumn = Expression::ColumnTerminal<ParentModelColumnTag>;
+  using ChildModelColumn = FilterColumn;
 
 }} // namespace Mdt{ namespace ItemModel{
 
-#endif // #ifndef MDT_ITEM_MODEL_PARENT_MODEL_COLUMN_H
+#endif // #ifndef MDT_ITEM_MODEL_CHILD_MODEL_COLUMN_H

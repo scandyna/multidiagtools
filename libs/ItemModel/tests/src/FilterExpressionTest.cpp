@@ -45,6 +45,7 @@
 namespace ItemModel = Mdt::ItemModel;
 using ItemModel::VariantTableModel;
 using ItemModel::FilterColumn;
+using ItemModel::ChildModelColumn;
 using ItemModel::ParentModelColumn;
 using ItemModel::FilterExpression;
 using ItemModel::RelationFilterExpression;
@@ -218,7 +219,7 @@ void FilterExpressionTest::relationFilterComparisonTest()
 {
   using ItemModel::Expression::RelationFilterComparison;
 
-  FilterColumn A(1);
+  ChildModelColumn A(1);
   ParentModelColumn P(5);
 
   // ==
