@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_PRIMARY_KEY_PROXY_MODEL_H
 
 #include "PrimaryKey.h"
+#include "PrimaryKeyRecord.h"
 #include "PkFkProxyModelBase.h"
 #include <initializer_list>
 
@@ -65,6 +66,10 @@ namespace Mdt{ namespace ItemModel{
      */
     void setPrimaryKey(std::initializer_list<int> pk);
 
+    /*! \brief Get primary key
+     */
+    PrimaryKey primaryKey() const;
+
     /*! \brief Set primary key editable
      *
      * By default, primary key is editable
@@ -90,6 +95,12 @@ namespace Mdt{ namespace ItemModel{
     {
       return isKeyItemsEnabled();
     }
+
+    /*! \brief Get primary key record for row
+     *
+     * \pre \a row must be in correct range ( 0 <= row < rowCount() )
+     */
+    PrimaryKeyRecord primaryKeyRecord(int row) const;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

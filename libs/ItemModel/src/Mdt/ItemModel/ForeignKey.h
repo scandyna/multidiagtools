@@ -94,6 +94,22 @@ namespace Mdt{ namespace ItemModel{
       return mColumnList.end();
     }
 
+    /*! \brief Get a foreign key from a column list
+     */
+    static ForeignKey fromColumnList(const ColumnList & columnList)
+    {
+      ForeignKey fk;
+      fk.mColumnList = columnList;
+      return fk;
+    }
+
+    /*! \brief Get columns list
+     */
+    ColumnList toColumnList() const
+    {
+      return mColumnList;
+    }
+
    private:
 
     ColumnList mColumnList;

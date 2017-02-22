@@ -63,4 +63,17 @@ void PkFkProxyModelBase::setKeyItemsEnabled(bool enable)
   mIsKeyItemsEnabled = enable;
 }
 
+KeyRecord PkFkProxyModelBase::keyRecord(int row) const
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  KeyRecord record;
+  for(int column : mKey){
+    Q_ASSERT(column < columnCount());
+    record.append(column, index(row, column).data());
+  }
+  return record;
+}
+
 }} // namespace Mdt{ namespace ItemModel{

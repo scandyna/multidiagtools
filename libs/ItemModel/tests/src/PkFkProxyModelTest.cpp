@@ -44,6 +44,18 @@ void PkFkProxyModelTest::cleanupTestCase()
  * Tests
  */
 
+void PkFkProxyModelTest::pkSetGetKeyTest()
+{
+  PrimaryKeyProxyModel proxyModel;
+  proxyModel.setPrimaryKey({1,2});
+  QCOMPARE(proxyModel.primaryKey().columnCount(), 2);
+}
+
+void PkFkProxyModelTest::fkSetGetKeyTest()
+{
+  QFAIL("Not complete");
+}
+
 void PkFkProxyModelTest::pkSetModelTest()
 {
   /*
@@ -128,6 +140,45 @@ void PkFkProxyModelTest::pkFlagsTest()
 }
 
 void PkFkProxyModelTest::fkFlagsTest()
+{
+  QFAIL("Not complete");
+}
+
+void PkFkProxyModelTest::primaryKeyRecordTest()
+{
+  PrimaryKeyRecord record;
+  /*
+   * Setup source model
+   */
+  VariantTableModel model;
+  model.resize(2, 3);
+  model.populateColumn(0, {1,2});
+  model.populateColumn(1, {"A","B"});
+  model.populateColumn(2, {10,20});
+  /*
+   * Setup proxy model
+   */
+  PrimaryKeyProxyModel proxyModel;
+  proxyModel.setSourceModel(&model);
+  proxyModel.setPrimaryKey({0,2});
+  /*
+   * Get record for row 0
+   */
+  record = proxyModel.primaryKeyRecord(0);
+  QCOMPARE(record.columnCount(), 2);
+  QCOMPARE(record.columnAt(0), 0);
+  QCOMPARE(record.dataAt(0), QVariant(1));
+  QCOMPARE(record.columnAt(1), 2);
+  QCOMPARE(record.dataAt(1), QVariant(10));
+  /*
+   * Find record
+   */
+  
+
+  QFAIL("Not complete");
+}
+
+void PkFkProxyModelTest::foreignKeyRecordTest()
 {
   QFAIL("Not complete");
 }

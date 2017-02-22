@@ -29,6 +29,23 @@ namespace Mdt{ namespace ItemModel{
    */
   class PrimaryKeyRecord : public KeyRecord
   {
+   public:
+
+    PrimaryKeyRecord() = default;
+
+    /*! \brief Get a primary key record from a key record
+     */
+    static PrimaryKeyRecord fromKeyRecord(const KeyRecord & record)
+    {
+      return PrimaryKeyRecord(record);
+    }
+
+  private:
+    
+    PrimaryKeyRecord(const KeyRecord & record)
+     : KeyRecord(record)
+    {
+    }
   };
 
 }} // namespace Mdt{ namespace ItemModel{

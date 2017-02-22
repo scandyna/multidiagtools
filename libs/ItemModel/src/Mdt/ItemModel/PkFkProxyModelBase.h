@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_PK_FK_PROXY_MODEL_BASE_H
 
 #include "ColumnList.h"
+#include "KeyRecord.h"
 #include <QIdentityProxyModel>
 
 namespace Mdt{ namespace ItemModel{
@@ -48,6 +49,13 @@ namespace Mdt{ namespace ItemModel{
      */
     void setKey(const ColumnList & key);
 
+    /*! \brief Get key
+     */
+    ColumnList key() const
+    {
+      return mKey;
+    }
+
     /*! \brief Set key editable
      */
     void setKeyEditable(bool editable);
@@ -69,6 +77,12 @@ namespace Mdt{ namespace ItemModel{
     {
       return mIsKeyItemsEnabled;
     }
+
+    /*! \brief Get key record for row
+     *
+     * \pre \a row must be in correct range ( 0 <= row < rowCount() )
+     */
+    KeyRecord keyRecord(int row) const;
 
    private:
 

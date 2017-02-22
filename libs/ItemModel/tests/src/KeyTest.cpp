@@ -150,6 +150,12 @@ void KeyTest::primaryKeyTest()
    */
   pk2.clear();
   QVERIFY(pk2.isNull());
+  /*
+   * Construct from a ColumnList
+   */
+  ColumnList cl({1,2});
+  auto pk3 = PrimaryKey::fromColumnList(cl);
+  QCOMPARE(pk3.columnCount(), 2);
 }
 
 void KeyTest::foreignKeyTest()
@@ -175,6 +181,12 @@ void KeyTest::foreignKeyTest()
    */
   fk2.clear();
   QVERIFY(fk2.isNull());
+  /*
+   * Construct from a ColumnList
+   */
+  ColumnList cl({1,2});
+  auto fk3 = ForeignKey::fromColumnList(cl);
+  QCOMPARE(fk3.columnCount(), 2);
 }
 
 void KeyTest::keyDataTest()

@@ -39,6 +39,11 @@ void PrimaryKeyProxyModel::setPrimaryKey(std::initializer_list<int> pk)
   setPrimaryKey( PrimaryKey(pk) );
 }
 
+PrimaryKey PrimaryKeyProxyModel::primaryKey() const
+{
+  return PrimaryKey::fromColumnList(key());
+}
+
 void PrimaryKeyProxyModel::setPrimaryKeyEditable(bool editable)
 {
   setKeyEditable(editable);
@@ -47,6 +52,14 @@ void PrimaryKeyProxyModel::setPrimaryKeyEditable(bool editable)
 void PrimaryKeyProxyModel::setPrimaryKeyItemsEnabled(bool enable)
 {
   setKeyItemsEnabled(enable);
+}
+
+PrimaryKeyRecord PrimaryKeyProxyModel::primaryKeyRecord(int row) const
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  return PrimaryKeyRecord::fromKeyRecord(keyRecord(row));
 }
 
 }} // namespace Mdt{ namespace ItemModel{

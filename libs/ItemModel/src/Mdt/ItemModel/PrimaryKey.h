@@ -94,6 +94,15 @@ namespace Mdt{ namespace ItemModel{
       return mColumnList.end();
     }
 
+    /*! \brief Get a primary key from a column list
+     */
+    static PrimaryKey fromColumnList(const ColumnList & columnList)
+    {
+      PrimaryKey pk;
+      pk.mColumnList = columnList;
+      return pk;
+    }
+
     /*! \brief Get columns list
      */
     ColumnList toColumnList() const

@@ -32,10 +32,14 @@ class PkFkProxyModelTest : public TestBase
   void initTestCase();
   void cleanupTestCase();
 
+  void pkSetGetKeyTest();
+  void fkSetGetKeyTest();
   void pkSetModelTest();
   void fkSetModelTest();
   void pkFlagsTest();
   void fkFlagsTest();
+  void primaryKeyRecordTest();
+  void foreignKeyRecordTest();
   void pkQtModelTest();
   void fkQtModelTest();
 
