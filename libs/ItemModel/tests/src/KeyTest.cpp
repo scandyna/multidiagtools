@@ -24,7 +24,9 @@
 #include "Mdt/ItemModel/ColumnList.h"
 #include "Mdt/ItemModel/PrimaryKey.h"
 #include "Mdt/ItemModel/ForeignKey.h"
-// #include "Mdt/ItemModel/RelationKey.h"
+#include "Mdt/ItemModel/KeyData.h"
+#include "Mdt/ItemModel/KeyRecord.h"
+#include "Mdt/ItemModel/PrimaryKeyRecord.h"
 
 using namespace Mdt::ItemModel;
 
@@ -172,6 +174,53 @@ void KeyTest::foreignKeyTest()
    */
   fk2.clear();
   QVERIFY(fk2.isNull());
+}
+
+void KeyTest::keyDataTest()
+{
+  KeyData data(1, "A");
+  QCOMPARE(data.column(), 1);
+  QCOMPARE(data.data(), QVariant("A"));
+}
+
+void KeyTest::keyRecordTest()
+{
+  /*
+   * Initial state
+   */
+  KeyRecord record;
+  QCOMPARE(record.columnCount(), 0);
+  QVERIFY(record.isEmpty());
+  QVERIFY(record.dataForColumn(0).isNull());
+  /*
+   * Append
+   */
+  record.append(1, "A");
+  QCOMPARE(record.columnCount(), 1);
+  QVERIFY(!record.isEmpty());
+  QCOMPARE(record.columnAt(0), 1);
+  QCOMPARE(record.dataAt(0), QVariant("A"));
+  QVERIFY(record.dataForColumn(0).isNull());
+  QCOMPARE(record.dataForColumn(1), QVariant("A"));
+  /*
+   * Clear
+   */
+  record.clear();
+  QCOMPARE(record.columnCount(), 0);
+  QVERIFY(record.isEmpty());
+}
+
+void KeyTest::primaryKeyRecordTest()
+{
+  PrimaryKeyRecord record;
+  QVERIFY(record.isEmpty());
+  record.append(2, "B");
+  QVERIFY(!record.isEmpty());
+}
+
+void KeyTest::foreignKeyRecordTest()
+{
+  QFAIL("Not complete");
 }
 
 /*

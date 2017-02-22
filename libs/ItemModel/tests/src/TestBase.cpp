@@ -42,11 +42,13 @@ void TestBase::displayModel(QAbstractItemModel* model)
   auto *tableView = new QTableView;
   auto *treeView = new QTreeView;
   auto *comboBox = new QComboBox;
+  auto *editableComboBox = new QComboBox;
 
-  layout->addWidget(listView, 0, 0);
-  layout->addWidget(tableView, 0, 1);
-  layout->addWidget(treeView, 0, 2);
-  layout->addWidget(comboBox, 0, 3);
+  layout->addWidget(listView, 0, 0, 3, 1);
+  layout->addWidget(tableView, 0, 1, 3, 1);
+  layout->addWidget(treeView, 0, 2, 3, 1);
+  layout->addWidget(comboBox, 0, 3, 1, 1);
+  layout->addWidget(editableComboBox, 1, 3, 1, 1);
   dialog.setLayout(layout);
 
   listView->setModel(model);
@@ -54,6 +56,9 @@ void TestBase::displayModel(QAbstractItemModel* model)
   treeView->setModel(model);
   comboBox->setModel(model);
   comboBox->setMinimumWidth(100);
+  editableComboBox->setModel(model);
+  editableComboBox->setMinimumWidth(100);
+  editableComboBox->setEditable(true);
 
   dialog.setWindowTitle("Dialog to display a model");
   dialog.resize(1000, 500);
@@ -138,4 +143,26 @@ QVariant TestBase::getModelData(const QAbstractItemModel* model, int row, int co
 QVariant TestBase::getModelData(const QAbstractItemModel& model, int row, int column, Qt::ItemDataRole role)
 {
   return getModelData(&model, row, column, role);
+}
+
+Qt::ItemFlags TestBase::getModelFlags(const QAbstractItemModel* model, int row, int column)
+{
+  Q_ASSERT(model != nullptr);
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < model->rowCount());
+  Q_ASSERT(column >= 0);
+  Q_ASSERT(column < model->columnCount());
+
+  auto index = model->index(row, column);
+  if(!index.isValid()){
+    qDebug() << "TestBase::getModelFlags() - index is not valid: " << index;
+    return Qt::NoItemFlags;
+  }
+
+  return model->flags(index);
+}
+
+Qt::ItemFlags TestBase::getModelFlags(const QAbstractItemModel& model, int row, int column)
+{
+  return getModelFlags(&model, row, column);
 }

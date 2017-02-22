@@ -2,30 +2,31 @@ format 211
 
 classcanvas 128130 class_ref 2767362 // ControllerRelationList
   classdiagramsettings member_max_width 0 end
-  xyz 42 40 2006
+  xyz 506 40 2006
 end
 note 129538 "Don't forget:
  - value_type
 "
-  xyzwh 557.5 560 2000 441 92
+  xyzwh 557.5 584 2000 441 92
 note 129666 "Simply:
  - Define what a class  to handle specific functions
  - List also templated to one of this class"
-  xyzwh 40.5 560.5 2000 437 99
+  xyzwh 40.5 584.5 2000 437 99
 classcanvas 129794 class_ref 3627906 // ControllerRelationImplBase
   classdiagramsettings member_max_width 0 end
-  xyz 585 84 3005
+  xyz 49 40 3005
 end
 classcanvas 130050 class_ref 3708546 // ControllerRelation
   classdiagramsettings member_max_width 0 end
-  xyz 576 353 2000
+  xyz 41 354 2000
 end
 relationcanvas 129922 relation_ref 4005122 // <directional composition>
   from ref 128130 z 3006 to ref 129794
   no_role_a no_role_b
-  multiplicity_a_pos 569 210 3000 no_multiplicity_b
+  multiplicity_a_pos 473 186 3000 no_multiplicity_b
 end
 relationcanvas 130178 relation_ref 4095362 // <generalisation>
+  decenter_begin 489
   from ref 130050 z 3006 to ref 129794
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

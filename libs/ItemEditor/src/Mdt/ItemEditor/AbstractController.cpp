@@ -158,6 +158,7 @@ bool AbstractController::setCurrentRow(int row)
    *       we must try to fetch more data
    *       until we found row, or no more data is available,
    *       and consider this value as current row.
+   *       -> Or not ?
    */
   mRowChangeEventDispatcher->setCurrentRow(row);
 

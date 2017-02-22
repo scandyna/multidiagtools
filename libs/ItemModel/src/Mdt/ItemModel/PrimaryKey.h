@@ -94,6 +94,13 @@ namespace Mdt{ namespace ItemModel{
       return mColumnList.end();
     }
 
+    /*! \brief Get columns list
+     */
+    ColumnList toColumnList() const
+    {
+      return mColumnList;
+    }
+
    private:
 
     ColumnList mColumnList;

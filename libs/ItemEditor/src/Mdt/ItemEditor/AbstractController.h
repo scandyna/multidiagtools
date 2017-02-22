@@ -103,6 +103,8 @@ namespace Mdt{ namespace ItemEditor{
    *    - When a new row is inserted into child controller's model,
    *       values of the parent controller are copied to child controller
    *       for each column pairs in the relation.
+   *    - When a item, that is part of a relation key, is edited in parent controller's model,
+   *       values in child controller's model are updated.
    */
   class AbstractController : public QObject
   {

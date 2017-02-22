@@ -33,8 +33,13 @@ set(SOURCES_FILES
     src/Mdt/ItemModel/RowColumnListBase.cpp
     src/Mdt/ItemModel/RowList.cpp
     src/Mdt/ItemModel/ColumnList.cpp
+    src/Mdt/ItemModel/KeyData.cpp
+    src/Mdt/ItemModel/KeyRecord.cpp
+    src/Mdt/ItemModel/PrimaryKeyRecord.cpp
     src/Mdt/ItemModel/RelationKey.cpp
     src/Mdt/ItemModel/RelationKeyCopier.cpp
+    src/Mdt/ItemModel/PkFkProxyModelBase.cpp
+    src/Mdt/ItemModel/PrimaryKeyProxyModel.cpp
 )
 
 # Get Boost include directory if not allready set

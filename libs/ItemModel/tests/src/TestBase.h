@@ -24,6 +24,7 @@
 #include "Mdt/Application.h"
 #include <QObject>
 #include <QtTest/QtTest>
+#include <Qt>
 
 class QAbstractItemModel;
 class QAbstractProxyModel;
@@ -43,6 +44,9 @@ class TestBase : public QObject
   static bool setModelData(QAbstractItemModel & model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
   static QVariant getModelData(const QAbstractItemModel *model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
   static QVariant getModelData(const QAbstractItemModel & model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
+  // Helper functions get/set flags in a model
+  static Qt::ItemFlags getModelFlags(const QAbstractItemModel *model, int row, int column);
+  static Qt::ItemFlags getModelFlags(const QAbstractItemModel & model, int row, int column);
 };
 
 #define MDT_ITEM_MODEL_TEST_MAIN_IMPL(TestClass, debugEnv) \

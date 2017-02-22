@@ -58,6 +58,11 @@ set(CMAKE_CXX_STANDARD 14)
 add_compile_options(-Wall -Wextra)
 # add_compile_options(-Werror -Wpedantic)
 
+# Test coverage , NOTE: only gcc ?
+# TODO Should be in egbug mode only
+add_compile_options(-ftest-coverage)
+
+
 # Sanitizer
 # NOTE: must be the first option, else undefined references will occur.
 #       when using add_compile_options(), it is not at first,

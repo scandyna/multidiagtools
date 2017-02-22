@@ -18,30 +18,44 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_KEY_TEST_H
-#define MDT_ITEM_MODEL_KEY_TEST_H
+#include "KeyRecord.h"
+#include <algorithm>
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace ItemModel{
 
-class KeyTest : public QObject
+void KeyRecord::append(int column, const QVariant& data)
 {
- Q_OBJECT
+  Q_ASSERT(column >= 0);
 
- private slots:
+  mRecord.emplace_back(column, data);
+}
 
-  void initTestCase();
-  void cleanupTestCase();
+void KeyRecord::clear()
+{
+  mRecord.clear();
+}
 
-  void rowListTest();
-  void columnListTest();
-  void primaryKeyTest();
-  void foreignKeyTest();
+QVariant KeyRecord::dataForColumn(int column) const
+{
+  Q_ASSERT(column >= 0);
 
-  void keyDataTest();
-  void keyRecordTest();
-  void primaryKeyRecordTest();
-  void foreignKeyRecordTest();
-};
+  const auto it = iteratorForColumn(column);
+  if(it == cend()){
+    return QVariant();
+  }
 
-#endif // #ifndef MDT_ITEM_MODEL_KEY_TEST_H
+  return it->data();
+}
+
+Mdt::ItemModel::KeyRecord::const_iterator KeyRecord::iteratorForColumn(int column) const
+{
+  Q_ASSERT(column >= 0);
+
+  const auto pred = [column](const KeyData & kd){
+    return (kd.column() == column);
+  };
+
+  return std::find_if(cbegin(), cend(), pred);
+}
+
+}} // namespace Mdt{ namespace ItemModel{

@@ -18,30 +18,15 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_KEY_TEST_H
-#define MDT_ITEM_MODEL_KEY_TEST_H
+#include "KeyData.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace ItemModel{
 
-class KeyTest : public QObject
+KeyData::KeyData(int column, const QVariant& data)
+ : mColumn(column),
+   mData(data)
 {
- Q_OBJECT
+  Q_ASSERT(mColumn >= 0);
+}
 
- private slots:
-
-  void initTestCase();
-  void cleanupTestCase();
-
-  void rowListTest();
-  void columnListTest();
-  void primaryKeyTest();
-  void foreignKeyTest();
-
-  void keyDataTest();
-  void keyRecordTest();
-  void primaryKeyRecordTest();
-  void foreignKeyRecordTest();
-};
-
-#endif // #ifndef MDT_ITEM_MODEL_KEY_TEST_H
+}} // namespace Mdt{ namespace ItemModel{

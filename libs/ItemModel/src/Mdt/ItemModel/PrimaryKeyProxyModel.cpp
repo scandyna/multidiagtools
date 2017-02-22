@@ -18,30 +18,35 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_KEY_TEST_H
-#define MDT_ITEM_MODEL_KEY_TEST_H
+#include "PrimaryKeyProxyModel.h"
 
-#include <QObject>
-#include <QtTest/QtTest>
+namespace Mdt{ namespace ItemModel{
 
-class KeyTest : public QObject
+PrimaryKeyProxyModel::PrimaryKeyProxyModel(QObject* parent)
+ : PkFkProxyModelBase(parent)
 {
- Q_OBJECT
+}
 
- private slots:
+void PrimaryKeyProxyModel::setPrimaryKey(const PrimaryKey & pk)
+{
+  Q_ASSERT(!pk.isNull());
 
-  void initTestCase();
-  void cleanupTestCase();
+  setKey(pk.toColumnList());
+}
 
-  void rowListTest();
-  void columnListTest();
-  void primaryKeyTest();
-  void foreignKeyTest();
+void PrimaryKeyProxyModel::setPrimaryKey(std::initializer_list<int> pk)
+{
+  setPrimaryKey( PrimaryKey(pk) );
+}
 
-  void keyDataTest();
-  void keyRecordTest();
-  void primaryKeyRecordTest();
-  void foreignKeyRecordTest();
-};
+void PrimaryKeyProxyModel::setPrimaryKeyEditable(bool editable)
+{
+  setKeyEditable(editable);
+}
 
-#endif // #ifndef MDT_ITEM_MODEL_KEY_TEST_H
+void PrimaryKeyProxyModel::setPrimaryKeyItemsEnabled(bool enable)
+{
+  setKeyItemsEnabled(enable);
+}
+
+}} // namespace Mdt{ namespace ItemModel{

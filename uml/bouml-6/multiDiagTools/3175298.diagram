@@ -20,6 +20,10 @@ classcanvas 130818 class_ref 3648002 // AbstractController
   classdiagramsettings member_max_width 0 end
   xyz 266 40 2012
 end
+classcanvas 132610 class_ref 146946 // QAbstractItemModel
+  classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
+  xyz 84 154 2019
+end
 relationcanvas 129922 relation_ref 4011778 // <generalisation>
   geometry VHV unfixed
   decenter_end 510

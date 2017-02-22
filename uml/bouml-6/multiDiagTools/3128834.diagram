@@ -2,35 +2,39 @@ format 211
 
 classcanvas 129282 class_ref 3580930 // ParentModelColumnData
   classdiagramsettings member_max_width 0 end
-  xyz 615 154 2000
+  xyz 415 266 2000
 end
 classcanvas 129410 class_ref 3580802 // ParentModelColumn
   classdiagramsettings member_max_width 0 end
-  xyz 41 154 2000
+  xyz 41 46 2000
 end
 classcanvas 129794 class_ref 3532930 // FilterEvalData
   classdiagramsettings member_max_width 0 show_context_mode uml end
-  xyz 40 313 2000
+  xyz 40 425 2000
 end
 classcanvas 129922 class_ref 3581314 // ParentModelEvalData
   classdiagramsettings member_max_width 0 end
-  xyz 370 327 2000
+  xyz 370 439 2000
 end
 classcanvas 130434 class_ref 3491714 // FilterColumnData
   classdiagramsettings member_max_width 0 end
-  xyz 467 42 2011
+  xyz 123 266 2011
 end
 classcanvas 130690 class_ref 3533314 // FilterColumn
   classdiagramsettings member_max_width 0 end
-  xyz 289 42 2016
+  xyz 497 46 2016
 end
 classcanvas 131202 class_ref 3587842 // ColumnData
   classdiagramsettings member_max_width 0 end
-  xyz 479 152 2000
+  xyz 279 264 2000
 end
 classcanvas 131330 class_ref 3587970 // ColumnTerminal
   classdiagramsettings member_max_width 0 end
-  xyz 225 152 2000
+  xyz 225 40 2000
+end
+classcanvas 132098 class_ref 3822978 // ChildModelColumn
+  classdiagramsettings member_max_width 0 end
+  xyz 482 154 2000
 end
 relationcanvas 130306 relation_ref 3947394 // <directional composition>
   from ref 129794 z 2001 to ref 129922
@@ -38,18 +42,17 @@ relationcanvas 130306 relation_ref 3947394 // <directional composition>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131458 relation_ref 3953922 // <directional composition>
+  decenter_begin 479
   from ref 131330 z 2001 to ref 131202
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131586 relation_ref 3954178 // <dependency>
-  decenter_end 516
   from ref 130690 z 2017 to ref 131330
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131714 relation_ref 3954306 // <dependency>
-  decenter_begin 550
   from ref 129410 z 2001 to ref 131330
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -62,6 +65,12 @@ end
 relationcanvas 131970 relation_ref 3954562 // <dependency>
   decenter_begin 550
   from ref 129282 z 2001 to ref 131202
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132226 relation_ref 4250754 // <dependency>
+  decenter_begin 466
+  from ref 132098 z 2017 to ref 130690
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

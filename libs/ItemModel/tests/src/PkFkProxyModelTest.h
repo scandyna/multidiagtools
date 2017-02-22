@@ -18,13 +18,12 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_KEY_TEST_H
-#define MDT_ITEM_MODEL_KEY_TEST_H
+#ifndef MDT_ITEM_MODEL_PK_FK_PROXY_MODEL_TEST_H
+#define MDT_ITEM_MODEL_PK_FK_PROXY_MODEL_TEST_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "TestBase.h"
 
-class KeyTest : public QObject
+class PkFkProxyModelTest : public TestBase
 {
  Q_OBJECT
 
@@ -33,15 +32,17 @@ class KeyTest : public QObject
   void initTestCase();
   void cleanupTestCase();
 
-  void rowListTest();
-  void columnListTest();
-  void primaryKeyTest();
-  void foreignKeyTest();
+  void pkSetModelTest();
+  void fkSetModelTest();
+  void pkFlagsTest();
+  void fkFlagsTest();
+  void pkQtModelTest();
+  void fkQtModelTest();
 
-  void keyDataTest();
-  void keyRecordTest();
-  void primaryKeyRecordTest();
-  void foreignKeyRecordTest();
+  void modelGetDataBenchmark();
+  void modelGetDataBenchmark_data();
+  void proxyModelGetDataBenchmark();
+  void proxyModelGetDataBenchmark_data();
 };
 
-#endif // #ifndef MDT_ITEM_MODEL_KEY_TEST_H
+#endif // #ifndef MDT_ITEM_MODEL_PK_FK_PROXY_MODEL_TEST_H
