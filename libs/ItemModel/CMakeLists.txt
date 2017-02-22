@@ -36,6 +36,7 @@ set(SOURCES_FILES
     src/Mdt/ItemModel/KeyData.cpp
     src/Mdt/ItemModel/KeyRecord.cpp
     src/Mdt/ItemModel/PrimaryKeyRecord.cpp
+    src/Mdt/ItemModel/ForeignKeyRecord.cpp
     src/Mdt/ItemModel/RelationKey.cpp
     src/Mdt/ItemModel/RelationKeyCopier.cpp
     src/Mdt/ItemModel/PkFkProxyModelBase.cpp

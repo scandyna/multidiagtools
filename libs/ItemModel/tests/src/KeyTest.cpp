@@ -27,6 +27,7 @@
 #include "Mdt/ItemModel/KeyData.h"
 #include "Mdt/ItemModel/KeyRecord.h"
 #include "Mdt/ItemModel/PrimaryKeyRecord.h"
+#include "Mdt/ItemModel/ForeignKeyRecord.h"
 
 using namespace Mdt::ItemModel;
 
@@ -220,7 +221,10 @@ void KeyTest::primaryKeyRecordTest()
 
 void KeyTest::foreignKeyRecordTest()
 {
-  QFAIL("Not complete");
+  ForeignKeyRecord record;
+  QVERIFY(record.isEmpty());
+  record.append(2, "B");
+  QVERIFY(!record.isEmpty());
 }
 
 /*
