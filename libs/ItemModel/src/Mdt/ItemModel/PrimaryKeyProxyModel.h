@@ -101,6 +101,12 @@ namespace Mdt{ namespace ItemModel{
      * \pre \a row must be in correct range ( 0 <= row < rowCount() )
      */
     PrimaryKeyRecord primaryKeyRecord(int row) const;
+
+    /*! \brief Find row that matches primary key record
+     *
+     * Returns the row that matches, otherwise -1
+     */
+    int findRowForPrimaryKeyRecord(const PrimaryKeyRecord & record) const;
   };
 
 }} // namespace Mdt{ namespace ItemModel{

@@ -47,6 +47,8 @@ class PkFkProxyModelTest : public TestBase
   void modelGetDataBenchmark_data();
   void proxyModelGetDataBenchmark();
   void proxyModelGetDataBenchmark_data();
+  void findPrimaryKeyRecordBenchmark();
+  void findPrimaryKeyRecordBenchmark_data();
 };
 
 #endif // #ifndef MDT_ITEM_MODEL_PK_FK_PROXY_MODEL_TEST_H

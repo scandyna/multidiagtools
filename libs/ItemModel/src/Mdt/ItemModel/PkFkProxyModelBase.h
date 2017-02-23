@@ -84,7 +84,17 @@ namespace Mdt{ namespace ItemModel{
      */
     KeyRecord keyRecord(int row) const;
 
+    /*! \brief Find first row that matches key record
+     *
+     * Returns the first row that matches, otherwise -1
+     *
+     * \pre \a record must contain the same columns than key set with setKey()
+     */
+    int findFirstRowForKeyRecord(const KeyRecord & record) const;
+
    private:
+
+    bool rowMatchesKeyRecord(int row, const KeyRecord & record) const;
 
     bool mIsKeyEditable = true;
     bool mIsKeyItemsEnabled = true;

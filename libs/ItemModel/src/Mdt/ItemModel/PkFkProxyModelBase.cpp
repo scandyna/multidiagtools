@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "PkFkProxyModelBase.h"
+#include <algorithm>
 
 namespace Mdt{ namespace ItemModel{
 
@@ -74,6 +75,29 @@ KeyRecord PkFkProxyModelBase::keyRecord(int row) const
     record.append(column, index(row, column).data());
   }
   return record;
+}
+
+int PkFkProxyModelBase::findFirstRowForKeyRecord(const KeyRecord & record) const
+{
+  Q_ASSERT(record.columnCount() == mKey.size());
+
+  const int n = rowCount();
+  for(int row = 0; row < n; ++row){
+    if(rowMatchesKeyRecord(row, record)){
+      return row;
+    }
+  }
+
+  return -1;
+}
+
+bool PkFkProxyModelBase::rowMatchesKeyRecord(int row, const KeyRecord & record) const
+{
+  const auto pred = [row, this](const KeyData & kd){
+    Q_ASSERT(kd.column() < columnCount());
+    return( index(row, kd.column()).data() == kd.data() );
+  };
+  return std::all_of(record.cbegin(), record.cend(), pred);
 }
 
 }} // namespace Mdt{ namespace ItemModel{

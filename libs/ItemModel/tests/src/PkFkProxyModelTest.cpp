@@ -173,9 +173,17 @@ void PkFkProxyModelTest::primaryKeyRecordTest()
   /*
    * Find record
    */
-  
-
-  QFAIL("Not complete");
+  QCOMPARE(proxyModel.findRowForPrimaryKeyRecord(record), 0);
+  // Match row 1
+  record.clear();
+  record.append(0, 2);
+  record.append(2, 20);
+  QCOMPARE(proxyModel.findRowForPrimaryKeyRecord(record), 1);
+  // Match non existing row
+  record.clear();
+  record.append(0, 2);
+  record.append(2, 21);
+  QCOMPARE(proxyModel.findRowForPrimaryKeyRecord(record), -1);
 }
 
 void PkFkProxyModelTest::foreignKeyRecordTest()
@@ -270,6 +278,41 @@ void PkFkProxyModelTest::proxyModelGetDataBenchmark()
 }
 
 void PkFkProxyModelTest::proxyModelGetDataBenchmark_data()
+{
+  QTest::addColumn<int>("n");
+
+  QTest::newRow("10") << 10;
+  QTest::newRow("10'000") << 10000;
+}
+
+void PkFkProxyModelTest::findPrimaryKeyRecordBenchmark()
+{
+  QFETCH(int, n);
+  /*
+   * Setup model
+   */
+  VariantTableModel model;
+  model.resize(n, 2);
+  model.populateColumnWithInt(0, 1);
+  model.populateColumnWithInt(1, 2);
+  /*
+   * Setup proxy model
+   */
+  PrimaryKeyProxyModel proxyModel;
+  proxyModel.setSourceModel(&model);
+  proxyModel.setPrimaryKey({0,1});
+  /*
+   * Setup PK record that must match
+   */
+  PrimaryKeyRecord record;
+  record.append(0, n);
+  record.append(1, n+1);
+  QBENCHMARK{
+    QCOMPARE( proxyModel.findRowForPrimaryKeyRecord(record), n-1 );
+  }
+}
+
+void PkFkProxyModelTest::findPrimaryKeyRecordBenchmark_data()
 {
   QTest::addColumn<int>("n");
 

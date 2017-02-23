@@ -62,4 +62,9 @@ PrimaryKeyRecord PrimaryKeyProxyModel::primaryKeyRecord(int row) const
   return PrimaryKeyRecord::fromKeyRecord(keyRecord(row));
 }
 
+int PrimaryKeyProxyModel::findRowForPrimaryKeyRecord(const PrimaryKeyRecord & record) const
+{
+  return findFirstRowForKeyRecord(record);
+}
+
 }} // namespace Mdt{ namespace ItemModel{
