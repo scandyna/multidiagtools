@@ -127,6 +127,28 @@ void KeyTest::columnListTest()
   QCOMPARE(list2.at(0), 1);
 }
 
+void KeyTest::columnListQVariantTest()
+{
+  // Copy
+  ColumnList list({1,2});
+  QVariant v1;
+  v1.setValue(list);
+  QCOMPARE(v1.value<ColumnList>().size(), 2);
+  QCOMPARE(v1.value<ColumnList>().at(0), 1);
+  QCOMPARE(v1.value<ColumnList>().at(1), 2);
+  // Move (mybe)
+  QVariant v2;
+  v2.setValue( ColumnList({3,4}) );
+  QCOMPARE(v2.value<ColumnList>().size(), 2);
+  QCOMPARE(v2.value<ColumnList>().at(0), 3);
+  QCOMPARE(v2.value<ColumnList>().at(1), 4);
+  // Copy variant
+  QVariant v3 = v2;
+  QCOMPARE(v3.value<ColumnList>().size(), 2);
+  QCOMPARE(v3.value<ColumnList>().at(0), 3);
+  QCOMPARE(v3.value<ColumnList>().at(1), 4);
+}
+
 void KeyTest::primaryKeyTest()
 {
   /*
@@ -156,6 +178,22 @@ void KeyTest::primaryKeyTest()
   ColumnList cl({1,2});
   auto pk3 = PrimaryKey::fromColumnList(cl);
   QCOMPARE(pk3.columnCount(), 2);
+}
+
+void KeyTest::primaryKeyQVariantTest()
+{
+  // Copy
+  PrimaryKey pk({1,2});
+  QVariant v1;
+  v1.setValue(pk);
+  QCOMPARE(v1.value<PrimaryKey>().greatestColumn(), 2);
+  // Move (mybe)
+  QVariant v2;
+  v2.setValue( PrimaryKey({3,4}) );
+  QCOMPARE(v2.value<PrimaryKey>().greatestColumn(), 4);
+  // Copy variant
+  QVariant v3 = v2;
+  QCOMPARE(v3.value<PrimaryKey>().greatestColumn(), 4);
 }
 
 void KeyTest::foreignKeyTest()

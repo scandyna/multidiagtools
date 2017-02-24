@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_COLUMN_LIST_H
 
 #include "RowColumnListBase.h"
+#include <QMetaType>
 #include <initializer_list>
 
 namespace Mdt{ namespace ItemModel{
@@ -45,6 +46,11 @@ namespace Mdt{ namespace ItemModel{
      : RowColumnListBase(list)
     {}
 
+    ColumnList(const ColumnList &) = default;
+    ColumnList & operator=(const ColumnList &) = default;
+    ColumnList(ColumnList &&) = default;
+    ColumnList & operator=(ColumnList &&) = default;
+
     /*! \brief Get the greatest column
      *
      * Returns -1 if this list is empty.
@@ -57,5 +63,7 @@ namespace Mdt{ namespace ItemModel{
   };
 
 }} // namespace Mdt{ namespace ItemModel{
+
+Q_DECLARE_METATYPE(Mdt::ItemModel::ColumnList)
 
 #endif // #ifndef MDT_ITEM_MODEL_COLUMN_LIST_H

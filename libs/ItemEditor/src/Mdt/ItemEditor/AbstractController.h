@@ -33,6 +33,7 @@
 #include <QObject>
 #include <QPointer>
 #include <QAbstractItemModel>
+#include <initializer_list>
 
 class QAbstractProxyModel;
 
@@ -40,6 +41,7 @@ namespace Mdt{ namespace ItemModel{
 
 //   class RelationFilterProxyModel;
   class RelationFilterExpression;
+  class PrimaryKeyProxyModel;
 
 }} // namespace Mdt{ namespace ItemModel{
 
@@ -228,20 +230,6 @@ namespace Mdt{ namespace ItemEditor{
      */
     RowState rowState() const;
 
-    /*! \brief Get primary key
-     *
-     * \note When source model changes,
-     *        the primary key will be cleared.
-     */
-    Mdt::ItemModel::PrimaryKey primaryKey() const;
-
-    /*! \brief Get foreign key
-     *
-     * \note When source model changes,
-     *        the foreign key will be cleared.
-     */
-    Mdt::ItemModel::ForeignKey foreignKey() const;
-
     /*! \brief Prepend a proxy model
      *
      * If, after \a proxyModel was added, modelForView() has changed,
@@ -270,6 +258,79 @@ namespace Mdt{ namespace ItemEditor{
      * \note \a proxyModel is only removed from list of proxy models, but not deleted.
      */
     void removeProxyModel(QAbstractProxyModel *proxyModel);
+
+    /*! \brief Set primary key support enabled
+     *
+     * Enabling support for primary key will insert a proxy model,
+     *  disabling support will remove it.
+     *
+     * \sa setPrimaryKey()
+     * \sa isPrimaryKeyEnabled()
+     */
+    void setPrimaryKeyEnabled(bool enable);
+
+    /*! \brief Get primary key proxy model
+     *
+     * Return the primary key proxy model if support was enabled,
+     *  otherwise a nullptr.
+     *
+     * \sa setPrimaryKeyEnabled()
+     */
+    Mdt::ItemModel::PrimaryKeyProxyModel *getPrimaryKeyProxyModel() const;
+
+    /*! \brief Check if primary key support is enabled
+     *
+     * \sa setPrimaryKeyEnabled()
+     */
+    bool isPrimaryKeyEnabled() const;
+
+    /*! \brief Set primary key
+     *
+     * \pre \a pk must not be null
+     */
+    void setPrimaryKey(const Mdt::ItemModel::PrimaryKey & pk);
+
+    /*! \brief Set primary key
+     *
+     * If primary key support was not enabled,
+     *  it will be enabled before setting \a pk.
+     *
+     * \pre Each column in \a pk must be >= 0
+     * \pre Each column in \a pk must be unique
+     */
+    void setPrimaryKey(std::initializer_list<int> pk);
+
+    /*! \brief Get primary key
+     */
+    Mdt::ItemModel::PrimaryKey primaryKey() const;
+
+    /*! \brief Set primary key editable
+     *
+     * By default, primary key is editable
+     */
+    void setPrimaryKeyEditable(bool editable);
+
+    /*! \brief Set primary key items enabled
+     *
+     * By default, primary key items are enabled.
+     */
+    void setPrimaryKeyItemsEnabled(bool enable);
+
+    /*! \brief Set foreign key
+     *
+     * \note When source model changes, the foreign key will be cleared.
+     * \pre sourceModel must be set before setting the foreign key
+     * \pre Each column in \a fk must be in valid range ( 0 <= column < sourceModel()->columnCount() )
+     * \pre Each column in \a fk must be unique
+     */
+    void setForeignKey(const Mdt::ItemModel::ForeignKey & fk);
+
+    /*! \brief Get foreign key
+     *
+     * \note When source model changes,
+     *        the foreign key will be cleared.
+     */
+    Mdt::ItemModel::ForeignKey foreignKey() const;
 
     /*! \brief Set filter enabled
      *
@@ -415,6 +476,10 @@ namespace Mdt{ namespace ItemEditor{
      */
     void currentRowChanged(int row);
 
+    /*! \brief Emitted whenever primary key changed
+     */
+//     void primaryKeyChanged(const Mdt::ItemModel::PrimaryKey & pk);
+
    protected:
 
     /*! \brief Register model
@@ -477,23 +542,15 @@ namespace Mdt{ namespace ItemEditor{
      */
     virtual void revertDataFromModel() = 0;
 
-    /*! \brief Set primary key
+    /*! \brief Primary key changed event
      *
-     * \note When source model changes, the primary key will be cleared.
-     * \pre sourceModel must be set before setting the primary key
-     * \pre Each column in \a pk must be in valid range ( 0 <= column < sourceModel()->columnCount() )
-     * \pre Each column in \a pk must be unique
-     */
-    void setPrimaryKey(const Mdt::ItemModel::PrimaryKey & pk);
-
-    /*! \brief Set foreign key
+     * If subclass has some action to perform
+     *  when primary key changed,
+     *  it can implement this method.
      *
-     * \note When source model changes, the foreign key will be cleared.
-     * \pre sourceModel must be set before setting the foreign key
-     * \pre Each column in \a fk must be in valid range ( 0 <= column < sourceModel()->columnCount() )
-     * \pre Each column in \a fk must be unique
+     * This default implementation does nothing.
      */
-    void setForeignKey(const Mdt::ItemModel::ForeignKey & fk);
+    virtual void primaryKeyChangedEvent(const Mdt::ItemModel::PrimaryKey & oldPrimaryKey, const Mdt::ItemModel::PrimaryKey & newPrimaryKey);
 
     /*! \brief Set last error
      */
@@ -574,8 +631,8 @@ namespace Mdt{ namespace ItemEditor{
     ControllerState pvControllerState = ControllerState::Visualizing;
     RowChangeEventDispatcher *mRowChangeEventDispatcher;
     InsertLocation pvInsertLocation;
-    Mdt::ItemModel::PrimaryKey mPrimaryKey;
-    Mdt::ItemModel::ForeignKey mForeignKey;
+//     Mdt::ItemModel::PrimaryKey mPrimaryKey;
+//     Mdt::ItemModel::ForeignKey mForeignKey;
     Mdt::ItemModel::ProxyModelContainer mModelContainer;
     ControllerRelationList<AbstractController, ControllerRelation> mRelationList;
     Mdt::Error mLastError;

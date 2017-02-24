@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,13 +25,13 @@
 #include <memory>
 
 class QAbstractItemModel;
-class QAbstractItemView;
+class QTableView;
 
 namespace Mdt{ namespace ItemEditor{
 
   class ItemViewPrivateContainer;
 
-  /*! \brief TableViewController acts on a QAbstractTableModel and a QAbstractItemView
+  /*! \brief TableViewController acts on a QAbstractTableModel and a QTableView
    */
   class TableViewController : public AbstractItemModelController
   {
@@ -63,13 +63,21 @@ namespace Mdt{ namespace ItemEditor{
      *       of the view (it will not delete it).
      * \pre view must be a valid pointer.
      */
-    void setView(QAbstractItemView *view);
+    void setView(QTableView *view);
 
     /*! \brief Get view attached to this controller
      *
      * Will also return a nullptr if no view was set
      */
-    QAbstractItemView *view() const;
+    QTableView *view() const;
+
+  public slots:
+
+    /*! \brief Set primary key hidden
+     *
+     * If \a hide is true,columns that are part of primary key will be hidden.
+     */
+    void setPrimaryKeyHidden(bool hide);
 
    private:
 
@@ -87,6 +95,9 @@ namespace Mdt{ namespace ItemEditor{
 
     void registerModelAndSelectionModel();
 
+    void primaryKeyChangedEvent(const ItemModel::PrimaryKey& oldPrimaryKey, const ItemModel::PrimaryKey& newPrimaryKey) override;
+    void updatePrimaryKeyColumnsVisibility();
+
     /*! \brief Register item delegate
      *
      * Once delegate is registered, this controller is able to detect when user beginns editing,
@@ -95,6 +106,7 @@ namespace Mdt{ namespace ItemEditor{
 //     void registerItemDelegate();
 
     std::unique_ptr<ItemViewPrivateContainer> mContainer;
+    bool mPrimaryKeyColumnsHidden = false;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

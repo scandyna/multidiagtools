@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_PRIMARY_KEY_H
 
 #include "ColumnList.h"
+#include <QMetaType>
 #include <initializer_list>
 
 namespace Mdt{ namespace ItemModel{
@@ -49,6 +50,11 @@ namespace Mdt{ namespace ItemModel{
      : mColumnList(list)
     {
     }
+
+    PrimaryKey(const PrimaryKey &) = default;
+    PrimaryKey & operator=(const PrimaryKey &) = default;
+    PrimaryKey(PrimaryKey &&) = default;
+    PrimaryKey & operator=(PrimaryKey &&) = default;
 
     /*! \brief Get count of columns
      */
@@ -116,5 +122,7 @@ namespace Mdt{ namespace ItemModel{
   };
 
 }} // namespace Mdt{ namespace ItemModel{
+
+Q_DECLARE_METATYPE(Mdt::ItemModel::PrimaryKey)
 
 #endif // #ifndef MDT_ITEM_MODEL_PRIMARY_KEY_H

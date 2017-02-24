@@ -20,9 +20,11 @@
  ****************************************************************************/
 #include "ControllerTest.h"
 #include "ItemModelControllerTester.h"
+#include "PrimaryKeyChangedSignalSpy.h"
 #include "ItemViewTestEdit.h"
 #include "Mdt/Application.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
+#include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
 #include "Mdt/ItemEditor/ControllerStatePermission.h"
 #include "Mdt/ItemEditor/TableViewController.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"
@@ -99,7 +101,7 @@ void ControllerTest::basicStateTest()
    */
   ItemModelControllerTester controller;
   QVERIFY(controller.controllerState() == ControllerState::Visualizing);
-  QVERIFY(controller.primaryKey().isNull());
+  ///QVERIFY(controller.primaryKey().isNull());
 }
 
 void ControllerTest::setModelTest()
@@ -377,6 +379,39 @@ void ControllerTest::filterCheckModelSignalTest()
   QCOMPARE(arguments.size(), 1);
   QCOMPARE(arguments.at(0).value<QAbstractItemModel*>(), &model1);
 
+  QFAIL("Not complete");
+}
+
+void ControllerTest::primaryKeyTest()
+{
+  PrimaryKey pk;
+  ItemModelControllerTester controller;
+//   PrimaryKeyChangedSignalSpy pkChangedSpy(&controller);
+  /*
+   * Initial state
+   */
+  QVERIFY(!controller.isPrimaryKeyEnabled());
+  QVERIFY(controller.primaryKey().isNull());
+  /*
+   * Set primary key
+   * (Must also enable primary key support)
+   */
+  controller.setPrimaryKey({1});
+  QVERIFY(controller.isPrimaryKeyEnabled());
+  QCOMPARE(controller.primaryKey().columnCount(), 1);
+  QCOMPARE(controller.primaryKey().greatestColumn(), 1);
+//   QCOMPARE(pkChangedSpy.count(), 1);
+//   pk = pkChangedSpy.takeFirst();
+//   QCOMPARE(pk.greatestColumn(), 1);
+  /*
+   * Check some flags
+   */
+  controller.setPrimaryKeyEditable(false);
+  QVERIFY(!controller.getPrimaryKeyProxyModel()->isPrimaryKeyEditable());
+  controller.setPrimaryKeyItemsEnabled(false);
+  QVERIFY(!controller.getPrimaryKeyProxyModel()->isPrimaryKeyItemsEnabled());
+  
+  
   QFAIL("Not complete");
 }
 

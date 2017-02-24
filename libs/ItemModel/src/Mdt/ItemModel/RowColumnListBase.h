@@ -48,6 +48,11 @@ namespace Mdt{ namespace ItemModel{
      */
     explicit RowColumnListBase(std::initializer_list<int> list);
 
+    RowColumnListBase(const RowColumnListBase &) = default;
+    RowColumnListBase & operator=(const RowColumnListBase &) = default;
+    RowColumnListBase(RowColumnListBase &&) = default;
+    RowColumnListBase & operator=(RowColumnListBase &&) = default;
+
     /*! \brief Get size of the list
      */
     int size() const

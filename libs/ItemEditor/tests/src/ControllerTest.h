@@ -47,6 +47,7 @@ class ControllerTest : public QObject
   void addRemoveProxyModelSignalTest();
   void filterCheckModelTest();
   void filterCheckModelSignalTest();
+  void primaryKeyTest();
 
 //   void controllerListTest();
 

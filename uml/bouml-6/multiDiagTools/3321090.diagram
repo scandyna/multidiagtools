@@ -2,88 +2,87 @@ format 211
 
 classcanvas 128002 class_ref 1752450 // QIdentityProxyModel
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 376 90 2000
+  xyz 376 42 2000
 end
 classcanvas 128130 class_ref 3823106 // PrimaryKeyProxyModel
   classdiagramsettings member_max_width 0 end
-  xyz 237 465 2000
+  xyz 241 417 2000
 end
 classcanvas 128386 class_ref 3823234 // ForeignKeyProxyModel
   classdiagramsettings member_max_width 0 end
-  xyz 40 466 2000
+  xyz 40 418 2000
 end
 classcanvas 128898 class_ref 3715330 // PrimaryKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 769 170 2000
+  xyz 977 370 2000
 end
 classcanvas 129026 class_ref 3715458 // ForeignKey
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 770 346 2000
+  xyz 978 106 2000
 end
 classcanvas 129794 class_ref 3829762 // PkFkProxyModelBase
   classdiagramsettings member_max_width 0 end
-  xyz 282 176 2000
+  xyz 273 128 2000
 end
 classcanvas 130050 class_ref 3830018 // PrimaryKeyRecord
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 794 42 2000
+  xyz 662 194 2000
 end
 classcanvas 130178 class_ref 3830146 // ForeignKeyRecord
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 623 42 2000
+  xyz 831 194 2000
 end
 classcanvas 130434 class_ref 3715074 // ColumnList
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 770 258 2006
+  xyz 978 282 2006
 end
 classcanvas 133890 class_ref 3829890 // KeyRecord
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 647 170 2006
+  xyz 855 66 2006
 end
 relationcanvas 130306 relation_ref 4257794 // <generalisation>
-  decenter_begin 510
   from ref 129794 z 2001 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130562 relation_ref 4116610 // <directional composition>
-  decenter_begin 447
-  decenter_end 447
+  decenter_begin 541
+  decenter_end 541
   from ref 129026 z 2007 to ref 130434
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130690 relation_ref 4116482 // <directional composition>
-  decenter_begin 448
-  decenter_end 447
+  decenter_begin 540
+  decenter_end 541
   from ref 128898 z 2007 to ref 130434
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130818 relation_ref 4257922 // <directional composition>
+  decenter_begin 842
   from ref 129794 z 2007 to ref 130434
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130946 relation_ref 4258050 // <generalisation>
   geometry VHV unfixed
-  decenter_end 510
-  from ref 128386 z 2001 to point 118 424
-  line 134786 z 2001 to point 445 424
+  from ref 128386 z 2001 to point 118 376
+  line 134786 z 2001 to point 446 376
   line 134914 z 2001 to ref 129794
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131074 relation_ref 4258178 // <generalisation>
-  decenter_begin 508
-  decenter_end 510
   from ref 128130 z 2001 to ref 129794
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 134274 relation_ref 4258306 // <dependency>
-  decenter_begin 76
-  from ref 129794 z 2007 to ref 133890
+  geometry VH unfixed
+  decenter_begin 954
+  from ref 129794 z 2007 to point 605 86
+  line 135298 z 2007 to ref 133890
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
@@ -94,9 +93,8 @@ relationcanvas 134530 relation_ref 4271874 // <generalisation>
 end
 relationcanvas 134658 relation_ref 4272002 // <generalisation>
   geometry VHV unfixed
-  decenter_begin 466
-  from ref 130050 z 2007 to point 853 128
-  line 135042 z 2007 to point 686 128
+  from ref 130050 z 2007 to point 726 152
+  line 135042 z 2007 to point 894 152
   line 135170 z 2007 to ref 133890
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b

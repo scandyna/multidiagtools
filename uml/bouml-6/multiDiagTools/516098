@@ -1,6 +1,6 @@
 format 211
 "ItemModel" // Mdt::ItemModel
-  revision 61
+  revision 64
   modified_by 2 "philippe"
   // class settings
   
@@ -1516,6 +1516,22 @@ ${inlines}
 	
 	
       end
+
+      operation 5377410 "fromColumnList"
+	class_operation public return_type class_ref 3715330 // PrimaryKey
+	nparams 1
+	  param in name "list" type class_ref 3715074 // ColumnList
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     class 3715458 "ForeignKey"
@@ -2190,7 +2206,7 @@ ${inlines}
 	
       end
 
-      operation 5356162 "findRowForKeyRecord"
+      operation 5356162 "findFirstRowForKeyRecord"
 	protected explicit_return_type "int"
 	nparams 1
 	  param in name "record" type class_ref 3829890 // KeyRecord
@@ -2334,7 +2350,6 @@ ${inlines}
 	  b parent class_ref 3829762 // PkFkProxyModelBase
       end
     end
-
   end
 
   classview 1729026 "SortFilterProxyModel"
@@ -4757,6 +4772,7 @@ ${inlines}
 	
 	
       end
+
     end
   end
 end

@@ -8,6 +8,7 @@ enable_testing()
 
 set(SOURCES_FILES
   src/ItemModelControllerTester.cpp
+  src/PrimaryKeyChangedSignalSpy.cpp
   src/ItemViewTestEdit.cpp
   src/TestTableEditionWidget.cpp
   src/TestFormEditionWidget.cpp

@@ -21,6 +21,7 @@
 #include "AbstractController.h"
 #include "RowChangeEventDispatcher.h"
 #include "ControllerStatePermission.h"
+#include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
 
 // #include "Mdt/ItemModel/RelationFilterProxyModel.h"
 
@@ -30,6 +31,8 @@
 
 namespace ItemModel = Mdt::ItemModel;
 using ItemModel::FilterProxyModel;
+using ItemModel::PrimaryKey;
+using ItemModel::PrimaryKeyProxyModel;
 // using ItemModel::RelationFilterProxyModel;
 
 namespace Mdt{ namespace ItemEditor{
@@ -65,16 +68,6 @@ RowState AbstractController::rowState() const
   return mRowChangeEventDispatcher->currentRowState();
 }
 
-ItemModel::PrimaryKey AbstractController::primaryKey() const
-{
-  return mPrimaryKey;
-}
-
-ItemModel::ForeignKey AbstractController::foreignKey() const
-{
-  return mForeignKey;
-}
-
 void AbstractController::prependProxyModel(QAbstractProxyModel* proxyModel)
 {
   Q_ASSERT(proxyModel != nullptr);
@@ -108,6 +101,77 @@ void AbstractController::removeProxyModel(QAbstractProxyModel* model)
 //   setModelToView(modelForView());
 // }
 
+void AbstractController::setPrimaryKeyEnabled(bool enable)
+{
+  if(enable == isPrimaryKeyEnabled()){
+    return;
+  }
+  if(enable){
+    appendProxyModel(new PrimaryKeyProxyModel(this));
+  }else{
+    deleteFirstProxyModelOfType<PrimaryKeyProxyModel>();
+  }
+}
+
+PrimaryKeyProxyModel* AbstractController::getPrimaryKeyProxyModel() const
+{
+  auto *model = mModelContainer.firstProxyModelOfType<PrimaryKeyProxyModel>();
+  return reinterpret_cast<PrimaryKeyProxyModel*>(model);
+}
+
+bool AbstractController::isPrimaryKeyEnabled() const
+{
+  return mModelContainer.containsProxyModelOfType<PrimaryKeyProxyModel>();
+}
+
+void AbstractController::setPrimaryKey(const ItemModel::PrimaryKey & pk)
+{
+  const auto oldPk = primaryKey();
+  setPrimaryKeyEnabled(true);
+  getPrimaryKeyProxyModel()->setPrimaryKey(pk);
+  primaryKeyChangedEvent(oldPk, pk);
+//   emit primaryKeyChanged(pk);
+}
+
+void AbstractController::setPrimaryKey(std::initializer_list<int> pk)
+{
+  setPrimaryKey( PrimaryKey(pk) );
+}
+
+ItemModel::PrimaryKey AbstractController::primaryKey() const
+{
+  const auto *model = getPrimaryKeyProxyModel();
+  if(model == nullptr){
+    return PrimaryKey();
+  }
+  return model->primaryKey();
+}
+
+void AbstractController::setPrimaryKeyEditable(bool editable)
+{
+  setPrimaryKeyEnabled(true);
+  getPrimaryKeyProxyModel()->setPrimaryKeyEditable(editable);
+}
+
+void AbstractController::setPrimaryKeyItemsEnabled(bool enable)
+{
+  setPrimaryKeyEnabled(true);
+  getPrimaryKeyProxyModel()->setPrimaryKeyItemsEnabled(enable);
+}
+
+void AbstractController::setForeignKey(const ItemModel::ForeignKey & fk)
+{
+//   Q_ASSERT(sourceModel() != nullptr);
+//   Q_ASSERT(fk.greatestColumn() < sourceModel()->columnCount());
+// 
+//   mForeignKey = fk;
+}
+
+ItemModel::ForeignKey AbstractController::foreignKey() const
+{
+//   return mForeignKey;
+}
+
 void AbstractController::setFilterEnabled(bool enable)
 {
   if(enable == isFilterEnabled()){
@@ -115,13 +179,10 @@ void AbstractController::setFilterEnabled(bool enable)
   }
   if(enable){
     prependProxyModel(new FilterProxyModel(this));
-//     mModelContainer.prependProxyModel(new FilterProxyModel(this));
   }else{
     deleteFirstProxyModelOfType<FilterProxyModel>();
-//     mModelContainer.deleteFirstProxyModelOfType<FilterProxyModel>();
   }
-//   setModelToView(modelForView());
-  mRelationList.setParentControllerModelToChildControllers();
+  mRelationList.setParentControllerModelToChildControllers(); /// \todo Needed ?
 }
 
 bool AbstractController::isFilterEnabled() const
@@ -266,8 +327,8 @@ void AbstractController::registerModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);
 
-  mPrimaryKey.clear();
-  mForeignKey.clear();
+//   mPrimaryKey.clear();
+//   mForeignKey.clear();
   mModelContainer.setSourceModel(model);
   emit sourceModelChanged(model);
   model = modelForView();
@@ -284,20 +345,8 @@ void AbstractController::modelSetToView()
   mRowChangeEventDispatcher->setModel(model);
 }
 
-void AbstractController::setPrimaryKey(const ItemModel::PrimaryKey & pk)
+void AbstractController::primaryKeyChangedEvent(const PrimaryKey& , const PrimaryKey&)
 {
-  Q_ASSERT(sourceModel() != nullptr);
-  Q_ASSERT(pk.greatestColumn() < sourceModel()->columnCount());
-
-  mPrimaryKey = pk;
-}
-
-void AbstractController::setForeignKey(const ItemModel::ForeignKey & fk)
-{
-  Q_ASSERT(sourceModel() != nullptr);
-  Q_ASSERT(fk.greatestColumn() < sourceModel()->columnCount());
-
-  mForeignKey = fk;
 }
 
 void AbstractController::onDataEditionStarted()

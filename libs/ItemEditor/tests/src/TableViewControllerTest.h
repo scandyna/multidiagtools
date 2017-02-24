@@ -39,8 +39,9 @@ class TableViewControllerTest : public QObject
 
 //   void basicStateTest();
   void setModelTest();
-  void primaryKeyTest();
-  void foreignKeyTest();
+//   void primaryKeyTest();
+//   void foreignKeyTest();
+  void primaryKeyVisibilityTest();
   void currentRowChangeTest();
   void viewCurrentRowChangeBenchmark();
   void controllerCurrentRowChangeBenchmark();

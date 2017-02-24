@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 153
+  revision 155
   modified_by 2 "philippe"
   // class settings
   
@@ -2326,6 +2326,22 @@ ${inlines}
 	
       end
 
+      operation 5189890 "setPrimaryKey"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "pk" type class_ref 3715330 // PrimaryKey
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 5140482 "setRelationFilterEnabled"
 	public explicit_return_type "void"
 	nparams 1
@@ -2479,22 +2495,6 @@ ${inlines}
 	
       end
 
-      operation 5189890 "setPrimaryKey"
-	protected explicit_return_type "void"
-	nparams 1
-	  param in name "pk" type class_ref 3715330 // PrimaryKey
-	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}
-{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 5190018 "setForeignKey"
 	protected return_type class_ref 3715458 // ForeignKey
 	nparams 1
@@ -2528,6 +2528,7 @@ ${inlines}
 	    classrelation_ref 4142338 // <directional composition>
 	  b parent class_ref 3715458 // ForeignKey
       end
+
     end
 
     classdiagram 3175298 "AbstractItemModelController"

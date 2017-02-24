@@ -18,32 +18,52 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_KEY_TEST_H
-#define MDT_ITEM_MODEL_KEY_TEST_H
+#ifndef MDT_ITEM_EDITOR_PRIMARY_KEY_CHANGED_SIGNAL_SPY_H
+#define MDT_ITEM_EDITOR_PRIMARY_KEY_CHANGED_SIGNAL_SPY_H
 
+#include "Mdt/ItemModel/PrimaryKey.h"
+#include <QVector>
+#include <QtTest>
 #include <QObject>
-#include <QtTest/QtTest>
 
-class KeyTest : public QObject
+/*! \brief Created du to a limitation using QSignalSpy
+ *
+ * When argument of a signal is in a namespace,
+ *  QSignalSpy cannot find it.
+ */
+class PrimaryKeyChangedSignalSpy : public QObject
 {
  Q_OBJECT
 
+ public:
+
+  template<typename T>
+  PrimaryKeyChangedSignalSpy(T *obj)
+  {
+    Q_ASSERT(obj != nullptr);
+    connect(obj, &T::primaryKeyChanged, this, &PrimaryKeyChangedSignalSpy::onPrimaryKeyChanged);
+  }
+
+  int count() const
+  {
+    return mPrimaryKeyList.count();
+  }
+  
+  Mdt::ItemModel::PrimaryKey takeFirst()
+  {
+    Q_ASSERT(!mPrimaryKeyList.isEmpty());
+    return mPrimaryKeyList.takeFirst();
+  }
+
+  void clear();
+
  private slots:
 
-  void initTestCase();
-  void cleanupTestCase();
+  void onPrimaryKeyChanged(const Mdt::ItemModel::PrimaryKey & pk);
 
-  void rowListTest();
-  void columnListTest();
-  void columnListQVariantTest();
-  void primaryKeyTest();
-  void primaryKeyQVariantTest();
-  void foreignKeyTest();
+ private:
 
-  void keyDataTest();
-  void keyRecordTest();
-  void primaryKeyRecordTest();
-  void foreignKeyRecordTest();
+  QVector<Mdt::ItemModel::PrimaryKey> mPrimaryKeyList;
 };
 
-#endif // #ifndef MDT_ITEM_MODEL_KEY_TEST_H
+#endif // #ifndef MDT_ITEM_EDITOR_PRIMARY_KEY_CHANGED_SIGNAL_SPY_H

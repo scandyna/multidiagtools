@@ -34,14 +34,17 @@
 #include <QMetaProperty>
 #include <QMetaMethod>
 
-namespace ItemEditor = Mdt::ItemEditor;
-namespace ItemModel = Mdt::ItemModel;
-using ItemEditor::TableViewController;
-using ItemEditor::ControllerState;
-using ItemModel::VariantTableModel;
-using ItemModel::FilterColumn;
-using ItemModel::ParentModelColumn;
-using ItemModel::PrimaryKey;
+using namespace Mdt::ItemModel;
+using namespace Mdt::ItemEditor;
+
+// namespace ItemEditor = Mdt::ItemEditor;
+// namespace ItemModel = Mdt::ItemModel;
+// using ItemEditor::TableViewController;
+// using ItemEditor::ControllerState;
+// using ItemModel::VariantTableModel;
+// using ItemModel::FilterColumn;
+// using ItemModel::ParentModelColumn;
+// using ItemModel::PrimaryKey;
 
 void TableViewControllerTest::initTestCase()
 {
@@ -67,8 +70,6 @@ void TableViewControllerTest::cleanupTestCase()
 
 void TableViewControllerTest::setModelTest()
 {
-  using Mdt::ItemEditor::RowState;
-
   VariantTableModel tableModel;
   QStringListModel listModel;
   QTableView tableView;
@@ -126,60 +127,48 @@ void TableViewControllerTest::setModelTest()
   QFAIL("Missing set nullptr model");
 }
 
-void TableViewControllerTest::primaryKeyTest()
+void TableViewControllerTest::primaryKeyVisibilityTest()
 {
   /*
-   * Initial state
-   */
-  TableViewController controller;
-  QVERIFY(controller.primaryKey().isNull());
-  /*
-   * Set model to controller
+   * Setup model
    */
   VariantTableModel model;
-  model.resize(5,4);
+  model.resize(1, 3);
+  /*
+   * Setup controller
+   */
+  QTableView view;
+  TableViewController controller;
   controller.setModel(&model);
+  controller.setView(&view);
   controller.setPrimaryKey({0,1});
-  QVERIFY(!controller.primaryKey().isNull());
   /*
-   * Set another model to controller
+   * By default, all columns are visible
    */
-  VariantTableModel model2;
-  model2.resize(3, 2);
-  controller.setModel(&model2);
-  QVERIFY(controller.primaryKey().isNull());
-  controller.setPrimaryKey({0});
-  QVERIFY(!controller.primaryKey().isNull());
-
-  QFAIL("Not complete");
-}
-
-void TableViewControllerTest::foreignKeyTest()
-{
+  QVERIFY(!view.isColumnHidden(0));
+  QVERIFY(!view.isColumnHidden(1));
+  QVERIFY(!view.isColumnHidden(2));
   /*
-   * Initial state
+   * Hide primary key
    */
-  TableViewController controller;
-  QVERIFY(controller.foreignKey().isNull());
+  controller.setPrimaryKeyHidden(true);
+  QVERIFY( view.isColumnHidden(0));
+  QVERIFY( view.isColumnHidden(1));
+  QVERIFY(!view.isColumnHidden(2));
   /*
-   * Set model to controller
+   * Change primary key
    */
-  VariantTableModel model;
-  model.resize(5,4);
-  controller.setModel(&model);
-  controller.setForeignKey({0,2});
-  QVERIFY(!controller.foreignKey().isNull());
+  controller.setPrimaryKey({1});
+  QVERIFY(!view.isColumnHidden(0));
+  QVERIFY( view.isColumnHidden(1));
+  QVERIFY(!view.isColumnHidden(2));
   /*
-   * Set another model to controller
+   * Show primary key
    */
-  VariantTableModel model2;
-  model2.resize(3, 2);
-  controller.setModel(&model2);
-  QVERIFY(controller.foreignKey().isNull());
-  controller.setForeignKey({0});
-  QVERIFY(!controller.foreignKey().isNull());
-
-  QFAIL("Not complete");
+  controller.setPrimaryKeyHidden(false);
+  QVERIFY(!view.isColumnHidden(0));
+  QVERIFY(!view.isColumnHidden(1));
+  QVERIFY(!view.isColumnHidden(2));
 }
 
 void TableViewControllerTest::currentRowChangeTest()

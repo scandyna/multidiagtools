@@ -6,7 +6,7 @@ classcanvas 128002 class_ref 3715330 // PrimaryKey
 end
 classcanvas 128130 class_ref 3715074 // ColumnList
   classdiagramsettings member_max_width 0 end
-  xyz 257 60 2006
+  xyz 423 69 2006
 end
 relationcanvas 128258 relation_ref 4116482 // <directional composition>
   from ref 128002 z 2007 to ref 128130

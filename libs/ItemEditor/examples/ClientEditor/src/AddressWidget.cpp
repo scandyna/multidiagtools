@@ -37,7 +37,12 @@ AddressWidget::AddressWidget(QWidget* parent)
   setInsertActionText(tr("Add address"));
   addRemoveActionToBottomBar();
   setRemoveActionText(tr("Remove addresse"));
-  controller()->setInsertLocation(TableViewController::InsertAtEnd);
+  auto ctrl = controller();
+  ctrl->setInsertLocation(TableViewController::InsertAtEnd);
+  ctrl->setPrimaryKey({0});
+//   ctrl->setPrimaryKeyEditable(false);
+//   ctrl->setPrimaryKeyItemsEnabled(false);
+  ctrl->setPrimaryKeyHidden(true);
   /*
    * Setup some formatting
    */

@@ -18,30 +18,14 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "ClientWidget.h"
-#include "ClientModel.h"
-#include "Mdt/ItemModel/FormatProxyModel.h"
+#include "PrimaryKeyChangedSignalSpy.h"
 
-using namespace Mdt::ItemModel;
-using namespace Mdt::ItemEditor;
-
-ClientWidget::ClientWidget(QWidget* parent)
- : AbstractFormWidget(parent)
+void PrimaryKeyChangedSignalSpy::onPrimaryKeyChanged(const Mdt::ItemModel::PrimaryKey & pk)
 {
-  setModel(new ClientModel(this));
-  auto *formatModel = new FormatProxyModel(this);
-  formatModel->setTextAlignmentForColumn(0, Qt::AlignCenter);
-  formatModel->setTextFontForColumn(1, QFont("Times", 12));
-  ///appendProxyModel(formatModel);
-  setupUi(this);
-  auto *ctlr = controller();
-  ctlr->addMapping(fld_Id, 0);
-  ctlr->addMapping(fld_Name, 1);
-  ctlr->setInsertLocation(WidgetMapperController::InsertAtEnd);
-//   ctlr->setPrimaryKey({0});
-//   ctlr->setPrimaryKeyEditable(false);
-//   ctlr->setPrimaryKeyItemsEnabled(false);
-  /*
-   * Setup formatting
-   */
+  mPrimaryKeyList.append(pk);
+}
+
+void PrimaryKeyChangedSignalSpy::clear()
+{
+  mPrimaryKeyList.clear();
 }

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -20,9 +20,12 @@
  ****************************************************************************/
 #include "TableViewController.h"
 #include "ItemViewPrivateContainer.h"
-#include <QAbstractTableModel>
+#include "Mdt/ItemModel/PrimaryKey.h"
+#include <QTableView>
 
 // #include <QDebug>
+
+using namespace Mdt::ItemModel;
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -32,13 +35,14 @@ TableViewController::TableViewController(QObject* parent)
 {
   connect(mContainer->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionStarted, this, &TableViewController::onDataEditionStarted);
   connect(mContainer->proxyItemDelegate(), &EventCatchItemDelegate::dataEditionDone, this, &TableViewController::onDataEditionDone);
+//   connect(this, &TableViewController::primaryKeyChanged, this, &TableViewController::onPrimaryKeyChanged);
 }
 
 TableViewController::~TableViewController()
 {
 }
 
-void TableViewController::setView(QAbstractItemView* view)
+void TableViewController::setView(QTableView* view)
 {
   Q_ASSERT(view != nullptr);
 
@@ -46,9 +50,15 @@ void TableViewController::setView(QAbstractItemView* view)
   registerModelAndSelectionModel();
 }
 
-QAbstractItemView* TableViewController::view() const
+QTableView* TableViewController::view() const
 {
-  return mContainer->view();
+  return reinterpret_cast<QTableView*>(mContainer->view());
+}
+
+void TableViewController::setPrimaryKeyHidden(bool hide)
+{
+  mPrimaryKeyColumnsHidden = hide;
+  updatePrimaryKeyColumnsVisibility();
 }
 
 void TableViewController::setModelToView(QAbstractItemModel* model)
@@ -87,6 +97,32 @@ void TableViewController::registerModelAndSelectionModel()
   connect(mContainer->selectionModel(), &ItemSelectionModel::currentRowChangeRequested, this, &TableViewController::setCurrentRow);
   connect(this, &TableViewController::currentRowChanged, mContainer->selectionModel(), &ItemSelectionModel::updateCurrentRow);
   modelSetToView();
+}
+
+void TableViewController::primaryKeyChangedEvent(const PrimaryKey & oldPrimaryKey, const PrimaryKey & newPrimaryKey)
+{
+  auto *v = view();
+  if(v == nullptr){
+    return;
+  }
+  for(int column : oldPrimaryKey){
+    v->setColumnHidden(column, false);
+  }
+  for(int column : newPrimaryKey){
+    v->setColumnHidden(column, mPrimaryKeyColumnsHidden);
+  }
+}
+
+void TableViewController::updatePrimaryKeyColumnsVisibility()
+{
+  auto *v = view();
+  if(v == nullptr){
+    return;
+  }
+  const auto pk = primaryKey();
+  for(int column : pk){
+    v->setColumnHidden(column, mPrimaryKeyColumnsHidden);
+  }
 }
 
 }} // namespace Mdt{ namespace ItemEditor{
