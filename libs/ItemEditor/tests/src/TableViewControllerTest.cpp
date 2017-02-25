@@ -171,6 +171,50 @@ void TableViewControllerTest::primaryKeyVisibilityTest()
   QVERIFY(!view.isColumnHidden(2));
 }
 
+void TableViewControllerTest::foreignKeyVisibilityTest()
+{
+  /*
+   * Setup model
+   */
+  VariantTableModel model;
+  model.resize(1, 3);
+  /*
+   * Setup controller
+   */
+  QTableView view;
+  TableViewController controller;
+  controller.setModel(&model);
+  controller.setView(&view);
+  controller.setForeignKey({0,1});
+  /*
+   * By default, all columns are visible
+   */
+  QVERIFY(!view.isColumnHidden(0));
+  QVERIFY(!view.isColumnHidden(1));
+  QVERIFY(!view.isColumnHidden(2));
+  /*
+   * Hide foreign key
+   */
+  controller.setForeignKeyHidden(true);
+  QVERIFY( view.isColumnHidden(0));
+  QVERIFY( view.isColumnHidden(1));
+  QVERIFY(!view.isColumnHidden(2));
+  /*
+   * Change foreign key
+   */
+  controller.setForeignKey({1});
+  QVERIFY(!view.isColumnHidden(0));
+  QVERIFY( view.isColumnHidden(1));
+  QVERIFY(!view.isColumnHidden(2));
+  /*
+   * Show foreign key
+   */
+  controller.setForeignKeyHidden(false);
+  QVERIFY(!view.isColumnHidden(0));
+  QVERIFY(!view.isColumnHidden(1));
+  QVERIFY(!view.isColumnHidden(2));
+}
+
 void TableViewControllerTest::currentRowChangeTest()
 {
   using Mdt::ItemEditor::RowState;

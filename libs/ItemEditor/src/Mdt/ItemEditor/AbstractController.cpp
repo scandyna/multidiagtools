@@ -22,6 +22,7 @@
 #include "RowChangeEventDispatcher.h"
 #include "ControllerStatePermission.h"
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
+#include "Mdt/ItemModel/ForeignKeyProxyModel.h"
 
 // #include "Mdt/ItemModel/RelationFilterProxyModel.h"
 
@@ -33,6 +34,8 @@ namespace ItemModel = Mdt::ItemModel;
 using ItemModel::FilterProxyModel;
 using ItemModel::PrimaryKey;
 using ItemModel::PrimaryKeyProxyModel;
+using ItemModel::ForeignKey;
+using ItemModel::ForeignKeyProxyModel;
 // using ItemModel::RelationFilterProxyModel;
 
 namespace Mdt{ namespace ItemEditor{
@@ -126,7 +129,9 @@ bool AbstractController::isPrimaryKeyEnabled() const
 
 void AbstractController::setPrimaryKey(const ItemModel::PrimaryKey & pk)
 {
-  const auto oldPk = primaryKey();
+  Q_ASSERT(!pk.isNull());
+
+  const auto oldPk = getPrimaryKey();
   setPrimaryKeyEnabled(true);
   getPrimaryKeyProxyModel()->setPrimaryKey(pk);
   primaryKeyChangedEvent(oldPk, pk);
@@ -138,7 +143,7 @@ void AbstractController::setPrimaryKey(std::initializer_list<int> pk)
   setPrimaryKey( PrimaryKey(pk) );
 }
 
-ItemModel::PrimaryKey AbstractController::primaryKey() const
+ItemModel::PrimaryKey AbstractController::getPrimaryKey() const
 {
   const auto *model = getPrimaryKeyProxyModel();
   if(model == nullptr){
@@ -159,17 +164,63 @@ void AbstractController::setPrimaryKeyItemsEnabled(bool enable)
   getPrimaryKeyProxyModel()->setPrimaryKeyItemsEnabled(enable);
 }
 
-void AbstractController::setForeignKey(const ItemModel::ForeignKey & fk)
+void AbstractController::setForeignKeyEnabled(bool enable)
 {
-//   Q_ASSERT(sourceModel() != nullptr);
-//   Q_ASSERT(fk.greatestColumn() < sourceModel()->columnCount());
-// 
-//   mForeignKey = fk;
+  if(enable == isForeignKeyEnabled()){
+    return;
+  }
+  if(enable){
+    appendProxyModel(new ForeignKeyProxyModel(this));
+  }else{
+    deleteFirstProxyModelOfType<ForeignKeyProxyModel>();
+  }
 }
 
-ItemModel::ForeignKey AbstractController::foreignKey() const
+ForeignKeyProxyModel* AbstractController::getForeignKeyProxyModel() const
 {
-//   return mForeignKey;
+  auto *model = mModelContainer.firstProxyModelOfType<ForeignKeyProxyModel>();
+  return reinterpret_cast<ForeignKeyProxyModel*>(model);
+}
+
+bool AbstractController::isForeignKeyEnabled() const
+{
+  return mModelContainer.containsProxyModelOfType<ForeignKeyProxyModel>();
+}
+
+void AbstractController::setForeignKey(const ItemModel::ForeignKey & fk)
+{
+  Q_ASSERT(!fk.isNull());
+
+  const auto oldFk = getForeignKey();
+  setForeignKeyEnabled(true);
+  getForeignKeyProxyModel()->setForeignKey(fk);
+  foreignKeyChangedEvent(oldFk, fk);
+}
+
+void AbstractController::setForeignKey(std::initializer_list<int> fk)
+{
+  setForeignKey( ForeignKey(fk) );
+}
+
+ItemModel::ForeignKey AbstractController::getForeignKey() const
+{
+  const auto *model = getForeignKeyProxyModel();
+  if(model == nullptr){
+    return ForeignKey();
+  }
+  return model->foreignKey();
+}
+
+void AbstractController::setForeignKeyEditable(bool editable)
+{
+  setForeignKeyEnabled(true);
+  getForeignKeyProxyModel()->setForeignKeyEditable(editable);
+}
+
+void AbstractController::setForeignKeyItemsEnabled(bool enable)
+{
+  setForeignKeyEnabled(true);
+  getForeignKeyProxyModel()->setForeignKeyItemsEnabled(enable);
 }
 
 void AbstractController::setFilterEnabled(bool enable)
@@ -346,6 +397,10 @@ void AbstractController::modelSetToView()
 }
 
 void AbstractController::primaryKeyChangedEvent(const PrimaryKey& , const PrimaryKey&)
+{
+}
+
+void AbstractController::foreignKeyChangedEvent(const ForeignKey& , const ForeignKey&)
 {
 }
 

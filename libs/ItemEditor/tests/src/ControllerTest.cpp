@@ -25,6 +25,7 @@
 #include "Mdt/Application.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
+#include "Mdt/ItemModel/ForeignKeyProxyModel.h"
 #include "Mdt/ItemEditor/ControllerStatePermission.h"
 #include "Mdt/ItemEditor/TableViewController.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"
@@ -391,15 +392,15 @@ void ControllerTest::primaryKeyTest()
    * Initial state
    */
   QVERIFY(!controller.isPrimaryKeyEnabled());
-  QVERIFY(controller.primaryKey().isNull());
+  QVERIFY(controller.getPrimaryKey().isNull());
   /*
    * Set primary key
    * (Must also enable primary key support)
    */
   controller.setPrimaryKey({1});
   QVERIFY(controller.isPrimaryKeyEnabled());
-  QCOMPARE(controller.primaryKey().columnCount(), 1);
-  QCOMPARE(controller.primaryKey().greatestColumn(), 1);
+  QCOMPARE(controller.getPrimaryKey().columnCount(), 1);
+  QCOMPARE(controller.getPrimaryKey().greatestColumn(), 1);
 //   QCOMPARE(pkChangedSpy.count(), 1);
 //   pk = pkChangedSpy.takeFirst();
 //   QCOMPARE(pk.greatestColumn(), 1);
@@ -410,8 +411,48 @@ void ControllerTest::primaryKeyTest()
   QVERIFY(!controller.getPrimaryKeyProxyModel()->isPrimaryKeyEditable());
   controller.setPrimaryKeyItemsEnabled(false);
   QVERIFY(!controller.getPrimaryKeyProxyModel()->isPrimaryKeyItemsEnabled());
+  /*
+   * Disable primary key support
+   */
+  QVERIFY(!controller.getPrimaryKey().isNull());
+  controller.setPrimaryKeyEnabled(false);
+  QVERIFY(controller.getPrimaryKey().isNull());
   
   
+  QFAIL("Not complete");
+}
+
+void ControllerTest::foreignKeyTest()
+{
+  ForeignKey fk;
+  ItemModelControllerTester controller;
+  /*
+   * Initial state
+   */
+  QVERIFY(!controller.isForeignKeyEnabled());
+  QVERIFY(controller.getForeignKey().isNull());
+  /*
+   * Set foreign key
+   * (Must also enable foreign key support)
+   */
+  controller.setForeignKey({2});
+  QVERIFY(controller.isForeignKeyEnabled());
+  QCOMPARE(controller.getForeignKey().columnCount(), 1);
+  QCOMPARE(controller.getForeignKey().greatestColumn(), 2);
+  /*
+   * Check some flags
+   */
+  controller.setForeignKeyEditable(false);
+  QVERIFY(!controller.getForeignKeyProxyModel()->isForeignKeyEditable());
+  controller.setForeignKeyItemsEnabled(false);
+  QVERIFY(!controller.getForeignKeyProxyModel()->isForeignKeyItemsEnabled());
+  /*
+   * Disable foreign key support
+   */
+  QVERIFY(!controller.getForeignKey().isNull());
+  controller.setForeignKeyEnabled(false);
+  QVERIFY(controller.getForeignKey().isNull());
+
   QFAIL("Not complete");
 }
 

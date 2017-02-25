@@ -75,9 +75,15 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Set primary key hidden
      *
-     * If \a hide is true,columns that are part of primary key will be hidden.
+     * If \a hide is true, columns that are part of primary key will be hidden.
      */
     void setPrimaryKeyHidden(bool hide);
+
+    /*! \brief Set foreign key hidden
+     *
+     * If \a hide is true, columns that are part of foreign key will be hidden.
+     */
+    void setForeignKeyHidden(bool hide);
 
    private:
 
@@ -98,6 +104,9 @@ namespace Mdt{ namespace ItemEditor{
     void primaryKeyChangedEvent(const ItemModel::PrimaryKey& oldPrimaryKey, const ItemModel::PrimaryKey& newPrimaryKey) override;
     void updatePrimaryKeyColumnsVisibility();
 
+    void foreignKeyChangedEvent(const ItemModel::ForeignKey& oldForeignKey, const ItemModel::ForeignKey& newForeignKey) override;
+    void updateForeignKeyColumnsVisibility();
+
     /*! \brief Register item delegate
      *
      * Once delegate is registered, this controller is able to detect when user beginns editing,
@@ -107,6 +116,7 @@ namespace Mdt{ namespace ItemEditor{
 
     std::unique_ptr<ItemViewPrivateContainer> mContainer;
     bool mPrimaryKeyColumnsHidden = false;
+    bool mForeignKeyColumnsHidden = false;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

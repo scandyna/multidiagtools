@@ -1,4 +1,4 @@
-window_sizes 1272 955 306 960 903 0
+window_sizes 1280 963 306 968 911 0
 cleanlooks_style
 diagrams
   classdiagram_ref 2707074 // AbstractController
@@ -7,15 +7,18 @@ diagrams
     968 911 100 7 0 0
   classdiagram_ref 2760962 // TableViewController
     120 98 100 21 0 0
-  active  classdiagram_ref 2761218 // ControllerOverview
+  classdiagram_ref 2761218 // ControllerOverview
     968 911 100 23 0 0
+  active  classdiagram_ref 3321090 // PkFkProxyModel
+    968 911 100 18 0 0
 end
 show_stereotypes
-selected classdiagram_ref 2761218 // ControllerOverview
+selected classdiagram_ref 3321090 // PkFkProxyModel
 open
   
 package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
+  classview_ref 1702914 // Key
   classview_ref 1287042 // Controller
   class_ref 3601538 // ControllerRelationItemList
   operation_ref 4468866 // setLastError

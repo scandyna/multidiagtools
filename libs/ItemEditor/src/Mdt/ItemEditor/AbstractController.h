@@ -42,6 +42,7 @@ namespace Mdt{ namespace ItemModel{
 //   class RelationFilterProxyModel;
   class RelationFilterExpression;
   class PrimaryKeyProxyModel;
+  class ForeignKeyProxyModel;
 
 }} // namespace Mdt{ namespace ItemModel{
 
@@ -286,6 +287,9 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Set primary key
      *
+     * If primary key support was not enabled,
+     *  it will be enabled before setting \a pk.
+     *
      * \pre \a pk must not be null
      */
     void setPrimaryKey(const Mdt::ItemModel::PrimaryKey & pk);
@@ -302,7 +306,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Get primary key
      */
-    Mdt::ItemModel::PrimaryKey primaryKey() const;
+    Mdt::ItemModel::PrimaryKey getPrimaryKey() const;
 
     /*! \brief Set primary key editable
      *
@@ -316,21 +320,68 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setPrimaryKeyItemsEnabled(bool enable);
 
+    /*! \brief Set foreign key support enabled
+     *
+     * Enabling support for foreign key will insert a proxy model,
+     *  disabling support will remove it.
+     *
+     * \sa setForeignKey()
+     * \sa isForeignKeyEnabled()
+     */
+    void setForeignKeyEnabled(bool enable);
+
+    /*! \brief Get foreign key proxy model
+     *
+     * Return the foreign key proxy model if support was enabled,
+     *  otherwise a nullptr.
+     *
+     * \sa setForeignKeyEnabled()
+     */
+    Mdt::ItemModel::ForeignKeyProxyModel *getForeignKeyProxyModel() const;
+
+    /*! \brief Check if foreign key support is enabled
+     *
+     * \sa setForeignKeyEnabled()
+     */
+    bool isForeignKeyEnabled() const;
+
     /*! \brief Set foreign key
      *
-     * \note When source model changes, the foreign key will be cleared.
-     * \pre sourceModel must be set before setting the foreign key
-     * \pre Each column in \a fk must be in valid range ( 0 <= column < sourceModel()->columnCount() )
-     * \pre Each column in \a fk must be unique
+     * If foreign key support was not enabled,
+     *  it will be enabled before setting \a fk.
+     * 
+     * \pre \a fk must not be null
      */
     void setForeignKey(const Mdt::ItemModel::ForeignKey & fk);
+
+    /*! \brief Set foreign key
+     *
+     * If foreign key support was not enabled,
+     *  it will be enabled before setting \a fk.
+     *
+     * \pre Each column in \a fk must be >= 0
+     * \pre Each column in \a fk must be unique
+     */
+    void setForeignKey(std::initializer_list<int> fk);
 
     /*! \brief Get foreign key
      *
      * \note When source model changes,
      *        the foreign key will be cleared.
      */
-    Mdt::ItemModel::ForeignKey foreignKey() const;
+    Mdt::ItemModel::ForeignKey getForeignKey() const;
+
+    /*! \brief Set foreign key editable
+     *
+     * By default, foreign key is editable
+     */
+    void setForeignKeyEditable(bool editable);
+
+    /*! \brief Set foreign key items enabled
+     *
+     * By default, foreign key items are enabled.
+     */
+    void setForeignKeyItemsEnabled(bool enable);
 
     /*! \brief Set filter enabled
      *
@@ -551,6 +602,16 @@ namespace Mdt{ namespace ItemEditor{
      * This default implementation does nothing.
      */
     virtual void primaryKeyChangedEvent(const Mdt::ItemModel::PrimaryKey & oldPrimaryKey, const Mdt::ItemModel::PrimaryKey & newPrimaryKey);
+
+    /*! \brief Foreign key changed event
+     *
+     * If subclass has some action to perform
+     *  when foreign key changed,
+     *  it can implement this method.
+     *
+     * This default implementation does nothing.
+     */
+    virtual void foreignKeyChangedEvent(const Mdt::ItemModel::ForeignKey & oldForeignKey, const Mdt::ItemModel::ForeignKey & newForeignKey);
 
     /*! \brief Set last error
      */

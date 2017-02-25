@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 155
+  revision 156
   modified_by 2 "philippe"
   // class settings
   
@@ -2528,7 +2528,6 @@ ${inlines}
 	    classrelation_ref 4142338 // <directional composition>
 	  b parent class_ref 3715458 // ForeignKey
       end
-
     end
 
     classdiagram 3175298 "AbstractItemModelController"

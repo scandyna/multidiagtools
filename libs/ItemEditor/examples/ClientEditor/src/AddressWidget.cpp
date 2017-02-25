@@ -43,6 +43,10 @@ AddressWidget::AddressWidget(QWidget* parent)
 //   ctrl->setPrimaryKeyEditable(false);
 //   ctrl->setPrimaryKeyItemsEnabled(false);
   ctrl->setPrimaryKeyHidden(true);
+  ctrl->setForeignKey({1});
+//   ctrl->setForeignKeyEditable(false);
+//   ctrl->setForeignKeyItemsEnabled(false);
+  ctrl->setForeignKeyHidden(true);
   /*
    * Setup some formatting
    */

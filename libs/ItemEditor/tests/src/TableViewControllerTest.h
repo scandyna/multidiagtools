@@ -42,6 +42,7 @@ class TableViewControllerTest : public QObject
 //   void primaryKeyTest();
 //   void foreignKeyTest();
   void primaryKeyVisibilityTest();
+  void foreignKeyVisibilityTest();
   void currentRowChangeTest();
   void viewCurrentRowChangeBenchmark();
   void controllerCurrentRowChangeBenchmark();

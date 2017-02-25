@@ -61,6 +61,12 @@ void TableViewController::setPrimaryKeyHidden(bool hide)
   updatePrimaryKeyColumnsVisibility();
 }
 
+void TableViewController::setForeignKeyHidden(bool hide)
+{
+  mForeignKeyColumnsHidden = hide;
+  updateForeignKeyColumnsVisibility();
+}
+
 void TableViewController::setModelToView(QAbstractItemModel* model)
 {
   mContainer->setModel(model);
@@ -119,9 +125,35 @@ void TableViewController::updatePrimaryKeyColumnsVisibility()
   if(v == nullptr){
     return;
   }
-  const auto pk = primaryKey();
+  const auto pk = getPrimaryKey();
   for(int column : pk){
     v->setColumnHidden(column, mPrimaryKeyColumnsHidden);
+  }
+}
+
+void TableViewController::foreignKeyChangedEvent(const ForeignKey& oldForeignKey, const ForeignKey& newForeignKey)
+{
+  auto *v = view();
+  if(v == nullptr){
+    return;
+  }
+  for(int column : oldForeignKey){
+    v->setColumnHidden(column, false);
+  }
+  for(int column : newForeignKey){
+    v->setColumnHidden(column, mForeignKeyColumnsHidden);
+  }
+}
+
+void TableViewController::updateForeignKeyColumnsVisibility()
+{
+  auto *v = view();
+  if(v == nullptr){
+    return;
+  }
+  const auto fk = getForeignKey();
+  for(int column : fk){
+    v->setColumnHidden(column, mForeignKeyColumnsHidden);
   }
 }
 

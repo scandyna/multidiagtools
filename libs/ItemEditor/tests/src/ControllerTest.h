@@ -48,6 +48,7 @@ class ControllerTest : public QObject
   void filterCheckModelTest();
   void filterCheckModelSignalTest();
   void primaryKeyTest();
+  void foreignKeyTest();
 
 //   void controllerListTest();
 
