@@ -18,36 +18,48 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_MODEL_FOREIGN_KEY_RECORD_H
-#define MDT_ITEM_MODEL_FOREIGN_KEY_RECORD_H
-
-#include "KeyRecord.h"
+#include "ForeignKeyProxyModel.h"
 
 namespace Mdt{ namespace ItemModel{
 
-  /*! \brief List of data for a specific row and foreign key in a item model
-   */
-  class ForeignKeyRecord : public KeyRecord
-  {
-   public:
+ForeignKeyProxyModel::ForeignKeyProxyModel(QObject* parent)
+ : PkFkProxyModelBase(parent)
+{
+}
 
-    ForeignKeyRecord() = default;
+void ForeignKeyProxyModel::setForeignKey(const ForeignKey & fk)
+{
+  Q_ASSERT(!fk.isNull());
 
-    /*! \brief Get a foreign key record from a key record
-     */
-    static ForeignKeyRecord fromKeyRecord(const KeyRecord & record)
-    {
-      return ForeignKeyRecord(record);
-    }
+  setKey(fk.toColumnList());
+}
 
-  private:
-    
-    ForeignKeyRecord(const KeyRecord & record)
-     : KeyRecord(record)
-    {
-    }
-  };
+void ForeignKeyProxyModel::setForeignKey(std::initializer_list<int> fk)
+{
+  setForeignKey( ForeignKey(fk) );
+}
+
+ForeignKey ForeignKeyProxyModel::foreignKey() const
+{
+  return ForeignKey::fromColumnList(key());
+}
+
+void ForeignKeyProxyModel::setForeignKeyEditable(bool editable)
+{
+  setKeyEditable(editable);
+}
+
+void ForeignKeyProxyModel::setForeignKeyItemsEnabled(bool enable)
+{
+  setKeyItemsEnabled(enable);
+}
+
+ForeignKeyRecord ForeignKeyProxyModel::foreignKeyRecord(int row) const
+{
+  Q_ASSERT(row >= 0);
+  Q_ASSERT(row < rowCount());
+
+  return ForeignKeyRecord::fromKeyRecord(keyRecord(row));
+}
 
 }} // namespace Mdt{ namespace ItemModel{
-
-#endif // #ifndef MDT_ITEM_MODEL_FOREIGN_KEY_RECORD_H

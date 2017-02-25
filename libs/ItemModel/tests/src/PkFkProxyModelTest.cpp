@@ -21,6 +21,7 @@
 #include "PkFkProxyModelTest.h"
 #include "qtmodeltest.h"
 #include "Mdt/ItemModel/PrimaryKeyProxyModel.h"
+#include "Mdt/ItemModel/ForeignKeyProxyModel.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSignalSpy>
 #include <QVariantList>
@@ -53,7 +54,9 @@ void PkFkProxyModelTest::pkSetGetKeyTest()
 
 void PkFkProxyModelTest::fkSetGetKeyTest()
 {
-  QFAIL("Not complete");
+  ForeignKeyProxyModel proxyModel;
+  proxyModel.setForeignKey({2,3});
+  QCOMPARE(proxyModel.foreignKey().columnCount(), 2);
 }
 
 void PkFkProxyModelTest::pkSetModelTest()
@@ -141,7 +144,13 @@ void PkFkProxyModelTest::pkFlagsTest()
 
 void PkFkProxyModelTest::fkFlagsTest()
 {
-  QFAIL("Not complete");
+  ForeignKeyProxyModel proxyModel;
+  QVERIFY(proxyModel.isForeignKeyEditable());
+  QVERIFY(proxyModel.isForeignKeyItemsEnabled());
+  proxyModel.setForeignKeyEditable(false);
+  proxyModel.setForeignKeyItemsEnabled(false);
+  QVERIFY(!proxyModel.isForeignKeyEditable());
+  QVERIFY(!proxyModel.isForeignKeyItemsEnabled());
 }
 
 void PkFkProxyModelTest::primaryKeyRecordTest()
@@ -188,7 +197,30 @@ void PkFkProxyModelTest::primaryKeyRecordTest()
 
 void PkFkProxyModelTest::foreignKeyRecordTest()
 {
-  QFAIL("Not complete");
+  ForeignKeyRecord record;
+  /*
+   * Setup source model
+   */
+  VariantTableModel model;
+  model.resize(2, 3);
+  model.populateColumn(0, {1,2});
+  model.populateColumn(1, {"A","B"});
+  model.populateColumn(2, {10,20});
+  /*
+   * Setup proxy model
+   */
+  ForeignKeyProxyModel proxyModel;
+  proxyModel.setSourceModel(&model);
+  proxyModel.setForeignKey({0,2});
+  /*
+   * Get record for row 0
+   */
+  record = proxyModel.foreignKeyRecord(0);
+  QCOMPARE(record.columnCount(), 2);
+  QCOMPARE(record.columnAt(0), 0);
+  QCOMPARE(record.dataAt(0), QVariant(1));
+  QCOMPARE(record.columnAt(1), 2);
+  QCOMPARE(record.dataAt(1), QVariant(10));
 }
 
 void PkFkProxyModelTest::pkQtModelTest()
@@ -215,7 +247,24 @@ void PkFkProxyModelTest::pkQtModelTest()
 
 void PkFkProxyModelTest::fkQtModelTest()
 {
-  QFAIL("Not complete");
+  /*
+   * Setup model
+   */
+  VariantTableModel model;
+  model.resize(3, 2);
+  model.populateColumn(0, {1,2,3});
+  model.populateColumn(1, {"A","B","C"});
+  /*
+   * Setup proxy model
+   */
+  ForeignKeyProxyModel proxyModel;
+  proxyModel.setSourceModel(&model);
+  /*
+   * Test
+   */
+  QCOMPARE(proxyModel.rowCount(), 3);
+  QtModelTest mt(&proxyModel);
+  QtModelTest smt(&model);
 }
 
 void PkFkProxyModelTest::modelGetDataBenchmark()

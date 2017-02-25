@@ -41,6 +41,7 @@ set(SOURCES_FILES
     src/Mdt/ItemModel/RelationKeyCopier.cpp
     src/Mdt/ItemModel/PkFkProxyModelBase.cpp
     src/Mdt/ItemModel/PrimaryKeyProxyModel.cpp
+    src/Mdt/ItemModel/ForeignKeyProxyModel.cpp
 )
 
 # Get Boost include directory if not allready set

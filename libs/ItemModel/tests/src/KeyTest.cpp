@@ -267,6 +267,14 @@ void KeyTest::primaryKeyRecordTest()
   QVERIFY(record.isEmpty());
   record.append(2, "B");
   QVERIFY(!record.isEmpty());
+  /*
+   * Check casting from KeyRecord
+   */
+  KeyRecord kr;
+  kr.append(3, "C");
+  record = PrimaryKeyRecord::fromKeyRecord(kr);
+  QCOMPARE(record.columnCount(), 1);
+  QCOMPARE(record.columnAt(0), 3);
 }
 
 void KeyTest::foreignKeyRecordTest()
@@ -275,6 +283,14 @@ void KeyTest::foreignKeyRecordTest()
   QVERIFY(record.isEmpty());
   record.append(2, "B");
   QVERIFY(!record.isEmpty());
+  /*
+   * Check casting from KeyRecord
+   */
+  KeyRecord kr;
+  kr.append(3, "C");
+  record = ForeignKeyRecord::fromKeyRecord(kr);
+  QCOMPARE(record.columnCount(), 1);
+  QCOMPARE(record.columnAt(0), 3);
 }
 
 /*

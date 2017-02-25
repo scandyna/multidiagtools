@@ -22,6 +22,7 @@
 #define MDT_ITEM_MODEL_FOREIGN_KEY_H
 
 #include "ColumnList.h"
+#include <QMetaType>
 #include <initializer_list>
 
 namespace Mdt{ namespace ItemModel{
@@ -116,5 +117,7 @@ namespace Mdt{ namespace ItemModel{
   };
 
 }} // namespace Mdt{ namespace ItemModel{
+
+Q_DECLARE_METATYPE(Mdt::ItemModel::ForeignKey)
 
 #endif // #ifndef MDT_ITEM_MODEL_FOREIGN_KEY_H
