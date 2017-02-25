@@ -28,6 +28,8 @@
 #include "LikeExpression.h"
 #include "RowList.h"
 #include "RelationKey.h"
+#include "PrimaryKey.h"
+#include "ForeignKey.h"
 #include <QPointer>
 #include <QModelIndex>
 #include <QVector>
@@ -110,12 +112,34 @@ namespace Mdt{ namespace ItemModel{
      *
      * For each pairs of parent/child model column in \a relationKey,
      *  a equality criteria will be created.
-     *  Each pairs are alos chained with a AND constraint.
+     *  Each pairs are also chained with a AND constraint.
      *
      * \pre \a relationKey must not be null
      * \pre \a relationKey must contain max 4 columns pairs
      */
     void setFilter(const RelationKey & relationKey);
+
+    /*! \brief Set relation filter
+     *
+     * This is the same as:
+     * \code
+     * RelationFilterProxyModel proxyModel;
+     * RelationKey key;
+     * PrimaryKey pk({1,2});
+     * ForeignKey fk({2,3});
+     * key.setKey(pk, fk);
+     * proxyModel.setFilter(key);
+     * \endcode
+     *
+     * \pre \a parentModelPk must not be null
+     * \pre \a childModelFk must not be null
+     * \pre Both \a parentModelPk and \a childModelFk must have the same count of columns and max 4 columns
+     */
+    void setFilter(const PrimaryKey & parentModelPk, const ForeignKey & childModelFk);
+
+    /*! \brief Get relation key for equality
+     */
+    RelationKey relationKeyForEquality() const;
 
     /*! \brief Get row of parent model for which filter must match
      */

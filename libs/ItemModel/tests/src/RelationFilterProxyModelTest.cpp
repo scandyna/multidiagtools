@@ -105,6 +105,40 @@ void RelationFilterProxyModelTest::setModelTest()
   QCOMPARE(proxyModel.rowCount(), 0);
 }
 
+void RelationFilterProxyModelTest::setFilterTest()
+{
+  /*
+   * Initial state
+   */
+  RelationFilterProxyModel proxyModel;
+  QVERIFY(proxyModel.relationKeyForEquality().isNull());
+  /*
+   * Set filter using expression
+   */
+  proxyModel.setFilter(ChildModelColumn(2) == ParentModelColumn(1));
+  QCOMPARE(proxyModel.relationKeyForEquality().columnPairCount(), 1);
+  QCOMPARE(proxyModel.relationKeyForEquality().columnPairAt(0).parentModelColumn(), 1);
+  QCOMPARE(proxyModel.relationKeyForEquality().columnPairAt(0).childModelColumn(), 2);
+  /*
+   * Set filter with a relation key
+   */
+  RelationKey rk;
+  rk.addColumnPair(3, 2);
+  proxyModel.setFilter(rk);
+  QCOMPARE(proxyModel.relationKeyForEquality().columnPairCount(), 1);
+  QCOMPARE(proxyModel.relationKeyForEquality().columnPairAt(0).parentModelColumn(), 3);
+  QCOMPARE(proxyModel.relationKeyForEquality().columnPairAt(0).childModelColumn(), 2);
+  /*
+   * Set filter sepcifying parent model PK and child model FK
+   */
+  PrimaryKey pk({1});
+  ForeignKey fk({2});
+  proxyModel.setFilter(pk, fk);
+  QCOMPARE(proxyModel.relationKeyForEquality().columnPairCount(), 1);
+  QCOMPARE(proxyModel.relationKeyForEquality().columnPairAt(0).parentModelColumn(), 1);
+  QCOMPARE(proxyModel.relationKeyForEquality().columnPairAt(0).childModelColumn(), 2);
+}
+
 void RelationFilterProxyModelTest::parentModelMatchRowTest()
 {
   /*

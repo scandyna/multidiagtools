@@ -34,6 +34,8 @@ class RelationFilterProxyModelTest : public TestBase
 
   void setModelTest();
 
+  void setFilterTest();
+
   void parentModelMatchRowTest();
   void filterTest();
   void filterMultiColumnTest();

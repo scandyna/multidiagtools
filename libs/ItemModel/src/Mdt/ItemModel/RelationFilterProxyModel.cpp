@@ -69,6 +69,25 @@ void RelationFilterProxyModel::setFilter(const RelationKey & relationKey)
   Q_ASSERT(relationKey.columnPairCount() <= 4);
 
   mFilterExpression = RelationFilterExpression::fromRelationKey(relationKey);
+  mKeyCopier->setKey(relationKey);
+  invalidateFilter();
+}
+
+void RelationFilterProxyModel::setFilter(const PrimaryKey & parentModelPk, const ForeignKey & childModelFk)
+{
+  Q_ASSERT(!parentModelPk.isNull());
+  Q_ASSERT(!childModelFk.isNull());
+  Q_ASSERT(parentModelPk.columnCount() == childModelFk.columnCount());
+  Q_ASSERT(parentModelPk.columnCount() <= 4);
+
+  RelationKey key;
+  key.setKey(parentModelPk, childModelFk);
+  setFilter(key);
+}
+
+RelationKey RelationFilterProxyModel::relationKeyForEquality() const
+{
+  return mKeyCopier->key();
 }
 
 void RelationFilterProxyModel::setDynamicSortFilter(bool enable)
