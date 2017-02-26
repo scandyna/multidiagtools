@@ -20,11 +20,12 @@
  ****************************************************************************/
 #include "ControllerRelationTest.h"
 #include "ItemModelControllerTester.h"
-#include "ItemViewTestEdit.h"
-#include "Mdt/Application.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include "Mdt/ItemModel/RelationFilterProxyModel.h"
-#include "Mdt/ItemModel/RelationKeyCopier.h"
+#include "Mdt/ItemModel/RelationKey.h"
+#include "Mdt/ItemModel/PrimaryKey.h"
+#include "Mdt/ItemModel/ForeignKey.h"
+#include "Mdt/ItemModel/FormatProxyModel.h"
 #include "Mdt/ItemEditor/TableViewController.h"
 #include "Mdt/ItemEditor/WidgetMapperController.h"
 // #include "Mdt/ItemEditor/ControllerRelation.h"
@@ -42,18 +43,8 @@
 
 #include <QDebug>
 
-namespace ItemModel = Mdt::ItemModel;
-namespace ItemEditor = Mdt::ItemEditor;
-using ItemModel::VariantTableModel;
-using ItemModel::FilterColumn;
-using ItemModel::ParentModelColumn;
-using ItemEditor::TableViewController;
-using ItemEditor::AbstractController;
-using ItemEditor::WidgetMapperController;
-using ItemEditor::ControllerRelation;
-using ItemEditor::ControllerRelationImplBase;
-using ItemEditor::ControllerRelationList;
-using ItemEditor::ControllerState;
+using namespace Mdt::ItemModel;
+using namespace Mdt::ItemEditor;
 
 void ControllerRelationTest::initTestCase()
 {
@@ -83,7 +74,7 @@ void ControllerRelationTest::setControllersTest()
   QFAIL("Not complete");
 }
 
-void ControllerRelationTest::setModelToControllersFirstTest()
+void ControllerRelationTest::relationSetModelToControllersFirstTest()
 {
   /*
    * Setup parent model and controller
@@ -109,7 +100,8 @@ void ControllerRelationTest::setModelToControllersFirstTest()
   QCOMPARE(parentController.sourceModel(), &parentModel);
   QCOMPARE(childController.sourceModel(), &childModel);
   QCOMPARE(childController.modelForView(), &childModel);
-  relation.setChildController(&childController, FilterColumn(0) == ParentModelColumn(0));
+  relation.setChildController(&childController);
+  relation.setRelationFilter( ChildModelColumn(0) == ParentModelColumn(0) );
   QCOMPARE(parentController.sourceModel(), &parentModel);
   QCOMPARE(relation.relationFilterModel()->parentModel(), &parentModel);
   QCOMPARE(relation.relationFilterModel()->sourceModel(), &childModel);
@@ -117,7 +109,7 @@ void ControllerRelationTest::setModelToControllersFirstTest()
   QCOMPARE(childController.modelForView(), relation.relationFilterModel());
 }
 
-void ControllerRelationTest::setModelToControllersAfterTest()
+void ControllerRelationTest::relationSetModelToControllersAfterTest()
 {
   /*
    * Setup parent and child controllers
@@ -130,7 +122,8 @@ void ControllerRelationTest::setModelToControllersAfterTest()
    * Setup relation
    */
   ControllerRelation relation(&parentController);
-  relation.setChildController(&childController, FilterColumn(0) == ParentModelColumn(0));
+  relation.setChildController(&childController);
+  relation.setRelationFilter( ChildModelColumn(0) == ParentModelColumn(0) );
   QVERIFY(parentController.sourceModel() == nullptr);
   QVERIFY(childController.sourceModel() == nullptr);
   QVERIFY(relation.relationFilterModel()->parentModel() == nullptr);
@@ -158,27 +151,51 @@ void ControllerRelationTest::setModelToControllersAfterTest()
   QCOMPARE(childController.modelForView(), relation.relationFilterModel());
 }
 
-void ControllerRelationTest::changeModelTest()
+void ControllerRelationTest::relationFilterConditionTest()
 {
+  RelationKey rk;
   /*
-   * Change model in parent controller
+   * Setup parent model and controller
    */
-  
-  
+  VariantTableModel parentModel;
+  parentModel.resize(0, 3);
+  ItemModelControllerTester parentController;
+  parentController.setModel(&parentModel);
+  QCOMPARE(parentController.sourceModel(), &parentModel);
   /*
-   * Enable filter in parent controller
+   * Setup child model and controller
    */
-  
+  VariantTableModel childModel;
+  childModel.resize(0, 3);
+  ItemModelControllerTester childController;
+  childController.setModel(&childModel);
+  QCOMPARE(childController.sourceModel(), &childModel);
+  QCOMPARE(childController.modelForView(), &childModel);
   /*
-   * Disable filter in parent controller
+   * Setup relation using expression
    */
-  
-  
-  
-  QFAIL("Not complete");
+  ControllerRelation relation1(&parentController);
+  relation1.setChildController(&childController);
+  relation1.setRelationFilter( ChildModelColumn(2) == ParentModelColumn(1) );
+  rk = relation1.relationFilterModel()->relationKeyForEquality();
+  QCOMPARE(rk.columnPairCount(), 1);
+  QCOMPARE(rk.columnPairAt(0).parentModelColumn(), 1);
+  QCOMPARE(rk.columnPairAt(0).childModelColumn(), 2);
+  /*
+   * Setup relation using primary and foreign keys
+   */
+  parentController.setPrimaryKey({2});
+  childController.setForeignKey({3});
+  ControllerRelation relation2(&parentController);
+  relation2.setChildController(&childController);
+  relation2.setRelationFilterFromPkFk();
+  rk = relation2.relationFilterModel()->relationKeyForEquality();
+  QCOMPARE(rk.columnPairCount(), 1);
+  QCOMPARE(rk.columnPairAt(0).parentModelColumn(), 2);
+  QCOMPARE(rk.columnPairAt(0).childModelColumn(), 3);
 }
 
-void ControllerRelationTest::parentControllerCurrentRowTest()
+void ControllerRelationTest::relationParentControllerCurrentRowTest()
 {
   /*
    * Setup parent model and controller
@@ -276,7 +293,8 @@ void ControllerRelationTest::relationFilterTest()
   ParentModelColumn clientId(0);
   FilterColumn addressClientId(1);
   ControllerRelation relation(&clientController);
-  relation.setChildController(&addressController, addressClientId == clientId);
+  relation.setChildController(&addressController);
+  relation.setRelationFilter(addressClientId == clientId);
   /*
    * Check that filter was applied for current client
    * ------------------------
@@ -315,7 +333,6 @@ void ControllerRelationTest::relationFilterTest()
    * ------------------------
    */
   addressController.setInsertLocation(TableViewController::InsertAtEnd);
-  qDebug() << "TEST: insert at end";
   QVERIFY(addressController.insert());
   QCOMPARE(addressController.modelForView()->rowCount(), 2);
   QCOMPARE(getModelData(addressController.modelForView(), 0, 0), QVariant(21));
@@ -355,6 +372,62 @@ void ControllerRelationTest::relationFilterTest()
    */
   addressController.setInsertLocation(TableViewController::InsertAtBeginning);
   QVERIFY(addressController.insert());
+  QCOMPARE(addressController.modelForView()->rowCount(), 3);
+  QVERIFY(getModelData(addressController.modelForView(), 0, 0).isNull());
+  QCOMPARE(getModelData(addressController.modelForView(), 0, 1), QVariant(2));
+  QVERIFY(getModelData(addressController.modelForView(), 0, 2).isNull());
+  QCOMPARE(getModelData(addressController.modelForView(), 1, 0), QVariant(21));
+  QCOMPARE(getModelData(addressController.modelForView(), 1, 1), QVariant(2));
+  QCOMPARE(getModelData(addressController.modelForView(), 1, 2), QVariant("S21"));
+  QCOMPARE(getModelData(addressController.modelForView(), 2, 0), QVariant(22));
+  QCOMPARE(getModelData(addressController.modelForView(), 2, 1), QVariant(2));
+  QCOMPARE(getModelData(addressController.modelForView(), 2, 2), QVariant("S22"));
+  /*
+   * Enable formatting for address controller
+   * (Will append a proxy model)
+   * Address model filtered on client 2, after proxy model insertion done:
+   * ------------------------
+   * | Id | Cli_Id | Street |
+   * ------------------------
+   * |    |   2    |        |
+   * ------------------------
+   * | 21 |   2    |  S21   |
+   * ------------------------
+   * | 22 |   2    |  S22   |
+   * ------------------------
+   */
+  FormatProxyModel addressFormatModel;
+  addressController.appendProxyModel(&addressFormatModel);
+  addressFormatModel.setTextAlignmentForColumn(0, Qt::AlignCenter);
+  QCOMPARE(addressController.modelForView()->rowCount(), 3);
+  QVERIFY(getModelData(addressController.modelForView(), 0, 0).isNull());
+  QCOMPARE(getModelData(addressController.modelForView(), 0, 1), QVariant(2));
+  QVERIFY(getModelData(addressController.modelForView(), 0, 2).isNull());
+  QCOMPARE(getModelData(addressController.modelForView(), 1, 0), QVariant(21));
+  QCOMPARE(getModelData(addressController.modelForView(), 1, 1), QVariant(2));
+  QCOMPARE(getModelData(addressController.modelForView(), 1, 2), QVariant("S21"));
+  QCOMPARE(getModelData(addressController.modelForView(), 2, 0), QVariant(22));
+  QCOMPARE(getModelData(addressController.modelForView(), 2, 1), QVariant(2));
+  QCOMPARE(getModelData(addressController.modelForView(), 2, 2), QVariant("S22"));
+  /*
+   * Enable formatting for client controller
+   * (Will append a proxy model)
+   * Address model filtered on client 2, after proxy model insertion done:
+   * ------------------------
+   * | Id | Cli_Id | Street |
+   * ------------------------
+   * |    |   2    |        |
+   * ------------------------
+   * | 21 |   2    |  S21   |
+   * ------------------------
+   * | 22 |   2    |  S22   |
+   * ------------------------
+   */
+  FormatProxyModel clientFormatModel;
+  clientController.appendProxyModel(&clientFormatModel);
+  clientFormatModel.setTextAlignmentForColumn(0, Qt::AlignCenter);
+  // Client controller will go to first row after model change, go back to client 2
+  clientController.setCurrentRow(1);
   QCOMPARE(addressController.modelForView()->rowCount(), 3);
   QVERIFY(getModelData(addressController.modelForView(), 0, 0).isNull());
   QCOMPARE(getModelData(addressController.modelForView(), 0, 1), QVariant(2));
@@ -419,7 +492,8 @@ void ControllerRelationTest::relationFilterTableViewTest()
   ParentModelColumn clientId(0);
   FilterColumn addressClientId(1);
   ControllerRelation relation(&clientController);
-  relation.setChildController(&addressController, addressClientId == clientId);
+  relation.setChildController(&addressController);
+  relation.setRelationFilter(addressClientId == clientId);
   /*
    * Check that filter was applied for current client
    */
@@ -472,17 +546,17 @@ void ControllerRelationTest::relationFilterTableViewTest()
   /*
    * Play
    */
-  clientModel.setHeaderData(0, Qt::Horizontal, "Id");
-  clientModel.setHeaderData(1, Qt::Horizontal, "Name");
-  clientView.setWindowTitle("Client");
-  clientView.resizeColumnsToContents();
-  clientView.show();
-  addressView.setWindowTitle("Address");
-  addressView.resizeColumnsToContents();
-  addressView.show();
-  while(clientView.isVisible()){
-    QTest::qWait(500);
-  }
+//   clientModel.setHeaderData(0, Qt::Horizontal, "Id");
+//   clientModel.setHeaderData(1, Qt::Horizontal, "Name");
+//   clientView.setWindowTitle("Client");
+//   clientView.resizeColumnsToContents();
+//   clientView.show();
+//   addressView.setWindowTitle("Address");
+//   addressView.resizeColumnsToContents();
+//   addressView.show();
+//   while(clientView.isVisible()){
+//     QTest::qWait(500);
+//   }
   
   QFAIL("Not complete");
 }
@@ -532,6 +606,54 @@ void ControllerRelationTest::relationListSetModelToControllersAfterTest()
 {
 
   QFAIL("Not complete");
+}
+
+void ControllerRelationTest::relationListFilterConditionTest()
+{
+  ControllerRelation *relation;
+  RelationKey rk;
+  /*
+   * Setup parent model and controller
+   */
+  VariantTableModel parentModel;
+  parentModel.resize(0, 3);
+  ItemModelControllerTester parentController;
+  parentController.setModel(&parentModel);
+  /*
+   * Setup relation list
+   */
+  ControllerRelationList<AbstractController, ControllerRelation> relationList(&parentController);
+  QCOMPARE(relationList.childControllerCount(), 0);
+  /*
+   * Add a child controller by specifying filter
+   */
+  VariantTableModel childModel1;
+  childModel1.resize(0, 3);
+  ItemModelControllerTester childController1;
+  childController1.setModel(&childModel1);
+  relationList.addChildController(&childController1, ChildModelColumn(2) == ParentModelColumn(1));
+  QCOMPARE(relationList.childControllerCount(), 1);
+  relation = *(relationList.cbegin());
+  rk = relation->relationFilterModel()->relationKeyForEquality();
+  QCOMPARE(rk.columnPairCount(), 1);
+  QCOMPARE(rk.columnPairAt(0).parentModelColumn(), 1);
+  QCOMPARE(rk.columnPairAt(0).childModelColumn(), 2);
+  /*
+   * Add a child controller using PK/FK
+   */
+  VariantTableModel childModel2;
+  childModel2.resize(0, 3);
+  ItemModelControllerTester childController2;
+  childController2.setModel(&childModel2);
+  parentController.setPrimaryKey({2});
+  childController2.setForeignKey({3});
+  relationList.addChildController(&childController2);
+  QCOMPARE(relationList.childControllerCount(), 2);
+  relation = *(relationList.cbegin() + 1);
+  rk = relation->relationFilterModel()->relationKeyForEquality();
+  QCOMPARE(rk.columnPairCount(), 1);
+  QCOMPARE(rk.columnPairAt(0).parentModelColumn(), 2);
+  QCOMPARE(rk.columnPairAt(0).childModelColumn(), 3);
 }
 
 void ControllerRelationTest::relationListBasicSetGetTest()
@@ -631,64 +753,6 @@ void ControllerRelationTest::controllerRelationFilterTest()
 {
 
   QFAIL("Not complete");
-}
-
-/*
- * Helpers
- */
-
-void ControllerRelationTest::beginEditing(QAbstractItemView& view, const QModelIndex& index, BeginEditTrigger trigger)
-{
-  ItemViewTestEdit::beginEditing(view, index, trigger);
-}
-
-void ControllerRelationTest::editText(QAbstractItemView& view, const QModelIndex& editingIndex, const QString& str)
-{
-  ItemViewTestEdit::editText(view, editingIndex, str);
-}
-
-void ControllerRelationTest::endEditing(QAbstractItemView& view, const QModelIndex& editingIndex, EndEditTrigger trigger)
-{
-  ItemViewTestEdit::endEditing(view, editingIndex, trigger);
-}
-
-void ControllerRelationTest::edit(QAbstractItemView& view, const QModelIndex& index, const QString& str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger)
-{
-  ItemViewTestEdit::edit(view, index, str, beginEditTrigger, endEditTrigger);
-}
-
-bool ControllerRelationTest::setModelData(QAbstractItemModel *model, int row, int column, const QVariant& value, Qt::ItemDataRole role)
-{
-  Q_ASSERT(model != nullptr);
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < model->rowCount());
-  Q_ASSERT(column >= 0);
-  Q_ASSERT(column < model->columnCount());
-
-  auto index = model->index(row, column);
-  if(!index.isValid()){
-    qDebug() << "index is not valid: " << index;
-    return false;
-  }
-
-  return model->setData(index, value, role);
-}
-
-QVariant ControllerRelationTest::getModelData(QAbstractItemModel* model, int row, int column, Qt::ItemDataRole role)
-{
-  Q_ASSERT(model != nullptr);
-  Q_ASSERT(row >= 0);
-  Q_ASSERT(row < model->rowCount());
-  Q_ASSERT(column >= 0);
-  Q_ASSERT(column < model->columnCount());
-
-  auto index = model->index(row, column);
-  if(!index.isValid()){
-    qDebug() << "index is not valid: " << index;
-    return QVariant();
-  }
-
-  return model->data(index, role);
 }
 
 /*

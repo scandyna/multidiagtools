@@ -255,6 +255,16 @@ void AbstractController::addChildController(AbstractController *controller, cons
   mRelationList.addChildController(controller, conditions);
 }
 
+void AbstractController::addChildController(AbstractController* controller)
+{
+  Q_ASSERT(controller != nullptr);
+  Q_ASSERT(!getPrimaryKey().isNull());
+  Q_ASSERT(!controller->getForeignKey().isNull());
+  Q_ASSERT(getPrimaryKey().columnCount() == controller->getForeignKey().columnCount());
+
+  mRelationList.addChildController(controller);
+}
+
 bool AbstractController::setCurrentRow(int row)
 {
   Q_ASSERT(row >= -1);

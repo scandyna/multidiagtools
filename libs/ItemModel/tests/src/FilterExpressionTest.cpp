@@ -34,6 +34,8 @@
 #include "Mdt/ItemModel/FilterExpression.h"
 #include "Mdt/ItemModel/RelationFilterExpression.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
+#include "Mdt/ItemModel/FormatProxyModel.h"
+#include "Mdt/ItemModel/ProxyModelContainer.h"
 #include <QRegularExpression>
 #include <boost/proto/matches.hpp>
 #include <boost/proto/literal.hpp>
@@ -41,6 +43,8 @@
 
 // #include <boost/proto/proto.hpp>
 // #include <QDebug>
+
+using namespace Mdt::ItemModel;
 
 namespace ItemModel = Mdt::ItemModel;
 using ItemModel::VariantTableModel;
@@ -475,6 +479,64 @@ void FilterExpressionTest::filterEvalTest()
   // Comparison and || and &&
   QVERIFY(  eval(Id > 10 || ((Id < 5)&&(Name == Like("?B?"))) , 0, data) );
   QVERIFY( !eval(Id > 0 && ((Name == "A")||(Name == "B")) , 0, data) );
+}
+
+void FilterExpressionTest::filterEvalItemRoleTest()
+{
+  using ItemModel::Expression::FilterEvalData;
+  using ItemModel::Expression::FilterEval;
+  using Like = ItemModel::LikeExpression;
+
+  /*
+   * Setup table model:
+   * -------------
+   * | Id | Name |
+   * -------------
+   * | 1  | ABC  |
+   * -------------
+   */
+  VariantTableModel model;
+  model.resize(1, 2);
+  model.populateColumn(0, {1});
+  model.populateColumn(1, {"ABC"});
+  // Check
+  QCOMPARE(model.data(0, 0), QVariant(1));
+  QCOMPARE(model.data(0, 1), QVariant("ABC"));
+  /*
+   * Setup format proxy model
+   */
+  FormatProxyModel proxyModel;
+  proxyModel.setTextAlignmentForColumn(0, Qt::AlignLeft);
+  proxyModel.setTextAlignmentForColumn(1, Qt::AlignCenter);
+  /*
+   * Setup proxy model container
+   */
+  ProxyModelContainer container;
+  container.setSourceModel(&model);
+  container.appendProxyModel(&proxyModel);
+  /*
+   * Setup columns and data and transform
+   */
+  FilterColumn Id(0);
+  FilterColumn Name(1);
+  FilterEvalData data(&proxyModel, 0, Qt::CaseInsensitive);
+  FilterEval eval;
+  /*
+   * Tests
+   */
+  // ==
+  QVERIFY(  eval(Id == 1 , 0, data) );
+  QVERIFY( !eval(Id == 2 , 0, data) );
+  QVERIFY(  eval(Name == "ABC" , 0, data) );
+  QVERIFY( !eval(Name == "A" , 0, data) );
+  // Like
+  QVERIFY(  eval(Name == Like("ABC") , 0, data) );
+  QVERIFY( !eval(Name == Like("A") , 0, data) );
+  // !=
+  QVERIFY( !eval(Id != 1 , 0, data) );
+  QVERIFY(  eval(Id != 2 , 0, data) );
+  QVERIFY( !eval(Name != "ABC" , 0, data) );
+  QVERIFY(  eval(Name != "A" , 0, data) );
 }
 
 void FilterExpressionTest::relationFilterEvalTest()

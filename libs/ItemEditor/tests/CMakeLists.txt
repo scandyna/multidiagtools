@@ -7,6 +7,7 @@ enable_testing()
 #================= Item/View test library ====================
 
 set(SOURCES_FILES
+  src/TestBase.cpp
   src/ItemModelControllerTester.cpp
   src/PrimaryKeyChangedSignalSpy.cpp
   src/ItemViewTestEdit.cpp

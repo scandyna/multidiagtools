@@ -60,6 +60,7 @@ class FilterExpressionTest : public QObject
   void evalDataTest();
   void comparisonEvalTest();
   void filterEvalTest();
+  void filterEvalItemRoleTest();
   void relationFilterEvalTest();
 
   void expressionCopyTest();

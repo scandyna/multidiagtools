@@ -49,16 +49,6 @@ namespace Mdt{ namespace ItemEditor{
     AbstractControllerRelation(AbstractControllerRelation &&) = delete;
     AbstractControllerRelation & operator=(AbstractControllerRelation &&) = delete;
 
-   protected slots:
-
-     /*! \brief Set parent controller state
-      */
-     virtual void setParentControllerState(Mdt::ItemEditor::ControllerState newState) = 0;
-
-     /*! \brief Set child controller state
-      */
-     virtual void setChildControllerState(Mdt::ItemEditor::ControllerState newState) = 0;
-
    protected:
 
     /*! \brief Get parent controller
@@ -73,7 +63,25 @@ namespace Mdt{ namespace ItemEditor{
      */
     void registerAbstractChildController(AbstractController *controller);
 
-   private:
+    /*! \brief Parent controller's state changed event
+     */
+    virtual void parentControllerStateChangedEvent(ControllerState newState);
+
+    /*! \brief Child controller's state changed event
+     */
+    virtual void childControllerStateChangedEvent(ControllerState newState);
+
+   private slots:
+
+    /*! \brief Set parent controller state
+     */
+    void setParentControllerState(Mdt::ItemEditor::ControllerState newState);
+
+    /*! \brief Set child controller state
+     */
+    void setChildControllerState(Mdt::ItemEditor::ControllerState newState);
+
+ private:
 
     QMetaObject::Connection mChildControllerStateChagedConnection;
   };

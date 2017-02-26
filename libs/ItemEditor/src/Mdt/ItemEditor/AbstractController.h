@@ -434,14 +434,34 @@ namespace Mdt{ namespace ItemEditor{
      *  it will be filtered regarding \a conditions .
      *
      * When state of this controller changes,
-     *  state all childs will also be updated.
+     *  state of all childs will also be updated.
      *
      * \note Because \a controller can be shared with several objects,
      *        this controller does not take ownership of it (it will not delete it).
      * \pre \a controller must be a valid pointer
-     * \pre \a expression must be a relation filter expression
+     * \pre \a conditions must be a relation filter expression
      */
     void addChildController(AbstractController *controller, const Mdt::ItemModel::RelationFilterExpression & conditions);
+
+    /*! \brief Add a child controller
+     *
+     * Once \a controller becomes child of this controller,
+     *  it will be filtered regarding equality between
+     *  the primary key of this controller
+     *  and the foreign key of \a controller .
+     *
+     * When state of this controller changes,
+     *  state of all childs will also be updated.
+     *
+     * \note Because \a controller can be shared with several objects,
+     *        this controller does not take ownership of it (it will not delete it).
+     * \pre \a controller must be a valid pointer
+     * \pre This controller must have a non null primary key set
+     * \pre \a controller must have a non null foreign key set
+     * \pre Both primary of this controller and foreign key of \a controller
+     *       must have the same count of columns, and maximum 4
+     */
+    void addChildController(AbstractController *controller);
 
     /*! \brief Get last error
      */

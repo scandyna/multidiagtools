@@ -58,23 +58,11 @@ namespace Mdt{ namespace ItemEditor{
      */
     ~ControllerRelation();
 
-    /*! \brief Register child controller
+    /*! \brief Set relation filter
      *
      * \pre \a conditions must be a valid relation filter expression
      */
-    void registerChildController(const Mdt::ItemModel::RelationFilterExpression & conditions);
-
-    /*! \brief Unregister child controller
-     */
-    void unregisterChildController();
-
-   /*! \brief Actions to perform in a specific state of the parent controller
-    */
-   void onParentControllerStateChaged(Mdt::ItemEditor::ControllerState newState);
-
-   /*! \brief Actions to perform in a specific state of the child controller
-    */
-   void onChildControllerStateChaged(Mdt::ItemEditor::ControllerState newState);
+    void setSpecificRelationFilter(const Mdt::ItemModel::RelationFilterExpression & conditions);
 
     /*! \brief Set parent controller's model to child controller
      *
@@ -93,6 +81,18 @@ namespace Mdt{ namespace ItemEditor{
     }
 
    private:
+
+    /*! \brief Register child controller
+     */
+    void registerChildController() override;
+
+    /*! \brief Unregister child controller
+     */
+    void unregisterChildController() override;
+
+    /*! \brief Set relation filter from relation key
+     */
+    void setFilterFromRelationKey(const Mdt::ItemModel::RelationKey & key) override;
 
     void onParentControllerModelChanged(QAbstractItemModel *model);
 

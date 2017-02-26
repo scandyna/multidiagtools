@@ -21,15 +21,9 @@
 #ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_TEST_H
 #define MDT_ITEM_EDITOR_CONTROLLER_RELATION_TEST_H
 
-#include "ItemViewTestEditTriggers.h"
-#include <QObject>
-#include <QtTest/QtTest>
-#include <QVariant>
-#include <Qt>
+#include "TestBase.h"
 
-class QAbstractItemView;
-
-class ControllerRelationTest : public QObject
+class ControllerRelationTest : public TestBase
 {
   Q_OBJECT
 
@@ -40,33 +34,23 @@ class ControllerRelationTest : public QObject
 
   void setControllersTest();
 
-  void setModelToControllersFirstTest();
-  void setModelToControllersAfterTest();
-  void changeModelTest();
-  void parentControllerCurrentRowTest();
+  void relationSetModelToControllersFirstTest();
+  void relationSetModelToControllersAfterTest();
+  void relationFilterConditionTest();
+  void relationParentControllerCurrentRowTest();
   
   void relationFilterTest();
   void relationFilterTableViewTest();
 
   void relationListSetModelToControllersFirstTest();
   void relationListSetModelToControllersAfterTest();
+  void relationListFilterConditionTest();
 
   void relationListBasicSetGetTest();
 
   void controllerAddChildControllerTest();
   void controllerChangeModelForViewTest();
   void controllerRelationFilterTest();
-
- private:
-
-  // Helper function for editing in a QAbstractItemView
-  void beginEditing(QAbstractItemView & view, const QModelIndex & index, BeginEditTrigger trigger);
-  void editText(QAbstractItemView & view, const QModelIndex & editingIndex, const QString & str);
-  void endEditing(QAbstractItemView & view, const QModelIndex & editingIndex, EndEditTrigger trigger);
-  void edit(QAbstractItemView & view, const QModelIndex & index, const QString & str, BeginEditTrigger beginEditTrigger, EndEditTrigger endEditTrigger);
-  // Helper functions get/set data in a model
-  bool setModelData(QAbstractItemModel *model, int row, int column, const QVariant & value, Qt::ItemDataRole role = Qt::EditRole);
-  QVariant getModelData(QAbstractItemModel *model, int row, int column, Qt::ItemDataRole role = Qt::DisplayRole);
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_CONTROLLER_RELATION_TEST_H

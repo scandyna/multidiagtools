@@ -189,7 +189,7 @@ void RelationFilterProxyModelTest::parentModelMatchRowTest()
   VariantTableModel parentModel2;
   parentModel2.resize(3, 1);
   proxyModel.setParentModel(&parentModel2);
-  QCOMPARE(proxyModel.parentModelMatchRow(), -1);
+  QCOMPARE(proxyModel.parentModelMatchRow(), 0);
 }
 
 void RelationFilterProxyModelTest::filterTest()

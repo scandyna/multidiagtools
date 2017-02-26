@@ -83,7 +83,27 @@ namespace Mdt{ namespace ItemEditor{
     {
       Q_ASSERT(controller != nullptr);
       auto *relation = new RelationImpl(mParentController);
-      relation->setChildController(controller, conditions);
+      relation->setChildController(controller);
+      relation->setRelationFilter(conditions);
+      mList.push_back(relation);
+    }
+
+    /*! \brief Add a child controller
+     *
+     * \pre \a controller must be a valid pointer
+     * \pre parent controller must have a non null primary key set
+     * \pre \a controller must have a non null foreign key set
+     * \pre Both primary of parent controller and foreign key of \a controller must have the same count of columns, and max 4
+     */
+    void addChildController(Controller *controller)
+    {
+      Q_ASSERT(controller != nullptr);
+      Q_ASSERT(!mParentController->getPrimaryKey().isNull());
+      Q_ASSERT(!controller->getForeignKey().isNull());
+      Q_ASSERT(mParentController->getPrimaryKey().columnCount() == controller->getForeignKey().columnCount());
+      auto *relation = new RelationImpl(mParentController);
+      relation->setChildController(controller);
+      relation->setRelationFilterFromPkFk();
       mList.push_back(relation);
     }
 

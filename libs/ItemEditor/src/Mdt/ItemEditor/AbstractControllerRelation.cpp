@@ -40,4 +40,22 @@ void AbstractControllerRelation::registerAbstractChildController(AbstractControl
     connect(controller, &AbstractController::controllerStateChanged, this, &AbstractControllerRelation::setChildControllerState);
 }
 
+void AbstractControllerRelation::parentControllerStateChangedEvent(ControllerState)
+{
+}
+
+void AbstractControllerRelation::childControllerStateChangedEvent(ControllerState)
+{
+}
+
+void AbstractControllerRelation::setParentControllerState(ControllerState newState)
+{
+
+}
+
+void AbstractControllerRelation::setChildControllerState(ControllerState newState)
+{
+
+}
+
 }} // namespace Mdt{ namespace ItemEditor{

@@ -46,10 +46,13 @@ void RelationFilterProxyModel::setParentModel(QAbstractItemModel *model)
 {
   Q_ASSERT(model != nullptr);
 
+//   qDebug() << "RFPM: setParentModel() " << model;
+
   disconnect(mParentModelDataChangedConnection);
   mParentModel = model;
   mParentModelDataChangedConnection = connect(model, &QAbstractItemModel::dataChanged, this, &RelationFilterProxyModel::onParentModelDataChanged);
-  mParentModelRow = -1;
+//   mParentModelRow = -1;
+  setParentModelMatchRow(mParentModelRow);
   mKeyCopier->setParentModel(model);
   invalidateFilter();
 }

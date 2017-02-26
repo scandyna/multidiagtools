@@ -22,6 +22,7 @@
 #define MDT_ITEM_EDITOR_CONTROLLER_RELATION_IMPL_BASE_H
 
 #include "AbstractControllerRelation.h"
+#include "Mdt/ItemModel/RelationKey.h"
 #include <QPointer>
 
 namespace Mdt{ namespace ItemEditor{
@@ -34,20 +35,11 @@ namespace Mdt{ namespace ItemEditor{
    * To be usefull, a class that implements some of concrete controller's
    *  method in a specific way must be created as subclass of this.
    *
-   *  The implementation subclass must provide following methods:
+   * The implementation subclass must implement pure virtual methods
+   *  and also provide following ones:
    * \code
-   * // Make signal/slot connections and whatever is required.
-   * // Filter is of implementation specific filter expression type
-   * void registerChildController(const Filter & conditions);
-   *
-   * // Disconnect signal/slots and do whatever is required.
-   * void unregisterChildController();
-   *
-   * // Actions to perform in a specific state of the parent controller
-   * void onParentControllerStateChaged(ControllerState newState);
-   *
-   * // Actions to perform in a specific state of the child controller
-   * void onChildControllerStateChaged(ControllerState newState);
+   * // Set implementation specific filter
+   * void setSpecificRelationFilter(const Filter & conditions);
    *
    * // This method is called when parent controller's model changed.
    * void setParentControllerModelToChildController();
@@ -92,21 +84,67 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Set child controller
      *
      * \pre \a controller must be a valid pointer
-     * \pre \a conditions must be a valid relation filter expression
      */
-    template<typename T>
-    void setChildController(Controller *controller, const T & conditions)
+    void setChildController(Controller *controller)
     {
       Q_ASSERT(controller != nullptr);
 
       registerAbstractChildController(controller);
       if(!mChildController.isNull()){
-        impl()->unregisterChildController();
+        unregisterChildController();
       }
       mChildController = controller;
-      impl()->registerChildController(conditions);
-      impl()->setParentControllerModelToChildController();
+      registerChildController();
     }
+
+    /*! \brief Set implementation specific relation filter
+     *
+     * \pre \a conditions must be a valid relation filter expression
+     */
+    template<typename T>
+    void setRelationFilter(const T & conditions)
+    {
+      impl()->setSpecificRelationFilter(conditions);
+    }
+
+    /*! \brief Set relation filter from parent controller's primary key and child controller's foreign key
+     *
+     * \pre child controller must allready been set
+     * \pre parent controller must have a non null primary key set
+     * \pre child controller must have a non null foreign key set
+     * \pre Both primary of parent controller and foreign key of child controller must have the same count of columns, and max 4
+     */
+    void setRelationFilterFromPkFk()
+    {
+      Q_ASSERT(childController() != nullptr);
+      Q_ASSERT(!parentController()->getPrimaryKey().isNull());
+      Q_ASSERT(!childController()->getForeignKey().isNull());
+      Q_ASSERT(parentController()->getPrimaryKey().columnCount() == childController()->getForeignKey().columnCount());
+
+      Mdt::ItemModel::RelationKey key;
+      key.setKey( parentController()->getPrimaryKey(), childController()->getForeignKey() );
+      setFilterFromRelationKey(key);
+    }
+
+   protected:
+
+    /*! \brief Register child controller
+     *
+     * Subclass must implement this function to
+     *  make signal/slot connections and whatever is needed.
+     */
+    virtual void registerChildController() = 0;
+
+    /*! \brief Unregister child controller
+     *
+     * Subclass must implement this function to
+     *  disconnect signal/slot and whatever is needed.
+     */
+    virtual void unregisterChildController() = 0;
+
+    /*! \brief Set relation filter from relation key
+     */
+    virtual void setFilterFromRelationKey(const Mdt::ItemModel::RelationKey & key) = 0;
 
    private:
 
@@ -122,20 +160,6 @@ namespace Mdt{ namespace ItemEditor{
     AbstractController* abstractChildController() const override
     {
       return mChildController;
-    }
-
-    /*! \brief Set parent controller state
-     */
-    void setParentControllerState(ControllerState newState) override
-    {
-      impl()->onParentControllerStateChaged(newState);
-    }
-
-    /*! \brief Set child controller state
-     */
-    void setChildControllerState(ControllerState newState) override
-    {
-      impl()->onChildControllerStateChaged(newState);
     }
 
     Derived *impl()
