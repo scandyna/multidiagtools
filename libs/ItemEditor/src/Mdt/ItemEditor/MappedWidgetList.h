@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -48,28 +48,28 @@ namespace Mdt{ namespace ItemEditor{
      */
     int size() const
     {
-      return pvWidgetList.size();
+      return mWidgetList.size();
     }
 
     /*! \brief Check if some widget is mapped
      */
     bool isEmpty() const
     {
-      return pvWidgetList.empty();
+      return mWidgetList.empty();
     }
 
     /*! \brief Get begin const iterator
      */
     const_iterator begin() const
     {
-      return pvWidgetList.cbegin();
+      return mWidgetList.cbegin();
     }
 
     /*! \brief Get end const iterator
      */
     const_iterator end() const
     {
-      return pvWidgetList.cend();
+      return mWidgetList.cend();
     }
 
     /*! \brief Remove all mapped widgets
@@ -78,7 +78,7 @@ namespace Mdt{ namespace ItemEditor{
 
    private:
 
-    std::vector<MappedWidget> pvWidgetList;
+    std::vector<MappedWidget> mWidgetList;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

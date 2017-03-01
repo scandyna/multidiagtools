@@ -35,9 +35,8 @@
 
 #include <QDebug>
 
-namespace ItemEditor = Mdt::ItemEditor;
-using Mdt::ItemModel::VariantTableModel;
-using Mdt::ItemEditor::WidgetMapperController;
+using namespace Mdt::ItemModel;
+using namespace Mdt::ItemEditor;
 
 void WidgetMapperControllerTest::initTestCase()
 {
@@ -592,8 +591,6 @@ void WidgetMapperControllerTest::insertFromModelTest()
 
 void WidgetMapperControllerTest::removeTest()
 {
-  using ItemEditor::ControllerState;
-
   QStringListModel model;
   QLineEdit editor0;
   WidgetMapperController controller;
@@ -653,8 +650,6 @@ void WidgetMapperControllerTest::removeTest()
 
 void WidgetMapperControllerTest::removeFromModelTest()
 {
-  using ItemEditor::ControllerState;
-
   QStringListModel model;
   QLineEdit editor0;
   WidgetMapperController controller;

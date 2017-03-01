@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2016 Philippe Steinmann.
+ ** Copyright (C) 2011-2017 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -26,12 +26,12 @@ void MappedWidgetList::addWidget(QWidget* widget, int column, bool hasReadOnlyPr
 {
   Q_ASSERT(widget != nullptr);
   Q_ASSERT(column >= 0);
-  pvWidgetList.emplace_back(widget, column, hasReadOnlyProperty);
+  mWidgetList.emplace_back(widget, column, hasReadOnlyProperty);
 }
 
 void MappedWidgetList::clear()
 {
-  pvWidgetList.clear();
+  mWidgetList.clear();
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

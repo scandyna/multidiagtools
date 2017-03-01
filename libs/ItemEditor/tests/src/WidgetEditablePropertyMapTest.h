@@ -18,50 +18,56 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_ITEM_EDITOR_MAPPED_WIDGET_H
-#define MDT_ITEM_EDITOR_MAPPED_WIDGET_H
+#ifndef MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_TEST_H
+#define MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_TEST_H
 
-#include <QPointer>
+#include "TestBase.h"
 #include <QWidget>
 
-namespace Mdt{ namespace ItemEditor{
+class CustomTestWidget : public QWidget
+{
+ Q_OBJECT
 
-  class MappedWidget
+ public:
+
+  Q_PROPERTY(bool editable READ isEditable WRITE setEditable)
+
+  void setEditable(bool e)
   {
-   public:
+    mEditable = e;
+  }
 
-    /*
-     * Contructor
-     */
-    MappedWidget(QWidget *widget, int column, bool hasReadOnlyProperty)
-     : mWidget(widget), mColumn(column), mHasReadOnlyProperty(hasReadOnlyProperty)
-    {
-      Q_ASSERT(mWidget != nullptr);
-      Q_ASSERT(column >= 0);
-    }
+  bool isEditable() const
+  {
+    return mEditable;
+  }
 
-    QWidget *widget() const
-    {
-      return mWidget;
-    }
+ private:
 
-    int column() const
-    {
-      return mColumn;
-    }
+  bool mEditable = true;
+};
 
-    bool hasReadOnlyProperty() const
-    {
-      return mHasReadOnlyProperty;
-    }
+class WidgetEditablePropertyMapTest : public TestBase
+{
+  Q_OBJECT
 
-   private:
+ private slots:
 
-    QPointer<QWidget> mWidget;
-    int mColumn;
-    bool mHasReadOnlyProperty;
-  };
+  void initTestCase();
+  void cleanupTestCase();
 
-}} // namespace Mdt{ namespace ItemEditor{
+  void editablePropertyTest();
 
-#endif // #ifndef MDT_ITEM_EDITOR_MAPPED_WIDGET_H
+  void qtWidgetsEditablePropertyTest();
+  void qtWidgetsObjectsEditablePropertyTest();
+  void qtWidgetsObjectsEditablePropertyTest_data();
+  
+  void setEditablePropertyTest();
+  void instancesTest();
+
+  void setSpinBoxReadOnlyBenchmark();
+  void setSpinBoxReadOnlyPropertyBenchmark();
+  void setSpinBoxEditableBenchmark();
+};
+
+#endif // #ifndef MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_TEST_H

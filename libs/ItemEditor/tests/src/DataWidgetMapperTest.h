@@ -36,6 +36,11 @@ class DataWidgetMapperTest : public QObject
   void mappedWidgetTest();
   void mappedWidgetListTest();
 
+  void setModelThenMapWidgetsTest();
+  void mapWidgetsThenSetModelTest();
+  void enableEditableFlagsTest();
+  void formatRoleTest();
+
   void setModelTest();
   void setCurrentRowWidgetTest();
   void setCurrentRowSignalTest();

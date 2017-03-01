@@ -31,9 +31,12 @@
 #include <QTextEdit>
 #include <QPlainTextEdit>
 
-namespace ItemEditor = Mdt::ItemEditor;
-using ItemEditor::DataWidgetMapper;
-using Mdt::ItemModel::VariantTableModel;
+using namespace Mdt::ItemModel;
+using namespace Mdt::ItemEditor;
+
+// namespace ItemEditor = Mdt::ItemEditor;
+// using ItemEditor::DataWidgetMapper;
+// using Mdt::ItemModel::VariantTableModel;
 
 void DataWidgetMapperTest::initTestCase()
 {
@@ -49,8 +52,6 @@ void DataWidgetMapperTest::cleanupTestCase()
 
 void DataWidgetMapperTest::mappedWidgetTest()
 {
-  using ItemEditor::MappedWidget;
-
   auto *w = new QWidget;
 
   w->setObjectName("TestWidget");
@@ -119,6 +120,26 @@ void DataWidgetMapperTest::mappedWidgetListTest()
    */
   delete widget1;
   delete widget2;
+}
+
+void DataWidgetMapperTest::setModelThenMapWidgetsTest()
+{
+  QFAIL("Not complete");
+}
+
+void DataWidgetMapperTest::mapWidgetsThenSetModelTest()
+{
+  QFAIL("Not complete");
+}
+
+void DataWidgetMapperTest::enableEditableFlagsTest()
+{
+  QFAIL("Not complete");
+}
+
+void DataWidgetMapperTest::formatRoleTest()
+{
+  QFAIL("Not complete");
 }
 
 void DataWidgetMapperTest::setModelTest()

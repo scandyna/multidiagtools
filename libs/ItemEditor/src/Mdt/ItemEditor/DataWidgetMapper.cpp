@@ -187,15 +187,15 @@ void DataWidgetMapper::connectUserPropertyNotifySignal(QWidget*const widget, Dat
 
   // Find widget's user property notify signal
   QMetaMethod notifySignal = widget->metaObject()->userProperty().notifySignal();
-  // Get QMetaMethod of AbstractController::onDataEditionStarted()
+  // Get QMetaMethod of onDataEditionStarted()
   int slotIndex = metaObject()->indexOfSlot("onDataEditionStarted()");
   Q_ASSERT(slotIndex >= 0);
-  QMetaMethod controllerSlot = metaObject()->method(slotIndex);
+  QMetaMethod widgetMapperSlot = metaObject()->method(slotIndex);
   // (dis)connect
   if(ca == ConnectAction::Connect){
-    connect(widget, notifySignal, this, controllerSlot);
+    connect(widget, notifySignal, this, widgetMapperSlot);
   }else{
-    disconnect(widget, notifySignal, this, controllerSlot);
+    disconnect(widget, notifySignal, this, widgetMapperSlot);
   }
 }
 
