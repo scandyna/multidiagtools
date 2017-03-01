@@ -115,21 +115,6 @@ namespace Mdt{ namespace ItemEditor{
       setEditableProperty( classNameForT<T>(), editablePropertyName, reversed );
     }
 
-    /*! \brief Set editable property for a widget
-     *
-     * If a editable property name was allready set for the type (class name)
-     *  of \a widget , it will be replaced by \a editablePropertyName .
-     *
-     * If the widget is enabled while its property name is false,
-     *  set \a reversed to true.
-     *  This is for example the case for QLineEdit,
-     *  which has readOnly property (which must be false so that editing is possible).
-     *
-     * \pre \a widget must be a valid pointer
-     * \pre \a editablePropertyName must be a non empty null terminated string
-     */
-//     void setEditableProperty(const QWidget * const widget, const char * const editablePropertyName, bool reversed);
-
     /*! \brief Get editable property for a widget of type T
      *
      * Returns the editable property for a widget of type T if it was set,

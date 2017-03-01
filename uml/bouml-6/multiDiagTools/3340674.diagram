@@ -1,0 +1,31 @@
+format 211
+
+classcanvas 128002 class_ref 3048578 // QFlags
+  classdiagramsettings member_max_width 0 end
+  xyz 496 168 2005
+end
+classcanvas 128130 class_ref 3048450 // QFlag
+  classdiagramsettings member_max_width 0 end
+  xyz 223 290 2000
+end
+classcanvas 128258 class_ref 3857026 // FlagsEditXxYy
+  classdiagramsettings member_max_width 0 end
+  xyz 38 144 2000
+end
+note 128386 "Each method constexpr
+Each method templated on Enum"
+  xyzwh 99 39 2000 299 67
+relationcanvas 128642 relation_ref 4292098 // <dependency>
+  from ref 128258 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 4292226 // <dependency>
+  decenter_begin 533
+  from ref 128258 z 2006 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+line 128514 -_-_
+  from ref 128258 z 2001 to ref 128386
+end

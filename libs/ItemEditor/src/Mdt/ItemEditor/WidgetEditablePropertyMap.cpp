@@ -30,7 +30,7 @@
 #include <vector>
 #include <algorithm>
 
-#include <QDebug>
+// #include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -70,12 +70,10 @@ class WidgetEditablePropertyMapImpl
 
 WidgetEditablePropertyMapImpl::WidgetEditablePropertyMapImpl()
 {
-//   qDebug() << "+Impl: " << this;
 }
 
 WidgetEditablePropertyMapImpl::~WidgetEditablePropertyMapImpl()
 {
-//   qDebug() << "-Impl";
 }
 
 void WidgetEditablePropertyMapImpl::setEditableProperty(const char*const className, const char*const editablePropertyName, bool reversed)
@@ -157,7 +155,6 @@ int WidgetEditablePropertyMap::mInstanceCount = 0;
 
 WidgetEditablePropertyMap::WidgetEditablePropertyMap()
 {
-//   qDebug() << "+WEPM - count: " << mInstanceCount;
   if(!mImpl){
     mImpl.reset(new WidgetEditablePropertyMapImpl);
     populateWithQtWidgets();
@@ -167,20 +164,11 @@ WidgetEditablePropertyMap::WidgetEditablePropertyMap()
 
 WidgetEditablePropertyMap::~WidgetEditablePropertyMap()
 {
-//   qDebug() << "-WEPM - count: " << mInstanceCount;
   if(mInstanceCount == 1){
     mImpl.reset();
   }
   --mInstanceCount;
 }
-
-// void WidgetEditablePropertyMap::setEditableProperty(const QWidget*const widget, const char*const editablePropertyName, bool reversed)
-// {
-//   Q_ASSERT(widget != nullptr);
-//   Q_ASSERT(editablePropertyName != nullptr);
-// 
-//   
-// }
 
 WidgetEditableProperty WidgetEditablePropertyMap::getEditableProperty(const QWidget*const widget) const
 {
@@ -218,8 +206,6 @@ void WidgetEditablePropertyMap::addEditableProperty(const char*const className, 
   Q_ASSERT(className != nullptr);
   Q_ASSERT(editablePropertyName != nullptr);
 
-//   qDebug() << "WEPM +ADD property for class " << className;
-
   mImpl->addEditableProperty(className, editablePropertyName, reversed);
 }
 
@@ -227,8 +213,6 @@ WidgetEditableProperty WidgetEditablePropertyMap::getEditableProperty(const char
 {
   Q_ASSERT(className != nullptr);
 
-//   qDebug() << "WEPM getEditableProperty for class " << className;
-  
   return mImpl->getEditableProperty(className);
 }
 

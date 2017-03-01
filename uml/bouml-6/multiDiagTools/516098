@@ -1,6 +1,6 @@
 format 211
 "ItemModel" // Mdt::ItemModel
-  revision 64
+  revision 65
   modified_by 2 "philippe"
   // class settings
   
@@ -348,6 +348,111 @@ ${inlines}
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+    end
+  end
+
+  classview 1755266 "Flags"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 3340674 "FlagsEdit"
+      classdiagramsettings member_max_width 0 end
+      size A4
+    end
+
+    class 3857026 "FlagsEditXxYy"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit}
+{
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      operation 5398914 "setFlag"
+	class_operation cpp_inline public explicit_return_type "void"
+	nparams 2
+	  param in name "enum" type class_ref 3048578 // QFlags
+	  param in name "flag" type class_ref 3048450 // QFlag
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5399170 "setFlags"
+	class_operation cpp_inline public explicit_return_type "void"
+	nparams 3
+	  param in name "enum" type class_ref 3048578 // QFlags
+	  param in name "flag1" type class_ref 3048450 // QFlag
+	  param in name "flagN" type class_ref 3048450 // QFlag
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}, const ${t2} & ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 5399042 "unsetFlag"
+	class_operation cpp_inline public explicit_return_type "void"
+	nparams 2
+	  param in name "enum" type class_ref 3048578 // QFlags
+	  param in name "flag" type class_ref 3048450 // QFlag
+	cpp_decl "  ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}, const ${t1} & ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}
+{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 4318082 // <dependency>
+	relation 4292098 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 4318082 // <dependency>
+	  b parent class_ref 3048450 // QFlag
+      end
+
+      classrelation 4318210 // <dependency>
+	relation 4292226 -_->
+	  a public
+	    cpp default "#include in source"
+	    classrelation_ref 4318210 // <dependency>
+	  b parent class_ref 3048578 // QFlags
       end
     end
   end
@@ -4772,7 +4877,6 @@ ${inlines}
 	
 	
       end
-
     end
   end
 end
