@@ -189,7 +189,7 @@ namespace Mdt{ namespace ItemEditor{
 
     /*! \brief Update editor
      */
-    void updateMappedWidget(QWidget * const widget, int column, bool hasReadOnlyProperty);
+    void updateMappedWidget(QWidget * const widget, int column);
 
     /*! \brief Update all mapped widgets
      */

@@ -22,11 +22,11 @@
 
 namespace Mdt{ namespace ItemEditor{
 
-void MappedWidgetList::addWidget(QWidget* widget, int column, bool hasReadOnlyProperty)
+void MappedWidgetList::addWidget(QWidget* widget, int column)
 {
   Q_ASSERT(widget != nullptr);
   Q_ASSERT(column >= 0);
-  mWidgetList.emplace_back(widget, column, hasReadOnlyProperty);
+  mWidgetList.emplace_back(widget, column);
 }
 
 void MappedWidgetList::clear()

@@ -88,12 +88,10 @@ void DataWidgetMapper::addMapping(QWidget* widget, int column)
   Q_ASSERT(column >= 0);
   Q_ASSERT(widget->metaObject() != nullptr);
 
-  const bool hasReadOnlyProperty = (widget->metaObject()->indexOfProperty("readOnly") >= 0);
-  mMappedWidgetList.addWidget(widget, column, hasReadOnlyProperty);
-  
+  mMappedWidgetList.addWidget(widget, column);
   connectUserPropertyNotifySignal(widget, ConnectAction::Connect);
   widget->installEventFilter(mDelegate);
-  updateMappedWidget(widget, column, hasReadOnlyProperty);
+  updateMappedWidget(widget, column);
 }
 
 void DataWidgetMapper::clearMapping()
@@ -103,7 +101,7 @@ void DataWidgetMapper::clearMapping()
       auto *widget = mw.widget();
       if(widget != nullptr){
         connectUserPropertyNotifySignal(widget, ConnectAction::Disctonnect);
-        updateMappedWidget(widget, -1, mw.hasReadOnlyProperty());
+        updateMappedWidget(widget, -1);
         widget->setEnabled(true);
         widget->removeEventFilter(mDelegate);
       }
@@ -170,7 +168,7 @@ void DataWidgetMapper::onModelDataChanged(const QModelIndex & topLeft, const QMo
     // Update current widget if its column is in range topLeft, bottomRight
     int column = mw.column();
     if( (column >= topLeft.column()) && (column <= bottomRight.column()) ){
-      updateMappedWidget(mw.widget(), column, mw.hasReadOnlyProperty());
+      updateMappedWidget(mw.widget(), column);
     }
   }
 }
@@ -200,7 +198,7 @@ void DataWidgetMapper::connectUserPropertyNotifySignal(QWidget*const widget, Dat
   }
 }
 
-void DataWidgetMapper::updateMappedWidget(QWidget*const widget, int column, bool hasReadOnlyProperty)
+void DataWidgetMapper::updateMappedWidget(QWidget*const widget, int column)
 {
   Q_ASSERT(!mModel.isNull());
   Q_ASSERT(!mDelegate.isNull());
@@ -223,13 +221,6 @@ void DataWidgetMapper::updateMappedWidget(QWidget*const widget, int column, bool
     }else{
       widget->setEnabled(editable);
     }
-//     bool readOnly = !(mModel->flags(index) & Qt::ItemIsEditable);
-//     if(hasReadOnlyProperty){
-//       widget->setEnabled(true);
-//       widget->setProperty("readOnly", readOnly);
-//     }else{
-//       widget->setEnabled(!readOnly);
-//     }
   }else{
     widget->setEnabled(false);
   }
@@ -239,7 +230,7 @@ void DataWidgetMapper::updateMappedWidget(QWidget*const widget, int column, bool
 void DataWidgetMapper::updateAllMappedWidgets()
 {
   for(const auto & mw : mMappedWidgetList){
-    updateMappedWidget(mw.widget(), mw.column(), mw.hasReadOnlyProperty());
+    updateMappedWidget(mw.widget(), mw.column());
   }
 }
 
