@@ -22,6 +22,7 @@
 #define MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_H
 
 #include "MappedWidgetList.h"
+#include "WidgetEditablePropertyMap.h"
 #include <QAbstractItemDelegate>
 #include <QObject>
 #include <QPointer>
@@ -208,6 +209,7 @@ namespace Mdt{ namespace ItemEditor{
     QPointer<QAbstractItemModel> mModel;
     QPointer<QAbstractItemDelegate> mDelegate;
     MappedWidgetList mMappedWidgetList;
+    WidgetEditablePropertyMap mEditablePropertyMap;
   };
 
 }} // namespace Mdt{ namespace ItemEditor{

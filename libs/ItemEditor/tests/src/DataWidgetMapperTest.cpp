@@ -24,6 +24,7 @@
 #include "Mdt/ItemEditor/DataWidgetMapper.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
 #include <QSignalSpy>
+#include <QScopedPointer>
 #include <QModelIndex>
 #include <QLineEdit>
 #include <QSpinBox>
@@ -130,6 +131,76 @@ void DataWidgetMapperTest::setModelThenMapWidgetsTest()
 void DataWidgetMapperTest::mapWidgetsThenSetModelTest()
 {
   QFAIL("Not complete");
+}
+
+void DataWidgetMapperTest::editableFlagsTest()
+{
+  /*
+   * DataWidgetMapper uses WidgetEditablePropertyMap,
+   * so we don't have to check every widgets here
+   */
+  DataWidgetMapper mapper;
+  VariantTableModel model;
+  QModelIndex index;
+  QLineEdit le;
+  QComboBox cb;
+  /*
+   * Setup
+   */
+  model.populate(1, 2);
+  mapper.setModel(&model);
+  mapper.addMapping(&le, 0);
+  mapper.addMapping(&cb, 1);
+  mapper.setCurrentRow(0);
+  /*
+   * Initial state
+   */
+  QVERIFY(!le.isReadOnly());
+  QVERIFY(cb.isEditable());
+  QVERIFY(le.isEnabled());
+  QVERIFY(cb.isEnabled());
+  /*
+   * Unset editable flag
+   */
+  // Line edit
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, false);
+  mapper.setCurrentRow(0);
+  QVERIFY(le.isReadOnly());
+  QVERIFY(cb.isEditable());
+  QVERIFY(le.isEnabled());
+  QVERIFY(cb.isEnabled());
+  // Combobox
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, false);
+  mapper.setCurrentRow(0);
+  QVERIFY(le.isReadOnly());
+  QVERIFY(!cb.isEditable());
+  QVERIFY(le.isEnabled());
+  QVERIFY(cb.isEnabled());
+  /*
+   * Set editable flag (again)
+   */
+  // Line edit
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, true);
+  mapper.setCurrentRow(0);
+  QVERIFY(!le.isReadOnly());
+  QVERIFY(!cb.isEditable());
+  QVERIFY(le.isEnabled());
+  QVERIFY(cb.isEnabled());
+  // Combobox
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, true);
+  mapper.setCurrentRow(0);
+  QVERIFY(!le.isReadOnly());
+  QVERIFY(cb.isEditable());
+  QVERIFY(le.isEnabled());
+  QVERIFY(cb.isEnabled());
 }
 
 void DataWidgetMapperTest::enableEditableFlagsTest()
@@ -528,6 +599,8 @@ void DataWidgetMapperTest::editStartDoneSignalTest()
   QFETCH(QWidget*, editor0);
   QFETCH(QWidget*, editor1);
 
+  QScopedPointer<QWidget> editor0Gard(editor0);
+  QScopedPointer<QWidget> editor1Gard(editor1);
   QSignalSpy editStartedSpy(&mapper, &DataWidgetMapper::dataEditionStarted);
   QVERIFY(editStartedSpy.isValid());
   QSignalSpy editDoneSpy(&mapper, &DataWidgetMapper::dataEditionDone);
@@ -612,8 +685,8 @@ void DataWidgetMapperTest::editStartDoneSignalTest()
   QCOMPARE(editStartedSpy.count(), 0);
   QCOMPARE(editDoneSpy.count(), 0);
 
-  delete editor0;
-  delete editor1;
+//   delete editor0;
+//   delete editor1;
 }
 
 void DataWidgetMapperTest::editStartDoneSignalTest_data()
@@ -660,142 +733,134 @@ void DataWidgetMapperTest::editStartDoneSignalTest_data()
   QTest::newRow("QTextEdit") << widget0 << widget1;
 }
 
-void DataWidgetMapperTest::modelItemEditableFlagWidgetsWithRoTest()
-{
-  using Mdt::ItemEditor::DataWidgetMapper;
+// void DataWidgetMapperTest::modelItemEditableFlagWidgetsWithRoTest()
+// {
+//   using Mdt::ItemEditor::DataWidgetMapper;
+// 
+//   DataWidgetMapper mapper;
+//   VariantTableModel model;
+//   QModelIndex index;
+//   QFETCH(QWidget*, editor0);
+//   QFETCH(QWidget*, editor1);
+// 
+//   QScopedPointer<QWidget> editor0Gard(editor0);
+//   QScopedPointer<QWidget> editor1Gard(editor1);
+//   /*
+//    * Setup
+//    */
+//   model.populate(1, 2);
+//   mapper.setModel(&model);
+//   mapper.addMapping(editor0, 0);
+//   mapper.addMapping(editor1, 1);
+//   mapper.setCurrentRow(0);
+//   /*
+//    * Initial state
+//    */
+//   QCOMPARE(editor0->property("readOnly"), QVariant(false));
+//   QCOMPARE(editor1->property("readOnly"), QVariant(false));
+//   /*
+//    * Unset editable flag
+//    */
+//   index = model.index(0, 0);
+//   QVERIFY(index.isValid());
+//   model.setItemEditable(index, false);
+//   mapper.setCurrentRow(0);
+//   QCOMPARE(editor0->property("readOnly"), QVariant(true));
+//   QCOMPARE(editor1->property("readOnly"), QVariant(false));
+//   /*
+//    * Set editable flag (again)
+//    */
+//   model.setItemEditable(index, true);
+//   mapper.setCurrentRow(0);
+//   QCOMPARE(editor0->property("readOnly"), QVariant(false));
+//   QCOMPARE(editor1->property("readOnly"), QVariant(false));
+// }
 
-  DataWidgetMapper mapper;
-  VariantTableModel model;
-  QModelIndex index;
-  QFETCH(QWidget*, editor0);
-  QFETCH(QWidget*, editor1);
+// void DataWidgetMapperTest::modelItemEditableFlagWidgetsWithRoTest_data()
+// {
+//   QTest::addColumn<QWidget*>("editor0");
+//   QTest::addColumn<QWidget*>("editor1");
+// 
+//   QWidget *widget0, *widget1;
+// 
+//   widget0 = new QLineEdit;
+//   widget1 = new QLineEdit;
+//   QTest::newRow("QLineEdit") << widget0 << widget1;
+// 
+//   widget0 = new QSpinBox;
+//   widget1 = new QSpinBox;
+//   QTest::newRow("QSpinBox") << widget0 << widget1;
+// 
+//   widget0 = new QPlainTextEdit;
+//   widget1 = new QPlainTextEdit;
+//   QTest::newRow("QPlainTextEdit") << widget0 << widget1;
+// 
+//   widget0 = new QTextEdit;
+//   widget1 = new QTextEdit;
+//   QTest::newRow("QTextEdit") << widget0 << widget1;
+// }
 
-  /*
-   * Setup
-   */
-  model.populate(1, 2);
-  mapper.setModel(&model);
-  mapper.addMapping(editor0, 0);
-  mapper.addMapping(editor1, 1);
-  mapper.setCurrentRow(0);
-  /*
-   * Initial state
-   */
-  QCOMPARE(editor0->property("readOnly"), QVariant(false));
-  QCOMPARE(editor1->property("readOnly"), QVariant(false));
-  /*
-   * Unset editable flag
-   */
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  model.setItemEditable(index, false);
-  mapper.setCurrentRow(0);
-  QCOMPARE(editor0->property("readOnly"), QVariant(true));
-  QCOMPARE(editor1->property("readOnly"), QVariant(false));
-  /*
-   * Set editable flag (again)
-   */
-  model.setItemEditable(index, true);
-  mapper.setCurrentRow(0);
-  QCOMPARE(editor0->property("readOnly"), QVariant(false));
-  QCOMPARE(editor1->property("readOnly"), QVariant(false));
-  /*
-   * Cleanup
-   */
-  delete editor0;
-  delete editor1;
-}
+// void DataWidgetMapperTest::modelItemEditableFlagWidgetsWithoutRoTest()
+// {
+//   DataWidgetMapper mapper;
+//   VariantTableModel model;
+//   QModelIndex index;
+//   QFETCH(QWidget*, editor0);
+//   QFETCH(QWidget*, editor1);
+// 
+//   QScopedPointer<QWidget> editor0Gard(editor0);
+//   QScopedPointer<QWidget> editor1Gard(editor1);
+//   /*
+//    * Setup
+//    */
+//   model.populate(1, 2);
+//   mapper.setModel(&model);
+//   mapper.addMapping(editor0, 0);
+//   mapper.addMapping(editor1, 1);
+//   mapper.setCurrentRow(0);
+//   /*
+//    * Initial state
+//    */
+//   QVERIFY(editor0->isEnabled());
+//   QVERIFY(editor1->isEnabled());
+//   /*
+//    * Unset editable flag
+//    */
+//   index = model.index(0, 0);
+//   QVERIFY(index.isValid());
+//   model.setItemEditable(index, false);
+//   mapper.setCurrentRow(0);
+//   QVERIFY(!editor0->isEnabled());
+//   QVERIFY(editor1->isEnabled());
+//   /*
+//    * Set editable flag (again)
+//    */
+//   model.setItemEditable(index, true);
+//   mapper.setCurrentRow(0);
+//   QVERIFY(editor0->isEnabled());
+//   QVERIFY(editor1->isEnabled());
+// }
 
-void DataWidgetMapperTest::modelItemEditableFlagWidgetsWithRoTest_data()
-{
-  QTest::addColumn<QWidget*>("editor0");
-  QTest::addColumn<QWidget*>("editor1");
-
-  QWidget *widget0, *widget1;
-
-  widget0 = new QLineEdit;
-  widget1 = new QLineEdit;
-  QTest::newRow("QLineEdit") << widget0 << widget1;
-
-  widget0 = new QSpinBox;
-  widget1 = new QSpinBox;
-  QTest::newRow("QSpinBox") << widget0 << widget1;
-
-  widget0 = new QPlainTextEdit;
-  widget1 = new QPlainTextEdit;
-  QTest::newRow("QPlainTextEdit") << widget0 << widget1;
-
-  widget0 = new QTextEdit;
-  widget1 = new QTextEdit;
-  QTest::newRow("QTextEdit") << widget0 << widget1;
-}
-
-void DataWidgetMapperTest::modelItemEditableFlagWidgetsWithoutRoTest()
-{
-  using Mdt::ItemEditor::DataWidgetMapper;
-
-  DataWidgetMapper mapper;
-  VariantTableModel model;
-  QModelIndex index;
-  QFETCH(QWidget*, editor0);
-  QFETCH(QWidget*, editor1);
-
-  /*
-   * Setup
-   */
-  model.populate(1, 2);
-  mapper.setModel(&model);
-  mapper.addMapping(editor0, 0);
-  mapper.addMapping(editor1, 1);
-  mapper.setCurrentRow(0);
-  /*
-   * Initial state
-   */
-  QVERIFY(editor0->isEnabled());
-  QVERIFY(editor1->isEnabled());
-  /*
-   * Unset editable flag
-   */
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  model.setItemEditable(index, false);
-  mapper.setCurrentRow(0);
-  QVERIFY(!editor0->isEnabled());
-  QVERIFY(editor1->isEnabled());
-  /*
-   * Set editable flag (again)
-   */
-  model.setItemEditable(index, true);
-  mapper.setCurrentRow(0);
-  QVERIFY(editor0->isEnabled());
-  QVERIFY(editor1->isEnabled());
-  /*
-   * Cleanup
-   */
-  delete editor0;
-  delete editor1;
-}
-
-void DataWidgetMapperTest::modelItemEditableFlagWidgetsWithoutRoTest_data()
-{
-  QTest::addColumn<QWidget*>("editor0");
-  QTest::addColumn<QWidget*>("editor1");
-
-  QWidget *widget0, *widget1;
-
-  QComboBox *cb;
-  cb = new QComboBox;
-  cb->addItem("1");
-  cb->addItem("2");
-  cb->addItem("3");
-  widget0 = cb;
-  cb = new QComboBox;
-  cb->addItem("1");
-  cb->addItem("2");
-  cb->addItem("3");
-  widget1 = cb;
-  QTest::newRow("QComboBox") << widget0 << widget1;
-}
+// void DataWidgetMapperTest::modelItemEditableFlagWidgetsWithoutRoTest_data()
+// {
+//   QTest::addColumn<QWidget*>("editor0");
+//   QTest::addColumn<QWidget*>("editor1");
+// 
+//   QWidget *widget0, *widget1;
+// 
+//   QComboBox *cb;
+//   cb = new QComboBox;
+//   cb->addItem("1");
+//   cb->addItem("2");
+//   cb->addItem("3");
+//   widget0 = cb;
+//   cb = new QComboBox;
+//   cb->addItem("1");
+//   cb->addItem("2");
+//   cb->addItem("3");
+//   widget1 = cb;
+//   QTest::newRow("QComboBox") << widget0 << widget1;
+// }
 
 void DataWidgetMapperTest::setDataFromModelQLineEditTest()
 {

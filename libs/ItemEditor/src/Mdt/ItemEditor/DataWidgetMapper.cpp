@@ -27,7 +27,7 @@
 #include <QMetaMethod>
 #include <QMetaProperty>
 
-// #include <QDebug>
+#include <QDebug>
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -90,6 +90,7 @@ void DataWidgetMapper::addMapping(QWidget* widget, int column)
 
   const bool hasReadOnlyProperty = (widget->metaObject()->indexOfProperty("readOnly") >= 0);
   mMappedWidgetList.addWidget(widget, column, hasReadOnlyProperty);
+  
   connectUserPropertyNotifySignal(widget, ConnectAction::Connect);
   widget->installEventFilter(mDelegate);
   updateMappedWidget(widget, column, hasReadOnlyProperty);
@@ -212,17 +213,23 @@ void DataWidgetMapper::updateMappedWidget(QWidget*const widget, int column, bool
   mDelegate->setEditorData(widget, index);
   /*
    * On invalid index, widget must allways be disabled,
-   * else, if editable flag is not set, and widget has not readOnly property,
+   * else, if editable flag is not set, and widget has not editable property,
    * it is also disabled
    */
   if(index.isValid()){
-    bool readOnly = !(mModel->flags(index) & Qt::ItemIsEditable);
-    if(hasReadOnlyProperty){
+    const bool editable = (mModel->flags(index) & Qt::ItemIsEditable);
+    if(mEditablePropertyMap.setWidgetEditable(widget, editable)){
       widget->setEnabled(true);
-      widget->setProperty("readOnly", readOnly);
     }else{
-      widget->setEnabled(!readOnly);
+      widget->setEnabled(editable);
     }
+//     bool readOnly = !(mModel->flags(index) & Qt::ItemIsEditable);
+//     if(hasReadOnlyProperty){
+//       widget->setEnabled(true);
+//       widget->setProperty("readOnly", readOnly);
+//     }else{
+//       widget->setEnabled(!readOnly);
+//     }
   }else{
     widget->setEnabled(false);
   }

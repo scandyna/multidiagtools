@@ -38,6 +38,7 @@ class DataWidgetMapperTest : public QObject
 
   void setModelThenMapWidgetsTest();
   void mapWidgetsThenSetModelTest();
+  void editableFlagsTest();
   void enableEditableFlagsTest();
   void formatRoleTest();
 
@@ -49,10 +50,10 @@ class DataWidgetMapperTest : public QObject
   void insertFromModelWidgetTest();
   void editStartDoneSignalTest();
   void editStartDoneSignalTest_data();
-  void modelItemEditableFlagWidgetsWithRoTest();
-  void modelItemEditableFlagWidgetsWithRoTest_data();
-  void modelItemEditableFlagWidgetsWithoutRoTest();
-  void modelItemEditableFlagWidgetsWithoutRoTest_data();
+//   void modelItemEditableFlagWidgetsWithRoTest();
+//   void modelItemEditableFlagWidgetsWithRoTest_data();
+//   void modelItemEditableFlagWidgetsWithoutRoTest();
+//   void modelItemEditableFlagWidgetsWithoutRoTest_data();
   void setDataFromModelQLineEditTest();
   void submitDataQLineEditTest();
   void revertDataQLineEditTest();
