@@ -61,13 +61,17 @@ namespace Mdt{ namespace ItemEditor{
      *
      * After model was set, current row will be set to -1.
      *
+     * If widgets have allready been mapped with a old model,
+     *  they will be remapped to \a model .
+     *  This gives some flexibility on setup order, and allows to insert, for example, proxy models,
+     *  but please not that remapping is simply done by column, and offers no garantie about coherence.
+     *
      * \note Because model can be shared with several objects (f.ex. other views),
      *        the mapper does not take ownership of it (it will not delete it).
-     * \pre No widget must be mapped when setting a model. If widget has been mapped, call clearMapping() first.
-     *       Which widget must be mapped with which column is only known from application developper,
-     *       this is the reason why no automatic remapping is done when changing the model.
      * \pre model must be a valid pointer
      * \sa model()
+     * \sa clearMapping()
+     * \sa addMapping()
      */
     void setModel(QAbstractItemModel *model);
 
@@ -98,11 +102,10 @@ namespace Mdt{ namespace ItemEditor{
      *  using this mapper's delegate.
      *  If this mapper refers to a invalid index, widget will be disabled.
      *
-     * If widget has a readOnly property, it will be used if model's Qt::ItemIsEditable
-     *  flag is not present for current index, else widget will be disabled in this case.
+     * If \a widget exists in WidgetEditablePropertyMap, it will follow Qt::ItemIsEditable flag from the model.
+     *  Most Qt edition widgets (such as QLineEdit) are allready known by WidgetEditablePropertyMap.
      *
      * \note widget will not display model data until setCurrentRow() was called
-     * \pre model must be set before mapping any widget
      * \pre widget pointer must be valid
      * \sa setModel()
      */

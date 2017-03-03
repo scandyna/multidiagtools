@@ -117,10 +117,344 @@ void DataWidgetMapperTest::mappedWidgetListTest()
 
 void DataWidgetMapperTest::setModelThenMapWidgetsTest()
 {
-  QFAIL("Not complete");
+  DataWidgetMapper mapper;
+  VariantTableModel model;
+  QLineEdit edit0, edit1;
+
+  QSignalSpy rowChangedSpy(&mapper, &DataWidgetMapper::currentRowChanged);
+  QVERIFY(rowChangedSpy.isValid());
+  QSignalSpy editStartedSpy(&mapper, &DataWidgetMapper::dataEditionStarted);
+  QVERIFY(editStartedSpy.isValid());
+  /*
+   * Initial state
+   */
+  QVERIFY(mapper.model() == nullptr);
+  QVERIFY(mapper.itemDelegate() != nullptr);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  /*
+   * Setup and set model
+   */
+  model.resize(1, 2);
+  model.populateColumn(0, {"1"});
+  model.populateColumn(1, {"A"});
+  mapper.setModel(&model);
+  QVERIFY(mapper.model() == &model);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  /*
+   * Map widgets
+   */
+  mapper.addMapping(&edit0, 0);
+  mapper.addMapping(&edit1, 1);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  QVERIFY(!edit0.isEnabled());
+  QVERIFY(!edit1.isEnabled());
+  QVERIFY(edit0.text().isEmpty());
+  QVERIFY(edit1.text().isEmpty());
+  /*
+   * Check that mapping works
+   */
+  mapper.setCurrentRow(0);
+  QCOMPARE(mapper.currentRow(), 0);
+  QCOMPARE(rowChangedSpy.count(), 1);
+  QCOMPARE(editStartedSpy.count(), 0);
+  QVERIFY(edit0.isEnabled());
+  QVERIFY(edit1.isEnabled());
+  QCOMPARE(edit0.text(), QString("1"));
+  QCOMPARE(edit1.text(), QString("A"));
+  rowChangedSpy.clear();
+  /*
+   * Clear mapping
+   */
+  mapper.clearMapping();
+  QVERIFY(edit0.isEnabled());
+  QVERIFY(edit1.isEnabled());
+  QVERIFY(edit0.text().isEmpty());
+  QVERIFY(edit1.text().isEmpty());
 }
 
 void DataWidgetMapperTest::mapWidgetsThenSetModelTest()
+{
+  DataWidgetMapper mapper;
+  VariantTableModel model;
+  QLineEdit edit0, edit1;
+
+  QSignalSpy rowChangedSpy(&mapper, &DataWidgetMapper::currentRowChanged);
+  QVERIFY(rowChangedSpy.isValid());
+  QSignalSpy editStartedSpy(&mapper, &DataWidgetMapper::dataEditionStarted);
+  QVERIFY(editStartedSpy.isValid());
+  /*
+   * Initial state
+   */
+  QVERIFY(mapper.model() == nullptr);
+  QVERIFY(mapper.itemDelegate() != nullptr);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  /*
+   * Map widgets
+   */
+  mapper.addMapping(&edit0, 0);
+  mapper.addMapping(&edit1, 1);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  QVERIFY(!edit0.isEnabled());
+  QVERIFY(!edit1.isEnabled());
+  QVERIFY(edit0.text().isEmpty());
+  QVERIFY(edit1.text().isEmpty());
+  /*
+   * Setup and set model
+   */
+  model.resize(1, 2);
+  model.populateColumn(0, {"1"});
+  model.populateColumn(1, {"A"});
+  mapper.setModel(&model);
+  QVERIFY(mapper.model() == &model);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  /*
+   * Check that mapping works
+   */
+  mapper.setCurrentRow(0);
+  QCOMPARE(mapper.currentRow(), 0);
+  QCOMPARE(rowChangedSpy.count(), 1);
+  QCOMPARE(editStartedSpy.count(), 0);
+  QVERIFY(edit0.isEnabled());
+  QVERIFY(edit1.isEnabled());
+  QCOMPARE(edit0.text(), QString("1"));
+  QCOMPARE(edit1.text(), QString("A"));
+  rowChangedSpy.clear();
+}
+
+void DataWidgetMapperTest::changeModelTest()
+{
+  DataWidgetMapper mapper;
+  QLineEdit edit0, edit1;
+
+  QSignalSpy rowChangedSpy(&mapper, &DataWidgetMapper::currentRowChanged);
+  QVERIFY(rowChangedSpy.isValid());
+  QSignalSpy editStartedSpy(&mapper, &DataWidgetMapper::dataEditionStarted);
+  QVERIFY(editStartedSpy.isValid());
+  /*
+   * Initial state
+   */
+  QVERIFY(mapper.model() == nullptr);
+  QVERIFY(mapper.itemDelegate() != nullptr);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  /*
+   * Set a empty model
+   */
+  VariantTableModel model0;
+  QCOMPARE(model0.rowCount(), 0);
+  mapper.setModel(&model0);
+  QVERIFY(mapper.model() == &model0);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  /*
+   * Map widgets
+   */
+  mapper.addMapping(&edit0, 0);
+  mapper.addMapping(&edit1, 1);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  QVERIFY(!edit0.isEnabled());
+  QVERIFY(!edit1.isEnabled());
+  QVERIFY(edit0.text().isEmpty());
+  QVERIFY(edit1.text().isEmpty());
+  /*
+   * Setup and set model
+   */
+  VariantTableModel model1;
+  model1.resize(1, 2);
+  model1.populateColumn(0, {"1"});
+  model1.populateColumn(1, {"A"});
+  mapper.setModel(&model1);
+  QVERIFY(mapper.model() == &model1);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  /*
+   * Check that mapping works
+   */
+  mapper.setCurrentRow(0);
+  QCOMPARE(mapper.currentRow(), 0);
+  QCOMPARE(rowChangedSpy.count(), 1);
+  QCOMPARE(editStartedSpy.count(), 0);
+  QVERIFY(edit0.isEnabled());
+  QVERIFY(edit1.isEnabled());
+  QCOMPARE(edit0.text(), QString("1"));
+  QCOMPARE(edit1.text(), QString("A"));
+  rowChangedSpy.clear();
+  /*
+   * Setup and set a other model
+   */
+  VariantTableModel model2;
+  model2.resize(1, 2);
+  model2.populateColumn(0, {"2"});
+  model2.populateColumn(1, {"B"});
+  mapper.setModel(&model2);
+  QVERIFY(mapper.model() == &model2);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 1);
+  QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), -1);
+  QCOMPARE(editStartedSpy.count(), 0);
+  QVERIFY(!edit0.isEnabled());
+  QVERIFY(!edit1.isEnabled());
+  QVERIFY(edit0.text().isEmpty());
+  QVERIFY(edit1.text().isEmpty());
+  /*
+   * Check that mapping works
+   */
+  mapper.setCurrentRow(0);
+  QCOMPARE(mapper.currentRow(), 0);
+  QCOMPARE(rowChangedSpy.count(), 1);
+  QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), 0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  QVERIFY(edit0.isEnabled());
+  QVERIFY(edit1.isEnabled());
+  QCOMPARE(edit0.text(), QString("2"));
+  QCOMPARE(edit1.text(), QString("B"));
+  rowChangedSpy.clear();
+  /*
+   * Setup and set a other model with less columns that widgets
+   */
+  VariantTableModel model3;
+  model3.resize(1, 1);
+  model3.populateColumn(0, {"3"});
+  mapper.setModel(&model3);
+  QVERIFY(mapper.model() == &model3);
+  QCOMPARE(mapper.currentRow(), -1);
+  QVERIFY(!edit0.isEnabled());
+  QVERIFY(!edit1.isEnabled());
+  QVERIFY(edit0.text().isEmpty());
+  QVERIFY(edit1.text().isEmpty());
+  /*
+   * Check that mapping works
+   */
+  mapper.setCurrentRow(0);
+  QCOMPARE(mapper.currentRow(), 0);
+  QVERIFY(edit0.isEnabled());
+  QVERIFY(!edit1.isEnabled());
+  QCOMPARE(edit0.text(), QString("3"));
+  QVERIFY(edit1.text().isEmpty());
+  rowChangedSpy.clear();
+  /*
+   * Clear mapping
+   */
+  mapper.clearMapping();
+  QVERIFY(edit0.isEnabled());
+  QVERIFY(edit1.isEnabled());
+  QVERIFY(edit0.text().isEmpty());
+  QVERIFY(edit1.text().isEmpty());
+}
+
+void DataWidgetMapperTest::modelResetTest()
+{
+  DataWidgetMapper mapper;
+  QLineEdit edit0, edit1;
+
+  QSignalSpy rowChangedSpy(&mapper, &DataWidgetMapper::currentRowChanged);
+  QVERIFY(rowChangedSpy.isValid());
+  QSignalSpy editStartedSpy(&mapper, &DataWidgetMapper::dataEditionStarted);
+  QVERIFY(editStartedSpy.isValid());
+  /*
+   * Initial state
+   */
+  QVERIFY(mapper.model() == nullptr);
+  QVERIFY(mapper.itemDelegate() != nullptr);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  /*
+   * Set model
+   */
+  VariantTableModel model;
+  mapper.setModel(&model);
+  QVERIFY(mapper.model() == &model);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  /*
+   * Map widgets
+   */
+  mapper.addMapping(&edit0, 0);
+  mapper.addMapping(&edit1, 1);
+  QVERIFY(!edit0.isEnabled());
+  QVERIFY(!edit1.isEnabled());
+  QVERIFY(edit0.text().isEmpty());
+  QVERIFY(edit1.text().isEmpty());
+  /*
+   * Populate model with 1 column
+   *
+   * Note: widget mapper allways goes to row -1 after a model reset.
+   *       The controller then set a appropriate current row.
+   */
+  model.populate(3, 1);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 0);
+  QCOMPARE(editStartedSpy.count(), 0);
+  QVERIFY(!edit0.isEnabled());
+  QVERIFY(!edit1.isEnabled());
+  QVERIFY(edit0.text().isEmpty());
+  QVERIFY(edit1.text().isEmpty());
+  // Now, change to first row
+  mapper.setCurrentRow(0);
+  QCOMPARE(mapper.currentRow(), 0);
+  // Check that current row changed was signaled
+  QCOMPARE(rowChangedSpy.count(), 1);
+  QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), 0);
+  // Check that no edition started was signaled
+  QCOMPARE(editStartedSpy.count(), 0);
+  // Check editors state
+  QVERIFY(edit0.isEnabled());
+  QVERIFY(!edit1.isEnabled());
+  QCOMPARE(edit0.text(), model.data(0, 0).toString());
+  QVERIFY(edit1.text().isEmpty());
+  /*
+   * Populate model with 2 columns
+   *
+   * Note: widget mapper allways goes to row -1 after a model reset.
+   *       The controller then set a appropriate current row.
+   */
+  model.populate(3, 2);
+  QCOMPARE(mapper.currentRow(), -1);
+  QCOMPARE(rowChangedSpy.count(), 1);
+  QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), -1);
+  QCOMPARE(editStartedSpy.count(), 0);
+  // Go to first row
+  mapper.setCurrentRow(0);
+  // Check that current row changed was signaled
+  QCOMPARE(rowChangedSpy.count(), 1);
+  QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), 0);
+  // Check that no edition started was signaled
+  QCOMPARE(editStartedSpy.count(), 0);
+  // Check that editors state was updated
+  QVERIFY(edit0.isEnabled());
+  QVERIFY(edit1.isEnabled());
+  QCOMPARE(edit0.text(), model.data(0, 0).toString());
+  QCOMPARE(edit1.text(), model.data(0, 1).toString());
+  /*
+   * Clear mapping
+   */
+  mapper.clearMapping();
+  QVERIFY(edit0.isEnabled());
+  QVERIFY(edit1.isEnabled());
+  QVERIFY(edit0.text().isEmpty());
+  QVERIFY(edit1.text().isEmpty());
+}
+
+void DataWidgetMapperTest::changeMappingTest()
 {
   QFAIL("Not complete");
 }
@@ -205,143 +539,143 @@ void DataWidgetMapperTest::formatRoleTest()
   QFAIL("Not complete");
 }
 
-void DataWidgetMapperTest::setModelTest()
-{
-  DataWidgetMapper mapper;
-  VariantTableModel model;
-  QModelIndex index;
-  QLineEdit edit0, edit1;
-
-  QSignalSpy rowChangedSpy(&mapper, &DataWidgetMapper::currentRowChanged);
-  QVERIFY(rowChangedSpy.isValid());
-  QSignalSpy editStartedSpy(&mapper, &DataWidgetMapper::dataEditionStarted);
-  QVERIFY(editStartedSpy.isValid());
-  /*
-   * Initial state
-   */
-  QVERIFY(mapper.model() == nullptr);
-  QVERIFY(mapper.itemDelegate() != nullptr);
-  QCOMPARE(mapper.currentRow(), -1);
-  QCOMPARE(rowChangedSpy.count(), 0);
-  QCOMPARE(editStartedSpy.count(), 0);
-  /*
-   * Set a empty model
-   */
-  QCOMPARE(model.rowCount(), 0);
-  mapper.setModel(&model);
-  QVERIFY(mapper.model() == &model);
-  QCOMPARE(mapper.currentRow(), -1);
-  QCOMPARE(rowChangedSpy.count(), 0);
-  QCOMPARE(editStartedSpy.count(), 0);
-  /*
-   * Map widgets
-   */
-  mapper.addMapping(&edit0, 0);
-  mapper.addMapping(&edit1, 1);
-  QVERIFY(!edit0.isEnabled());
-  QVERIFY(!edit1.isEnabled());
-  QVERIFY(edit0.text().isEmpty());
-  QVERIFY(edit1.text().isEmpty());
-  /*
-   * Populate model with 1 column
-   *
-   * Note: widget mapper allways goes to row -1 after a model reset.
-   *       The controller then set a appropriate current row.
-   */
-  model.populate(3, 1);
-  QCOMPARE(mapper.currentRow(), -1);
-  QCOMPARE(rowChangedSpy.count(), 0);
-  QCOMPARE(editStartedSpy.count(), 0);
-  QVERIFY(!edit0.isEnabled());
-  QVERIFY(!edit1.isEnabled());
-  QVERIFY(edit0.text().isEmpty());
-  QVERIFY(edit1.text().isEmpty());
-  // Now, change to first row
-  mapper.setCurrentRow(0);
-  QCOMPARE(mapper.currentRow(), 0);
-  // Check that current row changed was signaled
-  QCOMPARE(rowChangedSpy.count(), 1);
-  QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), 0);
-  // Check that no edition started was signaled
-  QCOMPARE(editStartedSpy.count(), 0);
-  // Check editors state
-  QVERIFY(edit0.isEnabled());
-  QVERIFY(!edit1.isEnabled());
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(edit0.text(), model.data(index).toString());
-  QVERIFY(edit1.text().isEmpty());
-  /*
-   * Populate model with 2 columns
-   *
-   * Note: widget mapper allways goes to row -1 after a model reset.
-   *       The controller then set a appropriate current row.
-   */
-  model.populate(3, 2);
-  QCOMPARE(mapper.currentRow(), -1);
-  QCOMPARE(rowChangedSpy.count(), 1);
-  QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), -1);
-  QCOMPARE(editStartedSpy.count(), 0);
-  // Go to first row
-  mapper.setCurrentRow(0);
-  // Check that current row changed was not signaled
-  QCOMPARE(rowChangedSpy.count(), 1);
-  QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), 0);
-  // Check that no edition started was signaled
-  QCOMPARE(editStartedSpy.count(), 0);
-  // Check that editors state was updated
-  QVERIFY(edit0.isEnabled());
-  QVERIFY(edit1.isEnabled());
-  index = model.index(0, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(edit0.text(), model.data(index).toString());
-  index = model.index(0, 1);
-  QVERIFY(index.isValid());
-  QCOMPARE(edit1.text(), model.data(index).toString());
-  /*
-   * Clear mapping
-   */
-  mapper.clearMapping();
-  QVERIFY(edit0.isEnabled());
-  QVERIFY(edit1.isEnabled());
-  QVERIFY(edit0.text().isEmpty());
-  QVERIFY(edit1.text().isEmpty());
-  /*
-   * Set allready populated model and map widgets once we are at first row
-   *
-   * Widget mapper must go to row -1 after model was set.
-   * The controller will tell it which row to go later.
-   */
-  VariantTableModel model2;
-  model2.populate(4, 2);
-  mapper.setModel(&model2);
-  QCOMPARE(mapper.currentRow(), -1);
-  // Check that current row changed was signaled
-  QCOMPARE(rowChangedSpy.count(), 1);
-  QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), -1);
-  // Check that no edition started was signaled
-  QCOMPARE(editStartedSpy.count(), 0);
-  // Go to first row
-  mapper.setCurrentRow(0);
-  QCOMPARE(mapper.currentRow(), 0);
-  // Check that current row changed was signaled
-  QCOMPARE(rowChangedSpy.count(), 1);
-  QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), 0);
-  // Check that no edition started was signaled
-  QCOMPARE(editStartedSpy.count(), 0);
-  // Map widgets
-  mapper.addMapping(&edit0, 0);
-  mapper.addMapping(&edit1, 1);
-  // Check editors state
-  QVERIFY(edit0.isEnabled());
-  QVERIFY(edit1.isEnabled());
-  index = model2.index(0, 0);
-  QVERIFY(index.isValid());
-  QCOMPARE(edit0.text(), model2.data(index).toString());
-  index = model2.index(0, 1);
-  QVERIFY(index.isValid());
-  QCOMPARE(edit1.text(), model2.data(index).toString());
-}
+// void DataWidgetMapperTest::setModelTest()
+// {
+//   DataWidgetMapper mapper;
+//   VariantTableModel model;
+//   QModelIndex index;
+//   QLineEdit edit0, edit1;
+// 
+//   QSignalSpy rowChangedSpy(&mapper, &DataWidgetMapper::currentRowChanged);
+//   QVERIFY(rowChangedSpy.isValid());
+//   QSignalSpy editStartedSpy(&mapper, &DataWidgetMapper::dataEditionStarted);
+//   QVERIFY(editStartedSpy.isValid());
+//   /*
+//    * Initial state
+//    */
+//   QVERIFY(mapper.model() == nullptr);
+//   QVERIFY(mapper.itemDelegate() != nullptr);
+//   QCOMPARE(mapper.currentRow(), -1);
+//   QCOMPARE(rowChangedSpy.count(), 0);
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   /*
+//    * Set a empty model
+//    */
+//   QCOMPARE(model.rowCount(), 0);
+//   mapper.setModel(&model);
+//   QVERIFY(mapper.model() == &model);
+//   QCOMPARE(mapper.currentRow(), -1);
+//   QCOMPARE(rowChangedSpy.count(), 0);
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   /*
+//    * Map widgets
+//    */
+//   mapper.addMapping(&edit0, 0);
+//   mapper.addMapping(&edit1, 1);
+//   QVERIFY(!edit0.isEnabled());
+//   QVERIFY(!edit1.isEnabled());
+//   QVERIFY(edit0.text().isEmpty());
+//   QVERIFY(edit1.text().isEmpty());
+//   /*
+//    * Populate model with 1 column
+//    *
+//    * Note: widget mapper allways goes to row -1 after a model reset.
+//    *       The controller then set a appropriate current row.
+//    */
+//   model.populate(3, 1);
+//   QCOMPARE(mapper.currentRow(), -1);
+//   QCOMPARE(rowChangedSpy.count(), 0);
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   QVERIFY(!edit0.isEnabled());
+//   QVERIFY(!edit1.isEnabled());
+//   QVERIFY(edit0.text().isEmpty());
+//   QVERIFY(edit1.text().isEmpty());
+//   // Now, change to first row
+//   mapper.setCurrentRow(0);
+//   QCOMPARE(mapper.currentRow(), 0);
+//   // Check that current row changed was signaled
+//   QCOMPARE(rowChangedSpy.count(), 1);
+//   QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), 0);
+//   // Check that no edition started was signaled
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   // Check editors state
+//   QVERIFY(edit0.isEnabled());
+//   QVERIFY(!edit1.isEnabled());
+//   index = model.index(0, 0);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(edit0.text(), model.data(index).toString());
+//   QVERIFY(edit1.text().isEmpty());
+//   /*
+//    * Populate model with 2 columns
+//    *
+//    * Note: widget mapper allways goes to row -1 after a model reset.
+//    *       The controller then set a appropriate current row.
+//    */
+//   model.populate(3, 2);
+//   QCOMPARE(mapper.currentRow(), -1);
+//   QCOMPARE(rowChangedSpy.count(), 1);
+//   QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), -1);
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   // Go to first row
+//   mapper.setCurrentRow(0);
+//   // Check that current row changed was signaled
+//   QCOMPARE(rowChangedSpy.count(), 1);
+//   QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), 0);
+//   // Check that no edition started was signaled
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   // Check that editors state was updated
+//   QVERIFY(edit0.isEnabled());
+//   QVERIFY(edit1.isEnabled());
+//   index = model.index(0, 0);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(edit0.text(), model.data(index).toString());
+//   index = model.index(0, 1);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(edit1.text(), model.data(index).toString());
+//   /*
+//    * Clear mapping
+//    */
+//   mapper.clearMapping();
+//   QVERIFY(edit0.isEnabled());
+//   QVERIFY(edit1.isEnabled());
+//   QVERIFY(edit0.text().isEmpty());
+//   QVERIFY(edit1.text().isEmpty());
+//   /*
+//    * Set allready populated model and map widgets once we are at first row
+//    *
+//    * Widget mapper must go to row -1 after model was set.
+//    * The controller will tell it which row to go later.
+//    */
+//   VariantTableModel model2;
+//   model2.populate(4, 2);
+//   mapper.setModel(&model2);
+//   QCOMPARE(mapper.currentRow(), -1);
+//   // Check that current row changed was signaled
+//   QCOMPARE(rowChangedSpy.count(), 1);
+//   QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), -1);
+//   // Check that no edition started was signaled
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   // Go to first row
+//   mapper.setCurrentRow(0);
+//   QCOMPARE(mapper.currentRow(), 0);
+//   // Check that current row changed was signaled
+//   QCOMPARE(rowChangedSpy.count(), 1);
+//   QCOMPARE(rowChangedSpy.takeFirst().at(0).toInt(), 0);
+//   // Check that no edition started was signaled
+//   QCOMPARE(editStartedSpy.count(), 0);
+//   // Map widgets
+//   mapper.addMapping(&edit0, 0);
+//   mapper.addMapping(&edit1, 1);
+//   // Check editors state
+//   QVERIFY(edit0.isEnabled());
+//   QVERIFY(edit1.isEnabled());
+//   index = model2.index(0, 0);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(edit0.text(), model2.data(index).toString());
+//   index = model2.index(0, 1);
+//   QVERIFY(index.isValid());
+//   QCOMPARE(edit1.text(), model2.data(index).toString());
+// }
 
 void DataWidgetMapperTest::setCurrentRowWidgetTest()
 {

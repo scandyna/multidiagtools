@@ -43,7 +43,7 @@ DataWidgetMapper::DataWidgetMapper(QObject* parent)
 void DataWidgetMapper::setModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);
-  Q_ASSERT_X(mMappedWidgetList.isEmpty(), "DataWidgetMapper::setModel()", "setting model while widgets are allready mapped is not allowed");
+//   Q_ASSERT_X(mMappedWidgetList.isEmpty(), "DataWidgetMapper::setModel()", "setting model while widgets are allready mapped is not allowed");
 
   if(model == mModel){
     return;
@@ -83,7 +83,7 @@ QAbstractItemDelegate* DataWidgetMapper::itemDelegate() const
 
 void DataWidgetMapper::addMapping(QWidget* widget, int column)
 {
-  Q_ASSERT_X(!mModel.isNull(), "DataWidgetMapper::addMapping()", "model must be set before mapping widgets");
+//   Q_ASSERT_X(!mModel.isNull(), "DataWidgetMapper::addMapping()", "model must be set before mapping widgets");
   Q_ASSERT(widget != nullptr);
   Q_ASSERT(column >= 0);
   Q_ASSERT(widget->metaObject() != nullptr);
@@ -200,15 +200,18 @@ void DataWidgetMapper::connectUserPropertyNotifySignal(QWidget*const widget, Dat
 
 void DataWidgetMapper::updateMappedWidget(QWidget*const widget, int column)
 {
-  Q_ASSERT(!mModel.isNull());
+//   Q_ASSERT(!mModel.isNull());
   Q_ASSERT(!mDelegate.isNull());
 
   if(widget == nullptr){
     return;
   }
   mUpdatingMappedWidget = true;
-  auto index = mModel->index(mCurrentRow, column);
-  mDelegate->setEditorData(widget, index);
+  QModelIndex index;
+  if(!mModel.isNull()){
+    index = mModel->index(mCurrentRow, column);
+    mDelegate->setEditorData(widget, index);
+  }
   /*
    * On invalid index, widget must allways be disabled,
    * else, if editable flag is not set, and widget has not editable property,
