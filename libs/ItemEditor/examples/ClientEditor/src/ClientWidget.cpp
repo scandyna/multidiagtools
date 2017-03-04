@@ -29,14 +29,10 @@ ClientWidget::ClientWidget(QWidget* parent)
  : AbstractFormWidget(parent)
 {
   setModel(new ClientModel(this));
-  auto *formatModel = new FormatProxyModel(this);
-  formatModel->setTextAlignmentForColumn(0, Qt::AlignCenter);
-  formatModel->setTextFontForColumn(1, QFont("Times", 12));
-  ///appendProxyModel(formatModel);
   setupUi(this);
   auto *ctlr = controller();
-//   ctlr->setPrimaryKey({0});
-//   ctlr->setPrimaryKeyEditable(false);
+  ctlr->setPrimaryKey({0});
+  ctlr->setPrimaryKeyEditable(false);
 //   ctlr->setPrimaryKeyItemsEnabled(false);
   ctlr->addMapping(fld_Id, 0);
   ctlr->addMapping(fld_Name, 1);
@@ -44,4 +40,8 @@ ClientWidget::ClientWidget(QWidget* parent)
   /*
    * Setup formatting
    */
+  auto *formatModel = new FormatProxyModel(this);
+  formatModel->setTextAlignmentForColumn(0, Qt::AlignCenter);
+  formatModel->setTextFontForColumn(1, QFont("Times", 12));
+  appendProxyModel(formatModel);
 }

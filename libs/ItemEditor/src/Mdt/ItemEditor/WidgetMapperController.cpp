@@ -37,7 +37,7 @@ WidgetMapperController::WidgetMapperController(QObject* parent)
 void WidgetMapperController::addMapping(QWidget* widget, int column)
 {
   Q_ASSERT(widget != nullptr);
-  Q_ASSERT_X(model() != nullptr, "WidgetMapperController::addMapping()", "model must be set before mapping widgets");
+//   Q_ASSERT_X(model() != nullptr, "WidgetMapperController::addMapping()", "model must be set before mapping widgets");
 
   mWidgetMapper->addMapping(widget, column);
 }
@@ -53,7 +53,7 @@ void WidgetMapperController::setModelToView(QAbstractItemModel* _model)
 
   mWidgetMapper->setModel(_model);
   modelSetToView();
-  Q_ASSERT(model() == mWidgetMapper->model());
+//   Q_ASSERT(model() == mWidgetMapper->model());
 }
 
 bool WidgetMapperController::submitDataToModel()

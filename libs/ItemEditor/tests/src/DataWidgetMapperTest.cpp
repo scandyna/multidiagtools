@@ -746,7 +746,7 @@ void DataWidgetMapperTest::clearMappingTest()
   QVERIFY(edit1.text().isEmpty());
 }
 
-void DataWidgetMapperTest::editableFlagsTest()
+void DataWidgetMapperTest::itemEditableFlagTest()
 {
   /*
    * DataWidgetMapper uses WidgetEditablePropertyMap,
@@ -757,13 +757,15 @@ void DataWidgetMapperTest::editableFlagsTest()
   QModelIndex index;
   QLineEdit le;
   QComboBox cb;
+  QWidget w;
   /*
    * Setup
    */
-  model.populate(1, 2);
+  model.populate(1, 3);
   mapper.setModel(&model);
   mapper.addMapping(&le, 0);
   mapper.addMapping(&cb, 1);
+  mapper.addMapping(&w, 2);
   mapper.setCurrentRow(0);
   /*
    * Initial state
@@ -772,6 +774,7 @@ void DataWidgetMapperTest::editableFlagsTest()
   QVERIFY(cb.isEditable());
   QVERIFY(le.isEnabled());
   QVERIFY(cb.isEnabled());
+  QVERIFY(w.isEnabled());
   /*
    * Unset editable flag
    */
@@ -793,6 +796,12 @@ void DataWidgetMapperTest::editableFlagsTest()
   QVERIFY(!cb.isEditable());
   QVERIFY(le.isEnabled());
   QVERIFY(cb.isEnabled());
+  // Widget without any editable property
+  index = model.index(0, 2);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, false);
+  mapper.setCurrentRow(0);
+  QVERIFY(!w.isEnabled());
   /*
    * Set editable flag (again)
    */
@@ -814,11 +823,134 @@ void DataWidgetMapperTest::editableFlagsTest()
   QVERIFY(cb.isEditable());
   QVERIFY(le.isEnabled());
   QVERIFY(cb.isEnabled());
+  // Widget without any editable property
+  index = model.index(0, 2);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, true);
+  mapper.setCurrentRow(0);
+  QVERIFY(w.isEnabled());
 }
 
-void DataWidgetMapperTest::enableEditableFlagsTest()
+void DataWidgetMapperTest::itemEnabledFlagTest()
 {
-  QFAIL("Not complete");
+  DataWidgetMapper mapper;
+  VariantTableModel model;
+  QModelIndex index;
+  QLineEdit le;
+  /*
+   * Setup
+   */
+  model.populate(1, 1);
+  mapper.setModel(&model);
+  mapper.addMapping(&le, 0);
+  mapper.setCurrentRow(0);
+  /*
+   * Initial state
+   */
+  QVERIFY(le.isEnabled());
+  /*
+   * Unset enabled flag
+   */
+  // Line edit
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setItemEnabled(index, false);
+  mapper.setCurrentRow(0);
+  QVERIFY(!le.isEnabled());
+  /*
+   * Set enabled flag again
+   */
+  // Line edit
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setItemEnabled(index, true);
+  mapper.setCurrentRow(0);
+  QVERIFY(le.isEnabled());
+}
+
+void DataWidgetMapperTest::itemEnabledEditableFlagTest()
+{
+  DataWidgetMapper mapper;
+  VariantTableModel model;
+  QModelIndex index;
+  QLineEdit le;
+  QWidget w;
+  /*
+   * Setup
+   */
+  model.populate(1, 2);
+  mapper.setModel(&model);
+  mapper.addMapping(&le, 0);
+  mapper.addMapping(&w, 1);
+  mapper.setCurrentRow(0);
+  /*
+   * Initial state
+   */
+  QVERIFY(le.isEnabled());
+  QVERIFY(!le.isReadOnly());
+  QVERIFY(w.isEnabled());
+  /*
+   * Unset editable flag
+   */
+  // Line edit
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, false);
+  mapper.setCurrentRow(0);
+  QVERIFY(le.isEnabled());
+  QVERIFY(le.isReadOnly());
+  // Widget without editable property
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, false);
+  mapper.setCurrentRow(0);
+  QVERIFY(!w.isEnabled());
+  /*
+   * Unset enabled flag
+   */
+  // Line edit
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setItemEnabled(index, false);
+  mapper.setCurrentRow(0);
+  QVERIFY(!le.isEnabled());
+  // Widget without editable property
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  model.setItemEnabled(index, false);
+  mapper.setCurrentRow(0);
+  QVERIFY(!w.isEnabled());
+  /*
+   * Set editable flag
+   */
+  // Line edit
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, true);
+  mapper.setCurrentRow(0);
+  QVERIFY(!le.isEnabled());
+  // Widget without editable property
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  model.setItemEditable(index, true);
+  mapper.setCurrentRow(0);
+  QVERIFY(!w.isEnabled());
+  /*
+   * Set enabled flag
+   */
+  // Line edit
+  index = model.index(0, 0);
+  QVERIFY(index.isValid());
+  model.setItemEnabled(index, true);
+  mapper.setCurrentRow(0);
+  QVERIFY(le.isEnabled());
+  QVERIFY(!le.isReadOnly());
+  // Widget without editable property
+  index = model.index(0, 1);
+  QVERIFY(index.isValid());
+  model.setItemEnabled(index, true);
+  mapper.setCurrentRow(0);
+  QVERIFY(w.isEnabled());
 }
 
 void DataWidgetMapperTest::formatRoleTest()

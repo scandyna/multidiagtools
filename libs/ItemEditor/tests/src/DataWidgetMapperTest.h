@@ -44,8 +44,9 @@ class DataWidgetMapperTest : public QObject
   void removeMappingTest();
   void changeMappingTest();
   void clearMappingTest();
-  void editableFlagsTest();
-  void enableEditableFlagsTest();
+  void itemEditableFlagTest();
+  void itemEnabledFlagTest();
+  void itemEnabledEditableFlagTest();
   void formatRoleTest();
 
 //   void setModelTest();
