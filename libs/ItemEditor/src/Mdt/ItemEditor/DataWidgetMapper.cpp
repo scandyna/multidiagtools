@@ -244,18 +244,21 @@ void DataWidgetMapper::updateMappedWidget(QWidget*const widget, int column)
     mDelegate->setEditorData(widget, index);
   }
   /*
-   * On invalid index, widget must allways be disabled.
-   * If Qt::ItemIsEnabled is not set, simply disable widget.
+   * On invalid index, or if Qt::ItemIsEnabled is not set, widget must allways be disabled.
    * Else, follow Qt::ItemIsEditable if editable property exists for widget
    */
   if(index.isValid()){
     const auto flags = mModel->flags(index);
-    ///const bool enabled = 
-    const bool editable = (mModel->flags(index) & Qt::ItemIsEditable);
-    if(mEditablePropertyMap.setWidgetEditable(widget, editable)){
-      widget->setEnabled(true);
+    const bool enabled = flags.testFlag(Qt::ItemIsEnabled);
+    if(enabled){
+      const bool editable = flags.testFlag(Qt::ItemIsEditable);
+      if(mEditablePropertyMap.setWidgetEditable(widget, editable)){
+        widget->setEnabled(true);
+      }else{
+        widget->setEnabled(editable);
+      }
     }else{
-      widget->setEnabled(editable);
+      widget->setEnabled(false);
     }
   }else{
     widget->setEnabled(false);

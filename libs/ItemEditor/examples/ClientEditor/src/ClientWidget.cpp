@@ -33,7 +33,7 @@ ClientWidget::ClientWidget(QWidget* parent)
   auto *ctlr = controller();
   ctlr->setPrimaryKey({0});
   ctlr->setPrimaryKeyEditable(false);
-//   ctlr->setPrimaryKeyItemsEnabled(false);
+  ctlr->setPrimaryKeyItemsEnabled(false);
   ctlr->addMapping(fld_Id, 0);
   ctlr->addMapping(fld_Name, 1);
   ctlr->setInsertLocation(WidgetMapperController::InsertAtEnd);
