@@ -105,15 +105,31 @@ namespace Mdt{ namespace ItemEditor{
      * If \a widget exists in WidgetEditablePropertyMap, it will follow Qt::ItemIsEditable flag from the model.
      *  Most Qt edition widgets (such as QLineEdit) are allready known by WidgetEditablePropertyMap.
      *
-     * \note widget will not display model data until setCurrentRow() was called
+     * \note \a widget will not display model data until setCurrentRow() was called
+     * \note If \a widget was allready mapped to a column, the old one will be replaced with ne new one
+     * \note Onle one-to-one mappings between column and widgets are allowed.
+     *        It is not possible to map a single column to multiple widgets, or to map a single widget to multiple sections
      * \pre widget pointer must be valid
      * \sa setModel()
+     * \sa removeMapping()
+     * \sa clearMapping()
      */
     void addMapping(QWidget *widget, int column);
 
+    /*! \brief Remove mapping for given widget
+     *
+     * After that call, \a widget will no longer be handled by this mapper.
+     *
+     * \note \a widget is not owned by this mapper, so it will not be deleted.
+     * \pre widget pointer must be valid
+     * \sa addMapping()
+     * \sa clearMapping()
+     */
+    void removeMapping(QWidget *widget);
+
     /*! \brief Clear mapping
      *
-     * After that call, all widgets that were mapped will no longer
+     * After that call, all widgets that where mapped will no longer
      *  been handled by this mapper.
      *
      * \note Mapped widgets are not owned by this mapper,
@@ -185,6 +201,9 @@ namespace Mdt{ namespace ItemEditor{
       Connect,
       Disctonnect
     };
+
+    void removeMappingForColumn(int column);
+    void unmapWidget(QWidget *widget);
 
     /*! \brief Connect widget's user property notify signal to this onDataEditionStarted() slot
      */

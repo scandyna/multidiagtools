@@ -43,7 +43,6 @@ DataWidgetMapper::DataWidgetMapper(QObject* parent)
 void DataWidgetMapper::setModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);
-//   Q_ASSERT_X(mMappedWidgetList.isEmpty(), "DataWidgetMapper::setModel()", "setting model while widgets are allready mapped is not allowed");
 
   if(model == mModel){
     return;
@@ -83,15 +82,28 @@ QAbstractItemDelegate* DataWidgetMapper::itemDelegate() const
 
 void DataWidgetMapper::addMapping(QWidget* widget, int column)
 {
-//   Q_ASSERT_X(!mModel.isNull(), "DataWidgetMapper::addMapping()", "model must be set before mapping widgets");
   Q_ASSERT(widget != nullptr);
   Q_ASSERT(column >= 0);
   Q_ASSERT(widget->metaObject() != nullptr);
 
-  mMappedWidgetList.addWidget(widget, column);
+  removeMapping(widget);
+  removeMappingForColumn(column);
+  mMappedWidgetList.addMapping(widget, column);
   connectUserPropertyNotifySignal(widget, ConnectAction::Connect);
   widget->installEventFilter(mDelegate);
   updateMappedWidget(widget, column);
+}
+
+void DataWidgetMapper::removeMapping(QWidget* widget)
+{
+  Q_ASSERT(widget != nullptr);
+
+  int index = mMappedWidgetList.getIndexForWidget(widget);
+  if(index < 0){
+    return;
+  }
+  mMappedWidgetList.removeMappingAt(index);
+  unmapWidget(widget);
 }
 
 void DataWidgetMapper::clearMapping()
@@ -100,10 +112,7 @@ void DataWidgetMapper::clearMapping()
     for(const auto & mw : mMappedWidgetList){
       auto *widget = mw.widget();
       if(widget != nullptr){
-        connectUserPropertyNotifySignal(widget, ConnectAction::Disctonnect);
-        updateMappedWidget(widget, -1);
-        widget->setEnabled(true);
-        widget->removeEventFilter(mDelegate);
+        unmapWidget(widget);
       }
     }
   }
@@ -176,6 +185,28 @@ void DataWidgetMapper::onModelDataChanged(const QModelIndex & topLeft, const QMo
 void DataWidgetMapper::onModelReset()
 {
   setCurrentRow(-1);
+}
+
+void DataWidgetMapper::removeMappingForColumn(int column)
+{
+  Q_ASSERT(column >= 0);
+
+  int index = mMappedWidgetList.getIndexForColumn(column);
+  if(index < 0){
+    return;
+  }
+  unmapWidget( mMappedWidgetList.widgetAt(index) );
+  mMappedWidgetList.removeMappingAt(index);
+}
+
+void DataWidgetMapper::unmapWidget(QWidget* widget)
+{
+  Q_ASSERT(widget != nullptr);
+
+  connectUserPropertyNotifySignal(widget, ConnectAction::Disctonnect);
+  updateMappedWidget(widget, -1);
+  widget->setEnabled(true);
+  widget->removeEventFilter(mDelegate);
 }
 
 void DataWidgetMapper::connectUserPropertyNotifySignal(QWidget*const widget, DataWidgetMapper::ConnectAction ca)

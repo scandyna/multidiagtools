@@ -37,12 +37,50 @@ namespace Mdt{ namespace ItemEditor{
      */
     typedef std::vector<MappedWidget>::const_iterator const_iterator;
 
+    /*! \brief STL-style iterator
+     */
+    typedef std::vector<MappedWidget>::iterator iterator;
+
     /*! \brief Add widget
      *
      * \note widget will not be owned by MappedWidgetList
      *        (it will not be deleted)
+     * \pre \a column must be >= 0
+     * \pre \a column must not allready exists in this mapping list
+     * \pre \a widget must be a valid pointer
+     * \pre \a widget must not allready exists in this mapping list
      */
-    void addWidget(QWidget *widget, int column);
+    void addMapping(QWidget *widget, int column);
+
+    /*! \brief Get index for given widget
+     *
+     * Returns the index of mapping for \a widget if it exists,
+     *  otherwise -1 .
+     *
+     * \pre \a widget muts be a valid pointer
+     */
+    int getIndexForWidget(const QWidget * const widget) const;
+
+    /*! \brief Get index for given column
+     *
+     * Returns the index of mapping for \a column if it exists,
+     *  otherwise -1 .
+     *
+     * \pre \a column must be >= 0
+     */
+    int getIndexForColumn(int column) const;
+
+    /*! \brief Get widget at given index
+     *
+     * \pre \a index must be in valid range ( 0 <= index < size() )
+     */
+    QWidget *widgetAt(int index) const;
+
+    /*! \brief Remove mapping at given index
+     *
+     * \pre \a index must be in valid range ( 0 <= index < size() )
+     */
+    void removeMappingAt(int index);
 
     /*! \brief Get count of mapped widgets
      */
@@ -77,6 +115,9 @@ namespace Mdt{ namespace ItemEditor{
     void clear();
 
    private:
+
+    const_iterator iteratorForWidget(const QWidget * const widget) const;
+    const_iterator iteratorForColumn(int column) const;
 
     std::vector<MappedWidget> mWidgetList;
   };
