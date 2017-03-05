@@ -23,6 +23,7 @@
 #include "Mdt/ItemEditor/MappedWidgetList.h"
 #include "Mdt/ItemEditor/DataWidgetMapper.h"
 #include "Mdt/ItemModel/VariantTableModel.h"
+#include "Mdt/ItemModel/FormatProxyModel.h"
 #include <QSignalSpy>
 #include <QScopedPointer>
 #include <QModelIndex>
@@ -955,6 +956,52 @@ void DataWidgetMapperTest::itemEnabledEditableFlagTest()
 
 void DataWidgetMapperTest::formatRoleTest()
 {
+  DataWidgetMapper mapper;
+  VariantTableModel model;
+  FormatProxyModel proxyModel;
+  QLineEdit editor0;
+  /*
+   * Setup
+   */
+  model.populate(1, 1);
+  proxyModel.setSourceModel(&model);
+  mapper.setModel(&proxyModel);
+  mapper.addMapping(&editor0, 0);
+  mapper.setCurrentRow(0);
+  /*
+   * Initial state
+   */
+  editor0.setAlignment(Qt::AlignLeft);
+  QCOMPARE(editor0.alignment(), Qt::AlignLeft);
+  QVERIFY(editor0.styleSheet().isEmpty());
+  /*
+   * Set formats
+   */
+  proxyModel.setTextAlignmentForColumn(0, Qt::AlignCenter);
+  proxyModel.setTextFontForColumn(0, QFont("Helvetica", 14));
+  proxyModel.setTextColorForColumn(0, QColor(0,255,0));
+  proxyModel.setBackgroundColorForColumn(0, QColor(255,0,0));
+  mapper.setCurrentRow(0);
+  QCOMPARE(editor0.alignment(), Qt::AlignCenter);
+  QVERIFY(editor0.styleSheet().contains("font-size:14pt"));
+  QVERIFY(editor0.styleSheet().contains("color:#00ff00"));
+  QVERIFY(editor0.styleSheet().contains("background-color:#ff0000"));
+  /*
+   * Clear formats
+   */
+  
+  /*
+   * Set custom style sheet
+   */
+  
+  /*
+   * Add formats
+   */
+  
+  
+  
+  displayWidget(editor0);
+
   QFAIL("Not complete");
 }
 
@@ -1336,8 +1383,6 @@ void DataWidgetMapperTest::insertFromModelWidgetTest()
 
 void DataWidgetMapperTest::editStartDoneSignalTest()
 {
-  using Mdt::ItemEditor::DataWidgetMapper;
-
   DataWidgetMapper mapper;
   VariantTableModel model;
   QModelIndex index;
@@ -1429,9 +1474,6 @@ void DataWidgetMapperTest::editStartDoneSignalTest()
   QTest::keyClick(editor0, Qt::Key_1);
   QCOMPARE(editStartedSpy.count(), 0);
   QCOMPARE(editDoneSpy.count(), 0);
-
-//   delete editor0;
-//   delete editor1;
 }
 
 void DataWidgetMapperTest::editStartDoneSignalTest_data()

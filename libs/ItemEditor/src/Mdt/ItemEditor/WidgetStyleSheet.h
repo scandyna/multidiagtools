@@ -23,6 +23,7 @@
 
 #include <QString>
 #include <QVariant>
+#include <QMetaType>
 
 class QFont;
 class QBrush;
@@ -39,6 +40,12 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setTextFont(const QFont & font);
 
+    /*! \brief Set text font from QVariant
+     *
+     * \pre \a font must not be null and must hold a QFont
+     */
+    void setTextFontVariant(const QVariant & font);
+
     /*! \brief Get text font
      *
      * Returns a QVariant holding a QFont if a text font was set,
@@ -53,6 +60,12 @@ namespace Mdt{ namespace ItemEditor{
      */
     void setForegroundBrush(const QBrush & brush);
 
+    /*! \brief Set foreground brush
+     *
+     * \pre \a brush must not be null and must hold a QBrush
+     */
+    void setForegroundBrushVariant(const QVariant & brush);
+
     /*! \brief Get foreground brush
      *
      * Returns a QVariant holding a QBrush if a foreground was set,
@@ -66,6 +79,12 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Set background brush
      */
     void setBackgroundBrush(const QBrush & brush);
+
+    /*! \brief Set background brush
+     *
+     * \pre \a brush must not be null and must hold a QBrush
+     */
+    void setBackgroundBrushVariant(const QVariant & brush);
 
     /*! \brief Get background brush
      *
@@ -106,6 +125,8 @@ namespace Mdt{ namespace ItemEditor{
     QString getForegroundCssString() const;
 
     QString getBackgroundCssString() const;
+
+    static bool variantIsOfType(const QVariant & var, QMetaType::Type type);
 
     QVariant mTextFont;
     QVariant mForegroundBrush;

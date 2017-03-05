@@ -42,6 +42,7 @@ ClientWidget::ClientWidget(QWidget* parent)
    */
   auto *formatModel = new FormatProxyModel(this);
   formatModel->setTextAlignmentForColumn(0, Qt::AlignCenter);
-  formatModel->setTextFontForColumn(1, QFont("Times", 12));
+  formatModel->setTextFontForColumn(1, QFont("Times", 14));
+  formatModel->setTextColorForColumn(1, QColor(0,0,255));
   appendProxyModel(formatModel);
 }

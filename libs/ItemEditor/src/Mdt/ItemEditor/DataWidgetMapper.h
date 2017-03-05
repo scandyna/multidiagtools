@@ -26,6 +26,8 @@
 #include <QAbstractItemDelegate>
 #include <QObject>
 #include <QPointer>
+#include <QMetaType>
+#include <Qt>
 
 class QWidget;
 class QAbstractItemModel;
@@ -213,6 +215,9 @@ namespace Mdt{ namespace ItemEditor{
      */
     void updateMappedWidget(QWidget * const widget, int column);
 
+    void updateMappedWidgetForItemFlags(QWidget * const widget, Qt::ItemFlags flags);
+    void updateMappedWidgetForAppearance(QWidget * const widget, const QModelIndex & index);
+
     /*! \brief Update all mapped widgets
      */
     void updateAllMappedWidgets();
@@ -224,7 +229,9 @@ namespace Mdt{ namespace ItemEditor{
     /*! \brief Commit data of all mapped widgets to model
      */
     bool commitAllMappedWidgetsData();
-    
+
+    static bool variantIsOfType(const QVariant & var, QMetaType::Type type);
+
     int mCurrentRow;
     bool mUpdatingMappedWidget;
     bool mEditingState;

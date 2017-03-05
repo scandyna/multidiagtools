@@ -32,13 +32,31 @@ void WidgetStyleSheet::setTextFont(const QFont & font)
   mTextFont = font;
 }
 
+void WidgetStyleSheet::setTextFontVariant(const QVariant & font)
+{
+  Q_ASSERT(variantIsOfType(font, QMetaType::QFont));
+  mTextFont = font;
+}
+
 void WidgetStyleSheet::setForegroundBrush(const QBrush & brush)
 {
   mForegroundBrush = brush;
 }
 
+void WidgetStyleSheet::setForegroundBrushVariant(const QVariant & brush)
+{
+  Q_ASSERT(variantIsOfType(brush, QMetaType::QBrush));
+  mForegroundBrush = brush;
+}
+
 void WidgetStyleSheet::setBackgroundBrush(const QBrush & brush)
 {
+  mBackgroundBrush = brush;
+}
+
+void WidgetStyleSheet::setBackgroundBrushVariant(const QVariant & brush)
+{
+  Q_ASSERT(variantIsOfType(brush, QMetaType::QBrush));
   mBackgroundBrush = brush;
 }
 
@@ -57,12 +75,6 @@ bool WidgetStyleSheet::operator==(const WidgetStyleSheet & other)
   return (mTextFont == other.mTextFont)
          && (mForegroundBrush == other.mForegroundBrush)
          && (mBackgroundBrush == other.mBackgroundBrush);
-//   if(isNull() && other.isNull()){
-//     return true;
-//   }
-//   return compareFontsEqual(mTextFont, other.mTextFont)
-//          && compareBrushesEqual(mForegroundBrush, other.mForegroundBrush)
-//          && compareBrushesEqual(mBackgroundBrush, other.mBackgroundBrush);
 }
 
 QString WidgetStyleSheet::toCssString() const
@@ -156,6 +168,11 @@ QString WidgetStyleSheet::getBackgroundCssString() const
   }
   const auto color = mBackgroundBrush.value<QBrush>().color();
   return QLatin1String("background-color:") % color.name();
+}
+
+bool WidgetStyleSheet::variantIsOfType(const QVariant& var, QMetaType::Type type)
+{
+  return static_cast<QMetaType::Type>(var.type()) == type;
 }
 
 }} // namespace Mdt{ namespace ItemEditor{

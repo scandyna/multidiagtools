@@ -21,10 +21,9 @@
 #ifndef MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_TEST_H
 #define MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_TEST_H
 
-#include <QObject>
-#include <QtTest/QtTest>
+#include "TestBase.h"
 
-class DataWidgetMapperTest : public QObject
+class DataWidgetMapperTest : public TestBase
 {
   Q_OBJECT
 

@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "DataWidgetMapper.h"
+#include "WidgetStyleSheet.h"
 #include <QAbstractItemModel>
 #include <QStyledItemDelegate>
 #include <QWidget>
@@ -231,7 +232,6 @@ void DataWidgetMapper::connectUserPropertyNotifySignal(QWidget*const widget, Dat
 
 void DataWidgetMapper::updateMappedWidget(QWidget*const widget, int column)
 {
-//   Q_ASSERT(!mModel.isNull());
   Q_ASSERT(!mDelegate.isNull());
 
   if(widget == nullptr){
@@ -244,26 +244,70 @@ void DataWidgetMapper::updateMappedWidget(QWidget*const widget, int column)
     mDelegate->setEditorData(widget, index);
   }
   /*
-   * On invalid index, or if Qt::ItemIsEnabled is not set, widget must allways be disabled.
-   * Else, follow Qt::ItemIsEditable if editable property exists for widget
+   * On invalid index, widget must allways be disabled.
    */
   if(index.isValid()){
-    const auto flags = mModel->flags(index);
-    const bool enabled = flags.testFlag(Qt::ItemIsEnabled);
-    if(enabled){
-      const bool editable = flags.testFlag(Qt::ItemIsEditable);
-      if(mEditablePropertyMap.setWidgetEditable(widget, editable)){
-        widget->setEnabled(true);
-      }else{
-        widget->setEnabled(editable);
-      }
-    }else{
-      widget->setEnabled(false);
-    }
+    updateMappedWidgetForItemFlags(widget, mModel->flags(index));
+    updateMappedWidgetForAppearance(widget, index);
   }else{
     widget->setEnabled(false);
   }
   mUpdatingMappedWidget = false;
+}
+
+void DataWidgetMapper::updateMappedWidgetForItemFlags(QWidget*const widget, Qt::ItemFlags flags)
+{
+  Q_ASSERT(widget != nullptr);
+  /*
+   * If Qt::ItemIsEnabled is not set, widget must allways be disabled.
+   * Else, follow Qt::ItemIsEditable if editable property exists for widget
+   */
+  const bool enabled = flags.testFlag(Qt::ItemIsEnabled);
+  if(enabled){
+    const bool editable = flags.testFlag(Qt::ItemIsEditable);
+    if(mEditablePropertyMap.setWidgetEditable(widget, editable)){
+      widget->setEnabled(true);
+    }else{
+      widget->setEnabled(editable);
+    }
+  }else{
+    widget->setEnabled(false);
+  }
+}
+
+void DataWidgetMapper::updateMappedWidgetForAppearance(QWidget*const widget, const QModelIndex& index)
+{
+  Q_ASSERT(widget != nullptr);
+  Q_ASSERT(index.isValid());
+  Q_ASSERT(!mModel.isNull());
+
+  WidgetStyleSheet ws;
+  QVariant var;
+
+  // Text alignment
+  var = mModel->data(index, Qt::TextAlignmentRole);
+  if(variantIsOfType(var, QMetaType::Int)){
+    widget->setProperty("alignment", var);
+  }
+  // Text font
+  var = mModel->data(index, Qt::FontRole);
+  if(variantIsOfType(var, QMetaType::QFont)){
+    ws.setTextFontVariant(var);
+  }
+  // Foreground brush
+  var = mModel->data(index, Qt::ForegroundRole);
+  if(variantIsOfType(var, QMetaType::QBrush)){
+    ws.setForegroundBrushVariant(var);
+  }
+  // Background brush
+  var = mModel->data(index, Qt::BackgroundRole);
+  if(variantIsOfType(var, QMetaType::QBrush)){
+    ws.setBackgroundBrushVariant(var);
+  }
+  /**
+   * \todo Should compare with previous ws before setting (performance)
+   */
+  widget->setStyleSheet(ws.toCssString());
 }
 
 void DataWidgetMapper::updateAllMappedWidgets()
@@ -297,6 +341,11 @@ bool DataWidgetMapper::commitAllMappedWidgetsData()
     }
   }
   return true;
+}
+
+bool DataWidgetMapper::variantIsOfType(const QVariant& var, QMetaType::Type type)
+{
+  return static_cast<QMetaType::Type>(var.type()) == type;
 }
 
 }} // namespace Mdt{ namespace ItemEditor{
