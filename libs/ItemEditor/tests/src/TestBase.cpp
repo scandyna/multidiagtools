@@ -32,6 +32,21 @@
 #include <QLabel>
 #include <QDebug>
 
+void TestBase::displayWidget(QWidget* widget)
+{
+  Q_ASSERT(widget != nullptr);
+
+  widget->show();
+  while(widget->isVisible()){
+    QTest::qWait(500);
+  }
+}
+
+void TestBase::displayWidget(QWidget& widget)
+{
+  displayWidget(&widget);
+}
+
 void TestBase::displayModel(QAbstractItemModel* model)
 {
   Q_ASSERT(model != nullptr);

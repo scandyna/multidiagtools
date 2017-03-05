@@ -60,7 +60,7 @@ add_compile_options(-Wall -Wextra)
 
 # Test coverage , NOTE: only gcc ?
 # TODO Should be in egbug mode only
-add_compile_options(-ftest-coverage)
+#add_compile_options(-ftest-coverage)
 
 
 # Sanitizer

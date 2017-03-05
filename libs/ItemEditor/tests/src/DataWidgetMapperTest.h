@@ -60,6 +60,8 @@ class DataWidgetMapperTest : public QObject
   void setDataFromModelQLineEditTest();
   void submitDataQLineEditTest();
   void revertDataQLineEditTest();
+
+  void setCurrentRowBenchmark();
 };
 
 #endif // #ifndef MDT_ITEM_EDITOR_DATA_WIDGET_MAPPER_TEST_H

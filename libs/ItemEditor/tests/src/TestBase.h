@@ -37,6 +37,8 @@ class TestBase : public QObject
 
  protected:
 
+  static void displayWidget(QWidget *widget);
+  static void displayWidget(QWidget & widget);
   static void displayModel(QAbstractItemModel *model);
   static void displayModel(QAbstractItemModel & model);
   static void displayModels(QAbstractItemModel *sourceModel, QAbstractProxyModel *proxyModel);

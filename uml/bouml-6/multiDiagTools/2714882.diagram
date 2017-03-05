@@ -18,7 +18,7 @@ classcanvas 129026 class_ref 1914498 // QAbstractItemDelegate
 end
 classcanvas 129282 class_ref 605570 // QStyledItemDelegate
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
-  xyz 657 463.25 2017
+  xyz 657 287.75 2017
 end
 classcanvas 129538 class_ref 3015042 // ItemDelegateProxy
   classdiagramsettings hide_attributes yes hide_operations yes member_max_width 0 end
