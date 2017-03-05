@@ -971,8 +971,7 @@ void DataWidgetMapperTest::formatRoleTest()
   /*
    * Initial state
    */
-  editor0.setAlignment(Qt::AlignLeft);
-  QCOMPARE(editor0.alignment(), Qt::AlignLeft);
+  QCOMPARE(editor0.alignment(), Qt::Alignment(Qt::AlignLeft | Qt::AlignVCenter));
   QVERIFY(editor0.styleSheet().isEmpty());
   /*
    * Set formats
@@ -981,7 +980,6 @@ void DataWidgetMapperTest::formatRoleTest()
   proxyModel.setTextFontForColumn(0, QFont("Helvetica", 14));
   proxyModel.setTextColorForColumn(0, QColor(0,255,0));
   proxyModel.setBackgroundColorForColumn(0, QColor(255,0,0));
-  mapper.setCurrentRow(0);
   QCOMPARE(editor0.alignment(), Qt::AlignCenter);
   QVERIFY(editor0.styleSheet().contains("font-size:14pt"));
   QVERIFY(editor0.styleSheet().contains("color:#00ff00"));
@@ -989,20 +987,12 @@ void DataWidgetMapperTest::formatRoleTest()
   /*
    * Clear formats
    */
-  
-  /*
-   * Set custom style sheet
-   */
-  
-  /*
-   * Add formats
-   */
-  
-  
-  
-  displayWidget(editor0);
-
-  QFAIL("Not complete");
+  proxyModel.clearTextAlignmentForColumn(0);
+  proxyModel.clearTextFontForColumn(0);
+  proxyModel.clearTextColorForColumn(0);
+  proxyModel.clearBackgroundBrushForColumn(0);
+  QCOMPARE(editor0.alignment(), Qt::Alignment(Qt::AlignLeft | Qt::AlignVCenter));
+  QVERIFY(editor0.styleSheet().isEmpty());
 }
 
 // void DataWidgetMapperTest::setModelTest()

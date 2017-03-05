@@ -13,21 +13,17 @@ diagrams
     951 911 100 7 0 0
 end
 show_stereotypes
-selected 
-package_ref 129 // multiDiagTools
+selected attribute_ref 2995074 // PreviousStyleSheet
 open
   
-package_ref 409858 // principes
+  package_ref 409858 // principes
   classview_ref 1293698 // CoreApplication
-  attribute_ref 3367170 // Foreground
-  operation_ref 5419266 // setTextFont
-  operation_ref 5419522 // setForegroundBrush
-  operation_ref 5419650 // setBackgroundBrush
-  class_ref 3158146 // MappedWidgetList
+  classview_ref 1761794 // StyleSheet
+  class_ref 3198082 // MappedWidget
   
-package_ref 430082 // Dsp
+  package_ref 430082 // Dsp
   
-package_ref 134786 // Qt
+  package_ref 134786 // Qt
   class_ref 3788930 // callable_context
 end
 end

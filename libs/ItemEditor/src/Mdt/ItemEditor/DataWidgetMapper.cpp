@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "DataWidgetMapper.h"
 #include "WidgetStyleSheet.h"
+#include "Mdt/ItemModel/RowRange.h"
+#include "Mdt/ItemModel/ColumnRange.h"
 #include <QAbstractItemModel>
 #include <QStyledItemDelegate>
 #include <QWidget>
@@ -28,7 +30,9 @@
 #include <QMetaMethod>
 #include <QMetaProperty>
 
-#include <QDebug>
+// #include <QDebug>
+
+using namespace Mdt::ItemModel;
 
 namespace Mdt{ namespace ItemEditor{
 
@@ -170,14 +174,19 @@ void DataWidgetMapper::onModelDataChanged(const QModelIndex & topLeft, const QMo
   if(topLeft.parent().isValid()){
     return;
   }
-  /// \todo Range checking seems wrong
-  if( (topLeft.row() != mCurrentRow) && (bottomRight.row() != mCurrentRow) ){
+  RowRange rowRange;
+  rowRange.setFirstIndex(topLeft);
+  rowRange.setLastIndex(bottomRight);
+  if(!rowRange.containsRow(mCurrentRow)){
     return;
   }
+  ColumnRange columnRange;
+  columnRange.setFirstIndex(topLeft);
+  columnRange.setLastIndex(bottomRight);
   for(const auto & mw : mMappedWidgetList){
     // Update current widget if its column is in range topLeft, bottomRight
     int column = mw.column();
-    if( (column >= topLeft.column()) && (column <= bottomRight.column()) ){
+    if(columnRange.containsColumn(column)){
       updateMappedWidget(mw.widget(), column);
     }
   }
@@ -288,6 +297,8 @@ void DataWidgetMapper::updateMappedWidgetForAppearance(QWidget*const widget, con
   var = mModel->data(index, Qt::TextAlignmentRole);
   if(variantIsOfType(var, QMetaType::Int)){
     widget->setProperty("alignment", var);
+  }else{
+    widget->setProperty("alignment", QVariant(Qt::Alignment(Qt::AlignLeft | Qt::AlignVCenter)));
   }
   // Text font
   var = mModel->data(index, Qt::FontRole);
@@ -304,8 +315,9 @@ void DataWidgetMapper::updateMappedWidgetForAppearance(QWidget*const widget, con
   if(variantIsOfType(var, QMetaType::QBrush)){
     ws.setBackgroundBrushVariant(var);
   }
-  /**
-   * \todo Should compare with previous ws before setting (performance)
+  /*
+   * NOTE Should compare with previous ws before setting
+   *      (could be a performance improuvement)
    */
   widget->setStyleSheet(ws.toCssString());
 }

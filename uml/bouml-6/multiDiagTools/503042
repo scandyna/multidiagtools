@@ -1,6 +1,6 @@
 format 211
 "ItemEditor" // Mdt::ItemEditor
-  revision 163
+  revision 164
   modified_by 2 "philippe"
   // class settings
   
@@ -2343,8 +2343,8 @@ ${inlines}
 	MysqlColumn
       end
 
-      attribute 2995074 "OriginalStyleSheet"
-	private type class_ref 161026 // QString
+      attribute 2995074 "PreviousStyleSheet"
+	private type class_ref 3863554 // WidgetStyleSheet
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} pv${name}${value};
 "
 	java_decl ""
